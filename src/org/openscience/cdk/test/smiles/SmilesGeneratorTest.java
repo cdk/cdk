@@ -864,30 +864,82 @@ public class SmilesGeneratorTest extends TestCase
     /**
      * Test for some rings where the double bond is broken
      */
-    public void testCycloExamples() {
+    public void testCycloOctan() {
       try{
         SmilesGenerator sg = new SmilesGenerator();
         String filename = "data/mdl/cyclooctan.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLReader reader = new MDLReader(new InputStreamReader(ins));
-				Molecule mol1 = (Molecule) reader.read(new Molecule());
-        String moleculeSmile=sg.createSMILES(mol1);
+        Molecule mol1 = (Molecule) reader.read(new Molecule());
+        String moleculeSmile = sg.createSMILES(mol1);
         assertEquals(moleculeSmile,"C1=CCCCCCC1");
-        filename = "data/mdl/cycloocten.mol";
-        ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        reader = new MDLReader(new InputStreamReader(ins));
-				mol1 = (Molecule) reader.read(new Molecule());
-        moleculeSmile=sg.createSMILES(mol1);
+      } catch (Exception exc) {
+        exc.printStackTrace();
+        System.out.println(exc);
+        fail(exc.getMessage());
+      }
+    }
+    public void testCycloOcten() {
+      try{
+        SmilesGenerator sg = new SmilesGenerator();
+        String filename = "data/mdl/cycloocten.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLReader reader = new MDLReader(new InputStreamReader(ins));
+        Molecule mol1 = (Molecule) reader.read(new Molecule());
+        String moleculeSmile = sg.createSMILES(mol1);
         assertEquals(moleculeSmile,"C1C=CCCCCC1");
-        filename = "data/mdl/cyclooctadien.mol";
-        ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        reader = new MDLReader(new InputStreamReader(ins));
-				mol1 = (Molecule) reader.read(new Molecule());
-        moleculeSmile=sg.createSMILES(mol1);
+      } catch (Exception exc) {
+        exc.printStackTrace();
+        System.out.println(exc);
+        fail(exc.getMessage());
+      }
+    }
+    public void testCycloOctadien() {
+      try{
+        SmilesGenerator sg = new SmilesGenerator();
+        String filename = "data/mdl/cyclooctadien.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLReader reader = new MDLReader(new InputStreamReader(ins));
+        Molecule mol1 = (Molecule) reader.read(new Molecule());
+        String moleculeSmile = sg.createSMILES(mol1);
         assertEquals(moleculeSmile,"C=1CCC=CCCC=1");
       } catch (Exception exc) {
         exc.printStackTrace();
         System.out.println(exc);
+        fail(exc.getMessage());
+      }
+    }
+    
+    public void testSFBug1089770_1() {
+      try{
+        SmilesGenerator sg = new SmilesGenerator();
+        String filename = "data/mdl/bug1089770-1.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLReader reader = new MDLReader(new InputStreamReader(ins));
+        Molecule mol1 = (Molecule) reader.read(new Molecule());
+        String moleculeSmile = sg.createSMILES(mol1);
+        System.out.println(filename + " -> " + moleculeSmile);
+        assertEquals(moleculeSmile,"C1CCC=2CCCC=2(C1)");
+      } catch (Exception exc) {
+        exc.printStackTrace();
+        System.out.println(exc);
+        fail(exc.getMessage());
+      }
+    }
+    public void testSFBug1089770_2() {
+      try{
+        SmilesGenerator sg = new SmilesGenerator();
+        String filename = "data/mdl/bug1089770-2.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLReader reader = new MDLReader(new InputStreamReader(ins));
+        Molecule mol1 = (Molecule) reader.read(new Molecule());
+        String moleculeSmile = sg.createSMILES(mol1);
+        System.out.println(filename + " -> " + moleculeSmile);
+        assertEquals(moleculeSmile,"C=1CCC=CCCC=1");
+      } catch (Exception exc) {
+        exc.printStackTrace();
+        System.out.println(exc);
+        fail(exc.getMessage());
       }
     }
 }
