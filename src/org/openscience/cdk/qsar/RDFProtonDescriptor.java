@@ -50,6 +50,24 @@ import org.openscience.cdk.qsar.result.*;
 /**
  *  This class calculates 5 RDF proton descriptors used in neural networks for H1 NMR shift.
  *
+ * <p>This descriptor uses these parameters:
+ * <table border="1">
+ *   <tr>
+ *     <td>Name</td>
+ *     <td>Default</td>
+ *     <td>Description</td>
+ *   </tr>
+ *   <tr>
+ *     <td>atomPosition</td>
+ *     <td>0</td>
+ *     <td>The position of the target atom</td>
+ *   </tr>
+ *   <tr>
+ *     <td>checkAromaticity</td>
+ *     <td>false</td>
+ *     <td>True is the aromaticity has to be checked</td>
+ *   </tr>
+ * </table>
  * @author      mfe4
  * @cdk.created 2004-11-03
  * @cdk.module  qsar
@@ -713,8 +731,8 @@ public class RDFProtonDescriptor implements Descriptor {
 	 */
 	public String[] getParameterNames() {
 		String[] params = new String[2];
-		params[0] = "The position of the atom bonded to this proton";
-		params[1] = "False if the aromaticity has been already checked";
+		params[0] = "atomPosition";
+		params[1] = "checkAromaticity";
 		return params;
 	}
 

@@ -40,6 +40,20 @@ import java.util.Hashtable;
  *  The number of rotatable bonds is given by the SMARTS specified by Daylight on
  *  <a href="http://www.daylight.com/dayhtml_tutorials/languages/smarts/smarts_examples.html#EXMPL">SMARTS tutorial</a>
  *
+ * <p>This descriptor uses these parameters:
+ * <table border="1">
+ *   <tr>
+ *     <td>Name</td>
+ *     <td>Default</td>
+ *     <td>Description</td>
+ *   </tr>
+ *   <tr>
+ *     <td>includeTerminals</td>
+ *     <td>false</td>
+ *     <td>True if terminal bonds are included</td>
+ *   </tr>
+ * </table>
+ *
  * @author      mfe4
  * @cdk.created 2004-11-03
  * @cdk.module  qsar
@@ -158,7 +172,7 @@ public class RotatableBondsCountDescriptor implements Descriptor {
 	 */
 	public String[] getParameterNames() {
 		String[] params = new String[1];
-		params[0] = "Include Terminal Bonds in the count";
+		params[0] = "includeTerminals";
 		return params;
 	}
 

@@ -35,6 +35,21 @@ import java.util.Hashtable;
 /**
  *  Sigma electronegativity is given by X = a + bq + c(q*q)
  *
+  *
+ * <p>This descriptor uses these parameters:
+ * <table border="1">
+ *   <tr>
+ *     <td>Name</td>
+ *     <td>Default</td>
+ *     <td>Description</td>
+ *   </tr>
+ *   <tr>
+ *     <td>atomPosition</td>
+ *     <td>0</td>
+ *     <td>The position of the target atom</td>
+ *   </tr>
+ * </table>
+ *
  * @author      mfe4
  * @cdk.created 2004-11-03
  * @cdk.module  qsar
@@ -131,7 +146,7 @@ public class SigmaElectronegativityDescriptor implements Descriptor {
 	 */
 	public String[] getParameterNames() {
 		String[] params = new String[1];
-		params[0] = "The position of the atom whose calculate sigma electronegativity";
+		params[0] = "atomPosition";
 		return params;
 	}
 

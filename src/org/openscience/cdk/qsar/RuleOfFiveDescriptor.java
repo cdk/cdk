@@ -40,6 +40,20 @@ import org.openscience.cdk.tools.HydrogenAdder;
  * Lipinski's Rule Of 5.
  * See <a href="http://www.lifechemicals.com/eng/services/HTS/five/">http://www.lifechemicals.com/eng/services/HTS/five/</a>.
  *
+  * <p>This descriptor uses these parameters:
+ * <table border="1">
+ *   <tr>
+ *     <td>Name</td>
+ *     <td>Default</td>
+ *     <td>Description</td>
+ *   </tr>
+ *   <tr>
+ *     <td>checkAromaticity</td>
+ *     <td>false</td>
+ *     <td>True is the aromaticity has to be checked</td>
+ *   </tr>
+ * </table>
+ *
  * @author      mfe4
  * @cdk.created 2004-11-03
  * @cdk.module  qsar
@@ -152,7 +166,7 @@ public class RuleOfFiveDescriptor implements Descriptor {
 	 */
 	public String[] getParameterNames() {
 		String[] params = new String[1];
-		params[0] = "True is the aromaticity has to be checked";
+		params[0] = "checkAromaticity";
 		return params;
 	}
 

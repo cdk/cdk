@@ -37,6 +37,20 @@ import java.util.ArrayList;
 
 /**
  *  The calculation of partial charges of an heavy atom and its protons is based on Gasteiger Marsili (PEOE)
+ * <p>This descriptor uses these parameters:
+ * <table border="1">
+ *   <tr>
+ *     <td>Name</td>
+ *     <td>Default</td>
+ *     <td>Description</td>
+ *   </tr>
+ *   <tr>
+ *     <td>atomPosition</td>
+ *     <td>0</td>
+ *     <td>The position of the target atom</td>
+ *   </tr>
+ * </table>
+ *
  *
  * @author      mfe4
  * @cdk.created 2004-11-03
@@ -142,7 +156,7 @@ public class ProtonTotalPartialChargeDescriptor implements Descriptor {
 	 */
 	public String[] getParameterNames() {
 		String[] params = new String[1];
-		params[0] = "The position of the atom whose protons calculate total partial charge";
+		params[0] = "atomPosition";
 		return params;
 	}
 
