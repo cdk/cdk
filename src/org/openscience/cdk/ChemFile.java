@@ -32,7 +32,6 @@ import org.openscience.cdk.event.ChemObjectChangeEvent;
  *  document
  *
  *@author        steinbeck
- *@created       23. September 2004
  *@cdk.module    core
  */
 public class ChemFile extends ChemObject implements java.io.Serializable
@@ -57,7 +56,7 @@ public class ChemFile extends ChemObject implements java.io.Serializable
 
 
 	/**
-	 *  Constructs an empty SetOfChemSequences.
+	 *  Constructs an empty ChemFile.
 	 */
 	public ChemFile()
 	{
@@ -67,7 +66,7 @@ public class ChemFile extends ChemObject implements java.io.Serializable
 
 
 	/**
-	 *  Adds an chemSequence to this container.
+	 *  Adds an ChemSequence to this container.
 	 *
 	 *@param  chemSequence  The chemSequence to be added to this container
 	 *@see                  #getChemSequences
@@ -115,7 +114,7 @@ public class ChemFile extends ChemObject implements java.io.Serializable
 
 
 	/**
-	 *  Grows the chemSequence array by a given size.
+	 *  Grows the ChemSequence array by a given size.
 	 *
 	 *@see    #growArraySize
 	 */
@@ -140,9 +139,10 @@ public class ChemFile extends ChemObject implements java.io.Serializable
 
 
 	/**
-	 *  Description of the Method
+	 * Returns a String representation of this class. It implements
+         * RFC #9.
 	 *
-	 *@return    Description of the Return Value
+	 *@return    String representation of the Object
 	 */
 	public String toString()
 	{
@@ -162,7 +162,7 @@ public class ChemFile extends ChemObject implements java.io.Serializable
 
 
 	/**
-	 *  Allows for getting an clone of this object
+	 *  Allows for getting an clone of this object.
 	 *
 	 *@return    a clone of this object
 	 */
@@ -182,7 +182,7 @@ public class ChemFile extends ChemObject implements java.io.Serializable
 
 	/**
 	 *  Called by objects to which this object has
-	 *  registered as a listener
+	 *  registered as a listener.
 	 *
 	 *@param  event  A change event pointing to the source of the change
 	 */

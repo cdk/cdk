@@ -715,7 +715,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	/**
 	 *  Returns an array of all SingleElectron connected to the given atom.
 	 *
-	 *@param  atom  Description of the Parameter
+	 *@param  atom  The atom on which the single electron is located
 	 *@return       The array of SingleElectron of this AtomContainer
 	 */
 	public SingleElectron[] getSingleElectron(Atom atom)
@@ -735,7 +735,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	/**
 	 *  Returns the sum of the SingleElectron for a given Atom.
 	 *
-	 *@param  atom  Description of the Parameter
+	 *@param  atom  The atom on which the single electron is located
 	 *@return       The array of SingleElectron of this AtomContainer
 	 */
 	public int getSingleElectronSum(Atom atom)
@@ -1055,7 +1055,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	/**
 	 * Removes this ElectronContainer from this container.
 	 *
-	 * @param  electronContainer    Description of the Parameter
+	 * @param  electronContainer    The electronContainer to be removed
 	 * @return                      Bond that was removed
 	 */
 	public ElectronContainer removeElectronContainer(ElectronContainer electronContainer)

@@ -41,7 +41,6 @@ import org.openscience.cdk.event.ChemObjectChangeEvent;
  *  table for administration of physical or chemical properties
  *
  *@author        steinbeck
- *@created       23. September 2004
  *@cdk.module    core
  */
 public class ChemObject implements java.io.Serializable, Cloneable
@@ -83,13 +82,10 @@ public class ChemObject implements java.io.Serializable, Cloneable
 	}
 
 
-	/*
-	 *  Lazy creation of chemObjects Vector.
-	 */
 	/**
-	 *  Description of the Method
+	 *  Lazy creation of chemObjects Vector.
 	 *
-	 *@return    Description of the Return Value
+	 *@return    Vector with the ChemObjects associated.
 	 */
 	private Vector lazyChemObjects()
 	{
@@ -187,13 +183,10 @@ public class ChemObject implements java.io.Serializable, Cloneable
 	}
 
 
-	/*
-	 *  Lazy creation of properties hash.
-	 */
 	/**
-	 *  Description of the Method
+	 * Lazy creation of properties hash.
 	 *
-	 *@return    Description of the Return Value
+	 * @return    Returns in instance of the properties
 	 */
 	private Hashtable lazyProperties()
 	{
@@ -405,9 +398,8 @@ public class ChemObject implements java.io.Serializable, Cloneable
 
 
 	/**
-	 *  Clones this <code>ChemObject</code>, but preserves references to <code>Object</code>
-	 *  s.
-	 *
+	 *  Clones this <code>ChemObject</code>, but preserves references to <code>Object</code>s.
+         *
 	 *@return    Shallow copy of this ChemObject
 	 *@see       #clone
 	 */
