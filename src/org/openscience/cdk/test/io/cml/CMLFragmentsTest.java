@@ -354,7 +354,31 @@ public class CMLFragmentsTest extends TestCase {
 
         assertEquals("m1", mol.getID());
     }
+    
+    public void testBondArrayCML1() {
+        String cml1String = 
+"  <molecule title=\"NSC 25\">\n" +
+"   <atomArray>\n" +
+"    <stringArray builtin=\"atomId\">a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13</stringArray>\n" +
+"    <stringArray builtin=\"elementType\">Br N C C C C C C C O C C C</stringArray>\n" +
+"    <integerArray builtin=\"formalCharge\">0 0 0 0 0 0 0 0 0 0 0 0 0</integerArray>\n" +
+"    <floatArray builtin=\"x2\">-2.350500 0.850500 -2.160500 -1.522400 -2.798500 -1.522400 -2.798500 -2.160500 -0.889500 -1.259400 0.850500 0.850500 2.880500</floatArray>\n" +
+"    <floatArray builtin=\"y2\">-2.129900 0.767900 0.769900 0.401900 0.401900 -0.334900 -0.334900 -0.703000 0.767900 1.408800 -0.652000 2.088000 0.767900</floatArray>\n" +
+"   </atomArray>\n" +
+"   <bondArray>\n" +
+"    <stringArray builtin=\"atomRef\">a2 a2 a2 a2 a3 a3 a4 a4 a5 a6 a7 a9</stringArray>\n" +
+"    <stringArray builtin=\"atomRef\">a9 a11 a12 a13 a5 a4 a6 a9 a7 a8 a8 a10</stringArray>\n" +
+"    <stringArray builtin=\"order\">1 1 1 1 2 1 2 1 1 1 2 2</stringArray>\n" +
+"   </bondArray>\n" +
+"  </molecule>\n";
 
+        ChemFile chemFile = parseCMLString(cml1String);
+        Molecule mol = checkForSingleMoleculeFile(chemFile);
+
+        assertEquals(13, mol.getAtomCount());
+        assertEquals(12, mol.getBondCount());
+    }
+    
     private ChemFile parseCMLString(String cmlString) {
         ChemFile chemFile = null;
         try {
