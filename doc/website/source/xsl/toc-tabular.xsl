@@ -82,6 +82,11 @@
     <xsl:with-param name="relpath" select="$relpath"/>
   </xsl:apply-templates>
   <br/>
+
+  <a href="http://sourceforge.net">
+    <img src="http://sourceforge.net/sflogo.php?group_id=20024" width="88" height="31"
+             border="0" alt="SourceForge Logo" />
+  </a>
 </xsl:template>
 
 <!-- ==================================================================== -->
