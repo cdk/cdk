@@ -1,7 +1,12 @@
 CHANGELOG
 ------------------------------------
 
-Changes in CVS
+20020902 Release
+------------------------------------
+Fixes:
+* Added missing Log4J jar's to distribution
+
+20020831 Release
 ------------------------------------
 New:
 * Added Fragment class (fixes wishlist #591476)
