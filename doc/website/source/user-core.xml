@@ -6,17 +6,16 @@
   <!ENTITY % classes SYSTEM "../../user-guide/classes.mod">
 %classes;
 ]>
-<webpage id="reference">
+<webpage id="user-core">
   <config param="last-change-by" value="$Author$"/>
   <config param="rcsdate" value="$Date$"/>
 
   <head>
-    <title>The Programming Reference</title>
-    <titleabbrev>Programming Reference</titleabbrev>
-    <summary>This section tells you how to use the classes in your own
-       software program.</summary>
+    <title>User Guide - Core CLasses</title>
+    <titleabbrev>UG - Core Classes</titleabbrev>
+    <summary></summary>
   </head>
 
-  &intro;
+  &core;
 
 </webpage>
