@@ -123,6 +123,36 @@ public class HueckelAromaticityDetectorTest extends TestCase
 		}
 	}
 	
+	public void testPyridine()
+	{
+		boolean isAromatic = false;
+		try
+		{
+			SmilesParser sp = new SmilesParser();
+
+			Molecule mol = sp.parseSmiles("c1ccncc1");
+			RingSet rs = (new AllRingsFinder()).findAllRings(mol);
+			HueckelAromaticityDetector.detectAromaticity(mol, rs, true);
+			
+			RingSet ringset = (new SSSRFinder(mol)).findSSSR();
+			HueckelAromaticityDetector.setRingFlags(ringset);
+			
+			int numberOfAromaticRings = 0;
+			for (int i = 0; i < ringset.size(); i++) {
+				if (((Ring)ringset.get(i)).getFlag(CDKConstants.ISAROMATIC))
+					numberOfAromaticRings++;
+			}
+			assertEquals(numberOfAromaticRings, 1);
+		} catch (Exception exc)
+		{
+			if (standAlone)
+			{
+				exc.printStackTrace();
+			}
+			fail(exc.toString());
+		}
+	}
+	
 	
 	/**
 	 *  A unit test for JUnit The special difficulty with Azulene is that only the
