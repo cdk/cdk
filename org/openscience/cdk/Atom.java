@@ -177,6 +177,15 @@ public class Atom extends ChemObject implements Cloneable {
                 this.stereoParity = stereoParity;
         }
         /**
+         *  Convenience method for returns the element symbol for
+	 *  this atom's element  
+         *
+         * @return    The element symbol for this atoms element 
+         */
+        public String getElementSymbol() {
+                return getElement().getSymbol();
+        }
+        /**
          *  Returns an Element representing the element type of this Atom. 
          *
          * @return    An Element representing the element type of this Atom. 
@@ -184,6 +193,7 @@ public class Atom extends ChemObject implements Cloneable {
         public Element getElement() {
                 return this.element;
         }
+
         /**
          *  Returns the hydrogen count of this atom 
          *

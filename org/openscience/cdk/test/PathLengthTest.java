@@ -1,4 +1,6 @@
-/* $RCSfile$    $Author$    $Date$    $Revision$
+/* PathLengthTest.java
+ * 
+ * $RCSfile$    $Author$    $Date$    $Revision$
  * 
  * Copyright (C) 1997-2001  The Chemistry Development Kit (CDK) project
  * 
@@ -21,43 +23,42 @@
 
 package org.openscience.cdk.test;
 
+import org.openscience.cdk.*;
+import org.openscience.cdk.tools.*;
+import java.util.*;
+import java.io.*;
+import java.net.URL;
 import junit.framework.*;
-import org.openscience.cdk.renderer.*;
 
-/**
- * TestSuite that runs all the sample tests
- *
- */
-public class CDKTests {
-
-	static MoleculeListViewer moleculeListViewer = null;
-
-	public static void main (String[] args) 
+public class PathLengthTest extends TestCase
+{
+	Molecule molecule;
+	
+	public PathLengthTest(String name)
 	{
-		junit.textui.TestRunner.run(suite());
+		super(name);
 	}
-	public static Test suite ( ) 
+
+	public void setUp()
 	{
-		TestSuite suite= new TestSuite("All CDK Tests");
-		suite.addTest(RingSearchTest.suite());
-		suite.addTest(ConnectivityCheckerTest.suite());
-		suite.addTest(MorganNumberToolsTest.suite());		
-		suite.addTest(MFAnalyserTest.suite());
-		suite.addTest(PathLengthTest.suite());
-		suite.addTest(IsomorphismTesterTest.suite());		
-		//suite.addTest(StructureDiagramGeneratorTest.suite());
-		//suite.addTest(RandomStructureGeneratorTest.suite());
-		
-		
-	    return suite;
+		molecule = MoleculeFactory.makeAlphaPinene();
 	}
-	public static MoleculeListViewer getMoleculeListViewer()
+
+	public static Test suite() 
 	{
-		if (moleculeListViewer == null)
-		{
-			moleculeListViewer = new MoleculeListViewer();
-		}
-		return moleculeListViewer;
+		return new TestSuite(PathLengthTest.class);
+	}
+
+	public void testPathLength()
+	{
+		Atom atom1 = molecule.getAtomAt(0);
+		Atom atom2 = molecule.getAtomAt(8);
+		Vector sphere = new Vector();
+		sphere.addElement(atom1);
+		int length = PathTools.breadthFirstTargetSearch(molecule, sphere, atom2, 0, 3);
+		System.out.println(length);
+		assert(length == 3);
 	}
 	
 }
+

@@ -35,7 +35,8 @@ import junit.framework.*;
  
 public class MorganNumberToolsTest extends TestCase
 {
-	int[] reference = {0,0,0,0,0,0,0,0,0,0};
+	// This is an array with the expected Morgan Numbers for a-pinene
+	int[] reference = {28776,17899,23549,34598,31846,36393,9847,45904,15669,15669};
 	public MorganNumberToolsTest(String name)
 	{
 		super(name);
@@ -43,7 +44,7 @@ public class MorganNumberToolsTest extends TestCase
 	
 	public void setUp()
 	{
-		
+
 	}
 	
 	public static Test suite() {
@@ -60,9 +61,15 @@ public class MorganNumberToolsTest extends TestCase
 		}
 		catch(Exception exc)
 		{
+			System.err.println("An Exception");
 			fail();
 		}
-		assert(arraysAreEqual(morganNumbers, reference));	
+		assert(morganNumbers.length == reference.length);
+		for (int f = 0; f < morganNumbers.length; f ++)
+		{
+		//	System.out.println(morganNumbers[f]);
+			assert(reference[f] == morganNumbers[f]);
+		}
 	}
 	
 	protected boolean arraysAreEqual(int[] array1, int[] array2)
@@ -73,12 +80,17 @@ public class MorganNumberToolsTest extends TestCase
 		}
 		for (int f = 0; f < array1.length; f ++)
 		{
-			System.out.println(array1[f]);
+			System.err.println(array1[f]);
 			if (array1[f] != array2[f])
 			{
 				return false;
 			}
 		}
 		return true;
+	}
+	
+	public static void main(String[] args)
+	{
+		new MorganNumberToolsTest("MorganNumberToolsTest").testMorganNumbers();
 	}
 }
