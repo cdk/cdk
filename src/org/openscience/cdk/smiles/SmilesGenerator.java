@@ -1,10 +1,9 @@
-/* AromaticityCalculator.java
+/* $RCSfile$
+ * $Author$
+ * $Date$
+ * $Revision$
  *
- * $ author: 	Oliver Horlacher, Stefan Kuhn (chiral smiles)		$
- * $ contact: 	oliver.horlacher@therastrat.com, skuhn@ice.mpg.de 	$
- * $ date: 		Feb 26, 2002			$
- *
- * Copyright (C) 2001-2002
+ * Copyright (C) 2002
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -27,6 +26,7 @@
 package org.openscience.cdk.smiles;
 
 import org.openscience.cdk.*;
+import org.openscience.cdk.aromaticity.AromaticityCalculator;
 import org.openscience.cdk.tools.IsotopeFactory;
 import org.openscience.cdk.graph.invariant.MorganNumbersTools;
 import org.openscience.cdk.templates.MoleculeFactory;
@@ -46,7 +46,9 @@ import javax.vecmath.Vector2d;
  *   <a href="http://cdk.sf.net/biblio.html#WEI88">WEI88</a>,
  *   <a href="http://cdk.sf.net/biblio.html#WEI89">WEI89</a>
  *
- * @author Oliver Horlacher, Stefan Kuhn (chiral smiles)
+ * @author  Oliver Horlacher, 
+ * @author  Stefan Kuhn (chiral smiles)
+ * @created Feb 26, 2002
  *
  * @keyword SMILES, generator
  */

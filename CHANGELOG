@@ -25,6 +25,7 @@ API changes:
 * Moved generateElementFormula(Molecule, String[]) from
   SwissArmyKnife to MFAnalyser
 * Moved package graphinvariant to package graph.invariant
+* Moved AromaticityCalculator from package smiles to aromaticity
 
 20020920 Release
 ------------------------------------
