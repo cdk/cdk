@@ -1,9 +1,19 @@
---- src/org/openscience/cdk/tools/AtomTypeFactory.java	Sun Mar  2 14:19:23 2003
-+++ src/org/openscience/cdk/tools/AtomTypeFactory.java.noFile	Sun Mar  2 14:17:30 2003
-@@ -113,26 +113,28 @@
+--- src/org/openscience/cdk/tools/AtomTypeFactory.java.1.22	2003-05-06 09:45:20.311916000 +0200
++++ src/org/openscience/cdk/tools/AtomTypeFactory.java.Jmol	2003-05-06 09:48:58.218785000 +0200
+@@ -33,8 +33,6 @@
+ import javax.xml.parsers.*;
+ import org.w3c.dom.*;
+ 
+-import JSX.*;
+-
+ /**
+  *  General class for defining AtomTypes. This class itself does not define the
+  *  items types; for this classes implementing the AtomTypeConfiguration
+@@ -112,27 +110,28 @@
+ 
  		InputStream ins = null;
  		{
- 			// try to see if this configFile is an actual file
+-			// try to see if this configFile is an actual file
 -			File f = new File(configFile);
 -            if (f.exists()) {
 -                logger.debug("configFile is a File");
@@ -49,3 +59,18 @@
  			if (ins == null)
  			{
  				logger.error("There was a problem getting a stream for " +
+@@ -151,11 +150,13 @@
+ 				atc = (AtomTypeConfigurator) this.getClass().getClassLoader().
+ 						loadClass("org.openscience.cdk.tools.TXTBasedAtomTypeConfigurator").
+ 						newInstance();
+-			} else if (configFile.endsWith("xml"))
++			/* elw: don't use this, because we don't want to depend on JSX at all
++            } else if (configFile.endsWith("xml"))
+ 			{
+ 				atc = (AtomTypeConfigurator) this.getClass().getClassLoader().
+ 						loadClass("org.openscience.cdk.tools.JSXBasedAtomTypeConfigurator").
+ 						newInstance();
++            */
+ 			}
+ 			logger.debug("Instantiated a AtomTypeConfigurator of class: " +
+ 					atc.getClass().getName());

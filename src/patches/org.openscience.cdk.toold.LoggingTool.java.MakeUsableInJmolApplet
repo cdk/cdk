@@ -1,110 +1,133 @@
---- org/openscience/cdk/tools/LoggingTool.java	Fri Nov 22 12:06:46 2002
-+++ org/openscience/cdk/tools/LoggingTool.applet.java	Mon Nov 18 14:50:22 2002
-@@ -26,44 +26,17 @@
+--- src/org/openscience/cdk/tools/LoggingTool.java.1.5	2003-05-06 09:29:24.754343000 +0200
++++ src/org/openscience/cdk/tools/LoggingTool.java.JmolApplet	2003-05-06 09:32:15.115267000 +0200
+@@ -30,7 +30,6 @@
+     private boolean debug = false;
+     private boolean tostdout = false;
  
- import java.net.*;
- 
-+/**
-+ * Adapted version made for use in applets.
-+ */
- public class LoggingTool {
- 
--    private boolean debug = false;
--    private boolean tostdout = false;
--
 -    private Object logger;
--
-     public LoggingTool() {
-         this( LoggingTool.class.getName() );
-     }
+     private String classname;
+     
+     /** Default number of StackTraceElements to be printed by debug(Exception) */
+@@ -38,59 +37,12 @@
+      
+      private int stackLength = DEFAULT_STACK_LENGTH;
+ 
+-    public LoggingTool() {
+-        this( LoggingTool.class.getName() );
+-    }
++    public LoggingTool() {}
  
      public LoggingTool(String classname) {
+         this.classname = classname;
 -        try {
 -            logger = org.apache.log4j.Category.getInstance( classname );
--
+-            /****************************************************************
+-             * believe it or not this code has a purpose
+-             * The MSFT jvm throws a ClassNotFoundException instead of
+-             * a NoClassDefFoundError. But the compiler will not allow the
+-             * catch of ClassNotFoundException because it doesn't think
+-             * that anybody is going to throw it. So, we will put in this
+-             * little trick ...
+-             ****************************************************************/
+-            if (false)
+-              throw new ClassNotFoundException();
 -            // configure Log4J
--            URL url = getClass().getClassLoader().getResource("org/openscience/cdk/config/log4j.properties");
+-            URL url = getClass().getClassLoader().getResource("/org/openscience/cdk/config/log4j.properties");
 -            org.apache.log4j.PropertyConfigurator.configure(url);
+-        } catch (ClassNotFoundException e) {
+-            tostdout = true;
+-            debug("Log4J class not found!");
 -        } catch (NoClassDefFoundError e) {
 -            tostdout = true;
+-            debug("Log4J class not found!");
 -        } catch (NullPointerException e) {
 -            tostdout = true;
 -            debug("Properties file not found!");
 -        } catch (Exception e) {
 -            tostdout = true;
 -        }
--        // Use a try {} to catch SecurityExceptions when used in applets
--        try {
+-        /****************************************************************
+-         * but some JVMs (i.e. MSFT) won't pass the SecurityException to
+-         * this exception handler. So we are going to check the JVM
+-         * version first
+-         ****************************************************************/
++        tostdout = false;
+         debug = false;
+-        String strJvmVersion = System.getProperty("java.version");
+-        if (strJvmVersion.compareTo("1.2") >= 0) {
+-          // Use a try {} to catch SecurityExceptions when used in applets
+-          try {
 -            // by default debugging is set off, but it can be turned on
 -            // with starting java like "java -Dcdk.debugging=true"
 -            if (System.getProperty("cdk.debugging", "false").equals("true")) {
--                debug = true;
+-              debug = true;
 -            }
--        } catch (Exception e) {
+-          } catch (Exception e) {
 -            // guess what happens: security exception from applet runner
 -            // do not debug in those cases
--            debug = false;
+-          }
 -        }
-+        dumpSystemProperties();
      }
  
      public void dumpSystemProperties() {
-@@ -79,58 +52,24 @@
+@@ -127,55 +79,19 @@
+         }
      }
- 
-     public void debug(String s) {
+     
+-    public void debug(String s) {
 -        if (debug) {
 -            if (tostdout) {
--                System.out.print("DEBUG: ");
--                System.out.println(s);
+-                toSTDOUT("DEBUG", s);
 -            } else {
 -                ((org.apache.log4j.Category)logger).debug(s);
 -            }
 -        }
-     }
+-    }
++    public void debug(String s) {}
  
      public void error(String s) {
 -        if (debug) {
 -            if (tostdout) {
-                 System.out.print("ERROR: ");
-                 System.out.println(s);
+-                toSTDOUT("ERROR", s);
 -            } else {
 -                ((org.apache.log4j.Category)logger).error(s);
 -            }
 -        }
++        toSTDOUT("ERROR", s);
      }
  
      public void fatal(String s) {
 -        if (debug) {
 -            if (tostdout) {
-                 System.out.print("FATAL: ");
-                 System.out.println(s);
+-                toSTDOUT("FATAL", s);
 -            } else {
 -                ((org.apache.log4j.Category)logger).fatal(s);
 -            }
 -        }
++        toSTDOUT("FATAL", s);
      }
  
-     public void info(String s) {
+-    public void info(String s) {
 -        if (debug) {
 -            if (tostdout) {
--                System.out.print("INFO: ");
--                System.out.println(s);
+-                toSTDOUT("INFO", s);
 -            } else {
 -                ((org.apache.log4j.Category)logger).info(s);
 -            }
 -        }
-     }
+-    }
++    public void info(String s) {}
  
-     public void warn(String s) {
+-    public void warn(String s) {
 -        if (debug) {
 -            if (tostdout) {
-                 System.out.print("WARN: ");
-                 System.out.println(s);
+-                toSTDOUT("WARN", s);
 -            } else {
 -                ((org.apache.log4j.Category)logger).warn(s);
 -            }
 -        }
-     }
- 
- }
+-    }
++    public void warn(String s) {}
+     
+     private void toSTDOUT(String level, String message) {
+         System.out.print(classname);
