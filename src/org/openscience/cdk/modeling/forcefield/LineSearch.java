@@ -7,11 +7,10 @@ import javax.vecmath.*;
 import org.openscience.cdk.*;
 
 /**
- *  Search line approach: Obtain line where the function decrease
- *  (The line have Interception xk and slope on the direction of vk, e.g. the gradient for steepest descents method)
+ *  The line-search method searches along the line containing the current point, xk, parallel to the search direction
  *
- *@author     labarta
- *@created    4-01-2005
+ *@author     vlabarta
+ *
  */
 public class LineSearch {
 	double stepSize = 2;
@@ -32,7 +31,7 @@ public class LineSearch {
 	/**
 	 *  Constructor for the LineSearch object
 	 *
-	 *@param  point  Description of the Parameter
+	 *@param  point  Coordinates from current point
 	 */
 	public LineSearch(GVector point) {
 		kplus1Point1.setSize(point.getSize());
@@ -43,15 +42,13 @@ public class LineSearch {
 
 
 	/**
-	 *  Search line approach: Look for 3 points along the line where the energy of
-	 *  the middle point is lower than the energy of the two outer points
-	 *  The bracketing phase determines the range of points
-	 *  on the line to be searched. The bracket corresponds to an interval
-	 *  specifying the range of values of Lambda.
+	 *  Bracketing the minimum: The bracketing phase determines the range of points on the line to be searched.
+	 *  Look for 3 points along the line where the energy of the middle point is lower than the energy of the two outer points.
+	 *  The bracket corresponds to an interval specifying the range of values of Lambda.
 	 *
-	 *@param  kPoint              Description of the Parameter
-	 *@param  directionVector     Description of the Parameter
-	 *@param  forceFieldFunction  Description of the Parameter
+	 *@param  kPoint              Current point, xk
+	 *@param  directionVector     Search direction
+	 *@param  forceFieldFunction  Potential energy function
 	 */
 	public void bracketingTheMinimum(GVector kPoint, GVector directionVector, PotentialFunction forceFieldFunction) {
 
@@ -131,7 +128,7 @@ public class LineSearch {
 				if (forceFieldFunction.functionInPoint(kplus1Point2) < forceFieldFunction.functionInPoint(kPoint)) {
 					finish = true;
 				}
-				if (maximumLambda < 0.01) {
+				if (maximumLambda < 0.001) {
 					finish = true;
 				}
 			}
@@ -161,45 +158,39 @@ public class LineSearch {
 	/**
 	 *  xk+1= Xk + Lambdak Sk
 	 *
-	 *@param  oldCoordinates   Description of the Parameter
-	 *@param  currentStepSize  Description of the Parameter
+	 *@param  oldCoordinates   Coordinates of the previous step, k
+	 *@param  currentStepSize  Step size estimated
 	 *@return                  New coordinates of the atoms, k+1 step
 	 */
-	public GVector coordinatesCalculation(GVector oldCoordinates, double currentStepSize) {
+	public GVector setCoordinates(GVector oldCoordinates, double currentStepSize) {
 		GVector coordinates = new GVector(oldCoordinates.getSize());
 		return coordinates;
 	}
 
 
 	/**
-	 *  Search line approach: Minimize The fitted function on the line *** Waiting
-	 *  to be completed
+	 *  Minimize The fitted function on the line *** Waiting to be completed
 	 *
-	 *@param  function  Description of the Parameter
-	 *@param  segment   Description of the Parameter
-	 *@return           Description of the Return Value
+	 *@return           Minimun of the fitted function on the line segment
 	 */
-	public Vector minimizeFitFunction(String function, String segment) {
+	public GVector minimizeFitFunction() {
 
-		Vector fitFunctionMinimum = new Vector();
+		GVector fitFunctionMinimum = new GVector(3);
 		return fitFunctionMinimum;
 	}
 
 
 	/**
-	 *  Search line approach: Fit a function of order p with the three point of the
-	 *  line // To check comment *** Waiting to be completed
+	 *  Fit a function of order p using the three points in the line *** Waiting to be completed
 	 *
-	 *@param  point1  Description of the Parameter
-	 *@param  point2  Description of the Parameter
-	 *@param  point3  Description of the Parameter
-	 *@param  order   Description of the Parameter
-	 *@return         Description of the Return Value
+	 *@param  point1  Point 1 in the line
+	 *@param  point2  Point 2 in the line
+	 *@param  point3  Point 3 in the line
+	 *@param  order   Order of the function to be fit
 	 */
-	public String fitFunction(Vector point1, Vector point2, Vector point3, byte order) {
+	public void fitFunction(Vector point1, Vector point2, Vector point3, byte order) {
 
-		String fitFunctionShape = "";
-		return fitFunctionShape;
+		return;
 	}
 
 
