@@ -85,7 +85,7 @@ public class DBAdmin
     /**
      *  Driver for database
      **/
-    public String driver = "postgresql";
+    public String driver = "postgres";
     
     /**
      *  An object representing a connection to a database
@@ -130,7 +130,7 @@ public class DBAdmin
         usage += "                                 (example: \"jdbc:postgresql://www.nmrshiftdb.org/nmrshiftdb\")\n";
         usage += "--useHost 'thisHost' -h          Administer DB specified by 'thisHost'\n";
         usage += "                                 (URL is formed as follows: \"jdbc:postgresql://thisHost/nmrshiftdb\")\n";
-        usage += "--useDriver 'thisDriver' -d      Driver for DB specified by 'thisDriver'\n";
+        usage += "--useDriver 'thisDriver' -D      Driver for DB specified by 'thisDriver'\n";
         usage += "                                 (mysql | postgresql)\n";
         usage += "--username 'thisUser' -u         Log into database using 'thisUser' as the username\n";
         usage += "--passwd 'thisPasswd' -p         Log into database using 'thisPasswd' as the passwd\n";
@@ -149,50 +149,41 @@ public class DBAdmin
         {
             option = args[f];
 
-            if(option.equals("--useURL") || option.equals("-r"))
+            if (option.equals("--useURL") || option.equals("-r"))
             {
                 useURL = true;
-                url = args[f + 1];
-                f ++;
-            }
-
-            if(option.equals("--useHost") || option.equals("-h"))
+                url = args[++f];
+                System.out.println("Using URL: " + url);
+            } else if(option.equals("--useHost") || option.equals("-h"))
             {
                 useHost = true;
-                host = args[f + 1];
-                f ++;
-            }
-
-            if(option.equals("--username") || option.equals("-u"))
+                host = args[++f];
+            } else if(option.equals("--username") || option.equals("-u"))
             {
-                user = args[f + 1];
-            }
-
-            if(option.equals("--passwd") || option.equals("-p"))
+                user = args[++f];
+            } else if(option.equals("--useDriver") || option.equals("-D"))
             {
-                pwd = args[f + 1];
-            }
-
-            if(option.equals("--createDefaultTables") || option.equals("-c"))
+                driver = args[++f];
+                System.out.println("Using Driver: " + driver);
+            } else if(option.equals("--passwd") || option.equals("-p"))
+            {
+                pwd = args[++f];
+            } else if(option.equals("--createDefaultTables") || option.equals("-c"))
             {
                 createDefaultTables = true;
-            }
-            else if(option.equals("--listTables") || option.equals("-l"))
+            } else if(option.equals("--listTables") || option.equals("-l"))
             {
                 listTables = true;
-            }
-            else if(option.equals("--insertMolecule") || option.equals("-i"))
+            } else if(option.equals("--insertMolecule") || option.equals("-i"))
             {
             	insertMolecule = true;
-	        	thisMol = args[f + 1];
-                f++;
+	        	  thisMol = args[++f];
             }
             else if(option.equals("--deleteTables") || option.equals("-d"))
             {
             	deleteTables = true;
-            }
-            else
-            {
+            } else {
+              System.out.println("Unknown option: " + args[f]);
             	System.out.println(usage);
             	System.exit(0);
             }
@@ -205,17 +196,17 @@ public class DBAdmin
         try
         {
             if (driver.equals("postgres")) {
+              System.out.print("Loading PostGres driver... ");
               Class.forName("postgres.Driver");
             } else if (driver.equals("mysql")) {
+              System.out.print("Loading MySQL driver... ");
               Class.forName("org.gjt.mm.mysql.Driver").newInstance();
             }
-            if (useURL)
-			{
+            System.out.println("done.");
+            if (useURL) {
             	db = DriverManager.getConnection(url,user,pwd);
-            }
-            else if (useHost)
-            {
-            	url = "jdbc:postgresql://" + host + "/testdb";
+            } else if (useHost) {
+            	url = "jdbc:" + driver + "://" + host + "/testdb";
             	db = DriverManager.getConnection(url,user,pwd);
             }
         }
@@ -275,10 +266,11 @@ public class DBAdmin
             st = db.createStatement();
             query = "CREATE TABLE molecules (";
             query += "autonomname TEXT";
-			query += ", casrn TEXT";
-			query += ", brn TEXT";
-			query += ", C INT4, H INT4, N INT4, O INT4, S INT4, P INT4, F INT4, Cl INT4, Br INT4, I INT4";
-			query += ", molid OID";
+            query += ", casrn TEXT";
+            query += ", brn TEXT";
+            query += ", C INT4, H INT4, N INT4, O INT4, S INT4, P INT4, F INT4, Cl INT4, Br INT4, I INT4";
+            query += ", CMLcode TEXT";
+            query += ", molid int(11) NOT NULL auto_increment, PRIMARY KEY (molid)";
             query += ");";
             System.out.println(query);
             st.executeUpdate(query);
@@ -292,7 +284,7 @@ public class DBAdmin
              */
             st = db.createStatement();
             query = "CREATE TABLE chemnames (";
-            query += "molid OID";
+            query += "molid int(11) NOT NULL";
 			query += ", name TEXT";
             query += ");";
             System.out.println(query);            

@@ -91,7 +91,7 @@ public class DBWriter implements ChemObjectWriter
 		try
 		{
 			con.setAutoCommit(false);
-			ps = con.prepareStatement("INSERT INTO molecules VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			ps = con.prepareStatement("INSERT INTO molecules VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,\"\")");
 			ps.setString(1, mol.getAutonomName());
 			ps.setString(2, mol.getCasRN());
 			ps.setString(3, mol.getBeilsteinRN());
