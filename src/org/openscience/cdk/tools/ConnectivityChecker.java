@@ -98,15 +98,15 @@ public class ConnectivityChecker
 		{
 			atom = atomContainer.getAtomAt(f);
 			if (atom.flags == null) atom.flags = new boolean[100];
-			atomContainer.getAtomAt(f).flags[CDKConstants.VISITED] = false;
-			ac.addAtom(atomContainer.getAtomAt(f));
+			atom.flags[CDKConstants.VISITED] = false;
+			ac.addAtom(atom);
 		}
 		for (int f = 0; f < atomContainer.getBondCount(); f++)
 		{
 			bond = atomContainer.getBondAt(f);
 			if (bond.flags == null) bond.flags = new boolean[100];
-			atomContainer.getBondAt(f).flags[CDKConstants.VISITED] = false;
-			ac.addBond(atomContainer.getBondAt(f));
+			bond.flags[CDKConstants.VISITED] = false;
+			ac.addBond(bond);
 		}
 		while(ac.getAtomCount() > 0)
 		{
