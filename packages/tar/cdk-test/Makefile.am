@@ -1,0 +1,6 @@
+
+PREFIX="@prefix@"
+SUBDIRS= bin jar
+
+EXTRA_DIST=VERSION
+

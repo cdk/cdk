@@ -1,0 +1,21 @@
+#! /bin/sh -e
+
+PREFIX=@prefix@
+XERCESJAR=@PATHTOXERCES@
+LOGJAVA=@PATHTOLOGJAVA@
+RTJAR=@PATHTORTJAR@
+JAVA=@PATHTOJAVA@
+
+JARLIBDIR=${PREFIX}/lib/cdk
+JARLIBS=`ls -1 ${JARLIBDIR}/*.jar | perl -ne "s/\n|\r/:/g; print;"`
+CLASSPATH=${RTJAR}:${LOGJAVA}:${XERCESJAR}:${JARLIBS}
+
+# Collect -D options as java arguments
+command=${JAVA}
+while [ `echo $1 | egrep '^-D' | wc -l` != 0 ]; do
+        command="$command $1"
+        shift
+done
+
+
+${command} -cp ${CLASSPATH} junit.awtui.TestRunner $*
