@@ -642,7 +642,7 @@ public class RingPlacer
 //				logger.debug(connectedRing.toString(molecule));				
 				sharedAtoms = ring.getIntersection(connectedRing);
 				sac = sharedAtoms.getAtomCount();
-				logger.debug("placeConnectedRings-> connectedRing: " + (ring.toString(molecule)));
+				logger.debug("placeConnectedRings-> connectedRing: " + (ring.toString()));
 				if ((sac == 2 && handleType == FUSED) ||(sac == 1 && handleType == SPIRO)||(sac > 2 && handleType == BRIDGED))
 				{
 					sharedAtomsCenter = sharedAtoms.get2DCenter();

@@ -330,16 +330,20 @@ public class RingSet extends Vector implements java.io.Serializable, Cloneable
 	 * RingSet.
 	 *
 	 * @param   molecule  Used to assign numbers to each atom in the rings
-	 * @return  A sequence of string representations for all rings in the RingSet   
+	 * @return  A sequence of string representations for all rings in the RingSet
 	 */
-	public String reportRingList(Molecule molecule)
+	public String toString(Molecule molecule)
 	{
-		String ringList = "";
+		StringBuffer ringList = new StringBuffer();
+		ringList.append("RingList(");
 		for (int f = 0; f < size(); f++)
 		{
-			ringList += ((Ring)elementAt(f)).toString(molecule) + "\n";
+		        ringList.append("R" + f + ": ");
+			ringList.append(((Ring)elementAt(f)).toString());
+			ringList.append(";");
 		}
-		return ringList;
+		ringList.append(")");
+		return ringList.toString();
 		
 	}
 

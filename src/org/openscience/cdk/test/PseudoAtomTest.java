@@ -51,6 +51,14 @@ public class PseudoAtomTest extends TestCase {
         return new TestSuite(PseudoAtomTest.class);
     }
 
+    public void testPseudoAtom() {
+        PseudoAtom a = new PseudoAtom();
+        assertEquals("R", a.getSymbol());
+        assertNull(a.getPoint3d());
+        assertNull(a.getPoint2d());
+        assertNull(a.getFractionalPoint3d());
+    }
+    
     public void testPseudoAtom_String() {
         String label = "Arg255";
         PseudoAtom a = new PseudoAtom(label);

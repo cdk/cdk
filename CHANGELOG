@@ -29,6 +29,7 @@ Fixes:
   1/3rd speed up for reading PDB files
 * The PDBReader now stores the PDB atom type with AtomType.setAtomTypeName()
   (closes #1085910)
+* Added missing Ring.toString() and RingSet.toString() methods
 
 API changes:
 * Moved SingleElectron to the core module
@@ -38,6 +39,8 @@ API changes:
 * Moved SmilesViewerforDeterministicGenerator into cdk.applications.demo
 * MDL SDF files are now read as a ChemSequence of ChemModel's instead of a
   SetOfMolecules
+* Moved Ring.toString(Molecule) to only user RingSearchTest
+* Removed RingSet.reportRingList(Molecule)
 
 20041201 Release
 ------------------------------------

@@ -76,6 +76,11 @@ public class RingTest extends TestCase {
     
     public void testRingSize() {
         Ring r = new Ring(5, "C");
+	assertNotNull(r);
+    }
+    
+    public void testGetRingSize() {
+        Ring r = new Ring(5, "C");
         assertEquals(5, r.getRingSize());
     }
     

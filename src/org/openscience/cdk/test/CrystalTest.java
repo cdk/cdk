@@ -113,10 +113,10 @@ public class CrystalTest extends TestCase {
 
     public void testGetSpaceGroup() {
         Crystal crystal = new Crystal();
-        assertNull(crystal.getSpaceGroup());
         String spacegroup = "P 2_1 2_1 2_1";
         crystal.setSpaceGroup(spacegroup);
         assertNotNull(crystal.getSpaceGroup());
+        assertEquals(spacegroup, crystal.getSpaceGroup());
     }
 
     public void testSetZ_int() {

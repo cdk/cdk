@@ -158,7 +158,7 @@ public class RingSearchTest extends TestCase
 			for (int f = 0; f < ringSet.size(); f++)
 			{
 				ring = (Ring) ringSet.elementAt(f);
-				if (standAlone) System.out.println("ring: " + ring.toString(molecule));
+				if (standAlone) System.out.println("ring: " + toString(ring, molecule));
 			}
 		} catch (Exception exc)
 		{
@@ -190,7 +190,7 @@ public class RingSearchTest extends TestCase
 			for (int f = 0; f < ringSet.size(); f++)
 			{
 				ring = (Ring) ringSet.elementAt(f);
-				if (standAlone) System.out.println("ring: " + ring.toString(molecule));
+				if (standAlone) System.out.println("ring: " + toString(ring, molecule));
 			}
 		} catch (Exception exc)
 		{
@@ -222,7 +222,7 @@ public class RingSearchTest extends TestCase
 			for (int f = 0; f < ringSet.size(); f++)
 			{
 				ring = (Ring) ringSet.elementAt(f);
-				if (standAlone) System.out.println("ring: " + ring.toString(molecule));
+				if (standAlone) System.out.println("ring: " + toString(ring, molecule));
 			}
 		} catch (Exception exc)
 		{
@@ -248,5 +248,30 @@ public class RingSearchTest extends TestCase
 
 	}
 
+	 /**
+	  * Convenience method for giving a string representation 
+	  * of this ring based on the number of the atom in a given 
+	  * molecule.
+      *
+	  * @param molecule  A molecule to determine an atom number for each ring atom
+      * @return          string representation of this ring
+	  */
+	public String toString(Ring ring, Molecule molecule)
+	{
+		String str = "";
+		for (int f = 0; f < ring.getAtomCount(); f++)
+		{
+			try
+			{
+				str += molecule.getAtomNumber(ring.getAtomAt(f)) +  " - ";
+			}
+			catch(Exception exc)
+			{
+			    System.err.println("Could not create string representation of Ring: " + exc.getMessage());
+			}
+		}
+		return str;
+	}
+	
 }
 

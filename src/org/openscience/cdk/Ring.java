@@ -129,33 +129,6 @@ public class Ring extends AtomContainer implements java.io.Serializable, Cloneab
 		return orderSum;
 	}
 	
-	
-	 /**
-	  * Convenience method for giving a string representation 
-	  * of this ring based on the number of the atom in a given 
-	  * molecule.
-      *
-	  * @param molecule  A molecule to determine an atom number for each ring atom
-      * @return          string representation of this ring
-      * @deprecated
-	  */
-	public String toString(Molecule molecule)
-	{
-		String str = "";
-		for (int f = 0; f < getAtomCount(); f++)
-		{
-			try
-			{
-				str += molecule.getAtomNumber(getAtomAt(f)) +  " - ";
-			}
-			catch(Exception exc)
-			{
-			    System.err.println("Could not create string representation of Ring: " + exc.getMessage());
-			}
-		}
-		return str;
-	}
-	
 	public String toString() {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append("Ring(");
