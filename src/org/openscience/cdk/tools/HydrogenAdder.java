@@ -129,11 +129,16 @@ public class HydrogenAdder {
     public void addExplicitHydrogensToSatisfyValency(Molecule molecule) throws IOException, ClassNotFoundException
     {
 	    logger.debug("Start of addExplicitHydrogensToSatisfyValency");
-        Atom[] atoms = molecule.getAtoms();
+      SetOfMolecules moleculeSet = ConnectivityChecker.partitionIntoMolecules(molecule);
+      Molecule[] molecules = moleculeSet.getMolecules();
+      for (int k = 0; k < molecules.length; k++) {
+        Molecule molPart = molecules[k];
+        Atom[] atoms = molPart.getAtoms();
         for (int i = 0; i < atoms.length; i++) {
-            addHydrogensToSatisfyValency(molecule, atoms[i]);
+          addHydrogensToSatisfyValency(molPart, atoms[i], molecule);
         }
-	logger.debug("End of addExplicitHydrogensToSatisfyValency");
+      }
+      logger.debug("End of addExplicitHydrogensToSatisfyValency");
     }
 
     /**
@@ -153,11 +158,11 @@ public class HydrogenAdder {
      *
      * @deprecated
      */
-    public void addHydrogensToSatisfyValency(AtomContainer container, Atom atom) 
+    public void addHydrogensToSatisfyValency(AtomContainer container, Atom atom, AtomContainer totalContainer) 
         throws IOException, ClassNotFoundException
     {
 	logger.debug("Start of addHydrogensToSatisfyValency(AtomContainer container, Atom atom)");
-        addExplicitHydrogensToSatisfyValency(container, atom);
+        addExplicitHydrogensToSatisfyValency(container, atom, totalContainer);
 	logger.debug("End of addHydrogensToSatisfyValency(AtomContainer container, Atom atom)");
     }
 
@@ -176,7 +181,7 @@ public class HydrogenAdder {
      * @keyword          hydrogen, adding
      * @keyword          explicit hydrogen
      */
-    public void addExplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom) 
+    public void addExplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom, AtomContainer totalContainer) 
         throws IOException, ClassNotFoundException
     {
         // set number of implicit hydrogens to zero
@@ -184,7 +189,7 @@ public class HydrogenAdder {
 	logger.debug("Start of addExplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom)");
         int missingHydrogens = satChecker.calculateMissingHydrogen(atom, container);
 	logger.debug("According to satChecker, " + missingHydrogens + " are missing");
-        addExplicitHydrogensToSatisfyValency(container, atom, missingHydrogens);
+        addExplicitHydrogensToSatisfyValency(container, atom, missingHydrogens, totalContainer);
 	logger.debug("End of addExplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom)");
     }
     
@@ -198,7 +203,7 @@ public class HydrogenAdder {
      * @keyword          hydrogen, adding
      * @keyword          explicit hydrogen
      */
-    public void addExplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom, int count) 
+    public void addExplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom, int count, AtomContainer totalContainer) 
         throws IOException, ClassNotFoundException
     {
         boolean create2DCoordinates = GeometryTools.has2DCoordinates(container);
@@ -210,9 +215,9 @@ public class HydrogenAdder {
         for (int i = 1; i <= count; i++) {
             Atom hydrogen = new Atom("H");
             IsotopeFactory.getInstance().configure(hydrogen, isotope);
-            container.addAtom(hydrogen);
+            totalContainer.addAtom(hydrogen);
             Bond newBond = new Bond(atom, hydrogen, 1.0);
-            container.addBond(newBond);
+            totalContainer.addBond(newBond);
         }
         /* The following code has been removed for a clearer separation
 	 * between adding (in HydrogenAdder) and placing the hydrogens (in HydrogenPlacer)
@@ -233,16 +238,22 @@ public class HydrogenAdder {
      *@keyword          implicit hydrogen
      */
     public void addImplicitHydrogensToSatisfyValency(AtomContainer container) {
-        Atom[] atoms = container.getAtoms();
+      SetOfMolecules moleculeSet = ConnectivityChecker.partitionIntoMolecules(container);
+      Molecule[] molecules = moleculeSet.getMolecules();
+      for (int k = 0; k < molecules.length; k++) {
+        Molecule molPart = molecules[k];
+        Atom[] atoms = molPart.getAtoms();
         for (int f = 0; f < atoms.length; f++) {
-            addImplicitHydrogensToSatisfyValency(container, atoms[f]);
+            addImplicitHydrogensToSatisfyValency(molPart, atoms[f]);
         }
+      }
     }
     
     /**
-     * Method that saturates a molecule by adding implicit hydrogens.
+     * Method that saturates an atom in a molecule by adding implicit hydrogens.
      *
      * @param  molecule  Molecule to saturate
+     * @param  atom      Atom to satureate.
      * @keyword          hydrogen, adding
      * @keyword          implicit hydrogen
      */
