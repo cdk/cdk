@@ -36,6 +36,8 @@ import org.openscience.cdk.AtomEnumeration;
 import java.lang.Math;
 import java.util.Vector;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Hashtable;
 
 
 /**
@@ -72,6 +74,15 @@ public class GravitationalIndexDescriptor implements Descriptor {
     }
 
     public GravitationalIndexDescriptor() {}
+
+    public Map getSpecification() {
+        Hashtable specs = new Hashtable();
+        specs.put("Specification-Reference", "http://qsar.sourceforge.net/dicts/qsar-descriptors:gravitationalIndex");
+        specs.put("Implementation-Title", this.getClass().getName());
+        specs.put("Implementation-Identifier", "$Id$"); // added by CVS
+        specs.put("Implementation-Vendor", "The Chemistry Development Kit");
+        return specs;
+    };
 
     /**
      *  Sets the parameters attribute of the GravitationalIndexDescriptor object

@@ -38,12 +38,22 @@ import org.openscience.cdk.RingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import java.util.Vector;
+import java.util.Map;
+import java.util.Hashtable;
 
 public class RotatableBondsCountDescriptor implements Descriptor {
 	private boolean includeTerminals=false;
 	
 	public RotatableBondsCountDescriptor() { }
 
+    public Map getSpecification() {
+        Hashtable specs = new Hashtable();
+        specs.put("Specification-Reference", "http://qsar.sourceforge.net/dicts/qsar-descriptors:rotatableBondsCount");
+        specs.put("Implementation-Title", this.getClass().getName());
+        specs.put("Implementation-Identifier", "$Id$"); // added by CVS
+        specs.put("Implementation-Vendor", "The Chemistry Development Kit");
+        return specs;
+    };
 
 	public void setParameters(Object[] params) throws CDKException {
 		if (params.length > 1) {

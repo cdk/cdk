@@ -32,6 +32,8 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
+import java.util.Map;
+import java.util.Hashtable;
 
 /**
  *  Descriptor based on the number of atoms of a certain element type. It is
@@ -51,7 +53,15 @@ public class AtomCountDescriptor implements Descriptor {
 	 */
 	public AtomCountDescriptor() { }
 
-
+    public Map getSpecification() {
+        Hashtable specs = new Hashtable();
+        specs.put("Specification-Reference", "http://qsar.sourceforge.net/dicts/qsar-descriptors:atomCount");
+        specs.put("Implementation-Title", this.getClass().getName());
+        specs.put("Implementation-Identifier", "$Id$"); // added by CVS
+        specs.put("Implementation-Vendor", "The Chemistry Development Kit");
+        return specs;
+    };
+    
 	/**
 	 *  Sets the parameters attribute of the AtomCountDescriptor object
 	 *

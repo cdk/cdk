@@ -31,6 +31,8 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
+import java.util.Map;
+import java.util.Hashtable;
 
 /**
  * Descriptor based on the number of bonds of a certain element type.
@@ -43,6 +45,15 @@ public class BondCountDescriptor implements Descriptor {
     private double order = -1.0;
 
     public BondCountDescriptor() {}
+
+    public Map getSpecification() {
+        Hashtable specs = new Hashtable();
+        specs.put("Specification-Reference", "http://qsar.sourceforge.net/dicts/qsar-descriptors:bondCount");
+        specs.put("Implementation-Title", this.getClass().getName());
+        specs.put("Implementation-Identifier", "$Id$"); // added by CVS
+        specs.put("Implementation-Vendor", "The Chemistry Development Kit");
+        return specs;
+    };
 
     public void setParameters(Object[] params) throws CDKException {
         if (params.length > 1)
