@@ -663,7 +663,8 @@
                 <property name="sourcedist.dir" value="${sourcedist}/${package}"/>
                 <copy todir="${sourcedist.dir}/${src}">
                         <fileset dir="${src}" includes="*.javafiles" />
-                        <fileset dir="${src}" includes="**/*java" />
+                        <fileset dir="${src}" includes="**/*.java" />
+                        <fileset dir="${src}" includes="**/*.jj" />
                         <fileset dir="${src}" includes="org/openscience/cdk/io/cml/data/**" />
                 </copy>
                 <copy todir="${sourcedist.dir}">
@@ -678,6 +679,8 @@
                 <copy todir="${sourcedist.dir}/data">
                         <fileset dir="data" />
                 </copy>
+                <copy tofile="${sourcedist.dir}/doc/javadoc/source//MakeJavaFilesFilesDoclet.java"
+                      file="doc/javadoc/source/MakeJavaFilesFilesDoclet.java"/>
                 <copy todir="${sourcedist.dir}/${src}/org/openscience/cdk/config/">
                         <fileset dir="${src}/org/openscience/cdk/config/"
                                  includes="*" />
