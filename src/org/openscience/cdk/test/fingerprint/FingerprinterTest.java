@@ -6,7 +6,7 @@
  * 
  * Copyright (C) 1997-2002  The Chemistry Development Kit (CKD) project
  * 
- * Contact: steinbeck@ice.mpg.de
+ * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -28,7 +28,7 @@
  * 
  */
 
-package org.openscience.cdk.test;
+package org.openscience.cdk.test.fingerprint;
 
 
 import org.openscience.cdk.*;

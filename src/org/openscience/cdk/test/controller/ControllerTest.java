@@ -1,6 +1,7 @@
-/* ControllerTest.java
- * 
- * $RCSfile$    $Author$    $Date$    $Revision$
+/* $RCSfile$    
+ * $Author$    
+ * $Date$    
+ * $Revision$
  * 
  * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
  * 
@@ -21,7 +22,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
  */
 
-package org.openscience.cdk.test;
+package org.openscience.cdk.test.controller;
 
 import org.openscience.cdk.controller.*;
 import org.openscience.cdk.*;
@@ -32,7 +33,6 @@ import java.util.*;
 import java.io.*;
 import java.net.URL;
 import javax.vecmath.Vector2d;
-
 
 public class ControllerTest
 {

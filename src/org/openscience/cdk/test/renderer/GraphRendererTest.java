@@ -1,10 +1,9 @@
-/* GraphRendererTest.java
- * 
- * Autor: Stephan Michels 
- * EMail: stephan@vern.chem.tu-berlin.de
- * Datum: 23.7.2001
- * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+/* $RCSfile$
+ * $Author$
+ * $Date$
+ * $Revision$
+ *
+ * Copyright (C) 2001-2002  The Chemistry Development Kit (CDK) project
  * 
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  * 
@@ -33,7 +32,12 @@ import org.openscience.cdk.math.*;
 import org.openscience.cdk.renderer.*;
 import java.awt.*;
 import javax.swing.*;
- 
+
+/**
+ *
+ * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
+ * @created 2001-07-23
+ */
 public class GraphRendererTest
 {
   public GraphRendererTest()

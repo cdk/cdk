@@ -1,5 +1,7 @@
-/*
- * $RCSfile$    $Author$    $Date$    $Revision$
+/* $RCSfile$    
+ * $Author$    
+ * $Date$    
+ * $Revision$
  * 
  * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
  * 
@@ -20,8 +22,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
  * 
  */
-
-package org.openscience.cdk.test;
+package org.openscience.cdk.test.isomorphism;
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.tools.*;
@@ -32,7 +33,6 @@ import junit.framework.*;
 /**
  * Checks the funcitonality of the IsomorphismTester
  */
- 
 public class IsomorphismTesterTest extends TestCase
 {
 	Molecule pinene_1 = null, pinene_2 = null, pinene_non = null;

@@ -1,4 +1,4 @@
-/* $RCSfile$    
+/* $RCSfile$
  * $Author$    
  * $Date$    
  * $Revision$
@@ -26,6 +26,9 @@ package org.openscience.cdk.test;
 
 import junit.framework.*;
 import org.openscience.cdk.renderer.*;
+import org.openscience.cdk.test.fingerprint.*;
+import org.openscience.cdk.test.graph.invariant.*;
+import org.openscience.cdk.test.isomorphism.*;
 import org.openscience.cdk.test.io.*;
 import org.openscience.cdk.test.io.cml.*;
 import org.openscience.cdk.test.smiles.*;

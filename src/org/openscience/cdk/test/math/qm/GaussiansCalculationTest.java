@@ -1,9 +1,9 @@
-/* GaussiansCalculationTest.java
- * 
- * Autor: Stephan Michels 
- * EMail: stephan@vern.chem.tu-berlin.de
- * Datum: 9.6.2001
- * 
+/*
+ * $RCSfile$
+ * $Author$
+ * $Date$
+ * $Revision$
+ *
  * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
  * 
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
@@ -27,7 +27,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *  */
 
-package org.openscience.cdk.test;
+package org.openscience.cdk.test.math.qm;
  
 import org.openscience.cdk.*;
 import org.openscience.cdk.math.qm.*;
@@ -40,6 +40,11 @@ import java.io.*;
 import javax.swing.*;
 import java.awt.*;
  
+/**
+ *
+ * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
+ * @created 2001-06-09
+ */
 public class GaussiansCalculationTest
 {
 	public GaussiansCalculationTest(String inFile)

@@ -1,9 +1,9 @@
-/* GaussiansCalculationTest.java
- * 
- * Autor: Stephan Michels 
- * EMail: stephan@vern.chem.tu-berlin.de
- * Datum: 9.6.2001
- * 
+/*
+ * $RCSfile$
+ * $Author$
+ * $Date$
+ * $Revision$
+ *
  * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
  * 
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
@@ -25,8 +25,8 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- *  */
-
+ *
+ */
 package org.openscience.cdk.test;
  
 import org.openscience.cdk.*;
@@ -39,6 +39,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
  
+/**
+ *
+ * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
+ * @created 2001-06-09
+ */
 public class VisualGaussiansCalculationTest
 {
   private AcceleratedRenderer3DModel model;

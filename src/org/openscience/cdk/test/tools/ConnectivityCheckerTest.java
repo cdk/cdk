@@ -23,8 +23,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *
  */
-
-package org.openscience.cdk.test;
+package org.openscience.cdk.test.tools;
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.tools.*;
@@ -38,7 +37,6 @@ import junit.framework.*;
  * @author     steinbeck
  * @created    July 24, 2001
  */
-
 public class ConnectivityCheckerTest extends TestCase {
 	AtomContainer atomCon = null;
 	Vector molecules = null;
