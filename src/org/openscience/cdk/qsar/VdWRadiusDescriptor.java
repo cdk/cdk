@@ -49,7 +49,7 @@ public class VdWRadiusDescriptor implements Descriptor {
 
 
 	/**
-	 *  Constructor for the APolDescriptor object
+	 *  Constructor for the VdWRadiusDescriptor object
 	 */
 	public VdWRadiusDescriptor() {
 		logger = new LoggingTool(this);
@@ -78,7 +78,7 @@ public class VdWRadiusDescriptor implements Descriptor {
 	 */
 	public void setParameters(Object[] params) throws CDKException {
 		if (params.length > 1) {
-			throw new CDKException("EffectivePolarizabilityDescriptor only expects one parameter");
+			throw new CDKException("VdWRadiusDescriptor only expects one parameter");
 		}
 		if (!(params[0] instanceof Integer)) {
 			throw new CDKException("The parameter must be of type Integer");
