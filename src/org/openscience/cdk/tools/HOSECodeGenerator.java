@@ -690,3 +690,4 @@ public class HOSECodeGenerator implements java.io.Serializable
 	}
 }
 
+

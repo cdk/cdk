@@ -230,6 +230,7 @@ public class SaturationChecker {
             int missingHydrogens = calculateMissingHydrogen(atom, molecule);
             for (int i = 1; i <= missingHydrogens; i++ ) {
                 Atom hydrogen = new Atom("H");
+hydrogen.setPoint2D(atom.getPoint2D());
                 molecule.addAtom(hydrogen);
                 Bond newBond = new Bond(atom, hydrogen, 1.0);
                 molecule.addBond(newBond);
@@ -256,3 +257,4 @@ public class SaturationChecker {
     }
 
 }
+

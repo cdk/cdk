@@ -31,6 +31,7 @@
 package org.openscience.cdk.tools;
 
 import java.util.Hashtable;
+import org.openscience.cdk.exception.CDKException;
 
 /**
  * @keyword HOSE code
@@ -45,32 +46,32 @@ public class BremserOneSphereHOSECodePredictor implements java.io.Serializable
 		prepareHashTable();
 	}
 	
-	public double predict(String hoseCode) throws java.lang.Exception
+	public double predict(String hoseCode) throws CDKException
 	{
 		if (ht.containsKey(hoseCode))
 		{
 			return ((HOSECodeShiftRange)ht.get(hoseCode)).shift;
 		}
-		throw new java.lang.Exception("No such HOSE code");
+		throw new CDKException("No such HOSE code");
 	}
 
-	public String predictFull(String hoseCode) throws java.lang.Exception
+	public String predictFull(String hoseCode) throws CDKException
 	{
 		if (ht.containsKey(hoseCode))
 		{
 			return ((HOSECodeShiftRange)ht.get(hoseCode)).toString();
 		}
-		throw new java.lang.Exception("No such HOSE code");
+		throw new CDKException("No such HOSE code");
 	}
 
 
-	public double getConfidenceLimit(String hoseCode) throws java.lang.Exception
+	public double getConfidenceLimit(String hoseCode) throws CDKException
 	{
 		if (ht.containsKey(hoseCode))
 		{
 			return ((HOSECodeShiftRange)ht.get(hoseCode)).confidenceLimit;
 		}
-		throw new java.lang.Exception("No such HOSE code");
+		throw new CDKException("No such HOSE code");
 	}
 
 	class HOSECodeShiftRange implements java.io.Serializable
@@ -426,7 +427,7 @@ public class BremserOneSphereHOSECodePredictor implements java.io.Serializable
 		ht.put("C$C$C$(//)", new HOSECodeShiftRange("C$C$C$(//)", 58.0, 5.0, "D", 59.6, 56.4, 1, 2));
 		ht.put("C$C$CC(//)", new HOSECodeShiftRange("C$C$CC(//)", 61.0, 17.4, "S", 85.1, 28.5, 125, 228));
 		ht.put("C$C$CO(//)", new HOSECodeShiftRange("C$C$CO(//)", 81.0, 22.4, "S", 95.3, 61.3, 8, 10));
-		// ht.put("C$C§CN(//)", new HOSECodeShiftRange("C$C§CN(//)", 70.8, 18.8, "S", 95.0, 53.9, 13, 24));
+		// ht.put("C$Cï¿½CN(//)", new HOSECodeShiftRange("C$Cï¿½CN(//)", 70.8, 18.8, "S", 95.0, 53.9, 13, 24));
 		ht.put("C$C$CY(//)", new HOSECodeShiftRange("C$C$CY(//)", 59.4, 19.3, "S", 64.6, 56.7, 3, 3));
 		ht.put("C$C$C(//)", new HOSECodeShiftRange("C$C$C(//)", 57.1, 23.6, "D", 123.3, 41.8, 104, 162));
 		ht.put("C$C$OO(//)", new HOSECodeShiftRange("C$C$OO(//)", 90.5, 5.0, "S", 90.5, 90.5, 1, 1));
