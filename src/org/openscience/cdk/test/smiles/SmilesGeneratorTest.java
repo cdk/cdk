@@ -767,7 +767,6 @@ public class SmilesGeneratorTest extends TestCase
         SmilesGenerator sg=new SmilesGenerator();
         String smiles1=sg.createChiralSMILES(mol1,new boolean[20]);
         String smiles2=sg.createChiralSMILES(mol2,new boolean[20]);
-        System.err.println(smiles1+"_______"+smiles2);
         assertFalse(smiles1.equals(smiles2));
       } catch (Exception exc) {
         System.out.println(exc);
