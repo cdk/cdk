@@ -210,15 +210,15 @@ public class HueckelAromaticityDetectorTest extends TestCase
 
 			Molecule mol = sp.parseSmiles("C1CCCc2c1cccc2");
 			RingSet rs = (new AllRingsFinder()).findAllRings(mol);
+			(new HueckelAromaticityDetector()).detectAromaticity(mol, rs, true);
 			Iterator iter = rs.iterator();
 			Ring r = null;
 			int i = 0;
 			while (iter.hasNext())
 			{
 				r = (Ring) iter.next();
-				isAromatic = HueckelAromaticityDetector.isAromatic(mol, r);
-				assertTrue(testResults[i] == isAromatic);
-				i++;
+				isAromatic = r.getFlag(CDKConstants.ISAROMATIC);
+				
 				if (standAlone && isAromatic)
 				{
 					System.out.println("Ring " + i + " in test molecule is aromatic.");
@@ -226,6 +226,8 @@ public class HueckelAromaticityDetectorTest extends TestCase
 				{
 					System.out.println("Ring " + i + " in test molecule is not aromatic.");
 				}
+				assertTrue(testResults[i] == isAromatic);
+				i++;
 			}
 		} catch (Exception exc)
 		{
@@ -267,13 +269,13 @@ public class HueckelAromaticityDetectorTest extends TestCase
 				false,
 				true,
 				true,
+				false,
+				false,
+				false,
+				true,
 				true,
 				false,
 				false,
-				true,
-				true,
-				false,
-				true,
 				false,
 				true,
 				true,
@@ -362,6 +364,35 @@ public class HueckelAromaticityDetectorTest extends TestCase
 		}*/
 	}
 
+	/**
+	 *  A unit test for JUnit
+	 */
+	public void testQuinone()
+	{
+		Molecule molecule = MoleculeFactory.makeQuinone();
+		boolean isAromatic = false;
+		boolean[] testResults = {false, false, false, false, false, false, false, false};
+		try
+		{
+			isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
+			for (int f = 0; f < molecule.getAtomCount(); f++)
+			{
+				assertTrue(molecule.getAtomAt(f).getFlag(CDKConstants.ISAROMATIC) == testResults[f]);
+			}
+
+		} catch (Exception exc)
+		{
+			if (standAlone)
+			{
+				exc.printStackTrace();
+			}
+			fail(exc.toString());
+		}
+
+	}
+
+	
+	
 
 	/**
 	 *  The main program for the HueckelAromaticityDetectorTest class
@@ -378,6 +409,7 @@ public class HueckelAromaticityDetectorTest extends TestCase
 		hadt.testThiazole();
 		hadt.testBug698152();
 		hadt.testPorphyrine();
+		hadt.testQuinone();
 	}
 }
 
