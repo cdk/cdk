@@ -47,9 +47,7 @@ import java.io.*;
 public class MoleculeListViewer extends JFrame
 {
 	protected StrucContainer panel;
-
 	protected JScrollPane scrollPane;
-
 	protected int noOfStructures = 0;
 
 	/**
@@ -69,6 +67,7 @@ public class MoleculeListViewer extends JFrame
 	public MoleculeListViewer()
 	{
 		super();
+        this.molViewDim = molViewDim;
 		getContentPane().setLayout(new BorderLayout());
 		setTitle("Structure Display");
 		panel = new StrucContainer();
@@ -79,7 +78,6 @@ public class MoleculeListViewer extends JFrame
 		pack();
 		setVisible(true);
 	}
-
 
 	/**
 	 *  Sets the molViewDim attribute of the MoleculeListViewer object
@@ -125,6 +123,7 @@ public class MoleculeListViewer extends JFrame
 	{
 		noOfStructures++;
 		mv.setPreferredSize(molViewDim);
+        mv.getRenderer2DModel().setBackgroundDimension(molViewDim);
 		mv.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), title));
 		moleculeViewerPanels.addElement(mv);
 		panel.add(mv);
