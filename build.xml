@@ -57,8 +57,6 @@
                         <include name="postgresql7.0-1.2.jar" />
                         <include name="printf.jar" />
                         <include name="vecmath1.2-1.14.jar" />
-                        <include name="xerces-2.6.2.jar" />
-                        <include name="xmlApis-2.6.2.jar" />
                         <include name="xindice.jar" />
                         <include name="xmldb.jar" />
                         <include name="stmml.jar" />
@@ -353,7 +351,6 @@
             <javac destdir="${build}" optimize="${optimization}" 
                    debug="${debug}" deprecation="${deprecation}">
                 <src path="${src}/org/openscience/cdk/libio/joelib" />
-                <src path="${src}/org/openscience/cdk/test/libio/joelib" />
                 
                 <classpath refid="project.class.path" />
                 <classpath>
@@ -593,8 +590,7 @@
             </javac>
         </target>
 
-        <target id="compile-test" name="compile-test" 
-                depends="dist-all">
+        <target id="compile-test" name="compile-test" depends="dist-large">
             <!-- Task to build the test classes. -->
             <javac srcdir="${src}"
                    destdir="${build}" optimize="${optimization}" 
@@ -607,16 +603,7 @@
 
                 <classpath refid="project.class.path" />
                 <classpath>
-                    <fileset dir="${dist}/jar">
-                        <include name="cdk-core.jar" />
-                        <include name="cdk-standard.jar" />
-                        <include name="cdk-render.jar" />
-                        <include name="cdk-io.jar" />
-                        <include name="cdk-extra.jar" />
-                        <include name="cdk-libio.jar" />
-                        <include name="cdk-experimental.jar" />
-                        <include name="cdk-apps.jar" />
-                    </fileset>
+                    <pathelement location="${dist}/jar/cdk-${version}.jar" />
                 </classpath>
             </javac>
         </target>
@@ -760,6 +747,10 @@
                     <fileset dir=".">
                         <include name="data/**" />
                     </fileset>
+                    <fileset dir="${src}">
+                        <include name="data.javafiles"/>
+                        <include name="core.javafiles"/>
+                    </fileset>
                 </jar>
         </target>
 
@@ -892,7 +883,8 @@
                     <fileset dir="packages/tar/cdk">
                         <include name="AUTHORS" />
                     </fileset>
-                    <fileset dir="${src}"> <!-- from qsar module -->
+                    <fileset dir="${src}"> <!-- from io and qsar module -->
+                        <include name="io-formats.set"/>
                         <include name="qsar-descriptors.set"/>
                     </fileset>
                     <fileset dir="data/templates"> <!-- from builder3d module -->
@@ -929,9 +921,7 @@
                 <srcfiles dir="${lib}" includes="printf.jar"/>
                 <srcfiles dir="${lib}" includes="stmml.jar"/>
                 <srcfiles dir="${lib}" includes="vecmath1.2-1.14.jar"/>
-                <srcfiles dir="${lib}" includes="xerces-2.6.2.jar"/>
                 <srcfiles dir="${lib}" includes="xindice.jar"/>
-                <srcfiles dir="${lib}" includes="xmlApis-2.6.2.jar"/>
                 <srcfiles dir="${lib}" includes="xmldb.jar"/>
             </uptodate>
         </target>
@@ -962,9 +952,7 @@
             <unjar dest="${appjars.dir}" src="${lib}/printf.jar"/>
             <unjar dest="${appjars.dir}" src="${lib}/stmml.jar"/>
             <unjar dest="${appjars.dir}" src="${lib}/vecmath1.2-1.14.jar"/>
-            <unjar dest="${appjars.dir}" src="${lib}/xerces-2.6.2.jar"/>
             <unjar dest="${appjars.dir}" src="${lib}/xindice.jar"/>
-            <unjar dest="${appjars.dir}" src="${lib}/xmlApis-2.6.2.jar"/>
             <unjar dest="${appjars.dir}" src="${lib}/xmldb.jar"/>
         </target>
 
@@ -1052,6 +1040,7 @@
                 <junit printsummary="yes" haltonfailure="yes" fork="yes">
                     <classpath>
                         <pathelement location="${dist}/jar/cdk-${version}.jar" />
+                        <pathelement location="${dist}/jar/cdk-test.jar" />
                         <fileset dir="${lib}">
                                 <include name="*.jar" />
                         </fileset>
@@ -1078,6 +1067,7 @@
                 <junit printsummary="yes" haltonfailure="yes" fork="yes" maxmemory="256m">
                     <classpath>
                         <pathelement location="${dist}/jar/cdk-${version}.jar" />
+                        <pathelement location="${dist}/jar/cdk-test.jar" />
                         <fileset dir="${lib}">
                                 <include name="*.jar" />
                         </fileset>
@@ -1115,12 +1105,10 @@
                 </junit>
         </target>
 
-        <target name="test-libio" depends="dist-libio">
+        <target id="test-libio" name="test-libio" depends="dist-large, dist-libio">
                 <java classname="org.openscience.cdk.test.libio.joelib.JOELibIOTest" fork="yes">
                         <classpath>
-                                <pathelement location="${dist}/jar/cdk-core.jar" />
-                                <pathelement location="${dist}/jar/cdk-extra.jar" />
-                                <pathelement location="${dist}/jar/cdk-libio.jar" />
+                                <pathelement location="${dist}/jar/cdk-${version}.jar" />
                                 <pathelement path="${java.class.path}" />
                                 <pathelement location="." />
                                 <fileset dir="${lib}">
@@ -1166,6 +1154,7 @@
                     <jvmarg value="-Dcdk.debugging=true"/>
                     <classpath>
                         <pathelement location="${dist}/jar/cdk-${version}.jar" />
+                        <pathelement location="${dist}/jar/cdk-test.jar" />
                         <fileset dir="${lib}">
                                 <include name="*.jar" />
                         </fileset>
@@ -1184,6 +1173,7 @@
                     <jvmarg value="-Dcdk.debug.stdout=true"/>
                     <classpath>
                         <pathelement location="${dist}/jar/cdk-${version}.jar" />
+                        <pathelement location="${dist}/jar/cdk-test.jar" />
                         <pathelement path="${java.class.path}" />
                         <pathelement location="." />
                         <fileset dir="${lib}">
