@@ -74,6 +74,18 @@ public class CMLFragmentsTest extends TestCase {
         assertEquals("a1", atom.getID());
     }
     
+    public void testAtomId3() {
+        String cmlString = "<molecule id='m1'><atomArray atomID='a1 a2 a3'/></molecule>";
+        
+        ChemFile chemFile = parseCMLString(cmlString);
+        Molecule mol = checkForSingleMoleculeFile(chemFile);
+
+        assertEquals(3, mol.getAtomCount());
+        Atom atom = mol.getAtomAt(1);
+        assertEquals("a2", atom.getID());
+    }
+
+    
     public void testAtomElementType() {
         String cmlString = "<molecule id='m1'><atomArray><stringArray builtin='elementType'>C</stringArray></atomArray></molecule>";
         
@@ -87,6 +99,17 @@ public class CMLFragmentsTest extends TestCase {
     
     public void testAtomElementType2() {
         String cmlString = "<molecule id='m1'><atomArray><atom id='a1'><string builtin='elementType'>C</string></atom></atomArray></molecule>";
+        
+        ChemFile chemFile = parseCMLString(cmlString);
+        Molecule mol = checkForSingleMoleculeFile(chemFile);
+
+        assertEquals(1, mol.getAtomCount());
+        Atom atom = mol.getAtomAt(0);
+        assertEquals("C", atom.getSymbol());
+    }
+    
+    public void testAtomElementType3() {
+        String cmlString = "<molecule id='m1'><atomArray atomID='a1' elementType='C'/></molecule>";
         
         ChemFile chemFile = parseCMLString(cmlString);
         Molecule mol = checkForSingleMoleculeFile(chemFile);
@@ -172,6 +195,24 @@ public class CMLFragmentsTest extends TestCase {
         assertEquals("a2", atom2.getID());
     }
     
+    public void testBond4() {
+        String cmlString = "<molecule id='m1'><atomArray atomID='a1 a2 a3'/><bondArray atomRef1='a1 a1' atomRef2='a2 a3' bondID='b1 b2'/></molecule>";
+        
+        ChemFile chemFile = parseCMLString(cmlString);
+        Molecule mol = checkForSingleMoleculeFile(chemFile);
+
+        assertEquals(3, mol.getAtomCount());
+        assertEquals(2, mol.getBondCount());
+        Bond bond = mol.getBondAt(0);
+        assertEquals(2, bond.getAtomCount());
+        Atom atom1 = bond.getAtomAt(0);
+        Atom atom2 = bond.getAtomAt(1);
+        assertEquals("a1", atom1.getID());
+        assertEquals("a2", atom2.getID());
+        assertEquals("b2", mol.getBondAt(1).getID());
+    }
+
+    
     public void testBondId() {
         String cmlString = "<molecule id='m1'><atomArray><atom id='a1'/><atom id='a2'/></atomArray><bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray></molecule>";
         
@@ -195,6 +236,32 @@ public class CMLFragmentsTest extends TestCase {
         checkForXMoleculeFile(chemFile, 2);
     }
 
+    public void testCoordinates2D() {
+        String cmlString = "<molecule id='m1'><atomArray atomID='a1 a2' x2='0.0 0.1' y2='1.2 1.3'/></molecule>";
+        
+        ChemFile chemFile = parseCMLString(cmlString);
+        Molecule mol = checkForSingleMoleculeFile(chemFile);
+        
+        assertEquals(2, mol.getAtomCount());
+        assertNotNull(mol.getAtomAt(0).getPoint2D());
+        assertNotNull(mol.getAtomAt(1).getPoint2D());
+        assertNull(mol.getAtomAt(0).getPoint3D());
+        assertNull(mol.getAtomAt(1).getPoint3D());
+    }
+  
+    public void testCoordinates3D() {
+        String cmlString = "<molecule id='m1'><atomArray atomID='a1 a2' x3='0.0 0.1' y3='1.2 1.3' z3='2.1 2.5'/></molecule>";
+        
+        ChemFile chemFile = parseCMLString(cmlString);
+        Molecule mol = checkForSingleMoleculeFile(chemFile);
+        
+        assertEquals(2, mol.getAtomCount());
+        assertNull(mol.getAtomAt(0).getPoint2D());
+        assertNull(mol.getAtomAt(1).getPoint2D());
+        assertNotNull(mol.getAtomAt(0).getPoint3D());
+        assertNotNull(mol.getAtomAt(1).getPoint3D());
+    }
+    
     public void testMissing2DCoordinates() {
         String cmlString = 
           "<molecule id='m1'><atomArray><atom id='a1' xy2='0.0 0.1'/><atom id='a2'/><atom id='a3' xy2='0.1 0.0'/></atomArray></molecule>";
