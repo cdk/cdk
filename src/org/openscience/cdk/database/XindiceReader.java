@@ -131,4 +131,7 @@ public class XindiceReader extends DefaultChemObjectReader {
         SetOfMolecules som = cm.getSetOfMolecules();
         return som.getMolecule(0);
     }
+
+    public void close() throws IOException {
+    }
 }

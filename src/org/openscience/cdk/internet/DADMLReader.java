@@ -206,4 +206,6 @@ public class DADMLReader extends DefaultChemObjectReader {
 		return m;
 	}
 
+    public void close() throws IOException {
+    }
 }

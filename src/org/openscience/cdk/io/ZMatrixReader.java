@@ -36,7 +36,7 @@ import javax.vecmath.*;
 
 /* This class is based on Dan Gezelter's XYZReader from Jmol */
 /**
- * This class is expermiental
+ * This class is experimental
  * It reads Z matrices like in gaussians input file
  *
  * @keyword file format, Z-matrix
@@ -250,4 +250,8 @@ public class ZMatrixReader extends DefaultChemObjectReader {
     rotate.transform(vector, result);
     return result;
   }
+
+    public void close() throws IOException {
+        input.close();
+    }
 }

@@ -327,4 +327,7 @@ public class PMPReader extends DefaultChemObjectReader {
         }
     };
 
+    public void close() throws IOException {
+        input.close();
+    }
 }

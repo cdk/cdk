@@ -108,4 +108,7 @@ public class SMILESReader extends DefaultChemObjectReader {
         return som;
     }
     
+    public void close() throws IOException {
+        input.close();
+    }
 }

@@ -243,4 +243,8 @@ public class PDBReader extends DefaultChemObjectReader {
   
     return oAtom;
   }
+
+    public void close() throws IOException {
+        _oInput.close();
+    }
 }

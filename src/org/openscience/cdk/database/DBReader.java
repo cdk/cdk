@@ -101,4 +101,6 @@ public class DBReader extends DefaultChemObjectReader {
 		this.query = query;
 	}
 	
+    public void close() throws IOException {
+    }
 }

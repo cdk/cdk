@@ -207,4 +207,6 @@ public class WWMMatrixReader extends DefaultChemObjectReader {
         return m;
     }
 
+    public void close() throws IOException {
+    }
 }

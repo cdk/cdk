@@ -306,4 +306,8 @@ public class ShelXReader extends DefaultChemObjectReader {
         file.addChemSequence(seq);
         return file;
     }
+
+    public void close() throws IOException {
+        input.close();
+    }
 }

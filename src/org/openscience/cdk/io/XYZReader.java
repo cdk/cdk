@@ -143,4 +143,7 @@ public class XYZReader extends DefaultChemObjectReader {
         return file;
     }
     
+    public void close() throws IOException {
+        input.close();
+    }
 }

@@ -128,5 +128,8 @@ public class IChIReader extends DefaultChemObjectReader {
         return cf;
     }
 
+    public void close() throws IOException {
+        input.close();
+    }
 }
 

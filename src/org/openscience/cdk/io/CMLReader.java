@@ -184,5 +184,8 @@ public class CMLReader extends DefaultChemObjectReader {
         return cdo;
     }
 
+    public void close() throws IOException {
+        input.close();
+    }
 }
 
