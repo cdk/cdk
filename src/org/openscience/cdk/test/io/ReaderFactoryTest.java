@@ -44,6 +44,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.io.formats.*;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * TestCase for the reading CML files using a few test files
@@ -55,9 +56,11 @@ import org.openscience.cdk.io.formats.*;
 public class ReaderFactoryTest extends CDKTestCase {
 
     private ReaderFactory factory;
+    private LoggingTool logger;
     
     public ReaderFactoryTest(String name) {
         super(name);
+        logger = new LoggingTool(this);
         factory = new ReaderFactory();
     }
 
@@ -145,13 +148,16 @@ public class ReaderFactoryTest extends CDKTestCase {
         if (ins == null) {
             fail("Cannot find file: " + filename);
         }
+        ChemFormat format = null;
         try {
-            ChemFormat format = factory.guessFormat(ins);
-            assertEquals(expectedFormat.getFormatName(), format.getFormatName());
+            format = factory.guessFormat(ins);
         } catch (Exception exception) {
-            exception.printStackTrace();
+            logger.error("Could not guess format: ", exception.getMessage());
+            logger.debug(exception);
             fail(exception.getMessage());
         }
+        assertNotNull(format);
+        assertEquals(expectedFormat.getFormatName(), format.getFormatName());
     }
     private void expectReader(String filename, ChemFormat expectedFormat) {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
@@ -160,6 +166,7 @@ public class ReaderFactoryTest extends CDKTestCase {
         }
         try {
             ChemFormat format = factory.guessFormat(ins);
+            assertNotNull(format);
             assertEquals(expectedFormat.getFormatName(), format.getFormatName());
             // ok, if format ok, try instantiating a reader
             ins = this.getClass().getClassLoader().getResourceAsStream(filename);
@@ -175,7 +182,8 @@ public class ReaderFactoryTest extends CDKTestCase {
                 try {
                     reader.read(objects[i]);
                 } catch (CDKException exception) {
-                    // was not able to read info
+                    logger.error("Could not read information from file: ", exception.getMessage());
+                    logger.debug(exception);
                 }
                 read = true;
             }
@@ -184,8 +192,11 @@ public class ReaderFactoryTest extends CDKTestCase {
             } else {
                 fail("Reading an ChemObject from the Reader did not work properly.");
             }
+        } catch (junit.framework.AssertionFailedError exception) {
+            throw exception;
         } catch (Exception exception) {
-            exception.printStackTrace();
+            logger.error("Could not guess format or read file: ", exception.getMessage());
+            logger.debug(exception);
             fail(exception.getMessage());
         }
     }
