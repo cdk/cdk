@@ -34,6 +34,8 @@ API changes:
 * The build.xml now builds cdk-$version.jar instead of cdk-all.jar
 * Descriptor.calculate() now returns a DescriptorResult object
 * Moved SmilesViewerforDeterministicGenerator into cdk.applications.demo
+* MDL SDF files are now read as a ChemSequence of ChemModel's instead of a
+  SetOfMolecules
 
 20041201 Release
 ------------------------------------

@@ -243,8 +243,7 @@ public class MDLReaderTest extends TestCase {
                 "  2  7  1  6  0  0\n" +
                 "  3  8  1  6  0  0\n" +
                 "  3  9  1  0  0  0\n" +
-                "M  END\n" +
-                "$$$$\n";
+                "M  END\n";
         try {
             MDLReader reader = new MDLReader(new StringReader(mdl));
             ChemFile chemFile = (ChemFile) reader.read(new ChemFile());
@@ -258,7 +257,7 @@ public class MDLReaderTest extends TestCase {
             
             SetOfMolecules som = model.getSetOfMolecules();
             assertNotNull(som);
-            assertEquals(2, som.getMoleculeCount());
+            assertEquals(1, som.getMoleculeCount());
             Molecule m = som.getMolecule(0);
             assertNotNull(m);
             assertEquals(9, m.getAtomCount());

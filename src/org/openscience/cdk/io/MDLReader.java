@@ -150,6 +150,18 @@ public class MDLReader extends DefaultChemObjectReader {
 		}
 	}
 
+    private ChemModel readChemModel(ChemModel chemModel) throws CDKException {
+        SetOfMolecules setOfMolecules = chemModel.getSetOfMolecules();
+        if (setOfMolecules == null) {
+            setOfMolecules = new SetOfMolecules();
+        }
+        Molecule m = readMolecule(new Molecule());
+		if (m != null) {
+			setOfMolecules.addMolecule(m);
+		}
+        chemModel.setSetOfMolecules(setOfMolecules);
+        return chemModel;
+    }
 
 	/**
 	 * Read a ChemFile from a file in MDL SDF format.
@@ -158,22 +170,18 @@ public class MDLReader extends DefaultChemObjectReader {
 	 */
     private ChemFile readChemFile(ChemFile chemFile) throws CDKException {
         ChemSequence chemSequence = new ChemSequence();
-        ChemModel chemModel = readChemModel(new ChemModel());
-        logger.debug("Adding ChemModel to ChemSequence");
-        logger.debug("#models (count): " + chemSequence.getChemModelCount());
-        chemSequence.addChemModel(chemModel);
-        logger.debug("Adding ChemSequence to ChemFile");
-        logger.debug("#sequences (count): " + chemFile.getChemSequenceCount());
-        chemFile.addChemSequence(chemSequence);
-        return chemFile;
-    }
-    
-    private ChemModel readChemModel(ChemModel chemModel) throws CDKException {
+        
+        ChemModel chemModel = new ChemModel();
 		SetOfMolecules setOfMolecules = new SetOfMolecules();
 		Molecule m = readMolecule(new Molecule());
 		if (m != null) {
 			setOfMolecules.addMolecule(m);
 		}
+        chemModel.setSetOfMolecules(setOfMolecules);
+        chemSequence.addChemModel(chemModel);
+        
+        setOfMolecules = new SetOfMolecules();
+        chemModel = new ChemModel();
 		String str;
         try {
             String line = input.readLine();
@@ -188,6 +196,13 @@ public class MDLReader extends DefaultChemObjectReader {
 
                         if (m != null) {
                             setOfMolecules.addMolecule(m);
+
+                            chemModel.setSetOfMolecules(setOfMolecules);
+                            chemSequence.addChemModel(chemModel);
+                            
+                            setOfMolecules = new SetOfMolecules();
+                            chemModel = new ChemModel();
+                            
                         }
                     } else {
                         // skip stuff between "M  END" and "$$$$" 
@@ -210,8 +225,9 @@ public class MDLReader extends DefaultChemObjectReader {
             logger.error(error);
 			throw new CDKException(error);
 		}
-		chemModel.setSetOfMolecules(setOfMolecules);
-		return chemModel;
+
+        chemFile.addChemSequence(chemSequence);
+		return chemFile;
 	}
 
 
