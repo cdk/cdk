@@ -126,7 +126,7 @@ public class DictRefEditorTableModel extends AbstractTableModel {
                 String keyName = (String)key;
                 if (keyName.startsWith(DictionaryDatabase.DICTREFPROPERTYNAME)) {
                     if (keyName.length() > DictionaryDatabase.DICTREFPROPERTYNAME.length()) {
-                        String fieldName = keyName.substring(DictionaryDatabase.DICTREFPROPERTYNAME.length()-1);
+                        String fieldName = keyName.substring(DictionaryDatabase.DICTREFPROPERTYNAME.length()+1);
                         fields.addElement(fieldName);
                     } else {
                         fields.addElement("unspecified");
