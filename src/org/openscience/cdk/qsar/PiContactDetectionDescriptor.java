@@ -152,7 +152,7 @@ public class PiContactDetectionDescriptor implements Descriptor {
 		if (counter > 0) {
 			piContact = true;
 		}
-		return new DescriptorValue(getSpecification(), getParameters(), new BooleanResult(piContact));
+		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new BooleanResult(piContact));
 	}
 
 

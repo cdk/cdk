@@ -114,7 +114,7 @@ public class AtomDegreeDescriptor implements Descriptor {
 		for (int i =0; i< neighboors.length;i++) {
 			if(!neighboors[i].getSymbol().equals("H")) atomDegree+=1;
 		}
-		return new DescriptorValue(getSpecification(), getParameters(), new IntegerResult(atomDegree));
+		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(atomDegree));
 	}
 
 

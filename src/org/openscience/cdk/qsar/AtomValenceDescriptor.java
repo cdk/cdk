@@ -153,7 +153,7 @@ public class AtomValenceDescriptor implements Descriptor {
 		int atomValence = 0;
 		String symbol = container.getAtomAt(targetPosition).getSymbol();
 		atomValence = ((Integer)valencesTable.get(symbol)).intValue();
-		return new DescriptorValue(getSpecification(), getParameters(), new IntegerResult(atomValence));
+		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(atomValence));
 	}
 
 

@@ -154,7 +154,7 @@ public class PeriodicTablePositionDescriptor implements Descriptor {
 		int period = 0;
 		String symbol = container.getAtomAt(targetPosition).getSymbol();
 		period = ((Integer)periodicTable.get(symbol)).intValue();
-		return new DescriptorValue(getSpecification(), getParameters(), new IntegerResult(period));
+		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(period));
 	}
 
 
