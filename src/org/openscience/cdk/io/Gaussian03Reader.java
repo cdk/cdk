@@ -63,9 +63,9 @@ import javax.vecmath.Point3d;
  *
  * @author Jonathan C. Rienstra-Kiracofe <jrienst@emory.edu>
  * @author Bradley A. Smith <yeldar@home.com>
- * @authro Egon Willighagen
+ * @author Egon Willighagen
  */
-public class Gaussian03Reader extends DummyReader {
+public class Gaussian03Reader extends DefaultChemObjectReader {
 
     private IsotopeFactory isotopeFactory;
     private BufferedReader input;
@@ -87,12 +87,16 @@ public class Gaussian03Reader extends DummyReader {
         }
     }
     
-    public ChemObject readChemObject(ChemObject object) throws CDKException {
+    public ChemObject read(ChemObject object) throws CDKException {
         if (object instanceof ChemSequence) {
             return readChemSequence();
         } else {
             throw new CDKException("Object " + object.getClass().getName() + " is not supported");
         }
+    }
+    
+    public void close() throws IOException {
+        input.close();
     }
     
     private ChemSequence readChemSequence() throws CDKException {
