@@ -6,22 +6,24 @@
   <!-- This file is preferable edited in jEdit with the XML plugin installed -->
 
   <bibtex:entry id="BGdV04a">
-    <bibtex:unpublished>
-      <bibtex:author>Unknown</bibtex:author>
+    <bibtex:article>
+      <bibtex:author>Berger, F. and Gritzmann, P. and De Vries, S.</bibtex:author>
       <bibtex:title>Minimum cycle bases for network graphs</bibtex:title>
-      <!-- bibtex:journal>Algorithmica</bibtex:journal -->
-      <bibtex:note>To appear.</bibtex:note>
+      <bibtex:journal>Algorithmica</bibtex:journal>
       <bibtex:year>2004</bibtex:year>
-    </bibtex:unpublished>
+      <bibtex:number>1</bibtex:number>
+      <bibtex:pages>51-62</bibtex:pages>
+    </bibtex:article>
   </bibtex:entry>
   
   <bibtex:entry id="BGdV04b">
-    <bibtex:unpublished>
-      <bibtex:author>Unknown</bibtex:author>
-      <bibtex:title>Computing Cyclic Invariants for Molecular Graphs</bibtex:title>
-      <bibtex:note>In preperation.</bibtex:note>
+    <bibtex:techreport>
+      <bibtex:author>Berger, F. and Gritzmann, P. and De Vries, S.</bibtex:author>
+      <bibtex:title>Cyclic Invariants for Molecular Graphs</bibtex:title>
+      <bibtex:institution>Lehrstuhl für Angewandte Geometrie und Diskrete Mathematik, Technische Universität München</bibtex:institution>
       <bibtex:year>2004</bibtex:year>
-    </bibtex:unpublished>
+      <bibtex:url>http://www-m9.ma.tum.de/dm/cycles/</bibtex:url>
+    </bibtex:techreport>
   </bibtex:entry>
 
   <bibtex:entry id="BLE91">
@@ -70,17 +72,17 @@
       <bibtex:pages>225-227</bibtex:pages>
     </bibtex:article>
   </bibtex:entry>
+  
   <bibtex:entry id="BUR97">
     <bibtex:article>
       <bibtex:author>Burden, F.R.</bibtex:author>
-      <bibtex:title></bibtex:title>
+      <bibtex:title>Chemically Intuitive Molecular Index</bibtex:title>
       <bibtex:journal>Quant. Struct .-Act. Relat.</bibtex:journal>
       <bibtex:year>1997</bibtex:year>
       <bibtex:volume>16</bibtex:volume>
       <bibtex:pages>309-314</bibtex:pages>
     </bibtex:article>
   </bibtex:entry>
-
 
   <bibtex:entry id="DAL92">
     <bibtex:article>
@@ -99,14 +101,18 @@
     </bibtex:article>
   </bibtex:entry>
 
-  <bibtex:entry id="FIG96">
-   <bibtex:article>
-      <bibtex:author>Figueras, J.</bibtex:author>
-      <bibtex:title>Ring Perception Using Breadth-First Search</bibtex:title>
-      <bibtex:journal>J. Chem. Inf. Comput Sci.</bibtex:journal>
-      <bibtex:year>1996</bibtex:year>
-      <bibtex:volume>36</bibtex:volume>
-      <bibtex:pages>986-991</bibtex:pages>
+  <bibtex:entry id="ERTL2000">
+    <bibtex:article>
+      <bibtex:author>Ertl, P. and Rohde, B. and Selzer, P.</bibtex:author>
+      <bibtex:title>Fast Calculation of Molecular Polar Surface Area as a Sum of 
+         Fragment-Based Contributions and Its Application to the Prediction of 
+         Drug Transport Properties</bibtex:title>
+      <bibtex:journal>J. Med. Chem.</bibtex:journal>
+      <bibtex:year>2000</bibtex:year>
+      <bibtex:volume>43</bibtex:volume>
+      <bibtex:number>20</bibtex:number>
+      <bibtex:pages>3714-3717</bibtex:pages>
+      <bibtex:doi>10.1021/jm000942e</bibtex:doi>
     </bibtex:article>
   </bibtex:entry>
 
@@ -121,6 +127,39 @@
       <bibtex:volume>36</bibtex:volume>
       <bibtex:number>4</bibtex:number>
       <bibtex:pages>731-740</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+
+  <bibtex:entry id="FIG96">
+    <bibtex:article>
+      <bibtex:author>Figueras, J.</bibtex:author>
+      <bibtex:title>Ring Perception Using Breadth-First Search</bibtex:title>
+      <bibtex:journal>J. Chem. Inf. Comput Sci.</bibtex:journal>
+      <bibtex:year>1996</bibtex:year>
+      <bibtex:volume>36</bibtex:volume>
+      <bibtex:pages>986-991</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+
+  <bibtex:entry id="GH82">
+    <bibtex:article>
+      <bibtex:author>Gasteiger, J. and  Hutchings, M.G.</bibtex:author>
+      <bibtex:title>Quantitative Models of Gas-Phase Proton Transfer Reactions Involving Alcohols, Ethers, and their Thio analogs. Correlation Analyses Based on Residual Electronegativity and Effective Polarizability</bibtex:title>
+      <bibtex:journal>J. Amer. Chem. Soc.</bibtex:journal>
+      <bibtex:year>1984</bibtex:year>
+      <bibtex:volume>106</bibtex:volume>
+      <bibtex:pages>6489-6495</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+
+  <bibtex:entry id="GM80">
+    <bibtex:article>
+      <bibtex:author>Gasteiger, J. and  Marsili, M.</bibtex:author>
+      <bibtex:title> Iterative partial equalization of orbital elektronegativity - a rapid access to atomic charges</bibtex:title>
+      <bibtex:journal> Tetrahedron</bibtex:journal>
+      <bibtex:year>1980</bibtex:year>
+      <bibtex:volume>36</bibtex:volume>
+      <bibtex:pages>3219-3288</bibtex:pages>
     </bibtex:article>
   </bibtex:entry>
 
@@ -228,6 +267,17 @@
     </bibtex:article>
   </bibtex:entry>
   
+  <bibtex:entry id="KAB76">
+    <bibtex:article>
+      <bibtex:author>Kabsch, W.</bibtex:author>
+      <bibtex:title>A Solution for the Best Rotation to Relate Two Sets of Vectors</bibtex:title>
+      <bibtex:journal>Acta Cryst.</bibtex:journal>
+      <bibtex:year>1976</bibtex:year>
+      <bibtex:volume>A32</bibtex:volume>
+      <bibtex:pages>922-923</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+
   <bibtex:entry id="KAT96">
       <bibtex:article>
           <bibtex:author>Katritzky, A.R. and Mu, L. and Lobanov, V.S. and Karelson, M.</bibtex:author>
@@ -237,6 +287,17 @@
           <bibtex:volume>100</bibtex:volume>
           <bibtex:pages>10400-10407</bibtex:pages>
       </bibtex:article>
+  </bibtex:entry>
+
+  <bibtex:entry id="KJ81">
+    <bibtex:article>
+      <bibtex:author>Kang, Y.K. and  Jhon, M.S.</bibtex:author>
+      <bibtex:title>Additivity of Atomic Static Polarizabilities and Dispersion Coefficients</bibtex:title>
+      <bibtex:journal> Theoretica Chimica Acta</bibtex:journal>
+      <bibtex:year>1982</bibtex:year>
+      <bibtex:volume>61</bibtex:volume>
+      <bibtex:pages>41-48</bibtex:pages>
+    </bibtex:article>
   </bibtex:entry>
 
   <bibtex:entry id="KRA00">
@@ -298,8 +359,10 @@
   </bibtex:entry>
 
   <bibtex:entry id="OS">
-    <bibtex:misc>
+    <bibtex:book>
+      <bibtex:editor>Csaszar, F.</bibtex:editor>
       <bibtex:title>The Open Source Reader</bibtex:title>
+      <bibtex:publisher>Csaszar, F.</bibtex:publisher>
       <bibtex:year>2002</bibtex:year>
       <bibtex:note>Several articles (for example "The Cathedral and the Bazaar",
           "Homesteading the Noosphere") on the foundations of the open-source idea,
@@ -307,7 +370,7 @@
           can be found on http://www.tuxedo.org/. Further, http://www.opensource.org/
           is a web site completely dedicated to the open-source idea.</bibtex:note>
       <bibtex:url>http://www.csaszar.org/interesting/The_Open_Source_Reader.pdf</bibtex:url>
-    </bibtex:misc>
+    </bibtex:book>
   </bibtex:entry>
   
   <bibtex:entry id="PEA99">
@@ -438,6 +501,16 @@
     </bibtex:article>
   </bibtex:entry>
 
+  <bibtex:entry id="TOD98">
+    <bibtex:article>
+      <bibtex:author>Todeschini, R. and Gramatica, P.</bibtex:author>
+      <bibtex:title>New 3D Molecular Descriptors: The WHIM theory and QAR Applications</bibtex:title>
+      <bibtex:journal>Persepectives in Drug Discovery and Design</bibtex:journal>
+      <bibtex:year>1998</bibtex:year>
+      <bibtex:pages>355-380</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+
   <bibtex:entry id="TRI92">
     <bibtex:book>
       <bibtex:author>Trinijastic, N.</bibtex:author>
@@ -446,6 +519,18 @@
       <bibtex:year>1992</bibtex:year>
       <bibtex:isbn>0-8493-4256-2</bibtex:isbn>
     </bibtex:book>
+  </bibtex:entry>
+
+  <bibtex:entry id="WANG97">
+    <bibtex:article>
+        <bibtex:author>Wang, R., Fu, Y., and Lai, L.</bibtex:author>
+        <bibtex:title>A New Atom-Additive Method for Calculating Partition Coefficients</bibtex:title>
+      <bibtex:journal>Journal of Chemical Information and Computer
+          Sciences</bibtex:journal>
+      <bibtex:year>1997</bibtex:year>
+      <bibtex:volume>37</bibtex:volume>
+      <bibtex:pages>615-621</bibtex:pages>
+    </bibtex:article>
   </bibtex:entry>
 
   <bibtex:entry id="WEI88">
@@ -520,61 +605,5 @@
       <bibtex:url>http://www.w3.org/TR/1998/REC-xml-19980210</bibtex:url>
     </bibtex:misc>
   </bibtex:entry>
-
-  <bibtex:entry id="GM80">
-    <bibtex:article>
-      <bibtex:author>Gasteiger, J. and  Marsili, M.</bibtex:author>
-      <bibtex:title> Iterative partial equalization of orbital elektronegativity - a rapid access to atomic charges</bibtex:title>
-      <bibtex:journal> Tetrahedron</bibtex:journal>
-      <bibtex:year>1980</bibtex:year>
-      <bibtex:volume>36</bibtex:volume>
-      <bibtex:pages>3219-3288</bibtex:pages>
-    </bibtex:article>
-  </bibtex:entry>
-
-  <bibtex:entry id="KJ81">
-    <bibtex:article>
-      <bibtex:author>Kang, Y.K. and  Jhon, M.S.</bibtex:author>
-      <bibtex:title>Additivity of Atomic Static Polarizabilities and Dispersion Coefficients</bibtex:title>
-      <bibtex:journal> Theoretica Chimica Acta</bibtex:journal>
-      <bibtex:year>1982</bibtex:year>
-      <bibtex:volume>61</bibtex:volume>
-      <bibtex:pages>41-48</bibtex:pages>
-    </bibtex:article>
-  </bibtex:entry>
-
-  <bibtex:entry id="GH82">
-    <bibtex:article>
-      <bibtex:author>Gasteiger, J. and  Hutchings, M.G.</bibtex:author>
-      <bibtex:title>Quantitative Models of Gas-Phase Proton Transfer Reactions Involving Alcohols, Ethers, and their Thio analogs. Correlation Analyses Based on Residual Electronegativity and Effective Polarizability</bibtex:title>
-      <bibtex:journal>J. Amer. Chem. Soc.</bibtex:journal>
-      <bibtex:year>1984</bibtex:year>
-      <bibtex:volume>106</bibtex:volume>
-      <bibtex:pages>6489-6495</bibtex:pages>
-    </bibtex:article>
-  </bibtex:entry>
-
-  <bibtex:entry id="TOD98">
-    <bibtex:article>
-      <bibtex:author>Todeschini, R. and Gramatica, P.</bibtex:author>
-      <bibtex:title>New 3D Molecular Descriptors: The WHIM theory and QAR Applications</bibtex:title>
-      <bibtex:journal>Persepectives in Drug Discovery and Design</bibtex:journal>
-      <bibtex:year>1998</bibtex:year>
-      <bibtex:pages>355-380</bibtex:pages>
-    </bibtex:article>
-  </bibtex:entry>
-  
-  <bibtex:entry id="KAB76">
-    <bibtex:article>
-      <bibtex:author>Kabsch, W.</bibtex:author>
-      <bibtex:title>A Solution for the Best Rotation to Relate Two Sets of Vectors</bibtex:title>
-      <bibtex:journal>Acta Cryst.</bibtex:journal>
-      <bibtex:volume>A32</bibtex:volume>
-      <bibtex:year>1976</bibtex:year>
-      <bibtex:pages>922-923</bibtex:pages>
-    </bibtex:article>
-  </bibtex:entry>
-
-
 
 </bibtex:file>
