@@ -98,7 +98,6 @@ public class IsotopeFactory
 		return null;
 	}
 
-
 	/**
 	 *  Get an array of all isotoptes known to the IsotopeFactory for the given element symbol
 	 *

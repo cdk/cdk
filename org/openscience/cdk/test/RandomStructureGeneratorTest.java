@@ -87,6 +87,7 @@ public class RandomStructureGeneratorTest
 					System.out.println(s);
 				}
 			}
+			rg.acceptStructure();
 		}
 		everythingOk(structures);
 	}

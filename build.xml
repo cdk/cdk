@@ -64,7 +64,7 @@
 
                 <mkdir dir="${build}" />
 
-                <javac destdir="${build}" optimize="on" deprecation="off">
+                <javac destdir="${build}" optimize="off" debug="on" deprecation="off">
                         <src path="." />
 
                         <exclude
@@ -237,7 +237,7 @@
         </target>
 
         <target name="run" depends="dist">
-                <java classname="org.openscience.cdk.test.FileReaderTest" fork="yes">
+                <java classname="org.openscience.cdk.test.RandomStructureGeneratorTest" fork="yes">
                         <classpath>
                                 <pathelement
                                 location="${dist}/jar/cdk.jar" />

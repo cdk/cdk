@@ -51,6 +51,15 @@ public class Isotope extends Element implements Cloneable {
 	/**
 	 *  Constructor for the Isotope object
 	 *
+	 * @param  elementSymbol  The element symbol, "O" for Oxygen, etc.
+	 */
+	public Isotope(String elementSymbol) {
+		super(elementSymbol);
+	}
+	
+	/**
+	 *  Constructor for the Isotope object
+	 *
 	 * @param  atomicNumber   The atomic number of the isotope
 	 * @param  elementSymbol  The element symbol, "O" for Oxygen, etc.
 	 * @param  atomicMass     The atomic mass of the isotope, 16 for Oxygen, e.g.

@@ -990,21 +990,20 @@ public class AtomContainer extends ChemObject implements Cloneable
 	 */
 	public Object clone()
 	{
-		//AtomContainer o = null;
-		Object o = null;
+		AtomContainer o = null;
 		Bond bond = null;
 		Bond newBond = null;
 		Atom[] natoms;
 		Atom[] newAtoms;
 		try
 		{
-			o = super.clone();
+			o = (AtomContainer)super.clone();
 		}
 		catch (Exception e)
 		{
 			e.printStackTrace(System.err);
 		}
-/*		o.removeAllElements();
+		o.removeAllElements();
 		for (int f = 0; f < getAtomCount(); f++)
 		{
 			o.addAtom((Atom) getAtomAt(f).clone());
@@ -1030,7 +1029,7 @@ public class AtomContainer extends ChemObject implements Cloneable
 			newBond.setAtoms(newAtoms);
 			newBond.setOrder(bond.getOrder());
 			o.addBond(newBond);
-		}*/
+		}
 		return o;
 	}
 

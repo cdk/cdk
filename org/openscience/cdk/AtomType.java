@@ -32,7 +32,7 @@ package org.openscience.cdk;
  * @author     steinbeck
  * @created    8. August 2001
  */
-public class AtomType extends Element
+public class AtomType extends Isotope
 {
 	/**
 	 *  An id for this atom type, like C3 for sp3 carbon

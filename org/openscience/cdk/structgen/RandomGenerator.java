@@ -85,9 +85,7 @@ public class RandomGenerator
 		if(debug) System.out.println("RandomGenerator->proposeStructure() Start");
 		do
 		{
-			//System.out.println("molecule: " + molecule);
 			trial = (Molecule)molecule.clone();
-			//System.out.println("trial: " + trial);
 			mutate(trial);
 			if(debug)
 			{
@@ -118,11 +116,7 @@ public class RandomGenerator
 	{
 		if (proposedStructure != null)
 		{
-			molecule.removeAllBonds();
-			for (int f = 0; f < proposedStructure.getBondCount(); f++)
-			{
-				molecule.addBond((Bond)proposedStructure.getBondAt(f).clone());
-			}
+			molecule = proposedStructure;
 		}
 	}
 	
