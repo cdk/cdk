@@ -13,5 +13,7 @@ set CLASSPATH=%CLASSPATH%;jar\log4j.jar
 set CLASSPATH=%CLASSPATH%;jar\printf.jar
 set CLASSPATH=%CLASSPATH%;jar\vecmath1.2-1.14.jar
 set CLASSPATH=%CLASSPATH%;jar\xerces-1.3.0.jar
+set CLASSPATH=%CLASSPATH%;jar\baysmith-io.jar
+set CLASSPATH=%CLASSPATH%;jar\gnujaxp.jar
 
 java -classpath %CLASSPATH%;jar\junit.jar junit.swingui.TestRunner org.openscience.cdk.test.CDKTests
