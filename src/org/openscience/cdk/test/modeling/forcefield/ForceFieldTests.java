@@ -396,33 +396,79 @@ public class ForceFieldTests extends CDKTestCase {
 		//System.out.println("hessian = " + sbi.hessianInPoint(acCoordinates));
 	}
 	
+	public AtomContainer coordinateScrambler(AtomContainer molecule, int min, double positiveShift, double negativeShift){
+		double nPertubatedAtoms=min+Math.random()*molecule.getAtomCount();
+		double coord=0.0;
+		System.out.println("Number of pertubated Atoms:"+nPertubatedAtoms);
+		for (int i=0;i<nPertubatedAtoms;i++){
+			coord=Math.random();
+			if (coord<=0.33){
+				if (Math.random()<=0.){
+					molecule.getAtomAt(i).setX3d(molecule.getAtomAt(i).getX3d()+positiveShift);
+				}else{
+					molecule.getAtomAt(i).setX3d(molecule.getAtomAt(i).getX3d()-negativeShift);
+				}
+			}else if (coord<=0.66){
+				if (Math.random()<=0.){
+					molecule.getAtomAt(i).setY3d(molecule.getAtomAt(i).getY3d()+positiveShift);
+				}else{
+					molecule.getAtomAt(i).setY3d(molecule.getAtomAt(i).getY3d()-negativeShift);
+				}
+			}else{
+				if (Math.random()<=0.){
+					molecule.getAtomAt(i).setZ3d(molecule.getAtomAt(i).getZ3d()+positiveShift);
+				}else{
+					molecule.getAtomAt(i).setZ3d(molecule.getAtomAt(i).getZ3d()-negativeShift);
+				}
+			}
+		}
+		return molecule;
+	}
 	
 	public void testForceField() throws Exception, CDKException {
 		/*System.out.println("TEST FORCE FIELD");
-		
+		ModelBuilder3D mb3d=new ModelBuilder3D();
+		HydrogenAdder hAdder=new HydrogenAdder();
 		String JMOLPATH = "java -jar /home/cho/SOFTWARE-DEVELOPMENT/cdk-project/Jmol10pre14/Jmol.jar";
 		String TMP_FILE_PATH = "/home/cho/SOFTWARE-DEVELOPMENT/cdk-project/Modeling/data/cdk/data/mdl/";
 		String []molfile={"TEST3DSTARTMolecule.mol","TEST3DMINIMIZEDMolecule.mol"};
 		String command = "";
 		BufferedWriter fout = null;
 		SetOfMolecules som=new SetOfMolecules();
-		
-		
+		Molecule molecule=null;
+		SmilesParser sp = new SmilesParser();
 		ForceField ff=new ForceField();
-		createTestMoleculeAndSetMMFF94Parameters();
-		//mb3d.setTemplateHandler();
-		som.addMolecule(new Molecule(ac));
-		/*try{
-			ff.setMolecule(new Molecule(ac),true);
-			ff.minimize();
-			som.addMolecule(ff.getMolecule());
-		}catch(Exception ex1){
-		}*/
 		
-		/*for (int i=0;i<molfile.length;i++){
+		String smile="CC";
+		
+		try{
+			
+			molecule = sp.parseSmiles(smile);
+			hAdder.addExplicitHydrogensToSatisfyValency(molecule);
+			//mb3d.setTemplateHandler();
+			mb3d.setForceField("mmff94");
+			mb3d.setMolecule(molecule,false);
+			mb3d.generate3DCoordinates();
+			molecule = mb3d.getMolecule();
+			som.addMolecule(molecule);
+		}catch (Exception ex1){
+			System.out.println("Error in generating 3D coordinates for molecule due to:"+ex1.toString());
+		}
+		//createTestMoleculeAndSetMMFF94Parameters();
+		//mb3d.setTemplateHandler();
+		
+		try{
+			ff.setMolecule(molecule,true);
+			ff.minimize();
+			som.addMolecule(new Molecule(coordinateScrambler((AtomContainer)ff.getMolecule(),1,1,05)));
+		}catch(Exception ex2){
+			System.out.println("Error in minimizing molecule due to:"+ex2.toString());
+		}
+		
+		for (int i=0;i<molfile.length;i++){
 			try {
 				fout = new BufferedWriter(new FileWriter(molfile[i]));
-			} catch (Exception ex2) {
+			} catch (Exception ex3) {
 			}
 		
 			MDLWriter mdlw = new MDLWriter(fout);
@@ -435,6 +481,7 @@ public class ForceFieldTests extends CDKTestCase {
 			try {
 				Runtime.getRuntime().exec(command);
 			} catch (Exception ex4) {
+				System.out.println("Error in viewer for molecule due to:"+ex4.toString());
 			}
 		}*/
 	}

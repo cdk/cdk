@@ -63,12 +63,14 @@ public class ForceField extends GeometricMinimizer{
 			setMMFF94Tables(molecule);
 		}
 		moleculeCoords.setSize(molecule.getAtomCount() * 3);
-		moleculeCoords.set(ffTools.getCoordinates3xNVector(molecule));
+		moleculeCoords.set(ffTools.getCoordinates3xNVector((AtomContainer)molecule));
 		
+	
 		
 		//steepestDescentsMinimization(molecule3Coordinates,);
 		//conjugateGradientMinimization(molecule3Coordinates, tpf);
 		//conjugateGradientMinimization(molecule3Coordinates, tpf);
+		ffTools.assignCoordinatesToMolecule(moleculeCoords, (AtomContainer) molecule);
 	}
 			
 

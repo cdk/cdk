@@ -128,7 +128,16 @@ public class ForceFieldTools {
 		return atomsDistance;
 	}
 
-
+	
+	public AtomContainer assignCoordinatesToMolecule(GVector moleculeCoords, AtomContainer molecule){
+		for (int i=0;i<molecule.getAtomCount();i++){
+			molecule.getAtomAt(i).setX3d(moleculeCoords(i*3);
+			molecule.getAtomAt(i).setY3d(moleculeCoords(i*3+1);
+			molecule.getAtomAt(i).setZ3d(moleculeCoords(i*3+2);
+		}
+		return molecule;
+	}
+	
 	/**
 	 *  Calculate 3d distance between two atoms from two different 3xN coordinate
 	 *  vectors.
