@@ -49,6 +49,8 @@ public class JCPController2D {
     boolean wasDragged = false;
 
     private LoggingTool logger;
+    
+    Vector commonElements;
 
     /**
      * Constructs a controller that performs operations on the
@@ -60,6 +62,17 @@ public class JCPController2D {
         this.c2dm = c2dm;
 
         logger = new LoggingTool(this.getClass().getName());
+        
+        commonElements = new Vector();
+        commonElements.add("C");
+        commonElements.add("O");
+        commonElements.add("N");
+        commonElements.add("S");
+        commonElements.add("H");
+        commonElements.add("P");
+        commonElements.add("Cl");
+        commonElements.add("Br");
+        commonElements.add("F");
     }
 
     public JCPController2D(AtomContainer atomCon, Renderer2DModel r2dm) {
@@ -73,7 +86,7 @@ public class JCPController2D {
          * @param   e    MouseEvent object
          **/
         public void mouseMoved(MouseEvent e) {
-            logger.debug("Mouse moved");
+            // logger.debug("Mouse moved");
 
                 double highlightRadius = r2dm.getHighlightRadius();
                 int mouseX = e.getX(), mouseY = e.getY();
@@ -111,7 +124,7 @@ public class JCPController2D {
          **/
         public void mouseDragged(MouseEvent e)
         {
-            logger.debug("Mouse dragged");
+            // logger.debug("Mouse dragged");
 
                 int mouseX = e.getX(), mouseY = e.getY();
                 wasDragged = true;
@@ -192,28 +205,21 @@ public class JCPController2D {
          *
          * @param   e    MouseEvent object
          **/
-        public void mousePressed(MouseEvent e)
-        {
+        public void mousePressed(MouseEvent e) {
             logger.debug("Mouse pressed");
 
-                Atom atomInRange;
-                int mouseX = e.getX(), mouseY = e.getY(), startX = 0, startY = 0;
-                r2dm.setPointerVectorStart(null);
-                r2dm.setPointerVectorEnd(null);
-//              if (c2dm.getDrawMode() == c2dm.DRAWBOND)
-//              {
-                        atomInRange = getAtomInRange(mouseX, mouseY);
-                        if (atomInRange != null)
-                        {
-                                startX = (int)atomInRange.getX2D();
-                                startY = (int)atomInRange.getY2D();
-                                r2dm.setPointerVectorStart(new Point(startX, startY));
-                        }
-                        else
-                        {
-                                r2dm.setPointerVectorStart(new Point(mouseX, mouseY));
-                        }
-//              }
+            Atom atomInRange;
+            int mouseX = e.getX(), mouseY = e.getY(), startX = 0, startY = 0;
+            r2dm.setPointerVectorStart(null);
+            r2dm.setPointerVectorEnd(null);
+            atomInRange = getAtomInRange(mouseX, mouseY);
+            if (atomInRange != null) {
+                    startX = (int)atomInRange.getX2D();
+                    startY = (int)atomInRange.getY2D();
+                    r2dm.setPointerVectorStart(new Point(startX, startY));
+            } else {
+                    r2dm.setPointerVectorStart(new Point(mouseX, mouseY));
+            }
         }
         
 
@@ -227,6 +233,25 @@ public class JCPController2D {
             logger.debug("Mouse released");
 
                 int mouseX = e.getX(), mouseY = e.getY();
+
+                /*************************************************************************
+                 *                       SYMBOL MODE                                     *
+                 *************************************************************************/
+                if (c2dm.getDrawMode() == c2dm.SYMBOL) {
+
+                    Atom atomInRange = r2dm.getHighlightedAtom();
+                    if (atomInRange != null) {
+                        int index = commonElements.indexOf(atomInRange.getSymbol());
+                        if ((index < (commonElements.size()-1)) && (index != -1)) {
+                            // pick next atom in list of common Elements
+                            index++;
+                        } else {
+                            index = 0;
+                        }
+                        atomInRange.setSymbol((String)commonElements.get(index));
+                        r2dm.fireChange();
+                    }
+                }
 
                 /*************************************************************************
                  *                       DRAWBONDMODE                                    *
@@ -579,9 +604,9 @@ public class JCPController2D {
                 double highlightRadius = r2dm.getHighlightRadius();
                 Atom closestAtom = GeometryTools.getClosestAtom(mouseX, mouseY, atomCon);
                 if (closestAtom == null) return null;
-                logger.debug("closestAtom  "+ closestAtom);
-                if (Math.sqrt(Math.pow(closestAtom.getX2D() - mouseX, 2) + Math.pow(closestAtom.getY2D() - mouseY, 2)) < highlightRadius)
-                {
+                // logger.debug("closestAtom  "+ closestAtom);
+                if (Math.sqrt(Math.pow(closestAtom.getX2D() - mouseX, 2) + 
+                    Math.pow(closestAtom.getY2D() - mouseY, 2)) < highlightRadius) {
                         return closestAtom;
                 }
                 return null;
@@ -594,15 +619,16 @@ public class JCPController2D {
          *
          * @param   mouseX  The x coordinate of the point
          * @param   mouseY  The y coordinate of the point
-         * @return    An Atom if it is in a certain range of the given point 
+         * @return    An Atom if it is in a certain range of the given point
          */
         private Bond getBondInRange(int mouseX, int mouseY)
-        {       
+        {
                 double highlightRadius = r2dm.getHighlightRadius();
                 Bond closestBond = GeometryTools.getClosestBond(mouseX, mouseY, atomCon);
                 if (closestBond == null) return null;
-                logger.debug("closestBond  "+ closestBond);
-                int[] coords = GeometryTools.distanceCalculator(GeometryTools.getBondCoordinates(closestBond),highlightRadius);
+                // logger.debug("closestBond  "+ closestBond);
+                int[] coords = GeometryTools.distanceCalculator(
+                    GeometryTools.getBondCoordinates(closestBond),highlightRadius);
                 int[] xCoords = {coords[0],coords[2],coords[4],coords[6]};
                 int[] yCoords = {coords[1],coords[3],coords[5],coords[7]};
                 if ((new Polygon(xCoords, yCoords, 4)).contains(new Point(mouseX, mouseY)))
@@ -611,7 +637,7 @@ public class JCPController2D {
                 }
                 return null;
         }
-        
+
 
         /**
          * Returns an AtomContainer that contains the atom or the the bond with its
