@@ -52,6 +52,15 @@ import java.util.regex.*;
  */
 public class MACiEReader extends DefaultChemObjectReader {
 
+    /** Property it will put on ChemModel */
+    public final static String CreationDate = "org.openscience.cdk.io.MACiE.CreationDate";
+    /** Property it will put on ChemModel */
+    public final static String MedlineID = "org.openscience.cdk.io.MACiE.MedlineID";
+    /** Property it will put on ChemModel */
+    public final static String PDBCode = "org.openscience.cdk.io.MACiE.PDBCode";
+    /** Property it will put on ChemModel */
+    public final static String ECNumber = "org.openscience.cdk.io.MACiE.ECNumber";
+    
     private LineNumberReader input = null;
     private org.openscience.cdk.tools.LoggingTool logger = null;
 
@@ -146,7 +155,7 @@ public class MACiEReader extends DefaultChemObjectReader {
             if (line.startsWith("$RDFILE")) {
                 entries = new ChemSequence();
             } else if (line.startsWith("$DATM")) {
-                entries.setProperty("MACiE:CreationDate", line.substring(7));
+                entries.setProperty(CreationDate, line.substring(7));
             } else if (line.startsWith("$RIREG")) {
                 // new entry
                 if (currentEntry != null) {
@@ -239,10 +248,10 @@ public class MACiEReader extends DefaultChemObjectReader {
         logger.debug("Processing top level field");
         if (field.equals("UNIQUE IDENTIFIER")) {
             currentEntry.setID(datum);
-        } else if (field.equals("EC NUMBER") ||
-                   field.equals("PDB CODE") ||
-                   field.equals("ENZYME NAME")) {
-            currentEntry.setProperty("MACiE:" + field, datum);
+        } else if (field.equals("EC NUMBER")) {
+            currentEntry.setProperty(ECNumber, datum);
+        } else if (field.equals("PDB CODE")) {
+            currentEntry.setProperty(PDBCode, datum);
         } else {
             logger.warn("Unrecognized ROOT field " + field + 
                 " around line " + input.getLineNumber());
@@ -305,7 +314,11 @@ public class MACiEReader extends DefaultChemObjectReader {
                 // now, I'm ready to add reaction
                 currentReactionStepSet.addReaction(currentReaction);
             }
-        } else {
+        } else if (field.equals("REFERENCES")) {
+             if (subfield.equals("MEDLINE_ID")) {
+                 currentEntry.setProperty(MedlineID, datum);
+             }
+       } else {
             logger.warn("Unrecognized sub level field " + field + 
                 " around line " + input.getLineNumber());
         }
