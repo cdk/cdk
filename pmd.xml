@@ -22,7 +22,7 @@
     
     <target name="pmd-core">
         <mkdir dir="${reports.tests}/pmd"/>
-        <pmd shortFilenames="true" rulesetfiles="pmd/custom.xml">
+        <pmd shortFilenames="true" rulesetfiles="pmd/custom-core.xml">
             <formatter type="summaryhtml" toFile="${reports.tests}/pmd/core.html"/>
             <fileset dir="${src}">
                 <includesfile name="${src}/core.javafiles"/>
