@@ -63,8 +63,6 @@ import javax.vecmath.Point3d;
  */
 public class CMLWriter implements ChemObjectWriter, CDKConstants {
 
-    private static final String pClass = "org.apache.xerces.parsers.SAXParser";
-
     private Writer output;
 
     private boolean done;
@@ -99,7 +97,6 @@ public class CMLWriter implements ChemObjectWriter, CDKConstants {
      * Flushes the output and closes this object
      */
     public void close() throws IOException {
-	super.close();
 	output.close();
     }
 
