@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
 <!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.0b1//EN" "dtd/website.dtd" [
   <!ENTITY io SYSTEM "../../user-guide/ioclasses.xml">
-  <!ENTITY % classes SYSTEM "../../user-guide/classes.mod">
+  <!ENTITY % classes SYSTEM "../../javadoc/classes.mod">
+    <!-- can be generated in ../../javadoc by typing 'ant classes.mod' -->
 %classes;
 ]>
 <webpage id="user-io">

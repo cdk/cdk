@@ -3,7 +3,8 @@
   <!ENTITY intro SYSTEM "../../user-guide/intro.xml">
   <!ENTITY core SYSTEM "../../user-guide/coreclasses.xml">
   <!ENTITY extra SYSTEM "../../user-guide/extraclasses.xml">
-  <!ENTITY % classes SYSTEM "../../user-guide/classes.mod">
+  <!ENTITY % classes SYSTEM "../../javadoc/classes.mod">
+    <!-- can be generated in ../../javadoc by typing 'ant classes.mod' -->
 %classes;
 ]>
 <webpage id="reference">
