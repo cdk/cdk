@@ -30,11 +30,14 @@ package org.openscience.cdk.test.tools;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import java.io.*;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.HOSECodeGenerator;
@@ -73,6 +76,27 @@ public class HOSECodeTest extends TestCase
 	}
 
 	
+	/**
+	 *  A unit test for JUnit
+	 *
+	 *@return    Description of the Return Value
+	 */
+	public void test968852()
+	{
+    try{
+        String filename = "data/mdl/2,5-dimethyl-furan.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLReader reader = new MDLReader(new InputStreamReader(ins));
+				Molecule mol1 = (Molecule) reader.read(new Molecule());
+        HueckelAromaticityDetector.detectAromaticity(mol1);
+        assertEquals(new HOSECodeGenerator().getHOSECode(mol1, mol1.getAtoms()[2], 6),new HOSECodeGenerator().getHOSECode(mol1, mol1.getAtoms()[3], 6));
+		} catch (Exception exc) {
+			exc.printStackTrace();
+            fail(exc.getMessage());
+		}
+	}
+
+
 	/**
 	 *  A unit test for JUnit
 	 *
@@ -218,29 +242,29 @@ public class HOSECodeTest extends TestCase
 	{
 		String[] result = { 
 			
-"O-1;=C(CC/*C*C,=C/*C*C,*C,&)",
-"C-3;CC=O(*C*C,=C,/*C*C,*C,&/*C*C,*C&,*&O)",
-"C-3;C=C(C=O,C/*C*C,,*&*C/*C*&,*C,*C)",
-"C-3;C=C(*C*C,C/*C*C,*C,&=O/*C*C,*C&,*&,)",
-"C-3;*C*CC(*C*C,*C,=C/*C*C,C*C,*&,&/*&C,*CO,=O&,*&)",
-"C-3;*C*C(*CC,*C/*C*C,=C,*&C/*C*&,*CC,&,*C*C)",
-"C-3;*C*C(*CC,*C/*C*C,*C*C,*&C/*C*&,*CO,*C&,*C,=C)",
-"C-3;*CC*C(*C*C,*C*C,*C/*C*C,*CO,*C&,*C,*&/*CC,*&C,*&O,&,*C,*&)",
-"C-3;C*C*C(*C*C,*CO,*C/*C*C,*C,*C,&,*&/*C*C,*C&,*&,*&)",
-"C-3;*C*C(C*C,*C/*C*C,*CO,*&/*C*C,*C,*&,&)",
-"C-3;*C*C(*C,*C/C*C,*&/*C*C,*&O)",
-"C-3;*C*C(*C,*C/*CO,*&/*&C,C)",
-"C-3;*C*C(*CO,*C/C*C,C,*&/*C*C,*&,*&*C)",
-"C-3;*CO*C(C*C,C,*C/*C*C,*C,*&*C,*&/*C*&,*C,*&,*CO)",
-"O-2;CC(*C*C,*C*C/*C*C,*CO,&*C,*C/*C*C,*C&,*&,C,*C,*&)",
-"C-3;*C*CO(*C*C,*CO,C/*C*C,C*C,*&,C,*&*C/*&C,*CC,*&*C,*&,,*C)",
-"C-3;*C*CO(*CO,*C,C/*C*C,C,*&C,/*&*C,*CC,*&*C,=OC)",
-"O-2;CC(*C*C,/*CO,*C/*C*C,C,*&C)",
-"C-4;O(C/*C*C/*CO,*C)",
-"C-3;*C*C(*CC,*CO/*C*C,C=O,*&O,C/*&*C,*CC,=&,,C,)",
-"C-3;*C*CC(*C*C,*C,C=O/*C*C,*CC,*&O,=&,/*CC,*&O,*&,=&,C)",
-"C-3;*C*C*C(*C*C,C*C,*CC/C*C,*CO,C=O,*&,*&,=&/*C*C,*&,*&O,&,=&,)",
-"C-3;*C*C*C(*C*C,C*C,*CO/C*C,*CC,*C*C,*&,*&O,&/=OC,*&,*&,=&,*C&,*C,C)"
+"O-1;=C(CC/=C,*C*C/*C,*C,*C,&)",
+"C-3;=OCC(=C,*C*C,/*C,*C,*C,&/,*C*C,*&,*C&,O)",
+"C-3;=CC(=O,C,C/*C,*&*C,*C,/*C*&,*C,*C)",
+"C-3;=CC(*C*C,C/=O,*C*C,*C,&/*C,*C*&,*C&,)",
+"C-3;*C*CC(=C,*C*C,*C/*C,*C*&,*C,C,&/=O,*&,*C,*&,C,&,O)",
+"C-3;*C*C(*C,*C,C/=C,*C,*&,*C,C/*C*&,*C,*C,*C,C,&)",
+"C-3;*C*C(*C,*C,C/*C,*&,*C,*C*C,C/=C,*C*&,*C,*C,*C,O,&)",
+"C-3;*C*CC(*C*C,*C,*C,*C/*C,*C,*&,*C,*C,*C,O,&/*&,*C,*&,*C,*&,&,C,C,O)",
+"C-3;*C*CC(*C,*C,*C,*C,O/*C*C,*C,*C,*&,&/,*C,*C,*&,*C,*&,&)",
+"C-3;*C*C(*C,*C,C/*C,*C,*&,*C,O/*C*C,*&,*C,&)",
+"C-3;*C*C(*C,*C/*C,*&C/*C,*&,*C,O)",
+"C-3;*C*C(*C,*C/*C,*&O/*&,C,C)",
+"C-3;*C*C(*C,*C,O/*C,*&,C,C/*&,*C,*&,*C,*C)",
+"C-3;*C*CO(*C,*C,C,C/*C,*&,*C,*C,*&,*C/*C*&,*C,*C,*&,O)",
+"O-2;CC(*C,*C,*C,*C/*C*C,*C,*C,*C,&,O/*C,*&*C,*C,*C,*&,&,C)",
+"C-3;*C*CO(*C*C,*C,C,O/*C,*&,*C,*C,*C,*C,&,C/*&,*C,*C,*&,*C,&,C,C,)",
+"C-3;*C*CO(*C,*C,C,O/*C,*&,*C,C,C,/=O,*&,*C,*C,*C,*C,&,C)",
+"O-2;CC(*C*C,/*C,*C,O/*C,*&,*C,C,C)",
+"C-4;O(C/*C*C/*C,*C,O)",
+"C-3;*C*C(*C,*C,C,O/=O,*C,*&,*C,C,C,O/=C,*&*C,*C,C,&,,)",
+"C-3;*C*CC(=O,*C,*C,*C,C/=C,*C*C,*&,*C&,O,/,*&,*C,*&,&,C,C,O)",
+"C-3;*C*C*C(*C*C,*C,*C,C,C/=C,=O,*C,*&,*C,*&C,&,O/,*&,*&,*C*C,&,&,O,)",
+"C-3;*C*C*C(*C*C,*C,*CC,O/*C,*C,*&,*C,*&,*C,&,C,C,O/=C,=O,*&,*&,*C,*C,&,C,&)"
 		};
 		
 		try
@@ -253,7 +277,7 @@ public class HOSECodeTest extends TestCase
 			{
 				s = hcg.getHOSECode(molecule, molecule.getAtomAt(f), 4);
         if (standAlone)
-          System.out.print("|" + s + "| -> " + result[f]);
+          System.out.println(f+"|" + s + "| -> " + result[f]);
 				assertEquals(result[f], s);
         if (standAlone)
           System.out.println("  OK");
@@ -275,15 +299,15 @@ public class HOSECodeTest extends TestCase
 	public void test4()
 	{
 		String[] result = {
-		     "C-3;*C*C*C(*C*N,*C,*C/*C,*&,*&,*&/*&)",
-     "C-3;*C*C(*C*C,*N/*C*&,*C,*&/*C,*&)",
-     "C-3;*C*N(*C,*C/*&*C,*&*C/,*C,*C)",
-     "N-3;*C*C(*C*C,*C/*&*C,*C,*&/,*C,*&)",
-     "C-3;*C*C*N(*C*C,*C,*C/*C,*&,*&,*&/*&)",
-     "C-3;*C*C(*C*N,*C/*C*C,*C,*&/*&,*&,*&)",
-     "C-3;*C*C(*C,*C/*C*N,*&/*C*&,*C)",
-     "C-3;*C*C(*C,*C/*C*C,*&/*&*N,*C)",
-     "C-3;*C*C(*C*C,*C/*C*N,*C,*&/*&,*&,*&)"};
+		     "C-3;*C*C*C(*C,*C,*C,*N/*C,*&,*&,*&/,*&)",
+     "C-3;*C*C(*C*C,*N/*&,*C,*C,*&/,*C,*&)",
+     "C-3;*C*N(*C,*C/*&,*&,*C,*C/,*C,*C)",
+     "N-3;*C*C(*C,*C,*C/*&,*&*C,*C/,*C,*&)",
+     "C-3;*C*C*N(*C*C,*C,*C/*&,*&,*C,*&/,*&)",
+     "C-3;*C*C(*C,*C,*N/*C,*C*&,*C/*&,*&,*&)",
+     "C-3;*C*C(*C,*C/*C,*&*N/*&*C,*C)",
+     "C-3;*C*C(*C,*C/*C,*&*C/*&,*C,*N)",
+     "C-3;*C*C(*C*C,*C/*C,*&,*C,*N/*&,*&,*&)"};
 		try
 		{
 			Molecule molecule = (new SmilesParser()).parseSmiles("C1(C=CN2)=C2C=CC=C1");
@@ -295,7 +319,7 @@ public class HOSECodeTest extends TestCase
 			{
 				s = hcg.getHOSECode(molecule, molecule.getAtomAt(f), 4);
         if (standAlone)
-          System.out.print("|" + s + "| -> " + result[f]);
+          System.out.println("|" + s + "| -> " + result[f]);
 				assertEquals(result[f], s);
         if (standAlone)
           System.out.println("  OK");
