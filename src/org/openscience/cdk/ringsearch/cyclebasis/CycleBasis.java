@@ -72,7 +72,6 @@ public class CycleBasis {
 	//private List edgeList = new Vector();
 	//private List multiEdgeList = new Vector();
 	private UndirectedGraph baseGraph;
-	private boolean isMinimized = false;
 	private List subgraphBases = new Vector();
 		
 	/**
@@ -180,9 +179,9 @@ public class CycleBasis {
 	 */
 	public void printIncidenceMatrix() {
 		SimpleCycleBasis basis = simpleBasis();
-		Collection edgeList = basis.edges();
 		
 		/*
+		Collection edgeList = basis.edges();
 		for (int j=0; j<edgeList.size(); j++) {
 			System.out.print(((Edge) edgeList.get(j)).getSource());
 		}

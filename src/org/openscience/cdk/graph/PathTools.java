@@ -115,7 +115,6 @@ public class PathTools  {
 	public static int[][] computeFloydAPSP(double C[][]) {
 		int i;
 		int j;
-		int k;
 		int n = C.length;
 		int[][] A = new int[n][n];
 		//System.out.println("Matrix size: " + n);

@@ -165,7 +165,7 @@ public class CanonicalLabeler {
   private void primeProduct(Vector v, AtomContainer atomContainer) {
     Iterator it = v.iterator();
     Iterator n;
-    InvPair inv, curr;
+    InvPair inv;
     Atom a;
     long summ;
     while (it.hasNext()) {

@@ -64,9 +64,9 @@ public class MoleculeGraphs {
 		
 		for (int i=0; i<molecule.getBondCount(); i++	) {
 			Bond bond = molecule.getBonds()[i];
-			int order = (int) bond.getOrder();
 			
 			/*
+			int order = (int) bond.getOrder();
 			for (int j=0; j<order; j++) {
 				graph.addEdge(bond.getAtoms()[0], bond.getAtoms()[1]);
 			}

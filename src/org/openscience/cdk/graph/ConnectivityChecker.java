@@ -66,10 +66,9 @@ public class ConnectivityChecker
 	public boolean isConnected(AtomContainer atomContainer)
 	{
 		AtomContainer ac = new AtomContainer();
-		Atom atom = null, nextAtom = null;
+		Atom atom = null;
 		Bond bond = null;
 		Molecule molecule = new Molecule();
-		Vector molecules = new Vector();
 		Vector sphere = new Vector();
 		for (int f = 0; f < atomContainer.getAtomCount(); f++)
 		{
@@ -105,7 +104,7 @@ public class ConnectivityChecker
 	 */
 	public static SetOfMolecules partitionIntoMolecules(AtomContainer atomContainer) {
 		AtomContainer ac = new AtomContainer();
-		Atom atom = null, nextAtom = null;
+		Atom atom = null;
 		Bond bond = null;
 		Molecule molecule = null;
 		SetOfMolecules molecules = new SetOfMolecules();

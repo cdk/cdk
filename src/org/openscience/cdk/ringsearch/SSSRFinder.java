@@ -188,8 +188,6 @@ public class SSSRFinder {
 	 */
 	static public RingSet findSSSR(Molecule mol)
 	{
-		RingSet sssr = new RingSet();
-		
 		UndirectedGraph molGraph = MoleculeGraphs.getMoleculeGraph(mol);
 		
 		CycleBasis cycleBasis = new CycleBasis(molGraph);

@@ -190,8 +190,6 @@ public class CrystalGeometryTools {
         double cosalpha = Math.cos(toRadians*alpha);
         double cosbeta = Math.cos(toRadians*beta);
         double cosgamma = Math.cos(toRadians*gamma);
-        double sinalpha = Math.sin(toRadians*alpha);
-        double sinbeta = Math.sin(toRadians*beta);
         double singamma = Math.sin(toRadians*gamma);
 
         /* 2. place the b is in xy plane making a angle gamma with a */

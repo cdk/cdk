@@ -280,7 +280,7 @@ public class SmilesParser {
 				} else if (mychar == '[')
 				{
 					currentSymbol = getAtomString(smiles, position);
-					atom = assembleAtom(currentSymbol, nodeCounter);
+					atom = assembleAtom(currentSymbol);
 					molecule.addAtom(atom);
                     logger.debug("Added atom: ", atom);
                     if (lastNode != null && bondExists) {
@@ -525,7 +525,7 @@ public class SmilesParser {
 		return retString;
 	}
 
-	private Atom assembleAtom(String s, int nodeCounter) throws InvalidSmilesException {
+	private Atom assembleAtom(String s) throws InvalidSmilesException {
         logger.debug("assembleAtom(): Assembling atom from: ", s);
         Atom atom = null;
         int position = 0;

@@ -23,8 +23,6 @@
  */
 package org.openscience.cdk.graph.matrix;
 
-import org.openscience.cdk.AtomContainer;
-
 /**
  * Interface describing a molecular graph matrix calculator.
  *

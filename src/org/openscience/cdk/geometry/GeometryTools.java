@@ -443,7 +443,7 @@ public class GeometryTools {
 	{
 		Point2d bondCenter;
 		Bond closestBond = null, currentBond;
-		double smallestMouseDistance = -1, mouseDistance, bondCenterX, bondCenterY;
+		double smallestMouseDistance = -1, mouseDistance;
         Bond[] bonds = atomCon.getBonds();
 		for (int i = 0; i < bonds.length; i++)
 		{

@@ -27,7 +27,6 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringReader;
-import java.net.URL;
 import java.util.Properties;
 
 /**
@@ -146,7 +145,6 @@ public class LoggingTool {
               throw new ClassNotFoundException();
             if (useConfig) {
                 // configure Log4J
-                URL url = getClass().getClassLoader().getResource("/org/openscience/cdk/config/data/log4j.properties");
                 InputStream ins = this.getClass().getClassLoader().getResourceAsStream("org/openscience/cdk/config/data/log4j.properties");
                 Properties props = new Properties();
                 props.load(ins);

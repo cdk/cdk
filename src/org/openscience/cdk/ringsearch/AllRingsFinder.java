@@ -76,7 +76,6 @@ public class AllRingsFinder
 		AtomContainer ac = new AtomContainer();
 		originalAc = atomContainer;
 		ac.add(atomContainer);
-		Ring ring;
 		if (debug) System.out.println("AtomCount before removal of aliphatic atoms: " + ac.getAtomCount());
 		removeAliphatic(ac);
 		if (debug) System.out.println("AtomCount after removal of aliphatic atoms: " + ac.getAtomCount());
@@ -125,7 +124,6 @@ public class AllRingsFinder
 		newPathes.removeAllElements();
 		removePathes.removeAllElements();
 		potentialRings.removeAllElements();
-		boolean joined = false;
 		if (debug) System.out.println("*** Removing atom " + originalAc.getAtomNumber(atom) +  " ***");
 				
 		for (int i = 0; i < pathes.size(); i++)

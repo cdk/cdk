@@ -210,9 +210,8 @@ public class FiguerasSSSRFinder {
 		int OKatoms = molecule.getAtomCount();
 		/** queue for Breadth First Search of this graph */
 		Queue queue = new Queue();
-		/* Initialize a path Vector for each node
-		*/
-		Vector pfad1,pfad2,pfad3,pfad4,pfad5;
+		/* Initialize a path Vector for each node */
+		Vector pfad1,pfad2;
 		Vector path[] = new Vector[OKatoms];
 		Vector intersection = new Vector();
 		Vector ring = new Vector();

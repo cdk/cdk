@@ -361,7 +361,6 @@ public class MFAnalyser{
 		String symbol, mf = "";
 		SortedMap symbols=new TreeMap();
 		int HCount = 0;
-		int numberOfElements = 0;
 		Atom atom = null;
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
@@ -474,7 +473,6 @@ public class MFAnalyser{
         StringBuffer formula = new StringBuffer();
         int[] elementCount = new int[num];
         for (int i = 0; i < mol.getAtomCount(); i++) {
-            String symbol = mol.getAtomAt(i).getSymbol();
             for (int j = 0; j < num; j++) {
                 if (elements[j].equals(mol.getAtomAt(i).getSymbol())) {
                     elementCount[j]++;
