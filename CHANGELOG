@@ -63,6 +63,7 @@ Fixes:
 * Fixed aromaticity detection
 * Fixes in the SMILES generator (fixes #791091)
 * CMLReader is now much more CML2 compliant
+* Removed use of tokenizers in MDLReader (fixes #719663)
 
 API changes:
 * ConnectivityChecker.partitionIntoMolecules() now returns a 
