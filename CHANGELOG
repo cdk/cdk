@@ -18,6 +18,7 @@ New:
 * Added ChemObject.getProperties() method
 * CMLReader reads dictRef of <atom> and <bond>
 * Core CDK classes are now serializable
+* Added Manipulator classes that relay methods to 'lower' classes
 
 Changes:
 * Added one-click (not-patented ;) deselect of atoms in lasso mode
@@ -38,6 +39,7 @@ Fixes:
 
 API chages:
 * Implemented RFC #11 as a patch (which is applied by default)
+* Removed ChemModel.getAtomContainer
 
 20030217 Release
 ------------------------------------
