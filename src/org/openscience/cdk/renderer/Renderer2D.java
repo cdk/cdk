@@ -305,35 +305,36 @@ public class Renderer2D   {
         }
         
         int alignment = GeometryTools.getBestAlignmentForLabel(container, atom);
+        boolean drawSymbol = false;
         if (atom instanceof PseudoAtom) {
-            paintPseudoAtomLabel((PseudoAtom)atom, atomBackColor, graphics, alignment);
+            drawSymbol = true;
         } else if (!atom.getSymbol().equals("C")) {
             /*
             *  only show element for non-carbon atoms,
              *  unless (see below)...
              */
-            paintAtomSymbol(atom, atomBackColor, graphics, alignment);
+            drawSymbol = true;
         } else if (r2dm.getKekuleStructure()) {
             // ... unless carbon must be drawn because in Kekule mode
-            paintAtomSymbol(atom, atomBackColor, graphics, alignment);
+            drawSymbol = true;
         } else if (container.getConnectedBonds(atom).length < 1) {
             // ... unless carbon is unbonded
-            paintAtomSymbol(atom, atomBackColor, graphics, alignment);
-        } else if (r2dm.getShowEndCarbons() && 
-                   (container.getConnectedBonds(atom).length == 1)) {
-            paintAtomSymbol(atom, atomBackColor, graphics, alignment);
+            drawSymbol = true;
+        } else if (r2dm.getShowEndCarbons() && (container.getConnectedBonds(atom).length == 1)) {
+            drawSymbol = true;
         } else if (atom.getProperty(ProblemMarker.ERROR_MARKER) != null) {
             // ... unless carbon is unbonded
-            paintAtomSymbol(atom, atomBackColor, graphics, alignment);
+            drawSymbol = true;
         } else if (atom.getAtomicMass() != 0) {
             try {
                 if (atom.getAtomicMass() != IsotopeFactory.getInstance().
                        getMajorIsotope(atom.getSymbol()).getAtomicMass()) {
-                    paintAtomSymbol(atom, atomBackColor, graphics, alignment);
+                    drawSymbol = true;
                 }
             } catch (Exception exception) {
             };
-        } else if (r2dm.drawNumbers()) {
+        }
+        if (drawSymbol) {
             paintAtomSymbol(atom, atomBackColor, graphics, alignment, container.getAtomNumber(atom));
         }
     }
@@ -357,19 +358,15 @@ public class Renderer2D   {
 	}
 
     /**
-     * @see paintAtomSymbol(Atom, Color, Graphics, int, int)
-     */
-    private void paintAtomSymbol(Atom atom, Color backColor, Graphics graphics, int alignment) {
-        paintAtomSymbol(atom, backColor, graphics, alignment, 0);
-    }
-
-    /**
      * Paints the given atom symbol. It first outputs some empty space using the
      * background color, slightly larger than the space that the symbol occupies.
      * The atom symbol is then printed into the empty space.
      *
      * @param  atom       The atom to be drawn
      * @param  backColor  Description of the Parameter
+     * @param  graphics   Graphics to draw too
+     * @param  alignment  How to align the H's
+     * @param  atomNumber Number of the atom in the AtomContainer, 0 is not in container
      *
      * @author  Egon Willighagen <egonw@users.sf.net>
      * @created 2003-07-21
