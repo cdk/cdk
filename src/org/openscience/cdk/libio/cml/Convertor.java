@@ -169,7 +169,7 @@ public class Convertor {
         } else if (object instanceof ChemModel) {
             writeChemModel((ChemModel)object, element);
         } else if (object instanceof Atom) {
-            writeAtom((Atom)object, element);
+            writeAtom(null, (Atom)object, element);
         } else if (object instanceof Bond) {
             writeBond((Bond)object, element);
         } else if (object instanceof Reaction) {
@@ -263,10 +263,10 @@ public class Convertor {
         writeAtomContainer(ac,molecule);
     }
     
-    private void writeAtomContainer(AtomContainer ac, Element nodeToAppend) throws CMLException{
-        writeAtomArray(ac.getAtoms(),nodeToAppend);
-        writeBondArray(ac.getBonds(),nodeToAppend);
-        writeProperties(ac, nodeToAppend);
+    private void writeAtomContainer(AtomContainer container, Element nodeToAppend) throws CMLException{
+        writeAtomArray(container, container.getAtoms(),nodeToAppend);
+        writeBondArray(container.getBonds(),nodeToAppend);
+        writeProperties(container, nodeToAppend);
     }
 
     private void writeSetOfMolecules(SetOfMolecules som, Element nodeToAppend) throws CMLException{
@@ -403,11 +403,11 @@ public class Convertor {
         writeAtomContainer(mol,molecule);
     }
 
-    private void writeAtomArray(Atom atoms[], Element nodeToAppend) throws CMLException {
+    private void writeAtomArray(AtomContainer container, Atom atoms[], Element nodeToAppend) throws CMLException {
         AtomArrayImpl atomarray = new AtomArrayImpl(doc);
         nodeToAppend.appendChild(atomarray);
         for (int i = 0; i < atoms.length; i++) {
-            writeAtom(atoms[i], atomarray);
+            writeAtom(container, atoms[i], atomarray);
         }
     }
     
@@ -582,7 +582,7 @@ public class Convertor {
         return true;
     }
     
-    private void writeAtom(Atom atom, Element nodeToAppend) throws CMLException {
+    private void writeAtom(AtomContainer container, Atom atom, Element nodeToAppend) throws CMLException {
         AtomImpl atomimpl=new AtomImpl(doc);
         nodeToAppend.appendChild(atomimpl);
         addAtomID(atom, atomimpl);
@@ -623,6 +623,11 @@ public class Convertor {
             scalar.setDictRef("cdk:partialCharge");
             scalar.appendChild(doc.createTextNode("" + atom.getCharge()));
             atomimpl.appendScalar(scalar);
+        }
+        if (container != null && container.getSingleElectronSum(atom) > 0) {
+            atomimpl.setAttribute("spinMultiplicity", 
+                (container.getSingleElectronSum(atom)+1)+""
+            );
         }
         writeProperties(atom, atomimpl);
     }

@@ -20,6 +20,8 @@ New:
 * Added the new method CDKEditBus.runScript()
 * CML2 from Jumbo 4.6 was uploaded
 * Added rendering of radicals (SingleElectron)
+* Added reading of 'M  RAD' from MDL molfiles
+* Added writing of radicals to CML2
 
 Fixes:
 * Fixed KabschAlignment so that the rotation matrixi, U, is returned properly
