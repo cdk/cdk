@@ -47,7 +47,7 @@ import javax.vecmath.*;
  *
  * @keyword file format, MDL molfile
  */
-public class MDLReader implements CDKConstants, ChemObjectReader {
+public class MDLReader implements ChemObjectReader {
 
 	boolean debug = false;
 	BufferedReader input;
@@ -208,12 +208,12 @@ public class MDLReader implements CDKConstants, ChemObjectReader {
 	            if (stereo == 1)
 	            {
 	                // MDL up bond
-	                stereo = STEREO_BOND_UP;
+	                stereo = CDKConstants.STEREO_BOND_UP;
 	            }
 	            else if (stereo == 6)
 	            {
 	                // MDL down bond
-					stereo = STEREO_BOND_DOWN;
+					stereo = CDKConstants.STEREO_BOND_DOWN;
 	            }
 				molecule.addBond(atom1 - 1, atom2 - 1, order, stereo);
 	        }

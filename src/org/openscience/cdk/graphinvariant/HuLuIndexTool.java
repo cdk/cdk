@@ -33,7 +33,7 @@ import java.util.*;
  * Collection of methods for the calculation of topological indices of a molecular graph
  */
  
-public class HuLuIndexTool implements CDKConstants
+public class HuLuIndexTool 
 {
 	private static final int INFINITE = Integer.MAX_VALUE;
 	

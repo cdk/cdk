@@ -68,7 +68,7 @@ import javax.vecmath.Point3d;
  *
  * @keyword file format, CML
  */
-public class CMLWriter implements ChemObjectWriter, CDKConstants {
+public class CMLWriter implements ChemObjectWriter {
 
     private Writer output;
 
@@ -192,11 +192,11 @@ public class CMLWriter implements ChemObjectWriter, CDKConstants {
 		write("<float builtin=\"order\">" +
 		      + bond.getOrder() +
 		      "</float>\n");
-		if (bond.getStereo() != STEREO_BOND_UNDEFINED) {
+		if (bond.getStereo() != CDKConstants.STEREO_BOND_UNDEFINED) {
 		    write("<string builtin=\"stereo\" convention=\"MDLMol\">");
-		    if (bond.getStereo() == STEREO_BOND_UP) {
+		    if (bond.getStereo() == CDKConstants.STEREO_BOND_UP) {
 			write("W");
-		    } else if (bond.getStereo() == STEREO_BOND_DOWN) {
+		    } else if (bond.getStereo() == CDKConstants.STEREO_BOND_DOWN) {
 			write("H");
 		    }
 		    write("</string>\n");

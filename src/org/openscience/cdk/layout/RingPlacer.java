@@ -43,7 +43,7 @@ import java.awt.*;
  * buildup of ringsystems by the user. 
  **/
 
-public class RingPlacer implements CDKConstants
+public class RingPlacer 
 {
 	static boolean debug = false;
 
@@ -477,7 +477,7 @@ public class RingPlacer implements CDKConstants
 	{
 		for (int i = 0; i < rs.size(); i++)
 		{
-			if (!((Ring)rs.elementAt(i)).flags[ISPLACED])
+			if (!((Ring)rs.elementAt(i)).flags[CDKConstants.ISPLACED])
 			{
 				return false;
 			}
@@ -594,7 +594,7 @@ public class RingPlacer implements CDKConstants
 		for (int i = 0; i < connectedRings.size(); i++)
 		{
 			connectedRing = (Ring)connectedRings.elementAt(i);
-			if (!connectedRing.flags[ISPLACED])
+			if (!connectedRing.flags[CDKConstants.ISPLACED])
 			{
 //				if (debug) System.out.println(ring.toString(molecule));
 //				if (debug) System.out.println(connectedRing.toString(molecule));				
@@ -622,7 +622,7 @@ public class RingPlacer implements CDKConstants
 					tempPoint = new Point2d(sharedAtomsCenter);
 					tempPoint.add(newRingCenterVector);
 					placeRing(connectedRing, sharedAtoms, sharedAtomsCenter, newRingCenterVector, bondLength);
-					connectedRing.flags[ISPLACED] = true;
+					connectedRing.flags[CDKConstants.ISPLACED] = true;
 					placeConnectedRings(rs, connectedRing, handleType, bondLength);
 				}
 			}

@@ -42,8 +42,8 @@ import org.openscience.cdk.*;
  *@created    29. April 2002
  */
 
-public class SmilesParser implements CDKConstants
-{
+public class SmilesParser {
+
 	String message = "Can't handle SMILES string";
 	public static boolean debug = false;
 	int position = -1;
@@ -97,9 +97,9 @@ public class SmilesParser implements CDKConstants
 				if ((mychar >= 'A' && mychar <= 'Z') || (mychar >= 'a' && mychar <= 'z'))
 				{
 					currentSymbol = getElementSymbol(smiles, position);
-					if (bondStatus == BONDORDER_AROMATIC && !(mychar == 'c' || mychar == 'n' || mychar == 's' || mychar == 'o'))
+					if (bondStatus == CDKConstants.BONDORDER_AROMATIC && !(mychar == 'c' || mychar == 'n' || mychar == 's' || mychar == 'o'))
 					{
-						bondStatus = BONDORDER_SINGLE;
+						bondStatus = CDKConstants.BONDORDER_SINGLE;
 					}
 					atom = new Atom(currentSymbol);
 					molecule.addAtom(atom);
@@ -108,10 +108,10 @@ public class SmilesParser implements CDKConstants
 					{
 						molecule.addBond(new Bond(atom, lastNode, bondStatus));
 					}
-					bondStatus = BONDORDER_SINGLE;
+					bondStatus = CDKConstants.BONDORDER_SINGLE;
 					if (mychar == 'c' || mychar == 'n' || mychar == 's' || mychar == 'o')
 					{
-						bondStatus = BONDORDER_AROMATIC;
+						bondStatus = CDKConstants.BONDORDER_AROMATIC;
 					}
 					lastNode = atom;
 					nodeCounter++;
@@ -119,12 +119,12 @@ public class SmilesParser implements CDKConstants
 				}
 				else if (mychar == '=')
 				{
-					bondStatus = BONDORDER_DOUBLE;
+					bondStatus = CDKConstants.BONDORDER_DOUBLE;
 					position++;
 				}
 				else if (mychar == '#')
 				{
-					bondStatus = BONDORDER_TRIPLE;
+					bondStatus = CDKConstants.BONDORDER_TRIPLE;
 					position++;
 				}
 				else if (mychar == '(')
@@ -163,10 +163,10 @@ public class SmilesParser implements CDKConstants
 					{
 						molecule.addBond(new Bond(atom, lastNode, bondStatus));
 					}
-					bondStatus = BONDORDER_SINGLE;
+					bondStatus = CDKConstants.BONDORDER_SINGLE;
 					if (mychar == 'c' || mychar == 'n' || mychar == 's' || mychar == 'o')
 					{
-						bondStatus = BONDORDER_AROMATIC;
+						bondStatus = CDKConstants.BONDORDER_AROMATIC;
 					}
 					lastNode = atom;
 					nodeCounter++;
@@ -348,11 +348,11 @@ public class SmilesParser implements CDKConstants
 		Atom thisNode = rings[thisRing];
 		if (thisNode != null)
 		{
-			if (bondStat == BONDORDER_AROMATIC)
+			if (bondStat == CDKConstants.BONDORDER_AROMATIC)
 			{
-				if (ringbonds[thisRing] != BONDORDER_AROMATIC)
+				if (ringbonds[thisRing] != CDKConstants.BONDORDER_AROMATIC)
 				{
-					bondStat = BONDORDER_SINGLE;
+					bondStat = CDKConstants.BONDORDER_SINGLE;
 				}
 			}
 			atom = molecule.getAtomAt(nodeCounter - 1);

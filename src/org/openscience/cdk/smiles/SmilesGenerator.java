@@ -97,7 +97,7 @@ public class SmilesGenerator {
     for (int i = 0; i < all.length; i++) {
       Atom atom = all[i];
       if (atom.flags == null) atom.flags = new boolean[100];
-      atom.flags[Atom.VISITED] = false;
+      atom.flags[CDKConstants.VISITED] = false;
       if (((Long)atom.getProperty("CanonicalLable")).longValue() == 1) {
         start = atom;
       }
@@ -147,10 +147,10 @@ public class SmilesGenerator {
     Vector neighbours = getCanNeigh(a, container);
     neighbours.remove(parent);
     Atom next;
-    a.flags[Atom.VISITED] = true;
+    a.flags[CDKConstants.VISITED] = true;
     for(int x = 0; x < neighbours.size(); x++) {
       next = (Atom)neighbours.elementAt(x);
-      if (!next.flags[Atom.VISITED]) {
+      if (!next.flags[CDKConstants.VISITED]) {
         if(x == neighbours.size() - 1) { //Last neighbour therefore in this chain
           createDFSTree(next, tree, a, container);
         }
@@ -376,7 +376,8 @@ public class SmilesGenerator {
     for (int i = 0; i < bonds.length; i++) {
       Bond bond = bonds[i];
       int stereo = bond.getStereo();
-      if(stereo == Bond.STEREO_BOND_DOWN || stereo == Bond.STEREO_BOND_UP) {
+      if(stereo == CDKConstants.STEREO_BOND_DOWN || 
+         stereo == CDKConstants.STEREO_BOND_UP) {
         return true;
       }
     }

@@ -43,7 +43,7 @@ import java.util.*;
  *@keyword    subgraph
  *@keyword    isomorphism
  */
-public class NaiveSubgraphIsomorphismChecker implements CDKConstants
+public class NaiveSubgraphIsomorphismChecker 
 {
 
 	protected AtomContainer query = null;
@@ -96,8 +96,8 @@ public class NaiveSubgraphIsomorphismChecker implements CDKConstants
 				{
 					if (qAtom.getHydrogenCount() <= tAtom.getHydrogenCount())
 					{
-						qAtom.flags[MAPPED] = true;
-						tAtom.flags[MAPPED] = true;
+						qAtom.flags[CDKConstants.MAPPED] = true;
+						tAtom.flags[CDKConstants.MAPPED] = true;
 						mappedAtoms.put(qAtom, tAtom);
 						if (mapNeigbors(qAtom)) return true;
 					}
@@ -121,7 +121,7 @@ public class NaiveSubgraphIsomorphismChecker implements CDKConstants
 		for (int f = 0; f < qNeighbors.size(); f++)
 		{
 			qTempAtom = (Atom)qNeighbors.elementAt(f);
-			if (!qAtom.flags[MAPPED])
+			if (!qAtom.flags[CDKConstants.MAPPED])
 			{
 				tMapped = false;
 				for (int g = 0; g < tNeighbors.size(); g++)
@@ -147,13 +147,13 @@ public class NaiveSubgraphIsomorphismChecker implements CDKConstants
 	{
 		Bond qBond = null;
 		Bond tBond = null;
-		if (!tAtom.flags[MAPPED])
+		if (!tAtom.flags[CDKConstants.MAPPED])
 		{
 			if (qAtom.getSymbol().equals(tAtom.getSymbol()))
 			{
 				qBond = query.getBond(qRoot, qAtom);
 				tBond = target.getBond(tRoot, tAtom);
-				if (qBond.getOrder() == tBond.getOrder() || (qBond.flags[ISAROMATIC] && tBond.flags[ISAROMATIC]))
+				if (qBond.getOrder() == tBond.getOrder() || (qBond.flags[CDKConstants.ISAROMATIC] && tBond.flags[CDKConstants.ISAROMATIC]))
 				{
 					return true;
 				}
@@ -168,7 +168,7 @@ public class NaiveSubgraphIsomorphismChecker implements CDKConstants
 	{
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
-			ac.getAtomAt(f).flags[MAPPED] = false;
+			ac.getAtomAt(f).flags[CDKConstants.MAPPED] = false;
 		}
 	}
 	

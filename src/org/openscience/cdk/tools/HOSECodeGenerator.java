@@ -40,8 +40,7 @@ import org.openscience.cdk.*;
  *@author     steinbeck
  *@created    10. Mai 2002
  */
-public class HOSECodeGenerator implements java.io.Serializable, CDKConstants
-{
+public class HOSECodeGenerator implements java.io.Serializable {
 
 	/**
 	 *  Description of the Field
@@ -140,9 +139,9 @@ public class HOSECodeGenerator implements java.io.Serializable, CDKConstants
 		maxSphere = noOfSpheres;
 		for (int i = 0; i < ac.getAtomCount(); i++)
 		{
-			ac.getAtomAt(i).flags[VISITED] = false;
+			ac.getAtomAt(i).flags[CDKConstants.VISITED] = false;
 		}
-		root.flags[VISITED] = true;
+		root.flags[CDKConstants.VISITED] = true;
 
 		/*
 		 *  All we need to observe is how the ranking of substituents
@@ -317,7 +316,7 @@ public class HOSECodeGenerator implements java.io.Serializable, CDKConstants
 				 */
 	
 				sphereNodes.addElement(new TreeNode(atom.getSymbol(), root, atom, bond.getOrder(), 0));
-				atom.flags[VISITED] = true;
+				atom.flags[CDKConstants.VISITED] = true;
 
 			}
 			catch (Exception exc)
@@ -391,10 +390,10 @@ public class HOSECodeGenerator implements java.io.Serializable, CDKConstants
 								System.out.println("HOSECodeGenerator->nextSphere()->toNode.number:" + atomContainer.getAtomNumber(toNode));
 							}
 
-							if (!toNode.flags[VISITED])
+							if (!toNode.flags[CDKConstants.VISITED])
 							{
 								nextSphereNodes.addElement(new TreeNode(toNode.getSymbol(), node, toNode, atomContainer.getBond(node, toNode).getOrder(), treeNode.score * 1000000));
-								toNode.flags[VISITED] = true;
+								toNode.flags[CDKConstants.VISITED] = true;
 							}
 							else if (!toNode.equals(treeNode.source))
 							{

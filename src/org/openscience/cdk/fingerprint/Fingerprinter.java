@@ -43,7 +43,7 @@ import java.util.*;
  * @keyword    fingerprint
  * @keyword    similarity
  */
-public class Fingerprinter implements CDKConstants
+public class Fingerprinter 
 {
 	static int defaultSize = 1024;
 	static int searchDepth = 6;
@@ -150,15 +150,15 @@ public class Fingerprinter implements CDKConstants
 			{
 				for (int g = 0; g < ac.getAtomCount(); g++)
 				{
-					ac.getAtomAt(g).flags[VISITED] = false;
+					ac.getAtomAt(g).flags[CDKConstants.VISITED] = false;
 				}
-				root.flags[VISITED] = true;
+				root.flags[CDKConstants.VISITED] = true;
 			}
 			nextAtom = bonds[f].getConnectedAtom(root);
-			if (!nextAtom.flags[VISITED])
+			if (!nextAtom.flags[CDKConstants.VISITED])
 			{
 				newPath = new String(currentPath);
-				if (bonds[f].flags[Bond.ISAROMATIC])
+				if (bonds[f].flags[CDKConstants.ISAROMATIC])
 				{
 					newPath += ":";
 				}
@@ -176,7 +176,7 @@ public class Fingerprinter implements CDKConstants
 				}
 
 				newPath += nextAtom.getSymbol();
-				nextAtom.flags[VISITED] = true;
+				nextAtom.flags[CDKConstants.VISITED] = true;
 				checkAndStore(newPath);
 				if (currentDepth == searchDepth)
 				{

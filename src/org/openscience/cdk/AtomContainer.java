@@ -649,7 +649,7 @@ public class AtomContainer extends ChemObject implements Cloneable
 			{
 				if (atoms[i].getPoint3D().distance(atoms[j].getPoint3D()) <= maxbondlength)
 				{
-					addBond(new Bond(atoms[i], atoms[j], Bond.BONDORDER_SINGLE));
+					addBond(new Bond(atoms[i], atoms[j], CDKConstants.BONDORDER_SINGLE));
 				}
 			}
 		}

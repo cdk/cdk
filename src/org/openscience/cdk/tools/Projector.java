@@ -33,7 +33,7 @@ import org.openscience.cdk.*;
 /**
  * Tool to make projections from 3D to 2D
  */
-public class Projector implements CDKConstants {
+public class Projector  {
   
   public static void project2D(Molecule m) {
     for (int i = 0; i < m.getAtomCount(); i++) {

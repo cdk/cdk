@@ -53,7 +53,7 @@ import javax.vecmath.*;
  *
  * @keyword file format, MDL molfile
  */
-public class MDLWriter implements CDKConstants, ChemObjectWriter {
+public class MDLWriter implements ChemObjectWriter {
 	static BufferedWriter writer;
 
 

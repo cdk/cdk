@@ -50,7 +50,7 @@ import java.net.*;
  *
  * @keyword file format, CML
  */
-public class CMLReader implements CDKConstants, ChemObjectReader {
+public class CMLReader implements ChemObjectReader {
 
     private XMLReader parser;
     private Reader input;

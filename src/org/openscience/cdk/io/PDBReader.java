@@ -45,7 +45,7 @@ import javax.vecmath.*;
  *
  * @keyword file format, PDB
  */
-public class PDBReader implements CDKConstants, ChemObjectReader {
+public class PDBReader implements ChemObjectReader {
 
 	private BufferedReader _oInput; // The internal used BufferedReader
 

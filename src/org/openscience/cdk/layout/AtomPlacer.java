@@ -43,7 +43,7 @@ import java.awt.*;
  * buildup of molecules by the user. 
  **/
 
-public class AtomPlacer implements CDKConstants
+public class AtomPlacer 
 {
 	public boolean debug = false;
 	
@@ -216,7 +216,7 @@ public class AtomPlacer implements CDKConstants
 			bondVector.scale(bondLength);	
 			atomPoint.add(bondVector);
 			nextAtom.setPoint2D(atomPoint);		
-			nextAtom.flags[ISPLACED] = true;
+			nextAtom.flags[CDKConstants.ISPLACED] = true;
 			try
 			{
 				System.out.println(nextAtom.getSymbol());
@@ -300,7 +300,7 @@ public class AtomPlacer implements CDKConstants
 
 			}
 		
-		connectAtom.flags[ISPLACED] = true;
+		connectAtom.flags[CDKConstants.ISPLACED] = true;
 		}
 	}
 
@@ -317,7 +317,7 @@ public class AtomPlacer implements CDKConstants
 		Atom[] atoms = molecule.getConnectedAtoms(atom);
 		for (int i = 0; i < atoms.length; i++)
 		{
-			if (atoms[i].flags[ISPLACED])
+			if (atoms[i].flags[CDKConstants.ISPLACED])
 			{
 				placedPartners.addAtom(atoms[i]);
 			}
@@ -389,7 +389,7 @@ public class AtomPlacer implements CDKConstants
 		AtomContainer[] pathes = new AtomContainer[molecule.getAtomCount()];
 		for (int f = 0; f < molecule.getAtomCount(); f++)
 		{
-			molecule.getAtomAt(f).flags[VISITED] = false;
+			molecule.getAtomAt(f).flags[CDKConstants.VISITED] = false;
 			pathes[f] = new AtomContainer();
 			pathes[f].addAtom(startAtom);
 			
@@ -433,21 +433,21 @@ public class AtomPlacer implements CDKConstants
 		for (int f = 0; f < sphere.size(); f++)
 		{
 			atom = (Atom)sphere.elementAt(f);
-			if (!atom.flags[ISINRING])
+			if (!atom.flags[CDKConstants.ISINRING])
 			{
 				atomNr = ac.getAtomNumber(atom);
 				Bond[] bonds = ac.getConnectedBonds(atom);
 				for (int g = 0; g < bonds.length; g++)
 				{
 					nextAtom = bonds[g].getConnectedAtom(atom);
-					if (!nextAtom.flags[VISITED] && !nextAtom.flags[ISPLACED])
+					if (!nextAtom.flags[CDKConstants.VISITED] && !nextAtom.flags[CDKConstants.ISPLACED])
 					{
 						nextAtomNr = ac.getAtomNumber(nextAtom);
 						pathes[nextAtomNr] = (AtomContainer)pathes[atomNr].shallowCopy();
 						pathes[nextAtomNr].addAtom(nextAtom);
 						pathes[nextAtomNr].addBond(bonds[g]);
 						newSphere.addElement(nextAtom);
-						//nextAtom.flags[VISITED] = true;					
+						//nextAtom.flags[CDKConstants.VISITED] = true;					
 					}
 
 				}
@@ -457,7 +457,7 @@ public class AtomPlacer implements CDKConstants
 		{
 			for (int f = 0; f < newSphere.size(); f++)
 			{
-				((Atom)newSphere.elementAt(f)).flags[VISITED] = true;			
+				((Atom)newSphere.elementAt(f)).flags[CDKConstants.VISITED] = true;			
 			}
 		
 			breadthFirstSearch(ac, newSphere, pathes);
@@ -476,7 +476,7 @@ public class AtomPlacer implements CDKConstants
 		String s = "Placed: ";
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
-			if (ac.getAtomAt(f).flags[ISPLACED]) 
+			if (ac.getAtomAt(f).flags[CDKConstants.ISPLACED]) 
 			{
 				s += f + "+ ";
 			}
@@ -537,7 +537,7 @@ public class AtomPlacer implements CDKConstants
 	{
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
-			if (!ac.getAtomAt(f).flags[ISPLACED]) return false;
+			if (!ac.getAtomAt(f).flags[CDKConstants.ISPLACED]) return false;
 		}
 		return true;
 	}
@@ -551,7 +551,7 @@ public class AtomPlacer implements CDKConstants
 	{
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
-			ac.getAtomAt(f).flags[ISPLACED] = false;
+			ac.getAtomAt(f).flags[CDKConstants.ISPLACED] = false;
 		}
 
 	}
@@ -566,7 +566,7 @@ public class AtomPlacer implements CDKConstants
 	{
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
-			ac.getAtomAt(f).flags[ISPLACED] = true;
+			ac.getAtomAt(f).flags[CDKConstants.ISPLACED] = true;
 		}
 	}
 
@@ -582,7 +582,7 @@ public class AtomPlacer implements CDKConstants
 		AtomContainer ret = new AtomContainer();
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
-			if (ac.getAtomAt(f).flags[ISPLACED])
+			if (ac.getAtomAt(f).flags[CDKConstants.ISPLACED])
 			{
 				ret.addAtom(ac.getAtomAt(f));
 			}

@@ -1,6 +1,7 @@
-/* ConnectivityChecker.java
- *
- * $RCSfile$    $Author$    $Date$    $Revision$
+/* $RCSfile$
+ * $Author$    
+ * $Date$    
+ * $Revision$
  * 
  * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
  * 
@@ -33,7 +34,7 @@ import java.util.*;
  *
  * @keyword connectivity
  */ 
-public class ConnectivityChecker implements CDKConstants
+public class ConnectivityChecker 
 {
 	/**
 	 * Check whether a set of atoms in an atomcontainer is connected
@@ -53,19 +54,19 @@ public class ConnectivityChecker implements CDKConstants
 		{
 			atom = atomContainer.getAtomAt(f);
 			if (atom.flags == null) atom.flags = new boolean[100];
-			atomContainer.getAtomAt(f).flags[VISITED] = false;
+			atomContainer.getAtomAt(f).flags[CDKConstants.VISITED] = false;
 			ac.addAtom(atomContainer.getAtomAt(f));
 		}
 		for (int f = 0; f < atomContainer.getBondCount(); f++)
 		{
 			bond = atomContainer.getBondAt(f);
 			if (bond.flags == null) bond.flags = new boolean[100];
-			atomContainer.getBondAt(f).flags[VISITED] = false;
+			atomContainer.getBondAt(f).flags[CDKConstants.VISITED] = false;
 			ac.addBond(atomContainer.getBondAt(f));
 		}
 		atom = ac.getAtomAt(0);
 		sphere.addElement(atom);
-		atom.flags[VISITED] = true;
+		atom.flags[CDKConstants.VISITED] = true;
 		PathTools.breadthFirstSearch(ac, sphere, molecule);
 		if (molecule.getAtomCount() == atomContainer.getAtomCount())
 		{
@@ -96,14 +97,14 @@ public class ConnectivityChecker implements CDKConstants
 		{
 			atom = atomContainer.getAtomAt(f);
 			if (atom.flags == null) atom.flags = new boolean[100];
-			atomContainer.getAtomAt(f).flags[VISITED] = false;
+			atomContainer.getAtomAt(f).flags[CDKConstants.VISITED] = false;
 			ac.addAtom(atomContainer.getAtomAt(f));
 		}
 		for (int f = 0; f < atomContainer.getBondCount(); f++)
 		{
 			bond = atomContainer.getBondAt(f);
 			if (bond.flags == null) bond.flags = new boolean[100];
-			atomContainer.getBondAt(f).flags[VISITED] = false;
+			atomContainer.getBondAt(f).flags[CDKConstants.VISITED] = false;
 			ac.addBond(atomContainer.getBondAt(f));
 		}
 		while(ac.getAtomCount() > 0)
@@ -112,7 +113,7 @@ public class ConnectivityChecker implements CDKConstants
 			molecule = new Molecule();
 			sphere.removeAllElements();
 			sphere.addElement(atom);
-			atom.flags[VISITED] = true;
+			atom.flags[CDKConstants.VISITED] = true;
 			PathTools.breadthFirstSearch(ac, sphere, molecule);
 			molecules.addElement(molecule);
 			ac.remove(molecule);

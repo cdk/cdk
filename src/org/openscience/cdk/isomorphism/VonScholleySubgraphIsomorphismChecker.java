@@ -43,7 +43,7 @@ import java.util.*;
  * @keyword    fingerprint
  * @keyword    similarity
  */
-public class VonScholleySubgraphIsomorphismChecker implements CDKConstants
+public class VonScholleySubgraphIsomorphismChecker 
 {
 	AtomContainer structure = null;
 	

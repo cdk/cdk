@@ -36,7 +36,7 @@ import java.util.*;
  * J. Chem. Doc. 1965, 5, 107-113. 
  */
  
-public class MorganNumbersTools implements CDKConstants
+public class MorganNumbersTools 
 {
 	
 	public static int[] getMorganNumbers(AtomContainer atomContainer) throws NoSuchAtomException

@@ -41,8 +41,8 @@ import javax.vecmath.*;
  *
  * @keyword file format, Z-matrix
  */
-public class ZMatrixReader implements ChemObjectReader 
-{
+public class ZMatrixReader implements ChemObjectReader {
+
   private BufferedReader input;
   
   /**

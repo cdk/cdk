@@ -44,7 +44,7 @@ import javax.vecmath.*;
  *
  * @keyword file format
  */
-public class SMILESWriter implements CDKConstants, ChemObjectWriter {
+public class SMILESWriter implements ChemObjectWriter {
 
     private org.openscience.cdk.tools.LoggingTool logger;
     static BufferedWriter writer;

@@ -47,7 +47,7 @@ import java.awt.*;
  * @keyword layout
  * @keyword 2D-coordinates
  */
-public class StructureDiagramGenerator implements CDKConstants
+public class StructureDiagramGenerator 
 {
 
 	Molecule molecule;
@@ -106,10 +106,10 @@ public class StructureDiagramGenerator implements CDKConstants
 			{
 				atom.flags = new boolean[100];
 			}
-			atom.flags[ISPLACED] = false;
-			atom.flags[VISITED] = false;
-			atom.flags[ISINRING] = false;
-			atom.flags[ISALIPHATIC] = false;
+			atom.flags[CDKConstants.ISPLACED] = false;
+			atom.flags[CDKConstants.VISITED] = false;
+			atom.flags[CDKConstants.ISINRING] = false;
+			atom.flags[CDKConstants.ISALIPHATIC] = false;
 		}
 		atomPlacer.setMolecule(this.molecule);
 		ringPlacer.setMolecule(this.molecule);
@@ -209,7 +209,7 @@ public class StructureDiagramGenerator implements CDKConstants
 			 */
 			AtomContainer longestChain = atomPlacer.getInitialLongestChain(molecule);
 			longestChain.getAtomAt(0).setPoint2D(new Point2d(0,0));
-			longestChain.getAtomAt(0).flags[ISPLACED] = true;
+			longestChain.getAtomAt(0).flags[CDKConstants.ISPLACED] = true;
 			/* place the first bond such that the whole chain will be horizontally
 			 * alligned on the x axis
 			 */
@@ -268,14 +268,14 @@ public class StructureDiagramGenerator implements CDKConstants
 		/* 
 		 * Mark the ring as placed
 		 */
-		ring.flags[ISPLACED] = true;
+		ring.flags[CDKConstants.ISPLACED] = true;
 		/* 
 		 * Place all other rings in this ringsystem.
 		 */
 		thisRing = 0;
 		do
 		{
-			if (ring.flags[ISPLACED])
+			if (ring.flags[CDKConstants.ISPLACED])
 			{
 				ringPlacer.placeConnectedRings(rs, ring, ringPlacer.FUSED, bondLength);
 				ringPlacer.placeConnectedRings(rs, ring, ringPlacer.BRIDGED, bondLength);
@@ -338,7 +338,7 @@ public class StructureDiagramGenerator implements CDKConstants
 					
 					for (int f = 1; f < longestUnplacedChain.getAtomCount(); f++)
 					{
-						longestUnplacedChain.getAtomAt(f).flags[ISPLACED] = false;
+						longestUnplacedChain.getAtomAt(f).flags[CDKConstants.ISPLACED] = false;
 					}
 					System.out.println("longestUnplacedChain has : " + longestUnplacedChain.getAtomCount() +  " atoms.");
 					atomPlacer.placeLinearChain(longestUnplacedChain, direction, bondLength);
@@ -438,7 +438,7 @@ public class StructureDiagramGenerator implements CDKConstants
 		for (int f = 0; f < bonds.length; f++)
 		{
 			connectedAtom = bonds[f].getConnectedAtom(atom);
-			if (!connectedAtom.flags[ISPLACED])
+			if (!connectedAtom.flags[CDKConstants.ISPLACED])
 			{
 				unplacedAtoms.addAtom(connectedAtom);
 			}
@@ -461,7 +461,7 @@ public class StructureDiagramGenerator implements CDKConstants
 		for (int f = 0; f < bonds.length; f++)
 		{
 			connectedAtom = bonds[f].getConnectedAtom(atom);
-			if (connectedAtom.flags[ISPLACED])
+			if (connectedAtom.flags[CDKConstants.ISPLACED])
 			{
 				placedAtoms.addAtom(connectedAtom);
 			}
@@ -482,12 +482,12 @@ public class StructureDiagramGenerator implements CDKConstants
 		for (int f = 0; f < molecule.getBondCount(); f++)
 		{
 			bond = molecule.getBondAt(f);
-			if (bond.getAtomAt(1).flags[ISPLACED] && !bond.getAtomAt(0).flags[ISPLACED] )
+			if (bond.getAtomAt(1).flags[CDKConstants.ISPLACED] && !bond.getAtomAt(0).flags[CDKConstants.ISPLACED] )
 			{
 				return bond.getAtomAt(1);
 			}
 			
-			if (bond.getAtomAt(0).flags[ISPLACED] &&  !bond.getAtomAt(1).flags[ISPLACED]  )
+			if (bond.getAtomAt(0).flags[CDKConstants.ISPLACED] &&  !bond.getAtomAt(1).flags[CDKConstants.ISPLACED]  )
 			{
 				return bond.getAtomAt(0);
 			}
@@ -508,12 +508,12 @@ public class StructureDiagramGenerator implements CDKConstants
 		for (int f = 0; f < molecule.getBondCount(); f++)
 		{
 			bond = molecule.getBondAt(f);
-			if (bond.getAtomAt(1).flags[ISPLACED] && !bond.getAtomAt(0).flags[ISPLACED]  && bond.getAtomAt(0).flags[ISINRING])
+			if (bond.getAtomAt(1).flags[CDKConstants.ISPLACED] && !bond.getAtomAt(0).flags[CDKConstants.ISPLACED]  && bond.getAtomAt(0).flags[CDKConstants.ISINRING])
 			{
 				return bond;
 			}
-			
-			if (bond.getAtomAt(0).flags[ISPLACED] &&  !bond.getAtomAt(1).flags[ISPLACED]  && bond.getAtomAt(1).flags[ISINRING])
+
+			if (bond.getAtomAt(0).flags[CDKConstants.ISPLACED] &&  !bond.getAtomAt(1).flags[CDKConstants.ISPLACED]  && bond.getAtomAt(1).flags[CDKConstants.ISINRING])
 			{
 				return bond;
 			}
@@ -543,13 +543,13 @@ public class StructureDiagramGenerator implements CDKConstants
 			atom = bond.getAtomAt(0);
 			if (debug) System.out.println("Atom 1 of first Bond: " + molecule.getAtomNumber(atom));
 			atom.setPoint2D(point);
-			atom.flags[ISPLACED] = true;
+			atom.flags[CDKConstants.ISPLACED] = true;
 			point = new Point2d(0, 0);
 			atom = bond.getAtomAt(1);
 			if (debug) System.out.println("Atom 2 of first Bond: " + molecule.getAtomNumber(atom));		
 			point.add(bondVector);
 			atom.setPoint2D(point);
-			atom.flags[ISPLACED] = true;
+			atom.flags[CDKConstants.ISPLACED] = true;
 			/* 
 			 * The new ring is layed out relativ to some shared atoms that have already been 
 			 * placed. Usually this is another ring, that has already been draw and to which the new 
@@ -601,7 +601,7 @@ public class StructureDiagramGenerator implements CDKConstants
 	{
 		for (int f = 0; f < rs.size(); f++)
 		{
-			((Ring)rs.elementAt(f)).flags[ISPLACED] = false;
+			((Ring)rs.elementAt(f)).flags[CDKConstants.ISPLACED] = false;
 		}
 	}
 
@@ -614,7 +614,7 @@ public class StructureDiagramGenerator implements CDKConstants
 	{
 		for (int f = 0; f < rings.size(); f++)
 		{
-			if (!((Ring)rings.elementAt(f)).flags[ISPLACED])
+			if (!((Ring)rings.elementAt(f)).flags[CDKConstants.ISPLACED])
 			{
 				if (debug) System.out.println("allPlaced->Ring " + f + " not placed");			
 				return false;
@@ -638,7 +638,7 @@ public class StructureDiagramGenerator implements CDKConstants
 			ring = (Ring)rings.elementAt(i);
 			for (int j = 0; j < ring.getAtomCount(); j++)
 			{
-				ring.getAtomAt(j).flags[ISINRING] = true;
+				ring.getAtomAt(j).flags[CDKConstants.ISINRING] = true;
 			}
 		}
 	}
@@ -653,8 +653,8 @@ public class StructureDiagramGenerator implements CDKConstants
 	 */
 	private Atom getRingAtom(Bond bond)
 	{
-		if (bond.getAtomAt(0).flags[ISINRING] && !bond.getAtomAt(0).flags[ISPLACED]) return bond.getAtomAt(0);
-		if (bond.getAtomAt(1).flags[ISINRING] && !bond.getAtomAt(1).flags[ISPLACED]) return bond.getAtomAt(1);
+		if (bond.getAtomAt(0).flags[CDKConstants.ISINRING] && !bond.getAtomAt(0).flags[CDKConstants.ISPLACED]) return bond.getAtomAt(0);
+		if (bond.getAtomAt(1).flags[CDKConstants.ISINRING] && !bond.getAtomAt(1).flags[CDKConstants.ISPLACED]) return bond.getAtomAt(1);
 		return null;
 	}
 	
@@ -693,13 +693,13 @@ public class StructureDiagramGenerator implements CDKConstants
 		for (int f = 0; f < sssr.size(); f++)
 		{
 			ring = (Ring)sssr.elementAt(f);
-			if (!ring.flags[ISPLACED])
+			if (!ring.flags[CDKConstants.ISPLACED])
 			{
 				//System.out.println("Ring with " + ring.getAtomCount() + " atoms is not placed.");
 				unplacedCounter ++;
 				for (int g = 0; g < ring.getAtomCount(); g++)
 				{
-					ring.getAtomAt(g).flags[ISPLACED] = false;
+					ring.getAtomAt(g).flags[CDKConstants.ISPLACED] = false;
 				}
 			}
 		}
