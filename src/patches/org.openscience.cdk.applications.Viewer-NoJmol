@@ -1,84 +1,78 @@
---- src/org/openscience/cdk/applications/Viewer.java	2003-03-27 14:04:23.688374000 +0100
-+++ src/org/openscience/cdk/applications/Viewer.java.noJmol	2003-06-12 16:36:15.621091000 +0200
-@@ -30,7 +30,6 @@
- import org.openscience.cdk.geometry.*;
- import org.openscience.cdk.smiles.*;
- import org.openscience.cdk.layout.*;
--import org.openscience.cdk.libio.jmol.*;
- import java.util.*;
- import java.io.*;
- import javax.swing.*;
-@@ -52,7 +51,6 @@
- 
- 	private boolean useJava3D;
- 	private boolean use3D;
--	private boolean useJmol;
- 	private boolean showCOT;
+--- src/org/openscience/cdk/applications/Viewer.java	2003-06-15 15:48:05.000000000 +0200
++++ src/org/openscience/cdk/applications/Viewer.java.noJmol	2003-06-15 15:54:50.000000000 +0200
+@@ -52,7 +52,6 @@
+     
+     private boolean useJava3D;
+     private boolean use3D;
+-    private boolean useJmol;
+     private boolean showCOT;
  
  
-@@ -81,18 +79,6 @@
- 		this.use3D = b;
- 	}
+@@ -67,7 +66,6 @@
+         useJava3D = false;
+         use3D = true;
+         showCOT = false;
+-        useJmol = false;
+     }
  
--
--	/**
--	 *  Sets a flag value for using Jmol for viewing 3D.
--	 *
--	 *@param  b  value for using Jmol
--	 */
--	public void setUseJmol(boolean b)
--	{
--		this.useJmol = b;
--	}
--
--
- 	/**
- 	 *  Sets a flag value for using Java3D for viewing 3D.
- 	 *
-@@ -147,29 +133,6 @@
- 				logger.info("Viewing with 3D viewer");
+     /**
+@@ -80,15 +78,6 @@
+     }
  
- 				boolean viewed = false;
--				if (useJmol)
--				{
--					logger.debug(".. trying Jmol viewer");
--					try
--					{
--						frame.getContentPane().setLayout(new BorderLayout());
--                        Object jmol = this.getClass().getClassLoader().
--                            loadClass("org.openscience.jmol.app.Jmol").getInstance();
--                        // org.openscience.jmol.app.Jmol jmol = org.openscience.jmol.app.Jmol.getJmol(frame);
--                        jmol.showChemFrame(Convertor.convert(m));
+     /**
+-     * Sets a flag value for using Jmol for viewing 3D.
+-     *
+-     * @param  b  value for using Jmol
+-     */
+-    public void setUseJmol(boolean b) {
+-        this.useJmol = b;
+-    }
 -
--						frame.getContentPane().add(jmol, BorderLayout.CENTER);
--						logger.debug(".. done");
--
--						viewed = true;
--					} catch (Exception e)
--					{
--						logger.error("Viewing did not succeed!");
--						logger.error(e.toString());
--						e.printStackTrace();
--					}
--				}
--
- 				if (useJava3D && !viewed)
- 				{
- 					logger.debug(".. trying Java3D viewer");
-@@ -356,8 +319,6 @@
- 					v.setUseJava3D(false);
- 				} else if ("--no3d".equalsIgnoreCase(opt)) {
- 					v.setUse3D(false);
--				} else if ("--useJmol".equalsIgnoreCase(opt)) {
--					v.setUseJmol(true);
- 				} else if ("--smiles".equalsIgnoreCase(opt)) {
- 					// Filename is considered to be a smiles string
- 					showSmiles = true;
-@@ -379,7 +340,6 @@
- 			System.out.println();
- 			System.out.println("options: --nojava3D    Disable Java3D support");
- 			System.out.println("         --no3D        View only 2D info");
--			System.out.println("         --useJmol     Use Jmol for 3D (if available)");
- 			System.out.println("         --useTree     Show ChemObject Tree");
- 			System.exit(0);
- 		}
+-    /**
+      * Sets a flag value for using Java3D for viewing 3D.
+      *
+      * @param  b  value for using Java3D
+@@ -137,26 +126,6 @@
+                 logger.info("Viewing with 3D viewer");
+                 
+                 boolean viewed = false;
+-                if (useJmol) {
+-                    logger.debug(".. trying Jmol viewer");
+-                    try {
+-                        frame.getContentPane().setLayout(new BorderLayout());
+-                        org.openscience.jmol.app.Jmol jmol = org.openscience.jmol.app.Jmol.getJmol(frame);
+-                        /* Object jmol = this.getClass().getClassLoader().
+-                        loadClass("org.openscience.jmol.app.Jmol").getInstance();
+-                        jmol.showChemFrame(Convertor.convert(m)); */
+-                        
+-                        frame.getContentPane().add(jmol, BorderLayout.CENTER);
+-                        logger.debug(".. done");
+-                        
+-                        viewed = true;
+-                    } catch (Exception e) {
+-                        logger.error("Viewing did not succeed!");
+-                        logger.error(e.toString());
+-                        e.printStackTrace();
+-                    }
+-                }
+-                
+                 if (useJava3D && !viewed) {
+                     logger.debug(".. trying Java3D viewer");
+                     try {
+@@ -308,7 +277,6 @@
+             System.out.println();
+             System.out.println("options: --nojava3D    Disable Java3D support");
+             System.out.println("         --no3D        View only 2D info");
+-            System.out.println("         --useJmol     Use Jmol for 3D (if available)");
+             System.out.println("         --useTree     Show ChemObject Tree");
+             System.exit(0);
+         }
+@@ -333,8 +301,6 @@
+                 this.setUseJava3D(false);
+             } else if ("--no3d".equalsIgnoreCase(opt)) {
+                 this.setUse3D(false);
+-            } else if ("--useJmol".equalsIgnoreCase(opt)) {
+-                this.setUseJmol(true);
+             } else if ("--smiles".equalsIgnoreCase(opt)) {
+                 // Filename is considered to be a smiles string
+                 showSmiles = true;
