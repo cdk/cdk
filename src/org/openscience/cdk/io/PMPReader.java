@@ -36,6 +36,8 @@ import java.util.Hashtable;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
@@ -239,25 +241,25 @@ public class PMPReader extends DefaultChemObjectReader {
                                     StringTokenizer st;
                                     line = input.readLine();
                                     st = new StringTokenizer(line, " ");
-                                    crystal.setA(
+                                    crystal.setA(new Vector3d(
                                         Double.parseDouble(st.nextToken()),
                                         Double.parseDouble(st.nextToken()),
                                         Double.parseDouble(st.nextToken())
-                                    );
+                                    ));
                                     line = input.readLine();
                                     st = new StringTokenizer(line, " ");
-                                    crystal.setB(
+                                    crystal.setB(new Vector3d(
                                         Double.parseDouble(st.nextToken()),
                                         Double.parseDouble(st.nextToken()),
                                         Double.parseDouble(st.nextToken())
-                                    );
+                                    ));
                                     line = input.readLine();
                                     st = new StringTokenizer(line, " ");
-                                    crystal.setC(
+                                    crystal.setC(new Vector3d(
                                         Double.parseDouble(st.nextToken()),
                                         Double.parseDouble(st.nextToken()),
                                         Double.parseDouble(st.nextToken())
-                                    );
+                                    ));
                                 } else if (line.startsWith("%%Space Group")) {
                                     line = input.readLine().trim();
                                     /* standardize space group name.

@@ -25,6 +25,8 @@
 
 package org.openscience.cdk.test;
 
+import javax.vecmath.Vector3d;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -51,31 +53,31 @@ public class CrystalTest extends TestCase {
     public void testSetA() {
         Crystal crystal = new Crystal();
         
-        crystal.setA(1.0, 2.0, 3.0);
-        double[] a = crystal.getA();
-        assertEquals(1.0, a[0], 0.001);
-        assertEquals(2.0, a[1], 0.001);
-        assertEquals(3.0, a[2], 0.001);
+        crystal.setA(new Vector3d(1.0, 2.0, 3.0));
+        Vector3d a = crystal.getA();
+        assertEquals(1.0, a.x, 0.001);
+        assertEquals(2.0, a.y, 0.001);
+        assertEquals(3.0, a.z, 0.001);
     }
     
     public void testSetB() {
         Crystal crystal = new Crystal();
         
-        crystal.setB(1.0, 2.0, 3.0);
-        double[] b = crystal.getB();
-        assertEquals(1.0, b[0], 0.001);
-        assertEquals(2.0, b[1], 0.001);
-        assertEquals(3.0, b[2], 0.001);
+        crystal.setB(new Vector3d(1.0, 2.0, 3.0));
+        Vector3d b = crystal.getB();
+        assertEquals(1.0, b.x, 0.001);
+        assertEquals(2.0, b.y, 0.001);
+        assertEquals(3.0, b.z, 0.001);
     }
     
     public void testSetC() {
         Crystal crystal = new Crystal();
         
-        crystal.setC(1.0, 2.0, 3.0);
-        double[] c = crystal.getC();
-        assertEquals(1.0, c[0], 0.001);
-        assertEquals(2.0, c[1], 0.001);
-        assertEquals(3.0, c[2], 0.001);
+        crystal.setC(new Vector3d(1.0, 2.0, 3.0));
+        Vector3d c = crystal.getC();
+        assertEquals(1.0, c.x, 0.001);
+        assertEquals(2.0, c.y, 0.001);
+        assertEquals(3.0, c.z, 0.001);
     }
     
     public void testSetSpaceGroup() {

@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
@@ -98,7 +99,7 @@ public class CrystClustReader extends DefaultChemObjectReader {
         int lineNumber = 0;
         int frames = 0;
         
-        double[] a, b, c;
+        Vector3d a, b, c;
         
         try {
             String line = input.readLine();
@@ -118,40 +119,40 @@ public class CrystClustReader extends DefaultChemObjectReader {
                     crystal.setSpaceGroup(line);
                     
                     logger.debug("reading unit cell axes");
-                    double fractx, fracty, fractz;
+                    Vector3d axis = new Vector3d();
                     logger.debug("parsing A: ");
                     line = input.readLine();
                     logger.debug((lineNumber++) + ": ", line);
-                    fractx = FortranFormat.atof(line);
+                    axis.x = FortranFormat.atof(line);
                     line = input.readLine();
                     logger.debug((lineNumber++) + ": ", line);
-                    fracty = FortranFormat.atof(line);
+                    axis.y = FortranFormat.atof(line);
                     line = input.readLine();
                     logger.debug((lineNumber++) + ": ", line);
-                    fractz = FortranFormat.atof(line);
-                    crystal.setA(fractx, fracty, fractz);
+                    axis.z = FortranFormat.atof(line);
+                    crystal.setA(axis);
                     logger.debug("parsing B: ");
                     line = input.readLine();
                     logger.debug((lineNumber++) + ": ", line);
-                    fractx = FortranFormat.atof(line);
+                    axis.x = FortranFormat.atof(line);
                     line = input.readLine();
                     logger.debug((lineNumber++) + ": ", line);
-                    fracty = FortranFormat.atof(line);
+                    axis.y = FortranFormat.atof(line);
                     line = input.readLine();
                     logger.debug((lineNumber++) + ": ", line);
-                    fractz = FortranFormat.atof(line);
-                    crystal.setB(fractx, fracty, fractz);
+                    axis.z = FortranFormat.atof(line);
+                    crystal.setB(axis);
                     logger.debug("parsing C: ");
                     line = input.readLine();
                     logger.debug((lineNumber++) + ": ", line);
-                    fractx = FortranFormat.atof(line);
+                    axis.x = FortranFormat.atof(line);
                     line = input.readLine();
                     logger.debug((lineNumber++) + ": ", line);
-                    fracty = FortranFormat.atof(line);
+                    axis.y = FortranFormat.atof(line);
                     line = input.readLine();
                     logger.debug((lineNumber++) + ": ", line);
-                    fractz = FortranFormat.atof(line);
-                    crystal.setC(fractx, fracty, fractz);
+                    axis.z = FortranFormat.atof(line);
+                    crystal.setC(axis);
                     a = crystal.getA();
                     b = crystal.getB();
                     c = crystal.getC();
@@ -168,27 +169,27 @@ public class CrystClustReader extends DefaultChemObjectReader {
                     
                     String symbol;
                     double charge;
-                    double[] cart;
+                    Point3d cart;
                     for (int i=1; i<=atomsToRead; i++) {
-                        cart = new double[3];
+                        cart = new Point3d();
                         line = input.readLine();
                         logger.debug((lineNumber++) + ": ", line);
                         symbol = line.substring(0, line.indexOf(":"));
                         charge = Double.parseDouble(line.substring(line.indexOf(":")+1));
                         line = input.readLine();
                         logger.debug((lineNumber++) + ": ", line);
-                        cart[0] = Double.parseDouble(line); // x
+                        cart.x = Double.parseDouble(line); // x
                         line = input.readLine();
                         logger.debug((lineNumber++) + ": ", line);
-                        cart[1] = Double.parseDouble(line); // y
+                        cart.y = Double.parseDouble(line); // y
                         line = input.readLine();
                         logger.debug((lineNumber++) + ": ", line);
-                        cart[2] = Double.parseDouble(line); // z
+                        cart.z = Double.parseDouble(line); // z
                         Atom atom = new Atom(symbol);
                         atom.setCharge(charge);
                         // convert cartesian coords to fractional
-                        double[] frac = CrystalGeometryTools.cartesianToFractional(a, b, c, cart);
-                        atom.setFractionalPoint3d(new Point3d(frac[0], frac[1], frac[2]));
+                        Point3d frac = CrystalGeometryTools.cartesianToFractional(a, b, c, cart);
+                        atom.setFractionalPoint3d(frac);
                         crystal.addAtom(atom);
                         logger.debug("Added atom: ", atom);
                     }

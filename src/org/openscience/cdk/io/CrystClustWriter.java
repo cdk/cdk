@@ -30,6 +30,7 @@ import org.openscience.cdk.Crystal;
 import org.openscience.cdk.exception.UnsupportedChemObjectException;
 import java.util.Vector;
 import java.io.*;
+import javax.vecmath.Vector3d;
 
 /**
  * Rather stupid file format used for storing crystal information.
@@ -123,21 +124,9 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
         }
 
         // output unit cell axes
-        double[] a = crystal.getA();
-        for (int i=0; i <= 2; i++) {
-            write(new Double(a[i]).toString());
-            write("\n");
-        }
-        double[] b = crystal.getB();
-        for (int i=0; i <= 2; i++) {
-            write(new Double(b[i]).toString());
-            write("\n");
-        }
-        double[] c = crystal.getC();
-        for (int i=0; i <= 2; i++) {
-            write(new Double(c[i]).toString());
-            write("\n");
-        }
+        writeVector3d(crystal.getA());
+        writeVector3d(crystal.getB());
+        writeVector3d(crystal.getC());
 
         // output number of atoms
         int noatoms = crystal.getAtomCount();
@@ -175,6 +164,15 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
             System.err.println("CMLWriter IOException while printing \"" +
                                 s + "\":\n" + e.toString());
         }
+    }
+    
+    private void writeVector3d(Vector3d vector) {
+        write(new Double(vector.x).toString());
+        write("\n");
+        write(new Double(vector.y).toString());
+        write("\n");
+        write(new Double(vector.z).toString());
+        write("\n");
     }
 
 }

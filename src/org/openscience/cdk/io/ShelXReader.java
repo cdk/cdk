@@ -35,6 +35,7 @@ import java.io.StringReader;
 import java.util.StringTokenizer;
 
 import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemFile;
@@ -201,13 +202,12 @@ public class ShelXReader extends DefaultChemObjectReader {
                 double alpha = FortranFormat.atof(salpha);
                 double beta  = FortranFormat.atof(sbeta);
                 double gamma = FortranFormat.atof(sgamma);
-                double[][] axes;
+                
+                Vector3d[] axes = CrystalGeometryTools.notionalToCartesian(a,b,c, alpha, beta, gamma);
 
-                axes = CrystalGeometryTools.notionalToCartesian(a,b,c, alpha, beta, gamma);
-
-                crystal.setA(axes[0][0], axes[0][1], axes[0][2]);
-                crystal.setB(axes[1][0], axes[1][1], axes[1][2]);
-                crystal.setC(axes[2][0], axes[2][1], axes[2][2]);
+                crystal.setA(axes[0]);
+                crystal.setB(axes[1]);
+                crystal.setC(axes[2]);
             } else if (command.equalsIgnoreCase("ZERR")) {
             } else if (command.equalsIgnoreCase("LATT")) {
             } else if (command.equalsIgnoreCase("SYMM")) {

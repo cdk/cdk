@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.test.geometry;
 
+import javax.vecmath.Vector3d;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

@@ -35,6 +35,7 @@ import java.util.StringTokenizer;
 import java.io.StringReader;
 
 import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemFile;
@@ -235,11 +236,11 @@ public class CIFReader extends DefaultChemObjectReader {
         if (a != 0.0 && b != 0.0 && c != 0.0 &&
             alpha != 0.0 && beta != 0.0 && gamma != 0.0) {
             logger.info("Found and set crystal cell parameters");
-            double[][] axes = CrystalGeometryTools.notionalToCartesian(a,b,c, alpha, beta, gamma);
+            Vector3d[] axes = CrystalGeometryTools.notionalToCartesian(a,b,c, alpha, beta, gamma);
             
-            crystal.setA(axes[0][0], axes[0][1], axes[0][2]);
-            crystal.setB(axes[1][0], axes[1][1], axes[1][2]);
-            crystal.setC(axes[2][0], axes[2][1], axes[2][2]);
+            crystal.setA(axes[0]);
+            crystal.setB(axes[1]);
+            crystal.setC(axes[2]);
         }
     }
     
@@ -329,8 +330,8 @@ public class CIFReader extends DefaultChemObjectReader {
                 int colIndex = 0;
                 // process one row
                 Atom atom = new Atom("C");
-                double[] frac = new double[3];
-                double[] real = new double[3];
+                Point3d frac = new Point3d();
+                Point3d real = new Point3d();
                 boolean hasFractional = false;
                 boolean hasCartesian = false;
                 while (tokenizer.hasMoreTokens()) {
@@ -346,38 +347,38 @@ public class CIFReader extends DefaultChemObjectReader {
                         atom.setID(field);
                     } else if (colIndex == atomFractX) {
                         hasFractional = true;
-                        frac[0] = parseIntoDouble(field);
+                        frac.x = parseIntoDouble(field);
                     } else if (colIndex == atomFractY) {
                         hasFractional = true;
-                        frac[1] = parseIntoDouble(field);
+                        frac.y = parseIntoDouble(field);
                     } else if (colIndex == atomFractZ) {
                         hasFractional = true;
-                        frac[2] = parseIntoDouble(field);
+                        frac.z = parseIntoDouble(field);
                     } else if (colIndex == atomSymbol) {
                         atom.setSymbol(field);
                     } else if (colIndex == atomRealX) {
                         hasCartesian = true;
                         logger.debug("Adding x3: " + parseIntoDouble(field));
-                        real[0] = parseIntoDouble(field);
+                        real.x = parseIntoDouble(field);
                     } else if (colIndex == atomRealY) {
                         hasCartesian = true;
                         logger.debug("Adding y3: " + parseIntoDouble(field));
-                        real[1] = parseIntoDouble(field);
+                        real.y = parseIntoDouble(field);
                     } else if (colIndex == atomRealZ) {
                         hasCartesian = true;
                         logger.debug("Adding x3: " + parseIntoDouble(field));
-                        real[2] = parseIntoDouble(field);
+                        real.z = parseIntoDouble(field);
                     }
                 }
                 if (hasCartesian) {
-                    double[] a = crystal.getA();
-                    double[] b = crystal.getB();
-                    double[] c = crystal.getC();
+                    Vector3d a = crystal.getA();
+                    Vector3d b = crystal.getB();
+                    Vector3d c = crystal.getC();
                     frac = CrystalGeometryTools.cartesianToFractional(a, b, c, real);
-                    atom.setFractionalPoint3d(new Point3d(frac[0], frac[1], frac[2]));
+                    atom.setFractionalPoint3d(frac);
                 }
                 if (hasFractional) {
-                    atom.setFractionalPoint3d(new Point3d(frac[0], frac[1], frac[2]));
+                    atom.setFractionalPoint3d(frac);
                 }
                 logger.debug("Adding atom: " + atom);
                 crystal.addAtom(atom);

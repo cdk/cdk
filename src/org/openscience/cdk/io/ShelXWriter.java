@@ -29,11 +29,14 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.Enumeration;
 import java.util.Vector;
+import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Crystal;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.tools.MFAnalyser;
 
 import freeware.PrintfFormat;
@@ -94,15 +97,15 @@ public class ShelXWriter extends DefaultChemObjectWriter {
 
     private void write(Crystal crystal) {
         write("TITLE Produced with CDK (http://cdk.sf.net/)\n");
-        double[] a = crystal.getA();
-        double[] b = crystal.getB();
-        double[] c = crystal.getC();
-        double alength = calcLengthAxis(a);
-        double blength = calcLengthAxis(b);
-        double clength = calcLengthAxis(c);
-        double alpha = calcAxesAngle(b, c);
-        double beta  = calcAxesAngle(a, c);
-        double gamma = calcAxesAngle(a, b);
+        Vector3d a = crystal.getA();
+        Vector3d b = crystal.getB();
+        Vector3d c = crystal.getC();
+        double alength = a.length();
+        double blength = b.length();
+        double clength = c.length();
+        double alpha = b.angle(c);
+        double beta  = a.angle(c);
+        double gamma = a.angle(b);
         PrintfFormat format = new PrintfFormat("%7.5lf");
         write("CELL " + format.sprintf(1.54184) + "   ");
         format = new PrintfFormat("%8.5lf");
@@ -142,11 +145,8 @@ public class ShelXWriter extends DefaultChemObjectWriter {
         format = new PrintfFormat("%7.5lf");
         for (int i = 0; i < crystal.getAtomCount(); i++) {
             Atom atom = crystal.getAtomAt(i);
-            double[] reals = new double[3];
-            reals[0] = atom.getX3d();
-            reals[1] = atom.getY3d();
-            reals[2] = atom.getZ3d();
-            double[] fracs = realToFractional(reals, a, b, c);
+            Point3d cartCoord = atom.getPoint3d();
+            Point3d fracCoord = CrystalGeometryTools.cartesianToFractional(a, b, c, cartCoord);
             String symbol = atom.getSymbol();
             String output = symbol + (i+1);
             write(output);
@@ -157,9 +157,9 @@ public class ShelXWriter extends DefaultChemObjectWriter {
             String elemID = new Integer(asortedElements.indexOf(symbol)+1).toString();
             write(elemID);
             write("    ".substring(elemID.length()));
-            write(format.sprintf(fracs[0]) + "   ");
-            write(format.sprintf(fracs[1]) + "   ");
-            write(format.sprintf(fracs[2]) + "    11.00000    0.05000\n");
+            write(format.sprintf(fracCoord.x) + "   ");
+            write(format.sprintf(fracCoord.y) + "   ");
+            write(format.sprintf(fracCoord.z) + "    11.00000    0.05000\n");
         }
         write("END\n");
     }
@@ -173,57 +173,4 @@ public class ShelXWriter extends DefaultChemObjectWriter {
         }
     }
 
-    /** No checking whatsoever: use with care */
-    private double[] fractionalToReal(double[] fracs, double[] a, double[] b, double[] c) {
-        double[] reals = new double[3];
-        /* xr = ax*xf + bx*xf + cx*xf */
-        reals[0] = a[0]*fracs[0] + b[0]*fracs[0] + c[0]*fracs[0];
-        /* yr = ay*yf + by*yf + cy*yf */
-        reals[1] = a[1]*fracs[1] + b[1]*fracs[1] + c[1]*fracs[1];
-        /* zr = az*zf + bz*zf + cz*zf */
-        reals[2] = a[2]*fracs[2] + b[2]*fracs[2] + c[2]*fracs[2];
-        
-        return reals;
-    }
-
-    private double[] realToFractional(double[] reals, double[] a, double[] b, double[] c) {
-        double[] fracs = new double[3];
-
-        double[][] invaxis = new double[3][3];
-        double det = a[0]*b[1]*c[2] - a[0]*b[2]*c[1] -
-                     a[1]*b[0]*c[2] + a[1]*b[2]*c[0] +
-                     a[2]*b[0]*c[1] - a[2]*b[1]*c[0];
-        invaxis[0][0] = (b[1]*c[2] - b[2]*c[1])/det;
-        invaxis[0][1] = (b[2]*c[0] - b[0]*c[2])/det;
-        invaxis[0][2] = (b[0]*c[1] - b[1]*c[0])/det;
-
-        invaxis[1][0] = (a[2]*c[1] - a[1]*c[2])/det;
-        invaxis[1][1] = (a[0]*c[2] - a[2]*c[0])/det;
-        invaxis[1][2] = (a[1]*c[0] - a[0]*c[1])/det;
-
-        invaxis[2][0] = (a[1]*b[2] - a[2]*b[1])/det;
-        invaxis[2][1] = (a[2]*b[0] - a[0]*b[2])/det;
-        invaxis[2][2] = (a[0]*b[1] - a[1]*b[0])/det;
-
-        fracs[0] = invaxis[0][0]*reals[0] + invaxis[0][1]*reals[1] + invaxis[0][2]*reals[2];
-        fracs[1] = invaxis[1][0]*reals[0] + invaxis[1][1]*reals[1] + invaxis[1][2]*reals[2];
-        fracs[2] = invaxis[2][0]*reals[0] + invaxis[2][1]*reals[1] + invaxis[2][2]*reals[2];
-
-        return fracs;
-    }
-    
-    /**
-     * Calculate the length of an Axis
-     */
-    private double calcLengthAxis(double[] a) {
-        return Math.pow(Math.pow(a[0],2.0) + Math.pow(a[1],2.0) + Math.pow(a[2],2.0), 0.5);
-    };
-
-    /**
-     * Calculate the angle between two Axes
-     */
-    private double calcAxesAngle(double[] a, double[] b) {
-        return (180.0/Math.PI)*Math.acos((a[0]*b[0]+a[1]*b[1]+a[2]*b[2])/
-               (calcLengthAxis(a)*calcLengthAxis(b)));
-    };
 }

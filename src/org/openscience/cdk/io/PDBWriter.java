@@ -31,6 +31,7 @@ import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import freeware.PrintfFormat;
 import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
 import java.io.BufferedWriter;
 import java.io.Writer;
 import java.io.IOException;
@@ -138,9 +139,9 @@ public class PDBWriter extends DefaultChemObjectWriter {
    public void writeCrystal(Crystal crystal) throws CDKException {
        try {
            writer.write("HEADER created with CDK fileconvertot\n");
-           double[] a = crystal.getA();
-           double[] b = crystal.getB();
-           double[] c = crystal.getC();
+           Vector3d a = crystal.getA();
+           Vector3d b = crystal.getB();
+           Vector3d c = crystal.getC();
            double[] ucParams = CrystalGeometryTools.cartesianToNotional(a,b,c);
            PrintfFormat lengthFormat = new PrintfFormat("%4.3f");
            PrintfFormat angleFormat = new PrintfFormat("%3.3f");
@@ -155,14 +156,12 @@ public class PDBWriter extends DefaultChemObjectWriter {
            Atom[] atoms = crystal.getAtoms();
             for (int i=0; i<atoms.length; i++) {
                 Atom atom = atoms[i];
-                double[] frac = new double[3];
-                frac[0] = atom.getFractX3d();
-                frac[1] = atom.getFractY3d();
-                frac[2] = atom.getFractZ3d();
-                double[] cart = CrystalGeometryTools.fractionalToCartesian(a,b,c, frac);
-                atom.setX3d(cart[0]);
-                atom.setY3d(cart[1]);
-                atom.setZ3d(cart[2]);
+                Point3d frac = new Point3d();
+                frac.x = atom.getFractX3d();
+                frac.y = atom.getFractY3d();
+                frac.z = atom.getFractZ3d();
+                Point3d cart = CrystalGeometryTools.fractionalToCartesian(a,b,c, frac);
+                atom.setPoint3d(cart);
             }
            writeMolecule(new Molecule(crystal));
        } catch (IOException exception) {

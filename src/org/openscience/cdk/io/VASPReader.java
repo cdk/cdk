@@ -32,6 +32,7 @@ import java.io.StringReader;
 import java.util.StringTokenizer;
 
 import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
@@ -233,15 +234,15 @@ public class VASPReader extends DefaultChemObjectReader {
                 }
             }
             
-            crystal.setA(rprim[0][0]*acell[0],
-                         rprim[0][1]*acell[0],
-                         rprim[0][2]*acell[0]);
-            crystal.setB(rprim[1][0]*acell[1],
-                         rprim[1][1]*acell[1],
-                         rprim[1][2]*acell[1]);
-            crystal.setC(rprim[2][0]*acell[2],
-                         rprim[2][1]*acell[2],
-                         rprim[2][2]*acell[2]);
+            crystal.setA(new Vector3d(rprim[0][0]*acell[0],
+                                      rprim[0][1]*acell[0],
+                                      rprim[0][2]*acell[0]));
+            crystal.setB(new Vector3d(rprim[1][0]*acell[1],
+                                      rprim[1][1]*acell[1],
+                                      rprim[1][2]*acell[1]));
+            crystal.setC(new Vector3d(rprim[2][0]*acell[2],
+                                      rprim[2][1]*acell[2],
+                                      rprim[2][2]*acell[2]));
             for (int i=0; i<atomType.length; i++) {
                 String symbol = isotopeFac.getElement(atomType[i]).getSymbol();
                 Atom atom = new Atom(symbol);

@@ -28,6 +28,7 @@
 package org.openscience.cdk.geometry;
 
 import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
@@ -51,52 +52,57 @@ public class CrystalGeometryTools {
      * @return         a 3x3 matrix with the three cartesian vectors representing
      *                 the unit cell axes. The a axis is the first row.
      */
-    public static double[][] calcInvertedAxes(double[] a, double[] b, double[] c) {
-         double det = a[0]*b[1]*c[2] -
-                      a[0]*b[2]*c[1] -
-                      a[1]*b[0]*c[2] +
-                      a[1]*b[2]*c[0] +
-                      a[2]*b[0]*c[1] -
-                      a[2]*b[1]*c[0];
+    public static double[][] calcInvertedAxes(Vector3d a, Vector3d b, Vector3d c) {
+         double det = a.x*b.y*c.z -
+                      a.x*b.z*c.y -
+                      a.y*b.x*c.z +
+                      a.y*b.z*c.x +
+                      a.z*b.x*c.y -
+                      a.z*b.y*c.x;
          double invaxis[][] = new double[3][3];
-         invaxis[0][0] = (b[1]*c[2] - b[2]*c[1])/det;
-         invaxis[0][1] = (b[2]*c[0] - b[0]*c[2])/det;
-         invaxis[0][2] = (b[0]*c[1] - b[1]*c[0])/det;
+         invaxis[0][0] = (b.y*c.z - b.z*c.y)/det;
+         invaxis[0][1] = (b.z*c.x - b.x*c.z)/det;
+         invaxis[0][2] = (b.x*c.y - b.y*c.x)/det;
 
-         invaxis[1][0] = (a[2]*c[1] - a[1]*c[2])/det;
-         invaxis[1][1] = (a[0]*c[2] - a[2]*c[0])/det;
-         invaxis[1][2] = (a[1]*c[0] - a[0]*c[1])/det;
+         invaxis[1][0] = (a.z*c.y - a.y*c.z)/det;
+         invaxis[1][1] = (a.x*c.z - a.z*c.x)/det;
+         invaxis[1][2] = (a.y*c.x - a.x*c.y)/det;
 
-         invaxis[2][0] = (a[1]*b[2] - a[2]*b[1])/det;
-         invaxis[2][1] = (a[2]*b[0] - a[0]*b[2])/det;
-         invaxis[2][2] = (a[0]*b[1] - a[1]*b[0])/det;
+         invaxis[2][0] = (a.y*b.z - a.z*b.y)/det;
+         invaxis[2][1] = (a.z*b.x - a.x*b.z)/det;
+         invaxis[2][2] = (a.x*b.y - a.y*b.x)/det;
          return invaxis;
     }
 
     /**
      * Converts real coordinate (x,y,z) to a fractional coordinates
      * (xf, yf, zf).
+     *
+     * @deprecated
      */
     public static double[] cartesianToFractional(double[] a, double[] b, double[] c,
                                                  double[] cart) {
-         double[] fractCoords = new double[3];
-         double[][] invaxis = calcInvertedAxes(a,b,c);
-         fractCoords[0] = invaxis[0][0]*cart[0] + invaxis[0][1]*cart[1] +
-                          invaxis[0][2]*cart[2];
-         fractCoords[1] = invaxis[1][0]*cart[0] + invaxis[1][1]*cart[1] +
-                          invaxis[1][2]*cart[2];
-         fractCoords[2] = invaxis[2][0]*cart[0] + invaxis[2][1]*cart[1] +
-                          invaxis[2][2]*cart[2];
-         return fractCoords;
+        double[] fractCoords = new double[3];
+        Point3d fract = cartesianToFractional(new Vector3d(a[0], a[1], a[2]),
+                                              new Vector3d(b[0], b[1], b[2]),
+                                              new Vector3d(c[0], c[1], c[2]),
+                                              new Point3d(cart[0], cart[1], cart[2]));
+        fractCoords[0] = fract.x;
+        fractCoords[1] = fract.y;
+        fractCoords[2] = fract.z;
+        return fractCoords;
     };
 
-    public static Point3d cartesianToFractional(double[] a, double[] b, double[] c,
+    public static Point3d cartesianToFractional(Vector3d a, Vector3d b, Vector3d c,
                                                  Point3d cartPoint) {
-        double[] cart = new double[3];
-        cart[0] = cartPoint.x;
-        cart[1] = cartPoint.y;
-        cart[2] = cartPoint.z;
-        double[] frac = cartesianToFractional(a,b,c, cart);
+        double[][] invaxis = calcInvertedAxes(a,b,c);
+        double[] frac = new double[3];
+        frac[0] = invaxis[0][0]*cartPoint.x + invaxis[0][1]*cartPoint.y +
+                  invaxis[0][2]*cartPoint.z;
+        frac[1] = invaxis[1][0]*cartPoint.x + invaxis[1][1]*cartPoint.y +
+                  invaxis[1][2]*cartPoint.z;
+        frac[2] = invaxis[2][0]*cartPoint.x + invaxis[2][1]*cartPoint.y +
+                  invaxis[2][2]*cartPoint.z;
         return new Point3d(frac[0], frac[1], frac[2]);
     }
 
@@ -114,6 +120,7 @@ public class CrystalGeometryTools {
      * @cdk.keyword     fractional coordinates
      *
      * @see #cartesianToFractional(double[], double[], double[], double[])
+     * @deprecated
      */
     public static double[] fractionalToCartesian(double[] a, double[] b, double[] c,
                                                  double[] frac) {
@@ -124,6 +131,18 @@ public class CrystalGeometryTools {
         return cart;
     }
     
+    public static Point3d fractionalToCartesian(Vector3d a, Vector3d b, Vector3d c,
+                                                 Point3d frac) {
+        Point3d cart = new Point3d();
+        cart.x = frac.x*a.x + frac.y*b.x + frac.z*c.x;
+        cart.y = frac.x*a.y + frac.y*b.y + frac.z*c.y;
+        cart.z = frac.x*a.z + frac.y*b.z + frac.z*c.z;
+        return cart;
+    }
+
+    /**
+     * @deprecated
+     */
     public static Point3d fractionalToCartesian(double[] a, double[] b, double[] c,
                                                  Point3d fracPoint) {
         double[] frac = new double[3];
@@ -133,7 +152,7 @@ public class CrystalGeometryTools {
         double[] cart = fractionalToCartesian(a,b,c, frac);
         return new Point3d(cart[0], cart[1], cart[2]);
     }
-
+    
     /**
      * Calculates cartesian vectors for unit cell axes from axes lengths and angles
      * between axes.
@@ -150,22 +169,22 @@ public class CrystalGeometryTools {
      * @param alpha     angle between b and c axes in degrees
      * @param beta      angle between a and c axes in degrees
      * @param gamma     angle between a and b axes in degrees
-     * @return         a 3x3 matrix with the three cartesian vectors representing
-     *                  the unit cell axes. The a axis is the first row.
+     * @return          an array of Vector3d objects with the three cartesian vectors representing
+     *                  the unit cell axes.
      *
      * @cdk.keyword  notional coordinates
      */
-    public static double[][] notionalToCartesian(double alength, double blength,
+    public static Vector3d[] notionalToCartesian(double alength, double blength,
                                                  double clength, double alpha,
                                                  double beta, double gamma) {
-        double[][] axes = new double[3][3];
+        Vector3d[] axes = new Vector3d[3];
         
         /* 1. align the a axis with x axis */
-        axes[0][0] = alength;           // ax
-        axes[0][1] = 0.0;               // ay
-        axes[0][2] = 0.0;               // az
+        axes[0].x = alength;
+        axes[0].y = 0.0;
+        axes[0].z = 0.0;
 
-        double toRadians = Math.PI/180;
+        double toRadians = Math.PI/180.0;
         
         /* some intermediate variables */
         double cosalpha = Math.cos(toRadians*alpha);
@@ -176,21 +195,20 @@ public class CrystalGeometryTools {
         double singamma = Math.sin(toRadians*gamma);
 
         /* 2. place the b is in xy plane making a angle gamma with a */
-        axes[1][0] = blength*cosgamma;  // bx
-        axes[1][1] = blength*singamma;  // by
-        axes[1][2] = 0.0;               // bz
+        axes[1].x = blength*cosgamma;
+        axes[1].y = blength*singamma;
+        axes[1].z = 0.0;
 
-        /* 3. now the c axis,
-         * source: http://server.ccl.net/cca/documents/molecular-modeling/node4.html */
+        /* 3. now the c axis, with more complex maths */
         double V = alength * blength * clength *
                    Math.sqrt(1.0 - cosalpha*cosalpha -
                              cosbeta*cosbeta -
                              cosgamma*cosgamma +
                              2.0*cosalpha*cosbeta*cosgamma);
-        axes[2][0] = clength*cosbeta;   // cx
-        axes[2][1] = clength*(cosalpha-cosbeta*cosgamma)/singamma;
-        axes[2][2] = V/(alength*blength*singamma);                // cz
-
+        axes[2].x = clength*cosbeta;
+        axes[2].y = clength*(cosalpha-cosbeta*cosgamma)/singamma;
+        axes[2].z = V/(alength*blength*singamma);
+        
         return axes;
     }
     
@@ -207,6 +225,8 @@ public class CrystalGeometryTools {
      * @return     an array of length 6 with a,b,c,alpha,beta and gamma
      *
      * @cdk.keyword  notional coordinates
+     *
+     * @deprecated
      */
     public static double[] cartesianToNotional(double[] a, double[] b, double[] c) {
         double[] notionalCoords = new double[6];
@@ -219,81 +239,17 @@ public class CrystalGeometryTools {
         return notionalCoords;
     }
                                
-    /**
-     * Converts the cell into a P1 cell.
-     * The function assumes that unit cell axes are properly set.
-     *
-     * <p>Recognized space group strings:
-     *   "P1","P 2_1 2_1 2_1"
-     *
-     * <p>This function assumes fractional coordinates, which the
-     * Crystal does not provide by itself. It's broken!
-     *
-     * @return The Crystal clone with P1 space group.
-     *
-     * @deprecated
-     */
-    public static Crystal convertToP1Cell(Crystal crystal) throws CDKException {
-        Crystal result = (Crystal)crystal.clone();
-        if ("P 2_1 2_1 2_1".equals(crystal.getSpaceGroup())) {
-            for (int i =0; i < crystal.getAtomCount(); i++) {
-                Atom atom = crystal.getAtomAt(i);
-                /* symmetry operations:
-
-                identity (skipped) :   x      y      z
-                                        -x+0.5 -y      z+0.5   I
-                                        -x      y+0.5 -z+0.5   II
-                                        x+0.5 -y+0.5 -z        III
-                */
-
-                // do not take into account moving into unit cell
-                Point3d point = atom.getPoint3d();
-
-                if (point != null) {
-                    double[] a = crystal.getA();
-                    double[] b = crystal.getB();
-                    double[] c = crystal.getC();
-                    // point I
-                    Point3d newPoint = new Point3d();
-                    newPoint.x = -1.0*point.x + 0.5*(a[0] + b[0] + c[0]);
-                    newPoint.y = -1.0*point.y;
-                    newPoint.z =      point.z + 0.5*(a[3] + b[3] + c[3]);
-                    Atom syma = (Atom)atom.clone();
-                    syma.setPoint3d(newPoint);
-                    result.addAtom(syma);
-
-                    // point II
-                    newPoint.x = -1.0*point.x + 0.5*(a[0] + b[0] + c[0]);
-                    newPoint.y = -1.0*point.y;
-                    newPoint.z =      point.z + 0.5*(a[3] + b[3] + c[3]);
-                    syma = (Atom)atom.clone();
-                    syma.setPoint3d(newPoint);
-                    result.addAtom(syma);
-
-                    // point III
-                    newPoint.x = -1.0*point.x + 0.5*(a[0] + b[0] + c[0]);
-                    newPoint.y = -1.0*point.y;
-                    newPoint.z =      point.z + 0.5*(a[3] + b[3] + c[3]);
-                    syma = (Atom)atom.clone();
-                    syma.setPoint3d(newPoint);
-                    result.addAtom(syma);
-                } else {
-                    Atom syma = (Atom)atom.clone();
-                    result.addAtom(syma);
-                    syma = (Atom)atom.clone();
-                    result.addAtom(syma);
-                    syma = (Atom)atom.clone();
-                    result.addAtom(syma);
-                }
-            }
-        } else if ("P 2_1 2_1 2_1".equals(crystal.getSpaceGroup())) {
-            // no transformation needed
-        } else {
-            throw new CDKException("This given spacegroup is not supported.");
-        }
-        return result;
+    public static double[] cartesianToNotional(Vector3d a, Vector3d b, Vector3d c) {
+        double[] notionalCoords = new double[6];
+        notionalCoords[0] = a.length();
+        notionalCoords[1] = b.length();
+        notionalCoords[2] = c.length();
+        notionalCoords[3] = b.angle(c);
+        notionalCoords[4] = a.angle(c);
+        notionalCoords[5] = a.angle(b);
+        return notionalCoords;
     }
-    
+                               
     /**
      * Calculates the length of a cell axis.
      */
@@ -331,9 +287,9 @@ public class CrystalGeometryTools {
 	 */
     public static void fractionalToCartesian(Crystal crystal) {
         Atom[] atoms = crystal.getAtoms();
-        double[] a = crystal.getA();
-        double[] b = crystal.getB();
-        double[] c = crystal.getC();
+        Vector3d a = crystal.getA();
+        Vector3d b = crystal.getB();
+        Vector3d c = crystal.getC();
         for (int i=0; i < atoms.length; i++) {
             Point3d fracPoint = atoms[i].getFractionalPoint3d();
             if (fracPoint != null) {

@@ -24,6 +24,7 @@
 package org.openscience.cdk.io.cml;
 
 import java.util.Hashtable;
+import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
@@ -239,27 +240,27 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
           // set these variables
           if (currentMolecule instanceof Crystal) {
               Crystal current = (Crystal)currentMolecule;
-              current.setA(crystal_axis_x,
-                           crystal_axis_y,
-                           crystal_axis_z);
+              current.setA(new Vector3d(crystal_axis_x,
+                                        crystal_axis_y,
+                                        crystal_axis_z));
           } else {
               logger.warn("Current object is not a crystal");
           }
         } else if (objectType.equals("b-axis")) {
           if (currentMolecule instanceof Crystal) {
               Crystal current = (Crystal)currentMolecule;
-              current.setB(crystal_axis_x,
-                           crystal_axis_y,
-                           crystal_axis_z);
+              current.setB(new Vector3d(crystal_axis_x,
+                                        crystal_axis_y,
+                                        crystal_axis_z));
           } else {
               logger.warn("Current object is not a crystal");
           }
         } else if (objectType.equals("c-axis")) {
           if (currentMolecule instanceof Crystal) {
               Crystal current = (Crystal)currentMolecule;
-              current.setC(crystal_axis_x,
-                           crystal_axis_y,
-                           crystal_axis_z);
+              current.setC(new Vector3d(crystal_axis_x,
+                                        crystal_axis_y,
+                                        crystal_axis_z));
           } else {
               logger.warn("Current object is not a crystal");
           }

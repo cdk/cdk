@@ -31,6 +31,7 @@ package org.openscience.cdk.io.cml;
 import java.util.Enumeration;
 import java.util.StringTokenizer;
 import java.util.Vector;
+import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.io.cml.cdopi.CDOInterface;
@@ -90,9 +91,9 @@ public class CMLCoreModule implements ModuleInterface {
     protected double[] unitcellparams;
     protected int crystalScalar;
     
-    private double[] a;
-    private double[] b;
-    private double[] c;
+    private Vector3d aAxis;
+    private Vector3d bAxis;
+    private Vector3d cAxis;
     boolean cartesianAxesSet = false;
     
     public CMLCoreModule(CDOInterface cdo) {
@@ -200,9 +201,9 @@ public class CMLCoreModule implements ModuleInterface {
         unitcellparams = new double[6];
         cartesianAxesSet = false;
         crystalScalar = 0;
-        a = new double[3];
-        b = new double[3];
-        c = new double[3];
+        aAxis = new Vector3d();
+        bAxis = new Vector3d();
+        cAxis = new Vector3d();
     }
 
     public void startDocument() {
@@ -502,34 +503,28 @@ public class CMLCoreModule implements ModuleInterface {
         } else if ("crystal".equals(name)) {
             if (crystalScalar > 0) {
                 // convert unit cell parameters to cartesians
-                double[][] axes = CrystalGeometryTools.notionalToCartesian(
-                unitcellparams[0], unitcellparams[1], unitcellparams[2],
-                unitcellparams[3], unitcellparams[4], unitcellparams[5]
+                Vector3d[] axes = CrystalGeometryTools.notionalToCartesian(
+                    unitcellparams[0], unitcellparams[1], unitcellparams[2],
+                    unitcellparams[3], unitcellparams[4], unitcellparams[5]
                 );
-                a[0] = axes[0][0];
-                a[1] = axes[0][1];
-                a[2] = axes[0][2];
-                b[0] = axes[1][0];
-                b[1] = axes[1][1];
-                b[2] = axes[1][2];
-                c[0] = axes[2][0];
-                c[1] = axes[2][1];
-                c[2] = axes[2][2];
+                aAxis = axes[0];
+                bAxis = axes[1];
+                cAxis = axes[2];
                 cartesianAxesSet = true;
                 cdo.startObject("a-axis");
-                cdo.setObjectProperty("a-axis", "x", new Double(a[0]).toString());
-                cdo.setObjectProperty("a-axis", "y", new Double(a[1]).toString());
-                cdo.setObjectProperty("a-axis", "z", new Double(a[2]).toString());
+                cdo.setObjectProperty("a-axis", "x", new Double(aAxis.x).toString());
+                cdo.setObjectProperty("a-axis", "y", new Double(aAxis.y).toString());
+                cdo.setObjectProperty("a-axis", "z", new Double(aAxis.z).toString());
                 cdo.endObject("a-axis");
                 cdo.startObject("b-axis");
-                cdo.setObjectProperty("b-axis", "x", new Double(b[0]).toString());
-                cdo.setObjectProperty("b-axis", "y", new Double(b[1]).toString());
-                cdo.setObjectProperty("b-axis", "z", new Double(b[2]).toString());
+                cdo.setObjectProperty("b-axis", "x", new Double(bAxis.x).toString());
+                cdo.setObjectProperty("b-axis", "y", new Double(bAxis.y).toString());
+                cdo.setObjectProperty("b-axis", "z", new Double(bAxis.z).toString());
                 cdo.endObject("b-axis");
                 cdo.startObject("c-axis");
-                cdo.setObjectProperty("c-axis", "x", new Double(c[0]).toString());
-                cdo.setObjectProperty("c-axis", "y", new Double(c[1]).toString());
-                cdo.setObjectProperty("c-axis", "z", new Double(c[2]).toString());
+                cdo.setObjectProperty("c-axis", "x", new Double(cAxis.x).toString());
+                cdo.setObjectProperty("c-axis", "y", new Double(cAxis.y).toString());
+                cdo.setObjectProperty("c-axis", "z", new Double(cAxis.z).toString());
                 cdo.endObject("c-axis");
             } else {
                 logger.error("Could not find crystal unit cell parameters");

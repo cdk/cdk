@@ -21,16 +21,16 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
  */
-
 package org.openscience.cdk;
 
+import javax.vecmath.Vector3d;
 
 /**
  * Class representing a molecular crystal.
  * The crystal is described with molecules in fractional
  * coordinates and three cell axes: a,b and c.
  *
- * <p>The crystal is designed to store only the assymetric atoms.
+ * <p>The crystal is designed to store only the asymetric atoms.
  * Though this is not enforced, it is assumed by all methods.
  *
  * @cdk.module core
@@ -40,17 +40,17 @@ package org.openscience.cdk;
 public class Crystal extends AtomContainer implements java.io.Serializable, Cloneable
 {
 
-    /** x,y,z components of a axis */
-    private double ax,ay,az;
-    /** x,y,z components of b axis */
-    private double bx,by,bz;
-    /** x,y,z components of c axis */
-    private double cx,cy,cz;
+    /** The a axis. */
+    private Vector3d aAxis;
+    /** The b axis. */
+    private Vector3d bAxis;
+    /** The c axis. */
+    private Vector3d cAxis;
 
     /**
      * Number of symmetry related atoms.
      */
-    private int Z = 1;
+    private int zValue = 1;
 
     /**
      * Number of symmetry related atoms.
@@ -70,112 +70,94 @@ public class Crystal extends AtomContainer implements java.io.Serializable, Clon
      *
      * @param ac  the AtomContainer providing the atoms and bonds
      */
-    public Crystal(AtomContainer ac) {
+    public Crystal(AtomContainer container) {
         this();
-        add(ac);
-    }
-
-    /**
-     * Sets the A unit cell axes in carthesian coordinates in a 
-     * eucledian space.
-     *
-     * @param     x     the x coordinate of the vector
-     * @param     y     the y coordinate of the vector
-     * @param     z     the z coordinate of the vector
-     *
-     * @see       #getA
-     */
-    public void setA(double x, double y, double z) {
-        ax = x; ay = y; az = z;
-    }
-
-    /**
-     * Gets the A unit cell axes in carthesian coordinates
-     * as a three element double array.
-     *
-     * @return a 3-item double array with the x,y and z coordinate
-     *
-     * @see       #setA
-     */
-    public double[] getA() {
-        double[] result = new double[3];
-        result[0] = ax;
-        result[1] = ay;
-        result[2] = az;
-        return result;
+        add(container);
     }
 
     /**
      * Adds the atoms in the AtomContainer as cell content.
      */
-    public void add(AtomContainer ac) {
-        super.add(ac);
+    public void add(AtomContainer container) {
+        super.add(container);
     }
 
     /**
      * Adds the atom to the crystal. Symmetry related atoms should
      * not be added unless P1 space group is used.
      */
-    public void addAtom(Atom a) {
-        super.addAtom(a);
+    public void addAtom(Atom atom) {
+        super.addAtom(atom);
+    }
+
+    /**
+     * Sets the A unit cell axes in carthesian coordinates in a 
+     * eucledian space.
+     *
+     * @param  newAxis the new A axis
+     *
+     * @see    #getA
+     */
+    public void setA(Vector3d newAxis) {
+        aAxis = newAxis;
+    }
+
+    /**
+     * Gets the A unit cell axes in carthesian coordinates
+     * as a three element double array.
+     *
+     * @return a Vector3D representing the A axis
+     *
+     * @see       #setA
+     */
+    public Vector3d getA() {
+        return aAxis;
     }
 
     /**
      * Sets the B unit cell axes in carthesian coordinates.
      *
-     * @param     x     the x coordinate of the vector
-     * @param     y     the y coordinate of the vector
-     * @param     z     the z coordinate of the vector
+     * @param  newAxis the new B axis
      *
-     * @see       #getB
+     * @see    #getB
      */
-    public void setB(double x, double y, double z) {
-        bx = x; by = y; bz = z;
+    public void setB(Vector3d newAxis) {
+        bAxis = newAxis;
     }
 
     /**
      * Gets the B unit cell axes in carthesian coordinates
      * as a three element double array.
      *
-     * @return a 3-item double array with the x,y and z coordinate
+     * @return a Vector3D representing the B axis
      *
      * @see       #setB
      */
-    public double[] getB() {
-        double[] result = new double[3];
-        result[0] = bx;
-        result[1] = by;
-        result[2] = bz;
-        return result;
+    public Vector3d getB() {
+        return bAxis;
     }
 
     /**
      * Sets the C unit cell axes in carthesian coordinates.
      *
-     * @param     x     the x coordinate of the vector
-     * @param     y     the y coordinate of the vector
-     * @param     z     the z coordinate of the vector
+     * @param  newAxis the new C axis
      *
      * @see       #getC
      */
-    public void setC(double x, double y, double z) {
-        cx = x; cy = y; cz = z;
+    public void setC(Vector3d newAxis) {
+        cAxis = newAxis;
     }
 
     /**
      * Gets the C unit cell axes in carthesian coordinates
      * as a three element double array.
      *
-     * @return a 3-item double array with the x,y and z coordinate
+     * @return a Vector3D representing the C axis
      *
      * @see       #setC
      */
-    public double[] getC() {
-        double[] result = new double[3];
-        result[0] = cx;
-        result[1] = cy;
-        result[2] = cz;
-        return result;
+    public Vector3d getC() {
+        return cAxis;
     }
 
     /**
@@ -206,7 +188,7 @@ public class Crystal extends AtomContainer implements java.io.Serializable, Clon
      * @return Z
      */
     public int getZ() {
-        return Z;
+        return zValue;
     }
 
     /**
@@ -215,8 +197,8 @@ public class Crystal extends AtomContainer implements java.io.Serializable, Clon
      * @param   z the number of assymetric parts in the unit cell
      * @see       #getZ
      */
-    public void setZ(int z) {
-        Z = z;
+    public void setZ(int value) {
+        this.zValue = value;
     }
 
     /**
@@ -225,41 +207,41 @@ public class Crystal extends AtomContainer implements java.io.Serializable, Clon
      * @return The cloned crystal.
      */
     public Object clone() {
-        Crystal o = null;
+        Crystal clone = null;
         try {
-            o = (Crystal)super.clone();
+            clone = (Crystal)super.clone();
         } catch (Exception e) {
             e.printStackTrace(System.err);
         }
-        o.setSpaceGroup(this.getSpaceGroup());
-        o.setA(this.ax, this.ay, this.az);
-        o.setB(this.bx, this.by, this.bz);
-        o.setC(this.cx, this.cy, this.cz);
-        return o;
+        clone.setSpaceGroup(this.getSpaceGroup());
+        clone.setA(new Vector3d(this.aAxis));
+        clone.setB(new Vector3d(this.bAxis));
+        clone.setC(new Vector3d(this.cAxis));
+        return clone;
     }
 
     /**
      * Returns a String representation of this crystal.
      */
     public String toString() {
-        StringBuffer sb = new StringBuffer();
-        sb.append("Crystal{");
-        sb.append("SG=" + getSpaceGroup() + ", ");
-        sb.append("Z=" + getZ() + ", ");
-        sb.append("a=(" + ax + ", " + ay + ", " + az + "), ");
-        sb.append("b=(" + bx + ", " + by + ", " + bz + "), ");
-        sb.append("c=(" + cx + ", " + cy + ", " + cz + "), ");
-        sb.append("#A=" + getAtomCount() + "}");
-        return sb.toString();
+        StringBuffer resultString = new StringBuffer();
+        resultString.append("Crystal{");
+        resultString.append("SG=" + getSpaceGroup() + ", ");
+        resultString.append("Z=" + getZ() + ", ");
+        resultString.append("a=(" + aAxis.x + ", " + aAxis.y + ", " + aAxis.z + "), ");
+        resultString.append("b=(" + bAxis.x + ", " + bAxis.y + ", " + bAxis.z + "), ");
+        resultString.append("c=(" + cAxis.x + ", " + cAxis.y + ", " + cAxis.z + "), ");
+        resultString.append("#A=" + getAtomCount() + "}");
+        return resultString.toString();
     }
 
     /**
      *  Initializes the unit cell axes to zero length.
      */
     private void setZeroAxes() {
-        ax = 0.0; ay = 0.0; az = 0.0;
-        bx = 0.0; by = 0.0; bz = 0.0;
-        cx = 0.0; cy = 0.0; cz = 0.0;
+        aAxis = new Vector3d(0.0, 0.0, 0.0);
+        bAxis = new Vector3d(0.0, 0.0, 0.0);
+        cAxis = new Vector3d(0.0, 0.0, 0.0);
     }
 
 }
