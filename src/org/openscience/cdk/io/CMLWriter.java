@@ -496,7 +496,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
             childElements.append("      <string convention=\"CDK\" builtin=\"order\"" + 
                                  bond.getOrder() + "\"/>\n");
         }
-        if (bond.getStereo() == CDKConstants.STEREO_BOND_UP &&
+        if (bond.getStereo() == CDKConstants.STEREO_BOND_UP ||
             bond.getStereo() == CDKConstants.STEREO_BOND_DOWN) {
             childElements.append("      <scalar dataType=\"xsd:string\" dictRef=\"mdl:stereo\">");
 		    if (bond.getStereo() == CDKConstants.STEREO_BOND_UP) {
