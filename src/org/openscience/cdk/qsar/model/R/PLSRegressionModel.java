@@ -383,11 +383,11 @@ public class PLSRegressionModel extends RModel {
      *
      * @return String containing 'SIMPLS' or 'kernelPLS'
      */
-    String getFitMethod() {
+    public String getFitMethod() {
         return(this.modelfit.getMethod());
     }
 
-    int[] getFitNComp() {
+    public int[] getFitNComp() {
         return(this.modelfit.getNComp());
     }
 
@@ -401,25 +401,25 @@ public class PLSRegressionModel extends RModel {
      *
      * @return double[][][] containing the coefficients
      */
-    double[][][] getFitB() {
+    public double[][][] getFitB() {
         return(this.modelfit.getB());
     }
-    double[][] getFitRMS() {
+    public double[][] getFitRMS() {
         return(this.modelfit.getTrainingRMS());
     }
-    double[][][] getFitYPred() {
+    public double[][][] getFitYPred() {
         return(this.modelfit.getTrainingYPred());
     }
-    double[][] getFitXLoading() {
+    public double[][] getFitXLoading() {
         return(this.modelfit.getXLoading());
     }
-    double[][] getFitYLoading() {
+    public double[][] getFitYLoading() {
         return(this.modelfit.getYLoading());
     }
-    double[][] getFitXScores() {
+    public double[][] getFitXScores() {
         return(this.modelfit.getXScores());
     }
-    double[][] getFitYScores() {
+    public double[][] getFitYScores() {
         return(this.modelfit.getYScores());
     }
     /**
@@ -427,7 +427,7 @@ public class PLSRegressionModel extends RModel {
      *
      * @return A boolean indicating whether CV was used
      */
-    boolean getFitWasValidated() {
+    public boolean getFitWasValidated() {
         return(this.modelfit.wasValidated());
     }
 
@@ -437,7 +437,7 @@ public class PLSRegressionModel extends RModel {
      *
      * @return An int value indicating the number of iterations in CV
      */
-    int getValidationIter() {
+    public int getValidationIter() {
         return(this.modelfit.getValidationIter());
     }
     /**
@@ -445,19 +445,19 @@ public class PLSRegressionModel extends RModel {
      *
      * @return An int value indicating the number of LV's
      */
-    int getValidationLV() {
+    public int getValidationLV() {
         return(this.modelfit.getValidationLV());
     }
-    double[][] getValidationR2() {
+    public double[][] getValidationR2() {
         return(this.modelfit.getValidationR2());
     }
-    double[][] getValidationRMS() {
+    public double[][] getValidationRMS() {
         return(this.modelfit.getValidationRMS());
     }
-    double[][] getValidationRMSsd() {
+    public double[][] getValidationRMSsd() {
         return(this.modelfit.getValidationRMSSD());
     }
-    double[][][] getValidationYPred() {
+    public double[][][] getValidationYPred() {
         return(this.modelfit.getValidationYPred());
     }
     
@@ -474,7 +474,7 @@ public class PLSRegressionModel extends RModel {
      *
      * @return A double[][] containing the predicted values
      */
-    double[][] getPredictPredicted() {
+    public  double[][] getPredictPredicted() {
         return(this.modelpredict.getPredictions());
     }
 }
