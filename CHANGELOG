@@ -51,6 +51,7 @@ API changes:
 * Moved AtomContainer.get2DCenter() and .get3DCenter() to GeometryTools
 * Moved RingSet.getRingSetInAtomContainer() to RingSetManipulator.getAllInOneContainer()
 * Moved RingSet.sort(), .getHeaviestRing() and .getMostComplexRing() to RingSetManipulator
+* Removed deprecated method AtomContainer.getHighestCurrentBondOrder()
 
 20041201 Release
 ------------------------------------
