@@ -688,7 +688,7 @@
         </target>
 
 	<target name="test-core" depends="dist-core, dist-test">
-            <junit printsummary="yes" haltonfailure="yes">
+            <junit printsummary="yes" haltonfailure="yes" fork="yes">
                 <classpath refid="project.class.path" />
                 <classpath>
                     <fileset dir="${dist}/jar">
@@ -706,7 +706,7 @@
         </target>
 	
 	<target name="test-standard" depends="dist-core, dist-standard, dist-test">
-            <junit printsummary="yes" haltonfailure="yes">
+            <junit printsummary="yes" haltonfailure="yes" fork="yes">
                 <classpath refid="project.class.path" />
                 <classpath>
                     <fileset dir="${dist}/jar">
@@ -725,7 +725,7 @@
         </target>
 	
         <target name="test-io" depends="dist-core, dist-standard, dist-test, dist-io">
-            <junit printsummary="yes" haltonfailure="yes" showoutput="yes">
+            <junit printsummary="yes" haltonfailure="yes" showoutput="yes" fork="yes">
                 <classpath refid="project.class.path" />
                 <classpath>
                     <fileset dir="${dist}/jar">
