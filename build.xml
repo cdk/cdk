@@ -89,8 +89,7 @@
           <available classname="joelib.molecule.JOEAtom" 
                      classpath="${lib}/libio/joelib.jar" 
                      property="joelib.present"/>
-          <available classname="org.xmlcml.cml.CMLDocument" 
-                     classpath="${lib}/cmlAll.jar" 
+          <available file="${lib}/cmlAll.jar" 
                      property="cmllibs.present"/>
           <available classname="javax.media.j3d.Canvas3D"
                      classpathref="project.class.path"
@@ -223,7 +222,6 @@
             <javac destdir="${build}" optimize="${optimization}" 
                    debug="${debug}" deprecation="${deprecation}">
                 <src path="${src}/org/openscience/cdk/libio/cml" />
-                <src path="${src}/org/openscience/cdk/test/libio/cml" />
                 
                 <classpath refid="project.class.path" />
                 <classpath>
