@@ -19,12 +19,14 @@
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
  *  02111-1307  USA.
- **/
-
+ *
+ */
 package org.openscience.cdk.io.cml;
 
 import java.io.PrintStream;
+import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Stack;
 import java.util.Vector;
 import org.openscience.cdk.io.cml.cdopi.CDOInterface;
 import org.xml.sax.*;
@@ -44,6 +46,8 @@ public class CMLHandler extends DefaultHandler {
 
     private Hashtable userConventions;
 
+    private Stack xpath; 
+    
     /**
      * Constructor for the CMLHandler.
      *
@@ -54,6 +58,7 @@ public class CMLHandler extends DefaultHandler {
                        this.getClass().getName());
         conv = new CMLCoreModule(cdo);
         userConventions = new Hashtable();
+        xpath = new Stack();
     }
 
     public void registerConvention(String convention, ModuleInterface conv) {
@@ -82,6 +87,7 @@ public class CMLHandler extends DefaultHandler {
     public void endElement(String uri, String local, String raw) {
        logger.debug("</" + raw + ">");
        conv.endElement(uri, local, raw);
+       xpath.pop();
     }
 
     public CDOInterface returnCDO() {
@@ -92,13 +98,20 @@ public class CMLHandler extends DefaultHandler {
         conv.startDocument();
     }
 
-    public void startElement(String uri, String local, String raw, Attributes atts) {
+    private String printStringStack(Stack s) {
         StringBuffer sb = new StringBuffer();
-        sb.append("<" + raw);
-        if (uri.length() > 0) sb.append(" xmlns=\"" + uri + "\"");
-        sb.append(">");
-        logger.debug(sb.toString());
-        String name = raw;
+        sb.append("/");
+        Enumeration strings = s.elements();
+        while (strings.hasMoreElements()) {
+            sb.append(strings.nextElement());
+            sb.append("/");
+        }
+        return sb.toString();
+    }
+    
+    public void startElement(String uri, String local, String raw, Attributes atts) {
+        xpath.push(local);
+        logger.debug("<" + raw + "> -> " + printStringStack(xpath));
         // Detect CML modules, like CRML and CCML
         if (local.startsWith("reaction")) {
             // e.g. reactionList, reaction -> CRML module
