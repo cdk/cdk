@@ -101,6 +101,7 @@ public class PDBValidator implements ValidatorInterface {
     };
     public ValidationReport validateChemModel(ChemModel subject) {
         ValidationReport report = new ValidationReport();
+        logger.debug("Starting to validate against PDB entry...");
         Object PDBcodeObject = subject.getProperty(MACiEReader.PDBCode);
         if (PDBcodeObject != null) {
             String PDB = PDBcodeObject.toString();
