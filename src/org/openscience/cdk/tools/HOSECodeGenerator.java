@@ -375,7 +375,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 	{
 		if (sphereNodes == null || sphereNodes.size() < 1)
 		{
-			return "";
+			return sphereDelimiters[sphere - 1];
 		}
 		Atom node = null;
 		TreeNode treeNode = null;
@@ -548,7 +548,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 	 */
 	private void fillUpSphereDelimiters()
 	{
-		
+		if (debug) System.out.println("Sphere: " + sphere);
 		for (int f = sphere; f < 4; f++)
 		{
 			HOSECode.append(sphereDelimiters[f]);
