@@ -20,54 +20,59 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
  */
-
 package org.openscience.cdk;
 
 import java.util.Vector;
 
 /**
- * Represents the concept of a chemical molecule, an object composed of 
- * atoms connected by bonds
+ *  Represents the concept of a chemical molecule, an object composed of atoms connected by bonds
  *
- * @author     steinbeck 
- * @created    October 2, 2000 
+ * @author     steinbeck
+ * @created    October 2, 2000
  */
 public class Molecule extends AtomContainer
 {
-	private Vector chemNames; 
-    private String autonomName = "";
-    private String casRN = "";
-    private String beilsteinRN = "";
+	/**
+	 *  Description of the Field
+	 */
 	public String title;
+	private Vector chemNames;
+	private String autonomName = "";
+	private String casRN = "";
+	private String beilsteinRN = "";
 
 
 	/**
-	 * Creates an empty Molecule
-	 *
+	 *  Creates an empty Molecule
 	 */
 	public Molecule()
 	{
 		super();
 		chemNames = new Vector();
 	}
-	
+
+
+	/**
+	 *  Constructor for the Molecule object
+	 *
+	 * @param  atomCount  Description of Parameter
+	 * @param  bondCount  Description of Parameter
+	 */
 	public Molecule(int atomCount, int bondCount)
 	{
 		super(atomCount, bondCount);
 		chemNames = new Vector();
 	}
-	
+
 
 	/**
-	 * Constructs a Molecule with 
-	 * a copy of the atoms and bonds of another Molecule
-	 * (A shallow copy, i.e., with the same objects as in the original AtomContainer)
+	 *  Constructs a Molecule with a copy of the atoms and bonds of another Molecule (A shallow copy, i.e., with the same objects as in the original AtomContainer)
 	 *
-	 * @param   ac  An Molecule to copy the atoms and bonds from 
+	 * @param  ac  An Molecule to copy the atoms and bonds from
 	 */
-	public Molecule(Molecule ac)
+	public Molecule(Molecule mol)
 	{
-		super((AtomContainer)ac);
+		super((AtomContainer) mol);
 	}
 
 	/**
@@ -84,68 +89,31 @@ public class Molecule extends AtomContainer
 
 	
 	/**
-	 * Returns the AutonomName for this molecule. Autonom is a program that 
-	 * published by Beilstein, which uniquely names a chemical structure
+	 *  Sets the AutonomName for this molecule. Autonom is a program that published by Beilstein, which uniquely names a chemical structure
 	 *
-	 * @return The autoname name of this structure
-	 */
-	public String getAutonomName()
-	{
-		return this.autonomName;
-	}
-
-
-	/**
-	 * Sets the AutonomName for this molecule. Autonom is a program that 
-	 * published by Beilstein, which uniquely names a chemical structure
-     *
-	 * @param   autonomName  The Autonom name to be assigned to this structure
+	 * @param  autonomName  The Autonom name to be assigned to this structure
 	 */
 	public void setAutonomName(String autonomName)
 	{
 		this.autonomName = autonomName;
 	}
 
-	
 
 	/**
-	 * Returns the Beilstein Registry Number of this Molecule
+	 *  Assigns a Beilstein Registry Number to this Molecule
 	 *
-	 * @return The Beilstein Registry Number of this Molecule 
-	 */
-	public String getBeilsteinRN()
-	{
-		return this.beilsteinRN;
-	}
-
-
-	/**
-	 * Assigns a Beilstein Registry Number to this Molecule
-	 *
-	 * @param   beilsteinRN  The Beilstein Registry Number to be assigned to this molecule	
+	 * @param  beilsteinRN  The Beilstein Registry Number to be assigned to this molecule
 	 */
 	public void setBeilsteinRN(String beilsteinRN)
 	{
 		this.beilsteinRN = beilsteinRN;
 	}
 
-	
 
 	/**
-	 * Returns the CAS Registry Number of this Molecule
+	 *  Assigns a CAS Registry Number to this Molecule
 	 *
-	 * @return The CAS Registry Number of this Molecule    
-	 */
-	public String getCasRN()
-	{
-		return this.casRN;
-	}
-
-
-	/**
-	 * Assigns a CAS Registry Number to this Molecule
-	 *
-	 * @param   casRN  The CAS Registry Number to be assinged to this Molecule
+	 * @param  casRN  The CAS Registry Number to be assinged to this Molecule
 	 */
 	public void setCasRN(String casRN)
 	{
@@ -154,66 +122,100 @@ public class Molecule extends AtomContainer
 
 
 	/**
-	 * Returns the number of chemcial names stored for this Molecule
+	 *  Bulk method for assigning a bunch of chemical names to this molecule by overwriting the chemical names vector as a whole.
 	 *
-	 * @return The number of chemical names stored for this Molecule
-	 */
-	public int getChemNamesCount()
-	{
-		return chemNames.size();
-	}
-	
-
-	/**
-	 * Returns the Vector contains all the chemical names stored for this Molecule
-	 *
-	 * @return The Vector contains all the chemical names stored for this Molecule    
-	 */
-	public Vector getChemNames()
-	{
-		return this.chemNames;
-	}
-	
-
-	/**
-	 * Bulk method for assigning a bunch of chemical names to this molecule
-	 * by overwriting the chemical names vector as a whole.
-	 *
-	 * @param   chemNames A vector containing a bunch of chemical names to be assigned to this Molecule 
+	 * @param  chemNames  A vector containing a bunch of chemical names to be assigned to this Molecule
 	 */
 	public void setChemNames(Vector chemNames)
 	{
 		this.chemNames = chemNames;
 	}
-	
+
 
 	/**
-	 * Return one of the chemical names of this molecule.
+	 *  Assigns a title to this Molecule
 	 *
-	 * @param   number The position of the chemcial name to be returned
-	 * @return  The chemical name of this molecule whose position in the chemical names vector is indicated by number   
+	 * @param  title  The title to be assigned to this Molecule
+	 */
+	public void setTitle(String title)
+	{
+		this.title = title;
+	}
+
+
+	/**
+	 *  Returns the AutonomName for this molecule. Autonom is a program that published by Beilstein, which uniquely names a chemical structure
+	 *
+	 * @return    The autoname name of this structure
+	 */
+	public String getAutonomName()
+	{
+		return this.autonomName;
+	}
+
+
+
+	/**
+	 *  Returns the Beilstein Registry Number of this Molecule
+	 *
+	 * @return    The Beilstein Registry Number of this Molecule
+	 */
+	public String getBeilsteinRN()
+	{
+		return this.beilsteinRN;
+	}
+
+
+
+	/**
+	 *  Returns the CAS Registry Number of this Molecule
+	 *
+	 * @return    The CAS Registry Number of this Molecule
+	 */
+	public String getCasRN()
+	{
+		return this.casRN;
+	}
+
+
+	/**
+	 *  Returns the number of chemcial names stored for this Molecule
+	 *
+	 * @return    The number of chemical names stored for this Molecule
+	 */
+	public int getChemNamesCount()
+	{
+		return chemNames.size();
+	}
+
+
+	/**
+	 *  Returns the Vector contains all the chemical names stored for this Molecule
+	 *
+	 * @return    The Vector contains all the chemical names stored for this Molecule
+	 */
+	public Vector getChemNames()
+	{
+		return this.chemNames;
+	}
+
+
+	/**
+	 *  Return one of the chemical names of this molecule.
+	 *
+	 * @param  number  The position of the chemcial name to be returned
+	 * @return         The chemical name of this molecule whose position in the chemical names vector is indicated by number
 	 */
 	public String getChemName(int number)
 	{
-		return (String)chemNames.elementAt(number);
+		return (String) chemNames.elementAt(number);
 	}
 
 
 	/**
-	 * Add a new chemcial name to the collection of chemical names in this molecule
+	 *  Returns the title of this Molecule
 	 *
-	 * @param   chemName The new chemical name to added to the collection of chemical names of this molecule 
-	 */
-	public void addChemName(String chemName)
-	{
-		this.chemNames.addElement(chemName);
-	}
-	
-
-	/**
-	 * Returns the title of this Molecule
-	 *
-	 * @return   The title of this Molecule  
+	 * @return    The title of this Molecule
 	 */
 	public String getTitle()
 	{
@@ -222,15 +224,14 @@ public class Molecule extends AtomContainer
 
 
 	/**
-	 * Assigns a title to this Molecule
+	 *  Add a new chemcial name to the collection of chemical names in this molecule
 	 *
-	 * @param   title   The title to be assigned to this Molecule
+	 * @param  chemName  The new chemical name to added to the collection of chemical names of this molecule
 	 */
-	public void setTitle(String title)
+	public void addChemName(String chemName)
 	{
-		this.title = title;
+		this.chemNames.addElement(chemName);
 	}
-}	
-	
+}
 
 

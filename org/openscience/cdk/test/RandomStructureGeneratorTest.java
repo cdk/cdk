@@ -33,24 +33,16 @@ import java.util.*;
 import java.io.*;
 import java.net.URL;
 import javax.vecmath.Vector2d;
-import junit.framework.*;
 
-public class RandomStructureGeneratorTest extends TestCase
+public class RandomStructureGeneratorTest
 {
 	public boolean debug = false;
-	public RandomStructureGeneratorTest(String name)
+	public MoleculeListViewer moleculeListViewer = null;
+	public RandomStructureGeneratorTest()
 	{
-		super(name);
+		moleculeListViewer = new MoleculeListViewer();
+		testIt();
 	}
-	
-	public void setUp()
-	{
-	}
-
-	public static Test suite() {
-		return new TestSuite(RandomStructureGeneratorTest.class);
-	}
-
 
 	/** A complex alkaloid with two separate ring systems to 
 	  * be laid out.
@@ -64,13 +56,14 @@ public class RandomStructureGeneratorTest extends TestCase
 
 		RandomGenerator rg = new RandomGenerator();
 		rg.setMolecule(molecule);
-		
-		for (int f = 0; f < 1000; f++)
+	
+		for (int f = 0; f < 10000; f++)
 		{
 			mol = rg.proposeStructure();
-			if ((double)f/(double)50 == f/50)
+			//rg.acceptStructure();			
+			if ((double)f/(double)500 == f/500)
 			{
-				structures.addElement(mol);
+				structures.addElement(mol.clone());
 				if (debug)
 				{
 					s = "BondCounts:    ";
@@ -93,10 +86,8 @@ public class RandomStructureGeneratorTest extends TestCase
 					System.out.println(s);
 				}
 			}
-			rg.acceptStructure();			
 		}
-//		structures.addElement((Molecule)molecule.clone());
-		assert(everythingOk(structures));
+		everythingOk(structures);
 	}
 
 
@@ -114,7 +105,7 @@ public class RandomStructureGeneratorTest extends TestCase
 //			mv.setRenderer2DModel(r2dm);
 
 			mol = (Molecule)structures.elementAt(f);
-			sdg.setMolecule(mol);
+			sdg.setMolecule((Molecule)mol.clone());
 
 			try
 			{
@@ -126,10 +117,14 @@ public class RandomStructureGeneratorTest extends TestCase
 				exc.printStackTrace();
 			}
 			mv.setAtomContainer(sdg.getMolecule());
-			CDKTests.moleculeListViewer.addStructure(mv, "RandomGent Result no. " + (f + 1));
+			moleculeListViewer.addStructure(mv, "RandomGent Result no. " + (f + 1));
 		}
 		return true;
 	}
 	
+	public static void main(String[] args)
+	{
+		new RandomStructureGeneratorTest();	
+	}
 }
 

@@ -244,11 +244,11 @@ public class PathTools implements CDKConstants {
 	 *@return             The shortest path between the starting sphere and the target atom
 	 */
 	public static int breadthFirstTargetSearch(AtomContainer ac, Vector sphere, Atom target, int pathLength, int cutOff) {
+		if (pathLength == 0) resetFlags(ac);
 		pathLength++;
 		if (pathLength > cutOff) {
 			return -1;
 		}
-
 		Atom atom = null;
 
 		Atom nextAtom = null;
@@ -274,5 +274,18 @@ public class PathTools implements CDKConstants {
 			return breadthFirstTargetSearch(ac, newSphere, target, pathLength, cutOff);
 		}
 		return -1;
+	}
+	
+	public static void resetFlags(AtomContainer ac)
+	{
+		for (int f = 0; f < ac.getAtomCount(); f++)
+		{
+			ac.getAtomAt(f).flags[VISITED] = false;	
+		}
+		for (int f = 0; f < ac.getBondCount(); f++)
+		{
+			ac.getBondAt(f).flags[VISITED] = false;	
+		}
+		
 	}
 }
