@@ -151,7 +151,7 @@ public class MoleculeBuilder
             //with a bond modifer but no functional groups.
         }
         //Alcohols
-        else if (funGroupToken == "ol")
+        else if (funGroupToken == "ol" || funGroupToken == "hydroxy")
         {
             //If functional group hasn't had a location specified:
             if (addPos < 0)
