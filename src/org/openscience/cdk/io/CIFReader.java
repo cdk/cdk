@@ -39,7 +39,8 @@ import javax.vecmath.Point3d;
 
 
 /**
- * A reader for the CIF and mmCIF crystallographic formats. It's very ad hoc, not written
+ * This is not a reader for the CIF and mmCIF crystallographic formats.
+ * It is able, however, to extract some content from it. It's very ad hoc, not written
  * using any dictionary. So please complain if something is not working.
  * In addition, the things it does read are considered experimental.
  *
