@@ -62,8 +62,10 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	
 	private double highlightRadius = 10.0;
 
-	private boolean drawNumbers = false;	
-	
+	private boolean drawNumbers = false;
+
+    private boolean showAtomAtomMapping = false;
+
 	private int atomRadius = 8;
 	
 	private Atom highlightedAtom = null;
@@ -354,17 +356,27 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 		this.highlightRadius = highlightRadius;
 	}
 
-	
+    /**
+     * Returns whether Atom-Atom mapping must be shown.
+     */
+     public boolean getShowAtomAtomMapping() {
+         return this.showAtomAtomMapping;
+     }
 
-	/**
-	 * XXX No idea what this is about
-	 *
-	 * @return an unknown int    
-	 */
-	public int getAtomRadius()
-	{
-		return this.atomRadius;
-	}
+
+    /**
+     * Sets wether Atom-Atom mapping must be shown.
+     */
+    public void setShowAtomAtomMapping(boolean value) {
+        this.showAtomAtomMapping = value;
+    }
+
+    /**
+     * XXX No idea what this is about.
+     */
+    public int getAtomRadius() {
+        return this.atomRadius;
+    }
 
 
 	/**

@@ -116,6 +116,35 @@ public class Renderer2D   {
         }
         double[] minmaxProducts = GeometryTools.getMinMax(productContainer);
 
+        // paint atom atom mappings
+        if (r2dm.getShowAtomAtomMapping()) {
+            Mapping[] mappings = reaction.getMappings();
+            for (int i=0; i<mappings.length; i++) {
+                ChemObject[] objects = mappings[i].getRelatedChemObjects();
+                Atom highlighted = r2dm.getHighlightedAtom();
+                if (highlighted != null) {
+                    // only draw mapping when one of the mapped atoms
+                    // is highlighted
+                    if (objects[0] instanceof Atom &&
+                        objects[1] instanceof Atom &&
+                        (highlighted.equals(objects[0]) ||
+                         highlighted.equals(objects[1]))) {
+                        Atom atom1 = (Atom)objects[0];
+                        Atom atom2 = (Atom)objects[1];
+                        int[] ints = new int[4];
+                        ints[0] = (int)(atom1.getPoint2D().x);
+                        ints[1] = (int)(atom1.getPoint2D().y);
+                        ints[2] = (int)(atom2.getPoint2D().x);
+                        ints[3] = (int)(atom2.getPoint2D().y);
+                        int[] screenCoords = getScreenCoordinates(ints);
+                        graphics.setColor(Color.GRAY);
+                        graphics.drawLine(screenCoords[0], screenCoords[1],
+                        screenCoords[2], screenCoords[3]);
+                        graphics.setColor(r2dm.getForeColor());
+                    }
+                }
+            }
+        }
         
         // paint box around total
         int width = 13;

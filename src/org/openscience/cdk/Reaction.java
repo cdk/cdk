@@ -58,6 +58,9 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
     protected double[] productStoichiometry;
     protected int productCount;
     
+    protected Mapping[] map;
+    protected int mappingCount;
+    
     private int reactionDirection;
     
     /**
@@ -70,6 +73,8 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
         this.products = new Molecule[growArraySize];
         this.productStoichiometry = new double[growArraySize];
         productCount = 0;
+        this.map = new Mapping[growArraySize];
+        mappingCount = 0;
         reactionDirection = FORWARD;
     }
     
@@ -105,6 +110,16 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
         Molecule[] returnProducts = new Molecule[getProductCount()];
         System.arraycopy(this.products, 0, returnProducts, 0, returnProducts.length);
         return returnProducts;
+    }
+    
+    /**
+     * Returns an array of Molecule with a length matching he number
+     * of products in this reaction.
+     */
+    public Mapping[] getMappings() {
+        Mapping[] returnMappings = new Mapping[mappingCount];
+        System.arraycopy(this.map, 0, returnMappings, 0, returnMappings.length);
+        return returnMappings;
     }
     
     /**
@@ -193,6 +208,12 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
         return reactionDirection;
     }
     
+    public void addMapping(Mapping mapping) {
+        if (mappingCount + 1 >= map.length) growMappingArray();
+        map[mappingCount] = mapping;
+        mappingCount++;
+    }
+    
     protected void growReactantArray() {
         Molecule[] newReactants = new Molecule[reactants.length + growArraySize];
         System.arraycopy(reactants, 0, newReactants, 0, reactants.length);
@@ -211,6 +232,12 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
         productStoichiometry = newCoeffs;
     }
 
+    protected void growMappingArray() {
+        Mapping[] newMap = new Mapping[map.length + growArraySize];
+        System.arraycopy(map, 0, newMap, 0, map.length);
+        map = newMap;
+    }
+
     /**
      * Returns a one line string representation of this Atom.
      * Methods is conform RFC #9.
@@ -223,6 +250,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
         description.append(getID() + ", ");
         description.append("#R:" + reactantCount + ", ");
         description.append("#P:" + productCount + ", ");
+        description.append("#M:" + mappingCount + ", ");
         Molecule[] reactants = getReactants();
         for (int i=0; i<reactantCount; i++) {
             description.append(reactants[i].toString());
@@ -234,4 +262,5 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
         description.append(")");
         return description.toString();
     }
+    
 }
