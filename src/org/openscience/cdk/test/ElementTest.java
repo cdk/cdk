@@ -126,4 +126,12 @@ public class ElementTest extends TestCase {
             assertTrue(description.charAt(i) != '\r');
         }
     }
+
+    public void testCompare_Object() {
+        Element elem = new Element("Li");
+        assertTrue(elem.compare(elem));
+        Element hydrogen = new Element("H");
+        assertFalse(elem.compare(hydrogen));
+        assertFalse(elem.compare("Li"));
+    }
 }

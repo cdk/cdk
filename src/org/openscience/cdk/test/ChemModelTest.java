@@ -29,7 +29,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.*;
 
 /**
  * Checks the funcitonality of the ChemModel class.
@@ -55,6 +55,36 @@ public class ChemModelTest extends TestCase {
 	    assertNotNull(chemModel);
     }
 
+    public void testSetSetOfMolecules_SetOfMolecules() {
+	    ChemModel chemModel = new ChemModel();
+	    SetOfMolecules crystal = new SetOfMolecules();
+        chemModel.setSetOfMolecules(crystal);
+        assertEquals(crystal, chemModel.getSetOfMolecules());
+    }
+    public void testGetSetOfMolecules() {
+        testSetSetOfMolecules_SetOfMolecules();
+    }
+    
+    public void testSetRingSet_RingSet() {
+	    ChemModel chemModel = new ChemModel();
+	    RingSet crystal = new RingSet();
+        chemModel.setRingSet(crystal);
+        assertEquals(crystal, chemModel.getRingSet());
+    }
+    public void testGetRingSet() {
+        testSetRingSet_RingSet();
+    }
+    
+    public void testSetCrystal_Crystal() {
+	    ChemModel chemModel = new ChemModel();
+	    Crystal crystal = new Crystal();
+        chemModel.setCrystal(crystal);
+        assertEquals(crystal, chemModel.getCrystal());
+    }
+    public void testGetCrystal() {
+        testSetCrystal_Crystal();
+    }
+    
     public void testToString() {
         ChemModel model = new ChemModel();
         String description = model.toString();

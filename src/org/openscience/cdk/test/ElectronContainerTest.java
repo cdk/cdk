@@ -50,9 +50,28 @@ public class ElectronContainerTest extends TestCase {
         return new TestSuite(ElectronContainerTest.class);
     }
     
-    public void testSetElectronCount() {
+    public void testElectronContainer() {
+        ElectronContainer ec = new ElectronContainer();
+        assertNotNull(ec);
+        assertEquals(0, ec.getElectronCount());
+    }
+    
+    public void testSetElectronCount_int() {
         ElectronContainer ec = new ElectronContainer();
         ec.setElectronCount(3);
         assertEquals(3, ec.getElectronCount());
     }
+    public void getElectronCount() {
+        testSetElectronCount_int();
+    }
+
+    public void testClone() {
+        ElectronContainer ec = new ElectronContainer();
+        ec.setElectronCount(2);
+        Object clone = ec.clone();
+        assertNotNull(clone);
+        assertTrue(clone instanceof ElectronContainer);
+        assertEquals(ec.getElectronCount(), ((ElectronContainer)clone).getElectronCount());
+    }
+    
 }

@@ -69,6 +69,28 @@ public class PseudoAtomTest extends TestCase {
         assertNull(a.getFractionalPoint3d());
     }
 
+    public void testPseudoAtom_String_Point2d() {
+        Point2d point = new Point2d(1.0, 2.0);
+        String label = "Arg255";
+        PseudoAtom a = new PseudoAtom(label, point);
+        assertEquals("R", a.getSymbol());
+        assertEquals(label, a.getLabel());
+        assertEquals(point, a.getPoint2d());
+        assertNull(a.getPoint3d());
+        assertNull(a.getFractionalPoint3d());
+    }
+
+    public void testPseudoAtom_String_Point3d() {
+        Point3d point = new Point3d(1.0, 2.0, 3.0);
+        String label = "Arg255";
+        PseudoAtom a = new PseudoAtom(label, point);
+        assertEquals("R", a.getSymbol());
+        assertEquals(label, a.getLabel());
+        assertEquals(point, a.getPoint3d());
+        assertNull(a.getPoint2d());
+        assertNull(a.getFractionalPoint3d());
+    }
+
     public void testGetLabel() {
         String label = "Arg255";
         PseudoAtom a = new PseudoAtom(label);
@@ -92,6 +114,24 @@ public class PseudoAtomTest extends TestCase {
         PseudoAtom atom = new PseudoAtom("Whatever");
         atom.setFormalCharge(+5);
         assertEquals(0, atom.getFormalCharge());
+    }
+
+    public void testSetHydrogenCount_int() {
+        PseudoAtom atom = new PseudoAtom("Whatever");
+        atom.setHydrogenCount(+5);
+        assertEquals(0, atom.getHydrogenCount());
+    }
+
+    public void testSetCharge_double() {
+        PseudoAtom atom = new PseudoAtom("Whatever");
+        atom.setHydrogenCount(+5);
+        assertEquals(0, atom.getHydrogenCount());
+    }
+
+    public void testSetStereoParity_int() {
+        PseudoAtom atom = new PseudoAtom("Whatever");
+        atom.setStereoParity(-1);
+        assertEquals(0, atom.getStereoParity());
     }
 
     public void testPseudoAtom_Atom() {

@@ -31,7 +31,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.Crystal;
+import org.openscience.cdk.*;
 
 /**
  * Checks the funcitonality of the Crystal.
@@ -50,7 +50,58 @@ public class CrystalTest extends TestCase {
         return new TestSuite(CrystalTest.class);
     }
 
+    public void testCrystal() {
+        Crystal crystal = new Crystal();
+        assertNotNull(crystal);
+        assertEquals(0, crystal.getAtomCount());
+        assertEquals(0, crystal.getBondCount());
+    }
     
+    public void testCrystal_AtomContainer() {
+        AtomContainer acetone = new AtomContainer();
+        Atom c1 = new Atom("C");
+        Atom c2 = new Atom("C");
+        Atom o = new Atom("O");
+        Atom c3 = new Atom("C");
+        acetone.addAtom(c1);
+        acetone.addAtom(c2);
+        acetone.addAtom(c3);
+        acetone.addAtom(o);
+        Bond b1 = new Bond(c1, c2,1);
+        Bond b2 = new Bond(c1, o, 2);
+        Bond b3 = new Bond(c1, c3,1);
+        acetone.addBond(b1);
+        acetone.addBond(b2);
+        acetone.addBond(b3);
+        
+        Crystal crystal = new Crystal(acetone);
+        assertNotNull(crystal);
+        assertEquals(4, crystal.getAtomCount());
+        assertEquals(3, crystal.getBondCount());
+    }
+    
+    public void testAddl_AtomContainer() {
+        AtomContainer acetone = new AtomContainer();
+        Atom c1 = new Atom("C");
+        Atom c2 = new Atom("C");
+        Atom o = new Atom("O");
+        Atom c3 = new Atom("C");
+        acetone.addAtom(c1);
+        acetone.addAtom(c2);
+        acetone.addAtom(c3);
+        acetone.addAtom(o);
+        Bond b1 = new Bond(c1, c2,1);
+        Bond b2 = new Bond(c1, o, 2);
+        Bond b3 = new Bond(c1, c3,1);
+        acetone.addBond(b1);
+        acetone.addBond(b2);
+        acetone.addBond(b3);
+        
+        Crystal crystal = new Crystal();
+        crystal.add(acetone);
+        assertEquals(4, crystal.getAtomCount());
+        assertEquals(3, crystal.getBondCount());
+    }
     
     public void testSetA_Vector3d() {
         Crystal crystal = new Crystal();
@@ -126,6 +177,9 @@ public class CrystalTest extends TestCase {
         int z = 2;
         crystal.setZ(z);
         assertEquals(z, crystal.getZ());
+    }
+    public void testGetZ() {
+        testSetZ_int();
     }
 
     /**

@@ -50,7 +50,7 @@ public class IsotopeTest extends TestCase {
         return new TestSuite(IsotopeTest.class);
     }
     
-    public void testIsotope() {
+    public void testIsotope_String() {
         Isotope i = new Isotope("C");
         assertEquals("C", i.getSymbol());
     }
@@ -60,26 +60,49 @@ public class IsotopeTest extends TestCase {
         assertEquals(12, i.getMassNumber());
         assertEquals("C", i.getSymbol());
         assertEquals(6, i.getAtomicNumber());
-        assertTrue(12.001 == i.getExactMass());
-        assertTrue(80.0 == i.getNaturalAbundance());
+        assertEquals(12.001, i.getExactMass(), 0.001);
+        assertEquals(80.0, i.getNaturalAbundance(), 0.001);
     }
     
-    public void testSetNaturalAbundance() {
+    public void testIsotope_String_int() {
+        Isotope i = new Isotope("C", 12);
+        assertEquals(12, i.getMassNumber());
+        assertEquals("C", i.getSymbol());
+    }
+    
+    public void testIsotope_int_String_double_double() {
+        Isotope i = new Isotope(6, "C", 12.001, 80.0);
+        assertEquals("C", i.getSymbol());
+        assertEquals(6, i.getAtomicNumber());
+        assertEquals(12.001, i.getExactMass(), 0.001);
+        assertEquals(80.0, i.getNaturalAbundance(), 0.001);
+    }
+    
+    public void testSetNaturalAbundance_double() {
         Isotope i = new Isotope("C");
         i.setNaturalAbundance(80.0);
-        assertTrue(80.0 == i.getNaturalAbundance());
+        assertEquals(80.0, i.getNaturalAbundance(), 0.001);
+    }
+    public void testGetNaturalAbundance() {
+        testSetNaturalAbundance_double();
     }
     
-    public void testSetExactMass() {
+    public void testSetExactMass_double() {
         Isotope i = new Isotope("C");
         i.setExactMass(12.03);
-        assertTrue(12.03 == i.getExactMass());
+        assertEquals(12.03, i.getExactMass(), 0.001);
+    }
+    public void testGetExactMass() {
+        testSetExactMass_double();
     }
 
-    public void testSetMassNumber() {
+    public void testSetMassNumber_int() {
         Isotope i = new Isotope("D");
         i.setMassNumber(2);
         assertEquals(2, i.getMassNumber());
+    }
+    public void testGetMassNumber() {
+        testSetMassNumber_int();
     }
 
     /**
@@ -140,5 +163,13 @@ public class IsotopeTest extends TestCase {
             assertTrue(description.charAt(i) != '\n');
             assertTrue(description.charAt(i) != '\r');
         }
+    }
+
+    public void testCompare_Object() {
+        Isotope iso = new Isotope("C", 13);
+        assertTrue(iso.compare(iso));
+        Isotope iso12 = new Isotope("C", 12);
+        assertFalse(iso.compare(iso12));
+        assertFalse(iso.compare("C"));
     }
 }

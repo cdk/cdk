@@ -261,4 +261,12 @@ public class AtomTypeTest extends TestCase {
             assertTrue(description.charAt(i) != '\r');
         }
     }
+
+    public void testCompare_Object() {
+        AtomType at = new AtomType("C");
+        assertTrue(at.compare(at));
+        AtomType hydrogen = new AtomType("H");
+        assertFalse(at.compare(hydrogen));
+        assertFalse(at.compare("Li"));
+    }
 }

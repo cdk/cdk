@@ -84,10 +84,19 @@ public class ChemObjectTest extends TestCase {
         assertEquals(cProperty, chemObject.getProperty(cDescription));
     }
 
+    public void testGetProperties() {
+        ChemObject chemObject = new ChemObject();
+        assertNotNull(chemObject.getProperties());
+        assertEquals(0, chemObject.getProperties().size());
+    }
+    public void testLazyProperies() {
+        testGetProperties();
+    }
+
     public void testGetProperty_Object() {
         ChemObject chemObject = new ChemObject();
         assertNull(chemObject.getProperty("dummy"));
-   }
+    }
 
     public void testRemoveProperty_Object() {
         ChemObject chemObject = new ChemObject();
@@ -109,6 +118,15 @@ public class ChemObjectTest extends TestCase {
     public void testGetID() {
         ChemObject chemObject = new ChemObject();
         assertNull(chemObject.getID());
+    }
+    
+    public void testSetFlag_int_boolean() {
+        ChemObject chemObject = new ChemObject();
+        chemObject.setFlag(0, true);
+        assertTrue(chemObject.getFlag(0));
+    }
+    public void testGetFlag() {
+        testSetFlag_int_boolean();
     }
     
     public void testClone() {

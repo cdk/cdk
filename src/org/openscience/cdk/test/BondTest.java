@@ -178,9 +178,16 @@ public class BondTest extends TestCase {
         Atom c = new Atom("C");
         Atom o = new Atom("O");
         
-        Bond b = new Bond(c, o, 2.0);
+        Bond b = new Bond(c, o, 2.0, CDKConstants.STEREO_BOND_DOWN);
         
         b.setStereo(CDKConstants.STEREO_BOND_UP);
+        assertEquals(CDKConstants.STEREO_BOND_UP, b.getStereo());
+    }
+    public void testGetStereo() {
+        Atom c = new Atom("C");
+        Atom o = new Atom("O");
+        
+        Bond b = new Bond(c, o, 2.0, CDKConstants.STEREO_BOND_UP);
         assertEquals(CDKConstants.STEREO_BOND_UP, b.getStereo());
     }
     

@@ -57,18 +57,24 @@ public class MonomerTest extends TestCase {
 
 	public void testMonomer() {
 		Monomer oMonomer = new Monomer();
-                assertTrue(oMonomer != null);
+        assertTrue(oMonomer != null);
 	}
 	
-	public void testSetMonomerName() {
-            Monomer m = new Monomer();
-            m.setMonomerName(new String("TRP279"));
-            assertEquals(new String("TRP279"), m.getMonomerName());
+	public void testSetMonomerName_String() {
+        Monomer m = new Monomer();
+        m.setMonomerName(new String("TRP279"));
+        assertEquals(new String("TRP279"), m.getMonomerName());
 	}
-
-    public void testSetMonomerType() {
+    public void testGetMonomerName() {
+        testSetMonomerName_String();
+    }
+    
+    public void testSetMonomerType_String() {
         Monomer oMonomer = new Monomer();
         oMonomer.setMonomerType(new String("TRP"));
         assertEquals(new String("TRP"), oMonomer.getMonomerType());
+    }
+    public void testGetMonomerType() {
+        testSetMonomerType_String();
     }
 }
