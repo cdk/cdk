@@ -62,9 +62,10 @@ import org.openscience.cdk.test.qsar.*;
 	suite.addTest(BCUTDescriptorTest.suite());
 	suite.addTest(WHIMDescriptorTest.suite());
 	suite.addTest(KappaShapeIndicesDescriptorTest.suite());
+	suite.addTest(WienerNumbersDescriptorTest.suite());
 	suite.addTest(TPSADescriptorTest.suite());
         suite.addTest(DescriptorEngineTest.suite());
-        return suite;
+	return suite;
     }
     
 }
