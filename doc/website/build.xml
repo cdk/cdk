@@ -119,7 +119,7 @@
   <target id="website" name="website" depends="layout">
     <xslt basedir="${source.dir}" destdir="${build.dir}" extension=".html"
       includes="*.xml" excludes="build.xml, *layout.xml, java*-data.xml, javancss-tmp.xml, keyword.index.xml"
-      style="${website-docbook-xsl}/xsl/tabular.xsl"/>
+      style="website.cdk.xsl"/>
   </target>
 
   <target name="javancss" unless="javancss.uptodate">
