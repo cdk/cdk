@@ -1,5 +1,7 @@
 <project name="CDK" default="html" basedir=".">
 
+    <!-- $Id$ -->
+
     <property name="javadoc.dir" value="doc/api" />
     <property name="pathtojava3d" value="" />
     <property name="build" value="build" />
@@ -165,16 +167,35 @@
         </javadoc>
     </target>
 
-    <target name="compileTaglets" id="compileTaglets">
-      <javac srcdir="doc/javadoc/source" destdir="doc/javadoc"
-             includes="*Taglet.java" debug="on" optimize="off">
-        <classpath>
-          <fileset dir="${java.ext.dirs}">
-            <include name="tools.jar" />
-          </fileset>
-        </classpath>
-      </javac>
-    </target>
+  <target id="check" name="check">
+    <condition property="isMacOsX">
+      <and>
+        <os family="mac"/>
+        <os family="unix"/>
+      </and>
+    </condition>
+  </target>
+
+  <target name="compileTaglets" id="compileTaglets" depends="check, compileTaglets.MacOSX, compileTaglets.Other" />
+
+  <target name="compileTaglets.MacOSX" id="compileTaglets.MacOSX" if="isMacOsX">
+    <javac srcdir="doc/javadoc/source" destdir="doc/javadoc"
+           includes="*Taglet.java" debug="on" optimize="off"/>
+  </target>
+
+  <target name="compileTaglets.Other" id="compileTaglets.Other" unless="isMacOsX">
+    <javac srcdir="doc/javadoc/source" destdir="doc/javadoc" 
+         includes="*Taglet.java" debug="on" optimize="off">
+      <classpath>
+        <fileset dir="${java.ext.dirs}">
+          <include name="tools.jar" />
+        </fileset>
+        <fileset dir="${java.ext.dirs}/../../../lib">
+          <include name="tools.jar" />
+        </fileset>
+      </classpath>
+    </javac>
+  </target>
 
 </project>
 
