@@ -1,0 +1,2048 @@
+Start
+		##########################################	
+		##					##	
+		##	MM2 Force Field Definition	##	
+		##					##	
+		##########################################	
+
+ForceFieldDefinition 	
+forcefield MM2-1991-Pseudo	
+changed by cho for cdk to fit non defined atomtypes:	
+new 	:angle	2	2	4	0.500	118.000	0.000	0.000	
+from:angle 	2	2	9	0.500	118.000	0.000	0.000	
+
+from:angle 	1	4	10	0.325	180.000	0.000	0.000	
+new 	:angle	2	4	10	0.325	180.000	0.000	0.000	
+
+from:angle 	1	4	10	0.325	180.000	0.000	0.000	
+new 	:angle	10	10	1	0.325	180.000	0.000	0.000	
+
+from:angle 	1	4	10	0.325	180.000	0.000	0.000	
+new 	:angle	10	10	2	0.325	180.000	0.000	0.000	
+
+>bondunit 	71.94	
+>bond-cubic 	-2.0	
+>bond-quartic 	1.25	!!keeps_Ebond_positive;not_in_"real"_MM2	
+>angleunit 	0.02191418	
+>angle-sextic 	0.00000007	
+>strbndunit 	2.51118	
+>mm2-strbnd 	
+>opbendunit 	0.02191418	
+>torsionunit 	0.5	
+>vdwtype 	BUCKINGHAM	
+>radiusrule 	ARITHMETIC	
+>radiustype 	R-MIN	
+>radiussize 	RADIUS	
+>epsilonrule 	GEOMETRIC	
+>a-expterm 	290000.0	
+>b-expterm 	12.5	
+>c-expterm 	2.25	
+>vdw-14-scale 	1.0	
+>chg-14-scale 	1.0	
+>dielectric 	1.5	
+
+
+		##################################	
+		##				##	
+		##	Literature References	##	
+		##				##	
+		##################################	
+
+
+'N.  L. Allinger, "Conformational Analysis. 130. MM2. A Hydrocarbon Force  Field Utilizing V1 and V2 Torsional Terms", J. Am. Chem. Soc., 99,  8127-8134 (1977)'
+
+'J.  T. Sprague, J. C. Tai, Y. Yuh and N. L. Allinger, "The MMP2 Calculational  Method", J. Comput. Chem., 8, 581-603 (1987)' 
+
+'N.  L. Allinger, R. A. Kok and M. R. Imam, "Hydrogen Bonding in MM2",J.  Comput. Chem., 9, 591-595 (1988)' 
+
+'this  parameter set is from tinker http://dasher.wustl.edu/tinker/'
+
+
+		##################################	
+		##				##	
+		##	Atom Type Definitions	##	
+		##				##	
+		##################################	
+
+	 ID	Root	description     AtomNr.  mass    Formal
+#----	-------	-------	--------------- ------ -------- ----------
+atom 	C	C	CSP3ALKANE	6	12.000	4	
+atom 	Csp2	C	CSP2ALKENE	6	12.000	3	
+atom 	C=	C	CSP2CARBONYL	6	12.000	3	
+atom 	Csp	C	CSPALKYNE	6	12.000	2	
+atom 	HC	H	NONPOLARHYDROGEN	1	1.008	1	
+atom 	O	O	-O-ETHER	8	15.995	4	
+atom 	O=	O	=OCARBONYL	8	15.995	1	
+atom 	N	N	NSP3	7	14.003	4	
+atom 	Nsp2	N	NSP2AMIDE	7	14.003	3	
+atom 	Nsp	N	NSP	7	14.003	1	
+atom 	F	F	FLUORIDE	9	18.998	1	
+atom 	CL	Cl	CHLORIDE	17	34.969	1	
+atom 	BR	Br	BROMIDE	35	78.918	1	
+atom 	I	I	IODIDE	53	126.900	1	
+atom 	S	S	-S-SULFIDE	16	31.972	2	
+atom 	S+	S	>S+SULFONIUM	16	31.972	2	
+atom 	>SN	S	>S=OSULFOXIDE	16	31.972	3	
+atom 	SO2	S	>SO2SULFONE	16	31.972	4	
+atom 	SI	Si	SILANE	14	27.977	4	
+atom 	LP	Lp	LONEPAIR	0	0.000	1	
+atom 	HO	H	-OHALCOHOL	1	1.008	1	
+atom 	CR3R	C	CYCLOPROPANE	6	12.000	4	
+atom 	HN	H	NHAMINE	1	1.008	1	
+atom 	HOCO	H	COOHCARBOXYL	1	1.008	1	
+atom 	P	P	>P-PHOSPHINE	15	30.994	3	
+atom 	B	B	>B-TRIGONAL	5	11.009	3	
+atom 	BTET	B	>B<TETRAHEDRAL	5	11.009	4	
+atom 	HN2	H	-HAMIDE,ENOL	1	1.008	1	
+atom 	C.	C	CARBONRADICAL	6	12.000	3	
+atom 	C+	C	CARBONIUMION	6	12.000	3	
+atom 	GE	Ge	GERMANIUM	32	73.922	2	
+atom 	SN	Sn	TIN	50	117.902	2	
+atom 	PB	Pb	LEAD(IV)	82	207.977	4	
+atom 	SE	Se	SELENIUM	34	79.917	2	
+atom 	TE	Te	TELLURIUM	52	129.907	2	
+atom 	D	D	DEUTERIUM	1	2.014	1	
+atom 	NPYD	N	-N=AZO,PYRIDINE	7	14.003	3	
+atom 	CE3R	C	CSP2CYCLOPROPENE	6	12.000	3	
+atom 	N+	N	NSP3AMMONIUM	7	14.003	4	
+atom 	NPYL	N	NSP2PYRROLE	7	14.003	3	
+atom 	Oar	O	OSP2FURAN	8	15.995	3	
+atom 	Sthi	S	SSP2THIOPHENE	16	31.972	2	
+atom 	N2OX	N	-N=N-OAZOXY	7	14.003	2	
+atom 	HS	H	-SHTHIOL	1	1.008	1	
+atom 	=N=	N	AZIDE(CENTER-N)	7	14.003	2	
+atom 	NO3	N	NO2NITRO	7	14.003	3	
+atom 	OM	O	CARBOXYLATE	8	15.995	1	
+atom 	HN+	H	AMMONIUM	1	1.008	1	
+atom 	OR	O	EPOXY	8	15.995	4	
+atom 	Car	C	BENZENE	6	12.000	3	
+atom 	HE	He	HELIUM	2	4.003	0	
+atom 	NE	Ne	NEON	10	20.179	0	
+atom 	AR	Ar	ARGON	18	39.948	0	
+atom 	KR	Kr	KRYPTON	36	83.800	0	
+atom 	XE	Xe	XENON	54	131.300	0	
+atom 	MG	Mg	MAGNESIUM	12	24.301	0	
+atom 	PTET	P	PHOSPHORUS(V)	15	30.994	4	
+atom 	FE+2	Fe	IRON(II)	26	55.847	0	
+atom 	FE+3	Fe	IRON(III)	26	55.847	0	
+atom 	NI+2	Ni	NICKEL(II)	27	58.710	0	
+atom 	NI+3	Ni	NICKEL(III)	27	58.710	0	
+atom 	CO+2	Co	COBALT(II)	28	58.933	0	
+atom 	CO+3	Co	COBALT(III)	28	58.933	0	
+atom 	OX	O	AMINEOXIDE	8	15.995	1	
+atom 	OK	O	KETONIUMOXYGEN	8	15.995	1	
+atom 	C++	C	KETONIUMCARBON	6	12.000	2	
+atom 	N=C	N	=N-IMINE,OXIME	7	14.003	3	
+atom 	NPD+	N	=N(+)-PYRIDINIUM	7	14.003	3	
+atom 	N+=	N	=N(+)-IMMINIUM	7	14.003	3	
+atom 	N2OX	N	N-OHOXIME	7	14.003	3	
+
+
+		##########################################	
+		##					##	
+		##	Van der	Waals Parameters	##	
+		##					##	
+		##########################################	
+
+#code	T1	r	epsi
+#----	---	----	------
+vdw 	C	1.900	0.044	
+vdw 	Csp2	1.940	0.044	
+vdw 	C=	1.940	0.044	
+vdw 	Csp	1.940	0.044	
+vdw 	HC	1.500	0.047	0.915	
+vdw 	O	1.740	0.050	
+vdw 	O=	1.740	0.066	
+vdw 	N	1.820	0.055	
+vdw 	Nsp2	1.820	0.055	
+vdw 	Nsp	1.820	0.055	
+vdw 	F	1.650	0.078	
+vdw 	CL	2.030	0.240	
+vdw 	BR	2.180	0.320	
+vdw 	I	2.320	0.424	
+vdw 	S	2.110	0.202	
+vdw 	S+	2.110	0.202	
+vdw 	>SN	2.110	0.202	
+vdw 	SO2	2.110	0.202	
+vdw 	SI	2.250	0.140	
+vdw 	LP	1.200	0.016	
+vdw 	HO	0.950	0.036	
+vdw 	CR3R	1.900	0.044	
+vdw 	HN	1.050	0.034	
+vdw 	HOCO	0.900	0.015	
+vdw 	P	2.180	0.168	
+vdw 	B	1.980	0.034	
+vdw 	BTET	1.980	0.034	
+vdw 	HN2	0.900	0.015	
+vdw 	C.	1.940	0.044	
+vdw 	C+	1.940	0.044	
+vdw 	GE	2.400	0.200	
+vdw 	SN	2.550	0.270	
+vdw 	PB	2.700	0.340	
+vdw 	SE	2.250	0.276	
+vdw 	TE	2.400	0.368	
+vdw 	D	1.497	0.047	0.915	
+vdw 	NPYD	1.820	0.055	
+vdw 	CE3R	1.940	0.044	
+vdw 	N+	1.820	0.055	
+vdw 	NPYL	1.820	0.055	
+vdw 	Oar	1.740	0.050	
+vdw 	Sthi	2.110	0.202	
+vdw 	N2OX	1.820	0.055	
+vdw 	HS	0.000	0.000	
+vdw 	=N=	1.820	0.055	
+vdw 	NO3	1.820	0.055	
+vdw 	OM	1.740	0.050	
+vdw 	HN+	0.900	0.015	
+vdw 	OR	1.740	0.050	
+vdw 	Car	1.940	0.044	
+vdw 	HE	1.530	0.026	
+vdw 	NE	1.600	0.090	
+vdw 	AR	1.990	0.268	
+vdw 	KR	2.150	0.358	
+vdw 	XE	2.280	0.495	
+vdw 	MG	2.200	0.015	
+vdw 	PTET	2.200	0.168	
+vdw 	FE+2	2.200	0.020	
+vdw 	FE+3	2.200	0.020	
+vdw 	NI+2	2.200	0.020	
+vdw 	NI+3	2.200	0.020	
+vdw 	CO+2	2.200	0.020	
+vdw 	CO+3	2.200	0.020	
+vdw 	OX	1.820	0.059	
+vdw 	OK	1.740	0.066	
+vdw 	C++	1.940	0.056	
+vdw 	N=C	1.820	0.055	
+vdw 	NPD+	1.820	0.055	
+vdw 	N+=	1.820	0.055	
+vdw 	N2OX	1.820	0.055
+
+
+		##########################################	
+		##					##	
+		##	Van der Waals Pair Parameters	##	
+		##					##	
+		##########################################	
+
+#code	T1	T2	r	 
+#----	---	----	------	------
+vdwpr 	C	HC	3.340	0.046	
+vdwpr 	C	D	3.337	0.046	
+vdwpr 	Csp2	HO	2.340	1.100	
+vdwpr 	Csp2	HN	2.340	0.400	
+vdwpr 	Csp2	HOCO	2.340	1.000	
+vdwpr 	Csp2	HN2	2.340	1.000	
+vdwpr 	O	HO	1.830	1.300	
+vdwpr 	O	HN	1.830	0.600	
+vdwpr 	O	HOCO	2.140	2.200	
+vdwpr 	O	HN2	2.140	2.400	
+vdwpr 	O=	HO	2.140	2.950	
+vdwpr 	O=	HN	2.140	0.400	
+vdwpr 	O=	HOCO	2.030	3.000	
+vdwpr 	O=	HN2	2.030	3.000	
+vdwpr 	N	HO	2.220	2.000	
+vdwpr 	N	HN	2.220	0.400	
+vdwpr 	N	HOCO	2.220	1.400	
+vdwpr 	N	HN2	2.220	1.000	
+vdwpr 	F	HO	2.050	0.800	
+vdwpr 	F	HN	2.050	0.200	
+vdwpr 	F	HOCO	2.050	0.600	
+vdwpr 	F	HN2	2.050	0.400	
+vdwpr 	CL	HO	2.430	3.600	
+vdwpr 	CL	HN	2.430	0.200	
+vdwpr 	CL	HOCO	2.430	0.600	
+vdwpr 	CL	HN2	2.430	0.400	
+vdwpr 	BR	HO	2.580	0.800	
+vdwpr 	BR	HN	2.580	0.200	
+vdwpr 	BR	HOCO	2.580	0.600	
+vdwpr 	BR	HN2	2.580	0.400	
+vdwpr 	I	HO	2.720	0.600	
+vdwpr 	I	HN	2.720	0.400	
+vdwpr 	I	HOCO	2.720	0.400	
+vdwpr 	I	HN2	2.720	0.200	
+vdwpr 	S	HO	2.510	0.400	
+vdwpr 	S	HN	2.510	0.200	
+vdwpr 	S	HOCO	2.510	0.400	
+vdwpr 	S	HN2	2.510	0.200
+
+
+		##########################################	
+		##					##	
+		##	Bond Stretching Parameters	##	
+		##					##	
+		##########################################
+
+#code	T1	T2	lo	 ks
+#----	---	----	------	------
+bond 	C	C	1.523	4.400
+bond 	C	Csp2	1.497	4.400
+bond 	C	C=	1.509	4.400
+bond 	C	Csp	1.470	5.200
+bond 	C	HC	1.113	4.600
+bond 	C	O	1.402	5.360
+bond 	C	N	1.438	5.100
+bond 	C	Nsp2	1.437	3.520
+bond 	C	F	1.392	5.100
+bond 	C	CL	1.795	3.230
+bond 	C	BR	1.949	2.300
+bond 	C	I	2.149	2.200
+bond 	C	S	1.815	3.213
+bond 	C	S+	1.816	3.213
+bond 	C	>SN	1.805	3.213
+bond 	C	SO2	1.784	3.213
+bond 	C	SI	1.880	2.970
+bond 	C	CR3R	1.502	4.400
+bond 	C	P	1.856	2.910
+bond 	C	C.	1.497	4.400
+bond 	C	GE	1.950	2.700
+bond 	C	SN	2.147	2.124
+bond 	C	PB	2.242	1.900
+bond 	C	SE	1.948	2.680
+bond 	C	TE	2.140	2.700
+bond 	C	D	1.108	4.600
+bond 	C	NPYD	1.470	3.950
+bond 	C	CE3R	1.497	4.400
+bond 	C	N+	1.499	5.100
+bond 	C	Oar	1.414	5.360
+bond 	C	N2OX	1.488	3.950
+bond 	C	NO3	1.498	7.000
+bond 	C	Car	1.497	4.400
+bond 	C	OK	1.480	3.000
+bond 	C	C++	1.509	4.400
+bond 	C	N=C	1.470	3.950
+bond 	Csp2	Csp2	1.337	9.600
+bond 	Csp2	C=	1.351	9.600
+bond 	Csp2	Csp	1.313	9.900
+bond 	Csp2	HC	1.101	4.600
+bond 	Csp2	O	1.355	6.000
+bond 	Csp2	N	1.377	6.320
+bond 	Csp2	Nsp2	1.410	5.000
+bond 	Csp2	F	1.320	5.400
+bond 	Csp2	CL	1.719	3.400
+bond 	Csp2	BR	1.881	2.500
+bond 	Csp2	I	2.075	2.480
+bond 	Csp2	SI	1.865	3.500
+bond 	Csp2	CR3R	1.467	4.400
+bond 	Csp2	P	1.828	2.910
+bond 	Csp2	NPYD	1.260	11.090
+bond 	Csp2	CE3R	1.336	9.600
+bond 	Csp2	NPYL	1.266	11.090
+bond 	Csp2	Oar	1.225	10.000
+bond 	Csp2	Sthi	1.459	6.471
+bond 	Csp2	NO3	1.463	5.050
+bond 	Csp2	N=C	1.260	11.090
+bond 	C=	C=	1.415	9.600
+bond 	C=	HC	1.113	4.600
+bond 	C=	O	1.338	5.050
+bond 	C=	O=	1.208	10.800
+bond 	C=	Nsp2	1.385	6.400
+bond 	C=	CR3R	1.447	4.400
+bond 	C=	D	1.130	4.600
+bond 	C=	N=C	1.280	11.090
+bond 	Csp	Csp	1.212	15.600
+bond 	Csp	HC	1.090	5.900
+bond 	Csp	Nsp	1.158	17.730
+bond 	HC	S	1.345	3.800
+bond 	HC	S+	1.346	3.800
+bond 	HC	>SN	1.346	3.800
+bond 	HC	SO2	1.346	3.800
+bond 	HC	SI	1.489	2.720
+bond 	HC	CR3R	1.086	4.600
+bond 	HC	P	1.437	3.330
+bond 	HC	C.	1.101	4.600
+bond 	HC	GE	1.530	2.570
+bond 	HC	SN	1.696	2.229
+bond 	HC	PB	1.775	1.894
+bond 	HC	SE	1.472	3.170
+bond 	HC	TE	1.670	2.850
+bond 	HC	CE3R	1.072	4.600
+bond 	HC	C++	1.113	4.600
+bond 	O	O	1.428	3.950
+bond 	O	SI	1.626	5.500
+bond 	O	LP	0.600	4.600
+bond 	O	HO	0.942	4.600
+bond 	O	HOCO	0.972	7.200
+bond 	O	P	1.615	2.900
+bond 	O	HN2	0.972	7.200
+bond 	O=	>SN	1.480	5.000
+bond 	O=	SO2	1.450	8.412
+bond 	O=	N2OX	1.268	10.800
+bond 	O=	NO3	1.220	7.500
+bond 	N	N	1.381	5.600
+bond 	N	LP	0.600	6.100
+bond 	N	HN	1.020	6.100
+bond 	Nsp2	SO2	1.660	6.100
+bond 	Nsp2	HN2	1.022	5.900
+bond 	S	15	2.024	3.100
+bond 	SI	19	2.332	1.850
+bond 	SI	CR3R	1.860	3.500
+bond 	LP	NPYD	0.600	6.100
+bond 	LP	Oar	0.600	4.600
+bond 	LP	N=C	0.600	6.100
+bond 	CR3R	22	1.474	4.400
+bond 	CR3R	CE3R	1.488	4.400
+bond 	CR3R	NO3	1.477	4.350
+bond 	HN	NPYD	1.022	5.240
+bond 	HN	NPYL	1.050	6.100
+bond 	HN	N=C	1.022	5.240
+bond 	HN2	Oar	0.972	7.200
+bond 	PB	33	2.891	0.980
+bond 	NPYD	37	1.248	10.720
+bond 	NPYD	NPYL	1.230	11.000
+bond 	NPYD	N2OX	1.257	10.720
+bond 	CE3R	38	1.303	9.600
+bond 	N+	HN+	1.045	6.100
+bond 	Car	50	1.392	8.065
+bond 	OK	C++	1.236	10.000
+
+
+		##################################################
+		##						##	
+		##	Bond Stretching Parameters (4-Ring)	##	
+		##						##	
+		##################################################
+
+
+bond4 	CR3R	22	1.528	4.400
+
+		##################################################
+		##						##	
+		##	Bond Stretching Parameters (3-Ring)	##	
+		##						##	
+		##################################################
+
+bond3 	CR3R	22	1.503	4.400
+bond3 	CR3R	OR	1.435	5.360
+
+
+		##########################################	
+		##					##	
+		##	Angle Bending	Parameters	##	
+		##					##	
+		##########################################
+	
+#code	T1	T2	T3	 k1       kom        k2   	k3
+#----	----	----	----	-------   -------  -------- ----------
+angle 	C	C	C	109.470	0.450	109.510	109.500
+angle 	C	C	Csp2	109.470	0.450	109.510	109.500
+angle 	C	C	C=	107.800	0.450	109.900	110.000
+angle 	C	C	Csp	109.470	0.450	112.400	109.000
+angle 	C	C	HC	109.390	0.360	109.410	110.000
+angle 	C	C	O	107.500	0.700	107.700	107.400
+angle 	C	C	N	109.470	0.570	108.800	109.500
+angle 	C	C	Nsp2	109.280	0.500	110.780	109.280
+angle 	C	C	F	109.500	0.650	107.500	109.500
+angle 	C	C	CL	108.200	0.560	0.000	0.000
+angle 	C	C	BR	108.200	0.630	0.000	0.000
+angle 	C	C	I	108.900	0.490	0.000	0.000
+angle 	C	C	S	109.000	0.550	107.000	106.500
+angle 	C	C	S+	107.800	0.420	0.000	0.000
+angle 	C	C	>SN	106.000	0.420	0.000	0.000
+angle 	C	C	SO2	102.000	0.420	0.000	0.000
+angle 	C	C	SI	109.000	0.400	110.900	112.700
+angle 	C	C	CR3R	112.400	0.450	112.400	112.400
+angle 	C	C	P	111.500	0.480	0.000	0.000
+angle 	C	C	C.	110.000	0.450	0.000	0.000
+angle 	C	C	GE	110.500	0.640	0.000	0.000
+angle 	C	C	SN	110.200	0.560	0.000	0.000
+angle 	C	C	PB	110.200	0.300	0.000	0.000
+angle 	C	C	SE	108.200	0.500	0.000	0.000
+angle 	C	C	TE	108.200	0.450	0.000	0.000
+angle 	C	C	D	109.390	0.360	109.410	110.000
+angle 	C	C	NPYD	110.740	0.380	0.000	0.000
+angle 	C	C	N+	103.500	0.570	102.700	103.900
+angle 	C	C	Oar	107.500	0.700	0.000	0.000
+angle 	C	C	N2OX	104.640	0.380	0.000	0.000
+angle 	C	C	NO3	106.000	0.600	106.800	106.800
+angle 	C	C	Car	109.470	0.450	109.510	109.500
+angle 	C	C	OK	104.000	0.700	0.000	0.000
+angle 	C	C	C++	107.800	0.450	109.900	110.000
+angle 	Csp2	C	Csp2	109.470	0.450	109.510	109.500
+angle 	Csp2	C	C=	109.470	0.470	110.510	110.200
+angle 	Csp2	C	Csp	109.470	0.470	110.510	110.200
+angle 	Csp2	C	HC	109.390	0.360	109.410	110.000
+angle 	Csp2	C	O	109.500	0.700	0.000	0.000
+angle 	Csp2	C	N	110.740	1.045	0.000	0.000
+angle 	Csp2	C	Nsp2	109.800	0.500	0.000	0.000
+angle 	Csp2	C	F	109.000	0.650	0.000	0.000
+angle 	Csp2	C	CL	109.500	0.560	0.000	0.000
+angle 	Csp2	C	S	107.800	0.420	107.800	109.500
+angle 	Csp2	C	S+	107.800	0.420	0.000	0.000
+angle 	Csp2	C	SI	109.500	0.500	110.500	113.000
+angle 	Csp2	C	CR3R	112.400	0.450	0.000	0.000
+angle 	Csp2	C	D	109.390	0.360	109.410	110.000
+angle 	Csp2	C	NPYD	110.510	0.380	0.000	0.000
+angle 	Csp2	C	N+	110.740	1.045	0.000	0.000
+angle 	Csp2	C	N2OX	110.510	0.380	0.000	0.000
+angle 	C=	C	C=	109.470	0.470	110.510	110.200
+angle 	C=	C	HC	107.900	0.370	108.800	109.470
+angle 	C=	C	O	109.500	0.700	0.000	0.000
+angle 	C=	C	N	110.740	1.045	0.000	0.000
+angle 	C=	C	Nsp2	109.800	0.820	111.100	109.800
+angle 	C=	C	F	109.200	0.650	0.000	0.000
+angle 	C=	C	CL	109.800	0.560	0.000	0.000
+angle 	C=	C	BR	109.100	0.630	0.000	0.000
+angle 	C=	C	I	108.900	0.490	0.000	0.000
+angle 	C=	C	S	107.800	0.420	0.000	0.000
+angle 	C=	C	S+	107.800	0.420	0.000	0.000
+angle 	C=	C	D	108.800	0.370	108.800	109.470
+angle 	Csp	C	Csp	109.470	0.470	110.510	110.200
+angle 	Csp	C	HC	109.390	0.360	109.410	110.000
+angle 	HC	C	HC	109.400	0.320	109.000	109.470
+angle 	HC	C	O	106.700	0.540	106.700	106.700
+angle 	HC	C	N	108.800	0.500	0.000	0.000
+angle 	HC	C	Nsp2	109.000	0.420	0.000	0.000
+angle 	HC	C	F	110.500	0.490	0.000	0.000
+angle 	HC	C	CL	106.900	0.530	0.000	0.000
+angle 	HC	C	BR	106.500	0.440	0.000	0.000
+angle 	HC	C	I	106.400	0.540	0.000	0.000
+angle 	HC	C	S	112.000	0.360	112.000	109.300
+angle 	HC	C	S+	108.200	0.300	0.000	0.000
+angle 	HC	C	>SN	108.600	0.384	0.000	0.000
+angle 	HC	C	SO2	108.600	0.384	0.000	0.000
+angle 	HC	C	SI	108.600	0.320	110.800	107.000
+angle 	HC	C	CR3R	109.410	0.360	109.410	109.410
+angle 	HC	C	P	111.000	0.360	0.000	0.000
+angle 	HC	C	C.	110.000	0.360	0.000	0.000
+angle 	HC	C	GE	110.400	0.449	0.000	0.000
+angle 	HC	C	SN	112.000	0.350	0.000	0.000
+angle 	HC	C	PB	109.500	0.100	0.000	0.000
+angle 	HC	C	SE	110.500	0.330	0.000	0.000
+angle 	HC	C	TE	110.500	0.300	0.000	0.000
+angle 	HC	C	D	109.400	0.320	109.000	109.470
+angle 	HC	C	NPYD	107.500	0.480	0.000	0.000
+angle 	HC	C	N+	108.800	0.500	0.000	0.000
+angle 	HC	C	Oar	106.700	0.540	0.000	0.000
+angle 	HC	C	N2OX	107.500	0.480	0.000	0.000
+angle 	HC	C	NO3	109.000	0.480	0.000	0.000
+angle 	HC	C	Car	109.390	0.360	109.410	110.000
+angle 	HC	C	OK	102.800	0.350	0.000	0.000
+angle 	HC	C	C++	107.900	0.370	108.800	109.500
+angle 	HC	C	N=C	107.500	0.480	0.000	0.000
+angle 	O	C	O	99.900	0.460	97.000	102.200
+angle 	O	C	CL	108.500	0.560	0.000	0.000
+angle 	O	C	C++	103.000	0.700	0.000	0.000
+angle 	N	C	N	110.740	1.045	0.000	0.000
+angle 	N	C	N+	110.740	1.045	0.000	0.000
+angle 	Nsp2	C	S	107.000	0.580	108.000	114.800
+angle 	Nsp2	C	D	109.000	0.420	0.000	0.000
+angle 	F	C	F	107.100	1.070	0.000	0.000
+angle 	F	C	CL	110.400	1.075	0.000	0.000
+angle 	F	C	BR	109.400	1.024	0.000	0.000
+angle 	CL	C	CL	111.700	1.080	0.000	0.000
+angle 	CL	C	BR	110.700	1.030	0.000	0.000
+angle 	BR	C	BR	109.700	0.980	0.000	0.000
+angle 	S	C	S	116.200	0.420	0.000	0.000
+angle 	SI	C	SI	115.500	0.400	0.000	0.000
+angle 	CR3R	C	CR3R	112.000	0.450	0.000	105.000
+angle 	CR3R	C	NPYD	110.200	0.380	0.000	0.000
+angle 	CR3R	C	N2OX	110.200	0.380	0.000	0.000
+angle 	D	C	D	109.400	0.320	109.000	109.470
+angle 	D	C	Car	109.390	0.360	109.410	110.000
+angle 	Car	C	Car	109.470	0.450	109.510	109.500
+angle 	C	Csp2	C	117.200	0.450	0.000	0.000
+angle 	C	Csp2	Csp2	121.400	0.550	122.000	0.000
+angle 	C	Csp2	C=	121.000	0.380	0.000	0.000
+angle 	C	Csp2	Csp	122.000	0.470	0.000	0.000
+angle 	C	Csp2	HC	118.200	0.360	0.000	0.000
+angle 	C	Csp2	O	120.000	0.500	0.000	0.000
+angle 	C	Csp2	SI	120.000	0.400	0.000	0.000
+angle 	C	Csp2	NPYD	115.100	0.550	125.300	0.000
+angle 	Csp2	Csp2	Csp2	120.000	0.430	0.000	0.000
+angle 	Csp2	Csp2	C=	114.600	0.600	117.600	0.000
+angle 	Csp2	Csp2	Csp	118.000	0.500	0.000	0.000
+angle 	Csp2	Csp2	HC	120.000	0.360	120.500	0.000
+angle 	Csp2	Csp2	O	124.300	0.700	0.000	0.000
+angle 	Csp2	Csp2	N	123.000	0.616	124.000	0.000
+angle 	Csp2	Csp2	Nsp2	118.000	0.500	0.000	0.000
+angle 	Csp2	Csp2	F	121.000	0.650	0.000	0.000
+angle 	Csp2	Csp2	CL	118.800	0.550	0.000	0.000
+angle 	Csp2	Csp2	BR	118.100	0.450	0.000	0.000
+angle 	Csp2	Csp2	I	118.800	0.410	0.000	0.000
+angle 	Csp2	Csp2	SI	122.500	0.400	120.500	0.000
+angle 	Csp2	Csp2	CR3R	121.000	0.550	0.000	0.000
+angle 	Csp2	Csp2	P	120.000	0.380	0.000	0.000
+angle 	Csp2	Csp2	NPYD	120.000	0.430	123.500	0.000
+angle 	Csp2	Csp2	NPYL	120.000	0.430	119.000	0.000
+angle 	Csp2	Csp2	Oar	120.000	0.600	118.100	0.000
+angle 	Csp2	Csp2	Sthi	119.000	0.380	0.000	0.000
+angle 	Csp2	Csp2	NO3	113.500	0.600	0.000	0.000
+angle 	Csp2	Csp2	N=C	120.000	0.430	123.500	0.000
+angle 	C=	Csp2	HC	120.000	0.240	0.000	0.000
+angle 	Csp	Csp2	HC	121.100	0.360	121.600	0.000
+angle 	HC	Csp2	HC	119.000	0.320	0.000	0.000
+angle 	HC	Csp2	O	116.400	0.540	0.000	0.000
+angle 	HC	Csp2	N	119.000	0.540	0.000	0.000
+angle 	HC	Csp2	Nsp2	109.000	0.300	0.000	0.000
+angle 	HC	Csp2	F	120.000	0.450	0.000	0.000
+angle 	HC	Csp2	CL	112.600	0.450	0.000	0.000
+angle 	HC	Csp2	BR	112.100	0.460	0.000	0.000
+angle 	HC	Csp2	I	112.600	0.450	0.000	0.000
+angle 	HC	Csp2	SI	118.400	0.240	0.000	0.000
+angle 	HC	Csp2	CR3R	118.200	0.360	0.000	0.000
+angle 	HC	Csp2	NPYD	116.500	0.360	120.500	0.000
+angle 	HC	Csp2	CE3R	120.000	0.360	0.000	0.000
+angle 	HC	Csp2	NPYL	113.500	0.400	0.000	0.000
+angle 	HC	Csp2	Oar	108.000	0.450	0.000	0.000
+angle 	HC	Csp2	Sthi	120.000	0.400	0.000	0.000
+angle 	HC	Csp2	NO3	119.000	0.260	0.000	0.000
+angle 	HC	Csp2	N=C	116.500	0.360	120.500	0.000
+angle 	Nsp2	Csp2	Nsp2	120.000	0.400	0.000	0.000
+angle 	CL	Csp2	Oar	105.000	0.500	0.000	0.000
+angle 	BR	Csp2	Oar	104.000	0.500	0.000	0.000
+angle 	I	Csp2	Oar	107.000	0.500	0.000	0.000
+angle 	SI	Csp2	SI	120.000	0.400	0.000	0.000
+angle 	NPYD	Csp2	NPYD	120.000	0.400	127.000	0.000
+angle 	NPYD	Csp2	NPYL	126.000	0.400	126.000	0.000
+angle 	C	C=	C	116.600	0.400	0.000	0.000
+angle 	C	C=	Csp2	115.000	0.400	0.000	0.000
+angle 	C	C=	C=	114.000	0.600	0.000	0.000
+angle 	C	C=	HC	116.400	0.370	0.000	0.000
+angle 	C	C=	O	107.100	0.650	0.000	0.000
+angle 	C	C=	O=	122.500	0.460	0.000	0.000
+angle 	C	C=	Nsp2	116.500	0.660	0.000	0.000
+angle 	C	C=	N=C	116.800	0.550	0.000	0.000
+angle 	Csp2	C=	Csp2	112.000	0.600	0.000	0.000
+angle 	Csp2	C=	C=	120.000	0.480	0.000	0.000
+angle 	Csp2	C=	HC	113.500	0.400	0.000	0.000
+angle 	Csp2	C=	O	124.300	0.700	0.000	0.000
+angle 	Csp2	C=	O=	123.000	0.460	0.000	0.000
+angle 	Csp2	C=	Nsp2	120.000	99.000	0.000	0.000
+angle 	Csp2	C=	N=C	120.400	0.690	0.000	0.000
+angle 	C=	C=	HC	112.000	0.400	0.000	0.000
+angle 	C=	C=	O=	119.000	0.430	0.000	0.000
+angle 	C=	C=	D	112.500	0.400	0.000	0.000
+angle 	HC	C=	HC	118.200	0.360	0.000	0.000
+angle 	HC	C=	O	105.900	0.650	0.000	0.000
+angle 	HC	C=	O=	120.300	0.370	0.000	0.000
+angle 	HC	C=	Nsp2	109.000	0.300	0.000	0.000
+angle 	HC	C=	N=C	119.500	0.660	0.000	0.000
+angle 	O	C=	O=	122.000	0.800	0.000	0.000
+angle 	O=	C=	Nsp2	124.300	0.670	0.000	0.000
+angle 	O=	C=	CR3R	122.500	0.460	0.000	0.000
+angle 	O=	C=	D	120.000	0.370	0.000	0.000
+angle 	Nsp2	C=	Nsp2	120.000	0.500	0.000	0.000
+angle 	C	Csp	Csp	180.000	0.200	0.000	0.000
+angle 	C	Csp	Nsp	180.000	0.325	0.000	0.000
+angle 	C	Nsp	10	180.000	0.325	0.000	0.000
+angle 	Csp2	Nsp	10	180.000	0.325	0.000	0.000
+angle 	Csp2	Csp	Nsp	180.000	0.325	0.000	0.000
+angle 	Csp2	Csp	Csp2	180.000	0.400	0.000	0.000
+angle 	Csp2	Csp	Csp	180.000	0.470	0.000	0.000
+angle 	Csp	Csp	HC	180.000	0.360	0.000	0.000
+angle 	C	O	C	106.800	0.770	0.000	0.000
+angle 	C	O	Csp2	110.800	0.770	0.000	0.000
+angle 	C	O	C=	109.900	0.600	0.000	0.000
+angle 	C	O	O	98.700	0.635	0.000	0.000
+angle 	C	O	SI	114.600	0.400	0.000	0.000
+angle 	C	O	LP	105.160	0.350	0.000	0.000
+angle 	C	O	HO	106.900	0.350	0.000	0.000
+angle 	C	O	P	116.000	0.770	0.000	0.000
+angle 	Csp2	O	LP	103.260	0.350	0.000	0.000
+angle 	Csp2	O	P	118.000	0.800	0.000	0.000
+angle 	Csp2	O	HN2	108.000	0.350	0.000	0.000
+angle 	C=	O	LP	105.160	0.350	0.000	0.000
+angle 	C=	O	HOCO	106.100	0.300	0.000	0.000
+angle 	O	O	LP	103.260	0.350	0.000	0.000
+angle 	O	O	HO	98.440	0.511	0.000	0.000
+angle 	SI	O	SI	145.700	0.150	0.000	0.000
+angle 	SI	O	LP	97.500	0.350	0.000	0.000
+angle 	LP	O	LP	131.000	0.240	0.000	0.000
+angle 	LP	O	HO	101.010	0.240	0.000	0.000
+angle 	LP	O	HOCO	101.000	0.240	0.000	0.000
+angle 	LP	O	P	105.000	0.350	0.000	0.000
+angle 	LP	O	HN2	101.100	0.240	0.000	0.000
+angle 	HO	O	HO	104.500	0.400	0.000	0.000
+angle 	HO	O	HO	105.000	0.630	0.000	0.000
+angle 	C	N	C	107.700	0.630	0.000	0.000
+angle 	C	N	Csp2	107.000	0.698	0.000	0.000
+angle 	C	N	N	105.500	0.740	0.000	0.000
+angle 	C	N	LP	109.200	0.500	0.000	0.000
+angle 	C	N	HN	109.470	0.500	0.000	0.000
+angle 	Csp2	N	LP	87.000	0.350	0.000	0.000
+angle 	Csp2	N	HN	109.500	0.527	0.000	0.000
+angle 	N	N	LP	109.000	0.350	0.000	0.000
+angle 	N	N	HN	103.200	0.430	0.000	0.000
+angle 	LP	N	LP	106.820	0.587	0.000	0.000
+angle 	LP	N	HN	108.000	0.500	0.000	0.000
+angle 	HN	N	HN	104.500	0.500	0.000	0.000
+angle 	C	Nsp2	C	126.000	0.760	0.000	0.000
+angle 	C	Nsp2	Csp2	119.900	0.630	0.000	0.000
+angle 	C	Nsp2	C=	119.900	0.760	0.000	0.000
+angle 	C	Nsp2	SO2	110.000	0.300	0.000	0.000
+angle 	C	Nsp2	HN2	124.000	0.440	0.000	0.000
+angle 	Csp2	Nsp2	Csp2	107.000	0.400	0.000	0.000
+angle 	Csp2	Nsp2	C=	115.000	0.600	0.000	0.000
+angle 	Csp2	Nsp2	HN2	110.000	0.500	0.000	0.000
+angle 	C=	Nsp2	C=	125.000	0.500	0.000	0.000
+angle 	C=	Nsp2	HN2	119.000	0.420	0.000	0.000
+angle 	SO2	Nsp2	HN2	122.000	0.300	0.000	0.000
+angle 	HN2	Nsp2	HN2	123.000	0.320	0.000	0.000
+angle 	C	S	C	96.300	0.720	0.000	0.000
+angle 	C	S	HC	96.000	0.480	0.000	0.000
+angle 	C	S	15	102.900	1.168	0.000	0.000
+angle 	HC	S	15	91.200	0.400	0.000	0.000
+angle 	C	S+	C	94.300	0.500	0.000	0.000
+angle 	C	S+	HC	94.000	0.400	0.000	0.000
+angle 	C	>SN	C	93.000	0.720	0.000	0.000
+angle 	C	>SN	O=	106.000	0.597	0.000	0.000
+angle 	C	SO2	C	102.000	0.720	0.000	0.000
+angle 	C	SO2	O=	107.700	0.597	0.000	0.000
+angle 	C	SO2	Nsp2	103.000	0.800	0.000	0.000
+angle 	HC	SO2	O=	101.500	0.560	0.000	0.000
+angle 	HC	SO2	Nsp2	98.000	0.600	0.000	0.000
+angle 	O=	SO2	O=	116.600	0.900	0.000	0.000
+angle 	O=	SO2	Nsp2	108.000	1.700	0.000	0.000
+angle 	C	SI	C	110.800	0.480	110.400	108.500
+angle 	C	SI	Csp2	110.200	0.400	0.000	0.000
+angle 	C	SI	HC	109.300	0.460	107.000	110.200
+angle 	C	SI	O	108.500	0.350	0.000	0.000
+angle 	C	SI	19	110.000	0.750	0.000	0.000
+angle 	Csp2	SI	Csp2	109.500	0.600	0.000	0.000
+angle 	Csp2	SI	HC	109.500	0.240	0.000	0.000
+angle 	Csp2	SI	19	110.200	0.400	0.000	0.000
+angle 	HC	SI	HC	104.500	0.380	108.700	109.500
+angle 	HC	SI	O	109.500	0.350	0.000	0.000
+angle 	HC	SI	19	111.000	0.378	111.000	111.000
+angle 	HC	SI	CR3R	110.200	0.460	0.000	0.000
+angle 	O	SI	O	113.500	0.450	0.000	0.000
+angle 	SI	19	SI	111.300	0.350	110.800	110.000
+angle 	C	CR3R	C	120.000	0.450	0.000	0.000
+angle 	C	CR3R	HC	123.500	0.360	0.000	0.000
+angle 	C	CR3R	22	118.200	0.600	118.200	0.000
+angle 	C	CR3R	OR	115.000	0.560	0.000	0.000
+angle 	Csp2	CR3R	Csp2	120.000	0.450	0.000	0.000
+angle 	Csp2	CR3R	HC	123.500	0.360	0.000	0.000
+angle 	Csp2	CR3R	22	118.200	0.600	0.000	0.000
+angle 	Csp2	CR3R	OR	115.000	0.560	0.000	0.000
+angle 	C=	CR3R	HC	123.500	0.360	123.500	123.500
+angle 	HC	CR3R	HC	120.600	0.320	0.000	0.000
+angle 	HC	CR3R	SI	123.500	0.240	0.000	0.000
+angle 	HC	CR3R	22	124.500	0.360	119.700	0.000
+angle 	HC	CR3R	CE3R	124.500	0.360	119.700	0.000
+angle 	HC	CR3R	NO3	114.000	0.050	0.000	0.000
+angle 	HC	CR3R	OR	113.000	0.430	0.000	0.000
+angle 	SI	CR3R	22	117.500	0.530	0.000	0.000
+angle 	CR3R	22	CR3R	119.140	0.350	120.700	0.000
+angle 	CR3R	22	NO3	117.000	0.700	117.000	117.000
+angle 	C	P	C	96.000	0.576	0.000	0.000
+angle 	C	P	Csp2	92.500	0.480	0.000	0.000
+angle 	C	P	HC	95.000	0.480	0.000	0.000
+angle 	Csp2	P	Csp2	93.200	0.480	0.000	0.000
+angle 	HC	P	HC	93.400	0.438	0.000	0.000
+angle 	O	P	O	99.500	0.450	0.000	0.000
+angle 	C	C.	C	120.000	0.450	0.000	0.000
+angle 	C	C.	HC	120.000	0.360	0.000	0.000
+angle 	HC	C.	HC	120.000	0.320	0.000	0.000
+angle 	C	GE	C	110.000	0.490	0.000	0.000
+angle 	C	GE	HC	109.500	0.352	0.000	0.000
+angle 	HC	GE	HC	109.000	0.216	0.000	0.000
+angle 	C	SN	C	107.000	0.320	0.000	0.000
+angle 	C	SN	HC	110.500	0.227	0.000	0.000
+angle 	HC	SN	HC	109.500	0.132	0.000	0.000
+angle 	C	PB	C	109.500	0.100	0.000	0.000
+angle 	C	PB	HC	109.500	0.100	0.000	0.000
+angle 	C	PB	33	109.500	0.100	0.000	0.000
+angle 	HC	PB	HC	109.500	0.100	0.000	0.000
+angle 	C	SE	C	94.800	0.500	0.000	0.000
+angle 	C	SE	HC	94.500	0.430	0.000	0.000
+angle 	C	TE	C	95.050	0.590	0.000	0.000
+angle 	C	TE	HC	94.600	0.390	0.000	0.000
+angle 	C	NPYD	Csp2	108.000	0.550	0.000	0.000
+angle 	C	NPYD	LP	120.000	0.350	0.000	0.000
+angle 	C	NPYD	37	106.500	0.690	0.000	0.000
+angle 	C	NPYD	N2OX	99.100	0.570	0.000	0.000
+angle 	Csp2	NPYD	Csp2	115.000	0.430	0.000	0.000
+angle 	Csp2	NPYD	LP	122.500	0.500	0.000	0.000
+angle 	Csp2	NPYD	HN	110.000	0.500	0.000	0.000
+angle 	Csp2	NPYD	37	107.500	0.400	0.000	0.000
+angle 	Csp2	NPYD	NPYL	115.000	0.430	0.000	0.000
+angle 	LP	NPYD	HN	127.500	0.500	0.000	0.000
+angle 	LP	NPYD	37	120.000	0.350	0.000	0.000
+angle 	LP	NPYD	NPYL	122.500	0.500	0.000	0.000
+angle 	LP	NPYD	N2OX	120.000	0.350	0.000	0.000
+angle 	HN	NPYD	37	103.500	0.400	0.000	0.000
+angle 	C	CE3R	CR3R	117.200	0.450	0.000	0.000
+angle 	Csp2	CE3R	CR3R	137.000	0.550	0.000	0.000
+angle 	HC	CE3R	CR3R	146.000	0.360	0.000	0.000
+angle 	HC	CE3R	38	146.000	0.360	0.000	0.000
+angle 	C	N+	C	108.600	0.630	111.200	115.400
+angle 	C	N+	HN+	109.470	0.500	0.000	0.000
+angle 	HN+	N+	HN+	104.500	0.500	0.000	0.000
+angle 	Csp2	NPYL	Csp2	124.000	0.430	124.000	0.000
+angle 	Csp2	NPYL	HN	118.000	0.360	0.000	0.000
+angle 	Csp2	NPYL	NPYD	124.000	0.430	124.000	0.000
+angle 	HN	NPYL	NPYD	113.000	0.360	0.000	0.000
+angle 	C	Oar	Csp2	113.600	0.770	0.000	0.000
+angle 	C	Oar	LP	124.200	0.350	0.000	0.000
+angle 	Csp2	Oar	Csp2	113.950	0.870	0.000	0.000
+angle 	Csp2	Oar	LP	122.200	0.350	0.000	0.000
+angle 	Csp2	Oar	HN2	109.000	0.360	0.000	0.000
+angle 	LP	Oar	HN2	128.800	0.360	0.000	0.000
+angle 	Csp2	Sthi	Csp2	98.500	0.680	0.000	0.000
+angle 	C	N2OX	O=	120.400	0.570	0.000	0.000
+angle 	C	N2OX	NPYD	114.000	0.380	0.000	0.000
+angle 	O=	N2OX	NPYD	125.000	0.380	0.000	0.000
+angle 	C	NO3	O=	115.830	0.594	0.000	0.000
+angle 	Csp2	NO3	O=	115.000	0.800	0.000	0.000
+angle 	O=	NO3	O=	128.600	0.600	0.000	0.000
+angle 	O=	NO3	CR3R	111.000	0.594	0.000	0.000
+angle 	LP	OR	LP	131.000	0.240	0.000	0.000
+angle 	LP	OR	CR3R	103.000	0.350	0.000	0.000
+angle 	C	Car	C	117.200	0.450	0.000	0.000
+angle 	C	Car	HC	118.200	0.360	0.000	0.000
+angle 	C	Car	50	121.400	0.550	122.000	120.000
+angle 	HC	Car	HC	119.000	0.320	0.000	0.000
+angle 	HC	Car	50	120.000	0.360	120.500	0.000
+angle 	Car	50	Car	120.000	0.430	0.000	0.000
+angle 	C	OK	C++	116.000	0.800	0.000	0.000
+angle 	C	C++	C	116.600	0.400	0.000	0.000
+angle 	C	C++	HC	116.400	0.370	0.000	0.000
+angle 	C	C++	OK	113.000	0.520	116.500	0.000
+angle 	HC	C++	HC	122.400	0.440	0.000	0.000
+angle 	HC	C++	OK	111.000	0.360	117.000	0.000
+angle 	C	N=C	C=	111.000	0.550	0.000	0.000
+angle 	C	N=C	LP	120.000	0.350	0.000	0.000
+angle 	Csp2	N=C	C=	115.000	0.570	0.000	0.000
+angle 	Csp2	N=C	LP	122.500	0.500	0.000	0.000
+angle 	C=	N=C	LP	112.500	0.550	0.000	0.000
+angle 	C=	N=C	HN	110.000	0.550	0.000	0.000
+angle 	LP	N=C	HN	127.500	0.500	0.000	0.000
+
+
+		##################################################
+		##						##	
+		##	Angle Bending Parameters (4-Ring)	##	
+		##						##	
+		##################################################	
+
+
+angle4 	C	C	C	109.470	0.340	0.000	109.500
+angle4 	C	C	C	0.000	0.290	109.510	0.000
+angle4 	C	C	Csp2	109.470	0.360	109.510	109.500
+angle4 	C	C	C=	107.800	0.340	109.900	111.000
+angle4 	C	C	O	107.400	0.530	0.000	0.000
+angle4 	C	C	N	108.800	0.320	0.000	0.000
+angle4 	C	C	Nsp2	106.500	0.550	0.000	0.000
+angle4 	C	C	S	106.500	0.500	106.500	105.800
+angle4 	C	C	SI	94.500	0.300	0.000	94.500
+angle4 	C	C	CR3R	0.000	0.340	112.300	112.300
+angle4 	C	C	GE	92.000	0.640	0.000	0.000
+angle4 	C	C	NPYD	110.740	0.350	0.000	0.000
+angle4 	C	C	N+	108.800	0.450	0.000	0.000
+angle4 	C	C	N2OX	110.740	0.350	0.000	0.000
+angle4 	Csp2	C	Csp2	109.470	0.340	109.510	109.500
+angle4 	C	Csp2	C	117.200	0.220	0.000	0.000
+angle4 	C	Csp2	Csp2	121.400	0.340	122.000	120.000
+angle4 	Csp2	Csp2	Csp2	120.000	0.340	0.000	0.000
+angle4 	C	C=	C	116.600	0.300	0.000	0.000
+angle4 	C	C=	O	106.500	0.480	0.000	0.000
+angle4 	C	C=	Nsp2	113.000	0.660	0.000	0.000
+angle4 	C	C=	F	88.000	0.490	0.000	0.000
+angle4 	CR3R	C=	CR3R	116.600	0.300	0.000	0.000
+angle4 	C	O	C	106.800	0.580	0.000	0.000
+angle4 	C	O	C=	109.900	0.450	0.000	0.000
+angle4 	C	N	C	107.700	0.470	0.000	0.000
+angle4 	C	Nsp2	C=	119.800	0.600	0.000	0.000
+angle4 	C	S	C	96.500	0.650	0.000	0.000
+angle4 	C	SI	C	90.500	0.450	0.000	90.500
+angle4 	C	CR3R	22	0.000	0.340	119.300	0.000
+angle4 	C=	CR3R	22	119.300	0.340	119.300	119.300
+angle4 	CR3R	22	CR3R	112.500	0.450	98.000	0.000
+angle4 	C	GE	C	88.000	0.490	0.000	0.000
+angle4 	C	NPYD	37	106.500	0.620	0.000	0.000
+angle4 	C	NPYD	N2OX	99.100	0.480	0.000	0.000
+angle4 	C	N+	C	107.700	0.380	0.000	0.000
+angle4 	C	N2OX	NPYD	114.000	0.350	0.000	0.000
+
+
+		##################################################
+		##						##	
+		##	Angle Bending Parameters (4-Ring)	##	
+		##						##	
+		##################################################	
+
+
+angle3 	CR3R	22	CR3R	55.800	0.450	60.000	60.000
+angle3 	CR3R	22	CE3R	48.000	0.450	0.000	0.000
+angle3 	CR3R	22	OR	59.300	0.560	0.000	0.000
+angle3 	CE3R	CR3R	CE3R	53.000	0.450	0.000	0.000
+angle3 	CR3R	CE3R	CR3R	67.000	0.400	0.000	0.000
+angle3 	CR3R	CE3R	38	80.000	0.550	0.000	0.000
+angle3 	CR3R	OR	CR3R	61.400	0.620	0.000	0.000
+
+
+		##################################	
+		##				##	
+		##	Stretch-Bend Parameters	##	
+		##				##	
+		##################################	
+
+#code	T1	ksom	
+#----	-------	-------
+strbnd 	C	0.120	0.090	0.000	
+strbnd 	Csp2	0.120	0.090	0.000	
+strbnd 	C=	0.120	0.090	0.000	
+strbnd 	Csp	0.120	0.090	0.000	
+strbnd 	O	0.120	0.090	0.000	
+strbnd 	N	0.120	0.090	0.000	
+strbnd 	Nsp2	0.120	0.090	0.000	
+strbnd 	S	0.250	-0.400	0.000	
+strbnd 	S+	0.250	-0.400	0.000	
+strbnd 	>SN	0.250	-0.400	0.000	
+strbnd 	SO2	0.250	-0.400	0.000	
+strbnd 	SI	0.200	0.060	0.000	
+strbnd 	CR3R	0.120	0.090	0.000	
+strbnd 	P	0.200	0.060	0.000	
+strbnd 	B	0.120	0.090	0.000	
+strbnd 	BTET	0.120	0.090	0.000	
+strbnd 	C.	0.120	0.090	0.000	
+strbnd 	C+	0.120	0.090	0.000	
+strbnd 	SE	0.450	0.000	0.000	
+strbnd 	NPYD	0.120	0.090	0.000	
+strbnd 	CE3R	0.120	0.090	0.000	
+strbnd 	N+	0.120	0.090	0.000	
+strbnd 	NPYL	0.120	0.090	0.000	
+strbnd 	Oar	0.120	0.090	0.000	
+strbnd 	Sthi	0.250	-0.400	0.000	
+strbnd 	N2OX	0.120	0.090	0.000	
+strbnd 	=N=	0.120	0.090	0.000	
+strbnd 	NO3	0.120	0.090	0.000	
+strbnd 	OR	0.120	0.090	0.000	
+strbnd 	Car	0.120	0.090	0.000	
+strbnd 	PTET	0.200	0.060	0.000	
+strbnd 	C++	0.120	0.090	0.000	
+strbnd 	N=C	0.120	0.090	0.000	
+
+
+		#########################################
+		##				       ##	
+		##	Out-of-Plane Bend Parameters   ##	
+		##				       ##	
+		#########################################
+
+#code	T1	T2*	koop
+#---	----	----	----
+opbend 	Csp2	C	0.050	
+opbend 	Csp2	Csp2	0.050	
+opbend 	Csp2	C=	0.050	
+opbend 	Csp2	Csp	0.050	
+opbend 	Csp2	HC	0.050	
+opbend 	Csp2	O	0.050	
+opbend 	Csp2	O=	0.050	
+opbend 	Csp2	N	0.050	
+opbend 	Csp2	Nsp2	0.050	
+opbend 	Csp2	F	0.050	
+opbend 	Csp2	CL	0.050	
+opbend 	Csp2	BR	0.050	
+opbend 	Csp2	I	0.050	
+opbend 	Csp2	SI	0.050	
+opbend 	Csp2	CR3R	0.050	
+opbend 	Csp2	P	0.500	
+opbend 	Csp2	NPYD	0.050	
+opbend 	Csp2	CE3R	0.050	
+opbend 	Csp2	NPYL	0.050	
+opbend 	Csp2	Oar	0.050	
+opbend 	Csp2	Sthi	0.050	
+opbend 	Csp2	NO3	0.200	
+opbend 	Csp2	N=C	0.050	
+opbend 	C=	C	0.800	
+opbend 	C=	Csp2	0.800	
+opbend 	C=	C=	0.900	
+opbend 	C=	Csp	0.800	
+opbend 	C=	HC	0.800	
+opbend 	C=	O	0.800	
+opbend 	C=	O=	0.800	
+opbend 	C=	N	0.800	
+opbend 	C=	Nsp2	0.800	
+opbend 	C=	CR3R	0.800	
+opbend 	C=	D	0.800	
+opbend 	C=	N=C	0.050	
+opbend 	Nsp2	C	0.050	
+opbend 	Nsp2	Csp2	0.050	
+opbend 	Nsp2	C=	0.050	
+opbend 	Nsp2	Csp	0.050	
+opbend 	Nsp2	O	0.050	
+opbend 	Nsp2	O=	0.050	
+opbend 	Nsp2	N	0.050	
+opbend 	Nsp2	Nsp2	0.050	
+opbend 	Nsp2	SO2	0.050	
+opbend 	Nsp2	HN2	0.010	
+opbend 	C.	C	0.150	
+opbend 	C.	HC	0.150	
+opbend 	C+	C	0.050	
+opbend 	C+	HC	0.050	
+opbend 	NPYD	C	0.050	
+opbend 	NPYD	C	0.050	
+opbend 	NPYD	Csp2	0.050	
+opbend 	NPYD	LP	0.050	
+opbend 	NPYD	LP	0.050	
+opbend 	NPYD	HN	0.050	
+opbend 	NPYD	HN	0.050	
+opbend 	NPYD	37	0.050	
+opbend 	NPYD	37	0.050	
+opbend 	NPYD	NPYL	0.050	
+opbend 	NPYD	N2OX	0.050	
+opbend 	CE3R	Csp2	0.050	
+opbend 	CE3R	HC	0.050	
+opbend 	CE3R	CR3R	0.050	
+opbend 	CE3R	38	0.050	
+opbend 	NPYL	Csp2	0.050	
+opbend 	NPYL	HN	0.050	
+opbend 	NPYL	NPYD	0.050	
+opbend 	Oar	C	0.050	
+opbend 	Oar	Csp2	0.050	
+opbend 	Oar	LP	0.050	
+opbend 	Oar	HN2	0.050	
+opbend 	N2OX	C	0.050	
+opbend 	N2OX	O=	0.050	
+opbend 	N2OX	NPYD	0.050	
+opbend 	NO3	C	0.200	
+opbend 	NO3	Csp2	0.200	
+opbend 	NO3	O=	0.200	
+opbend 	NO3	CR3R	0.200	
+opbend 	Car	C	0.050	
+opbend 	Car	HC	0.050	
+opbend 	Car	50	0.050	
+opbend 	C++	C	0.800	
+opbend 	C++	HC	0.800	
+opbend 	C++	OK	1.569	
+opbend 	N=C	C	0.050	
+opbend 	N=C	Csp2	0.050	
+opbend 	N=C	C=	0.050	
+opbend 	N=C	LP	0.050	
+opbend 	N=C	HN	0.050	
+
+
+		##################################
+		##				##	
+		##	Torsional Parameters	##	
+		##				##	
+		##################################	
+
+#code		T1	T2	T3	T4	 V1/2	 		V2/2  	 		V3/2
+#----		----	----	----	----	-------			-------			-------
+torsion 	C	C	C	C	0.200	0.0	C	0.270	180.0	2	0.093	0.0	3	
+torsion 	C	C	C	Csp2	0.170	0.0	C	0.270	180.0	2	0.093	0.0	3	
+torsion 	C	C	C	C=	0.050	0.0	1	0.370	180.0	2	0.000	0.0	3	
+torsion 	C	C	C	Csp	0.200	0.0	1	-0.260	180.0	2	0.093	0.0	3	
+torsion 	C	C	C	HC	0.000	0.0	C	0.000	180.0	2	0.267	0.0	3	
+torsion 	C	C	C	O	0.100	0.0	1	0.100	180.0	2	0.180	0.0	3	
+torsion 	C	C	C	N	0.100	0.0	1	0.400	180.0	2	0.500	0.0	3	
+torsion 	C	C	C	Nsp2	0.000	0.0	1	0.000	180.0	2	0.400	0.0	3	
+torsion 	C	C	C	F	0.000	0.0	1	-0.086	180.0	2	0.930	0.0	3	
+torsion 	C	C	C	CL	0.000	0.0	1	-0.250	180.0	2	0.550	0.0	3	
+torsion 	C	C	C	BR	0.000	0.0	1	-0.410	180.0	2	1.060	0.0	3	
+torsion 	C	C	C	I	0.000	0.0	1	-0.500	180.0	2	0.267	0.0	3	
+torsion 	C	C	C	S	0.140	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	C	C	C	S+	0.000	0.0	1	0.000	180.0	2	0.483	0.0	3	
+torsion 	C	C	C	>SN	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	C	C	C	SO2	0.200	0.0	1	0.270	180.0	2	0.093	0.0	3	
+torsion 	C	C	C	SI	0.000	0.0	1	0.000	180.0	2	0.500	0.0	3	
+torsion 	C	C	C	CR3R	0.200	0.0	1	-0.200	180.0	2	0.600	0.0	3	
+torsion 	C	C	C	P	0.000	0.0	1	0.000	180.0	2	0.400	0.0	3	
+torsion 	C	C	C	C.	0.170	0.0	1	0.270	180.0	2	0.093	0.0	3	
+torsion 	C	C	C	GE	0.000	0.0	1	0.000	180.0	2	-0.065	0.0	3	
+torsion 	C	C	C	SN	-0.083	0.0	1	-0.083	180.0	2	0.050	0.0	3	
+torsion 	C	C	C	PB	0.000	0.0	1	-0.008	180.0	2	0.110	0.0	3	
+torsion 	C	C	C	SE	0.140	0.0	1	0.000	180.0	2	0.100	0.0	3	
+torsion 	C	C	C	TE	0.000	0.0	1	0.200	180.0	2	0.400	0.0	3	
+torsion 	C	C	C	D	0.000	0.0	1	0.000	180.0	2	0.267	0.0	3	
+torsion 	C	C	C	NPYD	0.000	0.0	1	0.000	180.0	2	0.100	0.0	3	
+torsion 	C	C	C	N+	0.100	0.0	1	0.400	180.0	2	0.500	0.0	3	
+torsion 	C	C	C	N2OX	0.000	0.0	1	0.000	180.0	2	0.100	0.0	3	
+torsion 	C	C	C	NO3	0.000	0.0	1	0.000	180.0	2	0.800	0.0	3	
+torsion 	C	C	C	Car	0.170	0.0	1	0.270	180.0	2	0.093	0.0	3	
+torsion 	C	C	C	OK	0.129	0.0	1	-0.650	180.0	2	0.817	0.0	3	
+torsion 	C	C	C	C++	0.050	0.0	1	0.370	180.0	2	0.000	0.0	3	
+torsion 	Csp2	C	C	Csp2	2.100	0.0	1	0.270	180.0	2	0.093	0.0	3	
+torsion 	Csp2	C	C	C=	0.000	0.0	1	0.000	180.0	2	0.180	0.0	3	
+torsion 	Csp2	C	C	Csp	0.000	0.0	1	0.000	180.0	2	0.093	0.0	3	
+torsion 	Csp2	C	C	HC	0.000	0.0	1	0.000	180.0	2	0.500	0.0	3	
+torsion 	Csp2	C	C	O	0.000	0.0	1	0.000	180.0	2	0.180	0.0	3	
+torsion 	Csp2	C	C	N	0.000	0.0	1	0.000	180.0	2	0.180	0.0	3	
+torsion 	Csp2	C	C	Nsp2	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	C	C	S	0.000	0.0	1	0.000	180.0	2	0.483	0.0	3	
+torsion 	Csp2	C	C	S+	0.000	0.0	1	0.000	180.0	2	0.483	0.0	3	
+torsion 	Csp2	C	C	SI	0.000	0.0	1	0.000	180.0	2	0.167	0.0	3	
+torsion 	Csp2	C	C	D	0.000	0.0	1	0.000	180.0	2	0.500	0.0	3	
+torsion 	Csp2	C	C	N+	0.000	0.0	1	0.000	180.0	2	0.180	0.0	3	
+torsion 	C=	C	C	C=	0.000	0.0	1	0.000	180.0	2	0.180	0.0	3	
+torsion 	C=	C	C	HC	0.000	0.0	1	0.000	180.0	2	0.180	0.0	3	
+torsion 	C=	C	C	O	0.000	0.0	1	0.000	180.0	2	0.180	0.0	3	
+torsion 	C=	C	C	N	0.000	0.0	1	0.400	180.0	2	0.500	0.0	3	
+torsion 	C=	C	C	Nsp2	0.000	0.0	1	0.000	180.0	2	0.180	0.0	3	
+torsion 	C=	C	C	F	-1.000	0.0	1	0.000	180.0	2	0.200	0.0	3	
+torsion 	C=	C	C	CL	-0.585	0.0	1	0.000	180.0	2	0.200	0.0	3	
+torsion 	C=	C	C	BR	-0.465	0.0	1	0.000	180.0	2	0.200	0.0	3	
+torsion 	C=	C	C	S	0.000	0.0	1	0.000	180.0	2	0.483	0.0	3	
+torsion 	C=	C	C	S+	0.000	0.0	1	0.000	180.0	2	0.483	0.0	3	
+torsion 	C=	C	C	P	0.000	0.0	1	0.000	180.0	2	0.400	0.0	3	
+torsion 	C=	C	C	D	0.000	0.0	1	0.000	180.0	2	0.180	0.0	3	
+torsion 	C=	C	C	N+	0.000	0.0	C	0.400	180.0	2	0.500	0.0	3	
+torsion 	Csp	C	C	Csp	1.000	0.0	1	0.000	180.0	2	0.093	0.0	3	
+torsion 	Csp	C	C	HC	0.000	0.0	1	0.000	180.0	2	0.400	0.0	3	
+torsion 	Csp	C	C	O	0.000	0.0	1	-0.400	180.0	2	0.180	0.0	3	
+torsion 	HC	C	C	HC	0.000	0.0	1	0.000	180.0	2	0.237	0.0	3	
+torsion 	HC	C	C	O	0.000	0.0	1	0.000	180.0	2	0.180	0.0	3	
+torsion 	HC	C	C	N	-0.150	0.0	1	0.000	180.0	2	0.150	0.0	3	
+torsion 	HC	C	C	Nsp2	0.000	0.0	1	0.000	180.0	2	0.400	0.0	3	
+torsion 	HC	C	C	F	0.000	0.0	1	0.000	180.0	2	0.351	0.0	3	
+torsion 	HC	C	C	CL	0.000	0.0	1	0.000	180.0	2	0.406	0.0	3	
+torsion 	HC	C	C	BR	0.000	0.0	1	0.000	180.0	2	0.385	0.0	3	
+torsion 	HC	C	C	I	0.000	0.0	1	0.000	180.0	2	0.267	0.0	3	
+torsion 	HC	C	C	S	0.000	0.0	1	0.000	180.0	2	0.330	0.0	3	
+torsion 	HC	C	C	S+	0.000	0.0	1	0.000	180.0	2	0.483	0.0	3	
+torsion 	HC	C	C	>SN	0.000	0.0	1	0.000	180.0	2	0.125	0.0	3	
+torsion 	HC	C	C	SO2	0.000	0.0	1	0.000	180.0	2	0.125	0.0	3	
+torsion 	HC	C	C	SI	0.000	0.0	1	0.000	180.0	2	0.105	0.0	3	
+torsion 	HC	C	C	CR3R	0.000	0.0	1	0.000	180.0	2	0.167	0.0	3	
+torsion 	HC	C	C	P	0.000	0.0	1	0.000	180.0	2	0.330	0.0	3	
+torsion 	HC	C	C	C.	0.000	0.0	1	0.000	180.0	2	0.100	0.0	3	
+torsion 	HC	C	C	GE	0.000	0.0	1	0.000	180.0	2	-0.065	0.0	3	
+torsion 	HC	C	C	SN	0.000	0.0	1	0.000	180.0	2	-0.155	0.0	3	
+torsion 	HC	C	C	PB	0.000	0.0	1	0.000	180.0	2	0.040	0.0	3	
+torsion 	HC	C	C	SE	0.000	0.0	1	0.000	180.0	2	0.280	0.0	3	
+torsion 	HC	C	C	TE	0.000	0.0	1	0.000	180.0	2	0.540	0.0	3	
+torsion 	HC	C	C	D	0.000	0.0	1	0.000	180.0	2	0.237	0.0	3	
+torsion 	HC	C	C	NPYD	0.000	0.0	1	0.000	180.0	2	0.500	0.0	3	
+torsion 	HC	C	C	N+	-0.150	0.0	1	0.000	180.0	2	0.150	0.0	3	
+torsion 	HC	C	C	Oar	0.000	0.0	1	0.000	180.0	2	0.180	0.0	3	
+torsion 	HC	C	C	N2OX	0.000	0.0	1	0.000	180.0	2	0.500	0.0	3	
+torsion 	HC	C	C	NO3	0.000	0.0	1	0.000	180.0	2	0.300	0.0	3	
+torsion 	HC	C	C	Car	0.000	0.0	1	0.000	180.0	2	0.500	0.0	3	
+torsion 	HC	C	C	OK	0.004	0.0	1	0.000	180.0	2	0.427	0.0	3	
+torsion 	HC	C	C	C++	0.000	0.0	1	0.000	180.0	2	0.180	0.0	3	
+torsion 	O	C	C	O	0.000	0.0	1	-0.600	180.0	2	0.300	0.0	3	
+torsion 	O	C	C	N	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	O	C	C	Nsp2	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	O	C	C	F	0.000	0.0	1	-1.400	180.0	2	0.180	0.0	3	
+torsion 	O	C	C	CL	0.000	0.0	1	-1.400	180.0	2	0.180	0.0	3	
+torsion 	O	C	C	BR	0.000	0.0	1	-1.400	180.0	2	0.180	0.0	3	
+torsion 	O	C	C	I	0.000	0.0	1	-1.400	180.0	2	0.180	0.0	3	
+torsion 	O	C	C	S	-0.800	0.0	1	0.900	180.0	2	-0.300	0.0	3	
+torsion 	O	C	C	>SN	-0.800	0.0	1	0.900	180.0	2	-0.300	0.0	3	
+torsion 	O	C	C	SO2	-0.800	0.0	1	0.000	180.0	2	-0.300	0.0	3	
+torsion 	O	C	C	N+	0.000	0.0	1	-0.600	180.0	2	0.300	0.0	3	
+torsion 	O	C	C	OK	-5.500	0.0	1	-2.500	180.0	2	2.000	0.0	3	
+torsion 	O	C	C	C++	-7.225	0.0	1	0.000	180.0	2	0.740	0.0	3	
+torsion 	N	C	C	N	-0.400	0.0	1	-1.100	180.0	2	1.200	0.0	3	
+torsion 	N	C	C	Nsp2	1.170	0.0	1	-1.263	180.0	2	2.064	0.0	3	
+torsion 	Nsp2	C	C	Nsp2	0.000	0.0	1	0.000	180.0	2	-0.500	0.0	3	
+torsion 	Nsp2	C	C	S	-1.000	0.0	1	-0.300	180.0	2	0.400	0.0	3	
+torsion 	Nsp2	C	C	S	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	F	C	C	F	-0.100	0.0	1	-2.000	180.0	2	0.200	0.0	3	
+torsion 	F	C	C	CL	0.000	0.0	1	0.000	180.0	2	0.253	0.0	3	
+torsion 	F	C	C	BR	0.000	0.0	1	0.000	180.0	2	0.253	0.0	3	
+torsion 	CL	C	C	CL	-0.240	0.0	1	0.620	180.0	2	0.540	0.0	3	
+torsion 	CL	C	C	BR	0.000	0.0	1	0.000	180.0	2	0.267	0.0	3	
+torsion 	BR	C	C	BR	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	S	C	C	S	-0.800	0.0	1	0.900	180.0	2	-0.300	0.0	3	
+torsion 	S	C	C	>SN	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	>SN	C	C	>SN	0.000	0.0	1	0.000	180.0	2	0.125	0.0	3	
+torsion 	SI	C	C	SI	0.000	0.0	1	0.000	180.0	2	0.167	0.0	3	
+torsion 	CR3R	C	C	CR3R	0.200	0.0	1	0.270	180.0	2	0.093	0.0	3	
+torsion 	C.	C	C	C.	2.100	0.0	1	0.270	180.0	2	0.093	0.0	3	
+torsion 	D	C	C	D	0.000	0.0	1	0.000	180.0	2	0.237	0.0	3	
+torsion 	Oar	C	C	Oar	0.000	0.0	1	-0.600	180.0	2	0.300	0.0	3	
+torsion 	C	C	Csp2	C	0.400	0.0	1	0.030	180.0	2	0.500	0.0	3	
+torsion 	C	C	Csp2	Csp2	-0.440	0.0	1	0.240	180.0	2	0.060	0.0	3	
+torsion 	C	C	Csp2	C=	0.000	0.0	1	0.000	180.0	2	0.457	0.0	3	
+torsion 	C	C	Csp2	Csp	-0.440	0.0	1	0.240	180.0	2	0.060	0.0	3	
+torsion 	C	C	Csp2	HC	0.000	0.0	1	0.000	180.0	2	0.010	0.0	3	
+torsion 	C	C	Csp2	O	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	C	C	Csp2	SI	0.000	0.0	1	0.000	180.0	2	0.350	0.0	3	
+torsion 	Csp2	C	Csp2	C	0.000	0.0	1	0.000	180.0	2	0.300	0.0	3	
+torsion 	Csp2	C	Csp2	Csp2	0.100	0.0	1	0.000	180.0	2	0.500	0.0	3	
+torsion 	Csp2	C	Csp2	HC	0.000	0.0	1	0.000	180.0	2	0.600	0.0	3	
+torsion 	Csp2	C	Csp2	O	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	C=	C	Csp2	C	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	C=	C	Csp2	Csp2	0.000	0.0	1	0.000	180.0	2	0.100	0.0	3	
+torsion 	C=	C	Csp2	HC	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	Csp	C	Csp2	C	0.000	0.0	1	0.000	180.0	2	0.780	0.0	3	
+torsion 	Csp	C	Csp2	Csp2	0.000	0.0	1	0.000	180.0	2	0.100	0.0	3	
+torsion 	Csp	C	Csp2	HC	0.000	0.0	1	0.000	180.0	2	0.780	0.0	3	
+torsion 	HC	C	Csp2	C	0.000	0.0	1	0.000	180.0	2	0.540	0.0	3	
+torsion 	HC	C	Csp2	Csp2	0.000	0.0	1	0.000	180.0	2	-0.240	0.0	3	
+torsion 	HC	C	Csp2	C=	0.000	0.0	1	0.000	180.0	2	0.200	0.0	3	
+torsion 	HC	C	Csp2	Csp	0.000	0.0	1	0.000	180.0	2	-0.240	0.0	3	
+torsion 	HC	C	Csp2	HC	0.000	0.0	1	0.000	180.0	2	0.520	0.0	3	
+torsion 	HC	C	Csp2	O	0.000	0.0	1	0.000	180.0	2	0.540	0.0	3	
+torsion 	HC	C	Csp2	NPYD	0.000	0.0	1	0.000	180.0	2	-0.240	0.0	3	
+torsion 	O	C	Csp2	C	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	O	C	Csp2	Csp2	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	O	C	Csp2	HC	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	N	C	Csp2	C	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	N	C	Csp2	Csp2	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	N	C	Csp2	HC	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	F	C	Csp2	Csp2	1.243	0.0	1	1.445	180.0	2	-1.243	0.0	3	
+torsion 	F	C	Csp2	HC	0.848	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	CL	C	Csp2	Csp2	0.500	0.0	1	0.300	180.0	2	-0.500	0.0	3	
+torsion 	CL	C	Csp2	HC	1.500	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	S	C	Csp2	C	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	S	C	Csp2	Csp2	0.000	0.0	1	0.000	180.0	2	0.100	0.0	3	
+torsion 	S	C	Csp2	HC	0.000	0.0	1	0.000	180.0	2	0.100	0.0	3	
+torsion 	S+	C	Csp2	C	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	S+	C	Csp2	Csp2	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	S+	C	Csp2	HC	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	SI	C	Csp2	Csp2	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	SI	C	Csp2	HC	0.000	0.0	1	0.000	180.0	2	0.717	0.0	3	
+torsion 	CR3R	C	Csp2	C	0.400	0.0	1	0.030	180.0	2	0.500	0.0	3	
+torsion 	CR3R	C	Csp2	Csp2	-0.440	0.0	1	0.240	180.0	2	0.060	0.0	3	
+torsion 	CR3R	C	Csp2	HC	0.000	0.0	1	0.000	180.0	2	0.010	0.0	3	
+torsion 	D	C	Csp2	Csp2	0.000	0.0	1	0.000	180.0	2	-0.240	0.0	3	
+torsion 	NPYD	C	Csp2	Csp2	-0.440	0.0	1	0.000	180.0	2	0.100	0.0	3	
+torsion 	NPYD	C	Csp2	HC	0.000	0.0	1	0.000	180.0	2	0.500	0.0	3	
+torsion 	N+	C	Csp2	Csp2	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	N2OX	C	Csp2	Csp2	-0.440	0.0	1	0.000	180.0	2	0.100	0.0	3	
+torsion 	N2OX	C	Csp2	HC	0.000	0.0	1	0.000	180.0	2	0.500	0.0	3	
+torsion 	C	C	C=	C	1.200	0.0	1	0.200	180.0	2	0.150	0.0	3	
+torsion 	C	C	C=	Csp2	0.000	0.0	1	0.000	180.0	2	-0.110	0.0	3	
+torsion 	C	C	C=	HC	0.730	0.0	1	0.270	180.0	2	0.680	0.0	3	
+torsion 	C	C	C=	O	0.400	0.0	1	-0.300	180.0	2	-0.070	0.0	3	
+torsion 	C	C	C=	O=	-0.130	0.0	1	0.904	180.0	2	0.050	0.0	3	
+torsion 	C	C	C=	Nsp2	0.000	0.0	1	0.000	180.0	2	0.400	0.0	3	
+torsion 	C	C	C=	N=C	-0.080	0.0	1	0.250	180.0	2	-0.700	0.0	3	
+torsion 	Csp2	C	C=	C	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	C	C=	HC	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	C	C=	O	0.000	0.0	1	0.000	180.0	2	-0.417	0.0	3	
+torsion 	Csp2	C	C=	O=	0.000	0.0	1	0.000	180.0	2	-0.350	0.0	3	
+torsion 	Csp2	C	C=	Nsp2	3.410	0.0	1	0.663	180.0	2	-0.150	0.0	3	
+torsion 	C=	C	C=	C	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	C=	C	C=	HC	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	C=	C	C=	O=	0.000	0.0	1	0.000	180.0	2	-0.350	0.0	3	
+torsion 	C=	C	C=	Nsp2	3.299	0.0	1	-1.450	180.0	2	-2.300	0.0	3	
+torsion 	HC	C	C=	C	0.000	0.0	1	0.000	180.0	2	0.130	0.0	3	
+torsion 	HC	C	C=	Csp2	0.000	0.0	1	0.000	180.0	2	-0.244	0.0	3	
+torsion 	HC	C	C=	C=	0.000	0.0	1	0.000	180.0	2	0.500	0.0	3	
+torsion 	HC	C	C=	HC	0.180	0.0	1	0.000	180.0	2	0.275	0.0	3	
+torsion 	HC	C	C=	O	0.000	0.0	1	0.000	180.0	2	-0.016	0.0	3	
+torsion 	HC	C	C=	O=	-0.167	0.0	1	0.000	180.0	2	-0.100	0.0	3	
+torsion 	HC	C	C=	Nsp2	0.000	0.0	1	0.000	180.0	2	0.400	0.0	3	
+torsion 	HC	C	C=	N=C	0.000	0.0	1	0.000	180.0	2	0.002	0.0	3	
+torsion 	O	C	C=	C	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	O	C	C=	HC	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	O	C	C=	O	3.550	0.0	1	-0.020	180.0	2	2.090	0.0	3	
+torsion 	O	C	C=	O=	-0.420	0.0	1	2.330	180.0	2	0.640	0.0	3	
+torsion 	N	C	C=	C	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	N	C	C=	HC	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	N	C	C=	O=	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	N	C	C=	Nsp2	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	Nsp2	C	C=	O	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	Nsp2	C	C=	O=	1.400	0.0	1	1.000	180.0	2	0.000	0.0	3	
+torsion 	Nsp2	C	C=	Nsp2	-1.300	0.0	1	1.000	180.0	2	0.000	0.0	3	
+torsion 	F	C	C=	C	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	F	C	C=	O=	0.000	0.0	1	4.000	180.0	2	0.000	0.0	3	
+torsion 	CL	C	C=	C	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	CL	C	C=	O=	0.000	0.0	1	2.600	180.0	2	0.000	0.0	3	
+torsion 	BR	C	C=	C	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	BR	C	C=	O=	0.000	0.0	1	0.780	180.0	2	0.000	0.0	3	
+torsion 	I	C	C=	C	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	I	C	C=	O=	0.000	0.0	1	0.000	180.0	2	-0.017	0.0	3	
+torsion 	S	C	C=	C	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	S	C	C=	HC	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	S	C	C=	O=	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	S+	C	C=	C	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	S+	C	C=	HC	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	S+	C	C=	O=	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	D	C	C=	C	0.000	0.0	1	0.000	180.0	2	0.130	0.0	3	
+torsion 	D	C	C=	C=	0.000	0.0	1	0.000	180.0	2	0.500	0.0	3	
+torsion 	D	C	C=	O=	-0.167	0.0	1	0.000	180.0	2	-0.100	0.0	3	
+torsion 	C	C	Csp	Csp	0.000	0.0	1	0.001	180.0	2	0.000	0.0	3	
+torsion 	HC	C	Csp	Csp	0.000	0.0	1	0.001	180.0	2	0.000	0.0	3	
+torsion 	C	C	O	C	0.400	0.0	1	0.520	180.0	2	0.467	0.0	3	
+torsion 	C	C	O	Csp2	0.000	0.0	1	0.000	180.0	2	0.400	0.0	3	
+torsion 	C	C	O	C=	-2.030	0.0	1	1.210	180.0	2	-0.670	0.0	3	
+torsion 	C	C	O	O	0.000	0.0	1	0.000	180.0	2	0.400	0.0	3	
+torsion 	C	C	O	SI	0.000	0.0	1	0.000	180.0	2	0.400	0.0	3	
+torsion 	C	C	O	LP	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	C	C	O	HO	0.800	0.0	1	0.000	180.0	2	0.090	0.0	3	
+torsion 	C	C	O	P	-0.200	0.0	1	4.600	180.0	2	0.450	0.0	3	
+torsion 	Csp2	C	O	C	0.000	0.0	1	0.000	180.0	2	0.403	0.0	3	
+torsion 	Csp2	C	O	LP	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	C	O	HO	0.000	0.0	1	0.000	180.0	2	0.090	0.0	3	
+torsion 	C=	C	O	C	0.000	0.0	1	0.000	180.0	2	0.403	0.0	3	
+torsion 	C=	C	O	LP	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	C=	C	O	HO	0.000	0.0	1	0.000	180.0	2	0.090	0.0	3	
+torsion 	HC	C	O	C	0.000	0.0	1	0.000	180.0	2	0.530	0.0	3	
+torsion 	HC	C	O	Csp2	0.000	0.0	1	0.000	180.0	2	0.530	0.0	3	
+torsion 	HC	C	O	C=	0.000	0.0	1	0.000	180.0	2	-0.132	0.0	3	
+torsion 	HC	C	O	O	0.000	0.0	1	0.000	180.0	2	0.465	0.0	3	
+torsion 	HC	C	O	SI	0.000	0.0	1	0.000	180.0	2	0.400	0.0	3	
+torsion 	HC	C	O	LP	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	HC	C	O	HO	0.000	0.0	1	0.000	180.0	2	0.200	0.0	3	
+torsion 	HC	C	O	P	0.000	0.0	1	0.000	180.0	2	0.530	0.0	3	
+torsion 	O	C	O	C	-0.170	0.0	1	-1.200	180.0	2	0.000	0.0	3	
+torsion 	O	C	O	O	0.000	0.0	1	0.000	180.0	2	0.403	0.0	3	
+torsion 	O	C	O	LP	0.000	0.0	1	0.500	180.0	2	-0.200	0.0	3	
+torsion 	O	C	O	HO	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	CL	C	O	C	0.500	0.0	1	-0.420	180.0	2	0.000	0.0	3	
+torsion 	CL	C	O	LP	0.000	0.0	1	1.500	180.0	2	0.000	0.0	3	
+torsion 	C++	C	O	LP	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	C++	C	O	HO	0.000	0.0	1	0.000	180.0	2	0.090	0.0	3	
+torsion 	C	C	N	C	-0.200	0.0	1	0.730	180.0	2	0.800	0.0	3	
+torsion 	C	C	N	N	-0.200	0.0	1	0.730	180.0	2	0.800	0.0	3	
+torsion 	C	C	N	LP	0.200	0.0	1	-0.220	180.0	2	0.100	0.0	3	
+torsion 	C	C	N	HN	0.000	0.0	1	0.120	180.0	2	0.100	0.0	3	
+torsion 	Csp2	C	N	C	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	C	N	N	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	C	N	LP	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	C	N	HN	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	C=	C	N	C	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	C=	C	N	LP	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	C=	C	N	HN	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	HC	C	N	C	0.000	0.0	1	0.000	180.0	2	0.520	0.0	3	
+torsion 	HC	C	N	Csp2	0.000	0.0	1	0.000	180.0	2	0.450	0.0	3	
+torsion 	HC	C	N	N	0.000	0.0	1	0.000	180.0	2	0.520	0.0	3	
+torsion 	HC	C	N	LP	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	HC	C	N	HN	0.000	0.0	1	0.000	180.0	2	0.250	0.0	3	
+torsion 	N	C	N	C	0.000	0.0	1	0.000	180.0	2	0.350	0.0	3	
+torsion 	N	C	N	N	0.000	0.0	1	0.000	180.0	2	0.350	0.0	3	
+torsion 	N	C	N	LP	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	N	C	N	HN	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	N+	C	N	C	0.000	0.0	1	0.000	180.0	2	0.350	0.0	3	
+torsion 	N+	C	N	LP	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	C	C	Nsp2	C	0.000	0.0	1	0.000	180.0	2	0.910	0.0	3	
+torsion 	C	C	Nsp2	Csp2	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	C	C	Nsp2	C=	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	C	C	Nsp2	HN2	0.000	0.0	1	0.000	180.0	2	0.910	0.0	3	
+torsion 	C=	C	Nsp2	C	0.000	0.0	1	0.000	180.0	2	0.457	0.0	3	
+torsion 	C=	C	Nsp2	C=	-0.200	0.0	1	-1.500	180.0	2	0.200	0.0	3	
+torsion 	C=	C	Nsp2	HN2	0.000	0.0	1	0.000	180.0	2	0.001	0.0	3	
+torsion 	HC	C	Nsp2	C	0.000	0.0	1	0.000	180.0	2	-0.200	0.0	3	
+torsion 	HC	C	Nsp2	Csp2	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	HC	C	Nsp2	Csp2	0.000	0.0	1	0.000	180.0	2	0.650	0.0	3	
+torsion 	HC	C	Nsp2	C=	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	HC	C	Nsp2	SO2	0.000	0.0	1	0.000	180.0	2	0.125	0.0	3	
+torsion 	HC	C	Nsp2	HN2	0.000	0.0	1	0.000	180.0	2	0.160	0.0	3	
+torsion 	S	C	Nsp2	C	1.200	0.0	1	0.300	180.0	2	1.634	0.0	3	
+torsion 	S	C	Nsp2	C=	-2.700	0.0	1	-3.400	180.0	2	-1.200	0.0	3	
+torsion 	D	C	Nsp2	C=	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	D	C	Nsp2	HN2	0.000	0.0	1	0.000	180.0	2	0.160	0.0	3	
+torsion 	C	C	S	C	-0.620	0.0	1	0.300	180.0	2	0.250	0.0	3	
+torsion 	C	C	S	HC	0.000	0.0	1	-0.350	180.0	2	0.367	0.0	3	
+torsion 	C	C	S	15	0.000	0.0	1	0.000	180.0	2	0.267	0.0	3	
+torsion 	Csp2	C	S	C	0.000	0.0	1	0.000	180.0	2	0.483	0.0	3	
+torsion 	Csp2	C	S	HC	0.000	0.0	1	0.000	180.0	2	0.267	0.0	3	
+torsion 	Csp2	C	S	15	0.000	0.0	1	0.000	180.0	2	0.483	0.0	3	
+torsion 	C=	C	S	C	0.000	0.0	1	0.000	180.0	2	0.483	0.0	3	
+torsion 	C=	C	S	HC	0.000	0.0	1	0.000	180.0	2	0.267	0.0	3	
+torsion 	HC	C	S	C	0.000	0.0	1	0.000	180.0	2	0.540	0.0	3	
+torsion 	HC	C	S	HC	0.000	0.0	1	0.000	180.0	2	0.320	0.0	3	
+torsion 	HC	C	S	15	0.000	0.0	1	0.000	180.0	2	0.267	0.0	3	
+torsion 	Nsp2	C	S	C	0.734	0.0	1	0.153	180.0	2	0.601	0.0	3	
+torsion 	S	C	S	C	0.000	0.0	1	-0.900	180.0	2	0.300	0.0	3	
+torsion 	S	C	S	15	0.000	0.0	1	0.000	180.0	2	0.267	0.0	3	
+torsion 	>SN	C	S	C	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	C	C	S+	C	0.000	0.0	1	0.000	180.0	2	0.483	0.0	3	
+torsion 	C	C	S+	HC	0.000	0.0	1	0.000	180.0	2	0.267	0.0	3	
+torsion 	Csp2	C	S+	C	0.000	0.0	1	0.000	180.0	2	0.483	0.0	3	
+torsion 	Csp2	C	S+	HC	0.000	0.0	1	0.000	180.0	2	0.267	0.0	3	
+torsion 	C=	C	S+	C	0.000	0.0	1	0.000	180.0	2	0.483	0.0	3	
+torsion 	C=	C	S+	HC	0.000	0.0	1	0.000	180.0	2	0.267	0.0	3	
+torsion 	HC	C	S+	C	0.000	0.0	1	0.000	180.0	2	0.483	0.0	3	
+torsion 	HC	C	S+	HC	0.000	0.0	1	0.000	180.0	2	0.267	0.0	3	
+torsion 	C	C	>SN	C	0.000	0.0	1	0.000	180.0	2	0.500	0.0	3	
+torsion 	C	C	>SN	O=	-0.235	0.0	1	-0.150	180.0	2	0.175	0.0	3	
+torsion 	HC	C	>SN	C	0.000	0.0	1	0.000	180.0	2	0.550	0.0	3	
+torsion 	HC	C	>SN	O=	0.000	0.0	1	0.000	180.0	2	0.175	0.0	3	
+torsion 	S	C	>SN	C	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	S	C	>SN	O=	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	>SN	C	>SN	C	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	>SN	C	>SN	O=	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	C	C	SO2	C	0.000	0.0	1	0.000	180.0	2	0.500	0.0	3	
+torsion 	C	C	SO2	O=	-0.235	0.0	1	-0.150	180.0	2	0.175	0.0	3	
+torsion 	HC	C	SO2	C	0.000	0.0	1	0.000	180.0	2	0.550	0.0	3	
+torsion 	HC	C	SO2	O=	0.000	0.0	1	0.000	180.0	2	0.175	0.0	3	
+torsion 	HC	C	SO2	Nsp2	0.000	0.0	1	0.000	180.0	2	0.125	0.0	3	
+torsion 	C	C	SI	C	0.000	0.0	1	0.300	180.0	2	0.167	0.0	3	
+torsion 	C	C	SI	Csp2	0.000	0.0	1	0.000	180.0	2	0.167	0.0	3	
+torsion 	C	C	SI	HC	0.000	0.0	1	0.000	180.0	2	0.272	0.0	3	
+torsion 	C	C	SI	O	0.000	0.0	1	0.000	180.0	2	0.167	0.0	3	
+torsion 	C	C	SI	19	0.000	0.0	1	0.000	180.0	2	0.300	0.0	3	
+torsion 	Csp2	C	SI	C	0.000	0.0	1	0.000	180.0	2	0.167	0.0	3	
+torsion 	Csp2	C	SI	Csp2	0.000	0.0	1	0.000	180.0	2	0.400	0.0	3	
+torsion 	Csp2	C	SI	HC	0.000	0.0	1	0.000	180.0	2	0.167	0.0	3	
+torsion 	HC	C	SI	C	0.000	0.0	1	0.000	180.0	2	0.200	0.0	3	
+torsion 	HC	C	SI	Csp2	0.000	0.0	1	0.000	180.0	2	0.117	0.0	3	
+torsion 	HC	C	SI	HC	0.000	0.0	1	0.000	180.0	2	0.176	0.0	3	
+torsion 	HC	C	SI	O	0.000	0.0	1	0.000	180.0	2	0.210	0.0	3	
+torsion 	HC	C	SI	19	0.000	0.0	1	0.000	180.0	2	0.270	0.0	3	
+torsion 	SI	C	SI	C	0.000	0.0	1	0.000	180.0	2	0.167	0.0	3	
+torsion 	SI	C	SI	HC	0.000	0.0	1	0.000	180.0	2	0.167	0.0	3	
+torsion 	C	C	CR3R	C	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	C	C	CR3R	HC	0.000	0.0	1	0.000	180.0	2	0.267	0.0	3	
+torsion 	C	C	CR3R	22	0.300	0.0	1	0.000	180.0	2	0.450	0.0	3	
+torsion 	C	C	CR3R	OR	0.000	0.0	1	0.000	180.0	2	0.530	0.0	3	
+torsion 	Csp2	C	CR3R	HC	0.000	0.0	1	0.000	180.0	2	0.267	0.0	3	
+torsion 	Csp2	C	CR3R	22	0.300	0.0	1	0.000	180.0	2	0.450	0.0	3	
+torsion 	HC	C	CR3R	C	0.000	0.0	1	0.000	180.0	2	0.690	0.0	3	
+torsion 	HC	C	CR3R	HC	0.000	0.0	1	0.000	180.0	2	0.690	0.0	3	
+torsion 	HC	C	CR3R	22	0.000	0.0	1	0.000	180.0	2	0.120	0.0	3	
+torsion 	HC	C	CR3R	OR	0.000	0.0	1	0.000	180.0	2	0.530	0.0	3	
+torsion 	CR3R	C	CR3R	C	0.200	0.0	1	0.270	180.0	2	0.093	0.0	3	
+torsion 	CR3R	C	CR3R	HC	0.000	0.0	1	0.000	180.0	2	0.120	0.0	3	
+torsion 	CR3R	C	CR3R	22	0.000	0.0	1	0.000	180.0	2	0.300	0.0	3	
+torsion 	NPYD	C	CR3R	HC	0.000	0.0	1	0.000	180.0	2	0.530	0.0	3	
+torsion 	NPYD	C	CR3R	22	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	N2OX	C	CR3R	HC	0.000	0.0	1	0.000	180.0	2	0.530	0.0	3	
+torsion 	N2OX	C	CR3R	22	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	C	C	P	C	-0.150	0.0	1	0.000	180.0	2	0.500	0.0	3	
+torsion 	C	C	P	Csp2	-0.050	0.0	1	-0.100	180.0	2	0.300	0.0	3	
+torsion 	C	C	P	HC	-0.530	0.0	1	-0.400	180.0	2	0.600	0.0	3	
+torsion 	HC	C	P	C	0.050	0.0	1	0.000	180.0	2	0.420	0.0	3	
+torsion 	HC	C	P	Csp2	0.050	0.0	1	0.000	180.0	2	0.200	0.0	3	
+torsion 	HC	C	P	HC	0.000	0.0	1	0.000	180.0	2	0.428	0.0	3	
+torsion 	C	C	C.	C	0.400	0.0	1	0.030	180.0	2	0.500	0.0	3	
+torsion 	C	C	C.	HC	0.000	0.0	1	0.200	180.0	2	0.200	0.0	3	
+torsion 	HC	C	C.	C	0.000	0.0	1	0.000	180.0	2	0.340	0.0	3	
+torsion 	HC	C	C.	HC	0.000	0.0	1	0.000	180.0	2	0.250	0.0	3	
+torsion 	C	C	GE	C	0.000	0.0	1	0.000	180.0	2	0.152	0.0	3	
+torsion 	C	C	GE	HC	0.000	0.0	1	0.000	180.0	2	0.152	0.0	3	
+torsion 	HC	C	GE	C	0.000	0.0	1	0.000	180.0	2	0.127	0.0	3	
+torsion 	HC	C	GE	HC	0.000	0.0	1	0.000	180.0	2	0.132	0.0	3	
+torsion 	C	C	SN	C	0.000	0.0	1	-0.050	180.0	2	0.160	0.0	3	
+torsion 	C	C	SN	HC	0.000	0.0	1	0.000	180.0	2	0.070	0.0	3	
+torsion 	HC	C	SN	C	0.000	0.0	1	0.000	180.0	2	0.089	0.0	3	
+torsion 	HC	C	SN	HC	0.000	0.0	1	0.000	180.0	2	0.071	0.0	3	
+torsion 	C	C	PB	C	0.000	0.0	1	0.000	180.0	2	0.021	0.0	3	
+torsion 	C	C	PB	HC	0.000	0.0	1	0.000	180.0	2	0.021	0.0	3	
+torsion 	HC	C	PB	C	0.000	0.0	1	0.000	180.0	2	0.021	0.0	3	
+torsion 	HC	C	PB	HC	0.000	0.0	1	0.000	180.0	2	0.021	0.0	3	
+torsion 	HC	C	PB	33	0.000	0.0	1	0.000	180.0	2	0.021	0.0	3	
+torsion 	C	C	SE	C	-0.620	0.0	1	0.300	180.0	2	0.350	0.0	3	
+torsion 	C	C	SE	HC	0.000	0.0	1	-0.200	180.0	2	0.300	0.0	3	
+torsion 	HC	C	SE	C	0.000	0.0	1	0.000	180.0	2	0.360	0.0	3	
+torsion 	HC	C	SE	HC	0.000	0.0	1	0.000	180.0	2	0.270	0.0	3	
+torsion 	C	C	TE	C	-0.440	0.0	1	-0.330	180.0	2	0.600	0.0	3	
+torsion 	C	C	TE	HC	0.000	0.0	1	-0.200	180.0	2	0.300	0.0	3	
+torsion 	HC	C	TE	C	0.000	0.0	1	0.000	180.0	2	0.360	0.0	3	
+torsion 	HC	C	TE	HC	0.000	0.0	1	0.000	180.0	2	0.270	0.0	3	
+torsion 	C	C	NPYD	LP	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	C	C	NPYD	37	0.340	0.0	1	0.000	180.0	2	-0.900	0.0	3	
+torsion 	C	C	NPYD	N2OX	0.340	0.0	1	0.000	180.0	2	-0.600	0.0	3	
+torsion 	Csp2	C	NPYD	LP	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	C	NPYD	N2OX	-0.440	0.0	1	0.000	180.0	2	0.100	0.0	3	
+torsion 	HC	C	NPYD	Csp2	0.000	0.0	1	0.000	180.0	2	-0.240	0.0	3	
+torsion 	HC	C	NPYD	LP	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	HC	C	NPYD	37	0.000	0.0	1	0.000	180.0	2	-0.316	0.0	3	
+torsion 	HC	C	NPYD	N2OX	0.000	0.0	1	0.000	180.0	2	-0.316	0.0	3	
+torsion 	CR3R	C	NPYD	LP	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	CR3R	C	NPYD	N2OX	0.000	0.0	1	0.000	180.0	2	0.100	0.0	3	
+torsion 	HC	C	CE3R	CR3R	0.000	0.0	1	0.000	180.0	2	0.540	0.0	3	
+torsion 	C	C	N+	C	-0.200	0.0	1	0.730	180.0	2	0.800	0.0	3	
+torsion 	C	C	N+	HN+	0.000	0.0	1	0.120	180.0	2	0.100	0.0	3	
+torsion 	Csp2	C	N+	C	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	C	N+	HN+	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	HC	C	N+	C	0.000	0.0	1	0.000	180.0	2	0.520	0.0	3	
+torsion 	HC	C	N+	HN+	0.000	0.0	1	0.000	180.0	2	0.250	0.0	3	
+torsion 	N	C	N+	C	0.000	0.0	1	0.000	180.0	2	0.350	0.0	3	
+torsion 	C	C	Oar	Csp2	0.000	0.0	1	0.000	180.0	2	0.400	0.0	3	
+torsion 	C	C	Oar	LP	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	HC	C	Oar	Csp2	0.000	0.0	1	0.000	180.0	2	0.350	0.0	3	
+torsion 	HC	C	Oar	LP	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	C	C	N2OX	O=	0.000	0.0	1	0.000	180.0	2	-0.600	0.0	3	
+torsion 	C	C	N2OX	NPYD	0.000	0.0	1	0.000	180.0	2	-1.200	0.0	3	
+torsion 	Csp2	C	N2OX	O=	0.000	0.0	1	0.000	180.0	2	-0.600	0.0	3	
+torsion 	Csp2	C	N2OX	NPYD	-0.440	0.0	1	0.000	180.0	2	0.100	0.0	3	
+torsion 	HC	C	N2OX	O=	0.000	0.0	1	0.000	180.0	2	-0.316	0.0	3	
+torsion 	HC	C	N2OX	NPYD	0.000	0.0	1	0.000	180.0	2	-0.316	0.0	3	
+torsion 	CR3R	C	N2OX	O=	0.000	0.0	1	0.000	180.0	2	-1.750	0.0	3	
+torsion 	CR3R	C	N2OX	NPYD	0.000	0.0	1	0.000	180.0	2	0.700	0.0	3	
+torsion 	C	C	NO3	O=	0.000	0.0	1	0.410	180.0	2	0.000	0.0	3	
+torsion 	HC	C	NO3	O=	0.000	0.0	1	0.000	180.0	2	0.060	0.0	3	
+torsion 	C	C	Car	50	-0.440	0.0	1	0.240	180.0	2	0.060	0.0	3	
+torsion 	HC	C	Car	50	0.000	0.0	1	0.000	180.0	2	-0.240	0.0	3	
+torsion 	Car	C	Car	50	0.100	0.0	1	0.000	180.0	2	0.500	0.0	3	
+torsion 	C	C	OK	C++	-1.340	0.0	1	1.020	180.0	2	-0.900	0.0	3	
+torsion 	HC	C	OK	C++	0.000	0.0	1	0.000	180.0	2	-0.620	0.0	3	
+torsion 	C	C	C++	C	1.200	0.0	1	0.200	180.0	2	0.150	0.0	3	
+torsion 	C	C	C++	HC	0.730	0.0	1	0.270	180.0	2	0.680	0.0	3	
+torsion 	C	C	C++	OK	-0.250	0.0	1	0.200	180.0	2	0.000	0.0	3	
+torsion 	HC	C	C++	C	0.000	0.0	1	0.000	180.0	2	0.130	0.0	3	
+torsion 	HC	C	C++	HC	0.180	0.0	1	0.000	180.0	2	0.275	0.0	3	
+torsion 	HC	C	C++	OK	0.000	0.0	1	0.000	180.0	2	-0.270	0.0	3	
+torsion 	O	C	C++	C	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	O	C	C++	HC	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	O	C	C++	OK	-3.870	0.0	1	5.700	180.0	2	0.000	0.0	3	
+torsion 	HC	C	N=C	C=	0.000	0.0	1	0.000	180.0	2	-1.000	0.0	3	
+torsion 	HC	C	N=C	LP	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	C	Csp2	Csp2	C	-0.100	0.0	1	10.000	180.0	2	0.000	0.0	3	
+torsion 	C	Csp2	Csp2	Csp2	-0.270	0.0	1	10.000	180.0	2	0.000	0.0	3	
+torsion 	C	Csp2	Csp2	C=	0.000	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	C	Csp2	Csp2	HC	0.000	0.0	1	12.500	180.0	2	0.000	0.0	3	
+torsion 	C	Csp2	Csp2	O	-1.200	0.0	1	16.250	180.0	2	0.000	0.0	3	
+torsion 	C	Csp2	Csp2	CL	0.320	0.0	1	15.500	180.0	2	0.000	0.0	3	
+torsion 	C	Csp2	Csp2	I	-1.320	0.0	1	15.500	180.0	2	0.000	0.0	3	
+torsion 	C	Csp2	Csp2	SI	0.000	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	C	Csp2	Csp2	NPYD	0.000	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	Csp2	Csp2	-0.930	0.0	1	8.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	Csp2	C=	0.000	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	Csp2	Csp	0.000	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	Csp2	HC	0.000	0.0	1	9.000	180.0	2	-1.060	0.0	3	
+torsion 	Csp2	Csp2	Csp2	O	0.000	0.0	1	16.250	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	Csp2	N	0.000	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	Csp2	Nsp2	0.000	0.0	1	12.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	Csp2	F	0.000	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	Csp2	CL	0.000	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	Csp2	BR	0.000	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	Csp2	I	0.000	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	Csp2	SI	0.000	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	Csp2	CR3R	-0.270	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	Csp2	P	0.000	0.0	1	16.250	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	Csp2	NPYD	1.000	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	Csp2	NPYL	0.000	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	Csp2	Oar	0.000	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	Csp2	Sthi	0.000	0.0	1	15.000	180.0	2	2.600	0.0	3	
+torsion 	Csp2	Csp2	Csp2	NO3	0.000	0.0	1	8.000	180.0	2	0.000	0.0	3	
+torsion 	C=	Csp2	Csp2	C=	0.000	0.0	1	8.700	180.0	2	0.000	0.0	3	
+torsion 	C=	Csp2	Csp2	HC	0.000	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	C=	Csp2	Csp2	I	-0.500	0.0	1	15.500	180.0	2	0.000	0.0	3	
+torsion 	Csp	Csp2	Csp2	HC	0.000	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	HC	Csp2	Csp2	HC	0.000	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	HC	Csp2	Csp2	O	0.000	0.0	1	16.250	180.0	2	0.000	0.0	3	
+torsion 	HC	Csp2	Csp2	N	0.000	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	HC	Csp2	Csp2	Nsp2	0.000	0.0	1	12.000	180.0	2	0.000	0.0	3	
+torsion 	HC	Csp2	Csp2	F	0.000	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	HC	Csp2	Csp2	CL	0.000	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	HC	Csp2	Csp2	BR	0.000	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	HC	Csp2	Csp2	I	-1.000	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	HC	Csp2	Csp2	SI	0.000	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	HC	Csp2	Csp2	CR3R	0.000	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	HC	Csp2	Csp2	P	0.000	0.0	1	16.250	180.0	2	0.000	0.0	3	
+torsion 	HC	Csp2	Csp2	NPYD	0.000	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	HC	Csp2	Csp2	NPYL	0.000	0.0	1	15.000	180.0	2	-1.060	0.0	3	
+torsion 	HC	Csp2	Csp2	Oar	0.000	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	HC	Csp2	Csp2	Sthi	0.000	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	HC	Csp2	Csp2	NO3	0.000	0.0	1	8.500	180.0	2	0.000	0.0	3	
+torsion 	HC	Csp2	Csp2	N=C	0.000	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	O	Csp2	Csp2	O	-2.000	0.0	1	16.250	180.0	2	0.000	0.0	3	
+torsion 	O	Csp2	Csp2	CL	-0.500	0.0	1	15.500	180.0	2	0.000	0.0	3	
+torsion 	O	Csp2	Csp2	BR	0.000	0.0	1	15.500	180.0	2	0.000	0.0	3	
+torsion 	O	Csp2	Csp2	I	0.000	0.0	1	5.250	180.0	2	0.000	0.0	3	
+torsion 	F	Csp2	Csp2	F	-2.060	0.0	1	15.500	180.0	2	0.000	0.0	3	
+torsion 	CL	Csp2	Csp2	CL	-1.600	0.0	1	15.500	180.0	2	0.000	0.0	3	
+torsion 	BR	Csp2	Csp2	BR	-0.800	0.0	1	15.500	180.0	2	0.000	0.0	3	
+torsion 	I	Csp2	Csp2	I	-3.840	0.0	1	15.500	180.0	2	0.000	0.0	3	
+torsion 	I	Csp2	Csp2	Oar	-1.000	0.0	1	15.500	180.0	2	0.000	0.0	3	
+torsion 	SI	Csp2	Csp2	SI	0.000	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	NPYD	Csp2	Csp2	NPYD	0.000	0.0	1	10.000	180.0	2	0.000	0.0	3	
+torsion 	NPYD	Csp2	Csp2	NPYL	0.000	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	NPYL	Csp2	Csp2	NPYL	0.000	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	Oar	Csp2	Csp2	Oar	-2.000	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	Sthi	Csp2	Csp2	Sthi	3.000	0.0	1	15.000	180.0	2	0.500	0.0	3	
+torsion 	C	Csp2	C=	C	2.600	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	C	Csp2	C=	Csp2	0.000	0.0	1	11.100	180.0	2	0.000	0.0	3	
+torsion 	C	Csp2	C=	HC	3.300	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	C	Csp2	C=	O=	2.750	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	C=	C	-2.300	0.0	1	11.100	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	C=	Csp2	0.500	0.0	1	11.100	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	C=	C=	-0.900	0.0	1	15.500	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	C=	HC	0.500	0.0	1	11.100	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	C=	O	0.000	0.0	1	16.250	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	C=	O=	1.530	0.0	1	6.500	180.0	2	0.830	0.0	3	
+torsion 	Csp2	Csp2	C=	Nsp2	0.000	0.0	1	1.500	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	C=	N=C	1.550	0.0	1	0.510	180.0	2	1.060	0.0	3	
+torsion 	HC	Csp2	C=	C	0.000	0.0	1	11.100	180.0	2	0.000	0.0	3	
+torsion 	HC	Csp2	C=	Csp2	0.400	0.0	1	11.100	180.0	2	0.000	0.0	3	
+torsion 	HC	Csp2	C=	C=	0.000	0.0	1	9.800	180.0	2	0.000	0.0	3	
+torsion 	HC	Csp2	C=	HC	2.800	0.0	1	13.000	180.0	2	0.000	0.0	3	
+torsion 	HC	Csp2	C=	O=	3.000	0.0	1	11.100	180.0	2	0.000	0.0	3	
+torsion 	HC	Csp2	C=	N=C	0.000	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	Csp	Csp	0.000	0.0	1	0.001	180.0	2	0.000	0.0	3	
+torsion 	C	Csp2	O	C	2.300	0.0	1	4.000	180.0	2	0.000	0.0	3	
+torsion 	C	Csp2	O	Csp2	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	C	Csp2	O	LP	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	O	C	3.530	0.0	1	2.300	180.0	2	-3.530	0.0	3	
+torsion 	Csp2	Csp2	O	Csp2	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	O	C=	0.000	0.0	1	2.300	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	O	LP	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	O	P	0.100	0.0	1	4.600	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	O	HN2	2.000	0.0	1	1.700	180.0	2	-2.000	0.0	3	
+torsion 	HC	Csp2	O	C	3.000	0.0	1	3.100	180.0	2	0.000	0.0	3	
+torsion 	HC	Csp2	O	Csp2	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	HC	Csp2	O	LP	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	HC	Csp2	O	P	-0.100	0.0	1	2.000	180.0	2	0.000	0.0	3	
+torsion 	HC	Csp2	O	HN2	2.940	0.0	1	1.500	180.0	2	-1.100	0.0	3	
+torsion 	Csp2	Csp2	N	C	-1.570	0.0	1	3.200	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	N	LP	0.000	0.0	1	0.000	180.0	2	0.010	0.0	3	
+torsion 	Csp2	Csp2	N	HN	0.000	0.0	1	2.000	180.0	2	0.000	0.0	3	
+torsion 	HC	Csp2	N	C	1.570	0.0	1	1.690	180.0	2	0.000	0.0	3	
+torsion 	HC	Csp2	N	LP	0.000	0.0	1	0.000	180.0	2	0.010	0.0	3	
+torsion 	HC	Csp2	N	HN	0.000	0.0	1	1.690	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	Nsp2	C	0.000	0.0	1	2.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	Nsp2	Csp2	0.000	0.0	1	0.000	180.0	2	1.490	0.0	3	
+torsion 	Csp2	Csp2	Nsp2	C=	0.000	0.0	1	2.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	Nsp2	HN2	0.000	0.0	1	2.000	180.0	2	0.000	0.0	3	
+torsion 	HC	Csp2	Nsp2	C=	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	HC	Csp2	Nsp2	HN2	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	Nsp2	Csp2	Nsp2	C	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	Nsp2	Csp2	Nsp2	HN2	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	C	Csp2	SI	C	0.000	0.0	1	0.000	180.0	2	0.350	0.0	3	
+torsion 	Csp2	Csp2	SI	C	-0.440	0.0	1	-0.240	180.0	2	0.060	0.0	3	
+torsion 	Csp2	Csp2	SI	Csp2	0.000	0.0	1	0.000	180.0	2	0.400	0.0	3	
+torsion 	Csp2	Csp2	SI	HC	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	SI	19	-0.440	0.0	1	-0.240	180.0	2	0.060	0.0	3	
+torsion 	HC	Csp2	SI	C	0.000	0.0	1	0.000	180.0	2	0.717	0.0	3	
+torsion 	HC	Csp2	SI	Csp2	0.000	0.0	1	0.000	180.0	2	0.600	0.0	3	
+torsion 	HC	Csp2	SI	HC	0.000	0.0	1	0.000	180.0	2	0.520	0.0	3	
+torsion 	Csp2	Csp2	CR3R	Csp2	0.100	0.0	1	0.000	180.0	2	0.500	0.0	3	
+torsion 	Csp2	Csp2	CR3R	HC	-0.300	0.0	1	1.600	180.0	2	-0.500	0.0	3	
+torsion 	Csp2	Csp2	CR3R	22	-0.440	0.0	1	0.240	180.0	2	0.060	0.0	3	
+torsion 	Csp2	Csp2	CR3R	OR	0.001	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	HC	Csp2	CR3R	Csp2	0.000	0.0	1	0.000	180.0	2	0.600	0.0	3	
+torsion 	HC	Csp2	CR3R	HC	0.000	0.0	1	0.000	180.0	2	0.520	0.0	3	
+torsion 	HC	Csp2	CR3R	22	0.000	0.0	1	0.000	180.0	2	0.010	0.0	3	
+torsion 	Csp2	Csp2	P	C	0.000	0.0	1	0.000	180.0	2	0.400	0.0	3	
+torsion 	Csp2	Csp2	P	Csp2	0.000	0.0	1	0.000	180.0	2	0.330	0.0	3	
+torsion 	C	Csp2	NPYD	Csp2	0.000	0.0	1	10.000	180.0	2	0.000	0.0	3	
+torsion 	C	Csp2	NPYD	LP	0.000	0.0	1	10.000	180.0	2	0.000	0.0	3	
+torsion 	C	Csp2	NPYD	HN	0.000	0.0	1	10.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	NPYD	Csp2	0.000	0.0	1	10.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	NPYD	LP	0.000	0.0	1	10.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	NPYD	HN	0.750	0.0	1	10.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	NPYD	37	0.000	0.0	1	10.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	NPYD	NPYL	0.000	0.0	1	10.000	180.0	2	0.000	0.0	3	
+torsion 	HC	Csp2	NPYD	C	0.000	0.0	1	10.000	180.0	2	0.000	0.0	3	
+torsion 	HC	Csp2	NPYD	Csp2	0.000	0.0	1	10.000	180.0	2	0.000	0.0	3	
+torsion 	HC	Csp2	NPYD	LP	0.000	0.0	1	10.000	180.0	2	0.000	0.0	3	
+torsion 	HC	Csp2	NPYD	HN	0.000	0.0	1	10.000	180.0	2	0.000	0.0	3	
+torsion 	HC	Csp2	NPYD	37	0.000	0.0	1	10.000	180.0	2	0.000	0.0	3	
+torsion 	HC	Csp2	NPYD	NPYL	0.000	0.0	1	10.000	180.0	2	0.000	0.0	3	
+torsion 	NPYD	Csp2	NPYD	Csp2	0.000	0.0	1	10.000	180.0	2	0.000	0.0	3	
+torsion 	NPYD	Csp2	NPYD	LP	0.000	0.0	1	10.000	180.0	2	0.000	0.0	3	
+torsion 	NPYD	Csp2	NPYD	37	0.000	0.0	1	10.000	180.0	2	0.000	0.0	3	
+torsion 	NPYD	Csp2	NPYD	NPYL	0.000	0.0	1	10.000	180.0	2	0.000	0.0	3	
+torsion 	NPYL	Csp2	NPYD	Csp2	0.000	0.0	1	10.000	180.0	2	0.000	0.0	3	
+torsion 	NPYL	Csp2	NPYD	LP	0.000	0.0	1	10.000	180.0	2	0.000	0.0	3	
+torsion 	HC	Csp2	CE3R	CR3R	0.000	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	NPYL	Csp2	0.000	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	NPYL	HN	0.000	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	NPYL	NPYD	0.000	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	HC	Csp2	NPYL	Csp2	0.000	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	HC	Csp2	NPYL	HN	0.000	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	HC	Csp2	NPYL	NPYD	0.000	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	NPYD	Csp2	NPYL	Csp2	0.000	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	NPYD	Csp2	NPYL	HN	0.000	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	NPYD	Csp2	NPYL	NPYD	0.000	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	Oar	C	0.000	0.0	1	9.200	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	Oar	Csp2	0.000	0.0	1	8.300	180.0	2	-0.800	0.0	3	
+torsion 	Csp2	Csp2	Oar	LP	0.000	0.0	1	0.000	180.0	2	0.250	0.0	3	
+torsion 	Csp2	Csp2	Oar	HN2	1.000	0.0	1	7.000	180.0	2	0.000	0.0	3	
+torsion 	HC	Csp2	Oar	C	-0.820	0.0	1	9.200	180.0	2	3.700	0.0	3	
+torsion 	HC	Csp2	Oar	Csp2	-0.460	0.0	1	2.700	180.0	2	0.700	0.0	3	
+torsion 	HC	Csp2	Oar	LP	0.000	0.0	1	7.500	180.0	2	0.000	0.0	3	
+torsion 	HC	Csp2	Oar	HN2	1.250	0.0	1	0.000	180.0	2	0.500	0.0	3	
+torsion 	CL	Csp2	Oar	Csp2	0.000	0.0	1	15.500	180.0	2	0.000	0.0	3	
+torsion 	CL	Csp2	Oar	LP	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	BR	Csp2	Oar	Csp2	0.000	0.0	1	15.500	180.0	2	0.000	0.0	3	
+torsion 	BR	Csp2	Oar	LP	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	I	Csp2	Oar	Csp2	0.000	0.0	1	15.500	180.0	2	0.000	0.0	3	
+torsion 	I	Csp2	Oar	LP	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	Sthi	Csp2	0.000	0.0	1	1.700	180.0	2	0.400	0.0	3	
+torsion 	HC	Csp2	Sthi	Csp2	0.000	0.0	1	1.700	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	NO3	O=	0.000	0.0	1	1.500	180.0	2	0.000	0.0	3	
+torsion 	HC	Csp2	NO3	O=	0.000	0.0	1	1.300	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp2	N=C	C=	1.581	0.0	1	3.430	180.0	2	3.010	0.0	3	
+torsion 	Csp2	Csp2	N=C	LP	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	HC	Csp2	N=C	C=	0.000	0.0	1	10.000	180.0	2	0.000	0.0	3	
+torsion 	HC	Csp2	N=C	LP	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	C	C=	C=	C	1.000	0.0	1	6.500	180.0	2	0.000	0.0	3	
+torsion 	C	C=	C=	HC	0.000	0.0	1	5.200	180.0	2	0.000	0.0	3	
+torsion 	C	C=	C=	O=	-1.000	0.0	1	6.500	180.0	2	0.000	0.0	3	
+torsion 	Csp2	C=	C=	Csp2	1.000	0.0	1	12.500	180.0	2	0.000	0.0	3	
+torsion 	Csp2	C=	C=	HC	0.000	0.0	1	5.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	C=	C=	O=	-0.700	0.0	1	12.500	180.0	2	0.000	0.0	3	
+torsion 	HC	C=	C=	HC	0.000	0.0	1	10.000	180.0	2	0.000	0.0	3	
+torsion 	HC	C=	C=	O=	-0.120	0.0	1	10.000	180.0	2	0.000	0.0	3	
+torsion 	HC	C=	C=	D	0.000	0.0	1	10.000	180.0	2	0.000	0.0	3	
+torsion 	O=	C=	C=	O=	0.000	0.0	1	10.000	180.0	2	0.000	0.0	3	
+torsion 	O=	C=	C=	D	-0.120	0.0	1	10.000	180.0	2	0.000	0.0	3	
+torsion 	D	C=	C=	D	0.000	0.0	1	10.000	180.0	2	0.000	0.0	3	
+torsion 	C	C=	O	C	-2.500	0.0	1	1.390	180.0	2	0.000	0.0	3	
+torsion 	C	C=	O	LP	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	C	C=	O	HOCO	0.000	0.0	1	0.500	180.0	2	0.000	0.0	3	
+torsion 	Csp2	C=	O	C	3.530	0.0	1	2.300	180.0	2	-3.530	0.0	3	
+torsion 	HC	C=	O	C	0.000	0.0	1	0.880	180.0	2	0.000	0.0	3	
+torsion 	HC	C=	O	LP	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	HC	C=	O	HOCO	-0.770	0.0	1	0.850	180.0	2	0.000	0.0	3	
+torsion 	O=	C=	O	C	-1.660	0.0	1	8.980	180.0	2	0.000	0.0	3	
+torsion 	O=	C=	O	LP	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	O=	C=	O	HOCO	-3.285	0.0	1	5.600	180.0	2	0.000	0.0	3	
+torsion 	C	C=	Nsp2	C	1.100	0.0	1	5.000	180.0	2	0.000	0.0	3	
+torsion 	C	C=	Nsp2	Csp2	-4.000	0.0	1	2.700	180.0	2	0.500	0.0	3	
+torsion 	C	C=	Nsp2	C=	-0.900	0.0	1	1.600	180.0	2	0.000	0.0	3	
+torsion 	C	C=	Nsp2	HN2	0.000	0.0	1	5.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	C=	Nsp2	C	0.000	0.0	1	5.000	180.0	2	0.000	0.0	3	
+torsion 	HC	C=	Nsp2	C	0.000	0.0	1	5.000	180.0	2	0.000	0.0	3	
+torsion 	HC	C=	Nsp2	C=	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	HC	C=	Nsp2	HN2	0.000	0.0	1	5.000	180.0	2	0.000	0.0	3	
+torsion 	O=	C=	Nsp2	C	0.000	0.0	1	5.000	180.0	2	0.000	0.0	3	
+torsion 	O=	C=	Nsp2	Csp2	-0.600	0.0	1	4.200	180.0	2	0.000	0.0	3	
+torsion 	O=	C=	Nsp2	Csp2	-3.100	0.0	1	2.900	180.0	2	0.000	0.0	3	
+torsion 	O=	C=	Nsp2	C=	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	O=	C=	Nsp2	C=	0.600	0.0	1	1.300	180.0	2	0.000	0.0	3	
+torsion 	O=	C=	Nsp2	HN2	1.100	0.0	1	5.000	180.0	2	0.000	0.0	3	
+torsion 	Nsp2	C=	Nsp2	C	0.000	0.0	1	0.000	180.0	2	0.010	0.0	3	
+torsion 	Nsp2	C=	Nsp2	Csp2	2.400	0.0	1	2.500	180.0	2	0.000	0.0	3	
+torsion 	Nsp2	C=	Nsp2	C=	0.800	0.0	1	1.300	180.0	2	0.000	0.0	3	
+torsion 	Nsp2	C=	Nsp2	HN2	0.000	0.0	1	1.000	180.0	2	0.000	0.0	3	
+torsion 	O=	C=	CR3R	HC	-0.167	0.0	1	0.000	180.0	2	-0.100	0.0	3	
+torsion 	O=	C=	CR3R	22	-0.300	0.0	1	1.200	180.0	2	-0.350	0.0	3	
+torsion 	CR3R	C=	CR3R	HC	0.000	0.0	1	0.000	180.0	2	0.130	0.0	3	
+torsion 	C	C=	N=C	C	-1.900	0.0	1	17.800	180.0	2	0.000	0.0	3	
+torsion 	C	C=	N=C	LP	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	C	C=	N=C	HN	-0.950	0.0	1	17.950	180.0	2	1.110	0.0	3	
+torsion 	Csp2	C=	N=C	C	-1.090	0.0	1	17.950	180.0	2	0.000	0.0	3	
+torsion 	Csp2	C=	N=C	Csp2	1.150	0.0	1	15.250	180.0	2	0.000	0.0	3	
+torsion 	Csp2	C=	N=C	LP	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	HC	C=	N=C	C	0.000	0.0	1	16.900	180.0	2	1.600	0.0	3	
+torsion 	HC	C=	N=C	Csp2	0.000	0.0	1	14.150	180.0	2	-0.990	0.0	3	
+torsion 	HC	C=	N=C	HC	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	HC	C=	N=C	HC	0.000	0.0	1	16.000	180.0	2	1.600	0.0	3	
+torsion 	HC	C=	N=C	LP	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	HC	C=	N=C	HN	0.000	0.0	1	16.800	180.0	2	0.000	0.0	3	
+torsion 	C	Csp	Csp	Csp2	0.000	0.0	1	0.001	180.0	2	0.000	0.0	3	
+torsion 	C	Csp	Csp	Csp	0.000	0.0	1	0.001	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp	Csp	Csp2	0.000	0.0	1	0.001	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp	Csp	Csp	0.000	0.0	1	0.001	180.0	2	0.000	0.0	3	
+torsion 	Csp2	Csp	Csp	HC	0.000	0.0	1	0.001	180.0	2	0.000	0.0	3	
+torsion 	Csp	Csp	Csp	Csp	0.000	0.0	1	0.001	180.0	2	0.000	0.0	3	
+torsion 	C	O	O	C	2.095	0.0	1	-2.155	180.0	2	-0.113	0.0	3	
+torsion 	C	O	O	LP	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	C	O	O	HO	2.865	0.0	1	-2.305	180.0	2	0.505	0.0	3	
+torsion 	LP	O	O	LP	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	LP	O	O	HO	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	HO	O	O	HO	0.753	0.0	1	-1.202	180.0	2	-0.250	0.0	3	
+torsion 	C	O	SI	C	0.000	0.0	1	0.000	180.0	2	0.230	0.0	3	
+torsion 	C	O	SI	HC	0.000	0.0	1	0.000	180.0	2	0.320	0.0	3	
+torsion 	C	O	SI	O	0.000	0.0	1	0.000	180.0	2	0.150	0.0	3	
+torsion 	SI	O	SI	C	0.000	0.0	1	0.000	180.0	2	0.100	0.0	3	
+torsion 	SI	O	SI	HC	0.000	0.0	1	0.000	180.0	2	0.100	0.0	3	
+torsion 	SI	O	SI	O	0.000	0.0	1	0.000	180.0	2	0.100	0.0	3	
+torsion 	LP	O	SI	C	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	LP	O	SI	HC	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	LP	O	SI	O	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	C	O	P	O	0.000	0.0	1	0.000	180.0	2	0.400	0.0	3	
+torsion 	Csp2	O	P	O	0.200	0.0	1	0.000	180.0	2	-0.300	0.0	3	
+torsion 	LP	O	P	O	-0.300	0.0	1	1.200	180.0	2	-0.350	0.0	3	
+torsion 	C	N	N	C	0.900	0.0	1	-6.800	180.0	2	0.210	0.0	3	
+torsion 	C	N	N	LP	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	C	N	N	HN	2.000	0.0	1	-8.500	180.0	2	0.800	0.0	3	
+torsion 	N	N	N	HN	0.025	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	LP	N	N	LP	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	LP	N	N	HN	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	HN	N	N	HN	1.800	0.0	1	-9.680	180.0	2	0.210	0.0	3	
+torsion 	C	Nsp2	SO2	C	-4.000	0.0	1	-3.000	180.0	2	-2.100	0.0	3	
+torsion 	C	Nsp2	SO2	O=	-0.500	0.0	1	-1.000	180.0	2	0.000	0.0	3	
+torsion 	HN2	Nsp2	SO2	C	-0.500	0.0	1	-2.000	180.0	2	-4.000	0.0	3	
+torsion 	HN2	Nsp2	SO2	HC	0.000	0.0	1	0.000	180.0	2	0.030	0.0	3	
+torsion 	HN2	Nsp2	SO2	O=	0.000	0.0	1	0.000	180.0	2	0.060	0.0	3	
+torsion 	C	S	15	C	0.000	0.0	1	-7.000	180.0	2	0.467	0.0	3	
+torsion 	HC	S	15	HC	0.000	0.0	1	-7.000	180.0	2	0.000	0.0	3	
+torsion 	C	SI	19	C	0.000	0.0	1	0.000	180.0	2	0.633	0.0	3	
+torsion 	C	SI	19	Csp2	0.170	0.0	1	0.270	180.0	2	0.093	0.0	3	
+torsion 	C	SI	19	SI	0.000	0.0	1	0.000	180.0	2	0.300	0.0	3	
+torsion 	Csp2	SI	19	Csp2	0.000	0.0	1	0.000	180.0	2	0.400	0.0	3	
+torsion 	Csp2	SI	19	HC	0.000	0.0	1	0.000	180.0	2	0.450	0.0	3	
+torsion 	HC	SI	19	HC	0.000	0.0	1	0.000	180.0	2	0.136	0.0	3	
+torsion 	HC	SI	19	SI	0.000	0.0	1	0.000	180.0	2	0.070	0.0	3	
+torsion 	SI	19	SI	19	0.000	0.0	1	0.000	180.0	2	0.100	0.0	3	
+torsion 	HC	SI	CR3R	HC	0.000	0.0	1	0.000	180.0	2	0.500	0.0	3	
+torsion 	HC	SI	CR3R	22	0.000	0.0	1	0.000	180.0	2	0.083	0.0	3	
+torsion 	C	CR3R	22	C	0.200	0.0	1	0.270	180.0	2	0.240	0.0	3	
+torsion 	C	CR3R	22	C=	0.200	0.0	1	0.200	180.0	2	0.000	0.0	3	
+torsion 	C	CR3R	22	HC	0.000	0.0	1	0.000	180.0	2	0.120	0.0	3	
+torsion 	C	CR3R	22	CR3R	0.200	0.0	1	0.270	180.0	2	0.093	0.0	3	
+torsion 	C	CR3R	22	OR	0.000	0.0	1	0.000	180.0	2	0.530	0.0	3	
+torsion 	Csp2	CR3R	22	Csp2	0.200	0.0	1	0.270	180.0	2	0.093	0.0	3	
+torsion 	Csp2	CR3R	22	HC	0.000	0.0	1	0.000	180.0	2	0.120	0.0	3	
+torsion 	Csp2	CR3R	22	CR3R	0.170	0.0	1	0.270	180.0	2	0.093	0.0	3	
+torsion 	Csp2	CR3R	22	OR	0.000	0.0	1	0.000	180.0	2	0.530	0.0	3	
+torsion 	C=	CR3R	22	HC	0.000	0.0	1	0.000	180.0	2	0.120	0.0	3	
+torsion 	C=	CR3R	22	CR3R	0.200	0.0	1	0.200	180.0	2	0.000	0.0	3	
+torsion 	HC	CR3R	22	HC	0.000	0.0	1	0.000	180.0	2	0.137	0.0	3	
+torsion 	HC	CR3R	22	SI	0.000	0.0	1	0.000	180.0	2	0.120	0.0	3	
+torsion 	HC	CR3R	22	CR3R	0.000	0.0	1	0.000	180.0	2	0.167	0.0	3	
+torsion 	HC	CR3R	22	CE3R	0.000	0.0	1	2.000	180.0	2	0.500	0.0	3	
+torsion 	HC	CR3R	22	NO3	0.000	0.0	1	0.000	180.0	2	0.200	0.0	3	
+torsion 	HC	CR3R	22	OR	0.000	0.0	1	0.000	180.0	2	0.530	0.0	3	
+torsion 	SI	CR3R	22	CR3R	0.220	0.0	1	0.270	180.0	2	0.093	0.0	3	
+torsion 	CR3R	22	CR3R	22	-0.520	0.0	1	0.000	180.0	2	0.160	0.0	3	
+torsion 	CR3R	22	CR3R	NO3	0.000	0.0	1	0.000	180.0	2	0.167	0.0	3	
+torsion 	HC	CR3R	CE3R	C	0.000	0.0	1	0.000	180.0	2	0.540	0.0	3	
+torsion 	HC	CR3R	CE3R	Csp2	0.000	0.0	1	0.000	180.0	2	-0.240	0.0	3	
+torsion 	HC	CR3R	CE3R	HC	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	HC	CR3R	CE3R	CR3R	0.000	0.0	1	2.000	180.0	2	0.540	0.0	3	
+torsion 	HC	CR3R	CE3R	38	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	CR3R	22	CE3R	Csp2	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	CR3R	22	CE3R	HC	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	CE3R	CR3R	CE3R	C	0.000	0.0	1	0.000	180.0	2	0.300	0.0	3	
+torsion 	CE3R	CR3R	CE3R	Csp2	0.100	0.0	1	0.000	180.0	2	0.500	0.0	3	
+torsion 	CE3R	CR3R	CE3R	HC	0.000	0.0	1	0.000	180.0	2	0.600	0.0	3	
+torsion 	HC	CR3R	NO3	O=	0.000	0.0	1	1.000	180.0	2	0.000	0.0	3	
+torsion 	CR3R	22	NO3	O=	0.000	0.0	1	2.000	180.0	2	0.000	0.0	3	
+torsion 	C	CR3R	OR	LP	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	C	CR3R	OR	CR3R	0.000	0.0	1	0.000	180.0	2	1.210	0.0	3	
+torsion 	Csp2	CR3R	OR	LP	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	CR3R	OR	CR3R	0.000	0.0	1	0.000	180.0	2	1.210	0.0	3	
+torsion 	HC	CR3R	OR	LP	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	HC	CR3R	OR	CR3R	0.000	0.0	1	0.000	180.0	2	1.210	0.0	3	
+torsion 	CR3R	22	OR	LP	0.000	0.0	1	0.000	180.0	2	0.000	0.0	3	
+torsion 	C	PB	33	C	0.000	0.0	1	0.000	180.0	2	0.021	0.0	3	
+torsion 	C	NPYD	37	C	-1.900	0.0	1	10.000	180.0	2	0.000	0.0	3	
+torsion 	C	NPYD	37	LP	0.000	0.0	1	10.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	NPYD	37	Csp2	0.000	0.0	1	10.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	NPYD	37	LP	0.000	0.0	1	10.000	180.0	2	0.000	0.0	3	
+torsion 	LP	NPYD	37	LP	0.000	0.0	1	10.000	180.0	2	0.000	0.0	3	
+torsion 	LP	NPYD	37	HN	0.000	0.0	1	10.000	180.0	2	0.000	0.0	3	
+torsion 	HN	NPYD	37	HN	2.400	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	NPYD	NPYL	Csp2	0.000	0.0	1	10.000	180.0	2	0.000	0.0	3	
+torsion 	Csp2	NPYD	NPYL	HN	0.000	0.0	1	10.000	180.0	2	0.000	0.0	3	
+torsion 	LP	NPYD	NPYL	Csp2	0.000	0.0	1	10.000	180.0	2	0.000	0.0	3	
+torsion 	LP	NPYD	NPYL	HN	0.000	0.0	1	10.000	180.0	2	0.000	0.0	3	
+torsion 	C	NPYD	N2OX	C	-1.900	0.0	1	10.000	180.0	2	0.000	0.0	3	
+torsion 	C	NPYD	N2OX	O=	-5.400	0.0	1	10.000	180.0	2	0.000	0.0	3	
+torsion 	LP	NPYD	N2OX	C	0.000	0.0	1	10.000	180.0	2	0.000	0.0	3	
+torsion 	LP	NPYD	N2OX	O=	0.000	0.0	1	10.000	180.0	2	0.000	0.0	3	
+torsion 	C	CE3R	38	CR3R	-0.100	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	HC	CE3R	38	HC	0.000	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	HC	CE3R	38	CR3R	0.000	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion 	C	Car	50	C	-0.100	0.0	1	9.000	180.0	2	0.000	0.0	3	
+torsion 	C	Car	50	HC	0.000	0.0	1	9.000	180.0	2	0.000	0.0	3	
+torsion 	C	Car	50	Car	-0.270	0.0	1	9.000	180.0	2	0.000	0.0	3	
+torsion 	HC	Car	50	HC	0.000	0.0	1	9.000	180.0	2	0.000	0.0	3	
+torsion 	HC	Car	50	Car	0.000	0.0	1	5.405	180.0	2	-1.060	0.0	3	
+torsion 	Car	50	Car	50	-0.930	0.0	1	4.800	180.0	2	0.000	0.0	3	
+torsion 	C	OK	C++	C	0.000	0.0	1	10.560	180.0	2	0.000	0.0	3	
+torsion 	C	OK	C++	HC	0.000	0.0	1	9.070	180.0	2	0.000	0.0	3	
+
+
+		##########################################
+		##					##	
+		##	Torsional Parameters (4-Ring)	##	
+		##					##	
+		##########################################	
+
+
+torsion4 	C	C	C	C	0.200	0.0	1	0.270	180.0	2	1.533	0.0	3	
+torsion4 	C	C	C	Csp2	0.000	0.0	1	0.000	180.0	2	1.900	0.0	3	
+torsion4 	C	C	C	C=	0.200	0.0	1	0.270	180.0	2	1.533	0.0	3	
+torsion4 	C	C	C	O	0.130	0.0	1	0.000	180.0	2	1.500	0.0	3	
+torsion4 	C	C	C	N	0.100	0.0	1	0.400	180.0	2	2.500	0.0	3	
+torsion4 	C	C	C	S	0.000	0.0	1	-0.100	180.0	2	1.100	0.0	3	
+torsion4 	C	C	C	SI	0.100	0.0	1	0.000	180.0	2	0.900	0.0	3	
+torsion4 	C	C	C	GE	0.000	0.0	1	0.000	180.0	2	-0.065	0.0	3	
+torsion4 	C	C	C	N+	0.100	0.0	1	0.400	180.0	2	2.500	0.0	3	
+torsion4 	Csp2	C	C	Csp2	0.200	0.0	1	0.270	180.0	2	1.530	0.0	3	
+torsion4 	C=	C	C	O	0.100	0.0	1	0.000	180.0	2	1.500	0.0	3	
+torsion4 	C=	C	C	Nsp2	0.000	0.0	1	0.000	180.0	2	0.250	0.0	3	
+torsion4 	CR3R	C	C	CR3R	0.200	0.0	1	0.270	180.0	2	1.533	0.0	3	
+torsion4 	NPYD	C	C	NPYD	0.000	0.0	1	0.000	180.0	2	1.533	0.0	3	
+torsion4 	NPYD	C	C	N2OX	0.000	0.0	1	0.000	180.0	2	1.533	0.0	3	
+torsion4 	C	C	Csp2	C	0.000	0.0	1	0.030	180.0	2	0.900	0.0	3	
+torsion4 	C	C	Csp2	Csp2	-0.700	0.0	1	0.240	180.0	2	0.060	0.0	3	
+torsion4 	Csp2	C	Csp2	C	0.000	0.0	1	0.000	180.0	2	0.300	0.0	3	
+torsion4 	Csp2	C	Csp2	Csp2	0.000	0.0	1	0.000	180.0	2	0.600	0.0	3	
+torsion4 	C	C	C=	C	0.550	0.0	1	-0.180	180.0	2	0.400	0.0	3	
+torsion4 	C	C	C=	O	0.100	0.0	1	0.000	180.0	2	1.500	0.0	3	
+torsion4 	C	C	C=	Nsp2	0.000	0.0	1	0.000	180.0	2	0.250	0.0	3	
+torsion4 	C	C	O	C	0.130	0.0	1	0.000	180.0	2	1.500	0.0	3	
+torsion4 	C	C	O	C=	0.100	0.0	1	0.000	180.0	2	1.500	0.0	3	
+torsion4 	C	C	N	C	-0.200	0.0	1	0.730	180.0	2	2.500	0.0	3	
+torsion4 	C	C	Nsp2	C=	0.000	0.0	1	0.000	180.0	2	0.250	0.0	3	
+torsion4 	C	C	S	C	0.000	0.0	1	-0.100	180.0	2	1.100	0.0	3	
+torsion4 	C	C	SI	C	0.100	0.0	1	0.000	180.0	2	0.900	0.0	3	
+torsion4 	C	C	CR3R	22	0.200	0.0	1	0.270	180.0	2	1.533	0.0	3	
+torsion4 	C	C	GE	C	0.000	0.0	1	0.000	180.0	2	0.152	0.0	3	
+torsion4 	C	C	NPYD	37	0.000	0.0	1	0.000	180.0	2	0.060	0.0	3	
+torsion4 	C	C	NPYD	N2OX	0.000	0.0	1	0.000	180.0	2	0.060	0.0	3	
+torsion4 	C	C	N+	C	-0.200	0.0	1	0.730	180.0	2	2.500	0.0	3	
+torsion4 	C	Csp2	Csp2	C	-0.100	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion4 	Csp2	Csp2	Csp2	Csp2	-0.930	0.0	1	15.000	180.0	2	0.000	0.0	3	
+torsion4 	C	C=	O	C	-2.500	0.0	1	1.390	180.0	2	0.000	0.0	3	
+torsion4 	C	C=	Nsp2	C	0.000	0.0	1	0.000	180.0	2	0.250	0.0	3	
+torsion4 	CR3R	C=	CR3R	22	0.550	0.0	1	-0.180	180.0	2	0.400	0.0	3	
+torsion4 	C	CR3R	22	C	0.200	0.0	1	0.270	180.0	2	2.500	0.0	3	
+torsion4 	C	CR3R	22	CR3R	0.200	0.0	1	0.270	180.0	2	1.533	0.0	3	
+torsion4 	C=	CR3R	22	CR3R	0.200	0.0	1	0.270	180.0	2	1.533	0.0	3	
+torsion4 	CR3R	22	CR3R	22	6.070	0.0	1	0.000	180.0	2	-0.880	0.0	3	
+torsion4 	C	NPYD	37	C	-1.900	0.0	1	10.000	180.0	2	0.000	0.0	3	
+torsion4 	C	NPYD	N2OX	C	-1.900	0.0	1	10.000	180.0	2	0.000	0.0	3	
+
+
+		##########################################
+		##					##	
+		##	Torsional Parameters (Allenes)	##	
+		##					##	
+		##########################################	
+
+
+torsion 	C	Csp2	Csp2	C	0.000	0.0	1	-11.500	180.0	2	0.000	0.0	3	
+torsion 	C	Csp2	Csp2	HC	0.000	0.0	1	-11.500	180.0	2	0.000	0.0	3	
+torsion 	HC	Csp2	Csp2	HC	0.050	0.0	1	-12.100	180.0	2	0.000	0.0	3	
+
+
+		##################################################
+		##						##	
+		##	Atomic Partial Charge Parameters	##	
+		##						##	
+		##################################################	
+
+
+charge 	S+	1.000	
+charge 	C+	1.000	
+charge 	N+	1.000	
+charge 	OM	-0.500	
+charge 	NPD+	1.000	
+charge 	N+=	1.000	
+
+
+		##########################################
+		##					##	
+		##	Bond Dipole Moment Parameters	##	
+		##					##	
+		##########################################	
+
+
+dipole 	C	Csp2	0.300	0.500	
+dipole 	C	C=	0.300	0.500	
+dipole 	C	Csp	0.750	0.500	
+dipole 	C	O	0.440	0.500	
+dipole 	C	N	0.040	0.500	
+dipole 	C	Nsp2	1.470	0.500	
+dipole 	C	F	1.820	0.500	
+dipole 	C	CL	1.940	0.500	
+dipole 	C	BR	1.790	0.500	
+dipole 	C	I	1.300	0.500	
+dipole 	C	S	1.200	0.500	
+dipole 	C	S+	1.200	0.500	
+dipole 	C	>SN	1.200	0.500	
+dipole 	C	SO2	1.200	0.500	
+dipole 	C	SI	-0.600	0.500	
+dipole 	C	CR3R	0.150	0.500	
+dipole 	C	P	0.830	0.500	
+dipole 	C	GE	-0.550	0.500	
+dipole 	C	SN	-0.650	0.500	
+dipole 	C	PB	-0.500	0.500	
+dipole 	C	SE	-1.100	0.500	
+dipole 	C	TE	-1.000	0.500	
+dipole 	C	NPYD	1.260	0.500	
+dipole 	C	CE3R	0.300	0.500	
+dipole 	C	Oar	0.220	0.500	
+dipole 	C	N2OX	1.260	0.500	
+dipole 	C	NO3	1.350	0.500	
+dipole 	C	Car	0.300	0.500	
+dipole 	C	OK	1.900	0.500	
+dipole 	C	C++	0.300	0.500	
+dipole 	C	N=C	1.260	0.500	
+dipole 	Csp2	O	0.001	0.500	
+dipole 	Csp2	N	-0.400	0.500	
+dipole 	Csp2	Nsp2	1.300	0.500	
+dipole 	Csp2	F	1.480	0.500	
+dipole 	Csp2	CL	1.580	0.500	
+dipole 	Csp2	BR	1.560	0.500	
+dipole 	Csp2	I	1.400	0.500	
+dipole 	Csp2	SI	-0.650	0.500	
+dipole 	Csp2	CR3R	-0.150	0.500	
+dipole 	Csp2	P	1.040	0.500	
+dipole 	Csp2	NPYD	0.583	0.500	
+dipole 	Csp2	NPYL	0.870	0.500	
+dipole 	Csp2	Oar	0.950	0.500	
+dipole 	Csp2	Sthi	1.925	0.500	
+dipole 	Csp2	NO3	1.700	0.500	
+dipole 	Csp2	N=C	0.583	0.500	
+dipole 	C=	O	-0.200	0.500	
+dipole 	C=	O=	2.600	0.500	
+dipole 	C=	Nsp2	-0.290	0.500	
+dipole 	C=	F	1.480	0.500	
+dipole 	C=	CL	1.580	0.500	
+dipole 	C=	BR	1.560	0.500	
+dipole 	C=	I	1.400	0.500	
+dipole 	C=	CR3R	0.300	0.500	
+dipole 	C=	N=C	0.583	0.500	
+dipole 	Csp	Nsp	3.400	0.500	
+dipole 	HC	S	0.900	0.500	
+dipole 	HC	P	0.500	0.500	
+dipole 	HC	SE	0.700	0.500	
+dipole 	HC	TE	0.800	0.500	
+dipole 	O	SI	-0.400	0.500	
+dipole 	O	LP	0.900	0.500	
+dipole 	O	HO	-1.115	0.500	
+dipole 	O	HOCO	-0.700	0.500	
+dipole 	O	P	0.970	0.500	
+dipole 	O	HN2	-0.700	0.500	
+dipole 	O=	>SN	-3.030	0.500	
+dipole 	O=	SO2	-2.930	0.500	
+dipole 	O=	N2OX	-2.600	0.500	
+dipole 	O=	NO3	-2.530	0.500	
+dipole 	N	LP	0.600	0.500	
+dipole 	N	HN	-0.760	0.500	
+dipole 	Nsp2	SO2	0.800	0.500	
+dipole 	Nsp2	HN2	-1.310	0.500	
+dipole 	LP	NPYD	-0.600	0.500	
+dipole 	LP	Oar	-0.750	0.500	
+dipole 	LP	N=C	-0.600	0.500	
+dipole 	CR3R	NO3	1.700	0.500	
+dipole 	HN	NPYD	0.600	0.500	
+dipole 	HN	NPYL	0.550	0.500	
+dipole 	HN	N=C	0.600	0.500	
+dipole 	HN2	Oar	0.700	0.500	
+dipole 	NPYD	NPYL	0.300	0.500	
+dipole 	OK	C++	-2.800	0.500	
+
+
+		##################################################
+		##						##	
+		##	Bond Dipole Moment Parameters (3-Ring)	##	
+		##						##	
+		##################################################	
+
+
+dipole3 	CR3R	OR	0.735	0.500	
+
+
+		##################################################	
+		##						##	
+		##	Conjugated Pisystem Atom Parameters	##	
+		##						##	
+		##################################################	
+
+
+piatom 	Csp2	1.0	-11.160	11.134	
+piatom 	C=	1.0	-11.160	11.134	
+piatom 	Csp	1.0	-11.160	11.134	
+piatom 	O	2.0	-17.600	19.342	
+piatom 	O=	1.0	-17.210	14.520	
+piatom 	Nsp2	2.0	-13.145	17.210	
+piatom 	Nsp	1.0	-14.120	12.340	
+piatom 	NPYD	1.0	-14.120	12.340	
+piatom 	NPYL	2.0	-13.145	17.210	
+piatom 	Oar	2.0	-17.600	19.342	
+piatom 	Sthi	2.0	-15.800	11.920	
+piatom 	N=C	1.0	-14.120	12.340	
+
+
+		##################################################
+		##						##	
+		##	Conjugated Pisystem Bond Parameters	##	
+		##						##	
+		##################################################	
+
+
+pibond 	Csp2	Csp2	4.600	0.166	
+pibond 	Csp2	C=	4.600	0.166	
+pibond 	Csp2	Csp	7.790	0.156	
+pibond 	Csp2	NPYD	10.880	0.196	
+pibond 	Csp2	NPYL	10.880	0.196	
+pibond 	Csp2	Oar	5.440	0.196	
+pibond 	Csp2	Sthi	4.861	0.397	
+pibond 	Csp2	N=C	10.880	0.196	
+pibond 	C=	C=	4.600	0.140	
+pibond 	C=	Csp	4.600	0.166	
+pibond 	C=	O=	4.600	0.105	
+pibond 	C=	N=C	10.880	0.196	
+pibond 	Csp	Csp	4.600	0.238	
+pibond 	NPYD	37	10.500	0.170	
+pibond 	NPYD	NPYL	10.880	0.196	
+END
