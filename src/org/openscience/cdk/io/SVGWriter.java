@@ -29,7 +29,7 @@ package org.openscience.cdk.io;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -144,7 +144,7 @@ public class SVGWriter extends DefaultChemObjectWriter {
         AtomContainer container = (AtomContainer)molecule.clone();
         GeometryTools.translateAllPositive(container);
         GeometryTools.center(container, new Dimension(600,400));
-        r2d.paintMolecule(container, (Graphics)svgGenerator);
+        r2d.paintMolecule(container, (Graphics2D)svgGenerator);
         
         // save to stream
         boolean useCSS = true;

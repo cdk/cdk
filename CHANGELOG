@@ -41,6 +41,8 @@ Fixes:
 API changes:
 * AtomTypeFactory and IsotopeFactory moved from cdk.tools to cdk.config
 * Moved atom type and isotope config files to cdk.config.data
+* The Renderer2D now explicitely requires a Graphics2D (which the Graphics
+  object subclasses in Java1.2 and higher)
 
 20040513 Release
 ------------------------------------

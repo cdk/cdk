@@ -25,6 +25,7 @@ package org.openscience.cdk.applications.swing;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.io.FileInputStream;
 import java.util.EventObject;
 
@@ -223,7 +224,7 @@ public class MoleculeViewer2D extends JPanel implements CDKChangeListener
 			GeometryTools.translateAllPositive(atomContainer);
 			GeometryTools.scaleMolecule(atomContainer, r2dm.getBackgroundDimension(), 0.8);
 			GeometryTools.center(atomContainer, r2dm.getBackgroundDimension());
-			renderer.paintMolecule(atomContainer, g);
+			renderer.paintMolecule(atomContainer, (Graphics2D)g);
 		}
 	}
 

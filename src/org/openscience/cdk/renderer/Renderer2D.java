@@ -28,11 +28,13 @@
  */
 package org.openscience.cdk.renderer;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.util.Vector;
@@ -76,6 +78,9 @@ import org.openscience.cdk.validate.ProblemMarker;
  * left-bottom corner, with the x axis to the right, and the y axis towards
  * the top of the screen. The system is thus right handed.
  *
+ * <p>The two main methods are paintMolecule() and paintChemModel(). Others
+ * might not show full rendering, e.g. anti-aliasing.
+ * 
  * <p>This modules tries to adhere to guidelines being developed by the IUPAC
  * which results can be found at
  * <a href="http://www.angelfire.com/sc3/iupacstructures/">http://www.angelfire.com/sc3/iupacstructures/</a>.
@@ -92,6 +97,8 @@ import org.openscience.cdk.validate.ProblemMarker;
  */
 public class Renderer2D implements MouseMotionListener   {
 
+    final static BasicStroke stroke = new BasicStroke(1.0f);
+    
     private LoggingTool logger;
     boolean debug = false;
 	SSSRFinder sssrf = new SSSRFinder();
@@ -128,7 +135,15 @@ public class Renderer2D implements MouseMotionListener   {
         }
 	}
 
-    public void paintChemModel(ChemModel model, Graphics graphics) {
+    private void customizeRendering(Graphics2D graphics) {
+        if (r2dm.getUseAntiAliasing()) {
+            graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        }
+        graphics.setStroke(stroke);
+    }
+    
+    public void paintChemModel(ChemModel model, Graphics2D graphics) {
+        customizeRendering(graphics);
         tooltiparea=null;
         paintPointerVector(graphics);
         if (model.getSetOfReactions() != null) {
@@ -139,21 +154,21 @@ public class Renderer2D implements MouseMotionListener   {
         }
     }
     
-    public void paintSetOfReactions(SetOfReactions reactionSet, Graphics graphics) {
+    public void paintSetOfReactions(SetOfReactions reactionSet, Graphics2D graphics) {
         Reaction[] reactions = reactionSet.getReactions();
         for (int i=0; i<reactions.length; i++) {
             paintReaction(reactions[i], graphics);
         }
     }
     
-    public void paintSetOfMolecules(SetOfMolecules moleculeSet, Graphics graphics) {
+    public void paintSetOfMolecules(SetOfMolecules moleculeSet, Graphics2D graphics) {
         Molecule[] molecules = moleculeSet.getMolecules();
         for (int i=0; i<molecules.length; i++) {
             paintMolecule(molecules[i], graphics);
         }
     }
     
-    public void paintReaction(Reaction reaction, Graphics graphics) {
+    public void paintReaction(Reaction reaction, Graphics2D graphics) {
         // calculate some boundaries
         AtomContainer reactantContainer = new AtomContainer();
         Molecule[] reactants = reaction.getReactants().getMolecules();
@@ -275,7 +290,7 @@ public class Renderer2D implements MouseMotionListener   {
      * @param minmax array of length for with min and max 2D coordinates
      */
     public void paintBoundingBox(double[] minmax, String caption, 
-                                  int side, Graphics graphics) {
+                                  int side, Graphics2D graphics) {
         int[] ints = new int[4];
         ints[0] = (int)minmax[0] -side; // min x
         ints[1] = (int)minmax[1] -side; // min y
@@ -302,7 +317,8 @@ public class Renderer2D implements MouseMotionListener   {
 	 * @param  atomCon  Description of the Parameter
 	 * @param  graphics        Description of the Parameter
 	 */
-	public void paintMolecule(AtomContainer atomCon, Graphics graphics) {
+	public void paintMolecule(AtomContainer atomCon, Graphics2D graphics) {
+        customizeRendering(graphics);
 		RingSet ringSet = new RingSet();
 		Molecule[] molecules = null;
 		try {
@@ -327,7 +343,7 @@ public class Renderer2D implements MouseMotionListener   {
 	}
 
 
-	public void paintLassoLines(Graphics graphics)
+	public void paintLassoLines(Graphics2D graphics)
 	{
 		Vector points = r2dm.getLassoPoints();
 		if (points.size() > 1)
@@ -350,14 +366,14 @@ public class Renderer2D implements MouseMotionListener   {
 	 *
 	 * @param  atomCon  Description of the Parameter
 	 */
-    public void paintAtoms(AtomContainer atomCon, Graphics graphics) {
+    public void paintAtoms(AtomContainer atomCon, Graphics2D graphics) {
          Atom[] atoms = atomCon.getAtoms();
          for (int i = 0; i < atoms.length; i++) {
              paintAtom(atomCon, atoms[i], graphics);
          }
      }
 
-	public void paintAtom(AtomContainer container, Atom atom, Graphics graphics) {
+	public void paintAtom(AtomContainer container, Atom atom, Graphics2D graphics) {
         Color atomBackColor = r2dm.getAtomBackgroundColor(atom);
         if (atom.equals(r2dm.getHighlightedAtom())) {
             paintColouredAtomBackground(atom, atomBackColor, graphics);
@@ -415,7 +431,7 @@ public class Renderer2D implements MouseMotionListener   {
 	 * @param  atom   The atom to be drawn
 	 * @param  color  The color of the atom to be drawn
 	 */
-	public void paintColouredAtomBackground(Atom atom, Color color, Graphics graphics)
+	public void paintColouredAtomBackground(Atom atom, Color color, Graphics2D graphics)
 	{
 		int atomRadius = r2dm.getAtomRadius();
 	    graphics.setColor(color);
@@ -441,11 +457,11 @@ public class Renderer2D implements MouseMotionListener   {
      *
      * @param  atom       The atom to be drawn
      * @param  backColor  Description of the Parameter
-     * @param  graphics   Graphics to draw too
+     * @param  graphics   Graphics2D to draw too
      * @param  alignment  How to align the H's
      * @param  atomNumber Number of the atom in the AtomContainer, 0 is not in container
      */
-    public void paintAtomSymbol(Atom atom, Color backColor, Graphics graphics, int alignment, int atomNumber) {
+    public void paintAtomSymbol(Atom atom, Color backColor, Graphics2D graphics, int alignment, int atomNumber) {
         if (atom.getPoint2d() == null) {
             logger.warn("Cannot draw atom without 2D coordinate");
             return;
@@ -705,7 +721,7 @@ public class Renderer2D implements MouseMotionListener   {
      * Makes a clear empty space using the background color.
      */
     public void paintEmptySpace(int x, int y, int w, int h, int border,
-                                Color backColor, Graphics graphics) {
+                                Color backColor, Graphics2D graphics) {
         if (w != 0 && h != 0) {
             Color saveColor = graphics.getColor();
             graphics.setColor(backColor);
@@ -725,7 +741,7 @@ public class Renderer2D implements MouseMotionListener   {
      * @param  atom       The atom to be drawn
      * @param  backColor  Description of the Parameter
      */
-    public void paintPseudoAtomLabel(PseudoAtom atom, Color backColor, Graphics graphics, int alignment) {
+    public void paintPseudoAtomLabel(PseudoAtom atom, Color backColor, Graphics2D graphics, int alignment) {
         if (atom.getPoint2d() == null) {
             logger.warn("Cannot draw atom without 2D coordinate");
             return;
@@ -798,7 +814,7 @@ public class Renderer2D implements MouseMotionListener   {
      * @param  ringSet  The set of rings the molecule contains
      * @param  atomCon  Description of the Parameter
      */
-    public void paintBonds(AtomContainer atomCon, RingSet ringSet, Graphics graphics) {
+    public void paintBonds(AtomContainer atomCon, RingSet ringSet, Graphics2D graphics) {
         Color bondColor;
         Ring ring;
         Bond[] bonds = atomCon.getBonds();
@@ -872,7 +888,7 @@ public class Renderer2D implements MouseMotionListener   {
 	 * @param  bond       The Bond to be drawn.
 	 * @param  bondColor  Description of the Parameter
 	 */
-	public void paintBond(Bond bond, Color bondColor, Graphics graphics) {
+	public void paintBond(Bond bond, Color bondColor, Graphics2D graphics) {
     if (bond.getAtomAt(0).getPoint2d() == null ||
             bond.getAtomAt(1).getPoint2d() == null) {
 			return;
@@ -909,7 +925,7 @@ public class Renderer2D implements MouseMotionListener   {
 	 * @param  ring       Description of the Parameter
 	 * @param  bondColor  Description of the Parameter
 	 */
-	public void paintRingBond(Bond bond, Ring ring, Color bondColor, Graphics graphics)
+	public void paintRingBond(Bond bond, Ring ring, Color bondColor, Graphics2D graphics)
 	{
         if (bond.getOrder() == 1.0) {
        // Added by rstefani (in fact, code copied from paintBond)
@@ -936,7 +952,7 @@ public class Renderer2D implements MouseMotionListener   {
     /**
      * Draws the ring in an aromatic ring.
      */
-    public void paintRingRing(Ring ring, Color bondColor, Graphics graphics) {
+    public void paintRingRing(Ring ring, Color bondColor, Graphics2D graphics) {
 		Point2d center = ring.get2DCenter();
 
         double[] minmax = GeometryTools.getMinMax(ring);
@@ -975,7 +991,7 @@ public class Renderer2D implements MouseMotionListener   {
     /**
      * Paint a Bond in an aromatic ring, using CDK style, meaning grey inner bonds.
      */
-    public void paintAromaticRingBondCDKStyle(Bond bond, Ring ring, Color bondColor, Graphics graphics)
+    public void paintAromaticRingBondCDKStyle(Bond bond, Ring ring, Color bondColor, Graphics2D graphics)
 	{
         paintSingleBond(bond, bondColor, graphics);
         paintInnerBond(bond, ring, Color.lightGray, graphics);
@@ -987,7 +1003,7 @@ public class Renderer2D implements MouseMotionListener   {
 	 * @param  bond       The single bond to be drawn
 	 * @param  bondColor  Description of the Parameter
 	 */
-	public void paintSingleBond(Bond bond, Color bondColor, Graphics graphics) {
+	public void paintSingleBond(Bond bond, Color bondColor, Graphics2D graphics) {
         if (GeometryTools.has2DCoordinates(bond)) { 
             paintOneBond(GeometryTools.getBondCoordinates(bond), bondColor, graphics);
         }
@@ -999,7 +1015,7 @@ public class Renderer2D implements MouseMotionListener   {
 	 * @param  bond       The double bond to be drawn
 	 * @param  bondColor  Description of the Parameter
 	 */
-	public void paintDoubleBond(Bond bond, Color bondColor, Graphics graphics)
+	public void paintDoubleBond(Bond bond, Color bondColor, Graphics2D graphics)
 	{
 		int[] coords = GeometryTools.distanceCalculator(GeometryTools.getBondCoordinates(bond), r2dm.getBondDistance() / 2);
 
@@ -1016,7 +1032,7 @@ public class Renderer2D implements MouseMotionListener   {
 	 * @param  bond       The triple bond to be drawn
 	 * @param  bondColor  Description of the Parameter
 	 */
-	public void paintTripleBond(Bond bond, Color bondColor, Graphics graphics)
+	public void paintTripleBond(Bond bond, Color bondColor, Graphics2D graphics)
 	{
 		paintSingleBond(bond, bondColor, graphics);
 
@@ -1037,7 +1053,7 @@ public class Renderer2D implements MouseMotionListener   {
 	 * @param  ring       The ring the bond is part of
 	 * @param  bondColor  Color of the bond
 	 */
-	public void paintInnerBond(Bond bond, Ring ring, Color bondColor, Graphics graphics)
+	public void paintInnerBond(Bond bond, Ring ring, Color bondColor, Graphics2D graphics)
 	{
 		Point2d center = ring.get2DCenter();
 
@@ -1080,7 +1096,7 @@ public class Renderer2D implements MouseMotionListener   {
 	 * @param  coords
 	 * @param  bondColor  Color of the bond
 	 */
-	public void paintOneBond(int[] coords, Color bondColor, Graphics graphics)
+	public void paintOneBond(int[] coords, Color bondColor, Graphics2D graphics)
 	{
 	    graphics.setColor(bondColor);
   	int[] newCoords = GeometryTools.distanceCalculator(coords, r2dm.getBondWidth() / 2);
@@ -1096,7 +1112,7 @@ public class Renderer2D implements MouseMotionListener   {
 	 * @param  bond       The singlebond to be drawn
 	 * @param  bondColor  Color of the bond
 	 */
-	public void paintWedgeBond(Bond bond, Color bondColor, Graphics graphics)
+	public void paintWedgeBond(Bond bond, Color bondColor, Graphics2D graphics)
 	{
         double wedgeWidth = r2dm.getBondWidth() * 2.0; // this value should be made customazible
         
@@ -1122,7 +1138,7 @@ public class Renderer2D implements MouseMotionListener   {
 	 * @param  bond       The single bond to be drawn
 	 * @param  bondColor  Color of the bond
 	 */
-	public void paintDashedWedgeBond(Bond bond, Color bondColor, Graphics graphics)
+	public void paintDashedWedgeBond(Bond bond, Color bondColor, Graphics2D graphics)
 	{
 	    graphics.setColor(bondColor);
 
@@ -1162,7 +1178,7 @@ public class Renderer2D implements MouseMotionListener   {
 	 *  Paints a line between the start point and end point of the pointer vector that
 	 *  is stored in the Renderer2DModel.
 	 */
-	public void paintPointerVector(Graphics graphics)
+	public void paintPointerVector(Graphics2D graphics)
 	{
 		if (r2dm.getPointerVectorStart() != null) {
             if (r2dm.getPointerVectorEnd() != null) {
@@ -1241,7 +1257,7 @@ public class Renderer2D implements MouseMotionListener   {
      * @param  atom      The atom.
      * @param  graphics  The current graphics object.
      */
-    public void paintToolTip(Atom atom, Graphics graphics, int atomNumber) {
+    public void paintToolTip(Atom atom, Graphics2D graphics, int atomNumber) {
       tooltiparea=new int[4];
       String text = r2dm.getToolTipText(r2dm.getHighlightedAtom());
       String[] result = text.split("\\n");

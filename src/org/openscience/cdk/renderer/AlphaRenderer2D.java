@@ -29,7 +29,7 @@
 package org.openscience.cdk.renderer;
 
 import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
@@ -50,8 +50,8 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @cdk.created    2004-02-04
  */
-public class AlphaRenderer2D extends Renderer2D
-{
+public class AlphaRenderer2D extends Renderer2D {
+    
   private LoggingTool logger;
 
   private Renderer2DModel r2dm = null;
@@ -70,7 +70,7 @@ public class AlphaRenderer2D extends Renderer2D
     logger = new LoggingTool(this);
   }
 
-  public void paintEmptySpace(int x, int y, int w, int h, int border, Color backColor, Graphics g)
+  public void paintEmptySpace(int x, int y, int w, int h, int border, Color backColor, Graphics2D g)
   {
     if ((w == 0) || (h == 0))
     {
@@ -96,7 +96,7 @@ protected RingSet getRingSet(AtomContainer atomCon)
 
   catch (Exception exception)
   {
-    logger.warn("Could not partition molecule: " + exception.getMessage());
+    logger.warn("Could not partition molecule: ", exception.getMessage());
     logger.debug(exception);
     return ringSet;
   }
@@ -109,7 +109,7 @@ protected RingSet getRingSet(AtomContainer atomCon)
   return ringSet;
 }
 
-public void paintMolecule(AtomContainer atomCon, Graphics graphics)
+public void paintMolecule(AtomContainer atomCon, Graphics2D graphics)
 {
   // make the initial mask cover the entire dimension we are going to paint
   mask =
