@@ -44,38 +44,41 @@ public class Viewer {
     private org.openscience.cdk.tools.LoggingTool logger;
 
     private boolean useJava3D;
+    private boolean use3D;
 
-    public Viewer(String inFile, boolean useJava3D) {
+    public Viewer(String inFile, boolean useJava3D, boolean use3D) {
         this.useJava3D = useJava3D;
+        this.use3D = use3D;
 
-      logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
-      logger.dumpSystemProperties();
-      logger.dumpClasspath();
+        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        logger.dumpSystemProperties();
+        logger.dumpClasspath();
 
-      ChemFile chemFile = new ChemFile();
-      try {
-        ChemObjectReader reader;
-        logger.info("Loading: " + inFile);
-        if (inFile.endsWith(".xyz")) {
-  	      reader = new XYZReader(new FileReader(inFile));
-          logger.info("Expecting XYZ format...");
-        } else if (inFile.endsWith(".cml")) {
-          String url = "file:" + System.getProperty("user.dir") + "/" + inFile;
-          reader = new CMLReader(url);
-          logger.info("Expecting CML format...");
-        } else if (inFile.endsWith(".pdb")) {
-  	      reader = new PDBReader(new FileReader(inFile));
-          logger.info("Expecting PDB format...");
-        } else {
-          reader = new MDLReader(new FileInputStream(inFile));
-          logger.info("Expecting MDL MolFile format...");
+        ChemFile chemFile = new ChemFile();
+        try {
+            ChemObjectReader reader;
+            logger.info("Loading: " + inFile);
+            if (inFile.endsWith(".xyz")) {
+               reader = new XYZReader(new FileReader(inFile));
+               logger.info("Expecting XYZ format...");
+            } else if (inFile.endsWith(".cml")) {
+                String url = "file:" + System.getProperty("user.dir") + "/" + inFile;
+                reader = new CMLReader(url);
+                logger.info("Expecting CML format...");
+            } else if (inFile.endsWith(".pdb")) {
+                reader = new PDBReader(new FileReader(inFile));
+                logger.info("Expecting PDB format...");
+            } else {
+                reader = new MDLReader(new FileInputStream(inFile));
+                logger.info("Expecting MDL MolFile format...");
+            }
+            chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+        } catch(Exception exc) {
+            logger.error("Error while reading file");
+            logger.error(exc.toString());
+            exc.printStackTrace();            
+            System.exit(1);
         }
-        chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
-      } catch(Exception exc) {
-	      logger.error("Error while reading file");
-          logger.error(exc.toString());
-		  System.exit(1);
-      }
 
 
         ChemSequence chemSequence;
@@ -95,7 +98,7 @@ public class Viewer {
               Molecule m = setOfMolecules.getMolecule(i);
 
 			  // use Accelerated viewer if 3D coords are available
-			  if (GeometryTools.has3DCoordinates(m)) {
+			  if (GeometryTools.has3DCoordinates(m) && use3D) {
 			      logger.info("Viewing with 3D viewer");
 
 				  boolean viewed = false;
@@ -144,6 +147,7 @@ public class Viewer {
     public static void main(String[] args) {
 
         boolean useJava3D = true;
+        boolean use3D = true;
 
         String filename = "";
         if (args.length == 1) {
@@ -154,6 +158,8 @@ public class Viewer {
                 String opt = args[i-1];
                 if ("--nojava3d".equalsIgnoreCase(opt)) {
                     useJava3D = false;
+                } else if ("--no3d".equalsIgnoreCase(opt)) {
+                    use3D = false;
                 } else {
                     System.err.println("Unknown option: " + opt);
                     System.exit(1);
@@ -165,11 +171,12 @@ public class Viewer {
             System.out.println("Syntax : Viewer [options] <inputfile>");
             System.out.println();
             System.out.println("options: --nojava3D    Disable Java3D support");
+            System.out.println("options: --no3D        View only 2D info");
             System.exit(0);
         }
 
         if (new File(filename).canRead()) {
-            new Viewer(filename, useJava3D);
+            new Viewer(filename, useJava3D, use3D);
         } else {
             System.out.println("File " + filename + " does not exist!");
         }

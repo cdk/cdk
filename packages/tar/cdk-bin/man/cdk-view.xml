@@ -12,7 +12,7 @@
 
   <refsynopsisdiv>
     <cmdsynopsis>
-      <command>cdk-view</command> <arg>--nojava3d</arg> <arg>file.xml</arg>
+      <command>cdk-view</command> <arg>--nojava3d</arg> <arg>--no3d</arg> <arg>file.xml</arg>
     </cmdsynopsis>
   </refsynopsisdiv>
 
@@ -23,6 +23,12 @@
         <term>--nojava3d</term>
         <listitem>
           <para>do not try to use Java3D for viewing 3D coordinates</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>--no3d</term>
+        <listitem>
+          <para>do not view 3D coordinates</para>
         </listitem>
       </varlistentry>
     </variablelist>

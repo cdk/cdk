@@ -172,7 +172,12 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
         } else if (propertyType.equals("atom2")) {
           bond_a2 = new Integer(propertyValue).intValue();
         } else if (propertyType.equals("order")) {
-          bond_order = new Integer(propertyValue).intValue();
+          try {
+            bond_order = new Integer(propertyValue).intValue();
+          } catch (Exception e) {
+            logger.error("Cannot convert to int: " + propertyValue);
+            bond_order = 1;
+          }
         }
       }
       logger.debug("Object property set...");
