@@ -3,6 +3,12 @@ CHANGELOG $Date$
 
 Changes in CVS
 ------------------------------------
+New:
+
+Fixes:
+* Fixed "M  END" line in MDL output (fixes bug #624656)
+
+API changes:
 
 20021012 Release
 ------------------------------------

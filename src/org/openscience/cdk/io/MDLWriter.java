@@ -214,7 +214,7 @@ public class MDLWriter implements ChemObjectWriter {
 					writer.newLine();
 				}
 			}
-			writer.write("M END");
+			writer.write("M  END");
 			writer.newLine();
 			writer.flush();
 			writer.close();
