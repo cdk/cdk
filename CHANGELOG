@@ -1,6 +1,12 @@
 CHANGELOG
 ------------------------------------
 
+Changes in CVS
+------------------------------------
+Fixes:
+* JCPController2D now edits a bond order when in
+  bond mode
+
 20020920 Release
 ------------------------------------
 New:
@@ -29,8 +35,8 @@ Fixes:
 
 API changes:
 * cdk.libio.jmol.Convertor now converts 
-  AtomContainer <-> ChemFrame, instead of
-  Molecule <-> ChemFrame
+  AtomContainer from/to ChemFrame, instead of
+  Molecule from/to ChemFrame
 * FortranFormat moved to org.openscience.cdk.math
 * GeomertryTools.hasXDCoordinates() now accepts
   AtomContainer instead of Molecule

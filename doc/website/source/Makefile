@@ -51,6 +51,9 @@ update-stats: javancss-tmp.xml
 
 include depends.tabular
 
+dist-clean: clean
+	rm javancss-tmp.xml
+
 autolayout.xml: layout.xml
 	$(PROC) ${STYLEDIR}/autolayout.xsl layout.xml > $@
 	make depends

@@ -1,6 +1,7 @@
-/* JCPController2D.java
- * 
- * $RCSfile$    $Author$    $Date$    $Revision$
+/* $RCSfile$    
+ * $Author$    
+ * $Date$    
+ * $Revision$
  * 
  * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
  * 
@@ -228,23 +229,29 @@ public class JCPController2D
                         Bond newBond;
                         int startX = r2dm.getPointerVectorStart().x;
                         int startY = r2dm.getPointerVectorStart().y;
+                        Bond bondInRange = getBondInRange(startX, startY);
                         atomInRange = getAtomInRange(startX, startY);
-                        if (atomInRange != null) 
-                        {
+                        if (bondInRange != null) {
+                            // increase Bond order
+                            double order = bondInRange.getOrder();
+                            if (order => 3.0) {
+                                bondInRange.setOrder(1.0);
+                            } else {
+                                bondInRange.setOrder(order + 1.0);
+                            };
+                        } else {
+                            if (atomInRange != null) {
                                 newAtom1 = atomInRange;
-                        }
-                        else
-                        {
+                            } else {
                                 newAtom1 = new Atom(c2dm.getDefaultElementSymbol(), new Point2d(startX,startY));
                                 atomCon.addAtom(newAtom1);
-                        }
-                        
-                        if (wasDragged)
-                        {
+                            }
+
+                            if (wasDragged) {
                                 int endX = r2dm.getPointerVectorEnd().x;
                                 int endY = r2dm.getPointerVectorEnd().y;
                                 atomInRange = getAtomInRange(endX, endY);
-                                if (atomInRange != null) 
+                                if (atomInRange != null)
                                 {
                                         newAtom2 = atomInRange;
                                 }
@@ -255,6 +262,7 @@ public class JCPController2D
                                 }
                                 newBond = new Bond(newAtom1, newAtom2, 1);
                                 atomCon.addBond(newBond);
+                            }
                         }
                         r2dm.fireChange();
                 }
