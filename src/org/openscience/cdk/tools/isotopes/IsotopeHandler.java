@@ -32,6 +32,21 @@ import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
+ * Reads an isotope list in CML2 format. An example definition is:
+ * <pre>
+ * <isotopeList id="H">
+ *   <isotope id="H1" isotopeNumber="1" elementTyp="H">
+ *     <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+ *     <scalar dictRef="cdk:exactMass">1.00782504</scalar>
+ *     <scalar dictRef="cdk:atomicNumber">1</scalar>
+ *   </isotope>
+ *   <isotope id="H2" isotopeNumber="2" elementTyp="H">
+ *     <abundance dictRef="cdk:relativeAbundance">0.015</abundance>
+ *     <scalar dictRef="cdk:exactMass">2.01410179</scalar>
+ *     <scalar dictRef="cdk:atomicNumber">1</scalar>
+ *   </isotope>
+ * </isotopeList>
+ * </pre> 
  *
  * @cdk.module standard
  */
@@ -40,8 +55,11 @@ public class IsotopeHandler extends DefaultHandler {
     private LoggingTool logger;
     private String currentChars;
     private Vector isotopes;
-    private boolean debug = false;
 
+    private Isotope workingIsotope;
+    private String currentElement;
+    private String dictRef;
+    
     public IsotopeHandler() {
         logger = new LoggingTool(this);
     }
@@ -52,62 +70,83 @@ public class IsotopeHandler extends DefaultHandler {
 
     // SAX Parser methods
 
-    public void doctypeDecl(String name, String publicId, String systemId)
-        throws Exception {
-        logger.info("DocType root element: " + name);
-        logger.info("DocType root PUBLIC: " + publicId);
-        logger.info("DocType root SYSTEM: " + systemId);
-    }
-
     public void startDocument() {
         isotopes = new Vector();
     }
 
-    public void endDocument() {
-    }
-
     public void endElement(String uri, String local, String raw) {
-        if (debug) logger.debug("end element: " + raw);
+        logger.debug("end element: " + raw);
+        if ("isotope".equals(local)) {
+            if (workingIsotope != null) 
+                isotopes.addElement(workingIsotope);
+            workingIsotope = null;
+        } else if ("isotopeList".equals(local)) {
+            currentElement = null;
+        } else if ("abundance".equals(local)) {
+            try {
+                workingIsotope.setNaturalAbundance(Double.parseDouble(currentChars));
+            } catch (NumberFormatException exception) {
+                logger.error("The abundance value is incorrect: ", currentChars);
+                logger.debug(exception);
+            }
+            
+        } else if ("scalar".equals(local)) {
+            try {
+                if ("cdk:exactMass".equals(dictRef)) {
+                    workingIsotope.setExactMass(Double.parseDouble(currentChars));
+                } else if ("cdk:atomicNumber".equals(dictRef)) {
+                    workingIsotope.setAtomicNumber(Integer.parseInt(currentChars));
+                }
+            } catch (NumberFormatException exception) {
+                logger.error("The ", dictRef, " value is incorrect: ", currentChars);
+                logger.debug(exception);
+            }
+        }
     }
 
     public void startElement(String uri, String local, 
                              String raw, Attributes atts) {
         currentChars = "";
-        if (debug) logger.debug("startElement: " + raw);
-        if (debug) logger.debug("uri: " + uri);
-        if (debug) logger.debug("local: " + local);
-        if (debug) logger.debug("raw: " + raw);
-        if ("org.openscience.cdk.Isotope".equals(local)) {
-            // check version
-            Isotope isotope = new Isotope("R");
+        dictRef = "";
+        logger.debug("startElement: ", raw);
+        logger.debug("uri: ", uri);
+        logger.debug("local: ", local);
+        logger.debug("raw: ", raw);
+        if ("isotope".equals(local)) {
+            workingIsotope = new Isotope(currentElement);
             for (int i = 0; i < atts.getLength(); i++) {
                 try {
-                    if ("symbol".equals(atts.getQName(i))) {
-                        isotope.setSymbol(atts.getValue(i));
-                    } else if ("atomicNumber".equals(atts.getQName(i))) {
-                        isotope.setAtomicNumber(Integer.parseInt(atts.getValue(i)));
-                    } else if ("massNumber".equals(atts.getQName(i))) {
-                        isotope.setMassNumber(Integer.parseInt(atts.getValue(i)));
-                    } else if ("exactMass".equals(atts.getQName(i))) {
-                        isotope.setExactMass(Double.parseDouble(atts.getValue(i)));
-                    } else if ("naturalAbundance".equals(atts.getQName(i))) {
-                        isotope.setNaturalAbundance(Double.parseDouble(atts.getValue(i)));
+                    if ("id".equals(atts.getQName(i))) {
+                        workingIsotope.setID(atts.getValue(i));
+                    } else if ("isotopeNumber".equals(atts.getQName(i))) {
+                        workingIsotope.setMassNumber(Integer.parseInt(atts.getValue(i)));
+                    } else if ("elementType".equals(atts.getQName(i))) {
+                        workingIsotope.setSymbol(atts.getValue(i));
                     }
                 } catch (NumberFormatException exception) {
-                    logger.error("Value of Isotope@" + atts.getQName(i) +
-                        " is not as expected.");
+                    logger.error("Value of isotope@", atts.getQName(i), " is not as expected.");
                     logger.debug(exception);
                 }
             }
-            isotopes.addElement(isotope);
+        } else if ("isotopeList".equals(local)) {
+            for (int i = 0; i < atts.getLength(); i++) {
+                if ("id".equals(atts.getQName(i))) {
+                    currentElement = atts.getValue(i);
+                }
+            }
+        } else if ("abundance".equals(local)) {
+            // disregard dictRef for now
+        } else if ("scalar".equals(local)) {
+            for (int i = 0; i < atts.getLength(); i++) {
+                if ("dictRef".equals(atts.getQName(i))) {
+                    dictRef = atts.getValue(i);
+                }
+            }
         }
     }
 
     public void characters(char ch[], int start, int length) {
-        if (debug) logger.debug("character data");
         currentChars += new String(ch, start, length);
     }
-
-    // private methods
 
 }
