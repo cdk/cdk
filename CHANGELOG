@@ -18,6 +18,8 @@ New:
   based applications (dist-core-debug task in build.xml)
 * Added cdk-experimental package with an experimental IUPAC
   name generator
+* MDL MOL/SDF reader now parses the 'G  ' lines in the property
+  blocks
 
 Fixes:
 * Added missing LGPL license to distributions.
@@ -26,6 +28,8 @@ Fixes:
 * JCPControllor nows reconfigures atom after changing symbol
 * 2D coordinate generation for molecules with only
   one atom (fixed #780545)
+* Added missing PseudoAtom.getLabel() method
+* Renderer2D should display PseudoAtom's label instead of symbol
 
 API changes:
 * ConnectivityChecker.partitionIntoMolecules() now returns a 
