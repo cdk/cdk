@@ -19,6 +19,8 @@ New:
 * A LonePair class is implemented (RFC #5)
 * More JUnit Tests.
 * Added rendering of wedge bonds (up/down) in Renderer2D
+* Added ChemObjectTree for for showing the content of a 
+  ChemObject as a tree
 
 Fixes:
 * HOSECodeGenerator now generates correctly ranked n-sphere codes.
