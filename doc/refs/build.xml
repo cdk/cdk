@@ -31,6 +31,8 @@
     </target>
     
     <target id="convertToDocBook" name="convertToDocBook">
+        <!-- biblio.dbx is used for website via DocBook/Website DTD etc -->
+        
         <java classname="org.openscience.jreferences.applications.ConvertReferences"
             fork="yes" output="cheminf.dbx">
             <!-- The fork is *very* important. It apperently not works with
@@ -45,6 +47,8 @@
     </target>
 
     <target id="convertToBibTex" name="convertToBibTex">
+        <!-- biblio.dbx is used for latex source -->
+        
         <java classname="org.openscience.jreferences.applications.ConvertReferences"
             fork="yes" output="cheminf.bib">
             <classpath refid="project.class.path"/>
@@ -55,15 +59,15 @@
     </target>
 
     <target id="list" name="list">
-        <java classname="org.openscience.jreferences.applications.SetReferences"
-            fork="yes">
-            <classpath refid="project.class.path"/>
-            <arg value="cheminf.btx"/>
-        </java>
-        <java classname="org.openscience.jreferences.applications.NumberReferences"
+        <!-- biblio.dbx is used for PDF via DocBook XML -->
+    
+        <java classname="org.openscience.jreferences.applications.ConvertReferences"
             fork="yes" output="biblio.dbx">
             <classpath refid="project.class.path"/>
-            <arg value="biblio.dbx.source"/>
+            <arg value="--input:bibtexml"/>
+            <arg value="--output:docbook"/>
+            <arg value="--sort"/>
+            <arg value="cheminf.btx"/>
         </java>
     </target>
 
