@@ -4,6 +4,14 @@ CHANGELOG $Date$
 Changes in CVS
 ------------------------------------
 New:
+
+Fixes:
+
+API changes:
+
+20040324 Release
+------------------------------------
+New:
 * The CDKPluginManager will only load the plugin with the highest version
 * Added IO settings for CMLWriter for the namespace prefix and the Schema
   Instance Location attribute
