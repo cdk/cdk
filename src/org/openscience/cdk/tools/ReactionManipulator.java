@@ -135,4 +135,23 @@ public class ReactionManipulator {
         );
     }
     
+    /**
+     * This badly named methods tries to determine which AtomContainer in the
+     * ChemModel is best suited to contain added Atom's and Bond's.
+     */
+    public static AtomContainer getRelevantAtomContainer(Reaction reaction, Atom atom) {
+        Molecule[] reactants = reaction.getReactants();
+        for (int j=0; j<reactants.length;j++) {
+            if (reactants[j].contains(atom)) {
+                return reactants[j];
+            }
+        }
+        Molecule[] products = reaction.getProducts();
+        for (int j=0; j<products.length; j++) {
+            if (products[j].contains(atom)) {
+                return products[j];
+            }
+        }
+        return null;
+    }
 }

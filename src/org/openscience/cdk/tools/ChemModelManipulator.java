@@ -140,22 +140,14 @@ public class ChemModelManipulator {
             Reaction[] reactions = reactionSet.getReactions();
             for (int i=0; i<reactions.length; i++) {
                 Reaction reaction = reactions[i];
-                Molecule[] reactants = reaction.getReactants();
-                for (int j=0; j<reactants.length;j++) {
-                    if (reactants[j].contains(atom)) {
-                        return reactants[j];
-                    }
-                }
-                Molecule[] products = reaction.getProducts();
-                for (int j=0; j<products.length; j++) {
-                    if (products[j].contains(atom)) {
-                        return products[j];
-                    }
+                AtomContainer container = ReactionManipulator.getRelevantAtomContainer(reaction, atom);
+                if (container != null) {
+                    return container;
                 }
             }
         }
         // This should never happen.
-        return createNewMolecule(chemModel);
+        return null;
     }
 
     /**
