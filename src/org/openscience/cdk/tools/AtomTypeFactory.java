@@ -325,6 +325,10 @@ public class AtomTypeFactory {
 	 * @return       The configured atom
 	 */
     public Atom configure(Atom atom) throws CDKException {
+        if (atom instanceof PseudoAtom) {
+            // do not try to configure PseudoAtom's
+            return atom;
+        }
         try {
             AtomType at = null;
             String atomTypeName = atom.getAtomTypeName();
