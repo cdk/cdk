@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.0b1//EN" "dtd/website.dtd" [
-  <!ENTITY index SYSTEM "../../../reports/javadoc/keyword.index.xml">
+  <!ENTITY index SYSTEM "../../javadoc/keyword.index.xml">
 ]>
 <webpage id="keyword-index">
   <config param="last-change-by" value="$Author$"/>

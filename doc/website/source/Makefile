@@ -23,13 +23,13 @@ stats: javadoc-stats.html javancss-stats.html
 update-stats: javancss-tmp.xml
 
 keyword: update-keyword
-update-keyword: ../../../reports/javadoc/MakeKeywordIndexDoclet.class ../../../reports/javadoc/keyword.index.xml
+update-keyword: ../../javadoc/MakeKeywordIndexDoclet.class ../../javadoc/keyword.index.xml
 
-../../../reports/javadoc/MakeKeywordIndexDoclet.class:
-	cd ../../../reports/javadoc; make
+../../javadoc/MakeKeywordIndexDoclet.class:
+	cd ../../javadoc; make
 
-../../../reports/javadoc/keyword.index.xml:
-	cd ../../../reports/javadoc; ant keyword.index
+../../javadoc/keyword.index.xml:
+	cd ../../javadoc; ant keyword.index
 
 include depends.tabular
 
