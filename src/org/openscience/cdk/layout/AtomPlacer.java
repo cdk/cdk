@@ -51,7 +51,7 @@ public class AtomPlacer
 	/**
 	 *  Description of the Field
 	 */
-	public static boolean debug = false;
+	public static boolean debug = true;
 	private static org.openscience.cdk.tools.LoggingTool logger;
 
 	/**
@@ -107,16 +107,17 @@ public class AtomPlacer
 
 
 	/**
-	 *  Distribute the bonding partners of an atom such that they fill the
-	 *  remaining space around an atom in a geometrically nice way
+	 * Distribute the bonded atoms (neighbours) of an atom such that they fill the
+	 * remaining space around an atom in a geometrically nice way.
 	 *
-	 *@param  atom               The atom whose partners are to be placed
-	 *@param  sharedAtoms        The atoms which are already placed
-	 *@param  partners           The partners to be placed
-	 *@param  bondLength         The standared bondlength
-	 *@param  sharedAtomsCenter  Description of the Parameter
+	 * @param  atom               The atom whose partners are to be placed
+	 * @param  placedNeighbours   The atoms which are already placed
+	 * @param  unplacedNeighbours The partners to be placed
+	 * @param  bondLength         The standared bond length for the newly placed Atoms
+	 * @param  sharedAtomsCenter  The 2D centre of the placed Atoms
 	 */
-	public void distributePartners(Atom atom, AtomContainer sharedAtoms, Point2d sharedAtomsCenter, AtomContainer partners, double bondLength)
+	public void distributePartners(Atom atom, AtomContainer placedNeighbours, Point2d sharedAtomsCenter,
+                                   AtomContainer unplacedNeighbours, double bondLength)
 	{
 		double occupiedAngle = 0;
 		double smallestDistance = Double.MAX_VALUE;
@@ -137,39 +138,46 @@ public class AtomPlacer
 		occupiedDirection.sub(newDirection);
 		Vector atomsToDraw = new Vector();
 
-		if (sharedAtoms.getAtomCount() == 1)
+        logger.debug("Number of shared atoms: " + placedNeighbours.getAtomCount());
+		if (placedNeighbours.getAtomCount() == 1)
 		{
-			for (int f = 0; f < partners.getAtomCount(); f++)
+            logger.debug("Only one neighbour...");
+			for (int f = 0; f < unplacedNeighbours.getAtomCount(); f++)
 			{
-				atomsToDraw.addElement(partners.getAtomAt(f));
+				atomsToDraw.addElement(unplacedNeighbours.getAtomAt(f));
 			}
 
-			addAngle = Math.PI * 2 / (partners.getAtomCount() + sharedAtoms.getAtomCount());
+			addAngle = Math.PI * 2 / (unplacedNeighbours.getAtomCount() + placedNeighbours.getAtomCount());
 			/*
 			 *  IMPORTANT: At this point we need a calculation of the
 			 *  start angle.
 			 *  Not done yet.
 			 */
-			Atom placedAtom = sharedAtoms.getAtomAt(0);
+			Atom placedAtom = placedNeighbours.getAtomAt(0);
 //			double xDiff = atom.getX2D() - placedAtom.getX2D();
 //			double yDiff = atom.getY2D() - placedAtom.getY2D();
 			double xDiff = placedAtom.getX2D() - atom.getX2D();
 			double yDiff = placedAtom.getY2D() - atom.getY2D();
 
+            logger.debug("distributePartners->xdiff: " + Math.toDegrees(xDiff));
+            logger.debug("distributePartners->ydiff: " + Math.toDegrees(yDiff));
 			startAngle = GeometryTools.getAngle(xDiff, yDiff);
 			//- (Math.PI / 2.0);
+            logger.debug("distributePartners->angle: " + Math.toDegrees(startAngle));
+
 			populatePolygonCorners(atomsToDraw, new Point2d(atom.getPoint2D()), startAngle, addAngle, bondLength);
 			return;
 		}
 
-		if (sharedAtoms.getAtomCount() == 0)
+		if (placedNeighbours.getAtomCount() == 0)
 		{
-			for (int f = 0; f < partners.getAtomCount(); f++)
+            logger.debug("First atom...");
+			for (int f = 0; f < unplacedNeighbours.getAtomCount(); f++)
 			{
-				atomsToDraw.addElement(partners.getAtomAt(f));
+				atomsToDraw.addElement(unplacedNeighbours.getAtomAt(f));
 			}
 
-			addAngle = Math.PI * 2 / (partners.getAtomCount() + sharedAtoms.getAtomCount());
+			addAngle = Math.PI * 2 / (unplacedNeighbours.getAtomCount() + placedNeighbours.getAtomCount());
 			/*
 			 *  IMPORTANT: At this point we need a calculation of the
 			 *  start angle.
@@ -197,7 +205,7 @@ public class AtomPlacer
 		/*
 		 *  get the two sharedAtom partners with the smallest distance to the new center
 		 */
-		sortedAtoms = sharedAtoms.getAtoms();
+		sortedAtoms = placedNeighbours.getAtoms();
 		GeometryTools.sortBy2DDistance(sortedAtoms, distanceMeasure);
 		Vector2d closestPoint1 = new Vector2d(sortedAtoms[0].getPoint2D());
 		Vector2d closestPoint2 = new Vector2d(sortedAtoms[1].getPoint2D());
@@ -213,12 +221,13 @@ public class AtomPlacer
 		{
 			try
 			{
-				System.out.println("distributePartners->sortedAtoms[0]: " + (molecule.getAtomNumber(sortedAtoms[0]) + 1));
-				System.out.println("distributePartners->sortedAtoms[1]: " + (molecule.getAtomNumber(sortedAtoms[1]) + 1));
-				System.out.println("distributePartners->angle1: " + Math.toDegrees(angle1));
-				System.out.println("distributePartners->angle2: " + Math.toDegrees(angle2));
+				logger.debug("distributePartners->sortedAtoms[0]: " + (molecule.getAtomNumber(sortedAtoms[0]) + 1));
+				logger.debug("distributePartners->sortedAtoms[1]: " + (molecule.getAtomNumber(sortedAtoms[1]) + 1));
+				logger.debug("distributePartners->angle1: " + Math.toDegrees(angle1));
+				logger.debug("distributePartners->angle2: " + Math.toDegrees(angle2));
 			} catch (Exception exc)
 			{
+                logger.debug(exc);
 				exc.printStackTrace();
 			}
 		}
@@ -247,24 +256,25 @@ public class AtomPlacer
 			}
 		}
 		remainingAngle = (2 * Math.PI) - occupiedAngle;
-		addAngle = remainingAngle / (partners.getAtomCount() + 1);
+		addAngle = remainingAngle / (unplacedNeighbours.getAtomCount() + 1);
 		if (debug)
 		{
 			try
 			{
-				System.out.println("distributePartners->startAtom: " + (molecule.getAtomNumber(startAtom) + 1));
-				System.out.println("distributePartners->remainingAngle: " + Math.toDegrees(remainingAngle));
-				System.out.println("distributePartners->addAngle: " + Math.toDegrees(addAngle));
-				System.out.println("distributePartners-> partners.getAtomCount(): " + partners.getAtomCount());
+				logger.debug("distributePartners->startAtom: " + (molecule.getAtomNumber(startAtom) + 1));
+				logger.debug("distributePartners->remainingAngle: " + Math.toDegrees(remainingAngle));
+				logger.debug("distributePartners->addAngle: " + Math.toDegrees(addAngle));
+				logger.debug("distributePartners-> partners.getAtomCount(): " + unplacedNeighbours.getAtomCount());
 			} catch (Exception exc)
 			{
+                logger.debug(exc);
 				exc.printStackTrace();
 			}
 
 		}
-		for (int f = 0; f < partners.getAtomCount(); f++)
+		for (int f = 0; f < unplacedNeighbours.getAtomCount(); f++)
 		{
-			atomsToDraw.addElement(partners.getAtomAt(f));
+			atomsToDraw.addElement(unplacedNeighbours.getAtomAt(f));
 		}
 		radius = bondLength;
 		startAngle = GeometryTools.getAngle(startAtom.getX2D() - atom.getX2D(), startAtom.getY2D() - atom.getY2D());
