@@ -30,13 +30,16 @@ package org.openscience.cdk.io;
 import org.openscience.cdk.*;
 import org.openscience.cdk.io.*;
 import org.openscience.cdk.exception.*;
+import org.openscience.cdk.tools.LoggingTool;
 import java.io.*;
 import java.util.*;
 import javax.vecmath.*;
 
 /**
- *
  * Reads the contents of a PDBFile.
+ *
+ * <p>A description can be found at <a href="http://www.rcsb.org/pdb/docs/format/pdbguide2.2/guide2.2_frame.html">
+ * http://www.rcsb.org/pdb/docs/format/pdbguide2.2/guide2.2_frame.html</a>.
  *
  * @author     Edgar Luttmann
  * @author     Bradley Smith (bradley@baysmith.com)
@@ -46,6 +49,7 @@ import javax.vecmath.*;
  */
 public class PDBReader extends DefaultChemObjectReader {
 
+    private org.openscience.cdk.tools.LoggingTool logger;
 	private BufferedReader _oInput; // The internal used BufferedReader
 
 	/**
@@ -57,6 +61,7 @@ public class PDBReader extends DefaultChemObjectReader {
 	 *
 	 */
 	public PDBReader(InputStream oIn) {
+        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
 		_oInput = new BufferedReader(new InputStreamReader(oIn));
 	}
 
@@ -69,6 +74,7 @@ public class PDBReader extends DefaultChemObjectReader {
 	 *
 	 */
 	public PDBReader(Reader oIn) {
+        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
 		_oInput = new BufferedReader(oIn);
 	}
 
@@ -94,15 +100,15 @@ public class PDBReader extends DefaultChemObjectReader {
 
 	/**
 	 * Read a <code>ChemFile</code> from a file in PDB format. The molecules
-   * in the file are stored as <code>BioPolymer</code>s in the
-   * <code>ChemFile</code>. The residues are the monomers of the
-   * <code>BioPolymer</code>, and their names are the concatenation of the
-   * residue, chain id, and the sequence number. Separate chains (denoted by
-   * TER records) are stored as separate <code>BioPolymer</code> molecules.
-   *
-   * <p>Connectivity information is not currently read.
+     * in the file are stored as <code>BioPolymer</code>s in the
+     * <code>ChemFile</code>. The residues are the monomers of the
+     * <code>BioPolymer</code>, and their names are the concatenation of the
+     * residue, chain id, and the sequence number. Separate chains (denoted by
+     * TER records) are stored as separate <code>BioPolymer</code> molecules.
+     *
+     * <p>Connectivity information is not currently read.
 	 *
-	 * @return The ChemFile that was read from the PDB file.    
+	 * @return The ChemFile that was read from the PDB file.
 	 */
 	private ChemFile readChemFile() 	{
 		// initialize all containers
@@ -125,6 +131,7 @@ public class PDBReader extends DefaultChemObjectReader {
 		try {
 			do {
 				cRead = _oInput.readLine();
+                logger.debug(cRead);
 				if (cRead != null) {
 					cLine = new StringBuffer(cRead);
 					// make sure the record name is 6 characters long
