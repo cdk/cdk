@@ -4,6 +4,10 @@ CHANGELOG $Date$
 Changes in CVS
 ------------------------------------
 New:
+<<<<<<< CHANGELOG
+* Added a 3D starting structure generator for small molecules
+* Added charges.Polarizability
+=======
 * File format detection for Spartan, Q-Chem, NWChem and Ghemical SPM files
 * Added WHIM and BCUT descriptors
 * Added new QSAR classes: DescriptorSpecification and DescriptorValue
@@ -61,6 +65,7 @@ API changes:
 20041201 Release
 ------------------------------------
 New:
+>>>>>>> 1.372
 * Added isomorphism.ConjugatedPiSystemsDetector
 * ChemFormat and ChemFormatMatchers interfaces in new io.formats package
 * Added charges.GasteigerMarsiliPartialCharges calculation

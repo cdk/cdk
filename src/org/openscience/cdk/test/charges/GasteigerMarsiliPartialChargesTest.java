@@ -45,8 +45,7 @@ public class GasteigerMarsiliPartialChargesTest extends TestCase {
 	boolean standAlone = false;
 	
 	/**
-	 *  Constructor for the HueckelAromaticityDetectorTest object
-	 *
+	 *  Constructor for the GasteigerMarsiliPartialChargesTest
 	 *@param  name  Description of the Parameter
 	 */
 	public  GasteigerMarsiliPartialChargesTest(){}
@@ -63,7 +62,7 @@ public class GasteigerMarsiliPartialChargesTest extends TestCase {
 	}
 	
 	/**
-	 *  Sets the standAlone attribute of the HueckelAromaticityDetectorTest object
+	 *  Sets the standAlone attribute 
 	 *
 	 *@param  standAlone  The new standAlone value
 	 */

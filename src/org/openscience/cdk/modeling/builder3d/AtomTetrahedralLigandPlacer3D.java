@@ -135,8 +135,8 @@ public class AtomTetrahedralLigandPlacer3D {
 
 
 	/**
-	 *  Rescales Point2 so that length 1-2 is sum of covalent radii. if covalent
-	 *  radii cannot be found, use bond length of 1.0
+	 *  Rescales Point2 so that length 1-2 is sum of covalent radii. 
+	 *  If covalent radii cannot be found, use bond length of 1.0
 	 *
 	 *@param  atom1          stationary atom
 	 *@param  atom2          moveable atom
@@ -457,7 +457,7 @@ public class AtomTetrahedralLigandPlacer3D {
 
 
 	/**
-	 *  Calculate new point(s) X in a B-A-C system. It forms form a B-A(-C)-X
+	 *  Calculate new point(s) X in a B-A-C system, it forms a B-A(-C)-X
 	 *  system. (2) 2 ligands(B, C) of refAtom A (i) 1 points required; vector in
 	 *  ABC plane bisecting AB, AC. If ABC is linear, no points (ii) 2 points: 2
 	 *  points X1, X2, X1-A-X2 = angle about 2i vector
@@ -753,11 +753,11 @@ public class AtomTetrahedralLigandPlacer3D {
 
 
 	/**
-	 *  set Atoms in respect to stereoinformation
-	 *	take placed neighbours to stereocenter 
+	 *  set Atoms in respect to stereoinformation.
+	 *	take placed neighbours to stereocenter
 	 *		create a x b
 	 *	     if right handed system (spatproduct >0)
-	 *			if unplaced !=up (relativ to stereocenter)
+	 *			if unplaced is not up (relativ to stereocenter)
 	 *				n=b x a
 	 *	     Determine angle between n and possible ligand place points
 	 *	     if angle smaller than 90° take this branch point
