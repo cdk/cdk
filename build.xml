@@ -121,7 +121,7 @@
                 </javac>
 
                 <copy todir="${build}">
-                        <fileset dir="." includes="**/Test-*" />
+                        <fileset dir="org" includes="**/Test-*" />
                 </copy>
         </target>
 
@@ -297,7 +297,7 @@
         </target>
 
         <target name="run" depends="dist">
-                <java classname="org.openscience.cdk.test.SmilesGeneratorTest" fork="yes">
+                <java classname="org.openscience.cdk.test.VicinitySamplerTest" fork="yes">
                         <classpath>
                                 <pathelement
                                 location="${dist}/jar/cdk.jar" />

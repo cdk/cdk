@@ -325,18 +325,7 @@ public class RandomGenerator
 		}
 	}
 
- 	protected boolean chemConstraintsOk(Molecule test)
- 	{
- 		for (int f = 0; f < test.getAtomCount(); f++)
- 		{
- 			if (test.getBondOrderSum(test.getAtomAt(f)) != correctBondOrderSums[f])
- 			{
- 				return false;
- 			}
- 		}
- 		return true;
- 	}
- 
+
 	/**
 	 * Analog of Math.max that returns the largest int value in an array of ints
 	 *
@@ -384,7 +373,6 @@ public class RandomGenerator
 	public void setMolecule(Molecule mol)
 	{
 		this.molecule = mol;	
-		initBondOrderSums(mol);
 	}
 
 
@@ -399,12 +387,4 @@ public class RandomGenerator
 		return this.molecule;
 	}
 	
- 	protected void initBondOrderSums(Molecule mol)
- 	{	
- 		correctBondOrderSums = new int[mol.getAtomCount()];
- 		for (int f = 0; f < mol.getAtomCount(); f++)
- 		{
- 			correctBondOrderSums[f] = mol.getBondOrderSum(mol.getAtomAt(f));
- 		}
- 	}
 }
