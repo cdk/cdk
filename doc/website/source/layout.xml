@@ -32,8 +32,10 @@
       <tocentry page="agenda.xml" filename="agenda.html"/>
       <tocentry page="changelog.xml" filename="changelog.html"/>
       <tocentry page="rfc.xml" filename="rfc.html">
+        <tocentry page="rfc1.xml" filename="rfc1.html"/>
         <tocentry page="rfc2.xml" filename="rfc2.html"/>
         <tocentry page="rfc3.xml" filename="rfc3.html"/>
+        <tocentry page="rfc4.xml" filename="rfc4.html"/>
       </tocentry>
     </tocentry>
     <tocentry page="documentation.xml" filename="documentation.html">
