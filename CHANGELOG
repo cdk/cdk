@@ -16,7 +16,7 @@ New:
 * Added a RFC #8 non-compliant PseudoAtom class 
 * Added editor table for dictionary references in ChemObject's
 * Added ChemObject.getProperties() method
-* CMLReader reads dictRef of <atom> and <bond>
+* CMLReader reads dictRef for the atom and bond elements
 * Core CDK classes are now serializable
 * Added Manipulator classes that relay methods to 'lower' classes
 * Added classes for chemical semantic validation
