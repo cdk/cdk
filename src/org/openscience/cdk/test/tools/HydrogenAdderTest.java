@@ -482,6 +482,33 @@ public class HydrogenAdderTest extends TestCase {
             MoleculeViewer2D.display(molecule, true);
         }
     }
+    
+    /**
+     * Tests wether the it actually resets an old value if zero missing hydrogens
+     * were calculated (bug found 2004-01-09 by egonw).
+     */
+    public void testaddImplicitHydrogensToSatisfyValency_OldValue() {
+        Molecule mol = new Molecule();
+        mol.addAtom(new Atom("C"));
+        Atom oxygen = new Atom("O");
+        mol.addAtom(oxygen);
+        mol.addAtom(new Atom("C"));
+        
+        mol.addBond(0, 1, 1.0);
+        mol.addBond(1, 2, 1.0);
+        
+        oxygen.setHydrogenCount(2); /* e.g. caused by the fact that the element symbol
+                                       was changed from C to O (=actual bug) */
+        try {
+            adder.addExplicitHydrogensToSatisfyValency(mol);
+        } catch (Exception exception) {
+            System.err.println(exception);
+            exception.printStackTrace();
+            fail();
+        }
+
+        assertEquals(0, oxygen.getHydrogenCount());
+    }
 
     /**
      * The main program for the HydrogenAdderTest class

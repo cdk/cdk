@@ -281,9 +281,7 @@ public class HydrogenAdder {
     public void addImplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom) throws CDKException
     {
         int missingHydrogens = satChecker.calculateMissingHydrogen(atom, container);
-        if (missingHydrogens > 0) {
-            atom.setHydrogenCount(missingHydrogens);
-        }
+        atom.setHydrogenCount(missingHydrogens);
     }
 
 }

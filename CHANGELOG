@@ -36,6 +36,7 @@ Fixes:
 * Deal with charges and H is special case (closes JCP bug #850143)
 * Fixed writing of SDF files (closes #870911)
 * Made all CDKConstants  really constant (i.e. final)
+* Fixed method: make sure to overwrite old value if number of missing Hs is zero
 
 API changes:
 * SetOfMolecules now extends SetOfAtomContainers which gives it additional
