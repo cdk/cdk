@@ -3,8 +3,19 @@ CHANGELOG
 
 Changes in CVS
 ------------------------------------
-* Added two classes for representing crystals: 
-  Crystal and MolecularCrystal
+New:
+* Added a class for representing crystals
+* Added a class for reading PolyMorph Predictor (r)
+  *.pmp files
+
+Fixes:
+* Added initialization of atoms Array in Bond.java
+  constructor
+
+API changes:
+* cdk.libio.jmol.Convertor now converts 
+  AtomContainer <-> ChemFrame, instead of
+  Molecule <-> ChemFrame
 
 20020902 Release
 ------------------------------------
