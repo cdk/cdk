@@ -29,6 +29,7 @@
 package org.openscience.cdk.io.cml;
 
 import org.openscience.cdk.io.cml.cdopi.CDOInterface;
+import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.Attributes;
 
 /**
@@ -44,14 +45,17 @@ public class JMOLANIMATIONConvention extends CMLCoreModule {
     private int current;
     private String frame_energy;
     private String units;
+    private LoggingTool logger;
 
     public JMOLANIMATIONConvention(CDOInterface cdo) {
         super(cdo);
+        logger = new LoggingTool(this);
         current = UNKNOWN;
     };
 
     public JMOLANIMATIONConvention(ModuleInterface conv) {
         super(conv);
+        logger = new LoggingTool(this);
     };
 
     public CDOInterface returnCDO() {
@@ -70,18 +74,18 @@ public class JMOLANIMATIONConvention extends CMLCoreModule {
     public void startElement(CMLStack xpath, String uri, String local, String raw, Attributes atts) {
         String name = local;
         if (name.equals("list")) {
-            // System.err.println("Oke, JMOLANIMATION seems to be kicked in :)");
+            logger.debug("Oke, JMOLANIMATION seems to be kicked in :)");
             cdo.startObject("Animation");
             super.startElement(xpath, uri, local, raw, atts);
         } else if (name.equals("molecule")) {
             cdo.startObject("Frame");
+            logger.debug("New frame being parsed.");
             super.startElement(xpath, uri, local, raw, atts);
         } else if (name.equals("float")) {
             boolean isEnergy = false;
-            //System.err.println("FLOAT found!");
+            logger.debug("FLOAT found!");
             for (int i = 0; i < atts.getLength(); i++) {
-              //System.err.println(" att: " + atts.getQName(i) + " -> "
-              //      + atts.getValue(i));
+              logger.debug(" att: ", atts.getQName(i), " -> ", atts.getValue(i));
                 if (atts.getQName(i).equals("title")
                         && atts.getValue(i).equals("FRAME_ENERGY")) {
                     isEnergy = true;
