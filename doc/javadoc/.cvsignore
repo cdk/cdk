@@ -2,3 +2,5 @@
 *.stats
 keyword.index.xml
 classes*.mod
+depends.xml
+builddepends.xml
