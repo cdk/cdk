@@ -73,6 +73,7 @@ public class SmilesGenerator {
 
   /** This is used for remembering wich vector marks the end of a double bond configuration **/
   private Stack endOfDoubleBondConfiguration=new Stack();
+  private Stack beginnOfDoubleBondConfiguration=new Stack();
   
   /**
    * Default constructor
@@ -143,10 +144,11 @@ public class SmilesGenerator {
    * @param atom      The atom which is the end of configuration
    * @param container The atomContainer the atom is in
    * @param parent    The atom we came from
-   * @param isDoubleBondSpecified[] Should double bond configurations be evaluated. If bond X (numbering as in the bonds array) should be evaluated is given by isDoubleBondSpecified[x]==true.
    * @return false=is not end of configuration, true=is 
    */
-  private boolean isEndOfDoubleBond(AtomContainer container, Atom atom, Atom parent, boolean isDoubleBondSpecified[]){
+  private boolean isEndOfDoubleBond(AtomContainer container, Atom atom, Atom parent, boolean[] doubleBondConfiguration){
+    if(!doubleBondConfiguration[container.getBondNumber(atom,parent)])
+      return false;
     int lengthAtom=container.getConnectedAtoms(atom).length+atom.getHydrogenCount();
     int lengthParent=container.getConnectedAtoms(parent).length+parent.getHydrogenCount();
     if(container.getBond(atom, parent)!=null){
@@ -160,10 +162,11 @@ public class SmilesGenerator {
           if(atoms[i]!=parent&&one!=null)
             two=atoms[i];
         }
-        if(two!=null&&one.getSymbol().equals(two.getSymbol())&&isDoubleBondSpecified[container.getBondNumber(parent,atom)]==true)
+        if(two!=null&&one.getSymbol().equals(two.getSymbol()))
           return(false);
-        else
+        else{
           return(true);
+        }
       }
     }
     return(false);
@@ -175,10 +178,9 @@ public class SmilesGenerator {
    * @param atom      The atom which is the start of configuration
    * @param container The atomContainer the atom is in
    * @param parent    The atom we came from
-   * @param isDoubleBondSpecified[] Should double bond configurations be evaluated. If bond X (numbering as in the bonds array) should be evaluated is given by isDoubleBondSpecified[x]==true.
    * @return false=is not start of configuration, true=is 
    */
-  private boolean isBeginnOfDoubleBond(AtomContainer container, Atom a, Atom parent, boolean isDoubleBondSpecified[]){
+  private boolean isBeginnOfDoubleBond(AtomContainer container, Atom a, Atom parent,boolean[] doubleBondConfiguration){
     int lengthAtom=container.getConnectedAtoms(a).length+a.getHydrogenCount();
     if(lengthAtom!=3)
       return(false);
@@ -188,16 +190,16 @@ public class SmilesGenerator {
     boolean doubleBond=false;
     Atom nextAtom=null;
     for(int i=0;i< atoms.length;i++){
-      if(atoms[i]!=parent&& container.getBond(atoms[i],a).getOrder()==CDKConstants.BONDORDER_DOUBLE&&isEndOfDoubleBond(container,atoms[i],a,isDoubleBondSpecified)){
-        nextAtom=atoms[i];
+      if(atoms[i]!=parent&& container.getBond(atoms[i],a).getOrder()==CDKConstants.BONDORDER_DOUBLE&&isEndOfDoubleBond(container,atoms[i],a,doubleBondConfiguration)){
         doubleBond=true;
+        nextAtom=atoms[i];
       }
       if(atoms[i]!=parent&&one==null)
         one=atoms[i];
       if(atoms[i]!=parent&&one!=null)
         two=atoms[i];
     }
-    if(one!=two && doubleBond && isDoubleBondSpecified[container.getBondNumber(a,nextAtom)]==true)
+    if(one!=two && doubleBond && doubleBondConfiguration[container.getBondNumber(a,nextAtom)])
       return(true);
     else
       return(false);
@@ -419,7 +421,7 @@ public class SmilesGenerator {
    */
   public synchronized String createSMILES(Molecule molecule) {
     try{
-      return (createSMILES(molecule, false, new boolean[molecule.getAtomCount()]));
+      return (createSMILES(molecule, false, new boolean[molecule.getBondCount()]));
     }
     catch(Coordinates2DMissingException ex){return("");}//This exception can only happen if a chiral smiles is requested
   }
@@ -434,14 +436,14 @@ public class SmilesGenerator {
    * check if coordinates make sense. Invalid stereo configurations are ignored; if there are no 
    * valid stereo configuration the smiles will be the same as the non-chiral one.
    *
-	 * @exception  Coordinates2DMissingException  At least one atom has no Point2D; coordinates are needed for crating the chiral smiles.
+   * @exception  Coordinates2DMissingException  At least one atom has no Point2D; coordinates are needed for crating the chiral smiles.
    * @param molecule The molecule to evaluate
-   * @param isDoubleBondSpecified[] Should double bond configurations be evaluated. If bond X (numbering as in the bonds array) should be evaluated is given by isDoubleBondSpecified[x]==true.
+   * @param isDoubleBondSpecified[] Should double bond configurations be evaluated. If bond X (numbering as in the bonds array) should be evaluated isDoubleBondSpecified[x] should be true, if not false.
    * @see org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel.
    *
    */
-  public synchronized String createChiralSMILES(Molecule molecule, boolean isDoubleBondSpecified[]) throws Coordinates2DMissingException {
-    return(createSMILES(molecule, true, isDoubleBondSpecified));
+  public synchronized String createChiralSMILES(Molecule molecule, boolean[] doubleBondConfiguration) throws Coordinates2DMissingException {
+    return(createSMILES(molecule, true, doubleBondConfiguration));
   }
 
   /**
@@ -452,11 +454,11 @@ public class SmilesGenerator {
    * @see org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel.
    * @param molecule The molecule to evaluate
    * @param chiral true=SMILES will be chiral, false=SMILES will not be chiral.
-   * @param isDoubleBondSpecified[] Should double bond configurations be evaluated. If bond X (numbering as in the bonds array) should be evaluated is given b isDoubleBondSpecified[x]==true.
-	 * @exception  Coordinates2DMissingException  At least one atom has no Point2D; coordinates are needed for crating the chiral smiles. This excpetion can only be thrown if chiral smiles is created, ignore it if you want a non-chiral smiles (createSMILES(AtomContainer) does not throw an exception).
+   * @param isDoubleBondSpecified[] Should double bond configurations be evaluated. If bond X (numbering as in the bonds array) should be evaluated isDoubleBondSpecified[x] should be true, if not false.
+   * @exception  Coordinates2DMissingException  At least one atom has no Point2D; coordinates are needed for crating the chiral smiles. This excpetion can only be thrown if chiral smiles is created, ignore it if you want a non-chiral smiles (createSMILES(AtomContainer) does not throw an exception).
    *
    */
-  public synchronized String createSMILES(Molecule molecule, boolean chiral, boolean isDoubleBondSpecified[]) throws Coordinates2DMissingException{
+  public synchronized String createSMILES(Molecule molecule, boolean chiral, boolean doubleBondConfiguration[]) throws Coordinates2DMissingException{
     if (molecule.getAtomCount() == 0)
       return "";
     canLabler.canonLabel(molecule);
@@ -488,7 +490,7 @@ public class SmilesGenerator {
     }
 
     StringBuffer l = new StringBuffer();
-    createSMILES(start, l, molecule, chiral, isDoubleBondSpecified);
+    createSMILES(start, l, molecule, chiral, doubleBondConfiguration);
     return l.toString();
   }
 
@@ -499,13 +501,13 @@ public class SmilesGenerator {
    * @param a the atom to start the search at.
    * @param line the StringBuffer that the SMILES is to be appended to.
    * @param chiral true=SMILES will be chiral, false=SMILES will not be chiral.
-   * @param isDoubleBondSpecified[] Should double bond configurations be evaluated. If bond X (numbering as in the bonds array) should be evaluated is given by isDoubleBondSpecified[x]==true.
+   * @param isDoubleBondSpecified[] Should double bond configurations be evaluated. If bond X (numbering as in the bonds array) should be evaluated isDoubleBondSpecified[x] should be true, if not false.
    * @param atomContainer the AtomContainer that the SMILES string is generated for.
    */
-  private void createSMILES(Atom a, StringBuffer line, AtomContainer atomContainer, boolean chiral, boolean isDoubleBondSpecified[]) {
+  private void createSMILES(Atom a, StringBuffer line, AtomContainer atomContainer, boolean chiral, boolean[] doubleBondConfiguration) {
     Vector tree = new Vector();
     createDFSTree(a, tree, null, atomContainer); 
-    parseChain(tree, line, atomContainer, null, chiral, isDoubleBondSpecified,null);
+    parseChain(tree, line, atomContainer, null, chiral, doubleBondConfiguration,null);
   }
 
   /**
@@ -560,9 +562,9 @@ public class SmilesGenerator {
   /**
    * Parse a branch
    */
-  private void parseChain(Vector v, StringBuffer buffer, AtomContainer container, Atom parent, boolean chiral, boolean isDoubleBondSpecified[], Vector vectorBefore){
+  private void parseChain(Vector v, StringBuffer buffer, AtomContainer container, Atom parent, boolean chiral, boolean[] doubleBondConfiguration, Vector vectorBefore){
     int positionInVector=0;
-    Atom atom=null;
+    Atom atom;
     for(int h=0;h<v.size();h++){
       Object o=v.get(h);
       if(o instanceof Atom) {
@@ -575,7 +577,7 @@ public class SmilesGenerator {
           if(chiral&&isStereo(container,atom))
             parent=(Atom)((Vector)v.get(1)).get(0);
         }
-        parseAtom(atom, buffer, container, chiral, isDoubleBondSpecified,parent);
+        parseAtom(atom, buffer, container, chiral,doubleBondConfiguration,parent);
       	if(chiral && isStereo(container,atom)){
           Atom[] sorted=null;
           Vector chiralNeighbours=container.getConnectedAtomsVector(atom);
@@ -891,7 +893,7 @@ public class SmilesGenerator {
             }
           }
         }
-        if(atom!=null&&parent!=null&&isEndOfDoubleBond(container,atom,parent,isDoubleBondSpecified)){
+        if(atom!=null&&parent!=null && isEndOfDoubleBond(container,atom,parent,doubleBondConfiguration)){
           int position=-1;
           if(v.get(positionInVector+1) instanceof Vector){
             if(positionInVector>0){
@@ -933,37 +935,43 @@ public class SmilesGenerator {
           brackets = false;
         if(brackets)
           buffer.append('(');
-        parseChain((Vector)o, buffer, container, parent, chiral, isDoubleBondSpecified,v);
+        parseChain((Vector)o, buffer, container, parent, chiral, doubleBondConfiguration,v);
         if(brackets)
           buffer.append(')');
-        if(!endOfDoubleBondConfiguration.empty()){
-          Integer integer=(Integer)endOfDoubleBondConfiguration.pop();
-          Atom viewFrom=(Atom)endOfDoubleBondConfiguration.pop();
-          System.err.println("jkljlkjlk "+container.getBondNumber(viewFrom,parent)+"  "+parent+"  "+atom);
-          if(v.indexOf(o)==integer.intValue())
-          {
-            Atom[] atomsOfParent=container.getConnectedAtoms(parent);
-            Atom[] atomsOfViewFrom=container.getConnectedAtoms(viewFrom);
-            Atom between=null;
-            for(int i=0;i<atomsOfParent.length;i++){
-              for(int k=0;k<atomsOfViewFrom.length;k++){
-                if(atomsOfParent[i]==atomsOfViewFrom[k])
-                  between=atomsOfParent[i];
+        if(!beginnOfDoubleBondConfiguration.empty()){
+          Atom beginn=(Atom)beginnOfDoubleBondConfiguration.pop();
+          if(container.getBondNumber(beginn,parent)!=-1 && doubleBondConfiguration[container.getBondNumber(beginn,parent)]){
+            if(!endOfDoubleBondConfiguration.empty()){
+              Integer integer=(Integer)endOfDoubleBondConfiguration.pop();
+              Atom viewFrom=(Atom)endOfDoubleBondConfiguration.pop();
+              if(v.indexOf(o)==integer.intValue())
+              {
+                Atom[] atomsOfParent=container.getConnectedAtoms(parent);
+                Atom[] atomsOfViewFrom=container.getConnectedAtoms(viewFrom);
+                Atom between=null;
+                for(int i=0;i<atomsOfParent.length;i++){
+                  for(int k=0;k<atomsOfViewFrom.length;k++){
+                    if(atomsOfParent[i]==atomsOfViewFrom[k])
+                      between=atomsOfParent[i];
+                  }
+                }
+                boolean oldAtom=isLeft(viewFrom,parent,between);
+                boolean newAtom=isLeft((Atom)v.get(positionInVector+1),between,parent);
+                if(oldAtom==newAtom)
+                  buffer.append('/');
+                else
+                  buffer.append('\\');
               }
-            }
-            if(isDoubleBondSpecified[container.getBondNumber(between,atom)]){
-              boolean oldAtom=isLeft(viewFrom,parent,between);
-              boolean newAtom=isLeft((Atom)v.get(positionInVector+1),between,parent);
-              if(oldAtom==newAtom)
-                buffer.append('/');
               else
-                buffer.append('\\');
+              {
+                endOfDoubleBondConfiguration.push(viewFrom);
+                endOfDoubleBondConfiguration.push(integer);
+              }
             }
           }
           else
           {
-            endOfDoubleBondConfiguration.push(viewFrom);
-            endOfDoubleBondConfiguration.push(integer);
+            beginnOfDoubleBondConfiguration.push(beginn);
           }
         }
       }
@@ -1078,12 +1086,9 @@ public class SmilesGenerator {
    *
    * @param atom the atom to generate the SMILES for
    * @param buffer the string buffer that the atom is to be apended to.
-   * @param container the atomCointainer we parse
-   * @param chiral is the SMILES supposed to be chiral
-   * @param isDoubleBondSpecified[] Should double bond configurations be evaluated. If bond X (numbering as in the bonds array) should be evaluated is given by isDoubleBondSpecified[x]==true.
-   * @param parent The atom which was parsed before
+   * @param isDoubleBondSpecified[] Should double bond configurations be evaluated. If bond X (numbering as in the bonds array) should be evaluated isDoubleBondSpecified[x] should be true, if not false.
    */
-  private void parseAtom(Atom a, StringBuffer buffer, AtomContainer container, boolean chiral, boolean isDoubleBondSpecified[], Atom parent) {
+  private void parseAtom(Atom a, StringBuffer buffer, AtomContainer container, boolean chiral, boolean[] doubleBondConfiguration, Atom parent) {
     String symbol = a.getSymbol();
     boolean stereo=isStereo(container,a);
     boolean brackets = symbol.equals("B") || symbol.equals("C") || symbol.equals("N") || symbol.equals("O") || symbol.equals("P") || symbol.equals("S") || symbol.equals("F") || symbol.equals("Br") || symbol.equals("I") || symbol.equals("Cl");
@@ -1097,8 +1102,9 @@ public class SmilesGenerator {
 
     if(chiral && stereo)
       brackets=true;
-    if(isBeginnOfDoubleBond(container,a,parent,isDoubleBondSpecified)){
+    if(isBeginnOfDoubleBond(container,a,parent,doubleBondConfiguration)){
       buffer.append('/');
+      beginnOfDoubleBondConfiguration.push(a);
     }
     if(brackets)
       buffer.append('[');
@@ -1262,5 +1268,6 @@ class BrokenBond {
     return (a1.equals(bond.getA1()) && a2.equals(bond.getA2())) || (a1.equals(bond.getA2()) && a2.equals(bond.getA1()));
   }
 }
+
 
 
