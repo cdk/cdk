@@ -34,6 +34,9 @@ import java.util.*;
 import java.io.IOException;
 import java.text.NumberFormat;
 
+/**
+ * @keyword SMILES
+ **/
 public class SmilesGenerator {
   private static boolean debug = false;
 

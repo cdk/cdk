@@ -38,6 +38,8 @@ import org.openscience.cdk.Bond;
  *
  * @author     steinbeck
  * @created    April 16, 2002
+ *
+ * @keyword aromaticity detector
  */
 public class AromaticityCalculator
 {
