@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.0b1//EN" "dtd/website.dtd">
+<webpage id="documentation">
+  <config param="last-change-by" value="$Author$"/>
+  <config param="rcsdate" value="$Date$"/>
+
+  <head>
+    <title>The CDK Documentation</title>
+    <titleabbrev>Documentation</titleabbrev>
+    <summary>Project and Library Documentation</summary>
+  </head>
+
+  <section>
+    <title>Library Documentation</title>
+    <para>
+	  Library documentation is information about the CDK library that is being developed.
+	  This includes the Application Programming Interface (API) and the Project Reference.
+     </para>
+  </section>
+  <section>
+    <title>Project Documentation</title>
+    <para>
+       Project documentation is information about the development process of the CDK library.
+	   It contains information about how distribution are build, how the classes are testen and how
+	   this website is maintained. This documentation is under development.
+     </para>
+  </section>
+
+</webpage>

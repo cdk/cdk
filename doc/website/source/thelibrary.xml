@@ -10,6 +10,63 @@
     <summary>Information about the CDK.</summary>
   </head>
 
- <para>Some text.</para>
+         <section>
+                 <title>What is the CDK?</title>
+                 <para>
+        The CDK classes are Java utitility classes for ChemoInformatics and Computational chemistry, written in Java. They are developed constantly developed parallel
+        to other projects that make use of them.
+        They are a complete re-write of the CompChem classes that were the basis of <ulink url="http://www.sourceforge.net/projects/JChemPaint">JChemPaint</ulink>, a Java Editor
+        for 2D chemical structures, and of <ulink url="http://www.sourceforge.net/projects/JMDraw">JMDraw</ulink>, a Java package for the graphical layout of 2D chemical structures
+                </para>
+
+                <para>
+        A re-write was needed to in order to assure the widest possible usability. It is also intended to port
+        <ulink url="http://www.openscience.org/jmol">JMol</ulink>, a 3D molecular visualization tool, to the CDK.
+                </para>
+                <para>
+                        The CDK classes support (or will support, as soon as ported from the old CompChem library):
+                        <itemizedlist>
+                                <listitem>
+                                        <para>
+                                                Classes for Atoms, Molecules and other chemical concepts.
+                                        </para>
+                                </listitem>
+                                <listitem>
+                                        <para>
+                                                Utilities for importing and exporting chemical structures (Molecules or arrays of Atoms) using standard chemical files format.
+                                        </para>
+                                </listitem>
+                                <listitem>
+                                        <para>
+                                                Utility classes for handling chemical elements and isotopes.
+                                        </para>
+                                </listitem>
+                                <listitem>
+                                        <para>
+                                                A class that parses a molecular formula (a String of characters) and returns an array of Nodes.
+                                        </para>
+                                </listitem>
+                                <listitem>
+                                        <para>
+                                                An isomorphisms tester that compares to structures and returns if they are isomorph. I'm almost sure, that the implementation is not strictly valid, but it
+                                                seems to work
+                                        </para>
+                                </listitem>
+                                <listitem>
+                                        <para>
+                                                A SMILES parser (hidden as a static method in compchem.ChemFileUtils), which so far only implements the SSMILES standard.
+                                        </para>
+                                </listitem>
+                                <listitem>
+                                        <para>
+                                                An implementation of John Figueras, "Ring Perception Using Breadth-First Search", J. Chem. Inf. Comput Sci. 1996, 36, 986-991.
+                                        </para>
+                                </listitem>
+                        </itemizedlist>
+                </para>
+                <para>
+                Please <ulink url="api/index.html">check the existing API documentation</ulink> for information on which classes are already implemented.
+                </para>
+          </section>
 
 </webpage>

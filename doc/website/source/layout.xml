@@ -17,16 +17,20 @@
   <toc page="website.xml" filename="index.html">
     <tocentry page="intro.xml" filename="intro.html"/>
 	<tocentry page="thelibrary.xml" filename="thelibrary.html">
-	  <tocentry page="reference.xml" filename="reference.html"/>
-	  <tocentry page="api.xml" filename="api.html"/>
 	  <tocentry page="libraries.xml" filename="libraries.html"/>
+	  <tocentry page="related.xml" filename="related.html"/>
 	</tocentry>
 	<tocentry page="development.xml" filename="development.html">
 	  <tocentry page="whoiswho.xml" filename="whoiswho.html"/>
 	  <tocentry page="agenda.xml" filename="agenda.html"/>
 	  <tocentry page="changelog.xml" filename="changelog.html"/>
 	</tocentry>
-    <tocentry page="screenshots.xml" filename="screenshots.html"/>
+ 	<tocentry page="documentation.xml" filename="documentation.html">
+	  <tocentry page="reference.xml" filename="reference.html"/>
+	  <tocentry page="api.xml" filename="api.html"/>
+	  <tocentry page="manpages.xml" filename="manpages.html"/>
+	</tocentry>
+   <tocentry page="screenshots.xml" filename="screenshots.html"/>
     <tocentry page="maillinglists.xml" filename="maillinglists.html"/>
     <tocentry page="download.xml" filename="download.html"/>
     <tocentry page="biblio.xml" filename="biblio.html"/>

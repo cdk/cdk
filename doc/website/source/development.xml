@@ -15,6 +15,30 @@
     <para>The CDK project was started in September 2000 in South Bend, IN, USA at the
 	  Notre Dame University. Dan Gzelter, Christoph Steinbeck and Egon Willighagen
 	  agreed on merging the underlying core classes of JChemPaint and Jmol.</para>
+    <para>
+      The development of all of our project will be organized via Sourceforge.
+      Unfortunately, this system, as good as it is, turns out to be buggy and
+      overloaded, but we'll stay with it, because this will not be so much of
+      a problem as soon as the projects are established, we have the CVS
+      access via SSH up'n running and can actually do some programming.
+    </para>
   </section>
+	<section>
+			<title>How is the CDK developed</title>
+			<para>
+					The CDK is mantained as a <ulink url="http://www.sourceforge.net">SourceForge</ulink> project under
+					<ulink url="http://www.sourceforge.net/projects/cdk">http://www.sourceforge.net/projects/cdk</ulink>.
+					Please check the SourceForge site documentation for more.
+					SourceForge gives us bugtracking, mailing lists, support manager and last not least CVS access.
+			</para>
+	</section>
+	<section>
+			<title>How can I participate?</title>
+			<para>
+					Check the <ulink url="http://www.sourceforge.net">SourceForge</ulink> site documentation on how to access the CVS.
+					If you actively want to contribute, please get a SourceForge accoutn, contact the project admin so that he can
+					add you to the developers list
+			</para>
+	</section>
 
 </webpage>
