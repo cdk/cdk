@@ -64,9 +64,9 @@ public class MDLWriterTest extends TestCase {
         molecule.addAtom(new PseudoAtom("*"));
         molecule.addAtom(new Atom("C"));
         molecule.addAtom(new Atom("C"));
-        MDLWriter mdlWriter = new MDLWriter(writer);
         
         try {
+            MDLWriter mdlWriter = new MDLWriter(writer);
             mdlWriter.write(molecule);
         } catch (Exception exception) {
             logger.error("Error while creating an MDL file");

@@ -16,6 +16,7 @@ New:
 
 Fixes:
 * Fixed junit-test and run-test: missing cdk-data.jar
+* Don't consume Exceptions while writing MDL
 
 API changes:
 * Moved IsotopeFactory from cdk-standard to the cdk-core module

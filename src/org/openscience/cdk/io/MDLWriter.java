@@ -91,7 +91,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
      *
      * @param   out  The Writer to write to
      */
-    public MDLWriter(Writer out) {
+    public MDLWriter(Writer out) throws Exception {
         writer = new BufferedWriter(out);
         logger = new LoggingTool(this);
         try {
@@ -99,6 +99,11 @@ public class MDLWriter extends DefaultChemObjectWriter {
         } catch (Exception exception) {
             logger.error("Failed to initiate isotope factory: ", exception.getMessage());
             logger.debug(exception);
+            if (exception instanceof CDKException) {
+                throw exception;
+            } else {
+                throw new CDKException("Failed to initiate isotope factory: " + exception.getMessage());
+            }
         }
     }
 
@@ -133,9 +138,10 @@ public class MDLWriter extends DefaultChemObjectWriter {
         }
 		    writeMolecule((Molecule)object,isVisible);
 			}
-			catch(Exception ex){
+			catch (Exception ex){
 				logger.error(ex.getMessage());
 				logger.debug(ex);
+                throw new CDKException("Exception while writing MDL file: " + ex.getMessage());
 			}
 		}
 		else

@@ -284,37 +284,42 @@ public class FileConvertor {
 
     private ChemObjectWriter getChemObjectWriter(String format, Writer fileWriter) {
         ChemObjectWriter writer = null;
-        if (format.equalsIgnoreCase("CML")) {
-            writer = new CMLWriter(fileWriter);
-        } else if (format.equalsIgnoreCase("MOL")) {
-            writer = new MDLWriter(fileWriter);
-        } else if (format.equalsIgnoreCase("SMI")) {
-            writer = new SMILESWriter(fileWriter);
-        } else if (format.equalsIgnoreCase("SHELX")) {
-            writer = new ShelXWriter(fileWriter);
-        } else if (format.equalsIgnoreCase("SVG")) {
-            writer = new SVGWriter(fileWriter);
-        } else if (format.equalsIgnoreCase("XYZ")) {
-            writer = new XYZWriter(fileWriter);
-        } else if (format.equalsIgnoreCase("PDB")) {
-            writer = new PDBWriter(fileWriter);
-        } else if (format.equalsIgnoreCase("GIN")) {
-            writer = new GaussianInputWriter(fileWriter);
-        } else if (format.equalsIgnoreCase("CDK")) {
-            writer = new CDKSourceCodeWriter(fileWriter);
-        } else if (format.equalsIgnoreCase("HIN")) {
-            writer = new HINWriter(fileWriter);
-        }
-        if (writer != null) {
-            logger.debug(format + " -> " + writer.getClass().getName());
-            if (settingListener != null) {
-                writer.addChemObjectIOListener(settingListener);
+        try {
+            if (format.equalsIgnoreCase("CML")) {
+                writer = new CMLWriter(fileWriter);
+            } else if (format.equalsIgnoreCase("MOL")) {
+                writer = new MDLWriter(fileWriter);
+            } else if (format.equalsIgnoreCase("SMI")) {
+                writer = new SMILESWriter(fileWriter);
+            } else if (format.equalsIgnoreCase("SHELX")) {
+                writer = new ShelXWriter(fileWriter);
+            } else if (format.equalsIgnoreCase("SVG")) {
+                writer = new SVGWriter(fileWriter);
+            } else if (format.equalsIgnoreCase("XYZ")) {
+                writer = new XYZWriter(fileWriter);
+            } else if (format.equalsIgnoreCase("PDB")) {
+                writer = new PDBWriter(fileWriter);
+            } else if (format.equalsIgnoreCase("GIN")) {
+                writer = new GaussianInputWriter(fileWriter);
+            } else if (format.equalsIgnoreCase("CDK")) {
+                writer = new CDKSourceCodeWriter(fileWriter);
+            } else if (format.equalsIgnoreCase("HIN")) {
+                writer = new HINWriter(fileWriter);
             }
-            if (propsListener != null) {
-                writer.addChemObjectIOListener(propsListener);
+            if (writer != null) {
+                logger.debug(format + " -> " + writer.getClass().getName());
+                if (settingListener != null) {
+                    writer.addChemObjectIOListener(settingListener);
+                }
+                if (propsListener != null) {
+                    writer.addChemObjectIOListener(propsListener);
+                }
+            } else {
+                logger.debug(format + " -> null");
             }
-        } else {
-            logger.debug(format + " -> null");
+        } catch (Exception exception) {
+            logger.error("Could not instantiate writer: ", exception.getMessage());
+            logger.debug(exception);
         }
         return writer;
     }
