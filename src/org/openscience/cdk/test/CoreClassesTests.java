@@ -27,6 +27,9 @@ package org.openscience.cdk.test;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.test.event.*;
+import org.openscience.cdk.test.exception.*;
+
 /**
  * TestSuite that runs all the sample tests.
  *
@@ -45,17 +48,22 @@ public class CoreClassesTests {
         suite.addTest(AtomTypeTest.suite());
         suite.addTest(BioPolymerTest.suite());
         suite.addTest(BondTest.suite());
+        suite.addTest(CDKConstantsTest.suite());
+        suite.addTest(CDKExceptionTest.suite());
         suite.addTest(ChemFileTest.suite());
         suite.addTest(ChemModelTest.suite());
         suite.addTest(ChemObjectTest.suite());
+        suite.addTest(ChemObjectListenerTest.suite());
         suite.addTest(ChemSequenceTest.suite());
         suite.addTest(CrystalTest.suite());
         suite.addTest(ElectronContainerTest.suite());
         suite.addTest(ElementTest.suite());
         suite.addTest(IsotopeTest.suite());
         suite.addTest(LonePairTest.suite());
+        suite.addTest(MappingTest.suite());
         suite.addTest(MoleculeTest.suite());
         suite.addTest(MonomerTest.suite());
+        suite.addTest(NoSuchAtomExceptionTest.suite());
         suite.addTest(PolymerTest.suite());
         suite.addTest(PseudoAtomTest.suite());
         suite.addTest(ReactionTest.suite());
@@ -63,6 +71,7 @@ public class CoreClassesTests {
         suite.addTest(RingSetTest.suite());
         suite.addTest(SetOfAtomContainersTest.suite());
         suite.addTest(SetOfMoleculesTest.suite());
+        suite.addTest(SetOfReactionsTest.suite());
         suite.addTest(SingleElectronTest.suite());
         suite.addTest(ChangeEventPropagationTest.suite());
         return suite;

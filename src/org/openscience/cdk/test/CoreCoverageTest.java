@@ -78,7 +78,9 @@ public class CoreCoverageTest extends TestCase {
                 // load them one by one
                 String rawClassName = reader.readLine();
                 rawClassName = rawClassName.substring(20);
-                String className = rawClassName.substring(0, rawClassName.indexOf('.'));
+                String className = convertSlash2Dot(
+                    rawClassName.substring(0, rawClassName.indexOf('.'))
+                );
                 allClassesAreTested = checkClass(className) && allClassesAreTested;
             }
         } catch (Exception exception) {
@@ -159,4 +161,16 @@ public class CoreCoverageTest extends TestCase {
         return capitalizedName;
     }
     
+    private String convertSlash2Dot(String className) {
+        StringBuffer sb = new StringBuffer();
+        className = className;
+        for (int i=0; i<className.length(); i++) {
+            if (className.charAt(i) == '/') {
+                sb.append('.');
+            } else {
+                sb.append(className.charAt(i));
+            }
+        }
+        return sb.toString();
+    }
 }
