@@ -54,6 +54,7 @@ import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.io.setting.IntegerIOSetting;
 import org.openscience.cdk.io.setting.StringIOSetting;
+import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
@@ -115,11 +116,11 @@ public class MACiEReader extends DefaultChemObjectReader {
      */
     public MACiEReader(Reader in) {
         this();
-        this.input = new LineNumberReader(input);
+        this.input = new LineNumberReader(in);
     }
 
     public MACiEReader() {
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        logger = new LoggingTool(this);
         
         /* compile patterns */
         topLevelDatum = Pattern.compile("(.+):(.+)");
@@ -411,12 +412,16 @@ public class MACiEReader extends DefaultChemObjectReader {
                     logger.warn("Not reading reactions of this entry.");
                 }
             }
+        } else if (field.equals("SUBSTRATES")) {
+            logger.warn("Ignoring top level definition of substrates");
+        } else if (field.equals("PRODUCTS")) {
+            logger.warn("Ignoring top level definition of products");
         } else if (field.equals("REFERENCES")) {
              if (subfield.equals("MEDLINE_ID")) {
                  currentEntry.setProperty(MedlineID, datum);
              }
-       } else {
-            logger.warn("Unrecognized sub level field ", field, 
+        } else {
+            logger.error("Unrecognized sub level field ", field, 
                         " around line " + input.getLineNumber());
         }
     }
@@ -424,7 +429,9 @@ public class MACiEReader extends DefaultChemObjectReader {
     private void markEnzymeResidueLocatorAtoms(Reaction currentReaction) {
         Atom[] atoms = ReactionManipulator.getAllInOneContainer(currentReaction).getAtoms();
         for (int i=0; i<atoms.length; i++) {
-            if (atoms[i] instanceof PseudoAtom) {
+            if (atoms[i] instanceof EnzymeResidueLocator) {
+                // skip atom
+            } else if (atoms[i] instanceof PseudoAtom) {
                 PseudoAtom pseudo = (PseudoAtom)atoms[i];
                 logger.debug("pseudo atom label: ", pseudo.getLabel());
                 logger.debug("pseudo class: ", pseudo.getClass().getName());
@@ -481,6 +488,17 @@ public class MACiEReader extends DefaultChemObjectReader {
                 reaction.setDirection(Reaction.BIDIRECTIONAL);
                 addDictRefedAnnotation(reaction, "ReactionType", "ReversibleReaction");
             }
+        } else if (field.equals("OverallReactionType")) {
+            StringTokenizer tokenizer = new StringTokenizer(value, ",");
+            int i = 0;
+            while (tokenizer.hasMoreTokens()) {
+                String token = tokenizer.nextToken();
+                i++;
+                reaction.setProperty(
+                    DictionaryDatabase.DICTREFPROPERTYNAME + ":field:overallReactionType:" + i, 
+                    "macie:" + token.toLowerCase()
+                );
+            }
         } else {
             Matcher residueLocatorMatcher =
                 residueLocator.matcher(field);
@@ -488,15 +506,12 @@ public class MACiEReader extends DefaultChemObjectReader {
                 logger.debug("Found residueLocator: ", field);
                 Atom[] atoms = ReactionManipulator.getAllInOneContainer(reaction).getAtoms();
                 boolean found = false;
-                logger.debug("Searching through #atom: " + atoms.length);
+                logger.debug("Searching for given residueLocator through #atom: ", atoms.length);
                 logger.debug("Taken from reaction ", reaction.getID());
-                for (int i=0; i<atoms.length; i++) {
+                for (int i=0; (i<atoms.length && !found); i++) {
                     if (atoms[i] instanceof PseudoAtom) {
                         // that is what we are looking for
                         PseudoAtom atom = (PseudoAtom)atoms[i];
-                        logger.debug("pseudo atom label: ", atom.getLabel());
-                        logger.debug("pseudo class: ", atom.getClass().getName());
-                        atom.setProperty(DictionaryDatabase.DICTREFPROPERTYNAME, "enzyme:residueLocator");
                         if (atom.getLabel().equals(field)) {
                             // we have a hit, now mark Atom with dict refs
                             addDictRefedAnnotation(atom, "ResidueRole", value);
