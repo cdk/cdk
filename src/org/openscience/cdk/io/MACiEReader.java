@@ -483,7 +483,7 @@ public class MACiEReader extends DefaultChemObjectReader {
 
     private void initIOSettings() {
         selectedEntry = new IntegerIOSetting("SelectedEntry", IOSetting.LOW,
-          "Which frame should I read?",
+          "Which entry should I read?",
           "1");
 
         readSecondaryFiles = new BooleanIOSetting("ReadSecondaryFiles", IOSetting.LOW,
