@@ -1,63 +1,68 @@
 /*
- * $RCSfile$    $Author$    $Date$    $Revision$
+ *  $RCSfile$    $Author$    $Date$    $Revision$
  *
- * Copyright (C) 1997-2001  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 1997-2001  The Chemistry Development Kit (CDK) project
  *
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ *  Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public License
- * as published by the Free Software Foundation; either version 2.1
- * of the License, or (at your option) any later version.
- * All we ask is that proper credit is given for our work, which includes
- * - but is not limited to - adding the above copyright notice to the beginning
- * of your source code files, and to any copyright notice that you may distribute
- * with programs based on this work.
+ *  This program is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public License
+ *  as published by the Free Software Foundation; either version 2.1
+ *  of the License, or (at your option) any later version.
+ *  All we ask is that proper credit is given for our work, which includes
+ *  - but is not limited to - adding the above copyright notice to the beginning
+ *  of your source code files, and to any copyright notice that you may distribute
+ *  with programs based on this work.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *
  */
-
 package org.openscience.cdk;
 
 /**
- *  The base class for atom types. Atom types are typically used to describe the
- *  behaviour of an atom of a particular element in different environment like
- *  sp3 hybridized carbon C3, etc., in some molecular modelling applications.
+ *  The base class for atom types. Atom types are typically used to describe the behaviour of an atom of a particular element in different environment like sp3 hybridized carbon C3, etc., in some molecular modelling applications.
  *
- *@author     steinbeck
- *@created    8. August 2001
+ * @author     steinbeck
+ * @created    8. August 2001
  */
 public class AtomType extends Element
 {
 	/**
 	 *  An id for this atom type, like C3 for sp3 carbon
 	 *
+	 * @since
 	 */
 	String atomTypeID;
 
 	/**
 	 *  The maximum bond order allowed for this atom type
+	 *
+	 * @since
 	 */
 	double maxBondOrder;
 	/**
 	 *  The maximum sum of all bondorders allowed for this atom type
+	 *
+	 * @since
 	 */
 	double maxBondOrderSum;
+
 
 	/**
 	 *  Constructor for the AtomType object
 	 *
-	 *@param  elementSymbol  Description of Parameter
+	 * @param  elementSymbol  Description of Parameter
+	 * @since
 	 */
-	public AtomType(String elementSymbol) {
+	public AtomType(String elementSymbol)
+	{
 		super(elementSymbol);
 	}
 
@@ -65,11 +70,12 @@ public class AtomType extends Element
 	/**
 	 *  Constructor for the AtomType object
 	 *
-	 *@param  atomTypeID     An id for this atom type, like C3 for sp3 carbon
-	 *@param  elementSymbol  The element symbol identifying the element to which
-	 *      this atom type applies
+	 * @param  atomTypeID     An id for this atom type, like C3 for sp3 carbon
+	 * @param  elementSymbol  The element symbol identifying the element to which this atom type applies
+	 * @since
 	 */
-	public AtomType(String atomTypeID, String elementSymbol) {
+	public AtomType(String atomTypeID, String elementSymbol)
+	{
 		this(elementSymbol);
 		this.atomTypeID = atomTypeID;
 	}
@@ -78,9 +84,11 @@ public class AtomType extends Element
 	/**
 	 *  Sets the AtomTypeID attribute of the AtomType object
 	 *
-	 *@param  atomTypeID  The new AtomTypeID value
+	 * @param  atomTypeID  The new AtomTypeID value
+	 * @since
 	 */
-	public void setAtomTypeID(String atomTypeID) {
+	public void setAtomTypeID(String atomTypeID)
+	{
 		this.atomTypeID = atomTypeID;
 	}
 
@@ -88,9 +96,11 @@ public class AtomType extends Element
 	/**
 	 *  Sets the MaxBondOrder attribute of the AtomType object
 	 *
-	 *@param  maxBondOrder  The new MaxBondOrder value
+	 * @param  maxBondOrder  The new MaxBondOrder value
+	 * @since
 	 */
-	public void setMaxBondOrder(double maxBondOrder) {
+	public void setMaxBondOrder(double maxBondOrder)
+	{
 		this.maxBondOrder = maxBondOrder;
 	}
 
@@ -98,9 +108,11 @@ public class AtomType extends Element
 	/**
 	 *  Sets the MaxBondCount attribute of the AtomType object
 	 *
-	 *@param  maxBondCount  The new MaxBondCount value
+	 * @param  maxBondOrderSum  The new MaxBondOrderSum value
+	 * @since
 	 */
-	public void setMaxBondOrderSum(double maxBondOrderSum) {
+	public void setMaxBondOrderSum(double maxBondOrderSum)
+	{
 		this.maxBondOrderSum = maxBondOrderSum;
 	}
 
@@ -108,9 +120,11 @@ public class AtomType extends Element
 	/**
 	 *  Gets the AtomTypeID attribute of the AtomType object
 	 *
-	 *@return    The AtomTypeID value
+	 * @return    The AtomTypeID value
+	 * @since
 	 */
-	public String getAtomTypeID() {
+	public String getAtomTypeID()
+	{
 		return atomTypeID;
 	}
 
@@ -118,9 +132,11 @@ public class AtomType extends Element
 	/**
 	 *  Gets the MaxBondOrder attribute of the AtomType object
 	 *
-	 *@return    The MaxBondOrder value
+	 * @return    The MaxBondOrder value
+	 * @since
 	 */
-	public double getMaxBondOrder() {
+	public double getMaxBondOrder()
+	{
 		return maxBondOrder;
 	}
 
@@ -128,12 +144,13 @@ public class AtomType extends Element
 	/**
 	 *  Gets the MaxBondCount attribute of the AtomType object
 	 *
-	 *@return    The MaxBondCount value
+	 * @return    The MaxBondCount value
+	 * @since
 	 */
-	public double getMaxBondOrderSum() {
+	public double getMaxBondOrderSum()
+	{
 		return maxBondOrderSum;
 	}
-
 
 }
 

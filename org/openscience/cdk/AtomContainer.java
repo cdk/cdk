@@ -1,28 +1,27 @@
 /*
- * $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+ *  $RCSfile$
+ *  $Author$
+ *  $Date$
+ *  $Revision$
  *
- * Copyright (C) 1997-2001  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 1997-2001  The Chemistry Development Kit (CDK) project
  *
- * Contact: steinbeck@ice.mpg.de, geelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ *  Contact: steinbeck@ice.mpg.de, geelter@maul.chem.nd.edu, egonw@sci.kun.nl
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public License
- * as published by the Free Software Foundation; either version 2.1
- * of the License, or (at your option) any later version.
+ *  This program is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public License
+ *  as published by the Free Software Foundation; either version 2.1
+ *  of the License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-
 package org.openscience.cdk;
 
 import java.util.*;
@@ -34,38 +33,52 @@ import javax.vecmath.*;
  * @author     steinbeck
  * @created    October 2, 2000
  */
-public class AtomContainer extends ChemObject implements Cloneable {
+public class AtomContainer extends ChemObject implements Cloneable
+{
 
 	/**
 	 *  Number of atoms contained by this object
+	 *
+	 * @since
 	 */
 	protected int atomCount;
 
 	/**
 	 *  Number of bonds contained by this object
+	 *
+	 * @since
 	 */
 	protected int bondCount;
 
 	/**
 	 *  Amount by which the bond and arom arrays grow when elements are added and the arrays are not large enough for that.
+	 *
+	 * @since
 	 */
 	protected int growArraySize = 10;
 
 	/**
 	 *  Internal array of atoms
+	 *
+	 * @since
 	 */
 	protected Atom[] atoms;
 
 	/**
 	 *  Internal array of bond
+	 *
+	 * @since
 	 */
 	protected Bond[] bonds;
 
 
 	/**
 	 *  Constructs an empty AtomContainer
+	 *
+	 * @since
 	 */
-	public AtomContainer() {
+	public AtomContainer()
+	{
 		atomCount = 0;
 		bondCount = 0;
 		atoms = new Atom[growArraySize];
@@ -77,8 +90,10 @@ public class AtomContainer extends ChemObject implements Cloneable {
 	 *  Constructs an AtomContainer with a copy of the atoms and bonds of another AtomContainer (A shallow copy, i.e., with the same objects as in the original AtomContainer)
 	 *
 	 * @param  ac  An AtomContainer to copy the atoms and bonds from
+	 * @since
 	 */
-	public AtomContainer(AtomContainer ac) {
+	public AtomContainer(AtomContainer ac)
+	{
 		this();
 		this.add(ac);
 	}
@@ -89,8 +104,10 @@ public class AtomContainer extends ChemObject implements Cloneable {
 	 *
 	 * @param  atomCount  Number of atoms to be in this container
 	 * @param  bondCount  Number of bonds to be in this container
+	 * @since
 	 */
-	public AtomContainer(int atomCount, int bondCount) {
+	public AtomContainer(int atomCount, int bondCount)
+	{
 		this.atomCount = atomCount;
 		this.bondCount = bondCount;
 		atoms = new Atom[atomCount];
@@ -102,8 +119,10 @@ public class AtomContainer extends ChemObject implements Cloneable {
 	 *  Sets the array of atoms of this AtomContainer
 	 *
 	 * @param  atoms  The array of atoms to be assigned to this AtomContainer
+	 * @since
 	 */
-	public void setAtoms(Atom[] atoms) {
+	public void setAtoms(Atom[] atoms)
+	{
 		this.atoms = atoms;
 	}
 
@@ -112,8 +131,10 @@ public class AtomContainer extends ChemObject implements Cloneable {
 	 *  Sets the array of bonds of this AtomContainer
 	 *
 	 * @param  bonds  The array of Bonds to be assigned to this AtomContainer
+	 * @since
 	 */
-	public void setBonds(Bond[] bonds) {
+	public void setBonds(Bond[] bonds)
+	{
 		this.bonds = bonds;
 	}
 
@@ -123,8 +144,10 @@ public class AtomContainer extends ChemObject implements Cloneable {
 	 *
 	 * @param  number  The position of the atom to be set.
 	 * @param  atom    The atom to be stored at position <code>number</code>
+	 * @since
 	 */
-	public void setAtomAt(int number, Atom atom) {
+	public void setAtomAt(int number, Atom atom)
+	{
 		atoms[number] = atom;
 	}
 
@@ -134,8 +157,10 @@ public class AtomContainer extends ChemObject implements Cloneable {
 	 *
 	 * @param  number  The position of the bond to be set.
 	 * @param  bond    The bond to be stored at position <code>number</code>
+	 * @since
 	 */
-	public void setBondAt(int number, Bond bond) {
+	public void setBondAt(int number, Bond bond)
+	{
 		bonds[number] = bond;
 	}
 
@@ -144,8 +169,10 @@ public class AtomContainer extends ChemObject implements Cloneable {
 	 *  Sets the number of atoms in this container
 	 *
 	 * @param  atomCount  The number of atoms in this container
+	 * @since
 	 */
-	public void setAtomCount(int atomCount) {
+	public void setAtomCount(int atomCount)
+	{
 		this.atomCount = atomCount;
 	}
 
@@ -154,8 +181,10 @@ public class AtomContainer extends ChemObject implements Cloneable {
 	 *  Returns the array of atoms of this AtomContainer
 	 *
 	 * @return    The array of atoms of this AtomContainer
+	 * @since
 	 */
-	public Atom[] getAtoms() {
+	public Atom[] getAtoms()
+	{
 		Atom[] returnAtoms = new Atom[getAtomCount()];
 		System.arraycopy(this.atoms, 0, returnAtoms, 0, returnAtoms.length);
 		return returnAtoms;
@@ -166,8 +195,10 @@ public class AtomContainer extends ChemObject implements Cloneable {
 	 *  Returns the array of bonds of this AtomContainer
 	 *
 	 * @return    The array of bonds of this AtomContainer
+	 * @since
 	 */
-	public Bond[] getBonds() {
+	public Bond[] getBonds()
+	{
 		Bond[] returnBonds = new Bond[getBondCount()];
 		System.arraycopy(this.bonds, 0, returnBonds, 0, returnBonds.length);
 		return returnBonds;
@@ -179,8 +210,10 @@ public class AtomContainer extends ChemObject implements Cloneable {
 	 *
 	 * @param  number  The position of the atom to be returned.
 	 * @return         The atom at position <code>number</code> .
+	 * @since
 	 */
-	public Atom getAtomAt(int number) {
+	public Atom getAtomAt(int number)
+	{
 		return atoms[number];
 	}
 
@@ -189,8 +222,10 @@ public class AtomContainer extends ChemObject implements Cloneable {
 	 *  Returns the atom at position 0 in the container
 	 *
 	 * @return    The atom at position 0 .
+	 * @since
 	 */
-	public Atom getFirstAtom() {
+	public Atom getFirstAtom()
+	{
 		return atoms[0];
 	}
 
@@ -199,8 +234,10 @@ public class AtomContainer extends ChemObject implements Cloneable {
 	 *  Returns the atom at the last position in the container
 	 *
 	 * @return    The atom at the last position
+	 * @since
 	 */
-	public Atom getLastAtom() {
+	public Atom getLastAtom()
+	{
 		return atoms[getAtomCount() - 1];
 	}
 
@@ -211,11 +248,15 @@ public class AtomContainer extends ChemObject implements Cloneable {
 	 * @param  atom                                                   The atom to be sought
 	 * @return                                                        The Position of the atom in the atoms array.
 	 * @exception  org.openscience.cdk.exception.NoSuchAtomException  Description of Exception
+	 * @since
 	 */
 
-	public int getAtomNumber(Atom atom) throws org.openscience.cdk.exception.NoSuchAtomException {
-		for (int f = 0; f < getAtomCount(); f++) {
-			if (getAtomAt(f) == atom) {
+	public int getAtomNumber(Atom atom) throws org.openscience.cdk.exception.NoSuchAtomException
+	{
+		for (int f = 0; f < getAtomCount(); f++)
+		{
+			if (getAtomAt(f) == atom)
+			{
 				return f;
 			}
 		}
@@ -228,8 +269,10 @@ public class AtomContainer extends ChemObject implements Cloneable {
 	 *
 	 * @param  number  The position of the bond to be returned.
 	 * @return         The bond at position <code>number</code> .
+	 * @since
 	 */
-	public Bond getBondAt(int number) {
+	public Bond getBondAt(int number)
+	{
 		return bonds[number];
 	}
 
@@ -240,11 +283,16 @@ public class AtomContainer extends ChemObject implements Cloneable {
 	 * @param  a1  The first atom
 	 * @param  a2  The second atom
 	 * @return     The bond that connectes the two atoms
+	 * @since
 	 */
-	public Bond getBond(Atom a1, Atom a2) {
-		for (int i = 0; i < getBondCount(); i++) {
-			if (bonds[i].contains(a1)) {
-				if (bonds[i].getConnectedAtom(a1) == a2) {
+	public Bond getBond(Atom a1, Atom a2)
+	{
+		for (int i = 0; i < getBondCount(); i++)
+		{
+			if (bonds[i].contains(a1))
+			{
+				if (bonds[i].getConnectedAtom(a1) == a2)
+				{
 					return bonds[i];
 				}
 			}
@@ -258,13 +306,17 @@ public class AtomContainer extends ChemObject implements Cloneable {
 	 *
 	 * @param  atom  The atom the bond partners are searched of.
 	 * @return       The array with the size of connected atoms
+	 * @since
 	 */
-	public Atom[] getConnectedAtoms(Atom atom) {
+	public Atom[] getConnectedAtoms(Atom atom)
+	{
 		Vector atomsVec = new Vector();
 		Bond bond;
-		for (int i = 0; i < bondCount; i++) {
+		for (int i = 0; i < bondCount; i++)
+		{
 			bond = bonds[i];
-			if (bond.contains(atom)) {
+			if (bond.contains(atom))
+			{
 				atomsVec.addElement(bond.getConnectedAtom(atom));
 			}
 		}
@@ -280,12 +332,16 @@ public class AtomContainer extends ChemObject implements Cloneable {
 	 *
 	 * @param  atom  The atom the connected bonds are searched of
 	 * @return       The array with the size of connected atoms
+	 * @since
 	 */
-	public Bond[] getConnectedBonds(Atom atom) {
+	public Bond[] getConnectedBonds(Atom atom)
+	{
 		Vector bondsVec = new Vector();
 		Bond bond;
-		for (int i = 0; i < bondCount; i++) {
-			if (bonds[i].contains(atom)) {
+		for (int i = 0; i < bondCount; i++)
+		{
+			if (bonds[i].contains(atom))
+			{
 				bondsVec.addElement(bonds[i]);
 			}
 		}
@@ -300,8 +356,10 @@ public class AtomContainer extends ChemObject implements Cloneable {
 	 *
 	 * @param  atomnumber  The atomnumber the degree is searched for
 	 * @return             The number of connected atoms (degree)
+	 * @since
 	 */
-	public int getDegree(int atomnumber) {
+	public int getDegree(int atomnumber)
+	{
 		return getDegree(getAtomAt(atomnumber));
 	}
 
@@ -311,13 +369,17 @@ public class AtomContainer extends ChemObject implements Cloneable {
 	 *
 	 * @param  atom  The atom the degree is searched of
 	 * @return       The number of connected atoms (degree)
+	 * @since
 	 */
-	public int getDegree(Atom atom) {
+	public int getDegree(Atom atom)
+	{
 		int degree = 0;
 		Bond bond;
-		for (int i = 0; i < bondCount; i++) {
+		for (int i = 0; i < bondCount; i++)
+		{
 			bond = bonds[i];
-			if (bond.contains(atom)) {
+			if (bond.contains(atom))
+			{
 				degree++;
 			}
 		}
@@ -329,8 +391,10 @@ public class AtomContainer extends ChemObject implements Cloneable {
 	 *  Returns the number of Atoms in this Container
 	 *
 	 * @return    The number of Atoms in this Container
+	 * @since
 	 */
-	public int getAtomCount() {
+	public int getAtomCount()
+	{
 		return this.atomCount;
 	}
 
@@ -339,8 +403,10 @@ public class AtomContainer extends ChemObject implements Cloneable {
 	 *  Returns the number of Bonds in this Container
 	 *
 	 * @return    The number of Bonds in this Container
+	 * @since
 	 */
-	public int getBondCount() {
+	public int getBondCount()
+	{
 		return this.bondCount;
 	}
 
@@ -350,11 +416,15 @@ public class AtomContainer extends ChemObject implements Cloneable {
 	 *
 	 * @param  atom  The atom
 	 * @return       The number of bonds for this atom
+	 * @since
 	 */
-	public int getBondCount(Atom atom) {
+	public int getBondCount(Atom atom)
+	{
 		int count = 0;
-		for (int i = 0; i < getBondCount(); i++) {
-			if (bonds[i].contains(atom)) {
+		for (int i = 0; i < getBondCount(); i++)
+		{
+			if (bonds[i].contains(atom))
+			{
 				count++;
 			}
 		}
@@ -367,11 +437,15 @@ public class AtomContainer extends ChemObject implements Cloneable {
 	 *
 	 * @param  atom  The atom
 	 * @return       The number of bondorders for this atom
+	 * @since
 	 */
-	public int getBondOrderSum(Atom atom) {
+	public int getBondOrderSum(Atom atom)
+	{
 		int count = 0;
-		for (int i = 0; i < getBondCount(); i++) {
-			if (bonds[i].contains(atom)) {
+		for (int i = 0; i < getBondCount(); i++)
+		{
+			if (bonds[i].contains(atom))
+			{
 				count += bonds[i].getOrder();
 			}
 		}
@@ -385,18 +459,24 @@ public class AtomContainer extends ChemObject implements Cloneable {
 	 *
 	 * @param  ac  Description of Parameter
 	 * @return     An AtomContainer containing the Intersection between this AtomContainer and another given one
+	 * @since
 	 */
 
-	public AtomContainer getIntersection(AtomContainer ac) {
+	public AtomContainer getIntersection(AtomContainer ac)
+	{
 		AtomContainer intersection = new AtomContainer();
 
-		for (int i = 0; i < getAtomCount(); i++) {
-			if (ac.contains(getAtomAt(i))) {
+		for (int i = 0; i < getAtomCount(); i++)
+		{
+			if (ac.contains(getAtomAt(i)))
+			{
 				intersection.addAtom(getAtomAt(i));
 			}
 		}
-		for (int i = 0; i < getBondCount(); i++) {
-			if (ac.contains(getBondAt(i))) {
+		for (int i = 0; i < getBondCount(); i++)
+		{
+			if (ac.contains(getBondAt(i)))
+			{
 				intersection.addBond(getBondAt(i));
 			}
 		}
@@ -409,13 +489,17 @@ public class AtomContainer extends ChemObject implements Cloneable {
 	 *  Returns the geometric center of all the atoms in this atomContainer
 	 *
 	 * @return    the geometric center of the atoms in this atomContainer
+	 * @since
 	 */
-	public Point2d get2DCenter() {
+	public Point2d get2DCenter()
+	{
 		double centerX = 0;
 		double centerY = 0;
 		double counter = 0;
-		for (int i = 0; i < getAtomCount(); i++) {
-			if (atoms[i].getPoint2D() != null) {
+		for (int i = 0; i < getAtomCount(); i++)
+		{
+			if (atoms[i].getPoint2D() != null)
+			{
 				centerX += atoms[i].getPoint2D().x;
 				centerY += atoms[i].getPoint2D().y;
 				counter++;
@@ -430,14 +514,18 @@ public class AtomContainer extends ChemObject implements Cloneable {
 	 *  Returns the geometric center of all the atoms in this atomContainer
 	 *
 	 * @return    the geometric center of the atoms in this atomContainer
+	 * @since
 	 */
-	public Point3d get3DCenter() {
+	public Point3d get3DCenter()
+	{
 		double centerX = 0;
 		double centerY = 0;
 		double centerZ = 0;
 		double counter = 0;
-		for (int i = 0; i < getAtomCount(); i++) {
-			if (atoms[i].getPoint3D() != null) {
+		for (int i = 0; i < getAtomCount(); i++)
+		{
+			if (atoms[i].getPoint3D() != null)
+			{
 				centerX += atoms[i].getPoint2D().x;
 				centerY += atoms[i].getPoint2D().y;
 				centerZ += atoms[i].getPoint3D().z;
@@ -455,14 +543,17 @@ public class AtomContainer extends ChemObject implements Cloneable {
 	 *
 	 * @return                                                        A connection matrix representation of this AtomContainer
 	 * @exception  org.openscience.cdk.exception.NoSuchAtomException  Description of Exception
+	 * @since
 	 */
 
-	public int[][] getConnectionMatrix() throws org.openscience.cdk.exception.NoSuchAtomException {
+	public int[][] getConnectionMatrix() throws org.openscience.cdk.exception.NoSuchAtomException
+	{
 		Bond bond = null;
 		int i;
 		int j;
 		int[][] conMat = new int[getAtomCount()][getAtomCount()];
-		for (int f = 0; f < getBondCount(); f++) {
+		for (int f = 0; f < getBondCount(); f++)
+		{
 			bond = getBondAt(f);
 			i = getAtomNumber(bond.getAtomAt(0));
 			j = getAtomNumber(bond.getAtomAt(1));
@@ -477,15 +568,21 @@ public class AtomContainer extends ChemObject implements Cloneable {
 	 *  Adds all atoms and bonds of a given atomcontainer to this container
 	 *
 	 * @param  atomContainer  The atomcontainer to be added
+	 * @since
 	 */
-	public void add(AtomContainer atomContainer) {
-		for (int f = 0; f < atomContainer.getAtomCount(); f++) {
-			if (!contains(atomContainer.getAtomAt(f))) {
+	public void add(AtomContainer atomContainer)
+	{
+		for (int f = 0; f < atomContainer.getAtomCount(); f++)
+		{
+			if (!contains(atomContainer.getAtomAt(f)))
+			{
 				addAtom(atomContainer.getAtomAt(f));
 			}
 		}
-		for (int f = 0; f < atomContainer.getBondCount(); f++) {
-			if (!contains(atomContainer.getBondAt(f))) {
+		for (int f = 0; f < atomContainer.getBondCount(); f++)
+		{
+			if (!contains(atomContainer.getBondAt(f)))
+			{
 				addBond(atomContainer.getBondAt(f));
 			}
 		}
@@ -496,9 +593,12 @@ public class AtomContainer extends ChemObject implements Cloneable {
 	 *  Adds an atom to this container
 	 *
 	 * @param  atom  The atom to be added to this container
+	 * @since
 	 */
-	public void addAtom(Atom atom) {
-		if (atomCount + 1 >= atoms.length) {
+	public void addAtom(Atom atom)
+	{
+		if (atomCount + 1 >= atoms.length)
+		{
 			growAtomArray();
 		}
 		atoms[atomCount] = atom;
@@ -511,9 +611,12 @@ public class AtomContainer extends ChemObject implements Cloneable {
 	 *  Adds a bond to this container
 	 *
 	 * @param  bond  The bond to added to this container
+	 * @since
 	 */
-	public void addBond(Bond bond) {
-		if (bondCount + 1 >= bonds.length) {
+	public void addBond(Bond bond)
+	{
+		if (bondCount + 1 >= bonds.length)
+		{
 			growBondArray();
 		}
 		// are we supposed to check if the atoms forming this bond are
@@ -528,12 +631,16 @@ public class AtomContainer extends ChemObject implements Cloneable {
 	 *
 	 * @param  atomContainer                                          The atomcontainer to be removed
 	 * @exception  org.openscience.cdk.exception.NoSuchAtomException  Description of Exception
+	 * @since
 	 */
-	public void remove(AtomContainer atomContainer) throws org.openscience.cdk.exception.NoSuchAtomException {
-		for (int f = 0; f < atomContainer.getAtomCount(); f++) {
+	public void remove(AtomContainer atomContainer) throws org.openscience.cdk.exception.NoSuchAtomException
+	{
+		for (int f = 0; f < atomContainer.getAtomCount(); f++)
+		{
 			removeAtom(atomContainer.getAtomAt(f));
 		}
-		for (int f = 0; f < atomContainer.getBondCount(); f++) {
+		for (int f = 0; f < atomContainer.getBondCount(); f++)
+		{
 			removeBond(atomContainer.getBondAt(f));
 		}
 	}
@@ -544,10 +651,13 @@ public class AtomContainer extends ChemObject implements Cloneable {
 	 *
 	 * @param  position  The position of the bond in the bonds array
 	 * @return           Description of the Returned Value
+	 * @since
 	 */
-	public Bond removeBond(int position) {
+	public Bond removeBond(int position)
+	{
 		Bond bond = getBondAt(position);
-		for (int i = position; i < bondCount - 1; i++) {
+		for (int i = position; i < bondCount - 1; i++)
+		{
 			bonds[i] = bonds[i + 1];
 		}
 		bonds[bondCount - 1] = null;
@@ -561,10 +671,14 @@ public class AtomContainer extends ChemObject implements Cloneable {
 	 *
 	 * @param  bond  The bond to be removed
 	 * @return       Description of the Returned Value
+	 * @since
 	 */
-	public Bond removeBond(Bond bond) {
-		for (int i = 0; i < bondCount; i++) {
-			if (bonds[i].equals(bond)) {
+	public Bond removeBond(Bond bond)
+	{
+		for (int i = 0; i < bondCount; i++)
+		{
+			if (bonds[i].equals(bond))
+			{
 				return removeBond(i);
 			}
 		}
@@ -578,11 +692,16 @@ public class AtomContainer extends ChemObject implements Cloneable {
 	 * @param  a1  The first atom
 	 * @param  a2  The second atom
 	 * @return     The bond that connectes the two atoms
+	 * @since
 	 */
-	public Bond removeBond(Atom a1, Atom a2) {
-		for (int i = 0; i < getBondCount(); i++) {
-			if (bonds[i].contains(a1)) {
-				if (bonds[i].getConnectedAtom(a1) == a2) {
+	public Bond removeBond(Atom a1, Atom a2)
+	{
+		for (int i = 0; i < getBondCount(); i++)
+		{
+			if (bonds[i].contains(a1))
+			{
+				if (bonds[i].getConnectedAtom(a1) == a2)
+				{
 					return removeBond(bonds[i]);
 				}
 			}
@@ -596,9 +715,12 @@ public class AtomContainer extends ChemObject implements Cloneable {
 	 *  Removes the atom at the given position from the AtomContainer !!! Note that the bonds are unaffected, You also have to take care of removeing all bonds to this atom from the container.
 	 *
 	 * @param  position  The position of the atom to be removed.
+	 * @since
 	 */
-	public void removeAtom(int position) {
-		for (int i = position; i < atomCount - 1; i++) {
+	public void removeAtom(int position)
+	{
+		for (int i = position; i < atomCount - 1; i++)
+		{
 			atoms[i] = atoms[i + 1];
 		}
 		atoms[atomCount - 1] = null;
@@ -611,8 +733,10 @@ public class AtomContainer extends ChemObject implements Cloneable {
 	 *
 	 * @param  atom                                                   The atom to be removed
 	 * @exception  org.openscience.cdk.exception.NoSuchAtomException  throws if the atom is not in the container
+	 * @since
 	 */
-	public void removeAtom(Atom atom) throws org.openscience.cdk.exception.NoSuchAtomException {
+	public void removeAtom(Atom atom) throws org.openscience.cdk.exception.NoSuchAtomException
+	{
 		int position = getAtomNumber(atom);
 		removeAtom(position);
 	}
@@ -620,8 +744,11 @@ public class AtomContainer extends ChemObject implements Cloneable {
 
 	/**
 	 *  removes all atoms and bond from this container
+	 *
+	 * @since
 	 */
-	public void removeAllElements() {
+	public void removeAllElements()
+	{
 		atoms = new Atom[growArraySize];
 		bonds = new Bond[growArraySize];
 		atomCount = 0;
@@ -631,8 +758,11 @@ public class AtomContainer extends ChemObject implements Cloneable {
 
 	/**
 	 *  removes bonds from this container
+	 *
+	 * @since
 	 */
-	public void removeAllBonds() {
+	public void removeAllBonds()
+	{
 		bonds = new Bond[growArraySize];
 		bondCount = 0;
 	}
@@ -646,9 +776,12 @@ public class AtomContainer extends ChemObject implements Cloneable {
 	 * @param  atom2   Order of the second atom of the Bond
 	 * @param  order   Bondorder
 	 * @param  stereo  Stereochemical orientation
+	 * @since
 	 */
-	public void addBond(int atom1, int atom2, int order, int stereo) {
-		if (bondCount >= bonds.length) {
+	public void addBond(int atom1, int atom2, int order, int stereo)
+	{
+		if (bondCount >= bonds.length)
+		{
 			growBondArray();
 		}
 		Bond bond = new Bond(getAtomAt(atom1), getAtomAt(atom2), order, stereo);
@@ -662,9 +795,12 @@ public class AtomContainer extends ChemObject implements Cloneable {
 	 * @param  atom1  Order of the first atom of the Bond
 	 * @param  atom2  Order of the second atom of the Bond
 	 * @param  order  Bondorder
+	 * @since
 	 */
-	public void addBond(int atom1, int atom2, int order) {
-		if (bondCount >= bonds.length) {
+	public void addBond(int atom1, int atom2, int order)
+	{
+		if (bondCount >= bonds.length)
+		{
 			growBondArray();
 		}
 		Bond bond = new Bond(getAtomAt(atom1), getAtomAt(atom2), order);
@@ -677,10 +813,14 @@ public class AtomContainer extends ChemObject implements Cloneable {
 	 *
 	 * @param  bond  the bond this AtomContainer is searched for
 	 * @return       True, if the AtomContainer contains the given bond object
+	 * @since
 	 */
-	public boolean contains(Bond bond) {
-		for (int i = 0; i < getBondCount(); i++) {
-			if (bond == bonds[i]) {
+	public boolean contains(Bond bond)
+	{
+		for (int i = 0; i < getBondCount(); i++)
+		{
+			if (bond == bonds[i])
+			{
 				return true;
 			}
 		}
@@ -693,10 +833,14 @@ public class AtomContainer extends ChemObject implements Cloneable {
 	 *
 	 * @param  atom  the atom this AtomContainer is searched for
 	 * @return       True, if the AtomContainer contains the given atom object
+	 * @since
 	 */
-	public boolean contains(Atom atom) {
-		for (int i = 0; i < getAtomCount(); i++) {
-			if (atom == atoms[i]) {
+	public boolean contains(Atom atom)
+	{
+		for (int i = 0; i < getAtomCount(); i++)
+		{
+			if (atom == atoms[i])
+			{
 				return true;
 			}
 		}
@@ -708,21 +852,28 @@ public class AtomContainer extends ChemObject implements Cloneable {
 	 *  Returns a string representation of this Container.
 	 *
 	 * @return    The string representation of this Container
+	 * @since
 	 */
-	public String toString() {
+	public String toString()
+	{
 		Bond bond;
 		StringBuffer s = new StringBuffer();
-		for (int i = 0; i < getAtomCount(); i++) {
+		for (int i = 0; i < getAtomCount(); i++)
+		{
 			s.append(i + ". " + getAtomAt(i));
 		}
-		for (int i = 0; i < getBondCount(); i++) {
+		for (int i = 0; i < getBondCount(); i++)
+		{
 			bond = getBondAt(i);
 			s.append("Bond: ");
-			for (int j = 0; j < bond.getAtomCount(); j++) {
-				try {
+			for (int j = 0; j < bond.getAtomCount(); j++)
+			{
+				try
+				{
 					s.append(getAtomNumber(bond.getAtomAt(j)) + "   ");
 				}
-				catch (Exception e) {
+				catch (Exception e)
+				{
 					s.append("Inconsistent Bond Setting");
 					e.printStackTrace();
 				}
@@ -738,34 +889,43 @@ public class AtomContainer extends ChemObject implements Cloneable {
 	 *  Clones this atomContainer object.
 	 *
 	 * @return    The cloned object
+	 * @since
 	 */
-	public Object clone() {
+	public Object clone()
+	{
 		AtomContainer o = null;
 		Bond bond = null;
 		Bond newBond = null;
 		Atom[] natoms;
 		Atom[] newAtoms;
-		try {
+		try
+		{
 			o = (AtomContainer) super.clone();
 		}
-		catch (Exception e) {
+		catch (Exception e)
+		{
 			e.printStackTrace(System.err);
 		}
 		o.removeAllElements();
-		for (int f = 0; f < getAtomCount(); f++) {
+		for (int f = 0; f < getAtomCount(); f++)
+		{
 			o.addAtom((Atom) getAtomAt(f).clone());
 		}
-		for (int f = 0; f < getBondCount(); f++) {
+		for (int f = 0; f < getBondCount(); f++)
+		{
 			bond = this.getBondAt(f);
 //			System.out.println("this.bond.getOrder(): " + bond.getOrder());
 			natoms = bond.getAtoms();
 			newAtoms = new Atom[natoms.length];
 			newBond = new Bond();
-			for (int g = 0; g < natoms.length; g++) {
-				try {
+			for (int g = 0; g < natoms.length; g++)
+			{
+				try
+				{
 					newAtoms[g] = o.getAtomAt(getAtomNumber(natoms[g]));
 				}
-				catch (Exception exc) {
+				catch (Exception exc)
+				{
 					exc.printStackTrace();
 				}
 			}
@@ -782,13 +942,17 @@ public class AtomContainer extends ChemObject implements Cloneable {
 	 *  Clones this atomContainer object but leaves references to all atoms and bonds the same.
 	 *
 	 * @return    The shallow copied object
+	 * @since
 	 */
-	public Object shallowCopy() {
+	public Object shallowCopy()
+	{
 		Object o = null;
-		try {
+		try
+		{
 			o = super.clone();
 		}
-		catch (Exception e) {
+		catch (Exception e)
+		{
 			e.printStackTrace(System.err);
 		}
 		return o;
@@ -799,9 +963,11 @@ public class AtomContainer extends ChemObject implements Cloneable {
 	/**
 	 *  Grows the bond array by a given size
 	 *
-	 * @see    org.openscience.cdk.AtomContainer#growArraySize growArraySize
+	 * @since
+	 * @see      org.openscience.cdk.AtomContainer#growArraySize growArraySize
 	 */
-	protected void growBondArray() {
+	protected void growBondArray()
+	{
 		growArraySize = bonds.length;
 		Bond[] newbonds = new Bond[bonds.length + growArraySize];
 		System.arraycopy(bonds, 0, newbonds, 0, bonds.length);
@@ -812,9 +978,11 @@ public class AtomContainer extends ChemObject implements Cloneable {
 	/**
 	 *  Grows the atom array by a given size
 	 *
-	 * @see    org.openscience.cdk.AtomContainer#growArraySize growArraySize
+	 * @since
+	 * @see      org.openscience.cdk.AtomContainer#growArraySize growArraySize
 	 */
-	protected void growAtomArray() {
+	protected void growAtomArray()
+	{
 		growArraySize = atoms.length;
 		Atom[] newatoms = new Atom[atoms.length + growArraySize];
 		System.arraycopy(atoms, 0, newatoms, 0, atoms.length);
