@@ -3,6 +3,12 @@ CHANGELOG $Date$
 
 Changes in CVS
 ------------------------------------
+New:
+* Added a JPanel of the periodic table
+
+Fixes:
+
+API changes:
 
 20040120 Release
 ------------------------------------
