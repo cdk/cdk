@@ -1,5 +1,0 @@
-<identifier version="0.9Beta" tautomeric="0">
-<basic>N2*4SSCCN1N1Cu, 7-5 8-6 9-7 10-8 11-1-2-3-4-9-10;C1*7NCC, 2-1 4-3 5-1 6-3 7-2 8-4 9-5-6 10-7-8-9;NS1C, 3-1-2</basic>
-<charge>+2;;</charge>
-
-</identifier>
