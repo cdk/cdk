@@ -3,7 +3,7 @@
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 2002-2003  The Chemistry Development Kit (CDK) Project
+ *  Copyright (C) 2002-2004  The Chemistry Development Kit (CDK) Project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -1259,39 +1259,44 @@ public class SmilesGenerator {
     boolean brackets = symbol.equals("B") || symbol.equals("C") || symbol.equals("N") || symbol.equals("O") || symbol.equals("P") || symbol.equals("S") || symbol.equals("F") || symbol.equals("Br") || symbol.equals("I") || symbol.equals("Cl");
     brackets = !brackets;
 
-    String mass = generateMassString(a);
-    brackets = brackets | !mass.equals("");
-
-    String charge = generateChargeString(a);
-    brackets = brackets | !charge.equals("");
-
-    if (chiral && stereo) {
-      brackets = true;
-    }
     //Deal with the start of a double bond configuration
     if (isStartOfDoubleBond(container, a, parent, doubleBondConfiguration)) {
-      buffer.append('/');
+        buffer.append('/');
     }
-    if (brackets) {
-      buffer.append('[');
-    }
-    buffer.append(mass);
-    if (a.getFlag(CDKConstants.ISAROMATIC)) {
-      buffer.append(a.getSymbol().toLowerCase());
+    
+    if (a instanceof PseudoAtom) {
+        buffer.append("[*]");
     } else {
-      buffer.append(symbol);
-    }
-    if (chiral && stereo && (isTrigonalBipyramidalOrOctahedral(container, a) || isSquarePlanar(container, a) || isTetrahedral(container, a) != 0)) {
-      buffer.append('@');
-    }
-    if (chiral && stereo && isSquarePlanar(container, a)) {
-      buffer.append("SP1");
-    }
-    //chiral
-    //hcount
-    buffer.append(charge);
-    if (brackets) {
-      buffer.append(']');
+        String mass = generateMassString(a);
+        brackets = brackets | !mass.equals("");
+        
+        String charge = generateChargeString(a);
+        brackets = brackets | !charge.equals("");
+        
+        if (chiral && stereo) {
+            brackets = true;
+        }
+        if (brackets) {
+            buffer.append('[');
+        }
+        buffer.append(mass);
+        if (a.getFlag(CDKConstants.ISAROMATIC)) {
+            buffer.append(a.getSymbol().toLowerCase());
+        } else {
+            buffer.append(symbol);
+        }
+        if (chiral && stereo && (isTrigonalBipyramidalOrOctahedral(container, a) || isSquarePlanar(container, a) || isTetrahedral(container, a) != 0)) {
+            buffer.append('@');
+        }
+        if (chiral && stereo && isSquarePlanar(container, a)) {
+            buffer.append("SP1");
+        }
+        //chiral
+        //hcount
+        buffer.append(charge);
+        if (brackets) {
+            buffer.append(']');
+        }
     }
     //Deal with the end of a double bond configuration
     if (isEndOfDoubleBond(container, a, parent, doubleBondConfiguration)) {

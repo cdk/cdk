@@ -3,7 +3,7 @@
  * $Date$    
  * $Revision$
  * 
- * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2004  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -420,6 +420,23 @@ public class SmilesGeneratorTest extends TestCase
 		}
 	}
 
+    public void testPseudoAtom() {
+        Atom atom = new PseudoAtom("Star");
+        SmilesGenerator sg = new SmilesGenerator();
+        String smiles = "";
+        Molecule molecule = new Molecule();
+        molecule.addAtom(atom);
+        try {
+            smiles = sg.createSMILES(molecule);
+        } catch(Exception exc) {
+            System.out.println(exc);
+            if (!standAlone) fail();
+        }
+        if (standAlone) System.err.println("SMILES: " + smiles);
+        assertEquals("[*]", smiles);
+        
+    }
+    
 	
 	private void display(Molecule molecule)
 	{	
