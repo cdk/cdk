@@ -25,40 +25,25 @@
 package org.openscience.cdk.validate;
 
 import org.openscience.cdk.*;
-import org.openscience.cdk.tools.SaturationChecker;
 import java.util.Vector;
 
 /**
- * Tool to validate the chemical semantics for an Molecule.
+ * Tool to validate the chemical semantics for an ChemSequence.
  *
- * @author   Egon Willighagen
- * @created  2003-03-28
+ * @author   Egon Willighagen <egonw@sci.kun.nl>
+ * @created  2003-07-14
  *
- * @see      org.openscience.cdk.Molecule
- * @keyword atom, chemical validation
+ * @see      org.openscience.cdk.ChemSequence
  */ 
-public class MoleculeValidator {
+public class ChemSequenceValidator {
 
-    public static Vector validate(Molecule molecule) {
+    public static Vector validate(ChemSequence sequence) {
         Vector errors = new Vector();
-        Atom[] atoms = molecule.getAtoms();
-        for (int i=0; i<atoms.length; i++) {
-            errors.addAll(validateAtomValency(atoms[i], molecule));
+        ChemModel[] models = sequence.getChemModels();
+        for (int i=0; i < models.length; i++) {
+            errors.addAll(ChemModelValidator.validate(models[i]));
         }
         return errors;
     }
     
-    private static Vector validateAtomValency(Atom atom, Molecule molecule) {
-        Vector errors = new Vector();
-        try {
-            SaturationChecker saturationChecker = new SaturationChecker();
-            if (!saturationChecker.isSaturated(atom, molecule)) {
-                String error = "Atom " + atom.getSymbol() + " has an unfulfilled valency";
-                errors.add(new ValidationError(atom, error));
-            }
-        } catch (Exception exception) {
-            System.err.println("Error while performing atom valency validation: " + exception.toString());
-        }
-        return errors;
-    }
 }

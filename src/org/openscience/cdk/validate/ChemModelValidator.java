@@ -25,40 +25,33 @@
 package org.openscience.cdk.validate;
 
 import org.openscience.cdk.*;
-import org.openscience.cdk.tools.SaturationChecker;
 import java.util.Vector;
 
 /**
- * Tool to validate the chemical semantics for an Molecule.
+ * Tool to validate the chemical semantics for an ChemModel.
  *
- * @author   Egon Willighagen
- * @created  2003-03-28
+ * @author   Egon Willighagen <egonw@sci.kun.nl>
+ * @created  2003-07-14
  *
- * @see      org.openscience.cdk.Molecule
- * @keyword atom, chemical validation
+ * @see      org.openscience.cdk.ChemModel
  */ 
-public class MoleculeValidator {
+public class ChemModelValidator {
 
-    public static Vector validate(Molecule molecule) {
+    public static Vector validate(ChemModel model) {
         Vector errors = new Vector();
-        Atom[] atoms = molecule.getAtoms();
-        for (int i=0; i<atoms.length; i++) {
-            errors.addAll(validateAtomValency(atoms[i], molecule));
+        SetOfMolecules moleculeSet = model.getSetOfMolecules();
+        if (moleculeSet != null) {
+            errors.addAll(SetOfMoleculesValidator.validate(moleculeSet));
+        }
+        SetOfReactions reactionSet = model.getSetOfReactions();
+        if (reactionSet != null) {
+            errors.addAll(SetOfReactionsValidator.validate(reactionSet));
+        }
+        Crystal crystal = model.getCrystal();
+        if (crystal != null) {
+            errors.addAll(CrystalValidator.validate(crystal));
         }
         return errors;
     }
     
-    private static Vector validateAtomValency(Atom atom, Molecule molecule) {
-        Vector errors = new Vector();
-        try {
-            SaturationChecker saturationChecker = new SaturationChecker();
-            if (!saturationChecker.isSaturated(atom, molecule)) {
-                String error = "Atom " + atom.getSymbol() + " has an unfulfilled valency";
-                errors.add(new ValidationError(atom, error));
-            }
-        } catch (Exception exception) {
-            System.err.println("Error while performing atom valency validation: " + exception.toString());
-        }
-        return errors;
-    }
 }
