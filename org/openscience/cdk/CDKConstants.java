@@ -35,13 +35,16 @@ package org.openscience.cdk;
 public interface CDKConstants
 {
 	/** A bond of degree 1 */
-	static int BONDORDER_SINGLE = 1;
+	static double BONDORDER_SINGLE = 1;
 
+	/** A bond of degree 1.5 */
+	static double BONDORDER_AROMATIC = 1.5;
+	
 	/** A bond of degree 2 */
-	static int BONDORDER_DOUBLE = 2;
+	static double BONDORDER_DOUBLE = 2;
 
 	/** A bond of degree 3 */
-	static int BONDORDER_TRIPLE = 3;
+	static double BONDORDER_TRIPLE = 3;
 
 	/** A bonds which end is above the drawing plane */
 	static int STEREO_BOND_UP = 1;

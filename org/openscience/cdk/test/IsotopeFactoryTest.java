@@ -75,5 +75,17 @@ public class IsotopeFactoryTest extends TestCase
 		
 		assert(isotope.getExactMass() == 129.906229);
 
+		try
+		{
+			isotope = isofac.getMajorIsotope(17);
+		}
+		catch(Exception exc)
+		{
+			throw new AssertionFailedError("Problem getting Isotope 'Cl' from IsotopeFactory by atomicNumber 17: "  +  exc.toString());
+		}
+		
+		assert(isotope.getSymbol().equals("Cl"));
+		
+		
 	}
 }

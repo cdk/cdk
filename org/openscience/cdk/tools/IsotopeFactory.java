@@ -117,5 +117,28 @@ public class IsotopeFactory
 		}
 		return (Isotope[]) al.toArray();
 	}
+
+	
+	/**
+	 *  Returns the major isotope with a given atomic number
+	 *
+	 * @param  atomicNumber The atomicNumber for which an isotope is to be returned
+	 * @return  The isotope corresponding to the given atomic number
+	 * @since
+	 */
+	public Isotope getMajorIsotope(int atomicNumber)
+	{
+		for (int f = 0; f < isotopes.size(); f++)
+		{
+			if (((Isotope) isotopes.elementAt(f)).getAtomicNumber() == atomicNumber)
+			{
+				if ((((Isotope)	isotopes.elementAt(f))).getNaturalAbundance() == ((double)100))
+				{
+					return (Isotope) ((Isotope) isotopes.elementAt(f)).clone();
+				}
+			}
+		}
+		return null;
+	}
 }
 

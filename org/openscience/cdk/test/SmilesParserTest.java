@@ -37,18 +37,18 @@ import java.io.*;
 import java.net.URL;
 import junit.framework.*;
 
-public class SmilesGeneratorTest extends TestCase
+public class SmilesParserTest extends TestCase
 {
 	boolean standAlone = false;
 	
-	public SmilesGeneratorTest(String name)
+	public SmilesParserTest(String name)
 	{
 		super(name);
 	}
 
 	public static Test suite()
 	{
-		return new TestSuite(SmilesGeneratorTest.class);
+		return new TestSuite(SmilesParserTest.class);
 	}
 
 	public void setStandAlone(boolean standAlone)
@@ -56,46 +56,21 @@ public class SmilesGeneratorTest extends TestCase
 		this.standAlone = standAlone;
 	}
 	
-	public void testSmilesGenerator()
+	public void testSmilesParser()
 	{
-		SmilesGenerator sg = new SmilesGenerator();
-		//Molecule mol1 = MoleculeFactory.makeEthylPropylPhenantren();
-		Molecule mol2 = MoleculeFactory.makeAlphaPinene();
-		fixCarbonHCount(mol2);
-		//fixCarbonHCount(mol1);
-		String smiles1 = null, smiles2 = null;
-		if (standAlone) display(mol2);
+		SmilesParser sp = new SmilesParser();
+		Molecule mol = null;
 		try
 		{
-		//	smiles1 = sg.createSMILES(mol1);
-			smiles2 = sg.createSMILES(mol2);
+			mol = sp.parseSmiles("C12=CC=C(C(=O)O)N=C1C=CC=C2");
+			if (standAlone) System.out.println("Done parsing SMILES");
+			if (standAlone) display(mol);
 		}
 		catch(Exception exc)
 		{
-			System.out.println(exc);	
+			throw new AssertionFailedError("Problem parsing SMILES: " +  exc.toString());
 		}
-		//if (standAlone)  System.out.println("SMILES 1: " + smiles1);
-		if (standAlone)  System.out.println("SMILES 2: " + smiles2);
-		assert(smiles1.equals("c2cc(c3ccc1c(ccc(c1)CCC)c3c2)CC"));
-		
-		                  
-	}
-
-	private void fixCarbonHCount(Molecule mol)
-	{	
-		/* the following line are just a quick fix for this
-		   particluar carbon-only molecule until we have a proper 
-		   hydrogen count configurator
-		 */
-		int bondCount = 0;
-		Atom atom;
-		 for (int f = 0; f < mol.getAtomCount(); f++)
-		{
-			atom = mol.getAtomAt(f);
-			bondCount =  mol.getBondOrderSum(atom);
-			atom.setHydrogenCount(4 - bondCount - (int)atom.getCharge());
-			if (standAlone) System.out.println("Hydrogen count for atom " + f + ": " + atom.getHydrogenCount());
-		}
+		assert(mol.getAtomCount() == 13);
 	}
 
 	
@@ -123,9 +98,9 @@ public class SmilesGeneratorTest extends TestCase
 	
 	public static void main(String[] args)
 	{
-		SmilesGeneratorTest sgt = new SmilesGeneratorTest("AllRingsFinderTest");
-		sgt.setStandAlone(true);
-		sgt.testSmilesGenerator();
+		SmilesParserTest spt = new SmilesParserTest("SmilesParserTest");
+		spt.setStandAlone(true);
+		spt.testSmilesParser();
 	}	
 }
 

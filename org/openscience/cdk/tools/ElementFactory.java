@@ -58,15 +58,30 @@ public class ElementFactory extends IsotopeFactory
 		return (Element)i;
 	}
 
+	public Element getElement(int atomicNumber)
+	{
+		Isotope i = getMajorIsotope(atomicNumber);
+		
+		return (Element)i;
+	}
+
+
 	public Atom configure(Atom atom)
 	{
 		Isotope isotope = getMajorIsotope(atom.getSymbol());
+		return configure(atom, isotope);
+	}
+
+	public Atom configure(Atom atom, Isotope isotope)
+	{
 		atom.setAtomicMass(isotope.getAtomicMass());
+		atom.setSymbol(isotope.getSymbol());
 		atom.setExactMass(isotope.getExactMass());
 		atom.setAtomicNumber(isotope.getAtomicNumber());
 		atom.setNaturalAbundance(isotope.getNaturalAbundance());
 		return atom;
 	}
+
 	
 	public void configureAtoms(AtomContainer ac) 
 	{
