@@ -402,8 +402,9 @@ public class CMLWriter extends DefaultChemObjectWriter {
             childElements.append("      <string convention=\"CDK\" builtin=\"order\"" + 
                                  bond.getOrder() + "\"/>\n");
         }
-		if (bond.getStereo() != CDKConstants.STEREO_BOND_UNDEFINED) {
-		    childElements.append("      <string builtin=\"stereo\" convention=\"MDLMol\">");
+        if (bond.getStereo() == CDKConstants.STEREO_BOND_UP &&
+            bond.getStereo() == CDKConstants.STEREO_BOND_DOWN) {
+            childElements.append("      <string builtin=\"stereo\" convention=\"MDLMol\">");
 		    if (bond.getStereo() == CDKConstants.STEREO_BOND_UP) {
                 childElements.append("W");
 		    } else if (bond.getStereo() == CDKConstants.STEREO_BOND_DOWN) {
