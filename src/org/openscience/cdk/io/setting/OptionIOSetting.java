@@ -72,7 +72,7 @@ public class OptionIOSetting extends IOSetting {
      */
     public void setSetting(int setting) throws CDKException {
         if (setting < settings.size()) {
-            this.setting = settings.elementAt(i);
+            this.setting = (String)settings.elementAt(setting);
         } else {
             throw new CDKException("Setting " + setting + " does not exist.");
         }
