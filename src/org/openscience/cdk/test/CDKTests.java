@@ -29,6 +29,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.test.applications.APIVersionTesterTest;
 import org.openscience.cdk.test.aromaticity.HueckelAromaticityDetectorTest;
+import org.openscience.cdk.test.atomtype.HybridizationStateATMatcherTest;
 import org.openscience.cdk.test.config.ConfigTests;
 import org.openscience.cdk.test.fingerprint.FingerprinterTest;
 import org.openscience.cdk.test.geometry.CrystalGeometryToolsTest;
@@ -86,6 +87,8 @@ public class CDKTests
         suite.addTest(APIVersionTesterTest.suite());
         // from cdk.test.aromaticity
         suite.addTest(HueckelAromaticityDetectorTest.suite());
+	// from cdk.test.atomtype
+        suite.addTest(HybridizationStateATMatcherTest.suite());
         // from cdk.test.charges
         suite.addTest(GasteigerMarsiliPartialChargesTest.suite());
 	// from cdk.test.charges
