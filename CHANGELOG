@@ -4,6 +4,14 @@ CHANGELOG $Date$
 Changes in CVS
 ------------------------------------
 New:
+
+Fixes:
+
+API changes:
+
+20040622 Release
+------------------------------------
+New:
 * Added MFAnalyser.removeHydrogensPreserveMultiplyBonded() method
 * Added CDKEditBus.setChemModel(Reader)
 * Added IUPAC/NIST Chemical Identifier reader
