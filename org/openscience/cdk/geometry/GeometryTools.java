@@ -48,7 +48,7 @@ public class GeometryTools
 	 */
 	public static void translateAllPositive(AtomContainer atomCon)
 	{
-		double transX = 0,transY = 0;
+		double transX = Double.MAX_VALUE, transY = Double.MAX_VALUE;
 		for (int i = 0; i < atomCon.getAtomCount(); i++)
 		{
 			if (atomCon.getAtomAt(i).getPoint2D() != null)
@@ -91,7 +91,6 @@ public class GeometryTools
 		{
 			if (atomCon.getAtomAt(i).getPoint2D() != null)
 			{
-			
 				atomCon.getAtomAt(i).getPoint2D().x *= scaleFactor;
 				atomCon.getAtomAt(i).getPoint2D().y *= scaleFactor;
 			}
@@ -173,6 +172,7 @@ public class GeometryTools
 		Dimension molDim = get2DDimension(atomCon);		
 		int transX = (int)((areaDim.width - molDim.width) / 2);
 		int transY = (int)((areaDim.height - molDim.height) / 2);
+		translateAllPositive(atomCon);
 		translate2D(atomCon, new Vector2d(transX, transY));
 	}
 	

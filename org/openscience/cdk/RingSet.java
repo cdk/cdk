@@ -266,10 +266,29 @@ public class RingSet extends Vector{
 			centerX += ((Ring)elementAt(i)).get2DCenter().x;
 			centerY += ((Ring)elementAt(i)).get2DCenter().y;
 		}
-		System.out.println("Center for " + size() + " rings");
 		Point2d point = new Point2d(centerX / ((double)size()), centerY / ((double)size()));
 		return point;
 	}
+
+
+	/**
+	 * True, if at least one of the rings in the ringset cotains
+	 * the given atom
+	 *
+	 * @return true, if the ringset contains the atom
+	 */
+	public boolean contains(Atom atom)
+	{
+		for (int i = 0; i < size(); i++)
+		{
+			if (((Ring)elementAt(i)).contains(atom))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
 
 	/**
 	 * Returns a sequence of string representations for all rings in the 

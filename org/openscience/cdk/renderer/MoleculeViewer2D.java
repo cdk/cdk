@@ -43,7 +43,7 @@ import java.awt.*;
  */
 public class MoleculeViewer2D extends JPanel implements CDKChangeListener
 {
-	static AtomContainer atomContainer;
+	public AtomContainer atomContainer;
 	public Renderer2DModel r2dm;
 	public Renderer2D renderer;
 	public String title = "Molecule Viewer";
@@ -70,7 +70,7 @@ public class MoleculeViewer2D extends JPanel implements CDKChangeListener
 	 */
 	public MoleculeViewer2D(AtomContainer atomContainer)
 	{
-		this.atomContainer = atomContainer;
+		setAtomContainer(atomContainer);
 		r2dm = new Renderer2DModel();
 		r2dm.addCDKChangeListener(this);
 		renderer = new Renderer2D(r2dm);
@@ -96,12 +96,8 @@ public class MoleculeViewer2D extends JPanel implements CDKChangeListener
 	public void display()
 	{
 		setPreferredSize(new Dimension(600, 400));
-		setBackground(r2dm.getBackColor());
-		GeometryTools.translateAllPositive(atomContainer);
-		GeometryTools.scaleMolecule(atomContainer, getPreferredSize(), 0.8);			
-		GeometryTools.center(atomContainer, getPreferredSize());
 		JFrame frame = new JFrame();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		frame.getContentPane().add(this);
 		frame.setTitle(title);
 		frame.pack();
@@ -120,6 +116,11 @@ public class MoleculeViewer2D extends JPanel implements CDKChangeListener
 		super.paint(g);
 		if (atomContainer != null)
 		{
+			setBackground(r2dm.getBackColor());
+			GeometryTools.translateAllPositive(atomContainer);
+			GeometryTools.scaleMolecule(atomContainer, getPreferredSize(), 0.6);			
+			GeometryTools.center(atomContainer, getPreferredSize());
+
 			renderer.paintMolecule(atomContainer, g);
 		}
 	}
@@ -132,11 +133,12 @@ public class MoleculeViewer2D extends JPanel implements CDKChangeListener
 
 	 public static void main(String[] args)
 	 {
+	 	AtomContainer ac = null;
 		try
 		{
 			FileInputStream fis = new FileInputStream(args[0]);
 			MDLReader mr = new MDLReader(fis);
-			atomContainer = ((ChemFile)mr.read(new ChemFile())).getChemSequence(0).getChemModel(0).getSetOfMolecules().getMolecule(0);
+			ac = ((ChemFile)mr.read(new ChemFile())).getChemSequence(0).getChemModel(0).getSetOfMolecules().getMolecule(0);
 			fis.close();
 		}
 		catch(Exception exc)
@@ -144,7 +146,7 @@ public class MoleculeViewer2D extends JPanel implements CDKChangeListener
 			exc.printStackTrace();		
 		}
 		
-		new MoleculeViewer2D(atomContainer, new Renderer2DModel());
+		new MoleculeViewer2D(ac, new Renderer2DModel());
 	}
 
 
@@ -177,9 +179,9 @@ public class MoleculeViewer2D extends JPanel implements CDKChangeListener
 	 *
 	 * @return The AtomContainer which is being displayed    
 	 */
-	public static AtomContainer getAtomContainer()
+	public AtomContainer getAtomContainer()
 	{
-		return MoleculeViewer2D.atomContainer;
+		return this.atomContainer;
 	}
 
 	/**
@@ -187,9 +189,9 @@ public class MoleculeViewer2D extends JPanel implements CDKChangeListener
 	 *
 	 * @param   atomContainer The AtomContainer to be displayed 
 	 */
-	public static void setAtomContainer(AtomContainer atomContainer)
+	public void setAtomContainer(AtomContainer atomContainer)
 	{
-		MoleculeViewer2D.atomContainer = atomContainer;
+		this.atomContainer = atomContainer;
 	}
 }
 

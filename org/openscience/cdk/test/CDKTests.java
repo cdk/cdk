@@ -22,6 +22,7 @@
 package org.openscience.cdk.test;
 
 import junit.framework.*;
+import org.openscience.cdk.renderer.*;
 
 /**
  * TestSuite that runs all the sample tests
@@ -29,17 +30,20 @@ import junit.framework.*;
  */
 public class CDKTests {
 
-	public static void main (String[] args) {
+	static MoleculeListViewer moleculeListViewer = null;
+
+	public static void main (String[] args) 
+	{
+		moleculeListViewer = new MoleculeListViewer();
 		junit.textui.TestRunner.run (suite());
 	}
-	public static Test suite ( ) {
+	public static Test suite ( ) 
+	{
 		TestSuite suite= new TestSuite("All CDK Tests");
 		suite.addTest(RingSearchTest.suite());
 		suite.addTest(ConnectivityCheckerTest.suite());
-
 		// Let the graphical tests always be the last ones
 		suite.addTest(StructureDiagramGeneratorTest.suite());
-		
 	    return suite;
 	}
 }

@@ -36,10 +36,6 @@ import junit.framework.*;
 
 public class StructureDiagramGeneratorTest extends TestCase
 {
-	Vector molecules = new Vector();;
-	StructureDiagramGenerator sdg = null;
-	MoleculeViewer2D mv = null;
-	Renderer2DModel r2dm = null;
 	
 	public StructureDiagramGeneratorTest(String name)
 	{
@@ -48,52 +44,75 @@ public class StructureDiagramGeneratorTest extends TestCase
 	
 	public void setUp()
 	{
-		sdg = new StructureDiagramGenerator();
-		mv = new MoleculeViewer2D();
-		r2dm = new Renderer2DModel();
-		r2dm.setDrawNumbers(true);
-		mv.setRenderer2DModel(r2dm);
+
 	}
 
 	public static Test suite() {
 		return new TestSuite(StructureDiagramGeneratorTest.class);
 	}
 
-//	public void testAlphaPinene()
-//	{
-//		assert(showIt(MoleculeFactory.makeAlphaPinene()));
-//	}
-//
-	public void testMolecule()
+
+	/** A complex alkaloid with two separate ring systems to 
+	  * be laid out.
+	  */
+	public void testReserpine()
 	{
-		assert(showIt(MoleculeFactory.loadMolecule("data/reserpine.mol")));
+		assert(showIt(MoleculeFactory.loadMolecule("data/reserpine.mol"), "Reserpine"));
 	}
 	
-//	public void testCondensed()
+//	public void testAlphaPinene()
 //	{
-//		assert(showIt(MoleculeFactory.make4x3CondensedRings()));
+//		assert(showIt(MoleculeFactory.makeAlphaPinene(), "alpha-Pinene"));
 //	}
+//
+//
+//	public void testPolycarpole()
+//	{
+//		assert(showIt(MoleculeFactory.loadMolecule("data/polycarpol.mol"), "Polycarpol"));
+//	}
+//
 //
 //	public void testSpiro()
 //	{
-//		assert(showIt(MoleculeFactory.makeSpiroRings()));
+//		assert(showIt(MoleculeFactory.makeSpiroRings(), "Spiro"));
 //	}
-
-
+//
+//
 //	public void testRingSubstituents()
 //	{
-//		assert(showIt(MoleculeFactory.makeMethylDecaline()));
+//		assert(showIt(MoleculeFactory.makeMethylDecaline(), "Methyldecaline"));
 //	}
-
-
+//
+//
 //	public void testBranchedAliphatic()
 //	{
-//		assert(showIt(MoleculeFactory.makeBranchedAliphatic()));
+//		assert(showIt(MoleculeFactory.makeBranchedAliphatic(), "Branched aliphatic"));
 //	}
-
-
-	boolean showIt(Molecule molecule)
+//	
+//	public void testAdamantane()
+//	{
+//		assert(showIt(MoleculeFactory.makeAdamantane(), "Adamantane"));
+//	}
+//
+//
+//	/** This was interesting because the 
+//	  * method "placeRingSubstituents" just places
+//	  * the next aliphatic atom close to a ring
+//	  * and there was initially a problem with
+//	  * just one atom left to place in the aliphatic chain
+//	  */
+//	public void testEthylCyclohexane()
+//	{
+//		assert(showIt(MoleculeFactory.makeEthylCyclohexane(), "Ethylcyclohexane"));
+//	}
+//
+	private boolean showIt(Molecule molecule, String name)
 	{
+		StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+		MoleculeViewer2D mv = new MoleculeViewer2D();
+		Renderer2DModel r2dm = new Renderer2DModel();
+		r2dm.setDrawNumbers(true);
+		mv.setRenderer2DModel(r2dm);
 		sdg.setMolecule(molecule);
 		try
 		{
@@ -106,9 +125,8 @@ public class StructureDiagramGeneratorTest extends TestCase
 			return false;
 		}
 		mv.setAtomContainer(sdg.getMolecule());
-		mv.display();
+		CDKTests.moleculeListViewer.addStructure(mv, name);
 		return true;
 	}
-
 }
 
