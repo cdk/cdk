@@ -138,22 +138,22 @@ public class CDKConstants {
 
         /** Flag that is set if the chemobject is placed (somewhere).
          */
-        public static int ISPLACED = 0;
+        public final static int ISPLACED = 0;
         /** Flag that is set when the chemobject is part of a ring.
          */
-        public static int ISINRING = 1;
+        public final static int ISINRING = 1;
         /** Flag that is set if a chemobject is part of an alipahtic chain.
          */
-        public static int ISALIPHATIC = 2;
+        public final static int ISALIPHATIC = 2;
         /** Flag is set if chemobject has been visited.
          */
-        public static int VISITED = 3; // Use in tree searches
+        public final static int VISITED = 3; // Use in tree searches
         /** Flag is set if chemobject is part of an aromatic system. */
-        public static int ISAROMATIC = 4;
+        public final static int ISAROMATIC = 4;
         /** Flag is set if a chemobject is mapped to another chemobject.
          *  It is used for example in subgraph isomorphism search.
          */
-        public static int MAPPED = 5;
+        public final static int MAPPED = 5;
 
     /**
      * Maximum flags array index.

@@ -95,10 +95,10 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	 *
 	 *@param  ac  An AtomContainer to copy the atoms and electronContainers from
 	 */
-	public AtomContainer(AtomContainer ac)
+	public AtomContainer(AtomContainer container)
 	{
 		this();
-		this.add(ac);
+		this.add(container);
 	}
 
 
@@ -407,9 +407,9 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	 *@return     The Position of the bond between a1 and a2 in the
 	 *      electronContainers array.
 	 */
-	public int getBondNumber(Atom a1, Atom a2)
+	public int getBondNumber(Atom atom1, Atom atom2)
 	{
-		return (getBondNumber(getBond(a1, a2)));
+		return (getBondNumber(getBond(atom1, atom2)));
 	}
 
 
@@ -420,11 +420,11 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	 *@param  b  The bond to be sought
 	 *@return    The Position of the bond in the electronContainers array in [0,..].
 	 */
-	public int getBondNumber(Bond b)
+	public int getBondNumber(Bond bond)
 	{
 		for (int f = 0; f < getElectronContainerCount(); f++)
 		{
-			if (getElectronContainerAt(f) == b)
+			if (getElectronContainerAt(f) == bond)
 			{
 				return f;
 			}
@@ -454,15 +454,15 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	 *@param  a2  The second atom
 	 *@return     The bond that connectes the two atoms
 	 */
-	public Bond getBond(Atom a1, Atom a2)
+	public Bond getBond(Atom atom1, Atom atom2)
 	{
 		for (int i = 0; i < getElectronContainerCount(); i++)
 		{
 			if (electronContainers[i] instanceof Bond &&
-					((Bond) electronContainers[i]).contains(a1))
+					((Bond) electronContainers[i]).contains(atom1))
 			{
 				if (electronContainers[i] instanceof Bond &&
-						((Bond) electronContainers[i]).getConnectedAtom(a1) == a2)
+						((Bond) electronContainers[i]).getConnectedAtom(atom1) == atom2)
 				{
 					return (Bond) electronContainers[i];
 				}
@@ -861,20 +861,20 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 
 	public double[][] getConnectionMatrix()
 	{
-		ElectronContainer ec = null;
-		int i;
-		int j;
+		ElectronContainer electronContainer = null;
+		int indexAtom1;
+		int indexAtom2;
 		double[][] conMat = new double[getAtomCount()][getAtomCount()];
 		for (int f = 0; f < getElectronContainerCount(); f++)
 		{
-			ec = getElectronContainerAt(f);
-			if (ec instanceof Bond)
+			electronContainer = getElectronContainerAt(f);
+			if (electronContainer instanceof Bond)
 			{
-				Bond bond = (Bond) ec;
-				i = getAtomNumber(bond.getAtomAt(0));
-				j = getAtomNumber(bond.getAtomAt(1));
-				conMat[i][j] = bond.getOrder();
-				conMat[j][i] = bond.getOrder();
+				Bond bond = (Bond) electronContainer;
+				indexAtom1 = getAtomNumber(bond.getAtomAt(0));
+				indexAtom2 = getAtomNumber(bond.getAtomAt(1));
+				conMat[indexAtom1][indexAtom2] = bond.getOrder();
+				conMat[indexAtom2][indexAtom1] = bond.getOrder();
 			}
 		}
 		return conMat;
@@ -893,19 +893,19 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	 */
 	public int[][] getAdjacencyMatrix()
 	{
-		ElectronContainer ec = null;
-		int i;
-		int j;
+		ElectronContainer electronContainer = null;
+		int indexAtom1;
+		int indexAtom2;
 		int[][] conMat = new int[getAtomCount()][getAtomCount()];
 		for (int f = 0; f < getElectronContainerCount(); f++){
-      ec = getElectronContainerAt(f);
-			if (ec instanceof Bond)
+            electronContainer = getElectronContainerAt(f);
+			if (electronContainer instanceof Bond)
 			{
-				Bond bond = (Bond) ec;
-				i = getAtomNumber(bond.getAtomAt(0));
-				j = getAtomNumber(bond.getAtomAt(1));
-				conMat[i][j] = 1;
-				conMat[j][i] = 1;
+				Bond bond = (Bond) electronContainer;
+				indexAtom1 = getAtomNumber(bond.getAtomAt(0));
+				indexAtom2 = getAtomNumber(bond.getAtomAt(1));
+				conMat[indexAtom1][indexAtom2] = 1;
+				conMat[indexAtom2][indexAtom1] = 1;
 			}
 		}
 		return conMat;
@@ -1055,14 +1055,14 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	 */
 	public ElectronContainer removeElectronContainer(int position)
 	{
-		ElectronContainer ec = getElectronContainerAt(position);
+		ElectronContainer electronContainer = getElectronContainerAt(position);
 		for (int i = position; i < electronContainerCount - 1; i++)
 		{
 			electronContainers[i] = electronContainers[i + 1];
 		}
 		electronContainers[electronContainerCount - 1] = null;
 		electronContainerCount--;
-		return ec;
+		return electronContainer;
 	}
 
 
@@ -1092,14 +1092,14 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	 *@param  a2  The second atom
 	 *@return     The bond that connectes the two atoms
 	 */
-	public Bond removeBond(Atom a1, Atom a2)
+	public Bond removeBond(Atom atom1, Atom atom2)
 	{
 		for (int i = 0; i < getElectronContainerCount(); i++)
 		{
 			if (electronContainers[i] instanceof Bond &&
-					((Bond) electronContainers[i]).contains(a1))
+					((Bond) electronContainers[i]).contains(atom1))
 			{
-				if (((Bond) electronContainers[i]).getConnectedAtom(a1) == a2)
+				if (((Bond) electronContainers[i]).getConnectedAtom(atom1) == atom2)
 				{
 					return (Bond) removeElectronContainer(electronContainers[i]);
 				}
@@ -1336,30 +1336,30 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	 */
 	public Object clone()
 	{
-		AtomContainer o = null;
-		ElectronContainer ec = null;
+		AtomContainer clone = null;
+		ElectronContainer electronContainer = null;
 		ElectronContainer newEC = null;
 		Atom[] natoms;
 		Atom[] newAtoms;
 		try
 		{
-			o = (AtomContainer) super.clone();
+			clone = (AtomContainer) super.clone();
 		} catch (Exception e)
 		{
 			e.printStackTrace(System.err);
 		}
-		o.removeAllElements();
+		clone.removeAllElements();
 		for (int f = 0; f < getAtomCount(); f++)
 		{
-			o.addAtom((Atom) getAtomAt(f).clone());
+			clone.addAtom((Atom) getAtomAt(f).clone());
 		}
 		for (int f = 0; f < getElectronContainerCount(); f++)
 		{
-			ec = this.getElectronContainerAt(f);
+			electronContainer = this.getElectronContainerAt(f);
 			newEC = new ElectronContainer();
-			if (ec instanceof Bond)
+			if (electronContainer instanceof Bond)
 			{
-				Bond bond = (Bond) ec;
+				Bond bond = (Bond) electronContainer;
 				newEC = new Bond();
 				natoms = bond.getAtoms();
 				newAtoms = new Atom[natoms.length];
@@ -1367,7 +1367,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 				{
 					try
 					{
-						newAtoms[g] = o.getAtomAt(getAtomNumber(natoms[g]));
+						newAtoms[g] = clone.getAtomAt(getAtomNumber(natoms[g]));
 					} catch (Exception exc)
 					{
 						System.out.println("natoms[g]: " + natoms[g]);
@@ -1376,19 +1376,19 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 				}
 				((Bond) newEC).setAtoms(newAtoms);
 				((Bond) newEC).setOrder(bond.getOrder());
-			} else if (ec instanceof LonePair)
+			} else if (electronContainer instanceof LonePair)
 			{
-				Atom a = ((LonePair) ec).getAtom();
+				Atom atom = ((LonePair) electronContainer).getAtom();
 				newEC = new LonePair();
-				((LonePair) newEC).setAtom(a);
+				((LonePair) newEC).setAtom(atom);
 			} else
 			{
-				System.out.println("Expecting EC, got: " + ec.getClass().getName());
-				newEC = (ElectronContainer) ec.clone();
+				System.out.println("Expecting EC, got: " + electronContainer.getClass().getName());
+				newEC = (ElectronContainer) electronContainer.clone();
 			}
-			o.addElectronContainer(newEC);
+			clone.addElectronContainer(newEC);
 		}
-		return o;
+		return clone;
 	}
 
 
@@ -1401,15 +1401,15 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	 */
 	public Object shallowCopy()
 	{
-		Object o = null;
+		Object copy = null;
 		try
 		{
-			o = super.clone();
+			copy = super.clone();
 		} catch (Exception e)
 		{
 			e.printStackTrace(System.err);
 		}
-		return o;
+		return copy;
 	}
 
 

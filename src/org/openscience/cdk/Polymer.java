@@ -42,7 +42,7 @@ import java.util.Hashtable;
  */
 public class Polymer extends Molecule implements java.io.Serializable, Cloneable
 {
-	private Hashtable _hContains;	// the list of all the contained Monomers. 
+	private Hashtable monomers;	// the list of all the contained Monomers. 
 
 	/**
 	 *
@@ -51,11 +51,11 @@ public class Polymer extends Molecule implements java.io.Serializable, Cloneable
 	 */	
 	public Polymer() {
 		super();
-		_hContains = new Hashtable();
+		monomers = new Hashtable();
 		Monomer oMonomer = new Monomer();
-		oMonomer.setMonomerName(new String(""));
+		oMonomer.setMonomerName("");
 		oMonomer.setMonomerType("UNKNOWN");
-		_hContains.put("", oMonomer);
+		monomers.put("", oMonomer);
 	}
 	
 	/**
@@ -84,8 +84,8 @@ public class Polymer extends Molecule implements java.io.Serializable, Cloneable
 			oMonomer = getMonomer("");
 		}
 		oMonomer.addAtom(oAtom);
-		if (! _hContains.contains(oMonomer.getMonomerName())) {
-			_hContains.put(oMonomer.getMonomerName(), oMonomer);
+		if (! monomers.contains(oMonomer.getMonomerName())) {
+			monomers.put(oMonomer.getMonomerName(), oMonomer);
 		}
 	}
 	
@@ -97,7 +97,7 @@ public class Polymer extends Molecule implements java.io.Serializable, Cloneable
 	 *
 	 */
 	public int getMonomerCount() {
-		return _hContains.size() - 1;
+		return monomers.size() - 1;
 	}
 	
 	/**
@@ -109,7 +109,7 @@ public class Polymer extends Molecule implements java.io.Serializable, Cloneable
 	 *
 	 */
 	public Monomer getMonomer(String cName) {
-		return (Monomer)_hContains.get(cName);
+		return (Monomer)monomers.get(cName);
 	}
 
   /**
@@ -119,6 +119,6 @@ public class Polymer extends Molecule implements java.io.Serializable, Cloneable
    * @return a <code>Collection</code> of all the monomer names.
    */
   public Collection getMonomerNames() {
-    return _hContains.keySet();
+    return monomers.keySet();
   }
 }

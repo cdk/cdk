@@ -28,8 +28,6 @@
  */
 package org.openscience.cdk;
 
-import javax.vecmath.Point3d;
-
 /**
  * Represents the concept of an atom parity identifying the stereochemistry
  * around an atom, given four neighbouring atoms.
