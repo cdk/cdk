@@ -29,9 +29,12 @@ EXTRA_DIST=VERSION ChangeLog build.xml javadoc.xml data src LICENSE
 
 CLEANFILES= cdk-core.jar cdk-extra.jar \
         cdk-libio.jar cdk-apps.jar cdk-test.jar \
+        cdk-io.jar cdk-experimental.jar cdk-render.jar cdk-standard.jar \
         dist/jar/cdk-core.jar dist/jar/cdk-standard.jar \
-        dist/jar/cdk-libio.jar dist/jar/cdk-render.jar \
-        dist/jar/cdk-test.jar dist/jar/cdk-apps.jar
+        dist/jar/cdk-libio.jar dist/jar/cdk-extra.jar \
+        dist/jar/cdk-test.jar dist/jar/cdk-apps.jar \
+        dist/jar/cdk-io.jar dist/jar/cdk-experimental.jar \
+        dist/jar/cdk-render.jar dist/jar/cdk-standard.jar
 
 dist/jar/cdk-core.jar:
 	ant ${JAVAC} dist-core
