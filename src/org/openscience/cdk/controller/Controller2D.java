@@ -842,6 +842,24 @@ public class Controller2D {
                         r2dm.setSelectedPart(getContainedAtoms(polygon));
                         r2dm.getLassoPoints().removeAllElements();
                         r2dm.fireChange();
+                    } else {
+                        // one atom clicked or one bond clicked
+                        ChemObject chemObj = getChemObjectInRange(mouseX, mouseY);
+                        AtomContainer container = new AtomContainer();
+                        if (chemObj instanceof Atom) {
+                            container.addAtom((Atom)chemObj);
+                            logger.debug("selected one atom in lasso mode");
+                            r2dm.setSelectedPart(container);
+                        } else if (chemObj instanceof Bond) {
+                            Bond bond = (Bond)chemObj;
+                            container.addBond(bond);
+                            logger.debug("selected one bond in lasso mode");
+                            Atom[] atoms = bond.getAtoms();
+                            for (int i=0; i<atoms.length; i++) {
+                                container.addAtom(atoms[i]);
+                            }
+                            r2dm.setSelectedPart(container);
+                        }
                     }
                     fireChange();
                 }
