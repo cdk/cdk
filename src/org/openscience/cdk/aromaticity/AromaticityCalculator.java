@@ -65,11 +65,13 @@ public class AromaticityCalculator
 		int eCount = 0;
 		Bond[] conectedBonds;
 		int numDoubleBond = 0;
+		boolean allConnectedBondsSingle;
 		
 		for (int i = 0; i < ringAtoms.length; i++)
 		{
 			Atom atom = ringAtoms[i];
 			numDoubleBond = 0;
+			allConnectedBondsSingle = true;
 			conectedBonds = atomContainer.getConnectedBonds(atom);
 			for (int j = 0; j < conectedBonds.length; j++)
 			{
@@ -80,9 +82,13 @@ public class AromaticityCalculator
 				}
 				
 				// Count the Electron if bond order = 1.5
-				if (bond.getOrder() == 1.5 && ring.contains(bond))
+				else if (bond.getOrder() == 1.5 && ring.contains(bond))
 				{
 					numDoubleBond = 1;
+				}
+				
+				if (bond.getOrder() != 1) {
+					allConnectedBondsSingle = false;
 				}
 			}
 			if (numDoubleBond == 1)
@@ -99,7 +105,15 @@ public class AromaticityCalculator
 			{
 				eCount++;
 			}
-			
+			else if (allConnectedBondsSingle 
+					&& atom.getSymbol().equals("C") 
+					&& atom.getFormalCharge() == 1.0)
+			{
+				// This is for tropylium and kinds. 
+				// Dependence on hybridisation would be better:
+				// empty p-orbital is needed
+				continue;
+			}
 			else
 			{
 				return false;	

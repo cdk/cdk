@@ -203,7 +203,7 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
     /**
      *  Sets the hybridization of this atom.
      *
-     * @param  hybridization  The formal charge
+     * @param  hybridization  The hybridization
      *
      * @see    #getHybridization
      */

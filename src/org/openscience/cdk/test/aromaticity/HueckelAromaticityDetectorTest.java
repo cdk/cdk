@@ -298,12 +298,12 @@ public class HueckelAromaticityDetectorTest extends TestCase
      * This is a bug reported for JCP.
      */
     public void testSFBug956923() {
-		boolean testResults[] = {false, true, true, true, true, true, true, true};
+		boolean testResults[] = {false, false, false, false, false, false, false, false};
 		try {
 			SmilesParser sp = new SmilesParser();
 
 			Molecule mol = sp.parseSmiles("O=c1cccccc1"); // tropone
-			assertTrue(HueckelAromaticityDetector.detectAromaticity(mol));
+			assertFalse(HueckelAromaticityDetector.detectAromaticity(mol));
             Atom[] atoms = mol.getAtoms();
             assertEquals(testResults.length, atoms.length);
 			for (int f = 0; f < atoms.length; f++) {
