@@ -1,7 +1,8 @@
-<!DOCTYPE website PUBLIC "-//Norman Walsh//DTD Website V1.7//EN" "/documents/config/xml/website/website.dtd" [
+<!DOCTYPE website PUBLIC "-//Norman Walsh//DTD Website V1.7//EN" "/usr/share/sgml/docbook/custom/website/2.0b1/website.dtd" [
 <!ENTITY about SYSTEM "about.xml">
 <!ENTITY news SYSTEM "news.xml">
 <!ENTITY introduction SYSTEM "intro.xml">
+<!ENTITY screenshots SYSTEM "screenshots.xml">
 <!ENTITY projectref SYSTEM "projectref.xml">
 <!ENTITY changelog SYSTEM "changelog.xml">
 <!ENTITY agenda SYSTEM "agenda.xml">
@@ -61,6 +62,16 @@ structure diagram generation, Java, chemoinformatics, cheminformatics, computati
 &introduction;
 </webpage>
 
+
+<webpage>
+<config param="rcsdate" value="$Date$"/>
+<config param="filename" value="cdk_screenshots.html"/>
+<config param="homebanner" value="images/cdklogo.gif"/>
+<head>
+<title>Screenshots</title>
+</head>
+&screenshots;
+</webpage>
 
 <webpage>
 <config param="rcsdate" value="$Date$"/>

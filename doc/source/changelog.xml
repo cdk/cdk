@@ -3,6 +3,21 @@
     <itemizedlist>
       <listitem><para>CVS Version
         <itemizedlist>
+           <listitem><para>Added TestCases for PDBReader, Monomer, Polymer and ChemObject.</para></listitem>
+           <listitem><para>Added get/setProperty and get/setRemark to ChemObject.</para></listitem>
+           <listitem><para>Added classes for rendering graphes</para></listitem>
+           <listitem><para>Added classes for complex numbers, vectors and matrices</para></listitem>
+           <listitem><para>Change name from Job to ClosedShellJob</para></listitem>
+        </itemizedlist>
+      </para></listitem>
+    </itemizedlist>
+    <itemizedlist>
+      <listitem><para>Preview 20010807
+        <itemizedlist>
+           <listitem><para>Added MoleculeTable class</para></listitem>
+           <listitem><para>Merged CML import library</para></listitem>
+           <listitem><para>Added (Bio)Polymer and Monomer classes</para></listitem>
+           <listitem><para>Added PDBReader</para></listitem>
            <listitem><para>Added XYZReader</para></listitem>
            <listitem><para>Added AtomicTable</para></listitem>
         </itemizedlist>
