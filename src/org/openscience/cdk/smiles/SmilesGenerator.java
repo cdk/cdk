@@ -43,7 +43,7 @@ import javax.vecmath.Vector2d;
 /**
  * Generates SMILES strings.
  *
- * References:
+ * <p>References:
  *   <a href="http://cdk.sf.net/biblio.html#WEI88">WEI88</a>,
  *   <a href="http://cdk.sf.net/biblio.html#WEI89">WEI89</a>
  *
@@ -1100,7 +1100,7 @@ public class SmilesGenerator {
    * @return string representing the charge on <code>a</code>
    */
   private String generateChargeString(Atom a) {
-    int charge = (int)a.getCharge();
+    int charge = a.getFormalCharge();
     StringBuffer buffer = new StringBuffer(3);
     if(charge > 0) { //Positive
       buffer.append('+');
