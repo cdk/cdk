@@ -67,6 +67,7 @@
                         <include name="jmolIO.jar" />
                         <include name="commons-cli-1.0.jar" />
                         <include name="jfontchooser.jar" />
+                        <include name="jgrapht-0.5.3.jar" />
                 </fileset>
                 <fileset dir="${pathtojava3d}">
                         <include name="*.jar" />
@@ -327,6 +328,7 @@
                             <include name="log4j.jar" />
                             <include name="gnujaxp.jar" />
                             <include name="xerces-2.5.0.jar" />
+                            <include name="jgrapht-0.5.3.jar" />
                         </fileset>
                         <fileset dir="${dist}/jar">
                             <include name="cdk-core.jar" />
