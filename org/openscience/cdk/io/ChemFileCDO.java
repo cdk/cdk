@@ -4,9 +4,9 @@
  * $Date$
  * $Revision$
  * 
- * Copyright (C) 1997-2001  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2000  The CompChem project
  * 
- * Contact: steinbeck@ice.mpg.de, geelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -27,26 +27,147 @@ package org.openscience.cdk.io;
 import org.openscience.cdk.*;
 import org.openscience.cml.*;
 import org.openscience.cdopi.*;
+import java.util.*;
 
 /**
- * 
+ * CDO object needed as interface with the JCFL library for reading CML
+ * encoded data.
  */ 
 public class ChemFileCDO extends ChemFile implements CDOInterface {
 
+    private Molecule currentMolecule;
+    private SetOfMolecules currentSetOfMolecules;
+    private ChemModel currentChemModel;
+    private ChemSequence currentChemSequence;
+    private Atom currentAtom;
+
+    private Hashtable atomEnumeration;
+
+    private int numberOfAtoms = 0;
+
+    private int bond_a1;
+    private int bond_a2;
+    private int bond_order;
+    private int bond_stereo;
+
+    /**
+     * Basic contructor
+     */
     public ChemFileCDO() {
+	currentChemSequence = new ChemSequence();
+	currentChemModel = new ChemModel();
+	currentSetOfMolecules = new SetOfMolecules();
+	atomEnumeration = new Hashtable();
     }
     
     // procedures required by CDOInterface
 
-    public void startDocument() {};
-    public void endDocument() {};
+    /**
+     * Procedure required by the CDOInterface. This function is only
+     * supposed to be called by the JCFL library
+     */
+    public void startDocument() {
+	System.out.println("New Document");
+	currentChemSequence = new ChemSequence();
+	currentChemModel = new ChemModel();
+	currentSetOfMolecules = new SetOfMolecules();
+	atomEnumeration = new Hashtable();
+    };
+
+    /**
+     * Procedure required by the CDOInterface. This function is only
+     * supposed to be called by the JCFL library
+     */
+    public void endDocument() {
+	    currentSetOfMolecules.addMolecule(currentMolecule);	    
+	    currentChemModel.setSetOfMolecules(currentSetOfMolecules);
+	    currentChemSequence.addChemModel(currentChemModel);
+	    this.addChemSequence(currentChemSequence);
+	    System.out.println("Molecule added");
+    };
+
+    /**
+     * Procedure required by the CDOInterface. This function is only
+     * supposed to be called by the JCFL library
+     */
     public void setDocumentProperty(String type, String value) {};
     
-    public void startObject(String objectType) {};
-    public void endObject(String objectType) {};
-    public void setObjectProperty(String objectType, String propertyType,
-				  String propertyValue) {};
+    /**
+     * Procedure required by the CDOInterface. This function is only
+     * supposed to be called by the JCFL library
+     */
+    public void startObject(String objectType) {
+	System.out.println("CDOStartObject");
+	if (objectType.equals("Molecule")) {
+	    currentMolecule = new Molecule();
+	} else if (objectType.equals("Atom")) {
+	    currentAtom = new Atom("H");
+	    numberOfAtoms++;
+	} else if (objectType.equals("Bond")) {
+	}
+    };
+
+    /**
+     * Procedure required by the CDOInterface. This function is only
+     * supposed to be called by the JCFL library
+     */
+    public void endObject(String objectType) {
+	System.out.println("END: " + objectType);
+	if (objectType.equals("Molecule")) {
+	    currentSetOfMolecules.addMolecule(currentMolecule);
+	    currentChemModel.setSetOfMolecules(currentSetOfMolecules);
+	    currentChemSequence.addChemModel(currentChemModel);
+	    addChemSequence(currentChemSequence);
+	    System.out.println("This file has " + getChemSequenceCount() + " sequences.");
+	    System.out.println("Molecule added: \n" + currentMolecule.toString());
+	} else if (objectType.equals("Atom")) {
+	    currentMolecule.addAtom(currentAtom);
+	} else if (objectType.equals("Bond")) {
+	    System.out.println("Bond: " + bond_a1 + ", " + bond_a2 + ", " + bond_order);
+	    currentMolecule.addBond(bond_a1, bond_a2, bond_order);
+	}
+    };
     
+    /**
+     * Procedure required by the CDOInterface. This function is only
+     * supposed to be called by the JCFL library
+     */
+    public void setObjectProperty(String objectType, String propertyType,
+		    String propertyValue) {
+      System.out.println("objectType: " + objectType);
+      System.out.println("propType: " + propertyType);
+      System.out.println("property: " + propertyValue);
+      if (objectType.equals("Atom")) {
+        if (propertyType.equals("type")) {
+          currentAtom.setElement(new Element(propertyValue));
+        } else if (propertyType.equals("x2")) {
+          Double value = new Double(propertyValue);
+          double val = value.doubleValue();
+          currentAtom.setX2D(val);
+        } else if (propertyType.equals("y2")) {
+          Double value = new Double(propertyValue);
+          double val = value.doubleValue();
+          currentAtom.setY2D(val);
+        } else if (propertyType.equals("id")) {
+          System.out.println("id" + propertyValue);
+          atomEnumeration.put(propertyValue, new Integer(numberOfAtoms));
+        }
+      } else if (objectType.equals("Bond")) {
+        if (propertyType.equals("atom1")) {
+          bond_a1 = new Integer(propertyValue).intValue();
+        } else if (propertyType.equals("atom2")) {
+          bond_a2 = new Integer(propertyValue).intValue();
+        } else if (propertyType.equals("order")) {
+          bond_order = new Integer(propertyValue).intValue();
+        }
+      }
+      System.out.println("Set...");
+    };
+    
+    /**
+     * Procedure required by the CDOInterface. This function is only
+     * supposed to be called by the JCFL library
+     */
     public CDOAcceptedObjects acceptObjects() {
 	CDOAcceptedObjects objects = new CDOAcceptedObjects();
 	objects.add("Molecule");
