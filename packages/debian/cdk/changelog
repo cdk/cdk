@@ -1,8 +1,14 @@
 cdk (20030702-1) unstable; urgency=low
 
   * New upstream release
+  * Put into correct Section (control)
+  * Now conform Standards Version 3.5.9 (control)
+  * Removed duplication in Description (control)
+  * Added depends on j2se1.4 (control)
+  * Fixed building system
+  * Now uses junit.jar from junit package
 
- -- E.L. Willighagen (Egon) <egonw@sci.kun.nl>  Sat, 10 May 2003 17:38:01 +0100
+ -- E.L. Willighagen (Egon) <egonw@sci.kun.nl>  Sat, 03 Jul 2003 12:11:00 +0100
 
 cdk (20020920-1) unstable; urgency=low
 
