@@ -84,8 +84,7 @@ public class GeometryTools {
 	 *
 	 * @param   molecule  The molecule to be scaled
 	 */
-	public static void scaleMolecule(AtomContainer atomCon, double scaleFactor)
-	{
+	public static void scaleMolecule(AtomContainer atomCon, double scaleFactor) {
 		for (int i = 0; i < atomCon.getAtomCount(); i++)
 		{
 			if (atomCon.getAtomAt(i).getPoint2D() != null)
@@ -556,6 +555,34 @@ public class GeometryTools {
         return new Vector2d(-1.0 * v.y, v.x);
     }
 
+    /**
+    * Scales a set of Nodes such that the average bondlenght is 1.5
+    *
+    * @param   atoms
+    * @return
+    */
+    public static double getNormalizationFactor(AtomContainer container) {
+        Bond[] bonds = container.getBonds();
+        double bondlength = 0.0, ratio = 0.0;
+        /* Desired bond length for storing structures in MDL mol files
+           This should probably be set externally (from system wide settings) */
+        double desiredBondLength = 1.5;
+        // loop over all bonds and determine the mean bond distance
+        int counter = 0;
+        for (int f = 0; f < bonds.length; f++) {
+            // only consider two atom bonds into account
+            if (bonds[f].getAtomCount() == 2) {
+                counter++;
+                Atom atom1 = bonds[f].getAtomAt(0);
+                Atom atom2 = bonds[f].getAtomAt(1);
+                bondlength += Math.sqrt(Math.pow(atom1.getX2D() - atom2.getX2D(), 2) + 
+                                        Math.pow(atom1.getY2D() - atom2.getY2D(), 2));
+            }
+        }
+        bondlength = bondlength / counter;
+        ratio = desiredBondLength / bondlength;
+        return ratio;
+    }
 }
 
 
