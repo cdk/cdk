@@ -389,14 +389,14 @@ public class CMLWriter extends DefaultChemObjectWriter {
             write("\" ");
         }
         double border = bond.getOrder();
-        if (border == CDKConstants.BONDORDER_SINGLE) {
+        if (bord.getFlag(CDKConstants.ISAROMATIC)) {
+            write("order=\"A\" ");
+        } else if (border == CDKConstants.BONDORDER_SINGLE) {
             write("order=\"S\" ");
         } else if (border == CDKConstants.BONDORDER_DOUBLE) {
             write("order=\"D\" ");
         } else if (border == CDKConstants.BONDORDER_TRIPLE) {
             write("order=\"T\" ");
-        } else if (border == CDKConstants.BONDORDER_AROMATIC) {
-            write("order=\"A\" ");
         } else {
             logger.warn("Outputing bond order in non CML2 default way.");
             childElements.append("      <string convention=\"CDK\" builtin=\"order\"" + 
