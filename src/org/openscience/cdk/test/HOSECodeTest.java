@@ -64,14 +64,14 @@ public class HOSECodeTest
 		try
 		{
 			molecule = MoleculeFactory.makeIndole();
-			display(molecule);
+			//display(molecule);
 			isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
 			HOSECodeGenerator hcg = new HOSECodeGenerator();
 			System.out.println("Listing 1-sphere HOSE codes for Indole:\n");
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
 				s = hcg.getHOSECode(molecule, molecule.getAtomAt(f), 1);
-				System.out.println("Atom " + f + ": " + s);
+				System.out.println("Atom " + (f + 1) + ": " + s);
 			}
 		} catch (Exception exc)
 		{
@@ -80,6 +80,7 @@ public class HOSECodeTest
 
 		return true;
 	}
+	
 
 
 	/**
@@ -92,7 +93,7 @@ public class HOSECodeTest
 		try
 		{
 			Molecule molecule = (new SmilesParser()).parseSmiles("O=c1ccc2ccc4c5ccccc5Oc3c(OC)cc1c2c34");
-			display(molecule);
+			//display(molecule);
 			boolean isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
 			HOSECodeGenerator hcg = new HOSECodeGenerator();
 			System.out.println("Listing 1-sphere HOSE codes for Indole:\n");
@@ -100,7 +101,7 @@ public class HOSECodeTest
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
 				s = hcg.getHOSECode(molecule, molecule.getAtomAt(f), 4);
-				System.out.println("Atom " + f + ": " + s);
+				System.out.println("Atom " + (f + 1) + ": " + s);
 			}
 		} catch (Exception exc)
 		{
@@ -111,7 +112,64 @@ public class HOSECodeTest
 		return true;
 	}
 
+	/**
+	 *  A unit test for JUnit
+	 *
+	 *@return    Description of the Return Value
+	 */
+	public boolean test3()
+	{
+		try
+		{
+			Molecule molecule = (new SmilesParser()).parseSmiles("C12=CC=CC=C1NC=C2");
+			//display(molecule);
+			boolean isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
+			HOSECodeGenerator hcg = new HOSECodeGenerator();
+			String s = null;
+			for (int f = 0; f < molecule.getAtomCount(); f++)
+			{
+				s = hcg.getHOSECode(molecule, molecule.getAtomAt(f), 4);
+				System.out.println("Atom " + (f + 1) + ": " + s);
+			}
+		} catch (Exception exc)
+		{
+			exc.printStackTrace();
+			return false;
+		}
 
+		return true;
+	}
+
+	/**
+	 *  A unit test for JUnit
+	 *
+	 *@return    Description of the Return Value
+	 */
+	public boolean test4()
+	{
+		try
+		{
+			Molecule molecule = (new SmilesParser()).parseSmiles("C1(C=CN2)=C2C=CC=C1");
+			//display(molecule);
+			boolean isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
+			HOSECodeGenerator hcg = new HOSECodeGenerator();
+			String s = null;
+			for (int f = 0; f < molecule.getAtomCount(); f++)
+			{
+				s = hcg.getHOSECode(molecule, molecule.getAtomAt(f), 4);
+				System.out.println("Atom " + (f + 1) + ": " + s);
+			}
+		} catch (Exception exc)
+		{
+			exc.printStackTrace();
+			return false;
+		}
+
+		return true;
+	}
+	
+	
+	
 	/**
 	 *  Description of the Method
 	 *
@@ -147,7 +205,9 @@ public class HOSECodeTest
 	{
 		HOSECodeTest hct = new HOSECodeTest();
 		//hct.test1();
-		hct.test2();
+		//hct.test2();
+		hct.test3();
+		hct.test4();
 	}
 }
 
