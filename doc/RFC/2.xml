@@ -1,0 +1,88 @@
+<refentry id="cdk-rfc-2">
+
+  <refentryinfo>
+    <revhistory>
+      <revision>
+        <revnumer>2</revnumber>
+        <date>30 July 2002</date>
+        <authorinitials>elw</authorinitials>
+        <revremark>
+          Changed: cdk-code was corrected into cdk-core; a few more classes added; class
+          AtomicNumbers was removed.
+          See <ulink url="http://sourceforge.net/mailarchive/forum.php?thread_id=939990&amp;forum_id=2178">email archive</ulink>.
+        </revremark>
+      </revision>
+      <revision>
+        <revnumer>1</revnumber>
+        <date>22 May 2002</date>
+        <authorinitials>elw</authorinitials>
+        <revremark>
+          See <ulink url="http://sourceforge.net/mailarchive/forum.php?thread_id=742806&amp;forum_id=2178">email archive</ulink>.
+        </revremark>
+      </revision>
+    </revhistory>
+  </refentryinfo>
+
+
+  <refnamediv>
+    <refname>RFC CDK #2</refname>
+  </refnamediv>
+
+  <refsect1>
+    <title>Proposal</title>
+    <para>
+      Proposed is a precise and definate list of classes that belong to the
+      cdk-code library. This class would contain the classes representing chemical
+      entities and required classes by those. All chemical information used in any
+      of the CDK classes must be able to be stored in one of these classes. Core
+      classes must not require non cdk-core classes other than provided by
+      Java1.2.
+    </para>
+    <para>
+      The list of classes in cdk-core is:
+      <itemizedlist>
+        <listitem><para>org.openscience.cdk.AtomContainer</para></listitem>
+        <listitem><para>org.openscience.cdk.AtomEnumeration</para></listitem>
+        <listitem><para>org.openscience.cdk.Atom</para></listitem>
+        <listitem><para>org.openscience.cdk.AtomType</para></listitem>
+        <listitem><para>org.openscience.cdk.BioPolymer</para></listitem>
+        <listitem><para>org.openscience.cdk.Bond</para></listitem>
+        <listitem><para>org.openscience.cdk.CDKConstants</para></listitem>
+        <listitem><para>org.openscience.cdk.ChemModel</para></listitem>
+        <listitem><para>org.openscience.cdk.ChemObject</para></listitem>
+        <listitem><para>org.openscience.cdk.ChemObjectListener</para></listitem>
+        <listitem><para>org.openscience.cdk.ChemSequence</para></listitem>
+        <listitem><para>org.openscience.cdk.ElectronContainer</para></listitem>
+        <listitem><para>org.openscience.cdk.Element</para></listitem>
+        <listitem><para>org.openscience.cdk.event.ChemObjectChangeEvent</para></listitem>
+        <listitem><para>org.openscience.cdk.exception.CDKException</para></listitem>
+        <listitem><para>org.openscience.cdk.exception.NoSuchAtomException</para></listitem>
+        <listitem><para>org.openscience.cdk.Isotope</para></listitem>
+        <listitem><para>org.openscience.cdk.Molecule</para></listitem>
+        <listitem><para>org.openscience.cdk.Monomer</para></listitem>
+        <listitem><para>org.openscience.cdk.Polymer</para></listitem>
+        <listitem><para>org.openscience.cdk.Ring</para></listitem>
+        <listitem><para>org.openscience.cdk.RingSet</para></listitem>
+        <listitem><para>org.openscience.cdk.SetOfMolecules</para></listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Data concerning visual representation does not need to be in one of these
+      classes. Also, factories and predefined values need not be in one of these
+      classes.
+    </para>
+    <para>
+      Junit test classes testing and only needing these core classes would belong
+      to cdk-core-test and not to cdk-core itself.
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>Reason</title>
+    <para>
+      A final list of core classes is needed to define a complete and accurate API
+      definition of the core CDK library.
+    </para>
+  </refsect1>
+
+</refentry>

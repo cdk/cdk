@@ -1,0 +1,31 @@
+<refentry id="cdk-rfc-2">
+
+  <refentryinfo>
+    <revhistory>
+      <revision>
+        <revnumer></revnumber>
+        <date></date>
+        <authorinitials></authorinitials>
+        <revremark>
+          See <ulink url="">email archive</ulink>.
+        </revremark>
+      </revision>
+    </revhistory>
+  </refentryinfo>
+
+
+  <refnamediv>
+    <refname>RFC CDK # </refname>
+  </refnamediv>
+
+  <refsect1>
+    <title>Proposal</title>
+    <para></para>
+  </refsect1>
+
+  <refsect1>
+    <title>Reason</title>
+    <para></para>
+  </refsect1>
+
+</refentry>
