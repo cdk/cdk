@@ -1,6 +1,6 @@
 /* $RCSfile$
- * $Author$    
- * $Date$    
+ * $Author$
+ * $Date$
  * $Revision$
  * 
  * Copyright (C) 2002-2003  The Chemistry Development Kit (CDK) project
@@ -73,17 +73,6 @@ public class CrystalTest extends TestCase {
         assertEquals("P 2_1 2_1 2_1", crystal.getSpaceGroup());
         
         assertEquals(4, crystal.getZ());
-    }
-
-    public void testGetP1Cell() {
-        Crystal crystal = new Crystal();
-        crystal.addAtom(new Atom("C"));
-        crystal.addAtom(new Atom("C"));
-        crystal.addAtom(new Atom("C"));
-        
-        crystal.setSpaceGroup("P 2_1 2_1 2_1");
-        Crystal p1 = crystal.getP1Cell();
-        assertEquals(12, p1.getAtomCount());
     }
 
 }
