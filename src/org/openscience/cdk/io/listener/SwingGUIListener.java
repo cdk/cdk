@@ -119,11 +119,13 @@ public class SwingGUIListener implements ReaderListener, WriterListener {
                 StringIOSetting stringSetting = (StringIOSetting)setting;
                 answer = JOptionPane.showInputDialog(frame,
                     setting.getQuestion(),
-                    setting.getSetting());
+                    setting.getName(), JOptionPane.QUESTION_MESSAGE, null, null,
+                    setting.getSetting()).toString();
             } else {
                 answer =  JOptionPane.showInputDialog(frame,
                     setting.getQuestion(),
-                    setting.getSetting());
+                    setting.getName(), JOptionPane.QUESTION_MESSAGE, null, null,
+                    setting.getSetting()).toString();
             }
 
             try {
