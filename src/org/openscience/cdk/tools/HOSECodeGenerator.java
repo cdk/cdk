@@ -406,20 +406,6 @@ public class HOSECodeGenerator implements java.io.Serializable
 
 		for (int f = 0; f < maxSphere; f++)
 		{
-			sphereNodes = spheres[maxSphere - f];
-			for (int g = 0; g < sphereNodes.size(); g++)
-			{
-				tn = (TreeNode) sphereNodes.elementAt(g);
-				if (tn.source != null)
-				{
-					tn.source.score += tn.score;
-				}
-				
-			}
-		}
-		
-		for (int f = 0; f < maxSphere; f++)
-		{
 			sphereNodes = spheres[f];
 			for (int g = 0; g < sphereNodes.size() ; g++)
 			{
@@ -429,17 +415,17 @@ public class HOSECodeGenerator implements java.io.Serializable
 			sortNodesByScore(sphereNodes);
 		}
 		BigInteger big = new BigInteger("10");
-		long temp, tempScore;
 		for (int f = 0; f < maxSphere; f++)
 		{
 			sphereNodes = spheres[f];
 			for (int g = 0; g < sphereNodes.size() ; g++)
 			{
 				tn = (TreeNode) sphereNodes.elementAt(g);
-				temp = (big.pow(maxSphere - f + 7)).longValue();
-				tempScore = tn.source.sortOrder * temp;
-				tn.score = tn.score + tempScore;
-				tn.score += tn.source.score;
+        String localscore=tn.score+"";
+        while(localscore.length()<6){
+          localscore="0"+localscore;
+        }
+        tn.stringscore=localscore+""+tn.source.stringscore;
 			}
 			sortNodesByScore(sphereNodes);
 		}
@@ -617,7 +603,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 			changed = false;
 			for (int i = 0; i < sphereNodes.size() - 1; i++)
 			{
-				if (((TreeNode) sphereNodes.elementAt(i + 1)).score > ((TreeNode) sphereNodes.elementAt(i)).score)
+				if (((TreeNode) sphereNodes.elementAt(i + 1)).stringscore.compareTo(((TreeNode) sphereNodes.elementAt(i)).stringscore)>0)
 				{
 					obj = sphereNodes.elementAt(i + 1);
 					sphereNodes.removeElementAt(i + 1);
@@ -712,6 +698,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 		Vector childs = null;
 		String hSymbol = null;
 		boolean stopper = false;
+    String stringscore="";
 
 		/**
 		 *  Constructor for the TreeNode object
