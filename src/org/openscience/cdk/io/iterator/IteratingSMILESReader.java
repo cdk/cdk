@@ -28,6 +28,8 @@
 package org.openscience.cdk.io.iterator;
 
 import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
@@ -67,7 +69,7 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader {
     private Molecule nextMolecule;
     
     /**
-     * Contructs a new MDLReader that can read Molecule from a given Reader.
+     * Contructs a new IteratingSMILESReader that can read Molecule from a given Reader.
      *
      * @param  in  The Reader to read from
      */
@@ -77,6 +79,15 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader {
         nextMolecule = null;
         nextAvailableIsKnown = false;
         hasNext = false;
+    }
+
+    /**
+     * Contructs a new IteratingSMILESReader that can read Molecule from a given InputStream.
+     *
+     * @param  in  The InputStream to read from
+     */
+    public IteratingSMILESReader(InputStream in) {
+        this(new InputStreamReader(in));
     }
 
     public ChemFormat getFormat() {
