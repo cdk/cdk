@@ -48,6 +48,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 	 *  Container for the nodes in a sphere.
 	 */
 	protected Vector sphereNodes = null;
+  protected Vector sphereNodesWithAtoms = null;
 	/**
 	 *  Container for the node in the next sphere Assembled in a recursive method
 	 *  and then passed to the next recursion to become "sphereNodes"
@@ -67,6 +68,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 	 *  code later.
 	 */
 	protected Vector[] spheres = null;
+  protected Vector[] spheresWithAtoms = null;
 
 	/**
 	 *  The HOSECode string that we assemble
@@ -136,8 +138,41 @@ public class HOSECodeGenerator implements java.io.Serializable
 	public HOSECodeGenerator()
 	{
 		sphereNodes = new Vector();
+    sphereNodesWithAtoms = new Vector();
 		nextSphereNodes = new Vector();
 		HOSECode = new StringBuffer();
+	}
+  
+  
+  public Vector[] getSpheres(AtomContainer ac, Atom root, int noOfSpheres) throws org.openscience.cdk.exception.CDKException
+	{
+		centerCode = "";
+		this.atomContainer = ac;
+		maxSphere = noOfSpheres;
+		spheres = new Vector[noOfSpheres + 1];
+    spheresWithAtoms = new Vector[noOfSpheres + 1];
+		for (int i = 0; i < ac.getAtomCount(); i++)
+		{
+			ac.getAtomAt(i).setFlag(CDKConstants.VISITED, false);
+		}
+		root.setFlag(CDKConstants.VISITED, true);
+		rootNode = new TreeNode(root.getSymbol(), null, root, (double)0, atomContainer.getBondCount(root), 0);
+		/*
+		 *  All we need to observe is how the ranking of substituents
+		 *  in the subsequent spheres of the root nodes influences the
+		 *  ranking of the first sphere, sinces the order of a node in a sphere
+		 *  depends on the order the preceding node in its branch
+		 */
+		HOSECode = new StringBuffer();
+		createCenterCode(root);
+		breadthFirstSearch(root, false);
+		createCode();
+		fillUpSphereDelimiters();
+		if (debug)
+		{
+			System.out.println("HOSECodeGenerator -> HOSECode: " + HOSECode.toString());
+		}
+		return spheresWithAtoms;
 	}
 
 
@@ -174,7 +209,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 		 */
 		HOSECode = new StringBuffer();
 		createCenterCode(root);
-		breadthFirstSearch(root);
+		breadthFirstSearch(root,true);
 		createCode();
 		fillUpSphereDelimiters();
 		if (debug)
@@ -188,8 +223,26 @@ public class HOSECodeGenerator implements java.io.Serializable
 	{
 		int partnerCount = 0;
 		partnerCount = atomContainer.getBondCount(root) + root.getHydrogenCount(); 
-		centerCode = root.getSymbol() + "-" + partnerCount + ";";
+		centerCode = root.getSymbol() + "-" + partnerCount + createChargeCode(root)+";";
 	}
+  
+  private String createChargeCode(Atom atom){
+    StringBuffer tempCode=new StringBuffer();
+    if (atom != null && atom.getFormalCharge()!=0){
+      if(Math.abs(atom.getFormalCharge())==1){
+        if(atom.getFormalCharge()<0)
+          tempCode.append("-");
+        else
+          tempCode.append("+");
+      }else{
+        tempCode.append("'");
+        if(atom.getFormalCharge()>0)
+          tempCode.append("+");
+        tempCode.append(atom.getFormalCharge()+"'");
+      }
+    }
+    return(tempCode+"");
+  }
 
 	/**
 	 *  Prepares for a breadth first search within the AtomContainer. The actual
@@ -198,7 +251,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 	 *@param  root  The atom at which we start the search
 	 *@exception  org.openscience.cdk.exception.CDKException  If something goes wrong.
 	 */
-	private void breadthFirstSearch(Atom root) throws org.openscience.cdk.exception.CDKException
+	private void breadthFirstSearch(Atom root,boolean addTreeNode) throws org.openscience.cdk.exception.CDKException
 	{
 		sphere = 0;
 		TreeNode tempNode = null;
@@ -206,6 +259,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 		Atom atom;
 		Bond bond = null;
 		sphereNodes.removeAllElements();
+    sphereNodesWithAtoms.removeAllElements();
 		for (int i = 0; i < conAtoms.length; i++)
 		{
 
@@ -224,7 +278,9 @@ public class HOSECodeGenerator implements java.io.Serializable
 				{
 					tempNode = new TreeNode(atom.getSymbol(), new TreeNode(root.getSymbol(), null, root, (double) 0, 0, (long) 0), atom, bond.getOrder(), atomContainer.getBondCount(atom), 0);
 				}
-				sphereNodes.addElement(tempNode);
+        sphereNodes.addElement(tempNode);
+        if(!addTreeNode)
+          sphereNodesWithAtoms.addElement(atom);
 				rootNode.childs.addElement(tempNode);
 				atom.setFlag(CDKConstants.VISITED, true);
 			} catch (Exception exc)
@@ -247,6 +303,8 @@ public class HOSECodeGenerator implements java.io.Serializable
 	private void nextSphere(Vector sphereNodes) throws org.openscience.cdk.exception.CDKException
 	{
 		spheres[sphere] = sphereNodes;
+    if(spheresWithAtoms!=null)
+      spheresWithAtoms[sphere] = sphereNodesWithAtoms;
 		/*
 		 *  From here we start assembling the next sphere
 		 */
@@ -311,7 +369,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 	 */
 	private void createCode() throws org.openscience.cdk.exception.CDKException
 	{
-		Vector sphereNodes = null;
+    Vector sphereNodes = null;
 		TreeNode tn = null;
 		for (int f = 0; f < atomContainer.getAtomCount(); f++)
 		{
@@ -431,7 +489,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 					tempCode.append(bondSymbols[(int) treeNode.bondType]);
 				} else
 				{
-					throw new CDKException("Unknown bond type");
+					//throw new CDKException("Unknown bond type");
 				}
 				if (treeNode.atom != null && !treeNode.atom.getFlag(CDKConstants.VISITED))
 				{
@@ -442,7 +500,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 					tempCode.append("&");
 					treeNode.stopper = true;
 				}
-				code.append(tempCode);
+        code.append(tempCode+createChargeCode(treeNode.atom));
 				treeNode.hSymbol = tempCode.toString();
 			}
 			if (treeNode.atom != null) treeNode.atom.setFlag(CDKConstants.VISITED, true);
@@ -522,7 +580,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 				treeNode.score += bondRankings[(int) treeNode.bondType];
 			} else
 			{
-				throw new CDKException("Unknown bond type encountered in HOSECodeGenerator");
+				//throw new CDKException("Unknown bond type encountered in HOSECodeGenerator");
 			}
 		}
 	}
