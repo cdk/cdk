@@ -25,6 +25,8 @@ CDK library.
 
 2. Compiling
 
+When using from the tar.gz package, see INSTALL. Otherwise the next is an option:
+
 Compiling and jar-ing the software is done with Jakarta's 
 Ant (http://jakarta.apache.org/ant/):
 

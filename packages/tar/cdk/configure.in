@@ -17,6 +17,18 @@ AC_ARG_WITH(sgmldir,
 AC_SUBST(SGMLDIR)
 AC_MSG_RESULT(Using sgml dir $SGMLDIR)
 
+DOCBOOKXSLDIR=""
+AC_ARG_WITH(docbookxsldir,
+      [  --with-docbookxsldir=DIR  where to find the SGML dir ],
+      [  if test -n "$withval"
+         then
+          DOCBOOKXSLDIR="$withval"
+         fi
+      ]
+)
+AC_SUBST(DOCBOOKXSLDIR)
+AC_MSG_RESULT(Using DocBook XSLT from dir $DOCBOOKXSLDIR)
+
 AC_ARG_ENABLE(freecompiler,
 [  --enable-freecompiler    Use jikes of gcj if available],
 [case "${enableval}" in
@@ -162,31 +174,39 @@ AC_MSG_RESULT($sgmldirs)
 AC_MSG_CHECKING(for DocBook XSL stylesheets)
 if test -z "$DBK_XSL_STYLESHEETS" && test -z "$PATHTODBKXSLHTML"
 then
-    for d in $sgmldirs
-    do
-	for f in stylesheet/xsl/docbook stylesheet/xsl stylesheet docbook/stylesheet/xsl docbook/xsl docbook
-	do
-	    dir=
-            if test -f "$d/$f/xhtml/docbook.xsl"
-	    then
-		dir="$d/$f"
-	    elif test -f "$d/$f/modular/xhtml/docbook.xsl"
-	    then
-		dir="$d/$f/modular"
-	    elif test -f "$d/$f/nwalsh/xhtml/docbook.xsl"
-	    then
-		dir="$d/$f/nwalsh"
-	    fi
-	    if test -n "$dir"
-	    then
-		AC_MSG_RESULT("$dir")
-		PATHTODBKXSLHTML="$dir/html"
-		PATHTODBKXSLCOMMON="$dir/common/common.xsl"
-	    fi
-	    test -n "$PATHTODBKXSLHTML" && break
-	done
-	test -n "$PATHTODBKXSLHTML" && break
-    done
+    if test -n "$DOCBOOKXSLDIR"
+    then
+        dir="$DOCBOOKXSLDIR"
+        AC_MSG_RESULT("$dir")
+        PATHTODBKXSLHTML="$dir/html"
+        PATHTODBKXSLCOMMON="$dir/common/common.xsl"
+    else
+        for d in $sgmldirs
+        do
+            for f in stylesheet/xsl/docbook stylesheet/xsl stylesheet docbook/stylesheet/xsl docbook/xsl docbook
+            do
+                dir=
+                if test -f "$d/$f/xhtml/docbook.xsl"
+                then
+                    dir="$d/$f"
+                elif test -f "$d/$f/modular/xhtml/docbook.xsl"
+                then
+                    dir="$d/$f/modular"
+                elif test -f "$d/$f/nwalsh/xhtml/docbook.xsl"
+                then
+                    dir="$d/$f/nwalsh"
+                fi
+                if test -n "$dir"
+                then
+                    AC_MSG_RESULT("$dir")
+                    PATHTODBKXSLHTML="$dir/html"
+                    PATHTODBKXSLCOMMON="$dir/common/common.xsl"
+                fi
+                test -n "$PATHTODBKXSLHTML" && break
+            done
+        test -n "$PATHTODBKXSLHTML" && break
+        done
+    fi
 else
     if test -n "$DBK_XSL_STYLESHEETS"
     then

@@ -4,13 +4,17 @@
 cp ../../../CHANGELOG ChangeLog
 cp ../../../build.xml .
 cp ../../../javadoc.xml .
+cp ../../../doc.xml .
+find ../../.. -name "*~" | xargs rm -f
 rsync -vargopt ../../../data .
 rsync -vargopt ../../../src .
 rsync -vargopt ../../../jar .
+mkdir -p doc/javadoc
+rsync -vargopt ../../../doc/javadoc doc/.
+find . -name "cdk-*.jar" | xargs rm -f
 find data -name "CVS" | xargs rm -R
 find src -name "CVS" | xargs rm -R
+find jar -name "CVS" | xargs rm -R
 find src -name ".cvsignore" | xargs rm -f
-find . -name "cdk-*.jar" | xargs rm -f
-find . -name "*~" | xargs rm -f
 
 aclocal && automake --gnu && autoconf
