@@ -81,9 +81,8 @@ public class ConnectivityChecker
 	 *
 	 * @param   atomContainer  The AtomContainer to be partitioned into connected components, i.e. molecules
 	 * @return  A vector of AtomContainers, each containing a connected molecule   
-	 * @exception   Exception  If something goes wrong
 	 */
-	public  static Vector partitionIntoMolecules(AtomContainer atomContainer) throws java.lang.Exception
+	public  static Vector partitionIntoMolecules(AtomContainer atomContainer)
 
 	{
 		AtomContainer ac = new AtomContainer();
