@@ -29,17 +29,19 @@ import java.io.StringReader;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.isomorphism.matchers.AnyOrderQueryBond;
-import org.openscience.cdk.isomorphism.matchers.OrderQueryBond;
 import org.openscience.cdk.isomorphism.matchers.QueryAtom;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryBond;
 import org.openscience.cdk.isomorphism.matchers.SymbolQueryAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.AnyOrderQueryBond;
+import org.openscience.cdk.isomorphism.matchers.smarts.AromaticQueryBond;
 import org.openscience.cdk.isomorphism.matchers.smarts.DegreeAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.FormalChargeAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.ImplicitHCountAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.SMARTSBond;
 import org.openscience.cdk.isomorphism.matchers.smarts.TotalHCountAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.OrderQueryBond;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -63,10 +65,10 @@ import org.openscience.cdk.tools.LoggingTool;
 public class SMARTSParser {
     
     private QueryAtom previousAtom = null;
-    private OrderQueryBond currentBond = null;
+    private SMARTSBond currentBond = null;
     private QueryAtomContainer container = null;
     
-    private final static LoggingTool = new LoggingTool("org.openscience.cdk.smiles.smarts.SMARTSParser");
+    private final static LoggingTool logger = new LoggingTool("org.openscience.cdk.smiles.smarts.SMARTSParser");
     
     public static QueryAtomContainer parse(String stringToParse) throws CDKException {
         QueryAtomContainer container = null;
@@ -87,7 +89,7 @@ PARSER_END(SMARTSParser)
 JAVACODE
 void AddNewSMARTSAtom() {
     Token tok = getToken(-1);
-    System.out.println("Adding SMARTS atom: " + tok.image);
+    logger.debug("Adding SMARTS atom: " + tok.image);
     SMARTSAtom atom = new SMARTSAtom();
     atom.setLabel(tok.image);
     container.addAtom(atom);
@@ -103,14 +105,14 @@ void AddCurrentBond(QueryAtom atom, QueryAtom atom2) {
         atoms[0] = (Atom)atom;
         atoms[1] = (Atom)atom2;
         currentBond.setAtoms(atoms);
-        container.addBond((OrderQueryBond)currentBond);
+        container.addBond(currentBond);
     }
 }
 
 JAVACODE
 void AddNewElementAtom() {
     Token tok = getToken(-1);
-    System.out.println("Adding SMARTS atom: " + tok.image);
+    logger.debug("Adding SMARTS atom: " + tok.image);
     SymbolQueryAtom atom = new SymbolQueryAtom(new Atom(tok.image));
     container.addAtom(atom);
     AddCurrentBond(previousAtom, atom);
@@ -121,7 +123,7 @@ void AddNewElementAtom() {
 JAVACODE
 void AddNewDegreeAtom() {
     Token tok = getToken(-1);
-    System.out.println("Adding SMARTS degree atom: " + tok.image);
+    logger.debug("Adding SMARTS degree atom: " + tok.image);
     DegreeAtom atom = new DegreeAtom(Integer.parseInt(tok.image));
     container.addAtom(atom);
     previousAtom = atom;
@@ -130,7 +132,7 @@ void AddNewDegreeAtom() {
 JAVACODE
 void AddNewFormalChargeAtom() {
     Token tok = getToken(-1);
-    System.out.println("Adding SMARTS formal charge atom: " + tok.image);
+    logger.debug("Adding SMARTS formal charge atom: " + tok.image);
     FormalChargeAtom atom = new FormalChargeAtom(Integer.parseInt(tok.image));
     container.addAtom(atom);
     previousAtom = atom;
@@ -139,7 +141,7 @@ void AddNewFormalChargeAtom() {
 JAVACODE
 void AddNewImplicitHCountAtom() {
     Token tok = getToken(-1);
-    System.out.println("Adding SMARTS implicit Hcount atom: " + tok.image);
+    logger.debug("Adding SMARTS implicit Hcount atom: " + tok.image);
     ImplicitHCountAtom atom = new ImplicitHCountAtom(Integer.parseInt(tok.image));
     container.addAtom(atom);
     previousAtom = atom;
@@ -148,7 +150,7 @@ void AddNewImplicitHCountAtom() {
 JAVACODE
 void AddNewTotalHCountAtom() {
     Token tok = getToken(-1);
-    System.out.println("Adding SMARTS total Hcount atom: " + tok.image);
+    logger.debug("Adding SMARTS total Hcount atom: " + tok.image);
     TotalHCountAtom atom = new TotalHCountAtom(Integer.parseInt(tok.image));
     container.addAtom(atom);
     previousAtom = atom;
@@ -163,6 +165,11 @@ void SetCurrentBondToOrderQuery(double order) {
 JAVACODE
 void SetCurrentBondToAnyOrder() {
     currentBond = new AnyOrderQueryBond();
+}
+
+JAVACODE
+void SetCurrentBondToAromatic() {
+    currentBond = new AromaticQueryBond();
 }
 
 QueryAtomContainer Parse() :
@@ -234,7 +241,9 @@ void BondExpression() :
 {}
 {
     ("-" SetCurrentBondToOrderQuery(1.0) ) | 
-    ("=" SetCurrentBondToOrderQuery(1.0) ) | 
+    ("=" SetCurrentBondToOrderQuery(2.0) ) | 
+    ("#" SetCurrentBondToOrderQuery(3.0) ) | 
+    (":" SetCurrentBondToAromatic() ) | 
     ("~" SetCurrentBondToAnyOrder() )
 }
 
