@@ -17,7 +17,7 @@ alldoc_DATA = ${DOCTAR}
 
 javadoc.tar.gz:
 	cd ../../../..; ${ANT} -buildfile javadoc.xml html
-	cd ../../../..; ${TAR} cf javadoc.tar javadoc
-	cp ../../../../javadoc.tar .
+	cd ../../../../doc; ${TAR} cf javadoc.tar api
+	cp ../../../../doc/javadoc.tar .
 	${GZIP} -9 javadoc.tar
 

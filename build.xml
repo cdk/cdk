@@ -231,6 +231,8 @@
                 </jar>
         </target>
 
+        <target name="dist-all" depends="dist-core, dist-extra, dist-with-java3d, dist-libio, dist-cml" />
+
         <target name="dist" depends="dist-extra" />
 
         <target name="dist-with-java3d" depends="compile-with-java3d, dist-core">
@@ -377,15 +379,4 @@
                 </java>
         </target>
 
-    <target name="javadoc" depends="init">
-		<javadoc packagenames="org.openscience.cdk.*"
-			sourcepath="${src}"
-			defaultexcludes="yes"
-			destdir="doc/api"
-			author="true"
-			version="true"
-			use="true">
-			<classpath refid="project.class.path" />	
-		</javadoc>
-	</target>
 </project>

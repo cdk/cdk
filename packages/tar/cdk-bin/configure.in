@@ -5,6 +5,17 @@ AC_INIT()
 AM_INIT_AUTOMAKE(cdk-bin, `cat VERSION`)
 
 dnl deal with options
+SGMLDIR=""
+AC_ARG_WITH(sgmldir,
+      [  --with-sgmldir=DIR  where to find the SGML dir ],
+      [  if test -n "$withval"
+         then
+          SGMLDIR="$withval"
+         fi
+      ]
+)
+AC_SUBST(SGMLDIR)
+
 AC_ARG_WITH(xercesdir,
       [  --with-xercesdir=DIR  where to find the xerces.jar library
                                [/usr/share/java] ],
@@ -176,7 +187,7 @@ dnl detection copied from Lire 1.0 (www.logreport.org)
 dnl Try to find the SGML directory layout
 dnl Find a list of potential SGML/XML trees, we will look into subdirectories
 dnl of this one to find the DSSSL/DTD/XSLT stuff.
-sgmldirs=""
+sgmldirs=$SGMLDIR
 try_dirs="/usr/lib/sgml /usr/share/sgml /usr/local/lib/sgml /usr/local/share/sgml /usr/share/xml /usr/local/share/xml /usr/local/share/xsl"
 if test x"$prefix" != "xNONE"
 then

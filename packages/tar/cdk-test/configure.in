@@ -161,7 +161,6 @@ fi
 AC_SUBST(PATHTOXERCES)
 
 dnl needed for check_xml
-AC_PATH_PROGS(PATHTONSGMLS, onsgmls nsgmls, no)
 
 AC_OUTPUT([
    Makefile

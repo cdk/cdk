@@ -1,7 +1,7 @@
 CHANGELOG
 ------------------------------------
 
-Changes in CVS
+20020805 Release
 ------------------------------------
 * Added --no3D option to cdk.applications.Viewer
 * Do not fail if bond order != integer, assume order=1
