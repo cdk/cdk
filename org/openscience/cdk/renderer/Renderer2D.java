@@ -108,10 +108,26 @@ public class Renderer2D
 			g.setColor(r2dm.getHighlightColor());
 			g.drawPolygon(r2dm.getSelectRect());
 		}
-		
+		paintLassoLines();
 	}
 	
-
+	
+	private void paintLassoLines()
+	{
+		Vector points = r2dm.getLassoPoints();
+		if (points.size() > 1)
+		{
+			System.out.println("number of points  "+ points.size());
+			Point point1 = (Point)points.elementAt(0), point2;
+			for (int i = 1; i < points.size(); i++)
+			{
+				point2 = (Point)points.elementAt(i);
+				g.drawLine(point1.x, point1.y, point2.x, point2.y);
+				point1 = point2;
+			}
+		}
+	}
+	
 	/**
 	 * Draw all numbers of all atoms in the molecule
 	 *

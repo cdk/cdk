@@ -71,6 +71,8 @@ public class Renderer2DModel
 	
 	private AtomContainer selectedPart = null;
 	
+	private Vector lassoPoints = new Vector();
+	
 
 	/**
 	 * Returns the distance between two lines in a double or triple bond
@@ -446,10 +448,32 @@ public class Renderer2DModel
 		}
 		for (int i = 0; i < selectedPart.getBondCount(); i++)
 		{
-			getColorHash().put(selectedPart.getAtomAt(i), getHighlightColor());
+			getColorHash().put(selectedPart.getBondAt(i), getHighlightColor());
 		}		
 	}
 
+
+	/**
+	 *
+	 *
+	 * @return     
+	 */
+	public Vector getLassoPoints()
+	{
+		return this.lassoPoints;
+	}
+
+
+	/**
+	 *
+	 *
+	 * @param   lassoPoints  
+	 */
+	public void addLassoPoint(Point point)
+	{
+		this.lassoPoints.addElement(point);
+		fireChange();
+	}
 
 
 	/**
@@ -485,4 +509,6 @@ public class Renderer2DModel
 			((CDKChangeListener)listeners.get(i)).stateChanged(event);
 		}
 	}
+
+	
 }

@@ -46,8 +46,9 @@ public class JCPController2DModel
     public static int UP_BOND=11;
     public static int DOWN_BOND=12;
 	public static int NORMALIZE=13;
+	public static int LASSO=14;
 	
-	private int drawMode = 6;
+	private int drawMode = 14;
 	private int ringSize = 6;
 	
 	private boolean snapToGridAngle = true;
@@ -55,11 +56,11 @@ public class JCPController2DModel
 	private boolean snapToGridCartesian = true;
 	private int snapCartesian = 10;	
 	
-	private double defaultBondLength = 70;
+	private int defaultBondLength = 70;
 	
 	private String defaultElementSymbol = "C";
 	private int bondPointerLength = 80;
-	private int ringPointerLength = 60;
+	private int ringPointerLength = (int)(getDefaultBondLength() / 2);
 	
 	
 	/**
@@ -204,7 +205,7 @@ public class JCPController2DModel
 	 *
 	 * @return     
 	 */
-	public double getDefaultBondLength()
+	public int getDefaultBondLength()
 	{
 		return this.defaultBondLength;
 	}
@@ -215,7 +216,7 @@ public class JCPController2DModel
 	 *
 	 * @param   defaultBondLength  
 	 */
-	public void setDefaultBondLength(double defaultBondLength)
+	public void setDefaultBondLength(int defaultBondLength)
 	{
 		this.defaultBondLength = defaultBondLength;
 	}

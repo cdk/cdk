@@ -149,18 +149,36 @@ public class JCPController2D
 		/*************************************************************************
 		 *                          RINGMODE                                     *
 		 *************************************************************************/
-		 if (c2dm.getDrawMode() == c2dm.RING)
-		 {
-			 int endX = 0, endY = 0;
-			 double angle = 0;
-			 int pointerVectorLength = c2dm.getRingPointerLength();
-			 int startX = r2dm.getPointerVectorStart().x;
-			 int startY = r2dm.getPointerVectorStart().y;
-	
-			 angle = GeometryTools.getAngle(startX - mouseX, startY - mouseY);
-			 endX = startX - (int)(Math.cos(angle) * pointerVectorLength);
-			 endY = startY - (int)(Math.sin(angle) * pointerVectorLength);
-			 r2dm.setPointerVectorEnd(new Point(endX, endY));
+	 	if (c2dm.getDrawMode() == c2dm.RING)
+	 	{
+		 	int endX = 0, endY = 0;
+		 	double angle = 0;
+		 	int pointerVectorLength = c2dm.getRingPointerLength();
+		 	Point2d center = getHighlighted().get2DCenter();
+		 	r2dm.setPointerVectorStart(new Point((int)center.x, (int)center.y));
+		 	int startX = 0;
+		 	int startY = 0;
+		 	angle = GeometryTools.getAngle(center.x - mouseX, center.y - mouseY);
+		 	endX = (int)center.x - (int)(Math.cos(angle) * pointerVectorLength);
+		 	endY = (int)center.y - (int)(Math.sin(angle) * pointerVectorLength);
+			r2dm.setPointerVectorEnd(new Point(endX, endY));
+	 	}
+
+		/*************************************************************************
+		 *                          LASSOMODE                                     *
+		 *************************************************************************/
+    	if (c2dm.getDrawMode() == c2dm.LASSO)
+	    {	
+			 r2dm.addLassoPoint(new Point(mouseX, mouseY));
+//		 	 r2dm.setSelectRect(new Polygon(xPoints, yPoints, number));
+//			 int startX = r2dm.getPointerVectorStart().x;
+//			 int startY = r2dm.getPointerVectorStart().y;
+//			 Vector xPointsVector = new Vector();
+//			 Vector yPointsVector = new Vector();
+//			 r2dm.setLassoLines()
+//			 int[] xPoints = {startX, startX, mouseX, mouseX};
+//			 int[] yPoints = {startY, mouseY, mouseY, startY};
+//			 r2dm.setSelectRect(new Polygon(xPoints, yPoints, 4));
 		 }
 	}
 	
@@ -250,31 +268,9 @@ public class JCPController2D
 			Bond currentBond;
 			AtomContainer selectedPart = new AtomContainer();
 			r2dm.setSelectedPart(selectedPart);
-			for (int i = 0; i < atomCon.getAtomCount(); i++)
-			{
-				currentAtom = atomCon.getAtomAt(i);
-				if (r2dm.getSelectRect().contains(new Point((int)currentAtom.getX2D(), (int)currentAtom.getY2D())))
-				{
-					selectedPart.addAtom(currentAtom);
-				}
-			}
-			for (int i = 0; i < atomCon.getAtomCount(); i++)
-			{
-				currentBond = atomCon.getBondAt(i);
-				for (int j = 0; j < selectedPart.getAtomCount(); j++)
-				{
-					currentAtom = selectedPart.getAtomAt(j);
-					if (selectedPart.contains(currentBond.getConnectedAtom(currentAtom)))
-					{
-						selectedPart.addBond(currentBond);
-						break;
-					}
-				}
-				
-			}
-			r2dm.setSelectedPart(selectedPart);
+			r2dm.setSelectedPart(getContainedAtoms(r2dm.getSelectRect()));
 			r2dm.setSelectRect(null);
-			System.out.println("selected stuff  "+ selectedPart);
+//			System.out.println("selected stuff  "+ selectedPart);
 		}
 		
 		/*************************************************************************
@@ -390,14 +386,17 @@ public class JCPController2D
 				angle = GeometryTools.getAngle(xDiff, yDiff);
 				newPoint1 = new Point2d((Math.cos(angle + (Math.PI / 2)) * bondLength / 4) + sharedAtomsCenter.x, (Math.sin(angle + (Math.PI / 2)) * bondLength / 4) + sharedAtomsCenter.y);
 				newPoint2 = new Point2d((Math.cos(angle - (Math.PI / 2)) * bondLength / 4) + sharedAtomsCenter.x, (Math.sin(angle - (Math.PI / 2)) * bondLength / 4) + sharedAtomsCenter.y);
+
 				if (wasDragged)
 				{
-					// check where the pointer points
+					// check which one of the two points is nearest to the endpoint of the pointer
+					// vector that was dragged to make the ringCenterVector point into the right direction.
 					pointerMarkX = r2dm.getPointerVectorEnd().x;
 					pointerMarkY = r2dm.getPointerVectorEnd().y;
-					distance1 = Math.sqrt(Math.pow(newPoint1.x - pointerMarkX, 2) + Math.pow(newPoint1.y - pointerMarkY, 2));
-					distance2 = Math.sqrt(Math.pow(newPoint2.x - pointerMarkX, 2) + Math.pow(newPoint2.y - pointerMarkY, 2));
-					r2dm.setPointerVectorStart(new Point(pointerMarkX, pointerMarkX));
+					distance1 = -1 * (Math.sqrt(Math.pow(newPoint1.x - pointerMarkX, 2) + Math.pow(newPoint1.y - pointerMarkY, 2)));
+					distance2 = -1 * (Math.sqrt(Math.pow(newPoint2.x - pointerMarkX, 2) + Math.pow(newPoint2.y - pointerMarkY, 2)));
+					r2dm.setPointerVectorStart(null);
+					r2dm.setPointerVectorEnd(null);
 				}
 				else
 				{
@@ -408,49 +407,64 @@ public class JCPController2D
 					distance2 = Math.sqrt(Math.pow(newPoint2.x - conAtomsCenter.x, 2) + Math.pow(newPoint2.y - conAtomsCenter.y, 2));
 				}
 				ringCenterVector = new Vector2d(sharedAtomsCenter);	
-				if (distance1 < distance2)
-				{
-					ringCenterVector.sub(newPoint1);
-				}
-				else if (distance2 < distance1)
-				{
-					ringCenterVector.sub(newPoint2);
-				}
-				else
+				// no ring is attached if the two ditances are equal
+				if (distance1 == distance2)
 				{
 					System.out.println("don't know where to draw the new Ring");
 				}
-				if (debug)
+				else
 				{
-					System.out.println("angle  "+ (angle / Math.PI) * 180);
-					Atom atom1 = new Atom(new Element("o"), newPoint1);
-					atomCon.addAtom(atom1);
-					Atom atom2 = new Atom(new Element("o"), newPoint2);
-					atomCon.addAtom(atom2);
-					Atom atom3 = new Atom(new Element("a"), conAtomsCenter);
-					atomCon.addAtom(atom3);
-					System.out.println("distance1  "+ distance1);
-					System.out.println("distance2  "+ distance2);
+					if (distance1 < distance2)
+					{
+						ringCenterVector.sub(newPoint1);
+					}
+					else if (distance2 < distance1)
+					{
+						ringCenterVector.sub(newPoint2);
+					}
+					
+					// construct a new Ring that contains the highlighted bond an its two atoms
+					newRing = createAttachRing(sharedAtoms, ringSize, symbol);
+					
+					// place the new atoms of the new ring to the right position
+					ringPlacer.placeFusedRing(newRing, sharedAtoms, sharedAtomsCenter, ringCenterVector, bondLength);
+					
+					// removes the highlighed bond and its atoms from the ring to add only
+					// the new placed atoms to the AtomContainer.		
+					try
+					{
+						newRing.remove(sharedAtoms);
+					}
+					catch (Exception exc)
+					{
+						exc.printStackTrace();
+					}
+					atomCon.add(newRing);
 				}
-				// construct a new Ring that contains the highlighted bond an its two atoms
-				newRing = createAttachRing(sharedAtoms, ringSize, symbol);
-//				sharedAtoms.addBond(newRing.getBondAt(0));
-				
-				// place the new atoms of the new ring to the right position
-				ringPlacer.placeFusedRing(newRing, sharedAtoms, sharedAtomsCenter, ringCenterVector, bondLength);
-				
-				// removes the highlighed bond and its atoms from the ring to add only
-				// the new placed atoms to the AtomContainer.		
-				try
-				{
-					newRing.remove(sharedAtoms);
-				}
-				catch (Exception exc)
-				{
-					exc.printStackTrace();
-				}
-				atomCon.add(newRing);
 			}
+			r2dm.fireChange();
+		}
+		
+	   /*************************************************************************
+	    *                          LASSOMODE                                     *
+	    *************************************************************************/
+		if (c2dm.getDrawMode() == c2dm.LASSO)
+		{
+			Vector lassoPoints = r2dm.getLassoPoints();
+			r2dm.addLassoPoint(new Point((Point)lassoPoints.elementAt(0)));
+			int number = lassoPoints.size();
+			int[] xPoints = new int[number];
+			int[] yPoints = new int[number];
+			Point currentPoint;
+			for (int i = 0; i < number; i++)
+			{
+				currentPoint = (Point)lassoPoints.elementAt(i);
+				xPoints[i] = currentPoint.x;
+				yPoints[i] = currentPoint.y;
+			}
+			Polygon polygon = new Polygon(xPoints, yPoints, number);
+			r2dm.setSelectedPart(getContainedAtoms(polygon));
+			r2dm.getLassoPoints().removeAllElements();
 			r2dm.fireChange();
 		}
 		wasDragged = false;
@@ -659,6 +673,43 @@ public class JCPController2D
 		}
 		return conAtoms.get2DCenter();
 		
+	}
+	
+
+	/**
+	 * Returns an AtomContainer with all the atoms and bonds that are inside 
+	 * a given polygon.
+	 *
+	 * @param   polygon  The given Polygon
+	 * @return     AtomContainer with all atoms and bonds inside the polygon
+	 */
+	private AtomContainer getContainedAtoms(Polygon polygon)
+	{
+		Atom currentAtom;
+		Bond currentBond;
+		AtomContainer selectedPart = new AtomContainer();
+		for (int i = 0; i < atomCon.getAtomCount(); i++)
+		{
+			currentAtom = atomCon.getAtomAt(i);
+			if (polygon.contains(new Point((int)currentAtom.getX2D(), (int)currentAtom.getY2D())))
+			{
+				selectedPart.addAtom(currentAtom);
+			}
+		}
+		for (int i = 0; i < atomCon.getAtomCount(); i++)
+		{
+			currentBond = atomCon.getBondAt(i);
+			for (int j = 0; j < selectedPart.getAtomCount(); j++)
+			{
+				currentAtom = selectedPart.getAtomAt(j);
+				if (selectedPart.contains(currentBond.getConnectedAtom(currentAtom)))
+				{
+					selectedPart.addBond(currentBond);
+					break;
+				}
+			}
+		}
+		return selectedPart;
 	}
 	
 }
