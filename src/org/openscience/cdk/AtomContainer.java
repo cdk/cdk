@@ -870,8 +870,8 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 		int i;
 		int j;
 		int[][] conMat = new int[getAtomCount()][getAtomCount()];
-		for (int f = 0; f < getElectronContainerCount(); f++)
-		{
+		for (int f = 0; f < getElectronContainerCount(); f++){
+      ec = getElectronContainerAt(f);
 			if (ec instanceof Bond)
 			{
 				Bond bond = (Bond) ec;
