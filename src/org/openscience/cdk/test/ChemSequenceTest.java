@@ -125,4 +125,28 @@ public class ChemSequenceTest extends TestCase {
     public void testStateChanged_ChemObjectChangeEvent() {
         // dunno how to test this!
     }
+
+	public void testClone() {
+        ChemSequence sequence = new ChemSequence();
+        Object clone = sequence.clone();
+        assertTrue(clone instanceof ChemSequence);
+    }    
+        
+    public void testClone_ChemModel() {
+		ChemSequence sequence = new ChemSequence();
+		sequence.addChemModel(new ChemModel()); // 1
+		sequence.addChemModel(new ChemModel()); // 2
+		sequence.addChemModel(new ChemModel()); // 3
+		sequence.addChemModel(new ChemModel()); // 4
+
+		ChemSequence clone = (ChemSequence)sequence.clone();
+		assertEquals(sequence.getChemModelCount(), clone.getChemModelCount());
+		for (int f = 0; f < sequence.getChemModelCount(); f++) {
+			for (int g = 0; g < clone.getChemModelCount(); g++) {
+				assertNotNull(sequence.getChemModel(f));
+				assertNotNull(clone.getChemModel(g));
+				assertNotSame(sequence.getChemModel(f), clone.getChemModel(g));
+			}
+		}        
+    }
 }

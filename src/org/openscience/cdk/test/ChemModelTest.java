@@ -65,6 +65,16 @@ public class ChemModelTest extends TestCase {
         testSetSetOfMolecules_SetOfMolecules();
     }
     
+    public void testSetSetOfReactions_SetOfReactions() {
+	    ChemModel chemModel = new ChemModel();
+	    SetOfReactions crystal = new SetOfReactions();
+        chemModel.setSetOfReactions(crystal);
+        assertEquals(crystal, chemModel.getSetOfReactions());
+    }
+    public void testGetSetOfReactions() {
+        testSetSetOfReactions_SetOfReactions();
+    }
+    
     public void testSetRingSet_RingSet() {
 	    ChemModel chemModel = new ChemModel();
 	    RingSet crystal = new RingSet();
@@ -92,6 +102,57 @@ public class ChemModelTest extends TestCase {
             assertTrue(description.charAt(i) != '\n');
             assertTrue(description.charAt(i) != '\r');
         }
+    }
+
+	public void testClone() {
+        ChemModel model = new ChemModel();
+        Object clone = model.clone();
+        assertNotNull(clone);
+        assertTrue(clone instanceof ChemModel);
+    }    
+        
+    public void testClone_SetOfMolecules() {
+		ChemModel model = new ChemModel();
+        ChemModel clone = (ChemModel)model.clone();
+        assertNull(clone.getSetOfMolecules());
+        
+		model.setSetOfMolecules(new SetOfMolecules());
+        clone = (ChemModel)model.clone();
+        assertNotNull(clone.getSetOfMolecules());
+        assertNotSame(model.getSetOfMolecules(), clone.getSetOfMolecules());
+    }
+
+    public void testClone_SetOfReactions() {
+		ChemModel model = new ChemModel();
+        ChemModel clone = (ChemModel)model.clone();
+        assertNull(clone.getSetOfReactions());
+        
+		model.setSetOfReactions(new SetOfReactions());
+        clone = (ChemModel)model.clone();
+        assertNotNull(clone.getSetOfReactions());
+        assertNotSame(model.getSetOfReactions(), clone.getSetOfReactions());
+    }
+
+    public void testClone_Crystal() {
+		ChemModel model = new ChemModel();
+        ChemModel clone = (ChemModel)model.clone();
+        assertNull(clone.getCrystal());
+        
+		model.setCrystal(new Crystal());
+        clone = (ChemModel)model.clone();
+        assertNotNull(clone.getCrystal());
+        assertNotSame(model.getCrystal(), clone.getCrystal());
+    }
+
+    public void testClone_RingSet() {
+		ChemModel model = new ChemModel();
+        ChemModel clone = (ChemModel)model.clone();
+        assertNull(clone.getRingSet());
+        
+		model.setRingSet(new RingSet());
+        clone = (ChemModel)model.clone();
+        assertNotNull(clone.getRingSet());
+        assertNotSame(model.getRingSet(), clone.getRingSet());
     }
 
     /**

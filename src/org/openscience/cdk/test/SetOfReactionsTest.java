@@ -55,6 +55,78 @@ public class SetOfReactionsTest extends TestCase {
         assertNotNull(reactionSet);
     }
     
+	public void testClone() {
+        SetOfReactions reactionSet = new SetOfReactions();
+        Object clone = reactionSet.clone();
+        assertTrue(clone instanceof SetOfReactions);
+    }    
+        
+    public void testGetReactionCount() {
+		SetOfReactions reactionSet = new SetOfReactions();
+		reactionSet.addReaction(new Reaction()); // 1
+		reactionSet.addReaction(new Reaction()); // 2
+		reactionSet.addReaction(new Reaction()); // 3
+		reactionSet.addReaction(new Reaction()); // 4
+        assertEquals(4, reactionSet.getReactionCount());
+    }
+
+    public void testGetReactions() {
+		SetOfReactions reactionSet = new SetOfReactions();
+		reactionSet.addReaction(new Reaction()); // 1
+		reactionSet.addReaction(new Reaction()); // 2
+		reactionSet.addReaction(new Reaction()); // 3
+		reactionSet.addReaction(new Reaction()); // 4
+        
+        Reaction[] reactions = reactionSet.getReactions();
+        assertNotNull(reactions);
+        assertEquals(4, reactions.length);
+        for (int i=0; i<reactions.length; i++) {
+            assertNotNull(reactions[i]);
+        }
+    }
+    
+    public void testGetReaction_int() {
+		SetOfReactions reactionSet = new SetOfReactions();
+		reactionSet.addReaction(new Reaction()); // 1
+		reactionSet.addReaction(new Reaction()); // 2
+		reactionSet.addReaction(new Reaction()); // 3
+		reactionSet.addReaction(new Reaction()); // 4
+        
+        for (int i=0; i<reactionSet.getReactionCount(); i++) {
+            assertNotNull(reactionSet.getReaction(i));
+        }
+    }
+    
+    public void testAddReaction_Reaction() {
+		SetOfReactions reactionSet = new SetOfReactions();
+		reactionSet.addReaction(new Reaction()); // 1
+		reactionSet.addReaction(new Reaction()); // 2
+        Reaction third = new Reaction();
+		reactionSet.addReaction(third); // 3
+		reactionSet.addReaction(new Reaction()); // 4
+        
+        assertEquals(4, reactionSet.getReactionCount());
+        assertEquals(third, reactionSet.getReaction(2));
+    }
+    
+    public void testClone_Reaction() {
+		SetOfReactions reactionSet = new SetOfReactions();
+		reactionSet.addReaction(new Reaction()); // 1
+		reactionSet.addReaction(new Reaction()); // 2
+		reactionSet.addReaction(new Reaction()); // 3
+		reactionSet.addReaction(new Reaction()); // 4
+
+		SetOfReactions clone = (SetOfReactions)reactionSet.clone();
+		assertEquals(reactionSet.getReactionCount(), clone.getReactionCount());
+		for (int f = 0; f < reactionSet.getReactionCount(); f++) {
+			for (int g = 0; g < clone.getReactionCount(); g++) {
+				assertNotNull(reactionSet.getReaction(f));
+				assertNotNull(clone.getReaction(g));
+				assertNotSame(reactionSet.getReaction(f), clone.getReaction(g));
+			}
+		}
+    }        
+
     /**
      * Method to test wether the class complies with RFC #9.
      */
