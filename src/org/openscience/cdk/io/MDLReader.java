@@ -48,8 +48,9 @@ import javax.vecmath.*;
  */
 public class MDLReader implements ChemObjectReader {
 
-	boolean debug = false;
-	BufferedReader input;
+    BufferedReader input;
+
+    private org.openscience.cdk.tools.LoggingTool logger;
 
     IsotopeFactory elemfact;
 
@@ -68,6 +69,7 @@ public class MDLReader implements ChemObjectReader {
 	 * @param   in  The Reader to read from
 	 */
 	public MDLReader(Reader in) {
+        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
 		input = new BufferedReader(in);
         try {
             elemfact = IsotopeFactory.getInstance();
@@ -171,9 +173,9 @@ public class MDLReader implements ChemObjectReader {
 	        strBuff.insert(3, " ");
 	        StringTokenizer strTok = new StringTokenizer(strBuff.toString());
 	        atoms = java.lang.Integer.valueOf(strTok.nextToken()).intValue();
-			if (debug) System.out.println("Atomcount: " + atoms);
+			logger.debug("Atomcount: " + atoms);
 	        bonds = java.lang.Integer.valueOf(strTok.nextToken()).intValue();
-			if (debug) System.out.println("Bondcount: " + bonds);
+			logger.debug("Bondcount: " + bonds);
 	        for (int f = 0; f < atoms; f++)
 	        {
 	            strBuff = new StringBuffer(input.readLine());
@@ -181,7 +183,7 @@ public class MDLReader implements ChemObjectReader {
 	            x = new Double(strTok.nextToken()).doubleValue();
 	            y = new Double(strTok.nextToken()).doubleValue();
 	            z = new Double(strTok.nextToken()).doubleValue();
-				if (debug) System.out.println("Coordinates: " + x + "; " + y + "; " + z);
+                logger.debug("Coordinates: " + x + "; " + y + "; " + z);
 				atom = new Atom(strTok.nextToken(), new Point3d(x, y, z));
 				atom.setPoint2D(new Point2d(x, y));
                 elemfact.configure(atom);
@@ -199,7 +201,7 @@ public class MDLReader implements ChemObjectReader {
 	            atom2 = java.lang.Integer.valueOf(strTok.nextToken()).intValue();
 	            order = java.lang.Integer.valueOf(strTok.nextToken()).intValue();
 	            stereo = java.lang.Integer.valueOf(strTok.nextToken()).intValue();
-				if (debug) System.out.println("Bond: " + atom1 + " - " + atom2 + "; order " + order);
+                logger.debug("Bond: " + atom1 + " - " + atom2 + "; order " + order);
 	            if (stereo == 1)
 	            {
 	                // MDL up bond
@@ -212,12 +214,10 @@ public class MDLReader implements ChemObjectReader {
 	            }
 				molecule.addBond(atom1 - 1, atom2 - 1, order, stereo);
 	        }
-	    }
-	    catch (Exception e)
-	    {
-	        System.err.println("Error while reading MDL Molfile.");
-	        System.err.println("Reason for failure: ");
-			e.printStackTrace();
+	    } catch (Exception e) {
+	        logger.error("Error while reading MDL Molfile.");
+	        logger.error("Reason for failure: ");
+            // e.printStackTrace();
             molecule = null;
 	    }
 		return molecule;
