@@ -50,6 +50,7 @@ public class IOTests {
         suite.addTest(MDLReaderTest.suite());
         suite.addTest(MDLWriterTest.suite());
         suite.addTest(MDLRXNReaderTest.suite());
+        suite.addTest(Mol2ReaderTest.suite());
         suite.addTest(PDBReaderTest.suite());
         suite.addTest(ShelXReaderTest.suite());
         suite.addTest(SMILESReaderTest.suite());

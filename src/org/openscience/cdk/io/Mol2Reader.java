@@ -31,11 +31,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
-
+import java.util.StringTokenizer;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomType;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
@@ -44,9 +45,11 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.config.AtomTypeFactory;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Reads a molecule from an Mol2 file, such as written by Sybyl.
+ * See the specs <a href="http://www.tripos.com/custResources/mol2Files/">here</a>.
  *
  * @cdk.module io
  *
@@ -58,7 +61,7 @@ import org.openscience.cdk.config.AtomTypeFactory;
 public class Mol2Reader extends DefaultChemObjectReader {
 
     BufferedReader input = null;
-    private org.openscience.cdk.tools.LoggingTool logger = null;
+    private LoggingTool logger = null;
 
     /**
      * Contructs a new MDLReader that can read Molecule from a given Reader.
@@ -66,7 +69,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
      * @param  in  The Reader to read from
      */
     public Mol2Reader(Reader in) {
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        logger = new LoggingTool(this);
         input = new BufferedReader(in);
     }
 
@@ -95,13 +98,12 @@ public class Mol2Reader extends DefaultChemObjectReader {
 
     /**
      * Takes an object which subclasses ChemObject, e.g.Molecule, and will read
-     * this (from file, database, internet etc). If the specific implementation
+     * this from from the Reader. If the specific implementation
      * does not support a specific ChemObject it will throw an Exception.
      *
-     * @param  object                              The object that subclasses
-     *      ChemObject
-     * @return                                     The ChemObject read
-     * @exception  CDKException
+     * @param  object The object that subclasses ChemObject
+     * @return        The ChemObject read
+     * @exception     CDKException
      */
      public ChemObject read(ChemObject object) throws CDKException {
          if (object instanceof ChemFile) {
@@ -147,7 +149,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
         AtomTypeFactory atFactory = null;
         try {
             atFactory = AtomTypeFactory.getInstance(
-                "org/openscience/cdk/config/mol2_atomtypes.txt"
+                "org/openscience/cdk/config/data/mol2_atomtypes.xml"
             );
         } catch (Exception exception) {
             String error = "Could not instantiate an AtomTypeFactory";
@@ -165,37 +167,49 @@ public class Mol2Reader extends DefaultChemObjectReader {
                     // second line has atom/bond counts?
                     String name = input.readLine();
                     String counts = input.readLine();
-                    String atomCountStr = counts.substring(0,5).trim();
-                    String bondCountStr = counts.substring(6,11).trim();
+                    StringTokenizer tokenizer = new StringTokenizer(counts);
                     try {
-                        atomCount = Integer.parseInt(atomCountStr);
-                        bondCount = Integer.parseInt(bondCountStr);
-                        logger.info("Reading #atoms: " + atomCount);
-                        logger.info("Reading #bonds: " + bondCount);
+                        atomCount = Integer.parseInt(tokenizer.nextToken());
                     } catch (NumberFormatException nfExc) {
-                        String error = "Error while reading atom and bond counts";
+                        String error = "Error while reading atom count from MOLECULE block";
                         logger.error(error);
                         logger.debug(nfExc);
                         throw new CDKException(error);
                     }
+                    if (tokenizer.hasMoreTokens()) {
+                        try {
+                            bondCount = Integer.parseInt(tokenizer.nextToken());
+                        } catch (NumberFormatException nfExc) {
+                            String error = "Error while reading atom and bond counts";
+                            logger.error(error);
+                            logger.debug(nfExc);
+                            throw new CDKException(error);
+                        }
+                    } else {
+                        bondCount = 0;
+                    }
+                    logger.info("Reading #atoms: ", atomCount);
+                    logger.info("Reading #bonds: ", bondCount);
                     
                     logger.warn("Not reading molecule qualifiers");
                 } else if (line.startsWith("@<TRIPOS>ATOM")) {
                     logger.info("Reading atom block");
                     for (int i=0; i<atomCount; i++) {
-                        line = input.readLine();
-                        String idStr = line.substring(8, 15).trim();
-                        String xStr = line.substring(17, 26).trim();
-                        String yStr = line.substring(27, 36).trim();
-                        String zStr = line.substring(37, 46).trim();
-                        String atomTypeStr = line.substring(47, 52).trim();
+                        line = input.readLine().trim();
+                        StringTokenizer tokenizer = new StringTokenizer(line);
+                        String idStr = tokenizer.nextToken();
+                        String nameStr = tokenizer.nextToken();
+                        String xStr = tokenizer.nextToken();
+                        String yStr = tokenizer.nextToken();
+                        String zStr = tokenizer.nextToken();
+                        String atomTypeStr = tokenizer.nextToken();
                         AtomType atomType = atFactory.getAtomType(atomTypeStr);
                         if (atomType == null) {
                             atomType = atFactory.getAtomType("X");
-                            logger.error("Could not find specified atom type: " +atomTypeStr);
+                            logger.error("Could not find specified atom type: ", atomTypeStr);
                         }
                         Atom atom = new Atom("X");
-                        atom.setID(idStr);
+                        atom.setID(nameStr);
                         atom.setAtomTypeName(atomTypeStr);
                         atFactory.configure(atom);
                         try {
@@ -215,14 +229,36 @@ public class Mol2Reader extends DefaultChemObjectReader {
                     logger.info("Reading bond block");
                     for (int i=0; i<bondCount; i++) {
                         line = input.readLine();
-                        String atom1Str = line.substring(7, 11).trim();
-                        String atom2Str = line.substring(12, 16).trim();
-                        String orderStr = line.substring(17).trim();
+                        StringTokenizer tokenizer = new StringTokenizer(line);
+                        String bondId = tokenizer.nextToken();
+                        String atom1Str = tokenizer.nextToken();
+                        String atom2Str = tokenizer.nextToken();
+                        String orderStr = tokenizer.nextToken();
                         try {
                             int atom1 = Integer.parseInt(atom1Str);
                             int atom2 = Integer.parseInt(atom2Str);
-                            int order = Integer.parseInt(orderStr);
-                            molecule.addBond(atom1-1, atom2-1, (double)order);
+                            double order = 0;
+                            if ("1".equals(orderStr)) {
+                                order = CDKConstants.BONDORDER_AROMATIC;
+                            } else if ("2".equals(orderStr)) {
+                                order = CDKConstants.BONDORDER_DOUBLE;
+                            } else if ("3".equals(orderStr)) {
+                                order = CDKConstants.BONDORDER_TRIPLE;
+                            } else if ("am".equals(orderStr)) {
+                                order = CDKConstants.BONDORDER_SINGLE;
+                            } else if ("ar".equals(orderStr)) {
+                                order = CDKConstants.BONDORDER_AROMATIC;
+                            } else if ("du".equals(orderStr)) {
+                                order = CDKConstants.BONDORDER_SINGLE;
+                            } else if ("un".equals(orderStr)) {
+                                order = CDKConstants.BONDORDER_SINGLE;
+                            } else if ("nc".equals(orderStr)) {
+                                // not connected
+                                order = 0;
+                            }
+                            if (order != 0) {
+                                molecule.addBond(atom1-1, atom2-1, order);
+                            }
                         } catch (NumberFormatException nfExc) {
                             String error = "Error while reading bond information";
                             logger.error(error);

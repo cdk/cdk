@@ -3,29 +3,58 @@
   xsi:schemaLocation="http://www.xml-cml.org/schema/cml2/core ../../io/cml/data/cmlAll.xsd"
   id="mol2" title="MOL2 AtomTypes">
 
-  <atomType id="P.3">
+  <atomType id="C.3" title="1">
+    <atom elementType="C"/>
+    <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
+  </atomType>
+  <atomType id="C.2" title="2">
+    <atom elementType="C"/>
+    <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
+  </atomType>
+  <atomType id="C.ar" title="3">
+    <atom elementType="C"/>
+  </atomType>
+  <atomType id="C.1" title="4">
+    <atom elementType="C"/>
+    <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp1</scalar>
+  </atomType>
+  <atomType id="N.3" title="5">
+    <atom elementType="N"/>
+    <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
+  </atomType>
+  <atomType id="N.2" title="6">
+    <atom elementType="N"/>
+    <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
+  </atomType>
+  <atomType id="N.1" title="7">
+    <atom elementType="N"/>
+    <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp1</scalar>
+  </atomType>
+  <atomType id="O.3" title="8">
+    <atom elementType="O"/>
+    <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
+  </atomType>
+  <atomType id="O.2" title="9">
+    <atom elementType="O"/>
+    <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
+  </atomType>
+  <atomType id="P.3" title="12">
     <atom elementType="P"/>
+    <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
   </atomType>
-  <atomType id="O.2">
-    <atom elementType="O"/>
+  <atomType id="H" title="13">
+    <atom elementType="H"/>
   </atomType>
-  <atomType id="O.3">
-    <atom elementType="O"/>
-  </atomType>
-  <atomType id="C.1">
-    <atom elementType="C"/>
-  </atomType>
-  <atomType id="C.2">
-    <atom elementType="C"/>
-  </atomType>
-  <atomType id="N.pl">
+  <atomType id="N.pl3" title="19">
     <atom elementType="N"/>
   </atomType>
-  <atomType id="N.2">
-    <atom elementType="N"/>
+  <atomType id="N.4" title="31">
+    <atom elementType="N" formalCharge="1"/>
+    <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
   </atomType>
-  <atomType id="N.1">
-    <atom elementType="N"/>
+  <atomType id="C.cat" title="33">
+    <!-- "only used in a guadinium group" -->
+    <atom elementType="C" formalCharge="1"/>
   </atomType>
 </atomTypeList>
 
