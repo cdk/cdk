@@ -123,28 +123,32 @@ public class CoreCoverageTest extends TestCase {
             // first the constructors
             Constructor[] constructors = coreClass.getDeclaredConstructors();
             for (int i=0; i<constructors.length; i++) {
-                String testMethod = "test" + capitalizeName(removePackage(constructors[i].getName()));
-                Class[] paramTypes = constructors[i].getParameterTypes();
-                for (int j=0; j<paramTypes.length; j++) {
-                    testMethod = testMethod + "_" + removePackage(paramTypes[j].getName());
-                }
-                if (!testMethodNames.contains(testMethod)) {
-                    System.out.println(removePackage(coreClass.getName()) + ": missing the expected test method: " + testMethod);
-                    missingTestsCount++;
+                if (!Modifier.isPrivate(constructors[i].getModifiers())) {
+                    String testMethod = "test" + capitalizeName(removePackage(constructors[i].getName()));
+                    Class[] paramTypes = constructors[i].getParameterTypes();
+                    for (int j=0; j<paramTypes.length; j++) {
+                        testMethod = testMethod + "_" + removePackage(paramTypes[j].getName());
+                    }
+                    if (!testMethodNames.contains(testMethod)) {
+                        System.out.println(removePackage(coreClass.getName()) + ": missing the expected test method: " + testMethod);
+                        missingTestsCount++;
+                    }
                 }
             }
             
             // now the methods.
             Method[] methods = coreClass.getDeclaredMethods();
             for (int i=0; i<methods.length; i++) {
-                String testMethod = "test" + capitalizeName(removePackage(methods[i].getName()));
-                Class[] paramTypes = methods[i].getParameterTypes();
-                for (int j=0; j<paramTypes.length; j++) {
-                    testMethod = testMethod + "_" + removePackage(paramTypes[j].getName());
-                }
-                if (!testMethodNames.contains(testMethod)) {
-                    System.out.println(removePackage(coreClass.getName()) + ": missing the expected test method: " + testMethod);
-                    missingTestsCount++;
+                if (!Modifier.isPrivate(methods[i].getModifiers())) {
+                    String testMethod = "test" + capitalizeName(removePackage(methods[i].getName()));
+                    Class[] paramTypes = methods[i].getParameterTypes();
+                    for (int j=0; j<paramTypes.length; j++) {
+                        testMethod = testMethod + "_" + removePackage(paramTypes[j].getName());
+                    }
+                    if (!testMethodNames.contains(testMethod)) {
+                        System.out.println(removePackage(coreClass.getName()) + ": missing the expected test method: " + testMethod);
+                        missingTestsCount++;
+                    }
                 }
             }
             
