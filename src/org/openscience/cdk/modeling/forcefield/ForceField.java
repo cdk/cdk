@@ -7,10 +7,10 @@ import javax.vecmath.*;
 import org.openscience.cdk.*;
 
 /**
- *  Description of the Class
+ *  To get parameters from the molecule to the potential function
  *
- *@author     labarta
- *@created    December 9, 2004
+ *@author     vlabarta
+ *
  */
 public class ForceField {
 	Vector point0ToShow = new Vector();
@@ -23,10 +23,10 @@ public class ForceField {
 	
 	
 	/**
-	 *  Description of the Method
+	 *  Read the coordinates of atoms in the molecule from its atom container
 	 *
-	 *@param  molecule  Description of the Parameter
-	 *@return           Description of the Return Value
+	 *@param  molecule  Molecule to be optimized
+	 *@return           Atoms coordinates r=(x1,y1,z1,...,xn,yn,zn).
 	 */
 	public GVector readAtomsCoordinates(AtomContainer molecule) {
 		//	input: molecule like AtomContainer object,
