@@ -590,7 +590,7 @@ public class GeometryTools {
       boolean hasinfo = true;
       Atom[] atoms = m.getAtoms();
       for (int i=0; i < atoms.length; i++) {
-          if (atoms[i].getPoint3D() == null) hasinfo = false;
+          if (atoms[i].getPoint3D() == null) return false;
       }
       return hasinfo;
   }
