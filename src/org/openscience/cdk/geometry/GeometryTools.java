@@ -1,4 +1,4 @@
-/* $RCSfile$    
+/* $RCSfile$
  * $Author$    
  * $Date$    
  * $Revision$
@@ -225,6 +225,59 @@ public class GeometryTools
 		return new Point2d(x/(double)atoms.size(), y/(double)atoms.size());
 	}
 
+    /**
+     * Calculates the center of mass for the <code>Atom</code>s in the
+     * AtomContainer for the 2D coordinates.
+     *
+     * @param ac        AtomContainer for which the center of mass is calculated
+     *
+     * @keyword center of mass
+     */
+    public static Point2d get2DCentreOfMass(AtomContainer ac) {
+        double x = 0.0;
+        double y = 0.0;
+
+        double totalmass = 0.0;
+
+        AtomEnumeration atoms = ac.atoms();
+        while (atoms.hasMoreElements()) {
+            Atom a = (Atom)atoms.nextElement();
+            double mass = a.getExactMass();
+            totalmass += mass;
+            x += mass*a.getX2D();
+            y += mass*a.getY2D();
+        }
+
+        return new Point2d(x/totalmass, y/totalmass);
+    }
+
+    /**
+     * Calculates the center of mass for the <code>Atom</code>s in the
+     * AtomContainer for the 2D coordinates.
+     *
+     * @param ac        AtomContainer for which the center of mass is calculated
+     *
+     * @keyword center of mass
+     */
+    public static Point3d get3DCentreOfMass(AtomContainer ac) {
+        double x = 0.0;
+        double y = 0.0;
+        double z = 0.0;
+
+        double totalmass = 0.0;
+
+        AtomEnumeration atoms = ac.atoms();
+        while (atoms.hasMoreElements()) {
+            Atom a = (Atom)atoms.nextElement();
+            double mass = a.getExactMass();
+            totalmass += mass;
+            x += mass*a.getX3D();
+            y += mass*a.getY3D();
+            z += mass*a.getZ3D();
+        }
+
+        return new Point3d(x/totalmass, y/totalmass, z/totalmass);
+    }
 
 	public static double getAngle(double xDiff, double yDiff)
 	{

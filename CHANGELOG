@@ -11,6 +11,8 @@ New:
   single double bond in the SmilesGenerator.
 * The Atom class has now a container field for its
   formal charge. (RFC #6)
+* Added getCentreOfMass methods (2D and 3D)
+* Added geometrical methods for crystals
 
 Fixes:
 * Reading of 3D coordinates from ShelX files

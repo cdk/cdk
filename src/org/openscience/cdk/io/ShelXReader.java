@@ -144,49 +144,19 @@ public class ShelXReader implements ChemObjectReader {
                 logger.debug("beta : " + sbeta);
                 logger.debug("gamma: " + sgamma);
 
-                /* now comes the tricky part: convert them to cartesian
-                   coordinates */
-                double ax,ay,az;
-                double bx,by,bz;
-                double cx,cy,cz;
-                /* align a axes with x, units are Angstrom */
                 double a = FortranFormat.atof(sa);
                 double b = FortranFormat.atof(sb);
                 double c = FortranFormat.atof(sc);
                 double alpha = FortranFormat.atof(salpha)*Math.PI/180.0;
                 double beta  = FortranFormat.atof(sbeta)*Math.PI/180.0;
                 double gamma = FortranFormat.atof(sgamma)*Math.PI/180.0;
-                ax = a;
-                ay = 0.0;
-                az = 0.0;
+                double[][] axes;
 
-                /* some intermediate variables */
-                double cosalpha = Math.cos(alpha);
-                double cosbeta = Math.cos(beta);
-                double cosgamma = Math.cos(gamma);
-                double sinalpha = Math.sin(alpha);
-                double sinbeta = Math.sin(beta);
-                double singamma = Math.sin(gamma);
+                axes = CrystalGeometryTools.notionalToCartesian(a,b,c, alpha, beta, gamma);
 
-                /* b is in xy plane making a angle gamma with a */
-                bx = b*cosgamma;
-                by = b*singamma;
-                bz = 0.0;
-
-                /* now the c axis,
-                 * source: http://server.ccl.net/cca/documents/molecular-modeling/node4.html */
-                double V = a * b * c *
-                           Math.sqrt(1.0 - cosalpha*cosalpha -
-                                     cosbeta*cosbeta -
-                                     cosgamma*cosgamma +
-                                     2.0*cosalpha*cosbeta*cosgamma);
-                cx  = c*cosbeta;
-                cy = c*(cosalpha - cosbeta*cosgamma)/singamma;
-                cz = V/(a*b*singamma);
-
-                crystal.setA(ax, ay, az);
-                crystal.setB(bx, by, bz);
-                crystal.setC(cx, cy, cz);
+                crystal.setA(axes[0][0], axes[0][1], axes[0][2]);
+                crystal.setB(axes[1][0], axes[1][1], axes[1][2]);
+                crystal.setC(axes[2][0], axes[2][1], axes[2][2]);
             } else if (command.equalsIgnoreCase("ZERR")) {
             } else if (command.equalsIgnoreCase("LATT")) {
             } else if (command.equalsIgnoreCase("SYMM")) {

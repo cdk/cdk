@@ -82,13 +82,13 @@ public class CrystalGeometryTools {
      *
      * @keyword  notional coordinates
      */
-    public static double[][] calculateCartesianVectors(double alength, double blength,
-                                                       double clength, double alpha,
-                                                       double beta, double gamma) {
+    public static double[][] notionalToCartesian(double alength, double blength,
+                                                 double clength, double alpha,
+                                                 double beta, double gamma) {
         double[][] axes = new double[3][3];
         
         /* 1. align the a axis with x axis */
-        axes[0][0] = a;                 // ax
+        axes[0][0] = alength;           // ax
         axes[0][1] = 0.0;               // ay
         axes[0][2] = 0.0;               // az
 
@@ -101,21 +101,22 @@ public class CrystalGeometryTools {
         double singamma = Math.sin(gamma);
 
         /* 2. place the b is in xy plane making a angle gamma with a */
-        axes[1][0] = b*cosgamma;        // bx
-        axes[1][1] = b*singamma;        // by
+        axes[1][0] = blength*cosgamma;  // bx
+        axes[1][1] = blength*singamma;  // by
         axes[1][2] = 0.0;               // bz
 
         /* 3. now the c axis,
          * source: http://server.ccl.net/cca/documents/molecular-modeling/node4.html */
-        double V = a * b * c *
+        double V = alength * blength * clength *
                    Math.sqrt(1.0 - cosalpha*cosalpha -
                              cosbeta*cosbeta -
                              cosgamma*cosgamma +
                              2.0*cosalpha*cosbeta*cosgamma);
-        axes[2][0] = c*cosbeta;         // cx
-        axes[2][1] = c*(cosalpha -      // cy
+        axes[2][0] = clength*cosbeta;   // cx
+        axes[2][1] = clength*(cosalpha- // cy
              cosbeta*cosgamma)/singamma;
-        axes[2][2] = V/(a*b*singamma);  // cz
+        axes[2][2] = V/(alength*blength
+             *singamma);                // cz
 
         return axes;
     }
