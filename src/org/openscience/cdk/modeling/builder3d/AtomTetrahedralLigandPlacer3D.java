@@ -689,7 +689,7 @@ public class AtomTetrahedralLigandPlacer3D {
 	 *@param  axis    axis of rotation
 	 *@param  angle   angle to vector rotate around
 	 *@return         rotated vector
-	 *@author         egonw
+	 *author:         egonw
 	 */
 	public static Vector3d rotate(Vector3d vector, Vector3d axis, double angle) {
 		Matrix3d rotate = new Matrix3d();

@@ -174,7 +174,7 @@ public class AtomPlacer3D {
 	 * and dihedrals. Assign coordinates directly to the atoms.
 	 *
 	 * @param  flag_branched  marks branched chain
-	 * @author                egonw,cho
+	 * author: egonw,cho
 	 */
 
 	public void zmatrixChainToCartesian(AtomContainer molecule, boolean flag_branched) {
@@ -304,7 +304,7 @@ public class AtomPlacer3D {
 	 *  Gets the nextUnplacedHeavyAtomWithAliphaticPlacedNeighbour from an atom container or molecule
 	 *
 	 * @return    The nextUnplacedHeavyAtomWithAliphaticPlacedNeighbour value
-	 * @author    steinbeck,cho
+	 * author:    steinbeck,cho
 	 */
 	public Atom getNextUnplacedHeavyAtomWithAliphaticPlacedNeighbour(AtomContainer molecule) {
 		Bond[] bonds = molecule.getBonds();
@@ -328,7 +328,7 @@ public class AtomPlacer3D {
 	 *  Gets the nextPlacedHeavyAtomWithAliphaticPlacedNeigbor from an atom container or molecule
 	 *
 	 * @return    The nextUnplacedHeavyAtomWithUnplacedAliphaticNeigbor
-	 * @author    steinbeck,cho
+	 * author: steinbeck,cho
 	 */
 	public Atom getNextPlacedHeavyAtomWithUnplacedAliphaticNeighbour(AtomContainer molecule) {
 		Bond[] bonds = molecule.getBonds();
@@ -426,7 +426,7 @@ public class AtomPlacer3D {
 	 *
 	 * @param  atom  The Atom whose unplaced bonding partners are to be returned
 	 * @return       an unplaced heavy atom connected to a given atom
-	 * @author       steinbeck,cho
+	 * author:      steinbeck,cho
 	 */
 	public Atom getUnplacedHeavyAtom(AtomContainer molecule, Atom atom) {
 
@@ -446,7 +446,7 @@ public class AtomPlacer3D {
 	 *
 	 * @param  atom  The Atom whose placed bonding partners are to be returned
 	 * @return       a placed heavy atom connected to a given atom
-	 * @author       steinbeck
+	 * author:      steinbeck
 	 */
 	public Atom getPlacedHeavyAtom(AtomContainer molecule, Atom atom) {
 
@@ -543,10 +543,10 @@ public class AtomPlacer3D {
 	}
 	
 	/**
-	 *  Gets the placedAtoms attribute of the AtomPlacer3D object
+	 *  Gets numberOfUnplacedHeavyAtoms (!Flag ISPLACED !H)
 	 *
-	 * @param  atom  Description of the Parameter
-	 * @return       The placedAtoms value
+	 * @param  ac AtomContainer
+	 * @return       int #UnplacedAtoms 
 	 */
 	public int numberOfUnplacedHeavyAtoms(AtomContainer ac) {
 		int nUnplacedHeavyAtoms=0;

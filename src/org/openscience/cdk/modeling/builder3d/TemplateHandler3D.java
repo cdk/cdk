@@ -144,8 +144,8 @@ public class TemplateHandler3D{
 	 *  Molecule. If so, it assigns the coordinates from the template to the
 	 *  respective atoms in the Molecule.
 	 *
-	 *@param  molecule  The molecule to be check for potential templates
-	 *@return           True if there was a possible mapping
+	 *@param  ringSystems AtomContainer from the ring systems
+	 *@param  NumberOfRingAtoms double
 	 */
 	public void mapTemplates(AtomContainer ringSystems, double NumberOfRingAtoms) throws Exception{
 		System.out.println("Map Template...START---Number of Ring Atoms:"+NumberOfRingAtoms);
