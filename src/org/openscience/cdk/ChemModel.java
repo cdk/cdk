@@ -191,5 +191,37 @@ public class ChemModel extends ChemObject implements java.io.Serializable, Clone
     public void setSetOfReactions(SetOfReactions sor) {
         this.setOfReactions = sor;
     }
+    
+    /**
+     * Returns a String representation of the contents of this
+     * ChemObject.
+     *
+     * @return String representation of content
+     */
+    public String toString() {
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("ChemModel(");
+        buffer.append(hashCode());
+        if (getSetOfMolecules() != null) {
+            buffer.append(", ");
+            buffer.append(getSetOfMolecules().toString());
+        } else {
+            buffer.append(", No SetOfMolecules");
+        }
+        if (getCrystal() != null) {
+            buffer.append(getCrystal().toString());
+            buffer.append(", ");
+        } else {
+            buffer.append(", No Crystal");
+        }
+        if (getSetOfReactions() != null) {
+            buffer.append(getSetOfReactions().toString());
+            buffer.append(", ");
+        } else {
+            buffer.append(", No SetOfReactions");
+        }
+        buffer.append(")");
+        return buffer.toString();
+    }
 }
 
