@@ -99,7 +99,7 @@
           -->
         <mkdir dir="report/doccheck"/>
         <javadoc private="false" public="true"
-                 destdir="report/doccheck/"
+                 destdir="reports/doccheck/"
                  excludepackagenames="org.openscience.cdk.test.*">
             <classpath refid="project.class.path" />
 
