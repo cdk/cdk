@@ -28,7 +28,6 @@
  */
 package org.openscience.cdk;
 
-import javax.vecmath.*;
 
 /**
  * Represents the idea of a chemical reaction. The reaction consists of 

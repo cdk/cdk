@@ -29,7 +29,7 @@
 
 package org.openscience.cdk;
 
-import org.openscience.cdk.event.*;
+import org.openscience.cdk.event.ChemObjectChangeEvent;
 
 
 /**

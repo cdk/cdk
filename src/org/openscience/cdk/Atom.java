@@ -28,7 +28,7 @@
  */
 package org.openscience.cdk;
 
-import javax.vecmath.*;
+import javax.vecmath.Point3d;
 
 /**
  * Represents the idea of an chemical atom.

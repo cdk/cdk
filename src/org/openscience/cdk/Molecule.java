@@ -23,7 +23,6 @@
  */
 package org.openscience.cdk;
 
-import java.util.Vector;
 
 /**
  * Represents the concept of a chemical molecule, an object composed of 

@@ -28,8 +28,11 @@
  */
 package org.openscience.cdk;
 
-import org.openscience.cdk.event.*;
-import java.util.*;
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.Vector;
+
+import org.openscience.cdk.event.ChemObjectChangeEvent;
 
 /**
  * The base class for all chemical objects in this cdk. It provides methods

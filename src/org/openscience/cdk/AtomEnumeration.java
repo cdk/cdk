@@ -24,8 +24,7 @@
  */
 package org.openscience.cdk;
 
-import java.util.*;
-import javax.vecmath.*;
+import java.util.Enumeration;
 
 /**
  *  An Enumeration of the Atoms in a particular AtomContainer.

@@ -24,8 +24,10 @@
 
 package org.openscience.cdk;
 
-import java.util.*;
-import javax.vecmath.*;
+import java.util.Collections;
+import java.util.Vector;
+
+import javax.vecmath.Point2d;
 
 
 /**

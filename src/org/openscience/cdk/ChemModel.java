@@ -24,7 +24,6 @@
 
 package org.openscience.cdk;
 
-import java.util.*;
 
 /** 
  * An object containig multiple SetOfMolecules and 

@@ -24,8 +24,6 @@
 
 package org.openscience.cdk;
 
-import javax.vecmath.*;
-import java.util.Vector;
 
 /** 
  * Class representing a ring structure in a molecule.

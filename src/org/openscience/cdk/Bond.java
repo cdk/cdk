@@ -25,7 +25,9 @@
 package org.openscience.cdk;
 
 import java.util.Vector;
-import javax.vecmath.*;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
 
 /**
  *  Implements the concept of a covalent bond between two atoms. A bond is

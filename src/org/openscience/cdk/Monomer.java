@@ -27,8 +27,6 @@
  *  */
 package org.openscience.cdk;
 
-import java.util.Vector;
-import org.openscience.cdk.*;
 
 /**
  * A Monomer is an AtomContainer which stores additional monomer specific 

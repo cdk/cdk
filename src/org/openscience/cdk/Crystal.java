@@ -24,8 +24,6 @@
 
 package org.openscience.cdk;
 
-import org.openscience.cdk.exception.*;
-import javax.vecmath.Point3d;
 
 /**
  * Class representing a molecular crystal.

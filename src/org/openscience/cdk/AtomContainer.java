@@ -23,8 +23,11 @@
  */
 package org.openscience.cdk;
 
-import java.util.*;
-import javax.vecmath.*;
+import java.util.Enumeration;
+import java.util.Vector;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
 
 /**
  *  Base class for all chemical objects that maintain a list of Atoms and

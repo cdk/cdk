@@ -27,8 +27,8 @@
  *  */
 package org.openscience.cdk;
 
-import org.openscience.cdk.*;
-import java.util.*;
+import java.util.Collection;
+import java.util.Hashtable;
 
 /**
  * Subclass of Molecule to store Poymer specific attributes a Polymer has.
