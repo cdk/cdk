@@ -41,9 +41,11 @@ import javax.vecmath.*;
  *
  * <p>From the Atom block it reads atomic coordinates, element types and
  * formal charges. From the Bond block it reads the bonds and the orders.
- * 
- * <p>Additionally, it reads 'M  CHG', 'G  ' and 'M  ISO' lines from the 
+ * Additionally, it reads 'M  CHG', 'G  ' and 'M  ISO' lines from the 
  * property block.
+ *
+ * <p>If all z coordinates are 0.0, then the xy coordinates are taken as
+ * 2D, otherwise the coordinates are read as 3D.
  *
  * @author     steinbeck
  * @author     Egon Willighagen
@@ -190,9 +192,10 @@ public class MDLReader extends DefaultChemObjectReader {
 		int atom2 = 0;
 		int order = 0;
 		int stereo = 0;
-		double x = 0;
-		double y = 0;
-		double z = 0;
+		double x = 0.0;
+		double y = 0.0;
+		double z = 0.0;
+        double totalZ = 0.0;
 		int[][] conMat = new int[0][0];
 		String help;
 		Molecule molecule = new Molecule();
@@ -241,18 +244,20 @@ public class MDLReader extends DefaultChemObjectReader {
 				x = new Double(strTok.nextToken()).doubleValue();
 				y = new Double(strTok.nextToken()).doubleValue();
 				z = new Double(strTok.nextToken()).doubleValue();
+                totalZ += z;
 				logger.debug("Coordinates: " + x + "; " + y + "; " + z);
                 String element = strTok.nextToken();
                 logger.debug("Atom type: " + element);
 
                 // try to determine Isotope
                 try {
-                    atom = isotopeFactory.configure(new Atom(element, new Point3d(x, y, z)));
+                    atom = isotopeFactory.configure(new Atom(element));
                 } catch (NullPointerException exception) {
                     logger.debug("Atom " + element + " is not an regular element. Creating a PseudoAtom.");
-                    atom = new PseudoAtom(element, new Point3d(x, y, z));
+                    atom = new PseudoAtom(element);
                 }
-				atom.setPoint2D(new Point2d(x, y));
+                // store as 3D for now, convert to 2D (if totalZ == 0.0) later
+                atom.setPoint3D(new Point3d(x, y, z));
                 
                 // parse further fields
                 String massDiffString = strTok.nextToken();
@@ -318,6 +323,18 @@ public class MDLReader extends DefaultChemObjectReader {
                 
 				molecule.addAtom(atom);
 			}
+            
+            // convert to 2D, if totalZ == 0
+            if (totalZ == 0.0) {
+                logger.info("Total 3D Z is 0.0, interpreting it as a 2D structure");
+                Atom[] atomsToUpdate = molecule.getAtoms();
+                for (int f = 0; f<atomsToUpdate.length; f++) {
+                    Atom atomToUpdate = atomsToUpdate[f];
+                    Point3d p3d = atomToUpdate.getPoint3D();
+                    atomToUpdate.setPoint2D(new Point2d(p3d.x, p3d.y));
+                    atomToUpdate.setPoint3D(null);
+                }
+            }
             
             // read BOND block
             logger.info("Reading bond block");
