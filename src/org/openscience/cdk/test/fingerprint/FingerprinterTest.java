@@ -183,7 +183,16 @@ public class FingerprinterTest extends TestCase
 		BitSet bs1 = Fingerprinter.getFingerprint(frag1);
 		if (!standAlone) assertTrue(Fingerprinter.isSubset(bs, bs1));
 	}
-
+	
+	public void testFingerprinterArguments() throws java.lang.Exception
+	{
+		Molecule mol = MoleculeFactory.makeIndole();
+		BitSet bs = Fingerprinter.getFingerprint(mol,1024,7);
+		Molecule frag1 = MoleculeFactory.makePyrrole();
+		BitSet bs1 = Fingerprinter.getFingerprint(frag1,1024,7);
+		if (!standAlone) assertTrue(Fingerprinter.isSubset(bs, bs1));
+	}
+	
 	public static Molecule makeFragment1()
 	{
 		Molecule mol = new Molecule();
@@ -261,7 +270,8 @@ public class FingerprinterTest extends TestCase
 		try{
 			FingerprinterTest fpt = new FingerprinterTest("FingerprinterTest");
 			fpt.standAlone = true;
-			fpt.testFingerprinter();	
+			fpt.testFingerprinter();
+			fpt.testFingerprinterArguments();
 			fpt.testBug706786();
 			fpt.testBug771485();
 			fpt.testBug853254();
