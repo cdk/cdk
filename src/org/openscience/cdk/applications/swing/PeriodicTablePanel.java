@@ -272,7 +272,8 @@ public class PeriodicTablePanel extends JPanel
 		{
 			ElementButton button = (ElementButton) e.getSource();
 			setSelectedElement(button.getElement());
-			System.out.println(getSelectedElement());
+			// System.out.println(getSelectedElement());
+            fireChange();
 		}
 	}
 
