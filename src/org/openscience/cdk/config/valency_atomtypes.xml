@@ -16,7 +16,11 @@
     <org.openscience.cdk.AtomType symbol="S" id="valency.S2-" maxBondOrder="1.0" bondOrderSum="1.0" formalCharge="-1"/>
     <org.openscience.cdk.AtomType symbol="S" id="valency.S4" maxBondOrder="2.0" bondOrderSum="6.0" formalCharge="0"/>
     <org.openscience.cdk.AtomType symbol="F" id="valency.F" maxBondOrder="1.0" bondOrderSum="1.0" formalCharge="0"/>
+    <org.openscience.cdk.AtomType symbol="F" id="valency.F-" maxBondOrder="0.0" bondOrderSum="0.0" formalCharge="-1"/>
     <org.openscience.cdk.AtomType symbol="Cl" id="valency.Cl" maxBondOrder="1.0" bondOrderSum="1.0" formalCharge="0"/>
+    <org.openscience.cdk.AtomType symbol="Cl" id="valency.Cl-" maxBondOrder="0.0" bondOrderSum="0.0" formalCharge="-1"/>
     <org.openscience.cdk.AtomType symbol="Br" id="valency.Br" maxBondOrder="1.0" bondOrderSum="1.0" formalCharge="0"/>
+    <org.openscience.cdk.AtomType symbol="Br" id="valency.Br-" maxBondOrder="0.0" bondOrderSum="0.0" formalCharge="-1"/>
     <org.openscience.cdk.AtomType symbol="I" id="valency.I" maxBondOrder="1.0" bondOrderSum="1.0" formalCharge="0"/>
+    <org.openscience.cdk.AtomType symbol="I" id="valency.I-" maxBondOrder="0.0" bondOrderSum="0.0" formalCharge="-1"/>
 </java.util.Vector>
