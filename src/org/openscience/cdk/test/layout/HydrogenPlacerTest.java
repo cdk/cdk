@@ -102,7 +102,7 @@ public class HydrogenPlacerTest extends TestCase {
     */
 	public void visualFullMolecule2DEvaluation()
 	{
-                String filename = "data/mdl/hydrogenplacertest.mol";
+                String filename = "data/mdl/reserpine.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 		try {
 		    MDLReader reader = new MDLReader(new InputStreamReader(ins));
