@@ -5,6 +5,7 @@ import java.lang.*;
 import java.util.*;
 import javax.vecmath.*;
 import org.openscience.cdk.*;
+import org.openscience.cdk.modeling.builder3d.*;
 
 /**
  *  Call the minimization methods. Check the convergence.
@@ -14,6 +15,7 @@ import org.openscience.cdk.*;
  */
 public class GeometricMinimizer {
 
+	Hashtable mmff94ParameterSet = null;
 	int SDMaximumIteration = 0;
 	int CGMaximumIteration = 0;
 	int NRMaximumIteration = 0;
@@ -57,6 +59,24 @@ public class GeometricMinimizer {
 	public GeometricMinimizer() { }
 
 
+	/**
+	 *  Assign MMFF94 atom types to the molecule.
+	 *  
+	 *@param  molecule  The molecule like an AtomContainer object.
+	 */
+	public void setMMFF94Tables(AtomContainer molecule) throws Exception {
+		
+		ForceFieldConfigurator ffc = new ForceFieldConfigurator();
+		ffc.setForceFieldConfigurator("mmff94");
+		RingSet rs = ffc.assignAtomTyps((Molecule) molecule);
+		mmff94ParameterSet = ffc.getParameterSet();
+	}
+	
+	public Hashtable getMMFF94Tables() {
+		return mmff94ParameterSet;
+	}
+
+
 	public void initializeMinimizationParameters(GVector initialCoord) {
 		
 		dimension = initialCoord.getSize();
@@ -93,7 +113,7 @@ public class GeometricMinimizer {
 
 		RMSD = 0;
 		for (int i = 0; i < AtomsNumber; i++) {
-			d = forceFieldObject.calculate3dDistanceBetweenTwoAtomOfTwoDiff3xNCoordinates(kplus1Coordinates, kCoordinates, i, i);
+			d = forceFieldObject.calculate3dDistanceBetweenTwoAtomFromTwo3xNCoordinates(kplus1Coordinates, kCoordinates, i, i);
 			RMSD = RMSD + Math.pow(d, 2);
 		}
 		RMSD = RMSD / dimension;

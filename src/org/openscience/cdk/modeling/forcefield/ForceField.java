@@ -21,12 +21,12 @@ public class ForceField {
 
 
 	/**
-	 *  Get the 3xN coordinates vector of a molecule of N atoms from its atom container
+	 *  Get the coordinates 3xN vector of a molecule of N atoms from its atom container
 	 *
 	 *@param  molecule  molecule store in an AtomContainer 
 	 *@return           GVector with 3xN coordinates (N: atom numbers)
 	 */
-	public GVector getCoordinatesVector(AtomContainer molecule) {
+	public GVector getCoordinates3xNVector(AtomContainer molecule) {
 		
 		//System.out.println("molecule: " + molecule.toString());
 		//System.out.println("Atoms number = " + molecule.getAtomCount());
@@ -84,6 +84,23 @@ public class ForceField {
 
 
 	/**
+	 *  Calculate 3d distance between two atoms coordinates
+	 *
+	 *@param  atom1Coordinates  Coordinates of the first atom.
+	 *@param  atom2Coordinates  Coordinates of the second atom.
+	 *@return           Distance between the two atoms.
+	 */
+	public double distanceBetweenTwoAtoms(Point3d atom1Coordinates, Point3d atom2Coordinates) {
+		
+		double atomsDistance = 0;
+		atomsDistance = atom1Coordinates.distance(atom2Coordinates);
+		//System.out.println("atomsDistance = " + atomsDistance);
+		
+		return atomsDistance;
+	}
+
+
+	/**
 	 *  Calculate 3d distance between two atoms in one molecule from its N coordinates 3d
 	 *
 	 *@param  atoms3dCoordinates  Vector with the N coordinates 3d
@@ -113,7 +130,7 @@ public class ForceField {
 	 *@param  atomNumM2  Atom position in the second molecule.
 	 *@return           Distance between the two atoms.
 	 */
-	public double calculate3dDistanceBetweenTwoAtomOfTwoDiff3xNCoordinates(GVector atomsCoordinatesVector1, GVector atomsCoordinatesVector2, int atomNumM1, int atomNumM2) {
+	public double calculate3dDistanceBetweenTwoAtomFromTwo3xNCoordinates(GVector atomsCoordinatesVector1, GVector atomsCoordinatesVector2, int atomNumM1, int atomNumM2) {
 		
 		double atomsDistance = 0;
 		double difference = 0;
@@ -125,6 +142,34 @@ public class ForceField {
 		atomsDistance = Math.sqrt(atomsDistance);
 		//System.out.println("atomsDistance = " + atomsDistance);
 		return atomsDistance;
+	}
+
+
+	/**
+	 *  Calculate 3d distance between two atoms in one molecule from its 3xN coordinate vector.
+	 *  
+	 *@param  atomsCoordinatesVector  Molecule 3xN coordinates.
+	 *@param  atomNum1  Atom position in the 3xN coordinates vector (from 0 to 3x(N-1)) for the first atom.
+	 *@param  atomNumM2  Atom position in the 3xN coordinates vector (from 0 to 3x(N-1)) for the second atom.
+	 *@return           3d distance between the two atoms.
+	 */
+	public double calculate3dDistanceBetweenTwoAtomFrom3xNCoordinates(GVector atomsCoordinatesVector, int atomNum1, int atomNum2) {
+		
+		double atomsDistance = 0;
+		double difference = 0;
+		for (int j = 0; j < 3; j++) {
+			difference = atomsCoordinatesVector.getElement(atomNum2*3+j) - atomsCoordinatesVector.getElement(atomNum1*3+j);
+			difference = Math.pow(difference, 2);
+			atomsDistance = atomsDistance + difference;
+		}
+		atomsDistance = Math.sqrt(atomsDistance);
+		//System.out.println("atomsDistance = " + atomsDistance);
+		return atomsDistance;
+	}
+	
+	public Vector convertGVectorToPoint3dVector(GVector coordinatesVector) {
+		Vector coordinates3d = new Vector();
+		return coordinates3d;
 	}
 }
 
