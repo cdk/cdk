@@ -26,6 +26,7 @@ Fixes:
 * Fixed creation of IDs for Bond's
 * CMLRSSHandler now propagates whitespace from CML fragments
 * Fixed output or aromatic bonds in MDLWriter
+* Fixed a NullPointerException problem in ChemObject.setProperties()
 
 API changes:
 * Moved AtomContainer.getAdjacencyMatrix to cdk.graph.matrix.AdjecencyMatrix
@@ -33,6 +34,7 @@ API changes:
 * Cleaned up Crystal API by using Vector3d for the axes
 * Made a few class fields private in core classes which were protected sofar
 * Deprecated old usage of SSSRFinder
+* Added a method ChemObject.shallowCopy()
 
 20040626 Release
 ------------------------------------
