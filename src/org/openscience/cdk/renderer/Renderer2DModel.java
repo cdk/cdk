@@ -578,7 +578,10 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 		{
 			listeners = new Vector();	
 		}
-		listeners.add(listener);
+		if (!listeners.contains(listener))
+		{
+			listeners.add(listener);
+		}
 	}
 	
 

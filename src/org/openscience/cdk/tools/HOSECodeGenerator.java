@@ -294,6 +294,16 @@ public class HOSECodeGenerator implements java.io.Serializable
 		}
 	}
 
+	public String makeBremserCompliant(String code)
+	{
+		int sepIndex = code.indexOf(";");
+		if (sepIndex >= 0)
+		{
+			code = code.substring(sepIndex + 1, code.length());	
+		}
+		return code;
+	}
+	
 	/**
 	 *  After recursivly having established the spheres and assigning each node an
 	 *  appropriate score, we now generate the complete HOSE code.
