@@ -365,6 +365,61 @@ public class HueckelAromaticityDetectorTest extends TestCase
 	}
 
 	/**
+	 *  A test for the fix of bug #716259, where a quinone ring 
+	 *  was falsely detected as aromatic
+	 */
+	public void testBug716259()
+	{
+		Molecule molecule = null;
+		boolean isAromatic = false;
+		boolean[] testResults = {
+			true,
+			true,
+			true,
+			true,
+			true,
+			true,
+			true,
+			true,
+			true,
+			true,
+			false,
+			false,
+			false,
+			false,
+			false,
+			false,
+			false,
+			false,
+			false
+		};
+		try
+		{
+			String filename = "data/mdl/bug716259.mol";
+			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+			MDLReader reader = new MDLReader(new InputStreamReader(ins));
+			molecule = (Molecule) reader.read((ChemObject) new Molecule());
+
+			isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
+			for (int f = 0; f < molecule.getAtomCount(); f++)
+			{
+				assertTrue(molecule.getAtomAt(f).getFlag(CDKConstants.ISAROMATIC) == testResults[f]);
+				//System.out.println(molecule.getAtomAt(f).getFlag(CDKConstants.ISAROMATIC) + ",");
+			}
+			//MoleculeViewer2D.display(molecule, false);
+		} catch (Exception exc)
+		{
+			exc.printStackTrace();
+			fail();
+		}
+/* 		if (standAlone)
+		{
+			MoleculeViewer2D.display(molecule, false);
+		}*/
+	}
+	
+	
+	/**
 	 *  A unit test for JUnit
 	 */
 	public void testQuinone()
@@ -438,7 +493,8 @@ public class HueckelAromaticityDetectorTest extends TestCase
 		//hadt.testBug698152();
 		//hadt.testPorphyrine();
 		//hadt.testQuinone();
-		hadt.testBenzene();
+		//hadt.testBenzene();
+		hadt.testBug716259();
 	}
 }
 
