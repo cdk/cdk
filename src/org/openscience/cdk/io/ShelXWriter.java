@@ -42,7 +42,7 @@ import freeware.PrintfFormat;
  *
  * @keyword file format, ShelX
  */
-public class ShelXWriter implements ChemObjectWriter {
+public class ShelXWriter extends DefaultChemObjectWriter {
 
     private Writer output;
 

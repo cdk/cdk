@@ -38,7 +38,7 @@ import java.io.OutputStream;
  *  @author  J. Daniel Gezelter
  *  @author  Egon Willighagen
  */
-public class XYZWriter implements ChemObjectWriter {
+public class XYZWriter extends DefaultChemObjectWriter {
   
     static BufferedWriter writer;
 

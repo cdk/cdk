@@ -71,4 +71,18 @@ public interface ChemObjectWriter {
      */
     public void close() throws IOException;
 
+    /**
+     * Adds a ReaderListener to this ChemObjectReader.
+     *
+     * @param listener the reader listener to add.
+     */
+    public void addWriterListener(WriterListener l);
+
+    /**
+     * Removes a ReaderListener from this ChemObjectReader.
+     *
+     * @param listener the reader listener to remove.
+     */
+    public void removeWriterListener(WriterListener l);
+    
 }

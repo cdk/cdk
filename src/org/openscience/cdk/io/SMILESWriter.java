@@ -42,7 +42,7 @@ import javax.vecmath.*;
  *
  * @keyword file format
  */
-public class SMILESWriter implements ChemObjectWriter {
+public class SMILESWriter extends DefaultChemObjectWriter {
 
     private org.openscience.cdk.tools.LoggingTool logger;
     static BufferedWriter writer;

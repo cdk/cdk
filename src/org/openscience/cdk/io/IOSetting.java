@@ -32,7 +32,7 @@ import org.openscience.cdk.exception.*;
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  */
-public abstract class ReaderSetting {
+public abstract class IOSetting {
 
     /** The levels available:
      *    NONE         no questions asked
@@ -60,7 +60,7 @@ public abstract class ReaderSetting {
      * @param defaultSetting The default setting, used if not overwritten
      *                       by a user
      */
-    public ReaderSetting(String name, int level, 
+    public IOSetting(String name, int level, 
                          String question, String defaultSetting) {
         this.level = level;
         this.name  = name;
@@ -92,5 +92,15 @@ public abstract class ReaderSetting {
     public void setSetting(String setting) throws CDKException {
         // by default, except all input, so no setting checking                     
         this.setting = setting;
+    }
+
+    /**
+     * Sets the setting for a certain question. It will throw
+     * a CDKException when the setting is not valid.    
+     *
+     */
+    public String getSetting() throws CDKException {
+        // by default, except all input, so no setting checking                     
+        return this.setting;
     }
 }

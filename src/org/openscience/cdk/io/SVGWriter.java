@@ -60,7 +60,7 @@ import org.w3c.dom.DOMImplementation;
  * @jar     batik-dom.jar
  * @jar     batik-util.jar
  */
-public class SVGWriter implements ChemObjectWriter {
+public class SVGWriter extends DefaultChemObjectWriter {
 
     private org.openscience.cdk.tools.LoggingTool logger;
     static BufferedWriter writer;

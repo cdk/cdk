@@ -3,9 +3,9 @@
  * $Date$    
  * $Revision$
  * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  * 
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -40,7 +40,7 @@ import org.openscience.cdk.*;
 /**
  *  Writer that is used to store molecules in JDBC databases.
  **/
-public class DBWriter implements ChemObjectWriter {
+public class DBWriter extends DefaultChemObjectWriter {
 
 	private org.openscience.cdk.tools.LoggingTool logger;
 

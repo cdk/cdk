@@ -72,7 +72,7 @@ import javax.vecmath.Point3d;
  *
  * @keyword file format, CML
  */
-public class CMLWriter implements ChemObjectWriter {
+public class CMLWriter extends DefaultChemObjectWriter {
 
     private Writer output;
 

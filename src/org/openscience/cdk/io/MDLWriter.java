@@ -52,7 +52,7 @@ import javax.vecmath.*;
  *
  * @keyword file format, MDL molfile
  */
-public class MDLWriter implements ChemObjectWriter {
+public class MDLWriter extends DefaultChemObjectWriter {
 
     private BufferedWriter writer;
     private org.openscience.cdk.tools.LoggingTool logger;

@@ -30,41 +30,19 @@ import java.util.Vector;
  * Abstract class that ChemObjectReader's can implement to have it
  * take care of basic stuff, like managing the ReaderListeners.
  */
-public abstract class DefaultChemObjectReader implements ChemObjectReader {
-
-    /**
-     * An event to be sent to listeners when a frame is read.
-     */
-    private ReaderEvent frameReadEvent = null;
+public abstract class DefaultChemObjectWriter implements ChemObjectWriter {
 
     /**
      * Holder of reader event listeners.
      */
     private Vector listenerList = new Vector();
 
-    public void addReaderListener(ReaderListener listener) {
+    public void addWriterListener(WriterListener listener) {
         listenerList.addElement(listener);
     }
 
-    public void removeReaderListener(ReaderListener listener) {
+    public void removeWriterListener(WriterListener listener) {
         listenerList.removeElement(listener);
-    }
-
-    /* Extra convenience methods */
-    
-    /**
-     * Sends a frame read event to the registered ReaderListeners.
-     */
-    protected void fireFrameRead() {
-        for (int i = 0; i < listenerList.size(); ++i) {
-            ReaderListener listener = (ReaderListener) listenerList.elementAt(i);
-            
-            // Lazily create the event:
-            if (frameReadEvent == null) {
-                frameReadEvent = new ReaderEvent(this);
-            }
-            listener.frameRead(frameReadEvent);
-        }
     }
 
 }

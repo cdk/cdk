@@ -78,12 +78,5 @@ public interface ChemObjectReader {
      */
     public void removeReaderListener(ReaderListener l);
     
-    /**
-     * Returns a Vector of ReaderSettings, that interface with the
-     * ChemObjectReader user for specific question. The list is
-     * by default empty.
-     */
-    public Vector getReaderSettings();
-    
 }
 
