@@ -152,6 +152,7 @@ public class HydrogenAdder {
      *
      * @param  atom      Atom to saturate
      * @param  container AtomContainer containing the atom
+     * @param  totalContainer In case you have a container containing multiple structures, this is the total container, whereas container is a partial structure
      *
      * @keyword          hydrogen, adding
      * @keyword          explicit hydrogen
@@ -177,6 +178,7 @@ public class HydrogenAdder {
      *
      * @param  atom      Atom to saturate
      * @param  container AtomContainer containing the atom
+     * @param  totalContainer In case you have a container containing multiple structures, this is the total container, whereas container is a partial structure
      *
      * @keyword          hydrogen, adding
      * @keyword          explicit hydrogen
@@ -199,6 +201,7 @@ public class HydrogenAdder {
      * @param  atom      Atom to saturate
      * @param  container AtomContainer containing the atom
      * @param  count     Number of hydrogens to add
+     * @param  totalContainer In case you have a container containing multiple structures, this is the total container, whereas container is a partial structure
      *
      * @keyword          hydrogen, adding
      * @keyword          explicit hydrogen
