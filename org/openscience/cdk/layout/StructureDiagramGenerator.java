@@ -189,7 +189,7 @@ public class StructureDiagramGenerator implements CDKConstants
 			angle = Math.toRadians(-30);
 			atomPlacer.placeLinearChain(longestChain, new Vector2d(Math.cos(angle), Math.sin(angle)), bondLength);
 		}
-		System.out.println("Placed initial chain or ring. Now do the rest");
+		if (debug) System.out.println("Placed initial chain or ring. Now do the rest");
 		do
 		{
 			handleAliphatics();
@@ -210,8 +210,8 @@ public class StructureDiagramGenerator implements CDKConstants
 				{
 					vectorAtom1 = nextRingAttachmentBond.getAtomAt(0);
 				}						
-				System.out.println("generateCoordinates -> molecule.getAtomNumber(vectorAtom1)" + molecule.getAtomNumber(vectorAtom1));
-				System.out.println("generateCoordinates -> molecule.getAtomNumber(vectorAtom2)" + molecule.getAtomNumber(vectorAtom2));
+				if (debug) System.out.println("generateCoordinates -> molecule.getAtomNumber(vectorAtom1)" + molecule.getAtomNumber(vectorAtom1));
+				if (debug) System.out.println("generateCoordinates -> molecule.getAtomNumber(vectorAtom2)" + molecule.getAtomNumber(vectorAtom2));
 				oldPoint2 = vectorAtom2.getPoint2D();
 				oldPoint1 = vectorAtom1.getPoint2D();				
 
@@ -231,17 +231,16 @@ public class StructureDiagramGenerator implements CDKConstants
 				newPoint1 = vectorAtom1.getPoint2D();				
 				
 				angle2 = GeometryTools.getAngle(newPoint2.x - newPoint1.x, newPoint2.y - newPoint2.y);				
-				System.out.println("Angle: " + angle1 + ", " + angle2);
-				System.out.println("Points: " + oldPoint1 + ", " + oldPoint2 + ", " + newPoint1 + ", " + newPoint2);				
+				if (debug) System.out.println("Angle: " + angle1 + ", " + angle2);
+				if (debug) System.out.println("Points: " + oldPoint1 + ", " + oldPoint2 + ", " + newPoint1 + ", " + newPoint2);				
 				Vector2d transVec = new Vector2d(oldPoint1);
 				transVec.sub(new Vector2d(newPoint1));
 //				ringSystem.removeAtom(vectorAtom1);
 
-				System.out.println("RingSystem to rotate" + atomPlacer.listNumbers(ringSystem));				
+				if (debug) System.out.println("RingSystem to rotate" + atomPlacer.listNumbers(molecule, ringSystem));				
 				GeometryTools.translate2D(ringSystem, transVec);				
 				GeometryTools.rotate(ringSystem, oldPoint1, angle1 - angle2);
 				vectorAtom1.setPoint2D(oldPoint1);				
-				System.out.println("Am End");
 				atomPlacer.listPlaced(molecule);
 			}
 
@@ -334,7 +333,7 @@ public class StructureDiagramGenerator implements CDKConstants
 				placedAtoms = getPlacedAtoms(atom);
 
 				longestUnplacedChain = atomPlacer.getLongestUnplacedChain(molecule, atom);
-				System.out.println("longestUnplacedChain: " + atomPlacer.listNumbers(longestUnplacedChain));
+				if (debug) System.out.println("longestUnplacedChain: " + atomPlacer.listNumbers(molecule, longestUnplacedChain));
 		
 				if (longestUnplacedChain.getAtomCount() > 1)
 				{
