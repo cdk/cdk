@@ -28,6 +28,7 @@ Fixes:
 * Added missing toString() methods to SetOfMolecules and SetOfReactions
 * Fixed coordinate system of Renderer2D (partly fixes #834515)
 * Deal with charges and H is special case (closes JCP bug #850143)
+* Fixed writing of SDF files (closes #870911)
 
 API changes:
 * SetOfMolecules now extends SetOfAtomContainers which gives it additional

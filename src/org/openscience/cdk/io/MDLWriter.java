@@ -277,7 +277,6 @@ public class MDLWriter extends DefaultChemObjectWriter {
         writer.write("M  END");
         writer.newLine();
         writer.flush();
-        writer.close();
     }
 
 	/**
