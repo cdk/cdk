@@ -30,6 +30,7 @@ package org.openscience.cdk.test.io;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringReader;
+import javax.vecmath.Vector3d;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -93,18 +94,18 @@ public class CrystClustReaderTest extends TestCase {
             assertEquals(-0.68264902, atom.getCharge(), 0.00000001);
             
             // test unit cell axes
-            double[] a = crystal.getA();
-            assertEquals( 7.971030, a[0], 0.000001);
-            assertEquals(0.0, a[1], 0.000001);
-            assertEquals(0.0, a[2], 0.000001);
-            double[] b = crystal.getB();
-            assertEquals(0.0, b[0], 0.000001);
-            assertEquals(18.772200, b[1], 0.000001);
-            assertEquals(0.0, b[2], 0.000001);
-            double[] c = crystal.getC();
-            assertEquals(0.0, c[0], 0.000001);
-            assertEquals(0.0, c[1], 0.000001);
-            assertEquals(10.262220, c[2], 0.000001);
+            Vector3d a = crystal.getA();
+            assertEquals(7.971030, a.x, 0.000001);
+            assertEquals(0.0, a.y, 0.000001);
+            assertEquals(0.0, a.z, 0.000001);
+            Vector3d b = crystal.getB();
+            assertEquals(0.0, b.x, 0.000001);
+            assertEquals(18.772200, b.y, 0.000001);
+            assertEquals(0.0, b.z, 0.000001);
+            Vector3d c = crystal.getC();
+            assertEquals(0.0, c.x, 0.000001);
+            assertEquals(0.0, c.y, 0.000001);
+            assertEquals(10.262220, c.z, 0.000001);
         } catch (Exception exception) {
             System.out.println("Error while reading file: " + exception.getMessage());
             exception.printStackTrace();

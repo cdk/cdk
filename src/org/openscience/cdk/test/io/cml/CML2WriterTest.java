@@ -30,6 +30,7 @@ package org.openscience.cdk.test.io.cml;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
+import javax.vecmath.Vector3d;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -102,9 +103,9 @@ public class CML2WriterTest extends TestCase {
         silicon.setFractY3d(0.0);
         silicon.setFractZ3d(0.0);
         crystal.addAtom(silicon);
-        crystal.setA(1.5, 0.0, 0.0);
-        crystal.setB(0.0, 2.0, 0.0);
-        crystal.setC(0.0, 0.0, 1.5);
+        crystal.setA(new Vector3d(1.5, 0.0, 0.0));
+        crystal.setB(new Vector3d(0.0, 2.0, 0.0));
+        crystal.setC(new Vector3d(0.0, 0.0, 1.5));
         CMLWriter cmlWriter = new CMLWriter(writer);
         
         try {

@@ -28,6 +28,7 @@
 package org.openscience.cdk.test.io.cml;
 
 import java.io.StringReader;
+import javax.vecmath.Vector3d;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -372,18 +373,18 @@ public class CMLFragmentsTest extends TestCase {
         assertEquals(4, crystal.getZ());
         assertEquals("Fm3m", crystal.getSpaceGroup());
         assertEquals(2, crystal.getAtomCount());
-        double[] aaxis = crystal.getA();
-        assertEquals(4.5, aaxis[0], 0.1);
-        assertEquals(0.0, aaxis[1], 0.1);
-        assertEquals(0.0, aaxis[2], 0.1);
-        double[] baxis = crystal.getB();
-        assertEquals(0.0, baxis[0], 0.1);
-        assertEquals(4.5, baxis[1], 0.1);
-        assertEquals(0.0, baxis[2], 0.1);
-        double[] caxis = crystal.getC();
-        assertEquals(0.0, caxis[0], 0.1);
-        assertEquals(0.0, caxis[1], 0.1);
-        assertEquals(4.5, caxis[2], 0.1);
+        Vector3d aaxis = crystal.getA();
+        assertEquals(4.5, aaxis.x, 0.1);
+        assertEquals(0.0, aaxis.y, 0.1);
+        assertEquals(0.0, aaxis.z, 0.1);
+        Vector3d baxis = crystal.getB();
+        assertEquals(0.0, baxis.x, 0.1);
+        assertEquals(4.5, baxis.y, 0.1);
+        assertEquals(0.0, baxis.z, 0.1);
+        Vector3d caxis = crystal.getC();
+        assertEquals(0.0, caxis.x, 0.1);
+        assertEquals(0.0, caxis.y, 0.1);
+        assertEquals(4.5, caxis.z, 0.1);
     }
 
     public void testMoleculeId() {

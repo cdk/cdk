@@ -131,6 +131,7 @@ public class CrystClustReader extends DefaultChemObjectReader {
                     logger.debug((lineNumber++) + ": ", line);
                     axis.z = FortranFormat.atof(line);
                     crystal.setA(axis);
+                    axis = new Vector3d();
                     logger.debug("parsing B: ");
                     line = input.readLine();
                     logger.debug((lineNumber++) + ": ", line);
@@ -142,6 +143,7 @@ public class CrystClustReader extends DefaultChemObjectReader {
                     logger.debug((lineNumber++) + ": ", line);
                     axis.z = FortranFormat.atof(line);
                     crystal.setB(axis);
+                    axis = new Vector3d();
                     logger.debug("parsing C: ");
                     line = input.readLine();
                     logger.debug((lineNumber++) + ": ", line);
@@ -153,6 +155,7 @@ public class CrystClustReader extends DefaultChemObjectReader {
                     logger.debug((lineNumber++) + ": ", line);
                     axis.z = FortranFormat.atof(line);
                     crystal.setC(axis);
+                    logger.debug("Crystal: ", crystal);
                     a = crystal.getA();
                     b = crystal.getB();
                     c = crystal.getC();

@@ -23,6 +23,7 @@
  */
 package org.openscience.cdk.test.geometry;
 
+import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
 import junit.framework.Test;
@@ -68,21 +69,21 @@ public class CrystalGeometryToolsTest extends TestCase {
      * places the a axis on the x axis and the b axis in the xy plane.
      */
     public void testNotionalToCartesian() {
-        double[][] cardAxes = CrystalGeometryTools.notionalToCartesian(
+        Vector3d[] cardAxes = CrystalGeometryTools.notionalToCartesian(
             1.0, 2.0, 3.0, 90.0, 90.0, 90.0
         );
         // the a axis
-        assertEquals(1.0, cardAxes[0][0], 0.001);
-        assertEquals(0.0, cardAxes[0][1], 0.001);
-        assertEquals(0.0, cardAxes[0][2], 0.001);
+        assertEquals(1.0, cardAxes[0].x, 0.001);
+        assertEquals(0.0, cardAxes[0].y, 0.001);
+        assertEquals(0.0, cardAxes[0].z, 0.001);
         // the b axis
-        assertEquals(0.0, cardAxes[1][0], 0.001);
-        assertEquals(2.0, cardAxes[1][1], 0.001);
-        assertEquals(0.0, cardAxes[1][2], 0.001);
+        assertEquals(0.0, cardAxes[1].x, 0.001);
+        assertEquals(2.0, cardAxes[1].y, 0.001);
+        assertEquals(0.0, cardAxes[1].z, 0.001);
         // the c axis
-        assertEquals(0.0, cardAxes[2][0], 0.001);
-        assertEquals(0.0, cardAxes[2][1], 0.001);
-        assertEquals(3.0, cardAxes[2][2], 0.001);
+        assertEquals(0.0, cardAxes[2].x, 0.001);
+        assertEquals(0.0, cardAxes[2].y, 0.001);
+        assertEquals(3.0, cardAxes[2].z, 0.001);
     }
 
     /**
@@ -90,9 +91,9 @@ public class CrystalGeometryToolsTest extends TestCase {
      * notional coordinates.
      */
     public void testCartesianToNotional() {
-        double[] a = {1.0, 0.0, 0.0};
-        double[] b = {0.0, 2.0, 0.0};
-        double[] c = {0.0, 0.0, 3.0};
+        Vector3d a = new Vector3d(1.0, 0.0, 0.0);
+        Vector3d b = new Vector3d(0.0, 2.0, 0.0);
+        Vector3d c = new Vector3d(0.0, 0.0, 3.0);
         double[] notionalCoords = CrystalGeometryTools.cartesianToNotional(
             a,b,c
         );
@@ -109,16 +110,16 @@ public class CrystalGeometryToolsTest extends TestCase {
      * cartesian coordinates.
      */
     public void testFractionalToCartesian() {
-        double[] a = {1.0, 0.0, 0.0};
-        double[] b = {0.0, 2.0, 0.0};
-        double[] c = {0.0, 0.0, 3.0};
-        double[] fractCoords = {0.25, 0.50, 0.75};
-        double[] cartCoords = CrystalGeometryTools.fractionalToCartesian(
-            a, b, c, fractCoords
+        Vector3d a = new Vector3d(1.0, 0.0, 0.0);
+        Vector3d b = new Vector3d(0.0, 2.0, 0.0);
+        Vector3d c = new Vector3d(0.0, 0.0, 3.0);
+        Point3d fractCoord = new Point3d(0.25, 0.50, 0.75);
+        Point3d cartCoord = CrystalGeometryTools.fractionalToCartesian(
+            a, b, c, fractCoord
         );
-        assertEquals(0.25, cartCoords[0], 0.001);
-        assertEquals(1.0, cartCoords[1], 0.001);
-        assertEquals(2.25, cartCoords[2], 0.001);
+        assertEquals(0.25, cartCoord.x, 0.001);
+        assertEquals(1.0,  cartCoord.y, 0.001);
+        assertEquals(2.25, cartCoord.z, 0.001);
     }
 
     /**
@@ -150,24 +151,24 @@ public class CrystalGeometryToolsTest extends TestCase {
      * fractional coordinates.
      */
     public void testCartesianToFractional() {
-        double[] a = {1.0, 0.0, 0.0};
-        double[] b = {0.0, 2.0, 0.0};
-        double[] c = {0.0, 0.0, 3.0};
-        double[] cartCoords = {0.25, 1.0, 2.25};
-        double[] fractCoords = CrystalGeometryTools.cartesianToFractional(
-            a, b, c, cartCoords
+        Vector3d a = new Vector3d(1.0, 0.0, 0.0);
+        Vector3d b = new Vector3d(0.0, 2.0, 0.0);
+        Vector3d c = new Vector3d(0.0, 0.0, 3.0);
+        Point3d cartCoord = new Point3d(0.25, 1.0, 2.25);
+        Point3d fractCoord = CrystalGeometryTools.cartesianToFractional(
+            a, b, c, cartCoord
         );
-        assertEquals(0.25, fractCoords[0], 0.001);
-        assertEquals(0.50, fractCoords[1], 0.001);
-        assertEquals(0.75, fractCoords[2], 0.001);
+        assertEquals(0.25, fractCoord.x, 0.001);
+        assertEquals(0.50, fractCoord.y, 0.001);
+        assertEquals(0.75, fractCoord.z, 0.001);
     }
 
     /**
      * This method tests the calculation of axis lengths.
      */
     public void testCalcAxisLength() {
-        double[] a = {1.0, 1.0, 1.0};
-        double length = CrystalGeometryTools.calcAxisLength(a);
+        Vector3d a = new Vector3d(1.0, 1.0, 1.0);
+        double length = a.length();
         assertEquals(Math.sqrt(3.0), length, 0.001);
     }
 
@@ -176,14 +177,14 @@ public class CrystalGeometryToolsTest extends TestCase {
      * <code>testCalcAxisLength()</code>.
      */
     public void testCalcAxisLength2() {
-        double[] a = {1.0, 0.0, 0.0};
-        double length = CrystalGeometryTools.calcAxisLength(a);
+        Vector3d a = new Vector3d(1.0, 0.0, 0.0);
+        double length = a.length();
         assertEquals(1.0, length, 0.001);
-        double[] b = {0.0, 1.0, 0.0};
-        length = CrystalGeometryTools.calcAxisLength(b);
+        Vector3d b = new Vector3d(0.0, 1.0, 0.0);
+        length = b.length();
         assertEquals(1.0, length, 0.001);
-        double[] c = {0.0, 0.0, 1.0};
-        length = CrystalGeometryTools.calcAxisLength(c);
+        Vector3d c = new Vector3d(0.0, 0.0, 1.0);
+        length = c.length();
         assertEquals(1.0, length, 0.001);
     }
 
@@ -191,9 +192,9 @@ public class CrystalGeometryToolsTest extends TestCase {
      * This method tests the calculation of the angle between two axes.
      */
     public void testCalcAngle() {
-        double[] b = {0.0, 2.0, 0.0};
-        double[] c = {0.0, 0.0, 3.0};
-        double angle = CrystalGeometryTools.calcAxesAngle(b,c);
+        Vector3d b = new Vector3d(0.0, 2.0, 0.0);
+        Vector3d c = new Vector3d(0.0, 0.0, 3.0);
+        double angle = b.angle(c)*180.0/Math.PI;
         assertEquals(90.0, angle, 0.001);
     }
     
@@ -201,9 +202,9 @@ public class CrystalGeometryToolsTest extends TestCase {
      * This method tests the calculation of the angle between two axes too.
      */
     public void testCalcAngle2() {
-        double[] b = {0.0, 1.0, 1.0};
-        double[] c = {0.0, 0.0, 1.0};
-        double angle = CrystalGeometryTools.calcAxesAngle(b,c);
+        Vector3d b = new Vector3d(0.0, 1.0, 1.0);
+        Vector3d c = new Vector3d(0.0, 0.0, 1.0);
+        double angle = b.angle(c)*180.0/Math.PI;
         assertEquals(45.0, angle, 0.001);
     }
     
@@ -212,8 +213,8 @@ public class CrystalGeometryToolsTest extends TestCase {
      * and itself, which should be zero by definition.
      */
     public void testCalcAngle3() {
-        double[] b = {4.5, 3.1, 1.7};
-        double angle = CrystalGeometryTools.calcAxesAngle(b,b);
+        Vector3d b = new Vector3d(4.5, 3.1, 1.7);
+        double angle = b.angle(b)*180.0/Math.PI;
         assertEquals(0.0, angle, 0.001);
     }
     
@@ -222,12 +223,12 @@ public class CrystalGeometryToolsTest extends TestCase {
      * cartesian and back to notional.
      */
     public void testRoundTripUnitCellNotionalCoordinates() {
-        double[][] cardAxes = CrystalGeometryTools.notionalToCartesian(
+        Vector3d[] cardAxes = CrystalGeometryTools.notionalToCartesian(
             7.6, 3.9, 10.3, 67.0, 91.2, 110.5
         );
-        double[] a = {cardAxes[0][0], cardAxes[0][1], cardAxes[0][2]};
-        double[] b = {cardAxes[1][0], cardAxes[1][1], cardAxes[1][2]};
-        double[] c = {cardAxes[2][0], cardAxes[2][1], cardAxes[2][2]};
+        Vector3d a = cardAxes[0];
+        Vector3d b = cardAxes[1];
+        Vector3d c = cardAxes[2];
         double[] notionalCoords = CrystalGeometryTools.cartesianToNotional(
             a,b,c
         );
@@ -244,30 +245,30 @@ public class CrystalGeometryToolsTest extends TestCase {
      * gives back the original axes.
      */
     public void testCalcInvertedAxes() {
-        double[] a = {3.4, 7.6, 5.5};
-        double[] b = {2.8, 4.0, 6.3};
-        double[] c = {1.9, 3.9, 9.1};
-        double[][] invertedAxes = CrystalGeometryTools.calcInvertedAxes(
+        Vector3d a = new Vector3d(3.4, 7.6, 5.5);
+        Vector3d b = new Vector3d(2.8, 4.0, 6.3);
+        Vector3d c = new Vector3d(1.9, 3.9, 9.1);
+        Vector3d[] invertedAxes = CrystalGeometryTools.calcInvertedAxes(
             a,b,c
         );
-        double[] a2 = {invertedAxes[0][0], invertedAxes[0][1], invertedAxes[0][2]};
-        double[] b2 = {invertedAxes[1][0], invertedAxes[1][1], invertedAxes[1][2]};
-        double[] c2 = {invertedAxes[2][0], invertedAxes[2][1], invertedAxes[2][2]};
-        double[][] doubleAxes = CrystalGeometryTools.calcInvertedAxes(
+        Vector3d a2 = invertedAxes[0];
+        Vector3d b2 = invertedAxes[1];
+        Vector3d c2 = invertedAxes[2];
+        Vector3d[] doubleAxes = CrystalGeometryTools.calcInvertedAxes(
             a2,b2,c2
         );
-        double[] a3 = {doubleAxes[0][0], doubleAxes[0][1], doubleAxes[0][2]};
-        double[] b3 = {doubleAxes[1][0], doubleAxes[1][1], doubleAxes[1][2]};
-        double[] c3 = {doubleAxes[2][0], doubleAxes[2][1], doubleAxes[2][2]};
-        assertEquals(a[0], a3[0], 0.001);
-        assertEquals(a[1], a3[1], 0.001);
-        assertEquals(a[2], a3[2], 0.001);
-        assertEquals(b[0], b3[0], 0.001);
-        assertEquals(b[1], b3[1], 0.001);
-        assertEquals(b[2], b3[2], 0.001);
-        assertEquals(c[0], c3[0], 0.001);
-        assertEquals(c[1], c3[1], 0.001);
-        assertEquals(c[2], c3[2], 0.001);
+        Vector3d a3 = doubleAxes[0];
+        Vector3d b3 = doubleAxes[1];
+        Vector3d c3 = doubleAxes[2];
+        assertEquals(a.x, a3.x, 0.001);
+        assertEquals(a.y, a3.y, 0.001);
+        assertEquals(a.z, a3.z, 0.001);
+        assertEquals(b.x, b3.x, 0.001);
+        assertEquals(b.y, b3.y, 0.001);
+        assertEquals(b.z, b3.z, 0.001);
+        assertEquals(c.x, c3.x, 0.001);
+        assertEquals(c.y, c3.y, 0.001);
+        assertEquals(c.z, c3.z, 0.001);
     }
 }
 

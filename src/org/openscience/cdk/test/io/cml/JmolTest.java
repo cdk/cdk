@@ -29,6 +29,7 @@ package org.openscience.cdk.test.io.cml;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import javax.vecmath.Vector3d;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -100,12 +101,12 @@ public class JmolTest extends TestCase {
             assertEquals(4*42, crystal.getAtomCount());
             assertTrue(GeometryTools.has3DCoordinates(crystal));
             // test the cell axes
-            double[] a = crystal.getA();
-            assertTrue(a[0] != 0.0);
-            double[] b = crystal.getB();
-            assertTrue(b[1] != 0.0);
-            double[] c = crystal.getC();
-            assertTrue(c[2] != 0.0);
+            Vector3d a = crystal.getA();
+            assertTrue(a.x != 0.0);
+            Vector3d b = crystal.getB();
+            assertTrue(b.y != 0.0);
+            Vector3d c = crystal.getC();
+            assertTrue(c.z != 0.0);
         } catch (Exception e) {
             fail(e.toString());
         }

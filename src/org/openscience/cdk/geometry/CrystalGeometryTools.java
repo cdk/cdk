@@ -57,14 +57,17 @@ public class CrystalGeometryTools {
                       a.y*b.x*c.z + a.y*b.z*c.x +
                       a.z*b.x*c.y - a.z*b.y*c.x;
          Vector3d[] invaxes = new Vector3d[3];
+         invaxes[0] = new Vector3d();
          invaxes[0].x = (b.y*c.z - b.z*c.y)/det;
          invaxes[0].y = (b.z*c.x - b.x*c.z)/det;
          invaxes[0].z = (b.x*c.y - b.y*c.x)/det;
 
+         invaxes[1] = new Vector3d();
          invaxes[1].x = (a.z*c.y - a.y*c.z)/det;
          invaxes[1].y = (a.x*c.z - a.z*c.x)/det;
          invaxes[1].z = (a.y*c.x - a.x*c.y)/det;
 
+         invaxes[2] = new Vector3d();
          invaxes[2].x = (a.y*b.z - a.z*b.y)/det;
          invaxes[2].y = (a.z*b.x - a.x*b.z)/det;
          invaxes[2].z = (a.x*b.y - a.y*b.x)/det;
@@ -177,6 +180,7 @@ public class CrystalGeometryTools {
         Vector3d[] axes = new Vector3d[3];
         
         /* 1. align the a axis with x axis */
+        axes[0] = new Vector3d();
         axes[0].x = alength;
         axes[0].y = 0.0;
         axes[0].z = 0.0;
@@ -192,11 +196,13 @@ public class CrystalGeometryTools {
         double singamma = Math.sin(toRadians*gamma);
 
         /* 2. place the b is in xy plane making a angle gamma with a */
+        axes[1] = new Vector3d();
         axes[1].x = blength*cosgamma;
         axes[1].y = blength*singamma;
         axes[1].z = 0.0;
 
         /* 3. now the c axis, with more complex maths */
+        axes[2] = new Vector3d();
         double V = alength * blength * clength *
                    Math.sqrt(1.0 - cosalpha*cosalpha -
                              cosbeta*cosbeta -
@@ -209,59 +215,17 @@ public class CrystalGeometryTools {
         return axes;
     }
     
-    /**
-     * Calculates notional coordinates for unit cell axes from cartesian
-     * axes coordinates.
-     *
-     * <p>The array that is returned contains the lengths of a, b and c,
-     * and the angles alpha, beta and gamma (in this order).
-     *
-     * @param a    length of the a axis
-     * @param b    length of the b axis
-     * @param c    length of the c axis
-     * @return     an array of length 6 with a,b,c,alpha,beta and gamma
-     *
-     * @cdk.keyword  notional coordinates
-     *
-     * @deprecated
-     */
-    public static double[] cartesianToNotional(double[] a, double[] b, double[] c) {
-        double[] notionalCoords = new double[6];
-        notionalCoords[0] = calcAxisLength(a);
-        notionalCoords[1] = calcAxisLength(b);
-        notionalCoords[2] = calcAxisLength(c);
-        notionalCoords[3] = calcAxesAngle(b,c);
-        notionalCoords[4] = calcAxesAngle(a,c);
-        notionalCoords[5] = calcAxesAngle(a,b);
-        return notionalCoords;
-    }
-                               
     public static double[] cartesianToNotional(Vector3d a, Vector3d b, Vector3d c) {
         double[] notionalCoords = new double[6];
         notionalCoords[0] = a.length();
         notionalCoords[1] = b.length();
         notionalCoords[2] = c.length();
-        notionalCoords[3] = b.angle(c);
-        notionalCoords[4] = a.angle(c);
-        notionalCoords[5] = a.angle(b);
+        notionalCoords[3] = b.angle(c)*180.0/Math.PI;
+        notionalCoords[4] = a.angle(c)*180.0/Math.PI;
+        notionalCoords[5] = a.angle(b)*180.0/Math.PI;
         return notionalCoords;
     }
                                
-    /**
-     * Calculates the length of a cell axis.
-     */
-    public static double calcAxisLength(double[] a) {
-        return Math.sqrt(Math.pow(a[0],2.0) + Math.pow(a[1],2.0) + Math.pow(a[2],2.0));
-    };
-
-    /**
-     * Calculates the angle between two axes.
-     */
-    public static double calcAxesAngle(double a[], double b[]) {
-        return Math.toDegrees(Math.acos((a[0]*b[0]+a[1]*b[1]+a[2]*b[2])/
-            (calcAxisLength(a)*calcAxisLength(b))));
-    };
-
 	/**
      * Determines if this model contains fractional (crystal) coordinates.
 	 *
