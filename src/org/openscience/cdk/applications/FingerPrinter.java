@@ -24,9 +24,11 @@
 package org.openscience.cdk.applications;
 
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.*;
 import org.openscience.cdk.io.*;
 import org.openscience.cdk.fingerprint.Fingerprinter;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ChemFileManipulator;
 import freeware.PrintfFormat;
 import java.util.Enumeration;
 import java.util.Locale;
@@ -66,10 +68,13 @@ public class FingerPrinter {
                 if (!input.isDirectory()) {
                     ChemObjectReader reader = new ReaderFactory().createReader(new FileReader(input));
                     if (reader.accepts(new Molecule())) {
-                        Molecule molecule = (Molecule)reader.read(new Molecule());
-                        if (molecule != null) {
-                            String print = Fingerprinter.getFingerprint(molecule).toString();
-                            System.out.println(ifilename + ": fingerprint=" + print);
+                        ChemFile content = (ChemFile)reader.read((ChemObject)new ChemFile());
+                        AtomContainer[] containers = ChemFileManipulator.getAllAtomContainers(content);
+                        if (containers.length > 0) {
+                            for (int j = 0; j < containers.length; j++) {
+                                String print = Fingerprinter.getFingerprint(containers[j]).toString();
+                                System.out.println(ifilename + " ("+ j +"): fingerprint=" + print);
+                            }
                         }
                     }
                 }
