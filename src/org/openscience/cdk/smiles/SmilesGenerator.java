@@ -844,6 +844,7 @@ public class SmilesGenerator {
               }
             }
           }
+          //This builds an onew[] containing the objects after the center of the chirality in the order geiven by sorted[]
           if(sorted!=null){
             int numberOfAtoms=3;
             if(isTrigonalBipyramidalOrOctahedral(container, atom))
@@ -880,6 +881,16 @@ public class SmilesGenerator {
                 onew[k]=null;
               }
             }
+            //Make sure that the first atom in onew is the first one in the original smiles order. This is important to have a canonical smiles.
+            Object atomAfterCenterInOriginalSmiles=v.get(positionInVector+1);
+            while(onew[0]!=atomAfterCenterInOriginalSmiles){
+              Object placeholder=onew[onew.length-1];
+              for(int k= onew.length-2;k>-1;k--){
+                onew[k+1]=onew[k];
+              }
+              onew[0]=placeholder;
+            }
+            //The last in onew is a vector: This means we need to exchange the rest of the original smiles with the rest of this vector.
             if(onew[numberOfAtoms-1] instanceof Vector){
               for(int i=0;i<numberOfAtoms;i++){
                 if(onew[i] instanceof Atom){
@@ -888,37 +899,24 @@ public class SmilesGenerator {
                   for(int k=positionInVector+1+numberOfAtoms;k<v.size();k++){
                       vtemp.add(v.get(k));
                   }
-                  Vector vtemp2=new Vector();
-                  for(int k=0;k<positionInVector+1+numberOfAtoms-1;k++){
-                    if(k==positionInVector+1+i){
-                      vtemp2.add(vtemp);
-                    }
-                    else
-                    {
-                      if(k>positionInVector){
-                        vtemp2.add(onew[k-positionInVector-1]);
-                      }
-                      else
-                      {
-                        vtemp2.add(v.get(k));
-                      }
-                    }
+                  onew[i]=vtemp;
+                  for(int k=v.size()-1;k>positionInVector+1+numberOfAtoms-1;k--){
+                      v.remove(k);
                   }
-                  for(int k=0;k<((Vector)onew[numberOfAtoms-1]).size();k++){
-                    vtemp2.add(((Vector)onew[numberOfAtoms-1]).get(k));
+                  for(int k=1;k<((Vector)onew[numberOfAtoms-1]).size();k++){
+                    v.add(((Vector)onew[numberOfAtoms-1]).get(k));
                   }
+                  onew[numberOfAtoms-1]=((Vector)onew[numberOfAtoms-1]).get(0);
                   break;
                 }
               }
             }
-            else
-            {
-              int k=0;
-              for(int m=0;m<onew.length;m++){
-                if(onew[m]!=null){
-                  v.set(positionInVector+1+k,onew[m]);
-                  k++;
-                }
+            //Put the onew objects in the original Vector
+            int k=0;
+            for(int m=0;m<onew.length;m++){
+              if(onew[m]!=null){
+                v.set(positionInVector+1+k,onew[m]);
+                k++;
               }
             }
           }
