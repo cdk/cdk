@@ -52,7 +52,8 @@
                         <include name="postgresql7.0-1.2.jar" />
                         <include name="printf.jar" />
                         <include name="vecmath1.2-1.14.jar" />
-                        <include name="xerces-2.5.0.jar" />
+                        <include name="xerces-2.6.2.jar" />
+                        <include name="xmlApis-2.6.2.jar" />
                         <include name="xindice.jar" />
                         <include name="xmldb.jar" />
                         <include name="stmml.jar" />
