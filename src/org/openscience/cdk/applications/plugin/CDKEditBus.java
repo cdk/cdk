@@ -24,6 +24,8 @@
  */
 package org.openscience.cdk.applications.plugin;
 
+import java.io.Reader;
+
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 
@@ -55,7 +57,7 @@ public interface CDKEditBus {
      * Tells the application in which the plugin is loaded to
      * show the chemistry in the given String.
      */
-    public void showChemFile(String file);
+    public void showChemFile(Reader file);
     /**
      * Tells the application in which the plugin is loaded to
      * show the given ChemModel.
