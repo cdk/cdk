@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2001-2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2001-20034 The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -55,161 +55,186 @@ import org.openscience.dadml.tools.*;
  */
 public class DADMLReader extends DefaultChemObjectReader {
 
-    String superdb;
-    String index = "CAS-NUMBER";
-	String casno = "50-00-0";
+    private String superdb;
 
     private org.openscience.cdk.tools.LoggingTool logger;
     private static final String sax2parser = "org.apache.xerces.parsers.SAXParser";
 
-	/**
-	 * Contructs a new DADMLReader that can read Molecule from the internet.
-	 *
-	 * @param   superdb DADML super database to look up structure from
-	 */
-	public DADMLReader(String superdb) {
-		logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
-		this.superdb = superdb;
-	}
+    private URI query;
+    
+    /**
+     * Contructs a new DADMLReader that can read Molecule from the internet.
+     *
+     * @param   superdb DADML super database to look up structure from
+     */
+    public DADMLReader(String superdb) {
+        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        this.superdb = superdb;
+        this.query = null;
+    }
 
     public String getFormatName() {
         return "DADML network";
     }
     
-	/**
-	 * Sets the query.
-	 *
-	 * @param   index   Index type (e.g. CAS-NUMBER)
-	 * @param   value   Index of molecule to download (e.g. 50-00-0)
-	 */
-	public void setQuery(String index, String value) {
-		this.index = index;
-		this.casno = value;
-	}
-
-	/**
-	 * Takes an object which subclasses ChemObject, e.g.Molecule, and will read this
-	 * (from file, database, internet etc). If the specific implementation does not
-	 * support a specific ChemObject it will throw an Exception.
-	 *
-	 * @param   object  The object that subclasses ChemObject
-	 * @return   The ChemObject read
-	 * @exception   UnsupportedChemObjectException
-	 */
-    public ChemObject read(ChemObject object) throws UnsupportedChemObjectException {
-        if (object instanceof Molecule) {
-		    return (ChemObject)readMolecule();
-		} else {
-		    throw new UnsupportedChemObjectException("Only supported is Molecule.");
-		}
+    /**
+     * Sets the query.
+     *
+     * @param   indexType   Index type (e.g. CAS-NUMBER)
+     * @param   value   Index of molecule to download (e.g. 50-00-0)
+     */
+    public void setQuery(String indexType, String value) {
+        try {
+            this.query = new URI("dadml://any/" + indexType + "?" + value);
+        } catch (URISyntaxException exception) {
+            logger.error("Serious error: " + exception.getMessage());
+            logger.debug(exception);
+        }
     }
 
-	/**
-	 * Read a Molecule from a DADML super database.
-	 *
-	 * @return The Molecule that was read
-	 */
-	private Molecule readMolecule() {
-	    boolean found = false; // this is true when a structure is downloaded
-	    boolean done = false;  // this is true when all URLS have been tested
+    /**
+     * Sets the query in the form &quot;dadml://any/CAS-NUMBER?50-00-0&quot;.
+     *
+     * @param   URI     URI query.
+     */
+    public void setQuery(URI query) throws URISyntaxException {
+        this.query = query;
+    }
 
-		Molecule molecule = new Molecule();
-		DBLIST dblist = new DBLIST();
+    /**
+     * Takes an object which subclasses ChemObject, e.g.Molecule, and will read this
+     * (from file, database, internet etc). If the specific implementation does not
+     * support a specific ChemObject it will throw an Exception.
+     *
+     * @param   object  The object that subclasses ChemObject
+     * @return   The ChemObject read
+     * @exception   UnsupportedChemObjectException
+     */
+    public ChemObject read(ChemObject object) throws UnsupportedChemObjectException {
+        if (object instanceof Molecule) {
+            return (ChemObject)readMolecule();
+        } else {
+            throw new UnsupportedChemObjectException("Only supported is Molecule.");
+        }
+    }
+
+    /**
+     * Read a Molecule from a DADML super database.
+     *
+     * @return The Molecule that was read
+     */
+    private Molecule readMolecule() {
+        Molecule molecule = null;
         try {
-		    logger.info("Downloading DADML super database: " + this.superdb);
-		    // Proxy authorization has to be ported from Chemistry Development Kit (CKD)
-			// for now, do without authorization
-			dblist = DBLISTFileReader.read(superdb, sax2parser);
-		} catch (Exception supererror) {
-		    logger.error(supererror.toString());
-		}
-		Enumeration dbases = dblist.databases();
+            URL resource = this.resolveLink(query);
+            // this has to be reformulated
+            molecule = this.downloadURL(resource);
+        } catch (Exception exception) {
+            logger.error("File Not Found: " + exception.getMessage());
+            logger.debug(exception);
+        }
+        return molecule;
+    }
+    
+    public URL resolveLink(URI dadmlRI) {
+        boolean found = false; // this is true when a structure is downloaded
+        boolean done = false;  // this is true when all URLS have been tested
+        
+        String indexType = dadmlRI.getPath().substring(1);
+        String index = dadmlRI.getQuery();
+        
+        Molecule molecule = new Molecule();
+        DBLIST dblist = new DBLIST();
+        try {
+            logger.info("Downloading DADML super database: " + this.superdb);
+            // Proxy authorization has to be ported from Chemistry Development Kit (CKD)
+            // for now, do without authorization
+            dblist = DBLISTFileReader.read(superdb, sax2parser);
+        } catch (Exception supererror) {
+            logger.error(supererror.toString());
+        }
+        Enumeration dbases = dblist.databases();
         while (!found && !done && dbases.hasMoreElements()) {
-		    DATABASE db = (DATABASE)dbases.nextElement();
-		    String dburl = db.getURL()+db.getDefinition();
-		    DBDEF dbdef = new DBDEF();
-		    // Proxy authorization has to be ported from Chemistry Development Kit (CKD)
-			// for now, do without authorization
-		    try {
-			    logger.info("Downloading: " + dburl);
-			    // do without authorization
-			    dbdef = DBDEFFileReader.read(dburl, sax2parser);
-		    } catch (Exception deferror) {
-			    System.err.println(deferror.toString());
-		    }
-		    if (DBDEFInfo.hasINDEX(dbdef, index)) {
-			  // oke, find a nice URL to use for download
-			  logger.debug("Trying: " + dbdef.getTITLE());
-			  Enumeration fields = dbdef.fields();
-			  while (fields.hasMoreElements()) {
-			    FIELD f = (FIELD)fields.nextElement();
-			    String mime = f.getMIMETYPE();
-			    String ftype = f.getTYPE();
-			    if ((mime.equals("chemical/x-mdl-mol") ||
-				      mime.equals("chemical/x-pdb") ||
-				      mime.equals("chemical/x-cml")) &&
-					  (ftype.equals("3DSTRUCTURE") ||
-					   ftype.equals("2DSTRUCTURE"))) {
-				  logger.info("Accepted: " + f.getMIMETYPE() + "," + f.getTYPE());
-				  Enumeration indices = f.getINDEX();
-				  while (indices.hasMoreElements()) {
-				    INDEX ind = (INDEX)indices.nextElement();
-				    if (ind.getTYPE().equals(index)) {
-					  String url = dbdef.getURL() + ind.getACCESS_PREFIX() + casno +
-					                     ind.getACCESS_SUFFIX();
-					  logger.info("Downloading: " + url);
-					  try {
-					    URL u = new URL(url);
-						// this has to be reformulated
-					    molecule = this.downloadURL(u, mime);
-					  } catch (MalformedURLException mue) {
-					    logger.error("Malformed URL" + mue);
-					  } catch (Exception fnfe) {
-					    logger.error("File Not Found." + fnfe);
-					  }
-				    }
-				  }
-			    } else {
-                  // reject other mime types && type structures
-				  logger.info("Rejected: " + f.getMIMETYPE() + "," + f.getTYPE());
-			    }
-			  }
-		    } else {
-                logger.warn("Database does not have index: " + index);
+            DATABASE database = (DATABASE)dbases.nextElement();
+            String dburl = database.getURL() + database.getDefinition();
+            DBDEF dbdef = new DBDEF();
+            // Proxy authorization has to be ported from Chemistry Development Kit (CKD)
+            // for now, do without authorization
+            try {
+                logger.info("Downloading: " + dburl);
+                // do without authorization
+                dbdef = DBDEFFileReader.read(dburl, sax2parser);
+            } catch (Exception deferror) {
+                System.err.println(deferror.toString());
             }
-		}
-		return molecule;
-	}
+            if (DBDEFInfo.hasINDEX(dbdef, indexType)) {
+                // oke, find a nice URL to use for download
+                logger.debug("Trying: " + dbdef.getTITLE());
+                Enumeration fields = dbdef.fields();
+                while (fields.hasMoreElements()) {
+                    FIELD field = (FIELD)fields.nextElement();
+                    String mime = field.getMIMETYPE();
+                    String ftype = field.getTYPE();
+                    if ((mime.equals("chemical/x-mdl-mol") ||
+                         mime.equals("chemical/x-pdb") ||
+                         mime.equals("chemical/x-cml")) &&
+                         (ftype.equals("3DSTRUCTURE") ||
+                          ftype.equals("2DSTRUCTURE"))) {
+                        logger.info("Accepted: " + field.getMIMETYPE() + "," + field.getTYPE());
+                        Enumeration indices = field.getINDEX();
+                        while (indices.hasMoreElements()) {
+                            INDEX ind = (INDEX)indices.nextElement();
+                            if (ind.getTYPE().equals(indexType)) {
+                                // here is the URL composed
+                                String url = dbdef.getURL() + ind.getACCESS_PREFIX() + index + ind.getACCESS_SUFFIX();
+                                try {
+                                    return new URL(url);
+                                } catch (MalformedURLException exception) {
+                                    logger.error("Malformed URL: " + exception.getMessage());
+                                    logger.debug(exception);
+                                }
+                           }
+                        }
+                    } else {
+                        // reject other mime types && type structures
+                        logger.info("Rejected: " + field.getMIMETYPE() + "," + field.getTYPE());
+                    }
+                }
+            } else {
+                logger.warn("Database does not have indexType: " + indexType);
+            }
+        }
+        return null;
+    }
 
-	private Molecule downloadURL(URL u, String mime) {
-        Molecule m = new Molecule();
-		try {
-		    URLConnection connection = u.openConnection();
-	        BufferedReader br = new BufferedReader(
-                 new InputStreamReader(connection.getInputStream()));
-			if (mime.equals("chemical/x-cml")) 	{
-                CMLReader reader = new CMLReader(br);
-                ChemFile cf = (ChemFile)reader.read((ChemObject)new ChemFile());
-				logger.debug("#sequences: " + cf.getChemSequenceCount());
-                ChemSequence chemSequence = cf.getChemSequence(0);
-				logger.debug("#models in sequence: " + chemSequence.getChemModelCount());
-                ChemModel chemModel = chemSequence.getChemModel(0);
-                SetOfMolecules setOfMolecules = chemModel.getSetOfMolecules();
-				logger.debug("#mols in model: " + setOfMolecules.getMoleculeCount());
-                m = setOfMolecules.getMolecule(0);
-			} else if (mime.equals("chemical/x-mdl-mol")) {
-                MDLReader reader = new MDLReader(br);
-                m = (Molecule)reader.read((ChemObject)m);
-			}
-	    } catch (UnsupportedChemObjectException e) {
-	        logger.error("Unsupported ChemObject type: " + e.toString());
-	    } catch (FileNotFoundException e) {
-	        logger.error("File not found: " + e.toString());
-		} catch (Exception e) {
-			logger.error(e.toString());
-		}
-		return m;
-	}
+    private Molecule downloadURL(URL resource) {
+        Molecule molecule = new Molecule();
+        try {
+            URLConnection connection = resource.openConnection();
+            BufferedReader bufReader = new BufferedReader(
+                new InputStreamReader(connection.getInputStream())
+            );
+            ChemObjectReader reader = new ReaderFactory().createReader(bufReader);
+            ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+            logger.debug("#sequences: " + chemFile.getChemSequenceCount());
+            ChemSequence chemSequence = chemFile.getChemSequence(0);
+            logger.debug("#models in sequence: " + chemSequence.getChemModelCount());
+            ChemModel chemModel = chemSequence.getChemModel(0);
+            SetOfMolecules moleculeSet = chemModel.getSetOfMolecules();
+            logger.debug("#mols in model: " + moleculeSet.getMoleculeCount());
+            molecule = moleculeSet.getMolecule(0);
+        } catch (UnsupportedChemObjectException exception) {
+            logger.error("Unsupported ChemObject type: " + exception.getMessage());
+            logger.debug(exception);
+        } catch (FileNotFoundException exception) {
+            logger.error("File not found: " + exception.getMessage());
+            logger.debug(exception);
+        } catch (Exception exception) {
+            logger.error(exception.getMessage());
+            logger.debug(exception);
+        }
+        return molecule;
+    }
 
     public void close() throws IOException {
     }
