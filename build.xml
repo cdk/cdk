@@ -999,6 +999,10 @@
                 <copy 
                   file="${src}/org/openscience/cdk/dict/data/elements.xml"
                   tofile="${sourcedist.dir}/${src}/org/openscience/cdk/dict/data/elements.xml" />
+                <mkdir dir="${sourcedist.dir}/${src}/org/openscience/cdk/qsar/model/data/"/>
+                <copy todir="${sourcedist.dir}/${src}/org/openscience/cdk/qsar/model/data/">
+                    <fileset dir="${src}/org/openscience/cdk/qsar/model/data/" includes="*.R"/>
+                </copy>
                 <copy todir="${sourcedist.dir}/${src}/">
                     <fileset dir="${src}/" includes="*.manifest" />
                 </copy>
