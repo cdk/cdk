@@ -5,7 +5,7 @@
  * 
  * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  * 
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -65,6 +65,9 @@ public class JCPController2D {
     
     private Vector commonElements;
 
+    private JPopupMenu atomPopup = null;
+    private JPopupMenu bondPopup = null;
+    
     /**
      * Constructs a controller that performs operations on the
      * AtomContainer when actions are detected from the MouseEvents.
@@ -272,14 +275,12 @@ public class JCPController2D {
                 Atom atomInRange = getAtomInRange(mouseX, mouseY);
                 Bond bondInRange = getBondInRange(mouseX, mouseY);
                 if (atomInRange != null) {
-                    JPopupMenu popup = c2dm.getAtomPopupMenu();
-                    if (popup != null ) {
-                        popup.show(event.getComponent(), event.getX(), event.getY());
+                    if (atomPopup != null ) {
+                        atomPopup.show(event.getComponent(), event.getX(), event.getY());
                     }
                 } else if (bondInRange != null) {
-                    JPopupMenu popup = c2dm.getBondPopupMenu();
-                    if (popup != null ) {
-                        popup.show(event.getComponent(), event.getX(), event.getY());
+                    if (bondPopup != null ) {
+                        bondPopup.show(event.getComponent(), event.getX(), event.getY());
                     }
                 } else {
                     logger.warn("Popup for model has not been implemented yet!");
@@ -1103,5 +1104,21 @@ public class JCPController2D {
 			((CDKChangeListener)listeners.get(i)).stateChanged(event);
 		}
 	}
+
+    public void setAtomPopupMenu(JPopupMenu menu) {
+        this.atomPopup = menu;
+    }
+    
+    public JPopupMenu getAtomPopupMenu() {
+        return this.atomPopup;
+    }
+
+    public void setBondPopupMenu(JPopupMenu menu) {
+        this.bondPopup = menu;
+    }
+    
+    public JPopupMenu getBondPopupMenu() {
+        return this.bondPopup;
+    }
 
 }

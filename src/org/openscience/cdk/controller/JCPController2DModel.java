@@ -5,7 +5,7 @@
  * 
  * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  * 
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -65,9 +65,6 @@ public class JCPController2DModel
 
 	private double bondPointerLength = 20;
 	private double ringPointerLength = 20;
-	
-    private JPopupMenu atomPopup = null;
-    private JPopupMenu bondPopup = null;
 	
 	/**
 	 * Returns the draw mode.
@@ -319,20 +316,4 @@ public class JCPController2DModel
         return this.commonElements;
     }
     
-    public void setAtomPopupMenu(JPopupMenu menu) {
-        this.atomPopup = menu;
-    }
-    
-    public JPopupMenu getAtomPopupMenu() {
-        return this.atomPopup;
-    }
-
-    public void setBondPopupMenu(JPopupMenu menu) {
-        this.bondPopup = menu;
-    }
-    
-    public JPopupMenu getBondPopupMenu() {
-        return this.bondPopup;
-    }
-
 }
