@@ -420,7 +420,11 @@ public class CMLCoreModule implements ModuleInterface {
 
             case CRYSTAL:
                 cdo.startObject("Crystal");
-
+                for (int i = 0; i < atts.getLength(); i++) {
+                    if (atts.getQName(i).equals("z"))
+                        cdo.setObjectProperty("Crystal", "z",
+                            atts.getValue(i));
+                }
                 break;
 
             case LIST:

@@ -343,6 +343,12 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
               Crystal current = (Crystal)currentMolecule;
               if (propertyType.equals("spacegroup")) {
                   current.setSpaceGroup(propertyValue);
+              } else if (propertyType.equals("z")) {
+                  try {
+                      current.setZ(Integer.parseInt(propertyValue));
+                  } catch (NumberFormatException exception) {
+                      logger.error("Error in format of Z value");
+                  }
               }
           } else {
               logger.warn("Cannot add crystal cell parameters to a non " +

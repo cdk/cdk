@@ -228,6 +228,42 @@ public class CMLFragmentsTest extends TestCase {
         assertNull   (atom2.getPoint3D());
         assertNotNull(atom3.getPoint3D());
     }
+    
+    public void testCrystal() {
+        StringBuffer cmlStringB = new StringBuffer("  <molecule id=\"m1\">\n");
+        cmlStringB.append("    <crystal z=\"4\">\n");
+        cmlStringB.append("      <scalar id=\"sc1\" title=\"a\" errorValue=\"0.001\" units=\"units:angstrom\">4.500</scalar>\n");
+        cmlStringB.append("      <scalar id=\"sc2\" title=\"b\" errorValue=\"0.001\" units=\"units:angstrom\">4.500</scalar>\n");
+        cmlStringB.append("      <scalar id=\"sc3\" title=\"c\" errorValue=\"0.001\" units=\"units:angstrom\">4.500</scalar>\n");
+        cmlStringB.append("      <scalar id=\"sc4\" title=\"alpha\" units=\"units:degrees\">90</scalar>\n");
+        cmlStringB.append("      <scalar id=\"sc5\" title=\"beta\" units=\"units:degrees\">90</scalar>\n");
+        cmlStringB.append("      <scalar id=\"sc6\" title=\"gamma\" units=\"units:degrees\">90</scalar>\n");
+        cmlStringB.append("      <symmetry id=\"s1\" spaceGroup=\"Fm3m\"/>\n");
+        cmlStringB.append("    </crystal>\n");
+        cmlStringB.append("    <atomArray>\n");
+        cmlStringB.append("      <atom id=\"a1\" elementType=\"Na\" formalCharge=\"1\" xyzFract=\"0.0 0.0 0.0\"\n");
+        cmlStringB.append("        xy2=\"+23.1 -21.0\"></atom>\n");
+        cmlStringB.append("      <atom id=\"a2\" elementType=\"Cl\" formalCharge=\"-1\" xyzFract=\"0.5 0.0 0.0\"></atom>\n");
+        cmlStringB.append("    </atomArray>\n");
+        cmlStringB.append("  </molecule>\n");
+        
+        ChemFile chemFile = parseCMLString(cmlStringB.toString());
+        Crystal crystal = checkForCrystalFile(chemFile);
+        assertEquals(4, crystal.getZ());
+        assertEquals(2, crystal.getAtomCount());
+        double[] aaxis = crysal.getA();
+        assertEquals(4.5, aaxis[0], 0.1);
+        assertEquals(0.0, aaxis[1], 0.1);
+        assertEquals(0.0, aaxis[2], 0.1);
+        double[] baxis = crysal.getB();
+        assertEquals(0.0, baxis[0], 0.1);
+        assertEquals(4.5, baxis[1], 0.1);
+        assertEquals(0.0, baxis[2], 0.1);
+        double[] caxis = crysal.getC();
+        assertEquals(0.0, caxis[0], 0.1);
+        assertEquals(0.0, caxis[1], 0.1);
+        assertEquals(4.5, caxis[2], 0.1);
+    }
 
     private ChemFile parseCMLString(String cmlString) {
         ChemFile chemFile = null;
@@ -268,6 +304,23 @@ public class CMLFragmentsTest extends TestCase {
             assertNotNull(mol);
         }
         return mol;
+    }
+
+    private Crystal checkForCrystalFile(ChemFile chemFile) {
+        assertNotNull(chemFile);
+        
+        assertEquals(chemFile.getChemSequenceCount(), 1);
+        ChemSequence seq = chemFile.getChemSequence(0);
+        assertNotNull(seq);
+        
+        assertEquals(seq.getChemModelCount(), 1);
+        ChemModel model = seq.getChemModel(0);
+        assertNotNull(model);
+        
+        Crystal crystal = model.getCrystal();
+        assertNotNull(crystal);
+        
+        return crystal;
     }
 
 }

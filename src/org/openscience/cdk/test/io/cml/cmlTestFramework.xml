@@ -81,5 +81,23 @@
       <atom id='a3' xyz3='0.1 0.0 0.2'/>
     </atomArray>
   </molecule>
+  
+  <!-- JFragmentsTests.testCrystal() -->
+  <molecule id="m1">
+    <crystal z="4">
+      <scalar id="sc1" title="a" errorValue="0.001" units="units:angstrom">4.500</scalar>
+      <scalar id="sc2" title="b" errorValue="0.001" units="units:angstrom">4.500</scalar>
+      <scalar id="sc3" title="c" errorValue="0.001" units="units:angstrom">4.500</scalar>
+      <scalar id="sc4" title="alpha" units="units:degrees">90</scalar>
+      <scalar id="sc5" title="beta" units="units:degrees">90</scalar>
+      <scalar id="sc6" title="gamma" units="units:degrees">90</scalar>
+      <symmetry id="s1" spaceGroup="Fm3m"/>
+    </crystal>
+    <atomArray>
+      <atom id="a1" elementType="Na" formalCharge="1" xyzFract="0.0 0.0 0.0"
+        xy2="+23.1 -21.0"></atom>
+      <atom id="a2" elementType="Cl" formalCharge="-1" xyzFract="0.5 0.0 0.0"></atom>
+    </atomArray>
+  </molecule>
 
 </cml>
