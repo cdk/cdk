@@ -5,7 +5,7 @@
  *
  * Copyright (C) 2001-2003  The Chemistry Development Kit (CDK) project
  *
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -33,8 +33,8 @@ import java.util.*;
 /**
  * Program that converts a file from one format to a file with another format.
  * Supported formats are:
- *   input: CML, MDL Molfile, PDB, PMP, ShelX, SMILES, XYZ
- *  output: CML, MDL Molfile, ShelX, SMILES, XYZ, Gaussian Input
+ *   input: CML, MDL MOL/SDF file, PDB, PMP, ShelX, SMILES, XYZ
+ *  output: CML, MDL MOL/SDF file, ShelX, SMILES, XYZ, Gaussian Input
  *
  *  @keyword command line util
  *  @keyword file format
@@ -101,11 +101,11 @@ public class FileConvertor {
         this.ifilename = ifilename;
         this.ofilename = ofilename;
         try {
-            cor = getChemObjectReader(this.iformat, 
-                                      new FileReader(new File(ifilename)));
+            File file = new File(ifilename);
+            cor = getChemObjectReader(file);
             if (cor == null) {
-                logger.warn("Format " + iformat + " is an unsupported input format.");
-                System.err.println("Unsupported input format!");
+                logger.warn("The format of the input file is not recognized or not supported.");
+                System.err.println("The format of the input file is not recognized or not supported.");
                 return false;
             }
 
@@ -123,6 +123,9 @@ public class FileConvertor {
             }
             write(content);
             cow.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("File " + ifilename + " does not exist!");
+            success = false;
         } catch (Exception e) {
             success = false;
             logger.error(e.toString());
@@ -142,13 +145,13 @@ public class FileConvertor {
     int level = 0; // no questions by default
     
     int startFromHere = 0;
-    if (args.length < 4) {
-      System.err.println("syntax: FileConverter [--question:none|fewest|some|all] -i<format> -o<format> <input> <output>");
+    if (args.length < 3) {
+      System.err.println("syntax: FileConverter [--question:none|fewest|some|all] -o<format> <input> <output>");
       System.exit(1);
     }
     
     // process options
-    for (int i=0; i<args.length-4; i++) {
+    for (int i=0; i<args.length-3; i++) {
         String option = args[i];
         if (option.startsWith("--question:") && option.length() > 11) {
             String levelString = option.substring(11);
@@ -164,14 +167,11 @@ public class FileConvertor {
         }
         startFromHere = i + 1;
     }
-    if (args[startFromHere].startsWith("-i")) {
-        input_format = args[startFromHere].substring(2);
+    if (args[startFromHere].startsWith("-o")) {
+        output_format = args[startFromHere].substring(2);
     }
-    if (args[startFromHere+1].startsWith("-o")) {
-        output_format = args[startFromHere+1].substring(2);
-    }
-    String ifilename = args[startFromHere+2];
-    String ofilename = args[startFromHere+3];
+    String ifilename = args[startFromHere+1];
+    String ofilename = args[startFromHere+2];
     
     // do conversion
     FileConvertor fc = new FileConvertor(input_format, output_format, level);
@@ -184,27 +184,33 @@ public class FileConvertor {
     }
   }
 
-    private ChemObjectReader getChemObjectReader(String format, FileReader f) {
+    private ChemObjectReader getChemObjectReader(File file) throws IOException {
+        Reader fileReader = new FileReader(file);
+        ReaderFactory factory = new ReaderFactory();
+        String format = factory.guessFormat(fileReader);
+        System.out.println("Detected format: " + format);
+        // reopen file, to force to start at the beginning
+        fileReader.close();
+        fileReader = new FileReader(file);
+        
         ChemObjectReader reader = null;
-        if (format.equalsIgnoreCase("CML")) {
-            reader = new CMLReader(f);
-        } else if (format.equalsIgnoreCase("XYZ")) {
-            reader = new XYZReader(f);
-        } else if (format.equalsIgnoreCase("MOL")) {
-            reader = new MDLReader(f);
-        } else if (format.equalsIgnoreCase("PDB")) {
-            reader = new PDBReader(f);
-        } else if (format.equalsIgnoreCase("PMP")) {
-            reader = new PMPReader(f);
-        } else if (format.equalsIgnoreCase("SMI")) {
-            reader = new SMILESReader(f);
-        } else if (format.equalsIgnoreCase("SHELX")) {
-            reader = new ShelXReader(f);
-        } else if (format.equalsIgnoreCase("ICHI")) {
-            reader = new IChIReader(f);
-        }
-        if (reader != null) {
-            reader.addReaderListener(readerListener);
+        // construct right reader
+        if (format.equals("org.openscience.cdk.io.CMLReader")) {
+            reader = new CMLReader(fileReader);
+        } else if (format.equals("org.openscience.cdk.io.IChIReader")) {
+            reader = new IChIReader(fileReader);
+        } else if (format.equals("org.openscience.cdk.io.MDLReader")) {
+            reader = new MDLReader(fileReader);
+        } else if (format.equals("org.openscience.cdk.io.PDBReader")) {
+            reader = new PDBReader(fileReader);
+        } else if (format.equals("org.openscience.cdk.io.PMPReader")) {
+            reader = new PMPReader(fileReader);
+        } else if (format.equals("org.openscience.cdk.io.ShelXReader")) {
+            reader = new ShelXReader(fileReader);
+        } else if (format.equals("org.openscience.cdk.io.SMILESReader")) {
+            reader = new SMILESReader(fileReader);
+        } else if (format.equals("org.openscience.cdk.io.XYZReader")) {
+            reader = new XYZReader(fileReader);
         }
         return reader;
     }
