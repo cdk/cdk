@@ -66,7 +66,11 @@ public class CrystClustReader extends DefaultChemObjectReader {
     }
     
     public void setReader(Reader reader) throws CDKException {
-        this.input = input;
+        if (input instanceof BufferedReader) {
+            this.input = (BufferedReader)reader;
+        } else {
+            this.input = new BufferedReader(reader);
+        }
     }
 
     public boolean matches(int lineNumber, String line) {
