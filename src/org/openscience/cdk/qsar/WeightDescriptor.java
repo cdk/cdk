@@ -39,8 +39,21 @@ import java.util.Hashtable;
 
 /**
  *  Descriptor based on the weight of atoms of a certain element type. If no
- *  element is specified, the returned value is the Molecular Weight. molecular
- *  weight.
+ *  element is specified, the returned value is the molecular weight.
+ *
+ * <p>This descriptor uses these parameters:
+ * <table border="1">
+ *   <tr>
+ *     <td>Name</td>
+ *     <td>Default</td>
+ *     <td>Description</td>
+ *   </tr>
+ *   <tr>
+ *     <td>elementSymbol</td>
+ *     <td>null</td>
+ *     <td>If null, returns the molecular weight, otherwise the weight for the given element</td>
+ *   </tr>
+ * </table>
  *
  * @author      mfe4
  * @cdk.created 2004-11-13
@@ -50,7 +63,6 @@ import java.util.Hashtable;
 public class WeightDescriptor implements Descriptor {
 
 	private String elementName = null;
-
 
 	/**
 	 *  Constructor for the AtomCountDescriptor object
@@ -141,7 +153,7 @@ public class WeightDescriptor implements Descriptor {
 	 */
 	public String[] getParameterNames() {
 		String[] params = new String[1];
-		params[0] = "Element Symbol";
+		params[0] = "elementSymbol";
 		return params;
 	}
 

@@ -42,8 +42,19 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * Calculation of topological polar surface area based on fragment 
  * contributions (TPSA) {@cdk.cite ERTL2000}.
  *
- * <p>This descriptor has one parameter: <code>UseAromaticity</code>. If set to
- * true (default = false), the aromaticity will be checked.
+ * <p>This descriptor uses these parameters:
+ * <table border="1">
+ *   <tr>
+ *     <td>Name</td>
+ *     <td>Default</td>
+ *     <td>Description</td>
+ *   </tr>
+ *   <tr>
+ *     <td>useAromaticity</td>
+ *     <td>false</td>
+ *     <td>If true, it will check aromaticity</td>
+ *   </tr>
+ * </table>
  *
  * @author      mfe4
  * @cdk.created 2004-11-03
@@ -295,7 +306,7 @@ public class TPSADescriptor implements Descriptor {
 	 */
 	public String[] getParameterNames() {
 		String[] params = new String[1];
-		params[0] = "UseAromaticity";
+		params[0] = "useAromaticity";
 		return params;
 	}
 

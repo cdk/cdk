@@ -46,14 +46,14 @@ import org.openscience.cdk.smiles.SmilesParser;
  * Actually one molecular factor is missing (presence of para Hs donor pair).
  *
  * <p>This descriptor uses these parameters:
- * <table>
+ * <table border="1">
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>
  *     <td>Description</td>
  *   </tr>
  *   <tr>
- *     <td>CheckAromaticity</td>
+ *     <td>checkAromaticity</td>
  *     <td>false</td>
  *     <td>True is the aromaticity has to be checked</td>
  *   </tr>
@@ -64,10 +64,9 @@ import org.openscience.cdk.smiles.SmilesParser;
  *@cdk.module     qsar
  *@cdk.set        qsar-descriptors
  */
-
 public class XLogPDescriptor implements Descriptor {
+    
 	private boolean checkAromaticity = false;
-
 
 	/**
 	 *  Constructor for the XLogPDescriptor object
@@ -1040,7 +1039,7 @@ public class XLogPDescriptor implements Descriptor {
 	 */
 	public String[] getParameterNames() {
 		String[] params = new String[1];
-		params[0] = "CheckAromaticity";
+		params[0] = "checkAromaticity";
 		return params;
 	}
 

@@ -36,13 +36,16 @@ import java.util.Hashtable;
 
 
 /**
- *  Atomic valence connectivity index (order 0):
- *  http://www.edusoft-lc.com/molconn/manuals/400/chaptwo.html
- *  http://www.chemcomp.com/Journal_of_CCG/Features/descr.htm#KH
- *  returned values are:
- *  chi0v is the Atomic valence connectivity index (order 0),
- *  chi0vC is the Carbon valence connectivity index (order 0);
- *  valence is the number of s and p valence electrons of atom.
+ *  Atomic valence connectivity index (order 0). See
+ *  <a href="http://www.edusoft-lc.com/molconn/manuals/400/chaptwo.html">http://www.edusoft-lc.com/molconn/manuals/400/chaptwo.html</a> and
+ *  <a href="http://www.chemcomp.com/Journal_of_CCG/Features/descr.htm#KH">http://www.chemcomp.com/Journal_of_CCG/Features/descr.htm#KH</a>.
+ *
+ *  <p>Returned values are:
+ *  <ul>
+ *    <li>chi0v is the Atomic valence connectivity index (order 0),
+ *    <li>chi0vC is the Carbon valence connectivity index (order 0);
+ *    <li>valence is the number of s and p valence electrons of atom.
+ *  </ul>
  *
  * @author      mfe4
  * @cdk.created 2004-11-03

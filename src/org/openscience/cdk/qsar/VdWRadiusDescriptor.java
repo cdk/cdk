@@ -35,8 +35,22 @@ import org.openscience.cdk.tools.LoggingTool;
 /**
  *  This class return the VdW radius of a given atom.
  *
+ * <p>This descriptor uses these parameters:
+ * <table border="1">
+ *   <tr>
+ *     <td>Name</td>
+ *     <td>Default</td>
+ *     <td>Description</td>
+ *   </tr>
+ *   <tr>
+ *     <td>atomPosition</td>
+ *     <td>0</td>
+ *     <td>The position of the atom whose protons calculate total partial charge</td>
+ *   </tr>
+ * </table>
+ *
  *@author         mfe4
- *@created        24 febbraio 2005
+ *@created        2005-02-24
  *@cdk.created    2004-11-13
  *@cdk.module     qsar
  *@cdk.set        qsar-descriptors
@@ -130,7 +144,7 @@ public class VdWRadiusDescriptor implements Descriptor {
 	 */
 	public String[] getParameterNames() {
 		String[] params = new String[1];
-		params[0] = "The position of the atom whose protons calculate total partial charge";
+		params[0] = "atomPosition";
 		return params;
 	}
 
