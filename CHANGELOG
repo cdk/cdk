@@ -5,8 +5,10 @@ Changes in CVS
 ------------------------------------
 New:
 * Added AtomType.get/setHybridization() method
-* Added LoggingTool.debug(Object, boolean)
+* Added tools.LoggingTool.debug(Object, boolean)
 * Added infrastructure for a SMARTS parse
+* Added tools.ValencyCheckerInterface.calculateMissingHydrogen(Atom) method
+* Added tools.ValencyChecker.saturate() to fix bond orders
 
 Removed:
 * Removed CDKInputAdapter. Use (Popup)Controller2D directly
@@ -35,6 +37,8 @@ API changes:
 * Moved *Manipulator from cdk.tools into cdk.tools.manipulator
 * PopupController2D.getPopupMenu() now also checks for popup menu's of super
   classes
+* Moved Primes from cdk.smiles to cdk.math
+* Moved RandomNumbersTool and <athTools from cdk.tools to cdk.math
 
 20040324 Release
 ------------------------------------
