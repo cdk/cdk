@@ -133,11 +133,20 @@ public class CDKConstants {
     * ChemObjects                           *
     ****************************************/
 
-    /** The title */
+    /** A String title. */
     public static final String TITLE = "Title";
 
-    /** A remark */
+    /** A String remark. */
     public static final String REMARK = "Remark";
+
+    /** A String comment. */
+    public static final String COMMENT = "Comment";
+
+    /** A List of names. */
+    public static final String NAMES = "Names";
+
+    /** A List of annotation remarks. */
+    public static final String ANNOTATIONS = "Annotations";
 
     /****************************************
     * Some predefined property names for    *
