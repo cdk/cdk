@@ -54,12 +54,14 @@ import org.openscience.cdk.exception.CDKException;
  */
 public class ValencyChecker implements ValencyCheckerInterface {
 
-    private final String atomTypeList = "org/openscience/cdk/config/data/valency_atomtypes.xml";
-    
 	protected AtomTypeFactory structgenATF;
 	protected LoggingTool logger;
 
 	public ValencyChecker() throws IOException, ClassNotFoundException {
+        this("org/openscience/cdk/config/data/valency_atomtypes.xml");
+	}
+
+	public ValencyChecker(String atomTypeList) throws IOException, ClassNotFoundException {
 		structgenATF = AtomTypeFactory.getInstance(atomTypeList);
 		logger = new LoggingTool(this);
         logger.info("Using configuration file: ", atomTypeList);
@@ -114,7 +116,7 @@ public class ValencyChecker implements ValencyCheckerInterface {
         
         // ok, the found atom was not in the list
         throw new CDKException("The atom with element " + atom.getSymbol() +
-                               "and charge " + charge + " is not found.");
+                               " and charge " + charge + " is not found.");
     }
     
     /**
@@ -216,6 +218,7 @@ public class ValencyChecker implements ValencyCheckerInterface {
         logger.info("Saturating atomContainer by adjusting bond orders...");
         boolean allSaturated = allSaturated(atomContainer);
         if (!allSaturated) {
+            logger.info("Saturating bond orders is needed...");
             boolean succeeded = saturate(atomContainer.getBonds(), atomContainer);
             if (!succeeded) {
                 throw new CDKException("Could not saturate this atomContainer!");
@@ -228,7 +231,7 @@ public class ValencyChecker implements ValencyCheckerInterface {
      */
     public boolean saturate(Bond[] bonds, AtomContainer atomContainer) throws CDKException {
         logger.debug("Saturating bond set of size: ", bonds.length);
-        boolean bondsAreFullySaturated = true;
+        boolean bondsAreFullySaturated = false;
         if (bonds.length > 0) {
             Bond bond = bonds[0];
 
@@ -238,61 +241,78 @@ public class ValencyChecker implements ValencyCheckerInterface {
             System.arraycopy(bonds, 1, leftBonds, 0, leftBondCount);
 
             // examine this bond
-            if (isUnsaturated(bond, atomContainer)) {
-                // either this bonds should be saturated or not
-                
-                // try to leave this bond unsaturated and saturate the left bondssaturate this bond
-                if (leftBondCount > 0) {
-                    logger.debug("Recursing with unsaturated bond with #bonds: ", leftBondCount);
-                    bondsAreFullySaturated = saturate(leftBonds, atomContainer) 
-                                             && !isUnsaturated(bond, atomContainer);
+            logger.debug("Examining this bond: ", bond);
+            if (isSaturated(bond, atomContainer)) {
+                logger.debug("OK, bond is saturated, now try to saturate remaining bonds (if needed)");
+                bondsAreFullySaturated = saturate(leftBonds, atomContainer);
+            } else if (isUnsaturated(bond, atomContainer)) {
+                logger.debug("Ok, this bond is unsaturated, and can be saturated");
+                // two options now: 
+                // 1. saturate this one directly
+                // 2. saturate this one by saturating the rest
+                logger.debug("Option 1: Saturating this bond directly, then trying to saturate rest");
+                // considering organic bonds, the max order is 3, so increase twice
+                double increment = 1.0;
+                boolean bondOrderIncreased = saturateByIncreasingBondOrder(bond, atomContainer, increment);
+                bondsAreFullySaturated = bondOrderIncreased && saturate(bonds, atomContainer);
+                if (bondsAreFullySaturated) {
+                    logger.debug("Option 1: worked");
                 } else {
-                    bondsAreFullySaturated = false;
-                }
-
-                // ok, did it work? if not, saturate this bond, and recurse
-                if (!bondsAreFullySaturated) {
-                    logger.debug("First try did not work...");
-                    // ok, revert saturating this bond, and recurse again
-                    boolean couldSaturate = saturate(bond, atomContainer);
-                    if (couldSaturate) {
-                        if (leftBondCount > 0) {
-                            logger.debug("Recursing with saturated bond with #bonds: ", leftBondCount);
-                            bondsAreFullySaturated = saturate(leftBonds, atomContainer);
-                        } else {
-                            bondsAreFullySaturated = true;
-                        }
-                    } else {
-                        bondsAreFullySaturated = false;
-                        // no need to recurse, because we already know that this bond
-                        // unsaturated does not work
-                    }
-                }
-            } else if (isSaturated(bond, atomContainer)) {
-                logger.debug("This bond is already saturated.");
-                if (leftBondCount > 0) {
-                    logger.debug("Recursing with #bonds: ", leftBondCount);
-                    bondsAreFullySaturated = saturate(leftBonds, atomContainer);
-                } else {
-                    bondsAreFullySaturated = true;
+                    logger.debug("Option 1: failed. Trying option 2.");
+                    logger.debug("Option 2: Saturing this bond by saturating the rest");
+                    // revert the increase (if succeeded), then saturate the rest
+                    if (bondOrderIncreased) unsaturateByDecreasingBondOrder(bond, increment);
+                    bondsAreFullySaturated = saturate(leftBonds, atomContainer) &&
+                                             isSaturated(bond, atomContainer);
+                    if (!bondsAreFullySaturated) logger.debug("Option 2: failed");
                 }
             } else {
-                logger.debug("Cannot saturate this bond");
-                // but, still recurse (if possible)
-                if (leftBondCount > 0) {
-                    logger.debug("Recursing with saturated bond with #bonds: ", leftBondCount);
-                    bondsAreFullySaturated = saturate(leftBonds, atomContainer) 
-                                             && !isUnsaturated(bond, atomContainer);
-                } else {
-                    bondsAreFullySaturated = !isUnsaturated(bond, atomContainer);
-                }
+                logger.debug("Ok, this bond is unsaturated, but cannot be saturated");
+                // try recursing and see if that fixes things
+                bondsAreFullySaturated = saturate(leftBonds, atomContainer) &&
+                                         isSaturated(bond, atomContainer);
             }
+        } else {
+            bondsAreFullySaturated = true; // empty is saturated by default
         }
-        logger.debug("Is bond set fully saturated?: ", bondsAreFullySaturated);
-        logger.debug("Returning to level: ", (bonds.length + 1));
         return bondsAreFullySaturated;
     }
     
+    /**
+     * Tries to saturate a bond by increasing its bond orders by 1.0.
+     *
+     * @return true if the bond could be increased
+     */
+    public boolean saturateByIncreasingBondOrder(Bond bond, AtomContainer atomContainer, double increment) throws CDKException {
+        Atom[] atoms = bond.getAtoms();
+        Atom atom = atoms[0];
+        Atom partner = atoms[1];
+        logger.debug("  saturating bond: ", atom.getSymbol(), "-", partner.getSymbol());
+        AtomType[] atomTypes1 = structgenATF.getAtomTypes(atom.getSymbol());
+        AtomType[] atomTypes2 = structgenATF.getAtomTypes(partner.getSymbol());
+        for (int atCounter1=0; atCounter1<atomTypes1.length; atCounter1++) {
+            AtomType aType1 = atomTypes1[atCounter1];
+            logger.debug("  condidering atom type: ", aType1);
+            if (couldMatchAtomType(atomContainer, atom, aType1)) {
+                logger.debug("  trying atom type: ", aType1);
+                for (int atCounter2=0; atCounter2<atomTypes2.length; atCounter2++) {
+                    AtomType aType2 = atomTypes2[atCounter2];
+                    logger.debug("  condidering partner type: ", aType1);
+                    if (couldMatchAtomType(atomContainer, partner, atomTypes2[atCounter2])) {
+                        logger.debug("    with atom type: ", aType2);
+                        if (bond.getOrder() < aType2.getMaxBondOrder() && 
+                        bond.getOrder() < aType1.getMaxBondOrder()) {
+                            bond.setOrder(bond.getOrder() + increment);
+                            logger.debug("Bond order now ", bond.getOrder());
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     /**
      * Saturate atom by adjusting its bond orders.
      */
@@ -301,35 +321,10 @@ public class ValencyChecker implements ValencyCheckerInterface {
         Atom atom = atoms[0];
         Atom partner = atoms[1];
         logger.debug("  saturating bond: ", atom.getSymbol(), "-", partner.getSymbol());
-        AtomType[] atomTypes1 = structgenATF.getAtomTypes(atom.getSymbol());
-        AtomType[] atomTypes2 = structgenATF.getAtomTypes(partner.getSymbol());
         boolean bondOrderIncreased = true;
-        while (bondOrderIncreased && !isSaturated(bond, atomContainer)) {
+        while (bondOrderIncreased && isUnsaturated(bond, atomContainer)) {
             logger.debug("Can increase bond order");
-            bondOrderIncreased = false;
-            for (int atCounter1=0; atCounter1<atomTypes1.length&& !bondOrderIncreased; atCounter1++) {
-                AtomType aType1 = atomTypes1[atCounter1];
-                logger.debug("  condidering atom type: ", aType1);
-                if (couldMatchAtomType(atomContainer, atom, aType1)) {
-                    logger.debug("  trying atom type: ", aType1);
-                    for (int atCounter2=0; atCounter2<atomTypes2.length && !bondOrderIncreased; atCounter2++) {
-                        AtomType aType2 = atomTypes2[atCounter2];
-                        logger.debug("  condidering partner type: ", aType1);
-                        if (couldMatchAtomType(atomContainer, partner, atomTypes2[atCounter2])) {
-                            logger.debug("    with atom type: ", aType2);
-                            if (bond.getOrder() >= aType2.getMaxBondOrder() || 
-                                bond.getOrder() >= aType1.getMaxBondOrder()) {
-                                logger.debug("Bond order not increased: atoms has reached (or exceeded) maximum bond order for this atom type");
-                            } else if (bond.getOrder() < aType2.getMaxBondOrder() &&
-                                       bond.getOrder() < aType1.getMaxBondOrder()) {
-                                bond.setOrder(bond.getOrder() + 1);
-                                logger.debug("Bond order now " + bond.getOrder());
-                                bondOrderIncreased = true;
-                            }
-                        }
-                    }
-                }
-            }
+            bondOrderIncreased = saturateByIncreasingBondOrder(bond, atomContainer, 1.0);
         }
         return isSaturated(bond, atomContainer);
     }
@@ -353,14 +348,16 @@ public class ValencyChecker implements ValencyCheckerInterface {
 
     /**
      * Returns wether a bond is unsaturated. A bond is unsaturated if 
-     * <b>both</b> Atoms in the bond are unsaturated.
+     * <b>all</b> Atoms in the bond are unsaturated.
      */
     public boolean isUnsaturated(Bond bond, AtomContainer atomContainer) throws CDKException {
+        logger.debug("isBondUnsaturated?: ", bond);
         Atom[] atoms = bond.getAtoms();
         boolean isUnsaturated = true;
-        for (int i=0; i<atoms.length; i++) {
+        for (int i=0; i<atoms.length && isUnsaturated; i++) {
             isUnsaturated = isUnsaturated && !isSaturated(atoms[i], atomContainer);
         }
+        logger.debug("Bond is unsaturated?: ", isUnsaturated);
         return isUnsaturated;
     }
     
@@ -369,11 +366,14 @@ public class ValencyChecker implements ValencyCheckerInterface {
      * <b>both</b> Atoms in the bond are saturated.
      */
     public boolean isSaturated(Bond bond, AtomContainer atomContainer) throws CDKException {
+        logger.debug("isBondSaturated?: ", bond);
         Atom[] atoms = bond.getAtoms();
         boolean isSaturated = true;
         for (int i=0; i<atoms.length; i++) {
+            logger.debug("isSaturated(Bond, AC): atom I=", i);
             isSaturated = isSaturated && isSaturated(atoms[i], atomContainer);
         }
+        logger.debug("isSaturated(Bond, AC): result=", isSaturated);
         return isSaturated;
     }
     
@@ -390,6 +390,15 @@ public class ValencyChecker implements ValencyCheckerInterface {
     public void unsaturate(Bond[] bonds) {
         for (int i = 1; i < bonds.length; i++) {
             bonds[i].setOrder(1.0);
+        }
+    }
+    
+    public boolean unsaturateByDecreasingBondOrder(Bond bond, double decrement) {
+        if (bond.getOrder() > decrement) {
+            bond.setOrder(bond.getOrder() - decrement);
+            return true;
+        } else {
+            return false;
         }
     }
     
