@@ -338,7 +338,6 @@ This DTD is fully described in Journal of Chemical Information
  %id;
  %count;
  %dictRef;
- %dictRef;
  %convention; 
 >
 
