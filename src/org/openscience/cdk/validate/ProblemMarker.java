@@ -1,6 +1,6 @@
 /* $RCSfile$
- * $Author$    
- * $Date$    
+ * $Author$
+ * $Date$
  * $Revision$
  * 
  * Copyright (C) 2003  The Chemistry Development Kit (CDK) project
@@ -34,7 +34,7 @@ import java.util.Vector;
  *
  * @author   Egon Willighagen
  * @created  2003-08-11
- */ 
+ */
 public class ProblemMarker {
 
     public static String ERROR_MARKER = "org.openscience.cdk.validate.error";

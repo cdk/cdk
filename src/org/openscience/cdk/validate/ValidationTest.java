@@ -35,23 +35,38 @@ import org.openscience.cdk.ChemObject;
  * @see      org.openscience.cdk.ChemObject
  * @keyword atom, chemical validation
  */ 
-public class ValidationError {
+public class ValidationTest {
     
     /** ChemObject which has the error. */
     private ChemObject object;
     /** String representation of the found error. */
     private String error;
+    /** Multiline String with details on the error. */
+    private String details;
 
-    public ValidationError(ChemObject object, String error) {
-        this.object = object;
-        this.error = error;
+    public ValidationTest(ChemObject object, String error) {
+        this(object, error, "");
     }
     
+    public ValidationTest(ChemObject object, String error, String details) {
+        this.object = object;
+        this.error = error;
+        this.details = details;
+    }
+
     public ChemObject getChemObject() {
         return this.object;
     }
     
     public String getError() {
         return this.error;
+    }
+    
+    public String getDetails() {
+        return this.details;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
     }
 }
