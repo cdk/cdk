@@ -64,8 +64,18 @@
           <available classname="javax.media.j3d.Canvas3D"
                      classpathref="project.class.path"
                      property="java3D.present"/>
+          <uptodate property="patchRFC11.applied"
+                    srcfile="${build.src}/org/openscience/cdk/ChemObject.java"
+                    targetfile="${build.src}/patchRFC11.applied"/>
         </target>
 
+        <target name="patchRFC11" unless="patchRFC11.applied">
+                <!-- apply patch that implements RFC #11 -->
+                <patch dir="${build.src}" patchfile="${src}/patches/implementation_of_RFC11"
+                       strip="1"/>
+                <touch file="${build.src}/patchRFC11.applied"/>
+        </target>
+        
         <target name="init" depends="check">
                 <tstamp />
                 <mkdir dir="${build}" />
@@ -80,9 +90,7 @@
                     <fileset dir="${src}/org"/>
                 </copy>
                 
-                <!-- apply patch that implements RFC #11 -->
-                <patch dir="${build.src}" patchfile="${src}/patches/implementation_of_RFC11"
-                       strip="1"/>
+                <antcall target="patchRFC11"/>
         </target>
 
         <target name="clean" description="Removes unneccessary stuff">
