@@ -4,6 +4,8 @@
 
 <xsl:import href="website-2.5.0/xsl/tabular.xsl"/>
 
+<xsl:param name="navbgcolor">#FCF0DA</xsl:param>
+
 <!-- Replace the text in these templates with whatever you want -->
 <!-- to appear in the respective location on the home page. -->
 
@@ -24,8 +26,6 @@
       <xsl:with-param name="pageid" select="$pageid"/>
     </xsl:call-template>
   </xsl:variable>
-
-  <xsl:variable name="textbgcolor"><xsl:text>#FCF0DA</xsl:text></xsl:variable>
 
   <xsl:variable name="homebanner"
                 select="/autolayout/config[@param='homebanner-tabular'][1]"/>
