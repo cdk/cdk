@@ -36,4 +36,14 @@
       </screenshot>
     </figure>
   </para>
+  
+  <para>
+    <figure>
+      <title>A ChemObjectTree showing the ethane molecule</title>
+      <screenshot>
+        <graphic width="200" fileref="graphics/screenshots/ChemObjectTree.png"></graphic>
+      </screenshot>
+    </figure>
+  </para>
+  
 </webpage>

@@ -8,7 +8,7 @@
   <head>
     <title>The CDK Man Pages</title>
     <titleabbrev>Manual Pages</titleabbrev>
-    <summary>This page contains the manual pages of the binaries that are
+    <summary>This page contains the manual pages of the executables that are
       included in the CDK tar distribution.</summary>
   </head>
 
@@ -17,9 +17,10 @@
     <para>
       <itemizedlist>
         <listitem><para><ulink url="man-dbadmin.html">cdk-dbadmin</ulink></para></listitem>
-        <listitem><para><ulink url="man-fileconvert.html">cdk-fileconvert</ulink></para></listitem>
-        <listitem><para><ulink url="man-view.html">cdk-view</ulink></para></listitem>
         <listitem><para><ulink url="man-download.html">cdk-download</ulink></para></listitem>
+        <listitem><para><ulink url="man-fileconvert.html">cdk-fileconvert</ulink></para></listitem>
+        <listitem><para><ulink url="man-test.html">cdk-test</ulink></para></listitem>
+        <listitem><para><ulink url="man-view.html">cdk-view</ulink></para></listitem>
       </itemizedlist>
     </para>
   </section>
