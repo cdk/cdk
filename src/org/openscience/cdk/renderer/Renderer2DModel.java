@@ -73,7 +73,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 
 	private boolean drawNumbers = false;
 
-    private boolean showAtomAtomMapping = false;
+    private boolean showAtomAtomMapping = true;
 
 	private int atomRadius = 8;
 	
