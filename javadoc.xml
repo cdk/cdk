@@ -43,7 +43,6 @@
             <packageset dir="${build}/${src}" defaultexcludes="yes">
                 <include name="org/openscience/cdk/**" />
                 <exclude name="org/openscience/cdk/test/**"/>
-                <exclude name="org/openscience/cdk/applications/**"/>
             </packageset>
         </javadoc>
     </target>
