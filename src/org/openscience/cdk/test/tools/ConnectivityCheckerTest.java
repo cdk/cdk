@@ -28,6 +28,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
@@ -81,7 +82,33 @@ public class ConnectivityCheckerTest extends TestCase {
 		assertEquals(3, moleculeSet.getMoleculeCount());
 	}
 
-	/**
+    /**
+     * Test for SF bug #903551
+     */
+	public void testPartitionIntoMoleculesKeepsAtomIDs() {
+        AtomContainer atomCon = new AtomContainer();
+        Atom atom1 = new Atom("C");
+        atom1.setID("atom1");
+        Atom atom2 = new Atom("C");
+        atom2.setID("atom2");
+        atomCon.addAtom(atom1);
+        atomCon.addAtom(atom2);
+        SetOfMolecules moleculeSet = null;
+		try {
+			moleculeSet = cc.partitionIntoMolecules(atomCon);
+		} catch (Exception exc) {
+            fail(exc.toString());
+		}
+        assertNotNull(moleculeSet);
+		assertEquals(2, moleculeSet.getMoleculeCount());
+        Atom copy1 = moleculeSet.getMolecule(0).getAtomAt(0);
+        Atom copy2 = moleculeSet.getMolecule(1).getAtomAt(0);
+        
+        assertEquals(atom1.getID(), copy1.getID());
+        assertEquals(atom2.getID(), copy2.getID());
+    }
+
+    /**
 	 * This test tests the consitency between isConnected() and
      * partitionIntoMolecules().
 	 */
