@@ -43,6 +43,9 @@
           <available classname="org.openscience.jmol.Crystal"
                      classpath="${lib}/libio/jmol.jar"
                      property="jmol.present"/>
+          <available classname="joelib.molecule.JOEAtom" 
+                     classpath="${lib}/libio/joelib.jar" 
+                     property="joelib.present"/>
         </target>
 
         <target name="init" depends="check">
@@ -87,26 +90,55 @@
 
         <target name="compile-all" 
             depends="init, info, compile-core, compile-standard, compile-extra, compile-io, 
-                     compile-render">
+                     compile-render, compile-libio">
         </target>
 
-        <target name="compile-libio" depends="dist-standard">
-                <!-- Task to build the libio classes. Clearly, this requires extra
-                     jars, and these should be located in ${lib}/libio -->
+        <target name="compile-libio" depends="dist-standard, dont-compile-libio-joelib, compile-libio-joelib,
+                                              dont-compile-libio-jmol, compile-libio-jmol">
+        </target>
+        
+        <target name="dont-compile-libio-joelib" unless="joelib.present">
+            <echo message="Not compiling libio for JOELib, jar/libio/joelib.jar is not present" /> 
+        </target>
+        
+        <target name="compile-libio-joelib" if="joelib.present">
+            <!-- Task to build the libio classes for JOELib. -->
+            <echo message="Compiling libio for JOELib" /> 
 
-                <javac destdir="${build}" optimize="${optimization}" 
-                       debug="${debug}" deprecation="${deprecation}">
-                        <src path="${build.src}/org/openscience/cdk/libio" />
-                        <src path="${build.src}/org/openscience/cdk/test/libio" />
-                        <src path="${build.src}/org/openscience/cdk/applications"/>
+            <javac destdir="${build}" optimize="${optimization}" 
+                   debug="${debug}" deprecation="${deprecation}">
+                <src path="${build.src}/org/openscience/cdk/libio/joelib" />
+                <src path="${build.src}/org/openscience/cdk/test/libio/joelib" />
+                
+                <classpath refid="project.class.path" />
+                <classpath>
+                    <fileset dir="${lib}/libio">
+                        <include name="*.jar" />
+                    </fileset>
+                </classpath>
+            </javac>
+        </target>
 
-                        <classpath refid="project.class.path" />
-                        <classpath>
-                            <fileset dir="${lib}/libio">
-                                <include name="*.jar" />
-                            </fileset>
-                        </classpath>
-                </javac>
+        <target name="dont-compile-libio-jmol" unless="jmol.present">
+            <echo message="Not compiling libio for Jmol, jar/libio/jmol.jar is not present" /> 
+        </target>
+        
+        <target name="compile-libio-jmol" if="jmol.present">
+            <!-- Task to build the libio classes for Jmol. -->
+            <echo message="Compiling libio for Jmol v5" /> 
+
+            <javac destdir="${build}" optimize="${optimization}" 
+                   debug="${debug}" deprecation="${deprecation}">
+                <src path="${build.src}/org/openscience/cdk/libio/jmol" />
+                <src path="${build.src}/org/openscience/cdk/test/libio/jmol" />
+                
+                <classpath refid="project.class.path" />
+                <classpath>
+                    <fileset dir="${lib}/libio">
+                        <include name="*.jar" />
+                    </fileset>
+                </classpath>
+            </javac>
         </target>
 
         <target name="compile-apps" depends="dist-extra, dist-libio">
@@ -200,7 +232,7 @@
                    debug="${debug}" deprecation="${deprecation}">
                 <classpath refid="project.class.path" />
 
-		<excludesfile name="${src}/java3d.classes" />
+                <excludesfile name="${src}/java3d.classes" />
                 <exclude name="org/openscience/cdk/libio/**/*.java" />
                 <exclude name="org/openscience/cdk/test/**/*.java" />
                 <exclude name="org/openscience/cdk/applications/**/*.java" />
@@ -472,7 +504,7 @@
 
         <target name="dist-all" depends="dist-core, dist-standard, 
                                          dist-io, dist-render, 
-                                         dist-extra" />
+                                         dist-extra, dist-libio" />
 
         <target name="dist" depends="dist-all" />
 
