@@ -26,20 +26,24 @@
     <ant antfile="build.xml" target="clean"/>
     <ant antfile="build.xml" target="init"/>
 
-    <patch patchfile="${src}/patches/org.openscience.cdk.toold.LoggingTool.java.MakeUsableInJmolApplet"
+    <!-- patch patchfile="${src}/patches/org.openscience.cdk.toold.LoggingTool.java.MakeUsableInJmolApplet"
            originalfile="${build.src}/org/openscience/cdk/tools/LoggingTool.java"
-           dir="${build.src}/org/openscience/cdk/tools"/>
+           dir="${build.src}/org/openscience/cdk/tools"/ -->
 
     <!-- do them one by one, compile-extra, compile-io requires 1.4 -->
     <javac srcdir="${build.src}" destdir="${build}" optimize="off" 
            debug="on" deprecation="off" target="1.1"
-           includesfile="${src}/jmol.classes">
+           includesfile="${src}/jmol.javafiles">
       <classpath refid="project.class.path" />
     </javac>
   </target>
 
   <target name="dist" depends="compile">
     <ant antfile="build.xml" target="dist.init"/>
+    
+    <copy file="${src}/jmol.javafiles" tofile="${src}/jmol.classes"/>
+    <replace file="${src}/jmol.classes" token=".java" value=".class"/>
+
     <jar jarfile="${dist}/jar/jmolcdk.jar">
       <fileset dir="${build}">
         <!-- Put only required class files in the jar -->

@@ -1,6 +1,7 @@
 <project name="CDK" default="dist-all" basedir=".">
 
         <!-- compile options -->
+        <property name="build.sysclasspath" value="ignore" />
         <property name="build.compiler" value="javac1.4" />
         <property name="debug" value="on" />
         <property name="deprecation" value="off" />
@@ -28,7 +29,21 @@
 
                 <pathelement location="." />
                 <fileset dir="${lib}">
-                        <include name="*.jar" />
+                        <include name="batik-awt-util.jar" />
+                        <include name="batik-dom.jar" />
+                        <include name="batik-util.jar" />
+                        <include name="baysmith-io.jar" />
+                        <include name="dadml.jar" />
+                        <include name="gnujaxp.jar" />
+                        <include name="JSX1.0.6.0.jar" />
+                        <include name="junit.jar" />
+                        <include name="log4j-core.jar" />
+                        <include name="log4j.jar" />
+                        <include name="mysql-2.0.4.jar" />
+                        <include name="postgresql7.0-1.2.jar" />
+                        <include name="printf.jar" />
+                        <include name="vecmath1.2-1.14.jar" />
+                        <include name="xerces-2.3.0.jar" />
                 </fileset>
                 <fileset dir="${pathtojava3d}">
                         <include name="*.jar" />
@@ -71,6 +86,7 @@
                         <fileset dir="." includes="**/*~" />
                         <fileset dir="." includes="*.tar.gz" />
                         <fileset dir="." includes="*.zip" />
+                        <fileset dir="${src}" includes="*.classes" />
                 </delete>
 
                 <delete dir="${build}" />
@@ -139,11 +155,11 @@
         <target name="compile-apps" depends="dist-extra, dist-libio">
                 <!-- Task to build the applications classes. Some require extra
                      jars, like those in ${lib}/libio -->
-                <echo message="Compiling classes defined in ${src}/applications.classes." />
+                <echo message="Compiling classes defined in ${src}/applications.javafiles." />
 
                 <javac srcdir="${build.src}" destdir="${build}" optimize="${optimization}" 
                        debug="${debug}" deprecation="${deprecation}"
-                       includesfile="${src}/applications.classes">
+                       includesfile="${src}/applications.javafiles">
 
                         <classpath refid="project.class.path" />
                         <classpath>
@@ -159,7 +175,7 @@
 
                 <javac srcdir="${build.src}" destdir="${build}" optimize="${optimization}" 
                        debug="${debug}" deprecation="${deprecation}"
-                       includesfile="${src}/core.classes">
+                       includesfile="${src}/core.javafiles">
                     <classpath refid="project.class.path" />
                 </javac>
         </target>
@@ -169,7 +185,7 @@
 
                 <javac srcdir="${build.src}" destdir="${build}" optimize="${optimization}" 
                        debug="${debug}" deprecation="${deprecation}"
-                       includesfile="${src}/standard.classes">
+                       includesfile="${src}/standard.javafiles">
                     <classpath>
                         <fileset dir="${lib}">
                             <include name="JSX1.0.6.0.jar" />
@@ -210,7 +226,7 @@
                        debug="${debug}" deprecation="${deprecation}">
                     <include name="org/openscience/cdk/renderer/**/*"/>
                     <include name="org/openscience/cdk/controller/**/*"/>
-                    <excludesfile name="${src}/java3d.classes"/>
+                    <excludesfile name="${src}/java3d.javafiles"/>
 
                     <classpath refid="project.class.path" />
                     <classpath>
@@ -227,7 +243,7 @@
                    debug="${debug}" deprecation="${deprecation}">
                 <classpath refid="project.class.path" />
 
-                <excludesfile name="${src}/java3d.classes" />
+                <excludesfile name="${src}/java3d.javafiles" />
                 <exclude name="org/openscience/cdk/libio/**/*.java" />
                 <exclude name="org/openscience/cdk/test/**/*.java" />
                 <exclude name="org/openscience/cdk/applications/**/*.java" />
@@ -265,7 +281,7 @@
                 <javac srcdir="${build.src}"
                        destdir="${build}" optimize="${optimization}" 
                        debug="${debug}" deprecation="${deprecation}"
-                       includesfile="${src}/java3d.classes">
+                       includesfile="${src}/java3d.javafiles">
 
                         <classpath refid="project.class.path" />
                 </javac>
@@ -299,40 +315,27 @@
                 <copy
                 file="${src}/org/openscience/cdk/io/cml/data/cml1_0_1.dtd"
                 tofile="${build}/org/openscience/cdk/io/cml/data/cml1_0_1.dtd" />
+
+                <!-- generate lists of class files that should end up in
+                     the jars for the modules -->
+                <copy file="${src}/core.javafiles" tofile="${src}/core.classes"/>
+                <replace file="${src}/core.classes" token=".java" value=".class"/>
+                
+                <copy file="${src}/java3d.javafiles" tofile="${src}/java3d.classes"/>
+                <replace file="${src}/java3d.classes" token=".java" value=".class"/>
+                
+                <copy file="${src}/standard.javafiles" tofile="${src}/standard.classes"/>
+                <replace file="${src}/standard.classes" token=".java" value=".class"/>
+
+                <copy file="${src}/applications.javafiles" tofile="${src}/applications.classes"/>
+                <replace file="${src}/applications.classes" token=".java" value=".class"/>
+                
         </target>
 
         <target name="dist-core" depends="compile-core, dist.init">
                 <jar jarfile="${dist}/jar/cdk-core.jar">
                     <fileset dir="${build}">
-                        <!-- As proposed in CDK-RFC 2 -->
-                        <include name="org/openscience/cdk/AtomContainer.class" />
-                        <include name="org/openscience/cdk/AtomEnumeration.class" />
-                        <include name="org/openscience/cdk/Atom.class" />
-                        <include name="org/openscience/cdk/AtomType.class" />
-                        <include name="org/openscience/cdk/BioPolymer.class" />
-                        <include name="org/openscience/cdk/Bond.class" />
-                        <include name="org/openscience/cdk/CDKConstants.class" />
-                        <include name="org/openscience/cdk/ChemModel.class" />
-                        <include name="org/openscience/cdk/ChemObject.class" />
-                        <include name="org/openscience/cdk/ChemObjectListener.class" />
-                        <include name="org/openscience/cdk/ChemSequence.class" />
-                        <include name="org/openscience/cdk/ElectronContainer.class" />
-                        <include name="org/openscience/cdk/Element.class" />
-                        <include name="org/openscience/cdk/event/ChemObjectChangeEvent.class" />
-                        <include name="org/openscience/cdk/exception/CDKException.class" />
-                        <include name="org/openscience/cdk/exception/NoSuchAtomException.class" />
-                        <include name="org/openscience/cdk/Isotope.class" />
-                        <include name="org/openscience/cdk/Molecule.class" />
-                        <include name="org/openscience/cdk/Monomer.class" />
-                        <include name="org/openscience/cdk/Polymer.class" />
-                        <include name="org/openscience/cdk/Ring.class" />
-                        <include name="org/openscience/cdk/RingSet.class" />
-                        <include name="org/openscience/cdk/SetOfMolecules.class" />
-                        <!-- Added after CDK-RFC 2 -->
-                        <include name="org/openscience/cdk/Crystal.class" />
-                        <include name="org/openscience/cdk/LonePair.class" />
-                        <include name="org/openscience/cdk/Reaction.class" />
-                        <include name="org/openscience/cdk/SetOfReactions.class" />
+                        <includesfile name="${src}/core.classes" />
                    </fileset>
                 </jar>
         </target>
@@ -342,33 +345,7 @@
                     <fileset dir="${build}">
                         <include name="org/openscience/cdk/**/**" />
                         <!-- Exclude core classes -->
-                        <exclude name="org/openscience/cdk/AtomContainer.class" />
-                        <exclude name="org/openscience/cdk/AtomEnumeration.class" />
-                        <exclude name="org/openscience/cdk/Atom.class" />
-                        <exclude name="org/openscience/cdk/AtomType.class" />
-                        <exclude name="org/openscience/cdk/BioPolymer.class" />
-                        <exclude name="org/openscience/cdk/Bond.class" />
-                        <exclude name="org/openscience/cdk/CDKConstants.class" />
-                        <exclude name="org/openscience/cdk/ChemModel.class" />
-                        <exclude name="org/openscience/cdk/ChemObject.class" />
-                        <exclude name="org/openscience/cdk/ChemObjectListener.class" />
-                        <exclude name="org/openscience/cdk/ChemSequence.class" />
-                        <exclude name="org/openscience/cdk/ElectronContainer.class" />
-                        <exclude name="org/openscience/cdk/Element.class" />
-                        <exclude name="org/openscience/cdk/event/ChemObjectChangeEvent.class" />
-                        <exclude name="org/openscience/cdk/exception/CDKException.class" />
-                        <exclude name="org/openscience/cdk/exception/NoSuchAtomException.class" />
-                        <exclude name="org/openscience/cdk/Isotope.class" />
-                        <exclude name="org/openscience/cdk/Molecule.class" />
-                        <exclude name="org/openscience/cdk/Monomer.class" />
-                        <exclude name="org/openscience/cdk/Polymer.class" />
-                        <exclude name="org/openscience/cdk/Ring.class" />
-                        <exclude name="org/openscience/cdk/RingSet.class" />
-                        <exclude name="org/openscience/cdk/SetOfMolecules.class" />
-                        <exclude name="org/openscience/cdk/Crystal.class" />
-                        <exclude name="org/openscience/cdk/LonePair.class" />
-                        <exclude name="org/openscience/cdk/Reaction.class" />
-                        <exclude name="org/openscience/cdk/SetOfReactions.class" />
+                        <excludesfile name="${src}/core.classes" />
                         <!-- Exclude classes in cdk-io module-->
                         <exclude name="org/openscience/cdk/io/**" />
                         <exclude name="org/openscience/cdk/ChemFile.class" />
@@ -380,22 +357,11 @@
                         <exclude name="org/openscience/cdk/libio/**" />
                         <exclude name="org/openscience/cdk/test/libio/**" />
                         <!-- Exclude application classes -->
-                        <exclude name="org/openscience/cdk/applications/**" />
+                        <excludesfile name="${src}/applications.classes" />
                         <!-- Exclude test classes -->
                         <exclude name="org/openscience/cdk/test/**" />
                         <!-- Exclude classes in cdk-standard module-->
-                        <exclude name="org/openscience/cdk/tools/LoggingTool.class" />
-                        <exclude name="org/openscience/cdk/tools/IsotopeFactory.class" />
-                        <exclude name="org/openscience/cdk/tools/AtomTypeFactory.class" />
-                        <exclude name="org/openscience/cdk/tools/AtomTypeConfigurator.class" />
-                        <exclude name="org/openscience/cdk/tools/JSXBasedAtomTypeConfigurator.class" />
-                        <exclude name="org/openscience/cdk/tools/TXTBasedAtomTypeConfigurator.class" />
-                        <exclude name="org/openscience/cdk/geometry/GeometryTools.class" />
-                        <exclude name="org/openscience/cdk/geometry/CrystalGeometryTools.class" />
-                        <exclude name="org/openscience/cdk/renderer/color/AtomColorer.class" />
-                        <exclude name="org/openscience/cdk/renderer/color/CDKAtomColors.class" />
-                        <exclude name="org/openscience/cdk/renderer/color/PartialAtomicChargeColors.class" />
-                        <exclude name="org/openscience/cdk/config/**" />
+                        <excludesfile name="${src}/standard.classes" />
                    </fileset>
                 </jar>
         </target>
@@ -403,7 +369,7 @@
         <target name="dist-apps" depends="compile-apps">
                 <jar jarfile="${dist}/jar/cdk-apps.jar" manifest="${src}/cdk-apps.manifest">
                     <fileset dir="${build}">
-                        <include name="org/openscience/cdk/applications/**" />
+                        <includesfile name="${src}/applications.classes" />
                     </fileset>
                 </jar>
         </target>
@@ -436,7 +402,6 @@
                     <fileset dir="${build}">
                         <include name="org/openscience/cdk/io/**/*" />
                         <include name="org/openscience/cdk/ChemFile.class" />
-                        <include name="org/openscience/cdk/exception/UnsupportedChemObjectException.class" />
                     </fileset>
                 </jar>
         </target>
@@ -447,6 +412,7 @@
                         <include name="org/openscience/cdk/renderer/**/*" />
                         <include name="org/openscience/cdk/controller/**/*" />
                         <include name="org/openscience/cdk/event/**/*" />
+                        <excludesfile name="${src}/java3d.classes" />
                     </fileset>
                 </jar>
         </target>
@@ -465,17 +431,7 @@
         <target name="dist-standard" depends="compile-standard, dist.init">
                 <jar jarfile="${dist}/jar/cdk-standard.jar">
                     <fileset dir="${build}">
-                        <include name="org/openscience/cdk/tools/LoggingTool.class" />
-                        <include name="org/openscience/cdk/tools/IsotopeFactory.class" />
-                        <include name="org/openscience/cdk/tools/AtomTypeFactory.class" />
-                        <include name="org/openscience/cdk/tools/AtomTypeConfigurator.class" />
-                        <include name="org/openscience/cdk/tools/JSXBasedAtomTypeConfigurator.class" />
-                        <include name="org/openscience/cdk/tools/TXTBasedAtomTypeConfigurator.class" />
-                        <include name="org/openscience/cdk/geometry/GeometryTools.class" />
-                        <include name="org/openscience/cdk/geometry/CrystalGeometryTools.class" />
-                        <include name="org/openscience/cdk/renderer/color/AtomColorer.class" />
-                        <include name="org/openscience/cdk/renderer/color/CDKAtomColors.class" />
-                        <include name="org/openscience/cdk/renderer/color/PartialAtomicChargeColors.class" />
+                        <includesfile name="${src}/standard.classes" />
                         <include name="org/openscience/cdk/config/**" />
                     </fileset>
                 </jar>
@@ -492,7 +448,7 @@
                 <property name="package" value="cdk-source-${DSTAMP}"/>
                 <property name="sourcedist.dir" value="${sourcedist}/${package}"/>
                 <copy todir="${sourcedist.dir}/${src}">
-                        <fileset dir="${src}" includes="*.classes" />
+                        <fileset dir="${src}" includes="*.javafiles" />
                         <fileset dir="${src}" includes="**/*java" />
                         <fileset dir="${src}" includes="org/openscience/cdk/io/cml/data/**" />
                 </copy>
@@ -555,8 +511,8 @@
             </junit>
         </target>
 	
-	<target name="test-io" depends="dist-core, dist-standard, dist-test, dist-io">
-            <junit printsummary="yes" haltonfailure="yes">
+        <target name="test-io" depends="dist-core, dist-standard, dist-test, dist-io">
+            <junit printsummary="yes" haltonfailure="yes" showoutput="yes">
                 <classpath refid="project.class.path" />
                 <classpath>
                     <fileset dir="${dist}/jar">
@@ -583,7 +539,12 @@
                                         <include name="*.jar" />
                                 </fileset>
                                 <fileset dir="${dist}/jar">
-                                        <include name="*.jar" />
+                                    <include name="cdk-core.jar" />
+                                    <include name="cdk-standard.jar" />
+                                    <include name="cdk-extra.jar" />
+                                    <include name="cdk-render.jar" />
+                                    <include name="cdk-io.jar" />
+                                    <include name="cdk-test.jar" />
                                 </fileset>
                         </classpath>
                         <test name="org.openscience.cdk.test.CDKTests"
