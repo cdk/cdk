@@ -38,7 +38,7 @@ public class GraphRendererTest
 {
   public GraphRendererTest()
   {
-    JFrame frame = new JFrame("AcceleratedRenderer3DTest");
+    JFrame frame = new JFrame("GraphRendererTest");
     frame.getContentPane().setLayout(new BorderLayout());
 
     GraphRendererModel model = new GraphRendererModel();

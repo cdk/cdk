@@ -32,9 +32,11 @@ package org.openscience.cdk.math;
 public class IVector
 {
   // Attention! The variables are unprotected
-  /** Content of this vector */
+  /** The real part of this vector */
   public double[] realvector;
+  /** The imaginary part of this vector */
   public double[] imagvector;
+
   /** Size of this vector */
   public int size;
 

@@ -34,14 +34,25 @@ import java.io.InputStream;
 import java.io.IOException;
 import java.text.DecimalFormat;
 
+/**
+ * This class contains a complex matrix
+ */
 public class IMatrix
 {
   // Attention! Variables are unprotected
+  /** the real part of the content */
   public double[][] realmatrix;
+  /** the imaginary part of the content */
   public double[][] imagmatrix;
+
+  /** the count of rows of the matrix */
   public int rows;
+  /** the count of columns of the matrix */
   public int columns;
 
+  /**
+   * Creates a complex matrix
+   */
   public IMatrix(int rows, int columns)
   {
     this.rows = rows;
@@ -50,6 +61,9 @@ public class IMatrix
     imagmatrix = new double[rows][columns];
   }
 
+  /**
+   * Creates a complex copy of a matrix
+   */
   public IMatrix(Matrix m)
   {
     rows = m.rows;
@@ -63,16 +77,25 @@ public class IMatrix
       }
   }
 
+  /**
+   * Returns the count of rows
+   */
   public int getRows()
   {
     return rows;
   }
 
+  /**
+   * Returns the count of columns
+   */
   public int getColumns()
   {
     return columns;
   }
 
+  /**
+   * Creates a vector with the content of a row from this matrix
+   */
   public IVector getVectorFromRow(int index)
   {
     IVector result = new IVector(columns);
@@ -84,6 +107,9 @@ public class IMatrix
     return result;
   }
 
+  /**
+   * Creates a vector with the content of a column from this matrix
+   */
   public IVector getVectorFromColumn(int index)
   {
     IVector result = new IVector(rows);
@@ -95,6 +121,9 @@ public class IMatrix
     return result;
   }
 
+  /**
+   * Creates a vector with the content of the diagonal elements from this matrix
+   */
   public IVector getVectorFromDiagonal()
   {
     int size = Math.min(rows, columns);
@@ -466,254 +495,4 @@ public class IMatrix
     rows = newrows;
     columns = newcolumns;
   }
-
-  /** 
-   * Diagonalize the matrix by Jacobi
-   * nrot Count from the maximal Jacobi rotations 
-   * return Matrix m, with m^t * this * m = diagonal
-   */
-  /*public Matrix diagonalize(int nrot)
-  {
-    Matrix result = new Matrix(rows,columns);
-    diagonalize(nrot, result);
-    return result;
-  }*/
-
-  /** 
-   * Diagonalize the matrix by Jacobi
-   * nrot Count from the maximal Jacobi rotations 
-   * return Matrix m, with m^t * this * m = diagonal
-   */
-  /*public void diagonalize(int nrot, Matrix v)
-  {
-    Matrix m = duplicate();
-    if (m.rows!=m.columns)
-        
-    {
-      System.err.println("Matrix.diagonal: Sizes mismatched");
-      return;
-    }
-    int n = m.rows;
-
-    int j,iq,ip,i;
-    
-    double tresh,theta,tau,t,sm,s,h,g,c;
-    double[] b,z;
-
-    if ((v.rows!=columns) || (v.columns!=columns))
-      v.reshape(columns,columns);
-    Vector d = new Vector(columns);
-    
-    b = new double[n+1];
-    z = new double[n+1];
-    for (ip=0;ip<n;ip++)
-    {
-      for (iq=0;iq<n;iq++)
-        v.matrix[ip][iq]=0.0;
-      v.matrix[ip][ip]=1.0;
-    } 
-    
-    for (ip=0;ip<n;ip++)
-    {
-      b[ip]=d.vector[ip]=m.matrix[ip][ip];
-      z[ip]=0.0;
-    }
-
-    nrot=0;
-    for (i=1;i<=50;i++)
-    {
-      sm=0.0;
-      for (ip=0;ip<n-1;ip++)
-      {
-        for (iq=ip+1;iq<n;iq++)
-          sm += Math.abs(m.matrix[ip][iq]);
-      }   
-
-      // Fertig ??
-      if (sm == 0.0)
-        return;
-
-      if (i < 4)
-        tresh=0.2*sm/(n*n);
-      else
-        tresh=0.0;
-
-      for (ip=0;ip<n-1;ip++)
-      {
-        for (iq=ip+1;iq<n;iq++)
-        {
-          g=100.0*Math.abs(m.matrix[ip][iq]);
-          if ((i > 4) && (Math.abs(d.vector[ip])+g == Math.abs(d.vector[ip]))
-                      && (Math.abs(d.vector[iq])+g == Math.abs(d.vector[iq])))
-            m.matrix[ip][iq]=0.0;
-          else if (Math.abs(m.matrix[ip][iq]) > tresh)
-          {
-            h = d.vector[iq]-d.vector[ip];
-            if (Math.abs(h)+g == Math.abs(h))
-              t = (m.matrix[ip][iq])/h;
-            else 
-            {
-              theta = 0.5*h/(m.matrix[ip][iq]);
-              t = 1.0/(Math.abs(theta)+Math.sqrt(1.0+theta*theta));
-              if (theta < 0.0) t = -t;
-            } 
-            c = 1.0/Math.sqrt(1+t*t);
-            s = t*c;
-            tau = s/(1.0+c);
-            h = t*m.matrix[ip][iq];
-            z[ip] -= h;
-            z[iq] += h;
-            d.vector[ip] -= h;
-            d.vector[iq] += h;
-            m.matrix[ip][iq]=0.0;
-
-            // Case of rotaions 1<=j<p
-            for (j=0;j<ip;j++)
-            {
-              g=m.matrix[j][ip];
-              h=m.matrix[j][iq];
-              m.matrix[j][ip]=g-s*(h+g*tau);
-              m.matrix[j][iq]=h+s*(g-h*tau);
-            } 
-            // Case of rotaions p<j<q
-            for (j=ip+1;j<iq;j++) 
-            {
-              g=m.matrix[ip][j];
-              h=m.matrix[j][iq];
-              m.matrix[ip][j]=g-s*(h+g*tau);
-              m.matrix[j][iq]=h+s*(g-h*tau);
-            } 
-            // Case of rotaions q<j<=n
-            for (j=iq+1;j<n;j++) 
-            {
-              g=m.matrix[ip][j];
-              h=m.matrix[iq][j];
-              m.matrix[ip][j]=g-s*(h+g*tau);
-              m.matrix[iq][j]=h+s*(g-h*tau);
-            } 
-
-
-            for (j=0;j<n;j++)
-            {
-              g=v.matrix[j][ip];
-              h=v.matrix[j][iq];
-              v.matrix[j][ip]=g-s*(h+g*tau);
-              v.matrix[j][iq]=h+s*(g-h*tau);
-            } 
-            ++nrot;
-          } 
-        } 
-      } 
-
-      for (ip=0;ip<n;ip++)
-      {
-        b[ip] += z[ip];
-        d.vector[ip]=b[ip];
-        z[ip]=0.0;
-      } 
-    } 
-    System.out.println("Too many iterations in routine JACOBI");
-  }*/
-
-  /**
-   * Orthonormalize the vectors from this matrix by Gram-Schmidt
-   */
-  /*public Matrix orthonormalize(Matrix S)
-  {
-    Matrix result = new Matrix(rows,columns);
-    orthonormalize(S, result);
-    return result;
-  }*/
-
-  /**
-   * Orthonormalize the vectors from this matrix by Gram-Schmidt
-   */
-  /*public void orthonormalize(Matrix S, Matrix result)
-  {
-    int p,q,k,i,j;
-    double sum;
-    double innersum;
-    double c;
-    double length;
-    //Matrix scr = S.mul(this);
-    //Matrix result = duplicate();
-    duplicate(result);
-    for(p=0; p<columns; p++) // Geht alle Vektoren in dieser Matrix durch
-    {
-      for(i=0; i<rows; i++)
-        result.matrix[i][p] = matrix[i][p];
-
-      for(k=0; k<p; k++)  // Substrahiert die vorherriegen Vektoren 
-      {
-        // Zuerst die Berechnung des Produktes <phi_p|phi_k>=length
-        length = 0;
-        for(i=0; i<rows; i++) // Geht alle Komponenten der Vektoren durch
-        { 
-          innersum = 0;
-          for(j=0; j<rows; j++)
-          {
-            innersum += result.matrix[j][p]*S.matrix[i][j];
-          }
-          length += result.matrix[i][k]*innersum;
-        } 
-
-        // Dann die Subtraktion von phi_k*length
-        for(q=0; q<rows; q++)
-          result.matrix[q][p] -= result.matrix[q][k]*length;
-      }
-
-      //Berechnet das Intergal für die normierung  
-      length = 0;
-      for(i=0; i<rows; i++)
-        for(j=0; j<rows; j++)
-          length += result.matrix[i][p]*result.matrix[j][p]*S.matrix[i][j];
-
-      length = Math.sqrt(length);
-
-      //Normiert den Vektor
-      if (length!=0d)
-        for(q=0; q<rows; q++)
-          result.matrix[q][p] /= length;
-      else
-        System.out.println("Warning(orthonormalize):"+(p+1)+".Vektor has the length null");
-    }
-  }*/
-
-  /**
-   * Normalize the vectors from this matrix
-   */
-  /*public Matrix normalize(Matrix S)
-  {
-    Matrix result = new Matrix(rows,columns);
-    normalize(S, result);
-    return result;
-  }*/
-  
-  /**
-   * Normalize the vectors from this matrix
-   */
-  /*public void normalize(Matrix S, Matrix result)
-  {
-    int p,q,i,j;
-    double length;
-    //Matrix result = duplicate();
-    duplicate(result);
-    for(p=0; p<columns; p++) // Geht alle Vektoren in dieser Matrix durch
-    {
-      //Berechnet das Intergal für die normierung 
-      length = 0;
-      for(i=0; i<rows; i++)
-        for(j=0; j<rows; j++)
-          length += result.matrix[i][p]*result.matrix[j][p]*S.matrix[i][j];
-          
-      length = Math.sqrt(length);
-      
-      //Normiert den Vektor
-      if (length!=0d)
-        for(q=0; q<rows; q++)
-          result.matrix[q][p] /= length;
-      else
-        System.out.println("Warning(normalize):"+(p+1)+".Vektor has the length null");
-    }
-  }*/
 }

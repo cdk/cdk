@@ -34,13 +34,23 @@ import java.io.InputStream;
 import java.io.IOException;
 import java.text.DecimalFormat;
 
+/**
+ * This class contains a matrix
+ */
 public class Matrix
 {
   // Attention! Variables are unprotected
+  /** the content of this matrix **/
   public double[][] matrix;
+
+  /** the count of rows of this matrix */
   public int rows;
+  /** the count of columns of this matrix */
   public int columns;
 
+  /**
+   * Creates a matrix
+   */ 
   public Matrix(int rows, int columns)
   {
     this.rows = rows;
@@ -48,6 +58,9 @@ public class Matrix
     matrix = new double[rows][columns];
   }
 
+  /**
+   * Creates a matrix with content of an array
+   */
   public Matrix(double[][] array)
   {
     rows = array.length;
@@ -62,16 +75,25 @@ public class Matrix
         matrix[i][j] = array[i][j];
   }
 
+  /**
+   * Returns the count of rows
+   */ 
   public int getRows()
   {
     return rows;
   }
 
+  /**
+   * Returns the count of columns
+   */
   public int getColumns()
   {
     return columns;
   }
 
+  /**
+   * Creates a vector with the content of a row from this matrix
+   */
   public Vector getVectorFromRow(int index)
   {
     double[] row = new double[columns];
@@ -80,6 +102,9 @@ public class Matrix
     return new Vector(row);
   }
 
+  /**
+   * Creates a vector with the content of a column from this matrix
+   */
   public Vector getVectorFromColumn(int index)
   {
     double[] column = new double[rows];
@@ -88,6 +113,9 @@ public class Matrix
     return new Vector(column);
   }
 
+  /**
+   * Creates a vector with the content of the diagonal elements from this matrix
+   */
   public Vector getVectorFromDiagonal()
   {
     int size = Math.min(rows, columns);
@@ -289,8 +317,8 @@ public class Matrix
 
 
   /** 
-   * Diagonalisiert diese Matrix nach Jacobi
-   * nrot Zahl der maximalen Jacobirotationen 
+   * Diagonalize this matrix by Jacobi
+   * nrot Count of max. rotations
    * return Matrix m, with m^t * this * m = diagonal
    */
   public Matrix diagonalize(int nrot)
@@ -426,7 +454,7 @@ public class Matrix
 
   /**
    * Solves a linear equationsystem with Gauss elimination
-    */
+   */
   public static Vector elimination(Matrix matrix, Vector vector)
   {
     int i,j,k,ipvt;
@@ -496,7 +524,7 @@ public class Matrix
   }
 
   /**
-   * Orthonormiert die Vektoren in dieser Matrix nach Gram-Schmidt
+   * Orthonormalize the vectors of this matrix by Gram-Schmidt
    */
   public Matrix orthonormalize(Matrix S)
   {
@@ -550,7 +578,7 @@ public class Matrix
   }
 
   /**
-   * Normiert die Vektoren in dieser Matrix 
+   * Normalizes the vectors of this matrix
    */
   public Matrix normalize(Matrix S)
   {

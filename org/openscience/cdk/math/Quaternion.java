@@ -28,10 +28,15 @@
  *  */
 
 package org.openscience.cdk.math;
- 
+
+/**
+ * This class handles quaternions
+ * Quaternion are 2*2 complex matrices
+ */ 
 public class Quaternion
 {
-  protected double a, b, c, d;
+  /** The content of the quaternion */
+  private double a, b, c, d;
 
   public Quaternion()
   {

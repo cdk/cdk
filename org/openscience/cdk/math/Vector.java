@@ -31,25 +31,28 @@ package org.openscience.cdk.math;
 
 import javax.vecmath.Tuple3d;
  
+/**
+ * This class handles vectors
+ */
 public class Vector
 {
-  /** Nullvektor im 3 dimensionalen Raum */
+  /** Null vector in 3 dimensional space */
   public final static Vector NULLVECTOR = new Vector(new double[] {0d,0d,0d});
-  /** Einheitsvektor im 3 dimensionalen Raum */
+  /** Unary vector in 3 dimensional space */
   public final static Vector EX = new Vector(new double[] {1d,0d,0d});
-  /** Einheitsvektor im 3 dimensionalen Raum */
+  /** Unary vector in 3 dimensional space */
   public final static Vector EY = new Vector(new double[] {0d,1d,0d});
-  /** Einheitsvektor im 3 dimensionalen Raum */
+  /** Unary vector in 3 dimensional space */
   public final static Vector EZ = new Vector(new double[] {0d,0d,1d});
 
-  // Vorsicht Variable ist ungeschützt
-  /** Inhalt des Vektors */
+  // Attention! Variables are unprotected
+  /** The content of this vector */
   public double[] vector;
-  /** Größe des Vektors */
+  /** The size of this vector */
   public int size;
 
   /**
-   * Konstruiert ein Vektor mit "size"-Elementen
+   * Constructs a Vector with "size" elements
    */
   public Vector(int size)
   {
@@ -58,7 +61,7 @@ public class Vector
   }
 
   /**
-   * Konstruiert ein Vektor mit Hilfe ein double Arrays
+   * Constructs a vector with the content of a array
    */
   public Vector(double[] array)
   {
@@ -77,7 +80,7 @@ public class Vector
   }
 
   /**
-   * Liefert die Größe des Vektors zurück
+   * Returns the size of this vector
    */
   public int getSize()
   {
@@ -145,7 +148,7 @@ public class Vector
   }
 
   /**
-   * Kreuzprodukt, nur definiert für Vektor aus R^3
+   * Cross product, only well definited in R^3
    */
   public Vector cross(Vector b)
   {
@@ -161,7 +164,7 @@ public class Vector
   }
 
   /**
-   * Return the length from this Vector
+   * Return the length from this vector
    */
   public double length()
   {
@@ -172,7 +175,7 @@ public class Vector
   }
 
   /**
-   * Normiert diesen Vektor
+   * Normalize this vector
    */
   public Vector normalize()
   {
@@ -184,7 +187,7 @@ public class Vector
   }
 
   /**
-   * Negiert diesen Vektor
+   * Negates this vector
    */
   public Vector negate()
   {
