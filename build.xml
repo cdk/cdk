@@ -276,8 +276,20 @@
                     </classpath>
                 </javac>
         </target>
+        
+	      <!-- Convert the JavaCC .jj file to the correct .java files for the IUPAC parser -->
+        <target name="javacc" depends="init">
+          <delete>
+              <fileset id="javacc-generated" 
+              dir="${build.src}/org/openscience/cdk/iupac/parser/" 
+              includes="NomParser*.java,ParseException.java,SimpleCharStream.java,Token.java,TokenMgrError.java"/>
+          </delete>
+          <javacc target="${src}/org/openscience/cdk/iupac/parser/NomParser.jj" 
+            outputdirectory="${build.src}/org/openscience/cdk/iupac/parser/" 
+            javacchome="${lib}"/>
+        </target>
 
-        <target id="compile-extra" name="compile-extra" depends="dist-standard">
+        <target id="compile-extra" name="compile-extra" depends="dist-standard, javacc">
             <javac srcdir="${build.src}" destdir="${build}" optimize="${optimization}" 
                    debug="${debug}" deprecation="${deprecation}">
                 <classpath refid="project.class.path" />

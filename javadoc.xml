@@ -2,7 +2,10 @@
 
     <property name="javadoc.dir" value="doc/api" />
     <property name="pathtojava3d" value="" />
-    <property name="src" value="src" />
+    <property name="src" value="build/src" />
+
+		<!-- Call javacc target in build.xml to re-generate the source code -->
+    <ant target="javacc"/>
 
     <path id="project.class.path">
         <pathelement location="/usr/local/j2sdk1.4.0/lib/rt.jar" />
@@ -25,7 +28,7 @@
         </fileset>
     </path>
 
-    <target name="html">
+    <target name="html">        
         <mkdir dir="${javadoc.dir}" />
 
         <javadoc destdir="${javadoc.dir}"
@@ -78,6 +81,13 @@
             <classpath refid="fop.class.path" />
         </java>
     </target>
+
+  <target name="jjdoc" description="Create JJDoc documentation from the .jj file">   
+    <mkdir dir="doc/iupac-parser"/>
+    <jjdoc target="${src}/org/openscience/cdk/iupac/parser/NomParser.jj"
+      outputfile="doc/iupac-parser/ParserBNF.html"
+      javacchome="jar"/>
+  </target>
 
 </project>
 

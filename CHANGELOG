@@ -4,6 +4,7 @@ CHANGELOG $Date$
 Changes in CVS
 ------------------------------------
 New:
+* IUPAC Name parser added, thanks to University of Manchester
 
 Fixes:
 * Removed use of JSX
