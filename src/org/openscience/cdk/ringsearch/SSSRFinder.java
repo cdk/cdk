@@ -35,19 +35,20 @@ import java.util.List;
 
 import org._3pq.jgrapht.UndirectedGraph;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.Bond;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.RingSet;
 import org.openscience.cdk.graph.MoleculeGraphs;
-import org.openscience.cdk.ringsearch.cyclebasis.SimpleCycle;
 import org.openscience.cdk.ringsearch.cyclebasis.CycleBasis;
+import org.openscience.cdk.ringsearch.cyclebasis.SimpleCycle;
 
 /**
  * Finds the Smallest Set of Smallest Rings. 
  * This is an implementation of an algorithm 
  * by Franziska Berger, Peter Gritzmann, and Sven deVries, TU M&uuml;nchen,
- * to appear in Algorithmica in 2004.
+ * {@cdk.cite BGdV04a}.
+ * 
+ * Additional related algorithms from {@cdk.cite BGdV04b}.
  *
  * @author Ulrich Bauer <baueru@cs.tum.edu>
  * 

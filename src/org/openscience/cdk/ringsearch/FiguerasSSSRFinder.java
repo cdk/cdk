@@ -45,6 +45,8 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module standard
  * @cdk.keyword smallest-set-of-rings
  * @cdk.keyword ring search
+ * 
+ * @deprecated Use SSSRFinder instead (exact algorithm).
  */
 public class FiguerasSSSRFinder {
 

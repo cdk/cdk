@@ -41,7 +41,6 @@ import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
-import org.openscience.cdk.ringsearch.FiguerasSSSRFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
@@ -103,9 +102,9 @@ public class HueckelAromaticityDetectorTest extends TestCase
 
 			Molecule mol = sp.parseSmiles("C1CCCc2c1cccc2");
 			RingSet rs = (new AllRingsFinder()).findAllRings(mol);
-			(new HueckelAromaticityDetector()).detectAromaticity(mol, rs, true);
+			HueckelAromaticityDetector.detectAromaticity(mol, rs, true);
 			
-			RingSet ringset = (new SSSRFinder()).findSSSR(mol);
+			RingSet ringset = (new SSSRFinder(mol)).findSSSR();
 			HueckelAromaticityDetector.setRingFlags(ringset);
 			
 			int numberOfAromaticRings = 0;
@@ -250,7 +249,7 @@ public class HueckelAromaticityDetectorTest extends TestCase
 
 			Molecule mol = sp.parseSmiles("C1CCCc2c1cccc2");
 			RingSet rs = (new AllRingsFinder()).findAllRings(mol);
-			(new HueckelAromaticityDetector()).detectAromaticity(mol, rs, true);
+			HueckelAromaticityDetector.detectAromaticity(mol, rs, true);
 			Iterator iter = rs.iterator();
 			Ring r = null;
 			int i = 0;

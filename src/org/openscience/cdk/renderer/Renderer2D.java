@@ -101,7 +101,6 @@ public class Renderer2D implements MouseMotionListener   {
     
     private LoggingTool logger;
     boolean debug = false;
-	SSSRFinder sssrf = new SSSRFinder();
     private IsotopeFactory isotopeFactory;
     private int[] tooltiparea=null;
 
@@ -329,7 +328,8 @@ public class Renderer2D implements MouseMotionListener   {
             return;
 		}
 		for (int i = 0; i < molecules.length; i++) {
-			ringSet.add(sssrf.findSSSR(molecules[i]));
+			SSSRFinder sssrf = new SSSRFinder(molecules[i]);
+			ringSet.add(sssrf.findSSSR());
 		}
 		paintBonds(atomCon, ringSet, graphics);
 		paintAtoms(atomCon, graphics);

@@ -56,7 +56,6 @@ public class AlphaRenderer2D extends Renderer2D {
 
   private Renderer2DModel r2dm = null;
   private Area mask = null;
-  private SSSRFinder sssrf = new SSSRFinder();
 
   public AlphaRenderer2D()
   {
@@ -103,7 +102,9 @@ protected RingSet getRingSet(AtomContainer atomCon)
 
   for (int i = 0; i < molecules.length; i++)
   {
-    ringSet.add(sssrf.findSSSR(molecules[i]));
+    SSSRFinder sssrf = new SSSRFinder(molecules[i]);
+
+    ringSet.add(sssrf.findSSSR());
   }
 
   return ringSet;

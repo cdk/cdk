@@ -47,8 +47,6 @@ import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.ringsearch.SSSRFinder;
-import org.openscience.cdk.graph.ConnectivityChecker;
-import org.openscience.cdk.tools.HydrogenAdder;
 
 /**
  * Generates 2D coordinates for a molecule for which only connectivity is known
@@ -83,7 +81,6 @@ public class StructureDiagramGenerator
 	RingSet sssr;
 	double bondLength = 1.5;
 	Vector2d firstBondVector;
-	SSSRFinder sssrf = new SSSRFinder();
 	RingPlacer ringPlacer = new RingPlacer();
 	AtomPlacer atomPlacer = new AtomPlacer();
 	Vector ringSystems = null;
@@ -324,7 +321,9 @@ public class StructureDiagramGenerator
 			/*
 			 *  Get the smallest set of smallest rings on this molecule
 			 */
-			sssr = sssrf.findSSSR(molecule);
+			SSSRFinder sssrf = new SSSRFinder(molecule);
+
+			sssr = sssrf.findSSSR();
 			if (sssr.size() < 1)
 			{
 				return;
@@ -488,9 +487,9 @@ public class StructureDiagramGenerator
 		{
 			if (ring.getFlag(CDKConstants.ISPLACED))
 			{
-				ringPlacer.placeConnectedRings(rs, ring, ringPlacer.FUSED, bondLength);
-				ringPlacer.placeConnectedRings(rs, ring, ringPlacer.BRIDGED, bondLength);
-				ringPlacer.placeConnectedRings(rs, ring, ringPlacer.SPIRO, bondLength);
+				ringPlacer.placeConnectedRings(rs, ring, RingPlacer.FUSED, bondLength);
+				ringPlacer.placeConnectedRings(rs, ring, RingPlacer.BRIDGED, bondLength);
+				ringPlacer.placeConnectedRings(rs, ring, RingPlacer.SPIRO, bondLength);
 			}
 			thisRing++;
 			if (thisRing == rs.size())

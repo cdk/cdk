@@ -483,7 +483,7 @@ public class SaturationChecker implements ValencyCheckerInterface {
     
 	public void saturateRingSystems(AtomContainer atomContainer) throws CDKException
 	{
-		RingSet rs = new SSSRFinder().findSSSR((Molecule)atomContainer);
+		RingSet rs = new SSSRFinder((Molecule)atomContainer).findSSSR();
 		Vector ringSets = RingPartitioner.partitionRings(rs);
 		AtomContainer ac = null;
 		Atom atom = null;
