@@ -92,6 +92,19 @@ public class SetOfReactions extends ChemObject implements java.io.Serializable, 
 		notifyChanged();
 	}
 
+    
+    /**
+	 *  
+	 * Returns the Reaction at position <code>number</code> in the
+	 * container.
+	 *
+	 * @param  number  The position of the Reaction to be returned
+	 * @return         The Reaction at position <code>number</code>
+	 */
+    public Reaction getReaction(int number) {
+        return reactions[number];
+    }
+    
 
 	/**
 	 *  Returns the array of Reactions of this container.
