@@ -27,6 +27,7 @@ package org.openscience.cdk.io.chemrss;
 
 import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.io.ChemicalRSSReader;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.tools.LoggingTool;
 import java.io.StringReader;
@@ -51,6 +52,11 @@ public class RSSHandler extends DefaultHandler {
     
     private String cmlString;
     private String cData;
+    
+    private String itemTitle;
+    private String itemDesc;
+    private String itemDate;
+    private String itemLink;
     
     /**
      * Constructor for the RSSHandler.
@@ -89,26 +95,38 @@ public class RSSHandler extends DefaultHandler {
             cmlString += cData;
             cmlString += toEndTag(local, raw);
         } else if (local.equals("item")) {
+            ChemModel model = null;
             if (cmlString.length() > 0) {
                 StringReader reader = new StringReader(cmlString);
                 CMLReader cmlReader = new CMLReader(reader);
-                ChemModel model = null;
                 try {
-                    cmlReader.read(new ChemModel());
+                    model = (ChemModel)cmlReader.read(new ChemModel());
                 } catch (Exception exception) {
                     logger.error("Error while parsing CML");
                     logger.debug(exception);
                 }
-                if (model != null) {
-                    channelSequence.addChemModel(model);
-                } else {
-                    channelSequence.addChemModel(new ChemModel());
-                }
             } else {
-                // if not chemical content found, then empty model
-                channelSequence.addChemModel(new ChemModel());
+                logger.warn("No CML content found");
             }
+            if (model == null) {
+                logger.warn("Read empty model");
+                model = new ChemModel();
+            }
+            model.setProperty(ChemicalRSSReader.RSS_ITEM_TITLE, itemTitle);
+            model.setProperty(ChemicalRSSReader.RSS_ITEM_DATE, itemDate);
+            model.setProperty(ChemicalRSSReader.RSS_ITEM_LINK, itemLink);
+            model.setProperty(ChemicalRSSReader.RSS_ITEM_DESCRIPTION, itemDesc);                    
+            channelSequence.addChemModel(model);
+        } else if (local.equals("title")) {
+            itemTitle = cData;
+        } else if (local.equals("link")) {
+            itemLink = cData;
+        } else if (local.equals("description")) {
+            itemDesc = cData;
+        } else if (local.equals("date")) {
+            itemDate = cData;
         }
+        cData = "";
     }
 
     public void startElement(String uri, String local, String raw, Attributes atts) {
@@ -116,7 +134,10 @@ public class RSSHandler extends DefaultHandler {
         if (uri.equals("http://www.xml-cml.org/schema/cml2/core")) {
             cmlString += toStartTag(local, raw, atts);
         } else if (local.equals("item")) {
-            //
+            itemTitle = "";
+            itemDesc = "";
+            itemDate = "";
+            itemLink = "";
         }
     }
     

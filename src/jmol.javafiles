@@ -18,6 +18,8 @@ org/openscience/cdk/io/Aces2Reader.java
 org/openscience/cdk/io/CACheReader.java
 org/openscience/cdk/io/CMLReader.java
 org/openscience/cdk/io/CMLWriter.java
+org/openscience/cdk/io/ChemicalRSSReader.java
+org/openscience/cdk/io/chemrss/RSSHandler.java
 org/openscience/cdk/io/ChemObjectReader.java
 org/openscience/cdk/io/DaltonReader.java
 org/openscience/cdk/io/DefaultChemObjectReader.java

@@ -40,7 +40,8 @@ import java.net.*;
 /**
  * Parses a RSS feed and extracts chemical content from it. Each RSS channel
  * item is parsed into a ChemModel. The whole channel is put into a 
- * ChemSequence.
+ * ChemSequence. Each ChemModel has properties containing RSS specific stuff.
+ * See the final statics of this class.
  *
  * @author     Egon Willighagen
  * @created    2003-09-07
@@ -50,6 +51,15 @@ import java.net.*;
  */
 public class ChemicalRSSReader extends DefaultChemObjectReader {
 
+    /** ChemModel property containing the channel item title */
+    public final static String RSS_ITEM_TITLE = "org.openscience.cdk.io.chemrss.TITLE";
+    /** ChemModel property containing the channel item date */
+    public final static String RSS_ITEM_DATE = "org.openscience.cdk.io.chemrss.DATE";
+    /** ChemModel property containing the channel item link */
+    public final static String RSS_ITEM_LINK = "org.openscience.cdk.io.chemrss.LINK";
+    /** ChemModel property containing the channel item description */
+    public final static String RSS_ITEM_DESCRIPTION = "org.openscience.cdk.io.chemrss.DESCRIPTION";
+    
     private XMLReader parser;
     private Reader input;
 
