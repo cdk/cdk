@@ -4,7 +4,7 @@
  * $Date$  
  * $Revision$
  *
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  *
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  *
@@ -59,7 +59,7 @@ public interface ChemObjectReader {
      *            the type of information is not available from 
      *            the input
      **/
-    public ChemObject read(ChemObject object) throws UnsupportedChemObjectException;
+    public ChemObject read(ChemObject object) throws CDKException;
 
 }
 

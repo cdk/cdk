@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2001-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2001-2003  The Chemistry Development Kit (CDK) project
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -68,11 +68,11 @@ public class ShelXWriter implements ChemObjectWriter {
      *
      * @param object A Molecule of SetOfMolecules object
      */
-    public void write(ChemObject object) throws UnsupportedChemObjectException {
+    public void write(ChemObject object) throws CDKException {
         if (object instanceof Crystal) {
             write((Crystal)object);
         } else {
-            throw new UnsupportedChemObjectException("This object type is not supported.");
+            throw new CDKException("Only Crystal objects can be read.");
         }
     };
 

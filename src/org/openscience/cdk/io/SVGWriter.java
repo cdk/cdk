@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  * 
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  * 
@@ -101,11 +101,11 @@ public class SVGWriter implements ChemObjectWriter {
      *
      * @param   object  ChemObject of which the data is outputted.
      */
-    public void write(ChemObject object) throws UnsupportedChemObjectException {
+    public void write(ChemObject object) throws CDKException {
         if (object instanceof AtomContainer) {
             writeAtomContainer((AtomContainer)object);
         } else {
-            throw new UnsupportedChemObjectException("Only supported is Molecule.");
+            throw new CDKException("Only supported is writing of AtomContainer objects.");
         }
     }
 

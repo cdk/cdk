@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2001-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2001-2003  The Chemistry Development Kit (CDK) project
  * 
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  * 
@@ -62,11 +62,11 @@ public class XYZReader implements ChemObjectReader {
      *
      * @see ChemFile
      */
-    public ChemObject read(ChemObject object) throws UnsupportedChemObjectException {
+    public ChemObject read(ChemObject object) throws CDKException {
         if (object instanceof ChemFile) {
             return (ChemObject)readChemFile();
         } else {
-            throw new UnsupportedChemObjectException("Only supported is ChemFile.");
+            throw new CDKException("Only supported is reading of ChemFile objects.");
         }
     }
 

@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2002-2003  The Chemistry Development Kit (CDK) project
  *
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  *
@@ -70,7 +70,7 @@ public class ShelXReader implements ChemObjectReader {
      *
      * @return the content in a ChemFile object
      */
-    public ChemObject read(ChemObject object) throws UnsupportedChemObjectException {
+    public ChemObject read(ChemObject object) throws CDKException {
         if (object instanceof ChemFile) {
             ChemFile cf = null;
             try {
@@ -80,7 +80,7 @@ public class ShelXReader implements ChemObjectReader {
             }
             return cf;
         } else {
-            throw new UnsupportedChemObjectException("Only supported is ChemFile.");
+            throw new CDKException("Only supported is reading of ChemFile.");
         }
     }
 

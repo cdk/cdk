@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2001-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2001-2003  The Chemistry Development Kit (CDK) project
  * 
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  * 
@@ -29,7 +29,7 @@
 package org.openscience.cdk.io;
 
 import org.openscience.cdk.*;
-import org.openscience.cdk.exception.*;
+import org.openscience.cdk.exception.CDKException;
 import java.util.*;
 import java.io.*;
 import javax.vecmath.*;
@@ -65,12 +65,12 @@ public class ZMatrixReader implements ChemObjectReader {
    * @param     object  ChemObject that types the class to return.
    * @throws    Exception when a ChemObject is requested that cannot be read.
    */
-  public ChemObject read(ChemObject object) throws UnsupportedChemObjectException 
+  public ChemObject read(ChemObject object) throws CDKException 
   {
     if (object instanceof ChemFile) 
       return (ChemObject)readChemFile();
     else 
-      throw new UnsupportedChemObjectException("Only supported is ChemFile.");
+      throw new CDKException("Only ChemFile objects can be read.");
   }
 
   /**
