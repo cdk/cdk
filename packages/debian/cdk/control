@@ -1,15 +1,15 @@
 Source: cdk
 Build-Depends: j2sdk1.4, libxerces2-java, junit, ant (>= 1.5), jikes
-Section: misc
+Section: contrib/x11
 Priority: optional
 Maintainer: Egon Willighagen <egonw@sci.kun.nl>
-Standards-Version: 3.1.1
+Standards-Version: 3.5.9
 
 Package: cdk
 Architecture: any
-Depends: java-virtual-machine
-Description: The Chemical Development Kit
- The Chemical Development Kit is a library of Java classes used
- in computational and information chemistry and in bioinformatics. 
- It includes renderers, file IO, SMILES generation/parsing and 
- much more.
+Depends: java-virtual-machine | j2se1.4
+Description: The Chemical Development Kit (CDK)
+ The CDK is a library of Java classes used in computational and 
+ information chemistry and in bioinformatics. It includes renderers, 
+ file IO, SMILES generation/parsing, maximal common substructure 
+ algorithms, fingerprinting and much, much more.
