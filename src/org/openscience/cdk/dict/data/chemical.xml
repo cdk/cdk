@@ -88,6 +88,23 @@
     </definition>
   </entry>
 
+  <entry id="covalentBond" term="Covalent Bond">
+    <annotation>
+      <documentation>
+        <metadata name="dc:creator" content="IUPAC"/>
+        <metadata name="dc:identifier" content="COMPENDIUM:B00697"/>
+        <metadata name="dc:contributor" content="Egon Willighagen"/>
+        <metadata name="dc:date" content="2003-03-13"/>
+      </documentation>
+    </annotation>
+    <definition>
+      Entity that aggregates two atoms or groups of atoms by means of
+      forces acting between them such that they lead to the formation
+      of an aggregate with sufficient stability to make it convenient for
+      the chemist to consider it as an independent 'molecular species'.
+    </definition>
+  </entry>
+
   <entry id="hydrogenBond" term="Hydrogen Bond">
     <annotation>
       <documentation>
@@ -189,21 +206,6 @@
       Any constitutaionally or isotopically distinct atom, molecule, ion,
       ion pair, radical, radical ion, complex, conformer etc, identifiable
       as a separately distinguishable entity.
-    </definition>
-  </entry>
-
-  <entry id="atomicSymbol" term="Atomic Symbol">
-    <annotation>
-      <documentation>
-        <metadata name="dc:creator" content="IUPAC"/>
-        <metadata name="dc:identifier" content="COMPENDIUM:I00503"/>
-        <metadata name="dc:contributor" content="Egon Willighagen"/>
-        <metadata name="dc:date" content="2003-08-09"/>
-      </documentation>
-    </annotation>
-    <definition>
-      One, two or three letters used to represent the atom in
-      chemical formulae.
     </definition>
   </entry>
 
