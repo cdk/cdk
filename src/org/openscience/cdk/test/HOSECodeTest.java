@@ -46,20 +46,47 @@ import javax.swing.tree.*;
 import java.util.*;
 import java.awt.*;
 
+import junit.framework.*;
+
 /**
  *  Tests the HOSECode genertor. This is *not* a JUnit test class!
  *
  *@author     steinbeck
  *@created    November 16, 2002
  */
-public class HOSECodeTest
+public class HOSECodeTest extends TestCase
 {
+	
+	static boolean standAlone = false;
+	
+
+	/**
+	 *  Constructor for the HOSECodeTest object
+	 *
+	 *@param  name  Description of the Parameter
+	 */
+	public HOSECodeTest(String name) {
+		super(name);
+	}
+
+		/**
+	 *  A unit test suite for JUnit
+	 *
+	 *@return    The test suite
+	 */
+	public static Test suite()
+	{
+		return new TestSuite(HOSECodeTest.class);
+	}
+
+	
+	
 	/**
 	 *  A unit test for JUnit
 	 *
 	 *@return    Description of the Return Value
 	 */
-	public boolean test1()
+	public void test1()
 	{
 		Molecule molecule;
 		String s = null;
@@ -70,18 +97,16 @@ public class HOSECodeTest
 			//display(molecule);
 			isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
 			HOSECodeGenerator hcg = new HOSECodeGenerator();
-			System.out.println("Listing 1-sphere HOSE codes for Indole:\n");
+			//System.out.println("Listing 1-sphere HOSE codes for Indole:\n");
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
 				s = hcg.getHOSECode(molecule, molecule.getAtomAt(f), 1);
-				System.out.println("Atom " + (f + 1) + ": " + s);
+				//System.out.println("Atom " + (f + 1) + ": " + s);
 			}
 		} catch (Exception exc)
 		{
 			exc.printStackTrace();
 		}
-
-		return true;
 	}
 	
 
@@ -91,7 +116,7 @@ public class HOSECodeTest
 	 *
 	 *@return    Description of the Return Value
 	 */
-	public boolean test2()
+	public void test2()
 	{
 		try
 		{
@@ -99,20 +124,18 @@ public class HOSECodeTest
 			//display(molecule);
 			boolean isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
 			HOSECodeGenerator hcg = new HOSECodeGenerator();
-			System.out.println("Listing 1-sphere HOSE codes for Indole:\n");
+			//System.out.println("Listing 1-sphere HOSE codes for Indole:\n");
 			String s = null;
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
 				s = hcg.getHOSECode(molecule, molecule.getAtomAt(f), 4);
-				System.out.println("Atom " + (f + 1) + ": " + s);
+				//System.out.println("Atom " + (f + 1) + ": " + s);
 			}
 		} catch (Exception exc)
 		{
 			exc.printStackTrace();
-			return false;
 		}
 
-		return true;
 	}
 
 	/**
@@ -120,7 +143,7 @@ public class HOSECodeTest
 	 *
 	 *@return    Description of the Return Value
 	 */
-	public boolean test3()
+	public void test3()
 	{
 		try
 		{
@@ -132,23 +155,20 @@ public class HOSECodeTest
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
 				s = hcg.getHOSECode(molecule, molecule.getAtomAt(f), 4);
-				System.out.println("Atom " + (f + 1) + ": " + s);
+				//System.out.println("Atom " + (f + 1) + ": " + s);
 			}
 		} catch (Exception exc)
 		{
 			exc.printStackTrace();
-			return false;
 		}
-
-		return true;
-	}
+}
 
 	/**
 	 *  A unit test for JUnit
 	 *
 	 *@return    Description of the Return Value
 	 */
-	public boolean test4()
+	public void test4()
 	{
 		try
 		{
@@ -160,22 +180,52 @@ public class HOSECodeTest
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
 				s = hcg.getHOSECode(molecule, molecule.getAtomAt(f), 4);
-				System.out.println("Atom " + (f + 1) + ": " + s);
+				//System.out.println("Atom " + (f + 1) + ": " + s);
 			}
 		} catch (Exception exc)
 		{
 			exc.printStackTrace();
-			return false;
+
 		}
 
-		return true;
 	}
 	
 	
-	public boolean test5()
+	public void test5()
 	{
 		Molecule molecule = null;
 		HOSECodeGenerator hcg = null;
+		String[] codes = {
+			"C-4;CCO(CCC,CO,/CC,CCO,,&,/*C,CC,&CC,&O,)",
+		     "C-4;CCO(CO,C,/CCC,,&CC/C&O,CC,,,)",
+		     "C-4;CCCC(CC,CCO,CO,/*C,CC,&O,CCC,,&O,/*C*O,&C,&O,C,&,,,)",
+		     "O-2;C(CC/CCC,CO/CCO,CC,,&,)",
+		     "C-4;CC(CCC,CO/CCO,,,&O,/C&C,CO,,)",
+		     "O-2;C(CC/CO,C/CCC,,&CC)",
+		     "C-4;CCCO(OC,CCC,CCC,/C,CO,C&,CO,,&,,/=OC,&C,C,*C,&O,)",
+		     "C-4;CCC(*C,CC,CCC/*C*O,&C,CO,C&O,CO,/*C&,*C,=O&,&O,&,CCC,,&O,)",
+		     "C-4;C(CCC/CC,CCO,CO/*C,CC,CCC,&O,,&O,)",
+		     "C-4;CCCC(CCO,C,,/CCC,CO,,&O/CC,&O,,&O,C,)",
+		     "C-4;COC(OC,C,CCO/C,CC,=OC,&CC,CCC,/=O&,&C,C&,,,CO,,&,,)",
+		     "O-2;C(CCC/CCC,CO,CCC/CC,CO,,&O,C,&,,)",
+		     "C-4;CCC(CC,CC,OC/*C*C,=O&,*&,CCC,&,&O/*&*O,*C,,&CO,CO,,C)",
+		     "C-4;*CC(*C*O,CC/*CC,*C,CCC,&C/*&,&C,*&,CCO,CO,,&O)",
+		     "C-4;C(CCC/CCO,C,/CCC,CO,,&O)",
+		     "C-4;C(CCC/CCO,C,/CCC,CO,,&O)",
+		     "C-4;CCO(CC,OC,C/C&,CC,C,&CO,=O&/*C*C,*&,&CC,=OC,CCC,,)",
+		     "O-2;CC(=OC,CC/,,CCO,CO/CCC,CCC,,&C,C)",
+		     "C-4;CCC(*C*C,=OO,CC/*O*C,*C,,&,&C,C&/*&,&,*&,CCC,&O)",
+		     "C-3;*C*O*C(*CC,*C,C/*&,CC,*&,C&/,=OO,&C,CCC)",
+		     "O-2;CC(C=O,CC/C&,,C&,CO/*C*C,CC,&CO,C)",
+		     "C-3;=OOC(,C,/CC/CCO,CO)",
+		     "C-3;*C*CC(*O*C,*C,CC/*&,C,*&,=OO,&C/,C&,,&,C&)",
+		     "C-3;C=OO(CC,,C/*C*C,C&,&C/*C*O,*C,C&,CO)",
+		     "O-2;*C*C(*C*C,*C/*&C,C,*&/,CC,C&)",
+		     "C-4;C(=OO/,C/CC)",
+		     "O-1;=C(OC/C,/CC)",
+		     "C-3;*C*C(*CC,*O/*&*C,CC,*&/,C,=OO,&C)",
+		     "O-1;=C(CO/CC,C/*C*C,C&,C&)",
+		     "C-3;*C*O(*C,*C/*&C,*&*C/,CC,C)"};
 
 		try
 		{
@@ -188,66 +238,64 @@ public class HOSECodeTest
 			boolean isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
-				System.out.println("Atom " + molecule.getAtomAt(f).getSymbol() + "-" + (f + 1) + " isAromatic? " + molecule.getAtomAt(f).flags[CDKConstants.ISAROMATIC]);
+				//System.out.println("Atom " + molecule.getAtomAt(f).getSymbol() + "-" + (f + 1) + " isAromatic? " + molecule.getAtomAt(f).flags[CDKConstants.ISAROMATIC]);
 			}
 			for (int f = 0; f < molecule.getBondCount(); f++)
 			{
-				System.out.println("Bond " + "-" + (f + 1) + " isAromatic? " + molecule.getBondAt(f).flags[CDKConstants.ISAROMATIC]);
+				//System.out.println("Bond " + "-" + (f + 1) + " isAromatic? " + molecule.getBondAt(f).flags[CDKConstants.ISAROMATIC]);
 			}
 
 			hcg = new HOSECodeGenerator();
 			String s = null;
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
-				System.out.println("Atom " + molecule.getAtomAt(f).getSymbol() + "-" + (f + 1));
-				if(molecule.getAtomAt(f).getSymbol().equals("C"))
-				{
-					s = hcg.getHOSECode(molecule, molecule.getAtomAt(f), 4);
-					System.out.println(s);
-				}
+				//System.out.println("Atom " + molecule.getAtomAt(f).getSymbol() + "-" + (f + 1));
+				s = hcg.getHOSECode(molecule, molecule.getAtomAt(f), 4);
+				assertTrue(s.equals(codes[f]));
+				//System.out.println(s);
 			}
 		} catch (Exception exc)
 		{
 			exc.printStackTrace();
-			return false;
 		}
-		
-		JFrame frame = new JFrame("HOSECodeTest");
-		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new BorderLayout());
-		DefaultMutableTreeNode top = hcg.getRootNode();
-		StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-		MoleculeViewer2D mv = new MoleculeViewer2D();
-		Renderer2DModel r2dm = mv.getRenderer2DModel();
-		r2dm.setDrawNumbers(true);
-
-		try
+		if (standAlone)
 		{
-			sdg.setMolecule((Molecule) molecule.clone());
-			sdg.generateCoordinates(new Vector2d(0, 1));
-			mv.setAtomContainer(sdg.getMolecule());
-			//mv.display();
-		} catch (Exception exc)
-		{
-			System.out.println("*** Exit due to an unexpected error during coordinate generation ***");
-			exc.printStackTrace();
+			JFrame frame = new JFrame("HOSECodeTest");
+			frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+			frame.getContentPane().setLayout(new BorderLayout());
+			DefaultMutableTreeNode top = hcg.getRootNode();
+			StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+			MoleculeViewer2D mv = new MoleculeViewer2D();
+			Renderer2DModel r2dm = mv.getRenderer2DModel();
+			r2dm.setDrawNumbers(true);
+	
+			try
+			{
+				sdg.setMolecule((Molecule) molecule.clone());
+				sdg.generateCoordinates(new Vector2d(0, 1));
+				mv.setAtomContainer(sdg.getMolecule());
+				//mv.display();
+			} catch (Exception exc)
+			{
+				//System.out.println("*** Exit due to an unexpected error during coordinate generation ***");
+				exc.printStackTrace();
+			}
+			
+			final JTree tree = new JTree(top);
+			JScrollPane treeView = new JScrollPane(tree);
+			frame.getContentPane().add("West", treeView);
+			mv.setPreferredSize(new Dimension(400,400));
+			frame.getContentPane().add("Center", mv);
+			for (int f = 0; f < tree.getRowCount(); f ++)
+			{
+				tree.expandRow(f);	
+			}
+			frame.pack();
+			frame.show();
 		}
-		
-		final JTree tree = new JTree(top);
-		JScrollPane treeView = new JScrollPane(tree);
-		frame.getContentPane().add("West", treeView);
-		mv.setPreferredSize(new Dimension(400,400));
-		frame.getContentPane().add("Center", mv);
-		for (int f = 0; f < tree.getRowCount(); f ++)
-		{
-			tree.expandRow(f);	
-		}
-		frame.pack();
-		frame.show();
-		return true;
 	}
 	
-	public boolean testBug655169()
+	public void testBug655169()
 	{
 		Molecule molecule = null;
 		HOSECodeGenerator hcg = null;
@@ -260,21 +308,20 @@ public class HOSECodeTest
 			String s = null;
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
-				System.out.println("Atom " + molecule.getAtomAt(f).getSymbol() + "-" + (f + 1));
+				//System.out.println("Atom " + molecule.getAtomAt(f).getSymbol() + "-" + (f + 1));
 				s = hcg.getHOSECode(molecule, molecule.getAtomAt(f), 4);
-				System.out.println(molecule.getAtomAt(f).flags[CDKConstants.ISAROMATIC]);
-				System.out.println(s);
+				//System.out.println(molecule.getAtomAt(f).flags[CDKConstants.ISAROMATIC]);
+				//System.out.println(s);
 			}
             Bond[] bonds = molecule.getBonds();
 			for (int f = 0; f < bonds.length; f++)
 			{
-				System.out.println(bonds[f].flags[CDKConstants.ISAROMATIC]);
+				//System.out.println(bonds[f].flags[CDKConstants.ISAROMATIC]);
 			}
 
 		} catch (Exception exc)
 		{
 			exc.printStackTrace();
-			return false;
 		}
 		
 		JFrame frame = new JFrame("HOSECodeTest");
@@ -294,7 +341,7 @@ public class HOSECodeTest
 			//mv.display();
 		} catch (Exception exc)
 		{
-			System.out.println("*** Exit due to an unexpected error during coordinate generation ***");
+			//System.out.println("*** Exit due to an unexpected error during coordinate generation ***");
 			exc.printStackTrace();
 		}
 		
@@ -309,8 +356,6 @@ public class HOSECodeTest
 		}
 		frame.pack();
 		frame.show();
-		return true;
-		
 	}
 
 	private void assembleNodes(DefaultMutableTreeNode top, HOSECodeGenerator hcg)
@@ -353,7 +398,8 @@ public class HOSECodeTest
 	 */
 	public static void main(String[] args)
 	{
-		HOSECodeTest hct = new HOSECodeTest();
+		standAlone = true;
+		HOSECodeTest hct = new HOSECodeTest("HOSECodeTest");
 		//hct.test1();
 		//hct.test2();
 		//hct.test3();
