@@ -52,15 +52,6 @@ public class HueckelAromaticityDetector
 	 */
 	public static boolean detectAromaticity(AtomContainer ac) throws org.openscience.cdk.exception.NoSuchAtomException
 	{	
-		for (int f = 0; f < ac.getAtomCount(); f++)
-		{
-			ac.getAtomAt(f).setFlag(CDKConstants.ISAROMATIC, false);	
-		}
-        Bond[] bonds = ac.getBonds();
-		for (int f = 0; f < bonds.length; f++)
-		{
-			bonds[f].setFlag(CDKConstants.ISAROMATIC, false);	
-		}
 		RingSet ringSet = new AllRingsFinder().findAllRings(ac);
 		if (ringSet.size() > 0)
 		{
@@ -86,7 +77,12 @@ public class HueckelAromaticityDetector
 			ElectronContainer ec = ac.getElectronContainerAt(f);
 			if (ec instanceof Bond) ec.setFlag(CDKConstants.ISAROMATIC, false);
 		}
-
+		for (int f = 0; f < ringSet.size(); f++)
+		{
+			((Ring)ringSet.get(f)).setFlag(CDKConstants.ISAROMATIC, false);
+		}
+		
+		
 		Ring ring = null;
 		Atom atom = null;
 		ringSet.sort();
