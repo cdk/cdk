@@ -63,7 +63,15 @@ public class AtomContainerTest extends TestCase {
      * Only test wether the atoms are correctly cloned.
      */
 	public void testClone() {
-		Molecule molecule = MoleculeFactory.makeAlphaPinene();
+		Molecule molecule = new Molecule();
+		molecule.addAtom(new Atom("C")); // 1
+		molecule.addAtom(new Atom("C")); // 2
+		molecule.addAtom(new Atom("C")); // 3
+		molecule.addAtom(new Atom("C")); // 4
+
+		molecule.addBond(0, 1, 2.0); // 1
+		molecule.addBond(1, 2, 1.0); // 2
+		molecule.addBond(2, 3, 1.0); // 3
 		Molecule clonedMol = (Molecule)molecule.clone();
 		assertTrue(molecule.getAtomCount() == clonedMol.getAtomCount());
 		for (int f = 0; f < molecule.getAtomCount(); f++) {
