@@ -18,6 +18,7 @@ API changes:
 * cdk.libio.jmol.Convertor now converts 
   AtomContainer <-> ChemFrame, instead of
   Molecule <-> ChemFrame
+* FortranFormat moved to org.openscience.cdk.math
 
 20020902 Release
 ------------------------------------
