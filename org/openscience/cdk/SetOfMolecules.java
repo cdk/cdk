@@ -24,8 +24,10 @@
 package org.openscience.cdk;
 
 
-
-public class SetOfMolecules extends ChemObject 
+/** 
+ * A set of molecules, for example those taking part in a reaction
+ */
+public class SetOfMolecules extends ChemObject
 {
 
 	/**

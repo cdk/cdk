@@ -24,8 +24,12 @@
 package org.openscience.cdk;
 
 
-
-public class ChemFile extends ChemObject 
+/**
+  * A Object containing a number of ChemSequences. 
+  * This is supposed to be the top level container, which can contain 
+  * all the concepts stored in a chemical document
+  */ 
+public class ChemFile 
 {
 
 	/**
@@ -43,9 +47,6 @@ public class ChemFile extends ChemObject
 	 *  the array is not large enough for that. 
 	 */
 	protected int growArraySize = 5;
-	
-
-
 
 	/**
 	 *  Constructs an empty SetOfChemSequences
@@ -56,8 +57,6 @@ public class ChemFile extends ChemObject
 		chemSequences = new ChemSequence[growArraySize];
 	}
 
-
-	
 	/**
 	 *  Adds an chemSequence to this container 
 	 *

@@ -88,7 +88,6 @@ public class RingSet extends Vector{
 	}
 	
 	
-
 	/**
 	 * Returns a vector of all rings that this bond is part of.
 	 *
@@ -116,8 +115,8 @@ public class RingSet extends Vector{
 	 * We define the heaviest ring as the one with the highest number of double bonds.
 	 * Needed for example for the placement of in-ring double bonds.
 	 *
-	 * @param   bond   
-	 * @return     
+	 * @param   bond  A bond which must be contained by the heaviest ring 
+	 * @return  The ring with the higest number of double bonds connected to a given bond   
 	 */
 	public Ring getHeaviestRing(Bond bond)
 	{
@@ -135,12 +134,12 @@ public class RingSet extends Vector{
 		return ring;
 	}
 
-
 	/**
-	 * Returns a vector of all rings that are connected to one given ring.
+	 * Returns all the rings in the RingSet that share
+	 * one or more atoms with a given ring.
 	 *
-	 * @param   ring  The ring the connected partners are searched of
-	 * @return    A vector of all rings that are connected to one given ring 
+	 * @param   ring  A ring with which all return rings must share one or more atoms
+	 * @return  All the rings that share one or more atoms with a given ring.   
 	 */
 	public Vector getConnectedRings(Ring ring)
 	{
@@ -230,6 +229,15 @@ public class RingSet extends Vector{
 		}
 	}
 
+	
+
+	/**
+	 * Returns a sequence of string representations for all rings in the 
+	 * RingSet
+	 *
+	 * @param   molecule  Used to assign numbers to each atom in the rings
+	 * @return  A sequence of string representations for all rings in the RingSet   
+	 */
 	public String reportRingList(Molecule molecule)
 	{
 		String ringList = "";

@@ -10,7 +10,7 @@
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * All I ask is that proper credit is given for my work, which includes
+ * All we ask is that proper credit is given for our work, which includes
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
@@ -46,24 +46,21 @@ import java.awt.*;
 public class RingPlacer implements CDKConstants
 {
 	static boolean debug = false;
-	public static int ISPLACED = 0;	
-	
+
 	private Molecule molecule; 
 	
-	public RingPlacer()
-	{
+	private AtomPlacer atomPlacer = new AtomPlacer();
 	
-	}
-
 
 	/**
+	 * Generated coordinates for a given ring. Multiplexes to special handlers 
+	 * for the different possible situations (spiro-, fusion-, bridged attachement)
 	 *
-	 *
-	 * @param   ring  
-	 * @param   sharedAtoms  
-	 * @param   sharedAtomsCenter  
-	 * @param   ringCenterVector  
-	 * @param   bondLength  
+	 * @param   ring  The ring to be placed
+	 * @param   sharedAtoms  The atoms of this ring, also members of another ring, which are already placed
+	 * @param   sharedAtomsCenter  The geometric center of these atoms
+	 * @param   ringCenterVector  A vector pointing the the center of the new ring
+	 * @param   bondLength  The standard bondlength
 	 */
 	public void placeRing(Ring ring, AtomContainer sharedAtoms, Point2d sharedAtomsCenter, Vector2d ringCenterVector, double bondLength)
 	{
@@ -84,7 +81,16 @@ public class RingPlacer implements CDKConstants
 
 	}
 	
-	
+	/**
+	 * Generated coordinates for a given ring, which is connected to another ring a bridged ring, 
+	 * i.e. it shares more than two atoms with another ring.
+	 *
+	 * @param   ring  The ring to be placed
+	 * @param   sharedAtoms  The atoms of this ring, also members of another ring, which are already placed
+	 * @param   sharedAtomsCenter  The geometric center of these atoms
+	 * @param   ringCenterVector  A vector pointing the the center of the new ring
+	 * @param   bondLength  The standard bondlength
+	 */
 	private  void placeBridgedRing(Ring ring, AtomContainer sharedAtoms, Point2d sharedAtomsCenter, Vector2d ringCenterVector, double bondLength )
 	{
 		double radius = getNativeRingRadius(ring, bondLength);
@@ -199,18 +205,18 @@ public class RingPlacer implements CDKConstants
 		if (debug) System.out.println("placeFusedRing->addAngle: " + Math.toDegrees(addAngle));		
 
 		addAngle = addAngle * direction;
-		drawPolygon(atomsToDraw, ringCenter, startAngle, addAngle, radius);
+		atomPlacer.populatePolygonCorners(atomsToDraw, ringCenter, startAngle, addAngle, radius);
 	}
 	
-
 	/**
+	 * Generated coordinates for a given ring, which is connected to another ring a spiro ring, 
+	 * i.e. it shares exactly one atom with another ring.
 	 *
-	 *
-	 * @param   ring  
-	 * @param   sharedAtoms  
-	 * @param   sharedAtomsCenter  
-	 * @param   ringCenterVector  
-	 * @param   bondLength  
+	 * @param   ring  The ring to be placed
+	 * @param   sharedAtoms  The atoms of this ring, also members of another ring, which are already placed
+	 * @param   sharedAtomsCenter  The geometric center of these atoms
+	 * @param   ringCenterVector  A vector pointing the the center of the new ring
+	 * @param   bondLength  The standard bondlength
 	 */
 	private void placeSpiroRing(Ring ring, AtomContainer sharedAtoms, Point2d sharedAtomsCenter, Vector2d ringCenterVector, double bondLength)
 	{
@@ -254,19 +260,20 @@ public class RingPlacer implements CDKConstants
 		if (debug) System.out.println("currentAtom  "+currentAtom);
 		if (debug) System.out.println("startAtom  "+startAtom);
 
-		drawPolygon(atomsToDraw, ringCenter, startAngle, addAngle, radius);
+		atomPlacer.populatePolygonCorners(atomsToDraw, ringCenter, startAngle, addAngle, radius);
 	
 	}
 
 
 	/**
+	 * Generated coordinates for a given ring, which is connected to another ring a fused ring, 
+	 * i.e. it shares exactly on bond with another ring.
 	 *
-	 *
-	 * @param   ring  
-	 * @param   sharedAtoms  
-	 * @param   sharedAtomsCenter  
-	 * @param   ringCenterVector  
-	 * @param   bondLength  
+	 * @param   ring  The ring to be placed
+	 * @param   sharedAtoms  The atoms of this ring, also members of another ring, which are already placed
+	 * @param   sharedAtomsCenter  The geometric center of these atoms
+	 * @param   ringCenterVector  A vector pointing the the center of the new ring
+	 * @param   bondLength  The standard bondlength
 	 */
 	public  void placeFusedRing(Ring ring, AtomContainer sharedAtoms, Point2d sharedAtomsCenter, Vector2d ringCenterVector, double bondLength )
 	{
@@ -380,59 +387,8 @@ public class RingPlacer implements CDKConstants
 		if (debug) System.out.println("placeFusedRing->addAngle: " + Math.toDegrees(addAngle));		
 
 		addAngle = addAngle * direction;
-		drawPolygon(atomsToDraw, ringCenter, startAngle, addAngle, radius);
+		atomPlacer.populatePolygonCorners(atomsToDraw, ringCenter, startAngle, addAngle, radius);
 	}
-	
-
-
-	/**
-	 *
-	 *
-	 * @param   startAtom  
-	 * @param   atomsToDraw  
-	 * @param   startAngle  
-	 * @param   addAngle  
-	 * @param   direction  
-	 * @param   bondLength  
-	 */
-	public void drawPolygon(Vector atomsToDraw, Point2d rotationCenter, double startAngle, double addAngle, double radius)
-	{
-		Atom connectAtom = null;
-		double angle = startAngle;
-		double newX, newY, x, y;
-		if (debug) System.out.println("drawPolygon->startAngle: " + Math.toDegrees(angle));
-		for (int i = 0; i < atomsToDraw.size(); i++)
-		{
-			connectAtom = (Atom)atomsToDraw.elementAt(i);
-			try
-			{
-				if (debug) System.out.println("drawPolygon->number of connectAtom: " + molecule.getAtomNumber(connectAtom));
-			}
-			catch(Exception exc)
-			{
-			
-			}
-		    angle = angle + addAngle;
-			if (angle >= 2 * Math.PI)
-			{
-				angle -= 2*Math.PI;
-			}
-		    if (debug)  System.out.println("drawPolygon->angle: " +Math.toDegrees( angle));
-		    x = Math.cos(angle) * radius;
-		    if (debug) System.out.println("drawPolygon-> x " + x);
-		    y = Math.sin(angle) * radius;
-			if (debug) System.out.println("drawPolygon-> y " + y);
-			newX = x + rotationCenter.x;
-			newY = y + rotationCenter.y;
-//			angle = angle + addAngle;
-			if (connectAtom.getPoint2D() == null)
-			{
-				connectAtom.setPoint2D(new Point2d(newX, newY));				
-			}
-		}
-		
-	}
-	
 	
 
 	/**
@@ -442,12 +398,6 @@ public class RingPlacer implements CDKConstants
 	 * @return  True if coordinates have been assigned to all atoms in all rings.    
 	 */
 
-	/**
-	 *
-	 *
-	 * @param   rs  
-	 * @return     
-	 */
 	public  boolean allPlaced(RingSet rs)
 	{
 		for (int i = 0; i < rs.size(); i++)
@@ -461,10 +411,11 @@ public class RingPlacer implements CDKConstants
 	}
 	
 	/**
+	 * Returns the bridge atoms, that is the outermost atoms in
+	 * the chain of more than two atoms which are shared by two rings
 	 *
-	 *
-	 * @param   sharedAtoms  
-	 * @return     
+	 * @param   sharedAtoms  The atoms (n > 2) which are shared by two rings
+	 * @return  The bridge atoms, i.e. the outermost atoms in the chain of more than two atoms which are shared by two rings  
 	 */
 	private  Atom[] getBridgeAtoms(AtomContainer sharedAtoms)
 	{
@@ -500,8 +451,6 @@ public class RingPlacer implements CDKConstants
 	}
 
 
-
-	
 	public Molecule getMolecule()
 	{
 		return this.molecule;

@@ -25,7 +25,10 @@ package org.openscience.cdk;
 
 
 
-
+/** A sequence of ChemModels, which can, for example, be used to 
+  * store the course of a reaction. Each state of the reaction would be
+  * stored in one ChemModel.
+  */
 public class ChemSequence extends ChemObject 
 {
 

@@ -26,7 +26,8 @@ package org.openscience.cdk;
 
 /**
  * An interface providing predefined values for a number of 
- * parameters used throughout the cdk.
+ * parameters used throughout the cdk. Classes using these Constants should 
+ * implement this interface.
  */
 
 public interface CDKConstants
@@ -52,19 +53,54 @@ public interface CDKConstants
 	/** A bonds which end is above the drawing plane */
 	static int STEREO_ATOM_PARITY_MINUS = -1;
 
+	/** Carbon NMR shift contant for use as a key in the 
+	  * ChemObject.physicalProperties hashtable
+	  * @see org.openscience.cdk.ChemObject 
+	  */
+	static String NMRSHIFT_CARBON = "carbon nmr shift";
+	/** Hydrogen NMR shift contant for use as a key in the 
+	  * ChemObject.physicalProperties hashtable
+	  * @see org.openscience.cdk.ChemObject 
+	  */
+	static String NMRSHIFT_HYDROGEN = "hydrogen nmr shift";
+	/** Nitrogen NMR shift contant for use as a key in the 
+	  * ChemObject.physicalProperties hashtable
+	  * @see org.openscience.cdk.ChemObject 
+	  */
+	static String NMRSHIFT_NITROGEN = "nitrogen nmr shift";
+	/** Phosphorus NMR shift contant for use as a key in the 
+	  * ChemObject.physicalProperties hashtable
+	  * @see org.openscience.cdk.ChemObject 
+	  */
+	static String NMRSHIFT_PHOSPORUS = "phosphorus nmr shift";
+	/** Fluorine NMR shift contant for use as a key in the 
+	  * ChemObject.physicalProperties hashtable
+	  * @see org.openscience.cdk.ChemObject 
+	  */
+	static String NMRSHIFT_FLUORINE = "fluorine nmr shift";				
+	/** Deuterium NMR shift contant for use as a key in the 
+	  * ChemObject.physicalProperties hashtable
+	  * @see org.openscience.cdk.ChemObject 
+	  */
+	static String NMRSHIFT_DEUTERIUM = "deuterium nmr shift";					
+	
+
 	/****************************************
 	 * Some predefined flags - keep the     *
 	 * numbers below 50 free for other      * 
 	 * purposes                             * 
 	 ****************************************/
 
-	/** A bonds which end is above the drawing plane */
+	/** Has a chemobject been placed (Wheresoever)? Flags for Structure Diagram Generation and other uses */
 	static int ISPLACED = 50;
+	/** Is a chemobject part of a ring? Flags for Structure Diagram Generation and other uses */
 	static int ISINRING = 51;
+	/** Is a chemobject part of an alipahtic chain? Flags for Structure Diagram Generation and other uses */
 	static int ISALIPHATIC = 52;
-	
-	
+	/** Has a chemobject been visited during a search? Flags for Structure Diagram Generation and other uses */
 	static int VISITED = 53; // Use in tree searches
+
+
 
 }
 

@@ -10,7 +10,7 @@
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * All I ask is that proper credit is given for my work, which includes
+ * All we ask is that proper credit is given for our work, which includes
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
@@ -50,8 +50,7 @@ public class RandomGenerator
 	Vector newBonds;
 
 	/**
-	 *
-	 *
+	 * The empty contructor
 	 */
 	public RandomGenerator()
 	{
@@ -61,9 +60,9 @@ public class RandomGenerator
 
 
 	/**
+	 * Constructs a RandomGenerator with a given starting structure
 	 *
-	 *
-	 * @param   molecule  
+	 * @param   molecule  The starting structure
 	 */
 	public RandomGenerator(Molecule molecule)
 	{
@@ -75,9 +74,11 @@ public class RandomGenerator
 
 
 	/**
+	 * Proposes a structure which can be accepted or rejected by an external 
+	 * entity. If rejected, the structure is not used as a starting point 
+	 * for the next random move in structure space.
 	 *
-	 *
-	 * @return     
+	 * @return A proposed molecule    
 	 */
 	public Molecule proposeStructure()
 	{
@@ -86,9 +87,9 @@ public class RandomGenerator
 
 
 	/**
+	 * Returns the next structure randomly generated based on the previous one
 	 *
-	 *
-	 * @return     
+	 * @return  The next structure randomly generated based on the previous one
 	 */
 	public Molecule getNextStructure()
 	{
@@ -96,9 +97,9 @@ public class RandomGenerator
 	}
 	
 	/**
-	 * Randomly breaks a bond and forms another to mutate the structure
-	 * The rules for this method are described in "Faulon, JCICS 1996, 36, 731"
-	 *
+	 * Randomly chooses four atoms and alters the bonding
+	 * pattern between them according to rules described 
+	 * in "Faulon, JCICS 1996, 36, 731"
 	 */
 	protected void mutate()
 	{
@@ -211,14 +212,10 @@ public class RandomGenerator
 	}
 
 	/**
-	* Analog of Math.max that returns the largest int value in an array of ints
-	**/
-
-	/**
+	 * Analog of Math.max that returns the largest int value in an array of ints
 	 *
-	 *
-	 * @param   values  
-	 * @return     
+	 * @param   values  the values to be searched for the largest value among them
+	 * @return   the largest value among a set of given values  
 	 */
 	protected int max(int[] values)
 	{
@@ -230,14 +227,10 @@ public class RandomGenerator
 	}
 
 	/**
-	* Analog of Math.max that returns the largest int value in an array of ints
-	**/
-
-	/**
+	 * Analog of Math.min that returns the largest int value in an array of ints
 	 *
-	 *
-	 * @param   values  
-	 * @return     
+	 * @param   values  the values to be searched for the smallest value among them
+	 * @return   the smallest value among a set of given values  
 	 */
 	protected int min(int[] values)
 	{
@@ -249,39 +242,13 @@ public class RandomGenerator
 	}
 
 	
-	/** Assigns the set of Nodes based on which the structure generation is performed */
-
 	/**
+	 * Assigns a starting structure to this generator
 	 *
-	 *
-	 * @param   molecule  
+	 * @param   molecule  a starting structure for this generator
 	 */
 	public void setMolecule(Molecule molecule)
 	{
 		this.molecule = molecule;	
 	}
-	
-
-	/**
-	 *
-	 *
-	 * @param   bm  
-	 * @return     
-	 */
-	protected boolean structureConnected(int[][] bm)
-	{
-		boolean[] visited = new boolean[bm.length];
-		visited[0] = true;
-		for (int i = 0; i < bm.length; i++)
-		{
-			if (!visited[i])
-			{
-				for (int j = 0; j < bm.length; j++)
-				{
-					 
-				}
-			}
-		}
-		return true;
-	}	
 }

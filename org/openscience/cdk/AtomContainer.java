@@ -232,7 +232,7 @@ public class AtomContainer extends ChemObject implements Cloneable{
 				}
 			}
 		}
-//		System.out.println("atom1  "+a1.toString()+"atom2  "+a2.toString());
+		System.out.println("atom1  "+a1.toString()+"atom2  "+a2.toString());
 		throw new Exception("atoms not connected");
 	}
 
@@ -275,7 +275,6 @@ public class AtomContainer extends ChemObject implements Cloneable{
 		{
 			if (bonds[i].contains(atom))
 			{
-//				System.out.println(bonds[i]);
 				bondsVec.addElement(bonds[i]);
 			}
 		}
@@ -317,6 +316,23 @@ public class AtomContainer extends ChemObject implements Cloneable{
 		return degree;
 	}
 	
+   /**
+     * Adds all atoms and bonds of a given atomcontainer to this container
+     *
+     * @param   atomContainer  The atomcontainer to be added
+     */
+    public void add(AtomContainer atomContainer)
+    {
+            for (int f = 0; f < atomContainer.getAtomCount(); f++)
+            {
+                    addAtom(atomContainer.getAtomAt(f));
+            }
+            for (int f = 0; f < atomContainer.getBondCount(); f++)
+            {
+                    addBond(atomContainer.getBondAt(f));
+            }
+    }
+
 	/**
 	 *  Adds an atom to this container 
 	 *
@@ -351,7 +367,23 @@ public class AtomContainer extends ChemObject implements Cloneable{
 		bondCount++;
 	}
 	
-	
+    /**
+     * Removes all atoms and bonds of a given atomcontainer from this container
+     *
+     * @param   atomContainer  The atomcontainer to be removed
+     * @exception   Exception  
+     */
+    public void remove(AtomContainer atomContainer) throws java.lang.Exception
+    {
+            for (int f = 0; f < atomContainer.getAtomCount(); f++)
+            {
+                    removeAtom(atomContainer.getAtomAt(f));
+            }
+            for (int f = 0; f < atomContainer.getBondCount(); f++)
+            {
+                    removeBond(atomContainer.getBondAt(f));
+            }
+    }	
 
 	/**
 	 * removes the bond at the given position from this container
@@ -433,46 +465,7 @@ public class AtomContainer extends ChemObject implements Cloneable{
 		bondCount = 0;	
 	}
 	
-	
 
-	/**
-	 * Removes all atoms and bonds of a given atomcontainer from this container
-	 *
-	 * @param   atomContainer  The atomcontainer to be removed
-	 * @exception   Exception  
-	 */
-	public void remove(AtomContainer atomContainer) throws java.lang.Exception
-	{
-		for (int f = 0; f < atomContainer.getAtomCount(); f++)
-		{
-			removeAtom(atomContainer.getAtomAt(f));
-		}
-		for (int f = 0; f < atomContainer.getBondCount(); f++)
-		{
-			removeBond(atomContainer.getBondAt(f));
-		}
-	}
-
-
-
-	/**
-	 * Adds all atoms and bonds of a given atomcontainer to this container
-	 *
-	 * @param   atomContainer  The atomcontainer to be added
-	 */
-	public void add(AtomContainer atomContainer)
-	{
-		for (int f = 0; f < atomContainer.getAtomCount(); f++)
-		{
-			addAtom(atomContainer.getAtomAt(f));
-		}
-		for (int f = 0; f < atomContainer.getBondCount(); f++)
-		{
-			addBond(atomContainer.getBondAt(f));
-		}
-	}
-	
-	 
 	/**
 	 *  Adds a bond to this container
 	 *
@@ -568,6 +561,14 @@ public class AtomContainer extends ChemObject implements Cloneable{
 	}
 
 
+	/**
+	 * Compares this AtomContainer with another given AtomContainer 
+	 * and returns the Intersection between them
+	 * Important Note: This is not a maximum common substructure
+	 *
+	 * @return  An AtomContainer containing the Intersection between this AtomContainer and another given one
+	 */
+	
 	public AtomContainer getIntersection(AtomContainer ac)
 	{
 		AtomContainer intersection = new AtomContainer();
@@ -647,6 +648,13 @@ public class AtomContainer extends ChemObject implements Cloneable{
 	}
 
 
+	/**
+	 * Returns a connection matrix representation 
+	 * of this AtomContainer
+	 *
+	 * @return  A connection matrix representation of this AtomContainer
+	 */
+
 	public int[][] getConnectionMatrix() throws java.lang.Exception
 	{
 		Bond bond = null;
@@ -722,6 +730,10 @@ public class AtomContainer extends ChemObject implements Cloneable{
 		return o;
 	}
 }
+
+
+
+
 
 
 

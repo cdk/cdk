@@ -34,7 +34,12 @@ import java.util.*;
  
 public class ConnectivityChecker implements CDKConstants
 {
-
+	/**
+	 * Check whether a set of atoms in an atomcontainer is connected
+	 *
+	 * @param   ac  The AtomContainer to be check for connectedness
+	 * @return  true if the AtomContainer is connected   
+	 */
 	public boolean isConnected(AtomContainer ac)
 	{
 		boolean doneSomething;
@@ -81,6 +86,14 @@ public class ConnectivityChecker implements CDKConstants
 	}
 	
 
+
+	/**
+	 * Partitions the atoms in an AtomContainer into connected components, i.e. molecules
+	 *
+	 * @param   atomContainer  The AtomContainer to be partitioned into connected components, i.e. molecules
+	 * @return  A vector of AtomContainers, each containing a connected molecule   
+	 * @exception   Exception  If something goes wrong
+	 */
 	public  static Vector partitionIntoMolecules(AtomContainer atomContainer) throws java.lang.Exception
 	{
 		AtomContainer ac = new AtomContainer();

@@ -10,7 +10,7 @@
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * All I ask is that proper credit is given for my work, which includes
+ * All we ask is that proper credit is given for our work, which includes
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
@@ -31,7 +31,12 @@ package org.openscience.cdk.ringsearch;
 import java.util.*;
 import org.openscience.cdk.*;
 
-
+/**
+ * Finds the Smallest Set of Smallest Rings. 
+ * This is an implementation of the algorithm published in
+ * John Figueras, "Ring Perception Using Breadth-First Search", 
+ * J. Chem. Inf. Comput Sci. 1996, 36, 986-991.
+ */
 public class SSSRFinder
 {
 
@@ -45,8 +50,8 @@ public class SSSRFinder
 	 * John Figueras, "Ring Perception Using Breadth-First Search", 
 	 * J. Chem. Inf. Comput Sci. 1996, 36, 986-991.
 	 *
-	 * @param   molecule  
-	 * @return     
+	 * @param   molecule the molecule to be searched for rings 
+	 * @return a RingSet containing the rings in molecule    
 	 */
 	public  RingSet findSSSR(Molecule mol)
 	{

@@ -24,8 +24,11 @@
 package org.openscience.cdk;
 
 
-
-public class ChemModel extends ChemObject 
+/** An object containig multiple SetOfMolecules and 
+  * the other lower level concepts like rings, sequences, 
+  * fragments, etc.
+  */
+public class ChemModel
 {
 
 	/**

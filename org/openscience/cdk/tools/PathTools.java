@@ -10,7 +10,7 @@
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * All I ask is that proper credit is given for my work, which includes
+ * All we ask is that proper credit is given for our work, which includes
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
@@ -32,9 +32,13 @@ import org.openscience.cdk.*;
 import java.util.*;
 import java.io.*;
 
+
+/**
+ * Tools class with methods for handling molecular graphs
+ */
 public class PathTools implements CDKConstants
 {
-	 public static boolean  debug = false; // minimum details
+	 public static boolean  debug = false; 
 
 	/**
 	 * All-Pairs-Shortest-Path computation based on Floyds algorithm
@@ -116,14 +120,15 @@ public class PathTools implements CDKConstants
 	 * @param   molecule  The AtomContainer to be searched 
 	 * @param   root  The root atom to start the search at
 	 * @param   target  The target
-	 * @param   path  
-	 * @return     
+	 * @param   path  An AtomContainer to be filled with the path
+	 * @return  true if the target atom was found during this function call   
 	 */
-	public static boolean depthFirstSearch(AtomContainer molecule, Atom root, Atom target, AtomContainer path) throws java.lang.Exception
+	public static boolean depthFirstTargetSearch(AtomContainer molecule, Atom root, Atom target, AtomContainer path) throws java.lang.Exception
 	{	
 		Bond[] bonds = molecule.getConnectedBonds(root);
 		Atom nextAtom = null;
 		root.flags[VISITED] = true;
+		System.out.println("root: " + molecule.getAtomNumber(root));
 		for(int f = 0; f < bonds.length; f++)
 		{
 			nextAtom = bonds[f].getConnectedAtom(root);
@@ -131,25 +136,46 @@ public class PathTools implements CDKConstants
 			{
 				path.addAtom(nextAtom);
 				path.addBond(bonds[f]);
+				System.out.println("nextAtom: " + molecule.getAtomNumber(nextAtom));
 				if (nextAtom == target)
 				{
+					System.out.println("target found: " + molecule.getAtomNumber(nextAtom));				
 					return true;
 				}
 				else
 				{
-					depthFirstSearch(molecule, nextAtom, target, path);
+					if (!depthFirstTargetSearch(molecule, nextAtom, target, path))
+					{
+						// we did not find the target 
+						path.removeAtom(nextAtom);
+						path.removeBond(bonds[f]);
+						System.out.println("removing nextAtom: " + molecule.getAtomNumber(nextAtom));
+					}
+					else
+					{
+						return true;
+					}
 				}
-				if (!path.contains(target))
-				{
-					path.removeAtom(nextAtom);
-					path.removeBond(bonds[f]);
-				}	
 			}
 		}
 		return false;
 	}
 
-
+	/**
+	 * Performs a breadthFirstSearch in an AtomContainer starting with
+	 * a particular sphere, which usually consists of one start atom.
+	 * While searching the graph, the method marks each visited atom.
+	 * It then puts all the atoms connected to the atoms in the given
+	 * sphere into a new vector which forms the sphere to search for 
+	 * the next recursive method call. 
+	 * All atoms that have been visited are put into a molecule container.
+	 * This breadthFirstSearch does thus find the connected graph for a 
+	 * given start atom.
+	 *
+	 * @param   ac  The AtomContainer to be searched
+	 * @param   sphere  A sphere of atoms to start the search with
+	 * @param   molecule  A molecule into which all the atoms and bonds are stored that are found during search 
+	 */
 	public static void breadthFirstSearch(AtomContainer ac, Vector sphere, Molecule molecule)
 	{
 		Atom atom = null, nextAtom = null; 
@@ -182,6 +208,9 @@ public class PathTools implements CDKConstants
 			breadthFirstSearch(ac, newSphere, molecule);
 		}
 	}
+
+
+
 }
 
 

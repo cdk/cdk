@@ -10,7 +10,7 @@
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * All I ask is that proper credit is given for my work, which includes
+ * All we ask is that proper credit is given for our work, which includes
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
@@ -150,11 +150,11 @@ public class StructureDiagramGenerator implements CDKConstants
 		}
 		else
 		{
-			Atom complexAtom = getComplexCentralAtom();
-			Bond[] bonds = molecule.getConnectedBonds(complexAtom);
-			placeFirstBond(bonds[0], firstBondVector);
+//			Atom complexAtom = getComplexCentralAtom();
+//			Bond[] bonds = molecule.getConnectedBonds(complexAtom);
+//			placeFirstBond(bonds[0], firstBondVector);
 		}
-		handleAliphatics();
+//		handleAliphatics();
 //		fixRest();
 	}
 
@@ -168,6 +168,13 @@ public class StructureDiagramGenerator implements CDKConstants
 		generateCoordinates(new Vector2d(0, 1));
 	}
 
+
+
+	/**
+	 * Positions the aliphatic substituents of a ring system
+	 *
+	 * @exception   Exception  Thrown if something goes wrong.
+	 */
 	public void placeRingSubstituents() throws java.lang.Exception
 	{
 		RingSet rs = null; 
@@ -259,9 +266,59 @@ public class StructureDiagramGenerator implements CDKConstants
 	private void handleAliphatics() throws java.lang.Exception
 	{
 		AtomContainer longestChain = getInitialLongestChain(molecule);
+		longestChain.getAtomAt(0).setPoint2D(new Point2d(0,0));
+		Atom atom = null;
+		Bond[] bonds = null;
+		/* place the first bond such that the whole chain will be vertically 
+		 * alligned on the x axis
+		 */
+		double angle = Math.toRadians(-30);
+		Vector unplacedAtoms = null;
+		double startAngle = 0, addAngle = 0, unoccupiedAngle = 0;
+		atomPlacer.placeLinearChain(longestChain, new Vector2d(Math.cos(angle), Math.sin(angle)), bondLength);
 		System.out.println("Longest Chain has " + longestChain.getAtomCount() + " atoms.");
+//		do
+//		{
+//			atom = getNextAtomWithUnplacedNeigbors();
+//			unplacedAtoms = getUnplacedAtoms(atom);
+//			unoccupiedAngle = getLargestUnoccupiedAngle(atom);
+//			XXXXXXXXXXXXXXXX Hier geht weiter XXXXXXXXXXXXXXXXXXXX
+//			Finde den optimalen Startwinkel zu den schon
+//			Plazierten Atomen.					
+//		}while(!allPlaced(molecule));
+	}
+	
+	private Vector getUnplacedAtoms(Atom atom)
+	{
+		Vector unplacedAtoms = new Vector();
+		Bond[] bonds = molecule.getConnectedBonds(atom);
+		for (int f = 0; f < bonds.length; f++)
+		{
+			unplacedAtoms.addElement(bonds[f].getConnectedAtom(atom));
+		}
+		return unplacedAtoms;
+	}
+	
+	private Atom getNextAtomWithUnplacedNeigbors()
+	{
+		Bond bond = null; 
+		for (int f = 0; f < molecule.getBondCount(); f++)
+		{
+			bond = molecule.getBondAt(f);
+			if (!bond.getAtomAt(0).flags[ISPLACED] &&  bond.getAtomAt(1).flags[ISPLACED])
+			{
+				return bond.getAtomAt(1);
+			}
+			
+			if (bond.getAtomAt(0).flags[ISPLACED] &&  !bond.getAtomAt(1).flags[ISPLACED])
+			{
+				return bond.getAtomAt(0);
+			}
+		}
+		return null;
 	}
 
+	
 
 	/**
 	 * Does a layout of all the rings in the molecule
@@ -579,7 +636,8 @@ public class StructureDiagramGenerator implements CDKConstants
 		startAtom = molecule.getAtomAt(bestStartAtom);
 		endAtom = molecule.getAtomAt(bestEndAtom);
 		AtomContainer path = new AtomContainer();
-		PathTools.depthFirstSearch(molecule, startAtom, endAtom, path);
+		System.out.println("Longest chain with length " + maxPathLength + " is between atoms " + molecule.getAtomNumber(startAtom) + " and " + molecule.getAtomNumber(endAtom));
+		PathTools.depthFirstTargetSearch(molecule, startAtom, endAtom, path);
 		return path;
 	}
 	
@@ -602,5 +660,13 @@ public class StructureDiagramGenerator implements CDKConstants
 		return new AtomContainer();
 	}
 
+	private boolean allPlaced(AtomContainer ac)
+	{
+		for (int f = 0; f < ac.getAtomCount(); f++)
+		{
+			if (!ac.getAtomAt(f).flags[VISITED]) return false;
+		}
+		return true;
+	}
 
 }

@@ -10,7 +10,7 @@
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * All I ask is that proper credit is given for my work, which includes
+ * All we ask is that proper credit is given for our work, which includes
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
@@ -32,6 +32,9 @@ import org.openscience.cdk.event.*;
 import java.util.*;
 
 
+/**
+ * A model for Renderer2D, which determines how things are drawn
+ */
 public class Renderer2DModel
 {
 	private double scaleFactor = 60;
@@ -67,6 +70,10 @@ public class Renderer2DModel
 	private Point pointerVectorEnd = null;
 	
 	private int pointerVectorLength = 80;
+	
+	private Polygon selectRect = null;
+	
+	private AtomContainer selectedPart = null;
 	
 
 	/**
@@ -150,9 +157,9 @@ public class Renderer2DModel
 
 
 	/**
+	 * Sets the foreground color with which bonds and atoms are drawn
 	 *
-	 *
-	 * @param   foreColor  
+	 * @param   foreColor  the foreground color with which bonds and atoms are drawn
 	 */
 	public void setForeColor(Color foreColor)
 	{
@@ -162,9 +169,9 @@ public class Renderer2DModel
 	
 
 	/**
+	 * Returns the background color 
 	 *
-	 *
-	 * @return     
+	 * @return the background color     
 	 */
 	public Color getBackColor()
 	{
@@ -173,9 +180,9 @@ public class Renderer2DModel
 
 
 	/**
+	 * Sets the background color 
 	 *
-	 *
-	 * @param   backColor  
+	 * @param   backColor the background color  
 	 */
 	public void setBackColor(Color backColor)
 	{
@@ -183,11 +190,10 @@ public class Renderer2DModel
 	}
 
 	
-
 	/**
+	 * Returns if the drawing of atom numbers is switched on for this model
 	 *
-	 *
-	 * @return     
+	 * @return  true if the drawing of atom numbers is switched on for this model   
 	 */
 	public boolean drawNumbers()
 	{
@@ -196,9 +202,9 @@ public class Renderer2DModel
 
 
 	/**
+	 * Sets if the drawing of atom numbers is switched on for this model
 	 *
-	 *
-	 * @param   drawNumbers  
+	 * @param   drawNumbers  true if the drawing of atom numbers is to be switched on for this model
 	 */
 	public void setDrawNumbers(boolean drawNumbers)
 	{
@@ -207,54 +213,56 @@ public class Renderer2DModel
 
 
 	/**
+	 * Returns the color used for highlighting things in this model 
 	 *
-	 *
-	 * @return     
+	 * @return     the color used for highlighting things in this model 
 	 */
 	public Color getHighlightColor()
 	{
-	return this.highlightColor;
+		return this.highlightColor;
 	}
 
 
 	/**
+	 * Sets the color used for highlighting things in this model 
 	 *
-	 *
-	 * @param   highlightColor  
+	 * @param   highlightColor  the color to be used for highlighting things in this model 
 	 */
 	public void setHighlightColor(Color highlightColor)
 	{
-	this.highlightColor = highlightColor;
+		this.highlightColor = highlightColor;
 	}
 
 
 	/**
-	 *
-	 *
-	 * @return     
+	 * Returns the radius around an atoms, for which the atom is 
+	 * marked highlighted if a pointer device is placed within this radius
+	 * 
+	 * @return The highlight radius for all atoms   
 	 */
 	public double getHighlightRadius()
 	{
-	return this.highlightRadius;
+		return this.highlightRadius;
 	}
 
 
 	/**
+	 * Sets the radius around an atoms, for which the atom is 
+	 * marked highlighted if a pointer device is placed within this radius
 	 *
-	 *
-	 * @param   highlightRadius  
+	 * @param   highlightRadius  the highlight radius of all atoms
 	 */
 	public void setHighlightRadius(double highlightRadius)
 	{
-	this.highlightRadius = highlightRadius;
+		this.highlightRadius = highlightRadius;
 	}
 
 	
 
 	/**
+	 * XXX No idea what this is about
 	 *
-	 *
-	 * @return     
+	 * @return an unknown int    
 	 */
 	public int getAtomRadius()
 	{
@@ -263,9 +271,9 @@ public class Renderer2DModel
 
 
 	/**
+	 * XXX No idea what this is about
 	 *
-	 *
-	 * @param   atomRadius  
+	 * @param   atomRadius   XXX No idea what this is about
 	 */
 	public void setAtomRadius(int atomRadius)
 	{
@@ -275,9 +283,9 @@ public class Renderer2DModel
 	
 
 	/**
+	 * Returns the atom currently highlighted
 	 *
-	 *
-	 * @return     
+	 * @return the atom currently highlighted    
 	 */
 	public Atom getHighlightedAtom()
 	{
@@ -286,9 +294,9 @@ public class Renderer2DModel
 
 
 	/**
+	 * Sets the atom currently highlighted
 	 *
-	 *
-	 * @param   highlghtedAtom  
+	 * @param   highlightedAtom The atom to be highlighted  
 	 */
 	public void setHighlightedAtom(Atom highlightedAtom)
 	{
@@ -299,9 +307,9 @@ public class Renderer2DModel
 	
 
 	/**
+	 * Returns the Bond currently highlighted
 	 *
-	 *
-	 * @return     
+	 * @return the Bond currently highlighted    
 	 */
 	public Bond getHighlightedBond()
 	{
@@ -310,9 +318,9 @@ public class Renderer2DModel
 
 
 	/**
+	 * Sets the Bond currently highlighted
 	 *
-	 *
-	 * @param   highlightedBond  
+	 * @param   highlightedBond  The Bond to be currently highlighted
 	 */
 	public void setHighlightedBond(Bond highlightedBond)
 	{
@@ -323,9 +331,9 @@ public class Renderer2DModel
 	
 
 	/**
+	 * Returns the hashtable used for coloring substructures 
 	 *
-	 *
-	 * @return     
+	 * @return the hashtable used for coloring substructures     
 	 */
 	public Hashtable getColorHash()
 	{
@@ -334,19 +342,20 @@ public class Renderer2DModel
 
 
 	/**
+	 * Sets the hashtable used for coloring substructures 
 	 *
-	 *
-	 * @param   colorHash  
+	 * @param   colorHash  the hashtable used for coloring substructures 
 	 */
 	public void setColorHash(Hashtable colorHash)
 	{
 		this.colorHash = colorHash;
 	}
 	
+
 	/**
+	 * Allows for adding a CDKChangeListener to this model
 	 *
-	 *
-	 * @return     
+	 * @param   listener  The listener to be added to this model
 	 */
 	public String getDefaultElementSymbol()
 	{
@@ -433,6 +442,64 @@ public class Renderer2DModel
 	{
 		this.pointerVectorLength = pointerVectorLength;
 	}
+
+
+
+	/**
+	 *
+	 *
+	 * @return     
+	 */
+	public Polygon getSelectRect()
+	{
+		return this.selectRect;
+	}
+
+
+	/**
+	 *
+	 *
+	 * @param   selectRect  
+	 */
+	public void setSelectRect(Polygon selectRect)
+	{
+		this.selectRect = selectRect;
+		fireChange();		
+	}
+
+	
+
+	/**
+	 *
+	 *
+	 * @return     
+	 */
+	public AtomContainer getSelectedPart()
+	{
+		return this.selectedPart;
+	}
+
+
+	/**
+	 *
+	 *
+	 * @param   selectedPart  
+	 */
+	public void setSelectedPart(AtomContainer selectedPart)
+	{
+		this.selectedPart = selectedPart;
+		getColorHash().clear();
+		for (int i = 0; i < selectedPart.getAtomCount(); i++)
+		{
+			getColorHash().put(selectedPart.getAtomAt(i), getHighlightColor());
+		}
+		for (int i = 0; i < selectedPart.getBondCount(); i++)
+		{
+			getColorHash().put(selectedPart.getAtomAt(i), getHighlightColor());
+		}		
+	}
+
+
 
 	/**
 	 * Adds a change listener to the list of listeners

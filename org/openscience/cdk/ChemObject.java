@@ -10,7 +10,7 @@
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * All I ask is that proper credit is given for my work, which includes
+ * All we ask is that proper credit is given for our work, which includes
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
@@ -42,8 +42,11 @@ public class ChemObject implements CDKConstants, Cloneable
 	/** Vector for listener administration */
 	protected Vector chemObjects = new Vector();
 	protected int size;
+	/** A hashtable for the storage of physical properties 
+	  * of this ChemObject. 
+	  */
 	protected Hashtable physicalProperties = new Hashtable();
-	/* You will frequently have to use some flags on a ChemObject
+	/** You will frequently have to use some flags on a ChemObject
 	 * for example if you want to draw a molecule and see
 	 * if you've already drawn an atom, or in a ring search to 
 	 * check whether a vertex has been visited in a graph traversal.
@@ -51,8 +54,8 @@ public class ChemObject implements CDKConstants, Cloneable
 	 * flag array with self-defined constants (flags[VISITED] = true).
 	 * 10 flags per object should be more than enough.
 	 */
-	 
 	public boolean[] flags = new boolean[100];
+
 	/** Array of multipurpose vectors. Handle like described for the
 	  * flags above 
 	  */

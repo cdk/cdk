@@ -10,7 +10,7 @@
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * All I ask is that proper credit is given for my work, which includes
+ * All we ask is that proper credit is given for our work, which includes
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
@@ -31,19 +31,34 @@ import java.util.Vector;
 
 
 
-/** Implementation of a Queue (FIFO stack)  */
-public class Queue extends Vector{
-	/** Constructs an empty Queue */
+/**
+ *  Implementation of a Queue (FIFO stack)  
+ **/
+public class Queue extends Vector
+{
+
+	/**
+	 * Constructs an empty Queue
+	 *
+	 */
 	public Queue(){
 		super();		
 	}	
 	
-	/** Places an Object into the queue */
+	/**
+	 *  Places an Object into the queue
+	 *
+	 * @param   o  The object to be pushed into the queue
+	 */
 	public void push(Object o){
 		addElement(o);
 	}
 	
-	/** Returns an Object from the queue */
+	/**
+	 * Returns an Object from the queue
+	 *
+	 * @return The object that had been pushed first into the queue     
+	 */
 	public Object pop(){
 		Object o = elementAt(0);
 		removeElementAt(0);	
