@@ -16,6 +16,7 @@ org/openscience/cdk/geometry/GeometryTools.java
 org/openscience/cdk/io/CMLReader.java
 org/openscience/cdk/io/CMLWriter.java
 org/openscience/cdk/io/ChemObjectReader.java
+org/openscience/cdk/io/Gaussian98Reader.java
 org/openscience/cdk/io/DefaultChemObjectReader.java
 org/openscience/cdk/io/ReaderFactory.java
 org/openscience/cdk/io/HINReader.java
@@ -46,6 +47,7 @@ org/openscience/cdk/tools/AtomTypeFactory.java
 org/openscience/cdk/tools/ChemModelManipulator.java
 org/openscience/cdk/tools/ChemFileManipulator.java
 org/openscience/cdk/tools/SetOfMoleculesManipulator.java
+org/openscience/cdk/tools/SetOfAtomContainersManipulator.java
 org/openscience/cdk/tools/IsotopeFactory.java
 org/openscience/cdk/tools/LoggingTool.java
 org/openscience/cdk/tools/TXTBasedAtomTypeConfigurator.java
