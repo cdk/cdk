@@ -64,41 +64,34 @@ public class JumboTest extends TestCase {
 
     /**
      * Special CML characteristics:
-     * - <atomArray></atom></atom></atomArray>
+     * - <atomArray><atom/><atom/></atomArray>
      * - X2D only
      */
     public void testCuran() {
         String filename = "data/cmltest/curan.xml";
         logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
-            File f = new File(filename);
-            if (f.canRead()) {
-                // read the file
-                CMLReader reader = new CMLReader(new FileReader(f));
-                ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+            CMLReader reader = new CMLReader(new InputStreamReader(ins));
+            ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
 
-                // test the resulting ChemFile content
-                assertNotNull(chemFile);
-                assertEquals(chemFile.getChemSequenceCount(), 1);
-                ChemSequence seq = chemFile.getChemSequence(0);
-                assertNotNull(seq);
-                assertEquals(seq.getChemModelCount(), 1);
-                ChemModel model = seq.getChemModel(0);
-                assertNotNull(model);
-                assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
+            // test the resulting ChemFile content
+            assertNotNull(chemFile);
+            assertEquals(chemFile.getChemSequenceCount(), 1);
+            ChemSequence seq = chemFile.getChemSequence(0);
+            assertNotNull(seq);
+            assertEquals(seq.getChemModelCount(), 1);
+            ChemModel model = seq.getChemModel(0);
+            assertNotNull(model);
+            assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
 
-                // test the molecule
-                Molecule mol = model.getSetOfMolecules().getMolecule(0);
-                assertNotNull(mol);
-                assertEquals(mol.getAtomCount(), 24);
-                assertEquals(mol.getBondCount(), 28);
-                assertTrue(!GeometryTools.has3DCoordinates(mol));
-                assertTrue(GeometryTools.has2DCoordinates(mol));
-            } else {
-                logger.error("The CMLReader was not tested with a CML file.");
-                logger.error("Due to missing file: " + filename);
-                fail("Missing file: " + filename);
-            }
+            // test the molecule
+            Molecule mol = model.getSetOfMolecules().getMolecule(0);
+            assertNotNull(mol);
+            assertEquals(mol.getAtomCount(), 24);
+            assertEquals(mol.getBondCount(), 28);
+            assertTrue(!GeometryTools.has3DCoordinates(mol));
+            assertTrue(GeometryTools.has2DCoordinates(mol));
         } catch (Exception e) {
             fail(e.toString());
         }
@@ -112,35 +105,28 @@ public class JumboTest extends TestCase {
     public void testCephNS() {
         String filename = "data/cmltest/ceph-ns.xml";
         logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
-            File f = new File(filename);
-            if (f.canRead()) {
-                // read the file
-                CMLReader reader = new CMLReader(new FileReader(f));
-                ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+            CMLReader reader = new CMLReader(new InputStreamReader(ins));
+            ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
 
-                // test the resulting ChemFile content
-                assertNotNull(chemFile);
-                assertEquals(chemFile.getChemSequenceCount(), 1);
-                ChemSequence seq = chemFile.getChemSequence(0);
-                assertNotNull(seq);
-                assertEquals(seq.getChemModelCount(), 1);
-                ChemModel model = seq.getChemModel(0);
-                assertNotNull(model);
-                assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
+            // test the resulting ChemFile content
+            assertNotNull(chemFile);
+            assertEquals(chemFile.getChemSequenceCount(), 1);
+            ChemSequence seq = chemFile.getChemSequence(0);
+            assertNotNull(seq);
+            assertEquals(seq.getChemModelCount(), 1);
+            ChemModel model = seq.getChemModel(0);
+            assertNotNull(model);
+            assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
 
-                // test the molecule
-                Molecule mol = model.getSetOfMolecules().getMolecule(0);
-                assertNotNull(mol);
-                assertEquals(mol.getAtomCount(), 15);
-                assertEquals(mol.getBondCount(), 16);
-                assertTrue(!GeometryTools.has3DCoordinates(mol));
-                assertTrue(GeometryTools.has2DCoordinates(mol));
-            } else {
-                logger.error("The CMLReader was not tested with a CML file.");
-                logger.error("Due to missing file: " + filename);
-                fail("Missing file: " + filename);
-            }
+            // test the molecule
+            Molecule mol = model.getSetOfMolecules().getMolecule(0);
+            assertNotNull(mol);
+            assertEquals(mol.getAtomCount(), 15);
+            assertEquals(mol.getBondCount(), 16);
+            assertTrue(!GeometryTools.has3DCoordinates(mol));
+            assertTrue(GeometryTools.has2DCoordinates(mol));
         } catch (Exception e) {
             fail(e.toString());
         }
@@ -155,35 +141,28 @@ public class JumboTest extends TestCase {
     public void testNucleustest() {
         String filename = "data/cmltest/nucleustest.xml";
         logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
-            File f = new File(filename);
-            if (f.canRead()) {
-                // read the file
-                CMLReader reader = new CMLReader(new FileReader(f));
-                ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+            CMLReader reader = new CMLReader(new InputStreamReader(ins));
+            ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
 
-                // test the resulting ChemFile content
-                assertNotNull(chemFile);
-                assertEquals(chemFile.getChemSequenceCount(), 1);
-                ChemSequence seq = chemFile.getChemSequence(0);
-                assertNotNull(seq);
-                assertEquals(seq.getChemModelCount(), 1);
-                ChemModel model = seq.getChemModel(0);
-                assertNotNull(model);
-                assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
+            // test the resulting ChemFile content
+            assertNotNull(chemFile);
+            assertEquals(chemFile.getChemSequenceCount(), 1);
+            ChemSequence seq = chemFile.getChemSequence(0);
+            assertNotNull(seq);
+            assertEquals(seq.getChemModelCount(), 1);
+            ChemModel model = seq.getChemModel(0);
+            assertNotNull(model);
+            assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
 
-                // test the molecule
-                Molecule mol = model.getSetOfMolecules().getMolecule(0);
-                assertNotNull(mol);
-                assertEquals(mol.getAtomCount(), 11);
-                assertEquals(mol.getBondCount(), 12);
-                assertTrue(!GeometryTools.has3DCoordinates(mol));
-                assertTrue(!GeometryTools.has2DCoordinates(mol));
-            } else {
-                logger.error("The CMLReader was not tested with a CML file.");
-                logger.error("Due to missing file: " + filename);
-                fail("Missing file: " + filename);
-            }
+            // test the molecule
+            Molecule mol = model.getSetOfMolecules().getMolecule(0);
+            assertNotNull(mol);
+            assertEquals(mol.getAtomCount(), 11);
+            assertEquals(mol.getBondCount(), 12);
+            assertTrue(!GeometryTools.has3DCoordinates(mol));
+            assertTrue(!GeometryTools.has2DCoordinates(mol));
         } catch (Exception e) {
             fail(e.toString());
         }

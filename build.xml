@@ -27,7 +27,6 @@
 
         <target name="init">
                 <tstamp />
-		<mkdir dir="${doc}/api" />
                 <mkdir dir="${build}" />
                 <mkdir dir="${sourcedist}" />
                 <mkdir dir="${dist}" />
@@ -224,6 +223,8 @@
                         <exclude name="org/openscience/cdk/test/libio/**" />
                         <!-- Exclude application classes -->
                         <exclude name="org/openscience/cdk/applications/**" />
+                        <!-- Exclude test classes -->
+                        <exclude name="org/openscience/cdk/test/**" />
                    </fileset>
                 </jar>
         </target>
@@ -232,6 +233,17 @@
                 <jar jarfile="${dist}/jar/cdk-apps.jar">
                     <fileset dir="${build}">
                         <include name="org/openscience/cdk/applications/**" />
+                    </fileset>
+                </jar>
+        </target>
+
+        <target name="dist-test" depends="compile">
+                <jar jarfile="${dist}/jar/cdk-test.jar">
+                    <fileset dir="${build}">
+                        <include name="org/openscience/cdk/test/**" />
+                    </fileset>
+                    <fileset dir=".">
+                        <include name="data/**" />
                     </fileset>
                 </jar>
         </target>
@@ -257,7 +269,8 @@
                 </jar>
         </target>
 
-        <target name="dist-all" depends="dist-core, dist-extra, dist-with-java3d, dist-libio, dist-cml, dist-apps" />
+        <target name="dist-all" depends="dist-core, dist-extra, dist-with-java3d, dist-libio, 
+                                         dist-cml, dist-apps, dist-test" />
 
         <target name="dist" depends="dist-extra" />
 
@@ -289,6 +302,8 @@
                         <exclude name="org/openscience/cdk/test/libio/**" />
                         <!-- Exclude application classes -->
                         <exclude name="org/openscience/cdk/applications/**" />
+                        <!-- Exclude test classes -->
+                        <exclude name="org/openscience/cdk/test/**" />
                     </fileset>
                 </jar>
         </target>

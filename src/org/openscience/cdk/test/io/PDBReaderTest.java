@@ -58,104 +58,101 @@ public class PDBReaderTest extends TestCase {
    * A directory to isolate testing files.
    */
   File testDirectory;
-  
+
   public void setUp() {
     testDirectory = new File("PDBReaderTest.directory");
     FileUtilities.deleteAll(testDirectory);
     assertTrue("Error creating test directory \"" + testDirectory + "\"",
       testDirectory.mkdir());
   }
-  
+
   public void tearDown() {
     testDirectory = null;
   }
-  
+
 	public void testPDBFileCoffein() {
+        String filename = "data/coffeine.pdb";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 		try {
-			if (new File("data/coffeine.pdb").canRead()) {
-				ChemObjectReader oReader = new PDBReader(new FileInputStream("data/coffeine.pdb"));
-				assertNotNull(oReader);
-				
-				ChemFile oChemFile = (ChemFile)oReader.read(new ChemFile());
-				assertNotNull(oChemFile);
-				assertEquals(oChemFile.getChemSequenceCount(), 1);
+            ChemObjectReader oReader = new PDBReader(new InputStreamReader(ins));
+            assertNotNull(oReader);
 
-				oChemFile.setProperty(new String("test.chemfile"), new String("test.chemfile")); 
-				assertEquals(new String("test.chemfile"), oChemFile.getProperty("test.chemfile"));
+            ChemFile oChemFile = (ChemFile)oReader.read(new ChemFile());
+            assertNotNull(oChemFile);
+            assertEquals(oChemFile.getChemSequenceCount(), 1);
 
-				ChemSequence oSeq = oChemFile.getChemSequence(0);
-				assertNotNull(oSeq);			
-				assertEquals(oSeq.getChemModelCount(), 1);
+            oChemFile.setProperty(new String("test.chemfile"), new String("test.chemfile")); 
+            assertEquals(new String("test.chemfile"), oChemFile.getProperty("test.chemfile"));
 
-				oSeq.setProperty(new String("test.chemsequence"), new String("test.chemsequence")); 
-				assertEquals(new String("test.chemsequence"), oSeq.getProperty("test.chemsequence"));
-				
-				ChemModel oModel = oSeq.getChemModel(0);
-				assertNotNull(oModel);
-				assertEquals(oModel.getSetOfMolecules().getMoleculeCount(), 1);
+            ChemSequence oSeq = oChemFile.getChemSequence(0);
+            assertNotNull(oSeq);			
+            assertEquals(oSeq.getChemModelCount(), 1);
 
-				oModel.setProperty(new String("test.chemmodel"), new String("test.chemmodel")); 
-				assertEquals(new String("test.chemmodel"), oModel.getProperty("test.chemmodel"));
-				
-				BioPolymer oMol = (BioPolymer)oModel.getSetOfMolecules().getMolecule(0);
-				assertNotNull(oMol);
-				assertEquals(oMol.getAtomCount(), 14);
-				assertNotNull(oMol.getMonomer("MOL1"));
+            oSeq.setProperty(new String("test.chemsequence"), new String("test.chemsequence")); 
+            assertEquals(new String("test.chemsequence"), oSeq.getProperty("test.chemsequence"));
 
-				oMol.setProperty(new String("test.molecule"), new String("test.molecule")); 
-				assertEquals(new String("test.molecule"), oMol.getProperty("test.molecule"));
+            ChemModel oModel = oSeq.getChemModel(0);
+            assertNotNull(oModel);
+            assertEquals(oModel.getSetOfMolecules().getMoleculeCount(), 1);
 
-				Atom oAtom = oMol.getFirstAtom();
-				assertNotNull(oAtom);
-				assertEquals(new String("C"), oAtom.getSymbol());
-				assertEquals(new Integer(1), oAtom.getProperty("pdb.serial"));
-				assertEquals(new String("C1"), oAtom.getProperty("pdb.name"));
-				assertEquals(new String(""), oAtom.getProperty("pdb.altLoc"));
-				assertEquals(new String("MOL"), oAtom.getProperty("pdb.resName"));
-				assertEquals(new String(""), oAtom.getProperty("pdb.chainID"));
-				assertEquals(new String("1"), oAtom.getProperty("pdb.resSeq"));
-				assertEquals(new String(""), oAtom.getProperty("pdb.iCode"));
-				assertEquals(1.0, ((Double)oAtom.getProperty("pdb.occupancy")).doubleValue(), 0);
-				assertEquals(0.0, ((Double)oAtom.getProperty("pdb.tempFactor")).doubleValue(), 0);
-				assertEquals(new String(""), oAtom.getProperty("pdb.segID"));
-				assertEquals(new String(""), oAtom.getProperty("pdb.element"));
-				assertEquals(new String(""), oAtom.getProperty("pdb.charge"));
+            oModel.setProperty(new String("test.chemmodel"), new String("test.chemmodel")); 
+            assertEquals(new String("test.chemmodel"), oModel.getProperty("test.chemmodel"));
 
-				oAtom = oMol.getAtoms()[3];
-				assertNotNull(oAtom);
-				assertEquals(new String("O"), oAtom.getSymbol());
-				assertEquals(new Integer(4), oAtom.getProperty("pdb.serial"));
-				assertEquals(new String("O4"), oAtom.getProperty("pdb.name"));
-				assertEquals(new String(""), oAtom.getProperty("pdb.altLoc"));
-				assertEquals(new String("MOL"), oAtom.getProperty("pdb.resName"));
-				assertEquals(new String(""), oAtom.getProperty("pdb.chainID"));
-				assertEquals(new String("1"), oAtom.getProperty("pdb.resSeq"));
-				assertEquals(new String(""), oAtom.getProperty("pdb.iCode"));
-				assertEquals(1.0, ((Double)oAtom.getProperty("pdb.occupancy")).doubleValue(), 0);
-				assertEquals(0.0, ((Double)oAtom.getProperty("pdb.tempFactor")).doubleValue(), 0);
-				assertEquals(new String(""), oAtom.getProperty("pdb.segID"));
-				assertEquals(new String(""), oAtom.getProperty("pdb.element"));
-				assertEquals(new String(""), oAtom.getProperty("pdb.charge"));
+            BioPolymer oMol = (BioPolymer)oModel.getSetOfMolecules().getMolecule(0);
+            assertNotNull(oMol);
+            assertEquals(oMol.getAtomCount(), 14);
+            assertNotNull(oMol.getMonomer("MOL1"));
 
-				oAtom = oMol.getLastAtom();
-				assertNotNull(oAtom);
-				assertEquals(new String("N"), oAtom.getSymbol());
-				assertEquals(new Integer(14), oAtom.getProperty("pdb.serial"));
-				assertEquals(new String("N14"), oAtom.getProperty("pdb.name"));
-				assertEquals(new String(""), oAtom.getProperty("pdb.altLoc"));
-				assertEquals(new String("MOL"), oAtom.getProperty("pdb.resName"));
-				assertEquals(new String(""), oAtom.getProperty("pdb.chainID"));
-				assertEquals(new String("1"), oAtom.getProperty("pdb.resSeq"));
-				assertEquals(new String(""), oAtom.getProperty("pdb.iCode"));
-				assertEquals(1.0, ((Double)oAtom.getProperty("pdb.occupancy")).doubleValue(), 0);
-				assertEquals(0.0, ((Double)oAtom.getProperty("pdb.tempFactor")).doubleValue(), 0);
-				assertEquals(new String(""), oAtom.getProperty("pdb.segID"));
-				assertEquals(new String(""), oAtom.getProperty("pdb.element"));
-				assertEquals(new String(""), oAtom.getProperty("pdb.charge"));
-			} else {
-				System.out.println("The PDBReader was not tested with a PDB file.");
-				System.out.println("Due to missing file: coffeine.pdb");
-			}
+            oMol.setProperty(new String("test.molecule"), new String("test.molecule")); 
+            assertEquals(new String("test.molecule"), oMol.getProperty("test.molecule"));
+
+            Atom oAtom = oMol.getFirstAtom();
+            assertNotNull(oAtom);
+            assertEquals(new String("C"), oAtom.getSymbol());
+            assertEquals(new Integer(1), oAtom.getProperty("pdb.serial"));
+            assertEquals(new String("C1"), oAtom.getProperty("pdb.name"));
+            assertEquals(new String(""), oAtom.getProperty("pdb.altLoc"));
+            assertEquals(new String("MOL"), oAtom.getProperty("pdb.resName"));
+            assertEquals(new String(""), oAtom.getProperty("pdb.chainID"));
+            assertEquals(new String("1"), oAtom.getProperty("pdb.resSeq"));
+            assertEquals(new String(""), oAtom.getProperty("pdb.iCode"));
+            assertEquals(1.0, ((Double)oAtom.getProperty("pdb.occupancy")).doubleValue(), 0);
+            assertEquals(0.0, ((Double)oAtom.getProperty("pdb.tempFactor")).doubleValue(), 0);
+            assertEquals(new String(""), oAtom.getProperty("pdb.segID"));
+            assertEquals(new String(""), oAtom.getProperty("pdb.element"));
+            assertEquals(new String(""), oAtom.getProperty("pdb.charge"));
+
+            oAtom = oMol.getAtoms()[3];
+            assertNotNull(oAtom);
+            assertEquals(new String("O"), oAtom.getSymbol());
+            assertEquals(new Integer(4), oAtom.getProperty("pdb.serial"));
+            assertEquals(new String("O4"), oAtom.getProperty("pdb.name"));
+            assertEquals(new String(""), oAtom.getProperty("pdb.altLoc"));
+            assertEquals(new String("MOL"), oAtom.getProperty("pdb.resName"));
+            assertEquals(new String(""), oAtom.getProperty("pdb.chainID"));
+            assertEquals(new String("1"), oAtom.getProperty("pdb.resSeq"));
+            assertEquals(new String(""), oAtom.getProperty("pdb.iCode"));
+            assertEquals(1.0, ((Double)oAtom.getProperty("pdb.occupancy")).doubleValue(), 0);
+            assertEquals(0.0, ((Double)oAtom.getProperty("pdb.tempFactor")).doubleValue(), 0);
+            assertEquals(new String(""), oAtom.getProperty("pdb.segID"));
+            assertEquals(new String(""), oAtom.getProperty("pdb.element"));
+            assertEquals(new String(""), oAtom.getProperty("pdb.charge"));
+
+            oAtom = oMol.getLastAtom();
+            assertNotNull(oAtom);
+            assertEquals(new String("N"), oAtom.getSymbol());
+            assertEquals(new Integer(14), oAtom.getProperty("pdb.serial"));
+            assertEquals(new String("N14"), oAtom.getProperty("pdb.name"));
+            assertEquals(new String(""), oAtom.getProperty("pdb.altLoc"));
+            assertEquals(new String("MOL"), oAtom.getProperty("pdb.resName"));
+            assertEquals(new String(""), oAtom.getProperty("pdb.chainID"));
+            assertEquals(new String("1"), oAtom.getProperty("pdb.resSeq"));
+            assertEquals(new String(""), oAtom.getProperty("pdb.iCode"));
+            assertEquals(1.0, ((Double)oAtom.getProperty("pdb.occupancy")).doubleValue(), 0);
+            assertEquals(0.0, ((Double)oAtom.getProperty("pdb.tempFactor")).doubleValue(), 0);
+            assertEquals(new String(""), oAtom.getProperty("pdb.segID"));
+            assertEquals(new String(""), oAtom.getProperty("pdb.element"));
+            assertEquals(new String(""), oAtom.getProperty("pdb.charge"));
 		} catch (Exception e) {
 			fail(e.toString());
 		}
@@ -165,22 +162,13 @@ public class PDBReaderTest extends TestCase {
    * Tests reading a protein PDB file.
    */
   public void testProtein() {
-    File testPdbFile = null;
+    String filename = "data/Test-1crn.pdb";
+    InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+
     try {
-      testPdbFile = new File(testDirectory, "1crn.pdb");
-      FileUtilities
-          .copyStreamToFile(getClass()
-              .getResourceAsStream("Test-"
-                  + testPdbFile.getName()), testPdbFile);
-    
-    } catch (IOException ex) {
-      fail(ex.toString());
-    }
-    
-    try {
-      ChemObjectReader reader = new PDBReader(new FileInputStream(testPdbFile));
+      ChemObjectReader reader = new PDBReader(new InputStreamReader(ins));
       assertNotNull(reader);
-      
+
       ChemFile chemFile = (ChemFile) reader.read(new ChemFile());
       assertNotNull(chemFile);
       assertEquals(1, chemFile.getChemSequenceCount());

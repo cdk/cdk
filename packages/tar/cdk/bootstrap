@@ -4,8 +4,10 @@
 cp ../../../CHANGELOG ChangeLog
 cp ../../../build.xml .
 cp ../../../javadoc.xml .
+rsync -vargopt ../../../data .
 rsync -vargopt ../../../src .
+find data -name "CVS" | xargs rm -R
 find src -name "CVS" | xargs rm -R
 find src -name ".cvsignore" | xargs rm
 
-aclocal && automake --verbose --gnu && autoconf
+aclocal && automake --gnu && autoconf

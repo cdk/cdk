@@ -2,6 +2,6 @@
 ## $Id$
 
 bin_SCRIPTS = cdk-dbadmin cdk-fileconvert cdk-view \
-              cdk-download
+              cdk-download cdk-test
 
 CLEANFILES=${bin_SCRIPTS}

@@ -6,9 +6,10 @@ config.*
 cdk*.tar.gz
 ChangeLog
 build
-sourcedist
+data
 dist
 reports
+sourcedist
 src
 build.xml
 javadoc.xml
