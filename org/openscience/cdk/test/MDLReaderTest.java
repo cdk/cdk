@@ -47,7 +47,7 @@ public class MDLReaderTest
 		{
 			FileInputStream fis = new FileInputStream(inFile);
 			mr = new MDLReader(fis);
-			chemFile = mr.readChemFile();
+			chemFile = (ChemFile)mr.read((ChemObject)new ChemFile());
 			fis.close();
 			
 			

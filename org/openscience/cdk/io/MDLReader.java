@@ -1,6 +1,9 @@
 /* MDLReader.java
  * 
- * $RCSfile$    $Author$    $Date$    $Revision$
+ * $RCSfile$
+ * $Author$
+ * $Date$
+ * $Revision$
  * 
  * Copyright (C) 1997-2000  The CompChem project
  * 
@@ -70,7 +73,7 @@ public class MDLReader implements CDKConstants, ChemObjectReader {
 	 *
 	 * @return The ChemFile that was read from the MDL file.    
 	 */
-	public ChemFile readChemFile()
+	private ChemFile readChemFile()
 	{
 		ChemFile chemFile = new ChemFile();
 		ChemSequence chemSequence = new ChemSequence();
@@ -113,7 +116,7 @@ public class MDLReader implements CDKConstants, ChemObjectReader {
 	 *
 	 * @return The Molecule that was read from the MDL file.    
 	 */
-	public Molecule readMolecule()
+	private Molecule readMolecule()
 	{
 	    int atoms = 0, bonds = 0, atom1 = 0, atom2 = 0, order = 0, stereo = 0;
 	    double x=0, y=0, z=0;
