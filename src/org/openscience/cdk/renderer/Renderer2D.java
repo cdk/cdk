@@ -137,11 +137,11 @@ public class Renderer2D   {
     }
     
 	/**
-	 *  triggers the methods to make the molecule fit into the frame and to paint
-	 *  it.
+	 * Triggers the methods to make the molecule fit into the frame and to paint
+	 * it.
 	 *
-	 *@param  atomCon  Description of the Parameter
-	 *@param  graphics        Description of the Parameter
+	 * @param  atomCon  Description of the Parameter
+	 * @param  graphics        Description of the Parameter
 	 */
 	public void paintMolecule(AtomContainer atomCon, Graphics graphics) {
 		RingSet ringSet = new RingSet();
@@ -174,9 +174,6 @@ public class Renderer2D   {
 	}
 
 
-	/**
-	 *  Description of the Method
-	 */
 	private void paintLassoLines(Graphics graphics)
 	{
 		Vector points = r2dm.getLassoPoints();
@@ -195,10 +192,10 @@ public class Renderer2D   {
 
 
 	/**
-	 *  Draw all numbers of all atoms in the molecule
+	 * Draw all numbers of all atoms in the molecule.
 	 *
-	 *@param  atoms   The array of atoms
-	 *@param  number  The number of atoms in this array
+	 * @param  atoms   The array of atoms
+	 * @param  number  The number of atoms in this array
 	 */
 	private void paintNumbers(AtomContainer container, int number, Graphics graphics)
 	{
@@ -210,15 +207,10 @@ public class Renderer2D   {
 	}
 
 
-	/*
-	 *  Paints the numbers
+	/**
+	 *  Paints the number of an Atom.
 	 *
 	 *  @param   atom    The atom to be drawn
-	 */
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  atom  Description of the Parameter
 	 */
 	private void paintNumber(AtomContainer container, Atom atom, Graphics graphics)
 	{
@@ -248,20 +240,18 @@ public class Renderer2D   {
 
 
 	/**
-	 *  Searches through all the atoms in the given array of atoms, triggers the
-	 *  paintColouredAtoms method if the atom has got a certain color and triggers
-	 *  the paintAtomSymbol method if the symbol of the atom is not C.
+	 * Searches through all the atoms in the given array of atoms, triggers the
+	 * paintColouredAtoms method if the atom has got a certain color and triggers
+	 * the paintAtomSymbol method if the symbol of the atom is not C.
 	 *
-	 *@param  atomCon  Description of the Parameter
+	 * @param  atomCon  Description of the Parameter
 	 */
-	private void paintAtoms(AtomContainer atomCon, Graphics graphics)
-	{
-		Atom atom;
-		for (int i = 0; i < atomCon.getAtomCount(); i++) {
-			atom = atomCon.getAtomAt(i);
-            paintAtom(atomCon, atom, graphics);
-		}
-	}
+     private void paintAtoms(AtomContainer atomCon, Graphics graphics) {
+         Atom[] atoms = atomCon.getAtoms();
+         for (int i = 0; i < atoms.length; i++) {
+             paintAtom(atomCon, atoms[i], graphics);
+         }
+     }
 
 	private void paintAtom(AtomContainer container, Atom atom, Graphics graphics) {
         Color atomBackColor = r2dm.getAtomBackgroundColor(atom);
@@ -310,12 +300,12 @@ public class Renderer2D   {
 	}
 
     /**
-	 *  Paints the given atom symbol. It first outputs some empty space using the
-	 *  background color, slightly larger than the space that the symbol occupies.
-	 *  The atom symbol is then printed into the empty space.
+	 * Paints the given atom symbol. It first outputs some empty space using the
+	 * background color, slightly larger than the space that the symbol occupies.
+	 * The atom symbol is then printed into the empty space.
 	 *
-	 *@param  atom       The atom to be drawn
-	 *@param  backColor  Description of the Parameter
+	 * @param  atom       The atom to be drawn
+	 * @param  backColor  Description of the Parameter
 	 */
 	private void paintAtomSymbol(Atom atom, Color backColor, Graphics graphics, int alignment) {
 		if (atom.getPoint2D() == null) {
@@ -385,12 +375,12 @@ public class Renderer2D   {
 	}
 
 	/**
-	 *  Paints the given atom symbol. It first outputs some empty space using the
-	 *  background color, slightly larger than the space that the symbol occupies.
-	 *  The atom symbol is then printed into the empty space.
+	 * Paints the given atom symbol. It first outputs some empty space using the
+	 * background color, slightly larger than the space that the symbol occupies.
+	 * The atom symbol is then printed into the empty space.
 	 *
-	 *@param  atom       The atom to be drawn
-	 *@param  backColor  Description of the Parameter
+	 * @param  atom       The atom to be drawn
+	 * @param  backColor  Description of the Parameter
 	 */
 	private void paintAtomCharge(Atom atom, Graphics graphics) {
         FontMetrics fm = graphics.getFontMetrics();
@@ -436,56 +426,49 @@ public class Renderer2D   {
     }
     
     
-	/**
-	 *  Triggers the suitable method to paint each of the given bonds and selects
-	 *  the right color.
-	 *
-	 *@param  ringSet  The set of rings the molecule contains
-	 *@param  atomCon  Description of the Parameter
-	 */
-	private void paintBonds(AtomContainer atomCon, RingSet ringSet, Graphics graphics)
-	{
-		Color bondColor;
-		Ring ring;
-		Bond bond;
-		for (int i = 0; i < atomCon.getElectronContainerCount(); i++){
-            if (atomCon.getElectronContainerAt(i) instanceof Bond) {
-                bond = (Bond)atomCon.getElectronContainerAt(i);
-                bondColor = (Color) r2dm.getColorHash().get(bond);
-                if (bondColor == null)
-                {
-                    bondColor = r2dm.getForeColor();
-                }
-                if (bond == r2dm.getHighlightedBond())
-                {
-                    bondColor = r2dm.getHighlightColor();
-                    for (int j = 0; j < bond.getAtomCount(); j++)
-                    {
-                        paintColouredAtomBackground(bond.getAtomAt(j), bondColor, graphics);
-                    }
-                }
-                ring = ringSet.getHeaviestRing(bond);
-                if (ring != null)
-                {
-                    paintRingBond(bond, ring, bondColor, graphics);
-
-                } else
-                {
-                    paintBond(bond, bondColor, graphics);
+    /**
+     * Triggers the suitable method to paint each of the given bonds and selects
+     * the right color.
+     *
+     * @param  ringSet  The set of rings the molecule contains
+     * @param  atomCon  Description of the Parameter
+     */
+    private void paintBonds(AtomContainer atomCon, RingSet ringSet, Graphics graphics) {
+        Color bondColor;
+        Ring ring;
+        Bond[] bonds = atomCon.getBonds();
+        for (int i = 0; i < bonds.length; i++){
+            Bond currentBond = bonds[i];
+            bondColor = (Color) r2dm.getColorHash().get(currentBond);
+            if (bondColor == null) {
+                bondColor = r2dm.getForeColor();
+            }
+            if (currentBond == r2dm.getHighlightedBond()) {
+                bondColor = r2dm.getHighlightColor();
+                for (int j = 0; j < currentBond.getAtomCount(); j++) {
+                    paintColouredAtomBackground(currentBond.getAtomAt(j),
+                       bondColor, graphics);
                 }
             }
-		}
-	}
+            ring = ringSet.getHeaviestRing(currentBond);
+            if (ring != null) {
+                paintRingBond(currentBond, ring, bondColor, graphics);
+            } else {
+                paintBond(currentBond, bondColor, graphics);
+            }
+        }
+    }
 
 
 	/**
-	 *  Triggers the paint method suitable to the bondorder of the given bond.
+	 * Triggers the paint method suitable to the bondorder of the given bond.
 	 *
-	 *@param  bond       The Bond to be drawn.
-	 *@param  bondColor  Description of the Parameter
+	 * @param  bond       The Bond to be drawn.
+	 * @param  bondColor  Description of the Parameter
 	 */
 	private void paintBond(Bond bond, Color bondColor, Graphics graphics) {
-		if (bond.getAtomAt(0).getPoint2D() == null || bond.getAtomAt(1).getPoint2D() == null) {
+		if (bond.getAtomAt(0).getPoint2D() == null || 
+            bond.getAtomAt(1).getPoint2D() == null) {
 			return;
 		}
 
@@ -512,12 +495,12 @@ public class Renderer2D   {
 
 
 	/**
-	 *  Triggers the paint method suitable to the bondorder of the given bond that
-	 *  is part of a ring.
+	 * Triggers the paint method suitable to the bondorder of the given bond that
+	 * is part of a ring.
 	 *
-	 *@param  bond       The Bond to be drawn.
-	 *@param  ring       Description of the Parameter
-	 *@param  bondColor  Description of the Parameter
+	 * @param  bond       The Bond to be drawn.
+	 * @param  ring       Description of the Parameter
+	 * @param  bondColor  Description of the Parameter
 	 */
 	private void paintRingBond(Bond bond, Ring ring, Color bondColor, Graphics graphics)
 	{
@@ -540,10 +523,10 @@ public class Renderer2D   {
 
 
 	/**
-	 *  Paints the given singlebond.
+	 * Paints the given single bond.
 	 *
-	 *@param  bond       The singlebond to be drawn
-	 *@param  bondColor  Description of the Parameter
+	 * @param  bond       The single bond to be drawn
+	 * @param  bondColor  Description of the Parameter
 	 */
 	private void paintSingleBond(Bond bond, Color bondColor, Graphics graphics) {
         if (GeometryTools.has2DCoordinates(bond)) { 
@@ -552,10 +535,10 @@ public class Renderer2D   {
 	}
 
 	/**
-	 *  Paints The given doublebond.
+	 * Paints The given double bond.
 	 *
-	 *@param  bond       The doublebond to be drawn
-	 *@param  bondColor  Description of the Parameter
+	 * @param  bond       The double bond to be drawn
+	 * @param  bondColor  Description of the Parameter
 	 */
 	private void paintDoubleBond(Bond bond, Color bondColor, Graphics graphics)
 	{
@@ -569,10 +552,10 @@ public class Renderer2D   {
 	}
 
 	/**
-	 *  Paints the given triplebond.
+	 * Paints the given triple bond.
 	 *
-	 *@param  bond       The triplebond to be drawn
-	 *@param  bondColor  Description of the Parameter
+	 * @param  bond       The triple bond to be drawn
+	 * @param  bondColor  Description of the Parameter
 	 */
 	private void paintTripleBond(Bond bond, Color bondColor, Graphics graphics)
 	{
@@ -589,11 +572,11 @@ public class Renderer2D   {
 
 
 	/**
-	 *  Paints the inner bond of a doublebond that is part of a ring.
+	 * Paints the inner bond of a double bond that is part of a ring.
 	 *
-	 *@param  bond       The bond to be drawn
-	 *@param  ring       The ring the bond is part of
-	 *@param  bondColor  Description of the Parameter
+	 * @param  bond       The bond to be drawn
+	 * @param  ring       The ring the bond is part of
+	 * @param  bondColor  Color of the bond
 	 */
 	private void paintInnerBond(Bond bond, Ring ring, Color bondColor, Graphics graphics)
 	{
@@ -615,12 +598,12 @@ public class Renderer2D   {
 
 
 	/**
-	 *  Calculates the coordinates for the inner bond of a doublebond that is part
-	 *  of a ring. It is drawn shorter than a normal bond.
+	 * Calculates the coordinates for the inner bond of a doublebond that is part
+	 * of a ring. It is drawn shorter than a normal bond.
 	 *
-	 *@param  coords  The original coordinates of the bond
-	 *@param  edges   Number of edges of the ring it is part of
-	 *@return         The calculated coordinates of the now shorter bond
+	 * @param  coords  The original coordinates of the bond
+	 * @param  edges   Number of edges of the ring it is part of
+	 * @return         The calculated coordinates of the now shorter bond
 	 */
 	private int[] shortenBond(int[] coords, int edges)
 	{
@@ -632,11 +615,11 @@ public class Renderer2D   {
 
 
 	/**
-	 *  Really paints the bond. It is triggered by all the other paintbond methods
-	 *  to draw a polygon as wide as bondwidth.
+	 * Really paints the bond. It is triggered by all the other paintbond methods
+	 * to draw a polygon as wide as bond width.
 	 *
-	 *@param  coords
-	 *@param  bondColor  Description of the Parameter
+	 * @param  coords
+	 * @param  bondColor  Color of the bond
 	 */
 	private void paintOneBond(int[] coords, Color bondColor, Graphics graphics)
 	{
@@ -650,10 +633,10 @@ public class Renderer2D   {
 	}
 
 	/**
-	 *  Paints the given bond as a wedge bond.
+	 * Paints the given bond as a wedge bond.
 	 *
-	 *@param  bond       The singlebond to be drawn
-	 *@param  bondColor  Description of the Parameter
+	 * @param  bond       The singlebond to be drawn
+	 * @param  bondColor  Color of the bond
 	 */
 	void paintWedgeBond(Bond bond, Color bondColor, Graphics graphics)
 	{
@@ -678,10 +661,10 @@ public class Renderer2D   {
 	}
 
 	/**
-	 *  Paints the given bond as a dashed wedge bond.
+	 * Paints the given bond as a dashed wedge bond.
 	 *
-	 *@param  bond       The singlebond to be drawn
-	 *@param  bondColor  Description of the Parameter
+	 * @param  bond       The single bond to be drawn
+	 * @param  bondColor  Color of the bond
 	 */
 	void paintDashedWedgeBond(Bond bond, Color bondColor, Graphics graphics)
 	{
@@ -722,7 +705,7 @@ public class Renderer2D   {
 	}
 
 	/**
-	 *  Paints a line between the startpoint and endpoint of the pointervector that
+	 *  Paints a line between the start point and end point of the pointer vector that
 	 *  is stored in the Renderer2DModel.
 	 */
 	private void paintPointerVector(Graphics graphics)
@@ -741,9 +724,9 @@ public class Renderer2D   {
 	}
 
 	/**
-	 *  Returns the Renderer2DModel of this Renderer
+	 * Returns the Renderer2DModel of this Renderer.
 	 *
-	 *@return    the Renderer2DModel of this Renderer
+	 * @return    the Renderer2DModel of this Renderer
 	 */
 	public Renderer2DModel getRenderer2DModel()
 	{
@@ -753,9 +736,9 @@ public class Renderer2D   {
 
 
 	/**
-	 *  Sets the Renderer2DModel of this Renderer
+	 * Sets the Renderer2DModel of this Renderer.
 	 *
-	 *@param  r2dm  the new Renderer2DModel for this Renderer
+	 * @param  r2dm  the new Renderer2DModel for this Renderer
 	 */
 	public void setRenderer2DModel(Renderer2DModel r2dm)
 	{
