@@ -29,7 +29,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.invariant.exception.BadMatrixFormatException;
-import org.openscience.cdk.graph.invariant.exception.MatrixIndexOutOfBoundsException;
+import org.openscience.cdk.graph.invariant.exception.IndexOutOfBoundsException;
 
 /**
  * Collection of methods for the calculation of topological indices of a molecular graph.
@@ -49,7 +49,7 @@ public class HuLuIndexTool
    * @cdk.keyword EAID number
    */
 	public static double getEAIDNumber(AtomContainer atomContainer) throws org.openscience.cdk.exception.NoSuchAtomException,
-			BadMatrixFormatException,MatrixIndexOutOfBoundsException
+			BadMatrixFormatException,IndexOutOfBoundsException
 	{
 		boolean debug = false;
 		

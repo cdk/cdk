@@ -25,7 +25,7 @@
 package org.openscience.cdk.graph.invariant;
 
 import org.openscience.cdk.graph.invariant.exception.BadMatrixFormatException;
-import org.openscience.cdk.graph.invariant.exception.MatrixIndexOutOfBoundsException;
+import org.openscience.cdk.graph.invariant.exception.IndexOutOfBoundsException;
 import org.openscience.cdk.graph.invariant.exception.MatrixNotInvertibleException;
 
 /**
@@ -117,7 +117,7 @@ public class GIMatrix {
 	    temp[i] = new double[matrix.width()]; // line by line ...
 	    for (int j = 0; j < matrix.width(); j++) {
 		try { temp[i][j] = matrix.getValueAt(i,j); }
-		catch (MatrixIndexOutOfBoundsException e) {} // never happens
+		catch (IndexOutOfBoundsException e) {} // never happens
 	    }
 	}
 	this.array = temp;
@@ -149,7 +149,7 @@ public class GIMatrix {
 		    GIMatrix tempMatrix = table[k][h];
 		    temp[i][j] = tempMatrix.getValueAt(i - k*tempMatrix.height(),j - h*tempMatrix.width());
 		}
-		catch (MatrixIndexOutOfBoundsException e) {} // never happens
+		catch (IndexOutOfBoundsException e) {} // never happens
 	    }
 	}
 	this.array = temp;
@@ -188,10 +188,10 @@ public class GIMatrix {
      * @param i the line number
      * @param j the column number
      * @return the double at the given index in the Matrix
-     * @exception MatrixIndexOutOfBoundsException if the given index is out of the matrix's range
+     * @exception IndexOutOfBoundsException if the given index is out of the matrix's range
      */
-    public double getValueAt(int i, int j) throws MatrixIndexOutOfBoundsException { 
-	if ( (i < 0)||(i >= m)||(j < 0)||(j >= n) ) throw new MatrixIndexOutOfBoundsException();
+    public double getValueAt(int i, int j) throws IndexOutOfBoundsException { 
+	if ( (i < 0)||(i >= m)||(j < 0)||(j >= n) ) throw new IndexOutOfBoundsException();
 	return array[i][j];
     } // method getValueAt(int,int)
     
@@ -200,10 +200,10 @@ public class GIMatrix {
      * @param i the line number
      * @param j the column number
      * @param element the double to place at the given index in the Matrix
-     * @exception MatrixIndexOutOfBoundsException if the given index is out of the matrix's range
+     * @exception IndexOutOfBoundsException if the given index is out of the matrix's range
      */
-    public void setValueAt(int i, int j, double element) throws MatrixIndexOutOfBoundsException {
-	if ( (i < 0)||(i >= m)||(j < 0)||(j >= n) ) throw new MatrixIndexOutOfBoundsException();
+    public void setValueAt(int i, int j, double element) throws IndexOutOfBoundsException {
+	if ( (i < 0)||(i >= m)||(j < 0)||(j >= n) ) throw new IndexOutOfBoundsException();
 	array[i][j] = element;
     } // method setValueAt(int,int,double)
 
@@ -211,10 +211,10 @@ public class GIMatrix {
      * Returns the line-matrix at the given line index
      * @param i the line number
      * @return the specified line as a Matrix object
-     * @exception MatrixIndexOutOfBoundsException if the given index is out of the matrix's range
+     * @exception IndexOutOfBoundsException if the given index is out of the matrix's range
      */ 
-    public GIMatrix getLine(int i) throws MatrixIndexOutOfBoundsException {
-	if ( (i < 0)||(i >= m) ) throw new MatrixIndexOutOfBoundsException();
+    public GIMatrix getLine(int i) throws IndexOutOfBoundsException {
+	if ( (i < 0)||(i >= m) ) throw new IndexOutOfBoundsException();
 	double[][] line = new double[1][n];
 	for (int k = 0; k < n; k++) line[0][k] = array[i][k];
 	try { return new GIMatrix(line); } // format is always OK anyway ...
@@ -225,10 +225,10 @@ public class GIMatrix {
      * Returns the column-matrix at the given line index
      * @param j the column number
      * @return the specified column as a Matrix object
-     * @exception MatrixIndexOutOfBoundsException if the given index is out of the matrix's range
+     * @exception IndexOutOfBoundsException if the given index is out of the matrix's range
      */ 
-    public GIMatrix getColumn(int j) throws MatrixIndexOutOfBoundsException {
-	if ( (j < 0)||(j >= n) ) throw new MatrixIndexOutOfBoundsException();
+    public GIMatrix getColumn(int j) throws IndexOutOfBoundsException {
+	if ( (j < 0)||(j >= n) ) throw new IndexOutOfBoundsException();
 	double[][] column = new double[m][1];
 	for (int k = 0; k < m; k++) column[k][0] = array[k][j];
 	try { return new GIMatrix(column); } // format is always OK anyway ...
@@ -239,11 +239,11 @@ public class GIMatrix {
      * Sets the line of the matrix at the specified index to a new value.
      * @param i the line number
      * @param line the line to be placed at the specified index
-     * @exception MatrixIndexOutOfBoundsException if the given index is out of the matrix's range
+     * @exception IndexOutOfBoundsException if the given index is out of the matrix's range
      * @exception BadMatrixFormatException in case the given Matrix is unproper to replace a line of this Matrix
      */
-    public void setLine(int i, GIMatrix line) throws MatrixIndexOutOfBoundsException, BadMatrixFormatException {
-	if ( (i < 0)||(i >= m) ) throw new MatrixIndexOutOfBoundsException();
+    public void setLine(int i, GIMatrix line) throws IndexOutOfBoundsException, BadMatrixFormatException {
+	if ( (i < 0)||(i >= m) ) throw new IndexOutOfBoundsException();
 	if ((line.height() != 1) || (line.width() != n)) throw new BadMatrixFormatException();
 	for (int k = 0; k < n; k++) array[i][k] = line.getValueAt(0,k);
     } // method setLine(int,Matrix)
@@ -252,11 +252,11 @@ public class GIMatrix {
      * Sets the column of the matrix at the specified index to a new value.
      * @param j the column number
      * @param column the colums to be placed at the specified index
-     * @exception MatrixIndexOutOfBoundsException if the given index is out of the matrix's range
+     * @exception IndexOutOfBoundsException if the given index is out of the matrix's range
      * @exception BadMatrixFormatException in case the given Matrix is unproper to replace a column of this Matrix
      */
-    public void setColumn(int j, GIMatrix column) throws MatrixIndexOutOfBoundsException, BadMatrixFormatException {
-	if ( (j < 0)||(j >= n) ) throw new MatrixIndexOutOfBoundsException();
+    public void setColumn(int j, GIMatrix column) throws IndexOutOfBoundsException, BadMatrixFormatException {
+	if ( (j < 0)||(j >= n) ) throw new IndexOutOfBoundsException();
 	if ((column.height() != m) || (column.width() != 1)) throw new BadMatrixFormatException();
 	for (int k = 0; k < m; k++) array[k][j] = column.getValueAt(k,0);
     } // method setColumn(int,Matrix)
@@ -425,7 +425,7 @@ public class GIMatrix {
 	for (int i = 0; i < m; i++) // extracts inverse matrix
 	    for (int j = n; j < 2*n; j++) {
 		try { inv[i][j-n] = table.getValueAt(i,j); }
-		catch (MatrixIndexOutOfBoundsException e) { return null; } // never happens
+		catch (IndexOutOfBoundsException e) { return null; } // never happens
 	    }
 	try { return new GIMatrix(inv); }
 	catch (BadMatrixFormatException e) { return null; } // never happens...
@@ -469,7 +469,7 @@ public class GIMatrix {
 	    }
 	    // normally here, r = i-1
 	    return tempMatrix;
-	} catch (MatrixIndexOutOfBoundsException e) { return null; } // never happens... well I hope ;)
+	} catch (IndexOutOfBoundsException e) { return null; } // never happens... well I hope ;)
 	/*
 	  From: LEROUX, P. Algebre lineaire: une approche matricielle.
 	  Modulo Editeur, 1983. p. 75. (In French)
@@ -515,10 +515,10 @@ public class GIMatrix {
      * @param i the line number
      * @param c the double constant that multiplies the line
      * @return the resulting Matrix object of the linear operation
-     * @exception MatrixIndexOutOfBoundsException if the given index is out of the matrix's range
+     * @exception IndexOutOfBoundsException if the given index is out of the matrix's range
      */
-    public GIMatrix multiplyLine(int i, double c) throws MatrixIndexOutOfBoundsException {
-	if ( (i < 0)||(i >= m) ) throw new MatrixIndexOutOfBoundsException();
+    public GIMatrix multiplyLine(int i, double c) throws IndexOutOfBoundsException {
+	if ( (i < 0)||(i >= m) ) throw new IndexOutOfBoundsException();
 	double[][] temp = array;
 	for (int k = 0; k < n; k++) temp[i][k] = c*temp[i][k]; // mutliply every member of the line by c
 	try { return new GIMatrix(temp); } // format is always OK anyway ...
@@ -530,10 +530,10 @@ public class GIMatrix {
      * @param i the first line number
      * @param j the second line number
      * @return the resulting Matrix object of the linear operation
-     * @exception MatrixIndexOutOfBoundsException if the given index is out of the matrix's range
+     * @exception IndexOutOfBoundsException if the given index is out of the matrix's range
      */
-    public GIMatrix invertLine(int i, int j) throws MatrixIndexOutOfBoundsException {
-	if ( (i < 0)||(i >= m)||(j < 0)||(j >= m) ) throw new MatrixIndexOutOfBoundsException();
+    public GIMatrix invertLine(int i, int j) throws IndexOutOfBoundsException {
+	if ( (i < 0)||(i >= m)||(j < 0)||(j >= m) ) throw new IndexOutOfBoundsException();
 	double[][] temp = array;
         double[] tempLine = temp[j]; // temporary line
 	temp[j] = temp[i];
@@ -549,10 +549,10 @@ public class GIMatrix {
      * @param j the second line number (to be added to the first)
      * @param c the double constant that multiplies the first line
      * @return the resulting Matrix object of the linear operation
-     * @exception MatrixIndexOutOfBoundsException if the given index is out of the matrix's range
+     * @exception IndexOutOfBoundsException if the given index is out of the matrix's range
      */
-    public GIMatrix addLine(int i, int j, double c) throws MatrixIndexOutOfBoundsException{
-	if ( (i < 0)||(i >= m)||(j < 0)||(j >= m) ) throw new MatrixIndexOutOfBoundsException();
+    public GIMatrix addLine(int i, int j, double c) throws IndexOutOfBoundsException{
+	if ( (i < 0)||(i >= m)||(j < 0)||(j >= m) ) throw new IndexOutOfBoundsException();
         double[][] temp = array;
 	for (int k = 0; k < n; k++)
 	    temp[i][k] = temp[i][k]+c*temp[j][k]; // add multiplied element of i to element of j
@@ -726,7 +726,7 @@ public class GIMatrix {
 				{
 				System.out.print(getValueAt(i,j)+"\t");
 				}
-				catch (MatrixIndexOutOfBoundsException e)
+				catch (IndexOutOfBoundsException e)
 				{
 				};
 			} // end of inner for

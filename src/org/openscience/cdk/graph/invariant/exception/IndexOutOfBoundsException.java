@@ -25,6 +25,6 @@
 package org.openscience.cdk.graph.invariant.exception;
 
 
-public class MatrixIndexOutOfBoundsException extends Exception {
+public class IndexOutOfBoundsException extends Exception {
 
 }
