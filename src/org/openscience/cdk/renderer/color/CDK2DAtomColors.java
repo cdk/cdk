@@ -36,8 +36,8 @@ public class CDK2DAtomColors implements AtomColorer, java.io.Serializable {
     private final Color CARBON         = Color.black;
     private final Color NITROGEN       = Color.blue;
     private final Color OXYGEN         = Color.red;
-    private final Color PHOSPHORUS     = Color.green;
-    private final Color SULPHUR        = Color.yellow;
+    private final Color PHOSPHORUS     = Color.green.darker();
+    private final Color SULPHUR        = Color.yellow.darker();
 
     private final Color DEFAULT        = Color.black;
     
