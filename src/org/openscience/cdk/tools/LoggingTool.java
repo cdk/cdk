@@ -80,8 +80,8 @@ import java.util.Properties;
  * <code>isDebugEnabled()</code> method:
  * <pre>
  * if (logger.isDebugEnabled()) {
- *   logger.info("The 1056389822th prime that is used is: ",
- *               calculatePrime(1056389822));
+ *   logger.info("The 1056389822th prime that is used is: ",
+ *     calculatePrime(1056389822));
  * }
  * </pre>
  *
@@ -475,8 +475,8 @@ public class LoggingTool {
      * For example:
      * <pre>
      * if (logger.isDebugEnabled()) {
-     *   logger.info("The 1056389822th prime that is used is: ",
-     *               calculatePrime(1056389822));
+     * ? logger.info("The 1056389822th prime that is used is: ",
+     *  ? ? ? ? ? ? ?calculatePrime(1056389822));
      * }
      * </pre>
      */
