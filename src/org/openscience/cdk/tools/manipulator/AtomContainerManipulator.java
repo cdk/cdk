@@ -218,6 +218,19 @@ public class AtomContainerManipulator {
 
         return (mol);
     }
+    
+    /**
+     * Sets a property on all <code>Atom</code>s in the given container.
+     */
+    public static void setAtomProperties(AtomContainer container, Object propKey, Object propVal) {
+        if (container != null) {
+            Atom[] atoms = container.getAtoms();
+            for (int i=0; i<atoms.length; i++) {
+                Atom atom = atoms[i];
+                atom.setProperty(propKey, propVal);
+            }
+        }
+    }
 
 }
 

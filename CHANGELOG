@@ -16,6 +16,7 @@ New:
   of CDK classes, e.g. Descriptor's or ChemFormat's
 * Added a IteratingSMILESParser
 * Added getNaturalMass to MFAnalyser, giving mass as average of isotopes
+* Added AtomContainerManipulator.addAtomProperties()
 
 Fixes:
 * Fixed format detection for Jaguar, Gamess and the HIN format: they were
