@@ -103,8 +103,8 @@ public class LonePair extends ElectronContainer implements java.io.Serializable,
     }
 
 	/**
-	 * Clones this bond object, including clones of the atoms between which the
-     * bond is defined.
+	 * Clones this LonePair object, including a clone of the atom for which the
+     * lone pair is defined.
 	 *
 	 * @return    The cloned object
 	 */
@@ -123,10 +123,10 @@ public class LonePair extends ElectronContainer implements java.io.Serializable,
 	}
 
     /**
-     * Returns a one line string representation of this Container.
+     * Returns a one line string representation of this LonePair.
      * This method is conform RFC #9.
      *
-     * @return    The string representation of this Container
+     * @return    The string representation of this LonePair
      */
     public String toString() {
         StringBuffer resultString = new StringBuffer();
