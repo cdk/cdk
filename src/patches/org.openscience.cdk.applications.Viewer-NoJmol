@@ -1,13 +1,5 @@
 --- src/org/openscience/cdk/applications/Viewer.java	Sun Mar  2 13:37:26 2003
 +++ src/org/openscience/cdk/applications/Viewer.java.nonJmol	Sun Mar  2 13:49:20 2003
-@@ -30,7 +30,6 @@
- import org.openscience.cdk.geometry.*;
- import org.openscience.cdk.smiles.*;
- import org.openscience.cdk.layout.*;
--import org.openscience.cdk.libio.jmol.*;
- import java.util.*;
- import java.io.*;
- import javax.swing.*;
 @@ -52,7 +51,6 @@
  
  	private boolean useJava3D;
@@ -44,10 +36,10 @@
 -					try
 -					{
 -						frame.getContentPane().setLayout(new BorderLayout());
--                        Object jmol = this.getClass().getClassLoader().
+-                        org.openscience.jmol.app.Jmol jmol = org.openscience.jmol.app.Jmol.getJmol(frame);
+-                        /* Object jmol = this.getClass().getClassLoader().
 -                            loadClass("org.openscience.jmol.app.Jmol").getInstance();
--                        // org.openscience.jmol.app.Jmol jmol = org.openscience.jmol.app.Jmol.getJmol(frame);
--                        jmol.showChemFrame(Convertor.convert(m));
+-                        jmol.showChemFrame(Convertor.convert(m)); */
 -
 -						frame.getContentPane().add(jmol, BorderLayout.CENTER);
 -						logger.debug(".. done");
