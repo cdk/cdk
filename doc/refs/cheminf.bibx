@@ -58,6 +58,29 @@
       <bibtex:pages>271-275</bibtex:pages>
     </bibtex:article>
   </bibtex:entry>
+  
+  <bibtex:entry id="BUR89">
+    <bibtex:article>
+      <bibtex:author>Burden, F.R.</bibtex:author>
+      <bibtex:title>Molecular identification number for substructure searches </bibtex:title>
+      <bibtex:journal>J. Chem. Inf. Comput. Sci.</bibtex:journal>
+      <bibtex:year>1989</bibtex:year>
+      <bibtex:volume>29</bibtex:volume>
+      <bibtex:number>3</bibtex:number>
+      <bibtex:pages>225-227</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+  <bibtex:entry id="BUR97">
+    <bibtex:article>
+      <bibtex:author>Burden, F.R.</bibtex:author>
+      <bibtex:title></bibtex:title>
+      <bibtex:journal>Quant. Struct .-Act. Relat.</bibtex:journal>
+      <bibtex:year>1997</bibtex:year>
+      <bibtex:volume>16</bibtex:volume>
+      <bibtex:pages>309-314</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+
 
   <bibtex:entry id="DAL92">
     <bibtex:article>
@@ -285,6 +308,18 @@
           is a web site completely dedicated to the open-source idea.</bibtex:note>
       <bibtex:url>http://www.csaszar.org/interesting/The_Open_Source_Reader.pdf</bibtex:url>
     </bibtex:misc>
+  </bibtex:entry>
+  
+  <bibtex:entry id="PEA99">
+    <bibtex:article>
+      <bibtex:author>Pearlman, R.S. and Smith, K.M.</bibtex:author>
+      <bibtex:title> Metric Validation and the Receptor-Relevant Subspace Concept</bibtex:title>
+      <bibtex:journal>J. Chem. Inf. Comput. Sci.</bibtex:journal>
+      <bibtex:year>1999</bibtex:year>
+      <bibtex:volume>39</bibtex:volume>
+      <bibtex:number>1</bibtex:number>
+      <bibtex:pages>28-35</bibtex:pages>
+    </bibtex:article>
   </bibtex:entry>
 
   <bibtex:entry id="PMR99">
