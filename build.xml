@@ -4,7 +4,7 @@
         <property name="build" value="build" />
         <property name="sourcedist" value="sourcedist" />
         <property name="dist" value="dist" />
-	<property name="doc" value="doc" />
+        <property name="doc" value="doc" />
         <property name="src.tests"
                           value="org/openscience/cdk/test" />
 
@@ -64,7 +64,7 @@
                         <exclude name="org/openscience/cdk/renderer/Molecule*.*"/>
                         <exclude name="org/openscience/cdk/renderer/GraphRend*.*"/>
                         <exclude name="org/openscience/cdk/renderer/AtomicTable*.*"/>
-                        <exclude name="org/openscience/cdk/io/CMLReader*.*"/>			
+                        <exclude name="org/openscience/cdk/io/CMLReader*.*"/>
 
                         <exclude
                         name="org/openscience/cdk/applications/Viewer.java" />
@@ -136,7 +136,7 @@
                 </javac>
         </target>
 
-        <target name="dist" depends="compile">
+        <target name="dist.init">
                 <mkdir dir="${dist}/jar" />
 
                 <mkdir
@@ -161,10 +161,62 @@
                 <copy
                 file="org/openscience/cdk/io/cml/data/cml1_0_1.dtd"
                 tofile="${build}/org/openscience/cdk/io/cml/data/cml1_0_1.dtd" />
+        </target>
 
-                <jar jarfile="${dist}/jar/cdk.jar"
-                basedir="${build}" />
+        <target name="dist-core" depends="compile, dist.init">
+                <jar jarfile="${dist}/jar/cdk-core.jar">
+                    <fileset dir="${build}">
+                        <!-- As proposed in CDK-RFC 2 -->
+                        <include name="org/openscience/cdk/AtomContainer.class" />
+                        <include name="org/openscience/cdk/AtomEnumeration.class" />
+                        <include name="org/openscience/cdk/Atom.class" />
+                        <include name="org/openscience/cdk/AtomType.class" />
+                        <include name="org/openscience/cdk/BioPolymer.class" />
+                        <include name="org/openscience/cdk/Bond.class" />
+                        <include name="org/openscience/cdk/ChemModel.class" />
+                        <include name="org/openscience/cdk/ChemObject.class" />
+                        <include name="org/openscience/cdk/ChemSequence.class" />
+                        <include name="org/openscience/cdk/ElectronContainer.class" />
+                        <include name="org/openscience/cdk/Element.class" />
+                        <include name="org/openscience/cdk/Isotope.class" />
+                        <include name="org/openscience/cdk/Molecule.class" />
+                        <include name="org/openscience/cdk/Monomer.class" />
+                        <include name="org/openscience/cdk/Polymer.class" />
+                        <include name="org/openscience/cdk/Ring.class" />
+                        <include name="org/openscience/cdk/RingSet.class" />
+                        <include name="org/openscience/cdk/SetOfMolecules.class" />
+                   </fileset>
+                </jar>
+        </target>
 
+        <target name="dist-extra" depends="dist-core">
+                <jar jarfile="${dist}/jar/cdk-extra.jar">
+                    <fileset dir="${build}">
+                        <include name="**/cdk/**" />
+                        <!-- Exclude core classes -->
+                        <exclude name="org/openscience/cdk/AtomContainer.class" />
+                        <exclude name="org/openscience/cdk/AtomEnumeration.class" />
+                        <exclude name="org/openscience/cdk/Atom.class" />
+                        <exclude name="org/openscience/cdk/AtomType.class" />
+                        <exclude name="org/openscience/cdk/BioPolymer.class" />
+                        <exclude name="org/openscience/cdk/Bond.class" />
+                        <exclude name="org/openscience/cdk/ChemModel.class" />
+                        <exclude name="org/openscience/cdk/ChemObject.class" />
+                        <exclude name="org/openscience/cdk/ChemSequence.class" />
+                        <exclude name="org/openscience/cdk/ElectronContainer.class" />
+                        <exclude name="org/openscience/cdk/Element.class" />
+                        <exclude name="org/openscience/cdk/Isotope.class" />
+                        <exclude name="org/openscience/cdk/Molecule.class" />
+                        <exclude name="org/openscience/cdk/Monomer.class" />
+                        <exclude name="org/openscience/cdk/Polymer.class" />
+                        <exclude name="org/openscience/cdk/Ring.class" />
+                        <exclude name="org/openscience/cdk/RingSet.class" />
+                        <exclude name="org/openscience/cdk/SetOfMolecules.class" />
+                   </fileset>
+                </jar>
+        </target>
+
+        <target name="dist-cml" depends="dist-core">
                 <jar jarfile="${dist}/jar/cdk-cml.jar">
                     <fileset dir="${build}">
                         <include name="org/openscience/cdk/io/cml/**" />
@@ -175,35 +227,33 @@
                 </jar>
         </target>
 
-        <target name="dist-with-java3d"
-        depends="compile-with-java3d">
-                <mkdir dir="${dist}/jar" />
+        <target name="dist" depends="dist-extra" />
 
-                <mkdir
-                dir="${build}/org/openscience/cdk/config" />
-
-                <copy
-                file="org/openscience/cdk/config/isotopes.xml"
-                tofile="${build}/org/openscience/cdk/config/isotopes.xml" />
-                <copy
-                file="org/openscience/cdk/config/structgen_atomtypes.xml"
-                tofile="${build}/org/openscience/cdk/config/structgen_atomtypes.xml" />
-                <copy
-                file="org/openscience/cdk/config/log4j.properties"
-                tofile="${build}/org/openscience/cdk/config/log4j.properties" />
-
-                <mkdir
-                dir="${build}/org/openscience/cdk/io/cml/data" />
-
-                <copy
-                file="org/openscience/cdk/io/cml/data/cml1_0.dtd"
-                tofile="${build}/org/openscience/cdk/io/cml/data/cml1_0.dtd" />
-                <copy
-                file="org/openscience/cdk/io/cml/data/cml1_0_1.dtd"
-                tofile="${build}/org/openscience/cdk/io/cml/data/cml1_0_1.dtd" />
-
-                <jar jarfile="${dist}/jar/cdk-with-java3d.jar"
-                basedir="${build}" />
+        <target name="dist-with-java3d" depends="compile-with-java3d, dist-core">
+                <jar jarfile="${dist}/jar/cdk-extra-with-java3d.jar">
+                    <fileset dir="${build}">
+                        <include name="**/cdk/**" />
+                        <!-- Exclude core classes -->
+                        <exclude name="org/openscience/cdk/AtomContainer.class" />
+                        <exclude name="org/openscience/cdk/AtomEnumeration.class" />
+                        <exclude name="org/openscience/cdk/Atom.class" />
+                        <exclude name="org/openscience/cdk/AtomType.class" />
+                        <exclude name="org/openscience/cdk/BioPolymer.class" />
+                        <exclude name="org/openscience/cdk/Bond.class" />
+                        <exclude name="org/openscience/cdk/ChemModel.class" />
+                        <exclude name="org/openscience/cdk/ChemObject.class" />
+                        <exclude name="org/openscience/cdk/ChemSequence.class" />
+                        <exclude name="org/openscience/cdk/ElectronContainer.class" />
+                        <exclude name="org/openscience/cdk/Element.class" />
+                        <exclude name="org/openscience/cdk/Isotope.class" />
+                        <exclude name="org/openscience/cdk/Molecule.class" />
+                        <exclude name="org/openscience/cdk/Monomer.class" />
+                        <exclude name="org/openscience/cdk/Polymer.class" />
+                        <exclude name="org/openscience/cdk/Ring.class" />
+                        <exclude name="org/openscience/cdk/RingSet.class" />
+                        <exclude name="org/openscience/cdk/SetOfMolecules.class" />
+                   </fileset>
+                </jar>
         </target>
 
         <target name="sourcedist" depends="init">
