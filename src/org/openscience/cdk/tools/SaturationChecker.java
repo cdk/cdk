@@ -220,9 +220,10 @@ public class SaturationChecker
 			// handle atoms with degree 1 first and then proceed to higher order
 			for (int f = 0; f < atomContainer.getAtomCount(); f++) {
 				Atom atom = atomContainer.getAtomAt(f);
-				if (atomContainer.getBondCount(atom) == i) {
+                AtomType[] atomTypes1 = structgenATF.getAtomTypes(atom.getSymbol());
+				/* if (atomContainer.getBondCount(atom) == i) { */
+                if (i == atomTypes1.length) {
                     logger.debug("symbol: " + atom.getSymbol() + " (=a" + f + ")");
-                    AtomType[] atomTypes1 = structgenATF.getAtomTypes(atom.getSymbol());
                     boolean success = false;
                     for (int atCounter1=0; (atCounter1< atomTypes1.length && !success); atCounter1++) {
                         AtomType aType1 = atomTypes1[atCounter1];
