@@ -53,4 +53,32 @@
     </bibtex:article>
   </bibtex:entry>
 
+  <bibtex:entry id="FAU96">
+    <bibtex:article>
+      <bibtex:author>Faulon, J. L.</bibtex:author>
+      <bibtex:title>Stochastic generator of chemical structure .2. Using simulated
+          annealing to search the space of constitutional isomers</bibtex:title>
+      <bibtex:journal>Journal of Chemical Information and Computer
+          Sciences</bibtex:journal>
+      <bibtex:volume>36</bibtex:volume>
+      <bibtex:number>4</bibtex:number>
+      <bibtex:pages>731-740</bibtex:pages>
+      <bibtex:year>1996</bibtex:year>
+    </bibtex:article>
+  </bibtex:entry>
+
+  <bibtex:entry id="HEL99">
+    <bibtex:article>
+      <bibtex:author>Helson, Harold E.</bibtex:author>
+      <bibtex:title>Structure Diagram Generation</bibtex:title>
+      <bibtex:booktitle>Reviews in Computational Chemistry</bibtex:booktitle>
+      <bibtex:editor>Lipkowitz, K. B. and Boyd, D. B.</bibtex:editor>
+      <bibtex:publisher>Wiley-VCH</bibtex:publisher>
+      <bibtex:address>New York</bibtex:address>
+      <bibtex:volume>13</bibtex:volume>
+      <bibtex:pages>313-398</bibtex:pages>
+      <bibtex:year>1999</bibtex:year>
+    </bibtex:article>
+  </bibtex:entry>
+
 </bibtex:file>
