@@ -3,12 +3,16 @@ CHANGELOG
 
 Changes in CVS
 ------------------------------------
+
+20020419 Release
+------------------------------------
 * uploaded CML 1.0.1 DTD and Schema
 * fixed writing of single molecule to MDL molfile format
   (closes bug #526612)
 * added fingerprinting class for molecules
 * debugging is set off by default
 * added several JUnit tests for CML reading library
+* added SMILES generator
 
 20020206 Release
 ------------------------------------
