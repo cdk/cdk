@@ -21,6 +21,7 @@ package org.openscience.cdk.iupac.parser;
 
 import java.io.*;
 import org.openscience.cdk.*;
+import org.openscience.cdk.exception.*;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.templates.*;
 import java.util.*;
