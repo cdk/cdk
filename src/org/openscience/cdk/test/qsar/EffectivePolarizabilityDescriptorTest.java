@@ -34,15 +34,12 @@ import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.qsar.result.*;
 
-/**
- * TestSuite that runs all QSAR tests.
- *
- * @cdk.module test
- */
-
 import java.util.ArrayList;
 import java.io.*;
 
+/**
+ * @cdk.module test
+ */
 public class EffectivePolarizabilityDescriptorTest extends TestCase {
 	
 	public  EffectivePolarizabilityDescriptorTest() {}

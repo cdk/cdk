@@ -36,6 +36,9 @@ import org.openscience.cdk.tools.HydrogenAdder;
 import java.util.ArrayList;
 import java.io.*;
 
+/**
+ * @cdk.module test
+ */
 public class ProtonTotalPartialChargeDescriptorTest extends TestCase {
 	
 	public  ProtonTotalPartialChargeDescriptorTest() {}
