@@ -24,7 +24,9 @@
  */
 package org.openscience.cdk.io;
 
+import org.openscience.cdk.exception.*;
 import org.openscience.cdk.io.setting.*;
+import java.io.*;
 import java.util.EventListener;
 import java.util.Vector;
 
@@ -47,6 +49,7 @@ public class TextWriterListener implements WriterListener {
     }
     
     public void processWriterSettingQuestion(IOSetting setting){
+        // post the question
         if (setting.getLevel() < this.level) {
             System.out.print(setting.getQuestion());
             if (setting instanceof BooleanIOSetting) {
@@ -68,6 +71,39 @@ public class TextWriterListener implements WriterListener {
                 }
             }
             System.out.println();
+        }
+        
+        // get the answer
+        boolean gotAnswer = false;
+        BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+        while (!gotAnswer) {
+            try {
+                System.out.print("> ");
+                String answer = input.readLine();
+                if (answer.length() == 0) {
+                    // pressed ENTER -> take default
+                } else if (setting instanceof OptionIOSetting) {
+                    ((OptionIOSetting)setting).setSetting(Integer.parseInt(answer));
+                } else if (setting instanceof BooleanIOSetting) {
+                    if (answer.equalsIgnoreCase("n") || answer.equalsIgnoreCase("no")) {
+                        answer = "false";
+                    }
+                    if (answer.equalsIgnoreCase("y") || answer.equalsIgnoreCase("yes")) {
+                        answer = "true";
+                    }
+                    setting.setSetting(answer);
+                } else {
+                    setting.setSetting(answer);
+                }
+                gotAnswer = true;
+            } catch (IOException exception) {
+                System.out.println("Cannot read from STDIN. Skipping question.");
+            } catch (NumberFormatException exception) {
+                System.out.println("Answer is not a number.");
+            } catch (CDKException exception) {
+                System.out.println();
+                System.out.println(exception.toString());
+            }
         }
     };
   
