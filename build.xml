@@ -153,6 +153,8 @@
                         <fileset dir="${lib}">
                             <include name="JSX1.0.6.0.jar" />
                             <include name="vecmath1.2-1.14.jar" />
+                            <include name="log4j-core.jar" />
+                            <include name="log4j.jar" />
                         </fileset>
                         <fileset dir="${dist}/jar">
                             <include name="cdk-core.jar" />
@@ -333,6 +335,11 @@
                         <!-- Exclude classes in cdk-standard module-->
                         <exclude name="org/openscience/cdk/tools/LoggingTool.class" />
                         <exclude name="org/openscience/cdk/tools/IsotopeFactory.class" />
+                        <exclude name="org/openscience/cdk/geometry/GeometryTools.class" />
+                        <exclude name="org/openscience/cdk/geometry/CrystalGeometryTools.class" />
+                        <exclude name="org/openscience/cdk/renderer/color/AtomColorer.class" />
+                        <exclude name="org/openscience/cdk/renderer/color/CDKAtomColors.class" />
+                        <exclude name="org/openscience/cdk/renderer/color/PartialAtomicChargeColors.class" />
                         <exclude name="org/openscience/cdk/config/**" />
                    </fileset>
                 </jar>
@@ -394,6 +401,11 @@
                     <fileset dir="${build}">
                         <include name="org/openscience/cdk/tools/LoggingTool.class" />
                         <include name="org/openscience/cdk/tools/IsotopeFactory.class" />
+                        <include name="org/openscience/cdk/geometry/GeometryTools.class" />
+                        <include name="org/openscience/cdk/geometry/CrystalGeometryTools.class" />
+                        <include name="org/openscience/cdk/renderer/color/AtomColorer.class" />
+                        <include name="org/openscience/cdk/renderer/color/CDKAtomColors.class" />
+                        <include name="org/openscience/cdk/renderer/color/PartialAtomicChargeColors.class" />
                         <include name="org/openscience/cdk/config/**" />
                     </fileset>
                 </jar>

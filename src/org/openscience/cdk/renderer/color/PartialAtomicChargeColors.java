@@ -42,22 +42,20 @@ public class PartialAtomicChargeColors implements AtomColorer {
      */
     public Color getAtomColor(Atom a) {
         Color c = Color.white;
-        if (ct != null) {
-            double charge = a.getCharge();
-            if (charge > 0.0) {
-                if (charge < 1.0) {
-                    int index = 255 - (int)(charge*255.0);
-                    c = new Color(index, index, 255);
-                } else {
-                    c = Color.blue;
-                }
-            } else if (charge < 0.0) {
-                if (charge > -1.0) {
-                    int index = 255 + (int)(charge*255.0);
-                    c = new Color(255, index, index);
-                } else {
-                    c = Color.red;
-                }
+        double charge = a.getCharge();
+        if (charge > 0.0) {
+            if (charge < 1.0) {
+                int index = 255 - (int)(charge*255.0);
+                c = new Color(index, index, 255);
+            } else {
+                c = Color.blue;
+            }
+        } else if (charge < 0.0) {
+            if (charge > -1.0) {
+                int index = 255 + (int)(charge*255.0);
+                c = new Color(255, index, index);
+            } else {
+                c = Color.red;
             }
         }
         return c;
