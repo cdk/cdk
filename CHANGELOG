@@ -7,7 +7,8 @@ Changes in CVS
 * added Aelfred2 SAX2 parser
 * added FileConvertor application
 * added constructors that take Writer/Reader for several IO classes
-* added partly working DADML reader, to read structures from internet
+* added DADML reader, to read structures from internet
+* seperated indices from CML content in database
 
 Preview 20011201
 ------------------------------------
