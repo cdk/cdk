@@ -36,20 +36,30 @@ import org.openscience.cdk.*;
 
 public class Renderer2D 
 {
-//	Graphics g;
 	SSSRFinder sssrf = new SSSRFinder();
-	Renderer2DModel r2dm = new Renderer2DModel();
-	double bondWidth, bondDistance, scaleFactor;
+	Renderer2DModel r2dm;
 	Graphics g;
 	
 
 	/**
-	 * Constructs a Renderer2D with a graphics object.
+	 * Constructs a Renderer2D
 	 *
 	 * @param   graphics    The graphics object 
 	 */
 	public Renderer2D()
 	{
+		r2dm = new Renderer2DModel();
+	}
+
+
+	/**
+	 * Constructs a Renderer2D
+	 *
+	 * @param   graphics    The graphics object 
+	 */
+	public Renderer2D(Renderer2DModel r2dm)
+	{
+		this.r2dm = r2dm;
 	}
 
 
@@ -60,25 +70,12 @@ public class Renderer2D
 	 */
 	public void paintMolecule(Molecule molecule, Graphics g)
 	{
-		System.out.println("molecule"+ molecule.toString());
 		this.g = g;
-		getSettings();
-//		Molecule molecule = (Molecule)mol.clone();
-		molecule = scaleMolecule(molecule);
-	    molecule = translateAllPositive(molecule);
-		molecule = translate(molecule,20,20);
 		RingSet ringSet = sssrf.findSSSR(molecule);
 		paintBonds(molecule.getBonds(), molecule.getBondCount(), ringSet);
 		paintAtoms(molecule.getAtoms(), molecule.getAtomCount());
 	}
 	
-	public void getSettings()
-	{
-		bondWidth = r2dm.getBondWidth();
-		bondDistance = r2dm.getBondDistance();
-		scaleFactor = r2dm.getScaleFactor();
-	}
-
 	/**
 	 * Searches through all the atoms in the given array of atoms and triggers
 	 * the paintAtom method if the symbol of the atom is not C.
@@ -113,11 +110,11 @@ public class Renderer2D
 		int xSymbOffset = (new Integer(fm.stringWidth(atom.getElement().getSymbol())/2)).intValue();
 		int ySymbOffset = (new Integer(fm.getAscent()/2)).intValue();
 		g.setColor(Color.gray);
-		g.fillRect((int)(atom.getPoint3D().x - (xSymbOffset * 1.8)),(int)(atom.getPoint3D().y - (ySymbOffset * 0.8)),(int)fontSize,(int)fontSize); 
+		g.fillRect((int)(atom.getPoint2D().x - (xSymbOffset * 1.8)),(int)(atom.getPoint2D().y - (ySymbOffset * 0.8)),(int)fontSize,(int)fontSize); 
 		g.setColor(Color.black);
-		g.drawString(atom.getElement().getSymbol(),(int)(atom.getPoint3D().x - xSymbOffset),(int)(atom.getPoint3D().y + ySymbOffset));
+		g.drawString(atom.getElement().getSymbol(),(int)(atom.getPoint2D().x - xSymbOffset),(int)(atom.getPoint2D().y + ySymbOffset));
 		g.setColor(Color.white);
-		g.drawLine((int)atom.getPoint3D().x,(int)atom.getPoint3D().y,(int)atom.getPoint3D().x,(int)atom.getPoint3D().y);
+		g.drawLine((int)atom.getPoint2D().x,(int)atom.getPoint2D().y,(int)atom.getPoint2D().x,(int)atom.getPoint2D().y);
 	}
 
 	private void paintBonds(Bond[] bonds, int number, RingSet ringSet)
@@ -203,7 +200,7 @@ public class Renderer2D
 	 */
 	private void paintDoubleBond(Bond bond)
 	{
-		int[] coords = distanceCalculator(getBondCoordinates(bond),bondDistance/2);
+		int[] coords = distanceCalculator(getBondCoordinates(bond),r2dm.getBondDistance()/2);
 		
 		int[] newCoords1 = {coords[0],coords[1],coords[6],coords[7]};
 		paintOneBond(newCoords1);
@@ -222,7 +219,7 @@ public class Renderer2D
 	{
 		paintSingleBond(bond);
 		
-		int[] coords = distanceCalculator(getBondCoordinates(bond),(bondWidth/2 + bondDistance));
+		int[] coords = distanceCalculator(getBondCoordinates(bond),(r2dm.getBondWidth()/2 + r2dm.getBondDistance()));
 		
 		int[] newCoords1 = {coords[0],coords[1],coords[6],coords[7]};
 		paintOneBond(newCoords1);
@@ -240,7 +237,7 @@ public class Renderer2D
 	private void paintInnerBond(Bond bond, Ring ring)
 	{
 		Point center = ring.getCenter();
-		int[] coords = distanceCalculator(getBondCoordinates(bond),(bondWidth/2 + bondDistance));
+		int[] coords = distanceCalculator(getBondCoordinates(bond),(r2dm.getBondWidth()/2 + r2dm.getBondDistance()));
 		double dist1 = Math.sqrt(Math.pow((coords[0] - center.x),2) + Math.pow((coords[1] - center.y),2));
 		double dist2 = Math.sqrt(Math.pow((coords[2] - center.x),2) + Math.pow((coords[3] - center.y),2));
 		if (dist1 < dist2)	
@@ -271,7 +268,7 @@ public class Renderer2D
 	 */
 	private void paintOneBond(int[] coords)
 	{
-		int[] newCoords = distanceCalculator(coords, bondWidth/2);
+		int[] newCoords = distanceCalculator(coords, r2dm.getBondWidth()/2);
 		int[] xCoords = {newCoords[0],newCoords[2],newCoords[4],newCoords[6]};
 		int[] yCoords = {newCoords[1],newCoords[3],newCoords[5],newCoords[7]};
 		g.fillPolygon(xCoords,yCoords,4);
@@ -286,10 +283,10 @@ public class Renderer2D
 	 */
 	private int[] getBondCoordinates(Bond bond)
 	{
-		int beginX = (int)bond.getAtomAt(0).getPoint3D().x;
-		int endX = (int)bond.getAtomAt(1).getPoint3D().x;
-		int beginY = (int)bond.getAtomAt(0).getPoint3D().y;
-		int endY = (int)bond.getAtomAt(1).getPoint3D().y;
+		int beginX = (int)bond.getAtomAt(0).getPoint2D().x;
+		int endX = (int)bond.getAtomAt(1).getPoint2D().x;
+		int beginY = (int)bond.getAtomAt(0).getPoint2D().y;
+		int endY = (int)bond.getAtomAt(1).getPoint2D().y;
 		int[] coords = {beginX,beginY,endX,endY};
 		return coords;
 	}
@@ -331,22 +328,21 @@ public class Renderer2D
 	 *
 	 * @param   molecule for which all the atoms are translated to positive coordinates
 	 */
-	private Molecule translateAllPositive(Molecule molecule)
+	public void translateAllPositive(Molecule molecule)
 	{
 		double transX = 0,transY = 0;
 		for (int i = 0; i < molecule.getAtomCount(); i++)
 		{
-			if (molecule.getAtomAt(i).getPoint3D().x < transX)
+			if (molecule.getAtomAt(i).getPoint2D().x < transX)
 			{
-				transX = molecule.getAtomAt(i).getPoint3D().x;
+				transX = molecule.getAtomAt(i).getPoint2D().x;
 			}
-			if (molecule.getAtomAt(i).getPoint3D().y < transY)
+			if (molecule.getAtomAt(i).getPoint2D().y < transY)
 			{
-				transY = molecule.getAtomAt(i).getPoint3D().y;
+				transY = molecule.getAtomAt(i).getPoint2D().y;
 			}
 		}
-		molecule = translate(molecule,transX * -1,transY * -1);
-		return molecule;
+		translate(molecule,transX * -1,transY * -1);		
 	}
 	
 
@@ -358,14 +354,13 @@ public class Renderer2D
 	 * @param   transY  translation in y direction
 	 * @return    translsted molecule 
 	 */
-	private Molecule translate(Molecule molecule,double transX, double transY)
+	public void translate(Molecule molecule,double transX, double transY)
 	{
 		for (int i = 0; i < molecule.getAtomCount(); i++)
 		{
-			molecule.getAtomAt(i).getPoint3D().x += transX;
-			molecule.getAtomAt(i).getPoint3D().y += transY;
+			molecule.getAtomAt(i).getPoint2D().x += transX;
+			molecule.getAtomAt(i).getPoint2D().y += transY;
 		}
-		return molecule;
 	}
 	
 
@@ -375,14 +370,13 @@ public class Renderer2D
 	 * @param   molecule  The molecule to be scaled
 	 * @return     The molecule with scaled coordinates
 	 */
-	private Molecule scaleMolecule(Molecule molecule)
+	public void scaleMolecule(Molecule molecule)
 	{
 		for (int i = 0; i < molecule.getAtomCount(); i++)
 		{
-			molecule.getAtomAt(i).getPoint3D().x *= scaleFactor;
-			molecule.getAtomAt(i).getPoint3D().y *= scaleFactor;
+			molecule.getAtomAt(i).getPoint2D().x *= r2dm.getScaleFactor();
+			molecule.getAtomAt(i).getPoint2D().y *= r2dm.getScaleFactor();
 		}
-		return molecule;
 	}
 }
 

@@ -110,6 +110,8 @@ public class MDLReader implements CDKConstants
 	    String help;
 	    Molecule molecule = new Molecule();
 		Bond bond;
+		Atom atom;
+		
 	    try
 	    {
 	        String title = new String(input.readLine()+"\n"+input.readLine()+"\n"+input.readLine());
@@ -129,7 +131,9 @@ public class MDLReader implements CDKConstants
 	            y = new Double(strTok.nextToken()).doubleValue();
 	            z = new Double(strTok.nextToken()).doubleValue();
 				if (debug) System.out.println("Coordinates: " + x + "; " + y + "; " + z);
-	            molecule.addAtom(new Atom(new Element(strTok.nextToken()), new Point3d(x, y, z)));
+				atom = new Atom(new Element(strTok.nextToken()), new Point3d(x, y, z));
+				atom.setPoint2D(new Point2d(x, y));
+	            molecule.addAtom(atom);
 	        }
 	        for (int f = 0; f < bonds; f++)
 	        {
