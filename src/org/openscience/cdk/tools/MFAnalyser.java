@@ -165,18 +165,6 @@ public class MFAnalyser{
 
     /**
      * Produces an AtomContainer without explicit Hs but with H count from one with Hs.
-     * The new molecule is a deep copy.
-     *
-     * @return The mol without Hs.
-     * @cdk.keyword hydrogen, removal
-     */
-    public AtomContainer removeHydrogens()
-    {
-        return removeHydrogens(new ArrayList());
-    }
-
-    /**
-     * Produces an AtomContainer without explicit Hs but with H count from one with Hs.
      * Hs bonded to more than one heavy atom are preserved.  The new molecule is a deep copy.
      *
      * @return The mol without Hs.
