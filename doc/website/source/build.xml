@@ -2,7 +2,7 @@
 
   <property name="build.dir" value="../target"/>
 
-  <target id="layout" name="layout">
+  <target id="layout" name="layout" depends="javancss, keyword.index">
     <xslt in="layout.xml" out="autolayout.xml" style="xsl/autolayout.xsl"/>
   </target>
 
