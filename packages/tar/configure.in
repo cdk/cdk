@@ -1,0 +1,36 @@
+dnl
+dnl $Id$
+dnl
+AC_INIT()
+AM_INIT_AUTOMAKE(cdk-bin, `cat VERSION`)
+
+dnl Checks for programs.
+AC_PROG_INSTALL
+AC_PROG_LN_S
+AC_PROG_MAKE_SET
+
+AC_CHECK_PROG(HASJAVA, java, yes, no)
+if test "xyes" = "x$HASJAVA"
+then
+        AC_PATH_PROG(PATHTOJAVA, java, no)
+fi
+
+AC_MSG_CHECKING(for rt.jar lib)
+for d in "/usr/lib/j2re1.3/lib"
+do
+    if test -f "$d/rt.jar"
+    then
+        AC_MSG_RESULT("$d")
+        PATHTORTJAR="$p/$d/print/docbook.dsl"
+    fi
+done
+AC_SUBST(PATHTORTJAR)
+
+AC_OUTPUT([
+   Makefile
+   bin/Makefile
+   bin/cdk-dbadmin
+   bin/cdk-fileconvert
+   jar/Makefile
+])
+
