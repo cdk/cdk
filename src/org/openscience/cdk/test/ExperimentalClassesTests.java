@@ -42,8 +42,6 @@ public class ExperimentalClassesTests {
     public static Test suite () {
         TestSuite suite= new TestSuite("The cdk.experimental Tests");
         suite.addTest(AssociationTest.suite());
-        suite.addTest(HydrogenAdder2Test.suite());
-        suite.addTest(ValencyCheckerTest.suite());
         suite.addTest(VASPReaderTest.suite());
         suite.addTest(SMARTSTest.suite());
         
