@@ -26,29 +26,65 @@
       </para>
     </section>
     <section>
-      <title>Tar Package</title>
+      <title>Source Packages</title>
+      <para>
+        The source package can be downloaded
+        <ulink url="http://sourceforge.net/project/showfiles.php?group_id=20024">here</ulink>.
+      </para>
+      <section>
+        <title>Unix, GNU/Linux, BSD tar.gz Package</title>
         <para>
           CDK is distributed as a tar.gz source package from which it can be compiled.
           On Linux/Solaris/BSD systems, it can be installed with the normal
           <command>./configure &amp;&amp; make &amp;&amp; make install</command>.
         </para>
+      </section>
+      <section>
+        <title>General Source Packages</title>
         <para>
-          On Windows systems
-          CDK cannot be installed automatically, but it can be compiled with
-          Ant: <command>ant dist-all</command>.
+          On Windows systems CDK cannot be installed in an automized way as on
+          Unix-like platforms, but it can be compiled with
+          <ulink url="http://ant.apache.org/">Ant</ulink>: 
+          <command>ant dist-all</command>. However, a binary package can be
+          downloaded too.
         </para>
-        <para>
-        The package can be downloaded
-        <ulink url="http://sourceforge.net/project/showfiles.php?group_id=20024">here</ulink>.
-        </para>
+      </section>
     </section>
     <section>
-      <title>Binary Linux Package</title>
+      <title>Binary Packages</title>
+      <para>
+        The binary package can be downloaded
+        <ulink url="http://sourceforge.net/project/showfiles.php?group_id=20024">here</ulink>.
+      </para>
+      <section>
+        <title>Debian GNU/Linux Packages</title>
         <para>
           In addition to the source package, Debian user's can also download a Debian
           package. Keep in mind that the Debian package is uploaded to SF a few days
           later than the source package.
         </para>
+        <para>
+          Debian users can also apt-get the package from
+          <ulink url="http://mentors.debian.net/">mentors.debian.net</ulink> 
+          by adding the following to <filename>/etc/apt/sources.list</filename>:
+        </para>
+        <literallayout>
+deb http://mentors.debian.net/debian unstable main contrib
+deb-src http://mentors.debian.net/debian unstable main contrib
+        </literallayout>
+        <para>
+          Doing 
+          <userinput>apt-get update &amp;&amp; apt-get install cdk/unstable</userinput>.
+          will then install CDK. (Jmol is also available from that apt-get repository.)
+        </para>
+      </section>
+      <section>
+        <title>Windows Packages</title>
+        <para>
+          For MS-Windows too, there is a binary package which includes two 
+          .bat files for running two of the command line utilities.
+        </para>
+      </section>
     </section>
   </section>
 
