@@ -31,11 +31,17 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.isomorphism.matchers.OrderQueryBond;
+import org.openscience.cdk.isomorphism.matchers.smarts.DegreeAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.FormalChargeAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.ImplicitHCountAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.TotalHCountAtom;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.smiles.SmilesParser;
 
@@ -83,5 +89,41 @@ public class SMARTSTest extends TestCase {
         assertTrue(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
     }
 	
+    private AtomContainer createEthane() {
+        AtomContainer container = new AtomContainer(); // SMILES "CC"
+        Atom carbon = new Atom("C");
+        Atom carbon2 = new Atom("C");
+        carbon.setHydrogenCount(3);
+        carbon2.setHydrogenCount(3);
+        container.addAtom(carbon);
+        container.addAtom(carbon2);
+        container.addBond(new Bond(carbon, carbon2, 1));
+        return container;
+    }
+    
+	public void testImplicitHCountAtom() throws Exception {
+        AtomContainer container = createEthane();
+
+        QueryAtomContainer query1 = new QueryAtomContainer(); // SMARTS [h3][h3]
+        SMARTSAtom atom1 = new ImplicitHCountAtom(3);
+        SMARTSAtom atom2 = new ImplicitHCountAtom(3);
+        query1.addAtom(atom1);
+        query1.addAtom(atom2);
+        query1.addBond(new OrderQueryBond(atom1, atom2, 1));
+        assertTrue(UniversalIsomorphismTester.isSubgraph(container, query1));
+    }
+
+	public void testImplicitHCountAtom2() throws Exception {
+        AtomContainer container = createEthane();
+
+        QueryAtomContainer query1 = new QueryAtomContainer(); // SMARTS [h3][h2]
+        SMARTSAtom atom1 = new ImplicitHCountAtom(3);
+        SMARTSAtom atom2 = new ImplicitHCountAtom(2);
+        query1.addAtom(atom1);
+        query1.addAtom(atom2);
+        query1.addBond(new OrderQueryBond(atom1, atom2, 1));
+        assertFalse(UniversalIsomorphismTester.isSubgraph(container, query1));
+    }
+
 }
 
