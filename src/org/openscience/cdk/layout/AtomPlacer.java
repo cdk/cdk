@@ -164,6 +164,26 @@ public class AtomPlacer
 			return;
 		}
 
+		if (sharedAtoms.getAtomCount() == 0)
+		{
+			for (int f = 0; f < partners.getAtomCount(); f++)
+			{
+				atomsToDraw.addElement(partners.getAtomAt(f));
+			}
+
+			addAngle = Math.PI * 2 / (partners.getAtomCount() + sharedAtoms.getAtomCount());
+			/*
+			 *  IMPORTANT: At this point we need a calculation of the
+			 *  start angle.
+			 *  Not done yet.
+			 */
+			
+			startAngle = 0;
+			//- (Math.PI / 2.0);
+			populatePolygonCorners(atomsToDraw, new Point2d(atom.getPoint2D()), startAngle, addAngle, bondLength);
+			return;
+		}
+
 		/*
 		 *  if the least hindered side of the atom is clearly defined (bondLength / 10 is an arbitrary value that seemed reasonable)
 		 */
