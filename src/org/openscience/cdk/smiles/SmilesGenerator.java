@@ -30,13 +30,13 @@
 package org.openscience.cdk.smiles;
 
 import org.openscience.cdk.*;
-import org.openscience.cdk.aromaticity.AromaticityCalculator;
+import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.tools.IsotopeFactory;
 import org.openscience.cdk.tools.ConnectivityChecker;
 import org.openscience.cdk.graph.invariant.MorganNumbersTools;
 import org.openscience.cdk.graph.invariant.CanonicalLabeler;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.ringsearch.SSSRFinder;
+import org.openscience.cdk.ringsearch.*;
 import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.exception.CDKException;
 
@@ -77,10 +77,6 @@ public class SmilesGenerator {
    */
   private IsotopeFactory isotopeFactory;
 
-  /**
-   * The rings that are aromatic
-   */
-  private Set arromaticRings = new HashSet();
 
   /**
    * The canonical labler
@@ -222,7 +218,6 @@ public class SmilesGenerator {
     canLabler.canonLabel(molecule);
     brokenBonds.clear();
     ringMarker = 0;
-    arromaticRings.clear();
     Atom[] all = molecule.getAtoms();
     Atom start = null;
     for (int i = 0; i < all.length; i++) {
@@ -236,17 +231,12 @@ public class SmilesGenerator {
       }
     }
 
-    //Sort aromatic rings
-    SSSRFinder ringFinder = new SSSRFinder();
-    RingSet rings = ringFinder.findSSSR(molecule);
-    Iterator it = rings.iterator();
-    while (it.hasNext()) {
-      Ring ring = (Ring) it.next();
-      if (AromaticityCalculator.isAromatic(ring, molecule)) {
-        arromaticRings.add(ring);
-      }
-    }
-
+    //detect aromaticity
+    AllRingsFinder ringFinder = new AllRingsFinder();
+    RingSet rings = ringFinder.findAllRings(molecule);
+    (new HueckelAromaticityDetector()).detectAromaticity(molecule, rings, true);
+    
+    
     StringBuffer l = new StringBuffer();
     createSMILES(start, l, molecule, chiral, doubleBondConfiguration);
     return l.toString();
@@ -660,24 +650,6 @@ public class SmilesGenerator {
     }
     Collections.sort(v);
     return v;
-  }
-
-
-  /**
-   * Is the atom in a ring that is arromatic.
-   *
-   * @param  a  the atom to test
-   * @return    true if a is in a aromatic ring false otherwise
-   */
-  private boolean isAromatic(Atom a) {
-    Iterator it = arromaticRings.iterator();
-    while (it.hasNext()) {
-      Ring ring = (Ring) it.next();
-      if (ring.contains(a)) {
-        return true;
-      }
-    }
-    return false;
   }
 
 
@@ -1250,7 +1222,7 @@ public class SmilesGenerator {
    * @param  atomContainer  the AtomContainer that the SMILES string is generated for.
    */
   private void parseBond(StringBuffer line, Atom a1, Atom a2, AtomContainer atomContainer) {
-    if (isAromatic(a1) && isAromatic(a2)) {
+    if (a1.getFlag(CDKConstants.ISAROMATIC) && a1.getFlag(CDKConstants.ISAROMATIC)) {
       return;
     }
     if (atomContainer.getBond(a1, a2) == null) {
@@ -1305,7 +1277,7 @@ public class SmilesGenerator {
       buffer.append('[');
     }
     buffer.append(mass);
-    if (isAromatic(a)) {
+    if (a.getFlag(CDKConstants.ISAROMATIC)) {
       buffer.append(a.getSymbol().toLowerCase());
     } else {
       buffer.append(symbol);
