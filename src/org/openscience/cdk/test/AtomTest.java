@@ -51,8 +51,9 @@ public class AtomTest extends TestCase {
     public void testAtom() {
         Atom a = new Atom("C");
         assertEquals("C", a.getSymbol());
-        assertTrue(null == a.getPoint2D());
-        assertTrue(null == a.getPoint3D());
+        assertNull(a.getPoint2D());
+        assertNull(a.getPoint3D());
+        assertNull(a.getFractionalPoint3D());
     }
 
     /**
@@ -64,7 +65,8 @@ public class AtomTest extends TestCase {
         Atom a = new Atom("C", point3d);
         assertEquals("C", a.getSymbol());
         assertEquals(point3d, a.getPoint3D());
-        assertTrue(null == a.getPoint2D());
+        assertNull(a.getPoint2D());
+        assertNull(a.getFractionalPoint3D());
     }
 
     /**
@@ -76,7 +78,8 @@ public class AtomTest extends TestCase {
         Atom a = new Atom("C", point2d);
         assertEquals("C", a.getSymbol());
         assertEquals(point2d, a.getPoint2D());
-        assertTrue(null == a.getPoint3D());
+        assertNull(a.getPoint3D());
+        assertNull(a.getFractionalPoint3D());
     }
 
     /**
