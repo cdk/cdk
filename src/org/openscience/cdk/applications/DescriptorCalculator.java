@@ -80,12 +80,16 @@ public class DescriptorCalculator {
 
     public static void main(String[] args) {
         DescriptorCalculator calculator = new DescriptorCalculator();
-        
-        DescriptorEngine engine = new DescriptorEngine();
 
         // process options
         String fileToProcess = calculator.parseCommandLineOptions(args);
-
+        
+        calculator.process(fileToProcess);
+    }
+     
+    public void process(String fileToProcess) {
+        DescriptorEngine engine = new DescriptorEngine();
+        
         IteratingMDLReader reader = null;
         Properties props = new Properties();
         props.setProperty("CMLIDs", "false");
@@ -102,18 +106,33 @@ public class DescriptorCalculator {
             fileWriter.write("  xmlns=\"http://www.xml-cml.org/schema/cml2/core\"\n");
             fileWriter.write("  xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n");
             fileWriter.write("  xsi:schemaLocation=\"http://www.xml-cml.org/schema/cml2/core cmlAll4.4.xsd\">\n");
+            fileWriter.flush();
             while (reader.hasNext()) {
                 Molecule molecule = (Molecule)reader.next();
-                engine.process(molecule);
-                StringWriter stringWriter = new StringWriter();
-                CMLWriter writer = new CMLWriter(stringWriter);
-                writer.addChemObjectIOListener(propsListener);
-                writer.write(molecule);
-                writer.close();
-                fileWriter.write(stringWriter.toString());
+                boolean engineError = false;
+                try {
+                    engine.process(molecule);
+                } catch (Exception exception) {
+                    logger.error("Exception while generating descriptors for molecule: ", exception.getMessage());
+                    logger.debug(exception);
+                    engineError = true;
+                }
+                if (!engineError) {
+                    StringWriter stringWriter = new StringWriter();
+                    CMLWriter writer = new CMLWriter(stringWriter);
+                    writer.addChemObjectIOListener(propsListener);
+                    writer.write(molecule);
+                    writer.close();
+                    fileWriter.write(stringWriter.toString());
+                    fileWriter.flush();
+                    System.out.print(".");
+                } else {
+                    System.out.print("x");
+                }
             }
             fileWriter.write("</list>\n");
             fileWriter.close();
+            System.out.println("\n");
         } catch (FileNotFoundException exception) {
             System.err.println("File not found: " + fileToProcess);
             System.exit(-1);
