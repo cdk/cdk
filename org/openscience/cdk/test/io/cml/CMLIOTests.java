@@ -41,6 +41,7 @@ public class CMLIOTests {
     public static Test suite () {
         TestSuite suite= new TestSuite("Test org.openscience.cdk.io.cml classes.");
         suite.addTest(JumboTest.suite());
+        suite.addTest(JmolTest.suite());
         return suite;
     }
 
