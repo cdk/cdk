@@ -164,9 +164,21 @@ public class AtomTypeFactory {
             AtomType at = getAtomType(atom.getID());
             atom.setMaxBondOrder(at.getMaxBondOrder());
             atom.setMaxBondOrderSum(at.getMaxBondOrderSum());
+            if (at.getAtomicNumber() != 0) {
+                atom.setAtomicNumber(at.getAtomicNumber());
+            } else {
+                logger.debug("Did not configure atomic number: AT.an=" + at.getAtomicNumber());
+            }
+            if (at.getExactMass() > 0.0) {
+                atom.setExactMass(at.getExactMass());
+            } else {
+                logger.debug("Did not configure mass: AT.mass=" + at.getAtomicNumber());
+            }
         } catch (Exception exc) {
-            logger.warn("Could not configure atom without unknown ID: " + atom.toString());
+            logger.warn("Could not configure atom with unknown ID: " + 
+                        atom.toString() + " + (id=" + atom.getID() + ")");
         }
+        logger.debug("Configured " + atom.toString());
 		return atom;
 	}
 }

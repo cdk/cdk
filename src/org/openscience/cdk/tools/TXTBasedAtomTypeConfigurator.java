@@ -111,8 +111,7 @@ public class TXTBasedAtomTypeConfigurator implements AtomTypeConfigurator {
                             "Malformed Number");
                         }
                         
-                        AtomType at = new AtomType(name);
-                        at.setSymbol(rootType);
+                        AtomType at = new AtomType(name, rootType);
                         at.setAtomicNumber(an);
                         at.setExactMass(mass);
                         // at.setVanderwaalsRadius(vdw);
