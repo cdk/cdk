@@ -40,11 +40,11 @@ import java.awt.event.*;
 import javax.vecmath.*;
 
 /**
- *  Command line utility for viewing chemical information from files.
+ * Command line utility for viewing chemical information from files.
  *
- *@author     steinbeck
- *@created    October 3, 2002
- *@keyword    command line util
+ * @author     steinbeck
+ * @created    October 3, 2002
+ * @keyword    command line util
  */
 public class Viewer
 {
@@ -54,6 +54,7 @@ public class Viewer
 	private boolean useJava3D;
 	private boolean use3D;
 	private boolean useJmol;
+	private boolean showCOT;
 
 
 	/**
@@ -67,6 +68,7 @@ public class Viewer
 
 		useJava3D = false;
 		use3D = true;
+		showCOT = false;
 	}
 
 
@@ -102,6 +104,16 @@ public class Viewer
 		this.useJava3D = b;
 	}
 
+	/**
+	 *  Sets a flag value for using Java3D for viewing 3D.
+	 *
+	 *@param  b  value for using Java3D
+	 */
+	public void setShowChemObjectTree(boolean b)
+	{
+		this.showCOT = b;
+	}
+
 
 	/**
 	 *  Views the contents of an <code>AtomContainer</code>.
@@ -110,7 +122,19 @@ public class Viewer
 	 */
 	private void view(AtomContainer m)
 	{
-		if (GeometryTools.has2DCoordinates(m) ||
+        if (showCOT) {
+            logger.info("Viewing ChemObjectTree...");
+			JFrame frame = new JFrame("CDK Molecule Viewer");
+
+            ChemObjectTree cot = new ChemObjectTree();
+            frame.getContentPane().add(new JScrollPane(cot), BorderLayout.CENTER);
+            cot.paintChemObject(m);
+
+			frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+			frame.setSize(500, 500);
+			frame.setVisible(true);
+			frame.addWindowListener(new AppCloser());
+        } else if (GeometryTools.has2DCoordinates(m) ||
 				GeometryTools.has3DCoordinates(m))
 		{
 
@@ -326,21 +350,19 @@ public class Viewer
 			for (int i = 1; i < args.length; i++)
 			{
 				String opt = args[i - 1];
-				if ("--nojava3d".equalsIgnoreCase(opt))
-				{
+				if ("--nojava3d".equalsIgnoreCase(opt))	{
 					v.setUseJava3D(false);
-				} else if ("--no3d".equalsIgnoreCase(opt))
-				{
+				} else if ("--no3d".equalsIgnoreCase(opt)) {
 					v.setUse3D(false);
-				} else if ("--useJmol".equalsIgnoreCase(opt))
-				{
+				} else if ("--useJmol".equalsIgnoreCase(opt)) {
 					v.setUseJmol(true);
-				} else if ("--smiles".equalsIgnoreCase(opt))
-				{
+				} else if ("--smiles".equalsIgnoreCase(opt)) {
 					// Filename is considered to be a smiles string
 					showSmiles = true;
-				} else
-				{
+				} else if ("--useTree".equalsIgnoreCase(opt)) {
+					// Filename is considered to be a smiles string
+					v.setShowChemObjectTree(true);
+				} else {
 					System.err.println("Unknown option: " + opt);
 					System.exit(1);
 				}
@@ -356,6 +378,7 @@ public class Viewer
 			System.out.println("options: --nojava3D    Disable Java3D support");
 			System.out.println("         --no3D        View only 2D info");
 			System.out.println("         --useJmol     Use Jmol for 3D (if available)");
+			System.out.println("         --useTree     Show ChemObject Tree");
 			System.exit(0);
 		}
 
@@ -363,11 +386,9 @@ public class Viewer
 		{
 			// Filename is considered to be a smiles string
 			v.viewSMILES(filename);
-		} else
-		{
-			if (new File(filename).canRead())
-			{
-				v.viewFile(filename);
+        } else {
+			if (new File(filename).canRead()) {
+                v.viewFile(filename);
 			} else
 			{
 				System.out.println("File " + filename + " does not exist!");
