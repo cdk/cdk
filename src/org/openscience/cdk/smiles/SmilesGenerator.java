@@ -293,7 +293,7 @@ public class SmilesGenerator {
    * @return                          false=is not end of configuration, true=is
    */
   private boolean isEndOfDoubleBond(AtomContainer container, Atom atom, Atom parent, boolean[] doubleBondConfiguration) {
-    if (container.getBondNumber(atom, parent) == -1 || !doubleBondConfiguration[container.getBondNumber(atom, parent)]) {
+    if (container.getBondNumber(atom, parent) == -1 || doubleBondConfiguration.length<=container.getBondNumber(atom, parent) || !doubleBondConfiguration[container.getBondNumber(atom, parent)]) {
       return false;
     }
     int lengthAtom = container.getConnectedAtoms(atom).length + atom.getHydrogenCount();
@@ -402,6 +402,12 @@ public class SmilesGenerator {
     }
     if (down == 1 && up == 0) {
       return 4;
+    }
+    if (down == 2 && up == 1) {
+      return 5;
+    }
+    if (down == 1 && up == 2) {
+      return 6;
     }
     return 0;
   }
@@ -832,7 +838,7 @@ public class SmilesGenerator {
    */
   private void createSMILES(Atom a, StringBuffer line, AtomContainer atomContainer, boolean chiral, boolean[] doubleBondConfiguration) {
     Vector tree = new Vector();
-    createDFSTree(a, tree, null, atomContainer);
+    createDFSTree(a, tree, null, atomContainer);    
     parseChain(tree, line, atomContainer, null, chiral, doubleBondConfiguration, new Vector());
   }
 
@@ -1075,6 +1081,100 @@ public class SmilesGenerator {
               }
             }
           }
+          if (isTetrahedral(container, atom) == 5) {
+            if (container.getBond(parent, atom).getStereo() == CDKConstants.STEREO_BOND_DOWN) {
+              for (int i = 0; i < chiralNeighbours.size(); i++) {
+                if (chiralNeighbours.get(i) != parent) {
+                  if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_UP) {
+                    sorted[0] = (Atom) chiralNeighbours.get(i);
+                  }
+                  if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == 0) {
+                    sorted[2] = (Atom) chiralNeighbours.get(i);
+                  }
+                  if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_DOWN) {
+                    sorted[1] = (Atom) chiralNeighbours.get(i);
+                  }
+                }
+              }
+            }
+            if (container.getBond(parent, atom).getStereo() == CDKConstants.STEREO_BOND_UP) {
+              for (int i = 0; i < chiralNeighbours.size(); i++) {
+                if (chiralNeighbours.get(i) != parent) {
+                  if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_DOWN && isLeft(((Atom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((Atom) chiralNeighbours.get(i), atom)) {
+                    sorted[0] = (Atom) chiralNeighbours.get(i);
+                  }
+                  if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_DOWN && !isLeft(((Atom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((Atom) chiralNeighbours.get(i), atom)) {
+                    sorted[2] = (Atom) chiralNeighbours.get(i);
+                  }
+                  if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == 0) {
+                    sorted[1] = (Atom) chiralNeighbours.get(i);
+                  }
+                }
+              }
+            }
+            if (container.getBond(parent, atom).getStereo() == CDKConstants.STEREO_BOND_UNDEFINED || container.getBond(parent, atom).getStereo() == CDKConstants.STEREO_BOND_NONE) {
+              for (int i = 0; i < chiralNeighbours.size(); i++) {
+                if (chiralNeighbours.get(i) != parent) {
+                  if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_DOWN && isLeft(((Atom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((Atom) chiralNeighbours.get(i), atom)) {
+                    sorted[0] = (Atom) chiralNeighbours.get(i);
+                  }
+                  if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_DOWN && !isLeft(((Atom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((Atom) chiralNeighbours.get(i), atom)) {
+                    sorted[2] = (Atom) chiralNeighbours.get(i);
+                  }
+                  if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_UP) {
+                    sorted[1] = (Atom) chiralNeighbours.get(i);
+                  }
+                }
+              }
+            }
+          }
+          if (isTetrahedral(container, atom) == 6) {
+            if (container.getBond(parent, atom).getStereo() == CDKConstants.STEREO_BOND_UP) {
+              for (int i = 0; i < chiralNeighbours.size(); i++) {
+                if (chiralNeighbours.get(i) != parent) {
+                  if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_UP) {
+                    sorted[0] = (Atom) chiralNeighbours.get(i);
+                  }
+                  if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == 0) {
+                    sorted[2] = (Atom) chiralNeighbours.get(i);
+                  }
+                  if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_DOWN) {
+                    sorted[1] = (Atom) chiralNeighbours.get(i);
+                  }
+                }
+              }
+            }
+            if (container.getBond(parent, atom).getStereo() == CDKConstants.STEREO_BOND_DOWN) {
+              for (int i = 0; i < chiralNeighbours.size(); i++) {
+                if (chiralNeighbours.get(i) != parent) {
+                  if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_UP && isLeft(((Atom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((Atom) chiralNeighbours.get(i), atom)) {
+                    sorted[2] = (Atom) chiralNeighbours.get(i);
+                  }
+                  if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_UP && !isLeft(((Atom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((Atom) chiralNeighbours.get(i), atom)) {
+                    sorted[0] = (Atom) chiralNeighbours.get(i);
+                  }
+                  if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == 0) {
+                    sorted[1] = (Atom) chiralNeighbours.get(i);
+                  }
+                }
+              }
+            }
+            if (container.getBond(parent, atom).getStereo() == CDKConstants.STEREO_BOND_UNDEFINED || container.getBond(parent, atom).getStereo() == CDKConstants.STEREO_BOND_NONE) {
+              for (int i = 0; i < chiralNeighbours.size(); i++) {
+                if (chiralNeighbours.get(i) != parent) {
+                  if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_UP && isLeft(((Atom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((Atom) chiralNeighbours.get(i), atom)) {
+                    sorted[2] = (Atom) chiralNeighbours.get(i);
+                  }
+                  if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_UP && !isLeft(((Atom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((Atom) chiralNeighbours.get(i), atom)) {
+                    sorted[0] = (Atom) chiralNeighbours.get(i);
+                  }
+                  if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_DOWN) {
+                    sorted[1] = (Atom) chiralNeighbours.get(i);
+                  }
+                }
+              }
+            }
+          }
           if (isSquarePlanar(container, atom)) {
             sorted = new Atom[3];
             //This produces a U=SP1 order in every case
@@ -1151,7 +1251,7 @@ public class SmilesGenerator {
               }
             }
           }
-          //This builds an onew[] containing the objects after the center of the chirality in the order geiven by sorted[]
+          //This builds an onew[] containing the objects after the center of the chirality in the order given by sorted[]
           if (sorted != null) {
             int numberOfAtoms = 3;
             if (isTrigonalBipyramidalOrOctahedral(container, atom)) {
@@ -1160,7 +1260,8 @@ public class SmilesGenerator {
             Object[] omy = new Object[numberOfAtoms];
             Object[] onew = new Object[numberOfAtoms];
             for (int k = getRingOpenings(atom).size(); k < numberOfAtoms; k++) {
-              omy[k] = v.get(positionInVector + 1 + k - getRingOpenings(atom).size());
+              if(positionInVector + 1 + k - getRingOpenings(atom).size()<v.size())
+                omy[k] = v.get(positionInVector + 1 + k - getRingOpenings(atom).size());
             }
             for (int k = 0; k < sorted.length; k++) {
               if (sorted[k] != null) {
@@ -1183,64 +1284,74 @@ public class SmilesGenerator {
                 onew[k] = null;
               }
             }
-            //Make sure that the first atom in onew is the first one in the original smiles order. This is important to have a canonical smiles.
-            if (positionInVector + 1 < v.size()) {
-              Object atomAfterCenterInOriginalSmiles = v.get(positionInVector + 1);
-              int l = 0;
-              while (onew[0] != atomAfterCenterInOriginalSmiles) {
-                Object placeholder = onew[onew.length - 1];
-                for (int k = onew.length - 2; k > -1; k--) {
-                  onew[k + 1] = onew[k];
-                }
-                onew[0] = placeholder;
-                l++;
-                if (l > onew.length) {
-                  break;
-                }
-              }
-            }
-            //This cares about ring openings. Here the ring closure (represendted by a figure) must be the first atom. In onew the closure is null.
-            if(getRingOpenings(atom).size()>0){
-              int l = 0;
-              while (onew[0] != null) {
-                Object placeholder = onew[0];
-                for (int k = 1; k < onew.length; k++) {
-                  onew[k-1] = onew[k];
-                }
-                onew[onew.length-1] = placeholder;
-                l++;
-                if (l > onew.length) {
-                  break;
-                }
-              }              
-            }
-            //The last in onew is a vector: This means we need to exchange the rest of the original smiles with the rest of this vector.
-            if (onew[numberOfAtoms - 1] instanceof Vector) {
-              for (int i = 0; i < numberOfAtoms; i++) {
-                if (onew[i] instanceof Atom) {
-                  Vector vtemp = new Vector();
-                  vtemp.add(onew[i]);
-                  for (int k = positionInVector + 1 + numberOfAtoms; k < v.size(); k++) {
-                    vtemp.add(v.get(k));
-                  }
-                  onew[i] = vtemp;
-                  for (int k = v.size() - 1; k > positionInVector + 1 + numberOfAtoms - 1; k--) {
-                    v.remove(k);
-                  }
-                  for (int k = 1; k < ((Vector) onew[numberOfAtoms - 1]).size(); k++) {
-                    v.add(((Vector) onew[numberOfAtoms - 1]).get(k));
-                  }
-                  onew[numberOfAtoms - 1] = ((Vector) onew[numberOfAtoms - 1]).get(0);
-                  break;
-                }
-              }
-            }
-            //Put the onew objects in the original Vector
-            int k = 0;
+            //This is a workaround for 3624.MOL.2 I don't have a better solution currently
+            boolean doubleentry=false;
             for (int m = 0; m < onew.length; m++) {
-              if (onew[m] != null) {
-                v.set(positionInVector + 1 + k, onew[m]);
-                k++;
+              for (int k = 0; k < onew.length; k++) {
+                if(m!=k && onew[k]==onew[m])
+                  doubleentry=true;
+              }
+            }
+            if(!doubleentry){
+              //Make sure that the first atom in onew is the first one in the original smiles order. This is important to have a canonical smiles.
+              if (positionInVector + 1 < v.size()) {
+                Object atomAfterCenterInOriginalSmiles = v.get(positionInVector + 1);
+                int l = 0;
+                while (onew[0] != atomAfterCenterInOriginalSmiles) {
+                  Object placeholder = onew[onew.length - 1];
+                  for (int k = onew.length - 2; k > -1; k--) {
+                    onew[k + 1] = onew[k];
+                  }
+                  onew[0] = placeholder;
+                  l++;
+                  if (l > onew.length) {
+                    break;
+                  }
+                }
+              }
+              //This cares about ring openings. Here the ring closure (represendted by a figure) must be the first atom. In onew the closure is null.
+              if(getRingOpenings(atom).size()>0){
+                int l = 0;
+                while (onew[0] != null) {
+                  Object placeholder = onew[0];
+                  for (int k = 1; k < onew.length; k++) {
+                    onew[k-1] = onew[k];
+                  }
+                  onew[onew.length-1] = placeholder;
+                  l++;
+                  if (l > onew.length) {
+                    break;
+                  }
+                }              
+              }
+              //The last in onew is a vector: This means we need to exchange the rest of the original smiles with the rest of this vector.
+              if (onew[numberOfAtoms - 1] instanceof Vector) {
+                for (int i = 0; i < numberOfAtoms; i++) {
+                  if (onew[i] instanceof Atom) {
+                    Vector vtemp = new Vector();
+                    vtemp.add(onew[i]);
+                    for (int k = positionInVector + 1 + numberOfAtoms; k < v.size(); k++) {
+                      vtemp.add(v.get(k));
+                    }
+                    onew[i] = vtemp;
+                    for (int k = v.size() - 1; k > positionInVector + 1 + numberOfAtoms - 1; k--) {
+                      v.remove(k);
+                    }
+                    for (int k = 1; k < ((Vector) onew[numberOfAtoms - 1]).size(); k++) {
+                      v.add(((Vector) onew[numberOfAtoms - 1]).get(k));
+                    }
+                    onew[numberOfAtoms - 1] = ((Vector) onew[numberOfAtoms - 1]).get(0);
+                    break;
+                  }
+                }
+              }
+              //Put the onew objects in the original Vector
+              int k = 0;
+              for (int m = 0; m < onew.length; m++) {
+                if (onew[m] != null) {
+                  v.set(positionInVector + 1 + k, onew[m]);
+                  k++;
+                }
               }
             }
           }
