@@ -1,10 +1,9 @@
-/* MockMolecule.java
+/* $RCSfile$
+ * $Author$
+ * $Date$
+ * $Revision$
  * 
- * $ author: 	Edgar Luttmann 			$ 
- * $ contact: 	edgar@uni-paderborn.de 	$
- * $ date: 		2001-08-09 				$
- * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2001-2004  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -32,16 +31,18 @@ import org.openscience.cdk.*;
 import javax.vecmath.*;
 
 /**
+ * A molecule which looks like a cube. The center
+ * of the cube is located at (0,0,0) and the corners have a length of 2.
+ *
  * @cdkPackage test
+ *
+ * @author  Edgar Luttmann <edgar@uni-paderborn.de>
+ * @created 2001-08-09
  */
 class MockMolecule extends Molecule {
 	public MockMolecule () {
 		super();
 		
-		//
-		// construct a Mock Molecule which looks like a cube. the center
-		// of the cube is located at (0,0,0) and the corners have a length of 2.
-		//
 		addAtom(new Atom("C", new Point3d(1,1,-1)));
 		addAtom(new Atom("C", new Point3d(1,-1,-1)));
 		addAtom(new Atom("C", new Point3d(-1,1,-1)));
