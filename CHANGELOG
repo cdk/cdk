@@ -44,11 +44,12 @@ Fixes:
   and all convention handlers already subclass CMLCore convention, so don't reset
   to CMLCore convention when CML convention found
 * ValencyChecker now throws a CDKException when the checked atom is not known
-  (closes JCP #903412)
+  (closes JCP #903412) but not for PseudoAtom's
 * ChemObject.getID() was "" by default; corrected to null
 * Fixed reading of aromatic bonds ('A') from CML (closes #903379)
 * Fixed rendering of atom-atom mappings
 * Fixed reading of atom-atom mappings from MDL RXN files
+* Fixed deleting of single carbon with Controller2d (closes JCP #906910)
 
 API changes:
 * Changed SetOfAtomContainers.getAtomContainerMultiplier() to .getMultiplier()

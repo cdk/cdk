@@ -37,6 +37,7 @@ import org.openscience.cdk.ElectronContainer;
 import org.openscience.cdk.Element;
 import org.openscience.cdk.Isotope;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.SetOfReactions;
@@ -104,7 +105,9 @@ public class ValencyValidator implements ValidatorInterface {
         ValidationReport report = new ValidationReport();
         Atom[] atoms = subject.getAtoms();
         for (int i=0; i<atoms.length; i++) {
-            report.addReport(validateAtomValency(atoms[i], subject));
+            if (!(atoms[i] instanceof PseudoAtom)) {
+                report.addReport(validateAtomValency(atoms[i], subject));
+            }
         }
         return report;
     };
