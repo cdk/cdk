@@ -208,7 +208,7 @@ public class ForceFieldTools {
 		Vector3d bondjk = new Vector3d();
 		bondjk.sub((Tuple3d)atomk.getPoint3d(), (Tuple3d)atomj.getPoint3d());
 
-		double angleBetweenTwoBonds = bondij.angle(bondjk);
+		double angleBetweenTwoBonds = Math.toDegrees(bondij.angle(bondjk));
 		return angleBetweenTwoBonds;
 	}
 	
@@ -233,7 +233,7 @@ public class ForceFieldTools {
 		Vector3d bondjk = new Vector3d();
 		bondjk.sub((Tuple3d)atomkCoordinates, (Tuple3d)atomjCoordinates);
 
-		double angleBetweenTwoBonds = bondij.angle(bondjk);
+		double angleBetweenTwoBonds = Math.toDegrees(bondij.angle(bondjk));
 		return angleBetweenTwoBonds;
 	}
 

@@ -44,18 +44,8 @@ public class GeometricMinimizer {
 	
 	ForceFieldTools ffTools = new ForceFieldTools();
 
-
 	Molecule molecule;
 
-/*
-	double B11 = 0;
-	double B12 = 0;
-	double B21 = 0;
-	double B22 = 0;
-	double B = 0;
-	double difference = 0;
-	double temp = 0;
-*/
 
 	/**
 	 *  Constructor for the GeometricMinimizer object
@@ -123,8 +113,7 @@ public class GeometricMinimizer {
 		convergence = false;
 		iterationNumber = 0;
 		iterationNumberBefore = -1;
-				
-		return;
+
 	}
 
 
@@ -201,8 +190,8 @@ public class GeometricMinimizer {
 
 		LineSearch ls = new LineSearch();
 
-		//System.out.println("");
-		//System.out.println("FORCEFIELDTESTS steepestDescentTest");
+		System.out.println("");
+		System.out.println("FORCEFIELDTESTS steepestDescentTest");
 		
 		SteepestDescentsMethod sdm = new SteepestDescentsMethod(kCoordinates);
 				
@@ -225,13 +214,13 @@ public class GeometricMinimizer {
 			ls.bracketingTheMinimum(kCoordinates, sdm.sk, forceField, iterationNumberBefore);
 			setkplus1Coordinates(sdm.sk, ls.arbitraryStepSize);			
 			//System.out.print("x" + iterationNumber + " = " + kplus1Coordinates + "	");
-			//System.out.println("f(x" + iterationNumber + ") = " + forceField.functionInPoint(kplus1Coordinates));
+			//System.out.println("f(x" + iterationNumber + ") = " + forceField.energyFunction(kplus1Coordinates));
 
 			//System.out.println("Parabolic interpolation: ");
 			ls.parabolicInterpolation();
 			setkplus1Coordinates(sdm.sk, ls.parabolMinimumLambda);			
 			//System.out.print("x" + iterationNumber + " = " + kplus1Coordinates + "	");
-			//System.out.println("f(x" + iterationNumber + ") = " + forceField.functionInPoint(kplus1Coordinates));
+			//System.out.println("f(x" + iterationNumber + ") = " + forceField.energyFunction(kplus1Coordinates));
 
 			forceField.setEnergyGradient(kplus1Coordinates);
 			gradient.set(forceField.getEnergyGradient());
@@ -239,17 +228,17 @@ public class GeometricMinimizer {
 			checkConvergence(SDconvergenceCriterion);
 			//System.out.println("convergence: " + convergence);
 
-			//System.out.println("");
-			//System.out.println("f(x" + iterationNumberBefore + ") = " + forceField.functionInPoint(kCoordinates));
-			//System.out.println("f(x" + iterationNumber + ") = " + forceField.functionInPoint(kplus1Coordinates));
-			if (molecule !=null){
+			System.out.println("");
+			System.out.println("f(x" + iterationNumberBefore + ") = " + forceField.energyFunction(kCoordinates));
+			System.out.println("f(x" + iterationNumber + ") = " + forceField.energyFunction(kplus1Coordinates));
+			if (molecule != null){
 			    //System.out.println("STEEPESTDM: kplus1Coordinates:"+kplus1Coordinates);
 			    ffTools.assignCoordinatesToMolecule(kplus1Coordinates, molecule); 
 			}
 
 		}
 		steepestDescentsMinimum.set(kplus1Coordinates);
-		   System.out.println("The SD minimum energy is at: " + steepestDescentsMinimum);
+		System.out.println("The SD minimum energy is at: " + steepestDescentsMinimum);
 		
 		return;
 	}
@@ -283,7 +272,9 @@ public class GeometricMinimizer {
 	 * @param  forceField		The potential function to be used
 	 */
 	public void conjugateGradientMinimization(GVector initialCoordinates,  PotentialFunction forceField) {
-	    System.out.println("CGM Method");
+		System.out.println("");
+		System.out.println("FORCEFIELDTESTS ConjugatedGradientTest");
+		
 		initializeMinimizationParameters(initialCoordinates);
 		
 		forceField.setEnergyGradient(kCoordinates);
@@ -293,9 +284,6 @@ public class GeometricMinimizer {
 		conjugateGradientMinimum.setSize(kCoordinates.getSize());
 		conjugateGradientMinimum.set(kCoordinates);
 		LineSearch ls = new LineSearch();
-		
-		//System.out.println("");
-		//System.out.println("FORCEFIELDTESTS ConjugatedGradientTest");
 		
 		ConjugateGradientMethod cgm = new ConjugateGradientMethod(kCoordinates);
 		       
@@ -319,13 +307,13 @@ public class GeometricMinimizer {
 			ls.bracketingTheMinimum(kCoordinates, cgm.vk, forceField, iterationNumberBefore);
 			setkplus1Coordinates(cgm.vk, ls.arbitraryStepSize);
 			//System.out.print("x" + iterationNumber + " = " + kplus1Coordinates + "	");
-			//System.out.println("f(x" + iterationNumber + ") = " + forceField.functionInPoint(kplus1Coordinates));
+			//System.out.println("f(x" + iterationNumber + ") = " + forceField.energyFunction(kplus1Coordinates));
 
 			//System.out.println("Parabolic interpolation: ");
 			ls.parabolicInterpolation();
 			setkplus1Coordinates(cgm.vk, ls.parabolMinimumLambda);
 			//System.out.print("x" + iterationNumber + " = " + kplus1Coordinates + "	");
-			//System.out.println("f(x" + iterationNumber + ") = " + forceField.functionInPoint(kplus1Coordinates));
+			//System.out.println("f(x" + iterationNumber + ") = " + forceField.energyFunction(kplus1Coordinates));
 			
 			forceField.setEnergyGradient(kplus1Coordinates);
 			gradient.set(forceField.getEnergyGradient());
@@ -333,9 +321,9 @@ public class GeometricMinimizer {
 			checkConvergence(CGconvergenceCriterion);
 			//System.out.println("convergence: " + convergence);
 
-			//System.out.println("");
-			//System.out.println("f(x" + iterationNumberBefore + ") = " + forceField.functionInPoint(kCoordinates));
-			//System.out.println("f(x" + iterationNumber + ") = " + forceField.functionInPoint(kplus1Coordinates));
+			System.out.println("");
+			System.out.println("f(x" + iterationNumberBefore + ") = " + forceField.energyFunction(kCoordinates));
+			System.out.println("f(x" + iterationNumber + ") = " + forceField.energyFunction(kplus1Coordinates));
 
 			if (molecule !=null){
 			    System.out.println("CGM: kplus1Coordinates:"+kplus1Coordinates);
@@ -414,7 +402,7 @@ public class GeometricMinimizer {
 			
 			setkplus1Coordinates(nrm.getGradientPerInverseHessian(), -1);
 			//System.out.print("x" + iterationNumber + " = " + kplus1Coordinates + "	");
-			//System.out.println("f(x" + iterationNumber + ") = " + forceField.functionInPoint(kplus1Coordinates));
+			//System.out.println("f(x" + iterationNumber + ") = " + forceField.energyFunction(kplus1Coordinates));
 
 			forceField.setEnergyGradient(kplus1Coordinates);
 			gradient.set(forceField.getEnergyGradient());
@@ -423,8 +411,8 @@ public class GeometricMinimizer {
 			//System.out.println("convergence: " + convergence);
 
 			//System.out.println("");
-			//System.out.println("f(x" + iterationNumberBefore + ") = " + forceField.functionInPoint(kCoordinates));
-			//System.out.println("f(x" + iterationNumber + ") = " + forceField.functionInPoint(kplus1Coordinates));
+			//System.out.println("f(x" + iterationNumberBefore + ") = " + forceField.energyFunction(kCoordinates));
+			//System.out.println("f(x" + iterationNumber + ") = " + forceField.energyFunction(kplus1Coordinates));
 		}
 		   newtonRaphsonMinimum.set(kplus1Coordinates);
 		   //System.out.println("The NR minimum energy is at: " + newtonRaphsonMinimum);

@@ -16,7 +16,7 @@ import org.openscience.cdk.*;
  */
 public class MMFF94EnergyFunction implements PotentialFunction {
 	String energyFunctionShape = " MMFF94 energy ";
-	double energyFunction = 0;
+	double energy = 0;
 	GVector energyGradient = new GVector(3);
 	GMatrix energyHessian = null;
 	
@@ -47,21 +47,20 @@ public class MMFF94EnergyFunction implements PotentialFunction {
 	 *  Evaluate the MMFF94 energy function in a given 3xN point
 	 *
 	 *@param  coords3d  Current molecule 3xN coordinates.
-	 */
-	public void setEnergyFunction(GVector coords3d) {
-		energyFunction = bs.functionMMFF94SumEB(coords3d) 
-				+ ab.functionMMFF94SumEA(coords3d) + sbi.functionMMFF94SumEBA(coords3d)
-				+ t.functionMMFF94SumET(coords3d) + vdwi.functionMMFF94SumEvdW(coords3d);
-	}
-
-
-	/**
-	 *  Get the MMFF94 energy function in a given 3xN point
-	 *
 	 *@return        MMFF94 energy function value.
 	 */
-	public double getEnergyFunction() {
-		return energyFunction;
+	public double energyFunction(GVector coords3d) {
+		//System.out.println("bs.functionMMFF94SumEB(coords3d) = " + bs.functionMMFF94SumEB(coords3d));
+		//System.out.println("ab.functionMMFF94SumEA(coords3d) = " + ab.functionMMFF94SumEA(coords3d));
+		//System.out.println("sbi.functionMMFF94SumEBA(coords3d) = " + sbi.functionMMFF94SumEBA(coords3d));
+		//System.out.println("t.functionMMFF94SumET(coords3d) = " + t.functionMMFF94SumET(coords3d));
+		//System.out.println("vdwi.functionMMFF94SumEvdW(coords3d) = " + vdwi.functionMMFF94SumEvdW(coords3d));
+		
+		energy = bs.functionMMFF94SumEB(coords3d) 
+			+ ab.functionMMFF94SumEA(coords3d) + sbi.functionMMFF94SumEBA(coords3d)
+			+ t.functionMMFF94SumET(coords3d) + vdwi.functionMMFF94SumEvdW(coords3d);
+		//System.out.println("energy = " + energy);
+		return energy;
 	}
 
 

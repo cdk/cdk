@@ -42,8 +42,7 @@ public class LineSearch {
 
 		//System.out.println("Bracketing the minimum:");
 		//System.out.print("X" + iterNum + " = " + kPoint + "	");
-		//forceFieldFunction.setEnergyFunction(kPoint);	//  Need We it?
-		//System.out.println("f(X" + iterNum + ") = " + forceFieldFunction.getEnergyFunction());
+		//System.out.println("f(X" + iterNum + ") = " + forceFieldFunction.energyFunction(kPoint));
 
 		GVector xa = new GVector(kPoint);
 		lambdaa = 0;
@@ -56,10 +55,8 @@ public class LineSearch {
 
 		GVector xc = new GVector(kPoint.getSize());
 
-		forceFieldFunction.setEnergyFunction(xa);
-		fxa = forceFieldFunction.getEnergyFunction();
-		forceFieldFunction.setEnergyFunction(xb);
-		fxb = forceFieldFunction.getEnergyFunction();
+		fxa = forceFieldFunction.energyFunction(xa);
+		fxb = forceFieldFunction.energyFunction(xb);
 		
 		//System.out.print("lambdaa = " + lambdaa + "	");
 		//System.out.println("fxa = " + fxa);
@@ -75,8 +72,7 @@ public class LineSearch {
 			direction.set(searchDirection);
 			direction.scale(lambdac);
 			xc.add(direction);
-			forceFieldFunction.setEnergyFunction(xc);
-			fxc = forceFieldFunction.getEnergyFunction();
+			fxc = forceFieldFunction.energyFunction(xc);
 		
 			//System.out.print("lambdaa = " + lambdaa + "	");
 			//System.out.println("fxa = " + fxa);
@@ -105,8 +101,7 @@ public class LineSearch {
 					direction.set(searchDirection);
 					direction.scale(lambdac);
 					xc.add(direction);
-					forceFieldFunction.setEnergyFunction(xc);
-					fxc = forceFieldFunction.getEnergyFunction();
+					fxc = forceFieldFunction.energyFunction(xc);
 
 					//System.out.print("lambdaa = " + lambdaa + "	");
 					//System.out.println("fxa = " + fxa);
@@ -132,8 +127,7 @@ public class LineSearch {
 				direction.set(searchDirection);
 				direction.scale(lambdab);
 				xb.add(direction);
-				forceFieldFunction.setEnergyFunction(xb);
-				fxb = forceFieldFunction.getEnergyFunction();
+				fxb = forceFieldFunction.energyFunction(xb);
 
 				//System.out.print("lambdaa = " + lambdaa + "	");
 				//System.out.println("fxa = " + fxa);

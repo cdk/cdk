@@ -177,6 +177,7 @@ public class Torsions {
 	public void setGradientMMFF94SumET(GVector coords3d) {
 
 		gradientMMFF94SumET.setSize(coords3d.getSize());
+		setPhi(coords3d);
 		dPhi.setSize(coords3d.getSize());
 
 		double sumGradientET;
@@ -218,6 +219,7 @@ public class Torsions {
 	public void setHessianMMFF94SumET(GVector coords3d) {
 
 		double[] forHessian = new double[coords3d.getSize() * coords3d.getSize()];
+		setPhi(coords3d);
 		double[] ddPhi = new double[coords3d.getSize() * coords3d.getSize()];
 		
 		double sumHessianET = 0;

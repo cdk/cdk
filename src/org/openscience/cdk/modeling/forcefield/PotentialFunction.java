@@ -15,7 +15,7 @@ import org.openscience.cdk.*;
  */
 
 public interface PotentialFunction {
-	double energyFunction = 0;			//Energy function in a 3xN point
+	double energy = 0;			//Energy function in a 3xN point
 	GVector energyGradient = new GVector(3);		//Gradient of the energy function in a 3xN point.
 	GMatrix energyHessian = null;
 
@@ -23,16 +23,9 @@ public interface PotentialFunction {
 	 *  Evaluate the potential energy function in a given point
 	 *
 	 *@param  coords3d  Current molecule 3xN coordinates.
-	 */
-	void setEnergyFunction(GVector coords3d);
-
-
-	/**
-	 *  Get the potential energy function in a given 3xN point.
-	 *
 	 * @return    Energy function value in the wished 3xN point.
 	 */
-	double getEnergyFunction();
+	double energyFunction(GVector coords3d);
 
 
 	/**

@@ -18,7 +18,7 @@ import org.openscience.cdk.qsar.RDFProtonDescriptor;
  */
 public class StretchBendInteractions {
 
-	String functionShape = " Stretch-BendInteractions ";
+	String functionShape = " Stretch-Bend Interactions ";
 
 	double mmff94SumEBA = 0;
 	GVector gradientMMFF94SumEBA = new GVector(3);
@@ -45,6 +45,7 @@ public class StretchBendInteractions {
 
 	ForceFieldTools ffTools = new ForceFieldTools();
 
+
 	/**
 	 *  Constructor for the StretchBendInteractions object
 	 */
@@ -52,7 +53,8 @@ public class StretchBendInteractions {
 
 
 	/**
-	 *  Set MMFF94 constants kbaIJK and kbaKJI for each i-j-k angle in the molecule.
+	 *  Set MMFF94 reference angle v0IJK, reference bond lengths r0IJ and r0JK,
+	 *  and the constants kbaIJK and kbaKJI for each i-j-k angle in the molecule.
 	 *
 	 *
 	 *@param  molecule       The molecule like an AtomContainer object.
@@ -113,8 +115,8 @@ public class StretchBendInteractions {
 						r0KJ[l] = ((Double) bondData.get(0)).doubleValue();
 						
 						angleAtomPosition[l] = new int[3];
-						angleAtomPosition[l][0] = molecule.getAtomNumber(atomConnected[j]);
-						angleAtomPosition[l][1] = i;
+						angleAtomPosition[l][0] = molecule.getAtomNumber(atomConnected[i]);
+						angleAtomPosition[l][1] = j;
 						angleAtomPosition[l][2] = molecule.getAtomNumber(atomConnected[k]);
 
 					}
@@ -141,12 +143,13 @@ public class StretchBendInteractions {
 
 		for (int i = 0; i < angleNumber; i++) {
 			v[i] = ffTools.angleBetweenTwoBondsFrom3xNCoordinates(coords3d, angleAtomPosition[i][0],angleAtomPosition[i][1],angleAtomPosition[i][2]);
+			//System.out.println("v[" + i + "]= " + v[i]);
 			deltav[i] = v[i] - v0[i];
 
-			rij[i] = ffTools.distanceBetweenTwoAtomsFrom3xNCoordinates(coords3d, angleAtomPosition[i][0], angleAtomPosition[i][1]);
+			rij[i] = ffTools.distanceBetweenTwoAtomsFrom3xNCoordinates(coords3d, angleAtomPosition[i][1], angleAtomPosition[i][0]);
 			deltarij[i] = rij[i] - r0IJ[i];
 
-			rkj[i] = ffTools.distanceBetweenTwoAtomsFrom3xNCoordinates(coords3d, angleAtomPosition[i][2], angleAtomPosition[i][1]);
+			rkj[i] = ffTools.distanceBetweenTwoAtomsFrom3xNCoordinates(coords3d, angleAtomPosition[i][1], angleAtomPosition[i][2]);
 			deltarkj[i] = rkj[i] - r0KJ[i];
 		}
 	}
@@ -178,6 +181,7 @@ public class StretchBendInteractions {
 	public void setGradientMMFF94SumEBA(GVector coords3d) {
 
 		gradientMMFF94SumEBA.setSize(coords3d.getSize());
+		calculateDeltarAndv(coords3d);
 		dDeltav.setSize(coords3d.getSize());
 		dDeltarij.setSize(coords3d.getSize());
 		dDeltarkj.setSize(coords3d.getSize());
@@ -222,6 +226,7 @@ public class StretchBendInteractions {
 	public void setHessianMMFF94SumEBA(GVector coords3d) {
 
 		double[] forHessian = new double[coords3d.getSize() * coords3d.getSize()];
+		calculateDeltarAndv(coords3d);
 		double sumHessianEBA = 0;
 
 		GMatrix ddDeltav = new GMatrix(coords3d.getSize(),coords3d.getSize());

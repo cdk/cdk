@@ -50,7 +50,7 @@ public class BondStretching {
 
 	/**
 	 *  Set MMFF94 reference bond lengths r0IJ and the constants k2, k3, k4 for
-	 *  each i-j bond in a molecule.
+	 *  each i-j bond in the molecule.
 	 *
 	 *@param  molecule       The molecule like an AtomContainer object.
 	 *@param  parameterSet   MMFF94 parameters set
@@ -104,6 +104,7 @@ public class BondStretching {
 	 */
 	public void calculateDeltar(GVector coord3d) {
 
+		//System.out.println("deltar.length = " + deltar.length);
 		for (int i = 0; i < bondsNumber; i++) {
 			r[i] = ffTools.distanceBetweenTwoAtomsFrom3xNCoordinates(coord3d, bondAtomPosition[i][0], bondAtomPosition[i][1]);
 			deltar[i] = r[i] - r0[i];
@@ -118,8 +119,15 @@ public class BondStretching {
 	 *@return        bond stretching value
 	 */
 	public double functionMMFF94SumEB(GVector coord3d) {
-
+		/*for (int i=0; i < bondsNumber; i++) {
+			System.out.println("before:	deltar[" + i + "] = " + deltar[i]);
+		}*/
+		
 		calculateDeltar(coord3d);
+
+		/*for (int i=0; i < bondsNumber; i++) {
+			System.out.println("after:	deltar[" + i + "] = " + deltar[i]);
+		}*/
 		
 		mmff94SumEB = 0;
 
@@ -200,6 +208,7 @@ public class BondStretching {
 		
 		gradientMMFF94SumEB.setSize(coord3d.getSize());
 		setBondLengthsFirstDerivative(coord3d);
+		calculateDeltar(coord3d);
 		
 		double sumGradientEB;
 		for (int i = 0; i < gradientMMFF94SumEB.getSize(); i++) {
@@ -339,6 +348,7 @@ public class BondStretching {
 		
 		double[] forHessian = new double[coord3d.getSize() * coord3d.getSize()];
 		setBondLengthsSecondDerivative(coord3d);
+		calculateDeltar(coord3d);
 		
 		double sumHessianEB;
 		int forHessianIndex;

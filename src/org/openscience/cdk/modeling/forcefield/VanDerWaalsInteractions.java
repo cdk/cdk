@@ -204,7 +204,7 @@ public class VanDerWaalsInteractions {
 	 *
 	 *@param  coords3d  Current molecule coordinates.
 	 */
-	public void setAtomDistance(GVector coords3d) throws Exception{
+	public void setAtomDistance(GVector coords3d) {
 
 		for (int l = 0; l < vdwInteractionNumber; l++) {
 
@@ -231,6 +231,7 @@ public class VanDerWaalsInteractions {
 	 *@return        MMFF94 Van Der Waals interaction term value.
 	 */
 	public double functionMMFF94SumEvdW(GVector coords3d) {
+		setAtomDistance(coords3d);
 		mmff94SumEvdW = 0;
 		for (int l = 0; l < vdwInteractionNumber; l++) {
 			mmff94SumEvdW = mmff94SumEvdW +
@@ -250,6 +251,7 @@ public class VanDerWaalsInteractions {
 	 *@return        CCG Van Der Waals interaction term value.
 	 */
 	public double functionCCGSumEvdWSK(GVector coords3d, double[] s) {
+		setAtomDistance(coords3d);
 		ccgSumEvdWSlaterKirkwood = 0;
 		double c;
 		for (int l = 0; l < vdwInteractionNumber; l++) {
@@ -272,6 +274,7 @@ public class VanDerWaalsInteractions {
 	 *@return        CCG Van Der Waals interaction term value.
 	 */
 	public double functionCCGSumEvdWAv(GVector coords3d, double[] s) {
+		setAtomDistance(coords3d);
 		ccgSumEvdWAverage = 0;
 		double c;
 		for (int l = 0; l < vdwInteractionNumber; l++) {
@@ -297,6 +300,7 @@ public class VanDerWaalsInteractions {
 	public void setGradientMMFF94SumEvdW(GVector coords3d) {
 
 		gradientMMFF94SumEvdW.setSize(coords3d.getSize());
+		setAtomDistance(coords3d);
 		dR.setSize(coords3d.getSize());
 		
 		double sumGradientEvdW;
@@ -341,6 +345,7 @@ public class VanDerWaalsInteractions {
 /*	public GVector gradientMMFF94SumEvdW(GVector coords3d, double[] s) {
 
 		gradientCCGSumEvdWSlaterKirkwood.setSize(molecule.getAtomCount() * 3);
+		setAtomDistance(coords3d);
 		dR.setSize(molecule.getAtomCount() * 3);
 
 		dterm1.setSize(molecule.getAtomCount() * 3);
@@ -386,6 +391,7 @@ public class VanDerWaalsInteractions {
 /*	public GMatrix hessian(GVector coords3d) {
 
 		double[] forHessian = new double[coords3d.getSize() * coords3d.getSize()];
+		setAtomDistance(coords3d);
 		double sumHessianEvdW = 0;
 
 		GMatrix ddR = new GMatrix(coords3d.getSize(),coords3d.getSize());

@@ -20,11 +20,12 @@ public class AngleBending {
 
 	String functionShape = " Angle bending ";
 
-	ForceFieldTools ffTools = new ForceFieldTools();
-
 	double mmff94SumEA = 0;
 	GVector gradientMMFF94SumEA = new GVector(3);
 	GMatrix hessianMMFF94SumEA = new GMatrix(3,3);
+
+	double[][] dDeltav = null;
+	double[][][] ddDeltav = null;
 
 	int angleNumber = 0;
 	int[][] angleAtomPosition = null;
@@ -37,8 +38,7 @@ public class AngleBending {
 	double[] v = null;
 	double[] deltav = null;
 
-	double[][] dDeltav = null;
-	double[][][] ddDeltav = null;
+	ForceFieldTools ffTools = new ForceFieldTools();
 
 
 	/**
@@ -124,9 +124,12 @@ public class AngleBending {
 	 */
 	public void calculateDeltav(GVector coord3d) {
 		
+		//System.out.println("deltav.length = " + deltav.length);
 		for (int i = 0; i < angleNumber; i++) {
 			v[i] = ffTools.angleBetweenTwoBondsFrom3xNCoordinates(coord3d,angleAtomPosition[i][0],angleAtomPosition[i][1],angleAtomPosition[i][2]);
+			//System.out.println("v[" + i + "] = " + v[i]);
 			deltav[i] = v[i] - v0[i];
+			//System.out.println("deltav[" + i + "]= " + deltav[i]);
 		}
 	}
 
@@ -141,8 +144,14 @@ public class AngleBending {
 		calculateDeltav(coord3d);
 		mmff94SumEA = 0;
 		for (int i = 0; i < angleNumber; i++) {
+			//System.out.println("k2[" + i + "]= " + k2[i]);
+			//System.out.println("k3[" + i + "]= " + k3[i]);
+			//System.out.println("deltav[" + i + "]= " + deltav[i]);
+
 			mmff94SumEA = mmff94SumEA + k2[i] * Math.pow(deltav[i],2) 
-											+ k3[i] * Math.pow(deltav[i],3);
+						+ k3[i] * Math.pow(deltav[i],3);
+			
+			//System.out.println("mmff94SumEA = " + mmff94SumEA);
 		}
 		//System.out.println("mmff94SumEA = " + mmff94SumEA);
 		return mmff94SumEA;
@@ -262,7 +271,7 @@ public class AngleBending {
 	 */
 	public void setGradientMMFF94SumEA(GVector coord3d) {
 		gradientMMFF94SumEA.setSize(coord3d.getSize());
-		
+		calculateDeltav(coord3d);
 		setAngleBendingFirstDerivative(coord3d);
 		
 		double sumGradientEA;
@@ -723,6 +732,7 @@ public class AngleBending {
 
 		double[] forHessian = new double[coord3d.getSize() * coord3d.getSize()];
 		
+		calculateDeltav(coord3d);
 		setAngleBendingSecondDerivative(coord3d);
 		
 		double sumHessianEA = 0;
@@ -740,7 +750,12 @@ public class AngleBending {
 				forHessian[forHessianIndex] = sumHessianEA;
 			}
 		}
-
+		/*for (int n = 0; n < forHessian.length; n++) {
+			System.out.print(forHessian[n] + ", ");
+			if (n % 6 == 5) {
+				System.out.println("");
+			}
+		}*/
 		hessianMMFF94SumEA.setSize(coord3d.getSize(), coord3d.getSize());
 		hessianMMFF94SumEA.set(forHessian); 
 		//System.out.println("hessianMMFF94SumEA : " + hessianMMFF94SumEA);

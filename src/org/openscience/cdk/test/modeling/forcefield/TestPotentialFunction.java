@@ -18,7 +18,7 @@ import org.openscience.cdk.modeling.forcefield.*;
 public class TestPotentialFunction implements PotentialFunction {
 	String functionShape = " f(X,Y) = X2 + 2 Y2 ";
 	String gradientShape = " g = ( 2x , 4y )";
-	double energyFunction = 0;
+	double energy = 0;
 	GVector energyGradient = new GVector(3);
 	GMatrix energyHessian = null;
 
@@ -35,19 +35,11 @@ public class TestPotentialFunction implements PotentialFunction {
 	 *  Evaluate the potential energy function in a given point
 	 *
 	 *@param  point  Current molecule coordinates.
-	 */
-	public void setEnergyFunction(GVector point) {
-		energyFunction = ((point.getElement(0)) * (point.getElement(0))) + (2 * (point.getElement(1)) * (point.getElement(1)));
-	}
-
-
-	/**
-	 *  Get the potential energy function in a given point
-	 *
 	 *@return        Function value
 	 */
-	public double getEnergyFunction() {
-		return energyFunction;
+	public double energyFunction(GVector point) {
+		energy = ((point.getElement(0)) * (point.getElement(0))) + (2 * (point.getElement(1)) * (point.getElement(1)));
+		return energy;
 	}
 
 
