@@ -82,9 +82,71 @@ public class GENMDeterministicGenerator
 		initializeParameters();
 		analyseMolecularFormula(mfa);
 		generateBasicUnits();
-	//	System.out.println("numberofstructure is="+numberOfStructure);
-	//	System.out.println("numberofstructure is="+structures.size());
+		logger.debug("numberofstructure is="+numberOfStructure);
 	}
+	
+	
+	/**
+	 * Constructor for GENMDeterministicGenerator object. This constructor could be 
+	 * used for a set of basic units.
+	 *
+	 */
+	public GENMDeterministicGenerator(Vector basicUnits) throws IOException,Exception
+	{
+		numberOfSetFragment=0;
+		numberOfStructure=0;
+		connectivityChecker=new ConnectivityChecker();
+		numberOfBasicUnit=new int[23];
+		numberOfBasicFragment=new int[34];
+		basicFragment=new Vector();
+		structures=new Vector();
+		
+		logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+		
+		structureout=new PrintWriter(new FileWriter("structuredata.txt"),true);
+		
+		initializeParameters();
+		if(basicUnits!=null)getBasicUnit(basicUnits);
+		else
+			logger.error("input false");
+		generateBasicFragments();
+		//System.out.println("numberofstructure is="+numberOfStructure);
+	}
+	
+	
+	/**
+	 * get basic units from input information.
+	 * @param	basicUnits	vector contains basic units which stored as string
+	 */
+	 public void getBasicUnit(Vector basicUnits)
+	 {
+		 int i,j;
+		 for(i=0;i<basicUnits.size();i++)
+		 {
+			 String s=(String)basicUnits.get(i);
+			 if(s.equals("Si"))numberOfBasicUnit[1]+=1;
+			 else if(s.equals("P"))numberOfBasicUnit[2]+=1;
+			 else if(s.equals("S"))numberOfBasicUnit[3]+=1;
+			 else if(s.equals("N"))numberOfBasicUnit[4]+=1;
+			 else if(s.equals("O"))numberOfBasicUnit[5]+=1;
+			 else if(s.equals("C"))numberOfBasicUnit[6]+=1;
+			 else if(s.equals("SiH3"))numberOfBasicUnit[7]+=1;
+			 else if(s.equals("SiH2"))numberOfBasicUnit[8]+=1;
+			 else if(s.equals("SiH"))numberOfBasicUnit[9]+=1;
+			 else if(s.equals("PH2"))numberOfBasicUnit[10]+=1;
+			 else if(s.equals("PH"))numberOfBasicUnit[11]+=1;
+			 else if(s.equals("SH"))numberOfBasicUnit[12]+=1;
+			 else if(s.equals("NH2"))numberOfBasicUnit[13]+=1;
+			 else if(s.equals("NH"))numberOfBasicUnit[14]+=1;
+			 else if(s.equals("OH"))numberOfBasicUnit[15]+=1;
+			 else if(s.equals("CH3"))numberOfBasicUnit[16]+=1;
+			 else if(s.equals("CH2"))numberOfBasicUnit[17]+=1;
+			 else if(s.equals("CH"))numberOfBasicUnit[18]+=1;
+			 else
+				 logger.error("input error");
+		 }
+	 }
+	
 	
 	/**
 	 *  Initialize the basic fragment. For the definition, please see the BasicFragment class.
@@ -176,9 +238,9 @@ public class GENMDeterministicGenerator
 			logger.debug("Input molecular formula error!");
 	 	 }
 		 
-		// for(i=1;i<=11;i++)
-			 //logger.debug("molecularFormula["+i+"]="+molecularFormula[i]);
-		 	//System.out.println("molecularFormula["+i+"]="+molecularFormula[i]);
+		 for(i=1;i<=11;i++)
+			logger.debug("molecularFormula["+i+"]="+molecularFormula[i]);
+		 	
 		 
 		 return;
 	 }
@@ -538,12 +600,10 @@ public class GENMDeterministicGenerator
 				 if(flag)
 				 {
 					 numberOfSetFragment+=1;
-					// System.out.println("Fragment Set	"+numberOfSetFragment);
-					// structureout.println("Fragment Set	"+numberOfSetFragment);
+					 logger.debug("Fragment Set	"+numberOfSetFragment);
 					 for(i=1;i<34;i++)
 					 {
-					//	 if(numberOfBasicFragment[i]!=0)System.out.println(((BasicFragment)(basicFragment.get(i-1))).getBasicFragment()+"		"+numberOfBasicFragment[i]);
-					//	 if(numberOfBasicFragment[i]!=0)structureout.println(((BasicFragment)(basicFragment.get(i-1))).getBasicFragment()+"		"+numberOfBasicFragment[i]);
+						 if(numberOfBasicFragment[i]!=0)logger.debug(((BasicFragment)(basicFragment.get(i-1))).getBasicFragment()+"		"+numberOfBasicFragment[i]);
 					 }
 					generateIsomers();
 				}
@@ -1572,8 +1632,39 @@ public class GENMDeterministicGenerator
 				 else break;
 			  }
 		}
-		else if(changedCategory==category[0]&& previousFilledValue[changedCategory]==category[changedCategory] && previousFilledValue[changedCategory-1]!=0 )
+		else if(changedCategory==category[0]&& previousFilledValue[changedCategory]==category[changedCategory] && 
+			previousFilledValue[changedCategory-1]!=0 && previousFilledValue[changedCategory-1]<category[changedCategory-1])
 		{
+			while(previousFilledValue[changedCategory-2]==0)changedCategory-=1;
+			sum=0;
+			for(i=1;i<(changedCategory-2);i++)
+			{
+				currentFilledValue[i]=previousFilledValue[i];
+				sum+=currentFilledValue[i];
+			}
+			
+			currentFilledValue[changedCategory-2]=previousFilledValue[changedCategory-2]-1;
+			sum+=currentFilledValue[changedCategory-2];
+			iter=changedCategory-1;
+			 while(leftBond>sum)
+			  {
+				 currentFilledValue[iter]=leftBond-sum;
+				 if(currentFilledValue[iter]>category[iter] && iter<category[0])
+				 {
+					 currentFilledValue[iter]=category[iter];
+					 sum+=currentFilledValue[iter];
+					 iter+=1;
+					 continue;
+				 }
+				
+				 else break;
+			  }
+		}
+		else if(changedCategory==category[0]&& previousFilledValue[changedCategory]==category[changedCategory] && 
+			previousFilledValue[changedCategory-1]!=0 && previousFilledValue[changedCategory-1]==category[changedCategory-1])
+		{
+			while(previousFilledValue[changedCategory-2]==category[changedCategory-2])changedCategory-=1;
+			changedCategory-=1;
 			while(previousFilledValue[changedCategory-2]==0)changedCategory-=1;
 			sum=0;
 			for(i=1;i<(changedCategory-2);i++)
