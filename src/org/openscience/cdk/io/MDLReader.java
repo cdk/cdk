@@ -213,8 +213,8 @@ public class MDLReader extends DefaultChemObjectReader {
 		String str;
         try {
             String line = input.readLine();
-            logger.debug("line: ", line);
             if (input.ready() && line != null) {
+                logger.debug("line: ", line);
                 // apparently, this is a SDF file, continue with 
                 // reading mol files
                 do {
