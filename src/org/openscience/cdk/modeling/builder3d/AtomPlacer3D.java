@@ -33,6 +33,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.geometry.GeometryTools;
 
 
 /**
@@ -419,7 +420,7 @@ public class AtomPlacer3D {
 	 */
 	public Point3d geometricCenterAllPlacedAtoms(AtomContainer molecule) {
 		AtomContainer allPlacedAtoms = getAllPlacedAtoms(molecule);
-		return allPlacedAtoms.get3DCenter();
+		return GeometryTools.get3DCenter(allPlacedAtoms);
 	}
 
 	/**

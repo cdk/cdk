@@ -364,6 +364,32 @@ public class GeometryTools {
         return new Point3d(x/totalmass, y/totalmass, z/totalmass);
     }
 
+	/**
+	 * Returns the geometric center of all the atoms in this atomContainer.
+	 *
+	 * @return    the geometric center of the atoms in this atomContainer
+	 */
+	public static Point3d get3DCenter(AtomContainer ac)
+	{
+		double centerX = 0;
+		double centerY = 0;
+		double centerZ = 0;
+		double counter = 0;
+        Atom[] atoms = ac.getAtoms();
+		for (int i = 0; i < atoms.length; i++)
+		{
+			if (atoms[i].getPoint3d() != null)
+			{
+				centerX += atoms[i].getPoint3d().x;
+				centerY += atoms[i].getPoint3d().y;
+				centerZ += atoms[i].getPoint3d().z;
+				counter++;
+			}
+		}
+		Point3d point = new Point3d(centerX / (counter), centerY / (counter), centerZ / (counter));
+		return point;
+	}
+
 	public static double getAngle(double xDiff, double yDiff)
 	{
 		double angle = 0; 

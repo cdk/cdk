@@ -860,31 +860,6 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	}
 
 	/**
-	 *  Returns the geometric center of all the atoms in this atomContainer.
-	 *
-	 *@return    the geometric center of the atoms in this atomContainer
-	 */
-	public Point3d get3DCenter()
-	{
-		double centerX = 0;
-		double centerY = 0;
-		double centerZ = 0;
-		double counter = 0;
-		for (int i = 0; i < getAtomCount(); i++)
-		{
-			if (atoms[i].getPoint3d() != null)
-			{
-				centerX += atoms[i].getPoint3d().x;
-				centerY += atoms[i].getPoint3d().y;
-				centerZ += atoms[i].getPoint3d().z;
-				counter++;
-			}
-		}
-		Point3d point = new Point3d(centerX / (counter), centerY / (counter), centerZ / (counter));
-		return point;
-	}
-
-	/**
 	 *  Adds the <code>ElectronContainer</code>s found in atomContainer to this
 	 *  container.
 	 *

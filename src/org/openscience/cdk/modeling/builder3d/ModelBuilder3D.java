@@ -50,6 +50,7 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.layout.AtomPlacer;
 import org.openscience.cdk.ringsearch.RingPartitioner;
+import org.openscience.cdk.geometry.GeometryTools;
 
 /**
  *  the main class to generate the 3D coordinates of a molecule ModelBuilder3D
@@ -398,7 +399,7 @@ public class ModelBuilder3D {
 
 		//Rotate Ring so that geometric center is max from placed center
 		//System.out.println("Rotate RINGSYSTEM");
-		Point3d pointRingCenter = ac.get3DCenter();
+		Point3d pointRingCenter = GeometryTools.get3DCenter(ac);
 		double distance = 0;
 		double rotAngleMax = 0;
 		angle = 1 / 180 * Math.PI;
