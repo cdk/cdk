@@ -78,6 +78,11 @@ public interface CDKPluginInterface {
     public void setEditBus(CDKEditBus editBus);
 
     /**
+     * Sets the directory where the plugin's preferences can be found.
+     */
+    public void setPropertyDirectory(String directory);
+
+    /**
      * Initializes the plugin.
      */
     public void start();
