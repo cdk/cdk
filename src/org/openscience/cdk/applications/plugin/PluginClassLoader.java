@@ -33,6 +33,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.jar.Attributes;
 import java.io.IOException;
 
+import org.openscience.cdk.tools.LoggingTool;
+
 /**
  * A class loader for loading classes from a plugin jar files.
  *
@@ -41,10 +43,13 @@ import java.io.IOException;
 public class PluginClassLoader extends URLClassLoader {
     
     private URL url;
+    
+    private static LoggingTool logger = null;
 
     public PluginClassLoader(URL url) {
         super(new URL[] { url });
         this.url = url;
+        if (logger == null) logger = new LoggingTool(this);
     }
 
     /**
@@ -58,23 +63,22 @@ public class PluginClassLoader extends URLClassLoader {
      *            be found
      */
     public Class loadClass(String name) throws ClassNotFoundException {
-        System.out.println("Loading from plugin jar: " + name);
+        logger.debug("Loading from plugin jar: " + name);
         Class _class = null;
-        ClassNotFoundException exception = null;
         try {
             _class = super.findClass(name);
-            System.out.println("  found: " + _class);
+            logger.debug("  found: " + _class);
             return _class;
         } catch (ClassNotFoundException exc) {
-            exception = exc;
-            System.out.println("  not found in plugin jar");
+            logger.debug("  not found in plugin jar");
         }
         try {
             _class = super.loadClass(name);
-            System.out.println("  found: " + _class);
+            logger.debug("  found: " + _class);
         } catch (ClassNotFoundException exc) {
-            System.out.println("  not found in elsewhere");
-            throw exception;
+            logger.error("  not found in elsewhere");
+            logger.debug(exc);
+            throw exc;
         }
         return _class;
     }
