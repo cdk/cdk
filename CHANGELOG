@@ -5,7 +5,8 @@ Changes in CVS
 ------------------------------------
 New:
 * ChemFormat and ChemFormatMatchers interfaces in new io.formats package
-
+* added charges.GasteigerMarsiliPartialCharges calculation
+* added charges.AtomTypesCharges class to assign charges to atom types
 Fixes:
 * Split file format matching from file reading reducing the requirements
   for format detection

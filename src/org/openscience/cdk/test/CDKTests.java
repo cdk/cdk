@@ -49,6 +49,7 @@ import org.openscience.cdk.test.smiles.SmilesGeneratorTest;
 import org.openscience.cdk.test.smiles.SmilesParserTest;
 import org.openscience.cdk.test.structgen.RandomStructureGeneratorTest;
 import org.openscience.cdk.test.tools.ToolsTests;
+import org.openscience.cdk.test.charges.GasteigerMarsiliPartialChargesTest;
 
 /**
  * TestSuite that runs all the sample tests
@@ -105,8 +106,10 @@ public class CDKTests
         suite.addTest(HueckelAromaticityDetectorTest.suite());
         // from cdk.test.structgen
         suite.addTest(RandomStructureGeneratorTest.suite());
-		// from cdk.test.reaction
-		suite.addTest(ReactionBalancerTest.suite());
+	// from cdk.test.reaction
+	suite.addTest(ReactionBalancerTest.suite());
+	// from cdk.test.charges
+	suite.addTest(GasteigerMarsiliPartialChargesTest.suite());
         // from cdk.test.iupac
         try {
             Class testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.test.iupac.ParserTest");
