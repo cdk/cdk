@@ -36,6 +36,8 @@ import org.openscience.cdk.*;
  * This is an implementation of the algorithm published in
  * John Figueras, "Ring Perception Using Breadth-First Search", 
  * J. Chem. Inf. Comput Sci. 1996, 36, 986-991.
+ *
+ * @keyword smallest-set-of-rings
  */
 public class SSSRFinder
 {

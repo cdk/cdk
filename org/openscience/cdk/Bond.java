@@ -30,6 +30,10 @@ import javax.vecmath.*;
 /**
  * Implements the concept of a bond, i.e. a number of electrons connecting 
  * a number of atoms.
+ *
+ * @keyword bond
+ * @keyword atom
+ * @keyword electron
  */
 
 public class Bond extends ElectronContainer implements Cloneable

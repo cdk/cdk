@@ -26,8 +26,11 @@ package org.openscience.cdk;
 
 /**
  * Base class for entities containing electrons, like bonds, orbitals, lone-pairs.
+ *
+ * @keyword orbital
+ * @keyword lone-pair
+ * @keyword bond
  */
-
 public class ElectronContainer extends ChemObject
 {
 	/** Number of electrons in the ElectronContainer */

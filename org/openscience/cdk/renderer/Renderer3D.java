@@ -32,55 +32,156 @@ import org.openscience.cdk.geometry.*;
 import org.openscience.cdk.tools.*;
 import org.openscience.cdk.*;
 import javax.vecmath.*;
+import javax.swing.*;
 import java.util.*;
 import java.awt.*;
+import java.awt.event.*;
 
-public class Renderer3D {
+/**
+ * Three dimensional renderer which depicts atoms as cartoonlike
+ * atoms. No shading, no other fancy stuff.
+ *
+ * This code is based on code from the Jmol Project.
+ *
+ * @author Egon Willighagen
+ **/
+public class Renderer3D extends JPanel implements Runnable {
 
     private org.openscience.cdk.tools.LoggingTool logger;
 
-    public Renderer3DModel r3dm;
+    private static Matrix4d rotation_matrix = new Matrix4d();
+
+    public Renderer3DModel drawing_properties;
+
+    private boolean painting = false;
+
+    // variables to do with rotation
+    private static int x_where_mouse_was_pressed, y_where_mouse_was_pressed;
 
     public Renderer3D() {
         this(new Renderer3DModel());
     }
 
-    public Renderer3D(Renderer3DModel r3dm) {
+    /**
+     * Constructs a new Renderer3D using the model properties given by
+     * the Renderer3DModel.
+     *
+     * @param drawing_properties     drawing properties to be used
+     */
+    public Renderer3D(Renderer3DModel drawing_properties) {
         logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
-        this.r3dm = r3dm;
+        this.drawing_properties = drawing_properties;
+
+        // initialize stuff
+        rotation_matrix.setIdentity();
     }
 
     public void paintMolecule(AtomContainer atomCon, Graphics g) {
-        logger.debug("Painting molecule");
-        paintBonds(atomCon, g);
-        paintAtoms(atomCon, g);
+        if (!painting) {
+            logger.debug("Painting...");
+            painting = true;
+
+            logger.debug("Painting molecule");
+            paintBonds(atomCon, g);
+            paintAtoms(atomCon, g);
+
+            painting = false;
+        } else {
+            logger.debug("Skipping painting...");
+        }
+        logger.debug("done");
     }
 
     public void paintAtoms(AtomContainer atomCon, Graphics g) {
+        // loop over all atoms in the model
         Atom[] atoms = atomCon.getAtoms();
         for (int i=0; i<atoms.length; i++) {
             logger.debug("Paint atom " + i);
             Atom atom = atoms[i];
+            logger.debug(atom.toString());
+            // the size of the circle
+            // FIXME: this should be determined by Renderer3DModel !
             int atomRadius = 20;
-            g.setColor(r3dm.getAtomColor(atom));
-            g.fillOval((int)atom.getX2D() - (atomRadius / 2),
-                       (int)atom.getY2D() - (atomRadius / 2),
+            // get color for this atom
+            g.setColor(drawing_properties.getAtomColor(atom));
+            // draw atom as filled circle
+            g.fillOval((int)(atom.getX3D() - (atomRadius / 2.0))*3,
+                       (int)(atom.getY3D() - (atomRadius / 2.0))*3,
                        atomRadius, atomRadius);
+            // draw black line around atom
             g.setColor(Color.black);
-            g.drawOval((int)atom.getX2D() - (atomRadius / 2),
-                       (int)atom.getY2D() - (atomRadius / 2),
+            g.drawOval((int)(atom.getX3D() - (atomRadius / 2.0))*3,
+                       (int)(atom.getY3D() - (atomRadius / 2.0))*3,
                        atomRadius, atomRadius);
         }
     }
 
     private void paintBonds(AtomContainer atomCon, Graphics g) {
+        // FIXME: have bonds drawn
     }
 
     public Renderer3DModel getRenderer3DModel() {
-        return this.r3dm;
+        return this.drawing_properties;
     }
 
-    public void setRenderer3DModel(Renderer3DModel r3dm) {
-        this.r3dm = r3dm;
+    /**
+     * Sets the new model properties
+     *
+     * @param drawing_properties      new properties for model drawing
+     */
+    public void setRenderer3DModel(Renderer3DModel drawing_properties) {
+        this.drawing_properties = drawing_properties;
     }
+
+    /** Functions to implement for Runnable interface **/
+    public void start() {
+        this.addMouseListener(new Renderer3DMouseAdapter());
+        this.addMouseMotionListener(new Renderer3DMouseMotionAdapter());
+    };
+
+    public void run() {
+        try {
+            Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        // repaint();
+    };
+
+    public void stop() {};
+
+    /** Classes that react on mouse operations **/
+
+    class Renderer3DMouseAdapter extends MouseAdapter {
+
+        public void mousePressed(MouseEvent e) {
+            x_where_mouse_was_pressed = e.getX();
+            y_where_mouse_was_pressed = e.getY();
+        };
+        public void mouseClicked(MouseEvent e) {};
+        public void mouseReleased(MouseEvent e) {};
+    }
+
+    class Renderer3DMouseMotionAdapter extends MouseMotionAdapter {
+
+        // mouse dragging is rotation
+        public void mouseDragged(MouseEvent event) {
+
+            // determine how much molecule must be rotated
+            int x = event.getX(); int y = event.getY();
+            double xtheta = (y - y_where_mouse_was_pressed) *
+                            (2.0 * Math.PI / getSize().width);
+            double ytheta = (x - x_where_mouse_was_pressed) *
+                            (2.0 * Math.PI / getSize().height);
+
+            // make rotation matrix
+            Matrix4d matrix = new Matrix4d();
+            // do rotation in two steps, first xtheta part, then ytheta part
+            matrix.rotX(xtheta);
+            rotation_matrix.mul(matrix, rotation_matrix);
+            matrix.rotY(ytheta);
+            rotation_matrix.mul(matrix, rotation_matrix);
+        }
+    }
+
 }

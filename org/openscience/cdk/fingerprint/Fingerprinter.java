@@ -38,6 +38,8 @@ import java.util.*;
  *
  * @author     steinbeck
  * @created    24. Februar 2002
+ * @keyword    fingerprint
+ * @keyword    similarity
  */
 public class Fingerprinter implements CDKConstants
 {

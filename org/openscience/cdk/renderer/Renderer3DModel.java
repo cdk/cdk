@@ -36,6 +36,8 @@ import java.awt.*;
 
 /**
  * A model for Renderer3D, which determines how things are drawn
+ *
+ * @author Egon Willighagen
  */
 public class Renderer3DModel {
 

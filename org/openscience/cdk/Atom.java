@@ -33,7 +33,8 @@ import javax.vecmath.*;
  *  Represents the idea of an chemical atom 
  *
  * @author     steinbeck 
- * @created    October 2, 2000 
+ * @created    October 2, 2000
+ * @keyword    atom
  */
 public class Atom extends AtomType implements Cloneable {
         /* Let's keep this exact specification

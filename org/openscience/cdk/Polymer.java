@@ -36,7 +36,8 @@ import java.util.*;
  * Subclass of Molecule to store Poymer specific attributes a Polymer has.
  *
  * @author     Edgar Luttmann
- * @created    2001-08-06 
+ * @created    2001-08-06
+ * @keyword    polymer
  *
  */
 public class Polymer extends Molecule {
