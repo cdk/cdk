@@ -51,7 +51,6 @@
                         <include name="gnujaxp.jar" />
                         <include name="hansel-1.02.jar" />
                         <include name="junit.jar" />
-                        <include name="log4j-core.jar" />
                         <include name="log4j.jar" />
                         <include name="mysql-2.0.4.jar" />
                         <include name="postgresql7.0-1.2.jar" />
@@ -451,7 +450,6 @@
                     <classpath>
                         <fileset dir="${lib}">
                             <include name="vecmath1.2-1.14.jar" />
-                            <include name="log4j-core.jar" />
                             <include name="log4j.jar" />
                             <include name="gnujaxp.jar" />
                             <include name="xerces-2.5.0.jar" />
@@ -916,7 +914,6 @@
                 <srcfiles dir="${lib}" includes="jmolApis.jar"/>
                 <srcfiles dir="${lib}" includes="jmolIO.jar"/>
                 <srcfiles dir="${lib}" includes="junit.jar"/>
-                <srcfiles dir="${lib}" includes="log4j-core.jar"/>
                 <srcfiles dir="${lib}" includes="log4j.jar"/>
                 <srcfiles dir="${lib}" includes="mysql-2.0.4.jar"/>
                 <srcfiles dir="${lib}" includes="pmrdom_1.4.jar"/>
