@@ -33,6 +33,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.Element;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.templates.MoleculeFactory;
@@ -65,7 +66,7 @@ public class MFAnalyserTest extends TestCase {
 		AtomContainer ac = mfa.getAtomContainer();
 		MFAnalyser mfa2 = new MFAnalyser(ac);
 		String mf = mfa2.getMolecularFormula();
-		assertTrue(mf.equals("C10H16"));
+		assertEquals("C10H16", mf);
 	}
 	
     public void testGetAtomContainer() {
@@ -82,7 +83,7 @@ public class MFAnalyserTest extends TestCase {
         assertEquals(3, mfa.getElementCount());        
     }
     
-    public void testGetAtomCount() {
+    public void testGetAtomCount_String() {
         MFAnalyser mfa = new MFAnalyser("C10H16");
         assertEquals(10, mfa.getAtomCount("C"));        
         assertEquals(16, mfa.getAtomCount("H"));        
@@ -153,9 +154,14 @@ public class MFAnalyserTest extends TestCase {
     }
     
     public void testMasses() throws Exception{
-	MFAnalyser mfa=new MFAnalyser(molecule);
-  assertEquals((float)120, mfa.getMass(),.1);
-  assertEquals((float)120.11038, mfa.getNaturalMass(),.1);
+        MFAnalyser mfa = new MFAnalyser(molecule);
+        assertEquals((float)120, mfa.getMass(), .1);
+        assertEquals((float)120.11038, mfa.getNaturalMass(), .1);
+    }
+    
+    public void testGetNaturalMass_ELement() throws Exception {
+        MFAnalyser mfa = new MFAnalyser("CH4");
+        assertEquals(100.81313, mfa.getNaturalMass(new Element("H")), 0.1);
     }
 }
 
