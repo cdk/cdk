@@ -1174,7 +1174,10 @@ public class Controller2D {
         CDKPopupMenu popupMenu = getPopupMenu(objectInRange);
         if (popupMenu != null ) {
             popupMenu.setSource(objectInRange);
+            logger.debug("Set popup menu source to: " + objectInRange);
             popupMenu.show(event.getComponent(), event.getX(), event.getY());
+        } else {
+            logger.warn("Popup menu is null! Could not set source!");
         }
     }
     
