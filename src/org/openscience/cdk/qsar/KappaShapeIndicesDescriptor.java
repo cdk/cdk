@@ -168,14 +168,33 @@ public class KappaShapeIndicesDescriptor implements Descriptor {
 			}
 		}
 
-		kier1 = ( ( (atomsCount) * ( (atomsCount - 1) * (atomsCount - 1) ) ) / ( singlePaths.size() * singlePaths.size() ) );
-		kier2 = ( ( (atomsCount - 1) * ( (atomsCount - 2) * (atomsCount - 2) ) ) / ( doublePaths.size() * doublePaths.size() ) );
-		if(atomsCount % 2 != 0) {
-			kier3 = ( ( (atomsCount - 1) * ( (atomsCount - 3) * (atomsCount - 3) ) ) / ( triplePaths.size() * triplePaths.size() ) );
+		if(atoms.length == 1) {
+			kier1 = 0;
+			kier2 = 0;
+			kier3 = 0;
 		}
 		else {
-			kier3 = ( ( (atomsCount - 3) * ( (atomsCount - 2) * (atomsCount - 2) ) ) / ( triplePaths.size() * triplePaths.size() ) );
+			kier1 = ( ( (atomsCount) * ( (atomsCount - 1) * (atomsCount - 1) ) ) / ( singlePaths.size() * singlePaths.size() ) );
+			if(atoms.length == 2) {
+				kier2 = 0;
+				kier3 = 0;
+			}
+			else {
+				kier2 = ( ( (atomsCount - 1) * ( (atomsCount - 2) * (atomsCount - 2) ) ) / ( doublePaths.size() * doublePaths.size() ) );
+				if(atoms.length == 3) {
+					kier3 = 0;
+				}
+				else {
+					if(atomsCount % 2 != 0) {
+						kier3 = ( ( (atomsCount - 1) * ( (atomsCount - 3) * (atomsCount - 3) ) ) / ( triplePaths.size() * triplePaths.size() ) );
+					}
+					else {
+						kier3 = ( ( (atomsCount - 3) * ( (atomsCount - 2) * (atomsCount - 2) ) ) / ( triplePaths.size() * triplePaths.size() ) );
+					}
+				}
+			}
 		}
+		
 		kierValues.add(kier1);
 		kierValues.add(kier2);
 		kierValues.add(kier3);		
