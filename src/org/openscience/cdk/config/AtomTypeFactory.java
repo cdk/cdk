@@ -297,7 +297,7 @@ public class AtomTypeFactory {
             AtomType at = (AtomType) atomTypes.elementAt(f);
             // logger.debug("  does symbol match for: ", at);
             if (at.getSymbol().equals(symbol)) {
-                logger.debug("Atom type found for symbol: ", at);
+                // logger.debug("Atom type found for symbol: ", at);
                 al.addElement((AtomType) at.clone());
             }
         }
