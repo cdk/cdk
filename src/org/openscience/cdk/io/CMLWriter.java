@@ -330,7 +330,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
 
         Hashtable moleculeAtts = new Hashtable();
         if (mol.getID() != null && mol.getID().length() != 0) {
-            moleculeAtts.put("id=", mol.getID());
+            moleculeAtts.put("id", mol.getID());
         }
         writeOpenTag("molecule", moleculeAtts);
         writeAtomContainer((AtomContainer)mol);
@@ -394,7 +394,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
     
     private boolean addTitle(Hashtable atts, ChemObject object) {
         if (object.getProperty(CDKConstants.TITLE) != null) {
-            atts.put("title=", object.getProperty(CDKConstants.TITLE));
+            atts.put("title", object.getProperty(CDKConstants.TITLE));
             return true;
         }
         return false;
