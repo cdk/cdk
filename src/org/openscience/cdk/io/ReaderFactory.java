@@ -319,6 +319,10 @@ public class ReaderFactory {
                         // Integers not found on fourth line; therefore not a MDL file
                     }
                 }
+            } else if (lineNumber == 1) {
+                if (line.startsWith("frame: ")) {
+                    return new org.openscience.cdk.io.CrystClustReader();
+                }
             }
             line = buffer.readLine();
             lineNumber++;
