@@ -195,6 +195,40 @@ public class CMLFragmentsTest extends TestCase {
         checkForXMoleculeFile(chemFile, 2);
     }
 
+    public void testMissing2DCoordinates() {
+        String cmlString = 
+          "<molecule id='m1'><atomArray><atom id='a1' xy2='0.0 0.1'/><atom id='a2'/><atom id='a3' xy2='0.1 0.0'/></atomArray></molecule>";
+          
+        ChemFile chemFile = parseCMLString(cmlString);
+        Molecule mol = checkForSingleMoleculeFile(chemFile);
+        
+        assertEquals(3, mol.getAtomCount());
+        Atom atom1 = mol.getAtomAt(0);
+        Atom atom2 = mol.getAtomAt(1);
+        Atom atom3 = mol.getAtomAt(2);
+        
+        assertNotNull(atom1.getPoint2D());
+        assertNull   (atom2.getPoint2D());
+        assertNotNull(atom3.getPoint2D());
+    }
+
+    public void testMissing3DCoordinates() {
+        String cmlString = 
+          "<molecule id='m1'><atomArray><atom id='a1' xyz3='0.0 0.1 0.2'/><atom id='a2'/><atom id='a3' xyz3='0.1 0.0 0.2'/></atomArray></molecule>";
+          
+        ChemFile chemFile = parseCMLString(cmlString);
+        Molecule mol = checkForSingleMoleculeFile(chemFile);
+        
+        assertEquals(3, mol.getAtomCount());
+        Atom atom1 = mol.getAtomAt(0);
+        Atom atom2 = mol.getAtomAt(1);
+        Atom atom3 = mol.getAtomAt(2);
+        
+        assertNotNull(atom1.getPoint3D());
+        assertNull   (atom2.getPoint3D());
+        assertNotNull(atom3.getPoint3D());
+    }
+
     private ChemFile parseCMLString(String cmlString) {
         ChemFile chemFile = null;
         try {
@@ -235,4 +269,5 @@ public class CMLFragmentsTest extends TestCase {
         }
         return mol;
     }
+
 }

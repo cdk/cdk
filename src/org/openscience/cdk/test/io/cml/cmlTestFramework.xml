@@ -58,4 +58,28 @@
     <bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray>
   </molecule>
   
+  <!-- JFragmentsTest.testList() -->
+  <list> 
+    <molecule id='m1'><atomArray><atom id='a1'/><atom id='a2'/></atomArray><bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray></molecule>
+    <molecule id='m2'><atomArray><atom id='a1'/><atom id='a2'/></atomArray><bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray></molecule>
+  </list>
+  
+  <!-- JFragmentsTest.testMissing2DCoordinates() -->
+  <molecule id='m1'>
+    <atomArray>
+      <atom id='a1' xy2='0.0 0.1'/>
+      <atom id='a2'/>
+      <atom id='a3' xy2='0.1 0.0'/>
+    </atomArray>
+  </molecule>
+  
+  <!-- JFragmentsTest.testMissing3DCoordinates() -->
+  <molecule id='m1'>
+    <atomArray>
+      <atom id='a1' xyz3='0.0 0.1 0.2'/>
+      <atom id='a2'/>
+      <atom id='a3' xyz3='0.1 0.0 0.2'/>
+    </atomArray>
+  </molecule>
+
 </cml>

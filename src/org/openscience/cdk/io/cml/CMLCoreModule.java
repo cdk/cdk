@@ -225,6 +225,17 @@ public class CMLCoreModule implements ModuleInterface {
                     else if (att.equals("x2")) {
                         x2.addElement(value);
                     } // this is supported in CML 2.0 
+                    else if (att.equals("xy2")) {
+                        StringTokenizer tokenizer = new StringTokenizer(value);
+                        x2.addElement(tokenizer.nextToken());
+                        y2.addElement(tokenizer.nextToken());
+                    } // this is supported in CML 2.0 
+                    else if (att.equals("xyz3")) {
+                        StringTokenizer tokenizer = new StringTokenizer(value);
+                        x3.addElement(tokenizer.nextToken());
+                        y3.addElement(tokenizer.nextToken());
+                        z3.addElement(tokenizer.nextToken());
+                    } // this is supported in CML 2.0 
                     else if (att.equals("y2")) {
                         y2.addElement(value);
                     } // this is supported in CML 2.0 
@@ -433,29 +444,36 @@ public class CMLCoreModule implements ModuleInterface {
 
             case ATOM:
            
-                if (elsym.size() > formalCharges.size()) {
+                if (atomCounter > formalCharges.size()) {
                     /* while strictly undefined, assume zero 
                     charge when no number is given */
                     formalCharges.addElement("0");
                 }
-                if (elsym.size() > hCounts.size()) {
+                if (atomCounter > hCounts.size()) {
                     /* while strictly undefined, assume zero 
                     implicit hydrogens when no number is given */
                     hCounts.addElement("0");
                 }
-                if (elsym.size() > atomDictRefs.size()) {
+                if (atomCounter > atomDictRefs.size()) {
                     atomDictRefs.addElement(null);
                 }
-                if (elsym.size() > isotope.size()) {
+                if (atomCounter > isotope.size()) {
                     isotope.addElement(null);
                 }
                 /* It may happen that not all atoms have
-                   associated 2D coordinates. accept that */
-                if (elsym.size() > x2.size() && x2.size() != 0) {
+                   associated 2D or 3D coordinates. accept that */
+                if (atomCounter > x2.size() && x2.size() != 0) {
                     /* apparently, the previous atoms had atomic
                        coordinates, add 'null' for this atom */
                     x2.addElement(null);
                     y2.addElement(null);
+                }
+                if (atomCounter > x3.size() && x3.size() != 0) {
+                    /* apparently, the previous atoms had atomic
+                       coordinates, add 'null' for this atom */
+                    x3.addElement(null);
+                    y3.addElement(null);
+                    z3.addElement(null);
                 }
 
                 break;
@@ -489,9 +507,10 @@ public class CMLCoreModule implements ModuleInterface {
                         logger.debug("coord3 x3.length: " + x3.size());
                         logger.debug("coord3 y3.length: " + y3.size());
                         logger.debug("coord3 z3.length: " + z3.size());
-                    } catch (Exception e) {
+                    } catch (Exception exception) {
                         logger.error(
                                 "CMLParsing error while setting coordinate3!");
+                        logger.debug(exception);
                     }
                 } else {
                     logger.warn("Unknown coordinate3 BUILTIN: " + BUILTIN);
