@@ -1,0 +1,83 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+# Sample debian/rules that uses debhelper.
+# GNU copyright 1997 to 1999 by Joey Hess.
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+PACKAGE=libcdk-java
+PACKAGECOMMON=libcdk-java-common
+LIBS=usr/share/$(PACKAGE)/lib
+
+INSTALL=/usr/bin/install
+
+build: build-stamp
+
+build-stamp: 
+	dh_testdir
+	test !Makefile && cp -f debian/Makefile .
+		
+	# Add here commands to compile the package.
+	$(MAKE) joelib
+	$(MAKE)
+
+	touch build-stamp
+
+clean:
+	dh_testdir
+	dh_testroot
+	-rm -f build-stamp
+	# Update config.{sub,guess}
+	#-test -r /usr/share/misc/config.sub && \
+	#	cp -f /usr/share/misc/config.sub config.sub
+	#-test -r /usr/share/misc/config.guess && \
+	#	cp -f /usr/share/misc/config.guess config.guess
+	
+	# Add here commands to clean up after the build process.
+	mkdir -p ./debian/javafiles
+	cp ./src/*.javafiles ./debian/javafiles/
+	-$(MAKE) clean
+	-test Makefile && rm -f Makefile
+	
+	dh_clean 
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_clean -k 
+	dh_installdirs
+
+	# Add here commands to install the package into debian/jmol.
+	$(MAKE) install DESTDIR=$(CURDIR)/debian/$(PACKAGE)
+	$(MAKE) common DESTDIR=$(CURDIR)/debian/$(PACKAGECOMMON)
+
+	# mv $(CURDIR)/debian/$(PACKAGE)
+
+	cp ./debian/javafiles/* ./src/
+	rm -r ./debian/javafiles/
+
+# Build architecture-independent files here.
+binary-indep: build install
+
+# We have nothing to do by default.
+
+# Build architecture-dependent files here.
+binary-arch: build install
+	dh_testdir
+	dh_testroot
+	dh_installchangelogs 
+	dh_installdocs
+	dh_installexamples
+	dh_installmime
+	dh_link
+	dh_strip
+	dh_compress
+	dh_fixperms
+	dh_installdeb
+	dh_shlibdeps
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary install configure
