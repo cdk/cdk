@@ -30,6 +30,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.ElectronContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 
@@ -105,7 +106,7 @@ public class ConnectivityChecker
 	public static SetOfMolecules partitionIntoMolecules(AtomContainer atomContainer) {
 		AtomContainer ac = new AtomContainer();
 		Atom atom = null;
-		Bond bond = null;
+		ElectronContainer eContainer = null;
 		Molecule molecule = null;
 		SetOfMolecules molecules = new SetOfMolecules();
 		Vector sphere = new Vector();
@@ -115,11 +116,11 @@ public class ConnectivityChecker
 			atom.setFlag(CDKConstants.VISITED, false);
 			ac.addAtom(atom);
 		}
-        Bond[] bonds = atomContainer.getBonds();
-		for (int f = 0; f < bonds.length; f++){
-			bond = bonds[f];
-			bond.setFlag(CDKConstants.VISITED, false);
-			ac.addBond(bond);
+        ElectronContainer[] eContainers = atomContainer.getElectronContainers();
+		for (int f = 0; f < eContainers.length; f++){
+			eContainer = eContainers[f];
+			eContainer.setFlag(CDKConstants.VISITED, false);
+			ac.addElectronContainer(eContainer);
 		}
 		while(ac.getAtomCount() > 0) {
 			atom = ac.getAtomAt(0);
@@ -130,6 +131,7 @@ public class ConnectivityChecker
 			PathTools.breadthFirstSearch(ac, sphere, molecule);
 			molecules.addMolecule(molecule);
 			ac.remove(molecule);
+            System.out.println("Found molecule: " + molecule);
 		}
 		return molecules;
 	}

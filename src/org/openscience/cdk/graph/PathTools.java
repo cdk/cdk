@@ -34,6 +34,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.ElectronContainer;
 import org.openscience.cdk.Molecule;
 
 /**
@@ -191,8 +192,9 @@ public class PathTools  {
 	 *      that are found during search
 	 */
 	public static void breadthFirstSearch(AtomContainer ac, Vector sphere, Molecule molecule) {
-    breadthFirstSearch(ac, sphere, molecule, -1);
-  }
+        System.out.println("Staring partitioning with this ac: " + ac);
+        breadthFirstSearch(ac, sphere, molecule, -1);
+    }
   
   
     /** 
@@ -241,9 +243,21 @@ public class PathTools  {
 		Vector newSphere = new Vector();
 		for (int f = 0; f < sphere.size(); f++) {
 			atom = (Atom) sphere.elementAt(f);
-//			System.out.println("atoms  "+ atom + f);
-//			System.out.println("sphere size  "+ sphere.size());
+ 			System.out.println("atoms  "+ atom + f);
+ 			System.out.println("sphere size  "+ sphere.size());
 			molecule.addAtom(atom);
+            // first copy LonePair's and SingleElectron's of this Atom as they need
+            // to be copied too
+            ElectronContainer[] eContainers = ac.getConnectedElectronContainers(atom);
+            System.out.println("found #ec's: " + eContainers.length);
+            for (int i=0; i<eContainers.length; i++) {
+                if (!(eContainers[i] instanceof Bond)) {
+                    // ok, no bond, thus LonePair or SingleElectron
+                    System.out.println("adding non bond " + eContainers[i]);
+                    molecule.addElectronContainer(eContainers[i]);
+                }
+            }
+            // now look at bonds
 			Bond[] bonds = ac.getConnectedBonds(atom);
 			for (int g = 0; g < bonds.length; g++) {
 				if (!bonds[g].getFlag(CDKConstants.VISITED)) {

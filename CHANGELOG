@@ -20,13 +20,17 @@ New:
 * CML2 from Jumbo 4.6 was uploaded
 
 Fixes:
-* Fixed KabschAlignment so that the rotation matrixi, U, is  returned properly
+* Fixed KabschAlignment so that the rotation matrixi, U, is returned properly
 * Fixed junit-test and run-test: missing cdk-data.jar
 * Don't consume Exceptions while writing MDL
 * Removed entry for 'D' in the isotope list; '2H' is still present
   (closes #1118689)
 * Fail more informative on (corrupt) MDL files that lack the property block
 * Fixed API detection in CDKPluginManager when distributing change events
+* Fixed returning of SingleElectron's with AtomContainer
+  .getConnectedElectronContainers(Atom)
+* Fixed retaining LonePair's and SingleElectron's when using
+  ConnectivityChecker.partitionIntoMolecules()
 
 API changes:
 * Moved IsotopeFactory from cdk-standard to the cdk-core module
