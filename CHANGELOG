@@ -81,11 +81,9 @@ Fixes:
 * Fixed toString() of AtomType.
 * Fixed bug in AtomContainer constructor
 * Some compatibility issues with Java1.1 (for applet usage)
-<<<<<<< CHANGELOG
 * Fixed Bond.getAtoms
 * Fixed Bond.toString
 * Fixed (and added) .compare methods for several core classes
-=======
 * Fixed bug #746067
 * Fixed aromaticity flagging of bonds in SmilesParser
 * Fixed possible memory overflow in RandomStructureGenerator
