@@ -39,6 +39,13 @@ public class ElectronContainer extends ChemObject implements java.io.Serializabl
 	/** Number of electrons in the ElectronContainer. */
 	protected int electronCount;
 
+    /**
+     * Constructs an empty ElectronContainer.
+     */
+    public void ElectronContainer() {
+        electronCount = 0;
+    }
+    
 	/**
 	 * Returns the number of electrons in this electron container.
 	 *
