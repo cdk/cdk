@@ -204,6 +204,10 @@ public class MDLReader extends DefaultChemObjectReader {
             logger.info("Reading header");
             line = input.readLine(); linecount++;
             logger.debug("Line " + linecount + ": " + line);
+            if (line.startsWith("$$$$")) {
+                logger.debug("File is empty, returning empty molecule");
+                return molecule;
+            }
             if (line.length() > 0) {
                 molecule.setProperty(CDKConstants.TITLE, line);
             }
