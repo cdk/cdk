@@ -104,6 +104,13 @@
               <entry>accepted</entry>
               <entry></entry>
             </row>
+            <row>
+              <entry>11</entry>
+              <entry><ulink url="rfc11.html">change AtomType.getID() into AtomType.getAtomTypeName()</ulink></entry>
+              <entry>2003-02-21</entry>
+              <entry></entry>
+              <entry></entry>
+            </row>
          </tbody>
         </tgroup>
       </informaltable>

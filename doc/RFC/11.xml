@@ -1,0 +1,36 @@
+<refentry id="cdk-rfc-11">
+
+  <refentryinfo>
+    <revhistory>
+      <revision>
+        <revnumber>11</revnumber>
+        <date>2002-02-21</date>
+        <authorinitials>elw</authorinitials>
+        <revremark>
+          See <ulink url="http://sourceforge.net/mailarchive/forum.php?thread_id=1689361&amp;forum_id=2178">email archive</ulink>.
+        </revremark>
+      </revision>
+    </revhistory>
+  </refentryinfo>
+
+
+  <refnamediv>
+    <refname>RFC CDK #11</refname>
+  </refnamediv>
+
+  <refsect1>
+    <title>Proposal</title>
+    <para>Change the method name of AtomType.getID() into AtomType.getAtomTypeName() 
+      and add two new methods ChemObject.getID() and .setID().</para>
+  </refsect1>
+
+  <refsect1>
+    <title>Reason</title>
+    <para>This would allow to put a getID() method into the ChemObject class, which 
+      would resemble the id concept in XML files, where an elements id is a unique 
+      code to this object, like the hashcode in Java. However, a hashcode is not to
+      be set manually, for this I have the get/setID() method in mind.
+    </para>
+  </refsect1>
+
+</refentry>
