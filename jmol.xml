@@ -42,22 +42,25 @@
     
   <target name="compile-applet">
 
-    <patch patchfile="${src}/patches/org.openscience.cdk.tools.LoggingTool.java.MakeUsableInJmolApplet"
-           originalfile="${build.src}/org/openscience/cdk/tools/LoggingTool.java"
-           dir="${build.src}/org/openscience/cdk/tools"/>
-    <patch patchfile="${src}/patches/org.openscience.cdk.tools.AtomTypeFactory-noFileCheck"
-           originalfile="${build.src}/org/openscience/cdk/tools/AtomTypeFactory.java"
-           dir="${build.src}/org/openscience/cdk/tools"/>
-
     <javac srcdir="${build.src}" destdir="${build}" optimize="${optimization}" 
            debug="${debug}" deprecation="${deprecation}" target="1.1"
            includesfile="${src}/jmol-applet.javafiles">
       <classpath refid="project.class.path" />
     </javac>
+    <!-- some classes need to be overwritten with patches files -->
+    <delete>
+        <fileset dir="${build}" includes="org/openscience/cdk/tools/LoggingTool.java" />
+        <fileset dir="${build}" includes="org/openscience/cdk/tools/AtomTypeFactory.java" />
+    </delete>
+    <javac srcdir="${src}" destdir="${build}" optimize="${optimization}" 
+           debug="${debug}" deprecation="${deprecation}" target="1.1"
+           includes="jmol-applet/**/*.java">
+        <classpath refid="project.class.path" />
+    </javac>
   </target>
 
   <target name="compile">
-    <javac srcdir="${build.src}" destdir="${build}" optimize="${optimization}" 
+    <javac srcdir="${build.src}" destdir="${build}" optimize="${optimization}"
            debug="${debug}" deprecation="${deprecation}" target="1.1"
            includesfile="${src}/jmol-b6.javafiles">
       <classpath refid="project.class.path" />
