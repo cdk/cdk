@@ -117,7 +117,7 @@ public class JCPController2D
                 if (c2dm.getDrawMode() == c2dm.DRAWBOND)
                 {
                         int endX = 0, endY = 0;
-                        int pointerVectorLength = c2dm.getBondPointerLength();
+                        double pointerVectorLength = c2dm.getBondPointerLength();
                         double angle = 0;
                         int startX = r2dm.getPointerVectorStart().x;
                         int startY = r2dm.getPointerVectorStart().y;
@@ -139,6 +139,7 @@ public class JCPController2D
                                 endX = startX - (int)(Math.cos(angle) * pointerVectorLength);
                                 endY = startY - (int)(Math.sin(angle) * pointerVectorLength);
                         }
+						System.out.println(endX + ", " + endY);
                         r2dm.setPointerVectorEnd(new Point(endX, endY));
                 }
                 
@@ -161,7 +162,7 @@ public class JCPController2D
                 {
                         int endX = 0, endY = 0;
                         double angle = 0;
-                        int pointerVectorLength = c2dm.getRingPointerLength();
+                        double pointerVectorLength = c2dm.getRingPointerLength();
                         Point2d center = getHighlighted().get2DCenter();
                         r2dm.setPointerVectorStart(new Point((int)center.x, (int)center.y));
                         int startX = 0;
@@ -327,7 +328,7 @@ public class JCPController2D
                         {
                                 sharedAtoms = new AtomContainer();
                                 newRing = new Ring(ringSize, symbol);
-                                bondLength = c2dm.getDefaultBondLength();
+                                bondLength = r2dm.getBondLength();
                                 ringRadius = (bondLength / 2) /Math.sin(Math.PI / c2dm.getRingSize());
                                 sharedAtomsCenter = new Point2d(mouseX, mouseY - ringRadius);
                                 firstAtom = newRing.getAtomAt(0);

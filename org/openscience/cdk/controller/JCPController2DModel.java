@@ -57,11 +57,9 @@ public class JCPController2DModel
 	private boolean snapToGridCartesian = true;
 	private int snapCartesian = 10;	
 	
-	private int defaultBondLength = 70;
-	
 	private String defaultElementSymbol = "C";
-	private int bondPointerLength = 80;
-	private int ringPointerLength = (int)(getDefaultBondLength() / 2);
+	private double bondPointerLength = 20;
+	private double ringPointerLength = 20;
 	
 	
 	/**
@@ -200,29 +198,6 @@ public class JCPController2DModel
 	}
 
 	
-
-	/**
-	 *
-	 *
-	 * @return     
-	 */
-	public int getDefaultBondLength()
-	{
-		return this.defaultBondLength;
-	}
-
-
-	/**
-	 *
-	 *
-	 * @param   defaultBondLength  
-	 */
-	public void setDefaultBondLength(int defaultBondLength)
-	{
-		this.defaultBondLength = defaultBondLength;
-	}
-	
-
 	/**
 	 * Allows for adding a CDKChangeListener to this model
 	 *
@@ -249,7 +224,7 @@ public class JCPController2DModel
 	 *
 	 * @return     
 	 */
-	public int getBondPointerLength()
+	public double getBondPointerLength()
 	{
 		return this.bondPointerLength;
 	}
@@ -260,7 +235,7 @@ public class JCPController2DModel
 	 *
 	 * @param   pointerVectorLength  
 	 */
-	public void setBondPointerLength(int bondPointerLength)
+	public void setBondPointerLength(double bondPointerLength)
 	{
 		this.bondPointerLength = bondPointerLength;
 	}
@@ -271,7 +246,7 @@ public class JCPController2DModel
 	 *
 	 * @return     
 	 */
-	public int getRingPointerLength()
+	public double getRingPointerLength()
 	{
 		return this.ringPointerLength;
 	}
@@ -282,7 +257,7 @@ public class JCPController2DModel
 	 *
 	 * @param   pointerVectorLength  
 	 */
-	public void setRingPointerLength(int ringPointerLength)
+	public void setRingPointerLength(double ringPointerLength)
 	{
 		this.ringPointerLength = ringPointerLength;
 	}
