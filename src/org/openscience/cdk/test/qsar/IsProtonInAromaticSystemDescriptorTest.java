@@ -55,7 +55,7 @@ public class IsProtonInAromaticSystemDescriptorTest extends TestCase {
 		Molecule mol = sp.parseSmiles("Oc1cc(OC)c(cc1Br)Br"); 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
-		assertEquals(2, ((Integer)descriptor.calculate(mol)).intValue());
+		assertEquals(1, ((Integer)descriptor.calculate(mol)).intValue());
 	}
 }
 

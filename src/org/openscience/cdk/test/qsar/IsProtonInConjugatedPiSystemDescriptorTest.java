@@ -28,8 +28,11 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.tools.HydrogenAdder;
+
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -47,10 +50,12 @@ public class IsProtonInConjugatedPiSystemDescriptorTest extends TestCase {
 	
 	public void testIsProtonInConjugatedPiSystemDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		Descriptor descriptor = new IsProtonInConjugatedPiSystemDescriptor();
-		Object[] params = {new Integer(3), new Boolean(false)};
+		Object[] params = {new Integer(13), new Boolean(true)};
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser();
-		AtomContainer mol = sp.parseSmiles("CNC=CC=C"); 
+		Molecule mol = sp.parseSmiles("CNC=CC=C"); 
+		HydrogenAdder hAdder = new HydrogenAdder();
+		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		assertTrue(((Boolean)descriptor.calculate(mol)).booleanValue());
 	}
 }

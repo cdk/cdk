@@ -26,9 +26,8 @@ package org.openscience.cdk.qsar;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
-
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.HydrogenAdder;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetector;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.SetOfAtomContainers;
@@ -112,39 +111,35 @@ public class IsProtonInConjugatedPiSystemDescriptor implements Descriptor {
 	 *  The method is a proton descriptor that evaluate if protons of a given atom are bonded to a conjugated system
 	 *
 	 *@param  ac                AtomContainer
-	 *@return                   true if the proton is bonded to an heavy atom involved in a conjugated system
+	 *@return                   true if the proton is bonded to a conjugated system
 	 *@exception  CDKException  Possible Exceptions
 	 */
 	public Object calculate(AtomContainer ac) throws CDKException {
-		HydrogenAdder hAdder = new HydrogenAdder();
-		try {
 			boolean isProtonInPiSystem = false;
 			int counter = 0;
 			Molecule mol = new Molecule(ac);
 			if (checkAromaticity) {
 				HueckelAromaticityDetector.detectAromaticity(mol);
 			}
-			SetOfAtomContainers acSet = ConjugatedPiSystemsDetector.detect(mol);
-			if (mol.contains(ac.getAtomAt(atomPosition))) {
-				Atom[] neighboors = mol.getConnectedAtoms(mol.getAtomAt(atomPosition));
+			Atom target = ac.getAtomAt(atomPosition);
+			if(target.getSymbol().equals("H")) {
+				System.out.println("symbol pi: "+target.getSymbol());
+				SetOfAtomContainers acSet = ConjugatedPiSystemsDetector.detect(mol);
+				AtomContainer detected = acSet.getAtomContainer(0);
+				Atom[] neighboors = mol.getConnectedAtoms(target);
 				for (int i = 0; i < neighboors.length; i++) {
-					if (neighboors[i].getSymbol().equals("H")) {
+					if (detected.contains(neighboors[i])) {
 						counter += 1;
-					} else if (mol.getAtomAt(atomPosition).getHydrogenCount() > 0) {
-						counter += mol.getAtomAt(atomPosition).getHydrogenCount();
-					} else {
+					}
+					else {
 						counter += 0;
 					}
 				}
-			}
-
-			if (counter > 0) {
-				isProtonInPiSystem = true;
+				if(counter > 0) {
+					isProtonInPiSystem = true;
+				}
 			}
 			return new Boolean(isProtonInPiSystem);
-		} catch (Exception ex1) {
-			throw new CDKException("Problems with HydrogenAdder due to " + ex1.toString());
-		}
 	}
 
 
