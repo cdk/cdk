@@ -72,13 +72,8 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  *  the CDK model in this way the RGraph remains independant and may be used
  *  in other contexts.
  *
- *  <p>This algorithm derives from the algorithm described in "Machine Learning of
- *  of generic Reactions : 3. An efficient Algorithm for Maximal Common
- *  Substructure determination" C. Tonnelier, Ph. Jauffret, T. Hanser
- *  and G. Kaufmann. Tetrahedron Vol. 3, No 6, pp. 351-358, 1990.
- *  and modified in the These of T. Hanser "Apprentissage automatique
- *  de m???hodes de synth???e ???partir d'exemples". Universit???Louis Pasteur
- *  STRASBOURG 1993.
+ *  <p>This algorithm derives from the algorithm described in
+ *  {@cdk.cite HAN90} and modified in the thesis of T. Hanser {@cdk.cite Han93}.
  *
  *  <p><font color="#FF0000">
  *     warning :  As a result of the adjacency perception used in this algorithm
