@@ -40,7 +40,7 @@ import java.io.*;
  */
 public class HueckelAromaticityDetector
 {
-	static boolean debug = true;
+	static boolean debug = false;
 	
 	/**
 	 * Retrieves the set of all rings and performs an aromaticity detection
@@ -78,8 +78,7 @@ public class HueckelAromaticityDetector
 		Ring ring = null;
 		Atom atom = null;
 		ringSet.sort();
-		System.out.println("RingSet has size " +  ringSet.size());
-		for (int f = 0; f < ringSet.size(); f++) 
+		for (int f = ringSet.size() - 1; f >= 0 ; f--) 
 		{
 			ring = (Ring)ringSet.elementAt(f);
 			if (debug)System.out.println("Testing ring no " + f + " for aromaticity:");
@@ -89,11 +88,16 @@ public class HueckelAromaticityDetector
 				{
 					ring.getAtomAt(g).flags[Atom.ISAROMATIC] = true;
 				}
-				for (int g = 0; g < ring.getAtomCount(); g++)
+				for (int g = 0; g < ring.getBondCount(); g++)
 				{
 					ring.getBondAt(g).flags[Bond.ISAROMATIC] = true;
 				}
 				foundSomething = true;
+				if (debug)System.out.println("Ring no " + f + " is aromatic.");				
+			}
+			else
+			{
+				if (debug)System.out.println("Ring no " + f + " is not aromatic.");	
 			}
 		}
 		return foundSomething;
@@ -121,6 +125,11 @@ public class HueckelAromaticityDetector
 			{
 				freeElectronPairCount += 1;	
 			}
+			if (atom.flags[Atom.ISAROMATIC])
+			{
+				aromaCounter ++;	
+			}
+			
 		}
 		for (int g = 0; g < ring.getBondCount(); g++)
 		{
@@ -128,10 +137,6 @@ public class HueckelAromaticityDetector
 			if (bond.getOrder() > 1)
 			{
 				piElectronCount += 2;
-			}
-			if (bond.flags[Bond.ISAROMATIC])
-			{
-				aromaCounter ++;	
 			}
 		}
 		for (int f = 0; f < ((ring.getAtomCount() - 2)/4) + 2; f ++)
