@@ -136,6 +136,8 @@ public class FileConvertor {
       return new CMLWriter(f);
     } else if (format.equalsIgnoreCase("MOL")) {
       return new MDLWriter(f);
+    } else if (format.equalsIgnoreCase("SMILES")) {
+      return new SMILESWriter(f);
     }
     return null;
   }
