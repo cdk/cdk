@@ -1,15 +1,17 @@
 <?xml version="1.0"?>
 <!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.0b1//EN" "dtd/website.dtd">
-<webpage id="maillinglist">
+<webpage id="whoiswho">
   <config param="last-change-by" value="$Author$"/>
   <config param="rcsdate" value="$Date$"/>
 
   <head>
-    <title>The Chemical Development Kit</title>
-    <titleabbrev>Mailling Lists</titleabbrev>
-    <summary>Information about the CDK mailling lists.</summary>
+    <title>Contact the Developers</title>
+    <titleabbrev>Contact</titleabbrev>
+    <summary>This page lists the means by which CDK developers can be reached.</summary>
   </head>
 
+  <section>
+    <title>Contact the Developers</title>
   <section>
     <title>Mailling Lists</title>
     <para>
@@ -49,6 +51,27 @@
         </varlistentry>
       </variablelist>
 	</para>
+  </section>
+
+    <section>
+      <title>Internet Relay Chat (IRC)</title>
+      <para>
+        The developers have an channel at the IRC network of
+        <ulink url="www.openprojects.net">OpenProjects.net</ulink>,
+        called #cdk. The developers are not online 100%, but you might
+        catch us there for a chat.
+      </para>
+    </section>
+
+    <section>
+      <title>Email us Personally</title>
+      <para>
+        The best way to email us, is using the developers mailling list mentioned above,
+        but if you want to reach one of us personally, you can find our email addresses
+        at the <ulink url="whoiswho.html">Who-is-Who page</ulink>.
+      </para>
+    </section>
+
   </section>
 
 </webpage>

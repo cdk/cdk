@@ -18,7 +18,7 @@ update-stats: javancss-tmp.xml
 include depends.tabular
 
 autolayout.xml: layout.xml
-	$(PROC) ${STYLEDIR}/autolayout.xsl $< > $@
+	$(PROC) ${STYLEDIR}/autolayout.xsl layout.xml > $@
 	make depends
 
 javadoc-stats.html: autolayout.xml javadoc-data.xml javadoc-stats.xml
