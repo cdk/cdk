@@ -10,6 +10,7 @@
         <property name="src.tests" value="${src}/org/openscience/cdk/test" />
         <property name="reports.tests" value="reports" />
         <property name="pathtojava3d" value="" />
+        <property name="pathtojoelib" value="../../JoeLib/joelib/" />
 
         <path id="project.class.path">
                 <pathelement
@@ -71,12 +72,33 @@
                         name="org/openscience/cdk/test/VisualGaussiansCalculationTest.java" />
                         <exclude
                         name="org/openscience/cdk/test/ZMatrixReaderTest.java" />
+
+                        <!-- exclude libio classes that require additional
+                             libraries, and are compiled elsewhere -->
+                        <exclude name="org/openscience/cdk/libio/**" />
+
                         <classpath refid="project.class.path" />
                 </javac>
 
                 <copy todir="${build}">
                         <fileset dir="${src}" includes="**/Test-*" />
                 </copy>
+        </target>
+        
+        <target name="compile-libio" depends="init">
+                <!-- Task to build to libio classes. Clearly, this requires extra
+                     extra jars, and these should be located in ${lib}/libio -->
+
+                <javac destdir="${build}" optimize="off" debug="on" deprecation="off">
+                        <src path="${src}/org/openscience/cdk/libio" />
+
+                        <classpath refid="project.class.path" />
+                        <classpath>
+                               <fileset dir="${lib}/libio">
+                                       <include name="*.jar" />
+                               </fileset>
+                        </classpath>
+                </javac>
         </target>
 
         <target name="compile-with-java3d" depends="init">

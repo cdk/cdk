@@ -1,0 +1,3 @@
+In this directory the library jars to which CDK offers 
+an interface should be placed to be able to compile
+classes in the org.openscience.cdk.libio (sub)packages.
