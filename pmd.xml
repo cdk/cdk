@@ -10,7 +10,7 @@
         <pathelement location="${build}"/>
         <fileset dir="${lib}">
             <include name="jaxen-core-1.0-fcs.jar"/>
-            <include name="pmd-1.8.jar"/>
+            <include name="pmd-2.2.jar"/>
             <include name="saxpath-1.0-fcs.jar"/>
         </fileset>
     </path>
