@@ -3,6 +3,8 @@ CHANGELOG
 
 changes since "cdk preview 20010909"
 ------------------------------------
+* several small other things
+* Added Log4J as (optional) logging tool
 
 changes since "cdk preview 20010807"
 ------------------------------------

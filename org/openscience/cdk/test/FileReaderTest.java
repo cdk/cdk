@@ -1,4 +1,4 @@
-/* $RCSfile$   
+/* $RCSfile$
  * $Author$   
  * $Date$   
  * $Revision$
@@ -34,19 +34,23 @@ import java.io.*;
 
 public class FileReaderTest {
 
+    private org.openscience.cdk.tools.LoggingTool logger;
+
     public FileReaderTest(String inFile) {
-      try {        
+      logger = new org.openscience.cdk.tools.LoggingTool();
+
+      try {
         ChemObjectReader reader;
-        System.out.println("Loading: " + inFile);
+        logger.info("Loading: " + inFile);
         if (inFile.endsWith(".xyz")) {
   	      reader = new XYZReader(new FileReader(inFile));
-          System.out.println("Expecting XYZ format...");
+          logger.info("Expecting XYZ format...");
         } else if (inFile.endsWith(".cml")) {
   	      reader = new CMLReader(new FileReader(inFile));
-          System.out.println("Expecting CML format...");
+          logger.info("Expecting CML format...");
         } else {
           reader = new MDLReader(new FileInputStream(inFile));
-          System.out.println("Expecting MDL MolFile format...");
+          logger.info("Expecting MDL MolFile format...");
         }
         ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
 
