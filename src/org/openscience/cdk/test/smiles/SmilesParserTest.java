@@ -167,7 +167,7 @@ public class SmilesParserTest extends TestCase
 	}
 	
 	
-/**
+    /**
      * This tests the fix made for bug #593648.
      */
     public void testSFBug593648() {
@@ -183,6 +183,32 @@ public class SmilesParserTest extends TestCase
         }
     }
 
+    public void testMassNumberReading() {
+        try {
+            String smiles = "[13C]";
+            SmilesParser sp = new SmilesParser();
+            Molecule mol = sp.parseSmiles(smiles);
+            assertEquals(1, mol.getAtomCount());
+            assertEquals("C", mol.getAtomAt(0).getSymbol());
+            assertEquals(13, mol.getAtomAt(0).getAtomicMass());
+        } catch (Exception e) {
+            fail(e.toString());
+        }
+    }
+    
+    public void testFormalChargeReading() {
+        try {
+            String smiles = "[OH-]";
+            SmilesParser sp = new SmilesParser();
+            Molecule mol = sp.parseSmiles(smiles);
+            assertEquals(1, mol.getAtomCount());
+            assertEquals("O", mol.getAtomAt(0).getSymbol());
+            assertEquals(-1, mol.getAtomAt(0).getFormalCharge());
+        } catch (Exception e) {
+            fail(e.toString());
+        }
+    }
+    
 	public static void main(String[] args)
 	{
 		SmilesParserTest spt = new SmilesParserTest("SmilesParserTest");
