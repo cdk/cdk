@@ -143,8 +143,8 @@ public class CDKPluginManager {
                 CDKPluginInterface cdkPlugin = (CDKPluginInterface)plugin;
                 if (Double.parseDouble(cdkPlugin.getAPIVersion()) < 1.4) {
                     // ignore old plugins
-                    logger.warn("Will not load plugins with old API: " + className);
-                    logger.debug("  the plugin has API version: " + cdkPlugin.getAPIVersion());
+                    logger.warn("Will not load plugins with old API: ", className);
+                    logger.debug("  the plugin has API version: ", cdkPlugin.getAPIVersion());
                 } else {
                     boolean loadPlugin = false;
                     if (cdkPlugins.containsKey(className)) {
@@ -165,7 +165,7 @@ public class CDKPluginManager {
                             cdkPlugin.setPropertyDirectory(pluginConfigDirName);
                         } else {
                             logger.warn("Plugin is too old to set property directory");
-                            logger.debug("  the plugin has API version: " + cdkPlugin.getAPIVersion());
+                            logger.debug("  the plugin has API version: ", cdkPlugin.getAPIVersion());
                         }
                         cdkPlugin.setEditBus(editBus);
                         cdkPlugins.put(className, cdkPlugin);
@@ -211,16 +211,16 @@ public class CDKPluginManager {
      */
     public void loadPlugins(String pluginDirName) {
         File pluginDir = new File(pluginDirName);
-        logger.info("User dict dir: " + pluginDir);
-        logger.debug("       exists: " + pluginDir.exists());
-        logger.debug("  isDirectory: " + pluginDir.isDirectory());
+        logger.info("User plugin dir: ", pluginDir);
+        logger.debug("       exists: ", pluginDir.exists());
+        logger.debug("  isDirectory: ", pluginDir.isDirectory());
         if (pluginDir.exists() && pluginDir.isDirectory()) {
             File[] plugins = pluginDir.listFiles();
             for (int i=0; i<plugins.length; i++) {
                 // loop over these files and load them
                 String pluginJarName = plugins[i].getName();
                 if (pluginJarName.endsWith("jar")) {
-                    logger.debug("Possible plugin found: " + pluginJarName);
+                    logger.debug("Possible plugin found: ", pluginJarName);
                     try {
                         JarFile jarfile = new JarFile(plugins[i]);
                         Enumeration entries = jarfile.entries();
@@ -234,10 +234,10 @@ public class CDKPluginManager {
                                     }
                                 }
                                 String pluginName = buffer.toString().substring(0, buffer.toString().indexOf(".class"));
-                                logger.info("Plugin class found: " + pluginName);
+                                logger.info("Plugin class found: ", pluginName);
 
                                 // FIXME: use a classloader that loads the whole jar
-                                logger.debug("Plugin URL: " + plugins[i].toURL());
+                                logger.debug("Plugin URL: ", plugins[i].toURL());
                                 URL u = new URL("jar", "", plugins[i].toURL() + "!/");
                                 ClassLoader loader = new PluginClassLoader(u);
                                 loadPlugin(loader, pluginName);
