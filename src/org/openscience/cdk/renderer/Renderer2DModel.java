@@ -1,6 +1,6 @@
-/* $RCSfile$    
- * $Author$    
- * $Date$    
+/* $RCSfile$
+ * $Author$
+ * $Date$
  * $Revision$
  * 
  * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
@@ -86,6 +86,17 @@ public class Renderer2DModel {
      */
     private boolean kekuleStructure = false;
 	
+    private Dimension backgroupDimension = new Dimension(500,400);
+    
+    public Dimension getBackgroundDimension() {
+        return new Dimension((int)((double)backgroupDimension.getWidth() * zoomFactor),
+                             (int)((double)backgroupDimension.getHeight() * zoomFactor));
+    }
+    
+    public void setBackgroundDimension(Dimension dim) {
+        this.backgroupDimension = dim;
+    }
+    
 	/**
 	 * Returns the distance between two lines in a double or triple bond
 	 *
