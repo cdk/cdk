@@ -89,7 +89,13 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
          */
         protected double charge;
 
-
+        /**
+         * Constructs an completely unset Atom.
+         */
+        public Atom() {
+            this(null);
+        }
+        
         /**
          * Constructs an Atom from a String containing an element symbol.
          *
