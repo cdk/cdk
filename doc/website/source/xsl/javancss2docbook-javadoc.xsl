@@ -39,6 +39,27 @@
           <xsl:sort select="javadocs" data-type="number" order="descending"/>
           <xsl:apply-templates select="self::node()[not(contains(./name, 'test'))]"/>
         </xsl:for-each>
+        <xsl:variable name="classes"   select="sum(javancss/packages/package[not(contains(./name, 'test'))]/classes)"/>
+        <xsl:variable name="functions" select="sum(javancss/packages/package[not(contains(./name, 'test'))]/functions)"/>
+        <xsl:variable name="javadocs"  select="sum(javancss/packages/package[not(contains(./name, 'test'))]/javadocs)"/>
+        <xsl:variable name="done" select="$javadocs div ($classes + $functions)"/>
+        <row>
+          <entry>Total</entry>
+          <entry><xsl:value-of select="$classes"/></entry>
+          <entry><xsl:value-of select="$functions"/></entry>
+          <entry><xsl:value-of select="$classes + $functions"/></entry>
+          <entry><xsl:value-of select="$javadocs"/></entry>
+          <entry>
+            <xsl:choose>
+              <xsl:when test="1.0 > $done">
+                <emphasis role="bold"><xsl:value-of select="format-number($done div 0.01,'#00.0')"/> %</emphasis>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:value-of select="format-number($done div 0.01,'#00.0')"/> %
+              </xsl:otherwise>
+            </xsl:choose>
+          </entry>
+        </row>
     </tbody>
   </tgroup>
 </informaltable>
@@ -68,15 +89,36 @@
           <xsl:sort select="javadocs" data-type="number" order="descending"/>
           <xsl:apply-templates select="self::node()[contains(./name, 'test')]"/>
         </xsl:for-each>
+        <xsl:variable name="classes"   select="sum(javancss/packages/package[contains(./name, 'test')]/classes)"/>
+        <xsl:variable name="functions" select="sum(javancss/packages/package[contains(./name, 'test')]/functions)"/>
+        <xsl:variable name="javadocs"  select="sum(javancss/packages/package[contains(./name, 'test')]/javadocs)"/>
+        <xsl:variable name="done" select="$javadocs div ($classes + $functions)"/>
+        <row>
+          <entry>Total</entry>
+          <entry><xsl:value-of select="$classes"/></entry>
+          <entry><xsl:value-of select="$functions"/></entry>
+          <entry><xsl:value-of select="$classes + $functions"/></entry>
+          <entry><xsl:value-of select="$javadocs"/></entry>
+          <entry>
+            <xsl:choose>
+              <xsl:when test="1.0 > $done">
+                <emphasis role="bold"><xsl:value-of select="format-number($done div 0.01,'#00.0')"/> %</emphasis>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:value-of select="format-number($done div 0.01,'#00.0')"/> %
+              </xsl:otherwise>
+            </xsl:choose>
+          </entry>
+        </row>
     </tbody>
   </tgroup>
 </informaltable>
   </xsl:template>
 
   <xsl:template match="package">
-      <xsl:variable name="classes" select="number(classes)"/>
+      <xsl:variable name="classes"   select="number(classes)"/>
       <xsl:variable name="functions" select="number(functions)"/>
-      <xsl:variable name="javadocs" select="number(javadocs)"/>
+      <xsl:variable name="javadocs"  select="number(javadocs)"/>
       <xsl:variable name="done" select="$javadocs div ($classes + $functions)"/>
       <row>
         <entry><xsl:value-of select="name"/></entry>
