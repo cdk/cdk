@@ -147,7 +147,7 @@
 	</target>
 
 	<target name="run" depends="dist">
-		<java classname="org.openscience.cdk.tools.AtomTypeFactory" fork="yes">
+		<java classname="org.openscience.cdk.test.ControllerTest" fork="yes">
 			<arg value=""/>
 			<classpath>
 				<pathelement location="${dist}/jar/cdk.jar"/>

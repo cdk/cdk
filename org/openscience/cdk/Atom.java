@@ -332,7 +332,7 @@ public class Atom extends AtomType implements Cloneable {
           if (object instanceof Atom)
           {
             Atom atom = (Atom) object;
-            if ((atomTypeID==atom.atomTypeID) &&
+            if ((getID()== atom.getID()) &&
                 (maxBondOrder==atom.maxBondOrder) &&
                 (maxBondOrderSum==atom.maxBondOrderSum) &&
                 ((point2D==atom.point2D) || ((point2D!=null) && (point2D.equals(atom.point2D)))) &&

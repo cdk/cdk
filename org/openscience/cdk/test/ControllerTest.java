@@ -44,14 +44,14 @@ public class ControllerTest
 	Molecule molecule;
 	CDKInputAdapter inputAdapter;
 	
-	public ControllerTest(String inFile)
+	public ControllerTest()
 	{
 //		molecule = buildFusedRings();
 //		molecule = buildMolecule4x3();
 //		molecule = buildMolecule2x3();
 //		molecule = buildMolecule2x4();
 //		molecule = buildSpiroRings();
-		molecule = loadMolecule(inFile);
+		molecule = loadMolecule("data/reserpine.mol");
 //		molecule = buildRing();
 //		molecule = new Molecule();
 
@@ -77,6 +77,7 @@ public class ControllerTest
 		mv.display();
 		JCPController2DModel c2dm = new JCPController2DModel();
 		inputAdapter = new CDKInputAdapter(molecule, r2dm, c2dm);
+		c2dm.setDrawMode(JCPController2DModel.DRAWBOND);
 		mv.addMouseMotionListener(inputAdapter);
 		mv.addMouseListener(inputAdapter);
 		mv.addKeyListener(inputAdapter);
@@ -90,11 +91,7 @@ public class ControllerTest
 	 */
 	public static void main(String[] args)
 	{
-	    if (args.length == 1) {
-		new ControllerTest(args[0]);
-	    } else {
-		System.out.println("Syntax: ControllerTest <filename>");
-	    }
+		new ControllerTest();
 	}
 	
 	/* build a molecule from 4 condensed triangles */

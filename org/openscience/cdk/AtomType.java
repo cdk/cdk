@@ -163,7 +163,7 @@ public class AtomType extends Element
     if (object instanceof AtomType)
     {
       AtomType type = (AtomType) object;
-      if ((atomTypeID==type.atomTypeID) &&
+      if ((getID()==type.getID()) &&
           (maxBondOrder==type.maxBondOrder) &&
           (maxBondOrderSum==type.maxBondOrderSum))
         return true;
