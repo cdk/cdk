@@ -178,7 +178,7 @@ public class ReaderFactory {
         String line = buffer.readLine();
         int lineNumber = 1;
         while (buffer.ready() && (line != null)) {
-            logger.debug(line);
+            logger.debug(lineNumber + ": ", line);
             if (line.indexOf("Gaussian(R) 98") >= 0 ||
                 line.indexOf("Gaussian 98") >= 0) {
                 logger.info("Gaussian98 format detected");
