@@ -22,12 +22,12 @@
             <row>
 			  <entry>Christoph Steinbeck (<ulink url="http://sourceforge.net/users/steinbeck/">steinbeck</ulink>)</entry>
 			  <entry></entry>
-			  <entry></entry>
+			  <entry>cdk.layout, cdk.structgen</entry>
 		    </row>
             <row>
 			  <entry>Egon Willighagen (<ulink url="http://sourceforge.net/users/egonw/">egonw</ulink>)</entry>
 			  <entry>Chemical Markup Language (CML)</entry>
-			  <entry>org.openscience.cdk.io, org.openscience.cdk.database</entry>
+			  <entry>oo.cdk.io, cdk.dict, cdk.validate, cdk.iupac</entry>
 		    </row>
             <row>
 			  <entry>Stephan Michels (<ulink url="http://sourceforge.net/users/benedikta/">benedikta</ulink>)</entry>

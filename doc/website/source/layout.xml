@@ -20,7 +20,10 @@
     </tocentry>
     <tocentry page="screenshots.xml" filename="screenshots.html"/>
     <tocentry page="documentation.xml" filename="documentation.html">
-      <tocentry page="reference.xml" filename="reference.html"/>
+      <tocentry page="reference.xml" filename="reference.html">
+        <tocentry page="user-core.xml" filename="user-core.html"/>
+        <tocentry page="user-extra.xml" filename="user-extra.html"/>
+      </tocentry>
       <tocentry page="keywordindex.xml" filename="keywordindex.html"/>
       <tocentry page="api.xml" filename="api.html"/>
       <tocentry page="manpages.xml" filename="manpages.html">

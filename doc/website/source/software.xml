@@ -73,6 +73,14 @@
         Jmol's 3D renderer will be ported to CDK.
       </para>
     </section>
+
+    <section>
+      <title>Nomen</title>
+      <para>
+        <ulink url="http://chemnomparse.sf.net/">Nomen</ulink> is a IUPAC name
+        parser being developed in Manchester, UK.
+      </para>
+    </section>
     
     <para>
       If your CDK using software is missing from this list, please send

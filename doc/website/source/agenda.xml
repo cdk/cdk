@@ -10,7 +10,7 @@
     <summary>The CDK Homepage.</summary>
   </head>
 
-  <para>This list shows the things that needs to be done:</para>
+  <para>This list shows the things that needs to be done urgently:</para>
     <itemizedlist>
       <listitem>
         <para>More documentation: many methods have not yet been
@@ -21,15 +21,7 @@
         </para>
       </listitem>
       <listitem>
-        <para>Write a non-accelerated 3D viewer, like the one in Jmol. Some work
-          has been done, but it is not completed.</para>
-        <para>For now, Jmol can be used. See cdk-view's --useJmol option.</para>
-      </listitem>
-      <listitem>
         <para>More JUnit tests: not all methods of the core classes are tested.</para>
-      </listitem>
-      <listitem>
-        <para>A IUPAC name generator is being developed.</para>
       </listitem>
     </itemizedlist>
 
@@ -43,28 +35,20 @@
       </listitem>
       <listitem>
         <para>An interface API to other programs and implementation
-             (like Tinker, Gaussian, Mopac etc)</para>
-      </listitem>
-      <listitem>
-        <para>LibIO to CMLDOM.</para>
-      </listitem>
-      <listitem>
-        <para>A cdk-merge program that adds information of a second file
-          to the information from the first one.</para>
-      </listitem>
-      <listitem>
-        <para>Improved CML reader that is able to read XHTML documents
-          with CML fragments.</para>
-      </listitem>
-      <listitem>
-        <para>Command line tools (cdk-dbquery/cdk-dbinsert) to add structures 
-          to and retrieve structures from the database.</para>
+             (like Tinker, Gaussian, Mopac, Ghemical etc)</para>
       </listitem>
       <listitem>
         <para>
           Code that can generate 3D structures, based on common angles and distances
-          between bonds. Babel is able to do this, so only the code has to be ported.
+          between bonds, like the proprietary Corina and Concord.
         </para>
+      </listitem>
+    </itemizedlist>
+
+    <para>This is the lists of things we could use some help with:</para>
+    <itemizedlist>
+      <listitem>
+        <para>A IUPAC name generator is being developed.</para>
       </listitem>
     </itemizedlist>
 
