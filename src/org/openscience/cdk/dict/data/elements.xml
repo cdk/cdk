@@ -1,0 +1,62 @@
+<dictionary xmlns="http://www.xml-cml.org/schema/stmml"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://www.xml-cml.org/schema/cml2/core ../../io/cml/data/cmlCore.xsd"
+  dictRef="element"
+  title="Element Dictionary">
+
+  <entry id="carbon" term="Carbon">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="Egon Willighagen"/>
+        <metadata name="dc:date" content="2003-08-12"/>
+      </documentation>
+    </annotation>
+  </entry>
+
+  <entry id="hydrogen" term="Hydrogen">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="Egon Willighagen"/>
+        <metadata name="dc:date" content="2003-08-12"/>
+      </documentation>
+    </annotation>
+  </entry>
+
+  <entry id="nitrogen" term="Nitrogen">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="Egon Willighagen"/>
+        <metadata name="dc:date" content="2003-08-12"/>
+      </documentation>
+    </annotation>
+  </entry>
+
+  <entry id="oxygen" term="Oxygen">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="Egon Willighagen"/>
+        <metadata name="dc:date" content="2003-08-12"/>
+      </documentation>
+    </annotation>
+  </entry>
+
+  <entry id="phosphorus" term="Phosphorus">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="Egon Willighagen"/>
+        <metadata name="dc:date" content="2003-08-12"/>
+      </documentation>
+    </annotation>
+  </entry>
+
+  <entry id="sulfur" term="Sulfur">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="Egon Willighagen"/>
+        <metadata name="dc:date" content="2003-08-12"/>
+      </documentation>
+    </annotation>
+  </entry>
+
+</dictionary>
+

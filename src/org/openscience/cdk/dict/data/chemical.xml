@@ -1,8 +1,8 @@
 <dictionary xmlns="http://www.xml-cml.org/schema/stmml"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
   xsi:schemaLocation="http://www.xml-cml.org/schema/cml2/core ../../io/cml/data/cmlCore.xsd"
-  dictRef="cml"
-  title="CML dictionary">
+  dictRef="chemical"
+  title="Chemical Concepts Dictionary">
 
   <!-- IMPORTANT: these document *does not* have an OpenSource like license! 
        
@@ -22,9 +22,9 @@
         <metadata name="dc:date" content="2003-03-13"/>
       </documentation>
     </annotation>
-    <definition>
+    <!-- definition>
       The assembling of separate molecular entities into any aggregate.
-    </definition>
+    </definition -->
   </entry>
 
   <entry id="atom" term="Atom">
@@ -36,9 +36,9 @@
         <metadata name="dc:date" content="2003-03-13"/>
       </documentation>
     </annotation>
-    <definition>
+    <!-- definition>
       Smallest particle still characterizing a chemical element.
-    </definition>
+    </definition -->
   </entry>
 
   <entry id="atomicSymbol" term="Atom Symbol">
@@ -50,10 +50,10 @@
         <metadata name="dc:date" content="2003-03-13"/>
       </documentation>
     </annotation>
-    <definition>
+    <!-- definition>
       One, two or three letters used to represent the atom in the
       chemical formulae.
-    </definition>
+    </definition -->
   </entry>
   
   <entry id="bond" term="Bond">
@@ -65,12 +65,12 @@
         <metadata name="dc:date" content="2003-03-13"/>
       </documentation>
     </annotation>
-    <definition>
+    <!-- definition>
       Entity that aggregates two atoms or groups of atoms by means of
       forces acting between them such that they lead to the formation
       of an aggregate with sufficient stability to make it convenient for
       the chemist to consider it as an independent 'molecular species'.
-    </definition>
+    </definition -->
   </entry>
 
   <entry id="bondOrder" term="Bond Order">
@@ -82,10 +82,10 @@
         <metadata name="dc:date" content="2003-03-13"/>
       </documentation>
     </annotation>
-    <definition>
+    <!-- definition>
       Theoretical index of the degree of bonding between two atoms relative
       to that of a single bond.
-    </definition>
+    </definition -->
   </entry>
 
   <entry id="covalentBond" term="Covalent Bond">
@@ -97,12 +97,12 @@
         <metadata name="dc:date" content="2003-03-13"/>
       </documentation>
     </annotation>
-    <definition>
+    <!-- definition>
       Entity that aggregates two atoms or groups of atoms by means of
       forces acting between them such that they lead to the formation
       of an aggregate with sufficient stability to make it convenient for
       the chemist to consider it as an independent 'molecular species'.
-    </definition>
+    </definition -->
   </entry>
 
   <entry id="hydrogenBond" term="Hydrogen Bond">
@@ -114,10 +114,10 @@
         <metadata name="dc:date" content="2003-03-13"/>
       </documentation>
     </annotation>
-    <definition>
+    <!-- definition>
       A form of association between an electronegative atom and a hydrogen atom
       attached to a second, relatively electronegative atom.
-    </definition>
+    </definition -->
   </entry>
 
   <entry id="ionicBond" term="Ionic Bond">
@@ -127,9 +127,9 @@
         <metadata name="dc:date" content="2003-03-13"/>
       </documentation>
     </annotation>
-    <definition>
+    <!-- definition>
       A conceptual bond between two ions.
-    </definition>
+    </definition -->
   </entry>
   
   <entry id="ionPair" term="Ion Pair">
@@ -141,10 +141,10 @@
         <metadata name="dc:date" content="2003-03-13"/>
       </documentation>
     </annotation>
-    <definition>
+    <!-- definition>
       A pair of oppositely charged ions held together by Coulomb attraction
       without formation of a covalent bond.
-    </definition>
+    </definition -->
   </entry>
 
   <entry id="isotope" term="Isotope">
@@ -156,10 +156,10 @@
         <metadata name="dc:date" content="2003-08-09"/>
       </documentation>
     </annotation>
-    <definition>
+    <!-- definition>
       Isotopes are nuclides with the same specific atomic number but different
       mass number.
-    </definition>
+    </definition -->
   </entry>
 
   <entry id="atomicNumber" term="Atomic Number">
@@ -171,9 +171,9 @@
         <metadata name="dc:date" content="2003-08-09"/>
       </documentation>
     </annotation>
-    <definition>
+    <!-- definition>
       The number of protons in the atomic nucleus.
-    </definition>
+    </definition -->
   </entry>
 
   <entry id="molecule" term="Molecule">
@@ -185,12 +185,12 @@
         <metadata name="dc:date" content="2003-08-09"/>
       </documentation>
     </annotation>
-    <definition>
+    <!-- definition>
       An electrically neutral entity consisting of more than one atom
       (n > 1). Rigorously, a molecule, in which n > 1 must correspond to
       a depression on the potential energy surface that is deep enough
       to confine at least on vibrational state.
-    </definition>
+    </definition -->
   </entry>
 
   <entry id="molecularEntity" term="Molecular Entity">
@@ -202,11 +202,11 @@
         <metadata name="dc:date" content="2003-08-09"/>
       </documentation>
     </annotation>
-    <definition>
+    <!-- definition>
       Any constitutaionally or isotopically distinct atom, molecule, ion,
       ion pair, radical, radical ion, complex, conformer etc, identifiable
       as a separately distinguishable entity.
-    </definition>
+    </definition -->
   </entry>
 
 </dictionary>
