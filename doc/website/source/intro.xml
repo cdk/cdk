@@ -15,7 +15,9 @@
 		<para>
 			The CDK project was started in September 2000 to replace the CompChem libraries used by
 			JChemPaint, Jmol and SENECA. It no longer is in its initial stage, but is slowly getting a solid
-			state. The people involved are those in the
+			state. The people involved are
+			<ulink url="http://www.ice.mpg.de/~stein">Christoph Steinbeck</ulink>
+			and his			
 			<ulink url="http://www.ice.mpg.de/departments/cheminf">Chemoinformatics Group</ulink> at the
 			<ulink url="http://www.ice.mpg.de">Max Planck Institute of Chemical Ecology in Jena</ulink>,
 			as well as <ulink url="mailto:egonw@sci.kun.nl">Egon Willighagen</ulink> from the University of Nijmegen,
@@ -26,12 +28,11 @@
 			Now, the rewrite of these CompChem/CDK library classes do somehow effect
 			all of our projects.
 			All of our code relies to some extend on the so-called CompChem classes
-			for computational chemistry. I started this chemistry library when I
-			started programming SENECA, my system for Computer Assisted Structure Elucidation.
+			for computational chemistry. Christoph Steinbeck started this chemistry library when he started programming SENECA, a system for Computer Assisted Structure Elucidation.
 			It turned out that some of
 			the code had design flaws that prevented others, like the authors of
 			(<ulink url="http://www.openscience.org/jmol">Jmol</ulink>) to use it.
-			Egon, Dan and I now met in September 2000 at the University of Notre Dame,
+			Egon, Dan and Chris now met in September 2000 at the University of Notre Dame,
 			South Bend, Chicago, and redesigned the CompChem classes, calling the
 			new project the "Chemistry Development Kit, CDK".
 		</para>
