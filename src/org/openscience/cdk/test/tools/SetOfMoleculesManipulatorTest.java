@@ -50,7 +50,8 @@ public class SetOfMoleculesManipulatorTest extends TestCase {
     public void setUp() {
 		Molecule mol1 = new Molecule();
 		Atom atom1 = new Atom("Cl");
-		atom1.setCharge(-1);
+		atom1.setCharge(-1.0);
+		atom1.setFormalCharge(-1);
 		atom1.setHydrogenCount(1);
 		mol1.addAtom(atom1);
 		Molecule mol2 = new Molecule();
@@ -67,7 +68,12 @@ public class SetOfMoleculesManipulatorTest extends TestCase {
 	}
 
     public void testGetTotalCharge() {
-        int charge = SetOfMoleculesManipulator.getTotalCharge(som);
+        double charge = SetOfMoleculesManipulator.getTotalCharge(som);
+		assertEquals(-1.0, charge, 0.000001);
+    }
+	
+	public void testGetTotalFormalCharge() {
+        int charge = SetOfMoleculesManipulator.getTotalFormalCharge(som);
 		assertEquals(-1, charge);
     }
 	

@@ -80,10 +80,21 @@ public class AtomContainerManipulator {
 	/**
 	 * @return The summed charges of all atoms in this AtomContainer.
 	 */
-	public static int getTotalCharge(AtomContainer atomContainer) {
-		int charge = 0;
+	public static double getTotalCharge(AtomContainer atomContainer) {
+		double charge = 0.0;
 		for (int i = 0; i < atomContainer.getAtomCount(); i++) {
 			charge += atomContainer.getAtomAt(i).getCharge();
+		}
+		return charge;
+	}
+	
+	/**
+	 * @return The summed formal charges of all atoms in this AtomContainer.
+	 */
+	public static int getTotalFormalCharge(AtomContainer atomContainer) {
+		int charge = 0;
+		for (int i = 0; i < atomContainer.getAtomCount(); i++) {
+			charge += atomContainer.getAtomAt(i).getFormalCharge();
 		}
 		return charge;
 	}

@@ -68,8 +68,15 @@ public class SetOfMoleculesManipulator {
 	/**
 	 * @see SetOfAtomContainersManipulator
 	 */
-	public static int getTotalCharge(SetOfMolecules set) {
+	public static double getTotalCharge(SetOfMolecules set) {
 		return SetOfAtomContainersManipulator.getTotalCharge(set);
+	}
+	
+	/**
+	 * @see SetOfAtomContainersManipulator
+	 */
+	public static int getTotalFormalCharge(SetOfMolecules set) {
+		return SetOfAtomContainersManipulator.getTotalFormalCharge(set);
 	}
 	
 	/**

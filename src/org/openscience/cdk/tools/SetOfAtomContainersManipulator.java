@@ -87,11 +87,23 @@ public class SetOfAtomContainersManipulator {
 	/**
 	 * @return The summed charges of all atoms in this set.
 	 */
-	public static int getTotalCharge(SetOfAtomContainers set) {
-		int charge = 0;
+	public static double getTotalCharge(SetOfAtomContainers set) {
+		double charge = 0;
 		for (int i = 0; i < set.getAtomContainerCount(); i++) {
 			AtomContainer ac = set.getAtomContainer(i);
 			charge += AtomContainerManipulator.getTotalCharge(ac);
+		}
+		return charge;
+	}
+	
+	/**
+	 * @return The summed formal charges of all atoms in this set.
+	 */
+	public static int getTotalFormalCharge(SetOfAtomContainers set) {
+		int charge = 0;
+		for (int i = 0; i < set.getAtomContainerCount(); i++) {
+			AtomContainer ac = set.getAtomContainer(i);
+			charge += AtomContainerManipulator.getTotalFormalCharge(ac);
 		}
 		return charge;
 	}
