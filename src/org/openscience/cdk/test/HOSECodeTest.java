@@ -179,10 +179,11 @@ public class HOSECodeTest
 
 		try
 		{
-			//molecule = (new SmilesParser()).parseSmiles("C12=CC=CC=C1NC=C2");
-			//molecule = (new SmilesParser()).parseSmiles("C1(C=CN2)=C2C=CC=C1");
-			//molecule = (new SmilesParser()).parseSmiles("ClC1CCCC1");
-			molecule = (new SmilesParser()).parseSmiles("c1c(OC)cc(OC)cc1");
+			String filename = "data/prediction-test.mol";
+			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+			MDLReader reader = new MDLReader(new InputStreamReader(ins));
+			molecule = (Molecule)reader.read((ChemObject)new Molecule());
+    
 			boolean isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
 			hcg = new HOSECodeGenerator();
 			String s = null;
