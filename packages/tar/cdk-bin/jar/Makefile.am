@@ -12,4 +12,4 @@ alljardir = "${JARLIBDIR}"
 alljar_DATA = ${JARLIBS}
 
 ${JARLIBS}:
-	cd ../../../jar; cp ${JARLIBS} ../packages/tar/jar/.
+	cd ../../../../jar; cp ${JARLIBS} ../packages/tar/cdk-bin/jar/.
