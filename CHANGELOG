@@ -35,6 +35,9 @@ Fixes:
   to the buffer send to MDLReader. Also fixed throwing of an exception as the interface
   describes (closes #895973)
 * Fixed handling of CML content in RSS channel when no namespace prefix was used
+* Fixed handling of CML conventions: don't compare new convention with itself,
+  and all convention handlers already subclass CMLCore convention, so don't reset
+  to CMLCore convention when CML convention found
 
 API changes:
 * Changed SetOfAtomContainers.getAtomContainerMultiplier() to .getMultiplier()

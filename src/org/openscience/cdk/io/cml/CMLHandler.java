@@ -28,6 +28,7 @@ package org.openscience.cdk.io.cml;
 import java.util.Hashtable;
 
 import org.openscience.cdk.io.cml.cdopi.CDOInterface;
+import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -46,7 +47,7 @@ import org.xml.sax.helpers.DefaultHandler;
 public class CMLHandler extends DefaultHandler {
     
     private ModuleInterface conv;
-    private org.openscience.cdk.tools.LoggingTool logger;
+    private LoggingTool logger;
     private boolean debug = true;
     
     private Hashtable userConventions;
@@ -63,8 +64,7 @@ public class CMLHandler extends DefaultHandler {
      * @param cdo The Chemical Document Object in which data is stored
      **/
     public CMLHandler(CDOInterface cdo) {
-        logger = new org.openscience.cdk.tools.LoggingTool(
-                       this.getClass().getName());
+        logger = new org.openscience.cdk.tools.LoggingTool(this);
         conv = new CMLCoreModule(cdo);
         userConventions = new Hashtable();
         xpath = new CMLStack();
@@ -113,7 +113,7 @@ public class CMLHandler extends DefaultHandler {
 
     public void startElement(String uri, String local, String raw, Attributes atts) {
         xpath.push(local);
-        if (debug) logger.debug("<" + raw + "> -> " + xpath);
+        if (debug) logger.debug("<", raw, "> -> ", xpath);
         // Detect CML modules, like CRML and CCML
         if (local.startsWith("reaction")) {
             // e.g. reactionList, reaction -> CRML module
@@ -131,13 +131,15 @@ public class CMLHandler extends DefaultHandler {
                 }
             }
             if (convName.length() > 0) {
-                conventionStack.push(convName);
                 if (convName.equals(conventionStack.current())) {
                     logger.debug("Same convention as parent");
                 } else {
-                    logger.info("New Convention: " + convName);
+                    logger.info("New Convention: ", convName);
                     if (convName.equals("CML")) {
-                        conv = new CMLCoreModule(conv);
+                        /* Don't reset the convention handler to CMLCore,
+                           becuase all handlers should extend this handler,
+                           and use it for any content other then specifically
+                           put into the specific convention */
                     } else if (convName.equals("PDB")) {
                         conv = new PDBConvention(conv);
                     } else if (convName.equals("PMP")) {
@@ -147,22 +149,22 @@ public class CMLHandler extends DefaultHandler {
                         conv = new MDLMolConvention(conv);
                     } else if (convName.equals("JMOL-ANIMATION")) {
                         conv = new JMOLANIMATIONConvention(conv);
-                    } else {
-                        //unknown convention. userConvention?
-                        if (userConventions.containsKey(convName)) {
+                    } else if (userConventions.containsKey(convName)) {
+                            //unknown convention. userConvention?
                             ConventionInterface newconv = (ConventionInterface)userConventions.get(convName);
                             newconv.inherit(conv);
                             conv = newconv;
-                        }
+                    } else {
+                        logger.warn("Detected unknown convention: ", convName);
                     }
-
                 }
+                conventionStack.push(convName);
             } else {
                 // no convention set/reset: take convention of parent
                 conventionStack.push(conventionStack.current());
             }
         }
-        if (debug) logger.debug("Conventions -> " + conventionStack);
+        if (debug) logger.debug("ConventionStack: ", conventionStack);
         conv.startElement(xpath, uri, local, raw, atts);
     }
 
