@@ -189,7 +189,7 @@ public class ChemObject implements java.io.Serializable, Cloneable
      *
      * @return  The object's properties
      */
-    public Map getProperties() {
+    public Hashtable getProperties() {
         return properties;
     }
     
