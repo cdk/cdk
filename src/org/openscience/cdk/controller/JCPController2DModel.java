@@ -1,9 +1,9 @@
 /* $RCSfile$
- * $Author$    
- * $Date$    
+ * $Author$
+ * $Date$
  * $Revision$
  * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  * 
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  * 
@@ -28,6 +28,7 @@
  */
 package org.openscience.cdk.controller;
 
+import javax.swing.JPopupMenu;
 
 public class JCPController2DModel 
 {
@@ -65,6 +66,8 @@ public class JCPController2DModel
 	private double bondPointerLength = 20;
 	private double ringPointerLength = 20;
 	
+    private JPopupMenu atomPopup = null;
+    private JPopupMenu bondPopup = null;
 	
 	/**
 	 * Returns the draw mode.
@@ -315,4 +318,21 @@ public class JCPController2DModel
     public String[] getCommonElements() {
         return this.commonElements;
     }
+    
+    public void setAtomPopupMenu(JPopupMenu menu) {
+        this.atomPopup = menu;
+    }
+    
+    public JPopupMenu getAtomPopupMenu() {
+        return this.atomPopup;
+    }
+
+    public void setBondPopupMenu(JPopupMenu menu) {
+        this.bondPopup = menu;
+    }
+    
+    public JPopupMenu getBondPopupMenu() {
+        return this.bondPopup;
+    }
+
 }

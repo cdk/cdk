@@ -86,6 +86,13 @@ public class JCPController2D {
     }
 
 
+    public JCPController2DModel getController2DModel() {
+        return c2dm;
+    }
+    
+    public void setController2DModel(JCPController2DModel model) {
+        this.c2dm = model;
+    }
         /**
          * manages all actions that will be invoked when the mouse is moved
          *
