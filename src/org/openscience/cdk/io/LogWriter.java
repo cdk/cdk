@@ -1,12 +1,11 @@
-/* LogWriter.java
+/* $RCSfile$ 
+ * $Author$ 
+ * $Date$
+ * $Revision$
  * 
- * Autor: Stephan Michels 
- * EMail: stephan@vern.chem.tu-berlin.de
- * Datum: 14.7.2001
+ * Copyright (C) 2001-2003  The Chemistry Development Kit (CDK) project
  * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
- * 
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -32,7 +31,11 @@ package org.openscience.cdk.io;
  
 import java.io.PrintStream;
 import java.io.OutputStream;
- 
+
+/**
+ * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
+ * @created 2001-07-14
+ */
 public class LogWriter
 {
 	private StringBuffer buffer = new StringBuffer();
