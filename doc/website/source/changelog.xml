@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.0b1//EN" "dtd/website.dtd">
+<webpage id="changelog">
+  <config param="last-change-by" value="$Author$"/>
+  <config param="rcsdate" value="$Date$"/>
+
+  <head>
+    <title>The CDK Changelog</title>
+    <titleabbrev>Changelog</titleabbrev>
+    <summary>Changes in the library from version to version.</summary>
+  </head>
+
+  <para>
+    Revision History of the CDK:
+    <itemizedlist>
+      <listitem><para>CVS version
+        <itemizedlist>
+           <listitem><para>Added FileConverter program.</para></listitem>
+        </itemizedlist>
+      </para></listitem>
+    </itemizedlist>
+    <itemizedlist>
+      <listitem><para>Preview 20011201
+        <itemizedlist>
+           <listitem><para>Splitted required libraries from CDK source</para></listitem>
+           <listitem><para>Fixed (again) CML reading</para></listitem>
+        </itemizedlist>
+      </para></listitem>
+    </itemizedlist>
+    <itemizedlist>
+      <listitem><para>Preview 20011015 and 20011013
+        <itemizedlist>
+           <listitem><para>Improvements to SingleRandomStructureGenerator</para></listitem>
+           <listitem><para>Added Log4J as (optional) logging tool</para></listitem>
+           <listitem><para>Fixed a problem in PathTools.breadthFirstTargetSearch()</para></listitem>
+           <listitem><para>Added to convenience methods to XMLTools for serializing
+               and de-serializing</para></listitem>
+        </itemizedlist>
+      </para></listitem>
+    </itemizedlist>
+    <itemizedlist>
+      <listitem><para>Preview 20010909
+        <itemizedlist>
+           <listitem><para>Added TestCases for PDBReader, Monomer, Polymer and ChemObject.</para></listitem>
+           <listitem><para>Added get/setProperty and get/setRemark to ChemObject.</para></listitem>
+           <listitem><para>Added classes for rendering graphes</para></listitem>
+           <listitem><para>Added classes for complex numbers, vectors and matrices</para></listitem>
+           <listitem><para>Change name from Job to ClosedShellJob</para></listitem>
+           <listitem><para>Added Factories for AtomType, Element and Isotope as well as
+              their testcases.</para></listitem>
+        </itemizedlist>
+      </para></listitem>
+    </itemizedlist>
+    <itemizedlist>
+      <listitem><para>Preview 20010807
+        <itemizedlist>
+           <listitem><para>Added MoleculeTable class</para></listitem>
+           <listitem><para>Merged CML import library</para></listitem>
+           <listitem><para>Added (Bio)Polymer and Monomer classes</para></listitem>
+           <listitem><para>Added PDBReader</para></listitem>
+           <listitem><para>Added XYZReader</para></listitem>
+           <listitem><para>Added AtomicTable</para></listitem>
+        </itemizedlist>
+      </para></listitem>
+    </itemizedlist>
+    <itemizedlist>
+      <listitem><para>Preview 20010511
+        <itemizedlist>
+           <listitem><para>Added base classes (Atom, Bond, etc)</para></listitem>
+           <listitem><para>Added file i/o (CML, MDL Molfile)</para></listitem>
+           <listitem><para>Added JDBC import/export filter (experimental)</para></listitem>
+           <listitem><para>Added RandomStructure Generator</para></listitem>
+           <listitem><para>Added Renderer2D</para></listitem>
+        </itemizedlist>
+      </para></listitem>
+    </itemizedlist>
+  </para>
+
+</webpage>

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.0b1//EN" "dtd/website.dtd">
+<webpage id="homepage">
+  <config param="last-change-by" value="$Author$"/>
+  <config param="rcsdate" value="$Date$"/>
+
+  <head>
+    <title>The Chemical Development Kit</title>
+    <titleabbrev>cdk-homepage</titleabbrev>
+    <summary>The CDK Homepage.</summary>
+  </head>
+
+  <section>
+    <title>The Chemical Development Kit (CDK)</title>
+    <para>The CDK classes are Java utitility classes for ChemoInformatics and Computational chemistry,
+      written in Java. They are developed constantly developed parallel to other projects that make use of them.
+      They are a complete re-write of the CompChem classes that were the basis of JChemPaint, a Java Editor for
+      2D chemical structures, and of JMDraw, a Java package for the graphical layout of 2D chemical structures.
+     </para>
+  </section>
+
+</webpage>

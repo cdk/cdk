@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.0b1//EN" "dtd/website.dtd">
+<webpage id="screenshots">
+  <config param="last-change-by" value="$Author$"/>
+  <config param="rcsdate" value="$Date$"/>
+
+  <head>
+    <title>CDK Screenshots</title>
+    <titleabbrev>Screenshots</titleabbrev>
+    <summary>Some visual eye-candy.</summary>
+  </head>
+
+    <para>
+        <figure>
+                <title>The GraphRenderer with a plot of a gaussian function
+                </title>
+                <screenshot>
+                        <graphic fileref="graphics/screenshots/GraphRendererTest.png"></graphic>
+                </screenshot>
+        </figure>
+    </para>
+
+</webpage>

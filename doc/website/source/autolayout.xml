@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!DOCTYPE autolayout PUBLIC "-//Norman Walsh//DTD Website Auto Layout V1.0//EN" "dtd/autolayout.dtd">
+<autolayout>
+<config param="text-prefix" value="txt"/><config param="homebanner-tabular" value="graphics/homebanner.png" altval="Home Banner"/><config param="banner-tabular" value="graphics/homebanner.png" altval="Banner"/><copyright><year>2001</year><holder>The CDK Team</holder></copyright><style src="example.css" type="text/css"/><toc page="website.xml" id="homepage" filename="index.html">
+<title>The Chemical Development Kit</title>
+<titleabbrev>cdk-homepage</titleabbrev>
+<summary>The CDK Homepage.</summary>
+<tocentry page="intro.xml" id="introduction" filename="intro.html">
+<title>Introduction</title>
+<titleabbrev>Introduction</titleabbrev>
+<summary>Information about the CDK project.</summary>
+</tocentry>
+<tocentry page="thelibrary.xml" id="thelibrary" filename="thelibrary.html">
+<title>The CDK</title>
+<titleabbrev>The CDK</titleabbrev>
+<summary>Information about the CDK.</summary>
+<tocentry page="api.xml" id="cdk-api" filename="api.html">
+<title>The CDK Application Programming Interface (API)</title>
+<titleabbrev>API</titleabbrev>
+<summary>Information about the Java classes of the CDK.</summary>
+</tocentry>
+<tocentry page="libraries.xml" id="libraries" filename="libraries.html">
+<title>Required and Optional Libraries</title>
+<titleabbrev>Needed Libraries</titleabbrev>
+<summary>This page lists the required and optional libraries.</summary>
+</tocentry>
+</tocentry>
+<tocentry page="development.xml" id="development" filename="development.html">
+<title>The Chemical Development Kit</title>
+<titleabbrev>Development</titleabbrev>
+<summary>The CDK Homepage.</summary>
+<tocentry page="reference.xml" id="reference" filename="reference.html">
+<title>The Programming Reference</title>
+<titleabbrev>Programming Reference</titleabbrev>
+<summary>This section tells you how to use the classes in your own
+	   software program.</summary>
+</tocentry>
+<tocentry page="agenda.xml" id="agenda" filename="agenda.html">
+<title>The CDK Agenda</title>
+<titleabbrev>Agenda</titleabbrev>
+<summary>The CDK Homepage.</summary>
+</tocentry>
+<tocentry page="changelog.xml" id="changelog" filename="changelog.html">
+<title>The CDK Changelog</title>
+<titleabbrev>Changelog</titleabbrev>
+<summary>Changes in the library from version to version.</summary>
+</tocentry>
+</tocentry>
+<tocentry page="screenshots.xml" id="screenshots" filename="screenshots.html">
+<title>CDK Screenshots</title>
+<titleabbrev>Screenshots</titleabbrev>
+<summary>Some visual eye-candy.</summary>
+</tocentry>
+<tocentry page="download.xml" id="download" filename="download.html">
+<title>The Chemical Development Kit</title>
+<titleabbrev>Download</titleabbrev>
+<summary>The CDK Homepage.</summary>
+</tocentry>
+<tocentry page="biblio.xml" id="bibliography" filename="biblio.html">
+<title>Bibliography</title>
+<titleabbrev>Bibliography</titleabbrev>
+<summary>Articles mentioned on the website.</summary>
+</tocentry>
+</toc>
+</autolayout>
+

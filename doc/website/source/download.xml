@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.0b1//EN" "dtd/website.dtd">
+<webpage id="download">
+  <config param="last-change-by" value="$Author$"/>
+  <config param="rcsdate" value="$Date$"/>
+
+  <head>
+    <title>The Chemical Development Kit</title>
+    <titleabbrev>Download</titleabbrev>
+    <summary>The CDK Homepage.</summary>
+  </head>
+
+  <section>
+    <title>Downloading CDK</title>
+    <para>The CDK source code can be downloaded from SourceForge. You will
+	  need to download the CDK source code and the required libraries, which are
+	  all packaged in the file cdk-libs.tar.gz.</para>
+  </section>
+
+</webpage>

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.0b1//EN" "dtd/website.dtd">
+<webpage id="agenda">
+  <config param="last-change-by" value="$Author$"/>
+  <config param="rcsdate" value="$Date$"/>
+
+  <head>
+    <title>The CDK Agenda</title>
+    <titleabbrev>Agenda</titleabbrev>
+    <summary>The CDK Homepage.</summary>
+  </head>
+
+<para>This is the list of stuff that is still missing in CDK:
+  <itemizedlist>
+         <listitem>
+                <para>a SMILES parser/producer</para>
+         </listitem>
+         <listitem>
+                <para>A substructure search</para>
+         </listitem>
+         <listitem>
+                <para>A energy minimizer / moleculare dynamics module</para>
+         </listitem>
+         <listitem>
+                <para>An interface API to other programs and implementation</para>
+         </listitem>
+</itemizedlist>
+</para>
+
+</webpage>

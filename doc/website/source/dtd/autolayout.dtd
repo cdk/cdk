@@ -1,0 +1,79 @@
+<!-- ====================================================================== -->
+<!-- Website Autolayout DTD V2.0b1
+     Part of the Website distribution
+     http://sourceforge.net/projects/docbook/
+
+     Please direct all questions and comments about this DTD to
+     Norman Walsh, <ndw@nwalsh.com>.
+                                                                            -->
+<!-- ====================================================================== -->
+
+<!ELEMENT autolayout ((copyright|style|script|config)*, toc+, notoc*)>
+
+<!ELEMENT toc (title, titleabbrev?, summary?, tocentry*)>
+<!ATTLIST toc
+	id		ID	#REQUIRED
+	page		CDATA	#REQUIRED
+	dir		CDATA	#IMPLIED
+	filename	CDATA	#REQUIRED
+>
+
+<!ELEMENT title ANY>
+
+<!ELEMENT titleabbrev ANY>
+
+<!ELEMENT summary (#PCDATA)*>
+
+<!ELEMENT config EMPTY>
+<!ATTLIST config
+	param	CDATA	#REQUIRED
+	value	CDATA	#REQUIRED
+	altval	CDATA	#IMPLIED
+>
+
+<!ELEMENT style (#PCDATA)>
+<!ATTLIST style
+	src	CDATA	#IMPLIED
+	type	CDATA	#IMPLIED
+>
+
+<!ELEMENT script (#PCDATA)>
+<!ATTLIST script
+	src	CDATA	#IMPLIED
+	language	CDATA	#IMPLIED
+>
+
+<!ELEMENT copyright (year+, holder+)>
+
+<!ELEMENT year (#PCDATA)*>
+
+<!ELEMENT holder (#PCDATA|ulink)*>
+<!ATTLIST holder
+	role	CDATA	#IMPLIED
+>
+
+<!ELEMENT ulink (#PCDATA)*>
+<!ATTLIST ulink
+	url	CDATA	#REQUIRED
+>
+
+<!ELEMENT tocentry (title, titleabbrev?, summary?, tocentry*)>
+<!ATTLIST tocentry
+	id		CDATA	#REQUIRED
+	page		CDATA	#IMPLIED
+	href		CDATA	#IMPLIED
+	dir		CDATA	#IMPLIED
+	filename	CDATA	#IMPLIED
+	tocskip		(0|1)	"0"
+>
+
+<!ELEMENT notoc (title, titleabbrev?, summary?)>
+<!ATTLIST notoc
+	id		CDATA	#REQUIRED
+	page		CDATA	#REQUIRED
+	dir		CDATA	#IMPLIED
+	filename	CDATA	#REQUIRED
+>
+
+<!-- End of autolayout.dtd V2.0b1 ......................................... -->
+<!-- ...................................................................... -->

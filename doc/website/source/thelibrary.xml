@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.0b1//EN" "dtd/website.dtd">
+<webpage id="thelibrary">
+  <config param="last-change-by" value="$Author$"/>
+  <config param="rcsdate" value="$Date$"/>
+
+  <head>
+    <title>The CDK</title>
+    <titleabbrev>The CDK</titleabbrev>
+    <summary>Information about the CDK.</summary>
+  </head>
+
+ <para>Some text.</para>
+
+</webpage>

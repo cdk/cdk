@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.0b1//EN" "dtd/website.dtd" [
+<!ENTITY content SYSTEM "projectref.xml">
+<!ENTITY % classes SYSTEM "classes.mod">
+%classes;
+]>
+<webpage id="reference">
+  <config param="last-change-by" value="$Author$"/>
+  <config param="rcsdate" value="$Date$"/>
+
+  <head>
+    <title>The Programming Reference</title>
+    <titleabbrev>Programming Reference</titleabbrev>
+    <summary>This section tells you how to use the classes in your own
+	   software program.</summary>
+  </head>
+
+  &content;
+
+</webpage>
