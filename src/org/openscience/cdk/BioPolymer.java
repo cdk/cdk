@@ -1,8 +1,7 @@
-/* BioPolymer.java
- * 
- * $ author: 	Edgar Luttmann 			$ 
- * $ contact: 	edgar@uni-paderborn.de 	$
- * $ date: 		2001-08-06 				$
+/* $RCSfile$
+ * $Author$    
+ * $Date$    
+ * $Revision$
  * 
  * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
  * 
@@ -34,7 +33,7 @@ package org.openscience.cdk;
  * A BioPolymer is a subclass of a Polymer which is supposed to store
  * additional informations about the Polymer which are connected to BioPolymers.
  *
- * @author     Edgar Luttmann
+ * @author     Edgar Luttmann <edgar@uni-paderborn.de>
  * @created    2001-08-06 
  *
  * @keyword    polymer

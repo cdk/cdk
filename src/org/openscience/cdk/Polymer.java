@@ -1,8 +1,4 @@
-/* Polymer.java
- * 
- * $ author: 	Edgar Luttmann 			$ 
- * $ contact: 	edgar@uni-paderborn.de 	$
- * $ date: 		2001-08-06 				$
+/* 
  * 
  * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
  * 
@@ -35,7 +31,7 @@ import java.util.*;
  *
  * Subclass of Molecule to store Poymer specific attributes a Polymer has.
  *
- * @author     Edgar Luttmann
+ * @author     Edgar Luttmann <edgar@uni-paderborn.de>
  * @created    2001-08-06
  * @keyword    polymer
  *
