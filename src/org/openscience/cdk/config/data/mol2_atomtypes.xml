@@ -1,6 +1,6 @@
 <atomTypeList xmlns="http://www.xml-cml.org/schema/cml2/core"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-  xsi:schemaLocation="http://www.xml-cml.org/schema/cml2/core ../io/cml/data/cmlAll.xsd"
+  xsi:schemaLocation="http://www.xml-cml.org/schema/cml2/core ../../io/cml/data/cmlAll.xsd"
   id="mol2" title="MOL2 AtomTypes">
 
   <atomType id="P.3">
