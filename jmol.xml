@@ -1,6 +1,10 @@
 <project name="JmolCDK" default="dist-both" basedir=".">
 
   <!-- compile options -->
+  <property name="build.compiler" value="javac1.1" />
+  <property name="debug" value="on" />
+  <property name="deprecation" value="on" />
+  <property name="optimization" value="off" />
   
   <!-- directories -->
   <property name="build" value="build" />
@@ -37,8 +41,8 @@
            dir="${build.src}/org/openscience/cdk/tools"/>
 
     <!-- do them one by one, compile-extra, compile-io require 1.4 -->
-    <javac srcdir="${build.src}" destdir="${build}" optimize="off" 
-           debug="on" deprecation="off" target="1.1"
+    <javac srcdir="${build.src}" destdir="${build}" optimize="${optimization}" 
+           debug="${debug}" deprecation="${deprecation}" target="1.1"
            includesfile="${src}/jmol.javafiles">
       <classpath refid="project.class.path" />
     </javac>
@@ -47,8 +51,8 @@
   <target name="compile">
 
     <!-- do them one by one, compile-extra, compile-io requires 1.4 -->
-    <javac srcdir="${build.src}" destdir="${build}" optimize="off" 
-           debug="on" deprecation="off" target="1.1"
+    <javac srcdir="${build.src}" destdir="${build}" optimize="${optimization}" 
+           debug="${debug}" deprecation="${deprecation}" target="1.1"
            includesfile="${src}/jmol.javafiles">
       <classpath refid="project.class.path" />
     </javac>
