@@ -109,6 +109,9 @@ import org.xmlcml.cmlimpl.*;
  * For bonds it outputs: order, atoms (2, or more) and wedges.
  *
  * @cdk.module extra
+ * @cdk.depends base.jar
+ * @cdk.depends pmrlib.jar
+ * @cdk.depends cmlAll.jar
  *
  * @see java.io.FileWriter
  * @see java.io.StringWriter
