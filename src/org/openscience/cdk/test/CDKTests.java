@@ -77,6 +77,7 @@ public class CDKTests {
         // from cdk.test.aromaticity
         suite.addTest(HueckelAromaticityDetectorTest.suite());
 	suite.addTest(HOSECodeTest.suite());
+	suite.addTest(BremserPredictorTest.suite());
 	    return suite;
 	}
     
