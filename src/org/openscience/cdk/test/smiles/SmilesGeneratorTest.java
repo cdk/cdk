@@ -30,6 +30,7 @@ import org.openscience.cdk.tools.*;
 import org.openscience.cdk.test.MoleculeFactory;
 import org.openscience.cdk.renderer.*;
 import org.openscience.cdk.layout.*;
+import org.openscience.cdk.test.*;
 import javax.vecmath.*;
 
 import java.util.*;
