@@ -310,8 +310,8 @@ public class AtomContainerTest extends TestCase {
         // array lengths
         AtomContainer ac = new AtomContainer(5,6);
         
-        assertEquals(0, ac.getAtomCount());
-        assertEquals(0, ac.getBondCount());
+        assertEquals(0, ac.getAtoms().length);
+        assertEquals(0, ac.getElectronContainers().length);
         
         // test wether the ElectronContainer is correctly initialized
         ac.addBond(new Bond(new Atom("C"), new Atom("C"), 2));
@@ -322,8 +322,8 @@ public class AtomContainerTest extends TestCase {
         // create an empty container with in the constructor defined array lengths
         AtomContainer container = new AtomContainer();
         
-        assertEquals(0, container.getAtomCount());
-        assertEquals(0, container.getBondCount());
+        assertEquals(0, container.getAtoms().length);
+        assertEquals(0, container.getElectronContainers().length);
         
         // test wether the ElectronContainer is correctly initialized
         container.addBond(new Bond(new Atom("C"), new Atom("C"), 2));
