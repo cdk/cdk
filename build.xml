@@ -232,7 +232,6 @@
                 <jar jarfile="${dist}/jar/cdk-apps.jar">
                     <fileset dir="${build}">
                         <include name="org/openscience/cdk/applications/**" />
-                        <include name="org/openscience/jmol/**" />
                     </fileset>
                 </jar>
         </target>
@@ -242,6 +241,7 @@
                     <fileset dir="${build}">
                         <include name="org/openscience/cdk/libio/**" />
                         <include name="org/openscience/cdk/test/libio/**" />
+                        <include name="org/openscience/jmol/**" />
                     </fileset>
                 </jar>
         </target>
