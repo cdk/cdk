@@ -58,6 +58,7 @@ public class DescriptorCalculator {
     private LoggingTool logger;
     
     private boolean inputIsSMILES;
+    private String[] descTypes = null;
     private PropertiesListener propsListener;
     private DescriptorEngine engine;
 
@@ -69,13 +70,19 @@ public class DescriptorCalculator {
         ouputFormat = "cml";
         inputIsSMILES = false;
         
-        engine = new DescriptorEngine();
-        
         Properties props = new Properties();
         props.setProperty("CMLIDs", "false");
         props.setProperty("NamespacedOutput", "false");
         props.setProperty("XMLDeclaration", "false");
         propsListener = new PropertiesListener(props);
+    }
+
+    private void initEngine() {
+        if (descTypes != null) {
+            engine = new DescriptorEngine(descTypes);
+        } else {
+            engine = new DescriptorEngine();
+        }
     }
 
     public static void main(String[] args) {
@@ -84,6 +91,10 @@ public class DescriptorCalculator {
         // process options
         String fileToProcess = calculator.parseCommandLineOptions(args);
         
+        // create the engine specifying which descriptors to calculate
+        calculator.initEngine();
+
+        // calculate descriptors
         calculator.process(fileToProcess);
     }
 
@@ -181,12 +192,11 @@ public class DescriptorCalculator {
 
         Options options = new Options();
         options.addOption("h", "help", false, "give this help page");
-        options.addOption(
-            OptionBuilder.withLongOpt("smiles").
-                          withDescription("input one SMILES string").
-                          create("s")
-        );
-        
+        options.addOption("s","smiles", false, "input one SMILES string");
+        options.addOption("t","type",true,
+                "specify which types of descriptor to calculate (comma seperated list). "+
+                "Possible values are: constitutional, molecular, topological, geometrical, electronic");
+ 
         CommandLine line = null;
         try {
             CommandLineParser parser = new PosixParser();
@@ -194,15 +204,19 @@ public class DescriptorCalculator {
         } catch (ParseException exception) {
             System.err.println("Unexpected exception: " + exception.toString());
         }
+
+        if (line.hasOption("s") || line.hasOption("smiles")) {
+            inputIsSMILES = true;
+        } 
+        if (line.hasOption("t") || line.hasOption("type")) {
+            String optvalue = line.getOptionValue("t");
+            descTypes = optvalue.split(",");
+        }
     
         String[] filesToConvert = line.getArgs();
-        
-        if (filesToConvert.length != 1 || line.hasOption("h")) {
+        if (filesToConvert.length != 1 || line.hasOption("h") || line.hasOption("help")) {
             printHelp(options);
-        } else if (line.hasOption("s")) {
-            inputIsSMILES = true;
-        }
-        
+        }         
         return filesToConvert[0];
     }
 
