@@ -722,8 +722,10 @@ public class Controller2D
 					logger.debug("Atoms before delete: ", container.getAtomCount());
 					// update atoms
 					Atom[] atoms = container.getConnectedAtoms(highlightedAtom);
-					AtomContainer atomCon = ChemModelManipulator.getRelevantAtomContainer(chemModel, atoms[0]);
-					updateAtoms(atomCon, atoms);
+                    if (atoms.length > 0) {
+                        AtomContainer atomCon = ChemModelManipulator.getRelevantAtomContainer(chemModel, atoms[0]);
+                        updateAtoms(atomCon, atoms);
+                    }
 				} else if (highlightedBond != null)
 				{
 					logger.info("User asks to delete a Bond");
