@@ -4,6 +4,14 @@ CHANGELOG $Date$
 Changes in CVS
 ------------------------------------
 New:
+
+Fixes:
+
+API changes:
+
+20030909 Release
+------------------------------------
+New:
 * Coloring of atom symbols in 2D display by atom type.
 * A cdk-validator program
 * More complete validation of chemical semantics in the
