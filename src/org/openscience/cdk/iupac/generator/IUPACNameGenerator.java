@@ -3,9 +3,9 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2002-2003  The Chemistry Development Kit (CDK) project
  *
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -194,9 +194,10 @@ public class IUPACNameGenerator {
         // step 3
         logger.info("Step 3");
         try {
-            Enumeration fragments = ConnectivityChecker.partitionIntoMolecules(ac).elements();
-            while (fragments.hasMoreElements()) {
-                FragmentWithAtomicValencies fwav = new FragmentWithAtomicValencies((AtomContainer)fragments.nextElement());
+            SetOfMolecules moleculeSet = ConnectivityChecker.partitionIntoMolecules(ac);
+            Molecule[] molecules = moleculeSet.getMolecules();
+            for (int j=0; j<molecules.length; j++) {
+                FragmentWithAtomicValencies fwav = new FragmentWithAtomicValencies(molecules[j]);
                 for (int i=0; i < fwav.getAtomCount(); i++) {
                     try {
                         Atom a = fwav.getAtomAt(i);
