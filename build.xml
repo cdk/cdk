@@ -776,7 +776,7 @@
 		   <arg value="${arg2}" />
 		   <arg value="${arg3}" />
 		   <arg value="${arg4}" />
-                    <classpath>
+                   <classpath>
                         <pathelement location="${dist}/jar/cdk-core.jar" />
                         <pathelement location="${dist}/jar/cdk-standard.jar" />
                         <pathelement location="${dist}/jar/cdk-io.jar" />
