@@ -569,12 +569,12 @@ public class Convention implements ConventionInterface {
       logger.debug("Testing a1,a2,stereo: " + bondARef1.size() + "," + bondARef2.size() + "," + bondStereo.size() + "=" + order.size());
       if ((bondARef1.size() == bondcount) &&
           (bondARef2.size() == bondcount)) {
-        logger.debug("About to add bond info to JChemPaintModel.");
+        logger.debug("About to add bond info to " + cdo.getClass().getName());
         Enumeration orders = order.elements();
         Enumeration bar1s = bondARef1.elements();
         Enumeration bar2s = bondARef2.elements();
         Enumeration stereos = bondStereo.elements();
-	      while (orders.hasMoreElements()) {            
+      while (orders.hasMoreElements()) {            
           cdo.startObject("Bond");
           cdo.setObjectProperty("Bond", "atom1", new Integer(elid.indexOf((String)bar1s.nextElement())).toString());
           cdo.setObjectProperty("Bond", "atom2", new Integer(elid.indexOf((String)bar2s.nextElement())).toString());
