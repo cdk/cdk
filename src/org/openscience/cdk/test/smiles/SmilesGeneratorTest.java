@@ -65,27 +65,92 @@ public class SmilesGeneratorTest extends TestCase
 	
 	public void testSmilesGenerator() {
 		SmilesGenerator sg = new SmilesGenerator();
-		Molecule mol1 = MoleculeFactory.makeEthylPropylPhenantren();
 		Molecule mol2 = MoleculeFactory.makeAlphaPinene();
 		fixCarbonHCount(mol2);
-		fixCarbonHCount(mol1);
-    String smiles1 = null, smiles2 = null;
+    String smiles2 = null;
 		if (standAlone) display(mol2);
 		try
 		{
-			smiles1 = sg.createSMILES(mol1);
 			smiles2 = sg.createSMILES(mol2);
 		}
     catch(Exception exc) {
 			System.out.println(exc);
             if (!standAlone) fail();
 		}
-		if (standAlone) System.err.println("SMILES 1: " + smiles1);
 		if (standAlone) System.err.println("SMILES 2: " + smiles2);
-        assertNotNull(smiles1);
         assertNotNull(smiles2);
-		//assertTrue(smiles1.equals("c2cc1c3ccc(cc3(ccc1c(c2)CC))CCC"));
 		assertTrue(smiles2.equals("C1=C(C)C2CC(C1)C2(C)(C)"));
+	}
+
+	public void testEthylPropylPhenantren() {
+		SmilesGenerator sg = new SmilesGenerator();
+		Molecule mol1 = MoleculeFactory.makeEthylPropylPhenantren();
+		fixCarbonHCount(mol1);
+    String smiles1 = null;
+		if (standAlone) display(mol1);
+		try
+		{
+			smiles1 = sg.createSMILES(mol1);
+		}
+    catch(Exception exc) {
+			System.out.println(exc);
+            if (!standAlone) fail();
+		}
+		if (standAlone) System.err.println("SMILES 1: " + smiles1);
+        assertNotNull(smiles1);
+		assertTrue(smiles1.equals("c2cc1c3ccc(cc3(ccc1c(c2)CC))CCC"));
+	}
+
+	public void testAlanin() {
+		SmilesGenerator sg = new SmilesGenerator();
+		Molecule mol1 = new Molecule();
+ 		mol1.addAtom(new Atom("N", new Point2d(1,0))); // 1
+		mol1.addAtom(new Atom("C", new Point2d(1,2))); // 2
+		mol1.addAtom(new Atom("F", new Point2d(1,2))); // 3
+		mol1.addAtom(new Atom("C", new Point2d(0,0))); // 4
+		mol1.addAtom(new Atom("C", new Point2d(1,4))); // 5
+		mol1.addAtom(new Atom("O", new Point2d(1,5))); // 6
+		mol1.addAtom(new Atom("O", new Point2d(1,6))); // 7
+		mol1.addBond(0, 1, 1); // 1
+		mol1.addBond(1, 2, 1, CDKConstants.STEREO_BOND_UP); // 2
+		mol1.addBond(1, 3, 1, CDKConstants.STEREO_BOND_DOWN); // 3
+		mol1.addBond(1, 4, 1); // 4
+		mol1.addBond(4, 5, 1); // 5
+		mol1.addBond(4, 6, 2); // 6
+    try{
+      new SaturationChecker().addHydrogensToSatisfyValency(mol1);
+          IsotopeFactory ifac = IsotopeFactory.getInstance();
+      ifac.configureAtoms(mol1);
+    }
+    catch(IOException ex){}
+    catch(ClassNotFoundException ex){}
+
+    String smiles1 = null;
+		if (standAlone) display(mol1);
+		try
+		{
+			smiles1 = sg.createSMILES(mol1,true,new boolean[mol1.getBondCount()]);
+		}
+    catch(Exception exc) {
+			System.out.println(exc);
+            if (!standAlone) fail();
+		}
+		if (standAlone) System.err.println("SMILES 1: " + smiles1);
+        assertNotNull(smiles1);
+		assertTrue(smiles1.equals("[H]OC(=O)[C@](F)(N([H])[H])C([H])([H])[H]"));
+    mol1.getBondAt(1).setStereo(CDKConstants.STEREO_BOND_DOWN);
+    mol1.getBondAt(2).setStereo(CDKConstants.STEREO_BOND_UP);
+		try
+		{
+			smiles1 = sg.createSMILES(mol1,true,new boolean[mol1.getBondCount()]);
+		}
+    catch(Exception exc) {
+			System.out.println(exc);
+            if (!standAlone) fail();
+		}
+		if (standAlone) System.err.println("SMILES 1: " + smiles1);
+        assertNotNull(smiles1);
+		assertTrue(smiles1.equals("[H]OC(=O)[C@](F)(C([H])([H])[H])N([H])[H]"));
 	}
 
     public void testPartitioning() {
