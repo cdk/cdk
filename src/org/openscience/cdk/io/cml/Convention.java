@@ -320,9 +320,9 @@ public class Convention implements ConventionInterface {
 		} else if (curRef == 2) {
 		    bondARef2.addElement(s.trim());
 		}
-	    } else if (BUILTIN.equals("order")) {
-		logger.debug("Bond: order " + s.trim());
-		order.addElement(s.trim());
+        } else if (BUILTIN.equals("order")) {
+            logger.debug("Bond: order " + s.trim());
+            order.addElement(s.trim());
 	    } else if (BUILTIN.equals("formalCharge")) {
 		logger.debug("Charge: " + s.trim());
 		formalCharges.addElement(s.trim());
@@ -338,7 +338,10 @@ public class Convention implements ConventionInterface {
 	    } else if (BUILTIN.equals("x2")) {
 		x2.addElement(s.trim());
 	    } else if (BUILTIN.equals("y2")) {
-		y2.addElement(s.trim());
+            y2.addElement(s.trim());
+        } else if (BUILTIN.equals("order")) {
+            // NOTE: this combination is in violation of the CML DTD!!!
+            order.addElement(s.trim());
 	    }
 	    break;
 	case COORDINATE2 :

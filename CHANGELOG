@@ -29,6 +29,11 @@ Fixes:
 * Removed NoSuchAtomException's from core classes
   (see RFC #4, fixes bugs #590570 and #590576)
 * Lots of updated JavaDoc's (checked with Sun's DocCheck doclet)
+* Fixed bug in reading SDF files with patch by Chris Pudney 
+  (fixes bug #619183).
+* Fixed CMLWriter to not produce invalid CML code, and patched
+  CMLReader to be able to read older CMLReader output
+  (fixes bug #620121).
 
 API changes:
 * Removed obsolete cdk.structgen.stoichastic.ConvertTools

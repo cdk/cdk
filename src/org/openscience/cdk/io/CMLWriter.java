@@ -247,9 +247,9 @@ public class CMLWriter implements ChemObjectWriter {
 			  atoms[i].hashCode() + 
 			  "</string>\n");
 		}
-		write("<float builtin=\"order\">" +
+		write("<string builtin=\"order\">" +
 		      + bond.getOrder() +
-		      "</float>\n");
+		      "</string>\n");
 		if (bond.getStereo() != CDKConstants.STEREO_BOND_UNDEFINED) {
 		    write("<string builtin=\"stereo\" convention=\"MDLMol\">");
 		    if (bond.getStereo() == CDKConstants.STEREO_BOND_UP) {
