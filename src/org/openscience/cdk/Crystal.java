@@ -76,12 +76,10 @@ public class Crystal extends AtomContainer implements java.io.Serializable, Clon
     }
 
     /**
-     * Adds the atoms in the AtomContainer as cell content.
+     * Adds the atoms in the AtomContainer as cell content. Symmetry related 
+     * atoms should not be added unless P1 space group is used.
      */
     public void add(AtomContainer container) {
-	    /* What do we gain here if we call super()?
-	       Wouldn't we just get the same behaviour 
-	       by just inheriting the method? */ 
         super.add(container);
     }
 
