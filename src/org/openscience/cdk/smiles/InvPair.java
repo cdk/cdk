@@ -28,7 +28,7 @@
 package org.openscience.cdk.smiles;
 
 import org.openscience.cdk.Atom;
-
+import org.openscience.cdk.math.Primes;
 
 /**
  * This is used to hold the invariance numbers for the cannonical labeling of

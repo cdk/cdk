@@ -1,7 +1,7 @@
-/*
- * MathTools.java
- *
- * $RCSfile$    $Author$    $Date$    $Revision$
+/* $RCSfile$
+ * $Author$
+ * $Date$
+ * $Revision$
  *
  * Copyright (C) 1997-2004  The Chemistry Development Kit (CDK) project
  *
@@ -21,15 +21,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
+package org.openscience.cdk.math;
 
-
-package org.openscience.cdk.tools;
-
-public class MathTools
-{
+/**
+ * Class providing convenience methods for simple mathematical operations.
+ */
+public class MathTools {
 	/**
-	* Analog of Math.max that returns the largest int value in an array of ints
-	**/
+	 * Analog of Math.max that returns the largest int value in an array of ints
+	 **/
 	public static int max(int[] values)
 	{
 		int max = values[0];
@@ -44,8 +44,8 @@ public class MathTools
 	}
 
 	/**
-	* Analog of Math.max that returns the largest int value in an array of ints
-	**/
+	 * Analog of Math.max that returns the largest int value in an array of ints
+	 **/
 	public static int min(int[] values)
 	{
 		int min = values[0];
