@@ -45,12 +45,14 @@ public class StructureDiagramGeneratorTest
 	public StructureDiagramGeneratorTest(String inFile)
 	{
 //		molecule = buildPerhydroAzulen();
-		molecule = buildMolecule4x3();
-//		molecule = loadMolecule(inFile);
+//		molecule = buildMolecule4x3();
+		molecule = loadMolecule(inFile);
 		StructureDiagramGenerator sdg = new StructureDiagramGenerator();
 		sdg.setMolecule(molecule);
 		sdg.generateCoordinates();
+		Molecule molecule = sdg.getMolecule();
 		new MoleculeViewer2D(sdg.getMolecule());
+		new MoleculeViewer2D(molecule);
 	}
 
 	/**
