@@ -399,6 +399,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 				branch = treeNode.source.atom;
 				code.append(",");
 			}
+			
 			if (!treeNode.source.stopper && treeNode.source.atom == branch)
 			{
 				if (treeNode.bondType <= 4)
@@ -408,11 +409,11 @@ public class HOSECodeGenerator implements java.io.Serializable
 				{
 					throw new CDKException("Unknown bond type");
 				}
-				if (!treeNode.atom.flags[CDKConstants.VISITED])
+				if (treeNode.atom != null && !treeNode.atom.flags[CDKConstants.VISITED])
 				{
 					tempCode.append(getElementSymbol(treeNode.symbol));
 				}
-				else
+				else if (treeNode.atom != null && treeNode.atom.flags[CDKConstants.VISITED])
 				{
 					tempCode.append("&");
 					treeNode.stopper = true;
@@ -420,7 +421,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 				code.append(tempCode);
 				treeNode.hSymbol = tempCode.toString();
 			}
-			treeNode.atom.flags[CDKConstants.VISITED] = true;
+			if (treeNode.atom != null)treeNode.atom.flags[CDKConstants.VISITED] = true;
 			if (treeNode.source.stopper) treeNode.stopper = true;
 		}
 		code.append(sphereDelimiters[sphere - 1]);
