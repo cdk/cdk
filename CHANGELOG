@@ -23,6 +23,9 @@ Fixes:
 * Fixed output of molecule ID and title in Convert for CML2
 * Fixed definition of N.sp2 which has 2 (not 3) formal neighbours
 * Fixed building CDK with Ant 1.5.x
+* PDBReader now uses static final String to set PDB properties leading to a
+  1/3rd speed up for reading PDB files
+* The PDBReader now stores the PDB atom type with AtomType.setAtomTypeName()
 
 API changes:
 * Moved SingleElectron to the core module

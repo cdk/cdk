@@ -265,10 +265,12 @@ public class PDBReader extends DefaultChemObjectReader {
       // ensure that the second char is lower case
       elementSymbol = elementSymbol.charAt(0) + elementSymbol.substring(1).toLowerCase();
     }
+    String rawAtomName = cLine.substring(12, 16).trim();
     Atom oAtom = new Atom(elementSymbol, 
                           new Point3d(new Double(cLine.substring(30, 38)).doubleValue(),
                                       new Double(cLine.substring(38, 46)).doubleValue(),
                                       new Double(cLine.substring(46, 54)).doubleValue()));
+    oAtom.setAtomTypeName(rawAtomName);
     oAtom.setProperty(CDKConstants.PDB_RECORD, cLine);
     oAtom.setProperty(CDKConstants.PDB_SERIAL, new Integer(cLine.substring(6, 11).trim()));
     oAtom.setProperty(CDKConstants.PDB_NAME, (new String(cLine.substring(12, 16))).trim());
