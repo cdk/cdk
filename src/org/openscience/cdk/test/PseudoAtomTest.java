@@ -3,7 +3,7 @@
  * $Date$    
  * $Revision$
  * 
- * Copyright (C) 2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2003-2004  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -50,6 +50,24 @@ public class PseudoAtomTest extends TestCase {
         PseudoAtom a = new PseudoAtom(label);
         assertEquals("R", a.getSymbol());
         assertEquals(label, a.getLabel());
+        assertNull(a.getPoint3D());
+        assertNull(a.getPoint2D());
+        assertNull(a.getFractionalPoint3D());
+    }
+
+    public void testPseudoAtom_Atom() {
+        Atom atom = new Atom("C");
+        Point3d fract = new Point3d(0.5, 0.5, 0.5);
+        Point3d threeD = new Point3d(0.5, 0.5, 0.5);
+        Point2d twoD = new Point2d(0.5, 0.5);
+        atom.setFractionalPoint3D(fract);
+        atom.setPoint3D(threeD);
+        atom.setPoint2D(twoD);
+        
+        PseudoAtom a = new PseudoAtom(atom);
+        assertEquals(fract, a.getFractionalPoint3D());
+        assertEquals(threeD, a.getPoint3D());
+        assertEquals(twoD, a.getPoint2D());
     }
 
 }

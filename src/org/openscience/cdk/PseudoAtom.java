@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2003-2004  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -68,7 +68,7 @@ public class PseudoAtom extends Atom implements java.io.Serializable, Cloneable
     public PseudoAtom(Atom atom) {
         super("R");
         super.setProperties(atom.getProperties());
-        this.fractionalPoint3D = fractionalPoint3D;
+        this.fractionalPoint3D = atom.fractionalPoint3D;
         this.point3D = atom.point3D;
         this.point2D = atom.point2D;
         super.setHydrogenCount(atom.getHydrogenCount());
