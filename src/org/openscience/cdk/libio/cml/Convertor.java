@@ -68,6 +68,34 @@ import org.openscience.cdk.tools.*;
  * Class that provides convertor procedures to
  * convert CDK classes to CMLDOM 4.x classes/documents.
  *
+ * <p>
+ * <table>
+ *   <tr>
+ *     <td><b>CDK class</b></td>
+ *     <td><b>CMLDOM class</b></td>
+ *   </tr>
+ *   <tr>
+ *     <td><b>AtomContainer</b></td>
+ *     <td><b>MoleculeImpl</b></td>
+ *   </tr>
+ *   <tr>
+ *     <td><b>Crystal</b></td>
+ *     <td><b>MoleculeImpl</b></td>
+ *   </tr>
+ *   <tr>
+ *     <td><b>Molecule</b></td>
+ *     <td><b>MoleculeImpl</b></td>
+ *   </tr>
+ *   <tr>
+ *     <td><b>Reaction</b></td>
+ *     <td><b>ReactionImpl</b></td>
+ *   </tr>
+ *   <tr>
+ *     <td><b>SetOfMolecule</b></td>
+ *     <td><b>ListImpl</b></td>
+ *   </tr>
+ * </table>
+ * 
  * @author        shk3
  * @author        egonw
  * @cdk.created   2004-02-19
