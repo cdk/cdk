@@ -82,9 +82,11 @@ public class AtomContainerManipulatorTest extends TestCase {
     
     public void testRemoveHydrogens() throws IOException, ClassNotFoundException, CDKException{
         Molecule mol=MoleculeFactory.makeAlphaPinene();
+        mol.setFlag(5,true);
         new HydrogenAdder().addHydrogensToSatisfyValency(mol);
         AtomContainer ac=AtomContainerManipulator.removeHydrogens((AtomContainer)mol);
         assertEquals(10, ac.getAtomCount());
+        assertTrue(ac.getFlag(5));
     }
 
     /**
