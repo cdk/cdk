@@ -95,6 +95,9 @@ public class HOSECodeGenerator implements java.io.Serializable
 			{
 			"", "", "=", "%", "*"
 			};
+			
+	protected String centerCode = null;			
+			
 	public TreeNode rootNode = null;
 			
 			
@@ -154,6 +157,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 	 */
 	public String getHOSECode(AtomContainer ac, Atom root, int noOfSpheres) throws org.openscience.cdk.exception.CDKException
 	{
+		centerCode = "";
 		this.atomContainer = ac;
 		maxSphere = noOfSpheres;
 		spheres = new Vector[noOfSpheres + 1];
@@ -170,6 +174,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 		 *  depends on the order the preceding node in its branch
 		 */
 		HOSECode = new StringBuffer();
+		createCenterCode(root);
 		breadthFirstSearch(root);
 		createCode();
 		fillUpSphereDelimiters();
@@ -180,6 +185,12 @@ public class HOSECodeGenerator implements java.io.Serializable
 		return HOSECode.toString();
 	}
 
+	private void createCenterCode(Atom root)
+	{
+		int partnerCount = 0;
+		partnerCount = atomContainer.getBondCount(root) + root.getHydrogenCount(); 
+		centerCode = root.getSymbol() + "-" + partnerCount + ";";
+	}
 
 	/**
 	 *  Prepares for a breadth first search within the AtomContainer. The actual
@@ -358,6 +369,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 			}
 			sortNodesByScore(sphereNodes);
 		}
+		HOSECode.append(centerCode);
 		for (int f = 0; f < maxSphere; f++)
 		{
 			sphere = f + 1;

@@ -183,6 +183,7 @@ public class HOSECodeTest
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 			MDLReader reader = new MDLReader(new InputStreamReader(ins));
 			molecule = (Molecule)reader.read((ChemObject)new Molecule());
+			new SaturationChecker().addImplicitHydrogensToSatisfyValency(molecule);
     
 			boolean isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
 			for (int f = 0; f < molecule.getAtomCount(); f++)
