@@ -339,7 +339,7 @@ public class Convertor {
     
     private boolean addTitle(ChemObject object, Element nodeToAdd) {
         if (object.getProperty(CDKConstants.TITLE) != null) {
-            addTitle(object,nodeToAdd);
+            nodeToAdd.setAttribute("title", (String)object.getProperty(CDKConstants.TITLE));
             return true;
         }
         return false;
@@ -351,16 +351,15 @@ public class Convertor {
         if (useCmlIdentifiers) {
             new IDCreator().createIDs(mol);
         }
-        MoleculeImpl molecule=new MoleculeImpl(doc);
+        MoleculeImpl molecule = new MoleculeImpl(doc);
+        addID(mol, molecule);
+        addTitle(mol, molecule);
         nodeToAppend.appendChild(molecule);
-        if (mol.getID() != null && mol.getID().length() != 0) {
-            molecule.setAttribute("id", mol.getID());
-        }        
-        writeAtomContainer((AtomContainer)mol,molecule);
+        writeAtomContainer(mol,molecule);
     }
 
     private void writeAtomArray(Atom atoms[], Element nodeToAppend) throws CMLException {
-        AtomArrayImpl atomarray=new AtomArrayImpl(doc);
+        AtomArrayImpl atomarray = new AtomArrayImpl(doc);
         nodeToAppend.appendChild(atomarray);
         for (int i = 0; i < atoms.length; i++) {
             writeAtom(atoms[i], atomarray);
@@ -387,12 +386,6 @@ public class Convertor {
                 Object value = props.get(key);
                 Element scalar = this.createElement("scalar");
                 scalar.setAttribute("dictRef",((DictRef)key).getType());
-                nodeToAppend.appendChild(scalar);
-                scalar.appendChild(doc.createTextNode(value.toString()));
-            } else if (key instanceof String && !((String)key).startsWith("org.openscience.cdk")) {
-                Object value = props.get(key);
-                Element scalar = this.createElement("scalar");
-                scalar.setAttribute("title",(String)key);
                 nodeToAppend.appendChild(scalar);
                 scalar.appendChild(doc.createTextNode(value.toString()));
             } else if (key instanceof DescriptorSpecification) {
@@ -433,6 +426,17 @@ public class Convertor {
                 scalar.setAttribute("dictRef", specsRef);
                 property.appendChild(scalar);
                 propList.appendChild(property);
+            } else if (key instanceof String) {
+                String stringKey = (String)key;
+                if (stringKey.equals(CDKConstants.TITLE)) {
+                    // don't output this one. It's covered by addTitle()
+                } else if (!(stringKey.startsWith("org.openscience.cdk"))) {
+                    Object value = props.get(key);
+                    Element scalar = this.createElement("scalar");
+                    scalar.setAttribute("title",(String)key);
+                    nodeToAppend.appendChild(scalar);
+                    scalar.appendChild(doc.createTextNode(value.toString()));
+                }
             } else {
                 logger.warn("Don't know what to do with this property key: " +
                     key.getClass().getName()
