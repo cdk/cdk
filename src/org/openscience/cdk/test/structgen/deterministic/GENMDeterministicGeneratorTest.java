@@ -121,7 +121,7 @@ public class GENMDeterministicGeneratorTest extends TestCase
                 //			Renderer2DModel r2dm = new Renderer2DModel();
                 //			r2dm.setDrawNumbers(true);
                 //			mv.setRenderer2DModel(r2dm);
-                moleculeListViewer.addStructure(mv, "RandomGent Result no. " + (f + 1));
+                moleculeListViewer.addStructure(mv, "Structure no. " + (f + 1));
             }
 		}
 		return true;
