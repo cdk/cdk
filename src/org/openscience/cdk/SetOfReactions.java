@@ -56,18 +56,18 @@ public class SetOfReactions extends ChemObject implements java.io.Serializable, 
 	/**
 	 *  Array of Reactions.
 	 */
-	protected Reaction[] reactions;
+	private Reaction[] reactions;
 	
 	/**
 	 *  Number of Reactions contained by this container.
 	 */
-	protected int reactionCount;
+	private int reactionCount;
 
 	/**
 	 *  Amount by which the Reactions array grows when elements are added and
 	 *  the array is not large enough for that. 
 	 */
-	protected int growArraySize = 5;
+	private int growArraySize = 5;
 
 
 	/**
@@ -124,7 +124,7 @@ public class SetOfReactions extends ChemObject implements java.io.Serializable, 
 	 *
 	 * @see    growArraySize
 	 */
-	protected void growReactionArray() {
+	private void growReactionArray() {
 		growArraySize = reactions.length;
 		Reaction[] newreactions = new Reaction[reactions.length + growArraySize];
 		System.arraycopy(reactions, 0, newreactions, 0, reactions.length);
@@ -155,18 +155,18 @@ public class SetOfReactions extends ChemObject implements java.io.Serializable, 
     }
 
 	/**
-	 * Clones this <code>ChemObject</code>. It clones the identifier, flags, properties 
-     * and pointer vectors. The ChemObjectListeners are not cloned, and neither is the
-     * content of the pointer vectors.
+	 * Clones this <code>SetOfReactions</code> and the contained <code>Reaction</code>s
+     * too.
 	 *
-	 * @return  The cloned object
+	 * @return  The cloned SetOfReactions
 	 */
 	public Object clone() {
 		SetOfReactions clone = (SetOfReactions)super.clone();
-        // clone the maps
-		clone.reactions = new Reaction[reactions.length];
-		for (int f = 0; f < reactions.length; f++) {
-			clone.reactions[f] = reactions[f];
+        // clone the reactions
+        clone.reactionCount = this.reactionCount;
+		clone.reactions = new Reaction[clone.reactionCount];
+		for (int f = 0; f < clone.reactionCount; f++) {
+			clone.reactions[f] = (Reaction)reactions[f].clone();
 		}
 		return clone;
 	}
