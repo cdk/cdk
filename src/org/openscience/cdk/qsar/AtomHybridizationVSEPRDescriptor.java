@@ -197,7 +197,7 @@ public class AtomHybridizationVSEPRDescriptor implements Descriptor {
 	private AtomType findMatchingAtomType(AtomContainer container, Atom atom) throws CDKException 
 	{
 		try {
-			AtomTypeFactory atomATF = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/hybridizationVSEPR_atomtypes.xml");
+			AtomTypeFactory atomATF = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/valency2_atomtypes.xml");
 
 			// take atomtype for the given element...
 			AtomType atomType = atomATF.getAtomType(atom.getSymbol());
