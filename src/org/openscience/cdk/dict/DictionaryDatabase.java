@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2003-2004  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -62,8 +62,11 @@ public class DictionaryDatabase {
         dictionaries = new Hashtable();
         for (int i=0; i<dictionaryNames.length; i++) {
             String name = dictionaryNames[i];
-            dictionaries.put(name.toLowerCase(), readDictionary("org/openscience/cdk/dict/data/" + name + ".xml"));
-            logger.info("Read dictionary: " + name);
+            Dictionary dictionary = readDictionary("org/openscience/cdk/dict/data/" + name + ".xml");
+            if (dictionary != null) {
+                dictionaries.put(name.toLowerCase(), dictionary);
+                logger.info("Read dictionary: " + name);
+            }
         }
     }
 
@@ -75,7 +78,7 @@ public class DictionaryDatabase {
                 this.getClass().getClassLoader().getResourceAsStream(databaseLocator));
             dictionary = Dictionary.unmarshal(reader);
         } catch (Exception exception) {
-            dictionary = new Dictionary();
+            dictionary = null;
             logger.error("Could not read dictionary " + databaseLocator);
             logger.debug(exception);
         }
