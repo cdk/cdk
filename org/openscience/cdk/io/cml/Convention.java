@@ -69,7 +69,8 @@ public class Convention implements ConventionInterface {
     
     protected Vector elsym;
     protected Vector elid;
-    protected Vector elcharge;
+    protected Vector formalCharges;
+    protected Vector partialCharges;
 
     protected Vector x3;
     protected Vector y3;
@@ -105,59 +106,65 @@ public class Convention implements ConventionInterface {
 
     public void inherit(Convention conv) {
         this.logger = conv.logger;
-	this.cdo = conv.returnCDO();
-	this.BUILTIN = conv.BUILTIN;
-	this.elsym = conv.elsym;
-	this.elid = conv.elid;
-	this.elcharge = conv.elcharge;
-	this.x3 = conv.x3;
-	this.y3 = conv.y3;
-	this.z3 = conv.z3;
-	this.x2 = conv.x2;
-	this.y2 = conv.y2;
-	this.bondid = conv.bondid;
-	this.bondARef1 = conv.bondARef1;
-	this.bondARef2 = conv.bondARef2;
-	this.order = conv.order;
-	this.bondStereo = conv.bondStereo;
-	this.curRef = conv.curRef;
-    } 
-  
+        this.cdo = conv.returnCDO();
+        this.BUILTIN = conv.BUILTIN;
+        this.elsym = conv.elsym;
+        this.elid = conv.elid;
+        this.formalCharges = conv.formalCharges;
+        this.partialCharges = conv.partialCharges;
+        this.x3 = conv.x3;
+        this.y3 = conv.y3;
+        this.z3 = conv.z3;
+        this.x2 = conv.x2;
+        this.y2 = conv.y2;
+        this.bondid = conv.bondid;
+        this.bondARef1 = conv.bondARef1;
+        this.bondARef2 = conv.bondARef2;
+        this.order = conv.order;
+        this.bondStereo = conv.bondStereo;
+        this.curRef = conv.curRef;
+    }
+
     public CDOInterface returnCDO() {
-	return (CDOInterface)this.cdo;
+        return (CDOInterface)this.cdo;
     };
-  
+
+    private void newMolecule() {
+        elsym = new Vector();
+        elid = new Vector();
+        formalCharges = new Vector();
+        partialCharges = new Vector();
+        x3 = new Vector();
+        y3 = new Vector();
+        z3 = new Vector();
+        x2 = new Vector();
+        y2 = new Vector();
+        bondid = new Vector();
+        bondARef1 = new Vector();
+        bondARef2 = new Vector();
+        order = new Vector();
+        bondStereo = new Vector();
+    }
+
     public void startDocument() {
-	logger.info("Start XML Doc");
-	cdo.startDocument();
-	elsym = new Vector();
-	elid = new Vector();
-	elcharge = new Vector();
-	x3 = new Vector();
-	y3 = new Vector();
-	z3 = new Vector();
-	x2 = new Vector();
-	y2 = new Vector();
-	bondid = new Vector();
-	bondARef1 = new Vector();
-	bondARef2 = new Vector();
-	order = new Vector();
-	bondStereo = new Vector();
-	BUILTIN = "";
-	curRef = 0;
+        logger.info("Start XML Doc");
+        cdo.startDocument();
+        newMolecule();
+        BUILTIN = "";
+        curRef = 0;
     };
 
     public void endDocument() {
-	cdo.endDocument();
-	logger.info("End XML Doc");
+        cdo.endDocument();
+        logger.info("End XML Doc");
     };
 
 
     public void startElement (String uri, String local, String raw, Attributes atts) {
-	String name = local;
-	logger.debug("StartElement");
-	setCurrentElement(name);
-	switch (CurrentElement) {
+        String name = local;
+        logger.debug("StartElement");
+        setCurrentElement(name);
+        switch (CurrentElement) {
 	case ATOM :
 	    for (int i = 0; i < atts.getLength(); i++) {
 		if (atts.getQName(i).equals("id")) {
@@ -246,11 +253,7 @@ public class Convention implements ConventionInterface {
 	    }
 	    break;
 	case MOLECULE :
-	    elsym = new Vector();
-	    elid = new Vector();
-	    x3 = new Vector();
-	    y3 = new Vector();
-	    z3 = new Vector();
+        newMolecule();
 	    BUILTIN = "";
 	    cdo.startObject("Molecule");
 	    break;
@@ -263,10 +266,10 @@ public class Convention implements ConventionInterface {
     }
 
     public void endElement(String uri, String name, String raw) {
-	logger.debug("EndElement: " + name);
-	setCurrentElement(name);
-	switch (CurrentElement) {
-	    case BOND :
+        logger.debug("EndElement: " + name);
+        setCurrentElement(name);
+        switch (CurrentElement) {
+        case BOND :
 	        if (!stereoGiven) bondStereo.addElement("");
 	        break;
 	    case MOLECULE :
@@ -294,8 +297,9 @@ public class Convention implements ConventionInterface {
 	}
         currentChars = "";
         BUILTIN = "";
+        elementTitle = "";
     }
-    
+
     public void characterData (char ch[], int start, int length) {
 	logger.debug("CD");
 	String s = new String(ch, start, length);
@@ -304,7 +308,7 @@ public class Convention implements ConventionInterface {
 	    logger.debug("Builtin: " + BUILTIN);
 	    if (BUILTIN.equals("elementType")) {
 		logger.debug("Element: " + s.trim());
-		elsym.addElement(s);	
+		elsym.addElement(s);
 	    } else if (BUILTIN.equals("atomRef")) {
 		curRef++;
 		logger.debug("Bond: ref #" + curRef);
@@ -318,7 +322,7 @@ public class Convention implements ConventionInterface {
 		order.addElement(s.trim());
 	    } else if (BUILTIN.equals("formalCharge")) {
 		logger.debug("Charge: " + s.trim());
-		elcharge.addElement(s.trim());
+		formalCharges.addElement(s.trim());
 	    }
 	    break;
 	case FLOAT :
@@ -408,55 +412,63 @@ public class Convention implements ConventionInterface {
 		    while (st.hasMoreTokens()) {
 			String token = st.nextToken();
 			logger.debug("Charge added: " + token);
-			elcharge.addElement(token);
+			formalCharges.addElement(token);
 		    }
 		} catch (Exception e) {
 		    notify("CMLParsing error: " + e, SYSTEMID, 205,1);
 		}
 	    }
 	case FLOATARRAY :
-	    if (BUILTIN.equals("x3")) {
-		try {	  
-		    StringTokenizer st = new StringTokenizer(s);
-		    while (st.hasMoreTokens()) x3.addElement(st.nextToken());
-		} catch (Exception e) {
-		    notify("CMLParsing error: " + e, SYSTEMID, 205,1);
-		}
-	    } else if (BUILTIN.equals("y3")) {
-		try {	  
-		    StringTokenizer st = new StringTokenizer(s);
-		    while (st.hasMoreTokens()) y3.addElement(st.nextToken());
-		} catch (Exception e) {
-		    notify("CMLParsing error: " + e, SYSTEMID, 213,1);
-		}
-	    } else if (BUILTIN.equals("z3")) {
-		try {	  
-		    StringTokenizer st = new StringTokenizer(s);
-		    while (st.hasMoreTokens()) z3.addElement(st.nextToken());
-		} catch (Exception e) {
-		    notify("CMLParsing error: " + e, SYSTEMID, 221,1);
-		}
-	    } else if (BUILTIN.equals("x2")) {
-		logger.debug("New floatArray found.");
-		try {
-		    StringTokenizer st = new StringTokenizer(s);
-		    while (st.hasMoreTokens()) x2.addElement(st.nextToken());
-		} catch (Exception e) {
-		    notify("CMLParsing error: " + e, SYSTEMID, 205,1);
-		}
-	    } else if (BUILTIN.equals("y2")) {
-		logger.debug("New floatArray found.");
-		try {	  
-		    StringTokenizer st = new StringTokenizer(s);
-		    while (st.hasMoreTokens()) y2.addElement(st.nextToken());
-		} catch (Exception e) {
-		    notify("CMLParsing error: " + e, SYSTEMID, 213,1);
-		}
-	    }
-	    break;
-	}
+        if (BUILTIN.equals("x3")) {
+            try {
+                StringTokenizer st = new StringTokenizer(s);
+                while (st.hasMoreTokens()) x3.addElement(st.nextToken());
+            } catch (Exception e) {
+                notify("CMLParsing error: " + e, SYSTEMID, 205,1);
+            }
+        } else if (BUILTIN.equals("y3")) {
+            try {
+                StringTokenizer st = new StringTokenizer(s);
+                while (st.hasMoreTokens()) y3.addElement(st.nextToken());
+            } catch (Exception e) {
+                notify("CMLParsing error: " + e, SYSTEMID, 213,1);
+            }
+        } else if (BUILTIN.equals("z3")) {
+            try {
+                StringTokenizer st = new StringTokenizer(s);
+                while (st.hasMoreTokens()) z3.addElement(st.nextToken());
+            } catch (Exception e) {
+                notify("CMLParsing error: " + e, SYSTEMID, 221,1);
+            }
+        } else if (BUILTIN.equals("x2")) {
+            logger.debug("New floatArray found.");
+            try {
+                StringTokenizer st = new StringTokenizer(s);
+                while (st.hasMoreTokens()) x2.addElement(st.nextToken());
+            } catch (Exception e) {
+                notify("CMLParsing error: " + e, SYSTEMID, 205,1);
+            }
+        } else if (BUILTIN.equals("y2")) {
+            logger.debug("New floatArray found.");
+            try {
+                StringTokenizer st = new StringTokenizer(s);
+                while (st.hasMoreTokens()) y2.addElement(st.nextToken());
+            } catch (Exception e) {
+                notify("CMLParsing error: " + e, SYSTEMID, 454,1);
+            }
+        } else if (elementTitle.equals("partialCharge")) {
+            logger.debug("New floatArray with partial charges found.");
+            try {
+                StringTokenizer st = new StringTokenizer(s);
+                while (st.hasMoreTokens()) partialCharges.addElement(st.nextToken());
+            } catch (Exception e) {
+                notify("CMLParsing error: " + e, SYSTEMID, 462,1);
+            }
+        }
+        break;
     }
-    
+    }
+
     protected void setCurrentElement(String name) {
 	// logger.debug("CE: " + name);
 	if (name.equals("string")) {
@@ -522,7 +534,8 @@ public class Convention implements ConventionInterface {
       logger.debug("No atom ids: " + atomcount);
       boolean has3D = false;
       boolean has2D = false;
-      boolean hasCharge = false;
+      boolean hasFormalCharge = false;
+      boolean hasPartialCharge = false;
       boolean hasSymbols = false;
       if (elsym.size() == atomcount) {
         hasSymbols = true;
@@ -544,10 +557,15 @@ public class Convention implements ConventionInterface {
         logger.debug("No 2D info: " + x2.size() + " " + y2.size() +
                        " != " + atomcount);
       }
-      if (elcharge.size() == atomcount) {
-        hasCharge = true;
+      if (formalCharges.size() == atomcount) {
+        hasFormalCharge = true;
       } else {
-        logger.debug("No Charge info: " + elcharge.size() + " != " + atomcount);
+        logger.debug("No formal Charge info: " + formalCharges.size() + " != " + atomcount);
+      }
+      if (partialCharges.size() == atomcount) {
+        hasPartialCharge = true;
+      } else {
+        logger.debug("No partial Charge info: " + partialCharges.size() + " != " + atomcount);
       }
       for (int i=0; i<atomcount; i++) {
         logger.info("Storing atom: " + i);
@@ -562,8 +580,12 @@ public class Convention implements ConventionInterface {
           cdo.setObjectProperty("Atom", "y3", (String)y3.elementAt(i));
           cdo.setObjectProperty("Atom", "z3", (String)z3.elementAt(i));
         }
-        if (hasCharge) {
-          cdo.setObjectProperty("Atom", "charge", (String)elcharge.elementAt(i));
+        if (hasFormalCharge) {
+          cdo.setObjectProperty("Atom", "charge", (String)formalCharges.elementAt(i));
+        }
+        if (hasPartialCharge) {
+          logger.debug("Storing partial atomic charge...");
+          cdo.setObjectProperty("Atom", "partialCharge", (String)partialCharges.elementAt(i));
         }
         if (has2D) {
           cdo.setObjectProperty("Atom", "x2", (String)x2.elementAt(i));

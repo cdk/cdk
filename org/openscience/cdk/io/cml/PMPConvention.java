@@ -42,73 +42,72 @@ import org.openscience.cdk.io.cml.cdopi.*;
 public class PMPConvention extends Convention {
 
     public PMPConvention(CDOInterface cdo) {
-	super(cdo);
+        super(cdo);
     };
-  
+
     public PMPConvention(Convention conv) {
-	super(conv);
-	logger.debug("New PMP Convention!");
+        super(conv);
+        logger.debug("New PMP Convention!");
     }
-    
+
     public CDOInterface returnCDO() {
-	return this.cdo;
+        return this.cdo;
     };
-  
+
     public void startDocument() {
-	super.startDocument();
-	cdo.startObject("Frame");
+        super.startDocument();
+        cdo.startObject("Frame");
     };
 
     public void endDocument() {
-	cdo.endObject("Frame");
-	super.endDocument();
+        cdo.endObject("Frame");
+        super.endDocument();
     };
     
     
     public void startElement (String uri, String local, String raw, Attributes atts) {
         logger.debug("PMP element: name");
-	super.startElement(uri, local, raw, atts);
+        super.startElement(uri, local, raw, atts);
     };
 
     public void endElement(String uri, String local, String raw) {
-	super.endElement(uri, local, raw);
+        super.endElement(uri, local, raw);
     }
 
     public void characterData (char ch[], int start, int length) {
-	String s = new String(ch, start, length).trim();
-	logger.debug("Start PMP chardata (" + CurrentElement + ") :" + s);
-	logger.debug(" ElTitle: " + elementTitle);
-	if (CurrentElement == STRING && BUILTIN.equals("spacegroup")) {
-	    cdo.setObjectProperty("Crystal", "spacegroup", s);
-	} else if (CurrentElement == FLOATARRAY && 
-		   (elementTitle.equals("a") ||
-		    elementTitle.equals("b") ||
-		    elementTitle.equals("c"))) {
-	    String axis = elementTitle + "-axis";
-	    cdo.startObject(axis);
-	    try {	  
-		StringTokenizer st = new StringTokenizer(s);
-		logger.debug("Tokens: " + st.countTokens());
-		if (st.countTokens() > 2) {
-		    String token = st.nextToken();
-		    logger.debug("FloatArray (Token): " + token);
-		    cdo.setObjectProperty(axis, "x", token);
-		    token = st.nextToken();
-		    logger.debug("FloatArray (Token): " + token);
-		    cdo.setObjectProperty(axis, "y", token);
-		    token = st.nextToken();
-		    logger.debug("FloatArray (Token): " + token);
-		    cdo.setObjectProperty(axis, "z", token);
-		} else {
-		    logger.debug("PMP Convention error: incorrect number of cell axis fractions!\n");
-		}
-	    } catch (Exception e) {
-		logger.debug("PMP Convention error: " + e.toString());
-	    }	    
-	    cdo.endObject(axis);
-	} else {           
-	    super.characterData(ch, start, length);
-	}
-	logger.debug("End PMP chardata");
+        String s = new String(ch, start, length).trim();
+        logger.debug("Start PMP chardata (" + CurrentElement + ") :" + s);
+        logger.debug(" ElTitle: " + elementTitle);
+        if (CurrentElement == STRING && BUILTIN.equals("spacegroup")) {
+            cdo.setObjectProperty("Crystal", "spacegroup", s);
+        } else if (CurrentElement == FLOATARRAY &&
+           (elementTitle.equals("a") || elementTitle.equals("b") ||
+            elementTitle.equals("c"))) {
+            String axis = elementTitle + "-axis";
+            cdo.startObject(axis);
+            try {
+                StringTokenizer st = new StringTokenizer(s);
+                logger.debug("Tokens: " + st.countTokens());
+                if (st.countTokens() > 2) {
+                    String token = st.nextToken();
+                    logger.debug("FloatArray (Token): " + token);
+                    cdo.setObjectProperty(axis, "x", token);
+                    token = st.nextToken();
+                    logger.debug("FloatArray (Token): " + token);
+                    cdo.setObjectProperty(axis, "y", token);
+                    token = st.nextToken();
+                    logger.debug("FloatArray (Token): " + token);
+                    cdo.setObjectProperty(axis, "z", token);
+                } else {
+                    logger.debug("PMP Convention error: incorrect number of cell axis fractions!\n");
+                }
+            } catch (Exception e) {
+                logger.debug("PMP Convention error: " + e.toString());
+            }
+            cdo.endObject(axis);
+        } else {
+            super.characterData(ch, start, length);
+        }
+        logger.debug("End PMP chardata");
     }
 }
