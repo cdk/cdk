@@ -221,6 +221,21 @@ public class CMLRoundTripTest extends TestCase {
         assertEquals(bond.getOrder(), roundTrippedBond.getOrder(), 0.0001);
     }
     
+    public void testBondID() {
+        Molecule mol = new Molecule();
+        Atom atom = new Atom("C");
+        Atom atom2 = new Atom("O");
+        mol.addAtom(atom);
+        mol.addAtom(atom2);
+        Bond bond = new Bond(atom, atom2, 1.0);
+        bond.setID("b1");
+        mol.addBond(bond);
+        
+        Molecule roundTrippedMol = roundTripMolecule(mol);
+        Bond roundTrippedBond = roundTrippedMol.getBondAt(0);
+        assertEquals(bond.getID(), roundTrippedBond.getID());
+    }
+    
     public void testBondStereo() {
         Molecule mol = new Molecule();
         Atom atom = new Atom("C");

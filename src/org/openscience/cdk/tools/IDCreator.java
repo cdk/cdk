@@ -38,6 +38,7 @@ import org.openscience.cdk.SetOfAtomContainers;
 import org.openscience.cdk.SetOfReactions;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
+import org.openscience.cdk.tools.manipulator.SetOfAtomContainersManipulator;
 
 /**
  * Class that provides methods to give unique IDs to ChemObjects.
@@ -121,6 +122,8 @@ public class IDCreator {
      * It will not the SetOfAtomContainers itself.
      */
     public void createIDs(SetOfAtomContainers containerSet) {
+        if (tabuList == null) tabuList = SetOfAtomContainersManipulator.getAllIDs(containerSet);
+
         if (containerSet.getID() == null) {
             moleculeCount++;
             while (tabuList.contains("molSet" + moleculeCount)) moleculeCount++;

@@ -220,6 +220,10 @@ public class Convertor {
 
     private void writeSetOfMolecules(SetOfMolecules som, Element nodeToAppend) throws CMLException{
         logger.debug("Writing SOM");
+        // create CML atom and bond ids
+        if (useCmlIdentifiers) {
+            new IDCreator().createIDs(som);
+        }
         Molecule[] molecules = som.getMolecules();
         logger.debug("Found # molecule(s) in set: ", molecules.length);
         if (molecules.length > 1) {
@@ -470,11 +474,11 @@ public class Convertor {
     private void writeBond(Bond bond, Element nodeToAdd) throws CMLException {
         BondImpl bondimpl=new BondImpl(doc);
         nodeToAdd.appendChild(bondimpl);
-        logger.debug("Bond id: " + bond.getID());
+        logger.debug("Bond id: ", bond.getID());
         if (bond.getID() == null || bond.getID().length() == 0) {
-            nodeToAdd.setAttribute("id", "b" + bond.hashCode());
+            bondimpl.setAttribute("id", "b" + bond.hashCode());
         }else{
-            nodeToAdd.setAttribute("id", bond.getID());
+            bondimpl.setAttribute("id", bond.getID());
         }
         StringBuffer atomRefs = new StringBuffer();
         Atom[] atoms = bond.getAtoms();
