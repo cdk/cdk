@@ -143,7 +143,7 @@
                        includesfile="${src}/standard.classes">
                     <classpath>
                         <fileset dir="${lib}">
-                            <include name="JSX1.0.1.1.jar" />
+                            <include name="JSX1.0.6.0.jar" />
                         </fileset>
                         <fileset dir="${dist}/jar">
                             <include name="cdk-core.jar" />
@@ -325,8 +325,8 @@
                         <!-- Exclude classes in cdk-io module-->
                         <exclude name="org/openscience/cdk/io/**" />
                         <!-- Exclude classes in cdk-standard module-->
-                        <exclude name="org/openscience/cdk/tools/LoggingTool" />
-                        <exclude name="org/openscience/cdk/tools/IsotopeFactory" />
+                        <exclude name="org/openscience/cdk/tools/LoggingTool.class" />
+                        <exclude name="org/openscience/cdk/tools/IsotopeFactory.class" />
                         <exclude name="org/openscience/cdk/config/**" />
                    </fileset>
                 </jar>
@@ -383,7 +383,7 @@
                 </jar>
         </target>
 
-        <target name="dist-standard" depends="compile-standard">
+        <target name="dist-standard" depends="compile-standard, dist.init">
                 <jar jarfile="${dist}/jar/cdk-standard.jar">
                     <fileset dir="${build}">
                         <include name="org/openscience/cdk/tools/LoggingTool.class" />
