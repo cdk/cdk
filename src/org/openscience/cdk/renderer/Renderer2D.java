@@ -489,11 +489,7 @@ public class Renderer2D   {
 	 *@param  bondColor  Description of the Parameter
 	 */
 	private void paintBond(Bond bond, Color bondColor, Graphics graphics) {
-		logger.debug("bond order: " + bond.getOrder());
-		logger.debug("bond stereo: " + bond.getStereo());
-
-		if (bond.getAtomAt(0).getPoint2D() == null || bond.getAtomAt(1).getPoint2D() == null)
-		{
+		if (bond.getAtomAt(0).getPoint2D() == null || bond.getAtomAt(1).getPoint2D() == null) {
 			return;
 		}
 
