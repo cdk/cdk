@@ -59,6 +59,43 @@ public class FingerprinterTest extends TestCase
 		return new TestSuite(FingerprinterTest.class);
 	}
 
+	public void testBug706786() throws java.lang.Exception
+	{
+		Molecule superstructure = null;
+		Molecule substructure = null;
+		/* We make a specifically substituted chromane here 
+		 * as well as the pure chromane skeleton, which should
+		 * be a substructure of the first.
+		 */
+		String filename = "data/mdl/bug706786-1.mol";
+		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+		MDLReader reader = new MDLReader(new InputStreamReader(ins));
+		superstructure = (Molecule) reader.read((ChemObject) new Molecule());
+		filename = "data/mdl/bug706786-2.mol";
+		ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+		reader = new MDLReader(new InputStreamReader(ins));
+		substructure = (Molecule) reader.read((ChemObject) new Molecule());
+		/* now we've read the two chromanes and we are going to check now
+		 * whether the latter is likely to be a substructure of the first by
+		 * using the fingerprinter.
+		*/
+		
+		BitSet superBS = Fingerprinter.getFingerprint(superstructure);
+		BitSet subBS = Fingerprinter.getFingerprint(substructure);
+		boolean isSubset = Fingerprinter.isSubset(superBS, subBS);
+
+		if (standAlone)
+		{
+			System.out.println("BitString superstructure: " + superBS);
+			System.out.println("BitString substructure: " + subBS);
+			System.out.println("isSubset? " + isSubset);
+		}
+		assertTrue(isSubset);
+		
+
+	
+	}
+	
 	public void testFingerprinter() throws java.lang.Exception
 	{
 		Molecule mol = MoleculeFactory.makeIndole();
@@ -145,7 +182,8 @@ public class FingerprinterTest extends TestCase
 		try{
 			FingerprinterTest fpt = new FingerprinterTest("FingerprinterTest");
 			fpt.standAlone = true;
-			fpt.testFingerprinter();			
+			//fpt.testFingerprinter();	
+			fpt.testBug706786();
 		}
 		catch(Exception exc)
 		{
