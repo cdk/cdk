@@ -59,26 +59,25 @@ public class SmilesGeneratorTest extends TestCase
 	public void testSmilesGenerator()
 	{
 		SmilesGenerator sg = new SmilesGenerator();
-		//Molecule mol1 = MoleculeFactory.makeEthylPropylPhenantren();
+		Molecule mol1 = MoleculeFactory.makeEthylPropylPhenantren();
 		Molecule mol2 = MoleculeFactory.makeAlphaPinene();
 		fixCarbonHCount(mol2);
-		//fixCarbonHCount(mol1);
+		fixCarbonHCount(mol1);
 		String smiles1 = null, smiles2 = null;
 		if (standAlone) display(mol2);
 		try
 		{
-		//	smiles1 = sg.createSMILES(mol1);
+			smiles1 = sg.createSMILES(mol1);
 			smiles2 = sg.createSMILES(mol2);
 		}
 		catch(Exception exc)
 		{
 			System.out.println(exc);	
 		}
-		//if (standAlone)  System.out.println("SMILES 1: " + smiles1);
-		if (standAlone)  System.out.println("SMILES 2: " + smiles2);
-		assertTrue(smiles1.equals("c2cc(c3ccc1c(ccc(c1)CCC)c3c2)CC"));
-		
-		                  
+		if (standAlone) System.err.println("SMILES 1: " + smiles1);
+		if (standAlone) System.err.println("SMILES 2: " + smiles2);
+		assertTrue(smiles1.equals("c2cc1c3ccc(cc3ccc1c(c2)CC)CCC"));
+		assertTrue(smiles2.equals("C1=C(C)C2CC(C1)C2(C)(C)"));
 	}
 
 	private void fixCarbonHCount(Molecule mol)

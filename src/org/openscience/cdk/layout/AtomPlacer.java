@@ -90,7 +90,7 @@ public class AtomPlacer implements CDKConstants
 		Atom[] sortedAtoms = null;
 		/* calculate the direction away from the already placed partners of atom */
 		//Point2d sharedAtomsCenter = sharedAtoms.get2DCenter();
-		Vector2d sharedAtomsCenterVector = new Vector2d(sharedAtomsCenter);	
+		Vector2d sharedAtomsCenterVector = new Vector2d(sharedAtomsCenter);
 
 		Vector2d newDirection = new Vector2d(atom.getPoint2D());
 		Vector2d occupiedDirection = new Vector2d(sharedAtomsCenter);
@@ -217,6 +217,13 @@ public class AtomPlacer implements CDKConstants
 			atomPoint.add(bondVector);
 			nextAtom.setPoint2D(atomPoint);		
 			nextAtom.flags[ISPLACED] = true;
+			try
+			{
+				System.out.println(nextAtom.getSymbol());
+				System.out.println(molecule.getAtomNumber(nextAtom));
+			}
+			catch(Exception exc){}
+			
 			bondVector = getNextBondVector(nextAtom, atom, molecule.get2DCenter());
 		}
 	}
@@ -269,32 +276,31 @@ public class AtomPlacer implements CDKConstants
 		Atom connectAtom = null;
 		double angle = startAngle;
 		double newX, newY, x, y;
-		if (debug) System.out.println("drawPolygon->startAngle: " + Math.toDegrees(angle));
+		if (debug) System.out.println("populatePolygonCorners->startAngle: " + Math.toDegrees(angle));
 		for (int i = 0; i < atomsToDraw.size(); i++)
 		{
 			connectAtom = (Atom)atomsToDraw.elementAt(i);
-			try
-			{
-				if (debug) System.out.println("drawPolygon->number of connectAtom: " + molecule.getAtomNumber(connectAtom));
-			}
-			catch(Exception exc)
-			{
-
-			}
 		    angle = angle + addAngle;
 			if (angle >= 2 * Math.PI)
 			{
 				angle -= 2*Math.PI;
 			}
-		    if (debug)  System.out.println("drawPolygon->angle: " +Math.toDegrees( angle));
+		    if (debug)  System.out.println("populatePolygonCorners->angle: " +Math.toDegrees( angle));
 		    x = Math.cos(angle) * radius;
-		    if (debug) System.out.println("drawPolygon-> x " + x);
 		    y = Math.sin(angle) * radius;
-			if (debug) System.out.println("drawPolygon-> y " + y);
-			newX = x + rotationCenter.x;
-			newY = y + rotationCenter.y;
-			connectAtom.setPoint2D(new Point2d(newX, newY));				
-			connectAtom.flags[ISPLACED] = true;
+		newX = x + rotationCenter.x;
+		newY = y + rotationCenter.y;
+		connectAtom.setPoint2D(new Point2d(newX, newY));				
+			try
+			{
+				if (debug) System.out.println("populatePolygonCorners->connectAtom: " + molecule.getAtomNumber(connectAtom) + " placed at " + connectAtom.getPoint2D());
+			}
+			catch(Exception exc)
+			{
+
+			}
+		
+		connectAtom.flags[ISPLACED] = true;
 		}
 	}
 

@@ -341,7 +341,8 @@ public class MoleculeFactory
 		mol.addBond(14, 15, 1); // 12
 		mol.addBond(12, 16, 1); // 12		
 		mol.addBond(16, 17, 1); // 12
-		mol.addBond(17, 18, 1); // 12		
+		mol.addBond(17, 18, 1); // 12	
+		configureAtoms(mol);
 		return mol;
 	}
 

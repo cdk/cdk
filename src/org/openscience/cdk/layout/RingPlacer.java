@@ -108,7 +108,6 @@ public class RingPlacer implements CDKConstants
 			ring = (Ring)rs.elementAt(j); /* Get the j-th Ring in RingSet rs */
 			for (int k = 0; k < ring.getAtomCount(); k++)
 			{
-			
 				unplacedPartners.removeAllElements();
 				sharedAtoms.removeAllElements();
 				primaryAtoms.removeAllElements();
@@ -117,10 +116,29 @@ public class RingPlacer implements CDKConstants
 				centerOfRingGravity = rings.get2DCenter();
 				atomPlacer.partitionPartners(atom, unplacedPartners, sharedAtoms);
 				atomPlacer.markNotPlaced(unplacedPartners);
+				try
+				{
+					if (debug)
+					{ 
+						for (int f = 0; f < unplacedPartners.getAtomCount(); f++)
+						{
+							System.out.println("placeRingSubstituents->unplacedPartners: " + molecule.getAtomNumber(unplacedPartners.getAtomAt(f)));
+						}
+					}
+				}
+				catch(Exception exc)
+				{
+				}
+				
 				treatedAtoms.add(unplacedPartners);
 				if (unplacedPartners.getAtomCount() > 0)
 				{
 					atomPlacer.distributePartners(atom, sharedAtoms, centerOfRingGravity, unplacedPartners, bondLength);
+					try
+					{
+						System.out.println(molecule.getAtomNumber(atom));
+					}catch(Exception exc){}
+					
 				}
 			}
 		}

@@ -42,7 +42,7 @@ import org.openscience.cdk.*;
 public class SmilesParser implements CDKConstants
 {
 	String message = "Can't handle SMILES string";
-	public static boolean debug = true;
+	public static boolean debug = false;
 	int position = -1;
 	int nodeCounter = -1;
 	String smiles = null;

@@ -182,3 +182,4 @@ public class FingerprinterTest extends TestCase
 		}
 	}
 }
+

@@ -182,9 +182,24 @@ public class StructureDiagramGenerator implements CDKConstants
 			ringSystems = RingPartitioner.partitionRings(sssr);
 			
 			/* Do the layout for the first connected ring system ... */
-			layoutRingSet(firstBondVector, (RingSet)ringSystems.elementAt(0));
+			int largest = 0; 
+			int largestSize = ((RingSet)ringSystems.elementAt(0)).size();
+			//System.out.println("We have " + ringSystems.size() + " ring systems.");
+			for (int f = 0; f < ringSystems.size(); f++)
+			{
+				//System.out.println(((RingSet)ringSystems.elementAt(f)).size());
+				if (((RingSet)ringSystems.elementAt(f)).size() > largestSize)
+				{
+					largestSize = ((RingSet)ringSystems.elementAt(f)).size(); 
+					largest = f;	
+				}
+			}
+			//System.out.println("Largest RingSystem: " + largest);
+			//System.out.println("Size of Largest RingSystem: " + largestSize);
+
+			layoutRingSet(firstBondVector, (RingSet)ringSystems.elementAt(largest));
 			/* and to the placement of all the directly connected atoms of this ringsystem */
-			ringPlacer.placeRingSubstituents((RingSet)ringSystems.elementAt(0), bondLength);
+			ringPlacer.placeRingSubstituents((RingSet)ringSystems.elementAt(largest), bondLength);
 		}
 		else
 		{
@@ -213,7 +228,10 @@ public class StructureDiagramGenerator implements CDKConstants
 			 * connected to the parts which have already been laid out.
 			 */
 			layoutNextRingSystem();
-		}while(!atomPlacer.allPlaced(molecule));		
+			//System.out.println("**********" + molecule);
+			
+		}while(!atomPlacer.allPlaced(molecule));
+			
 		fixRest();
 	}
 
@@ -322,8 +340,9 @@ public class StructureDiagramGenerator implements CDKConstants
 					{
 						longestUnplacedChain.getAtomAt(f).flags[ISPLACED] = false;
 					}
-
+					System.out.println("longestUnplacedChain has : " + longestUnplacedChain.getAtomCount() +  " atoms.");
 					atomPlacer.placeLinearChain(longestUnplacedChain, direction, bondLength);
+					
 				}
 				else
 				{
@@ -359,7 +378,7 @@ public class StructureDiagramGenerator implements CDKConstants
 		if (nextRingAttachmentBond != null)
 		{
 			vectorAtom2 = getRingAtom(nextRingAttachmentBond);
-			if (nextRingAttachmentBond.getAtomAt(0) == vectorAtom1)
+			if (nextRingAttachmentBond.getAtomAt(0) == vectorAtom2)
 			{
 				vectorAtom1 = nextRingAttachmentBond.getAtomAt(1);
 			}						
@@ -368,8 +387,10 @@ public class StructureDiagramGenerator implements CDKConstants
 				vectorAtom1 = nextRingAttachmentBond.getAtomAt(0);
 			}						
 			oldPoint2 = vectorAtom2.getPoint2D();
-			oldPoint1 = vectorAtom1.getPoint2D();				
-
+			oldPoint1 = vectorAtom1.getPoint2D();		
+			
+			//System.out.println("oldPoint1: " + oldPoint1);
+			//System.out.println("oldPoint2: " + oldPoint2);
 			angle1 = GeometryTools.getAngle(oldPoint2.x - oldPoint1.x, oldPoint2.y - oldPoint1.y);								
 			nextRingSystem = getRingSystemOfAtom(ringSystems, vectorAtom2);
 			ringSystem = new AtomContainer();
@@ -385,12 +406,20 @@ public class StructureDiagramGenerator implements CDKConstants
 			newPoint2 = vectorAtom2.getPoint2D();
 			newPoint1 = vectorAtom1.getPoint2D();				
 
-			angle2 = GeometryTools.getAngle(newPoint2.x - newPoint1.x, newPoint2.y - newPoint2.y);				
+			//System.out.println("newPoint1: " + newPoint1);
+			//System.out.println("newPoint2: " + newPoint2);
+
+			angle2 = GeometryTools.getAngle(newPoint2.x - newPoint1.x, newPoint2.y - newPoint1.y);				
 			Vector2d transVec = new Vector2d(oldPoint1);
 			transVec.sub(new Vector2d(newPoint1));
 
-			GeometryTools.translate2D(ringSystem, transVec);				
-			GeometryTools.rotate(ringSystem, oldPoint1, angle1 - angle2);
+			GeometryTools.translate2D(ringSystem, transVec);
+			//System.out.println(ringSystem.getAtomCount());
+			//System.out.println("oldPoint1 again: " + oldPoint1);
+			//System.out.println("and the angles: " + angle1 + ", " + angle2 + "; diff = " + (angle1 - angle2));				
+			
+			GeometryTools.rotate(ringSystem, oldPoint1,  Math.PI +  angle1);
+			//vectorAtom2.setPoint2D(oldPoint2);
 			vectorAtom1.setPoint2D(oldPoint1);				
 		}
 	}
@@ -548,11 +577,16 @@ public class StructureDiagramGenerator implements CDKConstants
 	 */
 	private void fixRest()
 	{
+		Atom atom = null;
+		Atom[] neighbors = null;
+		Point2d point = null;
 		for (int f = 0; f < molecule.getAtomCount(); f++)
 		{
-			if (molecule.getAtomAt(f).getPoint2D() == null)
+			atom = molecule.getAtomAt(f);
+			if (atom.getPoint2D() == null)
 			{
-				molecule.getAtomAt(f).setPoint2D(new Point2d(0,0));
+				System.out.println("not placed: " + atom.getSymbol());
+				atom.setPoint2D(new Point2d(0,0));
 			}
 		}
 	}
@@ -655,17 +689,21 @@ public class StructureDiagramGenerator implements CDKConstants
 	{
 		Ring ring = null;
 		if (sssr == null) return;
+		int unplacedCounter = 0;
 		for (int f = 0; f < sssr.size(); f++)
 		{
 			ring = (Ring)sssr.elementAt(f);
 			if (!ring.flags[ISPLACED])
 			{
+				//System.out.println("Ring with " + ring.getAtomCount() + " atoms is not placed.");
+				unplacedCounter ++;
 				for (int g = 0; g < ring.getAtomCount(); g++)
 				{
 					ring.getAtomAt(g).flags[ISPLACED] = false;
 				}
 			}
 		}
+		if (debug) System.out.println("There are " + unplacedCounter + " Rings.");
 	}
 
 

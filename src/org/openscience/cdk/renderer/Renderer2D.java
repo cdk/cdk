@@ -331,6 +331,11 @@ public class Renderer2D
 			paintSingleBond(bond, bondColor);
 			paintInnerBond(bond,ring, bondColor);
 		}
+		else if (bond.getOrder() == 1.5 || bond.flags[bond.ISAROMATIC])
+		{
+			paintSingleBond(bond, bondColor);
+			paintInnerBond(bond,ring, Color.lightGray);
+		}
 		else if (bond.getOrder() == 3)
 		{
 			paintTripleBond(bond, bondColor);

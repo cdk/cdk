@@ -59,18 +59,23 @@ public class SmilesParserTest extends TestCase
 	public void testSmilesParser()
 	{
 		SmilesParser sp = new SmilesParser();
-		Molecule mol = null;
+		Molecule mol1 = null, mol2 = null, mol3 = null;
 		try
 		{
-			mol = sp.parseSmiles("C12=CC=C(C(=O)O)N=C1C=CC=C2");
+			mol1 = sp.parseSmiles("C1c2c(c3c(c(O)cnc3)cc2)CC(=O)C1");
+			mol2 = sp.parseSmiles("O=C(O3)C1=COC(OC4OC(CO)C(O)C(O)C4O)C2C1C3C=C2COC(C)=O");
+			mol3 = sp.parseSmiles("CC(C(C8CCC(CC8)=O)C3C4C(CC5(CCC(C9=CC(C=CN%10)=C%10C=C9)CCCC5)C4)C2CCC1CCC7(CCC7)C6(CC6)C1C2C3)=O");
+
 			if (standAlone) System.out.println("Done parsing SMILES");
-			if (standAlone) display(mol);
+			if (standAlone) display(mol1);
 		}
 		catch(Exception exc)
 		{
 			throw new AssertionFailedError("Problem parsing SMILES: " +  exc.toString());
 		}
-		assertTrue(mol.getAtomCount() == 13);
+		assertTrue(mol1.getAtomCount() == 16);
+		assertTrue(mol2.getAtomCount() == 29);
+		assertTrue(mol3.getAtomCount() == 49);
 	}
 
 	
