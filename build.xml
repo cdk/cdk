@@ -123,9 +123,12 @@
                 <jar jarfile="${dist}/jar/cdk.jar"
                 basedir="${build}" />
 
-                <jar jarfile="${dist}/jar/cdk-cml.jar"
-                basedir="${build}"
-                includes="org/openscience/cdk/io/cml/**" />
+                <jar jarfile="${dist}/jar/cdk-cml.jar">
+                    <fileset dir="${build}">
+                        <include name="org/openscience/cdk/io/cml/**" />
+                        <include name="org/openscience/cdk/io/cml/cdopi/**" />
+                    </fileset>
+                </jar>
         </target>
 
         <target name="dist-with-java3d"
