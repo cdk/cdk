@@ -15,6 +15,12 @@
         </fileset>
     </path>
 
+    <path id="fop.class.path">
+        <fileset dir="doc/devel-guide/jar">
+            <include name="*.jar" />
+        </fileset>
+    </path>
+
     <target name="html">
         <mkdir dir="${javadoc.dir}" />
 
@@ -25,7 +31,7 @@
         </javadoc>
     </target>
 
-    <target name="docbook">
+    <target name="core.docbook">
         <javadoc private="false" public="true">
             <classpath refid="project.class.path" />
 
@@ -34,7 +40,7 @@
                 <param name="-properties" value="jar/dbdoclet.properties"/>
             </doclet>
 
-            <package name="org.openscience.cdk.*"/>
+            <package name="org.openscience.cdk"/>
 
             <sourcepath>
                 <pathelement path="."/>
@@ -42,6 +48,23 @@
 
         </javadoc>
     </target>
+
+    <target name="core.fo" depends="core.docbook">
+        <java classname="org.apache.xalan.xslt.Process"
+              args="-IN javadoc.dbxml -XSL doc/devel-guide/lib/xslt/docbook/fo/docbook.xsl -OUT core.fo"
+              dir="." fork="yes">
+            <classpath refid="fop.class.path" />
+        </java>
+    </target>
+
+    <target name="core.pdf" depends="core.fo">
+        <java classname="org.apache.fop.apps.Fop"
+              args="-fo core.fo -pdf core.pdf"
+              dir="." fork="yes">
+            <classpath refid="fop.class.path" />
+        </java>
+    </target>
+
 </project>
 
 
