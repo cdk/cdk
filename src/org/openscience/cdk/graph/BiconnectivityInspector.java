@@ -82,7 +82,12 @@ public class BiconnectivityInspector {
 				new ConnectivityInspector(graph).connectedSets().iterator();
 			
 			while (connectedSets.hasNext()) {
-				Graph subgraph = new Subgraph(graph, (Set) connectedSets.next(), null);
+				Set connectedSet = (Set) connectedSets.next();
+				if (connectedSet.size() == 1) {
+					continue;
+				}
+				
+				Graph subgraph = new Subgraph(graph, connectedSet, null);
 				
 				// do DFS
 				

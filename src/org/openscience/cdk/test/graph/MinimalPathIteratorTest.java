@@ -94,7 +94,7 @@ public class MinimalPathIteratorTest extends TestCase {
 		 	count++;
 		 }
 		 
-		 assertTrue(count == 10);
+		 assertEquals(10, count);
 
 	}
 	

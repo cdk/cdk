@@ -40,6 +40,7 @@ import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.Graph;
 import org._3pq.jgrapht.graph.DefaultDirectedGraph;
 import org._3pq.jgrapht.graph.SimpleGraph;
+import org._3pq.jgrapht.traverse.BreadthFirstIterator;
 import org._3pq.jgrapht.traverse.ClosestFirstIterator;
 
 /**
@@ -81,6 +82,100 @@ public class MinimalPathIterator implements Iterator {
 	}
 
 	private void createShortestPathGraph() {
+		
+		
+/*		shortestPathGraph = new DefaultDirectedGraph();
+		//shortestPathGraph.addAllVertices(g.vertexSet());
+		
+		LinkedList queue = new LinkedList();
+		
+		//encounter target vertex
+		queue.addLast(targetVertex);
+		shortestPathGraph.addVertex(targetVertex);
+		
+		int distance = 0;
+		
+		Object firstVertexOfNextLevel = targetVertex;
+		Collection verticesOfNextLevel = new ArrayList();
+		
+		while (!queue.isEmpty()) {
+			//provide next vertex
+			Object vertex = queue.removeFirst();
+			
+			if (vertex == firstVertexOfNextLevel) {
+				distance++;
+				firstVertexOfNextLevel = null;
+				verticesOfNextLevel.clear();
+			}
+			
+			//add unseen children of next vertex
+			List edges = g.edgesOf(vertex);
+			
+			for(Iterator i = edges.iterator(); i.hasNext();) {
+				Edge e = (Edge) i.next(  );
+				Object opposite = e.oppositeVertex(vertex);
+				
+				if (!shortestPathGraph.containsVertex(opposite)) {
+					//encounter vertex
+					queue.addLast(opposite);
+					shortestPathGraph.addVertex(opposite);
+					
+					verticesOfNextLevel.add(opposite);
+					
+					if (firstVertexOfNextLevel == null) {
+						firstVertexOfNextLevel = opposite;
+					}
+				}
+				
+				
+				if (verticesOfNextLevel.contains(opposite)) {
+					shortestPathGraph.addEdge(opposite, vertex);
+				}
+			}
+		}
+*/		
+		
+		
+		shortestPathGraph = new DefaultDirectedGraph();
+		shortestPathGraph.addVertex(targetVertex);
+
+		// This map gives the distance of a vertex to the target vertex
+		Map distanceMap = new HashMap();
+
+		for (MyBreadthFirstIterator iter = new MyBreadthFirstIterator(g, targetVertex); iter.hasNext(); ) {
+			Object vertex = iter.next();
+			shortestPathGraph.addVertex(vertex);
+			
+			int distance = iter.level;
+			distanceMap.put(vertex, new Integer(distance));
+			
+			for (Iterator edges = g.edgesOf(vertex).iterator(); edges.hasNext();) {
+				Edge edge = (Edge) edges.next();
+				Object opposite = edge.oppositeVertex(vertex);
+				if (distanceMap.get(opposite) != null) {
+					if (((Integer) distanceMap.get(opposite)).intValue() + 1 == distance) {
+						shortestPathGraph.addVertex(opposite);
+						shortestPathGraph.addEdge(vertex, opposite);
+					}
+				}
+			}
+			
+			if (vertex == sourceVertex) {
+				break;
+			}
+		}
+				
+		Iterator edgeIterator = shortestPathGraph.outgoingEdgesOf(sourceVertex).iterator();
+		
+		edgeIteratorStack = new Stack();
+		edgeIteratorStack.push(edgeIterator);
+
+		vertexStack = new Stack();
+		vertexStack.push(sourceVertex);
+		
+	}
+	
+	private void createShortestPathWeightedGraph() {
 		shortestPathGraph = new DefaultDirectedGraph();
 		//shortestPathGraph.addAllVertices(g.vertexSet());
 		shortestPathGraph.addVertex(targetVertex);
@@ -188,6 +283,33 @@ public class MinimalPathIterator implements Iterator {
 		}
 		
 		return edgeList;
+		
+	}
+	
+	private static class MyBreadthFirstIterator extends BreadthFirstIterator {
+
+		public MyBreadthFirstIterator(Graph g, Object startVertex) {
+			super(g, startVertex);
+		}
+
+		int level = -1;
+		private Object firstVertexOfNextLevel;
+		
+	    protected void encounterVertex( Object vertex, Edge edge ) {
+	        super.encounterVertex(vertex, edge);
+	        if (firstVertexOfNextLevel == null) {
+	        		firstVertexOfNextLevel = vertex;
+	        }
+	    }
+
+	    protected Object provideNextVertex(  ) {
+			Object nextVertex = super.provideNextVertex();
+			if (firstVertexOfNextLevel == nextVertex) {
+				firstVertexOfNextLevel = null;
+				level++;
+			}
+			return nextVertex;
+		}
 		
 	}
 }

@@ -46,10 +46,10 @@ import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.Graph;
 import org._3pq.jgrapht.UndirectedGraph;
 import org._3pq.jgrapht.alg.ConnectivityInspector;
-import org._3pq.jgrapht.alg.DijkstraShortestPath;
 import org._3pq.jgrapht.graph.SimpleDirectedGraph;
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org._3pq.jgrapht.graph.Subgraph;
+import org.openscience.cdk.graph.BFSShortestPath;
 import org.openscience.cdk.graph.MinimalPathIterator;
 
 /**
@@ -103,7 +103,7 @@ public class SimpleCycleBasis {
 			subgraph.removeEdge(edge);
 			
 			// Compute a shortest cycle through edge
-			List path = DijkstraShortestPath.findPathBetween(subgraph, edge.getSource(), edge.getTarget());
+			List path = BFSShortestPath.findPathBetween(subgraph, edge.getSource(), edge.getTarget());
 			path.add(edge);
 			SimpleCycle cycle = new SimpleCycle(graph, path);
 			
@@ -290,14 +290,6 @@ public class SimpleCycleBasis {
 		
 		// Implementation of "Algorithm 1" from [BGdV04]
 		
-		Map edgeMap = new HashMap();
-		
-		for (int i=0; i<edgeList.size(); i++) {
-			Edge edge = (Edge) edgeList.get(i);
-			
-			edgeMap.put(edge, new Integer(i));
-		}
-		
 		boolean[][] a = getCycleEdgeIncidenceMatrix();
 		
 		for (int i=startIndex; i<cycles.size(); i++) {
@@ -315,15 +307,15 @@ public class SimpleCycleBasis {
 			while (vertexIterator.hasNext()) {
 				Object vertex = vertexIterator.next();
 				
-				Collection incidentEdges = graph.edgesOf(vertex);
-				
 				// check if the vertex is incident to an edge with u[edge] == 1
 				boolean shouldSearchCycle = false;
 				
+				Collection incidentEdges = graph.edgesOf(vertex);
+
 				Iterator edgeIterator = incidentEdges.iterator();
 				while (edgeIterator.hasNext()) {
-					Object edge = edgeIterator.next();
-					int index = ((Integer) edgeMap.get(edge)).intValue();
+					Edge edge = (Edge) edgeIterator.next();
+					int index = getEdgeIndex(edge);
 					if (u[index]) {
 						shouldSearchCycle = true;
 						break;
@@ -337,7 +329,7 @@ public class SimpleCycleBasis {
 					
 					// Search for shortest path
 					
-					List auxPath = DijkstraShortestPath.findPathBetween(gu, auxVertex0, auxVertex1);
+					List auxPath = BFSShortestPath.findPathBetween(gu, auxVertex0, auxVertex1);
 					
 					List edgesOfNewCycle = new Vector();
 					
@@ -654,9 +646,9 @@ public class SimpleCycleBasis {
 			}
 		}
 		
-		
 		return result;
 	}
+	
 	
 	public List equivalenceClasses() {
 		int[] weight = weightVector();
@@ -680,8 +672,6 @@ public class SimpleCycleBasis {
 				u[i][j] = ai[j][i];
 			}
 		}
-		
-		
 		
 		UndirectedGraph h = new SimpleGraph();
 		h.addAllVertices(cycles);
@@ -718,17 +708,35 @@ public class SimpleCycleBasis {
 					for (Iterator it = graph.vertexSet().iterator(); it.hasNext();) {
 						Object vertex = it.next();
 						
-						Object auxVertex00 = auxGraph.auxVertex00(vertex);
-						Object auxVertex11 = auxGraph.auxVertex11(vertex);
+						// check if the vertex is incident to an edge with u[edge] == 1
+						boolean shouldSearchCycle = false;
 						
-						List auxPath = DijkstraShortestPath.findPathBetween(auxGraph, auxVertex00, auxVertex11);
+						Collection incidentEdges = graph.edgesOf(vertex);
+
+						Iterator edgeIterator = incidentEdges.iterator();
+						while (edgeIterator.hasNext()) {
+							Edge edge = (Edge) edgeIterator.next();
+							int index = getEdgeIndex(edge);
+							if (u[i][index] || u[j][index]) {
+								shouldSearchCycle = true;
+								break;
+							}
+						}
 						
-						double pathWeight = auxPath.size();
-						
-						if (pathWeight == weight[left]) {
-							sameClass = true;
-							break;
-						}	
+						if (shouldSearchCycle) {
+							
+							Object auxVertex00 = auxGraph.auxVertex00(vertex);
+							Object auxVertex11 = auxGraph.auxVertex11(vertex);
+							
+							List auxPath = BFSShortestPath.findPathBetween(auxGraph, auxVertex00, auxVertex11);
+							
+							double pathWeight = auxPath.size();
+							
+							if (pathWeight == weight[left]) {
+								sameClass = true;
+								break;
+							}	
+						}
 					}
 					
 					if (sameClass) {
@@ -767,7 +775,7 @@ public class SimpleCycleBasis {
 							Object auxVertex00 = auxGraph.auxVertex00(vertex);
 							Object auxVertex11 = auxGraph.auxVertex11(vertex);
 							
-							List auxPath = DijkstraShortestPath.findPathBetween(auxGraph, auxVertex00, auxVertex11);
+							List auxPath = BFSShortestPath.findPathBetween(auxGraph, auxVertex00, auxVertex11);
 							
 							double pathWeight = auxPath.size();
 							
@@ -788,7 +796,7 @@ public class SimpleCycleBasis {
 							Object auxVertex00 = auxGraph.auxVertex00(vertex);
 							Object auxVertex11 = auxGraph.auxVertex11(vertex);
 							
-							List auxPath = DijkstraShortestPath.findPathBetween(auxGraph, auxVertex00, auxVertex11);
+							List auxPath = BFSShortestPath.findPathBetween(auxGraph, auxVertex00, auxVertex11);
 							
 							double pathWeight = auxPath.size();
 							
