@@ -118,6 +118,16 @@ public class HydrogenAdder {
             logger.debug(exception);
         }
     }
+    
+    /**
+     * Creates a tool to add missing hydrogens using a ValencyCheckerInterface.
+     * 
+     * @see org.openscience.cdk.tools.ValencyCheckerInterface
+     */
+    public HydrogenAdder(ValencyCheckerInterface valencyChecker) {
+        logger = new LoggingTool(this);
+        this.valencyChecker = valencyChecker;
+    }
 
     /**
      * Method that saturates a molecule by adding explicit hydrogens.
