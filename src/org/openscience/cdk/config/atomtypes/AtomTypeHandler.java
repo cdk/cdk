@@ -88,7 +88,6 @@ public class AtomTypeHandler extends DefaultHandler {
             currentChars.trim();
             try {
                 if (scalarType == SCALAR_BONDORDERSUM) {
-                    double value = Double.parseDouble(currentChars);
                     atomType.setBondOrderSum(Double.parseDouble(currentChars));
                 } else if (scalarType == SCALAR_MAXBONDORDER) {
                     atomType.setMaxBondOrder(Double.parseDouble(currentChars));
@@ -156,9 +155,9 @@ public class AtomTypeHandler extends DefaultHandler {
         }
     }
 
-    public void characters(char ch[], int start, int length) {
+    public void characters(char chars[], int start, int length) {
         logger.debug("character data");
-        currentChars += new String(ch, start, length);
+        currentChars += new String(chars, start, length);
     }
 
 }

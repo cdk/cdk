@@ -76,56 +76,56 @@ public class TXTBasedAtomTypeConfigurator implements AtomTypeConfigurator {
             throw new IOException("There was a problem getting the default stream: " + configFile);
 
         // read the contents from file
-        BufferedReader r = new BufferedReader(new InputStreamReader(ins), 1024);
-        StringTokenizer st;
-        String s;
+        BufferedReader reader = new BufferedReader(new InputStreamReader(ins), 1024);
+        StringTokenizer tokenizer;
+        String string;
         
         try {
             while (true) {
-                s = r.readLine();
-                if (s == null) {
+                string = reader.readLine();
+                if (string == null) {
                     break;
                 }
-                if (!s.startsWith("#")) {
+                if (!string.startsWith("#")) {
                     String name = "";
                     String rootType = "";
-                    int an = 0, rl = 0, gl = 0, bl = 0;
-                    double mass = 0.0, vdw = 0.0, covalent = 0.0;
-                    st = new StringTokenizer(s, "\t ,;");
-                    int nt = st.countTokens();
+                    int atomicNumber = 0, colorR = 0, colorG = 0, colorB = 0;
+                    double mass = 0.0, vdwaals = 0.0, covalent = 0.0;
+                    tokenizer = new StringTokenizer(string, "\t ,;");
+                    int tokenCount = tokenizer.countTokens();
                     
-                    if (nt == 9) {
-                        name = st.nextToken();
-                        rootType = st.nextToken();
-                        String san = st.nextToken();
-                        String sam = st.nextToken();
-                        String svdw = st.nextToken();
-                        String scov = st.nextToken();
-                        String sr = st.nextToken();
-                        String sg = st.nextToken();
-                        String sb = st.nextToken();
+                    if (tokenCount == 9) {
+                        name = tokenizer.nextToken();
+                        rootType = tokenizer.nextToken();
+                        String san = tokenizer.nextToken();
+                        String sam = tokenizer.nextToken();
+                        String svdwaals = tokenizer.nextToken();
+                        String scovalent = tokenizer.nextToken();
+                        String sColorR = tokenizer.nextToken();
+                        String sColorG = tokenizer.nextToken();
+                        String sColorB = tokenizer.nextToken();
                         
                         try {
                             mass = new Double(sam).doubleValue();
-                            vdw = new Double(svdw).doubleValue();
-                            covalent = new Double(scov).doubleValue();
-                            an = Integer.parseInt(san);
-                            rl = Integer.parseInt(sr);
-                            gl = Integer.parseInt(sg);
-                            bl = Integer.parseInt(sb);
+                            vdwaals = new Double(svdwaals).doubleValue();
+                            covalent = new Double(scovalent).doubleValue();
+                            atomicNumber = Integer.parseInt(san);
+                            colorR = Integer.parseInt(sColorR);
+                            colorG = Integer.parseInt(sColorG);
+                            colorB = Integer.parseInt(sColorB);
                         } catch (NumberFormatException nfe) {
                             throw new IOException("AtomTypeTable.ReadAtypes: " +
                             "Malformed Number");
                         }
                         
-                        AtomType at = new AtomType(name, rootType);
-                        at.setAtomicNumber(an);
-                        at.setExactMass(mass);
-                        at.setVanderwaalsRadius(vdw);
-                        at.setCovalentRadius(covalent);
-                        Color co = new Color(rl, gl, bl);
-                        at.setProperty("org.openscience.cdk.renderer.color", co);
-                        atomTypes.addElement(at);
+                        AtomType atomType = new AtomType(name, rootType);
+                        atomType.setAtomicNumber(atomicNumber);
+                        atomType.setExactMass(mass);
+                        atomType.setVanderwaalsRadius(vdwaals);
+                        atomType.setCovalentRadius(covalent);
+                        Color color = new Color(colorR, colorG, colorB);
+                        atomType.setProperty("org.openscience.cdk.renderer.color", color);
+                        atomTypes.addElement(atomType);
                     } else {
                         throw new IOException("AtomTypeTable.ReadAtypes: " + 
                         "Wrong Number of fields");
@@ -133,9 +133,9 @@ public class TXTBasedAtomTypeConfigurator implements AtomTypeConfigurator {
                 }
             }    // end while
             ins.close();
-        } catch (IOException e) {
-            System.err.println(e.toString());
-            e.printStackTrace();
+        } catch (IOException exception) {
+            System.err.println(exception.toString());
+            exception.printStackTrace();
         }        
         return atomTypes;
     }

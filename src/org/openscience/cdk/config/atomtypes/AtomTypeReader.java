@@ -62,9 +62,9 @@ public class AtomTypeReader {
                 parser = saxParser.getXMLReader();
                 logger.info("Using JAXP/SAX XML parser.");
                 success = true;
-            } catch (Exception e) {
+            } catch (Exception exception) {
                 logger.warn("Could not instantiate JAXP/SAX XML reader!");
-                logger.debug(e);
+                logger.debug(exception);
             }
         }
         // Aelfred is first alternative.
@@ -75,9 +75,9 @@ public class AtomTypeReader {
                         newInstance();
                 logger.info("Using Aelfred2 XML parser.");
                 success = true;
-            } catch (Exception e) {
+            } catch (Exception exception) {
                 logger.warn("Could not instantiate Aelfred2 XML reader!");
-                logger.debug(e);
+                logger.debug(exception);
             }
         }
         // Xerces is second alternative
@@ -88,9 +88,9 @@ public class AtomTypeReader {
                         newInstance();
                 logger.info("Using Xerces XML parser.");
                 success = true;
-            } catch (Exception e) {
+            } catch (Exception exception) {
                 logger.warn("Could not instantiate Xerces XML reader!");
-                logger.debug(e);
+                logger.debug(exception);
             }
         }
         if (!success) {
@@ -103,19 +103,21 @@ public class AtomTypeReader {
         try {
             parser.setFeature("http://xml.org/sax/features/validation", false);
             logger.info("Deactivated validation");
-        } catch (SAXException e) {
-            logger.warn("Cannot deactivate validation.");
+        } catch (SAXException exception) {
+            logger.warn("Cannot deactivate validation: ", exception.getMessage());
+            logger.debug(exception);
         }
         AtomTypeHandler handler = new AtomTypeHandler();
         parser.setContentHandler(handler);
         try {
             parser.parse(new InputSource(input));
             isotopes = handler.getAtomTypes();
-        } catch (IOException e) {
-            logger.error("IOException: " + e.toString());
+        } catch (IOException exception) {
+            logger.error("IOException: ",exception.getMessage());
+            logger.debug(exception);
         } catch (SAXException saxe) {
-            logger.error("SAXException: " + saxe.getClass().getName());
-            logger.error(saxe.toString());
+            logger.error("SAXException: ", saxe.getMessage());
+            logger.debug(saxe);
         }
         return isotopes;
     }

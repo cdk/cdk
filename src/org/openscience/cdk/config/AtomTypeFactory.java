@@ -3,7 +3,7 @@
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 1997-2004  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2001-2004  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -72,18 +72,18 @@ import org.openscience.cdk.tools.LoggingTool;
 public class AtomTypeFactory {
 
     /**
-     *  Used as an ID to describe the atom type
+     *  Used as an ID to describe the atom type.
      */
-    public static String ATOMTYPE_ID_STRUCTGEN = "structgen";
+    public final static String ATOMTYPE_ID_STRUCTGEN = "structgen";
     /**
-     *  Used as an ID to describe the atom type
+     *  Used as an ID to describe the atom type.
      */
-    public static String ATOMTYPE_ID_MODELING = "modeling";
+    public final static String ATOMTYPE_ID_MODELING = "modeling";
     // these are not available
     /**
-     *  Used as an ID to describe the atom type
+     *  Used as an ID to describe the atom type.
      */
-    public static String ATOMTYPE_ID_JMOL = "jmol";
+    public final static String ATOMTYPE_ID_JMOL = "jmol";
     
     private static LoggingTool logger;
 
@@ -164,22 +164,22 @@ public class AtomTypeFactory {
 	 *
 	 * @param  configFile  name of the config file
 	 */
-	private void readConfiguration(String configFile)
+	private void readConfiguration(String fileName)
 	{
-		logger.info("Reading config file from ", configFile);
-		AtomTypeConfigurator atc = null;
+		logger.info("Reading config file from ", fileName);
 
 		InputStream ins = null;
 		{
 			// try to see if this configFile is an actual file
-			File f = new File(configFile);
-            if (f.exists()) {
+			File file = new File(fileName);
+            if (file.exists()) {
                 logger.debug("configFile is a File");
                 // what's next?
                 try {
-                    ins = new FileInputStream(f);
-                } catch (Exception exc) {
-                    logger.error(exc.toString());
+                    ins = new FileInputStream(file);
+                } catch (Exception exception) {
+                    logger.error(exception.getMessage());
+                    logger.debug(exception);
                 }
 			} else {
 			 
@@ -189,20 +189,20 @@ public class AtomTypeFactory {
                 *  this has to be this.getClass.getClassLoader.getResource,
                 *  getClass.getResource fails, elw
                 */
-                ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
+                ins = this.getClass().getClassLoader().getResourceAsStream(fileName);
             }
             
 			if (ins == null)
 			{
 				logger.error("There was a problem getting a stream for ",
-						configFile);
+						fileName);
 			}
 		}
 
         String format = "xml";
-        if (configFile.endsWith("txt")) {
+        if (fileName.endsWith("txt")) {
             format = "txt";
-        } else if (configFile.endsWith("xml")) {
+        } else if (fileName.endsWith("xml")) {
             format = "xml";
         }
         readConfiguration(ins, format);
@@ -264,18 +264,17 @@ public class AtomTypeFactory {
 	 * @return                              The AtomType for this id
 	 * @exception  NoSuchAtomTypeException  Thrown if the atom type does not exist.
 	 */
-	public AtomType getAtomType(String id) throws NoSuchAtomTypeException
+	public AtomType getAtomType(String identifier) throws NoSuchAtomTypeException
 	{
 		AtomType atomType = null;
 		for (int f = 0; f < atomTypes.size(); f++)
 		{
 			atomType = (AtomType) atomTypes.elementAt(f);
-			if (atomType.getAtomTypeName().equals(id))
-			{
+			if (atomType.getAtomTypeName().equals(identifier)) {
 				return atomType;
 			}
 		}
-		throw new NoSuchAtomTypeException("The AtomType " + id + " could not be found");
+		throw new NoSuchAtomTypeException("The AtomType " + identifier + " could not be found");
 	}
 
 
@@ -290,19 +289,19 @@ public class AtomTypeFactory {
 	public AtomType[] getAtomTypes(String symbol)
 	{
         logger.debug("Request for atomtype for symbol ", symbol);
-        Vector al = new Vector();
+        Vector atomList = new Vector();
         AtomType atomType = null;
         for (int f = 0; f < atomTypes.size(); f++)
         {
-            AtomType at = (AtomType) atomTypes.elementAt(f);
-            // logger.debug("  does symbol match for: ", at);
-            if (at.getSymbol().equals(symbol)) {
-                // logger.debug("Atom type found for symbol: ", at);
-                al.addElement((AtomType) at.clone());
+            atomType = (AtomType) atomTypes.elementAt(f);
+            // logger.debug("  does symbol match for: ", atomType);
+            if (atomType.getSymbol().equals(symbol)) {
+                // logger.debug("Atom type found for symbol: ", atomType);
+                atomList.addElement((AtomType)atomType.clone());
             }
         }
-        AtomType[] atomTypes = new AtomType[al.size()];
-        al.copyInto(atomTypes);
+        AtomType[] atomTypes = new AtomType[atomList.size()];
+        atomList.copyInto(atomTypes);
         if (atomTypes.length > 0)
             logger.debug("Atomtype for symbol ", symbol, " has this number of types: " + atomTypes.length);
         else
@@ -319,15 +318,15 @@ public class AtomTypeFactory {
 	public org.openscience.cdk.AtomType[] getAllAtomTypes()
 	{
 		logger.debug("Returning list of size: ", getSize());
-		Vector al = new Vector();
+		Vector atomtypeList = new Vector();
 		AtomType atomType = null;
 		for (int f = 0; f < atomTypes.size(); f++)
 		{
-			AtomType at = (AtomType) atomTypes.elementAt(f);
-			al.addElement((AtomType) at.clone());
+			atomType = (AtomType) atomTypes.elementAt(f);
+			atomtypeList.addElement((AtomType) atomType.clone());
 		}
-		AtomType[] atomTypes = new AtomType[al.size()];
-		al.copyInto(atomTypes);
+		AtomType[] atomTypes = new AtomType[atomtypeList.size()];
+		atomtypeList.copyInto(atomTypes);
 		return atomTypes;
 	}
 
@@ -346,14 +345,14 @@ public class AtomTypeFactory {
             return atom;
         }
         try {
-            AtomType at = null;
+            AtomType atomType = null;
             String atomTypeName = atom.getAtomTypeName();
             if (atomTypeName == null || atomTypeName.length() == 0) {
                 logger.debug("Using atom symbol because atom type name is empty...");
                 AtomType[] types = getAtomTypes(atom.getSymbol());
                 if (types.length > 0) {
                     logger.warn("Taking first atom type, but other may exist");
-                    at = types[0];
+                    atomType = types[0];
                 } else {
                     String message = "Could not configure atom with unknown ID: " +
                         atom.toString() + " + (id=" + atom.getAtomTypeName() + ")";
@@ -361,28 +360,28 @@ public class AtomTypeFactory {
                     throw new CDKException(message);
                 }
             } else {
-                at = getAtomType(atom.getAtomTypeName());
+                atomType = getAtomType(atom.getAtomTypeName());
             }
-            logger.debug("Configuring with atomtype: ", at);
-            atom.setSymbol(at.getSymbol());
-            atom.setMaxBondOrder(at.getMaxBondOrder());
-            atom.setBondOrderSum(at.getBondOrderSum());
-            atom.setVanderwaalsRadius(at.getVanderwaalsRadius());
-            atom.setCovalentRadius(at.getCovalentRadius());
-            atom.setHybridization(at.getHybridization());
-            Object color = at.getProperty("org.openscience.cdk.renderer.color");
+            logger.debug("Configuring with atomtype: ", atomType);
+            atom.setSymbol(atomType.getSymbol());
+            atom.setMaxBondOrder(atomType.getMaxBondOrder());
+            atom.setBondOrderSum(atomType.getBondOrderSum());
+            atom.setVanderwaalsRadius(atomType.getVanderwaalsRadius());
+            atom.setCovalentRadius(atomType.getCovalentRadius());
+            atom.setHybridization(atomType.getHybridization());
+            Object color = atomType.getProperty("org.openscience.cdk.renderer.color");
             if (color != null) {
                 atom.setProperty("org.openscience.cdk.renderer.color", color);
             }
-            if (at.getAtomicNumber() != 0) {
-                atom.setAtomicNumber(at.getAtomicNumber());
+            if (atomType.getAtomicNumber() != 0) {
+                atom.setAtomicNumber(atomType.getAtomicNumber());
             } else {
-                logger.debug("Did not configure atomic number: AT.an=", at.getAtomicNumber());
+                logger.debug("Did not configure atomic number: AT.an=", atomType.getAtomicNumber());
             }
-            if (at.getExactMass() > 0.0) {
-                atom.setExactMass(at.getExactMass());
+            if (atomType.getExactMass() > 0.0) {
+                atom.setExactMass(atomType.getExactMass());
             } else {
-                logger.debug("Did not configure mass: AT.mass=", at.getAtomicNumber());
+                logger.debug("Did not configure mass: AT.mass=", atomType.getAtomicNumber());
             }
         } catch (Exception exception) {
             logger.warn("Could not configure atom with unknown ID: ", atom,

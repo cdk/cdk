@@ -29,6 +29,7 @@ import java.io.InputStreamReader;
 import java.util.Vector;
 
 import org.openscience.cdk.config.atomtypes.AtomTypeReader;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * @cdk.module standard
@@ -38,7 +39,10 @@ public class CDKBasedAtomTypeConfigurator implements AtomTypeConfigurator {
     private String configFile = "org.openscience.cdk.config.data.structgen_atomtypes.xml";
     private InputStream ins = null;
     
+    private LoggingTool logger;
+    
     public CDKBasedAtomTypeConfigurator() {
+        logger = new LoggingTool(this);
     }
     
     /**
@@ -57,6 +61,8 @@ public class CDKBasedAtomTypeConfigurator implements AtomTypeConfigurator {
             try {
                 ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
             } catch(Exception exc) {
+                logger.error(exc.getMessage());
+                logger.debug(exc);
                 throw new IOException("There was a problem getting a stream for " + configFile +
                                       " with getClass.getClassLoader.getResourceAsStream");
             }
@@ -64,6 +70,8 @@ public class CDKBasedAtomTypeConfigurator implements AtomTypeConfigurator {
                 try {
                     ins = this.getClass().getResourceAsStream(configFile);
                 } catch(Exception exc) {
+                    logger.error(exc.getMessage());
+                    logger.debug(exc);
                     throw new IOException("There was a problem getting a stream for " + configFile +
                                           " with getClass.getResourceAsStream");
                 }
@@ -73,11 +81,11 @@ public class CDKBasedAtomTypeConfigurator implements AtomTypeConfigurator {
         AtomTypeReader reader = new AtomTypeReader(new InputStreamReader(ins));
         atomTypes = reader.readAtomTypes();
         for (int f = 0; f < atomTypes.size(); f++) {
-            Object o = atomTypes.elementAt(f);
-            if (o == null) {
+            Object object = atomTypes.elementAt(f);
+            if (object == null) {
                 System.out.println("Expecting an object but found null!");
-                if (!(o instanceof org.openscience.cdk.AtomType)) {
-                    System.out.println("Expecting cdk.AtomType class, but got: " + o.getClass().getName());
+                if (!(object instanceof org.openscience.cdk.AtomType)) {
+                    System.out.println("Expecting cdk.AtomType class, but got: " + object.getClass().getName());
                 }
             }
         }

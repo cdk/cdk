@@ -61,8 +61,8 @@ public class HueckelAromaticityDetector {
 	 *
 	 * @return  True if molecule is aromatic
 	 */
-	public static boolean detectAromaticity(AtomContainer ac) throws org.openscience.cdk.exception.NoSuchAtomException {
-		return (detectAromaticity(ac, true));
+	public static boolean detectAromaticity(AtomContainer atomContainer) throws org.openscience.cdk.exception.NoSuchAtomException {
+		return (detectAromaticity(atomContainer, true));
 	}
 	
 	
@@ -73,8 +73,8 @@ public class HueckelAromaticityDetector {
 	 * @param   ringSet  set of ALL rings
 	 * @return  True if molecule is aromatic
 	 */
-	public static boolean detectAromaticity(AtomContainer ac, RingSet ringSet) throws org.openscience.cdk.exception.NoSuchAtomException {
-		return (detectAromaticity(ac, ringSet, true));
+	public static boolean detectAromaticity(AtomContainer atomContainer, RingSet ringSet) throws org.openscience.cdk.exception.NoSuchAtomException {
+		return (detectAromaticity(atomContainer, ringSet, true));
 	}
 	
 	
@@ -85,16 +85,16 @@ public class HueckelAromaticityDetector {
 	 * @param   removeAromatictyFlags  Leaves ChemObjects that are already marked as aromatic as they are
 	 * @return                         True if molecule is aromatic
 	 */
-	public static boolean detectAromaticity(AtomContainer ac, boolean removeAromatictyFlags) throws org.openscience.cdk.exception.NoSuchAtomException {
+	public static boolean detectAromaticity(AtomContainer atomContainer, boolean removeAromatictyFlags) throws org.openscience.cdk.exception.NoSuchAtomException {
 		logger.debug("Entered Aromaticity Detection");
 		logger.debug("Starting AllRingsFinder");
 		long before = System.currentTimeMillis();
-		RingSet ringSet = new AllRingsFinder().findAllRings(ac);
+		RingSet ringSet = new AllRingsFinder().findAllRings(atomContainer);
 		long after = System.currentTimeMillis();
 		logger.debug("time for finding all rings: " + (after - before) + " milliseconds");
 		logger.debug("Finished AllRingsFinder");
 		if (ringSet.size() > 0) {
-			return detectAromaticity(ac, ringSet, removeAromatictyFlags);
+			return detectAromaticity(atomContainer, ringSet, removeAromatictyFlags);
 		}
 		return false;
 	}
@@ -108,16 +108,16 @@ public class HueckelAromaticityDetector {
 	 * @param  removeAromaticityFlags  Leaves ChemObjects that are already marked as aromatic as they are
 	 * @return                         True if molecule is aromatic
 	 */
-	public static boolean detectAromaticity(AtomContainer ac, RingSet ringSet, boolean removeAromaticityFlags) {
+	public static boolean detectAromaticity(AtomContainer atomContainer, RingSet ringSet, boolean removeAromaticityFlags) {
 		boolean foundSomething = false;
 		if (removeAromaticityFlags) {
-			for (int f = 0; f < ac.getAtomCount(); f++) {
-				ac.getAtomAt(f).setFlag(CDKConstants.ISAROMATIC, false);
+			for (int f = 0; f < atomContainer.getAtomCount(); f++) {
+				atomContainer.getAtomAt(f).setFlag(CDKConstants.ISAROMATIC, false);
 			}
-			for (int f = 0; f < ac.getElectronContainerCount(); f++) {
-				ElectronContainer ec = ac.getElectronContainerAt(f);
-				if (ec instanceof Bond) {
-					ec.setFlag(CDKConstants.ISAROMATIC, false);
+			for (int f = 0; f < atomContainer.getElectronContainerCount(); f++) {
+				ElectronContainer electronContainer = atomContainer.getElectronContainerAt(f);
+				if (electronContainer instanceof Bond) {
+					electronContainer.setFlag(CDKConstants.ISAROMATIC, false);
 				}
 			}
 			for (int f = 0; f < ringSet.size(); f++) {
@@ -130,7 +130,7 @@ public class HueckelAromaticityDetector {
 		for (int f = 0; f < ringSet.size(); f++) {
 			ring = (Ring) ringSet.elementAt(f);
 			logger.debug("Testing for aromaticity in ring no ", f);
-			if (AromaticityCalculator.isAromatic(ring, ac)) {
+			if (AromaticityCalculator.isAromatic(ring, atomContainer)) {
 				ring.setFlag(CDKConstants.ISAROMATIC, true);
 				
 				for (int g = 0; g < ring.getAtomCount(); g++) {
@@ -138,9 +138,9 @@ public class HueckelAromaticityDetector {
 				}
 				
 				for (int g = 0; g < ring.getElectronContainerCount(); g++) {
-					ElectronContainer ec = ring.getElectronContainerAt(g);
-					if (ec instanceof Bond) {
-						ec.setFlag(CDKConstants.ISAROMATIC, true);
+					ElectronContainer electronContainer = ring.getElectronContainerAt(g);
+					if (electronContainer instanceof Bond) {
+						electronContainer.setFlag(CDKConstants.ISAROMATIC, true);
 					}
 				}
 				

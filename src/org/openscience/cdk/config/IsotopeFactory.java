@@ -95,8 +95,9 @@ public class IsotopeFactory
             String configFile = "org/openscience/cdk/config/data/isotopes.xml";
             if (debug) logger.debug("Getting stream for ", configFile);
             ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
-		} catch (Exception exc) {
+		} catch (Exception exception) {
             logger.error(errorMessage);
+            logger.debug(exception);
 			throw new IOException(errorMessage);
 		}
 		if (ins == null) {
@@ -108,9 +109,9 @@ public class IsotopeFactory
         //isotopes = (Vector) in.readObject();
         isotopes = reader.readIsotopes();
         if (debug) logger.debug("Found #isotopes in file: ", isotopes.size());
-		for (int f = 0; f < isotopes.size(); f++) {
+		/* for (int f = 0; f < isotopes.size(); f++) {
             Isotope isotope = (Isotope)isotopes.elementAt(f);
-		}
+		} What's this loop for?? */
         
         majorIsotopes = new Hashtable();
 	}
@@ -153,16 +154,15 @@ public class IsotopeFactory
 	 */
 	public Isotope[] getIsotopes(String symbol)
 	{
-		ArrayList al = new ArrayList();
-		Isotope isotope = null;
+		ArrayList list = new ArrayList();
 		for (int f = 0; f < isotopes.size(); f++)
 		{
 			if (((Isotope) isotopes.elementAt(f)).getSymbol().equals(symbol))
 			{
-				al.add((Isotope) ((Isotope) isotopes.elementAt(f)).clone());
+				list.add((Isotope) ((Isotope) isotopes.elementAt(f)).clone());
 			}
 		}
-		return (Isotope[]) al.toArray();
+		return (Isotope[]) list.toArray();
 	}
 
 
@@ -247,8 +247,8 @@ public class IsotopeFactory
 	 */
 	public org.openscience.cdk.Element getElement(String symbol)
 	{
-		Isotope i = getMajorIsotope(symbol);
-		return (org.openscience.cdk.Element) i;
+		Isotope isotope = getMajorIsotope(symbol);
+		return (org.openscience.cdk.Element) isotope;
 	}
 
 
@@ -260,8 +260,8 @@ public class IsotopeFactory
 	 */
 	public org.openscience.cdk.Element getElement(int atomicNumber)
 	{
-		Isotope i = getMajorIsotope(atomicNumber);
-		return (org.openscience.cdk.Element) i;
+		Isotope isotope = getMajorIsotope(atomicNumber);
+		return (org.openscience.cdk.Element) isotope;
 	}
 
     /**
@@ -271,8 +271,8 @@ public class IsotopeFactory
      * @return               The symbol of the Element
      */
     public String getElementSymbol(int atomicNumber) {
-        Isotope i = getMajorIsotope(atomicNumber);
-        return i.getSymbol();
+        Isotope isotope = getMajorIsotope(atomicNumber);
+        return isotope.getSymbol();
     }
 
 	/**
@@ -314,11 +314,11 @@ public class IsotopeFactory
 	 *
 	 *@param  ac  The AtomContainer to be configured
 	 */
-	public void configureAtoms(AtomContainer ac)
+	public void configureAtoms(AtomContainer container)
 	{
-		for (int f = 0; f < ac.getAtomCount(); f++)
+		for (int f = 0; f < container.getAtomCount(); f++)
 		{
-			configure(ac.getAtomAt(f));
+			configure(container.getAtomAt(f));
 		}
 	}
 

@@ -33,7 +33,6 @@ import javax.vecmath.Vector3d;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Crystal;
-import org.openscience.cdk.exception.CDKException;
 
 /**
  * A set of static methods for working with crystal coordinates.
@@ -52,25 +51,25 @@ public class CrystalGeometryTools {
      * @return         a 3x3 matrix with the three cartesian vectors representing
      *                 the unit cell axes. The a axis is the first row.
      */
-    public static Vector3d[] calcInvertedAxes(Vector3d a, Vector3d b, Vector3d c) {
-         double det = a.x*b.y*c.z - a.x*b.z*c.y -
-                      a.y*b.x*c.z + a.y*b.z*c.x +
-                      a.z*b.x*c.y - a.z*b.y*c.x;
+    public static Vector3d[] calcInvertedAxes(Vector3d aAxis, Vector3d bAxis, Vector3d cAxis) {
+         double det = aAxis.x*bAxis.y*cAxis.z - aAxis.x*bAxis.z*cAxis.y -
+                      aAxis.y*bAxis.x*cAxis.z + aAxis.y*bAxis.z*cAxis.x +
+                      aAxis.z*bAxis.x*cAxis.y - aAxis.z*bAxis.y*cAxis.x;
          Vector3d[] invaxes = new Vector3d[3];
          invaxes[0] = new Vector3d();
-         invaxes[0].x = (b.y*c.z - b.z*c.y)/det;
-         invaxes[0].y = (b.z*c.x - b.x*c.z)/det;
-         invaxes[0].z = (b.x*c.y - b.y*c.x)/det;
+         invaxes[0].x = (bAxis.y*cAxis.z - bAxis.z*cAxis.y)/det;
+         invaxes[0].y = (bAxis.z*cAxis.x - bAxis.x*cAxis.z)/det;
+         invaxes[0].z = (bAxis.x*cAxis.y - bAxis.y*cAxis.x)/det;
 
          invaxes[1] = new Vector3d();
-         invaxes[1].x = (a.z*c.y - a.y*c.z)/det;
-         invaxes[1].y = (a.x*c.z - a.z*c.x)/det;
-         invaxes[1].z = (a.y*c.x - a.x*c.y)/det;
+         invaxes[1].x = (aAxis.z*cAxis.y - aAxis.y*cAxis.z)/det;
+         invaxes[1].y = (aAxis.x*cAxis.z - aAxis.z*cAxis.x)/det;
+         invaxes[1].z = (aAxis.y*cAxis.x - aAxis.x*cAxis.y)/det;
 
          invaxes[2] = new Vector3d();
-         invaxes[2].x = (a.y*b.z - a.z*b.y)/det;
-         invaxes[2].y = (a.z*b.x - a.x*b.z)/det;
-         invaxes[2].z = (a.x*b.y - a.y*b.x)/det;
+         invaxes[2].x = (aAxis.y*bAxis.z - aAxis.z*bAxis.y)/det;
+         invaxes[2].y = (aAxis.z*bAxis.x - aAxis.x*bAxis.z)/det;
+         invaxes[2].z = (aAxis.x*bAxis.y - aAxis.y*bAxis.x)/det;
          return invaxes;
     }
 
@@ -80,12 +79,12 @@ public class CrystalGeometryTools {
      *
      * @deprecated
      */
-    public static double[] cartesianToFractional(double[] a, double[] b, double[] c,
+    public static double[] cartesianToFractional(double[] aAxis, double[] bAxis, double[] cAxis,
                                                  double[] cart) {
         double[] fractCoords = new double[3];
-        Point3d fract = cartesianToFractional(new Vector3d(a[0], a[1], a[2]),
-                                              new Vector3d(b[0], b[1], b[2]),
-                                              new Vector3d(c[0], c[1], c[2]),
+        Point3d fract = cartesianToFractional(new Vector3d(aAxis[0], aAxis[1], aAxis[2]),
+                                              new Vector3d(bAxis[0], bAxis[1], bAxis[2]),
+                                              new Vector3d(cAxis[0], cAxis[1], cAxis[2]),
                                               new Point3d(cart[0], cart[1], cart[2]));
         fractCoords[0] = fract.x;
         fractCoords[1] = fract.y;
@@ -93,9 +92,9 @@ public class CrystalGeometryTools {
         return fractCoords;
     };
 
-    public static Point3d cartesianToFractional(Vector3d a, Vector3d b, Vector3d c,
+    public static Point3d cartesianToFractional(Vector3d aAxis, Vector3d bAxis, Vector3d cAxis,
                                                  Point3d cartPoint) {
-        Vector3d[] invaxis = calcInvertedAxes(a,b,c);
+        Vector3d[] invaxis = calcInvertedAxes(aAxis,bAxis,cAxis);
         Point3d frac = new Point3d();
         frac.x = invaxis[0].x*cartPoint.x + invaxis[0].y*cartPoint.y +
                  invaxis[0].z*cartPoint.z;
@@ -122,34 +121,34 @@ public class CrystalGeometryTools {
      * @see #cartesianToFractional(double[], double[], double[], double[])
      * @deprecated
      */
-    public static double[] fractionalToCartesian(double[] a, double[] b, double[] c,
+    public static double[] fractionalToCartesian(double[] aAxis, double[] bAxis, double[] cAxis,
                                                  double[] frac) {
         double[] cart = new double[3];
-        cart[0] = frac[0]*a[0] + frac[1]*b[0] + frac[2]*c[0];
-        cart[1] = frac[0]*a[1] + frac[1]*b[1] + frac[2]*c[1];
-        cart[2] = frac[0]*a[2] + frac[1]*b[2] + frac[2]*c[2];
+        cart[0] = frac[0]*aAxis[0] + frac[1]*bAxis[0] + frac[2]*cAxis[0];
+        cart[1] = frac[0]*aAxis[1] + frac[1]*bAxis[1] + frac[2]*cAxis[1];
+        cart[2] = frac[0]*aAxis[2] + frac[1]*bAxis[2] + frac[2]*cAxis[2];
         return cart;
     }
     
-    public static Point3d fractionalToCartesian(Vector3d a, Vector3d b, Vector3d c,
+    public static Point3d fractionalToCartesian(Vector3d aAxis, Vector3d bAxis, Vector3d cAxis,
                                                  Point3d frac) {
         Point3d cart = new Point3d();
-        cart.x = frac.x*a.x + frac.y*b.x + frac.z*c.x;
-        cart.y = frac.x*a.y + frac.y*b.y + frac.z*c.y;
-        cart.z = frac.x*a.z + frac.y*b.z + frac.z*c.z;
+        cart.x = frac.x*aAxis.x + frac.y*bAxis.x + frac.z*cAxis.x;
+        cart.y = frac.x*aAxis.y + frac.y*bAxis.y + frac.z*cAxis.y;
+        cart.z = frac.x*aAxis.z + frac.y*bAxis.z + frac.z*cAxis.z;
         return cart;
     }
 
     /**
      * @deprecated
      */
-    public static Point3d fractionalToCartesian(double[] a, double[] b, double[] c,
+    public static Point3d fractionalToCartesian(double[] aAxis, double[] bAxis, double[] cAxis,
                                                  Point3d fracPoint) {
         double[] frac = new double[3];
         frac[0] = fracPoint.x;
         frac[1] = fracPoint.y;
         frac[2] = fracPoint.z;
-        double[] cart = fractionalToCartesian(a,b,c, frac);
+        double[] cart = fractionalToCartesian(aAxis,bAxis,cAxis, frac);
         return new Point3d(cart[0], cart[1], cart[2]);
     }
     
@@ -215,14 +214,14 @@ public class CrystalGeometryTools {
         return axes;
     }
     
-    public static double[] cartesianToNotional(Vector3d a, Vector3d b, Vector3d c) {
+    public static double[] cartesianToNotional(Vector3d aAxis, Vector3d bAxis, Vector3d cAxis) {
         double[] notionalCoords = new double[6];
-        notionalCoords[0] = a.length();
-        notionalCoords[1] = b.length();
-        notionalCoords[2] = c.length();
-        notionalCoords[3] = b.angle(c)*180.0/Math.PI;
-        notionalCoords[4] = a.angle(c)*180.0/Math.PI;
-        notionalCoords[5] = a.angle(b)*180.0/Math.PI;
+        notionalCoords[0] = aAxis.length();
+        notionalCoords[1] = bAxis.length();
+        notionalCoords[2] = cAxis.length();
+        notionalCoords[3] = bAxis.angle(cAxis)*180.0/Math.PI;
+        notionalCoords[4] = aAxis.angle(cAxis)*180.0/Math.PI;
+        notionalCoords[5] = aAxis.angle(bAxis)*180.0/Math.PI;
         return notionalCoords;
     }
                                
@@ -231,8 +230,8 @@ public class CrystalGeometryTools {
 	 *
 	 * @return  boolean indication that 3D coordinates are available 
 	 */
-    public static boolean hasCrystalCoordinates(AtomContainer m) {
-        Atom[] atoms = m.getAtoms();
+    public static boolean hasCrystalCoordinates(AtomContainer container) {
+        Atom[] atoms = container.getAtoms();
         for (int i=0; i < atoms.length; i++) {
             if (atoms[i].getFractionalPoint3d() == null) {
                 return false;
@@ -242,19 +241,19 @@ public class CrystalGeometryTools {
     }
 
 	/**
-     * Creates cartesian coordinates for all Atoms in the Crystal
+     * Creates cartesian coordinates for all Atoms in the Crystal.
 	 *
 	 * @return  boolean indication that 3D coordinates are available 
 	 */
     public static void fractionalToCartesian(Crystal crystal) {
         Atom[] atoms = crystal.getAtoms();
-        Vector3d a = crystal.getA();
-        Vector3d b = crystal.getB();
-        Vector3d c = crystal.getC();
+        Vector3d aAxis = crystal.getA();
+        Vector3d bAxis = crystal.getB();
+        Vector3d cAxis = crystal.getC();
         for (int i=0; i < atoms.length; i++) {
             Point3d fracPoint = atoms[i].getFractionalPoint3d();
             if (fracPoint != null) {
-                atoms[i].setPoint3d(fractionalToCartesian(a,b,c, fracPoint));
+                atoms[i].setPoint3d(fractionalToCartesian(aAxis,bAxis,cAxis, fracPoint));
             }
         }
     }
