@@ -125,4 +125,16 @@ public class SetOfReactions extends ChemObject implements java.io.Serializable, 
 		return this.reactionCount;
 	}
 
+    public String toString() {
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("SetOfReactions(");
+        buffer.append(this.hashCode() + ", ");
+        buffer.append("R=" + getReactionCount() + ", ");
+        Reaction[] reactions = getReactions();
+        for (int i=0; i<reactions.length; i++) {
+            buffer.append(reactions[i].toString());
+        }
+        buffer.append(")");
+        return buffer.toString();
+    }
 }

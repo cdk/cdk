@@ -48,113 +48,74 @@ package org.openscience.cdk;
  * @keyword reaction
  * @keyword molecule
  */
-public class SetOfMolecules extends ChemObject implements java.io.Serializable, Cloneable
-{
+public class SetOfMolecules extends SetOfAtomContainers {
 
-	/**
-	 *  Array of Molecules.
-	 */
-	protected Molecule[] molecules;
-	
-	/**
-	 *  Number of Molecules contained by this container.
-	 */
-	protected int moleculeCount;
-
-	/**
-	 *  Amount by which the Molecules array grows when elements are added and
-	 *  the array is not large enough for that. 
-	 */
-	protected int growArraySize = 5;
-
-
-	/**
-	 *  Constructs an empty SetOfMolecules.
-	 */
-	public SetOfMolecules()   
-	{
-		moleculeCount = 0;
-		molecules = new Molecule[growArraySize];
-	}
-
-
-	
-	/**
-	 *  Adds an molecule to this container.
-	 *
-	 * @param  molecule  The molecule to be added to this container 
-	 */
-	public void addMolecule(Molecule molecule)
-	{
-		if (moleculeCount + 1 >= molecules.length) {
-			growMoleculeArray();
-		}
-		molecules[moleculeCount] = molecule;
-		moleculeCount++;
-	}
-
-	/**
-	 *  Adds all molecules in the SetOfMolecules to this container.
-	 *
-	 * @param  moleculeSet  The SetOfMolecules 
-	 */
-	public void add(SetOfMolecules moleculeSet) {
+    /**
+     *  Adds an molecule to this container.
+     *
+     * @param  molecule  The molecule to be added to this container 
+     */
+    public void addMolecule(Molecule molecule) {
+        super.addAtomContainer(molecule);
+    }
+    
+    /**
+     *  Adds all molecules in the SetOfMolecules to this container.
+     *
+     * @param  moleculeSet  The SetOfMolecules 
+     */
+    public void add(SetOfMolecules moleculeSet) {
         Molecule[] mols = moleculeSet.getMolecules();
         for (int i=0; i< mols.length; i++) {
             addMolecule(mols[i]);
         }
     }
-
-
-	/**
-	 *  Returns the array of Molecules of this container.
-	 *
-	 * @return    The array of Molecules of this container 
-	 */
-	public Molecule[] getMolecules() {
-        Molecule[] result = new Molecule[moleculeCount];
-        System.arraycopy(this.molecules, 0, result, 0, result.length);
-		return result;
-	}
-	
-	
-	/**
-	 *  
-	 * Returns the Molecule at position <code>number</code> in the
-	 * container.
-	 *
-	 * @param  number  The position of the Molecule to be returned. 
-	 * @return         The Molecule at position <code>number</code> . 
-	 */
-	public Molecule  getMolecule(int number)
-	{
-		return molecules[number];
-	}
-	
-	
-	/**
-	 *  Grows the molecule array by a given size.
-	 *
-	 * @see    growArraySize
-	 */
-	protected void growMoleculeArray()
-	{
-		growArraySize = molecules.length;
-		Molecule[] newmolecules = new Molecule[molecules.length + growArraySize];
-		System.arraycopy(molecules, 0, newmolecules, 0, molecules.length);
-		molecules = newmolecules;
-	}
-	
-
-	/**
-	 * Returns the number of Molecules in this Container.
-	 *
-	 * @return     The number of Molecules in this Container
-	 */
-	public int getMoleculeCount()
-	{
-		return this.moleculeCount;
-	}
-
-	
+    
+    
+    /**
+     *  Returns the array of Molecules of this container.
+     *
+     * @return    The array of Molecules of this container 
+     */
+    public Molecule[] getMolecules() {
+        Molecule[] result = new Molecule[super.getAtomContainerCount()];
+        AtomContainer[] containers = super.getAtomContainers();
+        for (int i=0; i<containers.length; i++) {
+            result[i] = (Molecule)containers[i];
+        }
+        return result;
+    }
+    
+    
+    /**
+     *  
+     * Returns the Molecule at position <code>number</code> in the
+     * container.
+     *
+     * @param  number  The position of the Molecule to be returned. 
+     * @return         The Molecule at position <code>number</code> . 
+     */
+    public Molecule  getMolecule(int number)
+    {
+        return (Molecule)super.getAtomContainer(number);
+    }
+    
+    
+    /**
+     * Returns the number of Molecules in this Container.
+     *
+     * @return     The number of Molecules in this Container
+     */
+    public int getMoleculeCount() {
+        return super.getAtomContainerCount();
+    }
+    
+    public String toString() {
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("SetOfMolecules(");
+        buffer.append(super.toString());
+        buffer.append(")");
+        return buffer.toString();
+    }
+    
 }

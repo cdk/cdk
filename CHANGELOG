@@ -6,6 +6,7 @@ Changes in CVS
 New:
 * An interface for iterated reading of data from a file, e.g. a SDF file.
 * Added Atom field for fractional coordinates as used in crystal representation
+* Added missing SetOfAtomContainer class
 
 Fixes:
 * Added missing get() methods to cdk.applications.plugin.EditBus interface
@@ -15,8 +16,11 @@ Fixes:
   (closes #820499)
 * JavaDoc now uses @depends for runtime dependencies and @builddepends for
   compile dependencies for jar libraries (closes #814294)
+* Added missing toString() methods to SetOfMolecules and SetOfReactions
 
 API changes:
+* SetOfMolecules now extends SetOfAtomContainers which gives it additional
+  methods like addAtomContainer().
 
 20031017 Release
 ------------------------------------
