@@ -44,6 +44,7 @@
       <listitem><para><ulink url="/reports/pmd/extra.html">extra</ulink></para></listitem>
       <listitem><para><ulink url="/reports/pmd/applications.html">applications</ulink></para></listitem>
       <listitem><para><ulink url="/reports/pmd/experimental.html">experimental</ulink></para></listitem>
+      <listitem><para><ulink url="/reports/pmd/qsar.html">qsar</ulink></para></listitem>
       <listitem><para><ulink url="/reports/pmd/libio.html">libio</ulink></para></listitem>
     </itemizedlist>
   </section>
