@@ -65,18 +65,21 @@ public class Convertor {
         if (atom != null) {
             JOEAtom convertedAtom = new JOEAtom();
             if (atom.getPoint3D() != null) {
+                System.out.println("getPoint3D() success");
                 convertedAtom.setVector(
                     atom.getX3D(),
                     atom.getY3D(),
                     atom.getZ3D()
                 );
             } else if (atom.getPoint2D() != null) {
+                System.out.println("getPoint2D() success");
                 convertedAtom.setVector(
                     atom.getX2D(),
                     atom.getY2D(),
                     0.0
                 );
             } else {
+                System.out.println("set coords to 0,0,0");
                 convertedAtom.setVector(0.0, 0.0, 0.0);
             }
             convertedAtom.setAtomicNum(atom.getAtomicNumber());

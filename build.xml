@@ -112,6 +112,7 @@
                         <!-- exclude libio classes that require additional
                              libraries, and are compiled elsewhere -->
                         <exclude name="org/openscience/cdk/libio/**" />
+                        <exclude name="org/openscience/cdk/test/libio/**" />
 
                         <classpath refid="project.class.path" />
                 </javac>
@@ -257,6 +258,7 @@
                         <exclude name="org/openscience/cdk/SetOfMolecules.class" />
                         <!-- Exclude libio classes -->
                         <exclude name="org/openscience/cdk/libio/**" />
+                        <exclude name="org/openscience/cdk/test/libio/**" />
                    </fileset>
                 </jar>
         </target>

@@ -40,7 +40,7 @@ public class CDKTests {
 	public static Test suite ( ) 
 	{
 		TestSuite suite= new TestSuite("All CDK Tests");
-		suite.addTest(ChemObjectTest.suite());
+        suite.addTest(CoreClassesTests.suite());
 		suite.addTest(CloneAtomContainerTest.suite());
 		suite.addTest(RingSearchTest.suite());
 		suite.addTest(ConnectivityCheckerTest.suite());
@@ -48,8 +48,6 @@ public class CDKTests {
 		suite.addTest(MFAnalyserTest.suite());
 		suite.addTest(PathLengthTest.suite());
 		suite.addTest(IsomorphismTesterTest.suite());
-		suite.addTest(MonomerTest.suite());
-		suite.addTest(PolymerTest.suite());
 		suite.addTest(PDBReaderTest.suite());		
 		suite.addTest(IsotopeFactoryTest.suite());
 		suite.addTest(ElementFactoryTest.suite());
