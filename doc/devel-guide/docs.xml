@@ -28,8 +28,58 @@ cdk/$ ant -buildfile javadoc.xml html
           <title>Tagging classes</title>
           <para>
             Java classes should have the JavaDoc tags
-            @copyright and @author. In addition, they may have
-            @keyword tags.
+            @copyright and @author. In addition, the CDK specific
+            tags are available.
+<variablelist><title>CDK specific JavaDoc tags</title>
+<varlistentry><term>@cdk.created</term>
+<listitem>
+<para>
+The date on which the class was created. Should be in the format
+YYYY-MM-DD.
+</para>
+</listitem>
+</varlistentry>
+<varlistentry><term>@cdk.module</term>
+<listitem>
+<para>
+Indicates the CDK module to which this class belongs. If not given, then
+the extra module is implied.
+</para>
+</listitem>
+</varlistentry>
+<varlistentry><term>@cdk.keyword</term>
+<listitem>
+<para>
+Indicates a keyword for this class allowing users to find the class
+more easily. More than one tag may be used. The index is found
+<ulink url="http://almost.cubic.uni-koeln.de/cdk/docu/featurefolder/">online</ulink>.
+</para>
+</listitem>
+</varlistentry>
+<varlistentry><term>@cdk.builddepends</term>
+<listitem>
+<para>
+Indicates on which jar files this class depends on runtime.
+</para>
+</listitem>
+</varlistentry>
+<varlistentry><term>@cdk.depends</term>
+<listitem>
+<para>
+Indicates the which jar files are required to compile its java source
+code to a class.
+</para>
+</listitem>
+</varlistentry>
+<varlistentry><term>@cdk.bug</term>
+<listitem>
+<para>
+Lists an open bug as reported on SourceForge. It is automatically linked
+to the SF bug list for the CDK project. One tag for one bug.
+</para>
+</listitem>
+</varlistentry>
+</variablelist>
           </para>
         </section>
 
@@ -66,7 +116,7 @@ cdk/$ ant -buildfile javadoc.xml html
           Statistics can be generated on the use of JavaDoc in the
           CDK library. It can be generated with:
         <programlisting>
-$ cd cdk/reports/javadoc
+$ cd cdk/doc/javadoc
 $ ant -Dpathtojava3d=/some/path overview
         </programlisting>
         </para>
@@ -79,7 +129,7 @@ $ ant -Dpathtojava3d=/some/path overview
           with the MakeKeywordIndexDoclet doclet. The file
           keyword.index.xml can be generated with:
         <programlisting>
-$ cd cdk/reports/javadoc
+$ cd cdk/doc/javadoc
 $ ant -Dpathtojava3d=/some/path keyword.index
         </programlisting>
         </para>
