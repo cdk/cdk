@@ -89,6 +89,7 @@ public class Renderer2D implements MouseMotionListener   {
     boolean debug = false;
 	SSSRFinder sssrf = new SSSRFinder();
     private IsotopeFactory isotopeFactory;
+    private int[] tooltiparea=null;
 
 	private Renderer2DModel r2dm;
 
@@ -121,6 +122,7 @@ public class Renderer2D implements MouseMotionListener   {
 	}
 
     public void paintChemModel(ChemModel model, Graphics graphics) {
+      tooltiparea=null;
         if (model.getSetOfReactions() != null) {
             paintSetOfReactions(model.getSetOfReactions(), graphics);
         }
@@ -422,7 +424,7 @@ public class Renderer2D implements MouseMotionListener   {
             logger.warn("Cannot draw atom without 2D coordinate");
             return;
         }
-
+        
         // The fonts for calculating geometries
         float subscriptFraction = 0.7f;
         Font normalFont = graphics.getFont();
@@ -527,7 +529,7 @@ public class Renderer2D implements MouseMotionListener   {
         }
         // labelY and labelH are the same for both left/right aligned
         labelY = (int)(atom.getPoint2D().y + (atomSymbolYOffset + isotopeH));
-
+        
         // xy for atom symbol
         int[] atomSymbolCoords = new int[2];
         if (alignment == 1) { // left alignment
@@ -536,6 +538,11 @@ public class Renderer2D implements MouseMotionListener   {
             atomSymbolCoords[0] = labelX + hSymbolW + Math.max(isotopeW, hMultiplierW);
         }
         atomSymbolCoords[1] = labelY - isotopeH - atomSymbolH;
+
+        //Check if this is inside the tooltiptextarea
+        int[] tipcoords= getScreenCoordinates(atomSymbolCoords);
+        if(tooltiparea!=null && tipcoords[0]>tooltiparea[0] && tipcoords[0]<tooltiparea[2] && tipcoords[1]>tooltiparea[1] && tipcoords[1]<tooltiparea[3])
+          return;
 
         // xy for implicit hydrogens
         int[] hSymbolCoords = new int[2];
@@ -1031,7 +1038,7 @@ public class Renderer2D implements MouseMotionListener   {
 		int[] xCoords = {screenCoords[0], screenCoords[2], screenCoords[4], screenCoords[6]};
 		int[] yCoords = {screenCoords[1], screenCoords[3], screenCoords[5], screenCoords[7]};
 	    graphics.fillPolygon(xCoords, yCoords, 4);
-	}
+ }
 
 	/**
 	 * Paints the given bond as a wedge bond.
@@ -1177,6 +1184,7 @@ public class Renderer2D implements MouseMotionListener   {
      * @param  graphics  The current graphics object.
      */
     public void paintToolTip(Atom atom, Graphics graphics, int atomNumber) {
+      tooltiparea=new int[4];
       String text = r2dm.getToolTipText(r2dm.getHighlightedAtom());
       String[] result = text.split("\\n");
       int widestline=0;
@@ -1192,15 +1200,23 @@ public class Renderer2D implements MouseMotionListener   {
       Font normalFont = graphics.getFont();
       graphics.setFont(normalFont);
       FontMetrics fm = graphics.getFontMetrics();
-      int[] provcoords={(int)atom.getPoint2D().x,(int)atom.getPoint2D().y};
+      int[] provcoords={(int)atom.getPoint2D().x+10,(int)atom.getPoint2D().y};
       int[] screenCoords = getScreenCoordinates(provcoords);
       for(int i=0;i<result.length;i++){
+        if(i==0){
+          tooltiparea[0]=screenCoords[0];
+          tooltiparea[1]=screenCoords[1];
+        }
         String text2=result[i];
         int atomSymbolH = (new Integer(fm.getAscent())).intValue();
         graphics.setColor(Color.YELLOW);
         graphics.fillRect(screenCoords[0], screenCoords[1]+((atomSymbolH + 4) *i), widestline + 4, atomSymbolH + 4);
         graphics.setColor(Color.BLACK);
         graphics.drawString(text2, screenCoords[0] + 2, screenCoords[1] + atomSymbolH + 2+((atomSymbolH + 4) *i));
+        if(i==result.length-1){
+          tooltiparea[2]=screenCoords[0]+widestline + 4;
+          tooltiparea[3]=screenCoords[1]+((atomSymbolH + 4) *i)+atomSymbolH + 4;
+        }
       }
     }
   
