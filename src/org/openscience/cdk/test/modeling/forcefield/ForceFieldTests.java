@@ -42,14 +42,6 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.AtomTools;
 import org.openscience.cdk.io.MDLWriter;
 
-import org.openscience.cdk.applications.CdkJmol3DPanel;
-//import org.openscience.cdk.applications.demo.ForceFieldVisualizer;
-
-import org.jmol.api.JmolViewer;
-import java.awt.Container;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import javax.swing.JFrame;
 /**
  *  Check results of GeometricMinimizer using some examples.
  *
@@ -532,122 +524,6 @@ public class ForceFieldTests extends CDKTestCase {
 		return molecule;
 	}
 	
-	/**
-	 *  A unit test for JUnit
-	 *
-	 *@exception  Exception     Description of the Exception
-	 *@exception  CDKException  Description of the Exception
-	 */
-	//public void testForceField() throws Exception, CDKException {
-    //System.out.println("TEST FORCE FIELD");
-		/*JFrame frame = new JFrame("CDK FORCE FIELD Integration");
-		frame.addWindowListener(new ApplicationCloser());
-		Container contentPane = frame.getContentPane();
-		CdkJmol3DPanel jmolPanel=new CdkJmol3DPanel();
-		contentPane.add(jmolPanel);
-		frame.setSize(300, 300);
-		frame.setVisible(true);
-		JmolViewer viewer = jmolPanel.getViewer();
-		Molecule mol=new Molecule();
-		
-		ModelBuilder3D mb3d=new ModelBuilder3D();
-		try{
-			HydrogenAdder hAdder = new HydrogenAdder();
-			SmilesParser sp = new SmilesParser();
-			mol = sp.parseSmiles("CC");
-			hAdder.addExplicitHydrogensToSatisfyValency(mol);
-			//mb3d.setTemplateHandler();
-			mb3d.setForceField("mm2");
-			mb3d.setMolecule(mol,false);
-			mb3d.generate3DCoordinates();
-			mol = mb3d.getMolecule();
-		}catch (Exception ex1){
-		}
-		
-		viewer.openClientFile("", "", mol);
-		
-		
-		
-		String strScript =  "select *; spacefill off; cartoons on; color cartoons structure;";
-		
-        	viewer.evalString(strScript);
-
-		String strError = viewer.getOpenFileError();
-		if (strError != null)
-			System.out.println(strError);
-                viewer.openClientFile("", "",new Molecule(coordinateScrambler
-                                      ((AtomContainer)mol,1,1,0.5)));
-                System.in.readLine();*/
-    //}
-     	
-	
-
-		/*System.out.println("TEST FORCE FIELD");
-		ModelBuilder3D mb3d=new ModelBuilder3D();
-		HydrogenAdder hAdder=new HydrogenAdder();
-		String JMOLPATH = "java -jar /home/cho/SOFTWARE-DEVELOPMENT/cdk-project/Jmol10pre14/Jmol.jar";
-		String TMP_FILE_PATH = "/home/cho/SOFTWARE-DEVELOPMENT/cdk-project/Modeling/data/cdk/data/mdl/";
-		String []molfile={"TEST3DSTARTMolecule.mol","TEST3DMINIMIZEDMolecule.mol"};
-		String command = "";
-		BufferedWriter fout = null;
-		SetOfMolecules som=new SetOfMolecules();
-		Molecule molecule=null;
-		SmilesParser sp = new SmilesParser();
-		ForceField ff=new ForceField();
-		
-		String smile="CC";
-		
-		try{
-			
-			molecule = sp.parseSmiles(smile);
-			hAdder.addExplicitHydrogensToSatisfyValency(molecule);
-			//mb3d.setTemplateHandler();
-			mb3d.setForceField("mmff94");
-			mb3d.setMolecule(molecule,false);
-			mb3d.generate3DCoordinates();
-			molecule = mb3d.getMolecule();
-			som.addMolecule(molecule);
-		}catch (Exception ex1){
-			System.out.println("Error in generating 3D coordinates for molecule due to:"+ex1.toString());
-		}
-		//createTestMoleculeAndSetMMFF94Parameters();
-		//mb3d.setTemplateHandler();
-		
-		try{
-			ff.setMolecule(molecule,true);
-			ff.minimize();
-			som.addMolecule(new Molecule(coordinateScrambler((AtomContainer)ff.getMolecule(),1,1,05)));
-		}catch(Exception ex2){
-			System.out.println("Error in minimizing molecule due to:"+ex2.toString());
-		}
-		
-		for (int i=0;i<molfile.length;i++){
-			try {
-				fout = new BufferedWriter(new FileWriter(molfile[i]));
-			} catch (Exception ex3) {
-			}
-		
-			MDLWriter mdlw = new MDLWriter(fout);
-			try {
-				mdlw.write(som.getMolecule(i));
-				mdlw.close();
-			} catch (Exception ex3) {
-			}
-			command = JMOLPATH + " " +molfile[i];
-			try {
-				Runtime.getRuntime().exec(command);
-			} catch (Exception ex4) {
-				System.out.println("Error in viewer for molecule due to:"+ex4.toString());
-			}
-		
-			}*/
-	
-    //static class ApplicationCloser extends WindowAdapter {
-		//public void windowClosing(WindowEvent e) {
-		//System.exit(0);
-		//}
-
-
 	/**
 	 *  A unit test for JUnit (Torsions)
 	 *
