@@ -232,10 +232,12 @@ public class SaturationChecker
 	}
 
     /**
-     * Method that saturates a molecule by adding hydrogens.
+     * Method that saturates a molecule by adding explicit hydrogens.
      *
      * @param molecule Molecule to saturate
+     *
      * @keyword hydrogen, adding
+     * @keyword explicit hydrogen
      */
     public void addHydrogensToSatisfyValency(Molecule molecule) {
         Atom partner = null;
@@ -261,4 +263,33 @@ public class SaturationChecker
             }
         }
     }
+
+    /**
+     * Method that saturates a molecule by adding implicit hydrogens.
+     *
+     * @param molecule Molecule to saturate
+     *
+     * @keyword hydrogen, adding
+     * @keyword implicit hydrogen
+     */
+    public void addImplicitHydrogensToSatisfyValency(Molecule molecule) {
+        Atom partner = null;
+        Atom atom = null;
+        Atom[] partners = null;
+        AtomType[] atomTypes = null;
+        Bond bond = null;
+        for (int f = 0; f < molecule.getAtomCount(); f ++) {
+            atom = molecule.getAtomAt(f);
+            // set number of implicit hydrogens to zero
+            atom.setHydrogenCount(0);
+            // get default atom
+            atomTypes = atf.getAtomTypes(atom.getSymbol(), atf.ATOMTYPE_ID_STRUCTGEN);
+            AtomType defaultAtom = atomTypes[0];
+            // add explicit hydrogens
+            int missingHydrogen = (int)(defaultAtom.getMaxBondOrder() -
+                                        molecule.getBondOrderSum(atom));
+            atom.setHydrogenCount(missingHydrogen);
+        }
+    }
+
 }
