@@ -39,11 +39,17 @@ import java.lang.Math;
 import java.awt.*;
 
 
-/* 
+/** 
  * Generates 2D coordinates for a molecule for which only connectivity is known
  * or the coordinates have been discarded for some reason.
  * Usage: Create an instance of this class, thereby assigning a molecule,
- * call generateCoordinates() and get your molecule back.
+ * call generateCoordinates() and get your molecule back:
+ * <pre>
+ * StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+ * sdg.setMolecule(someMolecule);
+ * sdg.generateCoordinates();
+ * Molecule layedOutMol = sdg.getMolecule();
+ * </pre>
  *
  * @keyword layout
  * @keyword 2D-coordinates
