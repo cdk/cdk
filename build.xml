@@ -127,6 +127,8 @@
                     <fileset dir="${build}">
                         <include name="org/openscience/cdk/io/cml/**" />
                         <include name="org/openscience/cdk/io/cml/cdopi/**" />
+                        <include name="org/openscience/cdk/tools/LoggingTool*" />
+                        <include name="org/openscience/cdk/config/log4j.properties" />
                     </fileset>
                 </jar>
         </target>
