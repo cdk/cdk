@@ -48,6 +48,16 @@ public class CNNRegressionModelTest extends TestCase {
 	}
     
         public void testCNNRegressionModelInstantiate() throws CDKException, java.lang.Exception, QSARModelException {
+            try {
+                String rhome = System.getenv("R_HOME");
+                if (rhome.equals("")) {
+                    fail("CNN Regression test ignored since you must set the\nenvironment variable must point to the location of your R installation");
+                }
+            } catch (NullPointerException npe) {
+                fail("CNN Regression test ignored since you must set the\nenvironment variable must point to the location of your R installation");
+            }
+
+
             CNNRegressionModel cnnrm = new CNNRegressionModel();
             assertTrue(cnnrm.revaluator != null);
         }
