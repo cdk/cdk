@@ -44,11 +44,12 @@ public class CDK2DAtomColors implements AtomColorer, java.io.Serializable {
 
     private final Color DEFAULT        = Color.black;
     
-    /**
-     * Returns the color for a certain atom type
-     */
     public Color getAtomColor(Atom a) {
-        Color c = DEFAULT;
+        return getAtomColor(a, DEFAULT);
+    }
+    
+    public Color getAtomColor(Atom a, Color defaultColor) {
+        Color c = defaultColor;
         int atomnumber = a.getAtomicNumber();
         if (atomnumber != 0) {
             switch (atomnumber) {

@@ -43,11 +43,14 @@ public class CDKAtomColors implements AtomColorer {
     private final Color SULPHUR        = Color.yellow;
     private final Color CHLORINE       = Color.magenta;
 
-    /**
-     * Returns the color for a certain atom type
-     */
+    private final Color DEFAULT        = Color.darkGray;
+
     public Color getAtomColor(Atom a) {
-        Color c = Color.darkGray;
+        return getAtomColor(a, DEFAULT);
+    }
+    
+    public Color getAtomColor(Atom a, Color defaultColor) {
+        Color c = defaultColor;
         int atomnumber = a.getAtomicNumber();
         switch (atomnumber) {
             case 1:    c = this.HYDROGEN; break;

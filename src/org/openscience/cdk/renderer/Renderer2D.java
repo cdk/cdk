@@ -76,6 +76,10 @@ import org.openscience.cdk.validate.ProblemMarker;
  * left-bottom corner, with the x axis to the right, and the y axis towards
  * the top of the screen. The system is thus right handed.
  *
+ * <p>This modules tries to adhere to guidelines being developed by the IUPAC
+ * which results can be found at
+ * <a href="http://www.angelfire.com/sc3/iupacstructures/">http://www.angelfire.com/sc3/iupacstructures/</a>.
+ *
  * @cdk.module render
  *
  * @author     steinbeck
@@ -83,6 +87,8 @@ import org.openscience.cdk.validate.ProblemMarker;
  *
  * @cdk.created    2002-10-03
  * @cdk.keyword    viewer, 2D-viewer
+ *
+ * @see org.openscience.cdk.renderer.Renderer2DModel
  */
 public class Renderer2D implements MouseMotionListener   {
 
@@ -616,7 +622,7 @@ public class Renderer2D implements MouseMotionListener   {
 
         // STEP 4: draw all parts in the label
 
-        Color atomColor = r2dm.getAtomColor(atom);
+        Color atomColor = r2dm.getAtomColor(atom, r2dm.getForeColor());
 
         // draw SYMBOL
         {

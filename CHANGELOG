@@ -15,6 +15,7 @@ New:
   in Controller2D
 * Added cdk.applications.APIVersionTester for testing version numbers
 * FileConvertor now makes use of Apache's CommandLineInterface
+* Added AtomColorer.getAtomColor(Atom, Color) (closes RFE #949751)
 
 Fixes:
 * Tropylium is now recognised as aromatic (closes CDK bug #957627)

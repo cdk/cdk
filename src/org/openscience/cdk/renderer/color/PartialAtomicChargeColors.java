@@ -40,11 +40,12 @@ import org.openscience.cdk.Atom;
  */
 public class PartialAtomicChargeColors implements AtomColorer {
 
-    /**
-     * Returns the color for a certain atom type
-     */
     public Color getAtomColor(Atom a) {
-        Color c = Color.white;
+        return getAtomColor(a, Color.white);
+    }
+    
+    public Color getAtomColor(Atom a, Color defaultColor) {
+        Color c = defaultColor;
         double charge = a.getCharge();
         if (charge > 0.0) {
             if (charge < 1.0) {

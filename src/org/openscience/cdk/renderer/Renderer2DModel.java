@@ -546,9 +546,9 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
      * If not, the color from the CDK2DAtomColor is used
      * (if selected). Otherwise, the atom is colored black.
      */
-    public Color getAtomColor(Atom atom) {
+    public Color getAtomColor(Atom atom, Color defaultColor) {
         // logger.debug("Getting atom front color for " + atom.toString());
-        Color atomColor = getForeColor();
+        Color atomColor = defaultColor;
         if (colorAtomsByType) {
             // logger.debug("Coloring atom by type");
             atomColor = colorer.getAtomColor(atom);
