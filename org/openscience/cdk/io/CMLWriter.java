@@ -33,36 +33,107 @@ import org.openscience.cdk.exception.*;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
+
+/**
+ * <p>Serializes a SetOfMolecules or a Molecule object to CML code.
+ *
+ * <p>Output can be redirected to other Writer objects like StringWriter
+ * and FileWriter. An example:
+ *
+ * <pre>
+ *   StringWriter output = new StringWriter();
+ *   boolean makeFragment = true;
+ *   CMLWriter cmlwriter = new CMLWriter(output, makeFragment);
+ *   cmlwriter.write(molecule);
+ *   cmlwriter.close();
+ *   String cmlcode = output.toString()
+ * </pre>
+ *
+ * <p>Output to a file called "molecule.cml" can done with:
+ *
+ * <pre>
+ *   FileWriter output = new FileWriter("molecule.cml");
+ *   CMLWriter cmlwriter = new CMLWriter(output);
+ *   cmlwriter.write(molecule);
+ *   cmlwriter.close();
+ * </pre>
+ *
+ * @see FileWriter
+ * @see StringWriter
+ */
 public class CMLWriter implements ChemObjectWriter, CDKConstants {
 
     private static final String pClass = "org.apache.xerces.parsers.SAXParser";
 
     private Writer output;
 
-    public CMLWriter(Writer w) {        
-	output = w;
+    private boolean done;
+    private boolean fragment;
+
+    /**
+     * Constructs a new CMLWriter class. Output will be stored in the Writer
+     * class given as parameter. The CML code will be valid CML code with a
+     * XML header. Only one object can be stored.
+     *
+     * @param out Writer to redirect the output to.
+     */
+    public CMLWriter(Writer out) {        
+	this(out, false);
     }
 
+    /**
+     * Constructs a new CMLWriter class. Output will be stored in the Writer
+     * class given as parameter. The CML code will be valid CML code with a
+     * XML header. More than object can be stored.
+     *
+     * @param out       Writer to redirect the output to.
+     * @param fragment  Boolean denoting that the content is not
+     */
+    public CMLWriter(Writer w, boolean fragment) {        
+	output = w;
+	this.fragment = fragment;
+	this.done = false;
+    }
+
+    /**
+     * Flushes the output and closes this object
+     */
     public void close() throws IOException {
+	super.close();
 	output.close();
     }
 
+    /**
+     * Serializes the ChemObject to CML and redirects it to the output Writer.
+     *
+     * @param object A Molecule of SetOfMolecules object
+     */
     public void write(ChemObject object) throws UnsupportedChemObjectException {
-	if (object instanceof SetOfMolecules) {
-	    if (((SetOfMolecules)object).getMoleculeCount() > 1) 
-		write("<list>\n");
-	    for (int i = 0; i < ((SetOfMolecules)object).getMoleculeCount(); i++) {
-		this.write(((SetOfMolecules)object).getMolecule(i));
+	if (!done) {
+	    if (!fragment) {
+		write("<?xml version=\"1.0\"?>\n");
 	    }
-	    if (((SetOfMolecules)object).getMoleculeCount() > 1) 
-		write("</list>\n");
-	} else if (object instanceof Molecule) {
-	    write((Molecule)object);
-	} else {
-	    throw new UnsupportedChemObjectException(
-		"Only supported are ChemFile and Molecule.");
-	}	
+	    if (object instanceof SetOfMolecules) {
+		if (((SetOfMolecules)object).getMoleculeCount() > 1) 
+		    write("<list>\n");
+		for (int i = 0; i < ((SetOfMolecules)object).getMoleculeCount(); i++) {
+		    write(((SetOfMolecules)object).getMolecule(i));
+		}
+		if (((SetOfMolecules)object).getMoleculeCount() > 1) 
+		    write("</list>\n");
+	    } else if (object instanceof Molecule) {
+		write((Molecule)object);
+	    } else {
+		throw new UnsupportedChemObjectException(
+							 "Only supported are ChemFile and Molecule.");
+	    }	
+	    if (!fragment) {	       
+		done = true;
+	    }
+	} else {};
     };
+
+    // Private procedures
 
     private void write(SetOfMolecules som) {
 	if (som.getMoleculeCount() > 1) 
