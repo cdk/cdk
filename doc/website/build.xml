@@ -2,19 +2,21 @@
 
   <property name="build.dir" value="target"/>
   <property name="source.dir" value="source"/>
-  <property name="docbook-xsl" value="website-2.5.0"/>
-  <property name="website-docbook-xsl.dir" value="${docbook-xsl}"/>
+  
+  <property name="docbook-xsl" value="docbook-xsl-1.65.1" />
+  <property name="website-docbook-xsl" value="website-2.5.0"/>
+  
   <property name="javancsslib" value="javancss21.41"/>
   <property name="javancsslib.dir" value="${javancsslib}"/>
 
   <target id="layout" name="layout" depends="includes">
     <xslt in="${source.dir}/layout.xml" out="${source.dir}/autolayout.xml" 
-          style="${website-docbook-xsl.dir}/xsl/autolayout.xsl"/>
+          style="${website-docbook-xsl}/xsl/autolayout.xsl"/>
   </target>
 
   <target name="website-from-autolayout" depends="layout">
     <!-- does should work, but it doesn't -->
-    <xslt in="${source.dir}/autolayout.xml" destdir="${build.dir}/" style="${website-docbook-xsl.dir}/xsl/tabular.xsl"/>
+    <xslt in="${source.dir}/autolayout.xml" destdir="${build.dir}/" style="${website-docbook-xsl}/xsl/tabular.xsl"/>
   </target>
 
   <target id="clean" name="clean">
@@ -29,8 +31,9 @@
     <delete>
       <fileset dir="${build.dir}/" includes="*.html"/>
     </delete>
-    <delete dir="${website-docbook-xsl.dir}"/>
-    <delete dir="${javancss.dir}"/>
+    <delete dir="${docbook-xsl}"/>
+    <delete dir="${website-docbook-xsl}"/>
+    <delete dir="${javancsslib.dir}"/>
   </target>
   
   <target name="info" id="info" depends="check.includes"/>
@@ -72,8 +75,11 @@
       depends="check.docbook-xsl, check.includes, javancss, keyword.index, bibliography, dicts, atlists, depends"/>
   
   <target name="setup" id="setup">
+    <uptodate property="website-docbook-xsl.uptodate"
+	      targetfile="${website-docbook-xsl}"
+	      srcfile="${website-docbook-xsl}.tar.gz" />
     <uptodate property="docbook-xsl.uptodate"
-	      targetfile="${website-docbook-xsl.dir}"
+	      targetfile="${docbook-xsl}"
 	      srcfile="${docbook-xsl}.tar.gz" />
     <uptodate property="javancsslib.uptodate"
 	      targetfile="${javancsslib.dir}"
@@ -81,11 +87,28 @@
   </target>
 
   <target name="checks" id="checks" 
-      depends="check.docbook-xsl, check.javancss"/>
+      depends="check.docbook, check.docbook-xsl, check.javancss"/>
   
-  <target name="check.docbook-xsl" depends="setup" unless="docbook-xsl.uptodate" >
-    <mkdir dir="${website-docbook-xsl.dir}" />
-    <untar src="${docbook-xsl}.tar.gz" dest="." compression="gzip" />
+  <target name="check.docbook" depends="setup" unless="docbook-xsl.uptodate" >
+    <delete dir="${docbook-xsl}" />
+    <mkdir dir="${docbook-xsl}" />
+    <untar src="${docbook-xsl}.tar.gz" dest="."
+	   compression="gzip" />
+  </target>
+  
+  <target name="check.docbook-xsl" depends="setup" unless="website-docbook-xsl.uptodate" >
+    <mkdir dir="${website-docbook-xsl}" />
+    <untar src="${website-docbook-xsl}.tar.gz" dest="." compression="gzip" />
+    <echo message="Making ${website-docbook-xsl}/xsl/autolayout.xsl internet independent..."/>
+    <replace file="${website-docbook-xsl}/xsl/autolayout.xsl">
+      <replacetoken><![CDATA[            doctype-system="http://docbook.sourceforge.net/release/website/2.4.1/schema/dtd/autolayout.dtd"]]></replacetoken>
+      <replacevalue><![CDATA[            doctype-system="../website-2.5.0/schema/dtd/autolayout.dtd"]]></replacevalue>
+    </replace>
+    <echo message="Making ${website-docbook-xsl}/xsl/website-common.xsl internet independent..."/>
+    <replace file="${website-docbook-xsl}/xsl/website-common.xsl">
+      <replacetoken><![CDATA[<xsl:import href="http://docbook.sourceforge.net/release/xsl/current/html/docbook.xsl"/>]]></replacetoken>
+      <replacevalue><![CDATA[<xsl:import href="../../docbook-xsl-1.65.1/html/docbook.xsl"/>]]></replacevalue>
+    </replace>
   </target>
 
   <target name="check.javancss" depends="setup" unless="javancsslib.uptodate" >
@@ -96,7 +119,7 @@
   <target id="website" name="website" depends="layout">
     <xslt basedir="${source.dir}" destdir="${build.dir}" extension=".html"
       includes="*.xml" excludes="build.xml, *layout.xml, java*-data.xml, javancss-tmp.xml, keyword.index.xml"
-      style="${website-docbook-xsl.dir}/xsl/tabular.xsl"/>
+      style="${website-docbook-xsl}/xsl/tabular.xsl"/>
   </target>
 
   <target name="javancss" unless="javancss.uptodate">
