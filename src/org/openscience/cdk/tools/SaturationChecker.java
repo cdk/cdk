@@ -412,49 +412,51 @@ public class SaturationChecker
 				atom = atomContainer.getAtomAt(f);
 				logger.debug("symbol: " + atom.getSymbol());
 				atomTypes1 = structgenATF.getAtomTypes(atom.getSymbol());
-				logger.debug("first atom type: " + atomTypes1[0]);
-				if (atomContainer.getBondCount(atom) == i)
-				{
-          if (atom.getFlag(CDKConstants.ISAROMATIC) && atomContainer.getBondOrderSum(atom) < atomTypes1[0].getMaxBondOrderSum() - atom.getHydrogenCount()){
-						partners = atomContainer.getConnectedAtoms(atom);
-						for (int g = 0; g < partners.length; g++)
-						{
-							partner = partners[g];
-							logger.debug("Atom has " + partners.length + " partners");
-							atomTypes2 = structgenATF.getAtomTypes(partner.getSymbol());
-							if (atomContainer.getBond(partner,atom).getFlag(CDKConstants.ISAROMATIC) && atomContainer.getBondOrderSum(partner) < atomTypes2[0].getMaxBondOrderSum() - partner.getHydrogenCount())
-							{
-								logger.debug("Partner has " + atomContainer.getBondOrderSum(partner) + ", may have: " + atomTypes2[0].getMaxBondOrderSum());
-								bond = atomContainer.getBond(atom, partner);
-								logger.debug("Bond order was " + bond.getOrder());
-								bond.setOrder(bond.getOrder() + 1);
-								logger.debug("Bond order now " + bond.getOrder());
-								break;
-							}
-						}
-					}
-					if (atomContainer.getBondOrderSum(atom) < atomTypes1[0].getMaxBondOrderSum() - atom.getHydrogenCount())
-					{
-						logger.debug("Atom has " + atomContainer.getBondOrderSum(atom) + ", may have: " + atomTypes1[0].getMaxBondOrderSum());
-						partners = atomContainer.getConnectedAtoms(atom);
-						for (int g = 0; g < partners.length; g++)
-						{
-							partner = partners[g];
-							logger.debug("Atom has " + partners.length + " partners");
-							atomTypes2 = structgenATF.getAtomTypes(partner.getSymbol());
-              if(atomTypes2.length==0)
-                throw new CDKException("Missing entry in structgen_atomtypes.xml for "+partner.getSymbol());
-							if (atomContainer.getBondOrderSum(partner) < atomTypes2[0].getMaxBondOrderSum() - partner.getHydrogenCount())
-							{
-								logger.debug("Partner has " + atomContainer.getBondOrderSum(partner) + ", may have: " + atomTypes2[0].getMaxBondOrderSum());
-								bond = atomContainer.getBond(atom, partner);
-								logger.debug("Bond order was " + bond.getOrder());
-								bond.setOrder(bond.getOrder() + 1);
-								logger.debug("Bond order now " + bond.getOrder());
-								break;
-							}
-						}
-					}
+        if(atomTypes1.length>0){
+          logger.debug("first atom type: " + atomTypes1[0]);
+          if (atomContainer.getBondCount(atom) == i)
+          {
+            if (atom.getFlag(CDKConstants.ISAROMATIC) && atomContainer.getBondOrderSum(atom) < atomTypes1[0].getMaxBondOrderSum() - atom.getHydrogenCount()){
+              partners = atomContainer.getConnectedAtoms(atom);
+              for (int g = 0; g < partners.length; g++)
+              {
+                partner = partners[g];
+                logger.debug("Atom has " + partners.length + " partners");
+                atomTypes2 = structgenATF.getAtomTypes(partner.getSymbol());
+                if (atomContainer.getBond(partner,atom).getFlag(CDKConstants.ISAROMATIC) && atomContainer.getBondOrderSum(partner) < atomTypes2[0].getMaxBondOrderSum() - partner.getHydrogenCount())
+                {
+                  logger.debug("Partner has " + atomContainer.getBondOrderSum(partner) + ", may have: " + atomTypes2[0].getMaxBondOrderSum());
+                  bond = atomContainer.getBond(atom, partner);
+                  logger.debug("Bond order was " + bond.getOrder());
+                  bond.setOrder(bond.getOrder() + 1);
+                  logger.debug("Bond order now " + bond.getOrder());
+                  break;
+                }
+              }
+            }
+            if (atomContainer.getBondOrderSum(atom) < atomTypes1[0].getMaxBondOrderSum() - atom.getHydrogenCount())
+            {
+              logger.debug("Atom has " + atomContainer.getBondOrderSum(atom) + ", may have: " + atomTypes1[0].getMaxBondOrderSum());
+              partners = atomContainer.getConnectedAtoms(atom);
+              for (int g = 0; g < partners.length; g++)
+              {
+                partner = partners[g];
+                logger.debug("Atom has " + partners.length + " partners");
+                atomTypes2 = structgenATF.getAtomTypes(partner.getSymbol());
+                if(atomTypes2.length==0)
+                  throw new CDKException("Missing entry in structgen_atomtypes.xml for "+partner.getSymbol());
+                if (atomContainer.getBondOrderSum(partner) < atomTypes2[0].getMaxBondOrderSum() - partner.getHydrogenCount())
+                {
+                  logger.debug("Partner has " + atomContainer.getBondOrderSum(partner) + ", may have: " + atomTypes2[0].getMaxBondOrderSum());
+                  bond = atomContainer.getBond(atom, partner);
+                  logger.debug("Bond order was " + bond.getOrder());
+                  bond.setOrder(bond.getOrder() + 1);
+                  logger.debug("Bond order now " + bond.getOrder());
+                  break;
+                }
+              }
+            }
+          }
 				}
 			}
 		}
