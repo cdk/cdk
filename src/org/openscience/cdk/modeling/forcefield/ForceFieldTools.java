@@ -128,16 +128,24 @@ public class ForceFieldTools {
 		return atomsDistance;
 	}
 
-	
-	public AtomContainer assignCoordinatesToMolecule(GVector moleculeCoords, AtomContainer molecule){
-		for (int i=0;i<molecule.getAtomCount();i++){
-			molecule.getAtomAt(i).setX3d(moleculeCoords(i*3);
-			molecule.getAtomAt(i).setY3d(moleculeCoords(i*3+1);
-			molecule.getAtomAt(i).setZ3d(moleculeCoords(i*3+2);
+
+	/**
+	 *  Assign the 3D coordinates saved in a GVector back to the molecule
+	 *
+	 *@param  moleculeCoords  GVector with the coordinates
+	 *@param  molecule        AtomContainer
+	 *@return                 the molecule as AtomContainer
+	 */
+	public AtomContainer assignCoordinatesToMolecule(GVector moleculeCoords, AtomContainer molecule) {
+		for (int i = 0; i < molecule.getAtomCount(); i++) {
+			molecule.getAtomAt(i).setX3d(moleculeCoords.getElement(i * 3));
+			molecule.getAtomAt(i).setY3d(moleculeCoords.getElement(i * 3 + 1));
+			molecule.getAtomAt(i).setZ3d(moleculeCoords.getElement(i * 3 + 2));
 		}
 		return molecule;
 	}
-	
+
+
 	/**
 	 *  Calculate 3d distance between two atoms from two different 3xN coordinate
 	 *  vectors.
@@ -189,7 +197,8 @@ public class ForceFieldTools {
 
 
 	/**
-	 *  Calculate the torsion angle from 4 atoms i,j,k and l, where i-j, j-k, and k-l are bonded pairs.
+	 *  Calculate the torsion angle from 4 atoms i,j,k and l, where i-j, j-k, and
+	 *  k-l are bonded pairs.
 	 *
 	 *@param  atomi  Atom i.
 	 *@param  atomj  Atom j.
@@ -199,18 +208,20 @@ public class ForceFieldTools {
 	 */
 	public double torsionAngle(Atom atomi, Atom atomj, Atom atomk, Atom atoml) {
 
-		Vector3d xji = new Vector3d((Tuple3d)atomi.getPoint3d());
+		Vector3d xji = new Vector3d((Tuple3d) atomi.getPoint3d());
 		xji.sub(atomj.getPoint3d());
-		Vector3d xjk = new Vector3d((Tuple3d)atomk.getPoint3d());
+		Vector3d xjk = new Vector3d((Tuple3d) atomk.getPoint3d());
 		xjk.sub(atomj.getPoint3d());
-		Vector3d xlk = new Vector3d((Tuple3d)atomk.getPoint3d());
+		Vector3d xlk = new Vector3d((Tuple3d) atomk.getPoint3d());
 		xlk.sub(atoml.getPoint3d());
-		
-		Vector3d v1 = new Vector3d();	// v1 = xji x xjk / |xji x xjk|
+
+		Vector3d v1 = new Vector3d();
+		// v1 = xji x xjk / |xji x xjk|
 		v1.cross(xji, xjk);
 		v1.normalize();
-		
-		Vector3d v2 = new Vector3d();	// v2 = xjk x xlk / |xjk x xlk|
+
+		Vector3d v2 = new Vector3d();
+		// v2 = xjk x xlk / |xjk x xlk|
 		v2.cross(xjk, xlk);
 		v2.normalize();
 
