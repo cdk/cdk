@@ -21,6 +21,10 @@ Fixes:
 * Fixed calculation of missing hydrogens for hydrogen itself (closes #813146)
 * Fixed SaturationChecker.saturate() code by taking into account all known atom 
   types (closes #815810)
+* No longer uses Log4J config by default in library, applications can force 
+  configuration by doing new LoggingTool(classNameString, true) (closes #816643)
+* Fixed serious problem in reading isotope and charge info from atom block in 
+  MDL files
 
 API changes:
 * Added getIOSettings() to ChemObject[Reader|Writer]
