@@ -193,7 +193,7 @@ public class AtomContainer extends ChemObject implements Cloneable
      *  Returns an AtomEnumeration for looping over all atoms
      *  in this container.
      *
-     * @returns   An AtomEnumeration with the atoms in this container
+     * @return   An AtomEnumeration with the atoms in this container
      */
 	public Enumeration atoms()
 	{

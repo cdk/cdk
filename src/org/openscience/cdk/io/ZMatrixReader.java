@@ -77,7 +77,7 @@ public class ZMatrixReader implements ChemObjectReader
    *  Private method that actually parses the input to read a ChemFile
    *  object.
    *
-   * @returns A ChemFile containing the data parsed from input.
+   * @return A ChemFile containing the data parsed from input.
    */
   private ChemFile readChemFile()
   {

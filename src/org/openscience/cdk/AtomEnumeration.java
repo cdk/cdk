@@ -75,7 +75,7 @@ public class AtomEnumeration implements Enumeration
     /**
      *  Returns next atom in Enumeration.
      *
-     *  @returns Uncasted Atom class.
+     *  @return Uncasted Atom class.
      */
 	public Object nextElement()
 	{

@@ -86,7 +86,7 @@ public class JCPController2DModel
 	/**
 	 * Returns the snapToGridAngle mode
          *
-	 * @returns the snapToGridAngle mode
+	 * @return the snapToGridAngle mode
 	 */
 	public boolean getSnapToGridAngle()
 	{

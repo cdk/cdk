@@ -60,7 +60,7 @@ public class Convertor {
      *   - coordinates
      *
      * @param   atom    class to be converted
-     * @returns         converted class in JOELib
+     * @return          converted class in JOELib
      **/
     public static JOEAtom convert(Atom atom) {
         if (atom != null) {
@@ -96,7 +96,7 @@ public class Convertor {
      *   - coordinates
      *
      * @param   atom    class to be converted
-     * @returns         converted class in CDK
+     * @return          converted class in CDK
      **/
     public static Atom convert(JOEAtom atom) {
         if (atom != null) {
@@ -137,7 +137,7 @@ public class Convertor {
      *   - bond order
      *
      * @param   atom    class to be converted
-     * @returns         converted class in JOELib
+     * @return          converted class in JOELib
      **/
     public static JOEBond convert(Bond bond) {
         if (bond != null) {
@@ -160,7 +160,7 @@ public class Convertor {
      *   - bond order
      *
      * @param   atom    class to be converted
-     * @returns         converted class in CDK
+     * @return          converted class in CDK
      **/
     public static Bond convert(JOEBond bond) {
         if (bond != null) {
@@ -183,7 +183,7 @@ public class Convertor {
      *   - bonds
      *
      * @param   atom    class to be converted
-     * @returns         converted class in JOELib
+     * @return          converted class in JOELib
      **/
     public static JOEMol convert(Molecule mol) {
         if (mol != null) {
@@ -222,7 +222,7 @@ public class Convertor {
      *   - bonds
      *
      * @param   atom    class to be converted
-     * @returns         converted class in CDK
+     * @return          converted class in CDK
      **/
     public static Molecule convert(JOEMol mol) {
         if (mol != null) {

@@ -129,13 +129,13 @@ public class GIMatrix {
     
     /**
      * Returns the number of lines of the matrix.
-     * @returns the height of the matrix
+     * @return the height of the matrix
      */
     public int height() { return m; } // method heigth()
 
     /**
      * Returns the number of columns of the matrix.
-     * @returns the width of the matrix
+     * @return the width of the matrix
      */
     public int width() { return n; } // method width()
 

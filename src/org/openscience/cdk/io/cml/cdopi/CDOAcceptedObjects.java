@@ -59,7 +59,7 @@ public class CDOAcceptedObjects {
    * Determine if an object name is contained in this list.
    *
    * @param   object Name of the object to search in the list
-   * @returns        true if the object is in the list, false otherwise
+   * @return         true if the object is in the list, false otherwise
    */
   public boolean contains(String object) {
     return objects.contains(object);

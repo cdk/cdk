@@ -53,7 +53,7 @@ public class ChemLoader {
      *
      * @param inFile the name of the file to load
      *
-     * @returns the loaded ChemFile
+     * @return the loaded ChemFile
      */
     public static ChemFile read(String inFile) {
         ChemFile chemFile;
