@@ -1,6 +1,6 @@
-/* $RCSfile$    
- * $Author$    
- * $Date$    
+/* $RCSfile$
+ * $Author$
+ * $Date$
  * $Revision$
  * 
  * Copyright (C) 1997-2004  The Chemistry Development Kit (CDK) project
@@ -21,27 +21,30 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
  */
-package org.openscience.cdk.test.isomorphism;
+package org.openscience.cdk.test.graph;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.test.isomorphism.matchers.*;
+import org.openscience.cdk.test.graph.rebond.*;
+import org.openscience.cdk.test.graph.invariant.*;
 
 /**
  * TestSuite that runs all the sample tests in the
- * org.openscience.cdk.isomorphism package.
+ * org.openscience.cdk.graph package.
  *
  * @cdk.module test
  */
-public class IsomorphismTests {
+public class GraphTests {
 
     public static Test suite () {
-        TestSuite suite= new TestSuite("The cdk.isomorphism Tests");
-        suite.addTest(IsomorphismTesterTest.suite());
-        suite.addTest(SMARTSTest.suite());
-        suite.addTest(UniversalIsomorphismTesterTest.suite());
-        suite.addTest(SymbolSetQueryAtomTest.suite());
+        TestSuite suite = new TestSuite("The cdk.graph Tests");
+        //suite.addTest(BiconnectivityInspectorTest.suite());
+        //suite.addTest(MinimalPathIteratorTest.suite());
+        //suite.addTest(RebondToolTest.suite());
+        //suite.addTest(EquivalentClassPartitionerTest.suite());
+        //suite.addTest(MorganNumberToolsTest.suite());
+        //suite.addTest(ConjugatedPiSystemsDetectorTest.suite());
         return suite;
     }
 

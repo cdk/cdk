@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!DOCTYPE molecule SYSTEM "cml.dtd" []>
 <molecule id="benzene">
   <atomArray>
     <stringArray builtin="id">a1 a2 a3 a4 a5 a6</stringArray>

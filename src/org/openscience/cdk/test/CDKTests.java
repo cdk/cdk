@@ -33,8 +33,7 @@ import org.openscience.cdk.test.config.ConfigTests;
 import org.openscience.cdk.test.fingerprint.FingerprinterTest;
 import org.openscience.cdk.test.geometry.CrystalGeometryToolsTest;
 import org.openscience.cdk.test.geometry.GeometryToolsTest;
-import org.openscience.cdk.test.graph.invariant.MorganNumberToolsTest;
-import org.openscience.cdk.test.graph.rebond.RebondToolTest;
+import org.openscience.cdk.test.graph.GraphTests;
 import org.openscience.cdk.test.index.CASNumberTest;
 import org.openscience.cdk.test.io.IOTests;
 import org.openscience.cdk.test.isomorphism.IsomorphismTests;
@@ -77,9 +76,9 @@ public class CDKTests
         
         // Individual Tests
         suite.addTest(ChemFileTest.suite());
-        suite.addTest(MorganNumberToolsTest.suite());
-        suite.addTest(RebondToolTest.suite());
         suite.addTest(PathLengthTest.suite());
+        // cdk.test.graph
+        suite.addTest(GraphTests.suite());
         //from cdk.test.applications
         suite.addTest(APIVersionTesterTest.suite());
 	//from cdk.test.ringsearch

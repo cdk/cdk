@@ -4,6 +4,7 @@ CHANGELOG $Date$
 Changes in CVS
 ------------------------------------
 New:
+* added isomorphism.ConjugatedPiSystemsDetector
 * ChemFormat and ChemFormatMatchers interfaces in new io.formats package
 * added charges.GasteigerMarsiliPartialCharges calculation
 * added charges.AtomTypesCharges class to assign charges to atom types

@@ -70,5 +70,4 @@ target in the build.xml file to look like this:
 
 Then, a "ant run" should give you a window where you can add bonds to a given structure.
 
-Currently, there are about 350 test, of which a large part tests the core classes,
-of which 3 are known to fail. This is expected behaviour.
+Currently, there are about 600 test, of which a large part tests the core classes.
