@@ -175,7 +175,7 @@ public class ChemObject implements Cloneable
 	 * Returns a property for the ChemObject.
 	 *
 	 * @param   description  An object description of the property (most likely a unique string)
-	 * @return  The object containing the property
+	 * @return  The object containing the property. Returns null if propert is not set.
      *
      * @see     #setProperty
 	 */
