@@ -240,6 +240,8 @@ AC_OUTPUT([
    jar/Makefile
    jar/libio/Makefile
    doc/Makefile
+   doc/javadoc/Makefile
+   doc/javadoc/source/Makefile
    bin/Makefile
    bin/cdk-dbadmin
    bin/cdk-download
