@@ -47,6 +47,15 @@ public class Bond extends ElectronContainer implements Cloneable
 	protected int stereo; 
 	
 	/**
+	 * Constructs an empty bond
+	 *
+	 */
+	public Bond()
+	{
+	
+	}
+
+	/**
 	 * Constructs a bond with a given order from an array of atoms
 	 *
 	 */
@@ -273,7 +282,6 @@ public class Bond extends ElectronContainer implements Cloneable
 		{
 			e.printStackTrace(System.err);
 		}
-		o.atoms = (Atom[])atoms.clone();
 		return o;
 	}
 	

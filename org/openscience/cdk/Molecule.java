@@ -59,6 +59,19 @@ public class Molecule extends AtomContainer
 	
 
 	/**
+	 * Constructs a Molecule with 
+	 * a copy of the atoms and bonds of another Molecule
+	 * (A shallow copy, i.e., with the same objects as in the original AtomContainer)
+	 *
+	 * @param   ac  An Molecule to copy the atoms and bonds from 
+	 */
+	public Molecule(Molecule ac)
+	{
+		super((AtomContainer)ac);
+	}
+
+
+	/**
 	 * Returns the AutonomName for this molecule. Autonom is a program that 
 	 * published by Beilstein, which uniquely names a chemical structure
 	 *

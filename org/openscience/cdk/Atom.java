@@ -354,17 +354,15 @@ public class Atom extends ChemObject implements Cloneable {
 	 */
 	public Object clone()
 	{
-		Atom o = null;
+		Object o = null;
 		try
 		{
-			o = (Atom)super.clone();
+			o = super.clone();
 		}
 		catch (Exception e)
 		{
 			e.printStackTrace(System.err);
 		}
-//		o.point2D = this.point2D;
-//		o.point3D = this.point3D;
 		return o;
 	}
 

@@ -40,9 +40,9 @@ public class CDKTests {
 	public static Test suite ( ) 
 	{
 		TestSuite suite= new TestSuite("All CDK Tests");
-//		suite.addTest(RingSearchTest.suite());
-//		suite.addTest(ConnectivityCheckerTest.suite());
-//		suite.addTest(StructureDiagramGeneratorTest.suite());
+		suite.addTest(RingSearchTest.suite());
+		suite.addTest(ConnectivityCheckerTest.suite());
+		suite.addTest(StructureDiagramGeneratorTest.suite());
 		suite.addTest(RandomStructureGeneratorTest.suite());
 	    return suite;
 	}

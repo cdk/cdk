@@ -642,6 +642,26 @@ public class AtomContainer extends ChemObject implements Cloneable{
 	}
 
 
+	/**
+	 * Returns the sum of the bondorders for a given Atom
+	 *
+	 * @param   atom  The atom
+	 * @return     The number of bondorders for this atom
+	 */
+	public int getBondOrderSum(Atom atom)
+	{
+		int count = 0; 
+		for (int i = 0; i < getBondCount(); i++)
+		{
+			if (bonds[i].contains(atom))
+			{
+				count += bonds[i].getOrder();
+			}
+		}
+		return count;
+	}
+
+
 
 	/**
 	 * Compares this AtomContainer with another given AtomContainer 
@@ -802,6 +822,8 @@ public class AtomContainer extends ChemObject implements Cloneable{
 	public Object clone()
 	{
 		AtomContainer o = null;
+		Bond bond = null, newBond = null;
+		Atom[] atoms, newAtoms;
 		try
 		{
 			o = (AtomContainer)super.clone();
@@ -810,10 +832,57 @@ public class AtomContainer extends ChemObject implements Cloneable{
 		{
 			e.printStackTrace(System.err);
 		}
-		o.atoms = (Atom[])atoms.clone();
-		o.bonds = (Bond[])bonds.clone();
+		o.removeAllElements();
+		for (int f = 0; f < getAtomCount(); f++)
+		{
+			o.addAtom((Atom)getAtomAt(f).clone());
+		}
+		for (int f = 0; f < getBondCount(); f++)
+		{
+			bond = getBondAt(f);
+			atoms = bond.getAtoms();
+			newAtoms = new Atom[atoms.length];
+			newBond = new Bond();
+			for (int g = 0; g < atoms.length; g++)
+			{
+				try
+				{
+					newAtoms[g] = o.getAtomAt(getAtomNumber(atoms[g]));
+				}
+				catch(Exception exc)
+				{
+					exc.printStackTrace();
+				}
+			}
+			newBond.setAtoms(newAtoms);
+			newBond.setOrder(bond.order);
+			o.addBond(newBond);
+		}
 		return o;
 	}
+
+
+	/**
+	 * Clones this atomContainer object but leaves references to all atoms and bonds 
+	 * the same.
+	 *
+	 * @return  The shallow copied object   
+	 */
+	public Object shallowCopy()
+	{
+		Object o = null;
+		try
+		{
+			o = super.clone();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace(System.err);
+		}
+		return o;
+	}
+
+
 }
 
 

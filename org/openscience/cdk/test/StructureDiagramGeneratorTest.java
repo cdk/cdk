@@ -151,7 +151,7 @@ public class StructureDiagramGeneratorTest extends TestCase
 //		Renderer2DModel r2dm = new Renderer2DModel();
 //		r2dm.setDrawNumbers(true);
 //		mv.setRenderer2DModel(r2dm);
-		sdg.setMolecule(molecule);
+		sdg.setMolecule((Molecule)molecule.clone());
 		try
 		{
 			sdg.generateCoordinates(new Vector2d(0,1));
@@ -160,10 +160,8 @@ public class StructureDiagramGeneratorTest extends TestCase
 		{
 			System.out.println("*** Exit due to an unexpected error during coordinate generation ***");
 			exc.printStackTrace();
-			return false;
 		}
 		mv.setAtomContainer(sdg.getMolecule());
-//		mv.display();
 		CDKTests.moleculeListViewer.addStructure(mv, name);
 		return true;
 	}

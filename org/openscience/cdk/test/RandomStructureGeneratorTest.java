@@ -58,30 +58,33 @@ public class RandomStructureGeneratorTest extends TestCase
 	{
 		Vector structures = new Vector();	
 		Molecule molecule = MoleculeFactory.loadMolecule("data/a-pinene.mol");
-		structures.addElement(molecule);
-		System.out.println(molecule.hashCode());
 		RandomGenerator rg = new RandomGenerator();
 		rg.setMolecule(molecule);
-		for (int f = 0; f < 100;f++)
+		for (int f = 0; f < 1000; f++)
 		{
-			rg.proposeStructure();
-			rg.acceptStructure();
+			molecule = rg.proposeStructure();
+			if ((double)f/(double)50 == f/50)
+			{
+				structures.addElement(molecule);
+			}
+			rg.acceptStructure();			
 		}
-		structures.addElement(rg.getMolecule());
 		assert(everythingOk(structures));
 	}
 
 
 	private boolean everythingOk(Vector structures)
 	{
-		StructureDiagramGenerator sdg;
-		MoleculeViewer2D mv;
+		StructureDiagramGenerator sdg = null;
+		MoleculeViewer2D mv = null;
+		Molecule mol = null;
 		for (int f = 0; f < structures.size(); f++)
 		{
 			sdg = new StructureDiagramGenerator();
 			mv = new MoleculeViewer2D();
-			sdg.setMolecule((Molecule)structures.elementAt(f));
-			System.out.println(((Molecule)structures.elementAt(f)).hashCode());			
+			mol = (Molecule)structures.elementAt(f);
+			sdg.setMolecule(mol);
+
 			try
 			{
 				sdg.generateCoordinates(new Vector2d(0,1));
@@ -90,12 +93,12 @@ public class RandomStructureGeneratorTest extends TestCase
 			{
 				System.out.println("*** Exit due to an unexpected error during coordinate generation ***");
 				exc.printStackTrace();
-				return false;
 			}
 			mv.setAtomContainer(sdg.getMolecule());
-			CDKTests.moleculeListViewer.addStructure(mv, "RandomGenerator result no. " + f);
+			CDKTests.moleculeListViewer.addStructure(mv, "RandomGent Result no. " + (f + 1));
 		}
 		return true;
 	}
+	
 }
 

@@ -48,6 +48,8 @@ public class RandomGenerator
 	private Molecule molecule = null;
 	private ConnectivityChecker cc = null; 
 	private Vector bonds = null;
+	public boolean debug = false;
+	private int[] correctBondOrderSums;
 
 	/**
 	 * The empty contructor
@@ -79,16 +81,31 @@ public class RandomGenerator
 	 */
 	public Molecule proposeStructure()
 	{
-		proposedStructure = new Molecule();
-		proposedStructure.removeAllElements();
+		Molecule trial = new Molecule();
+		trial.removeAllElements();
+		trial.add(molecule);
 		do
 		{
-			proposedStructure.add(molecule);
-			mutate(proposedStructure);
+			mutate(trial);
 		}
-		while(!cc.isConnected(proposedStructure));
-		System.out.println("proposedStructure.getBondCount(): " + proposedStructure.getBondCount());
-		return proposedStructure;
+		while(!(cc.isConnected(trial) && chemConstraintsOk(trial)));
+		proposedStructure = trial;
+		if (debug)
+		{
+			String s = "BondCounts:    ";
+			for (int f = 0; f < trial.getAtomCount(); f++)
+			{
+				s += trial.getBondCount(trial.getAtomAt(f)) + " ";
+			}
+			System.out.println(s);
+			s = "BondOrderSums: ";
+			for (int f = 0; f < trial.getAtomCount(); f++)
+			{
+				s += trial.getBondOrderSum(trial.getAtomAt(f)) + " ";
+			}
+			System.out.println(s);
+		}
+		return (Molecule)proposedStructure.clone();
 	}
 
 	/**
@@ -116,83 +133,106 @@ public class RandomGenerator
 
 		Atom ax1 = null, ax2 = null, ay1 = null, ay2  = null;
 		Bond b1 = null, b2 = null, b3 = null, b4 = null;
-
+		int[] choices = new int[3];
+		int choiceCounter  = 0;
+		/* We need at least two non-zero bonds in order to be successful */
+		int nonZeroBondsCounter = 0;
 		do
 		{
-			/* Randomly choose four distinct atoms */
 			do
 			{
-				// this yields numbers between 0 and (nrOfAtoms - 1)
-				x1 = (int)(Math.random() * nrOfAtoms);
-				x2 = (int)(Math.random() * nrOfAtoms);
-				y1 = (int)(Math.random() * nrOfAtoms);
-				y2 = (int)(Math.random() * nrOfAtoms);
-			}
-			while (!(x1 != x2 && x1 != y1 && x1 != y2 && x2 != y1 && x2 != y2 && y1 != y2));
-			ax1 = ac.getAtomAt(x1);
-			ay1 = ac.getAtomAt(y1);
-			ax2 = ac.getAtomAt(x2);
-			ay2 = ac.getAtomAt(y2);
-			/* Get four bonds for these four atoms */
-			
-			b1 = ac.getBond(ax1, ay1);
-			if (b1 != null)
-			{
-				a11 = b1.getOrder();
-			}
-			else
-			{
-				a11 = 0;
-			}
-			
-			b2 = ac.getBond(ax1, ay2);
-			if (b2 != null)
-			{
-				a12 = b2.getOrder();
-			}
-			else
-			{
-				a12 = 0;
-			}
+				nonZeroBondsCounter = 0;
+				/* Randomly choose four distinct atoms */
+				do
+				{
+					// this yields numbers between 0 and (nrOfAtoms - 1)
+					x1 = (int)(Math.random() * nrOfAtoms);
+					x2 = (int)(Math.random() * nrOfAtoms);
+					y1 = (int)(Math.random() * nrOfAtoms);
+					y2 = (int)(Math.random() * nrOfAtoms);
+				}
+				while (!(x1 != x2 && x1 != y1 && x1 != y2 && x2 != y1 && x2 != y2 && y1 != y2));
+				ax1 = ac.getAtomAt(x1);
+				ay1 = ac.getAtomAt(y1);
+				ax2 = ac.getAtomAt(x2);
+				ay2 = ac.getAtomAt(y2);
+				/* Get four bonds for these four atoms */
+				
+				b1 = ac.getBond(ax1, ay1);
+				if (b1 != null)
+				{
+					a11 = b1.getOrder();
+					nonZeroBondsCounter ++;				
+				}
+				else
+				{
+					a11 = 0;
+				}
+				
+				b2 = ac.getBond(ax1, ay2);
+				if (b2 != null)
+				{
+					a12 = b2.getOrder();
+					nonZeroBondsCounter ++;				
+				}
+				else
+				{
+					a12 = 0;
+				}
 
-			b3 = ac.getBond(ax2, ay1);
-			if (b3 != null)
-			{
-				a21 = b3.getOrder();
-			}
-			else
-			{
-				a21 = 0;
-			}
+				b3 = ac.getBond(ax2, ay1);
+				if (b3 != null)
+				{
+					a21 = b3.getOrder();
+					nonZeroBondsCounter ++;				
+				}
+				else
+				{
+					a21 = 0;
+				}
+				
+				b4 = ac.getBond(ax2, ay2);									
+				if (b4 != null)
+				{
+					a22 = b4.getOrder();
+					nonZeroBondsCounter ++;
+				}
+				else
+				{
+					a22 = 0;
+				}
+			}while(nonZeroBondsCounter < 2);
 			
-			b4 = ac.getBond(ax2, ay2);									
-			if (b4 != null)
-			{
-				a22 = b4.getOrder();
-			}
-			else
-			{
-				a22 = 0;
-			}
-			
+					
 			/* Compute the range for b11 (see Faulons formulae for details) */
 			int[] cmax = {0, a11 - a22, a11 + a12 - 3, a11 + a21 - 3};
 			int[] cmin = {3, a11 + a12, a11 + a21, a11 - a22 + 3};
 			lowerborder = max(cmax);
 			upperborder = min(cmin);
 			/* Randomly choose b11 != a11 in the range max > r > min */
-
-			if (upperborder - lowerborder > 0 || a11 != lowerborder)
+			if (debug) 				
 			{
-				do
-				{
-					b11 = ((int)(Math.random() * (upperborder - lowerborder + 1 ))) + lowerborder;
-				}while(b11 == a11);
 				System.out.println("*** New Try ***");
 				System.out.println("a11 = " + a11);
 				System.out.println("upperborder = " + upperborder);
 				System.out.println("lowerborder = " + lowerborder);
+			}
+			choiceCounter = 0;
+			for (int f = lowerborder; f <= upperborder; f++)
+			{
+				if (f != a11)
+				{
+					choices[choiceCounter] = f;
+					choiceCounter ++;
+				}
+			}
+			if (choiceCounter > 0)
+			{
+				b11 = choices[(int)(Math.random() * choiceCounter)];
+			}
 
+			if (debug) 				
+			{
 				System.out.println("b11 = " + b11);
 			}
 
@@ -226,7 +266,7 @@ public class RandomGenerator
 			if (b2 == null)
 			{
 				b2 = new Bond(ax1, ay2, b12);
-				ac.addBond(b1);
+				ac.addBond(b2);
 			}
 			else
 			{
@@ -271,15 +311,24 @@ public class RandomGenerator
 		{
 			ac.removeBond(b4);
 		}
-		System.out.println("a11 a12 a21 a22: " + a11 + " " + a12 + " " + a21 + " " + a22);
-		System.out.println("b11 b12 b21 b22: " + b11 + " " + b12 + " " + b21 + " " + b22);
-		String s = "BondCounts: ";
-		for (int f = 0; f < ac.getAtomCount(); f++)
-		{
-			s += ac.getBondCount(ac.getAtomAt(f));
+		
+		if (debug) 
+		{				
+			System.out.println("a11 a12 a21 a22: " + a11 + " " + a12 + " " + a21 + " " + a22);
+			System.out.println("b11 b12 b21 b22: " + b11 + " " + b12 + " " + b21 + " " + b22);
 		}
-		System.out.println(s);
+	}
 
+	protected boolean chemConstraintsOk(Molecule test)
+	{
+		for (int f = 0; f < test.getAtomCount(); f++)
+		{
+			if (test.getBondOrderSum(test.getAtomAt(f)) != correctBondOrderSums[f])
+			{
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
@@ -326,9 +375,10 @@ public class RandomGenerator
 	 *
 	 * @param   molecule  a starting structure for this generator
 	 */
-	public void setMolecule(Molecule molecule)
+	public void setMolecule(Molecule mol)
 	{
-		this.molecule = molecule;	
+		this.molecule = mol;	
+		initBondOrderSums(mol);
 	}
 
 
@@ -341,6 +391,15 @@ public class RandomGenerator
 	public Molecule getMolecule()
 	{
 		return this.molecule;
+	}
+	
+	protected void initBondOrderSums(Molecule mol)
+	{	
+		correctBondOrderSums = new int[mol.getAtomCount()];
+		for (int f = 0; f < mol.getAtomCount(); f++)
+		{
+			correctBondOrderSums[f] = mol.getBondOrderSum(mol.getAtomAt(f));
+		}
 	}
 
 }

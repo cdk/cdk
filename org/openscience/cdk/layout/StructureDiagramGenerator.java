@@ -87,6 +87,7 @@ public class StructureDiagramGenerator implements CDKConstants
 	 */
 	public void setMolecule(Molecule molecule, boolean clone)
 	{
+		Atom atom = null;
 		if (clone)
 		{
 			this.molecule = (Molecule)molecule.clone();
@@ -94,6 +95,15 @@ public class StructureDiagramGenerator implements CDKConstants
 		else
 		{
 			this.molecule = molecule;
+		}
+		for (int f = 0; f < molecule.getAtomCount(); f++)
+		{
+			atom = molecule.getAtomAt(f);
+			atom.setPoint2D(null);
+			atom.flags[ISPLACED] = false;
+			atom.flags[VISITED] = false;
+			atom.flags[ISINRING] = false;
+			atom.flags[ISALIPHATIC] = false;
 		}
 		atomPlacer.setMolecule(this.molecule);
 		ringPlacer.setMolecule(this.molecule);

@@ -437,7 +437,7 @@ public class AtomPlacer implements CDKConstants
 					if (!nextAtom.flags[VISITED] && !nextAtom.flags[ISPLACED])
 					{
 						nextAtomNr = ac.getAtomNumber(nextAtom);
-						pathes[nextAtomNr] = (AtomContainer)pathes[atomNr].clone();
+						pathes[nextAtomNr] = (AtomContainer)pathes[atomNr].shallowCopy();
 						pathes[nextAtomNr].addAtom(nextAtom);
 						pathes[nextAtomNr].addBond(bonds[g]);
 						newSphere.addElement(nextAtom);
