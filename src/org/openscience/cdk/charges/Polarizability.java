@@ -1,9 +1,9 @@
-/*
- *  $RCSfile: Polarizability
+/*  $RCSfile$
  *  $Author$
  *  $Date$
- *  *
- *  Copyright (C) 1997-2005  The Chemistry Development Kit (CDK) project
+ *  $Revision$
+ *
+ *  Copyright (C) 2004-2005  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@list.sourceforge.net
  *
