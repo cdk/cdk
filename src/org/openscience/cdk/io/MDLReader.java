@@ -55,6 +55,7 @@ import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.IsotopeFactory;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Reads a molecule from an MDL MOL or SDF file [DAL92].
@@ -150,7 +151,7 @@ public class MDLReader extends DefaultChemObjectReader {
 	 *@param  in  The Reader to read from
 	 */
 	public MDLReader(Reader in) {
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        logger = new LoggingTool(this);
         input = new BufferedReader(in);
         initIOSettings();
         try {
@@ -174,11 +175,11 @@ public class MDLReader extends DefaultChemObjectReader {
 	 */
 	public ChemObject read(ChemObject object) throws CDKException {
 		if (object instanceof ChemFile) {
-			return (ChemObject) readChemFile();
+			return readChemFile((ChemFile)object);
         } else if (object instanceof ChemModel) {
-            return (ChemObject) readChemModel();
+            return readChemModel((ChemModel)object);
 		} else if (object instanceof Molecule) {
-			return (ChemObject) readMolecule();
+			return readMolecule((Molecule)object);
 		} else {
 			throw new CDKException("Only supported are ChemFile and Molecule.");
 		}
@@ -190,10 +191,9 @@ public class MDLReader extends DefaultChemObjectReader {
 	 *
 	 * @return    The ChemFile that was read from the MDL file.
 	 */
-    private ChemFile readChemFile() throws CDKException {
-        ChemFile chemFile = new ChemFile();
+    private ChemFile readChemFile(ChemFile chemFile) throws CDKException {
         ChemSequence chemSequence = new ChemSequence();
-        ChemModel chemModel = readChemModel();
+        ChemModel chemModel = readChemModel(new ChemModel());
         logger.debug("Adding ChemModel to ChemSequence");
         logger.debug("#models (count): " + chemSequence.getChemModelCount());
         chemSequence.addChemModel(chemModel);
@@ -203,10 +203,9 @@ public class MDLReader extends DefaultChemObjectReader {
         return chemFile;
     }
     
-    private ChemModel readChemModel() throws CDKException {
-		ChemModel chemModel = new ChemModel();
+    private ChemModel readChemModel(ChemModel chemModel) throws CDKException {
 		SetOfMolecules setOfMolecules = new SetOfMolecules();
-		Molecule m = readMolecule();
+		Molecule m = readMolecule(new Molecule());
 		if (m != null) {
 			setOfMolecules.addMolecule(m);
 		}
@@ -220,7 +219,7 @@ public class MDLReader extends DefaultChemObjectReader {
                 do {
                     str = new String(line);
                     if (str.equals("$$$$") && input.ready() && line != null) {
-                        m = readMolecule();
+                        m = readMolecule(new Molecule());
 
                         if (m != null) {
                             setOfMolecules.addMolecule(m);
@@ -257,7 +256,7 @@ public class MDLReader extends DefaultChemObjectReader {
 	 *
 	 *@return    The Molecule that was read from the MDL file.
 	 */
-	private Molecule readMolecule() throws CDKException {
+	private Molecule readMolecule(Molecule molecule) throws CDKException {
         logger.debug("Reading new molecule");
         int linecount = 0;
         int atoms = 0;
@@ -272,7 +271,6 @@ public class MDLReader extends DefaultChemObjectReader {
         double totalZ = 0.0;
         int[][] conMat = new int[0][0];
         String help;
-        Molecule molecule = new Molecule();
         Bond bond;
         Atom atom;
         String line = "";

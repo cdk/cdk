@@ -203,6 +203,19 @@ public class MDLReaderTest extends TestCase {
         }
     }
 
+    public void testUsesGivenMolecule() {
+        String filename = "data/mdl/superspiro.mol"; // just a random file
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        try {
+            MDLReader reader = new MDLReader(new InputStreamReader(ins));
+            Molecule superspiro = new Molecule();
+            superspiro.setID("superspiro");
+            Molecule result = (Molecule)reader.read(superspiro);
+            assertEquals(superspiro.getID(), result.getID());
+        } catch (Exception e) {
+            fail(e.toString());
+        }
+    }
     /** 
      * Problem was filed as bug #835571
      */
