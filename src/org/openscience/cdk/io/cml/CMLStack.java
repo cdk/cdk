@@ -28,26 +28,32 @@
  */
 package org.openscience.cdk.io.cml;
 
-import java.util.Enumeration;
-import java.util.Stack;
+public class CMLStack {
 
-/**
- * A Stack object with an overwritten toString() method.
- *
- * @author  Egon Willighagen <egonw@sci.kun.nl>
- * @created 2003-08-20
- */
-public class CMLStack extends Stack {
+  String[] stack = new String[64];
+  int sp = 0;
 
-    public String toString() {
-        StringBuffer sb = new StringBuffer();
-        sb.append("/");
-        Enumeration strings = this.elements();
-        while (strings.hasMoreElements()) {
-            sb.append(strings.nextElement());
-            sb.append("/");
-        }
-        return sb.toString();
+  public void push(String item) {
+    if (sp == stack.length) {
+      String[] temp = new String[2 * sp];
+      System.arraycopy(stack, 0, temp, 0, sp);
+      stack = temp;
     }
-    
+    stack[sp++] = item;
+  }
+
+  public String pop() {
+    return stack[--sp];
+  }
+  
+
+  public String toString() {
+    StringBuffer sb = new StringBuffer();
+    sb.append("/");
+    for (int i = 0; i < sp; ++i) {
+      sb.append(stack[i]);
+      sb.append("/");
+    }
+    return sb.toString();
+  }
 }

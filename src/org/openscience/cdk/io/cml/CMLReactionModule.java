@@ -59,7 +59,7 @@ public class CMLReactionModule extends CMLCoreModule {
     };
     
     
-    public void startElement(Stack xpath, String uri, String local, String raw, Attributes atts) {
+    public void startElement(CMLStack xpath, String uri, String local, String raw, Attributes atts) {
         if ("reaction".equals(local)) {
             cdo.startObject("Reaction");
             for (int i = 0; i < atts.getLength(); i++) {
@@ -104,7 +104,7 @@ public class CMLReactionModule extends CMLCoreModule {
         }
     };
 
-    public void endElement(Stack xpath, String uri, String local, String raw) {
+    public void endElement(CMLStack xpath, String uri, String local, String raw) {
         if ("reaction".equals(local)) {
             cdo.endObject("Reaction");
         } else if ("reactionList".equals(local)) {
@@ -122,7 +122,7 @@ public class CMLReactionModule extends CMLCoreModule {
         }
     }
 
-    public void characterData(Stack xpath, char ch[], int start, int length) {
+    public void characterData(CMLStack xpath, char ch[], int start, int length) {
         String s = new String(ch, start, length).trim();
         super.characterData(xpath, ch, start, length);
     }

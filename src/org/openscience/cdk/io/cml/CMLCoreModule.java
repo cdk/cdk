@@ -214,7 +214,7 @@ public class CMLCoreModule implements ModuleInterface {
         logger.info("End XML Doc");
     }
     
-    public void startElement(Stack xpath, String uri, String local, String raw, 
+    public void startElement(CMLStack xpath, String uri, String local, String raw, 
                               Attributes atts) {
 
         String name = local;
@@ -418,7 +418,7 @@ public class CMLCoreModule implements ModuleInterface {
         }
     }
 
-    public void endElement(Stack xpath, String uri, String name, String raw) {
+    public void endElement(CMLStack xpath, String uri, String name, String raw) {
         logger.debug("EndElement: " + name);
 
         String cData = currentChars;
@@ -776,7 +776,7 @@ public class CMLCoreModule implements ModuleInterface {
         elementTitle = "";
     }
 
-    public void characterData(Stack xpath, char[] ch, int start, int length) {
+    public void characterData(CMLStack xpath, char[] ch, int start, int length) {
         currentChars = currentChars + new String(ch, start, length);
         logger.debug("CD: " + currentChars);
     }

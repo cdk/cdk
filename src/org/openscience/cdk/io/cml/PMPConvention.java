@@ -66,16 +66,16 @@ public class PMPConvention extends CMLCoreModule {
     };
     
     
-    public void startElement(Stack xpath, String uri, String local, String raw, Attributes atts) {
+    public void startElement(CMLStack xpath, String uri, String local, String raw, Attributes atts) {
         logger.debug("PMP element: name");
         super.startElement(xpath, uri, local, raw, atts);
     };
 
-    public void endElement(Stack xpath, String uri, String local, String raw) {
+    public void endElement(CMLStack xpath, String uri, String local, String raw) {
         super.endElement(xpath, uri, local, raw);
     }
 
-    public void characterData(Stack xpath, char ch[], int start, int length) {
+    public void characterData(CMLStack xpath, char ch[], int start, int length) {
         String s = new String(ch, start, length).trim();
         logger.debug("Start PMP chardata (" + CurrentElement + ") :" + s);
         logger.debug(" ElTitle: " + elementTitle);

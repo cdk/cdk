@@ -87,7 +87,7 @@ public class PDBConvention extends CMLCoreModule {
         super.endDocument();
     }
     
-    public void startElement(Stack xpath, String uri, String local, String raw, 
+    public void startElement(CMLStack xpath, String uri, String local, String raw, 
                               Attributes atts) {
         String name = raw;
         isELSYM = false;
@@ -120,7 +120,7 @@ public class PDBConvention extends CMLCoreModule {
         }
     }
     
-    public void endElement(Stack xpath, String uri, String local, String raw) {
+    public void endElement(CMLStack xpath, String uri, String local, String raw) {
 
         String name = raw;
 
@@ -134,7 +134,7 @@ public class PDBConvention extends CMLCoreModule {
         super.endElement(xpath, uri, local, raw);
     }
 
-    public void characterData(Stack xpath, char[] ch, int start, int length) {
+    public void characterData(CMLStack xpath, char[] ch, int start, int length) {
 
         String s = new String(ch, start, length).trim();
 

@@ -28,7 +28,6 @@
  */
 package org.openscience.cdk.io.cml;
 
-import java.util.Stack;
 import org.xml.sax.*;
 import org.openscience.cdk.io.cml.cdopi.*;
 
@@ -42,9 +41,9 @@ public interface ModuleInterface{
 
   void startDocument();
   void endDocument();
-  void startElement(Stack xpath, String uri, String local, String raw, Attributes atts);
-  void endElement(Stack xpath, String uri, String local, String raw);
-  void characterData(Stack xpath, char ch[], int start, int length);
+  void startElement(CMLStack xpath, String uri, String local, String raw, Attributes atts);
+  void endElement(CMLStack xpath, String uri, String local, String raw);
+  void characterData(CMLStack xpath, char ch[], int start, int length);
   
   CDOInterface returnCDO();
 

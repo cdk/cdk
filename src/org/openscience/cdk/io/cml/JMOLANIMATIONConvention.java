@@ -66,7 +66,7 @@ public class JMOLANIMATIONConvention extends CMLCoreModule {
     };
 
 
-    public void startElement(Stack xpath, String uri, String local, String raw, Attributes atts) {
+    public void startElement(CMLStack xpath, String uri, String local, String raw, Attributes atts) {
         String name = local;
         if (name.equals("list")) {
             // System.err.println("Oke, JMOLANIMATION seems to be kicked in :)");
@@ -99,7 +99,7 @@ public class JMOLANIMATIONConvention extends CMLCoreModule {
         }
     };
 
-    public void endElement(Stack xpath, String uri, String local, String raw) {
+    public void endElement(CMLStack xpath, String uri, String local, String raw) {
         String name = local;
         if (current == ENERGY) {
             cdo.setObjectProperty("Frame", "energy", frame_energy);
@@ -118,7 +118,7 @@ public class JMOLANIMATIONConvention extends CMLCoreModule {
         }
     }
 
-    public void characterData(Stack xpath, char ch[], int start, int length) {
+    public void characterData(CMLStack xpath, char ch[], int start, int length) {
         if (current == ENERGY) {
             frame_energy = new String(ch, start, length);
         } else {

@@ -65,7 +65,7 @@ public class CMLHandler extends DefaultHandler {
                        this.getClass().getName());
         conv = new CMLCoreModule(cdo);
         userConventions = new Hashtable();
-        xpath = new Stack();
+        xpath = new CMLStack();
     }
 
     public void registerConvention(String convention, ModuleInterface conv) {

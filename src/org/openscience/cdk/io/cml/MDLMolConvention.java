@@ -61,16 +61,16 @@ public class MDLMolConvention extends CMLCoreModule {
         super.endDocument();
     };
 
-    public void startElement(Stack xpath, String uri, String local, String raw, Attributes atts) {
+    public void startElement(CMLStack xpath, String uri, String local, String raw, Attributes atts) {
         logger.debug("MDLMol element: name");
         super.startElement(xpath, uri, local, raw, atts);
     };
 
-    public void endElement(Stack xpath, String uri, String local, String raw) {
+    public void endElement(CMLStack xpath, String uri, String local, String raw) {
         super.endElement(xpath, uri, local, raw);
     }
 
-    public void characterData(Stack xpath, char ch[], int start, int length) {
+    public void characterData(CMLStack xpath, char ch[], int start, int length) {
         String s = new String(ch, start, length).trim();
         if (xpath.toString().endsWith("string/") && BUILTIN.equals("stereo")) {
             stereoGiven = true;
