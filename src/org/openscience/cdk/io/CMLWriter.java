@@ -125,6 +125,8 @@ public class CMLWriter implements ChemObjectWriter {
                 write((Crystal)object);
             } else if (object instanceof ChemSequence) {
                 write((ChemSequence)object);
+            } else if (object instanceof ChemFile) {
+                write((ChemFile)object);
             } else {
                 throw new UnsupportedChemObjectException("This object type is not supported.");
             }    
@@ -135,6 +137,14 @@ public class CMLWriter implements ChemObjectWriter {
     };
 
     // Private procedures
+
+    private void write(ChemFile cf) {
+        write("<list title=\"sequence\">\n");
+        for (int i=0; i < cf.getChemSequenceCount(); i++ ) {
+            write(cf.getChemSequence(i));
+        }
+        write("</list>\n");
+    }
 
     private void write(Crystal crystal) {
         write("<molecule>\n");

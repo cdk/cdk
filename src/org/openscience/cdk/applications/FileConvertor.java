@@ -26,6 +26,7 @@ package org.openscience.cdk.applications;
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.io.*;
+import org.openscience.cdk.exception.*;
 import java.io.*;
 import java.util.*;
 
@@ -65,11 +66,13 @@ public class FileConvertor {
 
       ChemObjectReader cor = getChemObjectReader(this.iformat, fr);
       if (cor == null) {
+        logger.warn("Format " + iformat + " is an unsupported input format.");
         System.err.println("Unsupported input format!");
         return false;
       }
       ChemObjectWriter cow = getChemObjectWriter(this.oformat, fw);
       if (cow == null) {
+        logger.warn("Format " + oformat + " is an unsupported output format.");
         System.err.println("Unsupported output format!");
         return false;
       }
@@ -79,11 +82,23 @@ public class FileConvertor {
       if (content == null) {
         return false;
       }
-      cow.write(content.getChemSequence(0).getChemModel(0).getSetOfMolecules());
+      try {
+          cow.write(content.getChemSequence(0).getChemModel(0).getCrystal());
+      } catch (UnsupportedChemObjectException e) {
+          logger.error("Cannot add Crystal: " + e.toString());
+          return false;
+      }
+      try {
+          cow.write(content.getChemSequence(0).getChemModel(0).getSetOfMolecules());
+      } catch (UnsupportedChemObjectException e) {
+          logger.error("Cannot add SetOfMolecules: " + e.toString());
+          return false;
+      }
       fw.flush();
       fw.close();
     } catch (Exception e) {
       success = false;
+      logger.error(e.toString());
       e.printStackTrace();
     }
     return success;
@@ -111,10 +126,10 @@ public class FileConvertor {
       FileConvertor fc = new FileConvertor(input_format, output_format);
       boolean success = fc.convert(input, output);
       if (success) {
-        System.out.println("Conversion succeeded!");
+          System.out.println("Conversion succeeded!");
       } else {
-        System.out.println("Converstion failed!");
-        System.exit(1);
+          System.out.println("Conversion failed!");
+          System.exit(1);
       }
     } else {
       System.err.println("syntax: FileConverter -i<format> -o<format> <input> <output>");
@@ -122,29 +137,35 @@ public class FileConvertor {
     }
   }
 
-  private ChemObjectReader getChemObjectReader(String format, FileReader f) {
-    if (format.equalsIgnoreCase("CML")) {
-      return new CMLReader(f);
-    } else if (format.equalsIgnoreCase("XYZ")) {
-      return new XYZReader(f);
-    } else if (format.equalsIgnoreCase("MOL")) {
-      return new MDLReader(f);
-    } else if (format.equalsIgnoreCase("PDB")) {
-      return new PDBReader(f);
+    private ChemObjectReader getChemObjectReader(String format, FileReader f) {
+        if (format.equalsIgnoreCase("CML")) {
+            return new CMLReader(f);
+        } else if (format.equalsIgnoreCase("XYZ")) {
+            return new XYZReader(f);
+        } else if (format.equalsIgnoreCase("MOL")) {
+            return new MDLReader(f);
+        } else if (format.equalsIgnoreCase("PDB")) {
+            return new PDBReader(f);
+        } else if (format.equalsIgnoreCase("PMP")) {
+            return new PMPReader(f);
+        } else if (format.equalsIgnoreCase("SHELX")) {
+            return new ShelXReader(f);
+        }
+        return null;
     }
-    return null;
-  }
 
-  private ChemObjectWriter getChemObjectWriter(String format, FileWriter f) {
-    if (format.equalsIgnoreCase("CML")) {
-      return new CMLWriter(f);
-    } else if (format.equalsIgnoreCase("MOL")) {
-      return new MDLWriter(f);
-    } else if (format.equalsIgnoreCase("SMILES")) {
-      return new SMILESWriter(f);
+    private ChemObjectWriter getChemObjectWriter(String format, FileWriter f) {
+        if (format.equalsIgnoreCase("CML")) {
+            return new CMLWriter(f);
+        } else if (format.equalsIgnoreCase("MOL")) {
+            return new MDLWriter(f);
+        } else if (format.equalsIgnoreCase("SMILES")) {
+            return new SMILESWriter(f);
+        } else if (format.equalsIgnoreCase("SHELX")) {
+            return new ShelXWriter(f);
+        }
+        return null;
     }
-    return null;
-  }
 }
 
 
