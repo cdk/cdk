@@ -32,7 +32,6 @@ import org.openscience.cdk.atomtype.*;
 import org.openscience.cdk.AtomType;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -55,15 +54,8 @@ public class AtomTypeManipulator {
 		AtomTypeFactory factory = null;
 		LoggingTool logger = null;
 		int hybr;
-		try {
-			factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/hybridization_atomtypes.xml");
-			hybr = at.getHybridization();
-			atom.setHybridization(hybr);
-		} catch (Exception ex1) {
-			logger.error(ex1.getMessage());
-			logger.debug(ex1);
-			throw new CDKException("Problems with AtomTypeFactory due to " + ex1.toString());
-		}
+		hybr = at.getHybridization();
+		atom.setHybridization(hybr);
 	}
 }
 
