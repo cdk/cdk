@@ -348,6 +348,7 @@
 
                 <mkdir dir="${build}/org/openscience/cdk/config" />
                 <mkdir dir="${build}/org/openscience/cdk/io/cml/data" />
+                <mkdir dir="${build}/org/openscience/cdk/dict/data" />
                 <mkdir dir="${build}/org/openscience/cdk/iupac/generator/data" />
 
                 <copy
@@ -370,9 +371,16 @@
                 file="${src}/org/openscience/cdk/io/cml/data/cml1_0_1.dtd"
                 tofile="${build}/org/openscience/cdk/io/cml/data/cml1_0_1.dtd" />
 
-                <copy 
+                <copy
                 file="${src}/org/openscience/cdk/iupac/generator/data/IUPACNames.properties"
                 tofile="${build}/org/openscience/cdk/iupac/generator/data/IUPACNames.properties" />
+
+                <copy
+                file="${src}/org/openscience/cdk/dict/data/chemical.xml"
+                tofile="${build}/org/openscience/cdk/dict/data/chemical.xml" />
+                <copy 
+                file="${src}/org/openscience/cdk/dict/data/elements.xml"
+                tofile="${build}/org/openscience/cdk/dict/data/elements.xml" />
 
                 <!-- generate lists of class files that should end up in
                      the jars for the modules -->
