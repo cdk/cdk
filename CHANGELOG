@@ -3,6 +3,9 @@ CHANGELOG $Date$
 
 Changes in CVS
 ------------------------------------
+New:
+* Added move operation to JCPController2D
+
 Fixes:
 * Fixed reading of AtomType's with JSX
 * Fixed zooming of atomic charges in Renderer2D

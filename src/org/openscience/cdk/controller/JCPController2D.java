@@ -1,9 +1,9 @@
 /* $RCSfile$
- * $Author$    
- * $Date$    
+ * $Author$
+ * $Date$
  * $Revision$
  * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  * 
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  * 
@@ -26,7 +26,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *  */
 package org.openscience.cdk.controller;
-
 
 import org.openscience.cdk.layout.*;
 import org.openscience.cdk.renderer.*;
@@ -53,10 +52,13 @@ public class JCPController2D {
     JCPController2DModel c2dm;
     boolean wasDragged = false;
     
-   private Vector listeners = new Vector();
-
+    private Vector listeners = new Vector();
 
     private LoggingTool logger;
+    
+    private int prevDragCoordX = 0;
+    private int prevDragCoordY = 0;
+    private boolean draggingSelected = true;
     
     Vector commonElements;
 
@@ -126,13 +128,17 @@ public class JCPController2D {
          *
          * @param   e    MouseEvent object
          **/
-        public void mouseDragged(MouseEvent e)
-        {
-            logger.debug("Mouse dragged");
+        public void mouseDragged(MouseEvent e) {
+            logger.debug("Mouse dragged in mode: " + c2dm.getDrawModeString());
 
-                int mouseX = getWorldCoordinate(e.getX()); 
-                int mouseY = getWorldCoordinate(e.getY());
+            int mouseX = getWorldCoordinate(e.getX()); 
+            int mouseY = getWorldCoordinate(e.getY());
+
+            if (!wasDragged) {
+                prevDragCoordX = mouseX;
+                prevDragCoordY = mouseY;
                 wasDragged = true;
+            }
 
 
                 /*************************************************************************
@@ -205,6 +211,30 @@ public class JCPController2D {
                        to world coordinates when mouse release */
                     r2dm.addLassoPoint(new Point(e.getX(), e.getY()));
                 }
+
+                /*************************************************************************
+                 *                          MOVE MODE                                    *
+                 *************************************************************************/
+                if (c2dm.getDrawMode() == c2dm.MOVE) {
+                    // all these are in model coordinates
+                    logger.debug("Dragging selected atoms");
+                    int deltaX = mouseX - prevDragCoordX;
+                    int deltaY = mouseY - prevDragCoordY;
+                    AtomContainer container = r2dm.getSelectedPart();
+                    if (container != null) {
+                        // only move selected atoms if count > 0
+                        Atom[] atoms = container.getAtoms();
+                        for (int i=0; i < atoms.length; i++) {
+                            Atom atom = atoms[i];
+                            atom.setX2D(atom.getX2D()+deltaX);
+                            atom.setY2D(atom.getY2D()+deltaY);
+                        }
+                    }
+                    fireChange();
+                }
+                
+                prevDragCoordX = mouseX;
+                prevDragCoordY = mouseY;
         }
 
         /**
@@ -213,7 +243,7 @@ public class JCPController2D {
          * @param   e    MouseEvent object
          **/
         public void mousePressed(MouseEvent e) {
-            logger.debug("Mouse pressed");
+            logger.debug("Mouse pressed in mode: " + c2dm.getDrawModeString());
 
             Atom atomInRange;
             int mouseX = getWorldCoordinate(e.getX()); 
@@ -228,6 +258,33 @@ public class JCPController2D {
                     r2dm.setPointerVectorStart(new Point(startX, startY));
             } else {
                     r2dm.setPointerVectorStart(new Point(mouseX, mouseY));
+            }
+            
+            if (c2dm.getDrawMode() == c2dm.MOVE) {
+                AtomContainer container = r2dm.getSelectedPart();
+                if (container == null || (container.getAtomCount() == 0)) {
+                    // if no atoms are selected, then temporarily select nearest
+                    // to make sure to original state is reached again when the
+                    // mouse is released, the draggingSelected boolean is set
+                    logger.warn("No atoms selected: temporarily selecting nearest atom/bond");
+                    draggingSelected = false;
+                    AtomContainer selected = new AtomContainer();
+                    if (atomInRange != null) {
+                        selected.addAtom(atomInRange);
+                        r2dm.setSelectedPart(selected);
+                    } else {
+                        Bond bondInRange = getBondInRange(mouseX, mouseY);
+                        // because only atoms are dragged, select the atoms
+                        // in the bond, instead of the bond itself
+                        Atom[] atoms = bondInRange.getAtoms();
+                        for (int i=0; i<atoms.length; i++) {
+                            selected.addAtom(atoms[i]);
+                        }
+                        r2dm.setSelectedPart(selected);
+                    }
+                    logger.debug("Selected: " + selected.toString());
+                    fireChange();
+                }
             }
         }
         
@@ -281,7 +338,7 @@ public class JCPController2D {
                         r2dm.fireChange();
 			fireChange();
                     }
-                }                
+                }
                 
                 /*************************************************************************
                  *                       DRAWBONDMODE                                    *
@@ -331,7 +388,7 @@ public class JCPController2D {
                             }
                         }
                         r2dm.fireChange();
-			fireChange();
+                        fireChange();
                 }
                 
                 /*************************************************************************
@@ -355,7 +412,7 @@ public class JCPController2D {
                             logger.warn("No bond in range!");
                         }
                         r2dm.fireChange();
-			fireChange();
+                        fireChange();
                 }
                 
                 /*************************************************************************
@@ -379,7 +436,7 @@ public class JCPController2D {
                             logger.warn("No bond in range!");
                         }
                         r2dm.fireChange();
-			fireChange();
+                        fireChange();
                 }
                 
                 /*************************************************************************
@@ -409,7 +466,7 @@ public class JCPController2D {
                         atomCon.removeElectronContainer(highlightedBond);
                     }
                     r2dm.fireChange();
-		    fireChange();
+                    fireChange();
                 }
                 
                 /*************************************************************************
@@ -552,7 +609,7 @@ public class JCPController2D {
                                 }
                         }
                         r2dm.fireChange();
-			fireChange();
+                        fireChange();
                 }
                 
            /*************************************************************************
@@ -582,7 +639,23 @@ public class JCPController2D {
                         fireChange();
                     }
                 }
-                wasDragged = false;
+
+                /*************************************************************************
+                 *                          MOVE MODE                                    *
+                 *************************************************************************/
+                if (c2dm.getDrawMode() == c2dm.MOVE) {
+                    if (draggingSelected == false) {
+                        // then it was dragging nearest Bond or Atom
+                        draggingSelected = true;
+                        r2dm.setSelectedPart(new AtomContainer());
+                    }
+                }
+                
+                if (wasDragged) {
+                    prevDragCoordX = 0;
+                    prevDragCoordY = 0;
+                    wasDragged = false;
+                }
             }
         }
         
