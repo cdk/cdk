@@ -45,5 +45,14 @@ public class TotalValencyAtom extends SMARTSAtom {
         int valency = ((Integer)atom.getProperty("org.openscience.cdk.Atom.totalValency")).intValue();
         return (valency == this.valency);
     };
+
+    public String toString() {
+		StringBuffer s = new StringBuffer();
+		s.append("TotalValency(");
+        s.append(this.hashCode() + ", ");
+		s.append("V:" + valency);
+        s.append(")");
+		return s.toString();
+    }
 }
 

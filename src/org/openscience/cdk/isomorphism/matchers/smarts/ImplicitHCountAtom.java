@@ -43,5 +43,14 @@ public class ImplicitHCountAtom extends SMARTSAtom {
 	public boolean matches(Atom atom) {
         return (atom.getHydrogenCount() == this.hCount);
     };
+
+    public String toString() {
+		StringBuffer s = new StringBuffer();
+		s.append("ImplicitHCountAtom(");
+        s.append(this.hashCode() + ", ");
+		s.append("IH:" + hCount);
+		s.append(")");
+		return s.toString();
+    }
 }
 

@@ -39,5 +39,14 @@ public class SymbolQueryAtom extends Atom implements QueryAtom {
 	public boolean matches(Atom atom) {
         return this.getSymbol().equals(atom.getSymbol());
     };
+
+    public String toString() {
+		StringBuffer s = new StringBuffer();
+		s.append("SymbolQueryAtom(");
+		s.append(this.hashCode() + ", ");
+		s.append(getSymbol());
+		s.append(")");
+		return s.toString();
+    }
 }
 

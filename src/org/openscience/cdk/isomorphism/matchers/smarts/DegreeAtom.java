@@ -45,5 +45,14 @@ public class DegreeAtom extends SMARTSAtom {
         int atomDegree = ((Integer)atom.getProperty("org.openscience.cdk.Atom.degree")).intValue();
         return (atomDegree == this.degree);
     };
+
+    public String toString() {
+		StringBuffer s = new StringBuffer();
+		s.append("DegreeAtom(");
+        s.append(this.hashCode() + ", ");
+		s.append("D:" + degree);
+		s.append(")");
+		return s.toString();
+    }
 }
 

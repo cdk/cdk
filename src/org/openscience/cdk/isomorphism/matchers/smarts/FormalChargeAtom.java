@@ -43,5 +43,14 @@ public class FormalChargeAtom extends SMARTSAtom {
 	public boolean matches(Atom atom) {
         return (atom.getFormalCharge() == this.charge);
     };
+
+    public String toString() {
+		StringBuffer s = new StringBuffer();
+		s.append("FormalChargeAtom(");
+        s.append(this.hashCode() + ", ");
+		s.append("FC:" + charge);
+		s.append(")");
+		return s.toString();
+    }
 }
 

@@ -45,5 +45,14 @@ public class TotalHCountAtom extends SMARTSAtom {
         int hCount = ((Integer)atom.getProperty("org.openscience.cdk.Atom.totalHCount")).intValue();
         return (hCount == this.hCount);
     };
+
+    public String toString() {
+		StringBuffer s = new StringBuffer();
+		s.append("TotalHCountAtom(");
+        s.append(this.hashCode() + ", ");
+		s.append("HC:" + hCount);
+		s.append(")");
+		return s.toString();
+    }
 }
 

@@ -47,5 +47,21 @@ public class AromaticQueryBond extends SMARTSBond {
         return false;
     };
 
+    public String toString() {
+		StringBuffer s = new StringBuffer();
+		s.append("AromaticQueryBond(");
+        s.append(this.hashCode() + ", ");
+		Atom[] atoms = getAtoms();
+		s.append("#A:" + atoms.length);
+		for (int i = 0; i < atoms.length; i++) {
+			if (atoms[i] == null) {
+				s.append(", null");
+			} else {
+				s.append(", " + atoms[i].toString());
+			}
+		}
+		s.append(")");
+		return s.toString();
+    }
 }
 

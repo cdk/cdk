@@ -45,5 +45,14 @@ public class ConnectionCountAtom extends SMARTSAtom {
         int count = ((Integer)atom.getProperty("org.openscience.cdk.Atom.connectionCount")).intValue();
         return (count == this.count);
     };
+
+    public String toString() {
+		StringBuffer s = new StringBuffer();
+		s.append("ConnectionCountAtom(");
+        s.append(this.hashCode() + ", ");
+		s.append("CC:" + count);
+		s.append(")");
+		return s.toString();
+    }
 }
 

@@ -26,6 +26,7 @@ package org.openscience.cdk.isomorphism.matchers;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
+import org.openscience.cdk.ElectronContainer;
 
 /**
  * @cdk.module extra
@@ -58,5 +59,23 @@ public class QueryAtomContainer extends AtomContainer {
             throw new IllegalArgumentException("Bond is not of type QueryBond");
         }
     }
+    
+	public String toString() {
+		ElectronContainer ec;
+		StringBuffer s = new StringBuffer();
+		s.append("QueryAtomContainer(");
+		s.append(this.hashCode() + ", ");
+		s.append("#A:" + getAtomCount() + ", ");
+		s.append("#EC:" + getElectronContainerCount() + ", ");
+		for (int i = 0; i < getAtomCount(); i++) {
+			s.append(getAtomAt(i).toString() + ", ");
+		}
+		for (int i = 0; i < getElectronContainerCount(); i++) {
+			s.append(getElectronContainerAt(i).toString() + ", ");
+		}
+		s.append(")");
+		return s.toString();
+	}
+    
 }
 
