@@ -1,10 +1,9 @@
-/*
- *  $RCSfile$
+/*  $RCSfile$
  *  $Author$
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 1997-2004  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2003-2004  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -42,12 +41,12 @@ import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
- *  This class tests the SSSRFinder class.
+ * This class tests the SSSRFinder class.
  *
  * @cdk.module test
  *
- *@author     steinbeck
- *@cdk.created    October 17, 2003
+ * @author     steinbeck
+ * @cdk.created    2003-10-17
  */
 public class RingSearchTest extends TestCase
 {
@@ -70,9 +69,8 @@ public class RingSearchTest extends TestCase
 	/**
 	 *  The JUnit setup method
 	 */
-	public void setUp()
-	{
-		logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+	public void setUp() {
+		logger = new LoggingTool(this);
 	}
 
 
@@ -129,7 +127,14 @@ public class RingSearchTest extends TestCase
 		assertEquals(2, ringSet.size());
 	}
 
-
+	public void testSFBug826942() throws Exception
+	{
+		SmilesParser sp = new SmilesParser();
+		Molecule molecule = sp.parseSmiles("C1CCC2C(C1)C4CCC3(CCCCC23)(C4)");
+		SSSRFinder sssrf = new SSSRFinder(molecule);
+		RingSet ringSet = sssrf.findSSSR();
+		assertEquals(4, ringSet.size());
+	}
 
 	/**
 	 *  A unit test for JUnit
@@ -149,7 +154,7 @@ public class RingSearchTest extends TestCase
 			SSSRFinder sssrf = new SSSRFinder(molecule);
 			RingSet ringSet = sssrf.findSSSR();
 			if (standAlone) System.out.println("Found ring set of size: " + ringSet.size());
-			assertTrue(ringSet.size() == 3);
+			assertEquals(3, ringSet.size());
 			for (int f = 0; f < ringSet.size(); f++)
 			{
 				ring = (Ring) ringSet.elementAt(f);
@@ -181,7 +186,7 @@ public class RingSearchTest extends TestCase
 			SSSRFinder sssrf = new SSSRFinder(molecule);
 			RingSet ringSet = sssrf.findSSSR();
 			if (standAlone) System.out.println("Found ring set of size: " + ringSet.size());
-			assertTrue(ringSet.size() == 10);
+			assertEquals(10, ringSet.size());
 			for (int f = 0; f < ringSet.size(); f++)
 			{
 				ring = (Ring) ringSet.elementAt(f);
@@ -213,7 +218,7 @@ public class RingSearchTest extends TestCase
 			SSSRFinder sssrf = new SSSRFinder(molecule);
 			RingSet ringSet = sssrf.findSSSR();
 			if (standAlone) System.out.println("Found ring set of size: " + ringSet.size());
-			assertTrue(ringSet.size() == 5);
+			assertEquals(5, ringSet.size());
 			for (int f = 0; f < ringSet.size(); f++)
 			{
 				ring = (Ring) ringSet.elementAt(f);
