@@ -1,7 +1,7 @@
 CHANGELOG $Date$
 ------------------------------------
 
-Changes in CVS
+20050116 Release
 ------------------------------------
 New:
 * Added a 3D starting structure generator for small molecules
@@ -41,6 +41,7 @@ Fixes:
 * Fixed SetOfReactions.clone() method
 * Fixed AtomParity.clone() method
 * Added missing RingSet.toString() method
+* Fixed SMILES generations for rings with double bonds (closes #1089770)
 
 API changes:
 * Moved SingleElectron to the core module
