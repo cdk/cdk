@@ -57,7 +57,6 @@ public class CDKPluginManager {
     private LoggingTool logger;
     private Hashtable cdkPlugins;
     
-    private String pluginDirName;
     private String pluginConfigDirName;
     private CDKEditBus editBus;
     
@@ -72,11 +71,14 @@ public class CDKPluginManager {
      */
     public CDKPluginManager(String pluginDirName, String pluginConfigDirName,
                             CDKEditBus editBus) {
+        this(pluginConfigDirName, editBus);
+        loadPlugins(pluginDirName);
+    }
+    public CDKPluginManager(String pluginConfigDirName, CDKEditBus editBus) {
         this.logger = new LoggingTool(this);
         this.editBus = editBus;
-        this.pluginDirName = pluginDirName;
         this.pluginConfigDirName = pluginConfigDirName;
-        loadPlugins();
+        this.cdkPlugins = new Hashtable();
     }
     
     /**
@@ -197,7 +199,7 @@ public class CDKPluginManager {
     /**
      * Loads the plugins from a certain directory.
      */
-    private void loadPlugins() {
+    public void loadPlugins(String pluginDirName) {
         cdkPlugins = new Hashtable();
         File pluginDir = new File(pluginDirName);
         logger.info("User dict dir: " + pluginDir);
