@@ -256,10 +256,10 @@ buildPLS <- function(modelname, params) {
     # This needs to be specified properly as I'm skipping checking for this option
     ncomp <- unlist(ncomp)
 
-    if (!(method %in% c("PCR","SIMPLS","kernelPLS")) {
+    if (!(method %in% c("PCR","SIMPLS","kernelPLS"))) {
         stop("Invalid methopd specification")
     }
-    if (!(validation %in% c("none","CV")) {
+    if (!(validation %in% c("none","CV"))) {
         stop("Invalid validation sepcification")
     }
     
