@@ -13,22 +13,39 @@ public class MakeJavaFilesFilesDoclet {
         cdkPackages = new Hashtable();
     }
 
+    private String toAPIPath(String className) {
+        StringBuffer sb = new StringBuffer();
+        className = className;
+        for (int i=0; i<className.length(); i++) {
+            if (className.charAt(i) == '.') {
+                sb.append('/');
+            } else {
+                sb.append(className.charAt(i));
+            }
+        }
+        return sb.toString();
+    }
+
     public void process(RootDoc root) throws IOException {
         processPackages(root.specifiedPackages());
+
+        // output information in .javafiles and .classes files
         Enumeration keys = cdkPackages.keys();
         while (keys.hasMoreElements()) {
             String key = (String)keys.nextElement();
             
             // create one file for each cdk package = key
-            PrintWriter out = new PrintWriter((Writer)new FileWriter(key + ".javafiles"));
+            PrintWriter outJava = new PrintWriter((Writer)new FileWriter(key + ".javafiles"));
+            PrintWriter outClass = new PrintWriter((Writer)new FileWriter(key + ".classes"));
             Vector packageClasses = (Vector)cdkPackages.get(key);
             Enumeration classes = packageClasses.elements();
             while (classes.hasMoreElements()) {
                 String packageClass = (String)classes.nextElement();
-                out.println(packageClass);
+                outJava.println(toAPIPath(packageClass) + ".java");
+                outClass.println(toAPIPath(packageClass) + "*.class");
             }
-            out.flush();
-            out.close();
+            outJava.flush(); outJava.close();
+            outClass.flush(); outClass.close();
         }
     }
 
@@ -50,12 +67,11 @@ public class MakeJavaFilesFilesDoclet {
     private void processClass(ClassDoc classDoc) throws IOException {
         String className = classDoc.qualifiedName();
         Tag[] tags = classDoc.tags("cdkPackage");
+        String cdkPackage = "extra"; // if not given then it is part of cdk-extra
         if (tags.length > 0) {
-            addClassToCDKPackage(className, tags[0].text());
-        } else {
-            // ok, if not given then it is part of cdk-extra
-            addClassToCDKPackage(className, "extra");
+            cdkPackage = tags[0].text();
         }
+        addClassToCDKPackage(className, cdkPackage);
     }
     
     private void processClasses(ClassDoc[] classes) throws IOException {
