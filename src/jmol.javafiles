@@ -26,10 +26,12 @@ org/openscience/cdk/io/cml/JMOLANIMATIONConvention.java
 org/openscience/cdk/io/cml/PDBConvention.java
 org/openscience/cdk/io/cml/PMPConvention.java
 org/openscience/cdk/io/cml/XMLHandler.java
+org/openscience/cdk/io/ShelXReader.java
 org/openscience/cdk/geometry/BondTools.java
 org/openscience/cdk/renderer/color/AtomColorer.java
 org/openscience/cdk/renderer/color/PartialAtomicChargeColors.java
+org/openscience/cdk/tools/AtomTypeFactory.java
+org/openscience/cdk/tools/ChemModelManipulator.java
 org/openscience/cdk/tools/IsotopeFactory.java
 org/openscience/cdk/tools/LoggingTool.java
-org/openscience/cdk/tools/AtomTypeFactory.java
 org/openscience/cdk/tools/TXTBasedAtomTypeConfigurator.java
