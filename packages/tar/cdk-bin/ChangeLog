@@ -1,3 +1,8 @@
+20020101.1
+=================
+* added missing man pages
+* fixed cdk-fileconvert executable
+
 20020101
 =================
 * first binary release

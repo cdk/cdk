@@ -7,6 +7,8 @@ JARLIBS=cdk.jar
 
 EXTRA_DIST=${JARLIBS}
 
+CLEANFILES = $(JARLIBS)
+
 alljardir = "${JARLIBDIR}"
 
 alljar_DATA = ${JARLIBS}
