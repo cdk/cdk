@@ -163,6 +163,7 @@ public class Renderer2D implements MouseMotionListener   {
         // paint atom atom mappings
         if (r2dm.getShowAtomAtomMapping()) {
             Mapping[] mappings = reaction.getMappings();
+            logger.debug("Showing atom-atom mapping: #", mappings.length);
             for (int i=0; i<mappings.length; i++) {
                 ChemObject[] objects = mappings[i].getRelatedChemObjects();
                 Atom highlighted = r2dm.getHighlightedAtom();
@@ -170,24 +171,34 @@ public class Renderer2D implements MouseMotionListener   {
                     // only draw mapping when one of the mapped atoms
                     // is highlighted
                     if (objects[0] instanceof Atom &&
-                        objects[1] instanceof Atom &&
-                        (highlighted.equals(objects[0]) ||
-                         highlighted.equals(objects[1]))) {
-                        Atom atom1 = (Atom)objects[0];
-                        Atom atom2 = (Atom)objects[1];
-                        int[] ints = new int[4];
-                        ints[0] = (int)(atom1.getPoint2D().x);
-                        ints[1] = (int)(atom1.getPoint2D().y);
-                        ints[2] = (int)(atom2.getPoint2D().x);
-                        ints[3] = (int)(atom2.getPoint2D().y);
-                        int[] screenCoords = getScreenCoordinates(ints);
-                        graphics.setColor(r2dm.getAtomAtomMappingLineColor());
-                        graphics.drawLine(screenCoords[0], screenCoords[1],
-                        screenCoords[2], screenCoords[3]);
-                        graphics.setColor(r2dm.getForeColor());
+                        objects[1] instanceof Atom) {
+                        if (highlighted.equals(objects[0]) ||
+                            highlighted.equals(objects[1])) {
+                            Atom atom1 = (Atom)objects[0];
+                            Atom atom2 = (Atom)objects[1];
+                            int[] ints = new int[4];
+                            ints[0] = (int)(atom1.getPoint2D().x);
+                            ints[1] = (int)(atom1.getPoint2D().y);
+                            ints[2] = (int)(atom2.getPoint2D().x);
+                            ints[3] = (int)(atom2.getPoint2D().y);
+                            int[] screenCoords = getScreenCoordinates(ints);
+                            graphics.setColor(r2dm.getAtomAtomMappingLineColor());
+                            logger.debug("Mapping line color", r2dm.getAtomAtomMappingLineColor());
+                            logger.debug("Mapping line coords atom1.x: ", screenCoords[0]);
+                            logger.debug("Mapping line coords atom1.y: ", screenCoords[1]);
+                            logger.debug("Mapping line coords atom2.x: ", screenCoords[2]);
+                            logger.debug("Mapping line coords atom2.y: ", screenCoords[3]);
+                            graphics.drawLine(screenCoords[0], screenCoords[1],
+                                              screenCoords[2], screenCoords[3]);
+                            graphics.setColor(r2dm.getForeColor());
+                        }
+                    } else {
+                        logger.debug("Not showing a non atom-atom mapping");
                     }
                 }
             }
+        } else {
+            logger.debug("Not showing atom-atom mapping");
         }
         
         // paint box around total
@@ -201,7 +212,9 @@ public class Renderer2D implements MouseMotionListener   {
         if (reaction.getProperty(CDKConstants.TITLE) != null) {
             caption = reaction.getProperty(CDKConstants.TITLE) + 
                       " (" + caption + ")";
-        }
+        } else if (caption == null) {
+            caption = "r" + reaction.hashCode();
+        } 
         paintBoundingBox(minmaxReaction, caption, 2*width, graphics);
         
         // paint reactants content

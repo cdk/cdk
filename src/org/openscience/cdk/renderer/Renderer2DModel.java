@@ -309,7 +309,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
      * @return the atom-atom mapping line color     
      */
     public Color getAtomAtomMappingLineColor() {
-        return this.backColor;
+        return this.mappingColor;
     }
 
     /**
