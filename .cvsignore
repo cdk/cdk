@@ -1,2 +1,4 @@
 *.class
 *~
+cdk-*.zip
+cdk-*.tar.gz
