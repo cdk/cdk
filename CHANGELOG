@@ -11,6 +11,7 @@ New:
 * Implemented the --rebondFrom3DCoordiantes and --addHydrogens options for
   applications.FileCovertor
 * Added IOWriter that generates CDK source code
+* Added new, alternative method to saturate a molecule by adjusting bond orders
 
 Fixes:
 * Removed use of JSX
