@@ -37,6 +37,8 @@ Fixes:
 * FileFormatGuesser should use ChemObjectIO.getFormatName()
 * cdk-all is now a self containing one-jar big CDK library 
   (try java -jar cdk-all.jar)
+* Fixed SMILES parser into correct four step procedure using the new
+  hybridization atom type list (closes #957624)
 
 API changes:
 * AtomTypeFactory and IsotopeFactory moved from cdk.tools to cdk.config
