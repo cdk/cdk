@@ -162,7 +162,7 @@ public class LoggingTool {
             if (object instanceof Throwable) {
                 debugThrowable((Throwable)object);
             } else {
-                debugString(object.toString());
+                debugString("" + object.toString());
             }
         }
     }
@@ -177,81 +177,81 @@ public class LoggingTool {
     
     public void debug(Object object, Object object2) {
         if (debug) {
-            debugString(object.toString() + object2.toString());
+            debugString("" + object + object2);
         }
     }
     
     public void debug(Object object, int number) {
         if (debug) {
-            debugString(object.toString() + number);
+            debugString("" + object + number);
         }
     }
     
     public void debug(Object object, double number) {
         if (debug) {
-            debugString(object.toString() + number);
+            debugString("" + object + number);
         }
     }
     
     public void debug(Object obj, Object obj2, Object obj3) {
         if (debug) {
-            debugString(obj.toString() + obj2.toString() + obj3.toString());
+            debugString("" + obj + obj2 + obj3);
         }
     }
     
     public void debug(Object obj, Object obj2, Object obj3, Object obj4) {
         if (debug) {
-            debugString(obj.toString() + obj2.toString() + obj3.toString() +
-                  obj4.toString());
+            debugString("" + obj + obj2 + obj3 + obj4);
         }
     }
     
     public void debug(Object obj, Object obj2, Object obj3, Object obj4, Object obj5) {
         if (debug) {
-            debugString(obj.toString() + obj2.toString() + obj3.toString() +
-                  obj4.toString() + obj5.toString());
+            debugString("" + obj + obj2 + obj3 + obj4 + obj5);
         }
     }
     
     private void debugThrowable(Throwable problem) {
-        if (problem instanceof Error) {
-            debug("Error: " + problem.getMessage());
-        } else {
-            debug("Exception: " + problem.getMessage());
-        }
-        java.io.StringWriter stackTraceWriter = new java.io.StringWriter();
-        problem.printStackTrace(new PrintWriter(stackTraceWriter));
-        String trace = stackTraceWriter.toString();
-        try {
-            BufferedReader reader = new BufferedReader(new StringReader(trace));
-            if (reader.ready()) {
-                String traceLine = reader.readLine();
-                while (reader.ready() && traceLine != null) {
-                    debug(traceLine);
-                    traceLine = reader.readLine();
-                }
+        if (problem != null) {
+            if (problem instanceof Error) {
+                debug("Error: " + problem.getMessage());
+            } else {
+                debug("Exception: " + problem.getMessage());
             }
-        } catch (Exception ioException) {
-            error("Serious error in LoggingTool while printing exception stack trace: " + 
-            ioException.getMessage());
+            java.io.StringWriter stackTraceWriter = new java.io.StringWriter();
+            problem.printStackTrace(new PrintWriter(stackTraceWriter));
+            String trace = stackTraceWriter.toString();
+            try {
+                BufferedReader reader = new BufferedReader(new StringReader(trace));
+                if (reader.ready()) {
+                    String traceLine = reader.readLine();
+                    while (reader.ready() && traceLine != null) {
+                        debug(traceLine);
+                        traceLine = reader.readLine();
+                    }
+                }
+            } catch (Exception ioException) {
+                error("Serious error in LoggingTool while printing exception stack trace: " + 
+                ioException.getMessage());
+            }
         }
     }
     
     public void error(Object object) {
         if (debug) {
-            errorString(object.toString());
+            errorString("" + object);
         }
     }
 
     public void error(Object object, int number) {
         if (debug) {
-            errorString(object.toString() + number);
+            errorString("" + object + number);
         }
     }
     
     public void error(Object object, double number) {
         if (debug) {
-            errorString(object.toString() + number);
+            errorString("" + object + number);
         }
     }
     
@@ -265,27 +265,25 @@ public class LoggingTool {
     
     public void error(Object object, Object object2) {
         if (debug) {
-            errorString(object.toString() + object2.toString());
+            errorString("" + object + object2);
         }
     }
     
     public void error(Object obj, Object obj2, Object obj3) {
         if (debug) {
-            errorString(obj.toString() + obj2.toString() + obj3.toString());
+            errorString("" + obj + obj2 + obj3);
         }
     }
     
     public void error(Object obj, Object obj2, Object obj3, Object obj4) {
         if (debug) {
-            errorString(obj.toString() + obj2.toString() + obj3.toString() +
-                  obj4.toString());
+            errorString("" + obj + obj2 + obj3 + obj4);
         }
     }
     
     public void error(Object obj, Object obj2, Object obj3, Object obj4, Object obj5) {
         if (debug) {
-            errorString(obj.toString() + obj2.toString() + obj3.toString() +
-                  obj4.toString() + obj5.toString());
+            errorString("" + obj + obj2 + obj3 + obj4 + obj5);
         }
     }
     
@@ -294,26 +292,26 @@ public class LoggingTool {
             if (tostdout) {
                 toSTDOUT("FATAL", object.toString());
             } else {
-                ((org.apache.log4j.Category)logger).fatal(object.toString());
+                ((org.apache.log4j.Category)logger).fatal("" + object.toString());
             }
         }
     }
 
     public void info(Object object) {
         if (debug) {
-            infoString(object.toString());
+            infoString("" + object);
         }
     }
 
     public void info(Object object, int number) {
         if (debug) {
-            infoString(object.toString() + number);
+            infoString("" + object + number);
         }
     }
     
     public void info(Object object, double number) {
         if (debug) {
-            infoString(object.toString() + number);
+            infoString("" + object + number);
         }
     }
     
@@ -327,32 +325,30 @@ public class LoggingTool {
     
     public void info(Object object, Object object2) {
         if (debug) {
-            infoString(object.toString() + object2.toString());
+            infoString("" + object + object2);
         }
     }
     
     public void info(Object obj, Object obj2, Object obj3) {
         if (debug) {
-            infoString(obj.toString() + obj2.toString() + obj3.toString());
+            infoString("" + obj + obj2 + obj3);
         }
     }
     
     public void info(Object obj, Object obj2, Object obj3, Object obj4) {
         if (debug) {
-            infoString(obj.toString() + obj2.toString() + obj3.toString() +
-                  obj4.toString());
+            infoString("" + obj + obj2 + obj3 + obj4);
         }
     }
     
     public void info(Object obj, Object obj2, Object obj3, Object obj4, Object obj5) {
         if (debug) {
-            infoString(obj.toString() + obj2.toString() + obj3.toString() +
-                  obj4.toString() + obj5.toString());
+            infoString("" + obj + obj2 + obj3 + obj4 + obj5);
         }
     }
     public void warn(Object object) {
         if (debug) {
-            warnString(object.toString());
+            warnString("" + object);
         }
     }
     
@@ -366,39 +362,37 @@ public class LoggingTool {
     
     public void warn(Object object, int number) {
         if (debug) {
-            warnString(object.toString() + number);
+            warnString("" + object + number);
         }
     }
     
     public void warn(Object object, double number) {
         if (debug) {
-            warnString(object.toString() + number);
+            warnString("" + object + number);
         }
     }
     
     public void warn(Object object, Object object2) {
         if (debug) {
-            warnString(object.toString() + object2.toString());
+            warnString("" + object + object2);
         }
     }
     
     public void warn(Object obj, Object obj2, Object obj3) {
         if (debug) {
-            warnString(obj.toString() + obj2.toString() + obj3.toString());
+            warnString("" + obj + obj2 + obj3);
         }
     }
     
     public void warn(Object obj, Object obj2, Object obj3, Object obj4) {
         if (debug) {
-            warnString(obj.toString() + obj2.toString() + obj3.toString() +
-                  obj4.toString());
+            warnString("" + obj + obj2 + obj3 + obj4);
         }
     }
     
     public void warn(Object obj, Object obj2, Object obj3, Object obj4, Object obj5) {
         if (debug) {
-            warnString(obj.toString() + obj2.toString() + obj3.toString() +
-                  obj4.toString() + obj5.toString());
+            warnString("" + obj + obj2 + obj3 + obj4 + obj5);
         }
     }
 
