@@ -66,9 +66,13 @@ import org.openscience.cdk.io.setting.StringIOSetting;
  *
  * @author        shk3
  * @created       February 19, 2004
- * @cdk.module    libio
- * @keyword       cml
- * @keyword       class convertor
+ * @cdk.module    extra
+ * @cdk.keyword   CML
+ * @cdk.keyword   class convertor
+ *
+ * @cdk.builddepends base.jar
+ * @cdk.builddepends pmrlib.jar
+ * @cdk.builddepends cmlAll.jar
  */
 public class Convertor {
 
