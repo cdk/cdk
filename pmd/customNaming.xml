@@ -9,8 +9,8 @@
     <exclude name="LongVariable"/>
   </rule>
 
-  <rule name="CustomLongVariable"
-        message="Avoid excessively long variable names like ${0}"
+  <rule name="CDK_LongVariable"
+        message="Avoid excessively long variable names like {0}"
         class="net.sourceforge.pmd.rules.XPathRule">
     <description>
       Detects when a field, formal or local variable is declared with a long name.

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<ruleset name="custom">
+
+  <description>
+    This ruleset checks the CDK sources for bad code.
+  </description>
+
+  <rule ref="rulesets/basic.xml"/>
+  <rule ref="pmd/customNaming.xml"/> <!-- the pmd/ in front is needed because it's started in one dir up -->
+  <rule ref="rulesets/unusedcode.xml"/>
+  <rule ref="rulesets/imports.xml"/>
+  <rule ref="rulesets/strings.xml"/>
+  <rule ref="rulesets/codesize.xml"/>
+
+</ruleset>
