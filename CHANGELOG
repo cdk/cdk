@@ -14,12 +14,16 @@ New:
   hydrogens, e.g. H3C-
 * Stoichiometry and direction concepts added to Reaction
 * Added a reverse() Reaction method to ReactionManipulator
+* Debug CDK core classes that can help when developing CDK
+  based applications (dist-core-debug task in build.xml)
 
 Fixes:
 * Added missing LGPL license to distributions.
 * Fixed bugs in ChemSequence.getChemModels() and
   ChemFile.getChemSequences()
 * JCPControllor nows reconfigures atom after changing symbol
+* 2D coordinate generation for molecules with only
+  one atom (fixed #780545)
 
 API changes:
 * ConnectivityChecker.partitionIntoMolecules() now returns a 

@@ -1,0 +1,39 @@
+--- src/org/openscience/cdk/Molecule.java	2003-07-08 10:28:02.824274000 +0200
++++ src/org/openscience/cdk/Molecule.java.debug	2003-08-07 16:44:29.746038000 +0200
+@@ -29,6 +29,13 @@
+  * Represents the concept of a chemical molecule, an object composed of 
+  * atoms connected by bonds.
+  *
++ * <p><b>CORE-DEBUG</b><br>
++ * This class has debug facilities. While normal CDK core classes do not
++ * supply any validation of chemical correctness. The CDK core-debug classes 
++ * are supposed to do this. They can be used while software is being developed
++ * to provide debug information by the core classes, and check for problems
++ * that might lead to problems in helper classes.
++ *
+  * @author     steinbeck
+  * @created    2000-10-02
+  *
+@@ -85,6 +92,22 @@
+                 }
+                 return o;
+         }
++
++    public void addBond(Bond bond) {
++        // check that all 
++        Atom[] atoms = bond.getAtoms();
++        for (int i=0; i<atoms.length; i++) {
++            if (!this.contains(atoms[i])) {
++                throw new IncorrectUseOfCDKCoreClassError(
++                    "You are trying to add a bond to this molecule between atoms that " +
++                    "are not found in this Molecule"
++                );
++            }
++        }
++        
++        super.addBond(bond);
++    }
++    
+ }
+ 
+ 
