@@ -51,7 +51,20 @@ public class ChemFileTest extends TestCase {
         return new TestSuite(ChemFileTest.class);
     }
     
-    public void testAddChemSequence() {
+    public void testChemFile() {
+        ChemFile cs = new ChemFile();
+        assertNotNull(cs);
+    }
+
+    public void testAddChemSequence_ChemSequence() {
+        ChemFile cs = new ChemFile();
+        cs.addChemSequence(new ChemSequence());
+        cs.addChemSequence(new ChemSequence());
+        cs.addChemSequence(new ChemSequence());
+        assertEquals(3, cs.getChemSequenceCount());
+    }
+    
+    public void testGrowChemSequenceArray() {
         ChemFile cs = new ChemFile();
         cs.addChemSequence(new ChemSequence());
         cs.addChemSequence(new ChemSequence());
@@ -68,9 +81,18 @@ public class ChemFileTest extends TestCase {
         cs.addChemSequence(new ChemSequence());
         cs.addChemSequence(new ChemSequence());
         cs.addChemSequence(new ChemSequence());
+
+        assertNotNull(cs.getChemSequences());
+        assertEquals(3, cs.getChemSequences().length);
+    }
+
+    public void testGetChemSequenceCount() {
+        ChemFile cs = new ChemFile();
+        cs.addChemSequence(new ChemSequence());
+        cs.addChemSequence(new ChemSequence());
+        cs.addChemSequence(new ChemSequence());
  
         assertEquals(3, cs.getChemSequenceCount());
-        assertEquals(3, cs.getChemSequences().length);
     }
 
     /** Test for RFC #9 */

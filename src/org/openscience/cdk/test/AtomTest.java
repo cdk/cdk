@@ -104,7 +104,10 @@ public class AtomTest extends TestCase {
 
         Atom a = new Atom("C");
         a.setCharge(charge);
-        assertTrue(charge == a.getCharge());
+        assertEquals(charge, a.getCharge(), 0.001);
+    }
+    public void testGetCharge() {
+        testSetCharge_double();
     }
 
     /**
@@ -124,7 +127,7 @@ public class AtomTest extends TestCase {
     /**
      * Method to test the setFractional3D() methods.
      */
-    public void testSetFractional3d_Point3d() {
+    public void testSetFractionalPoint3d_Point3d() {
         Atom a = new Atom("C");
         a.setFractionalPoint3d(new Point3d(0.5, 0.5, 0.5));
         Point3d fract = a.getFractionalPoint3d();
@@ -132,6 +135,9 @@ public class AtomTest extends TestCase {
         assertEquals(0.5, fract.x, 0.001);
         assertEquals(0.5, fract.y, 0.001);
         assertEquals(0.5, fract.z, 0.001);
+    }
+    public void testGetFractionalPoint3d() {
+        testSetFractionalPoint3d_Point3d();
     }
     
     public void testGetFractX3d() {
@@ -233,21 +239,21 @@ public class AtomTest extends TestCase {
     /**
      * Method to test the set[XY]2D() methods.
      */
-    public void testSetX2d() {
+    public void testSetX2d_double() {
 
         Atom a = new Atom("C");
         a.setX2d(1.0);
 
         assertNotNull(a.getPoint2d());
-	assertEquals(1.0, a.getPoint2d().x, 0.001);
+        assertEquals(1.0, a.getPoint2d().x, 0.001);
     }
-    public void testSetY2d() {
+    public void testSetY2d_double() {
 
         Atom a = new Atom("C");
         a.setY2d(2.0);
 
         assertNotNull(a.getPoint2d());
-	assertEquals(2.0, a.getPoint2d().y, 0.001);
+        assertEquals(2.0, a.getPoint2d().y, 0.001);
     }
     
     public void testGetX2d() {

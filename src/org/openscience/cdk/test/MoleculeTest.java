@@ -28,8 +28,7 @@ package org.openscience.cdk.test;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.*;
 
 /**
  * Checks the funcitonality of the Molecule class.
@@ -55,5 +54,51 @@ public class MoleculeTest extends TestCase {
     public void testMolecule() {
         Molecule m = new Molecule();
         assertTrue(m != null);
+    }
+
+    public void testMolecule_int_int() {
+        Molecule m = new Molecule(5,5);
+        assertTrue(m != null);
+        assertEquals(0, m.getAtoms().length);
+        assertEquals(0, m.getElectronContainers().length);
+    }
+
+    public void testMolecule_AtomContainer() {
+        AtomContainer acetone = new AtomContainer();
+        Atom c1 = new Atom("C");
+        Atom c2 = new Atom("C");
+        Atom o = new Atom("O");
+        Atom c3 = new Atom("C");
+        acetone.addAtom(c1);
+        acetone.addAtom(c2);
+        acetone.addAtom(c3);
+        acetone.addAtom(o);
+        Bond b1 = new Bond(c1, c2,1);
+        Bond b2 = new Bond(c1, o, 2);
+        Bond b3 = new Bond(c1, c3,1);
+        acetone.addBond(b1);
+        acetone.addBond(b2);
+        acetone.addBond(b3);
+        
+        Molecule m = new Molecule(acetone);
+        assertTrue(m != null);
+        assertEquals(4, m.getAtomCount());
+        assertEquals(3, m.getBondCount());
+    }
+
+	public void testClone() {
+        Molecule molecule = new Molecule();
+        Object clone = molecule.clone();
+        assertTrue(clone instanceof Molecule);
+    }    
+
+    /** Test for RFC #9 */
+    public void testToString() {
+        Molecule m = new Molecule();
+        String description = m.toString();
+        for (int i=0; i< description.length(); i++) {
+            assertTrue(description.charAt(i) != '\n');
+            assertTrue(description.charAt(i) != '\r');
+        }
     }
 }
