@@ -227,7 +227,7 @@
 
         <target name="compile-test" depends="compile">
                 <!-- Task to build the test classes. -->
-                <javac srcdir="${src}/org/openscience/cdk/test"
+                <javac srcdir="${build.src}/org/openscience/cdk/test"
                        destdir="${build}" optimize="${optimization}" 
                        debug="${debug}" deprecation="${deprecation}">
                         <exclude name="renderer/Accel*.java" />
@@ -373,7 +373,7 @@
                 </jar>
         </target>
 
-        <target name="dist-test" depends="dist-core, dist-standard, dist-io, compile-test, dist.init">
+        <target name="dist-test" depends="dist-all, compile-test">
                 <jar jarfile="${dist}/jar/cdk-test.jar">
                     <fileset dir="${build}">
                         <include name="org/openscience/cdk/test/**" />
