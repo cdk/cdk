@@ -201,7 +201,9 @@ public class JCPController2D {
                  *                          LASSOMODE                                     *
                  *************************************************************************/
                 if (c2dm.getDrawMode() == c2dm.LASSO) {
-                         r2dm.addLassoPoint(new Point(mouseX, mouseY));
+                    /* Draw polygon in screencoordinates, convert them
+                       to world coordinates when mouse release */
+                    r2dm.addLassoPoint(new Point(e.getX(), e.getY()));
                 }
         }
 
@@ -556,28 +558,29 @@ public class JCPController2D {
            /*************************************************************************
             *                          LASSOMODE                                     *
             *************************************************************************/
-                if (c2dm.getDrawMode() == c2dm.LASSO)
-                {
-                        if (wasDragged)
-                        {
-                                Vector lassoPoints = r2dm.getLassoPoints();
-                                r2dm.addLassoPoint(new Point((Point)lassoPoints.elementAt(0)));
-                                int number = lassoPoints.size();
-                                int[] xPoints = new int[number];
-                                int[] yPoints = new int[number];
-                                Point currentPoint;
-                                for (int i = 0; i < number; i++)
-                                {
-                                        currentPoint = (Point)lassoPoints.elementAt(i);
-                                        xPoints[i] = currentPoint.x;
-                                        yPoints[i] = currentPoint.y;
-                                }
-                                Polygon polygon = new Polygon(xPoints, yPoints, number);
-                                r2dm.setSelectedPart(getContainedAtoms(polygon));
-                                r2dm.getLassoPoints().removeAllElements();
-                                r2dm.fireChange();
-				fireChange();
+                if (c2dm.getDrawMode() == c2dm.LASSO) {
+                    if (wasDragged) {
+                        Vector lassoPoints = r2dm.getLassoPoints();
+                        r2dm.addLassoPoint(new Point((Point)lassoPoints.elementAt(0)));
+                        int number = lassoPoints.size();
+                        int[] xPoints = new int[number];
+                        int[] yPoints = new int[number];
+                        Point currentPoint;
+                        for (int i = 0; i < number; i++) {
+                            currentPoint = (Point)lassoPoints.elementAt(i);
+                            xPoints[i] = currentPoint.x;
+                            yPoints[i] = currentPoint.y;
                         }
+                        /* Convert points to world coordinates as they are
+                           in screen coordinates in the vector */
+                        xPoints = getWorldCoordinates(xPoints);
+                        yPoints = getWorldCoordinates(yPoints);
+                        Polygon polygon = new Polygon(xPoints, yPoints, number);
+                        r2dm.setSelectedPart(getContainedAtoms(polygon));
+                        r2dm.getLassoPoints().removeAllElements();
+                        r2dm.fireChange();
+                        fireChange();
+                    }
                 }
                 wasDragged = false;
             }
@@ -842,6 +845,16 @@ public class JCPController2D {
         return (int)((double)coord / r2dm.getZoomFactor());
     }
     
+    /**
+     * This methods corrects for the zoom factor, and thus transforms
+     * screen coordinates back into world coordinates.
+     */
+    private int[] getWorldCoordinates(int[] coords) {
+        for (int i=0; i<coords.length; i++) {
+            coords[i] = (int)((double)coords[i] / r2dm.getZoomFactor());
+        }
+        return coords;
+    }
     
     	/**
 	 * Adds a change listener to the list of listeners

@@ -3,6 +3,10 @@ CHANGELOG $Date$
 
 Changes in CVS
 ------------------------------------
+Fixes:
+* Fixed reading of AtomType's with JSX
+* Fixed zooming of atomic charges in Renderer2D
+* Fixed lassoing of atoms in Renderer2D
 
 20030217 Release
 ------------------------------------

@@ -336,9 +336,9 @@ public class Renderer2D
             // show formal charge
         if (atom.getFormalCharge() != 0) {
             // print charge in smaller font size
-            Font normal = g.getFont();
-            float current_size = g.getFont().getSize2D();
-            g.setFont(normal.deriveFont((float)(current_size - 1.0)));
+            Font unscaledFont = g.getFont();
+            int fontSize = getScreenSize(unscaledFont.getSize() - 1);
+            g.setFont(unscaledFont.deriveFont((float)fontSize));        
 
             int charge = atom.getFormalCharge();
             String chargeString = (new Integer(charge)).toString();
@@ -351,10 +351,23 @@ public class Renderer2D
             } else if (charge < -1) {
                 chargeString = chargeString.substring(1) + "-";
             }
-            g.drawString(chargeString,
-                (int)atom.getX2D() + xSymbOffset,
-                (int)atom.getY2D() - ySymbOffset);
-            g.setFont(normal);
+            // draw string
+            int[] hCoords = {(int)atom.getX2D() + xSymbOffset,
+                             (int)atom.getY2D() - ySymbOffset};
+            hCoords = getScreenCoordinates(hCoords);
+            g.drawString(chargeString, hCoords[0], hCoords[1]);
+            
+            /** Put circles around + or - sign
+            Rectangle2D stringBounds = fm.getStringBounds(chargeString, g);
+            int width = (int)stringBounds.getWidth();
+            int height = (int)stringBounds.getHeight();
+            int[] coords = {(int)atom.getX2D() + xSymbOffset - (width/2), 
+                            (int)atom.getY2D() - ySymbOffset - (height/2),
+                            (int)stringBounds.getWidth(), 
+                            (int)stringBounds.getWidth()};
+            coords = getScreenCoordinates(coords);
+            g.drawOval(coords[0], coords[1], coords[2], coords[3]); */
+            g.setFont(unscaledFont);
         }
     }
     
