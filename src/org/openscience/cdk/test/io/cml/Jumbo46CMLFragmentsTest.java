@@ -56,14 +56,14 @@ import org.openscience.cdk.io.CMLReader;
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  */
-public class CMLFragmentsTest extends CDKTestCase {
+public class Jumbo46CMLFragmentsTest extends CDKTestCase {
 
-    public CMLFragmentsTest(String name) {
+    public Jumbo46CMLFragmentsTest(String name) {
         super(name);
     }
 
     public static Test suite() {
-        return new TestSuite(CMLFragmentsTest.class);
+        return new TestSuite(Jumbo46CMLFragmentsTest.class);
     }
 
     public void testAtomId() {
