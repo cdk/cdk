@@ -157,7 +157,12 @@ public class Convertor {
         if (object instanceof SetOfMolecules) {
             writeSetOfMolecules((SetOfMolecules)object, element);
         } else if (object instanceof Molecule) {
-            writeWrappedMolecule((Molecule)object, element);
+            // create CML atom and bond ids
+            Molecule mol = (Molecule)object;
+            if (useCmlIdentifiers) {
+                new IDCreator().createIDs(mol);
+            }
+            writeMolecule(mol, element);
         } else if (object instanceof AtomContainer) {
             writeWrappedAtomContainer((AtomContainer)object, element);
         } else if (object instanceof Crystal) {
@@ -394,21 +399,13 @@ public class Convertor {
         return false;
     }
 
-    private void writeWrappedMolecule(Molecule mol, Element nodeToAppend) throws CMLException{
+    private void writeMolecule(Molecule mol, Element nodeToAppend) throws CMLException{
         logger.debug("Writing molecule");
-        // create CML atom and bond ids
-        if (useCmlIdentifiers) {
-            new IDCreator().createIDs(mol);
-        }
         MoleculeImpl molecule = new MoleculeImpl(doc);
         addID(mol, molecule);
         addTitle(mol, molecule);
         nodeToAppend.appendChild(molecule);
-        writeMolecule(mol, molecule);
-    }
-        
-    private void writeMolecule(Molecule mol, Element nodeToAppend) throws CMLException{
-        writeAtomContainer(mol,nodeToAppend);
+        writeAtomContainer(mol,molecule);
     }
 
     private void writeAtomArray(AtomContainer container, Atom atoms[], Element nodeToAppend) throws CMLException {
