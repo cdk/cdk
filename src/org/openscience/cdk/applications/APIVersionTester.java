@@ -37,7 +37,7 @@ import java.util.StringTokenizer;
 public class APIVersionTester {
 
     /**
-     * Tests wether the first second string is bigger than or equals to the first.
+     * Tests wether the second string is bigger than or equals to the first.
      */
     public static boolean isBiggerOrEqual(String one, String two) {
         StringTokenizer oneTokens = new StringTokenizer(one, ".");

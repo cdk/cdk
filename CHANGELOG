@@ -26,6 +26,7 @@ Fixes:
 * Removed entry for 'D' in the isotope list; '2H' is still present
   (closes #1118689)
 * Fail more informative on (corrupt) MDL files that lack the property block
+* Fixed API detection in CDKPluginManager when distributing change events
 
 API changes:
 * Moved IsotopeFactory from cdk-standard to the cdk-core module
