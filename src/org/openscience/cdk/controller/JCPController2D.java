@@ -1,4 +1,4 @@
-/* $RCSfile$    
+/* $RCSfile$
  * $Author$    
  * $Date$    
  * $Revision$
@@ -234,7 +234,7 @@ public class JCPController2D
                         if (bondInRange != null) {
                             // increase Bond order
                             double order = bondInRange.getOrder();
-                            if (order => 3.0) {
+                            if (order >= 3.0) {
                                 bondInRange.setOrder(1.0);
                             } else {
                                 bondInRange.setOrder(order + 1.0);

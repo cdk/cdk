@@ -1,3 +1,10 @@
+cdk (20020831-1) unstable; urgency=low
+
+  * New upstream version
+  * Merged libcdk, libcdkextra and cdk into one package
+
+ -- E.L. Willighagen (Egon) <egonw@sci.kun.nl>  Sun, 01 Sep 2002 20:34:11 +0100
+
 cdk (20020805-1) unstable; urgency=low
 
   * New upstream version

@@ -102,7 +102,11 @@ public class MFAnalyser{
     }
 
 		
-	/** Returns a set of nodes excluding all the hydrogens*/
+	/** 
+     * Returns a set of nodes excluding all the hydrogens
+     *
+     * @keyword hydrogen, removal
+     */
 	public AtomContainer getHeavyAtoms()
 	{
 		AtomContainer newAc = new AtomContainer();
@@ -258,6 +262,14 @@ public class MFAnalyser{
         }
         return results;
     }
+
+    /**
+     * Returns the number of distinct elements in the formula.
+     */
+    public int getElementCount() {
+        return getElements().size();
+    }
+
 }
 
 

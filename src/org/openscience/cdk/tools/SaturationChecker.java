@@ -1,7 +1,8 @@
-/*
- *  SaturationChecker.java
+/*  $RCSfile$    
+ *  $Author$    
+ *  $Date$
+ *  $Revision$
  *
- *  $RCSfile$    $Author$    $Date$  *
  *  Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
  *
  *  Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
@@ -230,4 +231,34 @@ public class SaturationChecker
 		}
 	}
 
+    /**
+     * Method that saturates a molecule by adding hydrogens.
+     *
+     * @param molecule Molecule to saturate
+     * @keyword hydrogen, adding
+     */
+    public void saturateWithHydrogen(Molecule molecule) {
+        Atom partner = null;
+        Atom atom = null;
+        Atom[] partners = null;
+        AtomType[] atomTypes = null;
+        Bond bond = null;
+        for (int f = 0; f < molecule.getAtomCount(); f ++) {
+            atom = molecule.getAtomAt(f);
+            // set number of implicit hydrogens to zero
+            atom.setHydrogenCount(0);
+            // get default atom
+            atomTypes = atf.getAtomTypes(atom.getSymbol(), atf.ATOMTYPE_ID_STRUCTGEN);
+            AtomType defaultAtom = atomTypes[0];
+            // add explicit hydrogens
+            int missingHydrogen = (int)(defaultAtom.getMaxBondOrder() -
+                                        molecule.getBondOrderSum(atom));
+            for (int i = 1; i <= missingHydrogen; i++ ) {
+                Atom hydrogen = new Atom("H");
+                molecule.addAtom(hydrogen);
+                Bond newBond = new Bond(atom, hydrogen, 1.0);
+                molecule.addBond(newBond);
+            }
+        }
+    }
 }
