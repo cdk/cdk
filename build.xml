@@ -71,11 +71,13 @@
             <!-- Gives information about the building process. -->
             <echo message="Environment:" />
             <echo message="   Ant version: ${ant.version}" />
+            <echo message="   ${ANT_HOME}: ${ant.home}" />
             <echo message="  Java version: ${java.version}" />
+            <echo message="  Java ext dir: ${java.ext.dirs}" />
             <echo message="    Jmol found: ${jmol.present}" />
             <echo message="  JOELib found: ${joelib.present}" />
             <echo message="  Java3D found: ${java3D.present}" />
-            <echo message="  Java ext dir: ${java.ext.dirs}" />
+            <echo message="   Junit found: ${junit.present}" />
             <echo message="" />
             <echo message="Compiling:" />
             <echo message="           for: ${build.compiler}" />
@@ -97,6 +99,9 @@
           <available classname="javax.media.j3d.Canvas3D"
                      classpathref="project.class.path"
                      property="java3D.present"/>
+          <available classname="junit.framework.TestCase"
+                     classpath="${ant.home}/lib/junit.jar"
+                     property="junit.present"/>
           <condition property="hasAnt16">
             <contains string="${ant.version}" substring="1.6"/>
           </condition>
@@ -702,7 +707,7 @@
                 <zip zipfile="${package}.zip" basedir="${sourcedist}/" includes="${package}/**" />
         </target>
 
-	<target name="test-core" depends="dist-core, dist-test">
+	<target name="test-core" depends="dist-core, dist-test, noJunit">
             <junit printsummary="yes" haltonfailure="yes" fork="yes">
                 <classpath refid="project.class.path" />
                 <classpath>
@@ -720,7 +725,7 @@
             </junit>
         </target>
 	
-	<target name="test-standard" depends="dist-core, dist-standard, dist-test">
+	<target name="test-standard" depends="dist-core, dist-standard, dist-test, noJunit">
             <junit printsummary="yes" haltonfailure="yes" fork="yes">
                 <classpath refid="project.class.path" />
                 <classpath>
@@ -739,7 +744,7 @@
             </junit>
         </target>
 	
-        <target name="test-io" depends="dist-core, dist-standard, dist-test, dist-io">
+        <target name="test-io" depends="dist-core, dist-standard, dist-test, dist-io, noJunit">
             <junit printsummary="yes" haltonfailure="yes" showoutput="yes" fork="yes">
                 <classpath refid="project.class.path" />
                 <classpath>
@@ -759,7 +764,7 @@
             </junit>
         </target>
 
-        <target id="test-all" name="test-all" depends="test"
+        <target id="test-all" name="test-all" depends="test, noJunit"
                 description="Performs a full JUnit test for the CDK, including experimental classes.">
                 <junit printsummary="yes" haltonfailure="yes" fork="yes">
                     <classpath>
@@ -788,8 +793,12 @@
                 </junit>
         </target>
 
-        <target id="test" name="test" depends="dist-test"
-                description="Performs a full JUnit test for the CDK.">
+        <target id="noJunit" name="noJunit" depends="check" unless="junit.present">
+            <fail message="JUnit is not installed in Ant. Please copy cdk/jar/junit.jar to ${ant.home}/lib/."/>
+        </target>
+        
+        <target id="test" name="test" depends="dist-test, noJunit"
+                description="Performs a full JUnit test for the CDK." if="junit.present">
                 <junit printsummary="yes" haltonfailure="yes" fork="yes">
                     <classpath>
                         <pathelement location="${dist}/jar/cdk-core.jar" />
@@ -817,7 +826,7 @@
                 </junit>
         </target>
 
-        <target id="limitations" name="limitations" depends="dist-test"
+        <target id="limitations" name="limitations" depends="dist-test, noJunit"
                 description="Performs a JUnit tests that indicate limitations of certain CDK algorithms/classes.">
                 <junit printsummary="yes" haltonfailure="yes" fork="yes">
                     <classpath>
@@ -913,7 +922,7 @@
                 </java>
         </target>
 
-        <target id="junit-test" name="junit-test" depends="dist-core, dist-extra, dist-test, dist-standard" 
+        <target id="junit-test" name="junit-test" depends="dist-core, dist-extra, dist-test, dist-standard, noJunit" 
                 description="Runs one specific JUnit test suite (org.openscience.cdk.test.&lt;class>) with -Dtestclass=&lt;class>.">
                 <echo message="JUnit tests class: testclass=${testclass}"/>
                 <junit printsummary="yes" haltonfailure="no" fork="yes">
