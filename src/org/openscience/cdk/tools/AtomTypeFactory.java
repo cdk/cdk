@@ -94,8 +94,34 @@ public class AtomTypeFactory {
         readConfiguration(configFile);
     }
 
+	/**
+	 * Private constructor for the AtomTypeFactory singleton.
+	 *
+	 * @exception  IOException             Thrown if something goes wrong with reading the config
+	 * @exception  OptionalDataException   What ever that may be
+	 * @exception  ClassNotFoundException  Thrown if a class was not found :-)
+	 */
+    private AtomTypeFactory(InputStream ins, String format) throws IOException, OptionalDataException, ClassNotFoundException {
+        if (logger == null) {
+            logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        }
+        atomTypes = new Vector(30);
+        readConfiguration(ins, format);
+    }
+
     /**
      * Method to create a default AtomTypeFactory, using the structgen atom type list.
+     * An AtomType of this kind is not cached.
+     *
+     * @see #getInstance(String)
+     */
+    public static AtomTypeFactory getInstance(InputStream ins, String format) throws IOException, OptionalDataException, ClassNotFoundException {
+        return new AtomTypeFactory(ins, format);
+    }
+
+    /**
+     * Method to create a default AtomTypeFactory, using the structgen atom type list.
+     * An AtomType of this kind is not cached.
      *
      * @see #getInstance(String)
      */
@@ -161,25 +187,35 @@ public class AtomTypeFactory {
 			}
 		}
 
-		try
-		{
-			if (configFile.endsWith("txt")) {
-				atc = (AtomTypeConfigurator) this.getClass().getClassLoader().
-						loadClass("org.openscience.cdk.tools.TXTBasedAtomTypeConfigurator").
-						newInstance();
-			} else if (configFile.endsWith("xml")) {
-				atc = (AtomTypeConfigurator) this.getClass().getClassLoader().
-						loadClass("org.openscience.cdk.tools.CDKBasedAtomTypeConfigurator").
-						newInstance();
-			}
-			logger.debug("Instantiated a AtomTypeConfigurator of class: " +
-					atc.getClass().getName());
-		} catch (Exception exc)
-		{
-			logger.error("Could not get instance of AtomTypeConfigurator for " + configFile);
+        String format = "xml";
+        if (configFile.endsWith("txt")) {
+            format = "txt";
+        } else if (configFile.endsWith("xml")) {
+            format = "xml";
+        }
+        readConfiguration(ins, format);
+    }
+    
+    private AtomTypeConfigurator constructConfigurator(String format) {
+        try {
+            if (format.equals("txt")) {
+                return (AtomTypeConfigurator) this.getClass().getClassLoader().
+                    loadClass("org.openscience.cdk.tools.TXTBasedAtomTypeConfigurator").
+                    newInstance();
+            } else if (format.equals("xml")) {
+                return (AtomTypeConfigurator) this.getClass().getClassLoader().
+                 loadClass("org.openscience.cdk.tools.CDKBasedAtomTypeConfigurator").
+                 newInstance();
+            }
+		} catch (Exception exc) {
+			logger.error("Could not get instance of AtomTypeConfigurator for format " + format);
 		}
-		if (atc != null)
-		{
+        return null;
+    }
+    
+    private void readConfiguration(InputStream ins, String format) {
+        AtomTypeConfigurator atc = constructConfigurator(format);
+		if (atc != null) {
 			atc.setInputStream(ins);
 			try
 			{

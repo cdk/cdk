@@ -27,7 +27,9 @@ package org.openscience.cdk.test.tools;
 import org.openscience.cdk.*;
 import org.openscience.cdk.tools.*;
 import java.util.*;
+import java.io.InputStream;
 import junit.framework.*;
+
 
 /**
  * Checks the funcitonality of the AtomTypeFactory
@@ -57,6 +59,28 @@ public class AtomTypeFactoryTest extends TestCase {
 	public void testAtomTypeFactory() {
         assertTrue(atf != null);
 		assertTrue(atf.getSize() > 0);
+    }
+    
+    public void testGetInstanceInputStream() {
+        try {
+            String configFile = "org/openscience/cdk/config/structgen_atomtypes.xml";
+            InputStream ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
+            AtomTypeFactory atf = AtomTypeFactory.getInstance(ins, "xml");
+            assertNotNull(atf);
+            assertTrue(atf.getSize() > 0);
+        } catch (Exception exception) {
+            fail();
+        }
+    }
+    
+    public void testGetInstance() {
+        try {
+            AtomTypeFactory atf = AtomTypeFactory.getInstance();
+            assertNotNull(atf);
+            assertTrue(atf.getSize() > 0);
+        } catch (Exception exception) {
+            fail();
+        }
     }
     
     public void testGetAtomType() {
