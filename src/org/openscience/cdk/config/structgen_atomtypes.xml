@@ -15,6 +15,11 @@
    maxBondOrder="3.0"
    maxBondOrderSum="4.0"/>
   <org.openscience.cdk.AtomType
+   symbol="B"
+   id="structgen.B3"
+   maxBondOrder="2.0"
+   maxBondOrderSum="3.0"/>
+  <org.openscience.cdk.AtomType
    symbol="Si"
    id="structgen.Si4"
    maxBondOrder="3.0"
