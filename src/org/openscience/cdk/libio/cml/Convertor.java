@@ -366,7 +366,10 @@ public class Convertor {
     }
     
     private boolean addAtomID(Atom atom, Element nodeToAppend) {
-        nodeToAppend.setAttribute("id", "a" + new Integer(atom.hashCode()).toString());
+        if(atom.getID()!=null && !atom.getID().equals(""))
+          nodeToAppend.setAttribute("id", atom.getID());
+        else
+          nodeToAppend.setAttribute("id", "a" + new Integer(atom.hashCode()).toString());
         return true;
     }
     
