@@ -30,6 +30,7 @@ import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.charges.Polarizability;
+import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 
 import java.util.Vector;
 import java.util.ArrayList;
@@ -217,6 +218,10 @@ public class BCUTDescriptor implements Descriptor {
             System.out.println(e.toString());
         }
 
+        // do aromaticity detecttion for calculating polarizability later on
+        HueckelAromaticityDetector had = new HueckelAromaticityDetector();
+        had.detectAromaticity(ac);
+
         // find number of heavy atoms
         int nheavy = 0;
         for (int i = 0; i < ac.getAtomCount(); i++) {
@@ -241,7 +246,6 @@ public class BCUTDescriptor implements Descriptor {
         } catch (Exception e) {
             System.out.println(e.toString());
         }
-
         double[][]  bm = BurdenMatrix.evalBurdenMatrix(ac, diagvalue);
         Matrix m = new Matrix(bm);
         EigenvalueDecomposition ed = new EigenvalueDecomposition(m);
