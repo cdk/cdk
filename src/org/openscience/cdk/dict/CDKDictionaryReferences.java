@@ -50,6 +50,8 @@ public class CDKDictionaryReferences {
             makeReferencesExplicitForMolecule((Molecule)object);
         } else if (object instanceof Reaction) {
             makeReferencesExplicitForReaction((Reaction)object);
+        } else if (object instanceof ChemModel) {
+            makeReferencesExplicitForChemModel((ChemModel)object);
         } else {
             // don't do anything yet
         }
@@ -72,12 +74,23 @@ public class CDKDictionaryReferences {
     }
 
     private static void makeReferencesExplicitForBond(Bond bond) {
+        int selfCounter = 0;
+        // dictref: Bond:self = chemical:bond
+        bond.setProperty(DictionaryDatabase.DICTREFPROPERTYNAME +
+            ":field:order", "chemical:bondOrder");
     }
 
     private static void makeReferencesExplicitForMolecule(Molecule molecule) {
     }
 
     private static void makeReferencesExplicitForReaction(Reaction reaction) {
+        int selfCounter = 0;
+        // dictref: Reaction:self = reaction:reactionStep
+        reaction.setProperty(DictionaryDatabase.DICTREFPROPERTYNAME +
+            ":self:" + selfCounter, "reaction:reactionStep");
+    }
+
+    private static void makeReferencesExplicitForChemModel(ChemModel model) {
     }
 
 }
