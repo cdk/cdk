@@ -126,7 +126,11 @@ public class MDLWriter extends DefaultChemObjectWriter {
 		else if (object instanceof Molecule)
 		{
 			try{
-		    		writeMolecule((Molecule)object);
+        boolean[] isVisible=new boolean[((Molecule)object).getAtomCount()];
+        for(int i=0;i<isVisible.length;i++){
+          isVisible[i]=true;
+        }
+		    writeMolecule((Molecule)object,isVisible);
 			}
 			catch(Exception ex){
 				logger.error(ex.getMessage());
@@ -153,7 +157,11 @@ public class MDLWriter extends DefaultChemObjectWriter {
 		Molecule[] molecules = som.getMolecules();
 			try
 			{
-		writeMolecule(molecules[0]);
+        boolean[] isVisible=new boolean[molecules[0].getAtomCount()];
+        for(int i=0;i<isVisible.length;i++){
+          isVisible[i]=true;
+        }
+        writeMolecule(molecules[0], isVisible);
 			}
 			catch (Exception exc)
 			{
@@ -164,7 +172,11 @@ public class MDLWriter extends DefaultChemObjectWriter {
 			{
 			    writer.write("$$$$");
 				writer.newLine();
-				writeMolecule(molecules[i]);
+        boolean[] isVisible=new boolean[molecules[i].getAtomCount()];
+        for(int k=0;k<isVisible.length;k++){
+          isVisible[k]=true;
+        }
+				writeMolecule(molecules[i], isVisible);
 			}
 			catch (Exception exc)
 			{
@@ -182,27 +194,61 @@ public class MDLWriter extends DefaultChemObjectWriter {
 	 * @param   molecule  Molecule that is written to an OutputStream 
 	 */
     public void writeMolecule(Molecule molecule) throws Exception {
+        boolean[] isVisible=new boolean[molecule.getAtomCount()];
+        for(int i=0;i<isVisible.length;i++){
+          isVisible[i]=true;
+        }
+        writeMolecule(molecule, isVisible);
+    }
+    
+	/**
+	 * Writes a Molecule to an OutputStream in MDL sdf format.
+	 *
+	 * @param   molecule  Molecule that is written to an OutputStream
+   * @param   isVisible Should a certain atom be written to mdl?
+	 */
+    public void writeMolecule(Molecule molecule, boolean[] isVisible) throws Exception {
         int Bonorder, stereo;
         String line = "";
         
         // write header block
+        // lines get shortened to 80 chars, that's in the spec
         String title = (String)molecule.getProperty(CDKConstants.TITLE);
         if (title == null) title = "";
+        if(title.length()>80)
+          title=title.substring(0,80);
         writer.write(title + "\n");
         writer.write("  CDK\n");
         String comment = (String)molecule.getProperty(CDKConstants.REMARK);
         if (comment == null) comment = "";
+        if(comment.length()>80)
+          comment=comment.substring(0,80);
         writer.write(comment + "\n");
         
         // write Counts line
-        line += formatMDLInt(molecule.getAtomCount(), 3);
-        line += formatMDLInt(molecule.getBondCount(), 3);
+        int upToWhichAtom=0;
+        for(int i=0;i<isVisible.length;i++){
+          if(isVisible[i])
+            upToWhichAtom++;
+        }
+        line += formatMDLInt(upToWhichAtom, 3);
+        int numberOfBonds=0;
+        if(upToWhichAtom<molecule.getAtomCount()){
+          for(int i=0;i<molecule.getBondCount();i++){
+            if(isVisible[molecule.getAtomNumber(molecule.getBondAt(i).getAtoms()[0])] && isVisible[molecule.getAtomNumber(molecule.getBondAt(i).getAtoms()[1])])
+              numberOfBonds++;
+          }
+        }else{
+          numberOfBonds=molecule.getBondCount();
+        }
+        line += formatMDLInt(numberOfBonds, 3);
         line += "  0  0  0  0  0  0  0  0999 V2000\n";
         writer.write(line);
 
         // write Atom block
         Atom[] atoms = molecule.getAtoms();
         for (int f = 0; f < atoms.length; f++) {
+          if(isVisible[f]){
             Atom atom = atoms[f];
             line = "";
             if (atom.getPoint3D() != null) {
@@ -224,11 +270,13 @@ public class MDLWriter extends DefaultChemObjectWriter {
             line += " 0  0  0  0  0  0  0  0  0  0  0  0";
             writer.write(line);
             writer.newLine();
+          }
         }
 
         // write Bond block
         Bond[] bonds = molecule.getBonds();
         for (int g = 0; g < bonds.length; g++) {
+          if(upToWhichAtom==molecule.getAtomCount() || (isVisible[molecule.getAtomNumber(molecule.getBondAt(g).getAtoms()[0])] && isVisible[molecule.getAtomNumber(molecule.getBondAt(g).getAtoms()[1])])){
             Bond bond = bonds[g];
             if (bond.getAtoms().length != 2) {
                 logger.warn("Skipping bond with more/less than two atoms: " + bond);
@@ -262,13 +310,14 @@ public class MDLWriter extends DefaultChemObjectWriter {
                     case CDKConstants.STEREO_BOND_DOWN_INV:
                         line += "6";
                         break;
-                    default:
+                   default:
                         line += "0";
                 }
                 line += "  0  0  0 ";
                 writer.write(line);
                 writer.newLine();
             }
+          }
         }
 
         // write formal atomic charges
