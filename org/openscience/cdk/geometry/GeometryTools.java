@@ -117,7 +117,6 @@ public class GeometryTools
 			p = atom.getPoint2D();
 			offsetAngle = GeometryTools.getAngle(p.x - center.x, p.y - center.y);
 			distance = p.distance(center);
-			System.out.println("rotate -> distance: " +  distance);
 			p.x = center.x + (Math.sin(angle + offsetAngle) * distance);
 			p.y = center.y - (Math.cos(angle + offsetAngle) * distance);				
 		}

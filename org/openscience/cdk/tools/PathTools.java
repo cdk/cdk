@@ -149,7 +149,6 @@ public class PathTools implements CDKConstants
 						// we did not find the target 
 						path.removeAtom(nextAtom);
 						path.removeBond(bonds[f]);
-						System.out.println("removing nextAtom: " + molecule.getAtomNumber(nextAtom));
 					}
 					else
 					{

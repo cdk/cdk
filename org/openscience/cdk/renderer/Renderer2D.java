@@ -99,7 +99,6 @@ public class Renderer2D
 		}
 		paintBonds(atomCon, ringSet);
 		paintAtoms(atomCon);
-		System.out.println(r2dm.drawNumbers());
 		if (r2dm.drawNumbers()) 
 		{
 			paintNumbers(atomCon.getAtoms(), atomCon.getAtomCount());
@@ -118,7 +117,6 @@ public class Renderer2D
 		Vector points = r2dm.getLassoPoints();
 		if (points.size() > 1)
 		{
-			System.out.println("number of points  "+ points.size());
 			Point point1 = (Point)points.elementAt(0), point2;
 			for (int i = 1; i < points.size(); i++)
 			{
@@ -137,7 +135,6 @@ public class Renderer2D
 	 */
 	private void paintNumbers(Atom[] atoms, int number)
 	{
-		System.out.println("paintNumbers");
 		for (int i = 0; i < number; i++)
 		{
 				paintNumber(atoms[i]);

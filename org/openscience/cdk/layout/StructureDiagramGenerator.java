@@ -192,11 +192,10 @@ public class StructureDiagramGenerator implements CDKConstants
 		if (debug) System.out.println("Placed initial chain or ring. Now do the rest");
 		do
 		{
+
 			handleAliphatics();
-			atomPlacer.listPlaced(molecule);
 			resetUnplacedRings();
 			tempAc = atomPlacer.getPlacedAtoms(molecule);
-			atomPlacer.listPlaced(molecule);
 			nextRingAttachmentBond = getNextBondWithUnplacedRingAtom();
 
 			if (nextRingAttachmentBond != null)
@@ -241,7 +240,6 @@ public class StructureDiagramGenerator implements CDKConstants
 				GeometryTools.translate2D(ringSystem, transVec);				
 				GeometryTools.rotate(ringSystem, oldPoint1, angle1 - angle2);
 				vectorAtom1.setPoint2D(oldPoint1);				
-				atomPlacer.listPlaced(molecule);
 			}
 
 
@@ -271,7 +269,6 @@ public class StructureDiagramGenerator implements CDKConstants
 		Point2d ringCenter;
 		int thisRing;
 		Ring ring = rs.getMostComplexRing(); /* Get the most complex ring in this RingSet */
-//			if (debug) System.out.println("Most complex ring: " + ring.toString(molecule));
 		sharedAtoms = placeFirstBond(ring.getBondAt(0),firstBondVector); /* Place the most complex ring at the origin of the coordinate system */
 		/* 
 		 * Call the method which lays out the new ring.
@@ -328,7 +325,6 @@ public class StructureDiagramGenerator implements CDKConstants
 			atom = getNextAtomWithAliphaticUnplacedNeigbors();
 			if (atom != null)
 			{
-				System.out.println("getNextAtomWithAliphaticUnplacedNeigbors(): " + molecule.getAtomNumber(atom));
 				unplacedAtoms = getUnplacedAtoms(atom);
 				placedAtoms = getPlacedAtoms(atom);
 
@@ -410,35 +406,11 @@ public class StructureDiagramGenerator implements CDKConstants
 			bond = molecule.getBondAt(f);
 			if (bond.getAtomAt(1).flags[ISPLACED] && !bond.getAtomAt(0).flags[ISPLACED] )
 			{
-				// && !bond.getAtomAt(0).flags[ISINRING]
-				try
-				{
-					System.out.println("Atom " + molecule.getAtomNumber(bond.getAtomAt(1)) + " is placed");
-					System.out.println("Atom " + molecule.getAtomNumber(bond.getAtomAt(0)) + " is not placed");
-					System.out.println("Atom " + molecule.getAtomNumber(bond.getAtomAt(0)) + " is not in Ring");								
-				}
-				catch(Exception exc)
-				{
-						
-				}
-
 				return bond.getAtomAt(1);
 			}
 			
 			if (bond.getAtomAt(0).flags[ISPLACED] &&  !bond.getAtomAt(1).flags[ISPLACED]  )
 			{
-				//&& !bond.getAtomAt(1).flags[ISINRING]
-				try
-				{
-					System.out.println("Atom " + molecule.getAtomNumber(bond.getAtomAt(1)) + " is placed");
-					System.out.println("Atom " + molecule.getAtomNumber(bond.getAtomAt(0)) + " is not placed");
-					System.out.println("Atom " + molecule.getAtomNumber(bond.getAtomAt(0)) + " is not in Ring");								
-				}
-				catch(Exception exc)
-				{
-						
-				}
-
 				return bond.getAtomAt(0);
 			}
 		}
@@ -585,7 +557,7 @@ public class StructureDiagramGenerator implements CDKConstants
 					}
 					tempPoint = new Point2d(sharedAtomsCenter);
 					tempPoint.add(newRingCenterVector);
-					ringPlacer.placeRing(connectedRing, sharedAtoms, sharedAtomsCenter, newRingCenterVector, bondLength);ringPlacer.placeRing(connectedRing, sharedAtoms, sharedAtomsCenter, newRingCenterVector, bondLength);
+					ringPlacer.placeRing(connectedRing, sharedAtoms, sharedAtomsCenter, newRingCenterVector, bondLength);
 					connectedRing.flags[ISPLACED] = true;
 					placeConnectedRings(rs, connectedRing, handleType);
 				}
@@ -736,7 +708,7 @@ public class StructureDiagramGenerator implements CDKConstants
 	private void resetUnplacedRings()
 	{
 		Ring ring = null;
-		
+		if (sssr == null) return;
 		for (int f = 0; f < sssr.size(); f++)
 		{
 			ring = (Ring)sssr.elementAt(f);

@@ -45,7 +45,7 @@ import java.awt.*;
 
 public class RingPlacer implements CDKConstants
 {
-	static boolean debug = true;
+	static boolean debug = false;
 
 	private Molecule molecule; 
 	
@@ -143,7 +143,7 @@ public class RingPlacer implements CDKConstants
 		double radius = getNativeRingRadius(ring, bondLength);
 		Point2d ringCenter = new Point2d(sharedAtomsCenter);
 		ringCenterVector.normalize();
-		if (debug) System.out.println("placeFusedRing->: ringCenterVector.length()" + ringCenterVector.length());	
+		if (debug) System.out.println("placeBridgedRing->: ringCenterVector.length()" + ringCenterVector.length());	
 		ringCenterVector.scale(radius);
 		ringCenter.add(ringCenterVector);
 
@@ -164,10 +164,10 @@ public class RingPlacer implements CDKConstants
 		double remainingAngle = (2 * Math.PI) - occupiedAngle;
 		double addAngle = remainingAngle / (ring.getRingSize() - sharedAtoms.getAtomCount() + 1);
 
-		if (debug) System.out.println("placeFusedRing->occupiedAngle: " + Math.toDegrees(occupiedAngle));
-		if (debug) System.out.println("placeFusedRing->remainingAngle: " + Math.toDegrees(remainingAngle));
+		if (debug) System.out.println("placeBridgedRing->occupiedAngle: " + Math.toDegrees(occupiedAngle));
+		if (debug) System.out.println("placeBridgedRing->remainingAngle: " + Math.toDegrees(remainingAngle));
 
-		if (debug) System.out.println("placeFusedRing->addAngle: " + Math.toDegrees(addAngle));				
+		if (debug) System.out.println("placeBridgedRing->addAngle: " + Math.toDegrees(addAngle));				
 
 
 		Atom startAtom;
@@ -184,7 +184,7 @@ public class RingPlacer implements CDKConstants
 		// if bond is vertical
 		if (xDiff == 0)
 		{
-			if (debug) System.out.println("placeFusedRing->Bond is vertical");
+			if (debug) System.out.println("placeBridgedRing->Bond is vertical");
 			//starts with the lower Atom
 			if (bondAtom1.getY2D() > bondAtom2.getY2D())
 			{
@@ -238,19 +238,25 @@ public class RingPlacer implements CDKConstants
 		{
 			currentBond = ring.getNextBond(currentBond, currentAtom);
 			currentAtom = currentBond.getConnectedAtom(currentAtom);
-			atomsToDraw.addElement(currentAtom);
+			if (!sharedAtoms.contains(currentAtom))
+			{
+				atomsToDraw.addElement(currentAtom);
+			}
 		}
-		try
+		if (debug)
 		{
-			if (debug) System.out.println("placeFusedRing->startAtom is: " + molecule.getAtomNumber(startAtom));
+			try
+			{
+				System.out.println("placeBridgedRing->atomsToPlace: " + atomPlacer.listNumbers(molecule, atomsToDraw));
+				System.out.println("placeBridgedRing->startAtom is: " + molecule.getAtomNumber(startAtom));
+				System.out.println("placeBridgedRing->startAngle: " + Math.toDegrees(startAngle));
+				System.out.println("placeBridgedRing->addAngle: " + Math.toDegrees(addAngle));		
+			}
+			catch(Exception exc)
+			{
+			
+			}
 		}
-		catch(Exception exc)
-		{
-		
-		}
-		if (debug) System.out.println("placeFusedRing->startAngle: " + Math.toDegrees(startAngle));
-		if (debug) System.out.println("placeFusedRing->addAngle: " + Math.toDegrees(addAngle));		
-
 		addAngle = addAngle * direction;
 		atomPlacer.populatePolygonCorners(atomsToDraw, ringCenter, startAngle, addAngle, radius);
 	}
@@ -422,18 +428,22 @@ public class RingPlacer implements CDKConstants
 			currentAtom = currentBond.getConnectedAtom(currentAtom);
 			atomsToDraw.addElement(currentAtom);
 		}
-		try
-		{
-			if (debug) System.out.println("placeFusedRing->startAtom is: " + molecule.getAtomNumber(startAtom));
-		}
-		catch(Exception exc)
-		{
-		
-		}
-		if (debug) System.out.println("placeFusedRing->startAngle: " + Math.toDegrees(startAngle));
-		if (debug) System.out.println("placeFusedRing->addAngle: " + Math.toDegrees(addAngle));		
-
 		addAngle = addAngle * direction;
+		if (debug)
+		{
+			try
+			{
+				System.out.println("placeFusedRing->startAngle: " + Math.toDegrees(startAngle));
+				System.out.println("placeFusedRing->addAngle: " + Math.toDegrees(addAngle));		
+				System.out.println("placeFusedRing->startAtom is: " + molecule.getAtomNumber(startAtom));
+				System.out.println("AtomsToDraw: " + atomPlacer.listNumbers(molecule, atomsToDraw));
+			}
+			catch(Exception exc)
+			{
+			
+			}
+		}
+		
 		atomPlacer.populatePolygonCorners(atomsToDraw, ringCenter, startAngle, addAngle, radius);
 	}
 	

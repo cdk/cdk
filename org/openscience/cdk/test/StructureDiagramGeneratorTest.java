@@ -52,74 +52,92 @@ public class StructureDiagramGeneratorTest extends TestCase
 	}
 
 
-//	/** A complex alkaloid with two separate ring systems to 
-//	  * be laid out.
-//	  */
-//	public void testReserpine()
-//	{
-//		assert(showIt(MoleculeFactory.loadMolecule("data/reserpine.mol"), "Reserpine"));
-//	}
+	/** A complex alkaloid with two separate ring systems to 
+	  * be laid out.
+	  */
+	public void testReserpine()
+	{
+		assert(showIt(MoleculeFactory.loadMolecule("data/reserpine.mol"), "Reserpine"));
+	}
+
+	public void testFourRing5x10()
+	{
+		assert(showIt(MoleculeFactory.loadMolecule("data/four-ring-5x10.mol"), "5x10 condensed four membered rings"));
+	}
+
+	public void testSixRing4x4()
+	{
+		assert(showIt(MoleculeFactory.loadMolecule("data/six-ring-4x4.mol"), "4x4 condensed six membered rings"));
+	}
+
+
+	public void testAlphaPinene()
+	{
+		assert(showIt(MoleculeFactory.makeAlphaPinene(), "alpha-Pinene"));
+	}
+
+
+	public void testPolycarpole()
+	{
+		assert(showIt(MoleculeFactory.loadMolecule("data/polycarpol.mol"), "Polycarpol"));
+	}
+
+
+	public void testBiphenyl()
+	{
+		assert(showIt(MoleculeFactory.makeBiphenyl(), "Biphenyl"));
+	}
+
+	public void test4x3CondensedRings()
+	{
+		assert(showIt(MoleculeFactory.make4x3CondensedRings(), "4x3CondensedRings"));
+	}
+
+
+
+	public void testPhenylEthylBenzene()
+	{
+		assert(showIt(MoleculeFactory.makePhenylEthylBenzene(), "PhenylEthylBenzene"));
+	}
+
+
+
+	public void testSpiro()
+	{
+		assert(showIt(MoleculeFactory.makeSpiroRings(), "Spiro"));
+	}
+
+
+	public void testRingSubstituents()
+	{
+		assert(showIt(MoleculeFactory.makeMethylDecaline(), "Methyldecaline"));
+	}
+
+
+	public void testBranchedAliphatic()
+	{
+		assert(showIt(MoleculeFactory.makeBranchedAliphatic(), "Branched aliphatic"));
+	}
 	
-//	public void testAlphaPinene()
-//	{
-//		assert(showIt(MoleculeFactory.makeAlphaPinene(), "alpha-Pinene"));
-//	}
-//
-//
-//	public void testPolycarpole()
-//	{
-//		assert(showIt(MoleculeFactory.loadMolecule("data/polycarpol.mol"), "Polycarpol"));
-//	}
-//
-//
-//	public void testBiphenyl()
-//	{
-//		assert(showIt(MoleculeFactory.makeBiphenyl(), "Biphenyl"));
-//	}
-//
-//	public void testPhenylEthylBenzene()
-//	{
-//		assert(showIt(MoleculeFactory.makePhenylEthylBenzene(), "PhenylEthylBenzene"));
-//	}
-//
-//
-//
-//	public void testSpiro()
-//	{
-//		assert(showIt(MoleculeFactory.makeSpiroRings(), "Spiro"));
-//	}
-//
-//
-//	public void testRingSubstituents()
-//	{
-//		assert(showIt(MoleculeFactory.makeMethylDecaline(), "Methyldecaline"));
-//	}
-//
-//
-//	public void testBranchedAliphatic()
-//	{
-//		assert(showIt(MoleculeFactory.makeBranchedAliphatic(), "Branched aliphatic"));
-//	}
-//	
-//	public void testAdamantane()
-//	{
-//		assert(showIt(MoleculeFactory.makeAdamantane(), "Adamantane"));
-//	}
-//
-//
-//
-//
-//	/** This was interesting because the 
-//	  * method "placeRingSubstituents" just places
-//	  * the next aliphatic atom close to a ring
-//	  * and there was initially a problem with
-//	  * just one atom left to place in the aliphatic chain
-//	  */
-//	public void testEthylCyclohexane()
-//	{
-//		assert(showIt(MoleculeFactory.makeEthylCyclohexane(), "Ethylcyclohexane"));
-//	}
-//
+	public void testDiamantane()
+	{
+		assert(showIt(MoleculeFactory.makeDiamantane(), "Diamantane"));
+	}
+
+
+
+
+	/** This was interesting because the 
+	  * method "placeRingSubstituents" just places
+	  * the next aliphatic atom close to a ring
+	  * and there was initially a problem with
+	  * just one atom left to place in the aliphatic chain
+	  */
+	public void testEthylCyclohexane()
+	{
+		assert(showIt(MoleculeFactory.makeEthylCyclohexane(), "Ethylcyclohexane"));
+	}
+
 	public void testBicycloRings()
 	{
 		assert(showIt(MoleculeFactory.makeBicycloRings(), "Bicyclo-[2.2.2]-octane"));
@@ -130,9 +148,9 @@ public class StructureDiagramGeneratorTest extends TestCase
 	{
 		StructureDiagramGenerator sdg = new StructureDiagramGenerator();
 		MoleculeViewer2D mv = new MoleculeViewer2D();
-		Renderer2DModel r2dm = new Renderer2DModel();
-		r2dm.setDrawNumbers(true);
-		mv.setRenderer2DModel(r2dm);
+//		Renderer2DModel r2dm = new Renderer2DModel();
+//		r2dm.setDrawNumbers(true);
+//		mv.setRenderer2DModel(r2dm);
 		sdg.setMolecule(molecule);
 		try
 		{
