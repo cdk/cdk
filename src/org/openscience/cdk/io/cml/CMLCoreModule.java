@@ -138,7 +138,7 @@ public class CMLCoreModule implements ModuleInterface {
             this.curRef = conv.curRef;
             this.unitcellparams = conv.unitcellparams;
         } else {
-            logger.warn("Cannot inherit information from module: " + convention.getClass().getName());
+            logger.warn("Cannot inherit information from module: ", convention.getClass().getName());
         }
     }
 

@@ -40,6 +40,7 @@ import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.SetOfReactions;
 import org.openscience.cdk.io.cml.cdopi.CDOAcceptedObjects;
 import org.openscience.cdk.io.cml.cdopi.CDOInterface;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * CDO object needed as interface with the JCFL library for reading CML
@@ -134,7 +135,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
             addChemSequence(currentChemSequence);
         }
         logger.info("End CDO Object");
-        logger.info("This file has " + getChemSequenceCount() + " sequence(s).");
+        logger.info("Number of sequences:", getChemSequenceCount());
     };
 
     /**
