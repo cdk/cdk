@@ -155,6 +155,9 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
     private void customizeJob() {
         Vector basisOptions = new Vector();
         basisOptions.add("6-31g");
+        basisOptions.add("6-31g*");
+        basisOptions.add("6-311g");
+        basisOptions.add("6-311+g**");
         basis = new OptionIOSetting("Basis", IOSetting.MEDIUM,
           "Which basis set do you want to use?", basisOptions, "6-31g");
         fireWriterSettingQuestion(basis);
