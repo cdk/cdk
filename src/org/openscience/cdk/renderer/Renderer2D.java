@@ -278,26 +278,27 @@ public class Renderer2D   {
         } else {
             atomColor = r2dm.getBackColor();
         }
+        int alignment = GeometryTools.getBestAlignmentForLabel(container, atom);
         if (!atom.getSymbol().equals("C")) {
             /*
              *  only show element for non-carbon atoms,
              *  unless (see below)...
              */
-            paintAtomSymbol(atom, atomColor, graphics);
+            paintAtomSymbol(atom, atomColor, graphics, alignment);
             paintAtomCharge(atom, graphics);
         } else if (r2dm.getKekuleStructure()) {
             // ... unless carbon must be drawn because in Kekule mode
-            paintAtomSymbol(atom, atomColor, graphics);
+            paintAtomSymbol(atom, atomColor, graphics, alignment);
         } else if (atom.getFormalCharge() != 0) {
             // ... unless carbon is charged
-            paintAtomSymbol(atom, atomColor, graphics);
+            paintAtomSymbol(atom, atomColor, graphics, alignment);
             paintAtomCharge(atom, graphics);
         } else if (container.getConnectedBonds(atom).length < 1) {
             // ... unless carbon is unbonded
-            paintAtomSymbol(atom, atomColor, graphics);
+            paintAtomSymbol(atom, atomColor, graphics, alignment);
         } else if (r2dm.getShowEndCarbons() && (container.getConnectedBonds(atom).length == 1)) {
             // ... unless carbon is an methyl, and the user wants those with symbol
-            paintAtomSymbol(atom, atomColor, graphics);
+            paintAtomSymbol(atom, atomColor, graphics, alignment);
         }
     }
 
@@ -319,7 +320,7 @@ public class Renderer2D   {
 	    graphics.fillRect(coords[0], coords[1], coords[2], coords[3]);
 	}
 
-	/**
+    /**
 	 *  Paints the given atom symbol. It first outputs some empty space using the
 	 *  background color, slightly larger than the space that the symbol occupies.
 	 *  The atom symbol is then printed into the empty space.
@@ -327,7 +328,7 @@ public class Renderer2D   {
 	 *@param  atom       The atom to be drawn
 	 *@param  backColor  Description of the Parameter
 	 */
-	private void paintAtomSymbol(Atom atom, Color backColor, Graphics graphics) {
+	private void paintAtomSymbol(Atom atom, Color backColor, Graphics graphics, int alignment) {
 		if (atom.getPoint2D() == null) {
 			return;
 		}
@@ -345,7 +346,13 @@ public class Renderer2D   {
         /* determine where to put the string, as seen from the atom coordinates
            in model coordinates */
 		FontMetrics fm = graphics.getFontMetrics();
+        // left align
 		int xSymbOffset = (new Integer(fm.stringWidth(symbol.substring(0,1)) / 2)).intValue();
+        if (alignment == -1) {
+            // right align
+            xSymbOffset = (new Integer((fm.stringWidth(symbol.substring(symbol.length()-1)) / 2) +
+                                       fm.stringWidth(symbol.substring(1)))).intValue();
+        }
 		int ySymbOffset = (new Integer(fm.getAscent() / 2)).intValue();
 
 		int xSymbOffsetForSubscript = (new Integer(fm.stringWidth(symbol))).intValue();

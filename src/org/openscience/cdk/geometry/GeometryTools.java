@@ -556,11 +556,10 @@ public class GeometryTools {
     }
 
     /**
-    * Scales a set of Nodes such that the average bondlenght is 1.5
-    *
-    * @param   atoms
-    * @return
-    */
+     * Calculates the normalization factor in order to get an average
+     * bond length of 1.5. It takes only into account Bond's with two
+     * atoms.
+     */
     public static double getNormalizationFactor(AtomContainer container) {
         Bond[] bonds = container.getBonds();
         double bondlength = 0.0, ratio = 0.0;
@@ -582,6 +581,24 @@ public class GeometryTools {
         bondlength = bondlength / counter;
         ratio = desiredBondLength / bondlength;
         return ratio;
+    }
+    
+    /**
+     * Determines the best alignment for the label of an atom in 2D space.
+     * It returns 1 if left aligned, and -1 if right aligned.
+     */
+    public static int getBestAlignmentForLabel(AtomContainer container, Atom atom) {
+        Atom[] connectedAtoms = container.getConnectedAtoms(atom);
+        int overallDiffX = 0;
+        for (int i=0; i<connectedAtoms.length; i++) {
+            Atom connectedAtom = connectedAtoms[i];
+            overallDiffX = overallDiffX + (int)(connectedAtom.getX2D() - atom.getX2D());
+        }
+        if (overallDiffX < 0) {
+            return 1;
+        } else {
+            return -1;
+        }
     }
 }
 
