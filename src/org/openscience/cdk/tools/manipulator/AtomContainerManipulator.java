@@ -114,16 +114,18 @@ public class AtomContainerManipulator {
 	
     public static Vector getAllIDs(AtomContainer mol) {
         Vector IDlist = new Vector();
-        if (mol.getID() != null) IDlist.addElement(mol.getID());
-        Atom[] atoms = mol.getAtoms();
-        for (int i=0; i<atoms.length; i++) {
-            Atom atom = atoms[i];
-            if (atom.getID() != null) IDlist.addElement(atom.getID());
-        }
-        Bond[] bonds = mol.getBonds();
-        for (int i=0; i<bonds.length; i++) {
-            Bond bond = bonds[i];
-            if (bond.getID() != null) IDlist.addElement(bond.getID());
+        if (mol != null) {
+            if (mol.getID() != null) IDlist.addElement(mol.getID());
+            Atom[] atoms = mol.getAtoms();
+            for (int i=0; i<atoms.length; i++) {
+                Atom atom = atoms[i];
+                if (atom.getID() != null) IDlist.addElement(atom.getID());
+            }
+            Bond[] bonds = mol.getBonds();
+            for (int i=0; i<bonds.length; i++) {
+                Bond bond = bonds[i];
+                if (bond.getID() != null) IDlist.addElement(bond.getID());
+            }
         }
         return IDlist;
     }
