@@ -394,6 +394,7 @@ public class CMLWriter implements ChemObjectWriter {
 		    childElements.append("</string>\n");
 		}
 		if (childElements.length() > 0) { 
+            write(">\n");
             write(childElements.toString());
             write("    </bond>\n");
         } else {
