@@ -60,6 +60,10 @@ public class ChemicalRSSReader extends DefaultChemObjectReader {
 
     /** ChemSequence property containing the channel title */
     public final static String RSS_CHANNEL_TITLE = "org.openscience.cdk.io.chemrss.CHANNEL_TITLE";
+    public final static String RSS_CHANNEL_WEBSITE = "org.openscience.cdk.io.chemrss.CHANNEL_WEBSITE";
+    public final static String RSS_CHANNEL_PUBLISHER = "org.openscience.cdk.io.chemrss.CHANNEL_PUBLISHER";
+    public final static String RSS_CHANNEL_CREATOR = "org.openscience.cdk.io.chemrss.CHANNEL_CREATOR";
+    public final static String RSS_CHANNEL_DESCRIPTION = "org.openscience.cdk.io.chemrss.CHANNEL_DESCRIPTION";
 
     /** ChemModel property containing the channel item title */
     public final static String RSS_ITEM_TITLE = "org.openscience.cdk.io.chemrss.ITEM_TITLE";

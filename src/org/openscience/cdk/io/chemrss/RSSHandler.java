@@ -55,10 +55,12 @@ public class RSSHandler extends DefaultHandler {
     private String cData;
     private boolean readdedNamespace;
     
-    private String itemTitle = "";
-    private String itemDesc = "";
-    private String itemDate = "";
-    private String itemLink = "";
+    private String objectTitle;
+    private String objectDesc;
+    private String objectDate;
+    private String objectLink;
+    private String dcCreator;
+    private String dcPublisher;
     
     /**
      * Constructor for the RSSHandler.
@@ -87,6 +89,7 @@ public class RSSHandler extends DefaultHandler {
         channelSequence = new ChemSequence();
         cmlString = "";
         readdedNamespace = false;
+        resetStrings();
     }
 
     public void endDocument() {
@@ -97,51 +100,67 @@ public class RSSHandler extends DefaultHandler {
         if (uri.equals("http://www.xml-cml.org/schema/cml2/core")) {
             cmlString += cData;
             cmlString += toEndTag(raw);
-        } else if (local.equals("item")) {
-            ChemModel model = null;
-            if (cmlString.length() > 0) {
-                StringReader reader = new StringReader(cmlString);
-                logger.debug("Parsing CML String: " + cmlString);
-                CMLReader cmlReader = new CMLReader(reader);
-                try {
-                    ChemFile file = (ChemFile)cmlReader.read(new ChemFile());
-                    if (file.getChemSequenceCount() > 0) {
-                        ChemSequence sequence = file.getChemSequence(0);
-                        if (sequence.getChemModelCount() > 0) {
-                            model = sequence.getChemModel(0);
+        } else if (uri.equals("http://purl.org/dc/elements/1.1/")) {
+            // Deal with dublin core elements
+            if (local.equals("publisher")) {
+                dcPublisher = cData;
+            } else if (local.equals("creator")) {
+                dcCreator = cData;
+            }
+        } else if (uri.equals("http://purl.org/rss/1.0/")) {
+            // Deal with RSS 1.0 elements
+            if (local.equals("item")) {
+                ChemModel model = null;
+                if (cmlString.length() > 0) {
+                    StringReader reader = new StringReader(cmlString);
+                    logger.debug("Parsing CML String: " + cmlString);
+                    CMLReader cmlReader = new CMLReader(reader);
+                    try {
+                        ChemFile file = (ChemFile)cmlReader.read(new ChemFile());
+                        if (file.getChemSequenceCount() > 0) {
+                            ChemSequence sequence = file.getChemSequence(0);
+                            if (sequence.getChemModelCount() > 0) {
+                                model = sequence.getChemModel(0);
+                            } else {
+                                logger.warn("ChemSequence contains no ChemModel");
+                            }
                         } else {
-                            logger.warn("ChemSequence contains no ChemModel");
+                            logger.warn("ChemFile contains no ChemSequene");
                         }
-                    } else {
-                        logger.warn("ChemFile contains no ChemSequene");
+                    } catch (Exception exception) {
+                        logger.error("Error while parsing CML");
+                        logger.debug(exception);
                     }
-                } catch (Exception exception) {
-                    logger.error("Error while parsing CML");
-                    logger.debug(exception);
+                } else {
+                    logger.warn("No CML content found");
                 }
+                if (model == null) {
+                    logger.warn("Read empty model");
+                    model = new ChemModel();
+                }
+                model.setProperty(ChemicalRSSReader.RSS_ITEM_TITLE, objectTitle);
+                model.setProperty(ChemicalRSSReader.RSS_ITEM_DATE, objectDate);
+                model.setProperty(ChemicalRSSReader.RSS_ITEM_LINK, objectLink);
+                model.setProperty(ChemicalRSSReader.RSS_ITEM_DESCRIPTION, objectDesc);                    
+                channelSequence.addChemModel(model);
+                cmlString = "";
+            } else if (local.equals("title")) {
+                objectTitle = cData;
+            } else if (local.equals("link")) {
+                objectLink = cData;
+            } else if (local.equals("description")) {
+                objectDesc = cData;
+            } else if (local.equals("date")) {
+                objectDate = cData;
+            } else if (local.equals("channel")) {
+                channelSequence.setProperty(ChemicalRSSReader.RSS_CHANNEL_TITLE, objectTitle);
+                channelSequence.setProperty(ChemicalRSSReader.RSS_CHANNEL_WEBSITE, objectLink);
+                channelSequence.setProperty(ChemicalRSSReader.RSS_CHANNEL_DESCRIPTION, objectDesc);
+                channelSequence.setProperty(ChemicalRSSReader.RSS_CHANNEL_PUBLISHER, dcPublisher);
+                channelSequence.setProperty(ChemicalRSSReader.RSS_CHANNEL_CREATOR, dcCreator);
             } else {
-                logger.warn("No CML content found");
+                logger.debug("Unparsed RSS element: " + local);
             }
-            if (model == null) {
-                logger.warn("Read empty model");
-                model = new ChemModel();
-            }
-            model.setProperty(ChemicalRSSReader.RSS_ITEM_TITLE, itemTitle);
-            model.setProperty(ChemicalRSSReader.RSS_ITEM_DATE, itemDate);
-            model.setProperty(ChemicalRSSReader.RSS_ITEM_LINK, itemLink);
-            model.setProperty(ChemicalRSSReader.RSS_ITEM_DESCRIPTION, itemDesc);                    
-            channelSequence.addChemModel(model);
-            cmlString = "";
-        } else if (local.equals("title")) {
-            itemTitle = cData;
-        } else if (local.equals("link")) {
-            itemLink = cData;
-        } else if (local.equals("description")) {
-            itemDesc = cData;
-        } else if (local.equals("date")) {
-            itemDate = cData;
-        } else if (local.equals("channel")) {
-            channelSequence.setProperty(ChemicalRSSReader.RSS_CHANNEL_TITLE, itemTitle);
         } else {
             logger.debug("Unparsed element: " + local);
             logger.debug("  uri: " + uri);
@@ -157,13 +176,19 @@ public class RSSHandler extends DefaultHandler {
             } else {
                 cmlString += toStartTag(raw, atts, uri);
             }
-        } else if (local.equals("item")) {
-            itemTitle = "";
-            itemDesc = "";
-            itemDate = "";
-            itemLink = "";
+        } else if (local.equals("item") || local.equals("channel")) {
+            resetStrings();
         }
         cData = "";
+    }
+    
+    private void resetStrings() {
+        objectTitle = "";
+        objectDesc = "";
+        objectDate = "";
+        objectLink = "";
+        dcCreator = "";
+        dcPublisher = "";
     }
 
     private String toStartTag(String raw, Attributes atts) {
