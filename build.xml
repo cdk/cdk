@@ -631,7 +631,6 @@
                                          dist-io, dist-render,
                                          dist-extra, dist-libio,
                                          dist-render-with-java3d,
-                                         dist-experimental,
                                          dist-apps" />
 
         <target id="dist" name="dist" depends="dist-all" 
