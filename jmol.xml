@@ -8,8 +8,6 @@
   <property name="deprecation" value="on" />
   <property name="optimization" value="off" />
 
-  <property name="do.lazy.creation" value="yes" />
-  
   <!-- directories -->
   <property name="build" value="build" />
   <property name="sourcedist" value="sourcedist" />
@@ -33,9 +31,6 @@
   <target name="init">
     <ant antfile="build.xml" target="clean"/>
     <ant antfile="build.xml" target="init"/>
-    <condition property="doPatchLazyCreation">
-      <contains string="${do.lazy.creation}" substring="yes"/>
-    </condition>
   </target>  
     
   <target name="initAgain">
@@ -54,8 +49,6 @@
            originalfile="${build.src}/org/openscience/cdk/tools/AtomTypeFactory.java"
            dir="${build.src}/org/openscience/cdk/tools"/>
 
-    <ant antfile="build.xml" target="patchLazyCreation"/>
-    
     <javac srcdir="${build.src}" destdir="${build}" optimize="${optimization}" 
            debug="${debug}" deprecation="${deprecation}" target="1.1"
            includesfile="${src}/jmol-applet.javafiles">
@@ -64,8 +57,6 @@
   </target>
 
   <target name="compile">
-    <ant antfile="build.xml" target="patchLazyCreation"/>
-    
     <javac srcdir="${build.src}" destdir="${build}" optimize="${optimization}" 
            debug="${debug}" deprecation="${deprecation}" target="1.1"
            includesfile="${src}/jmol-b6.javafiles">
@@ -74,8 +65,6 @@
   </target>
 
   <target name="compile-jmol2">
-    <ant antfile="build.xml" target="patchLazyCreation"/>
-    
     <javac srcdir="${build.src}" destdir="${build}" optimize="${optimization}" 
            debug="${debug}" deprecation="${deprecation}" target="1.1"
            includesfile="${src}/jmol.javafiles">
