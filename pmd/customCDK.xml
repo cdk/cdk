@@ -24,7 +24,9 @@
     </properties>
   </rule>
 
-  <rule name="CDK_MoreThanOneLoggingToolInstantiated"
+  <!-- does not work yet... needs to be fixed
+  
+   rule name="CDK_MoreThanOneLoggingToolInstantiated"
         message="More than one LoggingTool is instantiated"
         class="net.sourceforge.pmd.rules.XPathRule">
     <description>
@@ -40,7 +42,7 @@
         </value>
         </property>
     </properties>
-  </rule>
+  </rule -->
 
 
 </ruleset>
