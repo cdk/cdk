@@ -1,0 +1,106 @@
+/* $RCSfile$   
+ * $Author$   
+ * $Date$    
+ * $Revision$
+ * 
+ * Copyright (C) 2004  The Chemistry Development Kit (CDK) project
+ * 
+ * Contact: cdk-devel@lists.sourceforge.net
+ * 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
+ */
+package org.openscience.cdk.applications.swing.editor;
+
+import javax.swing.JCheckBox;
+import javax.swing.JTextField;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.applications.swing.FieldTablePanel;
+import org.openscience.cdk.renderer.Renderer2DModel;
+
+/**
+ * @cdk.module applications
+ */
+public class Renderer2DModelEditor extends FieldTablePanel {
+    
+    private JCheckBox drawNumbers;
+    private JCheckBox showAtomAtomMapping;
+    private JCheckBox useKekuleStructure;
+    private JCheckBox showEndCarbons;
+    private JCheckBox showImplicitHydrogens;
+    private JCheckBox showAromaticity;
+    private JCheckBox showAromaticityInCDKStyle;
+    private JCheckBox colorAtomsByType;
+    private JCheckBox showToolTip;
+    
+    private Renderer2DModel model;
+    
+	public Renderer2DModelEditor() {
+        super();
+        constructPanel();
+	}
+    
+    private void constructPanel() {
+        drawNumbers = new JCheckBox();
+        addField("Draw atom numbers", drawNumbers);
+        showAtomAtomMapping = new JCheckBox();
+        addField("Show atom-atom mappings", showAtomAtomMapping);
+        useKekuleStructure = new JCheckBox();
+        addField("Explicit carbons", useKekuleStructure);
+        showEndCarbons = new JCheckBox();
+        addField("Show explicit methyl groups", showEndCarbons);
+        showImplicitHydrogens = new JCheckBox();
+        addField("Show implicit hydrogens", showImplicitHydrogens);
+        showAromaticity = new JCheckBox();
+        addField("Use aromatic ring circles", showAromaticity);
+        showAromaticityInCDKStyle = new JCheckBox();
+        addField("Use CDK style aromaticity indicators", showAromaticityInCDKStyle);
+        colorAtomsByType = new JCheckBox();
+        addField("Color atoms by element", colorAtomsByType);
+        showToolTip = new JCheckBox();
+        addField("Show tooltips", showToolTip);        
+    }
+    
+    public void setModel(Renderer2DModel model) {
+        this.model = model;
+        drawNumbers.setSelected(model.getDrawNumbers());
+        showAtomAtomMapping.setSelected(model.getShowAtomAtomMapping());
+        useKekuleStructure.setSelected(model.getKekuleStructure());
+        showEndCarbons.setSelected(model.getShowEndCarbons());
+        showImplicitHydrogens.setSelected(model.getShowImplicitHydrogens());
+        showAromaticity.setSelected(model.getShowAromaticity());
+        showAromaticityInCDKStyle.setSelected(model.getShowAromaticityInCDKStyle());
+        colorAtomsByType.setSelected(model.getColorAtomsByType());
+        showToolTip.setSelected(model.getShowTooltip());
+        validate();
+    }
+	
+    public void applyChanges() {
+        model.setDrawNumbers(drawNumbers.isSelected());
+        model.setShowAtomAtomMapping(showAtomAtomMapping.isSelected());
+        model.setKekuleStructure(useKekuleStructure.isSelected());
+        model.setShowEndCarbons(showEndCarbons.isSelected());
+        model.setShowImplicitHydrogens(showImplicitHydrogens.isSelected());
+        model.setShowAromaticity(showAromaticity.isSelected());
+        model.setShowAromaticityInCDKStyle(showAromaticityInCDKStyle.isSelected());
+        model.setColorAtomsByType(colorAtomsByType.isSelected());
+        model.setShowTooltip(showToolTip.isSelected());
+    }
+}
+
+
