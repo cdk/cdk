@@ -419,9 +419,6 @@ public class MoleculeFactory
 		return mol;
 	}
 
-
-
-	
 	static Molecule loadMolecule(String inFile)
 	{
 		MDLReader mr = null;
@@ -440,17 +437,17 @@ public class MoleculeFactory
 			chemModel = chemSequence.getChemModel(0);
 			setOfMolecules = chemModel.getSetOfMolecules();
 			molecule = setOfMolecules.getMolecule(0);
+			for (int i = 0; i < molecule.getAtomCount(); i++)
+			{
+				molecule.getAtomAt(i).setPoint2D(null);
+			}
 		}
 		catch(Exception exc)
 		{
-			exc.printStackTrace();		
+			// we just return null if something went wrong
 		}
-		for (int i = 0; i < molecule.getAtomCount(); i++)
-		{
-			molecule.getAtomAt(i).setPoint2D(null);
-		}
-		return molecule;
 		
+		return molecule;
 	}
 
 

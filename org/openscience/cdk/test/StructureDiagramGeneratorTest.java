@@ -71,18 +71,17 @@ public class StructureDiagramGeneratorTest extends TestCase
 	}
 
 
-	public void testAlphaPinene()
-	{
-		assert(showIt(MoleculeFactory.makeAlphaPinene(), "alpha-Pinene"));
-	}
-
-
 	public void testPolycarpole()
 	{
 		assert(showIt(MoleculeFactory.loadMolecule("data/polycarpol.mol"), "Polycarpol"));
 	}
 
+	public void testAlphaPinene()
+	{
+		assert(showIt(MoleculeFactory.makeAlphaPinene(), "alpha-Pinene"));
+	}
 
+	
 	public void testBiphenyl()
 	{
 		assert(showIt(MoleculeFactory.makeBiphenyl(), "Biphenyl"));
@@ -151,18 +150,19 @@ public class StructureDiagramGeneratorTest extends TestCase
 //		Renderer2DModel r2dm = new Renderer2DModel();
 //		r2dm.setDrawNumbers(true);
 //		mv.setRenderer2DModel(r2dm);
-		sdg.setMolecule((Molecule)molecule.clone());
 		try
 		{
+			sdg.setMolecule((Molecule)molecule.clone());
 			sdg.generateCoordinates(new Vector2d(0,1));
+			mv.setAtomContainer(sdg.getMolecule());
+			CDKTests.getMoleculeListViewer().addStructure(mv, name);
 		}
 		catch(Exception exc)
 		{
 			System.out.println("*** Exit due to an unexpected error during coordinate generation ***");
 			exc.printStackTrace();
+			return false;
 		}
-		mv.setAtomContainer(sdg.getMolecule());
-		CDKTests.moleculeListViewer.addStructure(mv, name);
 		return true;
 	}
 }

@@ -4,13 +4,16 @@
   <!--property name="build.compiler" value="jikes"/-->
   
   <property name="build" value="build"/>
-  <property name="sourcedist" value="sourcedist"/>  
+  <property name="sourcedist" value="sourcedist"/>
+  <property name="dist" value="dist"/>
+  <property name="src.tests" value="org/openscience/cdk/test"/>
+  <property name="reports.tests" value="reports"/>
   
   <path id="project.class.path">
     <!-- adapt the next line to reflect you installation -->
     <pathelement location="/usr/lib/j2sdk1.3/jre/lib/rt.jar"/>
     <pathelement location="."/>
-    <fileset dir="./jar">
+    <fileset dir="jar">
       <include name="*.jar"/>
     </fileset>
   </path>
@@ -21,6 +24,8 @@
     <!-- Create the build directory structure used by compile -->
     <mkdir dir="${build}"/>
     <mkdir dir="${sourcedist}"/>
+    <mkdir dir="${dist}"/>
+    <mkdir dir="${reports.tests}"/>
   </target>
 
   
@@ -40,12 +45,12 @@
     </delete>
     <delete dir="${build}"/>
     <delete dir="${sourcedist}"/>
+    <delete dir="${reports.tests}"/>
   </target>
   
   <target name="dist" depends="compile">
     <!-- Create the distribution directory -->
     <mkdir dir="${dist}/jar"/>
-
     <!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
     <jar jarfile="${dist}/jar/cdk-${DSTAMP}.jar" basedir="${build}"/>
   </target>
@@ -63,5 +68,32 @@
     <delete file="cdk-source-${DSTAMP}.tar" />
     <zip zipfile="cdk-source-${DSTAMP}.zip" basedir="${sourcedist}" includes="**"/>
   </target>
-
+	<target name="test" depends="dist">
+		<junit printsummary="yes" haltonfailure="yes">
+			<classpath>
+				<pathelement location="${dist}/jar/cdk-${DSTAMP}.jar"/>
+				<pathelement path="${java.class.path}"/>
+				<pathelement location="."/>
+				<fileset dir="jar">
+				<include name="*.jar"/>
+				</fileset>
+			</classpath>
+			
+			  <test name="org.openscience.cdk.test.CDKTests" haltonfailure="no" todir="${reports.tests}" outfile="result" >
+			    <formatter type="plain" />
+			  </test>		
+		</junit>
+	</target>  
+	<target name="run" depends="dist">
+		<java classname="org.openscience.cdk.test.CDKTests">
+			<classpath>
+				<pathelement location="${dist}/jar/cdk-${DSTAMP}.jar"/>
+				<pathelement path="${java.class.path}"/>
+				<pathelement location="."/>
+				<fileset dir="jar">
+				<include name="*.jar"/>
+				</fileset>
+			</classpath>
+		</java>  
+	</target>  
 </project>

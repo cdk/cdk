@@ -34,16 +34,27 @@ public class CDKTests {
 
 	public static void main (String[] args) 
 	{
-		moleculeListViewer = new MoleculeListViewer();
-		junit.textui.TestRunner.run (suite());
+		junit.textui.TestRunner.run(suite());
 	}
 	public static Test suite ( ) 
 	{
 		TestSuite suite= new TestSuite("All CDK Tests");
 		suite.addTest(RingSearchTest.suite());
 		suite.addTest(ConnectivityCheckerTest.suite());
-		suite.addTest(StructureDiagramGeneratorTest.suite());
-		suite.addTest(RandomStructureGeneratorTest.suite());
+		suite.addTest(MFAnalyserTest.suite());
+		//suite.addTest(StructureDiagramGeneratorTest.suite());
+		//suite.addTest(RandomStructureGeneratorTest.suite());
+		
+		
 	    return suite;
 	}
+	public static MoleculeListViewer getMoleculeListViewer()
+	{
+		if (moleculeListViewer == null)
+		{
+			moleculeListViewer = new MoleculeListViewer();
+		}
+		return moleculeListViewer;
+	}
+	
 }

@@ -1,4 +1,5 @@
-/* $RCSfile$
+/* 
+ * $RCSfile$
  * $Author$
  * $Date$
  * $Revision$

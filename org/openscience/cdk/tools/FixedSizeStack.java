@@ -1,11 +1,13 @@
-/* AtomContraints.java
- * 
- * $RCSfile$    $Author$    $Date$    $Revision$
- * 
+/*
+ * $RCSfile$
+ * $Author$
+ * $Date$
+ * $Revision$
+ *
  * Copyright (C) 1997-2001  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -14,37 +16,65 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- *  
+ *
  */
 
-package org.openscience.cdk;
+package org.openscience.cdk.tools;
 
-import org.openscience.cdk.*;
+/**
+ *  A LIFO queue for result structures. The Size is fixed so that one can use
+ *  this to hold the 10 best structures, e. g.
+ *
+ *@author     steinbeck
+ *@created    5. Juni 2001
+ */
+public class FixedSizeStack extends java.util.Vector implements java.io.Serializable {
 
-public class AtomConstraints
-{
-	public String elementSymbol;
-	public int maximumBondOrder;
-	public int maximumBondCount;
-	
-	public AtomConstraints()
-	{
+	private int size;
+
+	/**
+	 *  Creates a fixed size stack
+	 *
+	 *@param  size  The size of this stack
+	 */
+	public FixedSizeStack(int size) {
+		super();
+		this.size = size;
 	}
 
-	public AtomConstraints(String elementSymbol, int maximumBondOrder, int maximumBondCount)
-	{
-		this.elementSymbol = elementSymbol;
-		this.maximumBondOrder = maximumBondOrder;
-		this.maximumBondCount = maximumBondCount;
+
+	/**
+	 * Pushes an object onto the stack. If the new size then exceeds the 
+	 * standard size of this stack, the oldest elements in the stack are discarded. 
+	 *
+	 *@param  O  The object to be pushed onto the stack
+	 */
+	public void push(Object O) {
+		insertElementAt(O, 0);
+		if (size() > size) {
+			setSize(size);
+		}
 	}
-	
+
+
+	/**
+	 *  Returns the last object that was pushed onto the stack
+	 *
+	 *@return    the last object that was pushed onto the stack
+	 */
+	public Object pop() {
+		Object O = elementAt(0);
+		removeElementAt(0);
+		return O;
+	}
 }
+
