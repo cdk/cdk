@@ -1,4 +1,4 @@
-/*  $RCSfile$    
+/*  $RCSfile$
  *  $Author$    
  *  $Date$
  *  $Revision$
@@ -237,7 +237,7 @@ public class SaturationChecker
      * @param molecule Molecule to saturate
      * @keyword hydrogen, adding
      */
-    public void saturateWithHydrogen(Molecule molecule) {
+    public void addHydrogensToSatisfyValency(Molecule molecule) {
         Atom partner = null;
         Atom atom = null;
         Atom[] partners = null;
