@@ -89,6 +89,7 @@ public class HydrogenPlacerTest extends TestCase {
         assertNotNull(h2.getPoint2D());
     }
     
+
     private void assertEquals(Point2d p1, Point2d p2, double error) throws Exception {
         assertEquals(p1.x, p2.x, error);
         assertEquals(p1.y, p2.y, error);
