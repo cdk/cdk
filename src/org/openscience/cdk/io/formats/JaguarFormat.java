@@ -41,7 +41,8 @@ public class JaguarFormat implements ChemFormatMatcher {
     public String getWriterClassName() { return null; };
 
     public boolean matches(int lineNumber, String line) {
-        if (line.indexOf("Jaguar") >= 0) {
+        if (line.indexOf("Jaguar") >= 0 &&
+            line.indexOf("Schrodinger") >= 0) {
             return true;
         }
         return false;

@@ -41,7 +41,8 @@ public class GamessFormat implements ChemFormatMatcher {
     public String getWriterClassName() { return null; };
 
     public boolean matches(int lineNumber, String line) {
-        if (line.indexOf("GAMESS") >= 0) {
+        if (line.indexOf("GAMESS execution script") >= 0 ||
+            line.indexOf("GAMESS VERSION") >= 0) {
             return true;
         }
         return false;
