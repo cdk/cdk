@@ -5,7 +5,7 @@
     This ruleset checks the CDK sources for bad code.
   </description>
 
-  <!-- rule name="CDK_MissingLoggerStatementInCatch"
+  <rule name="CDK_MissingLoggerStatementInCatch"
         message="Catched Exceptions must report to CDK's LoggingTool"
         class="net.sourceforge.pmd.rules.XPathRule">
     <description>
@@ -17,11 +17,14 @@
       <property name="xpath" pluginname="true">
         <value>
           <![CDATA[
+//TryStatement[@Catch='true'][not(FormalParameter/following-sibling::Block//Name[@Image='logger.debug'])]
+          ]]>
+<!-- old one:
 //TryStatement[@Catch='true']//StatementExpression/PrimaryExpression[PrimaryPrefix/Name/@Image = 'logger.debug'][PrimarySuffix/Arguments//Name[@Image = ../../../../../../../../../../../../FormalParameter/VariableDeclaratorId/@Image]][count(*) = 0]
-           ]]>
+-->
         </value>
         </property>
     </properties>
-  </rule -->
+  </rule>
 
 </ruleset>
