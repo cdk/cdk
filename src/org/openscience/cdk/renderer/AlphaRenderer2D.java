@@ -50,76 +50,86 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @cdk.created    2004-02-04
  */
-public class AlphaRenderer2D extends Renderer2D {
-    
-    private LoggingTool logger;
-    private Renderer2DModel r2dm = null;
-    private Area mask = null;
-    private SSSRFinder sssrf = new SSSRFinder();
-    
-    public AlphaRenderer2D()
+public class AlphaRenderer2D extends Renderer2D
+{
+  private LoggingTool logger;
+
+  private Renderer2DModel r2dm = null;
+  private Area mask = null;
+  private SSSRFinder sssrf = new SSSRFinder();
+
+  public AlphaRenderer2D()
+  {
+    this(new Renderer2DModel());
+  }
+
+  public AlphaRenderer2D(Renderer2DModel r2dm)
+  {
+    super(r2dm);
+    this.r2dm = r2dm;
+    logger = new LoggingTool(this);
+  }
+
+  public void paintEmptySpace(int x, int y, int w, int h, int border, Color backColor, Graphics g)
+  {
+    if ((w == 0) || (h == 0))
     {
-        this(new Renderer2DModel());
+      // don't bother - we have nothing to paint
     }
-    
-    public AlphaRenderer2D(Renderer2DModel r2dm)
-    {
-        super(r2dm);
-        this.r2dm = r2dm;
-        logger = new LoggingTool(this);
-    }
-    
-    public void paintEmptySpace(int x, int y, int w, int h, int border, Color backColor, Graphics g)
-    {
-        if ((w != 0) || (h != 0)) {
-            int[] coords = { x - border, y + border };
-            double[] bounds = {getScreenSize(w + 2 * border), getScreenSize(h + 2 * border)};
-            int[] screenCoords = getScreenCoordinates(coords);
-            
-            mask.subtract(new Area(new Rectangle2D.Double(screenCoords[0], screenCoords[1], bounds[0], bounds[1])));
-        }
-    }
-    
-    protected RingSet getRingSet(AtomContainer atomCon)
-    {
-        RingSet ringSet = new RingSet();
-        Molecule[] molecules = null;
-        try
-        {
-            molecules = ConnectivityChecker.partitionIntoMolecules(atomCon).getMolecules();
-        }
-        catch (Exception exception)
-        {
-            logger.warn("Could not partition molecule: " + exception.getMessage());
-            logger.debug(exception);
-            return ringSet;
-        }
-        for (int i = 0; i < molecules.length; i++)
-        {
-            ringSet.add(sssrf.findSSSR(molecules[i]));
-        }
-        
-        return ringSet;
-    }
-    
-    public void paintMolecule(AtomContainer atomCon, Graphics graphics)
-    {
-        mask = new Area(new Rectangle2D.Double(0, 0, r2dm.getBackgroundDimension().width, r2dm.getBackgroundDimension().height));
-        
-        if (r2dm.getPointerVectorStart() != null && r2dm.getPointerVectorEnd() != null)
-        {
-            paintPointerVector(graphics);
-        }
-        paintAtoms(atomCon, graphics);
-        
-        Shape oldClip = graphics.getClip();
-        graphics.setClip(mask);
-        paintBonds(atomCon, getRingSet(atomCon), graphics);
-        graphics.setClip(oldClip);
-        
-        paintLassoLines(graphics);
-        
-        mask = null;
-    }
+
+    int[] coords = { x - border, y + border };
+    double[] bounds = { getScreenSize(w + 2 * border), getScreenSize(h + 2 * border)};
+    int[] screenCoords = getScreenCoordinates(coords);
+
+    mask.subtract(new Area(new Rectangle2D.Double(screenCoords[0], screenCoords[1], bounds[0], bounds[1])));
+}
+
+protected RingSet getRingSet(AtomContainer atomCon)
+{
+  RingSet ringSet = new RingSet();
+  Molecule[] molecules = null;
+
+  try
+  {
+    molecules = ConnectivityChecker.partitionIntoMolecules(atomCon).getMolecules();
+  }
+
+  catch (Exception exception)
+  {
+    logger.warn("Could not partition molecule: " + exception.getMessage());
+    logger.debug(exception);
+    return ringSet;
+  }
+
+  for (int i = 0; i < molecules.length; i++)
+  {
+    ringSet.add(sssrf.findSSSR(molecules[i]));
+  }
+
+  return ringSet;
+}
+
+public void paintMolecule(AtomContainer atomCon, Graphics graphics)
+{
+  // make the initial mask cover the entire dimension we are going to paint
+  mask =
+    new Area(new Rectangle2D.Double(0, 0, r2dm.getBackgroundDimension().width, r2dm.getBackgroundDimension().height));
+
+  if (r2dm.getPointerVectorStart() != null && r2dm.getPointerVectorEnd() != null)
+  {
+    paintPointerVector(graphics);
+  }
+
+  paintAtoms(atomCon, graphics);
+
+  Shape oldClip = graphics.getClip();
+  graphics.setClip(mask);
+  paintBonds(atomCon, getRingSet(atomCon), graphics);
+  graphics.setClip(oldClip);
+
+  paintLassoLines(graphics);
+
+  mask = null;
+}
 
 }
