@@ -325,6 +325,8 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
         resultString.append("FC:" + getFormalCharge() + ", ");
         resultString.append("H:" + getHybridization() + ", ");
         resultString.append("NC:" + getFormalNeighbourCount() + ", ");
+        resultString.append("CR:" + getCovalentRadius() + ", ");
+        resultString.append("VDWR:" + getVanderwaalsRadius() + ", ");
         resultString.append(super.toString());
         resultString.append(")");
         return resultString.toString(); 
