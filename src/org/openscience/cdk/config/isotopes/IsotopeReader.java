@@ -116,10 +116,11 @@ public class IsotopeReader {
      * Triggers the XML parsing of the data file and returns the read Isotopes. 
      * It turns of XML validation before parsing.
      *
-     * @return Vector Vector of Isotopes
+     * @return a Vector of Isotope's. Returns an empty vector is some reading error
+     *         occured.
      */
     public Vector readIsotopes() {
-        Vector isotopes = null;
+        Vector isotopes = new Vector();
         try {
             parser.setFeature("http://xml.org/sax/features/validation", false);
             logger.info("Deactivated validation");
