@@ -35,7 +35,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.isomorphism.matchers.OrderQueryBond;
-import org.openscience.cdk.isomorphism.matchers.SMARTSAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.smiles.SmilesParser;
 

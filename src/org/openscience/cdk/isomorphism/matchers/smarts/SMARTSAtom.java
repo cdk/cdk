@@ -21,10 +21,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package org.openscience.cdk.isomorphism.matchers;
+package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.isomorphism.matchers.QueryAtom;
 
 /**
  * This is just a simple proof of concept, and far from a functional SMARTSAtom.
