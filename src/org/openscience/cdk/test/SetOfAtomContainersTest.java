@@ -67,6 +67,18 @@ public class SetOfAtomContainersTest extends TestCase {
         assertEquals(3, som.getAtomContainerCount());
     }
     
+    public void testAdd_SetOfAtomContainers() {
+        SetOfAtomContainers som = new SetOfAtomContainers();
+        som.addAtomContainer(new AtomContainer());
+        som.addAtomContainer(new AtomContainer());
+        som.addAtomContainer(new AtomContainer());
+        
+        SetOfAtomContainers tested = new SetOfAtomContainers();
+        assertEquals(0, tested.getAtomContainerCount());
+        tested.add(som);
+        assertEquals(3, tested.getAtomContainerCount());
+    }
+
     public void testGetAtomContainer_int() {
         SetOfAtomContainers som = new SetOfAtomContainers();
         som.addAtomContainer(new AtomContainer());
@@ -84,12 +96,48 @@ public class SetOfAtomContainersTest extends TestCase {
         assertEquals(1.0, som.getMultiplier(0), 0.00001);
     }
     
+    public void testSetMultiplier_int_double() {
+        SetOfAtomContainers som = new SetOfAtomContainers();
+        som.addAtomContainer(new AtomContainer());
+
+        assertEquals(1.0, som.getMultiplier(0), 0.00001);
+        som.setMultiplier(0, 2.0);
+        assertEquals(2.0, som.getMultiplier(0), 0.00001);
+    }
+
+    public void testSetMultipliers_arraydouble() {
+        SetOfAtomContainers som = new SetOfAtomContainers();
+        AtomContainer container = new AtomContainer();
+        som.addAtomContainer(container);
+        AtomContainer container2 = new AtomContainer();
+        som.addAtomContainer(container2);
+
+        assertEquals(1.0, som.getMultiplier(0), 0.00001);
+        assertEquals(1.0, som.getMultiplier(1), 0.00001);
+        double[] multipliers = new double[2];
+        multipliers[0] = 2.0;
+        multipliers[1] = 3.0;
+        som.setMultipliers(multipliers);
+        assertEquals(2.0, som.getMultiplier(0), 0.00001);
+        assertEquals(3.0, som.getMultiplier(1), 0.00001);
+    }
+
+    public void testSetMultiplier_AtomContainer_double() {
+        SetOfAtomContainers som = new SetOfAtomContainers();
+        AtomContainer container = new AtomContainer();
+        som.addAtomContainer(container);
+
+        assertEquals(1.0, som.getMultiplier(container), 0.00001);
+        som.setMultiplier(container, 2.0);
+        assertEquals(2.0, som.getMultiplier(container), 0.00001);
+    }
+
     public void testGetMultipliers() {
         SetOfAtomContainers som = new SetOfAtomContainers();
         som.addAtomContainer(new AtomContainer(), 1.0);
-
-	double[] multipliers = som.getMultipliers();
-	assertNotNull(multipliers);
+        
+        double[] multipliers = som.getMultipliers();
+        assertNotNull(multipliers);
         assertEquals(1, multipliers.length);
     }
         

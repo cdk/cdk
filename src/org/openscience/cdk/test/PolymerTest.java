@@ -1,10 +1,9 @@
-/* PolymerTest.java
+/* $RCSfile$
+ * $Author$    
+ * $Date$    
+ * $Revision$
  * 
- * $ author: 	Edgar Luttmann 			$ 
- * $ contact: 	edgar@uni-paderborn.de 	$
- * $ date: 		2001-08-09 				$
- * 
- * Copyright (C) 1997-2004  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2001-2004  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -39,7 +38,9 @@ import org.openscience.cdk.Polymer;
 /**
  * TestCase for the Polymer class.
  *
- * @cdk.module test
+ * @author      Edgar Luttmann <edgar@uni-paderborn.de>
+ * @cdk.created 2001-08-09
+ * @cdk.module  test
  */
 public class PolymerTest extends TestCase {
 
@@ -136,4 +137,48 @@ public class PolymerTest extends TestCase {
 		assertTrue(oPolymer.getMonomerNames().contains(oMono2.getMonomerName()));
 	}
 	
+	public void testGetMonomer_String() {
+		Polymer oPolymer = new Polymer();
+		
+		Monomer oMono1 = new Monomer();
+		oMono1.setMonomerName(new String("TRP279"));
+		Monomer oMono2 = new Monomer();
+		oMono2.setMonomerName(new String("HOH"));
+		Atom oAtom1 = new Atom("C1");
+		Atom oAtom2 = new Atom("C2");
+		Atom oAtom3 = new Atom("C3");
+		oPolymer.addAtom(oAtom1, oMono1);
+		oPolymer.addAtom(oAtom2, oMono1);
+		oPolymer.addAtom(oAtom3, oMono2);
+
+		assertEquals(oMono1, oPolymer.getMonomer("TRP279"));
+		assertEquals(oMono2, oPolymer.getMonomer("HOH"));
+	}
+    
+	public void testAddAtom_Atom() {
+		Polymer oPolymer = new Polymer();
+		
+		Atom oAtom1 = new Atom("C1");
+		Atom oAtom2 = new Atom("C2");
+		oPolymer.addAtom(oAtom1);
+		oPolymer.addAtom(oAtom2);
+
+		assertEquals(2, oPolymer.getMonomer("").getAtomCount());
+	}
+    
+	public void testAddAtom_Atom_Monomer() {
+		Polymer oPolymer = new Polymer();
+		
+		Monomer oMono1 = new Monomer();
+		oMono1.setMonomerName(new String("TRP279"));
+		Atom oAtom1 = new Atom("C1");
+		Atom oAtom2 = new Atom("C2");
+		Atom oAtom3 = new Atom("C3");
+		oPolymer.addAtom(oAtom1);
+		oPolymer.addAtom(oAtom2, oMono1);
+		oPolymer.addAtom(oAtom3, oMono1);
+
+		assertEquals(1, oPolymer.getMonomer("").getAtomCount());
+		assertEquals(2, oPolymer.getMonomer("TRP279").getAtomCount());
+	}
 }
