@@ -144,6 +144,7 @@
                     <classpath>
                         <fileset dir="${lib}">
                             <include name="JSX1.0.6.0.jar" />
+                            <include name="vecmath1.2-1.14.jar" />
                         </fileset>
                         <fileset dir="${dist}/jar">
                             <include name="cdk-core.jar" />

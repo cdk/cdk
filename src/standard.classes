@@ -1,2 +1,4 @@
 org/openscience/cdk/tools/LoggingTool.java
 org/openscience/cdk/tools/IsotopeFactory.java
+org/openscience/cdk/geometry/GeometryTools.java
+org/openscience/cdk/geometry/CrystalGeometryTools.java

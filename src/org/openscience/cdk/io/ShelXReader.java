@@ -1,5 +1,4 @@
-/*
- * $RCSfile$
+/* $RCSfile$
  * $Author$
  * $Date$
  * $Revision$
@@ -31,6 +30,7 @@ package org.openscience.cdk.io;
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.math.FortranFormat;
+import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.exception.*;
 import java.io.*;
 import java.util.Vector;
@@ -39,6 +39,8 @@ import java.util.StringTokenizer;
 
 /**
  * A reader for ShelX output (RES) files. It does not read all information.
+ * The list of fields that is read: REM, END, CELL, SPGR.
+ * In additions atoms are read.
  *
  * <p>A reader for ShelX files. It currently supports ShelXL.
  *
@@ -301,32 +303,28 @@ public class ShelXReader implements ChemObjectReader {
                     atype = atype.substring(0,1) + sb2.toString().toLowerCase();
                 }
 
-                double fa = FortranFormat.atof(sa); // fractional coordinates
-                double fb = FortranFormat.atof(sb);
-                double fc = FortranFormat.atof(sc);
-                logger.debug("fa,fb,fc: " + fa + ", " + fb + ", " + fc);
-                /* convert these fractional coordinates to real
+                double[] frac = new double[3];
+                frac[0] = FortranFormat.atof(sa); // fractional coordinates
+                frac[1] = FortranFormat.atof(sb);
+                frac[2] = FortranFormat.atof(sc);
+                logger.debug("fa,fb,fc: " + frac[0] + ", " + frac[1] + ", " + frac[2]);
+                /* convert these fractional coordinates to cartesian
                    coordinates */
                 double[] a = crystal.getA();
                 double[] b = crystal.getB();
                 double[] c = crystal.getC();
-                logger.debug("A: " + a[0] + ", " + a[1] + ", " + a[2]);
-                logger.debug("B: " + b[0] + ", " + b[1] + ", " + b[2]);
-                logger.debug("C: " + c[0] + ", " + c[1] + ", " + c[2]);
-                double x = fa*a[0] + fb*a[1] + fc*a[2];
-                double y = fa*b[0] + fb*b[1] + fc*b[2];
-                double z = fa*c[0] + fb*c[1] + fc*c[2];
+                double[] cart = CrystalGeometryTools.fractionalToCartesian(a, b, c, frac);
 
                 if (atype.equalsIgnoreCase("Q")) {
                     // ingore atoms named Q
                 } else {
-                    logger.info("Adding atom: " + atype + ", " + x
-                                                        + ", " + y
-                                                        + ", " + z);
+                    logger.info("Adding atom: " + atype + ", " + cart[0]
+                                                        + ", " + cart[1]
+                                                        + ", " + cart[2]);
                     Atom atom = new Atom(atype);
-                    atom.setX3D(x);
-                    atom.setY3D(y);
-                    atom.setZ3D(z);
+                    atom.setX3D(cart[0]);
+                    atom.setY3D(cart[1]);
+                    atom.setZ3D(cart[2]);
                     crystal.addAtom(atom);
                     logger.debug(atom.toString());
                 }
