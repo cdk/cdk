@@ -33,12 +33,18 @@ import java.util.Vector;
 
 /**
  * Allows processing of IOSetting quesions which are passed to the user
- * by using the System.out and System.in.
+ * by using the System.out and System.in by default.
+ *
+ * <p>This listener can also be used to list all the questions a ChemObjectWriter 
+ * has, by using a dummy StringWriter, and a <code>null</code> Reader.
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  */
 public class TextGUIListener implements ReaderListener, WriterListener {
 
+    private BufferedReader in;
+    private PrintWriter out;
+    
     private int level = 0;
     
     /**
@@ -47,6 +53,39 @@ public class TextGUIListener implements ReaderListener, WriterListener {
      */
     public TextGUIListener(int level) {
         this.level = level;
+        
+        this.in = new BufferedReader(new InputStreamReader(System.in));
+        this.out = new PrintWriter(new OutputStreamWriter(System.out));
+    }
+    
+    public void setLevel(int level) {
+        this.level = level;
+    }
+    
+    /**
+     * Overwrites the default writer to which the output is directed.
+     */
+    public void setOutputWriter(Writer writer) {
+        if (writer instanceof PrintWriter) {
+            this.out = (PrintWriter)writer;
+        } else if (writer == null) {
+            this.in = null;
+        } else {
+            this.out = new PrintWriter(writer);
+        }
+    }
+    
+    /**
+     * Overwrites the default reader from which the input is taken.
+     */
+    public void setInputReader(Reader reader) {
+        if (reader instanceof BufferedReader) {
+            this.in = (BufferedReader)reader;
+        } else if (reader == null) {
+            this.in = null;
+        } else {
+            this.in = new BufferedReader(reader);
+        }
     }
     
     public void frameRead(ReaderEvent event) {
@@ -60,37 +99,47 @@ public class TextGUIListener implements ReaderListener, WriterListener {
         processIOSetting(setting);
     }
     
+    /**
+     * Processes the IOSettings by listing the question, giving the options
+     * and asking the user to provide their choice.
+     *
+     * <p>Note: if the input reader is <code>null</code>, then the method
+     * does not wait for an answer, and takes the default.
+     */
     private void processIOSetting(IOSetting setting) {
         // post the question
         if (setting.getLevel() < this.level) {
-            System.out.print(setting.getQuestion());
+            // output the option name
+            this.out.print("[" + setting.getName() + "]: ");
+            // post the question
+            this.out.print(setting.getQuestion());
             if (setting instanceof BooleanIOSetting) {
                 BooleanIOSetting boolSet = (BooleanIOSetting)setting;
                 boolean set = boolSet.isSet();
                 if (set) {
-                    System.out.print(" [Yn]");
+                    this.out.print(" [Yn]");
                 } else {
-                    System.out.print(" [yN]");
+                    this.out.print(" [yN]");
                 }
             } else if (setting instanceof StringIOSetting) {
-                System.out.print(" [" + setting.getSetting() + "]");
+                this.out.print(" [" + setting.getSetting() + "]");
             } else if (setting instanceof OptionIOSetting) {
                 OptionIOSetting optionSet = (OptionIOSetting)setting;
                 Vector settings = optionSet.getOptions();
                 for (int i=0; i<settings.size(); i++) {
-                    System.out.println();
-                    System.out.print((i+1) + ". " + settings.elementAt(i));
+                    this.out.println();
+                    this.out.print((i+1) + ". " + settings.elementAt(i));
                 }
             }
-            System.out.println();
+            this.out.println();
+            this.out.flush();
         
             // get the answer
             boolean gotAnswer = false;
-            BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
             while (!gotAnswer) {
                 try {
-                    System.out.print("> ");
-                    String answer = input.readLine();
+                    this.out.print("> "); this.out.flush();
+                    String answer = in.readLine();
                     if (answer.length() == 0) {
                         // pressed ENTER -> take default
                     } else if (setting instanceof OptionIOSetting) {
@@ -108,12 +157,12 @@ public class TextGUIListener implements ReaderListener, WriterListener {
                     }
                     gotAnswer = true;
                 } catch (IOException exception) {
-                    System.out.println("Cannot read from STDIN. Skipping question.");
+                    this.out.println("Cannot read from STDIN. Skipping question.");
                 } catch (NumberFormatException exception) {
-                    System.out.println("Answer is not a number.");
+                    this.out.println("Answer is not a number.");
                 } catch (CDKException exception) {
-                    System.out.println();
-                    System.out.println(exception.toString());
+                    this.out.println();
+                    this.out.println(exception.toString());
                 }
             }
         }
