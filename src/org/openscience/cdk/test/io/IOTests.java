@@ -28,6 +28,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.test.io.cml.CMLIOTests;
+import org.openscience.cdk.test.io.iterator.IteratingMDLReaderTest;
 
 /**
  * TestSuite that runs all the sample tests for the cdk.io package.
@@ -53,6 +54,9 @@ public class IOTests {
         /* suite.addTest(ZMatrixReaderTest.suite()); This is not a JUnit test yet! */
         
         suite.addTest(ReaderFactoryTest.suite());
+        
+        // cdk.io.iterator package
+        suite.addTest(IteratingMDLReaderTest.suite());
         return suite;
     }
 
