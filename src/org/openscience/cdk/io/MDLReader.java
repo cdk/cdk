@@ -37,7 +37,12 @@ import javax.vecmath.*;
 
 /**
  *  Reads a molecule from an MDL molfile or SDF file. References: <a
- *  href="http://cdk.sf.net/biblio.html#DAL92">DAL92</a>
+ *  href="http://cdk.sf.net/biblio.html#DAL92">DAL92</a>.
+ *
+ * <p>From the Atom block it reads atomic coordinates, element types and
+ * formal charges.
+ *
+ * <p>From the Bond block it reads the bonds and the orders.
  *
  *@author     steinbeck
  *@created    October 2, 2000
@@ -158,8 +163,7 @@ public class MDLReader implements ChemObjectReader
 	 *
 	 *@return    The Molecule that was read from the MDL file.
 	 */
-	private Molecule readMolecule()
-	{
+	private Molecule readMolecule() {
 		int atoms = 0;
 		int bonds = 0;
 		int atom1 = 0;
@@ -175,8 +179,7 @@ public class MDLReader implements ChemObjectReader
 		Bond bond;
 		Atom atom;
 
-		try
-		{
+		try {
 			String title = new String(input.readLine() + "\n" + input.readLine() + "\n" + input.readLine());
 			molecule.setProperty(CDKConstants.TITLE, title);
 			StringBuffer strBuff = new StringBuffer(input.readLine());
@@ -186,8 +189,7 @@ public class MDLReader implements ChemObjectReader
 			logger.debug("Atomcount: " + atoms);
 			bonds = java.lang.Integer.valueOf(strTok.nextToken()).intValue();
 			logger.debug("Bondcount: " + bonds);
-			for (int f = 0; f < atoms; f++)
-			{
+			for (int f = 0; f < atoms; f++) {
 				strBuff = new StringBuffer(input.readLine());
 				strTok = new StringTokenizer(strBuff.toString().trim());
 				x = new Double(strTok.nextToken()).doubleValue();
@@ -198,7 +200,45 @@ public class MDLReader implements ChemObjectReader
                 logger.debug("Atom type: " + element);
 				atom = new Atom(element, new Point3d(x, y, z));
 				atom.setPoint2D(new Point2d(x, y));
-				elemfact.configure(atom);
+				// elemfact.configure(atom);
+
+                // parse further fields
+                String dummy = strTok.nextToken();
+                String chargeCodeString = strTok.nextToken();
+                logger.debug("Atom charge code: " + chargeCodeString);
+                int chargeCode = Integer.parseInt(chargeCodeString);
+                switch (chargeCode) {
+                    case 0: 
+                        // uncharged specied
+                        break;
+                    case 1:
+                        // +3 charge
+                        atom.setFormalCharge(+3);
+                        break;
+                    case 2:
+                        // +2 charge
+                        atom.setFormalCharge(+2);
+                        break;
+                    case 3:
+                        // +1 charge
+                        atom.setFormalCharge(+1);
+                        break;
+                    case 4:
+                        // double radical
+                        break;
+                    case 5:
+                        // -1 charge
+                        atom.setFormalCharge(-1);
+                        break;
+                    case 6:
+                        // -2 charge
+                        atom.setFormalCharge(-2);
+                        break;
+                    case 7:
+                        // -3 charge
+                        atom.setFormalCharge(-3);
+                        break;
+                }
 				molecule.addAtom(atom);
 			}
 			for (int f = 0; f < bonds; f++)
