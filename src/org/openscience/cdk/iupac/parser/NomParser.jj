@@ -28,6 +28,7 @@ package org.openscience.cdk.iupac.parser;
 
 import java.io.StringReader;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.excpetion;
 import java.util.*;
 
 /**
@@ -69,7 +70,7 @@ public class NomParser {
      * @throws ParseException Any error which occur in the parsing get wrapped
      * up in a ParseException and thrown.
      */
-    public static Molecule generate (String stringToParse) throws ParseException
+    public static Molecule generate (String stringToParse) throws ParseException, CDKException
     {
         isMainCyclic = false;
         tempLocation = new Vector();
