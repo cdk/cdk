@@ -859,5 +859,36 @@ public class SmilesGeneratorTest extends TestCase
 		sgt.setStandAlone(true);
 		sgt.testSmilesGenerator();
 	}
+
+  
+    /**
+     * Test for some rings where the double bond is broken
+     */
+    public void testCycloExamples() {
+      try{
+        SmilesGenerator sg = new SmilesGenerator();
+        String filename = "data/mdl/cyclooctan.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLReader reader = new MDLReader(new InputStreamReader(ins));
+				Molecule mol1 = (Molecule) reader.read(new Molecule());
+        String moleculeSmile=sg.createSMILES(mol1);
+        assertEquals(moleculeSmile,"C1=CCCCCCC1");
+        filename = "data/mdl/cycloocten.mol";
+        ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        reader = new MDLReader(new InputStreamReader(ins));
+				mol1 = (Molecule) reader.read(new Molecule());
+        moleculeSmile=sg.createSMILES(mol1);
+        assertEquals(moleculeSmile,"C1C=CCCCCC1");
+        filename = "data/mdl/cyclooctadien.mol";
+        ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        reader = new MDLReader(new InputStreamReader(ins));
+				mol1 = (Molecule) reader.read(new Molecule());
+        moleculeSmile=sg.createSMILES(mol1);
+        assertEquals(moleculeSmile,"C=1CCC=CCCC=1");
+      } catch (Exception exc) {
+        exc.printStackTrace();
+        System.out.println(exc);
+      }
+    }
 }
 
