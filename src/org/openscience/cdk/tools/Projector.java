@@ -1,12 +1,11 @@
-/* 
- * $RCSfile$
+/* $RCSfile$
  * $Author$
  * $Date$
  * $Revision$
  * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  * 
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -32,15 +31,17 @@ import org.openscience.cdk.*;
 
 /**
  * Tool to make projections from 3D to 2D
+ *
+ * @keyword projection in 2D
  */
 public class Projector  {
   
-  public static void project2D(Molecule m) {
-    for (int i = 0; i < m.getAtomCount(); i++) {
-      Atom a = m.getAtomAt(i);
-      if (a.getPoint3D() != null) {
-        a.setX2D(a.getX3D());
-        a.setY2D(a.getY3D());
+  public static void project2D(AtomContainer container) {
+    for (int i = 0; i < container.getAtomCount(); i++) {
+      Atom atom = container.getAtomAt(i);
+      if (atom.getPoint3D() != null) {
+        atom.setX2D(atom.getX3D());
+        atom.setY2D(atom.getY3D());
       } else {
         // should throw an exception
       }
