@@ -123,12 +123,11 @@ public class IsProtonInConjugatedPiSystemDescriptor implements Descriptor {
 			}
 			Atom target = ac.getAtomAt(atomPosition);
 			if(target.getSymbol().equals("H")) {
-				System.out.println("symbol pi: "+target.getSymbol());
 				SetOfAtomContainers acSet = ConjugatedPiSystemsDetector.detect(mol);
 				AtomContainer detected = acSet.getAtomContainer(0);
 				Atom[] neighboors = mol.getConnectedAtoms(target);
 				for (int i = 0; i < neighboors.length; i++) {
-					if (detected.contains(neighboors[i])) {
+					if ((detected != null) && (detected.contains(neighboors[i]))) {
 						counter += 1;
 					}
 					else {
@@ -137,6 +136,9 @@ public class IsProtonInConjugatedPiSystemDescriptor implements Descriptor {
 				}
 				if(counter > 0) {
 					isProtonInPiSystem = true;
+				}
+				else {
+					isProtonInPiSystem = false;
 				}
 			}
 			return new Boolean(isProtonInPiSystem);
