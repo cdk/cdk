@@ -37,6 +37,15 @@ import org.openscience.cdk.*;
  *  and the '%' tag for more than 10 rings at a time are supported, but this
  *  should be sufficient for most organic molecules.
  *
+ *  An example:
+ *  <pre>
+ *  try {
+ *    SmilesParser sp = new SmilesParser();
+ *    Molecule m = sp.parseSMILES("c1ccccc1");
+ *  } catch (InvalidSmilesException ise) {
+ *  }
+ *  </pre>
+ *
  * References:
  *   <a href="http://cdk.sf.net/biblio.html#WEI88">WEI88</a>
  *
