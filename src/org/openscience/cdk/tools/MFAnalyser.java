@@ -214,7 +214,7 @@ public class MFAnalyser{
 		if(sm.get(symbol)!=null){
 			formula += symbol;
 			if (!sm.get(symbol).equals(new Integer(1)))
-				formula += sm.remove(symbol).toString();
+				formula += sm.get(symbol).toString();
 		}
 		return(formula);
 	}
@@ -247,4 +247,5 @@ public class MFAnalyser{
 		this.verbose = verbose;
 	}
 }
+
 
