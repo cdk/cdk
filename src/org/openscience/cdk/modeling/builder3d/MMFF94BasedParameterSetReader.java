@@ -52,7 +52,7 @@ import org.openscience.cdk.AtomType;
  */
 public class MMFF94BasedParameterSetReader {
 
-	private String configFile = "mmff94.prm";
+	private String configFile = "org/openscience/cdk/modeling/forcefield/data/mmff94.prm";
 	private InputStream ins = null;
 	private Hashtable parameterSet;
 	private Vector atomTypes;
@@ -60,7 +60,7 @@ public class MMFF94BasedParameterSetReader {
 	private String key = "";
 	private String sid;
 
-	private String configFilevdW = "data/mmffvdw.prm";
+	private String configFilevdW = "org/openscience/cdk/modeling/forcefield/data/mmffvdw.prm";
 	private InputStream insvdW = null;
 	private StringTokenizer stvdW;
 	private String sidvdW;

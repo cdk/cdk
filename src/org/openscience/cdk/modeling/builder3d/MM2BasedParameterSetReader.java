@@ -52,7 +52,7 @@ import org.openscience.cdk.AtomType;
  */
 public class MM2BasedParameterSetReader {
 
-	private String configFile = "mm2.prm";
+	private String configFile = "org/openscience/cdk/modeling/forcefield/data/mm2.prm";
 	private InputStream ins = null;
 	private Hashtable parameterSet;
 	private Vector atomTypes;
