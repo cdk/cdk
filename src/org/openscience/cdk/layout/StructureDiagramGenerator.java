@@ -51,6 +51,11 @@ import java.awt.*;
  * Molecule layedOutMol = sdg.getMolecule();
  * </pre>
  *
+ * <p>The method will fail if the molecule is disconnected. The
+ * partitionIntoMolecules(AtomContainer) can help here.
+ * 
+ * @see org.openscience.cdk.tools.ConnectivityChecker#partitionIntoMolecules(AtomContainer)
+ *
  * @keyword layout
  * @keyword 2D-coordinates
  */
