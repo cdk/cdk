@@ -642,4 +642,11 @@ public class StructureDiagramGenerator {
 		}
 		logger.debug("There are " + unplacedCounter + " Rings.");
 	}
+    
+    /**
+     * Set the bond length used for laying out the molecule
+     */
+    public void setBondLength(double bondLength) {
+        this.bondLength = bondLength;
+    }
 }
