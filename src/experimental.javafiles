@@ -15,3 +15,4 @@ org/openscience/cdk/iupac/generator/sectionc/Rule102dot1.java
 org/openscience/cdk/iupac/generator/IUPACNameGenerator.java
 org/openscience/cdk/iupac/generator/tools/CarbonChainNames.java
 org/openscience/cdk/iupac/generator/tools/AdjacencyMatrixTools.java
+org/openscience/cdk/graph/invariant/IChIGenerator.java
