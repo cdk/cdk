@@ -10,17 +10,17 @@ import java.util.Map;
 public class SummaryVBHTMLRenderer implements Renderer {
     
     public String render(Report report) {
-        if (report.isEmpty()) {
-            return "";
-        }
-
         StringBuffer sb = new StringBuffer(header());
         sb.append(renderSummary(report));
+
+        if (report.isEmpty()) {
+            sb.append(footer());
+            return sb.toString();
+        }
+        
+        boolean colorize = false;
         String filename = null;
         String lineSep = PMD.EOL;
-
-        boolean colorize = false;
-
         for (Iterator iter = report.iterator(); iter.hasNext();) {
             RuleViolation rv = (RuleViolation) iter.next();
             if (!rv.getFilename().equals(filename)) { // New File
@@ -99,6 +99,7 @@ public class SummaryVBHTMLRenderer implements Renderer {
         sb.append("<td><font class=title>&nbsp;Rule name</font></td>");
         sb.append("<td><font class=title>&nbsp;Number of violations</font></td></tr>");
         Map summary = report.getSummary();
+        int violationTotal = 0;
         for (Iterator i = summary.keySet().iterator(); i.hasNext();) {
             String ruleName = (String) i.next();
             if (colorize) {
@@ -110,7 +111,17 @@ public class SummaryVBHTMLRenderer implements Renderer {
             sb.append("<td><font class=body>" + ruleName + "</font></td>");
             sb.append("<td align=center><font class=body>" + String.valueOf(((Integer) summary.get(ruleName)).intValue()) + "</font></td>");
             sb.append("</tr>");
+            violationTotal += ((Integer) summary.get(ruleName)).intValue();
         }
+        if (colorize) {
+            sb.append("<tr id=RowColor1>");
+        } else {
+            sb.append("<tr id=RowColor2>");
+        }
+        colorize = !colorize;
+        sb.append("<td><font class=body align=right>Total</font></td>");
+        sb.append("<td align=center><font class=body>" + violationTotal + "</font></td>");
+        sb.append("</tr>");
         sb.append("</table><p/>");
         return sb.toString();
     }
