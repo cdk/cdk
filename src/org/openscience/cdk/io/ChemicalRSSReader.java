@@ -105,7 +105,7 @@ public class ChemicalRSSReader extends DefaultChemObjectReader {
     }
 
     private void init() {
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        logger = new LoggingTool(this);
 
         boolean success = false;
         // Aelfred is prefered.
