@@ -125,7 +125,7 @@ public class AngleBending {
 	public void calculateDeltav(GVector point) {
 		
 		for (int i = 0; i < angleNumber; i++) {
-			v[i] = ffTools.calculateAngleBetweenTwoBondsFrom3xNCoordinates(point,angleAtomPosition[i][0],angleAtomPosition[i][1],angleAtomPosition[i][2]);
+			v[i] = ffTools.angleBetweenTwoBondsFrom3xNCoordinates(point,angleAtomPosition[i][0],angleAtomPosition[i][1],angleAtomPosition[i][2]);
 			deltav[i] = v[i] - v0[i];
 		}
 	}

@@ -208,7 +208,7 @@ public class VanDerWaalsInteractions {
 
 		for (int l = 0; l < vdwInteractionNumber; l++) {
 
-			r[l] = ffTools.calculate3dDistanceBetweenTwoAtomFrom3xNCoordinates(point, vdWiAtomPosition[l][0], vdWiAtomPosition[l][1]);
+			r[l] = ffTools.distanceBetweenTwoAtomsFrom3xNCoordinates(point, vdWiAtomPosition[l][0], vdWiAtomPosition[l][1]);
 			//System.out.println("r[" + l + "]= " + r[l]);
 		}
 	}

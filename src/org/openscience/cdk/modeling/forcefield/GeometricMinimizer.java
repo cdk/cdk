@@ -128,7 +128,7 @@ public class GeometricMinimizer {
 
 		RMSD = 0;
 		for (int i = 0; i < AtomsNumber; i++) {
-			d = ffTools.calculate3dDistanceBetweenTwoAtomFromTwo3xNCoordinates(kplus1Coordinates, kCoordinates, i, i);
+			d = ffTools.distanceBetweenTwoAtomFromTwo3xNCoordinates(kplus1Coordinates, kCoordinates, i, i);
 			RMSD = RMSD + Math.pow(d, 2);
 		}
 		RMSD = RMSD / dimension;

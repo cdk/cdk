@@ -140,13 +140,13 @@ public class StretchBendInteractions {
 	public void calculateDeltarAndv(GVector point) {
 
 		for (int i = 0; i < angleNumber; i++) {
-			v[i] = ffTools.calculateAngleBetweenTwoBondsFrom3xNCoordinates(point,angleAtomPosition[i][0],angleAtomPosition[i][1],angleAtomPosition[i][2]);
+			v[i] = ffTools.angleBetweenTwoBondsFrom3xNCoordinates(point, angleAtomPosition[i][0],angleAtomPosition[i][1],angleAtomPosition[i][2]);
 			deltav[i] = v[i] - v0[i];
 
-			rij[i] = ffTools.calculate3dDistanceBetweenTwoAtomFrom3xNCoordinates(point, angleAtomPosition[i][0], angleAtomPosition[i][1]);
+			rij[i] = ffTools.distanceBetweenTwoAtomsFrom3xNCoordinates(point, angleAtomPosition[i][0], angleAtomPosition[i][1]);
 			deltarij[i] = rij[i] - r0IJ[i];
 
-			rkj[i] = ffTools.calculate3dDistanceBetweenTwoAtomFrom3xNCoordinates(point, angleAtomPosition[i][2], angleAtomPosition[i][1]);
+			rkj[i] = ffTools.distanceBetweenTwoAtomsFrom3xNCoordinates(point, angleAtomPosition[i][2], angleAtomPosition[i][1]);
 			deltarkj[i] = rkj[i] - r0KJ[i];
 		}
 	}

@@ -106,6 +106,27 @@ public class ForceFieldTools {
 
 
 	/**
+	 *  Calculate 3d distance between two atoms in one molecule from its 3xN
+	 *  coordinate vector.
+	 *
+	 *@param  coords3d  Molecule 3xN coordinates.
+	 *@param  atom1Position               Atom position in the molecule (from 0 to N-1) for the first atom.
+	 *@param  atom2Position               Atom position in the molecule (from 0 to N-1) for the second atom.
+	 *@return                         Distance between the two atoms.
+	 */
+	public double distanceBetweenTwoAtomsFrom3xNCoordinates(GVector coords3d, int atom1Position, int atom2Position) {
+
+		Point3d atom1Coordinates = new Point3d(coords3d.getElement(3 * atom1Position), coords3d.getElement(3 * atom1Position + 1), coords3d.getElement(3 * atom1Position + 2));
+		Point3d atom2Coordinates = new Point3d(coords3d.getElement(3 * atom2Position), coords3d.getElement(3 * atom2Position + 1), coords3d.getElement(3 * atom2Position + 2));
+		double atomsDistance = 0;
+		atomsDistance = atom1Coordinates.distance(atom2Coordinates);
+		//System.out.println("atomsDistance = " + atomsDistance);
+
+		return atomsDistance;
+	}
+
+
+	/**
 	 *  Calculate 3d distance between two atoms in one molecule from its N
 	 *  coordinates 3d
 	 *
@@ -116,7 +137,7 @@ public class ForceFieldTools {
 	 *      0 to N-1) for the second atom.
 	 *@return                     Distance between the two atoms in the molecule.
 	 */
-	public double get3dDistanceBetweenTwoAtoms(Vector atoms3dCoordinates, int atomNum1, int atomNum2) {
+	public double distanceBetweenTwoAtomsFromNCoordinates3d(Vector atoms3dCoordinates, int atomNum1, int atomNum2) {
 
 		Point3d atom13dCoord = (Point3d) atoms3dCoordinates.get(atomNum1);
 		Point3d atom23dCoord = (Point3d) atoms3dCoordinates.get(atomNum2);
@@ -156,36 +177,12 @@ public class ForceFieldTools {
 	 *@param  atomNumM2                Atom position in the second molecule.
 	 *@return                          Distance between the two atoms.
 	 */
-	public double calculate3dDistanceBetweenTwoAtomFromTwo3xNCoordinates(GVector atomsCoordinatesVector1, GVector atomsCoordinatesVector2, int atomNumM1, int atomNumM2) {
+	public double distanceBetweenTwoAtomFromTwo3xNCoordinates(GVector atomsCoordinatesVector1, GVector atomsCoordinatesVector2, int atomNumM1, int atomNumM2) {
 
 		double atomsDistance = 0;
 		double difference = 0;
 		for (int j = 0; j < 3; j++) {
 			difference = atomsCoordinatesVector2.getElement(atomNumM2 * 3 + j) - atomsCoordinatesVector1.getElement(atomNumM1 * 3 + j);
-			difference = Math.pow(difference, 2);
-			atomsDistance = atomsDistance + difference;
-		}
-		atomsDistance = Math.sqrt(atomsDistance);
-		//System.out.println("atomsDistance = " + atomsDistance);
-		return atomsDistance;
-	}
-
-
-	/**
-	 *  Calculate 3d distance between two atoms in one molecule from its 3xN
-	 *  coordinate vector.
-	 *
-	 *@param  atomsCoordinatesVector  Molecule 3xN coordinates.
-	 *@param  atomNum1                Atom position in the molecule (from 0 to N-1) for the first atom.
-	 *@param  atomNum2                Atom position in the molecule (from 0 to N-1) for the second atom.
-	 *@return                         3d distance between the two atoms.
-	 */
-	public double calculate3dDistanceBetweenTwoAtomFrom3xNCoordinates(GVector atomsCoordinatesVector, int atomNum1, int atomNum2) {
-
-		double atomsDistance = 0;
-		double difference = 0;
-		for (int j = 0; j < 3; j++) {
-			difference = atomsCoordinatesVector.getElement(atomNum2 * 3 + j) - atomsCoordinatesVector.getElement(atomNum1 * 3 + j);
 			difference = Math.pow(difference, 2);
 			atomsDistance = atomsDistance + difference;
 		}
@@ -203,7 +200,7 @@ public class ForceFieldTools {
 	 *@param  atomk  Atom k.
 	 *@return        Angle value.
 	 */
-	public double calculateAngleBetweenTwoBonds(Atom atomi, Atom atomj, Atom atomk) {
+	public double angleBetweenTwoBonds(Atom atomi, Atom atomj, Atom atomk) {
 
 		Vector3d bondij = new Vector3d();
 		bondij.sub((Tuple3d)atomi.getPoint3d(), (Tuple3d)atomj.getPoint3d());
@@ -224,7 +221,7 @@ public class ForceFieldTools {
 	 *@param  atomkPosition  Atom k position.
 	 *@return        Angle value.
 	 */
-	public double calculateAngleBetweenTwoBondsFrom3xNCoordinates(GVector coords3d,int atomiPosition,int atomjPosition,int atomkPosition) {
+	public double angleBetweenTwoBondsFrom3xNCoordinates(GVector coords3d,int atomiPosition,int atomjPosition,int atomkPosition) {
 
 		Point3d atomiCoordinates = new Point3d(coords3d.getElement(3 * atomiPosition), coords3d.getElement(3 * atomiPosition + 1), coords3d.getElement(3 * atomiPosition + 2));
 		Point3d atomjCoordinates = new Point3d(coords3d.getElement(3 * atomjPosition), coords3d.getElement(3 * atomjPosition + 1), coords3d.getElement(3 * atomjPosition + 2));

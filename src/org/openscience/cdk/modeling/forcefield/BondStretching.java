@@ -105,7 +105,7 @@ public class BondStretching {
 	public void calculateDeltar(GVector point) {
 
 		for (int i = 0; i < bondsNumber; i++) {
-			r[i] = ffTools.calculate3dDistanceBetweenTwoAtomFrom3xNCoordinates(point, bondAtomPosition[i][0], bondAtomPosition[i][1]);
+			r[i] = ffTools.distanceBetweenTwoAtomsFrom3xNCoordinates(point, bondAtomPosition[i][0], bondAtomPosition[i][1]);
 			deltar[i] = r[i] - r0[i];
 		}
 	}
