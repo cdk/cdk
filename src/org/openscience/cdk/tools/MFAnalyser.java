@@ -398,14 +398,15 @@ public class MFAnalyser{
 
 	/**
 	 *  Builds the elemental formula of a given molecule as a Hashtable.
+	 *  Keys are the elemental symbols (Strings) and values are the no. of occurrence (Integer objects).
 	 *
-	 * @return    a Hashtable, keys are the elemental symbols (Strings) and values are the no. of occurrence (Integer objects).
+	 * @return    a Hashtable, keys are the elemental symbols and values are their no.
 	 */
 	public Hashtable getFormulaHashtable() {
 		Hashtable formula = new Hashtable();
 		Vector elements = this.getElements();
 		for (int i = 0; i < elements.size(); i++) {
-			Integer numOfAtom = new Integer(atomContainer.getAtomCount());
+			Integer numOfAtom = new Integer(this.getAtomCount((String)elements.get(i)));
 			formula.put(elements.get(i), numOfAtom);
 		}
 		return formula;
