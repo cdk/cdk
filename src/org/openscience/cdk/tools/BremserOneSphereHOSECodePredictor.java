@@ -1,10 +1,9 @@
-/*
- * $RCSfile$
+/* $RCSfile$
  * $Author$
  * $Date$
  * $Revision$
  *
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -27,7 +26,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *
  */
-
 package org.openscience.cdk.tools;
 
 import java.util.Hashtable;
@@ -427,7 +425,6 @@ public class BremserOneSphereHOSECodePredictor implements java.io.Serializable
 		ht.put("C$C$C$(//)", new HOSECodeShiftRange("C$C$C$(//)", 58.0, 5.0, "D", 59.6, 56.4, 1, 2));
 		ht.put("C$C$CC(//)", new HOSECodeShiftRange("C$C$CC(//)", 61.0, 17.4, "S", 85.1, 28.5, 125, 228));
 		ht.put("C$C$CO(//)", new HOSECodeShiftRange("C$C$CO(//)", 81.0, 22.4, "S", 95.3, 61.3, 8, 10));
-		// ht.put("C$C�CN(//)", new HOSECodeShiftRange("C$C�CN(//)", 70.8, 18.8, "S", 95.0, 53.9, 13, 24));
 		ht.put("C$C$CY(//)", new HOSECodeShiftRange("C$C$CY(//)", 59.4, 19.3, "S", 64.6, 56.7, 3, 3));
 		ht.put("C$C$C(//)", new HOSECodeShiftRange("C$C$C(//)", 57.1, 23.6, "D", 123.3, 41.8, 104, 162));
 		ht.put("C$C$OO(//)", new HOSECodeShiftRange("C$C$OO(//)", 90.5, 5.0, "S", 90.5, 90.5, 1, 1));
