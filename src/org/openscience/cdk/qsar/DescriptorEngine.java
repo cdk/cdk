@@ -66,7 +66,7 @@ public class DescriptorEngine {
     private LoggingTool logger;
 
     public DescriptorEngine() {
-        logger = new LoggingTool(true);
+        logger = new LoggingTool(this);
         descriptors = new Vector();
 
         /* the next is stupid, we don't want to hard code this, but it seems
@@ -126,7 +126,8 @@ public class DescriptorEngine {
      */
     public DescriptorEngine(String[] descriptorClasses) {
 
-        List tmplist; // stores the initial list of *all* descriptors
+        List tmplist = new Vector(); // stores the initial list of *all* descriptors
+        logger = new LoggingTool(this);
         
         // some validation. Maybe add some constants to CDKConstants?
         String[] validTypes = {"constitutional","molecular","topological","electronic","geometrical"};
@@ -145,8 +146,6 @@ public class DescriptorEngine {
         DictionaryDatabase dictDB = new DictionaryDatabase();
         Entry[] dictEntries = dictDB.getDictionaryEntry("qsar-descriptors");
 
-        logger = new LoggingTool(true);
-        tmplist = new Vector();
 
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(
