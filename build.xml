@@ -491,6 +491,7 @@
                     <fileset dir="${build}">
                         <include name="org/openscience/cdk/io/**/*" />
                         <include name="org/openscience/cdk/ChemFile.class" />
+                        <excludesfile name="${src}/experimental.classes" />
                     </fileset>
                 </jar>
         </target>

@@ -16,3 +16,4 @@ org/openscience/cdk/iupac/generator/IUPACNameGenerator.java
 org/openscience/cdk/iupac/generator/tools/CarbonChainNames.java
 org/openscience/cdk/iupac/generator/tools/AdjacencyMatrixTools.java
 org/openscience/cdk/graph/invariant/IChIGenerator.java
+org/openscience/cdk/io/IChIReader.java
