@@ -53,15 +53,10 @@ public class MDLWriter implements CDKConstants, ChemObjectWriter {
 	 *
 	 * @param   out  The OutputStream to write to
 	 */
-	public MDLWriter(FileOutputStream out)
+	public MDLWriter(FileOutputStream out) throws Exception
 	{
-		try
-		{
 			writer = new BufferedWriter(new OutputStreamWriter(out));
-		}
-		catch (Exception exc)
-		{
-		}
+		
 	}
 
     /**
@@ -77,10 +72,7 @@ public class MDLWriter implements CDKConstants, ChemObjectWriter {
 	 * @param   out  The Writer to write to
 	 */
 	public MDLWriter(Writer out) {
-		try {
 			writer = new BufferedWriter(out);
-		} catch (Exception exc) {
-		}
 	}
 
 
@@ -92,7 +84,12 @@ public class MDLWriter implements CDKConstants, ChemObjectWriter {
 		}
 		else if (object instanceof Molecule)
 		{
-		    writeMolecule((Molecule)object);
+			try{
+		    		writeMolecule((Molecule)object);
+			}
+			catch(Exception ex){
+				System.err.println(ex.getMessage());
+			}
 		}
 		else
 		{
@@ -110,7 +107,13 @@ public class MDLWriter implements CDKConstants, ChemObjectWriter {
 	private void  writeSetOfMolecules(SetOfMolecules som)
 	{
 		Molecule[] molecules = som.getMolecules();
+			try
+			{
 		writeMolecule(molecules[0]);
+			}
+			catch (Exception exc)
+			{
+			}
 		for (int i = 1; i <= som.getMoleculeCount() - 1; i++)
 		{
 			try
@@ -134,7 +137,7 @@ public class MDLWriter implements CDKConstants, ChemObjectWriter {
 	 *
 	 * @param   molecule  Molecule that is written to an OutputStream 
 	 */
-	public static void writeMolecule(Molecule molecule)
+	public static void writeMolecule(Molecule molecule) throws Exception
 	{
 		int Bonorder, stereo;
 		String line = "";
@@ -148,8 +151,6 @@ public class MDLWriter implements CDKConstants, ChemObjectWriter {
 			rows--;
 		}
 		while (index != -1);
-		try
-		{
 			writer.write(title);
 			for(int i = 0; i < rows; i++)
 			{
@@ -166,7 +167,7 @@ public class MDLWriter implements CDKConstants, ChemObjectWriter {
 		        line = "";
 		        line += formatMDLFloat((float) atom.getX2D());
 		        line += formatMDLFloat((float) atom.getY2D());
-				line += " 0 ";
+				line += "    0.0000 ";
 		        line += formatMDLString(molecule.getAtomAt(f).getSymbol(), 3);
 		        line += " 0  0  0  0  0  0  0  0  0  0  0  0";
 			    writer.write(line);
@@ -185,18 +186,16 @@ public class MDLWriter implements CDKConstants, ChemObjectWriter {
 					line += formatMDLInt(molecule.getAtomNumber(bond.getAtomAt(0)) + 1,3);
 					line += formatMDLInt(molecule.getAtomNumber(bond.getAtomAt(1)) + 1,3);
 					line += formatMDLInt((int)bond.getOrder(),3);
-					line += " 0  0  0  0 ";
+					line += "  0  0  0  0 ";
 					writer.write(line);
 					writer.newLine();
 				}
 			}
 			writer.write("M END");
 			writer.newLine();
-		}
-		catch (Exception exc)
-		{
-			exc.printStackTrace();     
-		}
+			writer.flush();
+			writer.close();
+		
 	}
 			
 			
@@ -280,3 +279,4 @@ public class MDLWriter implements CDKConstants, ChemObjectWriter {
     }
 
 }
+
