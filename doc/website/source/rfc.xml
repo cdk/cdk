@@ -41,8 +41,8 @@
               <entry>1</entry>
               <entry><ulink url="rfc1.html">Setting up an RFC system</ulink></entry>
               <entry>22-05-2002</entry>
-              <entry>pending</entry>
               <entry></entry>
+              <entry>14-08-2002</entry>
             </row>
             <row>
               <entry>2</entry>
@@ -55,6 +55,13 @@
               <entry>3</entry>
               <entry><ulink url="rfc3.html">Tests in org.openscience.cdk.test Use Same Directory Structure as Tested Classes</ulink></entry>
               <entry>30-07-2002</entry>
+              <entry>pending</entry>
+              <entry></entry>
+            </row>
+            <row>
+              <entry>4</entry>
+              <entry><ulink url="rfc4.html">Core classes must not check method parameters</ulink></entry>
+              <entry>2002-08-14</entry>
               <entry>pending</entry>
               <entry></entry>
             </row>

@@ -1,0 +1,47 @@
+<refentry id="cdk-rfc-4">
+
+  <refentryinfo>
+    <revhistory>
+      <revision>
+        <revnumer>1</revnumber>
+        <date>2002-08-14</date>
+        <authorinitials>elw</authorinitials>
+        <revremark>
+          See <ulink url="http://www.geocrawler.com/lists/3/SourceForge/10854/0/9312560/">email archive</ulink>.
+        </revremark>
+      </revision>
+    </revhistory>
+  </refentryinfo>
+
+
+  <refnamediv>
+    <refname>RFC CDK #4</refname>
+  </refnamediv>
+
+  <refsect1>
+    <title>Proposal</title>
+    <para>The core classes (see RFC #2) must not check the values of method 
+      parameters. It is up to the classes using the core classes to check this.
+      JavaDoc documentation must however state how to properly use the methods
+      that may throw such RunTimeExceptions.
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>Example</title>
+    <para>
+      The input parameter number in AtomContainer.getAtomAt(int number) does not
+      check wether the value will throw an ArrayIndexOutOfBounds Exception.
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>Reason</title>
+    <para>
+      Most methods apply the rule proposed in this RFC, but not all of them do. Some
+      methods may throw a NoSuchAtom exception when an Atom is asked to be returned
+      and the index does not point to an atom.
+    </para>
+  </refsect1>
+
+</refentry>
