@@ -24,6 +24,7 @@
  */
 package org.openscience.cdk.test;
 
+import java.util.Vector;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
@@ -128,6 +129,20 @@ public class BondTest extends TestCase {
         assertEquals(2.0, b.getAtomCount(), 0.001);
     }
     
+    public void testSetAtoms_arrayAtom() {
+        Atom[] atomsToAdd = new Atom[2];
+        atomsToAdd[0] = new Atom("C");
+        atomsToAdd[1] = new Atom("O");
+        
+        Bond b = new Bond();
+        b.setAtoms(atomsToAdd);
+        
+        Atom[] atoms = b.getAtoms();
+        assertEquals(2, atoms.length);
+        assertEquals(atomsToAdd[0], atoms[0]);
+        assertEquals(atomsToAdd[1], atoms[1]);
+    }
+    
     public void testGetAtoms() {
         Atom c = new Atom("C");
         Atom o = new Atom("O");
@@ -135,9 +150,21 @@ public class BondTest extends TestCase {
         Bond b = new Bond(c, o, 2.0); // C=O bond
         
         Atom[] atoms = b.getAtoms();
-        assertEquals(2.0, atoms.length, 0.001);
+        assertEquals(2, atoms.length);
         assertEquals(c, atoms[0]);
         assertEquals(o, atoms[1]);
+    }
+    
+    public void testGetAtomsVector() {
+        Atom c = new Atom("C");
+        Atom o = new Atom("O");
+        
+        Bond b = new Bond(c, o, 2.0); // C=O bond
+        
+        Vector atoms = b.getAtomsVector();
+        assertEquals(2, atoms.size());
+        assertEquals(c, atoms.elementAt(0));
+        assertEquals(o, atoms.elementAt(1));
     }
     
     public void testGetAtomAt_int() {
@@ -145,6 +172,18 @@ public class BondTest extends TestCase {
         Atom o = new Atom("O");
         
         Bond b = new Bond(c, o, 2.0); // C=O bond
+        
+        assertEquals(c, b.getAtomAt(0));
+        assertEquals(o, b.getAtomAt(1));
+    }
+    
+    public void testSetAtomAt_Atom_int() {
+        Atom c = new Atom("C");
+        Atom o = new Atom("O");
+        
+        Bond b = new Bond();
+        b.setAtomAt(c, 0);
+        b.setAtomAt(o, 1);
         
         assertEquals(c, b.getAtomAt(0));
         assertEquals(o, b.getAtomAt(1));
@@ -158,6 +197,24 @@ public class BondTest extends TestCase {
         
         assertEquals(c, b.getConnectedAtom(o));
         assertEquals(o, b.getConnectedAtom(c));
+    }
+    
+    public void testIsConnectedTo_Bond() {
+        Atom c1 = new Atom("C");
+        Atom o = new Atom("O");
+        Atom c2 = new Atom("C");
+        Atom c3 = new Atom("C");
+        
+        Bond b1 = new Bond(c1, o);
+        Bond b2 = new Bond(o, c2);
+        Bond b3 = new Bond(c2, c3);
+        
+        assertTrue(b1.isConnectedTo(b2));
+        assertTrue(b2.isConnectedTo(b1));
+        assertTrue(b2.isConnectedTo(b3));
+        assertTrue(b3.isConnectedTo(b2));
+        assertFalse(b1.isConnectedTo(b3));
+        assertFalse(b3.isConnectedTo(b1));
     }
     
     public void testGetOrder() {
