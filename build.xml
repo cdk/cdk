@@ -76,6 +76,9 @@
 
         <target id="info" name="info" depends="check"> 
             <!-- Gives information about the building process. -->
+            <echo message="Platform:" />
+            <echo message="   Mac OS/X: ${isMacOsX}" />
+            <echo message="" />
             <echo message="Environment:" />
             <echo message="   Ant version: ${ant.version}" />
             <echo message="   ${ANT_HOME}: ${ant.home}" />
@@ -95,7 +98,7 @@
             <echo message="Patches to apply" />
         </target>
 
-        <target id="checkPlatforms" name="check">
+        <target id="checkPlatforms" name="checkPlatforms">
             <condition property="isMacOsX">
                 <and>
                     <os family="mac"/>
@@ -104,7 +107,7 @@
             </condition>
         </target>
         
-        <target id="check" name="check">
+        <target id="check" name="check" depends="checkPlatforms">
             <!-- Checks which parts of CDK can be build. -->
           <available classname="joelib.molecule.JOEAtom" 
                      classpath="${lib}/libio/joelib.jar" 
