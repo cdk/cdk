@@ -2,7 +2,7 @@
 ## $Id$
 
 PREFIX="@prefix@"
-JARLIBDIR="@CDKLIBDIR@"
+JARLIBDIR="@CDKJARDIR@"
 JARLIBS=cdk-core.jar cdk-extra.jar cdk-libio.jar cdk-apps.jar
 
 EXTRA_DIST= $(JARLIBS)

@@ -16,6 +16,7 @@ Changes in CVS
   #599536 and #599539)
 * Added convertor procedures for CDK from/to jmol.Atom,
   jmol.ChemFrame
+* Added support for using Jmol as 3D viewer in cdk-view
 
 20020805 Release
 ------------------------------------

@@ -8,10 +8,18 @@ RTJAR=@PATHTORTJAR@
 JAVA=@PATHTOJAVA@
 CDKLIBDIR=@CDKLIBDIR@
 CDKJARDIR=@CDKJARDIR@
+JMOLDIR=@JMOLDIR@
 
 JARLIBS=`ls -1 ${CDKLIBDIR}/*.jar | perl -ne "s/\n|\r/:/g; print;"`
 CDKLIBS=`ls -1 ${CDKJARDIR}/*.jar | perl -ne "s/\n|\r/:/g; print;"`
 CLASSPATH=${RTJAR}:${LOGJAVA}:${XERCESJAR}:${JARLIBS}:${THREEDJAR}:${CDKLIBS}
+if test "x${JMOLDIR}" = "x"
+then
+    :
+else
+    JMOLLIBS=${JMOLDIR}/jmol.jar:${JMOLDIR}/jas.jar
+    CLASSPATH=${CLASSPATH}:${JMOLLIBS}
+fi
 
 # Collect -D options as java arguments
 command=${JAVA}

@@ -15,9 +15,25 @@ AC_ARG_WITH(sgmldir,
       ]
 )
 AC_SUBST(SGMLDIR)
+AC_MSG_RESULT(Using sgml dir $SGMLDIR)
+
+AC_ARG_WITH(jmoldir,
+      [  --with-jmoldir=DIR  where to find the jmol.jar library],
+      [  if test -n "$withval"
+         then
+          JMOLDIR="$withval"
+         fi]
+)
+dnl set default
+if test -z "$JMOLDIR"
+then
+    JMOLDIR=""
+fi
+AC_SUBST(JMOLDIR)
+AC_MSG_RESULT(Using Jmol dir $JMOLDIR)
 
 AC_ARG_WITH(xercesdir,
-      [  --with-xercesdir=DIR  where to find the xerces.jar library
+      [  --with-xercesdir=DIR  where to find the xerces.jar library],
                                [/usr/share/java] ],
       [  if test -n "$withval"
          then
@@ -30,6 +46,7 @@ then
     XERCESDIR="/usr/share/java"
 fi
 AC_SUBST(XERCESDIR)
+AC_MSG_RESULT(Using Xerces dir $XERCESDIR)
 
 AC_ARG_WITH(log4javadir,
       [  --with-log4javadir=DIR  where to find the log4j.jar and log4j-core.jar libraries
@@ -45,6 +62,7 @@ then
     LOGJAVADIR="/usr/share/java"
 fi
 AC_SUBST(LOGJAVADIR)
+AC_MSG_RESULT(Using Log4J dir $LOGJAVADIR)
 
 AC_ARG_WITH(java3ddir,
       [  --with-java3ddir=DIR    path to the Java 3D installation directory
@@ -54,6 +72,8 @@ AC_ARG_WITH(java3ddir,
           JAVA3DDIR="$withval"
          fi
         ])
+AC_SUBST(JAVA3DDIR)
+AC_MSG_RESULT(Using Java3D dir $JAVA3DDIR)
 
 dnl Checks for programs.
 AC_PROG_INSTALL

@@ -31,6 +31,7 @@ import org.openscience.cdk.tools.*;
 import org.openscience.cdk.geometry.*;
 import org.openscience.cdk.smiles.*;
 import org.openscience.cdk.layout.*;
+import org.openscience.cdk.libio.jmol.*;
 import java.util.*;
 import java.io.*;
 import javax.swing.*;
@@ -49,8 +50,30 @@ public class Viewer {
 
     private boolean useJava3D;
     private boolean use3D;
+    private boolean useJmol;
 
-    private void view(Molecule m, boolean use3D, boolean useJava3D) {
+    public Viewer() {
+        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        logger.dumpSystemProperties();
+        logger.dumpClasspath();
+
+        useJava3D = false;
+        use3D = true;
+    }
+
+    public void setUse3D(boolean b) {
+        this.use3D = b;
+    }
+
+    public void setUseJmol(boolean b) {
+        this.useJmol = b;
+    }
+
+    public void setUseJava3D(boolean b) {
+        this.useJava3D = b;
+    }
+
+    private void view(Molecule m) {
         JFrame frame = new JFrame("CDK Molecule Viewer");
         frame.getContentPane().setLayout(new BorderLayout());
 
@@ -59,7 +82,29 @@ public class Viewer {
             logger.info("Viewing with 3D viewer");
 
             boolean viewed = false;
-            if (useJava3D) {
+            if (useJmol) {
+                logger.debug(".. trying Jmol viewer");
+                try {
+                    StringWriter output = new StringWriter();
+                    CMLWriter cmlwriter = new CMLWriter(output, true);
+                    cmlwriter.write(m);
+                    cmlwriter.close();
+                    String cmlcode = output.toString();
+                    logger.debug(output.toString());
+                    org.openscience.jmol.PublicJmol jmol = org.openscience.jmol.PublicJmol.getJmol(frame);
+                    jmol.readCML(cmlcode);
+
+                    logger.debug(".. done");
+
+                    viewed = true;
+                } catch (Exception e) {
+                    logger.error("Viewing did not succeed!");
+                    logger.error(e.toString());
+                    e.printStackTrace();
+                }
+            }
+
+            if (useJava3D && !viewed) {
                 logger.debug(".. trying Java3D viewer");
                 try {
                     AcceleratedRenderer3D renderer = new AcceleratedRenderer3D(
@@ -72,6 +117,7 @@ public class Viewer {
                 } catch (Exception e) {
                     logger.error("Viewing did not succeed!");
                     logger.error(e.toString());
+                    e.printStackTrace();
                 }
             }
 
@@ -91,17 +137,15 @@ public class Viewer {
             System.exit(1);
         }
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        frame.setSize(500,500);
-        frame.setVisible(true);
-        frame.addWindowListener(new AppCloser());       
+        if (!useJmol) {
+            frame.setSize(500,500);
+            frame.setVisible(true);
+        }
+        frame.addWindowListener(new AppCloser());
     }
 
     // view a SMILES string
-    public Viewer(String SMILES) {
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
-        logger.dumpSystemProperties();
-        logger.dumpClasspath();
-        
+    public void viewSMILES(String SMILES) {
         SmilesParser sp = new SmilesParser();
         Molecule mol = null;
         try {
@@ -114,7 +158,7 @@ public class Viewer {
             try {
                 sdg.setMolecule((Molecule)mol.clone());
                 sdg.generateCoordinates(new Vector2d(0,1));
-		view(sdg.getMolecule(), false, false);
+                view(sdg.getMolecule());
             } catch(Exception exc) {
                 System.out.println("*** Exit due to an unexpected error during coordinate generation ***");
                 exc.printStackTrace();
@@ -123,14 +167,7 @@ public class Viewer {
     }
 
     // view a file
-    public Viewer(String inFile, boolean useJava3D, boolean use3D) {
-        this.useJava3D = useJava3D;
-        this.use3D = use3D;
-
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
-        logger.dumpSystemProperties();
-        logger.dumpClasspath();
-
+    public void viewFile(String inFile) {
         ChemFile chemFile = new ChemFile();
         try {
             ChemObjectReader reader;
@@ -162,7 +199,7 @@ public class Viewer {
         ChemModel chemModel;
         SetOfMolecules setOfMolecules;
         logger.info("  number of sequences: " + chemFile.getChemSequenceCount());
-    	for (int sequence = 0; sequence < chemFile.getChemSequenceCount(); sequence++) {
+        for (int sequence = 0; sequence < chemFile.getChemSequenceCount(); sequence++) {
           chemSequence = chemFile.getChemSequence(sequence);
           logger.info("  number of models in sequence " + sequence + ": " +
                              chemSequence.getChemModelCount());
@@ -173,7 +210,7 @@ public class Viewer {
                                setOfMolecules.getMoleculeCount());
             for (int i = 0; i < setOfMolecules.getMoleculeCount(); i++) {
                 Molecule m = setOfMolecules.getMolecule(i);
-                view(m, useJava3D, use3D);
+                view(m);
             }
           }
         }
@@ -181,12 +218,10 @@ public class Viewer {
     
     public static void main(String[] args) {
 
-        boolean useJava3D = true;
-        boolean use3D = true;
-
         boolean showSmiles = false;
 
         String filename = "";
+        Viewer v = new Viewer();
         if (args.length == 1) {
             filename = args[0];
         } else if (args.length > 1) {
@@ -194,9 +229,11 @@ public class Viewer {
             for (int i=1; i<args.length; i++) {
                 String opt = args[i-1];
                 if ("--nojava3d".equalsIgnoreCase(opt)) {
-                    useJava3D = false;
+                    v.setUseJava3D(false);
                 } else if ("--no3d".equalsIgnoreCase(opt)) {
-                    use3D = false;
+                    v.setUse3D(false);
+                } else if ("--useJmol".equalsIgnoreCase(opt)) {
+                    v.setUseJmol(true);
                 } else if ("--smiles".equalsIgnoreCase(opt)) {
                     // Filename is considered to be a smiles string
                     showSmiles = true;
@@ -210,19 +247,20 @@ public class Viewer {
         } else {
             System.out.println("Syntax : Viewer [options] <inputfile>");
             System.out.println();
-            System.out.println("options: --nojava3D    Disable Java3D support");
-            System.out.println("options: --no3D        View only 2D info");
+            System.out.println("         Viewer --smiles <SMILES>");
             System.out.println();
-            System.out.println("      or Viewer --smiles <SMILES>");
+            System.out.println("options: --nojava3D    Disable Java3D support");
+            System.out.println("         --no3D        View only 2D info");
+            System.out.println("         --useJmol     Use Jmol for 3D (if available)");
             System.exit(0);
         }
 
         if (showSmiles) {
             // Filename is considered to be a smiles string
-            Viewer v = new Viewer(filename);
+            v.viewSMILES(filename);
         } else {
             if (new File(filename).canRead()) {
-                new Viewer(filename, useJava3D, use3D);
+                v.viewFile(filename);
             } else {
                 System.out.println("File " + filename + " does not exist!");
             }
@@ -231,7 +269,6 @@ public class Viewer {
 
     // Class to close program
     protected static final class AppCloser extends WindowAdapter {
-
         public void windowClosing(WindowEvent e) {
             System.exit(0);
         }

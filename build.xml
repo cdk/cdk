@@ -232,6 +232,7 @@
                 <jar jarfile="${dist}/jar/cdk-apps.jar">
                     <fileset dir="${build}">
                         <include name="org/openscience/cdk/applications/**" />
+                        <include name="org/openscience/jmol/**" />
                     </fileset>
                 </jar>
         </target>
