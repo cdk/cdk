@@ -26,7 +26,10 @@ JARLIBS=vecmath1.2-1.14.jar \
   javacc.jar \
   base.jar \
   cmlAll.jar \
-  pmrlib.jar
+  pmrlib.jar \
+  commons-cli-1.0.jar \
+  jfontchooser.jar \
+  jmolApis.jar
 
 EXTRA_DIST=${JARLIBS}
 
