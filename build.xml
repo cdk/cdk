@@ -343,7 +343,7 @@
                         <exclude name="org/openscience/cdk/Monomer.class" />
                         <exclude name="org/openscience/cdk/Polymer.class" />
                         <exclude name="org/openscience/cdk/Ring.class" />
-                        <exclude name="org/openscience/cdk/RingSet*.class" />
+                        <exclude name="org/openscience/cdk/RingSet.class" />
                         <exclude name="org/openscience/cdk/SetOfMolecules.class" />
                         <exclude name="org/openscience/cdk/Crystal.class" />
                         <exclude name="org/openscience/cdk/LonePair.class" />
@@ -456,6 +456,10 @@
                     <fileset dir="${build}">
                         <include name="org/openscience/cdk/tools/LoggingTool.class" />
                         <include name="org/openscience/cdk/tools/IsotopeFactory.class" />
+                        <include name="org/openscience/cdk/tools/AtomTypeFactory.class" />
+                        <include name="org/openscience/cdk/tools/AtomTypeConfigurator.class" />
+                        <include name="org/openscience/cdk/tools/JSXBasedAtomTypeConfigurator.class" />
+                        <include name="org/openscience/cdk/tools/TXTBasedAtomTypeConfigurator.class" />
                         <include name="org/openscience/cdk/geometry/GeometryTools.class" />
                         <include name="org/openscience/cdk/geometry/CrystalGeometryTools.class" />
                         <include name="org/openscience/cdk/renderer/color/AtomColorer.class" />
