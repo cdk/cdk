@@ -46,4 +46,10 @@ public class ElectronContainerTest extends TestCase {
     public static Test suite() {
         return new TestSuite(ElectronContainerTest.class);
     }
+    
+    public void testSetElectronCount() {
+        ElectronContainer ec = new ElectronContainer();
+        ec.setElectronCount(3);
+        assertEquals(3, ec.getElectronCount());
+    }
 }

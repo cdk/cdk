@@ -62,7 +62,7 @@ public class MFAnalyserTest extends TestCase {
     public void testGetAtomContainer() {
         MFAnalyser mfa = new MFAnalyser("C10H16");
         AtomContainer ac = mfa.getAtomContainer();
-        assertEquals(26, mfa.getAtomCount());        
+        assertEquals(26, ac.getAtomCount());        
     }
     
     public void testGetElementCount() {

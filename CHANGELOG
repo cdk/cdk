@@ -37,12 +37,15 @@ Fixes:
   above 60 (fixes #642426 and #609834)
 * Tar package can now be build on Woody 3.0 (with docbook stylesheets
   1.40)
-
+* Fix for SetOfMolecule.getMolecules(). The array length is now
+  equals to the number of molecules in the set.
+  
 API changes:
 * Two getBondNumber() methods are added to AtomContainer.
 * The method tools.SaturationChecker.saturateWithHydrogen() got
   renamed to addHydrogensToSatisfyValency() (thanks to Peter)
-* Major changes in the AtomContainer API (RFC #5)
+* Major changes in the AtomContainer API (see RFC #5)
+* Added constructor Bond(Atom, Atom)
 
 20021012 Release
 ------------------------------------

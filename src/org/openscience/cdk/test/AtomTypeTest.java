@@ -3,7 +3,7 @@
  * $Date$    
  * $Revision$
  * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  * 
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  * 
@@ -45,5 +45,34 @@ public class AtomTypeTest extends TestCase {
 
     public static Test suite() {
         return new TestSuite(AtomTypeTest.class);
+    }
+    
+    public void testAtomType_String() {
+        AtomType at = new AtomType("C");
+        assertEquals("C", at.getSymbol());
+    }
+
+    public void testAtomType_String_String() {
+        AtomType at = new AtomType("C4", "C");
+        assertEquals("C", at.getSymbol());
+        assertEquals("C4", at.getID());
+    }
+    
+    public void testSetID() {
+        AtomType at = new AtomType("C");
+        at.setID("C4");
+        assertEquals("C4", at.getID());
+    }
+
+    public void testSetMaxBondOrder() {
+        AtomType at = new AtomType("C");
+        at.setMaxBondOrder(3.0);
+        assertTrue(3.0 == at.getMaxBondOrder());
+    }
+
+    public void testSetMaxBondOrderSum() {
+        AtomType at = new AtomType("C");
+        at.setMaxBondOrder(4.0);
+        assertTrue(4.0 == at.getMaxBondOrder());
     }
 }

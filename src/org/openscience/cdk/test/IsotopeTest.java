@@ -46,4 +46,30 @@ public class IsotopeTest extends TestCase {
     public static Test suite() {
         return new TestSuite(IsotopeTest.class);
     }
+    
+    public void testIsotope() {
+        Isotope i = new Isotope("C");
+        assertEquals("C", i.getSymbol());
+    }
+    
+    public void testIsotope_int_String_int_double_double() {
+        Isotope i = new Isotope(12, "C", 6, 12.001, 80.0);
+        assertEquals(12, i.getAtomicMass());
+        assertEquals("C", i.getSymbol());
+        assertEquals(6, i.getAtomicNumber());
+        assertTrue(12.001 == i.getExactMass());
+        assertTrue(80.0 == i.getNaturalAbundance());
+    }
+    
+    public void testSetNaturalAbundance() {
+        Isotope i = new Isotope("C");
+        i.setNaturalAbundance(80.0);
+        assertTrue(80.0 == i.getNaturalAbundance());
+    }
+    
+    public void testSetExactMass() {
+        Isotope i = new Isotope("C");
+        i.setExactMass(12.03);
+        assertTrue(12.03 == i.getExactMass());
+    }
 }
