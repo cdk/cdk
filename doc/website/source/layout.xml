@@ -69,15 +69,20 @@
         <tocentry page="guide-packages.xml" filename="guide-packages.html"/>
         <tocentry page="guide-website-development.xml" filename="guide-website-development.html"/>
       </tocentry>
+      <tocentry page="qualitycontrol.xml" filename="qualitycontrol.html">
+        <tocentry page="pmd.xml" filename="pmd.html"/>
       <tocentry page="javadoc-stats.xml" filename="javadoc-stats.html"/>
       <tocentry page="javancss-stats.xml" filename="javancss-stats.html"/>
-      <tocentry page="pmd.xml" filename="pmd.html"/>
+      </tocentry>
       <tocentry page="modules.xml" filename="modules.html">
         <tocentry page="module-core.xml" filename="module-core.html"/>
         <tocentry page="module-standard.xml" filename="module-standard.html"/>
         <tocentry page="module-io.xml" filename="module-io.html"/>
         <tocentry page="module-render.xml" filename="module-render.html"/>
         <tocentry page="module-extra.xml" filename="module-extra.html"/>
+      </tocentry>
+      <tocentry id="SFBugs" href="http://sourceforge.net/tracker/?group_id=20024&amp;atid=120024">
+        <title>Bugs</title>
       </tocentry>
     </tocentry>
     <tocentry page="changelog.xml" filename="changelog.html"/>
