@@ -82,33 +82,34 @@
         <target id="info" name="info" depends="check"> 
             <!-- Gives information about the building process. -->
             <echo message="Platform:" />
-            <echo message="            OS: ${os.name}" />
-            <echo message="  Architecture: ${os.arch}" />
-            <echo message="       Version: ${os.version}" />
-            <echo message="Mac OS/X found: ${isMacOsX}" />
+            <echo message="             OS: ${os.name}" />
+            <echo message="   Architecture: ${os.arch}" />
+            <echo message="        Version: ${os.version}" />
+            <echo message=" Mac OS/X found: ${isMacOsX}" />
             <echo message="" />
             <echo message="Java/Ant Environment:" />
-            <echo message="  Java version: ${java.version}" />
-            <echo message="   Java vendor: ${java.vendor}" />
-            <echo message="      Java dir: ${java.home}" />
-            <echo message="  Java ext dir: ${java.ext.dirs}" />
-            <echo message="   Ant version: ${ant.version}" />
-            <echo message="   ${ANT_HOME}: ${ant.home}" />
-            <echo message="      hasAnt16: ${hasAnt16}" />
+            <echo message="   Java version: ${java.version}" />
+            <echo message="    Java vendor: ${java.vendor}" />
+            <echo message="       Java dir: ${java.home}" />
+            <echo message="   Java ext dir: ${java.ext.dirs}" />
+            <echo message="    Ant version: ${ant.version}" />
+            <echo message="    ${ANT_HOME}: ${ant.home}" />
+            <echo message="       hasAnt16: ${hasAnt16}" />
             <echo message="" />
             <echo message="CDK Environment:" />
-            <echo message="   CDK version: ${version}" />
-            <echo message="     build.xml: $Id$" />
-            <echo message="  JOELib found: ${joelib.present}" />
-            <echo message="  CMLDOM found: ${cmllibs.present}" />
-            <echo message="  Java3D found: ${java3D.present}" />
-            <echo message="   Junit found: ${junit.present}" />
+            <echo message="    CDK version: ${version}" />
+            <echo message="      build.xml: $Id$" />
+            <echo message="   JOELib found: ${joelib.present}" />
+            <echo message="   CMLDOM found: ${cmllibs.present}" />
+            <echo message="   Java3D found: ${java3D.present}" />
+            <echo message="    Junit found: ${junit.present}" />
+            <echo message="R/SJava present: ${rispresent}"/>
             <echo message="" />
             <echo message="Compiling:" />
-            <echo message="           for: ${build.compiler}" />
-            <echo message="         debug: ${debug}" />
-            <echo message="   deprecation: ${deprecation}" />
-            <echo message="  optimization: ${optimization}" />
+            <echo message="            for: ${build.compiler}" />
+            <echo message="          debug: ${debug}" />
+            <echo message="    deprecation: ${deprecation}" />
+            <echo message="   optimization: ${optimization}" />
         </target>
 
         <target id="checkPlatforms" name="checkPlatforms">
@@ -179,7 +180,6 @@
                     </or>
                 </and>
             </condition>
-            <echo message="R and SJava present: ${rispresent}"/>
         </target>
 
 
