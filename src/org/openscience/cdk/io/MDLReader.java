@@ -96,6 +96,8 @@ public class MDLReader extends DefaultChemObjectReader {
 	public ChemObject read(ChemObject object) throws CDKException {
 		if (object instanceof ChemFile) {
 			return (ChemObject) readChemFile();
+        } else if (object instanceof ChemModel) {
+            return (ChemObject) readChemModel();
 		} else if (object instanceof Molecule) {
 			return (ChemObject) readMolecule();
 		} else {
@@ -109,9 +111,26 @@ public class MDLReader extends DefaultChemObjectReader {
 	 *
 	 * @return    The ChemFile that was read from the MDL file.
 	 */
-	private ChemFile readChemFile() throws CDKException {
-		ChemFile chemFile = new ChemFile();
-		ChemSequence chemSequence = new ChemSequence();
+    private ChemFile readChemFile() throws CDKException {
+        ChemFile chemFile = new ChemFile();
+        ChemSequence chemSequence = new ChemSequence();
+        ChemModel chemModel = readChemModel();
+        logger.debug("Adding ChemModel to ChemSequence");
+        logger.debug("#models (array): " + chemSequence.getChemModels().length);
+        logger.debug("#models (count): " + chemSequence.getChemModelCount());
+        chemSequence.addChemModel(chemModel);
+        logger.debug("#models (array): " + chemSequence.getChemModels().length);
+        logger.debug("#models (count): " + chemSequence.getChemModelCount());
+        logger.debug("Adding ChemSequence to ChemFile");
+        logger.debug("#sequences (array): " + chemFile.getChemSequences().length);
+        logger.debug("#sequences (count): " + chemFile.getChemSequenceCount());
+        chemFile.addChemSequence(chemSequence);
+        logger.debug("#sequences (array): " + chemFile.getChemSequences().length);
+        logger.debug("#sequences (count): " + chemFile.getChemSequenceCount());
+        return chemFile;
+    }
+    
+    private ChemModel readChemModel() throws CDKException {
 		ChemModel chemModel = new ChemModel();
 		SetOfMolecules setOfMolecules = new SetOfMolecules();
 		Molecule m = readMolecule();
@@ -152,20 +171,7 @@ public class MDLReader extends DefaultChemObjectReader {
 			throw new CDKException(error);
 		}
 		chemModel.setSetOfMolecules(setOfMolecules);
-        logger.debug("Adding ChemModel to ChemSequence");
-        logger.debug("#models (array): " + chemSequence.getChemModels().length);
-        logger.debug("#models (count): " + chemSequence.getChemModelCount());
-		chemSequence.addChemModel(chemModel);
-        logger.debug("#models (array): " + chemSequence.getChemModels().length);
-        logger.debug("#models (count): " + chemSequence.getChemModelCount());
-        logger.debug("Adding ChemSequence to ChemFile");
-        logger.debug("#sequences (array): " + chemFile.getChemSequences().length);
-        logger.debug("#sequences (count): " + chemFile.getChemSequenceCount());
-		chemFile.addChemSequence(chemSequence);
-        logger.debug("#sequences (array): " + chemFile.getChemSequences().length);
-        logger.debug("#sequences (count): " + chemFile.getChemSequenceCount());
-
-		return chemFile;
+		return chemModel;
 	}
 
 
