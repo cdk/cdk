@@ -12,6 +12,7 @@ New:
 * Extended DADMLReader to support URI's like dadml://any/CAS-NUMBER?50-00-0
 
 Fixes:
+* Fixed layout of aliphatic structures (closes bug #889027)
 * cdk-* shell wrapper now accept -X java options (closes #882990)
 * Refactored build process (closes #883519)
 * Fixed rendering of stereo bonds in rings (closes #884935)
