@@ -1,0 +1,173 @@
+diff -ur src-copy/org/openscience/cdk/Atom.java src/org/openscience/cdk/Atom.java
+--- src-copy/org/openscience/cdk/Atom.java	Mon Feb 24 11:50:43 2003
++++ src/org/openscience/cdk/Atom.java	Mon Feb 24 11:51:46 2003
+@@ -450,7 +450,7 @@
+           if (object instanceof Atom)
+           {
+             Atom atom = (Atom) object;
+-            if ((getID()== atom.getID()) &&
++            if ((getAtomTypeName()== atom.getAtomTypeName()) &&
+                 (maxBondOrder==atom.maxBondOrder) &&
+                 (maxBondOrderSum==atom.maxBondOrderSum) &&
+                 ((point2D==atom.point2D) || ((point2D!=null) && (point2D.equals(atom.point2D)))) &&
+diff -ur src-copy/org/openscience/cdk/AtomType.java src/org/openscience/cdk/AtomType.java
+--- src-copy/org/openscience/cdk/AtomType.java	Mon Feb 24 11:50:43 2003
++++ src/org/openscience/cdk/AtomType.java	Mon Feb 24 11:57:31 2003
+@@ -84,7 +84,7 @@
+ 	public AtomType(String id, String elementSymbol)
+ 	{
+ 		this(elementSymbol);
+-		setID(id);
++		setAtomTypeName(id);
+ 	}
+ 
+ 
+@@ -93,9 +93,9 @@
+ 	 *
+ 	 * @param  id  The new AtomTypeID value
+      *
+-     * @see    #getID
++     * @see    #getAtomTypeName
+ 	 */
+-	public void setID(String id)
++	public void setAtomTypeName(String id)
+ 	{
+ 		this.id = id;
+ 	}
+@@ -132,9 +132,9 @@
+ 	 *
+ 	 * @return    The id value
+      *
+-     * @see       #setID
++     * @see       #setAtomTypeName
+ 	 */
+-	public String getID()
++	public String getAtomTypeName()
+ 	{
+ 		return id;
+ 	}
+@@ -175,7 +175,7 @@
+     {
+         if (object instanceof AtomType) {
+             AtomType type = (AtomType) object;
+-            if ((getID()==type.getID()) &&
++            if ((getAtomTypeName()==type.getAtomTypeName()) &&
+                 (maxBondOrder==type.maxBondOrder) &&
+             (maxBondOrderSum==type.maxBondOrderSum))
+             return true;
+@@ -202,7 +202,7 @@
+     public String toString() {
+         StringBuffer sb = new StringBuffer();
+         sb.append("AtomType(");
+-        sb.append(getID() + ", ");
++        sb.append(getAtomTypeName() + ", ");
+         sb.append("MB:" + getMaxBondOrder() + ", ");
+         sb.append("TBS:" + getMaxBondOrderSum());
+         sb.append(super.toString());
+diff -ur src-copy/org/openscience/cdk/ChemObject.java src/org/openscience/cdk/ChemObject.java
+--- src-copy/org/openscience/cdk/ChemObject.java	Mon Feb 24 11:50:43 2003
++++ src/org/openscience/cdk/ChemObject.java	Mon Feb 24 12:03:40 2003
+@@ -71,6 +71,8 @@
+ 	  */
+ 	public Vector[] pointers;
+ 
++    protected String id = ""; 
++    
+     /**
+      * Constructs a new ChemObject.
+      */
+@@ -264,6 +266,23 @@
+ 		return o;
+ 	}
+ 
++    /**
++     * Returns the identifier (ID) of this object.
++     *
++     * @see setID
++     */
++    public String getID() {
++        return this.id;
++    }
++    
++    /**
++     * Sets the identifier (ID) of this object.
++     *
++     * @see getID
++     */
++    public void setID(String id) {
++        this.id = id;
++    }
+ }
+ 
+ 
+Only in src/org/openscience/cdk: ChemObject.java~
+diff -ur src-copy/org/openscience/cdk/test/AtomTypeTest.java src/org/openscience/cdk/test/AtomTypeTest.java
+--- src-copy/org/openscience/cdk/test/AtomTypeTest.java	Mon Feb 24 11:50:43 2003
++++ src/org/openscience/cdk/test/AtomTypeTest.java	Mon Feb 24 11:58:13 2003
+@@ -55,13 +55,13 @@
+     public void testAtomType_String_String() {
+         AtomType at = new AtomType("C4", "C");
+         assertEquals("C", at.getSymbol());
+-        assertEquals("C4", at.getID());
++        assertEquals("C4", at.getAtomTypeName());
+     }
+     
+-    public void testSetID() {
++    public void testSetAtomTypeName() {
+         AtomType at = new AtomType("C");
+-        at.setID("C4");
+-        assertEquals("C4", at.getID());
++        at.setAtomTypeName("C4");
++        assertEquals("C4", at.getAtomTypeName());
+     }
+ 
+     public void testSetMaxBondOrder() {
+diff -ur src-copy/org/openscience/cdk/tools/AtomTypeFactory.java src/org/openscience/cdk/tools/AtomTypeFactory.java
+--- src-copy/org/openscience/cdk/tools/AtomTypeFactory.java	Mon Feb 24 11:50:43 2003
++++ src/org/openscience/cdk/tools/AtomTypeFactory.java	Mon Feb 24 11:52:24 2003
+@@ -207,7 +207,7 @@
+ 		for (int f = 0; f < atomTypes.size(); f++)
+ 		{
+ 			atomType = (AtomType) atomTypes.elementAt(f);
+-			if (atomType.getID().equals(id))
++			if (atomType.getAtomTypeName().equals(id))
+ 			{
+ 				return atomType;
+ 			}
+@@ -233,7 +233,7 @@
+ 		for (int f = 0; f < atomTypes.size(); f++)
+ 		{
+ 			AtomType at = (AtomType) atomTypes.elementAt(f);
+-			if (at.getSymbol().equals(symbol) && (at.getID().indexOf(id) > -1))
++			if (at.getSymbol().equals(symbol) && (at.getAtomTypeName().indexOf(id) > -1))
+ 			{
+ 				//System.out.println("Atomtype for symbol " + symbol + " found.");
+ 				al.addElement((AtomType) at.clone());
+@@ -269,7 +269,7 @@
+ 
+ 	/**
+ 	 *  Configures an atom. Finds the correct element type by looking at the atoms
+-	 *  atom type id (atom.getID()).
++	 *  atom type id (atom.getAtomTypeName()).
+ 	 *
+ 	 *@param  atom  The atom to be configured
+ 	 *@return       The configured atom
+@@ -278,7 +278,7 @@
+ 	{
+ 		try
+ 		{
+-			AtomType at = getAtomType(atom.getID());
++			AtomType at = getAtomType(atom.getAtomTypeName());
+ 			atom.setMaxBondOrder(at.getMaxBondOrder());
+ 			atom.setMaxBondOrderSum(at.getMaxBondOrderSum());
+ 			atom.setVanderwaalsRadius(at.getVanderwaalsRadius());
+@@ -305,7 +305,7 @@
+ 		} catch (Exception exc)
+ 		{
+ 			logger.warn("Could not configure atom with unknown ID: " +
+-					atom.toString() + " + (id=" + atom.getID() + ")");
++					atom.toString() + " + (id=" + atom.getAtomTypeName() + ")");
+ 		}
+ 		logger.debug("Configured " + atom.toString());
+ 		return atom;
+Only in src/patches: implementation_of_RFC11

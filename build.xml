@@ -79,6 +79,10 @@
                 <copy todir="${build.src}/org">
                     <fileset dir="${src}/org"/>
                 </copy>
+                
+                <!-- apply patch that implements RFC #11 -->
+                <patch dir="${build.src}" patchfile="${src}/patches/implementation_of_RFC11"
+                       strip="1"/>
         </target>
 
         <target name="clean" description="Removes unneccessary stuff">
