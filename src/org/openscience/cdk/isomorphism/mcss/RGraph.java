@@ -100,8 +100,9 @@ import java.util.BitSet;
   *
   * @author     Stephane Werner from IXELIS mail@ixelis.net
   * @created    2002-07-17
+  *
+  * @since Java 1.4
   */
-
 public class RGraph
 {
     // an RGraph is a list of RGraph nodes

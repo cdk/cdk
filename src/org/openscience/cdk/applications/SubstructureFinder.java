@@ -39,6 +39,8 @@ import java.io.*;
  *
  * @author  Egon Willighagen
  * @created 2003-08-14
+ *
+ * @since Java 1.4
  */
 public class SubstructureFinder {
 

@@ -1,5 +1,4 @@
-/*
- *  $RCSfile$
+/*  $RCSfile$
  *  $Author$
  *  $Date$
  *  $Revision$
@@ -49,6 +48,8 @@ import java.util.*;
  *@created    September 4, 2003
  *@keyword    layout
  *@keyword    2D-coordinates
+ *
+ * @since Java 1.4
  */
 public class TemplateHandler
 {

@@ -82,8 +82,8 @@ import org.openscience.cdk.tools.ChemModelManipulator;
  * @author     Stephane Werner from IXELIS mail@ixelis.net
  * @created    2002-07-17
  *
+ * @since Java 1.4
  */
-
 public class RTools
 {
     final static int ID1 = 0;

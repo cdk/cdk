@@ -43,6 +43,8 @@ import java.net.URLConnection;
  *
  * @author   Egon Willighagen
  * @created  2003-08-27
+ *
+ * @since Java 1.4
  */ 
 public class PDBValidator implements ValidatorInterface {
 
