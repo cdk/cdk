@@ -223,20 +223,31 @@ public class MDLReader extends DefaultChemObjectReader {
 				logger.debug("Coordinates: " + x + "; " + y + "; " + z);
                 String element = strTok.nextToken();
                 logger.debug("Atom type: " + element);
-				atom = isotopeFactory.configure(new Atom(element, new Point3d(x, y, z)));
-				atom.setPoint2D(new Point2d(x, y));
 
+                // try to determine Isotope
+                try {
+                    atom = isotopeFactory.configure(new Atom(element, new Point3d(x, y, z)));
+                } catch (NullPointerException exception) {
+                    logger.debug("Atom " + element + " is not an regular element. Creating a PseudoAtom.");
+                    atom = new PseudoAtom(element, new Point3d(x, y, z));
+                }
+				atom.setPoint2D(new Point2d(x, y));
+                
                 // parse further fields
                 String massDiffString = strTok.nextToken();
                 logger.debug("Mass difference: " + massDiffString);
-                try {
-                    int massDiff = Integer.parseInt(massDiffString);
-                    if (massDiff != 0) { 
-                        Isotope major = isotopeFactory.getMajorIsotope(element);
-                        atom.setAtomicNumber(major.getAtomicNumber() + massDiff);
+                if (!(atom instanceof PseudoAtom)) {
+                    try {
+                        int massDiff = Integer.parseInt(massDiffString);
+                        if (massDiff != 0) {
+                            Isotope major = isotopeFactory.getMajorIsotope(element);
+                            atom.setAtomicNumber(major.getAtomicNumber() + massDiff);
+                        }
+                    } catch (Exception exception) {
+                        logger.error("Could not parse mass difference field");
                     }
-                } catch (Exception exception) {
-                    logger.error("Could not parse mass difference field");
+                } else {
+                    logger.error("Cannot set mass difference for a non-element!");
                 }
                 
                 
