@@ -135,6 +135,13 @@ public class StructureDiagramGenerator {
 	 * the generateCoordinates() method and get your molecule back.
 	 */
 	public void generateCoordinates(Vector2d firstBondVector) throws java.lang.Exception {
+        /* if molecule contains only one Atom, don't fail, simply
+           set coordinates to simplest: 0,0. See bug #780545 */
+        if (molecule.getAtomCount() == 1) {
+            molecule.getAtomAt(0).setPoint2D(new Point2d(0,0));
+            return;
+        }
+        
 		/* compute the minimum number of rings as 
 		   given by Frerejacque, Bull. Soc. Chim. Fr., 5, 1008 (1939) */
 		int nrOfEdges = molecule.getBondCount();
