@@ -92,7 +92,7 @@ public class AtomCountDescriptor implements Descriptor {
 	 
 	 // it could be interesting to accept as elementName a SMARTS atom, to get the frequency of this atom
 	 // this could be useful for other descriptors like polar surface area...
-	public Object calculate(AtomContainer container) {
+	public Object calculate(AtomContainer container) throws CDKException {
 		int atomCount = 0;
 		Atom[] atoms = container.getAtoms();
 		if (elementName == "*") {

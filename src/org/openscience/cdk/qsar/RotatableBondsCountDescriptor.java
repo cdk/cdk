@@ -40,41 +40,39 @@ import org.openscience.cdk.ringsearch.SSSRFinder;
 import java.util.Vector;
 
 public class RotatableBondsCountDescriptor implements Descriptor {
-
+	private boolean includeTerminals=false;
+	
 	public RotatableBondsCountDescriptor() { }
 
 
 	public void setParameters(Object[] params) throws CDKException {
-		if (params.length > 2) {
+		if (params.length > 1) {
 			throw new CDKException("RotatableBondsCount only expects less than two parameters");
 		}
 		if (!(params[0] instanceof Boolean)) {
 			throw new CDKException("The first parameter must be of type Boolean");
 		}
-		if (!(params[1] instanceof RingSet)) {
-			throw new CDKException("The parameter must be of type RingSet");
-		}
 		// ok, all should be fine
-		includeTerminals = (Boolean) params[0];
-		ringSet = (RingSet) params[1];
+		includeTerminals = ((Boolean)params[0]).booleanValue();
 	}
 
 
 	public Object[] getParameters() {
 		// return the parameters as used for the descriptor calculation
 		Object[] params = new Object[1];
-		params[0] = includeTerminals;
-		params[1] = ringSet;
+		params[0] = new Boolean(includeTerminals);
 		return params;
 	}
 
-	public Object calculate(AtomContainer ac) {
+	public Object calculate(AtomContainer ac) throws CDKException{
 		int rotatableBondsCount = 0;
 		Bond[] bonds = ac.getBonds();
-		Vector ringsWithThisBond = new Vector();
 		int degree0 = 0;
 		int degree1 = 0;
-
+		RingSet ringSet = null;
+		AllRingsFinder arf = new AllRingsFinder();
+		ringSet = arf.findAllRings(ac);
+		Vector ringsWithThisBond=null;
 		for (int f = 0; f < bonds.length; f++) {
 			ringsWithThisBond = ringSet.getRings(bonds[f]);
 			if (ringsWithThisBond.size() > 0) {
@@ -103,14 +101,13 @@ public class RotatableBondsCountDescriptor implements Descriptor {
 				}
 			}
 		}
-		return rotatableBondsCount;
+		return new Integer(rotatableBondsCount);
 	}
 	
 	
 	public String[] getParameterNames() {
 		String[] params = new String[1];
 		params[0] = "Include Terminal Bonds in the count";
-		params[1] = "A predefined RingSet";
 		return params;
 	}
 
@@ -118,8 +115,7 @@ public class RotatableBondsCountDescriptor implements Descriptor {
 	
 	public Object getParameterType(String name) {
 		Object[] paramTypes = new Object[1];
-		paramTypes[0] = new Boolean();
-		paramTypes[1] = new RingSet();
+		paramTypes[0] = new Boolean(true);
 		return paramTypes;
 	}
 }

@@ -33,7 +33,7 @@ public interface Descriptor {
     public void setParameters(Object[] params) throws CDKException;
     public Object[] getParameters();
     
-    public Object calculate(AtomContainer container);
+    public Object calculate(AtomContainer container)throws CDKException;
     
     // we should also have something like these. The order of the String[]
     // return should match the expected order in setParameters;

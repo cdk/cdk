@@ -30,6 +30,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.tools.MFAnalyser;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 
@@ -96,19 +97,28 @@ public class WeightDescriptor implements Descriptor {
 		if (elementName == "") {
 			for (int i = 0; i < atoms.length; i++) {
 				weight += container.getAtomAt(i).getExactMass();
+				weight += (container.getAtomAt(i).getHydrogenCount() * 1.00782504);
 			}
-			weight += (container.getHydrogenCount() * 1.00782504);
-		} else {
+			
+		} 
+		else if (elementName == "H") {
+			for (int i = 0; i < atoms.length; i++) {
+				if (container.getAtomAt(i).getSymbol().equals(elementName)) {
+					weight += container.getAtomAt(i).getExactMass();
+				}
+				else {
+					weight += (container.getAtomAt(i).getHydrogenCount() * 1.00782504);
+				}
+			}
+		}
+		else {
 			for (int i = 0; i < atoms.length; i++) {
 				if (container.getAtomAt(i).getSymbol().equals(elementName)) {
 					weight += container.getAtomAt(i).getExactMass();
 				}
 			}
-			if (elementName == "H") {
-				weight += (container.getHydrogenCount() * 1.00782504);
-			}
-			return new Double(weight);
 		}
+		return new Double(weight);
 	}
 
 
