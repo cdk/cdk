@@ -368,7 +368,37 @@ public class HOSECodeTest extends TestCase
 	}
 	
 	
-	/**
+  public void testBug795480()
+	{
+		Molecule molecule = null;
+		HOSECodeGenerator hcg = null;
+		String[] result = {
+		    "C-1-;C(=C/Y'+4'/)",
+     "C-2;=CC-(Y'+4',//)",
+     "C-2;=CY'+4'(C-,//)",
+     "Br-1'+4';C(=C/C-/)"
+		};
+
+		try
+		{
+			molecule = (new SmilesParser()).parseSmiles("CC=CBr");
+      boolean isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
+			molecule.getAtomAt(0).setFormalCharge(-1);
+      molecule.getAtomAt(3).setFormalCharge(+4);
+			hcg = new HOSECodeGenerator();
+			String s = null;
+			for (int f = 0; f < molecule.getAtomCount(); f++)
+			{
+				s = hcg.getHOSECode(molecule, molecule.getAtomAt(f), 4);
+      	assertTrue(result[f].equals(s));
+			}
+
+		} catch (Exception exc)
+		{
+			exc.printStackTrace();
+		}
+  }
+  /**
 	 *  The main program for the HOSECodeTest class
 	 *
 	 *@param  args  The command line arguments
