@@ -189,7 +189,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
         } else if (objectType.equals("Atom")) {
             currentMolecule.addAtom(currentAtom);
         } else if (objectType.equals("Bond")) {
-            logger.debug("Bond: " + bond_a1 + ", " + bond_a2 + ", " + bond_order);
+            logger.debug("Bond(" + bond_id + "): " + bond_a1 + ", " + bond_a2 + ", " + bond_order);
             Atom a1 = currentMolecule.getAtomAt(bond_a1);
             Atom a2 = currentMolecule.getAtomAt(bond_a2);
             Bond b = new Bond(a1, a2, bond_order);
@@ -276,7 +276,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
         } else if (propertyType.equals("atom2")) {
           bond_a2 = new Integer(propertyValue).intValue();
         } else if (propertyType.equals("id")) {
-          logger.debug("id" + propertyValue);
+          logger.debug("id: " + propertyValue);
           bond_id = propertyValue;
         } else if (propertyType.equals("order")) {
           try {
