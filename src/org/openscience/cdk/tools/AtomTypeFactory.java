@@ -63,7 +63,6 @@ public class AtomTypeFactory
 	 * @exception  IOException             A problem with reading the atomtypes.xml file
 	 * @exception  OptionalDataException   Unexpected data appeared in the atomtype ObjectInputStream
 	 * @exception  ClassNotFoundException  A problem instantiating the atomtypes
-	 * @since
 	 */
 	public AtomTypeFactory(String configFile) throws IOException, OptionalDataException, ClassNotFoundException
 	{

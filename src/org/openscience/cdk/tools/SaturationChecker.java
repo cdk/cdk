@@ -168,7 +168,6 @@ public class SaturationChecker
 	 * @param  atom  The atom to be checked
 	 * @param  ac    The AtomContainer that provides the context
 	 * @return       the currently maximum formable bond order for this atom
-	 * @since
 	 */
 	public double getCurrentMaxBondOrder(Atom atom, AtomContainer ac)
 	{

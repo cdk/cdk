@@ -43,21 +43,15 @@ public class AtomType extends Isotope
 {
 	/**
 	 *  An id for this atom type, like C3 for sp3 carbon
-	 *
-	 * @since
 	 */
 	String id;
 
 	/**
 	 *  The maximum bond order allowed for this atom type
-	 *
-	 * @since
 	 */
 	double maxBondOrder;
 	/**
 	 *  The maximum sum of all bondorders allowed for this atom type
-	 *
-	 * @since
 	 */
 	double maxBondOrderSum;
 
@@ -76,7 +70,6 @@ public class AtomType extends Isotope
 	 *
 	 * @param  atomTypeID     An id for this atom type, like C3 for sp3 carbon
 	 * @param  elementSymbol  The element symbol identifying the element to which this atom type applies
-	 * @since
 	 */
 	public AtomType(String id, String elementSymbol)
 	{
@@ -89,7 +82,6 @@ public class AtomType extends Isotope
 	 *  Sets the if attribute of the AtomType object
 	 *
 	 * @param  id  The new AtomTypeID value
-	 * @since
 	 */
 	public void setID(String id)
 	{
@@ -101,7 +93,6 @@ public class AtomType extends Isotope
 	 *  Sets the MaxBondOrder attribute of the AtomType object
 	 *
 	 * @param  maxBondOrder  The new MaxBondOrder value
-	 * @since
 	 */
 	public void setMaxBondOrder(double maxBondOrder)
 	{
@@ -113,7 +104,6 @@ public class AtomType extends Isotope
 	 *  Sets the MaxBondCount attribute of the AtomType object
 	 *
 	 * @param  maxBondOrderSum  The new MaxBondOrderSum value
-	 * @since
 	 */
 	public void setMaxBondOrderSum(double maxBondOrderSum)
 	{
@@ -125,7 +115,6 @@ public class AtomType extends Isotope
 	 *  Gets the id attribute of the AtomType object
 	 *
 	 * @return    The id value
-	 * @since
 	 */
 	public String getID()
 	{
@@ -137,7 +126,6 @@ public class AtomType extends Isotope
 	 *  Gets the MaxBondOrder attribute of the AtomType object
 	 *
 	 * @return    The MaxBondOrder value
-	 * @since
 	 */
 	public double getMaxBondOrder()
 	{
@@ -149,7 +137,6 @@ public class AtomType extends Isotope
 	 *  Gets the MaxBondCount attribute of the AtomType object
 	 *
 	 * @return    The MaxBondCount value
-	 * @since
 	 */
 	public double getMaxBondOrderSum()
 	{

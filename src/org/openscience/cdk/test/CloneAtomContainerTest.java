@@ -34,8 +34,8 @@ import org.openscience.cdk.templates.MoleculeFactory;
 /**
  * TestCase for the AtomContainer class.
  *
- * @author Christoph Steinbeck
- * @since  2001-08-09
+ * @author  Christoph Steinbeck
+ * @created 2001-08-09
  */
 public class CloneAtomContainerTest extends TestCase {
 

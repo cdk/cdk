@@ -92,7 +92,7 @@ import javax.swing.JOptionPane;
  *
  * @author Bradley A. Smith (bradley@baysmith.com)
  * @author Peter Murray-Rust
- * @authro Egon Willighagen
+ * @author Egon Willighagen
  */
 public class PublicJmol extends JPanel {
 

@@ -85,7 +85,6 @@ public class SingleStructureRandomGenerator
 	 *  Sets the AtomContainer attribute of the SingleStructureRandomGenerator object
 	 *
 	 * @param  ac  The new AtomContainer value
-	 * @since
 	 */
 	public void setAtomContainer(AtomContainer ac)
 	{
@@ -145,7 +144,6 @@ public class SingleStructureRandomGenerator
 	 *  Gets the AnotherUnsaturatedNode attribute of the SingleStructureRandomGenerator object
 	 *
 	 * @return                The AnotherUnsaturatedNode value
-	 * @since
 	 */
 	private Atom getAnotherUnsaturatedNode(Atom exclusionAtom)
 	{
