@@ -27,6 +27,8 @@ package org.openscience.cdk.io;
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.geometry.CrystalGeometryTools;
+import org.openscience.cdk.tools.ChemModelManipulator;
 import freeware.PrintfFormat;
 import javax.vecmath.Point3d;
 import java.io.BufferedWriter;
@@ -57,13 +59,31 @@ public class PDBWriter extends DefaultChemObjectWriter {
     public void write(ChemObject object) throws CDKException {
         if (object instanceof Molecule){
             writeMolecule((Molecule)object);
+        } else if (object instanceof Crystal){
+            writeCrystal((Crystal)object);
+        } else if (object instanceof ChemFile){
+            ChemFile chemFile = (ChemFile)object;
+            ChemSequence sequence = chemFile.getChemSequence(0);
+            if (sequence != null) {
+                ChemModel model = sequence.getChemModel(0);
+                if (model != null) {
+                    Crystal crystal = model.getCrystal();
+                    if (crystal != null) {
+                        write(crystal);
+                    } else {
+                        writeMolecule(new Molecule(
+                            ChemModelManipulator.getAllInOneContainer(model)
+                        ));
+                    }
+                }
+            }
         } else {
-            throw new CDKException("Only supported is writing of Molecule objects.");
+            throw new CDKException("Only supported is writing of Molecule, Crystal and ChemFile objects.");
         }
     }
     
     public ChemObject highestSupportedChemObject() {
-        return new Molecule();
+        return new ChemFile();
     }
     
    /**
@@ -115,7 +135,42 @@ public class PDBWriter extends DefaultChemObjectWriter {
        }
    }
    
-    /**
+   public void writeCrystal(Crystal crystal) throws CDKException {
+       try {
+           writer.write("HEADER created with CDK fileconvertot\n");
+           double[] a = crystal.getA();
+           double[] b = crystal.getB();
+           double[] c = crystal.getC();
+           double[] ucParams = CrystalGeometryTools.cartesianToNotional(a,b,c);
+           PrintfFormat lengthFormat = new PrintfFormat("%4.3f");
+           PrintfFormat angleFormat = new PrintfFormat("%3.3f");
+           writer.write("CRYST1 " + lengthFormat.sprintf(ucParams[0])
+                                                   + lengthFormat.sprintf(ucParams[1])
+                                                   + lengthFormat.sprintf(ucParams[2])
+                                                   + angleFormat.sprintf(ucParams[3])
+                                                   + angleFormat.sprintf(ucParams[4])
+                                                   + angleFormat.sprintf(ucParams[5]) + "\n");
+                                                   
+           // before saving the atoms, we need to create cartesian coordinates
+           Atom[] atoms = crystal.getAtoms();
+            for (int i=0; i<atoms.length; i++) {
+                Atom atom = atoms[i];
+                double[] frac = new double[3];
+                frac[0] = atom.getFractX3D();
+                frac[1] = atom.getFractY3D();
+                frac[2] = atom.getFractZ3D();
+                double[] cart = CrystalGeometryTools.fractionalToCartesian(a,b,c, frac);
+                atom.setX3D(cart[0]);
+                atom.setY3D(cart[1]);
+                atom.setZ3D(cart[2]);
+            }
+           writeMolecule(new Molecule(crystal));
+       } catch (IOException exception) {
+           throw new CDKException("Error while writing file: " + exception.getMessage());
+       }
+   }
+
+   /**
      * Flushes the output and closes this object.
      */
     public void close() throws IOException {
