@@ -1,5 +1,5 @@
 Source: cdk
-Build-Depends: libcdk
+Build-Depends: libcdk (>=20020805)
 Section: misc
 Priority: optional
 Maintainer: Egon Willighagen <egonw@sci.kun.nl>
@@ -7,7 +7,7 @@ Standards-Version: 3.1.1
 
 Package: cdk
 Architecture: any
-Depends: java-virtual-machine, libcdk
+Depends: java-virtual-machine, libcdk (>=20020805)
 Description: Chemical utilities that use the CDK library.
  The Chemical Development Kit is a library of Java classes useful
  in computational and information chemistry. It includes renderers,

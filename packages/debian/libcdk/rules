@@ -37,7 +37,7 @@ binary-arch: checkroot build
 	dpkg-gencontrol -isp
 	chown -R root.root debian/tmp
 	chmod -R go=rX debian/tmp
-	chmod 644 debian/tmp/usr/lib/cdk/*jar
+	chmod 644 debian/tmp/usr/share/java/cdk-*.jar
 	dpkg --build debian/tmp ..
 
 define checkdir

@@ -1,9 +1,12 @@
+libcdkextra (20020723-1) unstable; urgency=low
+
+  * New upstream version
+
+ -- E.L. Willighagen (Egon) <egonw@sci.kun.nl>  Sat, 08 Aug 2002 19:34:43 +0100
+
+
 libcdkextra (20020206-1) unstable; urgency=low
 
   * New upstream version
 
  -- E.L. Willighagen (Egon) <egonw@sci.kun.nl>  Sat, 18 May 2002 15:20:00 +0200
-
-Local variables:
-mode: debian-changelog
-End:
