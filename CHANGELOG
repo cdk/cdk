@@ -41,6 +41,7 @@ Fixes:
 * Fixed Controller2D to not show a proposed bond when dragging from a bond
   (closes JCP #932378, JCP #933601, JCP #933600, JCP #846617)
 * Rings no longer get drawn more than needed (closes #949681)
+* Make sure to set drawing color when drawing aromatic rings (closes #949738)
 
 API changes:
 * cdk.tools.manipulator.SetOf(AtomContainers|Molecules)Manipluator.

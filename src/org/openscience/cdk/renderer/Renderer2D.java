@@ -933,6 +933,7 @@ public class Renderer2D implements MouseMotionListener   {
 		int[] coords = {(int)(center.x - (width/2.0)), 
                         (int)(center.y + (height/2.0))};
         int[] screenCoords = getScreenCoordinates(coords);
+        graphics.setColor(bondColor);
         graphics.fillOval(screenCoords[0], screenCoords[1], 
                           (int)(width*r2dm.getZoomFactor()), 
                           (int)(height*r2dm.getZoomFactor()));
