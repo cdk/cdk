@@ -267,7 +267,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
           return;
       }
       if (propertyValue == null) {
-          logger.error("Cannot add null property");
+          logger.warn("Will not add null property");
           return;
       }
       
