@@ -1,12 +1,11 @@
-/* Job.java
+/* $RCSfile$
+ * $Author$
+ * $Date$
+ * $Revision$
  * 
- * Autor: Stephan Michels 
- * EMail: stephan@vern.chem.tu-berlin.de
- * Datum: 14.6.2001
+ * Copyright (C) 2001-2003  The Chemistry Development Kit (CDK) project
  * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
- * 
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sf.net
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -25,16 +24,19 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- *  */
-
+ *
+ */
 package org.openscience.cdk.math.qm;
 
 import org.openscience.cdk.math.*;
 import org.openscience.cdk.io.LogWriter;
 
 /**
- * Calculates the orbitals and orbitalenergies of electron systems
+ * Calculates the orbitals and orbital energies of electron systems
  * with closed shells
+ * 
+ * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
+ * @created 2001-06-14
  */
 public class ClosedShellJob
 {
