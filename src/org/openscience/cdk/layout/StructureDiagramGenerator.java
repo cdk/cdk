@@ -83,6 +83,7 @@ public class StructureDiagramGenerator
 	AtomPlacer atomPlacer = new AtomPlacer();
 	Vector ringSystems = null;
 	final String disconnectedMessage = "Molecule not connected. Use ConnectivityChecker.partitionIntoMolecules() and do the layout for every single component.";
+	TemplateHandler templateHandler = null;
 	boolean useTemplates = true;
 
 
@@ -92,6 +93,7 @@ public class StructureDiagramGenerator
 	public StructureDiagramGenerator()
 	{
 		logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName(), true);
+		templateHandler = new TemplateHandler();
 	}
 
 
@@ -162,6 +164,27 @@ public class StructureDiagramGenerator
 		return useTemplates;
 	}
 
+
+	/**
+	 *  Sets the templateHandler attribute of the StructureDiagramGenerator object
+	 *
+	 *@param  templateHandler  The new templateHandler value
+	 */
+	public void setTemplateHandler(TemplateHandler templateHandler)
+	{
+		this.templateHandler = templateHandler;
+	}
+
+
+	/**
+	 *  Gets the templateHandler attribute of the StructureDiagramGenerator object
+	 *
+	 *@return    The templateHandler value
+	 */
+	public TemplateHandler getTemplateHandler()
+	{
+		return templateHandler;
+	}
 
 
 	/**
@@ -307,7 +330,6 @@ public class StructureDiagramGenerator
 		if (useTemplates)
 		{
 			logger.debug("Initializing TemplateHandler");
-			TemplateHandler templateHandler = new TemplateHandler();
 			logger.debug("TemplateHander initialized");
 			logger.debug("Now starting Template Detection in Molecule...");
 			templateMapped = templateHandler.mapTemplates(molecule);
