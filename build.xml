@@ -46,7 +46,7 @@
                 <delete dir="${reports.tests}" />
         </target>
 	
-        <target name="compile" depends="init">
+        <target name="compile" depends="clean, init">
                 <echo message="Compiling only the classes that don't use Java3d." />
 
                 <echo
@@ -61,17 +61,13 @@
                         <exclude name="org/openscience/cdk/renderer/AcceleratedRenderer3D.java" />
                         <exclude name="org/openscience/cdk/renderer/AcceleratedRenderer3DModel.java" />
                         <exclude name="org/openscience/cdk/renderer/OrbitalsRenderer3D.java" />
-                        <exclude name="org/openscience/cdk/test/renderer/AcceleratedRenderer3DTest.java" />
-                        <exclude name="org/openscience/cdk/test/OrbitalsRenderer3DTest.java" />
-                        <exclude name="org/openscience/cdk/test/VisualGaussiansCalculationTest.java" />
-                        <exclude name="org/openscience/cdk/test/io/ZMatrixReaderTest.java" />
-                        <!-- exclude libio classes that require additional
+                         <!-- exclude libio classes that require additional
                              libraries, and which are compiled elsewhere -->
-                        <exclude name="org/openscience/cdk/libio/**" />
-                        <exclude name="org/openscience/cdk/test/libio/**" />
+                         <exclude name="org/openscience/cdk/libio/**/*.java" />
+                        <exclude name="org/openscience/cdk/test/**/*.java" />
                         <!-- exclude application classes that require additional
                              libraries, and which are compiled elsewhere -->
-                        <exclude name="org/openscience/cdk/applications/**" />
+                        <exclude name="org/openscience/cdk/applications/**/*.java" />
 
                         <classpath refid="project.class.path" />
                 </javac>
@@ -81,7 +77,7 @@
                 </copy>
         </target>
 
-        <target name="compile-libio" depends="init">
+        <target name="compile-libio" depends="compile">
                 <!-- Task to build the libio classes. Clearly, this requires extra
                      jars, and these should be located in ${lib}/libio -->
 
@@ -98,7 +94,7 @@
                 </javac>
         </target>
 
-        <target name="compile-apps" depends="init">
+        <target name="compile-apps" depends="compile, compile-libio">
                 <!-- Task to build the applications classes. Some require extra
                      jars, like those in ${lib}/libio -->
 
@@ -114,7 +110,21 @@
                 </javac>
         </target>
 
-        <target name="compile-with-java3d" depends="init">
+       <target name="compile-test" depends="compile">
+                <!-- Task to build the test classes. -->
+                <javac destdir="${build}" optimize="off" debug="on" deprecation="off">
+                        <src path="${src}/org/openscience/cdk/test" />
+                       <exclude name="renderer/Accel*.java" />
+		       <exclude name="renderer/Orbitals*.java" />
+		       <exclude name="libio/**/*.java" />
+		       <exclude name="math/qm/VisualGaussiansCalculationTest.java" />
+		       <exclude name="io/ZMatrixReaderTest.java" />		       
+	       
+                        <classpath refid="project.class.path" />
+                </javac>
+        </target>	
+	
+        <target name="compile-with-java3d" depends="clean, init">
                 <mkdir dir="${build}" />
 
                 <javac destdir="${build}" optimize="on" deprecation="off" debug="on">
@@ -237,7 +247,7 @@
                 </jar>
         </target>
 
-        <target name="dist-test" depends="compile">
+        <target name="dist-test" depends="compile-test">
                 <jar jarfile="${dist}/jar/cdk-test.jar">
                     <fileset dir="${build}">
                         <include name="org/openscience/cdk/test/**" />
@@ -343,7 +353,7 @@
                 </java>
         </target>
 
-        <target name="test" depends="clean,dist-core, dist-extra, dist-test">
+        <target name="test" depends="dist-core, dist-extra, dist-test">
                 <junit printsummary="yes" haltonfailure="yes">
                         <classpath>
                                 <pathelement
@@ -405,17 +415,27 @@
                 </java>
         </target>
 
-        <target name="run" depends="dist-core, dist-extra, dist-apps">
-                <java classname="org.openscience.cdk.applications.PublicJmol" fork="yes">
-                        <classpath>
+        <target name="run" depends="dist-core, dist-extra, dist-test, dist-apps, dist-libio">
+                <java classname="org.openscience.cdk.applications.Viewer" fork="yes">
+			<arg value="--nojava3d" />
+			<arg value="--no3d" />
+			<arg value="--useJmol" />
+			<arg value="data/guanine.txt" />
+			<classpath>
                                 <pathelement location="${dist}/jar/cdk-core.jar" />
                                 <pathelement location="${dist}/jar/cdk-extra.jar" />
-                                <pathelement location="${dist}/jar/cdk-apps.jar" />				
+                                <pathelement location="${dist}/jar/cdk-apps.jar" />
+                                <pathelement location="${dist}/jar/cdk-test.jar" />
+				<pathelement location="${dist}/jar/cdk-libio.jar" />				
                                 <pathelement path="${java.class.path}" />
                                 <pathelement location="." />
                                 <fileset dir="${lib}">
                                         <include name="*.jar" />
                                 </fileset>
+                                <fileset dir="${lib}/libio">
+                                        <include name="*.jar" />
+                                </fileset>
+				
                         </classpath>
                 </java>
         </target>
