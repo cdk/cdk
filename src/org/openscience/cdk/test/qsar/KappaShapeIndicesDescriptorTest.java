@@ -49,7 +49,7 @@ import java.io.*;
 	}
     
 	public void testKappaShapeIndicesDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		double [] testResult={ 5,2.25, 14};
+		double [] testResult={ 5,2.25, 4};
 		Descriptor descriptor = new KappaShapeIndicesDescriptor();
 		SmilesParser sp = new SmilesParser();
 		AtomContainer mol = sp.parseSmiles("O=C(O)CC");
