@@ -42,24 +42,24 @@ public class GeometryTools
 	 *
 	 * @param   molecule for which all the atoms are translated to positive coordinates
 	 */
-	public static void translateAllPositive(Molecule molecule)
+	public static void translateAllPositive(AtomContainer atomCon)
 	{
 		double transX = 0,transY = 0;
-		for (int i = 0; i < molecule.getAtomCount(); i++)
+		for (int i = 0; i < atomCon.getAtomCount(); i++)
 		{
-			if (molecule.getAtomAt(i).getPoint2D() != null)
+			if (atomCon.getAtomAt(i).getPoint2D() != null)
 			{
-				if (molecule.getAtomAt(i).getPoint2D().x < transX)
+				if (atomCon.getAtomAt(i).getPoint2D().x < transX)
 				{
-					transX = molecule.getAtomAt(i).getPoint2D().x;
+					transX = atomCon.getAtomAt(i).getPoint2D().x;
 				}
-				if (molecule.getAtomAt(i).getPoint2D().y < transY)
+				if (atomCon.getAtomAt(i).getPoint2D().y < transY)
 				{
-					transY = molecule.getAtomAt(i).getPoint2D().y;
+					transY = atomCon.getAtomAt(i).getPoint2D().y;
 				}
 			}
 		}
-		translate2D(molecule,transX * -1,transY * -1);		
+		translate2D(atomCon,transX * -1,transY * -1);		
 	}
 	
 
@@ -70,9 +70,9 @@ public class GeometryTools
 	 * @param   transX  translation in x direction
 	 * @param   transY  translation in y direction
 	 */
-	public static void translate2D(Molecule molecule, double transX, double transY)
+	public static void translate2D(AtomContainer atomCon, double transX, double transY)
 	{
-		translate2D(molecule, new Vector2d(transX, transY));
+		translate2D(atomCon, new Vector2d(transX, transY));
 	}
 	
 
@@ -81,15 +81,15 @@ public class GeometryTools
 	 *
 	 * @param   molecule  The molecule to be scaled
 	 */
-	public static void scaleMolecule(Molecule molecule, double scaleFactor)
+	public static void scaleMolecule(AtomContainer atomCon, double scaleFactor)
 	{
-		for (int i = 0; i < molecule.getAtomCount(); i++)
+		for (int i = 0; i < atomCon.getAtomCount(); i++)
 		{
-			if (molecule.getAtomAt(i).getPoint2D() != null)
+			if (atomCon.getAtomAt(i).getPoint2D() != null)
 			{
 			
-				molecule.getAtomAt(i).getPoint2D().x *= scaleFactor;
-				molecule.getAtomAt(i).getPoint2D().y *= scaleFactor;
+				atomCon.getAtomAt(i).getPoint2D().x *= scaleFactor;
+				atomCon.getAtomAt(i).getPoint2D().y *= scaleFactor;
 			}
 		}
 	}
@@ -101,13 +101,13 @@ public class GeometryTools
 	 * @param   dim       The dimension to be filled
 	 * @param   percentage  The percentage of the dimension to be filled
 	 */
-	public static void scaleMolecule(Molecule molecule, Dimension areaDim, double fillFactor)
+	public static void scaleMolecule(AtomContainer atomCon, Dimension areaDim, double fillFactor)
 	{
-		Dimension molDim = get2DDimension(molecule);
+		Dimension molDim = get2DDimension(atomCon);
 		double widthFactor = (double)areaDim.width / (double)molDim.width;
 		double heightFactor = (double)areaDim.height / (double)molDim.height;
 		double scaleFactor = Math.min(widthFactor, heightFactor) * fillFactor;
-		scaleMolecule(molecule, scaleFactor);
+		scaleMolecule(atomCon, scaleFactor);
 	}
 
 	/**
@@ -116,23 +116,23 @@ public class GeometryTools
 	 * @param   molecule of which the dimension should be returned
 	 * @return The java.awt.Dimension of this molecule
 	 */
-	public static Dimension get2DDimension(Molecule molecule)
+	public static Dimension get2DDimension(AtomContainer atomCon)
 	{
 		double xOffset = 0, yOffset = 0;
 		double maxX = Double.MIN_VALUE, maxY = Double.MIN_VALUE, minX = Double.MAX_VALUE, minY = Double.MAX_VALUE;
-		for (int i = 0; i < molecule.getAtomCount(); i++)
+		for (int i = 0; i < atomCon.getAtomCount(); i++)
 		{
-			if (molecule.getAtomAt(i).getPoint2D() != null)
+			if (atomCon.getAtomAt(i).getPoint2D() != null)
 			{
 		
-				if (molecule.getAtomAt(i).getX2D() > maxX)
-					maxX = molecule.getAtomAt(i).getX2D();
-				if (molecule.getAtomAt(i).getY2D() > maxY)
-					maxY = molecule.getAtomAt(i).getY2D();
-				if (molecule.getAtomAt(i).getX2D() < minX)
-					minX = molecule.getAtomAt(i).getX2D();
-				if (molecule.getAtomAt(i).getY2D() < minY)
-					minY = molecule.getAtomAt(i).getY2D();
+				if (atomCon.getAtomAt(i).getX2D() > maxX)
+					maxX = atomCon.getAtomAt(i).getX2D();
+				if (atomCon.getAtomAt(i).getY2D() > maxY)
+					maxY = atomCon.getAtomAt(i).getY2D();
+				if (atomCon.getAtomAt(i).getX2D() < minX)
+					minX = atomCon.getAtomAt(i).getX2D();
+				if (atomCon.getAtomAt(i).getY2D() < minY)
+					minY = atomCon.getAtomAt(i).getY2D();
 			}	
 		}
 		return new Dimension((int)(maxX - minX + 1),
@@ -147,13 +147,13 @@ public class GeometryTools
 	 * @param   molecule to be translated	
 	 * @param   dimension that represents the translation vector 
 	 */
-	public static void translate2D(Molecule molecule, Vector2d vector)
+	public static void translate2D(AtomContainer atomCon, Vector2d vector)
 	{
-		for (int i = 0; i < molecule.getAtomCount(); i++)
+		for (int i = 0; i < atomCon.getAtomCount(); i++)
 		{
-			if (molecule.getAtomAt(i).getPoint2D() != null)
+			if (atomCon.getAtomAt(i).getPoint2D() != null)
 			{
-				molecule.getAtomAt(i).getPoint2D().add(vector);
+				atomCon.getAtomAt(i).getPoint2D().add(vector);
 			}
 		}
 	}
@@ -164,12 +164,12 @@ public class GeometryTools
 	 * @param   molecule to be centered
 	 * @param   areaDim in which the molecule is to be centered
 	 */
-	public static void center(Molecule molecule, Dimension areaDim)
+	public static void center(AtomContainer atomCon, Dimension areaDim)
 	{
-		Dimension molDim = get2DDimension(molecule);		
+		Dimension molDim = get2DDimension(atomCon);		
 		int transX = (int)((areaDim.width - molDim.width) / 2);
 		int transY = (int)((areaDim.height - molDim.height) / 2);
-		translate2D(molecule, new Vector2d(transX, transY));
+		translate2D(atomCon, new Vector2d(transX, transY));
 	}
 	
 
@@ -225,6 +225,7 @@ public class GeometryTools
 	 * distance vertical to the bond.
 	 *
 	 * @param   coords  The coordinates of the two given points of the bond
+	 *					like this [point1x, point1y, point2x, point2y]
 	 * @param   dist  The vertical distance between the given points and those to be calculated
 	 * @return     The coordinates of the calculated four points
 	 */
@@ -276,25 +277,20 @@ public class GeometryTools
 	 * @param   molecule  The molecule that is searched for the closest atom
 	 * @return   The atom that is closest to the given coordinates  
 	 */
-	public static Atom getClosestAtom(int xPosition, int yPosition, SetOfMolecules setOfMolecules)
+	public static Atom getClosestAtom(int xPosition, int yPosition, AtomContainer atomCon)
 	{
-		Molecule molecule;
 		Atom closestAtom = null, currentAtom;
 		double smallestMouseDistance = -1, mouseDistance, atomX, atomY;
-		for (int f = 0; f < setOfMolecules.getMoleculeCount(); f++)
+		for (int i = 0; i < atomCon.getAtomCount(); i++)
 		{
-			molecule = setOfMolecules.getMolecule(f);
-			for (int i = 0; i < molecule.getAtomCount(); i++)
+			currentAtom = atomCon.getAtomAt(i);
+			atomX = currentAtom.getX2D();
+			atomY = currentAtom.getY2D();
+			mouseDistance = Math.sqrt(Math.pow(atomX - xPosition, 2) + Math.pow(atomY - yPosition, 2));
+			if (mouseDistance < smallestMouseDistance || smallestMouseDistance == -1)
 			{
-				currentAtom = molecule.getAtomAt(i);
-				atomX = currentAtom.getX2D();
-				atomY = currentAtom.getY2D();
-				mouseDistance = Math.sqrt(Math.pow(atomX - xPosition, 2) + Math.pow(atomY - yPosition, 2));
-				if (mouseDistance < smallestMouseDistance || smallestMouseDistance == -1)
-				{
-					smallestMouseDistance = mouseDistance;
-					closestAtom = currentAtom;
-				}
+				smallestMouseDistance = mouseDistance;
+				closestAtom = currentAtom;
 			}
 		}
 		return closestAtom;
@@ -310,31 +306,25 @@ public class GeometryTools
 	 * @param   molecule  The molecule that is searched for the closest bond
 	 * @return   The bond that is closest to the given coordinates  
 	 */
-	public static Bond getClosestBond(int xPosition, int yPosition, SetOfMolecules setOfMolecules)
+	public static Bond getClosestBond(int xPosition, int yPosition, AtomContainer atomCon)
 	{
-		Molecule molecule;
 		Point2d bondCenter;
 		Bond closestBond = null, currentBond;
 		double smallestMouseDistance = -1, mouseDistance, bondCenterX, bondCenterY;
-		for (int f = 0; f < setOfMolecules.getMoleculeCount(); f++)
+		for (int i = 0; i < atomCon.getBondCount(); i++)
 		{
-			molecule = setOfMolecules.getMolecule(f);
-			for (int i = 0; i < molecule.getBondCount(); i++)
+			currentBond = atomCon.getBondAt(i);
+			bondCenter = get2DCenter(currentBond.getAtomsVector());
+			mouseDistance = Math.sqrt(Math.pow(bondCenter.x - xPosition, 2) + Math.pow(bondCenter.y - yPosition, 2));
+			if (mouseDistance < smallestMouseDistance || smallestMouseDistance == -1)
 			{
-				currentBond = molecule.getBondAt(i);
-				bondCenter = get2DCenter(currentBond.getAtomsVector());
-				mouseDistance = Math.sqrt(Math.pow(bondCenter.x - xPosition, 2) + Math.pow(bondCenter.y - yPosition, 2));
-				if (mouseDistance < smallestMouseDistance || smallestMouseDistance == -1)
-				{
-					smallestMouseDistance = mouseDistance;
-					closestBond = currentBond;
-				}
+				smallestMouseDistance = mouseDistance;
+				closestBond = currentBond;
 			}
 		}
 		return closestBond;
 	}
 
-	
 
 	/**
 	 * Sorts a Vector of atoms such that the 2D distances of the 

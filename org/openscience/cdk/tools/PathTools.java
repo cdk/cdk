@@ -157,16 +157,23 @@ public class PathTools implements CDKConstants
 		for (int f = 0; f < sphere.size(); f++)
 		{
 			atom = (Atom)sphere.elementAt(f);
+//			System.out.println("atoms  "+ atom + f);
+//			System.out.println("sphere size  "+ sphere.size());
 			molecule.addAtom(atom);
-			atom.flags[VISITED] = true;
 			Bond[] bonds = ac.getConnectedBonds(atom);
 			for (int g = 0; g < bonds.length; g++)
 			{
-				molecule.addBond(bonds[g]);
+				if (!bonds[g].flags[VISITED])
+				{
+					molecule.addBond(bonds[g]);
+					bonds[g].flags[VISITED] = true;
+				}
 				nextAtom = bonds[g].getConnectedAtom(atom);
 				if (!nextAtom.flags[VISITED])
 				{
+//					System.out.println("wie oft???");
 					newSphere.addElement(nextAtom);
+					nextAtom.flags[VISITED] = true;
 				}
 			}
 		}

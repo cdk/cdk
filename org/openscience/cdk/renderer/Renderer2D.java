@@ -33,6 +33,7 @@ import java.util.*;
 import org.openscience.cdk.ringsearch.*;
 import org.openscience.cdk.geometry.*;
 import org.openscience.cdk.*;
+import org.openscience.cdk.tools.*;
 
 
 
@@ -41,9 +42,8 @@ public class Renderer2D
 	SSSRFinder sssrf = new SSSRFinder();
 	public Renderer2DModel r2dm;
 	Graphics g;
-	Molecule molecule;
-//	Hashtable colorHash = new Hashtable();
-	
+	AtomContainer atomCon;
+		
 
 	/**
 	 * Constructs a Renderer2D
@@ -72,14 +72,32 @@ public class Renderer2D
 	 * 
 	 * @param   mol  The Molecule to be drawn
 	 */
-	public void paintMolecule(Molecule molecule, Graphics g)
+	public void paintMolecule(AtomContainer atomCon, Graphics g)
 	{
 		this.g = g;
-		this.molecule = molecule;
-		RingSet ringSet = sssrf.findSSSR(molecule);
-		paintAtoms(molecule.getAtoms(), molecule.getAtomCount());
-		paintBonds(molecule.getBonds(), molecule.getBondCount(), ringSet);
-		if (r2dm.drawNumbers()) paintNumbers(molecule.getAtoms(), molecule.getAtomCount());
+		this.atomCon = atomCon;
+		RingSet ringSet = new RingSet();
+		Vector molecules = null;
+		try
+		{
+			molecules = ConnectivityChecker.partitionIntoMolecules(atomCon);
+		}
+		catch (Exception exc)
+		{
+			exc.printStackTrace();
+		}
+		for (int i = 0; i < molecules.size(); i++)
+		{
+			ringSet.add(sssrf.findSSSR((Molecule)molecules.elementAt(i)));
+		}
+		paintAtoms(atomCon.getAtoms(), atomCon.getAtomCount());
+		paintBonds(atomCon.getBonds(), atomCon.getBondCount(), ringSet);
+		if (r2dm.drawNumbers()) paintNumbers(atomCon.getAtoms(), atomCon.getAtomCount());
+		if (r2dm.getPointerVectorStart() != null && r2dm.getPointerVectorEnd() != null) 
+		{ 
+			paintPointerVector();
+		System.out.println("repaint");
+		}
 	}
 	
 
@@ -113,7 +131,7 @@ public class Renderer2D
 
 		try
 		{
-			int i = molecule.getAtomNumber(atom);
+			int i = atomCon.getAtomNumber(atom);
 //			g.setColor(r2dm.getBackColor());
 //			g.fillRect((int)(atom.getPoint2D().x - (xSymbOffset * 1.8)),(int)(atom.getPoint2D().y - (ySymbOffset * 0.8)),(int)fontSize,(int)fontSize); 
 			g.setColor(r2dm.getForeColor());
@@ -234,6 +252,10 @@ public class Renderer2D
 			{
 				paintBond(bond, bondColor);
 			}
+		}
+		if (r2dm.getNewBond() != null)
+		{
+			paintBond(r2dm.getNewBond(), r2dm.getForeColor());
 		}
 	}
 	
@@ -388,4 +410,21 @@ public class Renderer2D
 		g.fillPolygon(xCoords,yCoords,4);
 	}
 
+
+
+	/**
+	 * Paints a line between the startpoint and endpoint of the pointervector
+	 * that is stored in the Renderer2DModel.
+	 */
+	private void paintPointerVector()
+	{
+		Point startPoint = r2dm.getPointerVectorStart();
+		Point endPoint = r2dm.getPointerVectorEnd();
+		int[] points = {startPoint.x, startPoint.y, endPoint.x, endPoint.y};
+		int[] newCoords = GeometryTools.distanceCalculator(points,r2dm.getBondWidth() / 2);
+		int[] xCoords = {newCoords[0],newCoords[2],newCoords[4],newCoords[6]};
+		int[] yCoords = {newCoords[1],newCoords[3],newCoords[5],newCoords[7]};
+		g.setColor(r2dm.getForeColor());
+		g.fillPolygon(xCoords,yCoords,4);
+	}
 }

@@ -26,7 +26,7 @@
  *  */
 package org.openscience.cdk.renderer;
 
-import java.awt.Color;
+import java.awt.*;
 import org.openscience.cdk.*;
 import org.openscience.cdk.event.*;
 import java.util.*;
@@ -52,6 +52,8 @@ public class Renderer2DModel
 	
 	private int atomRadius = 8;
 	
+	private String defaultElementSymbol = "H";
+	
 	private Atom highlightedAtom = null;
 	
 	private Bond highlightedBond = null;
@@ -59,6 +61,14 @@ public class Renderer2DModel
 	private Hashtable colorHash = new Hashtable();
 	
 	private Vector listeners = new Vector();
+	
+	private Bond newBond = null;
+	
+	private Point pointerVectorStart = null;
+	
+	private Point pointerVectorEnd = null;
+	
+	private int pointerVectorLength = 80;
 	
 
 	/**
@@ -273,6 +283,7 @@ public class Renderer2DModel
 	public void setHighlightedAtom(Atom highlightedAtom)
 	{
 		this.highlightedAtom = highlightedAtom;
+		fireChange();		
 	}
 
 	
@@ -296,6 +307,7 @@ public class Renderer2DModel
 	public void setHighlightedBond(Bond highlightedBond)
 	{
 		this.highlightedBond = highlightedBond;
+		fireChange();		
 	}
 
 	
@@ -321,12 +333,147 @@ public class Renderer2DModel
 		this.colorHash = colorHash;
 	}
 	
+	/**
+	 *
+	 *
+	 * @return     
+	 */
+	public String getDefaultElementSymbol()
+	{
+		return this.defaultElementSymbol;
+	}
+
+
+	/**
+	 *
+	 *
+	 * @param   elementSymbol  
+	 */
+	public void setDefaultElementSymbol(String defaultElementSymbol)
+	{
+		this.defaultElementSymbol = defaultElementSymbol;
+	}
+
 	
+
+	/**
+	 *
+	 *
+	 * @return     
+	 */
+	public Bond getNewBond()
+	{
+		return this.newBond;
+	}
+
+
+	/**
+	 *
+	 *
+	 * @param   newBond  
+	 */
+	public void setNewBond(Bond newBond)
+	{
+		this.newBond = newBond;
+		fireChange();
+	}
+
+	
+
+	/**
+	 *
+	 *
+	 * @return     
+	 */
+	public Point getPointerVectorEnd()
+	{
+		return this.pointerVectorEnd;
+	}
+
+
+	/**
+	 *
+	 *
+	 * @param   pointerVectorEnd  
+	 */
+	public void setPointerVectorEnd(Point pointerVectorEnd)
+	{
+		this.pointerVectorEnd = pointerVectorEnd;
+		fireChange();
+	}
+
+	
+
+	/**
+	 *
+	 *
+	 * @return     
+	 */
+	public Point getPointerVectorStart()
+	{
+		return this.pointerVectorStart;
+	}
+
+
+	/**
+	 *
+	 *
+	 * @param   pointerVectorStart  
+	 */
+	public void setPointerVectorStart(Point pointerVectorStart)
+	{
+		this.pointerVectorStart = pointerVectorStart;
+		fireChange();
+	}
+	
+	
+
+	/**
+	 *
+	 *
+	 * @return     
+	 */
+	public int getPointerVectorLength()
+	{
+		return this.pointerVectorLength;
+	}
+
+
+	/**
+	 *
+	 *
+	 * @param   pointerVectorLength  
+	 */
+	public void setPointerVectorLength(int pointerVectorLength)
+	{
+		this.pointerVectorLength = pointerVectorLength;
+	}
+
+	/**
+	 * Adds a change listener to the list of listeners
+	 *
+	 * @param   listener  The listener added to the list 
+	 */
 	public void addCDKChangeListener(CDKChangeListener listener)
 	{
 		listeners.add(listener);
 	}
 	
+	/**
+	 * Removes a change listener from the list of listeners
+	 *
+	 * @param   listener  The listener removed from the list 
+	 */
+	public void removeCDKChangeListener(CDKChangeListener listener)
+	{
+		listeners.remove(listener);
+	}
+
+
+	/**
+	 * Notifies registered listeners of certain changes
+	 * that have occurred in this model.
+	 */
 	public void fireChange()
 	{
 		EventObject event = new EventObject(this);

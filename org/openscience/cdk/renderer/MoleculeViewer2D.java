@@ -40,22 +40,24 @@ import java.awt.event.*;
 
 public class MoleculeViewer2D extends JPanel implements CDKChangeListener
 {
-	static Molecule molecule;
-	
+//	static Molecule molecule;
+	static AtomContainer atomCon;
 	public Renderer2DModel r2dm;
 	public Renderer2D renderer;
 
-	public MoleculeViewer2D(Molecule molecule,Renderer2DModel r2dm)
+	public MoleculeViewer2D(AtomContainer atomCon,Renderer2DModel r2dm)
 	{
-		this.molecule = molecule;
+//		this.molecule = molecule;
+		this.atomCon = atomCon;
 		this.r2dm = r2dm;
 		r2dm.addCDKChangeListener(this);
 		renderer = new Renderer2D(r2dm);
 	}
 	
-	public MoleculeViewer2D(Molecule molecule)
+	public MoleculeViewer2D(AtomContainer atomCon)
 	{
-		this.molecule = molecule;
+		this.atomCon = atomCon;
+//		this.molecule = molecule;
 		r2dm = new Renderer2DModel();
 		r2dm.addCDKChangeListener(this);
 		renderer = new Renderer2D(r2dm);
@@ -65,9 +67,9 @@ public class MoleculeViewer2D extends JPanel implements CDKChangeListener
 	{
 		setPreferredSize(new Dimension(600, 400));
 		setBackground(r2dm.getBackColor());
-		GeometryTools.translateAllPositive(molecule);
-		GeometryTools.scaleMolecule(molecule, getPreferredSize(), 0.8);			
-		GeometryTools.center(molecule, getPreferredSize());
+		GeometryTools.translateAllPositive(atomCon);
+		GeometryTools.scaleMolecule(atomCon, getPreferredSize(), 0.8);			
+		GeometryTools.center(atomCon, getPreferredSize());
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().add(this);
@@ -79,9 +81,9 @@ public class MoleculeViewer2D extends JPanel implements CDKChangeListener
 	public void paint(Graphics g)
 	{
 		super.paint(g);
-		if (molecule != null)
+		if (atomCon != null)
 		{
-			renderer.paintMolecule(molecule, g);
+			renderer.paintMolecule(atomCon, g);
 		}
 	}
 
@@ -96,15 +98,14 @@ public class MoleculeViewer2D extends JPanel implements CDKChangeListener
 		{
 			FileInputStream fis = new FileInputStream(args[0]);
 			MDLReader mr = new MDLReader(fis);
-			molecule = mr.readChemFile().getChemSequence(0).getChemModel(0).getSetOfMolecules(0).getMolecule(0);
+			atomCon = mr.readChemFile().getChemSequence(0).getChemModel(0).getSetOfMolecules(0).getMolecule(0);
 			fis.close();
 		}
 		catch(Exception exc)
 		{
 			exc.printStackTrace();		
 		}
-
-		new MoleculeViewer2D(molecule, new Renderer2DModel());
+		new MoleculeViewer2D(atomCon, new Renderer2DModel());
 	}
 
 	public void setRenderer2DModel(Renderer2DModel r2dm)

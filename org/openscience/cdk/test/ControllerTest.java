@@ -42,6 +42,7 @@ public class ControllerTest
 	ChemModel chemModel;
 	SetOfMolecules setOfMolecules;
 	Molecule molecule;
+	CDKInputAdapter inputAdapter;
 	
 	public ControllerTest(String inFile)
 	{
@@ -52,27 +53,31 @@ public class ControllerTest
 //		molecule = buildSpiroRings();
 		molecule = loadMolecule(inFile);
 //		molecule = buildRing();
-		StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-		sdg.setMolecule(molecule);
-		try
-		{
-			sdg.generateCoordinates(new Vector2d(0,1));
-		}
-		catch(Exception exc)
-		{
-			System.out.println("*** Exit due to an unexpected error during coordinate generation ***");
-			exc.printStackTrace();
-			System.exit(1);
-		}
-		Molecule molecule = sdg.getMolecule();
-		SetOfMolecules som = new SetOfMolecules();
-		som.addMolecule(molecule);
+
+
+//		StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+//		sdg.setMolecule(molecule);
+//		try
+//		{
+//			sdg.generateCoordinates(new Vector2d(0,1));
+//		}
+//		catch(Exception exc)
+//		{
+//			System.out.println("*** Exit due to an unexpected error during coordinate generation ***");
+//			exc.printStackTrace();
+//			System.exit(1);
+//		}
+//		Molecule molecule = sdg.getMolecule();
+
+
 		Renderer2DModel r2dm = new Renderer2DModel();
 		MoleculeViewer2D mv = new MoleculeViewer2D(molecule, r2dm);
 		r2dm.setDrawNumbers(true);
 		mv.display();
-		mv.addMouseMotionListener(new CDKInputAdapter(som, r2dm));
-		
+		inputAdapter = new CDKInputAdapter(molecule, r2dm);
+		mv.addMouseMotionListener(inputAdapter);
+		mv.addMouseListener(inputAdapter);
+		mv.addKeyListener(inputAdapter);
 	}
 
 	/**
@@ -261,12 +266,11 @@ public class ControllerTest
 		{
 			exc.printStackTrace();		
 		}
-		for (int i = 0; i < molecule.getAtomCount(); i++)
-		{
-			molecule.getAtomAt(i).setPoint2D(null);
-		}
+//		for (int i = 0; i < molecule.getAtomCount(); i++)
+//		{
+//			molecule.getAtomAt(i).setPoint2D(null);
+//		}
 		return molecule;
-		
 	}
 }
 

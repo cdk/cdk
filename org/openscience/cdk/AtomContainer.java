@@ -232,7 +232,7 @@ public class AtomContainer extends ChemObject implements Cloneable{
 				}
 			}
 		}
-		System.out.println("atom1  "+a1.toString()+"atom2  "+a2.toString());
+//		System.out.println("atom1  "+a1.toString()+"atom2  "+a2.toString());
 		throw new Exception("atoms not connected");
 	}
 
@@ -275,7 +275,7 @@ public class AtomContainer extends ChemObject implements Cloneable{
 		{
 			if (bonds[i].contains(atom))
 			{
-				System.out.println(bonds[i]);
+//				System.out.println(bonds[i]);
 				bondsVec.addElement(bonds[i]);
 			}
 		}
@@ -434,6 +434,13 @@ public class AtomContainer extends ChemObject implements Cloneable{
 	}
 	
 	
+
+	/**
+	 * Removes all atoms and bonds of a given atomcontainer from this container
+	 *
+	 * @param   atomContainer  The atomcontainer to be removed
+	 * @exception   Exception  
+	 */
 	public void remove(AtomContainer atomContainer) throws java.lang.Exception
 	{
 		for (int f = 0; f < atomContainer.getAtomCount(); f++)
@@ -444,9 +451,28 @@ public class AtomContainer extends ChemObject implements Cloneable{
 		{
 			removeBond(atomContainer.getBondAt(f));
 		}
-		
 	}
 
+
+
+	/**
+	 * Adds all atoms and bonds of a given atomcontainer to this container
+	 *
+	 * @param   atomContainer  The atomcontainer to be added
+	 */
+	public void add(AtomContainer atomContainer)
+	{
+		for (int f = 0; f < atomContainer.getAtomCount(); f++)
+		{
+			addAtom(atomContainer.getAtomAt(f));
+		}
+		for (int f = 0; f < atomContainer.getBondCount(); f++)
+		{
+			addBond(atomContainer.getBondAt(f));
+		}
+	}
+	
+	 
 	/**
 	 *  Adds a bond to this container
 	 *
@@ -696,8 +722,6 @@ public class AtomContainer extends ChemObject implements Cloneable{
 		return o;
 	}
 }
-
-
 
 
 

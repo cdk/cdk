@@ -81,7 +81,7 @@ public class ConnectivityChecker implements CDKConstants
 	}
 	
 
-	public Vector partitionIntoMolecules(AtomContainer atomContainer) throws java.lang.Exception
+	public  static Vector partitionIntoMolecules(AtomContainer atomContainer) throws java.lang.Exception
 	{
 		AtomContainer ac = new AtomContainer();
 		Atom atom = null, nextAtom = null; 
@@ -96,14 +96,17 @@ public class ConnectivityChecker implements CDKConstants
 		{
 			ac.addBond(atomContainer.getBondAt(f));
 		}
+//		System.out.println("atomcontainer  "+ ac);
 		do
 		{
 			atom = ac.getAtomAt(0);
 			molecule = new Molecule();
 			sphere.removeAllElements();
 			sphere.addElement(atom);
+			atom.flags[VISITED] = true;
 			PathTools.breadthFirstSearch(ac, sphere, molecule);
 			molecules.addElement(molecule);
+//			System.out.println("wie oft "+ molecules.elementAt(0));
 			ac.remove(molecule);
 		}while(ac.getAtomCount() > 0);
 		return molecules;
