@@ -3,6 +3,10 @@ CHANGELOG
 
 Changes in CVS
 ------------------------------------
+* uploaded CML 1.0.1 DTD and Schema
+* fixed writing of single molecule to MDL molfile format
+  (closes bug #526612)
+* added fingerprinting class for molecules
 
 20020206 Release
 ------------------------------------
@@ -12,7 +16,7 @@ Changes in CVS
 * adding Rendered3D which does not use Java3D (not yet operational)
 * fixed Atom.point2D == null problem
 * fixed reading of CML files with DTD for Aelfred2 
-  (closes bug #???)
+  (closes bug #493605)
 
 20020101.1 Release
 ------------------------------------
