@@ -6,9 +6,6 @@
   <config param="last-change-by" value="$Author$"/>
   <config param="rcsdate" value="$Date$"/>
 
-  <!-- This page is maintained by the author(s) of the plugin. 
-       Discuss changes to this file with them first. -->
-  
   <head>
     <title>Core Module</title>
     <titleabbrev>cdk-core</titleabbrev>

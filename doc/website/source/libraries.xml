@@ -19,7 +19,6 @@
     </para>
     <section>
       <title>Required Libraries</title>
-<para>
   <itemizedlist>
     <listitem>
       <para><ulink url="http://java.sun.com/products/java-media/3D/index.html">javax.vecmath</ulink></para>
@@ -29,11 +28,9 @@
       <para>Sun's java library for vector algebra from the Java3D package.</para>
     </listitem>
   </itemizedlist>
-</para>
 </section>
 <section>
   <title>Optional Libraries</title>
-  <para>
   <itemizedlist>
     <listitem>
       <para>JUnit</para>
@@ -62,8 +59,7 @@
 	  <para>Needed by: org.openscience.cdk.*</para>
     </listitem>
   </itemizedlist>
-  </para>
-  <para>For database access, JDBC drivers are needed:
+  <para>For database access, JDBC drivers are needed:</para>
   <itemizedlist>
     <listitem>
       <para>MySQL</para>
@@ -76,7 +72,6 @@
       <para>License: ??</para>
     </listitem>
   </itemizedlist>
-  </para>
 </section>
 </section>
 </webpage>

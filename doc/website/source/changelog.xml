@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.5.0//EN" 
-                         "../website-2.5.0/schema/dtd/website.dtd" [
+                         "../website-2.5.0/schema/dtd/website-full.dtd" [
 <!ENTITY changelog SYSTEM "../../../CHANGELOG">
 ]>
 <webpage id="changelog">
@@ -24,8 +24,8 @@
   <para>
     Revision History of the CDK:
   </para>
-  <literallayout>
+  <screen>
     &changelog;
-  </literallayout>
+  </screen>
 
 </webpage>

@@ -78,6 +78,7 @@
       <tocentry page="javancss-stats.xml" filename="javancss-stats.html"/>
       </tocentry>
       <tocentry page="modules.xml" filename="modules.html">
+        <tocentry page="module-data.xml" filename="module-data.html"/>
         <tocentry page="module-core.xml" filename="module-core.html"/>
         <tocentry page="module-standard.xml" filename="module-standard.html"/>
         <tocentry page="module-io.xml" filename="module-io.html"/>

@@ -18,12 +18,41 @@
     about the modules.
   </para>
   
-  <itemizedlist>
-    <listitem><para><ulink url="module-core.html">core</ulink></para></listitem>
-    <listitem><para><ulink url="module-standard.html">standard</ulink></para></listitem>
-    <listitem><para><ulink url="module-io.html">io</ulink></para></listitem>
-    <listitem><para><ulink url="module-render.html">render</ulink></para></listitem>
-    <listitem><para><ulink url="module-extra.html">extra</ulink></para></listitem>
-  </itemizedlist>
+  <informaltable>
+    <tgroup cols="2">
+      <thead>
+        <row>
+          <entry>Module</entry>
+          <entry></entry>
+        </row>
+      </thead>
+      <tbody>
+        <row>
+          <entry><para><ulink url="module-data.html">data</ulink></para></entry>
+          <entry>stable</entry>
+        </row>
+        <row>
+          <entry><para><ulink url="module-core.html">core</ulink></para></entry>
+          <entry>stable</entry>
+        </row>
+        <row>
+          <entry><para><ulink url="module-standard.html">standard</ulink></para></entry>
+          <entry></entry>
+        </row>
+        <row>
+          <entry><para><ulink url="module-extra.html">extra</ulink></para></entry>
+          <entry></entry>
+        </row>
+        <row>
+          <entry><para><ulink url="module-io.html">io</ulink></para></entry>
+          <entry></entry>
+        </row>
+        <row>
+          <entry><para><ulink url="module-render.html">render</ulink></para></entry>
+          <entry></entry>
+        </row>
+      </tbody>
+    </tgroup>
+  </informaltable>
 
 </webpage>

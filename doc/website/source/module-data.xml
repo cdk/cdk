@@ -2,27 +2,28 @@
 <!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.5.0//EN" 
                          "../website-2.5.0/schema/dtd/website.dtd" [
 ]>
-<webpage id="module-render">
+<webpage id="module-data">
   <config param="last-change-by" value="$Author$"/>
   <config param="rcsdate" value="$Date$"/>
 
   <head>
-    <title>Render Module</title>
-    <titleabbrev>cdk-render</titleabbrev>
-    <summary>Information about CDK's render module.</summary>
+    <title>Data Module</title>
+    <titleabbrev>cdk-data</titleabbrev>
+    <summary>Information about CDK's data module.</summary>
   </head>
 
   <section>
-    <title>Render Module</title>
+    <title>Core Module</title>
     <para>
-        The classes in this module deals with 2D and 3D rendering.
+        This module contains the data classes used in CDK which are used to
+        store chemical information.
     </para>
     
     <section>
       <title>Quality Control</title>
       <itemizedlist>
-        <listitem><para><ulink url="reports/pmd/render.html">PMD results</ulink></para></listitem>
-        <listitem><para><ulink url="reports/javadoc/render/">Javadoc DocCheck results</ulink></para></listitem>
+        <listitem><para><ulink url="reports/pmd/data.html">PMD results</ulink></para></listitem>
+        <listitem><para><ulink url="reports/javadoc/data/">Javadoc DocCheck results</ulink></para></listitem>
       </itemizedlist>
       <para>
         These results are created with the Ant scripts <filename>pmd.xml</filename> and

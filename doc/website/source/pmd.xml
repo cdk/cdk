@@ -38,6 +38,7 @@
   <section>
     <title>Results for the CDK modules</title>
     <itemizedlist>
+      <listitem><para><ulink url="/reports/pmd/data.html">data</ulink></para></listitem>
       <listitem><para><ulink url="/reports/pmd/core.html">core</ulink></para></listitem>
       <listitem><para><ulink url="/reports/pmd/standard.html">standard</ulink></para></listitem>
       <listitem><para><ulink url="/reports/pmd/io.html">io</ulink></para></listitem>

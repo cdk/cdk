@@ -22,6 +22,7 @@
   <target id="clean" name="clean">
     <delete file="javancss-tmp.xml"/>
     <delete file="keyword.index.xml"/>
+    <delete file="classes.mod"/>
     <delete file="${source.dir}/javancss-data.xml"/>
     <delete file="${source.dir}/javadoc-data.xml"/>
     <delete file="${source.dir}/autolayout.xml"/>
@@ -60,6 +61,11 @@
       <srcfiles dir="../refs" includes="cheminf.btx"/>
     </uptodate>
     <echo message="Bibliography index uptodate: ${refs.uptodate}"/>
+    <uptodate property="classesmod.uptodate"
+      targetfile="../javadoc/classes.mod">
+      <srcfiles dir="../javadoc" includes="classes.mod"/>
+    </uptodate>
+    <echo message="Classes module uptodate: ${classesmod.uptodate}"/>
     <uptodate property="dicts.uptodate"
       targetfile="${source.dir}/cdkdict.dbx">
       <srcfiles dir="../../src/org/openscience/cdk/dict/data" includes="cdk.xml"/>
@@ -74,7 +80,8 @@
 
   <target name="includes" id="includes" 
       depends="check.buildsystem, check.includes,
-               javancss, keyword.index, bibliography, dicts, atlists, depends"/>
+               javancss, keyword.index, bibliography, dicts, atlists, 
+               classes.mod, depends"/>
   
   <target name="setup.buildsystem" id="setup.buildsystem">
     <uptodate property="website-docbook-xsl.uptodate"
@@ -142,8 +149,8 @@
   </target>
   
   <target name="dicts" unless="dicts.uptodate">
-    <xslt in="../../src/org/openscience/cdk/dict/data/cdk.xml"      out="${source.dir}/cdkdict.dbx" style="xsl/cmldict2docbook.xsl"/>
-    <xslt in="../../src/org/openscience/cdk/dict/data/chemical.xml" out="${source.dir}/chemicaldict.dbx" style="xsl/cmldict2docbook.xsl"/>
+    <xslt in="../../src/org/openscience/cdk/dict/data/cdk.xml"      out="${source.dir}/cdkdict.dbx" style="${source.dir}/xsl/cmldict2docbook.xsl"/>
+    <xslt in="../../src/org/openscience/cdk/dict/data/chemical.xml" out="${source.dir}/chemicaldict.dbx" style="${source.dir}/xsl/cmldict2docbook.xsl"/>
   </target>
   
   <target name="atlists" unless="atlists.uptodate">
@@ -158,6 +165,11 @@
     <copy file="keyword.index.xml" tofile="../javadoc/keyword.index.xml"/>
   </target>
 
+  <target id="classes.mod" name="classes.mod" unless="classesmod.uptodate">
+    <ant dir="../javadoc/" antfile="build.xml" target="classes.mod"/>
+    <copy file="classes.mod" tofile="../javadoc/classes.mod"/>
+  </target>
+  
   <target id="depends" name="depends" unless="depends.uptodate">
     <ant dir="../javadoc/" antfile="build.xml" target="dependencies"/>
     <move file="builddepends.xml" tofile="../javadoc/builddepends.xml"/>

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.5.0//EN" 
-                         "../website-2.5.0/schema/dtd/website.dtd">
+                         "../website-2.5.0/schema/dtd/website-full.dtd">
 <webpage id="agenda">
   <config param="last-change-by" value="$Author$"/>
   <config param="rcsdate" value="$Date$"/>
@@ -29,32 +29,22 @@
   <para>This lists shows the things we would like to have/do:</para>
     <itemizedlist>
       <listitem>
-        <para>IUPAC name parser</para>
-      </listitem>
-      <listitem>
-        <para>A energy minimizer / moleculare dynamics module</para>
-      </listitem>
-      <listitem>
         <para>An interface API to other programs and implementation
-             (like Tinker, Gaussian, Mopac, Ghemical etc)</para>
-      </listitem>
-      <listitem>
-        <para>
-          Code that can generate 3D structures, based on common angles and distances
-          between bonds, like the proprietary Corina and Concord.
-        </para>
+             (like Tinker, Gaussian, Mopac, Ghemical etc) using JNI
+             or similar approaches</para>
       </listitem>
     </itemizedlist>
 
     <para>This is the lists of things we could use some help with:</para>
     <itemizedlist>
       <listitem>
-        <para>A IUPAC name generator is being developed.</para>
+        <para>A IUPAC name parser and a generator are being developed but
+              can use some more attention.</para>
       </listitem>
     </itemizedlist>
 
   <para>
-    Other wishes can be found and posted at 
+    Many other wishes can be found and posted at 
     <ulink url="http://sourceforge.net/tracker/?atid=370024&amp;group_id=20024&amp;func=browse">this SF webpage</ulink>.
   </para>
 </webpage>
