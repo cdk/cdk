@@ -67,6 +67,14 @@ public class SMILESReader implements ChemObjectReader {
     public ChemObject read(ChemObject object) throws CDKException {
         if (object instanceof SetOfMolecules) {
             return (ChemObject)readSetOfMolecules();
+				} else if (object instanceof ChemFile) {
+					  ChemFile file = new ChemFile();
+						ChemSequence sequence = new ChemSequence();
+						ChemModel chemModel = new ChemModel();
+						chemModel.setSetOfMolecules(readSetOfMolecules());
+						sequence.addChemModel(chemModel);
+						file.addChemSequence(sequence);
+						return (ChemObject) file;
         } else {
             throw new CDKException("Only supported is reading of SetOfMolecules objects.");
         }
