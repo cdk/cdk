@@ -3,6 +3,7 @@
 
 cp ../../../CHANGELOG ChangeLog
 cp ../../../build.xml .
+cp ../../../build.props .
 cp ../../../javadoc.xml .
 find ../../.. -name "*~" | xargs rm -f
 rsync -vargopt ../../../data .

@@ -12,6 +12,7 @@ reports
 sourcedist
 src
 build.xml
+build.props
 javadoc.xml
 cdk*jar
 autom4te.cache

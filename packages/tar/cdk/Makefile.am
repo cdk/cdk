@@ -10,16 +10,7 @@ JARLIBS=cdk-core.jar cdk-standard.jar cdk-io.jar cdk-extra.jar cdk-render.jar \
         cdk-test.jar cdk-apps.jar cdk-experimental.jar
 
 # set the Java compiler
-if FREECOMPILER
-if WITHJIKES
-JAVAC=-Dbuild.compiler=jikes
-endif
-if WITHGCJ
-JAVAC=-Dbuild.compiler=gcj
-endif
-else
-JAVAC=
-endif
+JAVAC=${JAVACOMPILER}
 
 alljardir = "${JARLIBDIR}"
 alljar_DATA = ${JARLIBS}
