@@ -177,6 +177,19 @@ public class SaturationCheckerTest extends TestCase
 	}
     
     /**
+     * Tests wether the saturation checker considers negative
+     * charges.
+     */
+	public void testIsSaturated_Proton() throws CDKException {
+		// test methane with explicit hydrogen
+		Molecule m = new Molecule();
+		Atom h = new Atom("H");
+        h.setFormalCharge(+1);
+		m.addAtom(h);
+		assertTrue(satcheck.isSaturated(h, m));
+	}
+    
+    /**
      * Tests wether the saturation checker considers positive
      * charges.
      */
