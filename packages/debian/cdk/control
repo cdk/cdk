@@ -6,9 +6,9 @@ Maintainer: Egon Willighagen <egonw@sci.kun.nl>
 Standards-Version: 3.5.9
 
 Package: cdk
-Architecture: any
+Architecture: all
 Depends: gij | java-virtual-machine | java2-runtime | j2se1.4
-Description: The Chemical Development Kit (CDK)
+Description: The Chemistry Development Kit (CDK)
  The CDK is a library of Java classes used in computational and 
  information chemistry and in bioinformatics. It includes renderers, 
  file IO, SMILES generation/parsing, maximal common substructure 

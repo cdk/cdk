@@ -1,3 +1,10 @@
+cdk (20040112-2) unstable; urgency=low
+
+  * Fixed description title name of CDK (control)
+  * Hopefully moved package to arch = all (control)
+
+ -- E.L. Willighagen (Egon) <egonw@sci.kun.nl>  Mon, 12 Jan 2004 17:59:00 +0100
+
 cdk (20040112-1) unstable; urgency=low
 
   * New upstream release taken from CVS
