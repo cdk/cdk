@@ -46,11 +46,28 @@ import java.awt.*;
 
 public class HydrogenPlacer
 {
-	public static boolean debug = true;
+	public static boolean debug = false;
+	public static boolean debug1 = true;
+	
+	public static void placeHydrogens2D(AtomContainer atomContainer)
+	{
+		Atom atom = null; 
+		for (int f = 0; f < atomContainer.getAtomCount();f++)
+		{
+			atom = atomContainer.getAtomAt(f);
+			if (!atom.getSymbol().equals("H"))
+			{
+				if (debug1) System.out.println("Now placing hydrogens at atom " + f);
+				placeHydrogens2D(atomContainer, atom);
+			}
+		}
+	}
 	
 	public static void placeHydrogens2D(AtomContainer atomContainer, Atom atom)
 	{
 		double bondLength = GeometryTools.getScaleFactor(atomContainer, 1.0);
+		double startAngle = 0.0;
+		double addAngle = 0.0; 
 		AtomPlacer atomPlacer = new AtomPlacer();
 		atomPlacer.setMolecule((Molecule)atomContainer);
 		Vector atomVector = new Vector();
@@ -69,13 +86,22 @@ public class HydrogenPlacer
 				placedAtoms.addAtom(connectedAtoms[f]);
 			}
 		}
-		placedAtoms.addAtom(atom);
-		for (int f = 0; f < placedAtoms.getAtomCount(); f++)
-		{
-			atomVector.addElement(placedAtoms.getAtomAt(f));
-		}
 
-		atomPlacer.distributePartners(atom, placedAtoms, placedAtoms.get2DCenter(), unplacedAtoms, bondLength);
+		if (placedAtoms.getAtomCount() > 1)
+		{
+			atomPlacer.distributePartners(atom, placedAtoms, placedAtoms.get2DCenter(), unplacedAtoms, bondLength);
+		}
+		else if (placedAtoms.getAtomCount() == 1)
+		{
+			for (int f = 0; f < unplacedAtoms.getAtomCount(); f++)
+			{
+				atomVector.addElement(unplacedAtoms.getAtomAt(f));
+			}
+
+			addAngle = Math.PI * 2 / unplacedAtoms.getAtomCount();
+			atomPlacer.populatePolygonCorners(atomVector, new Point2d(atom.getPoint2D()), startAngle, addAngle, bondLength);	
+		}
+			
 		if (debug) System.out.println("unplacedAtoms: " + unplacedAtoms);
 		if (debug) System.out.println("placedAtoms: " + placedAtoms);
 				
