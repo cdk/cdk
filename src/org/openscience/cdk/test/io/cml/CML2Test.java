@@ -128,4 +128,420 @@ public class CML2Test extends TestCase {
         }
     }
 
+    public void testCMLOK1() {
+        String filename = "data/cmltestok/cs2a.cml";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        try {
+            CMLReader reader = new CMLReader(new InputStreamReader(ins));
+            ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+
+            // test the resulting ChemFile content
+            assertNotNull(chemFile);
+            assertEquals(chemFile.getChemSequenceCount(), 1);
+            ChemSequence seq = chemFile.getChemSequence(0);
+            assertNotNull(seq);
+            assertEquals(seq.getChemModelCount(), 1);
+            ChemModel model = seq.getChemModel(0);
+            assertNotNull(model);
+            assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
+
+            // test the molecule
+            Molecule mol = model.getSetOfMolecules().getMolecule(0);
+            assertNotNull(mol);
+            assertEquals(38, mol.getAtomCount());
+            assertEquals(48, mol.getBondCount());
+            assertTrue(GeometryTools.has3DCoordinates(mol));
+            assertFalse(GeometryTools.has2DCoordinates(mol));
+            
+        } catch (Exception e) {
+            fail(e.toString());
+            e.printStackTrace();
+        }
+    }
+
+    public void testCMLOK2() {
+        String filename = "data/cmltestok/cs2a.mol.cml";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        try {
+            CMLReader reader = new CMLReader(new InputStreamReader(ins));
+            ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+
+            // test the resulting ChemFile content
+            assertNotNull(chemFile);
+            assertEquals(chemFile.getChemSequenceCount(), 1);
+            ChemSequence seq = chemFile.getChemSequence(0);
+            assertNotNull(seq);
+            assertEquals(seq.getChemModelCount(), 1);
+            ChemModel model = seq.getChemModel(0);
+            assertNotNull(model);
+            assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
+
+            // test the molecule
+            Molecule mol = model.getSetOfMolecules().getMolecule(0);
+            assertNotNull(mol);
+            assertEquals(38, mol.getAtomCount());
+            assertEquals(29, mol.getBondCount());
+            assertTrue(GeometryTools.has3DCoordinates(mol));
+            assertFalse(GeometryTools.has2DCoordinates(mol));
+            
+        } catch (Exception e) {
+            fail(e.toString());
+            e.printStackTrace();
+        }
+    }
+
+    public void testCMLOK3() {
+        String filename = "data/cmltestok/nsc2dmol.1.cml";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        try {
+            CMLReader reader = new CMLReader(new InputStreamReader(ins));
+            ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+
+            // test the resulting ChemFile content
+            assertNotNull(chemFile);
+            assertEquals(chemFile.getChemSequenceCount(), 1);
+            ChemSequence seq = chemFile.getChemSequence(0);
+            assertNotNull(seq);
+            assertEquals(seq.getChemModelCount(), 1);
+            ChemModel model = seq.getChemModel(0);
+            assertNotNull(model);
+            assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
+
+            // test the molecule
+            Molecule mol = model.getSetOfMolecules().getMolecule(0);
+            assertNotNull(mol);
+            assertEquals(13, mol.getAtomCount());
+            assertEquals(12, mol.getBondCount());
+            assertFalse(GeometryTools.has3DCoordinates(mol));
+            assertTrue(GeometryTools.has2DCoordinates(mol));
+            
+        } catch (Exception e) {
+            fail(e.toString());
+            e.printStackTrace();
+        }
+    }
+
+    public void testCMLOK4() {
+        String filename = "data/cmltestok/nsc2dmol.2.cml";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        try {
+            CMLReader reader = new CMLReader(new InputStreamReader(ins));
+            ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+
+            // test the resulting ChemFile content
+            assertNotNull(chemFile);
+            assertEquals(chemFile.getChemSequenceCount(), 1);
+            ChemSequence seq = chemFile.getChemSequence(0);
+            assertNotNull(seq);
+            assertEquals(seq.getChemModelCount(), 1);
+            ChemModel model = seq.getChemModel(0);
+            assertNotNull(model);
+            assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
+
+            // test the molecule
+            Molecule mol = model.getSetOfMolecules().getMolecule(0);
+            assertNotNull(mol);
+            assertEquals(13, mol.getAtomCount());
+            assertEquals(12, mol.getBondCount());
+            assertFalse(GeometryTools.has3DCoordinates(mol));
+            assertTrue(GeometryTools.has2DCoordinates(mol));
+            
+        } catch (Exception e) {
+            fail(e.toString());
+            e.printStackTrace();
+        }
+    }
+
+    public void testCMLOK5() {
+        String filename = "data/cmltestok/nsc2dmol.a1.cml";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        try {
+            CMLReader reader = new CMLReader(new InputStreamReader(ins));
+            ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+
+            // test the resulting ChemFile content
+            assertNotNull(chemFile);
+            assertEquals(chemFile.getChemSequenceCount(), 1);
+            ChemSequence seq = chemFile.getChemSequence(0);
+            assertNotNull(seq);
+            assertEquals(seq.getChemModelCount(), 1);
+            ChemModel model = seq.getChemModel(0);
+            assertNotNull(model);
+            assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
+
+            // test the molecule
+            Molecule mol = model.getSetOfMolecules().getMolecule(0);
+            assertNotNull(mol);
+            assertEquals(13, mol.getAtomCount());
+            assertEquals(12, mol.getBondCount());
+            assertFalse(GeometryTools.has3DCoordinates(mol));
+            assertTrue(GeometryTools.has2DCoordinates(mol));
+            
+        } catch (Exception e) {
+            fail(e.toString());
+            e.printStackTrace();
+        }
+    }
+
+    public void testCMLOK6() {
+        String filename = "data/cmltestok/nsc2dmol.a2.cml";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        try {
+            CMLReader reader = new CMLReader(new InputStreamReader(ins));
+            ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+
+            // test the resulting ChemFile content
+            assertNotNull(chemFile);
+            assertEquals(chemFile.getChemSequenceCount(), 1);
+            ChemSequence seq = chemFile.getChemSequence(0);
+            assertNotNull(seq);
+            assertEquals(seq.getChemModelCount(), 1);
+            ChemModel model = seq.getChemModel(0);
+            assertNotNull(model);
+            assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
+
+            // test the molecule
+            Molecule mol = model.getSetOfMolecules().getMolecule(0);
+            assertNotNull(mol);
+            assertEquals(13, mol.getAtomCount());
+            assertEquals(12, mol.getBondCount());
+            assertFalse(GeometryTools.has3DCoordinates(mol));
+            assertTrue(GeometryTools.has2DCoordinates(mol));
+            
+        } catch (Exception e) {
+            fail(e.toString());
+            e.printStackTrace();
+        }
+    }
+
+    public void testCMLOK7() {
+        String filename = "data/cmltestok/nsc3dcml.xml";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        try {
+            CMLReader reader = new CMLReader(new InputStreamReader(ins));
+            ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+
+            // test the resulting ChemFile content
+            assertNotNull(chemFile);
+            assertEquals(chemFile.getChemSequenceCount(), 1);
+            ChemSequence seq = chemFile.getChemSequence(0);
+            assertNotNull(seq);
+            assertEquals(seq.getChemModelCount(), 1);
+            ChemModel model = seq.getChemModel(0);
+            assertNotNull(model);
+            assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
+
+            // test the molecule
+            Molecule mol = model.getSetOfMolecules().getMolecule(0);
+            assertNotNull(mol);
+            assertEquals(27, mol.getAtomCount());
+            assertEquals(27, mol.getBondCount());
+            assertFalse(GeometryTools.has3DCoordinates(mol));
+            assertTrue(GeometryTools.has2DCoordinates(mol));
+            
+        } catch (Exception e) {
+            fail(e.toString());
+            e.printStackTrace();
+        }
+    }
+
+    public void testCMLOK8() {
+        String filename = "data/cmltestok/nsc2dcml.xml";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        try {
+            CMLReader reader = new CMLReader(new InputStreamReader(ins));
+            ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+
+            // test the resulting ChemFile content
+            assertNotNull(chemFile);
+            assertEquals(chemFile.getChemSequenceCount(), 1);
+            ChemSequence seq = chemFile.getChemSequence(0);
+            assertNotNull(seq);
+            assertEquals(seq.getChemModelCount(), 1);
+            ChemModel model = seq.getChemModel(0);
+            assertNotNull(model);
+            assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
+
+            // test the molecule
+            Molecule mol = model.getSetOfMolecules().getMolecule(0);
+            assertNotNull(mol);
+            assertEquals(15, mol.getAtomCount());
+            assertEquals(14, mol.getBondCount());
+            assertFalse(GeometryTools.has3DCoordinates(mol));
+            assertTrue(GeometryTools.has2DCoordinates(mol));
+            
+        } catch (Exception e) {
+            fail(e.toString());
+            e.printStackTrace();
+        }
+    }
+
+    public void testCMLOK9() {
+        String filename = "data/cmltestok/nsc3dcml.xml";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        try {
+            CMLReader reader = new CMLReader(new InputStreamReader(ins));
+            ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+
+            // test the resulting ChemFile content
+            assertNotNull(chemFile);
+            assertEquals(chemFile.getChemSequenceCount(), 1);
+            ChemSequence seq = chemFile.getChemSequence(0);
+            assertNotNull(seq);
+            assertEquals(seq.getChemModelCount(), 1);
+            ChemModel model = seq.getChemModel(0);
+            assertNotNull(model);
+            assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
+
+            // test the molecule
+            Molecule mol = model.getSetOfMolecules().getMolecule(0);
+            assertNotNull(mol);
+            assertEquals(27, mol.getAtomCount());
+            assertEquals(27, mol.getBondCount());
+            assertFalse(GeometryTools.has3DCoordinates(mol));
+            assertTrue(GeometryTools.has2DCoordinates(mol));
+            
+        } catch (Exception e) {
+            fail(e.toString());
+            e.printStackTrace();
+        }
+    }
+
+    public void testCMLOK10() {
+        String filename = "data/cmltestok/nsc3dmol.1.cml";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        try {
+            CMLReader reader = new CMLReader(new InputStreamReader(ins));
+            ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+
+            // test the resulting ChemFile content
+            assertNotNull(chemFile);
+            assertEquals(chemFile.getChemSequenceCount(), 1);
+            ChemSequence seq = chemFile.getChemSequence(0);
+            assertNotNull(seq);
+            assertEquals(seq.getChemModelCount(), 1);
+            ChemModel model = seq.getChemModel(0);
+            assertNotNull(model);
+            assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
+
+            // test the molecule
+            Molecule mol = model.getSetOfMolecules().getMolecule(0);
+            assertNotNull(mol);
+            assertEquals(15, mol.getAtomCount());
+            assertEquals(15, mol.getBondCount());
+            assertFalse(GeometryTools.has3DCoordinates(mol));
+            assertTrue(GeometryTools.has2DCoordinates(mol));
+            
+        } catch (Exception e) {
+            fail(e.toString());
+            e.printStackTrace();
+        }
+    }
+
+    public void testCMLOK11() {
+        String filename = "data/cmltestok/nsc3dmol.2.cml";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        try {
+            CMLReader reader = new CMLReader(new InputStreamReader(ins));
+            ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+
+            // test the resulting ChemFile content
+            assertNotNull(chemFile);
+            assertEquals(chemFile.getChemSequenceCount(), 1);
+            ChemSequence seq = chemFile.getChemSequence(0);
+            assertNotNull(seq);
+            assertEquals(seq.getChemModelCount(), 1);
+            ChemModel model = seq.getChemModel(0);
+            assertNotNull(model);
+            assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
+
+            // test the molecule
+            Molecule mol = model.getSetOfMolecules().getMolecule(0);
+            assertNotNull(mol);
+            assertEquals(15, mol.getAtomCount());
+            assertEquals(15, mol.getBondCount());
+            assertFalse(GeometryTools.has3DCoordinates(mol));
+            assertTrue(GeometryTools.has2DCoordinates(mol));
+            
+        } catch (Exception e) {
+            fail(e.toString());
+            e.printStackTrace();
+        }
+    }
+
+    public void testCMLOK12() {
+        String filename = "data/cmltestok/nsc3dmol.a1.cml";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        try {
+            CMLReader reader = new CMLReader(new InputStreamReader(ins));
+            ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+
+            // test the resulting ChemFile content
+            assertNotNull(chemFile);
+            assertEquals(chemFile.getChemSequenceCount(), 1);
+            ChemSequence seq = chemFile.getChemSequence(0);
+            assertNotNull(seq);
+            assertEquals(seq.getChemModelCount(), 1);
+            ChemModel model = seq.getChemModel(0);
+            assertNotNull(model);
+            assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
+
+            // test the molecule
+            Molecule mol = model.getSetOfMolecules().getMolecule(0);
+            assertNotNull(mol);
+            assertEquals(15, mol.getAtomCount());
+            assertEquals(15, mol.getBondCount());
+            assertFalse(GeometryTools.has3DCoordinates(mol));
+            assertTrue(GeometryTools.has2DCoordinates(mol));
+            
+        } catch (Exception e) {
+            fail(e.toString());
+            e.printStackTrace();
+        }
+    }
+
+    public void testCMLOK13() {
+        String filename = "data/cmltestok/nsc3dmol.a2.cml";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        try {
+            CMLReader reader = new CMLReader(new InputStreamReader(ins));
+            ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+
+            // test the resulting ChemFile content
+            assertNotNull(chemFile);
+            assertEquals(chemFile.getChemSequenceCount(), 1);
+            ChemSequence seq = chemFile.getChemSequence(0);
+            assertNotNull(seq);
+            assertEquals(seq.getChemModelCount(), 1);
+            ChemModel model = seq.getChemModel(0);
+            assertNotNull(model);
+            assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
+
+            // test the molecule
+            Molecule mol = model.getSetOfMolecules().getMolecule(0);
+            assertNotNull(mol);
+            assertEquals(15, mol.getAtomCount());
+            assertEquals(15, mol.getBondCount());
+            assertFalse(GeometryTools.has3DCoordinates(mol));
+            assertTrue(GeometryTools.has2DCoordinates(mol));
+            
+        } catch (Exception e) {
+            fail(e.toString());
+            e.printStackTrace();
+        }
+    }
+
 }
