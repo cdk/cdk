@@ -273,50 +273,55 @@ public class AtomTypeFactory {
 
 
 	/**
-	 *  Configures an atom. Finds the correct element type by looking at the atoms
-	 *  atom type id (atom.getAtomTypeName()).
+	 * Configures an atom. Finds the correct element type by looking at the atoms
+	 * atom type id (atom.getAtomTypeName()).
 	 *
-	 *@param  atom  The atom to be configured
-	 *@return       The configured atom
+	 * @param  atom  The atom to be configured
+	 * @return       The configured atom
 	 */
-	public Atom configure(Atom atom)
-	{
-		try {
+    public Atom configure(Atom atom) throws CDKException {
+        try {
             AtomType at = null;
-            if (atom.getAtomTypeName() == null) {
+            String atomTypeName = atom.getAtomTypeName();
+            if (atomTypeName == null || atomTypeName.length() == 0) {
                 logger.debug("Using atom symbol because atom type name is empty...");
-                at = getAtomType(atom.getSymbol());
+                AtomType[] types = getAtomTypes(atom.getSymbol(), "structgen");
+                if (types.length > 0) {
+                    logger.warn("Taking first atom type, but other may exist");
+                    at = types[0];
+                } else {
+                    String message = "Could not configure atom with unknown ID: " +
+                        atom.toString() + " + (id=" + atom.getAtomTypeName() + ")";
+                    logger.warn(message);
+                    throw new CDKException(message);
+                }
             } else {
                 at = getAtomType(atom.getAtomTypeName());
             }
-			atom.setMaxBondOrder(at.getMaxBondOrder());
-			atom.setMaxBondOrderSum(at.getMaxBondOrderSum());
-			atom.setVanderwaalsRadius(at.getVanderwaalsRadius());
-			atom.setCovalentRadius(at.getCovalentRadius());
-			Object color = at.getProperty("org.openscience.jmol.color");
-			if (color != null)
-			{
-				atom.setProperty("org.openscience.jmol.color", color);
-			}
-			if (at.getAtomicNumber() != 0)
-			{
-				atom.setAtomicNumber(at.getAtomicNumber());
-			} else
-			{
-				logger.debug("Did not configure atomic number: AT.an=" + at.getAtomicNumber());
-			}
-			if (at.getExactMass() > 0.0)
-			{
-				atom.setExactMass(at.getExactMass());
-			} else
-			{
-				logger.debug("Did not configure mass: AT.mass=" + at.getAtomicNumber());
-			}
-		} catch (Exception exception)
-		{
+            atom.setMaxBondOrder(at.getMaxBondOrder());
+            atom.setMaxBondOrderSum(at.getMaxBondOrderSum());
+            atom.setVanderwaalsRadius(at.getVanderwaalsRadius());
+            atom.setCovalentRadius(at.getCovalentRadius());
+            Object color = at.getProperty("org.openscience.jmol.color");
+            if (color != null) {
+                atom.setProperty("org.openscience.jmol.color", color);
+            }
+            if (at.getAtomicNumber() != 0) {
+                atom.setAtomicNumber(at.getAtomicNumber());
+            } else {
+                logger.debug("Did not configure atomic number: AT.an=" + at.getAtomicNumber());
+            }
+            if (at.getExactMass() > 0.0) {
+                atom.setExactMass(at.getExactMass());
+            } else {
+                logger.debug("Did not configure mass: AT.mass=" + at.getAtomicNumber());
+            }
+        } catch (Exception exception)
+        {
 			logger.warn("Could not configure atom with unknown ID: " +
 					atom.toString() + " + (id=" + atom.getAtomTypeName() + ")");
             logger.debug(exception);
+            throw new CDKException(exception.toString());
 		}
 		logger.debug("Configured " + atom.toString());
 		return atom;
