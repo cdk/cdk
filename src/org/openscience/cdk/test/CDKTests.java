@@ -57,10 +57,13 @@ import org.openscience.cdk.test.qsar.*;
 import org.openscience.cdk.test.qsar.model.*;
 import org.openscience.cdk.test.modeling.builder3d.ModelBuilder3dTest;
 import org.openscience.cdk.test.modeling.forcefield.ForceFieldTests;
+
 /**
  * TestSuite that runs all the sample tests
  *
  * @cdk.module test
+ * @cdk.depends log4j.jar
+ * @cdk.depends junit.jar
  */
 public class CDKTests
 {
@@ -130,7 +133,7 @@ public class CDKTests
         suite.addTest(RandomStructureGeneratorTest.suite());
         // from cdk.test.modeling.forcefield
         suite.addTest(ForceFieldTests.suite());
-
+	
 
         // Below are the tests that are not always possible to execute, because
         // the class might not be compiled (depeding on Ant and Java VM versions).
