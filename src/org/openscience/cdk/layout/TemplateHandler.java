@@ -75,26 +75,32 @@ public class TemplateHandler
 
 	/**
 	 *  Loads all existing templates into memory
+	 * To add templates to be used in SDG, place a drawing with 
+	 * the new template in data/templates and add the template
+	 * filename to data/templates/template.list
 	 */
 	public void loadTemplates()
 	{
-		File file = new File("data/templates");
-		File[] templateFiles = file.listFiles();
-		logger.debug("found " + templateFiles.length + " templates for Structure Diagram Generation");
-		for (int f = 0; f < templateFiles.length; f++)
+		String line = null;
+		InputStream ins = this.getClass().getClassLoader().getResourceAsStream("data/templates/templates.list");
+		BufferedReader reader = new BufferedReader(new InputStreamReader(ins));
+		try
 		{
-			try
+			while (reader.ready())
 			{
-				MDLReader reader = new MDLReader(new FileReader(templateFiles[f]));
-				templates.addElement((Molecule) reader.read((ChemObject) new Molecule()));
-				logger.debug("Successfully read template " + templateFiles[f].getName());
-			} catch (Exception exc)
-			{
-				logger.debug("Could not read template from file " + templateFiles[f]);
-				logger.debug("Reason: " + exc.getMessage());
+				line = reader.readLine();
+				line = "data/templates/" + line;
+				MDLReader structureReader = new MDLReader(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream(line)));
+				templates.addElement((Molecule) structureReader.read((ChemObject) new Molecule()));
+				logger.debug("Successfully read template " + line);
 			}
+		} catch (Exception exc)
+		{
+			logger.debug("Could not read template from file " + line);
+			logger.debug("Reason: " + exc.getMessage());
+			
 		}
-
+		
 	}
 
 
