@@ -31,8 +31,12 @@ public class LoggingTool {
     private Object logger;
 
     public LoggingTool() {
+        this( LoggingTool.class.getName() );
+    }
+
+    public LoggingTool(String classname) {
         try {
-            logger = org.apache.log4j.Category.getInstance( LoggingTool.class.getName());
+            logger = org.apache.log4j.Category.getInstance( classname );
 
             // configure Log4J
             (org.apache.log4j.PropertyConfigurator).configure("org/openscience/cdk/config/log4j.properties");
