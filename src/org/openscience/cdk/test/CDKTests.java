@@ -52,6 +52,7 @@ import org.openscience.cdk.test.structgen.RandomStructureGeneratorTest;
 import org.openscience.cdk.test.tools.ToolsTests;
 import org.openscience.cdk.test.charges.GasteigerMarsiliPartialChargesTest;
 import org.openscience.cdk.test.qsar.*;
+import org.openscience.cdk.test.qsar.model.*;
 /**
  * TestSuite that runs all the sample tests
  *
@@ -105,6 +106,8 @@ public class CDKTests
         suite.addTest(MathToolsTest.suite());
         // from cdk.test.qsar
         suite.addTest(QSARDescriptorTests.suite());
+        // from cdk.test.qsar.model
+        suite.addTest(QSARModelTests.suite());
         // from cdk.test.reaction
         suite.addTest(ReactionBalancerTest.suite());
         // from cdk.test.ringsearch
