@@ -119,7 +119,7 @@ public class TXTBasedAtomTypeConfigurator implements AtomTypeConfigurator {
                         // at.setCovalentRadius(covalent);
                         // atomColors.setAtomColor(at, new Color(rl, gl, bl));
                         
-                        atomTypes.add(at);
+                        atomTypes.addElement(at);
                         
                     } else {
                         throw new IOException("AtomTypeTable.ReadAtypes: " + 
