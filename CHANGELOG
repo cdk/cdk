@@ -41,6 +41,10 @@ New:
 * Added a Mol2 reader
 
 Fixes:
+* An angle error in the StructureDiagramGenerator has been
+  corrected. This fixes bug #792467 "Rings needlessly overlap"
+* An error in AtomPlacer.getLongestUnplacedChain has been corrected.
+  This fixes Bug #736137 "small problem in layout managers"
 * Added missing LGPL license to distributions.
 * Fixed bugs in ChemSequence.getChemModels() and
   ChemFile.getChemSequences()
