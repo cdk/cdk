@@ -29,8 +29,9 @@
  *  */
 package org.openscience.cdk.io;
 
-import org.openscience.cdk.*;
 import org.openscience.cdk.exception.*;
+import org.openscience.cdk.tools.*;
+import org.openscience.cdk.*;
 import java.io.*;
 import java.util.*;
 import javax.vecmath.*;
@@ -46,14 +47,15 @@ public class MDLReader implements CDKConstants, ChemObjectReader {
 	boolean debug = false;
 	BufferedReader input;
 
+    ElementFactory elemfact;
+
 	/**
 	 * Contructs a new MDLReader that can read Molecule from a given InputStream
 	 *
 	 * @param   in  The InputStream to read from
 	 */
-	public MDLReader(InputStream in)
-	{
-		input = new BufferedReader(new InputStreamReader(in));
+	public MDLReader(InputStream in) {
+		this(new InputStreamReader(in));
 	}
 
 	/**
@@ -63,19 +65,24 @@ public class MDLReader implements CDKConstants, ChemObjectReader {
 	 */
 	public MDLReader(Reader in) {
 		input = new BufferedReader(in);
+        try {
+            elemfact = new ElementFactory();
+        } catch (Exception e) {
+			// cannot load ElementFactory data
+        }
 	}
 
 
 	/**
-	 * Takes an object which subclasses ChemObject, e.g.Molecule, and will read this 
+	 * Takes an object which subclasses ChemObject, e.g.Molecule, and will read this
 	 * (from file, database, internet etc). If the specific implementation does not
 	 * support a specific ChemObject it will throw an Exception.
 	 *
 	 * @param   object  The object that subclasses ChemObject
-	 * @return   The ChemObject read  
-	 * @exception   UnsupportedChemObjectException  
+	 * @return   The ChemObject read
+	 * @exception   UnsupportedChemObjectException
 	 */
-    public ChemObject read(ChemObject object) throws UnsupportedChemObjectException 
+    public ChemObject read(ChemObject object) throws UnsupportedChemObjectException
 	{
 		if (object instanceof ChemFile)
 		{
@@ -133,7 +140,7 @@ public class MDLReader implements CDKConstants, ChemObjectReader {
 	}
 
 
-	
+
 	/**
 	 * Read a Molecule from a file in MDL sd format
 	 *
@@ -170,6 +177,7 @@ public class MDLReader implements CDKConstants, ChemObjectReader {
 				if (debug) System.out.println("Coordinates: " + x + "; " + y + "; " + z);
 				atom = new Atom(strTok.nextToken(), new Point3d(x, y, z));
 				atom.setPoint2D(new Point2d(x, y));
+                elemfact.configure(atom);
 	            molecule.addAtom(atom);
 	        }
 	        for (int f = 0; f < bonds; f++)
@@ -193,8 +201,8 @@ public class MDLReader implements CDKConstants, ChemObjectReader {
 	            else if (stereo == 6)
 	            {
 	                // MDL down bond
-					stereo = STEREO_BOND_DOWN;	
-	            }            
+					stereo = STEREO_BOND_DOWN;
+	            }
 				molecule.addBond(atom1 - 1, atom2 - 1, order, stereo);
 	        }
 	    }
