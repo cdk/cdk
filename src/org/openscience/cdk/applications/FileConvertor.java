@@ -29,6 +29,7 @@ import org.openscience.cdk.io.program.*;
 import org.openscience.cdk.io.listener.*;
 import org.openscience.cdk.exception.*;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.IDCreator;
 import java.io.*;
 import java.util.*;
 
@@ -38,49 +39,31 @@ import java.util.*;
  *   input: CML, MDL MOL/SDF file, PDB, PMP, ShelX, SMILES, XYZ
  *  output: CML, MDL MOL/SDF file, ShelX, SMILES, XYZ, Gaussian Input
  *
- *  @keyword command line util
- *  @keyword file format
+ * @author Egon Willighagen <egonw@sci.kun.nl>
+ *
+ * @keyword command line util
+ * @keyword file format
  */
 public class FileConvertor {
 
     private org.openscience.cdk.tools.LoggingTool logger;
 
-    private String iformat;
-    private String ifilename;
     private ChemObjectReader cor;
-
     private String oformat;
-    private String ofilename;
     private ChemObjectWriter cow;
     
     private TextGUIListener settingListener;
-
     private int level;
-    
-    private ChemFile chemFile;
-
     private Vector chemObjectNames = new Vector();
 
-    /**
-     * Constructs a convertor for the file formats <code>iformat</code>
-     * and <code>oformat</code>.
-     *
-     * @param iformat   format of the input
-     * @param oformat   format of the output
-     */
-    public FileConvertor(String iformat, String oformat, int level) {
+    public FileConvertor() {
         logger = new LoggingTool(this.getClass().getName());
         logger.dumpSystemProperties();
 
-        this.iformat = iformat;
-        this.oformat = oformat;
-        this.level = level;
-        
         settingListener = new TextGUIListener(level);
         
-        logger.debug("Input format: " + iformat);
-        logger.debug("Output format: " + oformat);
-        logger.debug("Question level: " + level);
+        this.level = 0;
+        this.oformat = "cml";
 
         chemObjectNames.add("org.openscience.cdk.Molecule");
         chemObjectNames.add("org.openscience.cdk.SetOfMolecules");
@@ -89,110 +72,86 @@ public class FileConvertor {
         chemObjectNames.add("org.openscience.cdk.ChemSequence");
         chemObjectNames.add("org.openscience.cdk.ChemFile");
     }
-
+    
     /**
-     * Convert file <code>ifilename</code> into a file <code>ofilename</code>.
+     * Convert the file <code>ifilename</code>.
      *
      * @param ifilename name of input file
-     * @param ofilename name of output file
      */
-    public boolean convert(String ifilename, String ofilename) {
-        boolean success = true;
-        this.ifilename = ifilename;
-        this.ofilename = ofilename;
+    public boolean convert(String ifilename) {
+        boolean success = false;
         try {
             File file = new File(ifilename);
-            cor = getChemObjectReader(file);
-            if (cor == null) {
-                logger.warn("The format of the input file is not recognized or not supported.");
-                System.err.println("The format of the input file is not recognized or not supported.");
-                return false;
+            if (file.isFile()) {
+                cor = getChemObjectReader(file);
+                if (cor == null) {
+                    logger.warn("The format of the input file is not recognized or not supported.");
+                    System.err.println("The format of the input file is not recognized or not supported.");
+                    return false;
+                }
+                
+                ChemFile content = (ChemFile)cor.read((ChemObject)new ChemFile());
+                if (content == null) {
+                    return false;
+                }
+                
+                // create output file
+                String ofilename = getOutputFileName(ifilename, this.oformat);
+                cow = getChemObjectWriter(this.oformat, ofilename);
+                if (cow == null) {
+                    logger.warn("Format " + oformat + " is an unsupported output format.");
+                    System.err.println("Unsupported output format!");
+                    return false;
+                }
+                write(content, ofilename);
+                cow.close();
+                
+                success = true;
+            } else {
+                System.out.println("Skipping non-file.");
             }
-
-            ChemFile content = (ChemFile)cor.read((ChemObject)new ChemFile());
-            if (content == null) {
-                return false;
-            }
-            
-            // create output file
-            cow = getChemObjectWriter(this.oformat, ofilename);
-            if (cow == null) {
-                logger.warn("Format " + oformat + " is an unsupported output format.");
-                System.err.println("Unsupported output format!");
-                return false;
-            }
-            write(content);
-            cow.close();
         } catch (FileNotFoundException e) {
             System.out.println("File " + ifilename + " does not exist!");
-            success = false;
         } catch (Exception e) {
-            success = false;
-            logger.error(e.toString());
-            e.printStackTrace();
+            logger.debug(e);
         }
         return success;
     }
 
-  /**
-   * actual program
-   */
-  public static void main(String[] args) {
-    String input_format = "";
-    String output_format = "";
-    File input;
-    File output;
-    int level = 0; // no questions by default
-    LoggingTool logger = new LoggingTool("org.openscience.cdk.applications.FileConvertor.main");
-    
-    int startFromHere = 0;
-    if (args.length < 3) {
-      System.err.println("syntax: FileConverter [--question:none|fewest|some|all] -o<format> <input> <output>");
-      System.exit(1);
-    }
-    
-    // process options
-    for (int i=0; i<args.length-3; i++) {
-        String option = args[i];
-        logger.debug("Parsing option: " + option);
-        if (option.startsWith("--question:") && option.length() > 11) {
-            String levelString = option.substring(11);
-            if (levelString.equals("none")) {
-                level = 0;
-            } else if (levelString.equals("fewest")) {
-                level = 1;
-            } else if (levelString.equals("some")) {
-                level = 2;
-            } else if (levelString.equals("all")) {
-                level = 3;
+    /**
+     * actual program
+     */
+    public static void main(String[] args) {
+        String input_format = "";
+        String output_format = "";
+        File input;
+        File output;
+        int level = 0; // no questions by default
+        LoggingTool logger = new LoggingTool("org.openscience.cdk.applications.FileConvertor.main");
+        FileConvertor convertor = new FileConvertor();
+        
+        // process options
+        int firstNonOptionArgument = convertor.parseCommandLineOptions(args);
+        
+        // do conversion(s)
+        for (int i=firstNonOptionArgument; i < args.length; i++) {
+            String inputFilename = args[i];
+            System.out.print("Converting " + inputFilename + " ... ");
+            boolean success = convertor.convert(inputFilename);
+            if (success) {
+                System.out.println("succeeded!");
+            } else {
+                System.out.println("failed!");
             }
-        } else {
-            System.out.println("Unrecognized option: " + args[i]);
         }
-        startFromHere = i + 1;
     }
-    if (args[startFromHere].startsWith("-o")) {
-        output_format = args[startFromHere].substring(2);
-    }
-    String ifilename = args[startFromHere+1];
-    String ofilename = args[startFromHere+2];
-    
-    // do conversion
-    FileConvertor fc = new FileConvertor(input_format, output_format, level);
-    boolean success = fc.convert(ifilename, ofilename);
-    if (success) {
-        System.out.println("Conversion succeeded!");
-    } else {
-        System.out.println("Conversion failed!");
-        System.exit(1);
-    }
-  }
+
+    // PRIVATE INTERNAL STUFF
 
     private ChemObjectReader getChemObjectReader(File file) throws IOException {
         Reader fileReader = new FileReader(file);
         ReaderFactory factory = new ReaderFactory();
         String format = factory.guessFormat(fileReader);
-        System.out.println("Detected format: " + format);
         // reopen file, to force to start at the beginning
         fileReader.close();
         fileReader = new FileReader(file);
@@ -249,12 +208,99 @@ public class FileConvertor {
         return writer;
     }
 
+    private String getOutputFileName(String inputFilename, String outputFormat) {
+        String outputFilename = inputFilename.substring(0,inputFilename.lastIndexOf('.'));
+        outputFilename = outputFilename.substring(outputFilename.lastIndexOf(File.separatorChar) + 1);
+        outputFilename = outputFilename + ".";
+        String format = this.oformat;
+        if (format.equalsIgnoreCase("CML")) {
+            outputFilename = outputFilename + "cml";
+        } else if (format.equalsIgnoreCase("MOL")) {
+            outputFilename = outputFilename + "mol";
+        } else if (format.equalsIgnoreCase("SMI")) {
+            outputFilename = outputFilename + "smi";
+        } else if (format.equalsIgnoreCase("SHELX")) {
+            outputFilename = outputFilename + "res";
+        } else if (format.equalsIgnoreCase("SVG")) {
+            outputFilename = outputFilename + "svg";
+        } else if (format.equalsIgnoreCase("XYZ")) {
+            outputFilename = outputFilename + "xyz";
+        } else if (format.equalsIgnoreCase("PDB")) {
+            outputFilename = outputFilename + "pdb";
+        } else if (format.equalsIgnoreCase("GIN")) {
+            outputFilename = outputFilename + "in";
+        }
+        return outputFilename;
+    }
+    
+    /**
+     * Parses the options in the command line arguments and returns
+     * the index of the first non-option argument.
+     */
+    private int parseCommandLineOptions(String[] args) {
+        int i = 0;
+        
+        // parse options
+        if (args.length == 0) {
+            printHelp();
+            System.exit(0);
+        }
+        while (args[i].startsWith("-")) {
+            // parse option
+            String option = args[i];
+            logger.debug("Parsing option: " + option);
+            if (option.startsWith("--question:") && option.length() > 11) {
+                String levelString = option.substring(11);
+                if (levelString.equals("none")) {
+                    this.level = 0;
+                } else if (levelString.equals("fewest")) {
+                    this.level = 1;
+                } else if (levelString.equals("some")) {
+                    this.level = 2;
+                } else if (levelString.equals("all")) {
+                    this.level = 3;
+                } else {
+                    System.out.println("Unrecognized question level: " + levelString);
+                    System.exit(1);
+                }
+            } else if (option.equals("--help") || option.equals("-h")) {
+                printHelp();
+                System.exit(0);
+            } else if (option.startsWith("-o") && option.length() > 2) {
+                this.oformat = option.substring(2);
+            } else if (option.startsWith("--outputformat:") && option.length() > 15) {
+                this.oformat = option.substring(15);
+            } else {
+                System.out.println("Unrecognized option: " + args[i]);
+                System.exit(1);
+            }
+            i++;
+        } // done parsing options
+        
+        // return the index of the first non-option command line arguments
+        return i;
+    }
+    
+    private void printHelp() {
+        System.out.println(" FileConverter [OPTIONS] <files>");
+        System.out.println();
+        System.out.println(" Output files are written to the directory from which the program is run.");
+        System.out.println(" The default output format is CML 2.");
+        System.out.println();
+        System.out.println(" OPTIONS:");
+        System.out.println("  --help                            Print this help");
+        System.out.println("   -h");
+        System.out.println("  --question:[none|fewest|some|all] Ask none|fewest|some|all customization questions");
+        System.out.println("  --outputformat:<format>           Output the files in the given format");
+        System.out.println("   -o<format>");
+    }
+    
     /**
     * Since we do not know what kind of ChemObject the Writer supports,
     * and we want to output as much information as possible, use
     * the generalized mechanism below.
     */
-    private void write(ChemFile cf) throws IOException {
+    private void write(ChemFile cf, String outputFilename) throws IOException {
         if (compare(new ChemFile(), cow.highestSupportedChemObject()) >= 0) {
             // Can write ChemFile, do so
             try {
@@ -270,15 +316,15 @@ public class FileConvertor {
             for (int i=0; i < count; i++) {
                 if (needMoreFiles) {
                     cow.close(); // possibly closing empty file
-                    String fname = ofilename + "." + (i+1);
+                    String fname = outputFilename + "." + (i+1);
                     cow = getChemObjectWriter(this.oformat, fname);
                 }
-                write(cf.getChemSequence(i));
+                write(cf.getChemSequence(i), outputFilename);
             }
         }
     }
 
-    private void write(ChemSequence cs) throws IOException {
+    private void write(ChemSequence cs, String outputFilename) throws IOException {
         try {
             cow.write(cs);
         } catch (CDKException e) {
@@ -289,31 +335,31 @@ public class FileConvertor {
             for (int i=0; i < count; i++) {
                 if (needMoreFiles) {
                     cow.close(); // possibly closing empty file
-                    String fname = ofilename + "." + (i+1);
+                    String fname = outputFilename + "." + (i+1);
                     cow = getChemObjectWriter(this.oformat, fname);
                 }
-                write(cs.getChemModel(i));
+                write(cs.getChemModel(i), outputFilename);
             }
         }
     }
 
-    private void write(ChemModel cm) throws IOException {
+    private void write(ChemModel cm, String outputFilename) throws IOException {
         try {
             cow.write(cm);
         } catch (CDKException e) {
             logger.info("Cannot write ChemModel, trying Crystal.");
             Crystal crystal = cm.getCrystal();
             if (crystal != null) {
-                write(crystal);
+                write(crystal, outputFilename);
             }
             SetOfMolecules som = cm.getSetOfMolecules();
             if (som != null) {
-                write(som);
+                write(som, outputFilename);
             }
         }
     }
 
-    private void write(Crystal c) throws IOException {
+    private void write(Crystal c, String outputFilename) throws IOException {
         try {
             cow.write(c);
         } catch (CDKException e) {
@@ -321,7 +367,7 @@ public class FileConvertor {
         }
     }
 
-    private void write(SetOfMolecules som) throws IOException {
+    private void write(SetOfMolecules som, String outputFilename) throws IOException {
         try {
             cow.write(som);
         } catch (CDKException e) {
@@ -332,16 +378,19 @@ public class FileConvertor {
             for (int i=0; i < count; i++) {
                 if (needMoreFiles) {
                     cow.close(); // possibly closing empty file
-                    String fname = ofilename + "." + (i+1);
+                    String fname = outputFilename + "." + (i+1);
                     cow = getChemObjectWriter(this.oformat, fname);
                 }
-                write(som.getMolecule(i));
+                write(som.getMolecule(i), outputFilename);
             }
         }
     }
 
-    private void write(Molecule molecule) throws IOException {
+    private void write(Molecule molecule, String outputFilename) throws IOException {
         try {
+            if (cow instanceof CMLWriter) {
+                IDCreator.createAtomAndBondIDs(molecule);
+            }
             cow.write(molecule);
         } catch (CDKException e) {
             logger.error("Cannot write Molecule: " + e.getMessage());

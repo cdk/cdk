@@ -16,6 +16,8 @@ New:
 * More jUnit tests (total now: 217, of which 102 for core classes)
 * Added MFAnalyser.removeHydrogens()
 * CMLReader can now use J2SE 1.4 JAXP XML reader
+* FileConvertor now takes multiple files as input and dynamically
+  recognizes format (implements feature #707425)
 
 Fixes:
 * Fixed reading/writing of isotopes from/to MDL molfiles
@@ -32,6 +34,7 @@ Fixes:
 
 API changes:
 * ChemObject now has protected flags/pointers (implements RFC #13)
+* FileConvertor command line API changed considerable (see --help)
 
 20030412 Release
 ------------------------------------
