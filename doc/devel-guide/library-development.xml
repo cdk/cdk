@@ -129,6 +129,42 @@ cdk/$ ant -Ddebug=off -Doptimization=on -Ddeprecation=off dist-all
       </para>
     </section>
     
+    <section>
+      <title>Patches</title>
+      <para>
+        Sometimes it may be required to apply patches to the source code
+        before it is compiled. For example, the CDK source code needs to be
+        patches before Jmol can use it in an applet. Reasons can be that CDK
+        want to use post Java 1.1 methods and classes, or that it uses
+        some algorithm that violates applet security model.
+      </para>
+      <para>
+        Patches are kept in CVS in the <filename class="directory">cdk/src/patches</filename>
+        and generated with a diff utility:
+        <programlisting>
+cdk/$ diff -u path/to/OriginalFile.java path/to/PatchedFile.java
+        </programlisting>
+        E.g. for LoggingTool.java the command looks like:
+        <programlisting>
+cdk/$ diff -u src/org/openscience/cdk/tools/LoggingTool.java src/org/openscience/cdk/tools/LoggingTool.java.withoutLog4J
+        </programlisting>
+        The -u option indicates that the ouput should be unified diff format,
+        which is much more readable than the default format.
+        The patch can be stored in the patch directory in the same step using:
+        <programlisting>
+cdk/$ diff -u path/to/OriginalFile.java path/to/PatchedFile.java > src/patches/somePatch.txt
+        </programlisting>
+      </para>
+      <para>
+        Patches can be automatically applied by Ant using the &lt;patch>
+        task, as is done in the current build.xml for CDK. The task requieres
+        a program <filename>patch.exe</filename> of <filename>patch</filename>
+        to be installed, which is normally installed by default on Unix systems.
+        Windows users are referred to Cygwin, which is a Unix shell that can be
+        run on a Windows system. Alternatively, you could use "cvs diff -u", but
+        this is not recommended.
+      </para>
+    </section>
   </chapter>
 
   <chapter id="sect:testing">
