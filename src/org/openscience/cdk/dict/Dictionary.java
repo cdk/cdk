@@ -92,7 +92,7 @@ public class Dictionary {
     }
     
     public void addEntry(Entry entry) {
-        entries.put(entry.getID(), entry);
+        entries.put(entry.getID().toLowerCase(), entry);
     }
     
     public Entry[] getEntry() {
