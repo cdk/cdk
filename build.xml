@@ -77,13 +77,20 @@
         <target id="info" name="info" depends="check"> 
             <!-- Gives information about the building process. -->
             <echo message="Platform:" />
-            <echo message="   Mac OS/X: ${isMacOsX}" />
+            <echo message="            OS: ${os.name}" />
+            <echo message="  Architecture: ${os.arch}" />
+            <echo message="       Version: ${os.version}" />
+            <echo message="Mac OS/X found: ${isMacOsX}" />
             <echo message="" />
-            <echo message="Environment:" />
+            <echo message="Java/Ant Environment:" />
             <echo message="  Java version: ${java.version}" />
+            <echo message="   Java vendor: ${java.vendor}" />
+            <echo message="      Java dir: ${java.home}" />
             <echo message="  Java ext dir: ${java.ext.dirs}" />
             <echo message="   Ant version: ${ant.version}" />
             <echo message="   ${ANT_HOME}: ${ant.home}" />
+            <echo message="" />
+            <echo message="CDK Environment:" />
             <echo message="     build.xml: $Id$" />
             <echo message="  JOELib found: ${joelib.present}" />
             <echo message="  CMLDOM found: ${cmllibs.present}" />
@@ -95,8 +102,6 @@
             <echo message="         debug: ${debug}" />
             <echo message="   deprecation: ${deprecation}" />
             <echo message="  optimization: ${optimization}" />
-            <echo message="" />
-            <echo message="Patches to apply" />
         </target>
 
         <target id="checkPlatforms" name="checkPlatforms">
@@ -165,6 +170,7 @@
                     <fileset dir="${src}" includes="*.javafiles">
                         <exclude name="jmol*.javafiles" />
                     </fileset>
+                    <fileset dir="doc/javadoc" includes="MakeJavaFilesFilesDoclet.class" />
                 </delete>
 
                 <delete dir="${build}" />
@@ -173,16 +179,22 @@
                 <delete dir="${reports.tests}" />
         </target>
 
-        <target name="compileDoclet" id="compileDoclet">
+        <target name="compileDoclet" id="compileDoclet" depends="check, compileDoclet.MacOSX, compileDoclet.Other" />
+
+        <target name="compileDoclet.MacOSX" id="compileDoclet.MacOSX" if="isMacOsX">
+            <javac srcdir="doc/javadoc/source" destdir="doc/javadoc"
+                   includes="MakeJavaFilesFilesDoclet.java" />
+        </target>
+
+        <target name="compileDoclet.Other" id="compileDoclet.Other" unless="isMacOsX">
             <javac srcdir="doc/javadoc/source" destdir="doc/javadoc" 
                    includes="MakeJavaFilesFilesDoclet.java">
                 <classpath>
-                    <fileset>
-                        <include unless="isMacOsX" name="${java.ext.dirs}/tools.jar" />
-                        <include unless="isMacOsX" name="${java.ext.dirs}/../../../lib/tools.jar" />
-                        <include name="${lib}/vecmath1.2-1.14.jar" /> 
-                        <!-- the latter lib is not really needed, but might be needed 
-                             to solve the empty fileset problem on Mac OS/X -->
+                    <fileset dir="${java.ext.dirs}">
+                        <include name="tools.jar" />
+                    </fileset>
+                    <fileset dir="${java.ext.dirs}/../../../lib">
+                        <include name="tools.jar" />
                     </fileset>
                 </classpath>
             </javac>
