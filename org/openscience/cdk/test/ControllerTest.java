@@ -51,9 +51,9 @@ public class ControllerTest
 //		molecule = buildMolecule2x3();
 //		molecule = buildMolecule2x4();
 //		molecule = buildSpiroRings();
-//		molecule = loadMolecule(inFile);
+		molecule = loadMolecule(inFile);
 //		molecule = buildRing();
-		molecule = new Molecule();
+//		molecule = new Molecule();
 
 //
 //		StructureDiagramGenerator sdg = new StructureDiagramGenerator();

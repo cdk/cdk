@@ -199,7 +199,9 @@ public class DBAdmin
         {
             Class.forName("postgresql.Driver");
             if (useURL)
+			{
             	db = DriverManager.getConnection(url,user,pwd);
+            }
             else if (useHost)
             {
             	url = "jdbc:postgresql://" + host + "/testdb";
@@ -308,7 +310,6 @@ public class DBAdmin
 			molecule = (Molecule)mdlr.read(new Molecule());			
 			fis.close();
 			dbw.write(molecule);
-//			System.out.println(molecule);
 		}
 		catch (Exception exc)
 		{
@@ -357,9 +358,6 @@ public class DBAdmin
             System.out.println(exc);
         }
 		
-		
-//		DBReader dbr = new DBReader(db, "molecules");
-//		dbr.read();
     }
 
     /**

@@ -55,14 +55,18 @@ public class CMLReader implements CDKConstants, ChemObjectReader {
      *
      * @param input Reader type input
      */
-    public CMLReader(Reader input) {
-	try {
-	    parser = new org.apache.xerces.parsers.SAXParser();
-	    this.input = input;
-	} catch (Exception e) {
-	    System.out.println("CMLReader: You found a serious bug! Please report it!");
-	    System.exit(1);			       
-	}
+    public CMLReader(Reader input) 
+	{
+		try 
+		{
+		    parser = new org.apache.xerces.parsers.SAXParser();
+		    this.input = input;
+		} 
+		catch (Exception e) 
+		{
+		    System.out.println("CMLReader: You found a serious bug! Please report it!");
+		    System.exit(1);			       
+		}
     }
 
 	
@@ -71,38 +75,52 @@ public class CMLReader implements CDKConstants, ChemObjectReader {
      *
      * @return The content in a ChemFile object
      */
-    public ChemObject read(ChemObject object) throws UnsupportedChemObjectException {
-	if (object instanceof ChemFile) {
-	    return (ChemObject)readChemFile();
-	} else {
-	    throw new UnsupportedChemObjectException(
-		"Only supported is ChemFile.");
-	}
+    public ChemObject read(ChemObject object) throws UnsupportedChemObjectException 
+	{
+		if (object instanceof ChemFile) 
+		{
+		    return (ChemObject)readChemFile();
+		} 
+		else 
+		{
+		    throw new UnsupportedChemObjectException(
+			"Only supported is ChemFile.");
+		}
     }
 
     // private functions
 
-    private ChemFile readChemFile() {
+    private ChemFile readChemFile() 
+	{
 		ChemFileCDO cdo = new ChemFileCDO();
 		handler = new CMLHandler((CDOInterface)cdo);
-		try {
+		try 
+		{
 		    parser.setFeature("http://xml.org/sax/features/validation", true);
-		} catch (SAXException e) {
+		} 
+		catch (SAXException e) 
+		{
 		    System.err.println("Cannot activate validation."); 
 		    return cdo;
 		}
 		resolver = new org.openscience.cml.CMLResolver();
 		parser.setContentHandler(handler);
 		parser.setEntityResolver(resolver);
-		try {
+		try 
+		{
 		    parser.parse(new InputSource(input));
-		} catch (IOException e) {
+		} 
+		catch (IOException e) 
+		{
 		    System.out.println("CMLReader (IOException): " + e.toString());
-		} catch (SAXException e) {
+		} 
+		catch (SAXException e) 
+		{
 		    System.out.println("CMLReader (SAXException): " + e.toString());
 		    e.printStackTrace();
 		}
 		return cdo;
     }
+	
 }
 

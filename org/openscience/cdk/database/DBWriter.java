@@ -34,7 +34,7 @@ import java.io.*;
 import org.openscience.cdk.io.*;
 import org.openscience.cdk.exception.*;
 import org.openscience.cdk.*;
-
+import postgresql.fastpath.*;
 
 
 public class DBWriter implements ChemObjectWriter
@@ -76,6 +76,7 @@ public class DBWriter implements ChemObjectWriter
      */
     public void writeMolecule(Molecule mol) throws UnsupportedChemObjectException
     {
+		PreparedStatement ps;
 		//The Molecule is turned into a CML string
 		writer = new StringWriter();
 		cmlw = new CMLWriter(writer);
@@ -84,45 +85,40 @@ public class DBWriter implements ChemObjectWriter
 		
 		try
 		{
-			PreparedStatement ps = con.prepareStatement("INSERT INTO molecules VALUES(?,?,?,?)");
+			con.setAutoCommit(false);
+			ps = con.prepareStatement("INSERT INTO molecules VALUES(?,?,?,?)");
 			ps.setString(1, mol.getAutonomName());
 			ps.setString(2, mol.getCasRN());
 			ps.setString(3, mol.getBeilsteinRN());
 			ps.setBytes(4, moleculeString.getBytes());
-			ps.execute();
+			ps.executeUpdate();
 			ps.close();
+			con.commit();
+			con.setAutoCommit(true);
     	}
 		catch(Exception exc)
     	{
         	System.out.println("Error while trying to add molecule to table");
-        	System.out.println(exc);   
+			exc.printStackTrace();  
     	}
 		
-	
-//        strtok = new StringTokenizer(st.getResultStatusString().trim());  
-//        answer = strtok.nextToken();
-//        answer = strtok.nextToken();            
-//        oid = new Integer(answer).intValue();
-//        System.out.println("OID of newly inserted row is: " + oid);
-		
-		
-		
-		for (int i = 0; i < mol.getChemNames().size(); i++)
-		{
-	    	try
-	    	{
-				PreparedStatement ps = con.prepareStatement("INSERT INTO chemnames VALUES(?,?)");
-				ps.setBytes(1, moleculeString.getBytes());
-				ps.setString(2, mol.getChemName(i));
-				ps.execute();
-				ps.close();
-	    	}
-			catch(Exception exc)
-	    	{
-	        	System.out.println("Error while trying to add molecule to table");
-	        	System.out.println(exc);   
-	    	}
-		}
+//	
+//		for (int i = 0; i < mol.getChemNames().size(); i++)
+//		{
+//	    	try
+//	    	{
+//				ps = con.prepareStatement("INSERT INTO chemnames VALUES(?,?)");
+//				ps.setBytes(1, moleculeString.getBytes());
+//				ps.setString(2, mol.getChemName(i));
+//				ps.execute();
+//				ps.close();
+//	    	}
+//			catch(Exception exc)
+//	    	{
+//	        	System.out.println("Error while trying to add molecule to table");
+//	        	System.out.println(exc);   
+//	    	}
+//		}
     }
 	
 	/**

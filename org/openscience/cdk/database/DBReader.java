@@ -28,7 +28,9 @@
 
 package org.openscience.cdk.database;
 
+
 import java.sql.*;
+import java.io.*;
 import org.openscience.cdk.*;
 import org.openscience.cdk.io.*;
 import org.openscience.cdk.exception.*;
@@ -38,6 +40,7 @@ import org.openscience.cdk.exception.*;
 public class DBReader implements ChemObjectReader
 {
 	Connection con;
+	String query = null;
 	
 	public DBReader(Connection con)
 	{
@@ -60,33 +63,56 @@ public class DBReader implements ChemObjectReader
     }
 	
 	
-	
-	
-	
-	
 	private ChemObject readMolecule()
 	{
+		Molecule mol = null;
+		CMLReader cmlr;
+		StringReader reader;
 		Statement st;
-		String query;
 		ResultSet rs;
 		try
 		{
+			con.setAutoCommit(false);
 			st = con.createStatement();
-			query = "SELECT molid FROM molecules WHERE autonomname = reserpine";
+			System.out.println(query);
 			rs = st.executeQuery(query);
-			System.out.println(rs.toString());
-			
-//			rs.getBytes();
-			
+			while (rs.next())
+			{
+				byte[] bytes = rs.getBytes(4);
+				reader = new StringReader(new String(bytes));
+				cmlr = new CMLReader(reader);
+				mol = getMolecule((ChemFile)cmlr.read(new ChemFile()));
+				
+				mol.setAutonomName(rs.getString(1));
+				mol.setCasRN(rs.getString(2));
+				mol.setBeilsteinRN(rs.getString(3));
+			}
 			rs.close();
 			st.close();
+			con.commit();
+			con.setAutoCommit(true);
 		}
 	
 	    catch (Exception exc)
 	    {
 	    	exc.printStackTrace();
 	    }
-		return new Molecule();
+		return mol;
     }
 		
+
+	private Molecule getMolecule(ChemFile cf)
+	{		
+		ChemSequence cs = cf.getChemSequence(0);
+		ChemModel cm = cs.getChemModel(0);
+		SetOfMolecules som = cm.getSetOfMolecules();
+		return som.getMolecule(0);
+	}
+
+
+	public void setQuery(String query)
+	{
+		this.query = query;
+	}
+	
 }
