@@ -15,6 +15,7 @@
         <property name="pathtojava3d" value="" />
         <property name="pathtojoelib" value="../../JoeLib/joelib/" />
 
+
         <!-- directories -->
         <property name="build" value="build" />
         <property name="sourcedist" value="sourcedist" />
@@ -69,6 +70,9 @@
                         <include name="jfontchooser.jar" />
                         <include name="jgrapht-0.5.3.jar" />
                         <include name="Jama-1.0.1.jar" />
+
+                        <include name="antlr.jar" />
+                        <include name="sjava-0.68.jar" />
                 </fileset>
                 <fileset dir="${pathtojava3d}">
                         <include name="*.jar" />
@@ -118,52 +122,66 @@
         
         <target id="check" name="check" depends="checkPlatforms">
             <!-- Checks which parts of CDK can be build. -->
-          <available classname="joelib.molecule.JOEAtom" 
-                     classpath="${lib}/libio/joelib.jar" 
-                     property="joelib.present"/>
-          <available file="${lib}/cmlAll.jar" 
-                     property="cmllibs.present"/>
-          <available classname="javax.media.j3d.Canvas3D"
-                     classpathref="project.class.path"
-                     property="java3D.present"/>
-          <available classname="junit.framework.TestCase"
-                     classpath="${ant.home}/lib/junit.jar"
-                     property="junit.present"/>
-          <condition property="hasAnt16">
-            <contains string="${ant.version}" substring="1.6"/>
-          </condition>
-          <condition property="isJava13">
-            <contains string="${java.version}" substring="1.3"/>
-          </condition>
-          <condition property="isJava14">
-            <contains string="${java.version}" substring="1.4"/>
-          </condition>
-          <condition property="isJava14+">
-            <or>
-              <contains string="${java.version}" substring="1.4"/>
-              <contains string="${java.version}" substring="1.5"/>
-            </or>
-          </condition>
-          <condition property="isJava15">
-            <contains string="${java.version}" substring="1.5"/>
-          </condition>
-          <uptodate property="dotjavafiles.uptodate"
-              targetfile="${src}/core.javafiles">
-              <srcfiles dir="${src}" includes="**/*.java" />
-          </uptodate>
-          <condition property="dotjjfiles.uptodate">
-            <and>
-              <uptodate property="NomParserJavafiles.uptodate" 
-                  targetfile="${src}/org/openscience/cdk/iupac/parser/NomParser.java">
-                  <srcfiles dir="${src}" includes="org/openscience/cdk/iupac/parser/NomParser.jj" />
-              </uptodate>
-              <uptodate property="SMARTSParserJavafiles.uptodate" 
-                  targetfile="${src}/org/openscience/cdk/smiles/smarts/SMARTSParser.java">
-                  <srcfiles dir="${src}" includes="org/openscience/cdk/smiles/smarts/SMARTSParser.jj" />
-              </uptodate>
-            </and>
-          </condition>
+            <available classname="joelib.molecule.JOEAtom" 
+                classpath="${lib}/libio/joelib.jar" 
+                property="joelib.present"/>
+            <available file="${lib}/cmlAll.jar" 
+                property="cmllibs.present"/>
+            <available classname="javax.media.j3d.Canvas3D"
+                classpathref="project.class.path"
+                property="java3D.present"/>
+            <available classname="junit.framework.TestCase"
+                classpath="${ant.home}/lib/junit.jar"
+                property="junit.present"/>
+            <condition property="hasAnt16">
+                <contains string="${ant.version}" substring="1.6"/>
+            </condition>
+            <condition property="isJava13">
+                <contains string="${java.version}" substring="1.3"/>
+            </condition>
+            <condition property="isJava14">
+                <contains string="${java.version}" substring="1.4"/>
+            </condition>
+            <condition property="isJava14+">
+                <or>
+                    <contains string="${java.version}" substring="1.4"/>
+                    <contains string="${java.version}" substring="1.5"/>
+                </or>
+            </condition>
+            <condition property="isJava15">
+                <contains string="${java.version}" substring="1.5"/>
+            </condition>
+            <uptodate property="dotjavafiles.uptodate"
+                targetfile="${src}/core.javafiles">
+                <srcfiles dir="${src}" includes="**/*.java" />
+            </uptodate>
+            <condition property="dotjjfiles.uptodate">
+                <and>
+                    <uptodate property="NomParserJavafiles.uptodate" 
+                        targetfile="${src}/org/openscience/cdk/iupac/parser/NomParser.java">
+                        <srcfiles dir="${src}" includes="org/openscience/cdk/iupac/parser/NomParser.jj" />
+                    </uptodate>
+                    <uptodate property="SMARTSParserJavafiles.uptodate" 
+                        targetfile="${src}/org/openscience/cdk/smiles/smarts/SMARTSParser.java">
+                        <srcfiles dir="${src}" includes="org/openscience/cdk/smiles/smarts/SMARTSParser.jj" />
+                    </uptodate>
+                </and>
+            </condition>
+            <condition property="rispresent">
+                <and>
+                    <or>
+                        <available file="/usr/bin/R" />
+                        <available file="/usr/local/bin/R"/>
+                    </or>
+                    <or>
+                        <available file="/usr/lib/R/library/SJava/" />
+                        <available file="/usr/local/lib/R/library/SJava/" />
+                    </or>
+                </and>
+            </condition>
+            <echo message="R and SJava present: ${rispresent}"/>
         </target>
+
 
         <target id="init" name="init" depends="check, setupBuildDir"/>
         <target id="customize" name="customize" depends="javacc"/>
@@ -464,6 +482,8 @@
                     <excludesfile name="${src}/java1.4+.javafiles" if="isJava13"/>
                     <excludesfile name="${src}/java1.4.javafiles" unless="isJava14"/>
                     <excludesfile name="${src}/ant1.6.javafiles" unless="hasAnt16"/>
+                    <!-- qsar.javafiles will contain the model hierarchy by default, so see if we need to remove it -->
+                    <exclude name="org/openscience/cdk/qsar/model/**" unless="rispresent"/>
                 </javac>
         </target>
 
@@ -595,39 +615,44 @@
         </target>
 
         <target id="dist.init" name="dist.init">
-                <mkdir dir="${dist}/jar" />
+            <mkdir dir="${dist}/jar" />
 
-                <!-- copy data files -->
+            <!-- copy data files -->
 
-                <mkdir dir="${build}/org/openscience/cdk/config/data" />
-                <mkdir dir="${build}/org/openscience/cdk/io/cml/data" />
-                <mkdir dir="${build}/org/openscience/cdk/dict/data" />
-                <mkdir dir="${build}/org/openscience/cdk/iupac/generator/data" />
+            <mkdir dir="${build}/org/openscience/cdk/config/data" />
+            <mkdir dir="${build}/org/openscience/cdk/io/cml/data" />
+            <mkdir dir="${build}/org/openscience/cdk/dict/data" />
+            <mkdir dir="${build}/org/openscience/cdk/iupac/generator/data" />
+            <mkdir dir="${build}/org/openscience/cdk/qsar/model/R/data" />
 
-                <copy
-                  file="${src}/org/openscience/cdk/config/data/isotopes.xml"
-                  tofile="${build}/org/openscience/cdk/config/data/isotopes.xml" />
-                <copy todir="${build}/org/openscience/cdk/config/data/">
-                  <fileset dir="${src}/org/openscience/cdk/config/data/" includes="*_atomtypes.xml"/>
-                  <fileset dir="${src}/org/openscience/cdk/config/data/" includes="jmol_atomtypes.txt"/>
-                </copy>
-                <copy
-                  file="${src}/org/openscience/cdk/config/data/log4j.properties"
-                  tofile="${build}/org/openscience/cdk/config/data/log4j.properties" />
-                <copy
-                  file="${src}/org/openscience/cdk/io/cml/data/cml1_0.dtd"
-                  tofile="${build}/org/openscience/cdk/io/cml/data/cml1_0.dtd" />
-                <copy
-                  file="${src}/org/openscience/cdk/io/cml/data/cml1_0_1.dtd"
-                  tofile="${build}/org/openscience/cdk/io/cml/data/cml1_0_1.dtd" />
+            <copy
+                file="${src}/org/openscience/cdk/config/data/isotopes.xml"
+                tofile="${build}/org/openscience/cdk/config/data/isotopes.xml" />
+            <copy todir="${build}/org/openscience/cdk/config/data/">
+                <fileset dir="${src}/org/openscience/cdk/config/data/" includes="*_atomtypes.xml"/>
+                <fileset dir="${src}/org/openscience/cdk/config/data/" includes="jmol_atomtypes.txt"/>
+            </copy>
+            <copy
+                file="${src}/org/openscience/cdk/config/data/log4j.properties"
+                tofile="${build}/org/openscience/cdk/config/data/log4j.properties" />
+            <copy
+                file="${src}/org/openscience/cdk/io/cml/data/cml1_0.dtd"
+                tofile="${build}/org/openscience/cdk/io/cml/data/cml1_0.dtd" />
+            <copy
+                file="${src}/org/openscience/cdk/io/cml/data/cml1_0_1.dtd"
+                tofile="${build}/org/openscience/cdk/io/cml/data/cml1_0_1.dtd" />
 
-                <copy
-                  file="${src}/org/openscience/cdk/iupac/generator/data/IUPACNames.properties"
-                  tofile="${build}/org/openscience/cdk/iupac/generator/data/IUPACNames.properties" />
+            <copy
+                file="${src}/org/openscience/cdk/iupac/generator/data/IUPACNames.properties"
+                tofile="${build}/org/openscience/cdk/iupac/generator/data/IUPACNames.properties" />
 
-                <copy todir="${build}/org/openscience/cdk/dict/data/">
-                  <fileset dir="${src}/org/openscience/cdk/dict/data/" includes="*.xml"/>
-                </copy>
+            <copy todir="${build}/org/openscience/cdk/dict/data/">
+                <fileset dir="${src}/org/openscience/cdk/dict/data/" includes="*.xml"/>
+            </copy>
+
+            <copy todir="${build}/org/openscience/cdk/qsar/model/data/">
+                <fileset dir="${src}/org/openscience/cdk/qsar/model/data/" includes="*.R"/>
+            </copy>
         </target>
 
         <target id="dist-core" name="dist-core" depends="compile-core, dist.init">
@@ -760,6 +785,9 @@
                         <excludesfile name="${src}/java1.4+.classes" if="isJava13"/>
                         <excludesfile name="${src}/java1.4.classes" unless="isJava14"/>
                         <excludesfile name="${src}/ant1.6.classes" unless="hasAnt16"/>
+                    </fileset>
+                    <fileset dir="${build}">
+                        <include name="org/openscience/cdk/qsar/model/data/*.R" if="rispresent"/>
                     </fileset>
                     <fileset dir="${src}">
                         <include name="qsar-descriptors.set"/>
