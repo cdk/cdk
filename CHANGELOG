@@ -9,6 +9,8 @@ New:
 * Added missing SetOfAtomContainer class
 * Added a limitations task to build.xml to show known limitations of implemented
   algorithms (closes #825454)
+* The Controller2D now maintains an active draw element. Changing the element of
+  an existing atom using the SYMBOL mode, also changes the draw element.
 
 Fixes:
 * Added missing get() methods to cdk.applications.plugin.EditBus interface

@@ -60,6 +60,7 @@ public class Controller2DModel implements java.io.Serializable, Cloneable
 	private int snapCartesian = 10;	
 	
 	private String defaultElementSymbol = "C";
+	private String drawElement = "C";
     private String[] commonElements = { "C", "O", "N", "H", "P", "S" };
 
 	private double bondPointerLength = 20;
@@ -289,7 +290,6 @@ public class Controller2DModel implements java.io.Serializable, Cloneable
 		return this.ringPointerLength;
 	}
 
-
 	/**
 	 * Sets the pointer length
 	 *
@@ -308,4 +308,12 @@ public class Controller2DModel implements java.io.Serializable, Cloneable
         return this.commonElements;
     }
     
+    public void setDrawElement(String element) {
+        this.drawElement = element;
+    }
+
+    public String getDrawElement() {
+        return this.drawElement;
+    }
+
 }

@@ -289,14 +289,18 @@ public class Controller2D {
                         } else {
                             index = 0;
                         }
-                        atomInRange.setSymbol((String)commonElements.get(index));
+                        String symbol = (String)commonElements.get(index);
+                        atomInRange.setSymbol(symbol);
+                        // configure the atom, so that the atomic number matches the symbol
                         try {
-                            // configure the atom, so that the atomic number matches the symbol
                             IsotopeFactory.getInstance().configure(atomInRange);
                         } catch (Exception exception) {
                             logger.error("Error while configuring atom");
                             logger.debug(exception);
                         }
+                        // also adjust the new draw elem
+                        c2dm.setDrawElement(symbol);
+                        
                         /* PRESERVE THIS. This notifies the 
                         * the listener responsible for 
                         * undo and redo storage that it
@@ -376,7 +380,7 @@ public class Controller2D {
                             if (atomInRange != null) {
                                 newAtom1 = atomInRange;
                             } else {
-                                newAtom1 = new Atom(c2dm.getDefaultElementSymbol(), new Point2d(startX,startY));
+                                newAtom1 = new Atom(c2dm.getDrawElement(), new Point2d(startX,startY));
                                 AtomContainer atomCon = ChemModelManipulator.createNewMolecule(chemModel);
                                 atomCon.addAtom(newAtom1);
 		    /* PRESERVE THIS. This notifies the 
@@ -397,7 +401,7 @@ public class Controller2D {
                                         newAtom2 = atomInRange;
                                         atomCon = ChemModelManipulator.getRelevantAtomContainer(chemModel, newAtom2);
                                 } else {
-                                        newAtom2 = new Atom(c2dm.getDefaultElementSymbol(), new Point2d(endX,endY));
+                                        newAtom2 = new Atom(c2dm.getDrawElement(), new Point2d(endX,endY));
                                         atomCon = ChemModelManipulator.getRelevantAtomContainer(chemModel, newAtom1);
                                         atomCon.addAtom(newAtom2);
                                 }
@@ -537,7 +541,7 @@ public class Controller2D {
                         
                         RingPlacer ringPlacer = new RingPlacer();
                         int ringSize = c2dm.getRingSize();
-                        String symbol = c2dm.getDefaultElementSymbol();
+                        String symbol = c2dm.getDrawElement();
                         AtomContainer sharedAtoms = getHighlighted();
                         
                         /******************** NO ATTACHMENT ************************************/
