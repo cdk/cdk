@@ -57,15 +57,30 @@ public class MDLReader implements CDKConstants, ChemObjectReader {
 	}
 	
 	
-    public ChemObject read(ChemObject object) throws UnsupportedChemObjectException {
-	if (object instanceof ChemFile) {
-	    return (ChemObject)readChemFile();
-	} else if (object instanceof Molecule) {
-	    return (ChemObject)readMolecule();
-	} else {
-	    throw new UnsupportedChemObjectException(
-		          "Only supported are ChemFile and Molecule.");
-	}
+
+	/**
+	 * Takes an object which subclasses ChemObject, e.g.Molecule, and will read this 
+	 * (from file, database, internet etc). If the specific implementation does not
+	 * support a specific ChemObject it will throw an Exception.
+	 *
+	 * @param   object  The object that subclasses ChemObject
+	 * @return   The ChemObject read  
+	 * @exception   UnsupportedChemObjectException  
+	 */
+    public ChemObject read(ChemObject object) throws UnsupportedChemObjectException 
+	{
+		if (object instanceof ChemFile)
+		{
+		    return (ChemObject)readChemFile();
+		} 
+		else if (object instanceof Molecule) 
+		{
+		    return (ChemObject)readMolecule();
+		} 
+		else 
+		{
+		    throw new UnsupportedChemObjectException("Only supported are ChemFile and Molecule.");
+		}
     }
 	
 	/**
@@ -86,9 +101,9 @@ public class MDLReader implements CDKConstants, ChemObjectReader {
 			do
 			{
 				str = new String(input.readLine());
+				if (str.equals("$$$$")) setOfMolecules.addMolecule(readMolecule());
 			}
-			while (!str.equals("$$$$") || !input.ready());
-			setOfMolecules.addMolecule(readMolecule());
+			while (input.ready());
 		}
 		catch (Exception exc)
 		{

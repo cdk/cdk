@@ -32,7 +32,7 @@ import org.openscience.cdk.tools.*;
   * the other lower level concepts like rings, sequences, 
   * fragments, etc.
   */
-public class ChemModel
+public class ChemModel extends ChemObject
 {
 
 	/**
@@ -57,7 +57,7 @@ public class ChemModel
 	 *
 	 * @return  The AtomContainer with all the Molecules of this container   
 	 */
-	public AtomContainer getAllInOneAtomContainer()
+	public AtomContainer getAllInOneContainer()
 	{
 		AtomContainer ac;
 		ac = new AtomContainer();
@@ -78,7 +78,7 @@ public class ChemModel
 	 * @param   ac   The AtomContainer to be partitioned
 	 * @exception   Exception  
 	 */
-	public void PartitionIntoMolecules(AtomContainer ac) throws Exception
+	public void partitionIntoMolecules(AtomContainer ac) throws Exception
 	{
 		SetOfMolecules newSet = new SetOfMolecules();
 		Vector molecules = ConnectivityChecker.partitionIntoMolecules(ac);

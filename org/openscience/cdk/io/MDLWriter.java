@@ -31,6 +31,7 @@ package org.openscience.cdk.io;
 
 
 import org.openscience.cdk.*;
+import org.openscience.cdk.exception.*;
 import java.io.*;
 import java.util.*;
 import java.text.*;
@@ -64,16 +65,42 @@ public class MDLWriter implements CDKConstants
 	}
 	
 	
+	/**
+	 * Takes an object subclassed from ChemObject, e.g.Molecule and tries to 
+	 * save it. If the specific implementation does not support a specific 
+	 * ChemObject it will throw an Exception.
+	 *
+	 * @param   object  The object subclssed from ChemObject
+	 * @exception   UnsupportedChemObjectException  
+	 */
+	public void write(ChemObject object) throws UnsupportedChemObjectException 
+	{
+		if (object instanceof SetOfMolecules)
+		{
+		    writeSetOfMolecules((SetOfMolecules)object);
+		} 
+		else if (object instanceof Molecule) 
+		{
+		    writeMolecule((Molecule)object);
+		} 
+		else 
+		{
+		    throw new UnsupportedChemObjectException("Only supported are ChemFile and Molecule.");
+		}
+	}
+	
+	
 
 	/**
 	 * Writes an array of Molecules to an OutputStream in MDL sdf format
 	 *
 	 * @param   molecules  Array of Molecules that is written to an OutputStream 
 	 */
-	public void  writeMolecules(Molecule[] molecules)
+	private void  writeSetOfMolecules(SetOfMolecules som)
 	{
+		Molecule[] molecules = som.getMolecules();
 		writeMolecule(molecules[0]);
-		for (int i = 1; i <= molecules.length - 1; i++)
+		for (int i = 1; i <= som.getMoleculeCount() - 1; i++)
 		{
 			try
 			{
@@ -107,22 +134,23 @@ public class MDLWriter implements CDKConstants
 	{
 		int Bonorder, stereo;
 		String line = "";
-		int index = 0;
+		int index = -1;
 		int rows = 4;
+		String title = molecule.getTitle();
+		if (title == null) title = "";
 		do
 		{
-			index = molecule.title.indexOf("\n",index + 1);
+			index = title.indexOf("\n",index + 1);
 			rows--;
 		}
 		while (index != -1);
 		try
 		{
-			writer.write(molecule.title);
+			writer.write(title);
 			for(int i = 0; i < rows; i++)
 			{
 				writer.newLine();
 			}
-			
 		    line += formatMDLInt(molecule.getAtomCount(), 3);
 		    line += formatMDLInt(molecule.getBondCount(), 3);
 		    line += "  0  0  0  0  0  0  0  0  1 V2000";
@@ -132,10 +160,9 @@ public class MDLWriter implements CDKConstants
 		    {
 				Atom atom = molecule.getAtomAt(f);
 		        line = "";
-		        line += formatMDLFloat((float) atom.getPoint3D().x);
-		        line += formatMDLFloat((float) atom.getPoint3D().y);
-		        line += formatMDLFloat((float) atom.getPoint3D().z);
-		        line += " ";
+		        line += formatMDLFloat((float) atom.getX2D());
+		        line += formatMDLFloat((float) atom.getY2D());
+				line += " 0 ";                 // z coordinate handeled here
 		        line += formatMDLString(molecule.getAtomAt(f).getElement().getSymbol(), 3);
 		        line += " 0  0  0  0  0  0  0  0  0  0  0  0";
 			    writer.write(line);
@@ -163,7 +190,9 @@ public class MDLWriter implements CDKConstants
 			writer.newLine();
 		}
 		catch (Exception exc)
-		{}
+		{
+			exc.printStackTrace();     
+		}
 	}
 			
 			

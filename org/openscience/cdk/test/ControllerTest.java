@@ -75,7 +75,8 @@ public class ControllerTest
 		MoleculeViewer2D mv = new MoleculeViewer2D(molecule, r2dm);
 //		r2dm.setDrawNumbers(true);
 		mv.display();
-		inputAdapter = new CDKInputAdapter(molecule, r2dm);
+		JCPController2DModel c2dm = new JCPController2DModel();
+		inputAdapter = new CDKInputAdapter(molecule, r2dm, c2dm);
 		mv.addMouseMotionListener(inputAdapter);
 		mv.addMouseListener(inputAdapter);
 		mv.addKeyListener(inputAdapter);

@@ -184,6 +184,28 @@ public class Molecule extends AtomContainer
 		this.chemNames.addElement(chemName);
 	}
 	
-		
-}
+
+	/**
+	 * Returns the title of this Molecule
+	 *
+	 * @return   The title of this Molecule  
+	 */
+	public String getTitle()
+	{
+		return this.title;
+	}
+
+
+	/**
+	 * Assigns a title to this Molecule
+	 *
+	 * @param   title   The title to be assigned to this Molecule
+	 */
+	public void setTitle(String title)
+	{
+		this.title = title;
+	}
+}	
+	
+
 
