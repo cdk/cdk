@@ -29,6 +29,7 @@
 package org.openscience.cdk;
 
 import javax.vecmath.*;
+
 /**
  *  Represents the idea of an chemical atom.
  *
@@ -63,7 +64,11 @@ public class Atom extends AtomType implements Cloneable {
          *  The partial charge of the atom.
          */
         protected double charge;
-        
+        /**
+         *  The formal charge of the atom. Implements RFC #6.
+         */
+        protected int formalCharge;
+
 
         /**
          * Constructs an Atom from a String containing an element symbol.
@@ -121,6 +126,28 @@ public class Atom extends AtomType implements Cloneable {
          */
         public double getCharge() {
                return this.charge;
+        }
+
+        /**
+         *  Sets the formal charge of this atom.
+         *
+         * @param  charge  The formal charge
+         *
+         * @see    #getFormalCharge
+         */
+        public void setFormalCharge(int charge) {
+               this.formalCharge = charge;
+        }
+
+        /**
+         *  Returns the formal charge of this atom.
+         *
+         * @return the formal charge of this atom
+         *
+         * @see    #setFormalCharge
+         */
+        public int getFormalCharge() {
+               return this.formalCharge;
         }
 
         /**
@@ -430,7 +457,9 @@ public class Atom extends AtomType implements Cloneable {
                 s.append("Stereo Parity: " + getStereoParity() + "\n");
                 s.append("2D coordinates: " + getPoint2D() + "\n");
                 s.append("3D coordinates: " + getPoint3D() + "\n");
-                                
+                s.append("Partial charge: " + getCharge() + "\n");
+                s.append("Formal charge: " + getFormalCharge() + "\n");
+
                 return s.toString();
         }
         

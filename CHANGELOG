@@ -9,6 +9,8 @@ New:
 * It is now possible to say if the double bond 
   configurations should be evaluated for every 
   single double bond in the SmilesGenerator.
+* The Atom class has now a container field for its
+  formal charge. (RFC #6)
 
 Fixes:
 * Reading of 3D coordinates from ShelX files
