@@ -98,7 +98,7 @@ public class StructureDiagramGeneratorTest extends TestCase
 	{
 		moleculeListViewer = new MoleculeListViewer();
 		//MoleculeViewer2D.display(MoleculeFactory.loadMolecule("data/mdl/reserpine.mol"), true);
-		showIt(MoleculeFactory.loadMolecule("data/mdl/reserpine.mol"), "Reserpine");
+		/*showIt(MoleculeFactory.loadMolecule("data/mdl/reserpine.mol"), "Reserpine");
 		showIt(MoleculeFactory.loadMolecule("data/mdl/four-ring-5x10.mol"), "5x10 condensed four membered rings");
 		showIt(MoleculeFactory.loadMolecule("data/mdl/six-ring-4x4.mol"), "4x4 condensed six membered rings");
 		showIt(MoleculeFactory.loadMolecule("data/mdl/polycarpol.mol"), "Polycarpol");
@@ -112,7 +112,9 @@ public class StructureDiagramGeneratorTest extends TestCase
 		showIt(MoleculeFactory.makeDiamantane(), "Diamantane - Was A Problem! - Solved :-)");
 		showIt(MoleculeFactory.makeEthylCyclohexane(), "Ethylcyclohexane");
 		showIt(MoleculeFactory.makeBicycloRings(), "Bicyclo-[2.2.2]-octane");		
-		showIt(makeBug736137(), "Bug 736137");
+		showIt(makeBug736137(), "Bug 736137");*/
+		showIt(makeBug891021(), "Bug 891021");
+
 	}
 
 
@@ -208,6 +210,37 @@ public class StructureDiagramGeneratorTest extends TestCase
 
 	}
 
+	/**
+	 *  Description of the Method
+	 *
+	 *@exception  java.lang.Exception  Description of the Exception
+	 */
+	public Molecule makeBug891021()
+	{
+		String filename = "data/mdl/bug891021.mol";
+		Molecule molecule = null;
+		try
+		{
+			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+			MDLReader reader = new MDLReader(new InputStreamReader(ins));
+			 //CMLReader reader = new CMLReader(new InputStreamReader(ins));
+		 ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+		      ChemSequence[] chemSequence = chemFile.getChemSequences();
+		      ChemModel[] chemModels = chemSequence[0].getChemModels();
+		      AtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModels[0]);
+	
+			molecule = new Molecule(atomContainer);
+		}
+		catch(Exception exc)
+		{
+			fail(exc.toString());	
+		}
+		return molecule;
+
+	}	
+	
+	
+	
 	public void visualBugPMR()
 	{
                 String filename = "data/SL0016a.cml";
@@ -350,6 +383,25 @@ public class StructureDiagramGeneratorTest extends TestCase
 	}
 
 
+	/**
+	 *  A unit test for JUnit
+	 *
+	 *@exception  Exception  Description of the Exception
+	 */
+	public Molecule makeBug923825() throws Exception
+	{
+		SmilesParser sp = new SmilesParser();
+		Molecule mol = sp.parseSmiles("c1ccccc1");
+		return mol;
+	}
+	
+	public void testBug923825()
+	{
+		Molecule mol = makeBug923825();	
+	}
+	
+
+	
 	/**
 	 *  A unit test for JUnit
 	 *
