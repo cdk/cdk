@@ -65,7 +65,11 @@ public class ReaderFactory {
      * @throws IllegalArgumentException if the input is null
      */
     public String guessFormat(Reader input) throws IOException {
-        return createReader(input).getClass().getName();
+        ChemObjectReader reader = createReader(input);
+        if (reader != null) {
+            return reader.getClass().getName();
+        }
+        return "Format undetermined";
     }
     
     public ChemObjectReader createReader(Reader input) throws IOException {
