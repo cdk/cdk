@@ -52,7 +52,7 @@ public class BondTest extends TestCase {
         assertTrue(bond.getAtomAt(0) == null);
         assertTrue(bond.getAtomAt(1) == null);
         assertTrue(bond.getOrder() == 0.0);
-        assertEquals(CDKConstants.STEREO_BOND_UNDEFINED, bond.getStereo());
+        assertEquals(CDKConstants.STEREO_BOND_NONE, bond.getStereo());
     }
     
     public void testBond_Atom_Atom() {
@@ -64,7 +64,7 @@ public class BondTest extends TestCase {
         assertTrue(bond.getAtomAt(0).compare(c));
         assertTrue(bond.getAtomAt(1).compare(o));
         assertTrue(bond.getOrder() == 1.0);
-        assertEquals(CDKConstants.STEREO_BOND_UNDEFINED, bond.getStereo());
+        assertEquals(CDKConstants.STEREO_BOND_NONE, bond.getStereo());
     }
     
     public void testBond_Atom_Atom_Double() {
@@ -76,7 +76,7 @@ public class BondTest extends TestCase {
         assertTrue(bond.getAtomAt(0).compare(c));
         assertTrue(bond.getAtomAt(1).compare(o));
         assertTrue(bond.getOrder() == 2.0);
-        assertEquals(CDKConstants.STEREO_BOND_UNDEFINED, bond.getStereo());
+        assertEquals(CDKConstants.STEREO_BOND_NONE, bond.getStereo());
     }
     
     public void testBond_Atom_Atom_Double_Int() {
