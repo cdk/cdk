@@ -32,7 +32,7 @@ package org.openscience.cdk.libio.jmol;
 import org.openscience.jmol.Atom;
 import org.openscience.jmol.BaseAtomType;
 import org.openscience.jmol.ChemFrame;
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.NoSuchAtomException;
 
 /**
@@ -122,21 +122,21 @@ public class Convertor {
     }
 
     /**
-     * Converts an org.openscience.cdk.Molecule class into a
+     * Converts an org.openscience.cdk.AtomContainer class into a
      * org.openscience.cdk.ChemFrame class.
      *
      * Conversion includes:
      *   - atoms
      *
-     * @param   atom    class to be converted
+     * @param   ac      class to be converted
      * @return          converted class in Jmol
      **/
-    public static ChemFrame convert(Molecule mol) {
-        if (mol != null) {
-            int NOatoms = mol.getAtomCount();
+    public static ChemFrame convert(AtomContainer ac) {
+        if (ac != null) {
+            int NOatoms = ac.getAtomCount();
             ChemFrame converted = new ChemFrame(NOatoms);
             for (int i=0; i<NOatoms; i++) {
-                org.openscience.cdk.Atom atom = mol.getAtomAt(i);
+                org.openscience.cdk.Atom atom = ac.getAtomAt(i);
                 javax.vecmath.Point3d xyz = atom.getPoint3D();
                 if (atom.getPoint3D() != null) {
                 } else if (atom.getPoint2D() != null) {
@@ -164,7 +164,7 @@ public class Convertor {
 
     /**
      * Converts an org.openscience.jmol.ChemFrame class into a
-     * org.openscience.cdk.Molecule class.
+     * org.openscience.cdk.AtomContainer class.
      *
      * Conversion includes:
      *   - atoms
@@ -172,9 +172,9 @@ public class Convertor {
      * @param   atom    class to be converted
      * @return          converted class in CDK
      **/
-    public static Molecule convert(org.openscience.jmol.ChemFrame mol) {
+    public static AtomContainer convert(org.openscience.jmol.ChemFrame mol) {
         if (mol != null) {
-            Molecule converted = new Molecule();
+            AtomContainer converted = new AtomContainer();
             int NOatoms = mol.getNumberOfAtoms();
             for (int i=0; i<NOatoms; i++) {
                 converted.addAtom(convert(mol.getAtomAt(i)));

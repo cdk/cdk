@@ -63,7 +63,7 @@ public class JmolLibIOTest extends TestCase {
         mol.addAtom(new Atom("N", new javax.vecmath.Point3d(2.0, 1.0, 1.5)));
 
         org.openscience.jmol.ChemFrame converted = Convertor.convert(mol);
-        Molecule reverted = Convertor.convert(converted);
+        AtomContainer reverted = Convertor.convert(converted);
 
         assertEquals(mol.getAtomCount(), reverted.getAtomCount());
         int NOatoms = mol.getAtomCount();
