@@ -3,9 +3,9 @@
  * $Date$    
  * $Revision$
  * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  * 
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -311,5 +311,42 @@ public class AtomContainerTest extends TestCase {
         
         assertEquals(0, ac.getAtomCount());
         assertEquals(0, ac.getBondCount());
+        
+        // test wether the ElectronContainer is correctly initialized
+        ac.addBond(new Bond(new Atom("C"), new Atom("C"), 2));
+        ac.addElectronContainer(new LonePair(new Atom("N")));
+    }
+
+    public void testAtomContainer() {
+        // create an empty container with in the constructor defined array lengths
+        AtomContainer container = new AtomContainer();
+        
+        assertEquals(0, container.getAtomCount());
+        assertEquals(0, container.getBondCount());
+        
+        // test wether the ElectronContainer is correctly initialized
+        container.addBond(new Bond(new Atom("C"), new Atom("C"), 2));
+        container.addElectronContainer(new LonePair(new Atom("N")));
+    }
+
+    public void testAtomContainer_AtomContainer() {
+        Molecule acetone = new Molecule();
+        Atom c1 = new Atom("C");
+        Atom c2 = new Atom("C");
+        Atom o = new Atom("O");
+        Atom c3 = new Atom("C");
+        acetone.addAtom(c1);
+        acetone.addAtom(c2);
+        acetone.addAtom(c3);
+        acetone.addAtom(o);
+        Bond b1 = new Bond(c1, c2,1);
+        Bond b2 = new Bond(c1, o, 2);
+        Bond b3 = new Bond(c1, c3,1);
+        acetone.addBond(b1);
+        acetone.addBond(b2);
+        acetone.addBond(b3);
+        
+        AtomContainer container = new AtomContainer(acetone);
+        assertEquals(3, container.getBondCount());
     }
 }
