@@ -133,6 +133,20 @@ public class AtomTypeTest extends CDKTestCase {
         testSetFormalCharge_int();
     }
 
+    /**
+     * Method to test the get/setValency() methods.
+     */
+    public void testSetValency_int() {
+        int valency = 4;
+
+        AtomType a = new AtomType("C");
+        a.setValency(valency);
+        assertEquals(valency, a.getValency());
+    }
+    public void testGetValency() {
+        testSetValency_int();
+    }
+
     public void testSetFormalNeighbourCount_int() {
         int count = 4;
 
