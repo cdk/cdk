@@ -1,17 +1,19 @@
 <?xml version="1.0"?>
 <!DOCTYPE
-     book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
-                 "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+     book PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+                 "file:///user/share/sgml/docbook/xml/4.2/docbookx.dtd" [
   <!ENTITY packages SYSTEM "packages.xml">
   <!ENTITY preface SYSTEM "preface.xml">
   <!ENTITY docs SYSTEM "docs.xml">
   <!ENTITY docs-uml SYSTEM "docs-uml.xml">
   <!ENTITY docs-docbook SYSTEM "docs-docbook.xml">
-  <!ENTITY biblio SYSTEM "../refs/cheminf.dbx">
+  <!ENTITY biblio SYSTEM "../refs/biblio.dbx">
+    <!-- generated with 'ant list' from ../refs/ -->
   <!ENTITY library-development SYSTEM "library-development.xml">
   <!ENTITY website-development SYSTEM "website-development.xml">
 ]>
 <book id="devel-guide">
+
   <title>CDK Developer's Guide</title>
 
   <bookinfo>
@@ -47,9 +49,10 @@
     
     <chapter>
       <title>Literature</title>
-      <para></para>
+      <para>References to literature of methods used/implemented in CDK.</para>
       <bibliography>
       &biblio;
+        <!-- if this fails, run 'ant list' in ../refs/ -->
       </bibliography>
     </chapter>
   </part>

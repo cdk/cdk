@@ -5,8 +5,9 @@
   <!ENTITY intro SYSTEM "intro.xml">
   <!ENTITY core SYSTEM "coreclasses.xml">
   <!ENTITY extra SYSTEM "extraclasses.xml">
-  <!ENTITY % classes SYSTEM "classes.mod">
+  <!ENTITY % classes SYSTEM "../javadoc/classes.mod">
 %classes;
+  <!ENTITY validate.ValidatorInterface '<ulink url="api/org/openscience/cdk/validate/ValidatorInterface.html">validate.ValidatorInterface</ulink>'>
 ]>
 <book id="user-guide">
   <title>CDK User's Guide</title>
