@@ -144,4 +144,85 @@ public class JmolTest extends TestCase {
         }
     }
 
+
+    /**
+     * No special CML code, just regression test for Jmol releases
+     */
+    public void testMethanolOne() {
+        String filename = "data/cmltest/methanol2.cml";
+        logger.info("Testing: " + filename);
+        try {
+            File f = new File(filename);
+            if (f.canRead()) {
+                // read the file
+                String url = "file:" + System.getProperty("user.dir") + "/" + filename;
+                CMLReader reader = new CMLReader(url);
+                ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+
+                // test the resulting ChemFile content
+                assertNotNull(chemFile);
+                assertEquals(1, chemFile.getChemSequenceCount());
+                System.out.println("NO sequences: " + chemFile.getChemSequenceCount());
+                ChemSequence seq = chemFile.getChemSequence(0);
+                assertNotNull(seq);
+                assertEquals(1, seq.getChemModelCount());
+                System.out.println("NO models: " + seq.getChemModelCount());
+                ChemModel model = seq.getChemModel(0);
+                assertNotNull(model);
+                assertEquals(1, model.getSetOfMolecules().getMoleculeCount());
+
+                // test the molecule
+                Molecule mol = model.getSetOfMolecules().getMolecule(0);
+                assertNotNull(mol);
+                assertEquals(mol.getAtomCount(), 6);
+                assertTrue(GeometryTools.has3DCoordinates(mol));
+            } else {
+                System.out.println("The CMLReader was not tested with a CML file.");
+                System.out.println("Due to missing file: " + filename);
+            }
+        } catch (Exception e) {
+            fail(e.toString());
+        }
+    }
+
+    /**
+     * No special CML code, just regression test for Jmol releases
+     */
+    public void testtestMethanolOne() {
+        String filename = "data/cmltest/methanol1.cml";
+        logger.info("Testing: " + filename);
+        try {
+            File f = new File(filename);
+            if (f.canRead()) {
+                // read the file
+                String url = "file:" + System.getProperty("user.dir") + "/" + filename;
+                CMLReader reader = new CMLReader(url);
+                ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+
+                // test the resulting ChemFile content
+                assertNotNull(chemFile);
+                assertEquals(1, chemFile.getChemSequenceCount());
+                System.out.println("NO sequences: " + chemFile.getChemSequenceCount());
+                ChemSequence seq = chemFile.getChemSequence(0);
+                assertNotNull(seq);
+                assertEquals(1, seq.getChemModelCount());
+                System.out.println("NO models: " + seq.getChemModelCount());
+                ChemModel model = seq.getChemModel(0);
+                assertNotNull(model);
+                assertEquals(1, model.getSetOfMolecules().getMoleculeCount());
+
+                // test the molecule
+                Molecule mol = model.getSetOfMolecules().getMolecule(0);
+                assertNotNull(mol);
+                assertEquals(mol.getAtomCount(), 6);
+                assertTrue(GeometryTools.has3DCoordinates(mol));
+            } else {
+                System.out.println("The CMLReader was not tested with a CML file.");
+                System.out.println("Due to missing file: " + filename);
+            }
+        } catch (Exception e) {
+            fail(e.toString());
+        }
+    }
+
 }
