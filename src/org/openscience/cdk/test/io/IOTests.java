@@ -42,6 +42,7 @@ public class IOTests {
         suite.addTest(CMLIOTests.suite());
         
         //suite.addTest(IChIReaderTest.suite());
+        suite.addTest(CrystClustReaderTest.suite());
         suite.addTest(PDBReaderTest.suite());
         suite.addTest(MDLReaderTest.suite());
         suite.addTest(MDLWriterTest.suite());
