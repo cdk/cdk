@@ -15,7 +15,7 @@ import org.openscience.cdk.*;
 public class ForceFieldTools {
 	
 	/**
-	 *  Constructor for the ForceField object
+	 *  Constructor for the ForceFieldTools object
 	 */
 	public ForceFieldTools() {}
 
@@ -86,12 +86,14 @@ public class ForceFieldTools {
 	/**
 	 *  Calculate 3d distance between two atoms coordinates
 	 *
-	 *@param  atom1Coordinates  Coordinates of the first atom.
-	 *@param  atom2Coordinates  Coordinates of the second atom.
+	 *@param  atom1  First atom.
+	 *@param  atom2  Second atom.
 	 *@return           Distance between the two atoms.
 	 */
-	public double distanceBetweenTwoAtoms(Point3d atom1Coordinates, Point3d atom2Coordinates) {
+	public double distanceBetweenTwoAtoms(Atom atom1, Atom atom2) {
 		
+		Point3d atom1Coordinates = new Point3d(atom1.getPoint3d());
+		Point3d atom2Coordinates = new Point3d(atom2.getPoint3d());
 		double atomsDistance = 0;
 		atomsDistance = atom1Coordinates.distance(atom2Coordinates);
 		//System.out.println("atomsDistance = " + atomsDistance);

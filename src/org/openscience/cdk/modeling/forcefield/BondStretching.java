@@ -11,10 +11,10 @@ import org.openscience.cdk.modeling.builder3d.*;
 import org.openscience.cdk.geometry.GeometryTools;
 
 /**
- *  Bond Stretching MMFF94
+ *  Bond Stretching calculator for the potential energy function. Include function and derivatives.
  *
  *@author     vlabarta
- *@created    January 27, 2005
+ *@cdk.created    January 27, 2005
  */
 public class BondStretching {
 
@@ -88,14 +88,14 @@ public class BondStretching {
 
 		bonds = molecule.getBonds();
 		Atom[] atomsInBond = null;
-				
+		
 		r = new double[bonds.length];
 		deltar = new double[r.length];
 		
 		for (int i = 0; i < bonds.length; i++) {
 
 			atomsInBond = bonds[i].getAtoms();
-			r[i] = ffTools.distanceBetweenTwoAtoms(atomsInBond[0].getPoint3d(), atomsInBond[1].getPoint3d());
+			r[i] = ffTools.distanceBetweenTwoAtoms(atomsInBond[0], atomsInBond[1]);
 			deltar[i] = r[i] - r0[i];
 		}
 		return;
@@ -115,7 +115,8 @@ public class BondStretching {
 		mmff94SumEB_InWishedCoordinates = 0;
 
 		for (int i = 0; i < bonds.length; i++) {
-			mmff94SumEB_InWishedCoordinates = mmff94SumEB_InWishedCoordinates + k2[i] * deltar[i] * deltar[i] + k3[i] * deltar[i] * deltar[i] * deltar[i] + k4[i] * deltar[i] * deltar[i] * deltar[i] * deltar[i];
+			mmff94SumEB_InWishedCoordinates = mmff94SumEB_InWishedCoordinates + k2[i] * Math.pow(deltar[i],2) 
+							+ k3[i] * Math.pow(deltar[i],3) + k4[i] * Math.pow(deltar[i],4);
 		}
 
 		return mmff94SumEB_InWishedCoordinates;
@@ -143,7 +144,7 @@ public class BondStretching {
 			sumGradientEB = 0;
 			for (int j = 0; j < bonds.length; j++) {
 
-				sumGradientEB = sumGradientEB + (k2[j] * 2 * deltar[j] + k3[j] * 3 * deltar[j] * deltar[j] + k4[j] * 4 * deltar[j] * deltar[j] * deltar[j]) * dDeltar.getElement(i);
+				sumGradientEB = sumGradientEB + (k2[j] * 2 * deltar[j] + k3[j] * 3 * Math.pow(deltar[j],2) + k4[j] * 4 * Math.pow(deltar[j],3)) * dDeltar.getElement(i);
 			}
 			gradientMMFF94SumEB_InWishedCoordinates.setElement(i, sumGradientEB);
 		}
@@ -169,8 +170,8 @@ public class BondStretching {
 
 		for (int i = 0; i < forHessian.length; i++) {
 			for (int j = 0; j < bonds.length; j++) {
-				sumHessianEB = sumHessianEB + (2 * k2[j] + 6 * k3[j] * deltar[j] + 12 * k4[j] * deltar[j] * deltar[j]) * dDeltar.getElement(0) * dDeltar.getElement(0) 
-							+ (k2[j] * 2 * deltar[j] + k3[j] * 3 * deltar[j] * deltar[j] + k4[j] * 4 * deltar[j] * deltar[j] * deltar[j]) * ddDeltar.getElement(0,0);
+				sumHessianEB = sumHessianEB + (2 * k2[j] + 6 * k3[j] * deltar[j] + 12 * k4[j] * Math.pow(deltar[j],2)) * dDeltar.getElement(0) * dDeltar.getElement(0) 
+							+ (k2[j] * 2 * deltar[j] + k3[j] * 3 * Math.pow(deltar[j],2) + k4[j] * 4 * Math.pow(deltar[j],3)) * ddDeltar.getElement(0,0);
 			}
 			forHessian[i] = sumHessianEB;
 		}

@@ -11,10 +11,10 @@ import org.openscience.cdk.modeling.builder3d.*;
 import org.openscience.cdk.qsar.RDFProtonDescriptor;
 
 /**
- *  Angle bending for the potential energy function
+ *  Angle bending calculator for the potential energy function. Include function and derivatives.
  *
  *@author     vlabarta
- *@created    February 8, 2005
+ *@cdk.created    February 8, 2005
  */
 public class AngleBending {
 
@@ -144,7 +144,8 @@ public class AngleBending {
 		calculateDeltav(molecule);
 		mmff94SumEA_InWishedCoordinates = 0;
 		for (int i = 0; i < angleNumber; i++) {
-			mmff94SumEA_InWishedCoordinates = mmff94SumEA_InWishedCoordinates + k2[i] * deltav[i] * deltav[i] + k3[i] * deltav[i] * deltav[i] * deltav[i];
+			mmff94SumEA_InWishedCoordinates = mmff94SumEA_InWishedCoordinates + k2[i] * Math.pow(deltav[i],2) 
+											+ k3[i] * Math.pow(deltav[i],3);
 		}
 		//System.out.println("mmff94SumEA_InWishedCoordinates = " + mmff94SumEA_InWishedCoordinates);
 		return mmff94SumEA_InWishedCoordinates;
@@ -172,7 +173,7 @@ public class AngleBending {
 
 			for (int j = 0; j < angleNumber; j++) {
 
-				sumGradientEA = sumGradientEA + (k2[j] * 2 * deltav[j] + k3[j] * 3 * deltav[j] * deltav[j]) * dDeltav.getElement(i);
+				sumGradientEA = sumGradientEA + (k2[j] * 2 * deltav[j] + k3[j] * 3 * Math.pow(deltav[j],2)) * dDeltav.getElement(i);
 			}
 			
 			gradientMMFF94SumEA_InWishedCoordinates.setElement(i, sumGradientEA);
@@ -200,7 +201,7 @@ public class AngleBending {
 		for (int i = 0; i < forHessian.length; i++) {
 			for (int j = 0; j < angleNumber; j++) {
 				sumHessianEA = sumHessianEA + (2 * k2[j] + 6 * k3[j] * deltav[j]) * dDeltav.getElement(j) * dDeltav.getElement(0)
-							+ (k2[j] * 2 * deltav[j] + k3[j] * 3 * deltav[j] * deltav[j]) * ddDeltar.getElement(0,0);
+							+ (k2[j] * 2 * deltav[j] + k3[j] * 3 * Math.pow(deltav[j],2)) * ddDeltar.getElement(0,0);
 			}
 			forHessian[i] = sumHessianEA;
 		}

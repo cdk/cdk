@@ -11,7 +11,7 @@ import org.openscience.cdk.modeling.builder3d.*;
 import org.openscience.cdk.qsar.RDFProtonDescriptor;
 
 /**
- *  Stretch-Bend Interaction for the potential energy function
+ *  Stretch-Bend Interaction calculator for the potential energy function. Include function and derivatives.
  *
  *@author     vlabarta
  *@created    February 15, 2005
@@ -41,9 +41,8 @@ public class StretchBendInteractions {
 	double[] rkj = null;
 	double[] deltarij = null;
 	double[] deltarkj = null;
-	
+
 	ForceFieldTools ffTools = new ForceFieldTools();
-		
 
 	/**
 	 *  Constructor for the StretchBendInteractions object
@@ -135,7 +134,6 @@ public class StretchBendInteractions {
 		
 		Atom[] atomConnected = null;
 		RDFProtonDescriptor rdfpdo = new RDFProtonDescriptor();
-		
 		int l=-1;
 		
 		for (int j = 0; j < molecule.getAtomCount(); j++) {
@@ -150,10 +148,10 @@ public class StretchBendInteractions {
 						v[l] = rdfpdo.calculateAngleBetweenTwoLines(vb, vb, vc, vb);
 						deltav[l] = v[l] - v0[l];
 
-						rij[l] = ffTools.distanceBetweenTwoAtoms(atomConnected[i].getPoint3d(), molecule.getAtomAt(j).getPoint3d());
+						rij[l] = ffTools.distanceBetweenTwoAtoms(atomConnected[i], molecule.getAtomAt(j));
 						deltarij[l] = rij[l] - r0IJ[l];
 
-						rkj[l] = ffTools.distanceBetweenTwoAtoms(atomConnected[k].getPoint3d(), molecule.getAtomAt(j).getPoint3d());
+						rkj[l] = ffTools.distanceBetweenTwoAtoms(atomConnected[k], molecule.getAtomAt(j));
 						deltarkj[l] = rkj[l] - r0KJ[l];
 					}
 				}
@@ -174,7 +172,7 @@ public class StretchBendInteractions {
 		for (int j = 0; j < angleNumber; j++) {
 			mmff94SumEBA_InWishedCoordinates = mmff94SumEBA_InWishedCoordinates + 2.51210 * (kbaIJK[j] * deltarij[j] + kbaKJI[j] * deltarkj[j]) * deltav[j];
 		}
-		//System.out.println("mmff94SumEA_InWishedCoordinates = " + mmff94SumEA_InWishedCoordinates);
+		//System.out.println("mmff94SumEBA_InWishedCoordinates = " + mmff94SumEBA_InWishedCoordinates);
 		return mmff94SumEBA_InWishedCoordinates;
 	}
 

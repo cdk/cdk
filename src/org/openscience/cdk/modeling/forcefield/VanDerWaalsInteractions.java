@@ -207,7 +207,7 @@ public class VanDerWaalsInteractions {
 				if (((IntegerResult)shortestPathBetweenToAtoms.calculate(molecule).getValue()).intValue()>2){
 				//if (distances[molecule.getAtomNumber(molecule.getAtomAt(i))][molecule.getAtomNumber(molecule.getAtomAt(j))]>2) {
 					l += 1;
-					r[l] = ffTools.distanceBetweenTwoAtoms(molecule.getAtomAt(i).getPoint3d(), molecule.getAtomAt(j).getPoint3d());
+					r[l] = ffTools.distanceBetweenTwoAtoms(molecule.getAtomAt(i), molecule.getAtomAt(j));
 					//System.out.println("r[" + l + "]= " + r[l]);
 
 				}

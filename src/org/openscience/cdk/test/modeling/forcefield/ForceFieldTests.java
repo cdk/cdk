@@ -44,7 +44,6 @@ import org.openscience.cdk.geometry.AtomTools;
  *  Check results of GeometricMinimizer using some examples.
  *
  *@author         vlabarta
- *@created        February 14, 2005
  *@cdk.module     test
  *@cdk.created    2005-01-17
  */
@@ -143,9 +142,9 @@ public class ForceFieldTests extends CDKTestCase {
 		ac.setAtomAt(1, a);
 		AtomTools at = new AtomTools();
 		at.add3DCoordinates1(ac);
-		ForceField ff = new ForceField();
+		ForceFieldTools ffTools = new ForceFieldTools();
 		acCoordinates.setSize(ac.getAtomCount() * 3);
-		acCoordinates.set(ff.getCoordinates3xNVector(ac));
+		acCoordinates.set(ffTools.getCoordinates3xNVector(ac));
 	}
 
 
@@ -157,9 +156,9 @@ public class ForceFieldTests extends CDKTestCase {
 	 *@exception  java.lang.Exception     Description of the Exception
 	 */
 	public void testBondStretching() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		/*System.out.println("");
+		System.out.println("");
 		System.out.println("FORCEFIELDTESTS with Bond Stretching");
-		*/
+		
 		double testResult_SumEB = 228.51003288118426;
 		double[] testResult_gradientSumEB = {-1665.773538328216,-1665.773538328216,-1665.773538328216,
 						-1665.773538328216,-1665.773538328216,-1665.773538328216,-1665.773538328216,
@@ -200,9 +199,9 @@ public class ForceFieldTests extends CDKTestCase {
 	 *@exception  java.lang.Exception     Description of the Exception
 	 */
 	public void testAngleBending() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		/*System.out.println("");
+		System.out.println("");
 		System.out.println("FORCEFIELDTESTS with Angle Bending");
-		*/
+		
 		double testResult_SumEA = 2.6627825055933344E8;
 		double[] testResult_gradientSumEA = {-7254575.574502064,-7254575.574502064,-7254575.574502064,-7254575.574502064,
 						-7254575.574502064,-7254575.574502064,-7254575.574502064,-7254575.574502064,
@@ -240,17 +239,17 @@ public class ForceFieldTests extends CDKTestCase {
 	 *@exception  java.lang.Exception     Description of the Exception
 	 */
 	public void testStretchBendInteraction() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		/*
+		
 		System.out.println("");
 		System.out.println("FORCEFIELDTESTS with StretchBendInteraction");
-		*/
-		double testResult_SumEBA = 18795.199851224905;
-		double[] testResult_gradientSumEBA = {-81376.99250979327,-81376.99250979327,-81376.99250979327,-81376.99250979327,
-						-81376.99250979327,-81376.99250979327,-81376.99250979327,-81376.99250979327,
-						-81376.99250979327,-81376.99250979327,-81376.99250979327,-81376.99250979327,
-						-81376.99250979327,-81376.99250979327,-81376.99250979327,-81376.99250979327,
-						-81376.99250979327,-81376.99250979327,-81376.99250979327,-81376.99250979327,
-						-81376.99250979327,-81376.99250979327,-81376.99250979327,-81376.99250979327};
+		
+		double testResult_SumEBA = 17052.61896814143;
+		double[] testResult_gradientSumEBA = {-62623.72567235314,-62623.72567235314,-62623.72567235314,-62623.72567235314,
+						-62623.72567235314,-62623.72567235314,-62623.72567235314,-62623.72567235314,
+						-62623.72567235314,-62623.72567235314,-62623.72567235314,-62623.72567235314,
+						-62623.72567235314,-62623.72567235314,-62623.72567235314,-62623.72567235314,
+						-62623.72567235314,-62623.72567235314,-62623.72567235314,-62623.72567235314,
+						-62623.72567235314,-62623.72567235314,-62623.72567235314,-62623.72567235314};
 
 		createTestMolecule();
 
@@ -270,6 +269,53 @@ public class ForceFieldTests extends CDKTestCase {
 		}
 		
 		//System.out.println("hessian = " + sbi.hessianInPoint(acCoordinates));
+	}
+
+
+	/**
+	 *  A unit test for JUnit (VanDerWaalsInteraction)
+	 *
+	 *@exception  ClassNotFoundException  Description of the Exception
+	 *@exception  CDKException            Description of the Exception
+	 *@exception  java.lang.Exception     Description of the Exception
+	 */
+	public void testVanDerWaalsInteraction() throws ClassNotFoundException, CDKException, java.lang.Exception {
+		
+		System.out.println("");
+		System.out.println("FORCEFIELDTESTS with VanDerWaalsInteraction");
+		
+		double testResult_SumEvdW = 18795.199851224905;
+		double[] testResult_gradientSumEwdW = {-81376.99250979327,-81376.99250979327,-81376.99250979327,-81376.99250979327,
+						-81376.99250979327,-81376.99250979327,-81376.99250979327,-81376.99250979327,
+						-81376.99250979327,-81376.99250979327,-81376.99250979327,-81376.99250979327,
+						-81376.99250979327,-81376.99250979327,-81376.99250979327,-81376.99250979327,
+						-81376.99250979327,-81376.99250979327,-81376.99250979327,-81376.99250979327,
+						-81376.99250979327,-81376.99250979327,-81376.99250979327,-81376.99250979327};
+
+		createTestMolecule();
+
+		gm.setMMFF94Tables(ac);
+		mmff94Tables = gm.getMMFF94Tables();
+
+		VanDerWaalsInteractions vdwi = new VanDerWaalsInteractions();
+		vdwi.setMMFF94VanDerWaalsParameters(ac, mmff94Tables);
+		vdwi.setAtomDistance(ac);
+		
+		SmoothingFunctions sf = new SmoothingFunctions();
+		sf.setSmoothingFunction(vdwi.getAtomDistance());
+		
+		System.out.println("functionMMFF94SumEvdW_InPoint = " + vdwi.functionMMFF94SumEvdW_InPoint(ac));
+		System.out.println("functionCCGSumEvdWSK_InPoint = " + vdwi.functionCCGSumEvdWSK_InPoint(ac,sf.getSmoothingFunction()));
+		System.out.println("functionCCGSumEvdWAv_InPoint = " + vdwi.functionCCGSumEvdWAv_InPoint(ac,sf.getSmoothingFunction()));
+		//assertEquals(testResult_SumEvdW, vdwi.functionMMFF94SumEvdW_InPoint(ac), 0.00001);
+		
+		//System.out.println("vdwi.gradientMMFF94SumEvdW_InPoint(ac) = " + vdwi.gradientMMFF94SumEvdW_InPoint(ac));
+		
+		/*for (int i = 0; i < testResult_gradientSumEvdW.length; i++) {
+			assertEquals(testResult_gradientSumEvdW[i], vdwi.gradientMMFF94SumEvdW_InPoint(ac).getElement(i), 0.00001);
+		}*/
+		
+		//System.out.println("hessian = " + vdwi.hessianInPoint(acCoordinates));
 	}
 
 }
