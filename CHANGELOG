@@ -6,6 +6,8 @@ Changes in CVS
 New:
 
 Fixes:
+* Fixed subset problem in FingerPrinter closes (bug #853254 and partly #799672)
+* Fixed event throwing when PeriodicTablePanel button was pushed
 
 API changes:
 
