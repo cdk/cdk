@@ -14,11 +14,6 @@
             <scalar dictRef="cdk:exactMass">2.01410179</scalar>
             <scalar dictRef="cdk:atomicNumber">1</scalar>
         </isotope>
-        <isotope id="D2" isotopeNumber="2" elementType="D">
-            <abundance dictRef="cdk:relativeAbundance">0.015</abundance>
-            <scalar dictRef="cdk:exactMass">2.01410179</scalar>
-            <scalar dictRef="cdk:atomicNumber">1</scalar>
-        </isotope>
     </isotopeList>
     <isotopeList id="He">
         <isotope id="He3" isotopeNumber="3" elementType="He">
