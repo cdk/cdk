@@ -33,8 +33,9 @@ import java.util.*;
 import java.io.*;
 import org.openscience.cdk.io.*;
 import org.openscience.cdk.exception.*;
+import org.openscience.cdk.tools.*;
 import org.openscience.cdk.*;
-import postgresql.fastpath.*;
+
 
 
 public class DBWriter implements ChemObjectWriter
@@ -82,15 +83,29 @@ public class DBWriter implements ChemObjectWriter
 		cmlw = new CMLWriter(writer);
 		cmlw.write(mol);
 		String moleculeString = writer.toString();
-		
+		String[] elements = {"C","H","N","O","S","P","F","Cl","Br","I"};
+		String elementFormula = ElementFormula.getElementFormula(mol, elements);
+		System.out.println(elementFormula);
+		System.out.println(elementFormula.substring(elementFormula.indexOf("C") + 1, elementFormula.indexOf("H")));
+				
 		try
 		{
 			con.setAutoCommit(false);
-			ps = con.prepareStatement("INSERT INTO molecules VALUES(?,?,?,?)");
+			ps = con.prepareStatement("INSERT INTO molecules VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 			ps.setString(1, mol.getAutonomName());
 			ps.setString(2, mol.getCasRN());
 			ps.setString(3, mol.getBeilsteinRN());
-			ps.setBytes(4, moleculeString.getBytes());
+			ps.setInt(4, new Integer(elementFormula.substring(elementFormula.indexOf("C") + 1, elementFormula.indexOf("H"))).intValue());
+			ps.setInt(5, new Integer(elementFormula.substring(elementFormula.indexOf("H") + 1, elementFormula.indexOf("N"))).intValue());
+			ps.setInt(6, new Integer(elementFormula.substring(elementFormula.indexOf("N") + 1, elementFormula.indexOf("O"))).intValue());
+			ps.setInt(7, new Integer(elementFormula.substring(elementFormula.indexOf("O") + 1, elementFormula.indexOf("S"))).intValue());
+			ps.setInt(8, new Integer(elementFormula.substring(elementFormula.indexOf("S") + 1, elementFormula.indexOf("P"))).intValue());
+			ps.setInt(9, new Integer(elementFormula.substring(elementFormula.indexOf("P") + 1, elementFormula.indexOf("F"))).intValue());
+			ps.setInt(10, new Integer(elementFormula.substring(elementFormula.indexOf("F") + 1, elementFormula.indexOf("Cl"))).intValue());
+			ps.setInt(11, new Integer(elementFormula.substring(elementFormula.indexOf("Cl") + 2, elementFormula.indexOf("Br"))).intValue());
+			ps.setInt(12, new Integer(elementFormula.substring(elementFormula.indexOf("Br") + 2, elementFormula.indexOf("I"))).intValue());
+			ps.setInt(13, new Integer(elementFormula.substring(elementFormula.indexOf("I") + 1)).intValue());
+			ps.setBytes(14, moleculeString.getBytes());
 			ps.executeUpdate();
 			ps.close();
 			con.commit();

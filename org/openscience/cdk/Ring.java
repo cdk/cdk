@@ -48,7 +48,7 @@ public class Ring extends AtomContainer
 	
 
 	/**
-	 * Constructs a ring that will have a certain size and of the given elements
+	 * Constructs a ring that will have a certain number of atoms of the given elements
 	 *
 	 * @param   ringSize   The number of atoms and bonds the ring will have
 	 * @param   elementSymbol   The element of the atoms the ring will have

@@ -59,8 +59,7 @@ public class ChemModel extends ChemObject
 	 */
 	public AtomContainer getAllInOneContainer()
 	{
-		AtomContainer ac;
-		ac = new AtomContainer();
+		AtomContainer ac = new AtomContainer();
 		for (int i = 0; i < setOfMolecules.getMoleculeCount(); i++)
 		{
 			ac.add(setOfMolecules.getMolecule(i));

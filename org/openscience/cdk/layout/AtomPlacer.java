@@ -45,7 +45,7 @@ import java.awt.*;
 public class AtomPlacer implements CDKConstants
 {
 	Molecule molecule;
-	public boolean debug;
+	public boolean debug = false;
 	
 	
 	
@@ -302,7 +302,7 @@ public class AtomPlacer implements CDKConstants
 			}
 			catch(Exception exc)
 			{
-			
+
 			}
 		    angle = angle + addAngle;
 			if (angle >= 2 * Math.PI)
@@ -316,7 +316,6 @@ public class AtomPlacer implements CDKConstants
 			if (debug) System.out.println("drawPolygon-> y " + y);
 			newX = x + rotationCenter.x;
 			newY = y + rotationCenter.y;
-//			angle = angle + addAngle;
 			if (connectAtom.getPoint2D() == null)
 			{
 				connectAtom.setPoint2D(new Point2d(newX, newY));				

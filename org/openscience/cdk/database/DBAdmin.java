@@ -266,6 +266,7 @@ public class DBAdmin
             query += "autonomname TEXT";
 			query += ", casrn TEXT";
 			query += ", brn TEXT";
+			query += ", C INT4, H INT4, N INT4, O INT4, S INT4, P INT4, F INT4, Cl INT4, Br INT4, I INT4";
 			query += ", molid OID";
             query += ");";
             System.out.println(query);
@@ -357,7 +358,6 @@ public class DBAdmin
             System.out.println("Error while trying to get metadata.");
             System.out.println(exc);
         }
-		
     }
 
     /**

@@ -80,6 +80,7 @@ public class ControllerTest
 		mv.addMouseMotionListener(inputAdapter);
 		mv.addMouseListener(inputAdapter);
 		mv.addKeyListener(inputAdapter);
+	
 	}
 
 	/**

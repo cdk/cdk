@@ -56,7 +56,7 @@ public class DatabaseReaderTest
 			exc.printStackTrace();
 		}
 		dbr = new DBReader(db);
-		dbr.setQuery("SELECT * FROM molecules WHERE autonomname LIKE 'a-pinene'");
+		dbr.setQuery("SELECT * FROM molecules WHERE autonomname LIKE 'ethane3D'");
 		try
 		{
 			mol = (Molecule)dbr.read(new Molecule());
