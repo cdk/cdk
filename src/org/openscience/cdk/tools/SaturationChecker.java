@@ -77,7 +77,7 @@ public class SaturationChecker implements ValencyCheckerInterface {
 		double maxBondOrder = ac.getMaximumBondOrder(atom);
 		AtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
     if(atomTypes.length==0)
-      throw new CDKException("Missing entry in structgen_atomtypes.xml for "+atom.getSymbol());
+      return true;
 		logger.debug("*** Checking for perfect configuration ***");
 		try
 		{
@@ -159,7 +159,7 @@ public class SaturationChecker implements ValencyCheckerInterface {
 	public boolean isSaturated(Atom atom, AtomContainer ac) throws CDKException {
 		AtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
         if(atomTypes.length==0)
-            throw new CDKException("Missing entry in structgen_atomtypes.xml for "+ atom.getSymbol());
+          return true;
         double bondOrderSum = ac.getBondOrderSum(atom);
         double maxBondOrder = ac.getMaximumBondOrder(atom);
         int hcount = atom.getHydrogenCount();
@@ -194,7 +194,7 @@ public class SaturationChecker implements ValencyCheckerInterface {
 	{
 		AtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
     if(atomTypes.length==0)
-      throw new CDKException("Missing entry in structgen_atomtypes.xml for "+atom.getSymbol());
+      return false;
 		double bondOrderSum = ac.getBondOrderSum(atom);
 		double maxBondOrder = ac.getMaximumBondOrder(atom);
 		int hcount = atom.getHydrogenCount();
@@ -231,7 +231,7 @@ public class SaturationChecker implements ValencyCheckerInterface {
 	{
 		AtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
     if(atomTypes.length==0)
-      throw new CDKException("Missing entry in structgen_atomtypes.xml for "+ atom.getSymbol());
+      return 0;
 		double bondOrderSum = ac.getBondOrderSum(atom);
 		int hcount = atom.getHydrogenCount();
 		double max = 0;
@@ -443,7 +443,7 @@ public class SaturationChecker implements ValencyCheckerInterface {
                 logger.debug("Atom has " + partners.length + " partners");
                 atomTypes2 = structgenATF.getAtomTypes(partner.getSymbol());
                 if(atomTypes2.length==0)
-                  throw new CDKException("Missing entry in structgen_atomtypes.xml for "+ partner.getSymbol());
+                  return;
                 if (atomContainer.getBond(partner,atom).getFlag(CDKConstants.ISAROMATIC) && atomContainer.getBondOrderSum(partner) < atomTypes2[0].getBondOrderSum() - partner.getHydrogenCount())
                 {
                   logger.debug("Partner has " + atomContainer.getBondOrderSum(partner) + ", may have: " + atomTypes2[0].getBondOrderSum());
@@ -465,7 +465,7 @@ public class SaturationChecker implements ValencyCheckerInterface {
                 logger.debug("Atom has " + partners.length + " partners");
                 atomTypes2 = structgenATF.getAtomTypes(partner.getSymbol());
                 if(atomTypes2.length==0)
-                  throw new CDKException("Missing entry in structgen_atomtypes.xml for "+partner.getSymbol());
+                  return;
                 if (atomContainer.getBondOrderSum(partner) < atomTypes2[0].getBondOrderSum() - partner.getHydrogenCount())
                 {
                   logger.debug("Partner has " + atomContainer.getBondOrderSum(partner) + ", may have: " + atomTypes2[0].getBondOrderSum());
@@ -612,7 +612,7 @@ public class SaturationChecker implements ValencyCheckerInterface {
             // get default atom
             AtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
             if(atomTypes.length==0 && throwExceptionForUnknowAtom)
-              throw new CDKException("Missing entry in structgen_atomtypes.xml for " + atom.getSymbol());
+              return 0;
             logger.debug("Found atomtypes: " + atomTypes.length);
             if (atomTypes.length > 0) {
                 AtomType defaultAtom = atomTypes[0];
