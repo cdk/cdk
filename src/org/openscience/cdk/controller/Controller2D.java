@@ -6,7 +6,7 @@
  * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -377,8 +377,8 @@ public class Controller2D {
                                 // this is tricky as it depends on the fact that the 
                                 // constants are unidistant, i.e. {1.0, 2.0, 3.0}.
                             };
-		    /* PRESERVE THIS. This notifies the 
-		     * the listener responsible for 
+		    /* PRESERVE THIS. This notifies the
+		     * the listener responsible for
 		     * undo and redo storage that it
 		     * should store this change of an atom symbol
 		     */
@@ -388,11 +388,12 @@ public class Controller2D {
                             if (atomInRange != null) {
                                 newAtom1 = atomInRange;
                             } else {
+                                // create a new molecule
                                 newAtom1 = new Atom(c2dm.getDrawElement(), new Point2d(startX,startY));
                                 AtomContainer atomCon = ChemModelManipulator.createNewMolecule(chemModel);
                                 atomCon.addAtom(newAtom1);
-		    /* PRESERVE THIS. This notifies the 
-		     * the listener responsible for 
+		    /* PRESERVE THIS. This notifies the
+		     * the listener responsible for
 		     * undo and redo storage that it
 		     * should store this change of an atom symbol
 		     */
@@ -415,26 +416,51 @@ public class Controller2D {
                                 }
                                 newBond = new Bond(newAtom1, newAtom2, 1);
                                 atomCon.addBond(newBond);
-		    /* PRESERVE THIS. This notifies the 
-		     * the listener responsible for 
+		    /* PRESERVE THIS. This notifies the
+		     * the listener responsible for
 		     * undo and redo storage that it
 		     * should store this change of an atom symbol
 		     */
 		    isUndoableChange = true;
 		    /* --- */
+                            } else if (atomInRange != null) {
+                                // add a new atom to the current atom in some random
+                                // direction
+                                AtomContainer atomCon = ChemModelManipulator.getRelevantAtomContainer(chemModel, atomInRange);
+                                Point2d center2D = atomCon.get2DCenter();
+                                newAtom2 = new Atom(c2dm.getDrawElement(), atomInRange.getPoint2D());
+
+                                // now create 2D coords for new atom
+                                double bondLength = r2dm.getBondLength();
+                                Atom[] connectedAtoms = atomCon.getConnectedAtoms(atomInRange);
+                                AtomContainer placedAtoms = new AtomContainer();
+                                for (int i=0; i<connectedAtoms.length; i++) {
+                                    placedAtoms.addAtom(connectedAtoms[i]);
+                                }
+                                AtomContainer unplacedAtoms = new AtomContainer();
+                                unplacedAtoms.addAtom(newAtom2);
+                                AtomPlacer atomPlacer = new AtomPlacer();
+                                atomPlacer.setMolecule(new Molecule(atomCon));
+                                atomPlacer.distributePartners(atomInRange, placedAtoms, center2D,
+                                                              unplacedAtoms, bondLength);
+                                                              
+                                // now add the new atom
+                                atomCon.addAtom(newAtom2);
+                                atomCon.addBond(new Bond(atomInRange, newAtom2, 1.0));
+
                             }
                         }
                         r2dm.fireChange();
                         fireChange();
                 }
-                
+
                 /*************************************************************************
                  *                       UP BOND MODE                                    *
                  *************************************************************************/
-                if (c2dm.getDrawMode() == c2dm.UP_BOND) 
+                if (c2dm.getDrawMode() == c2dm.UP_BOND)
                 {
                         Bond bondInRange = r2dm.getHighlightedBond();
-                                                          
+
                         if (bondInRange != null) {
                             // toggle bond stereo
                             double stereo = bondInRange.getStereo();
@@ -911,8 +937,6 @@ public class Controller2D {
                           Math.pow(closestAtom.getY2D() - Y, 2)) < highlightRadius)) {
                         closestAtom = null;
                     }
-                } else {
-                    logger.warn("Cannot find nearest atom!");
                 }
                 return closestAtom;
         }
