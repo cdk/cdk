@@ -56,6 +56,9 @@
       <tocentry page="dicts.xml" filename="dicts.html">
         <tocentry page="dict-cdk.xml" filename="dict-cdk.html"/>
         <tocentry page="dict-chemical.xml" filename="dict-chemical.html"/>
+        <tocentry id="qsar-dict" href="http://qsar.sf.net/dicts/qsar-descriptors/">
+          <title>QSAR dict</title>
+        </tocentry>
       </tocentry>
     </tocentry>
     <tocentry page="development.xml" filename="development.html">
@@ -78,6 +81,7 @@
         <tocentry page="module-standard.xml" filename="module-standard.html"/>
         <tocentry page="module-io.xml" filename="module-io.html"/>
         <tocentry page="module-render.xml" filename="module-render.html"/>
+        <tocentry page="module-qsar.xml" filename="module-qsar.html"/>
         <tocentry page="module-extra.xml" filename="module-extra.html"/>
       </tocentry>
       <tocentry id="SFBugs" href="http://sourceforge.net/tracker/?group_id=20024&amp;atid=120024">
