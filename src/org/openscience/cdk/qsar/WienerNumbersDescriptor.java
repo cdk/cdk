@@ -45,10 +45,16 @@ import org.openscience.cdk.graph.matrix.*;
  */
 public class WienerNumbersDescriptor implements Descriptor {
 
+	double[][] matr = null;
+	DoubleArrayResult wienerNumbers = null;
+	ConnectionMatrix connectionMatrix = new ConnectionMatrix();
+	PathTools pathTools = new PathTools();
 	/**
 	 *  Constructor for the WienerNumbersDescriptor object
 	 */
-	public WienerNumbersDescriptor() { }
+	public WienerNumbersDescriptor() { 
+		
+	}
 
 
 	/**
@@ -95,13 +101,17 @@ public class WienerNumbersDescriptor implements Descriptor {
 	 *@exception  CDKException  Possible Exceptions
 	 */
 	public DescriptorValue calculate(AtomContainer atomContainer) throws CDKException {
+		wienerNumbers = new DoubleArrayResult(2);
 		double wienerPathNumber = 0; //weinerPath
 		double wienerPolarityNumber = 0; //weinerPol
-		ConnectionMatrix connectionMatrix = new ConnectionMatrix();
-		double[][] matr = connectionMatrix.getMatrix(atomContainer);
-		DoubleArrayResult wienerNumbers = new DoubleArrayResult(2);
-		PathTools pathTools = new PathTools();
+		
+		// "matr" is the connection matrix
+		matr = connectionMatrix.getMatrix(atomContainer);
+		// and "distances" is ist matrix of int where 
+		// for example distance[1][2] = length of the shortest path
+		// between atom at position 1 and atom at position 2.
 		int[][] distances = pathTools.computeFloydAPSP(matr);
+		
 		int partial = 0;
 		for (int i = 0; i < distances.length; i++) {
 			wienerPolarityNumber = 0;
