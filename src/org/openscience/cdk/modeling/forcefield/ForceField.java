@@ -26,7 +26,9 @@ public class ForceField extends GeometricMinimizer{
 
 	private String potentialFunction="mmff94";
 	ForceFieldTools ffTools = new ForceFieldTools();
-	
+	boolean sdm_flag=true;
+        boolean cgm_flag=true;
+        boolean nrm_flag=true;
 	/**
 	 *  Constructor for the ForceField object
 	 */
@@ -42,7 +44,12 @@ public class ForceField extends GeometricMinimizer{
 		potentialFunction=potentialName;
 	}
 	
-		
+        public void setUsedGMMethods(boolean sdm, boolean cgm,boolean nrm){
+	       sdm_flag=sdm;
+               cgm_flag=cgm;
+               nrm_flag=nrm;
+        }
+	
 	public void minimize( ) throws Exception{
 		ConnectivityChecker cc = new ConnectivityChecker();
 		if (!cc.isConnected(molecule)) {
@@ -60,10 +67,9 @@ public class ForceField extends GeometricMinimizer{
 		
 		System.out.println("PotentialFunction set:"+potentialFunction+"MoleculeCoords set:"+moleculeCoords.getSize()+" Hashtable:"+getPotentialParameterSet().size());
 		
-		
-		//steepestDescentsMinimization(moleculeCoords,mmff94PF);
+		if (sdm_flag)steepestDescentsMinimization(moleculeCoords,mmff94PF);
 
-		conjugateGradientMinimization(moleculeCoords, mmff94PF);
+		if (cgm_flag)conjugateGradientMinimization(moleculeCoords, mmff94PF);
 		//conjugateGradientMinimization(moleculeCoords, tpf);
 	
 
