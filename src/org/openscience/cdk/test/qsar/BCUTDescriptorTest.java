@@ -62,8 +62,8 @@ public class BCUTDescriptorTest extends TestCase {
 
             Descriptor descriptor = new BCUTDescriptor();
             Object[] params = new Object[2];
-            params[0] = 2;
-            params[1] = 2;
+            params[0] = new Integer(2);
+            params[1] = new Integer(2);
             descriptor.setParameters(params);
             ArrayList retval = (ArrayList)descriptor.calculate(ac);
             /*
