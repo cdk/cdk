@@ -3,54 +3,61 @@
   xsi:schemaLocation="http://www.xml-cml.org/schema/cml2/core ../../io/cml/data/cmlAll.xsd"
   title="The Chemistry Development Kit Dictionary">
 
+  <annotation>
+    <documentation>
+      <metadata name="cvs:last-change-by" content="$Author$"/>
+      <metadata name="cvs:date" content="$Date$"/>
+    </documentation>
+  </annotation>
+
   <description>
     This dictionary describes terminology used on CDK classes and configuration
     files. The items are listed in alphabetical order.
   </description>
   
-  <entry term="absoluteAbundance">
+  <entry id="absoluteAbundance" term="Absolute Abundance">
     <definition>
        No explicit definition yet.
     </definition>
   </entry>
   
-  <entry term="aromaticAtom">
+  <entry id="aromaticAtom" term="Aromatic Atom">
     <definition>
        No explicit definition yet.
     </definition>
   </entry>
 
-  <entry term="atomicNumber">
+  <entry id="atomicNumber" term="Atomic Number">
     <definition>
        No explicit definition yet.
     </definition>
   </entry>
   
-  <entry term="bondOrder">
+  <entry id="bondOrder" term="Bond Order">
     <definition>
       No explicit definition yet.
     </definition>
   </entry>
   
-  <entry term="bondOrderSum">
+  <entry id="bondOrderSum" term="Bond Order Sum">
     <definition>
       The exact sum of bond orders that this atom type can have.
     </definition>
   </entry>
   
-  <entry term="exactMass">
+  <entry id="exactMass" term="Exact Mass">
     <definition>
        No explicit definition yet.
     </definition>
   </entry>
   
-  <entry term="maxBondOrder">
+  <entry id="maxBondOrder" term="Maximal Bond Order">
     <definition>
       The maximal bond order that this atom type can have. 
     </definition>
   </entry>
   
-  <entry term="relativeAbundance">
+  <entry id="relativeAbundance" term="Relative Abundance">
     <definition>
       No explicit definition yet.
     </definition>
