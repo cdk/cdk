@@ -901,10 +901,14 @@ public class SmilesGenerator {
             }
           }
         }
+        //Check if this atom represents the end of a double bond configuration
         if(atom!=null&&parent!=null && isEndOfDoubleBond(container,atom,parent,doubleBondConfiguration)){
           int position=-1;
+          //if the next atom is part of a vector, i. e. a branch, we need to remember the end of the configuration
           if(v.get(positionInVector+1) instanceof Vector){
+            //We distingiush if we are at the start of the smiles or not
             if(positionInVector>0){
+              //We push the atom we came from when "walking" throught the molecule on the stack and also the number of the next atom
               if(v.get(positionInVector-1) instanceof Vector){
                 endOfDoubleBondConfiguration.push(((Vector)v.get(positionInVector-1)).get(0));
               }
@@ -916,15 +920,19 @@ public class SmilesGenerator {
                 if(vectorBefore.get(i) instanceof Atom && ((Atom)vectorBefore.get(i)).getPoint2D().equals(parent.getPoint2D()))
                   position=i;
               }
-              if(vectorBefore.get(position-1) instanceof Atom)
-                endOfDoubleBondConfiguration.push(vectorBefore.get(position-1));
-              else
-                endOfDoubleBondConfiguration.push((((Vector)vectorBefore.get(position-1)).get(0)));
-              endOfDoubleBondConfiguration.push(new Integer(positionInVector+1));
+              if(position>0){
+                //We push the atom we came from when "walking" throught the molecule on the stack and also the number of the next atom
+                if(vectorBefore.get(position-1) instanceof Atom)
+                  endOfDoubleBondConfiguration.push(vectorBefore.get(position-1));
+                else
+                  endOfDoubleBondConfiguration.push((((Vector)vectorBefore.get(position-1)).get(0)));
+                endOfDoubleBondConfiguration.push(new Integer(positionInVector+1));
+              }
             }
           }
           else
           {
+            //if the next atom is only an atom, we can append / or \ directly
             Atom viewFrom=null;
             if(positionInVector>2){
               if(v.get(positionInVector-2) instanceof Atom)
@@ -956,14 +964,21 @@ public class SmilesGenerator {
         parseChain((Vector)o, buffer, container, parent, chiral, doubleBondConfiguration,v);
         if(brackets)
           buffer.append(')');
+        //Check if we remembered the start of double bond configuration by checking if there is an atom on the respective stack
         if(!beginnOfDoubleBondConfiguration.empty()){
           Atom beginn=(Atom)beginnOfDoubleBondConfiguration.pop();
+          //If there is also the end of the configuration remembered, we need to handle it
           if(container.getBondNumber(beginn,parent)!=-1 && doubleBondConfiguration[container.getBondNumber(beginn,parent)]){
             if(!endOfDoubleBondConfiguration.empty()){
               Integer integer=(Integer)endOfDoubleBondConfiguration.pop();
               Atom viewFrom=(Atom)endOfDoubleBondConfiguration.pop();
+              //Make sure we are already processing the atom which represents the end of the configuration
               if(v.indexOf(o)==integer.intValue())
               {
+                /*Now view From represents the atom the configuration starts with, 
+                  parent the atom at the end of the double bond. We need to find the
+                  the atom at the start of the double bond, which we will call between
+                */
                 Atom[] atomsOfParent=container.getConnectedAtoms(parent);
                 Atom[] atomsOfViewFrom=container.getConnectedAtoms(viewFrom);
                 Atom between=null;
@@ -973,15 +988,18 @@ public class SmilesGenerator {
                       between=atomsOfParent[i];
                   }
                 }
-                boolean oldAtom=isLeft(viewFrom,parent,between);
-                boolean newAtom=isLeft((Atom)v.get(positionInVector+1),between,parent);
-                if(oldAtom==newAtom)
-                  buffer.append('/');
-                else
-                  buffer.append('\\');
+                if(between!=null){
+                  boolean oldAtom=isLeft(viewFrom,parent,between);
+                  boolean newAtom=isLeft((Atom)v.get(positionInVector+1),between,parent);
+                  if(oldAtom==newAtom)
+                    buffer.append('/');
+                  else
+                    buffer.append('\\');
+                }
               }
               else
               {
+                //if not still remember the end
                 endOfDoubleBondConfiguration.push(viewFrom);
                 endOfDoubleBondConfiguration.push(integer);
               }
@@ -989,6 +1007,7 @@ public class SmilesGenerator {
           }
           else
           {
+            //if the end is not yet reached, we keep the beginning by pushing it back on the stack
             beginnOfDoubleBondConfiguration.push(beginn);
           }
         }
@@ -1120,6 +1139,7 @@ public class SmilesGenerator {
 
     if(chiral && stereo)
       brackets=true;
+    //If this atom is the start of a double bond configuration, we append the / and remember this atom via pushing it on a stack
     if(isBeginnOfDoubleBond(container,a,parent,doubleBondConfiguration)){
       buffer.append('/');
       beginnOfDoubleBondConfiguration.push(a);
