@@ -70,6 +70,7 @@ public class CDKTests {
 		suite.addTest(FingerprinterTest.suite());
         // from cdk.test.layout.*
 		suite.addTest(StructureDiagramGeneratorTest.suite());
+        suite.addTest(HydrogenPlacerTest.suite());
         // from cdk.test.smiles
 		suite.addTest(SmilesGeneratorTest.suite());
 		suite.addTest(SmilesParserTest.suite());
