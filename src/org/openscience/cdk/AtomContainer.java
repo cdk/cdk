@@ -988,6 +988,9 @@ public class AtomContainer extends ChemObject implements Cloneable
 					e.printStackTrace();
 				}
 			}
+            s.append(" (order: ");
+            s.append(bond.getOrder());
+            s.append(")");
 			s.append("\n");
 		}
 
