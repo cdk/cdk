@@ -102,10 +102,10 @@ public class SVGWriter implements ChemObjectWriter {
      * @param   object  ChemObject of which the data is outputted.
      */
     public void write(ChemObject object) throws UnsupportedChemObjectException {
-        if (object instanceof Molecule) {
-            writeMolecule((Molecule)object);
+        if (object instanceof AtomContainer) {
+            writeAtomContainer((AtomContainer)object);
         } else {
-            throw new UnsupportedChemObjectException("Only supported are ChemFile and Molecule.");
+            throw new UnsupportedChemObjectException("Only supported is Molecule.");
         }
     }
 
@@ -114,28 +114,11 @@ public class SVGWriter implements ChemObjectWriter {
     }
 
     /**
-     * Writes a list of molecules to an OutputStream
-     *
-     * @param   molecules  Array of Molecules that is written to an OutputStream
-     */
-    public void  writeSetOfMolecules(SetOfMolecules som)
-    {
-        Molecule[] molecules = som.getMolecules();
-        writeMolecule(molecules[0]);
-        for (int i = 1; i <= som.getMoleculeCount() - 1; i++) {
-            try {
-                writeMolecule(molecules[i]);
-            } catch (Exception exc) {
-            }
-        }
-    }
-
-    /**
      * Writes the content from molecule to output.
      *
      * @param   object  Molecule of which the data is outputted.
      */
-    public void writeMolecule(Molecule molecule) {
+    public void writeAtomContainer(AtomContainer molecule) {
         DOMImplementation domImpl = GenericDOMImplementation.getDOMImplementation();
         Document document = domImpl.createDocument(null, "svg", null);
         SVGGraphics2D svgGenerator = new SVGGraphics2D(document);

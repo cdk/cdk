@@ -106,7 +106,7 @@ public class ZMatrixReader implements ChemObjectReader {
         SetOfMolecules setOfMolecules = new SetOfMolecules();
                 
         Molecule m = new Molecule();
-        m.setTitle(info);
+        m.setProperty(CDKConstants.TITLE ,info);
 
         String[] types = new String[number_of_atoms];
         double[] d = new double[number_of_atoms]; int[] d_atom = new int[number_of_atoms]; // Distances

@@ -1,6 +1,4 @@
-/* MDLWriter.java
- * 
- * $RCSfile$ 
+/* $RCSfile$
  * $Author$ 
  * $Date$
  * $Revision$
@@ -54,11 +52,12 @@ import javax.vecmath.*;
  * @keyword file format, MDL molfile
  */
 public class MDLWriter implements ChemObjectWriter {
-	static BufferedWriter writer;
 
+    static BufferedWriter writer;
 
 	/**
-	 * Contructs a new MDLWriter that can write an array of Molecules to a given OutputStream
+	 * Contructs a new MDLWriter that can write an array of
+     * Molecules to a given OutputStream.
 	 *
 	 * @param   out  The OutputStream to write to
 	 */
@@ -69,14 +68,15 @@ public class MDLWriter implements ChemObjectWriter {
 	}
 
     /**
-     * Flushes the output and closes this object
+     * Flushes the output and closes this object.
      */
     public void close() throws IOException {
         writer.close();
     }
 
 	/**
-	 * Contructs a new MDLWriter that can write an array of Molecules to a Writer
+	 * Contructs a new MDLWriter that can write an array of 
+     * Molecules to a Writer.
 	 *
 	 * @param   out  The Writer to write to
 	 */
@@ -120,7 +120,7 @@ public class MDLWriter implements ChemObjectWriter {
     }
 
 	/**
-	 * Writes an array of Molecules to an OutputStream in MDL sdf format
+	 * Writes an array of Molecules to an OutputStream in MDL sdf format.
 	 *
 	 * @param   molecules  Array of Molecules that is written to an OutputStream 
 	 */
@@ -153,7 +153,7 @@ public class MDLWriter implements ChemObjectWriter {
 	
 
 	/**
-	 * Writes a Molecule to an OutputStream in MDL sdf format
+	 * Writes a Molecule to an OutputStream in MDL sdf format.
 	 *
 	 * @param   molecule  Molecule that is written to an OutputStream 
 	 */
@@ -163,7 +163,7 @@ public class MDLWriter implements ChemObjectWriter {
 		String line = "";
 		int index = -1;
 		int rows = 4;
-		String title = molecule.getTitle();
+		String title = (String)molecule.getProperty(CDKConstants.TITLE);
 		if (title == null) title = "";
 		do
 		{
@@ -218,20 +218,12 @@ public class MDLWriter implements ChemObjectWriter {
 			writer.newLine();
 			writer.flush();
 			writer.close();
-		
+
 	}
-			
-			
-			
-
-
-
-
-	
-
 
 	/**
-	 * Formats an int to fit into the connectiontable and changes it to a String
+	 * Formats an int to fit into the connectiontable and changes it 
+     * to a String.
 	 *
 	 * @param   i  The int to be formated
 	 * @param   l  Length of the String
@@ -257,7 +249,8 @@ public class MDLWriter implements ChemObjectWriter {
 
 
 	/**
-	 * Formats a float to fit into the connectiontable and changes it to a String
+	 * Formats a float to fit into the connectiontable and changes it
+     * to a String.
 	 *
 	 * @param   fl  The float to be formated
 	 * @return      The String to be written into the connectiontable
@@ -283,7 +276,7 @@ public class MDLWriter implements ChemObjectWriter {
 
 
 	/**
-	 * Formats a String to fit into the connectiontable
+	 * Formats a String to fit into the connectiontable.
 	 *
 	 * @param   s    The String to be formated
 	 * @param   le   The length of the String

@@ -99,8 +99,8 @@ public class XYZReader implements ChemObjectReader {
                 SetOfMolecules setOfMolecules = new SetOfMolecules();
                 
                 Molecule m = new Molecule();
-                m.setTitle(info);
-                
+                m.setProperty(CDKConstants.TITLE ,info);
+
                 for (int i = 0; i < number_of_atoms; i++) {
                     line = input.readLine();
                     if (line == null) break;

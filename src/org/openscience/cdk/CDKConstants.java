@@ -2,7 +2,7 @@
  * $Author$    
  * $Date$    
  * $Revision$
- * 
+ *
  * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
  * 
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
@@ -124,6 +124,32 @@ public class CDKConstants {
          *  It is used for example in subgraph isomorphism search.
          */
         public static int MAPPED = 55;
+
+
+    /****************************************
+    * Some predefined property names for    *
+    * ChemObjects                           *
+    ****************************************/
+
+    /** The title */
+    public static final String TITLE = "Title";
+
+    /** A remark */
+    public static final String REMARK = "Remark";
+
+    /****************************************
+    * Some predefined property names for    *
+    * Molecules                             *
+    ****************************************/
+
+    /** The IUPAC compatible name generated with AutoNom */
+    public static final String AUTONOMNAME = "AutonomName";
+
+    /** The Beilstein Registry Number */
+    public static final String BEILSTEINRN = "BeilsteinRN";
+
+    /** The CAS Registry Number */
+    public static final String CASRN = "CasRN";
 
 }
 

@@ -1,4 +1,4 @@
-/* $RCSfile$   
+/* $RCSfile$
  * $Author$   
  * $Date$    
  * $Revision$
@@ -101,13 +101,13 @@ public class MoleculesTable extends JPanel implements CDKChangeListener {
     
     public Object getValueAt(int row, int col) {
       if (getColumnName(col).equals("title")) {
-        return (set.getMolecule(row)).getTitle();
+        return (set.getMolecule(row)).getProperty("title");
       } else if (getColumnName(col).equals("casRN")) {
-        return (set.getMolecule(row)).getCasRN();
+        return (set.getMolecule(row)).getProperty(CDKConstants.CASRN);
       } else if (getColumnName(col).equals("beilsteinRN")) {
-        return (set.getMolecule(row)).getBeilsteinRN();
+        return (set.getMolecule(row)).getProperty(CDKConstants.BEILSTEINRN);
       } else if (getColumnName(col).equals("autonomName")) {
-        return (set.getMolecule(row)).getAutonomName();
+        return (set.getMolecule(row)).getProperty(CDKConstants.AUTONOMNAME);
       } else {
         return null;
       }

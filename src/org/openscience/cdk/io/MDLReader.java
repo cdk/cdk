@@ -1,6 +1,4 @@
-/* MDLReader.java
- * 
- * $RCSfile$
+/* $RCSfile$
  * $Author$
  * $Date$
  * $Revision$
@@ -171,7 +169,7 @@ public class MDLReader implements ChemObjectReader {
 	    try
 	    {
 	        String title = new String(input.readLine()+"\n"+input.readLine()+"\n"+input.readLine());
-		    molecule.setTitle(title);
+		    molecule.setProperty(CDKConstants.TITLE, title);
 	        StringBuffer strBuff = new StringBuffer(input.readLine());
 	        strBuff.insert(3, " ");
 	        StringTokenizer strTok = new StringTokenizer(strBuff.toString());

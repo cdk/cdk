@@ -1,6 +1,7 @@
-/* DBReader.java
- *
- * $RCSfile$    $Author$    $Date$    $Revision$
+/* $RCSfile$    
+ * $Author$    
+ * $Date$    
+ * $Revision$
  * 
  * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
  * 
@@ -79,14 +80,14 @@ public class DBReader implements ChemObjectReader
 			while (rs.next())
 			{
 				byte[] bytes = rs.getBytes(14);
-        String CMLString = new String(bytes);
+                String CMLString = new String(bytes);
 				reader = new StringReader(CMLString);
 				cmlr = new CMLReader(reader);
 				mol = getMolecule((ChemFile)cmlr.read(new ChemFile()));
 				
-				mol.setAutonomName(rs.getString(1));
-				mol.setCasRN(rs.getString(2));
-				mol.setBeilsteinRN(rs.getString(3));
+				mol.setProperty(CDKConstants.AUTONOMNAME, rs.getString(1));
+				mol.setProperty(CDKConstants.CASRN, rs.getString(2));
+				mol.setProperty(CDKConstants.BEILSTEINRN, rs.getString(3));
 			}
 			rs.close();
 			st.close();

@@ -1,6 +1,7 @@
-/* DBWriter.java
- *
- * $RCSfile$    $Author$    $Date$    $Revision$
+/* $RCSfile$    
+ * $Author$    
+ * $Date$    
+ * $Revision$
  * 
  * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
  * 
@@ -104,7 +105,7 @@ public class DBWriter implements ChemObjectWriter {
 
 			ps = con.prepareStatement("INSERT INTO chemnames VALUES('', ?, ?)");
 			logger.info("Inserting molecule into chemnames...");
-			ps.setString(1, mol.getAutonomName());
+			ps.setString(1, (String)mol.getProperty(CDKConstants.AUTONOMNAME));
 			ps.setString(2, "");
 			logger.debug("SQL: " + ps.toString());
 			ps.executeUpdate();
@@ -114,8 +115,8 @@ public class DBWriter implements ChemObjectWriter {
 
 			ps = con.prepareStatement("INSERT INTO indices VALUES('', ?, ?)");
 			logger.info("Inserting molecule into indices...");
-			ps.setString(1, mol.getCasRN());
-			ps.setString(2, mol.getBeilsteinRN());
+			ps.setString(1, (String)mol.getProperty(CDKConstants.CASRN));
+			ps.setString(2, (String)mol.getProperty(CDKConstants.BEILSTEINRN));
 			logger.debug("SQL: " + ps.toString());
 			ps.executeUpdate();
 			ps.close();
@@ -123,18 +124,6 @@ public class DBWriter implements ChemObjectWriter {
 			con.commit();
 
 			con.setAutoCommit(true);
-
-			// some old stuff i should have a look at
-			// ps.setInt(4, new Integer(elementFormula.substring(elementFormula.indexOf("C") + 1, elementFormula.indexOf("H"))).intValue());
-			// ps.setInt(5, new Integer(elementFormula.substring(elementFormula.indexOf("H") + 1, elementFormula.indexOf("N"))).intValue());
-			// ps.setInt(6, new Integer(elementFormula.substring(elementFormula.indexOf("N") + 1, elementFormula.indexOf("O"))).intValue());
-			// ps.setInt(7, new Integer(elementFormula.substring(elementFormula.indexOf("O") + 1, elementFormula.indexOf("S"))).intValue());
-			// ps.setInt(8, new Integer(elementFormula.substring(elementFormula.indexOf("S") + 1, elementFormula.indexOf("P"))).intValue());
-			// ps.setInt(9, new Integer(elementFormula.substring(elementFormula.indexOf("P") + 1, elementFormula.indexOf("F"))).intValue());
-			// ps.setInt(10, new Integer(elementFormula.substring(elementFormula.indexOf("F") + 1, elementFormula.indexOf("Cl"))).intValue());
-			// ps.setInt(11, new Integer(elementFormula.substring(elementFormula.indexOf("Cl") + 2, elementFormula.indexOf("Br"))).intValue());
-			// ps.setInt(12, new Integer(elementFormula.substring(elementFormula.indexOf("Br") + 2, elementFormula.indexOf("I"))).intValue());
-			// ps.setInt(13, new Integer(elementFormula.substring(elementFormula.indexOf("I") + 1)).intValue());
     	} catch(Exception exc) {
         	System.out.println("Error while trying to add molecule to table");
 		logger.error("Error while trying to add molecule to table");
