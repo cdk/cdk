@@ -28,8 +28,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.Mapping;
-import org.openscience.cdk.Atom;
+import org.openscience.cdk.*;
 
 /**
  * Checks the funcitonality of the Mapping class.
@@ -50,7 +49,7 @@ public class MappingTest extends TestCase {
         return new TestSuite(MappingTest.class);
     }
     
-    public void testMapping() {
+    public void testMapping_ChemObject_ChemObject() {
         Mapping mapping = new Mapping(new Atom(), new Atom());
         assertNotNull(mapping);
     }
@@ -65,5 +64,39 @@ public class MappingTest extends TestCase {
             assertTrue(description.charAt(i) != '\n');
             assertTrue(description.charAt(i) != '\r');
         }
+    }
+
+	public void testClone() {
+        Mapping mapping = new Mapping(new Atom(), new Atom());
+        Object clone = mapping.clone();
+        assertTrue(clone instanceof Mapping);
+    }    
+        
+    public void testGetRelatedChemObjects() {
+        Atom atom1 = new PseudoAtom("M");
+        Bond ethene = new Bond(new Atom("C"), new Atom("C"), 2.0); // coordinated with metal
+		Mapping mapping = new Mapping(atom1, ethene);
+
+		ChemObject[] map = mapping.getRelatedChemObjects();
+        assertNotNull(map[0]);
+        assertNotNull(map[1]);
+        assertEquals(atom1, map[0]);
+        assertEquals(ethene, map[1]);
+    }
+
+    public void testClone_ChemObject() {
+		Mapping mapping = new Mapping(new Atom(), new Atom());
+
+		Mapping clone = (Mapping)mapping.clone();
+        ChemObject[] map = mapping.getRelatedChemObjects();
+        ChemObject[] mapClone = clone.getRelatedChemObjects();
+        assertEquals(map.length, mapClone.length);
+		for (int f = 0; f < map.length; f++) {
+			for (int g = 0; g < mapClone.length; g++) {
+				assertNotNull(map[f]);
+				assertNotNull(mapClone[g]);
+				assertNotSame(map[f], mapClone[g]);
+			}
+		}        
     }
 }

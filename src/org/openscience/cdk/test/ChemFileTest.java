@@ -64,6 +64,15 @@ public class ChemFileTest extends TestCase {
         assertEquals(3, cs.getChemSequenceCount());
     }
     
+    public void testGetChemSequence_int() {
+        ChemFile cs = new ChemFile();
+        cs.addChemSequence(new ChemSequence());
+        ChemSequence second = new ChemSequence();
+        cs.addChemSequence(second);
+        cs.addChemSequence(new ChemSequence());
+        assertEquals(second, cs.getChemSequence(1));
+    }
+    
     public void testGrowChemSequenceArray() {
         ChemFile cs = new ChemFile();
         cs.addChemSequence(new ChemSequence());
@@ -111,5 +120,29 @@ public class ChemFileTest extends TestCase {
      */
     public void testStateChanged_ChemObjectChangeEvent() {
         // dunno how to test this!
+    }
+
+	public void testClone() {
+        ChemFile file = new ChemFile();
+        Object clone = file.clone();
+        assertTrue(clone instanceof ChemFile);
+    }    
+        
+    public void testClone_ChemSequence() {
+		ChemFile file = new ChemFile();
+		file.addChemSequence(new ChemSequence()); // 1
+		file.addChemSequence(new ChemSequence()); // 2
+		file.addChemSequence(new ChemSequence()); // 3
+		file.addChemSequence(new ChemSequence()); // 4
+
+		ChemFile clone = (ChemFile)file.clone();
+		assertEquals(file.getChemSequenceCount(), clone.getChemSequenceCount());
+		for (int f = 0; f < file.getChemSequenceCount(); f++) {
+			for (int g = 0; g < clone.getChemSequenceCount(); g++) {
+				assertNotNull(file.getChemSequence(f));
+				assertNotNull(clone.getChemSequence(g));
+				assertNotSame(file.getChemSequence(f), clone.getChemSequence(g));
+			}
+		}        
     }
 }
