@@ -931,25 +931,35 @@ public class Renderer2D implements MouseMotionListener   {
 		Point2d center = ring.get2DCenter();
 
         double[] minmax = GeometryTools.getMinMax(ring);
-        double width = (minmax[2]- minmax[0])*0.7;
-        double height = (minmax[3]- minmax[1])*0.7;
-		int[] coords = {(int)(center.x - (width/2.0)), 
-                        (int)(center.y + (height/2.0))};
+        double width = (minmax[2] - minmax[0]) * 0.7;
+        double height = (minmax[3] - minmax[1]) * 0.7;
+        int[] coords = {
+            (int) (center.x - (width / 2.0)),
+            (int) (center.y + (height / 2.0))
+        };
         int[] screenCoords = getScreenCoordinates(coords);
+        int ring_width = (int) (width * r2dm.getZoomFactor());
+        int ring_height = (int) (height * r2dm.getZoomFactor());
+
+        // Calculate inner oval offset - must be a whole number of pixels > 1.
+        int offset = (int) Math.ceil(0.05 * Math.max(ring_width, ring_height));
+        int offsetX2 = 2 * offset;
+
+        // Fill outer oval.
         graphics.setColor(bondColor);
-        graphics.fillOval(screenCoords[0], screenCoords[1], 
-                          (int)(width*r2dm.getZoomFactor()), 
-                          (int)(height*r2dm.getZoomFactor()));
-        
-        double innerWidth = width*0.9;
-        double innerHeight = height*0.9;
-		int[] innerCoords = {(int)(center.x - (innerWidth/2.0)), 
-                             (int)(center.y + (innerHeight/2.0))};
-        screenCoords = getScreenCoordinates(innerCoords);
+        graphics.fillOval(
+                screenCoords[0], screenCoords[1],
+                ring_width, ring_height);
+
+        // Erase inner oval.
         graphics.setColor(r2dm.getBackColor());
-        graphics.fillOval(screenCoords[0], screenCoords[1], 
-                          (int)(innerWidth*r2dm.getZoomFactor()), 
-                          (int)(innerHeight*r2dm.getZoomFactor()));
+        graphics.fillOval(
+                screenCoords[0] + offset,
+                screenCoords[1] + offset,
+                ring_width - offsetX2,
+                ring_height - offsetX2);
+
+        // Reset drawing colour.
         graphics.setColor(bondColor);
     }
     
