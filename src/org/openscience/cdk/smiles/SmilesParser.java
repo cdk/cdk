@@ -208,9 +208,6 @@ public class SmilesParser {
                                     currentSymbol = currentSymbol.toUpperCase();
                                     atom = new Atom(currentSymbol);
                                     atom.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
-                                    if (atom.getHydrogenCount() > 0) {
-                                        atom.setHydrogenCount(atom.getHydrogenCount() - 1);
-                                    }
                                 } else {
                                     atom = new Atom(currentSymbol);
                                 }
@@ -231,15 +228,6 @@ public class SmilesParser {
                         logger.debug("Creating bond between ", atom.getSymbol(), " and ", lastNode.getSymbol());
                         bond = new Bond(atom, lastNode, bondStatus);
                         molecule.addBond(bond);
-                        if (bondStatus == CDKConstants.BONDORDER_DOUBLE) {
-                            // ok, correct for possible double reduction of implicit H count
-                            if (atom.getHybridization() == CDKConstants.HYBRIDIZATION_SP2) {
-                                atom.setHydrogenCount(atom.getHydrogenCount() + 1);
-                            }
-                            if (lastNode.getHybridization() == CDKConstants.HYBRIDIZATION_SP2) {
-                                lastNode.setHydrogenCount(lastNode.getHydrogenCount() + 1);
-                            }
-                        }
                     }
                     bondStatus = CDKConstants.BONDORDER_SINGLE;
                     lastNode = atom;
@@ -338,7 +326,9 @@ public class SmilesParser {
 
         // add implicit hydrogens
         try {
+            logger.debug("before H-adding: ", molecule);
             hAdder.addImplicitHydrogensToSatisfyValency(molecule);
+            logger.debug("after H-adding: ", molecule);
         } catch (Exception exception) {
             logger.error("Error while calculation Hcount for SMILES atom: ", exception.getMessage());
         }
