@@ -33,6 +33,10 @@ import java.util.*;
 import java.io.*;
 import org.openscience.cdk.*;
 
+import org.xml.sax.*;
+import javax.xml.parsers.*;
+import org.w3c.dom.*;
+
 /**
  *  Used to store and return data of a particular element
  *
@@ -42,7 +46,7 @@ import org.openscience.cdk.*;
 
 public class ElementFactory {
 
-	Element[] elements = {};
+	org.openscience.cdk.Element[] elements = {};
 
 
 	/**
@@ -69,9 +73,9 @@ public class ElementFactory {
 	 * @param  pos  Description of Parameter
 	 * @return      Description of the Returned Value
 	 */
-	public Element elementAt(int pos) {
+	public org.openscience.cdk.Element elementAt(int pos) {
 		if (pos >= 0 && pos < getSize()) {
-			return (Element) elements[pos].clone();
+			return (org.openscience.cdk.Element) elements[pos].clone();
 		}
 		return null;
 	}
@@ -84,7 +88,7 @@ public class ElementFactory {
 	 */
 	public void writeElements(Writer writer) throws IOException 
 	{
-		Element e = null;
+		org.openscience.cdk.Element e = null;
 		writer.write("<elements>\n");
 		for (int f = 0; f < elements.length; f++)
 		{
@@ -95,13 +99,41 @@ public class ElementFactory {
 		writer.write("</elements>\n");
 	}
 
+	public void readFlatFile(Reader reader) throws IOException
+	{
+		
+		
+	}
+	
+	public void readElements(Reader reader) throws IOException
+	{
+	}
 
+	public org.openscience.cdk.Element readElement(Node node)
+	{
+		org.openscience.cdk.Element element = null;
+		org.w3c.dom.Node newNode = null;
+		for (int f = 0; f < node.getChildNodes().getLength(); f++)
+		{
+			newNode = node.getChildNodes().item(f);
+			if (XMLTools.typeName[newNode.getNodeType()].equals("Element"))
+			{
+				if (newNode.getNodeName().toLowerCase().equals("element"))
+				{
+				
+				}
+			}
+		}	
+		return element;
+	}
+	
+	
 	/**
 	 *  Description of the Method
 	 */
 	private void enlargeElementArray() {
 		int newSize = (int) (elements.length * 1.1);
-		Element[] newElements = new Element[newSize];
+		org.openscience.cdk.Element[] newElements = new org.openscience.cdk.Element[newSize];
 		System.arraycopy(elements, 0, newElements, 0, elements.length);
 		elements = newElements;
 	}

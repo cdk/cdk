@@ -143,7 +143,21 @@
 			</classpath>
 		</java>  
 	</target>
-  
+
+	<target name="run" depends="dist">
+		<java classname="org.openscience.cdk.tools.IsotopeFactory" fork="yes">
+			<arg value=""/>
+			<classpath>
+				<pathelement location="${dist}/jar/cdk.jar"/>
+				<pathelement path="${java.class.path}"/>
+				<pathelement location="."/>
+				<fileset dir="jar">
+				<include name="*.jar"/>
+				</fileset>
+			</classpath>
+		</java>  
+	</target>
+
   <target name="javadoc">
     <mkdir dir="${javadoc.dir}"/>
     <javadoc packagenames="org.openscience.cdk.*"

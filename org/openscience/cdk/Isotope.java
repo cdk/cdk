@@ -57,7 +57,7 @@ public class Isotope extends Element implements Cloneable {
 	 * @param  exactMass      The exact mass of the isotope, be a little more explicit here :-)
 	 * @param  nA             The natural abundance of the isotope
 	 */
-	public Isotope(int atomicNumber, String elementSymbol, double atomicMass, double exactMass, double nA) {
+	public Isotope(int atomicMass, String elementSymbol, int atomicNumber, double exactMass, double nA) {
 		super(elementSymbol, atomicNumber, atomicMass);
 		this.exactMass = exactMass;
 		this.naturalAbundance = nA;
@@ -72,8 +72,8 @@ public class Isotope extends Element implements Cloneable {
 	 * @param  exactMass      The exact mass of the isotope, be a little more explicit here :-)
 	 * @param  nA             The natural abundance of the isotope
 	 */
-	public Isotope(int atomicNumber, String elementSymbol, double exactMass, double nA) {
-		this(atomicNumber, elementSymbol, (double) Math.round(exactMass), exactMass, nA);
+	public Isotope(int atomicMass, String elementSymbol, double exactMass, double nA) {
+		this(atomicMass, elementSymbol, (int) (atomicMass / 2), exactMass, nA);
 	}
 
 

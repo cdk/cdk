@@ -38,7 +38,7 @@ public class Element extends ChemObject
 	protected int atomicNumber = 0;
 	
 	/** The atomic mass of this element */
-	protected double atomicMass;	
+	protected int atomicMass;	
 
 	/**
 	 * Constructs an empty Element
@@ -68,7 +68,7 @@ public class Element extends ChemObject
 	 * @param   atomicNumber  The atomicNumber of this element.
 	 * @param   atomicMass  The atomicMass of this element.
 	 */
-	public Element(String symbol, int atomicNumber, double atomicMass)
+	public Element(String symbol, int atomicNumber, int atomicMass)
 	{
 		this(symbol);
 		this.atomicNumber = atomicNumber;
@@ -80,7 +80,7 @@ public class Element extends ChemObject
 	 *
 	 * @return The atomic mass of this element
 	 */
-		public double getAtomicMass()
+		public int getAtomicMass()
 	{
 		return this.atomicMass;
 	}
@@ -90,7 +90,7 @@ public class Element extends ChemObject
 	 *
 	 * @param   atomicMass The atomic mass to be assigned to this element
 	 */
-	public void setAtomicMass(double atomicMass)
+	public void setAtomicMass(int atomicMass)
 	{
 		this.atomicMass = atomicMass;
 	}
@@ -102,13 +102,14 @@ public class Element extends ChemObject
 	 */
 	public int getAtomicNumber()
 	{
-		Isotope isotope = null;
+/* 		Isotope isotope = null;
 		if (this.atomicNumber == 0)
 		{
 			isotope	= new org.openscience.cdk.tools.StandardIsotopes().getMajorIsotope(getSymbol());
 			this.atomicNumber = (int)(isotope.atomicMass / 2);
 		}
-		return this.atomicNumber;
+ */		
+ 		return this.atomicNumber;
 	}
 
 	/**
