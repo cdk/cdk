@@ -61,6 +61,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
       currentChemSequence = new ChemSequence();
       currentChemModel = new ChemModel();
       currentSetOfMolecules = new SetOfMolecules();
+      currentMolecule = new Molecule();
       atomEnumeration = new Hashtable();
     }
 
@@ -75,6 +76,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
       currentChemSequence = new ChemSequence();
       currentChemModel = new ChemModel();
       currentSetOfMolecules = new SetOfMolecules();
+      currentMolecule = new Molecule();
       atomEnumeration = new Hashtable();
     };
 
