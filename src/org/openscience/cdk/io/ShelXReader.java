@@ -35,6 +35,7 @@ import org.openscience.cdk.exception.*;
 import java.io.*;
 import java.util.Vector;
 import java.util.StringTokenizer;
+import javax.vecmath.Point3d;
 
 
 /**
@@ -278,23 +279,15 @@ public class ShelXReader extends DefaultChemObjectReader {
                 frac[1] = FortranFormat.atof(sb);
                 frac[2] = FortranFormat.atof(sc);
                 logger.debug("fa,fb,fc: " + frac[0] + ", " + frac[1] + ", " + frac[2]);
-                /* convert these fractional coordinates to cartesian
-                   coordinates */
-                double[] a = crystal.getA();
-                double[] b = crystal.getB();
-                double[] c = crystal.getC();
-                double[] cart = CrystalGeometryTools.fractionalToCartesian(a, b, c, frac);
 
                 if (atype.equalsIgnoreCase("Q")) {
                     // ingore atoms named Q
                 } else {
-                    logger.info("Adding atom: " + atype + ", " + cart[0]
-                                                        + ", " + cart[1]
-                                                        + ", " + cart[2]);
+                    logger.info("Adding atom: " + atype + ", " + frac[0]
+                                                        + ", " + frac[1]
+                                                        + ", " + frac[2]);
                     Atom atom = new Atom(atype);
-                    atom.setX3D(cart[0]);
-                    atom.setY3D(cart[1]);
-                    atom.setZ3D(cart[2]);
+                    atom.setFractionalPoint3D(new Point3d(frac[0], frac[1], frac[2]));
                     crystal.addAtom(atom);
                     logger.debug(atom.toString());
                 }

@@ -439,6 +439,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
         }
         add(atomAtts, atom.getPoint2D());
         add(atomAtts, atom.getPoint3D());
+        addFractional(atomAtts, atom.getFractionalPoint3D());
         int fCharge = atom.getFormalCharge();
         if (fCharge != 0) {
             atomAtts.put("formalCharge", new Integer(fCharge));
@@ -542,6 +543,14 @@ public class CMLWriter extends DefaultChemObjectWriter {
             atts.put("x3", new Float(p.x).toString());
             atts.put("y3", new Float(p.y).toString());
             atts.put("z3", new Float(p.z).toString());
+        }
+    }
+
+    private void addFractional(Hashtable atts, Point3d p) {
+        if (p != null) {
+            atts.put("xFract", new Float(p.x).toString());
+            atts.put("yFract", new Float(p.y).toString());
+            atts.put("zFract", new Float(p.z).toString());
         }
     }
 

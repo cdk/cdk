@@ -35,6 +35,7 @@ import org.openscience.cdk.exception.*;
 import java.io.*;
 import java.util.Vector;
 import java.util.StringTokenizer;
+import javax.vecmath.Point3d;
 
 
 /**
@@ -293,7 +294,9 @@ public class CIFReader extends DefaultChemObjectReader {
                 // process one row
                 Atom atom = new Atom("C");
                 double[] frac = new double[3];
+                double[] real = new double[3];
                 boolean hasFractional = false;
+                boolean hasCartesian = false;
                 while (tokenizer.hasMoreTokens()) {
                     colIndex++;
                     String field = tokenizer.nextToken();
@@ -314,26 +317,28 @@ public class CIFReader extends DefaultChemObjectReader {
                     } else if (colIndex == atomSymbol) {
                         atom.setSymbol(field);
                     } else if (colIndex == atomRealX) {
+                        hasCartesian = true;
                         logger.debug("Adding x3: " + parseIntoDouble(field));
-                        atom.setX3D(parseIntoDouble(field));
+                        real[0] = parseIntoDouble(field);
                     } else if (colIndex == atomRealY) {
+                        hasCartesian = true;
                         logger.debug("Adding y3: " + parseIntoDouble(field));
-                        atom.setY3D(parseIntoDouble(field));
+                        real[1] = parseIntoDouble(field);
                     } else if (colIndex == atomRealZ) {
+                        hasCartesian = true;
                         logger.debug("Adding x3: " + parseIntoDouble(field));
-                        atom.setZ3D(parseIntoDouble(field));
+                        real[2] = parseIntoDouble(field);
                     }
                 }
-                if (atomFractX != -1) {
-                    /* convert these fractional coordinates to cartesian
-                    coordinates */
+                if (hasCartesian) {
                     double[] a = crystal.getA();
                     double[] b = crystal.getB();
                     double[] c = crystal.getC();
-                    double[] cart = CrystalGeometryTools.fractionalToCartesian(a, b, c, frac);
-                    atom.setX3D(cart[0]);
-                    atom.setY3D(cart[1]);
-                    atom.setZ3D(cart[2]);
+                    frac = CrystalGeometryTools.cartesianToFractional(a, b, c, real);
+                    atom.setFractionalPoint3D(new Point3d(frac[0], frac[1], frac[2]));
+                }
+                if (hasFractional) {
+                    atom.setFractionalPoint3D(new Point3d(frac[0], frac[1], frac[2]));
                 }
                 logger.debug("Adding atom: " + atom);
                 crystal.addAtom(atom);

@@ -218,12 +218,7 @@ public class VASPReader extends DefaultChemObjectReader {
                 frac[0] = xred[i][0];
                 frac[1] = xred[i][1];
                 frac[2] = xred[i][2];
-                double[] cart = CrystalGeometryTools.fractionalToCartesian(
-                    crystal.getA(), crystal.getB(), crystal.getC(), frac
-                );
-                atom.setX3D(cart[0]); // cdk.Crystal expects cartesian coordinates
-                atom.setY3D(cart[1]);
-                atom.setZ3D(cart[2]);
+                atom.setFractionalPoint3D(new Point3d(frac[0], frac[1], frac[2]));
                 crystal.addAtom(atom);
             }
             crystal.setProperty(CDKConstants.REMARK, info);
