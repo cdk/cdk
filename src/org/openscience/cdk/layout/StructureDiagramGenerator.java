@@ -170,7 +170,7 @@ public class StructureDiagramGenerator {
             if (hydrogensToAdd > 0) {
                 // FIXME: almost correct.
                 new HydrogenAdder().addExplicitHydrogensToSatisfyValency(
-                    molecule, atoms[i], hydrogensToAdd
+                    molecule, atoms[i], hydrogensToAdd, molecule
                 );
             }
         }
