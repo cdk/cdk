@@ -5,6 +5,8 @@ org.openscience.cdk.AtomType
 org.openscience.cdk.BioPolymer
 org.openscience.cdk.Bond
 org.openscience.cdk.CDKConstants
+org.openscience.cdk.tools.PathTools
+org.openscience.cdk.tools.ConnectivityChecker
 org.openscience.cdk.ChemModel
 org.openscience.cdk.ChemObject
 org.openscience.cdk.ChemObjectListener

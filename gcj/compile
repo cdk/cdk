@@ -13,6 +13,9 @@ for FILE in $CDKCORECLASSES
 do
     echo "Compiling $FILE..."
     OPTIONS="-d $CDKBUILDDIR -I$CDKSRCDIR --CLASSPATH=$JARLIBS"
+    # Use the next line once all classes are compiled, and you
+    # want to check dependencies for non-core classes
+    #OPTIONS="-d $CDKBUILDDIR -I$CDKBUILDDIR --CLASSPATH=$JARLIBS"
     if ! $GCJ $OPTIONS -C $FILE.java
     then
         echo "Error during compilation!"
