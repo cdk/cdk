@@ -280,6 +280,14 @@ public class ReaderFactory {
                        line.startsWith("loop_")) {
                 logger.info("CIF format detected");
                 return new org.openscience.cdk.io.CIFReader(originalBuffer);
+            } else if (line.indexOf(";") == 0 ||
+                       line.startsWith("forcefield") ||
+                       line.startsWith("sys") ||
+                       line.startsWith("view") ||
+                       line.startsWith("mol") ||
+                       line.startsWith("endmol")) {
+                logger.info("HIN format detected");
+                return new org.openscience.cdk.io.HINReader(originalBuffer);
             } else if (lineNumber == 4) {
                 if (line.indexOf("Z Matrix") != -1) {
                     return new org.openscience.cdk.io.ZMatrixReader();

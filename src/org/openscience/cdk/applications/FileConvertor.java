@@ -247,6 +247,8 @@ public class FileConvertor {
             writer = new GaussianInputWriter(fileWriter);
         } else if (format.equalsIgnoreCase("CDK")) {
             writer = new CDKSourceCodeWriter(fileWriter);
+        } else if (format.equalsIgnoreCase("HIN")) {
+            writer = new HINWriter(fileWriter);
         }
         if (writer != null) {
             logger.debug(format + " -> " + writer.getClass().getName());
@@ -284,6 +286,8 @@ public class FileConvertor {
             outputFilename = outputFilename + "in";
         } else if (outputFormat.equalsIgnoreCase("CDK")) {
             outputFilename = outputFilename + "java.fragment";
+        } else if (outputFormat.equalsIgnoreCase("HIN")) {
+            outputFilename = outputFilename + "hin";
         }
         return outputFilename;
     }
@@ -382,6 +386,7 @@ public class FileConvertor {
         System.out.println(" OUTPUT FORMATS:");
         System.out.println("  cml    Chemical Markup Language (the default)");
         System.out.println("  gin    Gaussian Input File");
+        System.out.println("  hin    Hyperchem file");
         System.out.println("  mol    MDL molfile");
         System.out.println("  pdb    PDB");
         System.out.println("  shelx  ShelX");
