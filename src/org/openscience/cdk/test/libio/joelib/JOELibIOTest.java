@@ -27,6 +27,7 @@ package org.openscience.cdk.test.libio.joelib;
 import org.openscience.cdk.*;
 import org.openscience.cdk.exception.*;
 import org.openscience.cdk.libio.joelib.*;
+import org.openscience.cdk.smiles.*;
 import joelib.molecule.JOEMol;
 import joelib.molecule.JOEAtom;
 import joelib.molecule.JOEBond;
@@ -61,7 +62,7 @@ public class JOELibIOTest extends TestCase {
     public void testBond() {
         Atom a = new Atom("C");
         Atom b = new Atom("O");
-        Bond bond = new Bond(a,b,1);
+        Bond bond = new Bond(a,b,2);
 
         JOEBond converted = Convertor.convert(bond);
         Bond reverted = Convertor.convert(converted);

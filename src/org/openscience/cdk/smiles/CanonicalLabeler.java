@@ -165,7 +165,7 @@ public class CanonicalLabeler {
   }
 
   /**
-   * Calculates the prouct of the neighbouring primes.
+   * Calculates the product of the neighbouring primes.
    *
    * @param v the invariance pair vector
    */

@@ -120,6 +120,7 @@ public class Convertor {
                 // try to give the atom its atomic number
                 convertedAtom.setAtomicNumber(atom.getAtomicNum());
             } catch (java.lang.Exception e) {
+                // System.out.println("AtomicNumber failed");
             }
             return convertedAtom;
         } else {
@@ -197,6 +198,7 @@ public class Convertor {
                     for (int j=i+1; j<NOatoms; j++) {
                         if (matrix[i][j] != 0.0) {
                             // atoms i,j are connected
+                            /* JOEMol.addBond() needs atom ids [1,...] */
                             converted.addBond(i+1,j+1, (int)matrix[i][j]);
                         } else {
                         }
@@ -227,11 +229,19 @@ public class Convertor {
             Molecule converted = new Molecule();
             int NOatoms = mol.numAtoms();
             for (int i=1; i<=NOatoms; i++) {
-                converted.addAtom(convert(mol.getAtom(i)));
+                /* JOEMol.getAtom() needs ids [1,...] */
+                JOEAtom a = mol.getAtom(i);
+                Atom cdka = convert(a);
+                converted.addAtom(cdka);
             }
             int NObonds = mol.numBonds();
             for (int i=1; i<=NObonds; i++) {
-                converted.addBond(convert(mol.getBond(i)));
+                /* JOEMol.getBond() needs ids [0,...] */
+                JOEBond b = mol.getBond(i-1);
+                /* Molecule.addBond() need atom ids [0,...] */
+                converted.addBond(b.getBeginAtomIdx()-1,
+                                  b.getEndAtomIdx()-1,
+                                  b.getBondOrder());
             }
             return converted;
         } else {
