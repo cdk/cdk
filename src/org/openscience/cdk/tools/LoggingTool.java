@@ -24,6 +24,8 @@
 package org.openscience.cdk.tools;
 
 import java.net.*;
+import java.io.*;
+import java.util.*;
 
 public class LoggingTool {
 
@@ -57,8 +59,11 @@ public class LoggingTool {
             if (false)
               throw new ClassNotFoundException();
             // configure Log4J
-            URL url = getClass().getClassLoader().getResource("/org/openscience/cdk/config/log4j.properties");
-            org.apache.log4j.PropertyConfigurator.configure(url);
+            //URL url = getClass().getClassLoader().getResource("/org/openscience/cdk/config/log4j.properties");
+	    InputStream ins = this.getClass().getClassLoader().getResourceAsStream("org/openscience/cdk/config/log4j.properties");
+	    Properties props = new Properties();
+	    props.load(ins);
+            org.apache.log4j.PropertyConfigurator.configure(props);
         } catch (ClassNotFoundException e) {
             tostdout = true;
             debug("Log4J class not found!");
