@@ -1,4 +1,5 @@
-/* $RCSfile$
+/* 
+ * $RCSfile$
  * $Author$
  * $Date$
  * $Revision$
@@ -24,18 +25,29 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- *  */
+ */
+
 package org.openscience.cdk.index;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Tools to work with CAS registry numbers. 
- *
- * @author  Egon Willighagen <egonw@sci.kun.nl>
+ * Tools to work with CAS registry numbers.
+ * 
+ * <p><b>References:</b> 
+ * <ul>
+ * 	<li><a href="http://www.cas.org/EO/regsys.html">A CAS Registry Number</a></li>
+ * 	<li><a href="http://www.cas.org/EO/checkdig.html">Check Digit Verification of CAS Registry Numbers</a></li>
+ * </ul>
+ * </p>
+ * 
+ * @author Egon Willighagen <egonw@sci.kun.nl>
+ * @author Nathanaël "M.Le_maudit" Mazuir
+ * 
+ * @see <a href="http://www.cas.org">CAS website</a>
+ * 
  * @cdk.created 2003-06-30
- *
  * @cdk.keyword CAS number
  * @cdk.require java1.4
  */
@@ -43,33 +55,38 @@ public class CASNumber {
 
     /**
      * Checks wether the registry number is valid.
-     * See <a href="http://www.cas.org/EO/checkdig.html">CAS website</a>.
      *
-     * @cdk.keyword CAS number, validation
+     * @cdk.keyword CAS number
+     * @cdk.keyword validation
      */
     public static boolean isValid(String casNumber) {
         boolean overall = true;
-        // check format
+        /*
+         * check format
+         */
         String format = "^(\\d+)-(\\d\\d)-(\\d)$";
         Pattern pattern = Pattern.compile(format);
         Matcher matcher = pattern.matcher(casNumber);
         overall = overall && matcher.matches();
         
-        // check number
-        String part1 = matcher.group(1);
-        String part2 = matcher.group(2);
-        String part3 = matcher.group(3);
-        int total = 0;
-        total = total + 1*Integer.parseInt(part2.substring(1,2));
-        total = total + 2*Integer.parseInt(part2.substring(0,1));
-        int length = part1.length();
-        for (int i=0; i<length; i++) {
-            total = total + (3+i)*Integer.parseInt(part1.substring(length-1-i,length-i));
+        if (matcher.matches()) {
+			/*
+			 * check number
+			 */
+			String part1 = matcher.group(1);
+			String part2 = matcher.group(2);
+			String part3 = matcher.group(3);
+			int total = 0;
+			total = total + 1*Integer.parseInt(part2.substring(1,2));
+			total = total + 2*Integer.parseInt(part2.substring(0,1));
+			int length = part1.length();
+			for (int i=0; i<length; i++) {
+				total = total + (3+i)*Integer.parseInt(part1.substring(length-1-i,length-i));
+			}
+			int digit = total % 10;
+			overall = overall && (digit == Integer.parseInt(part3));
         }
-        int digit = total % 10;
-        overall = overall && (digit == Integer.parseInt(part3));
         
         return overall;
-    }
-    
+    }   
 }
