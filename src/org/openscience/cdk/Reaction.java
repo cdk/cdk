@@ -98,6 +98,6 @@ public class Reaction extends ChemObject implements Cloneable {
     protected void growProductArray() {
         Molecule[] newProducts = new Molecule[products.length + growArraySize];
         System.arraycopy(products, 0, newProducts, 0, products.length);
-        reactants = newProducts;
+        products = newProducts;
     }
 }
