@@ -60,6 +60,7 @@ public class AtomContainerManipulator {
     public static void replaceAtomByAtom(AtomContainer container, Atom atom, Atom newAtom) {
         if (!container.contains(atom)) {
             // it should complain
+	    return;
         } else {
             container.setAtomAt(container.getAtomNumber(atom), newAtom);
             ElectronContainer[] electronContainers = container.getElectronContainers();
@@ -180,7 +181,7 @@ public class AtomContainerManipulator {
             // Check bond.
             final Bond bond = atomContainer.getBondAt(i);
             Atom[] atoms = bond.getAtoms();
-            boolean remove_bond = false;
+            boolean removedBond = false;
             final int length = atoms.length;
             for (int k = 0;
                     k < length;
@@ -188,13 +189,13 @@ public class AtomContainerManipulator {
             {
                 if (remove.contains(atoms[k]))
                 {
-                    remove_bond = true;
+                    removedBond = true;
                     break;
                 }
             }
 
             // Clone/remove this bond?
-            if (!remove_bond)
+            if (!removedBond)
                 // if (!remove.contains(atoms[0]) && !remove.contains(atoms[1]))
             {
                 Bond clone = (Bond) atomContainer.getBondAt(i).clone();

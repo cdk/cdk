@@ -135,7 +135,7 @@ public class IsotopeHandler extends DefaultHandler {
                 }
             }
         } else if ("abundance".equals(local)) {
-            // disregard dictRef for now
+            logger.warn("Disregarding dictRef for now...");
         } else if ("scalar".equals(local)) {
             for (int i = 0; i < atts.getLength(); i++) {
                 if ("dictRef".equals(atts.getQName(i))) {

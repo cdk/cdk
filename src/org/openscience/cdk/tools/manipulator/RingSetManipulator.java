@@ -29,8 +29,6 @@ package org.openscience.cdk.tools.manipulator;
 
 import org.openscience.cdk.*;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.Enumeration;
 import java.util.Vector;
 
 /**

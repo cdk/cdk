@@ -42,7 +42,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * This is an implementation of the algorithm published in
  * {@cdk.cite FIG96}.
  *
- * @cdk.module standard
+ * @cdk.module extra
  * @cdk.keyword smallest-set-of-rings
  * @cdk.keyword ring search
  * 
