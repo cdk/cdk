@@ -176,6 +176,8 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
                     
                     // Found a set of vibrations
                     // readFrequencies(frame);
+                } else if (line.indexOf("Total atomic charges") >= 0) {
+                    readPartialCharges(model);
                 } else if (line.indexOf("Magnetic shielding") >= 0) {
                     
                     // Found NMR data
@@ -185,6 +187,8 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
                     
                     // Found calculation level of theory
                     levelOfTheory = parseLevelOfTheory(line);
+                } else {
+                    logger.debug("Skipping line: " + line);
                 }
                 line = input.readLine();
             }
@@ -262,6 +266,42 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
         }
         moleculeSet.addMolecule(molecule);
         model.setSetOfMolecules(moleculeSet);
+    }
+
+    /**
+     * Reads partial atomic charges and add the to the given ChemModel.
+     */
+    private void readPartialCharges(ChemModel model) throws CDKException, IOException {
+        logger.info("Reading partial atomic charges");
+        SetOfMolecules moleculeSet = model.getSetOfMolecules();
+        Molecule molecule = moleculeSet.getMolecule(0);
+        String line = input.readLine(); // skip first line after "Total atomic charges"
+        while (input.ready()) {
+            line = input.readLine();
+            logger.debug("Read charge block line: " + line);
+            if ((line == null) || (line.indexOf("Sum of Mulliken charges") >= 0)) {
+                logger.debug("End of charge block found");
+                break;
+            }
+            StringReader sr = new StringReader(line);
+            StreamTokenizer tokenizer = new StreamTokenizer(sr);
+            if (tokenizer.nextToken() == StreamTokenizer.TT_NUMBER) {
+                int atomCounter = (int) tokenizer.nval;
+
+                tokenizer.nextToken(); // ignore the symbol
+                
+                double charge = 0.0;
+                if (tokenizer.nextToken() == StreamTokenizer.TT_NUMBER) {
+                    charge = (double)tokenizer.nval;
+                    logger.debug("Found charge for atom " + atomCounter + 
+                                 ": " + charge);
+                } else {
+                    throw new CDKException("Error while reading charge: expected double.");
+                }
+                Atom atom = molecule.getAtomAt(atomCounter-1);
+                atom.setCharge(charge);
+            }
+        }
     }
 
     /**
