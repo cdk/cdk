@@ -21,7 +21,7 @@
 
                 <para>
         A re-write was needed to in order to assure the widest possible usability. It is also intended to port
-        <ulink url="http://www.openscience.org/jmol">JMol</ulink>, a 3D molecular visualization tool, to the CDK.
+        <ulink url="http://www.openscience.org/jmol">Jmol</ulink>, a 3D molecular visualization tool, to the CDK.
                 </para>
                 <para>
                         The CDK classes support (or will support, as soon as ported from the old CompChem library):

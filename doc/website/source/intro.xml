@@ -20,7 +20,7 @@
 			<ulink url="http://www.ice.mpg.de">Max Planck Institute of Chemical Ecology in Jena</ulink>,
 			as well as <ulink url="mailto:egonw@sci.kun.nl">Egon Willighagen</ulink> from the University of Nijmegen,
 			who is also involved with JChemPaint and many other Java Chemoinformatics programs, and
-			<ulink url="mailto:gezelter@maul.chem.nd.edu">Dan Gezelter</ulink>, the initiator of JMol, a 3D viewer and analyzer for molecules .
+			<ulink url="mailto:gezelter@maul.chem.nd.edu">Dan Gezelter</ulink>, the initiator of Jmol, a 3D viewer and analyzer for molecules .
 		</para>
 		<para>
 			Now, the rewrite of these CompChem/CDK library classes do somehow effect
@@ -30,7 +30,7 @@
 			started programming SENECA, my system for Computer Assisted Structure Elucidation.
 			It turned out that some of
 			the code had design flaws that prevented others, like the authors of
-			(<ulink url="http://www.openscience.org/jmol">JMol</ulink>) to use it.
+			(<ulink url="http://www.openscience.org/jmol">Jmol</ulink>) to use it.
 			Egon, Dan and I now met in September 2000 at the University of Notre Dame,
 			South Bend, Chicago, and redesigned the CompChem classes, calling the
 			new project the "Chemistry Development Kit, CDK".
