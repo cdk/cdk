@@ -79,9 +79,9 @@ public class ControllerTest
         SetOfMolecules moleculeSet = new SetOfMolecules();
         moleculeSet.addMolecule(molecule);
         model.setSetOfMolecules(moleculeSet);
-		JCPController2DModel c2dm = new JCPController2DModel();
+		Controller2DModel c2dm = new Controller2DModel();
 		inputAdapter = new CDKInputAdapter(model, r2dm, c2dm);
-		c2dm.setDrawMode(JCPController2DModel.DRAWBOND);
+		c2dm.setDrawMode(Controller2DModel.DRAWBOND);
 		mv.addMouseMotionListener(inputAdapter);
 		mv.addMouseListener(inputAdapter);
 		mv.addKeyListener(inputAdapter);
