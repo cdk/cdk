@@ -31,6 +31,8 @@ import java.util.*;
 /**
  * CDO object needed as interface with the JCFL library for reading CML
  * encoded data.
+ * 
+ * @author Egon Willighagen <egonw@sci.kun.nl>
  */ 
 public class ChemFileCDO extends ChemFile implements CDOInterface {
 

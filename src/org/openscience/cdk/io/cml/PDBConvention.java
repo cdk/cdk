@@ -5,7 +5,7 @@
  *
  * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  *
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -32,24 +32,28 @@ import java.util.*;
 import org.openscience.cdk.io.cml.cdopi.*;
 import org.xml.sax.*;
 
-
 /***
  * This is a lousy implementation for the PDB convention:
  *
- * Problems that will arise:
- *   - when this new convention is adopted in the root element no
+ * <p>Problems that will arise:
+ * <ul>
+ *   <li>when this new convention is adopted in the root element no
  *     currentFrame was set. This is done when <list sequence=""> is found
- *   - multiple sequences are not yet supported
- *   - the frame is now added when the doc is ended, which will result in problems
+ *   <li>multiple sequences are not yet supported
+ *   <li>the frame is now added when the doc is ended, which will result in problems
  *     but work for one sequence files made by PDB2CML v.??
+ * <ul>
  *
- * What is does:
- *   - work for now
- *   - give an idea on the API of the plugable CML import filter
+ * <p>What is does:
+ * <ul>
+ *   <li>work for now
+ *   <li>give an idea on the API of the plugable CML import filter
  *     (a real one will be made)
- *   - read CML files generated with Steve Zara's PDB 2 CML converter
+ *   <li>read CML files generated with Steve Zara's PDB 2 CML converter
  *     (of which version 1999 produces invalid CML 1.0)
+ * </ul>
  *
+ * @author Egon Willighagen <egonw@sci.kun.nl>
  */
 public class PDBConvention extends CMLCoreModule {
 

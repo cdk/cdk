@@ -5,7 +5,7 @@
  *
  * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  *
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -33,6 +33,9 @@ import org.openscience.cdk.io.cml.cdopi.CDOInterface;
 import org.xml.sax.AttributeList;
 import org.xml.sax.HandlerBase;
 
+/**
+ * @author Egon Willighagen <egonw@sci.kun.nl>
+ */
 public class XMLHandler extends HandlerBase {
     
     private CMLCoreModule conv;

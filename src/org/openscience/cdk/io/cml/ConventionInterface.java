@@ -5,7 +5,7 @@
  *
  * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  *
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -34,6 +34,8 @@ import org.openscience.cdk.io.cml.cdopi.*;
 /**
  * This interface describes the procedures classes must implement to be plugable
  * into the CMLHandler. Most procedures reflect those in SAX2.
+ *
+ * @author Egon Willighagen <egonw@sci.kun.nl>
  **/
 public interface ConventionInterface extends ModuleInterface {
 

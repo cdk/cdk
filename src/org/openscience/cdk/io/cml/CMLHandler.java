@@ -3,7 +3,9 @@
  * $Date$
  * $Revision$
  *
- *  Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
+ *
+ * Contact: cdk-devel@lists.sourceforge.net
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -37,7 +39,10 @@ import org.xml.sax.helpers.*;
  * as well is the CRML module.
  *
  * <p>Data is stored into the Chemical Document Object which is passed when
- * instantiating this class.
+ * instantiating this class. This makes it possible that programs that do not
+ * use CDK for internal data storage, use this CML library.
+ *
+ * @author Egon Willighagen <egonw@sci.kun.nl>
  **/
 public class CMLHandler extends DefaultHandler {
     

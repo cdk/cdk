@@ -1,5 +1,4 @@
-/*
- * $RCSfile$
+/* $RCSfile$
  * $Author$
  * $Date$
  * $Revision$
@@ -7,6 +6,8 @@
  * This class was based on the DTDResolver class developed by Dan Gezelter.
  *
  * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
+ *
+ * Contact: cdk-devel@lists.sourceforge.net
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -35,6 +36,8 @@ import java.io.*;
  * This class resolves DOCTYPE declaration for Chemical Markup Language (CML)
  * files and uses a local version for validation. More information about
  * CML can be found at http://www.xml-cml.org/.
+ *
+ * @author Egon Willighagen <egonw@sci.kun.nl>
  **/
 public class CMLResolver implements EntityResolver {
 
