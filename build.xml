@@ -103,7 +103,10 @@
           <condition property="isJava13">
             <contains string="${java.version}" substring="1.3"/>
           </condition>
-          
+          <uptodate property="dotjavafiles.uptodate" 
+              targetfile="${src}/*.javafiles">
+              <srcfiles dir="${src}" includes="**/*.java" />
+          </uptodate>
         </target>
 
         <target id="init" name="init" depends="check, setupBuildDir"/>
@@ -194,7 +197,8 @@
             </javac>
         </target>
 
-        <target name="compile.init" id="compile.init" depends="init, customize, compileDoclet">
+        <target name="runDoclet" id="runDoclet" depends="compileDoclet" 
+                unless="dotjavafiles.uptodate">
             <javadoc private="false" public="true">
                 <classpath refid="project.class.path" />
                 <doclet name="MakeJavaFilesFilesDoclet" path="${doc}/javadoc"/>
@@ -210,6 +214,9 @@
                 </fileset>
             </move>
         </target>
+        
+        <target name="compile.init" id="compile.init" 
+                depends="init, customize, compileDoclet, runDoclet"/>
         
         <target id="compile" name="compile" 
             description="Compiles the CDK."
