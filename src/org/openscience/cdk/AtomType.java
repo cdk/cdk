@@ -30,7 +30,9 @@
 package org.openscience.cdk;
 
 /**
- *  The base class for atom types. Atom types are typically used to describe the behaviour of an atom of a particular element in different environment like sp3 hybridized carbon C3, etc., in some molecular modelling applications.
+ *  The base class for atom types. Atom types are typically used to describe the
+ *  behaviour of an atom of a particular element in different environment like sp3 
+ *  hybridized carbon C3, etc., in some molecular modelling applications.
  *
  * @author     steinbeck
  * @created    8. August 2001

@@ -45,11 +45,26 @@ public class ZMatrixReader implements ChemObjectReader
 {
   private BufferedReader input;
   
+  /**
+   * Constructs a ZMatrixReader from a Reader that contains the
+   * data to be parsed.
+   *
+   * @param     input   Reader containing the data to read
+   */
   public ZMatrixReader(Reader input) 
   {
     this.input = new BufferedReader(input);
   }
-    
+  
+  /**
+   *  Returns a ChemObject of type object bye reading from
+   *  the input. 
+   *
+   *  The function supports only reading of ChemFile's.
+   *
+   * @param     object  ChemObject that types the class to return.
+   * @throws    Exception when a ChemObject is requested that cannot be read.
+   */
   public ChemObject read(ChemObject object) throws UnsupportedChemObjectException 
   {
     if (object instanceof ChemFile) 
@@ -58,7 +73,13 @@ public class ZMatrixReader implements ChemObjectReader
       throw new UnsupportedChemObjectException("Only supported is ChemFile.");
   }
 
-  private ChemFile readChemFile() 
+  /**
+   *  Private method that actually parses the input to read a ChemFile
+   *  object.
+   *
+   * @returns A ChemFile containing the data parsed from input.
+   */
+  private ChemFile readChemFile()
   {
     ChemFile file = new ChemFile();
     ChemSequence chemSequence = new ChemSequence();

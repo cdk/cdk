@@ -80,6 +80,11 @@ public class SMILESWriter implements CDKConstants, ChemObjectWriter {
         writer.close();
     }
 
+    /**
+     * Writes the content from object to output.
+     *
+     * @param   object  ChemObject of which the data is outputted.
+     */
 	public void write(ChemObject object) throws UnsupportedChemObjectException {
 		if (object instanceof SetOfMolecules) {
 		    writeSetOfMolecules((SetOfMolecules)object);
@@ -109,6 +114,11 @@ public class SMILESWriter implements CDKConstants, ChemObjectWriter {
 		}
 	}
 
+    /**
+     * Writes the content from molecule to output.
+     *
+     * @param   object  Molecule of which the data is outputted.
+     */
     public void writeMolecule(Molecule molecule) {
         SmilesGenerator sg = new SmilesGenerator();
         String smiles = "";

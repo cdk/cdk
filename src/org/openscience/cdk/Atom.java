@@ -30,7 +30,7 @@ package org.openscience.cdk;
 
 import javax.vecmath.*;
 /**
- *  Represents the idea of an chemical atom 
+ *  Represents the idea of an chemical atom.
  *
  * @author     steinbeck 
  * @created    October 2, 2000

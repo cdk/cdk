@@ -72,6 +72,12 @@ public class XYZReader implements ChemObjectReader {
 
     // private procedures
 
+    /**
+     *  Private method that actually parses the input to read a ChemFile
+     *  object.
+     *
+     * @returns A ChemFile containing the data parsed from input.
+     */
     private ChemFile readChemFile() {
         ChemFile file = new ChemFile();
         ChemSequence chemSequence = new ChemSequence();

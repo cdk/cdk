@@ -28,7 +28,19 @@ import java.util.*;
 import javax.vecmath.*;
 
 /**
- *  An Enumeration of the Atoms in a particular AtomContainer
+ *  An Enumeration of the Atoms in a particular AtomContainer.
+ *  The typical use is:
+ *
+ *  <pre>
+ *  AtomEnumeration atoms = ((Molecule)molecule).atoms();
+ *  while (atoms.hasMoreElements()) {
+ *      Atom a = (Atom)atoms.nextElement();
+ *      // do something with atom
+ *  }
+ *  </pre>
+ *
+ *  The Enumeration does not clone the AtomContainer from which
+ *  it is constructed, which might lead to errors.
  *
  * @author     steinbeck
  * @created    October 2, 2000
@@ -37,12 +49,20 @@ public class AtomEnumeration implements Enumeration
 {
 	protected int atomEnumerationCounter = 0;
 	protected AtomContainer ac;
-	
+
+    /**
+     *  Constructs a new AtomEnumeration.
+     *
+     *  @param      ac      AtomContainer which contains the atoms
+     */
 	public AtomEnumeration(AtomContainer ac)
 	{
 		this.ac = ac;
 	}
-	
+    
+    /**
+     *  Returns true if the Enumeration still has atoms left.
+     */
 	public boolean hasMoreElements()
 	{
 		if (ac.getAtomCount() > atomEnumerationCounter)
@@ -51,7 +71,12 @@ public class AtomEnumeration implements Enumeration
 		}
 		return false;
 	}
-	
+    
+    /**
+     *  Returns next atom in Enumeration.
+     *
+     *  @returns Uncasted Atom class.
+     */
 	public Object nextElement()
 	{
 		atomEnumerationCounter ++;
