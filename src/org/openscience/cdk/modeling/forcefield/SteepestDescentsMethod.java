@@ -7,10 +7,10 @@ import javax.vecmath.*;
 import org.openscience.cdk.*;
 
 /**
- *  Steepest Descents Method for optimisation
+ *  Find a direction from a point of the coordinates space using the steepest descents approach.
  *
- *@author     Labarta
- *@created    2004-12-03
+ *@author     vlabarta
+ *
  */
 public class SteepestDescentsMethod {
 	double arbitraryStepSize = 2;
@@ -25,7 +25,7 @@ public class SteepestDescentsMethod {
 	/**
 	 *  Constructor for the SteepestDescentsMethod object
 	 *
-	 *@param  point  Description of the Parameter
+	 *@param  point  Coordinates from current point
 	 */
 	public SteepestDescentsMethod(GVector point) {
 		newCoordinates.setSize(point.getSize());
@@ -36,7 +36,7 @@ public class SteepestDescentsMethod {
 	/**
 	 *  sk=-gK/|gk|
 	 *
-	 *@param  gK  Description of the Parameter
+	 * @param  gk  Gradient at coordinates Xk
 	 */
 	public void setSk(GVector gk) {
 
@@ -53,8 +53,8 @@ public class SteepestDescentsMethod {
 	 *  Method useful for Arbitrary Step approach: Compare f(Xk) with f(Xk+1) for
 	 *  decide the next step size.
 	 *
-	 *@param  kPoint              Coordinates of step k
-	 *@param  kplus1point         Coordinates of step k+1
+	 *@param  kPoint              Coordinates from current point, xk
+	 *@param  kplus1Point         Coordinates from step k+1
 	 *@param  forceFieldFunction  Force field function
 	 */
 	public void setArbitraryStepSize(GVector kPoint, GVector kplus1Point, PotentialFunction forceFieldFunction) {
@@ -87,8 +87,8 @@ public class SteepestDescentsMethod {
 	/**
 	 *  xk+1= Xk + Lambdak Sk
 	 *
-	 *@param  oldPoint   Old coordinates of the atoms, k step
-	 *@param  stepSizeK  Description of the Parameter
+	 *@param  oldCoordinates   Old coordinates of the atoms, k step
+	 *@param  stepSizeK  	Step size estimated
 	 *@return            New coordinates of the atoms, k+1 step
 	 */
 	public GVector setNewCoordinates(GVector oldCoordinates, double stepSizeK) {
