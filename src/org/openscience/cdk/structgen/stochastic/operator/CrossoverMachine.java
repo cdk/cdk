@@ -1,5 +1,7 @@
-/*
- * CrossoverMachine.java
+/*  $RCSfile$
+ *  $Author$  
+ *  $Date$  
+ *  $Revision$
  * 
  * Copyright (C) 2000-2004  The Chemistry Development Kit (CDK) project
  * 
@@ -30,7 +32,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.structgen.stochastic.PartialFilledStructureMerger;
-import org.openscience.cdk.tools.RandomNumbersTool;
+import org.openscience.cdk.math.RandomNumbersTool;
 
 /**
  * Modified molecular structures by applying crossover operator on a pair of parent structures 
