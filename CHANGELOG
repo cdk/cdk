@@ -13,6 +13,7 @@ New:
   window (implements RFE #954356)
 * Jmol API and IO from CVS HEAD on 10.05
 * Added AminoAcid templates
+* The libio.cml.Convertor now also excepts AtomContainer
 
 Fixes:
 * Fixed junit-test and run-test: missing cdk-data.jar

@@ -130,6 +130,8 @@ public class Convertor {
             writeSetOfMolecules((SetOfMolecules)object, element);
         } else if (object instanceof Molecule) {
             writeMolecule((Molecule)object, element);
+        } else if (object instanceof AtomContainer) {
+            writeAtomContainer((AtomContainer)object, element);
         } else if (object instanceof Crystal) {
             writeCrystal((Crystal)object, element);
         } else if (object instanceof ChemSequence) {
@@ -145,8 +147,9 @@ public class Convertor {
         } else if (object instanceof Reaction) {
             writeReaction((Reaction)object, element);
         } else {
-            logger.error("This object type is not supported.");
-            throw new CDKException("This object type is not supported.");
+            String errorMessage = "This object type is not supported: " + object.getClass().getName();
+            logger.error(errorMessage);
+            throw new CDKException(errorMessage);
         }
         if (setNamespaceUri && 
             schemaInstanceOutput && instanceLocation.length() > 0) {
