@@ -20,7 +20,7 @@ New:
 * More JUnit Tests.
 * Added rendering of wedge bonds (up/down) in Renderer2D
 * Added ChemObjectTree for for showing the content of a 
-  ChemObject as a tree
+  ChemObject as a tree, see cdk-view
 
 Fixes:
 * HOSECodeGenerator now generates correctly ranked n-sphere codes.
