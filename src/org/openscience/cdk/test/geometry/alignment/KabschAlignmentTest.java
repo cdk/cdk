@@ -57,6 +57,7 @@ public class KabschAlignmentTest extends TestCase {
         double rmsd = ka.getRMSD();
 
         assertTrue(1e-8 > rmsd);
+        assertNotNull(ka.getRotationMatrix());
     }
     
 }

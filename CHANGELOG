@@ -16,11 +16,11 @@ New:
 * The libio.cml.Convertor now also accepts AtomContainer
 
 Fixes:
+* Fixed KabschAlignment so that the rotation matrixi, U, is  returned properly
 * Fixed junit-test and run-test: missing cdk-data.jar
 * Don't consume Exceptions while writing MDL
 * Removed entry for 'D' in the isotope list; '2H' is still present
   (closes #1118689)
-
 API changes:
 * Moved IsotopeFactory from cdk-standard to the cdk-core module
 * Descriptor.calculate() now returns a DescriptorValue instead of

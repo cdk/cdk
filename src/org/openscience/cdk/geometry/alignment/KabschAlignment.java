@@ -353,7 +353,7 @@ public class KabschAlignment {
         }
 
         // take the transpose
-        double[][] U = new double[3][3];
+        U = new double[3][3];
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 U[i][j] = tU[j][i];
