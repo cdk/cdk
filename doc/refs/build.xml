@@ -8,25 +8,45 @@
         </fileset>
         <fileset dir="../jar">
             <include name="jreferences.jar"/>
+            <include name="bibtexml.jar"/>
+            <include name="castor-0.9.4.3-xml.jar"/>
+        </fileset>
+        <fileset dir="../../jar">
+            <include name="log4j-core.jar"/>
+            <include name="log4j.jar"/>
+            <include name="xerces-2.5.0.jar"/>
         </fileset>
     </path>
 
     <target id="all" name="all" depends="convertToBibTex, list"/>
     
+    <target id="clean" name="clean">
+        <delete>
+            <fileset dir="." includes="cheminf.dbx" />
+            <fileset dir="." includes="cheminf.bib" />
+            <fileset dir="." includes="biblio.dbx" />
+            <fileset dir="." includes="*.log" />
+            <fileset dir="." includes="*~" />
+        </delete>
+    </target>
+    
     <target id="convertToDocBook" name="convertToDocBook">
-        <java classname="org.openscience.references.applications.ConvertReference"
-            output="cheminf.dbx">
+        <java classname="org.openscience.jreferences.applications.ConvertReferences"
+            fork="yes" output="cheminf.dbx">
+            <!-- The fork is *very* important. It apperently not works with
+                 Ant's default Apache version ! -->
             <classpath refid="project.class.path"/>
             <arg value="--input:bibtexml"/>
             <arg value="--output:docbook"/>
-            <arg value="--dbxstyle:ACS"/>
+            <arg value="--dbxstyle:CDKWebsite"/>
+            <arg value="--sort"/>
             <arg value="cheminf.btx"/>
         </java>
     </target>
 
     <target id="convertToBibTex" name="convertToBibTex">
-        <java classname="org.openscience.references.applications.ConvertReference"
-            output="cheminf.bib">
+        <java classname="org.openscience.jreferences.applications.ConvertReferences"
+            fork="yes" output="cheminf.bib">
             <classpath refid="project.class.path"/>
             <arg value="--input:bibtexml"/>
             <arg value="--output:bibtex"/>
@@ -35,8 +55,13 @@
     </target>
 
     <target id="list" name="list">
-        <java classname="org.openscience.references.applications.ListReferences"
-            output="biblio.dbx">
+        <java classname="org.openscience.references.applications.SetReferences"
+            fork="yes">
+            <classpath refid="project.class.path"/>
+            <arg value="cheminf.btx"/>
+        </java>
+        <java classname="org.openscience.references.applications.NumberReferences"
+            fork="yes" output="biblio.dbx">
             <classpath refid="project.class.path"/>
             <arg value="biblio.dbx.source"/>
         </java>
