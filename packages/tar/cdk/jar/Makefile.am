@@ -13,7 +13,8 @@ JARLIBS=vecmath1.2-1.14.jar \
   baysmith-io.jar \
   dadml.jar \
   junit.jar \
-  xerces-2.5.0.jar \
+  xerces-2.6.2.jar \
+  xmlApis-2.6.2.jar \
   batik-awt-util.jar \
   batik-dom.jar \
   batik-svggen.jar \
@@ -29,7 +30,8 @@ JARLIBS=vecmath1.2-1.14.jar \
   pmrlib.jar \
   commons-cli-1.0.jar \
   jfontchooser.jar \
-  jmolApis.jar
+  jmolApis.jar \
+  jmolIO.jar
 
 EXTRA_DIST=${JARLIBS}
 
