@@ -35,7 +35,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * <pre>
  * ValidatorEngine engine = new ValidatorEngine();
  * engine.addValidator(new BasicValidator());
- * ValidationReport report = engine.validatenew(new Molecule());
+ * ValidationReport report = engine.validateMolecule(new Molecule());
  * </pre>
  *
  * @author   Egon Willighagen <egonw@sci.kun.nl>
