@@ -91,7 +91,7 @@ public class PMPReader implements ChemObjectReader {
         if (object instanceof ChemFile) {
             return (ChemObject)readChemFile();
         } else {
-            throw new Exception("Only supported is reading of ChemFile objects.");
+            throw new CDKException("Only supported is reading of ChemFile objects.");
         }
     }
 
