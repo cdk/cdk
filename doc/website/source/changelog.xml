@@ -22,9 +22,9 @@
   
   <para>
     Revision History of the CDK:
-    <computeroutput>
-      &changelog;
-    </computeroutput>
   </para>
+  <literallayout>
+    &changelog;
+  </literallayout>
 
 </webpage>
