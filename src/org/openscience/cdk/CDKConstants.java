@@ -72,6 +72,11 @@ public class CDKConstants {
         public final static int STEREO_ATOM_PARITY_MINUS = -1;
         public final static int STEREO_ATOM_PARITY_UNDEFINED = 0;
 
+        public final static int HYBRIDIZATION_UNSET = 0;
+        public final static int HYBRIDIZATION_SP1 = 1;
+        public final static int HYBRIDIZATION_SP2 = 2;
+        public final static int HYBRIDIZATION_SP3 = 3;
+
         /** 
          * Carbon NMR shift contant for use as a key in the
          * ChemObject.physicalProperties hashtable.

@@ -30,6 +30,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.AtomType;
+import org.openscience.cdk.CDKConstants;
 
 /**
  * Checks the funcitonality of the AtomType class.
@@ -107,6 +108,14 @@ public class AtomTypeTest extends TestCase {
         AtomType a = new AtomType("C");
         a.setFormalCharge(charge);
         assertEquals(charge, a.getFormalCharge());
+    }
+
+    public void testSetHybridization() {
+        int hybridization = CDKConstants.HYBRIDIZATION_SP3;
+
+        AtomType atom = new AtomType("C");
+        atom.setHybridization(hybridization);
+        assertEquals(hybridization, atom.getHybridization());
     }
 
     /**

@@ -72,6 +72,11 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
     protected int formalCharge;
 
     /**
+     *  The hybridization state of this atom.
+     */
+    protected int hybridization;
+
+    /**
 	 *  Constructor for the AtomType object.
      *
      * @param elementSymbol  Symbol of the atom
@@ -193,6 +198,28 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
      */
     public int getFormalCharge() {
         return this.formalCharge;
+    }
+    
+    /**
+     *  Sets the hybridization of this atom.
+     *
+     * @param  hybridization  The formal charge
+     *
+     * @see    #getHybridization
+     */
+    public void setHybridization(int hybridization) {
+        this.hybridization = hybridization;
+    }
+    
+    /**
+     *  Returns the hybridization of this atom.
+     *
+     * @return the hybridization of this atom
+     *
+     * @see    #setHybridization
+     */
+    public int getHybridization() {
+        return this.hybridization;
     }
     
     /**
