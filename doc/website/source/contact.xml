@@ -18,6 +18,7 @@
 	  To keep up to date about the project, or to ask question about the software, there are
 	  three mailling lists to which you can
 	  <ulink url="http://sourceforge.net/mail/?group_id=20024">subscribe</ulink>.
+    </para>
 	  <variablelist><title>Lists</title>
         <varlistentry><term><filename>cdk-commit</filename></term>
           <listitem>
@@ -49,24 +50,24 @@
           </listitem>
         </varlistentry>
       </variablelist>
-	</para>
   </section>
 
     <section>
       <title>Internet Relay Chat (IRC)</title>
       <para>
         The developers have an channel at the IRC network of
-        <ulink url="www.openprojects.net">OpenProjects.net</ulink>,
+        <ulink url="www.freenode.net">freenode</ulink>,
         called #cdk. The developers are not online 100%, but you might
         catch us there for a chat.
       </para>
       <para>
         A permanent visitor of this channel is the 
-        <ulink url="http://navi.picogui.org/svn/picogui/trunk/tools/irc/cia.html">CIA bot</ulink>
+        <ulink url="http://cia.navi.cx/irc">CIA bot</ulink>
         which posts live messages from the activiteis in CVS. Besides posting the cdk commit
         messages to the #cdk channel, they are duplicated to #commits, where many other projects
         can be live followed too. Statistics from the bot can be found
-        <ulink url="http://navi.picogui.org/cgi-bin/cia_stats.cgi">here</ulink>.
+        <ulink url="http://cia.navi.cx/stats/project">here</ulink>, and 
+        <ulink url="http://cia.navi.cx/stats/project/cdk">here</ulink> for cdk only.
       </para>
     </section>
 
