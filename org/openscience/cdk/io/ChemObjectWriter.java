@@ -1,4 +1,4 @@
-/* 
+/*
  * $RCSfile$ 
  * $Author$ 
  * $Date$
@@ -58,5 +58,11 @@ public interface ChemObjectWriter {
      *            does not support the data in the object
      */
     public void write(ChemObject object) throws UnsupportedChemObjectException;
+
+
+    /*
+     * Closes the writer's resources.
+     */
+    public void close() throws IOException;
 
 }

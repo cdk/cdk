@@ -63,6 +63,13 @@ public class MDLWriter implements CDKConstants, ChemObjectWriter {
 		}
 	}
 
+    /**
+     * Flushes the output and closes this object
+     */
+    public void close() throws IOException {
+        writer.close();
+    }
+
 	/**
 	 * Contructs a new MDLWriter that can write an array of Molecules to a Writer
 	 *
@@ -81,12 +88,12 @@ public class MDLWriter implements CDKConstants, ChemObjectWriter {
 		if (object instanceof SetOfMolecules)
 		{
 		    writeSetOfMolecules((SetOfMolecules)object);
-		} 
-		else if (object instanceof Molecule) 
+		}
+		else if (object instanceof Molecule)
 		{
 		    writeMolecule((Molecule)object);
-		} 
-		else 
+		}
+		else
 		{
 		    throw new UnsupportedChemObjectException("Only supported are ChemFile and Molecule.");
 		}
@@ -115,13 +122,6 @@ public class MDLWriter implements CDKConstants, ChemObjectWriter {
 			{
 			}
 		}
-		try
-		{		
-			writer.close();
-		}
-		catch (Exception exc)
-		{
-		}		
 	}
 	
 	

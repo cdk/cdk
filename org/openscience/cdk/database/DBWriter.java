@@ -52,7 +52,16 @@ public class DBWriter implements ChemObjectWriter {
 		this.con = con;
 	}
 
-	/**
+
+    /**
+     * Flushes the output and closes this object
+     */
+    public void close() throws IOException {
+        // FIXME: connection should be closed
+    }
+
+
+    /**
 	 *
 	 *
 	 * @param object

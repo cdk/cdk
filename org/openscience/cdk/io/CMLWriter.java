@@ -97,7 +97,7 @@ public class CMLWriter implements ChemObjectWriter, CDKConstants {
      * Flushes the output and closes this object
      */
     public void close() throws IOException {
-	output.close();
+        output.close();
     }
 
     /**
