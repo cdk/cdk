@@ -84,24 +84,24 @@ public class HOSECodeTest extends TestCase
 		{ 
 			"O-1;=C(//)",
 			"C-3;=OCC(//)",
-			"C-2;=CC(//)",
-			"C-2;=CC(//)",
+			"C-3;=CC(//)",
+			"C-3;=CC(//)",
 			"C-3;*C*CC(//)",
-			"C-2;*C*C(//)",
-			"C-2;*C*C(//)",
+			"C-3;*C*C(//)",
+			"C-3;*C*C(//)",
 			"C-3;*C*CC(//)",
 			"C-3;*C*CC(//)",
-			"C-2;*C*C(//)",
-			"C-2;*C*C(//)",
-			"C-2;*C*C(//)",
-			"C-2;*C*C(//)",
+			"C-3;*C*C(//)",
+			"C-3;*C*C(//)",
+			"C-3;*C*C(//)",
+			"C-3;*C*C(//)",
 			"C-3;*C*CO(//)",
 			"O-2;CC(//)",
 			"C-3;*C*CO(//)",
 			"C-3;*C*CO(//)",
 			"O-2;CC(//)",
-			"C-1;O(//)",
-			"C-2;*C*C(//)",
+			"C-4;O(//)",
+			"C-3;*C*C(//)",
 			"C-3;*C*CC(//)",
 			"C-3;*C*C*C(//)",
 			"C-3;*C*C*C(//)"
@@ -216,24 +216,24 @@ public class HOSECodeTest extends TestCase
 			
 "O-1;=C(CC/*C*C,=C/*C*C,*C,&)",
 "C-3;CC=O(*C*C,=C,/*C*C,*C,&/*C*C,*C&,*&O)",
-"C-2;C=C(C=O,C/*C*C,,*&*C/*C*&,*C,*C)",
-"C-2;C=C(*C*C,C/*C*C,*C,&=O/*C*C,*C&,*&,)",
+"C-3;C=C(C=O,C/*C*C,,*&*C/*C*&,*C,*C)",
+"C-3;C=C(*C*C,C/*C*C,*C,&=O/*C*C,*C&,*&,)",
 "C-3;*C*CC(*C*C,*C,=C/*C*C,C*C,*&,&/*&C,*CO,=O&,*&)",
-"C-2;*C*C(*CC,*C/*C*C,=C,*&C/*C*&,*CC,&,*C*C)",
-"C-2;*C*C(*CC,*C/*C*C,*C*C,*&C/*C*&,*CO,*C&,*C,=C)",
+"C-3;*C*C(*CC,*C/*C*C,=C,*&C/*C*&,*CC,&,*C*C)",
+"C-3;*C*C(*CC,*C/*C*C,*C*C,*&C/*C*&,*CO,*C&,*C,=C)",
 "C-3;*CC*C(*C*C,*C*C,*C/*C*C,*CO,*C&,*C,*&/*CC,*&C,*&O,&,*C,*&)",
 "C-3;C*C*C(*C*C,*CO,*C/*C*C,*C,*C,&,*&/*C*C,*C&,*&,*&)",
-"C-2;*C*C(C*C,*C/*C*C,*CO,*&/*C*C,*C,*&,&)",
-"C-2;*C*C(*C,*C/C*C,*&/*C*C,*&O)",
-"C-2;*C*C(*C,*C/*CO,*&/*&C,C)",
-"C-2;*C*C(*CO,*C/C*C,C,*&/*C*C,*&,*&*C)",
+"C-3;*C*C(C*C,*C/*C*C,*CO,*&/*C*C,*C,*&,&)",
+"C-3;*C*C(*C,*C/C*C,*&/*C*C,*&O)",
+"C-3;*C*C(*C,*C/*CO,*&/*&C,C)",
+"C-3;*C*C(*CO,*C/C*C,C,*&/*C*C,*&,*&*C)",
 "C-3;*CO*C(C*C,C,*C/*C*C,*C,*&*C,*&/*C*&,*C,*&,*CO)",
 "O-2;CC(*C*C,*C*C/*C*C,*CO,&*C,*C/*C*C,*C&,*&,C,*C,*&)",
 "C-3;*C*CO(*C*C,*CO,C/*C*C,C*C,*&,C,*&*C/*&C,*CC,*&*C,*&,,*C)",
 "C-3;*C*CO(*CO,*C,C/*C*C,C,*&C,/*&*C,*CC,*&*C,=OC)",
 "O-2;CC(*C*C,/*CO,*C/*C*C,C,*&C)",
-"C-1;O(C/*C*C/*CO,*C)",
-"C-2;*C*C(*CC,*CO/*C*C,C=O,*&O,C/*&*C,*CC,=&,,C,)",
+"C-4;O(C/*C*C/*CO,*C)",
+"C-3;*C*C(*CC,*CO/*C*C,C=O,*&O,C/*&*C,*CC,=&,,C,)",
 "C-3;*C*CC(*C*C,*C,C=O/*C*C,*CC,*&O,=&,/*CC,*&O,*&,=&,C)",
 "C-3;*C*C*C(*C*C,C*C,*CC/C*C,*CO,C=O,*&,*&,=&/*C*C,*&,*&O,&,=&,)",
 "C-3;*C*C*C(*C*C,C*C,*CO/C*C,*CC,*C*C,*&,*&O,&/=OC,*&,*&,=&,*C&,*C,C)"
@@ -270,14 +270,14 @@ public class HOSECodeTest extends TestCase
 	{
 		String[] result = {
 		     "C-3;*C*C*C(*C*N,*C,*C/*C,*&,*&,*&/*&)",
-     "C-2;*C*C(*C*C,*N/*C*&,*C,*&/*C,*&)",
-     "C-2;*C*N(*C,*C/*&*C,*&*C/,*C,*C)",
-     "N-2;*C*C(*C*C,*C/*&*C,*C,*&/,*C,*&)",
+     "C-3;*C*C(*C*C,*N/*C*&,*C,*&/*C,*&)",
+     "C-3;*C*N(*C,*C/*&*C,*&*C/,*C,*C)",
+     "N-3;*C*C(*C*C,*C/*&*C,*C,*&/,*C,*&)",
      "C-3;*C*C*N(*C*C,*C,*C/*C,*&,*&,*&/*&)",
-     "C-2;*C*C(*C*N,*C/*C*C,*C,*&/*&,*&,*&)",
-     "C-2;*C*C(*C,*C/*C*N,*&/*C*&,*C)",
-     "C-2;*C*C(*C,*C/*C*C,*&/*&*N,*C)",
-     "C-2;*C*C(*C*C,*C/*C*N,*C,*&/*&,*&,*&)"};
+     "C-3;*C*C(*C*N,*C/*C*C,*C,*&/*&,*&,*&)",
+     "C-3;*C*C(*C,*C/*C*N,*&/*C*&,*C)",
+     "C-3;*C*C(*C,*C/*C*C,*&/*&*N,*C)",
+     "C-3;*C*C(*C*C,*C/*C*N,*C,*&/*&,*&,*&)"};
 		try
 		{
 			Molecule molecule = (new SmilesParser()).parseSmiles("C1(C=CN2)=C2C=CC=C1");
@@ -305,9 +305,9 @@ public class HOSECodeTest extends TestCase
 		Molecule molecule = null;
 		HOSECodeGenerator hcg = null;
 		String[] result = {
-		    "C-1;C(=C/Y/)",
-     "C-2;=CC(Y,//)",
-     "C-2;=CY(C,//)",
+		    "C-4;C(=C/Y/)",
+     "C-3;=CC(Y,//)",
+     "C-3;=CY(C,//)",
      "Br-1;C(=C/C/)"
 		};
 
@@ -376,9 +376,9 @@ public class HOSECodeTest extends TestCase
 		Molecule molecule = null;
 		HOSECodeGenerator hcg = null;
 		String[] result = {
-		    "C-1-;C(=C/Y'+4'/)",
-     "C-2;=CC-(Y'+4',//)",
-     "C-2;=CY'+4'(C-,//)",
+		    "C-4-;C(=C/Y'+4'/)",
+     "C-3;=CC-(Y'+4',//)",
+     "C-3;=CY'+4'(C-,//)",
      "Br-1'+4';C(=C/C-/)"
 		};
 
