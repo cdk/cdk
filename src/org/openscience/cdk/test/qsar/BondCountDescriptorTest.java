@@ -24,6 +24,7 @@
 package org.openscience.cdk.test.qsar;
 
 import org.openscience.cdk.qsar.*;
+import org.openscience.cdk.qsar.result.*;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -51,7 +52,7 @@ public class BondCountDescriptorTest extends TestCase {
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser();
         AtomContainer mol = sp.parseSmiles("CCO"); // ethanol
-        assertEquals(13, ((Integer)descriptor.calculate(mol)).intValue());
+        assertEquals(13, ((IntegerResult)descriptor.calculate(mol)).intValue());
 	}
 }
 

@@ -24,6 +24,7 @@
 package org.openscience.cdk.test.qsar;
 
 import org.openscience.cdk.qsar.*;
+import org.openscience.cdk.qsar.result.*;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -56,7 +57,7 @@ public class IsProtonInConjugatedPiSystemDescriptorTest extends TestCase {
 		Molecule mol = sp.parseSmiles("CNC=CC=C"); 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
-		assertTrue(((Boolean)descriptor.calculate(mol)).booleanValue());
+		assertTrue(((BooleanResult)descriptor.calculate(mol)).booleanValue());
 	}
 }
 

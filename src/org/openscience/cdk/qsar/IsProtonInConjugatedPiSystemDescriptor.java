@@ -34,6 +34,7 @@ import org.openscience.cdk.SetOfAtomContainers;
 import java.util.Map;
 import java.util.Hashtable;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.qsar.result.*;
 
 /**
  *  Description of the Class
@@ -114,7 +115,7 @@ public class IsProtonInConjugatedPiSystemDescriptor implements Descriptor {
 	 *@return                   true if the proton is bonded to a conjugated system
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public Object calculate(AtomContainer ac) throws CDKException {
+	public DescriptorResult calculate(AtomContainer ac) throws CDKException {
 			boolean isProtonInPiSystem = false;
 			int counter = 0;
 			Molecule mol = new Molecule(ac);
@@ -141,7 +142,7 @@ public class IsProtonInConjugatedPiSystemDescriptor implements Descriptor {
 					isProtonInPiSystem = false;
 				}
 			}
-			return new Boolean(isProtonInPiSystem);
+			return new BooleanResult(isProtonInPiSystem);
 	}
 
 

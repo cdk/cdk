@@ -24,6 +24,7 @@
 package org.openscience.cdk.test.qsar;
 
 import org.openscience.cdk.qsar.*;
+import org.openscience.cdk.qsar.result.*;
 import junit.framework.Test;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.Molecule;
@@ -53,9 +54,9 @@ public class SigmaElectronegativityDescriptorTest extends TestCase {
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser();
         Molecule mol = sp.parseSmiles("CF"); 
-	HydrogenAdder hAdder = new HydrogenAdder();
-	hAdder.addExplicitHydrogensToSatisfyValency(mol);
-        assertEquals(8.72, ((Double)descriptor.calculate(mol)).doubleValue(), 0.1);
+        HydrogenAdder hAdder = new HydrogenAdder();
+        hAdder.addExplicitHydrogensToSatisfyValency(mol);
+        assertEquals(8.72, ((DoubleResult)descriptor.calculate(mol)).doubleValue(), 0.01);
 	}
 }
 

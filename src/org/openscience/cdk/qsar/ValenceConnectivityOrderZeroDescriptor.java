@@ -30,6 +30,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.tools.*;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.qsar.result.*;
 import junit.framework.AssertionFailedError;
 import java.util.Map;
 import java.util.Hashtable;
@@ -104,7 +105,7 @@ public class ValenceConnectivityOrderZeroDescriptor implements Descriptor {
 	 *@return                   chi0v and chi0_C returned as arrayList
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public Object calculate(AtomContainer ac) throws CDKException {
+	public DescriptorResult calculate(AtomContainer ac) throws CDKException {
 		Hashtable valences = new Hashtable();
 		valences.put("Li", new Integer(1));
 		valences.put("Be", new Integer(2));
@@ -148,7 +149,7 @@ public class ValenceConnectivityOrderZeroDescriptor implements Descriptor {
 		int atomicNumber = 0;
 		int hcount = 0;
 		int atomValue = 0;
-		ArrayList chiValuesVCOZ = new ArrayList(2);
+		DoubleArrayResult chiValuesVCOZ = new DoubleArrayResult(2);
 		double chi0v = 0;
 		double chi0v_C = 0;
 		Atom[] atoms = ac.getAtoms();
@@ -187,9 +188,9 @@ public class ValenceConnectivityOrderZeroDescriptor implements Descriptor {
 				chi0v += (1/(Math.sqrt(atomValue))); // chi0v
 			}
 		}
-		chiValuesVCOZ.add(new Double(chi0v));
-		chiValuesVCOZ.add(new Double(chi0v_C));		
-		return new ArrayList(chiValuesVCOZ);
+		chiValuesVCOZ.add(chi0v);
+		chiValuesVCOZ.add(chi0v_C);
+		return chiValuesVCOZ;
 	}
 
 

@@ -28,6 +28,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.tools.*;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.qsar.result.*;
 import java.util.Map;
 import java.util.Hashtable;
 import java.util.ArrayList;
@@ -101,13 +102,13 @@ public class KappaShapeIndicesDescriptor implements Descriptor {
 	 *@return                   kier1, kier2 and kier3 are returned as arrayList of doubles
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public Object calculate(AtomContainer ac) throws CDKException {
+	public DescriptorResult calculate(AtomContainer ac) throws CDKException {
 
 		Atom[] atoms = ac.getAtoms();
 		Atom[] firstAtomNeighboors = null;
 		Atom[] secondAtomNeighboors = null;
 		Atom[] thirdAtomNeighboors = null;
-		ArrayList kierValues = new ArrayList(3);
+		DoubleArrayResult kierValues = new DoubleArrayResult(3);
 		double bond1 = 0;
 		double bond2 = 0;
 		double bond3 = 0;
@@ -177,10 +178,10 @@ public class KappaShapeIndicesDescriptor implements Descriptor {
 		else {
 			kier3 = ( ( (atomsCount - 3) * ( (atomsCount - 2) * (atomsCount - 2) ) ) / ( triplePaths.size() * triplePaths.size() ) );
 		}
-		kierValues.add(new Double(kier1));
-		kierValues.add(new Double(kier2));
-		kierValues.add(new Double(kier3));		
-		return new ArrayList(kierValues);
+		kierValues.add(kier1);
+		kierValues.add(kier2);
+		kierValues.add(kier3);		
+		return kierValues;
 	}
 
 

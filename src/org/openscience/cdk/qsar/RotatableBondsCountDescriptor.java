@@ -31,6 +31,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.RingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
+import org.openscience.cdk.qsar.result.*;
 import java.util.Vector;
 import java.util.Map;
 import java.util.Hashtable;
@@ -107,7 +108,7 @@ public class RotatableBondsCountDescriptor implements Descriptor {
 	 *@return                   number of rotatable bonds
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public Object calculate(AtomContainer ac) throws CDKException {
+	public DescriptorResult calculate(AtomContainer ac) throws CDKException {
 		int rotatableBondsCount = 0;
 		Bond[] bonds = ac.getBonds();
 		int degree0 = 0;
@@ -144,7 +145,7 @@ public class RotatableBondsCountDescriptor implements Descriptor {
 				}
 			}
 		}
-		return new Integer(rotatableBondsCount);
+		return new IntegerResult(rotatableBondsCount);
 	}
 
 

@@ -32,6 +32,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.AtomEnumeration;
+import org.openscience.cdk.qsar.result.*;
 
 import java.lang.Math;
 import java.util.Vector;
@@ -132,7 +133,7 @@ public class GravitationalIndexDescriptor implements Descriptor {
      *@return            An ArrayList containing 9 elements in the order described above
      */
 
-    public Object calculate(AtomContainer container) {
+    public DescriptorResult calculate(AtomContainer container) {
         IsotopeFactory factory = null;
         double m1 = 0;
         double m2 = 0;
@@ -241,20 +242,20 @@ public class GravitationalIndexDescriptor implements Descriptor {
         }
 
 
-        ArrayList retval = new ArrayList(9);
-        retval.add( new Double(heavysum) );
-        retval.add( new Double(Math.sqrt(heavysum)) );
-        retval.add( new Double(Math.pow(heavysum,1.0/3.0)) );
-        
-        retval.add( new Double(sum) );
-        retval.add( new Double(Math.sqrt(sum)) );
-        retval.add( new Double(Math.pow(sum,1.0/3.0)) );
+        DoubleArrayResult retval = new DoubleArrayResult(9);
+        retval.add( heavysum );
+        retval.add( Math.sqrt(heavysum) );
+        retval.add( Math.pow(heavysum,1.0/3.0) );
+                    
+        retval.add( sum );
+        retval.add( Math.sqrt(sum) );
+        retval.add( Math.pow(sum,1.0/3.0) );
+                    
+        retval.add( allheavysum );
+        retval.add( Math.sqrt(allheavysum) );
+        retval.add( Math.pow(allheavysum,1.0/3.0) );
 
-        retval.add( new Double(allheavysum) );
-        retval.add( new Double(Math.sqrt(allheavysum)) );
-        retval.add( new Double(Math.pow(allheavysum,1.0/3.0)) );
-
-        return(retval);
+        return retval;
     }
 }
     

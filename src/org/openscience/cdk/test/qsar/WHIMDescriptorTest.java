@@ -21,6 +21,7 @@
 package org.openscience.cdk.test.qsar;
 
 import org.openscience.cdk.qsar.*;
+import org.openscience.cdk.qsar.result.*;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -65,10 +66,10 @@ public class WHIMDescriptorTest extends TestCase {
             Object[] params = new Object[1];
             params[0] = new String("unity");
             descriptor.setParameters(params);
-            ArrayList retval = (ArrayList)descriptor.calculate(ac);
+            DoubleArrayResult retval = (DoubleArrayResult)descriptor.calculate(ac);
             System.out.println("Num ret = "+retval.size());
             for (int i = 0; i < retval.size(); i++) {
-                System.out.println( ((Double)retval.get(i)).doubleValue() );
+                System.out.println( retval.get(i) );
             }
 
             /*

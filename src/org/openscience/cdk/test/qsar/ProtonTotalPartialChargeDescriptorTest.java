@@ -24,6 +24,7 @@
 package org.openscience.cdk.test.qsar;
 
 import org.openscience.cdk.qsar.*;
+import org.openscience.cdk.qsar.result.*;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -53,8 +54,8 @@ public class ProtonTotalPartialChargeDescriptorTest extends TestCase {
 		Molecule mol = sp.parseSmiles("CF"); 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
-		ArrayList retval = (ArrayList)descriptor.calculate(mol);
-		assertEquals(0.05783, ((Double)retval.get(2)).doubleValue(), 0.00001);
+		DoubleArrayResult retval = (DoubleArrayResult)descriptor.calculate(mol);
+		assertEquals(0.05783, retval.get(2), 0.00001);
 	}
 }
 

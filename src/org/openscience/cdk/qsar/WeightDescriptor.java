@@ -33,6 +33,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.tools.MFAnalyser;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.qsar.result.*;
 import java.util.Map;
 import java.util.Hashtable;
 
@@ -102,7 +103,7 @@ public class WeightDescriptor implements Descriptor {
 	 *@return            Number of atoms of a certain type is returned.
 	 */
 
-	public Object calculate(AtomContainer container) {
+	public DescriptorResult calculate(AtomContainer container) {
 		double weight = 0;
 		Atom[] atoms = container.getAtoms();
 		if (elementName == "") {
@@ -129,7 +130,7 @@ public class WeightDescriptor implements Descriptor {
 				}
 			}
 		}
-		return new Double(weight);
+		return new DoubleResult(weight);
 	}
 
 

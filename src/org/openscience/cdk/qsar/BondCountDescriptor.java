@@ -27,7 +27,7 @@ package org.openscience.cdk.qsar;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.result.IntegerResult;
+import org.openscience.cdk.qsar.result.*;
 import java.util.Map;
 import java.util.Hashtable;
 
@@ -101,7 +101,7 @@ public class BondCountDescriptor implements Descriptor {
 	 *@param  container  AtomContainer
 	 *@return            The number of bonds of a certain type.
 	 */
-	public Object calculate(AtomContainer container) {
+	public DescriptorResult calculate(AtomContainer container) {
 		int bondCount = 0;
 		Bond[] bonds = container.getBonds();
 		for (int i = 0; i < bonds.length; i++) {

@@ -31,6 +31,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.qsar.result.*;
 import java.util.Map;
 import java.util.Hashtable;
 
@@ -108,7 +109,7 @@ public class HBondDonorCountDescriptor implements Descriptor {
 	 *@return                   number of H bond donors
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public Object calculate(AtomContainer ac) throws CDKException {
+	public DescriptorResult calculate(AtomContainer ac) throws CDKException {
 		Molecule mol = new Molecule(ac);
 		if (checkAromaticity) {
 			HueckelAromaticityDetector.detectAromaticity(mol);
@@ -151,7 +152,7 @@ public class HBondDonorCountDescriptor implements Descriptor {
 				hBondDonors += 0;
 			}
 		}
-		return new Integer(hBondDonors);
+		return new IntegerResult(hBondDonors);
 	}
 
 

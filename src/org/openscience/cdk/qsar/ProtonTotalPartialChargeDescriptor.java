@@ -29,6 +29,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
+import org.openscience.cdk.qsar.result.*;
 
 import java.util.Map;
 import java.util.Hashtable;
@@ -108,7 +109,7 @@ public class ProtonTotalPartialChargeDescriptor implements Descriptor {
 	 *@return                   an array of doubles with partial charges of [heavy, proton_1 ... proton_n]
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public Object calculate(AtomContainer ac) throws CDKException {
+	public DescriptorResult calculate(AtomContainer ac) throws CDKException {
 		int counter = 1;
 		Molecule mol = new Molecule(ac);
 		try {
@@ -121,11 +122,11 @@ public class ProtonTotalPartialChargeDescriptor implements Descriptor {
 		}
 		Atom target = mol.getAtomAt(atomPosition);
 		Atom[] neighboors = mol.getConnectedAtoms(target);
-		ArrayList protonPartialCharge = new ArrayList(neighboors.length + 1);
-		protonPartialCharge.add( new Double(target.getCharge()) );
+		DoubleArrayResult protonPartialCharge = new DoubleArrayResult(neighboors.length + 1);
+		protonPartialCharge.add( target.getCharge() );
 		for (int i = 0; i < neighboors.length; i++) {
 			if (neighboors[i].getSymbol().equals("H")) {
-				protonPartialCharge.add( new Double(neighboors[i].getCharge()) );				counter++;
+				protonPartialCharge.add( neighboors[i].getCharge() );				counter++;
 			}
 		}
 		return protonPartialCharge;

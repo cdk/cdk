@@ -27,6 +27,7 @@ package org.openscience.cdk.qsar;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.qsar.result.*;
 import java.util.Map;
 import java.util.Hashtable;
 
@@ -89,7 +90,7 @@ public class ZagrebIndexDescriptor implements Descriptor {
 	 *@return                   zagreb index
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public Object calculate(AtomContainer ac) throws CDKException {
+	public DescriptorResult calculate(AtomContainer ac) throws CDKException {
 		double zagreb = 0;
 		Atom[] atoms = ac.getAtoms();
 		for (int i = 0; i < atoms.length; i++) {
@@ -102,7 +103,7 @@ public class ZagrebIndexDescriptor implements Descriptor {
 			}
 			zagreb += (atomDegree * atomDegree);
 		}
-		return new Double(zagreb);
+		return new DoubleResult(zagreb);
 	}
 
 

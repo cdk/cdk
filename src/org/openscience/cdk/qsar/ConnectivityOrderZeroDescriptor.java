@@ -27,6 +27,7 @@ package org.openscience.cdk.qsar;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.qsar.result.*;
 import java.util.Map;
 import java.util.Hashtable;
 import java.util.ArrayList;
@@ -95,8 +96,8 @@ public class ConnectivityOrderZeroDescriptor implements Descriptor {
 	 *@return                   chiValuesCOZ is an arrayList that contains chi0 and chi0_C
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public Object calculate(AtomContainer ac) throws CDKException {
-		ArrayList chiValuesCOZ = new ArrayList(2);
+	public DescriptorResult calculate(AtomContainer ac) throws CDKException {
+		DoubleArrayResult chiValuesCOZ = new DoubleArrayResult(2);
 		double chi0 = 0;
 		double chi0_C = 0;
 		Atom[] atoms = ac.getAtoms();
@@ -115,9 +116,9 @@ public class ConnectivityOrderZeroDescriptor implements Descriptor {
 				chi0 += 1/(Math.sqrt(atomDegree));
 			}
 		}
-		chiValuesCOZ.add(new Double(chi0));
-		chiValuesCOZ.add(new Double(chi0_C));		
-		return new ArrayList(chiValuesCOZ);
+		chiValuesCOZ.add(chi0);
+		chiValuesCOZ.add(chi0_C);		
+		return chiValuesCOZ;
 	}
 
 

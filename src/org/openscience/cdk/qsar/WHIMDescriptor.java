@@ -31,6 +31,7 @@ import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.charges.Polarizability;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.qsar.result.*;
 
 import java.lang.Math;
 import java.util.Vector;
@@ -246,7 +247,7 @@ public class WHIMDescriptor implements Descriptor {
      *@param  container  Parameter is the atom container.
      *@return            An ArrayList containing the descriptors in the order described above. 
      */
-    public Object calculate(AtomContainer container) throws CDKException {
+    public DescriptorResult calculate(AtomContainer container) throws CDKException {
         double sum = 0.0;
         Molecule ac = new Molecule(container);
 
@@ -345,30 +346,30 @@ public class WHIMDescriptor implements Descriptor {
         double D = eta[0] + eta[1] + eta[2];
 
         // return all the stuff we calculated
-        ArrayList retval = new ArrayList(11+6);
-        retval.add( new Double(lambda[0]) );
-        retval.add( new Double(lambda[1]) );
-        retval.add( new Double(lambda[2]) );
+        DoubleArrayResult retval = new DoubleArrayResult(11+6);
+        retval.add( lambda[0] );
+        retval.add( lambda[1] );
+        retval.add( lambda[2] );
+                    
+        retval.add( nu[0] );
+        retval.add( nu[1] );
+                    
+        retval.add( gamma[0] );
+        retval.add( gamma[1] );
+        retval.add( gamma[2] );
+                    
+        retval.add( eta[0] );
+        retval.add( eta[1] );
+        retval.add( eta[2] );
+                    
+        retval.add( T );
+        retval.add( A );
+        retval.add( V );
+        retval.add( K );
+        retval.add( G );
+        retval.add( D );
         
-        retval.add( new Double(nu[0]) );
-        retval.add( new Double(nu[1]) );
-
-        retval.add( new Double(gamma[0]) );
-        retval.add( new Double(gamma[1]) );
-        retval.add( new Double(gamma[2]) );
-
-        retval.add( new Double(eta[0]) );
-        retval.add( new Double(eta[1]) );
-        retval.add( new Double(eta[2]) );
-
-        retval.add( new Double(T) );
-        retval.add( new Double(A) );
-        retval.add( new Double(V) );
-        retval.add( new Double(K) );
-        retval.add( new Double(G) );
-        retval.add( new Double(D) );
-        
-        return (retval);
+        return retval;
     }
 
 

@@ -24,6 +24,7 @@
 package org.openscience.cdk.test.qsar;
 
 import org.openscience.cdk.qsar.*;
+import org.openscience.cdk.qsar.result.*;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -51,7 +52,7 @@ public class ZagrebIndexDescriptorTest extends TestCase {
 		Descriptor descriptor = new ZagrebIndexDescriptor();
 		SmilesParser sp = new SmilesParser();
 		AtomContainer mol = sp.parseSmiles("O=C(O)CC");
-		assertEquals(16, ((Double)descriptor.calculate(mol)).doubleValue(), 0.0001);
+		assertEquals(16, ((DoubleResult)descriptor.calculate(mol)).doubleValue(), 0.0001);
 	}
 }
 

@@ -24,6 +24,7 @@
 package org.openscience.cdk.test.qsar;
 
 import org.openscience.cdk.qsar.*;
+import org.openscience.cdk.qsar.result.*;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -45,6 +46,6 @@ public class HBondDonorCountDescriptorTest extends TestCase {
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser();
 		AtomContainer mol = sp.parseSmiles("Oc1ccccc1"); // 
-		assertEquals(1, ((Integer)descriptor.calculate(mol)).intValue());
+		assertEquals(1, ((IntegerResult)descriptor.calculate(mol)).intValue());
 	}
 }

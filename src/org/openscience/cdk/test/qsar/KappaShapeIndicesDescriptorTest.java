@@ -24,6 +24,7 @@
 package org.openscience.cdk.test.qsar;
 
 import org.openscience.cdk.qsar.*;
+import org.openscience.cdk.qsar.result.*;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -55,12 +56,12 @@ import java.io.*;
 		AtomContainer mol = sp.parseSmiles("O=C(O)CC");
 		AtomContainerManipulator acm = new AtomContainerManipulator();
 		acm.removeHydrogens(mol);
-		ArrayList retval = (ArrayList)descriptor.calculate(mol);
+		DoubleArrayResult retval = (DoubleArrayResult)descriptor.calculate(mol);
 		// position 0 =  kier1
 		// positions 1 = kier2
 		// THIS IS OK: assertEquals(testResult[1], ((Double)retval.get(1)).doubleValue(), 0.0001);
 		// THIS IS OK: assertEquals(testResult[0], ((Double)retval.get(0)).doubleValue(), 0.0001);
-		assertEquals(testResult[2], ((Double)retval.get(2)).doubleValue(), 0.0001);
+		assertEquals(testResult[2], retval.get(2), 0.0001);
 	}
 }
 

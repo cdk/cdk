@@ -25,6 +25,7 @@ package org.openscience.cdk.qsar;
 
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.qsar.result.*;
 import java.util.Map;
 
 /**
@@ -59,7 +60,7 @@ public interface Descriptor {
     
     /** Calculates the descriptor value for the given AtomContainer, while
         optionally using the given parameter values. */
-    public Object calculate(AtomContainer container)throws CDKException;
+    public DescriptorResult calculate(AtomContainer container) throws CDKException;
     
 }
 

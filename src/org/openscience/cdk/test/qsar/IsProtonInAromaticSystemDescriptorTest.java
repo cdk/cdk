@@ -24,6 +24,7 @@
 package org.openscience.cdk.test.qsar;
 
 import org.openscience.cdk.qsar.*;
+import org.openscience.cdk.qsar.result.*;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -55,7 +56,7 @@ public class IsProtonInAromaticSystemDescriptorTest extends TestCase {
 		Molecule mol = sp.parseSmiles("Oc1cc(OC)c(cc1Br)Br"); 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
-		assertEquals(1, ((Integer)descriptor.calculate(mol)).intValue());
+		assertEquals(1, ((IntegerResult)descriptor.calculate(mol)).intValue());
 	}
 }
 

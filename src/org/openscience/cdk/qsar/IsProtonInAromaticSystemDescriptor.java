@@ -32,6 +32,7 @@ import org.openscience.cdk.RingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.qsar.result.*;
 
 /**
  *  This descriptor returns 1 if the protons is directly bonded to an aromatic system,
@@ -115,7 +116,7 @@ public class IsProtonInAromaticSystemDescriptor implements Descriptor {
 	 *@return                   true if the proton is bonded to an aromatic atom.
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public Object calculate(AtomContainer ac) throws CDKException {
+	public DescriptorResult calculate(AtomContainer ac) throws CDKException {
 		int isProtonInAromaticSystem = 0;
 		Molecule mol = new Molecule(ac);
 		if (checkAromaticity) {
@@ -145,7 +146,7 @@ public class IsProtonInAromaticSystemDescriptor implements Descriptor {
 		else {
 			isProtonInAromaticSystem = 0;
 		}
-		return new Integer(isProtonInAromaticSystem);	
+		return new IntegerResult(isProtonInAromaticSystem);	
 	}
 
 

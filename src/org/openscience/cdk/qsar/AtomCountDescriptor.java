@@ -32,7 +32,7 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.result.IntegerResult;
+import org.openscience.cdk.qsar.result.*;
 import java.util.Map;
 import java.util.Hashtable;
 
@@ -104,7 +104,7 @@ public class AtomCountDescriptor implements Descriptor {
 	 
 	 // it could be interesting to accept as elementName a SMARTS atom, to get the frequency of this atom
 	 // this could be useful for other descriptors like polar surface area...
-	public Object calculate(AtomContainer container) throws CDKException {
+	public DescriptorResult calculate(AtomContainer container) throws CDKException {
 		int atomCount = 0;
 		Atom[] atoms = container.getAtoms();
 		if (elementName == "*") {

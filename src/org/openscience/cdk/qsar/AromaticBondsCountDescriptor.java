@@ -31,7 +31,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.RingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
-import org.openscience.cdk.qsar.result.IntegerResult;
+import org.openscience.cdk.qsar.result.*;
 import java.util.Map;
 import java.util.Hashtable;
 
@@ -106,7 +106,7 @@ public class AromaticBondsCountDescriptor implements Descriptor {
 	 *@return                   number of aromatic bonds in the atom container
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public Object calculate(AtomContainer ac) throws CDKException {
+	public DescriptorResult calculate(AtomContainer ac) throws CDKException {
 		int aromaticBondsCount = 0;
 		if (checkAromaticity) {
 			RingSet rs = (new AllRingsFinder()).findAllRings(ac);

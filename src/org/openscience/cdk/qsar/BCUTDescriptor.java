@@ -31,7 +31,7 @@ import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.charges.Polarizability;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
-import org.openscience.cdk.qsar.result.DoubleArrayResult;
+import org.openscience.cdk.qsar.result.*;
 
 import java.util.Vector;
 import java.util.ArrayList;
@@ -207,7 +207,7 @@ public class BCUTDescriptor implements Descriptor {
      *                   above. If a parameter list was supplied, then only the specified number
      *                   of highest and lowest eigenvalues (for each class of BCUT) will be returned.
      */
-    public Object calculate(AtomContainer container) throws CDKException {
+    public DescriptorResult calculate(AtomContainer container) throws CDKException {
         int j = 0;
         Molecule ac = new Molecule(container);
 

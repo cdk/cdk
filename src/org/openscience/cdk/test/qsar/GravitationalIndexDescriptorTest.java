@@ -20,6 +20,7 @@
 package org.openscience.cdk.test.qsar;
 
 import org.openscience.cdk.qsar.*;
+import org.openscience.cdk.qsar.result.*;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -60,17 +61,17 @@ public class GravitationalIndexDescriptorTest extends TestCase {
             AtomContainer ac = c[0];
 
             Descriptor descriptor = new GravitationalIndexDescriptor();
-            ArrayList retval = (ArrayList)descriptor.calculate(ac);
+            DoubleArrayResult retval = (DoubleArrayResult)descriptor.calculate(ac);
 
-            assertEquals(1756.5060703860984, ((Double)retval.get(0)).doubleValue(), 0.00000001);
-            assertEquals(41.91069159994975,  ((Double)retval.get(1)).doubleValue(), 0.00000001);
-            assertEquals(12.06562671430088,  ((Double)retval.get(2)).doubleValue(), 0.00000001);
-            assertEquals(1976.6432599699767, ((Double)retval.get(3)).doubleValue(), 0.00000001);
-            assertEquals(44.45945636161082,  ((Double)retval.get(4)).doubleValue(), 0.00000001);
-            assertEquals(12.549972243701887, ((Double)retval.get(5)).doubleValue(), 0.00000001);
-            assertEquals(4333.097373073368,  ((Double)retval.get(6)).doubleValue(), 0.00000001);
-            assertEquals(65.82626658920714,  ((Double)retval.get(7)).doubleValue(), 0.00000001);
-            assertEquals(16.302948232909483, ((Double)retval.get(8)).doubleValue(), 0.00000001);
+            assertEquals(1756.5060703860984, retval.get(0), 0.00000001);
+            assertEquals(41.91069159994975,  retval.get(1), 0.00000001);
+            assertEquals(12.06562671430088,  retval.get(2), 0.00000001);
+            assertEquals(1976.6432599699767, retval.get(3), 0.00000001);
+            assertEquals(44.45945636161082,  retval.get(4), 0.00000001);
+            assertEquals(12.549972243701887, retval.get(5), 0.00000001);
+            assertEquals(4333.097373073368,  retval.get(6), 0.00000001);
+            assertEquals(65.82626658920714,  retval.get(7), 0.00000001);
+            assertEquals(16.302948232909483, retval.get(8), 0.00000001);
         }
 }
 

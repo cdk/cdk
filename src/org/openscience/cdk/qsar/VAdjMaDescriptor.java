@@ -27,6 +27,7 @@ package org.openscience.cdk.qsar;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.tools.*;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.qsar.result.*;
 import java.lang.Math;
 import java.util.Map;
 import java.util.Hashtable;
@@ -92,14 +93,14 @@ public class VAdjMaDescriptor implements Descriptor {
 	 *@return                   VAdjMa
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public Object calculate(AtomContainer ac) throws CDKException {
+	public DescriptorResult calculate(AtomContainer ac) throws CDKException {
 		MFAnalyser formula = new MFAnalyser(ac);
 		int magnitude = formula.getHeavyAtoms().size();
 		double vadjMa = 0;
 		if (magnitude > 0) {
 			vadjMa += (Math.log(magnitude) / Math.log(2)) + 1;
 		}
-		return new Double(vadjMa);
+		return new DoubleResult(vadjMa);
 	}
 
 
