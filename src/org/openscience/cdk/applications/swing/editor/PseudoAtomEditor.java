@@ -27,51 +27,40 @@ import javax.swing.JTextField;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 
-import org.openscience.cdk.Atom;
+import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.applications.swing.FieldTablePanel;
 
 /**
  * @cdk.module applications
  */
-public class AtomEditor extends ChemObjectEditor {
+public class PseudoAtomEditor extends ChemObjectEditor {
     
-    JTextField symbolField;
-    JSpinner   hCountField;
-    JSpinner   formalChargeField;
+    JTextField labelField;
     
-	public AtomEditor() {
+	public PseudoAtomEditor() {
         super();
         constructPanel();
 	}
     
     private void constructPanel() {
-        symbolField = new JTextField(4);
-        addField("Symbol", symbolField);
-        hCountField = new JSpinner(new SpinnerNumberModel());
-        addField("H Count", hCountField);
-        formalChargeField = new JSpinner(new SpinnerNumberModel());
-        addField("Formal Charge", formalChargeField);
+        labelField = new JTextField(20);
+        addField("Label", labelField);
     }
     
     public void setChemObject(ChemObject object) {
-        if (object instanceof Atom) {
+        if (object instanceof PseudoAtom) {
             source = object;
             // update table contents
-            Atom atom = (Atom)source;
-            symbolField.setText(atom.getSymbol());
-            hCountField.setValue(new Integer(atom.getHydrogenCount()));
-            formalChargeField.setValue(new Integer(atom.getFormalCharge()));
+            labelField.setText(((PseudoAtom)object).getLabel());
         } else {
-            throw new IllegalArgumentException("Argument must be an Atom");
+            throw new IllegalArgumentException("Argument must be an PseudoAtom");
         }
     }
 	
     public void applyChanges() {
-        Atom atom = (Atom)source;
-        atom.setSymbol(symbolField.getText());
-        atom.setHydrogenCount(((Integer)hCountField.getValue()).intValue());
-        atom.setFormalCharge(((Integer)formalChargeField.getValue()).intValue());
+        PseudoAtom atom = (PseudoAtom)source;
+        atom.setLabel(labelField.getText());
     }
 }
 

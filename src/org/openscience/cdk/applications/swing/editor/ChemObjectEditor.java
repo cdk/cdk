@@ -31,14 +31,16 @@ import org.openscience.cdk.applications.swing.FieldTablePanel;
 /**
  * @cdk.module applications
  */
-public class ChemObjectEditor extends FieldTablePanel {
+public abstract class ChemObjectEditor extends FieldTablePanel {
     
-    private ChemObject source;
+    protected ChemObject source;
     
     public void setChemObject(ChemObject object) {
         source = object;
     }
 	
+    public void applyChanges() {}
+    
 }
 
 
