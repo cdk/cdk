@@ -3,7 +3,7 @@
  *
  * $RCSfile$    $Author$    $Date$    $Revision$
  *
- * Copyright (C) 1997-2001  The Chemistry Development Kit Project
+ * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
  *
  * Contact: steinbeck@ice.mpg.de
  *

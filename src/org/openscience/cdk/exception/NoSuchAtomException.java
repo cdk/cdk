@@ -4,7 +4,7 @@
  * $Date$   
  * $Revision$
  * 
- * Copyright (C) 2001  The JChemPaint project
+ * Copyright (C) 2001-2002  The Chemistry Development Kit (CKD) project
  *
  * Contact: steinbeck@ice.mpg.de, egonw@sci.kun.nl, Dan
  *

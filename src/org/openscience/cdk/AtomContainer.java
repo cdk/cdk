@@ -4,9 +4,9 @@
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 1997-2001  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
  *
- *  Contact: steinbeck@ice.mpg.de, geelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ *  Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public License
@@ -883,8 +883,8 @@ public class AtomContainer extends ChemObject implements Cloneable
 	/**
 	 *  Adds a bond to this container
 	 *
-	 * @param  atom1   Order of the first atom of the Bond
-	 * @param  atom2   Order of the second atom of the Bond
+	 * @param  atom1   Id of the first atom of the Bond
+	 * @param  atom2   Id of the second atom of the Bond
 	 * @param  order   Bondorder
 	 * @param  stereo  Stereochemical orientation
 	 * @since
@@ -909,8 +909,8 @@ public class AtomContainer extends ChemObject implements Cloneable
 	/**
 	 *  Adds a bond to this container
 	 *
-	 * @param  atom1  Order of the first atom of the Bond
-	 * @param  atom2  Order of the second atom of the Bond
+	 * @param  atom1  Id of the first atom of the Bond
+	 * @param  atom2  Id of the second atom of the Bond
 	 * @param  order  Bondorder
 	 * @since
 	 */

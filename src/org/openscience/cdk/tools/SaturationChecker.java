@@ -2,7 +2,7 @@
  *  SaturationChecker.java
  *
  *  $RCSfile$    $Author$    $Date$  *
- *  Copyright (C) 1997-2001  The CDK project
+ *  Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
  *
  *  Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  *

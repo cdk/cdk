@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 1997-2001  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
  *
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  *
@@ -24,7 +24,8 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- *  */
+ *  
+ */
 package org.openscience.cdk.internet;
 
 import org.openscience.cdk.*;
@@ -110,7 +111,7 @@ public class DADMLReader implements ChemObjectReader {
 		DBLIST dblist = new DBLIST();
         try {
 		    logger.info("Downloading DADML super database: " + this.superdb);
-		    // Proxy authorization has to be ported from JChemPaint
+		    // Proxy authorization has to be ported from Chemistry Development Kit (CKD)
 			// for now, do without authorization
 			dblist = DBLISTFileReader.read(superdb, sax2parser);
 		} catch (Exception supererror) {
@@ -121,7 +122,7 @@ public class DADMLReader implements ChemObjectReader {
 		    DATABASE db = (DATABASE)dbases.nextElement();
 		    String dburl = db.getURL()+db.getDefinition();
 		    DBDEF dbdef = new DBDEF();
-		    // Proxy authorization has to be ported from JChemPaint
+		    // Proxy authorization has to be ported from Chemistry Development Kit (CKD)
 			// for now, do without authorization
 		    try {
 			    logger.info("Downloading: " + dburl);

@@ -3,7 +3,7 @@
  * $Date$   
  * $Revision$
  * 
- * Copyright (C) 2002  The CDK project
+ * Copyright (C) 2002  The Chemistry Development Kit (CDK) project
  * 
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  *

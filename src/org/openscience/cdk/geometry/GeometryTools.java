@@ -2,7 +2,7 @@
  * 
  * $RCSfile$    $Author$    $Date$    $Revision$
  * 
- * Copyright (C) 1997-2001  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
  * 
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  * 
@@ -391,7 +391,7 @@ public class GeometryTools
 	/** Determines the scale factor for displaying a structure loaded from disk in a frame.
 	  * An average of all bond length values is produced and the structure is scaled
 	  * such that the resulting bond length divided by the
-	  * character size equals the current JChemPaintModels bondlengthToCharactersizeRatio
+	  * character size equals the current Chemistry Development Kit (CKD)Models bondlengthToCharactersizeRatio
 	  * setting.
 	  *
 	  * @param   ac The AtomContainer for which the ScaleFactor is to be calculated

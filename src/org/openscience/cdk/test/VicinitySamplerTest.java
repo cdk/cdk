@@ -1,7 +1,7 @@
 /* 
  * $RCSfile$    $Author$    $Date$    $Revision$
  * 
- * Copyright (C) 1997-2001  The JChemPaint project
+ * Copyright (C) 1997-2002  The Chemistry Development Kit (CKD) project
  * 
  * Contact: steinbeck@ice.mpg.de
  * 
