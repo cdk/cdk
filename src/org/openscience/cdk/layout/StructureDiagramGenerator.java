@@ -66,7 +66,6 @@ public class StructureDiagramGenerator {
 	 */
 	public StructureDiagramGenerator() {
         logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
-	logger.warn("test");
 	}
 
 	/**
@@ -199,8 +198,6 @@ public class StructureDiagramGenerator {
 		double angle;
 		
 		int expectedRingCount = nrOfEdges - molecule.getAtomCount() + 1;
-		logger.debug("Passiert was?");
-
 		if (expectedRingCount > 0) {		
 			logger.debug("*** Start of handling rings. ***");
 			/*
@@ -225,20 +222,22 @@ public class StructureDiagramGenerator {
 			/* Do the layout for the first connected ring system ... */
 			int largest = 0;
 			int largestSize = ((RingSet)ringSystems.elementAt(0)).size();
-			logger.debug("We have " + ringSystems.size() + " ring systems.");
+			logger.debug("We have " + ringSystems.size() + " ring system(s).");
 			for (int f = 0; f < ringSystems.size(); f++) {
-				logger.debug("Ring " + f + ": " + ((RingSet)ringSystems.elementAt(f)).size());
+				logger.debug("RingSet " + f + " has size " + ((RingSet)ringSystems.elementAt(f)).size());
 				if (((RingSet)ringSystems.elementAt(f)).size() > largestSize) {
 					largestSize = ((RingSet)ringSystems.elementAt(f)).size(); 
 					largest = f;	
 				}
 			}
-			logger.debug("Largest RingSystem: " + largest);
+			logger.debug("Largest RingSystem is at RingSet collection's position " + largest);
 			logger.debug("Size of Largest RingSystem: " + largestSize);
 
 			layoutRingSet(firstBondVector, (RingSet)ringSystems.elementAt(largest));
+			logger.debug("First RingSet placed");
 			/* and to the placement of all the directly connected atoms of this ringsystem */
 			ringPlacer.placeRingSubstituents((RingSet)ringSystems.elementAt(largest), bondLength);
+			
 		} else {
 			logger.debug("*** Start of handling purely aliphatic molecules. ***");
 			/* We are here because there are no rings in the molecule
@@ -266,7 +265,6 @@ public class StructureDiagramGenerator {
 			 * connected to the parts which have already been laid out.
 			 */
 			layoutNextRingSystem();
-			logger.debug("**********" + molecule);
 			
 		} while(!atomPlacer.allPlaced(molecule));
 			
@@ -396,6 +394,7 @@ public class StructureDiagramGenerator {
 	 * those parts of the molecule that have already been laid out.
 	 */
 	private void layoutNextRingSystem() {
+		logger.debug("Start of layoutNextRingSystem()");
 		Atom vectorAtom1 = null, vectorAtom2 = null;
 		Point2d oldPoint1 = null, newPoint1 = null, oldPoint2 = null, newPoint2 = null;
 		RingSet nextRingSystem = null;
@@ -445,7 +444,7 @@ public class StructureDiagramGenerator {
 			//System.out.println("oldPoint1 again: " + oldPoint1);
 			//System.out.println("and the angles: " + angle1 + ", " + angle2 + "; diff = " + (angle1 - angle2));				
 			
-			GeometryTools.rotate(ringSystem, oldPoint1,  Math.PI +  angle1);
+			GeometryTools.rotate(ringSystem, oldPoint1,  (2.0 * Math.PI) +  angle1);
 			//vectorAtom2.setPoint2D(oldPoint2);
 			vectorAtom1.setPoint2D(oldPoint1);				
 		}
