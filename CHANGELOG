@@ -7,6 +7,8 @@ Changes in CVS
 * fixed writing of single molecule to MDL molfile format
   (closes bug #526612)
 * added fingerprinting class for molecules
+* debugging is set off by default
+* added several JUnit tests for CML reading library
 
 20020206 Release
 ------------------------------------
