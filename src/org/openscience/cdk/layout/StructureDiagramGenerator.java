@@ -66,6 +66,7 @@ public class StructureDiagramGenerator {
 	 */
 	public StructureDiagramGenerator() {
         logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+	logger.warn("test");
 	}
 
 	/**
@@ -146,6 +147,7 @@ public class StructureDiagramGenerator {
 		double angle;
 		
 		int expectedRingCount = nrOfEdges - molecule.getAtomCount() + 1;
+		logger.debug("Passiert was?");
 
 		if (expectedRingCount > 0) {		
 			logger.debug("*** Start of handling rings. ***");
