@@ -58,15 +58,33 @@ public class CMLReader implements CDKConstants, ChemObjectReader {
      * @param input Reader type input
      */
     public CMLReader(Reader input) {
-        logger = new org.openscience.cdk.tools.LoggingTool(
-                       this.getClass().getName());
-        try {
-          parser = new org.apache.xerces.parsers.SAXParser();
-          this.input = input;
-        } catch (Exception e) {
-          logger.error("CMLReader: You found a serious bug! Please report it!");
-          System.exit(1);
-        }
+        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+
+		boolean success = false;
+		if (!success) {
+          try {
+            parser = new org.apache.xerces.parsers.SAXParser();
+		    logger.info("Using Xerces XML parser.");
+		    success = true;
+          } catch (Exception e) {
+            logger.warn("Could not instantiate Xerces XML reader!");
+          }
+		}
+		// Xerces is prefered. Aelfred2 seems to ignore the entity handler. Removal of the
+		// DocType line will make Aelfred2 work properly.
+		if (!success) {
+          try {
+		    parser = new gnu.xml.aelfred2.XmlReader();
+		    logger.info("Using Aelfred2 XML parser.");
+		    success = true;
+          } catch (Exception e) {
+            logger.warn("Could not instantiate Aelfred2 XML reader!");
+          }
+		}
+		if (!success) {
+		  logger.error("Could not instantiate any XML parser!");
+		}
+        this.input = input;
     }
 
 

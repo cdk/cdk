@@ -31,14 +31,21 @@ import java.io.*;
 
 public class CMLResolver implements EntityResolver {
 
-    public InputSource resolveEntity (String publicId, String systemId) {
-	System.err.println("CMLResolver: resolving " + publicId + ", " + systemId);
-        systemId = systemId.toLowerCase();
-	if ((systemId.indexOf("cml-1999-05-15.dtd") != -1) || (systemId.indexOf("cml.dtd") != -1)) {
-	    return getCMLType( "org/openscience/cdk/io/cml/data/cml.dtd" );
-	} else {
-	    return null;
+    private org.openscience.cdk.tools.LoggingTool logger;
+
+	public CMLResolver() {
+        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
 	}
+
+    public InputSource resolveEntity (String publicId, String systemId) {
+        logger.warn("CMLResolver: resolving " + publicId + ", " + systemId);
+        systemId = systemId.toLowerCase();
+        if ((systemId.indexOf("cml-1999-05-15.dtd") != -1) || (systemId.indexOf("cml.dtd") != -1)) {
+            return getCMLType( "org/openscience/cdk/io/cml/data/cml.dtd" );
+        } else {
+		    logger.warn("Could not resolve " + systemId);
+            return null;
+        }
     }
 
     private InputSource getCMLType( String type ) {

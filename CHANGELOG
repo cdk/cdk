@@ -1,6 +1,15 @@
 CHANGELOG
 ---------
 
+changes since "cdk preview 20011201"
+------------------------------------
+* splitted libraries from CDK source code
+* fixed some javadoc issues
+* added Aelfred2 SAX2 parser
+* added FileConvertor application
+* added constructors that take Writer/Reader for several IO classes
+* fixed reading of CML output of XDrawChem
+
 changes since "cdk preview 20011013"
 ------------------------------------
 * More classes make use of new LoggingTool

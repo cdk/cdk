@@ -161,11 +161,20 @@ public class Convention implements ConventionInterface {
 	    break;
 	case BOND :
 	    for (int i = 0; i < atts.getLength(); i++) {
-		logger.debug("B2 " + atts.getQName(i) + "=" + atts.getValue(i));
-		if (atts.getQName(i).equals("id")) {
-		    bondid.addElement(atts.getValue(i));
-		    logger.debug("B3 " + bondid);
-		}
+		  logger.debug("B2 " + atts.getQName(i) + "=" + atts.getValue(i));
+		  if (atts.getQName(i).equals("id")) {
+		      bondid.addElement(atts.getValue(i));
+		      logger.debug("B3 " + bondid);
+		  } else if (atts.getQName(i).equals("atomRefs")) {
+		    // expect only two references
+			try {
+			  StringTokenizer st = new StringTokenizer(atts.getValue(i));
+              bondARef1.addElement((String)st.nextElement());
+		      bondARef2.addElement((String)st.nextElement());
+			} catch (Exception e) {
+			  logger.error("Error in CML file: " + e.toString());
+			}
+		  }
 	    }
 	    stereoGiven = false;
 	    curRef = 0;
