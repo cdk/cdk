@@ -52,36 +52,49 @@ public class HueckelAromaticityDetector
 	 */
 	public static boolean detectAromaticity(AtomContainer ac) throws org.openscience.cdk.exception.NoSuchAtomException
 	{	
+    return(detectAromaticity(ac,true));
+  }
+  
+	/**
+	 * Retrieves the set of all rings and performs an aromaticity detection
+	 * based on Hueckels 2n + 1 rule.
+	 * Atoms and Bonds are marked by setting the aromaticity flag
+	 * (Atom.flags[ISAROMATIC]).
+	 */
+	public static boolean detectAromaticity(AtomContainer ac, boolean removeAromatictyFlags) throws org.openscience.cdk.exception.NoSuchAtomException
+	{	
 		RingSet ringSet = new AllRingsFinder().findAllRings(ac);
 		if (ringSet.size() > 0)
 		{
-			return detectAromaticity(ac, ringSet);
+			return detectAromaticity(ac, ringSet, removeAromatictyFlags);
 		}
 		return false;
 	}
 
-	/**
+
+    /**
 	 * A time-saving version for aromaticity detection 
 	 * that uses an already computed set of rings
 	 *
 	 */
-	public static boolean detectAromaticity(AtomContainer ac, RingSet ringSet)
+	public static boolean detectAromaticity(AtomContainer ac, RingSet ringSet, boolean removeAromaticityFlags)
 	{	
 		boolean foundSomething = false;
-		for (int f = 0; f < ac.getAtomCount(); f++)
-		{
-			ac.getAtomAt(f).setFlag(CDKConstants.ISAROMATIC, false);
-		}
-		for (int f = 0; f < ac.getElectronContainerCount(); f++) 
-		{
-			ElectronContainer ec = ac.getElectronContainerAt(f);
-			if (ec instanceof Bond) ec.setFlag(CDKConstants.ISAROMATIC, false);
-		}
-		for (int f = 0; f < ringSet.size(); f++)
-		{
-			((Ring)ringSet.get(f)).setFlag(CDKConstants.ISAROMATIC, false);
-		}
-		
+    if(removeAromaticityFlags){
+      for (int f = 0; f < ac.getAtomCount(); f++)
+      {
+        ac.getAtomAt(f).setFlag(CDKConstants.ISAROMATIC, false);
+      }
+      for (int f = 0; f < ac.getElectronContainerCount(); f++) 
+      {
+        ElectronContainer ec = ac.getElectronContainerAt(f);
+        if (ec instanceof Bond) ec.setFlag(CDKConstants.ISAROMATIC, false);
+      }
+      for (int f = 0; f < ringSet.size(); f++)
+      {
+        ((Ring)ringSet.get(f)).setFlag(CDKConstants.ISAROMATIC, false);
+      }
+    }
 		
 		Ring ring = null;
 		Atom atom = null;
