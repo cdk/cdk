@@ -1,8 +1,9 @@
-/* MFAnalyserTest.java
+/* $RCSfile$    
+ * $Author$    
+ * $Date$    
+ * $Revision$
  * 
- * $RCSfile$    $Author$    $Date$    $Revision$
- * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  * 
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  * 
@@ -20,9 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
  */
-
 package org.openscience.cdk.test.tools;
-
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.ringsearch.*;
@@ -34,8 +33,7 @@ import java.io.*;
 import java.net.URL;
 import junit.framework.*;
 
-public class MFAnalyserTest extends TestCase
-{
+public class MFAnalyserTest extends TestCase {
 	Molecule molecule;
 	
 	public MFAnalyserTest(String name)
@@ -53,8 +51,7 @@ public class MFAnalyserTest extends TestCase
 		return new TestSuite(MFAnalyserTest.class);
 	}
 
-	public void testAnalyseMF()
-	{
+	public void testAnalyseMF()	{
 		MFAnalyser mfa = new MFAnalyser("C10H16");
 		AtomContainer ac = mfa.getAtomContainer();
 		MFAnalyser mfa2 = new MFAnalyser(ac);
@@ -62,5 +59,37 @@ public class MFAnalyserTest extends TestCase
 		assertTrue(mf.equals("C10H16"));
 	}
 	
+    public void testGetAtomContainer() {
+        MFAnalyser mfa = new MFAnalyser("C10H16");
+        AtomContainer ac = mfa.getAtomContainer();
+        assertEquals(26, mfa.getAtomCount());        
+    }
+    
+    public void testGetElementCount() {
+        MFAnalyser mfa = new MFAnalyser("C10H16");
+        assertEquals(2, mfa.getElementCount());        
+    
+        mfa = new MFAnalyser("CH3OH");
+        assertEquals(3, mfa.getElementCount());        
+    }
+    
+    public void testGetAtomCount() {
+        MFAnalyser mfa = new MFAnalyser("C10H16");
+        assertEquals(10, mfa.getAtomCount("C"));        
+        assertEquals(16, mfa.getAtomCount("H"));        
+    
+        mfa = new MFAnalyser("CH3OH");
+        assertEquals(1, mfa.getAtomCount("C"));        
+        assertEquals(1, mfa.getAtomCount("O"));        
+        assertEquals(4, mfa.getAtomCount("H"));        
+    }
+    
+    public void testGetHeavyAtoms() {
+        MFAnalyser mfa = new MFAnalyser("C10H16");
+        assertEquals(10, mfa.getHeavyAtoms().getAtomCount());        
+    
+        mfa = new MFAnalyser("CH3OH");
+        assertEquals(2, mfa.getHeavyAtoms().getAtomCount());        
+    }
 }
 
