@@ -26,7 +26,7 @@
         </fileset>
     </path>
 
-    <target name="doccheck-all" depends="doccheck-core, doccheck-standard, doccheck-io, doccheck-render, doccheck-extra, doccheck-qsar"/>
+    <target name="doccheck-all" depends="doccheck-data, doccheck-core, doccheck-standard, doccheck-io, doccheck-render, doccheck-extra, doccheck-qsar"/>
     
     <target name="html" depends="compileTaglets">
         <mkdir dir="${javadoc.dir}" />
