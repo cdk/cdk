@@ -143,9 +143,9 @@ public class ShelXWriter extends DefaultChemObjectWriter {
         for (int i = 0; i < crystal.getAtomCount(); i++) {
             Atom atom = crystal.getAtomAt(i);
             double[] reals = new double[3];
-            reals[0] = atom.getX3D();
-            reals[1] = atom.getY3D();
-            reals[2] = atom.getZ3D();
+            reals[0] = atom.getX3d();
+            reals[1] = atom.getY3d();
+            reals[2] = atom.getZ3d();
             double[] fracs = realToFractional(reals, a, b, c);
             String symbol = atom.getSymbol();
             String output = symbol + (i+1);

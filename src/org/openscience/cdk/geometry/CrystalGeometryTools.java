@@ -247,7 +247,7 @@ public class CrystalGeometryTools {
                 */
 
                 // do not take into account moving into unit cell
-                Point3d point = atom.getPoint3D();
+                Point3d point = atom.getPoint3d();
 
                 if (point != null) {
                     double[] a = crystal.getA();
@@ -259,7 +259,7 @@ public class CrystalGeometryTools {
                     newPoint.y = -1.0*point.y;
                     newPoint.z =      point.z + 0.5*(a[3] + b[3] + c[3]);
                     Atom syma = (Atom)atom.clone();
-                    syma.setPoint3D(newPoint);
+                    syma.setPoint3d(newPoint);
                     result.addAtom(syma);
 
                     // point II
@@ -267,7 +267,7 @@ public class CrystalGeometryTools {
                     newPoint.y = -1.0*point.y;
                     newPoint.z =      point.z + 0.5*(a[3] + b[3] + c[3]);
                     syma = (Atom)atom.clone();
-                    syma.setPoint3D(newPoint);
+                    syma.setPoint3d(newPoint);
                     result.addAtom(syma);
 
                     // point III
@@ -275,7 +275,7 @@ public class CrystalGeometryTools {
                     newPoint.y = -1.0*point.y;
                     newPoint.z =      point.z + 0.5*(a[3] + b[3] + c[3]);
                     syma = (Atom)atom.clone();
-                    syma.setPoint3D(newPoint);
+                    syma.setPoint3d(newPoint);
                     result.addAtom(syma);
                 } else {
                     Atom syma = (Atom)atom.clone();
@@ -317,7 +317,7 @@ public class CrystalGeometryTools {
     public static boolean hasCrystalCoordinates(AtomContainer m) {
         Atom[] atoms = m.getAtoms();
         for (int i=0; i < atoms.length; i++) {
-            if (atoms[i].getFractionalPoint3D() == null) {
+            if (atoms[i].getFractionalPoint3d() == null) {
                 return false;
             }
         }
@@ -335,9 +335,9 @@ public class CrystalGeometryTools {
         double[] b = crystal.getB();
         double[] c = crystal.getC();
         for (int i=0; i < atoms.length; i++) {
-            Point3d fracPoint = atoms[i].getFractionalPoint3D();
+            Point3d fracPoint = atoms[i].getFractionalPoint3d();
             if (fracPoint != null) {
-                atoms[i].setPoint3D(fractionalToCartesian(a,b,c, fracPoint));
+                atoms[i].setPoint3d(fractionalToCartesian(a,b,c, fracPoint));
             }
         }
     }

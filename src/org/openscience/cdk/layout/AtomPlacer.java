@@ -146,7 +146,7 @@ public class AtomPlacer
 		//Point2d sharedAtomsCenter = sharedAtoms.get2DCenter();
 		Vector2d sharedAtomsCenterVector = new Vector2d(sharedAtomsCenter);
 
-		Vector2d newDirection = new Vector2d(atom.getPoint2D());
+		Vector2d newDirection = new Vector2d(atom.getPoint2d());
 		Vector2d occupiedDirection = new Vector2d(sharedAtomsCenter);
 		occupiedDirection.sub(newDirection);
 		Vector atomsToDraw = new Vector();
@@ -167,10 +167,10 @@ public class AtomPlacer
 			 *  Not done yet.
 			 */
 			Atom placedAtom = placedNeighbours.getAtomAt(0);
-//			double xDiff = atom.getX2D() - placedAtom.getX2D();
-//			double yDiff = atom.getY2D() - placedAtom.getY2D();
-			double xDiff = placedAtom.getX2D() - atom.getX2D();
-			double yDiff = placedAtom.getY2D() - atom.getY2D();
+//			double xDiff = atom.getX2d() - placedAtom.getX2d();
+//			double yDiff = atom.getY2d() - placedAtom.getY2d();
+			double xDiff = placedAtom.getX2d() - atom.getX2d();
+			double yDiff = placedAtom.getY2d() - atom.getY2d();
 
 			logger.debug("distributePartners->xdiff: " + Math.toDegrees(xDiff));
 			logger.debug("distributePartners->ydiff: " + Math.toDegrees(yDiff));
@@ -178,7 +178,7 @@ public class AtomPlacer
 			//- (Math.PI / 2.0);
 			logger.debug("distributePartners->angle: " + Math.toDegrees(startAngle));
 
-			populatePolygonCorners(atomsToDraw, new Point2d(atom.getPoint2D()), startAngle, addAngle, bondLength);
+			populatePolygonCorners(atomsToDraw, new Point2d(atom.getPoint2d()), startAngle, addAngle, bondLength);
 			return;
 		} else if (placedNeighbours.getAtomCount() == 0)
 		{
@@ -194,7 +194,7 @@ public class AtomPlacer
 			 * start angle. Not done yet.
 			 */
 			startAngle = 0.0;
-			populatePolygonCorners(atomsToDraw, new Point2d(atom.getPoint2D()), startAngle, addAngle, bondLength);
+			populatePolygonCorners(atomsToDraw, new Point2d(atom.getPoint2d()), startAngle, addAngle, bondLength);
 			return;
 		}
 
@@ -207,7 +207,7 @@ public class AtomPlacer
 		newDirection.normalize();
 		newDirection.scale(bondLength);
 		newDirection.negate();
-		Point2d distanceMeasure = new Point2d(atom.getPoint2D());
+		Point2d distanceMeasure = new Point2d(atom.getPoint2d());
 		distanceMeasure.add(newDirection);
 
 		/*
@@ -215,16 +215,16 @@ public class AtomPlacer
 		 */
 		sortedAtoms = placedNeighbours.getAtoms();
 		GeometryTools.sortBy2DDistance(sortedAtoms, distanceMeasure);
-		Vector2d closestPoint1 = new Vector2d(sortedAtoms[0].getPoint2D());
-		Vector2d closestPoint2 = new Vector2d(sortedAtoms[1].getPoint2D());
-		closestPoint1.sub(new Vector2d(atom.getPoint2D()));
-		closestPoint2.sub(new Vector2d(atom.getPoint2D()));
+		Vector2d closestPoint1 = new Vector2d(sortedAtoms[0].getPoint2d());
+		Vector2d closestPoint2 = new Vector2d(sortedAtoms[1].getPoint2d());
+		closestPoint1.sub(new Vector2d(atom.getPoint2d()));
+		closestPoint2.sub(new Vector2d(atom.getPoint2d()));
 		occupiedAngle = closestPoint1.angle(occupiedDirection);
 		occupiedAngle += closestPoint2.angle(occupiedDirection);
 
-		double angle1 = GeometryTools.getAngle(sortedAtoms[0].getX2D() - atom.getX2D(), sortedAtoms[0].getY2D() - atom.getY2D());
-		double angle2 = GeometryTools.getAngle(sortedAtoms[1].getX2D() - atom.getX2D(), sortedAtoms[1].getY2D() - atom.getY2D());
-		double angle3 = GeometryTools.getAngle(distanceMeasure.x - atom.getX2D(), distanceMeasure.y - atom.getY2D());
+		double angle1 = GeometryTools.getAngle(sortedAtoms[0].getX2d() - atom.getX2d(), sortedAtoms[0].getY2d() - atom.getY2d());
+		double angle2 = GeometryTools.getAngle(sortedAtoms[1].getX2d() - atom.getX2d(), sortedAtoms[1].getY2d() - atom.getY2d());
+		double angle3 = GeometryTools.getAngle(distanceMeasure.x - atom.getX2d(), distanceMeasure.y - atom.getY2d());
 		if (debug)
 		{
 			try
@@ -285,8 +285,8 @@ public class AtomPlacer
 			atomsToDraw.addElement(unplacedNeighbours.getAtomAt(f));
 		}
 		radius = bondLength;
-		startAngle = GeometryTools.getAngle(startAtom.getX2D() - atom.getX2D(), startAtom.getY2D() - atom.getY2D());
-		populatePolygonCorners(atomsToDraw, new Point2d(atom.getPoint2D()), startAngle, addAngle, radius);
+		startAngle = GeometryTools.getAngle(startAtom.getX2d() - atom.getX2d(), startAtom.getY2d() - atom.getY2d());
+		populatePolygonCorners(atomsToDraw, new Point2d(atom.getPoint2d()), startAngle, addAngle, radius);
 
 	}
 
@@ -317,11 +317,11 @@ public class AtomPlacer
 		{
 			atom = ac.getAtomAt(f);
 			nextAtom = ac.getAtomAt(f + 1);
-			atomPoint = new Point2d(atom.getPoint2D());
+			atomPoint = new Point2d(atom.getPoint2d());
 			bondVector.normalize();
 			bondVector.scale(bondLength);
 			atomPoint.add(bondVector);
-			nextAtom.setPoint2D(atomPoint);
+			nextAtom.setPoint2d(atomPoint);
 			nextAtom.setFlag(CDKConstants.ISPLACED, true);
 			bondVector = getNextBondVector(nextAtom, atom, molecule.get2DCenter());
 		}
@@ -349,16 +349,16 @@ public class AtomPlacer
 		  logger.debug("Entering AtomPlacer.getNextBondVector()");
 		  logger.debug("Arguments are atom: " + atom + ", previousAtom: " + previousAtom + ", distanceMeasure: " + distanceMeasure);
     }  
-		double angle = GeometryTools.getAngle(previousAtom.getX2D() - atom.getX2D(), previousAtom.getY2D() - atom.getY2D());
+		double angle = GeometryTools.getAngle(previousAtom.getX2d() - atom.getX2d(), previousAtom.getY2d() - atom.getY2d());
 		double addAngle = Math.toRadians(120);
 		angle += addAngle;
 		Vector2d vec1 = new Vector2d(Math.cos(angle), Math.sin(angle));
-		Point2d point1 = new Point2d(atom.getPoint2D());
+		Point2d point1 = new Point2d(atom.getPoint2d());
 		point1.add(vec1);
 		double distance1 = point1.distance(distanceMeasure);
 		angle += addAngle;
 		Vector2d vec2 = new Vector2d(Math.cos(angle), Math.sin(angle));
-		Point2d point2 = new Point2d(atom.getPoint2D());
+		Point2d point2 = new Point2d(atom.getPoint2d());
 		point2.add(vec2);
 		double distance2 = point2.distance(distanceMeasure);
 		if (distance2 > distance1)
@@ -424,7 +424,7 @@ public class AtomPlacer
       if (logger.isDebugEnabled())
       try
 			{
-				logger.debug("populatePolygonCorners->connectAtom: " + (molecule.getAtomNumber(connectAtom) + 1) + " placed at " + connectAtom.getPoint2D());
+				logger.debug("populatePolygonCorners->connectAtom: " + (molecule.getAtomNumber(connectAtom) + 1) + " placed at " + connectAtom.getPoint2d());
 			} catch (Exception exc)
 			{
 				//nothing to catch here. This is just for logging
@@ -434,7 +434,7 @@ public class AtomPlacer
 		for (int i = 0; i < atomsToDraw.size(); i++)
 		{
 			connectAtom = (Atom) atomsToDraw.elementAt(i);
-			connectAtom.setPoint2D((Point2d) points.elementAt(i));
+			connectAtom.setPoint2d((Point2d) points.elementAt(i));
 			connectAtom.setFlag(CDKConstants.ISPLACED, true);
 		}
 

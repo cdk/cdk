@@ -262,7 +262,7 @@ public class SmilesGenerator {
     Atom start = null;
     for (int i = 0; i < all.length; i++) {
       Atom atom = all[i];
-      if (chiral && atom.getPoint2D() == null) {
+      if (chiral && atom.getPoint2d() == null) {
         throw new CDKException("Atom number " + i + " has no 2D coordinates, but 2D coordinates are needed for creating chiral smiles");
       }
       atom.setFlag(CDKConstants.VISITED, false);
@@ -772,11 +772,11 @@ public class SmilesGenerator {
    */
   private double giveAngleBothMethods(Atom from, Atom to1, Atom to2, boolean bool) {
     double[] A = new double[2];
-    from.getPoint2D().get(A);
+    from.getPoint2d().get(A);
     double[] B = new double[2];
-    to1.getPoint2D().get(B);
+    to1.getPoint2d().get(B);
     double[] C = new double[2];
-    to2.getPoint2D().get(C);
+    to2.getPoint2d().get(C);
     double angle1 = Math.atan2((B[1] - A[1]), (B[0] - A[0]));
     double angle2 = Math.atan2((C[1] - A[1]), (C[0] - A[0]));
     double angle = angle2 - angle1;

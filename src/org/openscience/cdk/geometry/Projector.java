@@ -40,9 +40,9 @@ public class Projector  {
   public static void project2D(AtomContainer container) {
     for (int i = 0; i < container.getAtomCount(); i++) {
       Atom atom = container.getAtomAt(i);
-      if (atom.getPoint3D() != null) {
-        atom.setX2D(atom.getX3D());
-        atom.setY2D(atom.getY3D());
+      if (atom.getPoint3d() != null) {
+        atom.setX2d(atom.getX3d());
+        atom.setY2d(atom.getY3d());
       } else {
         // should throw an exception
       }

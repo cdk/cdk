@@ -374,10 +374,10 @@ public class CIFReader extends DefaultChemObjectReader {
                     double[] b = crystal.getB();
                     double[] c = crystal.getC();
                     frac = CrystalGeometryTools.cartesianToFractional(a, b, c, real);
-                    atom.setFractionalPoint3D(new Point3d(frac[0], frac[1], frac[2]));
+                    atom.setFractionalPoint3d(new Point3d(frac[0], frac[1], frac[2]));
                 }
                 if (hasFractional) {
-                    atom.setFractionalPoint3D(new Point3d(frac[0], frac[1], frac[2]));
+                    atom.setFractionalPoint3d(new Point3d(frac[0], frac[1], frac[2]));
                 }
                 logger.debug("Adding atom: " + atom);
                 crystal.addAtom(atom);

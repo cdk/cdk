@@ -409,7 +409,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader
 				throw new IOException("Error reading z coordinate");
 			}
 			Atom atom = new Atom(isotopeFactory.getElementSymbol(atomicNumber));
-			atom.setPoint3D(new Point3d(x, y, z));
+			atom.setPoint3d(new Point3d(x, y, z));
 			molecule.addAtom(atom);
 		}
 		/*

@@ -75,7 +75,7 @@ public class SimpleBasisSet extends GaussiansBasis
     for(i=0; i<atoms.length; i++)
     {
       atomicnumber = atoms[i].getAtomicNumber();
-      rN = new Vector(atoms[i].getPoint3D());
+      rN = new Vector(atoms[i].getPoint3d());
       if (atomicnumber<=2)
       {
         nx[j] = 0; ny[j] = 0; nz[j] = 0; alpha[j] = f1; r[j] = rN; j++;

@@ -712,7 +712,7 @@ public class MoleculeFactory {
 			molecule = setOfMolecules.getMolecule(0);
 			for (int i = 0; i < molecule.getAtomCount(); i++)
 			{
-				molecule.getAtomAt(i).setPoint2D(null);
+				molecule.getAtomAt(i).setPoint2d(null);
 			}
 		}
 		catch(Exception exc)

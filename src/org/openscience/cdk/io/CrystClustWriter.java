@@ -161,9 +161,9 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
             // output atom charge
             write(new Double(atom.getCharge()).toString() + "\n");
             // output coordinates
-            write(new Double(atom.getX3D()).toString() + "\n");
-            write(new Double(atom.getY3D()).toString() + "\n");
-            write(new Double(atom.getZ3D()).toString() + "\n");
+            write(new Double(atom.getX3d()).toString() + "\n");
+            write(new Double(atom.getY3d()).toString() + "\n");
+            write(new Double(atom.getZ3d()).toString() + "\n");
         }
     
     }

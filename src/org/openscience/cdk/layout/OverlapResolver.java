@@ -120,8 +120,8 @@ public class OverlapResolver
 			*/
 			a1 = (Atom)op.chemObject1;
 			a2 = (Atom)op.chemObject2;
-			v1 = new Vector2d(a1.getPoint2D());
-			v2 = new Vector2d(a2.getPoint2D());
+			v1 = new Vector2d(a1.getPoint2d());
+			v2 = new Vector2d(a2.getPoint2d());
 			v2.sub(v1);
 			v2.normalize();
 			v2.scale(bondLength / 20.0);
@@ -129,12 +129,12 @@ public class OverlapResolver
 			choice = Math.random();
 			if (choice > 0.5)
 			{
-				a2.getPoint2D().add(v2);
+				a2.getPoint2d().add(v2);
 				logger.debug("Random variable: " + choice + ", displacing first atom");
 			}
 			else
 			{
-				a1.getPoint2D().sub(v2);
+				a1.getPoint2d().sub(v2);
 				logger.debug("Random variable: " + choice + ", displacing second atom");
 			}
 			overlapScore = getOverlapScore(ac, overlappingAtoms
@@ -201,11 +201,11 @@ public class OverlapResolver
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
 			atom1 = ac.getAtomAt(f);
-			p1 = atom1.getPoint2D();
+			p1 = atom1.getPoint2d();
 			for (int g = f + 1; g < ac.getAtomCount(); g++)
 			{
 				atom2 = ac.getAtomAt(g);
-				p2 = atom2.getPoint2D();
+				p2 = atom2.getPoint2d();
 				distance = p1.distance(p2);
 				if (distance < overlapCutoff)
 				{
@@ -268,15 +268,15 @@ public class OverlapResolver
 		double y1 = 0, y2 = 0, y3 = 0, y4 = 0;
 		Point2D.Double p1 = null, p2 = null, p3 = null, p4 = null;
 		
-		x1 = bond1.getAtomAt(0).getX2D();
-		x2 = bond1.getAtomAt(1).getX2D();
-		x3 = bond2.getAtomAt(0).getX2D();
-		x4 = bond2.getAtomAt(1).getX2D();
+		x1 = bond1.getAtomAt(0).getX2d();
+		x2 = bond1.getAtomAt(1).getX2d();
+		x3 = bond2.getAtomAt(0).getX2d();
+		x4 = bond2.getAtomAt(1).getX2d();
 		
-		y1 = bond1.getAtomAt(0).getY2D();
-		y2 = bond1.getAtomAt(1).getY2D();
-		y3 = bond2.getAtomAt(0).getY2D();
-		y4 = bond2.getAtomAt(1).getY2D();
+		y1 = bond1.getAtomAt(0).getY2d();
+		y2 = bond1.getAtomAt(1).getY2d();
+		y3 = bond2.getAtomAt(0).getY2d();
+		y4 = bond2.getAtomAt(1).getY2d();
 		
 		Line2D.Double line1 = new Line2D.Double(new Point2D.Double(x1, y1), new Point2D.Double(x2, y2));
 		Line2D.Double line2 = new Line2D.Double(new Point2D.Double(x3, y3), new Point2D.Double(x4, y4));

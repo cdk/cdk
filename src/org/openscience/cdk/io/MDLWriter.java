@@ -251,13 +251,13 @@ public class MDLWriter extends DefaultChemObjectWriter {
           if(isVisible[f]){
             Atom atom = atoms[f];
             line = "";
-            if (atom.getPoint3D() != null) {
-                line += formatMDLFloat((float) atom.getX3D());
-                line += formatMDLFloat((float) atom.getY3D());
-                line += formatMDLFloat((float) atom.getZ3D()) + " ";
-            } else if (atom.getPoint2D() != null) {
-                line += formatMDLFloat((float) atom.getX2D());
-                line += formatMDLFloat((float) atom.getY2D());
+            if (atom.getPoint3d() != null) {
+                line += formatMDLFloat((float) atom.getX3d());
+                line += formatMDLFloat((float) atom.getY3d());
+                line += formatMDLFloat((float) atom.getZ3d()) + " ";
+            } else if (atom.getPoint2d() != null) {
+                line += formatMDLFloat((float) atom.getX2d());
+                line += formatMDLFloat((float) atom.getY2d());
                 line += "    0.0000 ";
             } else {
                 // if no coordinates available, then output a number

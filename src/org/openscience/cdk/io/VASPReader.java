@@ -251,7 +251,7 @@ public class VASPReader extends DefaultChemObjectReader {
                 frac[0] = xred[i][0];
                 frac[1] = xred[i][1];
                 frac[2] = xred[i][2];
-                atom.setFractionalPoint3D(new Point3d(frac[0], frac[1], frac[2]));
+                atom.setFractionalPoint3d(new Point3d(frac[0], frac[1], frac[2]));
                 crystal.addAtom(atom);
             }
             crystal.setProperty(CDKConstants.REMARK, info);

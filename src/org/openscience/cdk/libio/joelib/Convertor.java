@@ -91,17 +91,17 @@ public class Convertor {
         if (atom != null) {
             JOEAtom convertedAtom = new JOEAtom();
             if (coordType == COORDINATES_3D ||
-                (atom.getPoint3D() != null && coordType != -1)) {
+                (atom.getPoint3d() != null && coordType != -1)) {
                 convertedAtom.setVector(
-                    atom.getX3D(),
-                    atom.getY3D(),
-                    atom.getZ3D()
+                    atom.getX3d(),
+                    atom.getY3d(),
+                    atom.getZ3d()
                 );
             } else if (coordType == COORDINATES_2D ||
-                       (atom.getPoint2D() != null && coordType != -1)) {
+                       (atom.getPoint2d() != null && coordType != -1)) {
                 convertedAtom.setVector(
-                    atom.getX2D(),
-                    atom.getY2D(),
+                    atom.getX2d(),
+                    atom.getY2d(),
                     0.0
                 );
             } else {
@@ -138,9 +138,9 @@ public class Convertor {
             }
             try {
                 // try to give the atom its coordinates
-                convertedAtom.setX3D(atom.getVector().x());
-                convertedAtom.setY3D(atom.getVector().y());
-                convertedAtom.setZ3D(atom.getVector().z());
+                convertedAtom.setX3d(atom.getVector().x());
+                convertedAtom.setY3d(atom.getVector().y());
+                convertedAtom.setZ3d(atom.getVector().z());
             } catch (java.lang.Exception e) {
             }
             try {

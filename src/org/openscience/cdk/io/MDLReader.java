@@ -328,7 +328,7 @@ public class MDLReader extends DefaultChemObjectReader {
                 }
 
                 // store as 3D for now, convert to 2D (if totalZ == 0.0) later
-                atom.setPoint3D(new Point3d(x, y, z));
+                atom.setPoint3d(new Point3d(x, y, z));
                 
                 // parse further fields
                 String massDiffString = line.substring(34,36).trim();
@@ -395,9 +395,9 @@ public class MDLReader extends DefaultChemObjectReader {
                 Atom[] atomsToUpdate = molecule.getAtoms();
                 for (int f = 0; f<atomsToUpdate.length; f++) {
                     Atom atomToUpdate = atomsToUpdate[f];
-                    Point3d p3d = atomToUpdate.getPoint3D();
-                    atomToUpdate.setPoint2D(new Point2d(p3d.x, p3d.y));
-                    atomToUpdate.setPoint3D(null);
+                    Point3d p3d = atomToUpdate.getPoint3d();
+                    atomToUpdate.setPoint2d(new Point2d(p3d.x, p3d.y));
+                    atomToUpdate.setPoint3d(null);
                 }
             }
             
@@ -488,11 +488,11 @@ public class MDLReader extends DefaultChemObjectReader {
                         // convert Atom into a PseudoAtom
                         Atom prevAtom = molecule.getAtomAt(atomNumber - 1);
                         PseudoAtom pseudoAtom = new PseudoAtom(atomName);
-                        if (prevAtom.getPoint2D() != null) {
-                            pseudoAtom.setPoint2D(prevAtom.getPoint2D());
+                        if (prevAtom.getPoint2d() != null) {
+                            pseudoAtom.setPoint2d(prevAtom.getPoint2d());
                         }
-                        if (prevAtom.getPoint3D() != null) {
-                            pseudoAtom.setPoint3D(prevAtom.getPoint3D());
+                        if (prevAtom.getPoint3d() != null) {
+                            pseudoAtom.setPoint3d(prevAtom.getPoint3d());
                         }
                         AtomContainerManipulator.replaceAtomByAtom(molecule, prevAtom, pseudoAtom);
                     } catch (NumberFormatException exception) {

@@ -304,8 +304,8 @@ public class Bond extends ElectronContainer implements java.io.Serializable, Clo
 		double y = 0;
 		for (int f = 0; f < getAtomCount(); f++)
 		{
-			x += getAtomAt(f).getX2D();
-			y += getAtomAt(f).getY2D();
+			x += getAtomAt(f).getX2d();
+			y += getAtomAt(f).getY2d();
 		}
 		return new Point2d(x / ((double) getAtomCount()), y / ((double) getAtomCount()));
 	}
@@ -324,9 +324,9 @@ public class Bond extends ElectronContainer implements java.io.Serializable, Clo
 		double z = 0;
 		for (int f = 0; f < getAtomCount(); f++)
 		{
-			x += getAtomAt(f).getX3D();
-			y += getAtomAt(f).getY3D();
-			z += getAtomAt(f).getZ3D();
+			x += getAtomAt(f).getX3d();
+			y += getAtomAt(f).getY3d();
+			z += getAtomAt(f).getZ3d();
 		}
 		return new Point3d(x / getAtomCount(), y / getAtomCount(), z / getAtomCount());
 	}

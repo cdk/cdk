@@ -266,7 +266,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
                 throw new IOException("Error reading coordinates");
             }
             Atom atom = new Atom(isotopeFactory.getElementSymbol(atomicNumber));
-            atom.setPoint3D(new Point3d(x, y, z));
+            atom.setPoint3d(new Point3d(x, y, z));
             container.addAtom(atom);
         }
         SetOfMolecules moleculeSet = new SetOfMolecules();

@@ -196,8 +196,8 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                     double x = Double.parseDouble(xString);
                     double y = Double.parseDouble(yString);
                     double z = Double.parseDouble(zString);
-                    atom.setPoint3D(new Point3d(x, y, z));
-                    atom.setPoint2D(new Point2d(x, y)); // FIXME: dirty!
+                    atom.setPoint3d(new Point3d(x, y, z));
+                    atom.setPoint2d(new Point2d(x, y)); // FIXME: dirty!
                 } catch (Exception exception) {
                     String error = "Error while parsing atom coordinates";
                     logger.error(error);

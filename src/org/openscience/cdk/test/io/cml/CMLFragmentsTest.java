@@ -140,10 +140,10 @@ public class CMLFragmentsTest extends TestCase {
 
         assertEquals(1, mol.getAtomCount());
         Atom atom = mol.getAtomAt(0);
-        assertNull(atom.getPoint3D());
-        assertNotNull(atom.getPoint2D());
-        assertEquals(84, (int)atom.getX2D());
-        assertEquals(138, (int)atom.getY2D());
+        assertNull(atom.getPoint3d());
+        assertNotNull(atom.getPoint2d());
+        assertEquals(84, (int)atom.getX2d());
+        assertEquals(138, (int)atom.getY2d());
     }
     
     public void test2dCoord2() {
@@ -154,10 +154,10 @@ public class CMLFragmentsTest extends TestCase {
 
         assertEquals(1, mol.getAtomCount());
         Atom atom = mol.getAtomAt(0);
-        assertNull(atom.getPoint3D());
-        assertNotNull(atom.getPoint2D());
-        assertTrue(2.0833 == atom.getX2D());
-        assertTrue(4.9704 == atom.getY2D());
+        assertNull(atom.getPoint3d());
+        assertNotNull(atom.getPoint2d());
+        assertTrue(2.0833 == atom.getX2d());
+        assertTrue(4.9704 == atom.getY2d());
     }
     
     public void testBond() {
@@ -283,10 +283,10 @@ public class CMLFragmentsTest extends TestCase {
         Molecule mol = checkForSingleMoleculeFile(chemFile);
         
         assertEquals(2, mol.getAtomCount());
-        assertNotNull(mol.getAtomAt(0).getPoint2D());
-        assertNotNull(mol.getAtomAt(1).getPoint2D());
-        assertNull(mol.getAtomAt(0).getPoint3D());
-        assertNull(mol.getAtomAt(1).getPoint3D());
+        assertNotNull(mol.getAtomAt(0).getPoint2d());
+        assertNotNull(mol.getAtomAt(1).getPoint2d());
+        assertNull(mol.getAtomAt(0).getPoint3d());
+        assertNull(mol.getAtomAt(1).getPoint3d());
     }
   
     public void testCoordinates3D() {
@@ -296,10 +296,10 @@ public class CMLFragmentsTest extends TestCase {
         Molecule mol = checkForSingleMoleculeFile(chemFile);
         
         assertEquals(2, mol.getAtomCount());
-        assertNull(mol.getAtomAt(0).getPoint2D());
-        assertNull(mol.getAtomAt(1).getPoint2D());
-        assertNotNull(mol.getAtomAt(0).getPoint3D());
-        assertNotNull(mol.getAtomAt(1).getPoint3D());
+        assertNull(mol.getAtomAt(0).getPoint2d());
+        assertNull(mol.getAtomAt(1).getPoint2d());
+        assertNotNull(mol.getAtomAt(0).getPoint3d());
+        assertNotNull(mol.getAtomAt(1).getPoint3d());
     }
     
     public void testFractional3D() {
@@ -309,10 +309,10 @@ public class CMLFragmentsTest extends TestCase {
         Molecule mol = checkForSingleMoleculeFile(chemFile);
         
         assertEquals(2, mol.getAtomCount());
-        assertNull(mol.getAtomAt(0).getPoint3D());
-        assertNull(mol.getAtomAt(1).getPoint3D());
-        assertNotNull(mol.getAtomAt(0).getFractionalPoint3D());
-        assertNotNull(mol.getAtomAt(1).getFractionalPoint3D());
+        assertNull(mol.getAtomAt(0).getPoint3d());
+        assertNull(mol.getAtomAt(1).getPoint3d());
+        assertNotNull(mol.getAtomAt(0).getFractionalPoint3d());
+        assertNotNull(mol.getAtomAt(1).getFractionalPoint3d());
     }
     
     public void testMissing2DCoordinates() {
@@ -327,9 +327,9 @@ public class CMLFragmentsTest extends TestCase {
         Atom atom2 = mol.getAtomAt(1);
         Atom atom3 = mol.getAtomAt(2);
         
-        assertNotNull(atom1.getPoint2D());
-        assertNull   (atom2.getPoint2D());
-        assertNotNull(atom3.getPoint2D());
+        assertNotNull(atom1.getPoint2d());
+        assertNull   (atom2.getPoint2d());
+        assertNotNull(atom3.getPoint2d());
     }
 
     public void testMissing3DCoordinates() {
@@ -344,9 +344,9 @@ public class CMLFragmentsTest extends TestCase {
         Atom atom2 = mol.getAtomAt(1);
         Atom atom3 = mol.getAtomAt(2);
         
-        assertNotNull(atom1.getPoint3D());
-        assertNull   (atom2.getPoint3D());
-        assertNotNull(atom3.getPoint3D());
+        assertNotNull(atom1.getPoint3d());
+        assertNull   (atom2.getPoint3d());
+        assertNotNull(atom3.getPoint3d());
     }
     
     public void testCrystal() {

@@ -112,7 +112,7 @@ public class XYZWriter extends DefaultChemObjectWriter {
                 Atom a = atoms[i];
                 st = a.getSymbol();
                 
-                Point3d p3 = a.getPoint3D();
+                Point3d p3 = a.getPoint3d();
                 if (p3 != null) {
                     st = st + "\t" + new Double(p3.x).toString() + "\t"
                             + new Double(p3.y).toString() + "\t"

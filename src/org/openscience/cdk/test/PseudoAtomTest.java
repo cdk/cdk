@@ -56,9 +56,9 @@ public class PseudoAtomTest extends TestCase {
         PseudoAtom a = new PseudoAtom(label);
         assertEquals("R", a.getSymbol());
         assertEquals(label, a.getLabel());
-        assertNull(a.getPoint3D());
-        assertNull(a.getPoint2D());
-        assertNull(a.getFractionalPoint3D());
+        assertNull(a.getPoint3d());
+        assertNull(a.getPoint2d());
+        assertNull(a.getFractionalPoint3d());
     }
 
     public void testPseudoAtom_Atom() {
@@ -66,14 +66,14 @@ public class PseudoAtomTest extends TestCase {
         Point3d fract = new Point3d(0.5, 0.5, 0.5);
         Point3d threeD = new Point3d(0.5, 0.5, 0.5);
         Point2d twoD = new Point2d(0.5, 0.5);
-        atom.setFractionalPoint3D(fract);
-        atom.setPoint3D(threeD);
-        atom.setPoint2D(twoD);
+        atom.setFractionalPoint3d(fract);
+        atom.setPoint3d(threeD);
+        atom.setPoint2d(twoD);
         
         PseudoAtom a = new PseudoAtom(atom);
-        assertEquals(fract, a.getFractionalPoint3D());
-        assertEquals(threeD, a.getPoint3D());
-        assertEquals(twoD, a.getPoint2D());
+        assertEquals(fract, a.getFractionalPoint3d());
+        assertEquals(threeD, a.getPoint3d());
+        assertEquals(twoD, a.getPoint2d());
     }
 
     /**

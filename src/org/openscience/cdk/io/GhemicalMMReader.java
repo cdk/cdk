@@ -222,7 +222,7 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
                         try {
                             Atom atom = new Atom(IsotopeFactory.getInstance().getElementSymbol(atoms[i]));
                             atom.setAtomicNumber(atoms[i]);
-                            atom.setPoint3D(new Point3d(atomxs[i], atomys[i], atomzs[i]));
+                            atom.setPoint3d(new Point3d(atomxs[i], atomys[i], atomzs[i]));
                             atom.setCharge(atomcharges[i]);
                             container.addAtom(atom);
                             logger.debug("Stored atom: " + atom);

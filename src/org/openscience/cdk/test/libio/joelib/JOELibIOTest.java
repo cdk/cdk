@@ -54,16 +54,16 @@ public class JOELibIOTest extends TestCase {
 
     public void testAtom() {
         Atom a = new Atom("C");
-        a.setX3D(1.0);
-        a.setY3D(2.0);
-        a.setZ3D(3.0);
+        a.setX3d(1.0);
+        a.setY3d(2.0);
+        a.setZ3d(3.0);
 
         JOEAtom converted = Convertor.convert(a);
         Atom reverted = Convertor.convert(converted);
 
-        assertTrue(a.getX3D() == reverted.getX3D());
-        assertTrue(a.getY3D() == reverted.getY3D());
-        assertTrue(a.getZ3D() == reverted.getZ3D());
+        assertTrue(a.getX3d() == reverted.getX3d());
+        assertTrue(a.getY3d() == reverted.getY3d());
+        assertTrue(a.getZ3d() == reverted.getZ3d());
     }
 
     public void testBond() {

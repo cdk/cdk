@@ -66,12 +66,12 @@ public class GeometryTools {
                minY = Double.MAX_VALUE;
         Atom[] atoms = atomCon.getAtoms();
         for (int i = 0; i < atoms.length; i++) {
-            if (atoms[i].getPoint2D() != null) {
-                if (atoms[i].getPoint2D().x < minX) {
-                    minX = atoms[i].getPoint2D().x;
+            if (atoms[i].getPoint2d() != null) {
+                if (atoms[i].getPoint2d().x < minX) {
+                    minX = atoms[i].getPoint2d().x;
                 }
-                if (atoms[i].getPoint2D().y < minY) {
-                    minY = atoms[i].getPoint2D().y;
+                if (atoms[i].getPoint2d().y < minY) {
+                    minY = atoms[i].getPoint2d().y;
                 }
             }
         }
@@ -101,10 +101,10 @@ public class GeometryTools {
 	public static void scaleMolecule(AtomContainer atomCon, double scaleFactor) {
 		for (int i = 0; i < atomCon.getAtomCount(); i++)
 		{
-			if (atomCon.getAtomAt(i).getPoint2D() != null)
+			if (atomCon.getAtomAt(i).getPoint2d() != null)
 			{
-				atomCon.getAtomAt(i).getPoint2D().x *= scaleFactor;
-				atomCon.getAtomAt(i).getPoint2D().y *= scaleFactor;
+				atomCon.getAtomAt(i).getPoint2d().x *= scaleFactor;
+				atomCon.getAtomAt(i).getPoint2d().y *= scaleFactor;
 			}
 		}
 	}
@@ -126,7 +126,7 @@ public class GeometryTools {
 		for (int i = 0; i < atomCon.getAtomCount(); i++)
 		{
 			atom = atomCon.getAtomAt(i);		
-			p = atom.getPoint2D();
+			p = atom.getPoint2d();
 			offsetAngle = GeometryTools.getAngle(p.x - center.x, p.y - center.y);
 			distance = p.distance(center);
 			p.x = center.x + (Math.sin(angle + offsetAngle) * distance);
@@ -185,11 +185,11 @@ public class GeometryTools {
                minY = Double.MAX_VALUE;
 		for (int i = 0; i < container.getAtomCount(); i++) {
             Atom atom = container.getAtomAt(i);
-			if (atom.getPoint2D() != null) {
-				if (atom.getX2D() > maxX) maxX = atom.getX2D();
-				if (atom.getX2D() < minX) minX = atom.getX2D();
-				if (atom.getY2D() > maxY) maxY = atom.getY2D();
-				if (atom.getY2D() < minY) minY = atom.getY2D();
+			if (atom.getPoint2d() != null) {
+				if (atom.getX2d() > maxX) maxX = atom.getX2d();
+				if (atom.getX2d() < minX) minX = atom.getX2d();
+				if (atom.getY2d() > maxY) maxY = atom.getY2d();
+				if (atom.getY2d() < minY) minY = atom.getY2d();
 			}	
 		}
         double[] minmax = new double[4];
@@ -209,8 +209,8 @@ public class GeometryTools {
     public static void translate2D(AtomContainer atomCon, Vector2d vector) {
         Atom[] atoms = atomCon.getAtoms();
         for (int i = 0; i < atoms.length; i++) {
-            if (atoms[i].getPoint2D() != null) {
-                atoms[i].getPoint2D().add(vector);
+            if (atoms[i].getPoint2d() != null) {
+                atoms[i].getPoint2d().add(vector);
             } else {
                 logger.warn("Could not translate atom in 2D space");
             }
@@ -227,8 +227,8 @@ public class GeometryTools {
         Vector2d translation = new Vector2d(p.x-com.x, p.y-com.y);
         Atom[] atoms = atomCon.getAtoms();
 		for (int i = 0; i < atoms.length; i++) {
-			if (atoms[i].getPoint2D() != null) {
-				atoms[i].getPoint2D().add(translation);
+			if (atoms[i].getPoint2d() != null) {
+				atoms[i].getPoint2d().add(translation);
 			}
 		}
 	}
@@ -262,10 +262,10 @@ public class GeometryTools {
 		for (int f = 0; f < atoms.size(); f++)
 		{
 			atom = (Atom)atoms.elementAt(f);
-			if (atom.getPoint2D() != null)
+			if (atom.getPoint2d() != null)
 			{
-				x += atom.getX2D();
-				y += atom.getY2D();						
+				x += atom.getX2d();
+				y += atom.getY2d();						
 			}
 		}
 		return new Point2d(x/(double)atoms.size(), y/(double)atoms.size());
@@ -290,8 +290,8 @@ public class GeometryTools {
             Atom a = (Atom)atoms.nextElement();
             double mass = a.getExactMass();
             totalmass += mass;
-            x += mass*a.getX2D();
-            y += mass*a.getY2D();
+            x += mass*a.getX2d();
+            y += mass*a.getY2d();
         }
 
         return new Point2d(x/totalmass, y/totalmass);
@@ -317,9 +317,9 @@ public class GeometryTools {
             Atom a = (Atom)atoms.nextElement();
             double mass = a.getExactMass();
             totalmass += mass;
-            x += mass*a.getX3D();
-            y += mass*a.getY3D();
-            z += mass*a.getZ3D();
+            x += mass*a.getX3d();
+            y += mass*a.getY3d();
+            z += mass*a.getZ3d();
         }
 
         return new Point3d(x/totalmass, y/totalmass, z/totalmass);
@@ -387,15 +387,15 @@ public class GeometryTools {
 	 * @return     The array with the coordinates
 	 */
 	public static int[] getBondCoordinates(Bond bond) {
-        if (bond.getAtomAt(0).getPoint2D() == null ||
-            bond.getAtomAt(1).getPoint2D() == null) {
+        if (bond.getAtomAt(0).getPoint2d() == null ||
+            bond.getAtomAt(1).getPoint2d() == null) {
             logger.error("getBondCoordinates() called on Bond without 2D coordinates!");
             return new int[0];
         }
-		int beginX = (int)bond.getAtomAt(0).getPoint2D().x;
-		int endX = (int)bond.getAtomAt(1).getPoint2D().x;
-		int beginY = (int)bond.getAtomAt(0).getPoint2D().y;
-		int endY = (int)bond.getAtomAt(1).getPoint2D().y;
+		int beginX = (int)bond.getAtomAt(0).getPoint2d().x;
+		int endX = (int)bond.getAtomAt(1).getPoint2d().x;
+		int beginY = (int)bond.getAtomAt(0).getPoint2d().y;
+		int endY = (int)bond.getAtomAt(1).getPoint2d().y;
 		int[] coords = {beginX,beginY,endX,endY};
 		return coords;
 	}
@@ -417,8 +417,8 @@ public class GeometryTools {
 		for (int i = 0; i < atomCon.getAtomCount(); i++)
 		{
 			currentAtom = atomCon.getAtomAt(i);
-			atomX = currentAtom.getX2D();
-			atomY = currentAtom.getY2D();
+			atomX = currentAtom.getX2d();
+			atomY = currentAtom.getY2d();
 			mouseDistance = Math.sqrt(Math.pow(atomX - xPosition, 2) + Math.pow(atomY - yPosition, 2));
 			if (mouseDistance < smallestMouseDistance || smallestMouseDistance == -1)
 			{
@@ -480,8 +480,8 @@ public class GeometryTools {
 			{
 				atom1 = atoms[f];
 				atom2 = atoms[f + 1];
-				distance1 = point.distance(atom1.getPoint2D());				
-				distance2 = point.distance(atom2.getPoint2D());
+				distance1 = point.distance(atom1.getPoint2d());				
+				distance2 = point.distance(atom2.getPoint2d());
 				if (distance2 < distance1)
 				{
 					atoms[f] = atom2;
@@ -523,8 +523,8 @@ public class GeometryTools {
 			Bond bond = bonds[f];
             Atom atom1 = bond.getAtomAt(0);
             Atom atom2 = bond.getAtomAt(1);
-            if (atom1.getPoint2D() != null &&
-                atom2.getPoint2D() != null) {
+            if (atom1.getPoint2d() != null &&
+                atom2.getPoint2d() != null) {
                 bondCounter++;
                 bondLengthSum += getLength2D(bond);
             }
@@ -542,8 +542,8 @@ public class GeometryTools {
             bond.getAtomAt(1) == null) {
             return 0.0;
         }
-		Point2d p1 = bond.getAtomAt(0).getPoint2D();
-		Point2d p2 = bond.getAtomAt(1).getPoint2D();
+		Point2d p1 = bond.getAtomAt(0).getPoint2d();
+		Point2d p2 = bond.getAtomAt(1).getPoint2d();
         if (p1 == null || p2 == null) {
             return 0.0;
         }
@@ -557,7 +557,7 @@ public class GeometryTools {
     public static boolean has2DCoordinates(AtomContainer m) {
         Atom[] atoms = m.getAtoms();
         for (int i=0; i < atoms.length; i++) {
-            if (atoms[i].getPoint2D() == null) return false;
+            if (atoms[i].getPoint2d() == null) return false;
         }
         return true;
     }
@@ -567,7 +567,7 @@ public class GeometryTools {
 	  * @return  boolean indication that 2D coordinates are available 
 	 */
      public static boolean has2DCoordinates(Atom a) {
-         return (a.getPoint2D() != null);
+         return (a.getPoint2d() != null);
      }
      
 	/** Determines if this Bond contains 2D coordinates.
@@ -577,7 +577,7 @@ public class GeometryTools {
      public static boolean has2DCoordinates(Bond b) {
          Atom[] atoms = b.getAtoms();
          for (int i=0; i < atoms.length; i++) {
-             if (atoms[i].getPoint2D() == null) return false;
+             if (atoms[i].getPoint2d() == null) return false;
          }
          return true;
      }
@@ -590,7 +590,7 @@ public class GeometryTools {
       boolean hasinfo = true;
       Atom[] atoms = m.getAtoms();
       for (int i=0; i < atoms.length; i++) {
-          if (atoms[i].getPoint3D() == null) return false;
+          if (atoms[i].getPoint3d() == null) return false;
       }
       return hasinfo;
   }
@@ -626,8 +626,8 @@ public class GeometryTools {
                 counter++;
                 Atom atom1 = bonds[f].getAtomAt(0);
                 Atom atom2 = bonds[f].getAtomAt(1);
-                bondlength += Math.sqrt(Math.pow(atom1.getX2D() - atom2.getX2D(), 2) + 
-                                        Math.pow(atom1.getY2D() - atom2.getY2D(), 2));
+                bondlength += Math.sqrt(Math.pow(atom1.getX2d() - atom2.getX2d(), 2) + 
+                                        Math.pow(atom1.getY2d() - atom2.getY2d(), 2));
             }
         }
         bondlength = bondlength / counter;
@@ -644,7 +644,7 @@ public class GeometryTools {
         int overallDiffX = 0;
         for (int i=0; i<connectedAtoms.length; i++) {
             Atom connectedAtom = connectedAtoms[i];
-            overallDiffX = overallDiffX + (int)(connectedAtom.getX2D() - atom.getX2D());
+            overallDiffX = overallDiffX + (int)(connectedAtom.getX2d() - atom.getX2d());
         }
         if (overallDiffX <= 0) {
             return 1;

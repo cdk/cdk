@@ -163,10 +163,10 @@ public class HydrogenAdderTest extends TestCase {
         Molecule aminomethane = new Molecule();
         Atom carbon = new Atom("C");
         Point2d carbonPos = new Point2d(0.0,0.0);
-        carbon.setPoint2D(carbonPos);
+        carbon.setPoint2d(carbonPos);
         Atom nitrogen = new Atom("N");
         Point2d nitrogenPos = new Point2d(1.0,1.0);
-        nitrogen.setPoint2D(nitrogenPos);
+        nitrogen.setPoint2d(nitrogenPos);
         aminomethane.addAtom(carbon);
 	aminomethane.addAtom(nitrogen);
         aminomethane.addBond(new Bond(carbon, nitrogen));

@@ -69,11 +69,11 @@ public class AtomTools {
         for (int i = 0; i < atomContainer.getAtomCount(); i++) {
             Atom atom = atomContainer.getAtomAt(i);
             // is this atom without 3D coords, and has only one ligand?
-            if (atom.getPoint3D() == null) {
+            if (atom.getPoint3d() == null) {
                 Atom connectedAtoms[] = atomContainer.getConnectedAtoms(atom);
                 if (connectedAtoms.length == 1) {
                     Atom refAtom = connectedAtoms[0];
-                    if (refAtom.getPoint3D() != null) {
+                    if (refAtom.getPoint3d() != null) {
                         refAtoms.addAtom(refAtom);
                         // store atoms with no coords and ref atoms in a 
                         // single container
@@ -106,7 +106,7 @@ public class AtomTools {
             for (int j = 0; j < nLigands; j++) {
                 Atom ligand = noCoordLigands[j];
                 Point3d newPoint = rescaleBondLength(refAtom, ligand, newPoints[j]);
-                ligand.setPoint3D(newPoint);
+                ligand.setPoint3d(newPoint);
             }
         }
     }
@@ -122,7 +122,7 @@ public class AtomTools {
      */
     public static Point3d rescaleBondLength(
         Atom atom1, Atom atom2, Point3d point2) {
-        Point3d point1 = atom1.getPoint3D();
+        Point3d point1 = atom1.getPoint3d();
         double d1 = atom1.getCovalentRadius();
         double d2 = atom2.getCovalentRadius();
 // in case we have no covalent radii, set to 1.0        
@@ -187,7 +187,7 @@ public class AtomTools {
         AtomContainer atomContainer, Atom refAtom, int nwanted, 
         double length, double angle) {
         Point3d newPoints[] = new Point3d[0];
-        Point3d aPoint = refAtom.getPoint3D();
+        Point3d aPoint = refAtom.getPoint3d();
         // get ligands
 	    Vector connectedAtoms = atomContainer.getConnectedAtomsVector(refAtom);
         if (connectedAtoms == null) {
@@ -197,7 +197,7 @@ public class AtomTools {
         AtomContainer ligandsWithCoords    = new AtomContainer();
         for (int i = 0; i < nligands; i++) {
             Atom ligand = (Atom) connectedAtoms.elementAt(i);
-            if (ligand.getPoint3D() != null) {
+            if (ligand.getPoint3d() != null) {
                 ligandsWithCoords.addAtom(ligand);
             }
         }
@@ -207,7 +207,7 @@ public class AtomTools {
             return newPoints;
         }
         if (nwithCoords == 0) {
-            newPoints = calculate3DCoordinates0(refAtom.getPoint3D(), nwanted, length);
+            newPoints = calculate3DCoordinates0(refAtom.getPoint3d(), nwanted, length);
         } else if (nwithCoords == 1) {
 // ligand on A            
             Atom bAtom = ligandsWithCoords.getAtomAt(0);
@@ -221,15 +221,15 @@ public class AtomTools {
                     break;
                 }
             }
-            newPoints = calculate3DCoordinates1(aPoint, bAtom.getPoint3D(), (jAtom != null) ? jAtom.getPoint3D() : null, nwanted, length, angle);
+            newPoints = calculate3DCoordinates1(aPoint, bAtom.getPoint3d(), (jAtom != null) ? jAtom.getPoint3d() : null, nwanted, length, angle);
         } else if (nwithCoords == 2) {
-            Point3d bPoint = ligandsWithCoords.getAtomAt(0).getPoint3D();
-            Point3d cPoint = ligandsWithCoords.getAtomAt(1).getPoint3D();
+            Point3d bPoint = ligandsWithCoords.getAtomAt(0).getPoint3d();
+            Point3d cPoint = ligandsWithCoords.getAtomAt(1).getPoint3d();
             newPoints = calculate3DCoordinates2(aPoint, bPoint, cPoint, nwanted, length, angle);
         } else if (nwithCoords == 3) {
-            Point3d bPoint = ligandsWithCoords.getAtomAt(0).getPoint3D();
-            Point3d cPoint = ligandsWithCoords.getAtomAt(1).getPoint3D();
-            Point3d dPoint = ligandsWithCoords.getAtomAt(2).getPoint3D();
+            Point3d bPoint = ligandsWithCoords.getAtomAt(0).getPoint3d();
+            Point3d cPoint = ligandsWithCoords.getAtomAt(1).getPoint3d();
+            Point3d dPoint = ligandsWithCoords.getAtomAt(2).getPoint3d();
             newPoints = new Point3d[1];
             newPoints[0] = calculate3DCoordinates3(aPoint, bPoint, cPoint, dPoint, length);
         }

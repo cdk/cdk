@@ -202,7 +202,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
                             double x = Double.parseDouble(xStr);
                             double y = Double.parseDouble(yStr);
                             double z = Double.parseDouble(zStr);
-                            atom.setPoint3D(new Point3d(x, y, z));
+                            atom.setPoint3d(new Point3d(x, y, z));
                         } catch (NumberFormatException nfExc) {
                             String error = "Error while reading atom coordinates";
                             logger.error(error);

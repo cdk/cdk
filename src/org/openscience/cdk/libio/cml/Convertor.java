@@ -398,9 +398,9 @@ public class Convertor {
         } else {
             atomimpl.setAttribute("elementType", atom.getSymbol());
         }
-        add(atom.getPoint2D(), atomimpl);
-        add(atom.getPoint3D(), atomimpl);
-        addFractional(atom.getFractionalPoint3D(), atomimpl);
+        add(atom.getPoint2d(), atomimpl);
+        add(atom.getPoint3d(), atomimpl);
+        addFractional(atom.getFractionalPoint3d(), atomimpl);
         int fCharge = atom.getFormalCharge();
         if (fCharge != 0) {
             atomimpl.setAttribute("formalCharge", fCharge+"");

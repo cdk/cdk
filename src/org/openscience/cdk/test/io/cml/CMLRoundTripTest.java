@@ -97,47 +97,47 @@ public class CMLRoundTripTest extends TestCase {
         Molecule mol = new Molecule();
         Atom atom = new Atom("N");
         Point2d p2d = new Point2d(1.3, 1.4);
-        atom.setPoint2D(p2d);
+        atom.setPoint2d(p2d);
         mol.addAtom(atom);
         
         Molecule roundTrippedMol = roundTripMolecule(mol);
         
         assertEquals(1, roundTrippedMol.getAtomCount());
         Atom roundTrippedAtom = roundTrippedMol.getAtomAt(0);
-        assertEquals(atom.getX2D(), roundTrippedAtom.getX2D(), 0.00001);
-        assertEquals(atom.getY2D(), roundTrippedAtom.getY2D(), 0.00001);
+        assertEquals(atom.getX2d(), roundTrippedAtom.getX2d(), 0.00001);
+        assertEquals(atom.getY2d(), roundTrippedAtom.getY2d(), 0.00001);
     }
     
     public void testAtom3D() {
         Molecule mol = new Molecule();
         Atom atom = new Atom("N");
         Point3d p3d = new Point3d(1.3, 1.4, 0.9);
-        atom.setPoint3D(p3d);
+        atom.setPoint3d(p3d);
         mol.addAtom(atom);
         
         Molecule roundTrippedMol = roundTripMolecule(mol);
         
         assertEquals(1, roundTrippedMol.getAtomCount());
         Atom roundTrippedAtom = roundTrippedMol.getAtomAt(0);
-        assertEquals(atom.getX3D(), roundTrippedAtom.getX3D(), 0.00001);
-        assertEquals(atom.getY3D(), roundTrippedAtom.getY3D(), 0.00001);
-        assertEquals(atom.getZ3D(), roundTrippedAtom.getZ3D(), 0.00001);
+        assertEquals(atom.getX3d(), roundTrippedAtom.getX3d(), 0.00001);
+        assertEquals(atom.getY3d(), roundTrippedAtom.getY3d(), 0.00001);
+        assertEquals(atom.getZ3d(), roundTrippedAtom.getZ3d(), 0.00001);
     }
     
     public void testAtomFract3D() {
         Molecule mol = new Molecule();
         Atom atom = new Atom("N");
         Point3d p3d = new Point3d(0.3, 0.4, 0.9);
-        atom.setFractionalPoint3D(p3d);
+        atom.setFractionalPoint3d(p3d);
         mol.addAtom(atom);
         
         Molecule roundTrippedMol = roundTripMolecule(mol);
         
         assertEquals(1, roundTrippedMol.getAtomCount());
         Atom roundTrippedAtom = roundTrippedMol.getAtomAt(0);
-        assertEquals(atom.getFractX3D(), roundTrippedAtom.getFractX3D(), 0.00001);
-        assertEquals(atom.getFractY3D(), roundTrippedAtom.getFractY3D(), 0.00001);
-        assertEquals(atom.getFractZ3D(), roundTrippedAtom.getFractZ3D(), 0.00001);
+        assertEquals(atom.getFractX3d(), roundTrippedAtom.getFractX3d(), 0.00001);
+        assertEquals(atom.getFractY3d(), roundTrippedAtom.getFractY3d(), 0.00001);
+        assertEquals(atom.getFractZ3d(), roundTrippedAtom.getFractZ3d(), 0.00001);
     }
     
     public void testPseudoAtom() {

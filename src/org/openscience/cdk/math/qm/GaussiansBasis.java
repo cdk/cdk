@@ -102,9 +102,9 @@ public class GaussiansBasis implements Basis
     this.oz = new int[count_atoms];
     for(i=0; i<count_atoms; i++)
     { 
-      this.rN[i] = (new Vector(atoms[i].getPoint3D())).mul(1.8897);
+      this.rN[i] = (new Vector(atoms[i].getPoint3d())).mul(1.8897);
       this.oz[i] = atoms[i].getAtomicNumber();
-      System.out.println((i+1)+".Atom Z="+this.oz[i]+" r="+(new Vector(atoms[i].getPoint3D()))+"[angstrom]");
+      System.out.println((i+1)+".Atom Z="+this.oz[i]+" r="+(new Vector(atoms[i].getPoint3d()))+"[angstrom]");
     }
     System.out.println();
 
@@ -130,7 +130,7 @@ public class GaussiansBasis implements Basis
       this.nz[i] = nz[i];
       this.alpha[i] = alpha[i];
       //this.atoms[i] = atoms[i];
-      //this.r[i] = new Vector(atoms[i].getPoint3D()).mul(1.8897);
+      //this.r[i] = new Vector(atoms[i].getPoint3d()).mul(1.8897);
       this.r[i] = r[i].mul(1.8897);
 
       norm[i] = Math.sqrt(calcS(i,i));

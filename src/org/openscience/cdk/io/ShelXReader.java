@@ -337,7 +337,7 @@ public class ShelXReader extends DefaultChemObjectReader {
                                                         + ", " + frac[1]
                                                         + ", " + frac[2]);
                     Atom atom = new Atom(atype);
-                    atom.setFractionalPoint3D(new Point3d(frac[0], frac[1], frac[2]));
+                    atom.setFractionalPoint3d(new Point3d(frac[0], frac[1], frac[2]));
                     crystal.addAtom(atom);
                     logger.debug("Atom added: ", atom);
                 }

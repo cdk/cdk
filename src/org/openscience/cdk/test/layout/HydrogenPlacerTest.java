@@ -72,15 +72,15 @@ public class HydrogenPlacerTest extends TestCase {
         Molecule dichloromethane = new Molecule();
         Atom carbon = new Atom("C");
         Point2d carbonPos = new Point2d(0.0,0.0);
-        carbon.setPoint2D(carbonPos);
+        carbon.setPoint2d(carbonPos);
         Atom h1 = new Atom("H");
         Atom h2 = new Atom("H");
         Atom cl1 = new Atom("Cl");
         Point2d cl1Pos = new Point2d(0.0,-1.0);
-        cl1.setPoint2D(cl1Pos);
+        cl1.setPoint2d(cl1Pos);
         Atom cl2 = new Atom("Cl");
         Point2d cl2Pos = new Point2d(-1.0,0.0);
-        cl2.setPoint2D(cl2Pos);
+        cl2.setPoint2d(cl2Pos);
         dichloromethane.addAtom(carbon);
         dichloromethane.addAtom(h1);
         dichloromethane.addAtom(h2);
@@ -91,18 +91,18 @@ public class HydrogenPlacerTest extends TestCase {
         dichloromethane.addBond(new Bond(carbon, cl1));
         dichloromethane.addBond(new Bond(carbon, cl2));
 
-        assertNull(h1.getPoint2D());
-        assertNull(h2.getPoint2D());
+        assertNull(h1.getPoint2d());
+        assertNull(h2.getPoint2d());
         
         // generate new coords
         hydrogenPlacer.placeHydrogens2D(dichloromethane, carbon);
         if (standAlone) MoleculeViewer2D.display(dichloromethane, false);
         // check that previously set coordinates are kept
-        assertEquals(carbonPos, carbon.getPoint2D(), 0.01);
-        assertEquals(cl1Pos, cl1.getPoint2D(), 0.01);
-        assertEquals(cl2Pos, cl2.getPoint2D(), 0.01);
-        assertNotNull(h1.getPoint2D());
-        assertNotNull(h2.getPoint2D());
+        assertEquals(carbonPos, carbon.getPoint2d(), 0.01);
+        assertEquals(cl1Pos, cl1.getPoint2d(), 0.01);
+        assertEquals(cl2Pos, cl2.getPoint2d(), 0.01);
+        assertNotNull(h1.getPoint2d());
+        assertNotNull(h2.getPoint2d());
     }
     
 

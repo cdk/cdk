@@ -99,23 +99,23 @@ public class HydrogenPlacer {
 			}
 		}
 		logger.debug("Atom placement before procedure:");
-		logger.debug("Center atom ", atom.getSymbol(), ": ", atom.getPoint2D());
+		logger.debug("Center atom ", atom.getSymbol(), ": ", atom.getPoint2d());
 		for (int f = 0; f < unplacedAtoms.getAtomCount(); f++)
 		{
-			logger.debug("H-" + f, ": ", unplacedAtoms.getAtomAt(f).getPoint2D());
+			logger.debug("H-" + f, ": ", unplacedAtoms.getAtomAt(f).getPoint2d());
 		}
         Point2d centerPlacedAtoms = null;
         if (placedAtoms.getAtomCount() > 0) {
             centerPlacedAtoms = placedAtoms.get2DCenter();
         } else {
-            centerPlacedAtoms = atom.getPoint2D();
+            centerPlacedAtoms = atom.getPoint2d();
         }
 		atomPlacer.distributePartners(atom, placedAtoms, centerPlacedAtoms, unplacedAtoms, bondLength);
 		logger.debug("Atom placement after procedure:");
-		logger.debug("Center atom ", atom.getSymbol(), ": ", atom.getPoint2D());
+		logger.debug("Center atom ", atom.getSymbol(), ": ", atom.getPoint2d());
 		for (int f = 0; f < unplacedAtoms.getAtomCount(); f++)
 		{
-			logger.debug("H-" + f, ": ", unplacedAtoms.getAtomAt(f).getPoint2D());
+			logger.debug("H-" + f, ": ", unplacedAtoms.getAtomAt(f).getPoint2d());
 		}				
 	}
 }

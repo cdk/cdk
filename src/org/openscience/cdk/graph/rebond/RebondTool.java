@@ -98,7 +98,7 @@ public class RebondTool {
   private void bondAtom(AtomContainer container, Atom atom) {
     double myCovalentRadius = atom.getCovalentRadius();
     double searchRadius = myCovalentRadius + maxCovalentRadius + bondTolerance;
-    Point tupleAtom = new Point(atom.getX3D(), atom.getY3D(), atom.getZ3D());
+    Point tupleAtom = new Point(atom.getX3d(), atom.getY3d(), atom.getZ3d());
     for (Bspt.EnumerateSphere e = bspt.enumHemiSphere(tupleAtom, searchRadius); e.hasMoreElements(); ) {
       Atom atomNear = ((TupleAtom)e.nextElement()).getAtom();
       if (atomNear != atom && container.getBond(atom, atomNear) == null) {
@@ -140,10 +140,10 @@ public class RebondTool {
         
     public double getDimValue(int dim) {
       if (dim == 0)
-        return atom.getX3D();
+        return atom.getX3d();
       if (dim == 1)
-        return atom.getY3D();
-      return atom.getZ3D();
+        return atom.getY3d();
+      return atom.getZ3d();
     }
         
     public Atom getAtom() {
@@ -151,8 +151,8 @@ public class RebondTool {
     }
         
     public String toString() {
-      return ("<" + atom.getX3D() + "," + atom.getY3D() + "," +
-              atom.getZ3D() + ">");
+      return ("<" + atom.getX3d() + "," + atom.getY3d() + "," +
+              atom.getZ3d() + ">");
     }
   }
     

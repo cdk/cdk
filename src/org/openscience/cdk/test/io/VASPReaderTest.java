@@ -64,7 +64,7 @@ public class VASPReaderTest extends TestCase {
             assertEquals(16, crystal.getAtomCount());
             Atom atom = crystal.getAtomAt(0);
             assertNotNull(atom);
-            assertNotNull(atom.getFractionalPoint3D());
+            assertNotNull(atom.getFractionalPoint3d());
         } catch (Exception exception) {
             logger.error(exception.getMessage());
             logger.debug(exception);

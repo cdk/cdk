@@ -67,16 +67,16 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
          *  A 2D point specifying the location of this atom in a 2D coordinate 
          *  space.
          */
-        protected javax.vecmath.Point2d point2D;
+        protected javax.vecmath.Point2d point2d;
         /**
          *  A 3 point specifying the location of this atom in a 3D coordinate 
          *  space.
          */
-        protected javax.vecmath.Point3d point3D;
+        protected javax.vecmath.Point3d point3d;
         /**
          *  A 3 point specifying the location of this atom in a crystal unit cell.
          */
-        protected javax.vecmath.Point3d fractionalPoint3D;
+        protected javax.vecmath.Point3d fractionalPoint3d;
         /**
          *  The number of implicitly bound hydrogen atoms for this atom.
          */
@@ -105,33 +105,33 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
         public Atom(String elementSymbol)
         {
                 super(elementSymbol);
-                this.fractionalPoint3D = null;
-                this.point3D = null;
-                this.point2D = null;
+                this.fractionalPoint3d = null;
+                this.point3d = null;
+                this.point2d = null;
         }
 
         /**
-         * Constructs an Atom from an Element and a Point3D.
+         * Constructs an Atom from an Element and a Point3d.
          *
          * @param   elementSymbol   The symbol of the atom
-         * @param   point3D         The 3D coordinates of the atom
+         * @param   point3d         The 3D coordinates of the atom
          */
-        public Atom(String elementSymbol, javax.vecmath.Point3d point3D)
+        public Atom(String elementSymbol, javax.vecmath.Point3d point3d)
         {
                 this(elementSymbol);
-                this.point3D = point3D;
+                this.point3d = point3d;
         }
 
         /**
-         * Constructs an Atom from an Element and a Point2D.
+         * Constructs an Atom from an Element and a Point2d.
          *
          * @param   elementSymbol   The Element
-         * @param   point2D         The Point
+         * @param   point2d         The Point
          */
-        public Atom(String elementSymbol, javax.vecmath.Point2d point2D)
+        public Atom(String elementSymbol, javax.vecmath.Point2d point2d)
         {
                 this(elementSymbol);
-                this.point2D = point2D;
+                this.point2d = point2d;
         }
 
         /**
@@ -183,36 +183,36 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
          * Sets a point specifying the location of this
          * atom in a 2D space.
          *
-         * @param  point2D  A point in a 2D plane
+         * @param  point2d  A point in a 2D plane
          *
-         * @see    #getPoint2D
+         * @see    #getPoint2d
          */
-        public void setPoint2D(javax.vecmath.Point2d point2D) {
-                this.point2D = point2D;
+        public void setPoint2d(javax.vecmath.Point2d point2d) {
+                this.point2d = point2d;
         }
         /**
          *
          * Sets a point specifying the location of this
          * atom in 3D space.
          *
-         * @param  point3D  A point in a 3-dimensional space
+         * @param  point3d  A point in a 3-dimensional space
          *
-         * @see    #getPoint3D
+         * @see    #getPoint3d
          */
-        public void setPoint3D(javax.vecmath.Point3d point3D) {
-                this.point3D = point3D;
+        public void setPoint3d(javax.vecmath.Point3d point3d) {
+                this.point3d = point3d;
         }
         /**
          * Sets a point specifying the location of this
          * atom in a Crystal unit cell.
          *
-         * @param  point3D  A point in a 3d fractional unit cell space
+         * @param  point3d  A point in a 3d fractional unit cell space
          *
-         * @see    #getFractionalPoint3D
+         * @see    #getFractionalPoint3d
          * @see    org.openscience.cdk.Crystal
          */
-        public void setFractionalPoint3D(javax.vecmath.Point3d point3D) {
-                this.fractionalPoint3D = point3D;
+        public void setFractionalPoint3d(javax.vecmath.Point3d point3d) {
+                this.fractionalPoint3d = point3d;
         }
         /**
          * Sets the stereo parity for this atom.
@@ -232,10 +232,10 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
          *
          * @return    A point in a 2D plane. Null if unset.
          *
-         * @see       #setPoint2D
+         * @see       #setPoint2d
          */
-        public javax.vecmath.Point2d getPoint2D() {
-                return this.point2D;
+        public javax.vecmath.Point2d getPoint2d() {
+                return this.point2d;
         }
         /**
          * Returns a point specifying the location of this
@@ -243,10 +243,10 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
          *
          * @return    A point in 3-dimensional space. Null if unset.
          *
-         * @see       #setPoint3D
+         * @see       #setPoint3d
          */
-        public javax.vecmath.Point3d getPoint3D() {
-                return this.point3D;
+        public javax.vecmath.Point3d getPoint3d() {
+                return this.point3d;
         }
 
         /**
@@ -255,223 +255,223 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
          *
          * @return    A point in 3d fractional unit cell space. Null if unset.
          *
-         * @see       #setPoint3D
+         * @see       #setPoint3d
          * @see       org.openscience.cdk.CDKConstants for predefined values.
          */
-        public javax.vecmath.Point3d getFractionalPoint3D() {
-                return this.fractionalPoint3D;
+        public javax.vecmath.Point3d getFractionalPoint3d() {
+                return this.fractionalPoint3d;
         }
 
         /**
          * Returns the x coordinate for of the 2D location of this atom.
-         * You should know your context here. There is no guarantee that point2D and point3D
+         * You should know your context here. There is no guarantee that point2d and point3d
          * contain consistent information. Both are handled independently.
          *
          * @return the x coordinate for of the 2D location of this atom
          *
-         * @see    #setX2D
+         * @see    #setX2d
          */
-        public double getX2D() {
-            if (point2D == null) {
+        public double getX2d() {
+            if (point2d == null) {
                 return 0.0;
             } else {
-                return point2D.x;
+                return point2d.x;
             }
         }
 
 
         /**
          * Returns the y coordinate for of the 2D location of this atom.
-         * You should know your context here. There is no guarantee that point2D and point3D
+         * You should know your context here. There is no guarantee that point2d and point3d
          * contain consistent information. Both are handled independently.
          *
          * @return the y coordinate for of the 2D location of this atom
          *
-         * @see    #setY2D
+         * @see    #setY2d
          */
-        public double getY2D() {
-            if (point2D == null) {
+        public double getY2d() {
+            if (point2d == null) {
                 return 0.0;
             } else {
-                return point2D.y;
+                return point2d.y;
             }
         }
 
 
         /**
          * Returns the x coordinate for of the 3D location of this atom.
-         * You should know your context here. There is no guarantee that point2D and point3D
+         * You should know your context here. There is no guarantee that point2d and point3d
          * contain consistent information. Both are handled independently.
          *
          * @return the x coordinate for of the 3D location of this atom
          *
-         * @see    #setX3D
+         * @see    #setX3d
          */
-        public double getX3D() {
-            if (point3D == null) {
+        public double getX3d() {
+            if (point3d == null) {
                 return 0.0;
             } else {
-                return point3D.x;
+                return point3d.x;
             }
         }
 
 
         /**
          * Returns the y coordinate for of the 3D location of this atom.
-         * You should know your context here. There is no guarantee that point2D and point3D
+         * You should know your context here. There is no guarantee that point2d and point3d
          * contain consistent information. Both are handled independently.
          *
          * @return the y coordinate for of the 3D location of this atom
          *
-         * @see    #setY3D
+         * @see    #setY3d
          */
-        public double getY3D() {
-            if (point3D == null) {
+        public double getY3d() {
+            if (point3d == null) {
                 return 0.0;
             } else {
-                return point3D.y;
+                return point3d.y;
             }
         }
 
         /**
          * Returns the z coordinate for of the 3D location of this atom.
-         * You should know your context here. There is no guarantee that point2D and point3D
+         * You should know your context here. There is no guarantee that point2d and point3d
          * contain consistent information. Both are handled independently.
          *
          * @return the z coordinate for of the 3D location of this atom
          *
-         * @see    #setZ3D
+         * @see    #setZ3d
          */
-        public double getZ3D() {
-            if (point3D == null) {
+        public double getZ3d() {
+            if (point3d == null) {
                 return 0.0;
             } else {
-                return point3D.z;
+                return point3d.z;
             }
         }
 
-        public void setFractX3D(double x) {
-            if (fractionalPoint3D == null) {
-                fractionalPoint3D = new Point3d();
+        public void setFractX3d(double x) {
+            if (fractionalPoint3d == null) {
+                fractionalPoint3d = new Point3d();
             }
-            fractionalPoint3D.x = x;
+            fractionalPoint3d.x = x;
         }
-        public void setFractY3D(double y) {
-            if (fractionalPoint3D == null) {
-                fractionalPoint3D = new Point3d();
+        public void setFractY3d(double y) {
+            if (fractionalPoint3d == null) {
+                fractionalPoint3d = new Point3d();
             }
-            fractionalPoint3D.y = y;
+            fractionalPoint3d.y = y;
         }
-        public void setFractZ3D(double z) {
-            if (fractionalPoint3D == null) {
-                fractionalPoint3D = new Point3d();
+        public void setFractZ3d(double z) {
+            if (fractionalPoint3d == null) {
+                fractionalPoint3d = new Point3d();
             }
-            fractionalPoint3D.z = z;
+            fractionalPoint3d.z = z;
         }
-        public double getFractX3D() {
-            if (fractionalPoint3D == null) {
+        public double getFractX3d() {
+            if (fractionalPoint3d == null) {
                 return 0.0;
             } else {
-                return fractionalPoint3D.x;
+                return fractionalPoint3d.x;
             }
         }
-        public double getFractY3D() {
-            if (fractionalPoint3D == null) {
+        public double getFractY3d() {
+            if (fractionalPoint3d == null) {
                 return 0.0;
             } else {
-                return fractionalPoint3D.y;
+                return fractionalPoint3d.y;
             }
         }
-        public double getFractZ3D() {
-            if (fractionalPoint3D == null) {
+        public double getFractZ3d() {
+            if (fractionalPoint3d == null) {
                 return 0.0;
             } else {
-                return fractionalPoint3D.z;
+                return fractionalPoint3d.z;
             }
         }
 
         /**
          * Sets the x coordinate for of the 2D location of this atom.
-         * You should know your context here. There is no guarantee that point2D and point3D
+         * You should know your context here. There is no guarantee that point2d and point3d
          * contain consistent information. Both are handled independently.
          *
          * @param   x  the new x coordinate for of the 2D location of this atom
          *
-         * @see     #getX2D
+         * @see     #getX2d
          */
-        public void setX2D(double x) {
-            if (point2D == null) {
-                point2D = new javax.vecmath.Point2d();
+        public void setX2d(double x) {
+            if (point2d == null) {
+                point2d = new javax.vecmath.Point2d();
             }
-            point2D.x = x;
+            point2d.x = x;
         }
 
 
         /**
          * Sets the y coordinate for of the 2D location of this atom.
-         * You should know your context here. There is no guarantee that point2D and point3D
+         * You should know your context here. There is no guarantee that point2d and point3d
          * contain consistent information. Both are handled independently.
          *
          * @param   y  the new y coordinate for of the 2D location of this atom
          *
-         * @see     #getY2D
+         * @see     #getY2d
          */
-        public void setY2D(double y) {
-            if (point2D == null) {
-                point2D = new javax.vecmath.Point2d();
+        public void setY2d(double y) {
+            if (point2d == null) {
+                point2d = new javax.vecmath.Point2d();
             }
-            point2D.y = y;
+            point2d.y = y;
         }
 
 
         /**
          * Sets the x coordinate for of the 3D location of this atom.
-         * You should know your context here. There is no guarantee that point2D and point3D
+         * You should know your context here. There is no guarantee that point2d and point3d
          * contain consistent information. Both are handled independently.
          *
          * @param   x  the new x coordinate for of the 3D location of this atom
          *
-         * @see     #getX3D
+         * @see     #getX3d
          */
-        public void setX3D(double x) {
-            if (point3D == null) {
-                point3D = new javax.vecmath.Point3d();
+        public void setX3d(double x) {
+            if (point3d == null) {
+                point3d = new javax.vecmath.Point3d();
             }
-            point3D.x = x;
+            point3d.x = x;
         }
 
 
         /**
          * Sets the y coordinate for of the 3D location of this atom.
-         * You should know your context here. There is no guarantee that point2D and point3D
+         * You should know your context here. There is no guarantee that point2d and point3d
          * contain consistent information. Both are handled independently.
          *
          * @param   y  the new y coordinate for of the 3D location of this atom
          *
-         * @see     #getY3D
+         * @see     #getY3d
          */
-        public void setY3D(double y) {
-            if (point3D == null) {
-                point3D = new javax.vecmath.Point3d();
+        public void setY3d(double y) {
+            if (point3d == null) {
+                point3d = new javax.vecmath.Point3d();
             }
-            point3D.y = y;
+            point3d.y = y;
         }
 
 
         /**
          * Sets the z coordinate for of the 3D location of this atom.
-         * You should know your context here. There is no guarantee that point2D and point3D
+         * You should know your context here. There is no guarantee that point2d and point3d
          * contain consistent information. Both are handled independently.
          *
-         * @param   z  the new z coordinate for of the 3D location of this atom
+         * @param   z  the new z coordinate for of the 3d location of this atom
          *
-         * @see     #getZ3D
+         * @see     #getZ3d
          */
-        public void setZ3D(double z) {
-            if (point3D == null) {
-                point3D = new javax.vecmath.Point3d();
+        public void setZ3d(double z) {
+            if (point3d == null) {
+                point3d = new javax.vecmath.Point3d();
             }
-            point3D.z = z;
+            point3d.z = z;
         }
 
 
@@ -503,8 +503,8 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
               return false;
           }
           Atom atom = (Atom) object;
-          if (((point2D==atom.point2D) || ((point2D!=null) && (point2D.equals(atom.point2D)))) &&
-              ((point3D==atom.point3D) || ((point3D!=null) && (point3D.equals(atom.point3D)))) &&
+          if (((point2d==atom.point2d) || ((point2d!=null) && (point2d.equals(atom.point2d)))) &&
+              ((point3d==atom.point3d) || ((point3d!=null) && (point3d.equals(atom.point3d)))) &&
               (hydrogenCount==atom.hydrogenCount) &&
               (stereoParity==atom.stereoParity) &&
               (charge==atom.charge)) {
@@ -526,9 +526,9 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
                 s.append(getSymbol() + ", ");
                 s.append("H:" + getHydrogenCount() + ", ");
                 s.append("SP:" + getStereoParity() + ", ");
-                s.append("2D:[" + getPoint2D() + "], ");
-                s.append("3D:[" + getPoint3D() + "], ");
-                s.append("Fract3D:[" + getFractionalPoint3D() + "], ");
+                s.append("2D:[" + getPoint2d() + "], ");
+                s.append("3D:[" + getPoint3d() + "], ");
+                s.append("Fract3D:[" + getFractionalPoint3d() + "], ");
                 s.append("C:" + getCharge() + ", ");
                 s.append("FC:" + getFormalCharge());
                 s.append(", " + super.toString());

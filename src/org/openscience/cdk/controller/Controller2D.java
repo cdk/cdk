@@ -296,8 +296,8 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
         Atom atomInRange = getAtomInRange(mouseX, mouseY);
         Bond bondInRange = getBondInRange(mouseX, mouseY);
         if (atomInRange != null) {
-            startX = (int) atomInRange.getX2D();
-            startY = (int) atomInRange.getY2D();
+            startX = (int) atomInRange.getX2d();
+            startY = (int) atomInRange.getY2d();
             r2dm.setPointerVectorStart(new Point(startX, startY));
         } else {
             r2dm.setPointerVectorStart(new Point(mouseX, mouseY));
@@ -571,7 +571,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 						// add a new atom to the current atom in some random
 						// direction
 						AtomContainer atomCon = ChemModelManipulator.getRelevantAtomContainer(chemModel, atomInRange);
-						newAtom2 = new Atom(c2dm.getDrawElement(), atomInRange.getPoint2D());
+						newAtom2 = new Atom(c2dm.getDrawElement(), atomInRange.getPoint2d());
 
 						// now create 2D coords for new atom
 						double bondLength = r2dm.getBondLength();
@@ -781,7 +781,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 					ringRadius = (bondLength / 2) / Math.sin(Math.PI / c2dm.getRingSize());
 					sharedAtomsCenter = new Point2d(mouseX, mouseY - ringRadius);
 					firstAtom = newRing.getAtomAt(0);
-					firstAtom.setPoint2D(sharedAtomsCenter);
+					firstAtom.setPoint2d(sharedAtomsCenter);
 					sharedAtoms.addAtom(firstAtom);
 					ringCenterVector = new Vector2d(new Point2d(mouseX, mouseY));
 					ringCenterVector.sub(sharedAtomsCenter);
@@ -814,7 +814,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 					}
 					bondLength = r2dm.getBondLength();
 					conAtomsCenter = getConnectedAtomsCenter(sharedAtoms);
-					if (conAtomsCenter.equals(spiroAtom.getPoint2D()))
+					if (conAtomsCenter.equals(spiroAtom.getPoint2d()))
 					{
 						ringCenterVector = new Vector2d(0, 1);
 					} else
@@ -853,8 +853,8 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 					// and have a certain distance from the bondcenter
 					firstAtom = sharedAtoms.getAtomAt(0);
 					secondAtom = sharedAtoms.getAtomAt(1);
-					xDiff = secondAtom.getX2D() - firstAtom.getX2D();
-					yDiff = secondAtom.getY2D() - firstAtom.getY2D();
+					xDiff = secondAtom.getX2d() - firstAtom.getX2d();
+					yDiff = secondAtom.getY2d() - firstAtom.getY2d();
 					bondLength = Math.sqrt(Math.pow(xDiff, 2) + Math.pow(yDiff, 2));
 					angle = GeometryTools.getAngle(xDiff, yDiff);
 					newPoint1 = new Point2d((Math.cos(angle + (Math.PI / 2)) * bondLength / 4) + sharedAtomsCenter.x, (Math.sin(angle + (Math.PI / 2)) * bondLength / 4) + sharedAtomsCenter.y);
@@ -1249,8 +1249,8 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 		Atom closestAtom = GeometryTools.getClosestAtom(X, Y, atomCon);
 		if (closestAtom != null)
 		{
-			if (!(Math.sqrt(Math.pow(closestAtom.getX2D() - X, 2) +
-					Math.pow(closestAtom.getY2D() - Y, 2)) < highlightRadius))
+			if (!(Math.sqrt(Math.pow(closestAtom.getX2d() - X, 2) +
+					Math.pow(closestAtom.getY2d() - Y, 2)) < highlightRadius))
 			{
 				closestAtom = null;
 			}
@@ -1430,7 +1430,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 		{
 			currentAtom = atomCon.getAtomAt(i);
 			logger.debug("Atom: ", currentAtom);
-			if (polygon.contains(new Point((int) currentAtom.getX2D(), (int) currentAtom.getY2D())))
+			if (polygon.contains(new Point((int) currentAtom.getX2d(), (int) currentAtom.getY2d())))
 			{
 				selectedPart.addAtom(currentAtom);
 			}
@@ -1586,8 +1586,8 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 		atomInRange = getAtomInRange(mouseX, mouseY);
 		if (atomInRange != null)
 		{
-			endX = (int) atomInRange.getX2D();
-			endY = (int) atomInRange.getY2D();
+			endX = (int) atomInRange.getX2d();
+			endY = (int) atomInRange.getY2d();
 		} else
 		{
 			endX = startX - (int) (Math.cos(angle) * pointerVectorLength);
@@ -1630,8 +1630,8 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 			for (int i = 0; i < atoms.length; i++)
 			{
 				Atom atom = atoms[i];
-				atom.setX2D(atom.getX2D() + deltaX);
-				atom.setY2D(atom.getY2D() + deltaY);
+				atom.setX2d(atom.getX2d() + deltaX);
+				atom.setY2d(atom.getY2d() + deltaY);
 			}
 		}
 	}

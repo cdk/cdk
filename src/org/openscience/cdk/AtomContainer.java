@@ -787,10 +787,10 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 		double counter = 0;
 		for (int i = 0; i < getAtomCount(); i++)
 		{
-			if (atoms[i].getPoint2D() != null)
+			if (atoms[i].getPoint2d() != null)
 			{
-				centerX += atoms[i].getPoint2D().x;
-				centerY += atoms[i].getPoint2D().y;
+				centerX += atoms[i].getPoint2d().x;
+				centerY += atoms[i].getPoint2d().y;
 				counter++;
 			}
 		}
@@ -812,11 +812,11 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 		double counter = 0;
 		for (int i = 0; i < getAtomCount(); i++)
 		{
-			if (atoms[i].getPoint3D() != null)
+			if (atoms[i].getPoint3d() != null)
 			{
-				centerX += atoms[i].getPoint3D().x;
-				centerY += atoms[i].getPoint3D().y;
-				centerZ += atoms[i].getPoint3D().z;
+				centerX += atoms[i].getPoint3d().x;
+				centerY += atoms[i].getPoint3d().y;
+				centerZ += atoms[i].getPoint3d().z;
 				counter++;
 			}
 		}
@@ -902,7 +902,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 		{
 			for (int j = i + 1; j < atomCount; j++)
 			{
-				if (atoms[i].getPoint3D().distance(atoms[j].getPoint3D()) <= maxbondlength)
+				if (atoms[i].getPoint3d().distance(atoms[j].getPoint3d()) <= maxbondlength)
 				{
 					addBond(new Bond(atoms[i], atoms[j], CDKConstants.BONDORDER_SINGLE));
 				}

@@ -49,6 +49,8 @@ API changes:
 * Moved cdk.tools.Projector to cdk.geometry
 * The ValencyChecker no longer fails (but warns to the logger) about atoms not
   in the atom type list
+* getPoint2D() in the core classes (e.g. Atom) have been renamed to getPoint2d()
+  to match the lower case 'd' in the actual class returned Point2d
 
 20040324 Release
 ------------------------------------

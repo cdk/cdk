@@ -55,9 +55,9 @@ public class PseudoAtom extends Atom implements java.io.Serializable, Cloneable
     public PseudoAtom(String label) {
         super("R");
         this.label = label;
-        this.fractionalPoint3D = null;
-        this.point3D = null;
-        this.point2D = null;
+        this.fractionalPoint3d = null;
+        this.point3d = null;
+        this.point2d = null;
         // set these default, unchangable values
         super.setHydrogenCount(0);
         super.setStereoParity(-1);
@@ -74,9 +74,9 @@ public class PseudoAtom extends Atom implements java.io.Serializable, Cloneable
     public PseudoAtom(Atom atom) {
         super("R");
         super.setProperties(atom.getProperties());
-        this.fractionalPoint3D = atom.fractionalPoint3D;
-        this.point3D = atom.point3D;
-        this.point2D = atom.point2D;
+        this.fractionalPoint3d = atom.fractionalPoint3d;
+        this.point3d = atom.point3d;
+        this.point2d = atom.point2d;
         this.label = atom.getSymbol();
         super.setHydrogenCount(atom.getHydrogenCount());
         super.setStereoParity(atom.getStereoParity());
@@ -86,25 +86,25 @@ public class PseudoAtom extends Atom implements java.io.Serializable, Cloneable
     }
 
     /**
-     * Constructs an Atom from an Element and a Point3D.
+     * Constructs an Atom from an Element and a Point3d.
      *
      * @param   label  The String describing the PseudoAtom
-     * @param   point3D         The 3D coordinates of the atom
+     * @param   point3d         The 3D coordinates of the atom
      */
-    public PseudoAtom(String label, javax.vecmath.Point3d point3D) {
+    public PseudoAtom(String label, javax.vecmath.Point3d point3d) {
         this(label);
-        this.point3D = point3D;
+        this.point3d = point3d;
     }
 
     /**
-     * Constructs an Atom from an Element and a Point2D.
+     * Constructs an Atom from an Element and a Point2d.
      *
      * @param   label  The String describing the PseudoAtom
-     * @param   point2D         The Point
+     * @param   point2d         The Point
      */
-    public PseudoAtom(String label, javax.vecmath.Point2d point2D) {
+    public PseudoAtom(String label, javax.vecmath.Point2d point2d) {
         this(label);
-        this.point2D = point2D;
+        this.point2d = point2d;
     }
 
     /**

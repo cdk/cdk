@@ -119,7 +119,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
                Atom atom = atoms[i];
                buffer.append(atomNameFormat.sprintf(atom.getSymbol()));
                buffer.append(" MOL          ");
-               Point3d position = atom.getPoint3D();
+               Point3d position = atom.getPoint3d();
                buffer.append(positionFormat.sprintf(position.x));
                buffer.append(positionFormat.sprintf(position.y));
                buffer.append(positionFormat.sprintf(position.z));
@@ -156,13 +156,13 @@ public class PDBWriter extends DefaultChemObjectWriter {
             for (int i=0; i<atoms.length; i++) {
                 Atom atom = atoms[i];
                 double[] frac = new double[3];
-                frac[0] = atom.getFractX3D();
-                frac[1] = atom.getFractY3D();
-                frac[2] = atom.getFractZ3D();
+                frac[0] = atom.getFractX3d();
+                frac[1] = atom.getFractY3d();
+                frac[2] = atom.getFractZ3d();
                 double[] cart = CrystalGeometryTools.fractionalToCartesian(a,b,c, frac);
-                atom.setX3D(cart[0]);
-                atom.setY3D(cart[1]);
-                atom.setZ3D(cart[2]);
+                atom.setX3d(cart[0]);
+                atom.setY3d(cart[1]);
+                atom.setZ3d(cart[2]);
             }
            writeMolecule(new Molecule(crystal));
        } catch (IOException exception) {

@@ -90,7 +90,7 @@ public class AcceleratedRenderer3DModel {
 			sphere = getAtomObject(0.2, atomcolors[atoms[i].getAtomicNumber()]);
 			atomObjects.addElement(sphere);
 
-			transformgroup = new TransformGroup(getShiftTransformation(atoms[i].getPoint3D()));
+			transformgroup = new TransformGroup(getShiftTransformation(atoms[i].getPoint3d()));
 			transformgroup.addChild(sphere);
 			atomTransfroms.addElement(transformgroup);
 
@@ -109,7 +109,7 @@ public class AcceleratedRenderer3DModel {
 						bondObjects.addElement(cylinder);
 
 						transformgroup = new TransformGroup(getStrainTransformation(
-													atoms[i].getPoint3D(), atoms[j].getPoint3D()));
+													atoms[i].getPoint3d(), atoms[j].getPoint3d()));
 			      transformgroup.addChild(cylinder);
 			      atomTransfroms.addElement(transformgroup);
       

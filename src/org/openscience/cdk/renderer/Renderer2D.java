@@ -179,10 +179,10 @@ public class Renderer2D implements MouseMotionListener   {
                         Atom atom1 = (Atom)objects[0];
                         Atom atom2 = (Atom)objects[1];
                         int[] ints = new int[4];
-                        ints[0] = (int)(atom1.getPoint2D().x);
-                        ints[1] = (int)(atom1.getPoint2D().y);
-                        ints[2] = (int)(atom2.getPoint2D().x);
-                        ints[3] = (int)(atom2.getPoint2D().y);
+                        ints[0] = (int)(atom1.getPoint2d().x);
+                        ints[1] = (int)(atom1.getPoint2d().y);
+                        ints[2] = (int)(atom2.getPoint2d().x);
+                        ints[3] = (int)(atom2.getPoint2d().y);
                         int[] screenCoords = getScreenCoordinates(ints);
                         graphics.setColor(r2dm.getAtomAtomMappingLineColor());
                         logger.debug("Mapping line color", r2dm.getAtomAtomMappingLineColor());
@@ -406,8 +406,8 @@ public class Renderer2D implements MouseMotionListener   {
 	{
 		int atomRadius = r2dm.getAtomRadius();
 	    graphics.setColor(color);
-        int[] coords = {(int) atom.getX2D() - (atomRadius / 2), 
-                        (int) atom.getY2D() + (atomRadius / 2)};
+        int[] coords = {(int) atom.getX2d() - (atomRadius / 2), 
+                        (int) atom.getY2d() + (atomRadius / 2)};
         int radius = (int)getScreenSize(atomRadius);
         coords = getScreenCoordinates(coords);
 	    graphics.fillRect(coords[0], coords[1], radius, radius);
@@ -433,7 +433,7 @@ public class Renderer2D implements MouseMotionListener   {
      * @param  atomNumber Number of the atom in the AtomContainer, 0 is not in container
      */
     public void paintAtomSymbol(Atom atom, Color backColor, Graphics graphics, int alignment, int atomNumber) {
-        if (atom.getPoint2D() == null) {
+        if (atom.getPoint2d() == null) {
             logger.warn("Cannot draw atom without 2D coordinate");
             return;
         }
@@ -535,13 +535,13 @@ public class Renderer2D implements MouseMotionListener   {
         int labelY = 0;
 
         if (alignment == 1) { // left alignment
-            labelX = (int)(atom.getPoint2D().x - (atomSymbolXOffset + isotopeW));
+            labelX = (int)(atom.getPoint2d().x - (atomSymbolXOffset + isotopeW));
         } else { // right alignment
-            labelX = (int)(atom.getPoint2D().x -
+            labelX = (int)(atom.getPoint2d().x -
                      (atomSymbolXOffset + Math.max(isotopeW,hMultiplierW) + hSymbolW));
         }
         // labelY and labelH are the same for both left/right aligned
-        labelY = (int)(atom.getPoint2D().y + (atomSymbolYOffset + isotopeH));
+        labelY = (int)(atom.getPoint2d().y + (atomSymbolYOffset + isotopeH));
         
         // xy for atom symbol
         int[] atomSymbolCoords = new int[2];
@@ -712,7 +712,7 @@ public class Renderer2D implements MouseMotionListener   {
      * @param  backColor  Description of the Parameter
      */
     public void paintPseudoAtomLabel(PseudoAtom atom, Color backColor, Graphics graphics, int alignment) {
-        if (atom.getPoint2D() == null) {
+        if (atom.getPoint2d() == null) {
             logger.warn("Cannot draw atom without 2D coordinate");
             return;
         }
@@ -743,12 +743,12 @@ public class Renderer2D implements MouseMotionListener   {
         int labelH = atomSymbolH;
         
         if (alignment == 1) { // left alignment
-            labelX = (int)(atom.getPoint2D().x - (atomSymbolFirstCharW/2));
+            labelX = (int)(atom.getPoint2d().x - (atomSymbolFirstCharW/2));
         } else { // right alignment
-            labelX = (int)(atom.getPoint2D().x - (atomSymbolW + atomSymbolLastCharW/2));
+            labelX = (int)(atom.getPoint2d().x - (atomSymbolW + atomSymbolLastCharW/2));
         }
         // labelY and labelH are the same for both left/right aligned
-        labelY = (int)(atom.getPoint2D().y - (atomSymbolH/2));
+        labelY = (int)(atom.getPoint2d().y - (atomSymbolH/2));
 
         // make empty space
         {
@@ -854,8 +854,8 @@ public class Renderer2D implements MouseMotionListener   {
 	 * @param  bondColor  Description of the Parameter
 	 */
 	public void paintBond(Bond bond, Color bondColor, Graphics graphics) {
-    if (bond.getAtomAt(0).getPoint2D() == null ||
-            bond.getAtomAt(1).getPoint2D() == null) {
+    if (bond.getAtomAt(0).getPoint2d() == null ||
+            bond.getAtomAt(1).getPoint2d() == null) {
 			return;
 		}
 
@@ -1101,12 +1101,12 @@ public class Renderer2D implements MouseMotionListener   {
         double wedgeWidth = r2dm.getBondWidth() * 2.0; // this value should be made customazible
 
 		double widthStep = wedgeWidth/(double)numberOfLines;
-        Point2d p1 = bond.getAtomAt(0).getPoint2D();
-        Point2d p2 = bond.getAtomAt(1).getPoint2D();
+        Point2d p1 = bond.getAtomAt(0).getPoint2d();
+        Point2d p2 = bond.getAtomAt(1).getPoint2d();
         if (bond.getStereo() == CDKConstants.STEREO_BOND_DOWN_INV) {
             // draw the wedge bond the other way around
-            p1 = bond.getAtomAt(1).getPoint2D();
-            p2 = bond.getAtomAt(0).getPoint2D();
+            p1 = bond.getAtomAt(1).getPoint2d();
+            p2 = bond.getAtomAt(0).getPoint2d();
         }
 		Vector2d lengthStep = new Vector2d(p2);
 		lengthStep.sub(p1);
@@ -1228,7 +1228,7 @@ public class Renderer2D implements MouseMotionListener   {
       Font normalFont = graphics.getFont();
       graphics.setFont(normalFont);
       FontMetrics fm = graphics.getFontMetrics();
-      int[] provcoords={(int)atom.getPoint2D().x+10,(int)atom.getPoint2D().y};
+      int[] provcoords={(int)atom.getPoint2d().x+10,(int)atom.getPoint2d().y};
       int[] screenCoords = getScreenCoordinates(provcoords);
       for(int i=0;i<result.length;i++){
         if(i==0){

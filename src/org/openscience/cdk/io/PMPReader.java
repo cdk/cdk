@@ -231,9 +231,9 @@ public class PMPReader extends DefaultChemObjectReader {
                                         line = input.readLine();
                                         Atom a = crystal.getAtomAt(i);
                                         StringTokenizer st = new StringTokenizer(line, " ");
-                                        a.setX3D(Double.parseDouble(st.nextToken()));
-                                        a.setY3D(Double.parseDouble(st.nextToken()));
-                                        a.setZ3D(Double.parseDouble(st.nextToken()));
+                                        a.setX3d(Double.parseDouble(st.nextToken()));
+                                        a.setY3d(Double.parseDouble(st.nextToken()));
+                                        a.setZ3d(Double.parseDouble(st.nextToken()));
                                     }
                                 } else if (line.startsWith("%%Lat Vects")) {
                                     StringTokenizer st;

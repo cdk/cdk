@@ -105,15 +105,15 @@ public class AtomicTable extends JPanel implements CDKChangeListener {
       if (getColumnName(col).equals("atom")) {
         return (atomContainer.getAtomAt(row)).getSymbol();
       } else if (getColumnName(col).equals("x2")) {
-        return new Double((atomContainer.getAtomAt(row)).getX2D());
+        return new Double((atomContainer.getAtomAt(row)).getX2d());
       } else if (getColumnName(col).equals("y2")) {
-        return new Double((atomContainer.getAtomAt(row)).getY2D());
+        return new Double((atomContainer.getAtomAt(row)).getY2d());
       } else if (getColumnName(col).equals("x3")) {
-        return new Double((atomContainer.getAtomAt(row)).getX3D());
+        return new Double((atomContainer.getAtomAt(row)).getX3d());
       } else if (getColumnName(col).equals("y3")) {
-        return new Double((atomContainer.getAtomAt(row)).getY3D());
+        return new Double((atomContainer.getAtomAt(row)).getY3d());
       } else if (getColumnName(col).equals("z3")) {
-        return new Double((atomContainer.getAtomAt(row)).getZ3D());
+        return new Double((atomContainer.getAtomAt(row)).getZ3d());
       } else if (getColumnName(col).equals("charge")) {
         return new Double((atomContainer.getAtomAt(row)).getCharge());
       } else {

@@ -319,21 +319,21 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
             }
             currentAtom.setSymbol(propertyValue);
         } else if (propertyType.equals("x2")) {
-          currentAtom.setX2D(new Double(propertyValue).doubleValue());
+          currentAtom.setX2d(new Double(propertyValue).doubleValue());
         } else if (propertyType.equals("y2")) {
-          currentAtom.setY2D(new Double(propertyValue).doubleValue());
+          currentAtom.setY2d(new Double(propertyValue).doubleValue());
         } else if (propertyType.equals("x3")) {
-          currentAtom.setX3D(new Double(propertyValue).doubleValue());
+          currentAtom.setX3d(new Double(propertyValue).doubleValue());
         } else if (propertyType.equals("y3")) {
-          currentAtom.setY3D(new Double(propertyValue).doubleValue());
+          currentAtom.setY3d(new Double(propertyValue).doubleValue());
         } else if (propertyType.equals("z3")) {
-          currentAtom.setZ3D(new Double(propertyValue).doubleValue());
+          currentAtom.setZ3d(new Double(propertyValue).doubleValue());
         } else if (propertyType.equals("xFract")) {
-          currentAtom.setFractX3D(new Double(propertyValue).doubleValue());
+          currentAtom.setFractX3d(new Double(propertyValue).doubleValue());
         } else if (propertyType.equals("yFract")) {
-          currentAtom.setFractY3D(new Double(propertyValue).doubleValue());
+          currentAtom.setFractY3d(new Double(propertyValue).doubleValue());
         } else if (propertyType.equals("zFract")) {
-          currentAtom.setFractZ3D(new Double(propertyValue).doubleValue());
+          currentAtom.setFractZ3d(new Double(propertyValue).doubleValue());
         } else if (propertyType.equals("formalCharge")) {
           currentAtom.setFormalCharge(new Integer(propertyValue).intValue());
         } else if (propertyType.equals("charge")) {

@@ -45,7 +45,7 @@ public class BondTools {
     public static boolean closeEnoughToBond(Atom atom1, Atom atom2, double distanceFudgeFactor) {
         
         if (atom1 != atom2) {
-            double distanceBetweenAtoms = atom1.getPoint3D().distance(atom2.getPoint3D());
+            double distanceBetweenAtoms = atom1.getPoint3d().distance(atom2.getPoint3d());
             double bondingDistance = atom1.getCovalentRadius() + atom2.getCovalentRadius();
             if (distanceBetweenAtoms <= (distanceFudgeFactor *bondingDistance)) {
                 return true;

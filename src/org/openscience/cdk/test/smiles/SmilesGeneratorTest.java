@@ -525,8 +525,8 @@ public class SmilesGeneratorTest extends TestCase
 		}
 		assertNotNull(smiles1);
 		assertTrue(smiles1.equals("F/C(=C/(F)S)S"));
-		mol1.getAtomAt(4).setPoint2D(new Point2d(0, 3));
-		mol1.getAtomAt(5).setPoint2D(new Point2d(2, 3));
+		mol1.getAtomAt(4).setPoint2d(new Point2d(0, 3));
+		mol1.getAtomAt(5).setPoint2d(new Point2d(2, 3));
 		try
 		{
 			smiles1 = sg.createSMILES(mol1, true, bool);
@@ -565,8 +565,8 @@ public class SmilesGeneratorTest extends TestCase
 			}
 		}
 		assertTrue(smiles1.equals("[H]S/C(F)=C/(F)S[H]"));
-		mol1.getAtomAt(5).setPoint2D(new Point2d(0, 3));
-		mol1.getAtomAt(4).setPoint2D(new Point2d(2, 3));
+		mol1.getAtomAt(5).setPoint2d(new Point2d(0, 3));
+		mol1.getAtomAt(4).setPoint2d(new Point2d(2, 3));
 		try
 		{
 			smiles1 = sg.createSMILES(mol1, true, bool);

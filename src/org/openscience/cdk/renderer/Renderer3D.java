@@ -110,13 +110,13 @@ public class Renderer3D extends JPanel implements Runnable {
             // get color for this atom
             g.setColor(drawing_properties.getAtomColor(atom));
             // draw atom as filled circle
-            g.fillOval((int)(atom.getX3D() - (atomRadius / 2.0))*3,
-                       (int)(atom.getY3D() - (atomRadius / 2.0))*3,
+            g.fillOval((int)(atom.getX3d() - (atomRadius / 2.0))*3,
+                       (int)(atom.getY3d() - (atomRadius / 2.0))*3,
                        atomRadius, atomRadius);
             // draw black line around atom
             g.setColor(Color.black);
-            g.drawOval((int)(atom.getX3D() - (atomRadius / 2.0))*3,
-                       (int)(atom.getY3D() - (atomRadius / 2.0))*3,
+            g.drawOval((int)(atom.getX3d() - (atomRadius / 2.0))*3,
+                       (int)(atom.getY3d() - (atomRadius / 2.0))*3,
                        atomRadius, atomRadius);
         }
     }

@@ -132,7 +132,7 @@ public class StructureDiagramGenerator
 		for (int f = 0; f < molecule.getAtomCount(); f++)
 		{
 			atom = molecule.getAtomAt(f);
-			atom.setPoint2D(null);
+			atom.setPoint2d(null);
 			atom.setFlag(CDKConstants.ISPLACED, false);
 			atom.setFlag(CDKConstants.VISITED, false);
 			atom.setFlag(CDKConstants.ISINRING, false);
@@ -307,7 +307,7 @@ public class StructureDiagramGenerator
 		logger.debug("We have a molecules with " + molecule.getAtomCount() + " atoms.");
 		if (molecule.getAtomCount() == 1)
 		{
-			molecule.getAtomAt(0).setPoint2D(new Point2d(0, 0));
+			molecule.getAtomAt(0).setPoint2d(new Point2d(0, 0));
 			return;
 		}
 		ConnectivityChecker conCheck = new ConnectivityChecker();
@@ -413,7 +413,7 @@ public class StructureDiagramGenerator
 			AtomContainer longestChain = atomPlacer.getInitialLongestChain(molecule);
 			logger.debug("Found linear chain of length " + longestChain.getAtomCount());
 			logger.debug("Setting coordinated of first atom to 0,0");
-			longestChain.getAtomAt(0).setPoint2D(new Point2d(0, 0));
+			longestChain.getAtomAt(0).setPoint2d(new Point2d(0, 0));
 			longestChain.getAtomAt(0).setFlag(CDKConstants.ISPLACED, true);
 
 			/*
@@ -590,8 +590,8 @@ public class StructureDiagramGenerator
 						logger.debug("More than one atoms placed already");
 						logger.debug("trying to place neighbors of atom " + (molecule.getAtomNumber(atom) + 1));
 						atomPlacer.distributePartners(atom, placedAtoms, placedAtoms.get2DCenter(), unplacedAtoms, bondLength);
-						direction = new Vector2d(longestUnplacedChain.getAtomAt(1).getPoint2D());
-						startVector = new Vector2d(atom.getPoint2D());
+						direction = new Vector2d(longestUnplacedChain.getAtomAt(1).getPoint2d());
+						startVector = new Vector2d(atom.getPoint2d());
 						direction.sub(startVector);
 						logger.debug("Done placing neighbors of atom " + (molecule.getAtomNumber(atom) + 1));
 					} else
@@ -653,8 +653,8 @@ public class StructureDiagramGenerator
 			{
 				vectorAtom1 = nextRingAttachmentBond.getAtomAt(0);
 			}
-			oldPoint2 = vectorAtom2.getPoint2D();
-			oldPoint1 = vectorAtom1.getPoint2D();
+			oldPoint2 = vectorAtom2.getPoint2d();
+			oldPoint1 = vectorAtom1.getPoint2d();
 			logger.debug("Computing rotation of new ringset to fit old attachment bond orientation...");
 			logger.debug("oldPoint1: " + oldPoint1);
 			logger.debug("oldPoint2: " + oldPoint2);
@@ -674,8 +674,8 @@ public class StructureDiagramGenerator
 			ringSystem.add(ringPlacer.placeRingSubstituents(nextRingSystem, bondLength));
 			atomPlacer.markPlaced(tempAc);
 
-			newPoint2 = vectorAtom2.getPoint2D();
-			newPoint1 = vectorAtom1.getPoint2D();
+			newPoint2 = vectorAtom2.getPoint2d();
+			newPoint1 = vectorAtom1.getPoint2d();
 
 			logger.debug("newPoint1: " + newPoint1);
 			logger.debug("newPoint2: " + newPoint2);
@@ -690,8 +690,8 @@ public class StructureDiagramGenerator
 			logger.debug("and the angles: " + angle1 + ", " + angle2 + "; diff = " + (angle1 - angle2));
 			GeometryTools.rotate(ringSystem, oldPoint1, (0.5 * Math.PI) + (angle1 - angle2));
 			//GeometryTools.rotate(ringSystem, oldPoint1,  (2.0 * Math.PI) +  angle1);
-			//vectorAtom2.setPoint2D(oldPoint2);
-			vectorAtom1.setPoint2D(oldPoint1);
+			//vectorAtom2.setPoint2d(oldPoint2);
+			vectorAtom1.setPoint2d(oldPoint1);
 		}
 		logger.debug("End of layoutNextRingSystem()");
 	}
@@ -830,13 +830,13 @@ public class StructureDiagramGenerator
 			Point2d point = new Point2d(0, 0);
 			atom = bond.getAtomAt(0);
 			logger.debug("Atom 1 of first Bond: " + (molecule.getAtomNumber(atom) + 1));
-			atom.setPoint2D(point);
+			atom.setPoint2d(point);
 			atom.setFlag(CDKConstants.ISPLACED, true);
 			point = new Point2d(0, 0);
 			atom = bond.getAtomAt(1);
 			logger.debug("Atom 2 of first Bond: " + (molecule.getAtomNumber(atom) + 1));
 			point.add(bondVector);
-			atom.setPoint2D(point);
+			atom.setPoint2d(point);
 			atom.setFlag(CDKConstants.ISPLACED, true);
 			/*
 			 *  The new ring is layed out relativ to some shared atoms that have already been
@@ -867,9 +867,9 @@ public class StructureDiagramGenerator
 		for (int f = 0; f < molecule.getAtomCount(); f++)
 		{
 			atom = molecule.getAtomAt(f);
-			if (atom.getPoint2D() == null)
+			if (atom.getPoint2d() == null)
 			{
-				atom.setPoint2D(new Point2d(0, 0));
+				atom.setPoint2d(new Point2d(0, 0));
 			}
 		}
 	}

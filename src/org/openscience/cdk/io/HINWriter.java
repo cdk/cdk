@@ -132,7 +132,7 @@ public class HINWriter extends DefaultChemObjectWriter {
 
                     sym = a.getSymbol();
                     chrg = a.getCharge();
-                    Point3d p3 = a.getPoint3D();
+                    Point3d p3 = a.getPoint3d();
 
                     line = line + new Integer(i+1).toString() + " - " + sym + " ** - " + 
                         new Double(chrg).toString() + " " +
