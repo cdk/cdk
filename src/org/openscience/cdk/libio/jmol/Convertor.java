@@ -41,7 +41,7 @@ import org.openscience.cdk.exception.NoSuchAtomException;
 
 /**
  * Abstract class that provides convertor procedures to
- * convert CDK classes to Jmol classes and visa versa.
+ * convert CDK classes to Jmol (v5) classes and visa versa.
  *
  * Jmol is a Java 3D viewer specialized for viewing
  * animations and vibrational modes. It

@@ -690,13 +690,13 @@ public class JCPController2D {
                 }
                 Bond[] bonds = sharedAtoms.getBonds();
                 for (int i = 0; i < bonds.length; i++) {
-                        newRing.setBondAt(i, bonds[i]);
+                        newRing.addBond(bonds[i]);
                 }
                 for (int i = sharedAtoms.getBondCount(); i < ringSize - 1; i++)
                 {
-                        newRing.setBondAt(i,new Bond(ringAtoms[i], ringAtoms[i + 1], 1));
+                        newRing.addBond(new Bond(ringAtoms[i], ringAtoms[i + 1], 1));
                 }
-                newRing.setBondAt(ringSize - 1, new Bond(ringAtoms[ringSize - 1], ringAtoms[0], 1));
+                newRing.addBond(new Bond(ringAtoms[ringSize - 1], ringAtoms[0], 1));
                 newRing.setAtoms(ringAtoms);
                 return newRing;
         }

@@ -60,8 +60,6 @@ public class LonePair extends ElectronContainer {
      * Returns the number of electrons in this electron container.
      *
      * @return The number of electrons in this electron container.
-     *
-     * @see     #setElectronCount
      */
     public int getElectronCount() {
         return this.electronCount;

@@ -56,9 +56,10 @@ public class HueckelAromaticityDetector
 		{
 			ac.getAtomAt(f).flags[CDKConstants.ISAROMATIC] = false;		
 		}
-		for (int f = 0; f < ac.getBondCount(); f++)
+        Bond[] bonds = ac.getBonds();
+		for (int f = 0; f < bonds.length; f++)
 		{
-			ac.getBondAt(f).flags[CDKConstants.ISAROMATIC] = false;		
+			bonds[f].flags[CDKConstants.ISAROMATIC] = false;		
 		}
 		RingSet ringSet = new AllRingsFinder().findAllRings(ac);
 		if (ringSet.size() > 0)

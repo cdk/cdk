@@ -153,6 +153,18 @@ public class AtomContainer extends ChemObject implements Cloneable
 	}
 
 	/**
+	 *  Get the atom at position <code>number</code>.
+	 *
+	 * @param  number  The position of the atom to be set.
+     *
+     * @see    #setAtomAt
+	 */
+	public Atom getAtomAt(int number)
+	{
+		return atoms[number];
+	}
+
+	/**
 	 * Sets the ElectronContainer at position <code>number</code>.
 	 *
 	 * @param  number  The position of the ElectronContainer to be set.
@@ -257,28 +269,6 @@ public class AtomContainer extends ChemObject implements Cloneable
 	 * @return    The array of Bonds of this AtomContainer
 	 *
 	 * @see       #getElectronContainers
-	 * @see       #getLonePairs
-	 */
-	public Bond[] getBonds() {
-		int bondCount = getBondCount();
-		Bond[] result = new Bond[bondCount];
-		int bondCounter = 0;
-		for (int i=0; i < getElectronContainerCount(); i++) {
-			ElectronContainer ec = getElectronContainerAt(i);
-			if (ec instanceof Bond) {
-				result[bondCounter] = (Bond)ec;
-				bondCounter++;
-			}
-		}
-		return result;
-	}
-	
-	/**
-	 *  Returns the array of Bonds of this AtomContainer.
-	 *
-	 * @return    The array of Bonds of this AtomContainer
-	 *
-	 * @see       #getElectronContainers
 	 * @see       #getBonds
 	 */
 	public LonePair[] getLonePairs() {
@@ -288,6 +278,28 @@ public class AtomContainer extends ChemObject implements Cloneable
 		for (int i=0; i < getElectronContainerCount(); i++) {
 			ElectronContainer ec = getElectronContainerAt(i);
 			if (ec instanceof LonePair) {
+				result[counter] = (LonePair)ec;
+				counter++;
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * Returns the array of Bonds of this AtomContainer.
+	 *
+	 * @return    The array of Bonds of this AtomContainer
+	 *
+	 * @see       #getElectronContainers
+	 * @see       #getBonds
+	 */
+	public LonePair[] getLonePairs(Atom atom) {
+		int count = getLonePairCount();
+		LonePair[] result = new LonePair[count];
+		int counter = 0;
+		for (int i=0; i < getElectronContainerCount(); i++) {
+			ElectronContainer ec = getElectronContainerAt(i);
+			if ((ec instanceof LonePair) && (((LonePair)ec).getAtom().equals(atom))) {
 				result[counter] = (LonePair)ec;
 				counter++;
 			}
@@ -515,9 +527,24 @@ public class AtomContainer extends ChemObject implements Cloneable
 	}
 
 	/**
-	 *  Returns the number of ElectronContainers in this Container.
+	 *  Returns the number of LonePairs in this Container.
 	 *
-	 * @return    The number of ElectronContainers in this Container
+	 * @return    The number of LonePairs in this Container
+	 */
+	public int getLonePairCount() {
+		int count = 0;
+		for (int i = 0; i < electronContainerCount; i++) {
+			if (electronContainers[i] instanceof LonePair) {
+				count++;
+			}
+		}
+		return count;
+	}
+
+	/**
+	 *  Returns the number of Bonds in this Container.
+	 *
+	 * @return    The number of Bonds in this Container
 	 */
 	public int getBondCount() {
 		int bondCount = 0;
@@ -530,23 +557,40 @@ public class AtomContainer extends ChemObject implements Cloneable
 	}
 
 	/**
-	 *  Returns the number of electronContainers for a given Atom.
+	 *  Returns the number of Bonds for a given Atom.
 	 *
 	 * @param  atom  The atom
-	 * @return       The number of electronContainers for this atom
+	 * @return       The number of Bonds for this atom
 	 */
 	public int getBondCount(Atom atom)
 	{
 		int count = 0;
 		for (int i = 0; i < getElectronContainerCount(); i++) {
 			if (electronContainers[i] instanceof Bond &&
-			                ((Bond)electronContainers[i]).contains(atom)) {
+			    ((Bond)electronContainers[i]).contains(atom)) {
 				count++;
 			}
 		}
 		return count;
 	}
 
+	/**
+	 *  Returns the number of LonePairs for a given Atom.
+	 *
+	 * @param  atom  The atom
+	 * @return       The number of LonePairs for this atom
+	 */
+	public int getLonePairCount(Atom atom)
+	{
+		int count = 0;
+		for (int i = 0; i < getElectronContainerCount(); i++) {
+			if (electronContainers[i] instanceof LonePair &&
+			    ((Bond)electronContainers[i]).contains(atom)) {
+				count++;
+			}
+		}
+		return count;
+	}
 
 	/**
 	 *  Returns the sum of the bondorders for a given Atom.
@@ -779,7 +823,7 @@ public class AtomContainer extends ChemObject implements Cloneable
 
 	/**
 	 * Adds the <code>ElectronContainer</code>s found in atomContainer to this
-	    * container.
+	 * container.
 	 *
 	 * @param  atomContainer    AtomContainer with the new ElectronContainers
 	 */
@@ -836,10 +880,19 @@ public class AtomContainer extends ChemObject implements Cloneable
 		atomCount++;
 	}
 
+    /**
+     * Wrapper method for adding Bonds to this AtomContainer.
+     *
+     * @param bond  The bond to added to this container
+     */
+	public void addBond(Bond bond) {
+        addElectronContainer(bond);
+	}
+    
 	/**
 	 *  Adds a ElectronContainer to this AtomContainer.
 	 *
-	 * @param  bond  The bond to added to this container
+	 * @param  ec  The ElectronContainer to added to this container
 	 */
 	public void addElectronContainer(ElectronContainer ec) {
 		if (electronContainerCount + 1 >= electronContainers.length) {
@@ -1045,7 +1098,16 @@ public class AtomContainer extends ChemObject implements Cloneable
 		addBond(bond);
 	}
 
-
+    /**
+     * Adds a LonePair to this Atom.
+     *
+     * @param atom  Atom to which the LonePair is added.
+     */
+    public void addLonePair(int atomID) 
+    {
+        addElectronContainer(new LonePair(atoms[atomID]));
+    }
+    
 	/**
 	 * True, if the AtomContainer contains the given
 	    * ElectronContainer object.
