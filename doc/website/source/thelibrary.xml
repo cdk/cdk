@@ -16,7 +16,7 @@
         The CDK classes are Java utitility classes for ChemoInformatics and Computational chemistry, written in Java. They are developed constantly developed parallel
         to other projects that make use of them.
         They are a complete re-write of the CompChem classes that were the basis of <ulink url="http://www.sourceforge.net/projects/JChemPaint">JChemPaint</ulink>, a Java Editor
-        for 2D chemical structures, and of <ulink url="http://www.sourceforge.net/projects/JMDraw">JMDraw</ulink>, a Java package for the graphical layout of 2D chemical structures
+        for 2D chemical structures, and of <ulink url="http://www.sourceforge.net/projects/jmdraw">JMDraw</ulink>, a Java package for the graphical layout of 2D chemical structures
                 </para>
 
                 <para>

@@ -27,13 +27,13 @@
 			</listitem>
 			<listitem>
 					<para>
-							<ulink url="http://www.sourceforge.net/projects/JChemPaint">http://www.sourceforge.net/projects/JChemPaint</ulink>
+							<ulink url="http://www.sourceforge.net/projects/jchempaint">http://www.sourceforge.net/projects/JChemPaint</ulink>
 							for JChemPaint development.
 					</para>
 			</listitem>
 			<listitem>
 					<para>
-							<ulink url="http://www.sourceforge.net/projects/JMDraw">http://www.sourceforge.net/projects/JMDraw</ulink>
+							<ulink url="http://www.sourceforge.net/projects/jmdraw">http://www.sourceforge.net/projects/JMDraw</ulink>
 							for the development of JMDraw, which is the 2D rendering engine, also used in JChemPaint
 							1.0
 					</para>
@@ -44,6 +44,11 @@
 							which contains the "old" compchem sources
 					</para>
 			</listitem>
+			<listitem>
+                                        <para>
+                                                        <ulink url="http://www.sourceforge.net/projects/jmol">http://www.sourceforge.net/projects/jmol</ulink>
+                                        </para>
+                        </listitem>
 			</orderedlist>
 	</para>
   </section>
