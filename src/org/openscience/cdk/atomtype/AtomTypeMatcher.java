@@ -44,5 +44,5 @@ public interface AtomTypeMatcher {
      * @param container AtomContainer of which the <code>atom</code> is part
      * @param atom      Atom for which a matching atom type is searched
      */
-    public AtomType findMatchingAtomType(AtomContainer ac, Atom atom) throws CDKException;
+    public AtomType findMatchingAtomType(AtomContainer container, Atom atom) throws CDKException;
 }
