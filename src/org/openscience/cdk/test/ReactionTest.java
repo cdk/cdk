@@ -57,6 +57,20 @@ public class ReactionTest extends TestCase {
         assertEquals(Reaction.FORWARD, reaction.getDirection());
     }
     
+    public void testGetReactantCount() {
+        Reaction reaction = new Reaction();
+        assertEquals(0, reaction.getReactantCount());
+	reaction.addReactant(new Molecule());
+        assertEquals(1, reaction.getReactantCount());
+    }
+    
+    public void testGetProductCount() {
+        Reaction reaction = new Reaction();
+        assertEquals(0, reaction.getProductCount());
+	reaction.addProduct(new Molecule());
+        assertEquals(1, reaction.getProductCount());
+    }
+    
     public void testAddReactant_Molecule() {
         Reaction reaction = new Reaction();
         Molecule sodiumhydroxide = new Molecule();
@@ -216,7 +230,7 @@ public class ReactionTest extends TestCase {
         assertEquals(3, reaction.getReactants().getMolecules().length);
     }
 	
-    public void testGetProducts() {
+    public void testGetProducts() {    
         Reaction reaction = new Reaction();
         Molecule sodiumhydroxide = new Molecule();
         Molecule aceticAcid = new Molecule();
@@ -227,11 +241,23 @@ public class ReactionTest extends TestCase {
         assertEquals(3, reaction.getProducts().getMolecules().length);
     }
     
+    public void testGetAgents() {    
+        Reaction reaction = new Reaction();
+        Molecule water = new Molecule();
+        reaction.addAgent(water);
+        assertEquals(1, reaction.getAgents().getMoleculeCount());
+    }
+    
     public void testSetDirection_int() {
         Reaction reaction = new Reaction();
         int direction = Reaction.BIDIRECTIONAL;
         reaction.setDirection(direction);
         assertEquals(direction, reaction.getDirection());
+    }
+
+    public void testGetDirection() {
+        Reaction reaction = new Reaction();
+        assertEquals(Reaction.FORWARD, reaction.getDirection());
     }
 
     /**

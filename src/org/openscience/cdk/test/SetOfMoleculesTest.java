@@ -59,7 +59,7 @@ public class SetOfMoleculesTest extends TestCase {
         assertEquals(3, som.getMoleculeCount());
     }
     
-    public void testGetMolecule() {
+    public void testGetMolecule_int() {
         SetOfMolecules som = new SetOfMolecules();
         som.addMolecule(new Molecule());
         som.addMolecule(new Molecule());
@@ -86,6 +86,20 @@ public class SetOfMoleculesTest extends TestCase {
         assertEquals(7, som.getMoleculeCount());        
     }
     
+    public void testAdd_SetOfMolecules() {
+        SetOfMolecules som = new SetOfMolecules();
+        som.addMolecule(new Molecule());
+        som.addMolecule(new Molecule());
+        som.addMolecule(new Molecule());
+        som.addMolecule(new Molecule());
+        som.addMolecule(new Molecule());
+
+	SetOfMolecules som2 = new SetOfMolecules();
+	som2.add(som);
+	
+        assertEquals(5, som2.getMoleculeCount());
+    }
+    
     public void testGrowMoleculeArray() {
         // this test assumes that the growSize = 5 !
         // if not, there is need for the array to grow
@@ -101,6 +115,12 @@ public class SetOfMoleculesTest extends TestCase {
 
         Molecule[] mols = som.getMolecules();
         assertEquals(7, mols.length);
+    }
+    
+    public void testSetOfMolecules() {
+        SetOfMolecules som = new SetOfMolecules();
+	assertNotNull(som);
+        assertEquals(0, som.getMoleculeCount());
     }
     
     public void testGetMolecules() {

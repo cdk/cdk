@@ -98,7 +98,7 @@ public class CoreCoverageTest extends TestCase {
     }
 
     private int checkClass(String className) {
-        System.out.println("Checking : " + className);
+        // System.out.println("Checking : " + className);
         
         // the naming scheme: <package><class>Test
         final String basePackageName = "org.openscience.cdk.";

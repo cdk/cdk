@@ -50,6 +50,12 @@ public class SetOfAtomContainersTest extends TestCase {
         return new TestSuite(SetOfAtomContainersTest.class);
     }
     
+    public void testSetOfAtomContainers() {
+        SetOfAtomContainers som = new SetOfAtomContainers();
+        assertNotNull(som);
+        assertEquals(0, som.getAtomContainerCount());
+    }
+    
     public void testGetAtomContainerCount() {
         SetOfAtomContainers som = new SetOfAtomContainers();
         som.addAtomContainer(new AtomContainer());
@@ -76,6 +82,15 @@ public class SetOfAtomContainersTest extends TestCase {
         assertEquals(1.0, som.getMultiplier(0), 0.00001);
     }
     
+    public void testGetMultipliers() {
+        SetOfAtomContainers som = new SetOfAtomContainers();
+        som.addAtomContainer(new AtomContainer(), 1.0);
+
+	double[] multipliers = som.getMultipliers();
+	assertNotNull(multipliers);
+        assertEquals(1, multipliers.length);
+    }
+        
     public void testGetMultiplier_AtomContainer() {
         SetOfAtomContainers som = new SetOfAtomContainers();
         som.addAtomContainer(new AtomContainer());
