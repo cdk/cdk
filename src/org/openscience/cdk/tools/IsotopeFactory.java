@@ -51,6 +51,7 @@ public class IsotopeFactory
 	private static IsotopeFactory ifac = null;
 	private Vector isotopes = null;
 
+    private org.openscience.cdk.tools.LoggingTool logger;
 
 	/**
 	 *  Private constructor for the IsotopeFactory object
@@ -64,23 +65,25 @@ public class IsotopeFactory
 	private IsotopeFactory() throws IOException, OptionalDataException,
 			ClassNotFoundException
 	{
+        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+
 		InputStream ins = null;
 		ObjIn in = null;
-		try
-		{
+        String errorMessage = "There was a problem getting org.openscience.cdk." +
+                              "config.isotopes.xml as a stream";
+		try {
 			ins = this.getClass().getClassLoader().getResourceAsStream("org/openscience/cdk/config/isotopes.xml");
-		} catch (Exception exc)
-		{
-			throw new IOException("There was a problem getting org.openscience.cdk.config.isotopes.xml as a stream");
+		} catch (Exception exc) {
+            logger.error(errorMessage);
+			throw new IOException(errorMessage);
 		}
-		if (ins == null)
-		{
-			throw new IOException("There was a problem getting org.openscience.cdk.config.isotopes.xml as a stream");
+		if (ins == null) {
+            logger.error(errorMessage);
+			throw new IOException(errorMessage);
 		}
 		in = new ObjIn(ins, new Config().aliasID(false));
 		isotopes = (Vector) in.readObject();
-		for (int f = 0; f < isotopes.size(); f++)
-		{
+		for (int f = 0; f < isotopes.size(); f++) {
 			setup((Isotope) isotopes.elementAt(f));
 		}
 	}
@@ -134,6 +137,7 @@ public class IsotopeFactory
 				}
 			}
 		}
+        logger.error("Could not find major isotope for: " + symbol);
 		return null;
 	}
 

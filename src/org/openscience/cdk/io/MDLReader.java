@@ -204,7 +204,9 @@ public class MDLReader implements ChemObjectReader
 				y = new Double(strTok.nextToken()).doubleValue();
 				z = new Double(strTok.nextToken()).doubleValue();
 				logger.debug("Coordinates: " + x + "; " + y + "; " + z);
-				atom = new Atom(strTok.nextToken(), new Point3d(x, y, z));
+                String element = strTok.nextToken();
+                logger.debug("Atom type: " + element);
+				atom = new Atom(element, new Point3d(x, y, z));
 				atom.setPoint2D(new Point2d(x, y));
 				elemfact.configure(atom);
 				molecule.addAtom(atom);
@@ -249,11 +251,11 @@ public class MDLReader implements ChemObjectReader
 					molecule.addBond(bond);
 				}
 			}
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			logger.error("Error while reading MDL Molfile.");
 			logger.error("Reason for failure: ");
-			// e.printStackTrace();
+			logger.error(e.toString());
+            e.printStackTrace();
 			molecule = null;
 		}
 		return molecule;

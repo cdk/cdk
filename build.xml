@@ -126,7 +126,7 @@
         </target>
 
         <target name="compile-core" depends="init">
-                <echo message="Compiling classes defined in ${src}/core.classes." />
+                <echo message="Compiling classes for cdk-core module." />
 
                 <javac srcdir="${src}" destdir="${build}"
                        optimize="on" debug="off" deprecation="off"
@@ -135,8 +135,25 @@
                 </javac>
         </target>
 
+        <target name="compile-standard" depends="init">
+                <echo message="Compiling classes for cdk-standard module." />
+
+                <javac srcdir="${src}" destdir="${build}"
+                       optimize="on" debug="off" deprecation="off"
+                       includesfile="${src}/standard.classes">
+                    <classpath>
+                        <fileset dir="${lib}">
+                            <include name="JSX1.0.1.1.jar" />
+                        </fileset>
+                        <fileset dir="${dist}/jar">
+                            <include name="cdk-core.jar" />
+                        </fileset>
+                    </classpath>
+                </javac>
+        </target>
+
         <target name="compile-io" depends="init, dist-core">
-                <echo message="Compiling classes defined in ${src}/io.classes." />
+                <echo message="Compiling classes for cdk-io module." />
 
                 <javac srcdir="${src}" destdir="${build}"
                        optimize="off" debug="on" deprecation="off">
@@ -148,6 +165,7 @@
                     <classpath>
                         <fileset dir="${dist}/jar">
                             <include name="cdk-core.jar" />
+                            <include name="cdk-standard.jar" />
                         </fileset>
                     </classpath>
                 </javac>
@@ -304,8 +322,11 @@
                         <exclude name="org/openscience/cdk/applications/**" />
                         <!-- Exclude test classes -->
                         <exclude name="org/openscience/cdk/test/**" />
-                        <!-- Exclude test classes -->
+                        <!-- Exclude classes in cdk-io module-->
                         <exclude name="org/openscience/cdk/io/**" />
+                        <!-- Exclude classes in cdk-standard module-->
+                        <exclude name="org/openscience/cdk/tools/LoggingTool" />
+                        <exclude name="org/openscience/cdk/tools/IsotopeFactory" />
                    </fileset>
                 </jar>
         </target>
@@ -357,6 +378,15 @@
                 <jar jarfile="${dist}/jar/cdk-io.jar">
                     <fileset dir="${build}">
                         <include name="org/openscience/cdk/io/**/*" />
+                    </fileset>
+                </jar>
+        </target>
+
+        <target name="dist-standard" depends="compile-standard">
+                <jar jarfile="${dist}/jar/cdk-standard.jar">
+                    <fileset dir="${build}">
+                        <include name="org/openscience/cdk/tools/LoggingTool.class" />
+                        <include name="org/openscience/cdk/tools/IsotopeFactory.class" />
                     </fileset>
                 </jar>
         </target>

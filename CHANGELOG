@@ -11,6 +11,8 @@ New:
   single double bond in the SmilesGenerator.
 * The Atom class has now a container field for its
   formal charge. (RFC #6)
+* Added reading of bond orders S,D,T,A in CML
+  (bug #639455)
 
 Fixes:
 * Reading of 3D coordinates from ShelX files
