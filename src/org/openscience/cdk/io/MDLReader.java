@@ -318,15 +318,15 @@ public class MDLReader extends DefaultChemObjectReader {
                 totalZ += z;
                 logger.debug("Coordinates: " + x + "; " + y + "; " + z);
                 String element = line.substring(31,34).trim();
-                logger.debug("Atom type: ", element);
 
-                // try to determine Isotope
-                try {
+                logger.debug("Atom type: ", element);
+                if (isotopeFactory.isElement(element)) {
                     atom = isotopeFactory.configure(new Atom(element));
-                } catch (NullPointerException exception) {
+                } else {
                     logger.debug("Atom ", element, " is not an regular element. Creating a PseudoAtom.");
                     atom = new PseudoAtom(element);
                 }
+
                 // store as 3D for now, convert to 2D (if totalZ == 0.0) later
                 atom.setPoint3D(new Point3d(x, y, z));
                 
