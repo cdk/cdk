@@ -47,6 +47,9 @@ import org.openscience.cdk.RingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 
+/**
+ * @cdk.module test
+ */
 public class QsarDescriptors2DTest extends TestCase {
 	
 	boolean standAlone = false;
