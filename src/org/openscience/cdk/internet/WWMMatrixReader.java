@@ -57,6 +57,9 @@ public class WWMMatrixReader extends DefaultChemObjectReader {
     private String query = "C4,";
 
     private org.openscience.cdk.tools.LoggingTool logger;
+    
+    /** encoding of URLs as recommended by www.w3c.org */
+    private final String UTF8 = "UTF-8";
 
     public WWMMatrixReader() {
         logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
@@ -126,7 +129,7 @@ public class WWMMatrixReader extends DefaultChemObjectReader {
                         } catch (Exception exc) {
                                 System.out.println("Molecule has no coordinates and cannot generate those.");
                                 System.exit(1);
-                        }            
+                        }
         }
         
         MoleculeListViewer moleculeListViewer = new MoleculeListViewer();
@@ -143,16 +146,16 @@ public class WWMMatrixReader extends DefaultChemObjectReader {
     private Molecule readMolecule() throws Exception {
         String xpath = "";
         if (index.equals("ichi")) {
-            xpath = URLEncoder.encode("//molecule[./identifier/basic='" + query + "']");
+            xpath = URLEncoder.encode("//molecule[./identifier/basic='" + query + "']", UTF8);
         } else if (index.equals("kegg")) {
-            xpath = URLEncoder.encode("//molecule[./@name='" + query + "' and ./@dictRef='KEGG']");
+            xpath = URLEncoder.encode("//molecule[./@name='" + query + "' and ./@dictRef='KEGG']", UTF8);
         } else if (index.equals("nist")) {
-            xpath = URLEncoder.encode("//molecule[../@id='" + query + "']");
+            xpath = URLEncoder.encode("//molecule[../@id='" + query + "']", UTF8);
         } else {
             logger.error("Did not recognize index type: " + index);
             return null;
         }
-        String colname = URLEncoder.encode("/" + this.collection);
+        String colname = URLEncoder.encode("/" + this.collection, UTF8);
         
         logger.info("Doing query: " + xpath + " in collection " + colname);
         
