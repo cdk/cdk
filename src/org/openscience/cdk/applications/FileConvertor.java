@@ -115,7 +115,7 @@ public class FileConvertor {
     private boolean apply3DRebonding = false;
 
     public FileConvertor() {
-        logger = new LoggingTool(this.getClass().getName(), true);
+        logger = new LoggingTool(this, true);
         logger.dumpSystemProperties();
 
         settingListener = new TextGUIListener(level);

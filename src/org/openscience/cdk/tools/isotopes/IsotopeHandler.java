@@ -43,7 +43,7 @@ public class IsotopeHandler extends DefaultHandler {
     private boolean debug = false;
 
     public IsotopeHandler() {
-        logger = new LoggingTool(this.getClass().getName());
+        logger = new LoggingTool(this);
     }
 
     public Vector getIsotopes() {

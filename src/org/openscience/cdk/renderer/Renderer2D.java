@@ -110,7 +110,7 @@ public class Renderer2D implements MouseMotionListener   {
 	public Renderer2D(Renderer2DModel r2dm)
 	{
 		this.r2dm = r2dm;
-        logger = new LoggingTool(this.getClass().getName());
+        logger = new LoggingTool(this);
         
         try {
             isotopeFactory = IsotopeFactory.getInstance();

@@ -50,7 +50,7 @@ public class DictRefEditorTableModel extends AbstractTableModel {
     private Vector entries = new Vector();
     
     public DictRefEditorTableModel() {
-        logger = new LoggingTool(this.getClass().getName());
+        logger = new LoggingTool(this);
         
         columnNames = new String[3];
         columnNames[0] = "Field";

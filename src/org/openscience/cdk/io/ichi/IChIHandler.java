@@ -77,7 +77,7 @@ public class IChIHandler extends DefaultHandler {
      * Constructor for the IChIHandler.
      **/
     public IChIHandler() {
-        logger = new LoggingTool(this.getClass().getName());
+        logger = new LoggingTool(this);
     }
 
     public void doctypeDecl(String name, String publicId, String systemId)

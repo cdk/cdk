@@ -53,7 +53,7 @@ public class IsotopeReader {
     }
 
     private void init() {
-        logger = new LoggingTool(this.getClass().getName());
+        logger = new LoggingTool(this);
         boolean success = false;
         // If JAXP is prefered (comes with Sun JVM 1.4.0 and higher)
         if (!success) {

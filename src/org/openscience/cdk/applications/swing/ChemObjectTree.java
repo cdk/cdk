@@ -72,7 +72,7 @@ public class ChemObjectTree extends JPanel {
 	 * Constructs a JPanel showing a ChemObject in a tree.
 	 */
 	public ChemObjectTree() {
-        logger = new LoggingTool(this.getClass().getName());
+        logger = new LoggingTool(this);
         this.setLayout(new FlowLayout(FlowLayout.LEFT));
         this.tree = new JTree(new DefaultMutableTreeNode("empty"));
         this.add(tree);

@@ -56,7 +56,7 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
     private BufferedReader input = null;
 
     public GhemicalMMReader(Reader input) {
-        this.logger = new LoggingTool(this.getClass().getName());
+        this.logger = new LoggingTool(this);
         this.input = new BufferedReader(input);
     }
 

@@ -93,7 +93,7 @@ public class Controller2D
 		this.r2dm = r2dm;
 		this.c2dm = c2dm;
 
-		logger = new LoggingTool(this.getClass().getName());
+		logger = new LoggingTool(this);
 
 		commonElements = new Vector();
 		String[] elements = c2dm.getCommonElements();

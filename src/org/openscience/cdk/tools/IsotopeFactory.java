@@ -83,7 +83,7 @@ public class IsotopeFactory
 	private IsotopeFactory() throws IOException, OptionalDataException,
 			ClassNotFoundException
 	{
-        logger = new LoggingTool(this.getClass().getName());
+        logger = new LoggingTool(this);
         logger.info("Creating new IsotopeFactory");
 
 		InputStream ins = null;

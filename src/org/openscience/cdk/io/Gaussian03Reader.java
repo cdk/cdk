@@ -79,7 +79,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
     
     public Gaussian03Reader(Reader reader) {
         input = new BufferedReader(reader);
-        logger = new LoggingTool(this.getClass().getName());
+        logger = new LoggingTool(this);
         try {
             isotopeFactory = IsotopeFactory.getInstance();
         } catch (Exception exception) {

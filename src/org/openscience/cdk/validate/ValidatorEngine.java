@@ -64,7 +64,7 @@ public class ValidatorEngine implements ValidatorInterface {
     
     public ValidatorEngine() {
         validators = new Hashtable();
-        logger = new LoggingTool(this.getClass().getName());
+        logger = new LoggingTool(this);
     };
     
     public void addValidator(ValidatorInterface validator) {

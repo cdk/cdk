@@ -81,7 +81,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
     public Gaussian98Reader() {
         this.input = new BufferedReader(new StringReader(""));
 
-        logger = new LoggingTool(this.getClass().getName());
+        logger = new LoggingTool(this);
         try {
             isotopeFactory = IsotopeFactory.getInstance();
             logger.info("IsotopeFactory instantiated: " + isotopeFactory);

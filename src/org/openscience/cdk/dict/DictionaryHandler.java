@@ -41,7 +41,7 @@ public class DictionaryHandler extends DefaultHandler {
     Dictionary dict;
     
     public DictionaryHandler() {
-        logger = new LoggingTool(this.getClass().getName());
+        logger = new LoggingTool(this);
     }
 
     public void doctypeDecl(String name, String publicId, String systemId)

@@ -64,7 +64,7 @@ public class RSSHandler extends DefaultHandler {
      * Constructor for the RSSHandler.
      */
     public RSSHandler() {
-        logger = new LoggingTool(this.getClass().getName());
+        logger = new LoggingTool(this);
     }
 
     public ChemSequence getChemSequence() {

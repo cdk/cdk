@@ -58,7 +58,7 @@ public class SSSRFinder {
 	private static final int PATH = 0;
 
     public SSSRFinder() {
-        logger = new LoggingTool(this.getClass().getName());
+        logger = new LoggingTool(this);
     }
     
 	/**

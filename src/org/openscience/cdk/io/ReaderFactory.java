@@ -76,7 +76,7 @@ public class ReaderFactory {
      * @param headerLength length of the header in number of chars
      */
     public ReaderFactory(int headerLength) {
-        logger = new LoggingTool(this.getClass().getName());
+        logger = new LoggingTool(this);
         this.headerLength = headerLength;
     }
     

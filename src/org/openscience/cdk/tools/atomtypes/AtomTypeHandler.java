@@ -42,7 +42,7 @@ public class AtomTypeHandler extends DefaultHandler {
     private Vector atomTypes;
 
     public AtomTypeHandler() {
-        logger = new LoggingTool(this.getClass().getName());
+        logger = new LoggingTool(this);
     }
 
     public Vector getAtomTypes() {

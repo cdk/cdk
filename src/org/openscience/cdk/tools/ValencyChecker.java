@@ -60,7 +60,7 @@ public class ValencyChecker implements ValencyCheckerInterface {
 		structgenATF = AtomTypeFactory.getInstance(
             "org/openscience/cdk/config/valency_atomtypes.xml"
         );
-		logger = new LoggingTool(this.getClass().getName());
+		logger = new LoggingTool(this);
 	}
 
     /**
