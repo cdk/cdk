@@ -47,19 +47,21 @@ public class MoleculeValidator {
             errors.add(
               new ValidationWarning(molecule, "Molecule does not contain any atom")
             );
-        }
-        boolean foundMassCalcProblem = false;
-        for (int i=0; i<atoms.length; i++) {
-            if (atoms[i] instanceof PseudoAtom) {
-                
+        } else {
+            boolean foundMassCalcProblem = false;
+            for (int i=0; i<atoms.length; i++) {
+                if (atoms[i] instanceof PseudoAtom) {
+                    foundMassCalcProblem = true;
+                } else {
+                    errors.addAll(validateAtomValency(atoms[i], molecule));
+                    errors.addAll(validateBondOrderSum(atoms[i], molecule));
+                }
             }
-            errors.addAll(validateAtomValency(atoms[i], molecule));
-            errors.addAll(validateBondOrderSum(atoms[i], molecule));
-        }
-        if (foundMassCalcProblem) {
-            errors.add(
+            if (foundMassCalcProblem) {
+                errors.add(
                 new ValidationWarning(molecule, "Molecule contains PseudoAtom's. Won't be able to calculate some properties, like molecular mass.")
-            );
+                );
+            }
         }
         return errors;
     }
