@@ -22,6 +22,7 @@ API changes:
 * Removed physical props and remarks from ChemObject (implements RFC #20)
 * Cleaned up API for AtomTypeFactory: getAtomType() can only apply to the current
   AtomTypeFactory (each atom type list has a different ATF)
+* Removed deprecated methods from SaturationChecker
 
 20030909 Release
 ------------------------------------
