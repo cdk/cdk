@@ -26,8 +26,8 @@ package org.openscience.cdk.test.libio.jmol;
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.exception.*;
-import org.openscience.cdk.libio.jmol.*;
 import org.openscience.cdk.smiles.*;
+import org.openscience.cdk.libio.jmol.Convertor;
 import junit.framework.*;
 import org.openscience.cdk.isomorphism.IsomorphismTester;
 
