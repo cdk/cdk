@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<project name="Bibliography" default="all" basedir=".">
+
+    <path id="project.class.path">
+        <pathelement location="."/>
+        <fileset dir="../../jar">
+            <include name="gnujaxp.jar"/>
+        </fileset>
+        <fileset dir="../jar">
+            <include name="jreferences.jar"/>
+        </fileset>
+    </path>
+
+    <target id="all" name="all" depends="convertToBibTex, list"/>
+    
+    <target id="convertToDocBook" name="convertToDocBook">
+        <java classname="org.openscience.references.applications.ConvertReference"
+            output="cheminf.dbx">
+            <classpath refid="project.class.path"/>
+            <arg value="--input:bibtexml"/>
+            <arg value="--output:docbook"/>
+            <arg value="--dbxstyle:ACS"/>
+            <arg value="cheminf.btx"/>
+        </java>
+    </target>
+
+    <target id="convertToBibTex" name="convertToBibTex">
+        <java classname="org.openscience.references.applications.ConvertReference"
+            output="cheminf.bib">
+            <classpath refid="project.class.path"/>
+            <arg value="--input:bibtexml"/>
+            <arg value="--output:bibtex"/>
+            <arg value="cheminf.btx"/>
+        </java>
+    </target>
+
+    <target id="list" name="list">
+        <java classname="org.openscience.references.applications.ListReferences"
+            output="biblio.dbx">
+            <classpath refid="project.class.path"/>
+            <arg value="biblio.dbx.source"/>
+        </java>
+    </target>
+
+</project>
