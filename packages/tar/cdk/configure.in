@@ -45,19 +45,19 @@ AC_CHECK_PROG(HASGCJ, gcj, yes, no)
 AC_PATH_PROG(PATHTOGCJ, gcj)
 AM_CONDITIONAL(WITHGCJ, test "x$HASGCJ" = "xyes")
 
-if test -x "$JAVA_HOME/bin/java"
+AC_CHECK_PROG(HASJAVA, java, yes, no)
+if test "x$HASJAVA" = "xno"
 then
-    AC_MSG_CHECKING(for java)
-    AC_MSG_RESULT($JAVA_HOME/bin/java)
-    PATHTOJAVA=$JAVA_HOME/bin/java
-    AC_SUBST(PATHTOJAVA)
-else
-    AC_CHECK_PROG(HASJAVA, java, yes, no)
-    if test "xyes" = "x$HASJAVA"
+    if test -x "$JAVA_HOME/bin/java"
     then
-        AC_PATH_PROG(PATHTOJAVA, java, no)
+        AC_MSG_CHECKING(for java)
+        AC_MSG_RESULT($JAVA_HOME/bin/java)
+        PATHTOJAVA=$JAVA_HOME/bin/java
     fi
+else
+  AC_PATH_PROG(PATHTOJAVA, java, no)
 fi
+AC_SUBST(PATHTOJAVA)
 
 AC_MSG_CHECKING(for rt.jar lib)
 for d in "/usr/lib/j2re1.3/lib"
