@@ -36,6 +36,13 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 import java.util.ArrayList;
 import java.io.*;
+
+/**
+ * TestSuite that runs all QSAR tests.
+ *
+ * @cdk.module test
+ */
+
 public class GravitationalIndexDescriptorTest extends TestCase {
 	
 	public GravitationalIndexDescriptorTest() {}

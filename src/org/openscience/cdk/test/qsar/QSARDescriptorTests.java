@@ -54,6 +54,8 @@ import org.openscience.cdk.test.qsar.*;
 	suite.addTest(HBondDonorCountDescriptorTest.suite());
 	suite.addTest(ValenceConnectivityOrderZeroDescriptorTest.suite());
 	suite.addTest(ValenceConnectivityOrderOneDescriptorTest.suite());
+	suite.addTest(GravitationalIndexDescriptorTest.suite());
+	suite.addTest(BCUTDescriptorTest.suite());
         return suite;
     }
     
