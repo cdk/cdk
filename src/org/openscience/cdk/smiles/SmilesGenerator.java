@@ -157,8 +157,8 @@ public class SmilesGenerator {
             two = atoms[i];
           }
         }
-        int[] morgannumbers = MorganNumbersTools.getMorganNumbers(container);
-        if (one !=null && ((two == null && atom.getSymbol().equals("N") && Math.abs(giveAngleBothMethods(parent, atom, one, true)) > Math.PI / 10) || (two != null && morgannumbers[container.getAtomNumber(one)] != morgannumbers[container.getAtomNumber(two)]))) {
+        String[] morgannumbers = MorganNumbersTools.getMorganNumbersWithElementSymbol(container);
+        if ((one !=null && two == null && atom.getSymbol().equals("N") && Math.abs(giveAngleBothMethods(parent, atom, one, true)) > Math.PI / 10) || (!atom.getSymbol().equals("N") && one !=null && two != null && !morgannumbers[container.getAtomNumber(one)].equals(morgannumbers[container.getAtomNumber(two)]))) {
           return (true);
         } else {
           return (false);
@@ -199,8 +199,8 @@ public class SmilesGenerator {
         two = atoms[i];
       }
     }
-    int[] morgannumbers = MorganNumbersTools.getMorganNumbers(container);
-    if (one!=null && ((!a.getSymbol().equals("N") && two!=null && morgannumbers[container.getAtomNumber(one)] != morgannumbers[container.getAtomNumber(two)] && doubleBond && doubleBondConfiguration[container.getBondNumber(a, nextAtom)]) || (doubleBond && a.getSymbol().equals("N") && Math.abs(giveAngleBothMethods(nextAtom, a, parent, true)) > Math.PI / 10))) {
+    String[] morgannumbers = MorganNumbersTools.getMorganNumbersWithElementSymbol(container);
+    if (one!=null && ((!a.getSymbol().equals("N") && two!=null && !morgannumbers[container.getAtomNumber(one)].equals(morgannumbers[container.getAtomNumber(two)]) && doubleBond && doubleBondConfiguration[container.getBondNumber(a, nextAtom)]) || (doubleBond && a.getSymbol().equals("N") && Math.abs(giveAngleBothMethods(nextAtom, a, parent, true)) > Math.PI / 10))) {
       return (true);
     } else {
       return (false);
