@@ -35,6 +35,7 @@ import org.openscience.cdk.*;
 import org.openscience.cdk.event.*;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.ChemModelManipulator;
+import org.openscience.cdk.tools.IsotopeFactory;
 import java.awt.*;
 import java.util.*;
 import java.awt.event.*;
@@ -284,15 +285,22 @@ public class JCPController2D {
                             index = 0;
                         }
                         atomInRange.setSymbol((String)commonElements.get(index));
-		    /* PRESERVE THIS. This notifies the 
-		     * the listener responsible for 
-		     * undo and redo storage that it
-		     * should store this change of an atom symbol
-		     */
-		    isUndoableChange = true;
-		    /* --- */
-			r2dm.fireChange();
-			fireChange();
+                        try {
+                            // configure the atom, so that the atomic number matches the symbol
+                            IsotopeFactory.getInstance().configure(atomInRange);
+                        } catch (Exception exception) {
+                            logger.error("Error while configuring atom");
+                            logger.debug(exception);
+                        }
+                        /* PRESERVE THIS. This notifies the 
+                        * the listener responsible for 
+                        * undo and redo storage that it
+                        * should store this change of an atom symbol
+                        */
+                        isUndoableChange = true;
+                        /* --- */
+                        r2dm.fireChange();
+                        fireChange();
                     }
                 }
 
