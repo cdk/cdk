@@ -14,6 +14,7 @@ API changes:
 * Moved AtomContainer.getAdjacencyMatrix to cdk.graph.matrix.AdjecencyMatrix
 * Moved AtomContainer.getConnectionMatrix to cdk.graph.matrix.ConnectionMatrix
 * Cleaned up Crystal API by using Vector3d for the axes
+* Made a few class fields private in core classes which were protected sofar
 
 20040626 Release
 ------------------------------------

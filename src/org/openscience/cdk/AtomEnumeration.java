@@ -48,18 +48,18 @@ import java.util.Enumeration;
 public class AtomEnumeration implements java.io.Serializable, Cloneable, Enumeration {
 
     /** Counts the current element. */
-    protected int atomEnumerationCounter = 0;
+    private int atomEnumerationCounter = 0;
     /** Contains the atoms to enumerate. */
-    protected AtomContainer ac;
+    private AtomContainer container;
 
     /**
      *  Constructs a new AtomEnumeration.
      *
-     *  @param      ac      AtomContainer which contains the atoms
+     *  @param      copntainer      AtomContainer which contains the atoms
      */
-	public AtomEnumeration(AtomContainer ac)
+	public AtomEnumeration(AtomContainer container)
 	{
-		this.ac = ac;
+		this.container = container;
 	}
     
     /**
@@ -67,7 +67,7 @@ public class AtomEnumeration implements java.io.Serializable, Cloneable, Enumera
      */
 	public boolean hasMoreElements()
 	{
-		if (ac.getAtomCount() > atomEnumerationCounter)
+		if (container.getAtomCount() > atomEnumerationCounter)
 		{
 			return true;	
 		}
@@ -82,7 +82,7 @@ public class AtomEnumeration implements java.io.Serializable, Cloneable, Enumera
 	public Object nextElement()
 	{
 		atomEnumerationCounter ++;
-		return ac.getAtomAt(atomEnumerationCounter - 1);
+		return container.getAtomAt(atomEnumerationCounter - 1);
 	}
 }
 

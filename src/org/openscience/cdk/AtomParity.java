@@ -78,17 +78,17 @@ public class AtomParity implements java.io.Serializable, Cloneable  {
      * @return  The string representation of this AtomParity
      */
     public String toString() {
-        StringBuffer s = new StringBuffer();
-        s.append("AtomParity(");
-        s.append(this.hashCode() + ", ");
-        s.append(centralAtom.getID() + ", ");
-        s.append("F:[" + neighbors[0].getID() + ", ");
-        s.append(neighbors[1].getID() + ", ");
-        s.append(neighbors[2].getID() + ", ");
-        s.append(neighbors[3].getID() + "], ");
-        s.append(parity);
-        s.append(")");
-        return s.toString();
+        StringBuffer resultString = new StringBuffer();
+        resultString.append("AtomParity(");
+        resultString.append(this.hashCode() + ", ");
+        resultString.append(centralAtom.getID() + ", ");
+        resultString.append("F:[" + neighbors[0].getID() + ", ");
+        resultString.append(neighbors[1].getID() + ", ");
+        resultString.append(neighbors[2].getID() + ", ");
+        resultString.append(neighbors[3].getID() + "], ");
+        resultString.append(parity);
+        resultString.append(")");
+        return resultString.toString();
     }
 
     /**
@@ -98,13 +98,13 @@ public class AtomParity implements java.io.Serializable, Cloneable  {
      */
     public Object clone() {
         // is this correct? (taken from Atom, but seems wrong)
-        Object o = null;
+        Object clone = null;
         try {
-            o = super.clone();
+            clone = super.clone();
         } catch (Exception e) {
             e.printStackTrace(System.err);
         }
-        return o;
+        return clone;
     }
     
 }

@@ -285,17 +285,17 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
     }
     
     public String toString() {
-        StringBuffer sb = new StringBuffer();
-        sb.append("AtomType(");
-        sb.append(getAtomTypeName() + ", ");
-        sb.append("MBO:" + getMaxBondOrder() + ", ");
-        sb.append("BOS:" + getBondOrderSum() + ", ");
-        sb.append("FC:" + getFormalCharge() + ", ");
-        sb.append("H:" + getHybridization() + ", ");
-        sb.append("NC:" + getFormalNeighbourCount() + ", ");
-        sb.append(super.toString());
-        sb.append(")");
-        return sb.toString(); 
+        StringBuffer resultString = new StringBuffer();
+        resultString.append("AtomType(");
+        resultString.append(getAtomTypeName() + ", ");
+        resultString.append("MBO:" + getMaxBondOrder() + ", ");
+        resultString.append("BOS:" + getBondOrderSum() + ", ");
+        resultString.append("FC:" + getFormalCharge() + ", ");
+        resultString.append("H:" + getHybridization() + ", ");
+        resultString.append("NC:" + getFormalNeighbourCount() + ", ");
+        resultString.append(super.toString());
+        resultString.append(")");
+        return resultString.toString(); 
     }
 }
 
