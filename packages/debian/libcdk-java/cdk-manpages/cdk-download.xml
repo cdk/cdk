@@ -46,7 +46,7 @@
   <refnamediv>
     <refname>&dhpackage;</refname>
 
-    <refpurpose>program to do something</refpurpose>
+    <refpurpose>Download chemical information from the internet</refpurpose>
   </refnamediv>
   <refsynopsisdiv>
     <cmdsynopsis>
