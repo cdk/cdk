@@ -66,6 +66,25 @@ import Jama.EigenvalueDecomposition;
  * <p>The descriptor works with the hydrogen depleted molecule and thus the maximum number
  * of eigenvalues calculated for any class of BCUT descriptor is equal to the number
  * of heavy atoms present.
+ * <p>This descriptor uses these parameters:
+ * <table border="1">
+ *   <tr>
+ *     <td>Name</td>
+ *     <td>Default</td>
+ *     <td>Description</td>
+ *   </tr>
+ *   <tr>
+ *     <td>nhigh</td>
+ *     <td>2</td>
+ *     <td>The number of highest eigenvalue</td>
+ *   </tr>
+ *   <tr>
+ *     <td>nlow</td>
+ *     <td>2</td>
+ *     <td>The number of lowest eigenvalue</td>
+ *   </tr>
+ * </table>
+ *
  * 
  * @author      Rajarshi Guha
  * @cdk.created     2004-11-30
@@ -141,8 +160,8 @@ public class BCUTDescriptor implements Descriptor {
      */
     public String[] getParameterNames() {
         String[] params = new String[2];
-        params[0] = "Number of highest eigenvalues for each class";
-        params[1] = "Number of lowest eigenvalues for each class";
+        params[0] = "nhigh";
+        params[1] = "nlow";
         return(params);
     }
 
