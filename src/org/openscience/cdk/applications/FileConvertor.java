@@ -491,6 +491,7 @@ public class FileConvertor {
 				System.exit(1);
 			}
             if (apply2DCleanup) {
+				logger.info("Creating 2D coordinates");
             	StructureDiagramGenerator sdg = new StructureDiagramGenerator();
 	            try {
 	                sdg.setMolecule(molecule);
