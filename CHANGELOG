@@ -4,6 +4,20 @@ CHANGELOG $Date$
 Changes in CVS
 ------------------------------------
 New:
+none
+
+Changes:
+none
+
+Fixes:
+none
+
+API changes:
+none
+
+20030213 Release
+------------------------------------
+New:
 * A Crystal convertor to Jmol v5 is added.
 * StructureDiagramGenerator now uses LoggingTool.
 * It is now possible to say if the double bond 
@@ -23,6 +37,12 @@ New:
   ChemObject as a tree, see cdk-view
 * Added 2D rendering and editing of formal charges
 * Added AtomType configuration from Jmol
+* Added a SMILES reader
+* The AtomType class now has fields for Covalent and
+  Vanderwaals radii (RFC #10)
+
+Changes:
+* CMLWriter now outputs CML2 instead of CML1
 
 Fixes:
 * HOSECodeGenerator now generates correctly ranked n-sphere codes.
