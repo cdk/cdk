@@ -5,8 +5,8 @@
         <property name="sourcedist" value="sourcedist" />
         <property name="dist" value="dist" />
         <property name="doc" value="doc" />
-	<property name="src" value="src" />
-	<property name="lib" value="jar" />
+        <property name="src" value="src" />
+        <property name="lib" value="jar" />
         <property name="src.tests" value="${src}/org/openscience/cdk/test" />
         <property name="reports.tests" value="reports" />
         <property name="pathtojava3d" value="" />
@@ -76,6 +76,7 @@
                         <!-- exclude libio classes that require additional
                              libraries, and are compiled elsewhere -->
                         <exclude name="org/openscience/cdk/libio/**" />
+                        <exclude name="org/openscience/cdk/test/libio/**" />
 
                         <classpath refid="project.class.path" />
                 </javac>
@@ -91,6 +92,7 @@
 
                 <javac destdir="${build}" optimize="off" debug="on" deprecation="off">
                         <src path="${src}/org/openscience/cdk/libio" />
+                        <src path="${src}/org/openscience/cdk/test/libio" />
 
                         <classpath refid="project.class.path" />
                         <classpath>
@@ -152,11 +154,16 @@
                         <include name="org/openscience/cdk/AtomType.class" />
                         <include name="org/openscience/cdk/BioPolymer.class" />
                         <include name="org/openscience/cdk/Bond.class" />
+                        <include name="org/openscience/cdk/CDKConstants.class" />
                         <include name="org/openscience/cdk/ChemModel.class" />
                         <include name="org/openscience/cdk/ChemObject.class" />
+                        <include name="org/openscience/cdk/ChemObjectListener.class" />
                         <include name="org/openscience/cdk/ChemSequence.class" />
                         <include name="org/openscience/cdk/ElectronContainer.class" />
                         <include name="org/openscience/cdk/Element.class" />
+                        <include name="org/openscience/cdk/event/ChemObjectChangeEvent.class" />
+                        <include name="org/openscience/cdk/exception/CDKException.class" />
+                        <include name="org/openscience/cdk/exception/NoSuchAtomException.class" />
                         <include name="org/openscience/cdk/Isotope.class" />
                         <include name="org/openscience/cdk/Molecule.class" />
                         <include name="org/openscience/cdk/Monomer.class" />
@@ -179,11 +186,16 @@
                         <exclude name="org/openscience/cdk/AtomType.class" />
                         <exclude name="org/openscience/cdk/BioPolymer.class" />
                         <exclude name="org/openscience/cdk/Bond.class" />
+                        <exclude name="org/openscience/cdk/CDKConstants.class" />
                         <exclude name="org/openscience/cdk/ChemModel.class" />
                         <exclude name="org/openscience/cdk/ChemObject.class" />
+                        <exclude name="org/openscience/cdk/ChemObjectListener.class" />
                         <exclude name="org/openscience/cdk/ChemSequence.class" />
                         <exclude name="org/openscience/cdk/ElectronContainer.class" />
                         <exclude name="org/openscience/cdk/Element.class" />
+                        <exclude name="org/openscience/cdk/event/ChemObjectChangeEvent.class" />
+                        <exclude name="org/openscience/cdk/exception/CDKException.class" />
+                        <exclude name="org/openscience/cdk/exception/NoSuchAtomException.class" />
                         <exclude name="org/openscience/cdk/Isotope.class" />
                         <exclude name="org/openscience/cdk/Molecule.class" />
                         <exclude name="org/openscience/cdk/Monomer.class" />
@@ -193,6 +205,7 @@
                         <exclude name="org/openscience/cdk/SetOfMolecules.class" />
                         <!-- Exclude libio classes -->
                         <exclude name="org/openscience/cdk/libio/**" />
+                        <exclude name="org/openscience/cdk/test/libio/**" />
                    </fileset>
                 </jar>
         </target>
@@ -201,6 +214,7 @@
                 <jar jarfile="${dist}/jar/cdk-libio.jar">
                     <fileset dir="${build}">
                         <include name="org/openscience/cdk/libio/**" />
+                        <include name="org/openscience/cdk/test/libio/**" />
                     </fileset>
                 </jar>
         </target>
@@ -307,6 +321,24 @@
                 </junit>
         </target>
 
+        <target name="test-libio" depends="dist-libio">
+                <java classname="org.openscience.cdk.test.libio.joelib.JOELibIOTest" fork="yes">
+                        <classpath>
+                                <pathelement location="${dist}/jar/cdk-core.jar" />
+                                <pathelement location="${dist}/jar/cdk-extra.jar" />
+                                <pathelement location="${dist}/jar/cdk-libio.jar" />
+                                <pathelement path="${java.class.path}" />
+                                <pathelement location="." />
+                                <fileset dir="${lib}">
+                                        <include name="*.jar" />
+                                </fileset>
+                                <fileset dir="${lib}/libio">
+                                        <include name="*.jar" />
+                                </fileset>
+                        </classpath>
+                </java>
+        </target>
+
         <target name="run-with-java3d"
         depends="dist-with-java3d">
                 <java
@@ -337,24 +369,6 @@
                                 <pathelement path="${java.class.path}" />
                                 <pathelement location="." />
                                 <fileset dir="${lib}">
-                                        <include name="*.jar" />
-                                </fileset>
-                        </classpath>
-                </java>
-        </target>
-
-        <target name="runLibIOTest" depends="dist">
-                <java classname="org.openscience.cdk.libio.joelib.LibIOTest" fork="yes">
-                        <classpath>
-                                <pathelement location="${dist}/jar/cdk-core.jar" />
-                                <pathelement location="${dist}/jar/cdk-extra.jar" />
-                                <pathelement location="${dist}/jar/cdk-libio.jar" />
-                                <pathelement path="${java.class.path}" />
-                                <pathelement location="." />
-                                <fileset dir="${lib}">
-                                        <include name="*.jar" />
-                                </fileset>
-                                <fileset dir="${lib}/libio">
                                         <include name="*.jar" />
                                 </fileset>
                         </classpath>
