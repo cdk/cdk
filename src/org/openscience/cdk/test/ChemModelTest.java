@@ -30,6 +30,8 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.*;
+import org.openscience.cdk.event.ChemObjectChangeEvent;
+import org.openscience.cdk.ChemObjectListener;
 
 /**
  * Checks the funcitonality of the ChemModel class.
@@ -155,11 +157,43 @@ public class ChemModelTest extends TestCase {
         assertNotSame(model.getRingSet(), clone.getRingSet());
     }
 
-    /**
-     * This test is not implemented. I don't know how this test can be
-     * done with JUnit.
-     */
     public void testStateChanged_ChemObjectChangeEvent() {
-        // dunno how to test this!
+        ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
+        ChemModel chemObject = new ChemModel();
+        chemObject.addListener(listener);
+        
+        chemObject.setSetOfMolecules(new SetOfMolecules());
+        assertTrue(listener.changed);
+        
+        listener.reset();
+        assertFalse(listener.changed);
+        chemObject.setSetOfReactions(new SetOfReactions());
+        assertTrue(listener.changed);
+        
+        listener.reset();
+        assertFalse(listener.changed);
+        chemObject.setCrystal(new Crystal());
+        assertTrue(listener.changed);
+        
+        listener.reset();
+        assertFalse(listener.changed);
+        chemObject.setRingSet(new RingSet());
+        assertTrue(listener.changed);
+    }
+
+    private class ChemObjectListenerImpl implements ChemObjectListener {
+        private boolean changed;
+        
+        private ChemObjectListenerImpl() {
+            changed = false;
+        }
+        
+        public void stateChanged(ChemObjectChangeEvent e) {
+            changed = true;
+        }
+        
+        public void reset() {
+            changed = false;
+        }
     }
 }

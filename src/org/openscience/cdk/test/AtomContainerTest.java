@@ -40,6 +40,8 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.ElectronContainer;
 import org.openscience.cdk.LonePair;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.event.ChemObjectChangeEvent;
+import org.openscience.cdk.ChemObjectListener;
 
 /**
  * Checks the funcitonality of the AtomContainer.
@@ -1073,11 +1075,33 @@ public class AtomContainerTest extends TestCase {
         }
     }
 
-    /**
-     * This test is not implemented. I don't know how this test can be
-     * done with JUnit.
-     */
     public void testStateChanged_ChemObjectChangeEvent() {
-        // dunno how to test this!
+        ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
+        AtomContainer chemObject = new AtomContainer();
+        chemObject.addListener(listener);
+        
+        chemObject.addAtom(new Atom());
+        assertTrue(listener.changed);
+        
+        listener.reset();
+        assertFalse(listener.changed);
+        chemObject.addBond(new Bond(new Atom(), new Atom()));
+        assertTrue(listener.changed);
+    }
+
+    private class ChemObjectListenerImpl implements ChemObjectListener {
+        private boolean changed;
+        
+        private ChemObjectListenerImpl() {
+            changed = false;
+        }
+        
+        public void stateChanged(ChemObjectChangeEvent e) {
+            changed = true;
+        }
+        
+        public void reset() {
+            changed = false;
+        }
     }
 }

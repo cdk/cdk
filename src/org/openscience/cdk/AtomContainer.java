@@ -1110,7 +1110,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 
 
 	/**
-	 *  Removes all atoms and bond from this container.
+	 * Removes all atoms and bond from this container.
 	 */
 	public void removeAllElements()
 	{

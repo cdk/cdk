@@ -31,6 +31,8 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemSequence;
+import org.openscience.cdk.event.ChemObjectChangeEvent;
+import org.openscience.cdk.ChemObjectListener;
 
 /**
  * Checks the funcitonality of the ChemSequence class.
@@ -118,12 +120,29 @@ public class ChemSequenceTest extends TestCase {
         }
     }
     
-    /**
-     * This test is not implemented. I don't know how this test can be
-     * done with JUnit.
-     */
     public void testStateChanged_ChemObjectChangeEvent() {
-        // dunno how to test this!
+        ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
+        ChemSequence chemObject = new ChemSequence();
+        chemObject.addListener(listener);
+        
+        chemObject.addChemModel(new ChemModel());
+        assertTrue(listener.changed);
+    }
+
+    private class ChemObjectListenerImpl implements ChemObjectListener {
+        private boolean changed;
+        
+        private ChemObjectListenerImpl() {
+            changed = false;
+        }
+        
+        public void stateChanged(ChemObjectChangeEvent e) {
+            changed = true;
+        }
+        
+        public void reset() {
+            changed = false;
+        }
     }
 
 	public void testClone() {
