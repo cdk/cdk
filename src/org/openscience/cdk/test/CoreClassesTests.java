@@ -36,6 +36,8 @@ public class CoreClassesTests {
 
     public static Test suite () {
         TestSuite suite= new TestSuite("The cdk.core Tests");
+        suite.addTest(CoreCoverageTest.suite());
+        
         suite.addTest(AtomContainerTest.suite());
         suite.addTest(AtomEnumerationTest.suite());
         suite.addTest(AtomParityTest.suite());

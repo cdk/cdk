@@ -1,0 +1,162 @@
+/* $RCSfile$    
+ * $Author$    
+ * $Date$    
+ * $Revision$
+ * 
+ * Copyright (C) 2004  The Chemistry Development Kit (CDK) project
+ * 
+ * Contact: cdk-devel@lists.sourceforge.net
+ * 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
+ */
+package org.openscience.cdk.test;
+
+import java.io.*;
+import java.lang.reflect.*;
+import java.util.*;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+/**
+ * TestSuite that runs all the sample tests.
+ *
+ * @cdk.module test
+ */
+public class CoreCoverageTest extends TestCase {
+
+    private final static String CLASS_LIST = "core.javafiles";
+    
+    private ClassLoader classLoader;
+    
+    public CoreCoverageTest(String name) {
+        super(name);
+    }
+
+    public void setUp() {
+        classLoader = this.getClass().getClassLoader();
+    }
+
+    public static Test suite() {
+        return new TestSuite(CoreCoverageTest.class);
+    }
+
+    private Class loadClass(String className) {
+        Class loadedClass = null;
+        try {
+            loadedClass = classLoader.loadClass(className);
+        } catch (ClassNotFoundException exception) {
+            fail("Could not find class: " + exception.getMessage());
+        } catch (NoSuchMethodError error) {
+            fail("No such method in class: " + error.getMessage());
+        }
+        return loadedClass;
+    }
+    
+    public void testCoverage() {
+        boolean allClassesAreTested = true;
+        
+        // get the src/core.javafiles file
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(
+                this.getClass().getClassLoader().getResourceAsStream(CLASS_LIST)
+            ));
+            while (reader.ready()) {
+                // load them one by one
+                String rawClassName = reader.readLine();
+                rawClassName = rawClassName.substring(20);
+                String className = rawClassName.substring(0, rawClassName.indexOf('.'));
+                allClassesAreTested = checkClass(className) && allClassesAreTested;
+            }
+        } catch (Exception exception) {
+            fail("Could not load the src/core.javafiles file!");
+        }
+        
+        
+        if (!allClassesAreTested) {
+            fail("The core module is not fully tested!");
+        }
+    }
+
+    private boolean checkClass(String className) {
+        System.out.println("Checking : " + className);
+        
+        // the naming scheme: <package><class>Test
+        final String basePackageName = "org.openscience.cdk.";
+        final String testPackageName = "test.";
+        
+        // load both classes
+        Class coreClass = loadClass(basePackageName + className);
+        Class testClass = loadClass(basePackageName + testPackageName + className + "Test");
+        
+        // make map of methods in the test class
+        Vector testMethodNames = new Vector();
+        Method[] testMethods = testClass.getMethods();
+        for (int i=0; i<testMethods.length; i++) {
+            testMethodNames.add(testMethods[i].getName());
+        }
+        
+        boolean allIsTested = true;
+        
+        // now process the methods of the class to be tested
+        // first the constructors
+        Constructor[] constructors = coreClass.getDeclaredConstructors();
+        for (int i=0; i<constructors.length; i++) {
+            String testMethod = "test" + capitalizeName(removePackage(constructors[i].getName()));
+            Class[] paramTypes = constructors[i].getParameterTypes();
+            for (int j=0; j<paramTypes.length; j++) {
+                testMethod = testMethod + "_" + removePackage(paramTypes[j].getName());
+            }
+            if (!testMethodNames.contains(testMethod)) {
+                System.out.println(removePackage(coreClass.getName()) + ": missing the expection test method: " + testMethod);
+                allIsTested = false;
+            }
+        }
+        
+        // now the methods.
+        Method[] methods = coreClass.getDeclaredMethods();
+        for (int i=0; i<methods.length; i++) {
+            String testMethod = "test" + capitalizeName(removePackage(methods[i].getName()));
+            Class[] paramTypes = methods[i].getParameterTypes();
+            for (int j=0; j<paramTypes.length; j++) {
+                testMethod = testMethod + "_" + removePackage(paramTypes[j].getName());
+            }
+            if (!testMethodNames.contains(testMethod)) {
+                System.out.println(removePackage(coreClass.getName()) + ": missing the expection test method: " + testMethod);
+                allIsTested = false;
+            }
+        }
+        
+        return allIsTested;
+    }
+    
+    private String removePackage(String className) {
+        return className.substring(1+className.lastIndexOf('.'));
+    }
+    
+    private String capitalizeName(String name) {
+        String capitalizedName = "";
+        if (name == null) {
+            capitalizedName = null;
+        } else if (name.length() == 1) {
+            capitalizedName = name.toUpperCase();
+        } else if (name.length() > 1) {
+            capitalizedName = name.substring(0,1).toUpperCase() + name.substring(1);
+        }
+        return capitalizedName;
+    }
+    
+}

@@ -17,6 +17,7 @@ New:
 * Added a IteratingSMILESParser
 * Added getNaturalMass to MFAnalyser, giving mass as average of isotopes
 * Added AtomContainerManipulator.addAtomProperties()
+* The core module classes are now checked for coverage of JUnit testing
 
 Fixes:
 * Fixed format detection for Jaguar, Gamess and the HIN format: they were
