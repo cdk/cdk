@@ -54,6 +54,7 @@ import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.io.setting.IntegerIOSetting;
 import org.openscience.cdk.io.setting.StringIOSetting;
+import org.openscience.cdk.tools.AtomContainerManipulator;
 import org.openscience.cdk.tools.ReactionManipulator;
 
 /**
@@ -435,8 +436,8 @@ public class MACiEReader extends DefaultChemObjectReader {
                         currentReaction, pseudo
                     );
                     logger.debug("Replacing the pseudo atom with a ezymeResidueLocator atom");
-                    container.removeAtom(pseudo);
-                    container.addAtom(new EnzymeResidueLocator(pseudo));
+                    AtomContainerManipulator.replaceAtomByAtom(container, 
+                        pseudo, new EnzymeResidueLocator(pseudo));
                 }
             }
         }
