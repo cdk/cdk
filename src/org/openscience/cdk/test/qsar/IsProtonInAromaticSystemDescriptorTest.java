@@ -28,8 +28,10 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.tools.HydrogenAdder;
 
 public class IsProtonInAromaticSystemDescriptorTest extends TestCase {
 	
@@ -44,7 +46,9 @@ public class IsProtonInAromaticSystemDescriptorTest extends TestCase {
 		Object[] params = {new Integer(0), new Boolean(false)};
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser();
-		AtomContainer mol = sp.parseSmiles("Cc1ccccc1"); 
+		Molecule mol = sp.parseSmiles("Cc1ccccc1"); 
+		HydrogenAdder hAdder = new HydrogenAdder();
+		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		assertFalse(((Boolean)descriptor.calculate(mol)).booleanValue());
 	}
 }
