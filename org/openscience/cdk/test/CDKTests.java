@@ -1,6 +1,6 @@
 /* $RCSfile$    $Author$    $Date$    $Revision$
  * 
- * Copyright (C) 1997-2000  The CompChem project
+ * Copyright (C) 1997-2001  The Chemistry Development Kit (CDK) project
  * 
  * Contact: steinbeck@ice.mpg.de, geelter@maul.chem.nd.edu, egonw@sci.kun.nl
  * 
@@ -40,10 +40,10 @@ public class CDKTests {
 	public static Test suite ( ) 
 	{
 		TestSuite suite= new TestSuite("All CDK Tests");
-		suite.addTest(RingSearchTest.suite());
-		suite.addTest(ConnectivityCheckerTest.suite());
-		// Let the graphical tests always be the last ones
-		suite.addTest(StructureDiagramGeneratorTest.suite());
+//		suite.addTest(RingSearchTest.suite());
+//		suite.addTest(ConnectivityCheckerTest.suite());
+//		suite.addTest(StructureDiagramGeneratorTest.suite());
+		suite.addTest(RandomStructureGeneratorTest.suite());
 	    return suite;
 	}
 }

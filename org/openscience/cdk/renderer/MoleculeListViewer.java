@@ -1,7 +1,7 @@
 /*  
  * $RCSfile$    $Author$    $Date$    $Revision$
  * 
- * Copyright (C) 1997-2000  The CompChem project
+ * Copyright (C) 1997-2001  The Chemistry Development Kit (CDK) project
  * 
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  * 
@@ -48,7 +48,7 @@ public class MoleculeListViewer extends JFrame
 	/** 
 	  * The dimension of a single MoleculeViewerPanel
 	  */
-	protected Dimension molViewDim = new Dimension(350,350);
+	protected Dimension molViewDim = new Dimension(250,250);
 
 	protected Vector moleculeViewerPanels = new Vector();
 

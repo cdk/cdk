@@ -2,7 +2,7 @@
  * 
  * $RCSfile$    $Author$    $Date$    $Revision$
  * 
- * Copyright (C) 1997-2000  The CompChem project
+ * Copyright (C) 1997-2001  The Chemistry Development Kit (CDK) project
  * 
  * Contact: steinbeck@ice.mpg.de, geelter@maul.chem.nd.edu, egonw@sci.kun.nl
  * 
@@ -84,7 +84,7 @@ public class AtomContainer extends ChemObject implements Cloneable{
 	public AtomContainer(AtomContainer ac)
 	{
 		this();
-		add(ac);
+		this.add(ac);
 	}
 
 
@@ -250,30 +250,22 @@ public class AtomContainer extends ChemObject implements Cloneable{
 	 * @param   a1  The first atom
 	 * @param   a2  The second atom
 	 * @return     The bond that connectes the two atoms
-	 * @exception   Exception  thrown if the two atoms are not connected
 	 */
-	public Bond getBond(Atom a1, Atom a2) throws Exception
+	public Bond getBond(Atom a1, Atom a2)
 	{
 		for (int i = 0; i < getBondCount(); i++)
 		{
 			if (bonds[i].contains(a1))
 			{
-				try
+				if (bonds[i].getConnectedAtom(a1) == a2)
 				{
-					if (bonds[i].getConnectedAtom(a1) == a2)
-					{
-						return bonds[i];
-					}
-				}
-				catch (Exception exc)
-				{
-					throw exc;
+					return bonds[i];
 				}
 			}
 		}
-		System.out.println("atom1  "+a1.toString()+"atom2  "+a2.toString());
-		throw new Exception("atoms not connected");
+		return null;
 	}
+
 
 	/**
 	 * Returns an array of all atoms connected to the given atom.
@@ -435,14 +427,16 @@ public class AtomContainer extends ChemObject implements Cloneable{
 	 *
 	 * @param   position  The position of the bond in the bonds array
 	 */
-	public void removeBond(int position)
+	public Bond removeBond(int position)
 	{
+		Bond bond = getBondAt(position);
 		for (int i = position; i < bondCount - 1; i++)
 		{
 			bonds[i] = bonds[i + 1];
 		}
 		bonds[bondCount - 1] = null;
 		bondCount--;		
+		return bond;
 	}
 	
 	
@@ -451,15 +445,39 @@ public class AtomContainer extends ChemObject implements Cloneable{
 	 *
 	 * @param   bond  The bond to be removed
 	 */
-	public void removeBond(Bond bond)
+	public Bond removeBond(Bond bond)
 	{
 		for (int i = 0; i < bondCount; i++)
 		{
 			if (bonds[i].equals(bond))
 			{
-				removeBond(i);
+				return removeBond(i);
 			}
 		}
+		return null;
+	}
+
+
+	/**
+	 * Removes the bond that connects the two given atoms.
+	 *
+	 * @param   a1  The first atom
+	 * @param   a2  The second atom
+	 * @return     The bond that connectes the two atoms
+	 */
+	public Bond removeBond(Atom a1, Atom a2)
+	{
+		for (int i = 0; i < getBondCount(); i++)
+		{
+			if (bonds[i].contains(a1))
+			{
+				if (bonds[i].getConnectedAtom(a1) == a2)
+				{
+					return removeBond(bonds[i]);
+				}
+			}
+		}
+		return null;
 	}
 	
 
@@ -602,6 +620,27 @@ public class AtomContainer extends ChemObject implements Cloneable{
 	{
 		return this.bondCount;
 	}
+
+
+	/**
+	 * Returns the number of bonds for a given Atom
+	 *
+	 * @param   atom  The atom
+	 * @return     The number of bonds for this atom
+	 */
+	public int getBondCount(Atom atom)
+	{
+		int count = 0; 
+		for (int i = 0; i < getBondCount(); i++)
+		{
+			if (bonds[i].contains(atom))
+			{
+				count++;
+			}
+		}
+		return count;
+	}
+
 
 
 	/**

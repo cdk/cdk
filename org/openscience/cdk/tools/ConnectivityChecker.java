@@ -2,7 +2,7 @@
  *
  * $RCSfile$    $Author$    $Date$    $Revision$
  * 
- * Copyright (C) 1997-2000  The CompChem project
+ * Copyright (C) 1997-2001  The Chemistry Development Kit (CDK) project
  * 
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  * 
@@ -40,48 +40,32 @@ public class ConnectivityChecker implements CDKConstants
 	 * @param   ac  The AtomContainer to be check for connectedness
 	 * @return  true if the AtomContainer is connected   
 	 */
-	public boolean isConnected(AtomContainer ac)
+	public boolean isConnected(AtomContainer atomContainer)
 	{
-		boolean doneSomething;
-		Bond bond = null;
-		Atom atom = null;
-		Vector visitedAtoms = new Vector();
-		Vector bonds = new Vector();
-		boolean foundConnection = false;
-		for (int f = 0; f < ac.getBondCount();f ++)
+		AtomContainer ac = new AtomContainer();
+		Atom atom = null, nextAtom = null; 
+		Molecule molecule = new Molecule();
+		Vector molecules = new Vector();
+		Vector sphere = new Vector();
+		for (int f = 0; f < atomContainer.getAtomCount(); f++)
 		{
-			bonds.addElement(ac.getBondAt(f));
+			atomContainer.getAtomAt(f).flags[VISITED] = false;
+			ac.addAtom(atomContainer.getAtomAt(f));
 		}
-		bond = (Bond)bonds.remove(0);
-		visitedAtoms.add(bond.getAtomsVector());
-		do
+		for (int f = 0; f < atomContainer.getBondCount(); f++)
 		{
-			for (int f = 0; f < bonds.size(); f ++)
-			{
-				foundConnection = false;
-				bond = (Bond)bonds.elementAt(f);
-				for (int g = 0; g < bond.getAtomCount(); f++)
-				{
-					if (visitedAtoms.contains(bond.getAtomAt(g)))
-					{
-						foundConnection = true;
-						break;
-					}
-				}
-				if (foundConnection) 
-				{
-					visitedAtoms.add(bond.getAtomsVector());					
-					bonds.remove(bond);
-					break;
-				}
-			}
-		}while(bonds.size() > 0 || foundConnection);
-		if (!foundConnection && bonds.size() > 0)
-		{
-			return false;
+			atomContainer.getBondAt(f).flags[VISITED] = false;
+			ac.addBond(atomContainer.getBondAt(f));
 		}
-
-		return true;
+		atom = ac.getAtomAt(0);
+		sphere.addElement(atom);
+		atom.flags[VISITED] = true;
+		PathTools.breadthFirstSearch(ac, sphere, molecule);
+		if (molecule.getAtomCount() == atomContainer.getAtomCount())
+		{
+			return true;
+		}
+		return false;
 	}
 	
 

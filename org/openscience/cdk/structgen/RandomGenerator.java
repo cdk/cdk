@@ -2,7 +2,7 @@
  * 
  * $RCSfile$    $Author$    $Date$    $Revision$
  * 
- * Copyright (C) 1997-2000  The CompChem project
+ * Copyright (C) 1997-2001  The Chemistry Development Kit (CDK) project
  * 
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  * 
@@ -29,6 +29,8 @@
 package org.openscience.cdk.structgen;
 
 import org.openscience.cdk.*;
+import org.openscience.cdk.tools.*;
+
 import java.util.Vector;
 
 /**
@@ -42,20 +44,17 @@ import java.util.Vector;
  
 public class RandomGenerator
 {
-
-	Molecule proposedMolecule;
-	Molecule molecule;
-
-	Vector oldBonds;
-	Vector newBonds;
+	private Molecule proposedStructure = null;
+	private Molecule molecule = null;
+	private ConnectivityChecker cc = null; 
+	private Vector bonds = null;
 
 	/**
 	 * The empty contructor
 	 */
 	public RandomGenerator()
 	{
-		oldBonds = new Vector();
-		newBonds = new Vector();
+		cc = new ConnectivityChecker();
 	}
 
 
@@ -71,8 +70,6 @@ public class RandomGenerator
 	}
 
 
-
-
 	/**
 	 * Proposes a structure which can be accepted or rejected by an external 
 	 * entity. If rejected, the structure is not used as a starting point 
@@ -82,31 +79,40 @@ public class RandomGenerator
 	 */
 	public Molecule proposeStructure()
 	{
-		return proposedMolecule;
+		proposedStructure = new Molecule();
+		proposedStructure.removeAllElements();
+		do
+		{
+			proposedStructure.add(molecule);
+			mutate(proposedStructure);
+		}
+		while(!cc.isConnected(proposedStructure));
+		System.out.println("proposedStructure.getBondCount(): " + proposedStructure.getBondCount());
+		return proposedStructure;
 	}
-
 
 	/**
-	 * Returns the next structure randomly generated based on the previous one
-	 *
-	 * @return  The next structure randomly generated based on the previous one
+	 * Tell the RandomGenerator to accept the last structure that had been proposed
 	 */
-	public Molecule getNextStructure()
+	public void acceptStructure()
 	{
-		return new Molecule();
+		if (proposedStructure != null)
+		{
+			this.molecule = proposedStructure;
+		}
 	}
+	
 	
 	/**
 	 * Randomly chooses four atoms and alters the bonding
 	 * pattern between them according to rules described 
 	 * in "Faulon, JCICS 1996, 36, 731"
 	 */
-	protected void mutate()
+	protected void mutate(AtomContainer ac)
 	{
-		newBonds.removeAllElements();
-		oldBonds.removeAllElements();
-		int nrOfAtoms = molecule.getAtomCount();
-		int x1, x2, y1, y2, a11, a12, a22, a21, b11, min, max;
+		int nrOfAtoms = ac.getAtomCount();
+		int x1 = 0, x2 = 0, y1 = 0, y2 = 0, a11 = 0, a12 = 0, a22 = 0, a21 = 0;
+		int b11 = 0, lowerborder = 0, upperborder = 0;
 
 		Atom ax1 = null, ax2 = null, ay1 = null, ay2  = null;
 		Bond b1 = null, b2 = null, b3 = null, b4 = null;
@@ -116,99 +122,164 @@ public class RandomGenerator
 			/* Randomly choose four distinct atoms */
 			do
 			{
+				// this yields numbers between 0 and (nrOfAtoms - 1)
 				x1 = (int)(Math.random() * nrOfAtoms);
 				x2 = (int)(Math.random() * nrOfAtoms);
 				y1 = (int)(Math.random() * nrOfAtoms);
 				y2 = (int)(Math.random() * nrOfAtoms);
 			}
-			while (!(x1 != x2 && x1 != y1 && x1 != y2 && x2 != y1 &&
-				x2 != y2 && y1 != y2));
-			ax1 = molecule.getAtomAt(x1);
-			ay1 = molecule.getAtomAt(y1);
-			ax2 = molecule.getAtomAt(x2);
-			ay2 = molecule.getAtomAt(y2);
+			while (!(x1 != x2 && x1 != y1 && x1 != y2 && x2 != y1 && x2 != y2 && y1 != y2));
+			ax1 = ac.getAtomAt(x1);
+			ay1 = ac.getAtomAt(y1);
+			ax2 = ac.getAtomAt(x2);
+			ay2 = ac.getAtomAt(y2);
 			/* Get four bonds for these four atoms */
-			try
+			
+			b1 = ac.getBond(ax1, ay1);
+			if (b1 != null)
 			{
-				b1 = molecule.getBond(ax1, ay1);
 				a11 = b1.getOrder();
 			}
-			catch(Exception exc)
+			else
 			{
 				a11 = 0;
 			}
-			try
+			
+			b2 = ac.getBond(ax1, ay2);
+			if (b2 != null)
 			{
-				b2 = molecule.getBond(ax1, ay2);
 				a12 = b2.getOrder();
 			}
-			catch(Exception exc)
+			else
 			{
 				a12 = 0;
 			}
-			try
+
+			b3 = ac.getBond(ax2, ay1);
+			if (b3 != null)
 			{
-				b3 = molecule.getBond(ax2, ay2);
-				a22 = b3.getOrder();
+				a21 = b3.getOrder();
 			}
-			catch(Exception exc)
-			{
-				a22 = 0;
-			}
-			try
-			{
-				b4 = molecule.getBond(ax2, ay1);									
-				a21 = b4.getOrder();
-			}
-			catch(Exception exc)
+			else
 			{
 				a21 = 0;
+			}
+			
+			b4 = ac.getBond(ax2, ay2);									
+			if (b4 != null)
+			{
+				a22 = b4.getOrder();
+			}
+			else
+			{
+				a22 = 0;
 			}
 			
 			/* Compute the range for b11 (see Faulons formulae for details) */
 			int[] cmax = {0, a11 - a22, a11 + a12 - 3, a11 + a21 - 3};
 			int[] cmin = {3, a11 + a12, a11 + a21, a11 - a22 + 3};
-			min = max(cmax);
-			max = min(cmin);
+			lowerborder = max(cmax);
+			upperborder = min(cmin);
 			/* Randomly choose b11 != a11 in the range max > r > min */
-			b11 = ((int)(Math.random() * (max - min))) + min;
+
+			if (upperborder - lowerborder > 0 || a11 != lowerborder)
+			{
+				do
+				{
+					b11 = ((int)(Math.random() * (upperborder - lowerborder + 1 ))) + lowerborder;
+				}while(b11 == a11);
+				System.out.println("*** New Try ***");
+				System.out.println("a11 = " + a11);
+				System.out.println("upperborder = " + upperborder);
+				System.out.println("lowerborder = " + lowerborder);
+
+				System.out.println("b11 = " + b11);
+			}
+
 		}
-		while (b11 == a11);
-		if (b11 == 0)
+		while (!(b11 != a11 && (b11 >= lowerborder && b11 <= upperborder)));
+
+		int b12 = a11 + a12 - b11;
+		int b21 = a11 + a21 - b11;
+		int b22 = a22 - a11 + b11;
+		
+		
+		if (b11 > 0)
 		{
-			molecule.removeBond(b1);
+			if (b1 == null)
+			{
+				b1 = new Bond(ax1, ay1, b11);
+				ac.addBond(b1);
+			}
+			else
+			{
+				b1.setOrder(b11);
+			}
 		}
-		else
+		else if (b1 != null)
 		{
-			b1.setOrder(b11);
+			ac.removeBond(b1);
 		}
 		
-		if (a11 + a12 - b11 == 0) 
+		if (b12 > 0) 
 		{
-			molecule.removeBond(b2);			
+			if (b2 == null)
+			{
+				b2 = new Bond(ax1, ay2, b12);
+				ac.addBond(b1);
+			}
+			else
+			{
+				b2.setOrder(b12);
+			}
 		}
-		else
+		else if (b2 != null)
 		{
-			b2.setOrder(a11 + a12 - b11);
+			ac.removeBond(b2);
+		}
+		
+		if (b21 > 0) 
+		{
+			if (b3 == null)
+			{
+				b3 = new Bond(ax2, ay1, b21);
+				ac.addBond(b3);
+			}
+			else
+			{
+				b3.setOrder(b21);
+			}
+		}
+		else if (b3 != null)
+		{
+			ac.removeBond(b3);
 		}
 
-		if (a22 - a11 + b11 == 0) 
+		if (b22 > 0) 
 		{
-			molecule.removeBond(b3);			
+			if (b4 == null)
+			{
+				b4 = new Bond(ax2, ay2, b22);
+				ac.addBond(b4);
+			}
+			else
+			{
+				b4.setOrder(b22);
+			}
 		}
-		else
+		else if (b4 != null)
 		{
-			b3.setOrder(a22 - a11 + b11);
+			ac.removeBond(b4);
 		}
+		System.out.println("a11 a12 a21 a22: " + a11 + " " + a12 + " " + a21 + " " + a22);
+		System.out.println("b11 b12 b21 b22: " + b11 + " " + b12 + " " + b21 + " " + b22);
+		String s = "BondCounts: ";
+		for (int f = 0; f < ac.getAtomCount(); f++)
+		{
+			s += ac.getBondCount(ac.getAtomAt(f));
+		}
+		System.out.println(s);
 
-		if (a11 + a21 - b11 == 0) 
-		{
-			molecule.removeBond(b4);			
-		}
-		else
-		{
-			b4.setOrder(a11 + a21 - b11);
-		}		
 	}
 
 	/**
@@ -221,9 +292,13 @@ public class RandomGenerator
 	{
 		int max = values[0];
 		for (int f = 0; f < values.length; f++)
+		{
 			if (values[f] > max)
+			{
 				max = values[f];
-			return max;
+			}
+		}
+		return max;
 	}
 
 	/**
@@ -236,9 +311,13 @@ public class RandomGenerator
 	{
 		int min = values[0];
 		for (int f = 0; f < values.length; f++)
+		{
 			if (values[f] < min)
+			{
 				min = values[f];
-			return min;
+			}
+		}
+		return min;
 	}
 
 	
@@ -251,4 +330,17 @@ public class RandomGenerator
 	{
 		this.molecule = molecule;	
 	}
+
+
+	/**
+	 * Returns the molecule which reflects the current state of this
+	 * Stochastic Structure Generator
+	 *
+	 * @return The molecule    
+	 */
+	public Molecule getMolecule()
+	{
+		return this.molecule;
+	}
+
 }

@@ -1,4 +1,4 @@
-/* MDLReaderTest.java
+/* DatabaseReaderTest.java
  * 
  * $RCSfile$    $Author$    $Date$    $Revision$
  * 
@@ -23,53 +23,63 @@
 
 package org.openscience.cdk.test;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.io.*;
 import org.openscience.cdk.renderer.*;
-import java.util.*;
-import java.io.*;
-import java.net.URL;
+import org.openscience.cdk.*;
+import org.openscience.cdk.database.*;
+import java.sql.*;
 
-public class MDLReaderTest
+
+public class DatabaseReaderTest
 {
+	DBReader dbr;
+	Connection db;	
+	public String url = "jdbc:postgresql://lemon.ice.mpg.de:5432/martinstestdb";
+	public String user = "postgres";
+	public String pwd = "";
 
-	MDLReader mr;
-	MDLWriter mw;
-	ChemFile chemFile;
-	ChemSequence chemSequence;
-	ChemModel chemModel;
-	SetOfMolecules setOfMolecules;
-	Molecule[] molecules;
+
+
 	
-	public MDLReaderTest(String inFile)
+	public DatabaseReaderTest()
 	{
+		DBReader dbr;
+        Molecule mol = null;
+
 		try
 		{
-			FileInputStream fis = new FileInputStream(inFile);
-			mr = new MDLReader(fis);
-			chemFile = (ChemFile)mr.read((ChemObject)new ChemFile());
-			fis.close();
-			
-			
-			chemSequence = chemFile.getChemSequence(0);
-			chemModel = chemSequence.getChemModel(0);
-			setOfMolecules = chemModel.getSetOfMolecules();
-			molecules = new Molecule[setOfMolecules.getMoleculeCount()];
-			for (int i = 0; i < setOfMolecules.getMoleculeCount(); i++)
-			{
-				molecules[i] = setOfMolecules.getMolecule(i);
-			}
-			new MoleculeViewer2D(molecules[0]);
+		    Class.forName("postgresql.Driver");
+	    	db = DriverManager.getConnection(url,user,pwd);
 		}
 		catch(Exception exc)
 		{
+		    System.out.println("Error while trying to load JDBC driver");
 			exc.printStackTrace();
 		}
+		dbr = new DBReader(db);
+		dbr.setQuery("SELECT * FROM molecules WHERE C > 0");
+		try
+		{
+			mol = (Molecule)dbr.read(new Molecule());
+		}
+		catch (Exception exc)
+		{
+			exc.printStackTrace();
+		}
+		System.out.println(" molecule read from database \n" + mol);
+		Renderer2DModel r2dm = new Renderer2DModel();
+		MoleculeViewer2D mv = new MoleculeViewer2D(mol, r2dm);
+		mv.display();
 	}
+	
 
-	public static void main(String[] args)
+
+	
+    public static void main(String[] args) 
 	{
-		new MDLReaderTest(args[0]);
-	}
+	    new DatabaseReaderTest();
+    }
 }
 
+
+
+		
