@@ -98,9 +98,11 @@
         <target name="compile-apps" depends="compile, compile-libio">
                 <!-- Task to build the applications classes. Some require extra
                      jars, like those in ${lib}/libio -->
+                <echo message="Compiling classes defined in ${src}/applications.classes." />
 
-                <javac destdir="${build}" optimize="off" debug="on" deprecation="off">
-                        <src path="${src}/org/openscience/cdk/applications" />
+                <javac srcdir="${src}" destdir="${build}"
+                       optimize="off" debug="on" deprecation="off"
+                       includesfile="${src}/applications.classes">
 
                         <classpath refid="project.class.path" />
                         <classpath>
@@ -111,7 +113,18 @@
                 </javac>
         </target>
 
-       <target name="compile-test" depends="compile">
+        <target name="compile-core">
+                <!-- Task to build the core classes. -->
+                <echo message="Compiling classes defined in ${src}/core.classes." />
+
+                <javac srcdir="${src}" destdir="${build}"
+                       optimize="off" debug="on" deprecation="off"
+                       includesfile="${src}/core.classes">
+                    <classpath refid="project.class.path" />
+                </javac>
+        </target>
+
+        <target name="compile-test" depends="compile">
                 <!-- Task to build the test classes. -->
                 <javac destdir="${build}" optimize="off" debug="on" deprecation="off">
                         <src path="${src}/org/openscience/cdk/test" />
