@@ -106,6 +106,8 @@ public class RSSHandler extends DefaultHandler {
                 dcPublisher = cData;
             } else if (local.equals("creator")) {
                 dcCreator = cData;
+            } else if (local.equals("date")) {
+                objectDate = cData;
             }
         } else if (uri.equals("http://purl.org/rss/1.0/")) {
             // Deal with RSS 1.0 elements
@@ -142,6 +144,7 @@ public class RSSHandler extends DefaultHandler {
                 model.setProperty(ChemicalRSSReader.RSS_ITEM_DATE, objectDate);
                 model.setProperty(ChemicalRSSReader.RSS_ITEM_LINK, objectLink);
                 model.setProperty(ChemicalRSSReader.RSS_ITEM_DESCRIPTION, objectDesc);                    
+                model.setProperty(ChemicalRSSReader.RSS_ITEM_CREATOR, dcCreator);                    
                 channelSequence.addChemModel(model);
                 cmlString = "";
             } else if (local.equals("title")) {
@@ -150,8 +153,6 @@ public class RSSHandler extends DefaultHandler {
                 objectLink = cData;
             } else if (local.equals("description")) {
                 objectDesc = cData;
-            } else if (local.equals("date")) {
-                objectDate = cData;
             } else if (local.equals("channel")) {
                 channelSequence.setProperty(ChemicalRSSReader.RSS_CHANNEL_TITLE, objectTitle);
                 channelSequence.setProperty(ChemicalRSSReader.RSS_CHANNEL_WEBSITE, objectLink);

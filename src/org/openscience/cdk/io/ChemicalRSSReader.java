@@ -73,6 +73,7 @@ public class ChemicalRSSReader extends DefaultChemObjectReader {
     public final static String RSS_ITEM_LINK = "org.openscience.cdk.io.chemrss.ITEM_LINK";
     /** ChemModel property containing the channel item description */
     public final static String RSS_ITEM_DESCRIPTION = "org.openscience.cdk.io.chemrss.ITEM_DESCRIPTION";
+    public final static String RSS_ITEM_CREATOR = "org.openscience.cdk.io.chemrss.ITEM_CREATOR";
     
     private XMLReader parser;
     private Reader input;
