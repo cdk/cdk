@@ -177,7 +177,7 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
         
         comment = new StringIOSetting("Comment", IOSetting.LOW,
           "What comment should be put in the file?", 
-          "Generated with Jmol (http://jmol.sf.net/)");
+          "Created with CDK (http://cdk.sf.net/)");
         fireWriterSettingQuestion(comment);
         
         shell = new BooleanIOSetting("OpenShell", IOSetting.MEDIUM,

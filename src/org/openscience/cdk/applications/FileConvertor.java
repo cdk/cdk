@@ -79,6 +79,7 @@ public class FileConvertor {
      * @param ifilename name of input file
      */
     public boolean convert(String ifilename) {
+        if (this.level > 0) System.out.println();
         boolean success = false;
         try {
             File file = new File(ifilename);
@@ -263,6 +264,7 @@ public class FileConvertor {
                     System.out.println("Unrecognized question level: " + levelString);
                     System.exit(1);
                 }
+                settingListener = new TextGUIListener(this.level);
             } else if (option.equals("--help") || option.equals("-h")) {
                 printHelp();
                 System.exit(0);
