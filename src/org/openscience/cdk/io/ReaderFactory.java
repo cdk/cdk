@@ -90,7 +90,7 @@ public class ReaderFactory {
         
         /* Search file for a line containing an identifying keyword */
         String line = buffer.readLine();
-        int lineNumber = 0;
+        int lineNumber = 1;
         while (buffer.ready() && (line != null) && lineNumber < 100) {
             logger.debug(line);
             if (line.indexOf("Gaussian(R) 98") >= 0 ||
