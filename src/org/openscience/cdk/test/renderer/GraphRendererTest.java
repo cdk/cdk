@@ -30,6 +30,7 @@ package org.openscience.cdk.test.renderer;
 
 import org.openscience.cdk.math.*;
 import org.openscience.cdk.renderer.*;
+import org.openscience.cdk.applications.swing.*;
 import java.awt.*;
 import javax.swing.*;
 
