@@ -33,6 +33,13 @@
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">3.0</scalar>
     </atom>
   </atomType>
+  <atomType id="Cminus">
+    <atom elementType="C" formalCharge="-1">
+      <!-- for example in cyclopentadienyl anion -->
+      <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">3.0</scalar>
+      <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">3.0</scalar>
+    </atom>
+  </atomType>
   <atomType id="N">
     <atom elementType="N" formalCharge="0">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
