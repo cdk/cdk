@@ -7,6 +7,8 @@ New:
 * Added a JPanel of the periodic table
 * Added a reader and writer for Hyperchem HIN files
 * Added Ant doc.xml build file for converting documentation to HTML
+* MDLRXNReader now accepts ChemFile, so it can be used by FileConvertor
+* CMLWriter now outputs namespaced CML2
 
 Fixes:
 * cdk-* shell wrapper now accept -X java options (closes #882990)

@@ -88,12 +88,14 @@ public class CMLWriter extends DefaultChemObjectWriter {
 
     private BooleanIOSetting cmlIds;
     private BooleanIOSetting namespacedOutput;
+    private StringIOSetting targetNamespace;
     private BooleanIOSetting xmlDecl;
     
     private final String namespace = "cml";
 
     private boolean done;
     private boolean fragment;
+    private boolean isRootElement;
 
     private org.openscience.cdk.tools.LoggingTool logger;
     private IsotopeFactory isotopeFactory = null;
@@ -158,6 +160,8 @@ public class CMLWriter extends DefaultChemObjectWriter {
         logger.debug("Writing object in CML of type: " + object.getClass().getName());
         
         customizeJob();
+        
+        isRootElement = true;
         
         if (!done) {
             if (!fragment && xmlDecl.isSet()) {
@@ -582,6 +586,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
         writeElementName(name);
         writeOpenTagAtts(atts);
         write(">\n");
+        isRootElement = false; // always
     }
 
     private void writeEmptyElement(String name, Hashtable atts) {
@@ -589,7 +594,9 @@ public class CMLWriter extends DefaultChemObjectWriter {
         writeElementName(name);
         writeOpenTagAtts(atts);
         write("/>\n");
+        isRootElement = false; // always
     }
+
     private void writeOpenTagAtts(Hashtable atts) {
         if (atts != null) {
             Enumeration keys = atts.keys();
@@ -599,6 +606,10 @@ public class CMLWriter extends DefaultChemObjectWriter {
                 write(atts.get(key).toString());
                 write("\"");
             }
+        }
+        // if root element, write namespace declaration
+        if (isRootElement && namespacedOutput.isSet()) {
+            write(" xmlns:" + namespace + "=\"" + targetNamespace.getSetting() + "\"");
         }
     }
     
@@ -629,15 +640,19 @@ public class CMLWriter extends DefaultChemObjectWriter {
     private void initIOSettings() {
         cmlIds = new BooleanIOSetting("CMLIDs", IOSetting.LOW,
           "Should the output use CML identifiers?", 
-          "yes");
+          "true");
 
         namespacedOutput = new BooleanIOSetting("NamespacedOutput", IOSetting.LOW,
           "Should the output use namespaced output?", 
-          "no");
+          "true");
 
+        targetNamespace = new StringIOSetting("TargetNamespace", IOSetting.LOW,
+          "What is the target namespace?",
+          "http://www.xml-cml.org/schema/cml2/core");
+          
         xmlDecl = new BooleanIOSetting("XMLDeclaration", IOSetting.LOW,
           "Should the output use have a XMLDeclaration?", 
-          "no");
+          "true");
     }
     
     private void customizeJob() {
