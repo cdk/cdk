@@ -1,6 +1,6 @@
-diff -ur src-copy/org/openscience/cdk/Atom.java src/org/openscience/cdk/Atom.java
---- src-copy/org/openscience/cdk/Atom.java	Mon Feb 24 11:50:43 2003
-+++ src/org/openscience/cdk/Atom.java	Mon Feb 24 11:51:46 2003
+diff -x CVS -r -u src/org/openscience/cdk/Atom.java src-rfc11/org/openscience/cdk/Atom.java
+--- src/org/openscience/cdk/Atom.java	Mon Feb 24 11:50:43 2003
++++ src-rfc11/org/openscience/cdk/Atom.java	Thu Feb 27 09:09:06 2003
 @@ -450,7 +450,7 @@
            if (object instanceof Atom)
            {
@@ -10,9 +10,9 @@ diff -ur src-copy/org/openscience/cdk/Atom.java src/org/openscience/cdk/Atom.jav
                  (maxBondOrder==atom.maxBondOrder) &&
                  (maxBondOrderSum==atom.maxBondOrderSum) &&
                  ((point2D==atom.point2D) || ((point2D!=null) && (point2D.equals(atom.point2D)))) &&
-diff -ur src-copy/org/openscience/cdk/AtomType.java src/org/openscience/cdk/AtomType.java
---- src-copy/org/openscience/cdk/AtomType.java	Mon Feb 24 11:50:43 2003
-+++ src/org/openscience/cdk/AtomType.java	Mon Feb 24 11:57:31 2003
+diff -x CVS -r -u src/org/openscience/cdk/AtomType.java src-rfc11/org/openscience/cdk/AtomType.java
+--- src/org/openscience/cdk/AtomType.java	Mon Feb 24 11:50:43 2003
++++ src-rfc11/org/openscience/cdk/AtomType.java	Thu Feb 27 09:09:06 2003
 @@ -84,7 +84,7 @@
  	public AtomType(String id, String elementSymbol)
  	{
@@ -64,9 +64,9 @@ diff -ur src-copy/org/openscience/cdk/AtomType.java src/org/openscience/cdk/Atom
          sb.append("MB:" + getMaxBondOrder() + ", ");
          sb.append("TBS:" + getMaxBondOrderSum());
          sb.append(super.toString());
-diff -ur src-copy/org/openscience/cdk/ChemObject.java src/org/openscience/cdk/ChemObject.java
---- src-copy/org/openscience/cdk/ChemObject.java	Mon Feb 24 11:50:43 2003
-+++ src/org/openscience/cdk/ChemObject.java	Mon Feb 24 12:03:40 2003
+diff -x CVS -r -u src/org/openscience/cdk/ChemObject.java src-rfc11/org/openscience/cdk/ChemObject.java
+--- src/org/openscience/cdk/ChemObject.java	Mon Feb 24 11:50:43 2003
++++ src-rfc11/org/openscience/cdk/ChemObject.java	Thu Feb 27 09:09:06 2003
 @@ -71,6 +71,8 @@
  	  */
  	public Vector[] pointers;
@@ -100,10 +100,121 @@ diff -ur src-copy/org/openscience/cdk/ChemObject.java src/org/openscience/cdk/Ch
  }
  
  
-Only in src/org/openscience/cdk: ChemObject.java~
-diff -ur src-copy/org/openscience/cdk/test/AtomTypeTest.java src/org/openscience/cdk/test/AtomTypeTest.java
---- src-copy/org/openscience/cdk/test/AtomTypeTest.java	Mon Feb 24 11:50:43 2003
-+++ src/org/openscience/cdk/test/AtomTypeTest.java	Mon Feb 24 11:58:13 2003
+diff -x CVS -r -u src/org/openscience/cdk/io/CMLWriter.java src-rfc11/org/openscience/cdk/io/CMLWriter.java
+--- src/org/openscience/cdk/io/CMLWriter.java	Tue Feb 25 17:26:18 2003
++++ src-rfc11/org/openscience/cdk/io/CMLWriter.java	Thu Feb 27 09:19:54 2003
+@@ -222,7 +222,11 @@
+     }
+ 
+     private void write(Molecule mol) {
+-        write("<molecule>\n");
++        write("<molecule");
++        if (mol.getID() != null) {
++            write(" id=\"" + mol.getID() + "\"");
++        }
++        write(">\n");
+         write((AtomContainer)mol);
+         write("</molecule>\n");
+     }
+@@ -244,7 +248,14 @@
+     }
+ 
+     private void write(Atom atom) {
+-		write("    <atom id=\"a" + atom.hashCode() + "\" ");
++		write("    <atom id=\"");
++        if (atom.getID() != null) {
++            write(atom.getID());
++        } else {
++            // use some unique default -> the hashcode
++            write("a" + atom.hashCode());
++        }
++        write("\" ");
+ 		write("elementType=\"");
+ 		write(atom.getSymbol());
+ 		write("\" ");
+@@ -259,7 +270,14 @@
+ 
+     private void write(Bond bond) {
+         StringBuffer childElements = new StringBuffer();
+-		write("    <bond id=\"b" + bond.hashCode() + "\" ");
++		write("    <bond id=\"");
++        if (bond.getID() != null) {
++            write(bond.getID());
++        } else {
++            // use some unique default -> the hashcode
++            write("b" + bond.hashCode());
++        }
++        write("\" ");
+ 		Atom atoms[] = bond.getAtoms();
+         if (atoms.length == 2) {
+             write("atomRefs2=\"");
+diff -x CVS -r -u src/org/openscience/cdk/io/ChemFileCDO.java src-rfc11/org/openscience/cdk/io/ChemFileCDO.java
+--- src/org/openscience/cdk/io/ChemFileCDO.java	Wed Feb 26 11:14:53 2003
++++ src-rfc11/org/openscience/cdk/io/ChemFileCDO.java	Thu Feb 27 09:27:55 2003
+@@ -51,7 +51,7 @@
+     private int bond_a2;
+     private double bond_order;
+     private int bond_stereo;
+-    private int bond_id;
++    private String bond_id;
+     
+     private double crystal_axis_x;
+     private double crystal_axis_y;
+@@ -136,6 +136,7 @@
+         logger.debug("Atom # " + numberOfAtoms);
+         numberOfAtoms++;
+       } else if (objectType.equals("Bond")) {
++          bond_id = null;
+       } else if (objectType.equals("Animation")) {
+         currentChemSequence = new ChemSequence();
+       } else if (objectType.equals("Frame")) {
+@@ -189,7 +190,11 @@
+             currentMolecule.addAtom(currentAtom);
+         } else if (objectType.equals("Bond")) {
+             logger.debug("Bond: " + bond_a1 + ", " + bond_a2 + ", " + bond_order);
+-            currentMolecule.addBond(bond_a1, bond_a2, (int)bond_order);
++            Atom a1 = currentMolecule.getAtomAt(bond_a1 -1);
++            Atom a2 = currentMolecule.getAtomAt(bond_a2 -1);
++            Bond b = new Bond(a1, a2, bond_order);
++            if (bond_id != null) b.setID(bond_id);
++            currentMolecule.addBond(b);
+         } else if (objectType.equals("a-axis")) {
+           // set these variables
+           if (currentMolecule instanceof Crystal) {
+@@ -235,7 +240,11 @@
+       logger.debug("objectType: " + objectType);
+       logger.debug("propType: " + propertyType);
+       logger.debug("property: " + propertyValue);
+-      if (objectType.equals("Atom")) {
++      if (objectType.equals("Molecule")) {
++        if (propertyType.equals("id")) {
++          currentMolecule.setID(propertyValue);
++        }
++      } else if (objectType.equals("Atom")) {
+         if (propertyType.equals("type")) {
+           currentAtom.setSymbol(propertyValue);
+         } else if (propertyType.equals("x2")) {
+@@ -256,7 +265,7 @@
+           currentAtom.setHydrogenCount(new Integer(propertyValue).intValue());
+         } else if (propertyType.equals("id")) {
+           logger.debug("id" + propertyValue);
+-          // currentAtom.setID(propertyValue);
++          currentAtom.setID(propertyValue);
+           atomEnumeration.put(propertyValue, new Integer(numberOfAtoms));
+         }
+       } else if (objectType.equals("Bond")) {
+@@ -266,7 +275,7 @@
+           bond_a2 = new Integer(propertyValue).intValue();
+         } else if (propertyType.equals("id")) {
+           logger.debug("id" + propertyValue);
+-          // bond_id = propertyValue;
++          bond_id = propertyValue;
+         } else if (propertyType.equals("order")) {
+           try {
+             bond_order = Double.parseDouble(propertyValue);
+diff -x CVS -r -u src/org/openscience/cdk/test/AtomTypeTest.java src-rfc11/org/openscience/cdk/test/AtomTypeTest.java
+--- src/org/openscience/cdk/test/AtomTypeTest.java	Mon Feb 24 11:50:43 2003
++++ src-rfc11/org/openscience/cdk/test/AtomTypeTest.java	Thu Feb 27 09:09:06 2003
 @@ -55,13 +55,13 @@
      public void testAtomType_String_String() {
          AtomType at = new AtomType("C4", "C");
@@ -122,9 +233,9 @@ diff -ur src-copy/org/openscience/cdk/test/AtomTypeTest.java src/org/openscience
      }
  
      public void testSetMaxBondOrder() {
-diff -ur src-copy/org/openscience/cdk/tools/AtomTypeFactory.java src/org/openscience/cdk/tools/AtomTypeFactory.java
---- src-copy/org/openscience/cdk/tools/AtomTypeFactory.java	Mon Feb 24 11:50:43 2003
-+++ src/org/openscience/cdk/tools/AtomTypeFactory.java	Mon Feb 24 11:52:24 2003
+diff -x CVS -r -u src/org/openscience/cdk/tools/AtomTypeFactory.java src-rfc11/org/openscience/cdk/tools/AtomTypeFactory.java
+--- src/org/openscience/cdk/tools/AtomTypeFactory.java	Mon Feb 24 11:50:43 2003
++++ src-rfc11/org/openscience/cdk/tools/AtomTypeFactory.java	Thu Feb 27 09:09:06 2003
 @@ -207,7 +207,7 @@
  		for (int f = 0; f < atomTypes.size(); f++)
  		{
@@ -170,4 +281,4 @@ diff -ur src-copy/org/openscience/cdk/tools/AtomTypeFactory.java src/org/opensci
  		}
  		logger.debug("Configured " + atom.toString());
  		return atom;
-Only in src/patches: implementation_of_RFC11
+
