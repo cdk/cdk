@@ -30,6 +30,7 @@ Fixes:
 * Fixed coloring problem of implicit hydrogens and charges in Renderer2D 
   (closes #815202)
 * Fixed clearing background in Renderer2D (closes #815265)
+* Defaulted XML parser to JAXP that comes with Sun JVM 1.4 (closes #814297)
 
 API changes:
 * Added getIOSettings() to ChemObject[Reader|Writer]
@@ -41,6 +42,7 @@ API changes:
 * Cleaned up API for AtomTypeFactory: getAtomType() can only apply to the current
   AtomTypeFactory (each atom type list has a different ATF)
 * Removed deprecated methods from SaturationChecker
+* Removed the old io.ChemLoader class (use ReaderFactory instead)
 
 20030909 Release
 ------------------------------------
