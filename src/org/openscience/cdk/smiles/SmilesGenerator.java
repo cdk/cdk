@@ -1008,18 +1008,32 @@ public class SmilesGenerator {
               }
             }
             if (container.getBond(parent, atom).getStereo() == CDKConstants.STEREO_BOND_DOWN) {
+              double angle1=0;
+              double angle2=0;
+              Atom atom1=null;
+              Atom atom2=null;
               for (int i = 0; i < chiralNeighbours.size(); i++) {
                 if (chiralNeighbours.get(i) != parent) {
-                  if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_UP && isLeft(((Atom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((Atom) chiralNeighbours.get(i), atom)) {
-                    sorted[0] = (Atom) chiralNeighbours.get(i);
-                  }
-                  if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_UP && !isLeft(((Atom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((Atom) chiralNeighbours.get(i), atom)) {
-                    sorted[2] = (Atom) chiralNeighbours.get(i);
+                  if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_UP && !isBondBroken((Atom) chiralNeighbours.get(i), atom)) {
+                    if(angle1==0){
+                      angle1=giveAngle(atom,parent,(Atom) chiralNeighbours.get(i));
+                      atom1=(Atom) chiralNeighbours.get(i);
+                    }else{
+                      angle2=giveAngle(atom,parent,(Atom) chiralNeighbours.get(i));
+                      atom2=(Atom) chiralNeighbours.get(i);
+                    }
                   }
                   if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_DOWN && !isBondBroken((Atom) chiralNeighbours.get(i), atom)) {
                     sorted[1] = (Atom) chiralNeighbours.get(i);
                   }
                 }
+              }
+              if(angle1<angle2){
+                sorted[0] = atom2;
+                sorted[2] = atom1;
+              }else{
+                sorted[0] = atom1;
+                sorted[2] = atom2;
               }
             }
           }
@@ -1037,18 +1051,32 @@ public class SmilesGenerator {
               }
             }
             if (container.getBond(parent, atom).getStereo() == 0) {
+              double angle1=0;
+              double angle2=0;
+              Atom atom1=null;
+              Atom atom2=null;
               for (int i = 0; i < chiralNeighbours.size(); i++) {
                 if (chiralNeighbours.get(i) != parent) {
-                  if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == 0 && !isLeft(((Atom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((Atom) chiralNeighbours.get(i), atom)) {
-                    sorted[2] = (Atom) chiralNeighbours.get(i);
-                  }
-                  if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == 0 && isLeft(((Atom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((Atom) chiralNeighbours.get(i), atom)) {
-                    sorted[1] = (Atom) chiralNeighbours.get(i);
+                  if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == 0 && !isBondBroken((Atom) chiralNeighbours.get(i), atom)) {
+                    if(angle1==0){
+                      angle1=giveAngle(atom,parent,(Atom) chiralNeighbours.get(i));
+                      atom1=(Atom) chiralNeighbours.get(i);
+                    }else{
+                      angle2=giveAngle(atom,parent,(Atom) chiralNeighbours.get(i));
+                      atom2=(Atom) chiralNeighbours.get(i);
+                    }
                   }
                   if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_UP && !isBondBroken((Atom) chiralNeighbours.get(i), atom)) {
                     sorted[0] = (Atom) chiralNeighbours.get(i);
                   }
                 }
+              }
+              if(angle1<angle2){
+                sorted[1] = atom2;
+                sorted[2] = atom1;
+              }else{
+                sorted[1] = atom1;
+                sorted[2] = atom2;
               }
             }
           }
@@ -1066,18 +1094,32 @@ public class SmilesGenerator {
               }
             }
             if (container.getBond(parent, atom).getStereo() == 0) {
+              double angle1=0;
+              double angle2=0;
+              Atom atom1=null;
+              Atom atom2=null;
               for (int i = 0; i < chiralNeighbours.size(); i++) {
                 if (chiralNeighbours.get(i) != parent) {
-                  if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == 0 && isLeft(((Atom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((Atom) chiralNeighbours.get(i), atom)) {
-                    sorted[2] = (Atom) chiralNeighbours.get(i);
-                  }
-                  if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == 0 && !isLeft(((Atom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((Atom) chiralNeighbours.get(i), atom)) {
-                    sorted[1] = (Atom) chiralNeighbours.get(i);
+                  if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == 0 && !isBondBroken((Atom) chiralNeighbours.get(i), atom)) {
+                    if(angle1==0){
+                      angle1=giveAngle(atom,parent,(Atom) chiralNeighbours.get(i));
+                      atom1=(Atom) chiralNeighbours.get(i);
+                    }else{
+                      angle2=giveAngle(atom,parent,(Atom) chiralNeighbours.get(i));
+                      atom2=(Atom) chiralNeighbours.get(i);
+                    }
                   }
                   if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_DOWN && !isBondBroken((Atom) chiralNeighbours.get(i), atom)) {
                     sorted[0] = (Atom) chiralNeighbours.get(i);
                   }
                 }
+              }
+              if(angle1<angle2){
+                sorted[1] = atom2;
+                sorted[2] = atom1;
+              }else{
+                sorted[1] = atom1;
+                sorted[2] = atom2;
               }
             }
           }
