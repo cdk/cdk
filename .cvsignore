@@ -2,3 +2,6 @@
 *~
 cdk-*.zip
 cdk-*.tar.gz
+build
+sourcedist
+dist
