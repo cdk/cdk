@@ -1,3 +1,10 @@
+cdk (20040513) unstable; urgency=low
+
+  * New upstream release
+  * Now uses gjdoc instead of javadoc (see patches/)
+
+ -- E.L. Willighagen (Egon) <egonw@sci.kun.nl>  Thu, 13 May 2004 19:44:00 +0100
+
 cdk (20040420cvs-2) unstable; urgency=low
 
   * Now conform Standards Version 3.6.1 (control)

@@ -10,7 +10,7 @@ HTMLDOC  = ${DESTDIR}/usr/share/doc/${PACKAGE}/html
 
 VERSION=`cat ${PACKGDIR}/VERSION`
 
-DEBIANFILES=changelog control copyright postinst Makefile prerm rules cdk.install libcdk-java.install cdk.dirs libcdk-java.dirs
+DEBIANFILES=changelog control copyright Makefile rules cdk.install libcdk-java.install cdk.dirs libcdk-java.dirs
 
 JAVA_HOME=/usr/lib/j2se/1.4
 
