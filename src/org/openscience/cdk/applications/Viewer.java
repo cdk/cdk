@@ -129,8 +129,15 @@ public class Viewer {
             MoleculeViewer2D mv = new MoleculeViewer2D(m);
             frame.getContentPane().add(mv, BorderLayout.CENTER);
         } else {
-            System.out.println("Molecule has no coordinates.");
-            System.exit(1);
+            StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+            try {
+                sdg.setMolecule(new Molecule(m));
+                sdg.generateCoordinates(new Vector2d(0,1));
+                view(sdg.getMolecule());
+            } catch(Exception exc) {
+                System.out.println("Molecule has no coordinates and cannot generate those.");
+                System.exit(1);
+            }
         }
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         frame.setSize(500,500);
@@ -176,6 +183,9 @@ public class Viewer {
             } else if (inFile.endsWith(".pdb")) {
                 reader = new PDBReader(new FileReader(inFile));
                 logger.info("Expecting PDB format...");
+            } else if (inFile.endsWith(".txt")) {
+                reader = new IChIReader(new FileReader(inFile));
+                logger.info("Expecting IChI format...");
             } else {
                 reader = new MDLReader(new FileInputStream(inFile));
                 logger.info("Expecting MDL MolFile format...");

@@ -1,4 +1,7 @@
-/* $RCSfile$    $Author$    $Date$    $Revision$
+/* $RCSfile$    
+ * $Author$    
+ * $Date$    
+ * $Revision$
  * 
  * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
  * 
@@ -61,6 +64,7 @@ public class CDKTests {
         // from cdk.test.io.*
 		suite.addTest(CMLIOTests.suite());
 		suite.addTest(PDBReaderTest.suite());
+		suite.addTest(IChIReaderTest.suite());
         // from cdk.test.smiles
 		suite.addTest(SmilesGeneratorTest.suite());
 		suite.addTest(SmilesParserTest.suite());

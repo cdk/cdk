@@ -29,13 +29,11 @@
 package org.openscience.cdk.io;
 
 import org.openscience.cdk.exception.*;
-import org.openscience.cdk.io.cml.cdopi.*;
-import org.openscience.cdk.io.cml.*;
+import org.openscience.cdk.io.ichi.IChIHandler;
 import org.openscience.cdk.*;
 import org.xml.sax.helpers.*;
 import org.xml.sax.*;
 import java.io.*;
-import java.net.*;
 
 /**
  * Reads the content of a IUPAC Chemical Identifier (IChI) document. See
@@ -52,7 +50,6 @@ public class IChIReader implements ChemObjectReader {
 
     private XMLReader parser;
     private Reader input;
-    private String url;
 
     private org.openscience.cdk.tools.LoggingTool logger;
 
@@ -61,7 +58,7 @@ public class IChIReader implements ChemObjectReader {
      *
      * @param input the Reader with the content
      */
-    public CMLReader(Reader input) {
+    public IChIReader(Reader input) {
         this.init();
         this.input = input;
     }
@@ -71,13 +68,9 @@ public class IChIReader implements ChemObjectReader {
      */
     private void init() {
         logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
-
-        url = ""; // make sure it is not null
-
         try {
             parser = new gnu.xml.aelfred2.XmlReader();
             logger.info("Using Aelfred2 XML parser.");
-            success = true;
         } catch (Exception e) {
             logger.error("Could not instantiate Aelfred2 XML reader!");
         }
@@ -107,31 +100,25 @@ public class IChIReader implements ChemObjectReader {
      * @return ChemFile with the content read from the input
      */
     private ChemFile readChemFile() {
-        ChemFileCDO cdo = new ChemFileCDO();
+        ChemFile cf = null;
         try {
             parser.setFeature("http://xml.org/sax/features/validation", false);
             logger.info("Deactivated validation");
         } catch (SAXException e) {
             logger.warn("Cannot deactivate validation.");
-            return cdo;
         }
-        parser.setContentHandler(new IChIHandler((CDOInterface)cdo));
-        // parser.setEntityResolver(new CMLResolver());
-        // parser.setErrorHandler(new CMLErrorHandler());
+        IChIHandler handler = new IChIHandler();
+        parser.setContentHandler(handler);
         try {
-            if (input == null) {
-                parser.parse(url);
-            } else {
-                parser.parse(new InputSource(input));
-            }
+            parser.parse(new InputSource(input));
+            cf = handler.getChemFile();
         } catch (IOException e) {
-            logger.warn("IOException: " + e.toString());
+            logger.error("IOException: " + e.toString());
         } catch (SAXException saxe) {
-            logger.warn("SAXException: " + saxe.getClass().getName());
-            logger.warn(saxe.toString());
-            // e.printStackTrace();
+            logger.error("SAXException: " + saxe.getClass().getName());
+            logger.error(saxe.toString());
         }
-        return cdo;
+        return cf;
     }
 
 }

@@ -8,6 +8,7 @@ New:
 * Added SaturationChecker.saturateWithHydrogen(Molecule)
 * Added cdk.math.MinMax class (formarly in 
   cdk.structgen.stoichastic.ConvertTools)
+* Added a IChI reader
 
 Fixes:
 * JCPController2D now edits a bond order when in

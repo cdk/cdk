@@ -27,22 +27,34 @@ package org.openscience.cdk.io.ichi;
 
 import java.io.PrintStream;
 import java.util.Hashtable;
+import java.util.StringTokenizer;
 import java.util.Vector;
-import org.openscience.cdk.io.cml.cdopi.CDOInterface;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.*;
 import org.xml.sax.*;
 import org.xml.sax.helpers.*;
 
 /**
- * SAX2 implementation for IChi XML fragment parsing.
- * Only the framework is implemented at this moment: it does
- * not really work yet.
+ * SAX2 implementation for IChI XML fragment parsing.
+ *
+ * <p>The returned ChemFile contains a ChemSequence in
+ * which the ChemModel represents the molecule. The
+ * tautomeric information is not read (yet).
  *
  * @see org.openscience.cdk.io.IChIReader
  */
 public class IChIHandler extends DefaultHandler {
 
     private LoggingTool logger;
+
+    private ChemFile chemFile;
+    private ChemSequence chemSequence;
+    private ChemModel chemModel;
+    private SetOfMolecules setOfMolecules;
+    private Molecule tautomer;
+
+    /** Used to store all chars between two tags */
+    private String currentChars;
 
     /**
      * Constructor for the CMLHandler.
@@ -65,6 +77,8 @@ public class IChIHandler extends DefaultHandler {
      * DefaultHandler interface.
      */
     public void startDocument() {
+        chemFile = new ChemFile();
+        chemSequence = new ChemSequence();
     }
 
     /**
@@ -72,6 +86,7 @@ public class IChIHandler extends DefaultHandler {
      * DefaultHandler interface.
      */
     public void endDocument() {
+        chemFile.addChemSequence(chemSequence);
     }
 
     /**
@@ -84,6 +99,48 @@ public class IChIHandler extends DefaultHandler {
      */
     public void endElement(String uri, String local, String raw) {
         logger.debug("end element: " + raw);
+        if ("identifier".equals(local)) {
+            if (tautomer != null) {
+                // ok, add tautomer
+                setOfMolecules.addMolecule(tautomer);
+                chemModel.setSetOfMolecules(setOfMolecules);
+                chemSequence.addChemModel(chemModel);
+            }
+        } else if ("basic".equals(local)) {
+            if (tautomer != null) {
+                logger.info("Parsing <basic> chars: " + currentChars);
+                StringTokenizer st = new StringTokenizer(currentChars, ",");
+                if (st.hasMoreTokens()) {
+                    String atomsEncoding =  st.nextToken();
+                    analyseAtomsEncoding(atomsEncoding);
+                } else {
+                    logger.warn("Expected atom data missing!");
+                }
+                if (st.hasMoreTokens()) {
+                    String bondsEncodings =  st.nextToken();
+                    StringTokenizer st2 = new StringTokenizer(bondsEncodings, " ");
+                    while (st2.hasMoreTokens()) {
+                        String bondsEncoding = st2.nextToken();
+                        analyseBondsEncoding(bondsEncoding);
+                    }
+                } else {
+                    logger.warn("Expected bond data missing!");
+                }
+            }
+        } else if ("dbond".equals(local)) {
+            if (tautomer != null) {
+                logger.info("Parsing <dbond> chars: " + currentChars);
+                StringTokenizer st = new StringTokenizer(currentChars, " ");
+                if (st.hasMoreTokens()) {
+                    String dbondEncoding =  st.nextToken();
+                    analyseDBondEncoding(dbondEncoding);
+                } else {
+                    logger.warn("Expected dbond data missing!");
+                }
+            }
+        } else {
+            // skip all other elements
+        }
     }
 
     /**
@@ -95,11 +152,36 @@ public class IChIHandler extends DefaultHandler {
      * @param raw       the complete element name (with namespace part)
      * @param atts      the attributes of this element
      */
-    public void startElement(String uri, String local, String raw, Attributes atts) {
+    public void startElement(String uri, String local, 
+                             String raw, Attributes atts) {
+        currentChars = "";
         logger.debug("startElement: " + raw);
         logger.debug("uri: " + uri);
         logger.debug("local: " + local);
         logger.debug("raw: " + raw);
+        if ("IChI".equals(local)) {
+            // check version
+            for (int i = 0; i < atts.getLength(); i++) {
+                if (atts.getQName(i).equals("version"))
+                    logger.info("IChI version: " + atts.getValue(i));
+            }
+        } else if ("identifier".equals(local)) {
+            for (int i = 0; i < atts.getLength(); i++) {
+                if (atts.getQName(i).equals("tautomeric")) {
+                    if (atts.getValue(i).equals("0")) {
+                        // ok, start new Molecule
+                        chemModel = new ChemModel();
+                        setOfMolecules = new SetOfMolecules();
+                        tautomer = new Molecule();
+                    } else {
+                        logger.info("Skipping tautomers.");
+                        tautomer = null;
+                    }
+                }
+            }
+        } else {
+            // skip all other elements
+        }
     }
 
     /**
@@ -109,7 +191,106 @@ public class IChIHandler extends DefaultHandler {
      * @param ch        characters to handle
      */
     public void characters(char ch[], int start, int length) {
-       logger.debug("character data");
+        logger.debug("character data");
+        currentChars += new String(ch, start, length);
+    }
+
+    public ChemFile getChemFile() {
+        return chemFile;
+    }
+
+    // private methods
+
+    private void analyseAtomsEncoding(String atomsEncoding){
+        logger.debug("Parsing atom data: " + atomsEncoding);
+
+        char thisChar; /* Buffer for */
+        String symbol = new String();
+
+        Atom atomToAdd = null;
+        for (int f = 0; f < atomsEncoding.length(); f++) {
+            thisChar = atomsEncoding.charAt(f);
+            if (thisChar >= 'A' && thisChar <= 'Z'){
+                /* New Element begins */
+                symbol = String.valueOf(thisChar);
+                if ((f < (atomsEncoding.length()-1))) {
+                    // Check for two-letter symbol
+                    char nextChar = atomsEncoding.charAt(f+1);
+                    if ((nextChar >= 'a' && nextChar<= 'z')) {
+                        /* Two-letter Element */
+                        symbol += nextChar;
+                        f++;
+                    }
+                }
+                logger.debug("Atom symbol: " + symbol);
+                // add previous atom?
+                if (atomToAdd != null) tautomer.addAtom(atomToAdd);
+                atomToAdd = new Atom(symbol);
+            } else if (thisChar >= '0' && thisChar<= '9') {
+                /* Hydrogen count */
+                atomToAdd.setHydrogenCount(Integer.parseInt(String.valueOf(thisChar)));
+            } else if (thisChar == '*' && (f < (atomsEncoding.length()-1))) {
+                /* atom occurence */
+                char nextChar = atomsEncoding.charAt(++f);
+                int occurence = Integer.parseInt(String.valueOf(nextChar));
+                logger.debug("Adding copies: " + occurence);
+                for (int i=1; i<=occurence; i++) {
+                    Atom copy = (Atom)atomToAdd.clone();
+                    tautomer.addAtom(copy);
+                }
+            } else {
+                logger.error("Cannot parse atoms encoding: " + atomsEncoding);
+                return;
+            }
+        }
+        logger.debug("NO atoms: " + tautomer.getAtomCount());
+        return;
+    }
+
+    private void analyseBondsEncoding(String bondsEncoding){
+        logger.debug("Parsing bond data: " + bondsEncoding);
+
+        int atoms = tautomer.getAtomCount();
+
+        Bond bondToAdd = null;
+        StringTokenizer st = new StringTokenizer(bondsEncoding, "-");
+        if (!st.hasMoreTokens()) {
+            logger.error("Cannot parse bonds encoding: " + bondsEncoding);
+            return;
+        }
+        int source = Integer.parseInt(st.nextToken()); // at least one token
+        while (st.hasMoreTokens()) {
+            int target = Integer.parseInt(st.nextToken());
+            // should better check if atom exists!
+            Atom sourceAtom = tautomer.getAtomAt(source-1);
+            Atom targetAtom = tautomer.getAtomAt(target-1);
+            bondToAdd = new Bond(sourceAtom, targetAtom, 1.0);
+            tautomer.addBond(bondToAdd);
+        }
+        return;
+    }
+
+    private void analyseDBondEncoding(String dbondEncoding){
+        logger.debug("Parsing double bond data: " + dbondEncoding);
+
+        StringTokenizer st = new StringTokenizer(dbondEncoding, "-");
+        if (!st.hasMoreTokens()) {
+            logger.error("Cannot parse bonds encoding: " + dbondEncoding);
+            return;
+        }
+        int source = Integer.parseInt(st.nextToken()); // at least one token
+        if (!st.hasMoreTokens()) {
+            logger.error("Cannot parse bonds encoding: " + dbondEncoding);
+            return;
+        }
+        int target = Integer.parseInt(st.nextToken());
+        // should better check if atom exists!
+        Atom sourceAtom = tautomer.getAtomAt(source-1);
+        Atom targetAtom = tautomer.getAtomAt(target-1);
+        
+        Bond bond = tautomer.getBond(sourceAtom, targetAtom);
+        bond.setOrder(CDKConstants.BONDORDER_DOUBLE);
+        return;
     }
 
 }
