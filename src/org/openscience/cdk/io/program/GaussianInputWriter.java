@@ -147,6 +147,9 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
             writer.write(st, 0, st.length());
             writer.newLine();
         }
+        
+        // G98 expects an empty line at the end
+        writer.newLine();
     }
     
     private void customizeJob() {
