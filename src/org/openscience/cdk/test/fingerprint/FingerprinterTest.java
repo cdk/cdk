@@ -175,6 +175,22 @@ public class FingerprinterTest extends TestCase
 		assertTrue(isSubset);
 	}
 
+	/** This is a test for a molecule for which the computation takes forever */
+	public void testBugXXX() throws java.lang.Exception
+	{
+		Molecule structure1 = null;
+		String filename = "data/mdl/testbugXXX.mol";
+		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+		MDLReader reader = new MDLReader(new InputStreamReader(ins));
+		structure1 = (Molecule) reader.read((ChemObject) new Molecule());
+		long before = System.currentTimeMillis();
+		BitSet superBS = Fingerprinter.getFingerprint(structure1);
+		long after = System.currentTimeMillis();
+		System.out.println("time for fingerprint calculation: " + (after - before) + " milliseconds");
+		System.out.println(superBS);
+		MoleculeViewer2D.display(structure1, false);
+			
+	}
 
 	
 	
@@ -264,10 +280,11 @@ public class FingerprinterTest extends TestCase
 		try{
 			FingerprinterTest fpt = new FingerprinterTest("FingerprinterTest");
 			fpt.standAlone = true;
-			fpt.testFingerprinter();	
+			/*fpt.testFingerprinter();	
 			fpt.testBug706786();
 			fpt.testBug771485();
-			fpt.testBug853254();
+			fpt.testBug853254();*/
+			fpt.testBugXXX();
 		}
 		catch(Exception exc)
 		{

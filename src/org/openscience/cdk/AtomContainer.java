@@ -154,6 +154,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	{
 		this.atoms = atoms;
 		setAtomCount(atoms.length);
+		notifyChanged();
 
 	}
 
@@ -169,6 +170,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	{
 		this.electronContainers = electronContainers;
 		setElectronContainerCount(electronContainers.length);
+		notifyChanged();
 	}
 
 
@@ -182,6 +184,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	public void setAtomAt(int number, Atom atom)
 	{
 		atoms[number] = atom;
+		notifyChanged();
 	}
 
 
@@ -222,6 +225,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	public void setElectronContainerAt(int number, ElectronContainer electronContainer)
 	{
 		electronContainers[number] = electronContainer;
+		notifyChanged();
 	}
 
 
@@ -235,6 +239,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	public void setElectronContainerCount(int electronContainerCount)
 	{
 		this.electronContainerCount = electronContainerCount;
+		notifyChanged();
 	}
 
 
@@ -247,6 +252,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	public void setAtomCount(int atomCount)
 	{
 		this.atomCount = atomCount;
+		notifyChanged();
 	}
 
 
@@ -872,7 +878,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 				addElectronContainer(atomContainer.getElectronContainerAt(f));
 			}
 		}
-
+		notifyChanged();
 	}
 
 
@@ -898,6 +904,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 				addElectronContainer(atomContainer.getElectronContainerAt(f));
 			}
 		}
+		notifyChanged();
 	}
 
 
@@ -919,6 +926,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 		}
 		atoms[atomCount] = atom;
 		atomCount++;
+		notifyChanged();
 	}
 
 
@@ -930,6 +938,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	public void addBond(Bond bond)
 	{
 		addElectronContainer(bond);
+		notifyChanged();
 	}
 
 
@@ -949,6 +958,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 		// must not check parameter input.
 		electronContainers[electronContainerCount] = electronContainer;
 		electronContainerCount++;
+		notifyChanged();
 	}
 
 
@@ -968,6 +978,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 		{
 			removeElectronContainer(atomContainer.getElectronContainerAt(f));
 		}
+		notifyChanged();
 	}
 
 
@@ -986,6 +997,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 		}
 		electronContainers[electronContainerCount - 1] = null;
 		electronContainerCount--;
+		notifyChanged();
 		return electronContainer;
 	}
 
@@ -1002,6 +1014,8 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 		{
 			if (electronContainers[i].equals(electronContainer))
 			{
+				/* we don't notifyChanged here because the
+				   method called below does is already  */ 
 				return removeElectronContainer(i);
 			}
 		}
@@ -1025,6 +1039,8 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 			{
 				if (((Bond) electronContainers[i]).getConnectedAtom(atom1) == atom2)
 				{
+					/* We don't call notify changed here because
+					   the method called below does it */
 					return (Bond) removeElectronContainer(electronContainers[i]);
 				}
 			}
@@ -1049,6 +1065,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 		}
 		atoms[atomCount - 1] = null;
 		atomCount--;
+		notifyChanged();
 	}
 
 
@@ -1070,6 +1087,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 			}
 			removeAtom(position);
 		}
+		notifyChanged();
 	}
 
 
@@ -1087,6 +1105,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 		{
 			removeAtom(position);
 		}
+		notifyChanged();
 	}
 
 
@@ -1099,6 +1118,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 		electronContainers = new ElectronContainer[growArraySize];
 		atomCount = 0;
 		electronContainerCount = 0;
+		notifyChanged();
 	}
 
 
@@ -1109,6 +1129,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	{
 		electronContainers = new ElectronContainer[growArraySize];
 		electronContainerCount = 0;
+		notifyChanged();
 	}
 
     /**
@@ -1119,6 +1140,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
         for (int i=0; i<bonds.length; i++) {
             removeElectronContainer(bonds[i]);
         }
+	notifyChanged();
     }
 
 	/**
@@ -1143,6 +1165,8 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 			growElectronContainerArray();
 		}
 		addBond(bond);
+		/* no notifyChanged() here because addBond(bond) does 
+		   it already */
 	}
 
 
@@ -1162,6 +1186,8 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 			growElectronContainerArray();
 		}
 		addBond(bond);
+		/* no notifyChanged() here because addBond(bond) does 
+		   it already */
 	}
 
 
@@ -1173,6 +1199,8 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	public void addLonePair(int atomID)
 	{
 		addElectronContainer(new LonePair(atoms[atomID]));
+		/* no notifyChanged() here because addElectronContainer() does 
+		   it already */
 	}
 
 

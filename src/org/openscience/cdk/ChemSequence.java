@@ -83,6 +83,7 @@ public class ChemSequence extends ChemObject implements java.io.Serializable, Cl
 		}
 		chemModels[chemModelCount] = chemModel;
 		chemModelCount++;
+		notifyChanged();
 	}
 
 

@@ -88,7 +88,10 @@ public class HueckelAromaticityDetector {
 	public static boolean detectAromaticity(AtomContainer ac, boolean removeAromatictyFlags) throws org.openscience.cdk.exception.NoSuchAtomException {
 		logger.debug("Entered Aromaticity Detection");
 		logger.debug("Starting AllRingsFinder");
+		long before = System.currentTimeMillis();
 		RingSet ringSet = new AllRingsFinder().findAllRings(ac);
+		long after = System.currentTimeMillis();
+		logger.debug("time for finding all rings: " + (after - before) + " milliseconds");
 		logger.debug("Finished AllRingsFinder");
 		if (ringSet.size() > 0) {
 			return detectAromaticity(ac, ringSet, removeAromatictyFlags);

@@ -85,6 +85,7 @@ public class ChemModel extends ChemObject implements java.io.Serializable, Clone
 	public void setSetOfMolecules(SetOfMolecules setOfMolecules)
 	{
 		this.setOfMolecules = setOfMolecules;
+		notifyChanged();
 	}
 
 	
@@ -111,6 +112,7 @@ public class ChemModel extends ChemObject implements java.io.Serializable, Clone
 	public void setRingSet(RingSet ringSet)
 	{
 		this.ringSet = ringSet;
+		notifyChanged();
 	}
 
     /**
@@ -133,6 +135,7 @@ public class ChemModel extends ChemObject implements java.io.Serializable, Clone
      */
     public void setCrystal(Crystal crystal) {
         this.crystal = crystal;
+	notifyChanged();
     }
 
     /**
@@ -155,6 +158,7 @@ public class ChemModel extends ChemObject implements java.io.Serializable, Clone
      */
     public void setSetOfReactions(SetOfReactions sor) {
         this.setOfReactions = sor;
+	notifyChanged();
     }
     
     /**

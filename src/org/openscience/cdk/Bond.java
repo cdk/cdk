@@ -159,6 +159,7 @@ public class Bond extends ElectronContainer implements java.io.Serializable, Clo
 	public void setAtoms(Atom[] atoms)
 	{
 		this.atoms = atoms;
+		notifyChanged();
 	}
 
 
@@ -235,6 +236,7 @@ public class Bond extends ElectronContainer implements java.io.Serializable, Clo
 	public void setAtomAt(Atom atom, int position)
 	{
 		atoms[position] = atom;
+		notifyChanged();
 	}
 
 
@@ -263,6 +265,7 @@ public class Bond extends ElectronContainer implements java.io.Serializable, Clo
 	public void setOrder(double order)
 	{
 		this.order = order;
+		notifyChanged();
 	}
 
 
@@ -290,6 +293,7 @@ public class Bond extends ElectronContainer implements java.io.Serializable, Clo
 	public void setStereo(int stereo)
 	{
 		this.stereo = stereo;
+		notifyChanged();
 	}
 
 

@@ -113,6 +113,7 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
 	public void setAtomTypeName(String identifier)
 	{
 		setID(identifier);
+		notifyChanged();
 	}
 
 
@@ -126,6 +127,7 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
 	public void setMaxBondOrder(double maxBondOrder)
 	{
 		this.maxBondOrder = maxBondOrder;
+		notifyChanged();
 	}
 
 
@@ -139,6 +141,7 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
 	public void setBondOrderSum(double bondOrderSum)
 	{
 		this.bondOrderSum = bondOrderSum;
+		notifyChanged();
 	}
 
 
@@ -189,6 +192,7 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
      */
     public void setFormalCharge(int charge) {
         this.formalCharge = charge;
+	notifyChanged();
     }
     
     /**
@@ -211,6 +215,7 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
      */
     public void setFormalNeighbourCount(int count) {
         this.formalNeighbourCount = count;
+	notifyChanged();
     }
     
     /**
@@ -233,6 +238,7 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
      */
     public void setHybridization(int hybridization) {
         this.hybridization = hybridization;
+	notifyChanged();
     }
     
     /**
@@ -276,6 +282,7 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
      */
     public void setVanderwaalsRadius(double radius) {
         this.vanderwaalsRadius = radius;
+	notifyChanged();
     }
     
     /**
@@ -296,6 +303,7 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
      */
     public void setCovalentRadius(double radius) {
         this.covalentRadius = radius;
+	notifyChanged();
     }
     
     /**

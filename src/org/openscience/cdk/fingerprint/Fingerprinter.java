@@ -108,7 +108,10 @@ public class Fingerprinter
 		boolean isAromatic = false;
 		// logger.debug("Entering Fingerprinter");
 		// logger.debug("Starting Aromaticity Detection");
+		long before = System.currentTimeMillis();
 		isAromatic = HueckelAromaticityDetector.detectAromaticity(ac);
+		long after = System.currentTimeMillis();
+		logger.debug("time for aromaticity calculation: " + (after - before) + " milliseconds");
 		// logger.debug("Finished Aromaticity Detection");
 		findPathes(ac);
 		BitSet bs = new BitSet(size);

@@ -102,7 +102,7 @@ public class ChemObject implements java.io.Serializable, Cloneable {
 		{
 			listeners.addElement(col);
 		}
-		// Should we through an exception if col is already in here or
+		// Should we throw an exception if col is already in here or
 		// just silently ignore it?
 	}
 
@@ -171,6 +171,7 @@ public class ChemObject implements java.io.Serializable, Cloneable {
 	 */
 	public void setProperty(Object description, Object property) {
 		lazyProperties().put(description, property);
+		notifyChanged();
 	}
 
 	/**
@@ -282,6 +283,7 @@ public class ChemObject implements java.io.Serializable, Cloneable {
      */
     public void setID(String identifier) {
         this.identifier = identifier;
+	notifyChanged();
     }
     
     /**
@@ -293,6 +295,7 @@ public class ChemObject implements java.io.Serializable, Cloneable {
      */
     public void setFlag(int flag_type, boolean flag_value) {
         flags[flag_type] = flag_value;
+	notifyChanged();
     }
     
     /**
@@ -318,6 +321,7 @@ public class ChemObject implements java.io.Serializable, Cloneable {
             Object key = keys.nextElement();
             lazyProperties().put(key, properties.get(key));
         }
+	notifyChanged();
 	}
 
 

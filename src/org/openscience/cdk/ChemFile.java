@@ -76,6 +76,7 @@ public class ChemFile extends ChemObject implements java.io.Serializable, Clonea
 		}
 		chemSequences[chemSequenceCount] = chemSequence;
 		chemSequenceCount++;
+		notifyChanged();
 	}
 
 

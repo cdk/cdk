@@ -144,6 +144,7 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
          */
         public void setCharge(double charge) {
                this.charge = charge;
+	       notifyChanged();
         }
 
         /**
@@ -166,6 +167,7 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
          */
         public void setHydrogenCount(int hydrogenCount) {
                 this.hydrogenCount = hydrogenCount;
+		notifyChanged();
         }
 
         /**
@@ -190,6 +192,7 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
          */
         public void setPoint2d(javax.vecmath.Point2d point2d) {
                 this.point2d = point2d;
+		notifyChanged();
         }
         /**
          *
@@ -202,6 +205,7 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
          */
         public void setPoint3d(javax.vecmath.Point3d point3d) {
                 this.point3d = point3d;
+		notifyChanged();
         }
         /**
          * Sets a point specifying the location of this
@@ -214,6 +218,7 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
          */
         public void setFractionalPoint3d(javax.vecmath.Point3d point3d) {
                 this.fractionalPoint3d = point3d;
+		notifyChanged();
         }
         /**
          * Sets the stereo parity for this atom.
@@ -225,6 +230,7 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
          */
         public void setStereoParity(int stereoParity) {
                 this.stereoParity = stereoParity;
+		notifyChanged();
         }
 
         /**
@@ -363,6 +369,7 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
                 fractionalPoint3d = new Point3d();
             }
             fractionalPoint3d.x = xFract;
+	    notifyChanged();
         }
         /**
          * Sets the y coordinate of the fractional coordinate of this atom.
@@ -376,6 +383,7 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
                 fractionalPoint3d = new Point3d();
             }
             fractionalPoint3d.y = yFract;
+	    notifyChanged();
         }
         /**
          * Sets the z coordinate of the fractional coordinate of this atom.
@@ -389,6 +397,7 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
                 fractionalPoint3d = new Point3d();
             }
             fractionalPoint3d.z = zFract;
+	    notifyChanged();
         }
         /**
          * Returns the x coordinate for of the fractional coordinate of this atom.
@@ -447,6 +456,7 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
                 point2d = new javax.vecmath.Point2d();
             }
             point2d.x = xCoord;
+	    notifyChanged();
         }
 
 
@@ -464,6 +474,7 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
                 point2d = new javax.vecmath.Point2d();
             }
             point2d.y = yCoord;
+	    notifyChanged();
         }
 
 
@@ -481,6 +492,7 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
                 point3d = new javax.vecmath.Point3d();
             }
             point3d.x = xCoord;
+	    notifyChanged();
         }
 
 
@@ -498,6 +510,7 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
                 point3d = new javax.vecmath.Point3d();
             }
             point3d.y = yCoord;
+	    notifyChanged();
         }
 
 
@@ -515,6 +528,7 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
                 point3d = new javax.vecmath.Point3d();
             }
             point3d.z = zCoord;
+	    notifyChanged();
         }
 
 

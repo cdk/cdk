@@ -86,6 +86,7 @@ public class Association extends ElectronContainer implements java.io.Serializab
 	 */
 	public void setAtoms(Atom[] atoms) {
 		this.atoms = atoms;
+		notifyChanged();
 	}
 
 
@@ -144,6 +145,7 @@ public class Association extends ElectronContainer implements java.io.Serializab
 	 */
 	public void setAtomAt(Atom atom, int position) {
 		atoms[position] = atom;
+		notifyChanged();
 	}
 
     /**
