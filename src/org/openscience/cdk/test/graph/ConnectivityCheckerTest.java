@@ -30,8 +30,10 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.LonePair;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.graph.ConnectivityChecker;
@@ -134,6 +136,54 @@ public class ConnectivityCheckerTest extends CDKTestCase {
         assertTrue(cc.isConnected(molecules[2]));
 	}
 
+    /**
+	 * This test makes sure that it is checked that the partitionIntoMolecules()
+     * method keeps LonePairs and SingleElectrons with its associated atoms.
+	 */
+	public void testDontDeleteSingleElectrons() {
+        AtomContainer atomCon = new AtomContainer();
+        // make two molecules; one with an LonePair, the other with a SingleElectron
+        Molecule mol1 = new Molecule();
+        Atom atom1 = new Atom("C");
+        mol1.addAtom(atom1);
+        LonePair lp1 = new LonePair(atom1);
+        mol1.addElectronContainer(lp1);
+        // mol2
+        Molecule mol2 = new Molecule();
+        Atom atom2 = new Atom("C");
+        mol2.addAtom(atom2);
+        SingleElectron se2 = new SingleElectron(atom2);
+        mol2.addElectronContainer(se2);
+        
+        atomCon.add(mol1);
+        atomCon.add(mol2);
+        
+        // now partition
+        SetOfMolecules moleculeSet = null;
+		try {
+			moleculeSet = cc.partitionIntoMolecules(atomCon);
+		} catch (Exception exc) {
+            fail(exc.toString());
+		}
+        assertNotNull(moleculeSet);
+		assertEquals(2, moleculeSet.getMoleculeCount());
+        
+        Molecule[] molecules = moleculeSet.getMolecules();
+        assertTrue(cc.isConnected(molecules[0]));
+        assertTrue(cc.isConnected(molecules[1]));
+        
+        // make sure
+        assertEquals(1, molecules[0].getAtomCount());
+        assertEquals(1, molecules[0].getElectronContainerCount());
+        assertEquals(1, molecules[1].getAtomCount());
+        assertEquals(1, molecules[1].getElectronContainerCount());
+        // we don't know which partition contains the LP and which the electron
+        assertTrue(molecules[0].getSingleElectronSum(molecules[0].getAtomAt(0)) == 0 ||
+                   molecules[1].getSingleElectronSum(molecules[1].getAtomAt(0)) == 0);
+        assertTrue(molecules[0].getLonePairCount(molecules[0].getAtomAt(0)) == 0 ||
+                   molecules[1].getLonePairCount(molecules[1].getAtomAt(0)) == 0);
+	}
+    
 	/**
 	 * This test tests the algorithm behind isConnected().
 	 */
