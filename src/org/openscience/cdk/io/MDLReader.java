@@ -42,8 +42,8 @@ import javax.vecmath.*;
  * <p>From the Atom block it reads atomic coordinates, element types and
  * formal charges. From the Bond block it reads the bonds and the orders.
  * 
- * <p>Additionally, it reads M  CHG and M  ISO lines from the property
- * block.
+ * <p>Additionally, it reads 'M  CHG', 'G  ' and 'M  ISO' lines from the 
+ * property block.
  *
  * @author     steinbeck
  * @author     Egon Willighagen
@@ -384,6 +384,30 @@ public class MDLReader extends DefaultChemObjectReader {
                         + linecount + ": " + line + " in property block.";
                         logger.error(error);
                         throw new CDKException("NumberFormatException in isotope information on line: " + line);
+                    }
+                } else if (line.startsWith("G  ")) {
+                    try {
+                        String atomNumberString = line.substring(3,6).trim();
+                        int atomNumber = Integer.parseInt(atomNumberString);
+                        String whatIsThisString = line.substring(6,9).trim();
+                    
+                        String atomName = input.readLine();
+                        
+                        // convert Atom into a PseudoAtom
+                        Atom prevAtom = molecule.getAtomAt(atomNumber - 1);
+                        PseudoAtom pseudoAtom = new PseudoAtom(atomName);
+                        if (prevAtom.getPoint2D() != null) {
+                            pseudoAtom.setPoint2D(prevAtom.getPoint2D());
+                        }
+                        if (prevAtom.getPoint3D() != null) {
+                            pseudoAtom.setPoint3D(prevAtom.getPoint3D());
+                        }
+                        AtomContainerManipulator.replaceAtomByAtom(molecule, prevAtom, pseudoAtom);
+                    } catch (NumberFormatException exception) {
+                        String error = "Error (" + exception.toString() + ") while parsing line "
+                        + linecount + ": " + line + " in property block.";
+                        logger.error(error);
+                        throw new CDKException("NumberFormatException in group information on line: " + line);
                     }
                 }
                 if (!lineRead) {
