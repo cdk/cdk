@@ -291,7 +291,9 @@ public class Renderer2D   {
         // paintColouredAtomBackground(atom, atomBackColor, graphics);
 
         int alignment = GeometryTools.getBestAlignmentForLabel(container, atom);
-        if (!atom.getSymbol().equals("C")) {
+        if (atom instanceof PseudoAtom) {
+            paintPseudoAtomLabel((PseudoAtom)atom, atomBackColor, graphics, alignment);
+        } else if (!atom.getSymbol().equals("C")) {
             /*
              *  only show element for non-carbon atoms,
              *  unless (see below)...
@@ -353,9 +355,6 @@ public class Renderer2D   {
 
         // calculate SYMBOL width, height
         String atomSymbol = atom.getSymbol();
-        if (atom instanceof PseudoAtom) {
-            atomSymbol = ((PseudoAtom)atom).getLabel();
-        }
         graphics.setFont(normalFont);
         FontMetrics fm = graphics.getFontMetrics();
         int atomSymbolW = (new Integer(fm.stringWidth(atomSymbol))).intValue();
@@ -526,6 +525,78 @@ public class Renderer2D   {
             graphics.drawString(isotopeString, screenCoords[0], screenCoords[1]);
         }
         
+        // reset old font & color
+        graphics.setFont(unscaledFont);
+        graphics.setColor(r2dm.getForeColor());
+    }
+    
+    /**
+     * Paints the label of the given PseudoAtom, instead of it's symbol.
+     *
+     * @param  atom       The atom to be drawn
+     * @param  backColor  Description of the Parameter
+     *
+     * @author  Egon Willighagen <egonw@users.sf.net>
+     * @created 2003-08-08
+     */
+    private void paintPseudoAtomLabel(PseudoAtom atom, Color backColor, Graphics graphics, int alignment) {
+        if (atom.getPoint2D() == null) {
+            logger.warn("Cannot draw atom without 2D coordinate");
+            return;
+        }
+
+        // The drawing fonts
+        Font unscaledFont = graphics.getFont();
+        int unscaledFontSize = unscaledFont.getSize();
+        float normalFontSize = getScreenSize(unscaledFontSize); // apply zoom factor
+        Font normalFont = unscaledFont.deriveFont(normalFontSize); // keep font, only change size
+        Font subscriptFont = normalFont.deriveFont(normalFontSize*0.8f); // 80% of normal font
+
+        // calculate SYMBOL width, height
+        String atomSymbol = atom.getLabel();
+        graphics.setFont(normalFont);
+        FontMetrics fm = graphics.getFontMetrics();
+        int atomSymbolW = (new Integer(fm.stringWidth(atomSymbol))).intValue();
+        int atomSymbolFirstCharW = (new Integer(fm.stringWidth(atomSymbol.substring(0,1)))).intValue();
+        int atomSymbolLastCharW = (new Integer(fm.stringWidth(atomSymbol.substring(atomSymbol.length()-1)))).intValue();
+        int atomSymbolH = (new Integer(fm.getAscent())).intValue();
+
+        int labelX = 0;
+        int labelY = 0;
+        int labelW = atomSymbolW;
+        int labelH = atomSymbolH;
+        
+        logger.debug("Drawing " + atomSymbol + " with alignment " + alignment);
+        
+        if (alignment == 1) { // left alignment
+            labelX = (int)(atom.getPoint2D().x - (atomSymbolFirstCharW/2));
+        } else { // right alignment
+            labelX = (int)(atom.getPoint2D().x - (atomSymbolW + atomSymbolLastCharW/2));
+        }
+        // labelY and labelH are the same for both left/right aligned
+        labelY = (int)(atom.getPoint2D().y - (atomSymbolH/2));
+
+        // make empty space
+        {
+            int border = 2; // number of pixels
+            graphics.setColor(backColor);
+            int[] coords = {labelX - border, labelY - border, 
+                            labelW + 2*border, labelH + 2*border};
+            int[] screenCoords = getScreenCoordinates(coords);
+            graphics.fillRect(screenCoords[0], screenCoords[1], 
+                              screenCoords[2], screenCoords[3]);
+        }
+        
+        // draw label
+        {
+            int[] coords = { labelX, 
+                             labelY + atomSymbolH};
+            int[] screenCoords = getScreenCoordinates(coords);
+            graphics.setColor(Color.BLACK);
+            graphics.setFont(normalFont);
+            graphics.drawString(atomSymbol, screenCoords[0], screenCoords[1]);
+        }
+
         // reset old font & color
         graphics.setFont(unscaledFont);
         graphics.setColor(r2dm.getForeColor());
