@@ -61,6 +61,7 @@ public class CDKTests {
 		suite.addTest(ToolsTests.suite());
         
         // Individual Tests
+        suite.addTest(ChemFileTest.suite());
         suite.addTest(RingSearchTest.suite());
 		suite.addTest(MorganNumberToolsTest.suite());
 		suite.addTest(PathLengthTest.suite());

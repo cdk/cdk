@@ -35,38 +35,38 @@ import javax.vecmath.*;
  *
  * @see org.openscience.cdk.ChemSequence
  */
-public class ChemSequenceTest extends TestCase {
+public class ChemFileTest extends TestCase {
 
-    public ChemSequenceTest(String name) {
+    public ChemFileTest(String name) {
         super(name);
     }
 
     public void setUp() {}
 
     public static Test suite() {
-        return new TestSuite(ChemSequenceTest.class);
+        return new TestSuite(ChemFileTest.class);
     }
     
-    public void testAddChemModel() {
-        ChemSequence cs = new ChemSequence();
-        cs.addChemModel(new ChemModel());
-        cs.addChemModel(new ChemModel());
-        cs.addChemModel(new ChemModel());
-        assertEquals(3, cs.getChemModelCount());
-        cs.addChemModel(new ChemModel());
-        cs.addChemModel(new ChemModel());
-        cs.addChemModel(new ChemModel()); // this one should enfore array grow
-        assertEquals(6, cs.getChemModelCount());
+    public void testAddChemSequence() {
+        ChemFile cs = new ChemFile();
+        cs.addChemSequence(new ChemSequence());
+        cs.addChemSequence(new ChemSequence());
+        cs.addChemSequence(new ChemSequence());
+        assertEquals(3, cs.getChemSequenceCount());
+        cs.addChemSequence(new ChemSequence());
+        cs.addChemSequence(new ChemSequence());
+        cs.addChemSequence(new ChemSequence()); // this one should enfore array grow
+        assertEquals(6, cs.getChemSequenceCount());
     }
 
-    public void testGetChemModels() {
-        ChemSequence cs = new ChemSequence();
-        cs.addChemModel(new ChemModel());
-        cs.addChemModel(new ChemModel());
-        cs.addChemModel(new ChemModel());
-
-        assertEquals(3, cs.getChemModelCount());
-        assertEquals(3, cs.getChemModels().length);
+    public void testGetChemSequences() {
+        ChemFile cs = new ChemFile();
+        cs.addChemSequence(new ChemSequence());
+        cs.addChemSequence(new ChemSequence());
+        cs.addChemSequence(new ChemSequence());
+ 
+        assertEquals(3, cs.getChemSequenceCount());
+        assertEquals(3, cs.getChemSequences().length);
     }
 
 }
