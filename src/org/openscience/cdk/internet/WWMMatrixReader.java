@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2003-2004  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -32,8 +32,8 @@ import org.openscience.cdk.io.*;
 import org.openscience.cdk.exception.*;
 import org.openscience.cdk.layout.*;
 import org.openscience.cdk.geometry.*;
-import org.openscience.cdk.renderer.MoleculeListViewer;
-import org.openscience.cdk.renderer.MoleculeViewer2D;
+import org.openscience.cdk.applications.swing.MoleculeListViewer;
+import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import java.io.*;
 import java.net.*;
 import java.util.Enumeration;

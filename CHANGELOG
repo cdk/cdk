@@ -9,6 +9,7 @@ New:
 Fixes:
 
 API changes:
+* Moved a number of Swing based classes to cdk.applications.swing
 
 20040120 Release
 ------------------------------------
