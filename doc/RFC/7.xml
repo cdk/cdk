@@ -1,0 +1,65 @@
+<refentry id="cdk-rfc-6">
+
+  <refentryinfo>
+    <revhistory>
+      <revision>
+        <revnumber>1</revnumber>
+        <date>2002-10-07</date>
+        <authorinitials>elw</authorinitials>
+        <revremark>
+          See <ulink url="http://sourceforge.net/mailarchive/forum.php?thread_id=1154522&amp;forum_id=2178">email archive</ulink>.
+        </revremark>
+      </revision>
+    </revhistory>
+  </refentryinfo>
+
+
+  <refnamediv>
+    <refname>Coding Aromaticity</refname>
+  </refnamediv>
+
+  <refsect1>
+    <title>Proposal</title>
+    <para>
+    I propose that aromaticity is generally coded by setting a
+ CDKConstants.ISAROMATIC flag both in the aromatic ring atoms as well as 
+ in the aromatic ring bonds.
+ 	</para>
+	<para>
+ Aromatic ring systems are not only detected by classes like
+ org.openscience.cdk.aromaticity.HueckelAromaticityDetector, but they may 
+ also be created by parsing SMILES strings. In the latter case, no 
+ alternating single/double bond pattern is given, but the ring atom 
+ symbols are either written in lower case letters or the bond symbols 
+ indicate an "aromatic" bond.
+ 	</para>
+	<para>
+ HueckelAromaticityDetector sets these flags when it finds an aromatic 
+ ring and it also obeys these flags when searching a given structure for 
+ aromaticity.
+ 	</para>
+	<para>
+ SMILESParser will establish a bond order of 1.5 between the aromatic 
+ bonds (in order to keep the bond sum correct) and but will also set the 
+ above flag. Afterward there is the option of having another (yet to 
+ create) class establish an alternating single/double bond pattern.
+ 	</para>
+  </refsect1>
+
+  <refsect1>
+    <title>Reason</title>
+    <para>
+    
+    1. A chemical drawing and rendering program needs a flag like this in 
+ order to know when to draw a circle inside a ring instead of the 
+ alternating double/single bond pattern.
+ 	</para>
+	<para>
+    2. SMILESParser should have a simple method of setting aromaticity. 
+ Having it find a valid alternating double/single bond pattern would 
+ overload its functionality.
+    
+    </para>
+  </refsect1>
+
+</refentry>

@@ -76,7 +76,14 @@
               <entry>being discussed</entry>
               <entry></entry>
             </row>
-          </tbody>
+            <row>
+              <entry>7</entry>
+              <entry><ulink url="rfc7.html">Coding Aromaticity</ulink></entry>
+              <entry>2002-10-07</entry>
+              <entry>being discussed</entry>
+              <entry></entry>
+            </row>
+	 </tbody>
         </tgroup>
       </informaltable>
     </para>
