@@ -4,6 +4,14 @@ CHANGELOG $Date$
 Changes in CVS
 ------------------------------------
 New:
+
+Fixes:
+
+API changes:
+
+20040202 Release
+------------------------------------
+New:
 * Added a JPanel of the periodic table
 * Added a reader and writer for Hyperchem HIN files
 * Added Ant doc.xml build file for converting documentation to HTML
