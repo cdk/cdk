@@ -1,4 +1,4 @@
-<refentry id="cdk-dbadmin">
+<refentry id="cdk-view">
 
   <refmeta>
     <refentrytitle>cdk-view</refentrytitle>
@@ -12,16 +12,28 @@
 
   <refsynopsisdiv>
     <cmdsynopsis>
-      <command>cdk-view</command>
-      <arg>file.xml</arg>
+      <command>cdk-view</command> <arg>--nojava3d</arg> <arg>file.xml</arg>
     </cmdsynopsis>
   </refsynopsisdiv>
 
   <refsect1>
+    <title>OPTIONS</title>
+    <variablelist>
+      <varlistentry>
+        <term>--nojava3d</term>
+        <listitem>
+          <para>do not try to use Java3D for viewing 3D coordinates</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </refsect1>
+
+  <refsect1>
     <title>DESCRIPTION</title>
     <para>
-      <command>cdk-view</command> displays to content of a file in the
-      format PDB, XYZ, CML or MDLMol.
+      <command>cdk-view</command> displays to content of the file
+      <filename>file.xml</filename> with the format PDB, XYZ, CML
+      or MDLMol.
     </para>
   </refsect1>
 

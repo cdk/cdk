@@ -1,8 +1,9 @@
-200202XX
+20020206
 =================
 * fixed PATHTORTJAR bug
 * added cdk-view
 * better detection of Java3D (--with-java3ddir option)
+* added detection of Xerces/Log4J
 
 20020101.1
 =================

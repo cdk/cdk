@@ -1,12 +1,14 @@
 #! /bin/sh -e
 
-PREFIX="@prefix@"
+PREFIX=@prefix@
+XERCESJAR=@PATHTOXERCES@
+LOGJAVA=@PATHTOLOGJAVA@
+RTJAR=@PATHTORTJAR@
+JAVA=@PATHTOJAVA@
 
-JARLIBDIR="${PREFIX}/lib/cdk"
+JARLIBDIR=${PREFIX}/lib/cdk
 JARLIBS=`ls -1 ${JARLIBDIR}/*.jar | perl -ne "s/\n|\r/:/g; print;"`
-CLASSPATH="@PATHTO3DJAR@:@PATHTORTJAR@:${JARLIBS}"
-
-JAVA="@PATHTOJAVA@"
+CLASSPATH=${RTJAR}:${LOGJAVA}:${XERCESJAR}:${JARLIBS}
 
 # Collect -D options as java arguments
 command=${JAVA}
