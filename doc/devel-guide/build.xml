@@ -8,7 +8,7 @@
     <pathelement location="/usr/lib/j2sdk1.3/jre/lib/rt.jar" />
     <pathelement location="." />
 
-    <fileset dir="jar">
+    <fileset dir="../jar">
       <include name="*.jar" />
     </fileset>
   </path>

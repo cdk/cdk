@@ -47,6 +47,8 @@
             </sourcepath>
 
         </javadoc>
+        <copy file="javadoc.dbxml"
+              tofile="core.dbxml" />
     </target>
 
     <target name="core.fo" depends="core.docbook">
