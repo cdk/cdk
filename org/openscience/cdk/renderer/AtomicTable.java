@@ -34,19 +34,19 @@ import org.openscience.cdk.event.*;
 import java.util.*;
 import java.io.*;
 import javax.swing.*;
+import javax.swing.table.*;
 import java.awt.*;
 
 public class AtomicTable extends JPanel implements CDKChangeListener {
-	public AtomContainer atomContainer;
-  public JTable table;
-	public String title = "Molecule Viewer";
-
+  private JTable table;
+	private String title = "Molecule Viewer";
+  
 	public AtomicTable(AtomContainer atomContainer) {
-		this.atomContainer = atomContainer;
-    
-    table = new JTable();
-    //this table should show atom types, coords etc...
-    this.add(table);
+    AtomContainerModel acm = new AtomContainerModel(atomContainer);
+    table = new JTable(acm);
+    table.setPreferredScrollableViewportSize(new Dimension(500,300));
+    JScrollPane scrollPane = new JScrollPane(table);
+    this.add(scrollPane, BorderLayout.CENTER);
 	}
 	
 	/**
@@ -55,7 +55,6 @@ public class AtomicTable extends JPanel implements CDKChangeListener {
 	 */
 	public void display()
 	{
-		setPreferredSize(new Dimension(600, 400));
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		frame.getContentPane().add(this);
@@ -68,6 +67,62 @@ public class AtomicTable extends JPanel implements CDKChangeListener {
     // not implemented yet
   }
 	
+  class AtomContainerModel extends AbstractTableModel {
+
+    private AtomContainer atomContainer;
+    
+    final String[] columnNames = {"atom", "x2", "y2", "x3", 
+                                  "y3", "z3", "charge"};
+    
+    public AtomContainerModel(AtomContainer ac) {
+      atomContainer = ac;
+    }
+    
+    public int getColumnCount() {
+      return columnNames.length;
+    }
+    
+    public int getRowCount() {
+      return atomContainer.getAtomCount();
+    }
+    
+    public String getColumnName(int col) {
+      return columnNames[col];
+    }
+    
+    public Class getColumnClass(int col) {
+      Object o = getValueAt(0,col);
+      if (o == null) {
+        return (new String()).getClass();
+      } else {
+        return o.getClass();
+      }
+    }
+    
+    public Object getValueAt(int row, int col) {
+      if (getColumnName(col).equals("atom")) {
+        return (atomContainer.getAtomAt(row)).getElement().getSymbol();
+      } else if (getColumnName(col).equals("x2")) {
+        return new Double((atomContainer.getAtomAt(row)).getX2D());
+      } else if (getColumnName(col).equals("y2")) {
+        return new Double((atomContainer.getAtomAt(row)).getY2D());
+      } else if (getColumnName(col).equals("x3")) {
+        return new Double((atomContainer.getAtomAt(row)).getX3D());
+      } else if (getColumnName(col).equals("y3")) {
+        return new Double((atomContainer.getAtomAt(row)).getY3D());
+      } else if (getColumnName(col).equals("z3")) {
+        return new Double((atomContainer.getAtomAt(row)).getZ3D());
+      } else if (getColumnName(col).equals("charge")) {
+        return new Double((atomContainer.getAtomAt(row)).getCharge());
+      } else {
+        return null;
+      }
+    }
+    
+    public boolean isCellEditable(int row, int col) {
+      return false;
+    }
+  }
 }
 
 
