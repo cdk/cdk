@@ -61,11 +61,25 @@ public class AtomContainerManipulatorTest extends TestCase {
     }
 
     public void testGetTotalHydrogenCount() throws IOException, ClassNotFoundException, CDKException {
-        Molecule mol=MoleculeFactory.makeAlphaPinene();
-        new HydrogenAdder().addHydrogensToSatisfyValency(mol);
-        assertEquals(16, AtomContainerManipulator.getTotalHydrogenCount((AtomContainer)mol));
+        Molecule mol = MoleculeFactory.makeAlphaPinene();
+        new HydrogenAdder().addImplicitHydrogensToSatisfyValency(mol);
+        assertEquals(16, AtomContainerManipulator.getTotalHydrogenCount(mol));
     }
         
+    public void testGetTotalHydrogenCount_ImplicitHydrogens() throws Exception {
+        Molecule mol = new Molecule();
+        Atom carbon = new Atom("C");
+        carbon.setHydrogenCount(4);
+        mol.addAtom(carbon);
+        assertEquals(4, AtomContainerManipulator.getTotalHydrogenCount(mol));
+    }
+        
+    public void testGetTotalHydrogenCount_ExplicitHydrogens() throws Exception {
+        SmilesParser parser = new SmilesParser();
+        Molecule mol = parser.parseSmiles("[H]C([H])([H])[H]");
+        assertEquals(0, AtomContainerManipulator.getTotalHydrogenCount(mol));
+    }
+    
     public void testRemoveHydrogens() throws IOException, ClassNotFoundException, CDKException{
         Molecule mol=MoleculeFactory.makeAlphaPinene();
         new HydrogenAdder().addHydrogensToSatisfyValency(mol);
