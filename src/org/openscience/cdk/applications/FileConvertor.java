@@ -29,7 +29,10 @@ import org.openscience.cdk.io.program.*;
 import org.openscience.cdk.io.listener.*;
 import org.openscience.cdk.io.setting.*;
 import org.openscience.cdk.exception.*;
+import org.openscience.cdk.graph.rebond.*;
 import org.openscience.cdk.layout.*;
+import org.openscience.cdk.tools.AtomTypeFactory;
+import org.openscience.cdk.tools.ChemFileManipulator;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.IDCreator;
 import java.io.*;
@@ -123,17 +126,18 @@ public class FileConvertor {
                     System.exit(-1);
                 }
                 if (apply3DRebonding) {
-                    System.out.print("Cannot add bonds from 3D coordinates at this moment.");
-                    System.exit(-1);
-                    /* This code is broken, it needs to original AtomContainer's
+                    logger.info("Creating bonds from 3D coordinates");
                     AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/jmol_atomtypes.txt");
-                    AtomContainer container = ChemFileManipulator.getAllInOneContainer(content);
-                    RebondTool rebonder = new RebondTool(2.0, 0.5, 0.5);
-                    Atom[] atoms = container.getAtoms();
-                    for (int i=0; i<atoms.length; i++) {
-                        factory.configure(atoms[i]);
+                    AtomContainer[] containers = ChemFileManipulator.getAllAtomContainers(content);
+                    for (int i=0; i<containers.length; i++) {
+                        AtomContainer container = containers[i];
+                        RebondTool rebonder = new RebondTool(2.0, 0.5, 0.5);
+                        Atom[] atoms = container.getAtoms();
+                        for (int j=0; j<atoms.length; j++) {
+                            factory.configure(atoms[j]);
+                        }
+                        rebonder.rebond(container);
                     }
-                    rebonder.rebond(container); */
                 }
                 
                 // create output file
