@@ -18,6 +18,7 @@ New:
 * Added the new method CDKPluginInterface.getPluginLicense()
 * Added the new method CDKEditBus.runScript()
 * CML2 from Jumbo 4.6 was uploaded
+* Added (ugly) rendering of radicals (SingleElectron)
 
 Fixes:
 * Fixed KabschAlignment so that the rotation matrixi, U, is returned properly

@@ -418,8 +418,10 @@ public class Renderer2D implements MouseMotionListener   {
         if (r2dm.drawNumbers()) {
             drawSymbol = true;
         }
-        if (drawSymbol) {
-            paintAtomSymbol(atom, atomBackColor, graphics, alignment, container.getAtomNumber(atom) + 1);
+        boolean isRadical = (container.getSingleElectronSum(atom) > 0);
+        if (drawSymbol || isRadical) {
+            paintAtomSymbol(atom, atomBackColor, graphics, alignment, 
+                container.getAtomNumber(atom) + 1, isRadical);
         }
         if (r2dm.getShowTooltip() && atom == r2dm.getHighlightedAtom() && r2dm.getToolTipText(r2dm.getHighlightedAtom()) != null) {
           paintToolTip(atom, graphics, container.getAtomNumber(atom) + 1);
@@ -463,7 +465,8 @@ public class Renderer2D implements MouseMotionListener   {
      * @param  alignment  How to align the H's
      * @param  atomNumber Number of the atom in the AtomContainer, 0 is not in container
      */
-    public void paintAtomSymbol(Atom atom, Color backColor, Graphics2D graphics, int alignment, int atomNumber) {
+    public void paintAtomSymbol(Atom atom, Color backColor, Graphics2D graphics, 
+                    int alignment, int atomNumber, boolean isRadical) {
         if (atom.getPoint2d() == null) {
             logger.warn("Cannot draw atom without 2D coordinate");
             return;
@@ -492,6 +495,10 @@ public class Renderer2D implements MouseMotionListener   {
             } else if (atomNumber != 0 && !atomSymbol.equals("")) {
                 atomSymbol += "-" + atomNumber;
             }
+        }
+        if (isRadical) {
+            logger.debug(" atom is radical, adding '*'");
+            atomSymbol += "*";
         }
         graphics.setFont(normalFont);
         FontMetrics fm = graphics.getFontMetrics();
