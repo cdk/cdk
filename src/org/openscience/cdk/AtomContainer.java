@@ -911,28 +911,6 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 		return conMat;
 	}
 
-
-	/**
-	 *  Add bonds to a set of atoms (Experimental!).
-	 *
-	 *@param  maxbondlength  The feature to be added to the electronContainers
-	 *      attribute
-	 */
-	public void addBonds(double maxbondlength)
-	{
-		for (int i = 0; i < atomCount; i++)
-		{
-			for (int j = i + 1; j < atomCount; j++)
-			{
-				if (atoms[i].getPoint3d().distance(atoms[j].getPoint3d()) <= maxbondlength)
-				{
-					addBond(new Bond(atoms[i], atoms[j], CDKConstants.BONDORDER_SINGLE));
-				}
-			}
-		}
-	}
-
-
 	/**
 	 *  Adds the <code>ElectronContainer</code>s found in atomContainer to this
 	 *  container.
