@@ -35,7 +35,7 @@ import java.util.*;
 import javax.vecmath.*;
 
 /**
- * Reads a molecule from an MDL Molfile or SDF file.
+ * Reads a molecule from an MDL molfile or SDF file.
  *
  * References:
  *   <a href="http://cdk.sf.net/biblio.html#DAL92">DAL92</a>
@@ -202,17 +202,28 @@ public class MDLReader implements ChemObjectReader {
 	            order = java.lang.Integer.valueOf(strTok.nextToken()).intValue();
 	            stereo = java.lang.Integer.valueOf(strTok.nextToken()).intValue();
                 logger.debug("Bond: " + atom1 + " - " + atom2 + "; order " + order);
-	            if (stereo == 1)
-	            {
+	            if (stereo == 1) {
 	                // MDL up bond
 	                stereo = CDKConstants.STEREO_BOND_UP;
+	            } else if (stereo == 6) {
+                    // MDL down bond
+                    stereo = CDKConstants.STEREO_BOND_DOWN;
 	            }
-	            else if (stereo == 6)
-	            {
-	                // MDL down bond
-					stereo = CDKConstants.STEREO_BOND_DOWN;
-	            }
-				molecule.addBond(atom1 - 1, atom2 - 1, order, stereo);
+                // interpret CTfile's special bond orders
+                Atom a1 = molecule.getAtomAt(atom1 - 1);
+                Atom a2 = molecule.getAtomAt(atom2 - 1);
+                if (order == 4) {
+                    // aromatic bond
+                    bond = new Bond(a1, a2, CDKConstants.BONDORDER_AROMATIC, stereo);
+                    // mark both atoms and the bond as aromatic
+                    bond.flags[CDKConstants.ISAROMATIC] = true;
+                    a1.flags[CDKConstants.ISAROMATIC] = true;
+                    a2.flags[CDKConstants.ISAROMATIC] = true;
+                    molecule.addBond(bond);
+                } else {
+                    bond = new Bond(a1, a2, (double)order, stereo);
+                    molecule.addBond(bond);
+                }
 	        }
 	    } catch (Exception e) {
 	        logger.error("Error while reading MDL Molfile.");

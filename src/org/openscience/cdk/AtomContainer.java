@@ -898,7 +898,7 @@ public class AtomContainer extends ChemObject implements Cloneable
 	 * @param  order   Bondorder
 	 * @param  stereo  Stereochemical orientation
 	 */
-	public void addBond(int atom1, int atom2, int order, int stereo)
+	public void addBond(int atom1, int atom2, double order, int stereo)
 	{
 		Bond bond = new Bond(getAtomAt(atom1), getAtomAt(atom2), order, stereo);
 
@@ -922,7 +922,7 @@ public class AtomContainer extends ChemObject implements Cloneable
 	 * @param  atom2  Id of the second atom of the Bond
 	 * @param  order  Bondorder
 	 */
-	public void addBond(int atom1, int atom2, int order)
+	public void addBond(int atom1, int atom2, double order)
 	{
 		Bond bond = new Bond(getAtomAt(atom1), getAtomAt(atom2), order);
 

@@ -35,6 +35,9 @@ Fixes:
   CMLReader to be able to read older CMLReader output
   (fixes bug #620121).
 * Fixed bond order problem in ChemFileCDO (fixes bug #620229)
+* Fixed reading of aromatic bond from MDL molfiles 
+  (fixes bug #620731, thanks to Hans Vanderzijl for patch 
+  suggestion)
 
 API changes:
 * Removed obsolete cdk.structgen.stoichastic.ConvertTools
@@ -48,6 +51,8 @@ API changes:
 * Moved CanonicalLabeler from package smiles to graph.invariant
 * Moved PathTools from package tools to graph
 * Removed old hard coded property get and set methods from Molecule.
+* Changed order parameter of two AtomContainer.addBond() methods
+  from int to double signature (fixes bug #620241)
 
 20020920 Release
 ------------------------------------
