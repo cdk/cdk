@@ -24,9 +24,11 @@ public class MakeKeywordIndexDoclet {
         Enumeration words = keywords.keys();
         while (words.hasMoreElements()) {
             String keyword = (String)words.nextElement();
-            out.println("  <indexentry>" + keyword + " " +
+            out.println("  <indexentry>");
+            out.println("    <primaryie>" + keyword + " " +
                         (String)keywords.get(keyword) +
-                        "</indexentry>");
+                        " </primaryie>");
+            out.println("  </indexentry>");
         }
         out.println("</index>");
     }
