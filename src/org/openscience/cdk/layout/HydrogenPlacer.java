@@ -120,7 +120,7 @@ public class HydrogenPlacer {
 				atomVector.addElement(unplacedAtoms.getAtomAt(f));
 			}
 
-			addAngle = Math.PI * 2 / unplacedAtoms.getAtomCount() - 1;
+			addAngle = Math.PI * 2 / (unplacedAtoms.getAtomCount() + placedAtoms.getAtomCount());
 			/* IMPORTANT: At this point we need a calculation of the
 			   start angle. 
 			   Not done yet.
@@ -134,9 +134,7 @@ public class HydrogenPlacer {
 			startAngle = GeometryTools.getAngle(xDiff, yDiff); //- (Math.PI / 2.0);
 			//System.out.println("startAngle = " + startAngle);
 			logger.debug("startAngle = " + startAngle);
-			startAngle += addAngle;
-
-			   atomPlacer.populatePolygonCorners(atomVector, new Point2d(atom.getPoint2D()), startAngle, addAngle, bondLength);	
+			atomPlacer.populatePolygonCorners(atomVector, new Point2d(atom.getPoint2D()), startAngle, addAngle, bondLength);	
 		}
 		
 		
