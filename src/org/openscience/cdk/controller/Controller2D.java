@@ -78,6 +78,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 	private int dragMode = DRAG_UNSET;
 
 	private Vector commonElements;
+    private int currentCommonElement = 0;
 
 	// Helper classes
 	HydrogenAdder hydrogenAdder = new HydrogenAdder("org.openscience.cdk.tools.ValencyChecker");
@@ -333,9 +334,8 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 		isUndoableChange = false;
 		logger.debug("MouseReleased Event Props: mode=", c2dm.getDrawModeString());
         if (logger.isDebugEnabled()) {
-            logger.debug("   trigger=" + event.isPopupTrigger() +
-				/* ", Button number: " + event.getButton() + */
-				", Click count: " + event.getClickCount());
+            logger.debug("   trigger=" + event.isPopupTrigger(),
+                         ", Click count: " + event.getClickCount());
         }
 
         if ((event.getModifiers() & MouseEvent.BUTTON1_MASK) != 0) {
@@ -344,39 +344,42 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 			int mouseX = mouseCoords[0];
 			int mouseY = mouseCoords[1];
 
-			if (c2dm.getDrawMode() == c2dm.SYMBOL)
-			{
+			if (c2dm.getDrawMode() == c2dm.SYMBOL) {
 
 				Atom atomInRange = r2dm.getHighlightedAtom();
-				if (atomInRange != null)
-				{
-					String symbol = c2dm.getDrawElement();
-					atomInRange.setSymbol(symbol);
-					// configure the atom, so that the atomic number matches the symbol
-					try
-					{
-						IsotopeFactory.getInstance().configure(atomInRange);
-					} catch (Exception exception)
-					{
-						logger.error("Error while configuring atom");
-						logger.debug(exception);
-					}
-					// update atom
-					AtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, atomInRange);
-					updateAtom(container, atomInRange);
-
-					/*
-					 *  PRESERVE THIS. This notifies the
-					 *  the listener responsible for
-					 *  undo and redo storage that it
-					 *  should store this change of an atom symbol
-					 */
-					isUndoableChange = true;
-					/*
-					 *  ---
-					 */
-					r2dm.fireChange();
-					fireChange();
+				if (atomInRange != null) {
+                    String symbol = (String)commonElements.elementAt(currentCommonElement);
+                    if (!(atomInRange.getSymbol().equals(symbol))) {
+                        // only change symbol if needed
+                        
+                        atomInRange.setSymbol(symbol);
+                        // configure the atom, so that the atomic number matches the symbol
+                        try {
+                            IsotopeFactory.getInstance().configure(atomInRange);
+                        } catch (Exception exception) {
+                            logger.error("Error while configuring atom");
+                            logger.debug(exception);
+                        }
+                        // update atom
+                        AtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, atomInRange);
+                        updateAtom(container, atomInRange);
+                        
+                        /*
+                        *  PRESERVE THIS. This notifies the
+                        *  the listener responsible for
+                        *  undo and redo storage that it
+                        *  should store this change of an atom symbol
+                        */
+                        isUndoableChange = true;
+                        /*
+                        *  ---
+                        */
+                        r2dm.fireChange();
+                        fireChange();
+                    }
+                    currentCommonElement++;
+                    if (currentCommonElement == commonElements.size())
+                        currentCommonElement = 0;
 				}
 			}
 

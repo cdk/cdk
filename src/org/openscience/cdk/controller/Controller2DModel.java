@@ -333,6 +333,9 @@ public class Controller2DModel implements java.io.Serializable, Cloneable
         this.drawElement = element;
     }
 
+    /**
+     * Element symbol that <b>new</b> atoms get by default.
+     */
     public String getDrawElement() {
         return this.drawElement;
     }

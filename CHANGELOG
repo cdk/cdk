@@ -11,6 +11,8 @@ New:
 * Added UniversalIsomorphismTester.makeAtomsMapsOfBondsMaps() method
 * Added an experimental JMEReader wrapping a Jmol v10 IO class
 * Implemented Jmolv10 to CDK Convertor
+* Readded element toggling between common elements in SYMBOL mode
+  in Controller2D
 
 Fixes:
 * No longer calculates 2D coords for hydrogens which already have 2D coords
