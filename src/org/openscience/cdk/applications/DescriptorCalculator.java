@@ -23,22 +23,10 @@
  */
 package org.openscience.cdk.applications;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.StringWriter;
-import java.util.Properties;
+import java.io.*;
+import java.util.*;
 
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.Option;
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.PosixParser;
-import org.apache.commons.cli.OptionBuilder;
-import org.apache.commons.cli.ParseException;
-import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.*;
 
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemFile;
@@ -46,10 +34,8 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.fingerprint.Fingerprinter;
-import org.openscience.cdk.io.ChemObjectReader;
-import org.openscience.cdk.io.ReaderFactory;
+import org.openscience.cdk.io.*;
 import org.openscience.cdk.io.iterator.IteratingMDLReader;
-import org.openscience.cdk.io.CMLWriter;
 import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.qsar.DescriptorEngine;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
@@ -70,12 +56,26 @@ public class DescriptorCalculator {
     private String ouputFormat;
     
     private LoggingTool logger;
+    
+    private boolean inputIsSMILES;
+    private PropertiesListener propsListener;
+    private DescriptorEngine engine;
+
 
     public DescriptorCalculator() {
         logger = new LoggingTool(true);
         logger.dumpSystemProperties();
 
         ouputFormat = "cml";
+        inputIsSMILES = false;
+        
+        engine = new DescriptorEngine();
+        
+        Properties props = new Properties();
+        props.setProperty("CMLIDs", "false");
+        props.setProperty("NamespacedOutput", "false");
+        props.setProperty("XMLDeclaration", "false");
+        propsListener = new PropertiesListener(props);
     }
 
     public static void main(String[] args) {
@@ -86,55 +86,76 @@ public class DescriptorCalculator {
         
         calculator.process(fileToProcess);
     }
-     
-    public void process(String fileToProcess) {
-        DescriptorEngine engine = new DescriptorEngine();
-        
-        IteratingMDLReader reader = null;
-        Properties props = new Properties();
-        props.setProperty("CMLIDs", "false");
-        props.setProperty("NamespacedOutput", "false");
-        props.setProperty("XMLDeclaration", "false");
-        PropertiesListener propsListener = new PropertiesListener(props);
+
+    private void printCMLHeader(Writer writer) throws IOException {
+        writer.write("<?xml version=\"1.0\"?>\n");
+        writer.write("<list\n");
+        writer.write("  xmlns=\"http://www.xml-cml.org/schema/cml2/core\"\n");
+        writer.write("  xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n");
+        writer.write("  xsi:schemaLocation=\"http://www.xml-cml.org/schema/cml2/core cmlAll4.4.xsd\">\n");
+        writer.flush();
+    }
+
+    private void printCMLMolecule(Writer writer, Molecule molecule) throws Exception {
+        StringWriter stringWriter = new StringWriter();
+        CMLWriter cmlWriter = new CMLWriter(stringWriter);
+        cmlWriter.addChemObjectIOListener(propsListener);
+        cmlWriter.write(molecule);
+        cmlWriter.close();
+        writer.write(stringWriter.toString());
+        writer.flush();
+    }
+    
+    private void processMolecule(Writer writer, Molecule molecule) throws Exception {
+        boolean engineError = false;
         try {
-            reader = new IteratingMDLReader(
-                new FileReader(new File(fileToProcess))
-            );
-            FileWriter fileWriter = new FileWriter(new File(fileToProcess + ".cml"));
-            fileWriter.write("<?xml version=\"1.0\"?>\n");
-            fileWriter.write("<list\n");
-            fileWriter.write("  xmlns=\"http://www.xml-cml.org/schema/cml2/core\"\n");
-            fileWriter.write("  xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n");
-            fileWriter.write("  xsi:schemaLocation=\"http://www.xml-cml.org/schema/cml2/core cmlAll4.4.xsd\">\n");
-            fileWriter.flush();
-            while (reader.hasNext()) {
-                Molecule molecule = (Molecule)reader.next();
-                boolean engineError = false;
-                try {
-                    engine.process(molecule);
-                } catch (Exception exception) {
-                    logger.error("Exception while generating descriptors for molecule: ", exception.getMessage());
-                    logger.debug(exception);
-                    engineError = true;
+            engine.process(molecule);
+        } catch (Exception exception) {
+            logger.error("Exception while generating descriptors for molecule: ", exception.getMessage());
+            logger.debug(exception);
+            engineError = true;
+        }
+        if (!engineError) {
+            printCMLMolecule(writer, molecule);
+            if (!inputIsSMILES) System.out.print(".");
+        } else {
+            if (!inputIsSMILES) System.out.print("x");
+        }
+    }
+    
+    public void process(String toProcess) {
+        try {
+            Writer writer;
+            if (inputIsSMILES) {
+                writer = new OutputStreamWriter(System.out);
+            } else {
+                writer = new FileWriter(new File(toProcess + ".cml"));
+            }
+            printCMLHeader(writer);
+            
+            if (inputIsSMILES) {
+                SMILESReader reader = new SMILESReader(
+                    new StringReader(toProcess)
+                );
+                SetOfMolecules moleculeSet = (SetOfMolecules)reader.read(new SetOfMolecules());
+                Molecule[] molecules = moleculeSet.getMolecules();
+                for (int i=0; i<molecules.length; i++) {
+                    processMolecule(writer, molecules[i]);
                 }
-                if (!engineError) {
-                    StringWriter stringWriter = new StringWriter();
-                    CMLWriter writer = new CMLWriter(stringWriter);
-                    writer.addChemObjectIOListener(propsListener);
-                    writer.write(molecule);
-                    writer.close();
-                    fileWriter.write(stringWriter.toString());
-                    fileWriter.flush();
-                    System.out.print(".");
-                } else {
-                    System.out.print("x");
+            } else {
+                IteratingMDLReader reader = new IteratingMDLReader(
+                    new FileReader(new File(toProcess))
+                );
+                while (reader.hasNext()) {
+                    Molecule molecule = (Molecule)reader.next();
+                    processMolecule(writer, molecule);
                 }
             }
-            fileWriter.write("</list>\n");
-            fileWriter.close();
-            System.out.println("\n");
+            
+            printCMLFooter(writer);
+            if (!inputIsSMILES) System.out.println("\n");
         } catch (FileNotFoundException exception) {
-            System.err.println("File not found: " + fileToProcess);
+            System.err.println("File not found: " + toProcess);
             System.exit(-1);
         } catch (IOException exception) {
             System.err.println("IO exception: " + exception.getMessage());
@@ -145,7 +166,11 @@ public class DescriptorCalculator {
             exception.printStackTrace();
             System.exit(-1);
         }
+    }
         
+    private void printCMLFooter(Writer writer) throws IOException {
+        writer.write("</list>\n");
+        writer.close();
     }
 
     /**
@@ -156,6 +181,11 @@ public class DescriptorCalculator {
 
         Options options = new Options();
         options.addOption("h", "help", false, "give this help page");
+        options.addOption(
+            OptionBuilder.withLongOpt("smiles").
+                          withDescription("input one SMILES string").
+                          create("s")
+        );
         
         CommandLine line = null;
         try {
@@ -169,6 +199,8 @@ public class DescriptorCalculator {
         
         if (filesToConvert.length != 1 || line.hasOption("h")) {
             printHelp(options);
+        } else if (line.hasOption("s")) {
+            inputIsSMILES = true;
         }
         
         return filesToConvert[0];
