@@ -1,10 +1,9 @@
-/* FourierGridBasis.java
- * 
- * Autor: Stephan Michels 
- * EMail: stephan@vern.chem.tu-berlin.de
- * Datum: 2.7.2001
- * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+/*  $RCSfile$
+ *  $Author$
+ *  $Date$
+ *  $Revision$
+ *
+ * Copyright (C) 2001-2002  The Chemistry Development Kit (CDK) project
  * 
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  * 
@@ -37,6 +36,9 @@ import org.openscience.cdk.math.*;
  *
  * References:
  *   <a href="http://cdk.sf.net/biblio.html#MAR89">MAR89</a>
+ *
+ * @author    Stephan Michels <stephan@vern.chem.tu-berlin.de>
+ * @created   2 July 2001
  */
 public class FourierGridBasis implements Basis
 {
@@ -53,7 +55,8 @@ public class FourierGridBasis implements Basis
 
   //private final static double m = 1.6726485E-27; // [kg] Masse eines Protons
   //private final static double m = 9.109534E-31; // [kg] Masse eines Elektrons
-  private final static double m = (1.6726485E-27*1.6726485E-27)/(1.6726485E-27+1.6726485E-27); // [kg]red.Masse
+  private final static double m = (PhysicalConstants.MASS_PROTON*PhysicalConstants.MASS_PROTON)/
+                                  (2.0*PhysicalConstants.MASS_PROTON); // [kg]red.Masse
   private final static double hdash = 6.582E-16; // [eV*s]
 
   private double Tl;

@@ -29,6 +29,7 @@ import org.openscience.cdk.*;
 import org.openscience.cdk.aromaticity.AromaticityCalculator;
 import org.openscience.cdk.tools.IsotopeFactory;
 import org.openscience.cdk.graph.invariant.MorganNumbersTools;
+import org.openscience.cdk.graph.invariant.CanonicalLabeler;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.exception.NoSuchAtomException;
@@ -408,7 +409,7 @@ public class SmilesGenerator {
    * canonicaly lables the molecule but dose not perform any checks on the
    * chemical validity of the molecule.
    *
-   * @see org.openscience.cdk.smiles.CanonicalLabeler#canonLabel
+   * @see org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel
    *
    */
   public synchronized String createSMILES(Molecule molecule) {
@@ -431,7 +432,7 @@ public class SmilesGenerator {
 	 * @exception  Coordinates2DMissingException  At least one atom has no Point2D; coordinates are needed for crating the chiral smiles.
    * @param molecule The molecule to evaluate
    * @param doubleBondConfiguration Should double bond configurations be evaluated
-   * @see org.openscience.cdk.smiles.CanonicalLabeler#canonLabel.
+   * @see org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel.
    *
    */
   public synchronized String createChiralSMILES(Molecule molecule, boolean doubleBondConfiguration) throws Coordinates2DMissingException {
@@ -443,7 +444,7 @@ public class SmilesGenerator {
    * canonicaly lables the molecule but dose not perform any checks on the
    * chemical validity of the molecule.
    *
-   * @see org.openscience.cdk.smiles.CanonicalLabeler#canonLabel.
+   * @see org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel.
    * @param molecule The molecule to evaluate
    * @param chiral true=SMILES will be chiral, false=SMILES will not be chiral.
    * @param doubleBondConfiguration Should double bond configurations be evaluated

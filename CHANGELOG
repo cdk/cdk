@@ -6,9 +6,10 @@ Changes in CVS
 New:
 * Added MFAnalyser.getElementCount()
 * Added SaturationChecker.saturateWithHydrogen(Molecule)
-* Added cdk.math.MinMax class (formarly in 
+* Added cdk.math.MinMax class (methods formerly in 
   cdk.structgen.stoichastic.ConvertTools)
 * Added a IChI reader
+* Added a class for constant physical property values
 
 Fixes:
 * JCPController2D now edits a bond order when in
@@ -26,6 +27,7 @@ API changes:
   SwissArmyKnife to MFAnalyser
 * Moved package graphinvariant to package graph.invariant
 * Moved AromaticityCalculator from package smiles to aromaticity
+* Moved CanonicalLabeler from package smiles to graph.invariant
 
 20020920 Release
 ------------------------------------
