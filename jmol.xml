@@ -1,7 +1,9 @@
 <project name="JmolCDK" default="dist-both" basedir=".">
 
   <!-- compile options -->
+  <!-- mth 2003-05-07 had problems with this directive
   <property name="build.compiler" value="javac1.1" />
+  -->
   <property name="debug" value="on" />
   <property name="deprecation" value="on" />
   <property name="optimization" value="off" />
