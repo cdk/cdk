@@ -46,7 +46,7 @@ import org.openscience.cdk.event.ChemObjectChangeEvent;
  * }
  * </pre>
  *
- * @cdk.module core
+ * @cdk.module data
  *
  * @cdk.keyword reaction
  * @cdk.keyword molecule

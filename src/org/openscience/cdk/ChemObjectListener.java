@@ -37,7 +37,7 @@ import org.openscience.cdk.event.ChemObjectChangeEvent;
  * such that they react appropriately to changes in the object they
  * are interested in.
  *
- * @cdk.module core
+ * @cdk.module data
  */
 public interface ChemObjectListener
 {

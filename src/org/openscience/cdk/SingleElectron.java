@@ -35,7 +35,7 @@ package org.openscience.cdk;
  *   radical.addElectronContainer(new SingleElectron(carbon));
  * </pre> 
  *
- * @cdk.module core
+ * @cdk.module data
  *
  * @cdk.keyword radical
  * @cdk.keyword electron, unpaired

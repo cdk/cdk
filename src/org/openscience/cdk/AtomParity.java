@@ -31,7 +31,7 @@ package org.openscience.cdk;
 /**
  * Represents the concept of an atom parity identifying the stereochemistry
  * around an atom, given four neighbouring atoms.
- * @cdk.module core
+ * @cdk.module data
  *
  * @author      steinbeck
  * @cdk.created 2000-10-02

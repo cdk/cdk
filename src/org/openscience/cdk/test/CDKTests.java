@@ -75,6 +75,7 @@ public class CDKTests
         
         // Package Test Suites
         suite.addTest(ConfigTests.suite());
+        suite.addTest(DataClassesTests.suite());
         suite.addTest(CoreClassesTests.suite());
         suite.addTest(IOTests.suite());
         suite.addTest(ToolsTests.suite());

@@ -31,7 +31,7 @@ import org.openscience.cdk.event.ChemObjectChangeEvent;
  * the other lower level concepts like rings, sequences, 
  * fragments, etc.
  *
- * @cdk.module core
+ * @cdk.module data
  */
 public class ChemModel extends ChemObject implements java.io.Serializable
 , Cloneable, ChemObjectListener

@@ -41,7 +41,7 @@ import org.openscience.cdk.event.ChemObjectChangeEvent;
  *  table for administration of physical or chemical properties
  *
  *@author        steinbeck
- *@cdk.module    core
+ *@cdk.module    data
  */
 public class ChemObject implements java.io.Serializable, Cloneable
 {

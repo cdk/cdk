@@ -246,6 +246,7 @@
         <target name="checkDocletResults">
             <condition property="dotjavafiles.uptodate">
                 <and>
+                    <available file="${src}/data.javafiles" />
                     <available file="${src}/core.javafiles" />
                     <available file="${src}/standard.javafiles" />
                     <available file="${src}/extra.javafiles" />
@@ -398,6 +399,19 @@
                     </fileset>
                 </classpath>
             </javac>
+        </target>
+
+        <target id="compile-data" name="compile-data" depends="compile.init">
+                <echo message="Compiling classes for cdk-data module." />
+
+                <javac srcdir="${src}" destdir="${build}" optimize="${optimization}" 
+                       debug="${debug}" deprecation="${deprecation}">
+                    <classpath refid="project.class.path" />
+                    <includesfile name="${src}/data.javafiles"/>
+                    <excludesfile name="${src}/java1.4+.javafiles" if="isJava13"/>
+                    <excludesfile name="${src}/java1.4.javafiles" unless="isJava14"/>
+                    <excludesfile name="${src}/ant1.6.javafiles" unless="hasAnt16"/>
+                </javac>
         </target>
 
         <target id="compile-core" name="compile-core" depends="compile.init">
@@ -654,6 +668,20 @@
             <copy todir="${build}/org/openscience/cdk/qsar/model/data/">
                 <fileset dir="${src}/org/openscience/cdk/qsar/model/data/" includes="*.R"/>
             </copy>
+        </target>
+
+        <target id="dist-data" name="dist-data" depends="compile-data, dist.init">
+                <jar jarfile="${dist}/jar/cdk-data.jar">
+                    <fileset dir="${build}">
+                        <includesfile name="${src}/data.classes" />
+                        <excludesfile name="${src}/java1.4+.classes" if="isJava13"/>
+                        <excludesfile name="${src}/java1.4.classes" unless="isJava14"/>
+                        <excludesfile name="${src}/ant1.6.classes" unless="hasAnt16"/>
+                   </fileset>
+                   <fileset dir="${src}">
+                        <include name="data.javafiles" />
+                   </fileset>
+                </jar>
         </target>
 
         <target id="dist-core" name="dist-core" depends="compile-core, dist.init">
@@ -926,7 +954,7 @@
         <target id="dist-all" name="dist-all" depends="dist, dist-experimental, dist-apps"
                 description="Builds the jar files for the CDK, including experimental classes."/>
 
-        <target id="dist" name="dist" depends="dist-core, dist-standard, 
+        <target id="dist" name="dist" depends="dist-data, dist-core, dist-standard, 
                                          dist-io, dist-render,
                                          dist-extra, dist-libio,
                                          dist-render-with-java3d,
@@ -990,6 +1018,7 @@
                 <mkdir dir="${reports.tests}"/>
                 <junit printsummary="yes" haltonfailure="yes" fork="yes">
                     <classpath>
+                        <pathelement location="${dist}/jar/cdk-data.jar" />
                         <pathelement location="${dist}/jar/cdk-core.jar" />
                         <pathelement location="${dist}/jar/cdk-standard.jar" />
                         <pathelement location="${dist}/jar/cdk-io.jar" />
@@ -1025,6 +1054,7 @@
                 <mkdir dir="${reports.tests}"/>
                 <junit printsummary="yes" haltonfailure="yes" fork="yes" maxmemory="256m">
                     <classpath>
+                        <pathelement location="${dist}/jar/cdk-data.jar" />
                         <pathelement location="${dist}/jar/cdk-core.jar" />
                         <pathelement location="${dist}/jar/cdk-standard.jar" />
                         <pathelement location="${dist}/jar/cdk-io.jar" />
@@ -1035,7 +1065,7 @@
                         <pathelement location="${dist}/jar/cdk-libio.jar" />
                         <pathelement location="${dist}/jar/cdk-qsar.jar" />
                         <pathelement location="${dist}/jar/cdk-experimental.jar" />
-			<pathelement location="${dist}/jar/cdk-builder3d.jar" />
+                        <pathelement location="${dist}/jar/cdk-builder3d.jar" />
                         <fileset dir="${lib}">
                                 <include name="*.jar" />
                         </fileset>

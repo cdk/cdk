@@ -20,6 +20,6 @@
 
   <!-- Rules specific for CDK -->
 
-  <rule ref="pmd/customCDK-core.xml"/>
+  <rule ref="pmd/customCDK-data.xml"/>
 
 </ruleset>

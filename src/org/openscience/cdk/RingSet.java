@@ -30,7 +30,7 @@ import java.util.Vector;
 /**
  * Maintains a set of Ring objects.
  *
- * @cdk.module core
+ * @cdk.module data
  *
  * @cdk.keyword     ring, set of
  */

@@ -99,6 +99,24 @@
         </javadoc>
     </target>
 
+    <target name="doccheck-data">
+        <mkdir dir="reports/javadoc/data/"/>
+        <javadoc private="false" public="true"
+                 destdir="reports/javadoc/data/"
+                 excludepackagenames="org.openscience.cdk.test.*">
+            <classpath refid="project.class.path" />
+
+            <doclet name="com.sun.tools.doclets.doccheck.DocCheck"
+                    path="jar/doccheck.jar" />
+            <fileset dir="${src}">
+                <includesfile name="${src}/data.javafiles"/>
+            </fileset>
+            <sourcepath>
+                <pathelement path="${src}"/>
+            </sourcepath>
+        </javadoc>
+    </target>
+
     <target name="doccheck-core">
         <mkdir dir="reports/javadoc/core/"/>
         <javadoc private="false" public="true"

@@ -50,7 +50,7 @@ import javax.vecmath.Point3d;
  * <p>More examples about using this class can be found in the
  * Junit test for this class.
  *
- * @cdk.module core
+ * @cdk.module data
  *
  * @author     steinbeck
  * @cdk.created    2000-10-02

@@ -33,7 +33,7 @@ import javax.vecmath.Point3d;
  *  Implements the concept of a covalent bond between two atoms. A bond is
  *  considered to be a number of electrons connecting a two of atoms.
  *
- * @cdk.module core
+ * @cdk.module data
  *
  * @author     steinbeck
  * @cdk.created    2003-10-02

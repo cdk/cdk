@@ -33,7 +33,7 @@ package org.openscience.cdk;
  * A BioPolymer is a subclass of a Polymer which is supposed to store
  * additional informations about the Polymer which are connected to BioPolymers.
  *
- * @cdk.module core
+ * @cdk.module data
  *
  * @author     Edgar Luttmann <edgar@uni-paderborn.de>
  * @cdk.created    2001-08-06 

@@ -20,9 +20,19 @@
 
     <target name="pmd" depends="pmd-core, pmd-standard, pmd-io, pmd-extra, pmd-render, pmd-applications, pmd-libio, pmd-experimental"/>
     
+    <target name="pmd-data">
+        <mkdir dir="${reports.tests}/pmd"/>
+        <pmd shortFilenames="true" rulesetfiles="pmd/custom-data.xml">
+            <formatter type="summaryhtml" toFile="${reports.tests}/pmd/data.html"/>
+            <fileset dir="${src}">
+                <includesfile name="${src}/data.javafiles"/>
+            </fileset>
+        </pmd>
+    </target>
+
     <target name="pmd-core">
         <mkdir dir="${reports.tests}/pmd"/>
-        <pmd shortFilenames="true" rulesetfiles="pmd/custom-core.xml">
+        <pmd shortFilenames="true" rulesetfiles="pmd/custom.xml">
             <formatter type="summaryhtml" toFile="${reports.tests}/pmd/core.html"/>
             <fileset dir="${src}">
                 <includesfile name="${src}/core.javafiles"/>

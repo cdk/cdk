@@ -31,7 +31,7 @@ import org.openscience.cdk.event.ChemObjectChangeEvent;
  * store the course of a reaction. Each state of the reaction would be
  * stored in one ChemModel.
  *
- * @cdk.module core
+ * @cdk.module data
  *
  * @cdk.keyword animation
  * @cdk.keyword reaction

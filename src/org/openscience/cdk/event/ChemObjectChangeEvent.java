@@ -32,7 +32,7 @@ package org.openscience.cdk.event;
  * Event fired by cdk classes to their registered listeners
  * in case something changes within them.
  *
- * @cdk.module core
+ * @cdk.module data
  */
 public class ChemObjectChangeEvent extends java.util.EventObject
 {

@@ -36,13 +36,13 @@ import junit.framework.TestSuite;
  *
  * @cdk.module test
  */
-public class CoreCoverageTest extends TestCase {
+public class DataCoverageTest extends TestCase {
 
-    private final static String CLASS_LIST = "core.javafiles";
+    private final static String CLASS_LIST = "data.javafiles";
     
     private ClassLoader classLoader;
     
-    public CoreCoverageTest(String name) {
+    public DataCoverageTest(String name) {
         super(name);
     }
 
@@ -51,7 +51,7 @@ public class CoreCoverageTest extends TestCase {
     }
 
     public static Test suite() {
-        return new TestSuite(CoreCoverageTest.class);
+        return new TestSuite(DataCoverageTest.class);
     }
 
     private Class loadClass(String className) {

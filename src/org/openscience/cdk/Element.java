@@ -35,7 +35,7 @@ package org.openscience.cdk;
  *   Element e2 = if.getElement(12);
  * </pre>
  *
- * @cdk.module core
+ * @cdk.module data
  *
  * @cdk.keyword element
  *

@@ -40,7 +40,7 @@ import java.util.Vector;
  *  }
  *  </pre>
  *
- * @cdk.module core
+ * @cdk.module data
  *
  * @author     steinbeck
  * @cdk.created    2000-10-02

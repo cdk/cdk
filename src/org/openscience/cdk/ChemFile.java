@@ -32,7 +32,7 @@ import org.openscience.cdk.event.ChemObjectChangeEvent;
  *  document
  *
  *@author        steinbeck
- *@cdk.module    core
+ *@cdk.module    data
  */
 public class ChemFile extends ChemObject implements java.io.Serializable
 		, Cloneable, ChemObjectListener

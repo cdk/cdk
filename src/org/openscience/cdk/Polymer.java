@@ -33,7 +33,7 @@ import java.util.Hashtable;
 /**
  * Subclass of Molecule to store Poymer specific attributes a Polymer has.
  *
- * @cdk.module core
+ * @cdk.module data
  *
  * @author     Edgar Luttmann <edgar@uni-paderborn.de>
  * @cdk.created    2001-08-06

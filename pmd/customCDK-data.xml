@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<ruleset name="customCDKCore">
+<ruleset name="customCDKdata">
 
   <description>
     This ruleset checks the CDK sources for bad code.

@@ -30,7 +30,7 @@ package org.openscience.cdk;
  * An example of such a mapping, is the mapping between corresponding atoms
  * in a Reaction.
  *
- * @cdk.module core
+ * @cdk.module data
  *
  * @cdk.keyword reaction, atom mapping
  *

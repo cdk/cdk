@@ -86,7 +86,7 @@ import java.util.Properties;
  *
  * <p>The class uses log4j as a backend if available, and System.out otherwise.
  *
- * @cdk.module standard
+ * @cdk.module core
  */
 public class LoggingTool {
 
