@@ -74,5 +74,15 @@
    id="structgen.I1"
    maxBondOrder="1.0"
    maxBondOrderSum="1.0"/>
+  <org.openscience.cdk.AtomType
+   symbol="Li"
+   id="structgen.Li1"
+   maxBondOrder="1.0"
+   maxBondOrderSum="1.0"/>
+  <org.openscience.cdk.AtomType
+   symbol="As"
+   id="structgen.As1"
+   maxBondOrder="1.0"
+   maxBondOrderSum="1.0"/>
 </java.util.Vector>
 
