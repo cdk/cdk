@@ -26,6 +26,7 @@ package org.openscience.cdk.validate;
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.dict.*;
+import org.openscience.cdk.tools.LoggingTool;
 import java.util.Map;
 import java.util.Iterator;
 
@@ -37,6 +38,12 @@ import java.util.Iterator;
  */ 
 public class DictionaryValidator implements ValidatorInterface {
 
+    private static LoggingTool logger;
+    
+    static {
+        logger = new LoggingTool("org.openscience.cdk.validate.DictionaryValidator");
+    }
+    
     private DictionaryDatabase db;
     
     public DictionaryValidator(DictionaryDatabase db) {
@@ -62,7 +69,7 @@ public class DictionaryValidator implements ValidatorInterface {
                 String keyName = (String)key;
                 if (keyName.startsWith(DictionaryDatabase.DICTREFPROPERTYNAME)) {
                     String dictRef = (String)properties.get(keyName);
-                    String details = "Dictref being anaylyzed: " + dictRef;
+                    String details = "Dictref being anaylyzed: " + dictRef + ". ";
                     noNamespace.setDetails(details);
                     noDict.setDetails(details);
                     noEntry.setDetails(details);
@@ -70,10 +77,12 @@ public class DictionaryValidator implements ValidatorInterface {
                     if (index != -1) {
                         report.addOK(noNamespace);
                         String dict = dictRef.substring(0,index);
+                        logger.debug("Looking for dictionary:" + dict);
                         if (db.hasDictionary(dict)) {
                             report.addOK(noDict);
                             if (dictRef.length() > index+1) {
                                 String entry = dictRef.substring(index+1);
+                                logger.debug("Looking for entry:" + entry);
                                 if (db.hasEntry(dict, entry)) {
                                     report.addOK(noEntry);
                                 } else {
@@ -83,11 +92,15 @@ public class DictionaryValidator implements ValidatorInterface {
                                 report.addError(noEntry);
                             }
                         } else {
+                            details += "The dictionary searched: " + dict + ".";
+                            noDict.setDetails(details);
                             report.addError(noDict);
                             report.addError(noEntry);
                         }
                     } else {
                         // The dictRef has no namespace
+                        details += "There is not a namespace given.";
+                        noNamespace.setDetails(details);
                         report.addError(noNamespace);
                         report.addError(noDict);
                         report.addError(noEntry);
