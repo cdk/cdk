@@ -66,6 +66,7 @@ import org.openscience.cdk.test.qsar.*;
 	suite.addTest(APolDescriptorTest.suite());
 	suite.addTest(BPolDescriptorTest.suite());
 	suite.addTest(TPSADescriptorTest.suite());
+	suite.addTest(XLogPDescriptorTest.suite());
         suite.addTest(DescriptorEngineTest.suite());
 	return suite;
     }
