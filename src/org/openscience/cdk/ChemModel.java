@@ -61,43 +61,6 @@ public class ChemModel extends ChemObject implements java.io.Serializable, Clone
 	}
 
 	/**
-	 * Puts all the Molecules of this container together in one 
-     * AtomCcntainer.
-	 *
-	 * @return  The AtomContainer with all the Molecules of this container   
-	 */
-	public AtomContainer getAllInOneContainer() {
-        // FIXME: this method should be in ChemModelTools
-		AtomContainer ac = new AtomContainer();
-        // add molecules in SetOfMolecules
-        if (setOfMolecules != null) {
-            Molecule[] mols = setOfMolecules.getMolecules();
-            for (int i=0; i < mols.length; i++) {
-                Molecule m = mols[i];
-                ac.add(m);
-            }
-        }
-        // add molecules in SetOfReactions
-        if (setOfReactions != null) {
-            Reaction[] reactions = setOfReactions.getReactions();
-            for (int i=0; i < reactions.length; i++) {
-                Reaction r = reactions[i];
-                // add reactants in Reaction
-                Molecule[] reactants = r.getReactants();
-                for (int j=0; j < reactants.length; j++) {
-                    ac.add(reactants[i]);
-                }
-                // add products in Reaction
-                Molecule[] products = r.getProducts();
-                for (int j=0; j < products.length; j++) {
-                    ac.add(products[i]);
-                }
-            }
-        }
-		return ac;
-	}
-	
-	/**
 	 * Returns the SetOfMolecules of this ChemModel.
 	 *
 	 * @return   The SetOfMolecules of this ChemModel

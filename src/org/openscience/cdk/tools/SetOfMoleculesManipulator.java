@@ -56,5 +56,21 @@ public class SetOfMoleculesManipulator {
             return;
         }
     }
+    
+    /**
+     * Puts all the Molecules of this container together in one 
+     * AtomCcntainer.
+     *
+     * @return  The AtomContainer with all the Molecules of this container
+     */
+    public static AtomContainer getAllInOneContainer(SetOfMolecules set) {
+        AtomContainer container = new AtomContainer();
+        Molecule[] mols = set.getMolecules();
+        for (int i=0; i < mols.length; i++) {
+            Molecule m = mols[i];
+            container.add(m);
+        }
+        return container;
+    }
 }
 

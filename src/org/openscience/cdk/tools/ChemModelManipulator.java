@@ -79,5 +79,29 @@ public class ChemModelManipulator {
             SetOfReactionsManipulator.removeElectronContainer(reactionSet, electrons);
         }
     }
+    
+    /**
+     * Puts all the Molecules of this container together in one 
+     * AtomCcntainer.
+     *
+     * @return  The AtomContainer with all the Molecules of this container
+     */
+    public static AtomContainer getAllInOneContainer(ChemModel chemModel) {
+        AtomContainer container = new AtomContainer();
+        Crystal crystal = chemModel.getCrystal();
+        if (crystal != null) {
+            container.add(crystal);
+        }
+        SetOfMolecules moleculeSet = chemModel.getSetOfMolecules();
+        if (moleculeSet != null) {
+            container.add(SetOfMoleculesManipulator.getAllInOneContainer(moleculeSet));
+        }
+        SetOfReactions reactionSet = chemModel.getSetOfReactions();
+        if (reactionSet != null) {
+            container.add(SetOfReactionsManipulator.getAllInOneContainer(reactionSet));
+        }
+        return container;
+    }
+    
 }
 

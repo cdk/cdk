@@ -52,4 +52,15 @@ public class SetOfReactionsManipulator {
             return;
         }
     }
+    
+    public static AtomContainer getAllInOneContainer(SetOfReactions set) {
+        AtomContainer container = new AtomContainer();
+        Reaction[] reactions = set.getReactions();
+        for (int i=0; i < reactions.length; i++) {
+            Reaction reaction = reactions[i];
+            container.add(ReactionManipulator.getAllInOneContainer(reaction));
+        }
+        return container;
+    }
+    
 }
