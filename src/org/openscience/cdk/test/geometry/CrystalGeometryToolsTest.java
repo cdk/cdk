@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2003-2004  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -29,10 +29,17 @@ import org.openscience.cdk.geometry.*;
 import junit.framework.*;
 
 /**
+ * This class defines regression tests that should ensure that the source code
+ * of the org.openscience.cdk.geometry.CrystalGeometryTools is not broken.
+ * All methods that start with test are regression tests, e.g.
+ * <code>testNotionalToCartesian()</code>.
+ *
  * @cdkPackage test
  *
  * @author     Egon Willighagen
  * @created    2003-08-19
+ *
+ * @see org.openscience.cdk.geometry.CrystalGeometryTools
  */
 public class CrystalGeometryToolsTest extends TestCase {
 
@@ -42,11 +49,21 @@ public class CrystalGeometryToolsTest extends TestCase {
     
     public void setUp() {}
     
+    /**
+     * Defines a set of tests that can be used in automatic regression testing
+     * with JUnit.
+     */
     public static Test suite() {
         TestSuite suite = new TestSuite(CrystalGeometryToolsTest.class);
         return suite;
     }
     
+    /**
+     * This method tests the conversion of notional coordinates to 
+     * cartesian coordinates. The test assumes that the 
+     * <code>CrystalGeometryTools.notionalToCartesian()</code> methods
+     * places the a axis on the x axis and the b axis in the xy plane.
+     */
     public void testNotionalToCartesian() {
         double[][] cardAxes = CrystalGeometryTools.notionalToCartesian(
             1.0, 2.0, 3.0, 90.0, 90.0, 90.0
@@ -65,6 +82,10 @@ public class CrystalGeometryToolsTest extends TestCase {
         assertEquals(3.0, cardAxes[2][2], 0.001);
     }
 
+    /**
+     * This method tests the conversion of cartesian coordinates to 
+     * notional coordinates.
+     */
     public void testCartesianToNotional() {
         double[] a = {1.0, 0.0, 0.0};
         double[] b = {0.0, 2.0, 0.0};
@@ -80,6 +101,10 @@ public class CrystalGeometryToolsTest extends TestCase {
         assertEquals(90.0, notionalCoords[5], 0.001);
     }
     
+    /**
+     * This method tests the conversion of atomic fractional coordinates to
+     * cartesian coordinates.
+     */
     public void testFractionalToCartesian() {
         double[] a = {1.0, 0.0, 0.0};
         double[] b = {0.0, 2.0, 0.0};
@@ -93,6 +118,10 @@ public class CrystalGeometryToolsTest extends TestCase {
         assertEquals(2.25, cartCoords[2], 0.001);
     }
 
+    /**
+     * This method tests the conversion of atomic cartesian coordinates to
+     * fractional coordinates.
+     */
     public void testCartesianToFractional() {
         double[] a = {1.0, 0.0, 0.0};
         double[] b = {0.0, 2.0, 0.0};
@@ -106,12 +135,19 @@ public class CrystalGeometryToolsTest extends TestCase {
         assertEquals(0.75, fractCoords[2], 0.001);
     }
 
+    /**
+     * This method tests the calculation of axis lengths.
+     */
     public void testCalcAxisLength() {
         double[] a = {1.0, 1.0, 1.0};
         double length = CrystalGeometryTools.calcAxisLength(a);
         assertEquals(Math.sqrt(3.0), length, 0.001);
     }
 
+    /**
+     * This method tests the calculation of axis lengths too, like
+     * <code>testCalcAxisLength()</code>.
+     */
     public void testCalcAxisLength2() {
         double[] a = {1.0, 0.0, 0.0};
         double length = CrystalGeometryTools.calcAxisLength(a);
@@ -124,6 +160,9 @@ public class CrystalGeometryToolsTest extends TestCase {
         assertEquals(1.0, length, 0.001);
     }
 
+    /**
+     * This method tests the calculation of the angle between two axes.
+     */
     public void testCalcAngle() {
         double[] b = {0.0, 2.0, 0.0};
         double[] c = {0.0, 0.0, 3.0};
@@ -131,6 +170,9 @@ public class CrystalGeometryToolsTest extends TestCase {
         assertEquals(90.0, angle, 0.001);
     }
     
+    /**
+     * This method tests the calculation of the angle between two axes too.
+     */
     public void testCalcAngle2() {
         double[] b = {0.0, 1.0, 1.0};
         double[] c = {0.0, 0.0, 1.0};
@@ -138,12 +180,20 @@ public class CrystalGeometryToolsTest extends TestCase {
         assertEquals(45.0, angle, 0.001);
     }
     
+    /**
+     * This method tests the calculation of the angle between one axis
+     * and itself, which should be zero by definition.
+     */
     public void testCalcAngle3() {
         double[] b = {4.5, 3.1, 1.7};
         double angle = CrystalGeometryTools.calcAxesAngle(b,b);
         assertEquals(0.0, angle, 0.001);
     }
     
+    /**
+     * This method tests the conversion of notional coordinates to
+     * cartesian and back to notional.
+     */
     public void testRoundTripUnitCellNotionalCoordinates() {
         double[][] cardAxes = CrystalGeometryTools.notionalToCartesian(
             7.6, 3.9, 10.3, 67.0, 91.2, 110.5
@@ -162,6 +212,10 @@ public class CrystalGeometryToolsTest extends TestCase {
         assertEquals(110.5, notionalCoords[5], 0.001);
     }
     
+    /**
+     * This method tests wether two times inversion of the axes
+     * gives back the original axes.
+     */
     public void testCalcInvertedAxes() {
         double[] a = {3.4, 7.6, 5.5};
         double[] b = {2.8, 4.0, 6.3};
