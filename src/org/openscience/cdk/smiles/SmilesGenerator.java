@@ -31,6 +31,7 @@ package org.openscience.cdk.smiles;
 import org.openscience.cdk.*;
 import org.openscience.cdk.aromaticity.AromaticityCalculator;
 import org.openscience.cdk.tools.IsotopeFactory;
+import org.openscience.cdk.tools.ConnectivityChecker;
 import org.openscience.cdk.graph.invariant.MorganNumbersTools;
 import org.openscience.cdk.graph.invariant.CanonicalLabeler;
 import org.openscience.cdk.templates.MoleculeFactory;
@@ -427,28 +428,30 @@ public class SmilesGenerator {
    *
    */
   public synchronized String createSMILES(Molecule molecule) {
-      Vector moleculeSet = ConnectivityChecker.partitionIntoMolecules(molecule);
-      if (moleculeSet.size() > 1) {
-          StringBuffer fullSMILES = new StringBuffer();
-          Enumeration molecules = moleculeSet.elements();
-          while (molecules.hasMoreElements()) {
-              Molecule molPart = (Molecule)molecules.nextElement();
-              fullSMILES.append(createSMILES(molPart, false, new boolean[molPart.getBondCount()]));
-              if (molecules.hasMoreElements()) {
-                  fullSMILES.append('.');
+      try {
+          Vector moleculeSet = ConnectivityChecker.partitionIntoMolecules(molecule);
+          if (moleculeSet.size() > 1) {
+              StringBuffer fullSMILES = new StringBuffer();
+              Enumeration molecules = moleculeSet.elements();
+              while (molecules.hasMoreElements()) {
+                  Molecule molPart = (Molecule)molecules.nextElement();
+                  fullSMILES.append(createSMILES(molPart, false, new boolean[molPart.getBondCount()]));
+                  if (molecules.hasMoreElements()) {
+                      fullSMILES.append('.');
+                  }
               }
-          }
-          return fullSMILES.toString();
-      } else {
-          try {
+              return fullSMILES.toString();
+          } else {
               return (createSMILES(molecule, false, new boolean[molecule.getBondCount()]));
-          } catch(CDKException ex) {
-              //This exception can only happen if a chiral smiles is requested
-              return("");
           }
+      } catch (CDKException exception) {
+          // This exception can only happen if a chiral smiles is requested
+          return("");
+      } catch (Exception exception) {
+          return("");
       }
-  }
-  
+   }
+
   /**
    * Generate canonical and chiral SMILES from the <code>molecule</code>.  This method
    * canonicaly lables the molecule but dose not perform any checks on the
