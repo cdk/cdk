@@ -45,7 +45,7 @@ API changes:
 * MDL SDF files are now read as a ChemSequence of ChemModel's instead of a
   SetOfMolecules
 * Moved Ring.toString(Molecule) to only user RingSearchTest
-* Removed RingSet.reportRingList(Molecule)
+* Removed RingSet.reportRingList(Molecule) and RingSet.toString(Molecule)
 
 20041201 Release
 ------------------------------------

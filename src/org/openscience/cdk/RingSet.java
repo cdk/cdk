@@ -325,28 +325,6 @@ public class RingSet extends Vector implements java.io.Serializable, Cloneable
 		Collections.sort(this, new RingSizeComparator(LARGE_FIRST));	
 	}
 	
-	/**
-	 * Returns a sequence of string representations for all rings in the 
-	 * RingSet.
-	 *
-	 * @param   molecule  Used to assign numbers to each atom in the rings
-	 * @return  A sequence of string representations for all rings in the RingSet
-	 */
-	public String toString(Molecule molecule)
-	{
-		StringBuffer ringList = new StringBuffer();
-		ringList.append("RingList(");
-		for (int f = 0; f < size(); f++)
-		{
-		        ringList.append("R" + f + ": ");
-			ringList.append(((Ring)elementAt(f)).toString());
-			ringList.append(";");
-		}
-		ringList.append(")");
-		return ringList.toString();
-		
-	}
-
     /**
      * Comparator to sort Ring sets by size.
      */
