@@ -196,6 +196,16 @@ public class CDKPluginManager {
         return cdkPlugins.elements();
     }
     
+    public void closePlugins() {
+        Enumeration plugins = getPlugins();
+        if (plugins.hasMoreElements()) {
+            while (plugins.hasMoreElements()) {
+                CDKPluginInterface plugin = (CDKPluginInterface)plugins.nextElement();
+                plugin.stop();
+            }
+        }
+    }
+
     /**
      * Loads the plugins from a certain directory.
      */
