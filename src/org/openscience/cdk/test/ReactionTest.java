@@ -113,6 +113,13 @@ public class ReactionTest extends TestCase {
         assertEquals(1.0, reaction.getProductCoefficient(sulfate), 0.00001);
     }
     
+    public void testAddAgent() {
+        Reaction reaction = new Reaction();
+        Molecule proton = new Molecule();
+        reaction.addAgent(proton);
+        assertEquals(1, reaction.getAgents().getMoleculeCount());
+    }
+
     public void testGetReactantCoefficient() {
         Reaction reaction = new Reaction();
         Molecule proton = new Molecule();

@@ -15,6 +15,7 @@ New:
   psepanel.getSelectedElement().
 * Implemented GamessReader
 * Added parsing reaction specifications in SMILES
+* Added field to Reaction for agents, like catalysts
 
 Removed:
 * Viewer application. Use JChemPaint (jchempaint.sf.net) or Jmol (jmol.sf.net) instead

@@ -53,6 +53,9 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
 
     protected SetOfMolecules reactants;
     protected SetOfMolecules products;
+    /** These are the used solvent, catalysist etc that normally appear above
+        the reaction arrow */
+    protected SetOfMolecules agents;
     
     protected Mapping[] map;
     protected int mappingCount;
@@ -65,6 +68,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
     public Reaction() {
         this.reactants = new SetOfMolecules();
         this.products = new SetOfMolecules();
+        this.agents = new SetOfMolecules();
         this.map = new Mapping[growArraySize];
         mappingCount = 0;
         reactionDirection = FORWARD;
@@ -85,19 +89,24 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
     }
 
     /**
-     * Returns an array of Molecule with a length matching he number
-     * of reactants in this reaction.
+     * Returns an SetOfMolecules containing the reactants in this reaction.
      */
     public SetOfMolecules getReactants() {
         return reactants;
     }
 
     /**
-     * Returns an array of Molecule with a length matching he number
-     * of products in this reaction.
+     * Returns an SetOfMolecules containing the products in this reaction.
      */
     public SetOfMolecules getProducts() {
         return products;
+    }
+    
+    /**
+     * Returns an SetOfMolecules containing the agents in this reaction.
+     */
+    public SetOfMolecules getAgents() {
+        return agents;
     }
     
     /**
@@ -119,6 +128,15 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
         addReactant(reactant, 1.0);
     }
     
+    /**
+     * Adds an agent to this reaction.
+     *
+     * @param agent   Molecule added as agent to this reaction
+     */
+    public void addAgent(Molecule agent) {
+        agents.addAtomContainer(agent);
+    }
+
     /**
      * Adds a reactant to this reaction with a stoichiometry coefficient.
      *
@@ -259,6 +277,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
         description.append("#M:" + mappingCount + ", ");
         description.append("reactants=" + reactants.toString() + ", ");
         description.append("products=" + products.toString() + ", ");
+        description.append("agents=" + agents.toString());
         description.append(")");
         return description.toString();
     }
