@@ -129,7 +129,8 @@ public class Fingerprinter
 
 
 	/**
-	 *  Gets all pathes of length 1 up to the length given by the 'searchDepth" parameter. The pathes are aquired by a number of depth first searches, one for each atom.
+	 * Gets all pathes of length 1 up to the length given by the 'searchDepth" parameter. 
+     * The pathes are aquired by a number of depth first searches, one for each atom.
 	 *
 	 * @param  ac  The AtomContainer which is to be searched.
 	 */
