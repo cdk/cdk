@@ -333,33 +333,41 @@ public class SaturationChecker
 	 * @return           Description of the Return Value
 	 * @see              AtomTypeFactory
 	 */
-	public int calculateMissingHydrogen(Atom atom, AtomContainer container)
-	{
-		logger.info("Calculating number of missing hydrogen atoms");
-		// get default atom
-		AtomType[] atomTypes = atf.getAtomTypes(atom.getSymbol(), atf.ATOMTYPE_ID_STRUCTGEN);
-		logger.debug("Found atomtypes: " + atomTypes.length);
-		AtomType defaultAtom = atomTypes[0];
-		logger.debug("DefAtom: " + defaultAtom.toString());
-		int missingHydrogen = (int) (defaultAtom.getMaxBondOrderSum() -
-				container.getBondOrderSum(atom) +
-				atom.getFormalCharge());
-		if (atom.getFlag(CDKConstants.ISAROMATIC)){
-      Bond[] connectedBonds=container.getConnectedBonds(atom);
-      boolean subtractOne=true;
-      for(int i=0;i<connectedBonds.length;i++){
-        if(connectedBonds[i].getOrder()==2 || connectedBonds[i].getOrder()==CDKConstants.BONDORDER_AROMATIC)
-          subtractOne=false;
-      }
-      if(subtractOne)
-        missingHydrogen--;
+	public int calculateMissingHydrogen(Atom atom, AtomContainer container) {
+        int missingHydrogen = 0;
+        if (atom instanceof PseudoAtom) {
+            // don't figure it out... it simply does not lack H's
+        } else {
+            logger.info("Calculating number of missing hydrogen atoms");
+            // get default atom
+            AtomType[] atomTypes = atf.getAtomTypes(atom.getSymbol(), atf.ATOMTYPE_ID_STRUCTGEN);
+            logger.debug("Found atomtypes: " + atomTypes.length);
+            if (atomTypes.length > 0) {
+                AtomType defaultAtom = atomTypes[0];
+                logger.debug("DefAtom: " + defaultAtom.toString());
+                missingHydrogen = (int) (defaultAtom.getMaxBondOrderSum() -
+                container.getBondOrderSum(atom) +
+                atom.getFormalCharge());
+                if (atom.getFlag(CDKConstants.ISAROMATIC)){
+                    Bond[] connectedBonds=container.getConnectedBonds(atom);
+                    boolean subtractOne=true;
+                    for(int i=0;i<connectedBonds.length;i++){
+                        if(connectedBonds[i].getOrder()==2 || connectedBonds[i].getOrder()==CDKConstants.BONDORDER_AROMATIC)
+                            subtractOne=false;
+                    }
+                    if(subtractOne)
+                        missingHydrogen--;
+                }
+                logger.debug("Atom: " + atom.getSymbol());
+                logger.debug("  max bond order: " + defaultAtom.getMaxBondOrderSum());
+                logger.debug("  bond order sum: " + container.getBondOrderSum(atom));
+                logger.debug("  charge        : " + atom.getFormalCharge());
+            } else {
+                logger.warn("Could not find atom type for " + atom.getSymbol());
+            }
+        }
+        return missingHydrogen;
     }
-		logger.debug("Atom: " + atom.getSymbol());
-		logger.debug("  max bond order: " + defaultAtom.getMaxBondOrderSum());
-		logger.debug("  bond order sum: " + container.getBondOrderSum(atom));
-		logger.debug("  charge        : " + atom.getFormalCharge());
-		return missingHydrogen;
-	}
 
     /**
      * Method that saturates a molecule by adding explicit hydrogens.
