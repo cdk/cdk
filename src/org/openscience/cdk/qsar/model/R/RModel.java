@@ -42,6 +42,10 @@ import java.io.*;
  * initialization must be done only <b>once</b> in a Java thread. As a result
  * when any model class based on RModel is instantiated the constructor for the
  * super class (i.e., Rmodel) makes sure that SJava is not already initialized.
+ * <p>
+ * <b>NOTE</b>: For the R backend to work, ensure that R is correctly installed
+ * and that SJava is also installed, using the -c option. Finally, ensure 
+ * that the R_HOME environment variable points to the R installation.
  *
  * @param args  An array of String that contains command line parameters that
  *              would be processed by R

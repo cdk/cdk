@@ -28,7 +28,8 @@ import org.omegahat.R.Java.ROmegahatInterpreter;
 
 /** 
  * A modeling class that provides a computational neural network regression model.
- *
+ * <p>
+ * See {@link RModel} for details regarding the R and SJava environment.
  * @author Rajarshi Guha
  * @cdk.require r-project
  * @cdk.module qsar

@@ -61,6 +61,8 @@ import org.omegahat.R.Java.ROmegahatInterpreter;
  * values returned by the <a href="http://stat.ethz.ch/R-manual/R-patched/library/stats/html/lm.html">lm</a>
  * and <a href="http://stat.ethz.ch/R-manual/R-patched/library/stats/html/predict.lm.html">predict.lm</a>
  * functions in R.
+ * <p>
+ * See {@link RModel} for details regarding the R and SJava environment.
  *
  * @author Rajarshi Guha
  * @cdk.require r-project
