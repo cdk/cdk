@@ -32,8 +32,8 @@ for d in "/usr/lib/j2re1.3/lib"
 do
     if test -f "$d/rt.jar"
     then
-        AC_MSG_RESULT("$d")
-        PATHTORTJAR="$p/$d/print/docbook.dsl"
+        AC_MSG_RESULT("$d/rt.jar")
+        PATHTORTJAR="$d/rt.jar"
     fi
 done
 AC_SUBST(PATHTORTJAR)
