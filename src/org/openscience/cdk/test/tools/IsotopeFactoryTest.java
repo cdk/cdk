@@ -34,6 +34,8 @@ import junit.framework.*;
  */
 public class IsotopeFactoryTest extends TestCase
 {
+	boolean standAlone = false;
+	
 	public IsotopeFactoryTest(String name)
 	{
 		super(name);
@@ -61,12 +63,14 @@ public class IsotopeFactoryTest extends TestCase
 		{
 			throw new AssertionFailedError("Problem instantiating IsotopeFactory: " +  exc.toString());
 		}
-		
+		if (standAlone) System.out.println("isoFac.getSize(): " + isofac.getSize());
 		assertTrue(isofac.getSize() > 0);
 		
 		try
 		{
 			isotope = isofac.getMajorIsotope("Te");
+			if (standAlone) System.out.println("Isotope: " + isotope);
+			
 		}
 		catch(Exception exc)
 		{
@@ -119,4 +123,19 @@ public class IsotopeFactoryTest extends TestCase
 
 		assertTrue(element.getAtomicNumber() == 35);
 	}    
+	
+	
+	
+	public static void main(String[] args)
+	{
+		try{
+			IsotopeFactoryTest ift = new IsotopeFactoryTest("IsotopeFactoryTest");
+			ift.standAlone = true;
+			ift.testIsotopeFactory();
+		}
+		catch(Exception exc)
+		{
+			exc.printStackTrace();
+		}
+	}
 }
