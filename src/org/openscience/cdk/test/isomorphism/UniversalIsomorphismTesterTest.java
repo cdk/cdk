@@ -28,6 +28,7 @@
  */
 package org.openscience.cdk.test.isomorphism;
 
+import java.io.*;
 import java.util.Vector;
 import java.util.List;
 
@@ -35,10 +36,18 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.Bond;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.isomorphism.matchers.QueryAtom;
+import org.openscience.cdk.isomorphism.matchers.SymbolQueryAtom;
+import org.openscience.cdk.isomorphism.matchers.OrderQueryBond;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
+import org.openscience.cdk.isomorphism.matchers.smarts.AnyAtom;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.mcss.*;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -132,6 +141,33 @@ public class UniversalIsomorphismTesterTest extends TestCase
 		}
 	}
 	
+    public void testQueryAtomContainer()
+    {
+        String molfile = "data/mdl/decalin.mol";
+        String queryfile = "data/mdl/decalin.mol";
+        Molecule mol = new Molecule();
+        Molecule temp = new Molecule();
+        QueryAtomContainer query = null;
+        
+        try {
+            MDLReader reader = new MDLReader(new FileReader(molfile));
+            reader.read(mol);
+            reader = new MDLReader(new FileReader(queryfile));
+            reader.read(temp);
+            query = QueryAtomContainerCreator.createBasicQueryContainer(temp);
+            
+        } catch (Exception ex) {
+            System.err.println("testQueryAtomContainer: " + ex.getMessage());
+        }
+        
+        List list = UniversalIsomorphismTester.getSubgraphMaps(mol, temp);
+        List list2 = UniversalIsomorphismTester.getSubgraphMaps(mol, query);
+        
+        assertTrue(!list.isEmpty());
+        assertTrue(!list2.isEmpty());
+    }
+    
+    
 	public static void main(String[] args)
 	{
 		try{
