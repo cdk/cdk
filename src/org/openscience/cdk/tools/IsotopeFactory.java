@@ -63,7 +63,7 @@ public class IsotopeFactory
 	private static IsotopeFactory ifac = null;
 	private Vector isotopes = null;
     private Hashtable majorIsotopes = null;
-
+    private boolean debug = false;
     private LoggingTool logger;
 
 	/**
@@ -87,7 +87,7 @@ public class IsotopeFactory
                               "config.isotopes.xml as a stream";
 		try {
             String configFile = "org/openscience/cdk/config/isotopes.xml";
-            logger.debug("Getting stream for " + configFile);
+            if (debug) logger.debug("Getting stream for " + configFile);
             ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
 		} catch (Exception exc) {
             logger.error(errorMessage);
@@ -101,10 +101,10 @@ public class IsotopeFactory
         //in = new ObjIn(ins, new Config().aliasID(false));
         //isotopes = (Vector) in.readObject();
         isotopes = reader.readIsotopes();
-        logger.debug("Found #isotopes in file: " + isotopes.size());
+        if (debug) logger.debug("Found #isotopes in file: " + isotopes.size());
 		for (int f = 0; f < isotopes.size(); f++) {
             Isotope isotope = (Isotope)isotopes.elementAt(f);
-            logger.debug("Setting up: " + isotope);
+            if (debug) logger.debug("Setting up: " + isotope);
 			setup(isotope);
 		}
         

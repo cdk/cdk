@@ -38,6 +38,7 @@ public class IsotopeHandler extends DefaultHandler {
     private LoggingTool logger;
     private String currentChars;
     private Vector isotopes;
+    private boolean debug = false;
 
     public IsotopeHandler() {
         logger = new LoggingTool(this.getClass().getName());
@@ -64,16 +65,16 @@ public class IsotopeHandler extends DefaultHandler {
     }
 
     public void endElement(String uri, String local, String raw) {
-        logger.debug("end element: " + raw);
+        if (debug) logger.debug("end element: " + raw);
     }
 
     public void startElement(String uri, String local, 
                              String raw, Attributes atts) {
         currentChars = "";
-        logger.debug("startElement: " + raw);
-        logger.debug("uri: " + uri);
-        logger.debug("local: " + local);
-        logger.debug("raw: " + raw);
+        if (debug) logger.debug("startElement: " + raw);
+        if (debug) logger.debug("uri: " + uri);
+        if (debug) logger.debug("local: " + local);
+        if (debug) logger.debug("raw: " + raw);
         if ("org.openscience.cdk.Isotope".equals(local)) {
             // check version
             Isotope isotope = new Isotope("R");
@@ -101,7 +102,7 @@ public class IsotopeHandler extends DefaultHandler {
     }
 
     public void characters(char ch[], int start, int length) {
-        logger.debug("character data");
+        if (debug) logger.debug("character data");
         currentChars += new String(ch, start, length);
     }
 
