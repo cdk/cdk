@@ -42,6 +42,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Isotope;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.Reaction;
 import org.openscience.cdk.RingSet;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
@@ -152,6 +153,37 @@ public class SmilesGenerator {
     }
   }
 
+
+  /**
+   * Generate a SMILES for the given <code>Reaction</code>.
+   */
+  public synchronized String createSMILES(Reaction reaction) throws CDKException {
+      StringBuffer reactionSMILES = new StringBuffer();
+      Molecule[] reactants = reaction.getReactants().getMolecules();
+      for (int i=0; i<reactants.length; i++) {
+          reactionSMILES.append(createSMILES(reactants[i]));
+          if (i+1 < reactants.length) {
+              reactionSMILES.append('.');
+          }
+      }
+      reactionSMILES.append('>');
+      Molecule[] agents = reaction.getAgents().getMolecules();
+      for (int i=0; i<agents.length; i++) {
+          reactionSMILES.append(createSMILES(agents[i]));
+          if (i+1 < agents.length) {
+              reactionSMILES.append('.');
+          }
+      }
+      reactionSMILES.append('>');
+      Molecule[] products = reaction.getProducts().getMolecules();
+      for (int i=0; i<products.length; i++) {
+          reactionSMILES.append(createSMILES(products[i]));
+          if (i+1 < products.length) {
+              reactionSMILES.append('.');
+          }
+      }
+      return reactionSMILES.toString();
+  }
 
   /**
    * Generate canonical and chiral SMILES from the <code>molecule</code>.  This method

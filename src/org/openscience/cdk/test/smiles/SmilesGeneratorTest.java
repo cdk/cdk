@@ -37,6 +37,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.Reaction;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.layout.HydrogenPlacer;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
@@ -716,6 +717,32 @@ public class SmilesGeneratorTest extends TestCase
 
 	}
 
+    /**
+     * Test generation of a reaction SMILES. I know, it's a stupid
+     * alchemic reaction, but it serves its purpose.
+     */
+    public void testReactionSMILES() {
+        Reaction reaction = new Reaction();
+        Molecule methane = new Molecule();
+        methane.addAtom(new Atom("C"));
+        reaction.addReactant(methane);
+        Molecule magic = new Molecule();
+        magic.addAtom(new PseudoAtom("magic"));
+        reaction.addAgent(magic);
+        Molecule gold = new Molecule();
+        gold.addAtom(new Atom("Au"));
+        reaction.addProduct(gold);
+        
+		SmilesGenerator sg = new SmilesGenerator();
+        try {
+			String smiles = sg.createSMILES(reaction);
+            System.out.println("Generated SMILES: " + smiles);
+            assertEquals("C>[*]>[Au]", smiles);
+		} catch (Exception exc) {
+			System.out.println(exc);
+		}
+    }
+    
 
 	/**
 	 *  Description of the Method

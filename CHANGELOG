@@ -16,6 +16,7 @@ New:
 * Implemented GamessReader
 * Added parsing reaction specifications in SMILES
 * Added field to Reaction for agents, like catalysts
+* Added generation of reaction SMILES
 
 Removed:
 * Viewer application. Use JChemPaint (jchempaint.sf.net) or Jmol (jmol.sf.net) instead
