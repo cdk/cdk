@@ -11,13 +11,13 @@ Fixes:
 * Added missing switch for display of implicit hydrogens in Renderer2D
 * Fixed reading of OpenBabel CML1/2 output
 * Now compiles with GCJ 3.3.1 (closes #807833)
-* Renamed [s|g]etAtomicMass to [s|g]etMassNumber (fixes #721117) and moved it 
-  from Element into Isotope
 
 API changes:
 * Added getIOSettings() to ChemObject[Reader|Writer]
 * Added ChemObjectIO and ChemObjectIOListener interfaces
   to simplify IO API
+* Renamed [s|g]etAtomicMass to [s|g]etMassNumber (fixes #721117) and moved it
+  from Element into Isotope
 
 20030909 Release
 ------------------------------------
