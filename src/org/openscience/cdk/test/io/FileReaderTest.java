@@ -37,11 +37,11 @@ import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.applications.swing.AtomicTable;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.geometry.Projector;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.XYZReader;
-import org.openscience.cdk.tools.Projector;
 
 /**
  * @cdk.module test
