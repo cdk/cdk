@@ -56,7 +56,7 @@ public class MakeKeywordIndexDoclet {
 
     private void processPackages(PackageDoc[] pkgs) throws IOException {
         for (int i=0; i < pkgs.length; i++) {
-            processClasses(pkgs[i].ordinaryClasses());
+            processClasses(pkgs[i].allClasses());
         }
     }
 

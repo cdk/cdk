@@ -39,7 +39,7 @@ public class JavaDocStats {
             objectsWithDescription = 0;
 
             // generate statistics
-            processClasses(pkgs[i].ordinaryClasses());
+            processClasses(pkgs[i].allClasses());
 
             // output statistics
             out.println("Package " + pkgs[i].name());
