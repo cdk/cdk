@@ -11,6 +11,9 @@ public class JavaDocStats {
     private int interfaces = 0;
     private int classes = 0;
 
+    private int totalObjects = 0;
+    private int objectsWithDescription = 0;
+
     private Hashtable authors;
 
     private PrintWriter out;
@@ -32,6 +35,8 @@ public class JavaDocStats {
             interfaces = 0;
             classes = 0;
             authors = new Hashtable();
+            totalObjects = 0;
+            objectsWithDescription = 0;
 
             // generate statistics
             processClasses(pkgs[i].ordinaryClasses());
@@ -45,6 +50,9 @@ public class JavaDocStats {
             out.println("    public    : " + publicObjects);
             out.println("    private   : " + privateObjects);
             out.println("    protected : " + protectedObjects);
+            out.println("  Object has description");
+            out.println("    with      : " + objectsWithDescription);
+            out.println("    without   : " + (totalObjects - objectsWithDescription));
             out.println("  Object authors stats");
             Enumeration authorNames = authors.keys();
             while (authorNames.hasMoreElements()) {
@@ -56,6 +64,8 @@ public class JavaDocStats {
 
     private void processClasses(ClassDoc[] classes) throws IOException {
         for (int i=0; i<classes.length; i++) {
+            totalObjects++;
+
             // process basic Java stuff
             if ( classes[i].isInterface() )
                 this.interfaces++;
@@ -67,6 +77,11 @@ public class JavaDocStats {
                 this.protectedObjects++;
             if ( classes[i].isPrivate() )
                 this.privateObjects++;
+
+            // has object a description?
+            if (classes[i].commentText().length() > 0) {
+                objectsWithDescription++;
+            }
 
             // process tags
             Tag[] tags = classes[i].tags("author");

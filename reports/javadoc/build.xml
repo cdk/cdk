@@ -30,6 +30,21 @@
         </javadoc>
     </target>
 
+    <target name="keyword.index">
+        <javadoc private="false" public="true">
+            <classpath refid="project.class.path" />
+
+            <doclet name="MakeKeywordIndexDoclet" path="."/>
+
+            <package name="org.openscience.cdk.*"/>
+
+            <sourcepath>
+                <pathelement path="../.."/>
+            </sourcepath>
+
+        </javadoc>
+    </target>
+
 </project>
 
 
