@@ -50,17 +50,12 @@
   <para>
     The editorial board of the news letter consists of
     Egon Willighagen and Christoph Steinbeck, who are Editor-in-Chief,
-    Uli Fechner and Rajarshi Guha.
+    Uli Fechner, Rajarshi Guha and Andres Bender.
   </para>
   
-  <section>
-   <title>Submitting articles</title>
-   <para>
-     The first issue (1/1) features an article about writing an article for 
-     CDK&nbsp;News, so please read that. The article mentions websources for
-     the Latex style file and an example Latex source file for
-     an article. Both can be found <ulink url="http://cdk.sf.net/cdknews/exampleArticle">here</ulink>.
-   </para>
-  </section>
+  <para>
+    We invite people to submit article to the news letter. See
+    <ulink url="cdknews-submit.html">this page</ulink> for full details.
+  </para>
   
 </webpage>

@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.0b1//EN" "dtd/website.dtd" [
+<!ENTITY changelog SYSTEM "../../../CHANGELOG">
+]>
+<webpage id="cdknews-submit">
+  <config param="last-change-by" value="$Author$"/>
+  <config param="rcsdate" value="$Date$"/>
+
+  <head>
+    <title>Submitting to CDK News</title>
+    <titleabbrev>CDK News Submit</titleabbrev>
+    <summary>Information about how to submit articles to CDK News.</summary>
+  </head>
+
+  <para>
+    Submitting articles to CDK News is highly appreciated form of giving back to
+    the project. Share your ideas on CDK with others. Articles appearing in the
+    newsletter are published with the
+    <ulink url="http://www.gnu.org/copyleft/fdl.html">FDL</ulink>
+    license, an open source license for
+    documentation. When you submit an article for the newsletter, you acknoledge
+    that you agree with releasing the article with that license. Copyright on
+    the article, however, remains with the author, allowing it to be distributed
+    via other channels too.
+  </para>
+  
+  <para>
+    Articles can be submitted in six different categories, and each category has
+    specific requirements for the content. These are listed here:
+  </para>
+  <variablelist>
+    <varlistentry>
+      <term>Interview</term>
+      <term>Comment</term>
+      <listitem>
+        <itemizedlist>
+          <listitem><para>dealing with CDK or chemo/bio/mol-informatics in general</para></listitem>
+          <listitem><para>no citations required</para></listitem>
+          <listitem><para>no algorithms need to be discussed</para></listitem>
+          <listitem><para>shows what of that is available in which CDK classes, but
+                          no code required</para></listitem>
+        </itemizedlist>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Review</term>
+      <listitem>
+        <itemizedlist>
+          <listitem><para>full citations, primairy sources highly preferred</para></listitem>
+          <listitem><para>clear and detailed discussion of algorithms</para></listitem>
+          <listitem><para>shows what of that is available in which CDK classes</para></listitem>
+        </itemizedlist>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Tutorial</term>
+      <listitem>
+        <itemizedlist>
+          <listitem><para>dealing with CDK or chemo/bio/mol-informatics in general</para></listitem>
+          <listitem><para>a few relevant citations, possibly reviews</para></listitem>
+          <listitem><para>code fragments are compilable, and full programs downloadable</para></listitem>
+          <listitem><para>shows what of that is available in which CDK classes</para></listitem>
+        </itemizedlist>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Communication</term>
+      <listitem>
+        <itemizedlist>
+          <listitem><para>gives an update on ongoing research</para></listitem>
+          <listitem><para>short title, full title starts with "Communication:"</para></listitem>
+          <listitem><para>a few relevant citations, possibly reviews</para></listitem>
+          <listitem><para>code fragments show proof of concept, not necessarily
+                          compilable</para></listitem>
+          <listitem><para>discusses the algorithm on a conceptual level</para></listitem>
+          <listitem><para>does not need to disclose the full details of new algorithms</para></listitem>
+        </itemizedlist>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term>Research Article</term>
+      <listitem>
+        <itemizedlist>
+          <listitem><para>is not accepted when the article is likely to be accepted to JCICS or likewise</para></listitem>
+          <listitem><para>full citations, primairy sources highly preferred</para></listitem>
+          <listitem><para>clear and detailed discussion of algorithms</para></listitem>
+          <listitem><para>shows what of that is available in which CDK classes</para></listitem>
+          <listitem><para>must contain code fragments that are compilable, and full programs downloadable</para></listitem>
+        </itemizedlist>
+      </listitem>
+    </varlistentry>
+  </variablelist>
+  
+  <section>
+    <title>Latex</title>
+    <para>
+      The first issue (1/1) features an article about writing an article for 
+      CDK&nbsp;News, so please read that. The article mentions websources for
+      the Latex style file and an example Latex source file for
+      an article. Both can be found 
+      <ulink url="http://cdk.sf.net/cdknews/exampleArticle">here</ulink>.
+    </para>
+  </section>
+  
+</webpage>
