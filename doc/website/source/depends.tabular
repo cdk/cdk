@@ -1,4 +1,4 @@
-website: intro.html thelibrary.html libraries.html related.html javancss-stats.html development.html guide.html guide-library-development.html guide-docs.html guide-packages.html guide-website-development.html whoiswho.html agenda.html changelog.html documentation.html reference.html keywordindex.html api.html core-api.html manpages.html javadoc-stats.html screenshots.html index.html 
+website: intro.html thelibrary.html libraries.html related.html javancss-stats.html development.html guide.html guide-library-development.html guide-docs.html guide-packages.html guide-website-development.html whoiswho.html agenda.html changelog.html documentation.html reference.html keywordindex.html api.html core-api.html manpages.html javadoc-stats.html screenshots.html software.html maillinglists.html download.html biblio.html index.html 
 
 index.html: website.xml
 intro.html: intro.xml
@@ -23,7 +23,11 @@ core-api.html: core-api.xml
 manpages.html: manpages.xml
 javadoc-stats.html: javadoc-stats.xml
 screenshots.html: screenshots.xml
+software.html: software.xml
+maillinglists.html: maillinglists.xml
+download.html: download.xml
+biblio.html: biblio.xml
 
 clean:
-	rm -f intro.html thelibrary.html libraries.html related.html javancss-stats.html development.html guide.html guide-library-development.html guide-docs.html guide-packages.html guide-website-development.html whoiswho.html agenda.html changelog.html documentation.html reference.html keywordindex.html api.html core-api.html manpages.html javadoc-stats.html screenshots.html index.html 
+	rm -f intro.html thelibrary.html libraries.html related.html javancss-stats.html development.html guide.html guide-library-development.html guide-docs.html guide-packages.html guide-website-development.html whoiswho.html agenda.html changelog.html documentation.html reference.html keywordindex.html api.html core-api.html manpages.html javadoc-stats.html screenshots.html software.html maillinglists.html download.html biblio.html index.html 
 
