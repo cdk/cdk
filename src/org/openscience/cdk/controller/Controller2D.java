@@ -363,16 +363,7 @@ public class Controller2D
 				Atom atomInRange = r2dm.getHighlightedAtom();
 				if (atomInRange != null)
 				{
-					int index = commonElements.indexOf(atomInRange.getSymbol());
-					if ((index < (commonElements.size() - 1)) && (index != -1))
-					{
-						// pick next atom in list of common Elements
-						index++;
-					} else
-					{
-						index = 0;
-					}
-					String symbol = (String) commonElements.get(index);
+					String symbol = c2dm.getDrawElement();
 					atomInRange.setSymbol(symbol);
 					// configure the atom, so that the atomic number matches the symbol
 					try
@@ -386,9 +377,6 @@ public class Controller2D
 					// update atom
 					AtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, atomInRange);
 					updateAtom(container, atomInRange);
-
-					// also adjust the new draw elem
-					c2dm.setDrawElement(symbol);
 
 					/*
 					 *  PRESERVE THIS. This notifies the
