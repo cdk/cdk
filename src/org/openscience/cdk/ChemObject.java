@@ -76,31 +76,8 @@ public class ChemObject implements Cloneable
      */
 	public ChemObject()
 	{
-		/** Vector for listener administration */
-		chemObjects = new Vector();
-		/** 
-		  * A hashtable for the storage of physical properties 
-		  * of this ChemObject. 
-		  */
-		physicalProperties = new Hashtable();
-		/** 
-		  * A hashtable for the storage of any kind of properties 
-		  * of this ChemObject. 
-		  */
-		properties = new Hashtable();
-		/** 
-		  * A hashtable for the storage of the remarks.
-		  */
-		remarks = new Hashtable();
-		/** You will frequently have to use some flags on a ChemObject
-		 * for example if you want to draw a molecule and see
-		 * if you've already drawn an atom, or in a ring search to 
-		 * check whether a vertex has been visited in a graph traversal.
-		 * Use these flags while addressing particular positions in the
-		 * flag array with self-defined constants (flags[VISITED] = true).
-		 * 10 flags per object should be more than enough.
-		 */
-		flags = new boolean[100];
+		super();
+		init();
 	}
 	
 	/**
@@ -231,6 +208,39 @@ public class ChemObject implements Cloneable
 	}
 
 	/**
+	 * Initializes all the service fields, vectors, hashtables, etc..
+	 *
+	 */
+	public void init()
+	{
+		/** Vector for listener administration */
+		chemObjects = new Vector();
+		/** 
+		  * A hashtable for the storage of physical properties 
+		  * of this ChemObject. 
+		  */
+		physicalProperties = new Hashtable();
+		/** 
+		  * A hashtable for the storage of any kind of properties 
+		  * of this ChemObject. 
+		  */
+		properties = new Hashtable();
+		/** 
+		  * A hashtable for the storage of the remarks.
+		  */
+		remarks = new Hashtable();
+		/** You will frequently have to use some flags on a ChemObject
+		 * for example if you want to draw a molecule and see
+		 * if you've already drawn an atom, or in a ring search to 
+		 * check whether a vertex has been visited in a graph traversal.
+		 * Use these flags while addressing particular positions in the
+		 * flag array with self-defined constants (flags[VISITED] = true).
+		 * 10 flags per object should be more than enough.
+		 */
+		flags = new boolean[100];		
+	}
+	
+	/**
 	 * Clones this object.
 	 *
 	 * @return  The cloned object
@@ -245,6 +255,11 @@ public class ChemObject implements Cloneable
 		catch (CloneNotSupportedException e)
 		{
 			e.printStackTrace(System.err);
+		}
+		((ChemObject)o).flags = new boolean[100];
+		for (int f = 0; f < flags.length; f++)
+		{
+			((ChemObject)o).flags[f] = flags[f];	
 		}
 		return o;
 	}
