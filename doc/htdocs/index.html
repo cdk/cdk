@@ -1,0 +1,134 @@
+<html>
+    <head>
+        <title>The Chemistry Development Kit (CDK)</title>
+        <meta content="DocBook XSL Stylesheets V1.18" name="generator">
+    </head>
+    <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+        <div id="Na21" class="book">
+            <div class="titlepage">
+                <h1 class="title">
+                    <a name="Na21">The Chemistry Development Kit (CDK)</a>
+                </h1>
+                <h2 class="subtitle">A Java library for Computational Chemistry and Chemoinformatics</h2>
+                <h3 class="author">Dan Gezelter</h3>
+                <h3 class="author">Christoph Steinbeck</h3>
+                <h3 class="author">Egon Willighagen</h3>
+                <p class="copyright">Copyright &copy; 2000 by The CDK project</p>
+                <hr>
+            </div>
+            <div class="toc">
+                <p>
+                    <b>Table of Contents</b>
+                </p>
+                <dl>
+                    <dt>1. <a href="#Na93">What is the CDK?</a>
+                    </dt>
+                    <dt>2. <a href="#Nae6">Who develops the CDK?</a>
+                    </dt>
+                    <dt>3. <a href="#Naf4">How is the CDK developed</a>
+                    </dt>
+                    <dt>4. <a href="#Nb07">How can I participate?</a>
+                    </dt>
+                </dl>
+            </div>
+            <div class="chapter" id="Na93">
+                <h2 class="title">
+                    <a name="Na93">1. What is the CDK?</a>
+                </h2>
+                <p>
+The CDK classes are Java utitility classes for ChemoInformatics and Computational chemistry, written in Java. They are developed constantly developed parallel
+to other projects that make use of them.
+They are a complete re-write of the CompChem classes that were the basis of <a href="http://www.sourceforge.net/projects/JChemPaint">JChemPaint</a>, a Java Editor 
+for 2D chemical structures, and of <a href="http://www.sourceforge.net/projects/JMDraw">JMDraw</a>, a Java package for the graphical layout of 2D chemical structures 
+	</p>
+                <p>
+A re-write was needed to in order to assure the widest possible usability. It is also intended to port
+<a href="http://www.openscience.org/jmol">JMol</a>, a 3D molecular visualization tool, to the CDK.	
+	</p>
+                <p>		
+		The CDK classes support (or will support, as soon as ported from the old CompChem library): 
+		<div class="itemizedlist">
+                        <ul>
+                            <li>
+                                <a name="Nab1"></a>
+                                <p>
+					Classes for Atoms, Molecules and other chemical concepts.
+				</p>
+                            </li>
+                            <li>
+                                <a name="Nab7"></a>
+                                <p>
+					Utilities for importing and exporting chemical structures (Molecules or arrays of Atoms) using standard chemical files format.
+				</p>
+                            </li>
+                            <li>
+                                <a name="Nabd"></a>
+                                <p>
+					Utility classes for handling chemical elements and isotopes.
+				</p>
+                            </li>
+                            <li>
+                                <a name="Nac3"></a>
+                                <p>
+					A class that parses a molecular formula (a String of characters) and returns an array of Nodes.
+				</p>
+                            </li>
+                            <li>
+                                <a name="Nac9"></a>
+                                <p>
+					An isomorphisms tester that compares to structures and returns if they are isomorph. I'm almost sure, that the implementation is not strictly valid, but it 
+					seems to work
+				</p>
+                            </li>
+                            <li>
+                                <a name="Nacf"></a>
+                                <p>
+					A SMILES parser (hidden as a static method in compchem.ChemFileUtils), which so far only implements the SSMILES standard.
+				</p>
+                            </li>
+                            <li>
+                                <a name="Nad5"></a>
+                                <p>
+					An implementation of John Figueras, "Ring Perception Using Breadth-First Search", J. Chem. Inf. Comput Sci. 1996, 36, 986-991.
+				</p>
+                            </li>
+                        </ul>
+                    </div>
+	</p>
+                <p>
+	Please <a href="api/index.html">check the existing API documentation</a> for information on which classes are already implemented.
+	</p>
+            </div>
+            <div class="chapter" id="Nae6">
+                <h2 class="title">
+                    <a name="Nae6">2. Who develops the CDK?</a>
+                </h2>
+                <p>
+	  	The CDK is a joint venture of the JMol and JChemPaint developers who would like to see a general-purpose open-source library for 
+		computational chemistry and chemoinformatics. Check the developers list on the <a href="http://www.sourceforge.net/projects/CompChem">CDK pages.</a>
+	</p>
+            </div>
+            <div class="chapter" id="Naf4">
+                <h2 class="title">
+                    <a name="Naf4">3. How is the CDK developed</a>
+                </h2>
+                <p>
+	 	The CDK is mantained as a <a href="http://www.sourceforge.net">SourceForge</a> project under
+		<a href="http://www.sourceforge.net/projects/CompChem">http://www.sourceforge.net/projects/CompChem</a>. 
+		Please check the SourceForge site documentation for more.
+		SourceForge gives us bugtracking, mailing lists, support manager and last not least CVS access.
+	</p>
+            </div>
+            <div class="chapter" id="Nb07">
+                <h2 class="title">
+                    <a name="Nb07">4. How can I participate?</a>
+                </h2>
+                <p>
+		Check the <a href="http://www.sourceforge.net">SourceForge</a> site documentation on how to access the CVS.
+		If you actively want to contribute, please get a SourceForge accoutn, contact the project admin so that he can
+		add you to the developers list
+	</p>
+            </div>
+        </div>
+    </body>
+</html>
