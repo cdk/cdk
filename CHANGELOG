@@ -14,6 +14,8 @@ New:
 * Added new, alternative method to saturate a molecule by adjusting bond orders
 * Implemented a basic MDL v3000 MOL and RXN file reader
 * Added a basic CIF and mmCIF reader
+* Added benzene ring adding feature to the Controller2D
+* Made aromaticity perception in Renderer2D optional
 
 Fixes:
 * Removed use of JSX
