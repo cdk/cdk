@@ -29,6 +29,7 @@ package org.openscience.cdk.test.io.cml;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.StringWriter;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -42,6 +43,11 @@ import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.io.CMLReader;
+import org.openscience.cdk.io.CMLWriter;
+import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.exception.NoSuchAtomException;
+
 
 /**
  * TestCase for the reading CML 2 files using a few test files
@@ -522,4 +528,27 @@ public class CML2Test extends TestCase {
         }
     }
 
+	public void testCMLWriterBenzene() {
+		StringWriter writer = new StringWriter();
+        Molecule molecule = MoleculeFactory.makeBenzene();
+		try {
+			HueckelAromaticityDetector.detectAromaticity(molecule);
+		} catch (NoSuchAtomException e) {
+			fail(e.getMessage());
+		}
+        CMLWriter cmlWriter = new CMLWriter(writer);
+        
+        try {
+            cmlWriter.write(molecule);
+        } catch (Exception exception) {
+            logger.error("Error while creating an MDL file");
+            logger.debug(exception);
+            fail(exception.getMessage());
+        }
+		System.out.println("******************************");
+        System.out.println(writer.toString());
+		System.out.println("******************************");
+        assertTrue(writer.toString().indexOf("</molecule>") != -1);
+	}
+	
 }
