@@ -76,7 +76,7 @@ public class ReaderFactoryTest extends TestCase {
     }
 
     public void testGhemical() {
-        expectReader("data/ethene.mm1gp", new GhemicalMMFormat());
+        expectReader("data/ethene.mm1gp", new GhemicalSPMFormat());
     }
 
     public void testJaguar() {
@@ -158,10 +158,12 @@ public class ReaderFactoryTest extends TestCase {
             fail("Cannot find file: " + filename);
         }
         try {
+            ChemFormat format = factory.guessFormat(ins);
+            assertEquals(expectedFormat.getFormatName(), format.getFormatName());
+            // ok, if format ok, try instantiating a reader
+            ins = this.getClass().getClassLoader().getResourceAsStream(filename);
             ChemObjectReader reader = factory.createReader(ins);
             assertNotNull(reader);
-            ChemFormat format = reader.getFormat();
-            assertEquals(expectedFormat.getFormatName(), format.getFormatName());
             // now try reading something from it
             ChemObject[] objects = { 
                 new ChemFile(), new ChemModel(), new Molecule(),
