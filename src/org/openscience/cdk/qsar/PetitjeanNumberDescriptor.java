@@ -1,0 +1,164 @@
+/*
+ *  $RCSfile$
+ *  $Author$
+ *  $Date$
+ *  $Revision$
+ *
+ *  Copyright (C) 2004  The Chemistry Development Kit (CDK) project
+ *
+ *  Contact: cdk-devel@lists.sourceforge.net
+ *
+ *  This program is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public License
+ *  as published by the Free Software Foundation; either version 2.1
+ *  of the License, or (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+package org.openscience.cdk.qsar;
+
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.qsar.result.*;
+import org.openscience.cdk.graph.*;
+import org.openscience.cdk.graph.matrix.*;
+
+
+/**
+ *  According to the Petitjean definition, the eccentricity of a vertex corresponds to 
+ *  the distance from that vertex to the most remote vertex in the graph. 
+ *  The distance is obtained from the distance matrix as the count of edges between the two vertices. 
+ *  If r(i) is the largest matrix entry in row i of the distance matrix D, then the radius is defined as the smallest of the r(i).
+ *  The graph diameter D is defined as the largest vertex eccentricity in the graph.
+ *  (http://www.edusoft-lc.com/molconn/manuals/400/chaptwo.html)
+ *
+ *@author         mfe4
+ *@created        December 7, 2004
+ *@cdk.created    2004-11-03
+ *@cdk.module     qsar
+ *@cdk.set        qsar-descriptors
+ */
+public class PetitjeanNumberDescriptor implements Descriptor {
+
+	/**
+	 *  Constructor for the PetitjeanNumberDescriptor object
+	 */
+	public PetitjeanNumberDescriptor() { }
+
+
+	/**
+	 *  Gets the specification attribute of the PetitjeanNumberDescriptor object
+	 *
+	 *@return    The specification value
+	 */
+	public DescriptorSpecification getSpecification() {
+		return new DescriptorSpecification(
+				"http://qsar.sourceforge.net/dicts/qsar-descriptors:petitjeanNumber",
+				this.getClass().getName(),
+				"$Id$",
+				"The Chemistry Development Kit");
+	}
+
+
+	/**
+	 *  Sets the parameters attribute of the PetitjeanNumberDescriptor object
+	 *
+	 *@param  params            The new parameters value
+	 *@exception  CDKException  Description of the Exception
+	 */
+	public void setParameters(Object[] params) throws CDKException {
+		// no parameters for this descriptor
+	}
+
+
+	/**
+	 *  Gets the parameters attribute of the PetitjeanNumberDescriptor object
+	 *
+	 *@return    The parameters value
+	 */
+	public Object[] getParameters() {
+		return (null);
+		// no parameters to return
+	}
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  ac                AtomContainer
+	 *@return                   petitjean number
+	 *@exception  CDKException  Possible Exceptions
+	 */
+	public DescriptorResult calculate(AtomContainer ac) throws CDKException {
+		double petitjeanNumber = 0; //weinerPath
+		double diameter = 0;
+		double partialDiameter = 0;
+		double radius = 0;
+		double partialRadius = 0;
+		double rowMax = 0;
+		ConnectionMatrix cm = new ConnectionMatrix();
+		double[][] matr = cm.getMatrix(ac);
+		DoubleArrayResult wienerNumbers = new DoubleArrayResult(2);
+		PathTools pt = new PathTools();
+		int[][] distances = pt.computeFloydAPSP(matr);
+		for (int i = 0; i < distances.length; i++) {
+			rowMax = 0;
+			for (int j = 0; j < distances.length; j++) {
+				partialDiameter = distances[i][j];
+				if (partialDiameter > diameter) {
+					diameter = partialDiameter;
+				}
+				
+				if (partialDiameter > rowMax) {
+					rowMax = partialDiameter;
+				}
+			}
+			if(i == 0) {
+				radius = rowMax;
+			}
+			else {
+				if(rowMax < radius) {
+					radius = rowMax;
+				}
+				else { 
+					radius = radius; 
+				}
+			}
+			System.out.println("row " + i + ", radius: " +radius + ", diameter: " +diameter);
+		}
+		System.out.println("diameter: " +diameter);
+		
+		petitjeanNumber = (diameter - radius)/diameter;
+		return new DoubleResult(petitjeanNumber);
+	}
+
+	/**
+	 *  Gets the parameterNames attribute of the PetitjeanNumberDescriptor object
+	 *
+	 *@return    The parameterNames value
+	 */
+	public String[] getParameterNames() {
+		// no param names to return
+		return (null);
+	}
+
+
+
+	/**
+	 *  Gets the parameterType attribute of the PetitjeanNumberDescriptor object
+	 *
+	 *@param  name  Description of the Parameter
+	 *@return       The parameterType value
+	 */
+	public Object getParameterType(String name) {
+		return (null);
+	}
+}
+
