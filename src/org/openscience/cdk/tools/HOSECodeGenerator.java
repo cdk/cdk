@@ -113,7 +113,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 	 *  The rank order for the given element symbols
 	 */
 
-	static String[] rankedSymbols =
+	static final String[] rankedSymbols =
 			{
 			"C", "O", "N", "S", "P", "Si", "B", "F", "Cl", "Br", ";", "I", "#", "&", ","
 			};
@@ -121,7 +121,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 	/**
 	 *  The ranking values to be used for the symbols above
 	 */
-	static int[] symbolRankings =
+	static final int[] symbolRankings =
 			{
 			9000, 8900, 8800, 8700,
 			8600, 8500, 8400, 8300, 8200, 8100, 8000, 7900, 1200, 1100, 1000
@@ -131,7 +131,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 	 *  The bond rankings to be used for the four bond order possibilities
 	 */
 
-	static int[] bondRankings =
+	static final int[] bondRankings =
 			{
 			0, 0, 200000, 300000, 100000
 			};
@@ -186,7 +186,8 @@ public class HOSECodeGenerator implements java.io.Serializable
 	 *  code is produced for the number of spheres given by noOfSpheres
 	 *  IMPORTANT: if you want aromaticity to be included in the code, you need
 	 *  to run the AtomContainer ac to the HueckelAromaticityDetector prior to 
-	 *  using getHOSECode().
+	 *  using getHOSECode(). This method only gives proper results if the molecule is
+   *  fully saturated (if not, the order of the HOSE code might depend on atoms in higher spheres).
 	 *
 	 *@param  ac  The AtomContainer with the molecular skeleton in which the root atom resides
 	 *@param  root The root atom for which to produce the HOSE code
