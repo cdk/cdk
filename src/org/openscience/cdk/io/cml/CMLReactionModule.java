@@ -62,12 +62,40 @@ public class CMLReactionModule extends CMLCoreModule {
     public void startElement (String uri, String local, String raw, Attributes atts) {
         if ("reaction".equals(local)) {
             cdo.startObject("Reaction");
+            for (int i = 0; i < atts.getLength(); i++) {
+                String att = atts.getQName(i);
+                String value = atts.getValue(i);
+                if (att.equals("id")) {
+                    cdo.setObjectProperty("Reaction", "id", value);
+                }
+            }
         } else if ("reactionList".equals(local)) {
             cdo.startObject("SetOfReactions");
+            for (int i = 0; i < atts.getLength(); i++) {
+                String att = atts.getQName(i);
+                String value = atts.getValue(i);
+                if (att.equals("id")) {
+                    cdo.setObjectProperty("SetOfReactions", "id", value);
+                }
+            }
         } else if ("reactant".equals(local)) {
             cdo.startObject("Reactant");
+            for (int i = 0; i < atts.getLength(); i++) {
+                String att = atts.getQName(i);
+                String value = atts.getValue(i);
+                if (att.equals("id")) {
+                    cdo.setObjectProperty("Reactant", "id", value);
+                }
+            }
         } else if ("product".equals(local)) {
             cdo.startObject("Product");
+            for (int i = 0; i < atts.getLength(); i++) {
+                String att = atts.getQName(i);
+                String value = atts.getValue(i);
+                if (att.equals("id")) {
+                    cdo.setObjectProperty("Product", "id", value);
+                }
+            }
         } else if ("molecule".equals(local)) {
             // do nothing for now
             super.newMolecule();

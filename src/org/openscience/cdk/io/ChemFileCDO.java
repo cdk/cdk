@@ -286,6 +286,22 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
             bond_order = 1.0;
           }
         }
+      } else if (objectType.equals("Reaction")) {
+        if (propertyType.equals("id")) {
+          currentReaction.setID(propertyValue);
+        }
+      } else if (objectType.equals("SetOfReactions")) {
+          if (propertyType.equals("id")) {
+              currentSetOfReactions.setID(propertyValue);
+          }
+      } else if (objectType.equals("Reactant")) {
+          if (propertyType.equals("id")) {
+              currentMolecule.setID(propertyValue);
+          }
+      } else if (objectType.equals("Product")) {
+          if (propertyType.equals("id")) {
+              currentMolecule.setID(propertyValue);
+          }
       } else if (objectType.equals("Crystal")) {
           // set these variables
           if (currentMolecule instanceof Crystal) {
