@@ -435,11 +435,13 @@ public class Convertor {
                 scalar.appendChild(doc.createTextNode(value.toString()));
             } else if (key instanceof DescriptorSpecification) {
                 DescriptorSpecification specs = (DescriptorSpecification)key;
-                DescriptorResult value = ((DescriptorValue)props.get(key)).getValue();
+                DescriptorValue value = (DescriptorValue)props.get(key);
+                DescriptorResult result = value.getValue();
                 if (propList == null) {
                     propList = this.createElement("propertyList");
                 }
                 Element property = this.createElement("property");
+                // setup up the metadata list
                 Element metadataList = this.createElement("metadataList");
                 metadataList.setAttribute("xmlns:" + QSARMETA_NAMESPACE, QSARMETA_URI);
                 String specsRef = specs.getSpecificationReference();
@@ -459,9 +461,32 @@ public class Convertor {
                 metaData.setAttribute("dictRef", QSARMETA_NAMESPACE + ":" + "implementationVendor");
                 metaData.setAttribute("content", specs.getImplementationVendor());
                 metadataList.appendChild(metaData);
+                // add parameter setting to the metadata list
+                Object[] params = value.getParameters();
+                if (params != null && params.length > 0) {
+                    String[] paramNames = value.getParameterNames();
+                    Element paramSettings = this.createElement("metadataList");
+                    paramSettings.setAttribute("title", QSARMETA_NAMESPACE + ":" + "descriptorParameters");
+                    for (int i=0; i<params.length; i++) {
+                        Element paramSetting = this.createElement("metadata");
+                        String paramName = paramNames[i];
+                        Object paramVal = params[i];
+                        if (paramName == null) {
+                            logger.error("Parameter name was null! Cannot output to CML.");
+                        } else if (paramVal == null) {
+                            logger.error("Parameter setting was null! Cannot output to CML. Problem param: " + paramName);
+                        } else {
+                            paramSetting.setAttribute("title", paramNames[i]);
+                            paramSetting.setAttribute("content", params[i].toString());
+                            paramSettings.appendChild(paramSetting);
+                        }
+                    }
+                    metadataList.appendChild(paramSettings);
+                }
                 property.appendChild(metadataList);
-                Element scalar = this.createScalar(value);
+                Element scalar = this.createScalar(result);
                 scalar.setAttribute("dictRef", specsRef);
+                // add the actual descriptor value
                 property.appendChild(scalar);
                 propList.appendChild(property);
             } else if (key instanceof String) {
