@@ -18,6 +18,8 @@ org/openscience/cdk/io/ChemObjectReader.java
 org/openscience/cdk/io/DefaultChemObjectReader.java
 org/openscience/cdk/io/ReaderFactory.java
 org/openscience/cdk/io/ShelXReader.java
+org/openscience/cdk/io/ChemicalRSSReader.java
+org/openscience/cdk/io/chemrss/RSSHandler.java
 org/openscience/cdk/io/cml/CMLErrorHandler.java
 org/openscience/cdk/io/cml/CMLHandler.java
 org/openscience/cdk/io/cml/CMLResolver.java
@@ -42,3 +44,4 @@ org/openscience/cdk/tools/SetOfMoleculesManipulator.java
 org/openscience/cdk/tools/IsotopeFactory.java
 org/openscience/cdk/tools/LoggingTool.java
 org/openscience/cdk/tools/TXTBasedAtomTypeConfigurator.java
+org/openscience/cdk/tools/MFAnalyser.java
