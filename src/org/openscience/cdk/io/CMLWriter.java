@@ -315,6 +315,10 @@ public class CMLWriter implements ChemObjectWriter {
         if (fCharge != 0) {
             write("formalCharge=\"" + fCharge + "\" ");
         }
+        int hydrogenCount = atom.getHydrogenCount();
+        if (hydrogenCount != 0) {
+            write("hydrogenCount=\"" + hydrogenCount + "\" ");
+        }
 		write("/>\n");
     }
 
