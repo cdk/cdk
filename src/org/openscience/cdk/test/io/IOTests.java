@@ -22,23 +22,24 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
  */
 
-package org.openscience.cdk.test;
+package org.openscience.cdk.test.io;
 
 import junit.framework.*;
+import org.openscience.cdk.test.io.cml.CMLIOTests;
 
 /**
  * TestSuite that runs all the sample tests
  *
  */
-public class CoreClassesTests {
+public class IOTests {
 
     public static Test suite () {
-        TestSuite suite= new TestSuite("The cdk.core Tests");
-        suite.addTest(AtomTest.suite());
-        suite.addTest(AtomContainerTest.suite());
-        suite.addTest(ChemObjectTest.suite());
-        suite.addTest(MonomerTest.suite());
-        suite.addTest(PolymerTest.suite());
+        TestSuite suite= new TestSuite("The cdk.io Tests");
+        suite.addTest(CMLIOTests.suite());
+        
+        suite.addTest(IChIReaderTest.suite());
+        suite.addTest(PDBReaderTest.suite());
+        /* suite.addTest(ZMatrixReaderTest.suite()); This is not a JUnit test uet! */
         return suite;
     }
 

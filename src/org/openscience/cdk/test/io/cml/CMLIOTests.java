@@ -39,7 +39,7 @@ public class CMLIOTests {
     }
 
     public static Test suite () {
-        TestSuite suite= new TestSuite("Test org.openscience.cdk.io.cml classes.");
+        TestSuite suite= new TestSuite("The cdk.io.cml Tests");
         suite.addTest(JumboTest.suite());
         suite.addTest(JmolTest.suite());
         return suite;

@@ -30,7 +30,6 @@ import org.openscience.cdk.test.fingerprint.*;
 import org.openscience.cdk.test.graph.invariant.*;
 import org.openscience.cdk.test.isomorphism.*;
 import org.openscience.cdk.test.io.*;
-import org.openscience.cdk.test.io.cml.*;
 import org.openscience.cdk.test.smiles.*;
 import org.openscience.cdk.test.renderer.*;
 import org.openscience.cdk.test.ringsearch.*;
@@ -54,8 +53,7 @@ public class CDKTests {
 	{
 		TestSuite suite= new TestSuite("All CDK Tests");
 		suite.addTest(CoreClassesTests.suite());
-		suite.addTest(CloneAtomContainerTest.suite());
-		suite.addTest(RingSearchTest.suite());
+        suite.addTest(RingSearchTest.suite());
 		suite.addTest(ConnectivityCheckerTest.suite());
 		suite.addTest(MorganNumberToolsTest.suite());
 		suite.addTest(MFAnalyserTest.suite());
@@ -66,9 +64,7 @@ public class CDKTests {
 		suite.addTest(FingerprinterTest.suite());
 		suite.addTest(AtomTypeFactoryTest.suite());
         // from cdk.test.io.*
-		suite.addTest(CMLIOTests.suite());
-		suite.addTest(PDBReaderTest.suite());
-		suite.addTest(IChIReaderTest.suite());
+		suite.addTest(IOTests.suite());
         // from cdk.test.smiles
 		suite.addTest(SmilesGeneratorTest.suite());
 		suite.addTest(SmilesParserTest.suite());
