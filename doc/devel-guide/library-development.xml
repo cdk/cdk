@@ -374,6 +374,28 @@ $ cdk-test org.openscience.cdk.test.CDKTests
     
   </chapter>
   
+  <chapter id="sect:profiling">
+    <title>Debugging memory usage and performance</title>
+    <para>
+      Once functionality is working, and remaining bugs are removed, it is time to
+      optimize the source code, in terms of memory usage and performance. A profiling
+      tool is need for this, e.g. 
+      <ulink url="http://www.khelekore.org/jmp/">jmp</ulink>. With this program you can
+      very easily profile your classes by typing something like:
+      <command>java <arg>-Xrunjmp</arg> org.openscience.cdk.test.SomeTest</command>.
+    </para>
+    <para>
+      Jmp can be run in a graphical mode, which can only be used if the program does not
+      terminate, e.g. like cdk-fileconvert. Otherwise the <command><arg>nogui</arg></command>
+      may be used (as in <command>java <arg>-Xrunjmp:nogui</arg></command> which will create
+      a file containing the profiling information.
+    </para>
+    <para>
+      It becomes even better if you get the hang of filters; try for example
+      <command>java <arg>-Xrunjmp:nogui,filter=org.openscience.cdk</arg></command>.
+    </para>
+  </chapter>
+  
   <chapter id="sect:releasing">
     <title>Releasing a CDK version</title>
     <para>
@@ -405,5 +427,17 @@ $ cdk-test org.openscience.cdk.test.CDKTests
       At this moment Egon Willighagen is CDK's release manager and takes care of all of this.
     </para>
   </chapter>  
+  
+  <chapter id="sect:bugs">
+    <title>Dealing with bugs</title>
+    <para>
+      Bugs are, unfortunately, something inherent to source code. And, CDK is not bugless.
+      They can be reported on the
+      <ulink url="http://sourceforge.net/tracker/?group_id=20024&amp;atid=120024">SF website</ulink>.
+      When a user files a bug, it can be accepted by a developer, by reproducing the bug
+      <emphasis>and</emphasis>, if possible, making a JUnit test that reproduces the bug.
+      The latter is important to ensure that the bug will never ever be created again.
+    </para>
+  </chapter>
   
 </part>
