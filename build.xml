@@ -10,6 +10,7 @@
   <property name="dist" value="dist"/>
   <property name="src.tests" value="org/openscience/cdk/test"/>
   <property name="reports.tests" value="reports"/>
+  <property name="javadoc.dir" value="javadoc"/>
   
   <path id="project.class.path">
     <!-- adapt the next line to reflect your installation -->
@@ -52,6 +53,9 @@
       <exclude name="org/openscience/cdk/test/OrbitalsRenderer3DTest.java"/>
       <classpath refid="project.class.path"/>
     </javac>
+    <copy todir="${build}" >
+      <fileset dir="." includes="**/Test-*"/>
+    </copy>
   </target>
 
   <target name="compile-with-java3d" depends="init">
@@ -135,5 +139,16 @@
 				</fileset>
 			</classpath>
 		</java>  
-	</target>  
+	</target>
+  
+  <target name="javadoc">
+    <mkdir dir="${javadoc.dir}"/>
+    <javadoc packagenames="org.openscience.cdk.*"
+        sourcepath="."
+        destdir="${javadoc.dir}"
+        private="true">
+      <classpath refid="project.class.path" />
+    </javadoc>
+  </target>
+
 </project>

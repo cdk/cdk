@@ -40,6 +40,7 @@ import javax.vecmath.*;
  * Reads the contents of a PDBFile.
  *
  * @author     Edgar Luttmann
+ * @author     Bradley Smith (bradley@baysmith.com)
  * @created    2001-08-06 
  *
  */
@@ -80,11 +81,16 @@ public class PDBReader implements CDKConstants, ChemObjectReader {
 	}
 
 	/**
-	 *
-	 * Read a ChemFile from a file in PDB format.
+	 * Read a <code>ChemFile</code> from a file in PDB format. The molecules
+   * in the file are stored as <code>BioPolymer</code>s in the
+   * <code>ChemFile</code>. The residues are the monomers of the
+   * <code>BioPolymer</code>, and their names are the concatenation of the
+   * residue, chain id, and the sequence number. Separate chains (denoted by
+   * TER records) are stored as separate <code>BioPolymer</code> molecules.
+   *
+   * <p>Connectivity information is not currently read.
 	 *
 	 * @return The ChemFile that was read from the PDB file.    
-	 *
 	 */
 	private ChemFile readChemFile() 	{
 		// initialize all containers
@@ -150,7 +156,9 @@ public class PDBReader implements CDKConstants, ChemObjectReader {
 						oBP = new BioPolymer();
 					} else if (cCol.equals("END   ")) {
 						// finish the molecule and construct a new one
-						oSet.addMolecule(oBP);
+            if (oBP.getAtomCount() != 0) {
+              oSet.addMolecule(oBP);
+            }
 						oBP = new BioPolymer();					
 	//				} else if (cCol.equals("USER  ")) {
 	//						System.out.println(cLine);
@@ -180,33 +188,47 @@ public class PDBReader implements CDKConstants, ChemObjectReader {
 		return oFile;
 	}
 
-	/**
-	 *
-	 * Constructs a Atom object and sets properties due to their values from
-	 * the PDB record.
-	 *
-	 * @param cLine  The actual read PDB record
-	 * @return The Atom object constructed from the informations within the actual line.
-	 *
-	 */
-	private Atom readAtom(String cLine) {
-		Atom oAtom = new Atom(new Element(cLine.substring(12, 14).trim()), 
-									 new Point3d(new Double(cLine.substring(30, 38)).doubleValue(),
-									 				 new Double(cLine.substring(38, 46)).doubleValue(),
-									 				 new Double(cLine.substring(46, 54)).doubleValue()));
-		oAtom.setProperty("pdb.serial", new Integer(cLine.substring(6, 11).trim()));
-		oAtom.setProperty("pdb.name", (new String(cLine.substring(12, 16))).trim());
-		oAtom.setProperty("pdb.altLoc", (new String(cLine.substring(16, 17))).trim());
-		oAtom.setProperty("pdb.resName", (new String(cLine.substring(17, 20))).trim());
-		oAtom.setProperty("pdb.chainID", (new String(cLine.substring(21, 22))).trim());
-		oAtom.setProperty("pdb.resSeq", (new String(cLine.substring(22, 26))).trim());
-		oAtom.setProperty("pdb.iCode", (new String(cLine.substring(26, 27))).trim());
-		oAtom.setProperty("pdb.occupancy", new Double(cLine.substring(54, 60)));
-		oAtom.setProperty("pdb.tempFactor", new Double(cLine.substring(60, 66)));
-		oAtom.setProperty("pdb.segID", (new String(cLine.substring(72, 76))).trim());
-		oAtom.setProperty("pdb.element", (new String(cLine.substring(76, 78))).trim());
-		oAtom.setProperty("pdb.charge", (new String(cLine.substring(78, 80))).trim());
-
-		return oAtom;
-		}
+  /**
+   * Creates an <code>Atom</code> and sets properties to their values from
+   * the ATOM record. If the line is shorter than 80 characters, the information
+   * past 59 characters is treated as optional. If the line is shorter than 59
+   * characters, a <code>RuntimeException</code> is thrown.
+   *
+   * @param cLine  the PDB ATOM record.
+   * @return the <code>Atom</code> created from the record.
+   * @throws RuntimeException if the line is too short (less than 59 characters).
+   */
+  private Atom readAtom(String cLine) {
+    if (cLine.length() < 59) {
+      throw new RuntimeException("PDBReader error during readAtom(): line too short");
+    }
+    Atom oAtom = new Atom(new Element(cLine.substring(12, 14).trim()), 
+        new Point3d(new Double(cLine.substring(30, 38)).doubleValue(),
+          new Double(cLine.substring(38, 46)).doubleValue(),
+            new Double(cLine.substring(46, 54)).doubleValue()));
+    oAtom.setProperty("pdb.serial", new Integer(cLine.substring(6, 11).trim()));
+    oAtom.setProperty("pdb.name", (new String(cLine.substring(12, 16))).trim());
+    oAtom.setProperty("pdb.altLoc", (new String(cLine.substring(16, 17))).trim());
+    oAtom.setProperty("pdb.resName", (new String(cLine.substring(17, 20))).trim());
+    oAtom.setProperty("pdb.chainID", (new String(cLine.substring(21, 22))).trim());
+    oAtom.setProperty("pdb.resSeq", (new String(cLine.substring(22, 26))).trim());
+    oAtom.setProperty("pdb.iCode", (new String(cLine.substring(26, 27))).trim());
+    if (cLine.length() >= 59) {
+      oAtom.setProperty("pdb.occupancy", new Double(cLine.substring(54, 60)));
+    }
+    if (cLine.length() >= 65) {
+      oAtom.setProperty("pdb.tempFactor", new Double(cLine.substring(60, 66)));
+    }
+    if (cLine.length() >= 75) {
+      oAtom.setProperty("pdb.segID", (new String(cLine.substring(72, 76))).trim());
+    }
+    if (cLine.length() >= 78) {
+      oAtom.setProperty("pdb.element", (new String(cLine.substring(76, 78))).trim());
+    }
+    if (cLine.length() >= 79) {
+      oAtom.setProperty("pdb.charge", (new String(cLine.substring(78, 80))).trim());
+    }
+  
+    return oAtom;
+  }
 }

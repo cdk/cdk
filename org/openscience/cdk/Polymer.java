@@ -109,4 +109,14 @@ public class Polymer extends Molecule {
 	public Monomer getMonomer(String cName) {
 		return (Monomer)_hContains.get(cName);
 	}
+
+  /**
+   * Returns a collection of the names of all <code>Monomer</code>s in this
+   * polymer.
+   *
+   * @return a <code>Collection</code> of all the monomer names.
+   */
+  public Collection getMonomerNames() {
+    return _hContains.keySet();
+  }
 }

@@ -32,6 +32,8 @@ import org.openscience.cdk.*;
 import org.openscience.cdk.io.*;
 import java.io.*;
 import junit.framework.*;
+import com.baysmith.io.FileUtilities;
+import java.util.Iterator;
 
 /**
  *
@@ -52,6 +54,22 @@ public class PDBReaderTest extends TestCase {
 		junit.textui.TestRunner.run(new TestSuite(PDBReaderTest.class));
 	}
 
+  /**
+   * A directory to isolate testing files.
+   */
+  File testDirectory;
+  
+  public void setUp() {
+    testDirectory = new File("PDBReaderTest.directory");
+    FileUtilities.deleteAll(testDirectory);
+    assert("Error creating test directory \"" + testDirectory + "\"",
+      testDirectory.mkdir());
+  }
+  
+  public void tearDown() {
+    testDirectory = null;
+  }
+  
 	public void testPDBFileCoffein() {
 		try {
 			if (new File("data/coffeine.pdb").canRead()) {
@@ -142,4 +160,66 @@ public class PDBReaderTest extends TestCase {
 			fail(e.toString());
 		}
 	}
+
+  /**
+   * Tests reading a protein PDB file.
+   */
+  public void testProtein() {
+    File testPdbFile = null;
+    try {
+      testPdbFile = new File(testDirectory, "1crn.pdb");
+      FileUtilities
+          .copyStreamToFile(getClass()
+              .getResourceAsStream("Test-"
+                  + testPdbFile.getName()), testPdbFile);
+    
+    } catch (IOException ex) {
+      fail(ex.toString());
+    }
+    
+    try {
+      ChemObjectReader reader = new PDBReader(new FileInputStream(testPdbFile));
+      assertNotNull(reader);
+      
+      ChemFile chemFile = (ChemFile) reader.read(new ChemFile());
+      assertNotNull(chemFile);
+      assertEquals(1, chemFile.getChemSequenceCount());
+
+      ChemSequence seq = chemFile.getChemSequence(0);
+      assertNotNull(seq);
+      assertEquals(1, seq.getChemModelCount());
+      
+      ChemModel model = seq.getChemModel(0);
+      assertNotNull(model);
+      assertEquals(1, model.getSetOfMolecules().getMoleculeCount());
+
+      BioPolymer mol = (BioPolymer) model.getSetOfMolecules().getMolecule(0);
+      assertNotNull(mol);
+      assertEquals(327, mol.getAtomCount());
+      assertEquals(46, mol.getMonomerCount());
+      assertNotNull(mol.getMonomer("THR1"));
+      assertEquals(7, mol.getMonomer("THR1").getAtomCount());
+      assertNotNull(mol.getMonomer("ILE7"));
+      assertEquals(8, mol.getMonomer("ILE7").getAtomCount());
+      
+      Atom atom = mol.getAtomAt(94);
+      assertNotNull(atom);
+      assertEquals("C", atom.getElement().getSymbol());
+      assertEquals(new Integer(95), atom.getProperty("pdb.serial"));
+      assertEquals("CZ", atom.getProperty("pdb.name"));
+      assertEquals("", atom.getProperty("pdb.altLoc"));
+      assertEquals("PHE", atom.getProperty("pdb.resName"));
+      assertEquals("", atom.getProperty("pdb.chainID"));
+      assertEquals("13", atom.getProperty("pdb.resSeq"));
+      assertEquals("", atom.getProperty("pdb.iCode"));
+      assertEquals(1.0, ((Double) atom.getProperty("pdb.occupancy")).doubleValue(), 0.001);
+      assertEquals(6.84, ((Double) atom.getProperty("pdb.tempFactor")).doubleValue(), 0.001);
+      assertEquals(null, atom.getProperty("pdb.segID"));
+      assertEquals(null, atom.getProperty("pdb.element"));
+      assertEquals(null, atom.getProperty("pdb.charge"));
+
+    } catch (Exception ex) {
+      fail(ex.toString());
+    }
+  }
 }
