@@ -50,6 +50,7 @@ import org.openscience.cdk.Isotope;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
@@ -63,7 +64,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * <p>From the Atom block it reads atomic coordinates, element types and
  * formal charges. From the Bond block it reads the bonds and the orders.
- * Additionally, it reads 'M  CHG', 'G  ' and 'M  ISO' lines from the 
+ * Additionally, it reads 'M  CHG', 'G  ', 'M  RAD' and 'M  ISO' lines from the
  * property block.
  *
  * <p>If all z coordinates are 0.0, then the xy coordinates are taken as
@@ -459,6 +460,29 @@ public class MDLReader extends DefaultChemObjectReader {
                                        + linecount + ": " + line + " in property block.";
                         logger.error(error);
                         throw new CDKException("NumberFormatException in isotope information on line: " + line);
+                    }
+                } else if (line.startsWith("M  RAD")) {
+                    try {
+                        String countString = line.substring(6,9).trim();
+                        int infoCount = Integer.parseInt(countString);
+                        StringTokenizer st = new StringTokenizer(line.substring(9));
+                        for (int i=1; i <= infoCount; i++) {
+                            int atomNumber = Integer.parseInt(st.nextToken().trim());
+                            int spinMultiplicity = Integer.parseInt(st.nextToken().trim());
+                            if (spinMultiplicity > 1) {
+                                Atom radical = molecule.getAtomAt(atomNumber - 1);
+                                for (int j=2; j <= spinMultiplicity; j++) {
+                                    // 2 means doublet -> one unpaired electron
+                                    // 3 means triplet -> two unpaired electron
+                                    molecule.addElectronContainer(new SingleElectron(radical));
+                                }
+                            }
+                        }
+                    } catch (NumberFormatException exception) {
+                        String error = "Error (" + exception.getMessage() + ") while parsing line "
+                                       + linecount + ": " + line + " in property block.";
+                        logger.error(error);
+                        throw new CDKException("NumberFormatException in radical information on line: " + line);
                     }
                 } else if (line.startsWith("G  ")) {
                     try {
