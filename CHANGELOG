@@ -44,6 +44,8 @@ API changes:
   AtomTypeFactory (each atom type list has a different ATF)
 * Removed deprecated methods from SaturationChecker
 * Removed the old io.ChemLoader class (use ReaderFactory instead)
+* Renamed AtomType.get/setMaxBondOrderSum() to .get/setBondOrderSum()
+  (closes #823943)
 
 20030909 Release
 ------------------------------------

@@ -85,8 +85,8 @@ public class AtomTypeHandler extends DefaultHandler {
                         atomType.setAtomTypeName(atts.getValue(i));
                     } else if ("maxBondOrder".equals(atts.getQName(i))) {
                         atomType.setMaxBondOrder(Double.parseDouble(atts.getValue(i)));
-                    } else if ("maxBondOrderSum".equals(atts.getQName(i))) {
-                        atomType.setMaxBondOrderSum(Double.parseDouble(atts.getValue(i)));
+                    } else if ("bondOrderSum".equals(atts.getQName(i))) {
+                        atomType.setBondOrderSum(Double.parseDouble(atts.getValue(i)));
                     }
                 } catch (NumberFormatException exception) {
                     logger.error("Value of AtomType@" + atts.getQName(i) +

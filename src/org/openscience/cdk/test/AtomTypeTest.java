@@ -70,10 +70,10 @@ public class AtomTypeTest extends TestCase {
         assertTrue(3.0 == at.getMaxBondOrder());
     }
 
-    public void testSetMaxBondOrderSum() {
+    public void testSetBondOrderSum() {
         AtomType at = new AtomType("C");
-        at.setMaxBondOrder(4.0);
-        assertTrue(4.0 == at.getMaxBondOrder());
+        at.setBondOrderSum(4.0);
+        assertTrue(4.0 == at.getBondOrderSum());
     }
     
     public void testCompare() {

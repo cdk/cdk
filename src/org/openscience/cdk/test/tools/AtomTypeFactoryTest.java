@@ -91,6 +91,6 @@ public class AtomTypeFactoryTest extends TestCase {
 			fail("Problem getting AtomType for 'structgen.C4' from AtomTypeFactory: "  +  exc.toString());
 		}
 		
-		assertTrue(atomType.getMaxBondOrderSum() == 4.0);
+		assertTrue(atomType.getBondOrderSum() == 4.0);
 	}
 }

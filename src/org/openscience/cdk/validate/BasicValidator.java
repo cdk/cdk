@@ -357,7 +357,7 @@ public class BasicValidator implements ValidatorInterface {
             AtomType failedOn = null;
             boolean foundMatchingAtomType = false;
             for (int j=0; j<atomTypes.length; j++) {
-                if (bos <= atomTypes[j].getMaxBondOrderSum()) {
+                if (bos <= atomTypes[j].getBondOrderSum()) {
                     foundMatchingAtomType = true;
                 } else {
                     failedOn = atomTypes[j];
@@ -369,8 +369,8 @@ public class BasicValidator implements ValidatorInterface {
                 if (failedOn != null) {
                     checkBondSum.setDetails(
                         "Bond order exceeds the one allowed for atom " +
-                        atom.getSymbol() + " for which the maximum bond order is " +
-                        failedOn.getMaxBondOrderSum()
+                        atom.getSymbol() + " for which the total bond order is " +
+                        failedOn.getBondOrderSum()
                     );
                 }
                 report.addError(checkBondSum);

@@ -1,10 +1,9 @@
-/*
- * $RCSfile$    
+/* $RCSfile$    
  * $Author$    
  * $Date$    
  * $Revision$
  * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CKD) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CKD) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -27,7 +26,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
  * 
  */
-
 package org.openscience.cdk.test.isomorphism;
 
 
@@ -66,12 +64,11 @@ public class UniversalIsomorphismTesterTest extends TestCase
 		HueckelAromaticityDetector.detectAromaticity(mol);
 		HueckelAromaticityDetector.detectAromaticity(frag1);
 		
-		if(standAlone)
-		{
+		if(standAlone) {
 			System.out.println("Cyclohexene is a subgraph of alpha-Pinen: " + UniversalIsomorphismTester.isSubgraph(mol, frag1));
-
-		}
-		if (!standAlone) assertTrue(UniversalIsomorphismTester.isSubgraph(mol, frag1));
+        } else {
+            assertTrue(UniversalIsomorphismTester.isSubgraph(mol, frag1));
+        }
 	}
 
 	public void test2() throws java.lang.Exception
@@ -80,12 +77,12 @@ public class UniversalIsomorphismTesterTest extends TestCase
 		AtomContainer frag1 = MoleculeFactory.makeCyclohexane(); // no double bond in ring		
 		HueckelAromaticityDetector.detectAromaticity(mol);
 		HueckelAromaticityDetector.detectAromaticity(frag1);
-		if(standAlone)
-		{
+        
+		if(standAlone){
 			System.out.println("Cyclohexane is a subgraph of alpha-Pinen: " + UniversalIsomorphismTester.isSubgraph(mol, frag1));
-
-		}
-		if (!standAlone) assertTrue(!UniversalIsomorphismTester.isSubgraph(mol, frag1));
+		} else {
+            assertTrue(!UniversalIsomorphismTester.isSubgraph(mol, frag1));
+        }
 	}
 
 	public void test3() throws java.lang.Exception
@@ -95,12 +92,11 @@ public class UniversalIsomorphismTesterTest extends TestCase
 		HueckelAromaticityDetector.detectAromaticity(mol);
 		HueckelAromaticityDetector.detectAromaticity(frag1);
 
-		if(standAlone)
-		{
+		if(standAlone) {
 			System.out.println("Pyrrole is a subgraph of Indole: " + UniversalIsomorphismTester.isSubgraph(mol, frag1));
-
-		}
-		if (!standAlone) assertTrue(UniversalIsomorphismTester.isSubgraph(mol, frag1));
+        } else {
+            assertTrue(UniversalIsomorphismTester.isSubgraph(mol, frag1));
+        }
 	}
 	
 	

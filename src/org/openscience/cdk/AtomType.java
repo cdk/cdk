@@ -53,7 +53,7 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
 	/**
 	 *  The maximum sum of all bondorders allowed for this atom type.
 	 */
-	double maxBondOrderSum;
+	double bondOrderSum;
 
     /**
      * The Vanderwaals radius of this atom type.
@@ -115,15 +115,15 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
 
 
 	/**
-	 *  Sets the MaxBondCount attribute of the AtomType object.
+	 *  Sets the the exact bond order sum attribute of the AtomType object.
 	 *
-	 * @param  maxBondOrderSum  The new MaxBondOrderSum value
+	 * @param  bondOrderSum  The new bondOrderSum value
      *
      * @see       #getMaxBondOrderSum
 	 */
-	public void setMaxBondOrderSum(double maxBondOrderSum)
+	public void setBondOrderSum(double bondOrderSum)
 	{
-		this.maxBondOrderSum = maxBondOrderSum;
+		this.bondOrderSum = bondOrderSum;
 	}
 
 
@@ -154,15 +154,15 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
 
 
 	/**
-	 *  Gets the MaxBondCount attribute of the AtomType object.
+	 *  Gets the bondOrderSum attribute of the AtomType object.
 	 *
-	 * @return    The MaxBondCount value
+	 * @return    The bondOrderSum value
      *
-     * @see       #setMaxBondOrderSum
+     * @see       #setBondOrderSum
 	 */
-	public double getMaxBondOrderSum()
+	public double getBondOrderSum()
 	{
-		return maxBondOrderSum;
+		return bondOrderSum;
 	}
 
     /**
@@ -179,9 +179,9 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
             return false;
         }
         AtomType type = (AtomType) object;
-        if ((getAtomTypeName()==type.getAtomTypeName()) &&
-            (maxBondOrder==type.maxBondOrder) &&
-            (maxBondOrderSum==type.maxBondOrderSum)) {
+        if ((getAtomTypeName() == type.getAtomTypeName()) &&
+            (maxBondOrder == type.maxBondOrder) &&
+            (bondOrderSum == type.bondOrderSum)) {
             return true;
         }
         return false;
@@ -207,8 +207,8 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
         StringBuffer sb = new StringBuffer();
         sb.append("AtomType(");
         sb.append(getAtomTypeName() + ", ");
-        sb.append("MB:" + getMaxBondOrder() + ", ");
-        sb.append("TBS:" + getMaxBondOrderSum() + ", ");
+        sb.append("MBO:" + getMaxBondOrder() + ", ");
+        sb.append("BOS:" + getBondOrderSum() + ", ");
         sb.append(super.toString());
         sb.append(")");
         return sb.toString(); 

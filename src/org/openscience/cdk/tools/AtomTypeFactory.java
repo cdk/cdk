@@ -345,7 +345,7 @@ public class AtomTypeFactory {
                 at = getAtomType(atom.getAtomTypeName());
             }
             atom.setMaxBondOrder(at.getMaxBondOrder());
-            atom.setMaxBondOrderSum(at.getMaxBondOrderSum());
+            atom.setBondOrderSum(at.getBondOrderSum());
             atom.setVanderwaalsRadius(at.getVanderwaalsRadius());
             atom.setCovalentRadius(at.getCovalentRadius());
             Object color = at.getProperty("org.openscience.jmol.color");
