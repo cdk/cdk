@@ -34,26 +34,28 @@ import java.util.*;
 import java.io.*;
 import java.net.URL;
 import javax.vecmath.Vector2d;
+import javax.swing.*;
+import java.awt.event.*;
+
+
 
 public class SingleStructureRandomGeneratorTest
 {
-	MoleculeListViewer moleculeListViewer = null;
+	TestViewer testViewer = null;
+	String mf;
+	SingleStructureRandomGenerator ssrg;
 	
 	public SingleStructureRandomGeneratorTest() throws Exception
 	{
 		System.out.println("Instantiating MoleculeListViewer");
-		moleculeListViewer = new MoleculeListViewer();
+		testViewer = new TestViewer();
 		System.out.println("Instantiating SingleStructureRandomGenerator");
-		SingleStructureRandomGenerator ssrg = new SingleStructureRandomGenerator();
+		ssrg = new SingleStructureRandomGenerator();
 		System.out.println("Assining unbonded set of atoms");
 		AtomContainer ac = getBunchOfUnbondedAtoms();
-		String mf = new MFAnalyser(ac).getMolecularFormula();
+		mf = new MFAnalyser(ac).getMolecularFormula();
 		System.out.println("Molecular Formula is: " + mf);
 		ssrg.setAtomContainer(ac);
-		System.out.println("Generating a random structure");
-		ac = ssrg.generate();
-		System.out.println("Showing the structure");
-		showIt((Molecule)ac, "A randomly generated molecule for " + mf);
 	}
 
 
@@ -66,7 +68,7 @@ public class SingleStructureRandomGeneratorTest
 			sdg.setMolecule((Molecule)molecule.clone());
 			sdg.generateCoordinates(new Vector2d(0,1));
 			mv.setAtomContainer(sdg.getMolecule());
-			moleculeListViewer.addStructure(mv, name);
+			testViewer.addStructure(mv, name);
 		}
 		catch(Exception exc)
 		{
@@ -103,6 +105,29 @@ public class SingleStructureRandomGeneratorTest
 		}
 		System.out.println("Done");
 		
+	}
+	
+	public class TestViewer extends MoleculeListViewer
+	{
+		JButton more;
+		public TestViewer()
+		{
+			super();
+			more = new JButton("One more");
+			more.addActionListener(new MoreAction());
+			getContentPane().add("South", more);
+			pack();
+		}
+		
+	}
+	
+	class MoreAction extends AbstractAction
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			AtomContainer ac = ssrg.generate();
+			showIt((Molecule)ac, "Randomly generated for " + mf);						
+		}
 	}
 }
 

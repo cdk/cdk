@@ -1,175 +1,257 @@
-<?xml version="1.0"?>
-<!DOCTYPE project SYSTEM "dtd/project.dtd">
 <project name="CDK" default="compile" basedir=".">	
-  
-  <!-- comment this line out of you have not jikes installed -->
-  <!--property name="build.compiler" value="jikes"/-->
-  
-  <property name="build" value="build"/>
-  <property name="sourcedist" value="sourcedist"/>
-  <property name="dist" value="dist"/>
-  <property name="src.tests" value="org/openscience/cdk/test"/>
-  <property name="reports.tests" value="reports"/>
-  <property name="javadoc.dir" value="javadoc"/>
-  
-  <path id="project.class.path">
-    <!-- adapt the next line to reflect your installation -->
-    <pathelement location="/usr/lib/j2sdk1.3/jre/lib/rt.jar"/>
-    <pathelement location="."/>
-    <fileset dir="jar">
-      <include name="*.jar"/>
-    </fileset>
-  </path>
-  
-  <target name="init">
-    <!-- Create the time stamp -->
-    <tstamp/>
-    <!-- Create the build directory structure used by compile -->
-    <mkdir dir="${build}"/>
-    <mkdir dir="${sourcedist}"/>
-    <mkdir dir="${dist}"/>
-    <mkdir dir="${reports.tests}"/>
-  </target>
 
-  <target name="clean">
-    <delete>
-      <fileset dir="." includes="**/*~"/>
-      <fileset dir="." includes="**/*.class"/>
-      <fileset dir="." includes="*.tar.gz"/>
-      <fileset dir="." includes="*.zip"/> 
-    </delete>
-    <delete dir="${build}"/>
-    <delete dir="${sourcedist}"/>
-    <delete dir="${reports.tests}"/>
-  </target>
+        <property name="build" value="build" />
 
-  <target name="compile" depends="init">
-    <echo message="Compiling only the classes which doesn't use the java3d classes"/>
-    <echo message="To compile all classes use compile-with-java3d"/>
-    <mkdir dir="${build}"/>
-    <javac destdir="${build}" optimize="on" deprecation="off">
-      <src path="."/>
-      <exclude name="org/openscience/cdk/renderer/AcceleratedRenderer3D*"/>
-      <exclude name="org/openscience/cdk/renderer/OrbitalsRenderer3D*"/>
-      <exclude name="org/openscience/cdk/test/AcceleratedRenderer3DTest.java"/>
-      <exclude name="org/openscience/cdk/test/OrbitalsRenderer3DTest.java"/>
-      <exclude name="org/openscience/cdk/test/VisualGaussiansCalculationTest.java"/>
-      <exclude name="org/openscience/cdk/test/ZMatrixReaderTest.java"/>
-      <classpath refid="project.class.path"/>
-    </javac>
-    <copy todir="${build}" >
-      <fileset dir="." includes="**/Test-*"/>
-    </copy>
-  </target>
+        <property name="sourcedist" value="sourcedist" />
 
-  <target name="compile-with-java3d" depends="init">
-    <mkdir dir="${build}"/>
-    <javac destdir="${build}" optimize="on" deprecation="off">
-      <src path="."/>
-      <classpath refid="project.class.path"/>
-    </javac>
-  </target>
+        <property name="dist" value="dist" />
 
-  <target name="dist" depends="compile">
-    <!-- Create the distribution directory -->
-    <mkdir dir="${dist}/jar"/>
-    <!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
-    <mkdir dir="${build}/org/openscience/cdk/config"/>
-    <copy file="org/openscience/cdk/config/isotopes.xml"
-          tofile="${build}/org/openscience/cdk/config/isotopes.xml"/>
-    <jar jarfile="${dist}/jar/cdk.jar" basedir="${build}"/>
-    <mkdir dir="${build}/org/openscience/cdk/io/cml/data"/>
-    <copy file="org/openscience/cdk/io/cml/data/cml.dtd"
-          tofile="${build}/org/openscience/cdk/io/cml/data/cml.dtd"/>
-    <jar jarfile="${dist}/jar/cdk-cml.jar" basedir="${build}" 
-         includes="org/openscience/cdk/io/cml/**"/>
-  </target>
+        <property name="src.tests"
+	
+        value="org/openscience/cdk/test" />
 
-  <target name="dist-with-java3d" depends="compile-with-java3d">
-    <!-- Create the distribution directory -->
-    <mkdir dir="${dist}/jar"/>
-    <!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
-    <jar jarfile="${dist}/jar/cdk-with-java3d.jar" basedir="${build}"/>
-  </target>
+        <property name="reports.tests" value="reports" />
 
-  <target name="sourcedist" depends="init">
-    <copy todir="${sourcedist}" >
-      <fileset dir="." includes="**/*java"/>
-      <fileset dir="." includes="build.xml"/>
-    </copy>
-    <copy todir="${sourcedist}/jar" >
-      <fileset dir="jar" includes="*jar"/>
-    </copy>
-    <tar tarfile="cdk-source-${DSTAMP}.tar" basedir="${sourcedist}" includes="**"/>
-    <gzip zipfile="cdk-source-${DSTAMP}.tar.gz" src="cdk-source-${DSTAMP}.tar"/>
-    <delete file="cdk-source-${DSTAMP}.tar" />
-    <zip zipfile="cdk-source-${DSTAMP}.zip" basedir="${sourcedist}" includes="**"/>
-  </target>
+        <property name="javadoc.dir" value="javadoc" />
 
-  <target name="website">
-    <java classname="org.apache.xalan.xslt.Process"
-          args="-IN ../website.xml -XSL ../lib/cdkwebsite.xsl"
-          dir="doc/source/bin"
-          fork="yes">
-      <classpath>
-        <pathelement location="jar/xerces-1.3.0.jar"/>
-        <pathelement location="jar/xalan-2.0.1.jar"/>
-        <pathelement location="jar/bsf-2.0.1.jar"/>
-      </classpath>
-    </java>
-  </target>
-	<target name="test" depends="clean,dist">
-		<junit printsummary="yes" haltonfailure="yes">
-			<classpath>
-				<pathelement location="${dist}/jar/cdk.jar"/>
-				<pathelement path="${java.class.path}"/>
-				<pathelement location="."/>
-				<fileset dir="jar">
-				<include name="*.jar"/>
-				</fileset>
-			</classpath>
-			
-			  <test name="org.openscience.cdk.test.CDKTests" haltonfailure="no" todir="${reports.tests}" outfile="result" >
-			    <formatter type="plain" />
-			  </test>		
-		</junit>
-	</target>  
-	<target name="run-with-java3d" depends="dist-with-java3d">
-		<java classname="org.openscience.cdk.test.OrbitalsRenderer3DTest" fork="yes">
-			<arg value="data/reserpine.mol"/>
-			<classpath>
-				<pathelement location="${dist}/jar/cdk-with-java3d.jar"/>
-				<pathelement path="${java.class.path}"/>
-				<pathelement location="."/>
-				<fileset dir="jar">
-				<include name="*.jar"/>
-				</fileset>
-			</classpath>
-		</java>  
-	</target>
+        <path id="project.class.path">
+                <pathelement
+                location="/usr/lib/j2sdk1.3/jre/lib/rt.jar" />
 
-	<target name="run" depends="dist">
-		<java classname="org.openscience.cdk.test.ControllerTest" fork="yes">
-			<arg value=""/>
-			<classpath>
-				<pathelement location="${dist}/jar/cdk.jar"/>
-				<pathelement path="${java.class.path}"/>
-				<pathelement location="."/>
-				<fileset dir="jar">
-				<include name="*.jar"/>
-				</fileset>
-			</classpath>
-		</java>  
-	</target>
+                <pathelement location="." />
 
-  <target name="javadoc">
-    <mkdir dir="${javadoc.dir}"/>
-    <javadoc packagenames="org.openscience.cdk.*"
-        sourcepath="."
-        destdir="${javadoc.dir}"
-        private="true">
-      <classpath refid="project.class.path" />
-    </javadoc>
-  </target>
+                <fileset dir="jar">
+                        <include name="*.jar" />
+                </fileset>
+        </path>
 
+        <target name="init">
+                <tstamp />
+
+                <mkdir dir="${build}" />
+
+                <mkdir dir="${sourcedist}" />
+
+                <mkdir dir="${dist}" />
+
+                <mkdir dir="${reports.tests}" />
+        </target>
+
+        <target name="clean">
+                <delete>
+                        <fileset dir="." includes="**/*~" />
+
+                        <fileset dir="." includes="**/*.class" />
+
+                        <fileset dir="." includes="*.tar.gz" />
+
+                        <fileset dir="." includes="*.zip" />
+                </delete>
+
+                <delete dir="${build}" />
+
+                <delete dir="${sourcedist}" />
+
+                <delete dir="${reports.tests}" />
+        </target>
+
+        <target name="compile" depends="init">
+                <echo
+                message="Compiling only the classes that don't use Java3d." />
+
+                <echo
+                message="Use 'compile-with-java3d' target for full Java3D support. " />
+
+                <mkdir dir="${build}" />
+
+                <javac destdir="${build}" optimize="on"
+                deprecation="off">
+                        <src path="." />
+
+                        <exclude
+                        name="org/openscience/cdk/renderer/AcceleratedRenderer3D*" />
+
+                        <exclude
+                        name="org/openscience/cdk/renderer/OrbitalsRenderer3D*" />
+
+                        <exclude
+                        name="org/openscience/cdk/test/AcceleratedRenderer3DTest.java" />
+
+                        <exclude
+                        name="org/openscience/cdk/test/OrbitalsRenderer3DTest.java" />
+
+                        <classpath refid="project.class.path" />
+                </javac>
+
+                <copy todir="${build}">
+                        <fileset dir="." includes="**/Test-*" />
+                </copy>
+        </target>
+
+        <target name="compile-with-java3d" depends="init">
+                <mkdir dir="${build}" />
+
+                <javac destdir="${build}" optimize="on"
+                deprecation="off">
+                        <src path="." />
+
+                        <classpath refid="project.class.path" />
+                </javac>
+        </target>
+
+        <target name="dist" depends="compile">
+                <mkdir dir="${dist}/jar" />
+
+                <mkdir
+                dir="${build}/org/openscience/cdk/config" />
+
+                <copy
+                file="org/openscience/cdk/config/isotopes.xml"
+                tofile="${build}/org/openscience/cdk/config/isotopes.xml" />
+                <copy
+                file="org/openscience/cdk/config/structgen_atomtypes.xml"
+                tofile="${build}/org/openscience/cdk/config/structgen_atomtypes.xml" />
+
+		
+                <jar jarfile="${dist}/jar/cdk.jar"
+                basedir="${build}" />
+
+                <mkdir
+                dir="${build}/org/openscience/cdk/io/cml/data" />
+
+                <copy
+                file="org/openscience/cdk/io/cml/data/cml.dtd"
+                tofile="${build}/org/openscience/cdk/io/cml/data/cml.dtd" />
+
+                <jar jarfile="${dist}/jar/cdk-cml.jar"
+                basedir="${build}"
+                includes="org/openscience/cdk/io/cml/**" />
+        </target>
+
+        <target name="dist-with-java3d"
+        depends="compile-with-java3d">
+                <mkdir dir="${dist}/jar" />
+
+                <jar jarfile="${dist}/jar/cdk-with-java3d.jar"
+                basedir="${build}" />
+        </target>
+
+        <target name="sourcedist" depends="init">
+                <copy todir="${sourcedist}">
+                        <fileset dir="." includes="**/*java" />
+
+                        <fileset dir="." includes="build.xml" />
+                </copy>
+
+                <copy todir="${sourcedist}/jar">
+                        <fileset dir="jar" includes="*jar" />
+                </copy>
+
+                <tar tarfile="cdk-source-${DSTAMP}.tar"
+                basedir="${sourcedist}" includes="**" />
+
+                <gzip zipfile="cdk-source-${DSTAMP}.tar.gz"
+                src="cdk-source-${DSTAMP}.tar" />
+
+                <delete file="cdk-source-${DSTAMP}.tar" />
+
+                <zip zipfile="cdk-source-${DSTAMP}.zip"
+                basedir="${sourcedist}" includes="**" />
+        </target>
+
+        <target name="website">
+                <java classname="org.apache.xalan.xslt.Process"
+                args="-IN ../website.xml -XSL ../lib/cdkwebsite.xsl"
+                 dir="doc/source/bin" fork="yes">
+                        <classpath>
+                                <pathelement
+                                location="jar/xerces-1.3.0.jar" />
+
+                                <pathelement
+                                location="jar/xalan-2.0.1.jar" />
+
+                                <pathelement
+                                location="jar/bsf-2.0.1.jar" />
+                        </classpath>
+                </java>
+        </target>
+
+        <target name="test" depends="clean,dist">
+                <junit printsummary="yes" haltonfailure="yes">
+                        <classpath>
+                                <pathelement
+                                location="${dist}/jar/cdk.jar" />
+
+                                <pathelement
+                                path="${java.class.path}" />
+
+                                <pathelement location="." />
+
+                                <fileset dir="jar">
+                                        <include name="*.jar" />
+                                </fileset>
+                        </classpath>
+
+                        <test
+                        name="org.openscience.cdk.test.CDKTests"
+                        haltonfailure="no"
+                        todir="${reports.tests}"
+                        outfile="result">
+                                <formatter type="plain" />
+                        </test>
+                </junit>
+        </target>
+
+        <target name="run-with-java3d"
+        depends="dist-with-java3d">
+                <java
+                classname="org.openscience.cdk.test.OrbitalsRenderer3DTest"
+                 fork="yes">
+                        <arg value="data/reserpine.mol" />
+
+                        <classpath>
+                                <pathelement
+                                location="${dist}/jar/cdk-with-java3d.jar" />
+
+                                <pathelement
+                                path="${java.class.path}" />
+
+                                <pathelement location="." />
+
+                                <fileset dir="jar">
+                                        <include name="*.jar" />
+                                </fileset>
+                        </classpath>
+                </java>
+        </target>
+
+        <target name="run" depends="dist">
+                <java classname="org.openscience.cdk.test.SingleStructureRandomGeneratorTest">
+                        <classpath>
+                                <pathelement
+                                location="${dist}/jar/cdk.jar" />
+
+                                <pathelement
+                                path="${java.class.path}" />
+
+                                <pathelement location="." />
+
+                                <fileset dir="jar">
+                                        <include name="*.jar" />
+                                </fileset>
+                        </classpath>
+                </java>
+        </target>
+
+        <target name="javadoc">
+                <mkdir dir="${javadoc.dir}" />
+
+                <javadoc packagenames="org.openscience.cdk.*"
+                sourcepath="." destdir="${javadoc.dir}"
+                private="true">
+                        <classpath refid="project.class.path" />
+                </javadoc>
+        </target>
 </project>
+
+

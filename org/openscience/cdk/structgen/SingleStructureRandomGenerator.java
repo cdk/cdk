@@ -34,7 +34,8 @@ import java.util.Vector;
 import java.io.*;
 
 /**
- *  Description of the Class
+ *  Randomly generates a single, connected, correctly bonded structure for 
+ *  a given molecular formula
  *
  * @author     steinbeck
  * @created    September 4, 2001
@@ -42,8 +43,8 @@ import java.io.*;
 public class SingleStructureRandomGenerator
 {
 	AtomContainer atomContainer;
-	AtomTypeFactory atf;
-	static boolean debug = true;
+	SaturationChecker satCheck;
+	static boolean debug = false;
 
 
 	/**
@@ -54,7 +55,7 @@ public class SingleStructureRandomGenerator
 	 */
 	public SingleStructureRandomGenerator() throws java.lang.Exception
 	{
-		atf = new AtomTypeFactory();
+		satCheck = new SaturationChecker();
 	}
 
 
@@ -69,61 +70,6 @@ public class SingleStructureRandomGenerator
 		this.atomContainer = ac;
 	}
 
-
-	/**
-	 *  Returns the currently maximum formable bond order for this atom
-	 *
-	 * @param  atom  The atom to be checked
-	 * @param  ac    The AtomContainer that provides the context
-	 * @return       the currently maximum formable bond order for this atom
-	 * @since
-	 */
-	public double getCurrentMaxBondOrder(Atom atom, AtomContainer ac)
-	{
-		AtomType[] atomTypes = atf.getAtomTypes(atom.getSymbol(), atf.ATOMTYPE_ID_STRUCTGEN);
-		double bondOrderSum = ac.getBondOrderSum(atom);
-		double maxBondOrder = ac.getHighestCurrentBondOrder(atom);
-		int hcount = atom.getHydrogenCount();
-		double max = 0;
-		double current = 0;
-		for (int f = 0; f < atomTypes.length; f++)
-		{
-			current = hcount + bondOrderSum;
-			if (atomTypes[f].getMaxBondOrderSum() - current > max)
-			{
-				max = atomTypes[f].getMaxBondOrderSum() - current;
-			}
-		}
-		return max;
-	}
-
-
-
-	/**
-	 *  Description of the Method
-	 *
-	 * @param  atom  Description of Parameter
-	 * @param  ac    Description of Parameter
-	 * @return       Description of the Returned Value
-	 * @since
-	 */
-	public boolean isSaturated(Atom atom, AtomContainer ac)
-	{
-		AtomType[] atomTypes = atf.getAtomTypes(atom.getSymbol(), atf.ATOMTYPE_ID_STRUCTGEN);
-		double bondOrderSum = ac.getBondOrderSum(atom);
-		double maxBondOrder = ac.getHighestCurrentBondOrder(atom);
-		int hcount = atom.getHydrogenCount();
-		for (int f = 0; f < atomTypes.length; f++)
-		{
-			if (bondOrderSum >= atomTypes[f].getMaxBondOrderSum() - hcount && maxBondOrder <= atomTypes[f].getMaxBondOrder())
-			{
-				return true;
-			}
-		}
-		return false;
-	}
-
-
 	/**
 	 *  Description of the Method
 	 *
@@ -136,13 +82,14 @@ public class SingleStructureRandomGenerator
 		boolean bondFormed;
 		int next;
 		double order;
-		double max;
+		double max, cmax1, cmax2;
 		int iteration = 0;
 		Atom partner;
 		Atom atom;
 		do
 		{
 			iteration++;
+			atomContainer.removeAllBonds();
 			do
 			{
 				bondFormed = false;
@@ -150,26 +97,70 @@ public class SingleStructureRandomGenerator
 				{
 					atom = atomContainer.getAtomAt(f);
 
-					if (!hasPerfectConfiguration(atom, atomContainer))
+					if (!satCheck.isSaturated(atom, atomContainer))
 					{
 						partner = getAnotherUnsaturatedNode(atom);
 						if (partner != null)
 						{
-							max = Math.min(getCurrentMaxBondOrder(atom, atomContainer), getCurrentMaxBondOrder(partner, atomContainer));
+							cmax1 = satCheck.getCurrentMaxBondOrder(atom, atomContainer);
+							cmax2 = satCheck.getCurrentMaxBondOrder(partner, atomContainer);
+							max = Math.min(cmax1, cmax2);
 							order = Math.min(Math.max(1.0, (double)Math.round(Math.random() * max)), 3.0);
+														if (debug)
+							{
+								System.out.println("cmax1, cmax2, max, order: " + cmax1 + ", " + cmax2 + ", "  + max + ", " + order);	
+							}
+
 							atomContainer.addBond(new Bond(atom, partner, order));
 							bondFormed = true;
 						}
 					}
 				}
 			} while (bondFormed);
-			if (new ConnectivityChecker().isConnected(atomContainer) && allSaturated())
+			if (new ConnectivityChecker().isConnected(atomContainer) && satCheck.allSaturated(atomContainer))
 			{
-				return atomContainer;
+				structureFound = true;
 			}
-		} while (!true);
+		} while (!structureFound && iteration < 20);
+		if (debug)
+		{
+			System.out.println("Structure found after " + iteration + " iterations.");	
+		}
+		return atomContainer;
 	}
 
+	
+	/**
+	 *  Gets the AnotherUnsaturatedNode attribute of the SingleStructureRandomGenerator object
+	 *
+	 * @param  exclusionAtom  Description of Parameter
+	 * @return                The AnotherUnsaturatedNode value
+	 * @since
+	 */
+	private Atom getAnotherUnsaturatedNode(Atom exclusionAtom)
+	{
+		Atom atom;
+		int next = (int) (Math.random() * atomContainer.getAtomCount());
+
+		for (int f = next; f < atomContainer.getAtomCount(); f++)
+		{
+			atom = atomContainer.getAtomAt(f);
+			if (!satCheck.isSaturated(atom, atomContainer) && exclusionAtom != atom && !atomContainer.getConnectedAtomsVector(exclusionAtom).contains(atom))
+			{
+				return atom;
+			}
+		}
+		for (int f = 0; f < next; f++)
+		{
+			atom = atomContainer.getAtomAt(f);
+			if (!satCheck.isSaturated(atom, atomContainer) && exclusionAtom != atom && !atomContainer.getConnectedAtomsVector(exclusionAtom).contains(atom))
+			{
+				return atom;
+			}
+		}
+		return null;
+	}
+	
 	/**
 	 *  Description of the Method
 	 *
@@ -189,130 +180,5 @@ public class SingleStructureRandomGenerator
 		}
 		return o;
 	}
-
-
-	/**
-	 *  Gets the AnotherUnsaturatedNode attribute of the SingleStructureRandomGenerator object
-	 *
-	 * @param  exclusionAtom  Description of Parameter
-	 * @return                The AnotherUnsaturatedNode value
-	 * @since
-	 */
-	private Atom getAnotherUnsaturatedNode(Atom exclusionAtom)
-	{
-		Atom atom;
-		int next = (int) (Math.random() * atomContainer.getAtomCount());
-
-		for (int f = next; f < atomContainer.getAtomCount(); f++)
-		{
-			atom = atomContainer.getAtomAt(f);
-			if (!isSaturated(atom, atomContainer) && exclusionAtom != atom && !atomContainer.getConnectedAtomsVector(exclusionAtom).contains(atom))
-			{
-				return atom;
-			}
-		}
-		for (int f = 0; f < next; f++)
-		{
-			atom = atomContainer.getAtomAt(f);
-			if (!isSaturated(atom, atomContainer) && exclusionAtom != atom && !atomContainer.getConnectedAtomsVector(exclusionAtom).contains(atom))
-			{
-				return atom;
-			}
-		}
-		return null;
-	}
-
-
-	/**
-	 *  Description of the Method
-	 *
-	 * @param  atom  Description of Parameter
-	 * @param  ac    Description of Parameter
-	 * @return       Description of the Returned Value
-	 * @since
-	 */
-	private boolean hasPerfectConfiguration(Atom atom, AtomContainer ac)
-	{
-		AtomType[] atomTypes = atf.getAtomTypes(atom.getSymbol(), atf.ATOMTYPE_ID_STRUCTGEN);
-		double bondOrderSum = ac.getBondOrderSum(atom);
-		double maxBondOrder = ac.getHighestCurrentBondOrder(atom);
-
-		if (debug)
-		{
-			System.out.println("*** Checking for perfect configuration ***");
-			try
-			{
-				System.out.println("Checking configuration of atom " + ac.getAtomNumber(atom));
-				System.out.println("Atom has bondOrderSum = " + bondOrderSum);
-				System.out.println("Atom has max = " + bondOrderSum);
-			}
-			catch (Exception exc)
-			{
-
-			}
-
-		}
-		for (int f = 0; f < atomTypes.length; f++)
-		{
-			if (debug)
-			{
-
-			}
-			if (bondOrderSum == atomTypes[f].getMaxBondOrderSum() && maxBondOrder == atomTypes[f].getMaxBondOrder())
-			{
-				if (debug)
-				{
-					try
-					{
-						System.out.println("Atom " + ac.getAtomNumber(atom) + " has perfect configuration");
-					}
-					catch (Exception exc)
-					{
-
-					}
-				}
-				return true;
-			}
-		}
-		if (debug)
-		{
-			try
-			{
-				System.out.println("*** Atom " + ac.getAtomNumber(atom) + " has imperfect configuration ***");
-			}
-			catch (Exception exc)
-			{
-
-			}
-		}
-		return false;
-	}
-
-
-	/**
-	 *  Description of the Method
-	 *
-	 * @return    Description of the Returned Value
-	 * @since
-	 */
-	private boolean allSaturated()
-	{
-		for (int f = 0; f < atomContainer.getAtomCount(); f++)
-		{
-			if (!hasPerfectConfiguration(atomContainer.getAtomAt(f), atomContainer))
-			{
-				return false;
-			}
-		}
-		return true;
-	}
-
-
-	/**
-	 *  Description of the Method
-	 *
-	 * @since
-	 */
-	private void sortNodes() { }
 }
 
