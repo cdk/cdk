@@ -27,6 +27,9 @@
  *  */
 package org.openscience.cdk.test;
 
+import java.util.Hashtable;
+import java.util.Vector;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -68,6 +71,16 @@ public class ChemObjectTest extends TestCase {
         assertEquals(cProperty, chemObject.getProperty(cDescription));
     }
 
+    public void testSetProperties() {
+        ChemObject chemObject = new ChemObject();
+        Hashtable props = new Hashtable();
+        String cDescription = new String("description");
+        String cProperty = new String("property");
+        props.put(cDescription, cProperty);
+        chemObject.setProperties(props);
+        assertEquals(cProperty, chemObject.getProperty(cDescription));
+    }
+
     public void testGetProperty() {
         ChemObject chemObject = new ChemObject();
         assertNull(chemObject.getProperty("dummy"));
@@ -97,7 +110,51 @@ public class ChemObjectTest extends TestCase {
     
     public void testClone() {
         ChemObject chemObject = new ChemObject();
+        chemObject.setFlag(3, true);
+        
+        // test cloning of itself
         Object clone = chemObject.clone();
         assertTrue(clone instanceof ChemObject);
     }
+    
+    public void testClone_Flags() {
+        ChemObject chemObject1 = new ChemObject();
+        chemObject1.setFlag(3, true);
+        ChemObject chemObject2 = (ChemObject)chemObject1.clone();
+
+        // test cloning of flags field
+        chemObject2.setFlag(3, false);
+        assertTrue(chemObject1.getFlag(3));
+    }
+
+    public void testClone_Identifier() {
+        ChemObject chemObject1 = new ChemObject();
+        chemObject1.setID("co1");
+        ChemObject chemObject2 = (ChemObject)chemObject1.clone();
+
+        // test cloning of identifier field
+        chemObject2.setID("co2");
+        assertEquals("co1", chemObject1.getID());
+    }
+    
+    public void testClone_Properties() {
+        ChemObject chemObject1 = new ChemObject();
+        Hashtable props1 = new Hashtable();
+        chemObject1.setProperties(props1);
+        ChemObject chemObject2 = (ChemObject)chemObject1.clone();
+
+        // test cloning of properties field
+        Hashtable props2 = new Hashtable();
+        props2.put("key", "value");
+        chemObject2.setProperties(props2);
+        assertEquals(props1, chemObject1.getProperties());
+        assertEquals(0, chemObject1.getProperties().size());
+    }
+    
+    public void testShallowCopy() {
+        ChemObject chemObject = new ChemObject();
+        Object clone = chemObject.clone();
+        assertTrue(clone instanceof ChemObject);
+    }
+
 }
