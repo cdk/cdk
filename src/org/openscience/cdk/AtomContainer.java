@@ -1253,10 +1253,10 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 
 
 	/**
-	 *  Clones this atomContainer object.
+	 * Clones this AtomContainer object and its content.
 	 *
-	 *@return    The cloned object
-	 *@see       #shallowCopy
+	 * @return    The cloned object
+	 * @see       #shallowCopy
 	 */
 	public Object clone()
 	{
