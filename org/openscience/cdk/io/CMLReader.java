@@ -30,8 +30,8 @@ package org.openscience.cdk.io;
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.exception.*;
-import org.openscience.cml.*;
-import org.openscience.cdopi.*;
+import org.openscience.cdk.io.cml.*;
+import org.openscience.cdk.io.cml.cdopi.*;
 import org.xml.sax.*;
 import org.xml.sax.helpers.*;
 import java.io.*;
@@ -99,7 +99,7 @@ public class CMLReader implements CDKConstants, ChemObjectReader {
 		    System.err.println("Cannot activate validation."); 
 		    return cdo;
 		}
-		resolver = new org.openscience.cml.CMLResolver();
+		resolver = new CMLResolver();
 		parser.setContentHandler(handler);
 		parser.setEntityResolver(resolver);
 		try 

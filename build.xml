@@ -1,7 +1,9 @@
+<?xml version="1.0"?>
+<!DOCTYPE project SYSTEM "dtd/project.dtd">
 <project name="CDK" default="compile" basedir=".">	
   
   <!-- comment this line out of you have not jikes installed -->
-  <!--property name="build.compiler" value="jikes"/-->
+  <property name="build.compiler" value="jikes"/>
   
   <property name="build" value="build"/>
   <property name="sourcedist" value="sourcedist"/>
@@ -10,7 +12,7 @@
   <property name="reports.tests" value="reports"/>
   
   <path id="project.class.path">
-    <!-- adapt the next line to reflect you installation -->
+    <!-- adapt the next line to reflect your installation -->
     <pathelement location="/usr/lib/j2sdk1.3/jre/lib/rt.jar"/>
     <pathelement location="."/>
     <fileset dir="jar">
@@ -63,6 +65,11 @@
     <mkdir dir="${dist}/jar"/>
     <!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
     <jar jarfile="${dist}/jar/cdk.jar" basedir="${build}"/>
+    <mkdir dir="${build}/org/openscience/cdk/io/cml/data"/>
+    <copy file="org/openscience/cdk/io/cml/data/cml.dtd"
+          tofile="${build}/org/openscience/cdk/io/cml/data/cml.dtd"/>
+    <jar jarfile="${dist}/jar/cdk-cml.jar" basedir="${build}" 
+         includes="org/openscience/cdk/io/cml/**"/>
   </target>
 
   <target name="dist-with-java3d" depends="compile-with-java3d">
@@ -84,6 +91,19 @@
     <gzip zipfile="cdk-source-${DSTAMP}.tar.gz" src="cdk-source-${DSTAMP}.tar"/>
     <delete file="cdk-source-${DSTAMP}.tar" />
     <zip zipfile="cdk-source-${DSTAMP}.zip" basedir="${sourcedist}" includes="**"/>
+  </target>
+
+  <target name="website">
+    <java classname="org.apache.xalan.xslt.Process"
+          args="-IN ../website.xml -XSL ../lib/cdkwebsite.xsl"
+          dir="doc/source/bin"
+          fork="yes">
+      <classpath>
+        <pathelement location="jar/xerces-1.3.0.jar"/>
+        <pathelement location="jar/xalan-2.0.1.jar"/>
+        <pathelement location="jar/bsf-2.0.1.jar"/>
+      </classpath>
+    </java>
   </target>
 	<target name="test" depends="dist">
 		<junit printsummary="yes" haltonfailure="yes">

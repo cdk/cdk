@@ -25,8 +25,8 @@
 package org.openscience.cdk.io;
 
 import org.openscience.cdk.*;
-import org.openscience.cml.*;
-import org.openscience.cdopi.*;
+import org.openscience.cdk.io.cml.*;
+import org.openscience.cdk.io.cml.cdopi.*;
 import java.util.*;
 
 /**
