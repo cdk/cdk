@@ -655,63 +655,6 @@
                 <zip zipfile="${package}.zip" basedir="${sourcedist}/" includes="${package}/**" />
         </target>
 
-	<target name="test-core" depends="dist-core, dist-test, noJunit">
-            <junit printsummary="yes" haltonfailure="yes" fork="yes">
-                <classpath refid="project.class.path" />
-                <classpath>
-                    <fileset dir="${dist}/jar">
-                        <include name="cdk-core.jar" />
-                        <include name="cdk-test.jar" />
-                    </fileset>
-                </classpath>
-
-                <test name="org.openscience.cdk.test.CoreClassesTests"
-                      haltonfailure="no" todir="${reports.tests}"
-                      outfile="result.core">
-                    <formatter type="brief" />
-                </test>
-            </junit>
-        </target>
-	
-	<target name="test-standard" depends="dist-core, dist-standard, dist-test, noJunit">
-            <junit printsummary="yes" haltonfailure="yes" fork="yes">
-                <classpath refid="project.class.path" />
-                <classpath>
-                    <fileset dir="${dist}/jar">
-                        <include name="cdk-core.jar" />
-                        <include name="cdk-standard.jar" />
-                        <include name="cdk-test.jar" />
-                    </fileset>
-                </classpath>
-
-                <test name="org.openscience.cdk.test.StandardClassesTests"
-                      haltonfailure="no" todir="${reports.tests}"
-                      outfile="result.standard">
-                    <formatter type="brief" />
-                </test>
-            </junit>
-        </target>
-	
-        <target name="test-io" depends="dist-core, dist-standard, dist-test, dist-io, noJunit">
-            <junit printsummary="yes" haltonfailure="yes" showoutput="yes" fork="yes">
-                <classpath refid="project.class.path" />
-                <classpath>
-                    <fileset dir="${dist}/jar">
-                        <include name="cdk-core.jar" />
-                        <include name="cdk-standard.jar" />
-                        <include name="cdk-io.jar" />
-                        <include name="cdk-test.jar" />
-                    </fileset>
-                </classpath>
-
-                <test name="org.openscience.cdk.test.io.IOTests"
-                      haltonfailure="no" todir="${reports.tests}"
-                      outfile="result.io">
-                    <formatter type="brief" />
-                </test>
-            </junit>
-        </target>
-
         <target id="test-all" name="test-all" depends="test, noJunit"
                 description="Performs a full JUnit test for the CDK, including experimental classes.">
                 <junit printsummary="yes" haltonfailure="yes" fork="yes">
