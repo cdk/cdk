@@ -80,5 +80,43 @@ reader.addReaderListener(listener);
         e.g. cdk-fileconvert.
       </para>
     </section>
+    
+    <section>
+      <title>Writing new IO classes</title>
+      <para>
+        CDK IO classes must implement the &io.CDKObjectIO; which is automatically
+        done when the &io.ChemObjectReader; or the &io.ChemObjectWriter; is
+        extended. The latter two are the interfaces that the CDK readers and
+        writers must implement. The CDKObjectIO interface ensures that common
+        functionality is implemented, while the other two define reader and writer
+        specific methods.
+      </para>
+      <para>
+        Moreover, a proper CDK reader or writer must have a constructor which takes
+        zero parameters. This is needed to allow other classes to query the
+        class for its IO customization options.
+      </para>
+      <section>
+        <title>The DefaultChemObjectReader and -Writer</title>
+        <para>
+          The &io.DefaultChemObjectReader; and &io.DefaultChemObjectWriter;
+          classes are abstract classes that define the
+          implementation for a few methods defined by the CDK IO interfaces, which
+          do not necessarily require implementation. Therefore, many CDK IO classes
+          simply extend this class.
+        </para>
+      </section>
+      <section>
+        <title>The DummyReader</title>
+        <para>
+          The &io.DummyReader; is an abstract class that implements the
+          &io.ChemObjectReader; interface but defines the class as *not*
+          implemented. This is used in a number of dummy readers which can
+          be returned by the ReaderFactory, but can not actually read the
+          file format, but is only used by the Factory to indicate the file
+          format. See &applications.FileFormatGuesser;.
+        </para>
+      </section>
+    </section>
 </chapter>
 
