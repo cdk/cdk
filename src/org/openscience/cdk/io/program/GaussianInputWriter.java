@@ -134,12 +134,16 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
                      " ");
         String commandString = command.getSetting();
         if (commandString.equals("energy calculation")) {
+            // ok, no special command needed
         } else if (commandString.equals("geometry optimization")) {
             writer.write("opt");
         } else if (commandString.equals("IR frequency calculation")) {
             writer.write("freq");
         } else if (commandString.equals("IR frequency calculation (with Raman)")) {
             writer.write("freq=noraman");
+        } else {
+            // assume that user knows what he's doing
+            writer.write(commandString);
         }
         writer.newLine();
         
@@ -251,7 +255,7 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
     }
     
     public IOSetting[] getIOSettings() {
-        IOSetting[] settings = new IOSetting[7];
+        IOSetting[] settings = new IOSetting[8];
         settings[0] = basis;
         settings[1] = method;
         settings[2] = command;
@@ -259,7 +263,7 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
         settings[4] = shell;
         settings[5] = proccount;
         settings[6] = usecheckpoint;
-        settings[6] = memory;
+        settings[7] = memory;
         return settings;
     }
 }

@@ -12,6 +12,7 @@ Fixes:
 * The core class now notify their listeners when things are changed
 * ChangeEvents are now propagated through the container hierarchy
   from AtomContainer via SetOfMolecules up to the ChemFile level
+* Fixed returning of one of the IO settings in io.program.GaussianInputWriter
 
 API changes:
 
