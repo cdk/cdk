@@ -1,4 +1,7 @@
 org/openscience/cdk/applications/FileConvertor.java
 org/openscience/cdk/applications/FileFormatGuesser.java
+org/openscience/cdk/applications/FingerPrinter.java
+org/openscience/cdk/applications/IUPACNameGenerator.java
+org/openscience/cdk/applications/SubstructureFinder.java
 org/openscience/cdk/applications/Validator.java
 org/openscience/cdk/applications/Viewer.java
