@@ -3,13 +3,11 @@
 
       <para>
         The CDK projects uses UML diagrams to visualize relations between
-        classes and libraries. Diagrams are drawn in
-        <ulink url="http://www.argouml.org/">ArgoUML</ulink> and
-        <ulink url="http://www.gentleware.com/download/download2.php3?target=poseidonCEzip">Poseidon 
-        for UML (Community Edition 1.2)</ulink>.
-        The latter is a commercialized version of the former and does quite an
-        excellent job in converting java source to UML diagrams, almost
-        automatically.
+        classes and libraries. UML diagrams are saved in the XMI format.
+        A good opensource UML editor with XMI support is
+        <ulink url="http://uml.sf.net/">Umbrello</ulink> which is part of the KDE
+        desktop environment. A Java alternative is
+        <ulink url="http://www.argouml.org/">ArgoUML</ulink>.
       </para>
     </chapter>
 

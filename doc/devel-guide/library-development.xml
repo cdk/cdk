@@ -409,7 +409,8 @@ $ cdk-test org.openscience.cdk.test.CDKTests
       points are further described.
       <orderedlist>
         <listitem><para>Make CDK compiles from scratch</para></listitem>
-        <listitem><para>Make the JUnit tests succeed</para></listitem>
+        <listitem><para>Make the JUnit tests succeed, or report 
+            failing tests in the JavaDoc</para></listitem>
         <listitem><para>Make the Javadoc generate without errors and warnings</para></listitem>
         <listitem><para>Report bugs that cannot be fixed easily on SourceForge</para></listitem>
         <listitem><para>Make the Changelog up to date</para></listitem>
