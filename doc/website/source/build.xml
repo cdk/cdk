@@ -37,10 +37,15 @@
       <srcfiles dir="../../refs" includes="cheminf.btx"/>
     </uptodate>
     <echo message="Bibliography index uptodate: ${refs.uptodate}"/>
+    <uptodate property="dicts.uptodate"
+      targetfile="cdkdict.dbx">
+      <srcfiles dir="../../../src/org/openscience/cdk/dict/data" includes="cdk.xml"/>
+    </uptodate>
+    <echo message="Dictionaries in Docbook uptodate: ${dicts.uptodate}"/>
   </target>
 
   <target name="includes" id="includes" 
-      depends="check.includes, javancss, keyword.index, bibliography"/>
+      depends="check.includes, javancss, keyword.index, bibliography, dicts"/>
   
   <target id="website" name="website" depends="layout">
     <xslt basedir="." destdir="${build.dir}" extension=".html"
@@ -63,6 +68,10 @@
     </java>
     <xslt in="javancss-tmp.xml" out="javancss-data.xml" style="xsl/javancss2docbook.xsl"/>
     <xslt in="javancss-tmp.xml" out="javadoc-data.xml" style="xsl/javancss2docbook-javadoc.xsl"/>
+  </target>
+  
+  <target name="dicts" unless="dicts.uptodate">
+    <xslt in="../../../src/org/openscience/cdk/dict/data/cdk.xml" out="cdkdict.dbx" style="xsl/cmldict2docbook.xsl"/>
   </target>
   
   <target id="keyword.index" name="keyword.index" unless="keywordindex.uptodate">

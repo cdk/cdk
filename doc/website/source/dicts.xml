@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.0b1//EN" 
+                         "dtd/website.dtd" [
+  <!ENTITY biblio SYSTEM "../../refs/cheminf.dbx">  
+]>
+<webpage id="dictionary-overview">
+  <config param="last-change-by" value="$Author$"/>
+  <config param="rcsdate" value="$Date$"/>
+
+  <head>
+    <title>Dictionaries</title>
+    <titleabbrev>Dicts</titleabbrev>
+    <summary>A list of dictionaries that are distributed with CDK.</summary>
+  </head>
+
+  <para>
+    Below is a list of dictionaries in CML2 format that are distributed with
+    the CDK. A HTML overview of each dictionary is linked.
+  </para>
+  
+  <orderedlist>
+    <listitem><para><ulink url="dict-cdk.html">CDK</ulink></para></listitem>
+  </orderedlist>
+
+</webpage>
