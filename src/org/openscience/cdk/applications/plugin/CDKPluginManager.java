@@ -151,6 +151,13 @@ public class CDKPluginManager {
     }
     
     /**
+     * Returns an Enumeration of CDK plugins.
+     */
+    public Enumeration getPlugins() {
+        return cdkPlugins.elements();
+    }
+    
+    /**
      * Loads the plugins from a certain directory.
      */
     private void loadPlugins() {
