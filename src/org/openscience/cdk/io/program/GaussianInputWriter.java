@@ -57,7 +57,7 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
     * Constructs a new writer that produces input files to run a
     * Gaussian QM job.
     */
-    public GaussianInputWriter(Writer out) throws IOException {
+    public GaussianInputWriter(Writer out) {
         writer = new BufferedWriter(out);
     }
 
