@@ -42,6 +42,7 @@
     <xslt in="javancss-stats.xml" out="${build.dir}/javancss-stats.html" style="xsl/tabular.xsl"/>
     <xslt in="keywordindex.xml" out="${build.dir}/keywordindex.html" style="xsl/tabular.xsl"/>
     <xslt in="libraries.xml" out="${build.dir}/libraries.html" style="xsl/tabular.xsl"/>
+    <xslt in="license.xml" out="${build.dir}/license.html" style="xsl/tabular.xsl"/>
     <xslt in="man-dbadmin.xml" out="${build.dir}/man-dbadmin.html" style="xsl/tabular.xsl"/>
     <xslt in="man-download.xml" out="${build.dir}/man-download.html" style="xsl/tabular.xsl"/>
     <xslt in="man-fileconvert.xml" out="${build.dir}/man-fileconvert.html" style="xsl/tabular.xsl"/>

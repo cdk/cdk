@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.0b1//EN" 
+                         "dtd/website.dtd" [
+  <!ENTITY lgpl SYSTEM "../../lgpl.license">
+]>
+<webpage id="license">
+  <config param="last-change-by" value="$Author$"/>
+  <config param="rcsdate" value="$Date$"/>
+
+  <head>
+    <title>License: GNU Lesser General Public License</title>
+    <titleabbrev>License</titleabbrev>
+    <summary>This page contains the full GNU Lesser General
+      Public License (version 2.1).</summary>
+  </head>
+
+  <section>
+    <title>GNU Lesser General Public License</title>
+    <literallayout>
+      &lgpl;
+    </literallayout>
+  </section>
+
+</webpage>

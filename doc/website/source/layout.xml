@@ -67,5 +67,6 @@
     <tocentry page="changelog.xml" filename="changelog.html"/>
     <tocentry page="contact.xml" filename="contact.html"/>
     <tocentry page="download.xml" filename="download.html"/>
+    <tocentry page="license.xml" filename="license.html"/>
   </toc>
 </layout>
