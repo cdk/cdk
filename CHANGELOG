@@ -4,10 +4,12 @@ CHANGELOG $Date$
 Changes in CVS
 ------------------------------------
 New:
-* File format detection for Spartan, Q-Chem and Ghemical SPM files
+* File format detection for Spartan, Q-Chem, NWChem and Ghemical SPM files
 * Added WHIM and BCUT descriptor
 
 Fixes:
+* Fixed format detection for Jaguar, Gamess and the HIN format: they were
+  not specific enough
 
 API changes:
 * Moved SingleElectron to the core module
