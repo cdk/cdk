@@ -56,12 +56,12 @@ public class RingPlacer
 		if (debug) System.out.println("occupiedAngle: " + occupiedAngle + " (" + occupiedAngle / Math.PI * 180 + ")");
 		double remainingAngle = (2 * Math.PI) - occupiedAngle;
 		if (debug) System.out.println("remainingAngle: " + remainingAngle + " (" + remainingAngle / Math.PI * 180 + ")");
-		double addAngle = remainingAngle / ring.getRingSize();
+		double addAngle = remainingAngle / ring.getRingSize() - 1;
 		double currentAngle = occupiedAngle / 2;
-		for (int i = 0; i < ring.getRingSize(); i++)
+		for (int i = 0; i < ring.getRingSize() - 1; i++)
 		{
 			currentAngle += addAngle;
-			Vector2d newVector = new Vector2d(Math.cos(currentAngle) * bondLength, Math.sin(currentAngle) * bondLength); 
+			Vector2d newVector = new Vector2d(Math.cos(currentAngle) * ringRadius, Math.sin(currentAngle) * ringRadius); 
 			newAtomPoint = ringCenter;
 			newAtomPoint.add(newVector);
 		}
