@@ -51,6 +51,7 @@ import org.openscience.cdk.test.qsar.*;
 	suite.addTest(ProtonTotalPartialChargeDescriptorTest.suite());
 	suite.addTest(EffectivePolarizabilityDescriptorTest.suite());
 	suite.addTest(HBondAcceptorCountDescriptorTest.suite());
+	suite.addTest(HBondDonorCountDescriptorTest.suite());
         return suite;
     }
     
