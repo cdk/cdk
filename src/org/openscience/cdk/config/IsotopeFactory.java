@@ -154,7 +154,7 @@ public class IsotopeFactory
 	 */
 	public Isotope[] getIsotopes(String symbol)
 	{
-		ArrayList list = new ArrayList();
+  	ArrayList list = new ArrayList();
 		for (int f = 0; f < isotopes.size(); f++)
 		{
 			if (((Isotope) isotopes.elementAt(f)).getSymbol().equals(symbol))
@@ -162,7 +162,7 @@ public class IsotopeFactory
 				list.add((Isotope) ((Isotope) isotopes.elementAt(f)).clone());
 			}
 		}
-		return (Isotope[]) list.toArray();
+  	return (Isotope[]) list.toArray(new Isotope[list.size()]);
 	}
 
 
