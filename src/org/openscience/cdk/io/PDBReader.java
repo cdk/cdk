@@ -221,7 +221,12 @@ public class PDBReader extends DefaultChemObjectReader {
     if (cLine.length() < 59) {
       throw new RuntimeException("PDBReader error during readAtom(): line too short");
     }
-    Atom oAtom = new Atom(cLine.substring(12, 14).trim(), 
+    String elementSymbol = cLine.substring(12, 14).trim();
+    if (elementSymbol.length() == 2) {
+        // ensure that the second char is lower case
+        elementSymbol = elementSymbol.charAt(0) + elementSymbol.substring(1).toLowerCase();
+    }
+    Atom oAtom = new Atom(elementSymbol, 
         new Point3d(new Double(cLine.substring(30, 38)).doubleValue(),
           new Double(cLine.substring(38, 46)).doubleValue(),
             new Double(cLine.substring(46, 54)).doubleValue()));
