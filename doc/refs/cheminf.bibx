@@ -404,4 +404,15 @@
     </bibtex:misc>
   </bibtex:entry>
 
+  <bibtex:entry id="GM80">
+    <bibtex:article>
+      <bibtex:author>Gasteiger, J. and  Marsili, M.</bibtex:author>
+      <bibtex:title> Iterative partial equalization of orbital elektronegativity - a rapid access to atomic charges</bibtex:title>
+      <bibtex:journal> Tetrahedron</bibtex:journal>
+      <bibtex:year>1980</bibtex:year>
+      <bibtex:volume>36</bibtex:volume>
+      <bibtex:pages>3219-3288</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+
 </bibtex:file>
