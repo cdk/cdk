@@ -33,7 +33,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.tools.ConnectivityChecker;
+import org.openscience.cdk.graph.ConnectivityChecker;
 
 /**
  *  Checks the functionality of the ConnectivityChecker

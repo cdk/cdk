@@ -51,7 +51,7 @@ import org.openscience.cdk.graph.invariant.CanonicalLabeler;
 import org.openscience.cdk.graph.invariant.MorganNumbersTools;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
-import org.openscience.cdk.tools.ConnectivityChecker;
+import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.tools.IsotopeFactory;
 
 /**

@@ -41,7 +41,7 @@ import org.openscience.cdk.Reaction;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.InvalidSmilesException;
-import org.openscience.cdk.tools.ConnectivityChecker;
+import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.ValencyChecker;

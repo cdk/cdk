@@ -46,7 +46,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.ringsearch.SSSRFinder;
-import org.openscience.cdk.tools.ConnectivityChecker;
+import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.tools.HydrogenAdder;
 
 /**
@@ -65,7 +65,7 @@ import org.openscience.cdk.tools.HydrogenAdder;
  *
  *@author     steinbeck
  *@cdk.created    February 2, 2004
- *@see        org.openscience.cdk.tools.ConnectivityChecker#partitionIntoMolecules(AtomContainer)
+ *@see        org.openscience.cdk.graph.ConnectivityChecker#partitionIntoMolecules(AtomContainer)
  *@cdk.keyword    layout
  *@cdk.keyword    2D-coordinates
  */

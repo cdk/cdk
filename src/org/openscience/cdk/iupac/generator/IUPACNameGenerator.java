@@ -33,7 +33,7 @@ import org.openscience.cdk.Fragment;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.exception.NoSuchAtomException;
-import org.openscience.cdk.tools.ConnectivityChecker;
+import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.MFAnalyser;
 

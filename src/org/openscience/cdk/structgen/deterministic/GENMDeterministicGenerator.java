@@ -25,7 +25,7 @@ import java.util.*;
 import javax.vecmath.*;
 import org.openscience.cdk.*;
 import org.openscience.cdk.tools.*;
-import org.openscience.cdk.tools.ConnectivityChecker;
+import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.smiles.*;

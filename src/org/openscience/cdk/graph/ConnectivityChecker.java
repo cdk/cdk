@@ -22,7 +22,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
  * 
  */
-package org.openscience.cdk.tools;
+package org.openscience.cdk.graph;
 
 import java.util.Vector;
 
@@ -32,7 +32,6 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
-import org.openscience.cdk.graph.PathTools;
 
 /**
  * Tool class for checking whether the (sub)structure in an
