@@ -3,11 +3,20 @@
   <refentryinfo>
     <revhistory>
       <revision>
+        <revnumber>2</revnumber>
+        <date>2002-12-06</date>
+        <authorinitials>elw</authorinitials>
+        <revremark>
+          Clarified some issues posted by
+          L. Shymal. See <ulink url="https://sourceforge.net/mailarchive/forum.php?thread_id=1325930&forum_id=2178">email archive</ulink>.
+        </revremark>
+      </revision>
+      <revision>
         <revnumber>1</revnumber>
         <date>2002-10-24</date>
         <authorinitials>elw</authorinitials>
         <revremark>
-          See <ulink url="">email archive</ulink>.
+          See <ulink url="https://sourceforge.net/mailarchive/forum.php?thread_id=1227319&forum_id=2178">email archive</ulink>.
         </revremark>
       </revision>
     </revhistory>
@@ -30,10 +39,23 @@ it possible to still calculate molecular mass even if pseudo atoms are found
 in the molecule (Note that pseudo atoms can have both zero as non-zero mass).
     </para>
     <para>
+The PseudoAtom class is not primarily intended for direct use: users are
+encouraged to subclass the class. The class is primarily used for detection 
+that the actual class is not a real Atom, as in a carbon atom, but a pseudo 
+atom that has many characteristics in common with a real atom (e.g.
+that it is a point in space).
+    </para>
+    <para>
 Example pseudo atoms are (amongst others): the methyl group, denoted by Me; a 
 phenyl amino acid, denoted by Phe; a R group, denoted by R ;) and 
 representing an alkyl species. All of these may have specific properties, but 
 in the presented proposal, this is dealt with.
+    </para>
+    <para>
+The example pseudo atoms should not actually use PseudoAtom class, but a subclass
+instead. E.g. the amino acid use a subclass of PseudoAtom called AminoAcidPseudoAtom
+and will contain extra methods for getting and setting residue specific information,
+like the PDB code of the enzyme to which it belongs.
     </para>
     <para>
 Before I make the actual proposal, please take into account these points.
