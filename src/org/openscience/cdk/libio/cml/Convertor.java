@@ -466,7 +466,8 @@ public class Convertor {
             bondimpl.setAtomRefs(atomRefs.toString());
         }
         double border = bond.getOrder();
-        if (bond.getFlag(CDKConstants.ISAROMATIC)) {
+        if (bond.getFlag(CDKConstants.ISAROMATIC) | 
+            border == CDKConstants.BONDORDER_AROMATIC) {
             bondimpl.setAttribute("order", "A");
         } else if (border == CDKConstants.BONDORDER_SINGLE) {
             bondimpl.setAttribute("order", "S");
