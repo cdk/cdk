@@ -119,6 +119,7 @@ public class SmilesGeneratorTest extends TestCase
 		mol1.addBond(4, 6, 2); // 6
     try{
       new HydrogenAdder().addHydrogensToSatisfyValency(mol1);
+      HydrogenPlacer.placeHydrogens2D(mol1, 1.0);
       IsotopeFactory ifac = IsotopeFactory.getInstance();
       ifac.configureAtoms(mol1);
     }
@@ -178,6 +179,7 @@ public class SmilesGeneratorTest extends TestCase
 		mol1.addBond(7, 2, 1); // 6
     try{
       new HydrogenAdder().addHydrogensToSatisfyValency(mol1);
+      HydrogenPlacer.placeHydrogens2D(mol1, 1.0);
       IsotopeFactory ifac = IsotopeFactory.getInstance();
       ifac.configureAtoms(mol1);
     }
@@ -240,6 +242,7 @@ public class SmilesGeneratorTest extends TestCase
 		mol1.addBond(1, 6, 1); // 6
     try{
       new HydrogenAdder().addHydrogensToSatisfyValency(mol1);
+      HydrogenPlacer.placeHydrogens2D(mol1, 1.0);
       IsotopeFactory ifac = IsotopeFactory.getInstance();
       ifac.configureAtoms(mol1);
     }
@@ -323,6 +326,7 @@ public class SmilesGeneratorTest extends TestCase
   	assertTrue(smiles1.equals("F/C(=C\\(F)S)S"));
     try{
       new HydrogenAdder().addHydrogensToSatisfyValency(mol1);
+      HydrogenPlacer.placeHydrogens2D(mol1, 1.0);
     }
     catch(IOException ex){}
     catch(ClassNotFoundException ex){}
