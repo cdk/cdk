@@ -111,7 +111,7 @@ public class ValencyChecker implements ValencyCheckerInterface {
             return 0;
         }
         
-        logger.info("Calculating number of missing hydrogen atoms");
+        logger.debug("Calculating number of missing hydrogen atoms");
         // get default atom
         AtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
         if (atomTypes.length == 0) {
