@@ -40,6 +40,8 @@ import org.openscience.cdk.test.isomorphism.UniversalIsomorphismTesterTest;
 import org.openscience.cdk.test.iupac.ParserTest;
 import org.openscience.cdk.test.layout.HydrogenPlacerTest;
 import org.openscience.cdk.test.layout.StructureDiagramGeneratorTest;
+import org.openscience.cdk.test.layout.OverlapResolverTest;
+import org.openscience.cdk.test.layout.TemplateHandlerTest;
 import org.openscience.cdk.test.ringsearch.AllRingsFinderTest;
 import org.openscience.cdk.test.ringsearch.RingSearchTest;
 import org.openscience.cdk.test.smiles.SmilesGeneratorTest;
@@ -74,16 +76,20 @@ public class CDKTests
         
         // Individual Tests
         suite.addTest(ChemFileTest.suite());
-        suite.addTest(RingSearchTest.suite());
         suite.addTest(MorganNumberToolsTest.suite());
         suite.addTest(RebondToolTest.suite());
         suite.addTest(PathLengthTest.suite());
         suite.addTest(IsomorphismTesterTest.suite());
+	//from cdk.test.ringsearch
         suite.addTest(AllRingsFinderTest.suite());
+	suite.addTest(RingSearchTest.suite());
+	// cdk.test.fingerprint
         suite.addTest(FingerprinterTest.suite());
         // from cdk.test.layout.*
         suite.addTest(StructureDiagramGeneratorTest.suite());
         suite.addTest(HydrogenPlacerTest.suite());
+	suite.addTest(OverlapResolverTest.suite());
+	suite.addTest(TemplateHandlerTest.suite());
         // from cdk.test.smiles
         suite.addTest(SmilesGeneratorTest.suite());
         suite.addTest(SmilesParserTest.suite());
