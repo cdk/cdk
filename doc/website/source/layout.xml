@@ -96,6 +96,7 @@
     </tocentry>
     <tocentry page="cdknews.xml" filename="cdknews.html">
       <tocentry page="cdknews-submit.xml" filename="cdknews-submit.html"/>
+      <tocentry page="cdknews-bibtex.xml" filename="cdknews-bibtex.html"/>
     </tocentry>
     <tocentry page="changelog.xml" filename="changelog.html"/>
     <tocentry page="contact.xml" filename="contact.html"/>
