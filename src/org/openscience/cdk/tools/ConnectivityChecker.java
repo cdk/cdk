@@ -101,8 +101,7 @@ public class ConnectivityChecker
 			bond.setFlag(CDKConstants.VISITED, false);
 			ac.addBond(bond);
 		}
-		while(ac.getAtomCount() > 0)
-		{
+		while(ac.getAtomCount() > 0) {
 			atom = ac.getAtomAt(0);
 			molecule = new Molecule();
 			sphere.removeAllElements();

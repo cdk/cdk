@@ -76,7 +76,7 @@ public class CDKDictionaryReferences {
     
     private static void makeReferencesExplicitForBond(Bond bond) {
         int selfCounter = 0;
-        bond.setProperty(prefix + ":self:" + selfCounter++, "chemical:bond");
+        bond.setProperty(prefix + ":self:" + selfCounter++, "chemical:covalentBond");
         bond.setProperty(prefix + ":field:order", "chemical:bondOrder");
     }
 

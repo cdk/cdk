@@ -28,7 +28,7 @@ import java.util.Vector;
 import javax.vecmath.*;
 
 /**
- * Implements the concept of a bond between two atoms.
+ * Implements the concept of a covalent bond between two atoms.
  * A bond is considered to be a number of electrons connecting 
  * a two of atoms.
  *
