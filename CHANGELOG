@@ -1,6 +1,10 @@
 CHANGELOG
 ---------
 
+changes since "cdk preview 20011013"
+------------------------------------
+* More classes make use of new LoggingTool
+
 changes since "cdk preview 20010909"
 ------------------------------------
 * Improvements to SingleRandomStructureGenerator
