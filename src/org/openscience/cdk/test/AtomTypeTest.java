@@ -5,7 +5,7 @@
  * 
  * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  * 
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -74,5 +74,47 @@ public class AtomTypeTest extends TestCase {
         AtomType at = new AtomType("C");
         at.setMaxBondOrder(4.0);
         assertTrue(4.0 == at.getMaxBondOrder());
+    }
+    
+    public void testCompare() {
+        AtomType at = new AtomType("C4", "C");
+        AtomType at2 = new AtomType("C3", "C");
+        assertTrue(!at.compare("C4"));
+        assertTrue(!at.compare(at2));
+    }
+    
+    public void testSetVanderwaalsRadius() {
+        AtomType at = new AtomType("C");
+        at.setVanderwaalsRadius(1.0);
+        assertTrue(1.0 == at.getVanderwaalsRadius());
+    }
+    
+    public void testSetCovalentRadius() {
+        AtomType at = new AtomType("C");
+        at.setCovalentRadius(1.0);
+        assertTrue(1.0 == at.getCovalentRadius());
+    }
+    
+    /**
+     * Method to test the clone() method
+     */
+    public void testClone() {
+        AtomType at = new AtomType("C");
+        Object clone = at.clone();
+        assertTrue(clone instanceof AtomType);
+        AtomType copy = (AtomType)clone;
+        assertTrue(at.compare(copy));
+    }
+    
+    /**
+     * Method to test wether the class complies with RFC #9.
+     */
+    public void testToString() {
+        AtomType at = new AtomType("C");
+        String description = at.toString();
+        for (int i=0; i< description.length(); i++) {
+            assertTrue(description.charAt(i) != '\n');
+            assertTrue(description.charAt(i) != '\r');
+        }
     }
 }

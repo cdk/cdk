@@ -28,9 +28,9 @@ import java.util.Vector;
 import javax.vecmath.*;
 
 /**
- * Implements the concept of a bond.
+ * Implements the concept of a bond between two atoms.
  * A bond is considered to be a number of electrons connecting 
- * a number of atoms.
+ * a two of atoms.
  *
  * @keyword bond
  * @keyword atom
@@ -57,7 +57,7 @@ public class Bond extends ElectronContainer implements java.io.Serializable, Clo
 	 *
 	 */
 	public Bond() {
-        atoms = new Atom[2];
+        this(null, null, 0.0, CDKConstants.STEREO_BOND_UNDEFINED);
 	}
 
 	/**
@@ -65,28 +65,21 @@ public class Bond extends ElectronContainer implements java.io.Serializable, Clo
      *
      * @param atom1  the first Atom in the bond
      * @param atom2  the second Atom in the bond
-	 */
-	public Bond(Atom atom1, Atom atom2) {
-		atoms = new Atom[2];
-		setAtomAt(atom1, 0);
-		setAtomAt(atom2, 1);
-		setOrder(1.0);
-	}
-	
+     */
+    public Bond(Atom atom1, Atom atom2) {
+        this(atom1, atom2, 1.0, CDKConstants.STEREO_BOND_UNDEFINED);
+    }
+    
     /**
 	 * Constructs a bond with a given order.
      *
      * @param atom1  the first Atom in the bond
      * @param atom2  the second Atom in the bond
      * @param order  the bond order
-	 */
-	public Bond(Atom atom1, Atom atom2, double order)
-	{
-		atoms = new Atom[2];
-		setAtomAt(atom1, 0);
-		setAtomAt(atom2, 1);
-		setOrder(order);
-	}
+     */
+    public Bond(Atom atom1, Atom atom2, double order) {
+        this(atom1, atom2, order, CDKConstants.STEREO_BOND_UNDEFINED);
+    }
 
 	/**
 	 * Constructs a bond with a given order and stereo orientation from an array of atoms.
@@ -95,12 +88,14 @@ public class Bond extends ElectronContainer implements java.io.Serializable, Clo
      * @param atom2  the second Atom in the bond
      * @param order  the bond order
      * @param stereo a descriptor the stereochemical orientation of this bond
-	 */
-	public Bond(Atom atom1, Atom atom2, double order, int stereo) {
-        this(atom1, atom2, order);
+     */
+    public Bond(Atom atom1, Atom atom2, double order, int stereo) {
+        atoms = new Atom[2];
+        setAtomAt(atom1, 0);
+        setAtomAt(atom2, 1);
+        setOrder(order);
         setStereo(stereo);
-	}
-
+    }
 
 	/**
 	 * Returns the array of atoms making up this bond.
@@ -318,7 +313,7 @@ public class Bond extends ElectronContainer implements java.io.Serializable, Clo
 	
 
 	/**
-	 * Returns the geometric length of this bond.
+	 * Returns the geometric length of this bond in 2D space.
 	 *
 	 * @return The geometric length of this bond
 	 */

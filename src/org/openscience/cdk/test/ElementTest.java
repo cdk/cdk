@@ -3,9 +3,9 @@
  * $Date$    
  * $Revision$
  * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  * 
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -49,6 +49,11 @@ public class ElementTest extends TestCase {
     
     // test constructors
     
+    public void testElement() {
+        Element e = new Element();
+        assertTrue(e instanceof ChemObject);
+    }
+    
     public void testElement1() {
         Element e = new Element("C");
         assertEquals("C", e.getSymbol());
@@ -79,5 +84,21 @@ public class ElementTest extends TestCase {
         Element e = new Element("D");
         e.setAtomicMass(2);
         assertEquals(2, e.getAtomicMass());
+    }
+
+    public void testClone() {
+        Element elem = new Element();
+        Object clone = elem.clone();
+        assertTrue(clone instanceof Element);
+    }
+    
+    /** Test for RFC #9 */
+    public void testToString() {
+        Element elem = new Element();
+        String description = elem.toString();
+        for (int i=0; i< description.length(); i++) {
+            assertTrue(description.charAt(i) != '\n');
+            assertTrue(description.charAt(i) != '\r');
+        }
     }
 }

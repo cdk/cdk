@@ -1,12 +1,11 @@
-/* ChemObjectTest.java
+/* $RCSfile$
+ * $Author$
+ * $Date$
+ * $Revision$
  * 
- * $ author: 	Edgar Luttmann 			$ 
- * $ contact: 	edgar@uni-paderborn.de 	$
- * $ date: 		2001-08-09 				$
+ * Copyright (C) 2001-2003  The Chemistry Development Kit (CDK) project
  * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
- * 
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -32,9 +31,10 @@ import junit.framework.*;
 import org.openscience.cdk.*;
 
 /**
- *
  * TestCase for the ChemObject class.
  *
+ * @author Edgar Luttmann <edgar@uni-paderborn.de>
+ * @created 2001-08-09
  */
 public class ChemObjectTest extends TestCase {
 
@@ -50,21 +50,45 @@ public class ChemObjectTest extends TestCase {
 		junit.textui.TestRunner.run(new TestSuite(ChemObjectTest.class));
 	}
 
-	public void testProperties() {
-		ChemObject oCO = new ChemObject();
-		assertNotNull(oCO);
-		String cDescription = new String("description");
-		String cProperty = new String("property");
-		oCO.setProperty(cDescription, cProperty);
-		assertEquals(cProperty, oCO.getProperty(cDescription));
-	}
+    public void testChemObject() {
+        ChemObject chemObject = new ChemObject();
+        assertNotNull(chemObject);
+    }
+    
+    public void testSetProperty() {
+        ChemObject chemObject = new ChemObject();
+        String cDescription = new String("description");
+        String cProperty = new String("property");
+        chemObject.setProperty(cDescription, cProperty);
+        assertEquals(cProperty, chemObject.getProperty(cDescription));
+    }
 
-	public void testRemarks() {
-		ChemObject oCO = new ChemObject();
-		assertNotNull(oCO);
-		String cDescription = new String("description");
-		String cRemark = new String("remark");
-		oCO.setRemark(cDescription, cRemark);
-		assertEquals(cRemark, oCO.getRemark(cDescription));
-	}
+    public void testRemarks() {
+        ChemObject chemObject = new ChemObject();
+        String cDescription = new String("description");
+        String cRemark = new String("remark");
+        chemObject.setRemark(cDescription, cRemark);
+        assertEquals(cRemark, chemObject.getRemark(cDescription));
+    }
+    
+    public void testSetPhysicalProperty() {
+        ChemObject chemObject = new ChemObject();
+        String cDescription = new String("description");
+        String cProperty = new String("property");
+        chemObject.setPhysicalProperty(cDescription, cProperty);
+        assertEquals(cProperty, chemObject.getPhysicalProperty(cDescription));
+    }
+    
+    public void testSetID() {
+        ChemObject chemObject = new ChemObject();
+        String id = "objectX";
+        chemObject.setID(id);
+        assertEquals(id, chemObject.getID());
+    }
+    
+    public void testClone() {
+        ChemObject chemObject = new ChemObject();
+        Object clone = chemObject.clone();
+        assertTrue(clone instanceof ChemObject);
+    }
 }

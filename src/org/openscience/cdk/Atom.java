@@ -216,12 +216,11 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
                 this.point3D = point3D;
         }
         /**
-         *  Sets the stereo parity for this atom.
+         * Sets the stereo parity for this atom.
          *
          * @param  stereoParity  The stereo parity for this atom
          *
-         * @see                  org.openscience.cdk.CDKConstants
-         *                       for predefined values.
+         * @see    org.openscience.cdk.CDKConstants for predefined values.
          * @see    #getStereoParity
          */
         public void setStereoParity(int stereoParity) {

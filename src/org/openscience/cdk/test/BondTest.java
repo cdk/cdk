@@ -3,9 +3,9 @@
  * $Date$    
  * $Revision$
  * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2002-2003  The Chemistry Development Kit (CDK) project
  * 
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -22,7 +22,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
  * 
  */
-
 package org.openscience.cdk.test;
 
 import org.openscience.cdk.*;
@@ -31,7 +30,7 @@ import junit.framework.*;
 import javax.vecmath.*;
 
 /**
- * Checks the funcitonality of the Bond class.
+ * Checks the functionality of the Bond class.
  *
  * @see org.openscience.cdk.Bond
  */
@@ -45,6 +44,51 @@ public class BondTest extends TestCase {
 
     public static Test suite() {
         return new TestSuite(BondTest.class);
+    }
+    
+    public void testBond() {
+        Bond bond = new Bond();
+        assertEquals(2, bond.getAtomCount());
+        assertTrue(bond.getAtomAt(0) == null);
+        assertTrue(bond.getAtomAt(1) == null);
+        assertTrue(bond.getOrder() == 0.0);
+        assertEquals(CDKConstants.STEREO_BOND_UNDEFINED, bond.getStereo());
+    }
+    
+    public void testBond_Atom_Atom() {
+        Atom c = new Atom("C");
+        Atom o = new Atom("O");        
+        Bond bond = new Bond(c, o);
+        
+        assertEquals(2, bond.getAtomCount());
+        assertTrue(bond.getAtomAt(0).compare(c));
+        assertTrue(bond.getAtomAt(1).compare(o));
+        assertTrue(bond.getOrder() == 1.0);
+        assertEquals(CDKConstants.STEREO_BOND_UNDEFINED, bond.getStereo());
+    }
+    
+    public void testBond_Atom_Atom_Double() {
+        Atom c = new Atom("C");
+        Atom o = new Atom("O");        
+        Bond bond = new Bond(c, o, 2.0);
+        
+        assertEquals(2, bond.getAtomCount());
+        assertTrue(bond.getAtomAt(0).compare(c));
+        assertTrue(bond.getAtomAt(1).compare(o));
+        assertTrue(bond.getOrder() == 2.0);
+        assertEquals(CDKConstants.STEREO_BOND_UNDEFINED, bond.getStereo());
+    }
+    
+    public void testBond_Atom_Atom_Double_Int() {
+        Atom c = new Atom("C");
+        Atom o = new Atom("O");        
+        Bond bond = new Bond(c, o, 1.0, CDKConstants.STEREO_BOND_UP);
+        
+        assertEquals(2, bond.getAtomCount());
+        assertTrue(bond.getAtomAt(0).compare(c));
+        assertTrue(bond.getAtomAt(1).compare(o));
+        assertTrue(bond.getOrder() == 1.0);
+        assertEquals(CDKConstants.STEREO_BOND_UP, bond.getStereo());
     }
     
     public void testCompare() {
@@ -106,8 +150,60 @@ public class BondTest extends TestCase {
         
         assertTrue(2.0 == b.getOrder());
         
-        b.setOrder(400.0);
-        assertTrue(400.0 == b.getOrder());
+        b.setOrder(1.0);
+        assertTrue(1.0 == b.getOrder());
     }
     
+    public void testSetStereo() {
+        Atom c = new Atom("C");
+        Atom o = new Atom("O");
+        
+        Bond b = new Bond(c, o, 2.0);
+        
+        b.setStereo(CDKConstants.STEREO_BOND_UP);
+        assertEquals(CDKConstants.STEREO_BOND_UP, b.getStereo());
+    }
+    
+    public void testget2DCenter() {
+        Atom o = new Atom("O", new Point2d(0.0, 0.0));
+        Atom c = new Atom("C", new Point2d(1.0, 1.0));
+        Bond b = new Bond(c,o);
+        
+        assertTrue(0.5 == b.get2DCenter().x);
+        assertTrue(0.5 == b.get2DCenter().y);
+    }
+
+    public void testget3DCenter() {
+        Atom o = new Atom("O", new Point3d(0.0, 0.0, 0.0));
+        Atom c = new Atom("C", new Point3d(1.0, 1.0, 1.0));
+        Bond b = new Bond(c,o);
+        
+        assertTrue(0.5 == b.get3DCenter().x);
+        assertTrue(0.5 == b.get3DCenter().y);
+        assertTrue(0.5 == b.get3DCenter().z);
+    }
+
+    public void testGetLength() {
+        Atom o = new Atom("O", new Point2d(0.0, 0.0));
+        Atom c = new Atom("C", new Point2d(1.0, 0.0));
+        Bond b = new Bond(c,o);
+        
+        assertTrue(1.0 == b.getLength());
+    }
+    
+    public void testClone() {
+        Bond bond = new Bond();
+        Object clone = bond.clone();
+        assertTrue(clone instanceof Bond);
+    }    
+
+    /** Test for RFC #9 */
+    public void testToString() {
+        Bond bond = new Bond();
+        String description = bond.toString();
+        for (int i=0; i< description.length(); i++) {
+            assertTrue(description.charAt(i) != '\n');
+            assertTrue(description.charAt(i) != '\r');
+        }
+    }
 }

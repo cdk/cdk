@@ -1,12 +1,11 @@
-/*
- * $RCSfile$
+/* $RCSfile$
  * $Author$    
  * $Date$    
  * $Revision$
  * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2002-2003  The Chemistry Development Kit (CDK) project
  * 
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -34,7 +33,6 @@ import javax.vecmath.*;
 /**
  * Checks the functionality of the AtomTypeFactory
  */
- 
 public class AtomTest extends TestCase {
 
     public AtomTest(String name) {
@@ -115,7 +113,7 @@ public class AtomTest extends TestCase {
     }
 
     /**
-     * Method to test the set/get3D() methods.
+     * Method to test the set[XYZ]3D() methods.
      */
     public void testSet3D() {
 
@@ -125,5 +123,85 @@ public class AtomTest extends TestCase {
         a.setZ3D(3.0);
 
         assertTrue(a.getPoint3D() != null);
+    }
+    
+    /**
+     * Method to test the get[XYZ]3D() methods.
+     */
+    public void testGet3D() {
+        Point3d point3d = new Point3d(1.0, 2.0, 3.0);
+        
+        Atom a = new Atom("C", point3d);
+        assertTrue(point3d.x == a.getX3D());
+        assertTrue(point3d.y == a.getY3D());
+        assertTrue(point3d.z == a.getZ3D());
+    }
+
+    /**
+     * Method to test the set[XY]2D() methods.
+     */
+    public void testSet2D() {
+
+        Atom a = new Atom("C");
+        a.setX2D(1.0);
+        a.setY2D(2.0);
+
+        assertTrue(a.getPoint2D() != null);
+    }
+    
+    /**
+     * Method to test the get[XY]2D() methods.
+     */
+    public void testGet2D() {
+        Point2d point2d = new Point2d(1.0, 2.0);
+        
+        Atom a = new Atom("C", point2d);
+        assertTrue(point2d.x == a.getX2D());
+        assertTrue(point2d.y == a.getY2D());
+    }
+
+    /**
+     * Method to test the get/setHydrogenCount() methods.
+     */
+    public void testSetStereoParity() {
+        int parity = CDKConstants.STEREO_ATOM_PARITY_PLUS;
+
+        Atom a = new Atom("C");
+        a.setStereoParity(parity);
+        assertEquals(parity, a.getStereoParity());
+    }
+    
+    /**
+     * Method to test the compare() method.
+     */
+    public void testCompare() {
+        Atom atom = new Atom("C");
+        assertTrue(atom.compare(atom));
+        Atom hydrogen = new Atom("H");
+        assertTrue(!atom.compare(hydrogen));
+        assertTrue(!atom.compare("C"));
+    }
+    
+    /**
+     * Method to test the clone() method
+     */
+    public void testClone() {
+        Atom atom = new Atom("C");
+        Object clone = atom.clone();
+        assertTrue(clone instanceof Atom);
+        Atom copy = (Atom)clone;
+        assertTrue(atom.compare(copy));
+    }
+    
+    /**
+     * Method to test wether the class complies with RFC #9.
+     */
+    public void testToString() {
+        Atom atom = new Atom("C");
+        String description = atom.toString();
+        for (int i=0; i< description.length(); i++) {
+            assertTrue(description.charAt(i) != '\n');
+            assertTrue(description.charAt(i) != '\r');
+        }
     }
 }
