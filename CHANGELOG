@@ -8,7 +8,7 @@ New:
 * Added a class for reading PolyMorph Predictor (r)
   *.pmp files
 * Added a class for reading ShelX files
-* The SMILES parser now also supports chirality
+* The SMILES generator now also supports chirality
 
 Fixes:
 * Added initialization of atoms Array in Bond.java
