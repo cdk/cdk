@@ -35,6 +35,7 @@ public class ConvertMDL2CML {
 
     MDLReader mr;
     CMLWriter cw;
+    ChemFile chemFile;
     
     public ConvertMDL2CML(String inFile, String outFile) {
 	try {
@@ -44,8 +45,9 @@ public class ConvertMDL2CML {
 	    fis.close();
 	    
 	    // do output
-	    cw = new CMLWrite(new FileWriter(outFile));
+	    cw = new CMLWriter((Writer)new FileWriter(outFile));
 	    cw.write(chemFile.getChemSequence(0).getChemModel(0).getSetOfMolecules());
+	    cw.close();
 	} catch(Exception exc) {
 	    exc.printStackTrace();
 	}

@@ -43,6 +43,9 @@ public interface CDKConstants
 
 	/** A bonds which end is above the drawing plane */
 	static int STEREO_BOND_UP = 1;
+
+        /** A bonds for which the stereochemistry is undefined */
+        static int STEREO_BOND_UNDEFINED = 0;
 	
 	/** A bonds which end is below the drawing plane */
 	static int STEREO_BOND_DOWN = -1;
