@@ -98,7 +98,8 @@ public class FileConvertor {
                 
                 // create output file
                 String ofilename = getOutputFileName(ifilename, this.oformat);
-                cow = getChemObjectWriter(this.oformat, ofilename);
+                FileWriter fw = new FileWriter(new File(ofilename));
+                cow = getChemObjectWriter(this.oformat, fw);
                 if (cow == null) {
                     logger.warn("Format " + oformat + " is an unsupported output format.");
                     System.err.println("Unsupported output format!");
@@ -182,10 +183,8 @@ public class FileConvertor {
         return reader;
     }
 
-    private ChemObjectWriter getChemObjectWriter(String format, String ofilename) 
-            throws IOException {
+    private ChemObjectWriter getChemObjectWriter(String format, Writer fw) {
         ChemObjectWriter writer = null;
-        FileWriter fw = new FileWriter(new File(ofilename));
         if (format.equalsIgnoreCase("CML")) {
             writer = new CMLWriter(fw);
         } else if (format.equalsIgnoreCase("MOL")) {
@@ -204,7 +203,10 @@ public class FileConvertor {
             writer = new GaussianInputWriter(fw);
         }
         if (writer != null) {
+            logger.debug(format + " -> " + writer.getClass().getName());
             writer.addWriterListener(settingListener);
+        } else {
+            logger.debug(format + " -> null");
         }
         return writer;
     }
@@ -272,6 +274,10 @@ public class FileConvertor {
                 this.oformat = option.substring(2);
             } else if (option.startsWith("--outputformat:") && option.length() > 15) {
                 this.oformat = option.substring(15);
+            } else if (option.startsWith("--listoptions:") && option.length() > 14) {
+                String format = option.substring(14);
+                listOptionsForFormat(format);
+                System.exit(0);
             } else {
                 System.out.println("Unrecognized option: " + args[i]);
                 System.exit(1);
@@ -298,6 +304,32 @@ public class FileConvertor {
     }
     
     /**
+     * Convert the file <code>ifilename</code>.
+     *
+     * @param ifilename name of input file
+     */
+    public void listOptionsForFormat(String format) {
+        logger.debug("listing writer options");
+        settingListener.setLevel(4); // ask all questions
+        settingListener.setInputReader(null); // but don't really ask them
+        Molecule dummy = new Molecule();
+        dummy.addAtom(new Atom("C"));
+
+        StringWriter writer = new StringWriter();
+        cow = getChemObjectWriter(format, writer);
+        if (cow == null) {
+            logger.warn("Format " + oformat + " is an unsupported output format.");
+            System.err.println("Unsupported output format!");
+        }
+        try {
+            cow.write(dummy);
+        } catch (CDKException e) {
+            logger.error("Could not write ChemFile. FIXME: I should recurse!");
+        }
+        settingListener.setLevel(this.level);
+    }
+
+    /**
     * Since we do not know what kind of ChemObject the Writer supports,
     * and we want to output as much information as possible, use
     * the generalized mechanism below.
@@ -319,7 +351,8 @@ public class FileConvertor {
                 if (needMoreFiles) {
                     cow.close(); // possibly closing empty file
                     String fname = outputFilename + "." + (i+1);
-                    cow = getChemObjectWriter(this.oformat, fname);
+                    FileWriter fw = new FileWriter(new File(fname));
+                    cow = getChemObjectWriter(this.oformat, fw);
                 }
                 write(cf.getChemSequence(i), outputFilename);
             }
@@ -338,7 +371,8 @@ public class FileConvertor {
                 if (needMoreFiles) {
                     cow.close(); // possibly closing empty file
                     String fname = outputFilename + "." + (i+1);
-                    cow = getChemObjectWriter(this.oformat, fname);
+                    FileWriter fw = new FileWriter(new File(fname));
+                    cow = getChemObjectWriter(this.oformat, fw);
                 }
                 write(cs.getChemModel(i), outputFilename);
             }
@@ -381,7 +415,8 @@ public class FileConvertor {
                 if (needMoreFiles) {
                     cow.close(); // possibly closing empty file
                     String fname = outputFilename + "." + (i+1);
-                    cow = getChemObjectWriter(this.oformat, fname);
+                    FileWriter fw = new FileWriter(new File(fname));
+                    cow = getChemObjectWriter(this.oformat, fw);
                 }
                 write(som.getMolecule(i), outputFilename);
             }
