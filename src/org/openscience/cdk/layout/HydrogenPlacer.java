@@ -50,6 +50,11 @@ public class HydrogenPlacer
 	
 	public static void placeHydrogens2D(AtomContainer atomContainer, Atom atom)
 	{
+		double bondLength = GeometryTools.getScaleFactor(atomContainer, 1.0);
+		AtomPlacer atomPlacer = new AtomPlacer();
+		atomPlacer.setMolecule((Molecule)atomContainer);
+		Vector atomVector = new Vector();
+		if (debug) System.out.println("bondLength" + bondLength);
 		Atom[] connectedAtoms = atomContainer.getConnectedAtoms(atom);
 		AtomContainer placedAtoms = new AtomContainer();
 		AtomContainer unplacedAtoms = new AtomContainer();
@@ -64,6 +69,13 @@ public class HydrogenPlacer
 				placedAtoms.addAtom(connectedAtoms[f]);
 			}
 		}
+		placedAtoms.addAtom(atom);
+		for (int f = 0; f < placedAtoms.getAtomCount(); f++)
+		{
+			atomVector.addElement(placedAtoms.getAtomAt(f));
+		}
+
+		atomPlacer.distributePartners(atom, placedAtoms, placedAtoms.get2DCenter(), unplacedAtoms, bondLength);
 		if (debug) System.out.println("unplacedAtoms: " + unplacedAtoms);
 		if (debug) System.out.println("placedAtoms: " + placedAtoms);
 				
