@@ -34,7 +34,7 @@ import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
-import org.openscience.cdk.controller.CDKInputAdapter;
+import org.openscience.cdk.controller.PopupController2D;
 import org.openscience.cdk.controller.Controller2DModel;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.renderer.Renderer2DModel;
@@ -50,7 +50,7 @@ public class ControllerTest
 	ChemModel chemModel;
 	SetOfMolecules setOfMolecules;
 	Molecule molecule;
-	CDKInputAdapter inputAdapter;
+	PopupController2D inputAdapter;
 	
 	public ControllerTest()
 	{
@@ -88,7 +88,7 @@ public class ControllerTest
         moleculeSet.addMolecule(molecule);
         model.setSetOfMolecules(moleculeSet);
 		Controller2DModel c2dm = new Controller2DModel();
-		inputAdapter = new CDKInputAdapter(model, r2dm, c2dm);
+		inputAdapter = new PopupController2D(model, r2dm, c2dm);
 		c2dm.setDrawMode(Controller2DModel.DRAWBOND);
 		mv.addMouseMotionListener(inputAdapter);
 		mv.addMouseListener(inputAdapter);

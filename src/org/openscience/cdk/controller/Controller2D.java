@@ -43,7 +43,6 @@ import java.awt.*;
 import java.util.*;
 import java.awt.event.*;
 import javax.vecmath.*;
-import javax.swing.JPopupMenu;
 
 /**
  *  Class that acts on MouseEvents and KeyEvents. <p>
@@ -54,7 +53,7 @@ import javax.swing.JPopupMenu;
  *@cdk.created    February 4, 2004
  *@cdk.keyword    mouse events
  */
-public class Controller2D
+public class Controller2D implements MouseMotionListener, MouseListener, KeyListener
 {
 
 	Renderer2DModel r2dm;
@@ -72,8 +71,6 @@ public class Controller2D
 	private boolean draggingSelected = true;
 
 	private Vector commonElements;
-
-	private static Hashtable popupMenus = null;
 
 	// Helper classes
 	HydrogenAdder hydrogenAdder = new HydrogenAdder("org.openscience.cdk.tools.ValencyChecker");
@@ -100,11 +97,6 @@ public class Controller2D
 		for (int i = 0; i < elements.length; i++)
 		{
 			commonElements.add(elements[i]);
-		}
-
-		if (this.popupMenus == null)
-		{
-			this.popupMenus = new Hashtable();
 		}
 	}
 
@@ -305,34 +297,26 @@ public class Controller2D
 				", Click count: " + event.getClickCount());
         }
 
-		if (event.isPopupTrigger() || 
-            (event.getModifiers() & MouseEvent.BUTTON3_MASK) != 0)
-		{
-			logger.info("Popup menu triggered...");
-			popupMenuForNearestChemObject(mouseX, mouseY, event);
-		} else
-		{
-			Atom atomInRange;
-			int startX = 0;
-			int startY = 0;
-			r2dm.setPointerVectorStart(null);
-			r2dm.setPointerVectorEnd(null);
-			atomInRange = getAtomInRange(mouseX, mouseY);
-			if (atomInRange != null)
-			{
-				startX = (int) atomInRange.getX2D();
-				startY = (int) atomInRange.getY2D();
-				r2dm.setPointerVectorStart(new Point(startX, startY));
-			} else
-			{
-				r2dm.setPointerVectorStart(new Point(mouseX, mouseY));
-			}
-
-			if (c2dm.getDrawMode() == c2dm.MOVE)
-			{
-				selectNearestChemObjectIfNoneSelected(mouseX, mouseY);
-			}
-		}
+        Atom atomInRange;
+        int startX = 0;
+        int startY = 0;
+        r2dm.setPointerVectorStart(null);
+        r2dm.setPointerVectorEnd(null);
+        atomInRange = getAtomInRange(mouseX, mouseY);
+        if (atomInRange != null)
+        {
+            startX = (int) atomInRange.getX2D();
+            startY = (int) atomInRange.getY2D();
+            r2dm.setPointerVectorStart(new Point(startX, startY));
+        } else
+        {
+            r2dm.setPointerVectorStart(new Point(mouseX, mouseY));
+        }
+        
+        if (c2dm.getDrawMode() == c2dm.MOVE)
+        {
+            selectNearestChemObjectIfNoneSelected(mouseX, mouseY);
+        }
 	}
 
 
@@ -1211,7 +1195,7 @@ public class Controller2D
 	 *@param  Y  Description of the Parameter
 	 *@return    The chemObjectInRange value
 	 */
-	private ChemObject getChemObjectInRange(int X, int Y)
+	protected ChemObject getChemObjectInRange(int X, int Y)
 	{
 		ChemObject objectInRange = getAtomInRange(X, Y);
 		if (objectInRange != null)
@@ -1470,7 +1454,7 @@ public class Controller2D
 	 *@param  coords  Description of the Parameter
 	 *@return         The worldCoordinates value
 	 */
-	private int[] getWorldCoordinates(int[] coords)
+	protected int[] getWorldCoordinates(int[] coords)
 	{
 		int[] worldCoords = new int[coords.length];
 		int coordCount = coords.length / 2;
@@ -1524,38 +1508,6 @@ public class Controller2D
 			((CDKChangeListener) listeners.get(i)).stateChanged(event);
 		}
 	}
-
-
-	/**
-	 *  Sets the popupMenu attribute of the Controller2D object
-	 *
-	 *@param  chemObject  The new popupMenu value
-	 *@param  menu        The new popupMenu value
-	 */
-	public void setPopupMenu(ChemObject chemObject, CDKPopupMenu menu)
-	{
-		this.popupMenus.put(chemObject.getClass().getName(), menu);
-	}
-
-
-	/**
-	 *  Returns the popup menu for this ChemObject if it is set, and null
-	 *  otherwise.
-	 *
-	 *@param  chemObject  Description of the Parameter
-	 *@return             The popupMenu value
-	 */
-	public CDKPopupMenu getPopupMenu(ChemObject chemObject)
-	{
-		if (this.popupMenus.containsKey(chemObject.getClass().getName()))
-		{
-			return (CDKPopupMenu) this.popupMenus.get(chemObject.getClass().getName());
-		} else
-		{
-			return null;
-		}
-	}
-
 
 	// ------------ CHEMICAL OPERATIONS -------------- //
 
@@ -1676,30 +1628,6 @@ public class Controller2D
 			}
 		}
 	}
-
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  mouseX  Description of the Parameter
-	 *@param  mouseY  Description of the Parameter
-	 *@param  event   Description of the Parameter
-	 */
-	private void popupMenuForNearestChemObject(int mouseX, int mouseY, MouseEvent event)
-	{
-		ChemObject objectInRange = getChemObjectInRange(mouseX, mouseY);
-		CDKPopupMenu popupMenu = getPopupMenu(objectInRange);
-		if (popupMenu != null)
-		{
-			popupMenu.setSource(objectInRange);
-			logger.debug("Set popup menu source to: ", objectInRange);
-			popupMenu.show(event.getComponent(), event.getX(), event.getY());
-		} else
-		{
-			logger.warn("Popup menu is null! Could not set source!");
-		}
-	}
-
 
 	/**
 	 *  Description of the Method

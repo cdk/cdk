@@ -11,6 +11,7 @@ Fixes:
 * Fixed CDKPluginManager.loadPlugins(): do not reset the hash
 
 API changes:
+* Removed CDKInputAdapter. Use (Popup)Controller2D directly
 
 20040324 Release
 ------------------------------------
