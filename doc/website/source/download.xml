@@ -18,7 +18,7 @@
         <varlistentry><term><filename>cdk-preview</filename></term>
           <listitem>
             <para>Source code. Current version:
-			  <ulink url="http://sourceforge.net/project/shownotes.php?release_id=63744">20011201</ulink>
+			  <ulink url="http://sourceforge.net/project/showfiles.php?group_id=20024&amp;release_id=63744">20011201</ulink>
 		    </para>
           </listitem>
         </varlistentry>
@@ -26,7 +26,7 @@
           <listitem>
             <para>Set of required and optional libraries
 			  (<ulink url="libraries.html">more info</ulink>). Current version:
-			  <ulink url="http://sourceforge.net/project/shownotes.php?release_id=63747">20011201</ulink>
+			  <ulink url="http://sourceforge.net/project/showfiles.php?group_id=20024&amp;release_id=63747">20011201</ulink>
 			</para>
           </listitem>
         </varlistentry>
