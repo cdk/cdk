@@ -26,6 +26,7 @@ package org.openscience.cdk.applications;
 import java.io.File;
 import java.io.FileReader;
 
+import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -64,8 +65,12 @@ public class FileFormatGuesser {
                 ReaderFactory factory = new ReaderFactory();
                 File input = new File(ifilename);
                 if (!input.isDirectory()) {
-                    String format = factory.guessFormat(new FileReader(input));
-                    System.out.println(ifilename + ": format=" + format);
+                    ChemObjectReader reader = factory.createReader(new FileReader(input));
+                    if (reader != null) {
+                        System.out.println(ifilename + ": " + reader.getFormatName());
+                    } else {
+                        System.out.println(ifilename + ": unknown format");
+                    }
                 } else {
                     System.out.println("Skipping directory: " + ifilename);
                 }
