@@ -42,6 +42,32 @@ public class Bond extends ElectronContainer
 	  * to be used here.
 	  */
 	protected int stereo; 
+	
+	/**
+	 * Constructs a bond with a given order from an array of atoms
+	 *
+	 */
+	public Bond(Atom atom1, Atom atom2, int order)
+	{
+		atoms = new Atom[2];
+		setAtomAt(atom1, 0);
+		setAtomAt(atom2, 1);
+		setOrder(order);
+	}
+
+	/**
+	 * Constructs a bond with a given order and stereo orientation from an array of atoms
+	 *
+	 */
+	public Bond(Atom atom1, Atom atom2, int order, int stereo)
+	{
+		atoms = new Atom[2];
+		setAtomAt(atom1, 0);
+		setAtomAt(atom2, 1);
+		setOrder(order);
+		setStereo(stereo);
+	}
+
 
 	/**
 	 * Returns the array of atoms making up this bond
@@ -52,8 +78,7 @@ public class Bond extends ElectronContainer
 	{
 		return this.atoms;
 	}
-
-
+	
 	/**
 	 * Sets the array of atoms making up this bond
 	 *
@@ -65,6 +90,37 @@ public class Bond extends ElectronContainer
 	}
 
 
+	/**
+	 * Returns the number of Atoms in this Bond
+	 *
+	 * @return The number of Atoms in this Bond    
+	 */
+	public int getAtomCount()
+	{
+		return atoms.length;
+	}
+
+	/**
+	 * Returns an Atom from this bond.
+	 *
+	 * @param   position  The position in this bond where the atom is to be inserted
+	 */
+	public Atom getAtomAt(int position)
+	{
+		return atoms[position];
+	}
+
+
+	/**
+	 * Sets an Atom in this bond.
+	 *
+	 * @param   atom  The atom to be set
+	 * @param   position  The position in this bond where the atom is to be inserted
+	 */
+	public void setAtomAt(Atom atom, int position)
+	{
+		atoms[position] = atom;
+	}
 
 	/**
 	 * Returns the bond order of this bond

@@ -14,11 +14,15 @@
 <classpath enabled="1">
 <value>"C:\home\develop\cdk\jar\vecmath1.1-1.12.jar"</value>
 </classpath>
+<classpath enabled="1">
+<value>"Z:\develop\cdk\jar\vecmath1.1-1.12.jar"</value>
+</classpath>
 </classpaths>
 <profile>
 <name>"jdk1.3"</name>
 </profile>
 <runfile>
+<relativepath>"org\openscience\cdk\test\MDLReaderTest.java"</relativepath>
 </runfile>
 <items>
 <folder>
@@ -54,10 +58,10 @@
 <editor open="1">
 <selection start="0" end="0">
 </selection>
-<window x="7303681" y="0" width="0" height="48">
+<window x="0" y="0" width="0" height="0">
 </window>
 </editor>
-<scmstatus id="2">
+<scmstatus id="0">
 <userstring>""</userstring>
 <userinteger>"0"</userinteger>
 </scmstatus>
@@ -68,7 +72,7 @@
 <editor open="1">
 <selection start="0" end="0">
 </selection>
-<window x="0" y="0" width="0" height="0">
+<window x="0" y="1074" width="0" height="0">
 </window>
 </editor>
 <scmstatus id="0">
@@ -82,7 +86,7 @@
 <editor open="1">
 <selection start="0" end="0">
 </selection>
-<window x="14" y="33013" width="2672" height="145">
+<window x="0" y="0" width="0" height="0">
 </window>
 </editor>
 <scmstatus id="0">
@@ -96,7 +100,7 @@
 <editor open="1">
 <selection start="0" end="0">
 </selection>
-<window x="33017" y="4" width="1488" height="145">
+<window x="0" y="6619245" width="0" height="0">
 </window>
 </editor>
 <scmstatus id="0">
@@ -107,10 +111,10 @@
 <file>
 <dirty>"0"</dirty>
 <relativepath>"org\openscience\cdk\ChemObject.java"</relativepath>
-<editor open="1">
+<editor open="0">
 <selection start="0" end="0">
 </selection>
-<window x="32" y="3014656" width="106577632" height="106555856">
+<window x="1598888792" y="1598888792" width="0" height="0">
 </window>
 </editor>
 <scmstatus id="0">
@@ -121,10 +125,10 @@
 <file>
 <dirty>"0"</dirty>
 <relativepath>"org\openscience\cdk\ChemObjectListener.java"</relativepath>
-<editor open="1">
+<editor open="0">
 <selection start="0" end="0">
 </selection>
-<window x="-2" y="106553360" width="106541072" height="64">
+<window x="0" y="0" width="0" height="0">
 </window>
 </editor>
 <scmstatus id="0">
@@ -135,10 +139,10 @@
 <file>
 <dirty>"0"</dirty>
 <relativepath>"org\openscience\cdk\ElectronContainer.java"</relativepath>
-<editor open="1">
+<editor open="0">
 <selection start="0" end="0">
 </selection>
-<window x="18721740" y="18721340" width="0" height="0">
+<window x="103056272" y="1" width="0" height="0">
 </window>
 </editor>
 <scmstatus id="0">
@@ -149,10 +153,10 @@
 <file>
 <dirty>"0"</dirty>
 <relativepath>"org\openscience\cdk\Element.java"</relativepath>
-<editor open="1">
+<editor open="0">
 <selection start="0" end="0">
 </selection>
-<window x="0" y="106591264" width="1" height="6946927">
+<window x="0" y="0" width="0" height="0">
 </window>
 </editor>
 <scmstatus id="0">
@@ -168,7 +172,7 @@
 <editor open="0">
 <selection start="0" end="0">
 </selection>
-<window x="60" y="2" width="32" height="49">
+<window x="0" y="0" width="0" height="0">
 </window>
 </editor>
 <scmstatus id="0">
@@ -177,6 +181,51 @@
 </scmstatus>
 </file>
 </virtualfolder>
+<virtualfolder>
+<name>"test"</name>
+<file>
+<dirty>"0"</dirty>
+<relativepath>"org\openscience\cdk\test\MDLReaderTest.java"</relativepath>
+<editor open="1">
+<selection start="0" end="0">
+</selection>
+<window x="0" y="0" width="0" height="0">
+</window>
+</editor>
+<scmstatus id="0">
+<userstring>""</userstring>
+<userinteger>"0"</userinteger>
+</scmstatus>
+</file>
+</virtualfolder>
+<file>
+<dirty>"0"</dirty>
+<relativepath>"org\openscience\cdk\MDLReader.java"</relativepath>
+<editor open="1">
+<selection start="0" end="0">
+</selection>
+<window x="0" y="106615904" width="0" height="0">
+</window>
+</editor>
+<scmstatus id="0">
+<userstring>""</userstring>
+<userinteger>"0"</userinteger>
+</scmstatus>
+</file>
+<file>
+<dirty>"0"</dirty>
+<relativepath>"org\openscience\cdk\Molecule.java"</relativepath>
+<editor open="1">
+<selection start="0" end="0">
+</selection>
+<window x="1598888792" y="1598888792" width="0" height="0">
+</window>
+</editor>
+<scmstatus id="0">
+<userstring>""</userstring>
+<userinteger>"0"</userinteger>
+</scmstatus>
+</file>
 </virtualfolder>
 </virtualfolder>
 </virtualfolder>
@@ -189,7 +238,10 @@
 </customoptions>
 </compileroptions>
 <interpreteroptions debug="0" nogc="0" verbosegc="0" verbose="0" checksrc="0" verifieroff="0" verifieron="0" verifierremote="0" classic="0">
-<commandlineargs checked="0">
+<commandlineargs checked="1">
+<commandlinearg selected="1">
+<value>"c:\home\develop\cdk\org\openscience\cdk\test\a-pinen.mol"</value>
+</commandlinearg>
 </commandlineargs>
 <runclassnames checked="0">
 <runclassname selected="0">
@@ -243,7 +295,10 @@
 <javadocoptions version="1" type="1" author="1" noindex="0" notree="0" nodeprecated="0">
 <outputdirvalues checked="1">
 <outputdirvalue selected="1">
-<value>"C:\home\develop\cdk\doc"</value>
+<value>"c:\home\develop\cdk\doc\htdocs\api"</value>
+</outputdirvalue>
+<outputdirvalue selected="0">
+<value>"z:\develop\cdk\doc\htdocs\api"</value>
 </outputdirvalue>
 </outputdirvalues>
 <customoptions checked="0">

@@ -23,6 +23,8 @@
 
 package org.openscience.cdk;
 
+import java.util.*;
+
 /**
  *  
  * Base class for all chemical objects that maintain a list of Atoms and
@@ -101,6 +103,7 @@ public class AtomContainer extends ChemObject {
 	{
 		atoms[number] = atom;
 	}
+
 	/**
 	 *  Set the bond at position <code>number</code> . 
 	 *
@@ -111,6 +114,7 @@ public class AtomContainer extends ChemObject {
 	{
 		bonds[number] = bond;
 	}
+
 	/**
 	 *  Returns the array of atoms of this AtomContainer 
 	 *
@@ -120,6 +124,7 @@ public class AtomContainer extends ChemObject {
 	{
 		return this.atoms;
 	}
+
 	/**
 	 *  Returns the array of bonds of this AtomContainer 
 	 *
@@ -129,6 +134,7 @@ public class AtomContainer extends ChemObject {
 	{
 		return this.bonds;
 	}
+
 	/**
 	 *  
 	 * Returns the atom at position <code>number</code> in the
@@ -141,6 +147,20 @@ public class AtomContainer extends ChemObject {
 	{
 		return atoms[number];
 	}
+
+	public int getAtomNumber(Atom atom) throws Exception
+	{
+		for (int f = 0; f < getAtomCount(); f++)
+		{
+			if (getAtom(f).equals(atom))
+			{
+				return f;
+			}
+		}
+		throw new Exception("No such Atom");
+	}
+	
+
 	/**
 	 *  
 	 * Returns the bond at position <code>number</code> in the
@@ -153,6 +173,7 @@ public class AtomContainer extends ChemObject {
 	{
 		return bonds[number];
 	}
+	
 	/**
 	 *  Gets the ConnectionTable attribute of the AtomContainer object 
 	 *
@@ -169,6 +190,7 @@ public class AtomContainer extends ChemObject {
 		}
 		return ct;
 	}
+	
 	/**
 	 *  Adds an atom to this container 
 	 *
@@ -176,13 +198,14 @@ public class AtomContainer extends ChemObject {
 	 */
 	public void addAtom(Atom atom)
 	{
-		atomCount++;
-		if (atomCount >= atoms.length)
+		if (atomCount + 1 >= atoms.length)
 		{
 			growAtomArray();
 		}
 		atoms[atomCount] = atom;
+		atomCount++;
 	}
+	
 	/**
 	 *  Adds a bond to this container 
 	 *
@@ -190,15 +213,40 @@ public class AtomContainer extends ChemObject {
 	 */
 	public void addBond(Bond bond)
 	{
-		bondCount++;
-		if (bondCount >= bonds.length)
+		if (bondCount + 1 >= bonds.length)
 		{
 			growBondArray();
 		}
 		// are we supposed to check if the atoms forming this bond are
 		// already in here and add them if neccessary?
 		bonds[bondCount] = bond;
+		bondCount++;
+		
 	}
+
+
+	public void addBond(int atom1, int atom2, int order, int stereo)
+	{
+		if (bondCount >= bonds.length)
+		{
+			growBondArray();
+		}
+		Bond bond = new Bond(getAtom(atom1), getAtom(atom2), order, stereo);
+		addBond(bond);
+	}
+
+	public void addBond(int atom1, int atom2, int order)
+	{
+		if (bondCount >= bonds.length)
+		{
+			growBondArray();
+		}
+		Bond bond = new Bond(getAtom(atom1), getAtom(atom2), order);
+		addBond(bond);
+	}
+
+
+
 	/**
 	 *  Grows the bond array by a given size 
 	 *
@@ -238,5 +286,61 @@ public class AtomContainer extends ChemObject {
 			}
 		}
 	}
+
+
+	/**
+	 * Returns the number of Atoms in this Container
+	 *
+	 * @return     
+	 */
+	public int getAtomCount()
+	{
+		return this.atomCount;
+	}
+
+
+	/**
+	 * Returns the number of Bonds in this Container
+	 *
+	 * @return     
+	 */
+	public int getBondCount()
+	{
+		return this.bondCount;
+	}
+
+	public String toString()
+	{
+		Bond bond;
+		StringBuffer s = new StringBuffer();
+		System.out.println("Atomcount: " + getAtomCount());
+		for (int i = 0; i < getAtomCount(); i++)
+		{
+			s.append(i + ". " + getAtom(i));
+		}
+		System.out.println("Bondcount: " + getBondCount());
+		for (int i = 0; i < getBondCount(); i++)
+		{
+			bond = getBond(i);
+			s.append("Bond: ");
+			for (int j = 0; j < bond.getAtomCount(); j++)
+			{
+				try
+				{
+					s.append(getAtomNumber(bond.getAtomAt(j)) +  "   ");
+				}
+				catch(Exception e)
+				{
+					s.append("Inconsistent Bond Setting");
+					e.printStackTrace();
+				}
+			}
+			s.append("\n");
+		}
+		
+		return s.toString();
+	}
+
+
 }
 

@@ -1,0 +1,200 @@
+<html xmlns:lxslt="http://xml.apache.org/xslt">
+   <head>
+      <title>Design Considerations</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.18">
+      <link rel="home" href="index.html" title="The Chemistry Development Kit (CDK)">
+      <link rel="up" href="ch02.html" title="2. Project Reference">
+      <link rel="previous" href="ch02.html" title="2. Project Reference">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div class="navheader">
+         <table width="100%">
+            <tr>
+               <th colspan="3" align="center">Design Considerations</th>
+            </tr>
+            <tr>
+               <td width="20%" align="left"><a href="ch02.html">Prev</a>&nbsp;
+               </td>
+               <th width="60%" align="center">2. Project Reference</th>
+               <td widht="20%" align="right">&nbsp;</td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div id="c37ab2b2" class="section">
+         <h2 class="title" style="clear: all"><a name="c37ab2b2"><b>Design Considerations</b></a></h2>
+         <p>
+            			The most important aspect in the design of the CDK is the clean separation of function. 
+            			We decided to use the meanwhile classical model-view-controler design pattern.
+            			(see for example <a href="http://compsci.about.com/science/compsci/library/weekly/aa030600a.htm">
+               			this article on CompSci and the references therein</a> for more).
+            			The basic concept is that there is a single MODEL that contains the data. 
+            			In our case the data would be an internal representation of a molecule, a chemical reaction, an
+            			ensemble of molcecules, etc.
+            		
+         </p>
+         <p>
+            			There can be multiple VIEWs of the same model
+            			
+            <div class="itemizedlist">
+               <ul>
+                  <li><a name="c37ab2b2b2b1a"></a><p>
+                        						a 2D representation like the one in JChemPaint, consisting mainly of
+                        						lines, representing bonds and some Elementsymbols, or
+                        					
+                     </p>
+                  </li>
+                  <li><a name="c37ab2b2b2b1b1"></a><p>
+                        						a 3D representation, rotatable, nicely shaded with perspective scaling.
+                        					
+                     </p>
+                  </li>
+               </ul>
+            </div>
+            		
+         </p>
+         <p>
+            			The CONTROLER gives the user means of manipulating how the VIEW of the
+            			MODEL is supposed to look like, e.g. for rotating a molecule in the 3D
+            			view. But is also may provide a way of manipulating the model, so that a
+            			user of JChemPaint can, for example, remove a bond from a molecule, etc.
+            		
+         </p>
+         <p>
+            			Cleanly separating these parts, using well-defined interfaces between
+            			them, gives you great flexibility. Making an applet out of JChemPaint,
+            			i.e. plugin a Java 1.1.8 GUI where there is now a Browser-incompatible
+            			Java 2 interface, would be much easier if JCP was nicely designed using
+            			the MVC paradigm.
+            		
+         </p>
+         <p>
+            			The MODEL in the CDK consists of
+            			
+            <div class="itemizedlist">
+               <ul>
+                  <li><a name="c37ab2b2b5b1a"></a><p>
+                        						Java classes for chemical/physical concepts, like:
+                        						
+                        <div class="itemizedlist">
+                           <ul>
+                              <li><a name="c37ab2b2b5b1aab1a"></a><p>
+                                    									Element
+                                    								
+                                 </p>
+                              </li>
+                              <li><a name="c37ab2b2b5b1aab1b1"></a><p>
+                                    									Isotope
+                                    								
+                                 </p>
+                              </li>
+                              <li><a name="c37ab2b2b5b1aab1b2"></a><p>
+                                    									Atom
+                                    								
+                                 </p>
+                              </li>
+                              <li><a name="c37ab2b2b5b1aab1b3"></a><p>
+                                    									Bond
+                                    								
+                                 </p>
+                              </li>
+                              <li><a name="c37ab2b2b5b1aab1b4"></a><p>
+                                    									Molecule
+                                    								
+                                 </p>
+                              </li>
+                              <li><a name="c37ab2b2b5b1aab1b5"></a><p>
+                                    									Ring
+                                    								
+                                 </p>
+                              </li>
+                              <li><a name="c37ab2b2b5b1aab1b6"></a><p>
+                                    									etc.
+                                    								
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                        					
+                     </p>
+                  </li>
+                  <li><a name="c37ab2b2b5b1b1"></a><p>
+                        						Java classes that allow for the administration of the above:
+                        						
+                        <div class="itemizedlist">
+                           <ul>
+                              <li><a name="c37ab2b2b5b1b1ab1a"></a><p>
+                                    									ChemModel (may contain all of the above)
+                                    								
+                                 </p>
+                              </li>
+                              <li><a name="c37ab2b2b5b1b1ab1b1"></a><p>
+                                    									ChemSequence (contains a sequence of ChemModels, e.g. to represent
+                                    									the course of a reaction, where reactants, intermediates and products
+                                    									are stored in separated ChemModels)
+                                    								
+                                 </p>
+                              </li>
+                              <li><a name="c37ab2b2b5b1b1ab1b2"></a><p>
+                                    									ChemFile (a collection of ChemModels and/or ChemSequences)
+                                    								
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                        						
+                        					
+                     </p>
+                  </li>
+                  <li><a name="c37ab2b2b5b1b2"></a><p>
+                        						Java finder classes for the production of value-added representations from concepts in a ChemModel
+                        						
+                        <div class="itemizedlist">
+                           <ul>
+                              <li><a name="c37ab2b2b5b1b2ab1a"></a><p>
+                                    									RingFinder, for example, would produce a SetOfRings, when given a molecule.
+                                    								
+                                 </p>
+                              </li>
+                              <li><a name="c37ab2b2b5b1b2ab1b1"></a><p>
+                                    									BendFinder would produce a list of Bends (a Bend is an ensemble of
+                                    									three atoms from a molecule that make up an angle)
+                                    								
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                        					
+                     </p>
+                  </li>
+               </ul>
+            </div>
+            
+            			The full concept can be found on the photograph that I send you in the
+            			first mail and in Egons UML diagrams. The VIEW and the CONTROLER are now in the responsibility of the
+            			particular programming team, in our case the JChemPaint team. 
+            			The JChemPaint team, for example,  would produce a 2DRenderer.class which creates the regular 2D drawing program look
+            			from the underlying model. 
+            			The JCP controller would add mouse control for drawing and deleting
+            			bonds, rotating molecules, etc. 
+            		
+         </p>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%">
+            <tr>
+               <td width="40%" align="left"><a href="ch02.html">Prev</a>&nbsp;
+               </td>
+               <td width="20%" align="center"><a href="index.html">Home</a></td>
+               <td widht="40%" align="right">&nbsp;</td>
+            </tr>
+            <tr>
+               <td width="40%" align="left">2. Project Reference&nbsp;</td>
+               <td width="20%" align="center"><a href="ch02.html">Up</a></td>
+               <td widht="40%" align="right">&nbsp;</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

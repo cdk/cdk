@@ -177,5 +177,8 @@ public class Molecule extends AtomContainer
 	{
 		this.chemNames.addElement(chemName);
 	}
+	
+		
+	
 }
 

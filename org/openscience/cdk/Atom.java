@@ -62,6 +62,19 @@ public class Atom extends ChemObject {
 	 *  A stereo parity descriptor for the stereochemistry of this atom 
 	 */
 	protected int stereoParity;
+	
+	
+	public Atom(Element element)
+	{
+		this.element = element;
+	}
+	
+	public Atom(Element element, javax.vecmath.Point3d point3D)
+	{
+		this(element);
+		this.point3D = point3D;
+	}
+
 	/**
 	 *  Sets the element type of this atom 
 	 *
@@ -173,6 +186,18 @@ public class Atom extends ChemObject {
 	 */
 	protected void setDegree(int degree) {
 		this.degree = degree;
+	}
+	
+	public String toString()
+	{
+		StringBuffer s = new StringBuffer();
+		s.append("Atom " + getElement().getSymbol() + "\n");
+		s.append("Hydrogen count: " + getHydrogenCount() + "\n");
+		s.append("Stereo Parity: " + getStereoParity() + "\n");
+		s.append("2D coordinates: " + getPoint2D() + "\n");
+		s.append("3D coordinates: " + getPoint3D() + "\n");
+				
+		return s.toString();
 	}
 }
 
