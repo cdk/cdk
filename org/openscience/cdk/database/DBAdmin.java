@@ -83,6 +83,11 @@ public class DBAdmin
     public String query = null;
 
     /**
+     *  Driver for database
+     **/
+    public String driver = "postgresql";
+    
+    /**
      *  An object representing a connection to a database
      **/
     public Connection db = null;
@@ -125,6 +130,8 @@ public class DBAdmin
         usage += "                                 (example: \"jdbc:postgresql://www.nmrshiftdb.org/nmrshiftdb\")\n";
         usage += "--useHost 'thisHost' -h          Administer DB specified by 'thisHost'\n";
         usage += "                                 (URL is formed as follows: \"jdbc:postgresql://thisHost/nmrshiftdb\")\n";
+        usage += "--useDriver 'thisDriver' -d      Driver for DB specified by 'thisDriver'\n";
+        usage += "                                 (mysql | postgresql)\n";
         usage += "--username 'thisUser' -u         Log into database using 'thisUser' as the username\n";
         usage += "--passwd 'thisPasswd' -p         Log into database using 'thisPasswd' as the passwd\n";
         usage += "--createDefaultTables -c         Initialize empty database with default tables\n";
@@ -197,7 +204,11 @@ public class DBAdmin
 	 	
         try
         {
-            Class.forName("postgresql.Driver");
+            if (driver.equals("postgres")) {
+              Class.forName("postgres.Driver");
+            } else if (driver.equals("mysql")) {
+              Class.forName("org.gjt.mm.mysql.Driver").newInstance();
+            }
             if (useURL)
 			{
             	db = DriverManager.getConnection(url,user,pwd);
