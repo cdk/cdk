@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.0b1//EN" "dtd/website.dtd" [
+  <!ENTITY io SYSTEM "../../user-guide/ioclasses.xml">
+  <!ENTITY % classes SYSTEM "../../user-guide/classes.mod">
+%classes;
+]>
+<webpage id="user-io">
+  <config param="last-change-by" value="$Author$"/>
+  <config param="rcsdate" value="$Date$"/>
+
+  <head>
+    <title>User Guide - IO CLasses</title>
+    <titleabbrev>UG - IO Classes</titleabbrev>
+    <summary></summary>
+  </head>
+
+  &io;
+
+</webpage>

@@ -23,6 +23,7 @@
       <tocentry page="reference.xml" filename="reference.html">
         <tocentry page="user-core.xml" filename="user-core.html"/>
         <tocentry page="user-extra.xml" filename="user-extra.html"/>
+        <tocentry page="user-io.xml" filename="user-io.html"/>
       </tocentry>
       <tocentry page="keywordindex.xml" filename="keywordindex.html"/>
       <tocentry page="api.xml" filename="api.html"/>
@@ -30,6 +31,10 @@
         <tocentry page="man-dbadmin.xml" filename="man-dbadmin.html"/>
         <tocentry page="man-download.xml" filename="man-download.html"/>
         <tocentry page="man-fileconvert.xml" filename="man-fileconvert.html"/>
+        <tocentry page="man-fingerprint.xml" filename="man-fingerprint.html"/>
+        <tocentry page="man-guessformat.xml" filename="man-guessformat.html"/>
+        <tocentry page="man-iupacname.xml" filename="man-iupacname.html"/>
+        <tocentry page="man-substructure.xml" filename="man-substructure.html"/>
         <tocentry page="man-test.xml" filename="man-test.html"/>
         <tocentry page="man-view.xml" filename="man-view.html"/>
       </tocentry>

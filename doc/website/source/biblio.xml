@@ -1,18 +1,26 @@
 <?xml version="1.0"?>
 <!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.0b1//EN" 
                          "dtd/website.dtd" [
-  <!ENTITY biblio SYSTEM "../../refs/biblio.dbx">  
+  <!ENTITY biblio SYSTEM "../../refs/cheminf.dbx">  
 ]>
 <webpage id="bibliography">
   <config param="last-change-by" value="$Author: egonw $"/>
-  <config param="rcsdate" value="$Date: 2002/08/25 12:10:40 $"/>
+  <config param="rcsdate" value="$Date: 2002/09/02 12:04:29 $"/>
 
   <head>
-    <title>Bibliography</title>
-    <titleabbrev>Bibliography</titleabbrev>
+    <title>CDK Bibliography</title>
+    <titleabbrev>CDK Biblio</titleabbrev>
     <summary>Articles mentioned on the website.</summary>
   </head>
 
-  &biblio;
+  <para>
+    Below is a list of articles describing articles describing
+    algorithms that are implemented in CDK, and references to
+    articles describing software based on the CDK.
+  </para>
+  
+  <bibliography>
+    &biblio;
+  </bibliography>
 
 </webpage>

@@ -2,7 +2,7 @@
 
   <property name="build.dir" value="../target"/>
 
-  <target id="layout" name="layout" depends="javancss, keyword.index">
+  <target id="layout" name="layout" depends="includes">
     <xslt in="layout.xml" out="autolayout.xml" style="xsl/autolayout.xsl"/>
   </target>
 
@@ -20,7 +20,28 @@
     </delete>
   </target>
   
-  <target id="website" name="website" depends="layout, javancss, keyword.index, bibliography">
+  <target name="check.includes" id="check.includes">
+    <uptodate property="javancss.uptodate"
+      targetfile="javancss-data.xml">
+      <srcfiles dir="../../.." includes="CHANGELOG"/>
+    </uptodate>
+    <echo message="Java source stats uptodate: ${javancss.uptodate}"/>
+    <uptodate property="keywordindex.uptodate"
+      targetfile="../../javadoc/keyword.index.xml">
+      <srcfiles dir="../../.." includes="CHANGELOG"/>
+    </uptodate>
+    <echo message="Keyword index uptodate: ${keywordindex.uptodate}"/>
+    <uptodate property="refs.uptodate"
+      targetfile="../../refs/cheminf.dbx">
+      <srcfiles dir="../../refs" includes="cheminf.btx"/>
+    </uptodate>
+    <echo message="Bibliography index uptodate: ${refs.uptodate}"/>
+  </target>
+
+  <target name="includes" id="includes" 
+      depends="check.includes, javancss, keyword.index, bibliography"/>
+  
+  <target id="website" name="website" depends="layout, includes">
     <!-- note the duplication. If I understand the Ant website correctly, it should
          be possible to use the includes="*.xml" instead with Ant 1.5.2/Xalan and the
          reloadstylesheet attribute. But I only have Ant 1.5.1 at the moment :( -->
@@ -72,11 +93,14 @@
     <xslt in="screenshots.xml" out="${build.dir}/screenshots.html" style="xsl/tabular.xsl"/>
     <xslt in="software.xml" out="${build.dir}/software.html" style="xsl/tabular.xsl"/>
     <xslt in="thelibrary.xml" out="${build.dir}/thelibrary.html" style="xsl/tabular.xsl"/>
+    <xslt in="user-core.xml" out="${build.dir}/user-core.html" style="xsl/tabular.xsl"/>
+    <xslt in="user-extra.xml" out="${build.dir}/user-extra.html" style="xsl/tabular.xsl"/>
+    <xslt in="user-io.xml" out="${build.dir}/user-io.html" style="xsl/tabular.xsl"/>
     <xslt in="website.xml" out="${build.dir}/website.html" style="xsl/tabular.xsl"/>
     <xslt in="whoiswho.xml" out="${build.dir}/whoiswho.html" style="xsl/tabular.xsl"/>
   </target>
 
-  <target name="javancss">
+  <target name="javancss" unless="javancss.uptodate">
     <java classname="javancss.Main" fork="yes"
       output="javancss-tmp.xml">
       <arg value="-package"/>
@@ -93,14 +117,12 @@
     <xslt in="javancss-tmp.xml" out="javadoc-data.xml" style="xsl/javancss2docbook-javadoc.xsl"/>
   </target>
   
-  <target id="keyword.index" name="keyword.index">
+  <target id="keyword.index" name="keyword.index" unless="keywordindex.uptodate">
     <ant dir="../../javadoc/" antfile="build.xml" target="keyword.index"/>
-    <move file="keyword.index.xml" todir="../../javadoc"
-        failonerror="false"/>
   </target>
 
-  <target id="bibliography" name="bibliography">
-    <ant dir="../../refs/" antfile="build.xml" target="all"/>
+  <target id="bibliography" name="bibliography" unless="refs.uptodate">
+    <ant dir="../../refs/" antfile="build.xml" target="convertToDocBook" />
   </target>
 
 </project>
