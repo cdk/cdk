@@ -100,7 +100,7 @@ public class KappaShapeIndicesDescriptor implements Descriptor {
 	 *@return                   kier1, kier2 and kier3 are returned as arrayList of doubles
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public DescriptorResult calculate(AtomContainer atomContainer) throws CDKException {
+	public DescriptorValue calculate(AtomContainer atomContainer) throws CDKException {
 
 		Atom[] atoms = atomContainer.getAtoms();
 		Atom[] firstAtomNeighboors = null;
@@ -198,7 +198,7 @@ public class KappaShapeIndicesDescriptor implements Descriptor {
 		kierValues.add(kier1);
 		kierValues.add(kier2);
 		kierValues.add(kier3);		
-		return kierValues;
+		return new DescriptorValue(getSpecification(), getParameters(), kierValues);
 	}
 
 

@@ -106,7 +106,7 @@ public class EffectivePolarizabilityDescriptor implements Descriptor {
 	 *@return                   a double with polarizability of the heavy atom
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public DescriptorResult calculate(AtomContainer ac) throws CDKException {
+	public DescriptorValue calculate(AtomContainer ac) throws CDKException {
 		Molecule mol = new Molecule(ac);
 		Polarizability pol = new Polarizability();
 		
@@ -114,7 +114,7 @@ public class EffectivePolarizabilityDescriptor implements Descriptor {
 		Atom[] neighboors = mol.getConnectedAtoms(target);
 		double effectivePolarizability = 0;
 		effectivePolarizability = pol.calculateGHEffectiveAtomPolarizability(mol, target, 1000);
-		return new DoubleResult(effectivePolarizability);
+		return new DescriptorValue(getSpecification(), getParameters(), new DoubleResult(effectivePolarizability));
 	}
 
 

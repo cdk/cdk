@@ -53,7 +53,7 @@ public class WienerNumbersDescriptorTest extends TestCase {
 		AtomContainer mol = sp.parseSmiles("O=C(O)CC");
 		AtomContainerManipulator acm = new AtomContainerManipulator();
 		acm.removeHydrogens(mol);
-		DoubleArrayResult retval = (DoubleArrayResult)descriptor.calculate(mol);
+		DoubleArrayResult retval = (DoubleArrayResult)descriptor.calculate(mol).getValue();
 		// OK: assertEquals(testResult[0], retval.get(0), 0.0001);
 		assertEquals(testResult[1], retval.get(1), 0.0001);
 	}

@@ -101,7 +101,7 @@ public class BondCountDescriptor implements Descriptor {
 	 *@param  container  AtomContainer
 	 *@return            The number of bonds of a certain type.
 	 */
-	public DescriptorResult calculate(AtomContainer container) {
+	public DescriptorValue calculate(AtomContainer container) {
 		int bondCount = 0;
 		Bond[] bonds = container.getBonds();
 		for (int i = 0; i < bonds.length; i++) {
@@ -109,7 +109,7 @@ public class BondCountDescriptor implements Descriptor {
 				bondCount += 1;
 			}
 		}
-		return new IntegerResult(bondCount);
+		return new DescriptorValue(getSpecification(), getParameters(), new IntegerResult(bondCount));
 	}
 
 

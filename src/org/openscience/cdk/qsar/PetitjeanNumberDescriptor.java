@@ -96,7 +96,7 @@ public class PetitjeanNumberDescriptor implements Descriptor {
 	 *@return                   petitjean number
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public DescriptorResult calculate(AtomContainer atomContainer) throws CDKException {
+	public DescriptorValue calculate(AtomContainer atomContainer) throws CDKException {
 		double petitjeanNumber = 0; //weinerPath
 		double diameter = 0;
 		double partialDiameter = 0;
@@ -134,7 +134,7 @@ public class PetitjeanNumberDescriptor implements Descriptor {
 		// System.out.println("diameter: " +diameter);
 		
 		petitjeanNumber = (diameter - radius)/diameter;
-		return new DoubleResult(petitjeanNumber);
+		return new DescriptorValue(getSpecification(), getParameters(), new DoubleResult(petitjeanNumber));
 	}
 
 	/**

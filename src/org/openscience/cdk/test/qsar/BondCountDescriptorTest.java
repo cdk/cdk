@@ -52,7 +52,7 @@ public class BondCountDescriptorTest extends TestCase {
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser();
         AtomContainer mol = sp.parseSmiles("CCO"); // ethanol
-        assertEquals(13, ((IntegerResult)descriptor.calculate(mol)).intValue());
+        assertEquals(13, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 	}
 }
 

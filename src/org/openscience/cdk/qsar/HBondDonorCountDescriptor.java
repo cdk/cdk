@@ -108,7 +108,7 @@ public class HBondDonorCountDescriptor implements Descriptor {
 	 *@return                   number of H bond donors
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public DescriptorResult calculate(AtomContainer ac) throws CDKException {
+	public DescriptorValue calculate(AtomContainer ac) throws CDKException {
 		Molecule mol = new Molecule(ac);
 		if (checkAromaticity) {
 			HueckelAromaticityDetector.detectAromaticity(mol);
@@ -151,7 +151,7 @@ public class HBondDonorCountDescriptor implements Descriptor {
 				hBondDonors += 0;
 			}
 		}
-		return new IntegerResult(hBondDonors);
+		return new DescriptorValue(getSpecification(), getParameters(), new IntegerResult(hBondDonors));
 	}
 
 

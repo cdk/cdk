@@ -116,7 +116,7 @@ public class IsProtonInAromaticSystemDescriptor implements Descriptor {
 	 *@return                   true if the proton is bonded to an aromatic atom.
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public DescriptorResult calculate(AtomContainer ac) throws CDKException {
+	public DescriptorValue calculate(AtomContainer ac) throws CDKException {
 		int isProtonInAromaticSystem = 0;
 		Molecule mol = new Molecule(ac);
 		if (checkAromaticity) {
@@ -146,7 +146,7 @@ public class IsProtonInAromaticSystemDescriptor implements Descriptor {
 		else {
 			isProtonInAromaticSystem = 0;
 		}
-		return new IntegerResult(isProtonInAromaticSystem);	
+		return new DescriptorValue(getSpecification(), getParameters(), new IntegerResult(isProtonInAromaticSystem));	
 	}
 
 

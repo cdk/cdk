@@ -91,14 +91,14 @@ public class VAdjMaDescriptor implements Descriptor {
 	 *@return                   VAdjMa
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public DescriptorResult calculate(AtomContainer atomContainer) throws CDKException {
+	public DescriptorValue calculate(AtomContainer atomContainer) throws CDKException {
 		MFAnalyser formula = new MFAnalyser(atomContainer);
 		int magnitude = formula.getHeavyAtoms().size();
 		double vadjMa = 0;
 		if (magnitude > 0) {
 			vadjMa += (Math.log(magnitude) / Math.log(2)) + 1;
 		}
-		return new DoubleResult(vadjMa);
+		return new DescriptorValue(getSpecification(), getParameters(), new DoubleResult(vadjMa));
 	}
 
 

@@ -95,7 +95,7 @@ public class ConnectivityOrderOneDescriptor implements Descriptor {
 	 *@return                   chiValuesCOO is an arrayList that contains chi1 and chi1C
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public DescriptorResult calculate(AtomContainer atomContainer) throws CDKException {
+	public DescriptorValue calculate(AtomContainer atomContainer) throws CDKException {
 		DoubleArrayResult chiValuesCOO = new DoubleArrayResult(2);
 		ArrayList degrees = new ArrayList(2);
 		double chi1 = 0;
@@ -131,7 +131,7 @@ public class ConnectivityOrderOneDescriptor implements Descriptor {
 		}
 		chiValuesCOO.add(chi1);
 		chiValuesCOO.add(chi1C);		
-		return chiValuesCOO;
+		return new DescriptorValue(getSpecification(), getParameters(), chiValuesCOO);
 	}
 
 

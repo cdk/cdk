@@ -88,7 +88,7 @@ public class ZagrebIndexDescriptor implements Descriptor {
 	 *@return                   zagreb index
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public DescriptorResult calculate(AtomContainer atomContainer) throws CDKException {
+	public DescriptorValue calculate(AtomContainer atomContainer) throws CDKException {
 		double zagreb = 0;
 		Atom[] atoms = atomContainer.getAtoms();
 		for (int i = 0; i < atoms.length; i++) {
@@ -101,7 +101,7 @@ public class ZagrebIndexDescriptor implements Descriptor {
 			}
 			zagreb += (atomDegree * atomDegree);
 		}
-		return new DoubleResult(zagreb);
+		return new DescriptorValue(getSpecification(), getParameters(), new DoubleResult(zagreb));
 	}
 
 

@@ -51,7 +51,7 @@ public class ZagrebIndexDescriptorTest extends TestCase {
 		Descriptor descriptor = new ZagrebIndexDescriptor();
 		SmilesParser sp = new SmilesParser();
 		AtomContainer mol = sp.parseSmiles("O=C(O)CC");
-		assertEquals(16, ((DoubleResult)descriptor.calculate(mol)).doubleValue(), 0.0001);
+		assertEquals(16, ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue(), 0.0001);
 	}
 }
 

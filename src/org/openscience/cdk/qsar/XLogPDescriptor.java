@@ -116,7 +116,7 @@ public class XLogPDescriptor implements Descriptor {
 	 *@return                   XLogP is a double
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public DescriptorResult calculate(AtomContainer ac) throws CDKException {
+	public DescriptorValue calculate(AtomContainer ac) throws CDKException {
 		RingSet rs = (new AllRingsFinder()).findAllRings(ac);
 		HueckelAromaticityDetector.detectAromaticity(ac, rs, true);
 		double xlogP = 0;
@@ -636,8 +636,8 @@ public class XLogPDescriptor implements Descriptor {
 		Descriptor don = new HBondDonorCountDescriptor();
 		Object[] paramsDon = {new Boolean(false)};
 		don.setParameters(paramsDon);
-		int acceptors = ((IntegerResult) acc.calculate(ac)).intValue();
-		int donors = ((IntegerResult) don.calculate(ac)).intValue();
+		int acceptors = ((IntegerResult) acc.calculate(ac).getValue()).intValue();
+		int donors = ((IntegerResult) don.calculate(ac).getValue()).intValue();
 		if (donors > 0 && acceptors > 0) {
 			xlogP += 0.429;
 			// internal H-bonds
@@ -672,7 +672,7 @@ public class XLogPDescriptor implements Descriptor {
 			xlogP -= 0.268;
 		}
 
-		return new DoubleResult(xlogP);
+		return new DescriptorValue(getSpecification(), getParameters(), new DoubleResult(xlogP));
 	}
 
 

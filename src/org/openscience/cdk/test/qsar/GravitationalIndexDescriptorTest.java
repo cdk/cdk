@@ -61,7 +61,7 @@ public class GravitationalIndexDescriptorTest extends TestCase {
             AtomContainer ac = c[0];
 
             Descriptor descriptor = new GravitationalIndexDescriptor();
-            DoubleArrayResult retval = (DoubleArrayResult)descriptor.calculate(ac);
+            DoubleArrayResult retval = (DoubleArrayResult)descriptor.calculate(ac).getValue();
 
             assertEquals(1756.5060703860984, retval.get(0), 0.00000001);
             assertEquals(41.91069159994975,  retval.get(1), 0.00000001);

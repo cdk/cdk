@@ -223,11 +223,7 @@ public class DescriptorEngine {
         for (int i = 0; i < descriptors.size(); i++) {    
             Descriptor descriptor = (Descriptor)descriptors.get(i);
             try {
-                DescriptorValue value = new DescriptorValue(
-                        (DescriptorSpecification)speclist.get(i),
-                        descriptor.getParameters(),
-                        descriptor.calculate(molecule)
-                        );
+                DescriptorValue value = descriptor.calculate(molecule);
                 molecule.setProperty((DescriptorSpecification)speclist.get(i), value);
             } catch (CDKException exception) {
                 logger.error("Could not calculate descriptor value for: ", descriptor.getClass().getName());

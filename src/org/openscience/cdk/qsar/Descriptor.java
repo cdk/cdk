@@ -59,7 +59,7 @@ public interface Descriptor {
     
     /** Calculates the descriptor value for the given AtomContainer, while
         optionally using the given parameter values. */
-    public DescriptorResult calculate(AtomContainer container) throws CDKException;
+    public DescriptorValue calculate(AtomContainer container) throws CDKException;
     
 }
 

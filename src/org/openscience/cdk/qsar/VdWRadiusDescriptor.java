@@ -107,7 +107,7 @@ public class VdWRadiusDescriptor implements Descriptor {
 	 *@exception  CDKException  Description of the Exception
 	 */
 
-	public DescriptorResult calculate(AtomContainer container) throws CDKException {
+	public DescriptorValue calculate(AtomContainer container) throws CDKException {
 		double vdwradius = 0;
 		int atomicNumber = 0;
 		try {
@@ -115,7 +115,7 @@ public class VdWRadiusDescriptor implements Descriptor {
 			String symbol = container.getAtomAt(atomPosition).getSymbol();
 			AtomType type = factory.getAtomType(symbol);
 			vdwradius = type.getVanderwaalsRadius();
-			return new DoubleResult(vdwradius);
+			return new DescriptorValue(getSpecification(), getParameters(), new DoubleResult(vdwradius));
 		} catch (Exception ex1) {
 			logger.debug(ex1);
 			throw new CDKException("Problems with AtomTypeFactory due to " + ex1.toString());

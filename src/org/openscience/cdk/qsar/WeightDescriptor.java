@@ -103,7 +103,7 @@ public class WeightDescriptor implements Descriptor {
 	 *@return            Number of atoms of a certain type is returned.
 	 */
 
-	public DescriptorResult calculate(AtomContainer container) {
+	public DescriptorValue calculate(AtomContainer container) {
 		double weight = 0;
 		Atom[] atoms = container.getAtoms();
 		if (elementName == "") {
@@ -130,7 +130,7 @@ public class WeightDescriptor implements Descriptor {
 				}
 			}
 		}
-		return new DoubleResult(weight);
+		return new DescriptorValue(getSpecification(), getParameters(), new DoubleResult(weight));
 	}
 
 

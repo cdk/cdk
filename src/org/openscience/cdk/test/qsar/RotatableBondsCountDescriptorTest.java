@@ -52,7 +52,7 @@ public class RotatableBondsCountDescriptorTest extends TestCase {
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser();
         AtomContainer mol = sp.parseSmiles("CC2CCC(C1CCCCC1)CC2"); // molecule with 2 bridged cicloexane and 1 methyl
-        assertEquals(2, ((IntegerResult)descriptor.calculate(mol)).intValue());
+        assertEquals(2, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 	}
 }
 

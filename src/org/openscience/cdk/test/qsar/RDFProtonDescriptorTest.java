@@ -94,7 +94,7 @@ public class RDFProtonDescriptorTest extends TestCase {
 		
 		Atom target = mol.getAtomAt(16);
 		
-		IntegerArrayResult retval = (IntegerArrayResult)descriptor.calculate(mol);
+		IntegerArrayResult retval = (IntegerArrayResult)descriptor.calculate(mol).getValue();
 		assertEquals(5, retval.size());
 		
 		Double thisValue = (Double)((ArrayList)target.getProperty("gasteigerGHR")).get(13);

@@ -58,7 +58,7 @@ public class EffectivePolarizabilityDescriptorTest extends TestCase {
 		} catch (Exception ex1) {
 			throw new CDKException("Problems with HydrogenAdder due to " + ex1.toString());
 		}
-		double retval = ((DoubleResult)descriptor.calculate(mol)).doubleValue();
+		double retval = ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
 		// position 0 =  heavy atom
 		// positions 1... = protons
 		assertEquals(testResult[0], retval, 0.01);

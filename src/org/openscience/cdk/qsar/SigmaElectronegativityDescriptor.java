@@ -106,7 +106,7 @@ public class SigmaElectronegativityDescriptor implements Descriptor {
 	 *@return                   return the sigma electronegativity
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public DescriptorResult calculate(AtomContainer ac) throws CDKException {
+	public DescriptorValue calculate(AtomContainer ac) throws CDKException {
 		double sigmaElectronegativity = 0;
 		Molecule mol = new Molecule(ac);
 		GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
@@ -116,7 +116,7 @@ public class SigmaElectronegativityDescriptor implements Descriptor {
 			int stepSize = peoe.getStepSize();
 			int start = (stepSize * (atomPosition) + atomPosition);
 			sigmaElectronegativity = ((gasteigerFactors[start]) + (mol.getAtomAt(atomPosition).getCharge() * gasteigerFactors[start + 1]) + (gasteigerFactors[start + 2] * ((mol.getAtomAt(atomPosition).getCharge() * mol.getAtomAt(atomPosition).getCharge()))));
-			return new DoubleResult(sigmaElectronegativity);
+			return new DescriptorValue(getSpecification(), getParameters(), new DoubleResult(sigmaElectronegativity));
 		} catch (Exception ex1) {
 			throw new CDKException("Problems with GasteigerMarsiliPartialCharges due to " + ex1.toString());
 		}

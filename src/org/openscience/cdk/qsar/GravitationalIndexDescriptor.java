@@ -130,7 +130,7 @@ public class GravitationalIndexDescriptor implements Descriptor {
      *@return            An ArrayList containing 9 elements in the order described above
      */
 
-    public DescriptorResult calculate(AtomContainer container) {
+    public DescriptorValue calculate(AtomContainer container) {
         IsotopeFactory factory = null;
         double mass1 = 0;
         double mass2 = 0;
@@ -250,7 +250,7 @@ public class GravitationalIndexDescriptor implements Descriptor {
         retval.add( Math.sqrt(allheavysum) );
         retval.add( Math.pow(allheavysum,1.0/3.0) );
 
-        return retval;
+        return new DescriptorValue(getSpecification(), getParameters(), retval);
     }
 }
     

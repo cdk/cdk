@@ -94,7 +94,7 @@ public class WienerNumbersDescriptor implements Descriptor {
 	 *@return                   wiener numbers as array of 2 doubles
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public DescriptorResult calculate(AtomContainer atomContainer) throws CDKException {
+	public DescriptorValue calculate(AtomContainer atomContainer) throws CDKException {
 		double wienerPathNumber = 0; //weinerPath
 		double wienerPolarityNumber = 0; //weinerPol
 		ConnectionMatrix connectionMatrix = new ConnectionMatrix();
@@ -117,7 +117,7 @@ public class WienerNumbersDescriptor implements Descriptor {
 
 		wienerNumbers.add(wienerPathNumber);
 		wienerNumbers.add(wienerPolarityNumber);
-		return wienerNumbers;
+		return new DescriptorValue(getSpecification(), getParameters(), wienerNumbers);
 	}
 
 	/**

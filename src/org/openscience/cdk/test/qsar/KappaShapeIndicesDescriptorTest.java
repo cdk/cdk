@@ -55,7 +55,7 @@ import java.io.*;
 		AtomContainer mol = sp.parseSmiles("O=C(O)CC");
 		AtomContainerManipulator acm = new AtomContainerManipulator();
 		acm.removeHydrogens(mol);
-		DoubleArrayResult retval = (DoubleArrayResult)descriptor.calculate(mol);
+		DoubleArrayResult retval = (DoubleArrayResult)descriptor.calculate(mol).getValue();
 		// position 0 =  kier1
 		// positions 1 = kier2
 		// THIS IS OK: assertEquals(testResult[1], ((Double)retval.get(1)).doubleValue(), 0.0001);

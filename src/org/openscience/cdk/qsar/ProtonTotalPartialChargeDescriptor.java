@@ -109,7 +109,7 @@ public class ProtonTotalPartialChargeDescriptor implements Descriptor {
 	 *@return                   an array of doubles with partial charges of [heavy, proton_1 ... proton_n]
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public DescriptorResult calculate(AtomContainer ac) throws CDKException {
+	public DescriptorValue calculate(AtomContainer ac) throws CDKException {
 		int counter = 1;
 		Molecule mol = new Molecule(ac);
 		try {
@@ -129,7 +129,7 @@ public class ProtonTotalPartialChargeDescriptor implements Descriptor {
 				protonPartialCharge.add( neighboors[i].getCharge() );				counter++;
 			}
 		}
-		return protonPartialCharge;
+		return new DescriptorValue(getSpecification(), getParameters(), protonPartialCharge);
 	}
 
 

@@ -52,7 +52,7 @@ public class AromaticBondsCountDescriptorTest extends TestCase {
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser();
 		AtomContainer mol = sp.parseSmiles("CCOc1ccccc1"); // ethanol
-		assertEquals(6, ((IntegerResult)descriptor.calculate(mol)).intValue());
+		assertEquals(6, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 	}
 }
 

@@ -66,7 +66,7 @@ public class WHIMDescriptorTest extends TestCase {
             Object[] params = new Object[1];
             params[0] = new String("unity");
             descriptor.setParameters(params);
-            DoubleArrayResult retval = (DoubleArrayResult)descriptor.calculate(ac);
+            DoubleArrayResult retval = (DoubleArrayResult)descriptor.calculate(ac).getValue();
             System.out.println("Num ret = "+retval.size());
             for (int i = 0; i < retval.size(); i++) {
                 System.out.println( retval.get(i) );

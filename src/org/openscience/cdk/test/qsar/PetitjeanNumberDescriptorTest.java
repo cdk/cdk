@@ -53,7 +53,7 @@ public class PetitjeanNumberDescriptorTest extends TestCase {
         AtomContainer mol = sp.parseSmiles("O=C(O)CC"); 
 	AtomContainerManipulator acm = new AtomContainerManipulator();
 	acm.removeHydrogens(mol);
-	assertEquals(0.33333334, ((DoubleResult)descriptor.calculate(mol)).doubleValue(), 0.01);
+	assertEquals(0.33333334, ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue(), 0.01);
 	}
 }
 

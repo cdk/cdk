@@ -126,7 +126,7 @@ public class MomentOfInertiaDescriptor implements Descriptor {
      *@return            An ArrayList containing 7 elements in the order described above
      */
 
-    public DescriptorResult calculate(AtomContainer container) {
+    public DescriptorValue calculate(AtomContainer container) {
         IsotopeFactory factory = null;
         try {
             factory = IsotopeFactory.getInstance();
@@ -195,7 +195,7 @@ public class MomentOfInertiaDescriptor implements Descriptor {
         else pri = Math.sqrt( eval[0] * ccf / mfa.getMass() );
         retval.add( Math.sqrt(Math.PI * 2 * pri * ccf / mfa.getMass()) );
                 
-        return retval;
+        return new DescriptorValue(getSpecification(), getParameters(), retval);
     }
 }
     

@@ -106,7 +106,7 @@ public class ValenceConnectivityOrderZeroDescriptor implements Descriptor {
 	 *@return                   chi0v and chi0C returned as arrayList
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public DescriptorResult calculate(AtomContainer atomContainer) throws CDKException {
+	public DescriptorValue calculate(AtomContainer atomContainer) throws CDKException {
 		Hashtable valences = new Hashtable();
 		valences.put("Li", new Integer(1));
 		valences.put("Be", new Integer(2));
@@ -195,7 +195,7 @@ public class ValenceConnectivityOrderZeroDescriptor implements Descriptor {
                 }
                 chiValuesVCOZ.add(chi0v);
                 chiValuesVCOZ.add(chi0vC);
-                return chiValuesVCOZ;
+                return new DescriptorValue(getSpecification(), getParameters(), chiValuesVCOZ);
         }
 
 

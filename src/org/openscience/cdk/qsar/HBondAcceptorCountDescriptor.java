@@ -111,7 +111,7 @@ public class HBondAcceptorCountDescriptor implements Descriptor {
 	 *@return                   number of H bond acceptors
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public DescriptorResult calculate(AtomContainer ac) throws CDKException {
+	public DescriptorValue calculate(AtomContainer ac) throws CDKException {
 		int hBondacceptors = 0;
 		Molecule mol = new Molecule(ac);
 		if (checkAromaticity) {
@@ -159,7 +159,7 @@ public class HBondAcceptorCountDescriptor implements Descriptor {
 				}
 			}
 		}
-		return new IntegerResult(hBondacceptors);
+		return new DescriptorValue(getSpecification(), getParameters(), new IntegerResult(hBondacceptors));
 	}
 
 

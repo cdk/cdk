@@ -52,7 +52,7 @@ import java.io.*;
 		Descriptor descriptor = new ConnectivityOrderOneDescriptor();
 		SmilesParser sp = new SmilesParser();
 		AtomContainer mol = sp.parseSmiles("O=C(O)CC");
-		DoubleArrayResult retval = (DoubleArrayResult)descriptor.calculate(mol);
+		DoubleArrayResult retval = (DoubleArrayResult)descriptor.calculate(mol).getValue();
 		// position 0 =  chi1
 		// positions 1 = chi1_C
 		// THIS IS OK: assertEquals(testResult[0], ((Double)retval.get(0)).doubleValue(), 0.0001);
@@ -64,7 +64,7 @@ import java.io.*;
 		Descriptor descriptor = new ConnectivityOrderOneDescriptor();
 		SmilesParser sp = new SmilesParser();
 		AtomContainer mol = sp.parseSmiles("FCF");
-		DoubleArrayResult retval = (DoubleArrayResult)descriptor.calculate(mol);
+		DoubleArrayResult retval = (DoubleArrayResult)descriptor.calculate(mol).getValue();
 		// position 0 =  chi1
 		// positions 1 = chi1_C
 		assertEquals(testResult[0], retval.get(0), 0.001);

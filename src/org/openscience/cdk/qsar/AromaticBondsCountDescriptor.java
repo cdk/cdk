@@ -106,7 +106,7 @@ public class AromaticBondsCountDescriptor implements Descriptor {
 	 *@return                   number of aromatic bonds in the atom container
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public DescriptorResult calculate(AtomContainer ac) throws CDKException {
+	public DescriptorValue calculate(AtomContainer ac) throws CDKException {
 		int aromaticBondsCount = 0;
 		if (checkAromaticity) {
 			RingSet rs = (new AllRingsFinder()).findAllRings(ac);
@@ -118,7 +118,7 @@ public class AromaticBondsCountDescriptor implements Descriptor {
 				aromaticBondsCount += 1;
 			}
 		}
-		return new IntegerResult(aromaticBondsCount);
+		return new DescriptorValue(getSpecification(), getParameters(), new IntegerResult(aromaticBondsCount));
 	}
 
 

@@ -55,7 +55,7 @@ public class RuleOfFiveDescriptorTest extends TestCase {
         Molecule mol = sp.parseSmiles("CCCC(OCC)OCC(c1cccc2ccccc12)C4CCC(CCCO)C(CC3CNCNC3)C4"); // 
 	HydrogenAdder hAdder = new HydrogenAdder();
 	hAdder.addExplicitHydrogensToSatisfyValency(mol);
-        assertEquals(2, ((IntegerResult)descriptor.calculate(mol)).intValue());
+        assertEquals(2, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 	}
 }
 

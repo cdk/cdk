@@ -52,7 +52,7 @@ import java.io.*;
 		Descriptor descriptor = new ValenceConnectivityOrderZeroDescriptor();
 		SmilesParser sp = new SmilesParser();
 		AtomContainer mol = sp.parseSmiles("O=C(O)CC");
-		DoubleArrayResult retval = (DoubleArrayResult)descriptor.calculate(mol);
+		DoubleArrayResult retval = (DoubleArrayResult)descriptor.calculate(mol).getValue();
 		// position 0 =  chi0v
 		// positions 1 = chi0v_C
 		// THIS IS OK: assertEquals(testResult[0], ((Double)retval.get(0)).doubleValue(), 0.0001);

@@ -108,31 +108,31 @@ public class RuleOfFiveDescriptor implements Descriptor {
 	 *@return                   number of aromatic bonds in the atom container
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public DescriptorResult calculate(AtomContainer mol) throws CDKException {
+	public DescriptorValue calculate(AtomContainer mol) throws CDKException {
 		
 		int lipinskifailures = 0;
 		
 		Descriptor xlogP = new XLogPDescriptor();
 		Object[] xlogPparams = {new Boolean(checkAromaticity)};
 		xlogP.setParameters(xlogPparams);
-		double xlogPvalue = ((DoubleResult)xlogP.calculate(mol)).doubleValue();
+		double xlogPvalue = ((DoubleResult)xlogP.calculate(mol).getValue()).doubleValue();
 		
 		Descriptor acc = new HBondAcceptorCountDescriptor();
 		acc.setParameters(xlogPparams);
-		int acceptors = ((IntegerResult)acc.calculate(mol)).intValue();
+		int acceptors = ((IntegerResult)acc.calculate(mol).getValue()).intValue();
 		
 		Descriptor don = new HBondDonorCountDescriptor();
 		don.setParameters(xlogPparams);
-		int donors = ((IntegerResult)don.calculate(mol)).intValue();
+		int donors = ((IntegerResult)don.calculate(mol).getValue()).intValue();
 		
 		Descriptor mw = new WeightDescriptor();
 		Object[] mwparams = {new String("")};
 		mw.setParameters(mwparams);
-		double mwvalue = ((DoubleResult)mw.calculate(mol)).doubleValue();
+		double mwvalue = ((DoubleResult)mw.calculate(mol).getValue()).doubleValue();
 		
 		Descriptor rotata = new RotatableBondsCountDescriptor();
 		rotata.setParameters(xlogPparams);
-		int rotatablebonds = ((IntegerResult)rotata.calculate(mol)).intValue();
+		int rotatablebonds = ((IntegerResult)rotata.calculate(mol).getValue()).intValue();
 		
 		if(xlogPvalue > 5.0) { lipinskifailures += 1; }
 		if(acceptors > 10) { lipinskifailures += 1; }
@@ -140,7 +140,7 @@ public class RuleOfFiveDescriptor implements Descriptor {
 		if(mwvalue > 500.0) { lipinskifailures += 1; }
 		if(rotatablebonds > 10.0) { lipinskifailures += 1; }
 		
-		return new IntegerResult(lipinskifailures);
+		return new DescriptorValue(getSpecification(), getParameters(), new IntegerResult(lipinskifailures));
 	}
 
 

@@ -109,7 +109,7 @@ public class RotatableBondsCountDescriptor implements Descriptor {
 	 *@return                   number of rotatable bonds
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public DescriptorResult calculate(AtomContainer ac) throws CDKException {
+	public DescriptorValue calculate(AtomContainer ac) throws CDKException {
 		int rotatableBondsCount = 0;
 		Bond[] bonds = ac.getBonds();
 		int degree0 = 0;
@@ -146,7 +146,7 @@ public class RotatableBondsCountDescriptor implements Descriptor {
 				}
 			}
 		}
-		return new IntegerResult(rotatableBondsCount);
+		return new DescriptorValue(getSpecification(), getParameters(), new IntegerResult(rotatableBondsCount));
 	}
 
 

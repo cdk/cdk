@@ -254,7 +254,7 @@ public class WHIMDescriptor implements Descriptor {
      *@param  container  Parameter is the atom container.
      *@return            An ArrayList containing the descriptors in the order described above. 
      */
-    public DescriptorResult calculate(AtomContainer container) throws CDKException {
+    public DescriptorValue calculate(AtomContainer container) throws CDKException {
         double sum = 0.0;
         Molecule ac = new Molecule(container);
 
@@ -377,7 +377,7 @@ public class WHIMDescriptor implements Descriptor {
         retval.add( g );
         retval.add( d );
         
-        return retval;
+        return new DescriptorValue(getSpecification(), getParameters(), retval);
     }
 
 

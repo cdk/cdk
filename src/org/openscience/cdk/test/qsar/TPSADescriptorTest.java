@@ -64,12 +64,12 @@ public class TPSADescriptorTest extends TestCase {
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		// each test id done for one or more atom types:
-		// assertEquals(37.299999, ((DoubleResult)descriptor.calculate(mol)).doubleValue(), 0.1); at:  29, 31
-		// assertEquals(39.394, ((DoubleResult)descriptor.calculate(mol)).doubleValue(), 0.1); //at:  1,2,3
-		// assertEquals(45.824, ((DoubleResult)descriptor.calculate(mol)).doubleValue(), 0.1); //at:  4
-		//assertEquals(28.632, ((DoubleResult)descriptor.calculate(mol)).doubleValue(), 0.1); //at:  5,6,7
-		// assertEquals(12.892, ((DoubleResult)descriptor.calculate(mol)).doubleValue(), 0.1); //at:  19
-		assertEquals(16.61, ((DoubleResult)descriptor.calculate(mol)).doubleValue(), 0.1); //at:  16
+		// assertEquals(37.299999, ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue(), 0.1); at:  29, 31
+		// assertEquals(39.394, ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  1,2,3
+		// assertEquals(45.824, ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  4
+		//assertEquals(28.632, ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  5,6,7
+		// assertEquals(12.892, ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  19
+		assertEquals(16.61, ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
 	}
 }
 

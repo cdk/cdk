@@ -51,7 +51,7 @@ public class VdWRadiusDescriptorTest extends TestCase {
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("NCCN(C)(C)"); 
-		double retval = ((DoubleResult)descriptor.calculate(mol)).doubleValue();
+		double retval = ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
 
 		assertEquals(testResult[0], retval, 0.01);
 	}

@@ -132,7 +132,7 @@ public class RDFProtonDescriptor implements Descriptor {
 	 *@return                   an arrayList with 5 position (GHR, GHRtopol, GDR, GSR, G3R)
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public DescriptorResult calculate(AtomContainer ac) throws CDKException {
+	public DescriptorValue calculate(AtomContainer ac) throws CDKException {
 		Atom target = ac.getAtomAt(atomPosition);
 		
 		IntegerArrayResult rdfProtonCalculatedValues = new IntegerArrayResult(5);
@@ -566,7 +566,7 @@ public class RDFProtonDescriptor implements Descriptor {
 			}
 			else rdfProtonCalculatedValues.add(0);
 		}
-		return rdfProtonCalculatedValues;
+		return new DescriptorValue(getSpecification(), getParameters(), rdfProtonCalculatedValues);
 	}
 
 

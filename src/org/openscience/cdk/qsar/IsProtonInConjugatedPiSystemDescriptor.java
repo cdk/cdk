@@ -115,7 +115,7 @@ public class IsProtonInConjugatedPiSystemDescriptor implements Descriptor {
 	 *@return                   true if the proton is bonded to a conjugated system
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public DescriptorResult calculate(AtomContainer ac) throws CDKException {
+	public DescriptorValue calculate(AtomContainer ac) throws CDKException {
 			boolean isProtonInPiSystem = false;
 			int counter = 0;
 			Molecule mol = new Molecule(ac);
@@ -142,7 +142,7 @@ public class IsProtonInConjugatedPiSystemDescriptor implements Descriptor {
 					isProtonInPiSystem = false;
 				}
 			}
-			return new BooleanResult(isProtonInPiSystem);
+			return new DescriptorValue(getSpecification(), getParameters(), new BooleanResult(isProtonInPiSystem));
 	}
 
 

@@ -66,7 +66,7 @@ public class BCUTDescriptorTest extends TestCase {
             params[0] = new Integer(2);
             params[1] = new Integer(2);
             descriptor.setParameters(params);
-            DoubleArrayResult retval = (DoubleArrayResult)descriptor.calculate(ac);
+            DoubleArrayResult retval = (DoubleArrayResult)descriptor.calculate(ac).getValue();
             /*
             System.out.println("Num ret = "+retval.size());
             for (int i = 0; i < retval.size(); i++) {

@@ -93,7 +93,7 @@ public class ConnectivityOrderZeroDescriptor implements Descriptor {
 	 *@return                   chiValuesCOZ is an arrayList that contains chi0 and chi0C
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public DescriptorResult calculate(AtomContainer atomContainer) throws CDKException {
+	public DescriptorValue calculate(AtomContainer atomContainer) throws CDKException {
 		DoubleArrayResult chiValuesCOZ = new DoubleArrayResult(2);
 		double chi0 = 0;
 		double chi0C = 0;
@@ -115,7 +115,7 @@ public class ConnectivityOrderZeroDescriptor implements Descriptor {
 		}
 		chiValuesCOZ.add(chi0);
 		chiValuesCOZ.add(chi0C);		
-		return chiValuesCOZ;
+		return new DescriptorValue(getSpecification(), getParameters(), chiValuesCOZ);
 	}
 
 

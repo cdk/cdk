@@ -52,7 +52,7 @@ import java.io.*;
 		Descriptor descriptor = new ConnectivityOrderZeroDescriptor();
 		SmilesParser sp = new SmilesParser();
 		AtomContainer mol = sp.parseSmiles("O=C(O)CC");
-		DoubleArrayResult retval = (DoubleArrayResult)descriptor.calculate(mol);
+		DoubleArrayResult retval = (DoubleArrayResult)descriptor.calculate(mol).getValue();
 		// position 0 =  chi0
 		// positions 1 = chi0_C
 		assertEquals(testResult[0], retval.get(0), 0.0001);
@@ -64,7 +64,7 @@ import java.io.*;
 		Descriptor descriptor = new ConnectivityOrderZeroDescriptor();
 		SmilesParser sp = new SmilesParser();
 		AtomContainer mol = sp.parseSmiles("FCF");
-		DoubleArrayResult retval = (DoubleArrayResult)descriptor.calculate(mol);
+		DoubleArrayResult retval = (DoubleArrayResult)descriptor.calculate(mol).getValue();
 		// position 0 =  chi0
 		// positions 1 = chi0_C
 		assertEquals(testResult[0], retval.get(0), 0.0001);

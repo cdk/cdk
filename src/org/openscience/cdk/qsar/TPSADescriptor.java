@@ -114,7 +114,7 @@ public class TPSADescriptor implements Descriptor {
 	 *@return                   TPSA is a double
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public DescriptorResult calculate(AtomContainer ac) throws CDKException {
+	public DescriptorValue calculate(AtomContainer ac) throws CDKException {
 		
 		// contributions:
 		// every contribution is given by an atom profile;
@@ -277,7 +277,7 @@ public class TPSADescriptor implements Descriptor {
 			}
 		}
 		profiles.clear();
-		return new DoubleResult(tpsa);
+		return new DescriptorValue(getSpecification(), getParameters(), new DoubleResult(tpsa));
 	}
 
 	/**

@@ -52,7 +52,7 @@ public class ValenceConnectivityOrderOneDescriptorTest extends TestCase {
 		Descriptor descriptor = new ValenceConnectivityOrderOneDescriptor();
 		SmilesParser sp = new SmilesParser();
 		AtomContainer mol = sp.parseSmiles("O=C(O)CC");
-		DoubleArrayResult retval = (DoubleArrayResult)descriptor.calculate(mol);
+		DoubleArrayResult retval = (DoubleArrayResult)descriptor.calculate(mol).getValue();
 		// position 0 =  chi1v
 		// positions 1 = chi1v_C
 		// OK: assertEquals(testResult[0], ((Double)retval.get(0)).doubleValue(), 0.0001);

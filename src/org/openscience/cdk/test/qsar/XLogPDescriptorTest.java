@@ -58,7 +58,7 @@ public class XLogPDescriptorTest extends TestCase {
 		Molecule mol = sp.parseSmiles("COc1ccccc1C(C3=C(O)c2ccccc2CC3=O)c5c(O)c4ccccc4oc5=O"); // a cumarine
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
-		assertEquals(4.54, ((DoubleResult)descriptor.calculate(mol)).doubleValue(), 0.1); //at:  16
+		assertEquals(4.54, ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
 	}
 }
 

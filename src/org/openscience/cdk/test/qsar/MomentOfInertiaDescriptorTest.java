@@ -61,7 +61,7 @@ public class MomentOfInertiaDescriptorTest extends TestCase {
             AtomContainer ac = c[0];
 
             Descriptor descriptor = new MomentOfInertiaDescriptor();
-            DoubleArrayResult retval = (DoubleArrayResult)descriptor.calculate(ac);
+            DoubleArrayResult retval = (DoubleArrayResult)descriptor.calculate(ac).getValue();
 
             assertEquals(1044.55881, retval.get(0), 0.00001);
             assertEquals(1277.10448, retval.get(1), 0.00001);

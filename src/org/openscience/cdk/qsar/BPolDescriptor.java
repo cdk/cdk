@@ -92,7 +92,7 @@ public class BPolDescriptor implements Descriptor {
 	 */
 	 
 
-	public DescriptorResult calculate(AtomContainer container) throws CDKException {
+	public DescriptorValue calculate(AtomContainer container) throws CDKException {
 		// atomic polarizabilities ordered by atomic number from 1 to 102
 		
 		double[] polarizabilities = {0, 0.666793, 0.204956, 24.3, 5.6, 3.03, 1.76, 
@@ -127,7 +127,7 @@ public class BPolDescriptor implements Descriptor {
 				difference = polarizabilities[atomicNumber0] -polarizabilities[atomicNumber1];
 				bpol += Math.abs(difference);
 			}
-			return new DoubleResult(bpol);
+			return new DescriptorValue(getSpecification(), getParameters(), new DoubleResult(bpol));
 		} catch (Exception ex1) {
                     logger.debug(ex1);
 			throw new CDKException("Problems with IsotopeFactory due to " + ex1.toString());

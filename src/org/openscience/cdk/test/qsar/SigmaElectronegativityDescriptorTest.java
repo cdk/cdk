@@ -55,7 +55,7 @@ public class SigmaElectronegativityDescriptorTest extends TestCase {
         Molecule mol = sp.parseSmiles("CF"); 
         HydrogenAdder hAdder = new HydrogenAdder();
         hAdder.addExplicitHydrogensToSatisfyValency(mol);
-        assertEquals(8.72, ((DoubleResult)descriptor.calculate(mol)).doubleValue(), 0.01);
+        assertEquals(8.72, ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue(), 0.01);
 	}
 }
 

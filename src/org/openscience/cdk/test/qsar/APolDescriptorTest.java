@@ -53,7 +53,7 @@ public class APolDescriptorTest extends TestCase {
         Molecule mol = sp.parseSmiles("O=C(O)CC"); 
         HydrogenAdder hAdder = new HydrogenAdder();
         hAdder.addExplicitHydrogensToSatisfyValency(mol);
-        assertEquals(10.88, ((DoubleResult)descriptor.calculate(mol)).doubleValue(), 0.01);
+        assertEquals(10.88, ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue(), 0.01);
 	}
 }
 

@@ -210,7 +210,7 @@ public class BCUTDescriptor implements Descriptor {
      *                   above. If a parameter list was supplied, then only the specified number
      *                   of highest and lowest eigenvalues (for each class of BCUT) will be returned.
      */
-    public DescriptorResult calculate(AtomContainer container) throws CDKException {
+    public DescriptorValue calculate(AtomContainer container) throws CDKException {
         int j = 0;
         Molecule ac = new Molecule(container);
 
@@ -306,7 +306,7 @@ public class BCUTDescriptor implements Descriptor {
             for (int i = 0; i < nlow; i++) retval.add( eval3[i] );
             for (int i = 0; i < nhigh; i++) retval.add( eval3[ eval3.length-i-1 ] );
         }
-        return(retval);
+        return new DescriptorValue(getSpecification(), getParameters(), retval);
     }
 }
 
