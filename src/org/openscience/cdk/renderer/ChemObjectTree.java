@@ -29,6 +29,9 @@
 package org.openscience.cdk.renderer;
 
 import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.Bond;
 import org.openscience.cdk.tools.LoggingTool;
 import javax.swing.JTree;
 import javax.swing.JPanel;
@@ -100,6 +103,7 @@ public class ChemObjectTree extends JPanel {
     private DefaultMutableTreeNode getTree(ChemObject object) {
         DefaultMutableTreeNode node = getObjectName(object);
         Class reflectedClass = object.getClass();
+        // get all fields in this ChemObject
         Field[] fields = getFields(reflectedClass);
         logger.debug(reflectedClass.getName() + " #fields: " + fields.length); 
         for (int i=0; i<fields.length; i++) {
@@ -108,6 +112,7 @@ public class ChemObjectTree extends JPanel {
             logger.debug("Field name: " + f.getName());
             logger.debug("Field type: " + f.getType().getName());
             try {
+                // get an instance of the object in the field
                 Object fieldObject = f.get(object);
                 if (fieldObject != null) {
                     logger.debug("Field value: " + fieldObject.getClass().getName());
@@ -118,10 +123,22 @@ public class ChemObjectTree extends JPanel {
                     } else if (fieldObject instanceof ChemObject[]) {
                         // yes, found a Array!
                         logger.debug("Recursing into this Array");
+                        // determine what kind of Array
                         ChemObject[] objects = (ChemObject[])fieldObject;
+                        int count = objects.length;
+                        // Because the count above gives the array length and not the number
+                        // of not null objects the array, some intelligence must be added
+                        if (object instanceof AtomContainer) {
+                            if (objects[0] instanceof Atom) {
+                                count = ((AtomContainer)object).getAtomCount();
+                                } else if (objects[0] instanceof Bond) {
+                                    count = ((AtomContainer)object).getBondCount();
+                                }
+                        }
+                        // now start actual looping over child objects
                         for (int j=0; j<objects.length; j++) {
-                            if (objects[i] != null) {
-                                node.add(getTree(objects[i]));
+                            if (objects[j] != null) {
+                                node.add(getTree(objects[j]));
                             }
                         }
                     }
