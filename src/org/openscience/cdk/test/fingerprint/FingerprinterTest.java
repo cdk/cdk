@@ -147,6 +147,7 @@ public class FingerprinterTest extends TestCase
 		mol.addBond(5, 6, 1); // 6
 		return mol;
 	}
+
 	
 	private void display(Molecule molecule)
 	{	
@@ -177,8 +178,7 @@ public class FingerprinterTest extends TestCase
 		try{
 			FingerprinterTest fpt = new FingerprinterTest("FingerprinterTest");
 			fpt.standAlone = true;
-			fpt.testFingerprinter();
-			
+			fpt.testFingerprinter();			
 		}
 		catch(Exception exc)
 		{

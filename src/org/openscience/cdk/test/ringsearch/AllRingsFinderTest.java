@@ -110,6 +110,38 @@ public class AllRingsFinderTest extends TestCase
 		}
 	}
 	
+	/* This test takes a very long time. It was to ensure that 
+	   AllRingsFinder acually stops for the given examples. 
+	   And it does, after a very long time. 
+	   So, the test is commented our because of its long runtime */
+	/* public void testBug777488()
+	{
+	        //String filename = "data/Bug646963.cml";
+                String filename = "data/NCI_diversity_292.mol.cml";
+		//String filename = "data/NCI_diversity_528.mol.cml";
+		//String filename = "data/NCI_diversity_978.mol.cml";
+		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+		try {
+		    CMLReader reader = new CMLReader(new InputStreamReader(ins));
+		    ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+		    ChemSequence seq = chemFile.getChemSequence(0);
+		    ChemModel model = seq.getChemModel(0);
+		    Molecule mol = model.getSetOfMolecules().getMolecule(0);
+		    System.out.println("Constructed Molecule");
+		    System.out.println("Starting AllRingsFinder");
+		    RingSet ringSet = new AllRingsFinder().findAllRings(mol);
+		    System.out.println("Finished AllRingsFinder");
+	
+		    //display(mol);
+		
+		} catch (Exception e) 
+		{
+		    e.printStackTrace();
+		    fail(e.toString());
+		}
+	}*/
+
+	
 	private void display(Molecule molecule)
 	{	
 		StructureDiagramGenerator sdg = new StructureDiagramGenerator();
@@ -137,6 +169,7 @@ public class AllRingsFinderTest extends TestCase
 		AllRingsFinderTest arft = new AllRingsFinderTest("AllRingsFinderTest");
 		arft.setStandAlone(true);
 		arft.testAllRingsFinder();
+		//arft.testBug777488();
 	}	
 }
 

@@ -122,6 +122,7 @@ public class AllRingsFinder
 		potentialRings.removeAllElements();
 		boolean joined = false;
 		if (debug) System.out.println("*** Removing atom " + originalAc.getAtomNumber(atom) +  " ***");
+				
 		for (int i = 0; i < pathes.size(); i++)
 		{
 			path1 = (Path)pathes.elementAt(i);
@@ -129,13 +130,14 @@ public class AllRingsFinder
 			{
 				for (int j = i + 1; j < pathes.size(); j++)
 				{
+					//System.out.print(".");
 					path2 = (Path)pathes.elementAt(j);
 					if (path2.firstElement() == atom || path2.lastElement() == atom)
 					{
 						intersectionSize = path1.getIntersectionSize(path2);
 						if (intersectionSize < 3)
 						{
-							if (debug) System.out.println("Joining " + path1.toString(originalAc) + " and " + path2.toString(originalAc));
+							//if (debug) System.out.println("Joining " + path1.toString(originalAc) + " and " + path2.toString(originalAc));
 							union = Path.join(path1, path2, atom);
 							if (intersectionSize == 1)
 							{
@@ -145,8 +147,8 @@ public class AllRingsFinder
 							{
 								potentialRings.add(union);	
 							}
-							if (debug) System.out.println("Intersection Size: " + intersectionSize);
-							if (debug) System.out.println("Union: " + union.toString(originalAc));
+							//if (debug) System.out.println("Intersection Size: " + intersectionSize);
+							//if (debug) System.out.println("Union: " + union.toString(originalAc));
 							/* Now we know that path1 and
 							 * path2 share the Atom atom. 
 							 */
@@ -166,7 +168,8 @@ public class AllRingsFinder
 			pathes.addElement(newPathes.elementAt(f));	
 		}
 		detectRings(potentialRings, rings, originalAc);
-		ac.removeAtomAndConnectedElectronContainers(atom);	
+		ac.removeAtomAndConnectedElectronContainers(atom);
+		if (debug) System.out.println("\n" + pathes.size() + " pathes and " + ac.getAtomCount() + " atoms left.");
 	}
 	
 	private void detectRings(Vector pathes, RingSet ringSet, AtomContainer ac)
@@ -186,7 +189,7 @@ public class AllRingsFinder
 				{
 					ring.addAtom((Atom)path.elementAt(g));
 				}
-                Bond[] bonds = ac.getBonds();
+				Bond[] bonds = ac.getBonds();
 				for (int g = 0; g < bonds.length; g++)
 				{
 					bond = bonds[g];
@@ -233,7 +236,7 @@ public class AllRingsFinder
 		}
 		try
 		{
-			if (debug) System.out.println("Selected atom no " + originalAc.getAtomNumber(minAtom) + " for removal.");
+			//if (debug) System.out.println("Selected atom no " + originalAc.getAtomNumber(minAtom) + " for removal.");
 		}
 		catch(Exception exc)
 		{

@@ -79,7 +79,10 @@ public class Fingerprinter
 		String path = null;
 		int position = -1;
 		boolean isAromatic = false;
+		if (debug) System.out.println("Entering Fingerprinter");
+		if (debug) System.out.println("Starting Aromaticity Detection");
 		isAromatic = HueckelAromaticityDetector.detectAromaticity(ac);
+		if (debug) System.out.println("Finished Aromaticity Detection");
 		findPathes(ac);
 		BitSet bs = new BitSet(size);
 		for (Enumeration e = pathes.elements(); e.hasMoreElements(); )
