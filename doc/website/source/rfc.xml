@@ -210,6 +210,13 @@
               <entry></entry>
               <entry></entry>
             </row>
+            <row>
+              <entry>25</entry>
+              <entry><ulink url="rfc25.html">FormalCharge in AtomType instead of Atom</ulink></entry>
+              <entry>2003-10-01</entry>
+              <entry></entry>
+              <entry></entry>
+            </row>
          </tbody>
         </tgroup>
     </informaltable>
