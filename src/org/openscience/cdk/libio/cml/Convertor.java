@@ -59,6 +59,8 @@ import org.openscience.cdk.dict.*;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.io.setting.StringIOSetting;
+import org.openscience.cdk.qsar.DescriptorSpecification;
+import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.tools.*;
 
 /**
@@ -89,8 +91,11 @@ public class Convertor {
     private String prefix;
     private String instanceLocation;
     private String namespace = "http://www.xml-cml.org/schema/cml2/core";
-    
-    
+    private final String QSARDICT_NAMESPACE = "qsardict";
+    private final String QSARDICT_URI = "http://qsar.sourceforge.net/dicts/qsar-descriptors";
+    private final String QSARMETA_NAMESPACE = "qsarmeta";
+    private final String QSARMETA_URI = "http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata";
+
     public Convertor() {
         this(true, false, false, "", "");
     }
@@ -216,6 +221,7 @@ public class Convertor {
     private void writeAtomContainer(AtomContainer ac, Element nodeToAppend) throws CMLException{
         writeAtomArray(ac.getAtoms(),nodeToAppend);
         writeBondArray(ac.getBonds(),nodeToAppend);
+        writeProperties(ac, nodeToAppend);
     }
 
     private void writeSetOfMolecules(SetOfMolecules som, Element nodeToAppend) throws CMLException{
@@ -374,6 +380,7 @@ public class Convertor {
     private void writeProperties(ChemObject object, Element nodeToAppend) {
         Hashtable props = object.getProperties();
         Enumeration keys = props.keys();
+        Element propList = null;
         while (keys.hasMoreElements()) {
             Object key = keys.nextElement();
             if (key instanceof DictRef) {
@@ -388,11 +395,52 @@ public class Convertor {
                 scalar.setAttribute("title",(String)key);
                 nodeToAppend.appendChild(scalar);
                 scalar.appendChild(doc.createTextNode(value.toString()));
+            } else if (key instanceof DescriptorSpecification) {
+                DescriptorSpecification specs = (DescriptorSpecification)key;
+                Object value = props.get(key);
+                if (propList == null) {
+                    propList = this.createElement("propertyList");
+                }
+                Element property = this.createElement("property");
+                Element metadataList = this.createElement("metadataList");
+                metadataList.setAttribute("xmlns:" + QSARMETA_NAMESPACE, QSARMETA_URI);
+                String specsRef = specs.getSpecificationReference();
+                if (specsRef.startsWith(QSARDICT_URI)) {
+                    specsRef = QSARDICT_NAMESPACE + ":" + specsRef.substring(QSARDICT_URI.length()+1);
+                    property.setAttribute("xmlns:" + QSARDICT_NAMESPACE, QSARDICT_URI);
+                }
+                Element metaData = this.createElement("metadata");
+                metaData.setAttribute("dictRef", QSARMETA_NAMESPACE + ":" + "implementationTitle");
+                metaData.setAttribute("content", specs.getImplementationTitle());
+                metadataList.appendChild(metaData);
+                metaData = this.createElement("metadata");
+                metaData.setAttribute("dictRef", QSARMETA_NAMESPACE + ":" + "implementationIdentifier");
+                metaData.setAttribute("content", specs.getImplementationIdentifier());
+                metadataList.appendChild(metaData);
+                metaData = this.createElement("metadata");
+                metaData.setAttribute("dictRef", QSARMETA_NAMESPACE + ":" + "implementationVendor");
+                metaData.setAttribute("content", specs.getImplementationVendor());
+                metadataList.appendChild(metaData);
+                property.appendChild(metadataList);
+                Element scalar = this.createElement("scalar");
+                Object realValue = ((DescriptorValue)value).getValue();
+                if (realValue instanceof Double ||
+                    realValue instanceof Integer) { // Classes with a proper toString() method
+                    scalar.appendChild(doc.createTextNode(realValue.toString()));
+                } else {
+                    scalar.appendChild(doc.createTextNode(realValue.toString()));
+                }
+                scalar.setAttribute("dictRef", specsRef);
+                property.appendChild(scalar);
+                propList.appendChild(property);
             } else {
                 logger.warn("Don't know what to do with this property key: " +
                     key.getClass().getName()
                 );
             }
+        }
+        if (propList != null) {
+            nodeToAppend.appendChild(propList);
         }
     }
 
