@@ -1,5 +1,5 @@
---- src/org/openscience/cdk/tools/LoggingTool.java	2003-10-21 14:01:56.000000000 +0200
-+++ src/org/openscience/cdk/tools/LoggingTool.java.MakeUsableInJmolApplet	2003-10-23 18:45:12.319831000 +0200
+--- src/org/openscience/cdk/tools/LoggingTool.java	2003-11-14 10:48:56.000000000 +0100
++++ build/src/org/openscience/cdk/tools/LoggingTool.java	2003-12-07 19:43:29.000000000 +0100
 @@ -40,7 +40,6 @@
      private boolean debug = false;
      private boolean tostdout = false;
@@ -49,7 +49,6 @@
 -         * this exception handler. So we are going to check the JVM
 -         * version first
 -         ****************************************************************/
-+        tostdout = true;
          debug = false;
 -        String strJvmVersion = System.getProperty("java.version");
 -        if (strJvmVersion.compareTo("1.2") >= 0) {
@@ -68,16 +67,21 @@
 -            // do not debug in those cases
 -          }
 -        }
++        tostdout = true;
      }
  
      public void dumpSystemProperties() {
-@@ -142,70 +88,24 @@
+@@ -140,74 +86,24 @@
      }
  
-     public void debug(Exception exception) {
--        debug("Exception: " + exception.getMessage());
+     public void debug(Throwable problem) {
+-        if (problem instanceof Error) {
+-            debug("Error: " + problem.getMessage());
+-        } else {
+-            debug("Exception: " + problem.getMessage());
+-        }
 -        java.io.StringWriter stackTraceWriter = new java.io.StringWriter();
--        exception.printStackTrace(new PrintWriter(stackTraceWriter));
+-        problem.printStackTrace(new PrintWriter(stackTraceWriter));
 -        String trace = stackTraceWriter.toString();
 -        try {
 -            BufferedReader reader = new BufferedReader(new StringReader(trace));
