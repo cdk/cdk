@@ -401,8 +401,6 @@ public class SaturationChecker
 			for (int i = 1; i <= missingHydrogens; i++)
 			{
 				Atom hydrogen = new Atom("H");
-        if(atom.getPoint2D()!=null)
-          hydrogen.setPoint2D(new javax.vecmath.Point2d(atom.getPoint2D().x,atom.getPoint2D().y));
 				molecule.addAtom(hydrogen);
 				Bond newBond = new Bond(atom, hydrogen, 1.0);
 				molecule.addBond(newBond);
