@@ -37,6 +37,7 @@ import junit.framework.*;
 
 public class RandomStructureGeneratorTest extends TestCase
 {
+	public boolean debug = false;
 	public RandomStructureGeneratorTest(String name)
 	{
 		super(name);
@@ -56,19 +57,45 @@ public class RandomStructureGeneratorTest extends TestCase
 	  */
 	public void testIt()
 	{
+		String s = null;
 		Vector structures = new Vector();	
+		Molecule mol = null;
 		Molecule molecule = MoleculeFactory.loadMolecule("data/a-pinene.mol");
+
 		RandomGenerator rg = new RandomGenerator();
 		rg.setMolecule(molecule);
+		
 		for (int f = 0; f < 1000; f++)
 		{
-			molecule = rg.proposeStructure();
+			mol = rg.proposeStructure();
 			if ((double)f/(double)50 == f/50)
 			{
-				structures.addElement(molecule);
+				structures.addElement(mol);
+				if (debug)
+				{
+					s = "BondCounts:    ";
+					for (int g = 0; g < mol.getAtomCount(); g++)
+					{
+						s += mol.getBondCount(mol.getAtomAt(g)) + " ";
+					}
+					System.out.println(s);
+					s = "BondOrderSums: ";
+					for (int g = 0; g < mol.getAtomCount(); g++)
+					{
+						s += mol.getBondOrderSum(mol.getAtomAt(g)) + " ";
+					}
+					System.out.println(s);
+					s = "Bonds: ";
+					for (int g = 0; g < mol.getBondCount(); g++)
+					{
+						s += mol.getBondAt(g).getOrder() + " ";
+					}
+					System.out.println(s);
+				}
 			}
 			rg.acceptStructure();			
 		}
+//		structures.addElement((Molecule)molecule.clone());
 		assert(everythingOk(structures));
 	}
 
@@ -82,6 +109,10 @@ public class RandomStructureGeneratorTest extends TestCase
 		{
 			sdg = new StructureDiagramGenerator();
 			mv = new MoleculeViewer2D();
+//			Renderer2DModel r2dm = new Renderer2DModel();
+//			r2dm.setDrawNumbers(true);
+//			mv.setRenderer2DModel(r2dm);
+
 			mol = (Molecule)structures.elementAt(f);
 			sdg.setMolecule(mol);
 

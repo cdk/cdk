@@ -264,7 +264,9 @@ public class Bond extends ElectronContainer implements Cloneable
 
 
 	/**
-	 * Clones this bond object.
+	 * Clones this bond object. Notice that the references to the 
+	 * atom object remain untouched, i.e. you just get a 
+	 * new bond object that points to the same two atoms as the old one.
 	 *
 	 * @return  The cloned object   
 	 */

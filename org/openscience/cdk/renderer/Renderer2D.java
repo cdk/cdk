@@ -293,7 +293,10 @@ public class Renderer2D
 	 */
 	private void paintBond(Bond bond, Color bondColor)
 	{
+//		System.out.println("Renderer2D: bondorder: " + bond.getOrder());
+
 		if (bond.getAtomAt(0).getPoint2D() == null || bond.getAtomAt(1).getPoint2D() == null) return;
+		
 		if (bond.getOrder() == 1)
 		{
 			paintSingleBond(bond, bondColor);

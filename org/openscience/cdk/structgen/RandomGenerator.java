@@ -105,7 +105,8 @@ public class RandomGenerator
 			}
 			System.out.println(s);
 		}
-		return (Molecule)proposedStructure.clone();
+		
+		return proposedStructure;
 	}
 
 	/**
@@ -115,7 +116,11 @@ public class RandomGenerator
 	{
 		if (proposedStructure != null)
 		{
-			this.molecule = proposedStructure;
+			molecule.removeAllBonds();
+			for (int f = 0; f < proposedStructure.getBondCount(); f++)
+			{
+				molecule.addBond((Bond)proposedStructure.getBondAt(f).clone());
+			}
 		}
 	}
 	
