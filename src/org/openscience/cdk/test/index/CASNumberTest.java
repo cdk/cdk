@@ -35,6 +35,8 @@ import org.openscience.cdk.index.CASNumber;
  * @cdk.module test
  *
  * @author     Egon Willighagen <egonw@sci.kun.nl>
+ * @author Nathanaël "M.Le_maudit" Mazuir
+ * 
  * @cdk.created    2003-07-01
  * @cdk.require java1.4
  */
@@ -59,20 +61,45 @@ public class CASNumberTest extends TestCase {
     }
 
     public void testIsValid() {
-        assertTrue(CASNumber.isValid("50-00-0")); // formaldehyde
-        assertTrue(CASNumber.isValid("548-00-5"));
-        assertTrue(CASNumber.isValid("2622-26-6"));
-        assertTrue(CASNumber.isValid("15299-99-7"));
+		// valid cas numbers
+		assertTrue(CASNumber.isValid("50-00-0")); // formaldehyde
+		assertTrue(CASNumber.isValid("548-00-5"));
+		assertTrue(CASNumber.isValid("2622-26-6"));
+		assertTrue(CASNumber.isValid("15299-99-7"));
+		assertTrue(CASNumber.isValid("673434-32-7"));
+		
+		// invalid R value		
+		assertFalse(CASNumber.isValid("50-00-1"));
+		assertFalse(CASNumber.isValid("50-00-2"));
+		assertFalse(CASNumber.isValid("50-00-3"));
+		assertFalse(CASNumber.isValid("50-00-4"));
+		assertFalse(CASNumber.isValid("50-00-5"));
+		assertFalse(CASNumber.isValid("50-00-6"));
+		assertFalse(CASNumber.isValid("50-00-7"));
+		assertFalse(CASNumber.isValid("50-00-8"));
+		assertFalse(CASNumber.isValid("50-00-9"));
         
-        assertFalse(CASNumber.isValid("50-00-1"));
-        assertFalse(CASNumber.isValid("50-00-2"));
-        assertFalse(CASNumber.isValid("50-00-3"));
-        assertFalse(CASNumber.isValid("50-00-4"));
-        assertFalse(CASNumber.isValid("50-00-5"));
-        assertFalse(CASNumber.isValid("50-00-6"));
-        assertFalse(CASNumber.isValid("50-00-7"));
-        assertFalse(CASNumber.isValid("50-00-8"));
-        assertFalse(CASNumber.isValid("50-00-9"));
+		// valid format 
+		assertTrue(CASNumber.isValid("3-21-4"));
+		
+		// invalid format due to invalid hyphen positions 
+		assertFalse(CASNumber.isValid("3-21-40"));
+		assertFalse(CASNumber.isValid("3-210-4"));
+		assertFalse(CASNumber.isValid("03-1-4"));
+		assertFalse(CASNumber.isValid("03-21-"));
+		
+		// invalid characters
+		assertFalse(CASNumber.isValid("a-21-4"));
+		assertFalse(CASNumber.isValid("3-a1-4"));
+		assertFalse(CASNumber.isValid("3-2a-4"));
+		assertFalse(CASNumber.isValid("3-21-a"));
+		assertFalse(CASNumber.isValid("d-cb-a"));
+		
+		// completely stupid value
+		assertFalse(CASNumber.isValid("0&z003-!0>/-0a"));
+		
+		// invalid value even with the '0' unicode character '\u0030' 
+		assertFalse(CASNumber.isValid("\u0030-21-4"));		
     }
 }
 
