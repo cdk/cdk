@@ -30,9 +30,9 @@ package org.openscience.cdk.libio.jmol;
 
 import java.util.Hashtable;
 
-import org.jmol.adapter.smarter.SmarterModelAdapter;
-import org.jmol.api.ModelAdapter.AtomIterator;
-import org.jmol.api.ModelAdapter.BondIterator;
+import org.jmol.adapter.smarter.SmarterJmolAdapter;
+import org.jmol.api.JmolAdapter.AtomIterator;
+import org.jmol.api.JmolAdapter.BondIterator;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
@@ -61,7 +61,7 @@ public class Convertor {
      */
     public AtomContainer convert(Object model) throws CDKException {
         AtomContainer atomContainer = new AtomContainer();
-        SmarterModelAdapter adapter = new SmarterModelAdapter(null);
+        SmarterJmolAdapter adapter = new SmarterJmolAdapter(null);
         // use this hashtable to map the ModelAdapter Unique IDs to
         // our CDK Atom's
         Hashtable htMapUidsToAtoms = new Hashtable();
@@ -76,9 +76,9 @@ public class Convertor {
         }
         BondIterator bondIterator = adapter.getBondIterator(model);
         while (bondIterator.hasNext()) {
-            Object uid1 = bondIterator.getAtomUid1();
-            Object uid2 = bondIterator.getAtomUid2();
-            int order = bondIterator.getOrder();
+            Object uid1 = bondIterator.getAtomUniqueID1();
+            Object uid2 = bondIterator.getAtomUniqueID2();
+            int order = bondIterator.getEncodedOrder();
             // now, look up the uids in our atom map.
             Atom atom1 = (Atom)htMapUidsToAtoms.get(uid1);
             Atom atom2 = (Atom)htMapUidsToAtoms.get(uid2);

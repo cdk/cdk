@@ -34,8 +34,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
-import org.jmol.api.ModelAdapter;
-import org.jmol.adapter.smarter.SmarterModelAdapter;
+import org.jmol.api.JmolAdapter;
+import org.jmol.adapter.smarter.SmarterJmolAdapter;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
@@ -107,7 +107,7 @@ public class JMEReader extends DefaultChemObjectReader {
 	 *@return    The Molecule that was read from the MDL file.
 	 */
 	private Molecule readMolecule(Molecule molecule) throws CDKException {
-        ModelAdapter adapter = new SmarterModelAdapter(null);
+        JmolAdapter adapter = new SmarterJmolAdapter(null);
         // note that it actually let's the adapter detect the format!
         Object model = adapter.openBufferedReader("", input);
         AtomContainer container = new Convertor().convert(model);

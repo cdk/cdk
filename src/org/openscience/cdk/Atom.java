@@ -579,16 +579,16 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
         public String toString() {
                 StringBuffer stringContent = new StringBuffer();
                 stringContent.append("Atom(");
-                stringContent.append(this.hashCode() + ", ");
-                stringContent.append(getSymbol() + ", ");
-                stringContent.append("H:" + getHydrogenCount() + ", ");
-                stringContent.append("SP:" + getStereoParity() + ", ");
-                stringContent.append("2D:[" + getPoint2d() + "], ");
-                stringContent.append("3D:[" + getPoint3d() + "], ");
-                stringContent.append("Fract3D:[" + getFractionalPoint3d() + "], ");
-                stringContent.append("C:" + getCharge() + ", ");
-                stringContent.append("FC:" + getFormalCharge());
-                stringContent.append(", " + super.toString());
+                stringContent.append(this.hashCode()).append(", ");
+                stringContent.append(getSymbol()).append(", ");
+                stringContent.append("H:").append(getHydrogenCount()).append(", ");
+                stringContent.append("SP:").append(getStereoParity()).append(", ");
+                stringContent.append("2D:[").append(getPoint2d()).append("], ");
+                stringContent.append("3D:[").append(getPoint3d()).append("], ");
+                stringContent.append("Fract3D:[").append(getFractionalPoint3d()).append("], ");
+                stringContent.append("C:").append(getCharge()).append(", ");
+                stringContent.append("FC:").append(getFormalCharge());
+                stringContent.append(", ").append(super.toString());
                 stringContent.append(")");
                 return stringContent.toString();
         }
