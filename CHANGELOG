@@ -4,6 +4,7 @@ CHANGELOG $Date$
 Changes in CVS
 ------------------------------------
 New:
+* An interface for iterated reading of data from a file, e.g. a SDF file.
 
 Fixes:
 * Added missing get() methods to cdk.applications.plugin.EditBus interface
