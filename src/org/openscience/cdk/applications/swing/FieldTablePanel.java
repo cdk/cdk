@@ -53,6 +53,13 @@ public class FieldTablePanel extends JPanel {
         rows = 0;
     }
     
+    /**
+     * Adds a new JComponent to the 2 column table layout. Both
+     * elements will be layed out in the same row. For larger
+     * <code>JComponent</code>s the addArea() can be used.
+     *
+     * @see #addArea(String, JComponent)
+     */
     public void addField(String labelText, JComponent component) {
         rows++;
         GridBagConstraints constraints = new GridBagConstraints();
@@ -69,6 +76,13 @@ public class FieldTablePanel extends JPanel {
         add(component, constraints);
     }
     
+    /**
+     * Adds a new JComponent to the 2 column table layout. The JLabel
+     * will be placed in one row, while the <code>JComponent</code>
+     * will be placed in a second row.
+     *
+     * @see #addField(String, JComponent)
+     */
     public void addArea(String labelText, JComponent component) {
         rows++;
         GridBagConstraints constraints = new GridBagConstraints();
