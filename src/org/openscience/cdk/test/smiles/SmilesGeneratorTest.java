@@ -74,9 +74,9 @@ public class SmilesGeneratorTest extends TestCase
 			smiles1 = sg.createSMILES(mol1);
 			smiles2 = sg.createSMILES(mol2);
 		}
-		catch(Exception exc)
-		{
-			System.out.println(exc);	
+		catch(Exception exc) {
+			System.out.println(exc);
+            if (!standAlone) fail();
 		}
 		if (standAlone) System.err.println("SMILES 1: " + smiles1);
 		if (standAlone) System.err.println("SMILES 2: " + smiles2);
@@ -84,6 +84,27 @@ public class SmilesGeneratorTest extends TestCase
 		assertTrue(smiles2.equals("C1=C(C)C2CC(C1)C2(C)(C)"));
 	}
 
+    public void testPartitioning() {
+        SmilesGenerator sg = new SmilesGenerator();
+        String smiles = "";
+        Molecule molecule = new Molecule();
+        Atom sodium = new Atom("Na");
+        sodium.setFormalCharge(+1);
+        Atom hydroxyl = new Atom("O");
+        hydroxyl.setHydrogenCount(1);
+        hydroxyl.setFormalCharge(-1);
+        molecule.addAtom(sodium);
+        molecule.addAtom(hydroxyl);
+        try {
+            smiles = sg.createSMILES(molecule);
+        } catch(Exception exc) {
+            System.out.println(exc);
+            if (!standAlone) fail();
+        }
+        if (standAlone) System.err.println("SMILES: " + smiles);
+        assertTrue(smiles.indexOf(".") != -1);
+    }
+    
 	private void fixCarbonHCount(Molecule mol)
 	{	
 		/* the following line are just a quick fix for this
