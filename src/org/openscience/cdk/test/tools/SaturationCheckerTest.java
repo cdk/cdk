@@ -226,6 +226,59 @@ public class SaturationCheckerTest extends TestCase
 	}
 
     /**
+     * This one tests the possibility of the saturate() method
+     * to find an alternative bonded structure. A previous
+     * implementation was unable to recalculate bond orders
+     * properly because it would first make a double bond between
+     * a1 and a2, which is incorrect for thiophene.
+     */
+    public void testSaturate_NumberingProblem() throws CDKException {
+        Molecule mol = new Molecule();
+        Atom a1 = new Atom("C");
+        mol.addAtom(a1);
+        Atom a2 = new Atom("C");
+        mol.addAtom(a2);
+        Atom a3 = new Atom("C");
+        mol.addAtom(a3);
+        Atom a4 = new Atom("H");
+        mol.addAtom(a4);
+        Atom a5 = new Atom("C");
+        mol.addAtom(a5);
+        Atom a6 = new Atom("H");
+        mol.addAtom(a6);
+        Atom a7 = new Atom("S");
+        mol.addAtom(a7);
+        Atom a8 = new Atom("H");
+        mol.addAtom(a8);
+        Atom a9 = new Atom("H");
+        mol.addAtom(a9);
+        Bond b1 = new Bond(a1, a2, 1.0);
+        mol.addBond(b1);
+        Bond b2 = new Bond(a1, a3, 1.0);
+        mol.addBond(b2);
+        Bond b3 = new Bond(a1, a4, 1.0);
+        mol.addBond(b3);
+        Bond b4 = new Bond(a5, a2, 1.0);
+        mol.addBond(b4);
+        Bond b5 = new Bond(a2, a6, 1.0);
+        mol.addBond(b5);
+        Bond b6 = new Bond(a3, a7, 1.0);
+        mol.addBond(b6);
+        Bond b7 = new Bond(a3, a8, 1.0);
+        mol.addBond(b7);
+        Bond b8 = new Bond(a7, a5, 1.0);
+        mol.addBond(b8);
+        Bond b9 = new Bond(a5, a9, 1.0);
+        mol.addBond(b9);
+        satcheck.saturate(mol);
+        assertEquals(1.0, b1.getOrder(), 0.001);
+        assertEquals(2.0, b2.getOrder(), 0.001);
+        assertEquals(1.0, b6.getOrder(), 0.001);
+        assertEquals(1.0, b8.getOrder(), 0.001);
+        assertEquals(2.0, b4.getOrder(), 0.001);
+    }
+    
+    /**
      * Test sulfuric acid.
      */
     public void testBug772316() throws CDKException {
@@ -261,7 +314,6 @@ public class SaturationCheckerTest extends TestCase
     }
     
     public void testBug777529() throws CDKException {
-      // test methane with explicit hydrogen
       Molecule m = new Molecule();
       m.addAtom(new Atom("C"));
       m.addAtom(new Atom("C"));
