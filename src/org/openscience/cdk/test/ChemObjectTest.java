@@ -63,6 +63,16 @@ public class ChemObjectTest extends TestCase {
         assertEquals(cProperty, chemObject.getProperty(cDescription));
     }
 
+    public void testRemoveProperty() {
+        ChemObject chemObject = new ChemObject();
+        String cDescription = new String("description");
+        String cProperty = new String("property");
+        chemObject.setProperty(cDescription, cProperty);
+        assertNotNull(chemObject.getProperty(cDescription));
+        chemObject.removeProperty(cDescription);
+        assertNull(chemObject.getProperty(cDescription));
+    }
+
     public void testRemarks() {
         ChemObject chemObject = new ChemObject();
         String cDescription = new String("description");

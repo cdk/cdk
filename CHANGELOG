@@ -21,6 +21,7 @@ New:
   name generator
 * MDL MOL/SDF reader now parses the 'G  ' lines in the property
   blocks
+* A ChemObject removeProperty() method
 
 Fixes:
 * Added missing LGPL license to distributions.
