@@ -39,6 +39,7 @@ import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.SetOfReactions;
+import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.io.cml.cdopi.CDOAcceptedObjects;
 import org.openscience.cdk.io.cml.cdopi.CDOInterface;
 import org.openscience.cdk.tools.LoggingTool;
@@ -350,6 +351,11 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
             currentAtom.setAtomicNumber(Integer.parseInt(propertyValue));
         } else if (propertyType.equals("massNumber")) {
             currentAtom.setMassNumber((new Double(propertyValue)).intValue());
+        } else if (propertyType.equals("spinMultiplicity")) {
+            int unpairedElectrons = new Integer(propertyValue).intValue() -1;
+            for (int i=0; i<unpairedElectrons; i++) {
+                currentMolecule.addElectronContainer(new SingleElectron(currentAtom));
+            }
         } else if (propertyType.equals("id")) {
           logger.debug("id: ", propertyValue);
           currentAtom.setID(propertyValue);

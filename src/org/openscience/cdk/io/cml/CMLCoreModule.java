@@ -72,6 +72,7 @@ public class CMLCoreModule implements ModuleInterface {
     protected Vector hCounts;
     protected Vector atomParities;
     protected Vector atomDictRefs;
+    protected Vector spinMultiplicities;
 
     protected int bondCounter;
     protected Vector bondid;
@@ -131,6 +132,7 @@ public class CMLCoreModule implements ModuleInterface {
             this.hCounts = conv.hCounts;
             this.atomParities = conv.atomParities;
             this.atomDictRefs = conv.atomDictRefs;
+            this.spinMultiplicities = conv.spinMultiplicities;
             this.bondCounter = conv.bondCounter;
             this.bondid = conv.bondid;
             this.bondARef1 = conv.bondARef1;
@@ -189,6 +191,7 @@ public class CMLCoreModule implements ModuleInterface {
         hCounts = new Vector();
         atomParities = new Vector();
         atomDictRefs = new Vector();
+        spinMultiplicities = new Vector();
     }
 
     /**
@@ -324,6 +327,8 @@ public class CMLCoreModule implements ModuleInterface {
                 }
                 else if (att.equals("dictRef")) {
                     atomDictRefs.addElement(value);
+                } else if (att.equals("spinMultiplicity")) {
+                    spinMultiplicities.addElement(value);
                 } else {
                     logger.warn("Unparsed attribute: " + att);
                 }
@@ -479,6 +484,9 @@ public class CMLCoreModule implements ModuleInterface {
             }
             if (atomCounter > isotope.size()) {
                 isotope.addElement(null);
+            }
+            if (atomCounter > spinMultiplicities.size()) {
+                spinMultiplicities.addElement(null);
             }
             if (atomCounter > formalCharges.size()) {
                 /* while strictly undefined, assume zero 
@@ -882,6 +890,7 @@ public class CMLCoreModule implements ModuleInterface {
         boolean hasTitles = false;
         boolean hasIsotopes = false;
         boolean hasDictRefs = false;
+        boolean hasSpinMultiplicities = false;
 
         if (elid.size() == atomCounter) {
             hasID = true;
@@ -950,6 +959,14 @@ public class CMLCoreModule implements ModuleInterface {
         } else {
             logger.debug(
                     "No hydrogen Count info: " + hCounts.size(), 
+                    " != " + atomCounter);
+        }
+
+        if (spinMultiplicities.size() == atomCounter) {
+            hasSpinMultiplicities = true;
+        } else {
+            logger.debug(
+                    "No spinMultiplicity info: " + spinMultiplicities.size(),
                     " != " + atomCounter);
         }
 
@@ -1034,6 +1051,10 @@ public class CMLCoreModule implements ModuleInterface {
             
             if (hasDictRefs) {
                 cdo.setObjectProperty("Atom", "dictRef", (String)atomDictRefs.elementAt(i));
+            }
+
+            if (hasSpinMultiplicities && spinMultiplicities.elementAt(i) != null) {
+                cdo.setObjectProperty("Atom", "spinMultiplicity", (String)spinMultiplicities.elementAt(i));
             }
 
             if (hasIsotopes) {
