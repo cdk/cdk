@@ -39,7 +39,7 @@ import java.io.*;
 /**
  * Reads a molecule in CML format from a Reader
  *
- * @author     egonw
+ * @author     Egon L. Willighagen
  * @created    February 2001
  */
 public class CMLReader implements CDKConstants, ChemObjectReader {
@@ -73,7 +73,7 @@ public class CMLReader implements CDKConstants, ChemObjectReader {
     /**
      * Read a ChemFile from input
      *
-     * @return The content in a ChemFile object
+     * @return the content in a ChemFile object
      */
     public ChemObject read(ChemObject object) throws UnsupportedChemObjectException {
       if (object instanceof ChemFile) {

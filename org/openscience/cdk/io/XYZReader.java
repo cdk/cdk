@@ -34,15 +34,32 @@ import java.util.*;
 import java.io.*;
 import javax.vecmath.*;
 
-/* This class is based on Dan Gezelter's XYZReader from Jmol */
+/* 
+ * Reads an object from XYZ formated input
+ *
+ * This class is based on Dan Gezelter's XYZReader from Jmol
+ */
 public class XYZReader implements ChemObjectReader {
 
     private BufferedReader input;
-  
+
+    /* 
+     * construct a new reader from a Reader type object
+     *
+     * @param input reader from which input is read
+     */
     public XYZReader(Reader input) {
         this.input = new BufferedReader(input);
     }
-    
+
+    /*
+     * reads the content from a XYZ input. It can only return a
+     * ChemObject of type ChemFile
+     *
+     * @param object class must be of type ChemFile
+     *
+     * @see ChemFile
+     */
     public ChemObject read(ChemObject object) throws UnsupportedChemObjectException {
         if (object instanceof ChemFile) {
             return (ChemObject)readChemFile();
@@ -50,6 +67,8 @@ public class XYZReader implements ChemObjectReader {
             throw new UnsupportedChemObjectException("Only supported is ChemFile.");
         }
     }
+
+    // private procedures
 
     private ChemFile readChemFile() {
         ChemFile file = new ChemFile();

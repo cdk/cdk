@@ -34,8 +34,30 @@ import java.io.*;
 import java.util.*;
 import javax.vecmath.*;
 
+/*
+ * This class is the interface that all IO readers should implement.
+ * Programs need only care about this interface for any kind of IO.
+ *
+ * Currently, database IO and file IO is supported. Internet IO is
+ * expected.
+ *
+ * @version  $Date$
+ */
 public interface ChemObjectReader {
 
+    /*
+     * Reads an ChemObject of type "object" from input. The constructure
+     * of the actual implementation may take a Reader as input to get
+     * a very flexible reader that can read from string, files, etc.
+     * 
+     * @param  object    the type of object to return
+     * @return returns an object of that contains the content (or 
+               part) of the input content
+     *
+     * @exception UnsupportedChemObjectException it is thrown if
+     *            the type of information is not available from 
+     *            the input
+     */
     public ChemObject read(ChemObject object) throws UnsupportedChemObjectException;
 
 }

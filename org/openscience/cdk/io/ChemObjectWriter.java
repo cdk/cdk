@@ -38,11 +38,25 @@ import javax.vecmath.*;
 
 
 /**
- *  Interface that all ChemObject Writers/Readers must implement
+ * This class is the interface that all IO readers should implement.
+ * Programs need only care about this interface for any kind of IO.
+ *
+ * Currently, database IO and file IO is supported. Internet IO is
+ * expected.
+ *
+ * @version  $Date$
  */
 
 public interface ChemObjectWriter {
     
+    /*
+     * Writes the content of "object" to output
+     * 
+     * @param  object    the object of which the content is outputed
+     *
+     * @exception UnsupportedChemObjectException is thrown if the output
+     *            does not support the data in the object
+     */
     public void write(ChemObject object) throws UnsupportedChemObjectException;
 
 }
