@@ -41,8 +41,10 @@ import org.openscience.cdk.exception.*;
  */
 public class XindiceReader implements ChemObjectReader {
     
+    private String collection;
+    
     public XindiceReader(String collection) {
-        this.con = con;
+        this.collection = collection;
     }
 
     public ChemObject read(ChemObject object) throws CDKException {
@@ -58,7 +60,6 @@ public class XindiceReader implements ChemObjectReader {
     }
 
     public void setQuery(String xpath) {
-        this.query = query;
     }
     
 }
