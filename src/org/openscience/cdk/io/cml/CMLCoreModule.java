@@ -29,6 +29,8 @@
 package org.openscience.cdk.io.cml;
 
 import org.openscience.cdk.io.cml.cdopi.*;
+import org.openscience.cdk.io.cml.cdopi.*;
+import org.openscience.cdk.geometry.CrystalGeometryTools;
 import java.util.*;
 import org.xml.sax.*;
 
@@ -67,6 +69,7 @@ public class CMLCoreModule implements ModuleInterface {
     public final static int CRYSTAL = 21;
     public final static int SEQUENCE = 22;
     public final static int FEATURE = 23;
+    public final static int SCALAR = 24;
     protected final String SYSTEMID = "CML-1999-05-15";
     protected CDOInterface cdo;
     
@@ -81,6 +84,9 @@ public class CMLCoreModule implements ModuleInterface {
     protected Vector z3;
     protected Vector x2;
     protected Vector y2;
+    protected Vector xfract;
+    protected Vector yfract;
+    protected Vector zfract;
     protected Vector hCounts;
     protected Vector atomParities;
     protected Vector atomDictRefs;
@@ -97,8 +103,21 @@ public class CMLCoreModule implements ModuleInterface {
     protected int curRef;
     protected int CurrentElement;
     protected String BUILTIN;
+    protected String DICTREF;
     protected String elementTitle;
     protected String currentChars;
+    
+    protected double unitcella;
+    protected double unitcellb;
+    protected double unitcellc;
+    protected double unitcellalpha;
+    protected double unitcellbeta;
+    protected double unitcellgamma;
+    
+    private double[] a;
+    private double[] b;
+    private double[] c;
+    boolean cartesianAxesSet = false;
 
     public CMLCoreModule(CDOInterface cdo) {
         logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
@@ -126,6 +145,9 @@ public class CMLCoreModule implements ModuleInterface {
             this.z3 = conv.z3;
             this.x2 = conv.x2;
             this.y2 = conv.y2;
+            this.xfract = conv.xfract;
+            this.yfract = conv.yfract;
+            this.zfract = conv.zfract;
             this.hCounts = conv.hCounts;
             this.atomParities = conv.atomParities;
             this.atomDictRefs = conv.atomDictRefs;
@@ -137,6 +159,9 @@ public class CMLCoreModule implements ModuleInterface {
             this.bondStereo = conv.bondStereo;
             this.bondDictRefs = conv.bondDictRefs;
             this.curRef = conv.curRef;
+            this.unitcella = conv.unitcella;
+            this.unitcellb = conv.unitcellb;
+            this.unitcellc = conv.unitcellc;
         } else {
             logger.warn("Cannot inherit information from module: " + convention.getClass().getName());
         }
@@ -152,6 +177,7 @@ public class CMLCoreModule implements ModuleInterface {
     protected void newMolecule() {
         newAtomData();
         newBondData();
+        newCrystalData();
     }
     
     /**
@@ -169,6 +195,9 @@ public class CMLCoreModule implements ModuleInterface {
         z3 = new Vector();
         x2 = new Vector();
         y2 = new Vector();
+        xfract = new Vector();
+        yfract = new Vector();
+        zfract = new Vector();
         hCounts = new Vector();
         atomParities = new Vector();
         atomDictRefs = new Vector();
@@ -186,6 +215,22 @@ public class CMLCoreModule implements ModuleInterface {
         bondStereo = new Vector();
         bondDictRefs = new Vector();
         bondElid = new Vector();
+    }
+
+    /**
+     * Clean all data about read bonds.
+     */
+    protected void newCrystalData() {
+        unitcella = -1.0;
+        unitcellb = -1.0;
+        unitcellc = -1.0;
+        unitcellalpha = -1.0;
+        unitcellbeta = -1.0;
+        unitcellgamma = -1.0;
+        cartesianAxesSet = false;
+        a = new double[3];
+        b = new double[3];
+        c = new double[3];
     }
 
     public void startDocument() {
@@ -207,7 +252,25 @@ public class CMLCoreModule implements ModuleInterface {
         String name = local;
         logger.debug("StartElement");
         setCurrentElement(name);
+        
+        BUILTIN = "";
+        DICTREF = "";
 
+        for (int i=0; i<atts.getLength(); i++) {
+            String qname = atts.getQName(i);
+            if (qname.equals("builtin")) {
+                BUILTIN = atts.getValue(i);
+                logger.debug(name + "->BUILTIN found: " + atts.getValue(i));
+            } else if (qname.equals("dictRef")) {
+                DICTREF = atts.getValue(i);
+                logger.debug(name + "->DICTREF found: " + atts.getValue(i));
+            } else if (qname.equals("title")) {
+                elementTitle = atts.getValue(i);
+                logger.debug(name + "->TITLE found: " + atts.getValue(i));
+            } else {
+                logger.debug("Qname: " + qname);
+            }
+        }
         switch (CurrentElement) {
 
             case ATOM:
@@ -232,6 +295,12 @@ public class CMLCoreModule implements ModuleInterface {
                         x2.addElement(tokenizer.nextToken());
                         y2.addElement(tokenizer.nextToken());
                     } // this is supported in CML 2.0 
+                    else if (att.equals("xyzFract")) {
+                        StringTokenizer tokenizer = new StringTokenizer(value);
+                        xfract.addElement(tokenizer.nextToken());
+                        yfract.addElement(tokenizer.nextToken());
+                        zfract.addElement(tokenizer.nextToken());
+                    } // this is supported in CML 2.0 
                     else if (att.equals("xyz3")) {
                         StringTokenizer tokenizer = new StringTokenizer(value);
                         x3.addElement(tokenizer.nextToken());
@@ -249,6 +318,15 @@ public class CMLCoreModule implements ModuleInterface {
                     } // this is supported in CML 2.0 
                     else if (att.equals("z3")) {
                         z3.addElement(value);
+                    } // this is supported in CML 2.0 
+                    else if (att.equals("xFract")) {
+                        xfract.addElement(value);
+                    } // this is supported in CML 2.0 
+                    else if (att.equals("yFract")) {
+                        yfract.addElement(value);
+                    } // this is supported in CML 2.0 
+                    else if (att.equals("zFract")) {
+                        zfract.addElement(value);
                     } // this is supported in CML 2.0 
                     else if (att.equals("formalCharge")) {
                         formalCharges.addElement(value);
@@ -305,110 +383,30 @@ public class CMLCoreModule implements ModuleInterface {
                 break;
 
             case COORDINATE2:
-
-                for (int i = 0; i < atts.getLength(); i++) {
-
-                    if (atts.getQName(i).equals("builtin")) {
-                        BUILTIN = atts.getValue(i);
-                        logger.debug(
-                                "Valid element coord found, builtin: " + 
-                                atts.getValue(i));
-                    }
-                }
-
                 break;
 
             case COORDINATE3:
-
-                for (int i = 0; i < atts.getLength(); i++) {
-
-                    if (atts.getQName(i).equals("builtin")) {
-                        logger.debug(
-                                "BUILTIN value set for coordinate3: " + 
-                                atts.getValue(i));
-                        BUILTIN = atts.getValue(i);
-                    } else {
-                        logger.warn(
-                                "Unkown coordinate3 builtin value: " + 
-                                atts.getValue(i));
-                    }
-                }
-
                 break;
 
             case STRING:
-
-                for (int i = 0; i < atts.getLength(); i++) {
-
-                    if (atts.getQName(i).equals("builtin")) {
-                        BUILTIN = atts.getValue(i);
-                    } else if (atts.getQName(i).equals("title")) {
-                        elementTitle = atts.getValue(i);
-                    }
-                }
-
                 break;
 
             case FLOAT:
-
-                for (int i = 0; i < atts.getLength(); i++) {
-
-                    if (atts.getQName(i).equals("builtin")) {
-                        BUILTIN = atts.getValue(i);
-                    } else if (atts.getQName(i).equals("title")) {
-                        elementTitle = atts.getValue(i);
-                    }
-                }
-
                 break;
 
             case INTEGER:
-
-                for (int i = 0; i < atts.getLength(); i++) {
-
-                    if (atts.getQName(i).equals("builtin")) {
-                        BUILTIN = atts.getValue(i);
-                    } else if (atts.getQName(i).equals("title")) {
-                        elementTitle = atts.getValue(i);
-                    }
-                }
-
                 break;
 
             case ATOMARRAY:
                 break;
 
             case INTEGERARRAY:
-
-                for (int i = 0; i < atts.getLength(); i++) {
-
-                    if (atts.getQName(i).equals("builtin"))
-                        BUILTIN = atts.getValue(i);
-                }
-
                 break;
 
             case STRINGARRAY:
-
-                for (int i = 0; i < atts.getLength(); i++) {
-
-                    if (atts.getQName(i).equals("builtin"))
-                        BUILTIN = atts.getValue(i);
-                }
-
                 break;
 
             case FLOATARRAY:
-
-                for (int i = 0; i < atts.getLength(); i++) {
-
-                    if (atts.getQName(i).equals("builtin"))
-                        BUILTIN = atts.getValue(i);
-
-                    if (atts.getQName(i).equals("title"))
-                        elementTitle = atts.getValue(i);
-                }
-
                 break;
 
             case MOLECULE:
@@ -419,14 +417,13 @@ public class CMLCoreModule implements ModuleInterface {
                 break;
 
             case CRYSTAL:
+                newCrystalData();
                 cdo.startObject("Crystal");
-                for (int i = 0; i < atts.getLength(); i++) {
-                    if (atts.getQName(i).equals("z"))
-                        cdo.setObjectProperty("Crystal", "z",
-                            atts.getValue(i));
-                }
                 break;
 
+            case SCALAR:
+                break;
+            
             case LIST:
                 cdo.startObject("SetOfMolecules");
                 break;
@@ -482,6 +479,14 @@ public class CMLCoreModule implements ModuleInterface {
                     z3.addElement(null);
                 }
 
+                if (atomCounter > xfract.size() && xfract.size() != 0) {
+                    /* apparently, the previous atoms had atomic
+                       coordinates, add 'null' for this atom */
+                    xfract.addElement(null);
+                    yfract.addElement(null);
+                    zfract.addElement(null);
+                }
+
                 break;
 
             case MOLECULE:
@@ -491,6 +496,31 @@ public class CMLCoreModule implements ModuleInterface {
                 break;
 
             case CRYSTAL:
+                if (unitcella != -1.0) {
+                    // convert unit cell parameters to cartesians
+                    double[][] axes = CrystalGeometryTools.notionalToCartesian(
+                        unitcella, unitcellb, unitcellc, unitcellalpha, unitcellbeta, unitcellgamma
+                    );
+                    a[0] = axes[0][0];
+                    a[1] = axes[1][0];
+                    a[2] = axes[2][0];
+                    b[0] = axes[0][1];
+                    b[1] = axes[1][1];
+                    b[2] = axes[2][1];
+                    c[0] = axes[0][2];
+                    c[1] = axes[1][2];
+                    c[2] = axes[2][2];
+                    cartesianAxesSet = true;
+                    cdo.setObjectProperty("a-axis", "x", new Double(a[0]).toString());
+                    cdo.setObjectProperty("a-axis", "y", new Double(a[1]).toString());
+                    cdo.setObjectProperty("a-axis", "z", new Double(a[2]).toString());
+                    cdo.setObjectProperty("b-axis", "x", new Double(b[0]).toString());
+                    cdo.setObjectProperty("b-axis", "y", new Double(b[1]).toString());
+                    cdo.setObjectProperty("b-axis", "z", new Double(b[2]).toString());
+                    cdo.setObjectProperty("c-axis", "x", new Double(c[0]).toString());
+                    cdo.setObjectProperty("c-axis", "y", new Double(c[1]).toString());
+                    cdo.setObjectProperty("c-axis", "z", new Double(c[2]).toString());
+                }
                 cdo.endObject("Crystal");
 
                 break;
@@ -712,6 +742,47 @@ public class CMLCoreModule implements ModuleInterface {
                         notify("CMLParsing error: " + e, SYSTEMID, 205, 1);
                     }
                 }
+            
+            case SCALAR:
+                logger.debug("Going to store scalar data for dictref: " + DICTREF);
+                if (DICTREF.equals("cml:a")) {
+                    try {
+                        unitcella = Double.parseDouble(s);
+                    } catch (NumberFormatException exception) {
+                        logger.error("Content must a float: " + s);
+                    }
+                } else if (DICTREF.equals("cml:b")) {
+                    try {
+                        unitcellb = Double.parseDouble(s);
+                    } catch (NumberFormatException exception) {
+                        logger.error("Content must a float: " + s);
+                    }
+                } else if (DICTREF.equals("cml:c")) {
+                    try {
+                        unitcellc = Double.parseDouble(s);
+                    } catch (NumberFormatException exception) {
+                        logger.error("Content must a float: " + s);
+                    }
+                } else if (DICTREF.equals("cml:alpha")) {
+                    try {
+                        unitcellalpha = Double.parseDouble(s);
+                    } catch (NumberFormatException exception) {
+                        logger.error("Content must a float: " + s);
+                    }
+                } else if (DICTREF.equals("cml:beta")) {
+                    try {
+                        unitcellbeta = Double.parseDouble(s);
+                    } catch (NumberFormatException exception) {
+                        logger.error("Content must a float: " + s);
+                    }
+                } else if (DICTREF.equals("cml:gamma")) {
+                    try {
+                        unitcellgamma = Double.parseDouble(s);
+                    } catch (NumberFormatException exception) {
+                        logger.error("Content must a float: " + s);
+                    }
+                }
+                break;
 
             case FLOATARRAY:
 
@@ -839,6 +910,8 @@ public class CMLCoreModule implements ModuleInterface {
             CurrentElement = SEQUENCE;
         } else if (name.equals("feature")) {
             CurrentElement = FEATURE;
+        } else if (name.equals("scalar")) {
+            CurrentElement = SCALAR;
         } else {
             CurrentElement = UNKNOWN;
         }
@@ -867,6 +940,7 @@ public class CMLCoreModule implements ModuleInterface {
 
         boolean hasID = false;
         boolean has3D = false;
+        boolean has3Dfract = false;
         boolean has2D = false;
         boolean hasFormalCharge = false;
         boolean hasPartialCharge = false;
@@ -896,6 +970,15 @@ public class CMLCoreModule implements ModuleInterface {
             logger.debug(
                     "No 3D info: " + x3.size() + " " + y3.size() + " " + 
                     z3.size() + " != " + atomCounter);
+        }
+
+        if ((xfract.size() == atomCounter) && (yfract.size() == atomCounter) && 
+            (zfract.size() == atomCounter)) {
+            has3Dfract = true;
+        } else {
+            logger.debug(
+                    "No 3D fractional info: " + xfract.size() + " " + yfract.size() + " " + 
+                    zfract.size() + " != " + atomCounter);
         }
 
         if ((x2.size() == atomCounter) && (y2.size() == atomCounter)) {
@@ -963,6 +1046,23 @@ public class CMLCoreModule implements ModuleInterface {
                 cdo.setObjectProperty("Atom", "x3", (String)x3.elementAt(i));
                 cdo.setObjectProperty("Atom", "y3", (String)y3.elementAt(i));
                 cdo.setObjectProperty("Atom", "z3", (String)z3.elementAt(i));
+            }
+
+            if (has3Dfract) {
+                // ok, need to convert fractional into eucledian coordinates
+                double[] coord = new double[3];
+                coord[0] = Double.parseDouble((String)xfract.elementAt(i));
+                coord[1] = Double.parseDouble((String)yfract.elementAt(i));
+                coord[2] = Double.parseDouble((String)zfract.elementAt(i));
+                if (!cartesianAxesSet) {
+                    logger.error("Cannot convert fractional atomic coord to cartesian if axes are not known");
+                } else {
+                    double[] cartCoord = CrystalGeometryTools.fractionalToCartesian(a,b,c,coord);
+                    
+                    cdo.setObjectProperty("Atom", "x3", new Double(cartCoord[0]).toString());
+                    cdo.setObjectProperty("Atom", "y3", new Double(cartCoord[1]).toString());
+                    cdo.setObjectProperty("Atom", "z3", new Double(cartCoord[2]).toString());
+                }
             }
 
             if (hasFormalCharge) {
