@@ -353,6 +353,9 @@ public class Renderer2D   {
 
         // calculate SYMBOL width, height
         String atomSymbol = atom.getSymbol();
+        if (atom instanceof PseudoAtom) {
+            atomSymbol = ((PseudoAtom)atom).getLabel();
+        }
         graphics.setFont(normalFont);
         FontMetrics fm = graphics.getFontMetrics();
         int atomSymbolW = (new Integer(fm.stringWidth(atomSymbol))).intValue();
