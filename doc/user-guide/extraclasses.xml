@@ -169,6 +169,51 @@
         frame.add(renderer, BorderLayout.CENTER);
         </programlisting>
     </section>
+  </section>
+  
+  <section>
+    <title>Validation</title>
+    <para>
+      It is often useful to test chemical content against a number of rules.
+      E.g. is the formal charge on the atom realistic, or do the four neighbours of
+      a carbon (approximately) form a tetrahedral shape. CDK's validation package
+      automizes such testing.
+    </para>
+    <section>
+      <title>The ValidatorEngine</title>
+      <para>
+        The &validate.ValidatorEngine; can be used to automize the process of validation.
+        A new engine can be constructed with:
+        <programlisting>
+ValidatorEngine engine = new ValidatorEngine();
+        </programlisting>
+        The next step is to tell the engine which tests should be performed.
+        CDK, at this moment, contains a few classes that define sets of test. A set
+        can be added to the validator with:
+        <programlisting>
+engine.addValidator(new BasicValidator());
+        </programlisting>
+        The &validate.BasicValidator; tests for basic chemical assumptions like unlike
+        formal charges. A full list can be found in the JavaDoc documentation of the class.
+      </para>
+      <para>
+        Running the validation test is then done with:
+        <programlisting>
+ValidationReport report = engine.validateMolecule(new Molecule());
+        </programlisting>
+        which returns a &validate.ValidationReport;.
+      </para>
     </section>
+    <section>
+      <title>Making custom validation tests</title>
+      <para>
+        The ValidationEngine.addValidator() method takes an object of a class
+        that implements the &validate.ValidatorInterface;. Thus, custom validation
+        tests can easily be made by building a class that implements this interface,
+        and registering it with the engine. Ofcourse, the existing BasicValidator
+        source code can be used as a starting point.
+      </para>
+    </section>
+  </section>
 
 </chapter>
