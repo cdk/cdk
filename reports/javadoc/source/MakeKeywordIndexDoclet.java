@@ -77,8 +77,12 @@ public class MakeKeywordIndexDoclet {
                     Vector v = new Vector();
                     if (this.primaryToSecondary.containsKey(primaryWord)) {
                         v = (Vector)this.primaryToSecondary.get(primaryWord);
+                        if (!v.contains(word)) {
+                            v.add(word);
+                        }
+                    } else {
+                        v.add(word);
                     }
-                    v.add(word);
                     this.primaryToSecondary.put(primaryWord, v);
                     if (this.secondaryKeywords.containsKey(word)) {
                         this.secondaryKeywords.put(word,
