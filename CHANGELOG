@@ -47,6 +47,7 @@ API changes:
   SetOfMolecules
 * Moved Ring.toString(Molecule) to only user RingSearchTest
 * Removed RingSet.reportRingList(Molecule) and RingSet.toString(Molecule)
+* Moved RingSet.get2DCenter() to GeometryTools 
 
 20041201 Release
 ------------------------------------

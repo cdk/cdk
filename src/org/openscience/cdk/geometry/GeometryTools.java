@@ -34,10 +34,7 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector2d;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.AtomEnumeration;
-import org.openscience.cdk.Bond;
+import org.openscience.cdk.*;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -271,6 +268,23 @@ public class GeometryTools {
 		return new Point2d(x/(double)atoms.size(), y/(double)atoms.size());
 	}
 
+	/**
+	 * Returns the geometric center of all the rings in this ringset.
+	 *
+	 * @return the geometric center of the rings in this ringset
+	 */
+	public static Point2d get2DCenter(RingSet ringSet)
+	{
+		double centerX = 0, centerY = 0;
+		for (int i = 0; i < ringSet.size(); i++)
+		{
+			centerX += ((Ring)ringSet.elementAt(i)).get2DCenter().x;
+			centerY += ((Ring)ringSet.elementAt(i)).get2DCenter().y;
+		}
+		Point2d point = new Point2d(centerX / ((double)ringSet.size()), centerY / ((double)ringSet.size()));
+		return point;
+	}
+    
     /**
      * Calculates the center of mass for the <code>Atom</code>s in the
      * AtomContainer for the 2D coordinates.

@@ -264,24 +264,6 @@ public class RingSet extends Vector implements java.io.Serializable, Cloneable
 	}
 
 	/**
-	 * Returns the geometric center of all the rings in this ringset.
-	 *
-	 * @return the geometric center of the rings in this ringset
-	 */
-	public Point2d get2DCenter()
-	{
-		double centerX = 0, centerY = 0;
-		for (int i = 0; i < size(); i++)
-		{
-			centerX += ((Ring)elementAt(i)).get2DCenter().x;
-			centerY += ((Ring)elementAt(i)).get2DCenter().y;
-		}
-		Point2d point = new Point2d(centerX / ((double)size()), centerY / ((double)size()));
-		return point;
-	}
-
-
-	/**
 	 * True, if at least one of the rings in the ringset cotains
 	 * the given atom.
 	 *
