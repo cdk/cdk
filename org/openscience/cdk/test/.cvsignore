@@ -1,9 +1,1 @@
-CMLReaderTest.class
-ConnectivityCheckerTest.class
-ControllerTest.class
-ConvertMDL2CML.class
-DrawPolygonTest.class
-MDLReaderTest.class
-Renderer2DTest.class
-RingSearchTest.class
-StructureDiagramGeneratorTest.class
+*.class
