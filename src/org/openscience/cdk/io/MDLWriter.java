@@ -223,8 +223,15 @@ public class MDLWriter extends DefaultChemObjectWriter {
             if (bond.getAtoms().length != 2) {
                 logger.warn("Skipping bond with more/less than two atoms: " + bond);
             } else {
-                line = formatMDLInt(molecule.getAtomNumber(bond.getAtomAt(0)) + 1,3);
-                line += formatMDLInt(molecule.getAtomNumber(bond.getAtomAt(1)) + 1,3);
+                if (bond.getStereo() == CDKConstants.STEREO_BOND_UP_INV || 
+                    bond.getStereo() == CDKConstants.STEREO_BOND_DOWN_INV) {
+                    // turn around atom coding to correct for inv stereo
+                    line = formatMDLInt(molecule.getAtomNumber(bond.getAtomAt(1)) + 1,3);
+                    line += formatMDLInt(molecule.getAtomNumber(bond.getAtomAt(0)) + 1,3);
+                } else {
+                    line = formatMDLInt(molecule.getAtomNumber(bond.getAtomAt(0)) + 1,3);
+                    line += formatMDLInt(molecule.getAtomNumber(bond.getAtomAt(1)) + 1,3);
+                }
                 double bondOrder = bond.getOrder();
                 if (bondOrder == CDKConstants.BONDORDER_AROMATIC) {
                     line += formatMDLInt(4,3);
@@ -233,14 +240,20 @@ public class MDLWriter extends DefaultChemObjectWriter {
                 }
                 line += "  ";
                 switch(bond.getStereo()){
-                    case 1:
-                    line += "1";
-                    break;
-                    case -1:
-                    line += "6";
-                    break;
+                    case CDKConstants.STEREO_BOND_UP:
+                        line += "1";
+                        break;
+                    case CDKConstants.STEREO_BOND_UP_INV:
+                        line += "1";
+                        break;
+                    case CDKConstants.STEREO_BOND_DOWN:
+                        line += "6";
+                        break;
+                    case CDKConstants.STEREO_BOND_DOWN_INV:
+                        line += "6";
+                        break;
                     default:
-                    line += "0";
+                        line += "0";
                 }
                 line += "  0  0  0 ";
                 writer.write(line);

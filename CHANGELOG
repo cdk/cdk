@@ -14,7 +14,8 @@ Fixes:
 * cdk-* shell wrapper now accept -X java options (closes #882990)
 * Refactored build process (closes #883519)
 * Fixed rendering of stereo bonds in rings (closes #884935)
-* Fixed parsing of [H] string (closes #881330, #862930)
+* Fixed parsing of [H]-like thingies (closes #881330, #862930, #809412)
+* Also store inversed stereo chemistry in MDL mol files (closes #885512)
 
 API changes:
 * Moved a number of Swing based classes to cdk.applications.swing (addresses #847584)
