@@ -1,9 +1,40 @@
+# Some files need a patch to get to compile/link properly.
+# Those files are denoting with a ~ at the start of the line.
+# The patches are located in the dir patches/.
+#
 org.openscience.cdk.ChemFile
+org.openscience.cdk.exception.UnsupportedChemObjectException
 # IO classes
 org.openscience.cdk.io.ChemObjectReader
 org.openscience.cdk.io.ChemObjectWriter
 org.openscience.cdk.io.PDBReader
 org.openscience.cdk.io.XYZReader
 org.openscience.cdk.io.CMLReader
+org.openscience.cdk.io.CMLWriter
+org.openscience.cdk.io.ChemFileCDO
+org.openscience.cdk.io.cml.CMLErrorHandler
+org.openscience.cdk.io.cml.CMLHandler
+org.openscience.cdk.io.cml.CMLResolver
+org.openscience.cdk.io.cml.Convention
+org.openscience.cdk.io.cml.ConventionInterface
+org.openscience.cdk.io.cml.PDBConvention
+org.openscience.cdk.io.cml.PMPConvention
+org.openscience.cdk.io.cml.MDLMolConvention
+org.openscience.cdk.io.cml.JMOLANIMATIONConvention
+org.openscience.cdk.io.cml.cdopi.CDOInterface
+org.openscience.cdk.io.cml.cdopi.CDOAcceptedObjects
+org.openscience.cdk.io.MDLReader
+org.openscience.cdk.io.SMILESWriter
+org.openscience.cdk.io.MDLWriter
+# Ringsearch classes
+org.openscience.cdk.ringsearch.SSSRFinder
+org.openscience.cdk.ringsearch.Queue
+# Smiles classes
+org.openscience.cdk.smiles.AromaticityCalculator
+org.openscience.cdk.smiles.SmilesGenerator
+org.openscience.cdk.smiles.CanonicalLabeler
+org.openscience.cdk.smiles.InvPair
+org.openscience.cdk.smiles.Primes
 # Tool classes
-org.openscience.cdk.tools.LoggingTool
+~org.openscience.cdk.tools.LoggingTool
+~org.openscience.cdk.tools.IsotopeFactory

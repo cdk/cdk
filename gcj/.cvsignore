@@ -1,2 +1,5 @@
 build
 *.so
+cdk-fileconvertor
+cdk.log
+src

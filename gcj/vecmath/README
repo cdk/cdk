@@ -1,0 +1,73 @@
+-----------------------------------------------------
+ javax.vecmath package by Kenji Hiranabe
+
+                                11/25,'99 version 1.2-1.14
+                                 10/5,'99 version 1.2-1.13
+                                 6/12,'99 version 1.1-1.12
+                                 3/11,'99 version 1.1-1.10
+                                 3/4 ,'99 version 1.1-1.9
+                                 1/6 ,'99 version 1.1-1.8
+                                10/14,'98 version 1.1-1.6
+                                 7/21,'98 version 1.1-1.4
+                                 4/9 ,'98 version 1.1-1.0
+                                 1/6 ,'98 version 1.0-1.2
+                                 1/5 ,'98 version 1.0-1.1
+                                11/28,'97 version 1.0-0.8
+-----------------------------------------------------
+
+This is unofficial free implementation(source code release) of Java(TM) 3D
+API 1.2 Beta1 vecmath package.
+
+This package supports vector/point transformation math often utilized in
+computer graphics.
+
+The Included classes are the followings.
+
+    * Tuples
+
+      Tuple2f       Tuple2d    Tuple3b        Tuple3d      Tuple3f     
+        |             |          |              |            |
+        +Vector2f     +Vector2d	 +Color3b       +Vector3d    +Point3f   
+        +Point2f      +Point2d			+Point3d     +Vector3f  
+        +TexCoord2f 					     +Color3f
+						             +TexCoord3f
+
+      Tuple4b       Tuple4d        Tuple4f     Tuple3i     Tuple4i
+        |             |              |           |           |
+        +Color4b      +Vector4d      +Color4f    + Point3i   + Point4i
+                      +Point4d       +Point4f
+                      +Quat4d        +Vector4f
+                                     +Quat4f  
+
+      AxisAngle4d   AxisAngle4f    GVector
+
+    * Matrices
+
+      Matrix3d      Matrix4d      Matrix3f     Matrix4f  GMatrix
+
+    * Exceptions
+
+      MismatchedSizeException   SingularMatrixException
+
+Generic matrices' LU and SV decomposition are also there.
+You can download the zipped, tar+gzipped or jar'ed *.java source code
+from;
+
+       http://www.esm.co.jp/divisions/open-sys/java/vecmath/
+
+I implemented my version from scatch and reviewed it with the version of Paul Bathen,
+Kevin Copps, and Rick Niles from Adm King's unofficial j3d implementation.
+
+The features are;
+ * FULL 1.2 specification is implemented. All the classes and methods are there.
+ * Has a test suite class named VecmathTest with a main method.
+ * No 'new' operator at all except for GMatrix, GVecator and error exceptions.
+ * Aliasing-safe. i.e. v.cross(v,v1) or m.mul(m1,m) works.
+
+Any bug reports or comments are welcome.
+
+Note, there is a parallel C++ version.
+
+---
+  Eiwa System Management, Inc.  http://www.esm.co.jp/
+  Kenji Hiranabe                E-Mail: hiranabe@esm.co.jp

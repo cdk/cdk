@@ -7,12 +7,8 @@ if test -r libvecmath.so
 then
     echo "skipped"
 else
-    if ${GCJ} -shared -o libvecmath.so ../jar/vecmath1.2-1.14.jar
-    then
-        echo "done"
-    else
-        echo "failed"
-    fi
+    cd vecmath; make -f Makefile.gcj lib
+    mv vecmath/libvecmath.so .
 fi
 
 echo -n "Compiling gnujaxp... "
@@ -28,8 +24,40 @@ else
     fi
 fi
 
+# this gives several warning, but succeeds
+
+echo -n "Compiling xerces... "
+if test -r libxerces.so
+then
+    echo "skipped"
+else
+    if ${GCJ} -shared -o libxerces.so ../jar/xerces-1.3.0.jar
+    then
+        echo "done"
+    else
+        echo "failed"
+    fi
+fi
+
+exit 0;
+
+# the rest fails
+
+echo -n "Compiling jsx... "
+if test -r libjsx.so
+then
+    echo "skipped"
+else
+    if ${GCJ} -shared -o libjsx.so ../jar/JSX1.0.1.1.jar
+    then
+        echo "done"
+    else
+        echo "failed"
+    fi
+fi
+
 echo -n "Compiling log4j... "
-if test -r libloghcore.so
+if test -r liblogjcore.so
 then
     echo "skipped"
 else
