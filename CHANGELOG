@@ -62,6 +62,7 @@ Fixes:
   thanx to Miguel!)
 * Fixed aromaticity detection
 * Fixes in the SMILES generator (fixes #791091)
+* CMLReader is now much more CML2 compliant
 
 API changes:
 * ConnectivityChecker.partitionIntoMolecules() now returns a 
