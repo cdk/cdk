@@ -97,25 +97,47 @@ setJavaFunctionConverter(lmPredictConverter, function(x,...){inherits(x,"lmpredi
                           description="lm predict object to Java",
                           fromJava=F)
                           
-buildLM <- function(modelname, x,y,wts) {
+hashmap.to.list <- function(params) {
+    keys <- unlist(params$keySet()$toArray())
+    paramlist <- list()
+    cnt <- 1
+    for (key in keys) {
+        paramlist[[cnt]] <- params$get(key)
+        cnt <- cnt+1
+    }
+    names(paramlist) <- keys
+    paramlist
+}
+buildLM <- function(modelname, params) {
+    # params is a java.util.HashMap containing the parameters
+    # we need to extract them and add them to this environment
+    paramlist <- hashmap.to.list(params)
+    attach(paramlist)
+
     # x will come in as a double[][]
     x <- matrix(unlist(x), nrow=length(x), byrow=TRUE)
 
     # assumes y ~ all columns of x
     d <- data.frame(y=y,x)
-    fmla <- paste(names(d)[-1],sep="",collapse="+")
-    fmla <- formula(paste("y",fmla,sep="~",collapse=""))
-
-    assign(modelname, lm(fmla, d, weights=wts), pos=1)
+    assign(modelname, lm(y~., d, weights=weights), pos=1)
+    detach(paramlist)
     get(modelname)
 }
-predictLM <- function( modelname, newx, interval) {
-    newx <- data.frame( matrix(unlist(newx), nrow=length(newx), byrow=TRUE) )
+
+predictLM <- function( modelname, params) {
+    # params is a java.util.HashMap containing the parameters
+    # we need to extract them and add them to this environment
+    paramlist <- hashmap.to.list(params)
+    attach(paramlist)
+
+    newx <- data.frame( matrix(unlist(newdata), nrow=length(newdata), byrow=TRUE) )
     if (interval == '' || !(interval %in% c('confidence','prediction')) ) { 
         interval = 'confidence'
-    }
+    } 
     preds <- predict( get(modelname), newx, se.fit = TRUE, interval=interval);
     class(preds) <- 'lmprediction'
+
+    detach(paramlist)
     preds
 }
 

@@ -141,6 +141,7 @@ public abstract class RModel implements Model {
 
     abstract public void build() throws QSARModelException;
     abstract public void predict() throws QSARModelException;
+    abstract public void setParameters(String key, Object obj) throws QSARModelException;
 }
 
 

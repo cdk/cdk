@@ -166,13 +166,16 @@ public class LinearRegressionModelTest extends CDKTestCase {
 
             /* Test predictions */
 
-            double[][] newx = {{ 9.81536768251, 3.82849269659, 7.22212024421 },
-                { 0.197449829806, 0.324130354642, 2.8329420321 },
-                { 0.548460836141, 7.28037586863, 8.13728493983 },
-                { 1.76049278788, 6.41731766803, 5.53986167864 },
-                { 3.4541825491, 9.78038580407, 3.58954097059 }};
+            Double[][] newx = {
+                { new Double(9.81536768251), new Double(3.82849269659), new Double(7.22212024421) },
+                { new Double(0.197449829806), new Double(0.324130354642), new Double(2.8329420321) },
+                { new Double(0.548460836141), new Double(7.28037586863), new Double(8.13728493983) },
+                { new Double(1.76049278788), new Double(6.41731766803), new Double(5.53986167864) },
+                { new Double(3.4541825491), new Double(9.78038580407), new Double(3.58954097059) }
+            };
 
-            lrm.setPredictionParameters(newx, "confidence");
+            lrm.setParameters("newdata", newx);
+            lrm.setParameters("interval", "confidence");
             lrm.predict();
             double[] preds = lrm.getPredictPredicted();
             assertTrue(preds != null);
