@@ -36,8 +36,9 @@ import com.baysmith.io.FileUtilities;
 import java.util.Iterator;
 
 /**
- * TestCase for the reading CML files.
- *
+ * TestCase for the reading CML files using a few test files
+ * in data/cmltest as found in the original Jumbo3 release
+ * (http://www.xml-cml.org/).
  */
 public class JumboTest extends TestCase {
 
@@ -57,9 +58,16 @@ public class JumboTest extends TestCase {
      * Now come the actual tests...
      */
 
+
+    /**
+     * Special CML characteristics:
+     * - <atomArray></atom></atom></atomArray>
+     * - X2D only
+     */
     public void testCuran() {
+        String filename = "data/cmltest/curan.xml";
         try {
-            File f = new File("data/cmltest/curan.xml");
+            File f = new File(filename);
             if (f.canRead()) {
                 // read the file
                 CMLReader reader = new CMLReader(new FileReader(f));
@@ -84,7 +92,88 @@ public class JumboTest extends TestCase {
                 assertTrue(GeometryTools.has2DCoordinates(mol));
             } else {
                 System.out.println("The CMLReader was not tested with a CML file.");
-                System.out.println("Due to missing file: data/cmltest/curan.xml");
+                System.out.println("Due to missing file: " + filename);
+            }
+        } catch (Exception e) {
+            fail(e.toString());
+        }
+    }
+
+    /**
+     * Special CML characteristics:
+     * - use of cml: namespace
+     * - X2D only
+     */
+    public void testCephNS() {
+        String filename = "data/cmltest/ceph-ns.xml";
+        try {
+            File f = new File(filename);
+            if (f.canRead()) {
+                // read the file
+                CMLReader reader = new CMLReader(new FileReader(f));
+                ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+
+                // test the resulting ChemFile content
+                assertNotNull(chemFile);
+                assertEquals(chemFile.getChemSequenceCount(), 1);
+                ChemSequence seq = chemFile.getChemSequence(0);
+                assertNotNull(seq);
+                assertEquals(seq.getChemModelCount(), 1);
+                ChemModel model = seq.getChemModel(0);
+                assertNotNull(model);
+                assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
+
+                // test the molecule
+                Molecule mol = model.getSetOfMolecules().getMolecule(0);
+                assertNotNull(mol);
+                assertEquals(mol.getAtomCount(), 15);
+                assertEquals(mol.getBondCount(), 16);
+                assertTrue(!GeometryTools.has3DCoordinates(mol));
+                assertTrue(GeometryTools.has2DCoordinates(mol));
+            } else {
+                System.out.println("The CMLReader was not tested with a CML file.");
+                System.out.println("Due to missing file: " + filename);
+            }
+        } catch (Exception e) {
+            fail(e.toString());
+        }
+    }
+
+    /**
+     * Special CML characteristics:
+     * - <atomArray><stringArray builtin="atomId"/></atomArray>
+     * - <bondArray><stringArray builtin="atomRef"/></atomArray>
+     * - no coords
+     */
+    public void testNucleustest() {
+        String filename = "data/cmltest/nucleustest.xml";
+        try {
+            File f = new File(filename);
+            if (f.canRead()) {
+                // read the file
+                CMLReader reader = new CMLReader(new FileReader(f));
+                ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+
+                // test the resulting ChemFile content
+                assertNotNull(chemFile);
+                assertEquals(chemFile.getChemSequenceCount(), 1);
+                ChemSequence seq = chemFile.getChemSequence(0);
+                assertNotNull(seq);
+                assertEquals(seq.getChemModelCount(), 1);
+                ChemModel model = seq.getChemModel(0);
+                assertNotNull(model);
+                assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
+
+                // test the molecule
+                Molecule mol = model.getSetOfMolecules().getMolecule(0);
+                assertNotNull(mol);
+                assertEquals(mol.getAtomCount(), 8);
+                assertEquals(mol.getBondCount(), 12);
+                assertTrue(!GeometryTools.has3DCoordinates(mol));
+                assertTrue(!GeometryTools.has2DCoordinates(mol));
+            } else {
+                System.out.println("The CMLReader was not tested with a CML file.");
+                System.out.println("Due to missing file: " + filename);
             }
         } catch (Exception e) {
             fail(e.toString());

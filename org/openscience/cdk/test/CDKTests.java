@@ -23,6 +23,7 @@ package org.openscience.cdk.test;
 
 import junit.framework.*;
 import org.openscience.cdk.renderer.*;
+import org.openscience.cdk.test.io.cml.*;
 
 /**
  * TestSuite that runs all the sample tests
@@ -43,19 +44,20 @@ public class CDKTests {
 		suite.addTest(CloneAtomContainerTest.suite());
 		suite.addTest(RingSearchTest.suite());
 		suite.addTest(ConnectivityCheckerTest.suite());
-		suite.addTest(MorganNumberToolsTest.suite());		
+		suite.addTest(MorganNumberToolsTest.suite());
 		suite.addTest(MFAnalyserTest.suite());
 		suite.addTest(PathLengthTest.suite());
-		suite.addTest(IsomorphismTesterTest.suite());		
-		suite.addTest(MonomerTest.suite());		
-		suite.addTest(PolymerTest.suite());		
+		suite.addTest(IsomorphismTesterTest.suite());
+		suite.addTest(MonomerTest.suite());
+		suite.addTest(PolymerTest.suite());
 		suite.addTest(PDBReaderTest.suite());		
 		suite.addTest(IsotopeFactoryTest.suite());
 		suite.addTest(ElementFactoryTest.suite());
 		suite.addTest(AllRingsFinderTest.suite());
 		suite.addTest(FingerprinterTest.suite());
-		//suite.addTest(AtomTypeFactoryTest.suite());	//Can't find a class like AtomTypeFactoryTest, Stephan
-		
+		suite.addTest(AtomTypeFactoryTest.suite());
+		suite.addTest(JumboTest.suite());
+
 	    return suite;
 	}
 	public static MoleculeListViewer getMoleculeListViewer()
