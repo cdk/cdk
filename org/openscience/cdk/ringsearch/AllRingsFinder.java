@@ -162,14 +162,15 @@ public class AllRingsFinder
 		{
 			pathes.addElement(newPathes.elementAt(f));	
 		}
-		detectRings(potentialRings, rings);
+		detectRings(potentialRings, rings, originalAc);
 		ac.removeAtomAndConnectedBonds(atom);	
 	}
 	
-	private void detectRings(Vector pathes, RingSet ringSet)
+	private void detectRings(Vector pathes, RingSet ringSet, AtomContainer ac)
 	{
 		Path path = null;
 		Ring ring = null;
+		Bond bond = null;
 		for (int f = 0; f < pathes.size(); f ++)
 		{
 			path = (Path)pathes.elementAt(f);
@@ -181,6 +182,14 @@ public class AllRingsFinder
 				for (int g = 0; g < path.size(); g++)
 				{
 					ring.addAtom((Atom)path.elementAt(g));
+				}
+				for (int g = 0; g < ac.getBondCount(); g++)
+				{
+					bond = ac.getBondAt(g);
+					if (ring.contains(bond.getAtomAt(0)) && ring.contains(bond.getAtomAt(0)))
+					{
+						ring.addBond(bond);	
+					}
 				}
 				ringSet.add(ring);
 			}

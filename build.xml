@@ -5,6 +5,7 @@
         <property name="build" value="build" />
         <property name="sourcedist" value="sourcedist" />
         <property name="dist" value="dist" />
+	<property name="doc" value="doc" />
         <property name="src.tests"
                           value="org/openscience/cdk/test" />
 
@@ -27,7 +28,7 @@
 
         <target name="init">
                 <tstamp />
-
+		<mkdir dir="${doc}/api" />
                 <mkdir dir="${build}" />
                 <mkdir dir="${sourcedist}" />
                 <mkdir dir="${dist}" />
@@ -296,7 +297,7 @@
         </target>
 
         <target name="run" depends="dist">
-                <java classname="org.openscience.cdk.test.AllRingsFinderTest" fork="yes">
+                <java classname="org.openscience.cdk.test.SmilesGeneratorTest" fork="yes">
                         <classpath>
                                 <pathelement
                                 location="${dist}/jar/cdk.jar" />
@@ -313,6 +314,17 @@
                 </java>
         </target>
 
+	<target name="javadoc" depends="init">
+		<javadoc packagenames="org.openscience.cdk.*"
+			sourcepath="."
+			defaultexcludes="yes"
+			destdir="doc/api"
+			author="true"
+			version="true"
+			use="true">
+			<classpath refid="project.class.path" />	
+		</javadoc>
+	</target>
 </project>
 
 

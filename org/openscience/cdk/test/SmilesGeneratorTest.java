@@ -59,37 +59,46 @@ public class SmilesGeneratorTest extends TestCase
 	public void testSmilesGenerator()
 	{
 		SmilesGenerator sg = new SmilesGenerator();
-		Molecule molecule = MoleculeFactory.makeEthylPropylPhenantren();
-		int bondCount = 0;
-		Atom atom;
-		/* the following line are just a quick fix for this
-		   particluar carbon-only molecule until we have a proper 
-		   hydrogen count configurator
-		 */
-		for (int f = 0; f < molecule.getAtomCount(); f++)
-		{
-			atom = molecule.getAtomAt(f);
-			bondCount =  molecule.getBondOrderSum(atom);
-			atom.setHydrogenCount(4 - bondCount - (int)atom.getCharge());
-			if (standAlone) System.out.println("Hydrogen count for atom " + f + ": " + atom.getHydrogenCount());
-		}
-		String smiles = null;
-		display(molecule);
+		//Molecule mol1 = MoleculeFactory.makeEthylPropylPhenantren();
+		Molecule mol2 = MoleculeFactory.makeAlphaPinene();
+		fixCarbonHCount(mol2);
+		//fixCarbonHCount(mol1);
+		String smiles1 = null, smiles2 = null;
+		display(mol2);
 		try
 		{
-			smiles = sg.createSMILES(molecule);
+		//	smiles1 = sg.createSMILES(mol1);
+			smiles2 = sg.createSMILES(mol2);
 		}
 		catch(Exception exc)
 		{
 			System.out.println(exc);	
 		}
-		if (standAlone)  System.out.println("SMILES: " + smiles);
-		assert(smiles.equals("c2cc(c3ccc1c(ccc(c1)CCC)c3c2)CC"));
+		//if (standAlone)  System.out.println("SMILES 1: " + smiles1);
+		if (standAlone)  System.out.println("SMILES 2: " + smiles2);
+		assert(smiles1.equals("c2cc(c3ccc1c(ccc(c1)CCC)c3c2)CC"));
 		
 		                  
 	}
-	
 
+	private void fixCarbonHCount(Molecule mol)
+	{	
+		/* the following line are just a quick fix for this
+		   particluar carbon-only molecule until we have a proper 
+		   hydrogen count configurator
+		 */
+		int bondCount = 0;
+		Atom atom;
+		 for (int f = 0; f < mol.getAtomCount(); f++)
+		{
+			atom = mol.getAtomAt(f);
+			bondCount =  mol.getBondOrderSum(atom);
+			atom.setHydrogenCount(4 - bondCount - (int)atom.getCharge());
+			if (standAlone) System.out.println("Hydrogen count for atom " + f + ": " + atom.getHydrogenCount());
+		}
+	}
+
+	
 	private void display(Molecule molecule)
 	{	
 		StructureDiagramGenerator sdg = new StructureDiagramGenerator();

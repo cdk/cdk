@@ -56,9 +56,15 @@ public class FingerprinterTest extends TestCase
 		Molecule frag1 = makeFragment1();
 		Molecule frag2 = makeFragment2();
 		Molecule frag3 = makeFragment3();
+		Molecule frag4 = makeFragment4();
 		BitSet bs1 = Fingerprinter.getFingerprint(frag1);
 		BitSet bs2 = Fingerprinter.getFingerprint(frag2);
 		BitSet bs3 = Fingerprinter.getFingerprint(frag3);
+		BitSet bs4 = Fingerprinter.getFingerprint(frag4);
+		System.out.println("bs1: " + bs1);
+		System.out.println("bs2: " + bs2);
+		System.out.println("bs3: " + bs3);
+		System.out.println("bs4: " + bs4);
 		assert(Fingerprinter.isSubset(bs, bs1));
 		assert(!Fingerprinter.isSubset(bs, bs2));
 		assert(!Fingerprinter.isSubset(bs, bs3));
@@ -81,6 +87,17 @@ public class FingerprinterTest extends TestCase
 		mol.addBond(0, 4, 1); // 4
 		mol.addBond(3, 5, 1); // 5
 		mol.addBond(5, 6, 2); // 6
+		return mol;
+	}
+
+
+	public static Molecule makeFragment4()
+	{
+		Molecule mol = new Molecule();
+		mol.addAtom(new Atom("C")); // 0
+		mol.addAtom(new Atom("C")); // 1
+				
+		mol.addBond(0, 1, 1); // 1
 		return mol;
 	}
 

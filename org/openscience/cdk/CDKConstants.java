@@ -104,7 +104,8 @@ public interface CDKConstants
 	static int ISALIPHATIC = 52;
 	/** Has a chemobject been visited during a search? Flags for Structure Diagram Generation and other uses */
 	static int VISITED = 53; // Use in tree searches
-
+	/** Is a chemobject (an atom, a bond, a ring ...) part of an aromatic system? */
+	static int ISAROMATIC = 54;
 }
 
 

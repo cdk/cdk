@@ -23,8 +23,9 @@
 
 package org.openscience.cdk;
 
-import java.util.Vector;
+import java.util.*;
 import javax.vecmath.*;
+
 
 /**
  *  Implementation of a set of Rings.
@@ -32,7 +33,9 @@ import javax.vecmath.*;
  */
 public class RingSet extends Vector{
 	
-
+	public final static int LARGE_FIRST = 1;
+	public final static int SMALL_FIRST = 2;
+	
 	/**
 	 * The constructor.
 	 *
@@ -305,8 +308,11 @@ public class RingSet extends Vector{
 		return ac;
 	}
 
-
-
+	public void sort()
+	{
+		Collections.sort(this, new RingSizeComparator(LARGE_FIRST));	
+	}
+	
 	/**
 	 * Returns a sequence of string representations for all rings in the 
 	 * RingSet
@@ -323,5 +329,39 @@ public class RingSet extends Vector{
 		}
 		return ringList;
 		
+	}
+	
+	public class RingSizeComparator implements java.util.Comparator
+	{
+		int sortOrder = SMALL_FIRST;
+		
+		public RingSizeComparator(int so)
+		{
+			sortOrder = so;
+		}
+		
+		public int compare(Object o1, Object o2) throws ClassCastException
+		{
+			int s1 = ((Ring)o1).getAtomCount();
+			int s2 = ((Ring)o2).getAtomCount();
+			if (s1 == s2) return 0;
+			if (s2 > s1 && sortOrder == SMALL_FIRST)
+			{
+				return 1;
+			}
+			if (s2 > s1 && sortOrder == LARGE_FIRST)
+			{
+				return -1;
+			}
+			if (s2 < s1 && sortOrder == SMALL_FIRST)
+			{
+				return -1;
+			}
+			if (s2 < s1 && sortOrder == LARGE_FIRST)
+			{
+				return 1;
+			}
+			return 0;
+		}
 	}
 }

@@ -57,6 +57,7 @@ public class MoleculeFactory
 		mol.addBond(5, 7, 1); // 9
 		mol.addBond(7, 8, 1); // 10
 		mol.addBond(7, 9, 1); // 11
+		configureAtoms(mol);
 		return mol;
 	}
 	
@@ -297,7 +298,6 @@ public class MoleculeFactory
 
 	}
 
-
 	static Molecule makeEthylPropylPhenantren()
 	{
 		Molecule mol = new Molecule();
@@ -342,20 +342,35 @@ public class MoleculeFactory
 		mol.addBond(12, 16, 1); // 12		
 		mol.addBond(16, 17, 1); // 12
 		mol.addBond(17, 18, 1); // 12		
-		try
-		{
-			new ElementFactory().configureAtoms(mol);
-		}
-		catch(Exception exc)
-		{
-			exc.printStackTrace();
-		}
 		return mol;
 	}
 
-	
+	static Molecule makeAzulene()
+	{
+		Molecule mol = new Molecule();
+		mol.addAtom(new Atom("C")); // 0
+		mol.addAtom(new Atom("C")); // 1
+		mol.addAtom(new Atom("C")); // 2
+		mol.addAtom(new Atom("C")); // 3
+		mol.addAtom(new Atom("C")); // 4
+		mol.addAtom(new Atom("C")); // 5
+		mol.addAtom(new Atom("C")); // 6
+		mol.addAtom(new Atom("C")); // 7
+		mol.addAtom(new Atom("C")); // 8
+		mol.addAtom(new Atom("C")); // 9
 		
-	
+		mol.addBond(0, 1, 2); // 1
+		mol.addBond(1, 2, 1); // 2
+		mol.addBond(2, 3, 2); // 3
+		mol.addBond(3, 4, 1); // 4
+		mol.addBond(4, 5, 2); // 5
+		mol.addBond(5, 6, 1); // 6
+		mol.addBond(6, 7, 2); // 8
+		mol.addBond(7, 8, 1); // 9
+		mol.addBond(8, 9, 2); // 10
+		mol.addBond(9, 5, 1); // 11		
+		return mol;
+	}
 	
 	static Molecule makeSingleRing()
 	{
@@ -425,10 +440,7 @@ public class MoleculeFactory
 		mol.addBond(11, 13, 1); // 16
 		mol.addBond(4, 12, 1); // 17		
 		mol.addBond(12, 13, 1); // 18		
-		
-
-
-			
+				
 		return mol;
 	}
 
@@ -467,12 +479,29 @@ public class MoleculeFactory
 		mol.addBond(12, 13, 1); // 13
 		mol.addBond(11, 14, 1); // 14
 		
-		
-		
-			
 		return mol;
 	}
 
+	static Molecule makeBenzene()
+	{
+		Molecule mol = new Molecule();
+		mol.addAtom(new Atom("C")); // 0
+		mol.addAtom(new Atom("C")); // 1
+		mol.addAtom(new Atom("C")); // 2
+		mol.addAtom(new Atom("C")); // 3
+		mol.addAtom(new Atom("C")); // 4
+		mol.addAtom(new Atom("C")); // 5
+		
+		mol.addBond(0, 1, 1); // 1
+		mol.addBond(1, 2, 2); // 2
+		mol.addBond(2, 3, 1); // 3
+		mol.addBond(3, 4, 2); // 4
+		mol.addBond(4, 5, 1); // 5
+		mol.addBond(5, 0, 2); // 6
+		return mol;
+	}
+	
+	
 	static Molecule loadMolecule(String inFile)
 	{
 		MDLReader mr = null;
@@ -504,6 +533,17 @@ public class MoleculeFactory
 		return molecule;
 	}
 
+	private static void configureAtoms(Molecule mol)
+	{
+		try
+		{
+			new ElementFactory().configureAtoms(mol);
+		}
+		catch(Exception exc)
+		{
+			exc.printStackTrace();
+		}
+	}
 
 }
 
