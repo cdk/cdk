@@ -26,6 +26,8 @@ API changes:
 * FortranFormat moved to org.openscience.cdk.math
 * GeomertryTools.hasXDCoordinates() now accepts
   AtomContainer instead of Molecule
+* ChemObjectWriters must now also implement the 
+  method highestSupportedChemObject()
 
 20020902 Release
 ------------------------------------
