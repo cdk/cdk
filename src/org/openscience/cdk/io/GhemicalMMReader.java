@@ -3,6 +3,7 @@
  * $Date$
  * $Revision$
  *
+ * Copyright (C) 2002-2003  The Jmol Development Team
  * Copyright (C) 2003  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
@@ -12,7 +13,7 @@
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
  *
- *  This library is distributed in the hope that it will be useful,
+ * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
@@ -24,11 +25,192 @@
  */
 package org.openscience.cdk.io;
 
+import org.openscience.cdk.*;
+import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.IsotopeFactory;
+import org.openscience.cdk.exception.CDKException;
+import java.io.BufferedReader;
 import java.io.Reader;
+import java.util.StringTokenizer;
+import javax.vecmath.Point3d;
 
+/**
+ * Reads Ghemical (<a href="http://www.uku.fi/~thassine/ghemical/">
+ * http://www.uku.fi/~thassine/ghemical/</a>)
+ * molecular mechanics (*.mm1gp) files.
+ *
+ * @author Egon Willighagen <egonw@sci.kun.nl>
+ */
 public class GhemicalMMReader extends DummyReader {
 
+    private LoggingTool logger = null;
+    private BufferedReader input = null;
+
     public GhemicalMMReader(Reader input) {
+        this.logger = new LoggingTool(this.getClass().getName());
+        this.input = new BufferedReader(input);
     }
 
+    public boolean accepts(ChemObject object) {
+        if (object instanceof ChemModel) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public ChemObject read(ChemObject object) throws CDKException {
+        if (object instanceof ChemModel) {
+            return (ChemObject) readChemModel();
+        } else {
+            throw new CDKException("Only supported is ChemSequence.");
+        }
+    }
+    
+    private ChemModel readChemModel() throws CDKException {
+        ChemModel model = new ChemModel();
+        
+        int[] atoms = new int[1];
+        double[] atomxs = new double[1];
+        double[] atomys = new double[1];
+        double[] atomzs = new double[1];
+        double[] atomcharges = new double[1];
+        
+        int[] bondatomid1 = new int[1];
+        int[] bondatomid2 = new int[1];
+        int[] bondorder = new int[1];
+        
+        int numberOfAtoms = 0;
+        int numberOfBonds = 0;
+        
+        try {
+            String line = input.readLine();
+            while (line != null) {
+                StringTokenizer st = new StringTokenizer(line);
+                String command = st.nextToken();
+                if ("!Header".equals(command)) {
+                    logger.warn("Ignoring header");
+                } else if ("!Info".equals(command)) {
+                    logger.warn("Ignoring info");
+                } else if ("!Atoms".equals(command)) {
+                    // determine number of atoms to read
+                    try {
+                        numberOfAtoms = Integer.parseInt(st.nextToken());
+                        atoms = new int[numberOfAtoms];
+                        atomxs = new double[numberOfAtoms];
+                        atomys = new double[numberOfAtoms];
+                        atomzs = new double[numberOfAtoms];
+                        atomcharges = new double[numberOfAtoms];
+                        
+                        for (int i = 0; i < numberOfAtoms; i++) {
+                            line = input.readLine();
+                            StringTokenizer atomInfoFields = new StringTokenizer(line);
+                            int atomID = Integer.parseInt(atomInfoFields.nextToken());
+                            atoms[atomID] = Integer.parseInt(atomInfoFields.nextToken());
+                        }
+                    } catch (Exception exception) {
+                        logger.error("Error while reading Atoms block");
+                        logger.debug(exception);
+                    }
+                } else if ("!Bonds".equals(command)) {
+                    try {
+                        // determine number of bonds to read
+                        numberOfBonds = Integer.parseInt(st.nextToken());
+                        bondatomid1 = new int[numberOfAtoms];
+                        bondatomid2 = new int[numberOfAtoms];
+                        bondorder = new int[numberOfAtoms];
+                        
+                        for (int i = 0; i < numberOfBonds; i++) {
+                            line = input.readLine();
+                            StringTokenizer bondInfoFields = new StringTokenizer(line);
+                            bondatomid1[i] = Integer.parseInt(bondInfoFields.nextToken());
+                            bondatomid2[i] = Integer.parseInt(bondInfoFields.nextToken());
+                            String order = bondInfoFields.nextToken();
+                            if ("D".equals(order)) {
+                                bondorder[i] = 2;
+                            } else if ("S".equals(order)) {
+                                bondorder[i] = 1;
+                            } else if ("T".equals(order)) {
+                                bondorder[i] = 3;
+                            } else {
+                                // ignore order, i.e. set to single
+                                logger.warn("Unrecognized bond order, using single bond instead. Found: " + order);
+                                bondorder[i] = 1;
+                            }
+                        }
+                    } catch (Exception exception) {
+                        logger.error("Error while reading Bonds block");
+                        logger.debug(exception);
+                    }
+                } else if ("!Coord".equals(command)) {
+                    try {
+                        for (int i = 0; i < numberOfAtoms; i++) {
+                            line = input.readLine();
+                            StringTokenizer atomInfoFields = new StringTokenizer(line);
+                            int atomID = Integer.parseInt(atomInfoFields.nextToken());
+                            double x = Double.valueOf(atomInfoFields.nextToken()).doubleValue();
+                            double y = Double.valueOf(atomInfoFields.nextToken()).doubleValue();
+                            double z = Double.valueOf(atomInfoFields.nextToken()).doubleValue();
+                            atomxs[atomID] = x * 10;    // convert to Angstrom
+                            atomys[atomID] = y * 10;
+                            atomzs[atomID] = z * 10;
+                        }
+                    } catch (Exception exception) {
+                        logger.error("Error while reading Coord block");
+                        logger.debug(exception);
+                    }
+                } else if ("!Charges".equals(command)) {
+                    try {
+                        for (int i = 0; i < numberOfAtoms; i++) {
+                            line = input.readLine();
+                            StringTokenizer atomInfoFields = new StringTokenizer(line);
+                            int atomID = Integer.parseInt(atomInfoFields.nextToken());
+                            double charge = Double.valueOf(atomInfoFields.nextToken()).doubleValue();
+                            atomxs[atomID] = charge;
+                        }
+                    } catch (Exception exception) {
+                        logger.error("Error while reading Charges block");
+                        logger.debug(exception);
+                    }
+                } else if ("!End".equals(command)) {
+                    // Store atoms
+                    AtomContainer container = new AtomContainer();
+                    for (int i = 0; i < numberOfAtoms; i++) {
+                        try {
+                            Element element = IsotopeFactory.getInstance().getElement(atoms[i]);
+                            Atom atom = new Atom(element.getSymbol());
+                            atom.setPoint3D(new Point3d(atomxs[i], atomys[i], atomzs[i]));
+                            atom.setCharge(atomcharges[i]);
+                            container.addAtom(atom);
+                        } catch (Exception exception) {
+                            logger.error("Cannot create an atom with atomic number: " + atoms[i]);
+                            logger.debug(exception);
+                        }
+                    }
+                    
+                    // Store bonds
+                    for (int i = 0; i < numberOfBonds; i++) {
+                        container.addBond(bondatomid1[i], bondatomid2[i], bondorder[i]);
+                    }
+                    
+                    SetOfMolecules moleculeSet = new SetOfMolecules();
+                    moleculeSet.addMolecule(new Molecule(container));
+                    model.setSetOfMolecules(moleculeSet);
+                    
+                    return model;
+                } else {
+                    logger.warn("Skipping line: " + line);
+                }
+                
+                line = input.readLine();
+            }
+        } catch (Exception exception) {
+            logger.error("Error while reading file");
+            logger.debug(exception);
+        }
+        
+        // this should not happen, file is lacking !End command
+        return null;
+        
+    }
 }
