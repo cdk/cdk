@@ -128,6 +128,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
     private StringIOSetting namespacePrefix;
     private BooleanIOSetting schemaInstanceOutput;
     private StringIOSetting instanceLocation;
+    private BooleanIOSetting indent;
     
     private boolean done;
     private boolean fragment;
@@ -229,6 +230,8 @@ public class CMLWriter extends DefaultChemObjectWriter {
           if (fragment || !xmlDecl.isSet()) {
             transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
           }
+          if(indent.isSet())
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
           DOMSource source = new DOMSource(cmldoc);
           StreamResult result = new StreamResult(output);
           transformer.transform(source, result);
@@ -266,6 +269,9 @@ public class CMLWriter extends DefaultChemObjectWriter {
           "Where is the schema found?",
           "");
 
+        indent = new BooleanIOSetting("Indenting", IOSetting.LOW,
+          "Should the output be indented?", 
+          "false");
     }
     
     private void customizeJob() {
@@ -279,16 +285,18 @@ public class CMLWriter extends DefaultChemObjectWriter {
         if (schemaInstanceOutput.isSet()) {
             fireIOSettingQuestion(instanceLocation);
         }
+        fireIOSettingQuestion(indent);
     }
 
     public IOSetting[] getIOSettings() {
-        IOSetting[] settings = new IOSetting[6];
+        IOSetting[] settings = new IOSetting[7];
         settings[0] = xmlDecl;
         settings[1] = cmlIds;
         settings[2] = namespacedOutput;
         settings[3] = namespacePrefix;
         settings[4] = schemaInstanceOutput;
         settings[5] = instanceLocation;
+        settings[6] = indent;
         return settings;
     }
     
