@@ -221,6 +221,20 @@ public class SmilesParserTest extends TestCase
         }
     }
     
+    public void testUnkownAtomType() {
+        try {
+            String smiles = "*C";
+            SmilesParser sp = new SmilesParser();
+            Molecule mol = sp.parseSmiles(smiles);
+            assertEquals(2, mol.getAtomCount());
+            assertEquals(1, mol.getBondCount());
+            assertTrue(mol.getAtomAt(0) instanceof PseudoAtom);
+            assertFalse(mol.getAtomAt(1) instanceof PseudoAtom);
+        } catch (Exception e) {
+            fail(e.toString());
+        }
+    }
+    
 	public static void main(String[] args)
 	{
 		SmilesParserTest spt = new SmilesParserTest("SmilesParserTest");

@@ -126,18 +126,24 @@ public class SmilesParser
 				{
 					logger.debug("Lastnode: " + lastNode.hashCode());
 				}
-				if ((mychar >= 'A' && mychar <= 'Z') || (mychar >= 'a' && mychar <= 'z'))
+				if ((mychar >= 'A' && mychar <= 'Z') || (mychar >= 'a' && mychar <= 'z') ||
+                    (mychar == '*'))
 				{
-					currentSymbol = getElementSymbol(smiles, position);
-					if (bondStatus == CDKConstants.BONDORDER_AROMATIC && !(mychar == 'c' || mychar == 'n' || mychar == 's' || mychar == 'o'))
-					{
-						bondStatus = CDKConstants.BONDORDER_SINGLE;
-					}
-					atom = new Atom(currentSymbol);
-                    if (currentSymbol.length() == 1) {
-                        if (!(currentSymbol.toUpperCase()).equals(currentSymbol)) {
-                            atom.setFlag(CDKConstants.ISAROMATIC, true);
-                            atom.setSymbol(currentSymbol.toUpperCase());
+                    if (mychar == '*') {
+                        currentSymbol = "*";
+                        atom = new PseudoAtom("*");
+                    } else {
+                        currentSymbol = getElementSymbol(smiles, position);
+                        if (bondStatus == CDKConstants.BONDORDER_AROMATIC && !(mychar == 'c' || mychar == 'n' || mychar == 's' || mychar == 'o'))
+                        {
+                            bondStatus = CDKConstants.BONDORDER_SINGLE;
+                        }
+                        atom = new Atom(currentSymbol);
+                        if (currentSymbol.length() == 1) {
+                            if (!(currentSymbol.toUpperCase()).equals(currentSymbol)) {
+                                atom.setFlag(CDKConstants.ISAROMATIC, true);
+                                atom.setSymbol(currentSymbol.toUpperCase());
+                            }
                         }
                     }
 
@@ -148,7 +154,7 @@ public class SmilesParser
 						bond = new Bond(atom, lastNode, bondStatus);
 						if (bondStatus == CDKConstants.BONDORDER_AROMATIC) {
 							bond.setFlag(CDKConstants.ISAROMATIC, true);
-		    				}
+                        }
 						molecule.addBond(bond);
 					}
 					bondStatus = CDKConstants.BONDORDER_SINGLE;
