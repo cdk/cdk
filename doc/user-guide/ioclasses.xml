@@ -84,10 +84,10 @@ reader.addReaderListener(listener);
     <section>
       <title>Writing new IO classes</title>
       <para>
-        CDK IO classes must implement the &io.CDKObjectIO; which is automatically
+        CDK IO classes must implement the &io.ChemObjectIO; interface which is automatically
         done when the &io.ChemObjectReader; or the &io.ChemObjectWriter; is
-        extended. The latter two are the interfaces that the CDK readers and
-        writers must implement. The CDKObjectIO interface ensures that common
+        implemented. The latter two are the interfaces that the CDK readers and
+        writers must implement. The ChemObjectIO interface ensures that common
         functionality is implemented, while the other two define reader and writer
         specific methods.
       </para>

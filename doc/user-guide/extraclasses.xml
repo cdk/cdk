@@ -2,17 +2,18 @@
     <title>Extra Classes</title>
 
     <section> 
-      <title>The Tools Classes</title> 
+      <title>The Tools</title> 
       <para>
-        The tools classes are located in the org.openscience.cdk.tools package. 
-        This package contains everything for which the creation of an own subpackage 
+        The tools classes are located in the org.openscience.cdk.tools and a few
+        other packages. 
+        The tools package contains everything for which the creation of an own subpackage 
         could not be justified. Some of them might be moved to their own subpackages later
         as soon as more classes acting in this particular field have been created. 
-        Currently, the tools package contains:
+        Often used tools are:
         <itemizedlist>
            <listitem>
              <para>
-               &tools.AtomTypeFactory;, a class generating
+               &config.AtomTypeFactory;, a class generating
                AtomContraints containing informations like maximum
                allowed bond orders for certain chemical elements. Those
                AtomConstraints are used for example in structure
@@ -21,7 +22,7 @@
            </listitem>
            <listitem>
              <para>
-               &tools.ConnectivityChecker;, a class that checks if an
+               &graph.ConnectivityChecker;, a class that checks if an
                AtomContainer is connected, that is if there is a path
                from each atom to each other atom in the molecule. The
                class also has a method for partitioning an
@@ -40,7 +41,7 @@
            </listitem>
            <listitem>
              <para>
-               &tools.IsotopeFactory;, produces Isotopes for a given ElementSymbol, based on 
+               &config.IsotopeFactory;, produces Isotopes for a given ElementSymbol, based on 
                an XML configuration file in org/openscience/cdk/config
              </para>
            </listitem>
