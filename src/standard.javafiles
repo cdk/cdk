@@ -1,5 +1,7 @@
 org/openscience/cdk/tools/LoggingTool.java
 org/openscience/cdk/tools/IsotopeFactory.java
+org/openscience/cdk/tools/isotopes/IsotopeReader.java
+org/openscience/cdk/tools/isotopes/IsotopeHandler.java
 org/openscience/cdk/tools/AtomTypeFactory.java
 org/openscience/cdk/tools/AtomTypeConfigurator.java
 org/openscience/cdk/tools/JSXBasedAtomTypeConfigurator.java

@@ -36,7 +36,6 @@ import org.xml.sax.helpers.*;
 public class IsotopeHandler extends DefaultHandler {
 
     private LoggingTool logger;
-    private Isotope isotope;
     private String currentChars;
     private Vector isotopes;
 
@@ -75,12 +74,29 @@ public class IsotopeHandler extends DefaultHandler {
         logger.debug("uri: " + uri);
         logger.debug("local: " + local);
         logger.debug("raw: " + raw);
-        if ("IChI".equals(local)) {
+        if ("org.openscience.cdk.Isotope".equals(local)) {
             // check version
+            Isotope isotope = new Isotope("R");
             for (int i = 0; i < atts.getLength(); i++) {
-                if (atts.getQName(i).equals("version"))
-                    logger.info("IChI version: " + atts.getValue(i));
+                try {
+                    if ("symbol".equals(atts.getQName(i))) {
+                        isotope.setSymbol(atts.getValue(i));
+                    } else if ("atomicNumber".equals(atts.getQName(i))) {
+                        isotope.setAtomicNumber(Integer.parseInt(atts.getValue(i)));
+                    } else if ("atomicMass".equals(atts.getQName(i))) {
+                        isotope.setAtomicMass(Integer.parseInt(atts.getValue(i)));
+                    } else if ("exactMass".equals(atts.getQName(i))) {
+                        isotope.setExactMass(Double.parseDouble(atts.getValue(i)));
+                    } else if ("naturalAbundance".equals(atts.getQName(i))) {
+                        isotope.setNaturalAbundance(Double.parseDouble(atts.getValue(i)));
+                    }
+                } catch (NumberFormatException exception) {
+                    logger.error("Value of Isotope@" + atts.getQName(i) +
+                        " is not as expected.");
+                    logger.debug(exception);
+                }
             }
+            isotopes.addElement(isotope);
         }
     }
 

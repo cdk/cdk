@@ -27,12 +27,12 @@ package org.openscience.cdk.tools;
 import java.util.*;
 import java.io.*;
 import org.openscience.cdk.*;
+import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.isotopes.*;
 
 import org.xml.sax.*;
 import javax.xml.parsers.*;
 import org.w3c.dom.*;
-
-import JSX.*;
 
 /**
  * Used to store and return data of a particular isotope. As this class is a
@@ -65,7 +65,7 @@ public class IsotopeFactory
 	private Vector isotopes = null;
     private Hashtable majorIsotopes = null;
 
-    private org.openscience.cdk.tools.LoggingTool logger;
+    private LoggingTool logger;
 
 	/**
 	 *  Private constructor for the IsotopeFactory object
@@ -79,10 +79,11 @@ public class IsotopeFactory
 	private IsotopeFactory() throws IOException, OptionalDataException,
 			ClassNotFoundException
 	{
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        logger = new LoggingTool(this.getClass().getName());
+        logger.info("Creating new IsotopeFactory");
 
 		InputStream ins = null;
-		ObjIn in = null;
+        // ObjIn in = null;
         String errorMessage = "There was a problem getting org.openscience.cdk." +
                               "config.isotopes.xml as a stream";
 		try {
@@ -97,8 +98,10 @@ public class IsotopeFactory
             logger.error(errorMessage);
 			throw new IOException(errorMessage);
 		}
-		in = new ObjIn(ins, new Config().aliasID(false));
-		isotopes = (Vector) in.readObject();
+        IsotopeReader reader = new IsotopeReader(new InputStreamReader(ins));
+        //in = new ObjIn(ins, new Config().aliasID(false));
+        //isotopes = (Vector) in.readObject();
+        isotopes = reader.readIsotopes();
         logger.debug("Found #isotopes in file: " + isotopes.size());
 		for (int f = 0; f < isotopes.size(); f++) {
             Isotope isotope = (Isotope)isotopes.elementAt(f);
@@ -121,11 +124,10 @@ public class IsotopeFactory
 	public static IsotopeFactory getInstance()
 			 throws IOException, OptionalDataException, ClassNotFoundException
 	{
-		if (ifac == null)
-		{
-			ifac = new IsotopeFactory();
-		}
-		return ifac;
+        if (ifac == null) {
+            ifac = new IsotopeFactory();
+        }
+        return ifac;
 	}
 
 
