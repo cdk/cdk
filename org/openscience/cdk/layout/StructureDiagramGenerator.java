@@ -30,6 +30,7 @@ package org.openscience.cdk.layout;
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.ringsearch.*;
+import org.openscience.cdk.geometry.*;
 import javax.vecmath.*;
 import java.util.Vector;
 import java.lang.Math;
@@ -97,6 +98,8 @@ public class StructureDiagramGenerator
 	private void handleRings()
 	{
 		RingSet rs;
+		AtomContainer sharedAtoms;
+		Bond bond;
 		sssr = sssrf.findSSSR(molecule);
 		if (debug) System.out.println("StructureDiagramGenerator -> handleRings -> sssr.size(): " + sssr.size());
 		Vector ringSystems = RingPartitioner.partitionRings(sssr);
@@ -107,7 +110,12 @@ public class StructureDiagramGenerator
 			Ring ring = rs.getMostComplexRing();
 			/* Place the most complex ring at the origin of the coordinate system */
 			placeFirstBondOfFirstRing(ring, new Vector2d(0, 1));
-			RingPlacer.placeRing(ring, ring.getBondAt(0), getRingCenterOfFirstRing(ring), bondLength);
+			sharedAtoms = new AtomContainer();
+			bond = ring.getBondAt(0);
+			sharedAtoms.addBond(bond);
+			sharedAtoms.addAtom(bond.getAtomAt(0));
+			sharedAtoms.addAtom(bond.getAtomAt(1));			
+			RingPlacer.placeRing(ring, sharedAtoms, sharedAtoms.get2DCenter(), getRingCenterOfFirstRing(ring), bondLength);
 			ring.flags[RingPlacer.ISPLACED] = true;
 			placeConnectedRings(rs, ring);
 		}
@@ -140,9 +148,10 @@ public class StructureDiagramGenerator
 	{
 		Vector connectedRings = rs.getConnectedRings(ring);
 		Ring connectedRing;
-		Vector fusionBonds;
-		Point2d oldRingCenter, newRingCenter, bondCenter;
-		Vector2d tempVector;
+		AtomContainer sharedAtoms;
+		Point2d oldRingCenter, newRingCenter, sharedAtomsCenter, tempPoint;
+		Vector2d tempVector, oldRingCenterVector, newRingCenterVector;
+		double newRingPerpendicular; // the line that sits perpendicular to a bond in a ring and points to the ringcenter
 		Bond bond;
 		 
 		for (int i = 0; i < connectedRings.size(); i++)
@@ -150,22 +159,31 @@ public class StructureDiagramGenerator
 			connectedRing = (Ring)connectedRings.elementAt(i);
 			if (!connectedRing.flags[RingPlacer.ISPLACED])
 			{
-				bond = (Bond)ring.getSharedBonds(connectedRing).elementAt(0);
+				sharedAtoms = ring.getIntersection(connectedRing);
 				
-				if (bond != null)
+				if (sharedAtoms.getAtomCount() > 0)
 				{
-					bondCenter = bond.get2DCenter();
+					sharedAtomsCenter = sharedAtoms.get2DCenter();
+					if (debug) molecule.addAtom(new Atom(new Element("B"), new Point2d(sharedAtomsCenter)));
 					oldRingCenter = ring.get2DCenter();
-	//				molecule.addAtom(new Atom(new Element("O"), new Point2d(oldRingCenter)));			
-					tempVector = (new Vector2d(bondCenter));
-					tempVector.sub(new Vector2d(oldRingCenter));
-	//				if (debug) System.out.println("placeConnectedRing -> tempVector: " + tempVector + ", tempVector.length: " + tempVector.length());
-					newRingCenter = new Point2d(bondCenter);
-	//				if (debug) System.out.println("placeConnectedRing -> bondCenter: " + bondCenter);			
-	//				molecule.addAtom(new Atom(new Element("B"), new Point2d(bondCenter)));
-					newRingCenter.add(tempVector);
-	//				molecule.addAtom(new Atom(new Element("N"), new Point2d(newRingCenter)));
-					RingPlacer.placeRing(connectedRing, bond, new Vector2d(tempVector), bondLength);
+					if (debug) molecule.addAtom(new Atom(new Element("O"), new Point2d(oldRingCenter)));
+					tempVector = (new Vector2d(sharedAtomsCenter));
+					newRingCenterVector = new Vector2d(tempVector);
+					newRingCenterVector.sub(new Vector2d(oldRingCenter));
+					oldRingCenterVector = new Vector2d(newRingCenterVector);
+
+					if (debug) System.out.println("placeConnectedRing -> tempVector: " + tempVector + ", tempVector.length: " + tempVector.length());
+					if (debug) System.out.println("placeConnectedRing -> bondCenter: " + sharedAtomsCenter);
+					if (debug) System.out.println("placeConnectedRing -> oldRingCenterVector.length(): " + oldRingCenterVector.length());
+					if (debug) System.out.println("getNativRingRadius: " + getNativeRingRadius(connectedRing, bondLength));
+					newRingPerpendicular = Math.sqrt(Math.pow(getNativeRingRadius(connectedRing, bondLength), 2) - Math.pow(bondLength/2, 2));
+					newRingCenterVector.scale(newRingPerpendicular/oldRingCenterVector.length());
+					if (debug) System.out.println("placeConnectedRing -> newRingPerpendicular: " + newRingPerpendicular);
+					if (debug) System.out.println("placeConnectedRing -> newRingCenterVector.length(): " + newRingCenterVector.length());					
+					tempPoint = new Point2d(sharedAtomsCenter);
+					tempPoint.add(newRingCenterVector);
+					if (debug) molecule.addAtom(new Atom(new Element("N"), tempPoint));
+					RingPlacer.placeRing(connectedRing, sharedAtoms, sharedAtomsCenter, newRingCenterVector, bondLength);
 					connectedRing.flags[RingPlacer.ISPLACED] = true;
 					placeConnectedRings(rs, connectedRing);
 				}
@@ -193,5 +211,14 @@ public class StructureDiagramGenerator
 			((Ring)rs.elementAt(f)).flags[RingPlacer.ISPLACED] = false;
 		}
 	}
+	
+	public double getNativeRingRadius(Ring ring, double bondLength)
+	{
+		int size = ring.getAtomCount();
+		double angle = 2 * Math.PI / size;
+		double ringRadius = bondLength / (2 * Math.sin(angle/2));
+		return ringRadius;
+	}
+	
 
 }

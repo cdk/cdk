@@ -29,7 +29,7 @@ import org.openscience.cdk.renderer.*;
 import org.openscience.cdk.ringsearch.*;
 import org.openscience.cdk.io.*;
 import org.openscience.cdk.tools.*;
-import org.openscience.cdk.layout.*;
+import org.openscience.cdk.geometry.*;
 import java.util.*;
 import java.io.*;
 import java.net.URL;
@@ -66,9 +66,9 @@ public class Renderer2DTest extends JPanel
 			chemModel = chemSequence.getChemModel(0);
 			setOfMolecules = chemModel.getSetOfMolecules(0);
 			molecule = setOfMolecules.getMolecule(0);
-			LayoutTools.translateAllPositive(molecule);
-			LayoutTools.scaleMolecule(molecule, getPreferredSize(), 0.8);			
-			LayoutTools.center(molecule, getPreferredSize());
+			GeometryTools.translateAllPositive(molecule);
+			GeometryTools.scaleMolecule(molecule, getPreferredSize(), 0.8);			
+			GeometryTools.center(molecule, getPreferredSize());
 		}
 		catch(Exception exc)
 		{

@@ -30,6 +30,7 @@ package org.openscience.cdk.geometry;
 import javax.vecmath.*;
 import org.openscience.cdk.*;
 import java.awt.Dimension;
+import java.util.Vector;
 
 public class GeometryTools
 {
@@ -155,6 +156,19 @@ public class GeometryTools
 		int transX = (int)((areaDim.width - molDim.width) / 2);
 		int transY = (int)((areaDim.height - molDim.height) / 2);
 		translate2D(molecule, new Vector2d(transX, transY));
+	}
+	
+	public static Point2d get2DCenter(Vector atoms)
+	{
+		Atom atom; 
+		double x = 0, y = 0;
+		for (int f = 0; f < atoms.size(); f++)
+		{
+			atom = (Atom)atoms.elementAt(f);
+			x += atom.getX2D();
+			y += atom.getY2D();						
+		}
+		return new Point2d(x/(double)atoms.size(), y/(double)atoms.size());
 	}
 	
 }

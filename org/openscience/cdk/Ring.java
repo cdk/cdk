@@ -64,62 +64,6 @@ public class Ring extends AtomContainer
 		return this.atomCount;
 	}
 	
-	
-
-	/**
-	 * Returns the geometric center of the bond
-	 *
-	 * @return the geometric center of the bond    
-	 */
-	public Point2d get2DCenter()
-	{
-		double centerX = 0, centerY = 0;
-		for (int i = 0; i < getAtomCount(); i++)
-		{
-			centerX += atoms[i].getPoint2D().x;
-			centerY += atoms[i].getPoint2D().y;
-		}
-		Point2d point = new Point2d(centerX / ((double)atomCount), centerY / ((double)atomCount));
-		return point;
-	}
-	
-
-	/**
-	 * True, if the ring contains the given bond object
-	 *
-	 * @param   bond  the bond this ring is searched for
-	 * @return  True, if the ring contains the given bond object   
-	 */
-	public boolean contains(Bond bond)
-	{
-		for (int i = 0; i < getBondCount(); i++)
-		{
-			if (bond == bonds[i])
-			{
-				return true;
-			}
-		}
-		return false;
-	}
-
-	/**
-	 * True, if the ring contains the given atom object
-	 *
-	 * @param   atom  the atom this ring is searched for
-	 * @return  True, if the ring contains the given atom object   
-	 */
-	public boolean contains(Atom atom)
-	{
-		for (int i = 0; i < getAtomCount(); i++)
-		{
-			if (atom == atoms[i])
-			{
-				return true;
-			}
-		}
-		return false;
-	}
-	
 
 	/**
 	 * Returns the next bond in order, relative to a given bond and atom.
@@ -186,6 +130,7 @@ public class Ring extends AtomContainer
 		}
 		return sharedBonds;
 	}
+
 
 	/**
 	 * Returns the sum of all bond orders in the ring
