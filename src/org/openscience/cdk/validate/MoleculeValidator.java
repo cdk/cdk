@@ -42,6 +42,11 @@ public class MoleculeValidator {
     public static Vector validate(Molecule molecule) {
         Vector errors = new Vector();
         Atom[] atoms = molecule.getAtoms();
+        if (atoms.length < 1) {
+            errors.add(
+              new ValidationWarning(molecule, "Molecule does not contain any atom")
+            );
+        }
         for (int i=0; i<atoms.length; i++) {
             errors.addAll(validateAtomValency(atoms[i], molecule));
         }
