@@ -71,4 +71,13 @@ public class RingTest extends TestCase {
         Ring r = new Ring(5, "C");
         assertEquals(5, r.getRingSize());
     }
+    
+    public void testToString() {
+        Ring ring = new Ring(5, "C");
+        String description = ring.toString();
+        for (int i=0; i< description.length(); i++) {
+            assertTrue(description.charAt(i) != '\n');
+            assertTrue(description.charAt(i) != '\r');
+        }
+    }
 }
