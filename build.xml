@@ -291,8 +291,6 @@
                     <include name="org/openscience/cdk/io/**/*"/>
                     <include name="org/openscience/cdk/ChemFile.java"/>
                     <include name="org/openscience/cdk/exception/UnsupportedChemObjectException.java"/>
-                    <exclude name="org/openscience/cdk/io/MACiEReader.java"/>
-                    <exclude name="org/openscience/cdk/io/SVGWriter.java"/>
 
                     <classpath refid="project.class.path" />
                     <classpath>
