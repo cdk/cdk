@@ -123,6 +123,15 @@ public class CDKPluginManager {
                 }
                 pluginMenu.add(customPluginMenu);
             }
+
+            // add menu with plugin info
+            pluginMenu.addSeparator();
+            JMenu aboutMenu = new JMenu("About");
+            JMenuItem versionMenuItem = new JMenuItem("v. " + plugin.getPluginVersion());
+            versionMenuItem.setEnabled(false);
+            aboutMenu.add(versionMenuItem);
+            pluginMenu.add(aboutMenu);
+
             menu.add(pluginMenu);
         }
         return menu;
