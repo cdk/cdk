@@ -41,6 +41,7 @@ import org.openscience.cdk.test.layout.HydrogenPlacerTest;
 import org.openscience.cdk.test.layout.StructureDiagramGeneratorTest;
 import org.openscience.cdk.test.layout.OverlapResolverTest;
 import org.openscience.cdk.test.layout.TemplateHandlerTest;
+import org.openscience.cdk.test.math.MathToolsTest;
 import org.openscience.cdk.test.reaction.ReactionBalancerTest;
 import org.openscience.cdk.test.ringsearch.AllRingsFinderTest;
 import org.openscience.cdk.test.ringsearch.RingSearchTest;
@@ -77,55 +78,52 @@ public class CDKTests
         // Individual Tests
         suite.addTest(ChemFileTest.suite());
         suite.addTest(PathLengthTest.suite());
-        // cdk.test.graph
-        suite.addTest(GraphTests.suite());
-        //from cdk.test.applications
+        // from cdk.test.applications
         suite.addTest(APIVersionTesterTest.suite());
-        //from cdk.test.ringsearch
-        suite.addTest(AllRingsFinderTest.suite());
-        suite.addTest(RingSearchTest.suite());
-        // cdk.test.fingerprint
+        // from cdk.test.aromaticity
+        suite.addTest(HueckelAromaticityDetectorTest.suite());
+        // from cdk.test.charges
+        suite.addTest(GasteigerMarsiliPartialChargesTest.suite());
+        // from cdk.test.fingerprint
         suite.addTest(FingerprinterTest.suite());
-        // from cdk.test.layout.*
-        suite.addTest(StructureDiagramGeneratorTest.suite());
-        suite.addTest(HydrogenPlacerTest.suite());
-        suite.addTest(OverlapResolverTest.suite());
-        suite.addTest(TemplateHandlerTest.suite());
-        // from cdk.test.smiles
-        suite.addTest(SmilesGeneratorTest.suite());
-        suite.addTest(SmilesParserTest.suite());
         // from cdk.test.geometry
         suite.addTest(GeometryToolsTest.suite());
         suite.addTest(CrystalGeometryToolsTest.suite());
+        // from cdk.test.graph
+        suite.addTest(GraphTests.suite());
         // from cdk.test.index
         suite.addTest(CASNumberTest.suite());
         // from cdk.test.isomorphism
         suite.addTest(IsomorphismTests.suite());
-        // from cdk.test.aromaticity
-        suite.addTest(HueckelAromaticityDetectorTest.suite());
-        // from cdk.test.structgen
-        suite.addTest(RandomStructureGeneratorTest.suite());
-        // from cdk.test.reaction
-        suite.addTest(ReactionBalancerTest.suite());
-        // from cdk.test.charges
-        suite.addTest(GasteigerMarsiliPartialChargesTest.suite());
+        // from cdk.test.layout
+        suite.addTest(StructureDiagramGeneratorTest.suite());
+        suite.addTest(HydrogenPlacerTest.suite());
+        suite.addTest(OverlapResolverTest.suite());
+        suite.addTest(TemplateHandlerTest.suite());
+        // from cdk.test.math
+        suite.addTest(MathToolsTest.suite());
         // from cdk.test.qsar
         suite.addTest(QSARDescriptorTests.suite());
+        // from cdk.test.reaction
+        suite.addTest(ReactionBalancerTest.suite());
+        // from cdk.test.ringsearch
+        suite.addTest(AllRingsFinderTest.suite());
+        suite.addTest(RingSearchTest.suite());
+        // from cdk.test.smiles
+        suite.addTest(SmilesGeneratorTest.suite());
+        suite.addTest(SmilesParserTest.suite());
+        // from cdk.test.structgen
+        suite.addTest(RandomStructureGeneratorTest.suite());
+
+        // Below are the tests that are not always possible to execute, because
+        // the class might not be compiled (depeding on Ant and Java VM versions).
+
         // from cdk.test.iupac
         try {
             Class testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.test.iupac.ParserTest");
             suite.addTest(new TestSuite(testClass));
         } catch (Exception exception) {} //ok, do without. Probably compiled with Ant < 1.6
         return suite;
-    }
-    
-    public static MoleculeListViewer getMoleculeListViewer()
-    {
-        if (moleculeListViewer == null)
-        {
-            moleculeListViewer = new MoleculeListViewer();
-        }
-        return moleculeListViewer;
     }
     
 }
