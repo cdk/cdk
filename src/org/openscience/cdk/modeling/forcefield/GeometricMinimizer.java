@@ -15,10 +15,10 @@ import org.openscience.cdk.modeling.builder3d.*;
  */
 public class GeometricMinimizer {
 
-	Hashtable mmff94ParameterSet = null;
-	int SDMaximumIteration = 0;
-	int CGMaximumIteration = 0;
-	int NRMaximumIteration = 0;
+	Hashtable PotentialParameterSet = null;
+	int SDMaximumIteration = 1000;
+	int CGMaximumIteration = 500;
+	int NRMaximumIteration = 100;
 
 	double CGconvergenceCriterion = 0.001;
 	double SDconvergenceCriterion = 0.001;
@@ -70,14 +70,28 @@ public class GeometricMinimizer {
 		ForceFieldConfigurator ffc = new ForceFieldConfigurator();
 		ffc.setForceFieldConfigurator("mmff94");
 		RingSet rs = ffc.assignAtomTyps((Molecule) molecule);
-		mmff94ParameterSet = ffc.getParameterSet();
+		PotentialParameterSet = ffc.getParameterSet();
 	}
 	
-	public Hashtable getMMFF94Tables() {
-		return mmff94ParameterSet;
+	public Hashtable getPotentialParameterSet() {
+		return PotentialParameterSet;
 	}
 
-
+	public double[] getConvergenceParametersForSDM(){
+		double[] parameters={SDMaximumIteration,SDconvergenceCriterion};
+		return parameters;
+	}
+	
+	public double[] getConvergenceParametersForCGM(){
+		double[] parameters={CGMaximumIteration,CGconvergenceCriterion};
+		return parameters;
+	}
+		
+	public double[] getConvergenceParametersForNRM(){
+		double[] parameters={NRMaximumIteration,NRconvergenceCriterion};
+		return parameters;
+	}
+	
 	public void initializeMinimizationParameters(GVector initialCoord) {
 		
 		dimension = initialCoord.getSize();
@@ -299,7 +313,6 @@ public class GeometricMinimizer {
 	public void setConvergenceParametersForCGM(int changeCGMaximumIteration, double changeCGConvergenceCriterion){
 		CGMaximumIteration = changeCGMaximumIteration;
 		CGconvergenceCriterion = changeCGConvergenceCriterion;
-		return;
 	}
 
 
