@@ -292,14 +292,14 @@ public class SSSRFinder
 				if (b != null) {
 				    ring.addBond(b);
 				} else {
-				    System.out.println("This should not happen.")
+				    System.out.println("This should not happen.");
 				} 
 			}
 			b = mol.getBond(atoms[0], atoms[atomCount - 1]);
 			if (b != null) {
 				ring.addBond(b);
 			} else {
-				System.out.println("This should not happen either.")
+				System.out.println("This should not happen either.");
 			} 
 		}
 		catch (Exception exc)
