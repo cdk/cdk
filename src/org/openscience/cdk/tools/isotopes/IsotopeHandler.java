@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2003  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sf.net
  *
@@ -83,8 +83,8 @@ public class IsotopeHandler extends DefaultHandler {
                         isotope.setSymbol(atts.getValue(i));
                     } else if ("atomicNumber".equals(atts.getQName(i))) {
                         isotope.setAtomicNumber(Integer.parseInt(atts.getValue(i)));
-                    } else if ("atomicMass".equals(atts.getQName(i))) {
-                        isotope.setAtomicMass(Integer.parseInt(atts.getValue(i)));
+                    } else if ("massNumber".equals(atts.getQName(i))) {
+                        isotope.setMassNumber(Integer.parseInt(atts.getValue(i)));
                     } else if ("exactMass".equals(atts.getQName(i))) {
                         isotope.setExactMass(Double.parseDouble(atts.getValue(i)));
                     } else if ("naturalAbundance".equals(atts.getQName(i))) {

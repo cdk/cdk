@@ -2,1711 +2,1711 @@
   <org.openscience.cdk.Isotope
    symbol="H"
    atomicNumber="1"
-   atomicMass="1"
+   massNumber="1"
    exactMass="1.00782504"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="H"
    atomicNumber="1"
-   atomicMass="2"
+   massNumber="2"
    exactMass="2.01410179"
    naturalAbundance="0.015"/>
   <org.openscience.cdk.Isotope
    symbol="D"
    atomicNumber="1"
-   atomicMass="2"
+   massNumber="2"
    exactMass="2.01410179"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="He"
    atomicNumber="2"
-   atomicMass="3"
+   massNumber="3"
    exactMass="3.01602929"
    naturalAbundance="1.0E-4"/>
   <org.openscience.cdk.Isotope
    symbol="He"
    atomicNumber="2"
-   atomicMass="4"
+   massNumber="4"
    exactMass="4.00260325"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="Li"
    atomicNumber="3"
-   atomicMass="6"
+   massNumber="6"
    exactMass="6.0151232"
    naturalAbundance="8.1081"/>
   <org.openscience.cdk.Isotope
    symbol="Li"
    atomicNumber="3"
-   atomicMass="7"
+   massNumber="7"
    exactMass="7.0160045"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="Be"
    atomicNumber="4"
-   atomicMass="9"
+   massNumber="9"
    exactMass="9.0121825"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="B"
    atomicNumber="5"
-   atomicMass="10"
+   massNumber="10"
    exactMass="10.012938"
    naturalAbundance="24.8439"/>
   <org.openscience.cdk.Isotope
    symbol="B"
    atomicNumber="5"
-   atomicMass="11"
+   massNumber="11"
    exactMass="11.0093053"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="C"
    atomicNumber="6"
-   atomicMass="12"
+   massNumber="12"
    exactMass="12.0"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="C"
    atomicNumber="6"
-   atomicMass="13"
+   massNumber="13"
    exactMass="13.0033548"
    naturalAbundance="1.1122"/>
   <org.openscience.cdk.Isotope
    symbol="N"
    atomicNumber="7"
-   atomicMass="14"
+   massNumber="14"
    exactMass="14.003074"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="N"
    atomicNumber="7"
-   atomicMass="15"
+   massNumber="15"
    exactMass="15.000109"
    naturalAbundance="0.3673"/>
   <org.openscience.cdk.Isotope
    symbol="O"
    atomicNumber="8"
-   atomicMass="16"
+   massNumber="16"
    exactMass="15.9949146"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="O"
    atomicNumber="8"
-   atomicMass="17"
+   massNumber="17"
    exactMass="16.9991306"
    naturalAbundance="0.0381"/>
   <org.openscience.cdk.Isotope
    symbol="O"
    atomicNumber="8"
-   atomicMass="18"
+   massNumber="18"
    exactMass="17.9991594"
    naturalAbundance="0.2005"/>
   <org.openscience.cdk.Isotope
    symbol="F"
    atomicNumber="9"
-   atomicMass="19"
+   massNumber="19"
    exactMass="18.9984033"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="Ne"
    atomicNumber="10"
-   atomicMass="20"
+   massNumber="20"
    exactMass="19.9924391"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="Ne"
    atomicNumber="10"
-   atomicMass="21"
+   massNumber="21"
    exactMass="20.9938453"
    naturalAbundance="0.2983"/>
   <org.openscience.cdk.Isotope
    symbol="Ne"
    atomicNumber="10"
-   atomicMass="22"
+   massNumber="22"
    exactMass="21.9913837"
    naturalAbundance="10.1867"/>
   <org.openscience.cdk.Isotope
    symbol="Na"
    atomicNumber="11"
-   atomicMass="23"
+   massNumber="23"
    exactMass="22.9897697"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="Mg"
    atomicNumber="12"
-   atomicMass="24"
+   massNumber="24"
    exactMass="23.985045"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="Mg"
    atomicNumber="12"
-   atomicMass="25"
+   massNumber="25"
    exactMass="24.9858392"
    naturalAbundance="12.6598"/>
   <org.openscience.cdk.Isotope
    symbol="Mg"
    atomicNumber="12"
-   atomicMass="26"
+   massNumber="26"
    exactMass="25.9825954"
    naturalAbundance="13.938"/>
   <org.openscience.cdk.Isotope
    symbol="Al"
    atomicNumber="13"
-   atomicMass="27"
+   massNumber="27"
    exactMass="26.9815413"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="Si"
    atomicNumber="14"
-   atomicMass="28"
+   massNumber="28"
    exactMass="27.9769284"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="Si"
    atomicNumber="14"
-   atomicMass="29"
+   massNumber="29"
    exactMass="28.9764964"
    naturalAbundance="5.0634"/>
   <org.openscience.cdk.Isotope
    symbol="Si"
    atomicNumber="14"
-   atomicMass="30"
+   massNumber="30"
    exactMass="29.9737717"
    naturalAbundance="3.3612"/>
   <org.openscience.cdk.Isotope
    symbol="P"
    atomicNumber="15"
-   atomicMass="31"
+   massNumber="31"
    exactMass="30.9737634"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="S"
    atomicNumber="16"
-   atomicMass="32"
+   massNumber="32"
    exactMass="31.9720718"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="S"
    atomicNumber="16"
-   atomicMass="33"
+   massNumber="33"
    exactMass="32.9714591"
    naturalAbundance="0.7893"/>
   <org.openscience.cdk.Isotope
    symbol="S"
    atomicNumber="16"
-   atomicMass="34"
+   massNumber="34"
    exactMass="33.9678677"
    naturalAbundance="4.4306"/>
   <org.openscience.cdk.Isotope
    symbol="S"
    atomicNumber="16"
-   atomicMass="36"
+   massNumber="36"
    exactMass="35.967079"
    naturalAbundance="0.022"/>
   <org.openscience.cdk.Isotope
    symbol="Cl"
    atomicNumber="17"
-   atomicMass="35"
+   massNumber="35"
    exactMass="34.9688527"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="Cl"
    atomicNumber="17"
-   atomicMass="37"
+   massNumber="37"
    exactMass="36.9659026"
    naturalAbundance="31.978"/>
   <org.openscience.cdk.Isotope
    symbol="Ar"
    atomicNumber="18"
-   atomicMass="36"
+   massNumber="36"
    exactMass="35.9675456"
    naturalAbundance="0.338"/>
   <org.openscience.cdk.Isotope
    symbol="Ar"
    atomicNumber="18"
-   atomicMass="38"
+   massNumber="38"
    exactMass="37.9627322"
    naturalAbundance="0.063"/>
   <org.openscience.cdk.Isotope
    symbol="Ar"
    atomicNumber="18"
-   atomicMass="40"
+   massNumber="40"
    exactMass="39.9623831"
    naturalAbundance="100.0"/>
    <org.openscience.cdk.Isotope
    symbol="K"
    atomicNumber="19"
-   atomicMass="39"
+   massNumber="39"
    exactMass="38.9637079"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="K"
    atomicNumber="19"
-   atomicMass="40"
+   massNumber="40"
    exactMass="39.9639988"
    naturalAbundance="0.013"/>
   <org.openscience.cdk.Isotope
    symbol="K"
    atomicNumber="19"
-   atomicMass="42"
+   massNumber="42"
    exactMass="40.9618254"
    naturalAbundance="7.217"/>
   <org.openscience.cdk.Isotope
    symbol="Ca"
    atomicNumber="20"
-   atomicMass="40"
+   massNumber="40"
    exactMass="39.9625907"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="Ca"
    atomicNumber="20"
-   atomicMass="42"
+   massNumber="42"
    exactMass="41.9586218"
    naturalAbundance="0.6674"/>
   <org.openscience.cdk.Isotope
    symbol="Ca"
    atomicNumber="20"
-   atomicMass="43"
+   massNumber="43"
    exactMass="42.9587704"
    naturalAbundance="0.1393"/>
   <org.openscience.cdk.Isotope
    symbol="Ca"
    atomicNumber="20"
-   atomicMass="44"
+   massNumber="44"
    exactMass="43.9554848"
    naturalAbundance="2.1518"/>
   <org.openscience.cdk.Isotope
    symbol="Ca"
    atomicNumber="20"
-   atomicMass="46"
+   massNumber="46"
    exactMass="45.953689"
    naturalAbundance="0.0041"/>
   <org.openscience.cdk.Isotope
    symbol="Ca"
    atomicNumber="20"
-   atomicMass="48"
+   massNumber="48"
    exactMass="47.952532"
    naturalAbundance="0.1929"/>
   <org.openscience.cdk.Isotope
    symbol="Sc"
    atomicNumber="21"
-   atomicMass="45"
+   massNumber="45"
    exactMass="44.9559136"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="Ti"
    atomicNumber="22"
-   atomicMass="46"
+   massNumber="46"
    exactMass="45.952633"
    naturalAbundance="10.8401"/>
   <org.openscience.cdk.Isotope
    symbol="Ti"
    atomicNumber="22"
-   atomicMass="47"
+   massNumber="47"
    exactMass="46.951765"
    naturalAbundance="9.8916"/>
   <org.openscience.cdk.Isotope
    symbol="Ti"
    atomicNumber="22"
-   atomicMass="48"
+   massNumber="48"
    exactMass="47.947947"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="Ti"
    atomicNumber="22"
-   atomicMass="49"
+   massNumber="49"
    exactMass="48.947871"
    naturalAbundance="7.4526"/>
   <org.openscience.cdk.Isotope
    symbol="Ti"
    atomicNumber="22"
-   atomicMass="50"
+   massNumber="50"
    exactMass="49.944786"
    naturalAbundance="7.3171"/>
   <org.openscience.cdk.Isotope
    symbol="V"
    atomicNumber="23"
-   atomicMass="50"
+   massNumber="50"
    exactMass="49.947161"
    naturalAbundance="0.251"/>
   <org.openscience.cdk.Isotope
    symbol="V"
    atomicNumber="23"
-   atomicMass="51"
+   massNumber="51"
    exactMass="50.943963"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="Cr"
    atomicNumber="24"
-   atomicMass="50"
+   massNumber="50"
    exactMass="49.946046"
    naturalAbundance="5.1915"/>
   <org.openscience.cdk.Isotope
    symbol="Cr"
    atomicNumber="24"
-   atomicMass="52"
+   massNumber="52"
    exactMass="51.94051"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="Cr"
    atomicNumber="24"
-   atomicMass="53"
+   massNumber="53"
    exactMass="52.940651"
    naturalAbundance="11.3379"/>
   <org.openscience.cdk.Isotope
    symbol="Cr"
    atomicNumber="24"
-   atomicMass="54"
+   massNumber="54"
    exactMass="53.938882"
    naturalAbundance="2.8166"/>
   <org.openscience.cdk.Isotope
    symbol="Mn"
    atomicNumber="25"
-   atomicMass="55"
+   massNumber="55"
    exactMass="54.938046"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="Fe"
    atomicNumber="26"
-   atomicMass="54"
+   massNumber="54"
    exactMass="53.939612"
    naturalAbundance="6.3236"/>
   <org.openscience.cdk.Isotope
    symbol="Fe"
    atomicNumber="26"
-   atomicMass="56"
+   massNumber="56"
    exactMass="55.934939"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="Fe"
    atomicNumber="26"
-   atomicMass="57"
+   massNumber="57"
    exactMass="56.935396"
    naturalAbundance="2.3986"/>
   <org.openscience.cdk.Isotope
    symbol="Fe"
    atomicNumber="26"
-   atomicMass="58"
+   massNumber="58"
    exactMass="57.933278"
    naturalAbundance="0.3053"/>
   <org.openscience.cdk.Isotope
    symbol="Co"
    atomicNumber="27"
-   atomicMass="59"
+   massNumber="59"
    exactMass="58.933198"
    naturalAbundance="100.0"/>
    <org.openscience.cdk.Isotope
    symbol="Ni"
    atomicNumber="28"
-   atomicMass="58"
+   massNumber="58"
    exactMass="57.935347"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="Ni"
    atomicNumber="28"
-   atomicMass="60"
+   massNumber="60"
    exactMass="59.930789"
    naturalAbundance="38.2305"/>
   <org.openscience.cdk.Isotope
    symbol="Ni"
    atomicNumber="28"
-   atomicMass="61"
+   massNumber="61"
    exactMass="60.931059"
    naturalAbundance="1.6552"/>
   <org.openscience.cdk.Isotope
    symbol="Ni"
    atomicNumber="28"
-   atomicMass="62"
+   massNumber="62"
    exactMass="61.928346"
    naturalAbundance="5.2585"/>
   <org.openscience.cdk.Isotope
    symbol="Ni"
    atomicNumber="28"
-   atomicMass="64"
+   massNumber="64"
    exactMass="63.927968"
    naturalAbundance="1.3329"/>
   <org.openscience.cdk.Isotope
    symbol="Cu"
    atomicNumber="29"
-   atomicMass="63"
+   massNumber="63"
    exactMass="62.9295991"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="Cu"
    atomicNumber="29"
-   atomicMass="65"
+   massNumber="65"
    exactMass="64.9277921"
    naturalAbundance="44.571"/>
   <org.openscience.cdk.Isotope
    symbol="Zn"
    atomicNumber="30"
-   atomicMass="64"
+   massNumber="64"
    exactMass="63.929145"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="Zn"
    atomicNumber="30"
-   atomicMass="66"
+   massNumber="66"
    exactMass="65.926035"
    naturalAbundance="57.4074"/>
   <org.openscience.cdk.Isotope
    symbol="Zn"
    atomicNumber="30"
-   atomicMass="67"
+   massNumber="67"
    exactMass="66.927129"
    naturalAbundance="8.4362"/>
   <org.openscience.cdk.Isotope
    symbol="Zn"
    atomicNumber="30"
-   atomicMass="68"
+   massNumber="68"
    exactMass="67.924846"
    naturalAbundance="38.6831"/>
   <org.openscience.cdk.Isotope
    symbol="Zn"
    atomicNumber="30"
-   atomicMass="70"
+   massNumber="70"
    exactMass="69.925325"
    naturalAbundance="1.2346"/>
   <org.openscience.cdk.Isotope
    symbol="Ga"
    atomicNumber="31"
-   atomicMass="69"
+   massNumber="69"
    exactMass="68.925581"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="Ga"
    atomicNumber="31"
-   atomicMass="71"
+   massNumber="71"
    exactMass="70.924701"
    naturalAbundance="66.389"/>
   <org.openscience.cdk.Isotope
    symbol="Ge"
    atomicNumber="32"
-   atomicMass="70"
+   massNumber="70"
    exactMass="69.92425"
    naturalAbundance="56.1644"/>
   <org.openscience.cdk.Isotope
    symbol="Ge"
    atomicNumber="32"
-   atomicMass="72"
+   massNumber="72"
    exactMass="71.92208"
    naturalAbundance="75.0685"/>
   <org.openscience.cdk.Isotope
    symbol="Ge"
    atomicNumber="32"
-   atomicMass="73"
+   massNumber="73"
    exactMass="72.923464"
    naturalAbundance="21.3698"/>
   <org.openscience.cdk.Isotope
    symbol="Ge"
    atomicNumber="32"
-   atomicMass="74"
+   massNumber="74"
    exactMass="73.921179"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="Ge"
    atomicNumber="32"
-   atomicMass="76"
+   massNumber="76"
    exactMass="75.921403"
    naturalAbundance="21.3698"/>
   <org.openscience.cdk.Isotope
    symbol="As"
    atomicNumber="33"
-   atomicMass="75"
+   massNumber="75"
    exactMass="74.921596"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="Se"
    atomicNumber="34"
-   atomicMass="74"
+   massNumber="74"
    exactMass="73.922477"
    naturalAbundance="1.8145"/>
   <org.openscience.cdk.Isotope
    symbol="Se"
    atomicNumber="34"
-   atomicMass="76"
+   massNumber="76"
    exactMass="75.919207"
    naturalAbundance="18.1451"/>
   <org.openscience.cdk.Isotope
    symbol="Se"
    atomicNumber="34"
-   atomicMass="77"
+   massNumber="77"
    exactMass="76.919908"
    naturalAbundance="15.3226"/>
   <org.openscience.cdk.Isotope
    symbol="Se"
    atomicNumber="34"
-   atomicMass="78"
+   massNumber="78"
    exactMass="77.917304"
    naturalAbundance="47.379"/>
   <org.openscience.cdk.Isotope
    symbol="Se"
    atomicNumber="34"
-   atomicMass="80"
+   massNumber="80"
    exactMass="79.916521"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="Se"
    atomicNumber="34"
-   atomicMass="82"
+   massNumber="82"
    exactMass="81.916709"
    naturalAbundance="18.9516"/>
    <org.openscience.cdk.Isotope
    symbol="Br"
    atomicNumber="35"
-   atomicMass="79"
+   massNumber="79"
    exactMass="78.918336"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="Br"
    atomicNumber="35"
-   atomicMass="81"
+   massNumber="81"
    exactMass="80.91629"
    naturalAbundance="97.2776"/>
   <org.openscience.cdk.Isotope
    symbol="Kr"
    atomicNumber="36"
-   atomicMass="78"
+   massNumber="78"
    exactMass="77.920397"
    naturalAbundance="0.614"/>
   <org.openscience.cdk.Isotope
    symbol="Kr"
    atomicNumber="36"
-   atomicMass="80"
+   massNumber="80"
    exactMass="79.916375"
    naturalAbundance="3.9474"/>
   <org.openscience.cdk.Isotope
    symbol="Kr"
    atomicNumber="36"
-   atomicMass="82"
+   massNumber="82"
    exactMass="81.913483"
    naturalAbundance="20.3509"/>
   <org.openscience.cdk.Isotope
    symbol="Kr"
    atomicNumber="36"
-   atomicMass="83"
+   massNumber="83"
    exactMass="82.914134"
    naturalAbundance="20.1754"/>
   <org.openscience.cdk.Isotope
    symbol="Kr"
    atomicNumber="36"
-   atomicMass="84"
+   massNumber="84"
    exactMass="83.911506"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="Kr"
    atomicNumber="36"
-   atomicMass="86"
+   massNumber="86"
    exactMass="85.910614"
    naturalAbundance="30.3509"/>
   <org.openscience.cdk.Isotope
    symbol="Rb"
    atomicNumber="37"
-   atomicMass="85"
+   massNumber="85"
    exactMass="84.9117996"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="Rb"
    atomicNumber="37"
-   atomicMass="87"
+   massNumber="87"
    exactMass="86.909184"
    naturalAbundance="38.571"/>
   <org.openscience.cdk.Isotope
    symbol="Sr"
    atomicNumber="38"
-   atomicMass="84"
+   massNumber="84"
    exactMass="83.913428"
    naturalAbundance="0.6781"/>
   <org.openscience.cdk.Isotope
    symbol="Sr"
    atomicNumber="38"
-   atomicMass="86"
+   massNumber="86"
    exactMass="85.909273"
    naturalAbundance="11.9399"/>
   <org.openscience.cdk.Isotope
    symbol="Sr"
    atomicNumber="38"
-   atomicMass="87"
+   massNumber="87"
    exactMass="86.90889"
    naturalAbundance="8.4766"/>
   <org.openscience.cdk.Isotope
    symbol="Sr"
    atomicNumber="38"
-   atomicMass="88"
+   massNumber="88"
    exactMass="87.905625"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="Y"
    atomicNumber="39"
-   atomicMass="89"
+   massNumber="89"
    exactMass="88.905856"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="Zr"
    atomicNumber="40"
-   atomicMass="90"
+   massNumber="90"
    exactMass="89.904708"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="Zr"
    atomicNumber="40"
-   atomicMass="91"
+   massNumber="91"
    exactMass="90.905644"
    naturalAbundance="21.9048"/>
   <org.openscience.cdk.Isotope
    symbol="Zr"
    atomicNumber="40"
-   atomicMass="92"
+   massNumber="92"
    exactMass="91.905039"
    naturalAbundance="33.3722"/>
   <org.openscience.cdk.Isotope
    symbol="Zr"
    atomicNumber="40"
-   atomicMass="94"
+   massNumber="94"
    exactMass="93.906319"
    naturalAbundance="33.6832"/>
   <org.openscience.cdk.Isotope
    symbol="Zr"
    atomicNumber="40"
-   atomicMass="96"
+   massNumber="96"
    exactMass="95.908272"
    naturalAbundance="5.4033"/>
   <org.openscience.cdk.Isotope
    symbol="Nb"
    atomicNumber="41"
-   atomicMass="93"
+   massNumber="93"
    exactMass="92.906378"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="Mo"
    atomicNumber="442"
-   atomicMass="92"
+   massNumber="92"
    exactMass="91.906809"
    naturalAbundance="61.5002"/>
   <org.openscience.cdk.Isotope
    symbol="Mo"
    atomicNumber="42"
-   atomicMass="94"
+   massNumber="94"
    exactMass="93.905086"
    naturalAbundance="38.334"/>
   <org.openscience.cdk.Isotope
    symbol="Mo"
    atomicNumber="42"
-   atomicMass="95"
+   massNumber="95"
    exactMass="94.905838"
    naturalAbundance="65.976"/>
   <org.openscience.cdk.Isotope
    symbol="Mo"
    atomicNumber="42"
-   atomicMass="96"
+   massNumber="96"
    exactMass="95.904676"
    naturalAbundance="69.1256"/>
   <org.openscience.cdk.Isotope
    symbol="Mo"
    atomicNumber="42"
-   atomicMass="97"
+   massNumber="97"
    exactMass="96.906018"
    naturalAbundance="39.5773"/>
   <org.openscience.cdk.Isotope
    symbol="Mo"
    atomicNumber="42"
-   atomicMass="98"
+   massNumber="98"
    exactMass="97.905405"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="Mo"
    atomicNumber="42"
-   atomicMass="100"
+   massNumber="100"
    exactMass="99.907473"
    naturalAbundance="39.9088"/>
   <org.openscience.cdk.Isotope
    symbol="Ru"
    atomicNumber="44"
-   atomicMass="96"
+   massNumber="96"
    exactMass="95.907596"
    naturalAbundance="17.4684"/>
   <org.openscience.cdk.Isotope
    symbol="Ru"
    atomicNumber="44"
-   atomicMass="98"
+   massNumber="98"
    exactMass="97.905287"
    naturalAbundance="5.9494"/>
   <org.openscience.cdk.Isotope
    symbol="Ru"
    atomicNumber="44"
-   atomicMass="99"
+   massNumber="99"
    exactMass="98.905937"
    naturalAbundance="40.1899"/>
   <org.openscience.cdk.Isotope
    symbol="Ru"
    atomicNumber="44"
-   atomicMass="100"
+   massNumber="100"
    exactMass="99.904218"
    naturalAbundance="39.8734"/>
   <org.openscience.cdk.Isotope
    symbol="Ru"
    atomicNumber="44"
-   atomicMass="101"
+   massNumber="101"
    exactMass="100.905581"
    naturalAbundance="53.7975"/>
   <org.openscience.cdk.Isotope
    symbol="Ru"
    atomicNumber="44"
-   atomicMass="102"
+   massNumber="102"
    exactMass="101.904348"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="Ru"
    atomicNumber="44"
-   atomicMass="104"
+   massNumber="104"
    exactMass="103.905422"
    naturalAbundance="59.1772"/>
   <org.openscience.cdk.Isotope
    symbol="Rh"
    atomicNumber="45"
-   atomicMass="103"
+   massNumber="103"
    exactMass="102.905503"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="Pd"
    atomicNumber="46"
-   atomicMass="102"
+   massNumber="102"
    exactMass="101.905609"
    naturalAbundance="3.7322"/>
   <org.openscience.cdk.Isotope
    symbol="Pd"
    atomicNumber="46"
-   atomicMass="104"
+   massNumber="104"
    exactMass="103.904026"
    naturalAbundance="40.7611"/>
   <org.openscience.cdk.Isotope
    symbol="Pd"
    atomicNumber="46"
-   atomicMass="105"
+   massNumber="105"
    exactMass="104.905075"
    naturalAbundance="81.7051"/>
   <org.openscience.cdk.Isotope
    symbol="Pd"
    atomicNumber="46"
-   atomicMass="106"
+   massNumber="106"
    exactMass="105.903475"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="Pd"
    atomicNumber="46"
-   atomicMass="108"
+   massNumber="108"
    exactMass="107.903894"
    naturalAbundance="96.8167"/>
   <org.openscience.cdk.Isotope
    symbol="Pd"
    atomicNumber="46"
-   atomicMass="110"
+   massNumber="110"
    exactMass="109.905169"
    naturalAbundance="42.883"/>
   <org.openscience.cdk.Isotope
    symbol="Ag"
    atomicNumber="47"
-   atomicMass="107"
+   massNumber="107"
    exactMass="106.905095"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="Ag"
    atomicNumber="47"
-   atomicMass="109"
+   massNumber="109"
    exactMass="108.904754"
    naturalAbundance="92.905"/>
   <org.openscience.cdk.Isotope
    symbol="Cd"
    atomicNumber="48"
-   atomicMass="106"
+   massNumber="106"
    exactMass="105.906461"
    naturalAbundance="4.3508"/>
   <org.openscience.cdk.Isotope
    symbol="Cd"
    atomicNumber="48"
-   atomicMass="108"
+   massNumber="108"
    exactMass="107.904186"
    naturalAbundance="3.0978"/>
   <org.openscience.cdk.Isotope
    symbol="Cd"
    atomicNumber="48"
-   atomicMass="110"
+   massNumber="110"
    exactMass="109.903007"
    naturalAbundance="43.4737"/>
   <org.openscience.cdk.Isotope
    symbol="Cd"
    atomicNumber="48"
-   atomicMass="111"
+   massNumber="111"
    exactMass="110.904182"
    naturalAbundance="44.5527"/>
   <org.openscience.cdk.Isotope
    symbol="Cd"
    atomicNumber="48"
-   atomicMass="112"
+   massNumber="112"
    exactMass="111.902761"
    naturalAbundance="83.9888"/>
   <org.openscience.cdk.Isotope
    symbol="Cd"
    atomicNumber="48"
-   atomicMass="113"
+   massNumber="113"
    exactMass="112.904401"
    naturalAbundance="42.5339"/>
   <org.openscience.cdk.Isotope
    symbol="Cd"
    atomicNumber="48"
-   atomicMass="114"
+   massNumber="114"
    exactMass="113.903361"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="Cd"
    atomicNumber="48"
-   atomicMass="116"
+   massNumber="116"
    exactMass="115.904758"
    naturalAbundance="26.0703"/>
   <org.openscience.cdk.Isotope
    symbol="In"
    atomicNumber="49"
-   atomicMass="113"
+   massNumber="113"
    exactMass="112.904056"
    naturalAbundance="4.4932"/>
   <org.openscience.cdk.Isotope
    symbol="In"
    atomicNumber="49"
-   atomicMass="115"
+   massNumber="115"
    exactMass="114.903875"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="Sn"
    atomicNumber="50"
-   atomicMass="112"
+   massNumber="112"
    exactMass="111.904823"
    naturalAbundance="3.0864"/>
   <org.openscience.cdk.Isotope
    symbol="Sn"
    atomicNumber="50"
-   atomicMass="114"
+   massNumber="114"
    exactMass="113.902781"
    naturalAbundance="2.1605"/>
   <org.openscience.cdk.Isotope
    symbol="Sn"
    atomicNumber="50"
-   atomicMass="115"
+   massNumber="115"
    exactMass="114.903344"
    naturalAbundance="1.2346"/>
   <org.openscience.cdk.Isotope
    symbol="Sn"
    atomicNumber="50"
-   atomicMass="116"
+   massNumber="116"
    exactMass="115.901744"
    naturalAbundance="45.3704"/>
   <org.openscience.cdk.Isotope
    symbol="Sn"
    atomicNumber="50"
-   atomicMass="117"
+   massNumber="117"
    exactMass="116.902954"
    naturalAbundance="23.7654"/>
   <org.openscience.cdk.Isotope
    symbol="Sn"
    atomicNumber="50"
-   atomicMass="118"
+   massNumber="118"
    exactMass="117.901607"
    naturalAbundance="75.0"/>
   <org.openscience.cdk.Isotope
    symbol="Sn"
    atomicNumber="50"
-   atomicMass="119"
+   massNumber="119"
    exactMass="118.90331"
    naturalAbundance="26.5432"/>
   <org.openscience.cdk.Isotope
    symbol="Sn"
    atomicNumber="50"
-   atomicMass="120"
+   massNumber="120"
    exactMass="119.902199"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="Sn"
    atomicNumber="50"
-   atomicMass="122"
+   massNumber="122"
    exactMass="121.90344"
    naturalAbundance="14.1975"/>
   <org.openscience.cdk.Isotope
    symbol="Sn"
    atomicNumber="50"
-   atomicMass="124"
+   massNumber="124"
    exactMass="123.905271"
    naturalAbundance="17.284"/>
   <org.openscience.cdk.Isotope
    symbol="Sb"
    atomicNumber="51"
-   atomicMass="121"
+   massNumber="121"
    exactMass="120.903824"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="Sb"
    atomicNumber="51"
-   atomicMass="123"
+   massNumber="123"
    exactMass="122.904222"
    naturalAbundance="74.5201"/>
   <org.openscience.cdk.Isotope
    symbol="Te"
    atomicNumber="52"
-   atomicMass="120"
+   massNumber="120"
    exactMass="119.904021"
    naturalAbundance="0.284"/>
   <org.openscience.cdk.Isotope
    symbol="Te"
    atomicNumber="52"
-   atomicMass="122"
+   massNumber="122"
    exactMass="121.903055"
    naturalAbundance="7.6923"/>
   <org.openscience.cdk.Isotope
    symbol="Te"
    atomicNumber="52"
-   atomicMass="123"
+   massNumber="123"
    exactMass="122.904278"
    naturalAbundance="2.6864"/>
   <org.openscience.cdk.Isotope
    symbol="Te"
    atomicNumber="52"
-   atomicMass="124"
+   massNumber="124"
    exactMass="123.902825"
    naturalAbundance="14.2485"/>
   <org.openscience.cdk.Isotope
    symbol="Te"
    atomicNumber="52"
-   atomicMass="125"
+   massNumber="125"
    exactMass="124.904435"
    naturalAbundance="21.1243"/>
   <org.openscience.cdk.Isotope
    symbol="Te"
    atomicNumber="52"
-   atomicMass="126"
+   massNumber="126"
    exactMass="125.90331"
    naturalAbundance="56.0651"/>
   <org.openscience.cdk.Isotope
    symbol="Te"
    atomicNumber="52"
-   atomicMass="128"
+   massNumber="128"
    exactMass="127.904464"
    naturalAbundance="93.7574"/>
   <org.openscience.cdk.Isotope
    symbol="Te"
    atomicNumber="52"
-   atomicMass="130"
+   massNumber="130"
    exactMass="129.906229"
    naturalAbundance="100.0"/>
    <org.openscience.cdk.Isotope
    symbol="I"
    atomicNumber="53"
-   atomicMass="127"
+   massNumber="127"
    exactMass="126.904477"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="Xe"
    atomicNumber="54"
-   atomicMass="124"
+   massNumber="124"
    exactMass="123.90612"
    naturalAbundance="0.3717"/>
   <org.openscience.cdk.Isotope
    symbol="Xe"
    atomicNumber="54"
-   atomicMass="126"
+   massNumber="126"
    exactMass="125.904281"
    naturalAbundance="0.3346"/>
   <org.openscience.cdk.Isotope
    symbol="Xe"
    atomicNumber="54"
-   atomicMass="128"
+   massNumber="128"
    exactMass="127.903531"
    naturalAbundance="7.1004"/>
   <org.openscience.cdk.Isotope
    symbol="Xe"
    atomicNumber="54"
-   atomicMass="129"
+   massNumber="129"
    exactMass="128.90478"
    naturalAbundance="98.1413"/>
   <org.openscience.cdk.Isotope
    symbol="Xe"
    atomicNumber="54"
-   atomicMass="130"
+   massNumber="130"
    exactMass="129.90351"
    naturalAbundance="15.2416"/>
   <org.openscience.cdk.Isotope
    symbol="Xe"
    atomicNumber="54"
-   atomicMass="131"
+   massNumber="131"
    exactMass="130.90508"
    naturalAbundance="78.8104"/>
   <org.openscience.cdk.Isotope
    symbol="Xe"
    atomicNumber="54"
-   atomicMass="132"
+   massNumber="132"
    exactMass="131.904148"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="Xe"
    atomicNumber="54"
-   atomicMass="134"
+   massNumber="134"
    exactMass="133.905395"
    naturalAbundance="38.6617"/>
   <org.openscience.cdk.Isotope
    symbol="Xe"
    atomicNumber="54"
-   atomicMass="136"
+   massNumber="136"
    exactMass="135.907219"
    naturalAbundance="33.0855"/>
   <org.openscience.cdk.Isotope
    symbol="Cs"
    atomicNumber="55"
-   atomicMass="133"
+   massNumber="133"
    exactMass="132.905433"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="Ba"
    atomicNumber="56"
-   atomicMass="130"
+   massNumber="130"
    exactMass="129.906277"
    naturalAbundance="0.1478"/>
   <org.openscience.cdk.Isotope
    symbol="Ba"
    atomicNumber="56"
-   atomicMass="132"
+   massNumber="132"
    exactMass="131.905042"
    naturalAbundance="0.1409"/>
   <org.openscience.cdk.Isotope
    symbol="Ba"
    atomicNumber="56"
-   atomicMass="134"
+   massNumber="134"
    exactMass="133.90449"
    naturalAbundance="3.371"/>
   <org.openscience.cdk.Isotope
    symbol="Ba"
    atomicNumber="56"
-   atomicMass="135"
+   massNumber="135"
    exactMass="134.905668"
    naturalAbundance="9.1939"/>
   <org.openscience.cdk.Isotope
    symbol="Ba"
    atomicNumber="56"
-   atomicMass="136"
+   massNumber="136"
    exactMass="135.904556"
    naturalAbundance="10.954"/>
   <org.openscience.cdk.Isotope
    symbol="Ba"
    atomicNumber="56"
-   atomicMass="137"
+   massNumber="137"
    exactMass="136.905816"
    naturalAbundance="15.6625"/>
   <org.openscience.cdk.Isotope
    symbol="Ba"
    atomicNumber="56"
-   atomicMass="138"
+   massNumber="138"
    exactMass="137.905236"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="La"
    atomicNumber="57"
-   atomicMass="138"
+   massNumber="138"
    exactMass="137.907114"
    naturalAbundance="0.0901"/>
   <org.openscience.cdk.Isotope
    symbol="La"
    atomicNumber="57"
-   atomicMass="139"
+   massNumber="139"
    exactMass="138.906355"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="Ce"
    atomicNumber="58"
-   atomicMass="136"
+   massNumber="136"
    exactMass="135.90714"
    naturalAbundance="0.2147"/>
   <org.openscience.cdk.Isotope
    symbol="Ce"
    atomicNumber="58"
-   atomicMass="138"
+   massNumber="138"
    exactMass="137.905996"
    naturalAbundance="0.2825"/>
   <org.openscience.cdk.Isotope
    symbol="Ce"
    atomicNumber="58"
-   atomicMass="140"
+   massNumber="140"
    exactMass="139.905442"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="Ce"
    atomicNumber="58"
-   atomicMass="142"
+   massNumber="142"
    exactMass="141.909249"
    naturalAbundance="12.5226"/>
   <org.openscience.cdk.Isotope
    symbol="Pr"
    atomicNumber="59"
-   atomicMass="141"
+   massNumber="141"
    exactMass="140.907657"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="Nd"
    atomicNumber="60"
-   atomicMass="142"
+   massNumber="142"
    exactMass="141.907731"
    naturalAbundance="100.0"/>
   <org.openscience.cdk.Isotope
    symbol="Nd"
    atomicNumber="60"
-   atomicMass="143"
+   massNumber="143"
    exactMass="142.909823"
    naturalAbundance="44.8949"/>
   <org.openscience.cdk.Isotope
    symbol="Nd"
    atomicNumber="60"
-   atomicMass="144"
+   massNumber="144"
    exactMass="143.910096"
    naturalAbundance="87.7258"/>
   <org.openscience.cdk.Isotope
    symbol="Nd"
    atomicNumber="60"
-   atomicMass="145"
+   massNumber="145"
    exactMass="144.912582"
    naturalAbundance="30.5934"/>
   <org.openscience.cdk.Isotope
    symbol="Nd"
    atomicNumber="60"
-   atomicMass="146"
+   massNumber="146"
    exactMass="145.913126"
    naturalAbundance="63.3616"/>
   <org.openscience.cdk.Isotope
    symbol="Nd"
    atomicNumber="60"
-   atomicMass="148"
+   massNumber="148"
    exactMass="147.916901"
    naturalAbundance="21.2311"/>
   <org.openscience.cdk.Isotope
    symbol="Nd"
    atomicNumber="60"
-   atomicMass="150"
+   massNumber="150"
    exactMass="149.9209"
    naturalAbundance="20.7888"/>
   <org.openscience.cdk.Isotope
    symbol="Sm"
    atomicNumber="62"
-   atomicMass="152"
+   massNumber="152"
    exactMass="151.919728"
    naturalAbundance="26.75"/>
   <org.openscience.cdk.Isotope
    symbol="Sm"
    atomicNumber="62"
-   atomicMass="154"
+   massNumber="154"
    exactMass="153.922205"
    naturalAbundance="22.75"/>
   <org.openscience.cdk.Isotope
    symbol="Sm"
    atomicNumber="62"
-   atomicMass="147"
+   massNumber="147"
    exactMass="146.914894"
    naturalAbundance="14.99"/>
   <org.openscience.cdk.Isotope
    symbol="Sm"
    atomicNumber="62"
-   atomicMass="149"
+   massNumber="149"
    exactMass="148.917180"
    naturalAbundance="13.82"/>
   <org.openscience.cdk.Isotope
    symbol="Sm"
    atomicNumber="62"
-   atomicMass="148"
+   massNumber="148"
    exactMass="147.914819"
    naturalAbundance="11.24"/>
   <org.openscience.cdk.Isotope
    symbol="Sm"
    atomicNumber="62"
-   atomicMass="150"
+   massNumber="150"
    exactMass="149.917273"
    naturalAbundance="7.38"/>
   <org.openscience.cdk.Isotope
    symbol="Sm"
    atomicNumber="62"
-   atomicMass="144"
+   massNumber="144"
    exactMass="143.911998"
    naturalAbundance="3.07"/>
   <org.openscience.cdk.Isotope
    symbol="Eu"
    atomicNumber="63"
-   atomicMass="153"
+   massNumber="153"
    exactMass="152.921225"
    naturalAbundance="52.19"/>
   <org.openscience.cdk.Isotope
    symbol="Eu"
    atomicNumber="63"
-   atomicMass="151"
+   massNumber="151"
    exactMass="150.919702"
    naturalAbundance="47.81"/>
   <org.openscience.cdk.Isotope
    symbol="Gd"
    atomicNumber="64"
-   atomicMass="158"
+   massNumber="158"
    exactMass="157.924019"
    naturalAbundance="24.84"/>
   <org.openscience.cdk.Isotope
    symbol="Gd"
    atomicNumber="64"
-   atomicMass="160"
+   massNumber="160"
    exactMass="159.927049"
    naturalAbundance="21.86"/>
   <org.openscience.cdk.Isotope
    symbol="Gd"
    atomicNumber="64"
-   atomicMass="156"
+   massNumber="156"
    exactMass="155.922118"
    naturalAbundance="20.47"/>
   <org.openscience.cdk.Isotope
    symbol="Gd"
    atomicNumber="64"
-   atomicMass="157"
+   massNumber="157"
    exactMass="156.923956"
    naturalAbundance="15.65"/>
   <org.openscience.cdk.Isotope
    symbol="Gd"
    atomicNumber="64"
-   atomicMass="155"
+   massNumber="155"
    exactMass="154.922618"
    naturalAbundance="14.80"/>
   <org.openscience.cdk.Isotope
    symbol="Gd"
    atomicNumber="64"
-   atomicMass="154"
+   massNumber="154"
    exactMass="153.920861"
    naturalAbundance="2.18"/>
   <org.openscience.cdk.Isotope
    symbol="Gd"
    atomicNumber="64"
-   atomicMass="152"
+   massNumber="152"
    exactMass="151.919786"
    naturalAbundance="0.20"/>
   <org.openscience.cdk.Isotope
    symbol="Tb"
    atomicNumber="65"
-   atomicMass="159"
+   massNumber="159"
    exactMass="158.925342"
    naturalAbundance="100"/>
   <org.openscience.cdk.Isotope
    symbol="Dy"
    atomicNumber="66"
-   atomicMass="164"
+   massNumber="164"
    exactMass="163.929171"
    naturalAbundance="28.18"/>
   <org.openscience.cdk.Isotope
    symbol="Dy"
    atomicNumber="66"
-   atomicMass="162"
+   massNumber="162"
    exactMass="161.926795"
    naturalAbundance="25.51"/>
   <org.openscience.cdk.Isotope
    symbol="Dy"
    atomicNumber="66"
-   atomicMass="163"
+   massNumber="163"
    exactMass="162.928728"
    naturalAbundance="24.90"/>
   <org.openscience.cdk.Isotope
    symbol="Dy"
    atomicNumber="66"
-   atomicMass="161"
+   massNumber="161"
    exactMass="160.926930"
    naturalAbundance="18.91"/>
   <org.openscience.cdk.Isotope
    symbol="Dy"
    atomicNumber="66"
-   atomicMass="160"
+   massNumber="160"
    exactMass="159.925193"
    naturalAbundance="2.34"/>
   <org.openscience.cdk.Isotope
    symbol="Dy"
    atomicNumber="66"
-   atomicMass="158"
+   massNumber="158"
    exactMass="157.924403"
    naturalAbundance="0.10"/>
   <org.openscience.cdk.Isotope
    symbol="Dy"
    atomicNumber="66"
-   atomicMass="156"
+   massNumber="156"
    exactMass="155.924277"
    naturalAbundance="0.06"/>
   <org.openscience.cdk.Isotope
    symbol="Ho"
    atomicNumber="67"
-   atomicMass="165"
+   massNumber="165"
    exactMass="164.930319"
    naturalAbundance="100"/>
   <org.openscience.cdk.Isotope
    symbol="Er"
    atomicNumber="68"
-   atomicMass="166"
+   massNumber="166"
    exactMass="165.930290"
    naturalAbundance="33.61"/>
   <org.openscience.cdk.Isotope
    symbol="Er"
    atomicNumber="68"
-   atomicMass="168"
+   massNumber="168"
    exactMass="167.932368"
    naturalAbundance="26.78"/>
   <org.openscience.cdk.Isotope
    symbol="Er"
    atomicNumber="68"
-   atomicMass="167"
+   massNumber="167"
    exactMass="166.932046"
    naturalAbundance="22.93"/>
   <org.openscience.cdk.Isotope
    symbol="Er"
    atomicNumber="68"
-   atomicMass="170"
+   massNumber="170"
    exactMass="169.935461"
    naturalAbundance="14.93"/>
   <org.openscience.cdk.Isotope
    symbol="Er"
    atomicNumber="68"
-   atomicMass="164"
+   massNumber="164"
    exactMass="163.929198"
    naturalAbundance="1.61"/>
   <org.openscience.cdk.Isotope
    symbol="Er"
    atomicNumber="68"
-   atomicMass="162"
+   massNumber="162"
    exactMass="161.928775"
    naturalAbundance="0.14"/>
   <org.openscience.cdk.Isotope
    symbol="Tm"
    atomicNumber="69"
-   atomicMass="169"
+   massNumber="169"
    exactMass="168.934212"
    naturalAbundance="100"/>
   <org.openscience.cdk.Isotope
    symbol="Yb"
    atomicNumber="70"
-   atomicMass="174"
+   massNumber="174"
    exactMass="173.938859"
    naturalAbundance="31.83"/>
   <org.openscience.cdk.Isotope
    symbol="Yb"
    atomicNumber="70"
-   atomicMass="172"
+   massNumber="172"
    exactMass="171.936378"
    naturalAbundance="21.83"/>
   <org.openscience.cdk.Isotope
    symbol="Yb"
    atomicNumber="70"
-   atomicMass="173"
+   massNumber="173"
    exactMass="172.938208"
    naturalAbundance="16.13"/>
   <org.openscience.cdk.Isotope
    symbol="Yb"
    atomicNumber="70"
-   atomicMass="171"
+   massNumber="171"
    exactMass="170.936323"
    naturalAbundance="14.28"/>
   <org.openscience.cdk.Isotope
    symbol="Yb"
    atomicNumber="70"
-   atomicMass="176"
+   massNumber="176"
    exactMass="175.942564"
    naturalAbundance="12.76"/>
   <org.openscience.cdk.Isotope
    symbol="Yb"
    atomicNumber="70"
-   atomicMass="170"
+   massNumber="170"
    exactMass="169.934759"
    naturalAbundance="3.04"/>
   <org.openscience.cdk.Isotope
    symbol="Yb"
    atomicNumber="70"
-   atomicMass="168"
+   massNumber="168"
    exactMass="167.933894"
    naturalAbundance="0.13"/>
   <org.openscience.cdk.Isotope
    symbol="Lu"
    atomicNumber="71"
-   atomicMass="175"
+   massNumber="175"
    exactMass="174.940770"
    naturalAbundance="97.41"/>
   <org.openscience.cdk.Isotope
    symbol="Lu"
    atomicNumber="71"
-   atomicMass="176"
+   massNumber="176"
    exactMass="175.942679"
    naturalAbundance="2.59"/>
   <org.openscience.cdk.Isotope
    symbol="Hf"
    atomicNumber="72"
-   atomicMass="180"
+   massNumber="180"
    exactMass="179.9465457"
    naturalAbundance="35.08"/>
   <org.openscience.cdk.Isotope
    symbol="Hf"
    atomicNumber="72"
-   atomicMass="178"
+   massNumber="178"
    exactMass="177.943696"
    naturalAbundance="27.28"/>
   <org.openscience.cdk.Isotope
    symbol="Hf"
    atomicNumber="72"
-   atomicMass="177"
+   massNumber="177"
    exactMass="176.943217"
    naturalAbundance="18.60"/>
   <org.openscience.cdk.Isotope
    symbol="Hf"
    atomicNumber="72"
-   atomicMass="179"
+   massNumber="179"
    exactMass="178.9458122"
    naturalAbundance="13.62"/>
   <org.openscience.cdk.Isotope
    symbol="Hf"
    atomicNumber="72"
-   atomicMass="176"
+   massNumber="176"
    exactMass="175.941406"
    naturalAbundance="5.26"/>
   <org.openscience.cdk.Isotope
    symbol="Hf"
    atomicNumber="72"
-   atomicMass="174"
+   massNumber="174"
    exactMass="173.940044"
    naturalAbundance="0.16"/>
   <org.openscience.cdk.Isotope
    symbol="Ta"
    atomicNumber="73"
-   atomicMass="181"
+   massNumber="181"
    exactMass="180.947992"
    naturalAbundance="99.988"/>
   <org.openscience.cdk.Isotope
    symbol="Ta"
    atomicNumber="73"
-   atomicMass="180"
+   massNumber="180"
    exactMass="179.947462"
    naturalAbundance="0.012"/>
   <org.openscience.cdk.Isotope
    symbol="W"
    atomicNumber="74"
-   atomicMass="184"
+   massNumber="184"
    exactMass="183.950928"
    naturalAbundance="30.64"/>
   <org.openscience.cdk.Isotope
    symbol="W"
    atomicNumber="74"
-   atomicMass="186"
+   massNumber="186"
    exactMass="185.954357"
    naturalAbundance="28.43"/>
   <org.openscience.cdk.Isotope
    symbol="W"
    atomicNumber="74"
-   atomicMass="182"
+   massNumber="182"
    exactMass="181.948202"
    naturalAbundance="26.50"/>
   <org.openscience.cdk.Isotope
    symbol="W"
    atomicNumber="74"
-   atomicMass="183"
+   massNumber="183"
    exactMass="182.950220"
    naturalAbundance="14.31"/>
   <org.openscience.cdk.Isotope
    symbol="W"
    atomicNumber="74"
-   atomicMass="180"
+   massNumber="180"
    exactMass="179.946701"
    naturalAbundance="0.12"/>
   <org.openscience.cdk.Isotope
    symbol="Re"
    atomicNumber="75"
-   atomicMass="187"
+   massNumber="187"
    exactMass="186.955744"
    naturalAbundance="62.60"/>
   <org.openscience.cdk.Isotope
    symbol="Re"
    atomicNumber="75"
-   atomicMass="185"
+   massNumber="185"
    exactMass="184.952951"
    naturalAbundance="37.40"/>
   <org.openscience.cdk.Isotope
    symbol="Os"
    atomicNumber="76"
-   atomicMass="192"
+   massNumber="192"
    exactMass="191.961467"
    naturalAbundance="40.78"/>
   <org.openscience.cdk.Isotope
    symbol="Os"
    atomicNumber="76"
-   atomicMass="190"
+   massNumber="190"
    exactMass="189.958436"
    naturalAbundance="26.26"/>
   <org.openscience.cdk.Isotope
    symbol="Os"
    atomicNumber="76"
-   atomicMass="189"
+   massNumber="189"
    exactMass="188.958137"
    naturalAbundance="16.15"/>
   <org.openscience.cdk.Isotope
    symbol="Os"
    atomicNumber="76"
-   atomicMass="188"
+   massNumber="188"
    exactMass="187.955830"
    naturalAbundance="13.24"/>
   <org.openscience.cdk.Isotope
    symbol="Os"
    atomicNumber="76"
-   atomicMass="187"
+   massNumber="187"
    exactMass="186.955741"
    naturalAbundance="1.96"/>
   <org.openscience.cdk.Isotope
    symbol="Os"
    atomicNumber="76"
-   atomicMass="186"
+   massNumber="186"
    exactMass="185.953830"
    naturalAbundance="1.59"/>
   <org.openscience.cdk.Isotope
    symbol="Os"
    atomicNumber="76"
-   atomicMass="184"
+   massNumber="184"
    exactMass="183.952488"
    naturalAbundance="0.02"/>
   <org.openscience.cdk.Isotope
    symbol="Ir"
    atomicNumber="77"
-   atomicMass="193"
+   massNumber="193"
    exactMass="192.962917"
    naturalAbundance="62.7"/>
   <org.openscience.cdk.Isotope
    symbol="Ir"
    atomicNumber="77"
-   atomicMass="191"
+   massNumber="191"
    exactMass="190.960584"
    naturalAbundance="37.3"/>
   <org.openscience.cdk.Isotope
    symbol="Pt"
    atomicNumber="78"
-   atomicMass="195"
+   massNumber="195"
    exactMass="194.964766"
    naturalAbundance="33.832"/>
   <org.openscience.cdk.Isotope
    symbol="Pt"
    atomicNumber="78"
-   atomicMass="194"
+   massNumber="194"
    exactMass="193.962655"
    naturalAbundance="32.967"/>
   <org.openscience.cdk.Isotope
    symbol="Pt"
    atomicNumber="78"
-   atomicMass="196"
+   massNumber="196"
    exactMass="195.964926"
    naturalAbundance="25.242"/>
   <org.openscience.cdk.Isotope
    symbol="Pt"
    atomicNumber="78"
-   atomicMass="198"
+   massNumber="198"
    exactMass="197.967869"
    naturalAbundance="7.163"/>
   <org.openscience.cdk.Isotope
    symbol="Au"
    atomicNumber="79"
-   atomicMass="197"
+   massNumber="197"
    exactMass="196.966543"
    naturalAbundance="100"/>
   <org.openscience.cdk.Isotope
    symbol="Hg"
    atomicNumber="80"
-   atomicMass="202"
+   massNumber="202"
    exactMass="201.970617"
    naturalAbundance="29.86"/>
   <org.openscience.cdk.Isotope
    symbol="Hg"
    atomicNumber="80"
-   atomicMass="200"
+   massNumber="200"
    exactMass="199.968300"
    naturalAbundance="23.10"/>
   <org.openscience.cdk.Isotope
    symbol="Hg"
    atomicNumber="80"
-   atomicMass="199"
+   massNumber="199"
    exactMass="198.968254"
    naturalAbundance="16.87"/>
   <org.openscience.cdk.Isotope
    symbol="Hg"
    atomicNumber="80"
-   atomicMass="201"
+   massNumber="201"
    exactMass="200.970277"
    naturalAbundance="13.18"/>
   <org.openscience.cdk.Isotope
    symbol="Hg"
    atomicNumber="80"
-   atomicMass="198"
+   massNumber="198"
    exactMass="197.966743"
    naturalAbundance="9.97"/>
   <org.openscience.cdk.Isotope
    symbol="Hg"
    atomicNumber="80"
-   atomicMass="204"
+   massNumber="204"
    exactMass="203.973467"
    naturalAbundance="6.87"/>
   <org.openscience.cdk.Isotope
    symbol="Hg"
    atomicNumber="80"
-   atomicMass="196"
+   massNumber="196"
    exactMass="195.965807"
    naturalAbundance="0.15"/>
   <org.openscience.cdk.Isotope
    symbol="Tl"
    atomicNumber="81"
-   atomicMass="205"
+   massNumber="205"
    exactMass="204.974401"
    naturalAbundance="70.476"/>
   <org.openscience.cdk.Isotope
    symbol="Tl"
    atomicNumber="81"
-   atomicMass="203"
+   massNumber="203"
    exactMass="202.972320"
    naturalAbundance="29.524"/>
   <org.openscience.cdk.Isotope
    symbol="Pb"
    atomicNumber="82"
-   atomicMass="208"
+   massNumber="208"
    exactMass="207.976627"
    naturalAbundance="52.4"/>
   <org.openscience.cdk.Isotope
    symbol="Pb"
    atomicNumber="82"
-   atomicMass="206"
+   massNumber="206"
    exactMass="205.974440"
    naturalAbundance="24.1"/>
   <org.openscience.cdk.Isotope
    symbol="Pb"
    atomicNumber="82"
-   atomicMass="207"
+   massNumber="207"
    exactMass="206.975872"
    naturalAbundance="22.1"/>
   <org.openscience.cdk.Isotope
    symbol="Pb"
    atomicNumber="82"
-   atomicMass="204"
+   massNumber="204"
    exactMass="203.973020"
    naturalAbundance="1.4"/>
   <org.openscience.cdk.Isotope
    symbol="Bi"
    atomicNumber="83"
-   atomicMass="209"
+   massNumber="209"
    exactMass="208.980374"
    naturalAbundance="100"/>
   <org.openscience.cdk.Isotope
    symbol="U"
    atomicNumber="92"
-   atomicMass="238"
+   massNumber="238"
    exactMass="238.0507847"
    naturalAbundance="99.2745"/>
   <org.openscience.cdk.Isotope
    symbol="U"
    atomicNumber="92"
-   atomicMass="235"
+   massNumber="235"
    exactMass="235.0439242"
    naturalAbundance="0.7200"/>
   <org.openscience.cdk.Isotope
    symbol="U"
    atomicNumber="92"
-   atomicMass="234"
+   massNumber="234"
    exactMass="234.0409468"
    naturalAbundance="0.0055"/>
 </java.util.Vector>

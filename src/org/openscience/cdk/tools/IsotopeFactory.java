@@ -1,5 +1,4 @@
-/*
- *  $RCSfile$
+/*  $RCSfile$
  *  $Author$
  *  $Date$
  *  $Revision$
@@ -286,7 +285,7 @@ public class IsotopeFactory
 	 */
 	public Atom configure(Atom atom, Isotope isotope)
 	{
-		atom.setAtomicMass(isotope.getAtomicMass());
+		atom.setMassNumber(isotope.getMassNumber());
 		atom.setSymbol(isotope.getSymbol());
 		atom.setExactMass(isotope.getExactMass());
 		atom.setAtomicNumber(isotope.getAtomicNumber());
