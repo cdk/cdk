@@ -26,6 +26,7 @@
  *  */
 package org.openscience.cdk.renderer;
 
+import java.awt.Color;
 
 
 public class Renderer2DModel
@@ -36,37 +37,121 @@ public class Renderer2DModel
 	
 	private double bondDistance = 6;
 
+	private Color backColor = Color.white;
 
+	private Color foreColor = Color.black;
 	
+
+	/**
+	 * Returns the distance between two lines in a double or triple bond
+	 *
+	 * @return     the distance between two lines in a double or triple bond
+	 */
 	public double getBondDistance()
 	{
 		return this.bondDistance;
 	}
 
+
+	/**
+	 * Sets the distance between two lines in a double or triple bond
+	 *
+	 * @param   bondDistance  the distance between two lines in a double or triple bond
+	 */
 	public void setBondDistance(double bondDistance)
 	{
 		this.bondDistance = bondDistance;
 	}
 
 	
+
+	/**
+	 * Returns the thickness of a bond line (XXX what are the dimensions? XXX)
+	 *
+	 * @return     the thickness of a bond line
+	 */
 	public double getBondWidth()
 	{
 		return this.bondWidth;
 	}
 
+
+	/**
+	 * Sets the thickness of a bond line (XXX what are the dimensions? XXX)
+	 *
+	 * @param   bondWidth  the thickness of a bond line
+	 */
 	public void setBondWidth(double bondWidth)
 	{
 		this.bondWidth = bondWidth;
 	}
 
 	
+
+	/**
+	 * A scale factor for the drawing
+	 *
+	 * @return a scale factor for the drawing
+	 */
 	public double getScaleFactor()
 	{
 		return this.scaleFactor;
 	}
 
+
+	/**
+	 * Returns the scale factor for the drawing
+	 *
+	 * @param   scaleFactor  the scale factor for the drawing
+	 */
 	public void setScaleFactor(double scaleFactor)
 	{
 		this.scaleFactor = scaleFactor;
+	}
+
+	
+
+	/**
+	 * returns the foreground color for the drawing
+	 *
+	 * @return the foreground color for the drawing    
+	 */
+	public Color getForeColor()
+	{
+		return this.foreColor;
+	}
+
+
+	/**
+	 *
+	 *
+	 * @param   foreColor  
+	 */
+	public void setForeColor(Color foreColor)
+	{
+		this.foreColor = foreColor;
+	}
+
+	
+
+	/**
+	 *
+	 *
+	 * @return     
+	 */
+	public Color getBackColor()
+	{
+		return this.backColor;
+	}
+
+
+	/**
+	 *
+	 *
+	 * @param   backColor  
+	 */
+	public void setBackColor(Color backColor)
+	{
+		this.backColor = backColor;
 	}
 }

@@ -29,6 +29,7 @@ import org.openscience.cdk.renderer.*;
 import org.openscience.cdk.ringsearch.*;
 import org.openscience.cdk.io.*;
 import org.openscience.cdk.tools.*;
+import org.openscience.cdk.layout.*;
 import java.util.*;
 import java.io.*;
 import java.net.URL;
@@ -44,35 +45,36 @@ public class Renderer2DTest extends JPanel
 	ChemModel chemModel;
 	SetOfMolecules setOfMolecules;
 	Molecule molecule;
-	
+
+	Renderer2DModel r2dm;
 	Renderer2D renderer;
 
 	public Renderer2DTest(String inFile)
 	{
+		r2dm = new Renderer2DModel();
+		renderer = new Renderer2D(r2dm);
+		setPreferredSize(new Dimension(600, 400));
+		setBackground(r2dm.getBackColor());
+	
 		try
 		{
 			FileInputStream fis = new FileInputStream(inFile);
 			mr = new MDLReader(fis);
 			chemFile = mr.readChemFile();
 			fis.close();
-			
 			chemSequence = chemFile.getChemSequence(0);
 			chemModel = chemSequence.getChemModel(0);
 			setOfMolecules = chemModel.getSetOfMolecules(0);
 			molecule = setOfMolecules.getMolecule(0);
-			Renderer2DModel r2dm = new Renderer2DModel();
-			r2dm.setScaleFactor(20);
-			renderer = new Renderer2D(r2dm);
-			renderer.scaleMolecule(molecule);			
-			renderer.translateAllPositive(molecule);
-			renderer.translate(molecule,20,20);
+			LayoutTools.translateAllPositive(molecule);
+			LayoutTools.scaleMolecule(molecule, getPreferredSize(), 0.8);			
+			LayoutTools.center(molecule, getPreferredSize());
 			
 		}
 		catch(Exception exc)
 		{
 			exc.printStackTrace();		
 		}
-		setPreferredSize(new Dimension(600, 400));
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		frame.getContentPane().add(this);
@@ -85,9 +87,6 @@ public class Renderer2DTest extends JPanel
 	{
 		renderer.paintMolecule(molecule, g);
 	}
-	
-	
-
 
 	/**
 	 * The main method.

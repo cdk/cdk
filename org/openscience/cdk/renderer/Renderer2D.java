@@ -109,11 +109,11 @@ public class Renderer2D
 		int fontSize = g.getFont().getSize();
 		int xSymbOffset = (new Integer(fm.stringWidth(atom.getElement().getSymbol())/2)).intValue();
 		int ySymbOffset = (new Integer(fm.getAscent()/2)).intValue();
-		g.setColor(Color.gray);
+		g.setColor(r2dm.getBackColor());
 		g.fillRect((int)(atom.getPoint2D().x - (xSymbOffset * 1.8)),(int)(atom.getPoint2D().y - (ySymbOffset * 0.8)),(int)fontSize,(int)fontSize); 
-		g.setColor(Color.black);
+		g.setColor(r2dm.getForeColor());
 		g.drawString(atom.getElement().getSymbol(),(int)(atom.getPoint2D().x - xSymbOffset),(int)(atom.getPoint2D().y + ySymbOffset));
-		g.setColor(Color.white);
+		g.setColor(r2dm.getBackColor());
 		g.drawLine((int)atom.getPoint2D().x,(int)atom.getPoint2D().y,(int)atom.getPoint2D().x,(int)atom.getPoint2D().y);
 	}
 
@@ -321,63 +321,4 @@ public class Renderer2D
 		return newCoords; 
 	}
 	
-	/**
-	 * Adds an automatically calculated offset to the coordinates of all atoms
-	 * such that all coordinates are positive and the smallest x or y coordinate 
-	 * is exactly zero.
-	 *
-	 * @param   molecule for which all the atoms are translated to positive coordinates
-	 */
-	public void translateAllPositive(Molecule molecule)
-	{
-		double transX = 0,transY = 0;
-		for (int i = 0; i < molecule.getAtomCount(); i++)
-		{
-			if (molecule.getAtomAt(i).getPoint2D().x < transX)
-			{
-				transX = molecule.getAtomAt(i).getPoint2D().x;
-			}
-			if (molecule.getAtomAt(i).getPoint2D().y < transY)
-			{
-				transY = molecule.getAtomAt(i).getPoint2D().y;
-			}
-		}
-		translate(molecule,transX * -1,transY * -1);		
-	}
-	
-
-	/**
-	 * Translates the given molecule by the given Vector.
-	 *
-	 * @param   molecule  The molecule to be translated
-	 * @param   transX  translation in x direction
-	 * @param   transY  translation in y direction
-	 * @return    translsted molecule 
-	 */
-	public void translate(Molecule molecule,double transX, double transY)
-	{
-		for (int i = 0; i < molecule.getAtomCount(); i++)
-		{
-			molecule.getAtomAt(i).getPoint2D().x += transX;
-			molecule.getAtomAt(i).getPoint2D().y += transY;
-		}
-	}
-	
-
-	/**
-	 * Multiplies all the coordinates of the atoms of the given molecule with the scalefactor.
-	 *
-	 * @param   molecule  The molecule to be scaled
-	 * @return     The molecule with scaled coordinates
-	 */
-	public void scaleMolecule(Molecule molecule)
-	{
-		for (int i = 0; i < molecule.getAtomCount(); i++)
-		{
-			molecule.getAtomAt(i).getPoint2D().x *= r2dm.getScaleFactor();
-			molecule.getAtomAt(i).getPoint2D().y *= r2dm.getScaleFactor();
-		}
-	}
 }
-
-

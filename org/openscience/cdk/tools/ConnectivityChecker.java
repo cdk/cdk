@@ -71,7 +71,6 @@ public class ConnectivityChecker
 					break;
 				}
 			}
-			System.out.println(bonds.size());
 		}while(bonds.size() > 0 || foundConnection);
 		if (!foundConnection && bonds.size() > 0)
 		{

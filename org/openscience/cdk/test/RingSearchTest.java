@@ -41,8 +41,6 @@ public class RingSearchTest
 	ChemModel chemModel;
 	SetOfMolecules setOfMolecules;
 	Molecule molecule;
-	TestFrame[] frames;
-	TestFrame frame;
 	
 	SSSRFinder sssrf;
 	RingSet ringSet;
@@ -74,21 +72,11 @@ public class RingSearchTest
 			System.out.println(ringSet.size() + " Rings in " + inFile);
 			System.out.println(SwissArmyKnife.getDuration((long)((end-start)/5000)));
 			System.exit(0);
-//			System.out.println("number of rings found  "+ringSet.size());
-//			for (int i = 0; i < ringSet.size(); i++)
-//			{
-//				ring = (Ring)ringSet.elementAt(i);
-//				System.out.println("ring number "+ (i + 1) +" has "+ ring.getRingSize() + " edges");
-//				System.out.println("ring  "+ ring.toString());
-//			}
 		}
 		catch(Exception exc)
 		{
 			exc.printStackTrace();
 		}
-//		System.out.println("Molekuel  "+ molecule.toString());
-		frame = new TestFrame(molecule);
-		frame.show();
 	}
 
 

@@ -52,7 +52,6 @@ public class SwissArmyKnife
 			{
 				line += contab[f][g] + " ";
 			}
-			System.out.println(line);
 		}
 	}
 
