@@ -16,6 +16,8 @@ org/openscience/cdk/io/MDLReader.java
 org/openscience/cdk/io/PDBReader.java
 org/openscience/cdk/io/ShelXReader.java
 org/openscience/cdk/io/XYZReader.java
+org/openscience/cdk/io/XYZWriter.java
+org/openscience/cdk/io/CMLWriter.java
 org/openscience/cdk/io/cml/cdopi/CDOInterface.java
 org/openscience/cdk/io/cml/cdopi/CDOAcceptedObjects.java
 org/openscience/cdk/io/cml/cdopi/ANIMATIONCDO.java
