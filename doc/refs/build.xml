@@ -18,7 +18,7 @@
         </fileset>
     </path>
 
-    <target id="all" name="all" depends="convertToBibTex, list"/>
+    <target id="all" name="all" depends="convertToBibTex, convertToDocBook, list"/>
     
     <target id="clean" name="clean">
         <delete>
@@ -55,12 +55,12 @@
     </target>
 
     <target id="list" name="list">
-        <java classname="org.openscience.references.applications.SetReferences"
+        <java classname="org.openscience.jreferences.applications.SetReferences"
             fork="yes">
             <classpath refid="project.class.path"/>
             <arg value="cheminf.btx"/>
         </java>
-        <java classname="org.openscience.references.applications.NumberReferences"
+        <java classname="org.openscience.jreferences.applications.NumberReferences"
             fork="yes" output="biblio.dbx">
             <classpath refid="project.class.path"/>
             <arg value="biblio.dbx.source"/>
