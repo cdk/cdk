@@ -48,11 +48,11 @@ import org.openscience.cdk.*;
  *
  * <p>References: <a href="http://cdk.sf.net/biblio.html#WEI88">WEI88</a>
  *
- * @author     steinbeck
+ * @author     Christoph Steinbeck
+ * @author     Egon Willighagen
  * @created    29. April 2002
  * @keyword    SMILES, parser
  */
-
 public class SmilesParser
 {
 
@@ -107,7 +107,7 @@ public class SmilesParser
 			ringbonds[f] = -1;
 		}
 
-		char mychar;
+		char mychar = 'X';
 		char[] chars = new char[1];
 		Atom lastNode = null;
 		Atom thisNode = null;
@@ -211,11 +211,13 @@ public class SmilesParser
 					currentSymbol = getAtomString(smiles, position);
 					atom = assembleAtom(currentSymbol, nodeCounter);
 					molecule.addAtom(atom);
+                    logger.debug("Added atom: " + atom);
 					if (lastNode != null)
 					{
 						bond = new Bond(atom, lastNode, bondStatus);
 						bond.flags[CDKConstants.ISAROMATIC] = true;
 						molecule.addBond(new Bond(atom, lastNode, bondStatus));
+                        logger.debug("Added bond: " + bond);
 					}
 					bondStatus = CDKConstants.BONDORDER_SINGLE;
 					if (mychar == 'c' || mychar == 'n' || mychar == 's' || mychar == 'o')
@@ -224,13 +226,24 @@ public class SmilesParser
 					}
 					lastNode = atom;
 					nodeCounter++;
-					position = position + currentSymbol.length();
-				} else
-				{
-					throw new InvalidSmilesException(message);
+					position = position + currentSymbol.length() + 2; // plus two for [ and ]
+				} else if (mychar == '/' || mychar == '\\') {
+                    logger.warn("Ignoring stereo information for double bond");
+                    position++;
+				} else if (mychar == '@') {
+                    if (position < smiles.length()-1 && smiles.charAt(position+1) == '@') {
+                        position++;
+                    }
+                    logger.warn("Ignoring stereo information for atom");
+                    position++;
+				} else {
+					throw new InvalidSmilesException("Unexpected character found: " + mychar);
 				}
-			} catch (Exception exc)
-			{
+			} catch (InvalidSmilesException exc) {
+                throw exc;
+			} catch (Exception exc) {
+                logger.error("Error while parsing char: " + mychar);
+                logger.error("Exception: " + exc.toString());
 				exc.printStackTrace();
 				throw new InvalidSmilesException(message);
 			}
@@ -248,29 +261,26 @@ public class SmilesParser
 	 *@return                             The AtomString value
 	 *@exception  InvalidSmilesException  Description of the Exception
 	 */
-	private String getAtomString(String s, int pos) throws InvalidSmilesException
+	private String getAtomString(String smiles, int pos) throws InvalidSmilesException
 	{
-		StringBuffer as = new StringBuffer();
-		try
-		{
-			for (int f = pos + 1; f < s.length(); f++)
-			{
-				if (s.substring(f, 1).equals("]"))
-				{
+		StringBuffer atomString = new StringBuffer();
+		try {
+			for (int f = pos + 1; f < smiles.length(); f++) {
+                char character = smiles.charAt(f);
+				if (character == ']') {
 					break;
-				} else
-				{
-					as.append(s.substring(f, 1));
+				} else {
+					atomString.append(character);
 				}
-
 			}
-		} catch (Exception exc)
-		{
+		} catch (Exception exception) {
 			String message = "Problem parsing Atom specification given in brackets.\n";
-			message += "Invalid SMILES string was: " + s;
+			message += "Invalid SMILES string was: " + smiles;
+            logger.error(message);
+            logger.error(exception.toString());
 			throw new InvalidSmilesException(message);
 		}
-		return as.toString();
+		return atomString.toString();
 	}
 
 
@@ -297,19 +307,17 @@ public class SmilesParser
 
 
 	/**
-	 *  Gets the ElementSymbol attribute of the SmilesParser object
+	 * Gets the ElementSymbol attribute of the SmilesParser object
 	 *
-	 *@param  s    Description of the Parameter
-	 *@param  pos  Description of the Parameter
-	 *@return      The ElementSymbol value
+	 * @param  s    Description of the Parameter
+	 * @param  pos  Description of the Parameter
+	 * @return      The ElementSymbol value
 	 */
-	private String getElementSymbol(String s, int pos)
-	{
-		if (pos < s.length() - 1 && "BrCl".indexOf((s.substring(pos, pos + 2))) >= 0)
-		{
+	private String getElementSymbol(String s, int pos) {
+        // FIXME: what is going on here? Are only these atoms supported ?!?
+		if (pos < s.length() - 1 && "BrCl".indexOf((s.substring(pos, pos + 2))) >= 0) {
 			return s.substring(pos, pos + 2);
-		} else if ("BCcNnOoPSsFI".indexOf((s.substring(pos, pos + 1))) >= 0)
-		{
+		} else if ("HBCcNnOoPSsFI".indexOf((s.charAt(pos))) >= 0) {
 			return s.substring(pos, pos + 1);
 		}
 		return null;
@@ -349,33 +357,31 @@ public class SmilesParser
 	 */
 	private Atom assembleAtom(String s, int nodeCounter) throws InvalidSmilesException
 	{
+        logger.debug("Assembling atom from: " + s);
 		Atom atom = null;
 		int position = 0;
 		String currentSymbol = null;
 		char mychar;
-		do
-		{
-			try
-			{
+		do {
+			try {
 				mychar = s.charAt(position);
-				if ((mychar >= 'A' && mychar <= 'Z') || (mychar >= 'a' && mychar <= 'z'))
-				{
+				if ((mychar >= 'A' && mychar <= 'Z') || (mychar >= 'a' && mychar <= 'z')) {
 					currentSymbol = getElementSymbol(s, position);
 					position = position + currentSymbol.length();
-				} else if (mychar >= '0' && mychar <= '9')
-				{
+                    atom = new Atom(currentSymbol);
+                    break;
+				} else if (mychar >= '0' && mychar <= '9') {
+                    logger.warn("Ignoring char in isotopic info: " + mychar);
 					position++;
-				} else
-				{
-					throw new InvalidSmilesException(message);
+				} else {
+					throw new InvalidSmilesException("Found unexpected char: " + mychar);
 				}
-			} catch (Exception exc)
-			{
-				throw new InvalidSmilesException(message);
+			} catch (Exception exception) {
+                logger.error("Could not parse atom string: " + s);
+                logger.error("due to: " + exception.toString());
+				throw new InvalidSmilesException("Could not parse atom string: " + s);
 			}
 		} while (position < s.length());
-
-
 		return atom;
 	}
 
