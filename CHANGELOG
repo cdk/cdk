@@ -32,6 +32,7 @@ Fixes:
   .getConnectedElectronContainers(Atom)
 * Fixed retaining LonePair's and SingleElectron's when using
   ConnectivityChecker.partitionIntoMolecules()
+* Fixed showing ElectronContainers in the cdk.apps.swing.ChemObectTree
 
 API changes:
 * Moved IsotopeFactory from cdk-standard to the cdk-core module

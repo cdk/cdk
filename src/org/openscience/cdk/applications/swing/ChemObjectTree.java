@@ -38,7 +38,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Bond;
+import org.openscience.cdk.ElectronContainer;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -93,7 +93,8 @@ public class ChemObjectTree extends JPanel {
             // logger.info("Making empty ChemObjectTree");
             this.tree = new JTree(new DefaultMutableTreeNode("No Object"));
         } else {
-            // logger.info("Making ChemObjectTree for " + object.getClass().getName());
+            logger.info("Making ChemObjectTree for " + object.getClass().getName());
+            logger.debug(object);
             DefaultMutableTreeNode topNode = getTree(object);
             this.tree = new JTree(topNode);
             int rowcount = 0;
@@ -124,38 +125,45 @@ public class ChemObjectTree extends JPanel {
     private DefaultMutableTreeNode getTree(ChemObject object) {
         DefaultMutableTreeNode node = new ChemObjectTreeNode(object);
         Class reflectedClass = object.getClass();
+        logger.debug("getTree for class: ", reflectedClass);
         // get all fields in this ChemObject
         Field[] fields = getFields(reflectedClass);
-        // logger.debug(reflectedClass.getName() + " #fields: " + fields.length); 
+        logger.debug(reflectedClass.getName(), " #fields: " + fields.length); 
         for (int i=0; i<fields.length; i++) {
             Field f = fields[i];
             f.setAccessible(true);
-            // logger.debug("Field name: " + f.getName());
-            // logger.debug("Field type: " + f.getType().getName());
+            logger.debug("Field name: ", f.getName());
+            logger.debug("Field type: ", f.getType().getName());
             try {
                 // get an instance of the object in the field
                 Object fieldObject = f.get(object);
                 if (fieldObject != null) {
-                    // logger.debug("Field value: " + fieldObject.getClass().getName());
+                    logger.debug("Field value: ", fieldObject.getClass().getName());
                     if (fieldObject instanceof ChemObject) {
                         // yes, found a ChemObject!
-                        // logger.debug("Recursing into this object");
+                        logger.debug("Recursing into this object");
                         node.add(getTree((ChemObject)fieldObject));
                     } else if (fieldObject instanceof ChemObject[]) {
                         // yes, found a Array!
-                        // logger.debug("Recursing into this Array");
+                        logger.debug("Recursing into this Array");
                         // determine what kind of Array
                         ChemObject[] objects = (ChemObject[])fieldObject;
                         int count = objects.length;
                         // Because the count above gives the array length and not the number
                         // of not null objects the array, some intelligence must be added
-                        if (object instanceof AtomContainer) {
+                        if (object instanceof AtomContainer && objects[0] != null) {
+                            logger.debug("field class: ", objects[0].getClass().getName());
                             if (objects[0] instanceof Atom) {
                                 count = ((AtomContainer)object).getAtomCount();
-                            } else if (objects[0] instanceof Bond) {
-                                count = ((AtomContainer)object).getBondCount();
+                            } else if (objects[0] instanceof ElectronContainer) {
+                                count = ((AtomContainer)object).getElectronContainerCount();
+                            } else {
+                                logger.warn("Object not counted!");
                             }
+                        } else {
+                            logger.debug("Not going to recurse into arrays that are not field of AtomContainer");
                         }
+                        logger.debug("Found #entries in array: ", count);
                         // now start actual looping over child objects
                         for (int j=0; j<objects.length; j++) {
                             if (objects[j] != null) {
@@ -164,12 +172,14 @@ public class ChemObjectTree extends JPanel {
                         }
                     }
                 } else {
-                    //logger.debug("Field value: null");
+                    logger.debug("Field value: null");
                 }
             } catch (Exception e) {
-                logger.error(e.toString());
+                logger.error("Error while constructing COT: ", e.getMessage());
+                logger.debug(e);
             }
         }
+        logger.debug("Returning tree node: ", node);
         return node;
     }
     
