@@ -114,6 +114,11 @@ public class CDKTests
             Class testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.test.iupac.ParserTest");
             suite.addTest(new TestSuite(testClass));
         } catch (Exception exception) {} //ok, do without. Probably compiled with Ant < 1.6
+        // from cdk.test.smiles.smarts
+        try {
+            Class testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.test.smiles.smarts.ParserTest");
+            suite.addTest(new TestSuite(testClass));
+        } catch (Exception exception) {} //ok, do without. Probably compiled with Ant < 1.6
         return suite;
     }
     

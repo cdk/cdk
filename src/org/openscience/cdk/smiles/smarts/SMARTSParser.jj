@@ -5,23 +5,27 @@ FORCE_LA_CHECK=true;
 }
 
 PARSER_BEGIN(SMARTSParser)
-/*
- *   Copyright (C) 2004  The CDK Project
- *
- *   This library is free software; you can redistribute it and/or
- *   modify it under the terms of the GNU Lesser General Public
- *   License as published by the Free Software Foundation; either
- *   version 2.1 of the License, or (at your option) any later version.
- *
- *   This library is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- *   Lesser General Public License for more details.
- *
- *   You should have received a copy of the GNU Lesser General Public
- *   License along with this library; if not, write to the Free Software
- *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *   (or see http://www.gnu.org/copyleft/lesser.html)
+/* $RCSfile$    
+ * $Author$    
+ * $Date$    
+ * $Revision$
+ * 
+ * Copyright (C) 2004  The Chemistry Development Kit (CDK) project
+ * 
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ * 
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * (or see http://www.gnu.org/copyleft/lesser.html)
  */
 package org.openscience.cdk.smiles.smarts;
 
@@ -50,6 +54,14 @@ import org.openscience.cdk.tools.LoggingTool;
  * Daylight website</a>. But note that not all parsed strings are yet converted
  * in the corresponding queries. Not all concepts can yet be represented in
  * SMARTSAtom.
+ *
+ * <p>Example code using SMARTS substructure search looks like:
+ * <pre>
+ * SmilesParser sp = new SmilesParser();
+ * Container atomContainer = sp.parseSmiles("CC(=O)OC(=O)C");
+ * QueryAtomContainer query = SMARTSParser.parse("C*C");
+ * boolean queryMatch = UniversalIsomorphismTester.isSubgraph(atomContainer, query);
+ * </pre>
  *
  * <p>See the cdk.test.smiles.smarts.ParserTest for examples of the implemented
  * subset.
@@ -250,13 +262,13 @@ void BondExpression() :
 void TwoCharElement() :
 {}
 {
-	<CL>
+	<CL> | <BR> | <LI> | <OS> | <AU> | <AG> | <HG> | <RH> 
 }
 
 void OneCharElement() :
 {}
 {
-	<C> | <H> | <N>
+	<C> | <H> | <N> | <P> | <S> | <I>
 }
 
 
@@ -271,5 +283,16 @@ TOKEN : /* ELEMENTS */
 |   < C:  "C" >
 |   < N:  "N" >
 |   < H:  "H" >
+|   < P:  "P" >
+|   < O:  "O" >
+|   < S:  "S" >
+|   < I:  "I" >
+|   < BR:  "Br" >
+|   < LI:  "Li" >
+|   < OS:  "Os" >
+|   < AU:  "Au" >
+|   < AG:  "Ag" >
+|   < HG:  "Hg" >
+|   < RH:  "Rh" >
 }
 

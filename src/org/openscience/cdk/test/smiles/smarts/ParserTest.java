@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 1997-2004  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2004  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -29,6 +29,8 @@ import org.openscience.cdk.*;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.AnyOrderQueryBond;
+import org.openscience.cdk.isomorphism.matchers.smarts.AromaticQueryBond;
 import org.openscience.cdk.isomorphism.matchers.smarts.OrderQueryBond;
 import org.openscience.cdk.smiles.smarts.*;
 
@@ -156,6 +158,30 @@ public class ParserTest extends TestCase {
             assertTrue(bond instanceof OrderQueryBond);
             OrderQueryBond qBond = (OrderQueryBond)bond;
             assertEquals(3.0, qBond.getOrder(), 0.001);
+        } catch (CDKException exception) {
+            fail(exception.getMessage());
+        }
+    }
+
+    public void testAromaticBond() throws ParseException {
+        try {
+            QueryAtomContainer container = SMARTSParser.parse("C:C");
+            assertEquals(2, container.getAtomCount());
+            assertEquals(1, container.getBondCount());
+            Bond bond = container.getBondAt(0);
+            assertTrue(bond instanceof AromaticQueryBond);
+        } catch (CDKException exception) {
+            fail(exception.getMessage());
+        }
+    }
+
+    public void testAnyOrderBond() throws ParseException {
+        try {
+            QueryAtomContainer container = SMARTSParser.parse("C~C");
+            assertEquals(2, container.getAtomCount());
+            assertEquals(1, container.getBondCount());
+            Bond bond = container.getBondAt(0);
+            assertTrue(bond instanceof AnyOrderQueryBond);
         } catch (CDKException exception) {
             fail(exception.getMessage());
         }
