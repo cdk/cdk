@@ -62,7 +62,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.created  2003-08-27
  * @cdk.require java1.4
  */ 
-public class PDBValidator implements ValidatorInterface {
+public class PDBValidator extends AbstractValidator {
 
     private static LoggingTool logger;
     
@@ -75,30 +75,6 @@ public class PDBValidator implements ValidatorInterface {
 
     public PDBValidator() {}
 
-    public ValidationReport validateChemObject(ChemObject subject) {
-        ValidationReport report = new ValidationReport();
-        return report;
-    };
-    public ValidationReport validateAtom(Atom subject) {
-        ValidationReport report = new ValidationReport();
-        return report;
-    };
-    public ValidationReport validateAtomContainer(AtomContainer subject) {
-        ValidationReport report = new ValidationReport();
-        return report;
-    };
-    public ValidationReport validateAtomType(AtomType subject) {
-        ValidationReport report = new ValidationReport();
-        return report;
-    };
-    public ValidationReport validateBond(Bond subject) {
-        ValidationReport report = new ValidationReport();
-        return report;
-    };
-    public ValidationReport validateChemFile(ChemFile subject) {
-        ValidationReport report = new ValidationReport();
-        return report;
-    };
     public ValidationReport validateChemModel(ChemModel subject) {
         ValidationReport report = new ValidationReport();
         logger.debug("Starting to validate against PDB entry...");
@@ -160,42 +136,6 @@ public class PDBValidator implements ValidatorInterface {
                 }
             }
         }
-        return report;
-    };
-    public ValidationReport validateChemSequence(ChemSequence subject) {
-        ValidationReport report = new ValidationReport();
-        return report;
-    };
-    public ValidationReport validateCrystal(Crystal subject) {
-        ValidationReport report = new ValidationReport();
-        return report;
-    };
-    public ValidationReport validateElectronContainer(ElectronContainer subject) {
-        ValidationReport report = new ValidationReport();
-        return report;
-    };
-    public ValidationReport validateElement(Element subject) {
-        ValidationReport report = new ValidationReport();
-        return report;
-    };
-    public ValidationReport validateIsotope(Isotope subject) {
-        ValidationReport report = new ValidationReport();
-        return report;
-    };
-    public ValidationReport validateMolecule(Molecule subject) {
-        ValidationReport report = new ValidationReport();
-        return report;
-    };
-    public ValidationReport validateReaction(Reaction subject) {
-        ValidationReport report = new ValidationReport();
-        return report;
-    };
-    public ValidationReport validateSetOfMolecules(SetOfMolecules subject) {
-        ValidationReport report = new ValidationReport();
-        return report;
-    };
-    public ValidationReport validateSetOfReactions(SetOfReactions subject) {
-        ValidationReport report = new ValidationReport();
         return report;
     };
     

@@ -48,62 +48,19 @@ import org.openscience.cdk.SetOfReactions;
  * @author   Egon Willighagen
  * @cdk.created  2003-08-22
  */ 
-public class CDKValidator implements ValidatorInterface {
+public class CDKValidator extends AbstractValidator {
 
     public CDKValidator() {
     }
     
-    public ValidationReport validateAtom(Atom subject) {
-        return new ValidationReport();
-    };
-    public ValidationReport validateAtomContainer(AtomContainer subject) {
-        return new ValidationReport();
-    };
-    public ValidationReport validateAtomType(AtomType subject) {
-        return new ValidationReport();
-    };
-    public ValidationReport validateBond(Bond subject) {
-        return new ValidationReport();
-    };
-    public ValidationReport validateChemModel(ChemModel subject) {
-        return new ValidationReport();
-    };
     public ValidationReport validateChemFile(ChemFile subject) {
         return validateChemFileNulls(subject);
-    };
-    public ValidationReport validateChemObject(ChemObject subject) {
-        return new ValidationReport();
     };
     public ValidationReport validateChemSequence(ChemSequence subject) {
         return validateChemSequenceNulls(subject);
     };
-    public ValidationReport validateCrystal(Crystal subject) {
-        return new ValidationReport();
-    };
-    public ValidationReport validateElectronContainer(ElectronContainer subject) {
-        return new ValidationReport();
-    };
-    public ValidationReport validateElement(Element subject) {
-        return new ValidationReport();
-    };
-    public ValidationReport validateIsotope(Isotope subject) {
-        return new ValidationReport();
-    };
-    public ValidationReport validateMolecule(Molecule subject) {
-        return new ValidationReport();
-    };
-    public ValidationReport validateReaction(Reaction subject) {
-        return new ValidationReport();
-    };
-    public ValidationReport validateSetOfMolecules(SetOfMolecules subject) {
-        return new ValidationReport();
-    };
-    public ValidationReport validateSetOfReactions(SetOfReactions subject) {
-        return new ValidationReport();
-    };
 
-
-    public ValidationReport validateChemFileNulls(ChemFile chemFile) {
+    private ValidationReport validateChemFileNulls(ChemFile chemFile) {
         ValidationReport report = new ValidationReport();
         ChemSequence[] sequences = chemFile.getChemSequences();
         ValidationTest hasNulls = new ValidationTest(chemFile,
@@ -120,7 +77,7 @@ public class CDKValidator implements ValidatorInterface {
         return report;
     }
         
-    public ValidationReport validateChemSequenceNulls(ChemSequence sequence) {
+    private ValidationReport validateChemSequenceNulls(ChemSequence sequence) {
         ValidationReport report = new ValidationReport();
         ChemModel[] models = sequence.getChemModels();
         ValidationTest hasNulls = new ValidationTest(sequence,

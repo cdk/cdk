@@ -52,7 +52,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @author   Egon Willighagen
  * @cdk.created  2003-08-22
  */ 
-public class BasicValidator implements ValidatorInterface {
+public class BasicValidator extends AbstractValidator {
 
     private static LoggingTool logger;
     
@@ -70,38 +70,11 @@ public class BasicValidator implements ValidatorInterface {
         report.addReport(validatePseudoAtom(subject));
         return report;
     };
-    public ValidationReport validateAtomContainer(AtomContainer subject) {
-        return new ValidationReport();
-    };
-    public ValidationReport validateAtomType(AtomType subject) {
-        return new ValidationReport();
-    };
     public ValidationReport validateBond(Bond subject) {
         ValidationReport report = new ValidationReport();
         report.addReport(validateStereoChemistry(subject));
         report.addReport(validateMaxBondOrder(subject));
         return report;
-    };
-    public ValidationReport validateChemFile(ChemFile subject) {
-        return new ValidationReport();
-    };
-    public ValidationReport validateChemModel(ChemModel subject) {
-        return new ValidationReport();
-    };
-    public ValidationReport validateChemObject(ChemObject subject) {
-        return new ValidationReport();
-    };
-    public ValidationReport validateChemSequence(ChemSequence subject) {
-        return new ValidationReport();
-    };
-    public ValidationReport validateCrystal(Crystal subject) {
-        return new ValidationReport();
-    };
-    public ValidationReport validateElectronContainer(ElectronContainer subject) {
-        return new ValidationReport();
-    };
-    public ValidationReport validateElement(Element subject) {
-        return new ValidationReport();
     };
     public ValidationReport validateIsotope(Isotope subject) {
         return validateIsotopeExistence(subject);
@@ -151,16 +124,10 @@ public class BasicValidator implements ValidatorInterface {
         report.addReport(validateChargeConservation(subject, container1, container2));
         return report;
     };
-    public ValidationReport validateSetOfMolecules(SetOfMolecules subject) {
-        return new ValidationReport();
-    };
-    public ValidationReport validateSetOfReactions(SetOfReactions subject) {
-        return new ValidationReport();
-    };
     
     // the Atom tests
     
-    private static ValidationReport validateCharge(Atom atom) {
+    private ValidationReport validateCharge(Atom atom) {
         ValidationReport report = new ValidationReport();
         ValidationTest tooCharged = new ValidationTest(atom, "Atom has an unlikely large positive or negative charge");
         if (atom.getSymbol().equals("O") || atom.getSymbol().equals("N") ||
@@ -198,7 +165,7 @@ public class BasicValidator implements ValidatorInterface {
         return report;
     }
 
-    private static ValidationReport validateHydrogenCount(Atom atom) {
+    private ValidationReport validateHydrogenCount(Atom atom) {
         ValidationReport report = new ValidationReport();
         ValidationTest negativeHydrogenCount = new ValidationTest(atom,
             "An Atom cannot have a negative number of hydrogens attached."
@@ -214,7 +181,7 @@ public class BasicValidator implements ValidatorInterface {
         return report;
     }
 
-    private static ValidationReport validatePseudoAtom(Atom atom) {
+    private ValidationReport validatePseudoAtom(Atom atom) {
         ValidationReport report = new ValidationReport();
         ValidationTest isElementOrPseudo = new ValidationTest(atom,
             "Non-element atom must be of class PseudoAtom."
@@ -247,7 +214,7 @@ public class BasicValidator implements ValidatorInterface {
     
     // the Bond tests
     
-    private static ValidationReport validateStereoChemistry(Bond bond) {
+    private ValidationReport validateStereoChemistry(Bond bond) {
         ValidationReport report = new ValidationReport();
         ValidationTest bondStereo = new ValidationTest(bond,
             "Defining stereochemistry on bonds is not safe.",
@@ -261,7 +228,7 @@ public class BasicValidator implements ValidatorInterface {
         return report;
     }
     
-    private static ValidationReport validateMaxBondOrder(Bond bond) {
+    private ValidationReport validateMaxBondOrder(Bond bond) {
         ValidationReport report = new ValidationReport();
         ValidationTest maxBO = new ValidationTest(bond,
             "Bond order exceeds the maximum for one of its atoms."
@@ -343,7 +310,7 @@ public class BasicValidator implements ValidatorInterface {
     
     // the Molecule tests
 
-    private static ValidationReport validateBondOrderSum(Atom atom, Molecule molecule) {
+    private ValidationReport validateBondOrderSum(Atom atom, Molecule molecule) {
         ValidationReport report = new ValidationReport();
         ValidationTest checkBondSum = new ValidationTest(atom,
             "The atom's total bond order is too high."
@@ -393,7 +360,7 @@ public class BasicValidator implements ValidatorInterface {
         return report;
     }
 
-    private static ValidationReport validateAtomCountConservation(Reaction reaction,
+    private ValidationReport validateAtomCountConservation(Reaction reaction,
                                                         AtomContainer reactants,
                                                         AtomContainer products) {
         ValidationReport report = new ValidationReport();
@@ -408,7 +375,7 @@ public class BasicValidator implements ValidatorInterface {
         return report;
     }
 
-    private static ValidationReport validateChargeConservation(Reaction reaction,
+    private ValidationReport validateChargeConservation(Reaction reaction,
                                                      AtomContainer reactants,
                                                      AtomContainer products) {
         ValidationReport report = new ValidationReport();

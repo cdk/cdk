@@ -54,7 +54,7 @@ import org.openscience.cdk.tools.ValencyCheckerInterface;
  * @author   Egon Willighagen
  * @cdk.created  2004-01-14
  */ 
-public class ValencyValidator implements ValidatorInterface {
+public class ValencyValidator extends AbstractValidator {
 
     private static LoggingTool logger;
     
@@ -65,42 +65,6 @@ public class ValencyValidator implements ValidatorInterface {
     public ValencyValidator() {
     }
     
-    public ValidationReport validateAtom(Atom subject) {
-        return new ValidationReport();
-    };
-    public ValidationReport validateAtomContainer(AtomContainer subject) {
-        return new ValidationReport();
-    };
-    public ValidationReport validateAtomType(AtomType subject) {
-        return new ValidationReport();
-    };
-    public ValidationReport validateBond(Bond subject) {
-        return new ValidationReport();
-    };
-    public ValidationReport validateChemFile(ChemFile subject) {
-        return new ValidationReport();
-    };
-    public ValidationReport validateChemModel(ChemModel subject) {
-        return new ValidationReport();
-    };
-    public ValidationReport validateChemObject(ChemObject subject) {
-        return new ValidationReport();
-    };
-    public ValidationReport validateChemSequence(ChemSequence subject) {
-        return new ValidationReport();
-    };
-    public ValidationReport validateCrystal(Crystal subject) {
-        return new ValidationReport();
-    };
-    public ValidationReport validateElectronContainer(ElectronContainer subject) {
-        return new ValidationReport();
-    };
-    public ValidationReport validateElement(Element subject) {
-        return new ValidationReport();
-    };
-    public ValidationReport validateIsotope(Isotope subject) {
-        return new ValidationReport();
-    };
     public ValidationReport validateMolecule(Molecule subject) {
         ValidationReport report = new ValidationReport();
         Atom[] atoms = subject.getAtoms();
@@ -110,15 +74,6 @@ public class ValencyValidator implements ValidatorInterface {
             }
         }
         return report;
-    };
-    public ValidationReport validateReaction(Reaction subject) {
-        return new ValidationReport();
-    };
-    public ValidationReport validateSetOfMolecules(SetOfMolecules subject) {
-        return new ValidationReport();
-    };
-    public ValidationReport validateSetOfReactions(SetOfReactions subject) {
-        return new ValidationReport();
     };
     
     // the Molecule tests
