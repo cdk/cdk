@@ -157,6 +157,14 @@ public class Viewer {
                     }
                 }
                 
+                /* IMPORTANT: DO NOT REMOVE THESE LINES!
+                
+                   These are dummy lines to be able to have the 
+                   patches in cdk/src/patches/Viewer* to be applied. If 
+                   these are removed the patch program does not know where
+                   to apply the patch, and it will fail
+                */
+                
                 if (useJava3D && !viewed) {
                     logger.debug(".. trying Java3D viewer");
                     try {

@@ -1,8 +1,8 @@
---- src/org/openscience/cdk/applications/Viewer.java	2003-06-18 11:43:55.441699000 +0200
-+++ src/org/openscience/cdk/applications/Viewer.java.noJ3D	2003-06-25 14:16:51.395839000 +0200
-@@ -157,22 +157,6 @@
-                     }
-                 }
+--- src/org/openscience/cdk/applications/Viewer.java	2003-07-22 12:02:08.000000000 +0200
++++ src/org/openscience/cdk/applications/Viewer.java.noJava3D	2003-07-22 12:03:37.000000000 +0200
+@@ -165,22 +165,6 @@
+                    to apply the patch, and it will fail
+                 */
                  
 -                if (useJava3D && !viewed) {
 -                    logger.debug(".. trying Java3D viewer");
