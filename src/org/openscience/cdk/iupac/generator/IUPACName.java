@@ -29,7 +29,7 @@ import java.util.LinkedList;
 import java.util.Iterator;
 
 /**
- *  This class implements a IUPAC name.
+ *  This class implements an IUPAC name.
  *  It provides a String representation of the name, and,
  *  in addition, a list of applied rules.
  *
@@ -38,9 +38,11 @@ import java.util.Iterator;
 public class IUPACName {
 
     private Locale locale;
+    /** A list of IUPACNameParts to build the name from or to get at applied rules */
     private LinkedList nameParts;
 
-    private int atomsNamed;
+//Not needed?!    
+//    private int atomsNamed;
 
     /**
      *  Constructor for a IUPAC name.
@@ -61,8 +63,11 @@ public class IUPACName {
 
     /**
      *  Returns the IUPAC name.
+     *
+     * @return All the sub-parts of the name concatenated in the correct order.
      */
     public String getName() {
+        //An iterator over the Global LinkedList - nameParts
         Iterator parts = getIUPACNameParts();
         StringBuffer sb = new StringBuffer();
         while (parts.hasNext()) {
@@ -73,14 +78,16 @@ public class IUPACName {
     }
 
     /**
-     *  Adds a Rule to the list of applied rules to generate this name.
+     * Adds a Rule to the front of the list of applied rules to generate this name.
+     * To be used with prefixes
      */
     public void addFront(IUPACNamePart ipc) {
         this.nameParts.addFirst(ipc);
     }
 
     /**
-     *  Adds a Rule to the list of applied rules to generate this name.
+     * Adds a Rule to the end of the list of applied rules to generate this name.
+     * To be used with suffixes.
      */
     public void addEnd(IUPACNamePart ipc) {
         this.nameParts.addLast(ipc);
@@ -100,6 +107,12 @@ public class IUPACName {
         return nameParts.size();
     }
 
+    /**
+     * Proivides a string representation of all the information held in this class.
+     *
+     * @return A list of the sub parts of the name and which rules were used to get them.
+     * Each IUPACNamePart is seperated by a newline.
+     */
     public String toString() {
         Iterator parts = getIUPACNameParts();
         StringBuffer sb = new StringBuffer();

@@ -43,7 +43,7 @@ public class IUPACNamePart {
      *  Constructor for a IUPAC name part.
      *
      * @param    name       Current name part.
-     * @param    rule       Rule that generator this name part.
+     * @param    rule       Rule that generated this name part.
      */
     public IUPACNamePart(String name, Rule rule) {
         this.rule = rule;
@@ -52,6 +52,9 @@ public class IUPACNamePart {
 
     /**
      *  Returns the IUPAC name.
+     *
+     * @return The IUPAC name, or "unknown" if a null name 
+     * was given when constructing this instance.
      */
     public String getName() {
         return name != null ? name : "unknown";
@@ -64,6 +67,11 @@ public class IUPACNamePart {
         return rule;
     }
 
+    /**
+     * Returns a string representation of this name part.
+     *
+     * @return The part of the name followed by the rule number on a second line.
+     */
     public String toString() {
         StringBuffer sb = new StringBuffer();
         sb.append(this.getName());

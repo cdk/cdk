@@ -28,12 +28,18 @@ import org.openscience.cdk.exception.*;
 import org.openscience.cdk.isomorphism.IsomorphismTester;
 
 /**
- *  This class implements IUPAC rule 1.1 in Section A.
+ * Methods for playing with Adjacency Matrices
  *
  * @author Egon Willighagen
  */
 public class AdjacencyMatrixTools {
 
+    /**
+     * Returns an ajacency matrix with only carbon atoms in.
+     *
+     * @param ac The AtomContainer to strip down to Carbons.
+     * @return An adjacency matrix for the carbon atoms in the given AtomContainer.
+     */
     public static int[][] getCarbonOnly(AtomContainer ac) {
         AtomContainer copy = (AtomContainer)ac.clone();
         for (int i = 0; i < ac.getAtomCount(); i++) {

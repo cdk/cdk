@@ -52,10 +52,23 @@ public class NamingRule implements Rule {
         return null;
     };
 
+    /**
+     * Sets the localizer for this rule.
+     *
+     * @param IUPACNameLocalizer An localizer set with the current locale.
+     */
     public void setIUPACNameLocalizer(IUPACNameLocalizer l) {
         this.localizer = l;
     }
 
+    /**
+     * Translates a String according to known IUPAC localizations to the current
+     * localization, as set with setIUPACNameLocalizer.
+     *
+     * @see #setIUPACNameLoxalizer
+     * @return The localized version of the String, or if non exists,
+     * the original string is returned.
+     */
     public String localize(String s) {
        return this.localizer != null ? localizer.localize(s) : s;
     }
