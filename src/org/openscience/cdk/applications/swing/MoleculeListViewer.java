@@ -109,10 +109,10 @@ public class MoleculeListViewer extends JFrame
 	 *
 	 *@param  mv  The feature to be added to the Structure attribute
 	 */
-	public void addStructure(MoleculeViewer2D mv)
+	public void addStructure(MoleculeViewer2D moleculeViewer)
 	{
 		String title = "Structure no. " + (noOfStructures + 1);
-		addStructure(mv, title);
+		addStructure(moleculeViewer, title);
 	}
 
 
@@ -122,21 +122,21 @@ public class MoleculeListViewer extends JFrame
 	 *@param  mv     The feature to be added to the Structure attribute
 	 *@param  title  The feature to be added to the Structure attribute
 	 */
-	public void addStructure(MoleculeViewer2D mv, String title)
+	public void addStructure(MoleculeViewer2D moleculeViewer, String title)
 	{
 		noOfStructures++;
-		mv.setPreferredSize(molViewDim);
-        mv.getRenderer2DModel().setBackgroundDimension(molViewDim);
-		mv.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), title));
-		moleculeViewerPanels.addElement(mv);
-		panel.add(mv);
+		moleculeViewer.setPreferredSize(molViewDim);
+        moleculeViewer.getRenderer2DModel().setBackgroundDimension(molViewDim);
+		moleculeViewer.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), title));
+		moleculeViewerPanels.addElement(moleculeViewer);
+		panel.add(moleculeViewer);
 		panel.revalidate();
 	}
 
 
-	public void paint(Graphics g)
+	public void paint(Graphics graphics)
 	{
-		super.paint(g);
+		super.paint(graphics);
 		panel.revalidate();
 	}
 

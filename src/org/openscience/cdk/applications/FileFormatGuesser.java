@@ -75,6 +75,7 @@ public class FileFormatGuesser {
                     System.out.println("Skipping directory: " + ifilename);
                 }
             } catch (Exception exception) {
+                logger.debug(exception);
                 System.err.println(ifilename + ": error=");
                 exception.printStackTrace();
             }

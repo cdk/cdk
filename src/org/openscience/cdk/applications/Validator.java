@@ -54,7 +54,7 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class Validator {
 
-    private org.openscience.cdk.tools.LoggingTool logger;
+    private static org.openscience.cdk.tools.LoggingTool logger;
     
 	/*
 	 *  This is a command line application            *
@@ -79,6 +79,7 @@ public class Validator {
         try {
             content = (ChemFile)reader.read((ChemObject)new ChemFile());
         } catch (CDKException exception) {
+            logger.debug(exception);
             System.out.println("Error while reading file: " + exception.toString());
             return new ValidationReport();
         }
@@ -144,8 +145,10 @@ public class Validator {
                     System.out.println("Skipping directory: " + ifilename);
                 }
             } catch (FileNotFoundException exception) {
+                logger.debug(exception);
                 System.out.println("Skipping file. Cannot find it: " + ifilename);
             } catch (Exception exception) {
+                logger.debug(exception);
                 System.err.println(ifilename + ": error=");
                 exception.printStackTrace();
             }

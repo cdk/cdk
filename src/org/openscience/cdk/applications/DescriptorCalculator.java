@@ -28,17 +28,12 @@ import java.util.*;
 
 import org.apache.commons.cli.*;
 
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
-import org.openscience.cdk.fingerprint.Fingerprinter;
 import org.openscience.cdk.io.*;
 import org.openscience.cdk.io.iterator.IteratingMDLReader;
 import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.qsar.DescriptorEngine;
-import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -166,13 +161,16 @@ public class DescriptorCalculator {
             printCMLFooter(writer);
             if (!inputIsSMILES) System.out.println("\n");
         } catch (FileNotFoundException exception) {
+            logger.debug(exception);
             System.err.println("File not found: " + toProcess);
             System.exit(-1);
         } catch (IOException exception) {
+            logger.debug(exception);
             System.err.println("IO exception: " + exception.getMessage());
             exception.printStackTrace();
             System.exit(-1);
         } catch (Exception exception) {
+            logger.debug(exception);
             System.err.println("Some exception: " + exception.getMessage());
             exception.printStackTrace();
             System.exit(-1);

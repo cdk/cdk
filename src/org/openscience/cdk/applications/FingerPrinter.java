@@ -80,6 +80,7 @@ public class FingerPrinter {
                     }
                 }
             } catch (Exception exception) {
+                logger.debug(exception);
                 System.err.println(ifilename + ": error=");
                 exception.printStackTrace();
             }
