@@ -65,12 +65,12 @@
         </para>
         <para>
           Debian users can also apt-get the package from
-          <ulink url="http://www.wgdd.de/debian/">www.wgdd.de/debian</ulink> 
+          <ulink url="http://debian.wgdd.de/">debian.wgdd.de</ulink> 
           by adding the following to <filename>/etc/apt/sources.list</filename>:
         </para>
         <literallayout>
-deb http://www.wgdd.de/debian unstable main contrib non-free
-deb-src http://www.wgdd.de/debian unstable main contrib non-free
+deb http://ftp.wgdd.de/debian unstable main contrib non-free
+deb-src http://ftp.wgdd.de/debian unstable main contrib non-free
         </literallayout>
         <para>
           Doing 
