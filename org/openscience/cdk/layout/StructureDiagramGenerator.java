@@ -87,21 +87,25 @@ public class StructureDiagramGenerator implements CDKConstants
 	 * @param   molecule  the molecule for which coordinates are to be generated.
 	 * @param   clone  Should the whole process be performed with a cloned copy?
 	 */
-	public void setMolecule(Molecule molecule, boolean clone)
+	public void setMolecule(Molecule mol, boolean clone)
 	{
 		Atom atom = null;
 		if (clone)
 		{
-			this.molecule = (Molecule)molecule.clone();
+			this.molecule = (Molecule)mol.clone();
 		}
 		else
 		{
-			this.molecule = molecule;
+			this.molecule = mol;
 		}
 		for (int f = 0; f < molecule.getAtomCount(); f++)
 		{
 			atom = molecule.getAtomAt(f);
 			atom.setPoint2D(null);
+			if (atom.flags == null)
+			{
+				atom.flags = new boolean[100];
+			}
 			atom.flags[ISPLACED] = false;
 			atom.flags[VISITED] = false;
 			atom.flags[ISINRING] = false;

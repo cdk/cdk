@@ -44,17 +44,22 @@ public class ConnectivityChecker implements CDKConstants
 	public boolean isConnected(AtomContainer atomContainer)
 	{
 		AtomContainer ac = new AtomContainer();
-		Atom atom = null, nextAtom = null; 
+		Atom atom = null, nextAtom = null;
+		Bond bond = null;
 		Molecule molecule = new Molecule();
 		Vector molecules = new Vector();
 		Vector sphere = new Vector();
 		for (int f = 0; f < atomContainer.getAtomCount(); f++)
 		{
+			atom = atomContainer.getAtomAt(f);
+			if (atom.flags == null) atom.flags = new boolean[100];
 			atomContainer.getAtomAt(f).flags[VISITED] = false;
 			ac.addAtom(atomContainer.getAtomAt(f));
 		}
 		for (int f = 0; f < atomContainer.getBondCount(); f++)
 		{
+			bond = atomContainer.getBondAt(f);
+			if (bond.flags == null) bond.flags = new boolean[100];
 			atomContainer.getBondAt(f).flags[VISITED] = false;
 			ac.addBond(atomContainer.getBondAt(f));
 		}
@@ -82,17 +87,22 @@ public class ConnectivityChecker implements CDKConstants
 
 	{
 		AtomContainer ac = new AtomContainer();
-		Atom atom = null, nextAtom = null; 
+		Atom atom = null, nextAtom = null;
+		Bond bond = null;
 		Molecule molecule = null;
 		Vector molecules = new Vector();
 		Vector sphere = new Vector();
 		for (int f = 0; f < atomContainer.getAtomCount(); f++)
 		{
+			atom = atomContainer.getAtomAt(f);
+			if (atom.flags == null) atom.flags = new boolean[100];
 			atomContainer.getAtomAt(f).flags[VISITED] = false;
 			ac.addAtom(atomContainer.getAtomAt(f));
 		}
 		for (int f = 0; f < atomContainer.getBondCount(); f++)
 		{
+			bond = atomContainer.getBondAt(f);
+			if (bond.flags == null) bond.flags = new boolean[100];
 			atomContainer.getBondAt(f).flags[VISITED] = false;
 			ac.addBond(atomContainer.getBondAt(f));
 		}

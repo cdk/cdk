@@ -30,6 +30,8 @@ import org.openscience.cdk.io.*;
 import org.openscience.cdk.tools.*;
 import org.openscience.cdk.geometry.*;
 import org.openscience.cdk.event.*;
+import org.openscience.cdk.layout.*;
+
 import java.util.*;
 import java.io.*;
 import javax.swing.*;
@@ -181,7 +183,32 @@ public class MoleculeViewer2D extends JPanel implements CDKChangeListener
 		frame.pack();
 		frame.setVisible(true);
 	}
-
+	
+	public static void display(Molecule molecule, boolean generateCoordinates)
+	{	
+		StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+		MoleculeViewer2D mv = new MoleculeViewer2D();
+		mv.getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		Renderer2DModel r2dm = mv.getRenderer2DModel();
+		r2dm.setDrawNumbers(true);
+		
+		try
+		{
+			if (generateCoordinates)
+			{
+				sdg.setMolecule((Molecule)molecule.clone());
+				sdg.generateCoordinates();
+				molecule = sdg.getMolecule();
+			}
+			mv.setAtomContainer(molecule);
+			mv.display();
+		}
+		catch(Exception exc)
+		{
+			System.out.println("*** Exit due to an unexpected error during coordinate generation ***");
+			exc.printStackTrace();
+		}
+	}
 
 	/**
 	 *  Paints the molecule onto the JPanel

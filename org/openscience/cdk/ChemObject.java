@@ -63,13 +63,42 @@ public class ChemObject implements CDKConstants, Cloneable
 	 * flag array with self-defined constants (flags[VISITED] = true).
 	 * 10 flags per object should be more than enough.
 	 */
-	public transient boolean[] flags = new boolean[100];
+	public boolean[] flags = new boolean[100];
 
 	/** Array of multipurpose vectors. Handle like described for the
 	  * flags above 
 	  */
-	public transient Vector[] pointers;
+	public Vector[] pointers;
 
+	public ChemObject()
+	{
+		/** Vector for listener administration */
+		chemObjects = new Vector();
+		/** 
+		  * A hashtable for the storage of physical properties 
+		  * of this ChemObject. 
+		  */
+		physicalProperties = new Hashtable();
+		/** 
+		  * A hashtable for the storage of any kind of properties 
+		  * of this ChemObject. 
+		  */
+		properties = new Hashtable();
+		/** 
+		  * A hashtable for the storage of the remarks.
+		  */
+		remarks = new Hashtable();
+		/** You will frequently have to use some flags on a ChemObject
+		 * for example if you want to draw a molecule and see
+		 * if you've already drawn an atom, or in a ring search to 
+		 * check whether a vertex has been visited in a graph traversal.
+		 * Use these flags while addressing particular positions in the
+		 * flag array with self-defined constants (flags[VISITED] = true).
+		 * 10 flags per object should be more than enough.
+		 */
+		flags = new boolean[100];
+	}
+	
 	/**
 	 * Use this to add yourself to this ChemObject as a listener. 
 	 * In order to do so, you must implement the ChemObjectListener Interface
