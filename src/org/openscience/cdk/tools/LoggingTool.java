@@ -97,7 +97,7 @@ public class LoggingTool {
     private LoggingTool logger;
     private String classname;
 
-    private int stackLength;
+    private int stackLength;  // NOPMD
     
     /** Default number of StackTraceElements to be printed by debug(Exception). */
     public final int DEFAULT_STACK_LENGTH = 5;
@@ -162,7 +162,7 @@ public class LoggingTool {
      */
     public LoggingTool(Class classInst, boolean useConfig) {
         this.logger = this;
-        this.stackLength = DEFAULT_STACK_LENGTH;
+        stackLength = DEFAULT_STACK_LENGTH;
         this.classname = classInst.getName();
         try {
             log4jLogger = (org.apache.log4j.Category)org.apache.log4j.Category
@@ -178,7 +178,7 @@ public class LoggingTool {
         } catch (NoClassDefFoundError e) {
             tostdout = true;
             logger.debug("Log4J class not found!");
-        } catch (NullPointerException e) {
+        } catch (NullPointerException e) { // NOPMD
             tostdout = true;
             logger.debug("Properties file not found!");
         } catch (Exception e) {
