@@ -1,10 +1,9 @@
-/*
- *  $RCSfile$
+/*  $RCSfile$
  *  $Author$
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  *
  *  Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  *
@@ -60,8 +59,7 @@ public class MDLReader implements ChemObjectReader
 	 *
 	 *@param  in  The InputStream to read from
 	 */
-	public MDLReader(InputStream in)
-	{
+	public MDLReader(InputStream in) {
 		this(new InputStreamReader(in));
 	}
 
@@ -71,17 +69,13 @@ public class MDLReader implements ChemObjectReader
 	 *
 	 *@param  in  The Reader to read from
 	 */
-	public MDLReader(Reader in)
-	{
+	public MDLReader(Reader in) {
 		logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
 		input = new BufferedReader(in);
-		try
-		{
+		try {
 			elemfact = IsotopeFactory.getInstance();
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
-
 		}
 	}
 
@@ -96,16 +90,12 @@ public class MDLReader implements ChemObjectReader
 	 *@return                                     The ChemObject read
 	 *@exception  UnsupportedChemObjectException
 	 */
-	public ChemObject read(ChemObject object) throws UnsupportedChemObjectException
-	{
-		if (object instanceof ChemFile)
-		{
+	public ChemObject read(ChemObject object) throws UnsupportedChemObjectException {
+		if (object instanceof ChemFile) {
 			return (ChemObject) readChemFile();
-		} else if (object instanceof Molecule)
-		{
+		} else if (object instanceof Molecule) {
 			return (ChemObject) readMolecule();
-		} else
-		{
+		} else {
 			throw new UnsupportedChemObjectException("Only supported are ChemFile and Molecule.");
 		}
 	}
