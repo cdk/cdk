@@ -61,12 +61,40 @@ public class MDLRXNReaderTest extends TestCase {
             MDLRXNReader reader1 = new MDLRXNReader(new InputStreamReader(ins1));
             Reaction reaction1 = new Reaction();
 			reaction1 = (Reaction)reader1.read(reaction1);
+			reader1.close();
 			
 			assertNotNull(reaction1);
 			assertEquals(2, reaction1.getReactantCount());
 			assertEquals(1, reaction1.getProductCount());
 			
-	    	reader1.close();
+			Molecule[] educts = reaction1.getReactants();
+			// Check Atom symbols of first educt
+			String[] atomSymbolsOfEduct1 = { "C", "C", "O", "Cl"};
+			for (int i = 0; i < educts[0].getAtomCount(); i++) {
+				assertEquals(atomSymbolsOfEduct1[i], educts[0].getAtomAt(i).getSymbol());
+			}
+			
+			// Check Atom symbols of second educt
+			for (int i = 0; i < educts[1].getAtomCount(); i++) {
+				assertEquals("C", educts[1].getAtomAt(i).getSymbol());
+			}
+			
+			// Check Atom symbols of first product
+			Molecule[] products = reaction1.getProducts();
+			String[] atomSymbolsOfProduct1 = { 
+				"C",
+				"C",
+				"C",
+				"C",
+				"C",
+				"C",
+				"C",
+				"O",
+				"C"
+			};
+			for (int i = 0; i < products[0].getAtomCount(); i++) {
+				assertEquals(atomSymbolsOfProduct1[i], products[0].getAtomAt(i).getSymbol());
+			}
 			
         } catch (Exception e) {
             fail(e.toString());
@@ -81,13 +109,12 @@ public class MDLRXNReaderTest extends TestCase {
 			MDLRXNReader reader2 = new MDLRXNReader(new InputStreamReader(ins2));
 			Reaction reaction2 = new Reaction();
 			reaction2 = (Reaction)reader2.read(reaction2);
+			reader2.close();
 			
 			assertNotNull(reaction2);
 			assertEquals(2, reaction2.getReactantCount());
 			assertEquals(2, reaction2.getProductCount());
 			
-			reader2.close();
-	    	
         } catch (Exception e) {
             fail(e.toString());
         }

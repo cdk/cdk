@@ -194,7 +194,38 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
         }
         return -1.0;
     }
-    
+	
+	/**
+     * Sets the coefficient of a a reactant to a given value.
+     *
+     * @return  true if Molecule has been found and stoichiometry has been set.
+     */
+    public boolean setReactantCoefficient(Molecule reactant, double coefficient) {
+        for (int i=0; i<reactantCount; i++) {
+            if (reactants[i].equals(reactant)) {
+                reactantStoichiometry[i] = coefficient;
+				return true;
+            }
+        }
+        return false;
+    }
+	
+	    
+	/**
+     * Sets the coefficient of a a product to a given value.
+     *
+     * @return  true if Molecule has been found and stoichiometry has been set.
+     */
+    public boolean setProductCoefficient(Molecule product, double coefficient) {
+        for (int i=0; i<productCount; i++) {
+            if (products[i].equals(product)) {
+                productStoichiometry[i] = coefficient;
+				return true;
+            }
+        }
+        return false;
+    }
+	
 	/**
      * Returns an array of double with the stoichiometric coefficients
 	 * of the reactants.
@@ -213,6 +244,35 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
         double[] returnCoeff = new double[this.productCount];
         System.arraycopy(this.productStoichiometry, 0, returnCoeff, 0, this.productCount);
         return returnCoeff;
+    }
+	
+	
+	/**
+     * Sets the coefficient of the reactants.
+     *
+     * @return  true if coefficients have been set.
+     */
+    public boolean setReactantCoefficients(double[] reactantCoefficients) {
+        if (reactantCoefficients.length == reactantCount) {
+			System.arraycopy(reactantCoefficients, 0, reactantStoichiometry, 0, reactantCount);
+			return true;
+		}
+		
+        return false;
+    }
+	
+	/**
+     * Sets the coefficient of the products.
+     *
+     * @return  true if coefficients have been set.
+     */
+    public boolean setProductCoefficients(double[] productCoefficients) {
+        if (productCoefficients.length == productCount) {
+			System.arraycopy(productCoefficients, 0, productStoichiometry, 0, productCount);
+			return true;
+		}
+		
+        return false;
     }
 	
     /**

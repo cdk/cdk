@@ -134,6 +134,22 @@ public class ReactionTest extends TestCase {
         assertEquals(-1.0, reaction.getProductCoefficient(new Molecule()), 0.00001);
     }
     
+	public void testSetReactantCoefficient() {
+		Reaction reaction = new Reaction();
+        Molecule proton = new Molecule();
+		reaction.addReactant(proton, 2.0);
+		reaction.setReactantCoefficient(proton, 3.0);
+		assertEquals(3.0, reaction.getReactantCoefficient(proton), 0.00001);
+	}
+	
+	public void testSetProductCoefficient() {
+		Reaction reaction = new Reaction();
+        Molecule proton = new Molecule();
+		reaction.addProduct(proton, 2.0);
+		reaction.setProductCoefficient(proton, 1.0);
+		assertEquals(1.0, reaction.getProductCoefficient(proton), 0.00001);
+	}
+	
 	public void testGetReactantCoefficients() {
         Reaction reaction = new Reaction();
 		Molecule ed1 = new Molecule();
@@ -158,6 +174,33 @@ public class ReactionTest extends TestCase {
 		assertEquals(2.0, pc[1], 0.00001);
     }
 	
+	public void testSetReactantCoefficients() {
+        Reaction reaction = new Reaction();
+		Molecule ed1 = new Molecule();
+		Molecule ed2 = new Molecule();
+		reaction.addReactant(ed1, 2);
+		reaction.addReactant(ed2, 3);
+		double[] ec = { 1.0, 2.0 };
+		boolean coeffSet = reaction.setReactantCoefficients(ec);
+		assertTrue(coeffSet);
+		assertEquals(1.0, reaction.getReactantCoefficient(ed1), 0.00001);
+		assertEquals(2.0, reaction.getReactantCoefficient(ed2), 0.00001);
+		double[] ecFalse = { 1.0 };
+		assertFalse(reaction.setReactantCoefficients(ecFalse));
+    }
+	
+	public void testSetProductCoefficients() {
+        Reaction reaction = new Reaction();
+		Molecule pr1 = new Molecule();
+		reaction.addProduct(pr1, 1);
+		double[] pc = { 2.0 };
+		boolean coeffSet = reaction.setProductCoefficients(pc);
+		assertTrue(coeffSet);
+		assertEquals(2.0, reaction.getProductCoefficient(pr1), 0.00001);
+		double[] pcFalse = { 1.0 , 2.0 };
+		assertFalse(reaction.setProductCoefficients(pcFalse));
+    }
+	
     public void testGetReactants() {
         Reaction reaction = new Reaction();
         Molecule sodiumhydroxide = new Molecule();
@@ -168,7 +211,7 @@ public class ReactionTest extends TestCase {
         reaction.addReactant(water);
         assertEquals(3, reaction.getReactants().length);
     }
-
+	
     public void testGetProducts() {
         Reaction reaction = new Reaction();
         Molecule sodiumhydroxide = new Molecule();
