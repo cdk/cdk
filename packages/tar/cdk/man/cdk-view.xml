@@ -38,6 +38,12 @@
           <para>show a 2D representation of the SMILES</para>
         </listitem>
       </varlistentry>
+      <varlistentry>
+        <term>--useTree</term>
+        <listitem>
+          <para>shows a ChemObjectTree of the loaded file</para>
+        </listitem>
+      </varlistentry>
     </variablelist>
   </refsect1>
 
