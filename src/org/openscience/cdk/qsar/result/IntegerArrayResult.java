@@ -48,7 +48,7 @@ public class IntegerArrayResult implements DescriptorResult {
     /**
      * The first int is at index = 0;
      */
-    public double get(int index) {
+    public int get(int index) {
         return ((Integer)this.array.get(index)).intValue();
     }
     
