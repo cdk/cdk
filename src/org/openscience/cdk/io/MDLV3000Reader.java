@@ -29,10 +29,13 @@ import org.openscience.cdk.exception.*;
 import org.openscience.cdk.io.setting.*;
 import org.openscience.cdk.tools.IsotopeFactory;
 import org.openscience.cdk.tools.LoggingTool;
-import java.util.Vector;
+import java.util.Enumeration;
+import java.util.Hashtable;
 import java.util.StringTokenizer;
+import java.util.Vector;
 import java.io.*;
 import javax.vecmath.*;
+import java.util.regex.*;
 
 /**
  * Class that implements the new MDL rxn format introduced in August 2002.
@@ -56,6 +59,9 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     private LoggingTool logger = null;
     private IsotopeFactory isotopeFactory = null;
 
+    private Pattern keyValueTuple;
+    private Pattern keyValueTuple2;
+    
     public MDLV3000Reader(Reader in) {
         logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
         input = new BufferedReader(in);
@@ -65,6 +71,9 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         } catch (Exception exception) {
             logger.error("Failed to initiate isotope factory: " + exception.toString());
         }
+        /* compile patterns */
+        keyValueTuple = Pattern.compile("\\s*(\\w+)=([^\\s]*)(.*)"); // e.g. CHG=-1
+        keyValueTuple2 = Pattern.compile("\\s*(\\w+)=\\(([^\\)]*)\\)(.*)"); // e.g. ATOMS=(1 31)
     }
 
     public ChemObject read(ChemObject object) throws CDKException {
@@ -93,6 +102,8 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 readAtomBlock(readData);
             } else if ("BEGIN BOND".equals(command)) {
                 readBondBlock(readData);
+            } else if ("BEGIN SGROUP".equals(command)) {
+                readSGroup(readData);
             } else {
                 logger.warn("Unrecognized command: " + command);
             }
@@ -153,31 +164,39 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                     logger.debug(exception);
                     throw new CDKException(error);
                 }
+                // atom-atom mapping
+                String mapping = tokenizer.nextToken();
+                if (!mapping.equals("0")) {
+                    logger.warn("Skipping atom-atom mapping: " + mapping);
+                } // else: default 0 is no mapping defined
+                
                 // the rest are key value things
-                while (tokenizer.hasMoreTokens()) {
-                    String token = tokenizer.nextToken();
-                    try {
-                        if (token.indexOf("=") != -1) {
-                            String key = token.substring(0,token.indexOf("="));
-                            String value = token.substring(token.indexOf("=")+1);
+                if (command.indexOf("=") != -1) {
+                    Hashtable options = parseOptions(exhaustStringTokenizer(tokenizer));
+                    Enumeration keys = options.keys();
+                    while (keys.hasMoreElements()) {
+                        String key = (String)keys.nextElement();
+                        String value = (String)options.get(key);
+                        try {
                             if (key.equals("CHG")) {
                                 int charge = Integer.parseInt(value);
-                                if (charge > 0) { // zero is no charge specified
+                                if (charge != 0) { // zero is no charge specified
                                     atom.setFormalCharge(charge);
                                 }
                             } else {
-                                logger.warn("Not parsing token: " + token);
+                                logger.warn("Not parsing key: " + key);
                             }
+                        } catch (Exception exception) {
+                            String error = "Error while parsing key/value " + key + "=" +
+                            value + ": " + exception.getMessage();
+                            logger.error(error);
+                            logger.debug(exception);
+                            throw new CDKException(error);
                         }
-                        logger.warn("Not parsing token: " + token);
-                    } catch (Exception exception) {
-                        String error = "Error while parsing token " + token + ": " +
-                                       exception.getMessage();
-                        logger.error(error);
-                        logger.debug(exception);
-                        throw new CDKException(error);
                     }
                 }
+                
+                // store atom
                 readData.addAtom(atom);
                 logger.debug("Added atom: " + atom);
             }
@@ -247,12 +266,13 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                     throw new CDKException(error);
                 }
                 // the rest are key=value fields
-                while (tokenizer.hasMoreTokens()) {
-                    String token = tokenizer.nextToken();
-                    try {
-                        if (token.indexOf("=") != -1) {
-                            String key = token.substring(0,token.indexOf("="));
-                            String value = token.substring(token.indexOf("=")+1);
+                if (command.indexOf("=") != -1) {
+                    Hashtable options = parseOptions(exhaustStringTokenizer(tokenizer));
+                    Enumeration keys = options.keys();
+                    while (keys.hasMoreElements()) {
+                        String key = (String)keys.nextElement();
+                        String value = (String)options.get(key);
+                        try {
                             if (key.equals("CFG")) {
                                 int configuration = Integer.parseInt(value);
                                 if (configuration == 0) {
@@ -265,18 +285,19 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                                     bond.setStereo(CDKConstants.STEREO_BOND_DOWN);
                                 }
                             } else {
-                                logger.warn("Not parsing token: " + token);
+                                logger.warn("Not parsing key: " + key);
                             }
+                        } catch (Exception exception) {
+                            String error = "Error while parsing key/value " + key + "=" +
+                            value + ": " + exception.getMessage();
+                            logger.error(error);
+                            logger.debug(exception);
+                            throw new CDKException(error);
                         }
-                        logger.warn("Not parsing token: " + token);
-                    } catch (Exception exception) {
-                        String error = "Error while parsing token " + token + ": " +
-                                       exception.getMessage();
-                        logger.error(error);
-                        logger.debug(exception);
-                        throw new CDKException(error);
                     }
                 }
+                
+                // storing bond
                 readData.addBond(bond);
                 logger.debug("Added bond: " + bond);
             }
@@ -284,22 +305,132 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     }
     
     /**
+     * Reads labels.
+     */
+    public void readSGroup(AtomContainer readData) throws CDKException {
+        boolean foundEND = false;
+        while (isReady() && !foundEND) {
+            String command = readCommand();
+            if ("END SGROUP".equals(command)) {
+                foundEND = true;
+            } else {
+                logger.debug("Parsing Sgroup line: " + command);
+                StringTokenizer tokenizer = new StringTokenizer(command);
+                // parse the index
+                String indexString = tokenizer.nextToken();
+                logger.warn("Skipping external index: " + indexString);
+                // parse command type
+                String type = tokenizer.nextToken();
+                // parse the external index
+                String externalIndexString = tokenizer.nextToken();
+                logger.warn("Skipping external index: " + externalIndexString);
+                
+                // the rest are key=value fields
+                Hashtable options = new Hashtable();
+                if (command.indexOf("=") != -1) {
+                    options = parseOptions(exhaustStringTokenizer(tokenizer));
+                }
+
+                // now interpret line
+                if (type.startsWith("SUP")) {
+                    Enumeration keys = options.keys();
+                    int atomID = -1;
+                    String label = "";
+                    while (keys.hasMoreElements()) {
+                        String key = (String)keys.nextElement();
+                        String value = (String)options.get(key);
+                        try {
+                            if (key.equals("ATOMS")) {
+                                StringTokenizer atomsTokenizer = new StringTokenizer(value);
+                                int atomCount = Integer.parseInt(atomsTokenizer.nextToken()); // should be 1
+                                atomID = Integer.parseInt(atomsTokenizer.nextToken());
+                            } else if (key.equals("LABEL")) {
+                                label = value;
+                            } else {
+                                logger.warn("Not parsing key: " + key);
+                            }
+                        } catch (Exception exception) {
+                            String error = "Error while parsing key/value " + key + "=" +
+                            value + ": " + exception.getMessage();
+                            logger.error(error);
+                            logger.debug(exception);
+                            throw new CDKException(error);
+                        }
+                        if (atomID != -1 && label.length() > 0) {
+                            Atom atom = readData.getAtomAt(atomID-1);
+                            if (!(atom instanceof PseudoAtom)) {
+                                atom = new PseudoAtom(atom);
+                            }
+                            ((PseudoAtom)atom).setLabel(label);
+                            readData.setAtomAt(atomID-1, atom);
+                        }
+                    }
+                } else {
+                    logger.warn("Skipping unrecognized SGROUP type: " + type);
+                }
+            }
+        }
+    }
+
+            
+    /**
      * Reads the command on this line. If the line is continued on the next, that
      * part is added.
      *
      * @return Returns the command on this line.
      */
-    public String readCommand() throws CDKException {
+    private String readCommand() throws CDKException {
         String line = readLine();
         if (line.startsWith("M  V30 ")) {
             String command =  line.substring(7);
             if (command.endsWith("-")) {
+                command = command.substring(0, command.length()-1);
                 command += readCommand();
             }
             return command;
         } else {
             throw new CDKException("Could not read MDL file: unexpected line: " + line);
         }
+    }
+    
+    private Hashtable parseOptions(String string) throws CDKException {
+        Hashtable keyValueTuples = new Hashtable();
+        while (string.length() >= 3) {
+            logger.debug("Matching remaining option string: " + string);
+            Matcher tuple1Matcher = keyValueTuple2.matcher(string);
+            if (tuple1Matcher.matches()) {
+                String key = tuple1Matcher.group(1);
+                String value = tuple1Matcher.group(2);
+                string = tuple1Matcher.group(3);
+                logger.debug("Found key: " + key);
+                logger.debug("Found value: " + value);
+                keyValueTuples.put(key, value);
+            } else {
+                Matcher tuple2Matcher = keyValueTuple.matcher(string);
+                if (tuple2Matcher.matches()) {
+                    String key = tuple2Matcher.group(1);
+                    String value = tuple2Matcher.group(2);
+                    string = tuple2Matcher.group(3);
+                    logger.debug("Found key: " + key);
+                    logger.debug("Found value: " + value);
+                    keyValueTuples.put(key, value);
+                } else {
+                    logger.warn("Quiting; could not parse: " + string + ".");
+                    string = "";
+                }
+            }
+        }
+        return keyValueTuples;
+    }
+    
+    public String exhaustStringTokenizer(StringTokenizer tokenizer) {
+        StringBuffer buffer = new StringBuffer();
+        buffer.append(" ");
+        while (tokenizer.hasMoreTokens()) {
+            buffer.append(tokenizer.nextToken());
+            buffer.append(" ");
+        }
+        return buffer.toString();
     }
     
     public String readLine() throws CDKException {

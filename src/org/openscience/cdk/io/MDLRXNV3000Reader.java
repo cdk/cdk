@@ -81,6 +81,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
         if (line.startsWith("M  V30 ")) {
             String command =  line.substring(7);
             if (command.endsWith("-")) {
+                command = command.substring(0, command.length()-1);
                 command += readCommand();
             }
             return command;
