@@ -32,6 +32,7 @@ import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.tools.HydrogenAdder;
 import java.util.Map;
 import java.util.Hashtable;
+import java.util.ArrayList;
 
 /**
  *  The calculation of partial charges of an heavy atom and its protons is based on Gasteiger Marsili (PEOE)
@@ -119,12 +120,11 @@ public class ProtonTotalPartialChargeDescriptor implements Descriptor {
 		}
 		Atom target = mol.getAtomAt(atomPosition);
 		Atom[] neighboors = mol.getConnectedAtoms(target);
-		double[] protonPartialCharge = new double[neighboors.length + 1];
-		protonPartialCharge[0] = target.getCharge();
+		ArrayList protonPartialCharge = new ArrayList(neighboors.length + 1);
+		protonPartialCharge.add( new Double(target.getCharge()) );
 		for (int i = 0; i < neighboors.length; i++) {
 			if (neighboors[i].getSymbol().equals("H")) {
-				protonPartialCharge[counter] = neighboors[i].getCharge();
-				counter++;
+				protonPartialCharge.add( new Double(neighboors[i].getCharge()) );				counter++;
 			}
 		}
 		return protonPartialCharge;

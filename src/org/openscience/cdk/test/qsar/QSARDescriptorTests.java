@@ -43,7 +43,12 @@ import org.openscience.cdk.test.qsar.*;
         suite.addTest(AtomCountDescriptorTest.suite());
         suite.addTest(BondCountDescriptorTest.suite());
         suite.addTest(QsarDescriptors2DTest.suite());
-        suite.addTest(GravitationalIndexDescriptorTest.suite());
+        suite.addTest(RotatableBondsCountDescriptorTest.suite());
+	suite.addTest(IsProtonInAromaticSystemDescriptorTest.suite());
+	suite.addTest(SigmaElectronegativityDescriptorTest.suite());
+	suite.addTest(AromaticAtomsCountDescriptorTest.suite());
+	suite.addTest(IsProtonInConjugatedPiSystemDescriptorTest.suite());
+	suite.addTest(ProtonTotalPartialChargeDescriptorTest.suite());
         return suite;
     }
     
