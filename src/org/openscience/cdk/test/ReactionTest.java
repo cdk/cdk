@@ -31,8 +31,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.Reaction;
+import org.openscience.cdk.*;
 
 /**
  * TestCase for the Reaction class.
@@ -89,6 +88,21 @@ public class ReactionTest extends TestCase {
         assertEquals(1.0, reaction.getReactantCoefficient(aceticAcid), 0.00001);
     }
 
+    public void testSetReactants_SetOfMolecules() {
+        Reaction reaction = new Reaction();
+        Molecule sodiumhydroxide = new Molecule();
+        Molecule aceticAcid = new Molecule();
+        Molecule water = new Molecule();
+        SetOfMolecules reactants = new SetOfMolecules();
+        reactants.addMolecule(sodiumhydroxide);
+        reactants.addMolecule(aceticAcid);
+        reactants.addMolecule(water);
+        reaction.setReactants(reactants);
+        assertEquals(3, reaction.getReactantCount());
+        
+        assertEquals(1.0, reaction.getReactantCoefficient(aceticAcid), 0.00001);
+    }
+
     public void testAddReactant_Molecule_double() {
         Reaction reaction = new Reaction();
         Molecule proton = new Molecule();
@@ -113,6 +127,21 @@ public class ReactionTest extends TestCase {
         // size is still 3.
         reaction.addProduct(acetate);
         assertEquals(4, reaction.getProductCount());
+        
+        assertEquals(1.0, reaction.getProductCoefficient(aceticAcid), 0.00001);
+    }
+
+    public void testSetProducts_SetOfMolecules() {
+        Reaction reaction = new Reaction();
+        Molecule sodiumhydroxide = new Molecule();
+        Molecule aceticAcid = new Molecule();
+        Molecule water = new Molecule();
+        SetOfMolecules products = new SetOfMolecules();
+        products.addMolecule(sodiumhydroxide);
+        products.addMolecule(aceticAcid);
+        products.addMolecule(water);
+        reaction.setProducts(products);
+        assertEquals(3, reaction.getProductCount());
         
         assertEquals(1.0, reaction.getProductCoefficient(aceticAcid), 0.00001);
     }
@@ -192,7 +221,7 @@ public class ReactionTest extends TestCase {
 		assertEquals(2.0, pc[1], 0.00001);
     }
 	
-	public void testSetReactantCoefficients() {
+	public void testSetReactantCoefficients_arraydouble() {
         Reaction reaction = new Reaction();
 		Molecule ed1 = new Molecule();
 		Molecule ed2 = new Molecule();
@@ -207,7 +236,7 @@ public class ReactionTest extends TestCase {
 		assertFalse(reaction.setReactantCoefficients(ecFalse));
     }
 	
-	public void testSetProductCoefficients() {
+	public void testSetProductCoefficients_arraydouble() {
         Reaction reaction = new Reaction();
 		Molecule pr1 = new Molecule();
 		reaction.addProduct(pr1, 1);
@@ -270,6 +299,13 @@ public class ReactionTest extends TestCase {
             assertTrue(description.charAt(i) != '\n');
             assertTrue(description.charAt(i) != '\r');
         }
+    }
+    
+    public void testClone() {
+        Reaction reaction = new Reaction();
+        Object clone = reaction.clone();
+        assertNotNull(clone);
+        assertTrue(clone instanceof Reaction);
     }
 
 }
