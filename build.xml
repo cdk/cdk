@@ -43,6 +43,8 @@
                         <include name="batik-awt-util.jar" />
                         <include name="batik-dom.jar" />
                         <include name="batik-svggen.jar" />
+                        <include name="batik-util.jar" />
+                        <include name="batik-xml.jar" />
                         <include name="baysmith-io.jar" />
                         <include name="dadml.jar" />
                         <include name="gnujaxp.jar" />
@@ -58,7 +60,7 @@
                         <include name="xindice.jar" />
                         <include name="xmldb.jar" />
                         <include name="stmml.jar" />
-                        <include name="castor-0.9.4.3-xml.jar" />
+                        <include name="castor-0.9.5-xml.jar" />
                 </fileset>
                 <fileset dir="${pathtojava3d}">
                         <include name="*.jar" />
