@@ -63,7 +63,10 @@ public class FieldTablePanel extends JPanel {
     public void addField(String labelText, JComponent component) {
         rows++;
         GridBagConstraints constraints = new GridBagConstraints();
-        JLabel label = new JLabel(labelText + ": ", JLabel.TRAILING);
+        JLabel label = new JLabel("", JLabel.TRAILING);
+        if (labelText != null && labelText.length() > 0) {
+            label = new JLabel(labelText + ": ", JLabel.TRAILING);
+        }
         label.setLabelFor(component);
         constraints.gridx = 0;
         constraints.gridy = rows;
