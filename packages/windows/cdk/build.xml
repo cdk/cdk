@@ -21,7 +21,7 @@
         <copy todir="${dist}/jar">
             <fileset dir="../../../jar" includes="*.jar" />
             <fileset dir="../../../jar/libio" includes="*.jar" />
-            <fileset dir="../../../dist/jar" includes="*.jar" />
+            <fileset dir="../../../dist/jar" includes="*.jar" excludes="*-all.jar"/>
         </copy>
         <copy todir="${dist}">
             <fileset dir="." includes="*.bat" />
