@@ -607,12 +607,14 @@ public class SmilesGenerator {
    * @param  a2  Description of Parameter
    * @return     true if the atom participates in a bond that was broken in the first pass.
    */
-  private boolean isRingOpening(Atom a1, Atom a2) {
+  private boolean isRingOpening(Atom a1, Vector v) {
     Iterator it = brokenBonds.iterator();
     while (it.hasNext()) {
       BrokenBond bond = (BrokenBond) it.next();
-      if ((bond.getA1().equals(a1) && bond.getA2().equals(a2)) || (bond.getA1().equals(a2) && bond.getA2().equals(a1))) {
-        return true;
+      for(int i=0;i<v.size();i++){
+        if ((bond.getA1().equals(a1) && bond.getA2().equals((Atom)v.get(i))) || (bond.getA1().equals((Atom)v.get(i)) && bond.getA2().equals(a1))) {
+          return true;
+        }
       }
     }
     return false;
@@ -708,11 +710,12 @@ public class SmilesGenerator {
    * @param  i  The number of the last element (size -1)
    * @return    The last atom.
    */
-  private Atom getLastAtom(Vector v, int i) {
-    if (v.get(i) instanceof Atom) {
-      return ((Atom) v.get(i));
-    } else {
-      return (getLastAtom(v, i - 1));
+  private void addAtoms(Vector v, Vector result) {
+    for(int i=0;i<v.size();i++){
+      if(v.get(i) instanceof Atom)
+        result.add((Atom)v.get(i));
+      else
+        addAtoms((Vector)v.get(i),result);
     }
   }
 
@@ -1219,7 +1222,9 @@ public class SmilesGenerator {
       } else {
         //Have Vector
         boolean brackets = true;
-        if (isRingOpening(parent, getLastAtom((Vector) o, ((Vector) o).size() - 1)) && container.getBondCount(parent) < 4) {
+        Vector result=new Vector();
+        addAtoms((Vector) o, result);
+        if (isRingOpening(parent, result) && container.getBondCount(parent) < 4) {
           brackets = false;
         }
         if (brackets) {
