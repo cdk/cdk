@@ -227,7 +227,7 @@ public class AtomTypeFactory
 	 */
 	public AtomType[] getAtomTypes(String symbol, String id)
 	{
-		System.out.println("Request for atomtype " + id + " for symbol " + symbol);
+		//System.out.println("Request for atomtype " + id + " for symbol " + symbol);
 		Vector al = new Vector();
 		AtomType atomType = null;
 		for (int f = 0; f < atomTypes.size(); f++)
@@ -235,13 +235,13 @@ public class AtomTypeFactory
 			AtomType at = (AtomType) atomTypes.elementAt(f);
 			if (at.getSymbol().equals(symbol) && (at.getID().indexOf(id) > -1))
 			{
-				System.out.println("Atomtype for symbol " + symbol + " found.");
+				//System.out.println("Atomtype for symbol " + symbol + " found.");
 				al.addElement((AtomType) at.clone());
 			}
 		}
 		AtomType[] atomTypes = new AtomType[al.size()];
 		al.copyInto(atomTypes);
-		System.out.println("Atomtype for symbol " + symbol + " looks like this: " + atomTypes[0]);
+		//System.out.println("Atomtype for symbol " + symbol + " looks like this: " + atomTypes[0]);
 		return atomTypes;
 	}
 

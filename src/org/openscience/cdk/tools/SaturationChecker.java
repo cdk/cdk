@@ -240,9 +240,9 @@ public class SaturationChecker
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
 				atom = molecule.getAtomAt(f);
-				System.out.println(atom.getSymbol());
+				//System.out.println(atom.getSymbol());
 				atomTypes1 = atf.getAtomTypes(atom.getSymbol(), atf.ATOMTYPE_ID_STRUCTGEN);
-				System.out.println(atomTypes1[0]);
+				//System.out.println(atomTypes1[0]);
 				if (molecule.getBondCount(atom) == i)
 				{
 					if (molecule.getBondOrderSum(atom) < atomTypes1[0].getMaxBondOrderSum() - atom.getHydrogenCount())
