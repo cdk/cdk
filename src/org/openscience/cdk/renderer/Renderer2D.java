@@ -326,10 +326,10 @@ public class Renderer2D   {
         } else if (atom.getProperty(ProblemMarker.ERROR_MARKER) != null) {
             // ... unless carbon is unbonded
             drawSymbol = true;
-        } else if (atom.getAtomicMass() != 0) {
+        } else if (atom.getMassNumber() != 0) {
             try {
-                if (atom.getAtomicMass() != IsotopeFactory.getInstance().
-                       getMajorIsotope(atom.getSymbol()).getAtomicMass()) {
+                if (atom.getMassNumber() != IsotopeFactory.getInstance().
+                       getMajorIsotope(atom.getSymbol()).getMassNumber()) {
                     drawSymbol = true;
                 }
             } catch (Exception exception) {
@@ -448,13 +448,13 @@ public class Renderer2D   {
 
         // calculate ISOTOPE width, height
         // font is still subscript, that's fine
-        int atomicMassNumber = atom.getAtomicMass();
+        int atomicMassNumber = atom.getMassNumber();
         int isotopeW = 0; // unless next condition, this is the default
         int isotopeH = 0;
         String isotopeString = "";
         if (atomicMassNumber != 0 && isotopeFactory != null) {
             Isotope majorIsotope = isotopeFactory.getMajorIsotope(atom.getSymbol());
-            if (majorIsotope != null && atomicMassNumber != majorIsotope.getAtomicMass()) {
+            if (majorIsotope != null && atomicMassNumber != majorIsotope.getMassNumber()) {
                 graphics.setFont(subscriptFont);
                 fm = graphics.getFontMetrics();
                 isotopeString = new Integer(atomicMassNumber).toString();

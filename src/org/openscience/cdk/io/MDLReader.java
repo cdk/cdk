@@ -387,7 +387,7 @@ public class MDLReader extends DefaultChemObjectReader {
                             int absMass = Integer.parseInt(st.nextToken().trim());
                             if (absMass != 0) { 
                                 Atom isotope = molecule.getAtomAt(atomNumber - 1);
-                                isotope.setAtomicMass(absMass);
+                                isotope.setMassNumber(absMass);
                             }
                         }
                     } catch (NumberFormatException exception) {

@@ -528,7 +528,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 			}
 		}
 		Isotope isotope = (new StandardIsotopes()).getMajorIsotope(symbol);
-		return ((double) 800000 - isotope.getAtomicMass());
+		return ((double) 800000 - isotope.getMassNumber());
 	}
 
 	/**

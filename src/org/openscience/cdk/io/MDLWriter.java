@@ -256,8 +256,8 @@ public class MDLWriter extends DefaultChemObjectWriter {
         // write formal isotope information
         for (int i = 0; i < atoms.length; i++) {
             Atom atom = atoms[i];
-            int atomicMass = atom.getAtomicMass();
-            int majorMass = isotopeFactory.getMajorIsotope(atom.getSymbol()).getAtomicMass();
+            int atomicMass = atom.getMassNumber();
+            int majorMass = isotopeFactory.getMajorIsotope(atom.getSymbol()).getMassNumber();
             if (atomicMass != 0 && atomicMass != majorMass) {
                 writer.write("M  ISO  1 ");
                 writer.write(formatMDLInt(i+1,3));

@@ -224,7 +224,7 @@ public class SmilesParserTest extends TestCase
             Molecule mol = sp.parseSmiles(smiles);
             assertEquals(1, mol.getAtomCount());
             assertEquals("C", mol.getAtomAt(0).getSymbol());
-            assertEquals(13, mol.getAtomAt(0).getAtomicMass());
+            assertEquals(13, mol.getAtomAt(0).getMassNumber());
         } catch (Exception e) {
             fail(e.toString());
         }

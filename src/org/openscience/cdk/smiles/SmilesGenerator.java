@@ -1,5 +1,4 @@
-/*
- *  $RCSfile$
+/*  $RCSfile$
  *  $Author$
  *  $Date$
  *  $Revision$
@@ -1387,10 +1386,10 @@ public class SmilesGenerator {
     Isotope majorIsotope = isotopeFactory.getMajorIsotope(a.getSymbol());
     if (majorIsotope.getExactMass() == a.getExactMass()) {
       return "";
-    } else if (a.getAtomicMass() == 0) {
+    } else if (a.getMassNumber() == 0) {
       return "";
     } else {
-      return Integer.toString(a.getAtomicMass());
+      return Integer.toString(a.getMassNumber());
     }
   }
 }

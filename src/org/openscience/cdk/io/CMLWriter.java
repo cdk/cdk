@@ -447,11 +447,11 @@ public class CMLWriter extends DefaultChemObjectWriter {
         if (hydrogenCount != 0) {
             atomAtts.put("hydrogenCount", new Integer(hydrogenCount));
         }
-        int massNumber = atom.getAtomicMass();
+        int massNumber = atom.getMassNumber();
         if (!(atom instanceof PseudoAtom)) {
             Isotope majorIsotope = isotopeFactory.getMajorIsotope(atom.getSymbol());
             if (majorIsotope != null) {
-                int majorMassNumber = majorIsotope.getAtomicMass();
+                int majorMassNumber = majorIsotope.getMassNumber();
                 if (massNumber != 0 && massNumber != majorMassNumber) {
                     atomAtts.put("isotope", new Integer(massNumber));
                 }

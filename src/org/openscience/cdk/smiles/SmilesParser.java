@@ -480,7 +480,7 @@ public class SmilesParser
         } while (position < s.length());
         if (isotopicNumber.toString().length() > 0) {
             try {            
-                atom.setAtomicMass(Integer.parseInt(isotopicNumber.toString()));
+                atom.setMassNumber(Integer.parseInt(isotopicNumber.toString()));
             } catch (Exception exception) {
                 logger.error("Could not set atom's atom number.");
                 logger.debug(exception);

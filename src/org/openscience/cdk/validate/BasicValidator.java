@@ -292,10 +292,10 @@ public class BasicValidator implements ValidatorInterface {
         try {
             IsotopeFactory isotopeFac = IsotopeFactory.getInstance();
             Isotope[] isotopes = isotopeFac.getIsotopes(isotope.getSymbol());
-            if (isotope.getAtomicMass() != 0) {
+            if (isotope.getMassNumber() != 0) {
                 boolean foundKnownIsotope = false;
                 for (int i=0; i<isotopes.length; i++) {
-                    if (isotopes[i].getAtomicMass() == isotope.getAtomicMass()) {
+                    if (isotopes[i].getMassNumber() == isotope.getMassNumber()) {
                         foundKnownIsotope = true;
                     }
                 }
