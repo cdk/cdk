@@ -46,5 +46,15 @@ public class SetOfMoleculesManipulator {
         }
     }
     
+    public static void removeElectronContainer(SetOfMolecules set, ElectronContainer electrons) {
+        Molecule[] molecules = set.getMolecules();
+        for (int i=0; i < molecules.length; i++) {
+            Molecule mol = molecules[i];
+            if (mol.contains(electrons)) {
+                mol.removeElectronContainer(electrons);
+            }
+            return;
+        }
+    }
 }
 

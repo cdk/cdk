@@ -52,5 +52,20 @@ public class ReactionManipulator {
         }
     }
     
+    public static void removeElectronContainer(Reaction reaction, ElectronContainer electrons) {
+        Molecule[] reactants = reaction.getReactants();
+        for (int i=0; i<reactants.length; i++) {
+            Molecule mol = reactants[i];
+            if (mol.contains(electrons)) {
+                mol.removeElectronContainer(electrons);
+            }
+        }
+        Molecule[] products = reaction.getProducts();
+        for (int i=0; i<products.length; i++) {
+            Molecule mol = products[i];
+            if (mol.contains(electrons)) {
+                mol.removeElectronContainer(electrons);
+            }
+        }
+    }
 }
-

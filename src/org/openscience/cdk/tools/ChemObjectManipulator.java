@@ -58,9 +58,26 @@ public class ChemObjectManipulator {
         }
         SetOfReactions reactionSet = chemModel.getSetOfReactions();
         if (reactionSet != null) {
-            
+            SetOfReactionsManipulator.removeAtomAndConnectedElectronContainers(reactionSet, atom);
         }
     }
     
+    public static void removeElectronContainer(ChemModel chemModel, ElectronContainer electrons) {
+        Crystal crystal = chemModel.getCrystal();
+        if (crystal != null) {
+            if (crystal.contains(electrons)) {
+                crystal.removeElectronContainer(electrons);
+            }
+            return;
+        }
+        SetOfMolecules moleculeSet = chemModel.getSetOfMolecules();
+        if (moleculeSet != null) {
+            SetOfMoleculesManipulator.removeElectronContainer(moleculeSet, electrons);
+        }
+        SetOfReactions reactionSet = chemModel.getSetOfReactions();
+        if (reactionSet != null) {
+            SetOfReactionsManipulator.removeElectronContainer(reactionSet, electrons);
+        }
+    }
 }
 

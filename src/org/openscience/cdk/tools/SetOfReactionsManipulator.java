@@ -44,5 +44,12 @@ public class SetOfReactionsManipulator {
         }
     }
     
+    public static void removeElectronContainer(SetOfReactions set, ElectronContainer electrons) {
+        Reaction[] reactions = set.getReactions();
+        for (int i=0; i < reactions.length; i++) {
+            Reaction reaction = reactions[i];
+            ReactionManipulator.removeElectronContainer(reaction, electrons);
+            return;
+        }
+    }
 }
-
