@@ -1,76 +1,119 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
- * 
- * Copyright (C) 2004  The Chemistry Development Kit (CDK) project
+/*
+ *  $RCSfile$
+ *  $Author$
+ *  $Date$
+ *  $Revision$
  *
- * Contact: cdk-devel@lists.sourceforge.net
- * 
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public License
- * as published by the Free Software Foundation; either version 2.1
- * of the License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ *  Copyright (C) 2004  The Chemistry Development Kit (CDK) project
+ *
+ *  Contact: cdk-devel@lists.sourceforge.net
+ *
+ *  This program is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public License
+ *  as published by the Free Software Foundation; either version 2.1
+ *  of the License, or (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 package org.openscience.cdk.isomorphism.matchers;
-
 
 import java.util.HashSet;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.PseudoAtom;
 
-
 /**
- * A QueryAtom that matches all symbols in this container.
- * You may add symbols to this container. This QueryAtom will only give a match
- * if it contains the symbol of the Atom to match (example: add "F", "Cl", "Br", "I" to
- * get a match for the most common halogens).
- * 
- * @see InverseSymbolSetQueryAtom
- * @cdk.module extra
+ *  A QueryAtom that matches all symbols in this container. You may add symbols
+ *  to this container. This QueryAtom will only give a match if it contains the
+ *  symbol of the Atom to match (example: add "F", "Cl", "Br", "I" to get a
+ *  match for the most common halogens).
+ *
+ *@author        kha
+ *@created       16. September 2004
+ *@see           InverseSymbolSetQueryAtom
+ *@cdk.module    extra
  */
 public class SymbolSetQueryAtom extends PseudoAtom implements QueryAtom {
-    
-    private HashSet symbols = new HashSet();
-    
-    public SymbolSetQueryAtom() {}
-    
-	public boolean matches(Atom atom) {
-        return symbols.contains(atom.getSymbol());
-    };
 
+    private HashSet symbols = new HashSet();
+
+
+    /**
+     *  Constructor for the SymbolSetQueryAtom object
+     */
+    public SymbolSetQueryAtom() { }
+
+
+    /**
+     *  The matches implementation of the QueryAtom interface.
+     *
+     *@param  atom  The atom to be matched by this QueryAtom
+     *@return       true if Atom matched
+     */
+    public boolean matches(Atom atom) {
+        return symbols.contains(atom.getSymbol());
+    }
+
+
+    /**
+     *  Add a symbol to this QueryAtom
+     *
+     *@param  symbol  The symbol to add
+     */
     public void addSymbol(String symbol) {
         symbols.add(symbol);
     }
-    
+
+
+    /**
+     *  Remove a symbol from this QueryAtom
+     *
+     *@param  symbol  The symbol to remove
+     */
     public void removeSymbol(String symbol) {
         symbols.remove(symbol);
     }
-    
+
+
+    /**
+     *  Check whether a symbol is already registered
+     *
+     *@param  symbol  The symbol to check for
+     *@return         true if symbol already registered
+     */
     public boolean hasSymbol(String symbol) {
         return symbols.contains(symbol);
     }
-    
+
+
+    /**
+     *  Retrieve the Set of symbols
+     *
+     *@return    The symbol Set
+     */
     public HashSet getSymbolSet() {
         return symbols;
     }
-    
+
+
+    /**
+     *  The toString method
+     *
+     *@return    The String representation of this object.
+     */
     public String toString() {
-		StringBuffer s = new StringBuffer();
-		s.append("SymbolSetQueryAtom(");
-		s.append(this.hashCode() + ", ");
-		s.append(symbols.toString());
-		s.append(")");
-		return s.toString();
+        StringBuffer s = new StringBuffer();
+        s.append("SymbolSetQueryAtom(");
+        s.append(this.hashCode() + ", ");
+        s.append(symbols.toString());
+        s.append(")");
+        return s.toString();
     }
 }
 
