@@ -40,12 +40,12 @@ import java.util.ArrayList;
 
 /**
  * Descriptor characterizing the mass distribution of the molecule. 
- * Described by Katritzky et al. {@cdk-cite KAT96}.
+ * Described by Katritzky et al. {@cdk.cite KAT96}.
  * For modelling purposes the value of the descriptor is calculated
  * both with and without H atoms. Furthermore the square and cube roots 
  * of the descriptor are also generated as described by Wessel et al. {@cdk.cite WES98}.
- *
- * The descriptor routine generates 6 descriptors:
+ *<p>
+ * The descriptor routine generates 9 descriptors:
  * <ul>
  * <li>grav1 -  gravitational index of heavy atoms
  * <li>grav2 -  square root of gravitational index of heavy atoms
@@ -62,6 +62,7 @@ import java.util.ArrayList;
  * @created     2004-11-23
  */
 public class GravitationalIndexDescriptor implements Descriptor {
+    
     private class pair {
         int x,y;
         public  pair() { 
@@ -228,7 +229,7 @@ public class GravitationalIndexDescriptor implements Descriptor {
         }
 
 
-        ArrayList retval = new ArrayList(6);
+        ArrayList retval = new ArrayList(9);
         retval.add( new Double(heavysum) );
         retval.add( new Double(Math.sqrt(heavysum)) );
         retval.add( new Double(Math.pow(heavysum,1.0/3.0)) );
