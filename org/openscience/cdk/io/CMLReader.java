@@ -44,7 +44,6 @@ import java.io.*;
  */
 public class CMLReader implements CDKConstants, ChemObjectReader {
 
-    private static final String pClass = "org.apache.xerces.parsers.SAXParser";
     private XMLReader parser;
     private ContentHandler handler;
     private EntityResolver resolver;
@@ -58,7 +57,7 @@ public class CMLReader implements CDKConstants, ChemObjectReader {
      */
     public CMLReader(Reader input) {
 	try {
-	    parser = (XMLReader)Class.forName(pClass).newInstance();
+	    parser = new org.apache.xerces.parsers.SAXParser();
 	    this.input = input;
 	} catch (Exception e) {
 	    System.out.println("CMLReader: You found a serious bug! Please report it!");
@@ -86,7 +85,15 @@ public class CMLReader implements CDKConstants, ChemObjectReader {
     private ChemFile readChemFile() {
 	ChemFileCDO cdo = new ChemFileCDO();
 	handler = new CMLHandler((CDOInterface)cdo);
+	try {
+	    parser.setFeature("http://xml.org/sax/features/validation", true);
+	} catch (SAXException e) {
+	    System.err.println("Cannot activate validation."); 
+	    return cdo;
+	}
+	resolver = new org.openscience.cml.CMLResolver();
 	parser.setContentHandler(handler);
+	parser.setEntityResolver(resolver);
 	try {
 	    parser.parse(new InputSource(input));
 	} catch (IOException e) {
