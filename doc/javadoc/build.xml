@@ -18,7 +18,7 @@
         </fileset>
     </path>
 
-    <target name="overview" depends="compileDoclets">
+    <target name="overview" id="overview" depends="compileDoclets">
         <javadoc private="false" public="true">
             <classpath refid="project.class.path" />
 
@@ -30,7 +30,7 @@
         </javadoc>
     </target>
 
-    <target name="keyword.index" depends="compileDoclets">
+    <target name="keyword.index" id="keyword.index" depends="compileDoclets">
         <javadoc private="false" public="true">
             <classpath refid="project.class.path" />
 
@@ -43,7 +43,7 @@
         </javadoc>
     </target>
 
-    <target name="classes.mod" depends="compileDoclets">
+    <target name="classes.mod" id="classes.mod" depends="compileDoclets">
         <javadoc private="false" public="true">
             <classpath refid="project.class.path" />
 
@@ -55,7 +55,7 @@
         </javadoc>
     </target>
 
-    <target name="classes.web.mod" depends="compileDoclets">
+    <target name="classes.web.mod" id="classes.web.mod" depends="compileDoclets">
         <javadoc private="false" public="true">
             <classpath refid="project.class.path" />
 
@@ -67,7 +67,19 @@
         </javadoc>
     </target>
 
-    <target name="xmi" depends="compileDoclets">
+    <target name="src.star.javafiles" id="src.star.javafiles" depends="compileDoclets">
+        <javadoc private="false" public="true">
+            <classpath refid="project.class.path" />
+
+            <doclet name="MakeJavaFilesFilesDoclet" path="."/>
+
+            <packageset dir="../../src/">
+              <include name="org/openscience/cdk/**"/>
+            </packageset>
+        </javadoc>
+    </target>
+
+    <target name="xmi" id="xmi" depends="compileDoclets">
         <javadoc private="false" public="true">
             <classpath refid="project.class.path" />
 
@@ -80,7 +92,7 @@
         </javadoc>
     </target>
 
-    <target name="compileDoclets">
+    <target name="compileDoclets" id="compileDoclets">
       <javac srcdir="source" destdir="."
              includes="*.java">
         <classpath>
