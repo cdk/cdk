@@ -1,10 +1,9 @@
-/*
- *  $RCSfile$
+/*  $RCSfile$
  *  $Author$
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  *
  *  Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  *
@@ -205,7 +204,6 @@ public class SaturationChecker
 	{
 		AtomType[] atomTypes = atf.getAtomTypes(atom.getSymbol(), atf.ATOMTYPE_ID_STRUCTGEN);
 		double bondOrderSum = ac.getBondOrderSum(atom);
-		double maxBondOrder = ac.getHighestCurrentBondOrder(atom);
 		int hcount = atom.getHydrogenCount();
 		double max = 0;
 		double current = 0;
@@ -349,19 +347,18 @@ public class SaturationChecker
 		return true;
 	}*/
 
-
 	/**
-	 *  Calculate the number of missing hydrogens by substracting the number of
-	 *  bonds for the atom from the expected number of bonds. Charges are included
-	 *  in the calculation. The number of expected bonds is defined by the AtomType
-	 *  generated with the AtomTypeFactory.
+	 * Calculate the number of missing hydrogens by substracting the number of
+	 * bonds for the atom from the expected number of bonds. Charges are included
+	 * in the calculation. The number of expected bonds is defined by the AtomType
+	 * generated with the AtomTypeFactory.
 	 *
-	 *@param  atom      Description of the Parameter
-	 *@param  molecule  Description of the Parameter
-	 *@return           Description of the Return Value
-	 *@see              AtomTypeFactory
+	 * @param  atom      Description of the Parameter
+	 * @param  molecule  Description of the Parameter
+	 * @return           Description of the Return Value
+	 * @see              AtomTypeFactory
 	 */
-	private int calculateMissingHydrogen(Atom atom, Molecule molecule)
+	private int calculateMissingHydrogen(Atom atom, AtomContainer container)
 	{
 		logger.info("Calculating number of missing hydrogen atoms");
 		// get default atom
@@ -370,47 +367,84 @@ public class SaturationChecker
 		AtomType defaultAtom = atomTypes[0];
 		logger.debug("DefAtom: " + defaultAtom.toString());
 		int missingHydrogen = (int) (defaultAtom.getMaxBondOrderSum() -
-				molecule.getBondOrderSum(atom) +
+				container.getBondOrderSum(atom) +
 				atom.getFormalCharge());
 		if (atom.flags[CDKConstants.ISAROMATIC]) missingHydrogen--;				
 		logger.debug("Atom: " + atom.getSymbol());
 		logger.debug("  max bond order: " + defaultAtom.getMaxBondOrderSum());
-		logger.debug("  bond order sum: " + molecule.getBondOrderSum(atom));
+		logger.debug("  bond order sum: " + container.getBondOrderSum(atom));
 		logger.debug("  charge        : " + atom.getFormalCharge());
 		return missingHydrogen;
 	}
 
+    /**
+     * Method that saturates a molecule by adding explicit hydrogens.
+     *
+     * @param  molecule  Molecule to saturate
+     * @keyword          hydrogen, adding
+     * @keyword          explicit hydrogen
+     */
+    public void addHydrogensToSatisfyValency(Molecule molecule) throws IOException, ClassNotFoundException
+    {
+        addExplicitHydrogensToSatisfyValency(molecule);
+    }
 
-	/**
-	 *  Method that saturates a molecule by adding explicit hydrogens.
-	 *
-	 *@param  molecule  Molecule to saturate
-	 *@keyword          hydrogen, adding
-	 *@keyword          explicit hydrogen
-	 */
-	public void addHydrogensToSatisfyValency(Molecule molecule) throws IOException, ClassNotFoundException
-	{
-		Atom[] atoms = molecule.getAtoms();
-    Isotope isotope = IsotopeFactory.getInstance().getMajorIsotope("H");
-		for (int f = 0; f < atoms.length; f++)
-		{
-			Atom atom = atoms[f];
-			atom.setHydrogenCount(0);
-			// set number of implicit hydrogens to zero
-			// add explicit hydrogens
-			int missingHydrogens = calculateMissingHydrogen(atom, molecule);
-			for (int i = 1; i <= missingHydrogens; i++)
-			{
-    		Atom hydrogen = new Atom("H");
-        IsotopeFactory.getInstance().configure(hydrogen, isotope);
-        molecule.addAtom(hydrogen);
-				Bond newBond = new Bond(atom, hydrogen, 1.0);
-				molecule.addBond(newBond);
-			}
-		}
-	}
+    /**
+     * Method that saturates a molecule by adding explicit hydrogens.
+     *
+     * @param  molecule  Molecule to saturate
+     * @keyword          hydrogen, adding
+     * @keyword          explicit hydrogen
+     */
+    public void addExplicitHydrogensToSatisfyValency(Molecule molecule) throws IOException, ClassNotFoundException
+    {
+        Atom[] atoms = molecule.getAtoms();
+        for (int i = 0; i < atoms.length; i++) {
+            addHydrogensToSatisfyValency(molecule, atoms[i]);
+        }
+    }
 
+    /**
+     * Method that saturates an atom in a molecule by adding explicit hydrogens.
+     *
+     * @param  atom      Atom to saturate
+     * @param  container AtomContainer containing the atom
+     *
+     * @keyword          hydrogen, adding
+     * @keyword          explicit hydrogen
+     */
+    public void addHydrogensToSatisfyValency(AtomContainer container, Atom atom) 
+        throws IOException, ClassNotFoundException
+    {
+        addExplicitHydrogensToSatisfyValency(container, atom);
+    }
 
+    /**
+     * Method that saturates an atom in a molecule by adding explicit hydrogens.
+     *
+     * @param  atom      Atom to saturate
+     * @param  container AtomContainer containing the atom
+     *
+     * @keyword          hydrogen, adding
+     * @keyword          explicit hydrogen
+     */
+    public void addExplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom) 
+        throws IOException, ClassNotFoundException
+    {
+        Isotope isotope = IsotopeFactory.getInstance().getMajorIsotope("H");
+        atom.setHydrogenCount(0);
+        // set number of implicit hydrogens to zero
+        // add explicit hydrogens
+        int missingHydrogens = calculateMissingHydrogen(atom, container);
+        for (int i = 1; i <= missingHydrogens; i++) {
+            Atom hydrogen = new Atom("H");
+            IsotopeFactory.getInstance().configure(hydrogen, isotope);
+            container.addAtom(hydrogen);
+            Bond newBond = new Bond(atom, hydrogen, 1.0);
+            container.addBond(newBond);
+        }
+    }
+    
 	/**
 	 *  Method that saturates a molecule by adding implicit hydrogens.
 	 *
@@ -418,18 +452,27 @@ public class SaturationChecker
 	 *@keyword          hydrogen, adding
 	 *@keyword          implicit hydrogen
 	 */
-	public void addImplicitHydrogensToSatisfyValency(Molecule molecule)
+	public void addImplicitHydrogensToSatisfyValency(AtomContainer container)
 	{
-		Atom[] atoms = molecule.getAtoms();
+		Atom[] atoms = container.getAtoms();
 		for (int f = 0; f < atoms.length; f++)
 		{
-			Atom atom = atoms[f];
-			// add implicit hydrogens
-			int missingHydrogens = calculateMissingHydrogen(atom, molecule);
-			atom.setHydrogenCount(missingHydrogens);
+			addImplicitHydrogensToSatisfyValency(container, atoms[f]);
 		}
 	}
 	
+    /**
+     * Method that saturates a molecule by adding implicit hydrogens.
+     *
+     * @param  molecule  Molecule to saturate
+     * @keyword          hydrogen, adding
+     * @keyword          implicit hydrogen
+     */
+    public void addImplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom)
+    {
+        int missingHydrogens = calculateMissingHydrogen(atom, container);
+        atom.setHydrogenCount(missingHydrogens);
+    }
 	
 
 }
