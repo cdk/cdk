@@ -478,7 +478,7 @@
 
                 <!-- copy data files -->
 
-                <mkdir dir="${build}/org/openscience/cdk/config" />
+                <mkdir dir="${build}/org/openscience/cdk/config/data" />
                 <mkdir dir="${build}/org/openscience/cdk/io/cml/data" />
                 <mkdir dir="${build}/org/openscience/cdk/dict/data" />
                 <mkdir dir="${build}/org/openscience/cdk/iupac/generator/data" />
@@ -492,6 +492,9 @@
                 <copy
                 file="${src}/org/openscience/cdk/config/data/valency_atomtypes.xml"
                 tofile="${build}/org/openscience/cdk/config/data/valency_atomtypes.xml" />
+                <copy
+                file="${src}/org/openscience/cdk/config/data/mol2_atomtypes.xml"
+                tofile="${build}/org/openscience/cdk/config/data/mol2_atomtypes.xml" />
                 <copy
                 file="${src}/org/openscience/cdk/config/data/jmol_atomtypes.txt"
                 tofile="${build}/org/openscience/cdk/config/data/jmol_atomtypes.txt" />
