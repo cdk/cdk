@@ -18,15 +18,15 @@
 	  <variablelist><title>Packages</title>
         <varlistentry><term><filename>cdk-source</filename></term>
           <listitem>
-            <para>Source code. To compile the source code you need cdk-libs 20020101.
-			  Current version: 20020101.
+            <para>Source code. To compile the source code you need cdk-libs 20020206.
+			  Current version: 20020206.
 		    </para>
           </listitem>
         </varlistentry>
         <varlistentry><term><filename>cdk-libs</filename></term>
           <listitem>
             <para>Set of required and optional libraries (<ulink url="libraries.html">more info</ulink>).
-			   Current version: 20020101.
+			   Current version: 20020206.
 			</para>
           </listitem>
         </varlistentry>
@@ -34,8 +34,8 @@
           <listitem>
             <para>Binary distribution with two executables: cdk-fileconvert and cdk-dbadmin.
 			   The package is installable with <quote>configure &amp;&amp; make &amp;&amp; make install</quote>
-			   on Linux/Unix/BSD like systems. To run the software you need cdk-libs 20020101
-			   installed. Current version: 20020101.1.
+			   on Linux/Unix/BSD like systems. To run the software you need cdk-libs 20020206
+			   installed. Current version: 20020206.
 			</para>
           </listitem>
         </varlistentry>
