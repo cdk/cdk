@@ -130,7 +130,7 @@ public class SingleElectron extends ElectronContainer implements java.io.Seriali
 	 *
 	 * @return    The cloned object
 	 */
-	public Object clone() {
+	public Object clone() throws CloneNotSupportedException {
 		SingleElectron clone = null;
 		try {
 			clone = (SingleElectron) super.clone();

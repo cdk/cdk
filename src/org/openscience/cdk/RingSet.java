@@ -206,7 +206,7 @@ public class RingSet extends Vector implements java.io.Serializable, Cloneable
 	 *
 	 * @return  The cloned object
 	 */
-	public Object clone() {
+	public Object clone() throws CloneNotSupportedException {
 		RingSet clone = (RingSet)super.clone();
         // clone the rings
         clone.removeAllElements();

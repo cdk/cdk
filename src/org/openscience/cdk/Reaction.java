@@ -384,7 +384,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
 	 *
 	 * @return  The cloned object
 	 */
-	public Object clone() {
+	public Object clone() throws CloneNotSupportedException {
 		Reaction clone = (Reaction)super.clone();
         // clone the reactants, products and agents
         clone.reactants = (SetOfMolecules)reactants.clone();

@@ -132,7 +132,7 @@ public class Element extends ChemObject implements java.io.Serializable, Cloneab
          *
          * @return  The cloned object   
          */
-    public Object clone() {
+    public Object clone() throws CloneNotSupportedException {
         Object clone = null;
         try {
             clone = super.clone();

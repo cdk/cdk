@@ -73,7 +73,7 @@ public class Molecule extends AtomContainer implements java.io.Serializable, Clo
          *
          * @return  The cloned molecule object
          */
-        public Object clone()
+        public Object clone() throws CloneNotSupportedException 
         {
                 Object clone = null;
                 try

@@ -120,7 +120,7 @@ public class AtomParity implements java.io.Serializable, Cloneable  {
      *
      * @return  The cloned object   
      */
-    public Object clone() {
+    public Object clone() throws CloneNotSupportedException {
         AtomParity clone = null;
         try {
             clone = (AtomParity)super.clone();

@@ -266,7 +266,7 @@ public class ChemObject implements java.io.Serializable, Cloneable
 	 *
 	 *@return    The cloned object
 	 */
-	public Object clone()
+	public Object clone() throws CloneNotSupportedException 
 	{
 		Object clone = null;
 		try
