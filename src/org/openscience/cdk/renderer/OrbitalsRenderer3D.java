@@ -1,12 +1,11 @@
-/* OrbitalsRenderer3D.java
- * 
- * Autor: Stephan Michels
- * EMail: stephan@vern.chem.tu-berlin.de
- * Datum: 20.7.2001
+/* $RCSfile$
+ * $Author$
+ * $Date$
+ * $Revision$
  *
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
- * 
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Copyright (C) 2001-2003  The Chemistry Development Kit (CDK) project
+ *
+ * Contact: cdk-devel@lists.sourceforge.net
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -39,9 +38,13 @@ import org.openscience.cdk.math.*;
 import org.openscience.cdk.math.qm.*;
 
 /**
- * This class render orbitals
- * The algorithm was from following site:
- * http://www.swin.edu.au/astronomy/pbourke/modelling/polygonise/
+ * This class render orbitals. The algorithm used was found on the
+ * following site:
+ * <a href="http://www.swin.edu.au/astronomy/pbourke/modelling/polygonise/">
+ * http://www.swin.edu.au/astronomy/pbourke/modelling/polygonise/</a>
+ *
+ * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
+ * @created 2001-07-20
  *
  * @keyword orbital
  * @keyword viewer

@@ -1,14 +1,11 @@
-/* AcceleratedRender3D.java
- * 
- * Autor: Stephan Michels
- * Wohnort: Seestraﬂe 117 / 13353 Berlin
- * Telefon: +49-0173-6160804
- * EMail: stephan@vern.chem.tu-berlin.de
- * Datum: 20.7.2001
+/* $RCSfile$
+ * $Author$
+ * $Date$
+ * $Revision$
  *
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
- * 
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Copyright (C) 2001-2003  The Chemistry Development Kit (CDK) project
+ *
+ * Contact: cdk-devel@lists.sourceforge.net
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -27,8 +24,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- *  */
-
+ */
 package org.openscience.cdk.renderer;
 
 import java.awt.*;
@@ -41,6 +37,9 @@ import javax.media.j3d.*;
 import javax.vecmath.*;
  
 /**
+ * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
+ * @created 2001-07-20
+ *
  * @keyword viewer, 3D-viewer
  */
 public class AcceleratedRenderer3D extends Canvas3D

@@ -1,14 +1,11 @@
-/* AcceleratedRender3DModel.java
- * 
- * Autor: Stephan Michels
- * Wohnort: Seestraﬂe 117 / 13353 Berlin
- * Telefon: +49-0173-6160804
- * EMail: stephan@vern.chem.tu-berlin.de
- * Datum: 20.7.2001
+/* $RCSfile$
+ * $Author$
+ * $Date$
+ * $Revision$
  *
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
- * 
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Copyright (C) 2001-2003  The Chemistry Development Kit (CDK) project
+ *
+ * Contact: cdk-devel@lists.sourceforge.net
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -27,8 +24,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- *  */
-
+ */
 package org.openscience.cdk.renderer;
 
 import javax.media.j3d.*;
@@ -39,8 +35,11 @@ import java.awt.Color;
 import org.openscience.cdk.*;
 import org.openscience.cdk.math.qm.Orbitals;
 
-public class AcceleratedRenderer3DModel
-{
+/**
+ * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
+ * @created 2001-07-20
+ */
+public class AcceleratedRenderer3DModel {
 	private TransformGroup root = new TransformGroup();
 
 	private Vector atomObjects = new Vector();
