@@ -18,6 +18,14 @@
         </fileset>
     </path>
 
+    <target id="info" name="info"> 
+        <!-- Gives information about the building process. -->
+        <echo message="Environment:" />
+        <echo message="   Ant version: ${ant.version}" />
+        <echo message="  Java version: ${java.version}" />
+        <echo message="  Java ext dir: ${java.ext.dirs}" />
+    </target>
+    
     <target name="overview" id="overview" depends="compileDoclets">
         <javadoc private="false" public="true">
             <classpath refid="project.class.path" />

@@ -75,6 +75,7 @@
             <echo message="    Jmol found: ${jmol.present}" />
             <echo message="  JOELib found: ${joelib.present}" />
             <echo message="  Java3D found: ${java3D.present}" />
+            <echo message="  Java ext dir: ${java.ext.dirs}" />
             <echo message="" />
             <echo message="Compiling:" />
             <echo message="           for: ${build.compiler}" />
@@ -180,6 +181,9 @@
                    includes="MakeJavaFilesFilesDoclet.java">
                 <classpath>
                     <fileset dir="${java.ext.dirs}">
+                        <include name="tools.jar" />
+                    </fileset>
+                    <fileset dir="${java.ext.dirs}/../../../lib">
                         <include name="tools.jar" />
                     </fileset>
                 </classpath>
