@@ -1,3 +1,9 @@
 - Port much more from JChemPaint 1.x to CDK, among which
 
 - Implement a SMILES parser/generator pair 
+
+- Improve CML reader:
+
+  1. replace CDOPI layer by CDK base classes
+  2. use catalog parser
+  3. be namespace aware (aka "parse XHTML docs with CML fragments") 
