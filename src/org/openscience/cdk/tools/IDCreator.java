@@ -31,15 +31,20 @@ package org.openscience.cdk.tools;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
+import org.openscience.cdk.Reaction;
 import org.openscience.cdk.SetOfAtomContainers;
+import org.openscience.cdk.SetOfReactions;
+import org.openscience.cdk.tools.ReactionManipulator;
 
 /**
  * Class that provides methods to give unique IDs to ChemObjects.
+ * Methods are implemented for Atom, Bond, AtomContainer, SetOfAtomContainers
+ * and Reaction.
  *
  * @author   Egon Willighagen
  * @created  2003-04-01
  *
- * @keyword atom id, creation
+ * @keyword  id, creation
  */
 public class IDCreator {
 
@@ -114,4 +119,50 @@ public class IDCreator {
             bondCount += container.getBondCount();
         }
     }
+    
+    /**
+     * Labels the reactants and products in the Reaction m1, m2, etc, and the atoms
+     * accordingly. It does not apply mapping such that mapped atoms have the same ID.
+     */
+    public static void createIDs(Reaction reaction) {
+        IDCreator.createIDs(reaction, 0, 0, 0);
+    }
+    public static void createIDs(Reaction reaction,
+                           int containerOffset, int atomOffset, int bondOffset) {
+        AtomContainer[] reactants = reaction.getReactants();
+        int atomCount = atomOffset;
+        int bondCount = bondOffset;
+        for (int i=0; i<reactants.length; i++) {
+            AtomContainer container = reactants[i];
+            container.setID("m" + (i+1+containerOffset));
+            IDCreator.createAtomAndBondIDs(container, atomCount, bondCount);
+            atomCount += container.getAtomCount();
+            bondCount += container.getBondCount();
+        }
+        AtomContainer[] products = reaction.getProducts();
+        for (int i=0; i<products.length; i++) {
+            AtomContainer container = products[i];
+            container.setID("m" + (i+1+containerOffset));
+            IDCreator.createAtomAndBondIDs(container, atomCount, bondCount);
+            atomCount += container.getAtomCount();
+            bondCount += container.getBondCount();
+        }
+    }
+    
+    public static void createIDs(SetOfReactions reactionSet) {
+        Reaction[] reactions = reactionSet.getReactions();
+        int containerCount = 0;
+        int atomCount = 0;
+        int bondCount = 0;
+        for (int i=0; i<reactions.length; i++) {
+            Reaction reaction = reactions[i];
+            reaction.setID("r" + (i+1));
+            IDCreator.createIDs(reaction, containerCount, atomCount, bondCount);
+            containerCount += ReactionManipulator.getAllAtomContainers(reaction).length;
+            AtomContainer container = ReactionManipulator.getAllInOneContainer(reaction);
+            atomCount += container.getAtomCount();
+            bondCount += container.getBondCount();
+        }
+    }
+    
 }
