@@ -59,7 +59,7 @@ public class SetOfAtomContainersTest extends TestCase {
         assertEquals(3, som.getAtomContainerCount());
     }
     
-    public void testGetAtomContainer() {
+    public void testGetAtomContainer_int() {
         SetOfAtomContainers som = new SetOfAtomContainers();
         som.addAtomContainer(new AtomContainer());
         som.addAtomContainer(new AtomContainer());
@@ -69,21 +69,21 @@ public class SetOfAtomContainersTest extends TestCase {
         assertNull(som.getAtomContainer(3)); // fourth molecule must not exist
     }
     
-    public void testGetAtomContainerMultiplier() {
+    public void testGetMultiplier_int() {
         SetOfAtomContainers som = new SetOfAtomContainers();
         som.addAtomContainer(new AtomContainer());
 
         assertEquals(1.0, som.getMultiplier(0), 0.00001);
     }
     
-    public void testGetAtomContainerMultiplier2() {
+    public void testGetMultiplier_AtomContainer() {
         SetOfAtomContainers som = new SetOfAtomContainers();
         som.addAtomContainer(new AtomContainer());
 
         assertEquals(-1.0, som.getMultiplier(new AtomContainer()), 0.00001);
     }
     
-    public void testAddAtomContainer() {
+    public void testAddAtomContainer_AtomContainer() {
         SetOfAtomContainers som = new SetOfAtomContainers();
         som.addAtomContainer(new AtomContainer());
         som.addAtomContainer(new AtomContainer());
@@ -100,7 +100,7 @@ public class SetOfAtomContainersTest extends TestCase {
         assertEquals(7, som.getAtomContainerCount());        
     }
     
-    public void testAddAtomContainer_AtomContainer_Multiplier() {
+    public void testAddAtomContainer_AtomContainer_double() {
         SetOfAtomContainers som = new SetOfAtomContainers();
         som.addAtomContainer(new AtomContainer(), 2.0);
         assertEquals(1, som.getAtomContainerCount());
@@ -140,4 +140,14 @@ public class SetOfAtomContainersTest extends TestCase {
         assertNotNull(mols[1]);
         assertNotNull(mols[2]);
     }
+
+    public void testToString() {
+        SetOfAtomContainers containerSet = new SetOfAtomContainers();
+        String description = containerSet.toString();
+        for (int i=0; i< description.length(); i++) {
+            assertTrue(description.charAt(i) != '\n');
+            assertTrue(description.charAt(i) != '\r');
+        }
+    }
+
 }

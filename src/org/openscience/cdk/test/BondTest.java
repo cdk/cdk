@@ -109,7 +109,7 @@ public class BondTest extends TestCase {
         assertTrue(b.compare(b2));
     }
     
-    public void testContains() {
+    public void testContains_Atom() {
         Atom c = new Atom("C");
         Atom o = new Atom("O");
         
@@ -125,7 +125,7 @@ public class BondTest extends TestCase {
         
         Bond b = new Bond(c, o, 2.0); // C=O bond
         
-        assertTrue(2.0 == b.getAtomCount());
+        assertEquals(2.0, b.getAtomCount(), 0.001);
     }
     
     public void testGetAtoms() {
@@ -135,12 +135,12 @@ public class BondTest extends TestCase {
         Bond b = new Bond(c, o, 2.0); // C=O bond
         
         Atom[] atoms = b.getAtoms();
-        assertTrue(2.0 == atoms.length);
+        assertEquals(2.0, atoms.length, 0.001);
         assertEquals(c, atoms[0]);
         assertEquals(o, atoms[1]);
     }
     
-    public void testGetConnectedAtom() {
+    public void testGetConnectedAtom_Atom() {
         Atom c = new Atom("C");
         Atom o = new Atom("O");
         
@@ -156,13 +156,13 @@ public class BondTest extends TestCase {
         
         Bond b = new Bond(c, o, 2.0); // C=O bond
         
-        assertTrue(2.0 == b.getOrder());
+        assertEquals(2.0, b.getOrder(), 0.001);
         
         b.setOrder(1.0);
-        assertTrue(1.0 == b.getOrder());
+        assertEquals(1.0, b.getOrder(), 0.001);
     }
     
-    public void testSetStereo() {
+    public void testSetStereo_int() {
         Atom c = new Atom("C");
         Atom o = new Atom("O");
         
@@ -172,28 +172,29 @@ public class BondTest extends TestCase {
         assertEquals(CDKConstants.STEREO_BOND_UP, b.getStereo());
     }
     
-    public void testget2DCenter() {
+    public void testGet2DCenter() {
         Atom o = new Atom("O", new Point2d(0.0, 0.0));
         Atom c = new Atom("C", new Point2d(1.0, 1.0));
         Bond b = new Bond(c,o);
         
-        assertTrue(0.5 == b.get2DCenter().x);
-        assertTrue(0.5 == b.get2DCenter().y);
+        assertEquals(0.5, b.get2DCenter().x, 0.001);
+        assertEquals(0.5, b.get2DCenter().y, 0.001);
     }
 
-    public void testget3DCenter() {
+    public void testGet3DCenter() {
         Atom o = new Atom("O", new Point3d(0.0, 0.0, 0.0));
         Atom c = new Atom("C", new Point3d(1.0, 1.0, 1.0));
         Bond b = new Bond(c,o);
         
-        assertTrue(0.5 == b.get3DCenter().x);
-        assertTrue(0.5 == b.get3DCenter().y);
-        assertTrue(0.5 == b.get3DCenter().z);
+        assertEquals(0.5, b.get3DCenter().x, 0.001);
+        assertEquals(0.5, b.get3DCenter().y, 0.001);
+        assertEquals(0.5, b.get3DCenter().z, 0.001);
     }
 
     public void testClone() {
         Bond bond = new Bond();
         Object clone = bond.clone();
+        assertNotNull(clone);
         assertTrue(clone instanceof Bond);
     }
 

@@ -56,7 +56,7 @@ public class RingSetTest extends TestCase {
         RingSet rs = new RingSet();
     }
     
-    public void testRingAlreadyInSet() {
+    public void testRingAlreadyInSet_Ring() {
         Ring r1 = new Ring(5, "C");
         Ring r2 = new Ring(3, "C");
         
@@ -100,5 +100,14 @@ public class RingSetTest extends TestCase {
         
         assertEquals(1, rs.size());
         assertEquals(2, rs2.size());
+    }
+
+    public void testToString() {
+        RingSet ringset = new RingSet();
+        String description = ringset.toString();
+        for (int i=0; i< description.length(); i++) {
+            assertTrue(description.charAt(i) != '\n');
+            assertTrue(description.charAt(i) != '\r');
+        }
     }
 }

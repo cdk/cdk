@@ -66,7 +66,7 @@ public class ChemObjectTest extends TestCase {
         assertNotNull(chemObject);
     }
     
-    public void testSetProperty() {
+    public void testSetProperty_Object_Object() {
         ChemObject chemObject = new ChemObject();
         String cDescription = new String("description");
         String cProperty = new String("property");
@@ -74,7 +74,7 @@ public class ChemObjectTest extends TestCase {
         assertEquals(cProperty, chemObject.getProperty(cDescription));
     }
 
-    public void testSetProperties() {
+    public void testSetProperties_Hashtable() {
         ChemObject chemObject = new ChemObject();
         Hashtable props = new Hashtable();
         String cDescription = new String("description");
@@ -84,12 +84,12 @@ public class ChemObjectTest extends TestCase {
         assertEquals(cProperty, chemObject.getProperty(cDescription));
     }
 
-    public void testGetProperty() {
+    public void testGetProperty_Object() {
         ChemObject chemObject = new ChemObject();
         assertNull(chemObject.getProperty("dummy"));
    }
 
-    public void testRemoveProperty() {
+    public void testRemoveProperty_Object() {
         ChemObject chemObject = new ChemObject();
         String cDescription = new String("description");
         String cProperty = new String("property");
@@ -99,7 +99,7 @@ public class ChemObjectTest extends TestCase {
         assertNull(chemObject.getProperty(cDescription));
     }
 
-    public void testSetID() {
+    public void testSetID_String() {
         ChemObject chemObject = new ChemObject();
         String id = "objectX";
         chemObject.setID(id);
@@ -191,6 +191,7 @@ public class ChemObjectTest extends TestCase {
    public void testShallowCopy() {
         ChemObject chemObject = new ChemObject();
         Object clone = chemObject.clone();
+        assertNotNull(clone);
         assertTrue(clone instanceof ChemObject);
     }
 

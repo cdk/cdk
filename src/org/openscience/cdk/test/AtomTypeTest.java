@@ -62,47 +62,47 @@ public class AtomTypeTest extends TestCase {
         assertEquals("C4", at.getAtomTypeName());
     }
     
-    public void testSetAtomTypeName() {
+    public void testSetAtomTypeName_String() {
         AtomType at = new AtomType("C");
         at.setAtomTypeName("C4");
         assertEquals("C4", at.getAtomTypeName());
     }
 
-    public void testSetMaxBondOrder() {
+    public void testSetMaxBondOrder_double() {
         AtomType at = new AtomType("C");
         at.setMaxBondOrder(3.0);
-        assertTrue(3.0 == at.getMaxBondOrder());
+        assertEquals(3.0, at.getMaxBondOrder(), 0.001);
     }
 
-    public void testSetBondOrderSum() {
+    public void testSetBondOrderSum_double() {
         AtomType at = new AtomType("C");
         at.setBondOrderSum(4.0);
-        assertTrue(4.0 == at.getBondOrderSum());
+        assertEquals(4.0, at.getBondOrderSum(), 0.001);
     }
     
     public void testCompare() {
         AtomType at = new AtomType("C4", "C");
         AtomType at2 = new AtomType("C3", "C");
-        assertTrue(!at.compare("C4"));
-        assertTrue(!at.compare(at2));
+        assertFalse(at.compare("C4"));
+        assertFalse(at.compare(at2));
     }
     
-    public void testSetVanderwaalsRadius() {
+    public void testSetVanderwaalsRadius_double() {
         AtomType at = new AtomType("C");
         at.setVanderwaalsRadius(1.0);
-        assertTrue(1.0 == at.getVanderwaalsRadius());
+        assertEquals(1.0, at.getVanderwaalsRadius(), 0.001);
     }
     
-    public void testSetCovalentRadius() {
+    public void testSetCovalentRadius_double() {
         AtomType at = new AtomType("C");
         at.setCovalentRadius(1.0);
-        assertTrue(1.0 == at.getCovalentRadius());
+        assertEquals(1.0, at.getCovalentRadius(), 0.001);
     }
     
     /**
      * Method to test the get/setFormalCharge() methods.
      */
-    public void testSetFormalCharge() {
+    public void testSetFormalCharge_int() {
         int charge = 1;
 
         AtomType a = new AtomType("C");
@@ -110,7 +110,7 @@ public class AtomTypeTest extends TestCase {
         assertEquals(charge, a.getFormalCharge());
     }
 
-    public void testSetFormalNeighbourCount() {
+    public void testSetFormalNeighbourCount_int() {
         int count = 4;
 
         AtomType a = new AtomType("C");
@@ -118,7 +118,7 @@ public class AtomTypeTest extends TestCase {
         assertEquals(count, a.getFormalNeighbourCount());
     }
 
-    public void testSetHybridization() {
+    public void testSetHybridization_int() {
         int hybridization = CDKConstants.HYBRIDIZATION_SP3;
 
         AtomType atom = new AtomType("C");

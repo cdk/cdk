@@ -58,12 +58,12 @@ public class ElementTest extends TestCase {
         assertTrue(e instanceof ChemObject);
     }
     
-    public void testElement1() {
+    public void testElement_String() {
         Element e = new Element("C");
         assertEquals("C", e.getSymbol());
     }
     
-    public void testElement2() {
+    public void testElement_String_int() {
         Element e = new Element("H", 1);
         assertEquals("H", e.getSymbol());
         assertEquals(1, e.getAtomicNumber());
@@ -71,13 +71,13 @@ public class ElementTest extends TestCase {
     
     // test methods
     
-    public void testSetSymbol() {
+    public void testSetSymbol_String() {
         Element e = new Element();
         e.setSymbol("C");
         assertEquals("C", e.getSymbol());
     }
         
-    public void testSetAtomicNumber() {
+    public void testSetAtomicNumber_int() {
         Element e = new Element("H");
         e.setAtomicNumber(1);
         assertEquals(1, e.getAtomicNumber());

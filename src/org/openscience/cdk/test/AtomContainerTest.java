@@ -58,7 +58,7 @@ public class AtomContainerTest extends TestCase {
         return new TestSuite(AtomContainerTest.class);
     }
 
-    public void testSetAtoms() {
+    public void testSetAtoms_Atom() {
         Atom[] atoms = new Atom[4];
         atoms[0] = new Atom("C");
         atoms[1] = new Atom("C");
@@ -159,7 +159,7 @@ public class AtomContainerTest extends TestCase {
         assertTrue(clonedMol.contains(clonedMol.getBondAt(0).getAtomAt(1)));
 	}
 
-    public void testGetConnectedElectronContainers() {
+    public void testGetConnectedElectronContainers_Atom() {
         // acetone molecule
         Molecule acetone = new Molecule();
         
@@ -196,7 +196,7 @@ public class AtomContainerTest extends TestCase {
 
     }
 
-    public void testGetConnectedBonds() {
+    public void testGetConnectedBonds_Atom() {
         // acetone molecule
         Molecule acetone = new Molecule();
         
@@ -233,7 +233,7 @@ public class AtomContainerTest extends TestCase {
 
     }
 
-    public void testGetLonePairs() {
+    public void testGetLonePairs_Atom() {
         // acetone molecule
         Molecule acetone = new Molecule();
         
@@ -271,7 +271,7 @@ public class AtomContainerTest extends TestCase {
     }
 
     
-    public void testRemoveAtomAndConnectedElectronContainers() {
+    public void testRemoveAtomAndConnectedElectronContainers_Atom() {
         // acetone molecule
         Molecule acetone = new Molecule();
         
@@ -303,7 +303,7 @@ public class AtomContainerTest extends TestCase {
         assertEquals(0, acetone.getLonePairCount());
     }
 
-    public void testGetElectronContainerAt() {
+    public void testGetElectronContainerAt_int() {
         // acetone molecule
         Molecule acetone = new Molecule();
         
@@ -623,21 +623,6 @@ public class AtomContainerTest extends TestCase {
         assertEquals(3, acetone.getBonds().length);
     }
     
-    public void testLonePairs_Atom() {
-        Molecule acetone = new Molecule();
-        Atom c1 = new Atom("C");
-        Atom o = new Atom("O");
-        acetone.addAtom(c1);
-        acetone.addAtom(o);
-        LonePair lp1 = new LonePair(o);
-        LonePair lp2 = new LonePair(o);
-        acetone.addElectronContainer(lp1);
-        acetone.addElectronContainer(lp2);
-        
-        assertEquals(2, acetone.getLonePairs(o).length);
-        assertEquals(0, acetone.getLonePairs(c1).length);
-    }
-    
     public void testGetFirstAtom() {
         AtomContainer container = new AtomContainer();
         Atom c1 = new Atom("C");
@@ -878,7 +863,7 @@ public class AtomContainerTest extends TestCase {
         assertEquals(2.0, acetone.getBondOrderSum(o), 0.00001);
     }
     
-    public void testGetAtomParity() {
+    public void testGetAtomParity_Atom() {
         Atom carbon = new Atom("C");
         carbon.setID("central");
         Atom carbon1 = new Atom("C");

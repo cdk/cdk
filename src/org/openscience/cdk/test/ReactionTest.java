@@ -24,7 +24,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- *  */
+ */
 package org.openscience.cdk.test;
 
 import junit.framework.Test;
@@ -57,7 +57,7 @@ public class ReactionTest extends TestCase {
         assertEquals(Reaction.FORWARD, reaction.getDirection());
     }
     
-    public void testAddReactant() {
+    public void testAddReactant_Molecule() {
         Reaction reaction = new Reaction();
         Molecule sodiumhydroxide = new Molecule();
         Molecule aceticAcid = new Molecule();
@@ -75,7 +75,7 @@ public class ReactionTest extends TestCase {
         assertEquals(1.0, reaction.getReactantCoefficient(aceticAcid), 0.00001);
     }
 
-    public void testAddReactant_int() {
+    public void testAddReactant_Molecule_double() {
         Reaction reaction = new Reaction();
         Molecule proton = new Molecule();
         Molecule sulfate = new Molecule();
@@ -85,7 +85,7 @@ public class ReactionTest extends TestCase {
         assertEquals(1.0, reaction.getReactantCoefficient(sulfate), 0.00001);
     }
     
-    public void testAddProduct() {
+    public void testAddProduct_Molecule() {
         Reaction reaction = new Reaction();
         Molecule sodiumhydroxide = new Molecule();
         Molecule aceticAcid = new Molecule();
@@ -103,7 +103,7 @@ public class ReactionTest extends TestCase {
         assertEquals(1.0, reaction.getProductCoefficient(aceticAcid), 0.00001);
     }
 
-    public void testAddProduct_int() {
+    public void testAddProduct_Molecule_double() {
         Reaction reaction = new Reaction();
         Molecule proton = new Molecule();
         Molecule sulfate = new Molecule();
@@ -113,14 +113,14 @@ public class ReactionTest extends TestCase {
         assertEquals(1.0, reaction.getProductCoefficient(sulfate), 0.00001);
     }
     
-    public void testAddAgent() {
+    public void testAddAgent_Molecule() {
         Reaction reaction = new Reaction();
         Molecule proton = new Molecule();
         reaction.addAgent(proton);
         assertEquals(1, reaction.getAgents().getMoleculeCount());
     }
 
-    public void testGetReactantCoefficient() {
+    public void testGetReactantCoefficient_Molecule() {
         Reaction reaction = new Reaction();
         Molecule proton = new Molecule();
         reaction.addReactant(proton, 2.0);
@@ -129,7 +129,7 @@ public class ReactionTest extends TestCase {
         assertEquals(-1.0, reaction.getReactantCoefficient(new Molecule()), 0.00001);
     }
 
-    public void testGetProductCoefficient() {
+    public void testGetProductCoefficient_Molecule() {
         Reaction reaction = new Reaction();
         Molecule proton = new Molecule();
         reaction.addProduct(proton, 2.0);
@@ -138,7 +138,7 @@ public class ReactionTest extends TestCase {
         assertEquals(-1.0, reaction.getProductCoefficient(new Molecule()), 0.00001);
     }
     
-	public void testSetReactantCoefficient() {
+	public void testSetReactantCoefficient_Molecule_double() {
 		Reaction reaction = new Reaction();
         Molecule proton = new Molecule();
 		reaction.addReactant(proton, 2.0);
@@ -146,7 +146,7 @@ public class ReactionTest extends TestCase {
 		assertEquals(3.0, reaction.getReactantCoefficient(proton), 0.00001);
 	}
 	
-	public void testSetProductCoefficient() {
+	public void testSetProductCoefficient_Molecule_double() {
 		Reaction reaction = new Reaction();
         Molecule proton = new Molecule();
 		reaction.addProduct(proton, 2.0);
@@ -227,7 +227,7 @@ public class ReactionTest extends TestCase {
         assertEquals(3, reaction.getProducts().getMolecules().length);
     }
     
-    public void testSetDirection() {
+    public void testSetDirection_int() {
         Reaction reaction = new Reaction();
         int direction = Reaction.BIDIRECTIONAL;
         reaction.setDirection(direction);

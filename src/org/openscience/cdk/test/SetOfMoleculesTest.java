@@ -69,7 +69,7 @@ public class SetOfMoleculesTest extends TestCase {
         assertNull(som.getMolecule(3)); // fourth molecule must not exist
     }
     
-    public void testAddMolecule() {
+    public void testAddMolecule_Molecule() {
         SetOfMolecules som = new SetOfMolecules();
         som.addMolecule(new Molecule());
         som.addMolecule(new Molecule());
@@ -119,4 +119,15 @@ public class SetOfMoleculesTest extends TestCase {
         assertNotNull(mols[1]);
         assertNotNull(mols[2]);
     }
+
+    public void testToString() {
+        SetOfMolecules som = new SetOfMolecules();
+        String description = som.toString();
+        for (int i=0; i< description.length(); i++) {
+            assertTrue(description.charAt(i) != '\n');
+            assertTrue(description.charAt(i) != '\r');
+        }
+    }
+
+
 }

@@ -51,7 +51,7 @@ public class AtomParityTest extends TestCase {
         return new TestSuite(AtomParityTest.class);
     }
     
-    public void testAtomParity() {
+    public void testAtomParity_Atom_Atom_Atom_Atom_Atom_int() {
         Atom carbon = new Atom("C");
         carbon.setID("central");
         Atom carbon1 = new Atom("C");
