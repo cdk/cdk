@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.0b1//EN" "dtd/website.dtd" [
   <!ENTITY docs SYSTEM "../../devel-guide/docs.xml">
+  <!ENTITY docs-uml SYSTEM "../../devel-guide/docs-uml.xml">
+  <!ENTITY docs-docbook SYSTEM "../../devel-guide/docs-docbook.xml">
 ]>
 <webpage id="guide-docs">
   <config param="last-change-by" value="$Author$"/>
@@ -13,5 +15,7 @@
   </head>
 
   &docs;
+  &docs-uml;
+  &docs-docbook;
 
 </webpage>
