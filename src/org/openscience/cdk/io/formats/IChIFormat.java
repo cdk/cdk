@@ -43,6 +43,8 @@ public class IChIFormat implements ChemFormatMatcher {
     public boolean matches(int lineNumber, String line) {
         if (line.indexOf("<identifier") != -1) {
             return true;
+        } else if (line.indexOf("<IChI") != -1) {
+            return true;
         }
         return false;
     }
