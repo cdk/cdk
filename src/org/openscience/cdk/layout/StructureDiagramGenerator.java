@@ -283,6 +283,7 @@ public class StructureDiagramGenerator {
 		} while(!atomPlacer.allPlaced(molecule));
 			
 		fixRest();
+		//OverlapResolver.resolveOverlap(molecule, sssr);
 	}
 
 	/**
