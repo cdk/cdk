@@ -140,8 +140,13 @@ public class Convertor {
             logger.error("This object type is not supported.");
             throw new CDKException("This object type is not supported.");
         }
-        if (setNamespaceUri && schemaInstanceOutput) {
-            Attr schemaLocAttr = doc.createAttributeNS("http://www.w3.org/2001/XMLSchema-instance", "schemaLocation");
+        if (setNamespaceUri && 
+            schemaInstanceOutput && instanceLocation.length() > 0) {
+            Attr schemaLocAttr = doc.createAttribute("xsi");
+            schemaLocAttr.setPrefix("xmlns");
+            schemaLocAttr.setValue("http://www.w3.org/2001/XMLSchema-instance");
+            ((Element)element.getFirstChild()).setAttributeNodeNS(schemaLocAttr);
+            schemaLocAttr = doc.createAttributeNS("http://www.w3.org/2001/XMLSchema-instance", "schemaLocation");
             schemaLocAttr.setPrefix("xsi");
             schemaLocAttr.setValue(namespace + " " + instanceLocation);
             ((Element)element.getFirstChild()).setAttributeNodeNS(schemaLocAttr);
