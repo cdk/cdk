@@ -128,8 +128,8 @@
               <entry>14</entry>
               <entry><ulink url="rfc14.html">unit tests run with CDKTests may not produce graphical output</ulink></entry>
               <entry>2003-02-28</entry>
-              <entry></entry>
-              <entry></entry>
+              <entry>accepted</entry>
+              <entry>2003-06-26</entry>
             </row>
             <row>
               <entry>15</entry>
@@ -142,8 +142,8 @@
               <entry>16</entry>
               <entry><ulink url="rfc16.html">Isotope.getAtomicMass() should be renamed to Isotope.getMassNumber()</ulink></entry>
               <entry>2003-06-08</entry>
-              <entry></entry>
-              <entry></entry>
+              <entry>accepted</entry>
+              <entry>2003-06-26</entry>
             </row>
          </tbody>
         </tgroup>
