@@ -15,9 +15,9 @@
   <xsl:variable name="id">
     <xsl:call-template name="object.id"/>
   </xsl:variable>
-
+  
   <xsl:variable name="filename">
-    <xsl:apply-templates select="." mode="filename"/>
+    <xsl:apply-templates select="." mode="filename" />
   </xsl:variable>
 
   <!-- Note that we can't call apply-imports in here because we must -->
@@ -54,7 +54,7 @@
 	      <td bgcolor="{$textbgcolor}">&#160;</td>
 	      <td align="left" valign="top" bgcolor="{$textbgcolor}">
 		<xsl:apply-templates select="./head/title" mode="title.mode"/>
-		<xsl:apply-templates select="child::*[name(.) != 'webpage']"/>
+		<xsl:apply-templates select="child::*[name(.) != 'webpage']" />
 		<xsl:call-template name="process.footnotes"/>
 		<br/>
 	      </td>
@@ -103,6 +103,8 @@
     <xsl:call-template name="object.id"/>
   </xsl:variable>
 
+  <!--xsl:value-of select="document('../news.xml')" disable-output-escaping="yes"/-->
+  
   <xsl:variable name="relpath">
     <xsl:call-template name="root-rel-path">
       <xsl:with-param name="webpage" select="."/>

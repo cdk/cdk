@@ -1,38 +1,8 @@
-	 <section> 
+<section> 
 		<title>News</title> 
 		<para> 
-		  <itemizedlist> 
-                         <listitem>
-                                <para>(12. May 2001) First packaged version of CDK can be downloaded
-				from the CDK project pages on sourceforge
-				<ulink url="http://sourceforge.net/projects/cdk">(http://sourceforge.net/projects/cdk)</ulink>.
-                                </para>
-                         </listitem>
-
-                         <listitem>
-                                <para>(14. Mar. 2001) First CDK-based port of JChemPaint can be 
-				found in the JChemPaint CVS repository 
-				<ulink url="http://sourceforge.net/projects/jchempaint">(http://sourceforge.net/projects/jchempaint)</ulink>
-				under its own JCPCDK subtree.
-                                </para>
-                         </listitem>
-
-                         <listitem>
-                                <para>(12. Feb. 2001) The CDK now has its own SourceForge project 
-				<ulink url="http://sourceforge.net/projects/cdk">(http://sourceforge.net/projects/cdk)</ulink>
-                                </para>
-                         </listitem>
-                         <listitem>
-                                <para>(11. Feb. 2001) The 2D chemical editor  
-				<ulink url="http://jchempaint.sourceforge.net">JChemPaint</ulink>,
-				just released as version 1.0, will now be ported to the CDK.
-                                </para>
-                         </listitem>
-                         <listitem>
-                                <para>(06. Feb. 2001) New page design based on Norm Walsh's website dtd
-                                </para>
-                         </listitem>
-
-		</itemizedlist></para> 
-	 </section> 
-
+<![CDATA[		
+######
+]]>
+</para>
+</section>

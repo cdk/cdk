@@ -6,13 +6,13 @@
         <link href="example.css" rel="stylesheet" type="text/css">
     </head>
     <body>
-        <div class="webpage" id="Nc15">
-            <a name="Nc15"></a>
+        <div class="webpage" id="Nbe2">
+            <a name="Nbe2"></a>
             <table border="0" cellpadding="10" cellspacing="0" width="100%">
                 <tr>
                     <td align="left" bgcolor="#FCF0DA" valign="top" width="150">
                         <p class="navtoc">
-                            <a href="index.html"><img align="left" alt="Banner" border="0" src="images/cdklogo.gif"></a>
+                            <a href="index_template.html"><img align="left" alt="Banner" border="0" src="images/cdklogo.gif"></a>
                             <br clear="all">
                             <br>&nbsp;&nbsp;&nbsp;<span><span class="navtoc">&nbsp;&nbsp;&nbsp;<a href="cdk_intro.html">Introduction</a></span>
                                 <br>
@@ -22,7 +22,7 @@
                                 <br>
                             </span>&nbsp;&nbsp;&nbsp;<span><span class="navtoc">&nbsp;&nbsp;&nbsp;<a href="agenda.html">Agenda</a></span>
                                 <br>
-                            </span>&nbsp;&nbsp;&nbsp;<span><span class="navtoc">&nbsp;&nbsp;&nbsp;<a href="https://sourceforge.net/projects/cdk/l">Download</a></span>
+                            </span>&nbsp;&nbsp;&nbsp;<span><span class="navtoc">&nbsp;&nbsp;&nbsp;<a href="http://sourceforge.net/project/showfiles.php?group_id=20024">Download</a></span>
                                 <br>
                             </span>&nbsp;&nbsp;&nbsp;<span><span class="navtoc">&nbsp;&nbsp;&nbsp;<a href="libraries.html">Libraries</a></span>
                                 <br>
@@ -33,32 +33,17 @@
                         </p>
                     </td><td bgcolor="white">&nbsp;</td><td align="left" bgcolor="white" valign="top">
                         <h1>Programmer's Reference</h1>
-                        <div class="chapter" id="Nc35">
+                        <div class="section" id="Nc02">
                             <div class="titlepage">
-                                <h2 class="title">
-                                    <a name="Nc35">2. Programmers Reference</a>
+                                <h2 class="title" style="clear: all">
+                                    <a name="Nc02"></a><span class="title">Programmers Reference</span>
                                 </h2>
                             </div>
-                            <div class="toc">
-                                <p>
-                                    <b>Table of Contents</b>
-                                </p>
-                                <dl>
-                                    <dt> <a href="cdk_Ref.html#Nc3a">Introduction</a>
-                                    </dt>
-                                    <dt> <a href="cdk_Ref.html#Nc5e">The Base Classes</a>
-                                    </dt>
-                                    <dt> <a href="cdk_Ref.html#Ncdd">The Tools Classes</a>
-                                    </dt>
-                                    <dt> <a href="cdk_Ref.html#Nd20">Unit Testing the CDK</a>
-                                    </dt>
-                                </dl>
-                            </div>
-                            <div class="section" id="Nc3a">
+                            <div class="section" id="Nc07">
                                 <div class="titlepage">
-                                    <h2 class="title" style="clear: all">
-                                        <a name="Nc3a"></a><span class="title">Introduction</span>
-                                    </h2>
+                                    <h3 class="title">
+                                        <a name="Nc07"></a><span class="title">Introduction</span>
+                                    </h3>
                                 </div>
                                 <p> 
 	 	This chapter provides an overview about how to use the Chemistry
@@ -92,17 +77,25 @@
 			<div class="itemizedlist">
                                         <ul>
                                             <li>
-                                                <a name="Nc49"></a>
+                                                <a name="Nc16"></a>
                                                 <p>
 						a 2D representation like the one in JChemPaint, consisting mainly of
 						lines, representing bonds and some Elementsymbols, or
 					</p>
                                             </li>
                                             <li>
-                                                <a name="Nc4f"></a>
+                                                <a name="Nc1c"></a>
                                                 <p>
 						a 3D representation, rotatable, nicely shaded with perspective scaling.
 					</p>
+                                            </li>
+                                            <li>
+                                                <a name="Nc22"></a>
+                                                <p>
+                                                a textual representation for manual inspection and editing of properties
+                                                of primary CDK elements. Most common form are table representing such data.
+                                                High level tables can also be used as a GUI for databases.
+                                        </p>
                                             </li>
                                         </ul>
                                     </div>
@@ -121,60 +114,57 @@
 			the MVC paradigm.
 		</p>
                             </div>
-                            <div class="section" id="Nc5e">
+                            <div class="section" id="Nc31">
                                 <div class="titlepage">
-                                    <h2 class="title" style="clear: all">
-                                        <a name="Nc5e"></a><span class="title">The Base Classes</span>
-                                    </h2>
+                                    <h3 class="title">
+                                        <a name="Nc31"></a><span class="title">The Base Classes</span>
+                                    </h3>
                                 </div>
-                                <p>The base classes are located in the top level hirarchy of the CDK, which is
+                                <p>The base classes are located in the top level hierarchy of the CDK, which is
 	  org.openscience.cdk.
 	  A chemist will find many of his/her well known concepts implemented
 		as classes in the CDK:
 		<div class="itemizedlist">
                                         <ul>
                                             <li>
-                                                <a name="Nc67"></a>
+                                                <a name="Nc3a"></a>
                                                 <p>
-					<a href="api/org/openscience/cdk/Element.html" target="_top">Element</a>
-				</p>
+                                                    <a href="api/org/openscience/cdk/Element.html" target="_top">Element</a>
+                                                </p>
                                             </li>
                                             <li>
-                                                <a name="Nc72"></a>
+                                                <a name="Nc41"></a>
                                                 <p>
-					<a href="api/org/openscience/cdk/Isotope.html" target="_top">Isotope</a>
-				</p>
+                                                    <a href="api/org/openscience/cdk/Isotope.html" target="_top">Isotope</a>
+                                                </p>
                                             </li>
                                             <li>
-                                                <a name="Nc7d"></a>
+                                                <a name="Nc48"></a>
                                                 <p>
-					<a href="api/org/openscience/cdk/Atom.html" target="_top">Atom</a>
-
-				</p>
+                                                    <a href="api/org/openscience/cdk/Atom.html" target="_top">Atom</a>
+                                                </p>
                                             </li>
                                             <li>
-                                                <a name="Nc88"></a>
+                                                <a name="Nc4f"></a>
                                                 <p>
-					<a href="api/org/openscience/cdk/Bond.html" target="_top">Bond</a>
-
-				</p>
+                                                    <a href="api/org/openscience/cdk/Bond.html" target="_top">Bond</a>
+                                                </p>
                                             </li>
                                             <li>
-                                                <a name="Nc93"></a>
+                                                <a name="Nc56"></a>
                                                 <p>
-					<a href="api/org/openscience/cdk/Molecule.html" target="_top">Molecule</a>
-
-				</p>
+                                                    <a href="api/org/openscience/cdk/Molecule.html" target="_top">Molecule</a>
+                                                </p>
                                             </li>
                                             <li>
-                                                <a name="Nc9e"></a>
+                                                <a name="Nc5d"></a>
                                                 <p>
 					<a href="api/org/openscience/cdk/Ring.html" target="_top">Ring</a>
 
 				</p>
                                             </li>
                                             <li>
-                                                <a name="Nca9"></a>
+                                                <a name="Nc68"></a>
                                                 <p>
 					etc.
 				</p>
@@ -183,11 +173,11 @@
                                     </div>
 
 		A molecule is build by creating an instance of the Molecule.class and the
-		successivly adding instances of Atom.class and Bond.class to the Molecule
+		successivly adding instances of <a href="api/org/openscience/cdk/Atom.html" target="_top">Atom</a>.class and <a href="api/org/openscience/cdk/Bond.html" target="_top">Bond</a>.class to the Molecule
 		container: 
 		<div class="example">
                                         <p>
-                                            <a name="Ncb0"></a><b>Example 2.1. Creating a Molecule</b>
+                                            <a name="Nc79"></a><b>Example 1. Creating a Molecule</b>
                                         </p>
                                         <pre class="programlisting">public static Molecule makeAlphaPinene()
 {
@@ -247,11 +237,75 @@
 		in a ChemSequence. A ChemFile, the highest level concept, in our CDK hierarchy,
 		can store all of the above concepts. </p>
                             </div>
+                            <div class="section" id="Nca6">
+                                <div class="titlepage">
+                                    <h3 class="title">
+                                        <a name="Nca6"></a><span class="title">File I/O Classes</span>
+                                    </h3>
+                                </div>
+                                <p>At this moment the following Input classes are available:
+           <div class="itemizedlist">
+                                        <ul>
+                                            <li>
+                                                <a name="Ncaf"></a>
+                                                <p>
+                                                    <a href="api/org/openscience/cdk/io/MDLReader.html" target="_top">MDLReader</a>
+                                                </p>
+                                            </li>
+                                            <li>
+                                                <a name="Ncb6"></a>
+                                                <p>CMLReader</p>
+                                            </li>
+                                            <li>
+                                                <a name="Ncba"></a>
+                                                <p>XYZReader</p>
+                                            </li>
+                                        </ul>
+                                    </div>
+           To read a molecule use:
+           <div class="example">
+                                        <p>
+                                            <a name="Ncbf"></a><b>Example 2. </b>
+                                        </p>
+                                        <pre class="programlisting">
+        ChemObjectReader reader;
+        String inFile = "filetoread.xyz";
+        if (inFile.endsWith(".xyz")) {
+              reader = new XYZReader(new FileReader(inFile));
+        } else if (inFile.endsWith(".cml")) {
+              reader = new CMLReader(new FileReader(inFile));
+        } else {
+              reader = new MDLReader(new FileInputStream(inFile));
+        }
+        ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+             </pre>
+                                    </div>
+           But a class is planned that does automatic detection of the correct file type.
+         </p>
+                                <p>And these Output classes:
+         <div class="itemizedlist">
+                                        <ul>
+                                            <li>
+                                                <a name="Nccc"></a>
+                                                <p>
+                                                    <a href="api/org/openscience/cdk/io/MDLWriter.html" target="_top">MDLWriter</a>
+                                                </p>
+                                            </li>
+                                            <li>
+                                                <a name="Ncd3"></a>
+                                                <p>
+                                                    <a href="api/org/openscience/cdk/io/CMLWriter.html" target="_top">CMLWriter</a>
+                                                </p>
+                                            </li>
+                                        </ul>
+                                    </div>
+         </p>
+                            </div>
                             <div class="section" id="Ncdd">
                                 <div class="titlepage">
-                                    <h2 class="title" style="clear: all">
+                                    <h3 class="title">
                                         <a name="Ncdd"></a><span class="title">The Tools Classes</span>
-                                    </h2>
+                                    </h3>
                                 </div>
                                 <p> The tools classes are located in the org.openscience.cdk.tools package. 
 	 This package contains everything for which the creation of an own subpackage 
@@ -326,9 +380,9 @@
                             </div>
                             <div class="section" id="Nd20">
                                 <div class="titlepage">
-                                    <h2 class="title" style="clear: all">
+                                    <h3 class="title">
                                         <a name="Nd20"></a><span class="title">Unit Testing the CDK</span>
-                                    </h2>
+                                    </h3>
                                 </div>
                                 <p>
 A word about testing in the CDK: 
@@ -344,7 +398,7 @@ CDK, then you write a test class which extends junit.framework.TestCase.
 		
 		<div class="example">
                                         <p>
-                                            <a name="Nd27"></a><b>Example 2.2. Extending TestCase</b>
+                                            <a name="Nd27"></a><b>Example 3. Extending TestCase</b>
                                         </p>
                                         <pre class="programlisting">
 
@@ -366,7 +420,7 @@ make a junit.framework.TestSuite out of your puny little test class by filling t
 with a line of code.
 		<div class="example">
                                         <p>
-                                            <a name="Nd37"></a><b>Example 2.3. Making a TestSuite</b>
+                                            <a name="Nd37"></a><b>Example 4. Making a TestSuite</b>
                                         </p>
                                         <pre class="programlisting">
 
@@ -385,7 +439,7 @@ search on a-pinene. I know that the correct size of the Smallest Set of Smallest
 so my test methods reads:
 		<div class="example">
                                         <p>
-                                            <a name="Nd42"></a><b>Example 2.4. The Actual Test</b>
+                                            <a name="Nd42"></a><b>Example 5. The Actual Test</b>
                                         </p>
                                         <pre class="programlisting">
 
@@ -412,7 +466,7 @@ other object which is instanceOf(org.openscience.Molecule).
 We could then perform tests for the i/o tasks that relies on this:
 		<div class="example">
                                         <p>
-                                            <a name="Nd4d"></a><b>Example 2.5. Potential Testing of Successful I/O</b>
+                                            <a name="Nd4d"></a><b>Example 6. Potential Testing of Successful I/O</b>
                                         </p>
                                         <pre class="programlisting">
 
@@ -430,7 +484,7 @@ We could then perform tests for the i/o tasks that relies on this:
 Finally, the CDKTests class is supposed to be a host for all the single TestCases that we write:
 		<div class="example">
                                         <p>
-                                            <a name="Nd58"></a><b>Example 2.6. Doing it all together</b>
+                                            <a name="Nd58"></a><b>Example 7. Doing it all together</b>
                                         </p>
                                         <pre class="programlisting">
 
@@ -470,7 +524,7 @@ It is the goal to move all the tests to this framework so that one only has to r
             <div class="navfoot">
                 <table border="0" summary="Footer navigation" width="100%">
                     <tr>
-                        <td align="left" width="33%"><span class="footdate">$Date$</span></td><td align="center" width="34%"><span class="foothome"><a href="index.html">Home</a></span></td><td align="right" width="33%"><span class="footfeed"></span></td>
+                        <td align="left" width="33%"><span class="footdate">$Date$</span></td><td align="center" width="34%"><span class="foothome"><a href="index_template.html">Home</a></span></td><td align="right" width="33%"><span class="footfeed"></span></td>
                     </tr>
                     <tr>
                         <td align="right" colspan="3"><span class="footcopy"><span class="copyright">Copyright &copy; 1999, 2000, 2001 <a href="http://cdk.sourceforge.net/">The CDK Project</a>. </span></span></td>

@@ -1,4 +1,4 @@
-<!DOCTYPE website PUBLIC "-//Norman Walsh//DTD Website V1.9//EN" "/usr/lib/sgml/dtd/docbook-website/1.8/website.dtd" [
+<!DOCTYPE website PUBLIC "-//Norman Walsh//DTD Website V1.7//EN" "/documents/config/xml/website/website.dtd" [
 <!ENTITY about SYSTEM "about.xml">
 <!ENTITY news SYSTEM "news.xml">
 <!ENTITY introduction SYSTEM "intro.xml">
@@ -13,7 +13,7 @@
 <website>
 <homepage>
 <config param="desc" value="The Chemistry Development Kit Homepage"/>
-<config param="filename" value="index.html"/>
+<config param="filename" value="index_template.html"/>
 <config param="rcsdate" value="$Date$"/>
 <config param="footer" value="about.html" altval="About..."/>
 <config param="homebanner" value="images/cdklogo.gif"

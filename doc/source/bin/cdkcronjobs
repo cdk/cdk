@@ -1,0 +1,7 @@
+#
+#       PLEASE PICK A RANDOM MINUTE between 2-57
+#
+55 * * * * /home/groups/c/cd/cdk/bin/fetch-news.sh
+56 * * * * /home/groups/c/cd/cdk/bin/paste-news.pl
+
+
