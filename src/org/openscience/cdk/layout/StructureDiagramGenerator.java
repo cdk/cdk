@@ -72,7 +72,10 @@ import org.openscience.cdk.tools.HydrogenAdder;
 public class StructureDiagramGenerator
 {
 
-	private org.openscience.cdk.tools.LoggingTool logger;
+	private org.openscience.cdk.tools.LoggingTool logger =
+    new org.openscience.cdk.tools.LoggingTool(StructureDiagramGenerator.class.getName());
+
+  private static TemplateHandler DEFAULT_TEMPLATE_HANDLER = new TemplateHandler();
 
 	Molecule molecule;
 	RingSet sssr;
@@ -83,7 +86,7 @@ public class StructureDiagramGenerator
 	AtomPlacer atomPlacer = new AtomPlacer();
 	Vector ringSystems = null;
 	final String disconnectedMessage = "Molecule not connected. Use ConnectivityChecker.partitionIntoMolecules() and do the layout for every single component.";
-	TemplateHandler templateHandler = null;
+	private TemplateHandler templateHandler = null;
 	boolean useTemplates = true;
 
 
@@ -92,8 +95,6 @@ public class StructureDiagramGenerator
 	 */
 	public StructureDiagramGenerator()
 	{
-		logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName(), true);
-		templateHandler = new TemplateHandler();
 	}
 
 
@@ -183,7 +184,14 @@ public class StructureDiagramGenerator
 	 */
 	public TemplateHandler getTemplateHandler()
 	{
-		return templateHandler;
+    if (templateHandler == null)
+    {
+      return DEFAULT_TEMPLATE_HANDLER;
+    }
+    else
+    {
+		  return templateHandler;
+    }  
 	}
 
 
@@ -332,7 +340,7 @@ public class StructureDiagramGenerator
 			logger.debug("Initializing TemplateHandler");
 			logger.debug("TemplateHander initialized");
 			logger.debug("Now starting Template Detection in Molecule...");
-			templateMapped = templateHandler.mapTemplates(molecule);
+			templateMapped = getTemplateHandler().mapTemplates(molecule);
 			logger.debug("Template Detection finished");
 			logger.debug("Template found: " + templateMapped);
 		}
