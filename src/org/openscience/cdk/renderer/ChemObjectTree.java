@@ -94,7 +94,8 @@ public class ChemObjectTree extends JPanel {
      * Creates a node with the object name.
      */
     private DefaultMutableTreeNode getObjectName(Object object) {
-        return new DefaultMutableTreeNode(object.getClass().getName());
+        return new DefaultMutableTreeNode(object.getClass()
+            .getName().substring("org.openscience.cdk.".length()));
     }
     
     /**
@@ -105,24 +106,24 @@ public class ChemObjectTree extends JPanel {
         Class reflectedClass = object.getClass();
         // get all fields in this ChemObject
         Field[] fields = getFields(reflectedClass);
-        logger.debug(reflectedClass.getName() + " #fields: " + fields.length); 
+        // logger.debug(reflectedClass.getName() + " #fields: " + fields.length); 
         for (int i=0; i<fields.length; i++) {
             Field f = fields[i];
             f.setAccessible(true);
-            logger.debug("Field name: " + f.getName());
-            logger.debug("Field type: " + f.getType().getName());
+            // logger.debug("Field name: " + f.getName());
+            // logger.debug("Field type: " + f.getType().getName());
             try {
                 // get an instance of the object in the field
                 Object fieldObject = f.get(object);
                 if (fieldObject != null) {
-                    logger.debug("Field value: " + fieldObject.getClass().getName());
+                    // logger.debug("Field value: " + fieldObject.getClass().getName());
                     if (fieldObject instanceof ChemObject) {
                         // yes, found a ChemObject!
-                        logger.debug("Recursing into this object");
+                        // logger.debug("Recursing into this object");
                         node.add(getTree((ChemObject)fieldObject));
                     } else if (fieldObject instanceof ChemObject[]) {
                         // yes, found a Array!
-                        logger.debug("Recursing into this Array");
+                        // logger.debug("Recursing into this Array");
                         // determine what kind of Array
                         ChemObject[] objects = (ChemObject[])fieldObject;
                         int count = objects.length;
@@ -131,9 +132,9 @@ public class ChemObjectTree extends JPanel {
                         if (object instanceof AtomContainer) {
                             if (objects[0] instanceof Atom) {
                                 count = ((AtomContainer)object).getAtomCount();
-                                } else if (objects[0] instanceof Bond) {
-                                    count = ((AtomContainer)object).getBondCount();
-                                }
+                            } else if (objects[0] instanceof Bond) {
+                                count = ((AtomContainer)object).getBondCount();
+                            }
                         }
                         // now start actual looping over child objects
                         for (int j=0; j<objects.length; j++) {
@@ -143,10 +144,10 @@ public class ChemObjectTree extends JPanel {
                         }
                     }
                 } else {
-                    logger.debug("Field value: null");
+                    //logger.debug("Field value: null");
                 }
             } catch (Exception e) {
-                logger.debug(e.toString());
+                logger.error(e.toString());
             }
         }
         return node;
