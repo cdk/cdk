@@ -88,6 +88,11 @@
     <atomArray atomID='a1 a2' x3='0.0 0.1' y3='1.2 1.3' z3='2.1 2.5'/>
   </molecule>
   
+  <!-- JFragmentsTest.testFractional3D() -->
+  <molecule id='m1'>
+    <atomArray atomID='a1 a2' xFract='0.0 0.1' yFract='1.2 1.3' zFract='2.1 2.5'/>
+  </molecule>
+  
   <!-- JFragmentsTest.testMissing2DCoordinates() -->
   <molecule id='m1'>
     <atomArray>
@@ -124,4 +129,8 @@
     </atomArray>
   </molecule>
 
+  <!-- JFragmentsTest.testMoleculeId() -->
+  <molecule id='m1'><atomArray><atom id='a1'/></atomArray></molecule>
+  
+  
 </cml>

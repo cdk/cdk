@@ -62,6 +62,19 @@ public class CMLRoundTripTest extends TestCase {
         assertEquals(atom.getSymbol(), roundTrippedAtom.getSymbol());
     }
     
+    public void testAtomId() {
+        Molecule mol = new Molecule();
+        Atom atom = new Atom("N");
+        atom.setID("N1");
+        mol.addAtom(atom);
+        
+        Molecule roundTrippedMol = roundTripMolecule(mol);
+        
+        assertEquals(1, roundTrippedMol.getAtomCount());
+        Atom roundTrippedAtom = roundTrippedMol.getAtomAt(0);
+        assertEquals(atom.getID(), roundTrippedAtom.getID());
+    }
+    
     public void testAtom2D() {
         Molecule mol = new Molecule();
         Atom atom = new Atom("N");
@@ -91,6 +104,22 @@ public class CMLRoundTripTest extends TestCase {
         assertEquals(atom.getX3D(), roundTrippedAtom.getX3D(), 0.00001);
         assertEquals(atom.getY3D(), roundTrippedAtom.getY3D(), 0.00001);
         assertEquals(atom.getZ3D(), roundTrippedAtom.getZ3D(), 0.00001);
+    }
+    
+    public void testAtomFract3D() {
+        Molecule mol = new Molecule();
+        Atom atom = new Atom("N");
+        Point3d p3d = new Point3d(0.3, 0.4, 0.9);
+        atom.setFractionalPoint3D(p3d);
+        mol.addAtom(atom);
+        
+        Molecule roundTrippedMol = roundTripMolecule(mol);
+        
+        assertEquals(1, roundTrippedMol.getAtomCount());
+        Atom roundTrippedAtom = roundTrippedMol.getAtomAt(0);
+        assertEquals(atom.getFractX3D(), roundTrippedAtom.getFractX3D(), 0.00001);
+        assertEquals(atom.getFractY3D(), roundTrippedAtom.getFractY3D(), 0.00001);
+        assertEquals(atom.getFractZ3D(), roundTrippedAtom.getFractZ3D(), 0.00001);
     }
     
     public void testPseudoAtom() {

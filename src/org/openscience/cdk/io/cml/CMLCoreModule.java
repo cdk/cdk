@@ -332,6 +332,12 @@ public class CMLCoreModule implements ModuleInterface {
                     count = addArrayElementsTo(y3, atts.getValue(i));
                 } else if (att.equals("z3")) {
                     count = addArrayElementsTo(z3, atts.getValue(i));
+                } else if (att.equals("xFract")) {
+                    count = addArrayElementsTo(xfract, atts.getValue(i));
+                } else if (att.equals("yFract")) {
+                    count = addArrayElementsTo(yfract, atts.getValue(i));
+                } else if (att.equals("zFract")) {
+                    count = addArrayElementsTo(zfract, atts.getValue(i));
                 } else {
                     logger.warn("Unparsed attribute: " + att);
                 }
@@ -402,6 +408,15 @@ public class CMLCoreModule implements ModuleInterface {
             newMolecule();
             BUILTIN = "";
             cdo.startObject("Molecule");
+            for (int i = 0; i < atts.getLength(); i++) {
+                
+                String att = atts.getQName(i);
+                String value = atts.getValue(i);
+                
+                if (att.equals("id")) {
+                    cdo.setObjectProperty("Molecule", "id", atts.getValue(i));
+                }
+            }
         } else if ("crystal".equals(name)) {
             newCrystalData();
             cdo.startObject("Crystal");
@@ -973,19 +988,9 @@ public class CMLCoreModule implements ModuleInterface {
 
             if (has3Dfract) {
                 // ok, need to convert fractional into eucledian coordinates
-                double[] coord = new double[3];
-                coord[0] = Double.parseDouble((String)xfract.elementAt(i));
-                coord[1] = Double.parseDouble((String)yfract.elementAt(i));
-                coord[2] = Double.parseDouble((String)zfract.elementAt(i));
-                if (!cartesianAxesSet) {
-                    logger.error("Cannot convert fractional atomic coord to cartesian if axes are not known");
-                } else {
-                    double[] cartCoord = CrystalGeometryTools.fractionalToCartesian(a,b,c,coord);
-                    
-                    cdo.setObjectProperty("Atom", "x3", new Double(cartCoord[0]).toString());
-                    cdo.setObjectProperty("Atom", "y3", new Double(cartCoord[1]).toString());
-                    cdo.setObjectProperty("Atom", "z3", new Double(cartCoord[2]).toString());
-                }
+                cdo.setObjectProperty("Atom", "xFract", (String)xfract.elementAt(i));
+                cdo.setObjectProperty("Atom", "yFract", (String)yfract.elementAt(i));
+                cdo.setObjectProperty("Atom", "zFract", (String)zfract.elementAt(i));
             }
 
             if (hasFormalCharge) {
