@@ -40,6 +40,8 @@ Fixes:
 * Fixed method: make sure to overwrite old value if number of missing Hs is zero
 * Don't try to validate pseudo atoms (closes JCP bug #829038)
 * Fixed parsing of [H+] SMILES string (closes #873783)
+* AtomTypeFactory no longer tries to configuer PseudoAtom's (which it can't)
+* No longer ignores setting when outputing XML decleration in CMLWriter
 
 API changes:
 * SetOfMolecules now extends SetOfAtomContainers which gives it additional
