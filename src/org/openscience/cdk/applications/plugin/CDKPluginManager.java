@@ -39,6 +39,7 @@ import java.util.jar.JarEntry;
 import javax.swing.AbstractAction;
 import javax.swing.JDialog;
 import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
@@ -303,10 +304,34 @@ public class CDKPluginManager {
                 JDialog pluginWindow = new JDialog();
                 pluginWindow.setTitle(plugin.getName());
                 pluginWindow.getContentPane().add(pluginPanel);
+                pluginWindow.setJMenuBar(getMenuBar());
                 pluginWindow.pack();
                 pluginWindow.show();
             }
         }
+        
+        private JMenuBar getMenuBar() {
+            JMenuBar menuBar = new JMenuBar();
+
+            // try to plugin's private menu
+            JMenu customPluginMenu = plugin.getMenu();
+            if (customPluginMenu != null) {
+                if (customPluginMenu.getText().length() == 0) {
+                    customPluginMenu.setText("Menu");
+                }
+                menuBar.add(customPluginMenu);
+            }
+                
+            // add menu with plugin info
+            JMenu aboutMenu = new JMenu("About");
+            JMenuItem versionMenuItem = new JMenuItem("v. " + plugin.getPluginVersion());
+            versionMenuItem.setEnabled(false);
+            aboutMenu.add(versionMenuItem);
+            menuBar.add(aboutMenu);
+            
+            return menuBar;
+        }
+        
     }
     
 }
