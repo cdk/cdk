@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.0b1//EN" "dtd/website.dtd">
+<webpage id="whoiswho">
+  <config param="last-change-by" value="$Author$"/>
+  <config param="rcsdate" value="$Date$"/>
+
+  <head>
+    <title>The CDK Developers</title>
+    <titleabbrev>Who is Who?</titleabbrev>
+    <summary>List of developers and their specialties.</summary>
+  </head>
+
+  <section>
+    <title>Who is Who?</title>
+    <para>This section lists the developers and contributers and their specialties.
+      <informaltable frame='none'>
+        <tgroup cols="3">
+          <thead>
+            <row><entry>Name</entry><entry>Specialties</entry><entry>Classes</entry></row>
+          </thead>
+          <tbody>
+            <row>
+			  <entry>Christoph Steinbeck</entry>
+			  <entry></entry>
+			  <entry></entry>
+		    </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+	</para>
+  </section>
+
+</webpage>

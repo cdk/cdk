@@ -10,10 +10,13 @@
     <summary>The CDK Homepage.</summary>
   </head>
 
-<para>This is the list of stuff that is still missing in CDK:
-  <itemizedlist>
+  <para>This is the list of stuff that is still missing in CDK:
+    <itemizedlist>
          <listitem>
                 <para>a SMILES parser/producer</para>
+         </listitem>
+         <listitem>
+                <para>a IUPAC name parser/producer</para>
          </listitem>
          <listitem>
                 <para>A substructure search</para>
@@ -22,9 +25,10 @@
                 <para>A energy minimizer / moleculare dynamics module</para>
          </listitem>
          <listitem>
-                <para>An interface API to other programs and implementation</para>
+                <para>An interface API to other programs and implementation
+				  (like Tinker, Gaussian, Mopac etc)</para>
          </listitem>
-</itemizedlist>
-</para>
+    </itemizedlist>
+  </para>
 
 </webpage>

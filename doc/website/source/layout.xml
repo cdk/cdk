@@ -17,11 +17,12 @@
   <toc page="website.xml" filename="index.html">
     <tocentry page="intro.xml" filename="intro.html"/>
 	<tocentry page="thelibrary.xml" filename="thelibrary.html">
+	  <tocentry page="reference.xml" filename="reference.html"/>
 	  <tocentry page="api.xml" filename="api.html"/>
 	  <tocentry page="libraries.xml" filename="libraries.html"/>
 	</tocentry>
 	<tocentry page="development.xml" filename="development.html">
-	  <tocentry page="reference.xml" filename="reference.html"/>
+	  <tocentry page="whoiswho.xml" filename="whoiswho.html"/>
 	  <tocentry page="agenda.xml" filename="agenda.html"/>
 	  <tocentry page="changelog.xml" filename="changelog.html"/>
 	</tocentry>

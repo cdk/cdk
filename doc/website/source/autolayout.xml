@@ -14,6 +14,12 @@
 <title>The CDK</title>
 <titleabbrev>The CDK</titleabbrev>
 <summary>Information about the CDK.</summary>
+<tocentry page="reference.xml" id="reference" filename="reference.html">
+<title>The Programming Reference</title>
+<titleabbrev>Programming Reference</titleabbrev>
+<summary>This section tells you how to use the classes in your own
+	   software program.</summary>
+</tocentry>
 <tocentry page="api.xml" id="cdk-api" filename="api.html">
 <title>The CDK Application Programming Interface (API)</title>
 <titleabbrev>API</titleabbrev>
@@ -29,11 +35,10 @@
 <title>The Chemical Development Kit</title>
 <titleabbrev>Development</titleabbrev>
 <summary>The CDK Homepage.</summary>
-<tocentry page="reference.xml" id="reference" filename="reference.html">
-<title>The Programming Reference</title>
-<titleabbrev>Programming Reference</titleabbrev>
-<summary>This section tells you how to use the classes in your own
-	   software program.</summary>
+<tocentry page="whoiswho.xml" id="whoiswho" filename="whoiswho.html">
+<title>The CDK Developers</title>
+<titleabbrev>Who is Who?</titleabbrev>
+<summary>List of developers and their specialties.</summary>
 </tocentry>
 <tocentry page="agenda.xml" id="agenda" filename="agenda.html">
 <title>The CDK Agenda</title>
