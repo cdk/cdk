@@ -1,0 +1,55 @@
+<refentry id="cdk-rfc-26">
+
+  <refentryinfo>
+    <revhistory>
+      <revision>
+        <revnumber>1</revnumber>
+        <date>2004-01-12</date>
+        <authorinitials>elw</authorinitials>
+        <revremark>
+          See <ulink url="http://sourceforge.net/mailarchive/message.php?msg_id=6743346">email archive</ulink>.
+        </revremark>
+      </revision>
+    </revhistory>
+  </refentryinfo>
+
+
+  <refnamediv>
+    <refname>RFC CDK #26</refname>
+  </refnamediv>
+
+  <refsect1>
+    <title>Proposal</title>
+    <para>
+      All fields of core classes must be private.
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>Reason</title>
+    <para>
+      The core classes, at time of writing, do not consistently use a certain access 
+      level. Some classes have public fields, others protected, or do not define 
+      the level.
+    </para>
+    <para>
+      All core classes have access methods, so making the fields private is the best 
+      thing to do (IMHO).
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>Proposers</title>
+    <para>
+      Egon Willighagen.
+    </para>
+  </refsect1>
+
+    <refsect1>
+    <title>Date</title>
+    <para>
+      2003-12-07
+    </para>
+  </refsect1>
+
+</refentry>

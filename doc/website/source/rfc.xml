@@ -217,6 +217,13 @@
               <entry></entry>
               <entry></entry>
             </row>
+            <row>
+              <entry>26</entry>
+              <entry><ulink url="rfc26.html">All fields of core classes must be private</ulink></entry>
+              <entry>2003-12-07</entry>
+              <entry></entry>
+              <entry></entry>
+            </row>
          </tbody>
         </tgroup>
     </informaltable>
