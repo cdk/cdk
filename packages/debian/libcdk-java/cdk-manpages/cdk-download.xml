@@ -73,7 +73,7 @@
 
     <variablelist>
       <varlistentry>
-        <term><option><replaceable>CAS-NUMBER</replaceable></option></term>
+        <term><arg><replaceable>CAS-NUMBER</replaceable></arg></term>
         <listitem><para>The CAS number of the structure you want to download,
           such as <command>67-56-1</command> e.g. for Methanol.</para></listitem>
       </varlistentry>
@@ -85,6 +85,22 @@
     <para>This manual page was written by &dhusername1; &dhemail1; and
       edited by &dhusername2; &dhemail2; for the Debian GNU/Linux 
       distribution (but may be used by others).
+    </para>
+    
+    <para>Copyright (C) 2002 The CDK Project    
+    </para>
+    
+    <para>This program is free software; you can redistribute it and/or modify it
+      under the terms of the &gnu; General Public License (&gpl;) as published by the
+      Free Software Foundation; either version 2 of the License, 
+      or (at your option) any later version.
+    </para>
+    
+    <para>This program is distributed in the hope that it will be useful, but
+      WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+      or FITNESS FOR A PARTICULAR PURPOSE. See the &gnu; General Public License (&gpl;)
+      for more details. On Debian systems, the &gnu; General Public License is also 
+      available as the file /usr/share/common-licenses/copyright/&gpl;.
     </para>
     
   </refsect1>
