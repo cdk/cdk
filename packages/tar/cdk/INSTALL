@@ -14,9 +14,14 @@ INSTALL GUIDE
 
     - Java 1.3 or better
     - Ant (see http://www.apache.org/)
-    - Java 3D
     
   The generation of the man pages need the xsltproc tool.
+
+  Optionally, you it can use:
+
+    - JOELib (http://joelib.sf.net/)
+    - Jmol   (http://jmol.sf.net/)
+    - Java3D
 
   1.2 RUNNING CDK
 
