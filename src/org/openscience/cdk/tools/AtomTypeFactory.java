@@ -151,6 +151,18 @@ public class AtomTypeFactory {
 		al.toArray(atomTypes);
 		return atomTypes;
 	}
+    
+    public AtomType[] getAtomTypes() {
+		ArrayList al = new ArrayList();
+		AtomType atomType = null;
+		for (int f = 0; f < atomTypes.size(); f++){
+            AtomType at = (AtomType) atomTypes.elementAt(f); 
+            al.add((AtomType)at.clone());
+		}
+		AtomType[] atomTypes = new AtomType[al.size()];
+		al.toArray(atomTypes);
+		return atomTypes;
+    }
 
 	/**
 	 *  Configures an atom. Finds the correct element type
