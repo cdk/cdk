@@ -13,6 +13,7 @@ New:
   formal charge. (RFC #6)
 * Added getCentreOfMass methods (2D and 3D)
 * Added geometrical methods for crystals
+* Different build procedure to allow for patches
 
 Fixes:
 * Reading of 3D coordinates from ShelX files

@@ -6,6 +6,7 @@
         <property name="dist" value="dist" />
         <property name="doc" value="doc" />
         <property name="src" value="src" />
+        <property name="build.src" value="${build}/${src}" />
         <property name="lib" value="jar" />
         <property name="src.tests" value="${src}/org/openscience/cdk/test" />
         <property name="reports.tests" value="reports" />
@@ -38,9 +39,16 @@
         <target name="init" depends="check">
                 <tstamp />
                 <mkdir dir="${build}" />
+                <mkdir dir="${build.src}" />
                 <mkdir dir="${sourcedist}" />
                 <mkdir dir="${dist}" />
                 <mkdir dir="${reports.tests}" />
+
+                <!-- make a copy of the source tree. Patches are
+                     applied to this copy, not the original -->
+                <copy todir="${build.src}/org">
+                    <fileset dir="${src}/org"/>
+                </copy>
         </target>
 
         <target name="clean">
@@ -65,8 +73,7 @@
                 <mkdir dir="${build}" />
 
                 <javac destdir="${build}" optimize="off" debug="on" deprecation="off">
-                        <src path="${src}" />
-                        <exclude name="${sourcedist}/**" />
+                        <src path="${build.src}" />
                         <exclude name="org/openscience/cdk/applications/Viewer.java" />
                         <exclude name="org/openscience/cdk/renderer/AcceleratedRenderer3D.java" />
                         <exclude name="org/openscience/cdk/renderer/AcceleratedRenderer3DModel.java" />
@@ -93,16 +100,17 @@
                 <!-- Task to build the libio classes. Clearly, this requires extra
                      jars, and these should be located in ${lib}/libio -->
 
-                <javac destdir="${build}" optimize="off" debug="on" deprecation="off">
-                        <src path="${src}/org/openscience/cdk/libio" />
-                        <src path="${src}/org/openscience/cdk/test/libio" />
-                        <src path="${src}/org/openscience/cdk/applications"/>
+                <javac destdir="${build}" optimize="off" 
+                       debug="on" deprecation="off">
+                        <src path="${build.src}/org/openscience/cdk/libio" />
+                        <src path="${build.src}/org/openscience/cdk/test/libio" />
+                        <src path="${build.src}/org/openscience/cdk/applications"/>
 
                         <classpath refid="project.class.path" />
                         <classpath>
-                               <fileset dir="${lib}/libio">
-                                       <include name="*.jar" />
-                               </fileset>
+                            <fileset dir="${lib}/libio">
+                                <include name="*.jar" />
+                            </fileset>
                         </classpath>
                 </javac>
         </target>
@@ -112,7 +120,7 @@
                      jars, like those in ${lib}/libio -->
                 <echo message="Compiling classes defined in ${src}/applications.classes." />
 
-                <javac srcdir="${src}" destdir="${build}"
+                <javac srcdir="${build.src}" destdir="${build}"
                        optimize="off" debug="on" deprecation="off"
                        includesfile="${src}/applications.classes">
 
@@ -128,7 +136,7 @@
         <target name="compile-core" depends="init">
                 <echo message="Compiling classes for cdk-core module." />
 
-                <javac srcdir="${src}" destdir="${build}"
+                <javac srcdir="${build.src}" destdir="${build}"
                        optimize="on" debug="off" deprecation="off"
                        includesfile="${src}/core.classes">
                     <classpath refid="project.class.path" />
@@ -138,7 +146,7 @@
         <target name="compile-standard" depends="init">
                 <echo message="Compiling classes for cdk-standard module." />
 
-                <javac srcdir="${src}" destdir="${build}"
+                <javac srcdir="${build.src}" destdir="${build}"
                        optimize="on" debug="on" deprecation="off"
                        includesfile="${src}/standard.classes">
                     <classpath>
@@ -156,7 +164,7 @@
         <target name="compile-io" depends="init, dist-core">
                 <echo message="Compiling classes for cdk-io module." />
 
-                <javac srcdir="${src}" destdir="${build}"
+                <javac srcdir="${build.src}" destdir="${build}"
                        optimize="off" debug="on" deprecation="off">
                     <include name="org/openscience/cdk/io/**/*"/>
                     <include name="org/openscience/cdk/ChemFile.java"/>
@@ -175,31 +183,28 @@
         <target name="compile-extra" depends="compile"/>
 
         <target name="compile-cml">
-                <!-- Task to build the CML Lib classes. (For Jmol) -->
-                <echo message="Compiling classes defined in ${src}/cml.classes." />
+            <!-- Task to build the CML Lib classes. (For Jmol) -->
+            <echo message="Compiling classes defined in ${src}/cml.classes." />
 
-                <!-- apply patch to remove dependency on Log4J -->
-                <copy   file="${src}/org/openscience/cdk/tools/LoggingTool.java"
-                      tofile="${src}/org/openscience/cdk/tools/LoggingTool.withLog4J.java"/>
-                <copy   file="${src}/org/openscience/cdk/tools/LoggingTool.applet.java"
-                      tofile="${src}/org/openscience/cdk/tools/LoggingTool.java"/>
-
-                <javac srcdir="${src}" destdir="${build}"
-                       optimize="off" debug="on" deprecation="off"
-                       includesfile="${src}/cml.classes">
-                    <classpath refid="project.class.path" />
-                </javac>
-
-                <!-- restore original file -->
-                <move   file="${src}/org/openscience/cdk/tools/LoggingTool.withLog4J.java"
-                      tofile="${src}/org/openscience/cdk/tools/LoggingTool.java"/>
+            <!-- apply patch to remove dependency on Log4J -->
+            <patch patchfile="${src}/patches/org.openscience.cdk.toold.LoggingTool.java.MakeUsableInJmolApplet"
+                   originalfile="${build.src}/org/openscience/cdk/tools/LoggingTool.java"
+                   dir="${build.src}/org/openscience/cdk/tools"/>
+                
+            <javac srcdir="${build.src}" destdir="${build}"
+                   optimize="off" debug="on" deprecation="off"
+                   includesfile="${src}/cml.classes">
+                <classpath refid="project.class.path" />
+            </javac>
+            
+            <delete file="${build.src}/org/openscience/cdk/tools/LoggingTool.java"/>
         </target>
 
         <target name="compile-test" depends="compile">
                 <!-- Task to build the test classes. -->
                 <javac srcdir="${src}/org/openscience/cdk/test"
-                       destdir="${build}" optimize="off" debug="on" deprecation="off"
-                       >
+                       destdir="${build}" optimize="off" debug="on" 
+                       deprecation="off">
                         <exclude name="renderer/Accel*.java" />
                         <exclude name="renderer/Orbitals*.java" />
                         <exclude name="libio/**/*.java" />
@@ -214,7 +219,7 @@
                 <mkdir dir="${build}" />
 
                 <javac destdir="${build}" optimize="on" deprecation="off" debug="on">
-                        <src path="${src}" />
+                        <src path="${build.src}" />
 
                         <!-- exclude libio classes that require additional
                              libraries, and are compiled elsewhere -->
