@@ -972,6 +972,7 @@
                 <property name="sourcedist.dir" value="${sourcedist}/${package}"/>
                 <copy todir="${sourcedist.dir}/${src}">
                         <fileset dir="${src}" includes="*.javafiles" />
+                        <fileset dir="${src}" includes="*.classes" />
                         <fileset dir="${src}" includes="**/*.java" />
                         <fileset dir="${src}" includes="**/*.jj" />
                         <fileset dir="${src}" includes="org/openscience/cdk/io/cml/data/**" />
