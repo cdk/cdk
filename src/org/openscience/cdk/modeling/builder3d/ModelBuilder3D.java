@@ -70,7 +70,6 @@ public class ModelBuilder3D {
 	private Hashtable parameterSet = null;
 	private Molecule molecule;
 	private AtomPlacer atomPlacer = new AtomPlacer();
-	private SSSRFinder sssrf = new SSSRFinder();
 	private AtomPlacer3D ap3d = new AtomPlacer3D();
 	private AtomTetrahedralLigandPlacer3D atlp3d = new AtomTetrahedralLigandPlacer3D();
 	ForceFieldConfigurator ffc = new ForceFieldConfigurator();
@@ -240,7 +239,7 @@ public class ModelBuilder3D {
 		HOSECodeGenerator hcg = new HOSECodeGenerator();
 		int NumberOfRingAtoms = 0;
 		RingSet ringSetA = null;
-		RingSet ringSetMolecule = sssrf.findSSSR(molecule);
+		RingSet ringSetMolecule = new SSSRFinder(molecule).findSSSR();
 		boolean isInHeteroRing = false;
 		try {
 			HueckelAromaticityDetector.detectAromaticity(molecule);
