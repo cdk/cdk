@@ -171,58 +171,6 @@ public class RingSet extends Vector implements java.io.Serializable, Cloneable
 	}
 
 	/**
-	 * Returns the ring with the highest numbers of other rings attached to it.
-	 *
-	 * @return the ring with the highest numbers of other rings attached to it.    
-	 */
-	public Ring getMostComplexRing()
-	{
-		int[] neighbors = new int[size()];
-		Ring ring1, ring2;
-		Atom atom1, atom2;
-		int mostComplex = 0, mostComplexPosition = 0;
-		/* for all rings in this RingSet */
-		for (int i = 0; i < size(); i++)
-		{
-			/* Take each ring */
-			ring1 = (Ring)elementAt(i);
-			/* look at each Atom in this ring whether it is part of any other ring */
-			for (int j = 0; j < ring1.getAtomCount(); j++)
-			{
-				atom1 = ring1.getAtomAt(j);
-				/* Look at each of the other rings in the ringset */
-				for (int k = i + 1; k < size(); k++)
-				{
-					ring2 = (Ring)elementAt(k);
-					if (ring1 != ring2)
-					{
-						for (int l = 0; l < ring2.getAtomCount(); l++)
-						{
-							atom2 = ring2.getAtomAt(l);
-							if (atom1 == atom2)
-							{
-								neighbors[i]++;								
-								neighbors[k]++;
-								break;
-							}
-						}
-					}
-				}
-			}
-		}
-		for (int i = 0; i < neighbors.length; i++)
-		{
-			if (neighbors[i] > mostComplex)
-			{
-				mostComplex = neighbors[i];
-				mostComplexPosition = i;
-			}
-		}
-		return (Ring) elementAt(mostComplexPosition);
-	}
-	
-
-	/**
 	 * Adds all rings of another RingSet if they are not allready part of this ring set.
 	 *
 	 * @param   ringSet  the ring set to be united with this one.

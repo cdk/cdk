@@ -450,7 +450,7 @@ public class StructureDiagramGenerator
 		Vector2d ringCenterVector;
 		Point2d ringCenter;
 		int thisRing;
-		Ring ring = rs.getMostComplexRing();
+		Ring ring = RingSetManipulator.getMostComplexRing(rs);
 		/*
 		 *  Get the most complex ring in this RingSet
 		 */

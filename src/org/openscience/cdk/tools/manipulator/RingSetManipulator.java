@@ -90,7 +90,7 @@ public class RingSetManipulator {
 	 */
 	public static Ring getMostComplexRing(RingSet ringSet)
 	{
-		int[] neighbors = new int[size()];
+		int[] neighbors = new int[ringSet.size()];
 		Ring ring1, ring2;
 		Atom atom1, atom2;
 		int mostComplex = 0, mostComplexPosition = 0;
@@ -104,9 +104,9 @@ public class RingSetManipulator {
 			{
 				atom1 = ring1.getAtomAt(j);
 				/* Look at each of the other rings in the ringset */
-				for (int k = i + 1; k < size(); k++)
+				for (int k = i + 1; k < ringSet.size(); k++)
 				{
-					ring2 = (Ring)elementAt(k);
+					ring2 = (Ring)ringSet.elementAt(k);
 					if (ring1 != ring2)
 					{
 						for (int l = 0; l < ring2.getAtomCount(); l++)

@@ -50,8 +50,7 @@ API changes:
 * Moved RingSet.get2DCenter() to GeometryTools 
 * Moved AtomContainer.get2DCenter() to GeometryTools
 * Moved RingSet.getRingSetInAtomContainer() to RingSetManipulator.getAllInOneContainer()
-* Moved RingSet.sort() to RingSetManipulator.sort()
-* Moved RingSet.getHeaviestRing() to RingSetManipulator.getHeaviestRing()
+* Moved RingSet.sort(), .getHeaviestRing() and .getMostComplexRing() to RingSetManipulator
 
 20041201 Release
 ------------------------------------
