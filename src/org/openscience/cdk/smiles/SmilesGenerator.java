@@ -354,26 +354,35 @@ public class SmilesGenerator {
           if(!differentSymbols.contains(atoms[i].getSymbol()))
             differentSymbols.add(atoms[i].getSymbol());
         }
-        int symbolsWithDifferentMorganNumbers=differentSymbols.size();
-        for(int i=0;i<differentSymbols.size();i++){
-          int firstMorganNumber=-1;
-          for(int k=0;k<atoms.length;k++){
-            if(((String)differentSymbols.get(i)).equals(atoms[k].getSymbol())){
-              if(firstMorganNumber==-1)
-              {
-                firstMorganNumber=morgannumbers[container.getAtomNumber(atoms[k])];
-              }
-              else
-              {
-                if(morgannumbers[container.getAtomNumber(atoms[k])]==firstMorganNumber){
-                  symbolsWithDifferentMorganNumbers--;//alles mit allem
-                  break;
-                }
-              }
-            }
+        int[] onlyRelevantIfTwo=new int[2];
+        if(differentSymbols.size()==2){
+          for(int i=0;i<atoms.length;i++){
+            if(differentSymbols.indexOf(atoms[i].getSymbol())==0)
+              onlyRelevantIfTwo[0]++;
+            else
+              onlyRelevantIfTwo[1]++;
           }
+          System.err.println("CCCCC "+onlyRelevantIfTwo[0]+ "   "+onlyRelevantIfTwo[1]+"  "+differentAtoms);
         }
-        if(symbolsWithDifferentMorganNumbers!=differentSymbols.size()){
+        boolean[] symbolsWithDifferentMorganNumbers=new boolean[differentSymbols.size()];
+        Vector[] symbolsMorganNumbers=new Vector[differentSymbols.size()];
+        for(int i=0;i<symbolsWithDifferentMorganNumbers.length;i++){
+          symbolsWithDifferentMorganNumbers[i]=true;
+          symbolsMorganNumbers[i]=new Vector();
+        }
+        for(int k=0;k<atoms.length;k++){
+          int elementNumber=differentSymbols.indexOf(atoms[k].getSymbol());
+          if(symbolsMorganNumbers[elementNumber].contains(new Integer(morgannumbers[container.getAtomNumber(atoms[k])])))
+            symbolsWithDifferentMorganNumbers[elementNumber]=false;
+          else
+            symbolsMorganNumbers[elementNumber].add(new Integer(morgannumbers[container.getAtomNumber(atoms[k])]));
+        }
+        int numberOfSymbolsWithDifferentMorganNumbers=0;
+        for(int i=0;i<symbolsWithDifferentMorganNumbers.length;i++){
+          if(symbolsWithDifferentMorganNumbers[i]==true && symbolsMorganNumbers[i].size()>1)
+            numberOfSymbolsWithDifferentMorganNumbers++;
+        }
+        if(numberOfSymbolsWithDifferentMorganNumbers!=differentSymbols.size()){
           //Check if it's a cis/trans ring fusion
           if(stereo==1&&atoms.length==4){
             for(int i=0;i<atoms.length;i++){
@@ -385,9 +394,10 @@ public class SmilesGenerator {
               }
             }
           }
-          if((atoms.length==5 || atoms.length==6) && symbolsWithDifferentMorganNumbers+differentAtoms>2)//hier auch 2+x
+          System.err.println(atoms.length + "BBBBBBBBBB "+(differentAtoms==2 && onlyRelevantIfTwo[0]>1 && onlyRelevantIfTwo[1]>1)+"  "+(numberOfSymbolsWithDifferentMorganNumbers+differentAtoms>2 || (differentAtoms==2 && onlyRelevantIfTwo[0]>1 && onlyRelevantIfTwo[1]>1)));
+          if((atoms.length==5 || atoms.length==6) && (numberOfSymbolsWithDifferentMorganNumbers+differentAtoms>2 || (differentAtoms==2 && onlyRelevantIfTwo[0]>1 && onlyRelevantIfTwo[1]>1)))
             return(true);
-          if(isSquarePlanar(container,a) && symbolsWithDifferentMorganNumbers+differentAtoms>2)//hier auch 2+2
+          if(isSquarePlanar(container,a) && (numberOfSymbolsWithDifferentMorganNumbers+differentAtoms>2 || (differentAtoms==2 && onlyRelevantIfTwo[0]>1 && onlyRelevantIfTwo[1]>1)))
             return(true);
           return false;
         }
@@ -494,12 +504,7 @@ public class SmilesGenerator {
    */
   private void createSMILES(Atom a, StringBuffer line, AtomContainer atomContainer, boolean chiral, boolean doubleBondConfiguration) {
     Vector tree = new Vector();
-    createDFSTree(a, tree, null, atomContainer); //Dummy parent
-    /*if(isStereo(atomContainer,(Atom)tree.get(0))){
-            Object dummy=tree.get(0);
-            tree.set(0,tree.get(1));
-            tree.set(1,dummy);
-    }*/
+    createDFSTree(a, tree, null, atomContainer); 
     parseChain(tree, line, atomContainer, null, chiral, doubleBondConfiguration,null);
   }
 
@@ -622,25 +627,25 @@ public class SmilesGenerator {
               for(int i=0;i<chiralNeighbours.size();i++){
                 if(chiralNeighbours.get(i)!=parent){
                 if(normalBindingIsLeft){
-                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==0){//&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
+                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==0){
                     sorted[0]=(Atom)chiralNeighbours.get(i);
                   }
-                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==CDKConstants.STEREO_BOND_UP){//&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
+                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==CDKConstants.STEREO_BOND_UP){
                     sorted[2]=(Atom)chiralNeighbours.get(i);
                   }
-                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==CDKConstants.STEREO_BOND_DOWN){//&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
+                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==CDKConstants.STEREO_BOND_DOWN){
                     sorted[1]=(Atom)chiralNeighbours.get(i);
                   }
                 }
                 else
                 {
-                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==CDKConstants.STEREO_BOND_UP){//&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
+                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==CDKConstants.STEREO_BOND_UP){
                     sorted[1]=(Atom)chiralNeighbours.get(i);
                   }
-                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==0){//&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
+                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==0){
                     sorted[0]=(Atom)chiralNeighbours.get(i);
                   }
-                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==CDKConstants.STEREO_BOND_DOWN){//&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
+                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==CDKConstants.STEREO_BOND_DOWN){
                     sorted[2]=(Atom)chiralNeighbours.get(i);
                   }
                 }
