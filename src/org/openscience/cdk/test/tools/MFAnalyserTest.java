@@ -152,5 +152,10 @@ public class MFAnalyserTest extends TestCase {
 	assertEquals(10, ((Integer)formula.get("C")).intValue());
     }
     
+    public void testMasses() throws Exception{
+	MFAnalyser mfa=new MFAnalyser(molecule);
+  assertEquals((float)120, mfa.getMass(),.1);
+  assertEquals((float)120.11038, mfa.getNaturalMass(),.1);
+    }
 }
 
