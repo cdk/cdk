@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.0b1//EN" 
+                         "dtd/website.dtd" [
+  <!ENTITY atlist SYSTEM "mol2_atomtypes.dbx">  
+]>
+<webpage id="atlist-mol2">
+  <config param="last-change-by" value="$Author$"/>
+  <config param="rcsdate" value="$Date$"/>
+
+  <head>
+    <title>Mol2 Atom Type List</title>
+    <titleabbrev>Mol2 ATList</titleabbrev>
+  </head>
+
+  &atlist;
+
+</webpage>

@@ -48,6 +48,11 @@
         <tocentry page="deprecrfc.xml" filename="deprecrfc.html"/>
       </tocentry>
       <tocentry page="biblio.xml" filename="biblio.html"/>
+      <tocentry page="atlists.xml" filename="atlists.html">
+        <tocentry page="atlist-mol2.xml" filename="atlist-mol2.html"/>
+        <tocentry page="atlist-structgen.xml" filename="atlist-structgen.html"/>
+        <tocentry page="atlist-valency.xml" filename="atlist-valency.html"/>
+      </tocentry>
       <tocentry page="dicts.xml" filename="dicts.html">
         <tocentry page="dict-cdk.xml" filename="dict-cdk.html"/>
         <tocentry page="dict-chemical.xml" filename="dict-chemical.html"/>

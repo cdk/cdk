@@ -17,6 +17,10 @@
     <delete file="javadoc-data.xml"/>
     <delete file="autolayout.xml"/>
     <delete>
+      <fileset dir="." includes="*dicts.dbx"/>
+      <fileset dir="." includes="*atomtypes.dbx"/>
+    </delete>
+    <delete>
       <fileset dir="${build.dir}/" includes="*.html"/>
     </delete>
   </target>
@@ -42,10 +46,15 @@
       <srcfiles dir="../../../src/org/openscience/cdk/dict/data" includes="cdk.xml"/>
     </uptodate>
     <echo message="Dictionaries in Docbook uptodate: ${dicts.uptodate}"/>
+    <uptodate property="atlists.uptodate"
+      targetfile="mol2_atomtypes.dbx">
+      <srcfiles dir="../../../src/org/openscience/cdk/config/data" includes="mol2_atomtypes.xml"/>
+    </uptodate>
+    <echo message="Atom Type Lists in Docbook uptodate: ${atlists.uptodate}"/>
   </target>
 
   <target name="includes" id="includes" 
-      depends="check.includes, javancss, keyword.index, bibliography, dicts"/>
+      depends="check.includes, javancss, keyword.index, bibliography, dicts, atlists"/>
   
   <target id="website" name="website" depends="layout">
     <xslt basedir="." destdir="${build.dir}" extension=".html"
@@ -73,6 +82,12 @@
   <target name="dicts" unless="dicts.uptodate">
     <xslt in="../../../src/org/openscience/cdk/dict/data/cdk.xml" out="cdkdict.dbx" style="xsl/cmldict2docbook.xsl"/>
     <xslt in="../../../src/org/openscience/cdk/dict/data/chemical.xml" out="chemicaldict.dbx" style="xsl/cmldict2docbook.xsl"/>
+  </target>
+  
+  <target name="atlists" unless="atlists.uptodate">
+    <xslt in="../../../src/org/openscience/cdk/config/data/mol2_atomtypes.xml" out="mol2_atomtypes.dbx" style="xsl/atomtypelist2docbook.xsl"/>
+    <xslt in="../../../src/org/openscience/cdk/config/data/valency_atomtypes.xml" out="valency_atomtypes.dbx" style="xsl/atomtypelist2docbook.xsl"/>
+    <xslt in="../../../src/org/openscience/cdk/config/data/structgen_atomtypes.xml" out="structgen_atomtypes.dbx" style="xsl/atomtypelist2docbook.xsl"/>
   </target>
   
   <target id="keyword.index" name="keyword.index" unless="keywordindex.uptodate">
