@@ -49,163 +49,170 @@ import javax.vecmath.*;
  */
 public class PDBReader extends DefaultChemObjectReader {
 
-    private org.openscience.cdk.tools.LoggingTool logger;
-	private BufferedReader _oInput; // The internal used BufferedReader
+  private org.openscience.cdk.tools.LoggingTool logger;
+  private BufferedReader _oInput; // The internal used BufferedReader
 
-	/**
-	 *
-	 * Contructs a new PDBReader that can read Molecules from a given
-	 * InputStream.
-	 *
-	 * @param oIn  The InputStream to read from
-	 *
-	 */
-	public PDBReader(InputStream oIn) {
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
-		_oInput = new BufferedReader(new InputStreamReader(oIn));
-	}
+  /**
+   *
+   * Contructs a new PDBReader that can read Molecules from a given
+   * InputStream.
+   *
+   * @param oIn  The InputStream to read from
+   *
+   */
+  public PDBReader(InputStream oIn) {
+    logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+    _oInput = new BufferedReader(new InputStreamReader(oIn));
+  }
 
-	/**
-	 *
-	 * Contructs a new PDBReader that can read Molecules from a given
-	 * Reader.
-	 *
-	 * @param oIn  The Reader to read from
-	 *
-	 */
-	public PDBReader(Reader oIn) {
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
-		_oInput = new BufferedReader(oIn);
-	}
+  /**
+   *
+   * Contructs a new PDBReader that can read Molecules from a given
+   * Reader.
+   *
+   * @param oIn  The Reader to read from
+   *
+   */
+  public PDBReader(Reader oIn) {
+    logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+    _oInput = new BufferedReader(oIn);
+  }
 
-	/**
-	 *
-	 * Takes an object which subclasses ChemObject, e.g. Molecule, and will
-	 * read this (from file, database, internet etc). If the specific
-	 * implementation does not support a specific ChemObject it will throw
-	 * an Exception.
-	 *
-	 * @param oObj  The object that subclasses ChemObject
-	 * @return      The ChemObject read  
-	 * @exception   CDKException  
-	 *
-	 */
-   public ChemObject read(ChemObject oObj) throws CDKException {
-		if (oObj instanceof ChemFile) {
-			return (ChemObject)readChemFile();
-		} else {
-			throw new CDKException("Only supported is reading of ChemFile objects.");
-		}
-	}
+  /**
+   *
+   * Takes an object which subclasses ChemObject, e.g. Molecule, and will
+   * read this (from file, database, internet etc). If the specific
+   * implementation does not support a specific ChemObject it will throw
+   * an Exception.
+   *
+   * @param oObj  The object that subclasses ChemObject
+   * @return      The ChemObject read  
+   * @exception   CDKException  
+   *
+   */
+  public ChemObject read(ChemObject oObj) throws CDKException {
+    if (oObj instanceof ChemFile) {
+      return (ChemObject)readChemFile();
+    } else {
+      throw new CDKException("Only supported is reading of ChemFile objects.");
+    }
+  }
 
-	/**
-	 * Read a <code>ChemFile</code> from a file in PDB format. The molecules
-     * in the file are stored as <code>BioPolymer</code>s in the
-     * <code>ChemFile</code>. The residues are the monomers of the
-     * <code>BioPolymer</code>, and their names are the concatenation of the
-     * residue, chain id, and the sequence number. Separate chains (denoted by
-     * TER records) are stored as separate <code>BioPolymer</code> molecules.
-     *
-     * <p>Connectivity information is not currently read.
-	 *
-	 * @return The ChemFile that was read from the PDB file.
-	 */
-	private ChemFile readChemFile() 	{
-		// initialize all containers
-		ChemFile oFile = new ChemFile();
-		ChemSequence oSeq = new ChemSequence();
-		ChemModel oModel = new ChemModel();
-		SetOfMolecules oSet = new SetOfMolecules();
+  /**
+   * Read a <code>ChemFile</code> from a file in PDB format. The molecules
+   * in the file are stored as <code>BioPolymer</code>s in the
+   * <code>ChemFile</code>. The residues are the monomers of the
+   * <code>BioPolymer</code>, and their names are the concatenation of the
+   * residue, chain id, and the sequence number. Separate chains (denoted by
+   * TER records) are stored as separate <code>BioPolymer</code> molecules.
+   *
+   * <p>Connectivity information is not currently read.
+   *
+   * @return The ChemFile that was read from the PDB file.
+   */
+  private ChemFile readChemFile() 	{
+    // initialize all containers
+    ChemFile oFile = new ChemFile();
+    ChemSequence oSeq = new ChemSequence();
+    ChemModel oModel = new ChemModel();
+    SetOfMolecules oSet = new SetOfMolecules();
 		
-		// some variables needed
-		StringBuffer cLine;
-		String cCol;
-		Atom oAtom;
-		BioPolymer oBP = new BioPolymer();
-		StringBuffer cResidue;
-		Object oObj;
-		Monomer oMonomer;
-		String cRead;
+    // some variables needed
+    StringBuffer cLine;
+    String cCol;
+    Atom oAtom;
+    BioPolymer oBP = new BioPolymer();
+    StringBuffer cResidue;
+    Object oObj;
+    Monomer oMonomer;
+    String cRead;
 		
-		// do the reading of the Input		
-		try {
-			do {
-				cRead = _oInput.readLine();
-                logger.debug(cRead);
-				if (cRead != null) {
-					cLine = new StringBuffer(cRead);
-					// make sure the record name is 6 characters long
-					while (cLine.length() < 6) {
-						cLine.append(" ");
-					}
-					// check the first column to decide what to do
-					cCol = cLine.substring(0,6).toUpperCase();
-					if (cCol.equals("ATOM  ") || cCol.equals("HETATM")) {
-						// read an atom record
-						oAtom = readAtom(cLine.toString());
+    // do the reading of the Input		
+    try {
+      do {
+        cRead = _oInput.readLine();
+        logger.debug(cRead);
+        if (cRead != null) {
+          cLine = new StringBuffer(cRead);
+          // make sure the record name is 6 characters long
+          while (cLine.length() < 6) {
+            cLine.append(" ");
+          }
+          // check the first column to decide what to do
+          cCol = cLine.substring(0,6).toUpperCase();
+          if (cCol.equals("ATOM  ") || cCol.equals("HETATM")) {
+            // read an atom record
+            oAtom = readAtom(cLine.toString());
 						
-						// construct a string describing the residue
-						cResidue = new StringBuffer(8);
-						oObj = oAtom.getProperty("pdb.resName");
-						if (oObj != null) {
-							cResidue = cResidue.append(((String)oObj).trim());
-						}
-						oObj = oAtom.getProperty("pdb.chainID");
-						if (oObj != null) {
-							cResidue = cResidue.append(((String)oObj).trim());
-						}
-						oObj = oAtom.getProperty("pdb.resSeq");
-						if (oObj != null) {
-							cResidue = cResidue.append(((String)oObj).trim());
-						}
+            // construct a string describing the residue
+            cResidue = new StringBuffer(8);
+            oObj = oAtom.getProperty("pdb.resName");
+            if (oObj != null) {
+              cResidue = cResidue.append(((String)oObj).trim());
+            }
+            oObj = oAtom.getProperty("pdb.chainID");
+            if (oObj != null) {
+              cResidue = cResidue.append(((String)oObj).trim());
+            }
+            oObj = oAtom.getProperty("pdb.resSeq");
+            if (oObj != null) {
+              cResidue = cResidue.append(((String)oObj).trim());
+            }
 						
-						// search for the existing monomer or create a new one
-						oMonomer = oBP.getMonomer(cResidue.toString());
-						if (oMonomer == null) {
-							oMonomer = new Monomer();
-							oMonomer.setMonomerName(cResidue.toString());
-							oMonomer.setMonomerType((String)oAtom.getProperty("pdb.resName"));
-						}
+            // search for the existing monomer or create a new one
+            oMonomer = oBP.getMonomer(cResidue.toString());
+            if (oMonomer == null) {
+              oMonomer = new Monomer();
+              oMonomer.setMonomerName(cResidue.toString());
+              oMonomer.setMonomerType((String)oAtom.getProperty("pdb.resName"));
+            }
 						
-						// add the atom
-						oBP.addAtom(oAtom, oMonomer);
-					} else if (cCol.equals("TER   ")) {
-						// finish the molecule and construct a new one
-						oSet.addMolecule(oBP);
-						oBP = new BioPolymer();
-					} else if (cCol.equals("END   ")) {
-						// finish the molecule and construct a new one
+            // add the atom
+            oBP.addAtom(oAtom, oMonomer);
+          } else if (cCol.equals("TER   ")) {
+            // finish the molecule and construct a new one
+            oSet.addMolecule(oBP);
+            oBP = new BioPolymer();
+          } else if (cCol.equals("END   ")) {
+            // finish the molecule and construct a new one
             if (oBP.getAtomCount() != 0) {
               oSet.addMolecule(oBP);
             }
-						oBP = new BioPolymer();					
-	//				} else if (cCol.equals("USER  ")) {
-	//						System.out.println(cLine);
-	//				} else if (cCol.equals("MODEL ")) {
-	//					System.out.println(cLine);
-	//				} else if (cCol.equals("ENDMDL")) {
-	//					System.out.println(cLine);
-					}
-				}
-			} while (_oInput.ready());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+            oBP = new BioPolymer();					
+            //				} else if (cCol.equals("USER  ")) {
+            //						System.out.println(cLine);
+            //				} else if (cCol.equals("MODEL ")) {
+            //					System.out.println(cLine);
+            //				} else if (cCol.equals("ENDMDL")) {
+            //					System.out.println(cLine);
+          } else if (cCol.equals("HELIX ") ||
+                     cCol.equals("SHEET ") ||
+                     cCol.equals("TURN  ")) {
+            Vector t = (Vector)oModel.getProperty("pdb.structure.records");
+            if (t == null)
+              oModel.setProperty("pdb.structure.records", t = new Vector());
+            t.add("" + cLine);
+          }
+        }
+      } while (_oInput.ready());
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
 
-		// try to close the Input
-		try {
-			_oInput.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    // try to close the Input
+    try {
+      _oInput.close();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
 	
-		// Set all the dependencies
-		oModel.setSetOfMolecules(oSet);
-		oSeq.addChemModel(oModel);
-		oFile.addChemSequence(oSeq);
+    // Set all the dependencies
+    oModel.setSetOfMolecules(oSet);
+    oSeq.addChemModel(oModel);
+    oFile.addChemSequence(oSeq);
 		
-		return oFile;
-	}
+    return oFile;
+  }
 
   /**
    * Creates an <code>Atom</code> and sets properties to their values from
@@ -223,13 +230,13 @@ public class PDBReader extends DefaultChemObjectReader {
     }
     String elementSymbol = cLine.substring(12, 14).trim();
     if (elementSymbol.length() == 2) {
-        // ensure that the second char is lower case
-        elementSymbol = elementSymbol.charAt(0) + elementSymbol.substring(1).toLowerCase();
+      // ensure that the second char is lower case
+      elementSymbol = elementSymbol.charAt(0) + elementSymbol.substring(1).toLowerCase();
     }
     Atom oAtom = new Atom(elementSymbol, 
-        new Point3d(new Double(cLine.substring(30, 38)).doubleValue(),
-          new Double(cLine.substring(38, 46)).doubleValue(),
-            new Double(cLine.substring(46, 54)).doubleValue()));
+                          new Point3d(new Double(cLine.substring(30, 38)).doubleValue(),
+                                      new Double(cLine.substring(38, 46)).doubleValue(),
+                                      new Double(cLine.substring(46, 54)).doubleValue()));
     oAtom.setProperty("pdb.record", cLine);
     oAtom.setProperty("pdb.serial", new Integer(cLine.substring(6, 11).trim()));
     oAtom.setProperty("pdb.name", (new String(cLine.substring(12, 16))).trim());
@@ -257,7 +264,7 @@ public class PDBReader extends DefaultChemObjectReader {
     return oAtom;
   }
 
-    public void close() throws IOException {
-        _oInput.close();
-    }
+  public void close() throws IOException {
+    _oInput.close();
+  }
 }
