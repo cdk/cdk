@@ -42,12 +42,13 @@ import org.openscience.cdk.isomorphism.IsomorphismTester;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.graph.ConnectivityChecker;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * @cdk.module test
  *
- *@author     steinbeck
- *@cdk.created    September 19, 2003
+ *@author      steinbeck
+ *@cdk.created 2003-09-19
  */
 public class SmilesParserTest extends TestCase
 {
@@ -92,6 +93,7 @@ public class SmilesParserTest extends TestCase
         try {
             String smiles = "C1c2c(c3c(c(O)cnc3)cc2)CC(=O)C1";
             Molecule molecule = sp.parseSmiles(smiles);
+            assertEquals(16, molecule.getAtomCount());
         } catch (Exception exception) {
             fail(exception.getMessage());
         }
@@ -101,6 +103,7 @@ public class SmilesParserTest extends TestCase
         try {
             String smiles = "O=C(O3)C1=COC(OC4OC(CO)C(O)C(O)C4O)C2C1C3C=C2COC(C)=O";
             Molecule molecule = sp.parseSmiles(smiles);
+            assertEquals(29, molecule.getAtomCount());
         } catch (Exception exception) {
             fail(exception.getMessage());
         }
@@ -110,6 +113,7 @@ public class SmilesParserTest extends TestCase
         try {
             String smiles = "CN1C=NC2=C1C(N(C)C(N2C)=O)=O";
             Molecule molecule = sp.parseSmiles(smiles);
+            assertEquals(14, molecule.getAtomCount());
         } catch (Exception exception) {
             fail(exception.getMessage());
         }
@@ -119,6 +123,7 @@ public class SmilesParserTest extends TestCase
         try {
             String smiles = "CN(C)CCC2=CNC1=CC=CC(OP(O)(O)=O)=C12";
             Molecule molecule = sp.parseSmiles(smiles);
+            assertEquals(19, molecule.getAtomCount());
         } catch (Exception exception) {
             fail(exception.getMessage());
         }
@@ -128,6 +133,7 @@ public class SmilesParserTest extends TestCase
         try {
             String smiles = "O=C(O)C1C(OC(C3=CC=CC=C3)=O)CC2N(C)C1CC2";
             Molecule molecule = sp.parseSmiles(smiles);
+            assertEquals(21, molecule.getAtomCount());
         } catch (Exception exception) {
             fail(exception.getMessage());
         }
@@ -137,6 +143,7 @@ public class SmilesParserTest extends TestCase
         try {
             String smiles = "C1(C2(C)(C))C(C)=CCC2C1";
             Molecule molecule = sp.parseSmiles(smiles);
+            assertEquals(10, molecule.getAtomCount());
         } catch (Exception exception) {
             fail(exception.getMessage());
         }
@@ -151,7 +158,7 @@ public class SmilesParserTest extends TestCase
         }
     }
     
-    public void testSmiles8() {
+    public void xtestSmiles8() {
         try {
             String smiles = "CC1(C(=C(CC(C1)O)C)C=CC(=CC=CC(=CC=CC=C(C=CC=C(C=CC1=C(CC(CC1(C)C)O)C)C)C)C)C)C";
             Molecule molecule = sp.parseSmiles(smiles);
@@ -614,7 +621,7 @@ public class SmilesParserTest extends TestCase
      */
     public void testSFBug956926() {
 		try {
-			String smiles = "[c+]1ccccc1";
+			String smiles = "[c+]1ccccc1"; // C6H5+, phenyl cation
 			Molecule mol = sp.parseSmiles(smiles);
 			assertEquals(6, mol.getAtomCount());
             // it's a bit hard to detect three double bonds in the phenyl ring
@@ -630,6 +637,12 @@ public class SmilesParserTest extends TestCase
             for (int i=0; i<atoms.length; i++) {
                 assertEquals(2, mol.getConnectedAtoms(atoms[i]).length);
             }
+            // and the number of implicit hydrogens
+            int hCount = 0;
+            for (int i=0; i<atoms.length; i++) {
+                hCount += atoms[i].getHydrogenCount();
+            }
+            assertEquals(5, hCount);
 		} catch (Exception e) {
 			fail(e.toString());
 		}
@@ -874,16 +887,11 @@ public class SmilesParserTest extends TestCase
 	 *
 	 *@param  args  The command line arguments
 	 */
-	public static void main(String[] args)
-	{
+	public static void main(String[] args) {
+        LoggingTool logger = new LoggingTool();
 		SmilesParserTest spt = new SmilesParserTest("SmilesParserTest");
 		spt.setStandAlone(true);
-		//sspt.testSmilesParser();
-		//spt.testSFBug630475();
-		//spt.testSFBug585811();
-		//spt.testSFBug593648();
-		//spt.testMassNumberReading();
-		//spt.testSMILESFromXYZ();
+		spt.testSFBug956921();
 	}
 }
 

@@ -31,7 +31,6 @@ package org.openscience.cdk.smiles;
 import java.util.Enumeration;
 import java.util.Stack;
 import java.util.StringTokenizer;
-
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
@@ -45,7 +44,6 @@ import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.ValencyHybridChecker;
-import org.openscience.cdk.tools.ValencyCheckerInterface;
 
 /**
  *  Parses a SMILES string and an AtomContainer. So far only the SSMILES subset
@@ -175,11 +173,9 @@ public class SmilesParser {
 		char mychar = 'X';
 		char[] chars = new char[1];
 		Atom lastNode = null;
-		Atom thisNode = null;
 		Stack atomStack = new Stack();
 		Stack bondStack = new Stack();
 		Atom atom = null;
-		Atom partner = null;
 		do
 		{
 			try
@@ -189,7 +185,7 @@ public class SmilesParser {
 				logger.debug("Processing: " + mychar);
 				if (lastNode != null)
 				{
-					logger.debug("Lastnode: " + lastNode.hashCode());
+					logger.debug("Lastnode: ", lastNode.hashCode());
 				}
 				if ((mychar >= 'A' && mychar <= 'Z') || (mychar >= 'a' && mychar <= 'z') ||
                     (mychar == '*'))
@@ -250,7 +246,7 @@ public class SmilesParser {
 					while (ses.hasMoreElements())
 					{
 						Atom a = (Atom) ses.nextElement();
-						logger.debug("" + a.hashCode());
+						logger.debug("", a.hashCode());
 					}
 					logger.debug("------");
 					bondStack.push(new Double(bondStatus));
@@ -263,7 +259,7 @@ public class SmilesParser {
 					while (ses.hasMoreElements())
 					{
 						Atom a = (Atom) ses.nextElement();
-						logger.debug("" + a.hashCode());
+						logger.debug("", a.hashCode());
 					}
 					logger.debug("------");
 					bondStatus = ((Double) bondStack.pop()).doubleValue();
@@ -272,7 +268,7 @@ public class SmilesParser {
 				{
 					chars[0] = mychar;
 					currentSymbol = new String(chars);
-					thisRing = (new Integer(new String(chars))).intValue();
+					thisRing = (new Integer(currentSymbol)).intValue();
 					handleRing(lastNode);
 					position++;
 				} else if (mychar == '%')
@@ -286,11 +282,11 @@ public class SmilesParser {
 					currentSymbol = getAtomString(smiles, position);
 					atom = assembleAtom(currentSymbol, nodeCounter);
 					molecule.addAtom(atom);
-                    logger.debug("Added atom: " + atom);
+                    logger.debug("Added atom: ", atom);
                     if (lastNode != null && bondExists) {
 						bond = new Bond(atom, lastNode, bondStatus);
 						molecule.addBond(bond);
-                        logger.debug("Added bond: " + bond);
+                        logger.debug("Added bond: ", bond);
 					}
 					bondStatus = CDKConstants.BONDORDER_SINGLE;
 					lastNode = atom;
@@ -329,6 +325,14 @@ public class SmilesParser {
             logger.debug("before H-adding: ", molecule);
             hAdder.addImplicitHydrogensToSatisfyValency(molecule);
             logger.debug("after H-adding: ", molecule);
+        } catch (Exception exception) {
+            logger.error("Error while calculation Hcount for SMILES atom: ", exception.getMessage());
+        }
+        
+        // setup missing bond orders
+        try {
+            valencyChecker.saturate(molecule);
+            logger.debug("after adding missing bond orders: ", molecule);
         } catch (Exception exception) {
             logger.error("Error while calculation Hcount for SMILES atom: ", exception.getMessage());
         }
@@ -393,7 +397,7 @@ public class SmilesParser {
      *@return    The Charge value
      */
     private int getCharge(String chargeString, int position) {
-        logger.debug("getCharge(): Parsing charge from: " + chargeString.substring(position));
+        logger.debug("getCharge(): Parsing charge from: ", chargeString.substring(position));
         int charge = 0;
         if (chargeString.charAt(position) == '+') {
             charge = +1;
@@ -410,7 +414,7 @@ public class SmilesParser {
             position++;
         }
         if (multiplier.length() > 0) {
-            logger.debug("Found multiplier: " + multiplier.toString());
+            logger.debug("Found multiplier: ", multiplier);
             try {
                 charge = charge * Integer.parseInt(multiplier.toString());
             } catch (Exception exception) {
@@ -418,7 +422,7 @@ public class SmilesParser {
                 logger.debug(exception);
             }
         }
-        logger.debug("Found charge: " + charge);
+        logger.debug("Found charge: ", charge);
         return charge;
     }
     
@@ -456,7 +460,7 @@ public class SmilesParser {
         // first, the two char elements
         if (pos < s.length() - 1) {
             String possibleSymbol = s.substring(pos, pos + 2);
-            logger.debug("possibleSymbol: " + possibleSymbol);
+            logger.debug("possibleSymbol: ", possibleSymbol);
             if (("HeLiBeNeNaMgAlSiClArCaScTiCrMnFeCoNiCuZnGaGeAsSe".indexOf(possibleSymbol) >= 0) ||
                 ("BrKrRbSrZrNbMoTcRuRhPdAgCdInSnSbTeXeCsBaLuHfTaRe".indexOf(possibleSymbol) >= 0) ||
                 ("OsIrPtAuHgTlPbBiPoAtRnFrRaLrRfDbSgBhHsMtDs".indexOf(possibleSymbol) >= 0)) {
@@ -465,7 +469,7 @@ public class SmilesParser {
         }
         // if that fails, the one char elements
         String possibleSymbol = s.substring(pos, pos + 1);
-        logger.debug("possibleSymbol: " + possibleSymbol);
+        logger.debug("possibleSymbol: ", possibleSymbol);
         if (("H".indexOf(possibleSymbol) >= 0)) {
              return possibleSymbol;
         }
@@ -481,7 +485,7 @@ public class SmilesParser {
      * http://www.daylight.com/dayhtml/smiles/smiles-atoms.html</a>.
 	 */
      private String getSymbolForOrganicSubsetElement(String s, int pos) {
-         logger.debug("getSymbolForOrganicSubsetElement(): Parsing organic subset element from: " + s);
+         logger.debug("getSymbolForOrganicSubsetElement(): Parsing organic subset element from: ", s);
          if (pos < s.length() - 1) {
              String possibleSymbol = s.substring(pos, pos + 2);
              if (("ClBr".indexOf(possibleSymbol) >= 0)) {
@@ -492,7 +496,7 @@ public class SmilesParser {
             return s.substring(pos, pos + 1);
         }
         if ("fpi".indexOf((s.charAt(pos))) >= 0) {
-            logger.warn("Element " + s + " is normally not sp2 hybridisized!");
+            logger.warn("Element ", s, " is normally not sp2 hybridisized!");
             return s.substring(pos, pos + 1);
         }
         logger.warn("Subset element not found!");
@@ -509,7 +513,6 @@ public class SmilesParser {
 	 */
      private String getRingNumber(String s, int pos) {
         logger.debug("getRingNumber()");
-		char mychar = ' ';
 		String retString = "";
 		pos++;
 		do
@@ -522,17 +525,8 @@ public class SmilesParser {
 		return retString;
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  s                           Description of the Parameter
-	 *@param  nodeCounter                 Description of the Parameter
-	 *@return                             Description of the Return Value
-	 *@exception  InvalidSmilesException  Description of the Exception
-	 */
 	private Atom assembleAtom(String s, int nodeCounter) throws InvalidSmilesException {
-        logger.debug("assembleAtom(): Assembling atom from: " + s);
+        logger.debug("assembleAtom(): Assembling atom from: ", s);
         Atom atom = null;
         int position = 0;
         String currentSymbol = null;
@@ -550,7 +544,7 @@ public class SmilesParser {
                             "Expected element symbol, found null!"
                         );
                     } else {
-                        logger.debug("Found element symbol: " + currentSymbol);
+                        logger.debug("Found element symbol: ", currentSymbol);
                         position = position + currentSymbol.length();
                         if (currentSymbol.length() == 1) {
                             if (!(currentSymbol.toUpperCase()).equals(currentSymbol)) {
@@ -566,7 +560,7 @@ public class SmilesParser {
                         } else {
                             atom = new Atom(currentSymbol);
                         }
-                        logger.debug("Made atom: " + atom);
+                        logger.debug("Made atom: ", atom);
                     }
                     break;
                 } else if (mychar >= '0' && mychar <= '9') {
@@ -575,7 +569,7 @@ public class SmilesParser {
                 } else if (mychar == '*') {
                     currentSymbol = "*";
                     atom = new PseudoAtom(currentSymbol);
-                    logger.debug("Made atom: " + atom);
+                    logger.debug("Made atom: ", atom);
                     position++;
                     break;
                 } else {
@@ -586,7 +580,7 @@ public class SmilesParser {
                 logger.debug(exc);
                 throw exc;
             } catch (Exception exception) {
-                logger.error("Could not parse atom string: " + s);
+                logger.error("Could not parse atom string: ", s);
                 logger.debug(exception);
                 throw new InvalidSmilesException("Could not parse atom string: " + s);
             }
@@ -599,7 +593,7 @@ public class SmilesParser {
                 logger.debug(exception);
             }
         }
-        logger.debug("Parsing part after element symbol (like charge): " + s.substring(position));
+        logger.debug("Parsing part after element symbol (like charge): ", s.substring(position));
         int charge = 0;
         int implicitHydrogens = 0;
         while (position < s.length()) {
@@ -629,15 +623,15 @@ public class SmilesParser {
                     throw new InvalidSmilesException("Found unexpected char: " + mychar);
                 }
 			} catch (InvalidSmilesException exc) {
-                logger.error("InvalidSmilesException while parsing atom string: " + s);
+                logger.error("InvalidSmilesException while parsing atom string: ", s);
                 logger.debug(exc);
                 throw exc;
             } catch (Exception exception) {
-                logger.error("Could not parse atom string: " + s);
+                logger.error("Could not parse atom string: ", s);
                 logger.debug(exception);
                 throw new InvalidSmilesException("Could not parse atom string: " + s);
             }
-        };
+        }
         return atom;
     }
 
