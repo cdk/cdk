@@ -146,7 +146,7 @@ public class Renderer2D   {
                         ints[2] = (int)(atom2.getPoint2D().x);
                         ints[3] = (int)(atom2.getPoint2D().y);
                         int[] screenCoords = getScreenCoordinates(ints);
-                        graphics.setColor(Color.GRAY);
+                        graphics.setColor(r2dm.getAtomAtomMappingLineColor());
                         graphics.drawLine(screenCoords[0], screenCoords[1],
                         screenCoords[2], screenCoords[3]);
                         graphics.setColor(r2dm.getForeColor());
@@ -566,9 +566,9 @@ public class Renderer2D   {
                 atom.getProperty(ProblemMarker.WARNING_MARKER) != null) {
                 // RED for error, ORANGE for warnings
                 if (atom.getProperty(ProblemMarker.ERROR_MARKER) != null) {
-                    graphics.setColor(Color.RED);
+                    graphics.setColor(Color.red);
                 } else if (atom.getProperty(ProblemMarker.WARNING_MARKER) != null) {
-                    graphics.setColor(Color.ORANGE);
+                    graphics.setColor(Color.orange);
                 }
                 // make zig zag bond
                 int symbolLength = atom.getSymbol().length();
@@ -704,7 +704,7 @@ public class Renderer2D   {
             int[] coords = { labelX, 
                              labelY + atomSymbolH};
             int[] screenCoords = getScreenCoordinates(coords);
-            graphics.setColor(Color.BLACK);
+            graphics.setColor(Color.black);
             graphics.setFont(normalScreenFont);
             graphics.drawString(atomSymbol, screenCoords[0], screenCoords[1]);
         }
