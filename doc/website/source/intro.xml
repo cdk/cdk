@@ -70,36 +70,8 @@
 	<section>
 		<title>Contributors</title>
 		<para>
-          The list of source code contributors is long (in alphabetical order, please email
-          omissions):
-Fabian Dortu,
-Dan Gezelter,
-Rajarshi Guha,
-Yonquan Han,
-Kai Hartmann,
-Oliver Horlacher,
-Miguel Howard,
-Geert Josten,
-Anatoli Krassavine,
-Stefan Kuhn,
-Edgar Luttmann,
-Nathana&euml;l Mazuir,
-Stephan Michels,
-Peter Murray-Rust,
-Chris Pudney,
-Jonathan Rienstra-Kiracofe,
-David Robinson,
-Bhupinder Sandhu,
-Jean-Sebastien Senecal,
-Sulev Sild,
-Bradley Smith,
-Christoph Steinbeck,
-Stephan Tomkinson,
-Joerg Wegner,
-Stephane Werner,
-Egon Willighagen,
-Yong Zhang
-.
+          The list of source code contributors is long and can be viewed from
+          <ulink url="contributors.html">the list of contributors</ulink>.
         </para>
     </section>
 </webpage>

@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.0b1//EN" "dtd/website.dtd">
+<webpage id="contributors">
+  <config param="last-change-by" value="$Author$"/>
+  <config param="rcsdate" value="$Date$"/>
+
+  <head>
+    <title>Contributors</title>
+    <titleabbrev>Contributors</titleabbrev>
+    <summary>List of people who contributed source code to the project.</summary>
+  </head>
+
+	<section>
+		<title>Contributors</title>
+		<para>
+          The list of source code contributors is long (in alphabetical order, please email
+          omissions):
+Ulrich Bauer,
+Fabian Dortu,
+Dan Gezelter,
+Rajarshi Guha,
+Yonquan Han,
+Kai Hartmann,
+Christian Hoppe,
+Oliver Horlacher,
+Miguel Howard,
+Geert Josten,
+Anatoli Krassavine,
+Stefan Kuhn,
+Daniel Leidert,
+Edgar Luttmann,
+Nathana&euml;l Mazuir,
+Stephan Michels,
+Peter Murray-Rust,
+Chris Pudney,
+Jonathan Rienstra-Kiracofe,
+David Robinson,
+Bhupinder Sandhu,
+Jean-Sebastien Senecal,
+Sulev Sild,
+Bradley Smith,
+Christoph Steinbeck,
+Stephan Tomkinson,
+Joerg Wegner,
+Stephane Werner,
+Egon Willighagen,
+Yong Zhang.
+        </para>
+    </section>
+</webpage>

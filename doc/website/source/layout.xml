@@ -60,6 +60,7 @@
     </tocentry>
     <tocentry page="development.xml" filename="development.html">
       <tocentry page="whoiswho.xml" filename="whoiswho.html"/>
+      <tocentry page="contributors.xml" filename="contributors.html"/>
       <tocentry page="agenda.xml" filename="agenda.html"/>
       <tocentry page="guide.xml" filename="guide.html">
         <tocentry page="guide-library-development.xml" filename="guide-library-development.html"/>
