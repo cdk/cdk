@@ -28,6 +28,7 @@ import org.openscience.cdk.tools.*;
 import org.openscience.cdk.tools.ConnectivityChecker;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.smiles.*;
 
 /**
  *  An implementation of Molodtsov structure generator. However the final part is not the original idea, such as
@@ -52,6 +53,7 @@ public class GENMDeterministicGenerator
 	private int[] numberOfBasicFragment;
 	private Vector basicFragment;
 	private Vector structures;
+	private Vector smiles;
 	private ConnectivityChecker connectivityChecker;
 	private org.openscience.cdk.tools.LoggingTool logger;
 	private PrintWriter structureout;
@@ -59,7 +61,9 @@ public class GENMDeterministicGenerator
 	private static double LOST=0.000000000001;
 	
 	/**
-	 *  Constructor for the GENMDeterministicGenerator object
+	 *  Constructor for the GENMDeterministicGenerator object. This constructor is only 
+	 *  for molecular formula
+	 * @param	mf	molecular formula string
 	 *
 	 */
 	 public GENMDeterministicGenerator(String mf) throws java.lang.Exception
@@ -74,6 +78,7 @@ public class GENMDeterministicGenerator
 		numberOfBasicFragment=new int[34];
 		basicFragment=new Vector();
 		structures=new Vector();
+		smiles=new Vector();
 		
 		logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
 		
@@ -89,6 +94,7 @@ public class GENMDeterministicGenerator
 	/**
 	 * Constructor for GENMDeterministicGenerator object. This constructor could be 
 	 * used for a set of basic units.
+	 * @param	basicUnits	Vector contain a basic unit set
 	 *
 	 */
 	public GENMDeterministicGenerator(Vector basicUnits) throws IOException,Exception
@@ -2133,13 +2139,17 @@ public class GENMDeterministicGenerator
 		  if(decomposedNumber>0)
 		  {
 			 writeToFile(originalSet,numberOfStructure, originMatrix);
-			 convertToMol(originalSet,originMatrix,structures);
+			 if(numberOfStructure<500)
+				 convertToMol(originalSet,originMatrix,structures);
+			 convertToSMILES(originalSet,originMatrix,smiles);
 		  //	 writeToFile(setOfBasicFragment,numberOfStructure, adjacencyMatrix);
 		  }
 		  else
 		  {
 			writeToFile(setOfBasicFragment,numberOfStructure, adjacencyMatrix);
-			convertToMol(setOfBasicFragment,adjacencyMatrix,structures);
+			if(numberOfStructure<500)
+				convertToMol(setOfBasicFragment,adjacencyMatrix,structures);
+			convertToSMILES(setOfBasicFragment,adjacencyMatrix,smiles);
 		  }
 	  }
 	  
@@ -2646,6 +2656,38 @@ public class GENMDeterministicGenerator
 		 structures.addElement(mol);
 	 }
 	 
+	 
+	 /**
+	 * A bridge between CDK SMILES format and adjacency matrix. It might be a temporary thing, later,
+	 * all should be done according to CDK.
+	 * @param	set			basic fragment set
+	 * @param	matrix			adjacency matrix of the corresponding structure
+	 * @param	structures		vector contains all generated structures
+	 */
+	 public void convertToSMILES(Vector set,int[][] matrix,Vector smiles)
+	 {
+		 int i,j;
+		 Molecule mol=new Molecule();
+		 int size=set.size();
+		 for(i=0;i<size;i++)
+		 {
+			 Atom atom=new Atom(((BasicFragment)(set.get(i))).getHeavyAtomSymbol());
+			 
+			 atom.setHydrogenCount(((BasicFragment)(set.get(i))).getNumberOfHydrogen());
+			 
+			 mol.addAtom(atom);
+		 }
+		 for(i=0;i<size-1;i++)
+			 for(j=i+1;j<size;j++)
+				 if(matrix[i][j]!=0)mol.addBond(i,j,matrix[i][j]);
+		 
+		 SmilesGenerator sg = new SmilesGenerator();
+		 String smilesString = sg.createSMILES(mol);
+		 smiles.addElement(smilesString);
+	 }
+	 
+	 
+	 
 	  /**
 	   * Get the suitable structures
 	   * @return	vector contains suitable structures
@@ -2655,16 +2697,14 @@ public class GENMDeterministicGenerator
 		 return this.structures;
 	  }
 	 
-	 
 	  /**
-	   *  Constructor for the GENMDeterministicGenerator object
-	   *
+	   * Get the vector of SMILES
+	   * @return	vector contains suitable SMILES format for suitable structures
 	   */
-	  public void printBasicFragments()
+	  public Vector getSMILES()
 	  {
-		 
+		 return this.smiles;
 	  }
-	 
 	 
 	 /**
 	  * As only used in this class might now, define it as an inner class. It just works as fragment class
