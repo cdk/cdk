@@ -19,6 +19,8 @@ Fixes:
 * Fixed "M  END" line in MDL output (fixes bug #624656)
 * Fixed conversion of coordinates in libio/joelib/Convertor 
   (thanks to Joerg for patch)
+* Fixed reading of multifragment IChI tautomers
+  (fixed bug #642429)
 * Added reading of bond orders S,D,T,A in CML
   (bug #639455)
 * Added natural occuring isotopes with atomic numbers
