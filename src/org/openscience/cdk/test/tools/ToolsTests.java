@@ -42,9 +42,12 @@ public class ToolsTests {
         suite.addTest(ConnectivityCheckerTest.suite());
         suite.addTest(HOSECodeTest.suite());
         suite.addTest(HydrogenAdderTest.suite());
+        suite.addTest(HydrogenAdder2Test.suite());
         suite.addTest(IDCreatorTest.suite());
         suite.addTest(MFAnalyserTest.suite());
         suite.addTest(SaturationCheckerTest.suite());
+        suite.addTest(ValencyCheckerTest.suite());
+        suite.addTest(ValencyHybridCheckerTest.suite());
         suite.addTest(NormalizerTest.suite());
         // cdk.test.tools.manipulator
         suite.addTest(ManipulatorsTests.suite());

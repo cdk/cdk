@@ -91,7 +91,7 @@ public class AtomTypeHandler extends DefaultHandler {
                     atomType.setBondOrderSum(Double.parseDouble(currentChars));
                 } else if (scalarType == SCALAR_MAXBONDORDER) {
                     atomType.setMaxBondOrder(Double.parseDouble(currentChars));
-                } else if (scalarType == SCALAR_MAXBONDORDER) {
+                } else if (scalarType == SCALAR_HYBRIDIZATION) {
                     if ("sp1".equals(currentChars)) {
                         atomType.setHybridization(CDKConstants.HYBRIDIZATION_SP1);
                     } else if ("sp2".equals(currentChars)) {
@@ -143,6 +143,8 @@ public class AtomTypeHandler extends DefaultHandler {
                         scalarType = SCALAR_MAXBONDORDER;
                     } else if ("cdk:bondOrderSum".equals(atts.getValue(i))) {
                         scalarType = SCALAR_BONDORDERSUM;
+                    } else if ("cdk:hybridization".equals(atts.getValue(i))) {
+                        scalarType = SCALAR_HYBRIDIZATION;
                     }
                 }
             }
