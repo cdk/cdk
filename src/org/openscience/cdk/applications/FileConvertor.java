@@ -179,6 +179,8 @@ public class FileConvertor {
             return new SMILESWriter(fw);
         } else if (format.equalsIgnoreCase("SHELX")) {
             return new ShelXWriter(fw);
+        } else if (format.equalsIgnoreCase("SVG")) {
+            return new SVGWriter(fw);
         }
         return null;
     }

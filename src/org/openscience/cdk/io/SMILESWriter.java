@@ -1,6 +1,4 @@
-/* MDLWriter.java
- * 
- * $RCSfile$ 
+/* $RCSfile$ 
  * $Author$ 
  * $Date$
  * $Revision$
