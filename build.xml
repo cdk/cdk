@@ -28,7 +28,7 @@
  
         <!-- class to run for testing-->
         <property name="testclass" value="CDKTests" />
-        <property name="runclass" value="applications.Viewer" />
+        <property name="runclass" value="applications.FileConvertor" />
         <property name="arg1" value="" />
         <property name="arg2" value="" />
         <property name="arg3" value="" />
