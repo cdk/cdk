@@ -118,11 +118,11 @@ public class FingerprinterTest extends TestCase
 		BitSet superBS = Fingerprinter.getFingerprint(structure1);
 		BitSet subBS = Fingerprinter.getFingerprint(structure2);
 		boolean isSubset = Fingerprinter.isSubset(superBS, subBS);
-		MoleculeViewer2D.display(structure1, false);
-		MoleculeViewer2D.display(structure1, false);
-
 		if (standAlone)
 		{
+			MoleculeViewer2D.display(structure1, false);
+			MoleculeViewer2D.display(structure1, false);
+
 			System.out.println("BitString 1: " + superBS);
 			System.out.println("BitString 2: " + subBS);
 			System.out.println("isSubset? " + isSubset);
