@@ -43,8 +43,8 @@ import org.openscience.cdk.smiles.SmilesParser;
 /**
  *  Prediction of logP based on the atom-type method called XLogP. For
  *  description of the methodology see : J.Chem.Inf.Comput.Sci., 1997, 37, 615
- *  or http://www.chem.ac.ru/Chemistry/Soft/XLOGP.en.html . Actually two
- *  molecular factors are missing.
+ *  or http://www.chem.ac.ru/Chemistry/Soft/XLOGP.en.html . Actually 1
+ *  molecular factor is missing (presence of para Hs donor pair).
  *
  *@author         mfe4
  *@created        December 14, 2004
@@ -626,6 +626,11 @@ public class XLogPDescriptor implements Descriptor {
 				// // System.out...println("XLOGP: 92");
 			}
 			// more than 2 alogens on the same atom
+			
+			
+			if (getPresenceOfCarbonil(ac, atoms[i]) == 2) {// sp2 oxygen 1-5 pair
+				if(!rs.contains(atoms[i])) { xlogP += 0.580; }
+			}
 		}
 		Descriptor acc = new HBondAcceptorCountDescriptor();
 		Object[] paramsAcc = {new Boolean(false)};
@@ -928,7 +933,6 @@ public class XLogPDescriptor implements Descriptor {
 		Atom[] second = null;
 		Bond bond = null;
 		int counter = 0;
-		int presence = 0;
 		for (int i = 0; i < neighboors.length; i++) {
 			if (neighboors[i].getSymbol().equals("C")) {
 				second = ac.getConnectedAtoms(neighboors[i]);
@@ -942,10 +946,7 @@ public class XLogPDescriptor implements Descriptor {
 				}
 			}
 		}
-		if (counter > 0) {
-			presence = 1;
-		}
-		return presence;
+		return counter;
 	}
 
 
