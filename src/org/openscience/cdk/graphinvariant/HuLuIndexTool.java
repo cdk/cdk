@@ -48,10 +48,10 @@ public class HuLuIndexTool implements CDKConstants
 	{
 		boolean debug = false;
 		
-		Matrix matrix = new Matrix(getExtendedAdjacenyMatrix(atomContainer));
+		GIMatrix matrix = new GIMatrix(getExtendedAdjacenyMatrix(atomContainer));
 		
-		Matrix tempMatrix = matrix;
-		Matrix fixedMatrix = matrix;
+		GIMatrix tempMatrix = matrix;
+		GIMatrix fixedMatrix = matrix;
 		for (int i = 2; i < atomContainer.getAtomCount(); i++)
 		{
 			tempMatrix = tempMatrix.multiply(fixedMatrix);

@@ -1,4 +1,3 @@
-
 package org.openscience.cdk.tools;
 
 import java.util.Random;
@@ -10,7 +9,7 @@ import java.util.Random;
  * This class isn't supposed to be instantiated. You should use it by calling
  * its static methods.
  */
-public class RandomNumbersTools extends Random
+public class RandomNumbersTool extends Random
 {
     private static java.util.Random random;
     private static long randomSeed;

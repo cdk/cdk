@@ -1,6 +1,5 @@
 package org.openscience.cdk.structgen.stochastic;
 
-import gacdk.*;
 import org.openscience.cdk.*;
 import org.openscience.cdk.exception.*;
 import java.lang.Math.*;

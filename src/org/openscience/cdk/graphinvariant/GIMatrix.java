@@ -1,5 +1,5 @@
-package org.openscience.cdk.graphinvariant.exception;
-
+package org.openscience.cdk.graphinvariant;
+import org.openscience.cdk.graphinvariant.exception.*;
 /**
  * This class is intended to provide the user an efficient way of implementing matrix of double number and
  * using normal operations (linear operations, addition, substraction, multiplication, inversion, concatenation)
@@ -16,6 +16,7 @@ package org.openscience.cdk.graphinvariant.exception;
  * modified 10/06/02
  * adds method - add(Matrix matrix), matrix
  */
+
 public class GIMatrix {
 
     private double[][] array; // the matrix itself as an array of doubles
@@ -82,7 +83,7 @@ public class GIMatrix {
      * Class constructor. Copies an already existing Matrix object in a new Matrix object.
      * @param matrix a Matrix object
      */
-    public GIMatrix(Matrix matrix) {
+    public GIMatrix(GIMatrix matrix) {
 	double[][] temp = new double[matrix.height()][];
 	for (int i = 0; i < matrix.height(); i++) {
 	    temp[i] = new double[matrix.width()]; // line by line ...
@@ -103,7 +104,7 @@ public class GIMatrix {
      * @param table an array of matrices
      * @exception BadMatrixFormatException if the table is not properly instantiated
      */
-    public GIMatrix(Matrix[][] table) throws BadMatrixFormatException {
+    public GIMatrix(GIMatrix[][] table) throws BadMatrixFormatException {
 	verifyTableFormat(table);
 	m = n = 0;
 	for (int i = 0; i < table.length; i++) m += table[i][0].height();
@@ -117,7 +118,7 @@ public class GIMatrix {
 	    for (int j = 0; j < n; j++) {
 		if (j == table[k][h].width()) h++; // last column of matrix reached
 		try {
-		    Matrix tempMatrix = table[k][h];
+		    GIMatrix tempMatrix = table[k][h];
 		    temp[i][j] = tempMatrix.getValueAt(i - k*tempMatrix.height(),j - h*tempMatrix.width());
 		}
 		catch (MatrixIndexOutOfBoundsException e) {} // never happens
@@ -184,11 +185,11 @@ public class GIMatrix {
      * @return the specified line as a Matrix object
      * @exception MatrixIndexOutOfBoundsException if the given index is out of the matrix's range
      */ 
-    public Matrix getLine(int i) throws MatrixIndexOutOfBoundsException {
+    public GIMatrix getLine(int i) throws MatrixIndexOutOfBoundsException {
 	if ( (i < 0)||(i >= m) ) throw new MatrixIndexOutOfBoundsException();
 	double[][] line = new double[1][n];
 	for (int k = 0; k < n; k++) line[0][k] = array[i][k];
-	try { return new Matrix(line); } // format is always OK anyway ...
+	try { return new GIMatrix(line); } // format is always OK anyway ...
 	catch (BadMatrixFormatException e) { return null; }
     } // method getLine(int)
 
@@ -198,11 +199,11 @@ public class GIMatrix {
      * @return the specified column as a Matrix object
      * @exception MatrixIndexOutOfBoundsException if the given index is out of the matrix's range
      */ 
-    public Matrix getColumn(int j) throws MatrixIndexOutOfBoundsException {
+    public GIMatrix getColumn(int j) throws MatrixIndexOutOfBoundsException {
 	if ( (j < 0)||(j >= n) ) throw new MatrixIndexOutOfBoundsException();
 	double[][] column = new double[m][1];
 	for (int k = 0; k < m; k++) column[k][0] = array[k][j];
-	try { return new Matrix(column); } // format is always OK anyway ...
+	try { return new GIMatrix(column); } // format is always OK anyway ...
 	catch (BadMatrixFormatException e) { return null; }
     } // method getColumn(int)
 
@@ -213,7 +214,7 @@ public class GIMatrix {
      * @exception MatrixIndexOutOfBoundsException if the given index is out of the matrix's range
      * @exception BadMatrixFormatException in case the given Matrix is unproper to replace a line of this Matrix
      */
-    public void setLine(int i, Matrix line) throws MatrixIndexOutOfBoundsException, BadMatrixFormatException {
+    public void setLine(int i, GIMatrix line) throws MatrixIndexOutOfBoundsException, BadMatrixFormatException {
 	if ( (i < 0)||(i >= m) ) throw new MatrixIndexOutOfBoundsException();
 	if ((line.height() != 1) || (line.width() != n)) throw new BadMatrixFormatException();
 	for (int k = 0; k < n; k++) array[i][k] = line.getValueAt(0,k);
@@ -226,7 +227,7 @@ public class GIMatrix {
      * @exception MatrixIndexOutOfBoundsException if the given index is out of the matrix's range
      * @exception BadMatrixFormatException in case the given Matrix is unproper to replace a column of this Matrix
      */
-    public void setColumn(int j, Matrix column) throws MatrixIndexOutOfBoundsException, BadMatrixFormatException {
+    public void setColumn(int j, GIMatrix column) throws MatrixIndexOutOfBoundsException, BadMatrixFormatException {
 	if ( (j < 0)||(j >= n) ) throw new MatrixIndexOutOfBoundsException();
 	if ((column.height() != m) || (column.width() != 1)) throw new BadMatrixFormatException();
 	for (int k = 0; k < m; k++) array[k][j] = column.getValueAt(k,0);
@@ -237,14 +238,14 @@ public class GIMatrix {
      * @param n the matrix's dimension (identity matrix is a square matrix)
      * @return the identity matrix of format nxn
      */
-    public static Matrix identity(int n) {
+    public static GIMatrix identity(int n) {
 	double[][] identity = new double[n][n];
 	for (int i = 0; i < n; i++) {
 	    for (int j = 0; j < i; j++) identity[i][j] = 0.0;
 	    identity[i][i] = 1.0;
 	    for (int j = i+1; j < n; j++) identity[i][j] = 0.0;
 	}
-	try { return new Matrix(identity); } // format is always OK anyway ...
+	try { return new GIMatrix(identity); } // format is always OK anyway ...
 	catch (BadMatrixFormatException e) { return null; }
     } // method identity(int)
     
@@ -254,12 +255,12 @@ public class GIMatrix {
      * @param n number of columns
      * @return the zero (null) matrix of format mxn
      */
-    public static Matrix zero(int m, int n) {
+    public static GIMatrix zero(int m, int n) {
 	double[][] zero = new double[m][n];
 	for (int i = 0; i < m; i++)
 	    for (int j = 0; j < n; j++)
 		zero[i][j] = 0.0;
-	try { return new Matrix(zero); } // format is always OK anyway ...
+	try { return new GIMatrix(zero); } // format is always OK anyway ...
 	catch (BadMatrixFormatException e) { return null; }
     } // method zero(int,int)
 
@@ -270,7 +271,7 @@ public class GIMatrix {
      * @return true if both matrix are equal element to element
      * @exception BadMatrixFormatException if the given matrix doesn't have the same dimensions as this one
      */
-    public boolean equals(Matrix matrix) throws BadMatrixFormatException {
+    public boolean equals(GIMatrix matrix) throws BadMatrixFormatException {
 	if ( (height() != matrix.height())||(width() != matrix.width()) )
 	    throw new BadMatrixFormatException();
 	double[][] temp = matrix.getArrayValue();
@@ -379,17 +380,17 @@ public class GIMatrix {
      * @return the matrix's transpose as a Matrix object
      * @exception BadMatrixFormatException if the matrix is not square
      */
-    public Matrix inverse() throws MatrixNotInvertibleException {
+    public GIMatrix inverse() throws MatrixNotInvertibleException {
 	try {
 	    if (!isInvertible()) throw new MatrixNotInvertibleException();
 	} catch (BadMatrixFormatException e) {
 	    throw new MatrixNotInvertibleException();
 	}
-	Matrix I = identity(n); // Creates an identity matrix of same dimensions
-	Matrix table;
+	GIMatrix I = identity(n); // Creates an identity matrix of same dimensions
+	GIMatrix table;
 	try {
-	    Matrix[][] temp = {{this,I}};
-	    table = new Matrix(temp);
+	    GIMatrix[][] temp = {{this,I}};
+	    table = new GIMatrix(temp);
 	} catch (BadMatrixFormatException e) { return null; } // never happens
 	table = table.GaussJordan(); // linear reduction method applied
 	double[][] inv = new double[m][n];
@@ -398,7 +399,7 @@ public class GIMatrix {
 		try { inv[i][j-n] = table.getValueAt(i,j); }
 		catch (MatrixIndexOutOfBoundsException e) { return null; } // never happens
 	    }
-	try { return new Matrix(inv); }
+	try { return new GIMatrix(inv); }
 	catch (BadMatrixFormatException e) { return null; } // never happens...
     } // method inverse()
     
@@ -408,8 +409,8 @@ public class GIMatrix {
      * a serious problem.
      * @return the reduced matrix
      */
-    public Matrix GaussJordan() {
-	Matrix tempMatrix= new Matrix(this);
+    public GIMatrix GaussJordan() {
+	GIMatrix tempMatrix= new GIMatrix(this);
 	try {
 	    int i = 0;
 	    int j = 0;
@@ -454,13 +455,13 @@ public class GIMatrix {
      * @return the matrix's transpose as a Matrix object
      * @exception BadMatrixFormatException if the matrix is not square
      */
-    public Matrix transpose() throws BadMatrixFormatException {
+    public GIMatrix transpose() throws BadMatrixFormatException {
 	if (m != n) throw new BadMatrixFormatException();
 	double[][] transpose = new double[array.length][array[0].length];
 	for (int i = 0; i < m; i++)
 	    for (int j = 0; j < n; j++)
 	    transpose[i][j] = array[j][i];
-	return new Matrix(transpose);
+	return new GIMatrix(transpose);
     } // method transpose()
 
     /**
@@ -469,7 +470,7 @@ public class GIMatrix {
      * @return the diagonal of the matrix
      * @exception BadMatrixFormatException if the matrix is not square
      */
-     public Matrix diagonal() throws BadMatrixFormatException {
+     public GIMatrix diagonal() throws BadMatrixFormatException {
 	if (m != n) throw new BadMatrixFormatException();
 	double[][] diagonal = new double[array.length][array[0].length];;
 	for (int i = 0; i < m; i++)
@@ -477,7 +478,7 @@ public class GIMatrix {
 		if (i == j) diagonal[i][j] = array[i][j];
 		else diagonal[i][j] = 0;
 	    }
-	return new Matrix(diagonal);
+	return new GIMatrix(diagonal);
     } // method diagonal()
 
     /**
@@ -488,11 +489,11 @@ public class GIMatrix {
      * @return the resulting Matrix object of the linear operation
      * @exception MatrixIndexOutOfBoundsException if the given index is out of the matrix's range
      */
-    public Matrix multiplyLine(int i, double c) throws MatrixIndexOutOfBoundsException {
+    public GIMatrix multiplyLine(int i, double c) throws MatrixIndexOutOfBoundsException {
 	if ( (i < 0)||(i >= m) ) throw new MatrixIndexOutOfBoundsException();
 	double[][] temp = array;
 	for (int k = 0; k < n; k++) temp[i][k] = c*temp[i][k]; // mutliply every member of the line by c
-	try { return new Matrix(temp); } // format is always OK anyway ...
+	try { return new GIMatrix(temp); } // format is always OK anyway ...
 	catch (BadMatrixFormatException e) { return null; }
     } // method multiplyLine(int,int)
     
@@ -503,13 +504,13 @@ public class GIMatrix {
      * @return the resulting Matrix object of the linear operation
      * @exception MatrixIndexOutOfBoundsException if the given index is out of the matrix's range
      */
-    public Matrix invertLine(int i, int j) throws MatrixIndexOutOfBoundsException {
+    public GIMatrix invertLine(int i, int j) throws MatrixIndexOutOfBoundsException {
 	if ( (i < 0)||(i >= m)||(j < 0)||(j >= m) ) throw new MatrixIndexOutOfBoundsException();
 	double[][] temp = array;
         double[] tempLine = temp[j]; // temporary line
 	temp[j] = temp[i];
 	temp[i] = tempLine;
-	try { return new Matrix(temp); } // format is always OK anyway ...
+	try { return new GIMatrix(temp); } // format is always OK anyway ...
 	catch (BadMatrixFormatException e) { return null; }
     } // method invertLine(int,int) 
 
@@ -522,12 +523,12 @@ public class GIMatrix {
      * @return the resulting Matrix object of the linear operation
      * @exception MatrixIndexOutOfBoundsException if the given index is out of the matrix's range
      */
-    public Matrix addLine(int i, int j, double c) throws MatrixIndexOutOfBoundsException{
+    public GIMatrix addLine(int i, int j, double c) throws MatrixIndexOutOfBoundsException{
 	if ( (i < 0)||(i >= m)||(j < 0)||(j >= m) ) throw new MatrixIndexOutOfBoundsException();
         double[][] temp = array;
 	for (int k = 0; k < n; k++)
 	    temp[i][k] = temp[i][k]+c*temp[j][k]; // add multiplied element of i to element of j
-	try { return new Matrix(temp); } // format is always OK anyway ...
+	try { return new GIMatrix(temp); } // format is always OK anyway ...
 	catch (BadMatrixFormatException e) { return null; }
     } // method addLine(int,int,double)
 
@@ -535,13 +536,13 @@ public class GIMatrix {
 	/**
      *  Addition from two matrices
      */
-	public Matrix add(Matrix b)
+	public GIMatrix add(GIMatrix b)
 	{
 		if ((b==null) || (m!=b.m) || (n!=b.n))
 			return null;
 		
 		int i, j;
-		Matrix result = new Matrix(m,n);
+		GIMatrix result = new GIMatrix(m,n);
 		for(i=0; i<m; i++)
 			for(j=0; j<n; j++)
 				result.array[i][j] = array[i][j]+b.array[i][j];
@@ -556,12 +557,12 @@ public class GIMatrix {
      * @param c the constant by which the matrix is multiplied
      * @return the resulting matrix of the scalar multiplication
      */
-    public Matrix multiply(double c) {
+    public GIMatrix multiply(double c) {
 	double[][] temp = array;
 	for (int i = 0; i < m; i++)
 	    for (int j = 0; j < n; j++)
 		temp[i][j] = c*temp[i][j];
-	try { return new Matrix(temp); } // format is always OK anyway ...
+	try { return new GIMatrix(temp); } // format is always OK anyway ...
 	catch (BadMatrixFormatException e) { return null; }
     } // method multiply(double)
 
@@ -574,7 +575,7 @@ public class GIMatrix {
      * @return the resulting matrix of the matricial multiplication
      * @exception BadMatrixFormatException if the matrix passed in arguments has wrong dimensions
      */
-    public Matrix multiply(Matrix matrix) throws BadMatrixFormatException {
+    public GIMatrix multiply(GIMatrix matrix) throws BadMatrixFormatException {
 	if (n != matrix.height()) throw new BadMatrixFormatException(); // unsuitable dimensions
 	int p = matrix.width();
 	double[][] temp = new double[m][p];
@@ -585,7 +586,7 @@ public class GIMatrix {
 		for (int j = 1; j < n; j++) // sum of multiplications
 		    temp[i][k] = temp[i][k]+array[i][j]*multiplied[j][k];
 	    }
-	return new Matrix(temp);
+	return new GIMatrix(temp);
     } // method multiply(Matrix)
    
     /**
@@ -673,7 +674,7 @@ public class GIMatrix {
     } // method verifyMatrixFormat(double[][])
     
     // In the case of the implementation of a table i.e. an array of matrices, verifies if the table is proper.
-    private void verifyTableFormat(Matrix[][] testedTable) throws BadMatrixFormatException {
+    private void verifyTableFormat(GIMatrix[][] testedTable) throws BadMatrixFormatException {
 	if ( (testedTable.length == 0)||(testedTable[0].length == 0) ) throw new BadMatrixFormatException();
 	int noOfColumns = testedTable[0].length;
 	int currentHeigth, currentWidth;

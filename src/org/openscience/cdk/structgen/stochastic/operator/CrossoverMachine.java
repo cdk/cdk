@@ -97,7 +97,7 @@ public class CrossoverMachine
 			for (int i = 0; i < dim; i++)
 				redAtoms.add(new Integer(i));
 			for (int i = 0; i < (dim - numatoms); i++)
-			{   int ranInt = RNG.randomInt(0,redAtoms.size()-1);
+			{   int ranInt = RandomNumbersTool.randomInt(0,redAtoms.size()-1);
 				redAtoms.removeElementAt(ranInt);
 				blueAtoms.add(new Integer(ranInt));
 			}

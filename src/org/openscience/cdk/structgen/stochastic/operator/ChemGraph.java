@@ -3,6 +3,8 @@ package org.openscience.cdk.structgen.stochastic.operator;
 
 import org.openscience.cdk.*;
 import java.util.Vector;
+import org.openscience.cdk.tools.*;
+import org.openscience.cdk.structgen.stochastic.*;
 
 public class ChemGraph
 {
@@ -34,7 +36,7 @@ public class ChemGraph
 		subGraph = new Vector();		
 		visited = new boolean[dim];			 		
 		for (int atom = 0; atom < dim; atom++)	visited[atom] = false;
-        int seedAtom = RNG.randomInt(0,dim-1);
+        int seedAtom = RandomNumbersTool.randomInt(0,dim-1);
 		recursiveDFT(seedAtom);
 	
 		return subGraph;
@@ -60,7 +62,7 @@ public class ChemGraph
             }
 			while (adjSet.size() > 0)
 			{
-				int adjIndex = RNG.randomInt(0,adjSet.size()-1);
+				int adjIndex = RandomNumbersTool.randomInt(0,adjSet.size()-1);
 				recursiveDFT(((Integer)adjSet.get(adjIndex)).intValue());
 				adjSet.removeElementAt(adjIndex);
 			}
@@ -76,7 +78,7 @@ public class ChemGraph
 		subGraph = new Vector();		
 		visited = new boolean[dim];			 		
 		for (int atom = 0; atom < dim; atom++)	visited[atom] = false;
-        int seedAtom = RNG.randomInt(0,dim-1);
+        int seedAtom = RandomNumbersTool.randomInt(0,dim-1);
 		
 		Vector atomQueue = new Vector();
 		atomQueue.add(new Integer(seedAtom));
@@ -99,7 +101,7 @@ public class ChemGraph
             }
 			while (adjSet.size() > 0)
 			{
-				int adjIndex = RNG.randomInt(0,adjSet.size()-1);
+				int adjIndex = RandomNumbersTool.randomInt(0,adjSet.size()-1);
 				atomQueue.add((Integer)adjSet.get(adjIndex));
 				visited[((Integer)adjSet.get(adjIndex)).intValue()] = true;
 				adjSet.removeElementAt(adjIndex);
