@@ -40,7 +40,13 @@ import javax.vecmath.*;
 
 
 /**
- * Writes an array of molecules to a MDL molfile.
+ * Writes a molecule or an array of molecules to a MDL molfile.
+ *
+ * <pre>
+ * MDLWriter writer = new MDLWriter(new FileWriter(new File("output.mol")));
+ * writer.write((Molecule)molecule);
+ * writer.close();
+ * </pre>
  *
  * @keyword file format, MDL molfile
  */
@@ -76,6 +82,15 @@ public class MDLWriter implements CDKConstants, ChemObjectWriter {
 	}
 
 
+    /**
+     * Writes a ChemObject to the MDL molfile formated output. 
+     * It can only output ChemObjects of type Molecule and
+     * SetOfMolecules.
+     *
+     * @param object class must be of type Molecule or SetOfMolecules.
+     *
+     * @see ChemFile
+     */
 	public void write(ChemObject object) throws UnsupportedChemObjectException
 	{
 		if (object instanceof SetOfMolecules)

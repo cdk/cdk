@@ -54,7 +54,7 @@ public class XYZReader implements ChemObjectReader {
         this.input = new BufferedReader(input);
     }
 
-    /*
+    /**
      * reads the content from a XYZ input. It can only return a
      * ChemObject of type ChemFile
      *
