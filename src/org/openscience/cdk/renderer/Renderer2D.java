@@ -331,11 +331,9 @@ public class Renderer2D   {
             paintAtomSymbol(atom, atomBackColor, graphics, alignment);
         } else if (r2dm.getShowEndCarbons() && 
                    (container.getConnectedBonds(atom).length == 1)) {
+            paintAtomSymbol(atom, atomBackColor, graphics, alignment);
         } else if (atom.getProperty(ProblemMarker.ERROR_MARKER) != null) {
             // ... unless carbon is unbonded
-            paintAtomSymbol(atom, atomBackColor, graphics, alignment);
-        } else if (r2dm.getShowEndCarbons() && (container.getConnectedBonds(atom).length == 1)) {
-            // ... unless carbon is an methyl, and the user wants those with symbol
             paintAtomSymbol(atom, atomBackColor, graphics, alignment);
         } else if (atom.getAtomicMass() != 0) {
             try {
@@ -502,20 +500,34 @@ public class Renderer2D   {
             graphics.drawString(atomSymbol, screenCoords[0], screenCoords[1]);
 
             // possibly underline SYMBOL
-            int[] lineCoords = new int[4];
-            lineCoords[0] = coords[0]; // 5 point spacing
-            lineCoords[1] = coords[1] + 5;
-            lineCoords[2] = lineCoords[0] + atomSymbolW;
-            lineCoords[3] = lineCoords[1];
-            int[] lineScreenCoords = getScreenCoordinates(lineCoords);
-            if (atom.getProperty(ProblemMarker.ERROR_MARKER) != null) {
-                graphics.setColor(Color.RED);
-                graphics.drawLine(lineScreenCoords[0], lineScreenCoords[1],
-                                  lineScreenCoords[2], lineScreenCoords[3]);
-            } else if (atom.getProperty(ProblemMarker.WARNING_MARKER) != null) {
-                graphics.setColor(Color.ORANGE);
-                graphics.drawLine(lineScreenCoords[0], lineScreenCoords[1],
-                                  lineScreenCoords[2], lineScreenCoords[3]);
+            if (atom.getProperty(ProblemMarker.ERROR_MARKER) != null ||
+                atom.getProperty(ProblemMarker.WARNING_MARKER) != null) {
+                // RED for error, ORANGE for warnings
+                if (atom.getProperty(ProblemMarker.ERROR_MARKER) != null) {
+                    graphics.setColor(Color.RED);
+                } else if (atom.getProperty(ProblemMarker.WARNING_MARKER) != null) {
+                    graphics.setColor(Color.ORANGE);
+                }
+                // make zig zag bond
+                int symbolLength = atom.getSymbol().length();
+                int zigzags = 1+(2*symbolLength);
+                int spacing = atomSymbolW/zigzags;
+                int width = atomSymbolH/3;
+                for (int i=-symbolLength; i<=symbolLength; i++) {
+                    int[] lineCoords = new int[6];
+                    int halfspacing = spacing/2;
+                    lineCoords[0]=coords[0] + (atomSymbolW/2) + (i*spacing) - halfspacing;
+                    lineCoords[1]=coords[1] + 1*width;
+                    lineCoords[2]=lineCoords[0]+halfspacing;
+                    lineCoords[3]=coords[1] + 2*width;
+                    lineCoords[4]=lineCoords[2]+halfspacing;
+                    lineCoords[5]=lineCoords[1];
+                    int[] lineScreenCoords = getScreenCoordinates(lineCoords);
+                    graphics.drawLine(lineScreenCoords[0], lineScreenCoords[1],
+                                      lineScreenCoords[2], lineScreenCoords[3]);
+                    graphics.drawLine(lineScreenCoords[2], lineScreenCoords[3],
+                                      lineScreenCoords[4], lineScreenCoords[5]);
+                }
             }
         }
         
