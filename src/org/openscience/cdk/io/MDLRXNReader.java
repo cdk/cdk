@@ -44,6 +44,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.SetOfReactions;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.formats.*;
 
 /**
  * Reads a molecule from an MDL RXN file {@cdk.cite DAL92}.
@@ -74,8 +75,8 @@ public class MDLRXNReader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
     
-    public String getFormatName() {
-        return "MDL RXN";
+    public ChemFormat getFormat() {
+        return new MDLRXNFormat();
     }
 
     public void setReader(Reader input) throws CDKException {

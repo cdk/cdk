@@ -35,6 +35,7 @@ import java.io.StringReader;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.formats.*;
 import org.openscience.cdk.io.inchi.INChIHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -80,9 +81,10 @@ public class INChIReader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
     
-    public String getFormatName() {
-        return "IUPAC Chemical Identifier (XML)";
+    public ChemFormat getFormat() {
+        return new INChIFormat();
     }
+    
     
     public void setReader(Reader input) throws CDKException {
         this.input = input;

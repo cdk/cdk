@@ -36,6 +36,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.SetOfReactions;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.formats.*;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -68,8 +69,8 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
     
-    public String getFormatName() {
-        return "MDL RXN V3000";
+    public ChemFormat getFormat() {
+        return new MDLRXNV3000Format();
     }
 
     public void setReader(Reader input) throws CDKException {

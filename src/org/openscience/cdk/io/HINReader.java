@@ -43,6 +43,7 @@ import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.formats.*;
 
 /**
  * Reads an object from HIN formated input.
@@ -71,8 +72,8 @@ public class HINReader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
     
-    public String getFormatName() {
-        return "HIN";
+    public ChemFormat getFormat() {
+        return new HINFormat();
     }
 
     public void close() throws IOException {

@@ -4,10 +4,14 @@ CHANGELOG $Date$
 Changes in CVS
 ------------------------------------
 New:
+* ChemFormat and ChemFormatMatchers interfaces in new io.formats package
 
 Fixes:
+* Split file format matching from file reading reducing the requirements
+  for format detection
 
 API changes:
+* ChemObjectIO.getFormatName() is replaced by ChemObjectIO.getFormat()
 
 20051015 Release
 ------------------------------------

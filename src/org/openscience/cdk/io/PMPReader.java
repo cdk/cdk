@@ -50,6 +50,7 @@ import org.openscience.cdk.Crystal;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.formats.*;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
@@ -102,8 +103,8 @@ public class PMPReader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
     
-    public String getFormatName() {
-        return "PolyMorph Predictor (Cerius)";
+    public ChemFormat getFormat() {
+        return new PMPFormat();
     }
     
     public void setReader(Reader input) throws CDKException {

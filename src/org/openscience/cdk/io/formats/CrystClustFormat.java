@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2003-2004  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2004  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -22,26 +22,31 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
  * 02111-1307  USA.
  */
-package org.openscience.cdk.io;
-
-import java.io.Reader;
-import java.io.StringReader;
+package org.openscience.cdk.io.formats;
 
 /**
  * @cdk.module io
  */
-public class Gaussian90Reader extends DummyReader {
+public class CrystClustFormat implements ChemFormatMatcher {
 
-    public Gaussian90Reader() {}
-
+    public CrystClustFormat() {}
+    
     public String getFormatName() {
-        return "Gaussian90 (not implemented, post a feature request if you need it)";
+        return "CrystClust";
     }
 
+    public String getReaderClassName() { 
+      return "org.openscience.cdk.io.CrystClustReader";
+    };
+    public String getWriterClassName() { 
+      return "org.openscience.cdk.io.CrystClustWriter";
+    };
+
     public boolean matches(int lineNumber, String line) {
-        if (line.indexOf("Gaussian G90") >= 0) {
+        if (lineNumber == 1 && line.startsWith("frame: ")) {
             return true;
         }
         return false;
     }
+
 }

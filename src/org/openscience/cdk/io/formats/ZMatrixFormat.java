@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2003-2004  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2004  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -22,26 +22,29 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
  * 02111-1307  USA.
  */
-package org.openscience.cdk.io;
-
-import java.io.Reader;
-import java.io.StringReader;
+package org.openscience.cdk.io.formats;
 
 /**
  * @cdk.module io
  */
-public class DaltonReader extends DummyReader {
+public class ZMatrixFormat implements ChemFormatMatcher {
 
-    public DaltonReader() {}
-
-    public String getFormatName() {
-        return "Dalton (not implemented, post a feature request if you need it)";
-    }
+    public ZMatrixFormat() {}
     
+    public String getFormatName() {
+        return "ZMatrix";
+    }
+
+    public String getReaderClassName() { 
+      return "org.openscience.cdk.io.ZMatrixReader";
+    };
+    public String getWriterClassName() { return null; };
+
     public boolean matches(int lineNumber, String line) {
-        if (line.indexOf("DALTON") >= 0) {
+        if (lineNumber == 4 && line.indexOf("Z Matrix") != -1) {
             return true;
         }
         return false;
     }
+
 }

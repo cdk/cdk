@@ -36,6 +36,7 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.formats.*;
 import org.openscience.cdk.tools.IDCreator;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -72,8 +73,8 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
         logger = new LoggingTool(this);
     }
 
-    public String getFormatName() {
-        return "CDK Source Code Fragment";
+    public ChemFormat getFormat() {
+        return new CDKSourceCodeFormat();
     }
     /**
      * Flushes the output and closes this object.

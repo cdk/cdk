@@ -44,6 +44,7 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Crystal;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.formats.*;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.math.FortranFormat;
 
@@ -83,8 +84,8 @@ public class ShelXReader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
     
-    public String getFormatName() {
-        return "ShelXL";
+    public ChemFormat getFormat() {
+        return new ShelXFormat();
     }
 
     public void setReader(Reader input) throws CDKException {

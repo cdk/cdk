@@ -41,6 +41,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PhysicalConstants;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.formats.*;
 import org.openscience.cdk.io.DefaultChemObjectReader;
 
 
@@ -92,20 +93,6 @@ import org.openscience.cdk.io.DefaultChemObjectReader;
 //TODO Update "see" tag with reference to GamessWriter when it will be implemented.
 //TODO Update "author" tag with appropriate information. 
 public class GamessReader extends DefaultChemObjectReader {
-	
-	/**
-	 * String constant containing the file format name read by "this" reader.
-	 * 
-	 * <p><b>Implementation: </b><br>As it seems that there is no explicit policy 
-	 * about case sensitivity for file format name and given the fact that GAMESS 
-	 * is the acronym for General Atomic and Molecular Electronic Structure System, 
-	 * the constant will all be in capital letters.
-	 * 
-	 * @see org.openscience.cdk.io.GamessReader#getFormatName()
-	 */
-	//TODO Answer the question: Is there a policy about case sensitivity for file format name?
-	//TODO Update the string if necessary.
-	public static final String FILE_FORMAT_NAME = "GAMESS log file";
 	
 	/**
 	 * Boolean constant used to specify that the coordinates are given in Bohr units.
@@ -168,15 +155,8 @@ public class GamessReader extends DefaultChemObjectReader {
 		}
 	}
 	
-	/**
-	 * Returns a one-lined string containing the name of the file format this 
-	 * IO filter supports.
-	 * 
-	 * @see org.openscience.cdk.io.GamessReader#FILE_FORMAT_NAME
-	 * @see org.openscience.cdk.io.ChemObjectIO#getFormatName()
-	 */
-    public String getFormatName() {
-		return GamessReader.FILE_FORMAT_NAME;
+    public ChemFormat getFormat() {
+        return new GamessFormat();
     }
     
     public void setReader(Reader reader) throws CDKException {

@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2003-2004  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2004  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -22,25 +22,32 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
  * 02111-1307  USA.
  */
-package org.openscience.cdk.io;
-
-import java.io.Reader;
+package org.openscience.cdk.io.formats;
 
 /**
  * @cdk.module io
  */
-public class MOPAC7Reader extends DummyReader {
+public class ShelXFormat implements ChemFormatMatcher {
 
-    public MOPAC7Reader() {}
-
+    public ShelXFormat() {}
+    
     public String getFormatName() {
-        return "MOPAC7 (not implemented, post a feature request if you need it)";
+        return "ShelXL";
     }
 
+    public String getReaderClassName() { 
+      return "org.openscience.cdk.io.ShelXReader";
+    };
+    public String getWriterClassName() { 
+      return "org.openscience.cdk.io.ShelXWriter";
+    };
+
     public boolean matches(int lineNumber, String line) {
-        if (line.indexOf("MOPAC:  VERSION  7.00") >= 0) {
+        if (line.startsWith("ZERR ") ||
+            line.startsWith("TITL ")) {
             return true;
         }
         return false;
     }
+
 }

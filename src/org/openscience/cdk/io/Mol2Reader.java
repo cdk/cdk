@@ -44,6 +44,7 @@ import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.formats.*;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -77,8 +78,8 @@ public class Mol2Reader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
     
-    public String getFormatName() {
-        return "Mol2 (Sybyl)";
+    public ChemFormat getFormat() {
+        return new Mol2Format();
     }
 
     public void setReader(Reader input) throws CDKException {

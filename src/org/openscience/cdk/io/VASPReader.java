@@ -42,6 +42,7 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Crystal;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.formats.*;
 import org.openscience.cdk.math.FortranFormat;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.tools.LoggingTool;
@@ -100,8 +101,8 @@ public class VASPReader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
     
-    public String getFormatName() {
-        return "VASP";
+    public ChemFormat getFormat() {
+        return new VASPFormat();
     }
     
     public void setReader(Reader input) throws CDKException {

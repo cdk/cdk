@@ -31,6 +31,7 @@ package org.openscience.cdk.io;
 import java.io.IOException;
 
 import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.listener.ChemObjectIOListener;
 import org.openscience.cdk.io.setting.IOSetting;
 
@@ -51,11 +52,10 @@ import org.openscience.cdk.io.setting.IOSetting;
 public interface ChemObjectIO {
 
     /**
-     * Returns a one-lined format name of the format that this
-     * IO filter supports.
+     * Returns the ChemFormat class for this IO class.
      */
-    public String getFormatName();
-    
+    public ChemFormat getFormat();
+
     /**
      * Returns whether the given ChemObject can be read or not.
      */

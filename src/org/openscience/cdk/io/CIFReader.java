@@ -44,6 +44,7 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Crystal;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.formats.*;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
 
 
@@ -92,8 +93,8 @@ public class CIFReader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
     
-    public String getFormatName() {
-        return "CIF-like (not CIF)";
+    public ChemFormat getFormat() {
+        return new CIFFormat();
     }
 
     public void setReader(Reader reader) throws CDKException {

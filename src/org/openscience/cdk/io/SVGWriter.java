@@ -45,6 +45,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.formats.*;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.renderer.Renderer2D;
 import org.w3c.dom.DOMImplementation;
@@ -89,8 +90,14 @@ public class SVGWriter extends DefaultChemObjectWriter {
         }
     }
 
-    public String getFormatName() {
-        return "Scalable Vector Graphics (SVG)";
+    public ChemFormat getFormat() {
+        return new ChemFormat() {
+            public String getFormatName() {
+                return "Scalable Vector Graphics";
+            }
+            public String getReaderClassName() { return null; };
+            public String getWriterClassName() { return null; };
+        };
     }
 
     /**

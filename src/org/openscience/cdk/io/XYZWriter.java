@@ -35,6 +35,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.formats.*;
 
 /**
  * @cdk.module io
@@ -55,8 +56,8 @@ public class XYZWriter extends DefaultChemObjectWriter {
         writer = new BufferedWriter(out);
     }
 
-    public String getFormatName() {
-        return "XYZ";
+    public ChemFormat getFormat() {
+        return new XYZFormat();
     }
     
     /**

@@ -40,6 +40,7 @@ import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.formats.*;
 import org.openscience.cdk.smiles.SmilesParser;
 
 /**
@@ -69,8 +70,8 @@ public class SMILESReader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
     
-    public String getFormatName() {
-        return "SMILES";
+    public ChemFormat getFormat() {
+        return new SMILESFormat();
     }
     
     public void setReader(Reader input) throws CDKException {

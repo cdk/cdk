@@ -22,20 +22,23 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
  * 02111-1307  USA.
  */
-package org.openscience.cdk.io;
+package org.openscience.cdk.io.formats;
 
 import java.io.Reader;
 
 /**
  * @cdk.module io
  */
-public class Aces2Reader extends DummyReader {
+public class Aces2Format implements ChemFormatMatcher {
 
-    public Aces2Reader() {}
+    public Aces2Format() {}
 
     public String getFormatName() {
-        return "Aces2 (not implemented, post a feature request if you need it)";
+        return "Aces2";
     }
+
+    public String getReaderClassName() { return null; };
+    public String getWriterClassName() { return null; };
 
     public boolean matches(int lineNumber, String line) {
         if (line.indexOf("ACES2") >= 0) {

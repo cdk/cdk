@@ -36,6 +36,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Crystal;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.formats.*;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.tools.MFAnalyser;
 
@@ -65,8 +66,8 @@ public class ShelXWriter extends DefaultChemObjectWriter {
         output = out;
     }
 
-    public String getFormatName() {
-        return "ShelX";
+    public ChemFormat getFormat() {
+        return new ShelXFormat();
     }
     
     /**

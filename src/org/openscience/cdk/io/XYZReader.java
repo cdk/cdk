@@ -45,6 +45,7 @@ import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.formats.*;
 
 /**
  * Reads an object from XYZ formated input.
@@ -72,8 +73,8 @@ public class XYZReader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
     
-    public String getFormatName() {
-        return "XYZ";
+    public ChemFormat getFormat() {
+        return new XYZFormat();
     }
     
     public void setReader(Reader input) throws CDKException {

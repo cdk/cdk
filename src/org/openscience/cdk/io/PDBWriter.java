@@ -27,6 +27,7 @@ package org.openscience.cdk.io;
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.formats.*;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import freeware.PrintfFormat;
@@ -53,8 +54,8 @@ public class PDBWriter extends DefaultChemObjectWriter {
         writer = new BufferedWriter(out);
     }
 
-    public String getFormatName() {
-        return "Protein Brookhaven Database";
+    public ChemFormat getFormat() {
+        return new PDBFormat();
     }
     
     public void write(ChemObject object) throws CDKException {

@@ -40,6 +40,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.formats.*;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.libio.jmol.Convertor;
 import org.openscience.cdk.tools.LoggingTool;
@@ -80,8 +81,8 @@ public class JMEReader extends DefaultChemObjectReader {
         }
 	}
 
-    public String getFormatName() {
-        return "JME";
+    public ChemFormat getFormat() {
+        return new JMEFormat();
     }
 
     public void setReader(Reader input) throws CDKException {

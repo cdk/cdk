@@ -162,32 +162,6 @@ public class GamessReaderTest extends TestCase {
 		//The given object is a ChemFile object
 		Assert.assertTrue("TEST: GamessReader only accepts ChemFile object.", gamessReaderUnderTest.accepts(new ChemFile()));
 	}
-	
-	/**
-	 * Tests the <code>getFormatName()</code> method for the "GamessReader" object.
-	 * 
-	 * <p><b>Contract</b>:
-	 * <br><code>Preconditions</code>:
-	 * <ul>
-	 * 	<li>The "GamessReader" object is constructed.</li>
-	 * </ul>
-	 * <code>Invariants</code>:
-	 * <ul>
-	 * 	<li></li>
-	 * </ul>
-	 * <code>Postconditions</code>:
-	 * <ul>
-	 * 	<li>The format name returned by the <code>getFormatName()</code> method is the same as the one given by the constant <code>FILE_FORMAT_NAME</code>.</li>
-	 * </ul>
-	 * 
-	 * @see org.openscience.cdk.io.GamessReader
-	 * @see org.openscience.cdk.io.GamessReader#FILE_FORMAT_NAME
-	 * @see org.openscience.cdk.io.GamessReader#getFormatName()
-	 */
-	public void testGetFormatName() {
-		Assert.assertNotNull("TEST: The GamessReader object is constructed.", this.gamessReaderUnderTest);
-		Assert.assertEquals("TEST: The format name is the same as the name contained in FILE_FORMAT_NAME constant.", GamessReader.FILE_FORMAT_NAME, this.gamessReaderUnderTest.getFormatName());
-	}
 
 	/**
 	 * Tests the <code>read(ChemObject object)</code> method for the "GamessReader" object.

@@ -56,6 +56,7 @@ import org.openscience.cdk.SetOfReactions;
 import org.openscience.cdk.dict.DictRef;
 import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.formats.*;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.io.setting.StringIOSetting;
@@ -156,8 +157,8 @@ public class CMLWriter extends DefaultChemObjectWriter {
         this(new StringWriter());
     }
 
-    public String getFormatName() {
-        return "Chemical Markup Language";
+    public ChemFormat getFormat() {
+        return new CMLFormat();
     }
     
     /**

@@ -22,39 +22,29 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
  * 02111-1307  USA.
  */
-package org.openscience.cdk.io;
+package org.openscience.cdk.io.formats;
 
-import java.io.IOException;
 import java.io.Reader;
-
-import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.exception.CDKException;
+import java.io.StringReader;
 
 /**
- * Class that will serve as a dummy for the ReaderFactory to return.
- * This Reader will throw a CDKException when someone tries to
- * read information from it, to signal that it is not imlemented.
- *
  * @cdk.module io
  */
-public class DummyReader extends DefaultChemObjectReader {
+public class DaltonFormat implements ChemFormatMatcher {
 
-    public ChemObject read(ChemObject object) throws CDKException {
-        throw new CDKException("This Reader has not been implemented yet. Don't use it.");
-    }
-    
-    public void close() throws IOException {};
+    public DaltonFormat() {}
 
     public String getFormatName() {
-        return "Not Implemented (post a feature request if you need it)";
-    }
-
-    public boolean matches(int lineNumber, String line) {
-        return false;
+        return "Dalton";
     }
     
-    public void setReader(Reader reader) throws CDKException {
-        throw new CDKException("This Reader has not been implemented yet. Don't use it.");
-    };
+    public String getReaderClassName() { return null; };
+    public String getWriterClassName() { return null; };
 
+    public boolean matches(int lineNumber, String line) {
+        if (line.indexOf("DALTON") >= 0) {
+            return true;
+        }
+        return false;
+    }
 }

@@ -36,6 +36,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.formats.*;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.libio.jmol.Convertor;
 import org.openscience.cdk.tools.LoggingTool;
@@ -73,8 +74,8 @@ public class MOPAC97Reader extends DefaultChemObjectReader {
         }
 	}
 
-    public String getFormatName() {
-        return "MOPAC 93/97/2002";
+    public ChemFormat getFormat() {
+        return new MOPAC97Format();
     }
 
     public void setReader(Reader input) throws CDKException {

@@ -36,6 +36,7 @@ import java.util.NoSuchElementException;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.io.formats.*;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -78,8 +79,8 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
         hasNext = false;
     }
 
-    public String getFormatName() {
-        return "MDL SDF";
+    public ChemFormat getFormat() {
+        return new MDLFormat();
     }
 
     public boolean hasNext() {

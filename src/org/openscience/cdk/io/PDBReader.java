@@ -46,6 +46,7 @@ import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Monomer;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.formats.*;
 
 /**
  * Reads the contents of a PDBFile.
@@ -96,8 +97,8 @@ public class PDBReader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
     
-    public String getFormatName() {
-        return "Protein Brookhave Database (PDB)";
+    public ChemFormat getFormat() {
+        return new PDBFormat();
     }
 
     public void setReader(Reader input) throws CDKException {

@@ -35,6 +35,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.formats.*;
 import org.openscience.cdk.io.DefaultChemObjectWriter;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
@@ -78,8 +79,8 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
         initIOSettings();
     }
 
-    public String getFormatName() {
-        return "Gaussian Input";
+    public ChemFormat getFormat() {
+        return new GaussianInputFormat();
     }
 
     public void close() throws IOException {

@@ -35,6 +35,7 @@ import java.io.StringReader;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.formats.*;
 import org.openscience.cdk.io.cml.CMLErrorHandler;
 import org.openscience.cdk.io.cml.CMLHandler;
 import org.openscience.cdk.io.cml.CMLResolver;
@@ -93,8 +94,8 @@ public class CMLReader extends DefaultChemObjectReader {
         this.url = url;
     }
 
-    public String getFormatName() {
-        return "Chemical Markup Language";
+    public ChemFormat getFormat() {
+        return new CMLFormat();
     }
 
     public void setReader(Reader reader) throws CDKException {

@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2003-2004  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2004  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -22,25 +22,29 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
  * 02111-1307  USA.
  */
-package org.openscience.cdk.io;
-
-import java.io.Reader;
+package org.openscience.cdk.io.formats;
 
 /**
  * @cdk.module io
  */
-public class Gaussian92Reader extends DummyReader {
+public class VASPFormat implements ChemFormatMatcher {
 
-    public Gaussian92Reader() {}
-
+    public VASPFormat() {}
+    
     public String getFormatName() {
-        return "Gaussian92 (not implemented, post a feature request if you need it)";
+        return "VASP";
     }
 
+    public String getReaderClassName() { 
+      return "org.openscience.cdk.io.VASPReader";
+    };
+    public String getWriterClassName() { return null; };
+
     public boolean matches(int lineNumber, String line) {
-        if (line.indexOf("Gaussian 92") >= 0) {
+        if (line.indexOf("NCLASS=") >= 0) {
             return true;
         }
         return false;
     }
+
 }

@@ -52,6 +52,7 @@ import org.openscience.cdk.exception.UnsupportedChemObjectException;
 import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.DefaultChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
+import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.dadml.DATABASE;
 import org.openscience.dadml.DBDEF;
@@ -94,8 +95,14 @@ public class DADMLReader extends DefaultChemObjectReader {
         this.query = null;
     }
 
-    public String getFormatName() {
-        return "DADML network";
+    public ChemFormat getFormat() {
+        return new ChemFormat() {
+            public String getFormatName() {
+                return "DADML network";
+            }
+            public String getReaderClassName() { return null; };
+            public String getWriterClassName() { return null; };
+        };
     }
     
     public void setReader(Reader input) throws CDKException {

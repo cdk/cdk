@@ -28,6 +28,7 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Crystal;
 import org.openscience.cdk.exception.UnsupportedChemObjectException;
+import org.openscience.cdk.io.formats.*;
 import java.util.Vector;
 import java.io.*;
 import javax.vecmath.Vector3d;
@@ -54,8 +55,8 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
         output = out;
     }
 
-    public String getFormatName() {
-        return "CrystClust";
+    public ChemFormat getFormat() {
+        return new CrystClustFormat();
     }
     
     /**

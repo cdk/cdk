@@ -42,6 +42,7 @@ import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.formats.*;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.io.inchi.INChIContentProcessorTool;
 
@@ -89,8 +90,8 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
     
-    public String getFormatName() {
-        return "IUPAC Chemical Identifier (Plain Text)";
+    public ChemFormat getFormat() {
+        return new INChIPlainTextFormat();
     }
     
     public void setReader(Reader input) {

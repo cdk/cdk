@@ -67,7 +67,7 @@ public class FileFormatGuesser {
                 if (!input.isDirectory()) {
                     ChemObjectReader reader = factory.createReader(new FileReader(input));
                     if (reader != null) {
-                        System.out.println(ifilename + ": " + reader.getFormatName());
+                        System.out.println(ifilename + ": " + reader.getFormat().getFormatName());
                     } else {
                         System.out.println(ifilename + ": unknown format");
                     }

@@ -48,6 +48,7 @@ import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.formats.*;
 import org.openscience.cdk.geometry.ZMatrixTools;
 
 /**
@@ -77,8 +78,8 @@ public class ZMatrixReader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
   
-    public String getFormatName() {
-        return "ZMatrix";
+    public ChemFormat getFormat() {
+        return new ZMatrixFormat();
     }
 
     public void setReader(Reader input) throws CDKException {

@@ -44,6 +44,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.formats.*;
 import org.openscience.cdk.config.IsotopeFactory;
 
 
@@ -79,8 +80,8 @@ public class MDLWriter extends DefaultChemObjectWriter {
         this(new BufferedWriter(new OutputStreamWriter(out)));
     }
 
-    public String getFormatName() {
-        return "MDL Mol/SDF";
+    public ChemFormat getFormat() {
+        return new MDLFormat();
     }
     
     /**

@@ -40,6 +40,7 @@ import java.util.zip.GZIPInputStream;
 
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.InvalidSmilesException;
+import org.openscience.cdk.io.formats.*;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -64,7 +65,7 @@ public class ReaderFactory {
     private int headerLength;
     private LoggingTool logger;
 
-    private static Vector readers = null;
+    private static Vector formats = null;
 
     /**
      * Constructs a ReaderFactory which tries to detect the format in the
@@ -87,75 +88,72 @@ public class ReaderFactory {
     }
 
     /**
-     * Registers a reader for format detection. To be useful, the
-     * registered ChemObjectReader must implement the matches()
-     * method.
-     *
-     * @see org.openscience.cdk.io.ChemObjectReader#matches(int,String)
+     * Registers a format for detection.
      */
-    public void registerReader(ChemObjectReader reader) {
-        readers.addElement(reader);
+    public void registerFormat(ChemFormatMatcher format) {
+        formats.addElement(format);
     }
 
     private void loadReaders() {
-        if (readers == null) {
+        if (formats == null) {
             logger.debug("Starting loading Readers...");
             // IMPORTANT: the order in the next series *is* important!
-            String[] readerNames = {
-                "org.openscience.cdk.io.ABINITReader",
-                "org.openscience.cdk.io.Aces2Reader",
-                "org.openscience.cdk.io.ADFReader",
-                "org.openscience.cdk.io.CACheReader",
-                "org.openscience.cdk.io.ChemicalRSSReader",
-                "org.openscience.cdk.io.CIFReader",
-                "org.openscience.cdk.io.CMLReader",
-                "org.openscience.cdk.io.CrystClustReader",
-                "org.openscience.cdk.io.DaltonReader",
-                "org.openscience.cdk.io.GamessReader",
-                "org.openscience.cdk.io.Gaussian03Reader",
-                "org.openscience.cdk.io.Gaussian98Reader",
-                "org.openscience.cdk.io.Gaussian95Reader",
-                "org.openscience.cdk.io.Gaussian94Reader",
-                "org.openscience.cdk.io.Gaussian92Reader",
-                "org.openscience.cdk.io.Gaussian90Reader",
-                "org.openscience.cdk.io.GhemicalMMReader",
-                "org.openscience.cdk.io.HINReader",
-                "org.openscience.cdk.io.IChIReader",
-                "org.openscience.cdk.io.INChIPlainTextReader",
-                "org.openscience.cdk.io.INChIReader",
-                "org.openscience.cdk.io.JaguarReader",
-                "org.openscience.cdk.io.MACiEReader",
-                "org.openscience.cdk.io.MDLReader",
-                "org.openscience.cdk.io.MDLRXNV3000Reader",
-                "org.openscience.cdk.io.MDLRXNReader",
-                "org.openscience.cdk.io.MDLV3000Reader",
-                "org.openscience.cdk.io.Mol2Reader",
-                "org.openscience.cdk.io.MOPAC7Reader",
-                "org.openscience.cdk.io.MOPAC97Reader",
-                "org.openscience.cdk.io.PDBReader",
-                "org.openscience.cdk.io.PMPReader",
-                "org.openscience.cdk.io.ShelXReader",
-                "org.openscience.cdk.io.VASPReader",
-                "org.openscience.cdk.io.ZMatrixReader"
-                // "org.openscience.cdk.io.SMILESReader", match after all others failed
-                // "org.openscience.cdk.io.XYZReader", match after all others failed
+            String[] formatNames = {
+                "org.openscience.cdk.io.formats.ABINITFormat",
+                "org.openscience.cdk.io.formats.Aces2Format",
+                "org.openscience.cdk.io.formats.ADFFormat",
+                "org.openscience.cdk.io.formats.CACheFormat",
+                "org.openscience.cdk.io.formats.CIFFormat",
+                "org.openscience.cdk.io.formats.CMLFormat",
+                "org.openscience.cdk.io.formats.CrystClustFormat",
+                "org.openscience.cdk.io.formats.DaltonFormat",
+                "org.openscience.cdk.io.formats.GamessFormat",
+                "org.openscience.cdk.io.formats.Gaussian03Format",
+                "org.openscience.cdk.io.formats.Gaussian98Format",
+                "org.openscience.cdk.io.formats.Gaussian95Format",
+                "org.openscience.cdk.io.formats.Gaussian94Format",
+                "org.openscience.cdk.io.formats.Gaussian92Format",
+                "org.openscience.cdk.io.formats.Gaussian90Format",
+                "org.openscience.cdk.io.formats.GhemicalMMFormat",
+                "org.openscience.cdk.io.formats.HINFormat",
+                "org.openscience.cdk.io.formats.IChIFormat",
+                "org.openscience.cdk.io.formats.INChIPlainTextFormat",
+                "org.openscience.cdk.io.formats.INChIFormat",
+                "org.openscience.cdk.io.formats.JaguarFormat",
+                "org.openscience.cdk.io.formats.MACiEFormat",
+                "org.openscience.cdk.io.formats.MDLFormat",
+                "org.openscience.cdk.io.formats.MDLRXNV3000Format",
+                "org.openscience.cdk.io.formats.MDLRXNFormat",
+                "org.openscience.cdk.io.formats.MDLV3000Format",
+                "org.openscience.cdk.io.formats.Mol2Format",
+                "org.openscience.cdk.io.formats.MOPAC7Format",
+                "org.openscience.cdk.io.formats.MOPAC93Format",
+                "org.openscience.cdk.io.formats.MOPAC97Format",
+                "org.openscience.cdk.io.formats.MOPAC2002Format",
+                "org.openscience.cdk.io.formats.PDBFormat",
+                "org.openscience.cdk.io.formats.PMPFormat",
+                "org.openscience.cdk.io.formats.ShelXFormat",
+                "org.openscience.cdk.io.formats.VASPFormat",
+                "org.openscience.cdk.io.formats.ZMatrixFormat",
+                "org.openscience.cdk.io.formats.SMILESFormat",
+                "org.openscience.cdk.io.formats.XYZFormat",
             };
-            readers = new Vector();
-            for (int i=0; i<readerNames.length; i++) {
+            formats = new Vector();
+            for (int i=0; i<formatNames.length; i++) {
                 // load them one by one
                 try {
                     ChemObjectReader coReader = (ChemObjectReader)this.getClass().getClassLoader().
-                        loadClass(readerNames[i]).newInstance();
-                    readers.addElement(coReader);
+                        loadClass(formatNames[i]).newInstance();
+                    formats.addElement(coReader);
                 } catch (ClassNotFoundException exception) {
-                    logger.error("Could not find this ChemObjectReader: ", readerNames[i]);
+                    logger.error("Could not find this ChemObjectReader: ", formatNames[i]);
                     logger.debug(exception);
                 } catch (Exception exception) {
-                    logger.error("Could not load this ChemObjectReader: ", readerNames[i]);
+                    logger.error("Could not load this ChemObjectReader: ", formatNames[i]);
                     logger.debug(exception);
                 }
             }
-            logger.info("Number of loaded formats used in detection: ", readers.size());
+            logger.info("Number of loaded formats used in detection: ", formats.size());
         }
     }
 
@@ -262,25 +260,26 @@ public class ReaderFactory {
         boolean formatDetected = false;
         while (buffer.ready() && (line != null) && (!formatDetected)) {
             logger.debug(lineNumber + ": ", line);
-            for (int i=0; i<readers.size() && !formatDetected; i++) {
-                ChemObjectReader coReader = (ChemObjectReader)readers.elementAt(i);
-                if (coReader.matches(lineNumber, line)) {
+            for (int i=0; i<formats.size() && !formatDetected; i++) {
+                ChemFormatMatcher cfMatcher = (ChemFormatMatcher)formats.elementAt(i);
+                if (cfMatcher.matches(lineNumber, line)) {
                     formatDetected = true;
-                    try {
-                        // make a new instance of this class
-                        ChemObjectReader returnReader = (ChemObjectReader)coReader.getClass().newInstance();
-                        logger.info("Detected format: ", returnReader.getFormatName());
-                        if (!(returnReader instanceof DummyReader)) {
-                            returnReader.setReader(originalBuffer);
-                            logger.debug("Input Reader set in ChemObjectReader");
-                        } else {
-                            // DummyReader's will throw an error
-                            logger.warn("Have not set the Reader, because a DummyReader will throw an exception");
+                    logger.info("Detected format: ", cfMatcher.getFormatName());
+                    String readerClassName = cfMatcher.getReaderClassName();
+                    if (readerClassName != null) {
+                        try {
+                            // make a new instance of this class
+                            return (ChemObjectReader)this.getClass().getClassLoader().
+                              loadClass(readerClassName).newInstance();
+                        } catch (ClassNotFoundException exception) {
+                            logger.error("Could not find this ChemObjectReader: ", readerClassName);
+                            logger.debug(exception);
+                        } catch (Exception exception) {
+                            logger.error("Could not create this ChemObjectReader: ", readerClassName);
+                            logger.debug(exception);
                         }
-                        return returnReader;
-                    } catch (Exception exception) {
-                        logger.error("Could not create this ChemObjectReader: ", coReader.getClass().getName());
-                        logger.debug(exception);
+                    } else {
+                        logger.info("Format detected, but not implemented!");
                     }
                 }
             }

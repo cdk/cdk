@@ -43,6 +43,7 @@ import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.formats.*;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -91,8 +92,8 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
     
-    public String getFormatName() {
-        return "Gaussian 2003";
+    public ChemFormat getFormat() {
+        return new Gaussian03Format();
     }
     
     public void setReader(Reader reader) throws CDKException {

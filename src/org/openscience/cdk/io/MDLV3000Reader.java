@@ -45,6 +45,7 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.formats.*;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.tools.LoggingTool;
@@ -96,8 +97,8 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
     
-    public String getFormatName() {
-        return "MDL Mol/SDF V3000";
+    public ChemFormat getFormat() {
+        return new MDLV3000Format();
     }
 
     public void setReader(Reader input) throws CDKException {

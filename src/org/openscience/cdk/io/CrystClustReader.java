@@ -37,6 +37,7 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Crystal;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.formats.*;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.math.FortranFormat;
 import org.openscience.cdk.tools.LoggingTool;
@@ -62,8 +63,8 @@ public class CrystClustReader extends DefaultChemObjectReader {
         }
     }
 
-    public String getFormatName() {
-        return "CrystClust";
+    public ChemFormat getFormat() {
+        return new CrystClustFormat();
     }
     
     public void setReader(Reader reader) throws CDKException {

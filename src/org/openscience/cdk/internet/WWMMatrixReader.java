@@ -53,6 +53,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.DefaultChemObjectReader;
+import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 
 /**
@@ -91,10 +92,15 @@ public class WWMMatrixReader extends DefaultChemObjectReader {
         this.server = server;
     }
 
-    public String getFormatName() {
-        return "World Wide Molecular Matrix";
+    public ChemFormat getFormat() {
+        return new ChemFormat() {
+            public String getFormatName() {
+                return "World Wide Molecular Matrix";
+            }
+            public String getReaderClassName() { return null; };
+            public String getWriterClassName() { return null; };
+        };
     }
-    
     public void setReader(Reader input) throws CDKException {
         throw new CDKException("This Reader does not read from a Reader but from the WWMM");
     }

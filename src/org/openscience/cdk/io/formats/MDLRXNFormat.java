@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2003-2004  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2004  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -22,23 +22,26 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
  * 02111-1307  USA.
  */
-package org.openscience.cdk.io;
-
-import java.io.Reader;
+package org.openscience.cdk.io.formats;
 
 /**
  * @cdk.module io
  */
-public class ADFReader extends DummyReader {
+public class MDLRXNFormat implements ChemFormatMatcher {
 
-    public ADFReader() {}
-
+    public MDLRXNFormat() {}
+    
     public String getFormatName() {
-        return "ABINIT (not implemented, post a feature request if you need it)";
+        return "MDL RXN";
     }
 
+    public String getReaderClassName() { 
+      return "org.openscience.cdk.io.MDLRXNReader";
+    };
+    public String getWriterClassName() { return null; };
+
     public boolean matches(int lineNumber, String line) {
-        if (line.indexOf("Amsterdam Density Functional") >= 0) {
+        if (line.startsWith("$RXN")) {
             return true;
         }
         return false;

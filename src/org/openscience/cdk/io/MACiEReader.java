@@ -50,6 +50,7 @@ import org.openscience.cdk.SetOfReactions;
 import org.openscience.cdk.dict.DictRef;
 import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.formats.*;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.io.setting.IntegerIOSetting;
@@ -131,8 +132,8 @@ public class MACiEReader extends DefaultChemObjectReader {
         initIOSettings();
     }
 
-    public String getFormatName() {
-        return "MACiE";
+    public ChemFormat getFormat() {
+        return new MACiEFormat();
     }
 
     public void setReader(Reader input) throws CDKException {

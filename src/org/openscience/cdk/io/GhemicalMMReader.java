@@ -39,6 +39,7 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.formats.*;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -65,8 +66,8 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
 
-    public String getFormatName() {
-        return "GhemicalMM";
+    public ChemFormat getFormat() {
+        return new GhemicalMMFormat();
     }
 
     public boolean accepts(ChemObject object) {
