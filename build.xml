@@ -732,8 +732,8 @@
                 </copy>
                 <copy tofile="${sourcedist.dir}/doc/javadoc/source//MakeJavaFilesFilesDoclet.java"
                       file="doc/javadoc/source/MakeJavaFilesFilesDoclet.java"/>
-                <copy todir="${sourcedist.dir}/${src}/org/openscience/cdk/config/">
-                        <fileset dir="${src}/org/openscience/cdk/config/"
+                <copy todir="${sourcedist.dir}/${src}/org/openscience/cdk/config/data/">
+                        <fileset dir="${src}/org/openscience/cdk/config/data/"
                                  includes="*" />
                 </copy>
                 <copy
