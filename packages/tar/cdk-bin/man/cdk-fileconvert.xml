@@ -47,8 +47,9 @@
 	  <acronym>PDB</acronym> and
 	  <acronym>XYZ</acronym>.
 	  Supported output formats are
-	  <acronym>CML</acronym> and
-	  <acronym>MDL Molfile</acronym>.
+	  <acronym>CML</acronym>,
+	  <acronym>MDL Molfile</acronym> and
+          <acronym>SMILES</acronym>.
     </para>
   </refsect1>
 
