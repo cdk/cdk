@@ -85,6 +85,8 @@ public class Convention implements ConventionInterface {
     protected String BUILTIN;
     protected String elementTitle;
 
+    protected String currentChars;
+
     public Convention(CDOInterface cdo) {
         logger = new org.openscience.cdk.tools.LoggingTool(
                        this.getClass().getName());
@@ -190,8 +192,11 @@ public class Convention implements ConventionInterface {
 	case COORDINATE3 :
 	    for (int i = 0; i < atts.getLength(); i++) {
 		if (atts.getQName(i).equals("builtin")) {
+                    logger.debug("BUILTIN value set for coordinate3: " +atts.getValue(i));
 		    BUILTIN = atts.getValue(i);
-		}
+		} else {
+                    logger.warn("Unkown coordinate3 builtin value: " + atts.getValue(i));
+                }
 	    }
 	    break;
 	case STRING :
@@ -255,26 +260,44 @@ public class Convention implements ConventionInterface {
 	}
     }
 
-    public void endElement(String uri, String local, String raw) {
-	String name = raw;
-	logger.debug("EndElement");
+    public void endElement(String uri, String name, String raw) {
+	logger.debug("EndElement: " + name);
 	setCurrentElement(name);
-	BUILTIN = "";
 	switch (CurrentElement) {
-	case BOND :
-	    if (!stereoGiven) bondStereo.addElement("");
-	    break;
-	case MOLECULE :
-	    storeData();
-	    cdo.endObject("Frame");
-	    cdo.endObject("Molecule");
-	    break;
+	    case BOND :
+	        if (!stereoGiven) bondStereo.addElement("");
+	        break;
+	    case MOLECULE :
+	        storeData();
+	        cdo.endObject("Frame");
+	        cdo.endObject("Molecule");
+	        break;
+            case COORDINATE3:
+	        if (BUILTIN.equals("xyz3")) {
+		    logger.debug("New coord3 xyz3 found: " + currentChars);
+                    try {	  
+	                StringTokenizer st = new StringTokenizer(currentChars);
+		        x3.addElement(st.nextToken());
+		        y3.addElement(st.nextToken());
+		        z3.addElement(st.nextToken());
+                        logger.debug("coord3 x3.length: " + x3.size());
+                        logger.debug("coord3 y3.length: " + y3.size());
+                        logger.debug("coord3 z3.length: " + z3.size());
+		    } catch (Exception e) {
+		        logger.error("CMLParsing error while setting coordinate3!");
+		    }
+                } else {
+                    logger.warn("Unknown coordinate3 BUILTIN: " + BUILTIN);
+                }
+                break;
 	}
+        currentChars = "";
+        BUILTIN = "";
     }
     
     public void characterData (char ch[], int start, int length) {
-	// logger.debug("CD");
-	String s = toString(ch, start, length).trim();
+	logger.debug("CD");
+	String s = new String(ch, start, length);
 	switch (CurrentElement) {
 	case STRING :
 	    logger.debug("Builtin: " + BUILTIN);
@@ -312,7 +335,7 @@ public class Convention implements ConventionInterface {
 	    break;
 	case COORDINATE2 :
 	    if (BUILTIN.equals("xy2")) {
-		logger.debug("New coord found." + s);
+		logger.debug("New coord2 xy2 found." + s);
 		try {	  
 		    StringTokenizer st = new StringTokenizer(s);
 		    x2.addElement(st.nextToken());
@@ -323,17 +346,7 @@ public class Convention implements ConventionInterface {
 	    }
 	    break;
 	case COORDINATE3 :
-	    if (BUILTIN.equals("xyz3")) {
-		logger.debug("New coord found." + s);
-		try {	  
-		    StringTokenizer st = new StringTokenizer(s);
-		    x3.addElement(st.nextToken());
-		    y3.addElement(st.nextToken());
-		    z3.addElement(st.nextToken());
-		} catch (Exception e) {
-		    notify("CMLParsing error: " + e, SYSTEMID, 175,1);
-		}
-	    }
+            currentChars = currentChars + s;
 	    break;
 	case STRINGARRAY :
 	    if (BUILTIN.equals("id")) {
