@@ -1,54 +1,5 @@
 <chapter>
     <title>Extra Classes</title>
-    <section>
-      <title>File I/O Classes</title>
-      <para>
-        At this moment the following Input classes are available:
-        <itemizedlist>
-          <listitem><para>&MDLReader;</para></listitem>
-          <listitem><para>&CMLReader; <ulink url="biblio.html#WILLIGHAGEN2001"/></para></listitem>
-          <listitem><para>&XYZReader;</para></listitem>
-        </itemizedlist>
-        And many more.
-      </para>
-      <para>
-        To read a molecule, the folowing code may be used:
-        <example>
-          <title>Determining the file format using its name extension</title>
-          <programlisting>
-ChemObjectReader reader;
-String inFile = "filetoread.xyz";
-if (inFile.endsWith(".xyz")) {
-    reader = new XYZReader(new FileReader(inFile));
-} else if (inFile.endsWith(".cml")) {
-    reader = new CMLReader(new FileReader(inFile));
-} else if (inFile.endsWith(".pdb")) {
-    reader = new PDBReader(new FileReader(inFile));
-} else {
-    reader = new MDLReader(new FileInputStream(inFile));
-}
-ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
-          </programlisting>
-        </example>
-        It is easier, though, to use a ReaderFactory which will automatically
-        detect the file format. The above code then simplifies to:
-        <example>
-          <title>Getting a ChemObjectReader using the ReaderFactory</title>
-          <programlisting>
-String inFile = "filetoread.xyz";
-FileReader fileReader = new FileReader(inFile);
-ChemObjectReader reader = new ReaderFactory().createReader(fileReader);
-ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
-          </programlisting>
-        </example>
-      </para>
-      <para>And these output classes:
-        <itemizedlist>
-          <listitem><para>&MDLWriter;</para></listitem>
-          <listitem><para>&CMLWriter;</para></listitem>
-        </itemizedlist>
-      </para>
-    </section>
 
     <section> 
       <title>The Tools Classes</title> 

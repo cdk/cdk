@@ -17,6 +17,11 @@
 <!ENTITY io.XYZReader '<ulink url="api/org/openscience/cdk/io/XYZReader.html">io.XYZReader</ulink>'>
 <!ENTITY io.MDLWriter '<ulink url="api/org/openscience/cdk/io/MDLWriter.html">io.MDLWriter</ulink>'>
 <!ENTITY io.CMLWriter '<ulink url="api/org/openscience/cdk/io/CMLWriter.html">io.CMLWriter</ulink>'>
+<!ENTITY io.listener.ReaderListener '<ulink url="api/org/openscience/cdk/io/listener/ReaderListener.html">io.listener.ReaderListener</ulink>'>
+<!ENTITY io.listener.WriterListener '<ulink url="api/org/openscience/cdk/io/listener/WriterListener.html">io.listener.WriterListener</ulink>'>
+<!ENTITY io.listener.PropertiesListener '<ulink url="api/org/openscience/cdk/io/listener/PropertiesListener.html">io.listener.PropertiesListener</ulink>'>
+<!ENTITY io.listener.SwingGUIListener '<ulink url="api/org/openscience/cdk/io/listener/SwingGUIListener.html">io.listener.SwingGUIListener</ulink>'>
+<!ENTITY io.listener.TestGUIListener '<ulink url="api/org/openscience/cdk/io/listener/TextGUIListener.html">io.listener.TextGUIListener</ulink>'>
 
 <!-- Tools classes -->
 <!ENTITY tools.AtomTypeFactory '<ulink url="api/org/openscience/cdk/tools/AtomTypeFactory.html">tools.AtomTypeFactory</ulink>'>

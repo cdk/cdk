@@ -1,0 +1,84 @@
+<chapter>
+    <title>Extra Classes</title>
+    <section>
+      <title>File I/O Classes</title>
+      <para>
+        At this moment the following Input classes are available:
+        <itemizedlist>
+          <listitem><para>&io.MDLReader;</para></listitem>
+          <listitem><para>&io.CMLReader; <ulink url="biblio.html#WIL01"/></para></listitem>
+          <listitem><para>&io.XYZReader;</para></listitem>
+        </itemizedlist>
+        And many more.
+      </para>
+      <para>
+        To read a molecule, the folowing code may be used:
+        <example>
+          <title>Determining the file format using its name extension</title>
+          <programlisting>
+ChemObjectReader reader;
+String inFile = "filetoread.xyz";
+if (inFile.endsWith(".xyz")) {
+    reader = new XYZReader(new FileReader(inFile));
+} else if (inFile.endsWith(".cml")) {
+    reader = new CMLReader(new FileReader(inFile));
+} else if (inFile.endsWith(".pdb")) {
+    reader = new PDBReader(new FileReader(inFile));
+} else {
+    reader = new MDLReader(new FileInputStream(inFile));
+}
+ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+          </programlisting>
+        </example>
+        It is easier, though, to use a ReaderFactory which will automatically
+        detect the file format. The above code then simplifies to:
+        <example>
+          <title>Getting a ChemObjectReader using the ReaderFactory</title>
+          <programlisting>
+String inFile = "filetoread.xyz";
+FileReader fileReader = new FileReader(inFile);
+ChemObjectReader reader = new ReaderFactory().createReader(fileReader);
+ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+          </programlisting>
+        </example>
+      </para>
+      <para>And these output classes:
+        <itemizedlist>
+          <listitem><para>&io.MDLWriter;</para></listitem>
+          <listitem><para>&io.CMLWriter;</para></listitem>
+        </itemizedlist>
+      </para>
+    </section>
+
+    <section>
+      <title>Customizing IO</title>
+      <para>
+        CDK's IO can be cusomized making it possible to to only partially read
+        a file, or save information in a specific format. All possible
+        customizations have defaults, so that use of the IO classes do not
+        require one to do any costumization; it's optional.
+      </para>
+      <para>
+        The principle way to customize a IO class, is to use a
+        &io.listener.ReaderListener; or a &io.listener.WriterListener;
+        and register this with the IO class:
+        <example>
+          <title>Registering a ReaderListener with an IO class</title>
+          <programlisting>
+int questionLevel = 3; // all questions
+ReaderListener listener = new SwingGUIListener(myAWTComponent, 3);
+CMLReader reader = new CMLReader(new FileReader(file));
+reader.addReaderListener(listener);
+          </programlisting>
+        </example>
+      </para>
+      <para>
+        Besides the &io.listener.SwingGUIListener; there is also a
+        &io.listener.PropertiesListener; allowing to store customized values
+        for the IO class in a Java Properties class. And there is a
+        &io.listener.TextGUIListener; for use in command line utilities,
+        e.g. cdk-fileconvert.
+      </para>
+    </section>
+</chapter>
+
