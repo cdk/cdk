@@ -1,4 +1,4 @@
-website: intro.html thelibrary.html libraries.html related.html javancss-stats.html development.html guide.html guide-library-development.html guide-docs.html guide-packages.html guide-website-development.html whoiswho.html agenda.html changelog.html documentation.html reference.html keywordindex.html api.html core-api.html manpages.html javadoc-stats.html screenshots.html software.html maillinglists.html download.html biblio.html index.html 
+website: intro.html thelibrary.html libraries.html related.html javancss-stats.html development.html guide.html guide-library-development.html guide-docs.html guide-packages.html guide-website-development.html whoiswho.html agenda.html changelog.html rfc.html documentation.html reference.html keywordindex.html api.html core-api.html manpages.html javadoc-stats.html screenshots.html software.html maillinglists.html download.html biblio.html index.html 
 
 index.html: website.xml
 intro.html: intro.xml
@@ -15,6 +15,7 @@ guide-website-development.html: guide-website-development.xml
 whoiswho.html: whoiswho.xml
 agenda.html: agenda.xml
 changelog.html: changelog.xml
+rfc.html: rfc.xml
 documentation.html: documentation.xml
 reference.html: reference.xml
 keywordindex.html: keywordindex.xml
@@ -29,5 +30,5 @@ download.html: download.xml
 biblio.html: biblio.xml
 
 clean:
-	rm -f intro.html thelibrary.html libraries.html related.html javancss-stats.html development.html guide.html guide-library-development.html guide-docs.html guide-packages.html guide-website-development.html whoiswho.html agenda.html changelog.html documentation.html reference.html keywordindex.html api.html core-api.html manpages.html javadoc-stats.html screenshots.html software.html maillinglists.html download.html biblio.html index.html 
+	rm -f intro.html thelibrary.html libraries.html related.html javancss-stats.html development.html guide.html guide-library-development.html guide-docs.html guide-packages.html guide-website-development.html whoiswho.html agenda.html changelog.html rfc.html documentation.html reference.html keywordindex.html api.html core-api.html manpages.html javadoc-stats.html screenshots.html software.html maillinglists.html download.html biblio.html index.html 
 

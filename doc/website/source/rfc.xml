@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.0b1//EN" "dtd/website.dtd" [
+  <!ENTITY cdk-dbadmin SYSTEM "../../../packages/tar/cdk-bin/man/cdk-dbadmin.xml">
+  <!ENTITY cdk-fileconvert SYSTEM "../../../packages/tar/cdk-bin/man/cdk-fileconvert.xml">
+  <!ENTITY cdk-view SYSTEM "../../../packages/tar/cdk-bin/man/cdk-view.xml">
+]>
+<webpage id="request for comment">
+  <config param="last-change-by" value="$Author$"/>
+  <config param="rcsdate" value="$Date$"/>
+
+  <head>
+    <title>Request for Comments</title>
+    <titleabbrev>RFC</titleabbrev>
+    <summary>This page contains the list of RFCs posted to
+      the cdk-devel maillinglist.</summary>
+  </head>
+
+  <section>
+    <title>RFCs</title>
+    <para>
+      Request for Comments (RFC) are draft proposals to which other developers
+      can comment. After a while, RFCs are converted into standards which
+      will be preceded by a Call for Votes (CFV). During a period of time
+      developers can vote YES/NO on the RFC. If the majority votes in favor
+      of the RFC, it will be accepted.
+    </para>
+    <para>
+      <informaltable frame="none">
+        <tgroup cols="5">
+          <thead>
+            <row>
+              <entry>#</entry>
+              <entry>topic</entry>
+              <entry>posted</entry>
+              <entry>status</entry>
+              <entry>accepted</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry>1</entry>
+              <entry><ulink url="http://sourceforge.net/mailarchive/forum.php?thread_id=742807&amp;forum_id=2178">setting up an RFC system</ulink></entry>
+              <entry>22-05-2002</entry>
+              <entry>pending</entry>
+              <entry></entry>
+            </row>
+            <row>
+              <entry>2</entry>
+              <entry><ulink url="http://sourceforge.net/mailarchive/forum.php?thread_id=743974&amp;forum_id=2178">list of core classes</ulink></entry>
+              <entry>22-05-2002</entry>
+              <entry>pending</entry>
+              <entry></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </para>
+  </section>
+
+</webpage>
