@@ -157,9 +157,7 @@ public class CMLReader extends DefaultChemObjectReader {
             return cdo;
         }
         parser.setContentHandler(new CMLHandler((CDOInterface)cdo));
-        if (!parser.getClass().getName().equals("org.apache.xerces.parsers.SAXParser")) {
-            parser.setEntityResolver(new CMLResolver());
-        }
+        parser.setEntityResolver(new CMLResolver());
         parser.setErrorHandler(new CMLErrorHandler());
         try {
             if (input == null) {
