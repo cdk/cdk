@@ -330,7 +330,7 @@ public class SmilesGeneratorTest extends TestCase
 			System.err.println("SMILES 1: " + smiles1);
 		}
 		assertNotNull(smiles1);
-  	assertTrue(smiles1.equals("[H]O[C@]1(C([H])([H])C([H])([H])C([H])([H])C([H])([H])[C@]1(O[H])([H]))([H])"));
+    assertTrue(smiles1.equals("[H]O[C@]1(C([H])([H])C([H])([H])C([H])([H])C([H])([H])[C@]1(O[H])([H]))([H])"));
 		mol1 = (Molecule) new MFAnalyser(mol1).removeHydrogens();
 		try
 		{
@@ -357,7 +357,7 @@ public class SmilesGeneratorTest extends TestCase
 	 *
 	 *@exception  Exception  Description of the Exception
 	 */
-	public void testCisDecalin() throws Exception
+	public void testCisTransDecalin() throws Exception
 	{
     HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
 		SmilesGenerator sg = new SmilesGenerator();
@@ -442,11 +442,12 @@ public class SmilesGeneratorTest extends TestCase
 			System.err.println("SMILES 1: " + smiles1);
 		}
 		assertNotNull(smiles1);
-    assertTrue(smiles1.equals("[H]C1([H])(C([H])([H])C([H])([H])[C@]2(C([H])([H])C([H])([H])C([H])([H])C([H])([H])[C@]2(C1([H])([H]))([H]))([H]))"));
-    mol1 = (Molecule) new MFAnalyser(mol1).removeHydrogens();
+    assertTrue(smiles1.equals("[H]C1([H])(C([H])([H])C([H])([H])C\\2([H])(C([H])([H])C([H])([H])C([H])([H])C([H])([H])C\\2([H])(C1([H])([H]))))"));
+    mol1.getBondAt(6).setStereo(CDKConstants.STEREO_BOND_UP);
+    String smiles3=null;
 		try
 		{
-			smiles1 = sg.createSMILES(mol1);
+			smiles3 = sg.createSMILES(mol1, true, new boolean[mol1.getBondCount()]);
 		} catch (Exception exc)
 		{
 			System.out.println(exc);
@@ -455,12 +456,7 @@ public class SmilesGeneratorTest extends TestCase
 				fail();
 			}
 		}
-		if (standAlone)
-		{
-			System.err.println("SMILES 1: " + smiles1);
-		}
-		assertNotNull(smiles1);
-		assertTrue(smiles1.equals("C1CCC2CCCCC2(C1)"));
+    assertFalse(smiles1.equals(smiles3));
 	}
 
 
