@@ -28,17 +28,19 @@
     <target name="html">
         <mkdir dir="${javadoc.dir}" />
 
-        <javadoc packagenames="org.openscience.cdk.*"
-                 sourcepath="${src}" destdir="${javadoc.dir}"
-                 defaultexcludes="yes"
-                 excludepackagenames="org.openscience.cdk.test.*"
+        <javadoc destdir="${javadoc.dir}"
                  author="true" version="true" use="true"
                  public="true"
                  windowtitle="CDK API">
             <classpath refid="project.class.path" />
             <tag name="keyword" scope="all" description="Keywords:" />
             <tag name="created" scope="all" description="Created on:" />
-            <package name="org.openscience.cdk"/>
+            <tag name="jar"     scope="all" description="Requires the Library:" />
+            <packageset dir="${src}" defaultexcludes="yes">
+                <include name="org/openscience/cdk/**" />
+                <exclude name="org/openscience/cdk/test/**"/>
+                <exclude name="org/openscience/cdk/applications/**"/>
+            </packageset>
         </javadoc>
     </target>
 
