@@ -3,6 +3,9 @@ CHANGELOG $Date$
 
 Changes in CVS
 ------------------------------------
+
+20021012 Release
+------------------------------------
 New:
 * Added the long awaited UniversalIsomophismTester.
   This class provides methods for Isomophism-, Subgraph-
