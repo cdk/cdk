@@ -3,9 +3,9 @@
  * $Date$    
  * $Revision$
  * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CKD) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  * 
- * Contact: steinbeck@ice.mpg.de
+ * Contact: cdk-devel@lists.sourceforge.net
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -99,14 +99,14 @@ public class VicinitySamplerTest extends TestCase
 		   particluar carbon-only molecule until we have a proper 
 		   hydrogen count configurator
 		 */
-		int bondCount = 0;
+		double bondCount = 0;
 		Atom atom;
 		 for (int f = 0; f < mol.getAtomCount(); f++)
 		{
 			atom = mol.getAtomAt(f);
 			bondCount =  mol.getBondOrderSum(atom);
 			if (bondCount > 4) System.out.println("bondCount: " + bondCount);
-			atom.setHydrogenCount(4 - bondCount - (int)atom.getCharge());
+			atom.setHydrogenCount(4 - (int)bondCount - (int)atom.getCharge());
 		}
 	}
 

@@ -39,7 +39,8 @@ Fixes:
 
 API chages:
 * Implemented RFC #11
-* Removed ChemModel.getAtomContainer
+* Removed ChemModel.getAtomContainer (see ChemModelManipulator)
+* Returned bond order sum is now double (fixes #686451)
 
 20030217 Release
 ------------------------------------

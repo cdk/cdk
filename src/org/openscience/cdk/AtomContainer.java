@@ -654,14 +654,14 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 
 
 	/**
-	 *  Returns the sum of the bondorders for a given Atom.
+	 * Returns the sum of the bond orders for a given Atom.
 	 *
-	 *@param  atom  The atom
-	 *@return       The number of bondorders for this atom
+	 * @param  atom  The atom
+	 * @return       The number of bondorders for this atom
 	 */
-	public int getBondOrderSum(Atom atom)
+	public double getBondOrderSum(Atom atom)
 	{
-		int count = 0;
+		double count = 0;
 		for (int i = 0; i < getElectronContainerCount(); i++)
 		{
 			if (electronContainers[i] instanceof Bond &&
