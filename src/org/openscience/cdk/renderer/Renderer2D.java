@@ -30,6 +30,7 @@ package org.openscience.cdk.renderer;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import java.awt.event.*;
 import javax.vecmath.*;
 import java.util.*;
 import org.openscience.cdk.ringsearch.*;
@@ -54,7 +55,7 @@ import org.openscience.cdk.validate.ProblemMarker;
  * @created    2002-10-03
  * @keyword    viewer, 2D-viewer
  */
-public class Renderer2D   {
+public class Renderer2D implements MouseMotionListener   {
 
     private LoggingTool logger;
     boolean debug = false;
@@ -344,7 +345,7 @@ public class Renderer2D   {
         if (drawSymbol) {
             paintAtomSymbol(atom, atomBackColor, graphics, alignment, container.getAtomNumber(atom) + 1);
         }
-        if (r2dm.showTooltip && atom == r2dm.getHighlightedAtom() && r2dm.getToolTipText(r2dm.getHighlightedAtom()) != null) {
+        if (r2dm.getShowTooltip() && atom == r2dm.getHighlightedAtom() && r2dm.getToolTipText(r2dm.getHighlightedAtom()) != null) {
           paintToolTip(atom, graphics);
         }
     }
@@ -1140,5 +1141,29 @@ public class Renderer2D   {
       graphics.setColor(Color.BLACK);
       graphics.drawString(text, ((int) atom.getX2D()) + 2, ((int) atom.getY2D()) + atomSymbolH + 2);
     }
+  
+  
+    /**
+   *  The mouseMoved event (used for atom toolTipTexts).
+   *
+   * @param  e  The event.
+   */
+  public void mouseMoved(MouseEvent e) {
+    if (r2dm.getHighlightedAtom() != null) {
+      r2dm.setShowTooltip(true);
+    } else {
+      r2dm.setShowTooltip(false);
+    }
+    r2dm.setLastHighlightedAtom(r2dm.getHighlightedAtom());
+  }
+
+
+  /**
+   *  The mouseDragged event (not used currently).
+   *
+   * @param  e  The event.
+   */
+  public void mouseDragged(MouseEvent e) {
+  }
 }
 

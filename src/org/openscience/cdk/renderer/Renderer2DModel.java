@@ -30,7 +30,6 @@ package org.openscience.cdk.renderer;
 import org.openscience.cdk.renderer.color.CDK2DAtomColors;
 import org.openscience.cdk.tools.LoggingTool;
 import java.awt.*;
-import java.awt.event.*;
 import java.awt.Polygon;
 import org.openscience.cdk.*;
 import org.openscience.cdk.event.*;
@@ -39,7 +38,7 @@ import java.util.*;
 /**
  * Model for Renderer2D that contains settings for drawing objects.
  */
-public class Renderer2DModel implements java.io.Serializable, Cloneable, MouseMotionListener
+public class Renderer2DModel implements java.io.Serializable, Cloneable
 {
     
     // private LoggingTool logger = new LoggingTool("org.openscience.cdk.render.Renderer2DModel");
@@ -115,9 +114,9 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable, MouseMo
 
     private Dimension backgroundDimension = new Dimension(500,1200);
     
-    public boolean showTooltip = false;
+    private boolean showTooltip = false;
     
-    public HashMap toolTipTextMap = new HashMap();
+    private HashMap toolTipTextMap = new HashMap();
     
     private Atom lastHighlightedAtom = null;
     
@@ -757,26 +756,23 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable, MouseMo
   }
   
   
-    /**
-   *  The mouseMoved event (used for atom toolTipTexts).
-   *
-   * @param  e  The event.
-   */
-  public void mouseMoved(MouseEvent e) {
-    if (highlightedAtom != null) {
-      showTooltip = true;
-    } else {
-      showTooltip = false;
-    }
-    lastHighlightedAtom = highlightedAtom;
+  public void setShowTooltip(boolean b){
+    showTooltip=b;
+  }
+  
+  
+  public void setLastHighlightedAtom(Atom a){
+    lastHighlightedAtom=a;
+  }
+  
+  
+  public boolean getShowTooltip(){
+    return(showTooltip);
+  }
+  
+  
+  public void setToolTipTextMap(HashMap map){
+    toolTipTextMap=map;
   }
 
-
-  /**
-   *  The mouseDragged event (not used currently).
-   *
-   * @param  e  The event.
-   */
-  public void mouseDragged(MouseEvent e) {
-  }
 }
