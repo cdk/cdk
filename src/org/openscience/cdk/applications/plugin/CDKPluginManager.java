@@ -210,7 +210,6 @@ public class CDKPluginManager {
      * Loads the plugins from a certain directory.
      */
     public void loadPlugins(String pluginDirName) {
-        cdkPlugins = new Hashtable();
         File pluginDir = new File(pluginDirName);
         logger.info("User dict dir: " + pluginDir);
         logger.debug("       exists: " + pluginDir.exists());
