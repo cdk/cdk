@@ -90,6 +90,11 @@ public class ChemObjectTest extends TestCase {
         assertEquals(id, chemObject.getID());
     }
     
+    public void testGetID() {
+        ChemObject chemObject = new ChemObject();
+        assertNull(chemObject.getID());
+    }
+    
     public void testClone() {
         ChemObject chemObject = new ChemObject();
         Object clone = chemObject.clone();

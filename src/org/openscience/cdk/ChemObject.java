@@ -60,11 +60,15 @@ public class ChemObject implements java.io.Serializable, Cloneable {
 	 */
     private boolean[] flags = new boolean[CDKConstants.MAX_FLAG_INDEX + 1];
 
-	/** Array of multipurpose vectors. Handle like described for the
-	  * flags above.
-	  */
+	/** 
+     * Array of multipurpose vectors. Handle like described for the
+	 * flags above.
+	 */
     private Vector[] pointers;
 
+    /**
+     * The ID is null by default.
+     */
     private String id; 
     
     /**
@@ -75,7 +79,7 @@ public class ChemObject implements java.io.Serializable, Cloneable {
 		chemObjects = null;
         properties = null;
         pointers = null;
-        id = "";
+        id = null;
 	}
 	
     /*

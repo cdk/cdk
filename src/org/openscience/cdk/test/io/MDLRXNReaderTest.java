@@ -97,7 +97,8 @@ public class MDLRXNReaderTest extends TestCase {
 			}
 			
         } catch (Exception e) {
-            fail(e.toString());
+            e.printStackTrace();
+            fail(e.getMessage());
         }
     }
 
@@ -116,7 +117,8 @@ public class MDLRXNReaderTest extends TestCase {
 			assertEquals(2, reaction2.getProductCount());
 			
         } catch (Exception e) {
-            fail(e.toString());
+            e.printStackTrace();
+            fail(e.getMessage());
         }
     }
 }

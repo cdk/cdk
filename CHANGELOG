@@ -42,6 +42,7 @@ Fixes:
   to CMLCore convention when CML convention found
 * ValencyChecker now throws a CDKException when the checked atom is not known
   (closes JCP #903412)
+* ChemObject.getID() was "" by default; corrected to null
 
 API changes:
 * Changed SetOfAtomContainers.getAtomContainerMultiplier() to .getMultiplier()
