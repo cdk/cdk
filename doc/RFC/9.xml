@@ -1,0 +1,53 @@
+<refentry id="cdk-rfc-9">
+
+  <refentryinfo>
+    <revhistory>
+      <revision>
+        <revnumber>1</revnumber>
+        <date>2002-11-26</date>
+        <authorinitials>elw</authorinitials>
+        <revremark>
+          See <ulink url="">email archive</ulink>.
+        </revremark>
+      </revision>
+    </revhistory>
+  </refentryinfo>
+
+
+  <refnamediv>
+    <refname>RFC CDK #9</refname>
+  </refnamediv>
+
+  <refsect1>
+    <title>Proposal</title>
+    <para>The .toString() methods of the core classes give information about the content 
+of the class. My proposal is that the resulting String of these methods is a 
+String without \n and \r chars (thus a one-liner) that gives an overview of 
+the class. Being a one-liner, the output can be used in Log4J debugging 
+output, without having the problem that lines in the output become 
+multilined.
+</para>
+    <para>Note that I assume that the toString() method is not to be used for formating 
+the atom's properties, but just for quick developers access to its contents.</para>
+  </refsect1>
+
+  <refsect1>
+    <title>Reason</title>
+    <para>At this moment the Log4J output is complicated by multilined debug lines like:
+<programlisting>
+2002-11-26 15:11:58,883 [main] DEBUG org.openscience.cdk.applications.Viewer - 
+0. Atom Hg
+Hydrogen count: 0
+Stereo Parity: 0
+2D coordinates: (0.0021, -0.0041)
+3D coordinates: (0.0021, -0.0041, 0.0020)
+Partial charge: 0.0
+Formal charge: 0
+</programlisting>
+    A simple "grep -v applications.Viewer" now no longer removes all output from 
+the applications.Viewer class. If the atom.toString() output would be 
+one-lined, filtering could be done much easier.
+</para>
+  </refsect1>
+
+</refentry>

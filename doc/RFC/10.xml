@@ -1,0 +1,36 @@
+<refentry id="cdk-rfc-10">
+
+  <refentryinfo>
+    <revhistory>
+      <revision>
+        <revnumber>1</revnumber>
+        <date>2002-11-28</date>
+        <authorinitials>elw</authorinitials>
+        <revremark>
+          See <ulink url="">email archive</ulink>.
+        </revremark>
+      </revision>
+    </revhistory>
+  </refentryinfo>
+
+
+  <refnamediv>
+    <refname>RFC CDK #10</refname>
+  </refnamediv>
+
+  <refsect1>
+    <title>Proposal</title>
+    <para>
+The addition of two fields with get and set methods for storage of the 
+covalent and vanderwaals radii for the atom type. 
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>Reason</title>
+    <para>
+This is needed to move port Jmol to CDK.
+    </para>
+  </refsect1>
+
+</refentry>

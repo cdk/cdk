@@ -66,22 +66,22 @@
               <entry>5</entry>
               <entry><ulink url="rfc5.html">The Lone Pair Concept</ulink></entry>
               <entry>2002-10-03</entry>
-              <entry>being discussed</entry>
-              <entry></entry>
+              <entry>accepted</entry>
+              <entry>2002-11-22</entry>
             </row>
             <row>
               <entry>6</entry>
               <entry><ulink url="rfc6.html">A Formal Charge field for Atom</ulink></entry>
               <entry>2002-10-03</entry>
-              <entry>being discussed</entry>
-              <entry></entry>
+              <entry>accepted</entry>
+              <entry>2002-11-22</entry>
             </row>
             <row>
               <entry>7</entry>
               <entry><ulink url="rfc7.html">Coding Aromaticity</ulink></entry>
               <entry>2002-10-07</entry>
-              <entry>being discussed</entry>
-              <entry></entry>
+              <entry>accepted</entry>
+              <entry>2002-11-22</entry>
             </row>
             <row>
               <entry>8</entry>
@@ -90,7 +90,21 @@
               <entry>being discussed</entry>
               <entry></entry>
             </row>
-	 </tbody>
+            <row>
+              <entry>9</entry>
+              <entry><ulink url="rfc9.html">Online toString() methods for core classes</ulink></entry>
+              <entry>2002-11-26</entry>
+              <entry>being discussed</entry>
+              <entry></entry>
+            </row>
+            <row>
+              <entry>10</entry>
+              <entry><ulink url="rfc10.html">Fields for covalent and vanderwaals radii in AtomType</ulink></entry>
+              <entry>2002-11-28</entry>
+              <entry>being discussed</entry>
+              <entry></entry>
+            </row>
+         </tbody>
         </tgroup>
       </informaltable>
     </para>
