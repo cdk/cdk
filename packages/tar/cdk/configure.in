@@ -224,7 +224,10 @@ AC_OUTPUT([
    bin/cdk-dbadmin
    bin/cdk-download
    bin/cdk-fileconvert
+   bin/cdk-fingerprinter
    bin/cdk-guessformat
+   bin/cdk-iupacname
+   bin/cdk-substructure
    bin/cdk-test
    bin/cdk-validate
    bin/cdk-view

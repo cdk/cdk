@@ -7,3 +7,6 @@ cdk-download
 cdk-test
 cdk-guessformat
 cdk-validate
+cdk-iupacname
+cdk-fingerprinter
+cdk-substructure

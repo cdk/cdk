@@ -6,7 +6,8 @@ SUBDIRS=jar doc bin man
 JAVA3DDIR=@JAVA3DDIR@
 
 JARLIBDIR=@CDKJARDIR@
-JARLIBS=cdk-core.jar cdk-standard.jar cdk-io.jar cdk-extra.jar cdk-render.jar cdk-test.jar cdk-apps.jar 
+JARLIBS=cdk-core.jar cdk-standard.jar cdk-io.jar cdk-extra.jar cdk-render.jar \
+        cdk-test.jar cdk-apps.jar cdk-experimental.jar
 
 # set the Java compiler
 if FREECOMPILER
@@ -80,3 +81,8 @@ dist/jar/cdk-io.jar:
 cdk-io.jar: dist/jar/cdk-io.jar
 	cp dist/jar/cdk-io.jar .
 
+dist/jar/cdk-experimental.jar:
+	ant ${JAVAC} dist-experimental
+
+cdk-experimental.jar: dist/jar/cdk-experimental.jar
+	cp dist/jar/cdk-experimental.jar .
