@@ -571,21 +571,21 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 						// add a new atom to the current atom in some random
 						// direction
 						AtomContainer atomCon = ChemModelManipulator.getRelevantAtomContainer(chemModel, atomInRange);
-						Point2d center2D = atomCon.get2DCenter();
 						newAtom2 = new Atom(c2dm.getDrawElement(), atomInRange.getPoint2D());
 
 						// now create 2D coords for new atom
 						double bondLength = r2dm.getBondLength();
 						Atom[] connectedAtoms = atomCon.getConnectedAtoms(atomInRange);
 						AtomContainer placedAtoms = new AtomContainer();
-						for (int i = 0; i < connectedAtoms.length; i++)
-						{
+                        placedAtoms.addAtom(atomInRange);
+						for (int i = 0; i < connectedAtoms.length; i++) {
 							placedAtoms.addAtom(connectedAtoms[i]);
 						}
 						AtomContainer unplacedAtoms = new AtomContainer();
 						unplacedAtoms.addAtom(newAtom2);
 						AtomPlacer atomPlacer = new AtomPlacer();
 						atomPlacer.setMolecule(new Molecule(atomCon));
+						Point2d center2D = placedAtoms.get2DCenter();
 						atomPlacer.distributePartners(atomInRange, placedAtoms, center2D,
 								unplacedAtoms, bondLength);
 
