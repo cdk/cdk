@@ -396,7 +396,9 @@ public class MMFF94BasedParameterSetReader {
 		//System.out.println("------ Read MMFF94 ParameterSets ------");
 
 		if (ins == null) {
-			ins = getClass().getResourceAsStream(configFile);
+            ClassLoader loader = this.getClass().getClassLoader();
+            System.out.println("loader.getClassName:" + loader.getClass().getName());
+			ins = loader.getResourceAsStream(configFile);
 		}
 		if (ins == null) {
 			throw new IOException("There was a problem getting the default stream: " + configFile);
@@ -407,7 +409,7 @@ public class MMFF94BasedParameterSetReader {
 		int[] a = {0, 0, 0, 0, 0, 0, 0, 0};
 		
 		if (insvdW == null) {
-			insvdW = getClass().getClassLoader().getResourceAsStream(configFilevdW);
+			insvdW = this.getClass().getClassLoader().getResourceAsStream(configFilevdW);
 		}
 		if (insvdW == null) {
 			throw new IOException("There was a problem getting the default stream: " + configFilevdW);
