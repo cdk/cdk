@@ -57,6 +57,9 @@
                         <include name="xmldb.jar" />
                         <include name="stmml.jar" />
                         <include name="castor-0.9.5-xml.jar" />
+                        <include name="cmlAll.jar" />
+                        <include name="base.jar" />
+                        <include name="pmrlib.jar" />
                 </fileset>
                 <fileset dir="${pathtojava3d}">
                         <include name="*.jar" />
