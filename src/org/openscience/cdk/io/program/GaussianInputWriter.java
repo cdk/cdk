@@ -139,7 +139,7 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
             // export the 3D coordinates
             Point3d p3 = a.getPoint3D();
             if (p3 != null) {
-                st = st + " 0 " + new Double(p3.x).toString() + " "
+                st = st + new Double(p3.x).toString() + " "
                         + new Double(p3.y).toString() + " "
                         + new Double(p3.z).toString();
             }
