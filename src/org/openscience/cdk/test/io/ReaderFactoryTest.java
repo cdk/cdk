@@ -5,7 +5,7 @@
  *
  * Copyright (C) 2003  The Chemistry Development Kit (CDK) project
  * 
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -53,117 +53,93 @@ public class ReaderFactoryTest extends TestCase {
         return new TestSuite(ReaderFactoryTest.class);
     }
 
+    public void testGaussian94() {
+        expectFormat("data/gaussian/4-cyanophenylnitrene-Benzazirine-TS.g94.out", 
+                     "org.openscience.cdk.io.Gaussian94Reader");
+    }
+    public void testGaussian98() {
+        expectFormat("data/gaussian/g98.out", 
+                     "org.openscience.cdk.io.Gaussian98Reader");
+    }
+    public void testGaussian92() {
+        expectFormat("data/gaussian/phenylnitrene.g92.out", 
+                     "org.openscience.cdk.io.Gaussian92Reader");
+    }
+
+    public void testGhemical() {
+        expectFormat("data/ethene.mm1gp", "org.openscience.cdk.io.GhemicalMMReader");
+    }
+
+    public void testJaguar() {
+        expectFormat("data/ch4-opt.out", "org.openscience.cdk.io.JaguarReader");
+    }
+
+    public void testVASP() {
+        expectFormat("data/LiMoS2_optimisation_ISIF3.vasp", 
+                     "org.openscience.cdk.io.VASPReader");
+    }
+
+    public void testAces2() {
+        expectFormat("data/ch3oh_ace.out", "org.openscience.cdk.io.Aces2Reader");
+    }
+
+    public void testADF() {
+        expectFormat("data/ammonia.adf.out", "org.openscience.cdk.io.ADFReader");
+    }
+
+    public void testGamess() {
+        expectFormat("data/ch3oh_gam.out", "org.openscience.cdk.io.GamessReader");
+    }
+
+    public void testABINIT() {
+        expectFormat("data/t54.in", "org.openscience.cdk.io.ABINITReader");
+    }
+
     public void testCML() {
-        String filename = "data/cmltest/estron.cml";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(ins));
-            ChemObjectReader reader = factory.createReader(br);
-            if (reader instanceof CMLReader) {
-                // ok
-            } else {
-                fail("Wrong file format detected for " + filename + 
-                     ". Expected CMLReader, but found: " +
-                     reader.getClass().getName());
-            }
-            br.close();
-        } catch (Exception e) {
-            fail(e.toString());
-        }
+        expectFormat("data/cmltest/estron.cml", "org.openscience.cdk.io.CMLReader");
     }
 
     public void testXYZ() {
-        String filename = "data/bf3.xyz";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(ins));
-            ChemObjectReader reader = factory.createReader(br);
-            if (reader instanceof XYZReader) {
-                // ok
-            } else {
-                fail("Wrong file format detected for " + filename + 
-                     ". Expected XYZReader, but found: " +
-                     reader.getClass().getName());
-            }
-            br.close();
-        } catch (Exception e) {
-            fail(e.toString());
-        }
+        expectFormat("data/bf3.xyz", "org.openscience.cdk.io.XYZReader");
     }
 
     public void testShelX() {
-        String filename = "data/frame_1.res";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(ins));
-            ChemObjectReader reader = factory.createReader(br);
-            if (reader instanceof ShelXReader) {
-                // ok
-            } else {
-                fail("Wrong file format detected for " + filename + 
-                     ". Expected ShelXReader, but found: " +
-                     reader.getClass().getName());
-            }
-            br.close();
-        } catch (Exception e) {
-            fail(e.toString());
-        }
+        expectFormat("data/frame_1.res", "org.openscience.cdk.io.ShelXReader");
     }
     
     public void testMDLMol() {
-        String filename = "data/methylbenzol.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(ins));
-            ChemObjectReader reader = factory.createReader(br);
-            if (reader instanceof MDLReader) {
-                // ok
-            } else {
-                fail("Wrong file format detected for " + filename + 
-                     ". Expected MDLReader, but found: " +
-                     reader.getClass().getName());
-            }
-            br.close();
-        } catch (Exception e) {
-            fail(e.toString());
-        }
+        expectFormat("data/mdl/methylbenzol.mol", "org.openscience.cdk.io.MDLReader");
     }
 
     public void testPDB() {
-        String filename = "data/coffeine.pdb";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(ins));
-            ChemObjectReader reader = factory.createReader(br);
-            if (reader instanceof PDBReader) {
-                // ok
-            } else {
-                fail("Wrong file format detected for " + filename + 
-                     ". Expected PDBReader, but found: " +
-                     reader.getClass().getName());
-            }
-            br.close();
-        } catch (Exception e) {
-            fail(e.toString());
-        }
+        expectFormat("data/coffeine.pdb", "org.openscience.cdk.io.PDBReader");
     }
-
+    
     public void testSMILES() {
-        String filename = "data/smiles.txt";
+        expectFormat("data/smiles.txt", "org.openscience.cdk.io.SMILESReader");
+    }
+    
+    private void expectFormat(String filename, String expectedFormat) {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        if (ins == null) {
+            fail("Cannot find file: " + filename);
+        }
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(ins));
-            ChemObjectReader reader = factory.createReader(br);
-            if (reader instanceof SMILESReader) {
+            String format = factory.guessFormat(br);
+            if (format == null) {
+                fail("Format could not be determined");
+            }
+            if (format.equals(expectedFormat)) {
                 // ok
             } else {
                 fail("Wrong file format detected for " + filename + 
-                     ". Expected SMILESReader, but found: " +
-                     reader.getClass().getName());
+                     ". Expected " + expectedFormat + ", but found: " + format);
             }
             br.close();
-        } catch (Exception e) {
-            fail(e.toString());
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            fail(exception.toString());
         }
     }
 }
