@@ -18,9 +18,9 @@ CHECK_XML_RULE = for f in $^; \
   rm -f $$f.dbx; \
  done
 
-docbooks = cdk-fileconvert.xml cdk-dbadmin.xml cdk-view.xml
+docbooks = cdk-fileconvert.xml cdk-dbadmin.xml cdk-view.xml cdk-download.xml
 
-man_MANS = cdk-fileconvert.1 cdk-dbadmin.1 cdk-view.1
+man_MANS = cdk-fileconvert.1 cdk-dbadmin.1 cdk-view.1 cdk-download.1
 
 CLEANFILES = ${man_MANS}
 
@@ -33,6 +33,9 @@ cdk-dbadmin.1: cdk-dbadmin.xml
 	$(XML2MAN_RULE)
 
 cdk-view.1: cdk-view.xml
+	$(XML2MAN_RULE)
+
+cdk-download.1: cdk-download.xml
 	$(XML2MAN_RULE)
 
 check-xml: $(docbooks)

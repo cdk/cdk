@@ -3,3 +3,4 @@ Makefile.in
 cdk-fileconvert
 cdk-dbadmin
 cdk-view
+cdk-download

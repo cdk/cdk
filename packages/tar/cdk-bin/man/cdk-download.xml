@@ -1,20 +1,19 @@
-<refentry id="cdk-fileconvert">
+<refentry id="cdk-download">
 
   <refmeta>
-    <refentrytitle>cdk-fileconvert</refentrytitle>
+    <refentrytitle>cdk-download</refentrytitle>
     <manvolnum>1</manvolnum>
   </refmeta>
 
   <refnamediv>
-    <refname>cdk-fileconvert</refname>
-    <refpurpose>converts one file format to another</refpurpose>
+    <refname>cdk-download</refname>
+    <refpurpose>download chemical information from the internet</refpurpose>
   </refnamediv>
 
   <refsynopsisdiv>
     <cmdsynopsis>
-      <command>cdk-fileconvert</command>
-      <arg>-i [format]</arg>
-      <arg>-o [format]</arg>
+      <command>cdk-download</command>
+      <arg>CAS NUMBER</arg>
     </cmdsynopsis>
   </refsynopsisdiv>
 
@@ -22,15 +21,9 @@
     <title>OPTIONS</title>
     <variablelist>
       <varlistentry>
-        <term>-i</term>
+        <term>CAS NUMBER</term>
         <listitem>
-          <para>input format</para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>-o</term>
-        <listitem>
-          <para>output format</para>
+          <para>CAS number of the structure you want to download</para>
         </listitem>
       </varlistentry>
     </variablelist>
@@ -39,17 +32,8 @@
   <refsect1>
     <title>DESCRIPTION</title>
     <para>
-      <command>cdk-fileconvert</command> reads a input file and converts
-	  it to a new file with an other format.
-	  Supported input formats are
-	  <acronym>CML</acronym>,
-	  <acronym>MDL Molfile</acronym>,
-	  <acronym>PDB</acronym> and
-	  <acronym>XYZ</acronym>.
-	  Supported output formats are
-	  <acronym>CML</acronym>,
-	  <acronym>MDL Molfile</acronym> and
-          <acronym>SMILES</acronym>.
+      <command>cdk-download</command> retrieves the 2D coordiante file
+      of the requested compound.
     </para>
   </refsect1>
 
@@ -63,7 +47,7 @@
   <refsect1>
     <title>COPYRIGHT</title>
     <para>
-      Copyright (C) 2001-2002 The CDK Project
+      Copyright (C) 2002 The CDK Project
     </para>
     <para>
 This program is free software; you can redistribute it and/or modify

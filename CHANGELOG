@@ -7,6 +7,7 @@ Changes in CVS
 * Merged IsotopeFactory and ElementFactory
 * Made IsotopeFactory a singleton class
 * Moved more test classes to subpackages of cdk.test
+* Added cdk-download program (fixes wishlist #595031)
 
 20020805 Release
 ------------------------------------

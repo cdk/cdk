@@ -271,6 +271,7 @@ AC_OUTPUT([
    Makefile
    bin/Makefile
    bin/cdk-dbadmin
+   bin/cdk-download
    bin/cdk-fileconvert
    bin/cdk-view
    jar/Makefile
