@@ -118,15 +118,29 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
     
     private HashMap toolTipTextMap = new HashMap();
     
-    public Dimension getZoomedBackgroundDimension() {
+    /**
+     * Returns the active background dimensions, thus applying the zoom
+     * factor.
+     *
+     * @see #getUnzoomedBackgroundDimension
+     */
+    public Dimension getBackgroundDimension() {
         return new Dimension((int)((double)backgroundDimension.getWidth() * zoomFactor),
                              (int)((double)backgroundDimension.getHeight() * zoomFactor));
     }
     
-    public Dimension getBackgroundDimension() {
-        return this.backgroundDimension;
+    /**
+     * Returns the unzoomed background dimensions.
+     *
+     * @see #getBackgroundDimension
+     */
+    public Dimension getUnzoomedBackgroundDimension() {
+        return backgroundDimension;
     }
     
+    /**
+     * Sets the background dimensions in an unzoomed state.
+     */
     public void setBackgroundDimension(Dimension dim) {
         this.backgroundDimension = dim;
     }
