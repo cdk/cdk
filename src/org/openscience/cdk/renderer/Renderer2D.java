@@ -718,6 +718,11 @@ public class Renderer2D implements MouseMotionListener   {
             logger.warn("Cannot draw atom without 2D coordinate");
             return;
         }
+        String atomSymbol = atom.getLabel();
+        if (atomSymbol == null) {
+            logger.warn("Cannot draw null symbol: taking symbol as default.");
+            atomSymbol = atom.getSymbol();
+        }
 
         // The calculation fonts
         Font normalFont = graphics.getFont();
@@ -727,7 +732,6 @@ public class Renderer2D implements MouseMotionListener   {
         Font normalScreenFont = normalFont.deriveFont(normalScreenFontSize);
 
         // calculate SYMBOL width, height
-        String atomSymbol = atom.getLabel();
         graphics.setFont(normalFont);
         FontMetrics fm = graphics.getFontMetrics();
         int atomSymbolW = (new Integer(fm.stringWidth(atomSymbol))).intValue();
