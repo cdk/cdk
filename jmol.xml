@@ -25,6 +25,11 @@
   <target name="compile">
     <ant antfile="build.xml" target="clean"/>
     <ant antfile="build.xml" target="init"/>
+
+    <patch patchfile="${src}/patches/org.openscience.cdk.toold.LoggingTool.java.MakeUsableInJmolApplet"
+           originalfile="${build.src}/org/openscience/cdk/tools/LoggingTool.java"
+           dir="${build.src}/org/openscience/cdk/tools"/>
+
     <!-- do them one by one, compile-extra, compile-io requires 1.4 -->
     <javac srcdir="${build.src}" destdir="${build}" optimize="off" 
            debug="on" deprecation="off" target="1.1"
