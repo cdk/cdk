@@ -14,7 +14,8 @@
         <fileset dir="../../jar">
             <include name="log4j-core.jar"/>
             <include name="log4j.jar"/>
-            <include name="xerces-2.5.0.jar"/>
+            <include name="xerces-2.6.2.jar"/>
+            <include name="xmlApis-2.6.2.jar"/>
         </fileset>
     </path>
 
