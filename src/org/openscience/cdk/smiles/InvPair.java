@@ -1,10 +1,11 @@
-/* InvPair.java
+/*  $RCSfile$
+ *  $Author$
+ *  $Date$
+ *  $Revision$
  *
- * $ author: 	Oliver Horlacher		$
- * $ contact: 	oliver.horlacher@therastrat.com 	$
- * $ date: 		Feb 26, 2002			$
+ *  Copyright (C) 2002-2003  The Chemistry Development Kit (CDK) Project
  *
- * Copyright (C) 2001-2002
+ *  Contact: cdk-devel@lists.sourceforge.net
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -59,8 +60,9 @@ public class InvPair {
   public long getLast() {
     return last;
   }
-  /**
-   * @todo make the following robust!
+  
+  /*
+   * Todo make the following robust!
    */
   public void setCurr(long newCurr) {
     curr = newCurr;

@@ -1,10 +1,11 @@
-/* Primes.java
+/*  $RCSfile$
+ *  $Author$
+ *  $Date$
+ *  $Revision$
  *
- * $ author: 	Oliver Horlacher		$
- * $ contact: 	oliver.horlacher@therastrat.com 	$
- * $ date: 		Feb 26, 2002			$
+ *  Copyright (C) 2002-2003  The Chemistry Development Kit (CDK) Project
  *
- * Copyright (C) 2001-2002
+ *  Contact: cdk-devel@lists.sourceforge.net
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -26,6 +27,12 @@
  *  */
 package org.openscience.cdk.smiles;
 
+/**
+ * @author  Oliver Horlacher <oliver.horlacher@therastrat.com>
+ * @created 2002-02-26
+ *
+ * @keyword prime numbers
+ */
 public class Primes {
 
   private static final int[] primes = { 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73,
@@ -121,6 +128,11 @@ public class Primes {
 9791, 9803, 9811, 9817, 9829, 9833, 9839, 9851, 9857, 9859, 9871, 9883, 9887,
 9901, 9907, 9923, 9929, 9931, 9941, 9949, 9967, 9973};
 
+  /**
+   * Returns the i-th prime number in the sequence of
+   * all prime numbers below 10000. The first in the sequence
+   * (n=0) is the prime number 2.
+   */
   public static int getPrimeAt(int n){
     if(n < 0 || n > primes.length -1)
       System.out.println("out of range " + n);

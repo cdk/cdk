@@ -3,9 +3,9 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2002-2003  The Chemistry Development Kit (CDK) project
  *
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -46,7 +46,7 @@ public class CrystalGeometryTools {
      * @param b     the b axis vector of the unit cell in cartesian coordinates
      * @param c     the c axis vector of the unit cell in cartesian coordinates
      * @param frac  a fractional coordinate to convert
-     * @returns     an array of length 3 with the cartesian coordinates of the
+     * @return     an array of length 3 with the cartesian coordinates of the
      *              point defined by frac
      *
      * @keyword     cartesian coordinates
@@ -77,7 +77,7 @@ public class CrystalGeometryTools {
      * @param alpha     angle between b and c axes
      * @param beta      angle between a and c axes
      * @param gamma     angle between a and b axes
-     * @returns         a 3x3 matrix with the three cartesian vectors representing
+     * @return         a 3x3 matrix with the three cartesian vectors representing
      *                  the unit cell axes. The a axis is the first row.
      *
      * @keyword  notional coordinates

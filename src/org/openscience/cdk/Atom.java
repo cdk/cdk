@@ -53,8 +53,8 @@ import javax.vecmath.*;
  * @created    October 2, 2000
  * @keyword    atom
  *
- * @see  test.AtomTest
- * @see  tools.IsotopeFactory.configure()
+ * @see  org.openscience.cdk.test.AtomTest
+ * @see  org.openscience.cdk.tools.IsotopeFactory#getInstance()
  */
 public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
         /* Let's keep this exact specification

@@ -40,7 +40,7 @@ import org.openscience.cdk.exception.*;
  * SetOfMolecules, Crystal and SetOfReactions fields and remove
  * it with the removeAtomAndConnectedElectronContainers(Atom) method.
  *
- * @see org.openscience.cdk.AtomContainer.removeAtomAndConnectedElectronContainers(Atom)
+ * @see org.openscience.cdk.AtomContainer#removeAtomAndConnectedElectronContainers(Atom)
  */
 public class ChemModelManipulator {
     

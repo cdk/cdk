@@ -28,12 +28,13 @@
  */
 package org.openscience.cdk.io.cml.cdopi;
 
+/**
+ * @author Egon Willighagen <egonw@sci.kun.nl>
+ */
 public interface CDOInterface {
 
   /**
    * Called just before XML parsing is started.
-   *
-   * @author Egon Willighagen <egonw@sci.kun.nl>
    */
   public void startDocument();
 

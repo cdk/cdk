@@ -1,9 +1,8 @@
 /* $RCSfile$
- * $Author$    
- * $Date$    
+ * $Author$
+ * $Date$
  * $Revision$
  * 
- * Copyright (C) 2002-2003  The Jmol Project
  * Copyright (C) 2003  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
@@ -37,6 +36,9 @@ import javax.vecmath.Vector3d;
 
 /**
  * A set of static utility classes for geometric calculations on Atoms.
+ *
+ * @author Peter Murray-Rust
+ * @created 2003-06-14
  */
 public class AtomTools {
     
@@ -44,40 +46,44 @@ public class AtomTools {
         2.0 * Math.acos(1.0 / Math.sqrt(3.0));
 
 
-    /** generate coordinates for all atoms which are singly bonded and have
-    * no coordinates. This is useful when hydrogens are present but have
-    * no coords. It knows about C, O, N, S only and will give tetrahedral or 
-    * trigonal geometry elsewhere. Bond lengths are computed from covalent radii
-    * if available. Angles are tetrahedral or trigonal
-    *
-	* @param atomContainer the set of atoms involved
-    */
-    public static void add3DCoordinates1(
-        AtomContainer atomContainer) {
-// atoms without coordinates            
+    /** 
+     * Generate coordinates for all atoms which are singly bonded and have
+     * no coordinates. This is useful when hydrogens are present but have
+     * no coords. It knows about C, O, N, S only and will give tetrahedral or 
+     * trigonal geometry elsewhere. Bond lengths are computed from covalent radii
+     * if available. Angles are tetrahedral or trigonal
+     *
+     * @param atomContainer the set of atoms involved
+     *
+     * @keyword coordinate calculation
+     * @keyword 3D model
+     */
+    public static void add3DCoordinates1(AtomContainer atomContainer) {
+            // atoms without coordinates
         AtomContainer noCoords = new AtomContainer();
-// get vector of possible referenceAtoms?            
+        // get vector of possible referenceAtoms?
         AtomContainer refAtoms = new AtomContainer();
         for (int i = 0; i < atomContainer.getAtomCount(); i++) {
             Atom atom = atomContainer.getAtomAt(i);
-// is this atom without 3D coords, and has only one ligand?
+            // is this atom without 3D coords, and has only one ligand?
             if (atom.getPoint3D() == null) {
                 Atom connectedAtoms[] = atomContainer.getConnectedAtoms(atom);
                 if (connectedAtoms.length == 1) {
                     Atom refAtom = connectedAtoms[0];
                     if (refAtom.getPoint3D() != null) {
                         refAtoms.addAtom(refAtom);
-// store atoms with no coords and ref atoms in a single container
+                        // store atoms with no coords and ref atoms in a 
+                        // single container
                         noCoords.addAtom(atom);
                         noCoords.addAtom(refAtom);
-// bond is required to extract ligands                        
-					    noCoords.addBond(new Bond(atom, refAtom, CDKConstants.BONDORDER_SINGLE));
+                        // bond is required to extract ligands
+                        noCoords.addBond(new Bond(atom, refAtom, CDKConstants.BONDORDER_SINGLE));
                     }
                 }
             }
         }
-// now add coordinates to ligands of reference atoms
-// use default length of 1.0, which can be adjusted later
+        // now add coordinates to ligands of reference atoms
+        // use default length of 1.0, which can be adjusted later
         double length = 1.0;
         double angle = TETRAHEDRAL_ANGLE;
         for (int i = 0; i < refAtoms.getAtomCount(); i++) {
@@ -86,7 +92,7 @@ public class AtomTools {
             int nLigands = noCoordLigands.length;
             int nwanted = nLigands;
             String elementType = refAtom.getSymbol();
-// try to deal with lone pairs on small hetero            
+            // try to deal with lone pairs on small hetero
             if (elementType.equals("N") ||
                 elementType.equals("O") ||
                 elementType.equals("S")) {
@@ -102,16 +108,15 @@ public class AtomTools {
         }
     }
     
-    /** rescales Point2 so that length 1-2 is sum of covalent radii
-    * if covalent radii cannot be found, use bond length of 1.0
-    * 
-    *
-    * @param Atom atom1 stationary atom
-    * @param Atom atom2 moveable atom
-    * @param Point3d point2 coordinates for atom2
-    * @return Point3d new coords for atom 2
-    */
-    
+    /** 
+     * Rescales Point2 so that length 1-2 is sum of covalent radii.
+     * if covalent radii cannot be found, use bond length of 1.0
+     *
+     * @param Atom atom1 stationary atom
+     * @param Atom atom2 moveable atom
+     * @param Point3d point2 coordinates for atom2
+     * @return Point3d new coords for atom 2
+     */
     public static Point3d rescaleBondLength(
         Atom atom1, Atom atom2, Point3d point2) {
         Point3d point1 = atom1.getPoint3D();
@@ -130,7 +135,7 @@ public class AtomTools {
     }
                
     /**
-     * Adds 3D coordinates for singly-bonded ligands of a reference atom (A)
+     * Adds 3D coordinates for singly-bonded ligands of a reference atom (A).
      * Initially designed for hydrogens. The ligands of refAtom are identified
      * and those with 3D coordinates used to generate the new points. (This
      * allows strucures with partially known 3D coordinates to be used, as when
@@ -163,7 +168,6 @@ public class AtomTools {
      *       else vector is resultant of BA, CA, DA
      
      * fails if atom itself has no coordinates or >4 ligands
-     * @author Peter Murray-Rust, 2003
      *
      * @param atomContainer describing the ligands of refAtom. It could be the
      * whole molecule, or could be a selected subset of ligands
@@ -173,7 +177,7 @@ public class AtomTools {
      * @return Point3D[] points calculated. If request could not be fulfilled (e.g.
      * too many atoms, or strange geometry, returns empty array (zero length, 
      * not null)
-
+     *
      * @keyword coordinate generation
      */
     public static Point3d[] calculate3DCoordinatesForLigands(
@@ -229,7 +233,9 @@ public class AtomTools {
         return newPoints;
     }    
     
-    /** calculate substituent points for 
+    /**
+     * Calculates substituent points.
+     * Calculate substituent points for 
      * (0) zero ligands of aPoint. The resultant points are randomly oriented:
      *    (i) 1 points  required; +x,0,0
      *    (ii) 2 points: use +x,0,0 and -x,0,0
@@ -274,7 +280,9 @@ public class AtomTools {
         return points;
     }
     
-    /** calculate new point(s) X in a B-A system to form B-A-X. Use C as reference for * staggering about the B-A bond
+    /** 
+     * Calculate new point(s) X in a B-A system to form B-A-X. 
+     * Use C as reference for * staggering about the B-A bond
      *
      * (1a) 1 ligand(B) of refAtom (A) which itself has a ligand (C)
      *    (i) 1 points  required; vector along AB vector
@@ -339,7 +347,8 @@ public class AtomTools {
         return points;
     }
     
-    /** calculate new point(s) X in a B-A-C system to form B-A(-C)-X. 
+    /** 
+     * Calculate new point(s) X in a B-A-C system to form B-A(-C)-X. 
      *
      * (2) 2 ligands(B, C) of refAtom A
      *    (i) 1 points  required; vector in ABC plane bisecting AB, AC. If ABC is
@@ -395,7 +404,8 @@ public class AtomTools {
         return newPoints;
     }
     
-    /** calculate new point X in a B-A(-D)-C system to form B-A(-D)(-C)-X. 
+    /** 
+     * Calculate new point X in a B-A(-D)-C system to form B-A(-D)(-C)-X. 
      *
      * (3) 3 ligands(B, C, D) of refAtom A
      *    (i) 1 points  required; if A, B, C, D coplanar, no points. 

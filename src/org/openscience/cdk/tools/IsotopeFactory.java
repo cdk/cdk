@@ -36,7 +36,8 @@ import JSX.*;
 
 /**
  * Used to store and return data of a particular isotope. As this class is a
- * singleton class, one gets an instance with: <pre>
+ * singleton class, one gets an instance with: 
+ * <pre>
  * IsotopeFactory ifac = IsotopFactory.getInstance();
  * </pre>
  *
@@ -53,7 +54,7 @@ import JSX.*;
  * </pre> 
  *
  * @author     steinbeck
- * @created    August 29, 2001
+ * @created    2001-08-29
  * @keyword    isotope
  * @keyword    element
  */
@@ -168,7 +169,7 @@ public class IsotopeFactory
 	 * @param  atomicNumber  The atomicNumber for which an isotope is to be returned
 	 * @return               The isotope corresponding to the given atomic number
      *
-     * @see getMajorIsotope(String symbol)
+     * @see #getMajorIsotope(String symbol)
      */
     public Isotope getMajorIsotope(int atomicNumber) {
         Isotope major = null;

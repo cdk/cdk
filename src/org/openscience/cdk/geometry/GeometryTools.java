@@ -5,7 +5,7 @@
  * 
  * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  * 
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -159,7 +159,7 @@ public class GeometryTools {
 
     /**
      * Returns the minimum and maximum X and Y coordinates of the
-     * atoms in the AtomContainer as:
+     * atoms in the AtomContainer. The output is returned as:
      * <pre>
      *   minmax[0] = minX;
      *   minmax[1] = minY;

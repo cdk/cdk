@@ -23,6 +23,7 @@
  *
  */
 package org.openscience.cdk.graph.invariant;
+
 import org.openscience.cdk.graph.invariant.exception.*;
 
 /**
@@ -35,10 +36,10 @@ import org.openscience.cdk.graph.invariant.exception.*;
  * <P>Please note that although in most books matrix elements' indexes take values between [1..n] I chose not
  * to disturb Java language way of calling indexes; so the indexes used here take values between [0..n-1] instead.
  *
- * @see tatien.toolbox.#double
+ * @see tatien.toolbox#double
  * @author Jean-Sebastien Senecal
  * @version 1.0
- * @created 20/05/99
+ * @created 1999-05-20
  *
  * modified 10/06/02
  * adds method - add(Matrix matrix), matrix
@@ -562,7 +563,7 @@ public class GIMatrix {
 
     
 	/**
-     *  Addition from two matrices
+     *  Addition from two matrices.
      */
 	public GIMatrix add(GIMatrix b)
 	{

@@ -294,7 +294,7 @@ public class ChemObject implements java.io.Serializable, Cloneable {
     /**
      * Returns the identifier (ID) of this object.
      *
-     * @see setID
+     * @see #setID
      */
     public String getID() {
         return this.id;
@@ -303,7 +303,7 @@ public class ChemObject implements java.io.Serializable, Cloneable {
     /**
      * Sets the identifier (ID) of this object.
      *
-     * @see getID
+     * @see #getID
      */
     public void setID(String id) {
         this.id = id;

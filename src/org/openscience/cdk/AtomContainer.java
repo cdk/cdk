@@ -128,7 +128,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	 *
 	 *@param  electronContainers  The array of electronContainers to be assigned to
 	 *      this AtomContainer
-	 *@see                        #getelectronContainers
+	 *@see  #getElectronContainers
 	 */
 	public void setElectronContainers(Bond[] electronContainers)
 	{
@@ -168,7 +168,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	 *
 	 *@param  number  The position of the bond to be retrieved.
 	 *@return         The bondAt value
-	 *@see            #setBondAt
+	 *@see            #setElectronContainerAt
 	 */
 	public Bond getBondAt(int number)
 	{
@@ -683,7 +683,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
     /**
      * Deprecated wrapper method for getMaximumBondOrder().
      *
-     * @see  getMaximumBondOrder()
+     * @see #getMaximumBondOrder
      * @deprecated
      */
     public double getHighestCurrentBondOrder(Atom atom) {
@@ -691,11 +691,11 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
     }
 
     /**
-	 *  Returns the maximum bond order that this atom currently has in the context
-	 *  of this AtomContainer.
+	 * Returns the maximum bond order that this atom currently has in the context
+	 * of this AtomContainer.
 	 *
-	 *@param  atom  The atom
-	 *@return       The maximum bond order that this atom currently has
+	 * @param  atom  The atom
+	 * @return       The maximum bond order that this atom currently has
 	 */
 	public double getMaximumBondOrder(Atom atom) {
 		double max = 0.0;

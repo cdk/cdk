@@ -1,5 +1,4 @@
-/*
- *  $RCSfile$
+/*  $RCSfile$
  *  $Author$
  *  $Date$
  *  $Revision$
@@ -215,7 +214,7 @@ public class SmilesGenerator {
    *
    * @param  molecule  The molecule to evaluate
    * @return           Description of the Returned Value
-   * @see              org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel
+   * @see              org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel(AtomContainer)
    */
   public synchronized String createSMILES(Molecule molecule) {
     try {
@@ -242,7 +241,7 @@ public class SmilesGenerator {
    * @param  doubleBondConfiguration    Description of Parameter
    * @return                            Description of the Returned Value
    * @exception  CDKException           At least one atom has no Point2D; coordinates are needed for creating the chiral smiles.
-   * @see                               org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel.
+   * @see              org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel(AtomContainer)
    */
   public synchronized String createChiralSMILES(Molecule molecule, boolean[] doubleBondConfiguration) throws CDKException {
     return (createSMILES(molecule, true, doubleBondConfiguration));
@@ -259,7 +258,7 @@ public class SmilesGenerator {
    * @param  doubleBondConfiguration    Description of Parameter
    * @return                            Description of the Returned Value
    * @exception  CDKException           At least one atom has no Point2D; coordinates are needed for crating the chiral smiles. This excpetion can only be thrown if chiral smiles is created, ignore it if you want a non-chiral smiles (createSMILES(AtomContainer) does not throw an exception).
-   * @see                               org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel.
+   * @see              org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel(AtomContainer)
    */
   public synchronized String createSMILES(Molecule molecule, boolean chiral, boolean doubleBondConfiguration[]) throws CDKException {
     Vector moleculeSet = ConnectivityChecker.partitionIntoMolecules(molecule);
@@ -290,7 +289,7 @@ public class SmilesGenerator {
    * @param  doubleBondConfiguration    Description of Parameter
    * @return                            Description of the Returned Value
    * @exception  CDKException           At least one atom has no Point2D; coordinates are needed for crating the chiral smiles. This excpetion can only be thrown if chiral smiles is created, ignore it if you want a non-chiral smiles (createSMILES(AtomContainer) does not throw an exception).
-   * @see                               org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel.
+   * @see              org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel(AtomContainer)
    */
   public synchronized String createSMILESWithoutCheckForMultipleMolecules(Molecule molecule, boolean chiral, boolean doubleBondConfiguration[]) throws CDKException {
     if (molecule.getAtomCount() == 0) {

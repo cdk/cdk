@@ -32,10 +32,10 @@ import java.util.*;
 import org.openscience.cdk.io.cml.cdopi.*;
 import org.xml.sax.*;
 
-/***
- * This is a lousy implementation for the PDB convention:
+/**
+ * Implements the PDB convention used by PDB2CML.
  *
- * <p>Problems that will arise:
+ * <p>This is a lousy implementation, though. Problems that will arise:
  * <ul>
  *   <li>when this new convention is adopted in the root element no
  *     currentFrame was set. This is done when <list sequence=""> is found
