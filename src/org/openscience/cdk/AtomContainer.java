@@ -601,8 +601,12 @@ public class AtomContainer extends ChemObject implements Cloneable
 
 	/**
 	 *  Returns a connection matrix representation of this AtomContainer
+	 *  An adjacency matrix is a matrix of quare NxN matrix, where N is the
+	 *  number of atoms in the AtomContainer. If the i-th and the j-th atom 
+	 *  in the atomcontainer share a bond, the element i,j in the matrix is 
+	 *  set to the bond order value. Otherwise it is zero.
 	 *
-	 * @return                                                        A connection matrix representation of this AtomContainer
+	 * @return A connection matrix representation of this AtomContainer
 	 * @exception  org.openscience.cdk.exception.NoSuchAtomException  Description of Exception
 	 * @since
 	 */
@@ -625,13 +629,17 @@ public class AtomContainer extends ChemObject implements Cloneable
 	}
 
     /**
-     *  Returns a adjecency matrix representation of this AtomContainer
+     *  Returns a adjacency matrix representation of this AtomContainer.
+     *  An adjacency matrix is a matrix of quare NxN matrix, where N is the
+     *  number of atoms in the AtomContainer. The element i,j of the matrix is
+     *  1, if the i-th and the j-th atom in the atomcontainer share a bond. Otherwise it
+     *  is zero.
      *
-     * @return A adjecency matrix representating this AtomContainer
+     * @return A adjacency matrix representating this AtomContainer
      *
-     * @keyword adjecency matrix
+     * @keyword adjacency matrix
      */
-    public int[][] getAdjecencyMatrix() throws org.openscience.cdk.exception.NoSuchAtomException {
+    public int[][] getAdjacencyMatrix() throws org.openscience.cdk.exception.NoSuchAtomException {
         Bond bond = null;
         int i;
         int j;
