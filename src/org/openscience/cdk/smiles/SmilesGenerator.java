@@ -322,7 +322,7 @@ public class SmilesGenerator {
    *
    * @param a         The atom which is the center
    * @param container The atomContainer the atom is in
-   * @return true=isStereo, false= is not
+   * @return true=is a stereo atom, false=is not
    */
   private boolean isStereo(AtomContainer container, Atom a) {
     Atom[] atoms=container.getConnectedAtoms(a);
@@ -376,7 +376,7 @@ public class SmilesGenerator {
         }
         if(symbolsWithDifferentMorganNumbers!=differentSymbols.size()){
           //Check if it's a cis/trans ring fusion
-          if(stereo==1){
+          if(stereo==1&&atoms.length==4){
             for(int i=0;i<atoms.length;i++){
               RingSet rs=new SSSRFinder().findSSSR((Molecule)container);
               RingSet rs1=rs.getRings(a);
@@ -386,6 +386,8 @@ public class SmilesGenerator {
               }
             }
           }
+          if((atoms.length==5 || atoms.length==6) && symbolsWithDifferentMorganNumbers+differentAtoms>1)
+            return(true);
           return false;
         }
       }
@@ -781,7 +783,7 @@ public class SmilesGenerator {
               sorted[sorted.length-1]=((Atom)chiralNeighbours.get(((Integer)ohere[ohere.length-1]).intValue()));
               if(ohere.length==2){
                 sorted[sorted.length-3]=((Atom)chiralNeighbours.get(((Integer)ohere[0]).intValue()));
-                if(giveAngleFromMiddle(atom, parent, ((Atom)chiralNeighbours.get(((Integer)ohere[1]).intValue())))>0){
+                if(giveAngleFromMiddle(atom, parent, ((Atom)chiralNeighbours.get(((Integer)ohere[1]).intValue())))<0){
                   Atom dummy=sorted[sorted.length-2];
                   sorted[sorted.length-2]=sorted[0];
                   sorted[0]=dummy;
