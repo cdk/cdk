@@ -163,31 +163,7 @@ public class FileConvertor {
 
     private ChemObjectReader getChemObjectReader(File file) throws IOException {
         Reader fileReader = new FileReader(file);
-        ReaderFactory factory = new ReaderFactory();
-        String format = factory.guessFormat(fileReader);
-        // reopen file, to force to start at the beginning
-        fileReader.close();
-        fileReader = new FileReader(file);
-
-        ChemObjectReader reader = null;
-        // construct right reader
-        if (format.equals("org.openscience.cdk.io.CMLReader")) {
-            reader = new CMLReader(fileReader);
-        } else if (format.equals("org.openscience.cdk.io.IChIReader")) {
-            reader = new IChIReader(fileReader);
-        } else if (format.equals("org.openscience.cdk.io.MDLReader")) {
-            reader = new MDLReader(fileReader);
-        } else if (format.equals("org.openscience.cdk.io.PDBReader")) {
-            reader = new PDBReader(fileReader);
-        } else if (format.equals("org.openscience.cdk.io.PMPReader")) {
-            reader = new PMPReader(fileReader);
-        } else if (format.equals("org.openscience.cdk.io.ShelXReader")) {
-            reader = new ShelXReader(fileReader);
-        } else if (format.equals("org.openscience.cdk.io.SMILESReader")) {
-            reader = new SMILESReader(fileReader);
-        } else if (format.equals("org.openscience.cdk.io.XYZReader")) {
-            reader = new XYZReader(fileReader);
-        }
+        ChemObjectReader reader = new ReaderFactory().createReader(fileReader);
         if (reader != null) {
             if (settingListener != null) {
                 reader.addReaderListener(settingListener);

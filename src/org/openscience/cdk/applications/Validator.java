@@ -48,34 +48,10 @@ public class Validator {
     }
 
     public ValidationReport validate(File input) throws IOException {
-        ReaderFactory factory = new ReaderFactory();
         Reader fileReader = new FileReader(input);
-        String format = factory.guessFormat(fileReader);
-        // reopen file, to force to start at the beginning
-        fileReader.close();
-        fileReader = new FileReader(input);
-        
-        ChemObjectReader reader = null;
-        // construct right reader
-        if (format.equals("org.openscience.cdk.io.CMLReader")) {
-            reader = new CMLReader(fileReader);
-        } else if (format.equals("org.openscience.cdk.io.IChIReader")) {
-            reader = new IChIReader(fileReader);
-        } else if (format.equals("org.openscience.cdk.io.MDLReader")) {
-            reader = new MDLReader(fileReader);
-        } else if (format.equals("org.openscience.cdk.io.PDBReader")) {
-            reader = new PDBReader(fileReader);
-        } else if (format.equals("org.openscience.cdk.io.PMPReader")) {
-            reader = new PMPReader(fileReader);
-        } else if (format.equals("org.openscience.cdk.io.ShelXReader")) {
-            reader = new ShelXReader(fileReader);
-        } else if (format.equals("org.openscience.cdk.io.SMILESReader")) {
-            reader = new SMILESReader(fileReader);
-        } else if (format.equals("org.openscience.cdk.io.XYZReader")) {
-            reader = new XYZReader(fileReader);
-        }
+        ChemObjectReader reader = new ReaderFactory().createReader(fileReader);
         if (reader == null) {
-            System.out.println("Cannot parse file of type: " + format);
+            System.out.println("Cannot parse file with unknown file type: " + input.toString());
             return new ValidationReport();
         }
         

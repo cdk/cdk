@@ -235,25 +235,7 @@ public class Viewer {
         logger.info("Viewing file...");
         ChemFile chemFile = new ChemFile();
         try {
-            ChemObjectReader reader;
-            logger.info("Loading: " + inFile);
-            if (inFile.endsWith(".xyz")) {
-                reader = new XYZReader(new FileReader(inFile));
-                logger.info("Expecting XYZ format...");
-            } else if (inFile.endsWith(".cml")) {
-                String url = "file:" + System.getProperty("user.dir") + "/" + inFile;
-                reader = new CMLReader(url);
-                logger.info("Expecting CML format...");
-            } else if (inFile.endsWith(".pdb")) {
-                reader = new PDBReader(new FileReader(inFile));
-                logger.info("Expecting PDB format...");
-            } else if (inFile.endsWith(".txt")) {
-                reader = new IChIReader(new FileReader(inFile));
-                logger.info("Expecting IChI format...");
-            } else {
-                reader = new MDLReader(new FileInputStream(inFile));
-                logger.info("Expecting MDL MolFile format...");
-            }
+            ChemObjectReader reader = new ReaderFactory().createReader(new FileReader(inFile));
             chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         } catch (Exception exc) {
             logger.error("Error while reading file");
