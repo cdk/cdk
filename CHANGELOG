@@ -6,6 +6,7 @@ Changes in CVS
 New:
 * Added AtomType.get/setHybridization() method
 * Added LoggingTool.debug(Object, boolean)
+* Added infrastructure for a SMARTS parse
 
 Removed:
 * Removed CDKInputAdapter. Use (Popup)Controller2D directly

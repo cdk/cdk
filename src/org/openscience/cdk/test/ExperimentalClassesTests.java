@@ -24,6 +24,7 @@
 package org.openscience.cdk.test;
 
 import junit.framework.Test;
+import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.test.io.VASPReaderTest;
@@ -45,6 +46,20 @@ public class ExperimentalClassesTests {
         suite.addTest(ValencyCheckerTest.suite());
         suite.addTest(VASPReaderTest.suite());
         suite.addTest(SMARTSTest.suite());
+        
+        ExperimentalClassesTests thisTest = new ExperimentalClassesTests();
+        try {
+            TestCase test = (TestCase)thisTest.getClass().getClassLoader().loadClass("org.openscience.cdk.test.iupac.ParserTest").newInstance();
+            suite.addTest(test);
+        } catch (Exception exception) {
+            // ok, does not exist, just skip
+        }
+        try {
+            TestCase test = (TestCase)thisTest.getClass().getClassLoader().loadClass("org.openscience.cdk.test.smiles.smarts.ParserTest").newInstance();
+            suite.addTest(test);
+        } catch (Exception exception) {
+            // ok, does not exist, just skip
+        }
         return suite;
     }
 

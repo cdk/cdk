@@ -1,0 +1,152 @@
+options {
+STATIC=false;
+OPTIMIZE_TOKEN_MANAGER=true;
+FORCE_LA_CHECK=true;
+}
+
+PARSER_BEGIN(SMARTSParser)
+/*
+ *   Copyright (C) 2004  The CDK Project
+ *
+ *   This library is free software; you can redistribute it and/or
+ *   modify it under the terms of the GNU Lesser General Public
+ *   License as published by the Free Software Foundation; either
+ *   version 2.1 of the License, or (at your option) any later version.
+ *
+ *   This library is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *   Lesser General Public License for more details.
+ *
+ *   You should have received a copy of the GNU Lesser General Public
+ *   License along with this library; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *   (or see http://www.gnu.org/copyleft/lesser.html)
+ */
+package org.openscience.cdk.smiles.smarts;
+
+import java.io.StringReader;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.isomorphism.matchers.*;
+
+/**
+ * @author Egon Willighagen
+ *
+ * @cdk.module experimental
+ */
+public class SMARTSParser {
+    
+    private QueryAtom previousAtom;
+    private QueryAtomContainer container;
+    
+    public static QueryAtomContainer parse(String stringToParse) throws CDKException {
+        QueryAtomContainer container = null;
+        StringReader stringReader = new StringReader(stringToParse);
+        try {
+            SMARTSParser parser = new SMARTSParser(stringReader);
+            container = parser.Parse();
+        } catch (ParseException exception) {
+            throw new CDKException("The string " + stringToParse + " is not a valid" +
+              " SMARTS string: " + exception.getMessage());
+        }
+        return container;
+    }
+    
+}
+PARSER_END(SMARTSParser)
+
+JAVACODE
+void AddNewSMARTSAtom() {
+    Token tok = getToken(-1);
+    System.out.println("Adding SMARTS atom: " + tok.image);
+    SMARTSAtom atom = new SMARTSAtom();
+    atom.setLabel(tok.image);
+    container.addAtom(atom);
+    previousAtom = atom;
+}
+
+JAVACODE
+void AddNewElementAtom() {
+    Token tok = getToken(-1);
+    System.out.println("Adding SMARTS atom: " + tok.image);
+    SymbolQueryAtom atom = new SymbolQueryAtom(new Atom(tok.image));
+    container.addAtom(atom);
+    previousAtom = atom;
+}
+
+QueryAtomContainer Parse() :
+{}
+{
+    { 
+        container = new QueryAtomContainer();
+        previousAtom = null;
+    }
+    
+    (SMARTS())* <EOF>
+    
+    { return container; }
+}
+
+void SMARTS() :
+{}
+{
+    AtomExpression() [ BondExpression() ] 
+}
+
+void AtomExpression() :
+{}
+{
+    Element() | SMARTSAtomExpression()
+}
+
+void SMARTSAtomExpression() :
+{}
+{
+    (<ANYATOM> | <ANYALIPHATIC> | <ANYAROMATIC>)
+    AddNewSMARTSAtom()
+}
+
+void Element() :
+{}
+{
+	(TwoCharElement() | OneCharElement())
+    AddNewElementAtom()
+}
+
+void BondExpression() :
+{}
+{
+    "-" | "=" | <ANYBOND>
+}
+
+void TwoCharElement() :
+{}
+{
+	<CL>
+}
+
+void OneCharElement() :
+{}
+{
+	<C> | <H> | <N>
+}
+
+
+TOKEN : /* SPECIAL ENCODINGS */
+{
+	< ANYATOM: "*" >
+|   < ANYALIPHATIC: "A" >
+|   < ANYAROMATIC: "a" >
+|   < ANYBOND: "~" >
+}
+
+TOKEN : /* ELEMENTS */
+{
+	< CL: "Cl" >
+|   < C:  "C" >
+|   < N:  "N" >
+|   < H:  "H" >
+}
+
