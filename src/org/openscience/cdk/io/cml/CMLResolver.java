@@ -78,10 +78,12 @@ public class CMLResolver implements EntityResolver {
         if ((systemId.indexOf("cml-1999-05-15.dtd") != -1) ||
             (systemId.indexOf("cml.dtd") != -1) ||
             (systemId.indexOf("cml1_0.dtd") != -1)) {
+            logger.info("File has CML 1.0 DTD");
             return getCMLType( "cml1_0.dtd" );
         } else if ((systemId.indexOf("cml-2001-04-06.dtd") != -1) ||
                    (systemId.indexOf("cml1_0_1.dtd") != -1) ||
                    (systemId.indexOf("cml_1_0_1.dtd") != -1)) {
+            logger.info("File has CML 1.0.1 DTD");
             return getCMLType( "cml1_0_1.dtd" );
         } else {
             logger.warn("Could not resolve " + systemId);
