@@ -267,7 +267,7 @@ public class CMLWriter implements ChemObjectWriter {
     
     private void write(Molecule mol) {
         write("<molecule");
-        if (mol.getID() != null) {
+        if (mol.getID() != null && mol.getID().length() != 0) {
             write(" id=\"" + mol.getID() + "\"");
         }
         write(">\n");
