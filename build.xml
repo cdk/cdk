@@ -44,6 +44,8 @@
                         <include name="printf.jar" />
                         <include name="vecmath1.2-1.14.jar" />
                         <include name="xerces-2.3.0.jar" />
+                        <include name="xindice.jar" />
+                        <include name="xmldb.jar" />
                 </fileset>
                 <fileset dir="${pathtojava3d}">
                         <include name="*.jar" />
