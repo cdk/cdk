@@ -29,6 +29,8 @@ New:
   problems
 * The Renderer2D will now underline Atom's with validation problems
   with a red line
+* Added Association class, extended by the new HydrogenBond class
+  (implements RFC #22)
 * Added SetOfMolecules.add(SetOfMolecules) method
 * Added SetOfMolecules getAllMolecules() convenience methods to
   SetOfReactionsManipulator ReactionManipulator
