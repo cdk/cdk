@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk;
 
+import org.openscience.cdk.event.ChemObjectChangeEvent;
+
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
@@ -46,7 +48,7 @@ import javax.vecmath.Point3d;
  * @author     steinbeck
  * @cdk.created    2000-10-02
  */
-public class AtomContainer extends ChemObject implements java.io.Serializable, Cloneable {
+public class AtomContainer extends ChemObject implements java.io.Serializable, Cloneable, ChemObjectListener {
 
 	/**
 	 *  Number of atoms contained by this object.
@@ -153,6 +155,10 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	public void setAtoms(Atom[] atoms)
 	{
 		this.atoms = atoms;
+		for (int f = 0; f < atoms.length; f++)
+		{
+			atoms[f].addListener(this);	
+		}
 		setAtomCount(atoms.length);
 		notifyChanged();
 
@@ -169,6 +175,10 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	public void setElectronContainers(Bond[] electronContainers)
 	{
 		this.electronContainers = electronContainers;
+		for (int f = 0; f < electronContainers.length; f++)
+		{
+			electronContainers[f].addListener(this);	
+		}
 		setElectronContainerCount(electronContainers.length);
 		notifyChanged();
 	}
@@ -183,6 +193,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	 */
 	public void setAtomAt(int number, Atom atom)
 	{
+		atom.addListener(this);
 		atoms[number] = atom;
 		notifyChanged();
 	}
@@ -224,6 +235,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	 */
 	public void setElectronContainerAt(int number, ElectronContainer electronContainer)
 	{
+		electronContainer.addListener(this);
 		electronContainers[number] = electronContainer;
 		notifyChanged();
 	}
@@ -924,6 +936,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 		{
 			growAtomArray();
 		}
+		atom.addListener(this);
 		atoms[atomCount] = atom;
 		atomCount++;
 		notifyChanged();
@@ -956,6 +969,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 		// are we supposed to check if the atoms forming this bond are
 		// already in here and add them if neccessary? No, core classes
 		// must not check parameter input.
+		electronContainer.addListener(this);
 		electronContainers[electronContainerCount] = electronContainer;
 		electronContainerCount++;
 		notifyChanged();
@@ -991,6 +1005,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	public ElectronContainer removeElectronContainer(int position)
 	{
 		ElectronContainer electronContainer = getElectronContainerAt(position);
+		electronContainer.removeListener(this);
 		for (int i = position; i < electronContainerCount - 1; i++)
 		{
 			electronContainers[i] = electronContainers[i + 1];
@@ -1059,6 +1074,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	 */
 	public void removeAtom(int position)
 	{
+		atoms[position].removeListener(this);
 		for (int i = position; i < atomCount - 1; i++)
 		{
 			atoms[i] = atoms[i + 1];
@@ -1198,7 +1214,9 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	 */
 	public void addLonePair(int atomID)
 	{
-		addElectronContainer(new LonePair(atoms[atomID]));
+		ElectronContainer lonePair = new LonePair(atoms[atomID]);
+		lonePair.addListener(this);
+		addElectronContainer(lonePair);
 		/* no notifyChanged() here because addElectronContainer() does 
 		   it already */
 	}
@@ -1360,6 +1378,17 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 		System.arraycopy(atoms, 0, newatoms, 0, atoms.length);
 		atoms = newatoms;
 	}
+	
+	 /**
+	 *  Called by objects to which this object has
+	 *  registered as a listener
+	 *
+	 *@param  event  A change event pointing to the source of the change
+	 */
+	public void stateChanged(ChemObjectChangeEvent event)
+	{
+		notifyChanged(event);
+	}   
 
 }
 

@@ -6,6 +6,9 @@ Changes in CVS
 New:
 Fixes:
 * Faster SSSR algorithms
+* The core class now notify their listeners when things are changed
+* ChangeEvents are now propagated through the container hierarchy
+  from AtomContainer via SetOfMolecules up to the ChemFile level
 API changes:
 
 20040917 Release

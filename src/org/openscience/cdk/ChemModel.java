@@ -24,6 +24,7 @@
 
 package org.openscience.cdk;
 
+import org.openscience.cdk.event.ChemObjectChangeEvent;
 
 /** 
  * An object containig multiple SetOfMolecules and 
@@ -32,7 +33,8 @@ package org.openscience.cdk;
  *
  * @cdk.module core
  */
-public class ChemModel extends ChemObject implements java.io.Serializable, Cloneable
+public class ChemModel extends ChemObject implements java.io.Serializable
+, Cloneable, ChemObjectListener
 {
 
 	/**
@@ -85,6 +87,7 @@ public class ChemModel extends ChemObject implements java.io.Serializable, Clone
 	public void setSetOfMolecules(SetOfMolecules setOfMolecules)
 	{
 		this.setOfMolecules = setOfMolecules;
+		this.setOfMolecules.addListener(this);
 		notifyChanged();
 	}
 
@@ -135,6 +138,7 @@ public class ChemModel extends ChemObject implements java.io.Serializable, Clone
      */
     public void setCrystal(Crystal crystal) {
         this.crystal = crystal;
+	this.crystal.addListener(this);
 	notifyChanged();
     }
 
@@ -158,6 +162,7 @@ public class ChemModel extends ChemObject implements java.io.Serializable, Clone
      */
     public void setSetOfReactions(SetOfReactions sor) {
         this.setOfReactions = sor;
+	this.setOfReactions.addListener(this);
 	notifyChanged();
     }
     
@@ -206,6 +211,17 @@ public class ChemModel extends ChemObject implements java.io.Serializable, Clone
         clone.crystal = (Crystal)crystal.clone();
         clone.ringSet = (RingSet)ringSet.clone();
 		return clone;
+	}
+	
+	/**
+	 *  Called by objects to which this object has
+	 *  registered as a listener
+	 *
+	 *@param  event  A change event pointing to the source of the change
+	 */
+	public void stateChanged(ChemObjectChangeEvent event)
+	{
+		notifyChanged(event);
 	}
 }
 

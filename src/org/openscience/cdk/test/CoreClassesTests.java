@@ -60,6 +60,7 @@ public class CoreClassesTests {
         suite.addTest(RingSetTest.suite());
         suite.addTest(SetOfAtomContainersTest.suite());
         suite.addTest(SetOfMoleculesTest.suite());
+	suite.addTest(ChangeEventPropagationTest.suite());
         return suite;
     }
 

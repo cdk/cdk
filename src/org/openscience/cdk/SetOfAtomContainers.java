@@ -24,13 +24,14 @@
 
 package org.openscience.cdk;
 
+import org.openscience.cdk.event.ChemObjectChangeEvent;
 
 /** 
  * A set of AtomContainers.
  *
  * @cdk.module core
  */
-public class SetOfAtomContainers extends ChemObject implements java.io.Serializable, Cloneable {
+public class SetOfAtomContainers extends ChemObject implements java.io.Serializable, Cloneable, ChemObjectListener{
 
 	/**
 	 *  Array of AtomContainers.
@@ -71,6 +72,7 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
 	 * @param  atomContainer  The atomContainer to be added to this container 
 	 */
 	public void addAtomContainer(AtomContainer atomContainer) {
+		atomContainer.addListener(this);
 		addAtomContainer(atomContainer, 1.0);
 		/* notifyChanged is called below */
 	}
@@ -150,6 +152,7 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
 		if (atomContainerCount + 1 >= atomContainers.length) {
 			growAtomContainerArray();
 		}
+		atomContainer.addListener(this);
 		atomContainers[atomContainerCount] = atomContainer;
 		multipliers[atomContainerCount] = multiplier;
 		atomContainerCount++;
@@ -267,5 +270,16 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
         buffer.append(")");
         return buffer.toString();
     }
+    
+	/**
+	 *  Called by objects to which this object has
+	 *  registered as a listener
+	 *
+	 *@param  event  A change event pointing to the source of the change
+	 */
+	public void stateChanged(ChemObjectChangeEvent event)
+	{
+		notifyChanged(event);
+	}    
 	
 }

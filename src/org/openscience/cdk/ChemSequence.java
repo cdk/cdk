@@ -24,7 +24,7 @@
 
 package org.openscience.cdk;
 
-
+import org.openscience.cdk.event.ChemObjectChangeEvent;
 
 /** 
  * A sequence of ChemModels, which can, for example, be used to
@@ -36,7 +36,8 @@ package org.openscience.cdk;
  * @cdk.keyword animation
  * @cdk.keyword reaction
  */
-public class ChemSequence extends ChemObject implements java.io.Serializable, Cloneable
+public class ChemSequence extends ChemObject implements java.io.Serializable
+, Cloneable, ChemObjectListener
 {
 
 	/**
@@ -83,6 +84,7 @@ public class ChemSequence extends ChemObject implements java.io.Serializable, Cl
 		}
 		chemModels[chemModelCount] = chemModel;
 		chemModelCount++;
+		chemModel.addListener(this);
 		notifyChanged();
 	}
 
@@ -164,5 +166,16 @@ public class ChemSequence extends ChemObject implements java.io.Serializable, Cl
 			clone.chemModels[f] = (ChemModel)chemModels[f].clone();
 		}
 		return clone;
+	}
+	
+	/**
+	 *  Called by objects to which this object has
+	 *  registered as a listener
+	 *
+	 *@param  event  A change event pointing to the source of the change
+	 */
+	public void stateChanged(ChemObjectChangeEvent event)
+	{
+		notifyChanged(event);
 	}
 }

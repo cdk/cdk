@@ -24,6 +24,7 @@
 
 package org.openscience.cdk;
 
+import org.openscience.cdk.event.ChemObjectChangeEvent;
 
 /** 
  * A set of molecules, for example those taking part in a reaction.
@@ -122,4 +123,14 @@ public class SetOfMolecules extends SetOfAtomContainers {
         return buffer.toString();
     }
     
+    	/**
+	 *  Called by objects to which this object has
+	 *  registered as a listener
+	 *
+	 *@param  event  A change event pointing to the source of the change
+	 */
+	public void stateChanged(ChemObjectChangeEvent event)
+	{
+		notifyChanged(event);
+	}    
 }
