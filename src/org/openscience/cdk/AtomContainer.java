@@ -379,36 +379,13 @@ public class AtomContainer extends ChemObject implements Cloneable
 	 * @return             The number of connected atoms (degree)
 	 * @since
 	 */
-	public int getDegree(int atomnumber)
+	public int getBondCount(int atomnumber)
 	{
-		return getDegree(getAtomAt(atomnumber));
+		return getBondCount(getAtomAt(atomnumber));
 	}
 
 
-	/**
-	 *  Returns the number of connected atoms (degree) to the given atom
-	 *
-	 * @param  atom  The atom the degree is searched of
-	 * @return       The number of connected atoms (degree)
-	 * @since
-	 */
-	public int getDegree(Atom atom)
-	{
-		int degree = 0;
-		Bond bond;
-		for (int i = 0; i < bondCount; i++)
-		{
-			bond = bonds[i];
-			if (bond.contains(atom))
-			{
-				degree++;
-			}
-		}
-		return degree;
-	}
-
-
-	/**
+        /**
 	 *  Returns the number of Atoms in this Container
 	 *
 	 * @return    The number of Atoms in this Container

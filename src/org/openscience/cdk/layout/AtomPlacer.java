@@ -347,7 +347,7 @@ public class AtomPlacer implements CDKConstants
 		for (int f = 0; f < apsp.length; f++)
 		{
 			atom = molecule.getAtomAt(f);
-			if (molecule.getDegree(atom) == 1)
+			if (molecule.getBondCount(atom) == 1)
 			{
 				for (int g = 0; g < apsp.length; g++)
 				{

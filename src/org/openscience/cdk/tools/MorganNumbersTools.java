@@ -48,8 +48,8 @@ public class MorganNumbersTools implements CDKConstants
 		Atom[] atoms = null;
 		for (int f = 0; f < N; f++)
 		{
-			morganMatrix[f] = atomContainer.getDegree(f);
-			tempMorganMatrix[f] = atomContainer.getDegree(f);
+			morganMatrix[f] = atomContainer.getBondCount(f);
+			tempMorganMatrix[f] = atomContainer.getBondCount(f);
 		}
 		for (int e = 0; e < N; e++)
 		{

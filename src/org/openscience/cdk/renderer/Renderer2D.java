@@ -202,7 +202,7 @@ public class Renderer2D
 			{
 				paintAtomSymbol(atom, atomColor);
 			}
-			else if (atomCon.getDegree(atom) == 0)
+			else if (atomCon.getBondCount(atom) == 0)
 			{
 				paintAtomSymbol(atom, atomColor);
 			}

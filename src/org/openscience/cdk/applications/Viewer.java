@@ -62,9 +62,8 @@ public class Viewer {
             if (useJava3D) {
                 logger.debug(".. trying Java3D viewer");
                 try {
-                    AtomContainer atomContainer = chemModel.getAllInOneContainer();
                     AcceleratedRenderer3D renderer = new AcceleratedRenderer3D(
-                        new AcceleratedRenderer3DModel(atomContainer));
+                        new AcceleratedRenderer3DModel(m));
 
                     frame.getContentPane().add(renderer, BorderLayout.CENTER);
                     logger.debug(".. done");

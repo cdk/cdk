@@ -94,7 +94,7 @@ public class SSSRFinder
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
 				Atom atom = molecule.getAtomAt(f);
-				degree = molecule.getDegree(atom);
+				degree = molecule.getBondCount(atom);
 				if (degree == 0)
 				{
 					if (!trimSet.contains(atom))

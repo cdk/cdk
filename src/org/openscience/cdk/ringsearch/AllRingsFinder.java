@@ -101,7 +101,7 @@ public class AllRingsFinder
 			for (Enumeration e = ac.atoms(); e.hasMoreElements();)
 			{
 				atom = (Atom)e.nextElement();
-				if (ac.getDegree(atom) == 1)
+				if (ac.getBondCount(atom) == 1)
 				{
 					ac.removeAtomAndConnectedBonds(atom);
 					removedSomething = true;
@@ -220,7 +220,7 @@ public class AllRingsFinder
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
 			atom = ac.getAtomAt(f);
-			degree = ac.getDegree(atom);
+			degree = ac.getBondCount(atom);
 			
 			if (degree < minDegree)
 			{

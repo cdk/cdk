@@ -151,7 +151,7 @@ public class HOSECodeGenerator implements java.io.Serializable, CDKConstants
 		 *  depends on the order the preceding node in its branch
 		 */
 		//makeRingList();
-		ranking = new int[atomContainer.getDegree(root)];
+		ranking = new int[atomContainer.getBondCount(root)];
 		HOSECode = new StringBuffer();
 		breadthFirstSearch(root);
 		fillUpSphereDelimiters();
