@@ -109,7 +109,7 @@ public class Fingerprinter
 		// logger.debug("Entering Fingerprinter");
 		// logger.debug("Starting Aromaticity Detection");
 		long before = System.currentTimeMillis();
-		isAromatic = HueckelAromaticityDetector.detectAromaticity(ac);
+		isAromatic = HueckelAromaticityDetector.detectAromaticity(ac,false);
 		long after = System.currentTimeMillis();
 		logger.debug("time for aromaticity calculation: " + (after - before) + " milliseconds");
 		// logger.debug("Finished Aromaticity Detection");
@@ -253,7 +253,7 @@ public class Fingerprinter
 		}
 		//logger.debug("Checking for existence of Path " +  newPathString);
 		String storePath = new String(newPathString);
-		String reversePath = new StringBuffer(storePath).reverse().toString();
+    String reversePath = new StringBuffer(storePath).reverse().toString();
 		/* Pathes can be found twice (search from one or the other side) 
 		* so they will occur in reversed order. We only handle the  
 		* lexicographically smaller path (This is an arbitrary choice) */
