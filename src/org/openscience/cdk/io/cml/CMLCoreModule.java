@@ -362,7 +362,7 @@ public class CMLCoreModule implements ModuleInterface {
                     bondid.addElement(atts.getValue(i));
                     if (debug) logger.debug("B3 " + bondid);
                 } else if (att.equals("atomRefs") || // this is CML 1.x support
-                att.equals("atomRefs2")) { // this is CML 2.0 support
+                           att.equals("atomRefs2")) { // this is CML 2.0 support
                     
                     // expect exactly two references
                     try {
@@ -371,7 +371,8 @@ public class CMLCoreModule implements ModuleInterface {
                         bondARef1.addElement((String)st.nextElement());
                         bondARef2.addElement((String)st.nextElement());
                     } catch (Exception e) {
-                        logger.error("Error in CML file: " + e.toString());
+                        logger.error("Error in CML file: ", e.getMessage());
+                        logger.debug(e);
                     }
                 } else if (att.equals("order")) { // this is CML 2.0 support
                     order.addElement(atts.getValue(i).trim());

@@ -474,13 +474,13 @@ public class MACiEReader extends DefaultChemObjectReader {
                 Atom[] atoms = ReactionManipulator.getAllInOneContainer(reaction).getAtoms();
                 boolean found = false;
                 logger.debug("Searching through #atom: " + atoms.length);
-                // logger.debug("Taken from reaction " + reaction.toString());
+                logger.debug("Taken from reaction ", reaction.getID());
                 for (int i=0; i<atoms.length; i++) {
                     if (atoms[i] instanceof PseudoAtom) {
                         // that is what we are looking for
                         PseudoAtom atom = (PseudoAtom)atoms[i];
-                        logger.debug("pseudo atom label: " + atom.getLabel());
-                        logger.debug("pseudo class: " + atom.getClass().getName());
+                        logger.debug("pseudo atom label: ", atom.getLabel());
+                        logger.debug("pseudo class: ", atom.getClass().getName());
                         atom.setProperty(DictionaryDatabase.DICTREFPROPERTYNAME, "enzyme:residueLocator");
                         if (atom.getLabel().equals(field)) {
                             // we have a hit, now mark Atom with dict refs
@@ -493,7 +493,7 @@ public class MACiEReader extends DefaultChemObjectReader {
                     logger.error("MACiE annotation mentions a residue that does not exist: " + field);
                 }
             } else {
-                logger.error("Did not parse annotation: " + field);
+                logger.error("Did not parse annotation: ", field);
             }
         }
     }
@@ -503,7 +503,7 @@ public class MACiEReader extends DefaultChemObjectReader {
         while (tokenizer.hasMoreTokens()) {
             String token = tokenizer.nextToken();
             object.setProperty(new DictRef("macie:" + type, token), token);
-            logger.debug("Added dict ref " + token + " to " + object.getClass().getName());
+            logger.debug("Added dict ref ", token, " to ", object.getClass().getName());
         }
     }
     

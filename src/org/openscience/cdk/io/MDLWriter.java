@@ -96,7 +96,8 @@ public class MDLWriter extends DefaultChemObjectWriter {
         try {
             isotopeFactory = IsotopeFactory.getInstance();
         } catch (Exception exception) {
-            logger.error("Failed to initiate isotope factory: " + exception.toString());
+            logger.error("Failed to initiate isotope factory: ", exception.getMessage());
+            logger.debug(exception);
         }
     }
 

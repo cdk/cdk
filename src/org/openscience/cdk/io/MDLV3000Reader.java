@@ -84,7 +84,8 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         try {
             isotopeFactory = IsotopeFactory.getInstance();
         } catch (Exception exception) {
-            logger.error("Failed to initiate isotope factory: " + exception.toString());
+            logger.error("Failed to initiate isotope factory: " + exception.getMessage());
+            logger.debug(exception);
         }
         /* compile patterns */
         keyValueTuple = Pattern.compile("\\s*(\\w+)=([^\\s]*)(.*)"); // e.g. CHG=-1

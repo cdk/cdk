@@ -75,7 +75,7 @@ public class CMLResolver implements EntityResolver {
      * @return the CML DTD as an InputSource or null if id's unresolvable
      */
     public InputSource resolveEntity (String publicId, String systemId) {
-        logger.debug("CMLResolver: resolving " + publicId + ", " + systemId);
+        logger.debug("CMLResolver: resolving ", publicId, ", ", systemId);
         systemId = systemId.toLowerCase();
         if ((systemId.indexOf("cml-1999-05-15.dtd") != -1) ||
             (systemId.indexOf("cml.dtd") != -1) ||
@@ -88,7 +88,7 @@ public class CMLResolver implements EntityResolver {
             logger.info("File has CML 1.0.1 DTD");
             return getCMLType( "cml1_0_1.dtd" );
         } else {
-            logger.warn("Could not resolve " + systemId);
+            logger.warn("Could not resolve systemID: ", systemId);
             return null;
         }
     }
@@ -106,7 +106,9 @@ public class CMLResolver implements EntityResolver {
             InputStream ins = this.getClass().getClassLoader().getResourceAsStream("org/openscience/cdk/io/cml/data/" + type);
             return new InputSource(new BufferedReader(new InputStreamReader(ins)));
         } catch (Exception e) {
-            logger.error("Error while trying to read CML DTD (" + type + "): " + e.toString());
+            logger.error("Error while trying to read CML DTD (" + type + "): ",
+                         e.getMessage());
+            logger.debug(e);
             return null;
         }
     }

@@ -138,7 +138,8 @@ public class SMILESWriter extends DefaultChemObjectWriter {
             writer.flush();
             logger.debug("file flushed...");
         } catch(Exception exc) {
-            logger.error(exc.toString());
+            logger.error("Error while writing Molecule: ", exc.getMessage());
+            logger.debug(exc);
         }
     }
 }

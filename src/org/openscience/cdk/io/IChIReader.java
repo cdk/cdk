@@ -170,10 +170,11 @@ public class IChIReader extends DefaultChemObjectReader {
             parser.parse(new InputSource(input));
             cf = handler.getChemFile();
         } catch (IOException e) {
-            logger.error("IOException: " + e.toString());
+            logger.error("IOException: ", e.getMessage());
+            logger.debug(e);
         } catch (SAXException saxe) {
-            logger.error("SAXException: " + saxe.getClass().getName());
-            logger.error(saxe.toString());
+            logger.error("SAXException: ", saxe.getClass().getName());
+            logger.debug(saxe);
         }
         return cf;
     }
