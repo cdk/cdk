@@ -14,6 +14,8 @@ New:
   hydrogens, e.g. H3C-
 * Stoichiometry and direction concepts added to Reaction
 * Added a reverse() Reaction method to ReactionManipulator
+* A class for generating 2D coordinates for new hydrogen
+  atoms
 * SmilesParser now understands '*' indication unknown elements
 * Debug CDK core classes that can help when developing CDK
   based applications (dist-core-debug task in build.xml)
@@ -21,6 +23,7 @@ New:
   name generator
 * MDL MOL/SDF reader now parses the 'G  ' lines in the property
   blocks
+* An ChemObject[Reader|Writer].accepts(ChemObject) method
 * A ChemObject removeProperty() method
 * A cdk.validate.ProblemMarker which can 'tag' ChemObject's with
   problems
@@ -50,6 +53,7 @@ New:
 * Method to determine if two atoms should be bonded (cdk.geometry.BondTools)
 * Added a method debug(Exception) to LoggingTool
 * The SMILES parser now reads formal charges and mass numbers
+* ReaderFactory now recognizes all files that Jmol recognizes
 * Methods for getting subgraph/isomorphism atom mapping
 * Added a getConnectedBondsVector() method to AtomContainer
 * Added guessFileFormat application, using the new ReaderFactory
@@ -58,6 +62,9 @@ New:
   file reading
 * More jUnit tests
 * Added MFAnalyser.removeHydrogens()
+
+Changes:
+* Core classes now use super.compare() upto ChemObject
 * CMLReader can now use J2SE 1.4 JAXP XML reader
 * FileConvertor now takes multiple files as input and dynamically
   recognizes format (implements feature #707425)
@@ -74,6 +81,11 @@ Fixes:
 * Fixed toString() of AtomType.
 * Fixed bug in AtomContainer constructor
 * Some compatibility issues with Java1.1 (for applet usage)
+<<<<<<< CHANGELOG
+* Fixed Bond.getAtoms
+* Fixed Bond.toString
+* Fixed (and added) .compare methods for several core classes
+=======
 * Fixed bug #746067
 * Fixed aromaticity flagging of bonds in SmilesParser
 * Fixed possible memory overflow in RandomStructureGenerator
