@@ -34,11 +34,25 @@ public class CoreClassesTests {
 
     public static Test suite () {
         TestSuite suite= new TestSuite("The cdk.core Tests");
-        suite.addTest(AtomTest.suite());
         suite.addTest(AtomContainerTest.suite());
+        suite.addTest(AtomEnumerationTest.suite());
+        suite.addTest(AtomTest.suite());
+        suite.addTest(AtomTypeTest.suite());
+        suite.addTest(BioPolymerTest.suite());
+        suite.addTest(BondTest.suite());
+        suite.addTest(ChemModelTest.suite());
         suite.addTest(ChemObjectTest.suite());
+        suite.addTest(ChemSequenceTest.suite());
+        suite.addTest(CrystalTest.suite());
+        suite.addTest(ElectronContainerTest.suite());
+        suite.addTest(ElementTest.suite());
+        suite.addTest(IsotopeTest.suite());
+        suite.addTest(MoleculeTest.suite());
         suite.addTest(MonomerTest.suite());
         suite.addTest(PolymerTest.suite());
+        suite.addTest(RingTest.suite());
+        suite.addTest(RingSetTest.suite());
+        suite.addTest(SetOfMoleculesTest.suite());
         return suite;
     }
 

@@ -17,6 +17,7 @@ New:
 * Added a color scheme for atoms based on the partial
   atomic charge
 * A LonePair class is implemented (RFC #5)
+* More JUnit Tests.
 
 Fixes:
 * HOSECodeGenerator now generates correctly ranked n-sphere codes.
@@ -30,6 +31,8 @@ Fixes:
   (bug #639455)
 * Added natural occuring isotopes with atomic numbers
   above 60 (fixes #642426 and #609834)
+* Tar package can now be build on Woody 3.0 (with docbook stylesheets
+  1.40)
 
 API changes:
 * Two getBondNumber() methods are added to AtomContainer.

@@ -203,6 +203,7 @@ public class Crystal extends AtomContainer {
      */
     public void setSpaceGroup(String group) {
         if ("P1".equals(group)) {
+            setZ(1);
         } else if ("P 2_1 2_1 2_1".equals(group)) {
             setZ(4);
         } else {

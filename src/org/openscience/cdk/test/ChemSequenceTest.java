@@ -26,53 +26,24 @@
 package org.openscience.cdk.test;
 
 import org.openscience.cdk.*;
-import org.openscience.cdk.tools.*;
-import org.openscience.cdk.templates.MoleculeFactory;
 import java.util.*;
 import junit.framework.*;
 import javax.vecmath.*;
 
 /**
- * Checks the funcitonality of the AtomContainer.
+ * Checks the funcitonality of the ChemSequence class.
+ *
+ * @see org.openscience.cdk.ChemSequence
  */
-public class AtomContainerTest extends TestCase {
+public class ChemSequenceTest extends TestCase {
 
-    public AtomContainerTest(String name) {
+    public ChemSequenceTest(String name) {
         super(name);
     }
 
     public void setUp() {}
 
     public static Test suite() {
-        return new TestSuite(AtomContainerTest.class);
+        return new TestSuite(ChemSequenceTest.class);
     }
-
-    public void testSetAtoms() {
-        Atom[] atoms = new Atom[4];
-        atoms[0] = new Atom("C");
-        atoms[1] = new Atom("C");
-        atoms[2] = new Atom("C");
-        atoms[3] = new Atom("O");
-        AtomContainer ac = new AtomContainer();
-        ac.setAtoms(atoms);
-        
-        assertEquals(4, ac.getAtomCount());
-    }
-
-    /**
-     * Only test wether the atoms are correctly cloned.
-     */
-	public void testClone() {
-		Molecule molecule = MoleculeFactory.makeAlphaPinene();
-		Molecule clonedMol = (Molecule)molecule.clone();
-		assertTrue(molecule.getAtomCount() == clonedMol.getAtomCount());
-		for (int f = 0; f < molecule.getAtomCount(); f++) {
-			for (int g = 0; g < clonedMol.getAtomCount(); g++) {
-				assertNotNull(molecule.getAtomAt(f));
-				assertNotNull(clonedMol.getAtomAt(g));
-				assertTrue(molecule.getAtomAt(f) != clonedMol.getAtomAt(g));
-			}
-		}
-	}
-
 }
