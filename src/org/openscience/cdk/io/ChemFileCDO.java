@@ -138,6 +138,8 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
       } else if (objectType.equals("Animation")) {
         currentChemSequence = new ChemSequence();
       } else if (objectType.equals("Frame")) {
+        currentChemModel = new ChemModel();
+        currentSetOfMolecules = new SetOfMolecules();
         currentMolecule = new Molecule();
       } else if (objectType.equals("Crystal")) {
         currentMolecule = new Crystal(currentMolecule);
@@ -152,7 +154,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
       } else if (objectType.equals("Reaction")) {
           if (currentSetOfReactions == null) startObject("SetOfReactions");
           currentReaction = new Reaction();
-      } else if (objectType.equals("Reactant")) {          
+      } else if (objectType.equals("Reactant")) {
           if (currentReaction == null) startObject("Reaction");
           currentMolecule = new Molecule();
       } else if (objectType.equals("Product")) {
@@ -178,7 +180,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
             currentChemSequence.addChemModel(currentChemModel);
             /* FIXME: this should be when document is closed! */ 
         } else if (objectType.equals("Frame")) {
-            endObject("Molecule");
+            // endObject("Molecule");
         } else if (objectType.equals("Animation")) {
             addChemSequence(currentChemSequence);
             logger.info("This file has " + getChemSequenceCount() + " sequence(s).");
@@ -216,7 +218,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
       } else if (objectType.equals("Reaction")) {
           logger.debug("Adding reaction to SOR");
           currentSetOfReactions.addReaction(currentReaction);
-      } else if (objectType.equals("Reactant")) {          
+      } else if (objectType.equals("Reactant")) {
           currentReaction.addReactant((Molecule)currentMolecule);
       } else if (objectType.equals("Product")) {
           currentReaction.addProduct((Molecule)currentMolecule);
