@@ -1,0 +1,63 @@
+<refentry id="cdk-rfc-25">
+
+  <refentryinfo>
+    <revhistory>
+      <revision>
+        <revnumber>1</revnumber>
+        <date>2004-01-07</date>
+        <authorinitials>elw</authorinitials>
+        <revremark>
+          See <ulink url="http://sourceforge.net/mailarchive/message.php?msg_id=6185972">email archive</ulink>.
+        </revremark>
+      </revision>
+    </revhistory>
+  </refentryinfo>
+
+
+  <refnamediv>
+    <refname>RFC CDK #25</refname>
+  </refnamediv>
+
+  <refsect1>
+    <title>Replaces</title>
+    <para>This RFC replaces <ulink url="http://cdk.sourceforge.net/rfc6.html">RFC #6</ulink> (if accepted).</para>
+  </refsect1>
+
+  <refsect1>
+    <title>Proposal</title>
+    <para>
+To move the formal charge field of Atom and the get/setFormalCharge() methods
+to the AtomType class.
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>Reason</title>
+    <para>
+A formal charge is something more related to an atom type than to an actual 
+ instance. The field will still be accesible from the Atom class too, because 
+ it inherits from AtomType. The move, however, will allow atom types to be 
+ described with a formal charge.
+    </para>
+    <para> 
+ The problem that brought this forward, is the N4 atom type in the structgen 
+ atom type list (CVS 2003-10-01) which has a positive charge, but cannot be 
+ marked as such with the current API.
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>Proposers</title>
+    <para>
+      Egon Willighagen.
+    </para>
+  </refsect1>
+
+    <refsect1>
+    <title>Date</title>
+    <para>
+      2003-10-01.
+    </para>
+  </refsect1>
+
+</refentry>
