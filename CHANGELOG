@@ -16,6 +16,8 @@ New:
 * Added trigger to auto update of number of implicit hydrogens 
   (implements JCP RFE #813152)
 * Added a loadPlugin(String pluginClassName) method to the CDKPluginManager
+* New methods for detecting file format using an InputStream; Gziped files can
+  be analyzed too now.
 
 Fixes:
 * Added missing get() methods to cdk.applications.plugin.EditBus interface

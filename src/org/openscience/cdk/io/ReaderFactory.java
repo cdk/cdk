@@ -30,20 +30,23 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.tools.LoggingTool;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.CharArrayReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Reader;
 
 import java.util.StringTokenizer;
 import java.util.Vector;
 
+import java.util.zip.GZIPInputStream;
+
 /**
- * A factory for creating ChemObjectReaders. The type of reader 
- * created is determined from the content of the input.
- *
- * <p>The ReaderFactory does not properly rewind (please fix this!),
- * so the resulting ChemObject reader <b>cannot</b> be used.
+ * A factory for creating ChemObjectReaders. The type of reader
+ * created is determined from the content of the input. Formats
+ * of GZiped files can be detected too.
  *
  * @author  Egon Willighagen <egonw@sci.kun.nl>
  * @author  Bradley A. Smith <bradley@baysmith.com>
@@ -51,6 +54,7 @@ import java.util.Vector;
 public class ReaderFactory {
     
     private int headerLength;
+    private LoggingTool logger;
     
     /**
      * Constructs a ReaderFactory which tries to detect the format in the
@@ -67,6 +71,7 @@ public class ReaderFactory {
      * @param headerLength length of the header in number of chars
      */
     public ReaderFactory(int headerLength) {
+        logger = new LoggingTool(this.getClass().getName());
         this.headerLength = headerLength;
     }
     
@@ -77,10 +82,16 @@ public class ReaderFactory {
      * found.
      *
      * <p>The ReaderFactory detects more formats than the CDK
-     * has Readers for.
+     * has Readers for. If the CDK IO Reader is an instance of 
+     * DummyReader, than it Reader is not implemented.
+     *
+     * <p>This method is not able to detect the format of gziped files.
+     * Use guessFormat(InputStream) instead for such files.
      *
      * @throws IOException  if an I/O error occurs
      * @throws IllegalArgumentException if the input is null
+     *
+     * @see #guessFormat(InputStream)
      */
     public String guessFormat(Reader input) throws IOException {
         ChemObjectReader reader = createReader(input);
@@ -90,9 +101,57 @@ public class ReaderFactory {
         return "Format undetermined";
     }
     
+    public String guessFormat(InputStream input) throws IOException {
+        ChemObjectReader reader = createReader(input);
+        if (reader != null) {
+            return reader.getClass().getName();
+        }
+        return "Format undetermined";
+    }
+    
+    /**
+     * Detects the format of the Reader input, and if known, it will return
+     * a CDK Reader to read the format. Note that this Reader might be a
+     * subclass of DummyReader, which means that the Reader does not yet 
+     * have an implementation.
+     *
+     * @see #createReader(Reader)
+     * @see org.openscience.cdk.io.DummyReader
+     */
+    public ChemObjectReader createReader(InputStream input) throws IOException {
+        BufferedInputStream bistream = new BufferedInputStream(input, 8192);
+        InputStream istreamToRead = bistream; // if gzip test fails, then take default
+        bistream.mark(5);
+        int countRead = 0;
+        try {
+            byte[] abMagic = new byte[4];
+            countRead = bistream.read(abMagic, 0, 4);
+            bistream.reset();
+            if (countRead == 4) {
+                if (abMagic[0] == (byte)0x1F && abMagic[1] == (byte)0x8B) {
+                    istreamToRead = new GZIPInputStream(bistream);
+                }
+            }
+        } catch (IOException exception) {
+            logger.error(exception.getMessage());
+            logger.debug(exception);
+        }
+        return createReader(new InputStreamReader(istreamToRead));
+    }
+    
+    /**
+     * Detects the format of the Reader input, and if known, it will return
+     * a CDK Reader to read the format. Note that this Reader might be a
+     * subclass of DummyReader, which means that the Reader does not yet 
+     * have an implementation.
+     *
+     * <p>This method is not able to detect the format of gziped files.
+     * Use createReader(InputStream) instead for such files.
+     *
+     * @see #createReader(InputStream)
+     * @see org.openscience.cdk.io.DummyReader
+     */
     public ChemObjectReader createReader(Reader input) throws IOException {
-        LoggingTool logger = new LoggingTool(this.getClass().getName());
-        
         if (input == null) {
             throw new IllegalArgumentException("input cannot be null");
         }
