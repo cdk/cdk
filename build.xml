@@ -22,7 +22,15 @@
         <property name="src.tests" value="${src}/org/openscience/cdk/test" />
         <property name="reports.tests" value="reports" />
 
-        <!-- CLASSPATH -->
+	<!-- class to run for testing-->
+	<property name="testclass" value="CDKTests" />
+	<property name="runclass" value="applications.Viewer" />
+	<property name="arg1" value="" />
+	<property name="arg2" value="" />
+	<property name="arg3" value="" />
+	<property name="arg4" value="" />
+        
+<!-- CLASSPATH -->
         <path id="project.class.path">
                 <pathelement
                 location="/usr/lib/j2sdk1.3/jre/lib/rt.jar" />
@@ -616,9 +624,38 @@
                 </java>
         </target>
 
+        <target id="run-test" name="run-test" depends="dist-core, dist-extra, dist-test, dist-standard" 
+                description="Runs an application">
+                <java classname="org.openscience.cdk.test.${testclass}" fork="yes">
+                    <classpath>
+                        <pathelement location="${dist}/jar/cdk-core.jar" />
+                        <pathelement location="${dist}/jar/cdk-standard.jar" />
+                        <pathelement location="${dist}/jar/cdk-io.jar" />
+                        <pathelement location="${dist}/jar/cdk-render.jar" />
+                        <pathelement location="${dist}/jar/cdk-extra.jar" />
+                        <pathelement location="${dist}/jar/cdk-apps.jar" />
+                        <pathelement location="${dist}/jar/cdk-test.jar" />
+                        <pathelement location="${dist}/jar/cdk-libio.jar" />
+                        <pathelement path="${java.class.path}" />
+                        <pathelement location="." />
+                        <fileset dir="${lib}">
+                                <include name="*.jar" />
+                        </fileset>
+                        <fileset dir="${lib}/libio">
+                                <include name="*.jar" />
+                        </fileset>
+                    </classpath>
+                </java>
+        </target>
+
+	
         <target id="run" name="run" depends="dist-core, dist-extra, dist-test, dist-standard" 
                 description="Runs an application">
-                <java classname="org.openscience.cdk.test.tools.SaturationCheckerTest" fork="yes">
+                <java classname="org.openscience.cdk.${runclass}" fork="yes" >
+		   <arg value="${arg1}" />
+		   <arg value="${arg2}" />
+		   <arg value="${arg3}" />
+		   <arg value="${arg4}" />
                     <classpath>
                         <pathelement location="${dist}/jar/cdk-core.jar" />
                         <pathelement location="${dist}/jar/cdk-standard.jar" />
