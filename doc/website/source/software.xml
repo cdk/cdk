@@ -21,6 +21,18 @@
     </para>
     
     <section>
+      <title>HyperDossier</title>
+      <para>
+        <ulink url="http://www.intellidos.com/products/hyperdossier.htm">Intellidos HyperDossier</ulink>
+        is a light weight web application that collates and
+        cross links scientific data. All the latest information about a particular
+        scientific entity, from a variety of sources may be collated into a single
+        electronic dossier. Hyperlinking between these dossiers creates a web of
+        scientific information that may be readily browsed by scientists.
+      </para>
+    </section>
+
+    <section>
       <title>JCPCDK</title>
       <para>
         JCPCDK is the next generation
@@ -79,6 +91,16 @@
     </section>
 
     <section>
+      <title>QueryConstructor</title>
+      <para>
+        <ulink url="http://www.intellidos.com/products/queryconstructor.htm">Intellidos QueryConstructor</ulink>
+        is an ad hoc cross-domain query tool that allows
+        scientists with no knowledge of SQL to build complex queries on complex
+        scientific data.
+      </para>
+    </section>
+
+    <section>
       <title>XB Edit (Working title)</title>
       <para>
         XB Edit is an Extreme Blue (tm) internship project currently
@@ -87,7 +109,6 @@
         uses the CDK for handling the standard chemoinformatical algorithms.
       </para>
     </section>
-
   </section>
 
 </webpage>
