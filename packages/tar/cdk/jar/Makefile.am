@@ -31,7 +31,8 @@ JARLIBS=vecmath1.2-1.14.jar \
   commons-cli-1.0.jar \
   jfontchooser.jar \
   jmolApis.jar \
-  jmolIO.jar
+  jmolIO.jar \
+  jgrapht-0.5.3.jar
 
 EXTRA_DIST=${JARLIBS}
 
