@@ -153,7 +153,12 @@ public class Renderer2D   {
         minmaxReaction[1] = Math.min(minmaxReactants[1], minmaxProducts[1]);
         minmaxReaction[2] = Math.max(minmaxReactants[2], minmaxProducts[2]);
         minmaxReaction[3] = Math.max(minmaxReactants[3], minmaxProducts[3]);
-        paintBoundingBox(minmaxReaction, reaction.getID(), 2*width, graphics);
+        String caption = reaction.getID();
+        if (reaction.getProperty(CDKConstants.TITLE) != null) {
+            caption = reaction.getProperty(CDKConstants.TITLE) + 
+                      " (" + caption + ")";
+        }
+        paintBoundingBox(minmaxReaction, caption, 2*width, graphics);
         
         // paint reactants content
         paintBoundingBox(minmaxReactants, "Reactants", width, graphics);
