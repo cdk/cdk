@@ -1,0 +1,43 @@
+<project name="JmolCDK" default="dist" basedir=".">
+
+  <!-- compile options -->
+  
+  <!-- directories -->
+  <property name="build" value="build" />
+  <property name="sourcedist" value="sourcedist" />
+  <property name="dist" value="dist" />
+  <property name="doc" value="doc" />
+  <property name="src" value="src" />
+  <property name="build.src" value="${build}/${src}" />
+  <property name="lib" value="jar" />
+  <property name="src.tests" value="${src}/org/openscience/cdk/test" />
+  <property name="reports.tests" value="reports" />
+
+  <path id="project.class.path">
+    <fileset dir="${lib}">
+      <include name="*.jar" />
+    </fileset>
+  </path>
+  
+  <target name="compile">
+    <ant antfile="build.xml" target="clean"/>
+    <ant antfile="build.xml" target="init"/>
+    <!-- do them one by one, compile-extra, compile-io requires 1.4 -->
+    <javac srcdir="${build.src}" destdir="${build}" optimize="on" 
+           debug="off" deprecation="off"
+           includesfile="${src}/jmol.classes">
+      <classpath refid="project.class.path" />
+    </javac>
+  </target>
+
+  <target name="dist" depends="compile">
+    <ant antfile="build.xml" target="dist.init"/>
+    <jar jarfile="${dist}/jar/jmolcdk.jar">
+      <fileset dir="${build}">
+        <!-- Put only required class files in the jar -->
+        <include name="**/*.class" />
+      </fileset>
+    </jar>
+  </target>
+
+</project>
