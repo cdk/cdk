@@ -35,6 +35,8 @@ package org.openscience.cdk;
  *   radical.addElectronContainer(new SingleElectron(carbon));
  * </pre> 
  *
+ * @cdkPackage experimental
+ *
  * @keyword radical
  */
 public class SingleElectron extends ElectronContainer implements java.io.Serializable, Cloneable

@@ -41,6 +41,8 @@ import org.openscience.cdk.tools.ReactionManipulator;
  * Methods are implemented for Atom, Bond, AtomContainer, SetOfAtomContainers
  * and Reaction.
  *
+ * @cdkPackage standard
+ *
  * @author   Egon Willighagen
  * @created  2003-04-01
  *

@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2002-2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2002-2004  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -32,6 +32,8 @@ import java.util.Iterator;
  *  This class implements an IUPAC name.
  *  It provides a String representation of the name, and,
  *  in addition, a list of applied rules.
+ *
+ * @cdkPackage experimental
  *
  * @author Egon Willighagen
  */

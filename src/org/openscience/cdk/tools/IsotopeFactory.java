@@ -3,7 +3,7 @@
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 1997-2004  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2001-2004  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -51,6 +51,8 @@ import org.w3c.dom.*;
  *   IsotopeFactory factory = IsotopeFactory.getInstance();
  *   Isotope major = factory.getMajorIsotope("H");
  * </pre> 
+ *
+ * @cdkPackage standard
  *
  * @author     steinbeck
  * @created    2001-08-29

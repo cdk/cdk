@@ -33,6 +33,9 @@ import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.table.*;
 
+/**
+ * @cdkPackage applications
+ */
 public class ChemObjectPropertyEditorTableModel extends AbstractTableModel {
     
     private String[] columnNames;

@@ -44,6 +44,8 @@ import java.util.Comparator;
  *  A sorted table model. The objects in the model must implement the Comparable
  *  interface.
  *
+ * @cdkPackage applications
+ *
  *  @author Bradley A. Smith <bradley@baysmith.com>
  */
 public class SortedTableModel extends ListeningTableModel {

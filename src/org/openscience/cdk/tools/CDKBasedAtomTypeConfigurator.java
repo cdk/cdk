@@ -33,6 +33,9 @@ import org.xml.sax.*;
 import javax.xml.parsers.*;
 import org.w3c.dom.*;
 
+/**
+ * @cdkPackage standard
+ */
 public class CDKBasedAtomTypeConfigurator implements AtomTypeConfigurator {
 
     private String configFile = "org.openscience.cdk.config.structgen_atomtypes.xml";

@@ -35,6 +35,8 @@ import java.util.Vector;
  * IMPORTANT: it is highly experimental, and NOT
  * usefull for use.
  *
+ * @cdkPackage experimental
+ *
  * @author  Egon Willighagen <egonw@sci.kun.nl> 
  * @created 2002-05-21
  *

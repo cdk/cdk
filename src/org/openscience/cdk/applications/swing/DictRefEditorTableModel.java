@@ -35,6 +35,9 @@ import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.table.*;
 
+/**
+ * @cdkPackage applications
+ */
 public class DictRefEditorTableModel extends AbstractTableModel {
     
     private LoggingTool logger;

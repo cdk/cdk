@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  * 
- * Copyright (C) 2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2003-2004  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -39,6 +39,8 @@ import org.openscience.cdk.exception.*;
  * will find the Atom in the model by traversing the ChemModel's
  * SetOfMolecules, Crystal and SetOfReactions fields and remove
  * it with the removeAtomAndConnectedElectronContainers(Atom) method.
+ *
+ * @cdkPackage standard
  *
  * @see org.openscience.cdk.AtomContainer#removeAtomAndConnectedElectronContainers(Atom)
  */

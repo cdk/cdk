@@ -27,6 +27,8 @@ package org.openscience.cdk;
  * Base class for storing interactions like hydrogen bonds and ionic interactions.
  * The ElectronContainer contains zero electrons by default.
  *
+ * @cdkPackage experimental
+ *
  * @keyword orbital
  * @keyword association
  * @keyword bond

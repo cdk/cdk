@@ -39,6 +39,8 @@ import java.text.DecimalFormat;
 /**
  * This class is a function plotter
  *
+ * @cdkPackage applications
+ *
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
  * @created 2001-07-02
  */

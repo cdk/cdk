@@ -34,6 +34,8 @@ import javax.swing.event.TableModelEvent;
  *  A table model wrapper which listens to model changes and fowards them
  *  to other listeners.
  *
+ * @cdkPackage applications
+ *
  *  @author Bradley A. Smith <bradley@baysmith.com>
  */
 public class ListeningTableModel extends AbstractTableModel

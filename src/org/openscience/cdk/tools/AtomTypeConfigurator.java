@@ -3,7 +3,7 @@
  * $Date$    
  * $Revision$
  *
- * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2004  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -26,6 +26,10 @@ package org.openscience.cdk.tools;
 import java.util.Vector;
 import java.io.InputStream;
 
+/**
+ *
+ * @cdkPackage standard
+ */
 public interface AtomTypeConfigurator {
     
     /**

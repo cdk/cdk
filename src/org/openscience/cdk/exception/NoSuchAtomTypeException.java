@@ -1,10 +1,9 @@
-/*
- * $RCSfile$   
+/* $RCSfile$   
  * $Author$   
  * $Date$   
  * $Revision$
  *
- *  Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 1997-2004  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -27,9 +26,11 @@
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *
  */
+package org.openscience.cdk.exception;
 
- package org.openscience.cdk.exception;
-
+/**
+ * @cdkPackage standard
+ */
 public class NoSuchAtomTypeException extends CDKException {
 
     public NoSuchAtomTypeException(String message) {

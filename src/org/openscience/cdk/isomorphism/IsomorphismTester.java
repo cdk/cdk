@@ -3,7 +3,7 @@
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2001-2004  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -36,6 +36,8 @@ import java.util.*;
  * order into account.
  *
  * <p>Alternatively, you can use the UniversalIsomorphismTester.
+ *
+ * @cdkPackage standard
  *
  * @author     steinbeck
  * @created    2001-09-10

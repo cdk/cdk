@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2003-2004  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sf.net
  *
@@ -33,6 +33,10 @@ import org.openscience.cdk.*;
 import org.xml.sax.*;
 import org.xml.sax.helpers.*;
 
+/**
+ *
+ * @cdkPackage standard
+ */
 public class IsotopeHandler extends DefaultHandler {
 
     private LoggingTool logger;

@@ -31,7 +31,9 @@ import javax.swing.JPanel;
  * Interface that Jmol Plugins must implement. The version of this
  * interface is given below.
  *
- * @version 1.0
+ * @cdkPackage applications
+ *
+ * @version $Revision$
  */
 public interface CDKPluginInterface {
 

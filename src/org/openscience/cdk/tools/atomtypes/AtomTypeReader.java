@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2002-2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2002-2004  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -35,6 +35,9 @@ import org.xml.sax.*;
 import java.io.*;
 import java.util.Vector;
 
+/**
+ * @cdkPackage standard
+ */
 public class AtomTypeReader {
 
     private XMLReader parser;

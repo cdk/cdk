@@ -33,6 +33,10 @@ import org.openscience.cdk.*;
 import org.xml.sax.*;
 import org.xml.sax.helpers.*;
 
+/**
+ *
+ * @cdkPackage standard
+ */
 public class AtomTypeHandler extends DefaultHandler {
 
     private LoggingTool logger;

@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2004  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -34,6 +34,8 @@ import java.awt.Color;
  * the Atom's color:
  * uncharged atoms are colored white, positively charged
  * atoms are blue, and negatively charge atoms are red.
+ *
+ * @cdkPackage standard
  */
 public class PartialAtomicChargeColors implements AtomColorer {
 

@@ -48,6 +48,8 @@ import javax.vecmath.*;
  *  output: CML, MDL MOL/SDF file, PDB, ShelX, SMILES, SVG, XYZ, 
  *          Gaussian Input, CDK source code
  *
+ * @cdkPackage applications
+ *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  *
  * @keyword command line util

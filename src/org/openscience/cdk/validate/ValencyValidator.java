@@ -36,6 +36,8 @@ import org.openscience.cdk.tools.LoggingTool;
  * Validator which tests a the valencies of atoms using the
  * ValencyChecker.
  *
+ * @cdkPackage experimental
+ *
  * @author   Egon Willighagen
  * @created  2004-01-14
  */ 

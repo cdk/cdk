@@ -1,10 +1,9 @@
-/*
- *  $RCSfile$
+/*  $RCSfile$
  *  $Author$
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 2002-2003  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2003-2004  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -34,11 +33,13 @@ import java.util.Locale;
 import java.util.Vector;
 
 /**
- *  This class implements a IUPAC name generator.
+ * This class implements a IUPAC name generator.
  *
- *@author     Egon Willighagen
- *@created    October 21, 2003
- *@keyword    IUPAC name
+ * @cdkPackage applications
+ *
+ * @author     Egon Willighagen
+ * @created    2003-10-22
+ * @keyword    IUPAC name
  */
 public class IUPACNameGenerator
 {

@@ -34,6 +34,8 @@ import java.util.*;
  * </pre>
  *
  * <p>Uses log4j as a backend if available, and System.out otherwise.
+ *
+ * @cdkPackage standard
  */
 public class LoggingTool {
 

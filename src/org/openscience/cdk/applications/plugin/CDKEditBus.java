@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2003-2004  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -32,7 +32,9 @@ import org.openscience.cdk.ChemModel;
  * order to have plugins perform operations in the application.
  * For example, Jmol's DisplayControl class implements this interface.
  *
- * @version 1.0
+ * @cdkPackage applications
+ *
+ * @version $Revision$
  */
 public interface CDKEditBus {
 

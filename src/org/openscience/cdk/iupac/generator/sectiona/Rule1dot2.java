@@ -35,6 +35,8 @@ import org.openscience.cdk.templates.*;
 /**
  *  This class implements IUPAC rule 1.2 in Section A: Alkyls.
  *
+ * @cdkPackage experimental
+ *
  * @author Egon Willighagen
  */
 public class Rule1dot2 extends NamingRule {

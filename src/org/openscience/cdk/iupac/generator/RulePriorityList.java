@@ -36,6 +36,8 @@ import java.util.Locale;
  *  RulePriorityList priorities = RulePrioritList.getInstance(l);
  *  </pre>
  *
+ * @cdkPackage experimental
+ *
  * @see java.util.Locale
  * @author Egon Willighagen
  */

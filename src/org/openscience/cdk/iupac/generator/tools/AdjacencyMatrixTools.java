@@ -30,6 +30,8 @@ import org.openscience.cdk.isomorphism.IsomorphismTester;
 /**
  * Methods for playing with Adjacency Matrices
  *
+ * @cdkPackage experimental
+ *
  * @author Egon Willighagen
  */
 public class AdjacencyMatrixTools {

@@ -3,7 +3,7 @@
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 1997-2004  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -51,6 +51,8 @@ import org.openscience.cdk.exception.*;
  *  AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/jmol_atomtypes.txt");
  *  AtomType[] types = factory.getAtomTypes("C");
  *  </pre>
+ *
+ * @cdkPackage standard
  *
  * @author     steinbeck
  * @created    2001-08-29

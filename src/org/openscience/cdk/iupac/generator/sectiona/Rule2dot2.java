@@ -37,6 +37,8 @@ import org.openscience.cdk.layout.AtomPlacer;
  * This rule assumes (and does <b>not</b> check) that the
  * molecule is a lineair carbon chain.
  *
+ * @cdkPackage experimental
+ *
  * @author Egon Willighagen
  */
 public class Rule2dot2 extends NumberingRule {

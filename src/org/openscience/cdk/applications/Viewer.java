@@ -40,6 +40,8 @@ import javax.vecmath.*;
 /**
  * Command line utility for viewing chemical information from files.
  *
+ * @cdkPackage applications
+ *
  * @author     steinbeck
  * @author     egonw
  * @created    2002-10-03

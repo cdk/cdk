@@ -1,10 +1,9 @@
-/*
- *  $RCSfile$
+/*  $RCSfile$
  *  $Author$
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2003-2004  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -34,6 +33,8 @@ import java.util.*;
  *
  * References:
  *   <a href="http://cdk.sf.net/biblio.html#MOR65">MOR65</a>
+ *
+ * @cdkPackage standard
  *
  * @author     shk3
  * @created    2003-06-30

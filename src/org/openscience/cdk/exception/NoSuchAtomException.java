@@ -1,10 +1,9 @@
-/*
- * $RCSfile$   
+/* $RCSfile$   
  * $Author$   
  * $Date$   
  * $Revision$
  * 
- * Copyright (C) 2001-2002  The Chemistry Development Kit (CKD) project
+ * Copyright (C) 2001-2004  The Chemistry Development Kit (CKD) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *

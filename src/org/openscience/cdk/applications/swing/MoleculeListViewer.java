@@ -39,6 +39,8 @@ import java.util.zip.*;
 import java.io.*;
 
 /**
+ * @cdkPackage applications
+ *
  * @author     steinbeck
  * @created    2002-10-29
  */

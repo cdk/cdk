@@ -3,7 +3,7 @@
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 1997-2004  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2002-2004  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -47,6 +47,8 @@ import org.openscience.cdk.*;
  * <p>This parser does not parse stereochemical information.
  *
  * <p>References: <a href="http://cdk.sf.net/biblio.html#WEI88">WEI88</a>
+ *
+ * @cdkPackage standard
  *
  * @author     Christoph Steinbeck
  * @author     Egon Willighagen

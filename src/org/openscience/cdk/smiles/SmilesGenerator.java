@@ -53,6 +53,8 @@ import javax.vecmath.Vector2d;
  *   <a href="http://cdk.sf.net/biblio.html#WEI88">WEI88</a>,
  *   <a href="http://cdk.sf.net/biblio.html#WEI89">WEI89</a>
  *
+ * @cdkPackage standard
+ *
  * @author     Oliver Horlacher,
  * @author     Stefan Kuhn (chiral smiles)
  * @created    2002-02-26

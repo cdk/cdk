@@ -36,6 +36,9 @@ import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.*;
 
+/**
+ * @cdkPackage applications
+ */
 public class MoleculesTable extends JPanel implements CDKChangeListener {
   private JTable table;
 	private String title = "Molecule Viewer";

@@ -34,6 +34,8 @@ import org.openscience.cdk.templates.*;
 /**
  *  This class implements IUPAC rule 1.1 in Section A: Alkanes.
  *
+ * @cdkPackage experimental
+ *
  * @author Egon Willighagen
  */
 public class Rule1dot1 extends NamingRule {

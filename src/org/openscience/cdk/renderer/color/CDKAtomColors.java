@@ -29,6 +29,8 @@ import java.awt.Color;
 
 /**
  * Gives a short table of atom colors for 3D display.
+ *
+ * @cdkPackage standard
  */
 public class CDKAtomColors implements AtomColorer {
 

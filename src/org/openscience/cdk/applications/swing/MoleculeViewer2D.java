@@ -41,6 +41,8 @@ import java.awt.*;
 /**
  * A Swing-based implementation of Renderer2D for viewing molecules.
  *
+ * @cdkPackage applications
+ *
  * @author     steinbeck
  * @created    2002-05-30
  */

@@ -32,6 +32,8 @@ import java.util.Vector;
  *  It provides a String representation of the name, and,
  *  in addition, a list of applied rules.
  *
+ * @cdkPackage experimental
+ *
  * @author Egon Willighagen
  */
 public class IUPACNamePart {

@@ -38,8 +38,7 @@
         
         <!-- CLASSPATH -->
         <path id="project.class.path">
-                <pathelement
-                location="/usr/lib/j2sdk1.3/jre/lib/rt.jar" />
+                <pathelement location="${java.ext.dirs}/rt.jar" />
 
                 <pathelement location="." />
                 <fileset dir="${lib}">
@@ -107,7 +106,7 @@
           
         </target>
 
-        <target id="init" name="init" depends="check, setupBuildDir, patchForJava13"/>
+        <target id="init" name="init" depends="check, setupBuildDir, patchForJava13, src.star.javafiles"/>
         
         <target id="setupBuildDir" name="setupBuildDir">
                 <tstamp />
@@ -200,6 +199,7 @@
             <move todir="${src}">
                 <fileset dir=".">
                   <include name="*.javafiles"/>
+                  <include name="*.classes"/>
                 </fileset>
             </move>
         </target>
@@ -379,7 +379,8 @@
 
         <target id="compile-extra" name="compile-extra" depends="dist-standard, javacc">
             <javac srcdir="${build.src}" destdir="${build}" optimize="${optimization}" 
-                   debug="${debug}" deprecation="${deprecation}">
+                   debug="${debug}" deprecation="${deprecation}"
+                   includesfile="${src}/extra.javafiles">
 
                 <classpath refid="project.class.path" />
                 <classpath>
@@ -390,9 +391,6 @@
                 </classpath>
 
                 <excludesfile name="${src}/java3d.javafiles" />
-                <excludesfile name="${src}/experimental.javafiles" />
-                <excludesfile name="${src}/applications.javafiles" />
-                <exclude name="org/openscience/cdk/io/**/*.java" />
                 <exclude name="org/openscience/cdk/libio/**/*.java" />
                 <exclude name="org/openscience/cdk/test/**/*.java" />
             </javac>
@@ -498,21 +496,8 @@
 
                 <!-- generate lists of class files that should end up in
                      the jars for the modules -->
-                <copy file="${src}/core.javafiles" tofile="${src}/core.classes"/>
-                <replace file="${src}/core.classes" token=".java" value=".class"/>
-                
                 <copy file="${src}/java3d.javafiles" tofile="${src}/java3d.classes"/>
                 <replace file="${src}/java3d.classes" token=".java" value=".class"/>
-                
-                <copy file="${src}/standard.javafiles" tofile="${src}/standard.classes"/>
-                <replace file="${src}/standard.classes" token=".java" value=".class"/>
-
-                <copy file="${src}/applications.javafiles" tofile="${src}/applications.classes"/>
-                <replace file="${src}/applications.classes" token=".java" value=".class"/>
-                
-                <copy file="${src}/experimental.javafiles" tofile="${src}/experimental.classes"/>
-                <replace file="${src}/experimental.classes" token=".java" value=".class"/>
-                
         </target>
 
         <target id="dist-core" name="dist-core" depends="compile-core, dist.init">

@@ -29,6 +29,8 @@ import java.util.ResourceBundle;
 /**
  *  This class implements a name localizer.
  *
+ * @cdkPackage experimental
+ *
  * @author Egon Willighagen
  */
 public class IUPACNameLocalizer {

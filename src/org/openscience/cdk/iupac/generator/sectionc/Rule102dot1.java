@@ -34,6 +34,8 @@ import org.openscience.cdk.isomorphism.IsomorphismTester;
 /**
  *  This class implements IUPAC rule 102.1 in Section C.
  *
+ * @cdkPackage experimental
+ *
  * @author Egon Willighagen
  */
 public class Rule102dot1 extends NamingRule {

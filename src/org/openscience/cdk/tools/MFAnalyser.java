@@ -31,12 +31,14 @@ import org.openscience.cdk.*;
 import java.util.*;
 
 /** 
-  * Analyses a molecular formula given in String format and builds 
-  * an AtomContainer with the Atoms in the molecular formula.
-  *
-  * @keyword molecule, molecular mass
-  * @keyword molecule, molecular formula
-  */
+ * Analyses a molecular formula given in String format and builds 
+ * an AtomContainer with the Atoms in the molecular formula.
+ *
+ * @cdkPackage standard
+ *
+ * @keyword molecule, molecular mass
+ * @keyword molecule, molecular formula
+ */
 public class MFAnalyser{
 	
 	private String MF;

@@ -32,6 +32,8 @@ import org.openscience.cdk.isomorphism.IsomorphismTester;
 /**
  * This class is used the name carbon chains.
  *
+ * @cdkPackage experimental
+ *
  * @author Egon Willighagen
  */
 public class CarbonChainNames {

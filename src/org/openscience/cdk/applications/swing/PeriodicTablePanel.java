@@ -31,6 +31,8 @@ import javax.swing.*;
 /**
  * JPanel version of the periodic system.
  *
+ * @cdkPackage applications
+ *
  * @author   Egon Willighagen
  * @author   Geert Josten
  */

@@ -34,6 +34,8 @@ import org.openscience.cdk.layout.AtomPlacer;
 /**
  *  This class implements IUPAC rule 2.1 in Section A.
  *
+ * @cdkPackage experimental
+ *
  * @author Egon Willighagen
  */
 public class Rule2dot1 extends NamingRule {

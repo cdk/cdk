@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2003-2004 The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -36,6 +36,8 @@ import java.io.*;
 
 /**
  * Command line utility that will generate fingerprints for a set of files.
+ *
+ * @cdkPackage applications
  *
  * @author  Egon Willighagen
  * @created 2003-08-14

@@ -3,7 +3,7 @@
  * $Date$    
  * $Revision$
  *
- * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2004  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-developers@lists.sourceforge.net
  *
@@ -35,6 +35,8 @@ import java.awt.Color;
  * defined in Jmol v5. This class was added to be able to port
  * Jmol to CDK. The AtomType's themselves seems have a computational
  * background, but this is not clear. 
+ *
+ * @cdkPackage standard
  *
  * @author     Bradley A. Smith <bradley@baysmith.com>
  *

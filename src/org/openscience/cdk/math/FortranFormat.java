@@ -1,10 +1,9 @@
-/*
- * $RCSfile$
+/* $RCSfile$
  * $Author$
  * $Date$
  * $Revision$
  *
- * Copyright (c) 1998 The Chemistry Development Kit (CDK) project
+ * Copyright (c) 1998-2004  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -34,12 +33,15 @@ import java.io.*;
 /**
  * Converts a String representation of a Fortran double to a double.
  *
- * A modified version of the atof method provided in the Core Java
+ * <p>A modified version of the atof method provided in the Core Java
  * books by Cay S. Horstmann & Gary Cornell.  The main difference
  * here is that we scan for fortran double precision characters
  * ('D' and 'd') which often cause the C versions of atof to
  * barf.
- *   --Dan Gezelter
+ *
+ * @author Dan Gezelter
+ *
+ * @cdkPackage standard
  */
 public class FortranFormat {
     /**
