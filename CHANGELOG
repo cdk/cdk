@@ -20,6 +20,7 @@ New:
 * Added a AtomParity class which can be stored in AtomContainer
 * Mol2 atom types now include hybridization which is now also read
 * SubstructureFinder now uses the SMARTS engine
+* Renderer2D font can now be set (closes JCP RFE #901009)
 
 Fixes:
 * Tropylium is now recognised as aromatic (closes CDK bug #957627)
@@ -33,6 +34,8 @@ Fixes:
 * Fixed Mol2 reader (closes #964216)
 * Fixed SmilesGenerator: now takes into account sp2 states (closes #957632)
 * FileFormatGuesser should use ChemObjectIO.getFormatName()
+* cdk-all is now a self containing one-jar big CDK library 
+  (try java -jar cdk-all.jar)
 
 API changes:
 * AtomTypeFactory and IsotopeFactory moved from cdk.tools to cdk.config

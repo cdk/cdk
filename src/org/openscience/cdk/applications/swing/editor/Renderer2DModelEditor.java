@@ -23,10 +23,18 @@
  */
 package org.openscience.cdk.applications.swing.editor;
 
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+
+import com.ozten.font.JFontChooser; // from jfontchooser.jar
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemObject;
@@ -35,8 +43,9 @@ import org.openscience.cdk.renderer.Renderer2DModel;
 
 /**
  * @cdk.module applications
+ * @cdk.builddepends jfontchooser.jar
  */
-public class Renderer2DModelEditor extends FieldTablePanel {
+public class Renderer2DModelEditor extends FieldTablePanel implements ActionListener {
     
     private JCheckBox drawNumbers;
     private JCheckBox showAtomAtomMapping;
@@ -47,15 +56,22 @@ public class Renderer2DModelEditor extends FieldTablePanel {
     private JCheckBox showAromaticityInCDKStyle;
     private JCheckBox colorAtomsByType;
     private JCheckBox showToolTip;
+    private JLabel fontName;
+    private JButton chooseFontButton;
+    private Font currentFont;
+    
+    private JFrame frame;
     
     private Renderer2DModel model;
     
-	public Renderer2DModelEditor() {
+	public Renderer2DModelEditor(JFrame frame) {
         super();
+        this.frame = frame;
         constructPanel();
 	}
     
     private void constructPanel() {
+        currentFont = null;
         drawNumbers = new JCheckBox();
         addField("Draw atom numbers", drawNumbers);
         showAtomAtomMapping = new JCheckBox();
@@ -74,6 +90,12 @@ public class Renderer2DModelEditor extends FieldTablePanel {
         addField("Color atoms by element", colorAtomsByType);
         showToolTip = new JCheckBox();
         addField("Show tooltips", showToolTip);        
+        fontName = new JLabel();
+        addField("Font name", fontName);
+        chooseFontButton = new JButton("Choose Font...");
+        chooseFontButton.addActionListener(this);
+        chooseFontButton.setActionCommand("chooseFont");
+        addField("", chooseFontButton);
     }
     
     public void setModel(Renderer2DModel model) {
@@ -87,6 +109,10 @@ public class Renderer2DModelEditor extends FieldTablePanel {
         showAromaticityInCDKStyle.setSelected(model.getShowAromaticityInCDKStyle());
         colorAtomsByType.setSelected(model.getColorAtomsByType());
         showToolTip.setSelected(model.getShowTooltip());
+        currentFont = model.getFont();
+        if (currentFont != null) {
+            fontName.setText(currentFont.getFontName());
+        }
         validate();
     }
 	
@@ -100,7 +126,21 @@ public class Renderer2DModelEditor extends FieldTablePanel {
         model.setShowAromaticityInCDKStyle(showAromaticityInCDKStyle.isSelected());
         model.setColorAtomsByType(colorAtomsByType.isSelected());
         model.setShowTooltip(showToolTip.isSelected());
+        model.setFont(currentFont);
     }
+    
+    /**
+     * Required by the ActionListener interface.
+     */
+    public void actionPerformed(ActionEvent e) {
+        if ("chooseFont".equals(e.getActionCommand())) {
+            Font newFont = JFontChooser.showDialog(this.frame, "Choose a Font", "Carbon Dioxide", currentFont);
+            if (newFont != null) {
+                currentFont = newFont;
+                fontName.setText(currentFont.getFontName());
+            }
+        }
+    }     
 }
 
 

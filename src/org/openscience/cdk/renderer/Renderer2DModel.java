@@ -29,13 +29,13 @@ package org.openscience.cdk.renderer;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Point;
 import java.awt.Polygon;
 import java.util.EventObject;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Vector;
-
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
@@ -126,6 +126,19 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
     private boolean showTooltip = false;
     
     private HashMap toolTipTextMap = new HashMap();
+    
+    private Font customFont = null;
+    
+    /**
+     * @return null if no custom font set
+     */
+    public Font getFont() {
+        return customFont;
+    }
+    
+    public void setFont(Font font) {
+        this.customFont = font;
+    }
     
     /**
      * Returns the active background dimensions, thus applying the zoom

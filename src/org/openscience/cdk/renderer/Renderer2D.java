@@ -287,7 +287,8 @@ public class Renderer2D implements MouseMotionListener   {
         graphics.drawRect((int)screenCoords[0], (int)screenCoords[3], width, heigth);
 
         // draw reaction ID
-        Font unscaledFont = graphics.getFont();
+        Font unscaledFont = r2dm.getFont();
+        if (unscaledFont == null) unscaledFont = graphics.getFont();
         float fontSize = getScreenSize(unscaledFont.getSize());
         graphics.setFont(unscaledFont.deriveFont(fontSize));
         graphics.drawString(caption, (int)screenCoords[0], (int)screenCoords[3]);
@@ -452,7 +453,8 @@ public class Renderer2D implements MouseMotionListener   {
         
         // The fonts for calculating geometries
         float subscriptFraction = 0.7f;
-        Font normalFont = graphics.getFont();
+        Font normalFont = r2dm.getFont();
+        if (normalFont == null) normalFont = graphics.getFont();
         int normalFontSize = normalFont.getSize();
         Font subscriptFont = normalFont.deriveFont(
             normalFontSize*subscriptFraction);
@@ -735,7 +737,8 @@ public class Renderer2D implements MouseMotionListener   {
         }
 
         // The calculation fonts
-        Font normalFont = graphics.getFont();
+        Font normalFont = r2dm.getFont();
+        if (normalFont == null) normalFont = graphics.getFont();
         int normalFontSize = normalFont.getSize();
         // get drawing fonts
         float normalScreenFontSize = getScreenSize(normalFontSize);
@@ -1245,14 +1248,16 @@ public class Renderer2D implements MouseMotionListener   {
       int widestline=0;
       for(int i=0;i<result.length;i++){
         String text2=result[i];
-        Font normalFont = graphics.getFont();
+        Font normalFont = r2dm.getFont();
+        if (normalFont == null) normalFont = graphics.getFont();
         graphics.setFont(normalFont);
         FontMetrics fm = graphics.getFontMetrics();
         int atomSymbolW = (new Integer(fm.stringWidth(text2))).intValue();
         if(atomSymbolW>widestline)
           widestline=atomSymbolW;
       }
-      Font normalFont = graphics.getFont();
+      Font normalFont = r2dm.getFont();
+        if (normalFont == null) normalFont = graphics.getFont();
       graphics.setFont(normalFont);
       FontMetrics fm = graphics.getFontMetrics();
       int[] provcoords={(int)atom.getPoint2d().x+10,(int)atom.getPoint2d().y};

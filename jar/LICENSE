@@ -1,10 +1,10 @@
 This file lists the licenses for the libraries in this directory.
 
 Artistic license <http://www.opensource.org/licenses/artistic-license.php>
-base.jar, cmlAll.jar, pmrlib.jar
+base.jar, cmlAll.jar, pmrlib.jar, stmml.jar
 
 LGPL :
-jmolApis.jar, jmolIO.jar
+jmolApis.jar, jmolIO.jar, jfontchooser.jar
 
 The licenses of these jars have to be checked:
 stmml.jar
