@@ -65,6 +65,7 @@ import org.openscience.cdk.test.qsar.*;
 	suite.addTest(WienerNumbersDescriptorTest.suite());
 	suite.addTest(PetitjeanNumberDescriptorTest.suite());
 	suite.addTest(APolDescriptorTest.suite());
+	suite.addTest(BPolDescriptorTest.suite());
 	suite.addTest(TPSADescriptorTest.suite());
         suite.addTest(DescriptorEngineTest.suite());
 	return suite;
