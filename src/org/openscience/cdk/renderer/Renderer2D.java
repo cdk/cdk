@@ -992,15 +992,7 @@ public class Renderer2D implements MouseMotionListener   {
 	{
 	    graphics.setColor(bondColor);
 		int[] newCoords = GeometryTools.distanceCalculator(coords, r2dm.getBondWidth() / 2);
-        String s = "newCoords: ";
-        for (int i=0; i<newCoords.length; i++)
-            s += newCoords[i] + ", ";
-        logger.debug(s);
         int[] screenCoords = getScreenCoordinates(newCoords);
-        s = "screenCoords: ";
-        for (int i=0; i<screenCoords.length; i++)
-            s += screenCoords[i] + ", ";
-        logger.debug(s);
 		int[] xCoords = {screenCoords[0], screenCoords[2], screenCoords[4], screenCoords[6]};
 		int[] yCoords = {screenCoords[1], screenCoords[3], screenCoords[5], screenCoords[7]};
 	    graphics.fillPolygon(xCoords, yCoords, 4);
@@ -1132,7 +1124,6 @@ public class Renderer2D implements MouseMotionListener   {
         int[] screenCoordinates = new int[coords.length];
         double zoomFactor = r2dm.getZoomFactor();
         final int coordCount = coords.length / 2;
-        logger.debug("pairs: " + coordCount);
         for (int i=0; i<coordCount; i++) {
             screenCoordinates[i*2] = (int)((double)coords[i*2] * zoomFactor);
             screenCoordinates[i*2+1] = graphicsHeight - (int)((double)coords[i*2+1] * zoomFactor);
