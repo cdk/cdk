@@ -1,0 +1,8 @@
+c1ccccc1
+CNNC
+OC(=O)C(CO)N
+CC(=O)O
+C1CCNC1
+CC(C)C
+CCCC
+COC
