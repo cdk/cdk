@@ -35,7 +35,7 @@
         <mkdir dir="${reports.tests}/pmd"/>
         <pmd rulesetfiles="rulesets/basic.xml, rulesets/naming.xml, rulesets/unusedcode.xml, rulesets/imports.xml, rulesets/strings.xml, rulesets/codesize.xml">
             <formatter type="net.sourceforge.pmd.renderers.HTMLRenderer" 
-                     toFile="${reports.tests}/pmd/core.html"/>
+                     toFile="${reports.tests}/pmd/standard.html"/>
             <fileset dir="${src}">
                 <includesfile name="${src}/standard.javafiles"/>
             </fileset>
@@ -46,7 +46,7 @@
         <mkdir dir="${reports.tests}/pmd"/>
         <pmd rulesetfiles="rulesets/basic.xml, rulesets/naming.xml, rulesets/unusedcode.xml, rulesets/imports.xml, rulesets/strings.xml, rulesets/codesize.xml">
             <formatter type="net.sourceforge.pmd.renderers.HTMLRenderer" 
-                     toFile="${reports.tests}/pmd/core.html"/>
+                     toFile="${reports.tests}/pmd/io.html"/>
             <fileset dir="${src}">
                 <includesfile name="${src}/io.javafiles"/>
             </fileset>
@@ -57,7 +57,7 @@
         <mkdir dir="${reports.tests}/pmd"/>
         <pmd rulesetfiles="rulesets/basic.xml, rulesets/naming.xml, rulesets/unusedcode.xml, rulesets/imports.xml, rulesets/strings.xml, rulesets/codesize.xml">
             <formatter type="net.sourceforge.pmd.renderers.HTMLRenderer" 
-                     toFile="${reports.tests}/pmd/core.html"/>
+                     toFile="${reports.tests}/pmd/render.html"/>
             <fileset dir="${src}">
                 <includesfile name="${src}/render.javafiles"/>
             </fileset>
@@ -68,7 +68,7 @@
         <mkdir dir="${reports.tests}/pmd"/>
         <pmd rulesetfiles="rulesets/basic.xml, rulesets/naming.xml, rulesets/unusedcode.xml, rulesets/imports.xml, rulesets/strings.xml, rulesets/codesize.xml">
             <formatter type="net.sourceforge.pmd.renderers.HTMLRenderer" 
-                     toFile="${reports.tests}/pmd/core.html"/>
+                     toFile="${reports.tests}/pmd/extra.html"/>
             <fileset dir="${src}">
                 <includesfile name="${src}/extra.javafiles"/>
             </fileset>
