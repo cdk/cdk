@@ -1,3 +1,31 @@
+/* $RCSfile$
+ * $Author$
+ * $Date$
+ * $Revision$
+ * 
+ * Copyright (C) 2004  The Chemistry Development Kit (CDK) project
+ * 
+ * Contact: cdk-devel@lists.sourceforge.net
+ * 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ * All we ask is that proper credit is given for our work, which includes
+ * - but is not limited to - adding the above copyright notice to the beginning
+ * of your source code files, and to any copyright notice that you may distribute
+ * with programs based on this work.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
+ * 
+ */
 package org.openscience.cdk.test.ringsearch.cyclebasis;
 import java.util.Arrays;
 
@@ -6,14 +34,13 @@ import junit.framework.TestCase;
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org.openscience.cdk.ringsearch.cyclebasis.CycleBasis;
 import org.openscience.cdk.ringsearch.cyclebasis.SimpleCycleBasis;
-/*
- * Created on 08.07.2004
- *
- */
 
 /**
- * @author uli
+ * This class tests the SimpleCycleBasis class.
  *
+ * @cdk.module test
+ *
+ * @author     Ulrich Bauer <baueru@cs.tum.edu>
  */
 public class SimpleCycleBasisTest extends TestCase {
 
@@ -76,14 +103,14 @@ public class SimpleCycleBasisTest extends TestCase {
 		
 		basis = new SimpleCycleBasis( g );
 		assertTrue(basis.cycles().size() == g.edgeSet().size() - g.vertexSet().size() + 1);
-		assertTrue(Arrays.equals(basis.weightVector(), new double[] {3.,3.,3.,3.,3.,3.}) );
+		assertTrue(Arrays.equals(basis.weightVector(), new int[] {3,3,3,3,3,3}) );
 		assertTrue(basis.relevantCycles().size() == 10);
 		assertTrue(basis.essentialCycles().size() == 0);
 		assertTrue(basis.equivalenceClasses().size() == 1);
 	}
 	
 	public void testWeightVector() {
-		assertTrue(Arrays.equals(basis.weightVector(), new double[] {3.,3.,3.,3.,3.,3.,3.,3.}) );
+		assertTrue(Arrays.equals(basis.weightVector(), new int[] {3,3,3,3,3,3,3,3}) );
 	}
 	
 	public void testRelevantCycles() {

@@ -1,3 +1,32 @@
+/* $RCSfile$
+ * $Author$
+ * $Date$
+ * $Revision$
+ * 
+ * Copyright (C) 2004  The Chemistry Development Kit (CDK) project
+ * 
+ * Contact: cdk-devel@lists.sourceforge.net
+ * 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ * All we ask is that proper credit is given for our work, which includes
+ * - but is not limited to - adding the above copyright notice to the beginning
+ * of your source code files, and to any copyright notice that you may distribute
+ * with programs based on this work.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
+ * 
+ */
+
 package org.openscience.cdk.ringsearch.cyclebasis;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,19 +45,22 @@ import org._3pq.jgrapht.alg.DijkstraShortestPath;
 import org._3pq.jgrapht.graph.UndirectedSubgraph;
 import org.openscience.cdk.graph.BiconnectivityInspector;
 
-/*
- * Created on Apr 18, 2004
+/**
+ * A minimum basis of all cycles in a graph.
+ * All cycles in a graph G can be constructed from the basis cycles by binary
+ * addition of their invidence vectors.
+ * 
+ * A minimum cycle basis is a Matroid.
+ * 
+ * @author Ulrich Bauer <baueru@cs.tum.edu>
+ * 
  *
- * To change the template for this generated file go to
- * Window - Preferences - Java - Code Generation - Code and Comments
+ * @cdk.module standard
+ *
+ * @cdk.builddepends jgrapht-0.5.3.jar
+ * @cdk.depends jgrapht-0.5.3.jar
  */
 
-/**
- * @author uli
- *
- * To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Generation - Code and Comments
- */
 public class CycleBasis {
 		
 	//private List cycles = new Vector();
@@ -43,9 +75,14 @@ public class CycleBasis {
 	private boolean isMinimized = false;
 	private List subgraphBases = new Vector();
 		
-	public CycleBasis (UndirectedGraph aGraph) {
+	/**
+	 * Constructs a minimum cycle basis of a graph.
+	 *
+	 * @param   g the graph for the cycle basis
+	 */
+	public CycleBasis (UndirectedGraph g) {
 		
-		baseGraph = aGraph;
+		baseGraph = g;
 				
 		// We construct a simple graph out of the input (multi-)graph
 		// as a subgraph with no multiedges.
@@ -53,10 +90,10 @@ public class CycleBasis {
 		// Moreover, shortest cycles through these edges are constructed and
 		// collected in mulitEdgeCycles
 		
-		UndirectedGraph simpleGraph = new UndirectedSubgraph(aGraph, null, null);
+		UndirectedGraph simpleGraph = new UndirectedSubgraph(g, null, null);
 		
 		// Iterate over the edges and discard all edges with the same source and target
-		for (Iterator it = aGraph.edgeSet().iterator(); it.hasNext();) {
+		for (Iterator it = g.edgeSet().iterator(); it.hasNext();) {
 			Edge edge = (Edge) it.next();
 			Object u = edge.getSource();
 			Object v = edge.getTarget();
@@ -140,6 +177,9 @@ public class CycleBasis {
 	
 */	
 	
+	/**
+	 * Prints the cycle-edge incidence matrix of the cycle basis.
+	 */
 	public void printIncidenceMatrix() {
 		SimpleCycleBasis basis = simpleBasis();
 		List edgeList = basis.edgeList;
@@ -168,21 +208,21 @@ public class CycleBasis {
 		}
 	}
 
-	public double[] weightVector() {
+	public int[] weightVector() {
 		SimpleCycleBasis basis = simpleBasis();
 		List cycles = basis.cycles;
 		
-		double[] result = new double[cycles.size()];
+		int[] result = new int[cycles.size()];
 		for (int i=0; i<cycles.size(); i++) {
 			Cycle cycle = (Cycle) cycles.get(i);
-			result[i] = cycle.weight();
+			result[i] = (int) cycle.weight();
 		}
 		Arrays.sort(result);
 		
 		return result;
 	}
 	
-	public SimpleCycleBasis simpleBasis() {
+	private SimpleCycleBasis simpleBasis() {
 		if (cachedCycleBasis == null) {
 			List cycles = new ArrayList();
 			List edgeList = new ArrayList();
@@ -206,10 +246,23 @@ public class CycleBasis {
 		
 	}
 
+	/**
+	 * Returns the cycles that form the cycle basis.
+	 *
+	 * @returns a <Code>Collection</code> of the basis cycles
+	 */
+
 	public Collection cycles() {
 		return simpleBasis().cycles;
 	}
 	
+	/**
+	 * Returns the essential cycles of this cycle basis.
+	 * A essential cycle is contained in every minimum cycle basis of a graph.
+	 *
+	 * @returns a <Code>Collection</code> of the essential cycles
+	 */
+
 	public Collection essentialCycles() {
 		Collection result = new HashSet();
 		//minimize();
@@ -221,6 +274,14 @@ public class CycleBasis {
 		
 		return result;
 	}
+
+	/**
+	 * Returns the essential cycles of this cycle basis.
+	 * A relevant cycle is contained in some minimum cycle basis of a graph.
+	 *
+	 * @returns a <Code>Map</code> mapping each relevant cycles to the corresponding
+	 * basis cycle in this basis
+	 */
 
 	public Map relevantCycles() {
 		Map result = new HashMap();
@@ -234,6 +295,15 @@ public class CycleBasis {
 		return result;
 	}
 	
+	/**
+	 * Returns the connected components of this cycle basis, in regard to matroid theory.
+	 * Two cycles belong to the same commected component if there is a circuit (a minimal 
+	 * dependent set) containing both cycles.
+	 *
+	 * @returns a <Code>List</code> of <Code>Set</code>s consisting of the cycles in a
+	 * equivalence class.
+	 */
+
 	public List equivalenceClasses() {
 		List result = new ArrayList();
 		//minimize();

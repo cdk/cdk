@@ -39,6 +39,7 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.ChemSequence;
+import org.openscience.cdk.graph.rebond.RebondTool;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.MDLReader;
@@ -76,7 +77,8 @@ public class AcceleratedRenderer3DTest
 			ChemSequence[] chemSequence = chemFile.getChemSequences();
 			ChemModel[] chemModels = chemSequence[0].getChemModels();
 			AtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModels[0]);
-      atomContainer.addBonds(1.2); // new!!!
+			RebondTool rebonder = new RebondTool(2.0, 0.5, 0.5);
+			rebonder.rebond(atomContainer);
 
 			JFrame frame = new JFrame("AcceleratedRenderer3DTest");
 			frame.getContentPane().setLayout(new BorderLayout());

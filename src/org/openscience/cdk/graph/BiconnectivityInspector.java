@@ -1,3 +1,32 @@
+/* $RCSfile$
+ * $Author$
+ * $Date$
+ * $Revision$
+ * 
+ * Copyright (C) 2004  The Chemistry Development Kit (CDK) project
+ * 
+ * Contact: cdk-devel@lists.sourceforge.net
+ * 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ * All we ask is that proper credit is given for our work, which includes
+ * - but is not limited to - adding the above copyright notice to the beginning
+ * of your source code files, and to any copyright notice that you may distribute
+ * with programs based on this work.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
+ * 
+ */
+
 package org.openscience.cdk.graph;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,21 +44,29 @@ import org._3pq.jgrapht.alg.ConnectivityInspector;
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org._3pq.jgrapht.graph.Subgraph;
 
-/*
- * Created on May 2, 2004
- *
- */
-
 /**
- * @author uli
+ * Finds the biconnected components of a graph.
+ * 
+ * Two edges belong to the same biconnected component if and only if they are 
+ * identical or both belong to a simple cycle.
+ * 
+ * @author Ulrich Bauer <baueru@cs.tum.edu>
+ * 
  *
+ * @cdk.module standard
+ *
+ * @cdk.builddepends jgrapht-0.5.3.jar
+ * @cdk.depends jgrapht-0.5.3.jar
  */
-
 public class BiconnectivityInspector {
 	List          m_biconnectedSets;
 	Map           m_vertexToConnectedSet;
 	private UndirectedGraph graph;
 	
+	/**
+	 * Creates a biconnectivity inspector for the specified undirected graph.
+	 * @param g the specified graph
+	 */
 	
 	public BiconnectivityInspector(UndirectedGraph g) {
 		
@@ -164,10 +201,17 @@ public class BiconnectivityInspector {
 		return m_biconnectedSets;
 	}
 	
+	/**
+	 * Returns a list of <code>Set</code>s, where each set contains all edge that are
+	 * in the same biconnected component. All graph edges occur in exactly one set. 
+	 * @return a list of <code>Set</code>s, where each set contains all edge that are
+	 * in the same biconnected component
+	 */
 	public List biconnectedSets(  ) {
 		return lazyFindBiconnectedSets(  );
 	}
 	
+	/*
 	public List hopcroftTarjanKnuthFindBiconnectedSets() {
 		Map rank;
 		Map parent;
@@ -184,5 +228,5 @@ public class BiconnectivityInspector {
 		
 		return m_biconnectedSets;
 	}
-	
+	*/
 }

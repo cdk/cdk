@@ -35,6 +35,7 @@ import joelib.molecule.JOEMol;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.graph.matrix.ConnectionMatrix;
 
 /**
  * Abstract class that provides convertor procedures to
@@ -252,7 +253,7 @@ public class Convertor {
             }
             
             // add bonds
-            double[][] matrix = mol.getConnectionMatrix();
+            double[][] matrix = ConnectionMatrix.getMatrix(mol);
             for (int i=0; i<NOatoms-1; i++) {
                 for (int j=i+1; j<NOatoms; j++) {
                     if (matrix[i][j] != 0.0) {

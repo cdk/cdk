@@ -44,6 +44,7 @@ import javax.vecmath.Vector3d;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
+import org.openscience.cdk.graph.matrix.ConnectionMatrix;
 import org.openscience.cdk.math.qm.Orbitals;
 
 import com.sun.j3d.utils.geometry.Cylinder;
@@ -100,7 +101,7 @@ public class AcceleratedRenderer3DModel {
 		Cylinder cylinder;
 		try
 		{
-			double[][] cm = container.getConnectionMatrix();
+			double[][] cm = ConnectionMatrix.getMatrix(container);
 			for(i=0; i<cm.length; i++)
 				for(j=0; j<i; j++)
 					if (cm[i][j]>0)

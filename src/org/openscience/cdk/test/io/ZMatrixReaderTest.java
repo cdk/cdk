@@ -40,6 +40,7 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.ChemSequence;
+import org.openscience.cdk.graph.rebond.RebondTool;
 import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.ZMatrixReader;
 import org.openscience.cdk.renderer.AcceleratedRenderer3D;
@@ -81,7 +82,8 @@ public class ZMatrixReaderTest extends TestCase {
 			ChemSequence[] chemSequence = chemFile.getChemSequences();
 			ChemModel[] chemModels = chemSequence[0].getChemModels();
 			AtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModels[0]);
-            atomContainer.addBonds(1.5); // new!!!
+			RebondTool rebonder = new RebondTool(2.0, 0.5, 0.5);
+			rebonder.rebond(atomContainer);
             
 			if (standAlone) {
                 JFrame frame = new JFrame("ZMatrixReaderTest");
