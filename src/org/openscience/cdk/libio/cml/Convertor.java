@@ -472,6 +472,16 @@ public class Convertor {
             scalar = this.createElement("scalar");
             scalar.setAttribute("dataType", "xsd:boolean");
             scalar.appendChild(doc.createTextNode("" + ((BooleanResult)value).booleanValue()));
+        } else if (value instanceof IntegerArrayResult) {
+            IntegerArrayResult result = (IntegerArrayResult)value;
+            scalar = this.createElement("array");
+            scalar.setAttribute("dataType", "xsd:int");
+            scalar.setAttribute("size", "" + result.size());
+            StringBuffer buffer = new StringBuffer();
+            for (int i=0; i<result.size(); i++) {
+                buffer.append(result.get(i) + " ");
+            }
+            scalar.appendChild(doc.createTextNode(buffer.toString()));
         } else if (value instanceof DoubleArrayResult) {
             DoubleArrayResult result = (DoubleArrayResult)value;
             scalar = this.createElement("array");
