@@ -94,5 +94,10 @@
    id="structgen.As1"
    maxBondOrder="1.0"
    maxBondOrderSum="1.0"/>
+  <org.openscience.cdk.AtomType
+   symbol="Fe"
+   id="structgen.Fe1"
+   maxBondOrder="1.0"
+   maxBondOrderSum="6.0"/>
 </java.util.Vector>
 
