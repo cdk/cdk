@@ -746,7 +746,8 @@
                     </test>
                 </junit>
                 <java classname="org.openscience.cdk.test.${testclass}" fork="yes">
-                    <classpath>
+                    <jvmarg value="-Dcdk.debugging=true"/>
+		    <classpath>
                         <pathelement location="${dist}/jar/cdk-core.jar" />
                         <pathelement location="${dist}/jar/cdk-standard.jar" />
                         <pathelement location="${dist}/jar/cdk-io.jar" />
