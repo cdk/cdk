@@ -55,8 +55,8 @@ public class LonePair extends ElectronContainer implements java.io.Serializable,
      * Constructs an lone pair on an Atom.
      *
      */
-    public LonePair(Atom a) {
-        this.atom = a;
+    public LonePair(Atom atom) {
+        this.atom = atom;
     }
 
     /**
@@ -107,15 +107,15 @@ public class LonePair extends ElectronContainer implements java.io.Serializable,
      * @return    The string representation of this Container
      */
     public String toString() {
-        StringBuffer s = new StringBuffer();
-        s.append("LonePair(");
-        s.append(this.hashCode());
+        StringBuffer resultString = new StringBuffer();
+        resultString.append("LonePair(");
+        resultString.append(this.hashCode());
         if (atom != null) {
-            s.append(", ");
-            s.append(atom.toString());
+            resultString.append(", ");
+            resultString.append(atom.toString());
         }
-        s.append(")");
-        return s.toString();
+        resultString.append(")");
+        return resultString.toString();
     }
 }
 

@@ -44,9 +44,9 @@ public class Monomer extends AtomContainer implements java.io.Serializable, Clon
 {
 
     /** The name of this monomer (e.g. Trp42). */
-    protected String _cMonomerName;
+    private String monomerName;
     /** The type of this monomer (e.g. TRP). */
-    protected String _cMonomerType;
+    private String monomerType;
 
 	/**
 	 *
@@ -66,7 +66,7 @@ public class Monomer extends AtomContainer implements java.io.Serializable, Clon
      * @see    #setMonomerName
 	 */
 	public String getMonomerName() {
-		return _cMonomerName;
+		return monomerName;
 	}
 
 	/**
@@ -78,7 +78,7 @@ public class Monomer extends AtomContainer implements java.io.Serializable, Clon
      * @see    #setMonomerType
 	 */
 	public String getMonomerType() {
-		return _cMonomerType;
+		return monomerType;
 	}
 	
 	/**
@@ -90,7 +90,7 @@ public class Monomer extends AtomContainer implements java.io.Serializable, Clon
      * @see    #getMonomerName
 	 */
 	public void setMonomerName(String cMonomerName) {
-		_cMonomerName = cMonomerName;
+		monomerName = cMonomerName;
 	}
 	
 	/**
@@ -102,6 +102,6 @@ public class Monomer extends AtomContainer implements java.io.Serializable, Clon
      * @see    #getMonomerType
 	 */
 	public void setMonomerType(String cMonomerType) {
-		_cMonomerType = cMonomerType;
+		monomerType = cMonomerType;
 	}
 }

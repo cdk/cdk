@@ -63,9 +63,9 @@ public class Molecule extends AtomContainer implements java.io.Serializable, Clo
 	 *
 	 * @param   ac  An Molecule to copy the atoms and bonds from
 	 */
-	public Molecule(AtomContainer ac)
+	public Molecule(AtomContainer container)
 	{
-		super(ac);
+		super(container);
 	}
 
        /**
@@ -75,16 +75,16 @@ public class Molecule extends AtomContainer implements java.io.Serializable, Clo
          */
         public Object clone()
         {
-                Object o = null;
+                Object clone = null;
                 try
                 {
-                        o = super.clone();
+                        clone = super.clone();
                 }
                 catch (Exception e)
                 {
                         e.printStackTrace(System.err);
                 }
-                return o;
+                return clone;
         }
 
     /**

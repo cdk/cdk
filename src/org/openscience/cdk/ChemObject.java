@@ -101,7 +101,7 @@ public class ChemObject implements java.io.Serializable, Cloneable {
 	 * @param   col  the ChemObjectListener
      * @see     #removeListener
 	 */
-	public void addListener(ChemObjectListener col)
+	public void addListener(final ChemObjectListener col)
 	{
 	    Vector listeners = lazyChemObjects();
 
@@ -122,7 +122,7 @@ public class ChemObject implements java.io.Serializable, Cloneable {
 	 * @param   col  The ChemObjectListener to be removed
      * @see     #addListener
 	 */
-	public void removeListener(ChemObjectListener col)
+	public void removeListener(final ChemObjectListener col)
 	{
 	    Vector listeners = lazyChemObjects();
 
@@ -165,7 +165,7 @@ public class ChemObject implements java.io.Serializable, Cloneable {
      * @see     #getProperty
      * @see     #removeProperty
 	 */
-	public void setProperty(Object description, Object property) {
+	public void setProperty(final Object description, final Object property) {
 		lazyProperties().put(description, property);
 	}
 
@@ -176,7 +176,7 @@ public class ChemObject implements java.io.Serializable, Cloneable {
      * @see     #setProperty
      * @see     #getProperty
 	 */
-	public void removeProperty(Object description) {
+	public void removeProperty(final Object description) {
 		lazyProperties().remove(description);
 	}
 
@@ -188,7 +188,7 @@ public class ChemObject implements java.io.Serializable, Cloneable {
      * @see     #setProperty
      * @see     #removeProperty
 	 */
-	public Object getProperty(Object description) {
+	public Object getProperty(final Object description) {
 		return lazyProperties().get(description);
 	}
 
@@ -232,7 +232,7 @@ public class ChemObject implements java.io.Serializable, Cloneable {
      * @param  object Object of type AtomType
      * @return        Return true, if the atomtypes are equal
      */
-    public boolean compare(Object object) {
+    public boolean compare(final Object object) {
         if (!(object instanceof ChemObject)) {
             return false;
         }
@@ -259,7 +259,7 @@ public class ChemObject implements java.io.Serializable, Cloneable {
      * @param id a String representing the ID value
      * @see #getID
      */
-    public void setID(String identifier) {
+    public void setID(final String identifier) {
         this.identifier = identifier;
     }
     
@@ -270,7 +270,7 @@ public class ChemObject implements java.io.Serializable, Cloneable {
      * @param  flag_value Value to assign to flag
      * @see    #getFlag
      */
-    public void setFlag(int flag_type, boolean flag_value) {
+    public void setFlag(final int flag_type, final boolean flag_value) {
         flags[flag_type] = flag_value;
     }
     
@@ -281,7 +281,7 @@ public class ChemObject implements java.io.Serializable, Cloneable {
      * @return true if the flag <code>flag_type</code> is set
      * @see    #setFlag
      */
-    public boolean getFlag(int flag_type) {
+    public boolean getFlag(final int flag_type) {
         return flags[flag_type];
     }
 
@@ -325,7 +325,7 @@ public class ChemObject implements java.io.Serializable, Cloneable {
      * @param properties  a Hashtable specifying the property values
      * @see #getProperties
 	 */
-	public void setProperties(Hashtable properties) {
+	public void setProperties(final Hashtable properties) {
         Enumeration keys = properties.keys();
         while (keys.hasMoreElements()) {
             Object key = keys.nextElement();
