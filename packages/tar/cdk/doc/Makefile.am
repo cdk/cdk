@@ -2,6 +2,7 @@
 ## $Id$
 
 PREFIX=@prefix@
+PACKAGE=@PACKAGE@
 DOCTAR=javadoc.tar.gz
 ANT=@PATHTOANT@
 TAR=@PATHTOTAR@
@@ -11,8 +12,7 @@ EXTRA_DIST=${DOCTAR} lgpl.license
 
 CLEANFILES=$(DOCTAR)
 
-alldocdir = "${PREFIX}/share/doc"
-
+alldocdir = "${PREFIX}/share/doc/${PACKAGE}"
 alldoc_DATA = ${DOCTAR}
 
 lgpl.license: ../../../../doc/lgpl.license
