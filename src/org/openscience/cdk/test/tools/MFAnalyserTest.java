@@ -24,6 +24,7 @@
 package org.openscience.cdk.test.tools;
 
 import org.openscience.cdk.*;
+import org.openscience.cdk.exception.*;
 import org.openscience.cdk.ringsearch.*;
 import org.openscience.cdk.io.*;
 import org.openscience.cdk.tools.*;
@@ -92,7 +93,7 @@ public class MFAnalyserTest extends TestCase {
         assertEquals(2, mfa.getHeavyAtoms().size());        
     }
     
-    public void testRemoveHydrogens() throws IOException, ClassNotFoundException{
+    public void testRemoveHydrogens() throws IOException, ClassNotFoundException, CDKException{
       Molecule mol=MoleculeFactory.makeAlphaPinene();
       new HydrogenAdder().addHydrogensToSatisfyValency(mol);
       MFAnalyser mfa=new MFAnalyser(mol);

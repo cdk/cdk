@@ -101,7 +101,7 @@ public class SmilesGeneratorTest extends TestCase
 		assertTrue(smiles1.equals("c2cc1c3ccc(cc3(ccc1c(c2)CC))CCC"));
 	}
 
-	public void testAlanin() {
+	public void testAlanin() throws Exception {
 		SmilesGenerator sg = new SmilesGenerator();
 		Molecule mol1 = new Molecule();
  		mol1.addAtom(new Atom("N", new Point2d(1,0))); // 1
@@ -154,7 +154,7 @@ public class SmilesGeneratorTest extends TestCase
 		assertTrue(smiles1.equals("[H]OC(=O)[C@](F)(C([H])([H])[H])N([H])[H]"));
 	}
 
-	public void testCisResorcinol() {
+	public void testCisResorcinol() throws Exception {
 		SmilesGenerator sg = new SmilesGenerator();
 		Molecule mol1 = new Molecule();
 		mol1.addAtom(new Atom("O", new Point2d(3,1))); // 1
@@ -212,7 +212,7 @@ public class SmilesGeneratorTest extends TestCase
 		assertTrue(smiles1.equals("OC1CCCCC1(O)"));
 	}
 
-	public void testCisDecalin() {
+	public void testCisDecalin() throws Exception {
 		SmilesGenerator sg = new SmilesGenerator();
 		Molecule mol1 = new Molecule();
 		mol1.addAtom(new Atom("H", new Point2d(1,0))); // 1
@@ -275,7 +275,7 @@ public class SmilesGeneratorTest extends TestCase
 		assertTrue(smiles1.equals("C1CCC2CCCCC2(C1)"));
 	}
 
-	public void testDoubleBondConfiguration() {
+	public void testDoubleBondConfiguration() throws Exception {
 		SmilesGenerator sg = new SmilesGenerator();
 		Molecule mol1 = new Molecule();
 		mol1.addAtom(new Atom("S", new Point2d(0,0))); // 1

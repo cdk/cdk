@@ -30,6 +30,7 @@ package org.openscience.cdk.structgen.stochastic;
 
 
 import org.openscience.cdk.*;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.*;
 import java.util.Vector;
 import java.io.*;
@@ -87,7 +88,7 @@ public class PartialFilledStructureMerger
 		return this.atomContainer;
 	}
 
-	public AtomContainer generate()
+	public AtomContainer generate() throws CDKException
 	{
 		boolean structureFound = false;
 		boolean bondFormed;
@@ -148,7 +149,7 @@ public class PartialFilledStructureMerger
 	 *
 	 * @return                The AnotherUnsaturatedNode value
 	 */
-	private Atom getAnotherUnsaturatedNode(Atom exclusionAtom)
+	private Atom getAnotherUnsaturatedNode(Atom exclusionAtom) throws CDKException
 	{
 		Atom atom;
 		int next = (int) (Math.random() * atomContainer.getAtomCount());

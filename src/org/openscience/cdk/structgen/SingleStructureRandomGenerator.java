@@ -29,6 +29,7 @@
 package org.openscience.cdk.structgen;
 
 import org.openscience.cdk.*;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.*;
 import java.util.*;
 import java.io.*;
@@ -91,7 +92,7 @@ public class SingleStructureRandomGenerator
 		this.atomContainer = ac;
 	}
 
-	public Molecule generate()
+	public Molecule generate() throws CDKException
 	{
 		boolean structureFound = false;
 		boolean bondFormed;
@@ -145,7 +146,7 @@ public class SingleStructureRandomGenerator
 	 *
 	 * @return                The AnotherUnsaturatedNode value
 	 */
-	private Atom getAnotherUnsaturatedNode(Atom exclusionAtom)
+	private Atom getAnotherUnsaturatedNode(Atom exclusionAtom) throws CDKException
 	{
 		Atom atom;
 		int next = random.nextInt(atomContainer.getAtomCount());

@@ -26,6 +26,7 @@ package org.openscience.cdk.test.structgen;
 
 import org.openscience.cdk.controller.*;
 import org.openscience.cdk.*;
+import org.openscience.cdk.exception.*;
 import org.openscience.cdk.io.*;
 import org.openscience.cdk.layout.*;
 import org.openscience.cdk.renderer.*;
@@ -140,8 +141,11 @@ public class SingleStructureRandomGeneratorTest
 	{
 		public void actionPerformed(ActionEvent e)
 		{
-			AtomContainer ac = ssrg.generate();
-			showIt((Molecule)ac, "Randomly generated for " + mf);						
+      try{
+        AtomContainer ac = ssrg.generate();
+        showIt((Molecule)ac, "Randomly generated for " + mf);
+      }
+      catch(CDKException ex){System.err.println(ex.getMessage());}
 		}
 	}
 }

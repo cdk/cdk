@@ -29,6 +29,7 @@
 package org.openscience.cdk.tools;
 
 import org.openscience.cdk.*;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.geometry.GeometryTools;
 import java.util.Vector;
@@ -106,7 +107,7 @@ public class HydrogenAdder {
      * @keyword          hydrogen, adding
      * @keyword          explicit hydrogen
      */
-    public void addHydrogensToSatisfyValency(Molecule molecule) throws IOException, ClassNotFoundException
+    public void addHydrogensToSatisfyValency(Molecule molecule) throws IOException, ClassNotFoundException, CDKException
     {
 	    logger.debug("Start of addHydrogensToSatisfyValency");
         addExplicitHydrogensToSatisfyValency(molecule);
@@ -126,7 +127,7 @@ public class HydrogenAdder {
      * @keyword          hydrogen, adding
      * @keyword          explicit hydrogen
      */
-    public void addExplicitHydrogensToSatisfyValency(Molecule molecule) throws IOException, ClassNotFoundException
+    public void addExplicitHydrogensToSatisfyValency(Molecule molecule) throws IOException, ClassNotFoundException, CDKException
     {
 	    logger.debug("Start of addExplicitHydrogensToSatisfyValency");
       SetOfMolecules moleculeSet = ConnectivityChecker.partitionIntoMolecules(molecule);
@@ -160,7 +161,7 @@ public class HydrogenAdder {
      * @deprecated
      */
     public void addHydrogensToSatisfyValency(AtomContainer container, Atom atom, AtomContainer totalContainer) 
-        throws IOException, ClassNotFoundException
+        throws IOException, ClassNotFoundException, CDKException
     {
 	logger.debug("Start of addHydrogensToSatisfyValency(AtomContainer container, Atom atom)");
         addExplicitHydrogensToSatisfyValency(container, atom, totalContainer);
@@ -184,7 +185,7 @@ public class HydrogenAdder {
      * @keyword          explicit hydrogen
      */
     public void addExplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom, AtomContainer totalContainer) 
-        throws IOException, ClassNotFoundException
+        throws IOException, ClassNotFoundException, CDKException
     {
         // set number of implicit hydrogens to zero
         // add explicit hydrogens
@@ -240,7 +241,7 @@ public class HydrogenAdder {
      *@keyword          hydrogen, adding
      *@keyword          implicit hydrogen
      */
-    public void addImplicitHydrogensToSatisfyValency(AtomContainer container) {
+    public void addImplicitHydrogensToSatisfyValency(AtomContainer container) throws CDKException {
       SetOfMolecules moleculeSet = ConnectivityChecker.partitionIntoMolecules(container);
       Molecule[] molecules = moleculeSet.getMolecules();
       for (int k = 0; k < molecules.length; k++) {
@@ -260,7 +261,7 @@ public class HydrogenAdder {
      * @keyword          hydrogen, adding
      * @keyword          implicit hydrogen
      */
-    public void addImplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom)
+    public void addImplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom) throws CDKException
     {
         int missingHydrogens = satChecker.calculateMissingHydrogen(atom, container);
         if (missingHydrogens > 0) {

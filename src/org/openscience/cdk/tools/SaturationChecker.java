@@ -30,6 +30,7 @@ package org.openscience.cdk.tools;
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.ringsearch.*;
+import org.openscience.cdk.exception.CDKException;
 import java.util.Vector;
 import java.io.*;
 
@@ -56,12 +57,14 @@ public class SaturationChecker
 	}
 
 
-	public boolean hasPerfectConfiguration(Atom atom, AtomContainer ac)
+	public boolean hasPerfectConfiguration(Atom atom, AtomContainer ac) throws CDKException
 	{
 
 		double bondOrderSum = ac.getBondOrderSum(atom);
 		double maxBondOrder = ac.getMaximumBondOrder(atom);
 		AtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
+    if(atomTypes.length==0)
+      throw new CDKException("Missing entry in structgen_atomtypes.xml for "+atom.getSymbol());
 		logger.debug("*** Checking for perfect configuration ***");
 		try
 		{
@@ -93,7 +96,7 @@ public class SaturationChecker
 		return false;
 	}
 
-	public boolean allSaturated(AtomContainer ac)
+	public boolean allSaturated(AtomContainer ac) throws CDKException
 	{
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
@@ -105,11 +108,13 @@ public class SaturationChecker
 		return true;
 	}
 
-	public boolean isSaturated(Atom atom, AtomContainer ac)
+	public boolean isSaturated(Atom atom, AtomContainer ac) throws CDKException
 	{
 		//System.out.println("In here :-), checking atom " + atom.getSymbol());
 		
 		AtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
+    if(atomTypes.length==0)
+      throw new CDKException("Missing entry in structgen_atomtypes.xml for "+atom.getSymbol());
 		double bondOrderSum = ac.getBondOrderSum(atom);
 		double maxBondOrder = ac.getMaximumBondOrder(atom);
 		int hcount = atom.getHydrogenCount();
@@ -143,9 +148,11 @@ public class SaturationChecker
 	 * @param  ac   The atomcontainer context
 	 * @return      oversaturated or not
 	 */
-	public boolean isOverSaturated(Atom atom, AtomContainer ac)
+	public boolean isOverSaturated(Atom atom, AtomContainer ac) throws CDKException
 	{
 		AtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
+    if(atomTypes.length==0)
+      throw new CDKException("Missing entry in structgen_atomtypes.xml for "+atom.getSymbol());
 		double bondOrderSum = ac.getBondOrderSum(atom);
 		double maxBondOrder = ac.getMaximumBondOrder(atom);
 		int hcount = atom.getHydrogenCount();
@@ -178,9 +185,11 @@ public class SaturationChecker
 	 * @param  ac    The AtomContainer that provides the context
 	 * @return       the currently maximum formable bond order for this atom
 	 */
-	public double getCurrentMaxBondOrder(Atom atom, AtomContainer ac)
+	public double getCurrentMaxBondOrder(Atom atom, AtomContainer ac) throws CDKException
 	{
 		AtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
+    if(atomTypes.length==0)
+      throw new CDKException("Missing entry in structgen_atomtypes.xml for "+atom.getSymbol());
 		double bondOrderSum = ac.getBondOrderSum(atom);
 		int hcount = atom.getHydrogenCount();
 		double max = 0;
@@ -203,7 +212,7 @@ public class SaturationChecker
 	 *@param  molecule  Description of the Parameter
 	 *@keyword          bond order, calculation
 	 */
-	public void saturate(AtomContainer atomContainer)
+	public void saturate(AtomContainer atomContainer) throws CDKException
 	{
 		Atom partner = null;
 		Atom atom = null;
@@ -249,6 +258,8 @@ public class SaturationChecker
 							partner = partners[g];
 							logger.debug("Atom has " + partners.length + " partners");
 							atomTypes2 = structgenATF.getAtomTypes(partner.getSymbol());
+              if(atomTypes2.length==0)
+                throw new CDKException("Missing entry in structgen_atomtypes.xml for "+partner.getSymbol());
 							if (atomContainer.getBondOrderSum(partner) < atomTypes2[0].getMaxBondOrderSum() - partner.getHydrogenCount())
 							{
 								logger.debug("Partner has " + atomContainer.getBondOrderSum(partner) + ", may have: " + atomTypes2[0].getMaxBondOrderSum());
@@ -266,7 +277,7 @@ public class SaturationChecker
 	}
 
 
-	public void saturateRingSystems(AtomContainer atomContainer)
+	public void saturateRingSystems(AtomContainer atomContainer) throws CDKException
 	{
 		RingSet rs = new SSSRFinder().findSSSR((Molecule)atomContainer);
 		Vector ringSets = RingPartitioner.partitionRings(rs);
@@ -354,7 +365,7 @@ public class SaturationChecker
 	 * @return           Description of the Return Value
 	 * @see              AtomTypeFactory
 	 */
-	public int calculateMissingHydrogen(Atom atom, AtomContainer container) {
+	public int calculateMissingHydrogen(Atom atom, AtomContainer container) throws CDKException {
         int missingHydrogen = 0;
         if (atom instanceof PseudoAtom) {
             // don't figure it out... it simply does not lack H's
@@ -365,6 +376,8 @@ public class SaturationChecker
             logger.info("Calculating number of missing hydrogen atoms");
             // get default atom
             AtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
+            if(atomTypes.length==0)
+              throw new CDKException("Missing entry in structgen_atomtypes.xml for "+atom.getSymbol());
             logger.debug("Found atomtypes: " + atomTypes.length);
             if (atomTypes.length > 0) {
                 AtomType defaultAtom = atomTypes[0];

@@ -25,6 +25,7 @@
 package org.openscience.cdk.structgen.stochastic.operator;
 
 import org.openscience.cdk.*;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.structgen.*;
 import org.openscience.cdk.tools.*;
 import org.openscience.cdk.structgen.stochastic.*;
@@ -84,7 +85,7 @@ public class CrossoverMachine
      * @exception IllegalArgumentException if some of the crosspoints defined are
      * greater than the size of the corresponding chromosome.
      */
-    protected Vector doCrossover(AtomContainer dad, AtomContainer mom)
+    protected Vector doCrossover(AtomContainer dad, AtomContainer mom) throws CDKException
     {
 		int dim = dad.getAtomCount();
 		

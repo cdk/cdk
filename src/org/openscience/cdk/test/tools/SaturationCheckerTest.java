@@ -32,6 +32,7 @@ import org.openscience.cdk.templates.*;
 import org.openscience.cdk.geometry.*;
 import org.openscience.cdk.aromaticity.*;
 import org.openscience.cdk.smiles.*;
+import org.openscience.cdk.exception.*;
 
 import java.io.*;
 import javax.vecmath.*;
@@ -89,7 +90,7 @@ public class SaturationCheckerTest extends TestCase
 	/**
 	 *  A unit test for JUnit
 	 */
-	public void testAllSaturated()
+	public void testAllSaturated() throws CDKException
 	{
 		// test methane with explicit hydrogen
 		Molecule m = new Molecule();
@@ -121,7 +122,7 @@ public class SaturationCheckerTest extends TestCase
 	/**
 	 *  A unit test for JUnit
 	 */
-	public void testIsSaturated()
+	public void testIsSaturated() throws CDKException
 	{
 		// test methane with explicit hydrogen
 		Molecule m = new Molecule();
@@ -150,7 +151,7 @@ public class SaturationCheckerTest extends TestCase
      * Tests wether the saturation checker considers negative
      * charges.
      */
-	public void testIsSaturated_NegativelyChargedOxygen() {
+	public void testIsSaturated_NegativelyChargedOxygen() throws CDKException {
 		// test methane with explicit hydrogen
 		Molecule m = new Molecule();
 		Atom c = new Atom("C");
@@ -179,7 +180,7 @@ public class SaturationCheckerTest extends TestCase
      * Tests wether the saturation checker considers positive
      * charges.
      */
-	public void testIsSaturated_PositivelyChargedNitrogen() {
+	public void testIsSaturated_PositivelyChargedNitrogen() throws CDKException {
 		// test methane with explicit hydrogen
 		Molecule m = new Molecule();
 		Atom n = new Atom("N");
@@ -207,7 +208,7 @@ public class SaturationCheckerTest extends TestCase
 	/**
 	 *  A unit test for JUnit
 	 */
-	public void testSaturate()
+	public void testSaturate() throws CDKException
 	{
 		// test ethene
 		Atom c1 = new Atom("C");
@@ -227,7 +228,7 @@ public class SaturationCheckerTest extends TestCase
     /**
      * Test sulfuric acid.
      */
-    public void testBug772316() {
+    public void testBug772316() throws CDKException {
 		// test methane with explicit hydrogen
 		Molecule m = new Molecule();
 		Atom sulphur = new Atom("S");
@@ -259,7 +260,7 @@ public class SaturationCheckerTest extends TestCase
 		assertTrue(satcheck.isSaturated(h2, m));
     }
     
-    public void testBug777529() {
+    public void testBug777529() throws CDKException {
       // test methane with explicit hydrogen
       Molecule m = new Molecule();
       m.addAtom(new Atom("C"));
@@ -360,7 +361,7 @@ public class SaturationCheckerTest extends TestCase
 	 *
 	 *@param  args  The command line arguments
 	 */
-	public static void main(String[] args)
+	public static void main(String[] args) throws CDKException
 	{
 		SaturationCheckerTest sct = new SaturationCheckerTest("SaturationCheckerTest");
 		sct.standAlone = true;
