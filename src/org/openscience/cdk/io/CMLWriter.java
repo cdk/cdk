@@ -46,7 +46,7 @@ import javax.vecmath.Point3d;
  *   CMLWriter cmlwriter = new CMLWriter(output, makeFragment);
  *   cmlwriter.write(molecule);
  *   cmlwriter.close();
- *   String cmlcode = output.toString()
+ *   String cmlcode = output.toString();
  * </pre>
  *
  * <p>Output to a file called "molecule.cml" can done with:
