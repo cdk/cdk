@@ -234,7 +234,7 @@ public class JCPController2D {
          **/
         public void mouseReleased(MouseEvent e) {
             if (e.getButton() == MouseEvent.BUTTON1) {
-                logger.debug("Mouse released in modus: " + c2dm.getDrawMode());
+                logger.debug("Mouse released in modus: " + c2dm.getDrawModeString());
 
                 int mouseX = e.getX(), mouseY = e.getY();
 
@@ -257,6 +257,24 @@ public class JCPController2D {
                     }
                 }
 
+                /*************************************************************************
+                 *                       CHARGE MODE                                     *
+                 *************************************************************************/
+                if (c2dm.getDrawMode() == c2dm.INCCHARGE) {
+                    Atom atomInRange = r2dm.getHighlightedAtom();
+                    if (atomInRange != null) {
+                        atomInRange.setFormalCharge(atomInRange.getFormalCharge() + 1);
+                        r2dm.fireChange();
+                    }
+                }
+                if (c2dm.getDrawMode() == c2dm.DECCHARGE) {
+                    Atom atomInRange = r2dm.getHighlightedAtom();
+                    if (atomInRange != null) {
+                        atomInRange.setFormalCharge(atomInRange.getFormalCharge() - 1);
+                        r2dm.fireChange();
+                    }
+                }                
+                
                 /*************************************************************************
                  *                       DRAWBONDMODE                                    *
                  *************************************************************************/
