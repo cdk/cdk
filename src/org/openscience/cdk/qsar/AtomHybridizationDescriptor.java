@@ -25,6 +25,7 @@
 package org.openscience.cdk.qsar;
 
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.tools.manipulator.*;
 import org.openscience.cdk.atomtype.HybridizationStateATMatcher;
 import org.openscience.cdk.AtomType;
 import org.openscience.cdk.AtomContainer;
@@ -61,10 +62,11 @@ import org.openscience.cdk.graph.matrix.*;
 public class AtomHybridizationDescriptor implements Descriptor {
 
 	private int targetPosition = 0;
-	
+	AtomTypeManipulator atman = null;
 	HybridizationStateATMatcher atm = null;
 	Atom atom = null;
 	private LoggingTool logger;
+	AtomType matched = null;
 	
 	/**
 	 *  Constructor for the AtomHybridizationDescriptor object
@@ -127,8 +129,13 @@ public class AtomHybridizationDescriptor implements Descriptor {
 
 	public DescriptorValue calculate(AtomContainer container) throws CDKException {
 		atom = container.getAtomAt(targetPosition);
+		
 		atm = new HybridizationStateATMatcher();
-		atm.findMatchingAtomType(container, atom);
+		matched = atm.findMatchingAtomType(container, atom);
+		
+		atman = new AtomTypeManipulator();
+		atman.configure(atom, matched);
+
 		int atomHybridization = atom.getHybridization();
 		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(atomHybridization));
 	}
