@@ -118,7 +118,7 @@ public class SVGWriter extends DefaultChemObjectWriter {
     /**
      * Writes the content from molecule to output.
      *
-     * @param   object  Molecule of which the data is outputted.
+     * @param   molecule  Molecule of which the data is outputed.
      */
     public void writeAtomContainer(AtomContainer molecule) {
         DOMImplementation domImpl = GenericDOMImplementation.getDOMImplementation();

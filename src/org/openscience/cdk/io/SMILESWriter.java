@@ -100,7 +100,7 @@ public class SMILESWriter extends DefaultChemObjectWriter {
 	/**
 	 * Writes a list of molecules to an OutputStream
 	 *
-	 * @param   molecules  Array of Molecules that is written to an OutputStream
+	 * @param   som  SetOfMolecules that is written to an OutputStream
 	 */
 	public void  writeSetOfMolecules(SetOfMolecules som)
 	{
@@ -117,7 +117,7 @@ public class SMILESWriter extends DefaultChemObjectWriter {
     /**
      * Writes the content from molecule to output.
      *
-     * @param   object  Molecule of which the data is outputted.
+     * @param   molecule  Molecule of which the data is outputted.
      */
     public void writeMolecule(Molecule molecule) {
         SmilesGenerator sg = new SmilesGenerator();

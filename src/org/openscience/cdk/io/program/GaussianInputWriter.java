@@ -90,10 +90,8 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
     }
     
     /**
-    * writes a single frame in XYZ format to the Writer.
-    * @param cf the ChemFrame to write
-    * @param w the Writer to write it to
-    */
+     * Writes a molecule for input for Gaussian.
+     */
     public void writeMolecule(Molecule mol) throws IOException {
         
         customizeJob();

@@ -11,6 +11,10 @@ Fixes:
 * Added missing get() methods to cdk.applications.plugin.EditBus interface
 * Added use of LoggingTool in a few classes (closes #827341 and #826991)
 * Removed use of 1.4 only Exception.getStackTrace() in LoggingTool
+* Fixed remaining JavaDoc errors (except warnings about missing Java3D)
+  (closes #820499)
+* JavaDoc now uses @depends for runtime dependencies and @builddepends for
+  compile dependencies for jar libraries (closes #814294)
 
 API changes:
 

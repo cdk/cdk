@@ -35,8 +35,8 @@ import org.openscience.cdk.math.*;
 import org.openscience.cdk.Atom;
 
 /**
- * This class contains the information to use gauss function as a base 
- * for calculation of quantum mechanics:
+ * This class contains the information to use gauss function as a base
+ * for calculation of quantum mechanics. The function is defined as:
  * <pre>
  * f(x,y,z) = (x-rx)^nx * (y-ry)^ny * (z-rz)^nz * exp(-alpha*(r-ri)^2)
  * </pre>

@@ -85,8 +85,8 @@ public class LonePair extends ElectronContainer implements java.io.Serializable,
      *
      * @see    #getAtom
 	 */
-	public void setAtom(Atom a) {
-		this.atom = a;
+	public void setAtom(Atom atom) {
+		this.atom = atom;
 	}
 
     /**
@@ -95,8 +95,8 @@ public class LonePair extends ElectronContainer implements java.io.Serializable,
      * @param   atom  The atom to be tested if it participates in this bond
      * @return     true if this lone pair is associated with the atom
      */
-    public boolean contains(Atom a)     {
-        return (this.atom == a) ? true : false;
+    public boolean contains(Atom atom)     {
+        return (this.atom == atom) ? true : false;
     }
 
     /**

@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2002-2003  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sf.net
  *
@@ -67,9 +67,7 @@ public class IChIHandler extends DefaultHandler {
     private String currentChars;
 
     /**
-     * Constructor for the CMLHandler.
-     *
-     * @param cdo The Chemical Document Object in which data is stored
+     * Constructor for the IChIHandler.
      **/
     public IChIHandler() {
         logger = new LoggingTool(this.getClass().getName());

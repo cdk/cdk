@@ -158,7 +158,7 @@ public class Isotope extends Element implements java.io.Serializable, Cloneable
      *
      * @return The atomic mass of this element
      *
-     * @see    #setAtomicMass
+     * @see    #setMassNumber(int)
      */
     public int getMassNumber() {
 
@@ -168,9 +168,9 @@ public class Isotope extends Element implements java.io.Serializable, Cloneable
     /**
      * Sets the atomic mass of this element.
      *
-     * @param   atomicMass The atomic mass to be assigned to this element
+     * @param   massNumber The atomic mass to be assigned to this element
      *
-     * @see    #getAtomicMass
+     * @see    #getMassNumber
      */
     public void setMassNumber(int massNumber) {
         this.massNumber = massNumber;

@@ -130,8 +130,6 @@ public class LoggingTool {
     /**
      * Sets the number of StackTraceElements to be printed in DEBUG mode.
      * Defaults to DEFAULT_STACK_LENGTH.
-     *
-     * @see #DEFAULT_STACK_LENGTH
      */
     public void setStackLength(int length) {
         this.stackLength = length;

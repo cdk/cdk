@@ -34,9 +34,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 /**
- *  @author  Bradley A. Smith (bradley@baysmith.com)
- *  @author  J. Daniel Gezelter
- *  @author  Egon Willighagen
+ * @author  Bradley A. Smith <bradley@baysmith.com>
+ * @author  J. Daniel Gezelter
+ * @author  Egon Willighagen
  */
 public class XYZWriter extends DefaultChemObjectWriter {
   
@@ -44,7 +44,6 @@ public class XYZWriter extends DefaultChemObjectWriter {
 
     /**
     * Constructor.
-    * @param cf the ChemFile to dump.
     * @param out the stream to write the XYZ file to.
     */
     public XYZWriter(Writer out) {
@@ -76,8 +75,7 @@ public class XYZWriter extends DefaultChemObjectWriter {
     
     /**
     * writes a single frame in XYZ format to the Writer.
-    * @param cf the ChemFrame to write
-    * @param w the Writer to write it to
+    * @param mol the Molecule to write
     */
     public void writeMolecule(Molecule mol) throws IOException {
         

@@ -65,9 +65,9 @@ public class NamingRule implements Rule {
      * Translates a String according to known IUPAC localizations to the current
      * localization, as set with setIUPACNameLocalizer.
      *
-     * @see #setIUPACNameLoxalizer
+     * @see    #setIUPACNameLocalizer
      * @return The localized version of the String, or if non exists,
-     * the original string is returned.
+     *         the original string is returned.
      */
     public String localize(String s) {
        return this.localizer != null ? localizer.localize(s) : s;

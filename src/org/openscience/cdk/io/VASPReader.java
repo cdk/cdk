@@ -237,7 +237,6 @@ public class VASPReader extends DefaultChemObjectReader {
     * ABINIT tokens are words separated by space(s). Characters
     * following a "#" are ignored till the end of the line.
     *
-    * @param input a <code>BufferedReader</code> value
     * @return a <code>String</code> value
     * @exception IOException if an error occurs
     */

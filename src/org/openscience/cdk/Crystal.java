@@ -210,10 +210,10 @@ public class Crystal extends AtomContainer implements java.io.Serializable, Clon
     }
 
     /**
-     * Sets the number of asymmetric parts in the unit cell.
+     * Sets the number of assymmetric parts in the unit cell.
      *
-     * @param   z Z
-     * @see     getZ()
+     * @param   z the number of assymetric parts in the unit cell
+     * @see       #getZ
      */
     public void setZ(int z) {
         Z = z;

@@ -1,5 +1,4 @@
-/*
- *  $RCSfile$
+/*  $RCSfile$
  *  $Author$
  *  $Date$
  *  $Revision$
@@ -373,11 +372,11 @@ public class Bond extends ElectronContainer implements java.io.Serializable, Clo
 
 
 	/**
-	 *  Checks wether a bond is connected to another one, 
-	 *  i. e. if they have one atom in common.
+	 * Checks wether a bond is connected to another one.
+	 * This can only be true if the bonds have an Atom in common.
 	 *
-	 *@param  bond  The bond which is checked to be connect with this one
-	 *@return       True, if the bonds share an atom, otherwise false
+	 * @param  bond  The bond which is checked to be connect with this one
+	 * @return       True, if the bonds share an atom, otherwise false
 	 */
 	public boolean isConnectedTo(Bond bond)
 	{

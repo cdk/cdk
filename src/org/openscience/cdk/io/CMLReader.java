@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2001-2003  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -74,7 +74,7 @@ public class CMLReader extends DefaultChemObjectReader {
      * Define this CMLReader to take the input from a java.io.Reader
      * class. Possible readers are (among others) StringReader and FileReader.
      *
-     * @param input String url which points to the file to be read
+     * @param url String url which points to the file to be read
      */
     public CMLReader(String url) {
         this.init();

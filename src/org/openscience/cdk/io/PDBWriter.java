@@ -63,8 +63,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
    /**
     * Writes a single frame in PDB format to the Writer.
     *
-    * @param cf the ChemFrame to write
-    * @param w the Writer to write it to
+    * @param molecule the Molecule to write
     */
    public void writeMolecule(Molecule molecule) throws CDKException {
        

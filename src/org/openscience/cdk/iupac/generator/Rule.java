@@ -47,9 +47,9 @@ public interface Rule {
     public String localize(String s);
 
     /**
-     *  Flag that must be set by a Rule's apply() method.
+     * Flag that must be set by a Rule's apply() method.
      *
-     * @see apply(Molecule m)
+     * @see #apply(AtomContainer)
      */
     public final static String NONE_APPLICABLE =
       "org.openscience.cdk.iupac.generator.NONE_APPLICABLE";

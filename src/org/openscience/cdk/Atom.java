@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2000-2003  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -46,14 +46,13 @@ import javax.vecmath.*;
  *   if.configure(a);
  * </pre>
  *
- * <p>More example on using this class can be found in the
+ * <p>More examples about using this class can be found in the
  * Junit test for this class.
  *
  * @author     steinbeck
  * @created    2000-10-02
  * @keyword    atom
  *
- * @see  org.openscience.cdk.test.AtomTest
  * @see  org.openscience.cdk.tools.IsotopeFactory#getInstance()
  */
 public class Atom extends AtomType implements java.io.Serializable, Cloneable  {

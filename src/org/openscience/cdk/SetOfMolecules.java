@@ -96,7 +96,7 @@ public class SetOfMolecules extends ChemObject implements java.io.Serializable, 
 	/**
 	 *  Adds all molecules in the SetOfMolecules to this container.
 	 *
-	 * @param  molecule  The SetOfMolecules 
+	 * @param  moleculeSet  The SetOfMolecules 
 	 */
 	public void add(SetOfMolecules moleculeSet) {
         Molecule[] mols = moleculeSet.getMolecules();

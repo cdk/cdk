@@ -70,14 +70,14 @@ public interface ChemObjectIO {
      *
      * @param listener the reader listener to add.
      */
-    public void addChemObjectIOListener(ChemObjectIOListener l);
+    public void addChemObjectIOListener(ChemObjectIOListener listener);
 
     /**
      * Removes a ChemObjectIOListener from this ChemObjectReader.
      *
      * @param listener the reader listener to remove.
      */
-    public void removeChemObjectIOListener(ChemObjectIOListener l);
+    public void removeChemObjectIOListener(ChemObjectIOListener listener);
     
 }
 

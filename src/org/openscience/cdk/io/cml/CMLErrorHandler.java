@@ -57,18 +57,18 @@ public class CMLErrorHandler implements ErrorHandler {
      * Internal procedure that outputs an SAXParseException with a significance level
      * to the cdk.tools.LoggingTool logger.
      *
-     * @param level               significance level
-     * @param SAXParseException   Exception to output
+     * @param level     significance level
+     * @param exception Exception to output
      */
-    private void print (String label, SAXParseException e) {
-        if (label.equals("warning")) {
-            logger.warn("** " + label + ": " + e.getMessage ());
-            logger.warn("   URI  = " + e.getSystemId ());
-            logger.warn("   line = " + e.getLineNumber ());
+    private void print (String level, SAXParseException exception) {
+        if (level.equals("warning")) {
+            logger.warn("** " + level + ": " + exception.getMessage ());
+            logger.warn("   URI  = " + exception.getSystemId ());
+            logger.warn("   line = " + exception.getLineNumber ());
         } else {
-            logger.error("** " + label + ": " + e.getMessage ());
-            logger.error("   URI  = " + e.getSystemId ());
-            logger.error("   line = " + e.getLineNumber ());
+            logger.error("** " + level + ": " + exception.getMessage ());
+            logger.error("   URI  = " + exception.getSystemId ());
+            logger.error("   line = " + exception.getLineNumber ());
         }
     }
 
@@ -77,30 +77,30 @@ public class CMLErrorHandler implements ErrorHandler {
     /**
      * Outputs a SAXParseException error to the logger.
      *
-     * @param SAXParseException   Exception to output
+     * @param exception   Exception to output
      **/
-    public void error (SAXParseException e) throws SAXException {
-        if (reportErrors) print("error", e);
-        if (abortOnErrors) throw e;
+    public void error (SAXParseException exception) throws SAXException {
+        if (reportErrors) print("error", exception);
+        if (abortOnErrors) throw exception;
     }
 
     /**
      * Outputs as fatal SAXParseException error to the logger.
      *
-     * @param SAXParseException   Exception to output
+     * @param exception   Exception to output
      **/
-    public void fatalError (SAXParseException e) throws SAXException {
-        if (reportErrors) print("fatal", e);
-        if (abortOnErrors) throw e;
+    public void fatalError (SAXParseException exception) throws SAXException {
+        if (reportErrors) print("fatal", exception);
+        if (abortOnErrors) throw exception;
     }
 
     /**
      * Outputs a SAXParseException warning to the logger.
      *
-     * @param SAXParseException   Exception to output
+     * @param exception   Exception to output
      **/
-    public void warning (SAXParseException e) throws SAXException {
-        if (reportErrors) print("warning", e);
+    public void warning (SAXParseException exception) throws SAXException {
+        if (reportErrors) print("warning", exception);
     }
 
 }

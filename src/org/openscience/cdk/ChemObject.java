@@ -126,7 +126,8 @@ public class ChemObject implements java.io.Serializable, Cloneable {
 	 * @param   description  An object description of the property (most likely a unique string)
 	 * @param   property  An object with the property itself
      *
-     * @see     #getProperty, removeProperty
+     * @see     #getProperty
+     * @see     #removeProperty
 	 */
 	public void setProperty(Object description, Object property) {
 		properties.put(description, property);
@@ -137,7 +138,8 @@ public class ChemObject implements java.io.Serializable, Cloneable {
 	 *
 	 * @param   description  The object description of the property (most likely a unique string)
      *
-     * @see     #setProperty, #getProperty
+     * @see     #setProperty
+     * @see     #getProperty
 	 */
 	public void removeProperty(Object description) {
 		properties.remove(description);
@@ -149,7 +151,8 @@ public class ChemObject implements java.io.Serializable, Cloneable {
 	 * @param   description  An object description of the property (most likely a unique string)
 	 * @return  The object containing the property. Returns null if propert is not set.
      *
-     * @see     #setProperty, #removeProperty
+     * @see     #setProperty
+     * @see     #removeProperty
 	 */
 	public Object getProperty(Object description) {
 		return properties.get(description);

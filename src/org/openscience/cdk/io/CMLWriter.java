@@ -72,8 +72,8 @@ import java.util.Enumeration;
  * <p>References:
  *   <a href="http://cdk.sf.net/biblio.html#PMR99">PMR99</a>
  *
- * @see FileWriter
- * @see StringWriter
+ * @see java.io.FileWriter
+ * @see java.io.StringWriter
  *
  * @author Egon Willighagen
  *
@@ -111,7 +111,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
      * class given as parameter. The CML code will be valid CML code with a
      * XML header. More than object can be stored.
      *
-     * @param out       Writer to redirect the output to.
+     * @param w         Writer to redirect the output to.
      * @param fragment  Boolean denoting that the content is not
      */
     public CMLWriter(Writer w, boolean fragment) {

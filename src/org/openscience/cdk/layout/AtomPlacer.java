@@ -1,10 +1,9 @@
-/*
- *  $RCSfile$
+/*  $RCSfile$
  *  $Author$
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2003  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -40,14 +39,13 @@ import java.lang.Math;
 import java.awt.*;
 
 /**
- *  Methods for generating coordinates for atoms in various situations They can
+ *  Methods for generating coordinates for atoms in various situations. They can
  *  be used for Automated Structure Diagram Generation or in the interactive
  *  buildup of molecules by the user.
  *
  *@author     steinbeck
- *@created    August 29, 2003
+ *@created    2003-08-29
  */
-
 public class AtomPlacer
 {
 	/**
@@ -364,7 +362,6 @@ public class AtomPlacer
 	 *      partners are to be placed
 	 *@param  radius          The radius of the polygon to be populated: bond
 	 *      length or ring radius
-	 *@param  doDistanceSort  Should the above mentioned distance sort be done?
 	 */
 	public void populatePolygonCorners(Vector atomsToDraw, Point2d rotationCenter, double startAngle, double addAngle, double radius)
 	{

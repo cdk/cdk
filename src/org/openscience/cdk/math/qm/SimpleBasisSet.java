@@ -32,7 +32,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.math.Vector;
 
 /**
- * This class will generate a simple base set for a atom container
+ * This class will generate a simple base set for a atom container.
  * 
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
  * @created 2001-07-11

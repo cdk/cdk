@@ -26,10 +26,11 @@ package org.openscience.cdk;
 
 import java.util.*;
 
-/** An object containig multiple SetOfMolecules and 
-  * the other lower level concepts like rings, sequences, 
-  * fragments, etc.
-  */
+/** 
+ * An object containig multiple SetOfMolecules and 
+ * the other lower level concepts like rings, sequences, 
+ * fragments, etc.
+ */
 public class ChemModel extends ChemObject implements java.io.Serializable, Cloneable
 {
 
@@ -147,9 +148,9 @@ public class ChemModel extends ChemObject implements java.io.Serializable, Clone
     /**
      * Sets the SetOfReactions contained in this ChemModel.
      *
-     * @param   c     the SetOfReactions to store in this model
+     * @param sor the SetOfReactions to store in this model
      *
-     * @see      #getSetOfReactions
+     * @see       #getSetOfReactions
      */
     public void setSetOfReactions(SetOfReactions sor) {
         this.setOfReactions = sor;

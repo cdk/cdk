@@ -35,7 +35,7 @@ import java.util.Iterator;
  * in specific file format (e.g. SDF), without reading them into memory first. Suitable
  * for very large files, with thousands of molecules.
  *
- * @see org.openscience.cdk,io.ChemObjectIO
+ * @see org.openscience.cdk.io.ChemObjectIO
  *
  * @author  Egon Willighagen <egonw@sci.kun.nl>
  * @created 2003-10-19
