@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE pgml SYSTEM "pgml.dtd">
+<pgml description="uci.uml.visual.UMLClassDiagram|-125--82-116--114-5572a:e277ffa57e:-7ff9"
+      name="ChemFinder Class Hierarchy"
+>
+  <group name="Fig0"
+       description="uci.uml.visual.FigInterface[336, 424, 257, 64]"
+       href="-125--82-116--114-5572a:e27ae74a5d:-7ff0"
+       fill="1"
+       fillcolor="-1"
+       stroke="1"
+       strokecolor="-16777216"
+  >
+    <private>
+    </private>
+    
+    <rectangle name="Fig0.0"
+      x="337"
+      y="425"
+      width="255"
+      height="62"
+      fill="1"
+      fillcolor="-1"
+      stroke="1"
+      strokecolor="-16777216"
+    />
+    <rectangle name="Fig0.1"
+      x="336"
+      y="424"
+      width="257"
+      height="33"
+      fill="1"
+      fillcolor="-1"
+      stroke="1"
+      strokecolor="-16777216"
+    />
+    <text name="Fig0.2"
+      x="337"
+      y="425"
+      fill="1"
+      fillcolor="-1"
+      stroke="0"
+      strokecolor="-16777216"
+      font="Times"
+      textsize="10"
+    >&lt;&lt;Interface&gt;&gt;</text>
+    <text name="Fig0.3"
+      x="337"
+      y="440"
+      fill="1"
+      fillcolor="-1"
+      stroke="0"
+      strokecolor="-16777216"
+      font="dialog"
+      textsize="9"
+    >ChemObjectFinderInterface</text>
+    <text name="Fig0.4"
+      x="336"
+      y="456"
+      fill="1"
+      fillcolor="-1"
+      stroke="1"
+      strokecolor="-16777216"
+      font="dialog"
+      textsize="9"
+    >public ChemObject[] getResult(ChemObject[] objects)</text>
+  </group>
+  <text name="Fig1"
+    x="485"
+    y="592"
+    fill="1"
+    fillcolor="-1"
+    stroke="1"
+    strokecolor="-16777216"
+    font="serif"
+    textsize="10"
+  >Note that the finder hierarchy directly
+reflects the object hierarchy.
+</text>
+  <group name="Fig2"
+       description="uci.uml.visual.FigClass[360, 532, 99, 61]"
+       href="-125--82-116--114-5572a:e27ae74a5d:-7fef"
+       fill="1"
+       fillcolor="-1"
+       stroke="1"
+       strokecolor="-16777216"
+  >
+    <private>
+    </private>
+    
+    <rectangle name="Fig2.0"
+      x="361"
+      y="533"
+      width="97"
+      height="59"
+      fill="1"
+      fillcolor="-1"
+      stroke="1"
+      strokecolor="-16777216"
+    />
+    <text name="Fig2.1"
+      x="360"
+      y="532"
+      fill="1"
+      fillcolor="-1"
+      stroke="1"
+      strokecolor="-16777216"
+      font="dialog"
+      textsize="9"
+    >ChemObjectFinder</text>
+    <text name="Fig2.2"
+      x="360"
+      y="550"
+      fill="1"
+      fillcolor="-1"
+      stroke="1"
+      strokecolor="-16777216"
+      font="dialog"
+      textsize="9"
+    ></text>
+    <text name="Fig2.3"
+      x="360"
+      y="571"
+      fill="1"
+      fillcolor="-1"
+      stroke="1"
+      strokecolor="-16777216"
+      font="dialog"
+      textsize="9"
+    ></text>
+  </group>
+  <group name="Fig3"
+       description="uci.uml.visual.FigDependency"
+       href="-125--82-116--114-5572a:e27ae74a5d:-7fee"
+       stroke="1"
+       strokecolor="-16777216"
+  >
+    <private>
+      sourcePortFig="Fig2"
+      destPortFig="Fig0"
+      sourceFigNode="Fig2"
+      destFigNode="Fig0"
+    </private>
+    <path name="Fig3.1"
+      description="uci.gef.FigPoly"
+      fill="0"
+      fillcolor="-1"
+      stroke="1"
+      strokecolor="-16777216"
+    >
+      <moveto x="435"
+              y="532" />
+      <lineto x="435"
+              y="488" />
+    </path>
+  </group>
+</pgml>

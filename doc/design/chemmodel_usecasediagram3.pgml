@@ -4,7 +4,7 @@
       name="How is CDK used?"
 >
   <group name="Fig0"
-       description="uci.uml.visual.FigActor[48, 56, 58, 85]"
+       description="uci.uml.visual.FigActor[368, 200, 102, 85]"
        href="-125--82-116--114-35e6e3:e2781e2af7:-7ff0"
        fill="1"
        fillcolor="-1"
@@ -15,8 +15,8 @@
     </private>
     
     <ellipse name="Fig0.0"
-      x="77"
-      y="71"
+      x="419"
+      y="215"
       rx="10"
       ry="15"
       fill="1"
@@ -25,8 +25,8 @@
       strokecolor="-8355712"
     />
     <ellipse name="Fig0.1"
-      x="77"
-      y="71"
+      x="419"
+      y="215"
       rx="10"
       ry="15"
       fill="1"
@@ -41,10 +41,10 @@
       stroke="1"
       strokecolor="-16777216"
     >
-      <moveto x="77"
-              y="86" />
-      <lineto x="77"
-              y="106" />
+      <moveto x="419"
+              y="230" />
+      <lineto x="419"
+              y="250" />
     </path>
     <path name="Fig0.3"
       description="uci.gef.FigLine"
@@ -53,10 +53,10 @@
       stroke="1"
       strokecolor="-16777216"
     >
-      <moveto x="67"
-              y="96" />
-      <lineto x="87"
-              y="96" />
+      <moveto x="409"
+              y="240" />
+      <lineto x="429"
+              y="240" />
     </path>
     <path name="Fig0.4"
       description="uci.gef.FigLine"
@@ -65,10 +65,10 @@
       stroke="1"
       strokecolor="-16777216"
     >
-      <moveto x="77"
-              y="106" />
-      <lineto x="72"
-              y="121" />
+      <moveto x="419"
+              y="250" />
+      <lineto x="414"
+              y="265" />
     </path>
     <path name="Fig0.5"
       description="uci.gef.FigLine"
@@ -77,14 +77,14 @@
       stroke="1"
       strokecolor="-16777216"
     >
-      <moveto x="77"
-              y="106" />
-      <lineto x="82"
-              y="121" />
+      <moveto x="419"
+              y="250" />
+      <lineto x="424"
+              y="265" />
     </path>
     <text name="Fig0.6"
-      x="26"
-      y="123"
+      x="368"
+      y="267"
       fill="0"
       fillcolor="-1"
       stroke="0"
@@ -94,7 +94,7 @@
     >Chemist (of any sort)</text>
   </group>
   <group name="Fig1"
-       description="uci.uml.visual.FigUseCase[174, 48, 170, 64]"
+       description="uci.uml.visual.FigUseCase[494, 192, 170, 64]"
        href="-125--82-116--114-35e6e3:e2781e2af7:-7fef"
        fill="1"
        fillcolor="-1"
@@ -105,8 +105,8 @@
     </private>
     
     <ellipse name="Fig1.0"
-      x="259"
-      y="80"
+      x="579"
+      y="224"
       rx="85"
       ry="32"
       fill="1"
@@ -115,8 +115,8 @@
       strokecolor="-16777216"
     />
     <ellipse name="Fig1.1"
-      x="259"
-      y="80"
+      x="579"
+      y="224"
       rx="85"
       ry="32"
       fill="1"
@@ -125,8 +125,8 @@
       strokecolor="-16777216"
     />
     <text name="Fig1.2"
-      x="204"
-      y="71"
+      x="524"
+      y="215"
       fill="0"
       fillcolor="-1"
       stroke="0"
@@ -135,8 +135,8 @@
       textsize="9"
     >Chemical Java Program</text>
   </group>
-  <group name="Fig3"
-       description="uci.uml.visual.FigUseCase[142, 164, 100, 40]"
+  <group name="Fig2"
+       description="uci.uml.visual.FigUseCase[462, 308, 100, 40]"
        href="-125--82-116--114-35e6e3:e2781e2af7:-7feb"
        fill="1"
        fillcolor="-1"
@@ -146,9 +146,9 @@
     <private>
     </private>
     
-    <ellipse name="Fig3.0"
-      x="192"
-      y="184"
+    <ellipse name="Fig2.0"
+      x="512"
+      y="328"
       rx="50"
       ry="20"
       fill="1"
@@ -156,9 +156,9 @@
       stroke="1"
       strokecolor="-16777216"
     />
-    <ellipse name="Fig3.1"
-      x="192"
-      y="184"
+    <ellipse name="Fig2.1"
+      x="512"
+      y="328"
       rx="50"
       ry="20"
       fill="1"
@@ -166,9 +166,9 @@
       stroke="1"
       strokecolor="-16777216"
     />
-    <text name="Fig3.2"
-      x="177"
-      y="175"
+    <text name="Fig2.2"
+      x="497"
+      y="319"
       fill="0"
       fillcolor="-1"
       stroke="0"
@@ -177,8 +177,8 @@
       textsize="9"
     >CDK</text>
   </group>
-  <group name="Fig5"
-       description="uci.uml.visual.FigUseCase[254, 164, 114, 40]"
+  <group name="Fig3"
+       description="uci.uml.visual.FigUseCase[574, 308, 114, 40]"
        href="-125--82-116--114-35e6e3:e2781e2af7:-7fe9"
        fill="1"
        fillcolor="-1"
@@ -188,9 +188,9 @@
     <private>
     </private>
     
-    <ellipse name="Fig5.0"
-      x="311"
-      y="184"
+    <ellipse name="Fig3.0"
+      x="631"
+      y="328"
       rx="57"
       ry="20"
       fill="1"
@@ -198,9 +198,9 @@
       stroke="1"
       strokecolor="-16777216"
     />
-    <ellipse name="Fig5.1"
-      x="311"
-      y="184"
+    <ellipse name="Fig3.1"
+      x="631"
+      y="328"
       rx="57"
       ry="20"
       fill="1"
@@ -208,9 +208,9 @@
       stroke="1"
       strokecolor="-16777216"
     />
-    <text name="Fig5.2"
-      x="264"
-      y="175"
+    <text name="Fig3.2"
+      x="584"
+      y="319"
       fill="0"
       fillcolor="-1"
       stroke="0"
@@ -219,9 +219,8 @@
       textsize="9"
     >Other Java Libraries</text>
   </group>
-  <group name="Fig2"
+  <group name="Fig4"
        description="uci.uml.visual.FigAssociation"
-       href="-125--82-116--114-35e6e3:e2781e2af7:-7fee"
        stroke="1"
        strokecolor="-16777216"
   >
@@ -231,31 +230,6 @@
       sourceFigNode="Fig0"
       destFigNode="Fig1"
     </private>
-    <path name="Fig2.1"
-      description="uci.gef.FigPoly"
-      fill="0"
-      fillcolor="-1"
-      stroke="1"
-      strokecolor="-16777216"
-    >
-      <moveto x="106"
-              y="80" />
-      <lineto x="174"
-              y="80" />
-    </path>
-  </group>
-  <group name="Fig4"
-       description="uci.uml.visual.FigGeneralization"
-       href="-125--82-116--114-35e6e3:e2781e2af7:-7fea"
-       stroke="1"
-       strokecolor="-16777216"
-  >
-    <private>
-      sourcePortFig="Fig3"
-      destPortFig="Fig1"
-      sourceFigNode="Fig3"
-      destFigNode="Fig1"
-    </private>
     <path name="Fig4.1"
       description="uci.gef.FigPoly"
       fill="0"
@@ -263,10 +237,35 @@
       stroke="1"
       strokecolor="-16777216"
     >
-      <moveto x="210"
-              y="164" />
-      <lineto x="210"
-              y="112" />
+      <moveto x="470"
+              y="224" />
+      <lineto x="494"
+              y="224" />
+    </path>
+  </group>
+  <group name="Fig5"
+       description="uci.uml.visual.FigGeneralization"
+       href="-125--82-116--114-35e6e3:e2781e2af7:-7fea"
+       stroke="1"
+       strokecolor="-16777216"
+  >
+    <private>
+      sourcePortFig="Fig2"
+      destPortFig="Fig1"
+      sourceFigNode="Fig2"
+      destFigNode="Fig1"
+    </private>
+    <path name="Fig5.1"
+      description="uci.gef.FigPoly"
+      fill="0"
+      fillcolor="-1"
+      stroke="1"
+      strokecolor="-16777216"
+    >
+      <moveto x="530"
+              y="308" />
+      <lineto x="530"
+              y="256" />
     </path>
   </group>
   <group name="Fig6"
@@ -276,9 +275,9 @@
        strokecolor="-16777216"
   >
     <private>
-      sourcePortFig="Fig5"
+      sourcePortFig="Fig3"
       destPortFig="Fig1"
-      sourceFigNode="Fig5"
+      sourceFigNode="Fig3"
       destFigNode="Fig1"
     </private>
     <path name="Fig6.1"
@@ -288,10 +287,10 @@
       stroke="1"
       strokecolor="-16777216"
     >
-      <moveto x="286"
-              y="164" />
-      <lineto x="286"
-              y="112" />
+      <moveto x="606"
+              y="308" />
+      <lineto x="606"
+              y="256" />
     </path>
   </group>
 </pgml>

@@ -28,27 +28,13 @@
             <Foundation.Core.Generalization xmi.idref="xmi.4"/>
             <Foundation.Core.Generalization xmi.idref="xmi.5"/>
             <Foundation.Core.Generalization xmi.idref="xmi.6"/>
+            <Foundation.Core.Generalization xmi.idref="xmi.7"/>
+            <Foundation.Core.Generalization xmi.idref="xmi.8"/>
+            <Foundation.Core.Generalization xmi.idref="xmi.9"/>
           </Foundation.Core.GeneralizableElement.specialization>
           <Foundation.Core.Classifier.feature>
-            <Foundation.Core.Attribute xmi.id="xmi.7">
-              <Foundation.Core.ModelElement.name>chemObjectListeners</Foundation.Core.ModelElement.name>
-              <Foundation.Core.ModelElement.visibility xmi.value="public"/>
-              <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
-              <Foundation.Core.Attribute.initialValue>
-                <Foundation.Data_Types.Expression xmi.id="xmi.8">
-                  <Foundation.Data_Types.Expression.language></Foundation.Data_Types.Expression.language>
-                  <Foundation.Data_Types.Expression.body></Foundation.Data_Types.Expression.body>
-                </Foundation.Data_Types.Expression>
-              </Foundation.Core.Attribute.initialValue>
-              <Foundation.Core.Feature.owner>
-                <Foundation.Core.Class xmi.idref="xmi.2"/>
-              </Foundation.Core.Feature.owner>
-              <Foundation.Core.StructuralFeature.type>
-                <Foundation.Core.DataType xmi.idref="xmi.9"/>
-              </Foundation.Core.StructuralFeature.type>
-            </Foundation.Core.Attribute>
             <Foundation.Core.Attribute xmi.id="xmi.10">
-              <Foundation.Core.ModelElement.name>objects</Foundation.Core.ModelElement.name>
+              <Foundation.Core.ModelElement.name>chemObjectListeners</Foundation.Core.ModelElement.name>
               <Foundation.Core.ModelElement.visibility xmi.value="public"/>
               <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
               <Foundation.Core.Attribute.initialValue>
@@ -61,10 +47,27 @@
                 <Foundation.Core.Class xmi.idref="xmi.2"/>
               </Foundation.Core.Feature.owner>
               <Foundation.Core.StructuralFeature.type>
-                <Foundation.Core.DataType xmi.idref="xmi.9"/>
+                <Foundation.Core.DataType xmi.idref="xmi.12"/>
               </Foundation.Core.StructuralFeature.type>
             </Foundation.Core.Attribute>
-            <Foundation.Core.Operation xmi.id="xmi.12">
+            <Foundation.Core.Attribute xmi.id="xmi.13">
+              <Foundation.Core.ModelElement.name>objects</Foundation.Core.ModelElement.name>
+              <Foundation.Core.ModelElement.visibility xmi.value="public"/>
+              <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
+              <Foundation.Core.Attribute.initialValue>
+                <Foundation.Data_Types.Expression xmi.id="xmi.14">
+                  <Foundation.Data_Types.Expression.language></Foundation.Data_Types.Expression.language>
+                  <Foundation.Data_Types.Expression.body></Foundation.Data_Types.Expression.body>
+                </Foundation.Data_Types.Expression>
+              </Foundation.Core.Attribute.initialValue>
+              <Foundation.Core.Feature.owner>
+                <Foundation.Core.Class xmi.idref="xmi.2"/>
+              </Foundation.Core.Feature.owner>
+              <Foundation.Core.StructuralFeature.type>
+                <Foundation.Core.DataType xmi.idref="xmi.12"/>
+              </Foundation.Core.StructuralFeature.type>
+            </Foundation.Core.Attribute>
+            <Foundation.Core.Operation xmi.id="xmi.15">
               <Foundation.Core.ModelElement.name>addListener</Foundation.Core.ModelElement.name>
               <Foundation.Core.ModelElement.visibility xmi.value="public"/>
               <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
@@ -76,19 +79,19 @@
                 <Foundation.Core.Class xmi.idref="xmi.2"/>
               </Foundation.Core.Feature.owner>
               <Foundation.Core.BehavioralFeature.parameter>
-                <Foundation.Core.Parameter xmi.id="xmi.13">
+                <Foundation.Core.Parameter xmi.id="xmi.16">
                   <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
                   <Foundation.Core.Parameter.kind xmi.value="return"/>
                   <Foundation.Core.Parameter.behavioralFeature>
-                    <Foundation.Core.Operation xmi.idref="xmi.12"/>
+                    <Foundation.Core.Operation xmi.idref="xmi.15"/>
                   </Foundation.Core.Parameter.behavioralFeature>
                   <Foundation.Core.Parameter.type>
-                    <Foundation.Core.DataType xmi.idref="xmi.9"/>
+                    <Foundation.Core.DataType xmi.idref="xmi.12"/>
                   </Foundation.Core.Parameter.type>
                 </Foundation.Core.Parameter>
               </Foundation.Core.BehavioralFeature.parameter>
             </Foundation.Core.Operation>
-            <Foundation.Core.Operation xmi.id="xmi.14">
+            <Foundation.Core.Operation xmi.id="xmi.17">
               <Foundation.Core.ModelElement.name>removeListener</Foundation.Core.ModelElement.name>
               <Foundation.Core.ModelElement.visibility xmi.value="public"/>
               <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
@@ -100,16 +103,19 @@
                 <Foundation.Core.Class xmi.idref="xmi.2"/>
               </Foundation.Core.Feature.owner>
               <Foundation.Core.BehavioralFeature.parameter>
-                <Foundation.Core.Parameter xmi.id="xmi.15">
+                <Foundation.Core.Parameter xmi.id="xmi.18">
                   <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
                   <Foundation.Core.Parameter.kind xmi.value="return"/>
                   <Foundation.Core.Parameter.behavioralFeature>
-                    <Foundation.Core.Operation xmi.idref="xmi.14"/>
+                    <Foundation.Core.Operation xmi.idref="xmi.17"/>
                   </Foundation.Core.Parameter.behavioralFeature>
+                  <Foundation.Core.Parameter.type>
+                    <Foundation.Core.DataType xmi.idref="xmi.12"/>
+                  </Foundation.Core.Parameter.type>
                 </Foundation.Core.Parameter>
               </Foundation.Core.BehavioralFeature.parameter>
             </Foundation.Core.Operation>
-            <Foundation.Core.Operation xmi.id="xmi.16">
+            <Foundation.Core.Operation xmi.id="xmi.19">
               <Foundation.Core.ModelElement.name>notifyChanged</Foundation.Core.ModelElement.name>
               <Foundation.Core.ModelElement.visibility xmi.value="public"/>
               <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
@@ -121,18 +127,21 @@
                 <Foundation.Core.Class xmi.idref="xmi.2"/>
               </Foundation.Core.Feature.owner>
               <Foundation.Core.BehavioralFeature.parameter>
-                <Foundation.Core.Parameter xmi.id="xmi.17">
+                <Foundation.Core.Parameter xmi.id="xmi.20">
                   <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
                   <Foundation.Core.Parameter.kind xmi.value="return"/>
                   <Foundation.Core.Parameter.behavioralFeature>
-                    <Foundation.Core.Operation xmi.idref="xmi.16"/>
+                    <Foundation.Core.Operation xmi.idref="xmi.19"/>
                   </Foundation.Core.Parameter.behavioralFeature>
+                  <Foundation.Core.Parameter.type>
+                    <Foundation.Core.DataType xmi.idref="xmi.12"/>
+                  </Foundation.Core.Parameter.type>
                 </Foundation.Core.Parameter>
               </Foundation.Core.BehavioralFeature.parameter>
             </Foundation.Core.Operation>
           </Foundation.Core.Classifier.feature>
         </Foundation.Core.Class>
-        <Foundation.Core.DataType xmi.id="xmi.9">
+        <Foundation.Core.DataType xmi.id="xmi.12">
           <Foundation.Core.ModelElement.name>void</Foundation.Core.ModelElement.name>
           <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
           <Foundation.Core.GeneralizableElement.isRoot xmi.value="false"/>
@@ -142,7 +151,7 @@
             <Model_Management.Model xmi.idref="xmi.1"/>
           </Foundation.Core.ModelElement.namespace>
         </Foundation.Core.DataType>
-        <Foundation.Core.Class xmi.id="xmi.18" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7ffd">
+        <Foundation.Core.Class xmi.id="xmi.21" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7ffd">
           <Foundation.Core.ModelElement.name>Element</Foundation.Core.ModelElement.name>
           <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
           <Foundation.Core.GeneralizableElement.isRoot xmi.value="false"/>
@@ -156,28 +165,11 @@
             <Foundation.Core.Generalization xmi.idref="xmi.3"/>
           </Foundation.Core.GeneralizableElement.generalization>
           <Foundation.Core.GeneralizableElement.specialization>
-            <Foundation.Core.Generalization xmi.idref="xmi.19"/>
+            <Foundation.Core.Generalization xmi.idref="xmi.22"/>
           </Foundation.Core.GeneralizableElement.specialization>
           <Foundation.Core.Classifier.feature>
-            <Foundation.Core.Attribute xmi.id="xmi.20">
-              <Foundation.Core.ModelElement.name>symbol</Foundation.Core.ModelElement.name>
-              <Foundation.Core.ModelElement.visibility xmi.value="public"/>
-              <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
-              <Foundation.Core.Attribute.initialValue>
-                <Foundation.Data_Types.Expression xmi.id="xmi.21">
-                  <Foundation.Data_Types.Expression.language></Foundation.Data_Types.Expression.language>
-                  <Foundation.Data_Types.Expression.body></Foundation.Data_Types.Expression.body>
-                </Foundation.Data_Types.Expression>
-              </Foundation.Core.Attribute.initialValue>
-              <Foundation.Core.Feature.owner>
-                <Foundation.Core.Class xmi.idref="xmi.18"/>
-              </Foundation.Core.Feature.owner>
-              <Foundation.Core.StructuralFeature.type>
-                <Foundation.Core.Classifier xmi.idref="xmi.22"/>
-              </Foundation.Core.StructuralFeature.type>
-            </Foundation.Core.Attribute>
             <Foundation.Core.Attribute xmi.id="xmi.23">
-              <Foundation.Core.ModelElement.name>atomNumber</Foundation.Core.ModelElement.name>
+              <Foundation.Core.ModelElement.name>symbol</Foundation.Core.ModelElement.name>
               <Foundation.Core.ModelElement.visibility xmi.value="public"/>
               <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
               <Foundation.Core.Attribute.initialValue>
@@ -187,14 +179,14 @@
                 </Foundation.Data_Types.Expression>
               </Foundation.Core.Attribute.initialValue>
               <Foundation.Core.Feature.owner>
-                <Foundation.Core.Class xmi.idref="xmi.18"/>
+                <Foundation.Core.Class xmi.idref="xmi.21"/>
               </Foundation.Core.Feature.owner>
               <Foundation.Core.StructuralFeature.type>
-                <Foundation.Core.Class xmi.idref="xmi.25"/>
+                <Foundation.Core.Classifier xmi.idref="xmi.25"/>
               </Foundation.Core.StructuralFeature.type>
             </Foundation.Core.Attribute>
             <Foundation.Core.Attribute xmi.id="xmi.26">
-              <Foundation.Core.ModelElement.name>mass</Foundation.Core.ModelElement.name>
+              <Foundation.Core.ModelElement.name>atomNumber</Foundation.Core.ModelElement.name>
               <Foundation.Core.ModelElement.visibility xmi.value="public"/>
               <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
               <Foundation.Core.Attribute.initialValue>
@@ -204,10 +196,27 @@
                 </Foundation.Data_Types.Expression>
               </Foundation.Core.Attribute.initialValue>
               <Foundation.Core.Feature.owner>
-                <Foundation.Core.Class xmi.idref="xmi.18"/>
+                <Foundation.Core.Class xmi.idref="xmi.21"/>
               </Foundation.Core.Feature.owner>
               <Foundation.Core.StructuralFeature.type>
                 <Foundation.Core.Class xmi.idref="xmi.28"/>
+              </Foundation.Core.StructuralFeature.type>
+            </Foundation.Core.Attribute>
+            <Foundation.Core.Attribute xmi.id="xmi.29">
+              <Foundation.Core.ModelElement.name>mass</Foundation.Core.ModelElement.name>
+              <Foundation.Core.ModelElement.visibility xmi.value="public"/>
+              <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
+              <Foundation.Core.Attribute.initialValue>
+                <Foundation.Data_Types.Expression xmi.id="xmi.30">
+                  <Foundation.Data_Types.Expression.language></Foundation.Data_Types.Expression.language>
+                  <Foundation.Data_Types.Expression.body></Foundation.Data_Types.Expression.body>
+                </Foundation.Data_Types.Expression>
+              </Foundation.Core.Attribute.initialValue>
+              <Foundation.Core.Feature.owner>
+                <Foundation.Core.Class xmi.idref="xmi.21"/>
+              </Foundation.Core.Feature.owner>
+              <Foundation.Core.StructuralFeature.type>
+                <Foundation.Core.Class xmi.idref="xmi.31"/>
               </Foundation.Core.StructuralFeature.type>
             </Foundation.Core.Attribute>
           </Foundation.Core.Classifier.feature>
@@ -218,13 +227,13 @@
             <Model_Management.Model xmi.idref="xmi.1"/>
           </Foundation.Core.ModelElement.namespace>
           <Foundation.Core.Generalization.child>
-            <Foundation.Core.Class xmi.idref="xmi.18"/>
+            <Foundation.Core.Class xmi.idref="xmi.21"/>
           </Foundation.Core.Generalization.child>
           <Foundation.Core.Generalization.parent>
             <Foundation.Core.Class xmi.idref="xmi.2"/>
           </Foundation.Core.Generalization.parent>
         </Foundation.Core.Generalization>
-        <Foundation.Core.Class xmi.id="xmi.25">
+        <Foundation.Core.Class xmi.id="xmi.28">
           <Foundation.Core.ModelElement.name>int</Foundation.Core.ModelElement.name>
           <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
           <Foundation.Core.GeneralizableElement.isRoot xmi.value="false"/>
@@ -235,7 +244,7 @@
             <Model_Management.Model xmi.idref="xmi.1"/>
           </Foundation.Core.ModelElement.namespace>
         </Foundation.Core.Class>
-        <Foundation.Core.Class xmi.id="xmi.28">
+        <Foundation.Core.Class xmi.id="xmi.31">
           <Foundation.Core.ModelElement.name>double</Foundation.Core.ModelElement.name>
           <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
           <Foundation.Core.GeneralizableElement.isRoot xmi.value="false"/>
@@ -246,7 +255,7 @@
             <Model_Management.Model xmi.idref="xmi.1"/>
           </Foundation.Core.ModelElement.namespace>
         </Foundation.Core.Class>
-        <Foundation.Core.Class xmi.id="xmi.29" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7ffb">
+        <Foundation.Core.Class xmi.id="xmi.32" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7ffb">
           <Foundation.Core.ModelElement.name>Atom</Foundation.Core.ModelElement.name>
           <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
           <Foundation.Core.GeneralizableElement.isRoot xmi.value="false"/>
@@ -260,46 +269,29 @@
             <Foundation.Core.Generalization xmi.idref="xmi.4"/>
           </Foundation.Core.GeneralizableElement.generalization>
           <Foundation.Core.GeneralizableElement.specialization>
-            <Foundation.Core.Generalization xmi.idref="xmi.30"/>
-            <Foundation.Core.Generalization xmi.idref="xmi.31"/>
+            <Foundation.Core.Generalization xmi.idref="xmi.33"/>
+            <Foundation.Core.Generalization xmi.idref="xmi.34"/>
           </Foundation.Core.GeneralizableElement.specialization>
           <Foundation.Core.Classifier.feature>
-            <Foundation.Core.Attribute xmi.id="xmi.32">
+            <Foundation.Core.Attribute xmi.id="xmi.35">
               <Foundation.Core.ModelElement.name>element</Foundation.Core.ModelElement.name>
               <Foundation.Core.ModelElement.visibility xmi.value="public"/>
               <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
               <Foundation.Core.Attribute.initialValue>
-                <Foundation.Data_Types.Expression xmi.id="xmi.33">
+                <Foundation.Data_Types.Expression xmi.id="xmi.36">
                   <Foundation.Data_Types.Expression.language></Foundation.Data_Types.Expression.language>
                   <Foundation.Data_Types.Expression.body></Foundation.Data_Types.Expression.body>
                 </Foundation.Data_Types.Expression>
               </Foundation.Core.Attribute.initialValue>
               <Foundation.Core.Feature.owner>
-                <Foundation.Core.Class xmi.idref="xmi.29"/>
+                <Foundation.Core.Class xmi.idref="xmi.32"/>
               </Foundation.Core.Feature.owner>
               <Foundation.Core.StructuralFeature.type>
-                <Foundation.Core.Class xmi.idref="xmi.18"/>
-              </Foundation.Core.StructuralFeature.type>
-            </Foundation.Core.Attribute>
-            <Foundation.Core.Attribute xmi.id="xmi.34">
-              <Foundation.Core.ModelElement.name>point2D</Foundation.Core.ModelElement.name>
-              <Foundation.Core.ModelElement.visibility xmi.value="public"/>
-              <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
-              <Foundation.Core.Attribute.initialValue>
-                <Foundation.Data_Types.Expression xmi.id="xmi.35">
-                  <Foundation.Data_Types.Expression.language></Foundation.Data_Types.Expression.language>
-                  <Foundation.Data_Types.Expression.body></Foundation.Data_Types.Expression.body>
-                </Foundation.Data_Types.Expression>
-              </Foundation.Core.Attribute.initialValue>
-              <Foundation.Core.Feature.owner>
-                <Foundation.Core.Class xmi.idref="xmi.29"/>
-              </Foundation.Core.Feature.owner>
-              <Foundation.Core.StructuralFeature.type>
-                <Foundation.Core.Classifier xmi.idref="xmi.36"/>
+                <Foundation.Core.Class xmi.idref="xmi.21"/>
               </Foundation.Core.StructuralFeature.type>
             </Foundation.Core.Attribute>
             <Foundation.Core.Attribute xmi.id="xmi.37">
-              <Foundation.Core.ModelElement.name>point3D</Foundation.Core.ModelElement.name>
+              <Foundation.Core.ModelElement.name>point2D</Foundation.Core.ModelElement.name>
               <Foundation.Core.ModelElement.visibility xmi.value="public"/>
               <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
               <Foundation.Core.Attribute.initialValue>
@@ -309,14 +301,14 @@
                 </Foundation.Data_Types.Expression>
               </Foundation.Core.Attribute.initialValue>
               <Foundation.Core.Feature.owner>
-                <Foundation.Core.Class xmi.idref="xmi.29"/>
+                <Foundation.Core.Class xmi.idref="xmi.32"/>
               </Foundation.Core.Feature.owner>
               <Foundation.Core.StructuralFeature.type>
                 <Foundation.Core.Classifier xmi.idref="xmi.39"/>
               </Foundation.Core.StructuralFeature.type>
             </Foundation.Core.Attribute>
             <Foundation.Core.Attribute xmi.id="xmi.40">
-              <Foundation.Core.ModelElement.name>hydrogenCount</Foundation.Core.ModelElement.name>
+              <Foundation.Core.ModelElement.name>point3D</Foundation.Core.ModelElement.name>
               <Foundation.Core.ModelElement.visibility xmi.value="public"/>
               <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
               <Foundation.Core.Attribute.initialValue>
@@ -326,31 +318,31 @@
                 </Foundation.Data_Types.Expression>
               </Foundation.Core.Attribute.initialValue>
               <Foundation.Core.Feature.owner>
-                <Foundation.Core.Class xmi.idref="xmi.29"/>
+                <Foundation.Core.Class xmi.idref="xmi.32"/>
               </Foundation.Core.Feature.owner>
               <Foundation.Core.StructuralFeature.type>
-                <Foundation.Core.Class xmi.idref="xmi.25"/>
+                <Foundation.Core.Classifier xmi.idref="xmi.42"/>
               </Foundation.Core.StructuralFeature.type>
             </Foundation.Core.Attribute>
-            <Foundation.Core.Attribute xmi.id="xmi.42">
-              <Foundation.Core.ModelElement.name>degree</Foundation.Core.ModelElement.name>
+            <Foundation.Core.Attribute xmi.id="xmi.43">
+              <Foundation.Core.ModelElement.name>hydrogenCount</Foundation.Core.ModelElement.name>
               <Foundation.Core.ModelElement.visibility xmi.value="public"/>
               <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
               <Foundation.Core.Attribute.initialValue>
-                <Foundation.Data_Types.Expression xmi.id="xmi.43">
+                <Foundation.Data_Types.Expression xmi.id="xmi.44">
                   <Foundation.Data_Types.Expression.language></Foundation.Data_Types.Expression.language>
                   <Foundation.Data_Types.Expression.body></Foundation.Data_Types.Expression.body>
                 </Foundation.Data_Types.Expression>
               </Foundation.Core.Attribute.initialValue>
               <Foundation.Core.Feature.owner>
-                <Foundation.Core.Class xmi.idref="xmi.29"/>
+                <Foundation.Core.Class xmi.idref="xmi.32"/>
               </Foundation.Core.Feature.owner>
               <Foundation.Core.StructuralFeature.type>
-                <Foundation.Core.Classifier xmi.idref="xmi.44"/>
+                <Foundation.Core.Class xmi.idref="xmi.28"/>
               </Foundation.Core.StructuralFeature.type>
             </Foundation.Core.Attribute>
             <Foundation.Core.Attribute xmi.id="xmi.45">
-              <Foundation.Core.ModelElement.name>parity</Foundation.Core.ModelElement.name>
+              <Foundation.Core.ModelElement.name>degree</Foundation.Core.ModelElement.name>
               <Foundation.Core.ModelElement.visibility xmi.value="public"/>
               <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
               <Foundation.Core.Attribute.initialValue>
@@ -360,10 +352,27 @@
                 </Foundation.Data_Types.Expression>
               </Foundation.Core.Attribute.initialValue>
               <Foundation.Core.Feature.owner>
-                <Foundation.Core.Class xmi.idref="xmi.29"/>
+                <Foundation.Core.Class xmi.idref="xmi.32"/>
               </Foundation.Core.Feature.owner>
               <Foundation.Core.StructuralFeature.type>
                 <Foundation.Core.Classifier xmi.idref="xmi.47"/>
+              </Foundation.Core.StructuralFeature.type>
+            </Foundation.Core.Attribute>
+            <Foundation.Core.Attribute xmi.id="xmi.48">
+              <Foundation.Core.ModelElement.name>parity</Foundation.Core.ModelElement.name>
+              <Foundation.Core.ModelElement.visibility xmi.value="public"/>
+              <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
+              <Foundation.Core.Attribute.initialValue>
+                <Foundation.Data_Types.Expression xmi.id="xmi.49">
+                  <Foundation.Data_Types.Expression.language></Foundation.Data_Types.Expression.language>
+                  <Foundation.Data_Types.Expression.body></Foundation.Data_Types.Expression.body>
+                </Foundation.Data_Types.Expression>
+              </Foundation.Core.Attribute.initialValue>
+              <Foundation.Core.Feature.owner>
+                <Foundation.Core.Class xmi.idref="xmi.32"/>
+              </Foundation.Core.Feature.owner>
+              <Foundation.Core.StructuralFeature.type>
+                <Foundation.Core.Classifier xmi.idref="xmi.50"/>
               </Foundation.Core.StructuralFeature.type>
             </Foundation.Core.Attribute>
           </Foundation.Core.Classifier.feature>
@@ -374,13 +383,13 @@
             <Model_Management.Model xmi.idref="xmi.1"/>
           </Foundation.Core.ModelElement.namespace>
           <Foundation.Core.Generalization.child>
-            <Foundation.Core.Class xmi.idref="xmi.29"/>
+            <Foundation.Core.Class xmi.idref="xmi.32"/>
           </Foundation.Core.Generalization.child>
           <Foundation.Core.Generalization.parent>
             <Foundation.Core.Class xmi.idref="xmi.2"/>
           </Foundation.Core.Generalization.parent>
         </Foundation.Core.Generalization>
-        <Foundation.Core.Class xmi.id="xmi.48" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7ff9">
+        <Foundation.Core.Class xmi.id="xmi.51" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7ff9">
           <Foundation.Core.ModelElement.name>EllipticalAtom</Foundation.Core.ModelElement.name>
           <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
           <Foundation.Core.GeneralizableElement.isRoot xmi.value="false"/>
@@ -391,26 +400,26 @@
             <Model_Management.Model xmi.idref="xmi.1"/>
           </Foundation.Core.ModelElement.namespace>
           <Foundation.Core.GeneralizableElement.generalization>
-            <Foundation.Core.Generalization xmi.idref="xmi.30"/>
+            <Foundation.Core.Generalization xmi.idref="xmi.33"/>
           </Foundation.Core.GeneralizableElement.generalization>
           <Foundation.Core.GeneralizableElement.specialization>
-            <Foundation.Core.Generalization xmi.idref="xmi.49"/>
-            <Foundation.Core.Generalization xmi.idref="xmi.50"/>
+            <Foundation.Core.Generalization xmi.idref="xmi.52"/>
+            <Foundation.Core.Generalization xmi.idref="xmi.53"/>
           </Foundation.Core.GeneralizableElement.specialization>
         </Foundation.Core.Class>
-        <Foundation.Core.Generalization xmi.id="xmi.30" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7ff8">
+        <Foundation.Core.Generalization xmi.id="xmi.33" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7ff8">
           <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
           <Foundation.Core.ModelElement.namespace>
             <Model_Management.Model xmi.idref="xmi.1"/>
           </Foundation.Core.ModelElement.namespace>
           <Foundation.Core.Generalization.child>
-            <Foundation.Core.Class xmi.idref="xmi.48"/>
+            <Foundation.Core.Class xmi.idref="xmi.51"/>
           </Foundation.Core.Generalization.child>
           <Foundation.Core.Generalization.parent>
-            <Foundation.Core.Class xmi.idref="xmi.29"/>
+            <Foundation.Core.Class xmi.idref="xmi.32"/>
           </Foundation.Core.Generalization.parent>
         </Foundation.Core.Generalization>
-        <Foundation.Core.Class xmi.id="xmi.51" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7ff7">
+        <Foundation.Core.Class xmi.id="xmi.54" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7ff7">
           <Foundation.Core.ModelElement.name>DirectedAtom</Foundation.Core.ModelElement.name>
           <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
           <Foundation.Core.GeneralizableElement.isRoot xmi.value="false"/>
@@ -421,27 +430,27 @@
             <Model_Management.Model xmi.idref="xmi.1"/>
           </Foundation.Core.ModelElement.namespace>
           <Foundation.Core.GeneralizableElement.generalization>
-            <Foundation.Core.Generalization xmi.idref="xmi.31"/>
+            <Foundation.Core.Generalization xmi.idref="xmi.34"/>
           </Foundation.Core.GeneralizableElement.generalization>
           <Foundation.Core.GeneralizableElement.specialization>
-            <Foundation.Core.Generalization xmi.idref="xmi.52"/>
-            <Foundation.Core.Generalization xmi.idref="xmi.53"/>
-            <Foundation.Core.Generalization xmi.idref="xmi.54"/>
+            <Foundation.Core.Generalization xmi.idref="xmi.55"/>
+            <Foundation.Core.Generalization xmi.idref="xmi.56"/>
+            <Foundation.Core.Generalization xmi.idref="xmi.57"/>
           </Foundation.Core.GeneralizableElement.specialization>
         </Foundation.Core.Class>
-        <Foundation.Core.Generalization xmi.id="xmi.31" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7ff6">
+        <Foundation.Core.Generalization xmi.id="xmi.34" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7ff6">
           <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
           <Foundation.Core.ModelElement.namespace>
             <Model_Management.Model xmi.idref="xmi.1"/>
           </Foundation.Core.ModelElement.namespace>
           <Foundation.Core.Generalization.child>
-            <Foundation.Core.Class xmi.idref="xmi.51"/>
+            <Foundation.Core.Class xmi.idref="xmi.54"/>
           </Foundation.Core.Generalization.child>
           <Foundation.Core.Generalization.parent>
-            <Foundation.Core.Class xmi.idref="xmi.29"/>
+            <Foundation.Core.Class xmi.idref="xmi.32"/>
           </Foundation.Core.Generalization.parent>
         </Foundation.Core.Generalization>
-        <Foundation.Core.Class xmi.id="xmi.55" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7ff5">
+        <Foundation.Core.Class xmi.id="xmi.58" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7ff5">
           <Foundation.Core.ModelElement.name>Isotope</Foundation.Core.ModelElement.name>
           <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
           <Foundation.Core.GeneralizableElement.isRoot xmi.value="false"/>
@@ -452,76 +461,76 @@
             <Model_Management.Model xmi.idref="xmi.1"/>
           </Foundation.Core.ModelElement.namespace>
           <Foundation.Core.GeneralizableElement.generalization>
-            <Foundation.Core.Generalization xmi.idref="xmi.19"/>
+            <Foundation.Core.Generalization xmi.idref="xmi.22"/>
           </Foundation.Core.GeneralizableElement.generalization>
           <Foundation.Core.Classifier.feature>
-            <Foundation.Core.Attribute xmi.id="xmi.56">
+            <Foundation.Core.Attribute xmi.id="xmi.59">
               <Foundation.Core.ModelElement.name>mass</Foundation.Core.ModelElement.name>
               <Foundation.Core.ModelElement.visibility xmi.value="public"/>
               <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
               <Foundation.Core.Attribute.initialValue>
-                <Foundation.Data_Types.Expression xmi.id="xmi.57">
+                <Foundation.Data_Types.Expression xmi.id="xmi.60">
                   <Foundation.Data_Types.Expression.language></Foundation.Data_Types.Expression.language>
                   <Foundation.Data_Types.Expression.body></Foundation.Data_Types.Expression.body>
                 </Foundation.Data_Types.Expression>
               </Foundation.Core.Attribute.initialValue>
               <Foundation.Core.Feature.owner>
-                <Foundation.Core.Class xmi.idref="xmi.55"/>
+                <Foundation.Core.Class xmi.idref="xmi.58"/>
               </Foundation.Core.Feature.owner>
               <Foundation.Core.StructuralFeature.type>
-                <Foundation.Core.Class xmi.idref="xmi.25"/>
+                <Foundation.Core.Class xmi.idref="xmi.28"/>
               </Foundation.Core.StructuralFeature.type>
             </Foundation.Core.Attribute>
-            <Foundation.Core.Attribute xmi.id="xmi.58">
+            <Foundation.Core.Attribute xmi.id="xmi.61">
               <Foundation.Core.ModelElement.name>spin</Foundation.Core.ModelElement.name>
               <Foundation.Core.ModelElement.visibility xmi.value="public"/>
               <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
               <Foundation.Core.Attribute.initialValue>
-                <Foundation.Data_Types.Expression xmi.id="xmi.59">
+                <Foundation.Data_Types.Expression xmi.id="xmi.62">
                   <Foundation.Data_Types.Expression.language></Foundation.Data_Types.Expression.language>
                   <Foundation.Data_Types.Expression.body></Foundation.Data_Types.Expression.body>
                 </Foundation.Data_Types.Expression>
               </Foundation.Core.Attribute.initialValue>
               <Foundation.Core.Feature.owner>
-                <Foundation.Core.Class xmi.idref="xmi.55"/>
+                <Foundation.Core.Class xmi.idref="xmi.58"/>
               </Foundation.Core.Feature.owner>
               <Foundation.Core.StructuralFeature.type>
-                <Foundation.Core.Class xmi.idref="xmi.25"/>
+                <Foundation.Core.Class xmi.idref="xmi.28"/>
               </Foundation.Core.StructuralFeature.type>
             </Foundation.Core.Attribute>
-            <Foundation.Core.Attribute xmi.id="xmi.60">
+            <Foundation.Core.Attribute xmi.id="xmi.63">
               <Foundation.Core.ModelElement.name>symbol</Foundation.Core.ModelElement.name>
               <Foundation.Core.ModelElement.visibility xmi.value="public"/>
               <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
               <Foundation.Core.Attribute.initialValue>
-                <Foundation.Data_Types.Expression xmi.id="xmi.61">
+                <Foundation.Data_Types.Expression xmi.id="xmi.64">
                   <Foundation.Data_Types.Expression.language></Foundation.Data_Types.Expression.language>
                   <Foundation.Data_Types.Expression.body></Foundation.Data_Types.Expression.body>
                 </Foundation.Data_Types.Expression>
               </Foundation.Core.Attribute.initialValue>
               <Foundation.Core.Feature.owner>
-                <Foundation.Core.Class xmi.idref="xmi.55"/>
+                <Foundation.Core.Class xmi.idref="xmi.58"/>
               </Foundation.Core.Feature.owner>
               <Foundation.Core.StructuralFeature.type>
-                <Foundation.Core.Classifier xmi.idref="xmi.62"/>
+                <Foundation.Core.Classifier xmi.idref="xmi.65"/>
               </Foundation.Core.StructuralFeature.type>
             </Foundation.Core.Attribute>
           </Foundation.Core.Classifier.feature>
         </Foundation.Core.Class>
-        <Foundation.Core.Generalization xmi.id="xmi.19" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7ff4">
+        <Foundation.Core.Generalization xmi.id="xmi.22" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7ff4">
           <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
           <Foundation.Core.ModelElement.namespace>
             <Model_Management.Model xmi.idref="xmi.1"/>
           </Foundation.Core.ModelElement.namespace>
           <Foundation.Core.Generalization.child>
-            <Foundation.Core.Class xmi.idref="xmi.55"/>
+            <Foundation.Core.Class xmi.idref="xmi.58"/>
           </Foundation.Core.Generalization.child>
           <Foundation.Core.Generalization.parent>
-            <Foundation.Core.Class xmi.idref="xmi.18"/>
+            <Foundation.Core.Class xmi.idref="xmi.21"/>
           </Foundation.Core.Generalization.parent>
         </Foundation.Core.Generalization>
-        <Foundation.Core.Association xmi.id="xmi.63" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7ff2">
-          <Foundation.Core.ModelElement.name>isa</Foundation.Core.ModelElement.name>
+        <Foundation.Core.Association xmi.id="xmi.66" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7ff2">
+          <Foundation.Core.ModelElement.name></Foundation.Core.ModelElement.name>
           <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
           <Foundation.Core.GeneralizableElement.isRoot xmi.value="false"/>
           <Foundation.Core.GeneralizableElement.isLeaf xmi.value="false"/>
@@ -530,14 +539,15 @@
             <Model_Management.Model xmi.idref="xmi.1"/>
           </Foundation.Core.ModelElement.namespace>
           <Foundation.Core.Association.connection>
-            <Foundation.Core.AssociationEnd xmi.id="xmi.64">
+            <Foundation.Core.AssociationEnd xmi.id="xmi.67">
+              <Foundation.Core.ModelElement.name>has</Foundation.Core.ModelElement.name>
               <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
               <Foundation.Core.AssociationEnd.isNavigable xmi.value="true"/>
               <Foundation.Core.AssociationEnd.aggregation xmi.value="none"/>
               <Foundation.Core.AssociationEnd.multiplicity>
-                <Foundation.Data_Types.Multiplicity xmi.id="xmi.65">
+                <Foundation.Data_Types.Multiplicity xmi.id="xmi.68">
                   <Foundation.Data_Types.Multiplicity.range>
-                    <Foundation.Data_Types.MultiplicityRange xmi.id="xmi.66">
+                    <Foundation.Data_Types.MultiplicityRange xmi.id="xmi.69">
                       <Foundation.Data_Types.MultiplicityRange.lower>0</Foundation.Data_Types.MultiplicityRange.lower>
                       <Foundation.Data_Types.MultiplicityRange.upper>1</Foundation.Data_Types.MultiplicityRange.upper>
                     </Foundation.Data_Types.MultiplicityRange>
@@ -545,26 +555,27 @@
                 </Foundation.Data_Types.Multiplicity>
               </Foundation.Core.AssociationEnd.multiplicity>
               <Foundation.Core.AssociationEnd.association>
-                <Foundation.Core.Association xmi.idref="xmi.63"/>
+                <Foundation.Core.Association xmi.idref="xmi.66"/>
               </Foundation.Core.AssociationEnd.association>
               <Foundation.Core.AssociationEnd.type>
-                <Foundation.Core.Class xmi.idref="xmi.18"/>
+                <Foundation.Core.Class xmi.idref="xmi.21"/>
               </Foundation.Core.AssociationEnd.type>
             </Foundation.Core.AssociationEnd>
-            <Foundation.Core.AssociationEnd xmi.id="xmi.67">
+            <Foundation.Core.AssociationEnd xmi.id="xmi.70">
+              <Foundation.Core.ModelElement.name></Foundation.Core.ModelElement.name>
               <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
               <Foundation.Core.AssociationEnd.isNavigable xmi.value="true"/>
               <Foundation.Core.AssociationEnd.aggregation xmi.value="none"/>
               <Foundation.Core.AssociationEnd.association>
-                <Foundation.Core.Association xmi.idref="xmi.63"/>
+                <Foundation.Core.Association xmi.idref="xmi.66"/>
               </Foundation.Core.AssociationEnd.association>
               <Foundation.Core.AssociationEnd.type>
-                <Foundation.Core.Class xmi.idref="xmi.29"/>
+                <Foundation.Core.Class xmi.idref="xmi.32"/>
               </Foundation.Core.AssociationEnd.type>
             </Foundation.Core.AssociationEnd>
           </Foundation.Core.Association.connection>
         </Foundation.Core.Association>
-        <Behavioral_Elements.Use_Cases.Actor xmi.id="xmi.68" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7ff0">
+        <Behavioral_Elements.Use_Cases.Actor xmi.id="xmi.71" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7ff0">
           <Foundation.Core.ModelElement.name>Chemist (of any sort)</Foundation.Core.ModelElement.name>
           <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
           <Foundation.Core.GeneralizableElement.isRoot xmi.value="false"/>
@@ -574,7 +585,7 @@
             <Model_Management.Model xmi.idref="xmi.1"/>
           </Foundation.Core.ModelElement.namespace>
         </Behavioral_Elements.Use_Cases.Actor>
-        <Behavioral_Elements.Use_Cases.UseCase xmi.id="xmi.69" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fef">
+        <Behavioral_Elements.Use_Cases.UseCase xmi.id="xmi.72" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fef">
           <Foundation.Core.ModelElement.name>Chemical Java Program</Foundation.Core.ModelElement.name>
           <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
           <Foundation.Core.GeneralizableElement.isRoot xmi.value="false"/>
@@ -584,11 +595,11 @@
             <Model_Management.Model xmi.idref="xmi.1"/>
           </Foundation.Core.ModelElement.namespace>
           <Foundation.Core.GeneralizableElement.specialization>
-            <Foundation.Core.Generalization xmi.idref="xmi.70"/>
-            <Foundation.Core.Generalization xmi.idref="xmi.71"/>
+            <Foundation.Core.Generalization xmi.idref="xmi.73"/>
+            <Foundation.Core.Generalization xmi.idref="xmi.74"/>
           </Foundation.Core.GeneralizableElement.specialization>
         </Behavioral_Elements.Use_Cases.UseCase>
-        <Behavioral_Elements.Use_Cases.UseCase xmi.id="xmi.72" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7feb">
+        <Behavioral_Elements.Use_Cases.UseCase xmi.id="xmi.75" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7feb">
           <Foundation.Core.ModelElement.name>CDK</Foundation.Core.ModelElement.name>
           <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
           <Foundation.Core.GeneralizableElement.isRoot xmi.value="false"/>
@@ -598,22 +609,22 @@
             <Model_Management.Model xmi.idref="xmi.1"/>
           </Foundation.Core.ModelElement.namespace>
           <Foundation.Core.GeneralizableElement.generalization>
-            <Foundation.Core.Generalization xmi.idref="xmi.70"/>
+            <Foundation.Core.Generalization xmi.idref="xmi.73"/>
           </Foundation.Core.GeneralizableElement.generalization>
         </Behavioral_Elements.Use_Cases.UseCase>
-        <Foundation.Core.Generalization xmi.id="xmi.70" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fea">
+        <Foundation.Core.Generalization xmi.id="xmi.73" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fea">
           <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
           <Foundation.Core.ModelElement.namespace>
             <Model_Management.Model xmi.idref="xmi.1"/>
           </Foundation.Core.ModelElement.namespace>
           <Foundation.Core.Generalization.child>
-            <Behavioral_Elements.Use_Cases.UseCase xmi.idref="xmi.72"/>
+            <Behavioral_Elements.Use_Cases.UseCase xmi.idref="xmi.75"/>
           </Foundation.Core.Generalization.child>
           <Foundation.Core.Generalization.parent>
-            <Behavioral_Elements.Use_Cases.UseCase xmi.idref="xmi.69"/>
+            <Behavioral_Elements.Use_Cases.UseCase xmi.idref="xmi.72"/>
           </Foundation.Core.Generalization.parent>
         </Foundation.Core.Generalization>
-        <Behavioral_Elements.Use_Cases.UseCase xmi.id="xmi.73" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fe9">
+        <Behavioral_Elements.Use_Cases.UseCase xmi.id="xmi.76" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fe9">
           <Foundation.Core.ModelElement.name>Other Java Libraries</Foundation.Core.ModelElement.name>
           <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
           <Foundation.Core.GeneralizableElement.isRoot xmi.value="false"/>
@@ -623,75 +634,23 @@
             <Model_Management.Model xmi.idref="xmi.1"/>
           </Foundation.Core.ModelElement.namespace>
           <Foundation.Core.GeneralizableElement.generalization>
-            <Foundation.Core.Generalization xmi.idref="xmi.71"/>
+            <Foundation.Core.Generalization xmi.idref="xmi.74"/>
           </Foundation.Core.GeneralizableElement.generalization>
         </Behavioral_Elements.Use_Cases.UseCase>
-        <Foundation.Core.Generalization xmi.id="xmi.71" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fe8">
+        <Foundation.Core.Generalization xmi.id="xmi.74" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fe8">
           <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
           <Foundation.Core.ModelElement.namespace>
             <Model_Management.Model xmi.idref="xmi.1"/>
           </Foundation.Core.ModelElement.namespace>
           <Foundation.Core.Generalization.child>
-            <Behavioral_Elements.Use_Cases.UseCase xmi.idref="xmi.73"/>
+            <Behavioral_Elements.Use_Cases.UseCase xmi.idref="xmi.76"/>
           </Foundation.Core.Generalization.child>
           <Foundation.Core.Generalization.parent>
-            <Behavioral_Elements.Use_Cases.UseCase xmi.idref="xmi.69"/>
+            <Behavioral_Elements.Use_Cases.UseCase xmi.idref="xmi.72"/>
           </Foundation.Core.Generalization.parent>
         </Foundation.Core.Generalization>
-        <Foundation.Core.Class xmi.id="xmi.74" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fe7">
+        <Foundation.Core.Class xmi.id="xmi.77" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fe7">
           <Foundation.Core.ModelElement.name>ORTEPAtom</Foundation.Core.ModelElement.name>
-          <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
-          <Foundation.Core.GeneralizableElement.isRoot xmi.value="false"/>
-          <Foundation.Core.GeneralizableElement.isLeaf xmi.value="false"/>
-          <Foundation.Core.GeneralizableElement.isAbstract xmi.value="false"/>
-          <Foundation.Core.Class.isActive xmi.value="false"/>
-          <Foundation.Core.ModelElement.namespace>
-            <Model_Management.Model xmi.idref="xmi.1"/>
-          </Foundation.Core.ModelElement.namespace>
-          <Foundation.Core.GeneralizableElement.generalization>
-            <Foundation.Core.Generalization xmi.idref="xmi.49"/>
-          </Foundation.Core.GeneralizableElement.generalization>
-        </Foundation.Core.Class>
-        <Foundation.Core.Generalization xmi.id="xmi.49" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fe6">
-          <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
-          <Foundation.Core.ModelElement.namespace>
-            <Model_Management.Model xmi.idref="xmi.1"/>
-          </Foundation.Core.ModelElement.namespace>
-          <Foundation.Core.Generalization.child>
-            <Foundation.Core.Class xmi.idref="xmi.74"/>
-          </Foundation.Core.Generalization.child>
-          <Foundation.Core.Generalization.parent>
-            <Foundation.Core.Class xmi.idref="xmi.48"/>
-          </Foundation.Core.Generalization.parent>
-        </Foundation.Core.Generalization>
-        <Foundation.Core.Class xmi.id="xmi.75" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fe5">
-          <Foundation.Core.ModelElement.name>GayBerneAtom</Foundation.Core.ModelElement.name>
-          <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
-          <Foundation.Core.GeneralizableElement.isRoot xmi.value="false"/>
-          <Foundation.Core.GeneralizableElement.isLeaf xmi.value="false"/>
-          <Foundation.Core.GeneralizableElement.isAbstract xmi.value="false"/>
-          <Foundation.Core.Class.isActive xmi.value="false"/>
-          <Foundation.Core.ModelElement.namespace>
-            <Model_Management.Model xmi.idref="xmi.1"/>
-          </Foundation.Core.ModelElement.namespace>
-          <Foundation.Core.GeneralizableElement.generalization>
-            <Foundation.Core.Generalization xmi.idref="xmi.50"/>
-          </Foundation.Core.GeneralizableElement.generalization>
-        </Foundation.Core.Class>
-        <Foundation.Core.Generalization xmi.id="xmi.50" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fe4">
-          <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
-          <Foundation.Core.ModelElement.namespace>
-            <Model_Management.Model xmi.idref="xmi.1"/>
-          </Foundation.Core.ModelElement.namespace>
-          <Foundation.Core.Generalization.child>
-            <Foundation.Core.Class xmi.idref="xmi.75"/>
-          </Foundation.Core.Generalization.child>
-          <Foundation.Core.Generalization.parent>
-            <Foundation.Core.Class xmi.idref="xmi.48"/>
-          </Foundation.Core.Generalization.parent>
-        </Foundation.Core.Generalization>
-        <Foundation.Core.Class xmi.id="xmi.76" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fe3">
-          <Foundation.Core.ModelElement.name>Dipole</Foundation.Core.ModelElement.name>
           <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
           <Foundation.Core.GeneralizableElement.isRoot xmi.value="false"/>
           <Foundation.Core.GeneralizableElement.isLeaf xmi.value="false"/>
@@ -704,33 +663,7 @@
             <Foundation.Core.Generalization xmi.idref="xmi.52"/>
           </Foundation.Core.GeneralizableElement.generalization>
         </Foundation.Core.Class>
-        <Foundation.Core.Generalization xmi.id="xmi.52" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fe2">
-          <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
-          <Foundation.Core.ModelElement.namespace>
-            <Model_Management.Model xmi.idref="xmi.1"/>
-          </Foundation.Core.ModelElement.namespace>
-          <Foundation.Core.Generalization.child>
-            <Foundation.Core.Class xmi.idref="xmi.76"/>
-          </Foundation.Core.Generalization.child>
-          <Foundation.Core.Generalization.parent>
-            <Foundation.Core.Class xmi.idref="xmi.51"/>
-          </Foundation.Core.Generalization.parent>
-        </Foundation.Core.Generalization>
-        <Foundation.Core.Class xmi.id="xmi.77" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fe1">
-          <Foundation.Core.ModelElement.name>NMAtom</Foundation.Core.ModelElement.name>
-          <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
-          <Foundation.Core.GeneralizableElement.isRoot xmi.value="false"/>
-          <Foundation.Core.GeneralizableElement.isLeaf xmi.value="false"/>
-          <Foundation.Core.GeneralizableElement.isAbstract xmi.value="false"/>
-          <Foundation.Core.Class.isActive xmi.value="false"/>
-          <Foundation.Core.ModelElement.namespace>
-            <Model_Management.Model xmi.idref="xmi.1"/>
-          </Foundation.Core.ModelElement.namespace>
-          <Foundation.Core.GeneralizableElement.generalization>
-            <Foundation.Core.Generalization xmi.idref="xmi.53"/>
-          </Foundation.Core.GeneralizableElement.generalization>
-        </Foundation.Core.Class>
-        <Foundation.Core.Generalization xmi.id="xmi.53" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fe0">
+        <Foundation.Core.Generalization xmi.id="xmi.52" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fe6">
           <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
           <Foundation.Core.ModelElement.namespace>
             <Model_Management.Model xmi.idref="xmi.1"/>
@@ -742,8 +675,8 @@
             <Foundation.Core.Class xmi.idref="xmi.51"/>
           </Foundation.Core.Generalization.parent>
         </Foundation.Core.Generalization>
-        <Foundation.Core.Class xmi.id="xmi.78" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fdf">
-          <Foundation.Core.ModelElement.name>Velocity</Foundation.Core.ModelElement.name>
+        <Foundation.Core.Class xmi.id="xmi.78" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fe5">
+          <Foundation.Core.ModelElement.name>GayBerneAtom</Foundation.Core.ModelElement.name>
           <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
           <Foundation.Core.GeneralizableElement.isRoot xmi.value="false"/>
           <Foundation.Core.GeneralizableElement.isLeaf xmi.value="false"/>
@@ -753,10 +686,10 @@
             <Model_Management.Model xmi.idref="xmi.1"/>
           </Foundation.Core.ModelElement.namespace>
           <Foundation.Core.GeneralizableElement.generalization>
-            <Foundation.Core.Generalization xmi.idref="xmi.54"/>
+            <Foundation.Core.Generalization xmi.idref="xmi.53"/>
           </Foundation.Core.GeneralizableElement.generalization>
         </Foundation.Core.Class>
-        <Foundation.Core.Generalization xmi.id="xmi.54" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fde">
+        <Foundation.Core.Generalization xmi.id="xmi.53" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fe4">
           <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
           <Foundation.Core.ModelElement.namespace>
             <Model_Management.Model xmi.idref="xmi.1"/>
@@ -768,7 +701,85 @@
             <Foundation.Core.Class xmi.idref="xmi.51"/>
           </Foundation.Core.Generalization.parent>
         </Foundation.Core.Generalization>
-        <Foundation.Core.Class xmi.id="xmi.79" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fdd">
+        <Foundation.Core.Class xmi.id="xmi.79" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fe3">
+          <Foundation.Core.ModelElement.name>Dipole</Foundation.Core.ModelElement.name>
+          <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
+          <Foundation.Core.GeneralizableElement.isRoot xmi.value="false"/>
+          <Foundation.Core.GeneralizableElement.isLeaf xmi.value="false"/>
+          <Foundation.Core.GeneralizableElement.isAbstract xmi.value="false"/>
+          <Foundation.Core.Class.isActive xmi.value="false"/>
+          <Foundation.Core.ModelElement.namespace>
+            <Model_Management.Model xmi.idref="xmi.1"/>
+          </Foundation.Core.ModelElement.namespace>
+          <Foundation.Core.GeneralizableElement.generalization>
+            <Foundation.Core.Generalization xmi.idref="xmi.55"/>
+          </Foundation.Core.GeneralizableElement.generalization>
+        </Foundation.Core.Class>
+        <Foundation.Core.Generalization xmi.id="xmi.55" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fe2">
+          <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
+          <Foundation.Core.ModelElement.namespace>
+            <Model_Management.Model xmi.idref="xmi.1"/>
+          </Foundation.Core.ModelElement.namespace>
+          <Foundation.Core.Generalization.child>
+            <Foundation.Core.Class xmi.idref="xmi.79"/>
+          </Foundation.Core.Generalization.child>
+          <Foundation.Core.Generalization.parent>
+            <Foundation.Core.Class xmi.idref="xmi.54"/>
+          </Foundation.Core.Generalization.parent>
+        </Foundation.Core.Generalization>
+        <Foundation.Core.Class xmi.id="xmi.80" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fe1">
+          <Foundation.Core.ModelElement.name>NMAtom</Foundation.Core.ModelElement.name>
+          <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
+          <Foundation.Core.GeneralizableElement.isRoot xmi.value="false"/>
+          <Foundation.Core.GeneralizableElement.isLeaf xmi.value="false"/>
+          <Foundation.Core.GeneralizableElement.isAbstract xmi.value="false"/>
+          <Foundation.Core.Class.isActive xmi.value="false"/>
+          <Foundation.Core.ModelElement.namespace>
+            <Model_Management.Model xmi.idref="xmi.1"/>
+          </Foundation.Core.ModelElement.namespace>
+          <Foundation.Core.GeneralizableElement.generalization>
+            <Foundation.Core.Generalization xmi.idref="xmi.56"/>
+          </Foundation.Core.GeneralizableElement.generalization>
+        </Foundation.Core.Class>
+        <Foundation.Core.Generalization xmi.id="xmi.56" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fe0">
+          <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
+          <Foundation.Core.ModelElement.namespace>
+            <Model_Management.Model xmi.idref="xmi.1"/>
+          </Foundation.Core.ModelElement.namespace>
+          <Foundation.Core.Generalization.child>
+            <Foundation.Core.Class xmi.idref="xmi.80"/>
+          </Foundation.Core.Generalization.child>
+          <Foundation.Core.Generalization.parent>
+            <Foundation.Core.Class xmi.idref="xmi.54"/>
+          </Foundation.Core.Generalization.parent>
+        </Foundation.Core.Generalization>
+        <Foundation.Core.Class xmi.id="xmi.81" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fdf">
+          <Foundation.Core.ModelElement.name>VelocityAtom</Foundation.Core.ModelElement.name>
+          <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
+          <Foundation.Core.GeneralizableElement.isRoot xmi.value="false"/>
+          <Foundation.Core.GeneralizableElement.isLeaf xmi.value="false"/>
+          <Foundation.Core.GeneralizableElement.isAbstract xmi.value="false"/>
+          <Foundation.Core.Class.isActive xmi.value="false"/>
+          <Foundation.Core.ModelElement.namespace>
+            <Model_Management.Model xmi.idref="xmi.1"/>
+          </Foundation.Core.ModelElement.namespace>
+          <Foundation.Core.GeneralizableElement.generalization>
+            <Foundation.Core.Generalization xmi.idref="xmi.57"/>
+          </Foundation.Core.GeneralizableElement.generalization>
+        </Foundation.Core.Class>
+        <Foundation.Core.Generalization xmi.id="xmi.57" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fde">
+          <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
+          <Foundation.Core.ModelElement.namespace>
+            <Model_Management.Model xmi.idref="xmi.1"/>
+          </Foundation.Core.ModelElement.namespace>
+          <Foundation.Core.Generalization.child>
+            <Foundation.Core.Class xmi.idref="xmi.81"/>
+          </Foundation.Core.Generalization.child>
+          <Foundation.Core.Generalization.parent>
+            <Foundation.Core.Class xmi.idref="xmi.54"/>
+          </Foundation.Core.Generalization.parent>
+        </Foundation.Core.Generalization>
+        <Foundation.Core.Class xmi.id="xmi.82" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fdd">
           <Foundation.Core.ModelElement.name>Residue</Foundation.Core.ModelElement.name>
           <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
           <Foundation.Core.GeneralizableElement.isRoot xmi.value="false"/>
@@ -782,25 +793,25 @@
             <Foundation.Core.Generalization xmi.idref="xmi.5"/>
           </Foundation.Core.GeneralizableElement.generalization>
           <Foundation.Core.GeneralizableElement.specialization>
-            <Foundation.Core.Generalization xmi.idref="xmi.80"/>
-            <Foundation.Core.Generalization xmi.idref="xmi.81"/>
+            <Foundation.Core.Generalization xmi.idref="xmi.83"/>
+            <Foundation.Core.Generalization xmi.idref="xmi.84"/>
           </Foundation.Core.GeneralizableElement.specialization>
           <Foundation.Core.Classifier.feature>
-            <Foundation.Core.Attribute xmi.id="xmi.82">
+            <Foundation.Core.Attribute xmi.id="xmi.85">
               <Foundation.Core.ModelElement.name>name</Foundation.Core.ModelElement.name>
               <Foundation.Core.ModelElement.visibility xmi.value="public"/>
               <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
               <Foundation.Core.Attribute.initialValue>
-                <Foundation.Data_Types.Expression xmi.id="xmi.83">
+                <Foundation.Data_Types.Expression xmi.id="xmi.86">
                   <Foundation.Data_Types.Expression.language></Foundation.Data_Types.Expression.language>
                   <Foundation.Data_Types.Expression.body></Foundation.Data_Types.Expression.body>
                 </Foundation.Data_Types.Expression>
               </Foundation.Core.Attribute.initialValue>
               <Foundation.Core.Feature.owner>
-                <Foundation.Core.Class xmi.idref="xmi.79"/>
+                <Foundation.Core.Class xmi.idref="xmi.82"/>
               </Foundation.Core.Feature.owner>
               <Foundation.Core.StructuralFeature.type>
-                <Foundation.Core.Class xmi.idref="xmi.84"/>
+                <Foundation.Core.Class xmi.idref="xmi.87"/>
               </Foundation.Core.StructuralFeature.type>
             </Foundation.Core.Attribute>
           </Foundation.Core.Classifier.feature>
@@ -811,13 +822,13 @@
             <Model_Management.Model xmi.idref="xmi.1"/>
           </Foundation.Core.ModelElement.namespace>
           <Foundation.Core.Generalization.child>
-            <Foundation.Core.Class xmi.idref="xmi.79"/>
+            <Foundation.Core.Class xmi.idref="xmi.82"/>
           </Foundation.Core.Generalization.child>
           <Foundation.Core.Generalization.parent>
             <Foundation.Core.Class xmi.idref="xmi.2"/>
           </Foundation.Core.Generalization.parent>
         </Foundation.Core.Generalization>
-        <Foundation.Core.Class xmi.id="xmi.84">
+        <Foundation.Core.Class xmi.id="xmi.87">
           <Foundation.Core.ModelElement.name>String</Foundation.Core.ModelElement.name>
           <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
           <Foundation.Core.GeneralizableElement.isRoot xmi.value="false"/>
@@ -828,7 +839,7 @@
             <Model_Management.Model xmi.idref="xmi.1"/>
           </Foundation.Core.ModelElement.namespace>
         </Foundation.Core.Class>
-        <Foundation.Core.Class xmi.id="xmi.85" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fdb">
+        <Foundation.Core.Class xmi.id="xmi.88" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fdb">
           <Foundation.Core.ModelElement.name>DNABase</Foundation.Core.ModelElement.name>
           <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
           <Foundation.Core.GeneralizableElement.isRoot xmi.value="false"/>
@@ -839,22 +850,22 @@
             <Model_Management.Model xmi.idref="xmi.1"/>
           </Foundation.Core.ModelElement.namespace>
           <Foundation.Core.GeneralizableElement.generalization>
-            <Foundation.Core.Generalization xmi.idref="xmi.80"/>
+            <Foundation.Core.Generalization xmi.idref="xmi.83"/>
           </Foundation.Core.GeneralizableElement.generalization>
         </Foundation.Core.Class>
-        <Foundation.Core.Generalization xmi.id="xmi.80" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fda">
+        <Foundation.Core.Generalization xmi.id="xmi.83" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fda">
           <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
           <Foundation.Core.ModelElement.namespace>
             <Model_Management.Model xmi.idref="xmi.1"/>
           </Foundation.Core.ModelElement.namespace>
           <Foundation.Core.Generalization.child>
-            <Foundation.Core.Class xmi.idref="xmi.85"/>
+            <Foundation.Core.Class xmi.idref="xmi.88"/>
           </Foundation.Core.Generalization.child>
           <Foundation.Core.Generalization.parent>
-            <Foundation.Core.Class xmi.idref="xmi.79"/>
+            <Foundation.Core.Class xmi.idref="xmi.82"/>
           </Foundation.Core.Generalization.parent>
         </Foundation.Core.Generalization>
-        <Foundation.Core.Class xmi.id="xmi.86" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fd9">
+        <Foundation.Core.Class xmi.id="xmi.89" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fd9">
           <Foundation.Core.ModelElement.name>AminoAcid</Foundation.Core.ModelElement.name>
           <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
           <Foundation.Core.GeneralizableElement.isRoot xmi.value="false"/>
@@ -865,22 +876,22 @@
             <Model_Management.Model xmi.idref="xmi.1"/>
           </Foundation.Core.ModelElement.namespace>
           <Foundation.Core.GeneralizableElement.generalization>
-            <Foundation.Core.Generalization xmi.idref="xmi.81"/>
+            <Foundation.Core.Generalization xmi.idref="xmi.84"/>
           </Foundation.Core.GeneralizableElement.generalization>
         </Foundation.Core.Class>
-        <Foundation.Core.Generalization xmi.id="xmi.81" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fd8">
+        <Foundation.Core.Generalization xmi.id="xmi.84" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fd8">
           <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
           <Foundation.Core.ModelElement.namespace>
             <Model_Management.Model xmi.idref="xmi.1"/>
           </Foundation.Core.ModelElement.namespace>
           <Foundation.Core.Generalization.child>
-            <Foundation.Core.Class xmi.idref="xmi.86"/>
+            <Foundation.Core.Class xmi.idref="xmi.89"/>
           </Foundation.Core.Generalization.child>
           <Foundation.Core.Generalization.parent>
-            <Foundation.Core.Class xmi.idref="xmi.79"/>
+            <Foundation.Core.Class xmi.idref="xmi.82"/>
           </Foundation.Core.Generalization.parent>
         </Foundation.Core.Generalization>
-        <Foundation.Core.Class xmi.id="xmi.87" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fd5">
+        <Foundation.Core.Class xmi.id="xmi.90" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fd5">
           <Foundation.Core.ModelElement.name>Sequence</Foundation.Core.ModelElement.name>
           <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
           <Foundation.Core.GeneralizableElement.isRoot xmi.value="false"/>
@@ -894,9 +905,9 @@
             <Foundation.Core.Generalization xmi.idref="xmi.6"/>
           </Foundation.Core.GeneralizableElement.generalization>
           <Foundation.Core.GeneralizableElement.specialization>
-            <Foundation.Core.Generalization xmi.idref="xmi.88"/>
-            <Foundation.Core.Generalization xmi.idref="xmi.89"/>
-            <Foundation.Core.Generalization xmi.idref="xmi.90"/>
+            <Foundation.Core.Generalization xmi.idref="xmi.91"/>
+            <Foundation.Core.Generalization xmi.idref="xmi.92"/>
+            <Foundation.Core.Generalization xmi.idref="xmi.93"/>
           </Foundation.Core.GeneralizableElement.specialization>
         </Foundation.Core.Class>
         <Foundation.Core.Generalization xmi.id="xmi.6" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fd4">
@@ -905,13 +916,13 @@
             <Model_Management.Model xmi.idref="xmi.1"/>
           </Foundation.Core.ModelElement.namespace>
           <Foundation.Core.Generalization.child>
-            <Foundation.Core.Class xmi.idref="xmi.87"/>
+            <Foundation.Core.Class xmi.idref="xmi.90"/>
           </Foundation.Core.Generalization.child>
           <Foundation.Core.Generalization.parent>
             <Foundation.Core.Class xmi.idref="xmi.2"/>
           </Foundation.Core.Generalization.parent>
         </Foundation.Core.Generalization>
-        <Foundation.Core.Class xmi.id="xmi.91" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fd3">
+        <Foundation.Core.Class xmi.id="xmi.94" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fd3">
           <Foundation.Core.ModelElement.name>ResidueSequence</Foundation.Core.ModelElement.name>
           <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
           <Foundation.Core.GeneralizableElement.isRoot xmi.value="false"/>
@@ -922,22 +933,22 @@
             <Model_Management.Model xmi.idref="xmi.1"/>
           </Foundation.Core.ModelElement.namespace>
           <Foundation.Core.GeneralizableElement.generalization>
-            <Foundation.Core.Generalization xmi.idref="xmi.88"/>
+            <Foundation.Core.Generalization xmi.idref="xmi.91"/>
           </Foundation.Core.GeneralizableElement.generalization>
         </Foundation.Core.Class>
-        <Foundation.Core.Generalization xmi.id="xmi.88" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fd2">
+        <Foundation.Core.Generalization xmi.id="xmi.91" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fd2">
           <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
           <Foundation.Core.ModelElement.namespace>
             <Model_Management.Model xmi.idref="xmi.1"/>
           </Foundation.Core.ModelElement.namespace>
           <Foundation.Core.Generalization.child>
-            <Foundation.Core.Class xmi.idref="xmi.91"/>
+            <Foundation.Core.Class xmi.idref="xmi.94"/>
           </Foundation.Core.Generalization.child>
           <Foundation.Core.Generalization.parent>
-            <Foundation.Core.Class xmi.idref="xmi.87"/>
+            <Foundation.Core.Class xmi.idref="xmi.90"/>
           </Foundation.Core.Generalization.parent>
         </Foundation.Core.Generalization>
-        <Foundation.Core.Class xmi.id="xmi.92" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fd1">
+        <Foundation.Core.Class xmi.id="xmi.95" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fd1">
           <Foundation.Core.ModelElement.name>ModelSequence</Foundation.Core.ModelElement.name>
           <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
           <Foundation.Core.GeneralizableElement.isRoot xmi.value="false"/>
@@ -948,22 +959,22 @@
             <Model_Management.Model xmi.idref="xmi.1"/>
           </Foundation.Core.ModelElement.namespace>
           <Foundation.Core.GeneralizableElement.generalization>
-            <Foundation.Core.Generalization xmi.idref="xmi.89"/>
+            <Foundation.Core.Generalization xmi.idref="xmi.92"/>
           </Foundation.Core.GeneralizableElement.generalization>
         </Foundation.Core.Class>
-        <Foundation.Core.Generalization xmi.id="xmi.89" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fd0">
+        <Foundation.Core.Generalization xmi.id="xmi.92" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fd0">
           <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
           <Foundation.Core.ModelElement.namespace>
             <Model_Management.Model xmi.idref="xmi.1"/>
           </Foundation.Core.ModelElement.namespace>
           <Foundation.Core.Generalization.child>
-            <Foundation.Core.Class xmi.idref="xmi.92"/>
+            <Foundation.Core.Class xmi.idref="xmi.95"/>
           </Foundation.Core.Generalization.child>
           <Foundation.Core.Generalization.parent>
-            <Foundation.Core.Class xmi.idref="xmi.87"/>
+            <Foundation.Core.Class xmi.idref="xmi.90"/>
           </Foundation.Core.Generalization.parent>
         </Foundation.Core.Generalization>
-        <Foundation.Core.Class xmi.id="xmi.93" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fcf">
+        <Foundation.Core.Class xmi.id="xmi.96" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fcf">
           <Foundation.Core.ModelElement.name>Path</Foundation.Core.ModelElement.name>
           <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
           <Foundation.Core.GeneralizableElement.isRoot xmi.value="false"/>
@@ -974,38 +985,41 @@
             <Model_Management.Model xmi.idref="xmi.1"/>
           </Foundation.Core.ModelElement.namespace>
           <Foundation.Core.GeneralizableElement.generalization>
-            <Foundation.Core.Generalization xmi.idref="xmi.90"/>
+            <Foundation.Core.Generalization xmi.idref="xmi.93"/>
           </Foundation.Core.GeneralizableElement.generalization>
+          <Foundation.Core.GeneralizableElement.specialization>
+            <Foundation.Core.Generalization xmi.idref="xmi.97"/>
+          </Foundation.Core.GeneralizableElement.specialization>
           <Foundation.Core.Classifier.feature>
-            <Foundation.Core.Attribute xmi.id="xmi.94">
+            <Foundation.Core.Attribute xmi.id="xmi.98">
               <Foundation.Core.ModelElement.name>atoms</Foundation.Core.ModelElement.name>
               <Foundation.Core.ModelElement.visibility xmi.value="public"/>
               <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
               <Foundation.Core.Attribute.initialValue>
-                <Foundation.Data_Types.Expression xmi.id="xmi.95">
+                <Foundation.Data_Types.Expression xmi.id="xmi.99">
                   <Foundation.Data_Types.Expression.language></Foundation.Data_Types.Expression.language>
                   <Foundation.Data_Types.Expression.body></Foundation.Data_Types.Expression.body>
                 </Foundation.Data_Types.Expression>
               </Foundation.Core.Attribute.initialValue>
               <Foundation.Core.Feature.owner>
-                <Foundation.Core.Class xmi.idref="xmi.93"/>
+                <Foundation.Core.Class xmi.idref="xmi.96"/>
               </Foundation.Core.Feature.owner>
             </Foundation.Core.Attribute>
           </Foundation.Core.Classifier.feature>
         </Foundation.Core.Class>
-        <Foundation.Core.Generalization xmi.id="xmi.90" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fce">
+        <Foundation.Core.Generalization xmi.id="xmi.93" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fce">
           <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
           <Foundation.Core.ModelElement.namespace>
             <Model_Management.Model xmi.idref="xmi.1"/>
           </Foundation.Core.ModelElement.namespace>
           <Foundation.Core.Generalization.child>
-            <Foundation.Core.Class xmi.idref="xmi.93"/>
+            <Foundation.Core.Class xmi.idref="xmi.96"/>
           </Foundation.Core.Generalization.child>
           <Foundation.Core.Generalization.parent>
-            <Foundation.Core.Class xmi.idref="xmi.87"/>
+            <Foundation.Core.Class xmi.idref="xmi.90"/>
           </Foundation.Core.Generalization.parent>
         </Foundation.Core.Generalization>
-        <Foundation.Core.Association xmi.id="xmi.96" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fcd">
+        <Foundation.Core.Association xmi.id="xmi.100" xmi.uuid="-125--82-116--114-35e6e3:e2781e2af7:-7fcd">
           <Foundation.Core.ModelElement.name></Foundation.Core.ModelElement.name>
           <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
           <Foundation.Core.GeneralizableElement.isRoot xmi.value="false"/>
@@ -1015,15 +1029,15 @@
             <Model_Management.Model xmi.idref="xmi.1"/>
           </Foundation.Core.ModelElement.namespace>
           <Foundation.Core.Association.connection>
-            <Foundation.Core.AssociationEnd xmi.id="xmi.97">
-              <Foundation.Core.ModelElement.name>has several</Foundation.Core.ModelElement.name>
+            <Foundation.Core.AssociationEnd xmi.id="xmi.101">
+              <Foundation.Core.ModelElement.name>has</Foundation.Core.ModelElement.name>
               <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
               <Foundation.Core.AssociationEnd.isNavigable xmi.value="true"/>
               <Foundation.Core.AssociationEnd.aggregation xmi.value="none"/>
               <Foundation.Core.AssociationEnd.multiplicity>
-                <Foundation.Data_Types.Multiplicity xmi.id="xmi.98">
+                <Foundation.Data_Types.Multiplicity xmi.id="xmi.102">
                   <Foundation.Data_Types.Multiplicity.range>
-                    <Foundation.Data_Types.MultiplicityRange xmi.id="xmi.99">
+                    <Foundation.Data_Types.MultiplicityRange xmi.id="xmi.103">
                       <Foundation.Data_Types.MultiplicityRange.lower>0</Foundation.Data_Types.MultiplicityRange.lower>
                       <Foundation.Data_Types.MultiplicityRange.upper>-1</Foundation.Data_Types.MultiplicityRange.upper>
                     </Foundation.Data_Types.MultiplicityRange>
@@ -1031,26 +1045,500 @@
                 </Foundation.Data_Types.Multiplicity>
               </Foundation.Core.AssociationEnd.multiplicity>
               <Foundation.Core.AssociationEnd.association>
-                <Foundation.Core.Association xmi.idref="xmi.96"/>
+                <Foundation.Core.Association xmi.idref="xmi.100"/>
               </Foundation.Core.AssociationEnd.association>
               <Foundation.Core.AssociationEnd.type>
-                <Foundation.Core.Class xmi.idref="xmi.29"/>
+                <Foundation.Core.Class xmi.idref="xmi.32"/>
               </Foundation.Core.AssociationEnd.type>
             </Foundation.Core.AssociationEnd>
-            <Foundation.Core.AssociationEnd xmi.id="xmi.100">
+            <Foundation.Core.AssociationEnd xmi.id="xmi.104">
               <Foundation.Core.ModelElement.name></Foundation.Core.ModelElement.name>
               <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
               <Foundation.Core.AssociationEnd.isNavigable xmi.value="true"/>
               <Foundation.Core.AssociationEnd.aggregation xmi.value="none"/>
+              <Foundation.Core.AssociationEnd.multiplicity>
+                <Foundation.Data_Types.Multiplicity xmi.id="xmi.105">
+                  <Foundation.Data_Types.Multiplicity.range>
+                    <Foundation.Data_Types.MultiplicityRange xmi.id="xmi.106">
+                      <Foundation.Data_Types.MultiplicityRange.lower>1</Foundation.Data_Types.MultiplicityRange.lower>
+                      <Foundation.Data_Types.MultiplicityRange.upper>1</Foundation.Data_Types.MultiplicityRange.upper>
+                    </Foundation.Data_Types.MultiplicityRange>
+                  </Foundation.Data_Types.Multiplicity.range>
+                </Foundation.Data_Types.Multiplicity>
+              </Foundation.Core.AssociationEnd.multiplicity>
               <Foundation.Core.AssociationEnd.association>
-                <Foundation.Core.Association xmi.idref="xmi.96"/>
+                <Foundation.Core.Association xmi.idref="xmi.100"/>
               </Foundation.Core.AssociationEnd.association>
               <Foundation.Core.AssociationEnd.type>
-                <Foundation.Core.Class xmi.idref="xmi.93"/>
+                <Foundation.Core.Class xmi.idref="xmi.96"/>
               </Foundation.Core.AssociationEnd.type>
             </Foundation.Core.AssociationEnd>
           </Foundation.Core.Association.connection>
         </Foundation.Core.Association>
+        <Foundation.Core.Class xmi.id="xmi.107" xmi.uuid="-125--82-116--114-5572a:e27ae74a5d:-7ffe">
+          <Foundation.Core.ModelElement.name>ElectronContainer</Foundation.Core.ModelElement.name>
+          <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
+          <Foundation.Core.GeneralizableElement.isRoot xmi.value="false"/>
+          <Foundation.Core.GeneralizableElement.isLeaf xmi.value="false"/>
+          <Foundation.Core.GeneralizableElement.isAbstract xmi.value="false"/>
+          <Foundation.Core.Class.isActive xmi.value="false"/>
+          <Foundation.Core.ModelElement.namespace>
+            <Model_Management.Model xmi.idref="xmi.1"/>
+          </Foundation.Core.ModelElement.namespace>
+          <Foundation.Core.GeneralizableElement.generalization>
+            <Foundation.Core.Generalization xmi.idref="xmi.7"/>
+          </Foundation.Core.GeneralizableElement.generalization>
+          <Foundation.Core.GeneralizableElement.specialization>
+            <Foundation.Core.Generalization xmi.idref="xmi.108"/>
+            <Foundation.Core.Generalization xmi.idref="xmi.109"/>
+            <Foundation.Core.Generalization xmi.idref="xmi.110"/>
+          </Foundation.Core.GeneralizableElement.specialization>
+          <Foundation.Core.Classifier.feature>
+            <Foundation.Core.Attribute xmi.id="xmi.111">
+              <Foundation.Core.ModelElement.name>count</Foundation.Core.ModelElement.name>
+              <Foundation.Core.ModelElement.visibility xmi.value="public"/>
+              <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
+              <Foundation.Core.Attribute.initialValue>
+                <Foundation.Data_Types.Expression xmi.id="xmi.112">
+                  <Foundation.Data_Types.Expression.language></Foundation.Data_Types.Expression.language>
+                  <Foundation.Data_Types.Expression.body>1</Foundation.Data_Types.Expression.body>
+                </Foundation.Data_Types.Expression>
+              </Foundation.Core.Attribute.initialValue>
+              <Foundation.Core.Feature.owner>
+                <Foundation.Core.Class xmi.idref="xmi.107"/>
+              </Foundation.Core.Feature.owner>
+              <Foundation.Core.StructuralFeature.type>
+                <Foundation.Core.Class xmi.idref="xmi.28"/>
+              </Foundation.Core.StructuralFeature.type>
+            </Foundation.Core.Attribute>
+          </Foundation.Core.Classifier.feature>
+        </Foundation.Core.Class>
+        <Foundation.Core.Generalization xmi.id="xmi.7" xmi.uuid="-125--82-116--114-5572a:e27ae74a5d:-7ffd">
+          <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
+          <Foundation.Core.ModelElement.namespace>
+            <Model_Management.Model xmi.idref="xmi.1"/>
+          </Foundation.Core.ModelElement.namespace>
+          <Foundation.Core.Generalization.child>
+            <Foundation.Core.Class xmi.idref="xmi.107"/>
+          </Foundation.Core.Generalization.child>
+          <Foundation.Core.Generalization.parent>
+            <Foundation.Core.Class xmi.idref="xmi.2"/>
+          </Foundation.Core.Generalization.parent>
+        </Foundation.Core.Generalization>
+        <Foundation.Core.Class xmi.id="xmi.113" xmi.uuid="-125--82-116--114-5572a:e27ae74a5d:-7ffc">
+          <Foundation.Core.ModelElement.name>Bond</Foundation.Core.ModelElement.name>
+          <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
+          <Foundation.Core.GeneralizableElement.isRoot xmi.value="false"/>
+          <Foundation.Core.GeneralizableElement.isLeaf xmi.value="false"/>
+          <Foundation.Core.GeneralizableElement.isAbstract xmi.value="false"/>
+          <Foundation.Core.Class.isActive xmi.value="false"/>
+          <Foundation.Core.ModelElement.namespace>
+            <Model_Management.Model xmi.idref="xmi.1"/>
+          </Foundation.Core.ModelElement.namespace>
+          <Foundation.Core.GeneralizableElement.generalization>
+            <Foundation.Core.Generalization xmi.idref="xmi.108"/>
+          </Foundation.Core.GeneralizableElement.generalization>
+          <Foundation.Core.Classifier.feature>
+            <Foundation.Core.Attribute xmi.id="xmi.114">
+              <Foundation.Core.ModelElement.name>atoms</Foundation.Core.ModelElement.name>
+              <Foundation.Core.ModelElement.visibility xmi.value="public"/>
+              <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
+              <Foundation.Core.Attribute.initialValue>
+                <Foundation.Data_Types.Expression xmi.id="xmi.115">
+                  <Foundation.Data_Types.Expression.language></Foundation.Data_Types.Expression.language>
+                  <Foundation.Data_Types.Expression.body></Foundation.Data_Types.Expression.body>
+                </Foundation.Data_Types.Expression>
+              </Foundation.Core.Attribute.initialValue>
+              <Foundation.Core.Feature.owner>
+                <Foundation.Core.Class xmi.idref="xmi.113"/>
+              </Foundation.Core.Feature.owner>
+              <Foundation.Core.StructuralFeature.type>
+                <Foundation.Core.Class xmi.idref="xmi.32"/>
+              </Foundation.Core.StructuralFeature.type>
+            </Foundation.Core.Attribute>
+            <Foundation.Core.Attribute xmi.id="xmi.116">
+              <Foundation.Core.ModelElement.name>degree</Foundation.Core.ModelElement.name>
+              <Foundation.Core.ModelElement.visibility xmi.value="public"/>
+              <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
+              <Foundation.Core.Attribute.initialValue>
+                <Foundation.Data_Types.Expression xmi.id="xmi.117">
+                  <Foundation.Data_Types.Expression.language></Foundation.Data_Types.Expression.language>
+                  <Foundation.Data_Types.Expression.body></Foundation.Data_Types.Expression.body>
+                </Foundation.Data_Types.Expression>
+              </Foundation.Core.Attribute.initialValue>
+              <Foundation.Core.Feature.owner>
+                <Foundation.Core.Class xmi.idref="xmi.113"/>
+              </Foundation.Core.Feature.owner>
+              <Foundation.Core.StructuralFeature.type>
+                <Foundation.Core.Class xmi.idref="xmi.28"/>
+              </Foundation.Core.StructuralFeature.type>
+            </Foundation.Core.Attribute>
+            <Foundation.Core.Attribute xmi.id="xmi.118">
+              <Foundation.Core.ModelElement.name>stereo</Foundation.Core.ModelElement.name>
+              <Foundation.Core.ModelElement.visibility xmi.value="public"/>
+              <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
+              <Foundation.Core.Attribute.initialValue>
+                <Foundation.Data_Types.Expression xmi.id="xmi.119">
+                  <Foundation.Data_Types.Expression.language></Foundation.Data_Types.Expression.language>
+                  <Foundation.Data_Types.Expression.body></Foundation.Data_Types.Expression.body>
+                </Foundation.Data_Types.Expression>
+              </Foundation.Core.Attribute.initialValue>
+              <Foundation.Core.Feature.owner>
+                <Foundation.Core.Class xmi.idref="xmi.113"/>
+              </Foundation.Core.Feature.owner>
+              <Foundation.Core.StructuralFeature.type>
+                <Foundation.Core.Classifier xmi.idref="xmi.120"/>
+              </Foundation.Core.StructuralFeature.type>
+            </Foundation.Core.Attribute>
+          </Foundation.Core.Classifier.feature>
+        </Foundation.Core.Class>
+        <Foundation.Core.Generalization xmi.id="xmi.108" xmi.uuid="-125--82-116--114-5572a:e27ae74a5d:-7ffb">
+          <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
+          <Foundation.Core.ModelElement.namespace>
+            <Model_Management.Model xmi.idref="xmi.1"/>
+          </Foundation.Core.ModelElement.namespace>
+          <Foundation.Core.Generalization.child>
+            <Foundation.Core.Class xmi.idref="xmi.113"/>
+          </Foundation.Core.Generalization.child>
+          <Foundation.Core.Generalization.parent>
+            <Foundation.Core.Class xmi.idref="xmi.107"/>
+          </Foundation.Core.Generalization.parent>
+        </Foundation.Core.Generalization>
+        <Foundation.Core.Class xmi.id="xmi.121" xmi.uuid="-125--82-116--114-5572a:e27ae74a5d:-7ffa">
+          <Foundation.Core.ModelElement.name>Orbital</Foundation.Core.ModelElement.name>
+          <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
+          <Foundation.Core.GeneralizableElement.isRoot xmi.value="false"/>
+          <Foundation.Core.GeneralizableElement.isLeaf xmi.value="false"/>
+          <Foundation.Core.GeneralizableElement.isAbstract xmi.value="false"/>
+          <Foundation.Core.Class.isActive xmi.value="false"/>
+          <Foundation.Core.ModelElement.namespace>
+            <Model_Management.Model xmi.idref="xmi.1"/>
+          </Foundation.Core.ModelElement.namespace>
+          <Foundation.Core.GeneralizableElement.generalization>
+            <Foundation.Core.Generalization xmi.idref="xmi.109"/>
+          </Foundation.Core.GeneralizableElement.generalization>
+        </Foundation.Core.Class>
+        <Foundation.Core.Generalization xmi.id="xmi.109" xmi.uuid="-125--82-116--114-5572a:e27ae74a5d:-7ff9">
+          <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
+          <Foundation.Core.ModelElement.namespace>
+            <Model_Management.Model xmi.idref="xmi.1"/>
+          </Foundation.Core.ModelElement.namespace>
+          <Foundation.Core.Generalization.child>
+            <Foundation.Core.Class xmi.idref="xmi.121"/>
+          </Foundation.Core.Generalization.child>
+          <Foundation.Core.Generalization.parent>
+            <Foundation.Core.Class xmi.idref="xmi.107"/>
+          </Foundation.Core.Generalization.parent>
+        </Foundation.Core.Generalization>
+        <Foundation.Core.Class xmi.id="xmi.122" xmi.uuid="-125--82-116--114-5572a:e27ae74a5d:-7ff8">
+          <Foundation.Core.ModelElement.name>LonePair</Foundation.Core.ModelElement.name>
+          <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
+          <Foundation.Core.GeneralizableElement.isRoot xmi.value="false"/>
+          <Foundation.Core.GeneralizableElement.isLeaf xmi.value="false"/>
+          <Foundation.Core.GeneralizableElement.isAbstract xmi.value="false"/>
+          <Foundation.Core.Class.isActive xmi.value="false"/>
+          <Foundation.Core.ModelElement.namespace>
+            <Model_Management.Model xmi.idref="xmi.1"/>
+          </Foundation.Core.ModelElement.namespace>
+          <Foundation.Core.GeneralizableElement.generalization>
+            <Foundation.Core.Generalization xmi.idref="xmi.110"/>
+          </Foundation.Core.GeneralizableElement.generalization>
+        </Foundation.Core.Class>
+        <Foundation.Core.Generalization xmi.id="xmi.110" xmi.uuid="-125--82-116--114-5572a:e27ae74a5d:-7ff7">
+          <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
+          <Foundation.Core.ModelElement.namespace>
+            <Model_Management.Model xmi.idref="xmi.1"/>
+          </Foundation.Core.ModelElement.namespace>
+          <Foundation.Core.Generalization.child>
+            <Foundation.Core.Class xmi.idref="xmi.122"/>
+          </Foundation.Core.Generalization.child>
+          <Foundation.Core.Generalization.parent>
+            <Foundation.Core.Class xmi.idref="xmi.107"/>
+          </Foundation.Core.Generalization.parent>
+        </Foundation.Core.Generalization>
+        <Foundation.Core.Class xmi.id="xmi.123" xmi.uuid="-125--82-116--114-5572a:e27ae74a5d:-7ff6">
+          <Foundation.Core.ModelElement.name>Ring</Foundation.Core.ModelElement.name>
+          <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
+          <Foundation.Core.GeneralizableElement.isRoot xmi.value="false"/>
+          <Foundation.Core.GeneralizableElement.isLeaf xmi.value="false"/>
+          <Foundation.Core.GeneralizableElement.isAbstract xmi.value="false"/>
+          <Foundation.Core.Class.isActive xmi.value="false"/>
+          <Foundation.Core.ModelElement.namespace>
+            <Model_Management.Model xmi.idref="xmi.1"/>
+          </Foundation.Core.ModelElement.namespace>
+          <Foundation.Core.GeneralizableElement.generalization>
+            <Foundation.Core.Generalization xmi.idref="xmi.97"/>
+          </Foundation.Core.GeneralizableElement.generalization>
+          <Foundation.Core.Classifier.feature>
+            <Foundation.Core.Attribute xmi.id="xmi.124">
+              <Foundation.Core.ModelElement.name>isAromatic</Foundation.Core.ModelElement.name>
+              <Foundation.Core.ModelElement.visibility xmi.value="public"/>
+              <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
+              <Foundation.Core.Attribute.initialValue>
+                <Foundation.Data_Types.Expression xmi.id="xmi.125">
+                  <Foundation.Data_Types.Expression.language></Foundation.Data_Types.Expression.language>
+                  <Foundation.Data_Types.Expression.body>false</Foundation.Data_Types.Expression.body>
+                </Foundation.Data_Types.Expression>
+              </Foundation.Core.Attribute.initialValue>
+              <Foundation.Core.Feature.owner>
+                <Foundation.Core.Class xmi.idref="xmi.123"/>
+              </Foundation.Core.Feature.owner>
+              <Foundation.Core.StructuralFeature.type>
+                <Foundation.Core.Class xmi.idref="xmi.126"/>
+              </Foundation.Core.StructuralFeature.type>
+            </Foundation.Core.Attribute>
+          </Foundation.Core.Classifier.feature>
+        </Foundation.Core.Class>
+        <Foundation.Core.Generalization xmi.id="xmi.97" xmi.uuid="-125--82-116--114-5572a:e27ae74a5d:-7ff5">
+          <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
+          <Foundation.Core.ModelElement.namespace>
+            <Model_Management.Model xmi.idref="xmi.1"/>
+          </Foundation.Core.ModelElement.namespace>
+          <Foundation.Core.Generalization.child>
+            <Foundation.Core.Class xmi.idref="xmi.123"/>
+          </Foundation.Core.Generalization.child>
+          <Foundation.Core.Generalization.parent>
+            <Foundation.Core.Class xmi.idref="xmi.96"/>
+          </Foundation.Core.Generalization.parent>
+        </Foundation.Core.Generalization>
+        <Foundation.Core.Class xmi.id="xmi.126">
+          <Foundation.Core.ModelElement.name>boolean</Foundation.Core.ModelElement.name>
+          <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
+          <Foundation.Core.GeneralizableElement.isRoot xmi.value="false"/>
+          <Foundation.Core.GeneralizableElement.isLeaf xmi.value="false"/>
+          <Foundation.Core.GeneralizableElement.isAbstract xmi.value="false"/>
+          <Foundation.Core.Class.isActive xmi.value="false"/>
+          <Foundation.Core.ModelElement.namespace>
+            <Model_Management.Model xmi.idref="xmi.1"/>
+          </Foundation.Core.ModelElement.namespace>
+        </Foundation.Core.Class>
+        <Foundation.Core.Class xmi.id="xmi.127" xmi.uuid="-125--82-116--114-5572a:e27ae74a5d:-7ff4">
+          <Foundation.Core.ModelElement.name>Torsion</Foundation.Core.ModelElement.name>
+          <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
+          <Foundation.Core.GeneralizableElement.isRoot xmi.value="false"/>
+          <Foundation.Core.GeneralizableElement.isLeaf xmi.value="false"/>
+          <Foundation.Core.GeneralizableElement.isAbstract xmi.value="false"/>
+          <Foundation.Core.Class.isActive xmi.value="false"/>
+          <Foundation.Core.ModelElement.namespace>
+            <Model_Management.Model xmi.idref="xmi.1"/>
+          </Foundation.Core.ModelElement.namespace>
+          <Foundation.Core.GeneralizableElement.generalization>
+            <Foundation.Core.Generalization xmi.idref="xmi.8"/>
+          </Foundation.Core.GeneralizableElement.generalization>
+          <Foundation.Core.Classifier.feature>
+            <Foundation.Core.Attribute xmi.id="xmi.128">
+              <Foundation.Core.ModelElement.name>atoms</Foundation.Core.ModelElement.name>
+              <Foundation.Core.ModelElement.visibility xmi.value="public"/>
+              <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
+              <Foundation.Core.Attribute.initialValue>
+                <Foundation.Data_Types.Expression xmi.id="xmi.129">
+                  <Foundation.Data_Types.Expression.language>Java</Foundation.Data_Types.Expression.language>
+                  <Foundation.Data_Types.Expression.body>0</Foundation.Data_Types.Expression.body>
+                </Foundation.Data_Types.Expression>
+              </Foundation.Core.Attribute.initialValue>
+              <Foundation.Core.Feature.owner>
+                <Foundation.Core.Class xmi.idref="xmi.127"/>
+              </Foundation.Core.Feature.owner>
+              <Foundation.Core.StructuralFeature.type>
+                <Foundation.Core.Class xmi.idref="xmi.32"/>
+              </Foundation.Core.StructuralFeature.type>
+            </Foundation.Core.Attribute>
+            <Foundation.Core.Attribute xmi.id="xmi.130">
+              <Foundation.Core.ModelElement.name>isImproper</Foundation.Core.ModelElement.name>
+              <Foundation.Core.ModelElement.visibility xmi.value="public"/>
+              <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
+              <Foundation.Core.Attribute.initialValue>
+                <Foundation.Data_Types.Expression xmi.id="xmi.131">
+                  <Foundation.Data_Types.Expression.language></Foundation.Data_Types.Expression.language>
+                  <Foundation.Data_Types.Expression.body>false</Foundation.Data_Types.Expression.body>
+                </Foundation.Data_Types.Expression>
+              </Foundation.Core.Attribute.initialValue>
+              <Foundation.Core.Feature.owner>
+                <Foundation.Core.Class xmi.idref="xmi.127"/>
+              </Foundation.Core.Feature.owner>
+              <Foundation.Core.StructuralFeature.type>
+                <Foundation.Core.Class xmi.idref="xmi.126"/>
+              </Foundation.Core.StructuralFeature.type>
+            </Foundation.Core.Attribute>
+          </Foundation.Core.Classifier.feature>
+        </Foundation.Core.Class>
+        <Foundation.Core.Generalization xmi.id="xmi.8" xmi.uuid="-125--82-116--114-5572a:e27ae74a5d:-7ff3">
+          <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
+          <Foundation.Core.ModelElement.namespace>
+            <Model_Management.Model xmi.idref="xmi.1"/>
+          </Foundation.Core.ModelElement.namespace>
+          <Foundation.Core.Generalization.child>
+            <Foundation.Core.Class xmi.idref="xmi.127"/>
+          </Foundation.Core.Generalization.child>
+          <Foundation.Core.Generalization.parent>
+            <Foundation.Core.Class xmi.idref="xmi.2"/>
+          </Foundation.Core.Generalization.parent>
+        </Foundation.Core.Generalization>
+        <Foundation.Core.Class xmi.id="xmi.132" xmi.uuid="-125--82-116--114-5572a:e27ae74a5d:-7ff2">
+          <Foundation.Core.ModelElement.name>ChemModel</Foundation.Core.ModelElement.name>
+          <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
+          <Foundation.Core.GeneralizableElement.isRoot xmi.value="false"/>
+          <Foundation.Core.GeneralizableElement.isLeaf xmi.value="false"/>
+          <Foundation.Core.GeneralizableElement.isAbstract xmi.value="false"/>
+          <Foundation.Core.Class.isActive xmi.value="false"/>
+          <Foundation.Core.ModelElement.namespace>
+            <Model_Management.Model xmi.idref="xmi.1"/>
+          </Foundation.Core.ModelElement.namespace>
+          <Foundation.Core.GeneralizableElement.generalization>
+            <Foundation.Core.Generalization xmi.idref="xmi.9"/>
+          </Foundation.Core.GeneralizableElement.generalization>
+          <Foundation.Core.Classifier.feature>
+            <Foundation.Core.Attribute xmi.id="xmi.133">
+              <Foundation.Core.ModelElement.name>atoms</Foundation.Core.ModelElement.name>
+              <Foundation.Core.ModelElement.visibility xmi.value="public"/>
+              <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
+              <Foundation.Core.Attribute.initialValue>
+                <Foundation.Data_Types.Expression xmi.id="xmi.134">
+                  <Foundation.Data_Types.Expression.language></Foundation.Data_Types.Expression.language>
+                  <Foundation.Data_Types.Expression.body></Foundation.Data_Types.Expression.body>
+                </Foundation.Data_Types.Expression>
+              </Foundation.Core.Attribute.initialValue>
+              <Foundation.Core.Feature.owner>
+                <Foundation.Core.Class xmi.idref="xmi.132"/>
+              </Foundation.Core.Feature.owner>
+              <Foundation.Core.StructuralFeature.type>
+                <Foundation.Core.Class xmi.idref="xmi.32"/>
+              </Foundation.Core.StructuralFeature.type>
+            </Foundation.Core.Attribute>
+            <Foundation.Core.Attribute xmi.id="xmi.135">
+              <Foundation.Core.ModelElement.name>bonds</Foundation.Core.ModelElement.name>
+              <Foundation.Core.ModelElement.visibility xmi.value="public"/>
+              <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
+              <Foundation.Core.Attribute.initialValue>
+                <Foundation.Data_Types.Expression xmi.id="xmi.136">
+                  <Foundation.Data_Types.Expression.language></Foundation.Data_Types.Expression.language>
+                  <Foundation.Data_Types.Expression.body></Foundation.Data_Types.Expression.body>
+                </Foundation.Data_Types.Expression>
+              </Foundation.Core.Attribute.initialValue>
+              <Foundation.Core.Feature.owner>
+                <Foundation.Core.Class xmi.idref="xmi.132"/>
+              </Foundation.Core.Feature.owner>
+              <Foundation.Core.StructuralFeature.type>
+                <Foundation.Core.Class xmi.idref="xmi.113"/>
+              </Foundation.Core.StructuralFeature.type>
+            </Foundation.Core.Attribute>
+          </Foundation.Core.Classifier.feature>
+        </Foundation.Core.Class>
+        <Foundation.Core.Generalization xmi.id="xmi.9" xmi.uuid="-125--82-116--114-5572a:e27ae74a5d:-7ff1">
+          <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
+          <Foundation.Core.ModelElement.namespace>
+            <Model_Management.Model xmi.idref="xmi.1"/>
+          </Foundation.Core.ModelElement.namespace>
+          <Foundation.Core.Generalization.child>
+            <Foundation.Core.Class xmi.idref="xmi.132"/>
+          </Foundation.Core.Generalization.child>
+          <Foundation.Core.Generalization.parent>
+            <Foundation.Core.Class xmi.idref="xmi.2"/>
+          </Foundation.Core.Generalization.parent>
+        </Foundation.Core.Generalization>
+        <Foundation.Core.Interface xmi.id="xmi.137" xmi.uuid="-125--82-116--114-5572a:e27ae74a5d:-7ff0">
+          <Foundation.Core.ModelElement.name>ChemObjectFinderInterface</Foundation.Core.ModelElement.name>
+          <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
+          <Foundation.Core.GeneralizableElement.isRoot xmi.value="false"/>
+          <Foundation.Core.GeneralizableElement.isLeaf xmi.value="false"/>
+          <Foundation.Core.GeneralizableElement.isAbstract xmi.value="false"/>
+          <Foundation.Core.ModelElement.namespace>
+            <Model_Management.Model xmi.idref="xmi.1"/>
+          </Foundation.Core.ModelElement.namespace>
+          <Foundation.Core.ModelElement.supplierDependency>
+            <Foundation.Core.Abstraction xmi.idref="xmi.138"/>
+          </Foundation.Core.ModelElement.supplierDependency>
+          <Foundation.Core.Classifier.feature>
+            <Foundation.Core.Operation xmi.id="xmi.139">
+              <Foundation.Core.ModelElement.name>getResult</Foundation.Core.ModelElement.name>
+              <Foundation.Core.ModelElement.visibility xmi.value="public"/>
+              <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
+              <Foundation.Core.BehavioralFeature.isQuery xmi.value="false"/>
+              <Foundation.Core.Operation.isRoot xmi.value="false"/>
+              <Foundation.Core.Operation.isLeaf xmi.value="false"/>
+              <Foundation.Core.Operation.isAbstract xmi.value="false"/>
+              <Foundation.Core.Feature.owner>
+                <Foundation.Core.Interface xmi.idref="xmi.137"/>
+              </Foundation.Core.Feature.owner>
+              <Foundation.Core.BehavioralFeature.parameter>
+                <Foundation.Core.Parameter xmi.id="xmi.140">
+                  <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
+                  <Foundation.Core.Parameter.kind xmi.value="return"/>
+                  <Foundation.Core.Parameter.behavioralFeature>
+                    <Foundation.Core.Operation xmi.idref="xmi.139"/>
+                  </Foundation.Core.Parameter.behavioralFeature>
+                  <Foundation.Core.Parameter.type>
+                    <Foundation.Core.Class xmi.idref="xmi.141"/>
+                  </Foundation.Core.Parameter.type>
+                </Foundation.Core.Parameter>
+                <Foundation.Core.Parameter xmi.id="xmi.142">
+                  <Foundation.Core.ModelElement.name>objects</Foundation.Core.ModelElement.name>
+                  <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
+                  <Foundation.Core.Parameter.kind xmi.value="in"/>
+                  <Foundation.Core.Parameter.behavioralFeature>
+                    <Foundation.Core.Operation xmi.idref="xmi.139"/>
+                  </Foundation.Core.Parameter.behavioralFeature>
+                  <Foundation.Core.Parameter.type>
+                    <Foundation.Core.Class xmi.idref="xmi.141"/>
+                  </Foundation.Core.Parameter.type>
+                </Foundation.Core.Parameter>
+              </Foundation.Core.BehavioralFeature.parameter>
+            </Foundation.Core.Operation>
+          </Foundation.Core.Classifier.feature>
+        </Foundation.Core.Interface>
+        <Foundation.Core.Class xmi.id="xmi.141">
+          <Foundation.Core.ModelElement.name>ChemObject[]</Foundation.Core.ModelElement.name>
+          <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
+          <Foundation.Core.GeneralizableElement.isRoot xmi.value="false"/>
+          <Foundation.Core.GeneralizableElement.isLeaf xmi.value="false"/>
+          <Foundation.Core.GeneralizableElement.isAbstract xmi.value="false"/>
+          <Foundation.Core.Class.isActive xmi.value="false"/>
+          <Foundation.Core.ModelElement.namespace>
+            <Model_Management.Model xmi.idref="xmi.1"/>
+          </Foundation.Core.ModelElement.namespace>
+        </Foundation.Core.Class>
+        <Foundation.Core.Class xmi.id="xmi.143" xmi.uuid="-125--82-116--114-5572a:e27ae74a5d:-7fef">
+          <Foundation.Core.ModelElement.name>ChemObjectFinder</Foundation.Core.ModelElement.name>
+          <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
+          <Foundation.Core.GeneralizableElement.isRoot xmi.value="false"/>
+          <Foundation.Core.GeneralizableElement.isLeaf xmi.value="false"/>
+          <Foundation.Core.GeneralizableElement.isAbstract xmi.value="false"/>
+          <Foundation.Core.Class.isActive xmi.value="false"/>
+          <Foundation.Core.ModelElement.namespace>
+            <Model_Management.Model xmi.idref="xmi.1"/>
+          </Foundation.Core.ModelElement.namespace>
+          <Foundation.Core.ModelElement.clientDependency>
+            <Foundation.Core.Abstraction xmi.idref="xmi.138"/>
+          </Foundation.Core.ModelElement.clientDependency>
+        </Foundation.Core.Class>
+        <Foundation.Core.Abstraction xmi.id="xmi.138" xmi.uuid="-125--82-116--114-5572a:e27ae74a5d:-7fee">
+          <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
+          <Foundation.Core.ModelElement.namespace>
+            <Model_Management.Model xmi.idref="xmi.1"/>
+          </Foundation.Core.ModelElement.namespace>
+          <Foundation.Core.ModelElement.stereotype>
+            <Foundation.Extension_Mechanisms.Stereotype xmi.idref="xmi.144"/>
+          </Foundation.Core.ModelElement.stereotype>
+          <Foundation.Core.Dependency.client>
+            <Foundation.Core.Class xmi.idref="xmi.143"/>
+          </Foundation.Core.Dependency.client>
+          <Foundation.Core.Dependency.supplier>
+            <Foundation.Core.Interface xmi.idref="xmi.137"/>
+          </Foundation.Core.Dependency.supplier>
+        </Foundation.Core.Abstraction>
+        <Foundation.Extension_Mechanisms.Stereotype xmi.id="xmi.144">
+          <Foundation.Core.ModelElement.name>realize</Foundation.Core.ModelElement.name>
+          <Foundation.Core.ModelElement.isSpecification xmi.value="false"/>
+          <Foundation.Core.GeneralizableElement.isRoot xmi.value="false"/>
+          <Foundation.Core.GeneralizableElement.isLeaf xmi.value="false"/>
+          <Foundation.Core.GeneralizableElement.isAbstract xmi.value="false"/>
+          <Foundation.Core.ModelElement.namespace>
+            <Model_Management.Model xmi.idref="xmi.1"/>
+          </Foundation.Core.ModelElement.namespace>
+          <Foundation.Extension_Mechanisms.Stereotype.extendedElement>
+            <Foundation.Core.Abstraction xmi.idref="xmi.138"/>
+          </Foundation.Extension_Mechanisms.Stereotype.extendedElement>
+        </Foundation.Extension_Mechanisms.Stereotype>
       </Foundation.Core.Namespace.ownedElement>
     </Model_Management.Model>
   </XMI.content>

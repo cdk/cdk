@@ -12,19 +12,19 @@
   <searchpath href="PROJECT_DIR" />
   <member
     type="pgml"
-    name="chemmodel_classdiagram3.pgml"
+    name="lavoisier_classdiagram4.pgml"
   />
   <member
     type="pgml"
-    name="chemmodel_usecasediagram3.pgml"
+    name="lavoisier_usecasediagram3.pgml"
   />
   <member
     type="xmi"
-    name="chemmodel.xmi"
+    name="lavoisier.xmi"
   />
   <member
     type="pgml"
-    name="chemmodel_classdiagram4.pgml"
+    name="lavoisier_classdiagram5.pgml"
   />
   <historyfile name="" />
   <stats>
@@ -33,15 +33,15 @@
     <stat name="dblClicksInToDoPane"
          value="0" />
     <stat name="longestToDoList"
-         value="127" />
+         value="122" />
     <stat name="longestAdd"
          value="0" />
     <stat name="longestHot"
          value="0" />
     <stat name="numCriticsFired"
-         value="271621" />
+         value="146487" />
     <stat name="numNotValid"
-         value="121" />
+         value="99" />
     <stat name="numCriticsApplied"
          value="0" />
     <stat name="toDoPerspectivesChanged"
@@ -49,7 +49,7 @@
     <stat name="navPerspectivesChanged"
          value="0" />
     <stat name="clicksInNavPane"
-         value="102" />
+         value="90" />
     <stat name="numFinds"
          value="0" />
     <stat name="numJumpToRelated"
@@ -67,7 +67,7 @@
     <stat name="numChecks"
          value="0" />
     <stat name="Num_Button_Clicks"
-         value="26" />
+         value="24" />
     <stat name="Drags_To_New"
          value="1" />
     <stat name="Drags_To_Existing"
