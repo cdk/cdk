@@ -78,8 +78,8 @@ public class GasteigerMarsiliPartialCharges {
 	public void setMaxGasteigerIters(double iters) {
 		MX_ITERATIONS = iters;
 	}
-
-
+	
+	
 	/**
 	 *  Main method which assigns Gasteiger Marisili partial charges
 	 *
@@ -146,7 +146,7 @@ public class GasteigerMarsiliPartialCharges {
 	 *@param  ac  AtomContainer
 	 *@return     Array of doubles [a1,b1,c1,denom1,chi1,q1...an,bn,cn...] 1:Atom 1-n in AtomContainer
 	 */
-	private double[] assignGasteigerMarsiliFactors(AtomContainer ac) {
+	public double[] assignGasteigerMarsiliFactors(AtomContainer ac) {
 		//a,b,c,denom,chi,q
 		double[] gasteigerFactors = new double[(ac.getAtomCount() * (STEP_SIZE+1))];
 		String AtomSymbol = "";
