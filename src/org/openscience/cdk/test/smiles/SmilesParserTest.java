@@ -29,6 +29,7 @@ import org.openscience.cdk.io.*;
 import org.openscience.cdk.tools.*;
 import org.openscience.cdk.renderer.*;
 import org.openscience.cdk.layout.*;
+import org.openscience.cdk.isomorphism.*;
 import javax.vecmath.*;
 
 import java.util.*;
@@ -98,12 +99,28 @@ public class SmilesParserTest extends TestCase
 							
 	}
 
-	
+    /**
+     * This tests the fix made for bug #593648.
+     */
+    public void testSFBug593648() {
+        try {
+            String smiles = "CC1=CCC2CC1C(C)2C";
+            Molecule apinene = org.openscience.cdk.test.MoleculeFactory.makeAlphaPinene();
+            SmilesParser sp = new SmilesParser();
+            Molecule mol = sp.parseSmiles(smiles);
+            IsomorphismTester it = new IsomorphismTester(apinene);
+            assertTrue(it.isIsomorphic(mol));
+        } catch (Exception e) {
+            fail(e.toString());
+        }
+    }
+
 	public static void main(String[] args)
 	{
 		SmilesParserTest spt = new SmilesParserTest("SmilesParserTest");
 		spt.setStandAlone(true);
 		spt.testSmilesParser();
-	}	
+        spt.testSFBug593648();
+	}
 }
 

@@ -1,5 +1,7 @@
-/*
- *  $RCSfile$    $Author$    $Date$    $Revision$
+/* $RCSfile$
+ * $Author$    
+ * $Date$    
+ * $Revision$
  *
  *  Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
  *
@@ -44,8 +46,13 @@ import org.openscience.cdk.*;
 
 public class SmilesParser {
 
+    private org.openscience.cdk.tools.LoggingTool logger;
+    
+    public SmilesParser() {
+        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+    }
+
 	String message = "Can't handle SMILES string";
-	public static boolean debug = false;
 	int position = -1;
 	int nodeCounter = -1;
 	String smiles = null;
@@ -60,8 +67,8 @@ public class SmilesParser {
 	 *  Parses a SMILES string and returns a Molecule object
 	 *
 	 *@param  smiles   A SMILES string
-	 *@return        A molecule representing the constitution given in the SMILES string
-	 *@exception  InvalidSMILESException  thrown if we could not parse the SMILES string
+	 *@return          A molecule representing the constitution given in the SMILES string
+	 *@exception       InvalidSMILESException  thrown if we could not parse the SMILES string
 	 */
 	public Molecule parseSmiles(String smiles) throws InvalidSmilesException
 	{
@@ -84,6 +91,7 @@ public class SmilesParser {
 		char mychar;
 		char[] chars = new char[1];
 		Atom lastNode = null;
+		Atom baseNode = null;
 		Atom thisNode = null;
 		Stack atomStack = new Stack();
 		Stack bondStack = new Stack();
@@ -94,6 +102,10 @@ public class SmilesParser {
 			try
 			{
 				mychar = smiles.charAt(position);
+                logger.debug("");
+                logger.debug("Processing: " + mychar);
+                if (lastNode != null) logger.debug("Lastnode: " + lastNode.hashCode());
+                if (baseNode != null) logger.debug("Basenode: " + baseNode.hashCode());
 				if ((mychar >= 'A' && mychar <= 'Z') || (mychar >= 'a' && mychar <= 'z'))
 				{
 					currentSymbol = getElementSymbol(smiles, position);
@@ -103,7 +115,7 @@ public class SmilesParser {
 					}
 					atom = new Atom(currentSymbol);
 					molecule.addAtom(atom);
-					if (debug) System.out.println("Adding atom " + currentSymbol);
+					logger.debug("Adding atom " + atom.hashCode());
 					if (lastNode != null)
 					{
 						molecule.addBond(new Bond(atom, lastNode, bondStatus));
@@ -129,13 +141,18 @@ public class SmilesParser {
 				}
 				else if (mychar == '(')
 				{
-					atomStack.push(lastNode);
+                    /* a baseNode is used instead of atomStack to
+                     * fix bug #593648 */
+                    baseNode = lastNode;
+                    // atomStack.push(lastNode);
 					bondStack.push(new Double(bondStatus));
 					position++;
 				}
 				else if (mychar == ')')
 				{
-					lastNode = (Atom) atomStack.pop();
+                    //lastNode = (Atom) atomStack.pop();
+                    lastNode = baseNode;
+                    baseNode = null;
 					bondStatus = ((Double) bondStack.pop()).doubleValue();
 					position++;
 				}
@@ -144,14 +161,14 @@ public class SmilesParser {
 					chars[0] = mychar;
 					currentSymbol = new String(chars);
 					thisRing = (new Integer(new String(chars))).intValue();
-					handleRing();
+					handleRing(lastNode);
 					position++;
 				}
 				else if (mychar == '%')
 				{
 					currentSymbol = getRingNumber(smiles, position);
 					thisRing = (new Integer(currentSymbol)).intValue();
-					handleRing();
+					handleRing(lastNode);
 					position += currentSymbol.length() + 1;
 				}
 				else if (mychar == '[')
@@ -340,14 +357,14 @@ public class SmilesParser {
 	 *  We call this method when a ring (depicted by a number)
 	 * has been found.
 	 */
-	private void handleRing()
-	{
+	private void handleRing(Atom atom) {
 		double bondStat = bondStatus;
-		Atom atom = null;
 		Atom partner = null;
-		Atom thisNode = rings[thisRing];
-		if (thisNode != null)
-		{
+		Atom thisNode = rings[thisRing]; // lookup
+		if (thisNode != null) {
+            /* Second occurence of this ring:
+             *   - close ring
+             */
 			if (bondStat == CDKConstants.BONDORDER_AROMATIC)
 			{
 				if (ringbonds[thisRing] != CDKConstants.BONDORDER_AROMATIC)
@@ -355,18 +372,18 @@ public class SmilesParser {
 					bondStat = CDKConstants.BONDORDER_SINGLE;
 				}
 			}
-			atom = molecule.getAtomAt(nodeCounter - 1);
-			
+
 			partner = thisNode;
 			molecule.addBond(new Bond(atom, partner, bondStat));
 			rings[thisRing] = null;
 			ringbonds[thisRing] = -1;
 
-		}
-		else
-		{
-			rings[thisRing] = molecule.getAtomAt(nodeCounter - 1);
-			ringbonds[thisRing] = bondStatus;
+		} else {
+            /* First occurence of this ring:
+             *   - add current atom to list
+             */
+            rings[thisRing] = atom;
+            ringbonds[thisRing] = bondStatus;
 		}
 	}
 }
