@@ -106,7 +106,7 @@ public class HydrogenPlacer {
 		}
         Point2d centerPlacedAtoms = null;
         if (placedAtoms.getAtomCount() > 0) {
-            centerPlacedAtoms = placedAtoms.get2DCenter();
+            centerPlacedAtoms = GeometryTools.get2DCenter(placedAtoms);
         } else {
             centerPlacedAtoms = atom.getPoint2d();
         }

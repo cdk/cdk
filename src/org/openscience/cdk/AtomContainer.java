@@ -859,32 +859,6 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 		return intersection;
 	}
 
-
-
-	/**
-	 *  Returns the geometric center of all the atoms in this atomContainer.
-	 *
-	 *@return    the geometric center of the atoms in this atomContainer
-	 */
-	public Point2d get2DCenter()
-	{
-		double centerX = 0;
-		double centerY = 0;
-		double counter = 0;
-		for (int i = 0; i < getAtomCount(); i++)
-		{
-			if (atoms[i].getPoint2d() != null)
-			{
-				centerX += atoms[i].getPoint2d().x;
-				centerY += atoms[i].getPoint2d().y;
-				counter++;
-			}
-		}
-		Point2d point = new Point2d(centerX / (counter), centerY / (counter));
-		return point;
-	}
-
-
 	/**
 	 *  Returns the geometric center of all the atoms in this atomContainer.
 	 *

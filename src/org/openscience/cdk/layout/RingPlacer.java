@@ -645,8 +645,8 @@ public class RingPlacer
 				logger.debug("placeConnectedRings-> connectedRing: " + (ring.toString()));
 				if ((sac == 2 && handleType == FUSED) ||(sac == 1 && handleType == SPIRO)||(sac > 2 && handleType == BRIDGED))
 				{
-					sharedAtomsCenter = sharedAtoms.get2DCenter();
-					oldRingCenter = ring.get2DCenter();
+					sharedAtomsCenter = GeometryTools.get2DCenter(sharedAtoms);
+					oldRingCenter = GeometryTools.get2DCenter(ring);
 					tempVector = (new Vector2d(sharedAtomsCenter));
 					newRingCenterVector = new Vector2d(tempVector);
 					newRingCenterVector.sub(new Vector2d(oldRingCenter));

@@ -473,7 +473,7 @@ public class StructureDiagramGenerator
 			 *  Call the method which lays out the new ring.
 			 */
 			ringCenterVector = ringPlacer.getRingCenterOfFirstRing(ring, firstBondVector, bondLength);
-			ringPlacer.placeRing(ring, sharedAtoms, sharedAtoms.get2DCenter(), ringCenterVector, bondLength);
+			ringPlacer.placeRing(ring, sharedAtoms, GeometryTools.get2DCenter(sharedAtoms), ringCenterVector, bondLength);
 			/*
 			 *  Mark the ring as placed
 			 */
@@ -561,7 +561,7 @@ public class StructureDiagramGenerator
 					{
 						logger.debug("More than one atoms placed already");
 						logger.debug("trying to place neighbors of atom " + (molecule.getAtomNumber(atom) + 1));
-						atomPlacer.distributePartners(atom, placedAtoms, placedAtoms.get2DCenter(), unplacedAtoms, bondLength);
+						atomPlacer.distributePartners(atom, placedAtoms, GeometryTools.get2DCenter(placedAtoms), unplacedAtoms, bondLength);
 						direction = new Vector2d(longestUnplacedChain.getAtomAt(1).getPoint2d());
 						startVector = new Vector2d(atom.getPoint2d());
 						direction.sub(startVector);
@@ -570,7 +570,7 @@ public class StructureDiagramGenerator
 					{
 						logger.debug("Less than one atoms placed already");
 						logger.debug("Trying to get next bond vector.");
-						direction = atomPlacer.getNextBondVector(atom, placedAtoms.getAtomAt(0), molecule.get2DCenter());
+						direction = atomPlacer.getNextBondVector(atom, placedAtoms.getAtomAt(0), GeometryTools.get2DCenter(molecule));
 
 					}
 

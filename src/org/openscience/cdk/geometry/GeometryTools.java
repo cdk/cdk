@@ -278,8 +278,9 @@ public class GeometryTools {
 		double centerX = 0, centerY = 0;
 		for (int i = 0; i < ringSet.size(); i++)
 		{
-			centerX += ((Ring)ringSet.elementAt(i)).get2DCenter().x;
-			centerY += ((Ring)ringSet.elementAt(i)).get2DCenter().y;
+            Point2d centerPoint = GeometryTools.get2DCenter((Ring)ringSet.elementAt(i));
+			centerX += centerPoint.x;
+			centerY += centerPoint.y;
 		}
 		Point2d point = new Point2d(centerX / ((double)ringSet.size()), centerY / ((double)ringSet.size()));
 		return point;
@@ -310,6 +311,30 @@ public class GeometryTools {
 
         return new Point2d(x/totalmass, y/totalmass);
     }
+
+	/**
+	 * Returns the geometric center of all the atoms in the atomContainer.
+	 *
+	 * @return    the geometric center of the atoms in this atomContainer
+	 */
+	public static Point2d get2DCenter(AtomContainer container)
+	{
+		double centerX = 0;
+		double centerY = 0;
+		double counter = 0;
+        Atom[] atoms = container.getAtoms();
+		for (int i = 0; i < atoms.length; i++)
+		{
+			if (atoms[i].getPoint2d() != null)
+			{
+				centerX += atoms[i].getPoint2d().x;
+				centerY += atoms[i].getPoint2d().y;
+				counter++;
+			}
+		}
+		Point2d point = new Point2d(centerX / (counter), centerY / (counter));
+		return point;
+	}
 
     /**
      * Calculates the center of mass for the <code>Atom</code>s in the

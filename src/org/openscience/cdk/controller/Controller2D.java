@@ -233,7 +233,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 			int endY = 0;
 			double angle = 0;
 			double pointerVectorLength = c2dm.getRingPointerLength();
-			Point2d center = getHighlighted().get2DCenter();
+            Point2d center = GeometryTools.get2DCenter(getHighlighted());
 			r2dm.setPointerVectorStart(new Point((int) center.x, (int) center.y));
 			angle = GeometryTools.getAngle(center.x - mouseX, center.y - mouseY);
 			endX = (int) center.x - (int) (Math.cos(angle) * pointerVectorLength);
@@ -624,7 +624,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 						unplacedAtoms.addAtom(newAtom2);
 						AtomPlacer atomPlacer = new AtomPlacer();
 						atomPlacer.setMolecule(new Molecule(atomCon));
-						Point2d center2D = placedAtoms.get2DCenter();
+						Point2d center2D = GeometryTools.get2DCenter(placedAtoms);
 						atomPlacer.distributePartners(atomInRange, placedAtoms, center2D,
 								unplacedAtoms, bondLength);
 
@@ -840,7 +840,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 				} else if (sharedAtoms.getAtomCount() == 1)
 				{
 					spiroAtom = sharedAtoms.getAtomAt(0);
-					sharedAtomsCenter = sharedAtoms.get2DCenter();
+					sharedAtomsCenter = GeometryTools.get2DCenter(sharedAtoms);
 					newRing = createAttachRing(sharedAtoms, ringSize, symbol);
 					if (c2dm.getDrawMode() == c2dm.BENZENERING)
 					{
@@ -886,7 +886,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 					 */
 				} else if (sharedAtoms.getAtomCount() == 2)
 				{
-					sharedAtomsCenter = sharedAtoms.get2DCenter();
+					sharedAtomsCenter = GeometryTools.get2DCenter(sharedAtoms);
 
 					// calculate two points that are perpendicular to the highlighted bond
 					// and have a certain distance from the bondcenter
@@ -1448,7 +1448,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 				conAtoms.addAtom(conAtomsArray[j]);
 			}
 		}
-		return conAtoms.get2DCenter();
+		return GeometryTools.get2DCenter(conAtoms);
 	}
 
 

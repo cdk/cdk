@@ -323,7 +323,7 @@ public class AtomPlacer
 			atomPoint.add(bondVector);
 			nextAtom.setPoint2d(atomPoint);
 			nextAtom.setFlag(CDKConstants.ISPLACED, true);
-			bondVector = getNextBondVector(nextAtom, atom, molecule.get2DCenter());
+			bondVector = getNextBondVector(nextAtom, atom, GeometryTools.get2DCenter(molecule));
 		}
 	}
 

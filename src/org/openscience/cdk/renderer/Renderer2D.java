@@ -953,7 +953,7 @@ public class Renderer2D implements MouseMotionListener   {
      * Draws the ring in an aromatic ring.
      */
     public void paintRingRing(Ring ring, Color bondColor, Graphics2D graphics) {
-		Point2d center = ring.get2DCenter();
+		Point2d center = GeometryTools.get2DCenter(ring);
 
         double[] minmax = GeometryTools.getMinMax(ring);
         double width = (minmax[2] - minmax[0]) * 0.7;
@@ -1055,7 +1055,7 @@ public class Renderer2D implements MouseMotionListener   {
 	 */
 	public void paintInnerBond(Bond bond, Ring ring, Color bondColor, Graphics2D graphics)
 	{
-		Point2d center = ring.get2DCenter();
+		Point2d center = GeometryTools.get2DCenter(ring);
 
 		int[] coords = GeometryTools.distanceCalculator(GeometryTools.getBondCoordinates(bond), (r2dm.getBondWidth() / 2 + r2dm.getBondDistance()));
 		double dist1 = Math.sqrt(Math.pow((coords[0] - center.x), 2) + Math.pow((coords[1] - center.y), 2));
