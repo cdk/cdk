@@ -39,6 +39,7 @@ API changes:
 * The coordinate system of Renderer2D has been fixed
 * Renderer2DModel.getBackgroundDimension() now returns the active dimensions
 * Added a getFormatName() method to the ChemObjectIO interface
+* Moved formal charge from Atom to AtomType (implements RFC #25)
 
 20031017 Release
 ------------------------------------

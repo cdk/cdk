@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  * 
- * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2004  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -95,6 +95,17 @@ public class AtomTypeTest extends TestCase {
         assertTrue(1.0 == at.getCovalentRadius());
     }
     
+    /**
+     * Method to test the get/setFormalCharge() methods.
+     */
+    public void testSetFormalCharge() {
+        int charge = 1;
+
+        AtomType a = new AtomType("C");
+        a.setFormalCharge(charge);
+        assertEquals(charge, a.getFormalCharge());
+    }
+
     /**
      * Method to test the clone() method
      */

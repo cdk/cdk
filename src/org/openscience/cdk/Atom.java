@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2000-2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2000-2004  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -86,10 +86,6 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
          *  The partial charge of the atom.
          */
         protected double charge;
-        /**
-         *  The formal charge of the atom. Implements RFC #6.
-         */
-        protected int formalCharge;
 
 
         /**
@@ -149,28 +145,6 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
          */
         public double getCharge() {
                return this.charge;
-        }
-
-        /**
-         *  Sets the formal charge of this atom.
-         *
-         * @param  charge  The formal charge
-         *
-         * @see    #getFormalCharge
-         */
-        public void setFormalCharge(int charge) {
-               this.formalCharge = charge;
-        }
-
-        /**
-         *  Returns the formal charge of this atom.
-         *
-         * @return the formal charge of this atom
-         *
-         * @see    #setFormalCharge
-         */
-        public int getFormalCharge() {
-               return this.formalCharge;
         }
 
         /**

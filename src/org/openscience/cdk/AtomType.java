@@ -3,7 +3,7 @@
  * $Date$    
  * $Revision$
  *
- *  Copyright (C) 2001-2003  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2001-2004  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -64,7 +64,12 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
      */
     double covalentRadius;
     
-	/**
+    /**
+     *  The formal charge of the atom. Implements RFC #6.
+     */
+    protected int formalCharge;
+
+    /**
 	 *  Constructor for the AtomType object.
      *
      * @param elementSymbol  Symbol of the atom
@@ -166,6 +171,28 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
 		return bondOrderSum;
 	}
 
+    /**
+     *  Sets the formal charge of this atom.
+     *
+     * @param  charge  The formal charge
+     *
+     * @see    #getFormalCharge
+     */
+    public void setFormalCharge(int charge) {
+        this.formalCharge = charge;
+    }
+    
+    /**
+     *  Returns the formal charge of this atom.
+     *
+     * @return the formal charge of this atom
+     *
+     * @see    #setFormalCharge
+     */
+    public int getFormalCharge() {
+        return this.formalCharge;
+    }
+    
     /**
      * Compare a atom type with this atom type.
      *

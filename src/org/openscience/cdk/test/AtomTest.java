@@ -3,7 +3,7 @@
  * $Date$    
  * $Revision$
  * 
- * Copyright (C) 2002-2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2002-2004  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -91,17 +91,6 @@ public class AtomTest extends TestCase {
         Atom a = new Atom("C");
         a.setCharge(charge);
         assertTrue(charge == a.getCharge());
-    }
-
-    /**
-     * Method to test the get/setFormalCharge() methods.
-     */
-    public void testSetFormalCharge() {
-        int charge = 1;
-
-        Atom a = new Atom("C");
-        a.setFormalCharge(charge);
-        assertEquals(charge, a.getFormalCharge());
     }
 
     /**
