@@ -145,6 +145,20 @@
               <entry>accepted</entry>
               <entry>2003-06-26</entry>
             </row>
+            <row>
+              <entry>17</entry>
+              <entry><ulink url="rfc17.html">Field in AtomType for hybridization of atom</ulink></entry>
+              <entry>2003-06-18</entry>
+              <entry></entry>
+              <entry></entry>
+            </row>
+            <row>
+              <entry>18</entry>
+              <entry><ulink url="rfc18.html">A revised RFC system</ulink></entry>
+              <entry>2003-06-27</entry>
+              <entry></entry>
+              <entry></entry>
+            </row>
          </tbody>
         </tgroup>
     </informaltable>

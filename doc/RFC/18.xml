@@ -1,0 +1,133 @@
+<refentry id="cdk-rfc-18">
+
+  <refentryinfo>
+    <revhistory>
+      <revision>
+        <revnumber>1</revnumber>
+        <date>2003-07-01</date>
+        <authorinitials>elw</authorinitials>
+        <revremark>
+          See <ulink url="http://sourceforge.net/mailarchive/forum.php?thread_id=2684528&amp;forum_id=2178">email archive</ulink>.
+        </revremark>
+      </revision>
+    </revhistory>
+  </refentryinfo>
+
+
+  <refnamediv>
+    <refname>RFC CDK #18: A revised RFC system</refname>
+  </refnamediv>
+
+  <refsect1>
+    <title>Replaces</title>
+    <para>
+      This RFC replaces <ulink url="http://cdk.sf.net/rfc1.html">RFC #1</ulink> 
+      (once accepted).
+    </para>
+  </refsect1>
+
+  
+  <refsect1>
+    <title>Proposal</title>
+
+    <refsect2>
+      <title>The Request For Comment (RFC)</title>
+      <para>
+ Any change in the API of the CDK should be formalized in aRequest For 
+ Comment's (RFC's). A RFC is a document like this which is written by one or 
+ more developers, containing a API description, like package names, class 
+ organization, method names, etc. etc. RFC's will serve as a discussion 
+ platform and as a documentation tool. The RFC may be changed during the 
+ period of discussion on the developers mailling list 
+ (cdk-devel@li...).
+      </para>
+    </refsect2>
+ 
+    <refsect2>
+      <title>The Call For Votes (CFV)</title>
+      <para>
+ At any time the writers of the RFC may choose to Call For Votes (CFV). To do 
+ so, they compose a final RFC which will be subject to majority voting. When 
+ called for votes, each CDK developer and user can vote in favor or against 
+ the RFC. The voting period is at least two weeks, and at most three weeks, 
+ and will take place by using voting ballots that are send along with the CFV.
+ During July and August the minimum number of weeks for the voting period.
+ The writer is strongly encouraged to send a reminder email a few days before
+ the end of the voting period.
+      </para>
+      
+      <para>
+ Filled in CFVs are returned by email to the developers mailling list, and are 
+ preferably signed with a PGP/GnuPG key known by free keyservers. One can only 
+ vote in favor (YES) or against (NO) the acceptance of a RFC, and the majority 
+ of votes count.
+      </para>
+ 
+      <para>
+ A RFC is only valid if it includes this information:
+      <itemizedlist>
+        <listitem><para>A name. This is normally a sentence describing its intend.</para></listitem>
+        <listitem><para>A "Proposal" paragraph. This will describe the may, should, and must's
+        which the RFC will enforce whence it is accepted.</para></listitem>
+        <listitem><para>A "Reason" paragraph. This will describe why the RFC is needed, and may
+        include arguments to convince developers and users to accept the RFC.</para></listitem>
+        <listitem><para>A list of accepted RFCs that it will replace.</para></listitem>
+      </itemizedlist>
+      </para>
+      
+      <para>
+ The voting ballot must resemble the following format, and must include all 
+ information and fields found in the following example ballot:
+<literallayout>
+ =============================================================
+  Name:
+  Email:
+  PGP/GPG key:
+ 
+  I vote
+ 
+  [ ] YES
+  [ ] NO
+ 
+  on the acceptance of RFC #2 posted on 22 May 2002 with the
+  title "list of core classes". The content of this RFC can be
+  found at http://cdk.sourceforge.net/rfc2.html.
+ =============================================================
+</literallayout>
+       </para>
+
+       <para>
+ The proper RFC number and title must be given as well as a link to the final 
+ RFC and the date on which the final RFC was sent to the developers mailling 
+ list. 
+ </para>
+ </refsect2>
+ 
+   <refsect2>
+     <title>Counting Votes</title>
+     <para>
+ After the voting period is over, and the CFV is closed, the votes in favor and
+ the votes against are both counted. At least a total of three votes are
+ required to resolve a CFV. If less than three people vote on a CFV, then
+ the RFC is *not* accepted, even if all votes are in favor of the RFC.
+ The RFC is accepted if the majority of votes is in favor of the RFC. If the
+ majority of votes is against the RFC, then the RFC is not accepted. In case
+ of equal numbers, the RFC is not accepted either. After, and if, the RFC is
+ accepted, the RFC will be valid until replaced by another accepted RFC.
+      </para>
+    </refsect2>
+  </refsect1>
+
+  <refsect1>
+    <title>Reason</title>
+    <para>
+<ulink url="http://cdk.sf.net/rfc1.html">RFC #1</ulink> did not put a limit on the minimum amount of days the voting period 
+ must take. This, amongst possible other factors, leaded to a situation where 
+ only one person voted on the CFVs #14 and #16. This RFC adds a minimal amount
+ of weeks, adds a minimum number of total votes before the RFC can be accepted
+ at all, and adds a advisory to send an email to remind people of the CFV a few
+ days before the end of the voting period.
+    </para>
+  </refsect1>
+
+</refentry>

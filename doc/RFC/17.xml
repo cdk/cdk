@@ -1,0 +1,53 @@
+<refentry id="cdk-rfc-17">
+
+  <refentryinfo>
+    <revhistory>
+      <revision>
+        <revnumber>1</revnumber>
+        <date>2003-07-01</date>
+        <authorinitials>elw</authorinitials>
+        <revremark>
+          See <ulink url="http://sourceforge.net/mailarchive/forum.php?thread_id=2608677&amp;forum_id=2178">email archive</ulink>.
+        </revremark>
+      </revision>
+    </revhistory>
+  </refentryinfo>
+
+
+  <refnamediv>
+    <refname>RFC CDK #17: Field in AtomType for hybridization of atom</refname>
+  </refnamediv>
+
+  <refsect1>
+    <title>Proposal</title>
+    <para>
+The addition of a field for the hybridization of an atom, implemented as an 
+ int, and with constants in CDKConstants, like:
+    <itemizedlist>
+      <listitem><para>SP_HYBRIDIZATION</para></listitem>
+      <listitem><para>SP2_HYBRIDIZATION</para></listitem>
+      <listitem><para>SP3_HYBRIDIZATION</para></listitem>
+      <listitem><para>etc</para></listitem>
+    </itemizedlist>
+    </para>
+
+    <para>The field is accessed by:
+    <itemizedlist>
+      <listitem><para>public int getHybridization()</para></listitem>
+      <listitem><para>public void setHybridization(int)</para></listitem>
+    </itemizedlist>
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>Reason</title>
+    <para>
+Sometimes it is usefull to hard code the hybridization of an atom.
+ SMILES, e.g. defines the hybridization in case lower case symbols are used,
+ as in c1ccccc1 (cited from SMILES homepage: "The full SMILES language allows 
+ sp2-hybridized atoms to be indicated by writing the atomic symbol in lower 
+ case.").
+    </para>
+  </refsect1>
+
+</refentry>
