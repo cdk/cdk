@@ -439,7 +439,7 @@ public class MACiEReader extends DefaultChemObjectReader {
                         PseudoAtom atom = (PseudoAtom)atoms[i];
                         logger.debug("pseudo atom label: " + atom.getLabel());
                         logger.debug("pseudo class: " + atom.getClass().getName());
-                        atom.setProperty(DictionaryDatabase.DICTREFPROPERTYNAME, "enzyme:ResidueLocator");
+                        atom.setProperty(DictionaryDatabase.DICTREFPROPERTYNAME, "enzyme:residueLocator");
                         if (atom.getLabel().equals(field)) {
                             // we have a hit, now mark Atom with dict refs
                             addDictRefedAnnotation(atom, "ResidueRole", value);
