@@ -85,7 +85,7 @@ public class SMILESReader implements ChemObjectReader {
         try {
             String line = input.readLine();
             while (line != null) {
-                System.out.println(line);
+                //System.out.println(line);
                 try {
                     Molecule m = sp.parseSmiles(line);
                     som.addMolecule(m);
