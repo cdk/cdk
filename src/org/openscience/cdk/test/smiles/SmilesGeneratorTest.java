@@ -307,7 +307,6 @@ public class SmilesGeneratorTest extends TestCase
 		}
 		if (standAlone) System.err.println("SMILES 1: " + smiles1);
         assertNotNull(smiles1);
-        System.err.println(smiles1);
   	assertTrue(smiles1.equals("F/C(=C/(F)S)S"));
     mol1.getAtomAt(4).setPoint2D(new Point2d(0,3));
     mol1.getAtomAt(5).setPoint2D(new Point2d(2,3));
@@ -321,8 +320,7 @@ public class SmilesGeneratorTest extends TestCase
 		}
 		if (standAlone) System.err.println("SMILES 1: " + smiles1);
         assertNotNull(smiles1);
-        System.err.println(smiles1);
-		assertTrue(smiles1.equals("F/C(=C\\(F)S)S"));
+  	assertTrue(smiles1.equals("F/C(=C\\(F)S)S"));
 	}
 
     public void testPartitioning() {
