@@ -181,6 +181,7 @@ public class MDLWriter implements ChemObjectWriter {
 		    line += "  0  0  0  0  0  0  0  0  1 V2000";
 			writer.write(line);
 			writer.newLine();
+            // write Atom block
 		    for (int f = 0; f < molecule.getAtomCount(); f++)
 		    {
 				Atom atom = molecule.getAtomAt(f);
@@ -196,6 +197,7 @@ public class MDLWriter implements ChemObjectWriter {
 			    writer.write(line);
 			    writer.newLine();
 		    }
+            // write Bond block
 			for (int g = 0; g < molecule.getElectronContainerCount(); g++) { 
                 if (molecule.getElectronContainerAt(g) instanceof Bond) {
                     Bond bond = (Bond)molecule.getElectronContainerAt(g);
@@ -215,6 +217,19 @@ public class MDLWriter implements ChemObjectWriter {
                     }
                 }
 			}
+            // write formal atomic charges
+		    for (int f = 0; f < molecule.getAtomCount(); f++) {
+				Atom atom = molecule.getAtomAt(f);
+                int charge = atom.getFormalCharge();
+                if (charge != 0) {
+                    writer.write("M  CHG  1 ");
+                    writer.write(formatMDLInt(f,3));
+                    writer.write(" ");
+                    writer.write(formatMDLInt(charge,3));
+                    writer.newLine();
+                }
+            }
+            // close molecule
 			writer.write("M  END");
 			writer.newLine();
 			writer.flush();
