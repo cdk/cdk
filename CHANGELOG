@@ -13,6 +13,7 @@ New:
 * Basic CMLReaction reading has been added
 * Controller2D now supports context dependent popup menu's
   for atoms and bonds
+* Added a RFC #8 non-compliant PseudoAtom class 
 
 Changes:
 * Added one-click (not-patented ;) deselect of atoms in lasso mode
@@ -29,6 +30,7 @@ Fixes:
 * MDLWriter now writes numbers with Locale.ENGLISH
   (fixes #692410)
 * Fixed bug in Reaction.growProductArray()
+* Better layout of ChemObjectTree
 
 API chages:
 * Implemented RFC #11 as a patch (which is applied by default)
