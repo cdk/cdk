@@ -30,7 +30,8 @@ import org.openscience.cdopi.*;
 import java.util.*;
 
 /**
- * 
+ * CDO object needed as interface with the JCFL library for reading CML
+ * encoded data.
  */ 
 public class ChemFileCDO extends ChemFile implements CDOInterface {
 
@@ -49,6 +50,9 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
     private int bond_order;
     private int bond_stereo;
 
+    /**
+     * Basic contructor
+     */
     public ChemFileCDO() {
 	currentChemSequence = new ChemSequence();
 	currentChemModel = new ChemModel();
@@ -58,6 +62,10 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
     
     // procedures required by CDOInterface
 
+    /**
+     * Procedure required by the CDOInterface. This function is only
+     * supposed to be called by the JCFL library
+     */
     public void startDocument() {
 	System.out.println("New Document");
 	currentChemSequence = new ChemSequence();
@@ -66,6 +74,10 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
 	atomEnumeration = new Hashtable();
     };
 
+    /**
+     * Procedure required by the CDOInterface. This function is only
+     * supposed to be called by the JCFL library
+     */
     public void endDocument() {
 	    currentSetOfMolecules.addMolecule(currentMolecule);	    
 	    currentChemModel.setSetOfMolecules(currentSetOfMolecules);
@@ -74,8 +86,16 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
 	    System.out.println("Molecule added");
     };
 
+    /**
+     * Procedure required by the CDOInterface. This function is only
+     * supposed to be called by the JCFL library
+     */
     public void setDocumentProperty(String type, String value) {};
     
+    /**
+     * Procedure required by the CDOInterface. This function is only
+     * supposed to be called by the JCFL library
+     */
     public void startObject(String objectType) {
 	System.out.println("CDOStartObject");
 	if (objectType.equals("Molecule")) {
@@ -87,6 +107,10 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
 	}
     };
 
+    /**
+     * Procedure required by the CDOInterface. This function is only
+     * supposed to be called by the JCFL library
+     */
     public void endObject(String objectType) {
 	System.out.println("END: " + objectType);
 	if (objectType.equals("Molecule")) {
@@ -104,6 +128,10 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
 	}
     };
     
+    /**
+     * Procedure required by the CDOInterface. This function is only
+     * supposed to be called by the JCFL library
+     */
     public void setObjectProperty(String objectType, String propertyType,
 				  String propertyValue) {
 	System.out.println("objectType: " + objectType);
@@ -133,6 +161,10 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
 	System.out.println("Set...");
     };
     
+    /**
+     * Procedure required by the CDOInterface. This function is only
+     * supposed to be called by the JCFL library
+     */
     public CDOAcceptedObjects acceptObjects() {
 	CDOAcceptedObjects objects = new CDOAcceptedObjects();
 	objects.add("Molecule");

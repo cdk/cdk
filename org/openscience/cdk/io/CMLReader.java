@@ -50,6 +50,12 @@ public class CMLReader implements CDKConstants, ChemObjectReader {
     private EntityResolver resolver;
     private Reader input;
 
+    /**
+     * Define this CMLReader to take the input from a java.io.Reader
+     * class. Possible readers are (among others) StringReader and FileReader.
+     *
+     * @param input Reader type input
+     */
     public CMLReader(Reader input) {
 	try {
 	    parser = (XMLReader)Class.forName(pClass).newInstance();
