@@ -13,6 +13,8 @@ Fixes:
 * Fixed reading of AtomType's with JSX
 * Fixed zooming of atomic charges in Renderer2D
 * Fixed lassoing of atoms in Renderer2D
+* New spiro rings are now using the bond length specified in
+  the renderer model
 
 20030217 Release
 ------------------------------------

@@ -24,7 +24,8 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- *  */
+ *  
+ */
 package org.openscience.cdk.controller;
 
 import org.openscience.cdk.layout.*;
@@ -276,11 +277,13 @@ public class JCPController2D {
                         Bond bondInRange = getBondInRange(mouseX, mouseY);
                         // because only atoms are dragged, select the atoms
                         // in the bond, instead of the bond itself
-                        Atom[] atoms = bondInRange.getAtoms();
-                        for (int i=0; i<atoms.length; i++) {
-                            selected.addAtom(atoms[i]);
+                        if (bondInRange != null) {
+                            Atom[] atoms = bondInRange.getAtoms();
+                            for (int i=0; i<atoms.length; i++) {
+                                selected.addAtom(atoms[i]);
+                            }
+                            r2dm.setSelectedPart(selected);
                         }
-                        r2dm.setSelectedPart(selected);
                     }
                     logger.debug("Selected: " + selected.toString());
                     fireChange();
@@ -512,7 +515,7 @@ public class JCPController2D {
                                 spiroAtom = sharedAtoms.getAtomAt(0);
                                 sharedAtomsCenter = sharedAtoms.get2DCenter();
                                 newRing = createAttachRing(sharedAtoms, ringSize, symbol);
-                                bondLength = 50;
+                                bondLength = r2dm.getBondLength();
                                 conAtomsCenter = getConnectedAtomsCenter(sharedAtoms);                          
                                 if (conAtomsCenter.equals(spiroAtom.getPoint2D()))
                                 {
