@@ -14,12 +14,22 @@ import org.openscience.cdk.*;
  */
 public class GeometricMinimizer {
 	
-	GVector initialCoordinates = new GVector(3);
+	GVector initial3dCoordinates = null;
 	
 	/**
 	 *  Constructor for the GeometricMinimizer object
 	 */
+	
+	 public GVector getInitial3dCoordinates(){
+		 return initial3dCoordinates;
+	 }
+	 
+	 public void setInitialCoordinates(GVector initialCoordinates){
+		 initial3dCoordinates=initialCoordinates;
+	 }
+	
 	public GeometricMinimizer() { 
+		initial3dCoordinates = new GVector(3);
 	}
 	
 	
@@ -43,9 +53,9 @@ public class GeometricMinimizer {
 		
 		//	Read atoms coordinates
 		
-		initialCoordinates.setSize(3*testMolecule.getAtomCount());
+		initial3dCoordinates.setSize(3*testMolecule.getAtomCount());
 		ForceField forceFieldObject = new ForceField();
-		initialCoordinates = forceFieldObject.readAtomsCoordinates(testMolecule);
+		initial3dCoordinates = forceFieldObject.readAtomsCoordinates(testMolecule);
 		System.out.println("Initial coordinates: " + forceFieldObject.point0ToShow);	//	To check initialPoint size
 		
 		return;

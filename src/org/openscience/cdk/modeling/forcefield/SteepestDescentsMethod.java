@@ -13,22 +13,32 @@ import org.openscience.cdk.*;
  *@created    2004-12-03
  */
 public class SteepestDescentsMethod {
-	double stepSize = 2;	//	arbitrary step size
+	double stepSize =2;	//	arbitrary step size
 	int stepK = 0;	//	Step number
 	int dimension=3;	//	3 * Atoms number
-	GVector pointK = new GVector(3);	//	r coordinates at K step
-	GVector sK = new GVector(3);
-	TestPotentialFunction functionToOptimise = new TestPotentialFunction();	//	To be changed
+	//GVector pointK = new GVector(3);	//	r coordinates at K step
+	GVector pointK = null;
+	//GVector sK = new GVector(3);
+	GVector sK = null;
+	//TestPotentialFunction functionToOptimise = new TestPotentialFunction();	//	To be changed
 	
+	public double getStepSize(){
+		return stepSize;
+	}
+	
+	public void setStepSize(double StepSize){
+		stepSize=StepSize;
+	}
 /**
 	 *  Constructor for the SteepestDescentsMethod object
 	 */
-	public SteepestDescentsMethod(GVector point, TestPotentialFunction workFunction) { 
+	public SteepestDescentsMethod(GVector point) { 
 	dimension = point.getSize();
 	pointK.setSize(point.getSize());
 	pointK.set(point);
 	sK.setSize(point.getSize());
-	functionToOptimise=workFunction;
+	
+	//functionToOptimise=workFunction;
 	}
 
 
