@@ -2,12 +2,13 @@
 ## $Id$
 
 PREFIX="@prefix@"
-JARLIBDIR="${PREFIX}/lib/cdk"
+JARLIBDIR="${PREFIX}/share/java"
 JARLIBS=cdk-core.jar cdk-extra.jar cdk-libio.jar
 
 EXTRA_DIST= $(JARLIBS)
 
 # Don't add the CDK jars! They are not compiled from source!
+# This is an issue when building the Debian package.
 CLEANFILES=
 
 alljardir = "${JARLIBDIR}"

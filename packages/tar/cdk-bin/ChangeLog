@@ -5,6 +5,9 @@
 * Added DocBook XML 2 man page stylesheets which improves the
   portability of the building from CVS
 * Updated INSTALL stating that cdk-libs needs to be installed
+* Removed checking for obsoleted onsgml tool
+* Added detection of newly required tools: xmllint and xsltproc
+* Added viewing of SMILES string to cdk-view (closes #564839)
 
 20020518-2
 =================

@@ -14,7 +14,7 @@ CHECK_XML_RULE = for f in $^; \
   echo "  <title>Man page for $$f</title>" >> $$f.dbx; \
   cat $$f >> $$f.dbx; \
   echo "</part>" >> $$f.dbx; \
-  xmllint --valid --noout $$f.dbx && echo ok; \
+  xmllint --noent --valid --noout $$f.dbx && echo ok; \
   rm -f $$f.dbx; \
  done
 

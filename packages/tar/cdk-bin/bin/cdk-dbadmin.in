@@ -8,6 +8,7 @@ JAVA=@PATHTOJAVA@
 CDKLIBDIR=@CDKLIBDIR@
 
 JARLIBS=`ls -1 ${CDKLIBDIR}/*.jar | perl -ne "s/\n|\r/:/g; print;"`
-CLASSPATH=${RTJAR}:${LOGJAVA}:${XERCESJAR}:${JARLIBS}
+CDKLIBS=`ls -1 ${PREFIX}/share/java/cdk*.jar | perl -ne "s/\n|\r/:/g; print;"`
+CLASSPATH=${RTJAR}:${LOGJAVA}:${XERCESJAR}:${JARLIBS}:${CDKLIBS}
 
 ${JAVA} -Dcdk.debugging=true -cp ${CLASSPATH} org.openscience.cdk.database.DBAdmin $*

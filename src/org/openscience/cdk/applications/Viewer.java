@@ -29,10 +29,14 @@ import org.openscience.cdk.io.*;
 import org.openscience.cdk.renderer.*;
 import org.openscience.cdk.tools.*;
 import org.openscience.cdk.geometry.*;
+import org.openscience.cdk.smiles.*;
+import org.openscience.cdk.layout.*;
 import java.util.*;
 import java.io.*;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
+import javax.vecmath.*;
 
 /**
  * Command line utility for viewing chemical information from files.
@@ -46,6 +50,39 @@ public class Viewer {
     private boolean useJava3D;
     private boolean use3D;
 
+    // view a SMILES string
+    public Viewer(String SMILES) {
+        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        logger.dumpSystemProperties();
+        logger.dumpClasspath();
+        
+        SmilesParser sp = new SmilesParser();
+        Molecule mol = null;
+        try {
+            mol = sp.parseSmiles(SMILES);
+        } catch(Exception exc) {
+            System.out.println("Problem parsing SMILES: " +  exc.toString());
+        }
+        if (mol != null) {
+            StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+            MoleculeViewer2D mv = new MoleculeViewer2D();
+            Renderer2DModel r2dm = mv.getRenderer2DModel();
+            r2dm.setDrawNumbers(true);
+
+            try {
+                sdg.setMolecule((Molecule)mol.clone());
+                sdg.generateCoordinates(new Vector2d(0,1));
+                mv.setAtomContainer(sdg.getMolecule());
+                mv.display();
+            } catch(Exception exc) {
+                System.out.println("*** Exit due to an unexpected error during coordinate generation ***");
+                exc.printStackTrace();
+            }
+        }
+    }
+
+
+    // view a file
     public Viewer(String inFile, boolean useJava3D, boolean use3D) {
         this.useJava3D = useJava3D;
         this.use3D = use3D;
@@ -117,6 +154,7 @@ public class Viewer {
                           frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
                           frame.setSize(500,500);
                           frame.setVisible(true);
+                          frame.addWindowListener(new AppCloser());
                           logger.debug(".. done");
                           viewed = true;
                       } catch (Exception e) {
@@ -149,6 +187,8 @@ public class Viewer {
         boolean useJava3D = true;
         boolean use3D = true;
 
+        boolean showSmiles = false;
+
         String filename = "";
         if (args.length == 1) {
             filename = args[0];
@@ -160,6 +200,9 @@ public class Viewer {
                     useJava3D = false;
                 } else if ("--no3d".equalsIgnoreCase(opt)) {
                     use3D = false;
+                } else if ("--smiles".equalsIgnoreCase(opt)) {
+                    // Filename is considered to be a smiles string
+                    showSmiles = true;
                 } else {
                     System.err.println("Unknown option: " + opt);
                     System.exit(1);
@@ -172,14 +215,30 @@ public class Viewer {
             System.out.println();
             System.out.println("options: --nojava3D    Disable Java3D support");
             System.out.println("options: --no3D        View only 2D info");
+            System.out.println();
+            System.out.println("      or Viewer --smiles <SMILES>");
             System.exit(0);
         }
 
-        if (new File(filename).canRead()) {
-            new Viewer(filename, useJava3D, use3D);
+        if (showSmiles) {
+            // Filename is considered to be a smiles string
+            Viewer v = new Viewer(filename);
         } else {
-            System.out.println("File " + filename + " does not exist!");
+            if (new File(filename).canRead()) {
+                new Viewer(filename, useJava3D, use3D);
+            } else {
+                System.out.println("File " + filename + " does not exist!");
+            }
         }
     }
+
+    // Class to close program
+    protected static final class AppCloser extends WindowAdapter {
+
+        public void windowClosing(WindowEvent e) {
+            System.exit(0);
+        }
+    }
+
 }
 

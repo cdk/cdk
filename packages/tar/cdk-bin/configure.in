@@ -167,7 +167,10 @@ fi
 AC_SUBST(PATHTOXERCES)
 
 dnl needed for check_xml
-AC_PATH_PROGS(PATHTONSGMLS, onsgmls nsgmls, no)
+AC_CHECK_PROG(HASXSLTPROC, xsltproc, yes, no)
+AC_PATH_PROG(PATHTOXSLTPROC, xsltproc)
+AC_CHECK_PROG(HASXMLLINT, xmllint, yes, no)
+AC_PATH_PROG(PATHTOXMLLINT, xmllint)
 
 dnl detection copied from Lire 1.0 (www.logreport.org)
 dnl Try to find the SGML directory layout
