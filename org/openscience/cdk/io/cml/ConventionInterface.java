@@ -32,6 +32,10 @@ package org.openscience.cdk.io.cml;
 import org.xml.sax.*;
 import org.openscience.cdk.io.cml.cdopi.*;
 
+/**
+ * This interface describes the procedures classes must implement to be plugable
+ * into the CMLHandler. Most procedures reflect those in SAX2.
+ **/
 public interface ConventionInterface {
 
   void startDocument();

@@ -33,6 +33,9 @@ import java.util.*;
 import org.xml.sax.*;
 import org.openscience.cdk.io.cml.cdopi.*;
 
+/**
+ * Core CML 1.0 conventions are parsable by this class.
+ **/
 public class Convention implements ConventionInterface {
 
     protected org.openscience.cdk.tools.LoggingTool logger;

@@ -28,12 +28,23 @@ import org.openscience.cdk.io.cml.cdopi.CDOInterface;
 import org.xml.sax.*;
 import org.xml.sax.helpers.*;
 
+/**
+ * SAX2 implementation for CML XML fragment parsing.
+ *
+ * Data is stored into the Chemical Document Object which is passed when
+ * instantiating this class.
+ **/
 public class CMLHandler extends DefaultHandler {
     private Convention conv;
     private org.openscience.cdk.tools.LoggingTool logger;
 
     private Hashtable userConventions;
 
+    /**
+     * Constructor for the CMLHandler.
+     *
+     * @param cdo The Chemical Document Object in which data is stored
+     **/
     public CMLHandler(CDOInterface cdo) {
         logger = new org.openscience.cdk.tools.LoggingTool(
                        this.getClass().getName());

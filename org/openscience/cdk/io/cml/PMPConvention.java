@@ -37,7 +37,7 @@ import org.openscience.cdk.io.cml.cdopi.*;
  *  Implementation of the PMPMol Covention for CML.
  *
  *  PMP stands for PolyMorph Predictor and is a module
- *  of Cerius (tm).
+ *  of Cerius2 (tm).
  */
 public class PMPConvention extends Convention {
 

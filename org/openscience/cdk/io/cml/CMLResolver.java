@@ -34,7 +34,7 @@ import java.io.*;
 /**
  * This class resolves DOCTYPE declaration for Chemical Markup Language (CML)
  * files and uses a local version for validation. More information about
- * CML can be found at http://www.xml-cml.org/.s
+ * CML can be found at http://www.xml-cml.org/.
  **/
 public class CMLResolver implements EntityResolver2 {
 
