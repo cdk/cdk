@@ -34,6 +34,7 @@ import org.openscience.cdk.controller.Controller2DModel;
 
 /**
  * @cdk.module applications
+ * @cdk.require swing
  */
 public class Controller2DModelEditor extends FieldTablePanel {
     

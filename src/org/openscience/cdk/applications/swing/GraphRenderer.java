@@ -50,6 +50,7 @@ import org.openscience.cdk.renderer.GraphRendererModel;
  *
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
  * @cdk.created 2001-07-02
+ * @cdk.require swing
  */
 public class GraphRenderer extends JComponent
 {

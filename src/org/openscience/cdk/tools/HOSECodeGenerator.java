@@ -46,6 +46,7 @@ import org.openscience.cdk.exception.CDKException;
  *
  * @author     steinbeck
  * @cdk.created    2002-05-10
+ * @cdk.require swing
  */
 public class HOSECodeGenerator implements java.io.Serializable
 {

@@ -60,6 +60,7 @@ import org.openscience.cdk.layout.StructureDiagramGenerator;
  * <a href="http://wwmm.ch.cam.ac.uk/">http://wwmm.ch.cam.ac.uk/</a>.
  *
  * @cdk.module applications
+ * @cdk.require swing
  *
  * @author Yong Zhang <yz237@cam.ac.uk>
  * @author Egon Willighagen <elw38@cam.ac.uk>

@@ -45,6 +45,7 @@ import javax.swing.JScrollPane;
  *
  * @author     steinbeck
  * @cdk.created    2002-10-29
+ * @cdk.require swing
  */
 public class MoleculeListViewer extends JFrame
 {

@@ -48,6 +48,7 @@ import org.openscience.cdk.io.setting.StringIOSetting;
  *
  * @author  Egon Willighagen <egonw@sci.kun.nl>
  * @cdk.created 2003-07-18
+ * @cdk.require swing
  */
 public class SwingGUIListener implements ReaderListener, WriterListener {
 

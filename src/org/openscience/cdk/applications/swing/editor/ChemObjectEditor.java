@@ -30,6 +30,7 @@ import org.openscience.cdk.applications.swing.FieldTablePanel;
 
 /**
  * @cdk.module applications
+ * @cdk.require swing
  */
 public abstract class ChemObjectEditor extends FieldTablePanel {
     

@@ -30,6 +30,8 @@ Fixes:
 * Fixed output or aromatic bonds in MDLWriter
 * Fixed a NullPointerException problem in ChemObject.setProperties()
 * Fixed build.xml to allow compile of doclets on MacOS/X (closes #1001497)
+* All classes that require Swing are now marked with '@cdk.require swing'
+  (closes #847584)
 
 API changes:
 * Moved AtomContainer.getAdjacencyMatrix to cdk.graph.matrix.AdjecencyMatrix

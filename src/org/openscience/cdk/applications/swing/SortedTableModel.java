@@ -45,8 +45,9 @@ import javax.swing.table.TableModel;
  *  interface.
  *
  * @cdk.module applications
+ * @cdk.require swing
  *
- *  @author Bradley A. Smith <bradley@baysmith.com>
+ * @author Bradley A. Smith <bradley@baysmith.com>
  */
 public class SortedTableModel extends ListeningTableModel {
 

@@ -26,8 +26,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
  * 
  */
-
-
 package org.openscience.cdk.structgen.deterministic;
 
 import java.util.Vector;
@@ -53,6 +51,9 @@ import org.openscience.cdk.structgen.RandomGenerator;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.smiles.SmilesParser;
 
+/**
+ * @cdk.require swing
+ */
 public class SmilesViewerforDeterministicGenerator extends JApplet implements ActionListener{
 	String s = "";
 	TextField textField = null;

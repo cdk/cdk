@@ -69,6 +69,7 @@ import org.w3c.dom.Document;
  * @cdk.builddepends batik-svggen.jar
  * @cdk.builddepends batik-util.jar
  * @cdk.builddepends batik-xml.jar
+ * @cdk.require swing
  */
 public class SVGWriter extends DefaultChemObjectWriter {
 

@@ -48,6 +48,7 @@ import org.openscience.cdk.AtomContainer;
  * @author Egon Willighagen
  *
  * @cdk.keyword viewer, 3D-viewer
+ * @cdk.require swing
  *
  */
 public class Renderer3D extends JPanel implements Runnable {

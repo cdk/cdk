@@ -41,6 +41,7 @@ import javax.swing.JPopupMenu;
  *
  * @author  Egon Willighagen <egonw@sci.kun.nl>
  * @cdk.created 2003-07-36
+ * @cdk.require swing
  */
 public class CDKPopupMenu extends JPopupMenu {
    

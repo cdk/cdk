@@ -40,6 +40,7 @@ import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * @cdk.module applications
+ * @cdk.require swing
  */
 public class DictRefEditorTableModel extends AbstractTableModel {
     

@@ -50,6 +50,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @author     egonw
  * @cdk.created    2004-08-22
  * @cdk.keyword    node, ChemObject tree
+ * @cdk.require swing
  */
 public class ChemObjectTreeNode extends DefaultMutableTreeNode {
 

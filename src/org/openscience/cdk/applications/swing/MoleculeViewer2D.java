@@ -47,6 +47,7 @@ import org.openscience.cdk.renderer.Renderer2DModel;
  * A Swing-based implementation of Renderer2D for viewing molecules.
  *
  * @cdk.module applications
+ * @cdk.require swing
  *
  * @author     steinbeck
  * @cdk.created    2002-05-30

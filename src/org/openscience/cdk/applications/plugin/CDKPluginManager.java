@@ -52,6 +52,7 @@ import javax.swing.JPanel;
  * it encounters which name ends in Plugin will be loaded as plugin.
  *
  * @cdk.module applications
+ * @cdk.require swing
  */
 public class CDKPluginManager {
 

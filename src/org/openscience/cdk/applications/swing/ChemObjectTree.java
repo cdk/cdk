@@ -62,6 +62,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @author     egonw
  * @cdk.created    2002-12-29
  * @cdk.keyword    tree, ChemObject
+ * @cdk.require swing
  */
 public class ChemObjectTree extends JPanel {
 

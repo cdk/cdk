@@ -44,6 +44,7 @@ import org.openscience.cdk.renderer.Renderer2DModel;
 /**
  * @cdk.module applications
  * @cdk.builddepends jfontchooser.jar
+ * @cdk.require swing
  */
 public class Renderer2DModelEditor extends FieldTablePanel implements ActionListener {
     

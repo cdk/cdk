@@ -38,12 +38,13 @@ import org.openscience.cdk.Element;
 import org.openscience.cdk.event.CDKChangeListener;
 
 /**
- *  JPanel version of the periodic system.
+ * JPanel version of the periodic system.
  *
- *@author        Egon Willighagen
- *@author        Geert Josten
- *@cdk.created       February 10, 2004
- *@cdk.module    applications
+ * @author        Egon Willighagen
+ * @author        Geert Josten
+ * @cdk.created       February 10, 2004
+ * @cdk.module    applications
+ * @cdk.require swing
  */
 public class PeriodicTablePanel extends JPanel
 {

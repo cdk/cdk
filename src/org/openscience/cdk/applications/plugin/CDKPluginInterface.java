@@ -48,6 +48,7 @@ import org.openscience.cdk.event.ChemObjectChangeEvent;
  *
  * @see org.openscience.cdk.applications.plugin.CDKEditBus
  * @see org.openscience.cdk.applications.plugin.CDKPluginManager
+ * @cdk.require swing
  */
 public interface CDKPluginInterface {
 

@@ -43,6 +43,7 @@ import org.openscience.cdk.event.CDKChangeListener;
  * Swing class that allows easy building of edit forms.
  *
  * @cdk.module applications
+ * @cdk.require swing
  */
 public class FieldTablePanel extends JPanel {
         
