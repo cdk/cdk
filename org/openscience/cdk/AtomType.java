@@ -39,7 +39,7 @@ public class AtomType extends Element
 	 *
 	 * @since
 	 */
-	String atomTypeID;
+	String id;
 
 	/**
 	 *  The maximum bond order allowed for this atom type
@@ -74,22 +74,22 @@ public class AtomType extends Element
 	 * @param  elementSymbol  The element symbol identifying the element to which this atom type applies
 	 * @since
 	 */
-	public AtomType(String atomTypeID, String elementSymbol)
+	public AtomType(String id, String elementSymbol)
 	{
 		this(elementSymbol);
-		this.atomTypeID = atomTypeID;
+		setID(id);
 	}
 
 
 	/**
-	 *  Sets the AtomTypeID attribute of the AtomType object
+	 *  Sets the if attribute of the AtomType object
 	 *
-	 * @param  atomTypeID  The new AtomTypeID value
+	 * @param  id  The new AtomTypeID value
 	 * @since
 	 */
-	public void setAtomTypeID(String atomTypeID)
+	public void setID(String id)
 	{
-		this.atomTypeID = atomTypeID;
+		this.id = id;
 	}
 
 
@@ -118,14 +118,14 @@ public class AtomType extends Element
 
 
 	/**
-	 *  Gets the AtomTypeID attribute of the AtomType object
+	 *  Gets the id attribute of the AtomType object
 	 *
-	 * @return    The AtomTypeID value
+	 * @return    The id value
 	 * @since
 	 */
-	public String getAtomTypeID()
+	public String getID()
 	{
-		return atomTypeID;
+		return id;
 	}
 
 

@@ -114,7 +114,7 @@
       </classpath>
     </java>
   </target>
-	<target name="test" depends="dist">
+	<target name="test" depends="clean,dist">
 		<junit printsummary="yes" haltonfailure="yes">
 			<classpath>
 				<pathelement location="${dist}/jar/cdk.jar"/>
@@ -145,7 +145,7 @@
 	</target>
 
 	<target name="run" depends="dist">
-		<java classname="org.openscience.cdk.tools.IsotopeFactory" fork="yes">
+		<java classname="org.openscience.cdk.tools.AtomTypeFactory" fork="yes">
 			<arg value=""/>
 			<classpath>
 				<pathelement location="${dist}/jar/cdk.jar"/>
