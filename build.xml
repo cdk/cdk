@@ -145,7 +145,8 @@
                        patchfile="${src}/patches/org.openscience.cdk.applications.Viewer-NoJmol"/>
         </target>
         
-        <target id="compile-apps" name="compile-apps" depends="dist-extra, dist-libio, dist-render, 
+        <target id="compile-apps" name="compile-apps" 
+                depends="dist-extra, dist-libio, dist-render, 
                       dist-render-with-java3d, patch-viewer-for-no-jmol">        
                 <!-- Task to build the applications classes. Some require extra
                      jars, like those in ${lib}/libio -->
