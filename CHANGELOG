@@ -5,11 +5,16 @@ Changes in CVS
 ------------------------------------
 New:
 * Coloring of atom symbols in 2D display by atom type.
+* A cdk-validator program
 * More complete validation of chemical semantics in the
   org.openscience.cdk.validation package.
+* Added Swing implementation of Reader/WriterListener
 
 Fixes:
-* Added missing LGPL license from distributions.
+* Added missing LGPL license to distributions.
+* Fixed bugs in ChemSequence.getChemModels() and
+  ChemFile.getChemSequences()
+* JCPControllor nows reconfigures atom after changing symbol
 
 API changes:
 * ConnectivityChecker.partitionIntoMolecules() now returns a 
