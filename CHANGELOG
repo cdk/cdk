@@ -1,7 +1,7 @@
 CHANGELOG $Date$
 ------------------------------------
 
-Changes in CVS
+20050125 Release
 ------------------------------------
 New:
 
@@ -9,6 +9,8 @@ Fixes:
 * Fixed detection of class binaries of Doclets required to compile the CDK
 * Added missing radius field info for AtomType.toString()
 * Fixed syntax error in Accelerated3DRenderer
+* Added missing build.props to source releases
+* Added missing doc/javadoc doclet classes to source releases
 
 API changes:
 * Removed deprecated methods from LoggingTool

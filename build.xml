@@ -984,6 +984,7 @@
                         <fileset dir="${src}" includes="org/openscience/cdk/io/cml/data/**" />
                 </copy>
                 <copy todir="${sourcedist.dir}">
+                        <fileset dir="." includes="build.props" />
                         <fileset dir="." includes="build.xml" />
                         <fileset dir="." includes="javadoc.xml" />
                         <fileset dir="." includes="README" />
@@ -1020,6 +1021,11 @@
                 <mkdir dir="${sourcedist.dir}/doc/" />
                 <copy todir="${sourcedist.dir}/doc/">
                     <fileset dir="doc/" includes="lgpl.license" />
+                </copy>
+                <mkdir dir="${sourcedist.dir}/doc/javadoc" />
+                <copy todir="${sourcedist.dir}/doc/javadoc">
+                    <fileset dir="doc/javadoc" includes="MakeJavaFilesFilesDoclet.class" />
+                    <fileset dir="doc/javadoc" includes="MakeCDKSetFilesDoclet.class" />
                 </copy>
                 <tar tarfile="${package}.tar" basedir="${sourcedist}/" includes="${package}/**" />
                 <gzip zipfile="${package}.tar.gz" src="cdk-source-${version}.tar" />
