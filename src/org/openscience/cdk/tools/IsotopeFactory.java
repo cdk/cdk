@@ -55,6 +55,7 @@ public class IsotopeFactory
 
 	private static IsotopeFactory ifac = null;
 	private Vector isotopes = null;
+    private Hashtable majorIsotopes = null;
 
     private org.openscience.cdk.tools.LoggingTool logger;
 
@@ -90,9 +91,11 @@ public class IsotopeFactory
 		isotopes = (Vector) in.readObject();
 		for (int f = 0; f < isotopes.size(); f++) {
             Isotope isotope = (Isotope)isotopes.elementAt(f);
-            logger.debug("Setting up: " + isotope);
+            // logger.debug("Setting up: " + isotope);
 			setup(isotope);
 		}
+        
+        majorIsotopes = new Hashtable();
 	}
 
 
@@ -125,30 +128,6 @@ public class IsotopeFactory
 		return isotopes.size();
 	}
 
-
-	/**
-	 *  Returns the most abundant (major) isotope whose symbol equals element.
-	 *
-	 *@param  symbol  Description of the Parameter
-	 *@return         The Major Isotope value
-	 */
-	public Isotope getMajorIsotope(String symbol)
-	{
-		for (int f = 0; f < isotopes.size(); f++)
-		{
-			if (((Isotope) isotopes.elementAt(f)).getSymbol().equals(symbol))
-			{
-				if ((((Isotope) isotopes.elementAt(f))).getNaturalAbundance() == ((double) 100))
-				{
-					return (Isotope) ((Isotope) isotopes.elementAt(f)).clone();
-				}
-			}
-		}
-        logger.error("Could not find major isotope for: " + symbol);
-		return null;
-	}
-
-
 	/**
 	 *  Get an array of all isotoptes known to the IsotopeFactory for the given
 	 *  element symbol
@@ -172,26 +151,67 @@ public class IsotopeFactory
 
 
 	/**
-	 *  Returns the major isotope with a given atomic number
+	 * Returns the most abundant (major) isotope with a given atomic number.
+     *
+     * <p>The isotope's abundancy is for atoms with atomic number 60 and smaller
+     * defined as a number that is proportional to the 100 of the most abundant
+     * isotope. For atoms with higher atomic numbers, the abundancy is defined
+     * as a percentage.
 	 *
-	 *@param  atomicNumber  The atomicNumber for which an isotope is to be returned
-	 *@return               The isotope corresponding to the given atomic number
-	 */
-	public Isotope getMajorIsotope(int atomicNumber)
-	{
-		for (int f = 0; f < isotopes.size(); f++)
-		{
-			if (((Isotope) isotopes.elementAt(f)).getAtomicNumber() == atomicNumber)
-			{
-				if ((((Isotope) isotopes.elementAt(f))).getNaturalAbundance() == ((double) 100))
-				{
-					return (Isotope) ((Isotope) isotopes.elementAt(f)).clone();
-				}
-			}
-		}
-		return null;
-	}
+	 * @param  atomicNumber  The atomicNumber for which an isotope is to be returned
+	 * @return               The isotope corresponding to the given atomic number
+     *
+     * @see getMajorIsotope(String symbol)
+     */
+    public Isotope getMajorIsotope(int atomicNumber) {
+        Isotope major = null;
+        for (int f = 0; f < isotopes.size(); f++) {
+            Isotope current = (Isotope) isotopes.elementAt(f);
+            if (current.getAtomicNumber() == atomicNumber) {
+                if (major == null) {
+                    major = (Isotope)current.clone();
+                } else {
+                    if (current.getNaturalAbundance() > major.getNaturalAbundance()) {
+                        major = (Isotope)current.clone();
+                    }
+                }
+            }
+        }
+        if (major == null) logger.error("Could not find major isotope for: " + atomicNumber);
+        return major;
+    }
 
+    /**
+     *  Returns the most abundant (major) isotope whose symbol equals element.
+     *
+     *@param  symbol  Description of the Parameter
+     *@return         The Major Isotope value
+     */
+    public Isotope getMajorIsotope(String symbol) {
+        Isotope major = null;
+        if (majorIsotopes.contains(symbol)) {
+            major = (Isotope)majorIsotopes.get(symbol);
+        } else {
+            for (int f = 0; f < isotopes.size(); f++) {
+                Isotope current = (Isotope) isotopes.elementAt(f);
+                if (current.getSymbol().equals(symbol)) {
+                    if (major == null) {
+                        major = (Isotope)current.clone();
+                    } else {
+                        if (current.getNaturalAbundance() > major.getNaturalAbundance()) {
+                            major = (Isotope)current.clone();
+                        }
+                    }
+                }
+            }
+            if (major == null) {
+                logger.error("Could not find major isotope for: " + symbol);
+            } else {
+                majorIsotopes.put(symbol, major);
+            }
+        }
+        return major;
+    }
 
 	/**
 	 *  Returns an Element with a given element symbol
