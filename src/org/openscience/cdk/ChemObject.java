@@ -87,10 +87,9 @@ public class ChemObject implements java.io.Serializable, Cloneable
 	 *
 	 *@return    Vector with the ChemObjects associated.
 	 */
-	private Vector lazyChemObjects()
+	private Vector lazyChemObjectListeners()
 	{
-		if (chemObjectListeners == null)
-		{
+		if (chemObjectListeners == null) {
 			chemObjectListeners = new Vector();
 		}
 		return chemObjectListeners;
@@ -106,7 +105,7 @@ public class ChemObject implements java.io.Serializable, Cloneable
 	 */
 	public void addListener(ChemObjectListener col)
 	{
-		Vector listeners = lazyChemObjects();
+		Vector listeners = lazyChemObjectListeners();
 
 		if (!listeners.contains(col))
 		{
@@ -122,13 +121,11 @@ public class ChemObject implements java.io.Serializable, Cloneable
 	 *
 	 *@return    the number of registered listeners.
 	 */
-	public int getListenerCount()
-	{
-		if (chemObjectListeners == null)
-		{
+	public int getListenerCount() {
+		if (chemObjectListeners == null) {
 			return 0;
 		}
-		return chemObjectListeners.size();
+		return lazyChemObjectListeners().size();
 	}
 
 
@@ -139,12 +136,13 @@ public class ChemObject implements java.io.Serializable, Cloneable
 	 *@param  col  The ChemObjectListener to be removed
 	 *@see         #addListener
 	 */
-	public void removeListener(ChemObjectListener col)
-	{
-		Vector listeners = lazyChemObjects();
-
-		if (listeners.contains(col))
-		{
+	public void removeListener(ChemObjectListener col) {
+        if (chemObjectListeners == null) {
+			return;
+		}
+        
+		Vector listeners = lazyChemObjectListeners();
+		if (listeners.contains(col)) {
 			listeners.removeElement(col);
 		}
 	}
@@ -154,13 +152,13 @@ public class ChemObject implements java.io.Serializable, Cloneable
 	 *  This should be triggered by an method that changes the content of an object
 	 *  to that the registered listeners can react to it.
 	 */
-	protected void notifyChanged()
-	{
-		Vector listeners = lazyChemObjects();
-		for (int f = 0; f < listeners.size(); f++)
-		{
-			((ChemObjectListener) listeners.elementAt(f)).stateChanged(new ChemObjectChangeEvent(this));
-		}
+	protected void notifyChanged() {
+        if (getListenerCount() > 0) {
+            Vector listeners = lazyChemObjectListeners();
+            for (int f = 0; f < listeners.size(); f++) {
+                ((ChemObjectListener) listeners.elementAt(f)).stateChanged(new ChemObjectChangeEvent(this));
+            }
+        }
 	}
 
 
@@ -173,13 +171,13 @@ public class ChemObject implements java.io.Serializable, Cloneable
 	 *@param  evt  A ChemObjectChangeEvent pointing to the source of where
 	 *		the change happend
 	 */
-	protected void notifyChanged(ChemObjectChangeEvent evt)
-	{
-		Vector listeners = lazyChemObjects();
-		for (int f = 0; f < listeners.size(); f++)
-		{
-			((ChemObjectListener) listeners.elementAt(f)).stateChanged(evt);
-		}
+	protected void notifyChanged(ChemObjectChangeEvent evt) {
+        if (getListenerCount() > 0) {
+            Vector listeners = lazyChemObjectListeners();
+            for (int f = 0; f < listeners.size(); f++) {
+                ((ChemObjectListener) listeners.elementAt(f)).stateChanged(evt);
+            }
+        }
 	}
 
 
@@ -224,7 +222,10 @@ public class ChemObject implements java.io.Serializable, Cloneable
 	 */
 	public void removeProperty(Object description)
 	{
-		lazyProperties().remove(description);
+		if (properties == null) {
+            return;
+        }
+        lazyProperties().remove(description);
 	}
 
 
@@ -240,7 +241,10 @@ public class ChemObject implements java.io.Serializable, Cloneable
 	 */
 	public Object getProperty(Object description)
 	{
-		return lazyProperties().get(description);
+        if (properties != null) {
+            return lazyProperties().get(description);
+        }
+        return null;
 	}
 
 
@@ -254,7 +258,6 @@ public class ChemObject implements java.io.Serializable, Cloneable
 	{
 		return lazyProperties();
 	}
-
 
 	/**
 	 *  Clones this <code>ChemObject</code>. It clones the identifier, flags,
