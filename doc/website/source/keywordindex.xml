@@ -8,8 +8,8 @@
   <config param="rcsdate" value="$Date$"/>
 
   <head>
-    <title>Keyword Index</title>
-    <titleabbrev>Keywords</titleabbrev>
+    <title>Index</title>
+    <titleabbrev>Index</titleabbrev>
     <summary>A list to look up classes based on keywords.</summary>
   </head>
 
