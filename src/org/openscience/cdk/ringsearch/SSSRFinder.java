@@ -278,18 +278,29 @@ public class SSSRFinder
 	 */
 	private Ring prepareRing(Vector vec, Molecule mol)
 	{
+		// add the atoms in vec to the new ring
 		int atomCount = vec.size();
 		Ring ring = new Ring(atomCount);
 		Atom[] atoms = new Atom[atomCount];
 		vec.copyInto(atoms);
 		ring.setAtoms(atoms);
-		try
-		{
-			for (int i = 0; i < atomCount - 1; i++)
-			{
-				ring.addBond(mol.getBond(atoms[i], atoms[i + 1]));
+		// add the bonds in mol to the new ring
+		try {
+			Bond b;
+			for (int i = 0; i < atomCount - 1; i++) {
+				b = mol.getBond(atoms[i], atoms[i + 1]);
+				if (b != null) {
+				    ring.addBond(b);
+				} else {
+				    System.out.println("This should not happen.")
+				} 
 			}
-			ring.addBond(mol.getBond(atoms[0], atoms[atomCount - 1]));
+			b = mol.getBond(atoms[0], atoms[atomCount - 1]);
+			if (b != null) {
+				ring.addBond(b);
+			} else {
+				System.out.println("This should not happen either.")
+			} 
 		}
 		catch (Exception exc)
 		{
