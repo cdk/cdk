@@ -1,8 +1,6 @@
-/* AcceleratedRenderer3DTest.java
+/* ZMatrixReaderTest.java
  * 
  * Autor: Stephan Michels
- * Wohnort: Seestraﬂe 117 / 13353 Berlin
- * Telefon: +49-0173-6160804
  * EMail: stephan@vern.chem.tu-berlin.de
  * Datum: 20.7.2001
  * 
@@ -25,7 +23,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
  */
 
-package org.openscience.cdk.test;
+package org.openscience.cdk.test.io;
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.io.*;
@@ -37,35 +35,25 @@ import java.io.*;
 import javax.swing.*;
 import java.awt.*;
 
-public class AcceleratedRenderer3DTest
+public class ZMatrixReaderTest
 {
-  public AcceleratedRenderer3DTest(String inFile) 
+  public ZMatrixReaderTest(String inFile) 
 	{
   	try 
 		{        
     	ChemObjectReader reader;
       System.out.println("Loading: " + inFile);
-      if (inFile.endsWith(".xyz")) 
-			{
-  	  	reader = new XYZReader(new FileReader(inFile));
-        System.out.println("Expecting XYZ format...");
-      } else if (inFile.endsWith(".cml")) 
-			{
-  	  	reader = new CMLReader(new FileReader(inFile));
-        System.out.println("Expecting CML format...");
-      } else 
-			{
-      	reader = new MDLReader(new FileInputStream(inFile));
-        System.out.println("Expecting MDL MolFile format...");
-      }
+  	  reader = new ZMatrixReader(new FileReader(inFile));
+      System.out.println("Expecting ZMatrix format...");
+
       ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
 
 			ChemSequence[] chemSequence = chemFile.getChemSequences();
 			ChemModel[] chemModels = chemSequence[0].getChemModels();
 			AtomContainer atomContainer = chemModels[0].getAllInOneContainer();
-      atomContainer.addBonds(1.2); // new!!!
+      atomContainer.addBonds(1.5); // new!!!
 
-			JFrame frame = new JFrame("AcceleratedRenderer3DTest");
+			JFrame frame = new JFrame("ZMatrixReaderTest");
 			frame.getContentPane().setLayout(new BorderLayout());
 			
 			AcceleratedRenderer3D renderer = new AcceleratedRenderer3D(
@@ -90,14 +78,14 @@ public class AcceleratedRenderer3DTest
     	String filename = args[0];
       if (new File(filename).canRead()) 
 			{
-      	new AcceleratedRenderer3DTest(filename);
+      	new ZMatrixReaderTest(filename);
       } else 
 			{
       	System.out.println("File " + filename + " does not exist!");
       }
     } else 
 		{
-    	System.out.println("Syntax: AcceleratedRenderer3DTest <inputfile>");
+    	System.out.println("Syntax: ZMatrixReaderTest <inputfile>");
     }
   }
 }

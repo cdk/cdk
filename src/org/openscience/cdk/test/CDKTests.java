@@ -23,7 +23,9 @@ package org.openscience.cdk.test;
 
 import junit.framework.*;
 import org.openscience.cdk.renderer.*;
+import org.openscience.cdk.test.io.*;
 import org.openscience.cdk.test.io.cml.*;
+import org.openscience.cdk.test.smiles.*;
 
 
 /**
@@ -49,14 +51,16 @@ public class CDKTests {
 		suite.addTest(MFAnalyserTest.suite());
 		suite.addTest(PathLengthTest.suite());
 		suite.addTest(IsomorphismTesterTest.suite());
-		suite.addTest(PDBReaderTest.suite());		
 		suite.addTest(IsotopeFactoryTest.suite());
 		suite.addTest(AllRingsFinderTest.suite());
 		suite.addTest(FingerprinterTest.suite());
 		suite.addTest(AtomTypeFactoryTest.suite());
+        // from cdk.test.io.*
 		suite.addTest(CMLIOTests.suite());
-		suite.addTest(org.openscience.cdk.test.smiles.SmilesGeneratorTest.suite());
-		suite.addTest(org.openscience.cdk.test.smiles.SmilesParserTest.suite());
+		suite.addTest(PDBReaderTest.suite());
+        // from cdk.test.smiles
+		suite.addTest(SmilesGeneratorTest.suite());
+		suite.addTest(SmilesParserTest.suite());
 
 	    return suite;
 	}
