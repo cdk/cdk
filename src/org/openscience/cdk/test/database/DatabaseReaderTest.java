@@ -29,7 +29,9 @@ import org.openscience.cdk.*;
 import org.openscience.cdk.database.*;
 import java.sql.*;
 
-
+/**
+ * @cdkPackage test
+ */
 public class DatabaseReaderTest
 {
 	DBReader dbr;

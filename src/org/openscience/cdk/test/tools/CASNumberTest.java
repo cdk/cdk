@@ -29,6 +29,8 @@ import junit.framework.*;
 /**
  * Tests CDK's CAS Number class.
  *
+ * @cdkPackage test
+ *
  * @author     Egon Willighagen <egonw@sci.kun.nl>
  * @created    2003-07-01
  */

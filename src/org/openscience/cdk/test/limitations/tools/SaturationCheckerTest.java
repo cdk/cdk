@@ -46,6 +46,8 @@ import junit.framework.*;
 /**
  * This class shows some limitations of algorithms in the SaturationChecker
  * class.
+ *
+ * @cdkPackage test
  * 
  * @author     egonw
  * @created    2003-11-02

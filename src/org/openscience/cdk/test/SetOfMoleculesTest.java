@@ -32,6 +32,8 @@ import javax.vecmath.*;
 /**
  * Checks the funcitonality of the SetOfMolecules class.
  *
+ * @cdkPackage test
+ *
  * @see org.openscience.cdk.SetOfMolecules
  */
 public class SetOfMoleculesTest extends TestCase {

@@ -43,6 +43,9 @@ import java.util.*;
 import junit.framework.*;
 
 
+/**
+ * @cdkPackage test
+ */
 public class VicinitySamplerTest extends TestCase
 {
 	

@@ -39,6 +39,8 @@ import java.util.Iterator;
  * Atomic tests for the reading CML documents. All tested CML strings are valid CML 2,
  * as can be determined in cdk/src/org/openscience/cdk/test/io/cml/cmlTestFramework.xml.
  *
+ * @cdkPackage test
+ *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  */
 public class CMLFragmentsTest extends TestCase {

@@ -41,6 +41,8 @@ import java.util.Enumeration;
  * TestCase for the reading CML files using a few test files
  * in data/cmltest as found in the JChemPaint distribution
  * (http://jchempaint.sf.org/).
+ *
+ * @cdkPackage test
  */
 public class JChemPaintTest extends TestCase {
 

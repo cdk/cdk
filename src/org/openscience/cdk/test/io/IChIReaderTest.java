@@ -38,6 +38,8 @@ import java.util.Iterator;
 /**
  * TestCase for the reading IChI files using one test file.
  *
+ * @cdkPackage test
+ *
  * @see org.openscience.cdk.io.IChIReader
  */
 public class IChIReaderTest extends TestCase {

@@ -32,6 +32,8 @@ import javax.vecmath.Point3d;
 
 /**
  * Checks the funcitonality of the RebondTool.
+ *
+ * @cdkPackage test
  */
 public class RebondToolTest extends TestCase {
     

@@ -38,6 +38,8 @@ import java.util.Iterator;
 /**
  * TestCase for the reading Ghemical molecular dynamics files using one test file.
  *
+ * @cdkPackage test
+ *
  * @see org.openscience.cdk.io.GhemicalReader
  */
 public class GhemicalReaderTest extends TestCase {

@@ -33,6 +33,8 @@ import junit.framework.*;
 
 /**
  * Checks the funcitonality of the MorganNumberTools
+ *
+ * @cdkPackage test
  */
 public class MorganNumberToolsTest extends TestCase
 {

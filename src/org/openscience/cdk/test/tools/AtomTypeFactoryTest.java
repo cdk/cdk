@@ -33,6 +33,8 @@ import junit.framework.*;
 
 /**
  * Checks the funcitonality of the AtomTypeFactory
+ *
+ * @cdkPackage test
  */
 public class AtomTypeFactoryTest extends TestCase {
 

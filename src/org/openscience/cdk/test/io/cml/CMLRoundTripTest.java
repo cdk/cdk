@@ -36,6 +36,8 @@ import javax.vecmath.*;
 /**
  * TestCase for the reading CML 2 files using a few test files
  * in data/cmltest.
+ *
+ * @cdkPackage test
  */
 public class CMLRoundTripTest extends TestCase {
 

@@ -33,6 +33,8 @@ import javax.vecmath.*;
 /**
  * Checks the funcitonality of the AtomType class.
  *
+ * @cdkPackage test
+ *
  * @see org.openscience.cdk.AtomType
  */
 public class AtomTypeTest extends TestCase {

@@ -40,7 +40,6 @@
         <path id="project.class.path">
                 <pathelement location="${java.ext.dirs}/rt.jar" />
 
-                <pathelement location="." />
                 <fileset dir="${lib}">
                         <include name="batik-awt-util.jar" />
                         <include name="batik-dom.jar" />
@@ -216,7 +215,7 @@
             description="Compiles the CDK, including experimental classes.">
         </target>
 
-        <target name="compile-libio" depends="dist-standard, dont-compile-libio-joelib, 
+        <target id="compile-libio" name="compile-libio" depends="dist-standard, dont-compile-libio-joelib, 
                                               compile-libio-joelib" />
         
         <target name="dont-compile-libio-joelib" unless="joelib.present">
@@ -346,7 +345,7 @@
         </target>
         
 	      <!-- Convert the JavaCC .jj file to the correct .java files for the IUPAC parser -->
-        <target name="javacc" depends="nojavacc, dojavacc"/>
+        <target id="javacc" name="javacc" depends="nojavacc, dojavacc"/>
         <target name="dojavacc" depends="init" if="hasAnt16">
           <delete>
               <fileset id="javacc-generated" 
@@ -371,7 +370,7 @@
                  patchfile="${src}/patches/org.openscience.cdk.test.CDKTests.noAnt16"/>
         </target>
 
-        <target id="compile-extra" name="compile-extra" depends="dist-standard, javacc">
+        <target id="compile-extra" name="compile-extra" depends="dist-standard, dist-io, dist-render, javacc">
             <javac srcdir="${build.src}" destdir="${build}" optimize="${optimization}" 
                    debug="${debug}" deprecation="${deprecation}"
                    includesfile="${src}/extra.javafiles">
@@ -381,39 +380,53 @@
                     <fileset dir="${dist}/jar">
                         <include name="cdk-core.jar" />
                         <include name="cdk-standard.jar" />
+                        <include name="cdk-render.jar" />
+                        <include name="cdk-io.jar" />
                     </fileset>
                 </classpath>
-
-                <excludesfile name="${src}/java3d.javafiles" />
-                <excludesfile name="${src}/io.javafiles" />
-                <exclude name="org/openscience/cdk/libio/**/*.java" />
-                <exclude name="org/openscience/cdk/test/**/*.java" />
             </javac>
         </target>
 
-        <target id="compile-experimental" name="compile-experimental" depends="compile-extra">
-                <echo message="Compiling classes for cdk-experimental module." />
+        <target id="compile-experimental" name="compile-experimental" 
+                depends="dist-extra">
+            <echo message="Compiling classes for cdk-experimental module." />
 
-                <javac srcdir="${build.src}" destdir="${build}" optimize="${optimization}" 
-                       debug="${debug}" deprecation="${deprecation}"
-                       includesfile="${src}/experimental.javafiles">
-                    <classpath refid="project.class.path" />
-                </javac>
+            <javac srcdir="${build.src}" destdir="${build}" optimize="${optimization}" 
+                   debug="${debug}" deprecation="${deprecation}"
+                   includesfile="${src}/experimental.javafiles">
+                <classpath refid="project.class.path" />
+                <classpath>
+                    <fileset dir="${dist}/jar">
+                        <include name="cdk-core.jar" />
+                        <include name="cdk-standard.jar" />
+                        <include name="cdk-render.jar" />
+                        <include name="cdk-io.jar" />
+                        <include name="cdk-extra.jar" />
+                    </fileset>
+                </classpath>
+            </javac>
         </target>
 
-        <target id="compile-test" name="compile-test" depends="dist-all, dist-experimental">
-                <!-- Task to build the test classes. -->
-                <javac srcdir="${build.src}/org/openscience/cdk/test"
-                       destdir="${build}" optimize="${optimization}" 
-                       debug="${debug}" deprecation="${deprecation}">
-                        <exclude name="renderer/Accel*.java" />
-                        <exclude name="renderer/Orbitals*.java" />
-                        <exclude name="libio/**/*.java" />
-                        <exclude name="math/qm/VisualGaussiansCalculationTest.java" />
-                        <exclude name="io/ZMatrixReaderTest.java" />
+        <target id="compile-test" name="compile-test" depends="dist-all, dist-libio, dist-experimental">
+            <!-- Task to build the test classes. -->
+            <javac srcdir="${build.src}"
+                   destdir="${build}" optimize="${optimization}" 
+                   debug="${debug}" deprecation="${deprecation}"
+                   includesfile="${src}/test.javafiles">
 
-                        <classpath refid="project.class.path" />
-                </javac>
+                <classpath refid="project.class.path" />
+                <classpath>
+                    <fileset dir="${dist}/jar">
+                        <include name="cdk-core.jar" />
+                        <include name="cdk-standard.jar" />
+                        <include name="cdk-render.jar" />
+                        <include name="cdk-io.jar" />
+                        <include name="cdk-extra.jar" />
+                        <include name="cdk-libio.jar" />
+                        <include name="cdk-experimental.jar" />
+                    </fileset>
+                </classpath>
+            </javac>
         </target>
 
         
@@ -568,7 +581,7 @@
                 </jar>
         </target>
 
-        <target name="dist-libio" depends="compile-libio" unless="libio.present">
+        <target id="dist-libio" name="dist-libio" depends="compile-libio" unless="libio.present">
                 <jar jarfile="${dist}/jar/cdk-libio.jar">
                     <fileset dir="${build}">
                         <include name="org/openscience/cdk/libio/**" />

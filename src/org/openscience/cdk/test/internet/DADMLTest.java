@@ -33,6 +33,9 @@ import org.openscience.cdk.internet.*;
 import java.util.*;
 import java.io.*;
 
+/**
+ * @cdkPackage test
+ */
 public class DADMLTest {
 
     private org.openscience.cdk.tools.LoggingTool logger;

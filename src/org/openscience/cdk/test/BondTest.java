@@ -32,6 +32,8 @@ import javax.vecmath.*;
 /**
  * Checks the functionality of the Bond class.
  *
+ * @cdkPackage test
+ *
  * @see org.openscience.cdk.Bond
  */
 public class BondTest extends TestCase {

@@ -50,6 +50,8 @@ import junit.framework.*;
 /**
  * Tests the HOSECode genertor.
  *
+ * @cdkPackage test
+ *
  * @author     steinbeck
  * @created    2002-11-16
  */

@@ -34,6 +34,8 @@ import org.openscience.cdk.templates.MoleculeFactory;
 /**
  * TestCase for the AtomContainer class.
  *
+ * @cdkPackage test
+ *
  * @author  Christoph Steinbeck
  * @created 2001-08-09
  */

@@ -33,6 +33,8 @@ import javax.vecmath.*;
 /**
  * Checks the funcitonality of the AtomEnumeration class.
  *
+ * @cdkPackage test
+ *
  * @see org.openscience.cdk.AtomEnumeration
  */
 public class AtomEnumerationTest extends TestCase {

@@ -34,6 +34,9 @@ import java.io.*;
 import java.net.URL;
 import junit.framework.*;
 
+/**
+ * @cdkPackage test
+ */
 public class MFAnalyserTest extends TestCase {
 	Molecule molecule;
 	

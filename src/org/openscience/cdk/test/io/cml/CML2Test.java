@@ -38,6 +38,8 @@ import java.util.Iterator;
 /**
  * TestCase for the reading CML 2 files using a few test files
  * in data/cmltest.
+ *
+ * @cdkPackage test
  */
 public class CML2Test extends TestCase {
 

@@ -40,6 +40,8 @@ import junit.framework.TestSuite;
 /**
  *  Description of the Class
  *
+ * @cdkPackage test
+ *
  *@author     steinbeck
  *@created    September 4, 2003
  */

@@ -33,6 +33,8 @@ import javax.vecmath.*;
 /**
  * Checks the funcitonality of the ChemSequence class.
  *
+ * @cdkPackage test
+ *
  * @see org.openscience.cdk.ChemSequence
  */
 public class ChemFileTest extends TestCase {

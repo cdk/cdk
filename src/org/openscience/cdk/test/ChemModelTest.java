@@ -33,6 +33,8 @@ import javax.vecmath.*;
 /**
  * Checks the funcitonality of the ChemModel class.
  *
+ * @cdkPackage test
+ *
  * @see org.openscience.cdk.ChemModel
  */
 public class ChemModelTest extends TestCase {

@@ -34,6 +34,9 @@ import java.io.*;
 import java.net.URL;
 import javax.vecmath.Vector2d;
 
+/**
+ * @cdkPackage test
+ */
 public class ControllerTest
 {
 	MDLReader mr;

@@ -33,6 +33,8 @@ import javax.vecmath.*;
 /**
  * Checks the funcitonality of the Isotope class.
  *
+ * @cdkPackage test
+ *
  * @see org.openscience.cdk.Isotope
  */
 public class IsotopeTest extends TestCase {

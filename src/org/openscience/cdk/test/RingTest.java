@@ -33,6 +33,8 @@ import javax.vecmath.*;
 /**
  * Checks the funcitonality of the Ring class.
  *
+ * @cdkPackage test
+ *
  * @see org.openscience.cdk.Ring
  */
 public class RingTest extends TestCase {

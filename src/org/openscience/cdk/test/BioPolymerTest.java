@@ -33,6 +33,8 @@ import javax.vecmath.*;
 /**
  * Checks the functionality of the BioPolymer class.
  *
+ * @cdkPackage test
+ *
  * @see org.openscience.cdk.BioPolymer
  */
 public class BioPolymerTest extends TestCase {

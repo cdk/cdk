@@ -33,6 +33,8 @@ import javax.vecmath.*;
 /**
  * Checks the funcitonality of the Element class.
  *
+ * @cdkPackage test
+ *
  * @see org.openscience.cdk.Element
  */
 public class ElementTest extends TestCase {

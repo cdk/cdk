@@ -45,6 +45,7 @@ import org.openscience.cdk.test.iupac.*;
 /**
  * TestSuite that runs all the sample tests
  *
+ * @cdkPackage test
  */
 public class CDKTests
 {

@@ -33,6 +33,7 @@ import org.openscience.cdk.test.tools.*;
 /**
  * TestSuite that runs all the sample tests
  *
+ * @cdkPackage test
  */
 public class StandardClassesTests {
 

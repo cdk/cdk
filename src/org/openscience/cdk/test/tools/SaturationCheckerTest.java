@@ -44,6 +44,8 @@ import java.awt.*;
 import junit.framework.*;
 
 /**
+ * @cdkPackage test
+ *
  * @author     steinbeck
  * @created    2003-02-20
  */

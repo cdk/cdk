@@ -15,8 +15,7 @@
  *   License along with this library; if not, write to the Free Software
  *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *   (or see http://www.gnu.org/copyleft/lesser.html)
- */     
-
+ */
 package org.openscience.cdk.test.iupac;
 
 import junit.framework.*;
@@ -29,6 +28,8 @@ import org.openscience.cdk.exception.CDKException;
 
 /**
  * JUnit test routines for the core parser.
+ *
+ * @cdkPackage test
  *
  * @author Stephen Tomkinson
  */

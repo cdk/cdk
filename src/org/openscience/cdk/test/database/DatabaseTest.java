@@ -33,6 +33,9 @@ import java.sql.*;
 import java.util.*;
 import java.io.*;
 
+/**
+ * @cdkPackage test
+ */
 public class DatabaseTest {
   private Connection db;	
 

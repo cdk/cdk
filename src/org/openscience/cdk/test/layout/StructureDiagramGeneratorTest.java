@@ -42,6 +42,8 @@ import junit.framework.*;
 /**
  *  Description of the Class
  *
+ * @cdkPackage test
+ *
  *@author     steinbeck
  *@created    August 29, 2003
  */

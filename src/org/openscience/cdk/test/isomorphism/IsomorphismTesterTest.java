@@ -32,6 +32,8 @@ import junit.framework.*;
 
 /**
  * Checks the funcitonality of the IsomorphismTester
+ *
+ * @cdkPackage test
  */
 public class IsomorphismTesterTest extends TestCase
 {

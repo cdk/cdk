@@ -50,6 +50,8 @@ import junit.framework.*;
 /**
  *  Tests the HOSECode genertor. This is *not* a JUnit test class!
  *
+ * @cdkPackage test
+ *
  *@author     steinbeck
  *@created    2002-11-16
  */

@@ -33,13 +33,14 @@ import org.openscience.cdk.layout.*;
 import org.openscience.cdk.structgen.deterministic.*;
 
 import javax.vecmath.*;
-
 import java.util.*;
-
 import java.io.*;
 import java.net.URL;
 import junit.framework.*;
 
+/**
+ * @cdkPackage test
+ */
 public class EquivalentClassesDeterministicGeneratorTest extends TestCase
 {
 	boolean standAlone = false;

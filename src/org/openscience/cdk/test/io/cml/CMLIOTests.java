@@ -31,6 +31,7 @@ import org.openscience.cdk.renderer.*;
  * TestSuite for doing regression tests on the org.openscience.cdk.io.cml
  * package.
  *
+ * @cdkPackage test
  */
 public class CMLIOTests {
 

@@ -44,6 +44,9 @@ import java.io.*;
 import java.util.*;
 import junit.framework.*;
 
+/**
+ * @cdkPackage test
+ */
 public class FingerprinterTest extends TestCase
 {
 	

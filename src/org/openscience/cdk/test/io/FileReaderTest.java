@@ -32,6 +32,9 @@ import org.openscience.cdk.geometry.*;
 import java.util.*;
 import java.io.*;
 
+/**
+ * @cdkPackage test
+ */
 public class FileReaderTest {
 
     private org.openscience.cdk.tools.LoggingTool logger;

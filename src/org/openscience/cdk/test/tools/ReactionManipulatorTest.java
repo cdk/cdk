@@ -29,6 +29,8 @@ import org.openscience.cdk.tools.*;
 import junit.framework.*;
 
 /**
+ * @cdkPackage test
+ *
  * @author     Egon Willighagen
  * @created    2003-07-23
  */

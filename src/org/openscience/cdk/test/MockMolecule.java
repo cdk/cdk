@@ -32,9 +32,9 @@ import org.openscience.cdk.*;
 import javax.vecmath.*;
 
 /**
- *
  * TestCase for the Monomer class.
  *
+ * @cdkPackage test
  */
 class MockMolecule extends Molecule {
 	public MockMolecule () {

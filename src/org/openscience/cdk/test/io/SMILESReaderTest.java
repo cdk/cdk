@@ -35,6 +35,8 @@ import junit.framework.*;
 /**
  * TestCase for the reading MDL mol files using one test file.
  *
+ * @cdkPackage test
+ *
  * @see org.openscience.cdk.io.MDLReader
  */
 public class SMILESReaderTest extends TestCase {

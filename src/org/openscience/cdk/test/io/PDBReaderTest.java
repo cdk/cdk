@@ -37,6 +37,8 @@ import java.util.Iterator;
 /**
  * TestCase for the PDBReader class.
  *
+ * @cdkPackage test
+ *
  * @author  Edgar Luttmann <edgar@uni-paderborn.de>
  * @created 2001-08-09 				$
  *

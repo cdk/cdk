@@ -33,6 +33,8 @@ import org.openscience.cdk.*;
 /**
  * TestCase for the Monomer class.
  *
+ * @cdkPackage test
+ *
  * @author  Edgar Luttman <edgar@uni-paderborn.de>
  * @created 2001-08-09
  */

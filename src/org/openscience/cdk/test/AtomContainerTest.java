@@ -34,6 +34,8 @@ import javax.vecmath.*;
 
 /**
  * Checks the funcitonality of the AtomContainer.
+ *
+ * @cdkPackage test
  */
 public class AtomContainerTest extends TestCase {
 

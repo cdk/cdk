@@ -34,15 +34,15 @@ import org.openscience.cdk.templates.*;
 import org.openscience.cdk.ringsearch.*;
 
 import javax.vecmath.*;
-
 import java.util.*;
-
 import java.io.*;
 import java.net.URL;
 import junit.framework.*;
 
 /**
  *  Description of the Class
+ *
+ * @cdkPackage test
  *
  *@author     steinbeck
  *@created    2002-10-06

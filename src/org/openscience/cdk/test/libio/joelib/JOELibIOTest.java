@@ -34,6 +34,9 @@ import joelib.molecule.JOEBond;
 import junit.framework.*;
 import org.openscience.cdk.isomorphism.IsomorphismTester;
 
+/**
+ * @cdkPackage test
+ */
 public class JOELibIOTest extends TestCase {
 
     public JOELibIOTest(String name) {

@@ -29,6 +29,7 @@ import org.openscience.cdk.test.tools.*;
 /**
  * TestSuite that runs all the sample tests for experimental classes.
  *
+ * @cdkPackage test
  */
 public class ExperimentalClassesTests {
 

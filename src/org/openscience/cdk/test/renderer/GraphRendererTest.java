@@ -34,6 +34,7 @@ import java.awt.*;
 import javax.swing.*;
 
 /**
+ * @cdkPackage test
  *
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
  * @created 2001-07-23

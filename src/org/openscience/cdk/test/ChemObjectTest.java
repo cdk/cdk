@@ -33,6 +33,8 @@ import org.openscience.cdk.*;
 /**
  * TestCase for the ChemObject class.
  *
+ * @cdkPackage test
+ *
  * @author Edgar Luttmann <edgar@uni-paderborn.de>
  * @created 2001-08-09
  */

@@ -38,7 +38,7 @@ import java.net.URL;
 import junit.framework.*;
 
 /**
- *  Description of the Class
+ * @cdkPackage test
  *
  *@author     steinbeck
  *@created    September 19, 2003

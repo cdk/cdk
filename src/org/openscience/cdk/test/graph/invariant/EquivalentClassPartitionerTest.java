@@ -28,6 +28,8 @@ import junit.framework.*;
 
 /**
  * Checks the funcitonality of the TopologicalEquivalentClass
+ *
+ * @cdkPackage test
  */
 public class EquivalentClassPartitionerTest extends TestCase
 {

@@ -40,8 +40,9 @@ import javax.vecmath.Vector2d;
 import javax.swing.*;
 import java.awt.event.*;
 
-
-
+/**
+ * @cdkPackage test
+ */
 public class SingleStructureRandomGeneratorTest
 {
 	TestViewer testViewer = null;

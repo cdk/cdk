@@ -42,6 +42,9 @@ import java.io.*;
 import java.util.*;
 import junit.framework.*;
 
+/**
+ * @cdkPackage test
+ */
 public class UniversalIsomorphismTesterTest extends TestCase
 {
 	

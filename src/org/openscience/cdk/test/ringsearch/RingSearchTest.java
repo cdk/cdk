@@ -38,6 +38,8 @@ import junit.framework.*;
 /**
  *  This class tests the SSSRFinder class.
  *
+ * @cdkPackage test
+ *
  *@author     steinbeck
  *@created    October 17, 2003
  */

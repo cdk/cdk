@@ -41,6 +41,8 @@ import java.awt.event.*;
 /**
  * This class test the OrbitalRenderer3D
  *
+ * @cdkPackage test
+ *
  * @author     benedikta
  */
 public class OrbitalsRenderer3DTest {

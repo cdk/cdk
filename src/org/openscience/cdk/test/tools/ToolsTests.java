@@ -28,6 +28,8 @@ import junit.framework.*;
 /**
  * TestSuite that runs all the sample tests in the
  * org.openscience.cdk.tools package.
+ *
+ * @cdkPackage test
  */
 public class ToolsTests {
 

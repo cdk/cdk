@@ -43,6 +43,8 @@ import java.awt.event.*;
  * This application takes a XYZ, CML or MDL mol file, calculates
  * orbitals and displays them using Java3D.
  *
+ * @cdkPackage test
+ *
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
  * @created 2001-06-09
  *

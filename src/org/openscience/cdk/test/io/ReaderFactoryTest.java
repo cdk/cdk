@@ -40,6 +40,8 @@ import java.util.Iterator;
  * TestCase for the reading CML files using a few test files
  * in data/cmltest as found in the Jmol distribution
  * (http://jmol.sf.org/).
+ *
+ * @cdkPackage test
  */
 public class ReaderFactoryTest extends TestCase {
 

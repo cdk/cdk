@@ -33,6 +33,8 @@ import javax.vecmath.*;
 /**
  * Checks the funcitonality of the Molecule class.
  *
+ * @cdkPackage test
+ *
  * @see org.openscience.cdk.Molecule
  */
 public class MoleculeTest extends TestCase {

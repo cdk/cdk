@@ -32,9 +32,9 @@ import junit.framework.*;
 import org.openscience.cdk.*;
 
 /**
- *
  * TestCase for the Polymer class.
  *
+ * @cdkPackage test
  */
 public class PolymerTest extends TestCase {
 

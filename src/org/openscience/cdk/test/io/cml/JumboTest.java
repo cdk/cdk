@@ -39,6 +39,8 @@ import java.util.Iterator;
  * TestCase for the reading CML files using a few test files
  * in data/cmltest as found in the original Jumbo3 release
  * (http://www.xml-cml.org/).
+ *
+ * @cdkPackage test
  */
 public class JumboTest extends TestCase {
 

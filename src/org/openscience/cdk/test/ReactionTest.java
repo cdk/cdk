@@ -31,7 +31,9 @@ import junit.framework.*;
 import org.openscience.cdk.*;
 
 /**
- * TestCase for the Monomer class.
+ * TestCase for the Reaction class.
+ *
+ * @cdkPackage test
  *
  * @author  Edgar Luttman <edgar@uni-paderborn.de>
  * @created 2001-08-09

@@ -32,6 +32,8 @@ import javax.vecmath.*;
 
 /**
  * Checks the functionality of the AtomTypeFactory
+ *
+ * @cdkPackage test
  */
 public class PseudoAtomTest extends TestCase {
 

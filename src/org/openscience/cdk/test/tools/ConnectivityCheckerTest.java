@@ -33,6 +33,8 @@ import junit.framework.*;
 /**
  *  Checks the functionality of the ConnectivityChecker
  *
+ * @cdkPackage test
+ *
  * @author     steinbeck
  * @created    2001-07-24
  */

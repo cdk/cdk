@@ -39,6 +39,9 @@ import javax.vecmath.Vector2d;
 import javax.vecmath.Point2d;
 import junit.framework.*;
 
+/**
+ * @cdkPackage test
+ */
 public class HydrogenPlacerTest extends TestCase {
     
     public boolean standAlone = false;

@@ -32,6 +32,8 @@ import javax.vecmath.*;
 /**
  * Checks the functionality of the Association class.
  *
+ * @cdkPackage test
+ *
  * @see org.openscience.cdk.Association
  */
 public class AssociationTest extends TestCase {

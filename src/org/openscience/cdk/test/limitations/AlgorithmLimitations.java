@@ -21,7 +21,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-
 package org.openscience.cdk.test.limitations;
 
 import junit.framework.*;
@@ -30,6 +29,8 @@ import org.openscience.cdk.test.limitations.tools.*;
 /**
  * TestSuite that runs all JUnit tests that fail bacause of limitations of
  * certain algorithms.
+ *
+ * @cdkPackage test
  */
 public class AlgorithmLimitations {
     

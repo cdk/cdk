@@ -44,6 +44,8 @@ import java.awt.*;
 import junit.framework.*;
 
 /**
+ * @cdkPackage test
+ *
  * @author     Egon Willighagen
  * @created    2004-01-08
  */

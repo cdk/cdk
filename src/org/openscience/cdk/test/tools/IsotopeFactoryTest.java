@@ -31,6 +31,8 @@ import junit.framework.*;
 
 /**
  * Checks the funcitonality of the IsotopeFactory
+ *
+ * @cdkPackage test
  */
 public class IsotopeFactoryTest extends TestCase
 {

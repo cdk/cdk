@@ -35,7 +35,9 @@ import java.net.URL;
 import javax.swing.*;
 import java.awt.*;
 
-
+/**
+ * @cdkPackage test
+ */
 public class Renderer2DTest extends JPanel
 {
 	MDLReader mr;

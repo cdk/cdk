@@ -46,6 +46,8 @@ import junit.framework.*;
  * Tests CDK's hydrogen adding capabilities in terms of
  * example molecules.
  *
+ * @cdkPackage test
+ *
  * @author     egonw
  * @created    2003-06-18
  */

@@ -32,6 +32,8 @@ import javax.vecmath.*;
 
 /**
  * Checks the funcitonality of the Crystal.
+ *
+ * @cdkPackage test
  */
 public class CrystalTest extends TestCase {
 

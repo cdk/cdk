@@ -36,6 +36,9 @@ import java.net.URL;
 import javax.vecmath.Vector2d;
 import junit.framework.*;
 
+/**
+ * @cdkPackage test
+ */
 public class RandomStructureGeneratorTest extends TestCase
 {
 	public boolean debug = false;
