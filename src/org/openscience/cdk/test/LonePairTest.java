@@ -70,6 +70,22 @@ public class LonePairTest extends TestCase {
         assertTrue(lp.getAtom().compare(atom));
     }
     
+    public void testClone() {
+        LonePair lp = new LonePair();
+        Object clone = lp.clone();
+        assertTrue(clone instanceof LonePair);
+    }
+    
+    public void testClone_Atom() {
+        Atom atom = new Atom("N");
+        LonePair lp = new LonePair();
+        lp.setAtom(atom);
+        
+        // test cloning of atom
+        LonePair clone = (LonePair)lp.clone();
+        assertNotSame(atom, clone.getAtom());
+    }
+    
     /** Test for RFC #9 */
     public void testToString() {
         LonePair lp = new LonePair();

@@ -101,6 +101,26 @@ public class LonePair extends ElectronContainer implements java.io.Serializable,
         return (this.atom == atom) ? true : false;
     }
 
+	/**
+	 * Clones this bond object, including clones of the atoms between which the
+     * bond is defined.
+	 *
+	 * @return    The cloned object
+	 */
+	public Object clone() {
+		LonePair clone = null;
+		try {
+			clone = (LonePair) super.clone();
+		} catch (Exception e) {
+			e.printStackTrace(System.err);
+		}
+        // clone the Atom
+        if (atom != null) {
+		    clone.atom = (Atom)atom.clone(); 
+        }
+		return clone;
+	}
+
     /**
      * Returns a one line string representation of this Container.
      * This method is conform RFC #9.

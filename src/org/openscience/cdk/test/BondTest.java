@@ -197,6 +197,39 @@ public class BondTest extends TestCase {
         assertTrue(clone instanceof Bond);
     }
 
+    public void testClone_Atom() {
+        Atom atom1 = new Atom("C");
+        Atom atom2 = new Atom("O");
+        Bond bond = new Bond(atom1, atom2);
+        Bond clone = (Bond)bond.clone();
+        
+        // test cloning of atoms
+        assertNotSame(atom1, clone.getAtomAt(0));
+        assertNotSame(atom2, clone.getAtomAt(1));
+    }
+
+    public void testClone_Order() {
+        Atom atom1 = new Atom("C");
+        Atom atom2 = new Atom("O");
+        Bond bond = new Bond(atom1, atom2, 1.0);
+        Bond clone = (Bond)bond.clone();
+        
+        // test cloning of bond order
+        bond.setOrder(2.0);
+        assertEquals(1.0, clone.getOrder(), 0.01);
+    }
+
+    public void testClone_Stereo() {
+        Atom atom1 = new Atom("C");
+        Atom atom2 = new Atom("O");
+        Bond bond = new Bond(atom1, atom2, 1.0, 1);
+        Bond clone = (Bond)bond.clone();
+        
+        // test cloning of bond order
+        bond.setStereo(2);
+        assertEquals(1, clone.getStereo());
+    }
+
     /** Test for RFC #9 */
     public void testToString() {
         Bond bond = new Bond();

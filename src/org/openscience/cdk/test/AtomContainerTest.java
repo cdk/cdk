@@ -75,7 +75,43 @@ public class AtomContainerTest extends TestCase {
      * Only test wether the atoms are correctly cloned.
      */
 	public void testClone() {
+        AtomContainer molecule = new AtomContainer();
+        Object clone = molecule.clone();
+        assertTrue(clone instanceof AtomContainer);
+    }    
+        
+    public void testClone_Atom() {
+		AtomContainer molecule = new AtomContainer();
+		molecule.addAtom(new Atom("C")); // 1
+		molecule.addAtom(new Atom("C")); // 2
+		molecule.addAtom(new Atom("C")); // 3
+		molecule.addAtom(new Atom("C")); // 4
+
+		AtomContainer clonedMol = (AtomContainer)molecule.clone();
+		assertEquals(molecule.getAtomCount(), clonedMol.getAtomCount());
+		for (int f = 0; f < molecule.getAtomCount(); f++) {
+			for (int g = 0; g < clonedMol.getAtomCount(); g++) {
+				assertNotNull(molecule.getAtomAt(f));
+				assertNotNull(clonedMol.getAtomAt(g));
+				assertNotSame(molecule.getAtomAt(f), clonedMol.getAtomAt(g));
+			}
+		}        
+    }
+    
+	public void testClone_Atom2() {
 		Molecule molecule = new Molecule();
+        Atom carbon = new Atom("C");
+        carbon.setPoint2d(new Point2d(2, 4));
+		molecule.addAtom(carbon); // 1
+
+        // test cloning of Atoms
+		Molecule clonedMol = (Molecule)molecule.clone();
+        carbon.setPoint2d(new Point2d(3, 1));
+		assertEquals(clonedMol.getAtomAt(0).getX2d(), 2.0, 0.001);
+	}
+
+    public void testClone_Bond() {
+		AtomContainer molecule = new AtomContainer();
 		molecule.addAtom(new Atom("C")); // 1
 		molecule.addAtom(new Atom("C")); // 2
 		molecule.addAtom(new Atom("C")); // 3
@@ -84,26 +120,43 @@ public class AtomContainerTest extends TestCase {
 		molecule.addBond(0, 1, 2.0); // 1
 		molecule.addBond(1, 2, 1.0); // 2
 		molecule.addBond(2, 3, 1.0); // 3
-		Molecule clonedMol = (Molecule)molecule.clone();
-		assertTrue(molecule.getAtomCount() == clonedMol.getAtomCount());
-		for (int f = 0; f < molecule.getAtomCount(); f++) {
-			for (int g = 0; g < clonedMol.getAtomCount(); g++) {
-				assertNotNull(molecule.getAtomAt(f));
-				assertNotNull(clonedMol.getAtomAt(g));
-				assertTrue(molecule.getAtomAt(f) != clonedMol.getAtomAt(g));
+		AtomContainer clonedMol = (AtomContainer)molecule.clone();
+		assertEquals(molecule.getElectronContainerCount(), clonedMol.getElectronContainerCount());
+		for (int f = 0; f < molecule.getElectronContainerCount(); f++) {
+			for (int g = 0; g < clonedMol.getElectronContainerCount(); g++) {
+				assertNotNull(molecule.getElectronContainerAt(f));
+				assertNotNull(clonedMol.getElectronContainerAt(g));
+				assertNotSame(molecule.getElectronContainerAt(f), clonedMol.getElectronContainerAt(g));
 			}
 		}
 	}
 
-	public void testClone2() {
-		Molecule molecule = new Molecule();
-        Atom carbon = new Atom("C");
-        carbon.setPoint2d(new Point2d(2, 4));
-		molecule.addAtom(carbon); // 1
+    public void testClone_Bond2() {
+		AtomContainer molecule = new AtomContainer();
+        Atom atom1 = new Atom("C");
+        Atom atom2 = new Atom("C");
+		molecule.addAtom(atom1); // 1
+		molecule.addAtom(atom2); // 2
+		molecule.addBond(new Bond(atom1, atom2, 2.0)); // 1
+        
+        // test cloning of atoms in bonds
+		AtomContainer clonedMol = (AtomContainer)molecule.clone();
+        assertNotSame(atom1, clonedMol.getBondAt(0).getAtomAt(0));
+        assertNotSame(atom2, clonedMol.getBondAt(0).getAtomAt(1));
+	}
 
-		Molecule clonedMol = (Molecule)molecule.clone();
-        carbon.setPoint2d(new Point2d(3, 1));
-		assertEquals(clonedMol.getAtomAt(0).getX2d(), 2.0, 0.001);
+    public void testClone_Bond3() {
+		AtomContainer molecule = new AtomContainer();
+        Atom atom1 = new Atom("C");
+        Atom atom2 = new Atom("C");
+		molecule.addAtom(atom1); // 1
+		molecule.addAtom(atom2); // 2
+		molecule.addBond(new Bond(atom1, atom2, 2.0)); // 1
+        
+        // test that cloned bonds contain atoms from cloned atomcontainer
+		AtomContainer clonedMol = (AtomContainer)molecule.clone();
+        assertTrue(clonedMol.contains(clonedMol.getBondAt(0).getAtomAt(0)));
+        assertTrue(clonedMol.contains(clonedMol.getBondAt(0).getAtomAt(1)));
 	}
 
     public void testGetConnectedElectronContainers() {

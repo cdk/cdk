@@ -1258,55 +1258,46 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	 * @return    The cloned object
 	 * @see       #shallowCopy
 	 */
-	public Object clone()
-	{
+	public Object clone() {
 		AtomContainer clone = null;
 		ElectronContainer electronContainer = null;
 		ElectronContainer newEC = null;
 		Atom[] natoms;
 		Atom[] newAtoms;
-		try
-		{
+		try {
 			clone = (AtomContainer) super.clone();
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace(System.err);
 		}
+        // start from scratch
 		clone.removeAllElements();
-		for (int f = 0; f < getAtomCount(); f++)
-		{
+        // clone all atoms
+		for (int f = 0; f < getAtomCount(); f++) {
 			clone.addAtom((Atom) getAtomAt(f).clone());
 		}
-		for (int f = 0; f < getElectronContainerCount(); f++)
-		{
+        // clone the electronContainer
+		for (int f = 0; f < getElectronContainerCount(); f++) {
 			electronContainer = this.getElectronContainerAt(f);
 			newEC = new ElectronContainer();
-			if (electronContainer instanceof Bond)
-			{
+			if (electronContainer instanceof Bond) {
 				Bond bond = (Bond) electronContainer;
-				newEC = new Bond();
+				newEC = (ElectronContainer)bond.clone();
 				natoms = bond.getAtoms();
 				newAtoms = new Atom[natoms.length];
-				for (int g = 0; g < natoms.length; g++)
-				{
-					try
-					{
+				for (int g = 0; g < natoms.length; g++) {
+					try {
 						newAtoms[g] = clone.getAtomAt(getAtomNumber(natoms[g]));
-					} catch (Exception exc)
-					{
+					} catch (Exception exc) {
 						System.out.println("natoms[g]: " + natoms[g]);
 						exc.printStackTrace();
 					}
 				}
 				((Bond) newEC).setAtoms(newAtoms);
-				((Bond) newEC).setOrder(bond.getOrder());
-			} else if (electronContainer instanceof LonePair)
-			{
+			} else if (electronContainer instanceof LonePair) {
 				Atom atom = ((LonePair) electronContainer).getAtom();
-				newEC = new LonePair();
-				((LonePair) newEC).setAtom(atom);
-			} else
-			{
+				newEC = (LonePair)electronContainer.clone();
+				((LonePair) newEC).setAtom(clone.getAtomAt(getAtomNumber(atom)));
+			} else {
 				System.out.println("Expecting EC, got: " + electronContainer.getClass().getName());
 				newEC = (ElectronContainer) electronContainer.clone();
 			}
