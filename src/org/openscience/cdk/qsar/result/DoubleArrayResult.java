@@ -45,6 +45,9 @@ public class DoubleArrayResult implements DescriptorResult {
         array.add(new Double(value));
     }
     
+    /**
+     * The first double is at index = 0;
+     */
     public double get(int index) {
         return ((Double)this.array.get(index)).doubleValue();
     }
