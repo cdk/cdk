@@ -69,6 +69,7 @@ import org.openscience.cdk.test.qsar.*;
 	suite.addTest(XLogPDescriptorTest.suite());
         suite.addTest(DescriptorEngineTest.suite());
 	suite.addTest(RuleOfFiveDescriptorTest.suite());
+	suite.addTest(RDFProtonDescriptorTest.suite());
 	return suite;
     }
     
