@@ -65,14 +65,15 @@ public class RingSearchTest
 			chemModel = chemSequence.getChemModel(0);
 			setOfMolecules = chemModel.getSetOfMolecules(0);
 			molecule = setOfMolecules.getMolecule(0);
-//			start = System.currentTimeMillis();
-//			for (int i = 0; i < 500; i++)
-//			{
-//				ringSet = sssrf.findSSSR(molecule);
-//			}
-//			end = System.currentTimeMillis();
-//			System.out.println(SwissArmyKnife.getDuration((long)((end-start)/500)));
-//			System.exit(0);
+			start = System.currentTimeMillis();
+			for (int i = 0; i < 5000; i++)
+			{
+				ringSet = sssrf.findSSSR(molecule);
+			}
+			end = System.currentTimeMillis();
+			System.out.println(ringSet.size() + " Rings in " + inFile);
+			System.out.println(SwissArmyKnife.getDuration((long)((end-start)/5000)));
+			System.exit(0);
 //			System.out.println("number of rings found  "+ringSet.size());
 //			for (int i = 0; i < ringSet.size(); i++)
 //			{

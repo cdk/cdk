@@ -46,7 +46,7 @@ public class Atom extends ChemObject implements Cloneable {
 	 */
 	protected javax.vecmath.Point2d point2D;
 	/**
-	 *  A 2D point specifying the location of this atom in a 3D coordinate 
+	 *  A 3 point specifying the location of this atom in a 3D coordinate 
 	 *  space 
 	 */
 	protected javax.vecmath.Point3d point3D;
@@ -156,7 +156,6 @@ public class Atom extends ChemObject implements Cloneable {
 		return this.hydrogenCount;
 	}
 	/**
-	 *  
 	 * Returns a point specifying the location of this
 	 * atom in a 2D space
 	 *
@@ -166,7 +165,6 @@ public class Atom extends ChemObject implements Cloneable {
 		return this.point2D;
 	}
 	/**
-	 *  
 	 * Returns a point specifying the location of this
 	 * atom in a 3D space
 	 *
@@ -175,6 +173,137 @@ public class Atom extends ChemObject implements Cloneable {
 	public javax.vecmath.Point3d getPoint3D() {
 		return this.point3D;
 	}
+	
+
+	/**
+	 * Returns the x coordinate for of the 2D location of this atom.
+	 * You should know your context here. There is no guarantee that point2D and point3D 
+	 * contain consistent information. Both are handled independently.
+	 *
+	 * @return the x coordinate for of the 2D location of this atom     
+	 */
+	public double getX2D()
+	{
+		return point2D.x;
+	}
+	
+
+	/**
+	 * Returns the y coordinate for of the 2D location of this atom.
+	 * You should know your context here. There is no guarantee that point2D and point3D 
+	 * contain consistent information. Both are handled independently.
+	 *
+	 * @return the y coordinate for of the 2D location of this atom     
+	 */
+	public double getY2D()
+	{
+		return point2D.y;
+	}
+	
+
+	/**
+	 * Returns the x coordinate for of the 3D location of this atom.
+	 * You should know your context here. There is no guarantee that point2D and point3D 
+	 * contain consistent information. Both are handled independently.
+	 *
+	 * @return the x coordinate for of the 3D location of this atom     
+	 */
+	public double getX3D()
+	{
+		return point3D.x;
+	}
+	
+
+	/**
+	 * Returns the y coordinate for of the 3D location of this atom.
+	 * You should know your context here. There is no guarantee that point2D and point3D 
+	 * contain consistent information. Both are handled independently.
+	 *
+	 * @return the y coordinate for of the 3D location of this atom     
+	 */
+	public double getY3D()
+	{
+		return point3D.y;
+	}
+	
+	/**
+	 * Returns the z coordinate for of the 3D location of this atom.
+	 * You should know your context here. There is no guarantee that point2D and point3D 
+	 * contain consistent information. Both are handled independently.
+	 *
+	 * @return the z coordinate for of the 3D location of this atom     
+	 */
+
+	public double getZ3D()
+	{
+		return point3D.z;
+	}
+	
+
+	/**
+	 * Sets the x coordinate for of the 2D location of this atom.
+	 * You should know your context here. There is no guarantee that point2D and point3D 
+	 * contain consistent information. Both are handled independently.
+     *
+	 * @param   x  the new x coordinate for of the 2D location of this atom
+	 */
+	public void setX2D(double x)
+	{
+		point2D.x = x;
+	}
+	
+
+	/**
+	 * Sets the y coordinate for of the 2D location of this atom.
+	 * You should know your context here. There is no guarantee that point2D and point3D 
+	 * contain consistent information. Both are handled independently.
+	 *
+	 * @param   y  the new y coordinate for of the 2D location of this atom
+	 */
+	public void setY2D(double y)
+	{
+		point2D.y = y;
+	}
+
+
+	/**
+	 * Sets the x coordinate for of the 3D location of this atom.
+	 * You should know your context here. There is no guarantee that point2D and point3D 
+	 * contain consistent information. Both are handled independently.
+	 *
+	 * @param   x  the new x coordinate for of the 3D location of this atom
+	 */
+	public void setX3D(double x)
+	{
+		point3D.x = x;
+	}
+
+
+	/**
+	 * Sets the y coordinate for of the 3D location of this atom.
+	 * You should know your context here. There is no guarantee that point2D and point3D 
+	 * contain consistent information. Both are handled independently.
+	 *
+	 * @param   y  the new y coordinate for of the 3D location of this atom
+	 */
+	public void setY3D(double y)
+	{
+		point3D.y = y;
+	}
+
+
+	/**
+	 * Sets the z coordinate for of the 3D location of this atom.
+	 * You should know your context here. There is no guarantee that point2D and point3D 
+	 * contain consistent information. Both are handled independently.
+	 *
+	 * @param   z  the new z coordinate for of the 3D location of this atom
+	 */
+	public void setZ3D(double z)
+	{
+		point3D.z = z;
+	}
+	
 	/**
 	 *  Returns the stereo parity of this atom 
 	 *

@@ -35,5 +35,4 @@ public interface Renderer2DSettings
 	double bondWidth = 2;
 	
 	double bondDistance = 6;
-
 }

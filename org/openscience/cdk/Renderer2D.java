@@ -36,8 +36,6 @@ public class Renderer2D implements Renderer2DSettings
 {
 	Graphics g;
 	SSSRFinder sssrf = new SSSRFinder();
-	
-	
 
 	/**
 	 * Constructs a Renderer2D with a graphics object.
