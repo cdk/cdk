@@ -25,6 +25,8 @@
 package org.openscience.cdk.test.smiles;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
@@ -47,6 +49,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.IsotopeFactory;
 import org.openscience.cdk.tools.MFAnalyser;
+import org.openscience.cdk.io.MDLReader;
 
 /**
  *@author        steinbeck
@@ -744,7 +747,35 @@ public class SmilesGeneratorTest extends TestCase
     }
     
 
-	/**
+    /**
+     * Test generation of a d and l alanin
+     */
+    public void testAlaSMILES() {
+      try{
+        String filename = "data/mdl/l-ala.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLReader reader = new MDLReader(new InputStreamReader(ins));
+				Molecule mol1 = (Molecule) reader.read(new Molecule());
+        new HydrogenAdder().addExplicitHydrogensToSatisfyValency(mol1);
+        new HydrogenPlacer().placeHydrogens2D(mol1, 1.0);
+        filename = "data/mdl/d-ala.mol";
+        ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        reader = new MDLReader(new InputStreamReader(ins));
+				Molecule mol2 = (Molecule) reader.read(new Molecule());
+        new HydrogenAdder().addExplicitHydrogensToSatisfyValency(mol2);
+        new HydrogenPlacer().placeHydrogens2D(mol2, 1.0);
+        SmilesGenerator sg=new SmilesGenerator();
+        String smiles1=sg.createChiralSMILES(mol1,new boolean[20]);
+        String smiles2=sg.createChiralSMILES(mol2,new boolean[20]);
+        System.err.println(smiles1+"_______"+smiles2);
+        assertFalse(smiles1.equals(smiles2));
+      } catch (Exception exc) {
+        System.out.println(exc);
+      }
+    }
+
+    
+    /**
 	 *  Description of the Method
 	 *
 	 *@param  molecule  Description of the Parameter
