@@ -49,13 +49,13 @@ public class IsProtonInAromaticSystemDescriptorTest extends TestCase {
 	
 	public void testIsProtonInAromaticSystemDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		Descriptor descriptor = new IsProtonInAromaticSystemDescriptor();
-		Object[] params = {new Integer(0), new Boolean(false)};
+		Object[] params = {new Integer(13), new Boolean(true)};
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("Cc1ccccc1"); 
+		Molecule mol = sp.parseSmiles("Oc1cc(OC)c(cc1Br)Br"); 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
-		assertFalse(((Boolean)descriptor.calculate(mol)).booleanValue());
+		assertEquals(2, ((Integer)descriptor.calculate(mol)).intValue());
 	}
 }
 

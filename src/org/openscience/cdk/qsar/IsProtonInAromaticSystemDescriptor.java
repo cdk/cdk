@@ -31,13 +31,12 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.RingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
-import org.openscience.cdk.tools.HydrogenAdder;
-import java.util.Map;
-import java.util.Hashtable;
 import org.openscience.cdk.Molecule;
 
 /**
- *  This descriptor returns true if the protons of an heavy bond 
+ *  This descriptor returns 1 if the protons is directly bonded to an aromatic system,
+ *  it returns 2 if the distance between aromatic system and proton is 2 bonds, 
+ *  and it return 0 for other positions. It is needed to use addExplicitHydrogensToSatisfyValency method.
  *
  * @author      mfe4
  * @cdk.created 2004-11-03
@@ -109,7 +108,7 @@ public class IsProtonInAromaticSystemDescriptor implements Descriptor {
 
 
 	/**
-	 *  The method is a proton descriptor that evaluate if protons of a given atom are bonded to an aromatic system.
+	 *  The method is a proton descriptor that evaluate if a proton is bonded to an aromatic system or if there is distance of 2 bonds.
 	 *  It is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
 	 *
 	 *@param  ac                AtomContainer
@@ -117,30 +116,36 @@ public class IsProtonInAromaticSystemDescriptor implements Descriptor {
 	 *@exception  CDKException  Possible Exceptions
 	 */
 	public Object calculate(AtomContainer ac) throws CDKException {
-		boolean isProtonInAromaticSystem = false;
-		int counter = 0;
+		int isProtonInAromaticSystem = 0;
 		Molecule mol = new Molecule(ac);
 		if (checkAromaticity) {
 			RingSet rs = (new AllRingsFinder()).findAllRings(mol);
 			HueckelAromaticityDetector.detectAromaticity(mol, rs, true);
 		}
-		if (mol.getAtomAt(atomPosition).getFlag(CDKConstants.ISAROMATIC)) {
-			Atom[] neighboors = mol.getConnectedAtoms(mol.getAtomAt(atomPosition));
-			for (int i = 0; i < neighboors.length; i++) {
-				if (neighboors[i].getSymbol().equals("H")) {
-					counter += 1;
-				} else if (mol.getAtomAt(atomPosition).getHydrogenCount() > 0) {
-					counter += mol.getAtomAt(atomPosition).getHydrogenCount();
-				} else {
-					counter += 0;
+		Atom[] neighboor = mol.getConnectedAtoms(mol.getAtomAt(atomPosition));
+		Atom target = ac.getAtomAt(atomPosition);
+		System.out.println("target is "+target.getSymbol());
+		if(target.getSymbol().equals("H")) {
+			System.out.println("aromatic proton");
+			if(neighboor[0].getFlag(CDKConstants.ISAROMATIC)) {
+				isProtonInAromaticSystem = 1;
+			}
+			else {
+				Atom[] betaAtoms = ac.getConnectedAtoms(neighboor[0]);
+				for (int i = 0; i < betaAtoms.length; i++) {
+					if(betaAtoms[0].getFlag(CDKConstants.ISAROMATIC)) {
+						isProtonInAromaticSystem = 2;
+					}
+					else {
+						isProtonInAromaticSystem = 0;
+					}
 				}
 			}
 		}
-		if (counter > 0) {
-			isProtonInAromaticSystem = true;
+		else {
+			isProtonInAromaticSystem = 0;
 		}
-		return new Boolean(isProtonInAromaticSystem);
-	
+		return new Integer(isProtonInAromaticSystem);	
 	}
 
 
