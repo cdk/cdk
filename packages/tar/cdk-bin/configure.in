@@ -72,15 +72,20 @@ for d in "/usr/lib/j2re1.3/lib"
 do
     if test -f "$d/rt.jar"
     then
-        AC_MSG_RESULT("$d/rt.jar")
         PATHTORTJAR="$d/rt.jar"
     fi
 done
+if test "x$PATHTORTJAR" = "x"
+then
+    AC_MSG_RESULT(no)
+else
+    AC_MSG_RESULT($PATHTORTJAR)
+fi
 AC_SUBST(PATHTORTJAR)
 
 AC_MSG_CHECKING(for Java3D lib)
 if test -f "$JAVA3DDIR/lib/ext/j3dcore.jar"
-    AC_MSG_RESULT("$JAVA3DDIR/lib/ext/j3dcore.jar")
+    AC_MSG_RESULT($JAVA3DDIR/lib/ext/j3dcore.jar)
     PATHTO3DJAR="$JAVA3DDIR/lib/ext/j3dcore.jar:$JAVA3DDIR/lib/ext/j3dutils.jar:$JAVA3DDIR/lib/ext/vecmath.jar"
 then
     if test "x$prefix" = xNONE
@@ -98,7 +103,7 @@ then
     do
         if test -f "$d/j3dcore.jar"
         then 
-            AC_MSG_RESULT("$d/j3dcore.jar")
+            AC_MSG_RESULT($d/j3dcore.jar)
             PATHTO3DJAR="$d/j3dcore.jar:$d/j3dutils.jar:$d/vecmath.jar"
         fi
     done
@@ -115,7 +120,7 @@ do
 done
 if test "x$PATHTOLOGJAVA" = "x"
 then
-    AC_MSG_RESULT("no")
+    AC_MSG_RESULT(no)
 else
     AC_MSG_RESULT($PATHTOLOGJAVA)
 fi
@@ -135,7 +140,7 @@ do
 done
 if test "x$PATHTOXERCES" = "x"
 then
-    AC_MSG_RESULT("no")
+    AC_MSG_RESULT(no)
 else
     AC_MSG_RESULT($PATHTOXERCES)
 fi
