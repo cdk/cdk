@@ -6,10 +6,12 @@ Changes in CVS
 New:
 * Added a JPanel of the periodic table
 * Added a reader and writer for Hyperchem HIN files
+* Added Ant doc.xml build file for converting documentation to HTML
 
 Fixes:
 * cdk-* shell wrapper now accept -X java options (closes #882990)
 * Refactored build process (closes #883519)
+* Fixed rendering of stereo bonds in rings (closes #884935)
 
 API changes:
 * Moved a number of Swing based classes to cdk.applications.swing (addresses #847584)

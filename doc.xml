@@ -1,0 +1,47 @@
+<project name="CDK Documentation" default="doc" basedir=".">
+
+    <property name="build.dir" value="build" />
+    <property name="doc.dir" value="doc" />
+    <property name="docbook-xsl" value="docbook-xsl-1.61.2" />
+    <property name="docbook.dir" value="${build.dir}/${docbook-xsl}" />
+
+    <target id="init" name="init">
+        <tstamp />
+        <mkdir dir="${build.dir}" />
+        <uptodate property="userGuide.uptodate" targetfile="${build.dir}/${doc.dir}/UserGuide/index.html">
+            <srcfiles dir="${doc.dir}/user-guide" includes="*.xml" />
+        </uptodate>
+        <uptodate property="docbook-xsl.uptodate"
+	        targetfile="${build.dir}/${docbook-xsl}"
+	        srcfile="${doc.dir}/${docbook-xsl}.tar.gz" />
+    </target>
+
+    <target name="initdoc" depends="check.docbook" />
+  
+    <target name="check.docbook" depends="init" unless="docbook-xsl.uptodate" >
+        <delete dir="${build.dir}/${docbook-xsl}" />
+        <mkdir dir="${build.dir}/${docbook-xsl}" />
+        <untar src="${doc.dir}/${docbook-xsl}.tar.gz" dest="${build.dir}"
+            compression="gzip" />
+    </target>
+
+    <target name="userGuide" id="userGuide" depends="initdoc" unless="userGuide.uptodate" >
+        <echo message="Generating UserGuide" />
+        <mkdir dir="${build.dir}/${doc.dir}/UserGuide" />
+        <xslt basedir="${doc.dir}/user-guide"
+              includes="guide.xml" 
+              destdir="${build.dir}/${doc.dir}/UserGuide" 
+              style="${docbook.dir}/html/chunk.xsl"/>
+    </target>
+
+    <target id="doc" name="doc" depends="userGuide"/>
+    
+    <target id="clean" name="clean" description="Removes files and dirs that can be restored by other tasks">
+        <delete dir="${build.dir}/${doc.dir}" />
+        <delete dir="${build.dir}/${docbook-xsl}" />
+    </target>
+
+</project>
+
+
+
