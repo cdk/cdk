@@ -99,7 +99,7 @@
           "Homesteading the Noosphere") on the foundations of the open-source idea, 
           that are highly recommended reading, were written by Eric S: Raymond and 
           can be found on http://www.tuxedo.org. Further, http://www.opensource.org  
-          is a web site completely dedicated to evangelizing the open-source 
+          is a web site completely dedicated to evangelizing the open-source
           idea.</bibtex:note>
     </bibtex:misc>
   </bibtex:entry>
@@ -127,6 +127,55 @@
       <bibtex:keywords>information</bibtex:keywords>
       <bibtex:year>1999</bibtex:year>
     </bibtex:article>
+  </bibtex:entry>
+
+  <bibtex:entry id="STE2001">
+    <bibtex:article>
+      <bibtex:author>Steinbeck, C.</bibtex:author>
+      <bibtex:title>SENECA: A platform-independent, distributed, and parallel system
+          for computer-assisted structure elucidation in organic chemistry</bibtex:title>
+      <bibtex:journal>Journal of Chemical Information &amp; Computer
+          Sciences</bibtex:journal>
+      <bibtex:volume>41</bibtex:volume>
+      <bibtex:number>6</bibtex:number>
+      <bibtex:pages>1500-1507</bibtex:pages>
+      <bibtex:abstract>The program package SENECA for Computer-Assisted Structure
+          Elucidation (CASE) of organic molecules is described.SENECA is written
+          completely in the programming language Java and divided into a server, a client,
+          and a gatekeeper part.While the client allows for input of spectroscopic
+          information, the server part performs the actual structure elucidation by
+          stochastically walking through constitution space while optimizing the molecule
+          toward agreement with given spectral properties.The convergence is guided by
+          simulated annealing.The gatekeeper administers a list of server processes, which
+          can be retrieved by the client.The package is completely platform-independent
+          and its server part can be distributed over the Internet or an intranet using a
+          heterogeneous network of almost any number and type of computers, thus allowing
+          for parallel CASE computations on ordinary networks, present in almost any
+          institution.[References: 23]</bibtex:abstract>
+      <bibtex:keywords>Chemical-structure,Natural-products,Spectroscopy,Molecules,Search.,
+          Chemistry in Current Contents(R)/Physical, Chemical &amp; Earth,Sciences.</bibtex:keywords>
+      <bibtex:year>2001</bibtex:year>
+    </bibtex:article>
+  </bibtex:entry>
+
+  <bibtex:entry id="STE2002">
+    <bibtex:unpublished>
+      <bibtex:author>Steinbeck, C. and Kuhn, S. and Krause, S.</bibtex:author>
+      <bibtex:title>NMRShiftDB - An open-source, open-content web database for organic 
+          molecular structures and their NMR data.</bibtex:title>
+      <bibtex:year>2002</bibtex:year>
+      <bibtex:note>In preperation.</bibtex:note>
+    </bibtex:unpublished>
+  </bibtex:entry>
+
+  <bibtex:entry>
+    <bibtex:book>
+      <bibtex:author>Trinijastic, N.</bibtex:author>
+      <bibtex:title>Chemical Graph Theory</bibtex:title>
+      <bibtex:publisher>CRC Press</bibtex:publisher>
+      <bibtex:year>1992</bibtex:year>
+      <bibtex:isbn>0-8493-4256-2</bibtex:isbn>
+    </bibtex:book>
   </bibtex:entry>
 
   <bibtex:entry id="WEI88">
