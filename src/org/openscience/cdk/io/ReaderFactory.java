@@ -184,7 +184,8 @@ public class ReaderFactory {
                        line.startsWith("TITL ")) {
                 logger.info("ShelX format detected");
                 return new org.openscience.cdk.io.ShelXReader(originalBuffer);
-            } else if (lineNumber == 4) { 
+            } else if (lineNumber == 4 && line.length()>7) {
+                // possibly a MDL mol file
                 try {
                     String atomCountString = line.substring(0, 3).trim();
                     String bondCountString = line.substring(3, 6).trim();
