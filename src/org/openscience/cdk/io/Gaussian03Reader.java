@@ -308,12 +308,13 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
                 Vibration vib = new Vibration(Double.toString(token.nval));
                 currentVibs.addElement(vib);
             }
-            line = input.readLine();
-            line = input.readLine();
-            line = input.readLine();
-            line = input.readLine();
-            line = input.readLine();
-            line = input.readLine();
+            line = input.readLine(); // skip "Red. masses"
+            line = input.readLine(); // skip "Rfc consts"
+            line = input.readLine(); // skip "IR Inten"
+            while (!line.startsWith(" Atom AN")) {
+                // skip all lines upto and including the " Atom AN" line
+                line = input.readLine(); // skip
+            }
             for (int i = 0; i < frame.getAtomCount(); ++i) {
                 line = input.readLine();
                 StringReader vectorRead = new StringReader(line);
