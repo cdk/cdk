@@ -69,7 +69,6 @@ public class Renderer2DTest extends JPanel
 			LayoutTools.translateAllPositive(molecule);
 			LayoutTools.scaleMolecule(molecule, getPreferredSize(), 0.8);			
 			LayoutTools.center(molecule, getPreferredSize());
-			
 		}
 		catch(Exception exc)
 		{

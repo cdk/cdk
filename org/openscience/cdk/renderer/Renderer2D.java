@@ -237,6 +237,7 @@ public class Renderer2D
 	private void paintInnerBond(Bond bond, Ring ring)
 	{
 		Point center = ring.getCenter();
+
 		int[] coords = distanceCalculator(getBondCoordinates(bond),(r2dm.getBondWidth()/2 + r2dm.getBondDistance()));
 		double dist1 = Math.sqrt(Math.pow((coords[0] - center.x),2) + Math.pow((coords[1] - center.y),2));
 		double dist2 = Math.sqrt(Math.pow((coords[2] - center.x),2) + Math.pow((coords[3] - center.y),2));
@@ -252,6 +253,15 @@ public class Renderer2D
 		}	
 	}
 	
+
+	/**
+	 * Calculates the coordinates for the inner bond of a doublebond that is part of 
+	 * a ring. It is drawn shorter than a normal bond.
+	 *
+	 * @param   coords  The original coordinates of the bond   
+	 * @param   edges  Number of edges of the ring it is part of
+	 * @return    The calculated coordinates of the now shorter bond 
+	 */
 	private int[] shortenBond(int[] coords, int edges)
 	{
 		int xDiff = (coords[0] - coords[2]) / (edges * 2);

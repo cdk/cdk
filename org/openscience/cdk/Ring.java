@@ -67,8 +67,8 @@ public class Ring extends AtomContainer
 		double centerX = 0, centerY = 0;
 		for (int i = 0; i < atomCount; i++)
 		{
-			centerX += atoms[i].getPoint3D().x;
-			centerY += atoms[i].getPoint3D().y;
+			centerX += atoms[i].getPoint2D().x;
+			centerY += atoms[i].getPoint2D().y;
 		}
 		Point point = new Point((int)(centerX / atomCount), (int)(centerY / atomCount));
 		return point;
