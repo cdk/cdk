@@ -419,7 +419,7 @@ public class SmilesGenerator {
   
   /**
    * Generate canonical SMILES from the <code>molecule</code>.  This method
-   * canonicaly lables the molecule but dose not perform any checks on the
+   * canonicaly lables the molecule but does not perform any checks on the
    * chemical validity of the molecule.
    *
    * @param molecule The molecule to evaluate
@@ -427,10 +427,26 @@ public class SmilesGenerator {
    *
    */
   public synchronized String createSMILES(Molecule molecule) {
-    try{
-      return (createSMILES(molecule, false, new boolean[molecule.getBondCount()]));
-    }
-    catch(CDKException ex){return("");}//This exception can only happen if a chiral smiles is requested
+      Vector moleculeSet = ConnectivityChecker.partitionIntoMolecules(molecule);
+      if (moleculeSet.size() > 1) {
+          StringBuffer fullSMILES = new StringBuffer();
+          Enumeration molecules = moleculeSet.elements();
+          while (molecules.hasMoreElements()) {
+              Molecule molPart = (Molecule)molecules.nextElement();
+              fullSMILES.append(createSMILES(molPart, false, new boolean[molPart.getBondCount()]));
+              if (molecules.hasMoreElements()) {
+                  fullSMILES.append('.');
+              }
+          }
+          return fullSMILES.toString();
+      } else {
+          try {
+              return (createSMILES(molecule, false, new boolean[molecule.getBondCount()]));
+          } catch(CDKException ex) {
+              //This exception can only happen if a chiral smiles is requested
+              return("");
+          }
+      }
   }
   
   /**
