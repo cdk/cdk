@@ -32,11 +32,8 @@ import java.io.Reader;
 import java.io.StreamTokenizer;
 import java.io.StringReader;
 import java.util.StringTokenizer;
-
 import javax.vecmath.Point3d;
-
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
@@ -48,6 +45,9 @@ import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.tools.IsotopeFactory;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ChemModelManipulator;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.CDKConstants;
 
 /**
  *  A reader for Gaussian98 output. Gaussian 98 is a quantum chemistry program
@@ -65,6 +65,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  *@author        Bradley A. Smith <yeldar@home.com>
  *@author        Egon Willighagen
+ *@author        Christoph Steinbeck
  *@created       March 2, 2004
  *@cdk.module    io
  */
@@ -533,6 +534,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader
 	 */
 	private void readNMRData(ChemModel model, String labelLine) throws CDKException
 	{
+		AtomContainer ac = ChemModelManipulator.getAllInOneContainer(model);
 		// Determine label for properties
 		String label;
 		if (labelLine.indexOf("Diamagnetic") >= 0)
@@ -579,13 +581,12 @@ public class Gaussian98Reader extends DefaultChemObjectReader
 					}
 				}
 				double shielding = Double.valueOf(st1.nextToken()).doubleValue();
-				System.out.println("Shielding: " + shielding);
-				//NMRShielding ns1 = new NMRShielding(label, shielding);
-				//((org.openscience.jmol.Atom)frame.getAtomAt(atomIndex)).addProperty(ns1);
+				//System.out.println("Shielding: " + shielding);
+				ac.getAtomAt(atomIndex).setProperty(CDKConstants.ISOTROPIC_SHIELDING, new Double(shielding));
 				++atomIndex;
 			} catch (Exception exc)
 			{
-				System.out.println("failed to read line from gaussian98 file where I expected one.");
+				logger.debug("failed to read line from gaussian98 file where I expected one.");
 			}
 		}
 	}
