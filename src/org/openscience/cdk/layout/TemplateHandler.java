@@ -1,4 +1,5 @@
-/*  $RCSfile$
+/*
+ *  $RCSfile$
  *  $Author$
  *  $Date$
  *  $Revision$
@@ -53,8 +54,7 @@ import org.openscience.cdk.isomorphism.mcss.RMap;
  *@created    September 4, 2003
  *@keyword    layout
  *@keyword    2D-coordinates
- *
- * @since Java 1.4
+ *@since      Java 1.4
  */
 public class TemplateHandler
 {
@@ -80,10 +80,9 @@ public class TemplateHandler
 
 
 	/**
-	 *  Loads all existing templates into memory
-	 * To add templates to be used in SDG, place a drawing with 
-	 * the new template in data/templates and add the template
-	 * filename to data/templates/template.list
+	 *  Loads all existing templates into memory To add templates to be used in
+	 *  SDG, place a drawing with the new template in data/templates and add the
+	 *  template filename to data/templates/template.list
 	 */
 	public void loadTemplates()
 	{
@@ -104,9 +103,38 @@ public class TemplateHandler
 		{
 			logger.debug("Could not read templates");
 			logger.debug("Reason: " + exc.getMessage());
-			
+
 		}
-		
+
+	}
+
+	/**
+	 *  Adds a Molecule to the list of 
+	 *  templates use by this TemplateHandler
+	 *
+	 *@param  molecule  The molecule to be added to the TemplateHandler
+	 */
+	public void addMolecule(Molecule molecule)
+	{
+		templates.addElement(molecule);
+	}
+	
+	public Molecule removeMolecule(Molecule molecule)
+	{
+		AtomContainer ac1 = new AtomContainer(molecule);
+		AtomContainer ac2 = null;
+		Molecule mol2 = null;
+		for (int f = 0; f < templates.size(); f++)
+		{
+			mol2 = (Molecule)templates.elementAt(f);
+			ac2 = new AtomContainer(mol2);
+			if (UniversalIsomorphismTester.isIsomorph(new AtomContainer(ac1), new AtomContainer(ac2)))
+			{
+				templates.removeElementAt(f);
+				return mol2;
+			}
+		}
+		return null;
 	}
 
 
@@ -115,15 +143,16 @@ public class TemplateHandler
 	 *  Molecule. If so, it assigns the coordinates from the template to the
 	 *  respective atoms in the Molecule.
 	 *
-	 *@param  molecule       The molecule to be check for potential templates
-	 *@return                True if there was a possible mapping
+	 *@param  molecule  The molecule to be check for potential templates
+	 *@return           True if there was a possible mapping
 	 */
 	public boolean mapTemplates(Molecule molecule)
 	{
 		boolean mapped = false;
 		Molecule template = null;
 		RMap map = null;
-		Atom atom1 = null, atom2 = null;
+		Atom atom1 = null;
+		Atom atom2 = null;
 		for (int f = 0; f < templates.size(); f++)
 		{
 			template = (Molecule) templates.elementAt(f);
@@ -131,9 +160,9 @@ public class TemplateHandler
 			{
 				List list = UniversalIsomorphismTester.getSubgraphAtomsMap(new AtomContainer(molecule), new AtomContainer(template));
 				logger.debug("Found a subgraph mapping of size " + list.size());
-				for (int i = 0; i < list.size(); i ++)					
+				for (int i = 0; i < list.size(); i++)
 				{
-					map = (RMap)list.get(i);
+					map = (RMap) list.get(i);
 					atom1 = molecule.getAtomAt(map.getId1());
 					atom2 = template.getAtomAt(map.getId2());
 					atom1.setX2D(atom2.getX2D());
@@ -145,6 +174,7 @@ public class TemplateHandler
 		}
 		return mapped;
 	}
+
 
 	/**
 	 *  Gets the templateCount attribute of the TemplateHandler object
@@ -167,7 +197,7 @@ public class TemplateHandler
 	{
 		return (AtomContainer) templates.elementAt(position);
 	}
-
+	
 
 	/**
 	 *  Set the bond length used for laying out the molecule
