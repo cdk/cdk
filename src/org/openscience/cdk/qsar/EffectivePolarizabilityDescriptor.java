@@ -29,9 +29,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.charges.Polarizability;
-import java.util.Map;
 import java.util.Hashtable;
-import java.util.ArrayList;
 
 /**
  *  Effective polarizability of an heavy atom and its protons
@@ -89,7 +87,7 @@ public class EffectivePolarizabilityDescriptor implements Descriptor {
 	 *  Gets the parameters attribute of the EffectivePolarizabilityDescriptor
 	 *  object
 	 *
-	 *@return    an arrayList with the effective polarizability of an heavy atom and its protons
+	 *@return    an arrayList with the effective polarizability of an heavy atom
 	 */
 	public Object[] getParameters() {
 		// return the parameters as used for the descriptor calculation
@@ -100,13 +98,11 @@ public class EffectivePolarizabilityDescriptor implements Descriptor {
 
 
 	/**
-	 *  The method returns effective polarizabilities assigned to an heavy atom and its
-	 *  protons by Polarizability class.
+	 *  The method returns effective polarizabilities assigned to an heavy atom by Polarizability class.
 	 *  It is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
 	 *
 	 *@param  ac                AtomContainer
-	 *@return                   an array of doubles with polarizabilities of [heavy,
-	 *      proton_1 ... proton_n]
+	 *@return                   a double with polarizability of the heavy atom
 	 *@exception  CDKException  Possible Exceptions
 	 */
 	public Object calculate(AtomContainer ac) throws CDKException {
@@ -115,14 +111,9 @@ public class EffectivePolarizabilityDescriptor implements Descriptor {
 		
 		Atom target = mol.getAtomAt(atomPosition);
 		Atom[] neighboors = mol.getConnectedAtoms(target);
-		ArrayList effectivePolarizability = new ArrayList(4);
-		effectivePolarizability.add(new Double(pol.calculateGHEffectiveAtomPolarizability(mol, target, 1000)));
-		for (int i = 0; i < neighboors.length; i++) {
-			if (neighboors[i].getSymbol().equals("H")) {
-				effectivePolarizability.add(new Double(pol.calculateGHEffectiveAtomPolarizability(mol, neighboors[i], 1000)));
-			}
-		}
-		return new ArrayList(effectivePolarizability);
+		double effectivePolarizability = 0;
+		effectivePolarizability = pol.calculateGHEffectiveAtomPolarizability(mol, target, 1000);
+		return new Double(effectivePolarizability);
 	}
 
 
