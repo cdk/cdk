@@ -91,7 +91,7 @@ public class AtomTypeFactoryTest extends TestCase {
     public void testGetAtomType() {
 		AtomType atomType = null;
 		try {
-			atomType = atf.getAtomType("structgen.C4");
+			atomType = atf.getAtomType("C4");
 		} catch(Exception exc) {
 			fail("Problem getting AtomType for 'structgen.C4' from AtomTypeFactory: "  +  exc.toString());
 		}
