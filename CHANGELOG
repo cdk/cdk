@@ -3,6 +3,10 @@ CHANGELOG $Date$
 
 Changes in CVS
 ------------------------------------
+
+20030412 Release
+------------------------------------
+
 New:
 * Added move operation to JCPController2D
 * Added ReaderFactory that guesses the file format based
