@@ -415,7 +415,7 @@ public class GeometryTools
 	  *
 	  * @return  boolean indication that 2D coordinates are available 
 	 */
-  public static boolean has2DCoordinates(Molecule m) {
+  public static boolean has2DCoordinates(AtomContainer m) {
       boolean hasinfo = true;
       Atom[] atoms = m.getAtoms();
       for (int i=0; i < atoms.length; i++) {
@@ -428,7 +428,7 @@ public class GeometryTools
 	  *
 	  * @return  boolean indication that 3D coordinates are available 
 	 */
-  public static boolean has3DCoordinates(Molecule m) {
+  public static boolean has3DCoordinates(AtomContainer m) {
       boolean hasinfo = true;
       Atom[] atoms = m.getAtoms();
       for (int i=0; i < atoms.length; i++) {

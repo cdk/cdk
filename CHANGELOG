@@ -19,6 +19,8 @@ API changes:
   AtomContainer <-> ChemFrame, instead of
   Molecule <-> ChemFrame
 * FortranFormat moved to org.openscience.cdk.math
+* GeomertryTools.hasXDCoordinates() now accepts
+  AtomContainer instead of Molecule
 
 20020902 Release
 ------------------------------------
