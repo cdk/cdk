@@ -27,7 +27,7 @@ package org.openscience.cdk.test;
 import org.openscience.cdk.*;
 import org.openscience.cdk.tools.*;
 import org.openscience.cdk.templates.*;
-import org.openscience.cdk.graphinvariant.MorganNumbersTools;
+import org.openscience.cdk.graph.invariant.MorganNumbersTools;
 import java.util.*;
 import junit.framework.*;
 

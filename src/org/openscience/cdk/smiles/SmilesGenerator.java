@@ -28,7 +28,7 @@ package org.openscience.cdk.smiles;
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.tools.IsotopeFactory;
-import org.openscience.cdk.graphinvariant.MorganNumbersTools;
+import org.openscience.cdk.graph.invariant.MorganNumbersTools;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.exception.NoSuchAtomException;

@@ -24,6 +24,7 @@ API changes:
 * Removed redundant method Monomer.addAtom(Atom)
 * Moved generateElementFormula(Molecule, String[]) from
   SwissArmyKnife to MFAnalyser
+* Moved package graphinvariant to package graph.invariant
 
 20020920 Release
 ------------------------------------

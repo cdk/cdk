@@ -22,15 +22,14 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
  * 
  */
-
-package org.openscience.cdk.graphinvariant;
+package org.openscience.cdk.graph.invariant;
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.exception.*;
 import java.util.*;
 
 /**
- * Tool for calculating Morgan Numbers.
+ * Tool for calculating Morgan numbers.
  *
  * References:
  *   <a href="http://cdk.sf.net/biblio.html#MOR65">MOR65</a>

@@ -22,8 +22,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
  * 
  */
-
-package org.openscience.cdk.graphinvariant;
+package org.openscience.cdk.graph.invariant;
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.tools.*;

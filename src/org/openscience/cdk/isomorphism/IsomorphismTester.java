@@ -1,6 +1,6 @@
 /*  $RCSfile$
- *  $Author$    
- *  $Date$    
+ *  $Author$
+ *  $Date$
  *  $Revision$
  *
  *  Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
@@ -25,7 +25,7 @@
 package org.openscience.cdk.isomorphism;
 
 import org.openscience.cdk.*;
-import org.openscience.cdk.graphinvariant.MorganNumbersTools;
+import org.openscience.cdk.graph.invariant.MorganNumbersTools;
 import org.openscience.cdk.exception.*;
 import java.util.*;
 
@@ -40,7 +40,7 @@ import java.util.*;
  *
  * @keyword    isomorphism
  *
- * @see        org.openscience.cdk.graphinvariant.MorganNumbersTools
+ * @see        org.openscience.cdk.graph.invariant.MorganNumbersTools
  */
 public class IsomorphismTester implements java.io.Serializable
 {
