@@ -493,9 +493,6 @@
                 file="${src}/org/openscience/cdk/config/jmol_atomtypes.txt"
                 tofile="${build}/org/openscience/cdk/config/jmol_atomtypes.txt" />
                 <copy
-                file="${src}/org/openscience/cdk/config/mol2_atomtypes.txt"
-                tofile="${build}/org/openscience/cdk/config/mol2_atomtypes.txt" />
-                <copy
                 file="${src}/org/openscience/cdk/config/log4j.properties"
                 tofile="${build}/org/openscience/cdk/config/log4j.properties" />
 
