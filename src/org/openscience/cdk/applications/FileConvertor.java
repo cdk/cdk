@@ -1,10 +1,9 @@
-/*
- * $RCSfile$
+/* $RCSfile$
  * $Author$
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2001-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2001-2003  The Chemistry Development Kit (CDK) project
  *
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  *
@@ -33,8 +32,8 @@ import java.util.*;
 /**
  * Program that converts a file from one format to a file with another format.
  * Supported formats are:
- *   input: CML, XYZ, MDL Molfile, PMP, ShelX
- *  output: CML, MDL Molfile, SMILES, ShelX
+ *   input: CML, MDL Molfile, PDB, PMP, ShelX, SMILES, XYZ
+ *  output: CML, MDL Molfile, ShelX, SMILES, XYZ
  *
  *  @keyword command line util
  *  @keyword file format
@@ -162,6 +161,8 @@ public class FileConvertor {
             return new PDBReader(f);
         } else if (format.equalsIgnoreCase("PMP")) {
             return new PMPReader(f);
+        } else if (format.equalsIgnoreCase("SMI")) {
+            return new SMILESReader(f);
         } else if (format.equalsIgnoreCase("SHELX")) {
             return new ShelXReader(f);
         } else if (format.equalsIgnoreCase("ICHI")) {
@@ -183,6 +184,8 @@ public class FileConvertor {
             return new ShelXWriter(fw);
         } else if (format.equalsIgnoreCase("SVG")) {
             return new SVGWriter(fw);
+        } else if (format.equalsIgnoreCase("XYZ")) {
+            return new XYZWriter(fw);
         }
         return null;
     }
@@ -193,9 +196,10 @@ public class FileConvertor {
     * the generalized mechanism below.
     */
     private void write(ChemFile cf) throws IOException {
-        try {
+        if (compare(new ChemFile(), cow.highestSupportedChemObject()) >= 0) {
+            // Can write ChemFile, do so
             cow.write(cf);
-        } catch (UnsupportedChemObjectException e) {
+        } else {
             logger.info("Cannot write ChemFile, recursing into ChemSequence's.");
             int count = cf.getChemSequenceCount();
             boolean needMoreFiles =
