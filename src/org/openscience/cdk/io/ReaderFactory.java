@@ -88,10 +88,14 @@ public class ReaderFactory {
                 logger.info("PDB format detected");
                 buffer.reset();
                 return new PDBReader(input);
-            } else if (line.indexOf("<atom") != -1) {
+            } else if ((line.indexOf("<atom") != -1) ||
+                       (line.indexOf("<molecule") != -1) ||
+                       (line.indexOf("<reaction") != -1) ||
+                       (line.indexOf("<cml") != -1) ||
+                       (line.indexOf("<bond") != -1)) {
                 logger.info("CML format detected");
                 buffer.reset();
-                return new CMLReader(input);
+                return new CMLReader(buffer);
             } else if (line.indexOf("<identifier") != -1) {
                 logger.info("IChI format detected");
                 buffer.reset();
