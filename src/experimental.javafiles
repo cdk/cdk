@@ -21,4 +21,5 @@ org/openscience/cdk/tools/ValencyChecker.java
 org/openscience/cdk/SingleElectron.java
 org/openscience/cdk/Association.java
 org/openscience/cdk/Mapping.java
+org/openscience/cdk/validate/ValencyValidator.java
 

@@ -291,6 +291,8 @@
                     <include name="org/openscience/cdk/io/**/*"/>
                     <include name="org/openscience/cdk/ChemFile.java"/>
                     <include name="org/openscience/cdk/exception/UnsupportedChemObjectException.java"/>
+                    <exclude name="org/openscience/cdk/io/MACiEReader.java"/>
+                    <exclude name="org/openscience/cdk/io/SVGWriter.java"/>
 
                     <classpath refid="project.class.path" />
                     <classpath>
@@ -310,6 +312,7 @@
                     <include name="org/openscience/cdk/renderer/**/*"/>
                     <include name="org/openscience/cdk/controller/**/*"/>
                     <include name="org/openscience/cdk/editor/**/*"/>
+                    <include name="org/openscience/cdk/io/SVGWriter.java"/>
                     <excludesfile name="${src}/java3d.javafiles"/>
 
                     <classpath refid="project.class.path" />
@@ -356,6 +359,7 @@
                 <excludesfile name="${src}/java3d.javafiles" />
                 <excludesfile name="${src}/experimental.javafiles" />
                 <excludesfile name="${src}/applications.javafiles" />
+                <exclude name="org/openscience/cdk/io/**/*.java" />
                 <exclude name="org/openscience/cdk/libio/**/*.java" />
                 <exclude name="org/openscience/cdk/test/**/*.java" />
             </javac>

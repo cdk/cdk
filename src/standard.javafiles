@@ -13,6 +13,8 @@ org/openscience/cdk/tools/SetOfMoleculesManipulator.java
 org/openscience/cdk/tools/SetOfReactionsManipulator.java
 org/openscience/cdk/tools/ReactionManipulator.java
 org/openscience/cdk/tools/AtomContainerManipulator.java
+org/openscience/cdk/tools/IDCreator.java
+org/openscience/cdk/tools/MFAnalyser.java
 org/openscience/cdk/geometry/GeometryTools.java
 org/openscience/cdk/geometry/CrystalGeometryTools.java
 org/openscience/cdk/renderer/color/AtomColorer.java
@@ -25,6 +27,7 @@ org/openscience/cdk/exception/NoSuchAtomException.java
 org/openscience/cdk/exception/NoSuchAtomTypeException.java
 org/openscience/cdk/exception/UnsupportedChemObjectException.java
 org/openscience/cdk/smiles/SmilesParser.java
+org/openscience/cdk/smiles/SmilesGenerator.java
 org/openscience/cdk/math/FortranFormat.java
 org/openscience/cdk/isomorphism/IsomorphismTester.java
 org/openscience/cdk/graph/invariant/MorganNumbersTools.java

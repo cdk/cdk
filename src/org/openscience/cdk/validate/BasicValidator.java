@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  * 
- * Copyright (C) 2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2003-2004  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -28,8 +28,6 @@ import org.openscience.cdk.*;
 import org.openscience.cdk.tools.IsotopeFactory;
 import org.openscience.cdk.tools.AtomTypeFactory;
 import org.openscience.cdk.tools.SaturationChecker;
-import org.openscience.cdk.tools.ValencyCheckerInterface;
-import org.openscience.cdk.tools.ValencyChecker;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -110,7 +108,6 @@ public class BasicValidator implements ValidatorInterface {
                 if (atoms[i] instanceof PseudoAtom) {
                     foundMassCalcProblem = true;
                 } else {
-                    report.addReport(validateAtomValency(atoms[i], subject));
                     report.addReport(validateBondOrderSum(atoms[i], subject));
                 }
             }
@@ -329,25 +326,6 @@ public class BasicValidator implements ValidatorInterface {
     }
     
     // the Molecule tests
-
-    private static ValidationReport validateAtomValency(Atom atom, Molecule molecule) {
-        ValidationReport report = new ValidationReport();
-        ValidationTest checkValency = new ValidationTest(atom,
-            "The atom has an unfulfilled valency."
-        );
-        try {
-            ValencyCheckerInterface saturationChecker = new ValencyChecker();
-            if (!saturationChecker.isSaturated(atom, molecule)) {
-                checkValency.setDetails("Atom " + atom.getSymbol() + " fails");
-                report.addError(checkValency);
-            } else {
-                report.addOK(checkValency);
-            }
-        } catch (Exception exception) {
-            System.err.println("Error while performing atom valency validation: " + exception.toString());
-        }
-        return report;
-    }
 
     private static ValidationReport validateBondOrderSum(Atom atom, Molecule molecule) {
         ValidationReport report = new ValidationReport();
