@@ -5,7 +5,7 @@ Changes in CVS
 ------------------------------------
 New:
 * Added MFAnalyser.removeHydrogensPreserveMultiplyBonded() method
-* Added CDKEditBus.setChemModel(String) for plain IO formats
+* Added CDKEditBus.setChemModel(Reader)
 * Added IUPAC/NIST Chemical Identifier reader
 * The MDLReader will reuse the ChemObject given to read(ChemObject)
 * Added UniversalIsomorphismTester.makeAtomsMapsOfBondsMaps() method
@@ -13,6 +13,7 @@ New:
 * Implemented Jmolv10 to CDK Convertor
 * Readded element toggling between common elements in SYMBOL mode
   in Controller2D
+* Added cdk.applications.APIVersionTester for testing version numbers
 
 Fixes:
 * No longer calculates 2D coords for hydrogens which already have 2D coords

@@ -28,6 +28,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
+import org.openscience.cdk.test.applications.APIVersionTesterTest;
 import org.openscience.cdk.test.aromaticity.HueckelAromaticityDetectorTest;
 import org.openscience.cdk.test.fingerprint.FingerprinterTest;
 import org.openscience.cdk.test.geometry.CrystalGeometryToolsTest;
@@ -81,6 +82,8 @@ public class CDKTests
         suite.addTest(RebondToolTest.suite());
         suite.addTest(PathLengthTest.suite());
         suite.addTest(IsomorphismTesterTest.suite());
+        //from cdk.test.applications
+        suite.addTest(APIVersionTesterTest.suite());
 	//from cdk.test.ringsearch
         suite.addTest(AllRingsFinderTest.suite());
 	suite.addTest(RingSearchTest.suite());
