@@ -253,7 +253,7 @@
                         <fileset dir="." includes="build.xml" />
                 </copy>
                 <copy todir="${sourcedist}/org/openscience/cdk/config/isotopes.xml">
-                        <fileset dir="org/openscience/cdk/config/"
+                        <fileset dir="${src}/org/openscience/cdk/config/"
                                  includes="*" />
                 </copy>
                 <tar tarfile="cdk-source-${DSTAMP}.tar"

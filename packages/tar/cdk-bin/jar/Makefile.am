@@ -5,9 +5,10 @@ PREFIX="@prefix@"
 JARLIBDIR="${PREFIX}/lib/cdk"
 JARLIBS=cdk-core.jar cdk-extra.jar cdk-libio.jar
 
-EXTRA_DIST=${JARLIBS}
+EXTRA_DIST= $(JARLIBS)
 
-CLEANFILES = $(JARLIBS)
+# Don't add the CDK jars! They are not compiled from source!
+CLEANFILES=
 
 alljardir = "${JARLIBDIR}"
 

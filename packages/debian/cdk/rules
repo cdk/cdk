@@ -2,7 +2,7 @@
 # Made with the aid of debmake, by Christoph Lameter,
 # based on the sample debian/rules file for GNU hello by Ian Jackson.
 
-package=libcdk
+package=cdk
 
 build:
 	$(checkdir)
@@ -37,7 +37,6 @@ binary-arch: checkroot build
 	dpkg-gencontrol -isp
 	chown -R root.root debian/tmp
 	chmod -R go=rX debian/tmp
-	chmod 644 debian/tmp/usr/lib/cdk/*jar
 	dpkg --build debian/tmp ..
 
 define checkdir

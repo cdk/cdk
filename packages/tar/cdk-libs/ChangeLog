@@ -1,3 +1,7 @@
+20020723
+=================
+* update JSX library to version 1.0
+
 20020206
 =================
 * removed Xerces (no longer required)

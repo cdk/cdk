@@ -26,23 +26,22 @@ install:
 
 setup: clean
 	@echo "Cleaning old stuff..."
-	@rm -f -r /tmp/libcdk*
+	@rm -f -r /tmp/cdk*
 	@rm -f -r /tmp/cdk-bin*
 	@echo "Setting up build dir for version ${VERSION}"
-	cp ../../tar/cdk-bin/cdk-bin-${VERSION}.tar.gz /tmp/libcdk-${VERSION}.tar.gz
-	echo ${VERSION} > /tmp/LIBCDKVERSION
-	cd /tmp; tar zxf libcdk-`cat LIBCDKVERSION`.tar.gz
-	cd /tmp; mv cdk-bin-`cat LIBCDKVERSION` libcdk-`cat LIBCDKVERSION`
-	rm /tmp/LIBCDKVERSION
+	cp ../../tar/cdk-bin/cdk-bin-${VERSION}.tar.gz /tmp/cdk-${VERSION}.tar.gz
+	echo ${VERSION} > /tmp/CDKVERSION
+	cd /tmp; tar zxf cdk-`cat CDKVERSION`.tar.gz
+	cd /tmp; mv cdk-bin-`cat CDKVERSION` cdk-`cat CDKVERSION`
+	rm /tmp/CDKVERSION
 	@echo " ... copying debian specific files"
-	mkdir -p /tmp/libcdk-${VERSION}/debian
-	cp ${DEBIANFILES} /tmp/libcdk-${VERSION}/debian
+	mkdir -p /tmp/cdk-${VERSION}/debian
+	cp ${DEBIANFILES} /tmp/cdk-${VERSION}/debian
 	@echo " ... removing files provided by other Debian packages"
 	@echo " ... removing unneeded files"
-	rm /tmp/libcdk-${VERSION}/man/*.1
 	@echo " ... adapt files for debian needs"
-	cd /tmp/libcdk-${VERSION}; cat Makefile.am | perl -n -e "s/SUBDIRS=\ bin\ jar\ man/SUBDIRS=\ jar/; print;" > Makefile.am
+	cd /tmp/cdk-${VERSION}; cat Makefile.am | perl -n -e "s/SUBDIRS=\ bin\ jar\ man/SUBDIRS=\ bin\ man/; print;" > Makefile.am
 
 deb: setup
 	@echo "Building package for version ${VERSION}"
-	cd /tmp/libcdk-${VERSION}; dpkg-buildpackage -rfakeroot
+	cd /tmp/cdk-${VERSION}; dpkg-buildpackage -rfakeroot
