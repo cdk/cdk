@@ -484,20 +484,20 @@
                 <mkdir dir="${build}/org/openscience/cdk/iupac/generator/data" />
 
                 <copy
-                file="${src}/org/openscience/cdk/config/isotopes.xml"
-                tofile="${build}/org/openscience/cdk/config/isotopes.xml" />
+                file="${src}/org/openscience/cdk/config/data/isotopes.xml"
+                tofile="${build}/org/openscience/cdk/config/data/isotopes.xml" />
                 <copy
-                file="${src}/org/openscience/cdk/config/structgen_atomtypes.xml"
-                tofile="${build}/org/openscience/cdk/config/structgen_atomtypes.xml" />
+                file="${src}/org/openscience/cdk/config/data/structgen_atomtypes.xml"
+                tofile="${build}/org/openscience/cdk/config/data/structgen_atomtypes.xml" />
                 <copy
-                file="${src}/org/openscience/cdk/config/valency_atomtypes.xml"
-                tofile="${build}/org/openscience/cdk/config/valency_atomtypes.xml" />
+                file="${src}/org/openscience/cdk/config/data/valency_atomtypes.xml"
+                tofile="${build}/org/openscience/cdk/config/data/valency_atomtypes.xml" />
                 <copy
-                file="${src}/org/openscience/cdk/config/jmol_atomtypes.txt"
-                tofile="${build}/org/openscience/cdk/config/jmol_atomtypes.txt" />
+                file="${src}/org/openscience/cdk/config/data/jmol_atomtypes.txt"
+                tofile="${build}/org/openscience/cdk/config/data/jmol_atomtypes.txt" />
                 <copy
-                file="${src}/org/openscience/cdk/config/log4j.properties"
-                tofile="${build}/org/openscience/cdk/config/log4j.properties" />
+                file="${src}/org/openscience/cdk/config/data/log4j.properties"
+                tofile="${build}/org/openscience/cdk/config/data/log4j.properties" />
 
                 <copy
                 file="${src}/org/openscience/cdk/io/cml/data/cml1_0.dtd"

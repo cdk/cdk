@@ -42,8 +42,8 @@ import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.SetOfReactions;
-import org.openscience.cdk.tools.AtomTypeFactory;
-import org.openscience.cdk.tools.IsotopeFactory;
+import org.openscience.cdk.config.AtomTypeFactory;
+import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**

@@ -36,6 +36,7 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.Isotope;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.ConnectivityChecker;

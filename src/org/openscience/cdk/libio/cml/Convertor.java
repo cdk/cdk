@@ -54,6 +54,7 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.dict.*;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.CrystalGeometryTools;

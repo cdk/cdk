@@ -54,7 +54,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-import org.openscience.cdk.tools.IsotopeFactory;
+import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**

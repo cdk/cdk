@@ -30,7 +30,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.openscience.cdk.applications.swing.PeriodicTablePanel;
-import org.openscience.cdk.tools.AtomTypeFactory;
+import org.openscience.cdk.config.AtomTypeFactory;
 
 /**
  *  Checks the funcitonality of the PeriodicTablePanelTest

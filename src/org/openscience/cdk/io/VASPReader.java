@@ -42,7 +42,7 @@ import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Crystal;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.math.FortranFormat;
-import org.openscience.cdk.tools.IsotopeFactory;
+import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**

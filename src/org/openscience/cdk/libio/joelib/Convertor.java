@@ -130,8 +130,8 @@ public class Convertor {
             Atom convertedAtom = new Atom("C");
             try {
                 // try to give the atom the correct symbol
-                org.openscience.cdk.tools.IsotopeFactory ef =
-                    org.openscience.cdk.tools.IsotopeFactory.getInstance();
+                org.openscience.cdk.config.IsotopeFactory ef =
+                    org.openscience.cdk.config.IsotopeFactory.getInstance();
                 org.openscience.cdk.Element e = ef.getElement(atom.getAtomicNum());
                 convertedAtom = new Atom(e.getSymbol());
             } catch (java.lang.Exception e) {

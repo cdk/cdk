@@ -33,7 +33,7 @@ import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.io.MDLReader;
-import org.openscience.cdk.tools.IsotopeFactory;
+import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**

@@ -36,7 +36,7 @@ import org.openscience.cdk.event.*;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
-import org.openscience.cdk.tools.IsotopeFactory;
+import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.tools.HydrogenAdder;
 import java.awt.*;
 import java.util.*;

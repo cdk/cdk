@@ -22,7 +22,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
  * 
  */
-package org.openscience.cdk.test.tools;
+package org.openscience.cdk.test.config;
 
 import junit.framework.AssertionFailedError;
 import junit.framework.Test;
@@ -31,7 +31,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.Element;
 import org.openscience.cdk.Isotope;
-import org.openscience.cdk.tools.IsotopeFactory;
+import org.openscience.cdk.config.IsotopeFactory;
 
 /**
  * Checks the funcitonality of the IsotopeFactory

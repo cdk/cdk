@@ -43,6 +43,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.Isotope;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.config.IsotopeFactory;
 
 /** 
  * Analyses a molecular formula given in String format and builds 

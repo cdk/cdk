@@ -44,7 +44,7 @@ import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.structgen.VicinitySampler;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.tools.IsotopeFactory;
+import org.openscience.cdk.config.IsotopeFactory;
 
 
 /**

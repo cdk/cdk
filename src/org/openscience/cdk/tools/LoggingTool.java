@@ -146,8 +146,8 @@ public class LoggingTool {
               throw new ClassNotFoundException();
             if (useConfig) {
                 // configure Log4J
-                URL url = getClass().getClassLoader().getResource("/org/openscience/cdk/config/log4j.properties");
-                InputStream ins = this.getClass().getClassLoader().getResourceAsStream("org/openscience/cdk/config/log4j.properties");
+                URL url = getClass().getClassLoader().getResource("/org/openscience/cdk/config/data/log4j.properties");
+                InputStream ins = this.getClass().getClassLoader().getResourceAsStream("org/openscience/cdk/config/data/log4j.properties");
                 Properties props = new Properties();
                 props.load(ins);
                 org.apache.log4j.PropertyConfigurator.configure(props);

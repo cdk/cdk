@@ -22,7 +22,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
  * 
  */
-package org.openscience.cdk.test.tools;
+package org.openscience.cdk.test.config;
 
 import java.io.InputStream;
 
@@ -31,7 +31,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.AtomType;
-import org.openscience.cdk.tools.AtomTypeFactory;
+import org.openscience.cdk.config.AtomTypeFactory;
 
 
 /**
@@ -68,7 +68,7 @@ public class AtomTypeFactoryTest extends TestCase {
     
     public void testGetInstanceInputStream() {
         try {
-            String configFile = "org/openscience/cdk/config/structgen_atomtypes.xml";
+            String configFile = "org/openscience/cdk/config/data/structgen_atomtypes.xml";
             InputStream ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
             AtomTypeFactory atf = AtomTypeFactory.getInstance(ins, "xml");
             assertNotNull(atf);
@@ -106,7 +106,7 @@ public class AtomTypeFactoryTest extends TestCase {
     public void testGetAtomTypeFromValency() {
 		AtomType atomType = null;
 		try {
-            AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/valency_atomtypes.xml");
+            AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/valency_atomtypes.xml");
 			atomType = factory.getAtomType("Oplus");
 		} catch(Exception exc) {
 			fail("Problem getting AtomType for 'valency:O+' from AtomTypeFactory: "  +  exc.getMessage());

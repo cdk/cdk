@@ -35,6 +35,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.AtomType;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 
 /**
@@ -53,7 +54,7 @@ import org.openscience.cdk.exception.CDKException;
  */
 public class ValencyChecker implements ValencyCheckerInterface {
 
-    private final String atomTypeList = "org/openscience/cdk/config/valency_atomtypes.xml";
+    private final String atomTypeList = "org/openscience/cdk/config/data/valency_atomtypes.xml";
     
 	private AtomTypeFactory structgenATF;
 

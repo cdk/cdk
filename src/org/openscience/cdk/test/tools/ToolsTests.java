@@ -38,11 +38,11 @@ public class ToolsTests {
 
     public static Test suite () {
         TestSuite suite= new TestSuite("The cdk.tools Tests");
-        suite.addTest(AtomTypeFactoryTest.suite());
+        suite.addTest(BremserPredictorTest.suite());
         suite.addTest(ConnectivityCheckerTest.suite());
+        suite.addTest(HOSECodeTest.suite());
         suite.addTest(HydrogenAdderTest.suite());
         suite.addTest(IDCreatorTest.suite());
-        suite.addTest(IsotopeFactoryTest.suite());
         suite.addTest(MFAnalyserTest.suite());
         suite.addTest(SaturationCheckerTest.suite());
         suite.addTest(NormalizerTest.suite());

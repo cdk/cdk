@@ -21,7 +21,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package org.openscience.cdk.tools;
+package org.openscience.cdk.config;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -36,6 +36,7 @@ import org.openscience.cdk.AtomType;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.NoSuchAtomTypeException;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  *  General class for defining AtomTypes. This class itself does not define the
@@ -57,7 +58,7 @@ import org.openscience.cdk.exception.NoSuchAtomTypeException;
  *  <p>To get all the atom types of an element from a specific list, this 
  *  code can be used:
  *  <pre>
- *  AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/jmol_atomtypes.txt");
+ *  AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/jmol_atomtypes.txt");
  *  AtomType[] types = factory.getAtomTypes("C");
  *  </pre>
  *
@@ -99,7 +100,7 @@ public class AtomTypeFactory {
 	 */
     private AtomTypeFactory(String configFile) throws IOException, OptionalDataException, ClassNotFoundException {
         if (logger == null) {
-            logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+            logger = new LoggingTool(this);
         }
         atomTypes = new Vector(30);
         readConfiguration(configFile);
@@ -114,7 +115,7 @@ public class AtomTypeFactory {
 	 */
     private AtomTypeFactory(InputStream ins, String format) throws IOException, OptionalDataException, ClassNotFoundException {
         if (logger == null) {
-            logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+            logger = new LoggingTool(this);
         }
         atomTypes = new Vector(30);
         readConfiguration(ins, format);
@@ -137,7 +138,7 @@ public class AtomTypeFactory {
      * @see #getInstance(String)
      */
     public static AtomTypeFactory getInstance() throws IOException, OptionalDataException, ClassNotFoundException {
-        return getInstance("org/openscience/cdk/config/structgen_atomtypes.xml");
+        return getInstance("org/openscience/cdk/config/data/structgen_atomtypes.xml");
     }
 
     /**
@@ -211,11 +212,11 @@ public class AtomTypeFactory {
         try {
             if (format.equals("txt")) {
                 return (AtomTypeConfigurator) this.getClass().getClassLoader().
-                    loadClass("org.openscience.cdk.tools.TXTBasedAtomTypeConfigurator").
+                    loadClass("org.openscience.cdk.config.TXTBasedAtomTypeConfigurator").
                     newInstance();
             } else if (format.equals("xml")) {
                 return (AtomTypeConfigurator) this.getClass().getClassLoader().
-                 loadClass("org.openscience.cdk.tools.CDKBasedAtomTypeConfigurator").
+                 loadClass("org.openscience.cdk.config.CDKBasedAtomTypeConfigurator").
                  newInstance();
             }
 		} catch (Exception exc) {

@@ -33,7 +33,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.graph.rebond.RebondTool;
-import org.openscience.cdk.tools.AtomTypeFactory;
+import org.openscience.cdk.config.AtomTypeFactory;
 
 /**
  * Checks the funcitonality of the RebondTool.
@@ -63,7 +63,7 @@ public class RebondToolTest extends TestCase {
         
     try {
       // configure atoms
-      AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/jmol_atomtypes.txt");
+      AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/jmol_atomtypes.txt");
       Atom[] atoms = methane.getAtoms();
       for (int i=0; i<atoms.length; i++) {
         factory.configure(atoms[i]);

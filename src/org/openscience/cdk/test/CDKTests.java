@@ -26,10 +26,10 @@ package org.openscience.cdk.test;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.test.applications.APIVersionTesterTest;
 import org.openscience.cdk.test.aromaticity.HueckelAromaticityDetectorTest;
+import org.openscience.cdk.test.config.ConfigTests;
 import org.openscience.cdk.test.fingerprint.FingerprinterTest;
 import org.openscience.cdk.test.geometry.CrystalGeometryToolsTest;
 import org.openscience.cdk.test.geometry.GeometryToolsTest;
@@ -49,8 +49,6 @@ import org.openscience.cdk.test.ringsearch.RingSearchTest;
 import org.openscience.cdk.test.smiles.SmilesGeneratorTest;
 import org.openscience.cdk.test.smiles.SmilesParserTest;
 import org.openscience.cdk.test.structgen.RandomStructureGeneratorTest;
-import org.openscience.cdk.test.tools.BremserPredictorTest;
-import org.openscience.cdk.test.tools.HOSECodeTest;
 import org.openscience.cdk.test.tools.ToolsTests;
 
 /**
@@ -72,6 +70,7 @@ public class CDKTests
         TestSuite suite= new TestSuite("All CDK Tests");
         
         // Package Test Suites
+        suite.addTest(ConfigTests.suite());
         suite.addTest(CoreClassesTests.suite());
         suite.addTest(IOTests.suite());
         suite.addTest(ToolsTests.suite());
@@ -106,8 +105,6 @@ public class CDKTests
         suite.addTest(UniversalIsomorphismTesterTest.suite());
         // from cdk.test.aromaticity
         suite.addTest(HueckelAromaticityDetectorTest.suite());
-        suite.addTest(HOSECodeTest.suite());
-        suite.addTest(BremserPredictorTest.suite());
         // from cdk.test.structgen
         suite.addTest(RandomStructureGeneratorTest.suite());
 		// from cdk.test.reaction

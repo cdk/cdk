@@ -21,7 +21,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package org.openscience.cdk.tools;
+package org.openscience.cdk.config;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,7 +34,8 @@ import java.util.Vector;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Isotope;
-import org.openscience.cdk.tools.isotopes.IsotopeReader;
+import org.openscience.cdk.config.isotopes.IsotopeReader;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Used to store and return data of a particular isotope. As this class is a
@@ -91,8 +92,8 @@ public class IsotopeFactory
         String errorMessage = "There was a problem getting org.openscience.cdk." +
                               "config.isotopes.xml as a stream";
 		try {
-            String configFile = "org/openscience/cdk/config/isotopes.xml";
-            if (debug) logger.debug("Getting stream for " + configFile);
+            String configFile = "org/openscience/cdk/config/data/isotopes.xml";
+            if (debug) logger.debug("Getting stream for ", configFile);
             ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
 		} catch (Exception exc) {
             logger.error(errorMessage);
@@ -106,7 +107,7 @@ public class IsotopeFactory
         //in = new ObjIn(ins, new Config().aliasID(false));
         //isotopes = (Vector) in.readObject();
         isotopes = reader.readIsotopes();
-        if (debug) logger.debug("Found #isotopes in file: " + isotopes.size());
+        if (debug) logger.debug("Found #isotopes in file: ", isotopes.size());
 		for (int f = 0; f < isotopes.size(); f++) {
             Isotope isotope = (Isotope)isotopes.elementAt(f);
 		}
@@ -192,7 +193,7 @@ public class IsotopeFactory
                 }
             }
         }
-        if (major == null) logger.error("Could not find major isotope for: " + atomicNumber);
+        if (major == null) logger.error("Could not find major isotope for: ", atomicNumber);
         return major;
     }
 
@@ -230,7 +231,7 @@ public class IsotopeFactory
                 }
             }
             if (major == null) {
-                logger.error("Could not find major isotope for: " + symbol);
+                logger.error("Could not find major isotope for: ", symbol);
             } else {
                 majorIsotopes.put(symbol, major);
             }

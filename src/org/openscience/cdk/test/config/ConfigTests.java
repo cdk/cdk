@@ -3,7 +3,7 @@
  * $Date$    
  * $Revision$
  * 
- * Copyright (C) 1997-2004  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2004  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -21,34 +21,23 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
  */
-
-package org.openscience.cdk.test;
+package org.openscience.cdk.test.config;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.test.geometry.CrystalGeometryToolsTest;
-import org.openscience.cdk.test.isomorphism.IsomorphismTesterTest;
-import org.openscience.cdk.test.smiles.SmilesParserTest;
-import org.openscience.cdk.test.config.AtomTypeFactoryTest;
-import org.openscience.cdk.test.config.IsotopeFactoryTest;
-import org.openscience.cdk.test.tools.manipulator.ReactionManipulatorTest;
-
 /**
- * TestSuite that runs all the sample tests
+ * TestSuite that runs all the sample tests in the
+ * org.openscience.cdk.config package.
  *
  * @cdk.module test
  */
-public class StandardClassesTests {
+public class ConfigTests {
 
     public static Test suite () {
-        TestSuite suite= new TestSuite("The cdk.standard Tests");
+        TestSuite suite= new TestSuite("The cdk.tools Tests");
         suite.addTest(AtomTypeFactoryTest.suite());
         suite.addTest(IsotopeFactoryTest.suite());
-        suite.addTest(CrystalGeometryToolsTest.suite());
-        suite.addTest(SmilesParserTest.suite());
-        suite.addTest(ReactionManipulatorTest.suite());
-        suite.addTest(IsomorphismTesterTest.suite());
         return suite;
     }
 

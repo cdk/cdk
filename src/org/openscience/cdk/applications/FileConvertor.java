@@ -75,7 +75,7 @@ import org.openscience.cdk.io.listener.TextGUIListener;
 import org.openscience.cdk.io.program.GaussianInputWriter;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
-import org.openscience.cdk.tools.AtomTypeFactory;
+import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.IDCreator;

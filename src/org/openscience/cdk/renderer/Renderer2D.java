@@ -59,7 +59,7 @@ import org.openscience.cdk.SetOfReactions;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.graph.ConnectivityChecker;
-import org.openscience.cdk.tools.IsotopeFactory;
+import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.validate.ProblemMarker;
 

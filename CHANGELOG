@@ -29,6 +29,8 @@ Fixes:
 * Fixed rendering or aromatic rings with circles (closes #960709)
 
 API changes:
+* AtomTypeFactory and IsotopeFactory moved from cdk.tools to cdk.config
+* Moved atom type and isotope config files to cdk.config.data
 
 20040513 Release
 ------------------------------------

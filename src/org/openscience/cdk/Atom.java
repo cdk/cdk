@@ -55,7 +55,7 @@ import javax.vecmath.Point3d;
  * @cdk.created    2000-10-02
  * @cdk.keyword    atom
  *
- * @see  org.openscience.cdk.tools.IsotopeFactory#getInstance()
+ * @see  org.openscience.cdk.config.IsotopeFactory#getInstance()
  */
 public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
     

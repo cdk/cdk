@@ -52,7 +52,7 @@ import org.openscience.cdk.graph.invariant.MorganNumbersTools;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.graph.ConnectivityChecker;
-import org.openscience.cdk.tools.IsotopeFactory;
+import org.openscience.cdk.config.IsotopeFactory;
 
 /**
  * Generates SMILES strings. It takes into account the isotope and formal charge

@@ -21,21 +21,21 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package org.openscience.cdk.tools;
+package org.openscience.cdk.config;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Vector;
 
-import org.openscience.cdk.tools.atomtypes.AtomTypeReader;
+import org.openscience.cdk.config.atomtypes.AtomTypeReader;
 
 /**
  * @cdk.module standard
  */
 public class CDKBasedAtomTypeConfigurator implements AtomTypeConfigurator {
 
-    private String configFile = "org.openscience.cdk.config.structgen_atomtypes.xml";
+    private String configFile = "org.openscience.cdk.config.data.structgen_atomtypes.xml";
     private InputStream ins = null;
     
     public CDKBasedAtomTypeConfigurator() {

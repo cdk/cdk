@@ -39,7 +39,7 @@ package org.openscience.cdk;
  *
  * @cdk.keyword element
  *
- * @see org.openscience.cdk.tools.IsotopeFactory
+ * @see org.openscience.cdk.config.IsotopeFactory
  */
 public class Element extends ChemObject implements java.io.Serializable, Cloneable
 {
