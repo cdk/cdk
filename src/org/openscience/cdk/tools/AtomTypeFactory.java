@@ -44,6 +44,8 @@ import org.openscience.cdk.exception.*;
  *  AtomTypeFactory factory = AtomTypeFactory.getInstance();
  *  </pre>
  *
+ * <p>For each atom type list a separate AtomTypeFactory is instantiated.
+ *
  * @author     steinbeck
  * @created    2001-08-29
  * @keyword    atom, type
@@ -87,14 +89,21 @@ public class AtomTypeFactory {
     }
 
     /**
-     * Method to create a default AtomTypeFactory.
+     * Method to create a default AtomTypeFactory, using the structgen atom type list.
+     *
+     * @see #getInstance(String)
      */
     public static AtomTypeFactory getInstance() throws IOException, OptionalDataException, ClassNotFoundException {
         return getInstance("org/openscience/cdk/config/structgen_atomtypes.xml");
     }
 
     /**
-     * Method to create a default AtomTypeFactory.
+     * Method to create a default AtomTypeFactory. Available configFiles in CDK are:
+     * <ul>
+     *  <li>org/openscience/cdk/config/structgen_atomtypes.xml
+     *  <li>org/openscience/cdk/config/jmol_atomtypes.txt
+     *  <li>org/openscience/cdk/config/mol2_atomtypes.txt
+     * </ul>
      */
     public static AtomTypeFactory getInstance(String configFile) throws IOException, OptionalDataException, ClassNotFoundException {
         if (tables == null) {
@@ -223,23 +232,22 @@ public class AtomTypeFactory {
 	 *@return         An array of atomtypes that matches the given element symbol
 	 *      and atomtype class
 	 */
-	public AtomType[] getAtomTypes(String symbol, String id)
+	public AtomType[] getAtomTypes(String symbol)
 	{
-		//System.out.println("Request for atomtype " + id + " for symbol " + symbol);
+		logger.debug("Request for atomtype for symbol " + symbol);
 		Vector al = new Vector();
 		AtomType atomType = null;
 		for (int f = 0; f < atomTypes.size(); f++)
 		{
 			AtomType at = (AtomType) atomTypes.elementAt(f);
-			if (at.getSymbol().equals(symbol) && (at.getAtomTypeName().indexOf(id) > -1))
-			{
-				//System.out.println("Atomtype for symbol " + symbol + " found.");
+			if (at.getSymbol().equals(symbol)) {
+				logger.debug("Atomtype for symbol " + symbol + " found.");
 				al.addElement((AtomType) at.clone());
 			}
 		}
 		AtomType[] atomTypes = new AtomType[al.size()];
 		al.copyInto(atomTypes);
-		//System.out.println("Atomtype for symbol " + symbol + " looks like this: " + atomTypes[0]);
+		logger.debug("Atomtype for symbol " + symbol + " looks like this: " + atomTypes[0]);
 		return atomTypes;
 	}
 
@@ -278,7 +286,7 @@ public class AtomTypeFactory {
             String atomTypeName = atom.getAtomTypeName();
             if (atomTypeName == null || atomTypeName.length() == 0) {
                 logger.debug("Using atom symbol because atom type name is empty...");
-                AtomType[] types = getAtomTypes(atom.getSymbol(), "structgen");
+                AtomType[] types = getAtomTypes(atom.getSymbol());
                 if (types.length > 0) {
                     logger.warn("Taking first atom type, but other may exist");
                     at = types[0];
