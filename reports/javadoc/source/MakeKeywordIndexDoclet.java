@@ -8,12 +8,16 @@ public class MakeKeywordIndexDoclet {
     private final String omitPackageNamePart = "org.openscience.cdk.";
 
     private TreeMap keywords;
+    private TreeMap secondaryKeywords;
+    private Hashtable primaryToSecondary;
 
     private PrintWriter out;
 
     public MakeKeywordIndexDoclet(PrintWriter out) {
         this.out = out;
         this.keywords = new TreeMap(new LowerCaseComparator());
+        this.secondaryKeywords = new TreeMap(new LowerCaseComparator());
+        this.primaryToSecondary = new Hashtable();
     }
 
     public void process(RootDoc root) throws IOException {
@@ -31,6 +35,20 @@ public class MakeKeywordIndexDoclet {
             out.println("    <primaryie>" + keyword + " " +
                         (String)keywords.get(keyword) +
                         " </primaryie>");
+            if (this.primaryToSecondary.containsKey(keyword)) {
+                Vector v = (Vector)this.primaryToSecondary.get(keyword);
+                Enumeration secondaryWords = v.elements();
+                while (secondaryWords.hasMoreElements()) {
+                    String completeWord = (String)secondaryWords.nextElement();
+                    StringTokenizer st = new StringTokenizer(completeWord, ",");
+                    String primaryWord = st.nextToken().trim();
+                    String secondaryWord = st.nextToken().trim();
+                    // there are secondary words
+                    out.println("    <secondaryie>" + secondaryWord + " " +
+                                (String)secondaryKeywords.get(completeWord) +
+                                " </secondaryie>");
+                }
+            }
             out.println("  </indexentry>");
         }
         out.println("</index>");
@@ -52,11 +70,39 @@ public class MakeKeywordIndexDoclet {
                 String markedUpClassName = "<ulink url=\"" + rootToAPI +
                                            toAPIPath(className) + "\">" +
                                            className + "</ulink>";
-                if (this.keywords.containsKey(word)) {
-                    this.keywords.put(word, this.keywords.get(word) + ", " +
-                                            markedUpClassName);
+                if (word.indexOf(",") != -1) {
+                    StringTokenizer st = new StringTokenizer(word, ",");
+                    String primaryWord = st.nextToken().trim();
+                    String secondaryWord = st.nextToken().trim(); // dirty, should check!
+                    Vector v = new Vector();
+                    if (this.primaryToSecondary.containsKey(primaryWord)) {
+                        v = (Vector)this.primaryToSecondary.get(primaryWord);
+                    }
+                    v.add(word);
+                    this.primaryToSecondary.put(primaryWord, v);
+                    if (this.secondaryKeywords.containsKey(word)) {
+                        this.secondaryKeywords.put(word,
+                                this.secondaryKeywords.get(word) + ", " +
+                                markedUpClassName);
+                    } else {
+                        this.secondaryKeywords.put(word, markedUpClassName);
+                    }
+                    // make copy based on secondary word, i.e.
+                    // "file format, CML" is placed as file format -> CML
+                    // and as CML
+                    if (this.keywords.containsKey(secondaryWord)) {
+                        this.keywords.put(secondaryWord, this.keywords.get(secondaryWord) + ", " +
+                                                markedUpClassName);
+                    } else {
+                        this.keywords.put(secondaryWord, markedUpClassName);
+                    }
                 } else {
-                    this.keywords.put(word, markedUpClassName);
+                    if (this.keywords.containsKey(word)) {
+                        this.keywords.put(word, this.keywords.get(word) + ", " +
+                                                markedUpClassName);
+                    } else {
+                        this.keywords.put(word, markedUpClassName);
+                    }
                 }
             }
         }
