@@ -31,6 +31,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.Bond;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.IDCreator;
@@ -50,15 +51,47 @@ public class IDCreatorTest extends TestCase {
 		return new TestSuite(IDCreatorTest.class);
 	}
 
-	public void testKeepingIDs()	{
+	public void testStartID() {
+		Molecule mol = new Molecule();
+        Atom atom1 = new Atom("C");
+        Atom atom2 = new Atom("C");
+        mol.addAtom(atom1);
+        mol.addAtom(atom2);
+        Bond bond = new Bond(atom1, atom2);
+        mol.addBond(bond);
+        
+        IDCreator idCreator = new IDCreator();
+        idCreator.createIDs(mol);
+        
+        assertEquals("a1", atom1.getID());
+        assertEquals("b1", bond.getID());
+	}
+	
+	public void testKeepingIDs() {
 		Molecule mol = new Molecule();
         Atom atom = new Atom("C");
         atom.setID("atom1");
+        mol.addAtom(atom);
         
         IDCreator idCreator = new IDCreator();
         idCreator.createIDs(mol);
         
         assertEquals("atom1", atom.getID());
+        assertNotNull(mol.getID());
+	}
+	
+	public void testNoDuplicateCreation() {
+		Molecule mol = new Molecule();
+        Atom atom1 = new Atom("C");
+        Atom atom2 = new Atom("C");
+        atom1.setID("a1");
+        mol.addAtom(atom2);
+        mol.addAtom(atom1);
+        
+        IDCreator idCreator = new IDCreator();
+        idCreator.createIDs(mol);
+        
+        assertEquals("a2", atom2.getID());
 	}
 	
 }
