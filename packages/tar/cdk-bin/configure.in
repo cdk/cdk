@@ -46,6 +46,7 @@ AC_OUTPUT([
    bin/Makefile
    bin/cdk-dbadmin
    bin/cdk-fileconvert
+   bin/cdk-view
    jar/Makefile
    man/Makefile
 ])
