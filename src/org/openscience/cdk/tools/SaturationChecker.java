@@ -388,9 +388,10 @@ public class SaturationChecker
 	 *@keyword          hydrogen, adding
 	 *@keyword          explicit hydrogen
 	 */
-	public void addHydrogensToSatisfyValency(Molecule molecule)
+	public void addHydrogensToSatisfyValency(Molecule molecule) throws IOException, ClassNotFoundException
 	{
 		Atom[] atoms = molecule.getAtoms();
+    Isotope isotope = IsotopeFactory.getInstance().getMajorIsotope("H");
 		for (int f = 0; f < atoms.length; f++)
 		{
 			Atom atom = atoms[f];
@@ -400,8 +401,9 @@ public class SaturationChecker
 			int missingHydrogens = calculateMissingHydrogen(atom, molecule);
 			for (int i = 1; i <= missingHydrogens; i++)
 			{
-				Atom hydrogen = new Atom("H");
-				molecule.addAtom(hydrogen);
+    		Atom hydrogen = new Atom("H");
+        IsotopeFactory.getInstance().configure(hydrogen, isotope);
+        molecule.addAtom(hydrogen);
 				Bond newBond = new Bond(atom, hydrogen, 1.0);
 				molecule.addBond(newBond);
 			}
