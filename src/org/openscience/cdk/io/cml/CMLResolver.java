@@ -6,7 +6,7 @@
  *
  * This class was based on the DTDResolver class developed by Dan Gezelter.
  *
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -27,7 +27,7 @@
 package org.openscience.cdk.io.cml;
 
 import org.xml.sax.*;
-import org.xml.sax.ext.EntityResolver2;
+import org.xml.sax.EntityResolver;
 import java.net.URL;
 import java.io.*;
 
@@ -36,7 +36,7 @@ import java.io.*;
  * files and uses a local version for validation. More information about
  * CML can be found at http://www.xml-cml.org/.
  **/
-public class CMLResolver implements EntityResolver2 {
+public class CMLResolver implements EntityResolver {
 
     private org.openscience.cdk.tools.LoggingTool logger;
 
