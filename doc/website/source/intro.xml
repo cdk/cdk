@@ -31,7 +31,7 @@
 			for computational chemistry. Christoph Steinbeck started this chemistry library when he started programming SENECA, a system for Computer Assisted Structure Elucidation.
 			It turned out that some of
 			the code had design flaws that prevented others, like the authors of
-			(<ulink url="http://www.openscience.org/jmol">Jmol</ulink>) to use it.
+			(<ulink url="http://www.jmol.org/">Jmol</ulink>) to use it.
 			Egon, Dan and Chris now met in September 2000 at the University of Notre Dame,
 			South Bend, Chicago, and redesigned the CompChem classes, calling the
 			new project the "Chemistry Development Kit, CDK".

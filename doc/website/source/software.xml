@@ -44,7 +44,7 @@
     <section>
       <title>Jmol</title>
       <para>
-        <ulink url="http://jmol.sf.net/">Jmol</ulink> is a 3D chemical 
+        <ulink url="http://www.jmol.org/">Jmol</ulink> is a 3D chemical 
         animator/viewer and use CDK for reading CML. As of version 6, Jmol release
         will also use the cdk-core classes for data storage. Later, other 
         functionality will be ported to CDK or used from CDK. More specifically,

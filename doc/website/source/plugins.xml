@@ -21,7 +21,7 @@
       API can make use of CDK plugins, one plugin that can run in all CDK based programs.
       At this moment there are two programs that implement the plugin API, and thus two
       programs in which the plugins can be run: 
-      <ulink url="http://jmol.sf.net/">Jmol</ulink> and
+      <ulink url="http://www.jmol.org/">Jmol</ulink> and
       <ulink url="http://jchempaint.sf.net/">JChemPaint</ulink>.
     </para>
     <para>
