@@ -38,7 +38,8 @@ import java.awt.*;
  * Class that acts on MouseEvents.
  */
 public class CDKInputAdapter extends JCPController2D 
-    implements MouseMotionListener, MouseListener, KeyListener {
+    implements MouseMotionListener, MouseListener, KeyListener
+    {
 
     /**
      * Constructs a <code>CDKInputAdapter</code> that acts on the

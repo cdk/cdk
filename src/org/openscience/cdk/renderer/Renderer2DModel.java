@@ -37,9 +37,10 @@ import java.util.*;
 /**
  * Model for Renderer2D that contains settings for drawing objects.
  */
-public class Renderer2DModel {
+public class Renderer2DModel implements java.io.Serializable, Cloneable 
+{
     
-	private double scaleFactor = 60.0;
+    private double scaleFactor = 60.0;
     
     /** Determines how much the image is zoomed into on. */
     private double zoomFactor = 1.0;
@@ -68,7 +69,7 @@ public class Renderer2DModel {
 	
 	private Hashtable colorHash = new Hashtable();
 	
-	private Vector listeners = new Vector();
+	private transient Vector listeners = new Vector();
 	
 	private Point pointerVectorStart = null;
 	
@@ -573,6 +574,10 @@ public class Renderer2DModel {
 
 	public void addCDKChangeListener(CDKChangeListener listener)
 	{
+		if (listeners == null)
+		{
+			listeners = new Vector();	
+		}
 		listeners.add(listener);
 	}
 	
@@ -595,6 +600,11 @@ public class Renderer2DModel {
 	public void fireChange()
 	{
 		EventObject event = new EventObject(this);
+		if (listeners == null)
+		{
+			listeners = new Vector();	
+		}
+		
 		for (int i = 0; i < listeners.size(); i++)
 		{
 			((CDKChangeListener)listeners.get(i)).stateChanged(event);

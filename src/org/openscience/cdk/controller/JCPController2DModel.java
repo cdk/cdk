@@ -28,9 +28,7 @@
  */
 package org.openscience.cdk.controller;
 
-import javax.swing.JPopupMenu;
-
-public class JCPController2DModel 
+public class JCPController2DModel implements java.io.Serializable, Cloneable
 {
 	
     public final static int DRAWBOND = 0;
