@@ -55,10 +55,10 @@ public class RSSHandler extends DefaultHandler {
     private String cData;
     private boolean readdedNamespace;
     
-    private String itemTitle;
-    private String itemDesc;
-    private String itemDate;
-    private String itemLink;
+    private String itemTitle = "";
+    private String itemDesc = "";
+    private String itemDate = "";
+    private String itemLink = "";
     
     /**
      * Constructor for the RSSHandler.
@@ -93,7 +93,7 @@ public class RSSHandler extends DefaultHandler {
     }
 
     public void endElement(String uri, String local, String raw) {
-       logger.debug("</" + raw + ">");
+        logger.debug("</" + raw + ">");
         if (uri.equals("http://www.xml-cml.org/schema/cml2/core")) {
             cmlString += cData;
             cmlString += toEndTag(raw);
@@ -140,6 +140,8 @@ public class RSSHandler extends DefaultHandler {
             itemDesc = cData;
         } else if (local.equals("date")) {
             itemDate = cData;
+        } else if (local.equals("channel")) {
+            channelSequence.setProperty(ChemicalRSSReader.RSS_CHANNEL_TITLE, itemTitle);
         } else {
             logger.debug("Unparsed element: " + local);
             logger.debug("  uri: " + uri);

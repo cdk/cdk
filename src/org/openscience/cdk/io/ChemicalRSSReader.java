@@ -58,14 +58,17 @@ import org.xml.sax.XMLReader;
  */
 public class ChemicalRSSReader extends DefaultChemObjectReader {
 
+    /** ChemSequence property containing the channel title */
+    public final static String RSS_CHANNEL_TITLE = "org.openscience.cdk.io.chemrss.CHANNEL_TITLE";
+
     /** ChemModel property containing the channel item title */
-    public final static String RSS_ITEM_TITLE = "org.openscience.cdk.io.chemrss.TITLE";
+    public final static String RSS_ITEM_TITLE = "org.openscience.cdk.io.chemrss.ITEM_TITLE";
     /** ChemModel property containing the channel item date */
-    public final static String RSS_ITEM_DATE = "org.openscience.cdk.io.chemrss.DATE";
+    public final static String RSS_ITEM_DATE = "org.openscience.cdk.io.chemrss.ITEM_DATE";
     /** ChemModel property containing the channel item link */
-    public final static String RSS_ITEM_LINK = "org.openscience.cdk.io.chemrss.LINK";
+    public final static String RSS_ITEM_LINK = "org.openscience.cdk.io.chemrss.ITEM_LINK";
     /** ChemModel property containing the channel item description */
-    public final static String RSS_ITEM_DESCRIPTION = "org.openscience.cdk.io.chemrss.DESCRIPTION";
+    public final static String RSS_ITEM_DESCRIPTION = "org.openscience.cdk.io.chemrss.ITEM_DESCRIPTION";
     
     private XMLReader parser;
     private Reader input;
