@@ -33,7 +33,7 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.exception.CDKException;
 
 /**
- * TestSuite that runs all QSAR tests.
+ * TestSuite that runs a test for the AtomCountDescriptor.
  *
  * @cdk.module test
  */
