@@ -8,6 +8,7 @@ changes since "cdk preview 20010807"
 * Added classes for rendering graphes
 * Added classes for complex numbers, vectors and matrices
 * Change name from Job to ClosedShellJob
+* Added Factories for AtomType, Element and Isotope as well as their testcases.
 
 changes since "cdk preview 20010511"
 ------------------------------------
