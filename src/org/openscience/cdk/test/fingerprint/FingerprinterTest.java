@@ -62,17 +62,9 @@ public class FingerprinterTest extends TestCase
 	public void testFingerprinter() throws java.lang.Exception
 	{
 		Molecule mol = MoleculeFactory.makeIndole();
-		//display(mol);
 		BitSet bs = Fingerprinter.getFingerprint(mol);
 		Molecule frag1 = MoleculeFactory.makePyrrole();
-		//display(frag1);
 		BitSet bs1 = Fingerprinter.getFingerprint(frag1);
-		//System.out.println("bs: " + bs);
-		//System.out.println("bs1: " + bs1);
-		if (Fingerprinter.isSubset(bs, bs1))
-		{
-			//System.out.println("Pyrrole is subset of Indole");	
-		}
 		if (!standAlone) assertTrue(Fingerprinter.isSubset(bs, bs1));
 	}
 
@@ -148,31 +140,6 @@ public class FingerprinterTest extends TestCase
 		return mol;
 	}
 
-	
-	private void display(Molecule molecule)
-	{	
-		StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-		MoleculeViewer2D mv = new MoleculeViewer2D();
-		mv.getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		Renderer2DModel r2dm = mv.getRenderer2DModel();
-		r2dm.setDrawNumbers(true);
-		
-		try
-		{
-			sdg.setMolecule((Molecule)molecule.clone());
-			sdg.generateCoordinates();
-			mv.setAtomContainer(sdg.getMolecule());
-			mv.display();
-		}
-		catch(Exception exc)
-		{
-			System.out.println("*** Exit due to an unexpected error during coordinate generation ***");
-			exc.printStackTrace();
-		}
-	}
-
-	
-	
 	public static void main(String[] args)
 	{
 		try{
