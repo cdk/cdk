@@ -31,6 +31,9 @@ Fixes:
   (closes #1085910)
 * Added missing Ring.toString() and RingSet.toString() methods
 * Fixed setting of undefined stereoparity in PseudoAtom constructor
+* The ChemObject listeners and properties no longer get initialized when a query
+  is done
+* Fixed NullPointerException problems in ChemModel.clone()
 
 API changes:
 * Moved SingleElectron to the core module
