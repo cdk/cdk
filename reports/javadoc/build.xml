@@ -13,6 +13,9 @@
         <fileset dir="${pathtojava3d}">
             <include name="*.jar" />
         </fileset>
+        <fileset dir="../../jar/libio">
+            <include name="*.jar" />
+        </fileset>
     </path>
 
     <target name="overview">
@@ -32,11 +35,7 @@
 
     <target name="keyword.index">
         <javadoc private="false" public="true">
-            <classpath refid="project.class.path">
-                <fileset dir="../../../jar/libio">
-                    <include name="*.jar" />
-                </fileset>
-            </classpath>
+            <classpath refid="project.class.path" />
 
             <doclet name="MakeKeywordIndexDoclet" path="."/>
 
