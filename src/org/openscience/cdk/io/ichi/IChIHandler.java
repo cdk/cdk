@@ -150,6 +150,8 @@ public class IChIHandler extends DefaultHandler {
                 } else {
                     logger.warn("Expected dbond data missing!");
                 }
+            } else {
+                logger.warn("Cannot set dbond info for empty tautomer");
             }
         } else {
             // skip all other elements
