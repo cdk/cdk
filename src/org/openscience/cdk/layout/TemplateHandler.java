@@ -82,10 +82,10 @@ public class TemplateHandler
 	public void loadTemplates()
 	{
 		String line = null;
-		InputStream ins = this.getClass().getClassLoader().getResourceAsStream("data/templates/templates.list");
-		BufferedReader reader = new BufferedReader(new InputStreamReader(ins));
 		try
 		{
+			InputStream ins = this.getClass().getClassLoader().getResourceAsStream("data/templates/templates.list");
+			BufferedReader reader = new BufferedReader(new InputStreamReader(ins));
 			while (reader.ready())
 			{
 				line = reader.readLine();
@@ -96,7 +96,7 @@ public class TemplateHandler
 			}
 		} catch (Exception exc)
 		{
-			logger.debug("Could not read template from file " + line);
+			logger.debug("Could not read templates");
 			logger.debug("Reason: " + exc.getMessage());
 			
 		}
