@@ -253,7 +253,7 @@
                     <fileset dir="${build}">
                         <include name="org/openscience/cdk/libio/**" />
                         <include name="org/openscience/cdk/test/libio/**" />
-                        <include name="org/openscience/jmol/**" />
+                        <include name="org/openscience/jmol/PublicJmol.class" />
                     </fileset>
                 </jar>
         </target>
