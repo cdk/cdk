@@ -124,6 +124,26 @@
         depends="compile-with-java3d">
                 <mkdir dir="${dist}/jar" />
 
+                <mkdir
+                dir="${build}/org/openscience/cdk/config" />
+
+                <copy
+                file="org/openscience/cdk/config/isotopes.xml"
+                tofile="${build}/org/openscience/cdk/config/isotopes.xml" />
+                <copy
+                file="org/openscience/cdk/config/structgen_atomtypes.xml"
+                tofile="${build}/org/openscience/cdk/config/structgen_atomtypes.xml" />
+                <copy
+                file="org/openscience/cdk/config/log4j.properties"
+                tofile="${build}/org/openscience/cdk/config/log4j.properties" />
+
+                <mkdir
+                dir="${build}/org/openscience/cdk/io/cml/data" />
+
+                <copy
+                file="org/openscience/cdk/io/cml/data/cml.dtd"
+                tofile="${build}/org/openscience/cdk/io/cml/data/cml.dtd" />          !
+
                 <jar jarfile="${dist}/jar/cdk-with-java3d.jar"
                 basedir="${build}" />
         </target>
