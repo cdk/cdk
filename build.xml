@@ -64,7 +64,7 @@
 
         <target id="check" name="check"
                 description="Checks which parts of CDK can be build.">
-          <available classname="org.openscience.jmol.Crystal"
+          <available classname="org.openscience.jmol.app.Jmol"
                      classpath="${lib}/libio/jmol.jar"
                      property="jmol.present"/>
           <available classname="joelib.molecule.JOEAtom" 
@@ -529,7 +529,7 @@
                     </fileset>
                 </classpath>
 
-                <test name="org.openscience.cdk.test.io.IOTests"
+                <test name="org.openscience.cdk.test.io.cml.IOTests"
                       haltonfailure="no" todir="${reports.tests}"
                       outfile="result.io">
                     <formatter type="brief" />
