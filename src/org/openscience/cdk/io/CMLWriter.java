@@ -114,6 +114,7 @@ import org.xmlcml.cmlimpl.*;
  * @cdk.depends pmrlib.jar
  * @cdk.depends cmlAll.jar
  * @cdk.require java1.4
+ * @cdk.bug     905062
  *
  * @see java.io.FileWriter
  * @see java.io.StringWriter

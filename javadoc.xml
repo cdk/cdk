@@ -35,6 +35,7 @@
                  public="true"
                  windowtitle="CDK API - version ${version}">
             <classpath refid="project.class.path" />
+            <tag name="cdk.set" scope="all" description="Belongs to the set:" />
             <tag name="cdk.keyword" scope="all" description="Keywords:" />
             <tag name="cdk.created" scope="all" description="Created on:" />
             <tag name="cdk.require" scope="all" description="Requires:" />
@@ -42,6 +43,7 @@
             <tag name="cdk.builddepends" scope="all" description="Required library to be able to compile this class:" />
             <taglet name="CDKModuleTaglet" path="doc/javadoc" />
             <taglet name="CDKCiteTaglet" path="doc/javadoc" />
+            <taglet name="CDKBugTaglet" path="doc/javadoc" />
             <packageset dir="${src}" defaultexcludes="yes">
                 <include name="org/openscience/cdk/**" />
                 <exclude name="org/openscience/cdk/test/**"/>

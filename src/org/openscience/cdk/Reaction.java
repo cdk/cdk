@@ -28,7 +28,6 @@
  */
 package org.openscience.cdk;
 
-
 /**
  * Represents the idea of a chemical reaction. The reaction consists of 
  * a set of reactants and a set of products.
@@ -39,9 +38,10 @@ package org.openscience.cdk;
  *
  * @cdk.module core
  *
- * @author     Egon Willighagen <elw38@cam.ac.uk>
- * @cdk.created    2003-02-13
- * @cdk.keyword    reaction
+ * @author      Egon Willighagen <elw38@cam.ac.uk>
+ * @cdk.created 2003-02-13
+ * @cdk.keyword reaction
+ * @cdk.bug     1095690
  */
 public class Reaction extends ChemObject implements java.io.Serializable, Cloneable {
 

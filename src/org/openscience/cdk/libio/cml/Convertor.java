@@ -74,6 +74,7 @@ import org.openscience.cdk.tools.*;
  * @cdk.module    extra
  * @cdk.keyword   CML
  * @cdk.keyword   class convertor
+ * @cdk.bug       905062
  *
  * @cdk.builddepends base.jar
  * @cdk.builddepends pmrlib.jar
