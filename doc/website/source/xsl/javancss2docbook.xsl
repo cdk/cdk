@@ -26,7 +26,7 @@
     </thead>
     <tbody>
         <xsl:for-each select="javancss/packages/package">
-          <xsl:sort select="classes" data-type="number" order="descending"/>
+          <xsl:sort select="ncss" data-type="number" order="descending"/>
           <xsl:apply-templates select="."/>
         </xsl:for-each>
     </tbody>
