@@ -80,9 +80,10 @@
         <target name="compile-with-java3d" depends="init">
                 <mkdir dir="${build}" />
 
-                <javac destdir="${build}" optimize="on"
-                deprecation="off">
+                <javac destdir="${build}" optimize="on" deprecation="off">
                         <src path="." />
+
+                        <exclude name="${sourcedist}/**" />
 
                         <classpath refid="project.class.path" />
                 </javac>
