@@ -31,7 +31,7 @@ import java.util.Map;
 import java.util.Hashtable;
 
 /**
- *  Descriptor based on the number of bonds of a certain element type.
+ *  Descriptor based on the number of bonds of a certain bond order.
  *
  *@author     mfe4
  *@cdk.created    2004-11-13
