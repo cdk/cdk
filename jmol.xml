@@ -35,7 +35,7 @@
     
   <target name="compile-applet">
 
-    <patch patchfile="${src}/patches/org.openscience.cdk.toold.LoggingTool.java.MakeUsableInJmolApplet"
+    <patch patchfile="${src}/patches/org.openscience.cdk.tools.LoggingTool.java.MakeUsableInJmolApplet"
            originalfile="${build.src}/org/openscience/cdk/tools/LoggingTool.java"
            dir="${build.src}/org/openscience/cdk/tools"/>
     <patch patchfile="${src}/patches/org.openscience.cdk.tools.AtomTypeFactory-noFileCheck"

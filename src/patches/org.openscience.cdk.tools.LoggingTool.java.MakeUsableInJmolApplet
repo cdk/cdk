@@ -1,6 +1,6 @@
---- src/org/openscience/cdk/tools/LoggingTool.java	2003-08-14 14:39:25.000000000 +0100
-+++ src/org/openscience/cdk/tools/LoggingTool.java.JmolApplet	2003-08-14 19:40:56.000000000 +0100
-@@ -30,7 +30,6 @@
+--- src/org/openscience/cdk/tools/LoggingTool.java	2003-09-04 11:41:59.612452000 +0200
++++ src/org/openscience/cdk/tools/LoggingTool.java.JmolApplet	2003-09-04 11:41:26.398364000 +0200
+@@ -32,7 +32,6 @@
      private boolean debug = false;
      private boolean tostdout = false;
  
@@ -8,12 +8,7 @@
      private String classname;
      
      /** Default number of StackTraceElements to be printed by debug(Exception) */
-@@ -39,58 +38,12 @@
-      private int stackLength = DEFAULT_STACK_LENGTH;
- 
-     public LoggingTool() {
--        this( LoggingTool.class.getName() );
-     }
+@@ -46,59 +45,8 @@
  
      public LoggingTool(String classname) {
          this.classname = classname;
@@ -30,8 +25,11 @@
 -            if (false)
 -              throw new ClassNotFoundException();
 -            // configure Log4J
--            URL url = getClass().getClassLoader().getResource("/org/openscience/cdk/config/log4j.properties");
--            org.apache.log4j.PropertyConfigurator.configure(url);
+-            //URL url = getClass().getClassLoader().getResource("/org/openscience/cdk/config/log4j.properties");
+-	    InputStream ins = this.getClass().getClassLoader().getResourceAsStream("org/openscience/cdk/config/log4j.properties");
+-	    Properties props = new Properties();
+-	    props.load(ins);
+-            org.apache.log4j.PropertyConfigurator.configure(props);
 -        } catch (ClassNotFoundException e) {
 -            tostdout = true;
 -            debug("Log4J class not found!");
@@ -49,7 +47,7 @@
 -         * this exception handler. So we are going to check the JVM
 -         * version first
 -         ****************************************************************/
-+        tostdout = false;
++        tostdout = true;
          debug = false;
 -        String strJvmVersion = System.getProperty("java.version");
 -        if (strJvmVersion.compareTo("1.2") >= 0) {
@@ -60,6 +58,9 @@
 -            if (System.getProperty("cdk.debugging", "false").equals("true")) {
 -              debug = true;
 -            }
+-            if (System.getProperty("cdk.debug.stdout", "false").equals("true")) {
+-              tostdout = true;
+-            }
 -          } catch (Exception e) {
 -            // guess what happens: security exception from applet runner
 -            // do not debug in those cases
@@ -68,7 +69,7 @@
      }
  
      public void dumpSystemProperties() {
-@@ -116,70 +69,23 @@
+@@ -124,70 +72,23 @@
      }
  
      public void debug(Exception exception) {
