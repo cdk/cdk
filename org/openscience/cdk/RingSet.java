@@ -132,14 +132,14 @@ public class RingSet extends Vector{
 	{
 		Vector connectedRings = new Vector();
 		Ring tempRing;
-		Bond bond;
-		for (int i  = 0; i < ring.getBondCount(); i++)
+		Atom atom;
+		for (int i  = 0; i < ring.getAtomCount(); i++)
 		{
-			bond = ring.getBondAt(i);
+			atom = ring.getAtomAt(i);
 			for (int j = 0; j < size(); j++)
 			{	
 				tempRing = (Ring)elementAt(j);
-				if (tempRing != ring && tempRing.contains(bond))
+				if (tempRing != ring && tempRing.contains(atom))
 				{
 					connectedRings.addElement(tempRing);
 				}
@@ -156,25 +156,33 @@ public class RingSet extends Vector{
 	public Ring getMostComplexRing()
 	{
 		int[] neighbors = new int[size()];
-		Ring ring;
-		Bond bond1, bond2;
+		Ring ring1, ring2;
+		Atom atom1, atom2;
 		int mostComplex = 0, mostComplexPosition = 0;
+		/* for all rings in this RingSet */
 		for (int i = 0; i < size(); i++)
 		{
-			ring = (Ring)elementAt(i);
-			for (int j = 0; j < ring.getBondCount(); j++)
+			/* Take each ring */
+			ring1 = (Ring)elementAt(i);
+			/* look at each Atom in this ring whether it is part of any other ring */
+			for (int j = 0; j < ring1.getAtomCount(); j++)
 			{
-				bond1 = ring.getBondAt(j);
+				atom1 = ring1.getAtomAt(j);
+				/* Look at each of the other rings in the ringset */
 				for (int k = i + 1; k < size(); k++)
 				{
-					ring = (Ring)elementAt(k);
-					for (int l = 0; l < ring.getBondCount(); l++)
+					ring2 = (Ring)elementAt(k);
+					if (ring1 != ring2)
 					{
-						bond2 = ring.getBondAt(l);
-						if (bond1 == bond2)
+						for (int l = 0; l < ring2.getAtomCount(); l++)
 						{
-							neighbors[i]++;								
-							neighbors[k]++;
+							atom2 = ring2.getAtomAt(l);
+							if (atom1 == atom2)
+							{
+								neighbors[i]++;								
+								neighbors[k]++;
+								break;
+							}
 						}
 					}
 				}

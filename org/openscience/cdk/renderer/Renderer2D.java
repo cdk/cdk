@@ -40,7 +40,7 @@ public class Renderer2D
 	SSSRFinder sssrf = new SSSRFinder();
 	Renderer2DModel r2dm;
 	Graphics g;
-	
+	Molecule molecule;
 
 	/**
 	 * Constructs a Renderer2D
@@ -72,9 +72,11 @@ public class Renderer2D
 	public void paintMolecule(Molecule molecule, Graphics g)
 	{
 		this.g = g;
+		this.molecule = molecule;
 		RingSet ringSet = sssrf.findSSSR(molecule);
 		paintBonds(molecule.getBonds(), molecule.getBondCount(), ringSet);
 		paintAtoms(molecule.getAtoms(), molecule.getAtomCount());
+		if (r2dm.drawNumbers()) paintNumbers(molecule.getAtoms(), molecule.getAtomCount());
 	}
 	
 	/**
@@ -92,6 +94,49 @@ public class Renderer2D
 			{
 				paintAtom(atoms[i]);
 			}
+		}
+	}
+
+
+	/**
+	 * Draw all numbers of all atoms in the molecule
+	 *
+	 * @param   atoms     The array of atoms
+	 * @param   number    The number of atoms in this array
+	 */
+	private void paintNumbers(Atom[] atoms, int number)
+	{
+		for (int i = 0; i < number; i++)
+		{
+				paintNumber(atoms[i]);
+		}
+	}
+
+
+   /*
+	* Paints the numbers 
+	*
+	* @param   atom    The atom to be drawn
+	*/
+	private void paintNumber(Atom atom)
+	{
+		FontMetrics fm = g.getFontMetrics();
+		int fontSize = g.getFont().getSize();
+		int xSymbOffset = (new Integer(fm.stringWidth(atom.getElement().getSymbol())/2)).intValue();
+		int ySymbOffset = (new Integer(fm.getAscent()/2)).intValue();
+		try
+		{
+			int i = molecule.getAtomNumber(atom);
+//			g.setColor(r2dm.getBackColor());
+//			g.fillRect((int)(atom.getPoint2D().x - (xSymbOffset * 1.8)),(int)(atom.getPoint2D().y - (ySymbOffset * 0.8)),(int)fontSize,(int)fontSize); 
+			g.setColor(r2dm.getForeColor());
+			g.drawString(new Integer(i).toString(),(int)(atom.getPoint2D().x + (xSymbOffset)),(int)(atom.getPoint2D().y - (ySymbOffset)));
+			g.setColor(r2dm.getBackColor());
+			g.drawLine((int)atom.getPoint2D().x,(int)atom.getPoint2D().y,(int)atom.getPoint2D().x,(int)atom.getPoint2D().y);
+		}
+		catch(Exception exc)
+		{
+		
 		}
 	}
 

@@ -40,7 +40,8 @@ public class Renderer2DModel
 	private Color backColor = Color.white;
 
 	private Color foreColor = Color.black;
-	
+
+	private boolean drawNumbers = false;	
 
 	/**
 	 * Returns the distance between two lines in a double or triple bond
@@ -153,5 +154,16 @@ public class Renderer2DModel
 	public void setBackColor(Color backColor)
 	{
 		this.backColor = backColor;
+	}
+
+	
+	public boolean drawNumbers()
+	{
+		return this.drawNumbers;
+	}
+
+	public void setDrawNumbers(boolean drawNumbers)
+	{
+		this.drawNumbers = drawNumbers;
 	}
 }

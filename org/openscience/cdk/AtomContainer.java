@@ -268,14 +268,14 @@ public class AtomContainer extends ChemObject implements Cloneable{
 		Bond bond;
 		for (int i = 0; i < bondCount; i++)
 		{
-			bond = bonds[i];
-			if (bond.contains(atom))
+			if (bonds[i].contains(atom))
 			{
-				bondsVec.addElement(bond);
+				System.out.println(bonds[i]);
+				bondsVec.addElement(bonds[i]);
 			}
 		}
 		Bond[] conBonds = new Bond[bondsVec.size()];
-		bondsVec.copyInto(bonds);
+		bondsVec.copyInto(conBonds);
 		return conBonds;
 	}
 	

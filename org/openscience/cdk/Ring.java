@@ -88,50 +88,6 @@ public class Ring extends AtomContainer
 		return null;
 	}
 	
-	
-	
-
-	/**
-	 * Returns the atoms that are shared by this ring and a given other ring.
-	 *
-	 * @param   ring  A ring which is supposed to share atoms with this ring
-	 * @return  The Vector of atoms that are shared by this ring and a given other ring.  
-	 */
-	public Vector getSharedAtoms(Ring ring)
-	{
-		Vector sharedAtoms = new Vector();
-		for (int i = 0; i < getAtomCount(); i++)
-		{
-			if (ring.contains(getAtomAt(i)))
-			{
-				 sharedAtoms.addElement(getAtomAt(i));
-			}
-		}
-		return sharedAtoms;
-	}
-	
-	
-
-	/**
-	 * Returns the bonds that are shared by this ring and a given other ring.
-	 *
-	 * @param   ring  A ring which is supposed to share bonds with this ring
-	 * @return  The Vector containing the bonds that are shared by this ring and a given other ring.  
-	 */
-	public Vector getSharedBonds(Ring ring)
-	{
-		Vector sharedBonds = new Vector();
-		for (int i = 0; i < getBondCount(); i++)
-		{
-			if (ring.contains(getBondAt(i)))
-			{
-				 sharedBonds.addElement(getBondAt(i));
-			}
-		}
-		return sharedBonds;
-	}
-
-
 	/**
 	 * Returns the sum of all bond orders in the ring
 	 *
