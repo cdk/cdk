@@ -45,18 +45,11 @@ public class BioPolymer extends Polymer implements java.io.Serializable, Cloneab
 {
 
 	/**
+	 *
 	 * Contructs a new BioPolymer to store the Monomers.
+	 *
 	 */
     public BioPolymer() {
         super();
-    }
-
-    /**
-     * Clones this AtomParity object.
-     *
-     * @return  The cloned object   
-     */
-    public Object clone() throws CloneNotSupportedException {
-        return super.clone();
     }
 }

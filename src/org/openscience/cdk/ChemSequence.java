@@ -157,7 +157,7 @@ public class ChemSequence extends ChemObject implements java.io.Serializable
         return buffer.toString();
     }
 	
-	public Object clone() throws CloneNotSupportedException {
+	public Object clone() {
 		ChemSequence clone = (ChemSequence)super.clone();
         // clone the chemModels
         clone.chemModelCount = getChemModelCount();

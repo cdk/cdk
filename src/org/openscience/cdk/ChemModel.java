@@ -203,7 +203,7 @@ public class ChemModel extends ChemObject implements java.io.Serializable
 	 *
 	 * @return  The cloned object
 	 */
-	public Object clone() throws CloneNotSupportedException {
+	public Object clone() {
 		ChemModel clone = (ChemModel)super.clone();
         // clone the content
         if (setOfMolecules != null) {

@@ -166,7 +166,7 @@ public class ChemFile extends ChemObject implements java.io.Serializable
 	 *
 	 *@return    a clone of this object
 	 */
-	public Object clone() throws CloneNotSupportedException 
+	public Object clone()
 	{
 		ChemFile clone = (ChemFile) super.clone();
 		// clone the chemModels

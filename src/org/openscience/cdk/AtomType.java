@@ -331,20 +331,5 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
         resultString.append(")");
         return resultString.toString(); 
     }
-    
-    /**
-     * Clones this AtomParity object.
-     *
-     * @return  The cloned object   
-     */
-    public Object clone() throws CloneNotSupportedException {
-        AtomType clone = null;
-        try {
-            clone = (AtomType)super.clone();
-        } catch (Exception e) {
-            e.printStackTrace(System.err);
-        }
-        return clone;
-    }
 }
 

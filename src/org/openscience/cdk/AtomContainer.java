@@ -1280,7 +1280,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	 * @return    The cloned object
 	 * @see       #shallowCopy
 	 */
-	public Object clone() throws CloneNotSupportedException {
+	public Object clone() {
 		AtomContainer clone = null;
 		ElectronContainer electronContainer = null;
 		ElectronContainer newEC = null;
