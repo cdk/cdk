@@ -5,8 +5,44 @@
 
   <description>
     This dictionary describes terminology used on CDK classes and configuration
-    files.
+    files. The items are listed in alphabetical order.
   </description>
+  
+  <entry term="absoluteAbundance">
+    <definition>
+       No explicit definition yet.
+    </definition>
+  </entry>
+  
+  <entry term="aromaticAtom">
+    <definition>
+       No explicit definition yet.
+    </definition>
+  </entry>
+
+  <entry term="atomicNumber">
+    <definition>
+       No explicit definition yet.
+    </definition>
+  </entry>
+  
+  <entry term="bondOrder">
+    <definition>
+      No explicit definition yet.
+    </definition>
+  </entry>
+  
+  <entry term="bondOrderSum">
+    <definition>
+      The exact sum of bond orders that this atom type can have.
+    </definition>
+  </entry>
+  
+  <entry term="exactMass">
+    <definition>
+       No explicit definition yet.
+    </definition>
+  </entry>
   
   <entry term="maxBondOrder">
     <definition>
@@ -14,9 +50,9 @@
     </definition>
   </entry>
   
-  <entry term="bondOrderSum">
+  <entry term="relativeAbundance">
     <definition>
-      The exact sum of bond orders that this atom type can have.
+      No explicit definition yet.
     </definition>
   </entry>
   
