@@ -105,7 +105,8 @@
           
         </target>
 
-        <target id="init" name="init" depends="check, setupBuildDir, patchForJava13, src.star.javafiles"/>
+        <target id="init" name="init" depends="check, setupBuildDir"/>
+        <target id="customize" name="customize" depends="patchForJava13, javacc"/>
         
         <target id="setupBuildDir" name="setupBuildDir">
                 <tstamp />
@@ -145,7 +146,7 @@
                 patchfile="${src}/patches/org.openscience.cdk.tools.LoggingTool.java.Java1.3"/>
         </target>
 
-        <target id="init-core-debug" name="init-core-debug" depends="init">
+        <target id="init-core-debug" name="init-core-debug" depends="init, customize">
                 <mkdir dir="${build}/core-debug" />
                 <mkdir dir="${build.core-debug.src}" />
 
@@ -185,13 +186,13 @@
             </javac>
         </target>
 
-        <target name="src.star.javafiles" id="src.star.javafiles" depends="compileDoclet">
+        <target name="compile.init" id="compile.init" depends="init, customize, compileDoclet">
             <javadoc private="false" public="true">
                 <classpath refid="project.class.path" />
         
                 <doclet name="MakeJavaFilesFilesDoclet" path="${doc}/javadoc"/>
         
-                <packageset dir="${src}">
+                <packageset dir="${build}/${src}">
                     <include name="org/openscience/cdk/**"/>
                 </packageset>
             </javadoc>
@@ -205,8 +206,7 @@
         
         <target id="compile" name="compile" 
             description="Compiles the CDK."
-            depends="init, info, src.star.javafiles, 
-                     compile-core, compile-standard, compile-extra, compile-io, 
+            depends="compile-core, compile-standard, compile-extra, compile-io, 
                      compile-render, compile-render-with-java3d, compile-libio">
         </target>
 
@@ -275,11 +275,7 @@
             </javac>
         </target>
 
-        <target id="patch-core" name="patch-core" 
-            depends="init">
-        </target>
-        
-        <target id="compile-core" name="compile-core" depends="init, patch-core">
+        <target id="compile-core" name="compile-core" depends="compile.init">
                 <echo message="Compiling classes for cdk-core module." />
 
                 <javac srcdir="${build.src}" destdir="${build}" optimize="${optimization}" 
@@ -380,7 +376,7 @@
                  patchfile="${src}/patches/org.openscience.cdk.test.CDKTests.noAnt16"/>
         </target>
 
-        <target id="compile-extra" name="compile-extra" depends="dist-standard, dist-io, dist-render, javacc">
+        <target id="compile-extra" name="compile-extra" depends="dist-standard, dist-io, dist-render">
             <javac srcdir="${build.src}" destdir="${build}" optimize="${optimization}" 
                    debug="${debug}" deprecation="${deprecation}"
                    includesfile="${src}/extra.javafiles">
