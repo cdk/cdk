@@ -119,7 +119,7 @@ public final class Bspt {
     eleRoot.dump(0);
   }
 
-  public Enumeration enum() {
+  public Enumeration enumeration() {
     return new EnumerateAll();
   }
 

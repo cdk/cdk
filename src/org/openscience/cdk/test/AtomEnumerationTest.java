@@ -49,18 +49,18 @@ public class AtomEnumerationTest extends TestCase {
     public void setUp() {}
     
     public void testHasMoreElements() {
-	AtomContainer ac = new AtomContainer();
-	ac.addAtom(new Atom("C"));
-	ac.addAtom(new Atom("C"));
-	ac.addAtom(new Atom("C"));
-        AtomEnumeration enum = (AtomEnumeration)ac.atoms();
-        assertTrue(enum.hasMoreElements());
-        Atom a1 = (Atom)enum.nextElement();
-        assertTrue(enum.hasMoreElements());
-        Atom a2 = (Atom)enum.nextElement();
-        assertTrue(enum.hasMoreElements());
-        Atom a3 = (Atom)enum.nextElement();
-        assertTrue(!enum.hasMoreElements());
+        AtomContainer ac = new AtomContainer();
+        ac.addAtom(new Atom("C"));
+        ac.addAtom(new Atom("C"));
+        ac.addAtom(new Atom("C"));
+        AtomEnumeration enumeration = (AtomEnumeration)ac.atoms();
+        assertTrue(enumeration.hasMoreElements());
+        Atom a1 = (Atom)enumeration.nextElement();
+        assertTrue(enumeration.hasMoreElements());
+        Atom a2 = (Atom)enumeration.nextElement();
+        assertTrue(enumeration.hasMoreElements());
+        Atom a3 = (Atom)enumeration.nextElement();
+        assertFalse(enumeration.hasMoreElements());
     }
 
     public static Test suite() {
