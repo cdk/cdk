@@ -149,5 +149,11 @@ public class StructureDiagramGeneratorTest extends TestCase {
         AtomContainer ac = generateCoordinates(mol);
 	}
     
+	public void testBug780545() throws Exception{
+        Molecule mol = new Molecule();
+        mol.addAtom(new Atom("C"));
+        AtomContainer ac = generateCoordinates(mol);
+	}
+    
 }
 
