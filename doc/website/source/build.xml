@@ -1,0 +1,54 @@
+<project name="CDK Website Build File" default="website" basedir=".">
+
+  <target name="website">
+    <!-- note the duplication. If I understand the Ant website correctly, it should
+         be possible to use the includes="*.xml" instead with Ant 1.5.2/Xalan and the
+         reloadstylesheet attribute. But I only have Ant 1.5.1 at the moment :( -->
+    <xslt in="agenda.xml" out="../build/agenda.html" style="xsl/tabular.xsl"/>
+    <xslt in="api.xml" out="../build/api.html" style="xsl/tabular.xsl"/>
+    <xslt in="biblio.xml" out="../build/biblio.html" style="xsl/tabular.xsl"/>
+    <xslt in="changelog.xml" out="../build/changelog.html" style="xsl/tabular.xsl"/>
+    <xslt in="contact.xml" out="../build/contact.html" style="xsl/tabular.xsl"/>
+    <xslt in="development.xml" out="../build/development.html" style="xsl/tabular.xsl"/>
+    <xslt in="documentation.xml" out="../build/documentation.html" style="xsl/tabular.xsl"/>
+    <xslt in="download.xml" out="../build/download.html" style="xsl/tabular.xsl"/>
+    <xslt in="guide-docs.xml" out="../build/guide-docs.html" style="xsl/tabular.xsl"/>
+    <xslt in="guide-library-development.xml" out="../build/guide-library-development.html" style="xsl/tabular.xsl"/>
+    <xslt in="guide-packages.xml" out="../build/guide-packages" style="xsl/tabular.xsl"/>
+    <xslt in="guide-website-development.xml" out="../build/guide-website-development.html" style="xsl/tabular.xsl"/>
+    <xslt in="guide.xml" out="../build/guide.html" style="xsl/tabular.xsl"/>
+    <xslt in="intro.xml" out="../build/intro.html" style="xsl/tabular.xsl"/>
+    <xslt in="javadoc-stats.xml" out="../build/javadoc-stats.html" style="xsl/tabular.xsl"/>
+    <xslt in="javancss-stats.xml" out="../build/javancss-stats.html" style="xsl/tabular.xsl"/>
+    <xslt in="keywordindex.xml" out="../build/keywordindex.html" style="xsl/tabular.xsl"/>
+    <xslt in="libraries.xml" out="../build/libraries.html" style="xsl/tabular.xsl"/>
+    <xslt in="man-dbadmin.xml" out="../build/man-dbadmin.html" style="xsl/tabular.xsl"/>
+    <xslt in="man-download.xml" out="../build/man-download.html" style="xsl/tabular.xsl"/>
+    <xslt in="man-fileconvert.xml" out="../build/man-fileconvert.html" style="xsl/tabular.xsl"/>
+    <xslt in="man-test.xml" out="../build/man-test.html" style="xsl/tabular.xsl"/>
+    <xslt in="manpages.xml" out="../build/manpages.html" style="xsl/tabular.xsl"/>
+    <xslt in="reference.xml" out="../build/reference.html" style="xsl/tabular.xsl"/>
+    <xslt in="related.xml" out="../build/related.html" style="xsl/tabular.xsl"/>
+    <xslt in="rfc.xml" out="../build/rfc.html" style="xsl/tabular.xsl"/>
+    <xslt in="rfc1.xml" out="../build/rfc1.html" style="xsl/tabular.xsl"/>
+    <xslt in="rfc2.xml" out="../build/rfc2.html" style="xsl/tabular.xsl"/>
+    <xslt in="rfc3.xml" out="../build/rfc3.html" style="xsl/tabular.xsl"/>
+    <xslt in="rfc4.xml" out="../build/rfc4.html" style="xsl/tabular.xsl"/>
+    <xslt in="rfc5.xml" out="../build/rfc5.html" style="xsl/tabular.xsl"/>
+    <xslt in="rfc6.xml" out="../build/rfc6.html" style="xsl/tabular.xsl"/>
+    <xslt in="rfc7.xml" out="../build/rfc7.html" style="xsl/tabular.xsl"/>
+    <xslt in="rfc8.xml" out="../build/rfc8.html" style="xsl/tabular.xsl"/>
+    <xslt in="rfc9.xml" out="../build/rfc9.html" style="xsl/tabular.xsl"/>
+    <xslt in="rfc10.xml" out="../build/rfc10.html" style="xsl/tabular.xsl"/>
+    <xslt in="rfc11.xml" out="../build/rfc11.html" style="xsl/tabular.xsl"/>
+    <xslt in="rfc12.xml" out="../build/rfc12.html" style="xsl/tabular.xsl"/>
+    <xslt in="rfc13.xml" out="../build/rfc13.html" style="xsl/tabular.xsl"/>
+    <xslt in="rfc14.xml" out="../build/rfc14.html" style="xsl/tabular.xsl"/>
+    <xslt in="screenshots.xml" out="../build/screenshots.html" style="xsl/tabular.xsl"/>
+    <xslt in="software.xml" out="../build/software.html" style="xsl/tabular.xsl"/>
+    <xslt in="thelibrary.xml" out="../build/thelibrary.html" style="xsl/tabular.xsl"/>
+    <xslt in="website.xml" out="../build/website.html" style="xsl/tabular.xsl"/>
+    <xslt in="whoiswho.xml" out="../build/whoiswho.html" style="xsl/tabular.xsl"/>
+  </target>
+
+</project>
