@@ -55,7 +55,15 @@ public class AtomType extends Isotope
 	 */
 	double maxBondOrderSum;
 
-
+    /**
+     * The Vanderwaals radius of this atom type.
+     */
+    double vanderwaalsRadius;
+    /**
+     * The covalent radius of this atom type.
+     */
+    double covalentRadius;
+    
 	/**
 	 *  Constructor for the AtomType object.
      *
@@ -173,6 +181,22 @@ public class AtomType extends Isotope
             return true;
         }
         return false;
+    }
+    
+    public void setVanderwaalsRadius(double radius) {
+        this.vanderwaalsRadius = radius;
+    }
+    
+    public double getVanderwaalsRadius() {
+        return this.vanderwaalsRadius;
+    }
+    
+    public void setCovalentRadius(double radius) {
+        this.covalentRadius = radius;
+    }
+    
+    public double getCovalentRadius() {
+        return this.covalentRadius;
     }
     
     public String toString() {
