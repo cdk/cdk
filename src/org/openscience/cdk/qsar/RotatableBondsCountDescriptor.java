@@ -37,7 +37,8 @@ import java.util.Map;
 import java.util.Hashtable;
 
 /**
- *  The number of rotatable bonds is definde by this SMARTS: [!$(*#*)&!D1]-&!@[!$(*#*)&!D1]
+ *  The number of rotatable bonds is given by the SMARTS specified by Daylight on
+ *  <a href="http://www.daylight.com/dayhtml_tutorials/languages/smarts/smarts_examples.html#EXMPL">SMARTS tutorial</a>
  *
  * @author      mfe4
  * @cdk.created 2004-11-03

@@ -36,9 +36,8 @@ import java.util.Map;
 import java.util.Hashtable;
 
 /**
- *  The number of hydrogen bond donors is defined by Daylight:
- *  (http://www.daylight.com/dayhtml_tutorials/languages/smarts/smarts_examples.html)
- *  [!H0;#7,#8,#9].
+ *  The number of hydrogen bond donors is defined by Daylight in the
+ *  <a href="http://www.daylight.com/dayhtml_tutorials/languages/smarts/smarts_examples.html#EXMPL">SMARTS tutorial</a>
  *
  * @author      mfe4
  * @cdk.created 2004-11-03
