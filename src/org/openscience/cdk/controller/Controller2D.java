@@ -115,6 +115,10 @@ public class Controller2D {
         this.c2dm = model;
     }
 
+    public void setChemModel(ChemModel chemModel) {
+        this.chemModel = chemModel;
+    }
+
     /**
     * Manages all actions that will be invoked when the mouse is moved.
     *
