@@ -378,6 +378,11 @@ public class GeometryTools {
 	 * @return     The array with the coordinates
 	 */
 	public static int[] getBondCoordinates(Bond bond) {
+        if (bond.getAtomAt(0).getPoint2D() == null ||
+            bond.getAtomAt(1).getPoint2D() == null) {
+            logger.error("getBondCoordinates() called on Bond without 2D coordinates!");
+            return new int[0];
+        }
 		int beginX = (int)bond.getAtomAt(0).getPoint2D().x;
 		int endX = (int)bond.getAtomAt(1).getPoint2D().x;
 		int beginY = (int)bond.getAtomAt(0).getPoint2D().y;
