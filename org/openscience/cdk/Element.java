@@ -35,7 +35,7 @@ public class Element extends ChemObject
 	protected String symbol;
 	
 	/** The atomic number for this element giving their position in the periodic table */
-	protected int atomicNumber;
+	protected int atomicNumber = 0;
 	
 	/** The atomic mass of this element */
 	protected double atomicMass;	
@@ -93,6 +93,12 @@ public class Element extends ChemObject
 	 */
 	public int getAtomicNumber()
 	{
+		Isotope isotope = null;
+		if (this.atomicNumber == 0)
+		{
+			isotope	= new org.openscience.cdk.tools.StandardIsotopes().getMajorIsotope(getSymbol());
+			this.atomicNumber = isotope.atomicMass / 2;
+		}
 		return this.atomicNumber;
 	}
 

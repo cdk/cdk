@@ -57,7 +57,6 @@ public class AtomConstraintsFactory {
 			new AtomConstraints("X", 3, 10)
 			};
 
-
 	/**
 	 *  Gets the AtomConstraints attribute of the AtomConstraintsFactory class
 	 *

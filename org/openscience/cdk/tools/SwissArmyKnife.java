@@ -42,12 +42,6 @@ public class SwissArmyKnife {
 	public static boolean debug = false;
 	// minimum details
 
-			/**
-	 *  Description of the Field
-	 */
-	public static int INFINITY = 1000000;
-
-
 	/**
 	 *  Returns a string reporting the time passed between startTime and endTime, both given in milliseconds, in hours, minutes, seconds and milliseconds
 	 *

@@ -118,7 +118,7 @@ public class IsomorphismTesterTest extends TestCase
 	}
 	
 	public static Test suite() {
-		return new TestSuite(MorganNumberToolsTest.class);
+		return new TestSuite(IsomorphismTesterTest.class);
 	}
 
 	public void testIsomorphism()
@@ -127,7 +127,7 @@ public class IsomorphismTesterTest extends TestCase
 		{
 			IsomorphismTester it = new IsomorphismTester(pinene_1);
 			assert(it.isIsomorphic(pinene_2));
-			assert(it.isIsomorphic(pinene_non));
+			assert(!it.isIsomorphic(pinene_non));
 		}
 		catch(Exception exc)
 		{

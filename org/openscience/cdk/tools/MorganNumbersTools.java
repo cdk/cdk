@@ -39,27 +39,27 @@ import java.util.*;
 public class MorganNumbersTools implements CDKConstants
 {
 	
-	public static int[] getMorganNumbers(Molecule mol) throws NoSuchAtomException
+	public static int[] getMorganNumbers(AtomContainer atomContainer) throws NoSuchAtomException
 	{
 		int [] morganMatrix, tempMorganMatrix;
-		int N = mol.getAtomCount();
+		int N = atomContainer.getAtomCount();
 		morganMatrix = new int[N];
 		tempMorganMatrix = new int[N];
 		Atom[] atoms = null;
 		for (int f = 0; f < N; f++)
 		{
-			morganMatrix[f] = mol.getDegree(f);
-			tempMorganMatrix[f] = mol.getDegree(f);
+			morganMatrix[f] = atomContainer.getDegree(f);
+			tempMorganMatrix[f] = atomContainer.getDegree(f);
 		}
 		for (int e = 0; e < N; e++)
 		{
 			for (int f = 0; f < N; f++)
 			{
 				morganMatrix[f] = 0;
-				atoms = mol.getConnectedAtoms(mol.getAtomAt(f));				
+				atoms = atomContainer.getConnectedAtoms(atomContainer.getAtomAt(f));				
 				for (int g = 0; g < atoms.length; g ++)
 				{
-					morganMatrix[f] += tempMorganMatrix[mol.getAtomNumber(atoms[g])];	
+					morganMatrix[f] += tempMorganMatrix[atomContainer.getAtomNumber(atoms[g])];	
 				}
 			}
 			System.arraycopy(morganMatrix, 0, tempMorganMatrix, 0, N);

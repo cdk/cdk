@@ -57,36 +57,20 @@ public class MorganNumberToolsTest extends TestCase
 		int[] morganNumbers = null;
 		try
 		{
-			morganNumbers = MorganNumbersTools.getMorganNumbers(mol);
+			morganNumbers = MorganNumbersTools.getMorganNumbers((AtomContainer)mol);
 		}
 		catch(Exception exc)
 		{
+			exc.printStackTrace();
 			System.err.println("An Exception");
 			fail();
 		}
 		assert(morganNumbers.length == reference.length);
 		for (int f = 0; f < morganNumbers.length; f ++)
 		{
-		//	System.out.println(morganNumbers[f]);
+			//System.out.println(morganNumbers[f]);
 			assert(reference[f] == morganNumbers[f]);
 		}
-	}
-	
-	protected boolean arraysAreEqual(int[] array1, int[] array2)
-	{
-		if (array1.length != array2.length)
-		{
-			return false;
-		}
-		for (int f = 0; f < array1.length; f ++)
-		{
-			System.err.println(array1[f]);
-			if (array1[f] != array2[f])
-			{
-				return false;
-			}
-		}
-		return true;
 	}
 	
 	public static void main(String[] args)

@@ -1,4 +1,4 @@
-<project name="CDK" default="compile" basedir=".">
+<project name="CDK" default="compile" basedir=".">	
   
   <!-- comment this line out of you have not jikes installed -->
   <!--property name="build.compiler" value="jikes"/-->
@@ -28,14 +28,6 @@
     <mkdir dir="${reports.tests}"/>
   </target>
 
-  
-  <target name="compile" depends="init">
-    <mkdir dir="${build}"/>
-    <javac srcdir="." destdir="${build}" optimize="on" deprecation="on">
-      <classpath refid="project.class.path"/>
-    </javac>
-  </target>
-
   <target name="clean">
     <delete>
       <fileset dir="." includes="**/*~"/>
@@ -47,12 +39,37 @@
     <delete dir="${sourcedist}"/>
     <delete dir="${reports.tests}"/>
   </target>
-  
+
+  <target name="compile" depends="init">
+    <mkdir dir="${build}"/>
+    <javac destdir="${build}" optimize="on" deprecation="on">
+    	<src path="."/>
+    	<exclude name="org/openscience/cdk/renderer/AcceleratedRenderer3D*"/>
+	<exclude name="org/openscience/cdk/test/AcceleratedRenderer3DTest.java"/>    	
+	<classpath refid="project.class.path"/>
+    </javac>
+  </target>
+
+  <target name="compile-with-java3d" depends="init">
+    <mkdir dir="${build}"/>
+    <javac destdir="${build}" optimize="on" deprecation="on">
+    	<src path="."/>
+	<classpath refid="project.class.path"/>
+    </javac>
+  </target>
+
   <target name="dist" depends="compile">
     <!-- Create the distribution directory -->
     <mkdir dir="${dist}/jar"/>
     <!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
     <jar jarfile="${dist}/jar/cdk.jar" basedir="${build}"/>
+  </target>
+
+  <target name="dist-with-java3d" depends="compile-with-java3d">
+    <!-- Create the distribution directory -->
+    <mkdir dir="${dist}/jar"/>
+    <!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
+    <jar jarfile="${dist}/jar/cdk-with-java3d.jar" basedir="${build}"/>
   </target>
 
   <target name="sourcedist" depends="init">
@@ -84,10 +101,11 @@
 			  </test>		
 		</junit>
 	</target>  
-	<target name="run" depends="dist">
-		<java classname="org.openscience.cdk.test.MorganNumberToolsTest">
+	<target name="run-with-java3d" depends="dist-with-java3d">
+		<java classname="org.openscience.cdk.test.AcceleratedRenderer3DTest" fork="yes">
+			<arg value="data/reserpine.mol"/>
 			<classpath>
-				<pathelement location="${dist}/jar/cdk-${DSTAMP}.jar"/>
+				<pathelement location="${dist}/jar/cdk-with-java3d.jar"/>
 				<pathelement path="${java.class.path}"/>
 				<pathelement location="."/>
 				<fileset dir="jar">
