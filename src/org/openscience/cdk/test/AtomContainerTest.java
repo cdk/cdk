@@ -27,6 +27,8 @@ package org.openscience.cdk.test;
 
 import java.util.Enumeration;
 
+import javax.vecmath.Point2d;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -91,6 +93,17 @@ public class AtomContainerTest extends TestCase {
 				assertTrue(molecule.getAtomAt(f) != clonedMol.getAtomAt(g));
 			}
 		}
+	}
+
+	public void testClone2() {
+		Molecule molecule = new Molecule();
+        Atom carbon = new Atom("C");
+        carbon.setPoint2d(new Point2d(2, 4));
+		molecule.addAtom(carbon); // 1
+
+		Molecule clonedMol = (Molecule)molecule.clone();
+        carbon.setPoint2d(new Point2d(3, 1));
+		assertEquals(clonedMol.getAtomAt(0).getX2d(), 2.0, 0.001);
 	}
 
     public void testGetConnectedElectronContainers() {
