@@ -79,6 +79,7 @@ import org.openscience.cdk.test.qsar.*;
         suite.addTest(PiContactDetectionDescriptorTest.suite());
         suite.addTest(PeriodicTablePositionDescriptorTest.suite());
 	suite.addTest(AtomHybridizationDescriptorTest.suite());
+	suite.addTest(EccentricConnectivityIndexDescriptorTest.suite());
         return suite;
     }
     

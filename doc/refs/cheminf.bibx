@@ -592,6 +592,24 @@
     </bibtex:article>
   </bibtex:entry>
   
+   <bibtex:entry id="SHA97">
+    <bibtex:article>
+        <bibtex:author>
+            Sharma, V. and Goswami, R. and Madan, A.K.
+      </bibtex:author>
+      <bibtex:title>
+          Eccentric Connectivity Index: A Novel Highly Discriminating
+          Topological Descriptor for Structure-Property and
+          Structure-Activity Studies
+          </bibtex:title>
+      <bibtex:journal>Journal of Chemical Information and Computer
+          Sciences</bibtex:journal>
+      <bibtex:year>1997</bibtex:year>
+      <bibtex:volume>37</bibtex:volume>
+      <bibtex:pages>273-282</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+ 
   <bibtex:entry id="WES98">
     <bibtex:article>
         <bibtex:author>Wessel, M.D. and Jurs, P.C. and Tolan, J.W. and Muskal, S.M.
