@@ -45,6 +45,6 @@ public class HBondDonorCountDescriptorTest extends TestCase {
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser();
 		AtomContainer mol = sp.parseSmiles("Oc1ccccc1"); // 
-		assertEquals(5, ((Integer)descriptor.calculate(mol)).intValue());
+		assertEquals(1, ((Integer)descriptor.calculate(mol)).intValue());
 	}
 }
