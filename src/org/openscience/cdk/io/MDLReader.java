@@ -312,10 +312,10 @@ public class MDLReader implements ChemObjectReader
                     StringTokenizer st = new StringTokenizer(line.substring(9));
                     for (int i=1; i <= infoCount; i++) {
                         String token = st.nextToken();
-                        System.out.println("T1:" + token);
+                        //System.out.println("T1:" + token);
                         int atomNumber = Integer.parseInt(token.trim());
                         token = st.nextToken();
-                        System.out.println("T2:" + token);
+                        //System.out.println("T2:" + token);
                         int charge = Integer.parseInt(token.trim());
                         molecule.getAtomAt(atomNumber - 1).setFormalCharge(charge);
                     }
