@@ -280,9 +280,6 @@ public class Renderer2D   {
 		int implicitHydrogen = atom.getHydrogenCount();
 		if (implicitHydrogen > 0) {
 			symbol = symbol + "H";
-			if (implicitHydrogen > 1) {
-				symbol = symbol + implicitHydrogen;
-			}
 		}
         
         // draw string:
@@ -293,13 +290,16 @@ public class Renderer2D   {
 		int xSymbOffset = (new Integer(fm.stringWidth(symbol.substring(0,1)) / 2)).intValue();
 		int ySymbOffset = (new Integer(fm.getAscent() / 2)).intValue();
 
+		int xSymbOffsetForSubscript = (new Integer(fm.stringWidth(symbol))).intValue();
+		int ySymbOffsetForSubscript = (new Integer(fm.getAscent())).intValue();
+
 		// make empty space
 	    graphics.setColor(backColor);
         Rectangle2D stringBounds = fm.getStringBounds(symbol, graphics);
         int[] coords = {(int) (atom.getPoint2D().x - (xSymbOffset * 1.2)),
                         (int) (atom.getPoint2D().y - (ySymbOffset * 1.2)),
-                        (int) (stringBounds.getWidth() * 1.4),
-                        (int) (stringBounds.getHeight() * 1.4) };
+                        (int) (stringBounds.getWidth() * 1.2),
+                        (int) (stringBounds.getHeight() * 1.2) };
         coords = getScreenCoordinates(coords);
 	    graphics.fillRect(coords[0], coords[1], coords[2], coords[3]);
 
@@ -310,8 +310,23 @@ public class Renderer2D   {
         // apply zoom factor to font size
         Font unscaledFont = graphics.getFont();
         int fontSize = getScreenSize(unscaledFont.getSize());
-        graphics.setFont(unscaledFont.deriveFont((float)fontSize));        
+        graphics.setFont(unscaledFont.deriveFont((float)fontSize));
         graphics.drawString(symbol, hCoords[0], hCoords[1]);
+
+        if (implicitHydrogen > 1) {
+            // draw subscript part
+            int[] h2Coords = {(int) (atom.getPoint2D().x - xSymbOffset + xSymbOffsetForSubscript),
+                              (int) (atom.getPoint2D().y + ySymbOffsetForSubscript) };
+            h2Coords = getScreenCoordinates(h2Coords);
+            graphics.setColor(r2dm.getForeColor());
+            // apply zoom factor to font size
+            unscaledFont = graphics.getFont();
+            fontSize = getScreenSize(unscaledFont.getSize())-1;
+            graphics.setFont(unscaledFont.deriveFont((float)fontSize));
+            graphics.drawString(new Integer(implicitHydrogen).toString(), h2Coords[0], h2Coords[1]);
+        }
+        
+        // reset old font
         graphics.setFont(unscaledFont);
 	}
 
