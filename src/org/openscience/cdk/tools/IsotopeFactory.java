@@ -263,7 +263,7 @@ public class IsotopeFactory
 
 	/**
 	 *  Configures an atom to have all the data of the
-	 *  given isotope
+	 *  given isotope.
 	 *
 	 *@param  atom     The atom to be configure
 	 *@param  isotope  The isotope to read the data from
@@ -282,7 +282,7 @@ public class IsotopeFactory
 
 	/**
 	 *  Configures atoms in an AtomContainer to 
-	 *  carry all the correct data according to their element type
+	 *  carry all the correct data according to their element type.
 	 *
 	 *@param  ac  The AtomContainer to be configured
 	 */
