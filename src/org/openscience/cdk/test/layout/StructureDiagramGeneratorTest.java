@@ -49,6 +49,7 @@ public class StructureDiagramGeneratorTest extends TestCase
 {
 
 	MoleculeListViewer moleculeListViewer = null;
+	boolean standAlone = false;
 
 
 	/**
@@ -243,7 +244,7 @@ public class StructureDiagramGeneratorTest extends TestCase
 	{
 		Molecule m = MoleculeFactory.makeSpiroRings();
 		AtomContainer ac = generateCoordinates(m);
-		MoleculeViewer2D.display(new Molecule(ac), false);
+		if (standAlone)MoleculeViewer2D.display(new Molecule(ac), false);
 	}
 
 
