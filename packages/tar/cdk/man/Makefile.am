@@ -21,11 +21,11 @@ CHECK_XML_RULE = for f in $^; \
  done
 
 docbooks = cdk-fileconvert.xml cdk-dbadmin.xml cdk-view.xml cdk-download.xml \
-  cdk-guessformat.xml
+  cdk-guessformat.xml cdk-test.xml
 
-mandir=${PREFIX}/share
+mandir=${PREFIX}/share/man
 man_MANS = cdk-fileconvert.1 cdk-dbadmin.1 cdk-view.1 cdk-download.1 \
-  cdk-guessformat.1
+  cdk-guessformat.1 cdk-test.1
 
 CLEANFILES = ${man_MANS}
 
@@ -44,6 +44,9 @@ cdk-download.1: cdk-download.xml
 	$(XML2MAN_RULE)
 
 cdk-guessformat.1: cdk-guessformat.xml
+	$(XML2MAN_RULE)
+
+cdk-test.1: cdk-test.xml
 	$(XML2MAN_RULE)
 
 check-xml: $(docbooks)
