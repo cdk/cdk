@@ -1,0 +1,4502 @@
+
+pvm> 7 successful
+                    HOST     DTID
+    isis-s102.sp.sara.nl Duplicate host
+    isis-s506.sp.sara.nl    80000
+    isis-s204.sp.sara.nl    c0000
+    isis-s212.sp.sara.nl   100000
+    isis-s302.sp.sara.nl   140000
+    isis-s414.sp.sara.nl   180000
+    isis-s309.sp.sara.nl   1c0000
+    isis-s304.sp.sara.nl   200000
+pvm> quit
+pvmd still running.
+ Input for Parallel Execution
+ ----------------------------
+ Requested number of nodes (nproc):      128
+ Allow only one task per node (duphost not specified)
+ File for starting kids (prog): /home/v61u0001/bin/pvmspawn
+
+
+ Parallel Execution: Process Information
+ =======================================
+
+ Actual Number of Tasks running:     8
+ The Master (kid 0) runs on host isis-s102
+
+  Kid Node                   Speed          Task ID   Status
+------------------------------------------------------------------
+    0 isis-s102                 -1           262146   pvmok
+    1 isis-s506.sp.sara.nl      -1           524290   pvmok
+    2 isis-s204.sp.sara.nl      -1           786433   pvmok
+    3 isis-s212.sp.sara.nl      -1          1048577   pvmok
+    4 isis-s302.sp.sara.nl      -1          1310721   pvmok
+    5 isis-s414.sp.sara.nl      -1          1572865   pvmok
+    6 isis-s309.sp.sara.nl      -1          1835009   pvmok
+    7 isis-s304.sp.sara.nl      -1          2097153   pvmok
+1(INPUT FILE)
+   create H  file=/home/v61u0009/adfhome/atomicdata/IV/H
+ end input
+1
+ *******************************************************************************
+ *                                                                             *
+ *  -------------------------------------                                      *
+ *   Amsterdam Density Functional  (ADF)         2.2       February 20, 1997   *
+ *  -------------------------------------                                      *
+ *                                                                             *
+ *   (c) Copyright 1993-1997, Theoretical Chemistry,                           *
+ *       Vrije Universiteit, Amsterdam, The Netherlands                        *
+ *   All rights reserved.                                                      *
+ *                                                                             *
+ *   Recommended citation:                                                     *
+ *     ADF 2.2, Theoretical Chemistry, Vrije Universiteit, Amsterdam           *
+ *     E.J.Baerends et.al., Chem.Phys. 2 (1973) 41                             *
+ *     G.te Velde, E.J.Baerends, J.Comp.Phys. 99 (1992) 84                     *
+ *     C.Fonseca Guerra et.al. METECC-95 (1995) 305                            *
+ *                                                                             *
+ *   Online information and documentation:                                     *
+ *     http://tc.chem.vu.nl/SCM                                                *
+ *                                                                             *
+ *   E-mail: adf@chem.vu.nl                                                    *
+ *                                                                             *
+ **********************************************  rs6000_aix  ******************* 
+
+ ADF 2.2  RunTime: Feb20-97 14:01:33
+ Hydrogen (IV)
+
+
+
+ ===============================
+ M O D E L   P A R A M E T E R S
+ ===============================
+  
+ DENSITY FUNCTIONAL POTENTIAL (scf)
+    LDA:                               VWN                                      
+    Gradient Corrections:              ---                                      
+
+ SPIN  (restricted / unrestr.)
+    Molecule:                          Restricted                               
+
+ OTHER ASPECTS
+    Relativistic Corrections:          ---                                      
+    Core Treatment:                    Frozen Orbital(s)                        
+
+    Electric Field:                    ---                                      
+
+    Magnetic Field:                    ---                                      
+
+
+
+ ===========================
+ A T T A C H E D   F I L E S
+ ===========================
+  
+ CREATE - Data File:    /home/v61u0009/adfhome/atomicdata/IV/H
+                        Hydrogen (IV)
+
+
+
+ =====================================
+ S Y M M E T R Y ,   E L E C T R O N S
+ =====================================
+  
+ Symmetry: ATOM
+
+ Subspecies
+ ----------
+ S
+ P:x  P:y  P:z
+ D:z2  D:x2-y2  D:xy  D:xz  D:yz
+ F:z3  F:z  F:xyz  F:z2x  F:z2y  F:x  F:y
+
+
+ Configuration of Valence Electrons
+ ==================================
+
+          Occupation Numbers
+          -------------------------------------------------
+ S        1
+ P        0
+ D        0
+ F        0
+          -------------------------------------------------
+
+ Total:   1
+
+ Net Charge: 0 (Nuclei minus Electrons)
+
+
+
+ ================================
+ (Slater-type)  F U N C T I O N S  ***  (Basis and Fit)  ***
+ ================================
+  
+
+ Atom Type    1  (H)
+ ==============
+
+ Valence Basis Sets:   4
+ -----------------------
+   1 S     .690000
+   1 S     .920000
+   1 S    1.580000
+   2 P    1.250000
+
+ Charge Fitting Sets (for the computation of the Coulomb Potential):  11
+ -----------------------------------------------------------------------
+   1 S    3.160000
+   1 S    2.090000
+   1 S    1.380000
+   2 S    1.500000
+   2 P    4.000000
+   2 P    2.650000
+   2 P    1.750000
+   3 D    4.000000
+   3 D    2.500000
+   4 F    3.000000
+   5 G    4.000000
+
+
+ BAS: List of all Elementary Cartesian Basis Functions
+ =====================================================
+
+ The numbering in the list below (to the right of the function characteristics) is referred to in print-outs
+ of MO eigenvectors and Mulliken populations in the BAS representation (as contrasted to the SFO represen-
+ tation).
+
+ Notes:
+ 1. The functions are characterized by a polynomial prefactor (powers of x,y,z and r) and an exponential
+    decay factor alpha.
+ 2. Since the basis sets are specific for an atom TYPE, the individual functions occur on all atoms of that
+    type.
+ 3. The word 'Core' in the left margin signals that it is a Core Function (CF) : not a degree of freedom in
+    the valence set, but only used to ensure orthogonalization of the other (true valence) basis functions
+    on the frozen Core Orbitals.
+
+
+ (power of) X  Y  Z  R     Alpha  on Atom
+            ==========     =====     ==========
+
+ H                                    1
+                                  ---------------------------------------------------------------------------
+            0  0  0  0      .690      1
+            0  0  0  0      .920      2
+            0  0  0  0     1.580      3
+            1  0  0  0     1.250      4
+            0  1  0  0     1.250      5
+            0  0  1  0     1.250      6
+
+
+ Parallel Execution: Process Information
+ =======================================
+
+ Actual Number of Tasks running:     8
+ The Master (kid 0) runs on host isis-s102
+
+  Kid Node                   Speed          Task ID   Status
+------------------------------------------------------------------
+    0 isis-s102               1000           262146   pvmok
+    1 isis-s506.sp.sara.nl    1000           524290   pvmok
+    2 isis-s204.sp.sara.nl    1000           786433   pvmok
+    3 isis-s212.sp.sara.nl    1000          1048577   pvmok
+    4 isis-s302.sp.sara.nl    1000          1310721   pvmok
+    5 isis-s414.sp.sara.nl    1000          1572865   pvmok
+    6 isis-s309.sp.sara.nl    1000          1835009   pvmok
+    7 isis-s304.sp.sara.nl    1000          2097153   pvmok
+1
+ ***************************************************************************************************
+
+
+
+                                              ***********************
+                                              *  T E C H N I C A L  *
+                                              ***********************
+  
+
+
+
+ =============================================================
+ P A R A L L E L I Z A T I O N  and  V E C T O R I Z A T I O N
+ =============================================================
+  
+ nr of parallel processes:                                8
+ max vectorlength in NumInt loops:                      256
+
+
+
+ ===============
+ I O  vs.  C P U  ***  (store numerical data on disk or recalculate)  ***
+ ===============
+  
+ Basis functions:   recalculate when needed
+ Fit functions:     recalculate when needed
+
+
+
+ =====================
+ S C F   U P D A T E S
+ =====================
+  
+ Max. nr. of cycles:                               100
+ Convergence criterion:                               .0000000100
+ secondary criterion:                                 .0000000100
+
+ Mix parameter (when DIIS does not apply):            .2000000000
+ Special mix parameter for the first cycle:          1.0000000000
+
+
+ DIIS (Direct Inversion in Iteration Space)
+    Replace damping when SCF Error is below:          .5000000000
+    (Max.) nr. of expansion vectors:                10
+
+    Upperbound on expansion coefficients:            5.0000000000
+    (when exceeded, IterationSpace is re-built)
+    2nd Upperbound on coefficients:                 25.0000000000
+    (when exceeded, simple damping will be used)
+ ElectronSmearing (in case of problematic SCF convergence) prohibited
+
+
+
+ =================
+ P R E C I S I O N  ***  (general: NumInt, NeglectFunctionTails, ...)  ***
+ =================
+  
+
+ NumInt:           Target precision:                10.0000000000
+ -------           Initial precision:               10.0000000000
+                   Min. precision (optimization):   10.0000000000
+1
+ ***************************************************************************************************
+
+
+
+                                            ***************************
+                                            *  C O M P U T A T I O N  *
+                                            ***************************
+  
+
+
+
+ ===================================================
+ Numerical Integration : Atomic Polyhedra (Te Velde)  ***  (parameters, tests)  ***
+ ===================================================
+  
+ General Accuracy Parameter :                         10.00
+
+ Summary of the Symmetry Unique Points:
+ --------------------------------------
+    Nr. of used Symmetry Operators                     1
+
+    Points in the Atomic Spheres                      35
+    Points in the Atomic Polyhedra                     0
+    Points in the Outer Region                         0
+    ----------------------------------------------------
+    Total                                             35
+
+    Sum of Weights                                 33854.777883
+
+ Total nr. of points:         35
+ Nr. of blocks:                1
+ Block length:                35
+ Nr. of dummy points:          0
+
+
+ Test of Precision of the Numerical Integration Grid
+ ===================================================
+
+ Integral of the Total Core Density:                    .00000000000000
+
+
+
+ =====
+ S C F
+ =====
+  
+
+ CYCLE    1
+ orbitals (Q,E):
+ ---------------
+ S :1...3            ( 1.00     -.2336)  (  .00      .0942)  (  .00     1.5473)   
+ P :1...1            (  .00      .4029)   
+
+ CYCLE    2
+ orbitals (Q,E):
+ ---------------
+ S :1...3            ( 1.00     -.2336)  (  .00      .0942)  (  .00     1.5473)   
+ P :1...1            (  .00      .4029)   
+ d-Pmat  mean:   .20E-12
+ imax=      2:  -.92E-12
+
+ SCF CONVERGED
+
+ CYCLE    3
+1
+ ***************************************************************************************************
+
+
+
+                                                *******************
+                                                *  R E S U L T S  *
+                                                *******************
+  
+
+ Orbital Energies, per Irrep and Spin:
+ ======================================
+                        Occup              E (au)              E (eV)       Diff (eV) with prev. cycle
+                        -----      --------------------        ------       --------------------------
+ S
+               1        1.000      -.23359842681153E+00        -6.357               4.61E-13
+               2         .000       .94225464171431E-01         2.564
+               3         .000       .15473472188909E+01        42.105
+ P
+               1         .000       .40291848690094E+00        10.964
+
+
+ Partially Occupied:
+               1 S                 -.23359842681153E+00
+  
+ LUMO :        2 S                  .94225464171431E-01
+  
+
+
+ Orbital Energies, all Irreps
+ ========================================
+
+ Irrep        no.  (spin)   Occup              E (au)                E (eV)
+ --------------------------------------------------------------------------
+ S             1             1.00        -.23359842681153E+00        -6.357      
+ S             2              .00         .94225464171431E-01         2.564      
+ P             1              .00         .40291848690094E+00        10.964      
+ S             3              .00         .15473472188909E+01        42.105      
+
+
+ Orbital Energies of the Core Orbitals:
+ ======================================
+ (Note that the atoms are grouped by atomtype, see the labels, and may hence NOT be in input order)
+
+ AtomType  Orbital  Atom                   E (au)                        E (eV)
+ --------  -------  ----           --------------------        ----------------
+
+
+
+ =======================================
+ M U L L I K E N   P O P U L A T I O N S
+ =======================================
+  
+ The survey below gives for each atom:
+ a) the total charge (Z minus electrons)
+ b) the net spin polarization (nr of electrons spin-A minus spin-B)
+ c) for each spin the atomic electron valence density (integrated) per L-value.
+
+ Atom              Charge    Spin density          S         P         D         F
+ ----              ------    ------------       ------    ------    ------    ------
+ 1 H                .0000                       1.0000     .0000     .0000     .0000
+
+ Populations of individual BAS functions
+ ----------------------------------------
+ 1 H             .2547   .6549   .0904   .0000   .0000   .0000                   
+
+ Gross Charges per Atom (Z minus electrons)
+ ==========================================
+              .0000
+ Net Total:   .00000000
+
+
+ Atom-Atom Population Matrix (off-diagonal elements not doubled)
+ ===============================================================
+
+     1 :     1.0000
+
+
+
+ =============
+ Dipole Moment  ***  (Debye)  ***
+ =============
+  
+ Vector   :          .00000000       .00000000       .00000000
+ Magnitude:          .00000000
+
+
+
+ ===============================================================================
+ Electrostatic potential at the Nuclei due to valence electrons and other nuclei
+ ===============================================================================
+  
+         Atom                  Potential
+         ----                  ---------
+     1)   H                    .92089233
+1
+ ***************************************************************************************************
+
+                                                 A D F   E X I T
+
+ NORMAL TERMINATION
+
+
+ Currently Open Files (ADFEXI)
+ ====================
+
+ Unit    Access Format  Status   Type       Ident (file)
+ -------------------------------------------------------
+   1      SEQ    FORM   TRANSP  NORMAL      LOGFILE
+                                          ( logfile )
+   3      SEQ    FORM   OUTPUT  NORMAL      KidOutput
+
+
+ Buffered I/O statistics
+ =======================
+ Memory available:                     33554432
+ Number of records fitting in memory:      8120
+ Input :   1.9% of                          584  *4k bytes
+ Output:  13.0% of                          468  *4k bytes
+ Records from serial files evicted:           0
+                    others evicted:           0
+ Hash table lookups:       2836 with          0 conflicts (   .00%)
+
+
+ Workspace Manager statistics
+ ============================
+ Allocate  :    1206
+ Delocate  :     774
+ Relocate  :      30
+ Extend    :       0
+ Find      :      65
+ Available :       9
+ Check     :       4
+ Hide      :       3
+ Freeze    :      25
+ Print     :       1
+
+ (All arrays delocated)
+
+
+
+ =================
+ Timing Statistics
+ =================
+  
+ Total Used :                     CPU=        4.64      System=        1.21     Elapsed=       11.40
+
+ Calls  Section                     ( Mean, Percentage )
+ ---------------------------------------------------------------------------------------------------
+     4  ><      ................       .09    7.97              .01    1.65              .13    4.39
+     1  INIT    ................       .85   18.32              .78   64.46             6.23   54.67
+     1  GEOMET  ................       .08    1.72              .01     .83              .24    2.07
+     1  INPUTA  ................       .08    1.72              .01     .83              .17    1.46
+     1  MAINSY  ................       .06    1.29              .00     .00              .11     .98
+     1  SYMFIT  ................       .00     .00              .00     .00              .02     .17
+     1  CORORT  ................       .01     .22              .00     .00              .01     .08
+     1  SYMORB  ................       .02     .43              .00     .00              .05     .43
+     1  FITINT  ................       .06    1.29              .04    3.31              .13    1.17
+     1  ORTHON  ................       .13    2.80              .04    3.31              .19    1.65
+     1  CRTP12  ................       .04     .86              .00     .00              .05     .40
+     1  ETALOW  ................       .02     .43              .00     .00              .03     .29
+     1  POINTS  ................       .15    3.23              .00     .00              .20    1.72
+     1  WRIPNT  ................       .06    1.29              .00     .00              .12    1.02
+     1  PTCOR   ................       .06    1.29              .01     .83              .06     .56
+     1  PTBAS   ................       .01     .22              .02    1.65              .06     .51
+     4  FOCK00  ................       .02    1.72              .01    1.65              .03     .91
+     3  FOCKY   ................       .02    1.29              .00     .83              .04     .93
+     3  FOCKTR  ................       .01     .65              .00     .83              .02     .50
+     3  FOCKNM  ................       .01     .43              .00     .00              .00     .06
+     3  SDIIS   ................       .03    1.72              .01    3.31              .05    1.23
+     3  EMERGE  ................       .13    8.19              .03    7.44              .17    4.37
+     3  RHOFIH  ................       .04    2.80              .01    3.31              .09    2.40
+     1  COREPS  ................       .01     .22              .00     .00              .01     .12
+     1  POPAN   ................       .06    1.29              .01     .83              .06     .57
+     1  DEBYE   ................       .03     .65              .00     .00              .04     .34
+     1  QMPOT   ................       .02     .43              .00     .00              .03     .30
+     1  EXIT PROCEDURE .........      1.74   37.50              .06    4.96             1.91   16.73
+1
+ ***************************************************************************************************
+ (LOGFILE)
+ <Feb20-97> <14:01:33>  ADF 2.2  RunTime: Feb20-97 14:01:33
+ <Feb20-97> <14:01:33>  Hydrogen (IV)
+ <Feb20-97> <14:01:33>  RunType   : CREATE
+ <Feb20-97> <14:01:33>  Net Charge: 0 (Nuclei minus Electrons)
+ <Feb20-97> <14:01:33>  Symmetry  : ATOM
+ <Feb20-97> <14:01:34>  >>>> CORORT
+ <Feb20-97> <14:01:34>  >>>> FITINT
+ <Feb20-97> <14:01:34>  >>>> ORTHON
+ <Feb20-97> <14:01:34>  >>>> CRTP12
+ <Feb20-97> <14:01:34>  >>>> GENPT
+ <Feb20-97> <14:01:34>  Acc.Num.Int.=  10.000
+ <Feb20-97> <14:01:34>  Block Length=  35
+ <Feb20-97> <14:01:34>  >>>> PTCOR
+ <Feb20-97> <14:01:34>  >>>> PTBAS
+ <Feb20-97> <14:01:34>  >>>> CYCLE
+ <Feb20-97> <14:01:35>    1
+ <Feb20-97> <14:01:35>    2  ErrMat    .00000000  MaxEl   .00000000
+ <Feb20-97> <14:01:35>  SCF converged
+ <Feb20-97> <14:01:35>    3  ErrMat    .00000000  MaxEl   .00000000
+ <Feb20-97> <14:01:36>  >>>> COREPS
+ <Feb20-97> <14:01:36>  >>>> POPAN
+ <Feb20-97> <14:01:36>  NORMAL TERMINATION
+ <Feb20-97> <14:01:38>  END
+STOP ADF EXIT
+ Input for Parallel Execution
+ ----------------------------
+ Requested number of nodes (nproc):      128
+ Allow only one task per node (duphost not specified)
+ File for starting kids (prog): /home/v61u0001/bin/pvmspawn
+
+
+ Parallel Execution: Process Information
+ =======================================
+
+ Actual Number of Tasks running:     8
+ The Master (kid 0) runs on host isis-s102
+
+  Kid Node                   Speed          Task ID   Status
+------------------------------------------------------------------
+    0 isis-s102                 -1           262147   pvmok
+    1 isis-s506.sp.sara.nl      -1           524291   pvmok
+    2 isis-s204.sp.sara.nl      -1           786434   pvmok
+    3 isis-s212.sp.sara.nl      -1          1048578   pvmok
+    4 isis-s302.sp.sara.nl      -1          1310722   pvmok
+    5 isis-s414.sp.sara.nl      -1          1572866   pvmok
+    6 isis-s309.sp.sara.nl      -1          1835010   pvmok
+    7 isis-s304.sp.sara.nl      -1          2097154   pvmok
+1(INPUT FILE)
+   create N  /home/v61u0009/adfhome/atomicdata/IV/N.1s
+ end input
+1
+ *******************************************************************************
+ *                                                                             *
+ *  -------------------------------------                                      *
+ *   Amsterdam Density Functional  (ADF)         2.2       February 20, 1997   *
+ *  -------------------------------------                                      *
+ *                                                                             *
+ *   (c) Copyright 1993-1997, Theoretical Chemistry,                           *
+ *       Vrije Universiteit, Amsterdam, The Netherlands                        *
+ *   All rights reserved.                                                      *
+ *                                                                             *
+ *   Recommended citation:                                                     *
+ *     ADF 2.2, Theoretical Chemistry, Vrije Universiteit, Amsterdam           *
+ *     E.J.Baerends et.al., Chem.Phys. 2 (1973) 41                             *
+ *     G.te Velde, E.J.Baerends, J.Comp.Phys. 99 (1992) 84                     *
+ *     C.Fonseca Guerra et.al. METECC-95 (1995) 305                            *
+ *                                                                             *
+ *   Online information and documentation:                                     *
+ *     http://tc.chem.vu.nl/SCM                                                *
+ *                                                                             *
+ *   E-mail: adf@chem.vu.nl                                                    *
+ *                                                                             *
+ **********************************************  rs6000_aix  ******************* 
+
+ ADF 2.2  RunTime: Feb20-97 14:01:44
+ Nitrogen (IV, 1s frozen)
+
+
+
+ ===============================
+ M O D E L   P A R A M E T E R S
+ ===============================
+  
+ DENSITY FUNCTIONAL POTENTIAL (scf)
+    LDA:                               VWN                                      
+    Gradient Corrections:              ---                                      
+
+ SPIN  (restricted / unrestr.)
+    Molecule:                          Restricted                               
+
+ OTHER ASPECTS
+    Relativistic Corrections:          ---                                      
+    Core Treatment:                    Frozen Orbital(s)                        
+
+    Electric Field:                    ---                                      
+
+    Magnetic Field:                    ---                                      
+
+
+
+ ===========================
+ A T T A C H E D   F I L E S
+ ===========================
+  
+ CREATE - Data File:    /home/v61u0009/adfhome/atomicdata/IV/N.1s
+                        Nitrogen (IV, 1s frozen)
+
+
+
+ =====================================
+ S Y M M E T R Y ,   E L E C T R O N S
+ =====================================
+  
+ Symmetry: ATOM
+
+ Subspecies
+ ----------
+ S
+ P:x  P:y  P:z
+ D:z2  D:x2-y2  D:xy  D:xz  D:yz
+ F:z3  F:z  F:xyz  F:z2x  F:z2y  F:x  F:y
+
+
+ Configuration of Valence Electrons
+ ==================================
+
+          Occupation Numbers
+          -------------------------------------------------
+ S        2
+ P        3
+ D        0
+ F        0
+          -------------------------------------------------
+
+ Total:   5
+
+ Net Charge: 0 (Nuclei minus Electrons)
+
+
+
+ ================================
+ (Slater-type)  F U N C T I O N S  ***  (Basis and Fit)  ***
+ ================================
+  
+
+ Atom Type    1  (N)
+ ==============
+
+ Valence Basis Sets:   8
+ -----------------------
+   1 S    6.380000
+   2 S    1.500000
+   2 S    2.500000
+   2 S    5.150000
+   2 P    1.000000
+   2 P    1.880000
+   2 P    3.680000
+   3 D    2.200000
+
+ Frozen Core Shells
+ ------------------
+    S:  1
+
+ Charge Fitting Sets (for the computation of the Coulomb Potential):  20
+ -----------------------------------------------------------------------
+   1 S   12.760000
+   2 S   13.770000
+   2 S    9.060000
+   2 S    5.970000
+   3 S    5.770000
+   3 S    4.050000
+   3 S    2.850000
+   3 S    2.000000
+   2 P   10.060000
+   2 P    6.180000
+   3 P    5.600000
+   3 P    3.710000
+   3 P    2.460000
+   3 D    8.380000
+   3 D    5.200000
+   3 D    3.220000
+   3 D    2.000000
+   4 F    5.800000
+   4 F    3.600000
+   5 G    4.500000
+
+
+ BAS: List of all Elementary Cartesian Basis Functions
+ =====================================================
+
+ The numbering in the list below (to the right of the function characteristics) is referred to in print-outs
+ of MO eigenvectors and Mulliken populations in the BAS representation (as contrasted to the SFO represen-
+ tation).
+
+ Notes:
+ 1. The functions are characterized by a polynomial prefactor (powers of x,y,z and r) and an exponential
+    decay factor alpha.
+ 2. Since the basis sets are specific for an atom TYPE, the individual functions occur on all atoms of that
+    type.
+ 3. The word 'Core' in the left margin signals that it is a Core Function (CF) : not a degree of freedom in
+    the valence set, but only used to ensure orthogonalization of the other (true valence) basis functions
+    on the frozen Core Orbitals.
+
+
+ (power of) X  Y  Z  R     Alpha  on Atom
+            ==========     =====     ==========
+
+ N                                    1
+                                  ---------------------------------------------------------------------------
+    Core    0  0  0  0     6.380      1
+            0  0  0  1     1.500      2
+            0  0  0  1     2.500      3
+            0  0  0  1     5.150      4
+            1  0  0  0     1.000      5
+            0  1  0  0     1.000      6
+            0  0  1  0     1.000      7
+            1  0  0  0     1.880      8
+            0  1  0  0     1.880      9
+            0  0  1  0     1.880     10
+            1  0  0  0     3.680     11
+            0  1  0  0     3.680     12
+            0  0  1  0     3.680     13
+            2  0  0  0     2.200     14
+            1  1  0  0     2.200     15
+            1  0  1  0     2.200     16
+            0  2  0  0     2.200     17
+            0  1  1  0     2.200     18
+            0  0  2  0     2.200     19
+
+
+ Parallel Execution: Process Information
+ =======================================
+
+ Actual Number of Tasks running:     8
+ The Master (kid 0) runs on host isis-s102
+
+  Kid Node                   Speed          Task ID   Status
+------------------------------------------------------------------
+    0 isis-s102               1000           262147   pvmok
+    1 isis-s506.sp.sara.nl    1000           524291   pvmok
+    2 isis-s204.sp.sara.nl    1000           786434   pvmok
+    3 isis-s212.sp.sara.nl    1000          1048578   pvmok
+    4 isis-s302.sp.sara.nl    1000          1310722   pvmok
+    5 isis-s414.sp.sara.nl    1000          1572866   pvmok
+    6 isis-s309.sp.sara.nl    1000          1835010   pvmok
+    7 isis-s304.sp.sara.nl    1000          2097154   pvmok
+1
+ ***************************************************************************************************
+
+
+
+                                              ***********************
+                                              *  T E C H N I C A L  *
+                                              ***********************
+  
+
+
+
+ =============================================================
+ P A R A L L E L I Z A T I O N  and  V E C T O R I Z A T I O N
+ =============================================================
+  
+ nr of parallel processes:                                8
+ max vectorlength in NumInt loops:                      256
+
+
+
+ ===============
+ I O  vs.  C P U  ***  (store numerical data on disk or recalculate)  ***
+ ===============
+  
+ Basis functions:   recalculate when needed
+ Fit functions:     recalculate when needed
+
+
+
+ =====================
+ S C F   U P D A T E S
+ =====================
+  
+ Max. nr. of cycles:                               100
+ Convergence criterion:                               .0000000100
+ secondary criterion:                                 .0000000100
+
+ Mix parameter (when DIIS does not apply):            .2000000000
+ Special mix parameter for the first cycle:          1.0000000000
+
+
+ DIIS (Direct Inversion in Iteration Space)
+    Replace damping when SCF Error is below:          .5000000000
+    (Max.) nr. of expansion vectors:                10
+
+    Upperbound on expansion coefficients:            5.0000000000
+    (when exceeded, IterationSpace is re-built)
+    2nd Upperbound on coefficients:                 25.0000000000
+    (when exceeded, simple damping will be used)
+ ElectronSmearing (in case of problematic SCF convergence) prohibited
+
+
+
+ =================
+ P R E C I S I O N  ***  (general: NumInt, NeglectFunctionTails, ...)  ***
+ =================
+  
+
+ NumInt:           Target precision:                10.0000000000
+ -------           Initial precision:               10.0000000000
+                   Min. precision (optimization):   10.0000000000
+1
+ ***************************************************************************************************
+
+
+
+                                            ***************************
+                                            *  C O M P U T A T I O N  *
+                                            ***************************
+  
+
+
+
+ ===================================================
+ Numerical Integration : Atomic Polyhedra (Te Velde)  ***  (parameters, tests)  ***
+ ===================================================
+  
+ General Accuracy Parameter :                         10.00
+
+ Summary of the Symmetry Unique Points:
+ --------------------------------------
+    Nr. of used Symmetry Operators                     1
+
+    Points in the Atomic Spheres                      52
+    Points in the Atomic Polyhedra                     0
+    Points in the Outer Region                         0
+    ----------------------------------------------------
+    Total                                             52
+
+    Sum of Weights                                 58501.056183
+
+ Total nr. of points:         52
+ Nr. of blocks:                1
+ Block length:                52
+ Nr. of dummy points:          0
+
+
+ Test of Precision of the Numerical Integration Grid
+ ===================================================
+
+ Integral of the Total Core Density:                   1.99999999949734
+ Relative Error:                                      -2.513E-10
+
+
+
+ =====
+ S C F
+ =====
+  
+
+ CYCLE    1
+ orbitals (Q,E):
+ ---------------
+ S :1...3            ( 2.00     -.6773)  (  .00      .5914)  (  .00    12.5756)   
+ P :1...3            ( 3.00     -.2673)  (  .00      .2807)  (  .00     3.2723)   
+ D :1...1            (  .00     1.2404)   
+
+ CYCLE    2
+ orbitals (Q,E):
+ ---------------
+ S :1...3            ( 2.00     -.6773)  (  .00      .5914)  (  .00    12.5756)   
+ P :1...3            ( 3.00     -.2673)  (  .00      .2807)  (  .00     3.2723)   
+ D :1...1            (  .00     1.2404)   
+ d-Pmat  mean:   .96E-14
+ imax=      3:  -.41E-13
+
+ SCF CONVERGED
+
+ CYCLE    3
+1
+ ***************************************************************************************************
+
+
+
+                                                *******************
+                                                *  R E S U L T S  *
+                                                *******************
+  
+
+ Orbital Energies, per Irrep and Spin:
+ ======================================
+                        Occup              E (au)              E (eV)       Diff (eV) with prev. cycle
+                        -----      --------------------        ------       --------------------------
+ S
+               1        2.000      -.67734452199510E+00       -18.431              -1.33E-13
+               2         .000       .59143797032737E+00        16.094
+               3         .000       .12575554269560E+02       342.198
+ P
+               1        3.000      -.26733979662830E+00        -7.275              -1.27E-13
+               2         .000       .28070981435301E+00         7.639
+               3         .000       .32723453972309E+01        89.045
+ D
+               1         .000       .12404262323021E+01        33.754
+
+
+ Partially Occupied:
+               1 P                 -.26733979662830E+00
+  
+ HOMO :        1 S                 -.67734452199510E+00
+ LUMO :        2 P                  .28070981435301E+00
+  
+
+
+ Orbital Energies, all Irreps
+ ========================================
+
+ Irrep        no.  (spin)   Occup              E (au)                E (eV)
+ --------------------------------------------------------------------------
+ S             1             2.00        -.67734452199510E+00       -18.431      
+ P             1             3.00        -.26733979662830E+00        -7.275      
+ P             2              .00         .28070981435301E+00         7.639      
+ S             2              .00         .59143797032737E+00        16.094      
+ D             1              .00         .12404262323021E+01        33.754      
+ P             3              .00         .32723453972309E+01        89.045      
+ S             3              .00         .12575554269560E+02       342.198      
+
+
+ Orbital Energies of the Core Orbitals:
+ ======================================
+ (Note that the atoms are grouped by atomtype, see the labels, and may hence NOT be in input order)
+
+ AtomType  Orbital  Atom                   E (au)                        E (eV)
+ --------  -------  ----           --------------------        ----------------
+ N           1S        1           -.14007941726889E+02                -381.176 
+
+
+
+ =======================================
+ M U L L I K E N   P O P U L A T I O N S
+ =======================================
+  
+ The survey below gives for each atom:
+ a) the total charge (Z minus electrons)
+ b) the net spin polarization (nr of electrons spin-A minus spin-B)
+ c) for each spin the atomic electron valence density (integrated) per L-value.
+
+ Atom              Charge    Spin density          S         P         D         F
+ ----              ------    ------------       ------    ------    ------    ------
+ 1 N                .0000                       2.0000    3.0000     .0000     .0000
+
+ Populations of individual BAS functions
+ ----------------------------------------
+ 1 N             .0004   .9346  1.1180  -.0530   .2981   .2981   .2981   .5563   .5563   .5563
+                 .1456   .1456   .1456   .0000   .0000   .0000   .0000   .0000   .0000
+
+ Gross Charges per Atom (Z minus electrons)
+ ==========================================
+              .0000
+ Net Total:   .00000000
+
+
+ Atom-Atom Population Matrix (off-diagonal elements not doubled)
+ ===============================================================
+
+     1 :     5.0000
+
+
+
+ =============
+ Dipole Moment  ***  (Debye)  ***
+ =============
+  
+ Vector   :          .00000000       .00000000       .00000000
+ Magnitude:          .00000000
+
+
+
+ ===============================================================================
+ Electrostatic potential at the Nuclei due to valence electrons and other nuclei
+ ===============================================================================
+  
+         Atom                  Potential
+         ----                  ---------
+     1)   N                   5.01249342
+1
+ ***************************************************************************************************
+
+                                                 A D F   E X I T
+
+ NORMAL TERMINATION
+
+
+ Currently Open Files (ADFEXI)
+ ====================
+
+ Unit    Access Format  Status   Type       Ident (file)
+ -------------------------------------------------------
+   1      SEQ    FORM   TRANSP  NORMAL      LOGFILE
+                                          ( logfile )
+   3      SEQ    FORM   OUTPUT  NORMAL      KidOutput
+
+
+ Buffered I/O statistics
+ =======================
+ Memory available:                     33554432
+ Number of records fitting in memory:      8120
+ Input :   1.2% of                          898  *4k bytes
+ Output:  11.8% of                          602  *4k bytes
+ Records from serial files evicted:           0
+                    others evicted:           0
+ Hash table lookups:       4066 with          0 conflicts (   .00%)
+
+
+ Workspace Manager statistics
+ ============================
+ Allocate  :    1599
+ Delocate  :    1156
+ Relocate  :      30
+ Extend    :       1
+ Find      :      65
+ Available :      14
+ Check     :       4
+ Hide      :       3
+ Freeze    :      25
+ Print     :       1
+
+ (All arrays delocated)
+
+
+
+ =================
+ Timing Statistics
+ =================
+  
+ Total Used :                     CPU=        5.41      System=        1.31     Elapsed=       11.49
+
+ Calls  Section                     ( Mean, Percentage )
+ ---------------------------------------------------------------------------------------------------
+     4  ><      ................       .10    7.02              .01    1.53              .11    3.86
+     1  INIT    ................       .85   15.71              .76   58.02             6.01   52.32
+     1  GEOMET  ................       .08    1.48              .00     .00              .09     .77
+     1  INPUTA  ................       .11    2.03              .01     .76              .13    1.16
+     1  MAINSY  ................       .08    1.48              .00     .00              .09     .77
+     1  SYMFIT  ................       .01     .18              .00     .00              .01     .10
+     1  CORORT  ................       .01     .18              .00     .00              .01     .07
+     1  SYMORB  ................       .04     .74              .00     .00              .05     .43
+     1  FITINT  ................       .05     .92              .01     .76              .12    1.02
+     1  ORTHON  ................       .17    3.14              .06    4.58              .22    1.95
+     1  CRTP12  ................       .12    2.22              .00     .00              .12    1.07
+     1  ETALOW  ................       .04     .74              .00     .00              .05     .43
+     1  POINTS  ................       .20    3.70              .00     .00              .22    1.89
+     1  WRIPNT  ................       .05     .92              .01     .76              .08     .67
+     1  PTCOR   ................       .06    1.11              .01     .76              .06     .55
+     1  PTBAS   ................       .04     .74              .00     .00              .04     .36
+     4  FOCK00  ................       .02    1.29              .01    1.53              .02     .79
+     3  FOCKY   ................       .01     .74              .01    2.29              .03     .80
+     3  FOCKTR  ................       .02    1.11              .00     .76              .02     .60
+     3  FOCKNM  ................       .00     .18              .00     .00              .00     .07
+     3  SDIIS   ................       .03    1.66              .01    2.29              .05    1.36
+     3  EMERGE  ................       .25   13.68              .06   14.50              .31    8.09
+     3  RHOFIH  ................       .06    3.14              .02    3.82              .09    2.33
+     1  COREPS  ................       .08    1.48              .00     .00              .08     .71
+     1  POPAN   ................       .04     .74              .02    1.53              .06     .48
+     1  DEBYE   ................       .03     .55              .01     .76              .04     .33
+     1  QMPOT   ................       .01     .18              .00     .00              .02     .14
+     1  EXIT PROCEDURE .........      1.78   32.90              .07    5.34             1.94   16.87
+1
+ ***************************************************************************************************
+ (LOGFILE)
+ <Feb20-97> <14:01:44>  ADF 2.2  RunTime: Feb20-97 14:01:44
+ <Feb20-97> <14:01:44>  Nitrogen (IV, 1s frozen)
+ <Feb20-97> <14:01:44>  RunType   : CREATE
+ <Feb20-97> <14:01:45>  Net Charge: 0 (Nuclei minus Electrons)
+ <Feb20-97> <14:01:45>  Symmetry  : ATOM
+ <Feb20-97> <14:01:45>  >>>> CORORT
+ <Feb20-97> <14:01:45>  >>>> FITINT
+ <Feb20-97> <14:01:45>  >>>> ORTHON
+ <Feb20-97> <14:01:45>  >>>> CRTP12
+ <Feb20-97> <14:01:46>  >>>> GENPT
+ <Feb20-97> <14:01:46>  Acc.Num.Int.=  10.000
+ <Feb20-97> <14:01:46>  Block Length=  52
+ <Feb20-97> <14:01:46>  >>>> PTCOR
+ <Feb20-97> <14:01:46>  >>>> PTBAS
+ <Feb20-97> <14:01:46>  >>>> CYCLE
+ <Feb20-97> <14:01:46>    1
+ <Feb20-97> <14:01:47>    2  ErrMat    .00000000  MaxEl   .00000000
+ <Feb20-97> <14:01:47>  SCF converged
+ <Feb20-97> <14:01:47>    3  ErrMat    .00000000  MaxEl   .00000000
+ <Feb20-97> <14:01:48>  >>>> COREPS
+ <Feb20-97> <14:01:48>  >>>> POPAN
+ <Feb20-97> <14:01:48>  NORMAL TERMINATION
+ <Feb20-97> <14:01:50>  END
+STOP ADF EXIT
+ Input for Parallel Execution
+ ----------------------------
+ Requested number of nodes (nproc):      128
+ Allow only one task per node (duphost not specified)
+ File for starting kids (prog): /home/v61u0001/bin/pvmspawn
+
+
+ Parallel Execution: Process Information
+ =======================================
+
+ Actual Number of Tasks running:     8
+ The Master (kid 0) runs on host isis-s102
+
+  Kid Node                   Speed          Task ID   Status
+------------------------------------------------------------------
+    0 isis-s102                 -1           262148   pvmok
+    1 isis-s506.sp.sara.nl      -1           524292   pvmok
+    2 isis-s204.sp.sara.nl      -1           786435   pvmok
+    3 isis-s212.sp.sara.nl      -1          1048579   pvmok
+    4 isis-s302.sp.sara.nl      -1          1310723   pvmok
+    5 isis-s414.sp.sara.nl      -1          1572867   pvmok
+    6 isis-s309.sp.sara.nl      -1          1835011   pvmok
+    7 isis-s304.sp.sara.nl      -1          2097155   pvmok
+1(INPUT FILE)
+ title NH3 frequencies
+  
+ fragments
+   N  t21.N
+   H  t21.H
+ end
+  
+ define
+   rNH=1.02
+   theta=112
+   phi=120
+ end
+  
+ atoms   Z-matrix
+   XX   0 0 0
+   N    1 0 0   1.0
+   H    2 1 0   rNH   theta
+   H    2 1 3   rNH   theta   phi
+   H    2 1 4   rNH   theta   phi
+ end
+  
+ geometry
+   optim  cartesian
+   frequencies
+ end
+  
+ thermo  T=300,400
+  
+ integration  4.0
+  
+ end input
+1
+ *******************************************************************************
+ *                                                                             *
+ *  -------------------------------------                                      *
+ *   Amsterdam Density Functional  (ADF)         2.2       February 20, 1997   *
+ *  -------------------------------------                                      *
+ *                                                                             *
+ *   (c) Copyright 1993-1997, Theoretical Chemistry,                           *
+ *       Vrije Universiteit, Amsterdam, The Netherlands                        *
+ *   All rights reserved.                                                      *
+ *                                                                             *
+ *   Recommended citation:                                                     *
+ *     ADF 2.2, Theoretical Chemistry, Vrije Universiteit, Amsterdam           *
+ *     E.J.Baerends et.al., Chem.Phys. 2 (1973) 41                             *
+ *     G.te Velde, E.J.Baerends, J.Comp.Phys. 99 (1992) 84                     *
+ *     C.Fonseca Guerra et.al. METECC-95 (1995) 305                            *
+ *                                                                             *
+ *   Online information and documentation:                                     *
+ *     http://tc.chem.vu.nl/SCM                                                *
+ *                                                                             *
+ *   E-mail: adf@chem.vu.nl                                                    *
+ *                                                                             *
+ **********************************************  rs6000_aix  ******************* 
+
+ ADF 2.2  RunTime: Feb20-97 14:01:56
+ NH3 frequencies
+
+
+
+ ===============================
+ M O D E L   P A R A M E T E R S
+ ===============================
+  
+ DENSITY FUNCTIONAL POTENTIAL (scf)
+    LDA:                               VWN                                      
+    Gradient Corrections:              ---                                      
+
+ SPIN  (restricted / unrestr.)
+    Molecule:                          Restricted                               
+    Fragments:                         Restricted                               
+
+ OTHER ASPECTS
+    Relativistic Corrections:          ---                                      
+    Core Treatment:                    Frozen Orbital(s)                        
+
+    Electric Field:                    ---                                      
+
+    Magnetic Field:                    ---                                      
+
+
+
+ ===========================
+ A T T A C H E D   F I L E S
+ ===========================
+  
+
+
+ Fragment File(s)
+ ----------------
+ N:
+         file : t21.N
+         jobid: ADF 2.2  RunTime: Feb20-97 14:01:44
+         title: Nitrogen (IV, 1s frozen)
+ H:
+         file : t21.H
+         jobid: ADF 2.2  RunTime: Feb20-97 14:01:33
+         title: Hydrogen (IV)
+
+
+
+                                        ***********************************
+                                        *  R U N   T Y P E : FREQUENCIES  *
+                                        ***********************************
+  
+
+
+
+ ===============
+ G E O M E T R Y  ***  3D  Molecule  ***
+ ===============
+  
+
+ ATOMS
+ =====                            X Y Z                    CHARGE
+                                (Angstrom)             Nucl     +Core       At.Mass
+                       --------------------------    ----------------       -------
+    1  XX               .0000     .0000     .0000       .00       .00         .0000
+    2  N                .0000     .0000    1.0000      7.00      5.00       14.0031
+    3  H                .4729     .8190    1.3821      1.00      1.00        1.0078
+    4  H               -.9457     .0000    1.3821      1.00      1.00        1.0078
+    5  H                .4729    -.8190    1.3821      1.00      1.00        1.0078
+
+
+ FRAGMENTS
+ =========             No.s of the Atoms in this Fragment
+                       ----------------------------------
+    1  N                   2
+    2  H                   3
+    3  H                   4
+    4  H                   5
+    5  XX                  1
+
+
+ Interatomic Distance Matrix (Angstrom)
+ --------------------------------------
+
+   1)      .000
+   2)     1.000    .000
+   3)     1.675   1.020    .000
+   4)     1.675   1.020   1.638    .000
+   5)     1.675   1.020   1.638   1.638    .000
+
+ Min. Distance =    1.0000
+ Max. Distance =    1.6747
+
+
+
+ =====================================
+ S Y M M E T R Y ,   E L E C T R O N S
+ =====================================
+  
+ Symmetry: NOSYM
+
+ Subspecies
+ ----------
+ A
+
+ *** In a FREQUENCIES run the point group symmetry is used only in the construction of the Force Matrix.
+     Due to possibly symmetry-breaking displacements, the SCF calculations run in 'NOSYM', with only one
+     irrep and one subspecies: A.
+ (The current implementation does not use C(LIN),D(LIN) symmetries efficiently in Frequencies-runs.
+ If specified they will internally be reset to NOSYM)
+
+
+ Configuration of Valence Electrons
+ ==================================
+ ( determined in the SCF procedure )
+
+ Total:   8
+
+ Net Charge: 0 (Nuclei minus Electrons)
+
+ Aufbau principle for MO occupations (for each spin separately):
+    Initial geometry: until SCF-cycle      5 (frozen thereafter)                 
+    Next  geometries: until SCF-cycle      5 (frozen thereafter)                 
+1
+ ***************************************************************************************************
+
+
+
+                                      ****************************************
+                                      *  B U I L D : (Fragments, Functions)  *
+                                      ****************************************
+  
+
+
+
+ =======
+ S F O s  ***  (Symmetrized Fragment Orbitals)  ***
+ =======
+  
+ SFOs are linear combinations of (valence) Fragment Orbitals (FOs), such that the SFOs transform as the
+ irreducible representations of the (molecular) symmetry group. Each SFO is therefore characterized by
+ an irrep of the molecule and by a few (or only one) generating FOs.
+ The SFOs constitute a symmetry-adapted basis for the Fock matrix. The MO eigenvector coefficients in
+ this basis provide a direct interpretation of the MOs in terms of Frontier Orbital Theory.
+
+ The SFOs are combined with auxiliary Core Functions (CFs) to ensure orthogonalization on the (frozen)
+ Core Orbitals (COs). The Core-orthogonalized SFOs (CSFOs) constitute the true Fock basis.
+
+ The FOs, and hence also the (C)SFOs are combinations of the elementary basis functions (BAS). The basis
+ functions that participate in the description of the SFOs depend on the irrep. The indices of the
+ involved functions are printed below for each irrep.
+ (The complete list of primitive basis functions is printed in another section)
+
+
+ Total nr. of (C)SFOs (summation over all irreps) :    35
+
+ NOTE: a (C)SFO that is defined as a combination of more than one FO is usually NOT normalized.
+
+
+
+                                       === A ===
+ Nr. of SFOs :   35
+ Cartesian basis functions that participate in this irrep (total number =    37) :
+      1     2     3     4     5     8    11     6     9    12
+      7    10    13    14    15    16    17    18    19    20
+     21    22    23    24    25    26    27    28    29    30
+     31    32    33    34    35    36    37
+
+    SFO  ( index      Occupation       Generating           Expansion in Fragment Orbitals
+         incl.CFs)    in Fragment      FragmentType        Coeff.   Orbital     on Fragment
+ ------------------------------------------------------------------------------------------
+     1    (    2)      2.000           N                    1.00      1 S               1
+     2    (    3)       --             N                    1.00      2 S               1
+     3    (    4)       --             N                    1.00      3 S               1
+     4    (    5)      1.000           N                    1.00      1 P:x             1
+     5    (    6)       --             N                    1.00      2 P:x             1
+     6    (    7)       --             N                    1.00      3 P:x             1
+     7    (    8)      1.000           N                    1.00      1 P:y             1
+     8    (    9)       --             N                    1.00      2 P:y             1
+     9    (   10)       --             N                    1.00      3 P:y             1
+    10    (   11)      1.000           N                    1.00      1 P:z             1
+    11    (   12)       --             N                    1.00      2 P:z             1
+    12    (   13)       --             N                    1.00      3 P:z             1
+    13    (   14)       --             N                    1.00      1 D:z2            1
+    14    (   15)       --             N                    1.00      1 D:x2-y2         1
+    15    (   16)       --             N                    1.00      1 D:xy            1
+    16    (   17)       --             N                    1.00      1 D:xz            1
+    17    (   18)       --             N                    1.00      1 D:yz            1
+    18    (   19)      1.000           H                    1.00      1 S               2
+    19    (   20)       --             H                    1.00      2 S               2
+    20    (   21)       --             H                    1.00      3 S               2
+    21    (   22)       --             H                    1.00      1 P:x             2
+    22    (   23)       --             H                    1.00      1 P:y             2
+    23    (   24)       --             H                    1.00      1 P:z             2
+    24    (   25)      1.000           H                    1.00      1 S               3
+    25    (   26)       --             H                    1.00      2 S               3
+    26    (   27)       --             H                    1.00      3 S               3
+    27    (   28)       --             H                    1.00      1 P:x             3
+    28    (   29)       --             H                    1.00      1 P:y             3
+    29    (   30)       --             H                    1.00      1 P:z             3
+    30    (   31)      1.000           H                    1.00      1 S               4
+    31    (   32)       --             H                    1.00      2 S               4
+    32    (   33)       --             H                    1.00      3 S               4
+    33    (   34)       --             H                    1.00      1 P:x             4
+    34    (   35)       --             H                    1.00      1 P:y             4
+    35    (   36)       --             H                    1.00      1 P:z             4
+
+
+
+ ================================
+ (Slater-type)  F U N C T I O N S  ***  (Basis and Fit)  ***
+ ================================
+  
+
+ Atom Type    1  (N)
+ ==============
+
+ Valence Basis Sets:   8
+ -----------------------
+   1 S    6.380000
+   2 S    1.500000
+   2 S    2.500000
+   2 S    5.150000
+   2 P    1.000000
+   2 P    1.880000
+   2 P    3.680000
+   3 D    2.200000
+
+ Frozen Core Shells
+ ------------------
+    S:  1
+
+ Charge Fitting Sets (for the computation of the Coulomb Potential):  20
+ -----------------------------------------------------------------------
+   1 S   12.760000
+   2 S   13.770000
+   2 S    9.060000
+   2 S    5.970000
+   3 S    5.770000
+   3 S    4.050000
+   3 S    2.850000
+   3 S    2.000000
+   2 P   10.060000
+   2 P    6.180000
+   3 P    5.600000
+   3 P    3.710000
+   3 P    2.460000
+   3 D    8.380000
+   3 D    5.200000
+   3 D    3.220000
+   3 D    2.000000
+   4 F    5.800000
+   4 F    3.600000
+   5 G    4.500000
+
+ Atom Type    2  (H)
+ ==============
+
+ Valence Basis Sets:   4
+ -----------------------
+   1 S     .690000
+   1 S     .920000
+   1 S    1.580000
+   2 P    1.250000
+
+ Charge Fitting Sets (for the computation of the Coulomb Potential):  11
+ -----------------------------------------------------------------------
+   1 S    3.160000
+   1 S    2.090000
+   1 S    1.380000
+   2 S    1.500000
+   2 P    4.000000
+   2 P    2.650000
+   2 P    1.750000
+   3 D    4.000000
+   3 D    2.500000
+   4 F    3.000000
+   5 G    4.000000
+
+
+ BAS: List of all Elementary Cartesian Basis Functions
+ =====================================================
+
+ The numbering in the list below (to the right of the function characteristics) is referred to in print-outs
+ of MO eigenvectors and Mulliken populations in the BAS representation (as contrasted to the SFO represen-
+ tation).
+
+ Notes:
+ 1. The functions are characterized by a polynomial prefactor (powers of x,y,z and r) and an exponential
+    decay factor alpha.
+ 2. Since the basis sets are specific for an atom TYPE, the individual functions occur on all atoms of that
+    type.
+ 3. The word 'Core' in the left margin signals that it is a Core Function (CF) : not a degree of freedom in
+    the valence set, but only used to ensure orthogonalization of the other (true valence) basis functions
+    on the frozen Core Orbitals.
+
+
+ (power of) X  Y  Z  R     Alpha  on Atom
+            ==========     =====     ==========
+
+ N                                    1
+                                  ---------------------------------------------------------------------------
+    Core    0  0  0  0     6.380      1
+            0  0  0  1     1.500      2
+            0  0  0  1     2.500      3
+            0  0  0  1     5.150      4
+            1  0  0  0     1.000      5
+            0  1  0  0     1.000      6
+            0  0  1  0     1.000      7
+            1  0  0  0     1.880      8
+            0  1  0  0     1.880      9
+            0  0  1  0     1.880     10
+            1  0  0  0     3.680     11
+            0  1  0  0     3.680     12
+            0  0  1  0     3.680     13
+            2  0  0  0     2.200     14
+            1  1  0  0     2.200     15
+            1  0  1  0     2.200     16
+            0  2  0  0     2.200     17
+            0  1  1  0     2.200     18
+            0  0  2  0     2.200     19
+
+ H                                    2    3    4
+                                  ---------------------------------------------------------------------------
+            0  0  0  0      .690     20   26   32
+            0  0  0  0      .920     21   27   33
+            0  0  0  0     1.580     22   28   34
+            1  0  0  0     1.250     23   29   35
+            0  1  0  0     1.250     24   30   36
+            0  0  1  0     1.250     25   31   37
+
+
+ Parallel Execution: Process Information
+ =======================================
+
+ Actual Number of Tasks running:     8
+ The Master (kid 0) runs on host isis-s102
+
+  Kid Node                   Speed          Task ID   Status
+------------------------------------------------------------------
+    0 isis-s102               1000           262148   pvmok
+    1 isis-s506.sp.sara.nl    1000           524292   pvmok
+    2 isis-s204.sp.sara.nl    1000           786435   pvmok
+    3 isis-s212.sp.sara.nl    1000          1048579   pvmok
+    4 isis-s302.sp.sara.nl    1000          1310723   pvmok
+    5 isis-s414.sp.sara.nl    1000          1572867   pvmok
+    6 isis-s309.sp.sara.nl    1000          1835011   pvmok
+    7 isis-s304.sp.sara.nl    1000          2097155   pvmok
+1
+ ***************************************************************************************************
+
+
+
+                                              ***********************
+                                              *  T E C H N I C A L  *
+                                              ***********************
+  
+
+
+
+ =============================================================
+ P A R A L L E L I Z A T I O N  and  V E C T O R I Z A T I O N
+ =============================================================
+  
+ nr of parallel processes:                                8
+ max vectorlength in NumInt loops:                      256
+
+
+
+ ===============
+ I O  vs.  C P U  ***  (store numerical data on disk or recalculate)  ***
+ ===============
+  
+ Basis functions:   recalculate when needed
+ Fit functions:     recalculate when needed
+
+
+
+ ===============================
+ G E O M E T R Y   U P D A T E S
+ ===============================
+  
+ Optimization coordinates:                       Cartesian
+
+ (Max.) nr. of displacements to compute Freq.s:     25
+ Second derivatives are computed by 2-point num. differentiation of gradients
+ Fewer displacements may be used due to symmetry
+
+
+
+ =====================
+ S C F   U P D A T E S
+ =====================
+  
+ Max. nr. of cycles:                                50
+ Convergence criterion:                               .0000010000
+ secondary criterion:                                 .0010000000
+
+ Mix parameter (when DIIS does not apply):            .2000000000
+
+
+ DIIS (Direct Inversion in Iteration Space)
+    Replace damping when SCF Error is below:          .5000000000
+    (Max.) nr. of expansion vectors:                10
+
+    Upperbound on expansion coefficients:            5.0000000000
+    (when exceeded, IterationSpace is re-built)
+    2nd Upperbound on coefficients:                 25.0000000000
+    (when exceeded, simple damping will be used)
+ ElectronSmearing (in case of problematic SCF convergence) prohibited
+
+
+
+ =================
+ P R E C I S I O N  ***  (general: NumInt, NeglectFunctionTails, ...)  ***
+ =================
+  
+
+ NumInt:           Target precision:                 4.0000000000
+ -------           Initial precision:                4.0000000000
+                   Min. precision (optimization):    4.0000000000
+
+ Neglect Functions:          Basis functions:         .1000000000E-05
+ ------------------          Fit functions:           .1000000000E-05
+1
+ ***************************************************************************************************
+
+
+
+                                            ***************************
+                                            *  C O M P U T A T I O N  *
+                                            ***************************
+  
+
+
+
+ ===================================================
+ Numerical Integration : Atomic Polyhedra (Te Velde)  ***  (parameters, tests)  ***
+ ===================================================
+  
+ General Accuracy Parameter :                          4.00
+
+ Summary of the Symmetry Unique Points:
+ --------------------------------------
+    Nr. of used Symmetry Operators                     6
+
+    Points in the Atomic Spheres                     259
+    Points in the Atomic Polyhedra                  1863
+    Points in the Outer Region                      1184
+    ----------------------------------------------------
+    Total                                           3306
+
+    Sum of Weights                                 45626.771275
+
+ Total nr. of points:      19836
+ Nr. of blocks:               78
+ Block length:               255
+ Nr. of dummy points:         54
+
+
+ Test of Precision of the Numerical Integration Grid
+ ===================================================
+
+ Integral of the Total Core Density:                   1.99999782189169
+ Relative Error:                                      -1.089E-06
+
+
+
+ =====
+ S C F
+ =====
+  
+
+ CYCLE    1
+ orbitals (Q,E):
+ ---------------
+ A :1...14           ( 2.00     -.9788)  ( 2.00     -.6042)  ( 2.00     -.6042)  ( 2.00     -.4340)   
+                     (  .00     -.0730)  (  .00     -.0066)  (  .00     -.0066)  (  .00      .1213)   
+                     (  .00      .1213)  (  .00      .1749)  (  .00      .1837)  (  .00      .3271)   
+                     (  .00      .3271)  (  .00      .3547)   
+
+ CYCLE    2
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.8883)  ( 2.00     -.5227)  ( 2.00     -.5227)  ( 2.00     -.3392)   
+                     (  .00     -.0493)  (  .00      .0212)   
+ d-Pmat  mean:   .31E-01
+ imax=     10:  -.18E+00
+
+ CYCLE    3
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7458)  ( 2.00     -.3935)  ( 2.00     -.3935)  ( 2.00     -.2066)   
+                     (  .00     -.0067)  (  .00      .0666)   
+ d-Pmat  mean:   .30E-01
+ imax=     10:  -.24E+00
+
+ CYCLE    4
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7712)  ( 2.00     -.4158)  ( 2.00     -.4158)  ( 2.00     -.2280)   
+                     (  .00     -.0139)  (  .00      .0588)   
+ d-Pmat  mean:   .55E-02
+ imax=     10:   .44E-01
+
+ CYCLE    5
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7711)  ( 2.00     -.4158)  ( 2.00     -.4158)  ( 2.00     -.2285)   
+                     (  .00     -.0140)  (  .00      .0586)   
+ d-Pmat  mean:   .14E-03
+ imax=     27:  -.89E-03
+
+ CYCLE    6
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7712)  ( 2.00     -.4159)  ( 2.00     -.4159)  ( 2.00     -.2285)   
+                     (  .00     -.0141)  (  .00      .0586)   
+ d-Pmat  mean:   .30E-04
+ imax=      2:  -.24E-03
+
+ CYCLE    7
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7712)  ( 2.00     -.4159)  ( 2.00     -.4159)  ( 2.00     -.2285)   
+                     (  .00     -.0141)  (  .00      .0586)   
+ d-Pmat  mean:   .54E-05
+ imax=     27:  -.37E-04
+
+ CYCLE    8
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7712)  ( 2.00     -.4159)  ( 2.00     -.4159)  ( 2.00     -.2285)   
+                     (  .00     -.0141)  (  .00      .0586)   
+ d-Pmat  mean:   .31E-06
+ imax=      7:  -.26E-05
+
+ CYCLE    9
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7712)  ( 2.00     -.4159)  ( 2.00     -.4159)  ( 2.00     -.2285)   
+                     (  .00     -.0141)  (  .00      .0586)   
+ d-Pmat  mean:   .77E-08
+ imax=     33:  -.38E-07
+
+ SCF CONVERGED
+
+ CYCLE   10
+ orbitals (Q,E):
+ ---------------
+ A :1...14           ( 2.00     -.7712)  ( 2.00     -.4159)  ( 2.00     -.4159)  ( 2.00     -.2285)   
+                     (  .00     -.0141)  (  .00      .0586)  (  .00      .0586)  (  .00      .2068)   
+                     (  .00      .2068)  (  .00      .2595)  (  .00      .2868)  (  .00      .4327)   
+                     (  .00      .4327)  (  .00      .4496)   
+
+
+ Fit test: (difference of exact and fit density, squared integrated, result summed over spins)
+         SCF:                                           .00000796348957
+
+ Gross Charges per Atom (Z minus electrons)
+ ==========================================
+              .0000    -.3210     .1070     .1070     .1070
+ Net Total:   .00000000
+
+ Dipole Moment:
+ ==============
+ Vector   :          .00000000       .00000000      1.52418234
+ Magnitude:         1.52418234
+1
+
+
+
+ =============================
+ F O R C E   C O N S T A N T S  ***  nr. of geometries to evaluate: 25  ***
+ =============================
+  
+
+ Energy gradients wrt nuclear displacements
+ ==========================================
+
+   Atom         Cartesian (a.u./angstrom)   Connection Numbers               Internal
+                 X         Y         Z          R Alpha Beta       (au/angstr)  (a.u./radian)
+ ----------------------------------------------------------------------------------------------
+   1 XX       .000000   .000000   .000000       0    0    0
+   2 N        .000000   .000000   .006025       1    0    0         .000000
+   3 H       -.002759  -.004779  -.001984       2    1    0        -.005867   .000215
+   4 H        .005519   .000000  -.001984       2    1    3        -.005867   .000215   .000000
+   5 H       -.002759   .004779  -.001984       2    1    4        -.005867   .000215   .000000
+ ----------------------------------------------------------------------------------------------
+
+ Energy:                -.74383412
+
+
+ Coordinates (Internal)
+ =======================
+
+   Atom      Connection Numbers                 Coordinates
+               R   Alpha  Beta         Angstr      degree      degree
+ --------------------------------------------------------------------
+   1 XX        0     0     0          .000000     .000000     .000000
+   2 N         1     0     0         1.000050     .000000     .000000
+   3 H         2     1     0         1.024674  111.602615     .000000
+   4 H         2     1     3         1.010735  112.785293  120.718591
+   5 H         2     1     4         1.024674  111.602615  120.718591
+ --------------------------------------------------------------------
+
+
+ Coordinates (Cartesian)
+ =======================
+
+   Atom                      bohr                                 angstrom                 Geometric Variables
+                   X           Y           Z              X           Y           Z       (0:frozen, *:LT par.)
+ --------------------------------------------------------------------------------------------------------------
+   1 XX         .000000     .000000     .000000        .000000     .000000     .000000      0       0       0
+   2 N         -.018897     .000000    1.889727       -.010000     .000000    1.000000      1       2       3
+   3 H          .893583    1.547732    2.611789        .472864     .819024    1.382099      4       5       6
+   4 H        -1.787167     .000000    2.611789       -.945728     .000000    1.382099      7       8       9
+   5 H          .893583   -1.547732    2.611789        .472864    -.819024    1.382099     10      11      12
+ --------------------------------------------------------------------------------------------------------------
+
+
+
+ ===================================================
+ Numerical Integration : Atomic Polyhedra (Te Velde)  ***  (parameters, tests)  ***
+ ===================================================
+  
+ General Accuracy Parameter :                          4.00
+
+ Summary of the Symmetry Unique Points:
+ --------------------------------------
+    Nr. of used Symmetry Operators                     2
+
+    Points in the Atomic Spheres                     632
+    Points in the Atomic Polyhedra                  5189
+    Points in the Outer Region                      3263
+    ----------------------------------------------------
+    Total                                           9084
+
+    Sum of Weights                                 45609.893277
+
+ Total nr. of points:      18168
+ Nr. of blocks:               72
+ Block length:               253
+ Nr. of dummy points:         48
+
+
+ Test of Precision of the Numerical Integration Grid
+ ===================================================
+
+ Integral of the Total Core Density:                   1.99999809515752
+ Relative Error:                                      -9.524E-07
+
+
+
+ =====
+ S C F
+ =====
+  
+
+ CYCLE    1
+ orbitals (Q,E):
+ ---------------
+ A :1...14           ( 2.00     -.7712)  ( 2.00     -.4189)  ( 2.00     -.4128)  ( 2.00     -.2285)   
+                     (  .00     -.0141)  (  .00      .0584)  (  .00      .0587)  (  .00      .2045)   
+                     (  .00      .2090)  (  .00      .2595)  (  .00      .2867)  (  .00      .4315)   
+                     (  .00      .4338)  (  .00      .4496)   
+
+ CYCLE    2
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7712)  ( 2.00     -.4186)  ( 2.00     -.4131)  ( 2.00     -.2285)   
+                     (  .00     -.0141)  (  .00      .0583)   
+ d-Pmat  mean:   .12E-03
+ imax=     27:  -.16E-02
+
+ CYCLE    3
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7712)  ( 2.00     -.4182)  ( 2.00     -.4136)  ( 2.00     -.2286)   
+                     (  .00     -.0141)  (  .00      .0581)   
+ d-Pmat  mean:   .21E-03
+ imax=     27:  -.29E-02
+
+ CYCLE    4
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7712)  ( 2.00     -.4182)  ( 2.00     -.4135)  ( 2.00     -.2285)   
+                     (  .00     -.0141)  (  .00      .0582)   
+ d-Pmat  mean:   .33E-04
+ imax=     10:  -.19E-03
+
+ CYCLE    5
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7712)  ( 2.00     -.4182)  ( 2.00     -.4135)  ( 2.00     -.2285)   
+                     (  .00     -.0141)  (  .00      .0582)   
+ d-Pmat  mean:   .13E-04
+ imax=     27:  -.85E-04
+
+ CYCLE    6
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7712)  ( 2.00     -.4182)  ( 2.00     -.4135)  ( 2.00     -.2285)   
+                     (  .00     -.0141)  (  .00      .0582)   
+ d-Pmat  mean:   .21E-06
+ imax=     27:   .29E-05
+
+ SCF CONVERGED
+
+ CYCLE    7
+ orbitals (Q,E):
+ ---------------
+ A :1...14           ( 2.00     -.7712)  ( 2.00     -.4182)  ( 2.00     -.4135)  ( 2.00     -.2285)   
+                     (  .00     -.0141)  (  .00      .0582)  (  .00      .0589)  (  .00      .2044)   
+                     (  .00      .2092)  (  .00      .2595)  (  .00      .2868)  (  .00      .4314)   
+                     (  .00      .4339)  (  .00      .4496)   
+
+
+ Fit test: (difference of exact and fit density, squared integrated, result summed over spins)
+         SCF:                                           .00000798559314
+
+ Gross Charges per Atom (Z minus electrons)
+ ==========================================
+              .0000    -.3210     .1066     .1077     .1066
+ Net Total:   .00000000
+
+ Dipole Moment:
+ ==============
+ Vector   :          .02044743       .00000000      1.52421072
+ Magnitude:         1.52434786
+
+
+
+ =============================
+ G E O M E T R Y   U P D A T E  ***  2  ***
+ =============================
+  
+
+ Energy gradients wrt nuclear displacements
+ ==========================================
+
+   Atom         Cartesian (a.u./angstrom)   Connection Numbers               Internal
+                 X         Y         Z          R Alpha Beta       (au/angstr)  (a.u./radian)
+ ----------------------------------------------------------------------------------------------
+   1 XX       .000000   .000000   .000000       0    0    0
+   2 N       -.022414   .000000   .006518       1    0    0         .000000
+   3 H        .001867  -.000104   .000868       2    1    0         .001115   .000488
+   4 H        .018733   .000000  -.008236       2    1    3        -.020450  -.000574   .001575
+   5 H        .001867   .000104   .000868       2    1    4         .001115   .000488   .001575
+ ----------------------------------------------------------------------------------------------
+
+ Energy:                -.74370593
+
+
+ Coordinates (Internal)
+ =======================
+
+   Atom      Connection Numbers                 Coordinates
+               R   Alpha  Beta         Angstr      degree      degree
+ --------------------------------------------------------------------
+   1 XX        0     0     0          .000000     .000000     .000000
+   2 N         1     0     0         1.000050     .000000     .000000
+   3 H         2     1     0         1.015403  112.385849     .000000
+   4 H         2     1     3         1.029279  111.218533  119.268333
+   5 H         2     1     4         1.015403  112.385849  119.268333
+ --------------------------------------------------------------------
+
+
+ Coordinates (Cartesian)
+ =======================
+
+   Atom                      bohr                                 angstrom                 Geometric Variables
+                   X           Y           Z              X           Y           Z       (0:frozen, *:LT par.)
+ --------------------------------------------------------------------------------------------------------------
+   1 XX         .000000     .000000     .000000        .000000     .000000     .000000      0       0       0
+   2 N          .018897     .000000    1.889727        .010000     .000000    1.000000      1       2       3
+   3 H          .893583    1.547732    2.611789        .472864     .819024    1.382099      4       5       6
+   4 H        -1.787167     .000000    2.611789       -.945728     .000000    1.382099      7       8       9
+   5 H          .893583   -1.547732    2.611789        .472864    -.819024    1.382099     10      11      12
+ --------------------------------------------------------------------------------------------------------------
+
+
+
+ ===================================================
+ Numerical Integration : Atomic Polyhedra (Te Velde)  ***  (parameters, tests)  ***
+ ===================================================
+  
+ General Accuracy Parameter :                          4.00
+
+ Summary of the Symmetry Unique Points:
+ --------------------------------------
+    Nr. of used Symmetry Operators                     2
+
+    Points in the Atomic Spheres                     632
+    Points in the Atomic Polyhedra                  5198
+    Points in the Outer Region                      3272
+    ----------------------------------------------------
+    Total                                           9102
+
+    Sum of Weights                                 45618.365152
+
+ Total nr. of points:      18204
+ Nr. of blocks:               72
+ Block length:               253
+ Nr. of dummy points:         12
+
+
+ Test of Precision of the Numerical Integration Grid
+ ===================================================
+
+ Integral of the Total Core Density:                   1.99999777211676
+ Relative Error:                                      -1.114E-06
+
+
+
+ =====
+ S C F
+ =====
+  
+
+ CYCLE    1
+ orbitals (Q,E):
+ ---------------
+ A :1...14           ( 2.00     -.7712)  ( 2.00     -.4181)  ( 2.00     -.4135)  ( 2.00     -.2285)   
+                     (  .00     -.0141)  (  .00      .0581)  (  .00      .0590)  (  .00      .2043)   
+                     (  .00      .2092)  (  .00      .2595)  (  .00      .2868)  (  .00      .4313)   
+                     (  .00      .4340)  (  .00      .4496)   
+
+ CYCLE    2
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7712)  ( 2.00     -.4181)  ( 2.00     -.4135)  ( 2.00     -.2285)   
+                     (  .00     -.0141)  (  .00      .0581)   
+ d-Pmat  mean:   .86E-05
+ imax=     27:  -.54E-04
+
+ CYCLE    3
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7712)  ( 2.00     -.4182)  ( 2.00     -.4135)  ( 2.00     -.2285)   
+                     (  .00     -.0141)  (  .00      .0581)   
+ d-Pmat  mean:   .76E-05
+ imax=     27:  -.75E-04
+
+ CYCLE    4
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7712)  ( 2.00     -.4182)  ( 2.00     -.4135)  ( 2.00     -.2285)   
+                     (  .00     -.0141)  (  .00      .0581)   
+ d-Pmat  mean:   .14E-05
+ imax=     27:   .14E-04
+
+ CYCLE    5
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7712)  ( 2.00     -.4182)  ( 2.00     -.4135)  ( 2.00     -.2285)   
+                     (  .00     -.0141)  (  .00      .0581)   
+ d-Pmat  mean:   .85E-07
+ imax=     27:  -.98E-06
+
+ CYCLE    6
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7712)  ( 2.00     -.4182)  ( 2.00     -.4135)  ( 2.00     -.2285)   
+                     (  .00     -.0141)  (  .00      .0581)   
+ d-Pmat  mean:   .12E-07
+ imax=     27:  -.13E-06
+
+ SCF CONVERGED
+
+ CYCLE    7
+ orbitals (Q,E):
+ ---------------
+ A :1...14           ( 2.00     -.7712)  ( 2.00     -.4182)  ( 2.00     -.4135)  ( 2.00     -.2285)   
+                     (  .00     -.0141)  (  .00      .0581)  (  .00      .0590)  (  .00      .2043)   
+                     (  .00      .2092)  (  .00      .2595)  (  .00      .2868)  (  .00      .4313)   
+                     (  .00      .4340)  (  .00      .4496)   
+
+
+ Fit test: (difference of exact and fit density, squared integrated, result summed over spins)
+         SCF:                                           .00000798213705
+
+ Gross Charges per Atom (Z minus electrons)
+ ==========================================
+              .0000    -.3210     .1074     .1063     .1074
+ Net Total:   .00000000
+
+ Dipole Moment:
+ ==============
+ Vector   :         -.02064947       .00000000      1.52420957
+ Magnitude:         1.52434943
+
+
+
+ =============================
+ G E O M E T R Y   U P D A T E  ***  3  ***
+ =============================
+  
+
+ Energy gradients wrt nuclear displacements
+ ==========================================
+
+   Atom         Cartesian (a.u./angstrom)   Connection Numbers               Internal
+                 X         Y         Z          R Alpha Beta       (au/angstr)  (a.u./radian)
+ ----------------------------------------------------------------------------------------------
+   1 XX       .000000   .000000   .000000       0    0    0
+   2 N        .021831   .000000   .006531       1    0    0         .000000
+   3 H       -.007370  -.009644  -.005145       2    1    0        -.013079  -.000252
+   4 H       -.007038   .000000   .003783       2    1    3         .007942   .000889  -.001580
+   5 H       -.007370   .009644  -.005145       2    1    4        -.013079  -.000252  -.001580
+ ----------------------------------------------------------------------------------------------
+
+ Energy:                -.74370637
+
+
+ Coordinates (Internal)
+ =======================
+
+   Atom      Connection Numbers                 Coordinates
+               R   Alpha  Beta         Angstr      degree      degree
+ --------------------------------------------------------------------
+   1 XX        0     0     0          .000000     .000000     .000000
+   2 N         1     0     0         1.000050     .000000     .000000
+   3 H         2     1     0         1.028047  111.320967     .000000
+   4 H         2     1     3         1.020049  111.991673  118.750579
+   5 H         2     1     4         1.011988  112.677737  121.262500
+ --------------------------------------------------------------------
+
+
+ Coordinates (Cartesian)
+ =======================
+
+   Atom                      bohr                                 angstrom                 Geometric Variables
+                   X           Y           Z              X           Y           Z       (0:frozen, *:LT par.)
+ --------------------------------------------------------------------------------------------------------------
+   1 XX         .000000     .000000     .000000        .000000     .000000     .000000      0       0       0
+   2 N          .000000    -.018897    1.889727        .000000    -.010000    1.000000      1       2       3
+   3 H          .893583    1.547732    2.611789        .472864     .819024    1.382099      4       5       6
+   4 H        -1.787167     .000000    2.611789       -.945728     .000000    1.382099      7       8       9
+   5 H          .893583   -1.547732    2.611789        .472864    -.819024    1.382099     10      11      12
+ --------------------------------------------------------------------------------------------------------------
+
+
+
+ ===================================================
+ Numerical Integration : Atomic Polyhedra (Te Velde)  ***  (parameters, tests)  ***
+ ===================================================
+  
+ General Accuracy Parameter :                          4.00
+
+ Summary of the Symmetry Unique Points:
+ --------------------------------------
+    Nr. of used Symmetry Operators                     1
+
+    Points in the Atomic Spheres                    1206
+    Points in the Atomic Polyhedra                 10125
+    Points in the Outer Region                      5856
+    ----------------------------------------------------
+    Total                                          17187
+
+    Sum of Weights                                 45612.172997
+
+ Total nr. of points:      17187
+ Nr. of blocks:               68
+ Block length:               253
+ Nr. of dummy points:         17
+
+
+ Test of Precision of the Numerical Integration Grid
+ ===================================================
+
+ Integral of the Total Core Density:                   1.99999732536334
+ Relative Error:                                      -1.337E-06
+
+
+
+ =====
+ S C F
+ =====
+  
+
+ CYCLE    1
+ orbitals (Q,E):
+ ---------------
+ A :1...14           ( 2.00     -.7712)  ( 2.00     -.4189)  ( 2.00     -.4128)  ( 2.00     -.2285)   
+                     (  .00     -.0141)  (  .00      .0584)  (  .00      .0587)  (  .00      .2045)   
+                     (  .00      .2091)  (  .00      .2595)  (  .00      .2867)  (  .00      .4315)   
+                     (  .00      .4338)  (  .00      .4496)   
+
+ CYCLE    2
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7712)  ( 2.00     -.4186)  ( 2.00     -.4130)  ( 2.00     -.2285)   
+                     (  .00     -.0141)  (  .00      .0583)   
+ d-Pmat  mean:   .94E-04
+ imax=     21:   .15E-02
+
+ CYCLE    3
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7712)  ( 2.00     -.4182)  ( 2.00     -.4136)  ( 2.00     -.2286)   
+                     (  .00     -.0141)  (  .00      .0581)   
+ d-Pmat  mean:   .17E-03
+ imax=     21:   .26E-02
+
+ CYCLE    4
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7712)  ( 2.00     -.4181)  ( 2.00     -.4135)  ( 2.00     -.2285)   
+                     (  .00     -.0141)  (  .00      .0582)   
+ d-Pmat  mean:   .33E-04
+ imax=     10:  -.19E-03
+
+ CYCLE    5
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7712)  ( 2.00     -.4182)  ( 2.00     -.4135)  ( 2.00     -.2285)   
+                     (  .00     -.0141)  (  .00      .0582)   
+ d-Pmat  mean:   .13E-04
+ imax=     33:  -.81E-04
+
+ CYCLE    6
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7712)  ( 2.00     -.4182)  ( 2.00     -.4135)  ( 2.00     -.2285)   
+                     (  .00     -.0141)  (  .00      .0582)   
+ d-Pmat  mean:   .18E-06
+ imax=     33:   .28E-05
+
+ SCF CONVERGED
+
+ CYCLE    7
+ orbitals (Q,E):
+ ---------------
+ A :1...14           ( 2.00     -.7712)  ( 2.00     -.4182)  ( 2.00     -.4135)  ( 2.00     -.2285)   
+                     (  .00     -.0141)  (  .00      .0582)  (  .00      .0590)  (  .00      .2043)   
+                     (  .00      .2092)  (  .00      .2595)  (  .00      .2867)  (  .00      .4314)   
+                     (  .00      .4339)  (  .00      .4496)   
+
+
+ Fit test: (difference of exact and fit density, squared integrated, result summed over spins)
+         SCF:                                           .00000799631300
+
+ Gross Charges per Atom (Z minus electrons)
+ ==========================================
+              .0000    -.3215     .1066     .1071     .1078
+ Net Total:   .00000000
+
+ Dipole Moment:
+ ==============
+ Vector   :         -.00007780       .02053261      1.52426425
+ Magnitude:         1.52440254
+
+
+
+ =============================
+ G E O M E T R Y   U P D A T E  ***  4  ***
+ =============================
+  
+
+ Energy gradients wrt nuclear displacements
+ ==========================================
+
+   Atom         Cartesian (a.u./angstrom)   Connection Numbers               Internal
+                 X         Y         Z          R Alpha Beta       (au/angstr)  (a.u./radian)
+ ----------------------------------------------------------------------------------------------
+   1 XX       .000000   .000000   .000000       0    0    0
+   2 N        .000415  -.022130   .006584       1    0    0         .000000
+   3 H        .001826   .005127   .002966       2    1    0         .006074   .000765
+   4 H        .005481   .001866  -.002072       2    1    3        -.005842   .000097  -.000920
+   5 H       -.007721   .015131  -.007462       2    1    4        -.018520  -.000508   .000904
+ ----------------------------------------------------------------------------------------------
+
+ Energy:                -.74368946
+
+
+ Coordinates (Internal)
+ =======================
+
+   Atom      Connection Numbers                 Coordinates
+               R   Alpha  Beta         Angstr      degree      degree
+ --------------------------------------------------------------------
+   1 XX        0     0     0          .000000     .000000     .000000
+   2 N         1     0     0         1.000050     .000000     .000000
+   3 H         2     1     0         1.011988  112.677737     .000000
+   4 H         2     1     3         1.020049  111.991673  121.262500
+   5 H         2     1     4         1.028047  111.320967  118.750579
+ --------------------------------------------------------------------
+
+
+ Coordinates (Cartesian)
+ =======================
+
+   Atom                      bohr                                 angstrom                 Geometric Variables
+                   X           Y           Z              X           Y           Z       (0:frozen, *:LT par.)
+ --------------------------------------------------------------------------------------------------------------
+   1 XX         .000000     .000000     .000000        .000000     .000000     .000000      0       0       0
+   2 N          .000000     .018897    1.889727        .000000     .010000    1.000000      1       2       3
+   3 H          .893583    1.547732    2.611789        .472864     .819024    1.382099      4       5       6
+   4 H        -1.787167     .000000    2.611789       -.945728     .000000    1.382099      7       8       9
+   5 H          .893583   -1.547732    2.611789        .472864    -.819024    1.382099     10      11      12
+ --------------------------------------------------------------------------------------------------------------
+
+
+
+ ===================================================
+ Numerical Integration : Atomic Polyhedra (Te Velde)  ***  (parameters, tests)  ***
+ ===================================================
+  
+ General Accuracy Parameter :                          4.00
+
+ Summary of the Symmetry Unique Points:
+ --------------------------------------
+    Nr. of used Symmetry Operators                     1
+
+    Points in the Atomic Spheres                    1206
+    Points in the Atomic Polyhedra                 10119
+    Points in the Outer Region                      5856
+    ----------------------------------------------------
+    Total                                          17181
+
+    Sum of Weights                                 45612.172997
+
+ Total nr. of points:      17181
+ Nr. of blocks:               68
+ Block length:               253
+ Nr. of dummy points:         23
+
+
+ Test of Precision of the Numerical Integration Grid
+ ===================================================
+
+ Integral of the Total Core Density:                   1.99999732536080
+ Relative Error:                                      -1.337E-06
+
+
+
+ =====
+ S C F
+ =====
+  
+
+ CYCLE    1
+ orbitals (Q,E):
+ ---------------
+ A :1...14           ( 2.00     -.7711)  ( 2.00     -.4181)  ( 2.00     -.4135)  ( 2.00     -.2285)   
+                     (  .00     -.0141)  (  .00      .0581)  (  .00      .0590)  (  .00      .2044)   
+                     (  .00      .2092)  (  .00      .2595)  (  .00      .2868)  (  .00      .4314)   
+                     (  .00      .4339)  (  .00      .4496)   
+
+ CYCLE    2
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7712)  ( 2.00     -.4181)  ( 2.00     -.4135)  ( 2.00     -.2285)   
+                     (  .00     -.0141)  (  .00      .0581)   
+ d-Pmat  mean:   .78E-05
+ imax=     10:   .52E-04
+
+ CYCLE    3
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7712)  ( 2.00     -.4182)  ( 2.00     -.4135)  ( 2.00     -.2285)   
+                     (  .00     -.0141)  (  .00      .0581)   
+ d-Pmat  mean:   .79E-05
+ imax=     27:   .78E-04
+
+ CYCLE    4
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7712)  ( 2.00     -.4182)  ( 2.00     -.4135)  ( 2.00     -.2285)   
+                     (  .00     -.0141)  (  .00      .0581)   
+ d-Pmat  mean:   .13E-05
+ imax=     27:  -.22E-04
+
+ CYCLE    5
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7712)  ( 2.00     -.4182)  ( 2.00     -.4135)  ( 2.00     -.2285)   
+                     (  .00     -.0141)  (  .00      .0581)   
+ d-Pmat  mean:   .18E-06
+ imax=     27:   .13E-05
+
+ CYCLE    6
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7712)  ( 2.00     -.4182)  ( 2.00     -.4135)  ( 2.00     -.2285)   
+                     (  .00     -.0141)  (  .00      .0581)   
+ d-Pmat  mean:   .20E-07
+ imax=     27:   .28E-06
+
+ SCF CONVERGED
+
+ CYCLE    7
+ orbitals (Q,E):
+ ---------------
+ A :1...14           ( 2.00     -.7712)  ( 2.00     -.4182)  ( 2.00     -.4135)  ( 2.00     -.2285)   
+                     (  .00     -.0141)  (  .00      .0581)  (  .00      .0590)  (  .00      .2043)   
+                     (  .00      .2092)  (  .00      .2595)  (  .00      .2867)  (  .00      .4314)   
+                     (  .00      .4339)  (  .00      .4496)   
+
+
+ Fit test: (difference of exact and fit density, squared integrated, result summed over spins)
+         SCF:                                           .00000799627123
+
+ Gross Charges per Atom (Z minus electrons)
+ ==========================================
+              .0000    -.3215     .1079     .1071     .1066
+ Net Total:   .00000000
+
+ Dipole Moment:
+ ==============
+ Vector   :         -.00011321      -.02059227      1.52425929
+ Magnitude:         1.52439838
+
+
+
+ =============================
+ G E O M E T R Y   U P D A T E  ***  5  ***
+ =============================
+  
+
+ Energy gradients wrt nuclear displacements
+ ==========================================
+
+   Atom         Cartesian (a.u./angstrom)   Connection Numbers               Internal
+                 X         Y         Z          R Alpha Beta       (au/angstr)  (a.u./radian)
+ ----------------------------------------------------------------------------------------------
+   1 XX       .000000   .000000   .000000       0    0    0
+   2 N        .000418   .022149   .006584       1    0    0         .000000
+   3 H       -.007722  -.015141  -.007457       2    1    0        -.018527  -.000510
+   4 H        .005478  -.001874  -.002073       2    1    3        -.005840   .000097   .000906
+   5 H        .001822  -.005136   .002962       2    1    4         .006079   .000767  -.000923
+ ----------------------------------------------------------------------------------------------
+
+ Energy:                -.74368943
+
+
+ Coordinates (Internal)
+ =======================
+
+   Atom      Connection Numbers                 Coordinates
+               R   Alpha  Beta         Angstr      degree      degree
+ --------------------------------------------------------------------
+   1 XX        0     0     0          .000000     .000000     .000000
+   2 N         1     0     0          .990000     .000000     .000000
+   3 H         2     1     0         1.023788  112.518901     .000000
+   4 H         2     1     3         1.023788  112.518901  120.000000
+   5 H         2     1     4         1.023788  112.518901  120.000000
+ --------------------------------------------------------------------
+
+
+ Coordinates (Cartesian)
+ =======================
+
+   Atom                      bohr                                 angstrom                 Geometric Variables
+                   X           Y           Z              X           Y           Z       (0:frozen, *:LT par.)
+ --------------------------------------------------------------------------------------------------------------
+   1 XX         .000000     .000000     .000000        .000000     .000000     .000000      0       0       0
+   2 N          .000000     .000000    1.870829        .000000     .000000     .990000      1       2       3
+   3 H          .893583    1.547732    2.611789        .472864     .819024    1.382099      4       5       6
+   4 H        -1.787167     .000000    2.611789       -.945728     .000000    1.382099      7       8       9
+   5 H          .893583   -1.547732    2.611789        .472864    -.819024    1.382099     10      11      12
+ --------------------------------------------------------------------------------------------------------------
+
+
+
+ ===================================================
+ Numerical Integration : Atomic Polyhedra (Te Velde)  ***  (parameters, tests)  ***
+ ===================================================
+  
+ General Accuracy Parameter :                          4.00
+
+ Summary of the Symmetry Unique Points:
+ --------------------------------------
+    Nr. of used Symmetry Operators                     6
+
+    Points in the Atomic Spheres                     259
+    Points in the Atomic Polyhedra                  1806
+    Points in the Outer Region                      1173
+    ----------------------------------------------------
+    Total                                           3238
+
+    Sum of Weights                                 45526.368905
+
+ Total nr. of points:      19428
+ Nr. of blocks:               78
+ Block length:               250
+ Nr. of dummy points:         72
+
+
+ Test of Precision of the Numerical Integration Grid
+ ===================================================
+
+ Integral of the Total Core Density:                   1.99999806650354
+ Relative Error:                                      -9.667E-07
+
+
+
+ =====
+ S C F
+ =====
+  
+
+ CYCLE    1
+ orbitals (Q,E):
+ ---------------
+ A :1...14           ( 2.00     -.7692)  ( 2.00     -.4132)  ( 2.00     -.4132)  ( 2.00     -.2296)   
+                     (  .00     -.0143)  (  .00      .0584)  (  .00      .0584)  (  .00      .2058)   
+                     (  .00      .2058)  (  .00      .2600)  (  .00      .2859)  (  .00      .4316)   
+                     (  .00      .4316)  (  .00      .4489)   
+
+ CYCLE    2
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7697)  ( 2.00     -.4136)  ( 2.00     -.4136)  ( 2.00     -.2297)   
+                     (  .00     -.0144)  (  .00      .0583)   
+ d-Pmat  mean:   .86E-04
+ imax=      2:  -.55E-03
+
+ CYCLE    3
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7706)  ( 2.00     -.4141)  ( 2.00     -.4141)  ( 2.00     -.2296)   
+                     (  .00     -.0147)  (  .00      .0582)   
+ d-Pmat  mean:   .18E-03
+ imax=      2:  -.12E-02
+
+ CYCLE    4
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7707)  ( 2.00     -.4142)  ( 2.00     -.4142)  ( 2.00     -.2298)   
+                     (  .00     -.0147)  (  .00      .0582)   
+ d-Pmat  mean:   .47E-04
+ imax=     10:   .27E-03
+
+ CYCLE    5
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7707)  ( 2.00     -.4142)  ( 2.00     -.4142)  ( 2.00     -.2297)   
+                     (  .00     -.0147)  (  .00      .0582)   
+ d-Pmat  mean:   .28E-05
+ imax=     10:  -.28E-04
+
+ CYCLE    6
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7707)  ( 2.00     -.4142)  ( 2.00     -.4142)  ( 2.00     -.2297)   
+                     (  .00     -.0147)  (  .00      .0582)   
+ d-Pmat  mean:   .18E-06
+ imax=     21:   .14E-05
+
+ SCF CONVERGED
+
+ CYCLE    7
+ orbitals (Q,E):
+ ---------------
+ A :1...14           ( 2.00     -.7707)  ( 2.00     -.4142)  ( 2.00     -.4142)  ( 2.00     -.2297)   
+                     (  .00     -.0147)  (  .00      .0582)  (  .00      .0582)  (  .00      .2054)   
+                     (  .00      .2054)  (  .00      .2593)  (  .00      .2858)  (  .00      .4309)   
+                     (  .00      .4309)  (  .00      .4488)   
+
+
+ Fit test: (difference of exact and fit density, squared integrated, result summed over spins)
+         SCF:                                           .00000790808011
+
+ Gross Charges per Atom (Z minus electrons)
+ ==========================================
+              .0000    -.3278     .1093     .1093     .1093
+ Net Total:   .00000000
+
+ Dipole Moment:
+ ==============
+ Vector   :          .00000000       .00000000      1.55219980
+ Magnitude:         1.55219980
+
+
+
+ =============================
+ G E O M E T R Y   U P D A T E  ***  6  ***
+ =============================
+  
+
+ Energy gradients wrt nuclear displacements
+ ==========================================
+
+   Atom         Cartesian (a.u./angstrom)   Connection Numbers               Internal
+                 X         Y         Z          R Alpha Beta       (au/angstr)  (a.u./radian)
+ ----------------------------------------------------------------------------------------------
+   1 XX       .000000   .000000   .000000       0    0    0
+   2 N        .000000   .000000  -.001025       1    0    0         .000000
+   3 H       -.000654  -.001133   .000363       2    1    0        -.001075   .000841
+   4 H        .001308   .000000   .000363       2    1    3        -.001075   .000841   .000000
+   5 H       -.000654   .001133   .000363       2    1    4        -.001075   .000841   .000000
+ ----------------------------------------------------------------------------------------------
+
+ Energy:                -.74387525
+
+
+ Coordinates (Internal)
+ =======================
+
+   Atom      Connection Numbers                 Coordinates
+               R   Alpha  Beta         Angstr      degree      degree
+ --------------------------------------------------------------------
+   1 XX        0     0     0          .000000     .000000     .000000
+   2 N         1     0     0         1.010000     .000000     .000000
+   3 H         2     1     0         1.016296  111.477274     .000000
+   4 H         2     1     3         1.016296  111.477274  120.000000
+   5 H         2     1     4         1.016296  111.477274  120.000000
+ --------------------------------------------------------------------
+
+
+ Coordinates (Cartesian)
+ =======================
+
+   Atom                      bohr                                 angstrom                 Geometric Variables
+                   X           Y           Z              X           Y           Z       (0:frozen, *:LT par.)
+ --------------------------------------------------------------------------------------------------------------
+   1 XX         .000000     .000000     .000000        .000000     .000000     .000000      0       0       0
+   2 N          .000000     .000000    1.908624        .000000     .000000    1.010000      1       2       3
+   3 H          .893583    1.547732    2.611789        .472864     .819024    1.382099      4       5       6
+   4 H        -1.787167     .000000    2.611789       -.945728     .000000    1.382099      7       8       9
+   5 H          .893583   -1.547732    2.611789        .472864    -.819024    1.382099     10      11      12
+ --------------------------------------------------------------------------------------------------------------
+
+
+
+ ===================================================
+ Numerical Integration : Atomic Polyhedra (Te Velde)  ***  (parameters, tests)  ***
+ ===================================================
+  
+ General Accuracy Parameter :                          4.00
+
+ Summary of the Symmetry Unique Points:
+ --------------------------------------
+    Nr. of used Symmetry Operators                     6
+
+    Points in the Atomic Spheres                     259
+    Points in the Atomic Polyhedra                  1816
+    Points in the Outer Region                      1184
+    ----------------------------------------------------
+    Total                                           3259
+
+    Sum of Weights                                 45739.266148
+
+ Total nr. of points:      19554
+ Nr. of blocks:               78
+ Block length:               251
+ Nr. of dummy points:         24
+
+
+ Test of Precision of the Numerical Integration Grid
+ ===================================================
+
+ Integral of the Total Core Density:                   1.99999926627243
+ Relative Error:                                      -3.669E-07
+
+
+
+ =====
+ S C F
+ =====
+  
+
+ CYCLE    1
+ orbitals (Q,E):
+ ---------------
+ A :1...14           ( 2.00     -.7717)  ( 2.00     -.4175)  ( 2.00     -.4175)  ( 2.00     -.2273)   
+                     (  .00     -.0134)  (  .00      .0590)  (  .00      .0590)  (  .00      .2081)   
+                     (  .00      .2081)  (  .00      .2597)  (  .00      .2878)  (  .00      .4344)   
+                     (  .00      .4344)  (  .00      .4505)   
+
+ CYCLE    2
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7717)  ( 2.00     -.4175)  ( 2.00     -.4175)  ( 2.00     -.2273)   
+                     (  .00     -.0134)  (  .00      .0590)   
+ d-Pmat  mean:   .12E-04
+ imax=     10:   .62E-04
+
+ CYCLE    3
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7717)  ( 2.00     -.4175)  ( 2.00     -.4175)  ( 2.00     -.2273)   
+                     (  .00     -.0134)  (  .00      .0589)   
+ d-Pmat  mean:   .11E-04
+ imax=     27:  -.73E-04
+
+ CYCLE    4
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7717)  ( 2.00     -.4175)  ( 2.00     -.4175)  ( 2.00     -.2273)   
+                     (  .00     -.0134)  (  .00      .0589)   
+ d-Pmat  mean:   .21E-05
+ imax=     10:   .12E-04
+
+ CYCLE    5
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7717)  ( 2.00     -.4175)  ( 2.00     -.4175)  ( 2.00     -.2273)   
+                     (  .00     -.0134)  (  .00      .0589)   
+ d-Pmat  mean:   .89E-07
+ imax=     21:  -.65E-06
+
+ SCF CONVERGED
+
+ CYCLE    6
+ orbitals (Q,E):
+ ---------------
+ A :1...14           ( 2.00     -.7717)  ( 2.00     -.4175)  ( 2.00     -.4175)  ( 2.00     -.2273)   
+                     (  .00     -.0134)  (  .00      .0589)  (  .00      .0589)  (  .00      .2081)   
+                     (  .00      .2081)  (  .00      .2597)  (  .00      .2877)  (  .00      .4344)   
+                     (  .00      .4344)  (  .00      .4505)   
+
+
+ Fit test: (difference of exact and fit density, squared integrated, result summed over spins)
+         SCF:                                           .00000800855027
+
+ Gross Charges per Atom (Z minus electrons)
+ ==========================================
+              .0000    -.3119     .1040     .1040     .1040
+ Net Total:   .00000000
+
+ Dipole Moment:
+ ==============
+ Vector   :          .00000000       .00000000      1.49517242
+ Magnitude:         1.49517242
+
+
+
+ =============================
+ G E O M E T R Y   U P D A T E  ***  7  ***
+ =============================
+  
+
+ Energy gradients wrt nuclear displacements
+ ==========================================
+
+   Atom         Cartesian (a.u./angstrom)   Connection Numbers               Internal
+                 X         Y         Z          R Alpha Beta       (au/angstr)  (a.u./radian)
+ ----------------------------------------------------------------------------------------------
+   1 XX       .000000   .000000   .000000       0    0    0
+   2 N        .000000   .000000   .012857       1    0    0         .000000
+   3 H       -.004867  -.008431  -.004261       2    1    0        -.010626  -.000425
+   4 H        .009735   .000000  -.004261       2    1    3        -.010626  -.000425   .000000
+   5 H       -.004867   .008431  -.004261       2    1    4        -.010626  -.000425   .000000
+ ----------------------------------------------------------------------------------------------
+
+ Energy:                -.74376057
+
+
+ Coordinates (Internal)
+ =======================
+
+   Atom      Connection Numbers                 Coordinates
+               R   Alpha  Beta         Angstr      degree      degree
+ --------------------------------------------------------------------
+   1 XX        0     0     0          .000000     .000000     .000000
+   2 N         1     0     0         1.000000     .000000     .000000
+   3 H         2     1     0         1.015403  112.104846     .000000
+   4 H         2     1     3         1.020000  112.000000  119.472555
+   5 H         2     1     4         1.020000  112.000000  120.000000
+ --------------------------------------------------------------------
+
+
+ Coordinates (Cartesian)
+ =======================
+
+   Atom                      bohr                                 angstrom                 Geometric Variables
+                   X           Y           Z              X           Y           Z       (0:frozen, *:LT par.)
+ --------------------------------------------------------------------------------------------------------------
+   1 XX         .000000     .000000     .000000        .000000     .000000     .000000      0       0       0
+   2 N          .000000     .000000    1.889727        .000000     .000000    1.000000      1       2       3
+   3 H          .874686    1.547732    2.611789        .462864     .819024    1.382099      4       5       6
+   4 H        -1.787167     .000000    2.611789       -.945728     .000000    1.382099      7       8       9
+   5 H          .893583   -1.547732    2.611789        .472864    -.819024    1.382099     10      11      12
+ --------------------------------------------------------------------------------------------------------------
+
+
+
+ ===================================================
+ Numerical Integration : Atomic Polyhedra (Te Velde)  ***  (parameters, tests)  ***
+ ===================================================
+  
+ General Accuracy Parameter :                          4.00
+
+ Summary of the Symmetry Unique Points:
+ --------------------------------------
+    Nr. of used Symmetry Operators                     1
+
+    Points in the Atomic Spheres                    1206
+    Points in the Atomic Polyhedra                 10109
+    Points in the Outer Region                      5857
+    ----------------------------------------------------
+    Total                                          17172
+
+    Sum of Weights                                 45600.482939
+
+ Total nr. of points:      17172
+ Nr. of blocks:               68
+ Block length:               253
+ Nr. of dummy points:         32
+
+
+ Test of Precision of the Numerical Integration Grid
+ ===================================================
+
+ Integral of the Total Core Density:                   1.99999724701879
+ Relative Error:                                      -1.376E-06
+
+
+
+ =====
+ S C F
+ =====
+  
+
+ CYCLE    1
+ orbitals (Q,E):
+ ---------------
+ A :1...14           ( 2.00     -.7721)  ( 2.00     -.4175)  ( 2.00     -.4155)  ( 2.00     -.2288)   
+                     (  .00     -.0140)  (  .00      .0585)  (  .00      .0589)  (  .00      .2063)   
+                     (  .00      .2079)  (  .00      .2602)  (  .00      .2865)  (  .00      .4321)   
+                     (  .00      .4337)  (  .00      .4489)   
+
+ CYCLE    2
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7720)  ( 2.00     -.4173)  ( 2.00     -.4154)  ( 2.00     -.2287)   
+                     (  .00     -.0140)  (  .00      .0585)   
+ d-Pmat  mean:   .47E-04
+ imax=     21:  -.42E-03
+
+ CYCLE    3
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7720)  ( 2.00     -.4172)  ( 2.00     -.4154)  ( 2.00     -.2288)   
+                     (  .00     -.0140)  (  .00      .0585)   
+ d-Pmat  mean:   .69E-04
+ imax=     21:  -.13E-02
+
+ CYCLE    4
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7718)  ( 2.00     -.4171)  ( 2.00     -.4153)  ( 2.00     -.2286)   
+                     (  .00     -.0140)  (  .00      .0585)   
+ d-Pmat  mean:   .52E-04
+ imax=     10:  -.30E-03
+
+ CYCLE    5
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7719)  ( 2.00     -.4171)  ( 2.00     -.4153)  ( 2.00     -.2287)   
+                     (  .00     -.0140)  (  .00      .0585)   
+ d-Pmat  mean:   .63E-05
+ imax=     33:  -.35E-04
+
+ CYCLE    6
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7719)  ( 2.00     -.4171)  ( 2.00     -.4153)  ( 2.00     -.2287)   
+                     (  .00     -.0140)  (  .00      .0585)   
+ d-Pmat  mean:   .33E-06
+ imax=     33:   .35E-05
+
+ CYCLE    7
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7719)  ( 2.00     -.4171)  ( 2.00     -.4153)  ( 2.00     -.2287)   
+                     (  .00     -.0140)  (  .00      .0585)   
+ d-Pmat  mean:   .23E-07
+ imax=     33:   .21E-06
+
+ SCF CONVERGED
+
+ CYCLE    8
+ orbitals (Q,E):
+ ---------------
+ A :1...14           ( 2.00     -.7719)  ( 2.00     -.4171)  ( 2.00     -.4153)  ( 2.00     -.2287)   
+                     (  .00     -.0140)  (  .00      .0585)  (  .00      .0589)  (  .00      .2064)   
+                     (  .00      .2080)  (  .00      .2604)  (  .00      .2866)  (  .00      .4321)   
+                     (  .00      .4339)  (  .00      .4489)   
+
+
+ Fit test: (difference of exact and fit density, squared integrated, result summed over spins)
+         SCF:                                           .00000798039673
+
+ Gross Charges per Atom (Z minus electrons)
+ ==========================================
+              .0000    -.3208     .1074     .1070     .1064
+ Net Total:   .00000000
+
+ Dipole Moment:
+ ==============
+ Vector   :         -.00750996       .00105218      1.52653655
+ Magnitude:         1.52655539
+
+
+
+ =============================
+ G E O M E T R Y   U P D A T E  ***  8  ***
+ =============================
+  
+
+ Energy gradients wrt nuclear displacements
+ ==========================================
+
+   Atom         Cartesian (a.u./angstrom)   Connection Numbers               Internal
+                 X         Y         Z          R Alpha Beta       (au/angstr)  (a.u./radian)
+ ----------------------------------------------------------------------------------------------
+   1 XX       .000000   .000000   .000000       0    0    0
+   2 N        .004601   .004876   .008426       1    0    0         .000000
+   3 H       -.007639  -.010129  -.004566       2    1    0        -.013376   .000497
+   4 H        .006097   .001087  -.001523       2    1    3        -.006230   .000879  -.001566
+   5 H       -.003070   .004176  -.002321       2    1    4        -.005639  -.000215  -.000539
+ ----------------------------------------------------------------------------------------------
+
+ Energy:                -.74375125
+
+
+ Coordinates (Internal)
+ =======================
+
+   Atom      Connection Numbers                 Coordinates
+               R   Alpha  Beta         Angstr      degree      degree
+ --------------------------------------------------------------------
+   1 XX        0     0     0          .000000     .000000     .000000
+   2 N         1     0     0         1.000000     .000000     .000000
+   3 H         2     1     0         1.024674  111.894441     .000000
+   4 H         2     1     3         1.020000  112.000000  120.521897
+   5 H         2     1     4         1.020000  112.000000  120.000000
+ --------------------------------------------------------------------
+
+
+ Coordinates (Cartesian)
+ =======================
+
+   Atom                      bohr                                 angstrom                 Geometric Variables
+                   X           Y           Z              X           Y           Z       (0:frozen, *:LT par.)
+ --------------------------------------------------------------------------------------------------------------
+   1 XX         .000000     .000000     .000000        .000000     .000000     .000000      0       0       0
+   2 N          .000000     .000000    1.889727        .000000     .000000    1.000000      1       2       3
+   3 H          .912481    1.547732    2.611789        .482864     .819024    1.382099      4       5       6
+   4 H        -1.787167     .000000    2.611789       -.945728     .000000    1.382099      7       8       9
+   5 H          .893583   -1.547732    2.611789        .472864    -.819024    1.382099     10      11      12
+ --------------------------------------------------------------------------------------------------------------
+
+
+
+ ===================================================
+ Numerical Integration : Atomic Polyhedra (Te Velde)  ***  (parameters, tests)  ***
+ ===================================================
+  
+ General Accuracy Parameter :                          4.00
+
+ Summary of the Symmetry Unique Points:
+ --------------------------------------
+    Nr. of used Symmetry Operators                     1
+
+    Points in the Atomic Spheres                    1206
+    Points in the Atomic Polyhedra                 10124
+    Points in the Outer Region                      5851
+    ----------------------------------------------------
+    Total                                          17181
+
+    Sum of Weights                                 45644.978866
+
+ Total nr. of points:      17181
+ Nr. of blocks:               68
+ Block length:               253
+ Nr. of dummy points:         23
+
+
+ Test of Precision of the Numerical Integration Grid
+ ===================================================
+
+ Integral of the Total Core Density:                   1.99999706765698
+ Relative Error:                                      -1.466E-06
+
+
+
+ =====
+ S C F
+ =====
+  
+
+ CYCLE    1
+ orbitals (Q,E):
+ ---------------
+ A :1...14           ( 2.00     -.7705)  ( 2.00     -.4164)  ( 2.00     -.4146)  ( 2.00     -.2283)   
+                     (  .00     -.0142)  (  .00      .0582)  (  .00      .0586)  (  .00      .2055)   
+                     (  .00      .2071)  (  .00      .2587)  (  .00      .2869)  (  .00      .4315)   
+                     (  .00      .4332)  (  .00      .4487)   
+
+ CYCLE    2
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7705)  ( 2.00     -.4164)  ( 2.00     -.4146)  ( 2.00     -.2283)   
+                     (  .00     -.0142)  (  .00      .0582)   
+ d-Pmat  mean:   .34E-05
+ imax=     10:   .24E-04
+
+ CYCLE    3
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7705)  ( 2.00     -.4164)  ( 2.00     -.4146)  ( 2.00     -.2284)   
+                     (  .00     -.0142)  (  .00      .0582)   
+ d-Pmat  mean:   .65E-05
+ imax=     27:   .54E-04
+
+ CYCLE    4
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7705)  ( 2.00     -.4164)  ( 2.00     -.4146)  ( 2.00     -.2284)   
+                     (  .00     -.0142)  (  .00      .0582)   
+ d-Pmat  mean:   .54E-06
+ imax=     27:  -.11E-04
+
+ CYCLE    5
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7705)  ( 2.00     -.4164)  ( 2.00     -.4146)  ( 2.00     -.2284)   
+                     (  .00     -.0142)  (  .00      .0582)   
+ d-Pmat  mean:   .22E-06
+ imax=     27:   .17E-05
+
+ CYCLE    6
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7705)  ( 2.00     -.4164)  ( 2.00     -.4146)  ( 2.00     -.2284)   
+                     (  .00     -.0142)  (  .00      .0582)   
+ d-Pmat  mean:   .18E-07
+ imax=     33:   .25E-06
+
+ SCF CONVERGED
+
+ CYCLE    7
+ orbitals (Q,E):
+ ---------------
+ A :1...14           ( 2.00     -.7705)  ( 2.00     -.4164)  ( 2.00     -.4146)  ( 2.00     -.2284)   
+                     (  .00     -.0142)  (  .00      .0582)  (  .00      .0587)  (  .00      .2055)   
+                     (  .00      .2071)  (  .00      .2587)  (  .00      .2869)  (  .00      .4315)   
+                     (  .00      .4332)  (  .00      .4487)   
+
+
+ Fit test: (difference of exact and fit density, squared integrated, result summed over spins)
+         SCF:                                           .00000800310185
+
+ Gross Charges per Atom (Z minus electrons)
+ ==========================================
+              .0000    -.3222     .1070     .1073     .1079
+ Net Total:   .00000000
+
+ Dipole Moment:
+ ==============
+ Vector   :          .00749231      -.00119003      1.52189194
+ Magnitude:         1.52191085
+
+
+
+ =============================
+ G E O M E T R Y   U P D A T E  ***  9  ***
+ =============================
+  
+
+ Energy gradients wrt nuclear displacements
+ ==========================================
+
+   Atom         Cartesian (a.u./angstrom)   Connection Numbers               Internal
+                 X         Y         Z          R Alpha Beta       (au/angstr)  (a.u./radian)
+ ----------------------------------------------------------------------------------------------
+   1 XX       .000000   .000000   .000000       0    0    0
+   2 N       -.004622  -.004741   .004229       1    0    0         .000000
+   3 H        .002112   .000396   .000318       2    1    0         .001431  -.000238
+   4 H        .004998  -.001068  -.002651       2    1    3        -.005627  -.000598   .001535
+   5 H       -.002484   .005403  -.001877       2    1    4        -.006200   .000475   .000524
+ ----------------------------------------------------------------------------------------------
+
+ Energy:                -.74379884
+
+
+ Coordinates (Internal)
+ =======================
+
+   Atom      Connection Numbers                 Coordinates
+               R   Alpha  Beta         Angstr      degree      degree
+ --------------------------------------------------------------------
+   1 XX        0     0     0          .000000     .000000     .000000
+   2 N         1     0     0         1.000000     .000000     .000000
+   3 H         2     1     0         1.011988  112.183394     .000000
+   4 H         2     1     3         1.020000  112.000000  120.305716
+   5 H         2     1     4         1.020000  112.000000  120.000000
+ --------------------------------------------------------------------
+
+
+ Coordinates (Cartesian)
+ =======================
+
+   Atom                      bohr                                 angstrom                 Geometric Variables
+                   X           Y           Z              X           Y           Z       (0:frozen, *:LT par.)
+ --------------------------------------------------------------------------------------------------------------
+   1 XX         .000000     .000000     .000000        .000000     .000000     .000000      0       0       0
+   2 N          .000000     .000000    1.889727        .000000     .000000    1.000000      1       2       3
+   3 H          .893583    1.528834    2.611789        .472864     .809024    1.382099      4       5       6
+   4 H        -1.787167     .000000    2.611789       -.945728     .000000    1.382099      7       8       9
+   5 H          .893583   -1.547732    2.611789        .472864    -.819024    1.382099     10      11      12
+ --------------------------------------------------------------------------------------------------------------
+
+
+
+ ===================================================
+ Numerical Integration : Atomic Polyhedra (Te Velde)  ***  (parameters, tests)  ***
+ ===================================================
+  
+ General Accuracy Parameter :                          4.00
+
+ Summary of the Symmetry Unique Points:
+ --------------------------------------
+    Nr. of used Symmetry Operators                     1
+
+    Points in the Atomic Spheres                    1206
+    Points in the Atomic Polyhedra                 10104
+    Points in the Outer Region                      5857
+    ----------------------------------------------------
+    Total                                          17167
+
+    Sum of Weights                                 45580.996886
+
+ Total nr. of points:      17167
+ Nr. of blocks:               68
+ Block length:               253
+ Nr. of dummy points:         37
+
+
+ Test of Precision of the Numerical Integration Grid
+ ===================================================
+
+ Integral of the Total Core Density:                   1.99999721705941
+ Relative Error:                                      -1.391E-06
+
+
+
+ =====
+ S C F
+ =====
+  
+
+ CYCLE    1
+ orbitals (Q,E):
+ ---------------
+ A :1...14           ( 2.00     -.7729)  ( 2.00     -.4180)  ( 2.00     -.4160)  ( 2.00     -.2290)   
+                     (  .00     -.0140)  (  .00      .0585)  (  .00      .0590)  (  .00      .2066)   
+                     (  .00      .2080)  (  .00      .2608)  (  .00      .2864)  (  .00      .4326)   
+                     (  .00      .4335)  (  .00      .4489)   
+
+ CYCLE    2
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7727)  ( 2.00     -.4177)  ( 2.00     -.4159)  ( 2.00     -.2289)   
+                     (  .00     -.0139)  (  .00      .0585)   
+ d-Pmat  mean:   .81E-04
+ imax=     21:  -.72E-03
+
+ CYCLE    3
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7725)  ( 2.00     -.4173)  ( 2.00     -.4159)  ( 2.00     -.2289)   
+                     (  .00     -.0139)  (  .00      .0584)   
+ d-Pmat  mean:   .10E-03
+ imax=     21:  -.23E-02
+
+ CYCLE    4
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7723)  ( 2.00     -.4172)  ( 2.00     -.4158)  ( 2.00     -.2287)   
+                     (  .00     -.0139)  (  .00      .0585)   
+ d-Pmat  mean:   .78E-04
+ imax=     21:   .50E-03
+
+ CYCLE    5
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7724)  ( 2.00     -.4172)  ( 2.00     -.4158)  ( 2.00     -.2288)   
+                     (  .00     -.0139)  (  .00      .0585)   
+ d-Pmat  mean:   .69E-05
+ imax=     21:  -.46E-04
+
+ CYCLE    6
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7724)  ( 2.00     -.4172)  ( 2.00     -.4158)  ( 2.00     -.2288)   
+                     (  .00     -.0139)  (  .00      .0585)   
+ d-Pmat  mean:   .37E-06
+ imax=     21:  -.39E-05
+
+ CYCLE    7
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7724)  ( 2.00     -.4172)  ( 2.00     -.4158)  ( 2.00     -.2288)   
+                     (  .00     -.0139)  (  .00      .0585)   
+ d-Pmat  mean:   .54E-07
+ imax=     21:  -.55E-06
+
+ SCF CONVERGED
+
+ CYCLE    8
+ orbitals (Q,E):
+ ---------------
+ A :1...14           ( 2.00     -.7724)  ( 2.00     -.4172)  ( 2.00     -.4158)  ( 2.00     -.2288)   
+                     (  .00     -.0139)  (  .00      .0585)  (  .00      .0591)  (  .00      .2068)   
+                     (  .00      .2083)  (  .00      .2610)  (  .00      .2866)  (  .00      .4328)   
+                     (  .00      .4338)  (  .00      .4490)   
+
+
+ Fit test: (difference of exact and fit density, squared integrated, result summed over spins)
+         SCF:                                           .00000797453398
+
+ Gross Charges per Atom (Z minus electrons)
+ ==========================================
+              .0000    -.3203     .1075     .1062     .1065
+ Net Total:   .00000000
+
+ Dipole Moment:
+ ==============
+ Vector   :          .00110159      -.00625502      1.52825271
+ Magnitude:         1.52826590
+
+
+
+ =============================
+ G E O M E T R Y   U P D A T E  ***  10  ***
+ =============================
+  
+
+ Energy gradients wrt nuclear displacements
+ ==========================================
+
+   Atom         Cartesian (a.u./angstrom)   Connection Numbers               Internal
+                 X         Y         Z          R Alpha Beta       (au/angstr)  (a.u./radian)
+ ----------------------------------------------------------------------------------------------
+   1 XX       .000000   .000000   .000000       0    0    0
+   2 N        .005009   .010384   .010064       1    0    0         .000000
+   3 H       -.008223  -.015973  -.006468       2    1    0        -.019061   .000775
+   4 H        .005408  -.000033  -.002015       2    1    3        -.005764   .000169   .000900
+   5 H       -.002184   .005623  -.001563       2    1    4        -.006115   .000798   .000869
+ ----------------------------------------------------------------------------------------------
+
+ Energy:                -.74370242
+
+
+ Coordinates (Internal)
+ =======================
+
+   Atom      Connection Numbers                 Coordinates
+               R   Alpha  Beta         Angstr      degree      degree
+ --------------------------------------------------------------------
+   1 XX        0     0     0          .000000     .000000     .000000
+   2 N         1     0     0         1.000000     .000000     .000000
+   3 H         2     1     0         1.028047  111.818919     .000000
+   4 H         2     1     3         1.020000  112.000000  119.699832
+   5 H         2     1     4         1.020000  112.000000  120.000000
+ --------------------------------------------------------------------
+
+
+ Coordinates (Cartesian)
+ =======================
+
+   Atom                      bohr                                 angstrom                 Geometric Variables
+                   X           Y           Z              X           Y           Z       (0:frozen, *:LT par.)
+ --------------------------------------------------------------------------------------------------------------
+   1 XX         .000000     .000000     .000000        .000000     .000000     .000000      0       0       0
+   2 N          .000000     .000000    1.889727        .000000     .000000    1.000000      1       2       3
+   3 H          .893583    1.566629    2.611789        .472864     .829024    1.382099      4       5       6
+   4 H        -1.787167     .000000    2.611789       -.945728     .000000    1.382099      7       8       9
+   5 H          .893583   -1.547732    2.611789        .472864    -.819024    1.382099     10      11      12
+ --------------------------------------------------------------------------------------------------------------
+
+
+
+ ===================================================
+ Numerical Integration : Atomic Polyhedra (Te Velde)  ***  (parameters, tests)  ***
+ ===================================================
+  
+ General Accuracy Parameter :                          4.00
+
+ Summary of the Symmetry Unique Points:
+ --------------------------------------
+    Nr. of used Symmetry Operators                     1
+
+    Points in the Atomic Spheres                    1206
+    Points in the Atomic Polyhedra                 10125
+    Points in the Outer Region                      5848
+    ----------------------------------------------------
+    Total                                          17179
+
+    Sum of Weights                                 45658.174219
+
+ Total nr. of points:      17179
+ Nr. of blocks:               68
+ Block length:               253
+ Nr. of dummy points:         25
+
+
+ Test of Precision of the Numerical Integration Grid
+ ===================================================
+
+ Integral of the Total Core Density:                   1.99999707918380
+ Relative Error:                                      -1.460E-06
+
+
+
+ =====
+ S C F
+ =====
+  
+
+ CYCLE    1
+ orbitals (Q,E):
+ ---------------
+ A :1...14           ( 2.00     -.7700)  ( 2.00     -.4159)  ( 2.00     -.4145)  ( 2.00     -.2282)   
+                     (  .00     -.0143)  (  .00      .0580)  (  .00      .0587)  (  .00      .2051)   
+                     (  .00      .2068)  (  .00      .2581)  (  .00      .2870)  (  .00      .4316)   
+                     (  .00      .4326)  (  .00      .4486)   
+
+ CYCLE    2
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7700)  ( 2.00     -.4159)  ( 2.00     -.4145)  ( 2.00     -.2282)   
+                     (  .00     -.0143)  (  .00      .0580)   
+ d-Pmat  mean:   .35E-05
+ imax=     21:  -.23E-04
+
+ CYCLE    3
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7700)  ( 2.00     -.4159)  ( 2.00     -.4145)  ( 2.00     -.2282)   
+                     (  .00     -.0143)  (  .00      .0580)   
+ d-Pmat  mean:   .57E-05
+ imax=     33:   .73E-04
+
+ CYCLE    4
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7700)  ( 2.00     -.4159)  ( 2.00     -.4145)  ( 2.00     -.2282)   
+                     (  .00     -.0143)  (  .00      .0580)   
+ d-Pmat  mean:   .24E-05
+ imax=     33:  -.19E-04
+
+ CYCLE    5
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7700)  ( 2.00     -.4159)  ( 2.00     -.4145)  ( 2.00     -.2282)   
+                     (  .00     -.0143)  (  .00      .0580)   
+ d-Pmat  mean:   .17E-06
+ imax=     33:   .11E-05
+
+ SCF CONVERGED
+
+ CYCLE    6
+ orbitals (Q,E):
+ ---------------
+ A :1...14           ( 2.00     -.7700)  ( 2.00     -.4159)  ( 2.00     -.4145)  ( 2.00     -.2282)   
+                     (  .00     -.0143)  (  .00      .0580)  (  .00      .0587)  (  .00      .2051)   
+                     (  .00      .2068)  (  .00      .2581)  (  .00      .2869)  (  .00      .4316)   
+                     (  .00      .4326)  (  .00      .4486)   
+
+
+ Fit test: (difference of exact and fit density, squared integrated, result summed over spins)
+         SCF:                                           .00000801599334
+
+ Gross Charges per Atom (Z minus electrons)
+ ==========================================
+              .0000    -.3228     .1069     .1081     .1078
+ Net Total:   .00000000
+
+ Dipole Moment:
+ ==============
+ Vector   :         -.00115047       .00617015      1.52021907
+ Magnitude:         1.52023203
+
+
+
+ =============================
+ G E O M E T R Y   U P D A T E  ***  11  ***
+ =============================
+  
+
+ Energy gradients wrt nuclear displacements
+ ==========================================
+
+   Atom         Cartesian (a.u./angstrom)   Connection Numbers               Internal
+                 X         Y         Z          R Alpha Beta       (au/angstr)  (a.u./radian)
+ ----------------------------------------------------------------------------------------------
+   1 XX       .000000   .000000   .000000       0    0    0
+   2 N       -.004615  -.009957   .002796       1    0    0         .000000
+   3 H        .002318   .005952   .002003       2    1    0         .006610  -.000505
+   4 H        .005656   .000022  -.002162       2    1    3        -.006061   .000108  -.000892
+   5 H       -.003374   .003988  -.002622       2    1    4        -.005746  -.000515  -.000874
+ ----------------------------------------------------------------------------------------------
+
+ Energy:                -.74378473
+
+
+ Coordinates (Internal)
+ =======================
+
+   Atom      Connection Numbers                 Coordinates
+               R   Alpha  Beta         Angstr      degree      degree
+ --------------------------------------------------------------------
+   1 XX        0     0     0          .000000     .000000     .000000
+   2 N         1     0     0         1.000000     .000000     .000000
+   3 H         2     1     0         1.016296  111.477274     .000000
+   4 H         2     1     3         1.020000  112.000000  120.000000
+   5 H         2     1     4         1.020000  112.000000  120.000000
+ --------------------------------------------------------------------
+
+
+ Coordinates (Cartesian)
+ =======================
+
+   Atom                      bohr                                 angstrom                 Geometric Variables
+                   X           Y           Z              X           Y           Z       (0:frozen, *:LT par.)
+ --------------------------------------------------------------------------------------------------------------
+   1 XX         .000000     .000000     .000000        .000000     .000000     .000000      0       0       0
+   2 N          .000000     .000000    1.889727        .000000     .000000    1.000000      1       2       3
+   3 H          .893583    1.547732    2.592892        .472864     .819024    1.372099      4       5       6
+   4 H        -1.787167     .000000    2.611789       -.945728     .000000    1.382099      7       8       9
+   5 H          .893583   -1.547732    2.611789        .472864    -.819024    1.382099     10      11      12
+ --------------------------------------------------------------------------------------------------------------
+
+
+
+ ===================================================
+ Numerical Integration : Atomic Polyhedra (Te Velde)  ***  (parameters, tests)  ***
+ ===================================================
+  
+ General Accuracy Parameter :                          4.00
+
+ Summary of the Symmetry Unique Points:
+ --------------------------------------
+    Nr. of used Symmetry Operators                     2
+
+    Points in the Atomic Spheres                     632
+    Points in the Atomic Polyhedra                  5216
+    Points in the Outer Region                      3266
+    ----------------------------------------------------
+    Total                                           9114
+
+    Sum of Weights                                 45658.671804
+
+ Total nr. of points:      18228
+ Nr. of blocks:               72
+ Block length:               254
+ Nr. of dummy points:         60
+
+
+ Test of Precision of the Numerical Integration Grid
+ ===================================================
+
+ Integral of the Total Core Density:                   1.99999745614190
+ Relative Error:                                      -1.272E-06
+
+
+
+ =====
+ S C F
+ =====
+  
+
+ CYCLE    1
+ orbitals (Q,E):
+ ---------------
+ A :1...14           ( 2.00     -.7718)  ( 2.00     -.4174)  ( 2.00     -.4160)  ( 2.00     -.2281)   
+                     (  .00     -.0140)  (  .00      .0585)  (  .00      .0587)  (  .00      .2065)   
+                     (  .00      .2077)  (  .00      .2594)  (  .00      .2871)  (  .00      .4327)   
+                     (  .00      .4334)  (  .00      .4499)   
+
+ CYCLE    2
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7717)  ( 2.00     -.4173)  ( 2.00     -.4159)  ( 2.00     -.2281)   
+                     (  .00     -.0140)  (  .00      .0585)   
+ d-Pmat  mean:   .31E-04
+ imax=     21:  -.27E-03
+
+ CYCLE    3
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7714)  ( 2.00     -.4171)  ( 2.00     -.4158)  ( 2.00     -.2281)   
+                     (  .00     -.0139)  (  .00      .0586)   
+ d-Pmat  mean:   .62E-04
+ imax=     21:  -.90E-03
+
+ CYCLE    4
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7713)  ( 2.00     -.4170)  ( 2.00     -.4158)  ( 2.00     -.2281)   
+                     (  .00     -.0139)  (  .00      .0586)   
+ d-Pmat  mean:   .27E-04
+ imax=     10:  -.16E-03
+
+ CYCLE    5
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7713)  ( 2.00     -.4170)  ( 2.00     -.4158)  ( 2.00     -.2281)   
+                     (  .00     -.0139)  (  .00      .0586)   
+ d-Pmat  mean:   .63E-05
+ imax=     10:   .39E-04
+
+ CYCLE    6
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7713)  ( 2.00     -.4170)  ( 2.00     -.4158)  ( 2.00     -.2281)   
+                     (  .00     -.0139)  (  .00      .0586)   
+ d-Pmat  mean:   .23E-06
+ imax=     21:  -.37E-05
+
+ CYCLE    7
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7713)  ( 2.00     -.4170)  ( 2.00     -.4158)  ( 2.00     -.2281)   
+                     (  .00     -.0139)  (  .00      .0586)   
+ d-Pmat  mean:   .14E-07
+ imax=     21:  -.23E-06
+
+ SCF CONVERGED
+
+ CYCLE    8
+ orbitals (Q,E):
+ ---------------
+ A :1...14           ( 2.00     -.7713)  ( 2.00     -.4170)  ( 2.00     -.4158)  ( 2.00     -.2281)   
+                     (  .00     -.0139)  (  .00      .0586)  (  .00      .0588)  (  .00      .2066)   
+                     (  .00      .2079)  (  .00      .2596)  (  .00      .2871)  (  .00      .4329)   
+                     (  .00      .4336)  (  .00      .4499)   
+
+
+ Fit test: (difference of exact and fit density, squared integrated, result summed over spins)
+         SCF:                                           .00000799899393
+
+ Gross Charges per Atom (Z minus electrons)
+ ==========================================
+              .0000    -.3187     .1064     .1061     .1061
+ Net Total:   .00000000
+
+ Dipole Moment:
+ ==============
+ Vector   :          .00265560       .00459963      1.51465584
+ Magnitude:         1.51466515
+
+
+
+ =============================
+ G E O M E T R Y   U P D A T E  ***  12  ***
+ =============================
+  
+
+ Energy gradients wrt nuclear displacements
+ ==========================================
+
+   Atom         Cartesian (a.u./angstrom)   Connection Numbers               Internal
+                 X         Y         Z          R Alpha Beta       (au/angstr)  (a.u./radian)
+ ----------------------------------------------------------------------------------------------
+   1 XX       .000000   .000000   .000000       0    0    0
+   2 N        .002990   .005179   .008449       1    0    0         .000000
+   3 H       -.005211  -.009027  -.004291       2    1    0        -.011277  -.000241
+   4 H        .005202  -.000464  -.002057       2    1    3        -.005596   .000057   .000000
+   5 H       -.003003   .004273  -.002057       2    1    4        -.005596   .000057  -.000426
+ ----------------------------------------------------------------------------------------------
+
+ Energy:                -.74377473
+
+
+ Coordinates (Internal)
+ =======================
+
+   Atom      Connection Numbers                 Coordinates
+               R   Alpha  Beta         Angstr      degree      degree
+ --------------------------------------------------------------------
+   1 XX        0     0     0          .000000     .000000     .000000
+   2 N         1     0     0         1.000000     .000000     .000000
+   3 H         2     1     0         1.023788  112.518901     .000000
+   4 H         2     1     3         1.020000  112.000000  120.000000
+   5 H         2     1     4         1.020000  112.000000  120.000000
+ --------------------------------------------------------------------
+
+
+ Coordinates (Cartesian)
+ =======================
+
+   Atom                      bohr                                 angstrom                 Geometric Variables
+                   X           Y           Z              X           Y           Z       (0:frozen, *:LT par.)
+ --------------------------------------------------------------------------------------------------------------
+   1 XX         .000000     .000000     .000000        .000000     .000000     .000000      0       0       0
+   2 N          .000000     .000000    1.889727        .000000     .000000    1.000000      1       2       3
+   3 H          .893583    1.547732    2.630686        .472864     .819024    1.392099      4       5       6
+   4 H        -1.787167     .000000    2.611789       -.945728     .000000    1.382099      7       8       9
+   5 H          .893583   -1.547732    2.611789        .472864    -.819024    1.382099     10      11      12
+ --------------------------------------------------------------------------------------------------------------
+
+
+
+ ===================================================
+ Numerical Integration : Atomic Polyhedra (Te Velde)  ***  (parameters, tests)  ***
+ ===================================================
+  
+ General Accuracy Parameter :                          4.00
+
+ Summary of the Symmetry Unique Points:
+ --------------------------------------
+    Nr. of used Symmetry Operators                     2
+
+    Points in the Atomic Spheres                     632
+    Points in the Atomic Polyhedra                  5208
+    Points in the Outer Region                      3263
+    ----------------------------------------------------
+    Total                                           9103
+
+    Sum of Weights                                 45589.963369
+
+ Total nr. of points:      18206
+ Nr. of blocks:               72
+ Block length:               253
+ Nr. of dummy points:         10
+
+
+ Test of Precision of the Numerical Integration Grid
+ ===================================================
+
+ Integral of the Total Core Density:                   1.99999746364042
+ Relative Error:                                      -1.268E-06
+
+
+
+ =====
+ S C F
+ =====
+  
+
+ CYCLE    1
+ orbitals (Q,E):
+ ---------------
+ A :1...14           ( 2.00     -.7710)  ( 2.00     -.4159)  ( 2.00     -.4147)  ( 2.00     -.2289)   
+                     (  .00     -.0143)  (  .00      .0583)  (  .00      .0585)  (  .00      .2057)   
+                     (  .00      .2070)  (  .00      .2595)  (  .00      .2864)  (  .00      .4317)   
+                     (  .00      .4325)  (  .00      .4493)   
+
+ CYCLE    2
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7710)  ( 2.00     -.4159)  ( 2.00     -.4147)  ( 2.00     -.2289)   
+                     (  .00     -.0143)  (  .00      .0583)   
+ d-Pmat  mean:   .23E-05
+ imax=     10:   .16E-04
+
+ CYCLE    3
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7710)  ( 2.00     -.4159)  ( 2.00     -.4147)  ( 2.00     -.2289)   
+                     (  .00     -.0143)  (  .00      .0583)   
+ d-Pmat  mean:   .42E-05
+ imax=     27:   .27E-04
+
+ CYCLE    4
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7710)  ( 2.00     -.4159)  ( 2.00     -.4147)  ( 2.00     -.2289)   
+                     (  .00     -.0143)  (  .00      .0583)   
+ d-Pmat  mean:   .17E-06
+ imax=      2:  -.19E-05
+
+ CYCLE    5
+ orbitals (Q,E):
+ ---------------
+ A :1...6            ( 2.00     -.7710)  ( 2.00     -.4159)  ( 2.00     -.4147)  ( 2.00     -.2289)   
+                     (  .00     -.0143)  (  .00      .0583)   
+ d-Pmat  mean:   .11E-06
+ imax=     21:  -.61E-06
+
+ SCF CONVERGED
+
+ CYCLE    6
+ orbitals (Q,E):
+ ---------------
+ A :1...14           ( 2.00     -.7710)  ( 2.00     -.4159)  ( 2.00     -.4147)  ( 2.00     -.2289)   
+                     (  .00     -.0143)  (  .00      .0583)  (  .00      .0586)  (  .00      .2057)   
+                     (  .00      .2070)  (  .00      .2595)  (  .00      .2864)  (  .00      .4317)   
+                     (  .00      .4324)  (  .00      .4493)   
+
+
+ Fit test: (difference of exact and fit density, squared integrated, result summed over spins)
+         SCF:                                           .00000796903445
+
+ Gross Charges per Atom (Z minus electrons)
+ ==========================================
+              .0000    -.3240     .1078     .1081     .1081
+ Net Total:   .00000000
+
+ Dipole Moment:
+ ==============
+ Vector   :         -.00258863      -.00448363      1.53366913
+ Magnitude:         1.53367787
+
+
+
+ =============================
+ G E O M E T R Y   U P D A T E  ***  13  ***
+ =============================
+  
+
+ Energy gradients wrt nuclear displacements
+ ==========================================
+
+   Atom         Cartesian (a.u./angstrom)   Connection Numbers               Internal
+                 X         Y         Z          R Alpha Beta       (au/angstr)  (a.u./radian)
+ ----------------------------------------------------------------------------------------------
+   1 XX       .000000   .000000   .000000       0    0    0
+   2 N       -.002990  -.005179   .003764       1    0    0         .000000
+   3 H       -.000334  -.000579   .000420       2    1    0        -.000466   .000593
+   4 H        .005872   .000425  -.002070       2    1    3        -.006222   .000303   .000000
+   5 H       -.002568   .005298  -.002070       2    1    4        -.006222   .000303   .000414
+ ----------------------------------------------------------------------------------------------
+
+ All displacements handled. Matrix of Force constants completed. Go to analysis...
+1
+ ***************************************************************************************************
+
+
+
+                                            ***************************
+                                            *  F R E Q U E N C I E S  *
+                                            ***************************
+  
+
+
+ Coordinates (Internal)
+ =======================
+
+   Atom      Connection Numbers                 Coordinates
+               R   Alpha  Beta         Angstr      degree      degree
+ --------------------------------------------------------------------
+   1 XX        0     0     0          .000000     .000000     .000000
+   2 N         1     0     0         1.000000     .000000     .000000
+   3 H         2     1     0         1.020000  112.000000     .000000
+   4 H         2     1     3         1.020000  112.000000  120.000000
+   5 H         2     1     4         1.020000  112.000000  120.000000
+ --------------------------------------------------------------------
+
+
+ Coordinates (Cartesian)
+ =======================
+
+   Atom                      bohr                                 angstrom                 Geometric Variables
+                   X           Y           Z              X           Y           Z       (0:frozen, *:LT par.)
+ --------------------------------------------------------------------------------------------------------------
+   1 XX         .000000     .000000     .000000        .000000     .000000     .000000      0       0       0
+   2 N          .000000     .000000    1.889727        .000000     .000000    1.000000      1       2       3
+   3 H          .893583    1.547732    2.611789        .472864     .819024    1.382099      4       5       6
+   4 H        -1.787167     .000000    2.611789       -.945728     .000000    1.382099      7       8       9
+   5 H          .893583   -1.547732    2.611789        .472864    -.819024    1.382099     10      11      12
+ --------------------------------------------------------------------------------------------------------------
+
+
+ Atomic Masses:
+ ---------------
+    1. XX               .00000000
+    2. N              14.00307400
+    3. H               1.00782500
+    4. H               1.00782500
+    5. H               1.00782500
+
+
+ Force Constants Matrix: Computed (free variables)
+
+     1)     .6195   .0000   .0002  -.1294  -.1336  -.0841  -.3608   .0000   .1681  -.1294
+            .1336  -.0841
+     2)     .0001   .6200   .0000  -.1337  -.2838  -.1458   .0000  -.0524   .0000   .1336
+           -.2838   .1458
+     3)     .0000   .0000   .1943  -.0590  -.1022  -.0648   .1180   .0000  -.0648  -.0590
+            .1022  -.0648
+     4)    -.1292  -.1345  -.0588   .1365   .1474   .0686  -.0154  -.0302  -.0156   .0082
+            .0172   .0058
+     5)    -.1346  -.2848  -.1018   .1476   .3070   .1189   .0035   .0007  -.0023  -.0166
+           -.0229  -.0148
+     6)    -.0837  -.1451  -.0656   .0683   .1183   .0659   .0094   .0124  -.0001   .0061
+            .0143  -.0001
+     7)     .0000   .0000   .0000   .0000   .0000   .0000   .0000   .0000   .0000   .0000
+            .0000   .0000
+     8)     .0000   .0000   .0000   .0000   .0000   .0000   .0000   .0000   .0000   .0000
+            .0000   .0000
+     9)     .0000   .0000   .0000   .0000   .0000   .0000   .0000   .0000   .0000   .0000
+            .0000   .0000
+    10)     .0000   .0000   .0000   .0000   .0000   .0000   .0000   .0000   .0000   .0000
+            .0000   .0000
+    11)     .0000   .0000   .0000   .0000   .0000   .0000   .0000   .0000   .0000   .0000
+            .0000   .0000
+    12)     .0000   .0000   .0000   .0000   .0000   .0000   .0000   .0000   .0000   .0000
+            .0000   .0000
+
+ Dipole:      .000000     .000000     .599654
+ Derivatives:
+     1)      -.427803     .000000    -.000012
+     2)      -.000369    -.428094    -.000052
+     3)       .000000     .000000    -.593633
+     4)       .156168    -.023341    -.048349
+     5)      -.023443     .129341    -.083627
+     6)      -.054590    -.094553     .197921
+     7)       .000000     .000000     .000000
+     8)       .000000     .000000     .000000
+     9)       .000000     .000000     .000000
+    10)       .000000     .000000     .000000
+    11)       .000000     .000000     .000000
+    12)       .000000     .000000     .000000
+
+
+
+ ======================================
+ Normal Modes in Symmetry Displacements  ***  (cartesians, not mass-weighted)  ***
+ ======================================
+  
+
+
+                                       === A1 ===
+
+ Symmetry Displacements
+
+
+                          1                             2
+              ------------------------      ------------------------      ------------------------
+    1.XX          .000    .000    .000          .000    .000    .000
+    2.N           .000    .000    .113          .000    .000    .000
+    3.H           .000    .000   -.522          .288    .498    .000
+    4.H           .000    .000   -.522         -.575    .000    .000
+    5.H           .000    .000   -.522          .288   -.498    .000
+
+
+ Frequencies and Normal Modes
+ ============================
+
+             1           2
+
+          940.9057   3424.0365
+        ----------  ----------
+   1     .94296289  -.33289787
+   2     .33289787   .94296289
+
+
+ Intensities
+ ===========
+
+               Frequency       Dipole Strength        Absorption Intensity (degeneracy not counted)
+                 cm-1           1e-40 esu2 cm2          km/mole
+              ----------          ----------          ----------
+              940.905735          696.640431          164.298221
+             3424.036463            1.149375             .986457
+
+
+                                       === E1:1 ===
+
+ Symmetry Displacements
+
+
+                          1                             2
+              ------------------------      ------------------------      ------------------------
+    1.XX          .000    .000    .000          .000    .000    .000
+    2.N           .100    .000    .000          .000    .000    .000
+    3.H          -.463    .000   -.187          .288   -.498    .000
+    4.H          -.463    .000    .374         -.575    .000    .000
+    5.H          -.463    .000   -.187          .288    .498    .000
+
+
+                                       === E1:2 ===
+
+ Symmetry Displacements
+
+
+                          1                             2
+              ------------------------      ------------------------      ------------------------
+    1.XX          .000    .000    .000          .000    .000    .000
+    2.N           .000    .100    .000          .000    .000    .000
+    3.H           .000   -.463   -.324         -.498   -.288    .000
+    4.H           .000   -.463    .000          .000    .575    .000
+    5.H           .000   -.463    .324          .498   -.288    .000
+
+
+ Frequencies and Normal Modes
+ ============================
+
+             1           2
+
+         1571.3515   3560.4282
+        ----------  ----------
+   1    -.64930232   .76053040
+   2     .76053040   .64930232
+
+
+ Intensities
+ ===========
+
+               Frequency       Dipole Strength        Absorption Intensity (degeneracy not counted)
+                 cm-1           1e-40 esu2 cm2          km/mole
+              ----------          ----------          ----------
+             1571.351493           57.291307           22.565250
+             3560.428247           12.402483           11.068505
+
+
+
+ Zero-Point Energy :       .033326 a.u.
+ ===================       .906852 eV
+
+
+
+ ===========================
+ Vibrations and Normal Modes  ***  (cartesian coordinates, NOT mass-weighted)  ***
+ ===========================
+  
+ The headers on the normal mode eigenvectors below give the Frequency in cm-1
+ (a negative value means an imaginary frequency, no output for (almost-)zero frequencies)
+
+
+                       940.906                      1571.351                      1571.351
+              ------------------------      ------------------------      ------------------------
+    1.XX          .000    .000    .000          .000    .000    .000          .000    .000    .000
+    2.N           .000    .000    .115          .008    .067    .000         -.067    .008    .000
+    3.H           .104    .180   -.534          .323   -.037   -.231          .580   -.398    .098
+    4.H          -.208    .000   -.534          .017   -.757    .030         -.140   -.092   -.249
+    5.H           .104   -.180   -.534         -.453   -.131    .201          .485    .378    .151
+
+
+                      3424.036                      3560.428                      3560.428
+              ------------------------      ------------------------      ------------------------
+    1.XX          .000    .000    .000          .000    .000    .000          .000    .000    .000
+    2.N           .000    .000   -.038         -.073    .032    .000          .032    .073    .000
+    3.H           .275    .476    .176          .023    .084    .033         -.379   -.651   -.295
+    4.H          -.549    .000    .176          .694    .009   -.272         -.303    .020    .119
+    5.H           .275   -.476    .176          .294   -.535    .239          .240   -.380    .176
+
+
+
+ ====================================
+ Normal Modes in Z-matrix coordinates
+ ====================================
+  
+
+
+                       940.906                      1571.351                      1571.351
+              ------------------------      ------------------------      ------------------------
+    1.XX          .000    .000    .000          .000    .000    .000          .000    .000    .000
+    2.N           .184    .000    .000          .000    .000    .000          .000    .000    .000
+    3.H          -.080   -.562    .000         -.023   -.090    .000          .016    .064    .000
+    4.H          -.080   -.562    .000          .003    .012    .651         -.041   -.163    .820
+    5.H          -.080   -.562    .000          .020    .078   -.749          .025    .099    .534
+
+
+                      3424.036                      3560.428                      3560.428
+              ------------------------      ------------------------      ------------------------
+    1.XX          .000    .000    .000          .000    .000    .000          .000    .000    .000
+    2.N          -.037    .000    .000          .000    .000    .000          .000    .000    .000
+    3.H           .577   -.004    .000          .090   -.006    .000         -.806    .056    .000
+    4.H           .577   -.004    .000         -.745    .052    .063          .325   -.023    .046
+    5.H           .577   -.004    .000          .654   -.046    .009          .481   -.033   -.077
+
+
+
+
+ List of All Frequencies:
+
+
+ Intensities
+ ===========
+
+               Frequency       Dipole Strength        Absorption Intensity (degeneracy not counted)
+                 cm-1           1e-40 esu2 cm2          km/mole
+              ----------          ----------          ----------
+              940.905735          696.640431          164.298221
+             1571.351493           57.291307           22.565250
+             1571.351493           57.291307           22.565250
+             3424.036463            1.149375             .986457
+             3560.428247           12.402483           11.068505
+             3560.428247           12.402483           11.068505
+1
+
+
+
+ ============================
+ Statistical Thermal Analysis  ***  ideal gas assumed  ***
+ ============================
+  
+ Pressure:                  1.000000 atm.
+
+ Lowest Temperature:      300.000000 K
+ Highest Temperature:     400.000000 K
+ Nr. of T-steps:           10
+
+
+
+ Moments of Inertia (and direction vectors)
+ ==========================================
+
+           6.1249          6.1249          9.6569
+ ------------------------------------------------
+           -.1901           .9818           .0000
+           -.9818          -.1901           .0000
+            .0000           .0000          1.0000
+
+
+     Temp                                                       Transl     Rotat    Vibrat     Total
+     ----                                                       ------     -----    ------     -----
+
+     300.00   Entropy (cal/mole-K):                             34.472    13.676      .140    48.288
+              Internal Energy (Kcal/mole):                        .894      .894    20.947    22.736
+              Constant Volume Heat Capacity (cal/mole-K):        2.981     2.981      .574     6.536
+
+     310.00   Entropy (cal/mole-K):                             34.635    13.774      .159    48.568
+              Internal Energy (Kcal/mole):                        .924      .924    20.953    22.801
+              Constant Volume Heat Capacity (cal/mole-K):        2.981     2.981      .638     6.599
+
+     320.00   Entropy (cal/mole-K):                             34.793    13.869      .181    48.842
+              Internal Energy (Kcal/mole):                        .954      .954    20.960    22.868
+              Constant Volume Heat Capacity (cal/mole-K):        2.981     2.981      .703     6.664
+
+     330.00   Entropy (cal/mole-K):                             34.945    13.960      .203    49.109
+              Internal Energy (Kcal/mole):                        .984      .984    20.967    22.935
+              Constant Volume Heat Capacity (cal/mole-K):        2.981     2.981      .770     6.732
+
+     340.00   Entropy (cal/mole-K):                             35.094    14.049      .227    49.370
+              Internal Energy (Kcal/mole):                       1.013     1.013    20.975    23.002
+              Constant Volume Heat Capacity (cal/mole-K):        2.981     2.981      .839     6.801
+
+     350.00   Entropy (cal/mole-K):                             35.238    14.136      .253    49.626
+              Internal Energy (Kcal/mole):                       1.043     1.043    20.984    23.071
+              Constant Volume Heat Capacity (cal/mole-K):        2.981     2.981      .909     6.871
+
+     360.00   Entropy (cal/mole-K):                             35.378    14.220      .279    49.877
+              Internal Energy (Kcal/mole):                       1.073     1.073    20.993    23.140
+              Constant Volume Heat Capacity (cal/mole-K):        2.981     2.981      .981     6.943
+
+     370.00   Entropy (cal/mole-K):                             35.514    14.301      .307    50.122
+              Internal Energy (Kcal/mole):                       1.103     1.103    21.004    23.209
+              Constant Volume Heat Capacity (cal/mole-K):        2.981     2.981     1.054     7.016
+
+     380.00   Entropy (cal/mole-K):                             35.646    14.381      .336    50.363
+              Internal Energy (Kcal/mole):                       1.133     1.133    21.015    23.280
+              Constant Volume Heat Capacity (cal/mole-K):        2.981     2.981     1.128     7.090
+
+     390.00   Entropy (cal/mole-K):                             35.775    14.458      .366    50.600
+              Internal Energy (Kcal/mole):                       1.163     1.163    21.026    23.351
+              Constant Volume Heat Capacity (cal/mole-K):        2.981     2.981     1.203     7.165
+
+     400.00   Entropy (cal/mole-K):                             35.901    14.534      .398    50.833
+              Internal Energy (Kcal/mole):                       1.192     1.192    21.039    23.423
+              Constant Volume Heat Capacity (cal/mole-K):        2.981     2.981     1.279     7.240
+1
+ ***************************************************************************************************
+
+                                                 A D F   E X I T
+
+ NORMAL TERMINATION
+
+
+ Currently Open Files (ADFEXI)
+ ====================
+
+ Unit    Access Format  Status   Type       Ident (file)
+ -------------------------------------------------------
+   1      SEQ    FORM   TRANSP  NORMAL      LOGFILE
+                                          ( logfile )
+   3      SEQ    FORM   OUTPUT  NORMAL      KidOutput
+
+
+ Buffered I/O statistics
+ =======================
+ Memory available:                     33554432
+ Number of records fitting in memory:      8120
+ Input :   2.3% of                        23078  *4k bytes
+ Output:   6.7% of                         9034  *4k bytes
+ Records from serial files evicted:           0
+                    others evicted:           0
+ Hash table lookups:      89358 with          0 conflicts (   .00%)
+
+
+ Workspace Manager statistics
+ ============================
+ Allocate  :   25674
+ Delocate  :   15156
+ Relocate  :     209
+ Extend    :      13
+ Find      :     600
+ Available :      43
+ Check     :      46
+ Hide      :      55
+ Freeze    :      49
+ Print     :       1
+
+ (All arrays delocated)
+
+
+
+ =================
+ Timing Statistics
+ =================
+  
+ Total Used :                     CPU=      126.29      System=       36.23     Elapsed=      173.40
+
+ Calls  Section                     ( Mean, Percentage )
+ ---------------------------------------------------------------------------------------------------
+     4  ><      ................       .08     .26              .00     .03              .10     .22
+     1  INIT    ................       .85     .67              .86    2.37             6.24    3.60
+     1  GEOMET  ................       .19     .15              .01     .03              .20     .12
+     1  FRAGM   ................       .36     .29              .03     .08              .57     .33
+    13  INPUTA  ................       .07     .76              .01     .22              .12     .89
+    13  MAINSY  ................       .05     .47              .00     .03              .06     .42
+    13  SYMFIT  ................       .07     .67              .00     .06              .06     .48
+    13  CORORT  ................       .01     .13              .00     .00              .01     .11
+    13  SYMORB  ................       .03     .29              .00     .06              .04     .27
+    13  FITINT  ................       .10    1.01              .00     .03              .12     .91
+    13  ORTHON  ................       .47    4.84              .35   12.70              .84    6.27
+     1  ATDEN   ................       .29     .23              .00     .00              .30     .17
+     1  CRTP12  ................       .11     .09              .00     .00              .12     .07
+    13  ETALOW  ................       .04     .40              .00     .00              .04     .29
+    13  POINTS  ................      1.55   15.99              .74   26.39             2.30   17.26
+    13  WRIPNT  ................       .12    1.20              .01     .47              .14    1.07
+    13  PTCOR   ................       .12    1.24              .03     .91              .15    1.10
+    13  PTBAS   ................       .22    2.27              .04    1.49              .26    1.96
+    94  FOCK00  ................       .02    1.42              .00     .41              .02    1.10
+    94  FOCKY   ................       .41   30.75              .10   26.36              .52   28.36
+    94  FOCKTR  ................       .02    1.20              .00    1.10              .02    1.11
+    94  FOCKNM  ................       .00     .21              .00     .03              .00     .13
+    94  SDIIS   ................       .03    2.57              .01    2.98              .05    2.71
+    94  EMERGE  ................       .09    6.98              .02    4.97              .12    6.40
+    94  RHOFIH  ................       .05    4.05              .01    3.81              .10    5.31
+    13  TOTEN   ................       .67    6.94              .12    4.14              .79    5.92
+    13  POPAN   ................       .03     .28              .01     .19              .03     .25
+    13  DEBYE   ................       .03     .36              .03     .91              .06     .46
+    13  FOCKC   ................       .41    4.19              .09    3.39              .50    3.75
+    13  ELNRGY  ................       .07     .72              .03    1.16              .11     .79
+    13  ENGRAD  ................       .65    6.64              .13    4.61              .77    5.80
+    13  FCONST  ................       .11    1.17              .02     .77              .15    1.09
+     1  EXIT PROCEDURE .........      1.99    1.58              .11     .30             2.23    1.29
+1
+ ***************************************************************************************************
+ (LOGFILE)
+ <Feb20-97> <14:01:56>  ADF 2.2  RunTime: Feb20-97 14:01:56
+ <Feb20-97> <14:01:56>  NH3 frequencies
+ <Feb20-97> <14:01:56>  RunType   : FREQUENCIES
+ <Feb20-97> <14:01:57>  Net Charge: 0 (Nuclei minus Electrons)
+ <Feb20-97> <14:01:57>  Symmetry  : C(3V)
+ <Feb20-97> <14:01:57>  >>>> FRAGM
+  Coordinates in Frequency Displacement 0
+ Atom       X        Y        Z   (Angstrom)
+ XX        .0000    .0000    .0000
+ N         .0000    .0000   1.0000
+ H         .4729    .8190   1.3821
+ H        -.9457    .0000   1.3821
+ H         .4729   -.8190   1.3821
+ <Feb20-97> <14:01:58>  >>>> CORORT
+ <Feb20-97> <14:01:58>  >>>> FITINT
+ <Feb20-97> <14:01:59>  >>>> ORTHON
+ <Feb20-97> <14:01:59>  >>>> CRTP12
+ <Feb20-97> <14:01:59>  >>>> GENPT
+ <Feb20-97> <14:01:59>  Acc.Num.Int.=   4.000
+ <Feb20-97> <14:02:00>  Block Length= 255
+ <Feb20-97> <14:02:00>  >>>> PTCOR
+ <Feb20-97> <14:02:00>  >>>> PTBAS
+ <Feb20-97> <14:02:01>  >>>> CYCLE
+ <Feb20-97> <14:02:01>    1
+ <Feb20-97> <14:02:02>    2  ErrMat    .92019648  MaxEl  -.30554153
+ <Feb20-97> <14:02:03>    3  ErrMat    .41304574  MaxEl  -.14426184
+ <Feb20-97> <14:02:04>    4  ErrMat    .10920461  MaxEl   .03928795
+ <Feb20-97> <14:02:05>    5  ErrMat    .00301059  MaxEl   .00168272
+ <Feb20-97> <14:02:06>    6  ErrMat    .00048749  MaxEl  -.00026887
+ <Feb20-97> <14:02:07>    7  ErrMat    .00007206  MaxEl   .00002677
+ <Feb20-97> <14:02:08>    8  ErrMat    .00000473  MaxEl   .00000189
+ <Feb20-97> <14:02:09>    9  ErrMat    .00000008  MaxEl  -.00000002
+ <Feb20-97> <14:02:09>  SCF converged
+ <Feb20-97> <14:02:09>   10  ErrMat    .00000002  MaxEl   .00000001
+ <Feb20-97> <14:02:10>  >>>> TOTEN
+ <Feb20-97> <14:02:11>  >>>> POPAN
+ <Feb20-97> <14:02:11>  >>>> FOCKC
+ <Feb20-97> <14:02:11>  >>>> ENGRAD
+  Coordinates in Frequency Displacement 1
+ Atom       X        Y        Z   (Angstrom)
+ XX        .0000    .0000    .0000
+ N        -.0100    .0000   1.0000
+ H         .4729    .8190   1.3821
+ H        -.9457    .0000   1.3821
+ H         .4729   -.8190   1.3821
+ <Feb20-97> <14:02:13>  >>>> CORORT
+ <Feb20-97> <14:02:13>  >>>> FITINT
+ <Feb20-97> <14:02:14>  >>>> ORTHON
+ <Feb20-97> <14:02:14>  >>>> GENPT
+ <Feb20-97> <14:02:14>  Acc.Num.Int.=   4.000
+ <Feb20-97> <14:02:16>  Block Length= 253
+ <Feb20-97> <14:02:16>  >>>> PTCOR
+ <Feb20-97> <14:02:16>  >>>> PTBAS
+ <Feb20-97> <14:02:16>  >>>> CYCLE
+ <Feb20-97> <14:02:17>    1
+ <Feb20-97> <14:02:18>    2  ErrMat    .00927275  MaxEl  -.00392925
+ <Feb20-97> <14:02:18>    3  ErrMat    .00604390  MaxEl  -.00254713
+ <Feb20-97> <14:02:19>    4  ErrMat    .00038991  MaxEl  -.00013078
+ <Feb20-97> <14:02:20>    5  ErrMat    .00024727  MaxEl   .00009383
+ <Feb20-97> <14:02:21>    6  ErrMat    .00000224  MaxEl  -.00000096
+ <Feb20-97> <14:02:21>  SCF converged
+ <Feb20-97> <14:02:22>    7  ErrMat    .00000021  MaxEl   .00000008
+ <Feb20-97> <14:02:22>  >>>> TOTEN
+ <Feb20-97> <14:02:23>  >>>> POPAN
+ <Feb20-97> <14:02:23>  >>>> FOCKC
+ <Feb20-97> <14:02:23>  >>>> ENGRAD
+  Coordinates in Frequency Displacement 2
+ Atom       X        Y        Z   (Angstrom)
+ XX        .0000    .0000    .0000
+ N         .0100    .0000   1.0000
+ H         .4729    .8190   1.3821
+ H        -.9457    .0000   1.3821
+ H         .4729   -.8190   1.3821
+ <Feb20-97> <14:02:25>  >>>> CORORT
+ <Feb20-97> <14:02:25>  >>>> FITINT
+ <Feb20-97> <14:02:25>  >>>> ORTHON
+ <Feb20-97> <14:02:26>  >>>> GENPT
+ <Feb20-97> <14:02:26>  Acc.Num.Int.=   4.000
+ <Feb20-97> <14:02:28>  Block Length= 253
+ <Feb20-97> <14:02:28>  >>>> PTCOR
+ <Feb20-97> <14:02:28>  >>>> PTBAS
+ <Feb20-97> <14:02:28>  >>>> CYCLE
+ <Feb20-97> <14:02:29>    1
+ <Feb20-97> <14:02:29>    2  ErrMat    .00029630  MaxEl   .00012061
+ <Feb20-97> <14:02:30>    3  ErrMat    .00012927  MaxEl   .00005467
+ <Feb20-97> <14:02:31>    4  ErrMat    .00002443  MaxEl   .00000876
+ <Feb20-97> <14:02:32>    5  ErrMat    .00000234  MaxEl  -.00000103
+ <Feb20-97> <14:02:33>    6  ErrMat    .00000014  MaxEl   .00000005
+ <Feb20-97> <14:02:33>  SCF converged
+ <Feb20-97> <14:02:34>    7  ErrMat    .00000003  MaxEl   .00000001
+ <Feb20-97> <14:02:34>  >>>> TOTEN
+ <Feb20-97> <14:02:35>  >>>> POPAN
+ <Feb20-97> <14:02:35>  >>>> FOCKC
+ <Feb20-97> <14:02:35>  >>>> ENGRAD
+  Coordinates in Frequency Displacement 3
+ Atom       X        Y        Z   (Angstrom)
+ XX        .0000    .0000    .0000
+ N         .0000   -.0100   1.0000
+ H         .4729    .8190   1.3821
+ H        -.9457    .0000   1.3821
+ H         .4729   -.8190   1.3821
+ <Feb20-97> <14:02:36>  >>>> CORORT
+ <Feb20-97> <14:02:36>  >>>> FITINT
+ <Feb20-97> <14:02:37>  >>>> ORTHON
+ <Feb20-97> <14:02:37>  >>>> GENPT
+ <Feb20-97> <14:02:37>  Acc.Num.Int.=   4.000
+ <Feb20-97> <14:02:41>  Block Length= 253
+ <Feb20-97> <14:02:41>  >>>> PTCOR
+ <Feb20-97> <14:02:41>  >>>> PTBAS
+ <Feb20-97> <14:02:41>  >>>> CYCLE
+ <Feb20-97> <14:02:42>    1
+ <Feb20-97> <14:02:43>    2  ErrMat    .00923395  MaxEl  -.00391990
+ <Feb20-97> <14:02:43>    3  ErrMat    .00601910  MaxEl  -.00254105
+ <Feb20-97> <14:02:44>    4  ErrMat    .00039394  MaxEl   .00013542
+ <Feb20-97> <14:02:45>    5  ErrMat    .00024532  MaxEl   .00008328
+ <Feb20-97> <14:02:46>    6  ErrMat    .00000223  MaxEl  -.00000080
+ <Feb20-97> <14:02:46>  SCF converged
+ <Feb20-97> <14:02:47>    7  ErrMat    .00000022  MaxEl   .00000007
+ <Feb20-97> <14:02:47>  >>>> TOTEN
+ <Feb20-97> <14:02:47>  >>>> POPAN
+ <Feb20-97> <14:02:48>  >>>> FOCKC
+ <Feb20-97> <14:02:48>  >>>> ENGRAD
+  Coordinates in Frequency Displacement 4
+ Atom       X        Y        Z   (Angstrom)
+ XX        .0000    .0000    .0000
+ N         .0000    .0100   1.0000
+ H         .4729    .8190   1.3821
+ H        -.9457    .0000   1.3821
+ H         .4729   -.8190   1.3821
+ <Feb20-97> <14:02:49>  >>>> CORORT
+ <Feb20-97> <14:02:49>  >>>> FITINT
+ <Feb20-97> <14:02:50>  >>>> ORTHON
+ <Feb20-97> <14:02:50>  >>>> GENPT
+ <Feb20-97> <14:02:50>  Acc.Num.Int.=   4.000
+ <Feb20-97> <14:02:54>  Block Length= 253
+ <Feb20-97> <14:02:54>  >>>> PTCOR
+ <Feb20-97> <14:02:54>  >>>> PTBAS
+ <Feb20-97> <14:02:54>  >>>> CYCLE
+ <Feb20-97> <14:02:55>    1
+ <Feb20-97> <14:02:56>    2  ErrMat    .00028768  MaxEl   .00009732
+ <Feb20-97> <14:02:56>    3  ErrMat    .00012815  MaxEl   .00004333
+ <Feb20-97> <14:02:57>    4  ErrMat    .00002890  MaxEl   .00001134
+ <Feb20-97> <14:02:58>    5  ErrMat    .00000337  MaxEl  -.00000119
+ <Feb20-97> <14:02:59>    6  ErrMat    .00000016  MaxEl  -.00000007
+ <Feb20-97> <14:02:59>  SCF converged
+ <Feb20-97> <14:02:59>    7  ErrMat    .00000004  MaxEl   .00000002
+ <Feb20-97> <14:03:00>  >>>> TOTEN
+ <Feb20-97> <14:03:00>  >>>> POPAN
+ <Feb20-97> <14:03:01>  >>>> FOCKC
+ <Feb20-97> <14:03:01>  >>>> ENGRAD
+  Coordinates in Frequency Displacement 5
+ Atom       X        Y        Z   (Angstrom)
+ XX        .0000    .0000    .0000
+ N         .0000    .0000    .9900
+ H         .4729    .8190   1.3821
+ H        -.9457    .0000   1.3821
+ H         .4729   -.8190   1.3821
+ <Feb20-97> <14:03:02>  >>>> CORORT
+ <Feb20-97> <14:03:02>  >>>> FITINT
+ <Feb20-97> <14:03:03>  >>>> ORTHON
+ <Feb20-97> <14:03:03>  >>>> GENPT
+ <Feb20-97> <14:03:03>  Acc.Num.Int.=   4.000
+ <Feb20-97> <14:03:04>  Block Length= 250
+ <Feb20-97> <14:03:04>  >>>> PTCOR
+ <Feb20-97> <14:03:04>  >>>> PTBAS
+ <Feb20-97> <14:03:05>  >>>> CYCLE
+ <Feb20-97> <14:03:05>    1
+ <Feb20-97> <14:03:06>    2  ErrMat    .00801256  MaxEl  -.00442252
+ <Feb20-97> <14:03:07>    3  ErrMat    .00541062  MaxEl  -.00298359
+ <Feb20-97> <14:03:08>    4  ErrMat    .00084434  MaxEl   .00029871
+ <Feb20-97> <14:03:09>    5  ErrMat    .00006386  MaxEl  -.00002376
+ <Feb20-97> <14:03:10>    6  ErrMat    .00000187  MaxEl  -.00000063
+ <Feb20-97> <14:03:10>  SCF converged
+ <Feb20-97> <14:03:11>    7  ErrMat    .00000011  MaxEl   .00000004
+ <Feb20-97> <14:03:11>  >>>> TOTEN
+ <Feb20-97> <14:03:12>  >>>> POPAN
+ <Feb20-97> <14:03:12>  >>>> FOCKC
+ <Feb20-97> <14:03:13>  >>>> ENGRAD
+  Coordinates in Frequency Displacement 6
+ Atom       X        Y        Z   (Angstrom)
+ XX        .0000    .0000    .0000
+ N         .0000    .0000   1.0100
+ H         .4729    .8190   1.3821
+ H        -.9457    .0000   1.3821
+ H         .4729   -.8190   1.3821
+ <Feb20-97> <14:03:14>  >>>> CORORT
+ <Feb20-97> <14:03:14>  >>>> FITINT
+ <Feb20-97> <14:03:15>  >>>> ORTHON
+ <Feb20-97> <14:03:15>  >>>> GENPT
+ <Feb20-97> <14:03:15>  Acc.Num.Int.=   4.000
+ <Feb20-97> <14:03:16>  Block Length= 251
+ <Feb20-97> <14:03:16>  >>>> PTCOR
+ <Feb20-97> <14:03:16>  >>>> PTBAS
+ <Feb20-97> <14:03:16>  >>>> CYCLE
+ <Feb20-97> <14:03:17>    1
+ <Feb20-97> <14:03:18>    2  ErrMat    .00037858  MaxEl   .00012472
+ <Feb20-97> <14:03:19>    3  ErrMat    .00018013  MaxEl   .00007513
+ <Feb20-97> <14:03:20>    4  ErrMat    .00005523  MaxEl  -.00002344
+ <Feb20-97> <14:03:21>    5  ErrMat    .00000101  MaxEl   .00000036
+ <Feb20-97> <14:03:21>  SCF converged
+ <Feb20-97> <14:03:22>    6  ErrMat    .00000007  MaxEl   .00000003
+ <Feb20-97> <14:03:22>  >>>> TOTEN
+ <Feb20-97> <14:03:23>  >>>> POPAN
+ <Feb20-97> <14:03:23>  >>>> FOCKC
+ <Feb20-97> <14:03:23>  >>>> ENGRAD
+  Coordinates in Frequency Displacement 7
+ Atom       X        Y        Z   (Angstrom)
+ XX        .0000    .0000    .0000
+ N         .0000    .0000   1.0000
+ H         .4629    .8190   1.3821
+ H        -.9457    .0000   1.3821
+ H         .4729   -.8190   1.3821
+ <Feb20-97> <14:03:25>  >>>> CORORT
+ <Feb20-97> <14:03:25>  >>>> FITINT
+ <Feb20-97> <14:03:26>  >>>> ORTHON
+ <Feb20-97> <14:03:26>  >>>> GENPT
+ <Feb20-97> <14:03:26>  Acc.Num.Int.=   4.000
+ <Feb20-97> <14:03:29>  Block Length= 253
+ <Feb20-97> <14:03:29>  >>>> PTCOR
+ <Feb20-97> <14:03:30>  >>>> PTBAS
+ <Feb20-97> <14:03:30>  >>>> CYCLE
+ <Feb20-97> <14:03:30>    1
+ <Feb20-97> <14:03:31>    2  ErrMat    .00299265  MaxEl   .00115278
+ <Feb20-97> <14:03:32>    3  ErrMat    .00194596  MaxEl   .00075194
+ <Feb20-97> <14:03:33>    4  ErrMat    .00091886  MaxEl  -.00030473
+ <Feb20-97> <14:03:34>    5  ErrMat    .00010119  MaxEl   .00003409
+ <Feb20-97> <14:03:34>    6  ErrMat    .00000428  MaxEl   .00000153
+ <Feb20-97> <14:03:35>    7  ErrMat    .00000061  MaxEl  -.00000032
+ <Feb20-97> <14:03:35>  SCF converged
+ <Feb20-97> <14:03:36>    8  ErrMat    .00000011  MaxEl  -.00000004
+ <Feb20-97> <14:03:36>  >>>> TOTEN
+ <Feb20-97> <14:03:37>  >>>> POPAN
+ <Feb20-97> <14:03:37>  >>>> FOCKC
+ <Feb20-97> <14:03:37>  >>>> ENGRAD
+  Coordinates in Frequency Displacement 8
+ Atom       X        Y        Z   (Angstrom)
+ XX        .0000    .0000    .0000
+ N         .0000    .0000   1.0000
+ H         .4829    .8190   1.3821
+ H        -.9457    .0000   1.3821
+ H         .4729   -.8190   1.3821
+ <Feb20-97> <14:03:39>  >>>> CORORT
+ <Feb20-97> <14:03:39>  >>>> FITINT
+ <Feb20-97> <14:03:39>  >>>> ORTHON
+ <Feb20-97> <14:03:40>  >>>> GENPT
+ <Feb20-97> <14:03:40>  Acc.Num.Int.=   4.000
+ <Feb20-97> <14:03:43>  Block Length= 253
+ <Feb20-97> <14:03:43>  >>>> PTCOR
+ <Feb20-97> <14:03:43>  >>>> PTBAS
+ <Feb20-97> <14:03:43>  >>>> CYCLE
+ <Feb20-97> <14:03:44>    1
+ <Feb20-97> <14:03:45>    2  ErrMat    .00012824  MaxEl   .00004428
+ <Feb20-97> <14:03:46>    3  ErrMat    .00006013  MaxEl   .00002018
+ <Feb20-97> <14:03:46>    4  ErrMat    .00001703  MaxEl  -.00000689
+ <Feb20-97> <14:03:47>    5  ErrMat    .00000329  MaxEl  -.00000143
+ <Feb20-97> <14:03:48>    6  ErrMat    .00000015  MaxEl  -.00000007
+ <Feb20-97> <14:03:48>  SCF converged
+ <Feb20-97> <14:03:49>    7  ErrMat    .00000005  MaxEl   .00000001
+ <Feb20-97> <14:03:49>  >>>> TOTEN
+ <Feb20-97> <14:03:50>  >>>> POPAN
+ <Feb20-97> <14:03:50>  >>>> FOCKC
+ <Feb20-97> <14:03:50>  >>>> ENGRAD
+  Coordinates in Frequency Displacement 9
+ Atom       X        Y        Z   (Angstrom)
+ XX        .0000    .0000    .0000
+ N         .0000    .0000   1.0000
+ H         .4729    .8090   1.3821
+ H        -.9457    .0000   1.3821
+ H         .4729   -.8190   1.3821
+ <Feb20-97> <14:03:51>  >>>> CORORT
+ <Feb20-97> <14:03:51>  >>>> FITINT
+ <Feb20-97> <14:03:52>  >>>> ORTHON
+ <Feb20-97> <14:03:52>  >>>> GENPT
+ <Feb20-97> <14:03:52>  Acc.Num.Int.=   4.000
+ <Feb20-97> <14:03:56>  Block Length= 253
+ <Feb20-97> <14:03:56>  >>>> PTCOR
+ <Feb20-97> <14:03:56>  >>>> PTBAS
+ <Feb20-97> <14:03:56>  >>>> CYCLE
+ <Feb20-97> <14:03:57>    1
+ <Feb20-97> <14:03:58>    2  ErrMat    .00414912  MaxEl   .00148502
+ <Feb20-97> <14:03:58>    3  ErrMat    .00266333  MaxEl   .00095932
+ <Feb20-97> <14:03:59>    4  ErrMat    .00143546  MaxEl  -.00046969
+ <Feb20-97> <14:04:00>    5  ErrMat    .00012654  MaxEl  -.00004107
+ <Feb20-97> <14:04:01>    6  ErrMat    .00000577  MaxEl   .00000274
+ <Feb20-97> <14:04:02>    7  ErrMat    .00000083  MaxEl  -.00000038
+ <Feb20-97> <14:04:02>  SCF converged
+ <Feb20-97> <14:04:02>    8  ErrMat    .00000010  MaxEl  -.00000003
+ <Feb20-97> <14:04:03>  >>>> TOTEN
+ <Feb20-97> <14:04:03>  >>>> POPAN
+ <Feb20-97> <14:04:03>  >>>> FOCKC
+ <Feb20-97> <14:04:04>  >>>> ENGRAD
+  Coordinates in Frequency Displacement 10
+ Atom       X        Y        Z   (Angstrom)
+ XX        .0000    .0000    .0000
+ N         .0000    .0000   1.0000
+ H         .4729    .8290   1.3821
+ H        -.9457    .0000   1.3821
+ H         .4729   -.8190   1.3821
+ <Feb20-97> <14:04:05>  >>>> CORORT
+ <Feb20-97> <14:04:05>  >>>> FITINT
+ <Feb20-97> <14:04:06>  >>>> ORTHON
+ <Feb20-97> <14:04:06>  >>>> GENPT
+ <Feb20-97> <14:04:06>  Acc.Num.Int.=   4.000
+ <Feb20-97> <14:04:10>  Block Length= 253
+ <Feb20-97> <14:04:10>  >>>> PTCOR
+ <Feb20-97> <14:04:10>  >>>> PTBAS
+ <Feb20-97> <14:04:10>  >>>> CYCLE
+ <Feb20-97> <14:04:11>    1
+ <Feb20-97> <14:04:11>    2  ErrMat    .00015342  MaxEl  -.00004907
+ <Feb20-97> <14:04:12>    3  ErrMat    .00008581  MaxEl   .00003157
+ <Feb20-97> <14:04:13>    4  ErrMat    .00004712  MaxEl   .00001517
+ <Feb20-97> <14:04:14>    5  ErrMat    .00000233  MaxEl  -.00000078
+ <Feb20-97> <14:04:14>  SCF converged
+ <Feb20-97> <14:04:15>    6  ErrMat    .00000014  MaxEl   .00000006
+ <Feb20-97> <14:04:15>  >>>> TOTEN
+ <Feb20-97> <14:04:15>  >>>> POPAN
+ <Feb20-97> <14:04:16>  >>>> FOCKC
+ <Feb20-97> <14:04:16>  >>>> ENGRAD
+  Coordinates in Frequency Displacement 11
+ Atom       X        Y        Z   (Angstrom)
+ XX        .0000    .0000    .0000
+ N         .0000    .0000   1.0000
+ H         .4729    .8190   1.3721
+ H        -.9457    .0000   1.3821
+ H         .4729   -.8190   1.3821
+ <Feb20-97> <14:04:17>  >>>> CORORT
+ <Feb20-97> <14:04:17>  >>>> FITINT
+ <Feb20-97> <14:04:18>  >>>> ORTHON
+ <Feb20-97> <14:04:18>  >>>> GENPT
+ <Feb20-97> <14:04:18>  Acc.Num.Int.=   4.000
+ <Feb20-97> <14:04:20>  Block Length= 254
+ <Feb20-97> <14:04:20>  >>>> PTCOR
+ <Feb20-97> <14:04:20>  >>>> PTBAS
+ <Feb20-97> <14:04:21>  >>>> CYCLE
+ <Feb20-97> <14:04:21>    1
+ <Feb20-97> <14:04:22>    2  ErrMat    .00287237  MaxEl   .00149947
+ <Feb20-97> <14:04:23>    3  ErrMat    .00196541  MaxEl   .00101196
+ <Feb20-97> <14:04:24>    4  ErrMat    .00039854  MaxEl  -.00013172
+ <Feb20-97> <14:04:25>    5  ErrMat    .00012355  MaxEl   .00004428
+ <Feb20-97> <14:04:26>    6  ErrMat    .00000285  MaxEl  -.00000112
+ <Feb20-97> <14:04:26>    7  ErrMat    .00000016  MaxEl   .00000006
+ <Feb20-97> <14:04:27>  SCF converged
+ <Feb20-97> <14:04:27>    8  ErrMat    .00000006  MaxEl  -.00000002
+ <Feb20-97> <14:04:28>  >>>> TOTEN
+ <Feb20-97> <14:04:28>  >>>> POPAN
+ <Feb20-97> <14:04:28>  >>>> FOCKC
+ <Feb20-97> <14:04:29>  >>>> ENGRAD
+  Coordinates in Frequency Displacement 12
+ Atom       X        Y        Z   (Angstrom)
+ XX        .0000    .0000    .0000
+ N         .0000    .0000   1.0000
+ H         .4729    .8190   1.3921
+ H        -.9457    .0000   1.3821
+ H         .4729   -.8190   1.3821
+ <Feb20-97> <14:04:30>  >>>> CORORT
+ <Feb20-97> <14:04:30>  >>>> FITINT
+ <Feb20-97> <14:04:31>  >>>> ORTHON
+ <Feb20-97> <14:04:31>  >>>> GENPT
+ <Feb20-97> <14:04:31>  Acc.Num.Int.=   4.000
+ <Feb20-97> <14:04:33>  Block Length= 253
+ <Feb20-97> <14:04:33>  >>>> PTCOR
+ <Feb20-97> <14:04:33>  >>>> PTBAS
+ <Feb20-97> <14:04:34>  >>>> CYCLE
+ <Feb20-97> <14:04:34>    1
+ <Feb20-97> <14:04:35>    2  ErrMat    .00008564  MaxEl   .00003027
+ <Feb20-97> <14:04:36>    3  ErrMat    .00003865  MaxEl   .00001359
+ <Feb20-97> <14:04:37>    4  ErrMat    .00000741  MaxEl  -.00000351
+ <Feb20-97> <14:04:38>    5  ErrMat    .00000165  MaxEl   .00000053
+ <Feb20-97> <14:04:38>  SCF converged
+ <Feb20-97> <14:04:38>    6  ErrMat    .00000016  MaxEl  -.00000005
+ <Feb20-97> <14:04:39>  >>>> TOTEN
+ <Feb20-97> <14:04:39>  >>>> POPAN
+ <Feb20-97> <14:04:40>  >>>> FOCKC
+ <Feb20-97> <14:04:40>  >>>> ENGRAD
+ <Feb20-97> <14:04:41>  Force Constants computed
+ <Feb20-97> <14:04:41>  NORMAL TERMINATION
+ <Feb20-97> <14:04:44>  END
+STOP ADF EXIT
+
+real	3m18.22s
+user	2m16.63s
+sys	0m39.13s
