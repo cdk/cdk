@@ -76,9 +76,9 @@ public class IsotopeReader {
                 parser = saxParser.getXMLReader();
                 logger.info("Using JAXP/SAX XML parser.");
                 success = true;
-            } catch (Throwable e) {
+            } catch (Exception exception) {
                 logger.warn("Could not instantiate JAXP/SAX XML reader!");
-                logger.debug(e);
+                logger.debug(exception);
             }
         }
         // Aelfred is first alternative.
