@@ -66,8 +66,7 @@ public class JCPController2D {
     
     private Vector commonElements;
 
-    private JPopupMenu atomPopup = null;
-    private JPopupMenu bondPopup = null;
+    private static Hashtable popupMenus = null;
     
     /**
      * Constructs a controller that performs operations on the
@@ -84,6 +83,10 @@ public class JCPController2D {
         String[] elements = c2dm.getCommonElements();
         for (int i=0; i < elements.length; i++) {
             commonElements.add(elements[i]);
+        }
+        
+        if (this.popupMenus == null) {
+            this.popupMenus = new Hashtable();
         }
     }
 
@@ -115,7 +118,10 @@ public class JCPController2D {
          * @param   e    MouseEvent object
          **/
         public void mouseMoved(MouseEvent event) {
-            // logger.debug("Mouse moved");
+            /* logger.debug("MouseMoved Event Props: mode=" + c2dm.getDrawModeString() + 
+                         ", trigger=" + event.isPopupTrigger() +
+                         ", Button number: " + event.getButton() +
+                         ", Click count: " + event.getClickCount()); */
 
                 int mouseX = getWorldCoordinate(event.getX()); 
                 int mouseY = getWorldCoordinate(event.getY());
@@ -152,7 +158,10 @@ public class JCPController2D {
          * @param   e    MouseEvent object
          **/
         public void mouseDragged(MouseEvent event) {
-            logger.debug("Mouse dragged in mode: " + c2dm.getDrawModeString());
+            logger.debug("MouseDragged Event Props: mode=" + c2dm.getDrawModeString() + 
+                         ", trigger=" + event.isPopupTrigger() +
+                         ", Button number: " + event.getButton() +
+                         ", Click count: " + event.getClickCount());
 
             int mouseX = getWorldCoordinate(event.getX()); 
             int mouseY = getWorldCoordinate(event.getY());
@@ -275,9 +284,10 @@ public class JCPController2D {
             int mouseX = getWorldCoordinate(event.getX());
             int mouseY = getWorldCoordinate(event.getY());
 
-            logger.debug("Is popup trigger: " + event.isPopupTrigger());
-            logger.debug("Button number: " + event.getButton());
-            logger.debug("Click count: " + event.getClickCount());
+            logger.debug("MousePressed Event Props: mode=" + c2dm.getDrawModeString() + 
+                         ", trigger=" + event.isPopupTrigger() +
+                         ", Button number: " + event.getButton() +
+                         ", Click count: " + event.getClickCount());
             
             if (event.isPopupTrigger() || event.getButton() == MouseEvent.BUTTON3) {
                 logger.info("Popup menu triggered...");
@@ -285,20 +295,22 @@ public class JCPController2D {
                 Atom atomInRange = getAtomInRange(mouseX, mouseY);
                 Bond bondInRange = getBondInRange(mouseX, mouseY);
                 if (atomInRange != null) {
+                    JPopupMenu atomPopup = getPopupMenu(atomInRange);
                     if (atomPopup != null ) {
                         atomPopup.show(event.getComponent(), event.getX(), event.getY());
                     }
                 } else if (bondInRange != null) {
+                    JPopupMenu bondPopup = getPopupMenu(bondInRange);
                     if (bondPopup != null ) {
                         bondPopup.show(event.getComponent(), event.getX(), event.getY());
                     }
                 } else {
-                    logger.warn("Popup for model has not been implemented yet!");
+                    JPopupMenu modelPopup = getPopupMenu(chemModel);
+                    if (modelPopup != null ) {
+                        modelPopup.show(event.getComponent(), event.getX(), event.getY());
+                    }
                 }
             } else {
-            
-                logger.debug("Mouse pressed in mode: " + c2dm.getDrawModeString());
-            
                 Atom atomInRange;
                 int startX = 0, startY = 0;
                 r2dm.setPointerVectorStart(null);
@@ -358,13 +370,12 @@ public class JCPController2D {
          **/
         public void mouseReleased(MouseEvent event) {
             
-            logger.debug("Is popup trigger: " + event.isPopupTrigger());
-            logger.debug("Button number: " + event.getButton());
-            logger.debug("Click count: " + event.getClickCount());
-            
+            logger.debug("MouseReleased Event Props: mode=" + c2dm.getDrawModeString() + 
+                         ", trigger=" + event.isPopupTrigger() +
+                         ", Button number: " + event.getButton() +
+                         ", Click count: " + event.getClickCount());
+           
             if (event.getButton() == MouseEvent.BUTTON1) {
-                logger.debug("Mouse released in modus: " + c2dm.getDrawModeString());
-
                 int mouseX = getWorldCoordinate(event.getX()); 
                 int mouseY = getWorldCoordinate(event.getY());
 
@@ -822,10 +833,8 @@ public class JCPController2D {
          *
          * @param   e    MouseEvent object
          **/
-        public void mouseClicked(MouseEvent e)
-        {
-            logger.debug("Mouse clicked");
-
+        public void mouseClicked(MouseEvent e) {
+            // logger.debug("Mouse clicked");
         }
 
         /**
@@ -1126,20 +1135,20 @@ public class JCPController2D {
 		}
 	}
 
-    public void setAtomPopupMenu(JPopupMenu menu) {
-        this.atomPopup = menu;
+    public void setPopupMenu(ChemObject chemObject, JPopupMenu menu) {
+        this.popupMenus.put(chemObject.getClass().getName(), menu);
     }
     
-    public JPopupMenu getAtomPopupMenu() {
-        return this.atomPopup;
-    }
-
-    public void setBondPopupMenu(JPopupMenu menu) {
-        this.bondPopup = menu;
-    }
-    
-    public JPopupMenu getBondPopupMenu() {
-        return this.bondPopup;
+    /**
+     * Returns the popup menu for this ChemObject if it is set, and null
+     * otherwise.
+     */
+    public JPopupMenu getPopupMenu(ChemObject chemObject) {
+        if (this.popupMenus.containsKey(chemObject.getClass().getName())) {
+            return (JPopupMenu)this.popupMenus.get(chemObject.getClass().getName());
+        } else {
+            return null;
+        }
     }
 
 }
