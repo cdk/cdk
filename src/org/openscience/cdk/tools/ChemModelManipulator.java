@@ -157,5 +157,23 @@ public class ChemModelManipulator {
         // This should never happen.
         return createNewMolecule(chemModel);
     }
+
+    /**
+     * Returns all the AtomContainer's of a ChemModel.
+     */
+    public static AtomContainer[] getAllAtomContainers(ChemModel chemModel) {
+        SetOfMolecules moleculeSet = new SetOfMolecules();
+        if (chemModel.getSetOfMolecules() != null) {
+            moleculeSet.add(chemModel.getSetOfMolecules());
+        }
+        if (chemModel.getSetOfReactions() != null) {
+            moleculeSet.add(
+                SetOfReactionsManipulator.getAllMolecules(
+                    chemModel.getSetOfReactions()
+                )
+            );
+        }
+        return SetOfMoleculesManipulator.getAllAtomContainers(moleculeSet);
+    }
 }
 

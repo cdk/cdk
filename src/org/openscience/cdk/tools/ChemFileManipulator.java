@@ -24,11 +24,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- *  */
+ */
 package org.openscience.cdk.tools;
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.exception.*;
+import java.util.Vector;
+import java.util.Enumeration;
 
 /**
  * Class with convenience methods that provide methods from
@@ -51,6 +53,32 @@ public class ChemFileManipulator {
             container.add(ChemSequenceManipulator.getAllInOneContainer(sequence));
         }
         return container;
+    }
+
+    /**
+     * Returns all the AtomContainer's of a ChemFile.
+     */
+    public static AtomContainer[] getAllAtomContainers(ChemFile file) {
+        ChemSequence[] sequences = file.getChemSequences();
+        int acCount = 0;
+        Vector acArrays = new Vector();
+        for (int i=0; i<sequences.length; i++) {
+            AtomContainer[] sequenceContainers = ChemSequenceManipulator.
+                getAllAtomContainers(sequences[i]);
+            acArrays.addElement(sequenceContainers);
+            acCount += sequenceContainers.length;
+        }
+        AtomContainer[] containers = new AtomContainer[acCount];
+        int arrayOffset = 0;
+        for (Enumeration acArraysElements = acArrays.elements(); 
+             acArraysElements.hasMoreElements(); ) {
+            AtomContainer[] modelContainers = (AtomContainer[])acArraysElements.nextElement();
+            System.arraycopy(modelContainers, 0,
+                             containers, arrayOffset,
+                             modelContainers.length);
+            arrayOffset += modelContainers.length;
+        }
+        return containers;
     }
 }
 

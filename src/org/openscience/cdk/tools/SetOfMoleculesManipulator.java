@@ -72,5 +72,17 @@ public class SetOfMoleculesManipulator {
         }
         return container;
     }
+    
+    /**
+     * Returns all the AtomContainer's of a SetOfMolecules.
+     */
+    public static AtomContainer[] getAllAtomContainers(SetOfMolecules set) {
+        int acCount = set.getMoleculeCount();
+		AtomContainer[] container = new AtomContainer[acCount];
+        Molecule[] mols = set.getMolecules();
+		System.arraycopy(mols, 0, container, 0, acCount);
+		return container;
+    }
+    
 }
 

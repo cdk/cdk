@@ -125,4 +125,14 @@ public class ReactionManipulator {
         }
         return reversedReaction;
     }
+    
+    /**
+     * Returns all the AtomContainer's of a Reaction.
+     */
+    public static AtomContainer[] getAllAtomContainers(Reaction reaction) {
+		return SetOfMoleculesManipulator.getAllAtomContainers(
+            getAllMolecules(reaction)
+        );
+    }
+    
 }

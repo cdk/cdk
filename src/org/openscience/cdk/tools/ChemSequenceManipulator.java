@@ -29,6 +29,8 @@ package org.openscience.cdk.tools;
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.exception.*;
+import java.util.Vector;
+import java.util.Enumeration;
 
 /**
  * Class with convenience methods that provide methods from
@@ -51,6 +53,32 @@ public class ChemSequenceManipulator {
             container.add(ChemModelManipulator.getAllInOneContainer(model));
         }
         return container;
+    }
+    
+    /**
+     * Returns all the AtomContainer's of a ChemSequence.
+     */
+    public static AtomContainer[] getAllAtomContainers(ChemSequence sequence) {
+        ChemModel[] models = sequence.getChemModels();
+        int acCount = 0;
+        Vector acArrays = new Vector();
+        for (int i=0; i<models.length; i++) {
+            AtomContainer[] modelContainers = ChemModelManipulator.
+                getAllAtomContainers(models[i]);
+            acArrays.addElement(modelContainers);
+            acCount += modelContainers.length;
+        }
+        AtomContainer[] containers = new AtomContainer[acCount];
+        int arrayOffset = 0;
+        for (Enumeration acArraysElements = acArrays.elements(); 
+             acArraysElements.hasMoreElements(); ) {
+            AtomContainer[] modelContainers = (AtomContainer[])acArraysElements.nextElement();
+            System.arraycopy(modelContainers, 0,
+                             containers, arrayOffset,
+                             modelContainers.length);
+            arrayOffset += modelContainers.length;
+        }
+        return containers;
     }
 }
 

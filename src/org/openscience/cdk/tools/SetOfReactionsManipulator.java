@@ -73,4 +73,12 @@ public class SetOfReactionsManipulator {
         return moleculeSet;
     }
     
+    /**
+     * Returns all the AtomContainer's of a Reaction.
+     */
+    public static AtomContainer[] getAllAtomContainers(SetOfReactions set) {
+		return SetOfMoleculesManipulator.getAllAtomContainers(
+            getAllMolecules(set)
+        );
+    }
 }
