@@ -14,7 +14,7 @@
   </head>
 
   <section>
-    <title>World Wide Molecular Matrix Plugin</title>
+    <title>World Wide Molecular Matrix(WWMM) Plugin</title>
     <para>
       Plugins that allows you to interact from within your CDK application with
       the World Wide Molecule Matrix, or by a similarly typed local XIndice database.
@@ -22,6 +22,15 @@
     <para>
       The source code can be found in the cdk-plugins module in CDK cvs.
     </para>
+    <figure>
+        <title>Query WWMM Xindice Database</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="graphics/screenshots/plugin-wwmmplugin.screenshot1.png" format="PNG"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
+    
   </section>
 
 </webpage>
