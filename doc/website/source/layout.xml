@@ -27,6 +27,7 @@
         <tocentry page="man-dbadmin.xml" filename="man-dbadmin.html"/>
         <tocentry page="man-download.xml" filename="man-download.html"/>
         <tocentry page="man-fileconvert.xml" filename="man-fileconvert.html"/>
+        <tocentry page="man-test.xml" filename="man-test.html"/>
         <tocentry page="man-view.xml" filename="man-view.html"/>
       </tocentry>
       <tocentry page="rfc.xml" filename="rfc.html">
