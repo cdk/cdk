@@ -45,6 +45,7 @@ public class CMLIOTests {
         // suite.addTest(JmolTest.suite());
         suite.addTest(JChemPaintTest.suite());
         suite.addTest(CML2Test.suite());
+        suite.addTest(CML2WriterTest.suite());
         suite.addTest(CMLFragmentsTest.suite());
         suite.addTest(CMLRoundTripTest.suite());
         return suite;
