@@ -45,7 +45,7 @@ import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.tools.IsotopeFactory;
 import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.tools.ChemModelManipulator;
+import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 

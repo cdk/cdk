@@ -47,7 +47,7 @@ import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.tools.ChemModelManipulator;
+import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
  *  A set of test cases for the StructureDiagramGenerator

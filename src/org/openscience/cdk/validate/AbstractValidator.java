@@ -24,11 +24,6 @@
  */
 package org.openscience.cdk.validate;
 
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.Vector;
-
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.AtomType;
@@ -40,18 +35,11 @@ import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Crystal;
 import org.openscience.cdk.ElectronContainer;
 import org.openscience.cdk.Element;
-import org.openscience.cdk.EnzymeResidueLocator;
 import org.openscience.cdk.Isotope;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.SetOfReactions;
-import org.openscience.cdk.io.MACiEReader;
-import org.openscience.cdk.io.PDBReader;
-import org.openscience.cdk.tools.ChemFileManipulator;
-import org.openscience.cdk.tools.ChemModelManipulator;
-import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Abstract validator that does nothing but provide all the methods that the

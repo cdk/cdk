@@ -56,7 +56,7 @@ import org.openscience.cdk.isomorphism.matchers.QueryBond;
 import org.openscience.cdk.isomorphism.mcss.RGraph;
 import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.isomorphism.mcss.RNode;
-import org.openscience.cdk.tools.ChemModelManipulator;
+import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
  *  This class implements a multipurpose structure comparison tool.

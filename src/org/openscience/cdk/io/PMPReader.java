@@ -48,7 +48,7 @@ import org.openscience.cdk.Crystal;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.tools.ChemModelManipulator;
+import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
  * Reads an frames from a PMP formated input.

@@ -28,7 +28,7 @@ package org.openscience.cdk.io;
 import org.openscience.cdk.*;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
-import org.openscience.cdk.tools.ChemModelManipulator;
+import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import freeware.PrintfFormat;
 import javax.vecmath.Point3d;
 import java.io.BufferedWriter;

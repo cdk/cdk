@@ -32,7 +32,7 @@ import org.openscience.cdk.test.isomorphism.IsomorphismTesterTest;
 import org.openscience.cdk.test.smiles.SmilesParserTest;
 import org.openscience.cdk.test.tools.AtomTypeFactoryTest;
 import org.openscience.cdk.test.tools.IsotopeFactoryTest;
-import org.openscience.cdk.test.tools.ReactionManipulatorTest;
+import org.openscience.cdk.test.tools.manipulator.ReactionManipulatorTest;
 
 /**
  * TestSuite that runs all the sample tests

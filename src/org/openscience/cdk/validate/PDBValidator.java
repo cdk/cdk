@@ -49,8 +49,8 @@ import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.SetOfReactions;
 import org.openscience.cdk.io.MACiEReader;
 import org.openscience.cdk.io.PDBReader;
-import org.openscience.cdk.tools.ChemFileManipulator;
-import org.openscience.cdk.tools.ChemModelManipulator;
+import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**

@@ -21,12 +21,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
  */
-package org.openscience.cdk.test.tools;
+package org.openscience.cdk.test.tools.manipulator;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
-import org.openscience.cdk.test.tools.manipulator.ManipulatorsTests;
 
 /**
  * TestSuite that runs all the sample tests in the
@@ -34,21 +32,12 @@ import org.openscience.cdk.test.tools.manipulator.ManipulatorsTests;
  *
  * @cdk.module test
  */
-public class ToolsTests {
+public class ManipulatorsTests {
 
     public static Test suite () {
-        TestSuite suite= new TestSuite("The cdk.tools Tests");
-        suite.addTest(AtomTypeFactoryTest.suite());
-        suite.addTest(CASNumberTest.suite());
-        suite.addTest(ConnectivityCheckerTest.suite());
-        suite.addTest(HydrogenAdderTest.suite());
-        suite.addTest(IDCreatorTest.suite());
-        suite.addTest(IsotopeFactoryTest.suite());
-        suite.addTest(MFAnalyserTest.suite());
-        suite.addTest(SaturationCheckerTest.suite());
-        suite.addTest(NormalizerTest.suite());
-        // cdk.test.tools.manipulator
-        suite.addTest(ManipulatorsTests.suite());
+        TestSuite suite= new TestSuite("The cdk.tools.manipulator Tests");
+        suite.addTest(ReactionManipulatorTest.suite());
+		suite.addTest(SetOfMoleculesManipulatorTest.suite());
         return suite;
     }
 

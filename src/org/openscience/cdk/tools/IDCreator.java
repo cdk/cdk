@@ -36,6 +36,8 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.SetOfAtomContainers;
 import org.openscience.cdk.SetOfReactions;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
 /**
  * Class that provides methods to give unique IDs to ChemObjects.

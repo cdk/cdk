@@ -35,15 +35,10 @@ import org.openscience.cdk.geometry.*;
 import org.openscience.cdk.*;
 import org.openscience.cdk.event.*;
 import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.tools.ChemModelManipulator;
-import org.openscience.cdk.tools.ReactionManipulator;
-import org.openscience.cdk.tools.IsotopeFactory;
-import org.openscience.cdk.tools.HydrogenAdder;
 import java.awt.*;
 import java.util.*;
 import java.awt.event.*;
 import javax.vecmath.*;
-import javax.swing.JPopupMenu;
 
 /**
  * Class that acts on MouseEvents and KeyEvents.

@@ -40,7 +40,6 @@ import java.util.BitSet;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
-
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
@@ -49,7 +48,7 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.MDLReader;
-import org.openscience.cdk.tools.ChemModelManipulator;
+import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
  *  This class implements a multipurpose structure comparaison tool.

@@ -21,7 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package org.openscience.cdk.test.tools;
+package org.openscience.cdk.test.tools.manipulator;
 
 import java.util.Vector;
 
@@ -32,7 +32,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Reaction;
-import org.openscience.cdk.tools.ReactionManipulator;
+import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
 /**
  * @cdk.module test

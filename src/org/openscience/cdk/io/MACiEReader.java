@@ -54,8 +54,8 @@ import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.io.setting.IntegerIOSetting;
 import org.openscience.cdk.io.setting.StringIOSetting;
-import org.openscience.cdk.tools.AtomContainerManipulator;
-import org.openscience.cdk.tools.ReactionManipulator;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
 /**
  * Reads an export from the MACiE enzyme reaction database.

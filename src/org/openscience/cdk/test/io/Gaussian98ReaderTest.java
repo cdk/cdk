@@ -1,20 +1,14 @@
 package org.openscience.cdk.test.io;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.Reader;
-import junit.framework.Assert;
-import junit.framework.AssertionFailedError;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.Gaussian98Reader;
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.tools.ChemFileManipulator;
+import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 import org.openscience.cdk.CDKConstants;
 
 /**

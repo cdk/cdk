@@ -46,7 +46,7 @@ import org.openscience.cdk.math.qm.ClosedShellJob;
 import org.openscience.cdk.math.qm.GaussiansBasis;
 import org.openscience.cdk.math.qm.Orbitals;
 import org.openscience.cdk.math.qm.SimpleBasisSet;
-import org.openscience.cdk.tools.ChemModelManipulator;
+import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  
 /**
  * Demonstration of the quantum mechanical capabilities of CDK.

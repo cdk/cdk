@@ -1,7 +1,7 @@
-/* $RCSfile $
- * $Author $
- * $Date $
- * $Revision $
+/* $RCSfile$
+ * $Author$
+ * $Date$
+ * $Revision$
  *
  * Copyright (C) 2003-2004  The Chemistry Development Kit (CDK) project
  *
@@ -21,7 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package org.openscience.cdk.test.tools;
+package org.openscience.cdk.test.tools.manipulator;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -31,7 +31,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.Reaction;
-import org.openscience.cdk.tools.SetOfMoleculesManipulator;
+import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 
 /**
  * @cdk.module test

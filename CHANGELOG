@@ -18,6 +18,7 @@ Fixes:
 
 API changes:
 * Removed CDKInputAdapter. Use (Popup)Controller2D directly
+* Moved *Manipulator from cdk.tools into cdk.tools.manipulator
 
 20040324 Release
 ------------------------------------

@@ -33,7 +33,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.fingerprint.Fingerprinter;
 import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
-import org.openscience.cdk.tools.ChemFileManipulator;
+import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**

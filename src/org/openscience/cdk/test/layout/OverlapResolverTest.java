@@ -43,7 +43,7 @@ import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.layout.OverlapResolver;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.tools.ChemModelManipulator;
+import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
