@@ -704,7 +704,7 @@ public class Renderer2D implements MouseMotionListener   {
         {
             int border = 2; // number of pixels
             graphics.setColor(backColor);
-            int[] coords = {labelX - border, labelY - border};
+            int[] coords = {labelX - border, labelY + labelH + border};
             int[] bounds = {(int)getScreenSize(labelW + 2*border),
                             (int)getScreenSize(labelH + 2*border)};
             int[] screenCoords = getScreenCoordinates(coords);
