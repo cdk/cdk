@@ -54,7 +54,7 @@ public class OverlapResolverTest extends TestCase
 	 */
 	public boolean standAlone = false;
 	private LoggingTool logger = null;
-
+	StructureDiagramGenerator sdg = null;
 
 	/**
 	 *  Constructor for the OverlapResolverTest object
@@ -72,7 +72,8 @@ public class OverlapResolverTest extends TestCase
 	 */
 	public void setUp()
 	{
-		logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+		logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName(), true);
+		StructureDiagramGenerator sdg = new StructureDiagramGenerator();
 	}
 
 
@@ -105,8 +106,10 @@ public class OverlapResolverTest extends TestCase
 			ChemSequence[] chemSequence = chemFile.getChemSequences();
 			ChemModel[] chemModels = chemSequence[0].getChemModels();
 			AtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModels[0]);
+			
+			OverlapResolver or = new OverlapResolver();
+			or.resolveOverlap(atomContainer, null);
 			//MoleculeViewer2D.display(new Molecule(atomContainer), false);
-			//OverlapResolver.resolveOverlap(atomContainer, null);
 			double score = new OverlapResolver().getAtomOverlapScore(atomContainer, new Vector());
 			assertTrue(score > 0);
 		} catch (Exception exc)
@@ -195,10 +198,9 @@ public class OverlapResolverTest extends TestCase
 			ChemModel[] chemModels = chemSequence[0].getChemModels();
 			AtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModels[0]);
 			//MoleculeViewer2D.display(new Molecule(atomContainer), false);
-			//OverlapResolver.resolveOverlap(atomContainer, null);
 			OverlapResolver or = new OverlapResolver(); 
 			overlapScore = or.resolveOverlap(atomContainer, null);
-			MoleculeViewer2D.display(new Molecule(atomContainer), false);
+			//MoleculeViewer2D.display(new Molecule(atomContainer), false);
 			assertTrue(overlapScore == 0);
 		} catch (Exception exc)
 		{
@@ -209,7 +211,38 @@ public class OverlapResolverTest extends TestCase
 
 	}
 
+	/**
+	 *  A unit test for JUnit
+	 *
+	 *@exception  Exception  Description of the Exception
+	 */
+	public void testResolveOverlap5() throws Exception
+	{
+		Molecule molecule = null;
+		double overlapScore = 0;
+		logger.debug("Test case with atom clash");
+		try
+		{
+			AtomContainer atomContainer = new SmilesParser().parseSmiles("OC4C(N2C1=C(C(=NC(=N1)SC)SC)C3=C2N=CN=C3N)OC(C4O)CO");
+			StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+			sdg.setMolecule(new Molecule(atomContainer));
+			sdg.generateCoordinates();
+			atomContainer = sdg.getMolecule();
+			OverlapResolver or = new OverlapResolver(); 
+			overlapScore = or.resolveOverlap(atomContainer, null);
+			//MoleculeViewer2D.display(new Molecule(atomContainer), true);
+			assertTrue(overlapScore == 0);
+		} catch (Exception exc)
+		{
+			exc.printStackTrace();
+			fail(exc.toString());
+		}
+		logger.debug("End of test case with atom clash");
 
+	}
+
+	
+	
 	/**
 	 *  The main program for the OverlapResolverTest class
 	 *
@@ -225,7 +258,8 @@ public class OverlapResolverTest extends TestCase
 			//ort.testResolveOverlap1();
 			//ort.testResolveOverlap2();
 			//ort.testResolveOverlap3();
-			ort.testResolveOverlap4();
+			//ort.testResolveOverlap4();
+			ort.testResolveOverlap5();
 		} catch (Exception exc)
 		{
 			exc.printStackTrace();
