@@ -186,24 +186,24 @@ public class MDLReader extends DefaultChemObjectReader {
 	private Molecule readMolecule() throws CDKException {
         logger.debug("Reading new molecule");
         int linecount = 0;
-		int atoms = 0;
-		int bonds = 0;
-		int atom1 = 0;
-		int atom2 = 0;
-		int order = 0;
-		int stereo = 0;
-		double x = 0.0;
-		double y = 0.0;
-		double z = 0.0;
+        int atoms = 0;
+        int bonds = 0;
+        int atom1 = 0;
+        int atom2 = 0;
+        int order = 0;
+        int stereo = 0;
+        double x = 0.0;
+        double y = 0.0;
+        double z = 0.0;
         double totalZ = 0.0;
-		int[][] conMat = new int[0][0];
-		String help;
-		Molecule molecule = new Molecule();
-		Bond bond;
-		Atom atom;
+        int[][] conMat = new int[0][0];
+        String help;
+        Molecule molecule = new Molecule();
+        Bond bond;
+        Atom atom;
         String line = "";
-
-		try {
+        
+        try {
             logger.info("Reading header");
             line = input.readLine(); linecount++;
             logger.debug("Line " + linecount + ": " + line);
@@ -239,7 +239,7 @@ public class MDLReader extends DefaultChemObjectReader {
                 z = new Double(line.substring(20,30).trim()).doubleValue();
                 totalZ += z;
                 logger.debug("Coordinates: " + x + "; " + y + "; " + z);
-                String element = line.substring(21,24).trim();
+                String element = line.substring(31,34).trim();
                 logger.debug("Atom type: " + element);
 
                 // try to determine Isotope
