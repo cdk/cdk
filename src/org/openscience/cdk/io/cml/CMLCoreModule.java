@@ -86,6 +86,7 @@ public class CMLCoreModule implements ModuleInterface {
     protected Vector order;
     protected Vector bondStereo;
     protected Vector bondDictRefs;
+    protected Vector bondElid;
     protected boolean stereoGiven;
     protected int curRef;
     protected int CurrentElement;
@@ -135,7 +136,18 @@ public class CMLCoreModule implements ModuleInterface {
         return (CDOInterface)this.cdo;
     }
     
+    /**
+     * Clean all data about parsed data.
+     */
     protected void newMolecule() {
+        newAtomData();
+        newBondData();
+    }
+    
+    /**
+     * Clean all data about read atoms.
+     */
+    protected void newAtomData() {
         elsym = new Vector();
         elid = new Vector();
         formalCharges = new Vector();
@@ -149,12 +161,19 @@ public class CMLCoreModule implements ModuleInterface {
         hCounts = new Vector();
         atomParities = new Vector();
         atomDictRefs = new Vector();
+    }
+
+    /**
+     * Clean all data about read bonds.
+     */
+    protected void newBondData() {
         bondid = new Vector();
         bondARef1 = new Vector();
         bondARef2 = new Vector();
         order = new Vector();
         bondStereo = new Vector();
         bondDictRefs = new Vector();
+        bondElid = new Vector();
     }
 
     public void startDocument() {
@@ -494,10 +513,14 @@ public class CMLCoreModule implements ModuleInterface {
                     logger.debug("Bond: order " + s.trim());
                     order.addElement(s.trim());
                 } else if (BUILTIN.equals("formalCharge")) {
-
                     // NOTE: this combination is in violation of the CML DTD!!!
+                    logger.warn("formalCharge BUILTIN accepted but violating CML DTD");
                     logger.debug("Charge: " + s.trim());
-                    formalCharges.addElement(s.trim());
+                    String charge = s.trim();
+                    if (charge.startsWith("+") && charge.length() > 1) {
+                        charge = charge.substring(1);
+                    }
+                    formalCharges.addElement(charge);
                 }
 
                 break;
@@ -788,7 +811,11 @@ public class CMLCoreModule implements ModuleInterface {
     }
 
     protected void storeData() {
+        storeAtomData();
+        storeBondData();
+    }
 
+    protected void storeAtomData() {
         boolean hasID = true;
         int atomcount = elid.size();
         logger.debug("No atom ids: " + atomcount);
@@ -922,7 +949,14 @@ public class CMLCoreModule implements ModuleInterface {
 
             cdo.endObject("Atom");
         }
-
+        if (elid.size() > 0) {
+            // assume this is the current working list
+            bondElid = elid;
+        }
+        newAtomData();
+    }
+    
+    protected void storeBondData() {
         int bondcount = order.size();
         logger.debug(
                 "Testing a1,a2,stereo: " + bondARef1.size() + "," + 
@@ -946,10 +980,10 @@ public class CMLCoreModule implements ModuleInterface {
                     cdo.setObjectProperty("Bond", "id", (String)ids.nextElement());
                 }
                 cdo.setObjectProperty("Bond", "atom1", 
-                                      new Integer(elid.indexOf(
+                                      new Integer(bondElid.indexOf(
                                                           (String)bar1s.nextElement())).toString());
                 cdo.setObjectProperty("Bond", "atom2", 
-                                      new Integer(elid.indexOf(
+                                      new Integer(bondElid.indexOf(
                                                           (String)bar2s.nextElement())).toString());
 
                 String bondOrder = (String)orders.nextElement();
@@ -974,5 +1008,6 @@ public class CMLCoreModule implements ModuleInterface {
                 cdo.endObject("Bond");
             }
         }
+        newBondData();
     }
 }

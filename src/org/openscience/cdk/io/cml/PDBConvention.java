@@ -29,9 +29,7 @@
 package org.openscience.cdk.io.cml;
 
 import java.util.*;
-
 import org.openscience.cdk.io.cml.cdopi.*;
-
 import org.xml.sax.*;
 
 
@@ -50,6 +48,7 @@ import org.xml.sax.*;
  *   - give an idea on the API of the plugable CML import filter
  *     (a real one will be made)
  *   - read CML files generated with Steve Zara's PDB 2 CML converter
+ *     (of which version 1999 produces invalid CML 1.0)
  *
  */
 public class PDBConvention extends CMLCoreModule {
@@ -98,6 +97,9 @@ public class PDBConvention extends CMLCoreModule {
                     atts.getValue(i).equals("sequence")) {
                 } else if (atts.getQName(i).equals("title") && 
                          atts.getValue(i).equals("connections")) {
+                    // assume that Atom's have been read
+                    logger.debug("Assuming that Atom's have been read: storing them");
+                    super.storeAtomData();
                     connectionTable = true;
                     logger.debug("Start Connection Table");
                 } else if (atts.getQName(i).equals("title") && 

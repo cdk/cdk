@@ -190,11 +190,17 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
             currentMolecule.addAtom(currentAtom);
         } else if (objectType.equals("Bond")) {
             logger.debug("Bond(" + bond_id + "): " + bond_a1 + ", " + bond_a2 + ", " + bond_order);
-            Atom a1 = currentMolecule.getAtomAt(bond_a1);
-            Atom a2 = currentMolecule.getAtomAt(bond_a2);
-            Bond b = new Bond(a1, a2, bond_order);
-            if (bond_id != null) b.setID(bond_id);
-            currentMolecule.addBond(b);
+            if (bond_a1 > currentMolecule.getAtomCount() ||
+                bond_a2 > currentMolecule.getAtomCount()) {
+                logger.error("Cannot add bond between at least one non-existant atom: " + bond_a1 +
+                             " and " + bond_a2);
+            } else {
+                Atom a1 = currentMolecule.getAtomAt(bond_a1);
+                Atom a2 = currentMolecule.getAtomAt(bond_a2);
+                Bond b = new Bond(a1, a2, bond_order);
+                if (bond_id != null) b.setID(bond_id);
+                currentMolecule.addBond(b);
+            }
         } else if (objectType.equals("a-axis")) {
           // set these variables
           if (currentMolecule instanceof Crystal) {
