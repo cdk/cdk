@@ -358,6 +358,9 @@ public class SaturationChecker
         int missingHydrogen = 0;
         if (atom instanceof PseudoAtom) {
             // don't figure it out... it simply does not lack H's
+        } else if (atom.getAtomicNumber() == 1 || atom.getSymbol().equals("H")) {
+            missingHydrogen = (int) (1 - container.getBondOrderSum(atom) -
+                    atom.getFormalCharge());
         } else {
             logger.info("Calculating number of missing hydrogen atoms");
             // get default atom
@@ -367,8 +370,8 @@ public class SaturationChecker
                 AtomType defaultAtom = atomTypes[0];
                 logger.debug("DefAtom: " + defaultAtom.toString());
                 missingHydrogen = (int) (defaultAtom.getMaxBondOrderSum() -
-                container.getBondOrderSum(atom) +
-                atom.getFormalCharge());
+                    container.getBondOrderSum(atom) +
+                    atom.getFormalCharge());
                 if (atom.getFlag(CDKConstants.ISAROMATIC)){
                     Bond[] connectedBonds=container.getConnectedBonds(atom);
                     boolean subtractOne=true;
