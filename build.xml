@@ -282,6 +282,7 @@
                    debug="${debug}" deprecation="${deprecation}">
                 <includesfile name="${src}/applications.javafiles"/>
                 <excludesfile name="${src}/java1.4.javafiles" if="isJava13"/>
+                <excludesfile name="${src}/ant1.6.javafiles" unless="hasAnt16"/>
                 <classpath refid="project.class.path" />
                 <classpath>
                     <fileset dir="${dist}/jar">

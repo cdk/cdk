@@ -72,10 +72,11 @@ import org.openscience.cdk.tools.LoggingTool;
  * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom
  * @see org.openscience.cdk.test.smiles.smarts.ParserTest
  *
- * @author  Egon Willighagen
+ * @author      Egon Willighagen
  * @cdk.created 2004-03-29
  *
- * @cdk.module experimental
+ * @cdk.require ant1.6
+ * @cdk.module  experimental
  */
 public class SMARTSParser {
     
