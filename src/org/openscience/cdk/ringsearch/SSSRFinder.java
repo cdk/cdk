@@ -1,469 +1,60 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
- * 
- * Copyright (C) 1997-2004  The Chemistry Development Kit (CDK) project
- * 
- * Contact: cdk-devel@lists.sourceforge.net
- * 
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public License
- * as published by the Free Software Foundation; either version 2.1
- * of the License, or (at your option) any later version.
- * All we ask is that proper credit is given for our work, which includes
- * - but is not limited to - adding the above copyright notice to the beginning
- * of your source code files, and to any copyright notice that you may distribute
- * with programs based on this work.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
- * 
- */
 package org.openscience.cdk.ringsearch;
+import java.util.Iterator;
+import java.util.List;
 
-import java.util.Vector;
-
+import org._3pq.jgrapht.UndirectedGraph;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.RingSet;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.graph.MoleculeGraphs;
+import org.openscience.cdk.ringsearch.cyclebasis.Cycle;
+import org.openscience.cdk.ringsearch.cyclebasis.CycleBasis;
+
+/*
+ * Created on Jul 5, 2004
+ *
+ */
 
 /**
- * Finds the Smallest Set of Smallest Rings. 
- * This is an implementation of the algorithm published in
- * FIG96.
+ * @author uli
  *
- * <p>References:
- *   <a href="http://cdk.sf.net/biblio.html#FIG96">FIG96</a>
- *
- * @cdk.module standard
- *
- * @cdk.keyword smallest-set-of-rings
- * @cdk.keyword ring search
  */
 public class SSSRFinder {
 
-    private LoggingTool logger;
-    
-	int trimCounter = 0;
-	private static final int PATH = 0;
-
     public SSSRFinder() {
-        logger = new LoggingTool(this);
     }
     
-	/**
-	 * Finds the Smallest Set of Smallest Rings.
-	 *
-	 * @param   mol the molecule to be searched for rings 
-	 * @return      a RingSet containing the rings in molecule    
-	 */
-	public  RingSet findSSSR(Molecule mol)
+	public RingSet findSSSR(Molecule mol)
 	{
-		Bond brokenBond = null;
 		RingSet sssr = new RingSet();
-		Molecule molecule = new Molecule();
-		molecule.add(mol);
-		Atom smallest;
-		int smallestDegree, nodesToBreakCounter, degree;
-		Atom[] rememberNodes;
-		Ring ring;
-	
-		//Two Vectors - as defined in the article. One to hold the
-		//full set of atoms in the structure and on to store the numbers
-		//of the nodes that have been trimmed away.
-		//Furhter there is a Vector nodesN2 to store the number of N2 nodes
-		Vector fullSet = new Vector();
-		Vector trimSet = new Vector();
-		Vector nodesN2 = new Vector();
 		
-		initPath(molecule);
-		logger.debug("molecule.getAtomCount(): " + molecule.getAtomCount());				
-		// load fullSet with the numbers of our atoms
-		for (int f = 0; f < molecule.getAtomCount(); f++)
-		{
-			fullSet.addElement(molecule.getAtomAt(f));
-		}
-		logger.debug("fullSet.size(): " + fullSet.size());						
+		UndirectedGraph molGraph = MoleculeGraphs.getMoleculeGraph(mol);
 		
-		do{
-			//Add nodes of degree zero to trimset.
-			//Also add nodes of degree 2 to nodesN2.
-			//In the same run, check, which node has the lowest degree 
-			//greater than zero.	
-			smallestDegree = 7;
-			smallest = null;
-			nodesN2.removeAllElements();
-			for (int f = 0; f < molecule.getAtomCount(); f++)
-			{
-				Atom atom = molecule.getAtomAt(f);
-				degree = molecule.getBondCount(atom);
-				if (degree == 0)
-				{
-					if (!trimSet.contains(atom))
-					{
-						logger.debug("Atom of degree 0");
-						trimSet.addElement(atom);
-					}
-				}
-				if (degree == 2)
-				{
-					nodesN2.addElement(atom);
-				}
-				if (degree < smallestDegree && degree > 0)
-				{
-					smallest = atom;
-					smallestDegree = degree;
-				}
-			}
-			if (smallest == null )	break;	
-				
-			// If there are nodes of degree 1, trim them away
-			if (smallestDegree == 1)
-			{
-				trimCounter ++;
-				trim(smallest, molecule);
-				trimSet.addElement(smallest);
-			}
+		CycleBasis cycleBasis = new CycleBasis(molGraph);
+		
+		Iterator cycleIterator = cycleBasis.cycles().iterator();
+		
+		while (cycleIterator.hasNext()) {
+			Cycle cycle = (Cycle) cycleIterator.next();
 			
-			// if there are nodes of degree 2, find out of which rings
-			// they are part of.
-			else if (smallestDegree == 2)
-			{
-				rememberNodes = new Atom[nodesN2.size()];
-				nodesToBreakCounter = 0;
-				for (int f = 0; f < nodesN2.size(); f++)
-				{
-					ring = getRing((Atom)nodesN2.elementAt(f), molecule);
-					if (ring != null)
-					{
-						// check, if this ring already is in SSSR
-						if (!sssr.ringAlreadyInSet(ring))
-						{
-							sssr.addElement(ring);
-							rememberNodes[nodesToBreakCounter] = (Atom)nodesN2.elementAt(f);
-							nodesToBreakCounter++;
-						}
-					}
-				}
-				if (nodesToBreakCounter == 0)
-				{
-					nodesToBreakCounter = 1;
-					rememberNodes[0] = (Atom)nodesN2.elementAt(0);
-				}
-				for (int f = 0; f < nodesToBreakCounter; f++){
-					breakBond(rememberNodes[f], molecule);
-				}
-				if (brokenBond != null)
-				{
-					molecule.addBond(brokenBond);
-					brokenBond = null;
-				}
+			Ring ring = new Ring();
+			
+			List vertices = cycle.vertices();
+			
+			Atom[] atoms = new Atom[vertices.size()];
+			atoms[0] = (Atom) vertices.get(0);
+			for (int i = 1; i < vertices.size(); i++) {
+				atoms[i] = (Atom) vertices.get(i);
+				ring.addElectronContainer(new Bond(atoms[i - 1], atoms[i], 1));
 			}
-			// if there are nodes of degree 3
-			else if (smallestDegree == 3)
-			{
-				ring = getRing(smallest, molecule);
-				if (ring != null)
-				{
-					
-					// check, if this ring already is in SSSR
-					if (!sssr.ringAlreadyInSet(ring))
-					{
-						sssr.addElement(ring);
-					}
-					brokenBond = checkEdges(ring, molecule);
-					molecule.removeElectronContainer(brokenBond);
-				}
-			}
-		}
-		while(trimSet.size() < fullSet.size());
-		logger.debug("fullSet.size(): " + fullSet.size());				
-		logger.debug("trimSet.size(): " + trimSet.size());		
-		logger.debug("trimCounter: " + trimCounter);
-	return sssr;	  
-	}
+			ring.addElectronContainer(new Bond(atoms[vertices.size() - 1], atoms[0], 1));
+			ring.setAtoms(atoms);
 
-
-
-	/**
-	 * This routine is called 'getRing() in Figueras original article
-	 * finds the smallest ring of which rootNode is part of.
-	 *
-	 * @param   rootNode  The Atom to be searched for the smallest ring it is part of
-	 * @param   molecule  The molecule that contains the rootNode
-	 * @return     The smallest Ring rootnode is part of
-	 */
-	private Ring getRing(Atom rootNode, Molecule molecule)
-	{
-		Atom node, neighbor, mAtom; 
-		Atom[] neighbors, mAtoms;
-		/** OKatoms is Figueras nomenclature, giving the number of 
-		    atoms in the structure */
-		int OKatoms = molecule.getAtomCount();
-		/** queue for Breadth First Search of this graph */
-		Queue queue = new Queue();
-		/* Initialize a path Vector for each node
-		*/
-		Vector pfad1,pfad2,pfad3,pfad4,pfad5;
-		Vector path[] = new Vector[OKatoms];
-		Vector intersection = new Vector();
-		Vector ring = new Vector();
-		for (int f = 0; f < OKatoms; f++)
-		{
-			path[f] = new Vector();		
-			molecule.getAtomAt(f).getPointer(PATH).removeAllElements();
+			sssr.add(ring);
 		}
-		// Initialize the queue with nodes attached to rootNode
-		neighbors = molecule.getConnectedAtoms(rootNode);
-		for (int f = 0; f < neighbors.length; f++){
-			//if the degree of the f-st neighbor of rootNode is greater 
-			//than zero (i.e., it has not yet been deleted from the list)
-			neighbor = neighbors[f];
-			// push the f-st node onto our FIFO queue	
-			// after assigning rootNode as its source
-			queue.push(neighbor);
-			neighbor.getPointer(PATH).addElement(rootNode);
-			neighbor.getPointer(PATH).addElement(neighbor);
-		}
-		while (queue.size() > 0){	
-			node = (Atom)queue.pop();
-			mAtoms = molecule.getConnectedAtoms(node);
-			for (int f = 0; f < mAtoms.length; f++){
-				mAtom = mAtoms[f];
-				if (mAtom != node.getPointer(PATH).elementAt(node.getPointer(PATH).size() - 2)){
-					if (mAtom.getPointer(PATH).size() > 0){
-						intersection = getIntersection(node.getPointer(PATH), mAtom.getPointer(PATH));
-						if (intersection.size() == 1){
-							// we have found a valid ring closure
-							// now let's prepare the path to
-							// return in tempAtomSet
-							logger.debug("path1  ", node.getPointer(PATH));
-							logger.debug("path2  ", mAtom.getPointer(PATH));
-							logger.debug("rootNode  ", rootNode);
-							logger.debug("ring   ", ring);
-							ring = getUnion(node.getPointer(PATH), mAtom.getPointer(PATH));
-							return prepareRing(ring,molecule);
-						}
-					}
-					else 
-					{   
-						// if path[mNumber] is null
-					    // update the path[mNumber]							
-						pfad2 = node.getPointer(PATH);
-						mAtom.setPointer(PATH, (Vector)node.getPointer(PATH).clone());
-						mAtom.getPointer(PATH).addElement(mAtom);
-						pfad1 = mAtom.getPointer(PATH);
-						// now push the node m onto the queue
-						queue.push(mAtom);	
-					}
-				}
-			}
-		}
-		return null;
-	}
-
-									
-	
-	
-
-	/**
-	 * Returns the ring that is formed by the atoms in the given vector. 
-	 *
-	 * @param   vec  The vector that contains the atoms of the ring
-	 * @param   mol  The molecule this ring is a substructure of
-	 * @return     The ring formed by the given atoms
-	 */
-	private Ring prepareRing(Vector vec, Molecule mol)
-	{
-		// add the atoms in vec to the new ring
-		int atomCount = vec.size();
-		Ring ring = new Ring(atomCount);
-		Atom[] atoms = new Atom[atomCount];
-		vec.copyInto(atoms);
-		ring.setAtoms(atoms);
-		// add the bonds in mol to the new ring
-		try {
-			Bond b;
-			for (int i = 0; i < atomCount - 1; i++) {
-				b = mol.getBond(atoms[i], atoms[i + 1]);
-				if (b != null) {
-				    ring.addBond(b);
-				} else {
-				    logger.error("This should not happen.");
-				} 
-			}
-			b = mol.getBond(atoms[0], atoms[atomCount - 1]);
-			if (b != null) {
-				ring.addBond(b);
-			} else {
-				logger.error("This should not happen either.");
-			} 
-		}
-		catch (Exception exc)
-		{
-			exc.printStackTrace();
-		}
-		logger.debug("found Ring  ", ring);
-		return ring;
-	}
 		
-	/**
-	 * removes all bonds connected to the given atom leaving it with degree zero.
-	 *
-	 * @param   atom  The atom to be disconnecred
-	 * @param   molecule  The molecule containing the atom
-	 */
-	 private void trim(Atom atom, Molecule molecule) {
-        Bond[] bonds = molecule.getConnectedBonds(atom);
-	 	for (int i = 0; i < bonds.length; i++) {
-            molecule.removeElectronContainer(bonds[i]);
-	 	}
-		// you are erased! Har, har, har.....  >8-)
-	 }
-	  
-
-	/**
-	 * initializes a path vector in every Atom of the given molecule
-	 *
-	 * @param   molecule  The given molecule
-	 */
-	private void initPath(Molecule molecule)
-	{
-	 	for (int i = 0; i < molecule.getAtomCount(); i++) {
-			Atom atom = molecule.getAtomAt(i);
-			atom.setPointer(PATH, new Vector());
-	 	}		
+		return sssr;	  
 	}
-
-	/**
-	 * Returns a Vector that contains the intersection of Vectors vec1 and vec2
-	 *
-	 * @param   vec1   The first vector
-	 * @param   vec2   The second vector
-	 * @return     
-	 */
-	private  Vector getIntersection(Vector vec1, Vector vec2) {
-		Vector is = new Vector();		
-		for (int f = 0; f < vec1.size(); f++){
-			if (vec2.contains((Atom)vec1.elementAt(f))) is.addElement((Atom)vec1.elementAt(f));	
-		}	
-		return is;
-	}	
-
-	/**
-	 * Returns a Vector that contains the union of Vectors vec1 and vec2
-	 *
-	 * @param   vec1  The first vector
-	 * @param   vec2  The second vector
-	 * @return     
-	 */
-	private  Vector getUnion(Vector vec1, Vector vec2){
-		Vector is = (Vector)vec1.clone();
-		for (int f = vec2.size()- 1; f > -1; f--){
-			if (!vec1.contains((Atom)vec2.elementAt(f))) is.addElement((Atom)vec2.elementAt(f));	
-		}	
-		return is;
-	}	
-
-	/**
-	 * merges two vectors into one
-	 *
-	 * @param   vec1  The first vector
-	 * @param   vec2  The second vector
-	 * @return     
-	 */
-	private  Vector merge(Vector vec1, Vector vec2){
-		Vector result = (Vector)vec1.clone();
-		for (int f = 0; f < vec2.size(); f++){
-			result.addElement((Atom)vec2.elementAt(f))	;	
-		}	
-		return result;
-
-	}
-	
-	/**
-	 * Eliminates one bond of this atom from the molecule
-	 *
-	 * @param   atom  The atom one bond is eliminated of
-	 * @param   molecule  The molecule that contains the atom
-	 */
-	private void breakBond(Atom atom, Molecule molecule)
-	{
-        Bond[] bonds = molecule.getBonds();
-		for (int i = 0; i < bonds.length; i++)
-		{
-			if (bonds[i].contains(atom))
-			{
-				molecule.removeElectronContainer(bonds[i]);
-				break;
-			}
-		}
-	}
-
-
-	/**
-	 * Selects an optimum edge for elimination in structures without N2 nodes.
-	 *
-     * <p>This might be severely broken! Would have helped if there was an
-     * explanation of how this algorithm worked.
-     *
-	 * @param   ring  
-	 * @param   mol  
-	 */
-	private Bond checkEdges(Ring ring, Molecule molecule)
-	{
-		Ring r1, r2;
-		RingSet ringSet = new RingSet();
-		Bond bond;
-		int minMaxSize = Integer.MAX_VALUE;
-		int minMax = 0;
-		logger.debug("Molecule: " + molecule);
-        Bond[] bonds = ring.getBonds();
-		for (int i = 0; i < bonds.length; i++)
-		{
-			bond = bonds[i];
-			molecule.removeElectronContainer(bond);
-			r1 = getRing(bond.getAtomAt(0),molecule);
-			r2 = getRing(bond.getAtomAt(1),molecule);
-			logger.debug("checkEdges: " + bond);
-			if (r1.getAtomCount() > r2.getAtomCount())
-			{
-				ringSet.addElement(r1);
-			}
-			else
-			{
-				ringSet.addElement(r2);
-			}
-			molecule.addBond(bond);
-		}
-		for (int i = 0; i < ringSet.size(); i++)
-		{
-			if (((Ring)ringSet.elementAt(i)).getBondCount() < minMaxSize)
-			{
-				minMaxSize = ((Ring)ringSet.elementAt(i)).getBondCount();
-				minMax = i;
-			}
-		}
-		return (Bond)ring.getElectronContainerAt(minMax);
-	}
-	
-	
 }
-
-
-
-
-
-
-
-
