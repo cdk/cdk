@@ -5,11 +5,10 @@
         <property name="sourcedist" value="sourcedist" />
         <property name="dist" value="dist" />
         <property name="doc" value="doc" />
-        <property name="src.tests"
-                          value="org/openscience/cdk/test" />
-
+	<property name="src" value="src" />
+	<property name="lib" value="jar" />
+        <property name="src.tests" value="${src}/org/openscience/cdk/test" />
         <property name="reports.tests" value="reports" />
-
         <property name="pathtojava3d" value="" />
 
         <path id="project.class.path">
@@ -17,7 +16,7 @@
                 location="/usr/lib/j2sdk1.3/jre/lib/rt.jar" />
 
                 <pathelement location="." />
-                <fileset dir="jar">
+                <fileset dir="${lib}">
                         <include name="*.jar" />
                 </fileset>
                 <fileset dir="${pathtojava3d}">
@@ -46,49 +45,6 @@
                 <delete dir="${sourcedist}" />
                 <delete dir="${reports.tests}" />
         </target>
-
-
-
-        <target name="compile118" depends="init">
-                <echo message="Compiling only the classes that are needed 
-		for use in a drawing applet and don't use Java3d." />
-                <echo
-                message="Use 'compile-with-java3d' target for full Java3D support. " />
-                <mkdir dir="${build}" />
-
-                <javac destdir="${build}" optimize="on" debug="off" deprecation="off">
-                        <src path="." />
-                        <exclude name="${sourcedist}/**" />
-                        <exclude name="org/openscience/cdk/test/**"/>
-                        <exclude name="org/openscience/cdk/database/**"/>
-                        <exclude name="org/openscience/cdk/renderer/Molecule*.*"/>
-                        <exclude name="org/openscience/cdk/renderer/GraphRend*.*"/>
-                        <exclude name="org/openscience/cdk/renderer/AtomicTable*.*"/>
-                        <exclude name="org/openscience/cdk/io/CMLReader*.*"/>
-
-                        <exclude
-                        name="org/openscience/cdk/applications/Viewer.java" />
-                        <exclude
-                        name="org/openscience/cdk/renderer/AcceleratedRenderer3D*" />
-                        <exclude
-                        name="org/openscience/cdk/renderer/OrbitalsRenderer3D*" />
-                        <exclude
-                        name="org/openscience/cdk/test/AcceleratedRenderer3DTest.java" />
-                        <exclude
-                        name="org/openscience/cdk/test/OrbitalsRenderer3DTest.java" />
-                        <exclude
-                        name="org/openscience/cdk/test/VisualGaussiansCalculationTest.java" />
-                        <exclude
-                        name="org/openscience/cdk/test/ZMatrixReaderTest.java" />
-
-                        <classpath refid="project.class.path" />
-                </javac>
-
-                <copy todir="${build}">
-                        <fileset dir="." includes="**/Test-*" />
-                </copy>
-        </target>
-
 	
         <target name="compile" depends="init">
                 <echo message="Compiling only the classes that don't use Java3d." />
@@ -99,7 +55,7 @@
                 <mkdir dir="${build}" />
 
                 <javac destdir="${build}" optimize="off" debug="on" deprecation="off">
-                        <src path="." />
+                        <src path="${src}" />
                         <exclude name="${sourcedist}/**" />
                         <exclude
                         name="org/openscience/cdk/applications/Viewer.java" />
@@ -115,12 +71,11 @@
                         name="org/openscience/cdk/test/VisualGaussiansCalculationTest.java" />
                         <exclude
                         name="org/openscience/cdk/test/ZMatrixReaderTest.java" />
-
                         <classpath refid="project.class.path" />
                 </javac>
 
                 <copy todir="${build}">
-                        <fileset dir="." includes="**/Test-*" />
+                        <fileset dir="${src}" includes="**/Test-*" />
                 </copy>
         </target>
 
@@ -128,7 +83,7 @@
                 <mkdir dir="${build}" />
 
                 <javac destdir="${build}" optimize="on" deprecation="off" debug="on">
-                        <src path="org" />
+                        <src path="${src}" />
 
                         <exclude name="${sourcedist}/**" />
 
@@ -143,23 +98,23 @@
                 dir="${build}/org/openscience/cdk/config" />
 
                 <copy
-                file="org/openscience/cdk/config/isotopes.xml"
+                file="${src}/org/openscience/cdk/config/isotopes.xml"
                 tofile="${build}/org/openscience/cdk/config/isotopes.xml" />
                 <copy
-                file="org/openscience/cdk/config/structgen_atomtypes.xml"
+                file="${src}/org/openscience/cdk/config/structgen_atomtypes.xml"
                 tofile="${build}/org/openscience/cdk/config/structgen_atomtypes.xml" />
                 <copy
-                file="org/openscience/cdk/config/log4j.properties"
+                file="${src}/org/openscience/cdk/config/log4j.properties"
                 tofile="${build}/org/openscience/cdk/config/log4j.properties" />
 
                 <mkdir
                 dir="${build}/org/openscience/cdk/io/cml/data" />
 
                 <copy
-                file="org/openscience/cdk/io/cml/data/cml1_0.dtd"
+                file="${src}/org/openscience/cdk/io/cml/data/cml1_0.dtd"
                 tofile="${build}/org/openscience/cdk/io/cml/data/cml1_0.dtd" />
                 <copy
-                file="org/openscience/cdk/io/cml/data/cml1_0_1.dtd"
+                file="${src}/org/openscience/cdk/io/cml/data/cml1_0_1.dtd"
                 tofile="${build}/org/openscience/cdk/io/cml/data/cml1_0_1.dtd" />
         </target>
 
@@ -259,22 +214,17 @@
         <target name="sourcedist" depends="init">
                 <copy todir="${sourcedist}">
                         <fileset dir="." includes="**/*java" />
-
                         <fileset dir="." includes="build.xml" />
                 </copy>
                 <copy todir="${sourcedist}/org/openscience/cdk/config/isotopes.xml">
                         <fileset dir="org/openscience/cdk/config/"
                                  includes="*" />
                 </copy>
-
                 <tar tarfile="cdk-source-${DSTAMP}.tar"
                 basedir="${sourcedist}" includes="**" />
-
                 <gzip zipfile="cdk-source-${DSTAMP}.tar.gz"
                 src="cdk-source-${DSTAMP}.tar" />
-
                 <delete file="cdk-source-${DSTAMP}.tar" />
-
                 <zip zipfile="cdk-source-${DSTAMP}.zip"
                 basedir="${sourcedist}" includes="**" />
         </target>
@@ -307,11 +257,10 @@
 
                                 <pathelement location="." />
 
-                                <fileset dir="jar">
+                                <fileset dir="${lib}">
                                         <include name="*.jar" />
                                 </fileset>
                         </classpath>
-
                         <test
                         name="org.openscience.cdk.test.CDKTests"
                         haltonfailure="no"
@@ -338,7 +287,7 @@
 
                                 <pathelement location="." />
 
-                                <fileset dir="jar">
+                                <fileset dir="${lib}">
                                         <include name="*.jar" />
                                 </fileset>
                         </classpath>
@@ -348,15 +297,11 @@
         <target name="run" depends="dist">
                 <java classname="org.openscience.cdk.test.SingleStructureRandomGeneratorTest" fork="yes">
                         <classpath>
-                                <pathelement
-                                location="${dist}/jar/cdk.jar" />
-
-                                <pathelement
-                                path="${java.class.path}" />
-
+                                <pathelement location="${dist}/jar/cdk-core.jar" />
+                                <pathelement location="${dist}/jar/cdk-extra.jar" />
+                                <pathelement path="${java.class.path}" />
                                 <pathelement location="." />
-
-                                <fileset dir="jar">
+                                <fileset dir="${lib}">
                                         <include name="*.jar" />
                                 </fileset>
                         </classpath>
@@ -365,7 +310,7 @@
 
 	<target name="javadoc" depends="init">
 		<javadoc packagenames="org.openscience.cdk.*"
-			sourcepath="."
+			sourcepath="${src}"
 			defaultexcludes="yes"
 			destdir="doc/api"
 			author="true"
@@ -375,6 +320,3 @@
 		</javadoc>
 	</target>
 </project>
-
-
-
