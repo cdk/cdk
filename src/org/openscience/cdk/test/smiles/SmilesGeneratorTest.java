@@ -36,6 +36,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
@@ -331,7 +332,7 @@ public class SmilesGeneratorTest extends TestCase
 		}
 		assertNotNull(smiles1);
     assertTrue(smiles1.equals("[H]O[C@]1(C([H])([H])C([H])([H])C([H])([H])C([H])([H])[C@]1(O[H])([H]))([H])"));
-		mol1 = (Molecule) new MFAnalyser(mol1).removeHydrogens();
+		mol1 = (Molecule) AtomContainerManipulator.removeHydrogens(mol1);
 		try
 		{
 			smiles1 = sg.createSMILES(mol1);
