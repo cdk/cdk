@@ -259,6 +259,10 @@ public class BasicValidator implements ValidatorInterface {
             );
             for (int i=0; i<bond.getAtomCount(); i++) {
                 Atom atom = bond.getAtomAt(i);
+                if (atom instanceof PseudoAtom) {
+                    // ok, all is fine; we don't know the properties of pseudo atoms
+                    break;
+                }
                 AtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
                 AtomType failedOn = null;
                 boolean foundMatchingAtomType = false;

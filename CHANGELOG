@@ -37,6 +37,7 @@ Fixes:
 * Fixed writing of SDF files (closes #870911)
 * Made all CDKConstants  really constant (i.e. final)
 * Fixed method: make sure to overwrite old value if number of missing Hs is zero
+* Don't try to validate pseudo atoms (closes JCP bug #829038)
 
 API changes:
 * SetOfMolecules now extends SetOfAtomContainers which gives it additional
