@@ -32,8 +32,8 @@ import java.util.*;
 /**
  * Program that converts a file from one format to a file with another format.
  * Supported formats are:
- *   input: CML, XYZ
- *  output: CML
+ *   input: CML, XYZ, MDLMolfile
+ *  output: CML, MDL Molfile
  */
 public class FileConvertor {
 
@@ -56,7 +56,15 @@ public class FileConvertor {
       FileWriter fw = new FileWriter(output);
 
       ChemObjectReader cor = getChemObjectReader(this.iformat, fr);
+      if (cor == null) {
+        System.err.println("Unsupported input format!");
+	return false;
+      }
       ChemObjectWriter cow = getChemObjectWriter(this.oformat, fw);
+      if (cow == null) {
+        System.err.println("Unsupported output format!");
+	return false;
+      }
 
       ChemFile content = (ChemFile)cor.read((ChemObject)new ChemFile());
       fr.close();
@@ -102,31 +110,13 @@ public class FileConvertor {
 
   }
 
-  private boolean isSupportInputFormat(String format) {
-    boolean result = false;
-    if (format.equalsIgnoreCase("CML")) {
-      result = true;
-    }
-    return result;
-  }
-
-  private boolean isSupportOutputFormat(String format) {
-    boolean result = false;
-    if (format.equalsIgnoreCase("CML")) {
-      result = true;
-    } else if (format.equalsIgnoreCase("XYZ")) {
-      result = true;
-    }
-    return result;
-  }
-
   private ChemObjectReader getChemObjectReader(String format, FileReader f) {
     if (format.equalsIgnoreCase("CML")) {
       return new CMLReader(f);
     } else if (format.equalsIgnoreCase("XYZ")) {
       return new XYZReader(f);
-    } else {
-      System.err.println("Unsupported input format: " + format);
+    } else if (format.equalsIgnoreCase("MOL")) {
+      return new MDLReader(f);
     }
     return null;
   }
@@ -134,8 +124,8 @@ public class FileConvertor {
   private ChemObjectWriter getChemObjectWriter(String format, FileWriter f) {
     if (format.equalsIgnoreCase("CML")) {
       return new CMLWriter(f);
-    } else {
-      System.err.println("Unsupported output format: " + format);
+    } else if (format.equalsIgnoreCase("MOL")) {
+      return new MDLWriter(f);
     }
     return null;
   }
