@@ -73,40 +73,24 @@
                 <delete dir="${reports.tests}" />
         </target>
 
-        <target name="compile" depends="info, init">
-                <echo message="Compiling only the classes that don't use Java3d." />
+        <target name="compile">
+                <echo message="Compiling only the classes that don't use Java3d."/>
+                <echo message="Use 'compile-with-java3d' target for full Java3D support."/>
 
-                <echo
-                message="Use 'compile-with-java3d' target for full Java3D support. " />
-
-                <mkdir dir="${build}" />
-
-                <javac destdir="${build}" optimize="${optimization}" 
-                       debug="${debug}" deprecation="${deprecation}">
-                        <src path="${build.src}" />
-                        <exclude name="org/openscience/cdk/applications/Viewer.java" />
-                        <exclude name="org/openscience/cdk/renderer/AcceleratedRenderer3D.java" />
-                        <exclude name="org/openscience/cdk/renderer/AcceleratedRenderer3DModel.java" />
-                        <exclude name="org/openscience/cdk/renderer/OrbitalsRenderer3D.java" />
-                         <!-- exclude libio classes that require additional
-                             libraries, and which are compiled elsewhere -->
-                        <exclude name="org/openscience/cdk/libio/**/*.java" />
-                        <exclude name="org/openscience/cdk/test/**/*.java" />
-                        <!-- exclude application classes that require additional
-                             libraries, and which are compiled elsewhere -->
-                        <exclude name="org/openscience/cdk/applications/**/*.java" />
-                        <!-- exclude patch versions -->
-                        <exclude name="org/openscience/cdk/**/*.applet.java" />
-
-                        <classpath refid="project.class.path" />
-                </javac>
-
-                <copy todir="${build}">
-                        <fileset dir="${src}" includes="**/Test-*" />
-                </copy>
+                <antcall target="compile-all"/>
         </target>
 
-        <target name="compile-libio" depends="compile">
+        <target name="compile-with-java3d">
+                <antcall target="compile-all"/>
+                <antcall target="compile-render-with-java3d"/>
+        </target>
+
+        <target name="compile-all" 
+            depends="init, info, compile-core, compile-standard, compile-extra, compile-io, 
+                     compile-render">
+        </target>
+
+        <target name="compile-libio" depends="dist-standard">
                 <!-- Task to build the libio classes. Clearly, this requires extra
                      jars, and these should be located in ${lib}/libio -->
 
@@ -125,7 +109,7 @@
                 </javac>
         </target>
 
-        <target name="compile-apps" depends="compile, compile-libio">
+        <target name="compile-apps" depends="dist-extra, dist-libio">
                 <!-- Task to build the applications classes. Some require extra
                      jars, like those in ${lib}/libio -->
                 <echo message="Compiling classes defined in ${src}/applications.classes." />
@@ -153,7 +137,7 @@
                 </javac>
         </target>
 
-        <target name="compile-standard" depends="init">
+        <target name="compile-standard" depends="dist-core">
                 <echo message="Compiling classes for cdk-standard module." />
 
                 <javac srcdir="${build.src}" destdir="${build}" optimize="${optimization}" 
@@ -199,6 +183,7 @@
                        debug="${debug}" deprecation="${deprecation}">
                     <include name="org/openscience/cdk/renderer/**/*"/>
                     <include name="org/openscience/cdk/controller/**/*"/>
+                    <excludesfile name="${src}/java3d.classes"/>
 
                     <classpath refid="project.class.path" />
                     <classpath>
@@ -210,7 +195,16 @@
                 </javac>
         </target>
 
-        <target name="compile-extra" depends="compile"/>
+        <target name="compile-extra" depends="dist-standard">
+            <javac srcdir="${build.src}" destdir="${build}" optimize="${optimization}" 
+                   debug="${debug}" deprecation="${deprecation}"
+                   excludesfile="${src}/java3d.classes">
+                <classpath refid="project.class.path" />
+
+                <exclude name="org/openscience/cdk/libio/**/*.java" />
+                <exclude name="org/openscience/cdk/applications/**/*.java" />
+            </javac>          
+        </target>
 
         <target name="compile-cml">
             <!-- Task to build the CML Lib classes. (For Jmol) -->
@@ -245,20 +239,12 @@
                 </javac>
         </target>
 
-        <target name="compile-with-java3d" depends="compile">
+        <target name="compile-render-with-java3d" depends="compile-render">
                 <mkdir dir="${build}" />
 
                 <javac destdir="${build}" optimize="${optimization}" 
-                       debug="${debug}" deprecation="${deprecation}">
-                        <src path="${build.src}" />
-
-                        <!-- exclude libio classes that require additional
-                             libraries, and are compiled elsewhere -->
-                        <exclude name="org/openscience/cdk/libio/**" />
-                        <exclude name="org/openscience/cdk/test/libio/**" />
-                        <!-- exclude application classes that require additional
-                             libraries, and which are compiled elsewhere -->
-                        <exclude name="org/openscience/cdk/applications/**" />
+                       debug="${debug}" deprecation="${deprecation}"
+                       includesfile="${src}/java3d.classes">
 
                         <classpath refid="project.class.path" />
                 </javac>
@@ -437,6 +423,14 @@
                 </jar>
         </target>
 
+        <target name="dist-render-with-java3d" depends="compile-render-with-java3d">
+                <jar jarfile="${dist}/jar/cdk-render-java3d.jar">
+                    <fileset dir="${build}">
+                        <include name="org/openscience/cdk/controller/**/*" />
+                    </fileset>
+                </jar>
+        </target>
+
         <target name="dist-standard" depends="compile-standard, dist.init">
                 <jar jarfile="${dist}/jar/cdk-standard.jar">
                     <fileset dir="${build}">
@@ -458,40 +452,6 @@
                                          dist-apps, dist-test" />
 
         <target name="dist" depends="dist-all" />
-
-        <target name="dist-with-java3d" depends="compile-with-java3d, dist-core">
-                <jar jarfile="${dist}/jar/cdk-extra-with-java3d.jar">
-                    <fileset dir="${build}">
-                        <include name="**/cdk/**" />
-                        <!-- Exclude core classes -->
-                        <exclude name="org/openscience/cdk/AtomContainer.class" />
-                        <exclude name="org/openscience/cdk/AtomEnumeration.class" />
-                        <exclude name="org/openscience/cdk/Atom.class" />
-                        <exclude name="org/openscience/cdk/AtomType.class" />
-                        <exclude name="org/openscience/cdk/BioPolymer.class" />
-                        <exclude name="org/openscience/cdk/Bond.class" />
-                        <exclude name="org/openscience/cdk/ChemModel.class" />
-                        <exclude name="org/openscience/cdk/ChemObject.class" />
-                        <exclude name="org/openscience/cdk/ChemSequence.class" />
-                        <exclude name="org/openscience/cdk/ElectronContainer.class" />
-                        <exclude name="org/openscience/cdk/Element.class" />
-                        <exclude name="org/openscience/cdk/Isotope.class" />
-                        <exclude name="org/openscience/cdk/Molecule.class" />
-                        <exclude name="org/openscience/cdk/Monomer.class" />
-                        <exclude name="org/openscience/cdk/Polymer.class" />
-                        <exclude name="org/openscience/cdk/Ring.class" />
-                        <exclude name="org/openscience/cdk/RingSet.class" />
-                        <exclude name="org/openscience/cdk/SetOfMolecules.class" />
-                        <!-- Exclude libio classes -->
-                        <exclude name="org/openscience/cdk/libio/**" />
-                        <exclude name="org/openscience/cdk/test/libio/**" />
-                        <!-- Exclude application classes -->
-                        <exclude name="org/openscience/cdk/applications/**" />
-                        <!-- Exclude test classes -->
-                        <exclude name="org/openscience/cdk/test/**" />
-                    </fileset>
-                </jar>
-        </target>
 
         <target name="sourcedist" depends="init">
                 <copy todir="${sourcedist}">
@@ -552,7 +512,7 @@
         </target>
 
         <target name="run-with-java3d"
-        depends="dist-with-java3d">
+        depends="dist-extra, dist-io, dist-extra, dist-render-with-java3d">
                 <java
                 classname="org.openscience.cdk.test.OrbitalsRenderer3DTest"
                  fork="yes">
@@ -560,7 +520,11 @@
 
                         <classpath>
                                 <pathelement location="${dist}/jar/cdk-core.jar" />
-                                <pathelement location="${dist}/jar/cdk-extra-with-java3d.jar" />
+                                <pathelement location="${dist}/jar/cdk-standard.jar" />
+                                <pathelement location="${dist}/jar/cdk-extra.jar" />
+                                <pathelement location="${dist}/jar/cdk-io.jar" />
+                                <pathelement location="${dist}/jar/cdk-render.jar" />
+                                <pathelement location="${dist}/jar/cdk-render-with-java3d.jar" />
                                 <pathelement path="${java.class.path}" />
                                 <pathelement location="." />
                                 <fileset dir="${lib}">
