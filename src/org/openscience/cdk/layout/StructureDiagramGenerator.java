@@ -31,6 +31,7 @@ package org.openscience.cdk.layout;
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.ringsearch.*;
+import org.openscience.cdk.exception.*;
 import org.openscience.cdk.geometry.*;
 import org.openscience.cdk.tools.*;
 import javax.vecmath.*;
@@ -71,7 +72,8 @@ public class StructureDiagramGenerator {
 	RingPlacer ringPlacer = new RingPlacer();
 	AtomPlacer atomPlacer = new AtomPlacer();	
 	Vector ringSystems = null;
-
+	static final String disconnectedMessage = "Molecule not connected. Use ConnectivityChecker.partitionIntoMolecules() and do the layout for every single component."; 
+	
 	/**
 	 * The empty constructor.
 	 */
@@ -200,10 +202,15 @@ public class StructureDiagramGenerator {
         /* if molecule contains only one Atom, don't fail, simply
            set coordinates to simplest: 0,0. See bug #780545 */
 	   logger.debug("Entry point of generatorCoordinates()");
-        if (molecule.getAtomCount() == 1) {
-            molecule.getAtomAt(0).setPoint2D(new Point2d(0,0));
-            return;
-        }
+		if (molecule.getAtomCount() == 1) {
+		    molecule.getAtomAt(0).setPoint2D(new Point2d(0,0));
+		    return;
+		}
+		ConnectivityChecker conCheck = new ConnectivityChecker();
+		if (!conCheck.isConnected(molecule))
+		{
+			throw new CDKException(disconnectedMessage);	
+		}
         
 		/* compute the minimum number of rings as 
 		   given by Frerejacque, Bull. Soc. Chim. Fr., 5, 1008 (1939) */
