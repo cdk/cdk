@@ -842,6 +842,15 @@ public class Renderer2D implements MouseMotionListener   {
 	public void paintRingBond(Bond bond, Ring ring, Color bondColor, Graphics graphics)
 	{
         if (bond.getOrder() == 1.0) {
+       // Added by rstefani (in fact, code copied from paintBond)
+          if (bond.getStereo() != CDKConstants.STEREO_BOND_NONE && bond.getStereo() != CDKConstants.STEREO_BOND_UNDEFINED) {
+         // Draw stero information if available
+           if (bond.getStereo() >= CDKConstants.STEREO_BOND_UP) {
+             paintWedgeBond(bond, bondColor, graphics);
+           } else {
+             paintDashedWedgeBond(bond, bondColor, graphics);
+             }
+          } else // end code by rstefani
             paintSingleBond(bond, bondColor, graphics);
         } else if (bond.getOrder() == 2.0) {
             paintSingleBond(bond, bondColor, graphics);
