@@ -130,7 +130,7 @@ public class ProtonTotalPartialChargeDescriptor implements Descriptor {
 				protonPartialCharge.add( neighboors[i].getCharge() );				counter++;
 			}
 		}
-		return new DescriptorValue(getSpecification(), getParameters(), protonPartialCharge);
+		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), protonPartialCharge);
 	}
 
 

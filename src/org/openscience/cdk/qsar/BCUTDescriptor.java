@@ -306,7 +306,7 @@ public class BCUTDescriptor implements Descriptor {
             for (int i = 0; i < nlow; i++) retval.add( eval3[i] );
             for (int i = 0; i < nhigh; i++) retval.add( eval3[ eval3.length-i-1 ] );
         }
-        return new DescriptorValue(getSpecification(), getParameters(), retval);
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval);
     }
 }
 

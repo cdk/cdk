@@ -34,13 +34,16 @@ import org.openscience.cdk.qsar.result.DescriptorResult;
 public class DescriptorValue {
 
     private DescriptorSpecification specification;
+    private String[] parameterNames;
     private Object[] parameterSettings;
     private DescriptorResult value;
     
-    public DescriptorValue(DescriptorSpecification specification, 
+    public DescriptorValue(DescriptorSpecification specification,
+                           String[] parameterNames,
                            Object[] parameterSettings,
                            DescriptorResult value) {
         this.specification = specification;
+        this.parameterNames = parameterNames;
         this.parameterSettings = parameterSettings;
         this.value = value;
     }
@@ -51,6 +54,10 @@ public class DescriptorValue {
     
     public Object[] getParameters() {
         return this.parameterSettings;
+    };
+    
+    public String[] getParameterNames() {
+        return this.parameterNames;
     };
     
     public DescriptorResult getValue() {

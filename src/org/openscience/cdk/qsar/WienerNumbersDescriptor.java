@@ -117,7 +117,7 @@ public class WienerNumbersDescriptor implements Descriptor {
 
 		wienerNumbers.add(wienerPathNumber);
 		wienerNumbers.add(wienerPolarityNumber);
-		return new DescriptorValue(getSpecification(), getParameters(), wienerNumbers);
+		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), wienerNumbers);
 	}
 
 	/**

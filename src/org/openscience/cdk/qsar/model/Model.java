@@ -30,7 +30,6 @@ package org.openscience.cdk.qsar.model;
  * @author Rajarshi Guha
  * @cdk.module qsar
  */
-
 public interface Model {
    public void build() throws QSARModelException;
    public void predict() throws QSARModelException;

@@ -115,7 +115,7 @@ public class ConnectivityOrderZeroDescriptor implements Descriptor {
 		}
 		chiValuesCOZ.add(chi0);
 		chiValuesCOZ.add(chi0C);		
-		return new DescriptorValue(getSpecification(), getParameters(), chiValuesCOZ);
+		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), chiValuesCOZ);
 	}
 
 

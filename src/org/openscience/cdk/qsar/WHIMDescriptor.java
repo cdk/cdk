@@ -377,7 +377,7 @@ public class WHIMDescriptor implements Descriptor {
         retval.add( g );
         retval.add( d );
         
-        return new DescriptorValue(getSpecification(), getParameters(), retval);
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval);
     }
 
 

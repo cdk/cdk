@@ -146,7 +146,7 @@ public class IsProtonInAromaticSystemDescriptor implements Descriptor {
 		else {
 			isProtonInAromaticSystem = 0;
 		}
-		return new DescriptorValue(getSpecification(), getParameters(), new IntegerResult(isProtonInAromaticSystem));	
+		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(isProtonInAromaticSystem));	
 	}
 
 

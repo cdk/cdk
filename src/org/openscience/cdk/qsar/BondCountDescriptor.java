@@ -109,7 +109,7 @@ public class BondCountDescriptor implements Descriptor {
 				bondCount += 1;
 			}
 		}
-		return new DescriptorValue(getSpecification(), getParameters(), new IntegerResult(bondCount));
+		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(bondCount));
 	}
 
 

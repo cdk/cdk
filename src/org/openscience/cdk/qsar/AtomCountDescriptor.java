@@ -130,7 +130,7 @@ public class AtomCountDescriptor implements Descriptor {
 				}
 			}			
 		}
-		return new DescriptorValue(getSpecification(), getParameters(), new IntegerResult(atomCount));
+		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(atomCount));
 	}
 
 

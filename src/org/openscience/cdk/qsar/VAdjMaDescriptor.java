@@ -98,7 +98,7 @@ public class VAdjMaDescriptor implements Descriptor {
 		if (magnitude > 0) {
 			vadjMa += (Math.log(magnitude) / Math.log(2)) + 1;
 		}
-		return new DescriptorValue(getSpecification(), getParameters(), new DoubleResult(vadjMa));
+		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(vadjMa));
 	}
 
 

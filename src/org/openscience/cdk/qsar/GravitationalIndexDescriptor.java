@@ -250,7 +250,7 @@ public class GravitationalIndexDescriptor implements Descriptor {
         retval.add( Math.sqrt(allheavysum) );
         retval.add( Math.pow(allheavysum,1.0/3.0) );
 
-        return new DescriptorValue(getSpecification(), getParameters(), retval);
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval);
     }
 }
     

@@ -146,7 +146,7 @@ public class RotatableBondsCountDescriptor implements Descriptor {
 				}
 			}
 		}
-		return new DescriptorValue(getSpecification(), getParameters(), new IntegerResult(rotatableBondsCount));
+		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(rotatableBondsCount));
 	}
 
 

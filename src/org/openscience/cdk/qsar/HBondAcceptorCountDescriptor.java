@@ -159,7 +159,7 @@ public class HBondAcceptorCountDescriptor implements Descriptor {
 				}
 			}
 		}
-		return new DescriptorValue(getSpecification(), getParameters(), new IntegerResult(hBondacceptors));
+		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(hBondacceptors));
 	}
 
 

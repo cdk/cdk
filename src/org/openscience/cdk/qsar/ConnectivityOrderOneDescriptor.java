@@ -131,7 +131,7 @@ public class ConnectivityOrderOneDescriptor implements Descriptor {
 		}
 		chiValuesCOO.add(chi1);
 		chiValuesCOO.add(chi1C);		
-		return new DescriptorValue(getSpecification(), getParameters(), chiValuesCOO);
+		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), chiValuesCOO);
 	}
 
 

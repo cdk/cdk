@@ -162,7 +162,7 @@ public class ValenceConnectivityOrderZeroDescriptor implements Descriptor {
                 }
                 chiValuesVCOZ.add(chi0v);
                 chiValuesVCOZ.add(chi0vC);
-                return new DescriptorValue(getSpecification(), getParameters(), chiValuesVCOZ);
+                return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), chiValuesVCOZ);
         }
 
 

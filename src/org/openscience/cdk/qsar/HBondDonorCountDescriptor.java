@@ -151,7 +151,7 @@ public class HBondDonorCountDescriptor implements Descriptor {
 				hBondDonors += 0;
 			}
 		}
-		return new DescriptorValue(getSpecification(), getParameters(), new IntegerResult(hBondDonors));
+		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(hBondDonors));
 	}
 
 

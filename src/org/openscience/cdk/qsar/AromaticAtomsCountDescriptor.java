@@ -120,7 +120,7 @@ public class AromaticAtomsCountDescriptor implements Descriptor {
 				aromaticAtomsCount += 1;
 			}
 		}
-		return new DescriptorValue(getSpecification(), getParameters(), new IntegerResult(aromaticAtomsCount));
+		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(aromaticAtomsCount));
 	}
 
 

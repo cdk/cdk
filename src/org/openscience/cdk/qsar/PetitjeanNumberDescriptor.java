@@ -136,7 +136,7 @@ public class PetitjeanNumberDescriptor implements Descriptor {
 		// System.out.println("diameter: " +diameter);
 		
 		petitjeanNumber = (diameter - radius)/diameter;
-		return new DescriptorValue(getSpecification(), getParameters(), new DoubleResult(petitjeanNumber));
+		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(petitjeanNumber));
 	}
 
 	/**

@@ -183,7 +183,7 @@ public class ValenceConnectivityOrderOneDescriptor implements Descriptor {
 		}
 		chiValuesVCOO.add(chi1v);
 		chiValuesVCOO.add(chi1vC);		
-		return new DescriptorValue(getSpecification(), getParameters(), chiValuesVCOO);
+		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), chiValuesVCOO);
 	}
 
 

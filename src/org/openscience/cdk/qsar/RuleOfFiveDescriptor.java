@@ -140,7 +140,7 @@ public class RuleOfFiveDescriptor implements Descriptor {
 		if(mwvalue > 500.0) { lipinskifailures += 1; }
 		if(rotatablebonds > 10.0) { lipinskifailures += 1; }
 		
-		return new DescriptorValue(getSpecification(), getParameters(), new IntegerResult(lipinskifailures));
+		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(lipinskifailures));
 	}
 
 

@@ -566,7 +566,7 @@ public class RDFProtonDescriptor implements Descriptor {
 			}
 			else rdfProtonCalculatedValues.add(0);
 		}
-		return new DescriptorValue(getSpecification(), getParameters(), rdfProtonCalculatedValues);
+		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), rdfProtonCalculatedValues);
 	}
 
 

@@ -142,7 +142,7 @@ public class IsProtonInConjugatedPiSystemDescriptor implements Descriptor {
 					isProtonInPiSystem = false;
 				}
 			}
-			return new DescriptorValue(getSpecification(), getParameters(), new BooleanResult(isProtonInPiSystem));
+			return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new BooleanResult(isProtonInPiSystem));
 	}
 
 

@@ -128,7 +128,7 @@ public class BondsToAtomDescriptor implements Descriptor {
 		org._3pq.jgrapht.Edge edg = null;
 		mylist = org.openscience.cdk.graph.BFSShortestPath.findPathBetween(mygraph,startVertex,endVertex);
 		bondsToAtom = mylist.size();
-		return new DescriptorValue(getSpecification(), getParameters(), new IntegerResult(bondsToAtom));
+		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(bondsToAtom));
 
 	}
 

@@ -118,7 +118,7 @@ public class AromaticBondsCountDescriptor implements Descriptor {
 				aromaticBondsCount += 1;
 			}
 		}
-		return new DescriptorValue(getSpecification(), getParameters(), new IntegerResult(aromaticBondsCount));
+		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(aromaticBondsCount));
 	}
 
 

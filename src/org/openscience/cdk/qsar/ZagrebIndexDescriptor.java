@@ -101,7 +101,7 @@ public class ZagrebIndexDescriptor implements Descriptor {
 			}
 			zagreb += (atomDegree * atomDegree);
 		}
-		return new DescriptorValue(getSpecification(), getParameters(), new DoubleResult(zagreb));
+		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(zagreb));
 	}
 
 

@@ -672,7 +672,7 @@ public class XLogPDescriptor implements Descriptor {
 			xlogP -= 0.268;
 		}
 
-		return new DescriptorValue(getSpecification(), getParameters(), new DoubleResult(xlogP));
+		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(xlogP));
 	}
 
 

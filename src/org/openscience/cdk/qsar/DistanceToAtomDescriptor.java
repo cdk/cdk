@@ -119,7 +119,7 @@ public class DistanceToAtomDescriptor implements Descriptor {
 		Atom target = container.getAtomAt(targetPosition);
 		Atom focus = container.getAtomAt(focusPosition);
 		distanceToAtom = calculateDistanceBetweenTwoAtoms(target, focus);
-		return new DescriptorValue(getSpecification(), getParameters(), new DoubleResult(distanceToAtom));
+		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(distanceToAtom));
 
 	}
 

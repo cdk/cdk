@@ -201,7 +201,7 @@ public class KappaShapeIndicesDescriptor implements Descriptor {
 		kierValues.add(kier1);
 		kierValues.add(kier2);
 		kierValues.add(kier3);		
-		return new DescriptorValue(getSpecification(), getParameters(), kierValues);
+		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), kierValues);
 	}
 
 

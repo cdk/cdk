@@ -195,7 +195,7 @@ public class MomentOfInertiaDescriptor implements Descriptor {
         else pri = Math.sqrt( eval[0] * ccf / mfa.getMass() );
         retval.add( Math.sqrt(Math.PI * 2 * pri * ccf / mfa.getMass()) );
                 
-        return new DescriptorValue(getSpecification(), getParameters(), retval);
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval);
     }
 }
     

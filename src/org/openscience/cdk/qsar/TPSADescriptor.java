@@ -284,7 +284,7 @@ public class TPSADescriptor implements Descriptor {
 			}
 		}
 		profiles.clear();
-		return new DescriptorValue(getSpecification(), getParameters(), new DoubleResult(tpsa));
+		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(tpsa));
 	}
 
 	/**

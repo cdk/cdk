@@ -130,7 +130,7 @@ public class WeightDescriptor implements Descriptor {
 				}
 			}
 		}
-		return new DescriptorValue(getSpecification(), getParameters(), new DoubleResult(weight));
+		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(weight));
 	}
 
 
