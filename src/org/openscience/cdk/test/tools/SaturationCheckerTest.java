@@ -146,6 +146,63 @@ public class SaturationCheckerTest extends TestCase
 		assertTrue(satcheck.isSaturated(h4, m));
 	}
 
+    /**
+     * Tests wether the saturation checker considers negative
+     * charges.
+     */
+	public void testIsSaturated_NegativelyChargedOxygen() {
+		// test methane with explicit hydrogen
+		Molecule m = new Molecule();
+		Atom c = new Atom("C");
+		Atom h1 = new Atom("H");
+		Atom h2 = new Atom("H");
+		Atom h3 = new Atom("H");
+		Atom o = new Atom("O");
+        o.setFormalCharge(-1);
+		m.addAtom(c);
+		m.addAtom(h1);
+		m.addAtom(h2);
+		m.addAtom(h3);
+		m.addAtom(o);
+		m.addBond(new Bond(c, h1));
+		m.addBond(new Bond(c, h2));
+		m.addBond(new Bond(c, h3));
+		m.addBond(new Bond(c, o));
+		assertTrue(satcheck.isSaturated(c, m));
+		assertTrue(satcheck.isSaturated(h1, m));
+		assertTrue(satcheck.isSaturated(h2, m));
+		assertTrue(satcheck.isSaturated(h3, m));
+		assertTrue(satcheck.isSaturated(o, m));
+	}
+    
+    /**
+     * Tests wether the saturation checker considers positive
+     * charges.
+     */
+	public void testIsSaturated_PositivelyChargedNitrogen() {
+		// test methane with explicit hydrogen
+		Molecule m = new Molecule();
+		Atom n = new Atom("N");
+		Atom h1 = new Atom("H");
+		Atom h2 = new Atom("H");
+		Atom h3 = new Atom("H");
+		Atom h4 = new Atom("H");
+        n.setFormalCharge(+1);
+		m.addAtom(n);
+		m.addAtom(h1);
+		m.addAtom(h2);
+		m.addAtom(h3);
+		m.addAtom(h4);
+		m.addBond(new Bond(n, h1));
+		m.addBond(new Bond(n, h2));
+		m.addBond(new Bond(n, h3));
+		m.addBond(new Bond(n, h4));
+		assertTrue(satcheck.isSaturated(n, m));
+		assertTrue(satcheck.isSaturated(h1, m));
+		assertTrue(satcheck.isSaturated(h2, m));
+		assertTrue(satcheck.isSaturated(h3, m));
+		assertTrue(satcheck.isSaturated(h4, m));
+	}
 
 	/**
 	 *  A unit test for JUnit
