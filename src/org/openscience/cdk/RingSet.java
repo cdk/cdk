@@ -25,6 +25,7 @@
 package org.openscience.cdk;
 
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.Vector;
 
 import javax.vecmath.Point2d;
@@ -383,5 +384,26 @@ public class RingSet extends Vector implements java.io.Serializable, Cloneable
 			}
 			return 0;
 		}
+	}
+
+	/**
+	 * Clones this <code>RingSet</code> including the Rings.
+	 *
+	 * @return  The cloned object
+	 */
+	public Object clone() {
+		RingSet clone = (RingSet)super.clone();
+        // clone the rings
+        clone.removeAllElements();
+        Enumeration rings = clone.elements();
+        while (rings.hasMoreElements()) {
+            Object possibleRing = rings.nextElement();
+            if (possibleRing instanceof ChemObject) {
+                clone.addElement(((ChemObject)possibleRing).clone());
+            } else {
+                clone.addElement(possibleRing);
+            }
+        }
+		return clone;
 	}
 }

@@ -62,6 +62,24 @@ public class Mapping extends ChemObject implements java.io.Serializable, Cloneab
         return relation;
     }
 
+	/**
+	 * Clones this <code>ChemObject</code> and the mapped <code>ChemObject</code>s.
+	 *
+	 * @return  The cloned object
+	 */
+	public Object clone() {
+		Mapping clone = (Mapping)super.clone();
+        // clone the related ChemObject's
+        if (relation != null) {
+		    ((Mapping)clone).relation = new ChemObject[relation.length];
+            for (int f = 0; f < relation.length; f++) {
+                if (relation[f] != null) {
+                    ((Mapping)clone).relation[f] = (ChemObject)relation[f].clone();
+                }
+            }
+        }
+		return clone;
+	}
 }
 
 

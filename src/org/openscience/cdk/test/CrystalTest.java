@@ -105,4 +105,21 @@ public class CrystalTest extends TestCase {
             assertTrue(description.charAt(i) != '\r');
         }
     }
+
+    public void testClone() {
+        Crystal crystal = new Crystal();
+        Object clone = crystal.clone();
+        assertTrue(clone instanceof Crystal);
+    }
+
+    public void testClone_Axes() {
+        Crystal crystal1 = new Crystal();
+        Vector3d axes = new Vector3d(1.0, 2.0, 3.0);
+        crystal1.setA(axes);
+        Crystal crystal2 = (Crystal)crystal1.clone();
+
+        // test cloning of axes
+        crystal1.getA().x = 5.0;
+        assertEquals(1.0, crystal2.getA().x, 0.001);
+    }
 }

@@ -139,4 +139,21 @@ public class SetOfReactions extends ChemObject implements java.io.Serializable, 
         buffer.append(")");
         return buffer.toString();
     }
+
+	/**
+	 * Clones this <code>ChemObject</code>. It clones the identifier, flags, properties 
+     * and pointer vectors. The ChemObjectListeners are not cloned, and neither is the
+     * content of the pointer vectors.
+	 *
+	 * @return  The cloned object
+	 */
+	public Object clone() {
+		SetOfReactions clone = (SetOfReactions)super.clone();
+        // clone the maps
+		clone.reactions = new Reaction[reactions.length];
+		for (int f = 0; f < reactions.length; f++) {
+			clone.reactions[f] = reactions[f];
+		}
+		return clone;
+	}
 }

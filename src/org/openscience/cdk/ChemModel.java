@@ -189,5 +189,19 @@ public class ChemModel extends ChemObject implements java.io.Serializable, Clone
         return buffer.toString();
     }
 
+	/**
+	 * Clones this <code>ChemModel</code> and its content.
+	 *
+	 * @return  The cloned object
+	 */
+	public Object clone() {
+		ChemModel clone = (ChemModel)super.clone();
+        // clone the content
+        clone.setOfMolecules = (SetOfMolecules)setOfMolecules.clone();
+        clone.setOfReactions = (SetOfReactions)setOfReactions.clone();
+        clone.crystal = (Crystal)crystal.clone();
+        clone.ringSet = (RingSet)ringSet.clone();
+		return clone;
+	}
 }
 

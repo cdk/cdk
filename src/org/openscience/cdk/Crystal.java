@@ -214,7 +214,7 @@ public class Crystal extends AtomContainer implements java.io.Serializable, Clon
         } catch (Exception e) {
             e.printStackTrace(System.err);
         }
-        clone.setSpaceGroup(this.getSpaceGroup());
+        // clone the axes
         clone.setA(new Vector3d(this.aAxis));
         clone.setB(new Vector3d(this.bAxis));
         clone.setC(new Vector3d(this.cAxis));
