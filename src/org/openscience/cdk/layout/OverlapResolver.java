@@ -41,8 +41,8 @@ import java.io.*;
 import java.util.*;
 
 /**
- *  Helper class for Structure Diagram Generation. Resolves overlaps
- *  after the actual SDG was done
+ *  Helper class for Structure Diagram Generation. Resolves atom or bond
+ *  overlaps after the actual SDG was done
  *
  *@author     steinbeck
  *@created    September 4, 2003
@@ -52,23 +52,59 @@ import java.util.*;
 public class OverlapResolver
 {
 
-	private static org.openscience.cdk.tools.LoggingTool logger = new org.openscience.cdk.tools.LoggingTool("OverlapResolver");;
+	private  org.openscience.cdk.tools.LoggingTool logger = new org.openscience.cdk.tools.LoggingTool("OverlapResolver");
 
-	static double bondLength = 1.5;
-	
-	public static void resolveOverlap(AtomContainer ac, RingSet sssr)
+	 double bondLength = 1.5;
+
+
+	/**
+	 *  main method to be called to resolve overlap situations
+	 *
+	 *@param  ac    The atomcontainer in which the atom or bond overlap exists
+	 *@param  sssr  A ring set for this atom container if one exists, otherwhise
+	 *      null
+	 */
+	public void resolveOverlap(AtomContainer ac, RingSet sssr)
 	{
+		Vector overlappingAtoms = new Vector();
+		Vector overlappingBonds = new Vector();
 		logger.debug("Start of resolveOverlap");
-		double overlapScore = getOverlapScore(ac);
+		double overlapScore = getOverlapScore(ac, overlappingAtoms, overlappingBonds);
 		logger.debug("overlapScore = " + overlapScore);
 		logger.debug("End of resolveOverlap");
 	}
 
-	public static double getOverlapScore(AtomContainer ac)
+
+	/**
+	 *  Makes a small displacement to some atoms or rings in the given
+	 *  atomcontainer
+	 *
+	 *@param  ac            The AtomContainer to work on
+	 *@param  overlapatoms  A vector of overlapping atoms
+	 *@param  overlapbonds  A vector of intersecting bonds
+	 */
+	public  void displace(AtomContainer ac, Vector overlappingAtoms, Vector overlappingBonds)
 	{
-		Atom atom1 = null, atom2 = null;
-		Point2d p1 = null, p2 = null;
-		double distance = 0, overlapScore = 0;
+
+	}
+
+
+	/**
+	 *  Calculates a score based on the overlap of atoms and intersection of bonds.
+	 *  The overlap is calculated by summing up the distances between all pairs of
+	 *  atoms, if they are less than half the standard bondlength apart.
+	 *
+	 *@param  ac  The Atomcontainer to work on
+	 *@return     The overlapScore value
+	 */
+	public  double getOverlapScore(AtomContainer ac, Vector overlappingAtoms, Vector overlappingBonds)
+	{
+		Atom atom1 = null;
+		Atom atom2 = null;
+		Point2d p1 = null;
+		Point2d p2 = null;
+		double distance = 0;
+		double overlapScore = 0;
 		double overlapCutoff = bondLength / 2;
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
@@ -81,11 +117,35 @@ public class OverlapResolver
 				distance = p1.distance(p2);
 				if (distance < overlapCutoff)
 				{
-					overlapScore += overlapCutoff;	
+					overlapScore += overlapCutoff;
+					overlappingAtoms.addElement(new OverlapPair(atom1, atom2));
 				}
 			}
 		}
 		return overlapScore;
+	}
+
+	public  boolean doIntersect(Bond bond1, Bond bond2)
+	{
+		return false;
+	}
+
+	/**
+	 *  A little helper class to store pairs of overlapping atoms.
+	 *
+	 *@author     steinbeck
+	 *@created    October 1, 2003
+	 */
+	public class OverlapPair
+	{
+		Atom atom1 = null;
+		Atom atom2 = null;
+		
+		public OverlapPair(Atom a1, Atom a2)
+		{
+			atom1 = a1;
+			atom2 = a2;
+		}
 	}
 }
 

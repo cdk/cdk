@@ -103,7 +103,7 @@ public class OverlapResolverTest extends TestCase
 			AtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModels[0]);
 			//MoleculeViewer2D.display(new Molecule(atomContainer), false);
 			//OverlapResolver.resolveOverlap(atomContainer, null);
-			double score = OverlapResolver.getOverlapScore(atomContainer);
+			double score = new OverlapResolver().getOverlapScore(atomContainer, new Vector(), new Vector());
 			assertTrue(score > 0);
 		} catch (Exception exc)
 		{
@@ -130,7 +130,7 @@ public class OverlapResolverTest extends TestCase
 			ChemModel[] chemModels = chemSequence[0].getChemModels();
 			AtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModels[0]);
 			//MoleculeViewer2D.display(new Molecule(atomContainer), false);
-			double score = OverlapResolver.getOverlapScore(atomContainer);
+			double score = new OverlapResolver().getOverlapScore(atomContainer, new Vector(), new Vector());
 			assertTrue(score == 0.0);
 		} catch (Exception exc)
 		{
