@@ -142,31 +142,6 @@ public class RingSet extends Vector implements java.io.Serializable, Cloneable
 		return rings;
 	}
 
-
-
-	/**
-	 * We define the heaviest ring as the one with the highest number of double bonds.
-	 * Needed for example for the placement of in-ring double bonds.
-	 *
-	 * @param   bond  A bond which must be contained by the heaviest ring 
-	 * @return  The ring with the higest number of double bonds connected to a given bond   
-	 */
-	public Ring getHeaviestRing(Bond bond)
-	{
-		Vector rings = getRings(bond);
-		Ring ring = null;
-		int maxOrderSum = 0;
-		for (int i = 0; i < rings.size(); i++)
-		{
-			if (maxOrderSum < ((Ring)rings.elementAt(i)).getOrderSum()) 
-			{
-				ring = (Ring)rings.elementAt(i);
-				maxOrderSum = ring.getOrderSum();
-			} 
-		}
-		return ring;
-	}
-
 	/**
 	 * Returns all the rings in the RingSet that share
 	 * one or more atoms with a given ring.

@@ -63,6 +63,7 @@ import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 import org.openscience.cdk.validate.ProblemMarker;
 
 /**
@@ -834,7 +835,7 @@ public class Renderer2D implements MouseMotionListener   {
                        bondColor, graphics);
                 }
             }
-            ring = ringSet.getHeaviestRing(currentBond);
+            ring = RingSetManipulator.getHeaviestRing(ringSet, currentBond);
             if (ring != null) {
                 logger.debug("Found ring to draw");
                 if (ringIsAromatic(ring) && r2dm.getShowAromaticity()) {
