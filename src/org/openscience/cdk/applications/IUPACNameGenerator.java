@@ -52,6 +52,8 @@ public class IUPACNameGenerator {
                 String opt = args[i];
                 if ("--dutch".equalsIgnoreCase(opt)) {
                     l = new Locale("nl", "NL");
+                } else if ("--german".equalsIgnoreCase(opt)) {
+                    l = new Locale("de", "DE");
                 } else {
                     System.err.println("Unknown option: " + opt);
                     System.exit(1);
