@@ -442,7 +442,7 @@ public class SmilesGeneratorTest extends TestCase
 			System.err.println("SMILES 1: " + smiles1);
 		}
 		assertNotNull(smiles1);
-    assertTrue(smiles1.equals("[H]C1([H])(C([H])([H])C([H])([H])[C@]2([H])(C([H])([H])C([H])([H])C([H])([H])C([H])([H])[C@]2([H])(C1([H])([H]))))"));
+    assertTrue(smiles1.equals("[H]C1([H])(C([H])([H])C([H])([H])[C@]2(C([H])([H])C([H])([H])C([H])([H])C([H])([H])[C@]2(C1([H])([H]))([H]))([H]))"));
     mol1 = (Molecule) new MFAnalyser(mol1).removeHydrogens();
 		try
 		{
@@ -798,6 +798,33 @@ public class SmilesGeneratorTest extends TestCase
     }
 
     
+    /**
+     * Test some sugars
+     */
+    public void testSugarSMILES() {
+      try{
+        String filename = "data/mdl/D-mannose.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLReader reader = new MDLReader(new InputStreamReader(ins));
+				Molecule mol1 = (Molecule) reader.read(new Molecule());
+        new HydrogenAdder().addExplicitHydrogensToSatisfyValency(mol1);
+        new HydrogenPlacer().placeHydrogens2D(mol1, 1.0);
+        filename = "data/mdl/D+-glucose.mol";
+        ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        reader = new MDLReader(new InputStreamReader(ins));
+				Molecule mol2 = (Molecule) reader.read(new Molecule());
+        new HydrogenAdder().addExplicitHydrogensToSatisfyValency(mol2);
+        new HydrogenPlacer().placeHydrogens2D(mol2, 1.0);
+        SmilesGenerator sg=new SmilesGenerator();
+        String smiles1=sg.createChiralSMILES(mol1,new boolean[20]);
+        String smiles2=sg.createChiralSMILES(mol2,new boolean[20]);
+        assertFalse(smiles1.equals(smiles2));
+      } catch (Exception exc) {
+        System.out.println(exc);
+      }
+    }
+
+
     /**
 	 *  Description of the Method
 	 *
