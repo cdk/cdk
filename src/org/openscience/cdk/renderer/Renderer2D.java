@@ -82,6 +82,7 @@ public class Renderer2D   {
             isotopeFactory = IsotopeFactory.getInstance();
         } catch (Exception exception) {
             logger.error("Error while instantiating IsotopeFactory");
+            logger.warn("Will not be able to display undefault isotopes");
             logger.debug(exception);
         }
 	}
@@ -333,9 +334,11 @@ public class Renderer2D   {
                 }
             } catch (Exception exception) {
             };
+        } else if (r2dm.drawNumbers()) {
+            drawSymbol = true;
         }
         if (drawSymbol) {
-            paintAtomSymbol(atom, atomBackColor, graphics, alignment, container.getAtomNumber(atom));
+            paintAtomSymbol(atom, atomBackColor, graphics, alignment, container.getAtomNumber(atom) + 1);
         }
     }
 
@@ -449,9 +452,9 @@ public class Renderer2D   {
         int isotopeW = 0; // unless next condition, this is the default
         int isotopeH = 0;
         String isotopeString = "";
-        if (atomicMassNumber != 0) {
-            Isotope majorIsotope = isotopeFactory.getMajorIsotope(atomSymbol);
-            if (atomicMassNumber != majorIsotope.getAtomicMass()) {
+        if (atomicMassNumber != 0 && isotopeFactory != null) {
+            Isotope majorIsotope = isotopeFactory.getMajorIsotope(atom.getSymbol());
+            if (majorIsotope != null && atomicMassNumber != majorIsotope.getAtomicMass()) {
                 graphics.setFont(subscriptFont);
                 fm = graphics.getFontMetrics();
                 isotopeString = new Integer(atomicMassNumber).toString();
