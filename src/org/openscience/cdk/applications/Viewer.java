@@ -88,8 +88,6 @@ public class Viewer {
                     frame.getContentPane().setLayout(new BorderLayout());
                     org.openscience.jmol.PublicJmol jmol = org.openscience.jmol.PublicJmol.getJmol(frame);
                     jmol.showChemFrame(Convertor.convert(m));
-                    // frame.setSize(400, 400);
-                    // frame.show();
 
                     frame.getContentPane().add(jmol, BorderLayout.CENTER);
                     logger.debug(".. done");
@@ -135,10 +133,8 @@ public class Viewer {
             System.exit(1);
         }
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        // if (!useJmol) {
-            frame.setSize(500,500);
-            frame.setVisible(true);
-        // }
+        frame.setSize(500,500);
+        frame.setVisible(true);
         frame.addWindowListener(new AppCloser());
     }
 

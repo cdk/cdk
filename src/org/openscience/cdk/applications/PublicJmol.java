@@ -96,29 +96,21 @@ import javax.swing.JOptionPane;
  */
 public class PublicJmol extends JPanel {
 
-  private JScrollPane scroller;
-  private JViewport port;
+  public static final String moleculeProperty = "molecule";
+
   static DisplayPanel display;
   static AtomTypeTable atomTypeTable;
-  protected static JFrame frame;
-  private ChemFile chemFile;
-
-  /**
-   * Button group for toggle buttons in the toolbar.
-   */
-  ButtonGroup toolbarButtonGroup = new ButtonGroup();
-
   static File UserPropsFile;
   static File UserAtypeFile;
 
   Splash splash;
 
-  private static JFrame consoleframe;
-
+  protected static JFrame frame;
   protected DisplaySettings settings = new DisplaySettings();
 
-  /** The name of the currently open file **/
-  public String currentFileName = "";
+  private JScrollPane scroller;
+  private JViewport port;
+  private ChemFile chemFile;
 
   static {
     if (System.getProperty("user.home") == null) {
@@ -126,8 +118,7 @@ public class PublicJmol extends JPanel {
           "Error starting Jmol: the property 'user.home' is not defined.");
       System.exit(1);
     }
-    File ujmoldir = new File(new File(System.getProperty("user.home")),
-                      ".jmol");
+    File ujmoldir = new File(new File(System.getProperty("user.home")), ".jmol");
     ujmoldir.mkdirs();
     UserPropsFile = new File(ujmoldir, "properties");
     UserAtypeFile = new File(ujmoldir, "AtomTypes");
@@ -139,10 +130,9 @@ public class PublicJmol extends JPanel {
     this.splash = splash;
     splash.showStatus("Initializing Swing...");
     try {
-      UIManager
-          .setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+        UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
     } catch (Exception exc) {
-      System.err.println("Error loading L&F: " + exc);
+        System.err.println("Error loading L&F: " + exc);
     }
 
     setBorder(BorderFactory.createEtchedBorder());
@@ -158,7 +148,6 @@ public class PublicJmol extends JPanel {
       Boolean bs = new Boolean(vpFlag);
       port.setBackingStoreEnabled(bs.booleanValue());
     } catch (MissingResourceException mre) {
-
       // just use the viewport default
     }
 
@@ -168,14 +157,12 @@ public class PublicJmol extends JPanel {
 
     JPanel panel = new JPanel();
     panel.setLayout(new BorderLayout());
-    // panel.add("North", createToolbar());
 
     JPanel ip = new JPanel();
     ip.setLayout(new BorderLayout());
     ip.add("Center", scroller);
     panel.add("Center", ip);
     add("Center", panel);
-    // add("South", status);
 
     splash.showStatus("Starting display...");
     display.start();
@@ -195,12 +182,14 @@ public class PublicJmol extends JPanel {
     PublicJmol window = new PublicJmol(splash);
     frame.getContentPane().add("Center", window);
     frame.pack();
-    frame.setSize(400, 400);
+    frame.setSize(500, 500);
     frame.show();
     return window;
   }
 
-  // transfer molecule to Jmol as native object
+  /**
+   * Transfer molecule to Jmol as native object
+   */
   public void showChemFrame(ChemFrame cf) {
     ChemFile file = new ChemFile();
     file.addFrame(cf);
@@ -246,67 +235,6 @@ public class PublicJmol extends JPanel {
       }
     }
     return null;
-  }
-
-  private class ActionChangedListener implements PropertyChangeListener {
-
-    AbstractButton button;
-
-    ActionChangedListener(AbstractButton button) {
-      super();
-      this.button = button;
-    }
-
-    public void propertyChange(PropertyChangeEvent e) {
-
-      String propertyName = e.getPropertyName();
-      if (e.getPropertyName().equals(Action.NAME)) {
-        String text = (String) e.getNewValue();
-        if (button.getText() != null) {
-          button.setText(text);
-        }
-      } else if (propertyName.equals("enabled")) {
-        Boolean enabledState = (Boolean) e.getNewValue();
-        button.setEnabled(enabledState.booleanValue());
-      }
-    }
-  }
-
-  /**
-   * Returns a new File referenced by the property 'user.dir', or null
-   * if the property is not defined.
-   *
-   * @return  a File to the user directory
-   */
-  static File getUserDirectory() {
-    if (System.getProperty("user.dir") == null) {
-      return null;
-    }
-    return new File(System.getProperty("user.dir"));
-  }
-
-  public static final String moleculeProperty = "molecule";
-
-  private abstract class MoleculeDependentAction extends AbstractAction
-      implements PropertyChangeListener {
-
-    public MoleculeDependentAction(String name) {
-      super(name);
-      setEnabled(false);
-    }
-
-    public void propertyChange(PropertyChangeEvent event) {
-
-      if (event.getSource() instanceof PublicJmol) {
-        PublicJmol jmol = (PublicJmol) event.getSource();
-        if (jmol.hasMolecule()) {
-          setEnabled(true);
-        } else {
-          setEnabled(false);
-        }
-      }
-    }
-
   }
 
 }
