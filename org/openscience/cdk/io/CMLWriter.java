@@ -76,7 +76,7 @@ public class CMLWriter implements ChemObjectWriter, CDKConstants {
      * @param out Writer to redirect the output to.
      */
     public CMLWriter(Writer out) {        
-	this(out, false);
+		this(out, false);
     }
 
     /**
@@ -88,9 +88,9 @@ public class CMLWriter implements ChemObjectWriter, CDKConstants {
      * @param fragment  Boolean denoting that the content is not
      */
     public CMLWriter(Writer w, boolean fragment) {        
-	output = w;
-	this.fragment = fragment;
-	this.done = false;
+		output = w;
+		this.fragment = fragment;
+		this.done = false;
     }
 
     /**
@@ -106,129 +106,128 @@ public class CMLWriter implements ChemObjectWriter, CDKConstants {
      * @param object A Molecule of SetOfMolecules object
      */
     public void write(ChemObject object) throws UnsupportedChemObjectException {
-	if (!done) {
-	    if (!fragment) {
-		write("<?xml version=\"1.0\"?>\n");
-	    }
-	    if (object instanceof SetOfMolecules) {
-		if (((SetOfMolecules)object).getMoleculeCount() > 1) 
-		    write("<list>\n");
-		for (int i = 0; i < ((SetOfMolecules)object).getMoleculeCount(); i++) {
-		    write(((SetOfMolecules)object).getMolecule(i));
-		}
-		if (((SetOfMolecules)object).getMoleculeCount() > 1) 
-		    write("</list>\n");
-	    } else if (object instanceof Molecule) {
-		write((Molecule)object);
-	    } else {
-		throw new UnsupportedChemObjectException(
-							 "Only supported are ChemFile and Molecule.");
-	    }	
-	    if (!fragment) {	       
-		done = true;
-	    }
-	} else {};
+		if (!done) {
+		    if (!fragment) {
+			write("<?xml version=\"1.0\"?>\n");
+		    }
+		    if (object instanceof SetOfMolecules) {
+				if (((SetOfMolecules)object).getMoleculeCount() > 1) 
+				    write("<list>\n");
+				for (int i = 0; i < ((SetOfMolecules)object).getMoleculeCount(); i++) {
+				    write(((SetOfMolecules)object).getMolecule(i));
+				}
+				if (((SetOfMolecules)object).getMoleculeCount() > 1) 
+				    write("</list>\n");
+		    } else if (object instanceof Molecule) {
+				write((Molecule)object);
+		    } else {
+				throw new UnsupportedChemObjectException("Only supported are SetOfMolecules and Molecule.");
+		    }	
+		    if (!fragment) {	       
+				done = true;
+		    }
+		} else {};
     };
 
     // Private procedures
 
     private void write(SetOfMolecules som) {
-	if (som.getMoleculeCount() > 1) 
-	    write("<list>\n");
-	for (int i = 0; i < som.getMoleculeCount(); i++) {
-	    this.write(som.getMolecule(i));
-	}
-	if (som.getMoleculeCount() > 1) 
-	    write("</list>\n");
+		if (som.getMoleculeCount() > 1) 
+		    write("<list>\n");
+		for (int i = 0; i < som.getMoleculeCount(); i++) {
+		    this.write(som.getMolecule(i));
+		}
+		if (som.getMoleculeCount() > 1) 
+		    write("</list>\n");
     }
 
     private void write(Molecule mol) {
-	write("<molecule>\n");
-	write(mol.getAtoms());
-	write(mol.getBonds());
-	write("</molecule>\n");
+		write("<molecule>\n");
+		write(mol.getAtoms());
+		write(mol.getBonds());
+		write("</molecule>\n");
     }
 
     private void write(Atom atoms[]) {
-	write("<atomArray>\n");
-	for (int i = 0; i < atoms.length; i++) {
-	    write(atoms[i]);
-	}
-	write("</atomArray>\n");
+		write("<atomArray>\n");
+		for (int i = 0; i < atoms.length; i++) {
+		    write(atoms[i]);
+		}
+		write("</atomArray>\n");
     }
     
     private void write(Bond bonds[]) {
-	write("<bondArray>\n");
-	for (int i = 0; i < bonds.length; i++) {
-	    write(bonds[i]);
-	}
-	write("</bondArray>\n");
+		write("<bondArray>\n");
+		for (int i = 0; i < bonds.length; i++) {
+		    write(bonds[i]);
+		}
+		write("</bondArray>\n");
     }
 
     private void write(Atom atom) {
-	write("<atom id=\"a" + atom.hashCode() + "\">\n");
-	write("<string builtin=\"elementType\">");
-	write(atom.getElement().getSymbol());
-	write("</string>\n");
-	write(atom.getPoint2D());
-	write(atom.getPoint3D());
-	write("</atom>\n");
+		write("<atom id=\"a" + atom.hashCode() + "\">\n");
+		write("<string builtin=\"elementType\">");
+		write(atom.getElement().getSymbol());
+		write("</string>\n");
+		write(atom.getPoint2D());
+		write(atom.getPoint3D());
+		write("</atom>\n");
     }
 
     private void write(Bond bond) {
-	write("<bond id=\"b" + bond.hashCode() + "\">\n");
-	Atom atoms[] = bond.getAtoms();
-	for (int i = 0; i < atoms.length; i++) {
-	    write("<string builtin=\"atomRef\">a" +
-		  atoms[i].hashCode() + 
-		  "</string>\n");
-	}
-	write("<string builtin=\"order\">" +
-	      + bond.getOrder() +
-	      "</string>\n");
-	if (bond.getStereo() != STEREO_BOND_UNDEFINED) {
-	    write("<string builtin=\"stereo\" convention=\"MDLMol\">");
-	    if (bond.getStereo() == STEREO_BOND_UP) {
-		write("W");
-	    } else if (bond.getStereo() == STEREO_BOND_DOWN) {
-		write("H");
-	    }
-	    write("</string>\n");
-	}
-	write("</bond>\n");
+		write("<bond id=\"b" + bond.hashCode() + "\">\n");
+		Atom atoms[] = bond.getAtoms();
+		for (int i = 0; i < atoms.length; i++) {
+		    write("<string builtin=\"atomRef\">a" +
+			  atoms[i].hashCode() + 
+			  "</string>\n");
+		}
+		write("<string builtin=\"order\">" +
+		      + bond.getOrder() +
+		      "</string>\n");
+		if (bond.getStereo() != STEREO_BOND_UNDEFINED) {
+		    write("<string builtin=\"stereo\" convention=\"MDLMol\">");
+		    if (bond.getStereo() == STEREO_BOND_UP) {
+			write("W");
+		    } else if (bond.getStereo() == STEREO_BOND_DOWN) {
+			write("H");
+		    }
+		    write("</string>\n");
+		}
+		write("</bond>\n");
     }
 
     private void write(Point2d p) {
-	if (p != null) {
-	    write("<float builtin=\"x2\">");
-	    write(new Float(p.x).toString());
-	    write("</float>\n");
-	    write("<float builtin=\"y2\">");
-	    write(new Float(p.y).toString());
-	    write("</float>\n");
-	}
+		if (p != null) {
+		    write("<float builtin=\"x2\">");
+		    write(new Float(p.x).toString());
+		    write("</float>\n");
+		    write("<float builtin=\"y2\">");
+		    write(new Float(p.y).toString());
+		    write("</float>\n");
+		}
     }
 
     private void write(Point3d p) {
-	if (p != null) {
-	    write("<float builtin=\"x3\">");
-	    write(new Float(p.x).toString());
-	    write("</float>\n");
-	    write("<float builtin=\"y3\">");
-	    write(new Float(p.y).toString());
-	    write("</float>\n");
-	    write("<float builtin=\"z3\">");
-	    write(new Float(p.z).toString());
-	    write("</float>\n");
-	}
+		if (p != null) {
+		    write("<float builtin=\"x3\">");
+		    write(new Float(p.x).toString());
+		    write("</float>\n");
+		    write("<float builtin=\"y3\">");
+		    write(new Float(p.y).toString());
+		    write("</float>\n");
+		    write("<float builtin=\"z3\">");
+		    write(new Float(p.z).toString());
+		    write("</float>\n");
+		}
     }
 
     private void write(String s) {
-	try {
-	    output.write(s);
-	} catch (IOException e) {
-	    System.err.println("CMLWriter IOException while printing \"" + 
-                s + "\":\n" + e.toString());
-	}
+		try {
+		    output.write(s);
+		} catch (IOException e) {
+		    System.err.println("CMLWriter IOException while printing \"" + 
+	                s + "\":\n" + e.toString());
+		}
     }
 }

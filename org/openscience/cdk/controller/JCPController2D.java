@@ -178,15 +178,6 @@ public class JCPController2D
     	if (c2dm.getDrawMode() == c2dm.LASSO)
 	    {	
 			 r2dm.addLassoPoint(new Point(mouseX, mouseY));
-//		 	 r2dm.setSelectRect(new Polygon(xPoints, yPoints, number));
-//			 int startX = r2dm.getPointerVectorStart().x;
-//			 int startY = r2dm.getPointerVectorStart().y;
-//			 Vector xPointsVector = new Vector();
-//			 Vector yPointsVector = new Vector();
-//			 r2dm.setLassoLines()
-//			 int[] xPoints = {startX, startX, mouseX, mouseX};
-//			 int[] yPoints = {startY, mouseY, mouseY, startY};
-//			 r2dm.setSelectRect(new Polygon(xPoints, yPoints, 4));
 		 }
 	}
 	
@@ -458,22 +449,25 @@ public class JCPController2D
 	    *************************************************************************/
 		if (c2dm.getDrawMode() == c2dm.LASSO)
 		{
-			Vector lassoPoints = r2dm.getLassoPoints();
-			r2dm.addLassoPoint(new Point((Point)lassoPoints.elementAt(0)));
-			int number = lassoPoints.size();
-			int[] xPoints = new int[number];
-			int[] yPoints = new int[number];
-			Point currentPoint;
-			for (int i = 0; i < number; i++)
+			if (wasDragged)
 			{
-				currentPoint = (Point)lassoPoints.elementAt(i);
-				xPoints[i] = currentPoint.x;
-				yPoints[i] = currentPoint.y;
+				Vector lassoPoints = r2dm.getLassoPoints();
+				r2dm.addLassoPoint(new Point((Point)lassoPoints.elementAt(0)));
+				int number = lassoPoints.size();
+				int[] xPoints = new int[number];
+				int[] yPoints = new int[number];
+				Point currentPoint;
+				for (int i = 0; i < number; i++)
+				{
+					currentPoint = (Point)lassoPoints.elementAt(i);
+					xPoints[i] = currentPoint.x;
+					yPoints[i] = currentPoint.y;
+				}
+				Polygon polygon = new Polygon(xPoints, yPoints, number);
+				r2dm.setSelectedPart(getContainedAtoms(polygon));
+				r2dm.getLassoPoints().removeAllElements();
+				r2dm.fireChange();
 			}
-			Polygon polygon = new Polygon(xPoints, yPoints, number);
-			r2dm.setSelectedPart(getContainedAtoms(polygon));
-			r2dm.getLassoPoints().removeAllElements();
-			r2dm.fireChange();
 		}
 		wasDragged = false;
 	}

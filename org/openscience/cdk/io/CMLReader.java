@@ -83,26 +83,26 @@ public class CMLReader implements CDKConstants, ChemObjectReader {
     // private functions
 
     private ChemFile readChemFile() {
-	ChemFileCDO cdo = new ChemFileCDO();
-	handler = new CMLHandler((CDOInterface)cdo);
-	try {
-	    parser.setFeature("http://xml.org/sax/features/validation", true);
-	} catch (SAXException e) {
-	    System.err.println("Cannot activate validation."); 
-	    return cdo;
-	}
-	resolver = new org.openscience.cml.CMLResolver();
-	parser.setContentHandler(handler);
-	parser.setEntityResolver(resolver);
-	try {
-	    parser.parse(new InputSource(input));
-	} catch (IOException e) {
-	    System.out.println("CMLReader (IOException): " + e.toString());
-	} catch (SAXException e) {
-	    System.out.println("CMLReader (SAXException): " + e.toString());
-	    e.printStackTrace();
-	}
-	return cdo;
+		ChemFileCDO cdo = new ChemFileCDO();
+		handler = new CMLHandler((CDOInterface)cdo);
+		try {
+		    parser.setFeature("http://xml.org/sax/features/validation", true);
+		} catch (SAXException e) {
+		    System.err.println("Cannot activate validation."); 
+		    return cdo;
+		}
+		resolver = new org.openscience.cml.CMLResolver();
+		parser.setContentHandler(handler);
+		parser.setEntityResolver(resolver);
+		try {
+		    parser.parse(new InputSource(input));
+		} catch (IOException e) {
+		    System.out.println("CMLReader (IOException): " + e.toString());
+		} catch (SAXException e) {
+		    System.out.println("CMLReader (SAXException): " + e.toString());
+		    e.printStackTrace();
+		}
+		return cdo;
     }
 }
 
