@@ -11,6 +11,7 @@ New:
   algorithms (closes #825454)
 * The Controller2D now maintains an active draw element. Changing the element of
   an existing atom using the SYMBOL mode, also changes the draw element.
+* Added method for id-ing SetOfAtomContainers
 
 Fixes:
 * Added missing get() methods to cdk.applications.plugin.EditBus interface
@@ -21,6 +22,7 @@ Fixes:
 * JavaDoc now uses @depends for runtime dependencies and @builddepends for
   compile dependencies for jar libraries (closes #814294)
 * Added missing toString() methods to SetOfMolecules and SetOfReactions
+* Fixed coordinate system of Renderer2D (partly fixes #834515)
 
 API changes:
 * SetOfMolecules now extends SetOfAtomContainers which gives it additional
