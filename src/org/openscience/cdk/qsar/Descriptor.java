@@ -23,19 +23,22 @@
  */
 package org.openscience.cdk.qsar;
 
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.exception.CDKException;
+
 public interface Descriptor {
 
-    // an exception would be thrown when the parameters are not
-    // appropriate for this descriptor
-    public void setParameters(Object[] params) throws CDKException;
-    public Object[] getParameters();
-
-    public Object calculate(AtomContainer container);
-
-    // we should also have something like these. The order of the String[]
-    // return should match the expected order in setParameters;
-    public String[] getParameterNames();
-    public Object getParameterType(String name);
+    // an exception would be thrown when the parameters are not
+    // appropriate for this descriptor
+    public void setParameters(Object[] params) throws CDKException;
+    public Object[] getParameters();
+    
+    public Object calculate(AtomContainer container);
+    
+    // we should also have something like these. The order of the String[]
+    // return should match the expected order in setParameters;
+    public String[] getParameterNames();
+    public Object getParameterType(String name);
 
 }
 
