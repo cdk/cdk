@@ -32,14 +32,11 @@ import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
- * AtomType matcher that deduces the hybridization state of an atom based on
- * the max bond order, bond order sum and neighbor count properties of the Atom.
- *
  *@author         mfe4
  *@cdk.created    2004-12-02
  *@cdk.module     core
  */
-public class HybridizationStateATMatcher {
+public class HybridizationStateATMatcher implements AtomTypeMatcher {
 
 	private LoggingTool logger;
 	double charge = 0;
@@ -75,8 +72,9 @@ public class HybridizationStateATMatcher {
 	 *@param  atom              the target atom
 	 *@exception  CDKException  Description of the Exception
 	 */
-	public void findMatchingAtomType(AtomContainer ac, Atom atom) throws CDKException {
+	public AtomType findMatchingAtomType(AtomContainer ac, Atom atom) throws CDKException {
 		
+		AtomType matched = null;
 		symbol = atom.getSymbol();
 		//Hs are included?
 		Atom[] neighboors = ac.getConnectedAtoms(atom);
@@ -102,13 +100,11 @@ public class HybridizationStateATMatcher {
 					if (tmp_neighboorsCount == neighboorsCount) {
 						logger.debug("!!!!! ATOM TYPE FOUND");
 						atName = type[i].getAtomTypeName();
-						type[i].setAtomTypeName(atName);
-						hybr = type[i].getHybridization();
-						atom.setHybridization(hybr);
-						//break;
+						matched = type[i];
 					}
 				}
 			}
+			return matched;
 
 		} catch (Exception ex1) {
             logger.error(ex1.getMessage());
