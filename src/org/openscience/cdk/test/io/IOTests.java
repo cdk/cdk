@@ -52,7 +52,7 @@ public class IOTests {
         suite.addTest(PDBReaderTest.suite());
         suite.addTest(ShelXReaderTest.suite());
         suite.addTest(SMILESReaderTest.suite());
-        suite.addTest(VASPReaderTest.suite());
+        //suite.addTest(VASPReaderTest.suite());
         /* suite.addTest(ZMatrixReaderTest.suite()); This is not a JUnit test yet! */
         
         suite.addTest(ReaderFactoryTest.suite());
