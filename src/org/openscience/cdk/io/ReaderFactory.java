@@ -190,6 +190,11 @@ public class ReaderFactory {
                        line.startsWith("TITL ")) {
                 logger.info("ShelX format detected");
                 return new org.openscience.cdk.io.ShelXReader(originalBuffer);
+            } else if (line.startsWith("_cell_length_a") ||
+                       line.startsWith("_audit_creation_date") ||
+                       line.startsWith("loop_")) {
+                logger.info("CIF format detected");
+                return new org.openscience.cdk.io.CIFReader(originalBuffer);
             } else if (lineNumber == 4 && line.length()>7) {
                 // possibly a MDL mol file
                 try {

@@ -19,6 +19,7 @@ org/openscience/cdk/io/ChemObjectReader.java
 org/openscience/cdk/io/DefaultChemObjectReader.java
 org/openscience/cdk/io/ReaderFactory.java
 org/openscience/cdk/io/ShelXReader.java
+org/openscience/cdk/io/CIFReader.java
 org/openscience/cdk/io/ChemicalRSSReader.java
 org/openscience/cdk/io/chemrss/RSSHandler.java
 org/openscience/cdk/io/cml/CMLErrorHandler.java
