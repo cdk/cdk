@@ -69,7 +69,7 @@ public class MDLWriter implements CDKConstants
 	 *
 	 * @param   out  The Writer to write to
 	 */
-	public MDLWriter(FileOutputStream out) {
+	public MDLWriter(Writer out) {
 		try {
 			writer = new BufferedWriter(out);
 		} catch (Exception exc) {
