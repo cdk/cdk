@@ -17,7 +17,7 @@
 
     <revhistory>
       <revision>
-        <revnumber>&lire-version;</revnumber>
+        <revnumber>$Version:$</revnumber>
         <date>$Date$</date>
         <revremark>
           $Id$
@@ -42,10 +42,11 @@
   </preface>
 
   <part id="part:documentation">
+    <title>Documentation</title>
 
-    <section id="sect:javadoc">
+    <chapter id="sect:javadoc">
       <title>JavaDoc</title>
-   
+
       <para>
         Most of the documentation about the CDK classes is done in the
         java source files itself. The format used for this is the JavaDoc
@@ -58,24 +59,25 @@
 
         <para>
           The JavaDoc documentation can be converted into DocBook code
-          with the <ulink 
+          with the <ulink
           url="http://freshmeat.net/projects/dbdoclet/">DocBookDoclet</ulink>.
         </para>
       </section>
-    </section>
+    </chapter>
 
-    <section id="sect:cdk-tutorial">
+    <chapter id="sect:cdk-tutorial">
       <title>CDK Programming Tutorial</title>
 
       <para>There is a sort of CDK Programming Tutorial online. It is
         written in DocBook XML 4.1.2 (like most of our documentation).</para>
-    </section>
+    </chapter>
 
   </part>
 
   <part id="part:cdk-library">
+    <title>The CDK Library</title>
 
-  <section id="part:compiling">
+  <chapter id="sect:compiling">
     <title>Compiling the CDK source</title>
 
     <para>
@@ -88,9 +90,9 @@ cdk/$ ant
       </programlisting>
     </para>
 
-  </section>
+  </chapter>
 
-  <section id="part:testing">
+  <chapter id="sect:testing">
     <title>Testing CDK classes</title>
 
     <para>
@@ -100,7 +102,7 @@ cdk/$ ant
     </para>
 
     <para>
-      There are also run interactive tests, like the Controller2DTest. 
+      There are also run interactive tests, like the Controller2DTest.
       In order to try them, you can edit the "run"
       target in the build.xml file to look like this:
       <programlisting><![CDATA[
@@ -115,32 +117,38 @@ cdk/$ ant
                                 <include name="*.jar"/>
                                 </fileset>
                         </classpath>
-                </java>  
+                </java>
         </target>
 ]]></programlisting>
       Then, a <command>ant run</command> should give you a window where you
       can add bonds to a given structure.
     </para>
-  </section>
+  </chapter>
 
   </part>
 
   <part id="part:website">
     <title>The CDK Website</title>
 
-    <para>
-      The website is written as DocBook XML 4.1.2 fragments and
-      compiled into HTML with the Website DTD 2.0.
-    </para>
+	<chapter id="sect:htmlgeneration">
+	  <title>HTML Generation</title>
+      <para>
+        The website is written as DocBook XML 4.1.2 fragments and
+        compiled into HTML with the Website DTD 2.0.
+      </para>
+	</chapter>
   </part>
 
   <part id="part:packages">
     <title>Binary Packages</title>
-  
-    <para>
-      Currently only tar.gz packages are available.
-    </para>
-  
+
+	<chapter id="sect:tarpackages">
+	  <title>Tar packages</title>
+      <para>
+        Currently only tar.gz packages are available.
+      </para>
+	</chapter>
+
   </part>
 
 </book>
