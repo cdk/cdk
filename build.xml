@@ -1,0 +1,28 @@
+<project name="CDK" default="compile" basedir=".">
+  
+  <!-- comment this line out of you have not jikes installed -->
+  <property name="build.compiler" value="jikes"/>
+  
+  <path id="project.class.path">
+    <!-- adapt the next line to reflect you installation -->
+    <pathelement location="/usr/lib/j2sdk1.3/jre/lib/rt.jar"/>
+    <pathelement location="."/>
+    <fileset dir="./jar">
+      <include name="*.jar"/>
+    </fileset>
+  </path>
+  
+  <target name="compile">
+    <javac srcdir="." destdir="." optimize="on" deprecation="on">
+      <classpath refid="project.class.path"/>
+    </javac>
+  </target>
+
+  <target name="clean">
+    <delete>
+      <fileset dir="." includes="**/*~"/>
+      <fileset dir="." includes="**/*.class"/>
+    </delete>
+  </target>
+
+</project>
