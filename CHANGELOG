@@ -3,7 +3,8 @@ CHANGELOG
 
 Changes in CVS
 ------------------------------------
-* none since 2002-01-01
+* added cdk-view executable
+* added Viewer application that detects 3D/2D
 
 20020101.1 Release
 ------------------------------------

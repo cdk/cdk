@@ -8,9 +8,6 @@
   2. use catalog parser
   3. be namespace aware (aka "parse XHTML docs with CML fragments") 
 
-- Add cdk-view, a viewer that detects 2D/3D coordinates and chooses
-  the appropriate viewer (optionally using Java3D)
-
 - Add cdk-merge, to merge to content interactively of two source files
 
 - Add cdk-dbquery/cdk-dbinsert to interact with the chemical database
