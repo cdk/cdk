@@ -46,13 +46,13 @@
         <target name="clean">
                 <delete>
                         <fileset dir="." includes="**/*~" />
-                        <fileset dir="." includes="**/*.class" />
                         <fileset dir="." includes="*.tar.gz" />
                         <fileset dir="." includes="*.zip" />
                 </delete>
 
                 <delete dir="${build}" />
                 <delete dir="${sourcedist}" />
+                <delete dir="${dist}" />
                 <delete dir="${reports.tests}" />
         </target>
 
@@ -73,7 +73,7 @@
                         <exclude name="org/openscience/cdk/renderer/OrbitalsRenderer3D.java" />
                          <!-- exclude libio classes that require additional
                              libraries, and which are compiled elsewhere -->
-                         <exclude name="org/openscience/cdk/libio/**/*.java" />
+                        <exclude name="org/openscience/cdk/libio/**/*.java" />
                         <exclude name="org/openscience/cdk/test/**/*.java" />
                         <!-- exclude application classes that require additional
                              libraries, and which are compiled elsewhere -->
@@ -123,14 +123,27 @@
                 </javac>
         </target>
 
-        <target name="compile-core">
-                <!-- Task to build the core classes. -->
+        <target name="compile-core" depends="init">
                 <echo message="Compiling classes defined in ${src}/core.classes." />
 
                 <javac srcdir="${src}" destdir="${build}"
-                       optimize="off" debug="on" deprecation="off"
+                       optimize="on" debug="off" deprecation="off"
                        includesfile="${src}/core.classes">
                     <classpath refid="project.class.path" />
+                </javac>
+        </target>
+
+        <target name="compile-io" depends="init, dist-core">
+                <echo message="Compiling classes defined in ${src}/io.classes." />
+
+                <javac srcdir="${src}/org/openscience/cdk/io" destdir="${build}"
+                       optimize="off" debug="on" deprecation="off">
+                    <classpath refid="project.class.path" />
+                    <classpath>
+                        <fileset dir="${dist}/jar">
+                            <include name="cdk-core.jar" />
+                        </fileset>
+                    </classpath>
                 </javac>
         </target>
 
@@ -281,6 +294,8 @@
                         <exclude name="org/openscience/cdk/applications/**" />
                         <!-- Exclude test classes -->
                         <exclude name="org/openscience/cdk/test/**" />
+                        <!-- Exclude test classes -->
+                        <exclude name="org/openscience/cdk/io/**" />
                    </fileset>
                 </jar>
         </target>
@@ -328,8 +343,16 @@
                 </jar>
         </target>
 
-        <target name="dist-all" depends="dist-core, dist-extra, dist-with-java3d, dist-libio, 
-                                         dist-cml, dist-apps, dist-test" />
+        <target name="dist-io" depends="compile-io">
+                <jar jarfile="${dist}/jar/cdk-io.jar">
+                    <fileset dir="${build}">
+                        <include name="org/openscience/cdk/io/**/*" />
+                    </fileset>
+                </jar>
+        </target>
+
+        <target name="dist-all" depends="dist-with-java3d, dist-core, dist-extra, dist-libio,
+                                         dist-cml, dist-apps, dist-test, dist-io" />
 
         <target name="dist" depends="dist-extra" />
 
