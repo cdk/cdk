@@ -14,6 +14,8 @@ New:
 * Added getCentreOfMass methods (2D and 3D)
 * Added geometrical methods for crystals
 * Different build procedure to allow for patches
+* Added a color scheme for atoms based on the partial
+  atomic charge
 
 Fixes:
 * Reading of 3D coordinates from ShelX files
