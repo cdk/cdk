@@ -74,7 +74,7 @@ public class RDFProtonDescriptor implements Descriptor {
 	 */
 	public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-            "http://qsar.sourceforge.net/dicts/qsar-descriptors:calculatedValues",
+            "http://qsar.sourceforge.net/dicts/qsar-descriptors:rdfProtonCalculatedValues",
 		    this.getClass().getName(),
 		    "$Id$",
             "The Chemistry Development Kit");
@@ -134,7 +134,8 @@ public class RDFProtonDescriptor implements Descriptor {
 	 */
 	public DescriptorResult calculate(AtomContainer ac) throws CDKException {
 		Atom target = ac.getAtomAt(atomPosition);
-		IntegerArrayResult calculatedValues = new IntegerArrayResult(5);
+		
+		IntegerArrayResult rdfProtonCalculatedValues = new IntegerArrayResult(5);
 		if(target.getSymbol().equals("H")) {
 			
 /////////////////////////FIRST SECTION OF MAIN METHOD: DEFINITION OF MAIN VARIABLES
@@ -336,9 +337,9 @@ public class RDFProtonDescriptor implements Descriptor {
 					//System.out.println("RDF gr distance prob.: "+sum+ " at distance "+ghr);
 				}
 				target.setProperty("gasteigerGHR", new ArrayList(gHr_function));
-				calculatedValues.add(1);
+				rdfProtonCalculatedValues.add(1);
 			}
-			else calculatedValues.add(0);
+			else rdfProtonCalculatedValues.add(0);
 			//System.out.println("----------------------------");
 
 ///////////////////////THE SECOND CALCULATED DESCRIPTOR IS g(H)r TOPOLOGICAL WITH SUM OF BOND LENGTHS
@@ -387,9 +388,9 @@ public class RDFProtonDescriptor implements Descriptor {
 					//System.out.println("RDF gr-topol distance prob.: "+sum+ " at distance "+ghrt);
 				}
 				target.setProperty("gasteigerGHRtopol", new ArrayList(gHr_topol_function));
-				calculatedValues.add(1);
+				rdfProtonCalculatedValues.add(1);
 			}
-			else calculatedValues.add(0);
+			else rdfProtonCalculatedValues.add(0);
                         // System.out.println("TEST PROP: " + ((ArrayList)target.getProperty("gasteigerGHRtopol")).size() );
 			
 			
@@ -447,9 +448,9 @@ public class RDFProtonDescriptor implements Descriptor {
 					gDr_function.add(new Double(sum));
 				}
 				target.setProperty("gasteigerGDR", new ArrayList(gDr_function));
-				calculatedValues.add(1);
+				rdfProtonCalculatedValues.add(1);
 			}
-			else calculatedValues.add(0);
+			else rdfProtonCalculatedValues.add(0);
 			
 			//System.out.println("----------------------------");
 			
@@ -499,9 +500,9 @@ public class RDFProtonDescriptor implements Descriptor {
 					//System.out.println("RDF gSr prob.: " + sum +  " at distance " + ghs);
 				}
 				target.setProperty("gasteigerGSR", new ArrayList(gSr_function));
-				calculatedValues.add(1);
+				rdfProtonCalculatedValues.add(1);
 			}
-			else calculatedValues.add(0);
+			else rdfProtonCalculatedValues.add(0);
 			
 			//System.out.println("----------------------------");
 			
@@ -561,11 +562,11 @@ public class RDFProtonDescriptor implements Descriptor {
 					//System.out.println("RDF g-cycl prob.: "+sum+ " at distance "+g3r);
 				}
 				target.setProperty("gasteigerG3R", new ArrayList(g3r_function));
-				calculatedValues.add(1);
+				rdfProtonCalculatedValues.add(1);
 			}
-			else calculatedValues.add(0);
+			else rdfProtonCalculatedValues.add(0);
 		}
-		return calculatedValues;
+		return rdfProtonCalculatedValues;
 	}
 
 
