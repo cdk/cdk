@@ -1656,4 +1656,31 @@ public class AtomContainerTest extends TestCase {
             changed = false;
         }
     }
+    
+    public void testAddAtomParity_AtomParity() {
+        testGetAtomParity_Atom();
+    }
+    
+    public void testGetSingleElectronSum_Atom() {
+        // another rather artifial example
+        Molecule acetone = new Molecule();
+        Atom c = new Atom("C");
+        Atom o = new Atom("O");
+        acetone.addAtom(c);
+        acetone.addAtom(o);
+        Bond b1 = new Bond(c, o, 2.0);
+        acetone.addElectronContainer(b1);
+        SingleElectron single1 = new SingleElectron(c);
+        SingleElectron single2 = new SingleElectron(c);
+        SingleElectron single3 = new SingleElectron(o);
+        acetone.addElectronContainer(single1);
+        acetone.addElectronContainer(single2);
+        acetone.addElectronContainer(single3);
+
+        assertEquals(2, acetone.getSingleElectron(c).length);
+        assertEquals(1, acetone.getSingleElectron(o).length);
+        assertEquals(single1, acetone.getSingleElectron(c)[0]);
+        assertEquals(single2, acetone.getSingleElectron(c)[1]);
+        assertEquals(single3, acetone.getSingleElectron(o)[0]);
+    }
 }

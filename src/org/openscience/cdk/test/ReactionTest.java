@@ -308,4 +308,22 @@ public class ReactionTest extends TestCase {
         assertTrue(clone instanceof Reaction);
     }
 
+    public void testClone_Mapping() {
+        fail("Affected by bug #1095690");
+    }
+    
+    public void testAddMapping_Mapping() {
+        Reaction reaction = new Reaction();
+        Mapping mapping = new Mapping(new Atom("C"), new Atom("C"));
+        reaction.addMapping(mapping);
+        
+        Mapping[] mappings = reaction.getMappings();
+        assertNotNull(mappings);
+        assertEquals(1, mappings.length);
+        assertEquals(mapping, mappings[0]);
+    }
+    
+    public void testGetMappings() {
+        testAddMapping_Mapping();
+    }
 }
