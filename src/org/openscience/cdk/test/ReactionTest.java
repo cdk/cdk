@@ -3,7 +3,7 @@
  * $Date$    
  * $Revision$
  * 
- * Copyright (C) 2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2003-2004  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -38,9 +38,6 @@ import org.openscience.cdk.Reaction;
  * TestCase for the Reaction class.
  *
  * @cdkPackage test
- *
- * @author  Edgar Luttman <edgar@uni-paderborn.de>
- * @created 2001-08-09
  */
 public class ReactionTest extends TestCase {
 
