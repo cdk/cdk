@@ -175,7 +175,7 @@ public class MACiEReader extends DefaultChemObjectReader {
          } else if (object == null) {
              logger.warn("MACiEReader can not read null objects.");
          } else {
-             logger.warn("MACiEReader can not read ChemObject of type: " + 
+             logger.warn("MACiEReader can not read ChemObject of type: ", 
                          object.getClass().getName());
          }
          return false;
@@ -208,7 +208,7 @@ public class MACiEReader extends DefaultChemObjectReader {
                     createNiceMACiETitle(currentEntry);
                     entries.addChemModel(currentEntry);
                     if (selectEntry && (entryCounter == selectedEntry.getSettingValue())) {
-                        logger.info("Starting reading wanted frame: " + selectedEntry.getSettingValue());
+                        logger.info("Starting reading wanted frame: ", selectedEntry);
                         return currentEntry;
                     } else {
                         logger.debug("Not reading unwanted frame: " + entryCounter);
@@ -242,12 +242,12 @@ public class MACiEReader extends DefaultChemObjectReader {
                         String field = topLevelMatcher.group(2);
                         processTopLevelField(field, datum);
                     } else {
-                        logger.error("Could not parse datum tuple of type " + dataType +
-                        " around line " + input.getLineNumber());
+                        logger.error("Could not parse datum tuple of type ", dataType,
+                                     " around line " + input.getLineNumber());
                     }
                 }
             } else {
-                logger.warn("Unrecognized command on line " + input.getLineNumber() + ": " + line);
+                logger.warn("Unrecognized command on line " + input.getLineNumber(), ": ", line);
             }
         }
         
@@ -278,7 +278,7 @@ public class MACiEReader extends DefaultChemObjectReader {
         String datumLine = input.readLine();
         String type = dTypeLine.substring(7);
         String datum = datumLine.substring(7);
-        logger.debug("Tuple TYPE: " + type);
+        logger.debug("Tuple TYPE: ", type);
         String line = datum;
         if (datum.endsWith("$MFMT")) {
             // deal with MDL mol content
@@ -299,7 +299,7 @@ public class MACiEReader extends DefaultChemObjectReader {
             } while (line.endsWith("+"));
             datum = fullDatum.toString();
         }
-        logger.debug("     DATUM: " + datum);
+        logger.debug("     DATUM: ", datum);
         String[] tuple = new String[2];
         tuple[0] = type;
         tuple[1] = datum;
@@ -318,8 +318,8 @@ public class MACiEReader extends DefaultChemObjectReader {
         } else if (field.equals("ENZYME NAME")) {
             currentEntry.setProperty(EnzymeName, datum);
         } else {
-            logger.warn("Unrecognized ROOT field " + field + 
-                " around line " + input.getLineNumber());
+            logger.warn("Unrecognized ROOT field ", field, 
+                        " around line " + input.getLineNumber());
         }
     }
     
@@ -334,7 +334,7 @@ public class MACiEReader extends DefaultChemObjectReader {
                     String filename = readSecondaryDir.getSetting() + datum + ".rxn";
                     File file = new File(filename);
                     if (file.exists()) {
-                        logger.info("Reading overall reaction from: " + filename);
+                        logger.info("Reading overall reaction from: ", filename);
                         FileReader reader = new FileReader(file);
                         ChemObjectReader rxnReader = new ReaderFactory().createReader(reader);
                         currentReaction = (Reaction)rxnReader.read(new Reaction());
@@ -371,14 +371,14 @@ public class MACiEReader extends DefaultChemObjectReader {
                     String filename = readSecondaryDir.getSetting() + datum + ".rxn";
                     File file = new File(filename);
                     if (file.exists()) {
-                        logger.info("Reading reaction step from: " + filename);
+                        logger.info("Reading reaction step from: ", filename);
                         FileReader reader = new FileReader(file);
                         ChemObjectReader rxnReader = new ReaderFactory().createReader(reader);
                         currentReaction = (Reaction)rxnReader.read(new Reaction());
                         currentReaction.setID(datum);
                         currentReaction.setProperty(CDKConstants.TITLE, "Step " + fieldNumber);
                     } else {
-                        logger.error("Cannot find secondary file: " + filename);
+                        logger.error("Cannot find secondary file: ", filename);
                     }
                     // convert PseudoAtom's in EnzymeResidueLocator's if appropriate
                     markEnzymeResidueLocatorAtoms(currentReaction);
@@ -401,8 +401,8 @@ public class MACiEReader extends DefaultChemObjectReader {
                  currentEntry.setProperty(MedlineID, datum);
              }
        } else {
-            logger.warn("Unrecognized sub level field " + field + 
-                " around line " + input.getLineNumber());
+            logger.warn("Unrecognized sub level field ", field, 
+                        " around line " + input.getLineNumber());
         }
     }
     
@@ -411,11 +411,11 @@ public class MACiEReader extends DefaultChemObjectReader {
         for (int i=0; i<atoms.length; i++) {
             if (atoms[i] instanceof PseudoAtom) {
                 PseudoAtom pseudo = (PseudoAtom)atoms[i];
-                logger.debug("pseudo atom label: " + pseudo.getLabel());
-                logger.debug("pseudo class: " + pseudo.getClass().getName());
+                logger.debug("pseudo atom label: ", pseudo.getLabel());
+                logger.debug("pseudo class: ", pseudo.getClass().getName());
                 Matcher residueLocatorMatcher = residueLocator.matcher(pseudo.getLabel());
                 if (residueLocatorMatcher.matches()) {
-                    logger.debug("Found residueLocator: " + pseudo.getLabel());
+                    logger.debug("Found residueLocator: ", pseudo.getLabel());
                     // replace atom with enzymeResidueLocator
                     AtomContainer container = ReactionManipulator.getRelevantAtomContainer(
                         currentReaction, pseudo
@@ -444,7 +444,7 @@ public class MACiEReader extends DefaultChemObjectReader {
     }
 
     private void processAnnotation(String field, String value, Reaction reaction) {
-        logger.debug("Annote: " + field + "=" + value);
+        logger.debug("Annote: ", field, "=", value);
         if (field.equals("RxnAtts") || field.equals("RxnType")) {
             // reaction attributes
             String dictionary = "macie";
@@ -470,7 +470,7 @@ public class MACiEReader extends DefaultChemObjectReader {
             Matcher residueLocatorMatcher =
                 residueLocator.matcher(field);
             if (residueLocatorMatcher.matches()) {
-                logger.debug("Found residueLocator: " + field);
+                logger.debug("Found residueLocator: ", field);
                 Atom[] atoms = ReactionManipulator.getAllInOneContainer(reaction).getAtoms();
                 boolean found = false;
                 logger.debug("Searching through #atom: " + atoms.length);

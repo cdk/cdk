@@ -153,17 +153,11 @@ public class MDLReader extends DefaultChemObjectReader {
         ChemSequence chemSequence = new ChemSequence();
         ChemModel chemModel = readChemModel();
         logger.debug("Adding ChemModel to ChemSequence");
-        logger.debug("#models (array): " + chemSequence.getChemModels().length);
         logger.debug("#models (count): " + chemSequence.getChemModelCount());
         chemSequence.addChemModel(chemModel);
-        logger.debug("#models (array): " + chemSequence.getChemModels().length);
-        logger.debug("#models (count): " + chemSequence.getChemModelCount());
         logger.debug("Adding ChemSequence to ChemFile");
-        logger.debug("#sequences (array): " + chemFile.getChemSequences().length);
         logger.debug("#sequences (count): " + chemFile.getChemSequenceCount());
         chemFile.addChemSequence(chemSequence);
-        logger.debug("#sequences (array): " + chemFile.getChemSequences().length);
-        logger.debug("#sequences (count): " + chemFile.getChemSequenceCount());
         return chemFile;
     }
     
@@ -177,7 +171,7 @@ public class MDLReader extends DefaultChemObjectReader {
 		String str;
         try {
             String line = input.readLine();
-            logger.debug("line: " + line);
+            logger.debug("line: ", line);
             if (input.ready() && line != null) {
                 // apparently, this is a SDF file, continue with 
                 // reading mol files
@@ -206,7 +200,7 @@ public class MDLReader extends DefaultChemObjectReader {
 		try {
 			input.close();
 		} catch (Exception exc) {
-            String error = "Error while closing file: " + exc.toString();
+            String error = "Error while closing file: " + exc.getMessage();
             logger.error(error);
 			throw new CDKException(error);
 		}
@@ -282,13 +276,13 @@ public class MDLReader extends DefaultChemObjectReader {
                 totalZ += z;
                 logger.debug("Coordinates: " + x + "; " + y + "; " + z);
                 String element = line.substring(31,34).trim();
-                logger.debug("Atom type: " + element);
+                logger.debug("Atom type: ", element);
 
                 // try to determine Isotope
                 try {
                     atom = isotopeFactory.configure(new Atom(element));
                 } catch (NullPointerException exception) {
-                    logger.debug("Atom " + element + " is not an regular element. Creating a PseudoAtom.");
+                    logger.debug("Atom ", element, " is not an regular element. Creating a PseudoAtom.");
                     atom = new PseudoAtom(element);
                 }
                 // store as 3D for now, convert to 2D (if totalZ == 0.0) later
@@ -296,7 +290,7 @@ public class MDLReader extends DefaultChemObjectReader {
                 
                 // parse further fields
                 String massDiffString = line.substring(34,36).trim();
-                logger.debug("Mass difference: " + massDiffString);
+                logger.debug("Mass difference: ", massDiffString);
                 if (!(atom instanceof PseudoAtom)) {
                     try {
                         int massDiff = Integer.parseInt(massDiffString);
@@ -313,7 +307,7 @@ public class MDLReader extends DefaultChemObjectReader {
                 
                 
                 String chargeCodeString = line.substring(36,39).trim();
-                logger.debug("Atom charge code: " + chargeCodeString);
+                logger.debug("Atom charge code: ", chargeCodeString);
                 int chargeCode = Integer.parseInt(chargeCodeString);
                 if (chargeCode == 0) {
                     // uncharged species
@@ -334,14 +328,14 @@ public class MDLReader extends DefaultChemObjectReader {
                 
                 try {
                     String reactionAtomIDString = line.substring(50,53).trim();
-                    logger.debug("Parsing mapping id: " + reactionAtomIDString);
+                    logger.debug("Parsing mapping id: ", reactionAtomIDString);
                     try {
                         int reactionAtomID = Integer.parseInt(reactionAtomIDString);
                         if (reactionAtomID != 0) {
                             atom.setID(reactionAtomIDString);
                         }
                     } catch (Exception exception) {
-                        logger.error("Mapping number " + reactionAtomIDString + " is not an integer.");
+                        logger.error("Mapping number ", reactionAtomIDString, " is not an integer.");
                         logger.debug(exception);
                     }
                 } catch (Exception exception) {
@@ -372,7 +366,9 @@ public class MDLReader extends DefaultChemObjectReader {
                 atom2 = java.lang.Integer.valueOf(line.substring(3,6).trim()).intValue();
                 order = java.lang.Integer.valueOf(line.substring(6,9).trim()).intValue();
                 stereo = java.lang.Integer.valueOf(line.substring(9,12).trim()).intValue();
-                logger.debug("Bond: " + atom1 + " - " + atom2 + "; order " + order);
+                if (logger.isDebugEnabled()) {
+                    logger.debug("Bond: " + atom1 + " - " + atom2 + "; order " + order);
+                }
                 if (stereo == 1) {
                     // MDL up bond
                     stereo = CDKConstants.STEREO_BOND_UP;
@@ -433,8 +429,8 @@ public class MDLReader extends DefaultChemObjectReader {
                             }
                         }
                     } catch (NumberFormatException exception) {
-                        String error = "Error (" + exception.toString() + ") while parsing line "
-                        + linecount + ": " + line + " in property block.";
+                        String error = "Error (" + exception.getMessage() + ") while parsing line "
+                                       + linecount + ": " + line + " in property block.";
                         logger.error(error);
                         throw new CDKException("NumberFormatException in isotope information on line: " + line);
                     }
@@ -464,7 +460,7 @@ public class MDLReader extends DefaultChemObjectReader {
                     }
                 }
                 if (!lineRead) {
-                    logger.warn("Skipping line in property block: " + line);
+                    logger.warn("Skipping line in property block: ", line);
                 }
             }
 		} catch (CDKException exception) {
