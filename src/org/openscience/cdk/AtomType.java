@@ -58,6 +58,8 @@ public class AtomType extends Isotope
 
 	/**
 	 *  Constructor for the AtomType object
+     *
+     * @param elementSymbol  Symbol of the atom
 	 */
 	public AtomType(String elementSymbol)
 	{
@@ -68,7 +70,7 @@ public class AtomType extends Isotope
 	/**
 	 *  Constructor for the AtomType object
 	 *
-	 * @param  atomTypeID     An id for this atom type, like C3 for sp3 carbon
+	 * @param  id             An id for this atom type, like C3 for sp3 carbon
 	 * @param  elementSymbol  The element symbol identifying the element to which this atom type applies
 	 */
 	public AtomType(String id, String elementSymbol)
@@ -146,13 +148,12 @@ public class AtomType extends Isotope
   /**
    * Compare a atom type with this atom type
    *
-   * @return Return true, if the atomtypes are equal
-   * 
+   * @param  object Object of type AtomType
+   * @return        Return true, if the atomtypes are equal
    */
   public boolean compare(Object object)
-  { 
-    if (object instanceof AtomType)
-    {
+  {
+    if (object instanceof AtomType) {
       AtomType type = (AtomType) object;
       if ((getID()==type.getID()) &&
           (maxBondOrder==type.maxBondOrder) &&

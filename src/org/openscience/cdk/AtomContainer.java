@@ -724,6 +724,7 @@ public class AtomContainer extends ChemObject implements Cloneable
 	 *  removes the bond at the given position from this container
 	 *
 	 * @param  position  The position of the bond in the bonds array
+     * @return           Bond that was removed
 	 */
 	public Bond removeBond(int position)
 	{
@@ -742,6 +743,7 @@ public class AtomContainer extends ChemObject implements Cloneable
 	 *  removes this bond from this container
 	 *
 	 * @param  bond  The bond to be removed
+     * @return           Bond that was removed
 	 */
 	public Bond removeBond(Bond bond)
 	{

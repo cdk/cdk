@@ -14,6 +14,7 @@ Fixes:
   bond mode
 * Removed NoSuchAtomException's from core classes
   (see RFC #4, fixes bugs #590570 and #590576)
+* Lots of updated JavaDoc's (checked with Sun's DocCheck doclet)
 
 API changes:
 * Removed obsolete cdk.structgen.stoichastic.ConvertTools

@@ -75,7 +75,7 @@ public class ChemModel extends ChemObject
 	}
 	
 	/**
-	 * Returns the SetOfMolecules of this ChemModel
+	 * Returns the SetOfMolecules of this ChemModel.
 	 *
 	 * @return   The SetOfMolecules of this ChemModel 
 	 */
@@ -86,9 +86,9 @@ public class ChemModel extends ChemObject
 
 
 	/**
-	 * Sets the SetOfMolecules of this ChemModel
+	 * Sets the SetOfMolecules of this ChemModel.
 	 *
-	 * @param   setOfMolecules  
+	 * @param   setOfMolecules  the content of this model
 	 */
 	public void setSetOfMolecules(SetOfMolecules setOfMolecules)
 	{
@@ -98,20 +98,19 @@ public class ChemModel extends ChemObject
 	
 
 	/**
-	 * Returns the RingSet of this ChemModel
+	 * Returns the RingSet of this ChemModel.
 	 *
 	 * @return the ringset of this model
 	 */
-	public RingSet getRingSet()
-	{
+	public RingSet getRingSet() {
 		return this.ringSet;
 	}
 
 
 	/**
-	 * Sets the RingSet of this ChemModel
+	 * Sets the RingSet of this ChemModel.
 	 *
-	 * @param   ringSet
+	 * @param   ringSet         the content of this model
 	 */
 	public void setRingSet(RingSet ringSet)
 	{
@@ -119,7 +118,7 @@ public class ChemModel extends ChemObject
 	}
 
     /**
-     * Gets the Crystal contained in this ChemModel
+     * Gets the Crystal contained in this ChemModel.
      *
      * @return The crystal in this model
      */

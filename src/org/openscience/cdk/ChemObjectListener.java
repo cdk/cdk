@@ -42,7 +42,9 @@ public interface ChemObjectListener
 {
 	/**
 	 * Called by objects to notify objects that implemented this interface
-	 * and registered with them as ChemObjectListeners
+	 * and registered with them as ChemObjectListeners.
+     *
+     * @param event  a ChemObjectChangeEvent object
 	 */
 	public void stateChanged(ChemObjectChangeEvent event);
 }

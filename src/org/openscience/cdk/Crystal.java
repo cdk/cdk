@@ -67,6 +67,8 @@ public class Crystal extends AtomContainer {
     /**
      * Constructs a new crystal with zero length cell axis
      * and adds the atoms in the AtomContainer as cell content.
+     *
+     * @param ac  the AtomContainer providing the atoms and bonds
      */
     public Crystal(AtomContainer ac) {
         this();
@@ -74,7 +76,12 @@ public class Crystal extends AtomContainer {
     }
 
     /**
-     * Sets the A unit cell axes in carthesian coordinates.
+     * Sets the A unit cell axes in carthesian coordinates in a 
+     * eucledian space.
+     *
+     * @param     x     the x coordinate of the vector
+     * @param     y     the y coordinate of the vector
+     * @param     z     the z coordinate of the vector
      */
     public void setA(double x, double y, double z) {
         ax = x; ay = y; az = z;
@@ -102,6 +109,8 @@ public class Crystal extends AtomContainer {
     /**
      * Adds the atom to the crystal. Symmetry related atoms should
      * not be added unless P1 space group is used.
+     *
+     * @return a 3-item double array with the x,y and z coordinate
      */
     public void addAtom(Atom a) {
         super.addAtom(a);
@@ -109,6 +118,10 @@ public class Crystal extends AtomContainer {
 
     /**
      * Sets the B unit cell axes in carthesian coordinates.
+     *
+     * @param     x     the x coordinate of the vector
+     * @param     y     the y coordinate of the vector
+     * @param     z     the z coordinate of the vector
      */
     public void setB(double x, double y, double z) {
         bx = x; by = y; bz = z;
@@ -117,6 +130,8 @@ public class Crystal extends AtomContainer {
     /**
      * Gets the B unit cell axes in carthesian coordinates
      * as a three element double array.
+     *
+     * @return a 3-item double array with the x,y and z coordinate
      */
     public double[] getB() {
         double[] result = new double[3];
@@ -128,6 +143,10 @@ public class Crystal extends AtomContainer {
 
     /**
      * Sets the C unit cell axes in carthesian coordinates.
+     *
+     * @param     x     the x coordinate of the vector
+     * @param     y     the y coordinate of the vector
+     * @param     z     the z coordinate of the vector
      */
     public void setC(double x, double y, double z) {
         cx = x; cy = y; cz = z;
@@ -136,6 +155,8 @@ public class Crystal extends AtomContainer {
     /**
      * Gets the C unit cell axes in carthesian coordinates
      * as a three element double array.
+     *
+     * @return a 3-item double array with the x,y and z coordinate
      */
     public double[] getC() {
         double[] result = new double[3];

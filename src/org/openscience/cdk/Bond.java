@@ -46,14 +46,14 @@ public class Bond extends ElectronContainer implements Cloneable
 	/** A list of atoms participating in this bond */
 	protected Atom[] atoms;
 
-	/** A descriptor the stereochemical orientation of this bond. 
+	/** A descriptor the stereochemical orientation of this bond.
 	  * @see org.openscience.cdk.CDKConstants org.openscience.cdk.CDKConstants for predefined values. 
 	  * to be used here.
 	  */
 	protected int stereo; 
 	
 	/**
-	 * Constructs an empty bond
+	 * Constructs an empty bond.
 	 *
 	 */
 	public Bond() {
@@ -61,8 +61,11 @@ public class Bond extends ElectronContainer implements Cloneable
 	}
 
 	/**
-	 * Constructs a bond with a given order from an array of atoms
-	 *
+	 * Constructs a bond with a given order from an array of atoms.
+     *
+     * @param atom1  the first Atom in the bond
+     * @param atom2  the second Atom in the bond
+     * @param order  the bond order
 	 */
 	public Bond(Atom atom1, Atom atom2, double order)
 	{
@@ -73,18 +76,21 @@ public class Bond extends ElectronContainer implements Cloneable
 	}
 
 	/**
-	 * Constructs a bond with a given order and stereo orientation from an array of atoms
+	 * Constructs a bond with a given order and stereo orientation from an array of atoms.
 	 *
+     * @param atom1  the first Atom in the bond
+     * @param atom2  the second Atom in the bond
+     * @param order  the bond order
+     * @param int    a descriptor the stereochemical orientation of this bond
 	 */
-	public Bond(Atom atom1, Atom atom2, double order, int stereo)
-	{
-    this(atom1, atom2, order);
-		setStereo(stereo);
+	public Bond(Atom atom1, Atom atom2, double order, int stereo) {
+        this(atom1, atom2, order);
+        setStereo(stereo);
 	}
 
 
 	/**
-	 * Returns the array of atoms making up this bond
+	 * Returns the array of atoms making up this bond.
 	 *
 	 * @return An array of atoms participating in this bond
 	 */
@@ -134,7 +140,8 @@ public class Bond extends ElectronContainer implements Cloneable
 	/**
 	 * Returns an Atom from this bond.
 	 *
-	 * @param   position  The position in this bond where the atom is 
+	 * @param   position  The position in this bond where the atom is
+     * @return            The atom at the specified position
 	 */
 	public Atom getAtomAt(int position)
 	{
@@ -295,9 +302,10 @@ public class Bond extends ElectronContainer implements Cloneable
 
 
   /**
-   * Compares a bond with this bond
+   * Compares a bond with this bond.
    *
-   * @return Return true, if the bond is equal to this bond
+   * @param  object Object of type Bond
+   * @return        Return true, if the bond is equal to this bond
    */
   public boolean compare(Object object)
   {
