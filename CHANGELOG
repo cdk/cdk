@@ -36,6 +36,7 @@ Fixes:
 * Fixed NullPointerException problems in ChemModel.clone()
 * Fixed SetOfReactions.clone() method
 * Fixed AtomParity.clone() method
+* Added missing RingSet.toString() method
 
 API changes:
 * Moved SingleElectron to the core module

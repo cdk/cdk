@@ -214,7 +214,7 @@ public class RingSet extends Vector implements java.io.Serializable, Cloneable
 		RingSet clone = (RingSet)super.clone();
         // clone the rings
         clone.removeAllElements();
-        Enumeration rings = clone.elements();
+        Enumeration rings = elements();
         while (rings.hasMoreElements()) {
             Object possibleRing = rings.nextElement();
             if (possibleRing instanceof ChemObject) {
@@ -225,4 +225,27 @@ public class RingSet extends Vector implements java.io.Serializable, Cloneable
         }
 		return clone;
 	}
+
+    /**
+     * Returns the String representation of this RingSet.
+     *
+     * @return The String representation of this RingSet
+     */
+    public String toString() {
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("RingSet(");
+        buffer.append(this.hashCode() + ", ");
+        buffer.append("R=" + size() + ", ");
+        Enumeration rings = elements();
+        while (rings.hasMoreElements()) {
+            Ring possibleRing = (Ring)rings.nextElement();
+            buffer.append(possibleRing.toString());
+            if (rings.hasMoreElements()) {
+                buffer.append(", ");
+            }
+        }
+        buffer.append(")");
+        return buffer.toString();
+    }
+
 }
