@@ -74,6 +74,7 @@ public class SmilesParser {
 	private LoggingTool logger;
     private HydrogenAdder hAdder;
     private ValencyHybridChecker valencyChecker;
+    private int status=0;
 
 	/**
 	 *  Constructor for the SmilesParser object
@@ -95,6 +96,7 @@ public class SmilesParser {
 	int nodeCounter = -1;
 	String smiles = null;
 	double bondStatus = -1;
+  double bondStatusForRingClosure = 1;
 	Atom[] rings = null;
 	double[] ringbonds = null;
 	int thisRing = -1;
@@ -191,6 +193,7 @@ public class SmilesParser {
 				if ((mychar >= 'A' && mychar <= 'Z') || (mychar >= 'a' && mychar <= 'z') ||
                     (mychar == '*'))
 				{
+                    status=1;
                     logger.debug("Found a must-be 'organic subset' element");
                     // only 'organic subset' elements allowed
                     atom = null;
@@ -233,11 +236,19 @@ public class SmilesParser {
                     bondExists = true;
 				} else if (mychar == '=')
 				{
-					bondStatus = CDKConstants.BONDORDER_DOUBLE;
-					position++;
+          position++;
+          if(status==2){
+            bondStatus = CDKConstants.BONDORDER_DOUBLE;
+          }else{
+            bondStatusForRingClosure = CDKConstants.BONDORDER_DOUBLE;
+          }
 				} else if (mychar == '#')
 				{
-					bondStatus = CDKConstants.BONDORDER_TRIPLE;
+          if(status==2){
+            bondStatus = CDKConstants.BONDORDER_TRIPLE;
+          }else{
+            bondStatusForRingClosure = CDKConstants.BONDORDER_TRIPLE;
+          }
 					position++;
 				} else if (mychar == '(')
 				{
@@ -267,6 +278,7 @@ public class SmilesParser {
 					position++;
 				} else if (mychar >= '0' && mychar <= '9')
 				{
+          status=2;
 					chars[0] = mychar;
 					currentSymbol = new String(chars);
 					thisRing = (new Integer(currentSymbol)).intValue();
@@ -644,7 +656,7 @@ public class SmilesParser {
 	 */
 	private void handleRing(Atom atom) {
         logger.debug("handleRing():");
-		double bondStat = bondStatus;
+		double bondStat = bondStatusForRingClosure;
 		Bond bond = null;
 		Atom partner = null;
 		Atom thisNode = rings[thisRing];
@@ -662,8 +674,9 @@ public class SmilesParser {
 			 *  - add current atom to list
 			 */
 			rings[thisRing] = atom;
-			ringbonds[thisRing] = bondStatus;
+			ringbonds[thisRing] = bondStatusForRingClosure;
 		}
+    bondStatusForRingClosure=1;
 	}
     
 }
