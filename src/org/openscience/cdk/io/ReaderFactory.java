@@ -260,7 +260,7 @@ public class ReaderFactory {
         boolean formatDetected = false;
         while (buffer.ready() && (line != null) && (!formatDetected)) {
             logger.debug(lineNumber + ": ", line);
-            for (int i=0; i<readers.size(); i++) {
+            for (int i=0; i<readers.size() && !formatDetected; i++) {
                 ChemObjectReader coReader = (ChemObjectReader)readers.elementAt(i);
                 if (coReader.matches(lineNumber, line)) {
                     formatDetected = true;
@@ -270,6 +270,7 @@ public class ReaderFactory {
                         logger.info("Detected format: ", returnReader.getFormatName());
                         if (!(returnReader instanceof DummyReader)) {
                             returnReader.setReader(originalBuffer);
+                            logger.debug("Input Reader set in ChemObjectReader");
                         } else {
                             // DummyReader's will throw an error
                             logger.warn("Have not set the Reader, because a DummyReader will throw an exception");
@@ -283,6 +284,11 @@ public class ReaderFactory {
             }
             line = buffer.readLine();
             lineNumber++;
+        }
+        
+        if (formatDetected == true) {
+            logger.warn("Format was detected but it could not instantiate a Reader for that format");
+            return null;
         }
 
         logger.warn("Now comes the tricky and more difficult ones....");
