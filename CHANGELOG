@@ -61,6 +61,7 @@ API changes:
 * Moved AtomContainer.unregisterAtomListeners() and .unregisterElectronContainerListeners()
   to AtomContainerManipulator
 * The files from the former core module are now in the new data module
+* LoggingTool moved from the core to the standard module
 
 20041201 Release
 ------------------------------------

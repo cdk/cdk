@@ -93,74 +93,113 @@ public class LoggingTool {
     private boolean debug = false;
     private boolean tostdout = false;
 
-    private Object logger;
+    private org.apache.log4j.Category log4jLogger;
+    private LoggingTool logger;
     private String classname;
-    
-    /** Default number of StackTraceElements to be printed by debug(Exception) */
-    public final int DEFAULT_STACK_LENGTH = 5;
-     
-    private int stackLength = DEFAULT_STACK_LENGTH;
 
+    private int stackLength;
+    
+    /** Default number of StackTraceElements to be printed by debug(Exception). */
+    public final int DEFAULT_STACK_LENGTH = 5;
+
+    /**
+     * Constructs a LoggingTool which produces log lines without any special
+     * indication which class the message originates from. Neither is any
+     * configuration done.
+     *
+     * @deprecated Use the constructor LoggingTool(Object) instead.
+     */
     public LoggingTool() {
         this( LoggingTool.class.getName() );
     }
 
+    /**
+     * Constructs a LoggingTool which produces log lines without any special
+     * indication which class the message originates from. It allows determining
+     * wether the log4j should be configurated.
+     *
+     * @param useConfig if true, the Log4J engine is configurated with a CDK
+     *                  specific configuration file
+     */
     public LoggingTool(boolean useConfig) {
         this( LoggingTool.class.getName(), useConfig );
     }
 
     /**
-     * Instantiate a LoggingTool which produces log lines indicating them to be
-     * for the Class with the name <code>classname</code>.
+     * Constructs a LoggingTool which produces log lines indicating them to be
+     * for the Class with the name <code>classname</code>. No special
+     * configuration of the Log4J engine is done.
+     *
+     * @param classname String with the name of the class from which the messages
+     *                  originate
+     *
+     * @deprecated Use the constructor LoggingTool(Object) instead.
      */
     public LoggingTool(String classname) {
         this(classname, false);
     }
     
     /**
-     * Instantiate a LoggingTool which produces log lines indicating them to be
-     * for the Class given by <code>object</code>.
+     * Constructs a LoggingTool which produces log lines indicating them to be
+     * for the Class of the <code>Object</code>. The Log4J engine is configurated
+     * with CDK customized properties.
+     *
+     * @param object Object from which the message originates
      */
     public LoggingTool(Object object) {
-        this(object.getClass().getName());
+        this(object.getClass().getName(), true);
     }
     
+    /**
+     * Constructs a LoggingTool which produces log lines indicating them to be
+     * for the Class of the <code>Object</code>. It allows determining
+     * wether the log4j should be configurated.
+     *
+     * @param useConfig if true, the Log4J engine is configurated with a CDK
+     *                  specific configuration file
+     *
+     * @param object Object from which the message originates
+     */
     public LoggingTool(Object object, boolean useConfig) {
         this(object.getClass().getName(), useConfig);
     }
 
+    /**
+     * Constructs a LoggingTool which produces log lines indicating them to be
+     * for the Class with the name <code>classname</code>. It allows determining
+     * wether the log4j should be configurated.
+     *
+     * @param classname String with the name of the class from which the messages
+     *                  originate
+     * @param useConfig if true, the Log4J engine is configurated with a CDK
+     *                  specific configuration file
+     *
+     * @deprecated Use the constructor LoggingTool(Object) instead.
+     */
     public LoggingTool(String classname, boolean useConfig) {
+        this.logger = this;
+        this.stackLength = DEFAULT_STACK_LENGTH;
         this.classname = classname;
         try {
-            logger = org.apache.log4j.Category.getInstance( classname );
-            /****************************************************************
-             * believe it or not this code has a purpose
-             * The MSFT jvm throws a ClassNotFoundException instead of
-             * a NoClassDefFoundError. But the compiler will not allow the
-             * catch of ClassNotFoundException because it doesn't think
-             * that anybody is going to throw it. So, we will put in this
-             * little trick ...
-             ****************************************************************/
-            if (false)
-              throw new ClassNotFoundException();
+            log4jLogger = (org.apache.log4j.Category)org.apache.log4j.Category
+                                                     .getInstance( classname );
             if (useConfig) {
                 // configure Log4J
-                InputStream ins = this.getClass().getClassLoader().getResourceAsStream("org/openscience/cdk/config/data/log4j.properties");
+                InputStream ins = this.getClass().getClassLoader()
+                    .getResourceAsStream("org/openscience/cdk/config/data/log4j.properties");
                 Properties props = new Properties();
                 props.load(ins);
                 org.apache.log4j.PropertyConfigurator.configure(props);
             }
-        } catch (ClassNotFoundException e) {
-            tostdout = true;
-            debug("Log4J class not found!");
         } catch (NoClassDefFoundError e) {
             tostdout = true;
-            debug("Log4J class not found!");
+            logger.debug("Log4J class not found!");
         } catch (NullPointerException e) {
             tostdout = true;
-            debug("Properties file not found!");
+            logger.debug("Properties file not found!");
         } catch (Exception e) {
             tostdout = true;
+            logger.debug("Unknown error occured: ", e.getMessage());
         }
         /****************************************************************
          * but some JVMs (i.e. MSFT) won't pass the SecurityException to
@@ -181,8 +220,8 @@ public class LoggingTool {
               tostdout = true;
             }
           } catch (Exception e) {
-            // guess what happens: security exception from applet runner
-            // do not debug in those cases
+            logger.debug("guessed what happened: security exception thrown by applet runner");
+            logger.debug("  therefore, do not debug");
           }
         }
     }
@@ -205,6 +244,8 @@ public class LoggingTool {
      * calling <code>debug(Throwable)</code>.
      * The default value is DEFAULT_STACK_LENGTH.
      *
+     * @param length the new stack length
+     *
      * @see #DEFAULT_STACK_LENGTH
      */
     public void setStackLength(int length) {
@@ -219,9 +260,11 @@ public class LoggingTool {
     }
 
     /**
-     * Shows debug output for the Object. If the object is an instanceof
+     * Shows DEBUG output for the Object. If the object is an instanceof
      * Throwable it will output the trace. Otherwise it will use the
      * toString() method.
+     *
+     * @param object Object to apply toString() too and output
      */
     public void debug(Object object) {
         if (debug) {
@@ -237,46 +280,101 @@ public class LoggingTool {
         if (tostdout) {
             toSTDOUT("DEBUG", string);
         } else {
-            ((org.apache.log4j.Category)logger).debug(string);
+            log4jLogger.debug(string);
         }
     }
     
+    /**
+     * Shows DEBUG output for the given Object's. It uses the
+     * toString() method to concatenate the objects.
+     *
+     * @param object  Object to apply toString() too and output
+     * @param object2 Object to apply toString() too and output
+     */
     public void debug(Object object, Object object2) {
         if (debug) {
             debugString("" + object + object2);
         }
     }
     
+    /**
+     * Shows DEBUG output for the given Object's. It uses the
+     * toString() method to concatenate the objects.
+     *
+     * @param object Object to apply toString() too and output
+     * @param number int to concatenate to object
+     */
     public void debug(Object object, int number) {
         if (debug) {
             debugString("" + object + number);
         }
     }
     
+    /**
+     * Shows DEBUG output for the given Object's. It uses the
+     * toString() method to concatenate the objects.
+     *
+     * @param object Object to apply toString() too and output
+     * @param number int to concatenate to object
+     */
     public void debug(Object object, double number) {
         if (debug) {
             debugString("" + object + number);
         }
     }
     
+    /**
+     * Shows DEBUG output for the given Object's. It uses the
+     * toString() method to concatenate the objects.
+     *
+     * @param object Object to apply toString() too and output
+     * @param bool   boolean to concatenate to object
+     */
     public void debug(Object object, boolean bool) {
         if (debug) {
             debugString("" + object + bool);
         }
     }
     
+    /**
+     * Shows DEBUG output for the given Object's. It uses the
+     * toString() method to concatenate the objects.
+     *
+     * @param obj  Object to apply toString() too and output
+     * @param obj2 Object to apply toString() too and output
+     * @param obj3 Object to apply toString() too and output
+     */
     public void debug(Object obj, Object obj2, Object obj3) {
         if (debug) {
             debugString("" + obj + obj2 + obj3);
         }
     }
     
+    /**
+     * Shows DEBUG output for the given Object's. It uses the
+     * toString() method to concatenate the objects.
+     *
+     * @param obj  Object to apply toString() too and output
+     * @param obj2 Object to apply toString() too and output
+     * @param obj3 Object to apply toString() too and output
+     * @param obj4 Object to apply toString() too and output
+     */
     public void debug(Object obj, Object obj2, Object obj3, Object obj4) {
         if (debug) {
             debugString("" + obj + obj2 + obj3 + obj4);
         }
     }
     
+    /**
+     * Shows DEBUG output for the given Object's. It uses the
+     * toString() method to concatenate the objects.
+     *
+     * @param obj  Object to apply toString() too and output
+     * @param obj2 Object to apply toString() too and output
+     * @param obj3 Object to apply toString() too and output
+     * @param obj4 Object to apply toString() too and output
+     * @param obj5 Object to apply toString() too and output
+     */
     public void debug(Object obj, Object obj2, Object obj3, Object obj4, Object obj5) {
         if (debug) {
             debugString("" + obj + obj2 + obj3 + obj4 + obj5);
@@ -304,26 +402,59 @@ public class LoggingTool {
                 }
             } catch (Exception ioException) {
                 error("Serious error in LoggingTool while printing exception stack trace: " + 
-                ioException.getMessage());
+                      ioException.getMessage());
+                logger.debug(ioException);
             }
         }
     }
     
+    /**
+     * Shows ERROR output for the Object. It uses the toString() method.
+     *
+     * @param object Object to apply toString() too and output
+     */
     public void error(Object object) {
         if (debug) {
             errorString("" + object);
         }
     }
 
+    /**
+     * Shows ERROR output for the given Object's. It uses the
+     * toString() method to concatenate the objects.
+     *
+     * @param object Object to apply toString() too and output
+     * @param number int to concatenate to object
+     */
     public void error(Object object, int number) {
         if (debug) {
             errorString("" + object + number);
         }
     }
     
+    /**
+     * Shows ERROR output for the given Object's. It uses the
+     * toString() method to concatenate the objects.
+     *
+     * @param object Object to apply toString() too and output
+     * @param number double to concatenate to object
+     */
     public void error(Object object, double number) {
         if (debug) {
             errorString("" + object + number);
+        }
+    }
+    
+    /**
+     * Shows ERROR output for the given Object's. It uses the
+     * toString() method to concatenate the objects.
+     *
+     * @param object Object to apply toString() too and output
+     * @param bool   boolean to concatenate to object
+     */
+    public void error(Object object, boolean bool) {
+        if (debug) {
+            errorString("" + object + bool);
         }
     }
     
@@ -331,59 +462,130 @@ public class LoggingTool {
         if (tostdout) {
             toSTDOUT("ERROR", string);
         } else {
-            ((org.apache.log4j.Category)logger).error(string);
+            log4jLogger.error(string);
         }
     }
     
+    /**
+     * Shows ERROR output for the given Object's. It uses the
+     * toString() method to concatenate the objects.
+     *
+     * @param object  Object to apply toString() too and output
+     * @param object2 Object to apply toString() too and output
+     */
     public void error(Object object, Object object2) {
         if (debug) {
             errorString("" + object + object2);
         }
     }
     
+    /**
+     * Shows ERROR output for the given Object's. It uses the
+     * toString() method to concatenate the objects.
+     *
+     * @param obj  Object to apply toString() too and output
+     * @param obj2 Object to apply toString() too and output
+     * @param obj3 Object to apply toString() too and output
+     */
     public void error(Object obj, Object obj2, Object obj3) {
         if (debug) {
             errorString("" + obj + obj2 + obj3);
         }
     }
     
+    /**
+     * Shows ERROR output for the given Object's. It uses the
+     * toString() method to concatenate the objects.
+     *
+     * @param obj  Object to apply toString() too and output
+     * @param obj2 Object to apply toString() too and output
+     * @param obj3 Object to apply toString() too and output
+     * @param obj4 Object to apply toString() too and output
+     */
     public void error(Object obj, Object obj2, Object obj3, Object obj4) {
         if (debug) {
             errorString("" + obj + obj2 + obj3 + obj4);
         }
     }
     
+    /**
+     * Shows ERROR output for the given Object's. It uses the
+     * toString() method to concatenate the objects.
+     *
+     * @param obj  Object to apply toString() too and output
+     * @param obj2 Object to apply toString() too and output
+     * @param obj3 Object to apply toString() too and output
+     * @param obj4 Object to apply toString() too and output
+     * @param obj5 Object to apply toString() too and output
+     */
     public void error(Object obj, Object obj2, Object obj3, Object obj4, Object obj5) {
         if (debug) {
             errorString("" + obj + obj2 + obj3 + obj4 + obj5);
         }
     }
     
+    /**
+     * Shows FATAL output for the Object. It uses the toString() method.
+     *
+     * @param object Object to apply toString() too and output
+     */
     public void fatal(Object object) {
         if (debug) {
             if (tostdout) {
                 toSTDOUT("FATAL", object.toString());
             } else {
-                ((org.apache.log4j.Category)logger).fatal("" + object.toString());
+                log4jLogger.fatal("" + object.toString());
             }
         }
     }
 
+    /**
+     * Shows INFO output for the Object. It uses the toString() method.
+     *
+     * @param object Object to apply toString() too and output
+     */
     public void info(Object object) {
         if (debug) {
             infoString("" + object);
         }
     }
 
+    /**
+     * Shows INFO output for the given Object's. It uses the
+     * toString() method to concatenate the objects.
+     *
+     * @param object Object to apply toString() too and output
+     * @param number int to concatenate to object
+     */
     public void info(Object object, int number) {
         if (debug) {
             infoString("" + object + number);
         }
     }
     
+    /**
+     * Shows INFO output for the given Object's. It uses the
+     * toString() method to concatenate the objects.
+     *
+     * @param object Object to apply toString() too and output
+     * @param number double to concatenate to object
+     */
     public void info(Object object, double number) {
         if (debug) {
             infoString("" + object + number);
+        }
+    }
+    
+    /**
+     * Shows INFO output for the given Object's. It uses the
+     * toString() method to concatenate the objects.
+     *
+     * @param object Object to apply toString() too and output
+     * @param bool   boolean to concatenate to object
+     */
+    public void info(Object object, boolean bool) {
+        if (debug) {
+            infoString("" + object + bool);
         }
     }
     
@@ -391,33 +593,73 @@ public class LoggingTool {
         if (tostdout) {
             toSTDOUT("INFO", string);
         } else {
-            ((org.apache.log4j.Category)logger).info(string);
+            log4jLogger.info(string);
         }
     }
     
+    /**
+     * Shows INFO output for the given Object's. It uses the
+     * toString() method to concatenate the objects.
+     *
+     * @param object  Object to apply toString() too and output
+     * @param object2 Object to apply toString() too and output
+     */
     public void info(Object object, Object object2) {
         if (debug) {
             infoString("" + object + object2);
         }
     }
     
+    /**
+     * Shows INFO output for the given Object's. It uses the
+     * toString() method to concatenate the objects.
+     *
+     * @param obj  Object to apply toString() too and output
+     * @param obj2 Object to apply toString() too and output
+     * @param obj3 Object to apply toString() too and output
+     */
     public void info(Object obj, Object obj2, Object obj3) {
         if (debug) {
             infoString("" + obj + obj2 + obj3);
         }
     }
     
+    /**
+     * Shows INFO output for the given Object's. It uses the
+     * toString() method to concatenate the objects.
+     *
+     * @param obj  Object to apply toString() too and output
+     * @param obj2 Object to apply toString() too and output
+     * @param obj3 Object to apply toString() too and output
+     * @param obj4 Object to apply toString() too and output
+     */
     public void info(Object obj, Object obj2, Object obj3, Object obj4) {
         if (debug) {
             infoString("" + obj + obj2 + obj3 + obj4);
         }
     }
     
+    /**
+     * Shows INFO output for the given Object's. It uses the
+     * toString() method to concatenate the objects.
+     *
+     * @param obj  Object to apply toString() too and output
+     * @param obj2 Object to apply toString() too and output
+     * @param obj3 Object to apply toString() too and output
+     * @param obj4 Object to apply toString() too and output
+     * @param obj5 Object to apply toString() too and output
+     */
     public void info(Object obj, Object obj2, Object obj3, Object obj4, Object obj5) {
         if (debug) {
             infoString("" + obj + obj2 + obj3 + obj4 + obj5);
         }
     }
+
+    /**
+     * Shows WARN output for the Object. It uses the toString() method.
+     *
+     * @param object Object to apply toString() too and output
+     */
     public void warn(Object object) {
         if (debug) {
             warnString("" + object);
@@ -428,40 +670,88 @@ public class LoggingTool {
         if (tostdout) {
             toSTDOUT("WARN", string);
         } else {
-            ((org.apache.log4j.Category)logger).warn(string);
+            log4jLogger.warn(string);
         }
     }
     
+    /**
+     * Shows WARN output for the given Object's. It uses the
+     * toString() method to concatenate the objects.
+     *
+     * @param object Object to apply toString() too and output
+     * @param number int to concatenate to object
+     */
     public void warn(Object object, int number) {
         if (debug) {
             warnString("" + object + number);
         }
     }
     
+    /**
+     * Shows WARN output for the given Object's. It uses the
+     * toString() method to concatenate the objects.
+     *
+     * @param object Object to apply toString() too and output
+     * @param number double to concatenate to object
+     */
     public void warn(Object object, double number) {
         if (debug) {
             warnString("" + object + number);
         }
     }
     
+    /**
+     * Shows WARN output for the given Object's. It uses the
+     * toString() method to concatenate the objects.
+     *
+     * @param object  Object to apply toString() too and output
+     * @param object2 Object to apply toString() too and output
+     */
     public void warn(Object object, Object object2) {
         if (debug) {
             warnString("" + object + object2);
         }
     }
     
+    /**
+     * Shows WARN output for the given Object's. It uses the
+     * toString() method to concatenate the objects.
+     *
+     * @param obj  Object to apply toString() too and output
+     * @param obj2 Object to apply toString() too and output
+     * @param obj3 Object to apply toString() too and output
+     */
     public void warn(Object obj, Object obj2, Object obj3) {
         if (debug) {
             warnString("" + obj + obj2 + obj3);
         }
     }
     
+    /**
+     * Shows WARN output for the given Object's. It uses the
+     * toString() method to concatenate the objects.
+     *
+     * @param obj  Object to apply toString() too and output
+     * @param obj2 Object to apply toString() too and output
+     * @param obj3 Object to apply toString() too and output
+     * @param obj4 Object to apply toString() too and output
+     */
     public void warn(Object obj, Object obj2, Object obj3, Object obj4) {
         if (debug) {
             warnString("" + obj + obj2 + obj3 + obj4);
         }
     }
     
+    /**
+     * Shows WARN output for the given Object's. It uses the
+     * toString() method to concatenate the objects.
+     *
+     * @param obj  Object to apply toString() too and output
+     * @param obj2 Object to apply toString() too and output
+     * @param obj3 Object to apply toString() too and output
+     * @param obj4 Object to apply toString() too and output
+     * @param obj5 Object to apply toString() too and output
+     */
     public void warn(Object obj, Object obj2, Object obj3, Object obj4, Object obj5) {
         if (debug) {
             warnString("" + obj + obj2 + obj3 + obj4 + obj5);
@@ -473,10 +763,12 @@ public class LoggingTool {
      * For example:
      * <pre>
      * if (logger.isDebugEnabled()) {
-     * ? logger.info("The 1056389822th prime that is used is: ",
-     *  ? ? ? ? ? ? ?calculatePrime(1056389822));
+     *   logger.info("The 1056389822th prime that is used is: ",
+     *                calculatePrime(1056389822));
      * }
      * </pre>
+     *
+     * @return true, if debug is enabled
      */
     public boolean isDebugEnabled() {
         return debug;
