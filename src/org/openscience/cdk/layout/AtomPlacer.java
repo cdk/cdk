@@ -160,7 +160,7 @@ public class AtomPlacer
 
 			startAngle = GeometryTools.getAngle(xDiff, yDiff);
 			//- (Math.PI / 2.0);
-			populatePolygonCorners(atomsToDraw, new Point2d(atom.getPoint2D()), startAngle, addAngle, bondLength, true);
+			populatePolygonCorners(atomsToDraw, new Point2d(atom.getPoint2D()), startAngle, addAngle, bondLength);
 			return;
 		}
 
@@ -250,7 +250,7 @@ public class AtomPlacer
 		}
 		radius = bondLength;
 		startAngle = GeometryTools.getAngle(startAtom.getX2D() - atom.getX2D(), startAtom.getY2D() - atom.getY2D());
-		populatePolygonCorners(atomsToDraw, new Point2d(atom.getPoint2D()), startAngle, addAngle, radius, true);
+		populatePolygonCorners(atomsToDraw, new Point2d(atom.getPoint2D()), startAngle, addAngle, radius);
 
 	}
 
@@ -346,7 +346,7 @@ public class AtomPlacer
 	 *      length or ring radius
 	 *@param  doDistanceSort  Should the above mentioned distance sort be done?
 	 */
-	public void populatePolygonCorners(Vector atomsToDraw, Point2d rotationCenter, double startAngle, double addAngle, double radius, boolean doDistanceSort)
+	public void populatePolygonCorners(Vector atomsToDraw, Point2d rotationCenter, double startAngle, double addAngle, double radius)
 	{
 		Atom connectAtom = null;
 		double angle = startAngle;
@@ -357,26 +357,6 @@ public class AtomPlacer
 		logger.debug("populatePolygonCorners->startAngle: " + Math.toDegrees(angle));
 		Vector points = new Vector();
 		Atom atom = null;
-		if (doDistanceSort)
-		{	  
-			calculateWeights(molecule);
-			System.out.println("listing atom weights before sorting...");
-			for (int f = 0; f < atomsToDraw.size(); f++)
-			{
-				atom = (Atom)atomsToDraw.elementAt(f);
-				System.out.println("Atom " + (f + 1) + ": " + atom.getProperty("Weight"));	
-			}
-			System.out.println("...done.");
-			Collections.sort(atomsToDraw, ATOM_ORDER);
-			System.out.println("listing atom weights after sorting...");
-			for (int f = 0; f < atomsToDraw.size(); f++)
-			{
-				atom = (Atom)atomsToDraw.elementAt(f);
-				System.out.println("Atom " + (f + 1) + ": " + atom.getProperty("Weight"));	
-			}
-			System.out.println("...done.");
-
-		}
 		
 		for (int i = 0; i < atomsToDraw.size(); i++)
 		{
