@@ -102,7 +102,7 @@ public class MDLReader implements CDKConstants, ChemObjectReader {
 		{
 			exc.printStackTrace();
 		}
-		chemModel.addSetOfMolecules(setOfMolecules);
+		chemModel.setSetOfMolecules(setOfMolecules);
 		chemSequence.addChemModel(chemModel);
 		chemFile.addChemSequence(chemSequence);
 		

@@ -263,7 +263,7 @@ public class ControllerTest
 			fis.close();
 			chemSequence = chemFile.getChemSequence(0);
 			chemModel = chemSequence.getChemModel(0);
-			setOfMolecules = chemModel.getSetOfMolecules(0);
+			setOfMolecules = chemModel.getSetOfMolecules();
 			molecule = setOfMolecules.getMolecule(0);
 		}
 		catch(Exception exc)

@@ -61,7 +61,7 @@ public class RingSearchTest
 			
 			chemSequence = chemFile.getChemSequence(0);
 			chemModel = chemSequence.getChemModel(0);
-			setOfMolecules = chemModel.getSetOfMolecules(0);
+			setOfMolecules = chemModel.getSetOfMolecules();
 			molecule = setOfMolecules.getMolecule(0);
 			start = System.currentTimeMillis();
 			for (int i = 0; i < 1; i++)

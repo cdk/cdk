@@ -53,7 +53,7 @@ public class MDLReaderTest
 			
 			chemSequence = chemFile.getChemSequence(0);
 			chemModel = chemSequence.getChemModel(0);
-			setOfMolecules = chemModel.getSetOfMolecules(0);
+			setOfMolecules = chemModel.getSetOfMolecules();
 			molecules = new Molecule[setOfMolecules.getMoleculeCount()];
 			for (int i = 0; i < setOfMolecules.getMoleculeCount(); i++)
 			{

@@ -64,7 +64,7 @@ public class Renderer2DTest extends JPanel
 			fis.close();
 			chemSequence = chemFile.getChemSequence(0);
 			chemModel = chemSequence.getChemModel(0);
-			setOfMolecules = chemModel.getSetOfMolecules(0);
+			setOfMolecules = chemModel.getSetOfMolecules();
 			molecule = setOfMolecules.getMolecule(0);
 			GeometryTools.translateAllPositive(molecule);
 			GeometryTools.scaleMolecule(molecule, getPreferredSize(), 0.8);			
