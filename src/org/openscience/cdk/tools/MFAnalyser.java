@@ -86,6 +86,7 @@ public class MFAnalyser{
         Isotope i;
         StandardIsotopes si = new StandardIsotopes();
         AtomContainer ac = getAtomContainer();
+        Isotope h= si.getMajorIsotope("H");
         for(int f = 0; f < ac.getAtomCount();f++)
         {
             i = si.getMajorIsotope(ac.getAtomAt(f).getSymbol());
@@ -97,24 +98,66 @@ public class MFAnalyser{
             {
                 return 0;
             }
+            mass += ac.getAtomAt(f).getHydrogenCount()*h.exactMass;
         }
         return mass;
     }
 
 		
-	/** 
+  /**
+   * Produces an AtomContainer without explicit Hs but with H count from one with Hs. The new molecule is a deep copy.
+   *
+   * @return                The mol without Hs.
+   */
+  public AtomContainer removeHydrogens(){
+    AtomContainer ac = getAtomContainer();
+    Molecule mol = new Molecule();
+    Map map=new HashMap();
+    for (int i = 0; i < ac.getAtomCount(); i++) {
+      Atom atom = ac.getAtomAt(i);
+      if (!atom.getSymbol().equals("H")) {
+        Atom a = (Atom)atom.clone();
+        a.setHydrogenCount(0);
+        mol.addAtom(a);
+        map.put(ac.getAtomAt(i),a);
+      }
+    }
+    for (int i = 0; i < ac.getBondCount(); i++) {
+      Atom[] atoms = ac.getBondAt(i).getAtoms();
+      boolean isH = false;
+      for (int k = 0; k < atoms.length; k++) {
+        if (atoms[k].getSymbol().equals("H")) {
+          isH = true;
+          break;
+        }
+      }
+      if (!isH) {
+        Bond bond = (Bond)ac.getBondAt(i).clone();
+        bond.setAtoms(new Atom[]{(Atom)map.get(atoms[0]),(Atom)map.get(atoms[1])});
+        mol.addBond(bond);
+      }
+    }
+    for (int i = 0; i < ac.getAtomCount(); i++) {
+      if(ac.getAtomAt(i).getSymbol().equals("H"))
+        ((Atom)map.get(ac.getConnectedAtoms(ac.getAtomAt(i))[0])).setHydrogenCount(((Atom)map.get(ac.getConnectedAtoms(ac.getAtomAt(i))[0])).getHydrogenCount()+1);
+    }
+    return (mol);
+  }
+
+
+  	/** 
      * Returns a set of nodes excluding all the hydrogens
      *
      * @keyword hydrogen, removal
      */
-	public AtomContainer getHeavyAtoms()
+	public List getHeavyAtoms()
 	{
-		AtomContainer newAc = new AtomContainer();
+		ArrayList newAc = new ArrayList();
 		AtomContainer ac = getAtomContainer();
 		for (int f = 0; f < ac.getAtomCount(); f++){
 			if (!ac.getAtomAt(f).getSymbol().equals("H"))
 			{
-				newAc.addAtom(ac.getAtomAt(f));
+				newAc.add(ac.getAtomAt(f));
 			}
 		}	
 		return newAc;
