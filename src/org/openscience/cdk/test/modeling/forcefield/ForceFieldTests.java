@@ -32,6 +32,7 @@ import java.lang.*;
 import java.util.*;
 import javax.vecmath.*;
 
+import org.openscience.cdk.modeling.builder3d.ModelBuilder3D;
 import org.openscience.cdk.modeling.forcefield.*;
 import org.openscience.cdk.*;
 import org.openscience.cdk.test.CDKTestCase;
@@ -39,6 +40,7 @@ import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.AtomTools;
+import org.openscience.cdk.io.MDLWriter;
 
 /**
  *  Check results of GeometricMinimizer using some examples.
@@ -264,7 +266,50 @@ public class ForceFieldTests extends CDKTestCase {
 		
 		//System.out.println("hessian = " + sbi.hessianInPoint(acCoordinates));
 	}
-
+	
+	
+	public void testForceField() throws Exception, CDKException {
+		/*System.out.println("TEST FORCE FIELD");
+		
+		String JMOLPATH = "java -jar /home/cho/SOFTWARE-DEVELOPMENT/cdk-project/Jmol10pre14/Jmol.jar";
+		String TMP_FILE_PATH = "/home/cho/SOFTWARE-DEVELOPMENT/cdk-project/Modeling/data/cdk/data/mdl/";
+		String []molfile={"TEST3DSTARTMolecule.mol","TEST3DMINIMIZEDMolecule.mol"};
+		String command = "";
+		BufferedWriter fout = null;
+		SetOfMolecules som=new SetOfMolecules();
+		
+		
+		ForceField ff=new ForceField();
+		createTestMoleculeAndSetMMFF94Parameters();
+		//mb3d.setTemplateHandler();
+		som.addMolecule(new Molecule(ac));
+		/*try{
+			ff.setMolecule(new Molecule(ac),true);
+			ff.minimize();
+			som.addMolecule(ff.getMolecule());
+		}catch(Exception ex1){
+		}*/
+		
+		/*for (int i=0;i<molfile.length;i++){
+			try {
+				fout = new BufferedWriter(new FileWriter(molfile[i]));
+			} catch (Exception ex2) {
+			}
+		
+			MDLWriter mdlw = new MDLWriter(fout);
+			try {
+				mdlw.write(som.getMolecule(i));
+				mdlw.close();
+			} catch (Exception ex3) {
+			}
+			command = JMOLPATH + " " +molfile[i];
+			try {
+				Runtime.getRuntime().exec(command);
+			} catch (Exception ex4) {
+			}
+		}*/
+	}
+    
 
 	/**
 	 *  A unit test for JUnit (Torsions)

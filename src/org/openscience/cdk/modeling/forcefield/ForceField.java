@@ -25,7 +25,6 @@ public class ForceField extends GeometricMinimizer{
 	
 	private Molecule molecule;
 	private String potentialFunction="mmff94";
-	//GeometricMinimizer geometricMinimizer=new GeometricMinimizer();
 	ForceFieldTools ffTools = new ForceFieldTools();
 	/**
 	 *  Constructor for the ForceField object
@@ -38,7 +37,7 @@ public class ForceField extends GeometricMinimizer{
 		
 	}
 	
-	public void setPotentialfunction(String potentialName){
+	public void setPotentialFunction(String potentialName){
 		potentialFunction=potentialName;
 	}
 	
@@ -73,7 +72,9 @@ public class ForceField extends GeometricMinimizer{
 	}
 			
 
-	
+	public Molecule getMolecule() {
+		return this.molecule;
+	}
 
 }
 
