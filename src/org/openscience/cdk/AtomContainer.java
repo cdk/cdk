@@ -73,12 +73,8 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	/**
 	 *  Constructs an empty AtomContainer.
 	 */
-	public AtomContainer()
-	{
-		atomCount = 0;
-		electronContainerCount = 0;
-		atoms = new Atom[growArraySize];
-		electronContainers = new ElectronContainer[growArraySize];
+	public AtomContainer() {
+        this(10, 10);
 	}
 
 
