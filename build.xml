@@ -72,6 +72,7 @@
             <echo message="    Jmol found: ${jmol.present}" />
             <echo message="  JOELib found: ${joelib.present}" />
             <echo message="  Java3D found: ${java3D.present}" />
+            <echo message="   Ant version: ${ant.version}" />
         </target>
 
         <target id="check" name="check"
@@ -85,6 +86,9 @@
           <available classname="javax.media.j3d.Canvas3D"
                      classpathref="project.class.path"
                      property="java3D.present"/>
+          <condition property="hasAnt16">
+            <contains string="${ant.version}" substring="1.6"/>
+          </condition>
         </target>
 
         <target id="init" name="init" depends="check">
@@ -278,7 +282,8 @@
         </target>
         
 	      <!-- Convert the JavaCC .jj file to the correct .java files for the IUPAC parser -->
-        <target name="javacc" depends="init">
+        <target name="javacc" depends="nojavacc, dojavacc"/>
+        <target name="dojavacc" depends="init" if="hasAnt16">
           <delete>
               <fileset id="javacc-generated" 
               dir="${build.src}/org/openscience/cdk/iupac/parser/" 
@@ -287,6 +292,19 @@
           <javacc target="${src}/org/openscience/cdk/iupac/parser/NomParser.jj" 
             outputdirectory="${build.src}/org/openscience/cdk/iupac/parser/" 
             javacchome="${lib}"/>
+        </target>
+        <target name="nojavacc" depends="init" unless="hasAnt16">
+          <echo message="No Ant 1.6. Not compiling IUPAC parser"/>
+          <delete>
+            <fileset id="javacc-generated"
+              dir="${build.src}/org/openscience/cdk/iupac/parser/" 
+              includes="**/*"/>
+            <fileset id="javacc-test"
+              dir="${build.src}/org/openscience/cdk/test/iupac/" 
+              includes="**/*"/>
+          </delete>
+          <patch dir="${build.src}" strip="1"
+                 patchfile="${src}/patches/org.openscience.cdk.test.CDKTests.noAnt16"/>
         </target>
 
         <target id="compile-extra" name="compile-extra" depends="dist-standard, javacc">

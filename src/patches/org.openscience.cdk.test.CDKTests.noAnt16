@@ -1,0 +1,19 @@
+--- src/org/openscience/cdk/test/CDKTests.java	2003-09-14 19:27:27.000000000 +0100
++++ src/org/openscience/cdk/test/CDKTests.java.noAnt16	2003-09-14 20:47:05.000000000 +0100
+@@ -39,7 +39,6 @@
+ import org.openscience.cdk.test.tools.*;
+ import org.openscience.cdk.test.aromaticity.*;
+ import org.openscience.cdk.test.geometry.*;
+-import org.openscience.cdk.test.iupac.*;
+ 
+ /**
+  * TestSuite that runs all the sample tests
+@@ -87,8 +86,6 @@
+         suite.addTest(BremserPredictorTest.suite());
+         // from cdk.test.structgen
+         suite.addTest(RandomStructureGeneratorTest.suite());
+-        // from cdk.test.iupac
+-        suite.addTest(ParserTest.suite());
+         return suite;
+     }
+     
