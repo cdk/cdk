@@ -25,8 +25,62 @@
         The module was published in:
         Peter Murray-Rust, Henry S. Rzepa, Mark J. Williamson, and Egon L. Willighagen,
         &quot;Chemical Markup, XML, and the World Wide Web. 5. Applications of Chemical Metadata in RSS Aggregators&quot;,
-        <emphasis>J.Chem.Inf.Comp.Sci.</emphasis>, 2004
+        <emphasis>J.Chem.Inf.Comp.Sci.</emphasis>, 2004 (DOI: 
+        <ulink url="http://dx.doi.org/10.1021/ci034244p">10.1021/ci034244p</ulink>)
     </para>
+    <para>
+        The plugin does not have a GUI to configure the RSS sources yet, but instead, these are defined in a
+        configuration file in <filename>${HOME}/.jmol/rssviewer.props</filename>. 
+        On a UNIX machine this is something like:
+        <filename>/home/egonw/.jmol/rssviewer.props</filename>.
+        For JChemPaint, the location is <filename>${HOME}/.jchempaint/rssviewer.props</filename>.
+        The contents of this file looks like:
+    </para>
+    <programlisting linenumbering="numbered">
+ChannelCount=2
+
+Channel0=http://www.woc.sci.kun.nl/cgi-bin/rssfeed.rss
+Channel0Title=Woordenboek Organische Chemie
+Channel1=http://www.ch.ic.ac.uk/csdemo/feed.php
+Channel1Title=Imperial College
+    </programlisting>
+  </section>
+  <section title="CMLRSS feeds">
+    <title>Available CMLRSS feeds</title>
+    <para>
+        A alphabetic list of available CMLRSS feeds:
+    </para>
+    <informaltable>
+      <tgroup cols="2">
+        <thead>
+          <row>
+            <entry><para>Website Title</para></entry>
+            <entry><para>CMLRSS feed</para></entry>
+          </row>
+        </thead>
+        <tbody>
+          <row>
+            <entry><para>Imperial College ChemStock</para></entry>
+            <entry><para>http://www.ch.ic.ac.uk/csdemo/feed.php?num=5</para></entry>
+          </row>
+          <row>
+            <entry><para>NMRShiftDB</para></entry>
+            <entry><para>http://almost.cubic.uni-koeln.de/jetspeed/NmrshiftdbServlet?nmrshiftdbaction=rss</para></entry>
+          </row>
+          <row>
+            <entry><para>Woordenboek Organische Chemie</para></entry>
+            <entry><para>http://www.woc.sci.kun.nl/cgi-bin/rssfeed.rss</para></entry>
+          </row>
+          <row>
+            <entry><para>World Wide Molecular Matrix</para></entry>
+            <entry><para>http://wwmm.ch.cam.ac.uk/Bob/rss/results.rss</para></entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </informaltable>
+  </section>
+  <section title="Screenshots">
+    <title>Screenshots</title>
     <figure>
         <title>RSSViewer plugin in Jmol-HEAD</title>
         <mediaobject>
