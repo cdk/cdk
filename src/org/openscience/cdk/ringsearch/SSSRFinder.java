@@ -313,7 +313,7 @@ public class SSSRFinder {
 		{
 			exc.printStackTrace();
 		}
-		logger.debug("found Ring  "+ ring);
+		logger.debug("found Ring  ", ring);
 		return ring;
 	}
 		
