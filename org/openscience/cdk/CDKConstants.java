@@ -53,14 +53,18 @@ public interface CDKConstants
 	static int STEREO_ATOM_PARITY_MINUS = -1;
 
 	/****************************************
-	 * Some flags used for structure layout *
+	 * Some predefined flags - keep the     *
+	 * numbers below 50 free for other      * 
+	 * purposes                             * 
 	 ****************************************/
 
 	/** A bonds which end is above the drawing plane */
-	static int ISPLACED = 7;
-	static int ISINRING = 8;
-	static int ISALIPHATIC = 9;
-
+	static int ISPLACED = 50;
+	static int ISINRING = 51;
+	static int ISALIPHATIC = 52;
+	
+	
+	static int VISITED = 53; // Use in tree searches
 
 }
 

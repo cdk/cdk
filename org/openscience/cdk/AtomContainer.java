@@ -387,6 +387,40 @@ public class AtomContainer extends ChemObject implements Cloneable{
 	}
 	
 
+
+	/**
+	 * Removes the atom at the given position from the AtomContainer
+	 * !!! Note that the bonds are unaffected, You also have to take care of 
+	 * removeing all bonds to this atom from the container.
+	 *
+	 * @param   position  The position of the atom to be removed.
+	 */
+	public void removeAtom(int position)
+	{
+		Atom atom = atoms[position];
+		for (int i = position; i < atomCount; i++)
+		{
+			atoms[i] = atoms[i + 1];
+		}
+		atoms[atomCount] = null;
+		atomCount--;		
+	}
+	
+
+	/**
+	 * Removes the given atom from the AtomContainer
+	 * !!! Note that the bonds are unaffected, You also have to take care of 
+	 * removeing all bonds to this atom from the container.
+	 *
+	 * @param   atom  The atom to be removed
+	 * @exception   Exception  throws if the atom is not in the container
+	 */
+	public void removeAtom(Atom atom) throws java.lang.Exception
+	{
+		int position = getAtomNumber(atom);
+		removeAtom(position);
+	}
+
 	/**
 	 * removes all atoms and bond from this container
 	 *

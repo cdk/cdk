@@ -256,9 +256,10 @@ public class StructureDiagramGenerator implements CDKConstants
 	/**
 	 * Does a layout of all the non-ring parts of the molecule
 	 */
-	private void handleAliphatics()
+	private void handleAliphatics() throws java.lang.Exception
 	{
-
+		AtomContainer longestChain = getInitialLongestChain(molecule);
+		System.out.println("Longest Chain has " + longestChain.getAtomCount() + " atoms.");
 	}
 
 
@@ -552,5 +553,54 @@ public class StructureDiagramGenerator implements CDKConstants
 		}
 	}
 	
+	private AtomContainer getInitialLongestChain(Molecule molecule) throws java.lang.Exception
+	{
+		int [][] conMat = molecule.getConnectionMatrix();
+		int [][] apsp  = PathTools.computeFloydAPSP(conMat);
+		int maxPathLength = 0;
+		int bestStartAtom = -1, bestEndAtom = -1;
+		Atom atom = null, startAtom = null, endAtom =null;
+		for (int f = 0; f < apsp.length; f++)
+		{
+			atom = molecule.getAtomAt(f);
+			if (molecule.getDegree(atom) == 1)
+			{
+				for (int g = 0; g < apsp.length; g++)
+				{
+					if (apsp[f][g] > maxPathLength)
+					{
+						maxPathLength = apsp[f][g];
+						bestStartAtom = f;
+						bestEndAtom = g;
+					}
+				}
+			}
+		}
+		startAtom = molecule.getAtomAt(bestStartAtom);
+		endAtom = molecule.getAtomAt(bestEndAtom);
+		AtomContainer path = new AtomContainer();
+		PathTools.depthFirstSearch(molecule, startAtom, endAtom, path);
+		return path;
+	}
+	
+	private AtomContainer getLongestChain(Molecule molecule, Atom startAtom) throws java.lang.Exception
+	{
+		int [][] conMat = molecule.getConnectionMatrix();
+		int [][] apsp  = PathTools.computeFloydAPSP(conMat);
+		int startNumber = molecule.getAtomNumber(startAtom);
+		int maxPathLength = 0;
+		int maxAtom = -1;
+		for (int f = 0; f < apsp.length; f++)
+		{
+			if (apsp[startNumber][f] > maxPathLength)
+			{
+				maxPathLength = apsp[startNumber][f];
+				maxAtom = f;
+			}
+		}
+		Atom farestAtom = molecule.getAtomAt(maxAtom);
+		return new AtomContainer();
+	}
+
 
 }

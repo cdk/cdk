@@ -52,7 +52,7 @@ public class ChemObject implements CDKConstants, Cloneable
 	 * 10 flags per object should be more than enough.
 	 */
 	 
-	public boolean[] flags = new boolean[10];
+	public boolean[] flags = new boolean[100];
 	/** Array of multipurpose vectors. Handle like described for the
 	  * flags above 
 	  */

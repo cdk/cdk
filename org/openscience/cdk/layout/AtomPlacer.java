@@ -74,33 +74,61 @@ public class AtomPlacer
 			closestPoint2.sub(new Vector2d(atom.getPoint2D()));			
 			occupiedAngle = closestPoint1.angle(closestPoint2);
 			System.out.println("distributePartners->occupiedAngle: " + Math.toDegrees(occupiedAngle));
-			
+		
 		}
 		else
 		{
 			/* find the pair of partners from sharedAtoms
 			 which has the largest angle between them */
 		}
-				
+
+
+		double angle1 = GeometryTools.getAngle(sortedAtoms[0].getX2D() - atom.getX2D(), sortedAtoms[0].getY2D() - atom.getY2D());				
+		double angle2 = GeometryTools.getAngle(sortedAtoms[1].getX2D() - atom.getX2D(), sortedAtoms[1].getY2D() - atom.getY2D());				
+		Atom startAtom = null;		 
+		if (angle1 > angle2)
+		{
+			if (angle1 - angle2 < Math.PI)
+			{
+				startAtom = sortedAtoms[0];
+			}
+			else
+			{
+				startAtom = sortedAtoms[1];
+			}
+		
+		}
+		else
+		{
+			if (angle2 - angle1 < Math.PI)
+			{
+				startAtom = sortedAtoms[1];
+			}
+			else
+			{
+				startAtom = sortedAtoms[0];
+			}
+		}
+
 		double remainingAngle = (2 * Math.PI) - occupiedAngle;
-		System.out.println("distributePartners->remainingAngle: " + Math.toDegrees(remainingAngle));		
 		double addAngle = remainingAngle / (partners.getAtomCount() + 1);
-		System.out.println("distributePartners->addAngle: " + Math.toDegrees(addAngle));		
 
 		for (int f = 0; f < partners.getAtomCount(); f++)
 		{
 			atomsToDraw.addElement(partners.getAtomAt(f));
 		}
 		double radius = bondLength;
-		Atom startAtom = sharedAtoms.getAtomAt(0);
+
+
+		
 		double startAngle = GeometryTools.getAngle(startAtom.getX2D() - atom.getX2D(), startAtom.getY2D() - atom.getY2D());
-		System.out.println("distributePartners->startAngle: " + Math.toDegrees(startAngle));
 		/* 
 		 * Get one bond connected to the spiro bridge atom.
 		 * It doesn't matter in which direction we draw.
 		 */ 
 		new RingPlacer().drawPolygon(atomsToDraw, new Point2d(atom.getPoint2D()), startAngle, addAngle, radius);
 	}
+
 
 	
 	public Molecule getMolecule()

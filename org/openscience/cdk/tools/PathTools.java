@@ -28,10 +28,11 @@
 
 package org.openscience.cdk.tools;
 
+import org.openscience.cdk.*;
 import java.util.*;
 import java.io.*;
 
-public class PathTools
+public class PathTools implements CDKConstants
 {
 	 public static boolean  debug = false; // minimum details
 
@@ -83,6 +84,13 @@ public class PathTools
 		return A;
 	}
 
+
+	/**
+	 * Sums up the columns in a 2D int matrix
+	 *
+	 * @param   apsp  The 2D int matrix	
+	 * @return  A 1D matrix containing the column sum of the 2D matrix    
+	 */
 	public static int[] getInt2DColumnSum(int[][]apsp)
 	{
 		int[] colSum = new int[apsp.length];
@@ -99,6 +107,48 @@ public class PathTools
 		return colSum;
 	}
 	 
+	 
+
+	/**
+	 * Recursivly perfoms a depth first search in a molecular graphs contained in the AtomContainer molecule, 
+	 * starting at the root atom and returning when it hits the target atom.
+	 *
+	 * @param   molecule  The AtomContainer to be searched 
+	 * @param   root  The root atom to start the search at
+	 * @param   target  The target
+	 * @param   path  
+	 * @return     
+	 */
+	public static boolean depthFirstSearch(AtomContainer molecule, Atom root, Atom target, AtomContainer path) throws java.lang.Exception
+	{	
+		Bond[] bonds = molecule.getConnectedBonds(root);
+		Atom nextAtom = null;
+		root.flags[VISITED] = true;
+		for(int f = 0; f < bonds.length; f++)
+		{
+			nextAtom = bonds[f].getConnectedAtom(root);
+			if (!nextAtom.flags[VISITED])
+			{
+				path.addAtom(nextAtom);
+				path.addBond(bonds[f]);
+				if (nextAtom == target)
+				{
+					return true;
+				}
+				else
+				{
+					depthFirstSearch(molecule, nextAtom, target, path);
+				}
+				if (!path.contains(target))
+				{
+					path.removeAtom(nextAtom);
+					path.removeBond(bonds[f]);
+				}	
+			}
+		}
+		return false;
+	}
+
 }
 
 
