@@ -31,7 +31,7 @@ import java.util.*;
 import junit.framework.*;
 
 /**
- *  Checks the funcitonality of the ConnectivityChecker
+ *  Checks the functionality of the ConnectivityChecker
  *
  * @author     steinbeck
  * @created    July 24, 2001
