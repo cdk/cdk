@@ -53,7 +53,7 @@ public class IUPACNameGenerator
 	{
 
 		// to make sure the CDK LoggingTool is configured
-		LoggingTool logger = new LoggingTool(true);
+		LoggingTool logger = new LoggingTool();
         LoggingTool.configureLog4j();
         logger.dumpSystemProperties();
 

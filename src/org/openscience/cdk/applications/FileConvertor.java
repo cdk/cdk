@@ -124,7 +124,7 @@ public class FileConvertor {
     private boolean apply3DRebonding = false;
 
     public FileConvertor() {
-        logger = new LoggingTool(this);
+        logger = new LoggingTool();
         LoggingTool.configureLog4j();
         logger.dumpSystemProperties();
 
