@@ -128,6 +128,7 @@ public class PseudoAtom extends Atom implements java.io.Serializable, Cloneable
      */
     public void setLabel(String label) {
         this.label = label;
+	notifyChanged();
     }
 
     /**

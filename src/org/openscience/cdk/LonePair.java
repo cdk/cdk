@@ -89,6 +89,7 @@ public class LonePair extends ElectronContainer implements java.io.Serializable,
 	 */
 	public void setAtom(Atom atom) {
 		this.atom = atom;
+		notifyChanged();
 	}
 
     /**

@@ -101,6 +101,7 @@ public class Element extends ChemObject implements java.io.Serializable, Cloneab
      */
     public void setAtomicNumber(int atomicNumber) {
         this.atomicNumber = atomicNumber;
+	notifyChanged();
     }
 
     /**
@@ -123,6 +124,7 @@ public class Element extends ChemObject implements java.io.Serializable, Cloneab
      */
     public void setSymbol(String symbol) {
         this.symbol = symbol;
+	notifyChanged();
     }
 
     /**

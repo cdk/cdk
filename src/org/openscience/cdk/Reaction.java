@@ -117,6 +117,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      */
     public void setReactants(SetOfMolecules setOfMolecules) {
         reactants = setOfMolecules;
+	notifyChanged();
     }
 	
     /**
@@ -137,6 +138,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      */
     public void setProducts(SetOfMolecules setOfMolecules) {
         products = setOfMolecules;
+	notifyChanged();
     }
 	
     /**
@@ -169,6 +171,8 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      */
     public void addReactant(Molecule reactant) {
         addReactant(reactant, 1.0);
+	/* notifyChanged() is called by 
+	   addReactant(Molecule reactant, double coefficient) */
     }
     
     /**
@@ -179,6 +183,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      */
     public void addAgent(Molecule agent) {
         agents.addAtomContainer(agent);
+	notifyChanged();
     }
 
     /**
@@ -190,6 +195,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      */
     public void addReactant(Molecule reactant, double coefficient) {
         reactants.addAtomContainer(reactant, coefficient);
+	notifyChanged();
     }
     
     /**
@@ -200,6 +206,8 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      */
     public void addProduct(Molecule product) {
         this.addProduct(product, 1.0);
+	/* notifyChanged() is called by 
+	addProduct(Molecule product, double coefficient)*/
     }
     
     /**
@@ -211,6 +219,8 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      */
     public void addProduct(Molecule product, double coefficient) {
         products.addAtomContainer(product, coefficient);
+	/* notifyChanged() is called by 
+	   addReactant(Molecule reactant, double coefficient) */
     }
     
     /**
@@ -244,6 +254,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      * @see     #getReactantCoefficient
      */
     public boolean setReactantCoefficient(Molecule reactant, double coefficient) {
+	notifyChanged();
         return reactants.setMultiplier(reactant, coefficient);
     }
 	
@@ -257,6 +268,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      * @see     #getProductCoefficient
      */
     public boolean setProductCoefficient(Molecule product, double coefficient) {
+	notifyChanged();
         return products.setMultiplier(product, coefficient);
     }
 	
@@ -291,6 +303,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      * @see     #getReactantCoefficients
      */
     public boolean setReactantCoefficients(double[] coefficients) {
+	notifyChanged();
         return reactants.setMultipliers(coefficients);
     }
 	
@@ -302,6 +315,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      * @see     #getProductCoefficients
      */
     public boolean setProductCoefficients(double[] coefficients) {
+	notifyChanged();
         return products.setMultipliers(coefficients);
     }
 	
@@ -312,7 +326,8 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      * @see   #getDirection
      */
     public void setDirection(int direction) {
-        reactionDirection = direction;
+	reactionDirection = direction;
+	notifyChanged();
     }
     
     /**
@@ -337,6 +352,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
         if (mappingCount + 1 >= map.length) growMappingArray();
         map[mappingCount] = mapping;
         mappingCount++;
+	notifyChanged();
     }
     
     protected void growMappingArray() {

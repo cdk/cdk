@@ -85,6 +85,7 @@ public class SingleElectron extends ElectronContainer implements java.io.Seriali
 	 */
 	public void setAtom(Atom atom) {
 		this.atom = atom;
+		notifyChanged();
 	}
 
     /**

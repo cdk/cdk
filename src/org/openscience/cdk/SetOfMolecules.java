@@ -59,6 +59,7 @@ public class SetOfMolecules extends SetOfAtomContainers {
      */
     public void addMolecule(Molecule molecule) {
         super.addAtomContainer(molecule);
+	/* notifyChanged() called in super.addAtomContainer() */
     }
     
     /**
@@ -71,6 +72,7 @@ public class SetOfMolecules extends SetOfAtomContainers {
         for (int i=0; i< mols.length; i++) {
             addMolecule(mols[i]);
         }
+	/* notifyChanged() called in super.addAtomContainer() */
     }
     
     

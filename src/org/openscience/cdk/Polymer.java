@@ -68,6 +68,8 @@ public class Polymer extends Molecule implements java.io.Serializable, Cloneable
 	 */
 	public void addAtom(Atom oAtom) {
 		addAtom(oAtom, getMonomer(""));
+		/* notifyChanged() is called by addAtom in
+		   AtomContainer */
 	}
 	
 	/**
@@ -87,6 +89,8 @@ public class Polymer extends Molecule implements java.io.Serializable, Cloneable
 		if (! monomers.contains(oMonomer.getMonomerName())) {
 			monomers.put(oMonomer.getMonomerName(), oMonomer);
 		}
+		/* notifyChanged() is called by addAtom in
+		   AtomContainer */
 	}
 	
 	/**

@@ -117,6 +117,7 @@ public class Isotope extends Element implements java.io.Serializable, Cloneable
 	 */
 	public void setNaturalAbundance(double naturalAbundance) {
 		this.naturalAbundance = naturalAbundance;
+		notifyChanged();
 	}
 
 
@@ -129,6 +130,7 @@ public class Isotope extends Element implements java.io.Serializable, Cloneable
 	 */
 	public void setExactMass(double exactMass) {
 		this.exactMass = exactMass;
+		notifyChanged();
 	}
 
 
@@ -176,6 +178,7 @@ public class Isotope extends Element implements java.io.Serializable, Cloneable
      */
     public void setMassNumber(int massNumber) {
         this.massNumber = massNumber;
+	notifyChanged();
     }
 
 	/**

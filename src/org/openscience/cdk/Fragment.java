@@ -69,6 +69,7 @@ public class Fragment extends AtomContainer implements java.io.Serializable, Clo
      */
     public void setTitle(String title) {
         this.title = title;
+	notifyChanged();
     }
 
     /**
@@ -91,6 +92,7 @@ public class Fragment extends AtomContainer implements java.io.Serializable, Clo
      */
     public void setFreeValences(int count) {
         this.free_valences = count;
+	notifyChanged();
     }
 }
 

@@ -62,6 +62,7 @@ public class ElectronContainer extends ChemObject implements java.io.Serializabl
 	public void setElectronCount(int electronCount)
 	{
 		this.electronCount = electronCount;
+		notifyChanged();
 	}
 
     /**

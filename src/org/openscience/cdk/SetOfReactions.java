@@ -89,6 +89,7 @@ public class SetOfReactions extends ChemObject implements java.io.Serializable, 
 		if (reactionCount + 1 >= reactions.length) growReactionArray();
 		reactions[reactionCount] = reaction;
 		reactionCount++;
+		notifyChanged();
 	}
 
 

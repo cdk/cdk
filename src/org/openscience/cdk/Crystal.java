@@ -79,6 +79,9 @@ public class Crystal extends AtomContainer implements java.io.Serializable, Clon
      * Adds the atoms in the AtomContainer as cell content.
      */
     public void add(AtomContainer container) {
+	    /* What do we gain here if we call super()?
+	       Wouldn't we just get the same behaviour 
+	       by just inheriting the method? */ 
         super.add(container);
     }
 
@@ -100,6 +103,7 @@ public class Crystal extends AtomContainer implements java.io.Serializable, Clon
      */
     public void setA(Vector3d newAxis) {
         aAxis = newAxis;
+	notifyChanged();
     }
 
     /**
@@ -123,6 +127,7 @@ public class Crystal extends AtomContainer implements java.io.Serializable, Clon
      */
     public void setB(Vector3d newAxis) {
         bAxis = newAxis;
+	notifyChanged();
     }
 
     /**
@@ -146,6 +151,7 @@ public class Crystal extends AtomContainer implements java.io.Serializable, Clon
      */
     public void setC(Vector3d newAxis) {
         cAxis = newAxis;
+	notifyChanged();
     }
 
     /**
@@ -180,6 +186,7 @@ public class Crystal extends AtomContainer implements java.io.Serializable, Clon
      */
     public void setSpaceGroup(String group) {
         spaceGroup = group;
+	notifyChanged();
     }
 
     /**
@@ -200,6 +207,7 @@ public class Crystal extends AtomContainer implements java.io.Serializable, Clon
      */
     public void setZ(int value) {
         this.zValue = value;
+	notifyChanged();
     }
 
     /**
@@ -243,6 +251,7 @@ public class Crystal extends AtomContainer implements java.io.Serializable, Clon
         aAxis = new Vector3d(0.0, 0.0, 0.0);
         bAxis = new Vector3d(0.0, 0.0, 0.0);
         cAxis = new Vector3d(0.0, 0.0, 0.0);
+	notifyChanged();
     }
 
 }

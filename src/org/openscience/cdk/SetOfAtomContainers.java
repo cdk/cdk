@@ -72,6 +72,7 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
 	 */
 	public void addAtomContainer(AtomContainer atomContainer) {
 		addAtomContainer(atomContainer, 1.0);
+		/* notifyChanged is called below */
 	}
 
 	/**
@@ -86,6 +87,7 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
         for (int i=0; i<atomContainers.length; i++) {
             if (atomContainers[i] == container) {
                 multipliers[i] = multiplier;
+		notifyChanged();
                 return true;
             }
         }
@@ -103,6 +105,7 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
      */
     public void setMultiplier(int position, double multiplier) {
         multipliers[position] = multiplier;
+	notifyChanged();
     }
 	
 	/**
@@ -128,6 +131,7 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
     public boolean setMultipliers(double[] newMultipliers) {
         if (newMultipliers.length == atomContainerCount) {
 			System.arraycopy(newMultipliers, 0, multipliers, 0, atomContainerCount);
+			notifyChanged();
 			return true;
 		}
 		
@@ -149,6 +153,7 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
 		atomContainers[atomContainerCount] = atomContainer;
 		multipliers[atomContainerCount] = multiplier;
 		atomContainerCount++;
+		notifyChanged();
 	}
 
 	/**
@@ -161,6 +166,7 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
         for (int i=0; i< mols.length; i++) {
             addAtomContainer(mols[i]);
         }
+	/* notifyChanged() is called by addAtomContainer() */
     }
 
 	/**

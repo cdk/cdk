@@ -91,6 +91,7 @@ public class Monomer extends AtomContainer implements java.io.Serializable, Clon
 	 */
 	public void setMonomerName(String cMonomerName) {
 		monomerName = cMonomerName;
+		notifyChanged();
 	}
 	
 	/**
@@ -103,5 +104,6 @@ public class Monomer extends AtomContainer implements java.io.Serializable, Clon
 	 */
 	public void setMonomerType(String cMonomerType) {
 		monomerType = cMonomerType;
+		notifyChanged();
 	}
 }
