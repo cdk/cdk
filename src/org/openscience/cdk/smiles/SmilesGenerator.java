@@ -732,10 +732,10 @@ public class SmilesGenerator {
             if(container.getBond(parent,atom).getStereo()==0){
               for(int i=0;i<chiralNeighbours.size();i++){
                 if(chiralNeighbours.get(i)!=parent){
-                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==0&&isLeft(((Atom)chiralNeighbours.get(i)),parent,atom)&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
+                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==0&&!isLeft(((Atom)chiralNeighbours.get(i)),parent,atom)&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
                     sorted[2]=(Atom)chiralNeighbours.get(i);
                   }
-                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==0&&!isLeft(((Atom)chiralNeighbours.get(i)),parent,atom)&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
+                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==0&&isLeft(((Atom)chiralNeighbours.get(i)),parent,atom)&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
                     sorted[1]=(Atom)chiralNeighbours.get(i);
                   }
                   if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==CDKConstants.STEREO_BOND_UP&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
