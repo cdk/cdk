@@ -36,7 +36,7 @@ import org.openscience.cdk.exception.CDKException;
 /**
  * A set of static methods for working with crystal coordinates.
  *
- * @cdkPackage standard
+ * @cdk.module standard
  *
  * @author  Egon Willighagen <egonw@sci.kun.nl>
  *

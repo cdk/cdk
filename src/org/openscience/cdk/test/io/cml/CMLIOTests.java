@@ -31,7 +31,7 @@ import junit.framework.TestSuite;
  * TestSuite for doing regression tests on the org.openscience.cdk.io.cml
  * package.
  *
- * @cdkPackage test
+ * @cdk.module test
  */
 public class CMLIOTests {
 

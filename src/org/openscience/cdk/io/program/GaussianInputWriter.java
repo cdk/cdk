@@ -46,7 +46,7 @@ import org.openscience.cdk.io.setting.StringIOSetting;
  * File writer thats generates input files for Gaussian calculation
  * jobs. It was tested with Gaussian98.
  *
- * @cdkPackage io
+ * @cdk.module io
  *
  * @author  Egon Willighagen <egonw@sci.kun.nl>
  *

@@ -40,7 +40,7 @@ import javax.vecmath.Point3d;
  *  }
  *  </pre>
  *
- * @cdkPackage core
+ * @cdk.module core
  *
  * @author     steinbeck
  * @created    2000-10-02

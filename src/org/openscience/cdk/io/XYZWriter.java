@@ -37,7 +37,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 
 /**
- * @cdkPackage io
+ * @cdk.module io
  *
  * @author  Bradley A. Smith <bradley@baysmith.com>
  * @author  J. Daniel Gezelter

@@ -37,7 +37,7 @@ import org.openscience.cdk.geometry.GeometryTools;
  * This class defines regression tests that should ensure that the source code
  * of the org.openscience.cdk.geometry.GeometryTools is not broken.
  *
- * @cdkPackage test
+ * @cdk.module test
  *
  * @author     Egon Willighagen
  * @created    2004-01-30

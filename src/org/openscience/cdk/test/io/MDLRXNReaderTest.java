@@ -36,7 +36,7 @@ import junit.framework.*;
 /**
  * TestCase for the reading MDL RXN files using one test file.
  *
- * @cdkPackage test
+ * @cdk.module test
  *
  * @see org.openscience.cdk.io.MDLRXNReader
  */

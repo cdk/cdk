@@ -39,7 +39,7 @@ import org.openscience.cdk.AtomContainer;
  * <p>References:
  *   <a href="http://cdk.sf.net/biblio.html#HAN96">HAN96</a>
  *
- * @cdkPackage standard
+ * @cdk.module standard
  *
  * @cdk.keyword graph, path
  *

@@ -35,7 +35,7 @@ import org.openscience.cdk.Element;
 /**
  * Checks the funcitonality of the Element class.
  *
- * @cdkPackage test
+ * @cdk.module test
  *
  * @see org.openscience.cdk.Element
  */

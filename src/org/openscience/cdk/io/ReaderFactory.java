@@ -51,7 +51,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *   ChemObjectReader reader = new ReaderFactory().createReader(stringReader);
  * </pre>
  *
- * @cdkPackage experimental
+ * @cdk.module experimental
  *
  * @author  Egon Willighagen <egonw@sci.kun.nl>
  * @author  Bradley A. Smith <bradley@baysmith.com>

@@ -34,7 +34,7 @@ import org.openscience.cdk.exception.CDKException;
  * This Reader will throw a CDKException when someone tries to
  * read information from it, to signal that it is not imlemented.
  *
- * @cdkPackage io
+ * @cdk.module io
  */
 public class DummyReader extends DefaultChemObjectReader {
 

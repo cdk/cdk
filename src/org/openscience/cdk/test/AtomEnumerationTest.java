@@ -36,7 +36,7 @@ import org.openscience.cdk.AtomEnumeration;
 /**
  * Checks the funcitonality of the AtomEnumeration class.
  *
- * @cdkPackage test
+ * @cdk.module test
  *
  * @see org.openscience.cdk.AtomEnumeration
  */

@@ -48,7 +48,7 @@ import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.templates.MoleculeFactory;
 
 /**
- * @cdkPackage test
+ * @cdk.module test
  */
 public class FingerprinterTest extends TestCase
 {

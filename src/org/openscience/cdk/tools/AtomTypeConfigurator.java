@@ -28,7 +28,7 @@ import java.util.Vector;
 
 /**
  *
- * @cdkPackage standard
+ * @cdk.module standard
  */
 public interface AtomTypeConfigurator {
     

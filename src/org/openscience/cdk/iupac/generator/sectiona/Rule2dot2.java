@@ -36,7 +36,7 @@ import org.openscience.cdk.iupac.generator.NumberingRule;
  * This rule assumes (and does <b>not</b> check) that the
  * molecule is a lineair carbon chain.
  *
- * @cdkPackage experimental
+ * @cdk.module experimental
  *
  * @author Egon Willighagen
  */

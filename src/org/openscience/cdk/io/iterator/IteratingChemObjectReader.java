@@ -36,7 +36,7 @@ import org.openscience.cdk.io.ChemObjectIO;
  * in specific file format (e.g. SDF), without reading them into memory first. Suitable
  * for very large files, with thousands of molecules.
  *
- * @cdkPackage io
+ * @cdk.module io
  *
  * @see org.openscience.cdk.io.ChemObjectIO
  *

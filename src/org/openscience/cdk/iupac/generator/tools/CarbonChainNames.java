@@ -27,7 +27,7 @@ package org.openscience.cdk.iupac.generator.tools;
 /**
  * This class is used the name carbon chains.
  *
- * @cdkPackage experimental
+ * @cdk.module experimental
  *
  * @author Egon Willighagen
  */

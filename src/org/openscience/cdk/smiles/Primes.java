@@ -28,7 +28,7 @@
 package org.openscience.cdk.smiles;
 
 /**
- * @cdkPackage standard
+ * @cdk.module standard
  *
  * @author  Oliver Horlacher <oliver.horlacher@therastrat.com>
  * @created 2002-02-26

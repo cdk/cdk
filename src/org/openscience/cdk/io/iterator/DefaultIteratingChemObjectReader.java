@@ -36,7 +36,7 @@ import org.openscience.cdk.io.setting.IOSetting;
  * Abstract class that IteratingChemObjectReader's can implement to have it
  * take care of basic stuff, like managing the ReaderListeners.
  *
- * @cdkPackage io
+ * @cdk.module io
  */
 public abstract class DefaultIteratingChemObjectReader implements IteratingChemObjectReader {
 

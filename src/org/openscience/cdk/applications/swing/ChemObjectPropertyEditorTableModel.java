@@ -36,7 +36,7 @@ import javax.swing.table.AbstractTableModel;
 import org.openscience.cdk.ChemObject;
 
 /**
- * @cdkPackage applications
+ * @cdk.module applications
  */
 public class ChemObjectPropertyEditorTableModel extends AbstractTableModel {
     

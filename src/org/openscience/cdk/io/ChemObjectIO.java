@@ -42,7 +42,7 @@ import org.openscience.cdk.io.setting.IOSetting;
  * <p>The easiest way to implement a new ChemObjectReader is to
  * subclass the DefaultChemObjectReader.
  *
- * @cdkPackage io
+ * @cdk.module io
  *
  * @see DefaultChemObjectReader
  *

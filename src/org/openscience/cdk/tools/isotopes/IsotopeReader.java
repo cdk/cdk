@@ -38,7 +38,7 @@ import org.xml.sax.XMLReader;
 
 /**
  *
- * @cdkPackage standard
+ * @cdk.module standard
  */
 public class IsotopeReader {
 

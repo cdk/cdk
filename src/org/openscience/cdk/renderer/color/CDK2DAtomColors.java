@@ -31,7 +31,7 @@ import org.openscience.cdk.Atom;
 /**
  * Gives a short table of atom colors for 2D display.
  *
- * @cdkPackage render
+ * @cdk.module render
  */
 public class CDK2DAtomColors implements AtomColorer, java.io.Serializable {
 

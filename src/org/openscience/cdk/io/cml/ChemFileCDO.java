@@ -45,7 +45,7 @@ import org.openscience.cdk.io.cml.cdopi.CDOInterface;
  * CDO object needed as interface with the JCFL library for reading CML
  * encoded data.
  *
- * @cdkPackage io
+ * @cdk.module io
  * 
  * @author Egon Willighagen <egonw@sci.kun.nl>
  */ 

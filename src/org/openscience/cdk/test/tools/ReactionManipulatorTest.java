@@ -32,7 +32,7 @@ import org.openscience.cdk.Reaction;
 import org.openscience.cdk.tools.ReactionManipulator;
 
 /**
- * @cdkPackage test
+ * @cdk.module test
  *
  * @author     Egon Willighagen
  * @created    2003-07-23

@@ -46,7 +46,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * http://www.uku.fi/~thassine/ghemical/</a>)
  * molecular mechanics (*.mm1gp) files.
  *
- * @cdkPackage io
+ * @cdk.module io
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  */

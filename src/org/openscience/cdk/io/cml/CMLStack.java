@@ -31,7 +31,7 @@ package org.openscience.cdk.io.cml;
 /**
  * Low weigth alternative to Sun's Stack class.
  *
- * @cdkPackage io
+ * @cdk.module io
  *
  * @cdk.keyword stack
  */

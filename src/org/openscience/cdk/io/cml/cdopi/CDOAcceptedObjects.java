@@ -34,7 +34,7 @@ import java.util.Enumeration;
 /**
  * List of names (String classes) of objects accepted by CDO.
  *
- * @cdkPackage io
+ * @cdk.module io
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  */

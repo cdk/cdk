@@ -41,7 +41,7 @@ import org.openscience.cdk.tools.LoggingTool;
 /**
  * TestCase for the writer MDL mol files using one test file.
  *
- * @cdkPackage test
+ * @cdk.module test
  *
  * @see org.openscience.cdk.io.MDLWriter
  */

@@ -49,7 +49,7 @@ import org.openscience.cdk.tools.IDCreator;
  * System.out.print(stringWriter.toString());
  * </pre>
  *
- * @cdkPackage io
+ * @cdk.module io
  *
  * @author  Egon Willighagen <egonw@sci.kun.nl>
  * @created 2003-10-01

@@ -33,7 +33,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 /**
  *
- * @cdkPackage standard
+ * @cdk.module standard
  */
 public class IsotopeHandler extends DefaultHandler {
 

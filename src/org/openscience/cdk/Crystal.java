@@ -33,7 +33,7 @@ package org.openscience.cdk;
  * <p>The crystal is designed to store only the assymetric atoms.
  * Though this is not enforced, it is assumed by all methods.
  *
- * @cdkPackage core
+ * @cdk.module core
  *
  * @cdk.keyword crystal
  */

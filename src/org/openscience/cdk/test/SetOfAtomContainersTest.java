@@ -34,7 +34,7 @@ import org.openscience.cdk.SetOfAtomContainers;
 /**
  * Checks the funcitonality of the SetOfMolecules class.
  *
- * @cdkPackage test
+ * @cdk.module test
  *
  * @see org.openscience.cdk.SetOfMolecules
  */

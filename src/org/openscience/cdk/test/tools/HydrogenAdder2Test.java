@@ -32,7 +32,7 @@ import org.openscience.cdk.tools.HydrogenAdder;
  * Tests CDK's hydrogen adding capabilities in terms of
  * example molecules.
  *
- * @cdkPackage test
+ * @cdk.module test
  *
  * @author     egonw
  * @created    2003-06-18

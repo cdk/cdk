@@ -44,7 +44,7 @@ import org.openscience.cdk.tools.LoggingTool;
 /**
  *  This class tests the SSSRFinder class.
  *
- * @cdkPackage test
+ * @cdk.module test
  *
  *@author     steinbeck
  *@created    October 17, 2003

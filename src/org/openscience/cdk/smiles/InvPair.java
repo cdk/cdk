@@ -34,7 +34,7 @@ import org.openscience.cdk.Atom;
  * This is used to hold the invariance numbers for the cannonical labeling of
  * AtomContainers.
  *
- * @cdkPackage standard
+ * @cdk.module standard
  */
 public class InvPair {
   /** The description used to set the invatiance numbers in the atom's property*/

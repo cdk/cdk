@@ -36,7 +36,7 @@ import org.openscience.cdk.ChemObject;
 /**
  * TestCase for the ChemObject class.
  *
- * @cdkPackage test
+ * @cdk.module test
  *
  * @author Edgar Luttmann <edgar@uni-paderborn.de>
  * @created 2001-08-09

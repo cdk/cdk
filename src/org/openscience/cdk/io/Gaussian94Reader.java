@@ -27,7 +27,7 @@ package org.openscience.cdk.io;
 import java.io.Reader;
 
 /**
- * @cdkPackage io
+ * @cdk.module io
  */
 public class Gaussian94Reader extends DummyReader {
 

@@ -34,7 +34,7 @@ import org.openscience.cdk.Molecule;
 /**
  * Checks the funcitonality of the Molecule class.
  *
- * @cdkPackage test
+ * @cdk.module test
  *
  * @see org.openscience.cdk.Molecule
  */

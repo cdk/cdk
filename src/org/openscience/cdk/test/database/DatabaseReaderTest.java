@@ -33,7 +33,7 @@ import org.openscience.cdk.database.DBReader;
 import org.openscience.cdk.renderer.Renderer2DModel;
 
 /**
- * @cdkPackage test
+ * @cdk.module test
  */
 public class DatabaseReaderTest
 {

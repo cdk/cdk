@@ -57,7 +57,7 @@ import org.openscience.cdk.math.FortranFormat;
  * <a href="http://www.msg.ucsf.edu/local/programs/shelxl/ch_07.html"
  * http://www.msg.ucsf.edu/local/programs/shelxl/ch_07.html</a>.
  *
- * @cdkPackage io
+ * @cdk.module io
  *
  * @cdk.keyword file format, ShelXL
  * @author E.L. Willighagen

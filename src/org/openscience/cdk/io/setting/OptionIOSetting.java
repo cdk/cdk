@@ -32,7 +32,7 @@ import org.openscience.cdk.exception.CDKException;
  * An class for a reader setting which must be found in the list 
  * of possible settings.
  *
- * @cdkPackage io
+ * @cdk.module io
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  */

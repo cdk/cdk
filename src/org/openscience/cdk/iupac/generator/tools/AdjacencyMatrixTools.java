@@ -29,7 +29,7 @@ import org.openscience.cdk.AtomContainer;
 /**
  * Methods for playing with Adjacency Matrices
  *
- * @cdkPackage experimental
+ * @cdk.module experimental
  *
  * @author Egon Willighagen
  */

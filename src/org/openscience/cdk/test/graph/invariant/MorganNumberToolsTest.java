@@ -36,7 +36,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
 /**
  * Checks the funcitonality of the MorganNumberTools
  *
- * @cdkPackage test
+ * @cdk.module test
  */
 public class MorganNumberToolsTest extends TestCase
 {

@@ -44,7 +44,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * A set of static utility classes for geometric calculations and operations.
  * This class is extensively used, for example, by JChemPaint to edit molecule.
  *
- * @cdkPackage standard
+ * @cdk.module standard
  */
 public class GeometryTools {
 

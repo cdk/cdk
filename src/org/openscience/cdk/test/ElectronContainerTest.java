@@ -34,7 +34,7 @@ import org.openscience.cdk.ElectronContainer;
 /**
  * Checks the funcitonality of the ElectronContainer class.
  *
- * @cdkPackage test
+ * @cdk.module test
  *
  * @see org.openscience.cdk.ElectronContainer
  */

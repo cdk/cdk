@@ -35,7 +35,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.SaturationChecker;
 
 /**
- * @cdkPackage test
+ * @cdk.module test
  *
  * @author     steinbeck
  * @created    2003-02-20

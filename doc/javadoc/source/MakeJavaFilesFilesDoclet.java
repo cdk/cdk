@@ -7,6 +7,7 @@ import java.io.*;
  */
 public class MakeJavaFilesFilesDoclet {
 
+    private final String javaDocModuleTag = "cdk.module";
     private Hashtable cdkPackages;
 
     public MakeJavaFilesFilesDoclet() {
@@ -66,7 +67,7 @@ public class MakeJavaFilesFilesDoclet {
     
     private void processClass(ClassDoc classDoc) throws IOException {
         String className = classDoc.qualifiedName();
-        Tag[] tags = classDoc.tags("cdkPackage");
+        Tag[] tags = classDoc.tags(javaDocModuleTag);
         String cdkPackage = "extra"; // if not given then it is part of cdk-extra
         if (tags.length > 0) {
             cdkPackage = tags[0].text();

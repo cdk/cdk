@@ -34,7 +34,7 @@ package org.openscience.cdk;
  *
  * <p>This should be replaced by the mechanism explained in RFC #8.
  *
- * @cdkPackage core
+ * @cdk.module core
  *
  * @see  Atom
  */

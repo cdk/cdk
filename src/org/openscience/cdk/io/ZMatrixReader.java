@@ -54,7 +54,7 @@ import org.openscience.cdk.geometry.ZMatrixTools;
  * This class is experimental.
  * It reads Z matrices like in gaussians input file
  *
- * @cdkPackage io
+ * @cdk.module io
  *
  * @cdk.keyword file format, Z-matrix
  */

@@ -50,7 +50,7 @@ import org.openscience.cdk.renderer.AcceleratedRenderer3DModel;
 /**
  * This class test the OrbitalRenderer3D
  *
- * @cdkPackage test-java3d
+ * @cdk.module test-java3d
  *
  * @author     benedikta
  */

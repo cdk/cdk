@@ -54,7 +54,7 @@ import org.openscience.cdk.exception.InvalidSmilesException;
  *
  * <p>References: <a href="http://cdk.sf.net/biblio.html#WEI88">WEI88</a>
  *
- * @cdkPackage standard
+ * @cdk.module standard
  *
  * @author     Christoph Steinbeck
  * @author     Egon Willighagen

@@ -45,7 +45,7 @@ package org.openscience.cdk;
  * }
  * </pre>
  *
- * @cdkPackage core
+ * @cdk.module core
  *
  * @cdk.keyword reaction
  * @cdk.keyword reaction

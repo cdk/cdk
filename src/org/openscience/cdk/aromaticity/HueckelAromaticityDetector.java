@@ -43,7 +43,7 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
  * appropriate Atoms, Bonds and Rings. After the detection, you
  * can use getFlag(CDKConstants.ISAROMATIC) on these ChemObjects.
  *
- * @cdkPackage standard
+ * @cdk.module standard
  *
  * @author     steinbeck, kaihartmann
  * @created    2001-09-04

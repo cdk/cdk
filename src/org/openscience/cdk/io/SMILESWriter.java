@@ -43,7 +43,7 @@ import org.openscience.cdk.smiles.SmilesGenerator;
 /**
  * Writes the SMILES strings to a plain text file.
  *
- * @cdkPackage extra
+ * @cdk.module extra
  *
  * @cdk.keyword file format
  */

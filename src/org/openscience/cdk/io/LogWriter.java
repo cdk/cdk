@@ -32,7 +32,7 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 
 /**
- * @cdkPackage io
+ * @cdk.module io
  *
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
  * @created 2001-07-14

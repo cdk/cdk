@@ -44,7 +44,7 @@ import javax.swing.JPanel;
  * Manager that loads and maintains CDK plugins. In addition, it provides a JMenu 
  * to allow access to the plugin's functionality.
  *
- * @cdkPackage applications
+ * @cdk.module applications
  */
 public class CDKPluginManager {
 

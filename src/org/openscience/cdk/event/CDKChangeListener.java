@@ -33,7 +33,7 @@ import java.util.EventObject;
 /**
  * A ChangeListener for the CDK, to be independent from the Swing package.
  *
- * @cdkPackage standard
+ * @cdk.module standard
  */ 
 public interface CDKChangeListener extends EventListener
 {

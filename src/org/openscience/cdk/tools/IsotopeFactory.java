@@ -55,7 +55,7 @@ import org.openscience.cdk.tools.isotopes.IsotopeReader;
  *   Isotope major = factory.getMajorIsotope("H");
  * </pre> 
  *
- * @cdkPackage standard
+ * @cdk.module standard
  *
  * @author     steinbeck
  * @created    2001-08-29

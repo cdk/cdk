@@ -47,7 +47,7 @@ import org.xml.sax.XMLReader;
  * ChemSequence. Each ChemModel has properties containing RSS specific stuff.
  * See the final statics of this class.
  *
- * @cdkPackage io
+ * @cdk.module io
  *
  * @author     Egon Willighagen
  * @created    2003-09-07

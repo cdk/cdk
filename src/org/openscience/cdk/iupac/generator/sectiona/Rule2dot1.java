@@ -39,7 +39,7 @@ import org.openscience.cdk.templates.saturatedhydrocarbons.IsoAlkanes;
 /**
  *  This class implements IUPAC rule 2.1 in Section A.
  *
- * @cdkPackage experimental
+ * @cdk.module experimental
  *
  * @author Egon Willighagen
  */

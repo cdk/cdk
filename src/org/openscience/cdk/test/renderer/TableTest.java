@@ -40,7 +40,7 @@ import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.XYZReader;
 
 /**
- * @cdkPackage test
+ * @cdk.module test
  */
 public class TableTest {
 

@@ -38,7 +38,7 @@ import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.event.CDKChangeListener;
 
 /**
- * @cdkPackage applications
+ * @cdk.module applications
  */
 public class MoleculesTable extends JPanel implements CDKChangeListener {
   private JTable table;

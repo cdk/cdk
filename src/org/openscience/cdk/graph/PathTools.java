@@ -39,7 +39,7 @@ import org.openscience.cdk.Molecule;
 /**
  * Tools class with methods for handling molecular graphs.
  *
- * @cdkPackage standard
+ * @cdk.module standard
  *
  * @author     steinbeck
  * @created    2001-06-17

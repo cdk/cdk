@@ -34,7 +34,7 @@ import org.openscience.cdk.ChemModel;
 /**
  * Checks the funcitonality of the ChemModel class.
  *
- * @cdkPackage test
+ * @cdk.module test
  *
  * @see org.openscience.cdk.ChemModel
  */

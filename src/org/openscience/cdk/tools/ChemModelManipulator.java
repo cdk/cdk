@@ -47,7 +47,7 @@ import org.openscience.cdk.SetOfReactions;
  * SetOfMolecules, Crystal and SetOfReactions fields and remove
  * it with the removeAtomAndConnectedElectronContainers(Atom) method.
  *
- * @cdkPackage standard
+ * @cdk.module standard
  *
  * @see org.openscience.cdk.AtomContainer#removeAtomAndConnectedElectronContainers(Atom)
  */

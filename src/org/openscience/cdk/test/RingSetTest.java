@@ -36,7 +36,7 @@ import org.openscience.cdk.RingSet;
 /**
  * Checks the funcitonality of the RingSet class.
  *
- * @cdkPackage test
+ * @cdk.module test
  *
  * @see org.openscience.cdk.RingSet
  */

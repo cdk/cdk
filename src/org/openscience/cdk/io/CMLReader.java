@@ -53,7 +53,7 @@ import org.xml.sax.XMLReader;
  *   <a href="http://cdk.sf.net/biblio.html#PMR99">PMR99</a>,
  *   <a href="http://cdk.sf.net/biblio.html#WILLIGHAGEN2001">WILLIGHAGEN2001</a>
  *
- * @cdkPackage io
+ * @cdk.module io
  *
  * @author     Egon L. Willighagen
  * @created    2001-02-01

@@ -49,7 +49,7 @@ import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.renderer.Renderer2DModel;
 
 /**
- * @cdkPackage test
+ * @cdk.module test
  */
 public class DatabaseTest {
   private Connection db;	

@@ -52,7 +52,7 @@ import org.openscience.cdk.exception.CDKException;
  * <p>A description can be found at <a href="http://www.rcsb.org/pdb/docs/format/pdbguide2.2/guide2.2_frame.html">
  * http://www.rcsb.org/pdb/docs/format/pdbguide2.2/guide2.2_frame.html</a>.
  *
- * @cdkPackage io
+ * @cdk.module io
  *
  * @author     Edgar Luttmann
  * @author     Bradley Smith (bradley@baysmith.com)

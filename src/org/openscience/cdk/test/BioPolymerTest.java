@@ -34,7 +34,7 @@ import org.openscience.cdk.BioPolymer;
 /**
  * Checks the functionality of the BioPolymer class.
  *
- * @cdkPackage test
+ * @cdk.module test
  *
  * @see org.openscience.cdk.BioPolymer
  */

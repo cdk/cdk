@@ -35,7 +35,7 @@ import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.templates.MoleculeFactory;
 
 /**
- * @cdkPackage test
+ * @cdk.module test
  */
 public class PathLengthTest extends TestCase
 {

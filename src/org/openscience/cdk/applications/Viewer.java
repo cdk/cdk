@@ -55,7 +55,7 @@ import org.openscience.cdk.smiles.SmilesParser;
 /**
  * Command line utility for viewing chemical information from files.
  *
- * @cdkPackage applications
+ * @cdk.module applications
  *
  * @author     steinbeck
  * @author     egonw

@@ -47,7 +47,7 @@ import org.openscience.cdk.io.CMLReader;
  * in data/cmltest as found in the original Jumbo3 release
  * (http://www.xml-cml.org/).
  *
- * @cdkPackage test
+ * @cdk.module test
  */
 public class JumboTest extends TestCase {
 

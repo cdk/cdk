@@ -39,7 +39,7 @@ import org.openscience.cdk.AtomType;
  * Jmol to CDK. The AtomType's themselves seems have a computational
  * background, but this is not clear. 
  *
- * @cdkPackage standard
+ * @cdk.module standard
  *
  * @author     Bradley A. Smith <bradley@baysmith.com>
  *

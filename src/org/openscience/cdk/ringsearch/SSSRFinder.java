@@ -45,7 +45,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * <p>References:
  *   <a href="http://cdk.sf.net/biblio.html#FIG96">FIG96</a>
  *
- * @cdkPackage standard
+ * @cdk.module standard
  *
  * @cdk.keyword smallest-set-of-rings
  * @cdk.keyword ring search

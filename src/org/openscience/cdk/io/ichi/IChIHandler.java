@@ -54,7 +54,7 @@ import org.xml.sax.helpers.DefaultHandler;
  * <p>The returned ChemFile contains a ChemSequence in
  * which the ChemModel represents the molecule.
  *
- * @cdkPackage experimental
+ * @cdk.module experimental
  *
  * @see org.openscience.cdk.io.IChIReader
  *

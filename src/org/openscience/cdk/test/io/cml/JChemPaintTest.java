@@ -48,7 +48,7 @@ import org.openscience.cdk.io.CMLReader;
  * in data/cmltest as found in the JChemPaint distribution
  * (http://jchempaint.sf.org/).
  *
- * @cdkPackage test
+ * @cdk.module test
  */
 public class JChemPaintTest extends TestCase {
 

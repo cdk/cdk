@@ -33,7 +33,7 @@ import org.openscience.cdk.AtomContainer;
  * References:
  *   <a href="http://cdk.sf.net/biblio.html#MOR65">MOR65</a>
  *
- * @cdkPackage standard
+ * @cdk.module standard
  *
  * @author     shk3
  * @created    2003-06-30

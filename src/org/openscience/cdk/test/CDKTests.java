@@ -54,7 +54,7 @@ import org.openscience.cdk.test.tools.ToolsTests;
 /**
  * TestSuite that runs all the sample tests
  *
- * @cdkPackage test
+ * @cdk.module test
  */
 public class CDKTests
 {

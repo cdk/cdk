@@ -29,7 +29,7 @@ import java.util.ResourceBundle;
 /**
  *  This class implements a name localizer.
  *
- * @cdkPackage experimental
+ * @cdk.module experimental
  *
  * @author Egon Willighagen
  */

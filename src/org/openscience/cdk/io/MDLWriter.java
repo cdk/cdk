@@ -60,7 +60,7 @@ import org.openscience.cdk.tools.IsotopeFactory;
  * References:
  *   <a href="http://cdk.sf.net/biblio.html#DAL92">DAL92</a>
  *
- * @cdkPackage io
+ * @cdk.module io
  *
  * @cdk.keyword file format, MDL molfile
  */

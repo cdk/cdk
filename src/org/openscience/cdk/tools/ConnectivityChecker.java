@@ -38,7 +38,7 @@ import org.openscience.cdk.graph.PathTools;
  * Tool class for checking whether the (sub)structure in an
  * AtomContainer is connected.
  *
- * @cdkPackage standard
+ * @cdk.module standard
  *
  * @cdk.keyword connectivity
  */ 

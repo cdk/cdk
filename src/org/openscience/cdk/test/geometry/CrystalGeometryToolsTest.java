@@ -35,7 +35,7 @@ import org.openscience.cdk.geometry.CrystalGeometryTools;
  * All methods that start with test are regression tests, e.g.
  * <code>testNotionalToCartesian()</code>.
  *
- * @cdkPackage test
+ * @cdk.module test
  *
  * @author     Egon Willighagen
  * @created    2003-08-19

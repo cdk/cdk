@@ -43,7 +43,7 @@ import org.openscience.cdk.event.CDKChangeListener;
  *@author        Egon Willighagen
  *@author        Geert Josten
  *@created       February 10, 2004
- *@cdkPackage    applications
+ *@cdk.module    applications
  */
 public class PeriodicTablePanel extends JPanel
 {

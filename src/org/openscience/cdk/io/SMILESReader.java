@@ -45,7 +45,7 @@ import org.openscience.cdk.smiles.SmilesParser;
  * This Reader reads files which has one SMILES string on each
  * line. For each line a molecule is generated.
  *
- * @cdkPackage io
+ * @cdk.module io
  *
  * @cdk.keyword file format, SMILES
  */

@@ -43,7 +43,7 @@ import org.openscience.cdk.io.MDLReader;
  *
  * <p>For parsing the molecules it still uses the normal MDLReader.
  *
- * @cdkPackage io
+ * @cdk.module io
  *
  * @see org.openscience.cdk.io.MDLReader
  * 

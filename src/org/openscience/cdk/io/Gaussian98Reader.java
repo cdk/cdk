@@ -64,7 +64,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * please contact the author of this code, not the developers
  * of Gaussian98.
  *
- * @cdkPackage io
+ * @cdk.module io
  *
  * @author Bradley A. Smith <yeldar@home.com>
  * @author Egon Willighagen

@@ -61,7 +61,7 @@ import org.openscience.cdk.exception.NoSuchAtomTypeException;
  *  AtomType[] types = factory.getAtomTypes("C");
  *  </pre>
  *
- * @cdkPackage standard
+ * @cdk.module standard
  *
  * @author     steinbeck
  * @created    2001-08-29

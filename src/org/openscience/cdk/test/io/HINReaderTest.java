@@ -45,7 +45,7 @@ import org.openscience.cdk.io.HINReader;
 /**
  * TestCase for the reading HIN mol files using one test file.
  *
- * @cdkPackage test
+ * @cdk.module test
  *
  * @see org.openscience.cdk.io.HINReader
  */

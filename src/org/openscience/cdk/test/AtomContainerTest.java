@@ -41,7 +41,7 @@ import org.openscience.cdk.Molecule;
 /**
  * Checks the funcitonality of the AtomContainer.
  *
- * @cdkPackage test
+ * @cdk.module test
  */
 public class AtomContainerTest extends TestCase {
 

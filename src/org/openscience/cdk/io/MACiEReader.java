@@ -65,7 +65,7 @@ import org.openscience.cdk.tools.ReactionManipulator;
  * <p>This implementation is based on a dump from their database
  * on 2003-07-14.
  *
- * @cdkPackage experimental
+ * @cdk.module experimental
  *
  * @author     Egon Willighagen
  * @created    2003-07-24

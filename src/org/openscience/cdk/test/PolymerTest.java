@@ -39,7 +39,7 @@ import org.openscience.cdk.Polymer;
 /**
  * TestCase for the Polymer class.
  *
- * @cdkPackage test
+ * @cdk.module test
  */
 public class PolymerTest extends TestCase {
 

@@ -59,7 +59,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * of this class to get more insight in what is read and what is not.
  * In addition, the cdk.log will show the bits that are not interpreted.
  *
- * @cdkPackage io
+ * @cdk.module io
  *
  * @author  Egon Willighagen <egonw@sci.kun.nl>
  * @created 2003-10-05

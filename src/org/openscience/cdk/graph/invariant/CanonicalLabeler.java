@@ -45,7 +45,7 @@ import org.openscience.cdk.smiles.InvPair;
  * <p>References:
  *   <a href="http://cdk.sf.net/biblio.html#WEI89">WEI89</a>
  *
- * @cdkPackage standard
+ * @cdk.module standard
  *
  * @author   Oliver Horlacher <oliver.horlacher@therastrat.com>
  * @created  2002-02-26

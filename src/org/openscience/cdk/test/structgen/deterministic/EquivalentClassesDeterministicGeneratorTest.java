@@ -38,7 +38,7 @@ import org.openscience.cdk.structgen.deterministic.EquivalentClassesDeterministi
 import org.openscience.cdk.templates.MoleculeFactory;
 
 /**
- * @cdkPackage test
+ * @cdk.module test
  */
 public class EquivalentClassesDeterministicGeneratorTest extends TestCase
 {

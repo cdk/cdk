@@ -43,7 +43,7 @@ import org.openscience.cdk.renderer.AcceleratedRenderer3DModel;
 import org.openscience.cdk.tools.ChemModelManipulator;
 
 /**
- * @cdkPackage test-java3d
+ * @cdk.module test-java3d
  */
 public class ZMatrixReaderTest
 {

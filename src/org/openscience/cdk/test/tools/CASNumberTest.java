@@ -32,7 +32,7 @@ import org.openscience.cdk.index.CASNumber;
 /**
  * Tests CDK's CAS Number class.
  *
- * @cdkPackage test
+ * @cdk.module test
  *
  * @author     Egon Willighagen <egonw@sci.kun.nl>
  * @created    2003-07-01

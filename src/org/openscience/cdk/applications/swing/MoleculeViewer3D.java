@@ -39,7 +39,7 @@ import org.openscience.cdk.renderer.Renderer3DModel;
 /**
  * A Swing-based implementation of Renderer3D for viewing molecules.
  *
- * @cdkPackage java3d
+ * @cdk.module java3d
  */
 public class MoleculeViewer3D extends JPanel implements CDKChangeListener {
     private org.openscience.cdk.tools.LoggingTool logger;

@@ -33,7 +33,7 @@ import java.util.Vector;
 /**
  * Implementation of a Queue (FIFO stack).
  *
- * @cdkPackage standard
+ * @cdk.module standard
  */
 public class Queue extends Vector
 {

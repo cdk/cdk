@@ -37,7 +37,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.event.CDKChangeListener;
 
 /**
- * @cdkPackage applications
+ * @cdk.module applications
  */
 public class AtomicTable extends JPanel implements CDKChangeListener {
   private JTable table;

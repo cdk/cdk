@@ -38,7 +38,7 @@ import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
- * @cdkPackage applications
+ * @cdk.module applications
  */
 public class DictRefEditorTableModel extends AbstractTableModel {
     

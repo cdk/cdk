@@ -42,7 +42,7 @@ import org.openscience.cdk.LonePair;
  * will replace the Atom in the AtomContainer, but in all the ElectronContainer's
  * it participates too.
  *
- * @cdkPackage standard
+ * @cdk.module standard
  *
  * @author  Egon Willighagen
  * @created 2003-08-07

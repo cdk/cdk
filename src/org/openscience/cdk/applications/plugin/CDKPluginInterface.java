@@ -31,7 +31,7 @@ import javax.swing.JPanel;
  * Interface that CDK Plugins must implement. The version of this
  * interface is given below.
  *
- * @cdkPackage applications
+ * @cdk.module applications
  *
  * @version $Revision$
  */

@@ -42,7 +42,7 @@ import org.xml.sax.Attributes;
  * <p>Please file a bug report if this parser fails to parse
  * a certain element or attribute value in a valid CML document.
  *
- * @cdkPackage io
+ * @cdk.module io
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  **/

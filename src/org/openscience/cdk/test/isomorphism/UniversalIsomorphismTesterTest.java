@@ -39,7 +39,7 @@ import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.templates.MoleculeFactory;
 
 /**
- * @cdkPackage test
+ * @cdk.module test
  */
 public class UniversalIsomorphismTesterTest extends TestCase
 {

@@ -34,7 +34,7 @@ import javax.swing.table.TableModel;
  *  A table model wrapper which listens to model changes and fowards them
  *  to other listeners.
  *
- * @cdkPackage applications
+ * @cdk.module applications
  *
  *  @author Bradley A. Smith <bradley@baysmith.com>
  */

@@ -31,7 +31,7 @@ import java.util.EventObject;
  * primarily in place for future development when additional information
  * may be passed to <code>ReaderListener</code>s.
  *
- * @cdkPackage io
+ * @cdk.module io
  *
  * @author Bradley A. Smith <bradley@baysmith.com>
  */

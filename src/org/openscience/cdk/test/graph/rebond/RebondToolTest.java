@@ -38,7 +38,7 @@ import org.openscience.cdk.tools.AtomTypeFactory;
 /**
  * Checks the funcitonality of the RebondTool.
  *
- * @cdkPackage test
+ * @cdk.module test
  */
 public class RebondToolTest extends TestCase {
     

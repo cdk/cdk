@@ -33,7 +33,7 @@ import javax.vecmath.Point2d;
 /**
  * Maintains a set of Ring objects.
  *
- * @cdkPackage core
+ * @cdk.module core
  *
  * @cdk.keyword     ring, set of
  */

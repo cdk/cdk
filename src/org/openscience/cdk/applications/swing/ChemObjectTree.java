@@ -56,7 +56,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * <p>For each ChemObject it will add child nodes for each variable
  * it has that is either a ChemObject or a ChemObject[].
  *
- * @cdkPackage applications
+ * @cdk.module applications
  *
  * @author     egonw
  * @created    2002-12-29

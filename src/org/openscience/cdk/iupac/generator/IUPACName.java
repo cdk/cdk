@@ -32,7 +32,7 @@ import java.util.Locale;
  *  It provides a String representation of the name, and,
  *  in addition, a list of applied rules.
  *
- * @cdkPackage experimental
+ * @cdk.module experimental
  *
  * @author Egon Willighagen
  */

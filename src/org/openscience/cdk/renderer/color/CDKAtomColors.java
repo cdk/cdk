@@ -31,7 +31,7 @@ import org.openscience.cdk.Atom;
 /**
  * Gives a short table of atom colors for 3D display.
  *
- * @cdkPackage standard
+ * @cdk.module standard
  */
 public class CDKAtomColors implements AtomColorer {
 

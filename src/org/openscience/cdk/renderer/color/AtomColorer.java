@@ -32,7 +32,7 @@ import org.openscience.cdk.Atom;
 /**
  * Interface to a class for coloring atoms.
  *
- * @cdkPackage standard
+ * @cdk.module standard
  */
 public interface AtomColorer {
 

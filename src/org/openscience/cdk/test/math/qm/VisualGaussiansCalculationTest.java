@@ -64,7 +64,7 @@ import org.openscience.cdk.tools.ChemModelManipulator;
  * This application takes a XYZ, CML or MDL mol file, calculates
  * orbitals and displays them using Java3D.
  *
- * @cdkPackage test-java3d
+ * @cdk.module test-java3d
  *
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
  * @created 2001-06-09

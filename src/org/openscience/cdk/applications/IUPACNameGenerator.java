@@ -35,7 +35,7 @@ import freeware.PrintfFormat;
 /**
  * This class implements a IUPAC name generator.
  *
- * @cdkPackage applications
+ * @cdk.module applications
  *
  * @author     Egon Willighagen
  * @created    2003-10-22

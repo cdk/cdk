@@ -51,7 +51,7 @@ import org.openscience.cdk.math.qm.Orbitals;
  * <a href="http://www.swin.edu.au/astronomy/pbourke/modelling/polygonise/">
  * http://www.swin.edu.au/astronomy/pbourke/modelling/polygonise/</a>
  *
- * @cdkPackage java3d
+ * @cdk.module java3d
  *
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
  * @created 2001-07-20

@@ -44,7 +44,7 @@ import org.openscience.cdk.validate.ValidatorEngine;
 /**
  * Command line utility for checking the chemical information from files.
  *
- * @cdkPackage applications
+ * @cdk.module applications
  *
  * @author     egonw
  * @created    2003-07-14

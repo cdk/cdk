@@ -50,7 +50,7 @@ import org.xml.sax.XMLReader;
  *
  * <p>Reference: <a href="http://cdk.sf.net/biblio.html#HEL01">HEL01</a>.
  *
- * @cdkPackage experimental
+ * @cdk.module experimental
  *
  * @author     Egon Willighagen <egonw@sci.kun.nl>
  * @created    25 September 2002

@@ -40,7 +40,7 @@ import org.openscience.cdk.SetOfReactions;
  * Methods are implemented for Atom, Bond, AtomContainer, SetOfAtomContainers
  * and Reaction.
  *
- * @cdkPackage standard
+ * @cdk.module standard
  *
  * @author   Egon Willighagen
  * @created  2003-04-01

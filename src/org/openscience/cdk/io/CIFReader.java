@@ -54,7 +54,7 @@ import org.openscience.cdk.geometry.CrystalGeometryTools;
  * <p>The CIF example on the IUCR website has been tested, as well as Crambin (1CRN)
  * in the PDB database.
  *
- * @cdkPackage io
+ * @cdk.module io
  *
  * @cdk.keyword file format, CIF
  * @cdk.keyword file format, mmCIF

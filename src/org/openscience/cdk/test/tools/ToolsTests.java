@@ -30,7 +30,7 @@ import junit.framework.TestSuite;
  * TestSuite that runs all the sample tests in the
  * org.openscience.cdk.tools package.
  *
- * @cdkPackage test
+ * @cdk.module test
  */
 public class ToolsTests {
 

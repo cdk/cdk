@@ -47,7 +47,7 @@ import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
- * @cdkPackage test
+ * @cdk.module test
  */
 public class HydrogenPlacerTest extends TestCase {
     

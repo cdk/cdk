@@ -44,7 +44,7 @@ import javax.swing.table.TableModel;
  *  A sorted table model. The objects in the model must implement the Comparable
  *  interface.
  *
- * @cdkPackage applications
+ * @cdk.module applications
  *
  *  @author Bradley A. Smith <bradley@baysmith.com>
  */

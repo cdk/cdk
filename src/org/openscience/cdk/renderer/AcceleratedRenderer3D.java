@@ -48,7 +48,7 @@ import com.sun.j3d.utils.universe.SimpleUniverse;
 /**
  * 3D Renderer using Java3D.
  *
- * @cdkPackage java3d
+ * @cdk.module java3d
  * 
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
  * @created 2001-07-20

@@ -56,7 +56,7 @@ import org.openscience.cdk.tools.LoggingTool;
 /**
  * Validates the existence of references to dictionaries.
  *
- * @cdkPackage experimental
+ * @cdk.module experimental
  *
  * @author   Egon Willighagen
  * @created  2003-08-27

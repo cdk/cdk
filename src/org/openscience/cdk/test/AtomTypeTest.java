@@ -34,7 +34,7 @@ import org.openscience.cdk.AtomType;
 /**
  * Checks the funcitonality of the AtomType class.
  *
- * @cdkPackage test
+ * @cdk.module test
  *
  * @see org.openscience.cdk.AtomType
  */

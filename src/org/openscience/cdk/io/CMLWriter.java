@@ -92,7 +92,7 @@ import org.openscience.cdk.tools.IsotopeFactory;
  * <p>References:
  *   <a href="http://cdk.sf.net/biblio.html#PMR99">PMR99</a>
  *
- * @cdkPackage extra
+ * @cdk.module extra
  *
  * @see java.io.FileWriter
  * @see java.io.StringWriter

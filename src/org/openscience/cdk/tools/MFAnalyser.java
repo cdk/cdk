@@ -48,7 +48,7 @@ import org.openscience.cdk.Molecule;
  * Analyses a molecular formula given in String format and builds 
  * an AtomContainer with the Atoms in the molecular formula.
  *
- * @cdkPackage standard
+ * @cdk.module standard
  *
  * @cdk.keyword molecule, molecular mass
  * @cdk.keyword molecule, molecular formula

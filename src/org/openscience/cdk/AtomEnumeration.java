@@ -40,7 +40,7 @@ import java.util.Enumeration;
  *  <p>The Enumeration does not clone the AtomContainer from which
  *  it is constructed, which might lead to errors.
  *
- * @cdkPackage core
+ * @cdk.module core
  *
  * @author     steinbeck
  * @created    2000-10-02

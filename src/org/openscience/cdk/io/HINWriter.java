@@ -41,7 +41,7 @@ import org.openscience.cdk.exception.CDKException;
 /**
  * Writer that outputs in the HIN format.
  *
- * @cdkPackage io
+ * @cdk.module io
  *
  * @author  Rajarshi Guha <rajarshi@presidency.com>
  * @created 2004-01-27

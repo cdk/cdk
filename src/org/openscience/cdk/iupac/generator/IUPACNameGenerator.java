@@ -42,7 +42,7 @@ import org.openscience.cdk.tools.MFAnalyser;
  * IMPORTANT: it is highly experimental, and NOT
  * usefull for use.
  *
- * @cdkPackage experimental
+ * @cdk.module experimental
  *
  * @author  Egon Willighagen <egonw@sci.kun.nl> 
  * @created 2002-05-21

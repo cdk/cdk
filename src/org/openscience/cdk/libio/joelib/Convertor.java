@@ -43,7 +43,7 @@ import org.openscience.cdk.Molecule;
  * <p>JOELib is a Java implementation of the OELib classes and
  * can be found at: http://joelib.sourceforge.net/
  *
- * @cdkPackage libio
+ * @cdk.module libio
  *
  * @author     egonw
  * @author     Joerg K. Wegner <wegnerj@informatik.uni-tuebingen.de>

@@ -35,7 +35,7 @@ import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.SetOfReactions;
 
 /**
- * @cdkPackage standard
+ * @cdk.module standard
  *
  * @see org.openscience.cdk.tools.ChemModelManipulator
  */

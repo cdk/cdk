@@ -36,7 +36,7 @@ import org.openscience.cdk.tools.IsotopeFactory;
 /**
  * Checks the funcitonality of the IsotopeFactory
  *
- * @cdkPackage test
+ * @cdk.module test
  */
 public class IsotopeFactoryTest extends TestCase
 {

@@ -30,7 +30,7 @@ import org.openscience.cdk.AtomContainer;
  *  IUPAC rules in the org.openscience.cdk.iupac.generator
  *  package.
  *
- * @cdkPackage experimental
+ * @cdk.module experimental
  *
  * @author Egon Willighagen
  */

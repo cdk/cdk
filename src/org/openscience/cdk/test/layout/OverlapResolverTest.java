@@ -49,7 +49,7 @@ import org.openscience.cdk.tools.LoggingTool;
 /**
  *  Description of the Class
  *
- * @cdkPackage test
+ * @cdk.module test
  *
  *@author     steinbeck
  *@created    September 4, 2003

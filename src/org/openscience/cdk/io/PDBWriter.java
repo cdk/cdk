@@ -39,7 +39,7 @@ import java.io.OutputStream;
 /**
  * Saves molecules in a rudimentary PDB format.
  *
- * @cdkPackage io
+ * @cdk.module io
  */
 public class PDBWriter extends DefaultChemObjectWriter {
 

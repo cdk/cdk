@@ -47,7 +47,7 @@ import org.openscience.cdk.io.CMLReader;
  * TestCase for the reading CML 2 files using a few test files
  * in data/cmltest.
  *
- * @cdkPackage test
+ * @cdk.module test
  */
 public class CML2Test extends TestCase {
 

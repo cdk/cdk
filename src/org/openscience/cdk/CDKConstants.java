@@ -35,7 +35,7 @@ package org.openscience.cdk;
  *
  * <p>The lazyCreation patch has been applied to this class.
  *
- * @cdkPackage core
+ * @cdk.module core
  *
  * @cdk.keyword bond order
  * @cdk.keyword stereochemistry

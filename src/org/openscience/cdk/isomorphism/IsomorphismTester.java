@@ -39,7 +39,7 @@ import org.openscience.cdk.graph.invariant.MorganNumbersTools;
  *
  * <p>Alternatively, you can use the UniversalIsomorphismTester.
  *
- * @cdkPackage standard
+ * @cdk.module standard
  *
  * @author     steinbeck
  * @created    2001-09-10

@@ -35,7 +35,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
 /**
  *  This class implements IUPAC rule 1.2 in Section A: Alkyls.
  *
- * @cdkPackage experimental
+ * @cdk.module experimental
  *
  * @author Egon Willighagen
  */

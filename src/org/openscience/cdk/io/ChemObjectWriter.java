@@ -37,7 +37,7 @@ import org.openscience.cdk.exception.CDKException;
  * <p>Currently, database IO and file IO is supported. Internet IO is
  * expected.
  *
- * @cdkPackage io
+ * @cdk.module io
  *
  * @version  $Date$
  */

@@ -42,7 +42,7 @@ import org.openscience.cdk.tools.HOSECodeGenerator;
 /**
  *  Tests the HOSECode genertor. This is *not* a JUnit test class!
  *
- * @cdkPackage test
+ * @cdk.module test
  *
  *@author     steinbeck
  *@created    2002-11-16

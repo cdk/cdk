@@ -44,7 +44,7 @@ import org.openscience.cdk.io.XYZReader;
 import org.openscience.cdk.tools.Projector;
 
 /**
- * @cdkPackage test
+ * @cdk.module test
  */
 public class FileReaderTest {
 

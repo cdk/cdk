@@ -28,7 +28,7 @@ package org.openscience.cdk;
  * Represents the concept of a chemical molecule, an object composed of 
  * atoms connected by bonds.
  *
- * @cdkPackage core
+ * @cdk.module core
  *
  * @author     steinbeck
  * @created    2000-10-02

@@ -42,7 +42,7 @@ import freeware.PrintfFormat;
  * <p>Serializes a SetOfMolecules or a Molecule object to ShelX code.
  * The output can be read with Platon.
  *
- * @cdkPackage io
+ * @cdk.module io
  *
  * @author Egon Willighagen
  *

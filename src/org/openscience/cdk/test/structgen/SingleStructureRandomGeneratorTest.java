@@ -42,7 +42,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.MFAnalyser;
 
 /**
- * @cdkPackage test
+ * @cdk.module test
  */
 public class SingleStructureRandomGeneratorTest
 {

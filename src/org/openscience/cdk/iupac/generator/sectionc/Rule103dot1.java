@@ -32,7 +32,7 @@ import org.openscience.cdk.iupac.generator.NamingRule;
 /**
  *  This class implements IUPAC rule 103.1 in Section C.
  *
- * @cdkPackage experimental
+ * @cdk.module experimental
  *
  * @author Egon Willighagen
  */

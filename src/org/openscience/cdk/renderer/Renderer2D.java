@@ -75,7 +75,7 @@ import org.openscience.cdk.validate.ProblemMarker;
  * left-bottom corner, with the x axis to the right, and the y axis towards
  * the top of the screen. The system is thus right handed.
  *
- * @cdkPackage render
+ * @cdk.module render
  *
  * @author     steinbeck
  * @author     egonw

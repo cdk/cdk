@@ -69,7 +69,7 @@ import org.openscience.cdk.tools.IsotopeFactory;
  *
  * <p>References: <a href="http://cdk.sf.net/biblio.html#DAL92">DAL92</a>.
  *
- * @cdkPackage io
+ * @cdk.module io
  *
  * @author     steinbeck
  * @author     Egon Willighagen

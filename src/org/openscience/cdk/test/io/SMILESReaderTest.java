@@ -40,7 +40,7 @@ import org.openscience.cdk.io.SMILESReader;
 /**
  * TestCase for the reading MDL mol files using one test file.
  *
- * @cdkPackage test
+ * @cdk.module test
  *
  * @see org.openscience.cdk.io.MDLReader
  */

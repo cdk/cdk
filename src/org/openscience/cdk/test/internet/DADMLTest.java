@@ -32,7 +32,7 @@ import org.openscience.cdk.internet.DADMLReader;
 import org.openscience.cdk.io.ChemObjectReader;
 
 /**
- * @cdkPackage test
+ * @cdk.module test
  */
 public class DADMLTest {
 

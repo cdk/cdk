@@ -33,7 +33,7 @@ import org.openscience.cdk.Isotope;
 /**
  * Used to store data of a particular isotope.
  *
- * @cdkPackage standard
+ * @cdk.module standard
  *
  * @cdk.keyword isotope
  */

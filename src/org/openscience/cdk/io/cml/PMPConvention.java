@@ -39,7 +39,7 @@ import org.xml.sax.Attributes;
  *  <p>PMP stands for PolyMorph Predictor and is a module
  *  of Cerius2 (tm).
  *
- * @cdkPackage io
+ * @cdk.module io
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  */

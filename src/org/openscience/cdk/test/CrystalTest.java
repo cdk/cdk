@@ -34,7 +34,7 @@ import org.openscience.cdk.Crystal;
 /**
  * Checks the funcitonality of the Crystal.
  *
- * @cdkPackage test
+ * @cdk.module test
  */
 public class CrystalTest extends TestCase {
 

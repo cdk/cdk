@@ -48,7 +48,7 @@ import org.openscience.cdk.tools.ValencyCheckerInterface;
  * Validator which tests a the valencies of atoms using the
  * ValencyChecker.
  *
- * @cdkPackage experimental
+ * @cdk.module experimental
  *
  * @author   Egon Willighagen
  * @created  2004-01-14

@@ -45,7 +45,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * the format completely different, and thus implemented a separate Reader
  * for it.
  *
- * @cdkPackage io
+ * @cdk.module io
  *
  * @author  Egon Willighagen <egonw@sci.kun.nl>
  * @created 2003-10-05

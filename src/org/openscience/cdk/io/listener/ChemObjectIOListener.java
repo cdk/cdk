@@ -31,7 +31,7 @@ import org.openscience.cdk.io.setting.IOSetting;
 /**
  * Allows monitoring of progress of file reader activities.
  *
- * @cdkPackage io
+ * @cdk.module io
  *
  * @author Egon Willighagen
  */

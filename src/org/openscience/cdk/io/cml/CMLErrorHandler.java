@@ -36,7 +36,7 @@ import org.xml.sax.SAXParseException;
  * CDK's SAX2 ErrorHandler for giving feedback on XML errors in the CML document.
  * Output is redirected to org.openscience.cdk.tools.LoggingTool.
  *
- * @cdkPackage io
+ * @cdk.module io
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  **/

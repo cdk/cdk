@@ -57,7 +57,7 @@ import org.openscience.cdk.layout.StructureDiagramGenerator;
  * Reader for the World Wide Molecular Matrix, a project that can be found at
  * <a href="http://wwmm.ch.cam.ac.uk/">http://wwmm.ch.cam.ac.uk/</a>.
  *
- * @cdkPackage applications
+ * @cdk.module applications
  *
  * @author Yong Zhang <yz237@cam.ac.uk>
  * @author Egon Willighagen <elw38@cam.ac.uk>

@@ -39,7 +39,7 @@ import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 
 /**
- * @cdkPackage test
+ * @cdk.module test
  *
  *@author     steinbeck
  *@created    September 19, 2003

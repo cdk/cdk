@@ -31,7 +31,7 @@ package org.openscience.cdk.io.cml.cdopi;
 /**
  * @author Egon Willighagen <egonw@sci.kun.nl>
  *
- * @cdkPackage io
+ * @cdk.module io
  */
 public interface CDOInterface {
 

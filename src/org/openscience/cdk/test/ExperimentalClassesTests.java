@@ -32,7 +32,7 @@ import org.openscience.cdk.test.tools.ValencyCheckerTest;
 /**
  * TestSuite that runs all the sample tests for experimental classes.
  *
- * @cdkPackage test
+ * @cdk.module test
  */
 public class ExperimentalClassesTests {
 

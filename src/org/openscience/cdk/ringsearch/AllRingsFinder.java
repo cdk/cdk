@@ -51,7 +51,7 @@ import org.openscience.cdk.RingSet;
  * <p>References:
  *   <a href="http://cdk.sf.net/biblio.html#HAN96">HAN96</a>
  *
- * @cdkPackage standard
+ * @cdk.module standard
  */
 public class AllRingsFinder
 {

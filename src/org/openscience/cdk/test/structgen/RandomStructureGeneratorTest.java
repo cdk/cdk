@@ -40,7 +40,7 @@ import org.openscience.cdk.structgen.RandomGenerator;
 import org.openscience.cdk.templates.MoleculeFactory;
 
 /**
- * @cdkPackage test
+ * @cdk.module test
  */
 public class RandomStructureGeneratorTest extends TestCase
 {

@@ -49,7 +49,7 @@ import org.openscience.cdk.io.CMLReader;
  * in data/cmltest as found in the Jmol distribution
  * (http://jmol.sf.org/).
  *
- * @cdkPackage test
+ * @cdk.module test
  */
 public class JmolTest extends TestCase {
 

@@ -43,7 +43,7 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.templates.MoleculeFactory;
 
 /**
- * @cdkPackage test
+ * @cdk.module test
  */
 public class AllRingsFinderTest extends TestCase
 {

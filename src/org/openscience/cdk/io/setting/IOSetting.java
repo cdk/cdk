@@ -30,7 +30,7 @@ import org.openscience.cdk.exception.CDKException;
  * An interface for reader settings. It is subclassed by implementations,
  * one for each type of field, e.g. IntReaderSetting.
  *
- * @cdkPackage io
+ * @cdk.module io
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  */

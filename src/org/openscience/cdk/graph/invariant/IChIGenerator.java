@@ -45,7 +45,7 @@ import org.openscience.cdk.io.MDLWriter;
  * Generates and IChI for a Molecule. Requires the ichi.exe program
  * to be installed.
  *
- * @cdkPackage experimental
+ * @cdk.module experimental
  *
  * @author  Yong Zhang <yz237@cam.ac.uk>
  * @created  2003-06-13

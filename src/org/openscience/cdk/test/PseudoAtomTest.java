@@ -37,7 +37,7 @@ import org.openscience.cdk.PseudoAtom;
 /**
  * Checks the functionality of the AtomTypeFactory
  *
- * @cdkPackage test
+ * @cdk.module test
  */
 public class PseudoAtomTest extends TestCase {
 

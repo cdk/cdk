@@ -37,7 +37,7 @@ import org.openscience.cdk.Reaction;
 /**
  * TestCase for the Reaction class.
  *
- * @cdkPackage test
+ * @cdk.module test
  */
 public class ReactionTest extends TestCase {
 

@@ -39,7 +39,7 @@ import org.xml.sax.InputSource;
  * files and uses a local version for validation. More information about
  * CML can be found at <a href="http://www.xml-cml.org/">http://www.xml-cml.org/</a>.
  *
- * @cdkPackage io
+ * @cdk.module io
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  **/

@@ -34,7 +34,7 @@ import java.util.Comparator;
   * molecular formula. Order:
   * C, H, other elements in alphabetic order.
   *
-  * @cdkPackage standard
+  * @cdk.module standard
   *
   * @cdk.keyword element, sorting
   */

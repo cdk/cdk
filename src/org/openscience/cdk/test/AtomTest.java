@@ -37,7 +37,7 @@ import org.openscience.cdk.CDKConstants;
 /**
  * Checks the functionality of the AtomTypeFactory
  *
- * @cdkPackage test
+ * @cdk.module test
  */
 public class AtomTest extends TestCase {
 

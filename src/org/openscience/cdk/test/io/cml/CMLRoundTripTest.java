@@ -53,7 +53,7 @@ import org.openscience.cdk.io.CMLWriter;
  * TestCase for the reading CML 2 files using a few test files
  * in data/cmltest.
  *
- * @cdkPackage test
+ * @cdk.module test
  */
 public class CMLRoundTripTest extends TestCase {
 

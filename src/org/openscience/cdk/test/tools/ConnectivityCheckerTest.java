@@ -37,7 +37,7 @@ import org.openscience.cdk.tools.ConnectivityChecker;
 /**
  *  Checks the functionality of the ConnectivityChecker
  *
- * @cdkPackage test
+ * @cdk.module test
  *
  * @author     steinbeck
  * @created    2001-07-24

@@ -39,7 +39,7 @@ import org.openscience.cdk.isomorphism.IsomorphismTester;
 import org.openscience.cdk.libio.joelib.Convertor;
 
 /**
- * @cdkPackage test-libio
+ * @cdk.module test-libio
  */
 public class JOELibIOTest extends TestCase {
 

@@ -34,7 +34,7 @@ package org.openscience.cdk;
  *  sp<sup>3</sup>
  *  hybridized carbon C3, etc., in some molecular modelling applications.
  *
- * @cdkPackage core
+ * @cdk.module core
  *
  * @author     steinbeck
  * @created    2001-08-08

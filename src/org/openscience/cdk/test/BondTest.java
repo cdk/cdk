@@ -38,7 +38,7 @@ import org.openscience.cdk.CDKConstants;
 /**
  * Checks the functionality of the Bond class.
  *
- * @cdkPackage test
+ * @cdk.module test
  *
  * @see org.openscience.cdk.Bond
  */

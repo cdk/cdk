@@ -38,7 +38,7 @@ import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.MFAnalyser;
 
 /**
- * @cdkPackage test
+ * @cdk.module test
  */
 public class MFAnalyserTest extends TestCase {
 	Molecule molecule;

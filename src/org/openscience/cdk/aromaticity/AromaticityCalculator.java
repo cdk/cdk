@@ -35,7 +35,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Ring;
 
 /**
- * @cdkPackage standard
+ * @cdk.module standard
  *
  * @author     Oliver Horlacher <oliver.horlacher@therastrat.com>
  * @created    2002-03-14

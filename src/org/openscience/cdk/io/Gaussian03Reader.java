@@ -65,7 +65,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * <p>This code was adaptated by Jonathan from Gaussian98Reader written by
  * Bradley, and ported to CDK by Egon.
  *
- * @cdkPackage io
+ * @cdk.module io
  *
  * @author Jonathan C. Rienstra-Kiracofe <jrienst@emory.edu>
  * @author Bradley A. Smith <yeldar@home.com>

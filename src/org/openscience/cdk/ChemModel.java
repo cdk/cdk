@@ -30,7 +30,7 @@ package org.openscience.cdk;
  * the other lower level concepts like rings, sequences, 
  * fragments, etc.
  *
- * @cdkPackage core
+ * @cdk.module core
  */
 public class ChemModel extends ChemObject implements java.io.Serializable, Cloneable
 {

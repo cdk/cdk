@@ -48,7 +48,7 @@ import org.openscience.cdk.tools.IsotopeFactory;
 
 
 /**
- * @cdkPackage test
+ * @cdk.module test
  */
 public class VicinitySamplerTest extends TestCase
 {

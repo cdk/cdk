@@ -39,7 +39,7 @@ import org.openscience.cdk.event.ChemObjectChangeEvent;
  * for adding listeners and for their notification of events, as well a 
  * a hash table for administration of physical or chemical properties
  *
- * @cdkPackage core
+ * @cdk.module core
  */
 public class ChemObject implements java.io.Serializable, Cloneable {
     

@@ -46,7 +46,7 @@ import org.openscience.cdk.tools.HOSECodeGenerator;
 /**
  * Tests the HOSECode genertor.
  *
- * @cdkPackage test
+ * @cdk.module test
  *
  * @author     steinbeck
  * @created    2002-11-16

@@ -34,7 +34,7 @@ import org.xml.sax.Attributes;
 /**
  * Implementation of the MDLMol Covention for CML.
  *
- * @cdkPackage io
+ * @cdk.module io
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  */

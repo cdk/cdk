@@ -46,7 +46,7 @@ import org.openscience.cdk.exception.CDKException;
 /**
  * Reads an object from HIN formated input.
  *
- * @cdkPackage io
+ * @cdk.module io
  *
  * @author  Rajarshi Guha <rajarshi@presidency.com>
  * @created 2004-01-27

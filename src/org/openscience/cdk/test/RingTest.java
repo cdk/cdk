@@ -34,7 +34,7 @@ import org.openscience.cdk.Ring;
 /**
  * Checks the funcitonality of the Ring class.
  *
- * @cdkPackage test
+ * @cdk.module test
  *
  * @see org.openscience.cdk.Ring
  */

@@ -44,7 +44,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * A subclass of Renderer2D that uses masks (Area Class) to make an area
  * erased to background.
  *
- * @cdkPackage render
+ * @cdk.module render
  *
  * @author     akrassavine
  *

@@ -50,7 +50,7 @@ import org.openscience.cdk.exception.CDKException;
  *
  * <p>This class is based on Dan Gezelter's XYZReader from Jmol
  *
- * @cdkPackage io
+ * @cdk.module io
  *
  * @cdk.keyword file format, XYZ
  */

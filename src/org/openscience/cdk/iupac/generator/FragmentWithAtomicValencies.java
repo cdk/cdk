@@ -36,7 +36,7 @@ import org.openscience.cdk.exception.NoSuchAtomException;
  * An example use would be a set of templates with amino acid
  * residues in a protein generator.
  *
- * @cdkPackage experimental
+ * @cdk.module experimental
  *
  * @author     egonw
  * @created    August 14th 2002

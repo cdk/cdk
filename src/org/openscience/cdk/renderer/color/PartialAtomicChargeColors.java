@@ -36,7 +36,7 @@ import org.openscience.cdk.Atom;
  * uncharged atoms are colored white, positively charged
  * atoms are blue, and negatively charge atoms are red.
  *
- * @cdkPackage standard
+ * @cdk.module standard
  */
 public class PartialAtomicChargeColors implements AtomColorer {
 

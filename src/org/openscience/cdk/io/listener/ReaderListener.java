@@ -29,7 +29,7 @@ import org.openscience.cdk.io.ReaderEvent;
 /**
  * Allows monitoring of progress of file reader activities.
  *
- * @cdkPackage io
+ * @cdk.module io
  *
  * @author Bradley A. Smith <bradley@baysmith.com>
  */

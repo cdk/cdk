@@ -35,7 +35,7 @@ import org.openscience.cdk.ChemSequence;
 /**
  * Checks the funcitonality of the ChemSequence class.
  *
- * @cdkPackage test
+ * @cdk.module test
  *
  * @see org.openscience.cdk.ChemSequence
  */

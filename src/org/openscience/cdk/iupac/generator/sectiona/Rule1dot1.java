@@ -34,7 +34,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
 /**
  *  This class implements IUPAC rule 1.1 in Section A: Alkanes.
  *
- * @cdkPackage experimental
+ * @cdk.module experimental
  *
  * @author Egon Willighagen
  */

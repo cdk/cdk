@@ -32,7 +32,7 @@ package org.openscience.cdk;
  * A Monomer is an AtomContainer which stores additional monomer specific 
  * informations for a group of Atoms.
  *
- * @cdkPackage core
+ * @cdk.module core
  *
  * @author     Edgar Luttmann <edgar@uni-paderborn.de>
  * @created    2001-08-06 

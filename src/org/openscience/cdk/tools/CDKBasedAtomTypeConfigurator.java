@@ -31,7 +31,7 @@ import java.util.Vector;
 import org.openscience.cdk.tools.atomtypes.AtomTypeReader;
 
 /**
- * @cdkPackage standard
+ * @cdk.module standard
  */
 public class CDKBasedAtomTypeConfigurator implements AtomTypeConfigurator {
 

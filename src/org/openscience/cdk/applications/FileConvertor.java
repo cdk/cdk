@@ -80,7 +80,7 @@ import org.openscience.cdk.tools.SaturationChecker;
  *  output: CML, MDL MOL/SDF file, PDB, ShelX, SMILES, SVG, XYZ, 
  *          Gaussian Input, CDK source code
  *
- * @cdkPackage applications
+ * @cdk.module applications
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  *

@@ -29,7 +29,7 @@ import org.openscience.cdk.exception.CDKException;
 /**
  * An class for a reader setting which must be of type String.
  *
- * @cdkPackage io
+ * @cdk.module io
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  */

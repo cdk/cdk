@@ -43,7 +43,7 @@ import org.openscience.cdk.io.GhemicalMMReader;
 /**
  * TestCase for the reading Ghemical molecular dynamics files using one test file.
  *
- * @cdkPackage test
+ * @cdk.module test
  *
  * @see org.openscience.cdk.io.GhemicalReader
  */

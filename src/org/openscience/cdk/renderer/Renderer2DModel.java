@@ -45,7 +45,7 @@ import org.openscience.cdk.renderer.color.CDK2DAtomColors;
 /**
  * Model for Renderer2D that contains settings for drawing objects.
  *
- * @cdkPackage render
+ * @cdk.module render
  */
 public class Renderer2DModel implements java.io.Serializable, Cloneable
 {

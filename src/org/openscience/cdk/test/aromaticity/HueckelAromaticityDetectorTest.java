@@ -46,7 +46,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
 /**
  *  Description of the Class
  *
- * @cdkPackage test
+ * @cdk.module test
  *
  *@author     steinbeck
  *@created    2002-10-06

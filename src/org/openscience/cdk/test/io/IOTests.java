@@ -32,7 +32,7 @@ import org.openscience.cdk.test.io.cml.CMLIOTests;
 /**
  * TestSuite that runs all the sample tests for the cdk.io package.
  *
- * @cdkPackage test
+ * @cdk.module test
  */
 public class IOTests {
 

@@ -30,7 +30,7 @@ import junit.framework.TestSuite;
 /**
  * TestSuite that runs all the sample tests
  *
- * @cdkPackage test
+ * @cdk.module test
  */
 public class CoreClassesTests {
 
