@@ -2,5 +2,42 @@
 
 GCJ=gcj-3.0
 
-echo "Compiling vecmath..."
-${GCJ} -shared -o libvecmath.so ../jar/vecmath1.2-1.14.jar
+echo -n "Compiling vecmath... "
+if test -r libvecmath.so
+then
+    echo "skipped"
+else
+    if ${GCJ} -shared -o libvecmath.so ../jar/vecmath1.2-1.14.jar
+    then
+        echo "done"
+    else
+        echo "failed"
+    fi
+fi
+
+echo -n "Compiling gnujaxp... "
+if test -r libgnujaxp.so
+then
+    echo "skipped"
+else
+    if ${GCJ} -shared -o libgnujaxp.so ../jar/gnujaxp.jar
+    then
+        echo "done"
+    else
+        echo "failed"
+    fi
+fi
+
+echo -n "Compiling log4j... "
+if test -r libloghcore.so
+then
+    echo "skipped"
+else
+    if ${GCJ} -shared -o liblogj.so ../jar/log4j.jar && \
+       ${GCJ} -shared -o liblogjcore.so ../jar/log4j-core.jar
+    then
+        echo "done"
+    else
+        echo "failed"
+    fi
+fi
