@@ -24,6 +24,7 @@
 package org.openscience.cdk;
 
 import java.util.Enumeration;
+import java.util.Hashtable;
 import java.util.Vector;
 
 import javax.vecmath.Point2d;
@@ -73,6 +74,11 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	 */
 	protected ElectronContainer[] electronContainers;
 
+	/**
+	 * Internal list of atom parities.
+	 */
+	protected Hashtable atomParities;
+
 
 	/**
 	 *  Constructs an empty AtomContainer.
@@ -111,9 +117,25 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 		this.electronContainerCount = 0;
 		atoms = new Atom[atomCount];
 		electronContainers = new ElectronContainer[electronContainerCount];
+        atomParities = new Hashtable((int)(atomCount/2));
 	}
 
+    /**
+     * Adds an AtomParity to this container. If a parity is already given for the
+     * affected Atom, it is overwritten.
+     */
+    public void addAtomParity(AtomParity parity) {
+        atomParities.put(parity.getAtom(), parity);
+    }
 
+    /**
+     * Returns the atom parity for the given Atom. If no parity is associated
+     * with the given Atom, it returns null.
+     */
+    public AtomParity getAtomParity(Atom atom) {
+        return (AtomParity)atomParities.get(atom);
+    }
+    
 	/**
 	 *  Sets the array of atoms of this AtomContainer.
 	 *
@@ -1295,7 +1317,13 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 				s.append(ec.toString() + ", ");
 			}
 		}
-		s.append(")");
+        s.append(", AP:[#" + atomParities.size() + ", ");
+        Enumeration parities = atomParities.elements();
+        while (parities.hasMoreElements()) {
+			s.append(((AtomParity)parities.nextElement()).toString());
+            if (parities.hasMoreElements()) s.append(", ");
+		}
+		s.append("])");
 		return s.toString();
 	}
 
@@ -1412,5 +1440,6 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 		System.arraycopy(atoms, 0, newatoms, 0, atoms.length);
 		atoms = newatoms;
 	}
+
 }
 

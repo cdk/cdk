@@ -33,6 +33,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.AtomParity;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.ElectronContainer;
 import org.openscience.cdk.LonePair;
@@ -809,6 +810,26 @@ public class AtomContainerTest extends TestCase {
         assertEquals(1.0, acetone.getBondOrderSum(c2), 0.00001);
         assertEquals(1.0, acetone.getBondOrderSum(c3), 0.00001);
         assertEquals(2.0, acetone.getBondOrderSum(o), 0.00001);
+    }
+    
+    public void testGetAtomParity() {
+        Atom carbon = new Atom("C");
+        carbon.setID("central");
+        Atom carbon1 = new Atom("C");
+        carbon1.setID("c1");
+        Atom carbon2 = new Atom("C");
+        carbon2.setID("c2");
+        Atom carbon3 = new Atom("C");
+        carbon3.setID("c3");
+        Atom carbon4 = new Atom("C");
+        carbon4.setID("c4");
+        int parityInt = 1;
+        AtomParity parity = new AtomParity(carbon, carbon1, carbon2, carbon3, carbon4, parityInt);
+        AtomContainer container = new AtomContainer();
+        container.addAtomParity(parity);
+        AtomParity copy = container.getAtomParity(carbon);
+        assertNotNull(copy);
+        assertEquals(parity, copy);
     }
 
 }

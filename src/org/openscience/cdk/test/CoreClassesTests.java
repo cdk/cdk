@@ -38,6 +38,7 @@ public class CoreClassesTests {
         TestSuite suite= new TestSuite("The cdk.core Tests");
         suite.addTest(AtomContainerTest.suite());
         suite.addTest(AtomEnumerationTest.suite());
+        suite.addTest(AtomParityTest.suite());
         suite.addTest(AtomTest.suite());
         suite.addTest(AtomTypeTest.suite());
         suite.addTest(BioPolymerTest.suite());
