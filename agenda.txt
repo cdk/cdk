@@ -1,4 +1,4 @@
 - Port much more from JChemPaint 1.x to CDK, among which:
    - Internet download
 
-- This is the final test for the commit notification to the new list cdk-commits@lists.sourceforge.net
+- Implement a SMILES parser/generator pair
