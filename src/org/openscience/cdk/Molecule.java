@@ -65,20 +65,6 @@ public class Molecule extends AtomContainer
 		chemNames = new Vector();
 	}
 
-
-	/**
-	 *  Constructs a Molecule with a shallow copy of the atoms and bonds of
-     *  another Molecule.
-	 *
-	 * @param  mol  the Molecule from which the atoms and bonds are copied
-     *
-     * @see #shallowCopy
-	 */
-	public Molecule(Molecule mol)
-	{
-		super((AtomContainer) mol);
-	}
-
 	/**
 	 * Constructs a Molecule with 
 	 * a shallow copy of the atoms and bonds of an AtomContainer.

@@ -20,6 +20,8 @@ Fixes:
 API changes:
 * Removed obsolete cdk.structgen.stoichastic.ConvertTools
   (see AtomContainer and MinMax for same functionality)
+* Removed redundant constructor Molecule(Molecule)
+* Removed redundant method Monomer.addAtom(Atom)
 
 20020920 Release
 ------------------------------------

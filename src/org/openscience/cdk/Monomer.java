@@ -1,9 +1,8 @@
-/* Monomer.java
- * 
- * $ author: 	Edgar Luttmann 			$ 
- * $ contact: 	edgar@uni-paderborn.de 	$
- * $ date: 		2001-08-06 				$
- * 
+/* $RCSfile$
+ * $Author$
+ * $Date$
+ * $Revision$
+ *
  * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
  * 
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
@@ -36,7 +35,7 @@ import org.openscience.cdk.*;
  * A Monomer is an AtomContainer which stores additional monomer specific 
  * informations for a group of Atoms.
  *
- * @author     Edgar Luttmann
+ * @author     Edgar Luttmann <edgar@uni-paderborn.de>
  * @created    2001-08-06 
  *
  * @keyword    monomer
@@ -104,17 +103,5 @@ public class Monomer extends AtomContainer {
 	 */
 	public void setMonomerType(String cMonomerType) {
 		_cMonomerType = cMonomerType;
-	}
-	
-	/**
-	 *
-	 * Add an Atom object to this monomer.
-	 *
-	 * @param oAtom  The Atom to be added.
-	 */
-	public void addAtom(Atom oAtom) {
-		if (! contains(oAtom)) {
-			super.addAtom(oAtom);
-		}
 	}
 }
