@@ -338,7 +338,7 @@ public class Crystal extends AtomContainer implements java.io.Serializable, Clon
      * @param   z Z
      * @see     setSpaceGroup()
      */
-    private void setZ(int z) {
+    public void setZ(int z) {
         Z = z;
     }
 
