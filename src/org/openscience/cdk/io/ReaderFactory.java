@@ -116,13 +116,19 @@ public class ReaderFactory {
                 logger.info("Gamess format detected");
                 return new org.openscience.cdk.io.GamessReader(originalBuffer);
             } else if (lineNumber == 4 && (line.indexOf("v2000") >= 0 ||
-                                           line.indexOf("V3000") >= 0 ||
                                            line.indexOf("V2000") >= 0)) {
                 logger.info("MDL mol/sdf file format detected");
                 return new org.openscience.cdk.io.MDLReader(originalBuffer);
+            } else if (lineNumber == 4 && (line.indexOf("v3000") >= 0 ||
+                                           line.indexOf("V3000") >= 0)) {
+                logger.info("MDL mol V3000 file format detected");
+                return new org.openscience.cdk.io.MDLV3000Reader(originalBuffer);
             } else if (line.startsWith("M  END")) {
                 logger.info("MDL mol/sdf file format detected");
                 return new org.openscience.cdk.io.MDLReader(originalBuffer);
+            } else if (line.startsWith("$RXN V3000")) {
+                logger.info("MDL rxn v3000 file format detected");
+                return new org.openscience.cdk.io.MDLRXNV3000Reader(originalBuffer);
             } else if (line.startsWith("$RXN")) {
                 logger.info("MDL rxn file format detected");
                 return new org.openscience.cdk.io.MDLRXNReader(originalBuffer);
