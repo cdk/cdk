@@ -29,6 +29,7 @@ package org.openscience.cdk.io;
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.exception.*;
+import org.openscience.cdk.io.setting.*;
 import java.io.*;
 import java.util.*;
 import java.util.regex.*;
@@ -49,14 +50,18 @@ import java.util.regex.*;
  */
 public class MACiEReader extends DefaultChemObjectReader {
 
-    LineNumberReader input = null;
+    private LineNumberReader input = null;
     private org.openscience.cdk.tools.LoggingTool logger = null;
 
-    Pattern topLevelDatum;
-    Pattern subLevelDatum;
+    private BooleanIOSetting firstOnly;
+    private BooleanIOSetting readSecondaryFiles;
+    private StringIOSetting readSecondaryDir;
+
+    private Pattern topLevelDatum;
+    private Pattern subLevelDatum;
     
-    ChemModel currentEntry;
-    SetOfReactions currentReactionStepSet;
+    private ChemModel currentEntry;
+    private SetOfReactions currentReactionStepSet;
     
     /**
      * Contructs a new MDLReader that can read Molecule from a given Reader.
@@ -83,6 +88,8 @@ public class MACiEReader extends DefaultChemObjectReader {
      * @exception     CDKException
      */
      public ChemObject read(ChemObject object) throws CDKException {
+         customizeJob();
+         
          try {
              if (object instanceof ChemSequence) {
                  return readReactions(false);
@@ -97,6 +104,21 @@ public class MACiEReader extends DefaultChemObjectReader {
          }
          throw new CDKException("Only supported are ChemSequence and ChemModel.");
      }
+
+     public boolean accepts(ChemObject object) {
+         if (object instanceof ChemSequence) {
+             return true;
+         } else if (object instanceof ChemModel) {
+             return true;
+         } else if (object == null) {
+             logger.warn("MACiEReader can not read null objects.");
+         } else {
+             logger.warn("MACiEReader can not read ChemObject of type: " + 
+                         object.getClass().getName());
+         }
+         return false;
+    }
+    
 
 
     /**
@@ -121,6 +143,9 @@ public class MACiEReader extends DefaultChemObjectReader {
                     // store previous entry
                     currentEntry.setSetOfReactions(currentReactionStepSet);
                     entries.addChemModel(currentEntry);
+                    if (selectEntry && firstOnly.isSet()) {
+                        return currentEntry;
+                    }
                 }
                 currentEntry = new ChemModel();
                 currentReactionStepSet = new SetOfReactions();
@@ -133,6 +158,10 @@ public class MACiEReader extends DefaultChemObjectReader {
                 Matcher subLevelMatcher = subLevelDatum.matcher(dataType);
                 if (subLevelMatcher.matches()) {
                     // sub level field found
+                    String field = subLevelMatcher.group(2);
+                    String fieldNumber = subLevelMatcher.group(3);
+                    String subfield = subLevelMatcher.group(4);
+                    processSubLevelField(field, fieldNumber, subfield, datum);
                 } else {
                     Matcher topLevelMatcher = topLevelDatum.matcher(dataType);
                     if (topLevelMatcher.matches()) {
@@ -195,7 +224,9 @@ public class MACiEReader extends DefaultChemObjectReader {
         return tuple;
     }
     
-    private void processTopLevelField(String field, String datum) throws IOException {
+    private void processTopLevelField(String field, String datum) 
+      throws IOException, CDKException {
+        logger.debug("Processing top level field");
         if (field.equals("UNIQUE IDENTIFIER")) {
             currentEntry.setID(datum);
         } else if (field.equals("EC NUMBER") ||
@@ -208,8 +239,71 @@ public class MACiEReader extends DefaultChemObjectReader {
         }
     }
     
+    private void processSubLevelField(String field, String fieldNumber,
+                                      String subfield, String datum) 
+      throws IOException, CDKException {
+        logger.debug("Processing sub level field");
+        if (field.equals("OVERALL REACTION")) {
+            if (subfield.equals("REACTION_ID")) {
+                if (readSecondaryFiles.isSet()) {
+                    // parse referenced file
+                    String filename = readSecondaryDir.getSetting() + datum + ".rxn";
+                    File file = new File(filename);
+                    if (file.exists()) {
+                        logger.info("Reading overall reaction from: " + filename);
+                        FileReader reader = new FileReader(file);
+                        MDLRXNReader rxnReader = new MDLRXNReader(reader);
+                        Reaction reaction = (Reaction)rxnReader.read(new Reaction());
+                        reaction.setID("Overall Reaction");
+                        currentReactionStepSet.addReaction(reaction);
+                    } else {
+                        logger.error("Cannot find secondary file: " + filename);
+                    }
+                }
+            }
+        } else if (field.equals("REACTION STAGES")) {
+            if (subfield.equals("STEP_ID")) {
+                if (readSecondaryFiles.isSet()) {
+                    // parse referenced file
+                    String filename = readSecondaryDir.getSetting() + datum + ".rxn";
+                    File file = new File(filename);
+                    if (file.exists()) {
+                        logger.info("Reading overall reaction from: " + filename);
+                        FileReader reader = new FileReader(file);
+                        MDLRXNReader rxnReader = new MDLRXNReader(reader);
+                        Reaction reaction = (Reaction)rxnReader.read(new Reaction());
+                        reaction.setID("Step " + fieldNumber);
+                        currentReactionStepSet.addReaction(reaction);
+                    } else {
+                        logger.error("Cannot find secondary file: " + filename);
+                    }
+                }
+            }
+        } else {
+            logger.warn("Unrecognized sub level field " + field + 
+                " around line " + input.getLineNumber());
+        }
+    }
+    
     public void close() throws IOException {
         input.close();
+    }
+
+    private void customizeJob() {
+        firstOnly = new BooleanIOSetting("FirstEntryOnly", IOSetting.LOW,
+          "Should I read the first entry only?", 
+          "true");
+        fireReaderSettingQuestion(firstOnly);
+
+        readSecondaryFiles = new BooleanIOSetting("ReadSecondaryFiles", IOSetting.LOW,
+          "Should I read the secondary files (if available)?", 
+          "true");
+        fireReaderSettingQuestion(readSecondaryFiles);
+
+        readSecondaryDir = new StringIOSetting("ReadSecondaryDir", IOSetting.LOW,
+          "Where can the secondary files be found?", 
+          "/home/egonw/");
+        fireReaderSettingQuestion(readSecondaryDir);
     }
 }
 
