@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.0b1//EN" "dtd/website.dtd">
 <webpage id="bibliography">
-  <config param="last-change-by" value="$Author:$"/>
-  <config param="rcsdate" value="$Date: 2001/06/04 13:06:14 $"/>
+  <config param="last-change-by" value="$Author: egonw $"/>
+  <config param="rcsdate" value="$Date: 2001/12/13 13:47:34 $"/>
 
   <head>
     <title>Bibliography</title>
@@ -313,6 +313,65 @@ Weininger, David</surname></author><author><surname>Weininger, Arthur</surname><
   </bibliomisc>
 </biblioentry>
 
+<biblioentry id="STE2001">
+  <abbrev>STE2001</abbrev>
+  <biblioset relation="article">
+    <authorgroup>
+      <author>
+        <firstname>Christoph</firstname>
+        <surname>Steinbeck</surname>
+      </author>
+    </authorgroup>
+    <title>SENECA: A platform-independent, distributed, and parallel system for computer-assisted structure elucidation in organic chemistry</title>
+    <volumenum>41</volumenum>
+    <issuenum>6</issuenum>
+    <pagenums>1500-1507</pagenums>
+    <pubdate>2001</pubdate>
+  </biblioset>
+  <biblioset relation="journal">
+    <title>Journal of Chemical Information and Computer Sciences</title>
+  </biblioset>
+</biblioentry>
+
+<biblioentry id="STE2002">
+  <abbrev>STE2002</abbrev>
+  <biblioset relation="article">
+    <authorgroup>
+      <author>
+        <firstname>Christoph</firstname>
+        <surname>Steinbeck</surname>
+      </author>
+      <author>
+        <firstname>Stefan</firstname>
+        <surname>Kuhn</surname>
+      </author>
+      <author>
+        <firstname>Stefan</firstname>
+        <surname>Krause</surname>
+      </author>      
+    </authorgroup>
+    <title>NMRShiftDB - An open-source, open-content web database for organic molecular structures and their NMR data.</title>
+    <volumenum></volumenum>
+    <issuenum></issuenum>
+    <pagenums></pagenums>
+    <pubdate>2002</pubdate>
+  </biblioset>
+  <biblioset relation="journal">
+    <title>manuscript in preparation</title>
+  </biblioset>
+</biblioentry>
+
+<biblioentry>
+  <abbrev>TRI1992</abbrev>
+  <authorgroup>
+    <author><firstname>Nenad</firstname><surname>Trinijastic</surname></author>
+  </authorgroup>
+  <isbn>0-8493-4256-2</isbn>
+  <publisher>
+   <publishername>CRC Press</publishername>
+  </publisher>
+  <title>Chemical Graph Theory</title>
+</biblioentry>
 
   </bibliography>
 </para>
