@@ -52,6 +52,8 @@ API changes:
 * Moved RingSet.getRingSetInAtomContainer() to RingSetManipulator.getAllInOneContainer()
 * Moved RingSet.sort(), .getHeaviestRing() and .getMostComplexRing() to RingSetManipulator
 * Removed deprecated method AtomContainer.getHighestCurrentBondOrder()
+* Fixed signature to AtomContainer.setElectronContainers[ElectronContainers[])
+  which has Bond[] as parameter
 
 20041201 Release
 ------------------------------------
