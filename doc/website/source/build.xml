@@ -90,6 +90,7 @@
   </target>
   
   <target name="atlists" unless="atlists.uptodate">
+    <xslt in="../../../src/org/openscience/cdk/config/data/hybridization_atomtypes.xml" out="hybridization_atomtypes.dbx" style="xsl/atomtypelist2docbook.xsl"/>
     <xslt in="../../../src/org/openscience/cdk/config/data/mol2_atomtypes.xml" out="mol2_atomtypes.dbx" style="xsl/atomtypelist2docbook.xsl"/>
     <xslt in="../../../src/org/openscience/cdk/config/data/valency_atomtypes.xml" out="valency_atomtypes.dbx" style="xsl/atomtypelist2docbook.xsl"/>
     <xslt in="../../../src/org/openscience/cdk/config/data/structgen_atomtypes.xml" out="structgen_atomtypes.dbx" style="xsl/atomtypelist2docbook.xsl"/>

@@ -50,6 +50,7 @@
       </tocentry>
       <tocentry page="biblio.xml" filename="biblio.html"/>
       <tocentry page="atlists.xml" filename="atlists.html">
+        <tocentry page="atlist-hybrid.xml" filename="atlist-hybrid.html"/>
         <tocentry page="atlist-mol2.xml" filename="atlist-mol2.html"/>
         <tocentry page="atlist-structgen.xml" filename="atlist-structgen.html"/>
         <tocentry page="atlist-valency.xml" filename="atlist-valency.html"/>

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.0b1//EN" 
+                         "dtd/website.dtd" [
+  <!ENTITY atlist SYSTEM "hybridization_atomtypes.dbx">  
+]>
+<webpage id="atlist-hybrid">
+  <config param="last-change-by" value="$Author$"/>
+  <config param="rcsdate" value="$Date$"/>
+
+  <head>
+    <title>Valency/Hybridization Atom Type List</title>
+    <titleabbrev>Valency/Hybrid ATList</titleabbrev>
+  </head>
+
+  &atlist;
+
+</webpage>
