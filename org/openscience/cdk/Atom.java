@@ -71,8 +71,8 @@ public class Atom extends AtomType implements Cloneable {
         public Atom(String elementSymbol)
         {
 		super(elementSymbol);
-                this.point3D = new javax.vecmath.Point3d();
-                this.point2D = new javax.vecmath.Point2d();
+                this.point3D = null;
+                this.point2D = null;
         }
 
         /**
@@ -116,39 +116,39 @@ public class Atom extends AtomType implements Cloneable {
         }
 
         /**
-         *  Sets the hydrogen count of this atom. 
+         *  Sets the hydrogen count of this atom.
          *
-         * @param  hydrogenCount  The number of hydrogen atoms bonded to this atom. 
+         * @param  hydrogenCount  The number of hydrogen atoms bonded to this atom.
          */
         public void setHydrogenCount(int hydrogenCount) {
                 this.hydrogenCount = hydrogenCount;
         }
         /**
-         *  
+         *
          * Sets a point specifying the location of this
          * atom in a 2D space
          *
-         * @param  point2D  A point in a 2D plane 
+         * @param  point2D  A point in a 2D plane
          */
         public void setPoint2D(javax.vecmath.Point2d point2D) {
                 this.point2D = point2D;
         }
         /**
-         *  
+         *
          * Sets a point specifying the location of this
          * atom in 3D space
          *
-         * @param  point3D  A point in a 3-dimensional space 
+         * @param  point3D  A point in a 3-dimensional space
          */
         public void setPoint3D(javax.vecmath.Point3d point3D) {
                 this.point3D = point3D;
         }
         /**
-         *  Sets the stereo parity for this atom 
+         *  Sets the stereo parity for this atom
          *
-         * @param  stereoParity  The stereo parity for this atom 
-         * @see                  org.openscience.cdk.CDKConstants 
-         *      org.openscience.cdk.CDKConstants for predefined values. 
+         * @param  stereoParity  The stereo parity for this atom
+         * @see                  org.openscience.cdk.CDKConstants
+         *      org.openscience.cdk.CDKConstants for predefined values.
          */
         public void setStereoParity(int stereoParity) {
                 this.stereoParity = stereoParity;
@@ -156,9 +156,9 @@ public class Atom extends AtomType implements Cloneable {
 
 
         /**
-         *  Returns the hydrogen count of this atom 
+         *  Returns the hydrogen count of this atom
          *
-         * @return    The hydrogen count of this atom. 
+         * @return    The hydrogen count of this atom.
          */
         public int getHydrogenCount() {
                 return this.hydrogenCount;
@@ -167,7 +167,7 @@ public class Atom extends AtomType implements Cloneable {
          * Returns a point specifying the location of this
          * atom in a 2D space
          *
-         * @return    A point in a 2D plane 
+         * @return    A point in a 2D plane
          */
         public javax.vecmath.Point2d getPoint2D() {
                 return this.point2D;
@@ -176,149 +176,174 @@ public class Atom extends AtomType implements Cloneable {
          * Returns a point specifying the location of this
          * atom in a 3D space
          *
-         * @return    A point in 3-dimensional space 
+         * @return    A point in 3-dimensional space
          */
         public javax.vecmath.Point3d getPoint3D() {
                 return this.point3D;
         }
-        
+
 
         /**
          * Returns the x coordinate for of the 2D location of this atom.
-         * You should know your context here. There is no guarantee that point2D and point3D 
+         * You should know your context here. There is no guarantee that point2D and point3D
          * contain consistent information. Both are handled independently.
          *
-         * @return the x coordinate for of the 2D location of this atom     
+         * @return the x coordinate for of the 2D location of this atom
          */
-        public double getX2D()
-        {
+        public double getX2D() {
+            if (point2D == null) {
+                return 0.0;
+            } else {
                 return point2D.x;
+            }
         }
-        
+
 
         /**
          * Returns the y coordinate for of the 2D location of this atom.
-         * You should know your context here. There is no guarantee that point2D and point3D 
+         * You should know your context here. There is no guarantee that point2D and point3D
          * contain consistent information. Both are handled independently.
          *
-         * @return the y coordinate for of the 2D location of this atom     
+         * @return the y coordinate for of the 2D location of this atom
          */
-        public double getY2D()
-        {
-              return point2D.y;
+        public double getY2D() {
+            if (point2D == null) {
+                return 0.0;
+            } else {
+                return point2D.y;
+            }
         }
-        
+
 
         /**
          * Returns the x coordinate for of the 3D location of this atom.
-         * You should know your context here. There is no guarantee that point2D and point3D 
+         * You should know your context here. There is no guarantee that point2D and point3D
          * contain consistent information. Both are handled independently.
          *
-         * @return the x coordinate for of the 3D location of this atom     
+         * @return the x coordinate for of the 3D location of this atom
          */
-        public double getX3D()
-        {
+        public double getX3D() {
+            if (point3D == null) {
+                return 0.0;
+            } else {
                 return point3D.x;
+            }
         }
-        
+
 
         /**
          * Returns the y coordinate for of the 3D location of this atom.
-         * You should know your context here. There is no guarantee that point2D and point3D 
+         * You should know your context here. There is no guarantee that point2D and point3D
          * contain consistent information. Both are handled independently.
          *
-         * @return the y coordinate for of the 3D location of this atom     
+         * @return the y coordinate for of the 3D location of this atom
          */
-        public double getY3D()
-        {
+        public double getY3D() {
+            if (point3D == null) {
+                return 0.0;
+            } else {
                 return point3D.y;
+            }
         }
-        
+
         /**
          * Returns the z coordinate for of the 3D location of this atom.
-         * You should know your context here. There is no guarantee that point2D and point3D 
+         * You should know your context here. There is no guarantee that point2D and point3D
          * contain consistent information. Both are handled independently.
          *
-         * @return the z coordinate for of the 3D location of this atom     
+         * @return the z coordinate for of the 3D location of this atom
          */
 
-        public double getZ3D()
-        {
+        public double getZ3D() {
+            if (point3D == null) {
+                return 0.0;
+            } else {
                 return point3D.z;
+            }
         }
-        
+
 
         /**
          * Sets the x coordinate for of the 2D location of this atom.
-         * You should know your context here. There is no guarantee that point2D and point3D 
+         * You should know your context here. There is no guarantee that point2D and point3D
          * contain consistent information. Both are handled independently.
      *
          * @param   x  the new x coordinate for of the 2D location of this atom
          */
-        public void setX2D(double x)
-        {
-                point2D.x = x;
+        public void setX2D(double x) {
+            if (point2D == null) {
+                point2D = new javax.vecmath.Point2d();
+            }
+            point2D.x = x;
         }
-        
+
 
         /**
          * Sets the y coordinate for of the 2D location of this atom.
-         * You should know your context here. There is no guarantee that point2D and point3D 
+         * You should know your context here. There is no guarantee that point2D and point3D
          * contain consistent information. Both are handled independently.
          *
          * @param   y  the new y coordinate for of the 2D location of this atom
          */
-        public void setY2D(double y)
-        {
-                point2D.y = y;
+        public void setY2D(double y) {
+            if (point2D == null) {
+                point2D = new javax.vecmath.Point2d();
+            }
+            point2D.y = y;
         }
 
 
         /**
          * Sets the x coordinate for of the 3D location of this atom.
-         * You should know your context here. There is no guarantee that point2D and point3D 
+         * You should know your context here. There is no guarantee that point2D and point3D
          * contain consistent information. Both are handled independently.
          *
          * @param   x  the new x coordinate for of the 3D location of this atom
          */
-        public void setX3D(double x)
-        {
-                point3D.x = x;
+        public void setX3D(double x) {
+            if (point3D == null) {
+                point3D = new javax.vecmath.Point3d();
+            }
+            point3D.x = x;
         }
 
 
         /**
          * Sets the y coordinate for of the 3D location of this atom.
-         * You should know your context here. There is no guarantee that point2D and point3D 
+         * You should know your context here. There is no guarantee that point2D and point3D
          * contain consistent information. Both are handled independently.
          *
          * @param   y  the new y coordinate for of the 3D location of this atom
          */
-        public void setY3D(double y)
-        {
-                point3D.y = y;
+        public void setY3D(double y) {
+            if (point3D == null) {
+                point3D = new javax.vecmath.Point3d();
+            }
+            point3D.y = y;
         }
 
 
         /**
          * Sets the z coordinate for of the 3D location of this atom.
-         * You should know your context here. There is no guarantee that point2D and point3D 
+         * You should know your context here. There is no guarantee that point2D and point3D
          * contain consistent information. Both are handled independently.
          *
          * @param   z  the new z coordinate for of the 3D location of this atom
          */
-        public void setZ3D(double z)
-        {
-                point3D.z = z;
+        public void setZ3D(double z) {
+            if (point3D == null) {
+                point3D = new javax.vecmath.Point3d();
+            }
+            point3D.z = z;
         }
-        
+
 
         /**
-         *  Returns the stereo parity of this atom 
+         *  Returns the stereo parity of this atom
          *
-         * @return    The stereo parity for this atom 
-         * @see       org.openscience.cdk.CDKConstants 
-         *      org.openscience.cdk.CDKConstants for predefined values. 
+         * @return    The stereo parity for this atom
+         * @see       org.openscience.cdk.CDKConstants
+         *      org.openscience.cdk.CDKConstants for predefined values.
          */
         public int getStereoParity() {
                 return this.stereoParity;
@@ -329,7 +354,7 @@ public class Atom extends AtomType implements Cloneable {
          *
          * @return    return true, if the atoms are equal
          */
-        public boolean compare(Object object) 
+        public boolean compare(Object object)
         {
           if (object instanceof Atom)
           {
@@ -339,7 +364,7 @@ public class Atom extends AtomType implements Cloneable {
                 (maxBondOrderSum==atom.maxBondOrderSum) &&
                 ((point2D==atom.point2D) || ((point2D!=null) && (point2D.equals(atom.point2D)))) &&
                 ((point3D==atom.point3D) || ((point3D!=null) && (point3D.equals(atom.point3D)))) &&
-                (hydrogenCount==atom.hydrogenCount) && 
+                (hydrogenCount==atom.hydrogenCount) &&
                 (stereoParity==atom.stereoParity) &&
                 (charge==atom.charge))
               return true;
@@ -350,7 +375,7 @@ public class Atom extends AtomType implements Cloneable {
         /**
          * Returns a string representation of this Atom.
          *
-         * @return  The string representation of this Atom   
+         * @return  The string representation of this Atom
          */
         public String toString()
         {
