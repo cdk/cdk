@@ -39,7 +39,7 @@ import org.openscience.cdk.AtomType;
  * Jmol to CDK. The AtomType's themselves seems have a computational
  * background, but this is not clear. 
  *
- * @cdk.module standard
+ * @cdk.module core
  *
  * @author     Bradley A. Smith <bradley@baysmith.com>
  *
@@ -63,7 +63,7 @@ public class TXTBasedAtomTypeConfigurator implements AtomTypeConfigurator {
     /**
      * Read a text based configuration file
      */
-    public Vector readAtomTypes() throws Exception {
+    public Vector readAtomTypes() throws IOException {
         Vector atomTypes = new Vector();
 
         if (ins == null) {
@@ -136,6 +136,7 @@ public class TXTBasedAtomTypeConfigurator implements AtomTypeConfigurator {
         } catch (IOException exception) {
             System.err.println(exception.toString());
             exception.printStackTrace();
+            throw exception;
         }        
         return atomTypes;
     }

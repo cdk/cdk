@@ -24,22 +24,29 @@
 package org.openscience.cdk.config;
 
 import java.io.InputStream;
+import java.io.IOException;
 import java.util.Vector;
 
 /**
+ * Interface that allows reading atom type configuration data from some
+ * source.
  *
- * @cdk.module standard
+ * @cdk.module core
  */
 public interface AtomTypeConfigurator {
     
     /**
-     * Sets the file containing the config data
+     * Sets the file containing the config data.
+     *
+     * @param ins InputStream from which the atom type definitions are to be read
      */
     public void setInputStream(InputStream ins);
     
     /**
-     * Reads a set of configuref AtomType's into a Vector
+     * Reads a set of configured AtomType's into a Vector.
+     *
+     * @throws Exception when something went wrong with reading the data
      */
-    public Vector readAtomTypes() throws Exception;
+    public Vector readAtomTypes() throws IOException;
 
 }

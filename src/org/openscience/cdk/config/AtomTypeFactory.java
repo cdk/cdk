@@ -62,7 +62,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *  AtomType[] types = factory.getAtomTypes("C");
  *  </pre>
  *
- * @cdk.module standard
+ * @cdk.module core
  *
  * @author     steinbeck
  * @cdk.created    2001-08-29
@@ -85,10 +85,11 @@ public class AtomTypeFactory {
      */
     public final static String ATOMTYPE_ID_JMOL = "jmol";
     
-    private static LoggingTool logger;
-
-    private static Hashtable tables = null;
+    private final static String TXT_EXTENSION = "txt";
+    private final static String XML_EXTENSION = "xml";
     
+    private static LoggingTool logger;
+    private static Hashtable tables = null;
     private Vector atomTypes = null;
     
 	/**
@@ -199,22 +200,22 @@ public class AtomTypeFactory {
 			}
 		}
 
-        String format = "xml";
-        if (fileName.endsWith("txt")) {
-            format = "txt";
-        } else if (fileName.endsWith("xml")) {
-            format = "xml";
+        String format = XML_EXTENSION;
+        if (fileName.endsWith(TXT_EXTENSION)) {
+            format = TXT_EXTENSION;
+        } else if (fileName.endsWith(XML_EXTENSION)) {
+            format = XML_EXTENSION;
         }
         readConfiguration(ins, format);
     }
     
     private AtomTypeConfigurator constructConfigurator(String format) {
         try {
-            if (format.equals("txt")) {
+            if (format.equals(TXT_EXTENSION)) {
                 return (AtomTypeConfigurator) this.getClass().getClassLoader().
                     loadClass("org.openscience.cdk.config.TXTBasedAtomTypeConfigurator").
                     newInstance();
-            } else if (format.equals("xml")) {
+            } else if (format.equals(XML_EXTENSION)) {
                 return (AtomTypeConfigurator) this.getClass().getClassLoader().
                  loadClass("org.openscience.cdk.config.CDKBasedAtomTypeConfigurator").
                  newInstance();

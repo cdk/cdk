@@ -33,10 +33,13 @@ import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
+ * SAX Handler for the AtomTypeReader.
  *
- * @cdk.module standard
+ * @see AtomTypeReader
+ *
+ * @cdk.module core
  */
-public class AtomTypeHandler extends DefaultHandler {
+public class AtomTypeHandler extends DefaultHandler { //NOPMD
 
     private final int SCALAR_UNSET = 0;
     private final int SCALAR_MAXBONDORDER = 1; 
@@ -60,8 +63,7 @@ public class AtomTypeHandler extends DefaultHandler {
 
     // SAX Parser methods
 
-    public void doctypeDecl(String name, String publicId, String systemId)
-        throws Exception {
+    public void doctypeDecl(String name, String publicId, String systemId) {
         logger.info("DocType root element: " + name);
         logger.info("DocType root PUBLIC: " + publicId);
         logger.info("DocType root SYSTEM: " + systemId);
@@ -76,7 +78,7 @@ public class AtomTypeHandler extends DefaultHandler {
     public void endDocument() {
     }
 
-    public void endElement(String uri, String local, String raw) {
+    public void endElement(String uri, String local, String raw) {  //NOPMD
         logger.debug("END Element: ", raw);
         logger.debug("  uri: ", uri);
         logger.debug("  local: ", local);
@@ -111,7 +113,7 @@ public class AtomTypeHandler extends DefaultHandler {
         currentChars = "";
     }
 
-    public void startElement(String uri, String local, 
+    public void startElement(String uri, String local,       //NOPMD
                              String raw, Attributes atts) {
         currentChars = "";
         logger.debug("START Element: ", raw);

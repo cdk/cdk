@@ -32,7 +32,11 @@ import org.openscience.cdk.config.atomtypes.AtomTypeReader;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
- * @cdk.module standard
+ * AtomType resource that reads the atom type configuration from an XML file.
+ * The format is required to be in the STMML format {@cdk.cite PMR2002}; examples
+ * can be found in CVS in the src/org/openscience/cdk/config/data directory.
+ *
+ * @cdk.module core
  */
 public class CDKBasedAtomTypeConfigurator implements AtomTypeConfigurator {
 
@@ -55,7 +59,7 @@ public class CDKBasedAtomTypeConfigurator implements AtomTypeConfigurator {
     /**
      * @return Returns a Vector of AtomType's.
      */
-    public Vector readAtomTypes() throws Exception {
+    public Vector readAtomTypes() throws IOException {
         Vector atomTypes = new Vector(0);
         if (ins == null) {
             try {

@@ -37,7 +37,11 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
 /**
- * @cdk.module standard
+ * XML Reader for the CDKBasedAtomTypeConfigurator.
+ *
+ * @see org.openscience.cdk.config.CDKBasedAtomTypeConfigurator
+ *
+ * @cdk.module core
  */
 public class AtomTypeReader {
 
@@ -45,6 +49,9 @@ public class AtomTypeReader {
     private Reader input;
     private LoggingTool logger;
 
+    /**
+     * Instantiates the XML based AtomTypeReader.
+     */
     public AtomTypeReader(Reader input) {
         this.init();
         this.input = input;
