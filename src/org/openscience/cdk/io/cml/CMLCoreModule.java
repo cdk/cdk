@@ -38,7 +38,7 @@ import org.xml.sax.*;
  * <p>Please file a bug report if this parser fails to parse
  * a certain element or attribute value in a valid CML document.
  **/
-public class CMLCoreConvention implements ConventionInterface {
+public class CMLCoreModule implements ModuleInterface {
 
     protected org.openscience.cdk.tools.LoggingTool logger;
     public final static int UNKNOWN = -1;
@@ -90,18 +90,18 @@ public class CMLCoreConvention implements ConventionInterface {
     protected String elementTitle;
     protected String currentChars;
 
-    public CMLCoreConvention(CDOInterface cdo) {
+    public CMLCoreModule(CDOInterface cdo) {
         logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
         this.cdo = cdo;
     }
     
-    public CMLCoreConvention(ConventionInterface conv) {
+    public CMLCoreModule(ModuleInterface conv) {
         inherit(conv);
     }
 
-    public void inherit(ConventionInterface convention) {
-        if (convention instanceof CMLCoreConvention) {
-            CMLCoreConvention conv = (CMLCoreConvention)convention;
+    public void inherit(ModuleInterface convention) {
+        if (convention instanceof CMLCoreModule) {
+            CMLCoreModule conv = (CMLCoreModule)convention;
             this.logger = conv.logger;
             this.cdo = conv.returnCDO();
             this.BUILTIN = conv.BUILTIN;
