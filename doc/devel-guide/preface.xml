@@ -1,0 +1,16 @@
+    <para>This guide gives information on how the CDK library is being
+      developed. It contains links to software that is needed to
+      compile the software, or to create packages.
+    </para>
+
+    <para>It also includes
+      guide lines on how to write documentation about the software
+      and as JavaDoc in the software. None of this is currently
+      enforced or required.
+    </para>
+
+    <para>
+      Important! This guide is an ongoing documentation project.
+      It is far from complete right now, many things are still missing.
+      Please, add additional content to cvs or email it to me.
+    </para>

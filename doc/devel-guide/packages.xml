@@ -1,0 +1,42 @@
+    <chapter id="sect:tarpackages">
+      <title>Tar packages</title>
+      <para>
+        Currently only tar.gz packages are available. The packages
+        can be found in CVS /cdk/packages/tar. These packages can be
+        installed on UNIX type operating systems in a few steps
+        (replace the 20020206 with the latest release date):
+      <programlisting>
+$ gunzip cdk-libs-20020206.tar.gz
+$ tar xvf cdk-libs-20020206.tar
+$ cd cdk-libs-20020206
+$ ./configure &amp;&amp; make &amp;&amp; install
+</programlisting>
+      </para>
+      <para>
+        Remember the correct order of installation is:
+        cdk-libs, cdk-bin, cdk-test.
+      </para>
+    </chapter>
+
+    <chapter id="sect:linuxpackages">
+      <title>Linux packages</title>
+      <para>
+        At this moment Linux users should use and install the
+        above tar.gz packages. No binary packages are yet
+        available.
+      </para>
+
+      <section>
+        <title>Debian packages</title>
+        <para>
+          Debian packages are planned but not yet available.
+        </para>
+      </section>
+
+      <section>
+        <title>RPM packages</title>
+        <para>
+          RPM packages are planned but not yet available.
+        </para>
+      </section>
+    </chapter>

@@ -2,6 +2,11 @@
 <!DOCTYPE
      book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
                  "../lib/dtd/docbookx.dtd" [
+  <!ENTITY packages SYSTEM "packages.xml">
+  <!ENTITY preface SYSTEM "preface.xml">
+  <!ENTITY docs SYSTEM "docs.xml">
+  <!ENTITY library-development SYSTEM "library-development.xml">
+  <!ENTITY website-development SYSTEM "website-development.xml">
 ]>
 <book id="devel-guide">
   <title>CDK Developer's Guide</title>
@@ -28,357 +33,27 @@
 
   <preface>
     <title>Preface</title>
-
-    <para>This guide gives information on how the CDK library is being
-      developed. It contains links to software that is needed to 
-      compile the software, or to create packages.
-    </para>
-
-    <para>It also includes
-      guide lines on how to write documentation about the software
-      and as JavaDoc in the software. None of this is currently
-      enforced or required.
-    </para>
-
-    <para>
-      Important! This guide is an ongoing documentation project.
-      It is far from complete right now, many things are still missing.
-      Please, add additional content to cvs or email it to me.
-    </para>
+    &preface;
   </preface>
 
   <part id="part:documentation">
     <title>Documentation</title>
-
-    <chapter id="sect:javadoc">
-      <title>JavaDoc</title>
-
-      <para>
-        Most of the documentation about the CDK classes is done in the
-        java source files itself. The format used for this is the JavaDoc
-        format. An overview/introduction can be found at <ulink
-        url="http://java.sun.com/j2se/javadoc/writingdoccomments/">http://java.sun.com/j2se/javadoc/writingdoccomments/</ulink>.
-      </para>
-
-      <para>
-        JavaDoc documentation is now generated using Javadoc and
-        Ant:
-        <programlisting>
-cdk/$ ant -buildfile javadoc.xml html
-        </programlisting>
-      </para>
-
-      <section id="sect:javadoctags">
-        <title>JavaDoc Tags</title>
-
-        <para>
-          The two sub sections contain suggested policy and is not yet as such
-          approved.
-        </para>
-
-        <section>
-          <title>Tagging classes</title>
-          <para>
-            Java classes should have the JavaDoc tags
-            @copyright and @author.
-          </para>
-        </section>
-
-        <section>
-          <title>Tagging procedures</title>
-          <para>
-            Procedures of classes should give information about what they do
-            and information about parameters (@param) and things they
-            return (@return).
-          </para>
-          <para>
-            If the procedure performs a method found in literature, it should
-            mention the reference. No format for the reference has been determined,
-            but the BibTex format should do fine.
-          </para>
-        </section>
-      </section>
-
-      <section id="sect:docbookdoclet">
-        <title>DocbookDoclet</title>
-
-        <para>
-          The JavaDoc documentation can be converted into DocBook code
-          with the DocBookDoclet (<ulink
-          url="http://freshmeat.net/projects/dbdoclet/">http://freshmeat.net/projects/dbdoclet/</ulink>).
-          The DocBook output can in turn be generated into PDF files.
-        </para>
-      </section>
-
-      <section id="sect:javadocstats">
-        <title>JavaDoc Statistics</title>
-        <para>
-          Statistics can be generated on the use of JavaDoc in the
-          CDK library. It can be generated with:
-        <programlisting>
-$ cd cdk/reports/javadoc
-$ ant -Dpathtojava3d=/some/path overview
-        </programlisting>
-        </para>
-      </section>
-
-      <section id="sect:keywordindex">
-        <title>Keyword Index</title>
-        <para>
-          A keyword index is used for the website and is generated
-          with the MakeKeywordIndexDoclet doclet. The file
-          keyword.index.xml can be generated with:
-        <programlisting>
-$ cd cdk/reports/javadoc
-$ ant -Dpathtojava3d=/some/path keyword.index
-        </programlisting>
-        </para>
-      </section>
-    </chapter>
-
-    <chapter id="sect:cdk-tutorial">
-      <title>CDK Programming Tutorial</title>
-
-      <para>There is a sort of CDK Programming Tutorial online. It is
-        written in DocBook XML 4.1.2 (like most of our documentation).</para>
-    </chapter>
-
+    &docs;
   </part>
 
   <part id="part:cdk-library">
     <title>The CDK Library</title>
-
-    <chapter id="sect:goal">
-      <title>The Goal</title>
-      <para>
-        The goal of the CDK is to be a library of java classes to support
-        java software to solve typical chemical computational and informational
-        problems.
-      </para>
-    </chapter>
-
-    <chapter id="sect:classcategories">
-      <title>Class categories</title>
-      <para>
-        All CDK classes are categorized into four classes:
-        core, standard, extra, and project.
-      </para>
-      <section>
-        <title>Core classes</title>
-        <para>
-          Core classes represent chemical entities, like bonds, atoms, molecules, and
-          more abstract entities, like connectivity tables, used for in common
-          computational and information chemistry.
-        </para>
-      </section>
-      <section>
-        <title>Standard classes</title>
-        <para>
-          Standard classes are all classes that do not represent some entity,
-          but are common to many applications dealing with chemical problems.
-          These classes deal with manipulation and other ways of dealing with the
-          core classes. These can be further grouped into two subclasses.
-          One class changes the content of the entities, the other does not.
-        </para>
-        <para>
-          Example classes that do not change the content of core classes, are
-          IO classes and viewers. In this subclass belong also the classes that
-          generate instances of core classes, example classes are classes that
-          generate 3D coordinates, for example.
-        </para>
-        <para>
-          The other subclass contains classes that change the content of the
-          core classes. E.g. classes implementing a molecular dynamics run
-          and editors.
-        </para>
-        <para>
-          <remark>This subclassification seems to be too artificial.</remark>
-        </para>
-      </section>
-      <section>
-        <title>Extra classes</title>
-        <para>
-          Classes that are too specific for general use belong to the class Extra.
-        </para>
-      </section>
-      <section>
-        <title>Project classes</title>
-        <para>
-          Java classes and packages in this category are not really
-          part of the CDK library, but are aimed to help manage the
-          project, by ways of testing and generating documentation and
-          project statistics.
-        </para>
-      </section>
-    </chapter>
-
-  <chapter id="sect:compiling">
-    <title>Compiling the CDK source</title>
-
-    <para>
-      Compiling and jar-ing the software is done with <ulink
-      url="http://jakarta.apache.org/ant/">Jakarta's Ant</ulink>.
-    </para>
-
-    <para>
-      CDK can be compiled with and without support for Java3D.
-      How to compile these, is explained in the next two sections.
-    </para>
-
-    <section>
-      <title>Compiling without Java3D installed</title>
-      <para>
-        If not Java3D is installed or available for your platform,
-        you can compile CDK with:
-        <programlisting>
-cdk/$ ant
-        </programlisting>
-      </para>
-    </section>
-
-    <section>
-      <title>Compiling with Java3D installed</title>
-      <para>
-        If Java3D is installed or available for your platform,
-        you can compile CDK with:
-        <programlisting>
-cdk/$ ant -Dpathtojava3d=/some/path compile-with-java3d
-        </programlisting>
-        The parameter pathtojava3d can be used to tell Ant where
-        your Java3D installation (read: jar files) can be found.
-      </para>
-    </section>
-
-  </chapter>
-
-  <chapter id="sect:testing">
-    <title>Testing CDK classes</title>
-
-    <section>
-      <title>JUnit testing</title>
-      <para>
-        After you compiled the code, you can do <command>ant test</command>
-        to run the test suite of non-interactive, automated
-        tests. You will get output with a part something like:
-        <programlisting>
-test:
-    [junit] Running org.openscience.cdk.test.CDKTests
-    [junit] Tests run: 21, Failures: 5, Errors: 0, Time elapsed: 9.63 sec
-    [junit] TEST org.openscience.cdk.test.CDKTests FAILED
-        </programlisting>
-        These tests results in some serious problems.
-      </para>
-
-      <para>
-        The actual tests are done by
-        <ulink url="http://www.junit.org/">JUnit</ulink> which you must have
-        installed. JDK 1.4 requires version 3.7, but 3.6 is good for other
-        Java versions.
-      </para>
-
-      <para>
-        A recent alternative is to install the cdk-test package.
-        You can then do tests with
-        <programlisting>
-$ cdk-test org.openscience.cdk.test.CDKTests
-        </programlisting>
-      </para>
-
-      <para>
-        There are currently two major test suites:
-        <itemizedlist>
-          <listitem><para>org.openscience.cdk.test.CDKTests</para></listitem>
-          <listitem><para>org.openscience.cdk.test.io.cml.CMLIOTests</para></listitem>
-        </itemizedlist>
-      </para>
-    </section>
-
-    <section>
-      <title>Interactive tests</title>
-      <para>
-        There are also run interactive tests, like the Controller2DTest.
-        In order to try them, you can edit the "run"
-        target in the build.xml file to look like this:
-        <programlisting><![CDATA[
-          <target name="run" depends="dist">
-                <java classname="org.openscience.cdk.test.ControllerTest" fork="yes">
-                        <arg value=""/>
-                        <classpath>
-                                <pathelement location="${dist}/jar/cdk.jar"/>
-                                <pathelement path="${java.class.path}"/>
-                                <pathelement location="."/>
-                                <fileset dir="jar">
-                                <include name="*.jar"/>
-                                </fileset>
-                        </classpath>
-                </java>
-          </target>
-]]></programlisting>
-        Then, a <command>ant run</command> should give you a window where you
-        can add bonds to a given structure.
-      </para>
-    </section>
-  </chapter>
-
+    &library-development;
   </part>
 
   <part id="part:website">
     <title>The CDK Website</title>
-
-    <chapter id="sect:htmlgeneration">
-      <title>HTML Generation</title>
-      <para>
-        The website is written as DocBook XML 4.1.2 fragments and
-        compiled into HTML with the Website DTD 2.0.
-      </para>
-    </chapter>
+    &website-development;
   </part>
 
   <part id="part:packages">
     <title>Binary Packages</title>
-
-    <chapter id="sect:tarpackages">
-      <title>Tar packages</title>
-      <para>
-        Currently only tar.gz packages are available. The packages
-        can be found in CVS /cdk/packages/tar. These packages can be
-        installed on UNIX type operating systems in a few steps
-        (replace the 20020206 with the latest release date):
-      <programlisting>
-$ gunzip cdk-libs-20020206.tar.gz
-$ tar xvf cdk-libs-20020206.tar
-$ cd cdk-libs-20020206
-$ ./configure &amp;&amp; make &amp;&amp; install
-</programlisting>
-      </para>
-      <para>
-        Remember the correct order of installation is:
-        cdk-libs, cdk-bin, cdk-test.
-      </para>
-    </chapter>
-
-    <chapter id="sect:linuxpackages">
-      <title>Linux packages</title>
-      <para>
-        At this moment Linux users should use and install the
-        above tar.gz packages. No binary packages are yet
-        available.
-      </para>
-
-      <section>
-        <title>Debian packages</title>
-        <para>
-          Debian packages are planned but not yet available.
-        </para>
-      </section>
-
-      <section>
-        <title>RPM packages</title>
-        <para>
-          RPM packages are planned but not yet available.
-        </para>
-      </section>
-    </chapter>
+    &packages;
   </part>
 
 </book>

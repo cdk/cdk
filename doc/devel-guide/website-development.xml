@@ -1,0 +1,7 @@
+    <chapter id="sect:htmlgeneration">
+      <title>HTML Generation</title>
+      <para>
+        The website is written as DocBook XML 4.1.2 fragments and
+        compiled into HTML with the Website DTD 2.0.
+      </para>
+    </chapter>

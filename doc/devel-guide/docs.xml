@@ -1,0 +1,93 @@
+    <chapter id="sect:javadoc">
+      <title>JavaDoc</title>
+
+      <para>
+        Most of the documentation about the CDK classes is done in the
+        java source files itself. The format used for this is the JavaDoc
+        format. An overview/introduction can be found at <ulink
+        url="http://java.sun.com/j2se/javadoc/writingdoccomments/">http://java.sun.com/j2se/javadoc/writingdoccomments/</ulink>.
+      </para>
+
+      <para>
+        JavaDoc documentation is now generated using Javadoc and
+        Ant:
+        <programlisting>
+cdk/$ ant -buildfile javadoc.xml html
+        </programlisting>
+      </para>
+
+      <section id="sect:javadoctags">
+        <title>JavaDoc Tags</title>
+
+        <para>
+          The two sub sections contain suggested policy and is not yet as such
+          approved.
+        </para>
+
+        <section>
+          <title>Tagging classes</title>
+          <para>
+            Java classes should have the JavaDoc tags
+            @copyright and @author.
+          </para>
+        </section>
+
+        <section>
+          <title>Tagging procedures</title>
+          <para>
+            Procedures of classes should give information about what they do
+            and information about parameters (@param) and things they
+            return (@return).
+          </para>
+          <para>
+            If the procedure performs a method found in literature, it should
+            mention the reference. No format for the reference has been determined,
+            but the BibTex format should do fine.
+          </para>
+        </section>
+      </section>
+
+      <section id="sect:docbookdoclet">
+        <title>DocbookDoclet</title>
+
+        <para>
+          The JavaDoc documentation can be converted into DocBook code
+          with the DocBookDoclet (<ulink
+          url="http://freshmeat.net/projects/dbdoclet/">http://freshmeat.net/projects/dbdoclet/</ulink>).
+          The DocBook output can in turn be generated into PDF files.
+        </para>
+      </section>
+
+      <section id="sect:javadocstats">
+        <title>JavaDoc Statistics</title>
+        <para>
+          Statistics can be generated on the use of JavaDoc in the
+          CDK library. It can be generated with:
+        <programlisting>
+$ cd cdk/reports/javadoc
+$ ant -Dpathtojava3d=/some/path overview
+        </programlisting>
+        </para>
+      </section>
+
+      <section id="sect:keywordindex">
+        <title>Keyword Index</title>
+        <para>
+          A keyword index is used for the website and is generated
+          with the MakeKeywordIndexDoclet doclet. The file
+          keyword.index.xml can be generated with:
+        <programlisting>
+$ cd cdk/reports/javadoc
+$ ant -Dpathtojava3d=/some/path keyword.index
+        </programlisting>
+        </para>
+      </section>
+    </chapter>
+
+    <chapter id="sect:cdk-tutorial">
+      <title>CDK Programming Tutorial</title>
+
+      <para>There is a sort of CDK Programming Tutorial online. It is
+        written in DocBook XML 4.1.2 (like most of our documentation).</para>
+    </chapter>
+

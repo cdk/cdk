@@ -1,0 +1,172 @@
+    <chapter id="sect:goal">
+      <title>The Goal</title>
+      <para>
+        The goal of the CDK is to be a library of java classes to support
+        java software to solve typical chemical computational and informational
+        problems.
+      </para>
+    </chapter>
+
+    <chapter id="sect:classcategories">
+      <title>Class categories</title>
+      <para>
+        All CDK classes are categorized into four classes:
+        core, standard, extra, and project.
+      </para>
+      <section>
+        <title>Core classes</title>
+        <para>
+          Core classes represent chemical entities, like bonds, atoms, molecules, and
+          more abstract entities, like connectivity tables, used for in common
+          computational and information chemistry.
+        </para>
+      </section>
+      <section>
+        <title>Standard classes</title>
+        <para>
+          Standard classes are all classes that do not represent some entity,
+          but are common to many applications dealing with chemical problems.
+          These classes deal with manipulation and other ways of dealing with the
+          core classes. These can be further grouped into two subclasses.
+          One class changes the content of the entities, the other does not.
+        </para>
+        <para>
+          Example classes that do not change the content of core classes, are
+          IO classes and viewers. In this subclass belong also the classes that
+          generate instances of core classes, example classes are classes that
+          generate 3D coordinates, for example.
+        </para>
+        <para>
+          The other subclass contains classes that change the content of the
+          core classes. E.g. classes implementing a molecular dynamics run
+          and editors.
+        </para>
+        <para>
+          <remark>This subclassification seems to be too artificial.</remark>
+        </para>
+      </section>
+      <section>
+        <title>Extra classes</title>
+        <para>
+          Classes that are too specific for general use belong to the class Extra.
+        </para>
+      </section>
+      <section>
+        <title>Project classes</title>
+        <para>
+          Java classes and packages in this category are not really
+          part of the CDK library, but are aimed to help manage the
+          project, by ways of testing and generating documentation and
+          project statistics.
+        </para>
+      </section>
+    </chapter>
+
+  <chapter id="sect:compiling">
+    <title>Compiling the CDK source</title>
+
+    <para>
+      Compiling and jar-ing the software is done with <ulink
+      url="http://jakarta.apache.org/ant/">Jakarta's Ant</ulink>.
+    </para>
+
+    <para>
+      CDK can be compiled with and without support for Java3D.
+      How to compile these, is explained in the next two sections.
+    </para>
+
+    <section>
+      <title>Compiling without Java3D installed</title>
+      <para>
+        If not Java3D is installed or available for your platform,
+        you can compile CDK with:
+        <programlisting>
+cdk/$ ant
+        </programlisting>
+      </para>
+    </section>
+
+    <section>
+      <title>Compiling with Java3D installed</title>
+      <para>
+        If Java3D is installed or available for your platform,
+        you can compile CDK with:
+        <programlisting>
+cdk/$ ant -Dpathtojava3d=/some/path compile-with-java3d
+        </programlisting>
+        The parameter pathtojava3d can be used to tell Ant where
+        your Java3D installation (read: jar files) can be found.
+      </para>
+    </section>
+
+  </chapter>
+
+  <chapter id="sect:testing">
+    <title>Testing CDK classes</title>
+
+    <section>
+      <title>JUnit testing</title>
+      <para>
+        After you compiled the code, you can do <command>ant test</command>
+        to run the test suite of non-interactive, automated
+        tests. You will get output with a part something like:
+        <programlisting>
+test:
+    [junit] Running org.openscience.cdk.test.CDKTests
+    [junit] Tests run: 21, Failures: 5, Errors: 0, Time elapsed: 9.63 sec
+    [junit] TEST org.openscience.cdk.test.CDKTests FAILED
+        </programlisting>
+        These tests results in some serious problems.
+      </para>
+
+      <para>
+        The actual tests are done by
+        <ulink url="http://www.junit.org/">JUnit</ulink> which you must have
+        installed. JDK 1.4 requires version 3.7, but 3.6 is good for other
+        Java versions.
+      </para>
+
+      <para>
+        A recent alternative is to install the cdk-test package.
+        You can then do tests with
+        <programlisting>
+$ cdk-test org.openscience.cdk.test.CDKTests
+        </programlisting>
+      </para>
+
+      <para>
+        There are currently two major test suites:
+        <itemizedlist>
+          <listitem><para>org.openscience.cdk.test.CDKTests</para></listitem>
+          <listitem><para>org.openscience.cdk.test.io.cml.CMLIOTests</para></listitem>
+        </itemizedlist>
+      </para>
+    </section>
+
+    <section>
+      <title>Interactive tests</title>
+      <para>
+        There are also run interactive tests, like the Controller2DTest.
+        In order to try them, you can edit the "run"
+        target in the build.xml file to look like this:
+        <programlisting><![CDATA[
+          <target name="run" depends="dist">
+                <java classname="org.openscience.cdk.test.ControllerTest" fork="yes">
+                        <arg value=""/>
+                        <classpath>
+                                <pathelement location="${dist}/jar/cdk.jar"/>
+                                <pathelement path="${java.class.path}"/>
+                                <pathelement location="."/>
+                                <fileset dir="jar">
+                                <include name="*.jar"/>
+                                </fileset>
+                        </classpath>
+                </java>
+          </target>
+]]></programlisting>
+        Then, a <command>ant run</command> should give you a window where you
+        can add bonds to a given structure.
+      </para>
+    </section>
+  </chapter>
+
