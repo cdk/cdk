@@ -45,11 +45,15 @@ import org.openscience.cdk.exception.NoSuchAtomException;
  * can be found at: http://joelib.sourceforge.net/
  *
  * @author     egonw
+ * @author     Joerg K. Wegner <wegnerj@informatik.uni-tuebingen.de>
  *
  * @keyword    JOELib
  * @keyword    class convertor
  */
 public class Convertor {
+
+     public static final int COORDINATES_3D = 3;
+     public static final int COORDINATES_2D = 2;
 
     /**
      * Converts an org.openscience.cdk.Atom class into a
@@ -63,15 +67,37 @@ public class Convertor {
      * @return          converted class in JOELib
      **/
     public static JOEAtom convert(Atom atom) {
+         return convert(atom, -1);
+     }
+
+     /**
+      * Converts an org.openscience.cdk.Atom class into a
+      * joelib.molecule.JOEAtom class.
+      *
+      * Conversion includes:
+      *   - atomic number
+      *   - coordinates
+      *
+      * @param   atom      CDK atom to be converted
+      * @param   coordType coordinates to use. if -1 this converter uses the available coordinates.
+      *                    If 3D and 2D coordinates are available, the 3D coordinates are used
+      * @return            converted JOELib atom
+      *
+      * @see #COORDINATES_3D
+      * @see #COORDINATES_2D
+      **/
+     public static JOEAtom convert(Atom atom, int coordType) {
         if (atom != null) {
             JOEAtom convertedAtom = new JOEAtom();
-            if (atom.getPoint3D() != null) {
+            if (coordType == COORDINATES_3D ||
+                (atom.getPoint3D() != null && coordType != -1)) {
                 convertedAtom.setVector(
                     atom.getX3D(),
                     atom.getY3D(),
                     atom.getZ3D()
                 );
-            } else if (atom.getPoint2D() != null) {
+            } else if (coordType == COORDINATES_2D ||
+                       (atom.getPoint2D() != null && coordType != -1)) {
                 convertedAtom.setVector(
                     atom.getX2D(),
                     atom.getY2D(),
@@ -182,16 +208,49 @@ public class Convertor {
      *   - atoms
      *   - bonds
      *
-     * @param   atom    class to be converted
-     * @return          converted class in JOELib
+     * @param   mol     molecule to be converted
+     * @return          converted JOELib molecule
+     *
+     * @see #COORDINATES_3D
+     * @see #COORDINATES_2D
      **/
     public static JOEMol convert(Molecule mol) {
+        return convert(mol, -1);
+    }
+
+    /**
+     * Converts an org.openscience.cdk.Molecule class into a
+     * joelib.molecule.JOEMol class.
+     *
+     * Conversion includes:
+     *   - atoms
+     *   - bonds
+     *
+     *
+     * @param   atom      class to be converted
+     * @param   coordType coordinates to use. if -1 this converter uses the available coordinates.
+     *                    If 3D and 2D coordinates are available, the 3D coordinates are used
+     * @return            converted class in JOELib
+     *
+     * @see #COORDINATES_3D
+     * @see #COORDINATES_2D
+     **/
+    public static JOEMol convert(Molecule mol, int coordType) {
         if (mol != null) {
             JOEMol converted = new JOEMol();
+            
+            // start molecule modification
+            converted.beginModify();
+
             int NOatoms = mol.getAtomCount();
+            
+            // add atoms
+            converted.reserveAtoms(NOatoms);
             for (int i=0; i<NOatoms; i++) {
-                converted.addAtom(convert(mol.getAtomAt(i)));
+                converted.addAtom(convert(mol.getAtomAt(i), coordType));
             }
+            
+            // add bonds
             double[][] matrix = mol.getConnectionMatrix();
             for (int i=0; i<NOatoms-1; i++) {
                 for (int j=i+1; j<NOatoms; j++) {

@@ -13,6 +13,8 @@ New:
 Fixes:
 * Reading of 3D coordinates from ShelX files
 * Fixed "M  END" line in MDL output (fixes bug #624656)
+* Fixed conversion of coordinates in libio/joelib/Convertor (thanx
+  to Joerg for patch)
 
 API changes:
 * Two getBondNumber() methods are added to AtomContainer.
