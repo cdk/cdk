@@ -120,6 +120,7 @@ public class Viewer {
                   if (!viewed) {
                       logger.debug(".. trying non-Java3D viewer");
                       MoleculeViewer3D mv = new MoleculeViewer3D(m);
+                      mv.display();
                       logger.debug(".. done");
                   }
 			  } else if (GeometryTools.has2DCoordinates(m)) {

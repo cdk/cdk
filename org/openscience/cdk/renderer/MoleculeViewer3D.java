@@ -105,49 +105,25 @@ public class MoleculeViewer3D extends JPanel implements CDKChangeListener {
 	}
 
 
-	/**
-	 * Paints the molecule onto the JPanel
-	 *
-	 * @param   g  The graphics used to paint with.
-	 */
-	public void paint(Graphics g) {
-		super.paint(g);
-		logger.debug("Called super.paint()");
-		if (atomContainer != null) {
-		    logger.debug("Painting structure...");
-			setBackground(r3dm.getBackColor());
-			GeometryTools.translateAllPositive(atomContainer);
-			GeometryTools.scaleMolecule(atomContainer, getSize(), 0.8);
-			GeometryTools.center(atomContainer, getSize());
-			renderer.paintMolecule(atomContainer, g);
-		} else {
-		}
-	}
-
-	/**
-	 * The main method.
-	 *
-	 * @param   args    An MDL molfile
-	 */
-
-	 public static void main(String[] args)
-	 {
-	 	AtomContainer ac = null;
-		try
-		{
-			FileInputStream fis = new FileInputStream(args[0]);
-			MDLReader mr = new MDLReader(fis);
-			ac = ((ChemFile)mr.read(new ChemFile())).getChemSequence(0).getChemModel(0).getSetOfMolecules().getMolecule(0);
-			fis.close();
-		}
-		catch(Exception exc)
-		{
-			exc.printStackTrace();
-		}
-
-		new MoleculeViewer3D(ac, new Renderer3DModel());
-	}
-
+    /**
+     * Paints the molecule onto the JPanel
+     *
+     * @param   g  The graphics used to paint with.
+     */
+    public void paint(Graphics g) {
+        super.paint(g);
+       	logger.debug("Called super.paint()");
+        if (atomContainer != null) {
+            logger.debug("Painting structure...");
+            setBackground(r3dm.getBackColor());
+            GeometryTools.translateAllPositive(atomContainer);
+            GeometryTools.scaleMolecule(atomContainer, getSize(), 0.8);
+            GeometryTools.center(atomContainer, getSize());
+            renderer.paintMolecule(atomContainer, g);
+        } else {
+            logger.warn("Nothing to draw: atomContainer == null!");
+        }
+    }
 
 	/**
 	 * Sets a Renderer3DModel which determins the way a molecule is displayed

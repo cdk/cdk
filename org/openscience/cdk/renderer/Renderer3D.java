@@ -41,11 +41,12 @@ public class Renderer3D {
     public Renderer3DModel r3dm;
 
     public Renderer3D() {
-       logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
-       r3dm = new Renderer3DModel();
+        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        r3dm = new Renderer3DModel();
     }
 
     public Renderer3D(Renderer3DModel r3dm) {
+        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
         this.r3dm = r3dm;
     }
 
