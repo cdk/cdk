@@ -25,6 +25,7 @@
  */
 package org.openscience.cdk.io.chemrss;
 
+import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.io.ChemicalRSSReader;
@@ -52,6 +53,7 @@ public class RSSHandler extends DefaultHandler {
     
     private String cmlString;
     private String cData;
+    private boolean readdedNamespace;
     
     private String itemTitle;
     private String itemDesc;
@@ -84,6 +86,7 @@ public class RSSHandler extends DefaultHandler {
     public void startDocument() {
         channelSequence = new ChemSequence();
         cmlString = "";
+        readdedNamespace = false;
     }
 
     public void endDocument() {
@@ -93,14 +96,25 @@ public class RSSHandler extends DefaultHandler {
        logger.debug("</" + raw + ">");
         if (uri.equals("http://www.xml-cml.org/schema/cml2/core")) {
             cmlString += cData;
-            cmlString += toEndTag(local, raw);
+            cmlString += toEndTag(raw);
         } else if (local.equals("item")) {
             ChemModel model = null;
             if (cmlString.length() > 0) {
                 StringReader reader = new StringReader(cmlString);
+                logger.debug("Parsing CML String: " + cmlString);
                 CMLReader cmlReader = new CMLReader(reader);
                 try {
-                    model = (ChemModel)cmlReader.read(new ChemModel());
+                    ChemFile file = (ChemFile)cmlReader.read(new ChemFile());
+                    if (file.getChemSequenceCount() > 0) {
+                        ChemSequence sequence = file.getChemSequence(0);
+                        if (sequence.getChemModelCount() > 0) {
+                            model = sequence.getChemModel(0);
+                        } else {
+                            logger.warn("ChemSequence contains no ChemModel");
+                        }
+                    } else {
+                        logger.warn("ChemFile contains no ChemSequene");
+                    }
                 } catch (Exception exception) {
                     logger.error("Error while parsing CML");
                     logger.debug(exception);
@@ -117,6 +131,7 @@ public class RSSHandler extends DefaultHandler {
             model.setProperty(ChemicalRSSReader.RSS_ITEM_LINK, itemLink);
             model.setProperty(ChemicalRSSReader.RSS_ITEM_DESCRIPTION, itemDesc);                    
             channelSequence.addChemModel(model);
+            cmlString = "";
         } else if (local.equals("title")) {
             itemTitle = cData;
         } else if (local.equals("link")) {
@@ -125,6 +140,9 @@ public class RSSHandler extends DefaultHandler {
             itemDesc = cData;
         } else if (local.equals("date")) {
             itemDate = cData;
+        } else {
+            logger.debug("Unparsed element: " + local);
+            logger.debug("  uri: " + uri);
         }
         cData = "";
     }
@@ -132,16 +150,25 @@ public class RSSHandler extends DefaultHandler {
     public void startElement(String uri, String local, String raw, Attributes atts) {
         logger.debug("<" + raw + ">");
         if (uri.equals("http://www.xml-cml.org/schema/cml2/core")) {
-            cmlString += toStartTag(local, raw, atts);
+            if (readdedNamespace) {
+                cmlString += toStartTag(raw, atts);
+            } else {
+                cmlString += toStartTag(raw, atts, uri);
+            }
         } else if (local.equals("item")) {
             itemTitle = "";
             itemDesc = "";
             itemDate = "";
             itemLink = "";
         }
+        cData = "";
+    }
+
+    private String toStartTag(String raw, Attributes atts) {
+        return toStartTag(raw, atts, null);
     }
     
-    private String toStartTag(String local, String raw, Attributes atts) {
+    private String toStartTag(String raw, Attributes atts, String uri) {
         StringBuffer buffer = new StringBuffer();
         buffer.append("<");
         buffer.append(raw);
@@ -154,11 +181,20 @@ public class RSSHandler extends DefaultHandler {
             buffer.append(value);
             buffer.append("\"");
         }
+        if (uri != null) {
+            buffer.append(" ");
+            buffer.append("xmlns:");
+            String namespace = raw.substring(0, raw.indexOf(":"));
+            buffer.append(namespace);
+            buffer.append("=\"");
+            buffer.append(uri);
+            buffer.append("\"");
+        }
         buffer.append(">");
         return buffer.toString();
     }
 
-    private String toEndTag(String local, String raw) {
+    private String toEndTag(String raw) {
         StringBuffer buffer = new StringBuffer();
         buffer.append("</");
         buffer.append(raw);
