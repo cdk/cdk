@@ -36,7 +36,7 @@ import org.openscience.cdk.math.Primes;
  *
  * @cdk.module standard
  */
-public class InvPair {
+public class InvPair implements java.io.Serializable{
   /** The description used to set the invatiance numbers in the atom's property*/
   public static String INVARIANCE_PAIR = "InvariancePair";
 
