@@ -513,6 +513,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 	{
 		Object obj;
 		boolean changed;
+		if (sphereNodes.size() == 0) return;
 		/*
 		 *  Now we sort by score
 		 */
@@ -547,6 +548,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 	 */
 	private void fillUpSphereDelimiters()
 	{
+		
 		for (int f = sphere; f < 4; f++)
 		{
 			HOSECode.append(sphereDelimiters[f]);

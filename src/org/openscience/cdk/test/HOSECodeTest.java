@@ -232,6 +232,65 @@ public class HOSECodeTest
 		return true;
 	}
 	
+	public boolean testBug655169()
+	{
+		Molecule molecule = null;
+		HOSECodeGenerator hcg = null;
+
+		try
+		{
+			molecule = (new SmilesParser()).parseSmiles("CC=CBr");
+			boolean isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
+			hcg = new HOSECodeGenerator();
+			String s = null;
+			for (int f = 0; f < molecule.getAtomCount(); f++)
+			{
+				System.out.println("Atom " + molecule.getAtomAt(f).getSymbol() + "-" + (f + 1));
+				s = hcg.getHOSECode(molecule, molecule.getAtomAt(f), 4);
+				System.out.println(s);
+			}
+		} catch (Exception exc)
+		{
+			exc.printStackTrace();
+			return false;
+		}
+		
+		JFrame frame = new JFrame("HOSECodeTest");
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(new BorderLayout());
+		DefaultMutableTreeNode top = hcg.getRootNode();
+		StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+		MoleculeViewer2D mv = new MoleculeViewer2D();
+		Renderer2DModel r2dm = mv.getRenderer2DModel();
+		r2dm.setDrawNumbers(true);
+
+		try
+		{
+			sdg.setMolecule((Molecule) molecule.clone());
+			sdg.generateCoordinates(new Vector2d(0, 1));
+			mv.setAtomContainer(sdg.getMolecule());
+			//mv.display();
+		} catch (Exception exc)
+		{
+			System.out.println("*** Exit due to an unexpected error during coordinate generation ***");
+			exc.printStackTrace();
+		}
+		
+		final JTree tree = new JTree(top);
+		JScrollPane treeView = new JScrollPane(tree);
+		frame.getContentPane().add("West", treeView);
+		mv.setPreferredSize(new Dimension(400,400));
+		frame.getContentPane().add("Center", mv);
+		for (int f = 0; f < tree.getRowCount(); f ++)
+		{
+			tree.expandRow(f);	
+		}
+		frame.pack();
+		frame.show();
+		return true;
+		
+	}
+
 	private void assembleNodes(DefaultMutableTreeNode top, HOSECodeGenerator hcg)
 	{
 		DefaultMutableTreeNode node = null;
@@ -277,7 +336,8 @@ public class HOSECodeTest
 		//hct.test2();
 		//hct.test3();
 		//hct.test4();
-		hct.test5();
+		//hct.test5();
+		hct.testBug655169();
 	}
 }
 
