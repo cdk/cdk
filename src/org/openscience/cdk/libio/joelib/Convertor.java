@@ -108,10 +108,18 @@ public class Convertor {
                 convertedAtom = new Atom(e.getSymbol());
             } catch (java.lang.Exception e) {
             }
-            convertedAtom.setX3D(atom.x());
-            convertedAtom.setY3D(atom.y());
-            convertedAtom.setZ3D(atom.z());
-            convertedAtom.setAtomicNumber(atom.getAtomicNum());
+            try {
+                // try to give the atom its coordinates
+                convertedAtom.setX3D(atom.x());
+                convertedAtom.setY3D(atom.y());
+                convertedAtom.setZ3D(atom.z());
+            } catch (java.lang.Exception e) {
+            }
+            try {
+                // try to give the atom its atomic number
+                convertedAtom.setAtomicNumber(atom.getAtomicNum());
+            } catch (java.lang.Exception e) {
+            }
             return convertedAtom;
         } else {
             return null;

@@ -27,12 +27,44 @@ package org.openscience.cdk.test.libio.joelib;
 import org.openscience.cdk.*;
 import org.openscience.cdk.libio.joelib.*;
 import joelib.molecule.JOEMol;
+import joelib.molecule.JOEAtom;
+import joelib.molecule.JOEBond;
 import junit.framework.*;
 
 public class JOELibIOTest extends TestCase {
 
     public JOELibIOTest(String name) {
         super(name);
+    }
+
+    public static Test suite() {
+        return new TestSuite(JOELibIOTest.class);
+    }
+
+
+    public void testAtom() {
+        Atom a = new Atom("C");
+        a.setX3D(1.0);
+        a.setY3D(2.0);
+        a.setZ3D(3.0);
+
+        JOEAtom converted = Convertor.convert(a);
+        Atom reverted = Convertor.convert(converted);
+
+        assertTrue(a.getX3D() == reverted.getX3D());
+        assertTrue(a.getY3D() == reverted.getY3D());
+        assertTrue(a.getZ3D() == reverted.getZ3D());
+    }
+
+    public void testBond() {
+        Atom a = new Atom("C");
+        Atom b = new Atom("O");
+        Bond bond = new Bond(a,b,1);
+
+        JOEBond converted = Convertor.convert(bond);
+        Bond reverted = Convertor.convert(converted);
+
+        assertTrue(bond.getOrder() == reverted.getOrder());
     }
 
     public void testBenzene() {
@@ -50,10 +82,10 @@ public class JOELibIOTest extends TestCase {
         mol.addBond(3, 4, 2); // 4
         mol.addBond(4, 5, 1); // 5
         mol.addBond(5, 0, 2); // 6
-        
+
         JOEMol converted = Convertor.convert(mol);
         Molecule reverted = Convertor.convert(converted);
-        
+
         assertEquals(mol.getAtomCount(), reverted.getAtomCount());
         assertEquals(mol.getBondCount(), reverted.getBondCount());
     }
