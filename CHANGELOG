@@ -4,10 +4,11 @@ CHANGELOG $Date$
 Changes in CVS
 ------------------------------------
 New:
-none
+* Added Reaction and SetOfReactions to CDK's core classes
+* Zoom functionality for the Renderer2D (including in editing mode)
 
 Changes:
-none
+* Renamed io.cml.Convention to io.cml.CMLCoreConvention
 
 Fixes:
 none
