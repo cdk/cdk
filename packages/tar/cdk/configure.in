@@ -27,6 +27,13 @@ AC_SUBST(CDKJARDIR)
 CDKLIBDIR=$prefix/lib/cdk
 AC_SUBST(CDKLIBDIR)
 
+AC_CHECK_PROG(HASJIKES, jikes, yes, no)
+AC_PATH_PROG(PATHTOJIKES, jikes)
+AM_CONDITIONAL(WITHJIKES, test "x$HASJIKES" = "xyes")
+AC_CHECK_PROG(HASGCJ, gcj, yes, no)
+AC_PATH_PROG(PATHTOGCJ, gcj)
+AM_CONDITIONAL(WITHGCJ, test "x$HASGCJ" = "xyes")
+
 if test -x "$JAVA_HOME/bin/java"
 then
     AC_MSG_CHECKING(for java)
