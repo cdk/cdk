@@ -49,13 +49,13 @@ public class AtomTypeManipulator {
 	 * @param  atom  Atom to configure
 	 * @param  at    AtomType
 	 */
-	public static void configure(Atom atom, AtomType at) {
+	public static void configure(Atom atom, AtomType atomType) {
         atom.setMaxBondOrder(atomType.getMaxBondOrder());
         atom.setBondOrderSum(atomType.getBondOrderSum());
         atom.setVanderwaalsRadius(atomType.getVanderwaalsRadius());
         atom.setCovalentRadius(atomType.getCovalentRadius());
         atom.setFormalCharge(atomType.getFormalCharge());
-		atom.setHybridization(at.getHybridization());
+	atom.setHybridization(atomType.getHybridization());
         atom.setFormalNeighbourCount(atomType.getFormalNeighbourCount());
 	}
 }
