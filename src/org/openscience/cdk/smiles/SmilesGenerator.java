@@ -905,7 +905,10 @@ public class SmilesGenerator {
           int position=-1;
           if(v.get(positionInVector+1) instanceof Vector){
             if(positionInVector>0){
-              endOfDoubleBondConfiguration.push(((Vector)v.get(positionInVector-1)).get(0));
+              if(v.get(positionInVector-1) instanceof Vector)
+                endOfDoubleBondConfiguration.push(((Vector)v.get(positionInVector-1)).get(0));
+              else
+                endOfDoubleBondConfiguration.push((Atom)v.get(positionInVector-2));
               endOfDoubleBondConfiguration.push(new Integer(positionInVector+1));
             }else{
               for(int i=0;i<vectorBefore.size();i++){
