@@ -11,8 +11,10 @@ Changes in CVS
 * More JavaDoc documentation
 * Added int[][] AtomContainer.getAdjacencyMatrix() method
 * Fixed bug in cdk-view (#588043)
+* Added -t option to cdk-test for textual JUnit output
 * Fixes in MDLReader and FileConvertor (fixes bugs 
   #599536 and #599539)
+* Added convertor procedures for CDK from/to jmol.Atom
 
 20020805 Release
 ------------------------------------
