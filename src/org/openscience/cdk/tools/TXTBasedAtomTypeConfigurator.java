@@ -28,6 +28,7 @@ import java.io.*;
 import java.net.URL;
 import org.openscience.cdk.*;
 import org.openscience.cdk.exception.*;
+import java.awt.Color;
 
 /**
  * AtomType list configurator that uses the AtomTypes originally
@@ -114,9 +115,9 @@ public class TXTBasedAtomTypeConfigurator implements AtomTypeConfigurator {
                         AtomType at = new AtomType(name, rootType);
                         at.setAtomicNumber(an);
                         at.setExactMass(mass);
-                        // at.setVanderwaalsRadius(vdw);
-                        // at.setCovalentRadius(covalent);
-                        // atomColors.setAtomColor(at, new Color(rl, gl, bl));
+                        at.setVanderwaalsRadius(vdw);
+                        at.setCovalentRadius(covalent);
+                        at.setProperty("org.openscience.jmol.color", new Color(rl, gl, bl));
                         
                         atomTypes.addElement(at);
                         
