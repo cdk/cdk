@@ -794,6 +794,7 @@
                         <pathelement location="${dist}/jar/cdk-apps.jar" />
                         <pathelement location="${dist}/jar/cdk-test.jar" />
                         <pathelement location="${dist}/jar/cdk-libio.jar" />
+                        <pathelement location="${dist}/jar/cdk-experimental.jar" />
                         <fileset dir="${lib}">
                                 <include name="*.jar" />
                         </fileset>
