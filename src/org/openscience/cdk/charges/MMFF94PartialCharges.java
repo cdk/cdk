@@ -24,7 +24,6 @@
 package org.openscience.cdk.charges;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.Bond;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.modeling.builder3d.*;
@@ -46,7 +45,7 @@ import java.util.Vector;
  *  </pre>
  *  and for each atom, the value is given by
  *  <pre>
- *  atom.getProperty("MMFF94charge").
+ *  ( (Double)atom.getProperty("MMFF94charge") ).doubleValue().
  *  </pre>
  *
  *@author     mfe4
@@ -74,7 +73,6 @@ public class MMFF94PartialCharges {
 		ffc.setForceFieldConfigurator("mmff94");
 		RingSet rs = ffc.assignAtomTyps((Molecule)ac);
 		Hashtable parameterSet = ffc.getParameterSet();
-		Vector atomTypes = ffc.getAtomTypes();
 		// for this calculation,
 		// we need some values stored in the vector "data" in the
 		// hashtable of these atomTypes:		
@@ -82,7 +80,6 @@ public class MMFF94PartialCharges {
 		double formalCharge = 0;
 		double formalChargeNeigh = 0;
 		double theta = 0;
-		double bondIncrement = 0;
 		double sumOfFormalCharges = 0;
 		double sumOfBondIncrements = 0;
 		Atom thisAtom = null;
@@ -96,23 +93,29 @@ public class MMFF94PartialCharges {
 			thisAtom = atoms[i];
 			data = (Vector) parameterSet.get("data"+thisAtom.getID());
 			neighboors = ac.getConnectedAtoms(thisAtom);
-			formalCharge = ((Double)data.get(3)).doubleValue();
+			formalCharge = thisAtom.getCharge();
 			theta = ((Double)data.get(4)).doubleValue();
 			charge = formalCharge * (1 - (neighboors.length * theta));
 			sumOfFormalCharges = 0;
 			sumOfBondIncrements = 0;
 			for(int n = 0; n < neighboors.length; n++) {
+				dataNeigh = (Vector) parameterSet.get("data"+neighboors[n].getID());
 				if (parameterSet.containsKey("bond"+thisAtom.getID()+";"+neighboors[n].getID())) {
 					bondData = (Vector) parameterSet.get("bond"+thisAtom.getID()+";"+neighboors[n].getID());
-					sumOfBondIncrements += ((Double) bondData.get(4)).doubleValue();
-				}
-				if (parameterSet.containsKey("bond"+neighboors[n].getID()+";"+thisAtom.getID())) {
-					bondData = (Vector) parameterSet.get("bond"+neighboors[n].getID()+";"+thisAtom.getID());
 					sumOfBondIncrements -= ((Double) bondData.get(4)).doubleValue();
 				}
-				//System.out.println( "BOND VALUE "+n+" : " + ((Double) bondData.get(4)).doubleValue() );
+				else if (parameterSet.containsKey("bond"+neighboors[n].getID()+";"+thisAtom.getID())) {
+					bondData = (Vector) parameterSet.get("bond"+neighboors[n].getID()+";"+thisAtom.getID());
+					sumOfBondIncrements += ((Double) bondData.get(4)).doubleValue();
+				}
+				else {
+					// Maybe not all bonds have pbci in mmff94.prm, i.e. C-N
+					sumOfBondIncrements += ( theta - ((Double)dataNeigh.get(4)).doubleValue() );
+				}
+				
+				
 				dataNeigh = (Vector) parameterSet.get("data"+neighboors[n].getID());
-				formalChargeNeigh = ((Double) dataNeigh.get(3)).doubleValue();
+				formalChargeNeigh = neighboors[n].getCharge();
 				sumOfFormalCharges += formalChargeNeigh;
 			}
 			charge += sumOfFormalCharges * theta;
