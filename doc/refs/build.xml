@@ -1,32 +1,15 @@
 <?xml version="1.0"?>
 <project name="Bibliography" default="all" basedir=".">
 
-    <path id="project.class.path">
-        <pathelement location="."/>
-        <fileset dir="../../jar">
-            <include name="gnujaxp.jar"/>
-        </fileset>
-        <fileset dir="../jar">
-            <include name="jreferences.jar"/>
-            <include name="bibtexml.jar"/>
-            <include name="castor-0.9.4.3-xml.jar"/>
-        </fileset>
-        <fileset dir="../../jar">
-            <include name="log4j-core.jar"/>
-            <include name="log4j.jar"/>
-            <include name="xerces-2.6.2.jar"/>
-            <include name="xmlApis-2.6.2.jar"/>
-        </fileset>
-    </path>
-
-    <target id="all" name="all" depends="convertToBibTex, convertToDocBook, list"/>
+    <target id="all" name="all" depends="convertToBibTex, convertToDocBook"/>
     
     <target id="clean" name="clean">
         <delete>
             <fileset dir="." includes="cheminf.dbx" />
             <fileset dir="." includes="cheminf.bib" />
             <fileset dir="." includes="biblio.dbx" />
-            <fileset dir="." includes="*.log" />
+            <fileset dir="." includes="*.bak" />
+            <fileset dir="." includes="*.log*" />
             <fileset dir="." includes="*~" />
         </delete>
     </target>
@@ -34,41 +17,25 @@
     <target id="convertToDocBook" name="convertToDocBook">
         <!-- biblio.dbx is used for website via DocBook/Website DTD etc -->
         
-        <java classname="org.openscience.jreferences.applications.ConvertReferences"
-            fork="yes" output="cheminf.dbx">
-            <!-- The fork is *very* important. It apperently not works with
-                 Ant's default Apache version ! -->
-            <classpath refid="project.class.path"/>
-            <arg value="--input:bibtexml"/>
-            <arg value="--output:docbook"/>
-            <arg value="--dbxstyle:CDKWebsite"/>
-            <arg value="--sort"/>
-            <arg value="cheminf.bibx"/>
+        <java jar="../jar/jabref.jar" fork="yes">
+            <arg value="--nogui"/>
+            <arg value="--import"/>
+            <arg value="cheminf.bibx,bibtexml"/>
+            <arg value="--output"/>
+            <arg value="cheminf.dbx,docbook"/>
         </java>
+        <replace file="cheminf.dbx" token='&lt;?xml version="1.0" ?>' value=""/>
     </target>
 
     <target id="convertToBibTex" name="convertToBibTex">
-        <!-- biblio.dbx is used for latex source -->
+        <!-- biblio.bib is used for latex source -->
         
-        <java classname="org.openscience.jreferences.applications.ConvertReferences"
-            fork="yes" output="cheminf.bib">
-            <classpath refid="project.class.path"/>
-            <arg value="--input:bibtexml"/>
-            <arg value="--output:bibtex"/>
-            <arg value="cheminf.bibx"/>
-        </java>
-    </target>
-
-    <target id="list" name="list">
-        <!-- biblio.dbx is used for PDF via DocBook XML -->
-    
-        <java classname="org.openscience.jreferences.applications.ConvertReferences"
-            fork="yes" output="biblio.dbx">
-            <classpath refid="project.class.path"/>
-            <arg value="--input:bibtexml"/>
-            <arg value="--output:docbook"/>
-            <arg value="--sort"/>
-            <arg value="cheminf.bibx"/>
+        <java jar="../jar/jabref.jar" fork="yes">
+            <arg value="--nogui"/>
+            <arg value="--import"/>
+            <arg value="cheminf.bibx,bibtexml"/>
+            <arg value="--output"/>
+            <arg value="cheminf.bib"/>
         </java>
     </target>
 
