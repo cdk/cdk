@@ -279,15 +279,14 @@
                         <arg value="data/reserpine.mol" />
 
                         <classpath>
-                                <pathelement
-                                location="${dist}/jar/cdk-with-java3d.jar" />
-
-                                <pathelement
-                                path="${java.class.path}" />
-
+                                <pathelement location="${dist}/jar/cdk-core.jar" />
+                                <pathelement location="${dist}/jar/cdk-extra-with-java3d.jar" />
+                                <pathelement path="${java.class.path}" />
                                 <pathelement location="." />
-
                                 <fileset dir="${lib}">
+                                        <include name="*.jar" />
+                                </fileset>
+                                <fileset dir="${pathto3djava}">
                                         <include name="*.jar" />
                                 </fileset>
                         </classpath>
