@@ -56,6 +56,7 @@ public class Renderer2D   {
     private LoggingTool logger;
     
 	SSSRFinder sssrf = new SSSRFinder();
+    private IsotopeFactory isotopeFactory;
 
 	private Renderer2DModel r2dm;
 
@@ -75,6 +76,13 @@ public class Renderer2D   {
 	{
 		this.r2dm = r2dm;
         logger = new LoggingTool(this.getClass().getName());
+        
+        try {
+            isotopeFactory = IsotopeFactory.getInstance();
+        } catch (Exception exception) {
+            logger.error("Error while instantiating IsotopeFactory");
+            logger.debug(exception);
+        }
 	}
 
     public void paintChemModel(ChemModel model, Graphics graphics) {
@@ -300,76 +308,204 @@ public class Renderer2D   {
 	}
 
     /**
-	 * Paints the given atom symbol. It first outputs some empty space using the
-	 * background color, slightly larger than the space that the symbol occupies.
-	 * The atom symbol is then printed into the empty space.
-	 *
-	 * @param  atom       The atom to be drawn
-	 * @param  backColor  Description of the Parameter
-	 */
-	private void paintAtomSymbol(Atom atom, Color backColor, Graphics graphics, int alignment) {
-		if (atom.getPoint2D() == null) {
-			return;
-		}
-        
-		// but first determine symbol
-		String symbol = atom.getSymbol();
-		// if there are implicit hydrogens, add them to string to display
-		int implicitHydrogen = atom.getHydrogenCount();
-		if (implicitHydrogen > 0) {
-			symbol = symbol + "H";
-		}
-        
-        // draw string:
-
-        /* determine where to put the string, as seen from the atom coordinates
-           in model coordinates */
-		FontMetrics fm = graphics.getFontMetrics();
-        // left align
-		int xSymbOffset = (new Integer(fm.stringWidth(symbol.substring(0,1)) / 2)).intValue();
-        if (alignment == -1) {
-            // right align
-            xSymbOffset = (new Integer((fm.stringWidth(symbol.substring(symbol.length()-1)) / 2) +
-                                       fm.stringWidth(symbol.substring(1)))).intValue();
+     * Paints the given atom symbol. It first outputs some empty space using the
+     * background color, slightly larger than the space that the symbol occupies.
+     * The atom symbol is then printed into the empty space.
+     *
+     * @param  atom       The atom to be drawn
+     * @param  backColor  Description of the Parameter
+     *
+     * @author  Egon Willighagen <egonw@users.sf.net>
+     * @created 2003-07-21
+     */
+    private void paintAtomSymbol(Atom atom, Color backColor, Graphics graphics, int alignment) {
+        if (atom.getPoint2D() == null) {
+            logger.warn("Cannot draw atom without 2D coordinate");
+            return;
         }
-		int ySymbOffset = (new Integer(fm.getAscent() / 2)).intValue();
+        
+        // The drawing fonts
+        Font unscaledFont = graphics.getFont();
+        int unscaledFontSize = unscaledFont.getSize();
+        int normalFontSize = getScreenSize(unscaledFontSize); // apply zoom factor
+        Font normalFont = unscaledFont.deriveFont(normalFontSize); // keep font, only change size
+        Font subscriptFont = normalFont.deriveFont((int)(normalFontSize*0.8)); // 80% of normal font
 
-		int xSymbOffsetForSubscript = (new Integer(fm.stringWidth(symbol))).intValue();
-		int ySymbOffsetForSubscript = (new Integer(fm.getAscent())).intValue();
+        // calculate SYMBOL width, height
+        String atomSymbol = atom.getSymbol();
+        graphics.setFont(normalFont);
+        FontMetrics fm = graphics.getFontMetrics();
+        int atomSymbolW = (new Integer(fm.stringWidth(atomSymbol))).intValue();
+        int atomSymbolFirstCharW = (new Integer(fm.stringWidth(atomSymbol.substring(0,1)))).intValue();
+        int atomSymbolH = (new Integer(fm.getAscent())).intValue();
+        int atomSymbolXOffset = atomSymbolFirstCharW/2;
+        int atomSymbolYOffset = atomSymbolH/2;
+
+        // calculate IMPLICIT H width, height
+        int implicitHydrogenCount = atom.getHydrogenCount();
+        int hSymbolW = 0; // unless next condition, this is the default
+        String hSymbol = "H";
+        String hMultiplierString = new Integer(implicitHydrogenCount).toString();
+        if (implicitHydrogenCount > 0) {
+            // fm is identical, don't change
+            hSymbolW = (new Integer(fm.stringWidth(hSymbol))).intValue();
+        }
+        graphics.setFont(subscriptFont);
+        fm = graphics.getFontMetrics();
+        int hMultiplierW = 0;
+        int hMultiplierH = 0;
+        if (implicitHydrogenCount > 1) {
+            // fm is identical, don't change
+            hMultiplierW = (new Integer(fm.stringWidth(hMultiplierString))).intValue();
+            hMultiplierH = (new Integer(fm.getAscent())).intValue();
+        }
+        
+        // calculate CHARGE width, height
+        // font is still subscript, that's fine
+        int formalCharge = atom.getFormalCharge();
+        int formalChargeW = 0; // unless next condition, this is the default
+        int formalChargeH = 0;
+        String formalChargeString = ""; // if charge == 0, then don't print anything
+        if (formalCharge > 1) {
+            formalChargeString = new Integer(formalCharge).toString() + "+";
+        } else if (formalCharge > 0) {
+            formalChargeString = "+";
+        } else if (formalCharge < -1) {
+            formalChargeString = new Integer(formalCharge*-1).toString() + "-";
+        } else if (formalCharge < 0) {
+            formalChargeString = "-";
+        }
+        if (formalCharge != 0) {
+            // fm is identical, don't change
+            formalChargeW = (new Integer(fm.stringWidth(formalChargeString))).intValue();
+            formalChargeH = (new Integer(fm.getAscent())).intValue();
+        }
+
+        // calculate ISOTOPE width, height
+        // font is still subscript, that's fine
+        int atomicMassNumber = atom.getAtomicMass();
+        int isotopeW = 0; // unless next condition, this is the default
+        int isotopeH = 0;
+        Isotope majorIsotope = isotopeFactory.getMajorIsotope(atomSymbol);
+        String isotopeString = "";
+        if (atomicMassNumber != 0 && atomicMassNumber != majorIsotope.getAtomicMass()) {
+            // fm is identical, don't change
+            isotopeString = new Integer(atomicMassNumber).toString();
+            isotopeW = (new Integer(fm.stringWidth(isotopeString))).intValue();
+            isotopeH = (new Integer(fm.getAscent())).intValue();
+        }
+
+        int labelX = 0;
+        int labelY = 0;
+        int labelW = 0;
+        int labelH = 0;
+        
+        if (alignment == 1) { // left alignment
+            labelX = (int)(atom.getPoint2D().x - (atomSymbolXOffset + isotopeW));
+            labelW = isotopeW + atomSymbolW + hSymbolW + 
+                     Math.max(hMultiplierW, formalChargeW);
+        } else { // right alignment
+            labelX = (int)(atom.getPoint2D().x - 
+                     (atomSymbolXOffset + Math.max(isotopeW,hMultiplierW) + hSymbolW));
+            labelW = hSymbolW + Math.max(isotopeW, hMultiplierW) +
+                     atomSymbolW + formalChargeW;
+        }
+        // labelY and labelH are the same for both left/right aligned
+        labelY = (int)(atom.getPoint2D().y - (atomSymbolYOffset + isotopeH));
+        labelH = Math.max(isotopeH, formalChargeH) + 
+                atomSymbolH + hMultiplierH; 
 
         // make empty space
-	    graphics.setColor(backColor);
-        Rectangle2D stringBounds = fm.getStringBounds(symbol, graphics);
-        int[] coords = {(int) (atom.getPoint2D().x - (xSymbOffset * 1.2)),
-                        (int) (atom.getPoint2D().y - (ySymbOffset * 1.2)),
-                        (int) (stringBounds.getWidth() * 1.2),
-                        (int) (stringBounds.getHeight() * 1.2) };
-        coords = getScreenCoordinates(coords);
-	    graphics.fillRect(coords[0], coords[1], coords[2], coords[3]);
-
-        int[] hCoords = {(int) (atom.getPoint2D().x - xSymbOffset),
-				         (int) (atom.getPoint2D().y + ySymbOffset) };
-        hCoords = getScreenCoordinates(hCoords);
-	    graphics.setColor(r2dm.getAtomColor(atom));
-        // apply zoom factor to font size
-        Font unscaledFont = graphics.getFont();
-        int fontSize = getScreenSize(unscaledFont.getSize());
-        graphics.setFont(unscaledFont.deriveFont((float)fontSize));
-        graphics.drawString(symbol, hCoords[0], hCoords[1]);
-
-        if (implicitHydrogen > 1) {
-            // draw subscript part
-            int[] h2Coords = {(int) (atom.getPoint2D().x - xSymbOffset + xSymbOffsetForSubscript),
-                              (int) (atom.getPoint2D().y + ySymbOffsetForSubscript) };
-            h2Coords = getScreenCoordinates(h2Coords);
-            graphics.setColor(r2dm.getForeColor());
-            // apply zoom factor to font size
-            unscaledFont = graphics.getFont();
-            fontSize = getScreenSize(unscaledFont.getSize())-1;
-            graphics.setFont(unscaledFont.deriveFont((float)fontSize));
-            graphics.drawString(new Integer(implicitHydrogen).toString(), h2Coords[0], h2Coords[1]);
+        {
+            graphics.setColor(backColor);
+            int[] coords = {labelX, labelY, labelW, labelH};
+            int[] screenCoords = getScreenCoordinates(coords);
+            graphics.fillRect(screenCoords[0], screenCoords[1], 
+                              screenCoords[2], screenCoords[3]);
         }
         
+        // draw SYMBOL
+        {
+            int[] coords = new int[2];
+            if (alignment == 1) { // left alignment
+                coords[0] = labelX + isotopeW;
+            } else { // right alignment
+                coords[0] = labelX + hSymbolW + Math.max(isotopeW, hMultiplierW);
+            }
+            coords[1] = labelY + isotopeH + atomSymbolH;
+            int[] screenCoords = getScreenCoordinates(coords);
+            graphics.setColor(r2dm.getAtomColor(atom));
+            graphics.setFont(normalFont);
+            graphics.drawString(atomSymbol, screenCoords[0], screenCoords[1]);
+        }
+        
+        // draw IMPLICIT H's
+        if (implicitHydrogenCount > 0) {
+            int[] coords = new int[2];
+            if (alignment == 1) { // left alignment
+                coords[0] = labelX + isotopeW + atomSymbolW;
+            } else { // right alignment
+                coords[0] = labelX;
+            }
+            coords[1] = labelY + isotopeH + atomSymbolH;
+            int[] screenCoords = getScreenCoordinates(coords);
+            graphics.setColor(r2dm.getForeColor());
+            graphics.setFont(normalFont);
+            graphics.drawString(hSymbol, screenCoords[0], screenCoords[1]);
+            if (implicitHydrogenCount > 1) {
+                // draw number of hydrogens
+                coords = new int[2];
+                if (alignment == 1) { // left alignment
+                    coords[0] = labelX + isotopeW + atomSymbolW +hSymbolW;
+                } else { // right alignment
+                    coords[0] = labelX + hSymbolW;
+                }
+                coords[1] = labelY + isotopeH + atomSymbolH + hMultiplierH;
+                screenCoords = getScreenCoordinates(coords);
+                graphics.setColor(r2dm.getForeColor());
+                graphics.setFont(subscriptFont);
+                graphics.drawString(hMultiplierString, screenCoords[0], screenCoords[1]);
+            }
+        }
+        
+//        /* determine where to put the string, as seen from the atom coordinates
+//           in model coordinates */
+//		
+//         left align
+//		int xSymbOffset = (new Integer(fm.stringWidth(symbol.substring(0,1)) / 2)).intValue();
+//        if (alignment == -1) {
+//             right align
+//            xSymbOffset = (new Integer((fm.stringWidth(symbol.substring(symbol.length()-1)) / 2) +
+//                                       fm.stringWidth(symbol.substring(1)))).intValue();
+//        }
+//		int ySymbOffset = (new Integer(fm.getAscent() / 2)).intValue();
+//
+//		int xSymbOffsetForSubscript = (new Integer(fm.stringWidth(symbol))).intValue();
+//		int ySymbOffsetForSubscript = (new Integer(fm.getAscent())).intValue();
+//
+//        int[] hCoords = {(int) (atom.getPoint2D().x - xSymbOffset),
+//				         (int) (atom.getPoint2D().y + ySymbOffset) };
+//        hCoords = getScreenCoordinates(hCoords);
+//	    graphics.setColor(r2dm.getAtomColor(atom));
+//         apply zoom factor to font size
+//        Font unscaledFont = graphics.getFont();
+//        int fontSize = getScreenSize(unscaledFont.getSize());
+//        graphics.setFont(unscaledFont.deriveFont((float)fontSize));
+//        graphics.drawString(symbol, hCoords[0], hCoords[1]);
+//
+//        if (implicitHydrogen > 1) {
+//             draw subscript part
+//            int[] h2Coords = {(int) (atom.getPoint2D().x - xSymbOffset + xSymbOffsetForSubscript),
+//                              (int) (atom.getPoint2D().y + ySymbOffsetForSubscript) };
+//            h2Coords = getScreenCoordinates(h2Coords);
+//            graphics.setColor(r2dm.getForeColor());
+//             apply zoom factor to font size
+//            unscaledFont = graphics.getFont();
+//            fontSize = getScreenSize(unscaledFont.getSize())-1;
+//            graphics.setFont(unscaledFont.deriveFont((float)fontSize));
+//            graphics.drawString(new Integer(implicitHydrogen).toString(), h2Coords[0], h2Coords[1]);
+//        }
+//        
         // reset old font
         graphics.setFont(unscaledFont);
 	}
