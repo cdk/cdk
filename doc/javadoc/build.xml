@@ -24,7 +24,9 @@
 
             <doclet name="JavaDocStats" path="."/>
 
-            <package name="org.openscience.cdk.*"/>
+            <packageset dir="../../src/">
+              <include name="org/openscience/cdk/**"/>
+            </packageset>
         </javadoc>
     </target>
 
@@ -46,6 +48,18 @@
             <classpath refid="project.class.path" />
 
             <doclet name="MakeClassesDotModDoclet" path="."/>
+
+            <packageset dir="../../src/">
+              <include name="org/openscience/cdk/**"/>
+            </packageset>
+        </javadoc>
+    </target>
+
+    <target name="classes.web.mod" depends="compileDoclets">
+        <javadoc private="false" public="true">
+            <classpath refid="project.class.path" />
+
+            <doclet name="MakeClassesDotWebDotModDoclet" path="."/>
 
             <packageset dir="../../src/">
               <include name="org/openscience/cdk/**"/>

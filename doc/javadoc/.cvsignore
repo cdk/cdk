@@ -1,3 +1,4 @@
 *.class
 *.stats
 keyword.index.xml
+classes*.mod
