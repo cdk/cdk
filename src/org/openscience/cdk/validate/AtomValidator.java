@@ -24,7 +24,8 @@
  */
 package org.openscience.cdk.validate;
 
-import org.openscience.cdk.Atom;
+import org.openscience.cdk.*;
+import org.openscience.cdk.tools.IsotopeFactory;
 import java.util.Vector;
 
 /**
@@ -43,6 +44,7 @@ public class AtomValidator {
     public static Vector validate(Atom atom) {
         Vector errors = new Vector();
         errors.addAll(validateCharge(atom));
+        errors.addAll(validatePseudoAtom(atom));
         return errors;
     }
     
@@ -55,6 +57,26 @@ public class AtomValidator {
             }
             if (atom.getFormalCharge() > 1) {
                 errors.add(new ValidationWarning(atom, "Atom has an unlikely large positive charge"));
+            }
+        }
+        return errors;
+    }
+
+    private static Vector validatePseudoAtom(Atom atom) {
+        Vector errors = new Vector();
+        if (atom instanceof PseudoAtom) {
+            // that's fine
+        } else {
+            // check wether atom is really an element
+            try {
+                IsotopeFactory isotopeFactory = IsotopeFactory.getInstance();
+                Atom copy = isotopeFactory.configure(atom);
+            } catch (NullPointerException exception) {
+                errors.add(
+                  new CDKError(atom, "Non-element atom must be of class PseudoAtom.")
+                );
+            } catch (Exception exception) {
+                // well... don't throw an error then
             }
         }
         return errors;
