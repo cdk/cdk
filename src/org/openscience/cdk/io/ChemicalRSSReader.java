@@ -188,15 +188,19 @@ public class ChemicalRSSReader extends DefaultChemObjectReader {
         } catch (IOException e) {
             String error = "Error while reading file: " + e.toString();
             logger.error(error);
+            logger.debug(e);
             throw new CDKException(error);
         } catch (SAXParseException saxe) {
+            saxe.printStackTrace();
             SAXParseException spe = (SAXParseException)saxe;
             String error = "Found well-formedness error in line " + spe.getLineNumber();
             logger.error(error);
+            logger.debug(saxe);
             throw new CDKException(error);
         } catch (SAXException saxe) {
             String error = "Error while parsing XML: " + saxe.toString();
             logger.error(error);
+            logger.debug(saxe);
             throw new CDKException(error);
         }
         return handler.getChemSequence();
