@@ -3,6 +3,21 @@
 		<para> 
 		  <itemizedlist> 
                          <listitem>
+                                <para>(12. May 2001) First packaged version of CDK can be downloaded
+				from the CDK project pages on sourceforge
+				<ulink url="http://sourceforge.net/projects/cdk">(http://sourceforge.net/projects/cdk)</ulink>.
+                                </para>
+                         </listitem>
+
+                         <listitem>
+                                <para>(14. Mar. 2001) First CDK-based port of JChemPaint can be 
+				found in the JChemPaint CVS repository 
+				<ulink url="http://sourceforge.net/projects/jchempaint">(http://sourceforge.net/projects/jchempaint)</ulink>
+				under its own JCPCDK subtree.
+                                </para>
+                         </listitem>
+
+                         <listitem>
                                 <para>(12. Feb. 2001) The CDK now has its own SourceForge project 
 				<ulink url="http://sourceforge.net/projects/cdk">(http://sourceforge.net/projects/cdk)</ulink>
                                 </para>

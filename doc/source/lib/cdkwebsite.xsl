@@ -10,7 +10,7 @@
 <!-- This stylesheet does not work with XT. Use xtchunk.xsl instead. -->
 
 <!--xsl:include href="/usr/lib/sgml/stylesheet/xsl/docbook/nwalsh/website/1.8/chunk-tabular.xsl"/-->
-<xsl:include href="/home/documents/config/xml/website/xsl/chunk-tabular.xsl"/>
+<xsl:include href="/documents/config/xml/website/xsl/chunk-tabular.xsl"/>
 <xsl:template match="homepage">
   <xsl:variable name="id">
     <xsl:call-template name="object.id"/>

@@ -1,9 +1,8 @@
-<!DOCTYPE website SYSTEM "/home/documents/config/xml/website/website.dtd" [
+<!DOCTYPE website SYSTEM "/documents/config/xml/website/website.dtd" [
 <!ENTITY about SYSTEM "about.xml">
 <!ENTITY news SYSTEM "news.xml">
 <!ENTITY introduction SYSTEM "intro.xml">
 <!ENTITY projectref SYSTEM "projectref.xml">
-<!ENTITY progref SYSTEM "reference.xml">
 <!ENTITY changelog SYSTEM "changelog.xml">
 <!ENTITY agenda SYSTEM "agenda.xml">
 <!ENTITY bibliography SYSTEM "bibliography.xml">
@@ -61,23 +60,14 @@ structure diagram generation, Java, chemoinformatics, cheminformatics, computati
 &introduction;
 </webpage>
 
+
 <webpage>
 <config param="rcsdate" value="$Date$"/>
 <config param="filename" value="cdk_Ref.html"/>
 <config param="homebanner" value="images/cdklogo.gif"/>
-<head><title>Project Reference</title></head>
+<head><title>Programmer's Reference</title></head>
 &projectref;
 </webpage>
-
-
-<webpage>
-<config param="rcsdate" value="$Date$"/>
-<config param="filename" value="cdk_ProgRef.html"/>
-<config param="homebanner" value="images/cdklogo.gif"/>
-<head><title>Programmers Reference</title></head>
-&progref;
-</webpage>
-
 
 <webpage>
 <config param="rcsdate" value="$Date$"/>
@@ -94,6 +84,14 @@ structure diagram generation, Java, chemoinformatics, cheminformatics, computati
 <head><title>Agenda</title></head>
 &agenda;
 </webpage>
+
+<webpage>
+<config param="rcsdate" value="$Date$"/>
+<config param="filename" value="https://sourceforge.net/projects/cdk/l"/>
+<config param="homebanner" value="images/cdklogo.gif"/>
+<head><title>Download</title></head>
+</webpage>
+
 
 <webpage>
 <config param="rcsdate" value="$Date$"/>
