@@ -86,6 +86,7 @@ public class WWMMatrixReader implements ChemObjectReader {
                 return (ChemObject)readMolecule();
             } catch (Exception exc) {
                 logger.error("Error while reading molecule: " + exc.toString());
+		exc.printStackTrace();
                 return object;
             }
 		} else {
@@ -176,15 +177,26 @@ public class WWMMatrixReader implements ChemObjectReader {
         CMLReader reader = new CMLReader(in);
         ChemFile cf = (ChemFile)reader.read((ChemObject)new ChemFile());
         logger.debug("#sequences: " + cf.getChemSequenceCount());
-        ChemSequence chemSequence = cf.getChemSequence(0);
-        logger.debug("#models in sequence: " + chemSequence.getChemModelCount());
-        ChemModel chemModel = chemSequence.getChemModel(0);
-        SetOfMolecules setOfMolecules = chemModel.getSetOfMolecules();
-        logger.debug("#mols in model: " + setOfMolecules.getMoleculeCount());
-        Molecule m = setOfMolecules.getMolecule(0);
-        
+	Molecule m = null;
+	if (cf.getChemSequenceCount() > 0) {
+            ChemSequence chemSequence = cf.getChemSequence(0);
+            logger.debug("#models in sequence: " + chemSequence.getChemModelCount());
+	    if (chemSequence.getChemModelCount() > 0) {
+                ChemModel chemModel = chemSequence.getChemModel(0);
+                SetOfMolecules setOfMolecules = chemModel.getSetOfMolecules();
+                logger.debug("#mols in model: " + setOfMolecules.getMoleculeCount());
+		if (setOfMolecules.getMoleculeCount() > 0) {
+                    m = setOfMolecules.getMolecule(0);
+	        } else {
+		    logger.warn("No molecules in the model");
+		}
+	    } else {
+	        logger.warn("No models in the sequence");
+	    }
+	} else {
+	    logger.warn("No sequences in the file");
+	}
         in.close();
-        
         return m;
     }
     
