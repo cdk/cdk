@@ -46,4 +46,59 @@ public class SetOfMoleculesTest extends TestCase {
     public static Test suite() {
         return new TestSuite(SetOfMoleculesTest.class);
     }
+    
+    public void testGetMoleculeCount() {
+        SetOfMolecules som = new SetOfMolecules();
+        som.addMolecule(new Molecule());
+        som.addMolecule(new Molecule());
+        som.addMolecule(new Molecule());
+        
+        assertEquals(3, som.getMoleculeCount());
+    }
+    
+    public void testGetMolecule() {
+        SetOfMolecules som = new SetOfMolecules();
+        som.addMolecule(new Molecule());
+        som.addMolecule(new Molecule());
+        som.addMolecule(new Molecule());
+
+        assertNotNull(som.getMolecule(2)); // third molecule should exist
+        assertNull(som.getMolecule(3)); // fourth molecule must not exist
+    }
+    
+    public void testAddMolecule() {
+        SetOfMolecules som = new SetOfMolecules();
+        som.addMolecule(new Molecule());
+        som.addMolecule(new Molecule());
+        som.addMolecule(new Molecule());
+        som.addMolecule(new Molecule());
+        som.addMolecule(new Molecule());
+
+        assertEquals(5, som.getMoleculeCount());
+        
+        // now test it to make sure it properly grows the array
+        som.addMolecule(new Molecule());
+        som.addMolecule(new Molecule());
+
+        assertEquals(7, som.getMoleculeCount());        
+    }
+    
+    public void testGrowMoleculeArray() {
+        // this test assumes that the growSize = 5 !
+        SetOfMolecules som = new SetOfMolecules();
+        
+        Molecule[] mols = som.getMolecules();
+        assertEquals(5, mols.length);
+        
+        som.addMolecule(new Molecule());
+        som.addMolecule(new Molecule());
+        som.addMolecule(new Molecule());
+        som.addMolecule(new Molecule());
+        som.addMolecule(new Molecule());
+        som.addMolecule(new Molecule());
+        som.addMolecule(new Molecule());
+
+        mols = som.getMolecules();
+        assertEquals(10, mols.length);
+    }
 }

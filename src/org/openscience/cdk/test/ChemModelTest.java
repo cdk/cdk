@@ -46,4 +46,28 @@ public class ChemModelTest extends TestCase {
     public static Test suite() {
         return new TestSuite(ChemModelTest.class);
     }
+    
+    public void testGetAllInOneContainer() {
+        ChemModel cm = new ChemModel();
+        SetOfMolecules som = new SetOfMolecules();
+        Molecule m1 = new Molecule();
+        m1.addAtom(new Atom("C"));
+        m1.addAtom(new Atom("C"));
+        m1.addAtom(new Atom("C"));
+        som.addMolecule(m1);
+        Molecule m2 = new Molecule();
+        m2.addAtom(new Atom("C"));
+        m2.addAtom(new Atom("C"));
+        m2.addAtom(new Atom("C"));
+        som.addMolecule(m2);
+        Molecule m3 = new Molecule();
+        m3.addAtom(new Atom("C"));
+        m3.addAtom(new Atom("C"));
+        m3.addAtom(new Atom("C"));
+        som.addMolecule(m3);
+        cm.setSetOfMolecules(som);
+        
+        AtomContainer ac = cm.getAllInOneContainer();
+        assertEquals(9, ac.getAtomCount());
+    }
 }
