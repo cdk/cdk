@@ -251,9 +251,10 @@ public class HOSECodeTest
 				System.out.println(molecule.getAtomAt(f).flags[CDKConstants.ISAROMATIC]);
 				System.out.println(s);
 			}
-			for (int f = 0; f < molecule.getBondCount(); f++)
+            Bond[] bonds = molecule.getBonds();
+			for (int f = 0; f < bonds.length; f++)
 			{
-				System.out.println(molecule.getBondAt(f).flags[CDKConstants.ISAROMATIC]);
+				System.out.println(bonds[f].flags[CDKConstants.ISAROMATIC]);
 			}
 
 		} catch (Exception exc)

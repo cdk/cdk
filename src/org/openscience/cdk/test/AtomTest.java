@@ -23,7 +23,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
  * 
  */
-
 package org.openscience.cdk.test;
 
 import org.openscience.cdk.*;
@@ -33,7 +32,7 @@ import junit.framework.*;
 import javax.vecmath.*;
 
 /**
- * Checks the funcitonality of the AtomTypeFactory
+ * Checks the functionality of the AtomTypeFactory
  */
  
 public class AtomTest extends TestCase {

@@ -1,4 +1,5 @@
-/* $RCSfile$    
+/*
+ * $RCSfile$
  * $Author$    
  * $Date$    
  * $Revision$
@@ -20,26 +21,31 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
+ * 
  */
 
 package org.openscience.cdk.test;
 
+import org.openscience.cdk.*;
+import org.openscience.cdk.tools.*;
+import java.util.*;
 import junit.framework.*;
+import javax.vecmath.*;
 
 /**
- * TestSuite that runs all the sample tests
- *
+ * Checks the funcitonality of the AtomTypeFactory
  */
-public class CoreClassesTests {
+ 
+public class AtomContainerTest extends TestCase {
 
-    public static Test suite () {
-        TestSuite suite= new TestSuite("All CDK Tests");
-        suite.addTest(AtomTest.suite());
-        suite.addTest(AtomContainerTest.suite());
-        suite.addTest(ChemObjectTest.suite());
-        suite.addTest(MonomerTest.suite());
-        suite.addTest(PolymerTest.suite());
-        return suite;
+    public AtomContainerTest(String name) {
+        super(name);
+    }
+
+    public void setUp() {}
+
+    public static Test suite() {
+        return new TestSuite(AtomTest.class);
     }
 
 }
