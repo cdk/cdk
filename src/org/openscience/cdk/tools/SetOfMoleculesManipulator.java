@@ -41,25 +41,11 @@ import org.openscience.cdk.SetOfMolecules;
 public class SetOfMoleculesManipulator {
     
     public static void removeAtomAndConnectedElectronContainers(SetOfMolecules set, Atom atom) {
-        Molecule[] molecules = set.getMolecules();
-        for (int i=0; i < molecules.length; i++) {
-            Molecule mol = molecules[i];
-            if (mol.contains(atom)) {
-                mol.removeAtomAndConnectedElectronContainers(atom);
-                return;
-            }
-        }
+        SetOfAtomContainersManipulator.removeAtomAndConnectedElectronContainers(set, atom);
     }
     
     public static void removeElectronContainer(SetOfMolecules set, ElectronContainer electrons) {
-        Molecule[] molecules = set.getMolecules();
-        for (int i=0; i < molecules.length; i++) {
-            Molecule mol = molecules[i];
-            if (mol.contains(electrons)) {
-                mol.removeElectronContainer(electrons);
-                return;
-            }
-        }
+        SetOfAtomContainersManipulator.removeElectronContainer(set, electrons);
     }
     
     /**
@@ -69,25 +55,29 @@ public class SetOfMoleculesManipulator {
      * @return  The AtomContainer with all the Molecules of this container
      */
     public static AtomContainer getAllInOneContainer(SetOfMolecules set) {
-        AtomContainer container = new AtomContainer();
-        Molecule[] mols = set.getMolecules();
-        for (int i=0; i < mols.length; i++) {
-            Molecule m = mols[i];
-            container.add(m);
-        }
-        return container;
+        return SetOfAtomContainersManipulator.getAllInOneContainer(set);
     }
     
     /**
      * Returns all the AtomContainer's of a SetOfMolecules.
      */
     public static AtomContainer[] getAllAtomContainers(SetOfMolecules set) {
-        int acCount = set.getMoleculeCount();
-		AtomContainer[] container = new AtomContainer[acCount];
-        Molecule[] mols = set.getMolecules();
-		System.arraycopy(mols, 0, container, 0, acCount);
-		return container;
+		return SetOfAtomContainersManipulator.getAllAtomContainers(set);
     }
     
+	/**
+	 * @see SetOfAtomContainersManipulator
+	 */
+	public static int getTotalCharge(SetOfMolecules set) {
+		return SetOfAtomContainersManipulator.getTotalCharge(set);
+	}
+	
+	/**
+	 * @see SetOfAtomContainersManipulator
+	 */
+	public static int getTotalHydrogenCount(SetOfMolecules set) {
+		return SetOfAtomContainersManipulator.getTotalHydrogenCount(set);
+	}
+	
 }
 

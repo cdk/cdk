@@ -75,5 +75,29 @@ public class AtomContainerManipulator {
         }
         
     }
+	
+	
+	/**
+	 * @return The summed charges of all atoms in this AtomContainer.
+	 */
+	public static int getTotalCharge(AtomContainer atomContainer) {
+		int charge = 0;
+		for (int i = 0; i < atomContainer.getAtomCount(); i++) {
+			charge += atomContainer.getAtomAt(i).getCharge();
+		}
+		return charge;
+	}
+	
+	/**
+	 * @return The summed implicit hydrogens of all atoms in this AtomContainer.
+	 */
+	public static int getTotalHydrogenCount(AtomContainer atomContainer) {
+		int hCount = 0;
+		for (int i = 0; i < atomContainer.getAtomCount(); i++) {
+			hCount += atomContainer.getAtomAt(i).getHydrogenCount();
+		}
+		return hCount;
+	}
+	
 }
 
