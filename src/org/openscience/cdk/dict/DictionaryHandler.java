@@ -34,6 +34,9 @@ import org.xml.sax.helpers.DefaultHandler;
 public class DictionaryHandler extends DefaultHandler {
 
     private LoggingTool logger;
+    private boolean inEntry = false;
+    private boolean inMetadataList = false;
+    Entry entry;
 
     /** Used to store all chars between two tags */
     private String currentChars;
@@ -56,18 +59,20 @@ public class DictionaryHandler extends DefaultHandler {
     }
 
     public void endElement(String uri, String local, String raw) {
-        if ("entry".equals(local)) {
-            // nothing to do
-        } else {
-            // skip all other elements
+        if ("entry".equals(local) && !"bibtex:entry".equals(raw) && inEntry) {
+            dict.addEntry(entry);
+            inEntry = false;
+        } else if ("metadataList".equals(local) && inMetadataList) {
+            inMetadataList = false;
         }
     }
 
     public void startElement(String uri, String local, 
                              String raw, Attributes atts) {
         currentChars = "";
-        if ("entry".equals(local)) {
-            Entry entry = new Entry();
+        if ("entry".equals(local) && !"bibtex:entry".equals(raw) && !inEntry) {
+            inEntry = true;
+            entry = new Entry();
             for (int i = 0; i < atts.getLength(); i++) {
                 if (atts.getQName(i).equals("id")) {
                     entry.setID(atts.getValue(i));
@@ -75,11 +80,28 @@ public class DictionaryHandler extends DefaultHandler {
                     entry.setTerm(atts.getValue(i));
                 }
             }
-            dict.addEntry(entry);
-        } else {
-            // skip all other elements
+        } 
+        if ("metadataList".equals(local) && !inMetadataList) {
+            inMetadataList = true;
+        }
+
+        // if we're in a metadataList then look at individual
+        // metadata nodes and check for any whose content refers
+        // to QSAR metadata and save that. Currently it does'nt 
+        // differentiate between descriptorType or descriptorClass.
+        // Do we need to differentiate?
+        if ("metadata".equals(local) && inMetadataList) {
+            for (int i = 0; i < atts.getLength(); i++) {
+                if (atts.getQName(i).equals("content")) {
+                    String content = atts.getValue(i);
+                    if (content.indexOf("qsar-descriptors-metadata:") == 0) {
+                        entry.setDescriptorMetadata(content);
+                    }
+                }
+            }
         }
     }
+    
 
     public void characters(char ch[], int start, int length) {
         currentChars += new String(ch, start, length);

@@ -29,6 +29,7 @@ import java.io.InputStreamReader;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
+import java.util.StringTokenizer;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomType;
@@ -37,15 +38,21 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.dict.DictionaryDatabase;
+import org.openscience.cdk.dict.Entry;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.LoggingTool;
 
 
 /**
  * Engine that calculates the values for a set of Descriptors and add this
- * to a Molecule. The set of descriptors is created from the Java sources of
+ * to a Molecule.
+ *
+ * The set of descriptors is created from the Java sources of
  * the CDK QSAR source code, using <code>@cdk.set qsar-descriptors</code> tags
- * in the JavaDoc.
+ * in the JavaDoc. In addition it is possible to specify which types of descriptors
+ * (constitutional, molecular, geometrical, topological or electronic) should
+ * be calculated.
  *
  * @cdk.created 2004-12-02
  * @cdk.module  qsar
@@ -55,7 +62,7 @@ public class DescriptorEngine {
     private final static String QSAR_DESCRIPTOR_LIST = "qsar-descriptors.set";
 
     private List descriptors;
-    private DescriptorSpecification[] specs;
+    private List speclist;
     private LoggingTool logger;
 
     public DescriptorEngine() {
@@ -92,15 +99,126 @@ public class DescriptorEngine {
         // beforehand since these are used as key into the molecules 
         // property list. As a result when accessing the property list
         // the keys should be identical to those used when setting the properties.
-        specs = new DescriptorSpecification[descriptors.size()];
+        speclist = new Vector();
         for (int i = 0; i < descriptors.size(); i++) {
             Descriptor descriptor = (Descriptor)descriptors.get(i);
-            specs[i] = descriptor.getSpecification();
+            speclist.add(descriptor.getSpecification());
         }
     }
 
     /**
-     *  Calculates all available descriptors for a molecule
+     * Generates a list of descriptors to calculate.
+     *
+     * This constructor allows the user to specify which types of 
+     * descriptors should be calculated. The possible types are
+     * <ul>
+     * <li>constitutional
+     * <li>molecular
+     * <li>electronic
+     * <li>topological
+     * <li>geometrical
+     * </ul>
+     * More than one type may be specified and descriptors matching any of the specified
+     * types will be considered for calculation. If the any of the types specified do not
+     * belong to the above list all descriptor types will be considered.
+     * 
+     * @param descriptorClasses A String array containing one or more of the above elements
+     */
+    public DescriptorEngine(String[] descriptorClasses) {
+
+        List tmplist; // stores the initial list of *all* descriptors
+        
+        // some validation. Maybe add some constants to CDKConstants?
+        String[] validTypes = {"constitutional","molecular","topological","electronic","geometrical"};
+        if (descriptorClasses.length == 0) {
+            descriptorClasses = validTypes;
+        } else {
+            for (int i = 0; i < descriptorClasses.length; i++) {
+                int invalid = 0;
+                for (int j = 0; j < validTypes.length; j++) {
+                    if (!descriptorClasses[i].equals(validTypes[j])) invalid++;
+                }
+                if (invalid == validTypes.length) descriptorClasses = validTypes;
+            }
+        }
+        
+        DictionaryDatabase dictDB = new DictionaryDatabase();
+        Entry[] dictEntries = dictDB.getDictionaryEntry("qsar-descriptors");
+
+        logger = new LoggingTool(true);
+        tmplist = new Vector();
+
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(
+                        this.getClass().getClassLoader().getResourceAsStream(QSAR_DESCRIPTOR_LIST)
+                        ));
+            while (reader.ready()) {
+                String descriptorName = reader.readLine();
+                try {
+                    Descriptor descriptor = (Descriptor)this.getClass().getClassLoader().loadClass(descriptorName).newInstance();
+                    tmplist.add(descriptor);
+                    logger.info("Loaded descriptor: ", descriptorName);
+                } catch (ClassNotFoundException exception) {
+                    logger.error("Could not find this Descriptor: ", descriptorName);
+                    logger.debug(exception);
+                } catch (Exception exception) {
+                    logger.error("Could not load this Descriptor: ", descriptorName);
+                    logger.debug(exception);
+                }
+            }
+        } catch (Exception exception) {
+            logger.error("Could not load this descriptor list: ", QSAR_DESCRIPTOR_LIST);
+            logger.debug(exception);
+        }
+
+        // now see which descriptors match the types specified by the user
+        descriptors = new Vector();
+        speclist = new Vector();
+
+        // loop over all descriptors loaded
+        for (int i = 0; i < tmplist.size(); i++) {
+
+            // get the specification for this descriptor
+            DescriptorSpecification spec = ((Descriptor)tmplist.get(i)).getSpecification();
+
+            // get the ref into the XML dict
+            String specref = spec.getSpecificationReference();
+
+            // need to get rid of the base URI
+            String[] tmp = specref.split(":");
+            specref = tmp[2];
+            
+            // get the entry from the QSAR dict coresponding to this ref
+            for (int j = 0; j < dictEntries.length; j++) {
+                if (dictEntries[j].getID().equals(specref.toLowerCase())) {
+                    // ok, got the proper entry. Now get the classification metadata
+                    Vector clsmetadata = dictEntries[j].getDescriptorMetadata();
+                    
+                    // Now check to see if any of the metadata equals what the
+                    // user specified. At this point, the types of descriptors
+                    // the user specified should have been validated.
+                    for (int k = 0; k < descriptorClasses.length; k++) {
+                        boolean added = false;
+                        for (Iterator it = clsmetadata.iterator(); it.hasNext();) {
+                            String cls = (String)it.next();
+                            if (cls.indexOf(descriptorClasses[k]) != -1) {
+                                logger.info("Will use "+dictEntries[j].getID());
+                                descriptors.add(tmplist.get(i));
+                                speclist.add(spec);
+                                added = true;
+                                break;
+                            }
+                        }
+                        if (added) break;
+                    }
+                }
+            }
+        }
+        logger.info("Loaded "+descriptors.size()+" descriptors");
+    }
+
+    /**
+     *  Calculates all available descriptors for a molecule.
      *
      *  The results for a given descriptor as well as associated parameters and
      *  specifications are used to create a <code>DescriptorValue</code>
@@ -114,27 +232,27 @@ public class DescriptorEngine {
             Descriptor descriptor = (Descriptor)descriptors.get(i);
             try {
                 DescriptorValue value = new DescriptorValue(
-                        specs[i],
+                        (DescriptorSpecification)speclist.get(i),
                         descriptor.getParameters(),
                         descriptor.calculate(molecule)
                         );
-                molecule.setProperty(specs[i], value);
+                molecule.setProperty((DescriptorSpecification)speclist.get(i), value);
             } catch (CDKException exception) {
                 logger.error("Could not calculate descriptor value for: ",
                         descriptor.getClass().getName());
             }
         }
     }
-
+        
    /**
-     *  Returns the DescriptorSpecification object for all available descriptors
+     * Returns the DescriptorSpecification object for all available descriptors.
      *
      *@return An array of <code>DescriptorSpecification</code> objects. These are the keys
      *        with which the <code>DescriptorValue</code> objects can be obtained from a 
      *        molecules property list
      */
-    public DescriptorSpecification[] getDescriptorSpecifications() {
-        return(specs);
+    public List getDescriptorSpecifications() {
+        return(speclist);
     }
 
 }

@@ -50,7 +50,7 @@ public class DictionaryDatabase {
     private org.openscience.cdk.tools.LoggingTool logger;
     
     private String[] dictionaryNames = {
-        "chemical", "elements"
+        "chemical", "elements", "qsar-descriptors"
     };
     
     private Hashtable dictionaries;
@@ -131,6 +131,11 @@ public class DictionaryDatabase {
             }
             return entryNames;
         }
+    }
+
+    public Entry[] getDictionaryEntry(String dictionaryName) {
+        Dictionary dictionary = (Dictionary)dictionaries.get(dictionaryName);
+        return( dictionary.getEntry() );
     }
     
     /**

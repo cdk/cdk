@@ -28,7 +28,7 @@
  */
 package org.openscience.cdk.dict;
 
-
+import java.util.Vector;
 /**
  * Dictionary with entries.
  *
@@ -43,14 +43,17 @@ public class Entry {
     
     private String term;
     private String id;
+    private Vector descriptorInfo;
     
     public Entry(String id, String term) {
         this.id = id.toLowerCase();
         this.term = term;
+        this.descriptorInfo = new Vector();
     }
     
     public Entry() {
         this("", "");
+        this.descriptorInfo = new Vector();
     }
     
     public void setTerm(String term) {
@@ -67,6 +70,13 @@ public class Entry {
     
     public String getID() {
         return this.id;
+    }
+
+    public void setDescriptorMetadata(String metadata) {
+        this.descriptorInfo.add( metadata );
+    }
+    public Vector getDescriptorMetadata() {
+        return this.descriptorInfo;
     }
     
 }
