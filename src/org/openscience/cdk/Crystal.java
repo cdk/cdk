@@ -25,10 +25,16 @@
 
 package org.openscience.cdk;
 
+import org.openscience.cdk.exception.*;
+import javax.vecmath.Point3d;
+
 /**
  * Class representing a molecular crystal.
  * The crystal is described with molecules in fractional
  * coordinates and three cell axes: a,b and c.
+ *
+ * The crystal is designed to store only the assymetric atoms. 
+ * Though this is not enforced, it is assumed by all methods.
  *
  * @keyword crystal
  */
@@ -79,6 +85,14 @@ public class Crystal extends AtomContainer {
      */
     public void add(AtomContainer ac) {
         super.add(ac);
+    }
+
+    /**
+     * Adds the atom to the crystal. Symmetry related atoms should
+     * not be added unless P1 space group is used.
+     */
+    public void addAtom(Atom a) {
+        super.addAtom(a);
     }
 
     /**
@@ -134,14 +148,113 @@ public class Crystal extends AtomContainer {
     }
 
     /**
-     * Sets the number of asymmetric parts in the unit cell.
-     * This is used internally only by setSpaceGroup()
+     * Removes the atom at the given position from the AtomContainer
+     * and its symmetry related atoms too.
      *
-     * @param   z Z
-     * @see     setSpaceGroup()
+     * This assumes that atom i is symmetry related too
+     * atom (i + getAtomCount()/getZ()).
      */
-    private void setZ(int z) {
-        Z = z;
+    public void removeAtom(int position) {
+        int add = getAtomCount()/getZ();
+        for (int i = (getZ() - 1); i >= 0; i--) {
+            super.removeAtom(position + i*add);
+        }
+    }
+
+    /**
+     * Removes the atom at the given position from the AtomContainer
+     * and its symmetry related atoms too.
+     *
+     * This assumes that atom i is symmetry related too
+     * atom (i + getAtomCount()/getZ()).
+     */
+    public void removeAtom(Atom atom) {
+        try {
+            int position = getAtomNumber(atom);
+            removeAtom(position);
+        } catch (NoSuchAtomException e) {
+            // do nothing
+        }
+    }
+
+    /**
+     *  Converts the cell into a P1 cell.
+     *  The function assumes that unit cell axes are properly set.
+     *
+     * Recognized space group strings:
+     *   "P1"
+     *   "P 2_1 2_1 2_1"
+     *
+     * @return The Crystal with P1 space group.
+     */
+    public Crystal getP1Cell() {
+        Crystal result = (Crystal)this.clone();
+        if ("P 2_1 2_1 2_1".equals(spaceGroup)) {
+            for (int i =0; i < this.getAtomCount(); i++) {
+                Atom a = this.getAtomAt(i);
+                /* symmetry operations:
+
+                identity (skipped) :   x      y      z
+                                        -x+0.5 -y      z+0.5   I
+                                        -x      y+0.5 -z+0.5   II
+                                        x+0.5 -y+0.5 -z        III
+                */
+
+                // do not take into account moving into unit cell
+                Point3d point = a.getPoint3D();
+
+                if (point != null) {
+                    // point I
+                    Point3d newPoint = new Point3d();
+                    newPoint.x = -1.0*point.x + 0.5*(ax + bx + cx);
+                    newPoint.y = -1.0*point.y;
+                    newPoint.z =      point.z + 0.5*(az + bz + cz);
+                    Atom syma = (Atom)a.clone();
+                    syma.setPoint3D(newPoint);
+                    super.addAtom(syma);
+
+                    // point II
+                    newPoint.x = -1.0*point.x + 0.5*(ax + bx + cx);
+                    newPoint.y = -1.0*point.y;
+                    newPoint.z =      point.z + 0.5*(az + bz + cz);
+                    syma = (Atom)a.clone();
+                    syma.setPoint3D(newPoint);
+                    super.addAtom(syma);
+
+                    // point III
+                    newPoint.x = -1.0*point.x + 0.5*(ax + bx + cx);
+                    newPoint.y = -1.0*point.y;
+                    newPoint.z =      point.z + 0.5*(az + bz + cz);
+                    syma = (Atom)a.clone();
+                    syma.setPoint3D(newPoint);
+                    super.addAtom(syma);
+                } else {
+                    System.err.println("WARN: Did not copy 3D coordinates!");
+                }
+            }
+        } else {
+            // assume P1
+        }
+        return result;
+    }
+
+    /**
+     *  Makes a clone of this crystal.
+     *
+     * @return The cloned crystal.
+     */
+    public Object clone() {
+        Crystal o = null;
+        try {
+            o = (Crystal)super.clone();
+        } catch (Exception e) {
+            e.printStackTrace(System.err);
+        }
+        o.setSpaceGroup(this.getSpaceGroup());
+        o.setA(this.ax, this.ay, this.az);
+        o.setB(this.bx, this.by, this.bz);
+        o.setC(this.cx, this.cy, this.cz);
+        return o;
     }
 
     /**
@@ -155,8 +268,8 @@ public class Crystal extends AtomContainer {
         sb.append("  a : " + ax + ", " + ay + ", " + az + "\n");
         sb.append("  b : " + bx + ", " + by + ", " + bz + "\n");
         sb.append("  c : " + cx + ", " + cy + ", " + cz + "\n");
-        sb.append("  atoms: " + getAtomCount() + "\n");
-        sb.append("  assym atoms: " + getAtomCount()/getZ() + "\n");
+        sb.append("  atoms: " + getAtomCount()*getZ() + "\n");
+        sb.append("  assym atoms: " + getAtomCount() + "\n");
         return sb.toString();
     }
 
@@ -167,6 +280,17 @@ public class Crystal extends AtomContainer {
         ax = 0.0; ay = 0.0; az = 0.0;
         bx = 0.0; by = 0.0; bz = 0.0;
         cx = 0.0; cy = 0.0; cz = 0.0;
+    }
+
+    /**
+     * Sets the number of asymmetric parts in the unit cell.
+     * This is used internally only by setSpaceGroup()
+     *
+     * @param   z Z
+     * @see     setSpaceGroup()
+     */
+    private void setZ(int z) {
+        Z = z;
     }
 
 }

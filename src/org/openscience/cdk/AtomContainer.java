@@ -215,7 +215,9 @@ public class AtomContainer extends ChemObject implements Cloneable
 
 
 	/**
-	 *  Returns the atom at position <code>number</code> in the container
+	 * Returns the atom at position <code>number</code> in the container.
+     * The first atom has number 0. The last atom has number
+     * (getAtomCount() - 1).
 	 *
 	 * @param  number  The position of the atom to be returned.
 	 * @return         The atom at position <code>number</code> .

@@ -56,9 +56,8 @@ public class Bond extends ElectronContainer implements Cloneable
 	 * Constructs an empty bond
 	 *
 	 */
-	public Bond()
-	{
-	
+	public Bond() {
+        atoms = new Atom[2];
 	}
 
 	/**
@@ -289,8 +288,8 @@ public class Bond extends ElectronContainer implements Cloneable
 	 */
 	public double getLength()
 	{
-		Point2d p1 = getAtomAt(0).getPoint2D();		
-		Point2d p2 = getAtomAt(1).getPoint2D();				
+		Point2d p1 = getAtomAt(0).getPoint2D();
+		Point2d p2 = getAtomAt(1).getPoint2D();
 		return p1.distance(p2);
 	}
 
