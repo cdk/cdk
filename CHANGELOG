@@ -11,6 +11,8 @@ New:
 * MDLReader now also reads CHG and ISO fields in the
   property block
 * Basic CMLReaction reading has been added
+* Controller2D now supports context dependent popup menu's
+  for atoms and bonds
 
 Changes:
 * Added one-click (not-patented ;) deselect of atoms in lasso mode
