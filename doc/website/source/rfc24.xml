@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.0b1//EN" 
+                         "dtd/website.dtd" [
+  <!ENTITY rfc SYSTEM "../../RFC/24.xml">
+]>
+<webpage id="rfc24">
+  <config param="last-change-by" value="$Author$"/>
+  <config param="rcsdate" value="$Date$"/>
+
+  <head>
+    <title>CDK Request for Comments #24</title>
+    <titleabbrev>RFC #24</titleabbrev>
+    <summary></summary>
+  </head>
+
+  <section>
+    <title>CDK RFC #24</title>
+    &rfc;
+  </section>
+
+</webpage>

@@ -1,0 +1,61 @@
+<refentry id="cdk-rfc-24">
+
+  <refentryinfo>
+    <revhistory>
+      <revision>
+        <revnumber>1</revnumber>
+        <date>2003-09-30</date>
+        <authorinitials>elw</authorinitials>
+        <revremark>
+          See <ulink url="">email archive</ulink>.
+        </revremark>
+      </revision>
+    </revhistory>
+  </refentryinfo>
+
+
+  <refnamediv>
+    <refname>RFC CDK #24</refname>
+  </refnamediv>
+
+  <refsect1>
+    <title>Proposal</title>
+    <para>
+If a class depends on a packages outside the list of packages that come with
+J2SE, it must list the jar file in cdk/jars that provides this class. This 
+applied to both to requirement at compile time as at runtime. To distinct
+between these two situations, I propose to have two javadoc tags:
+    </para>
+    <itemizedlist>
+        <listitem><para>@build-depends</para></listitem>
+        <listitem><para>@depends</para></listitem>
+    </itemizedlist>
+    <para>
+The @build-depends implies a @depends. Each required jar is listed with a 
+separate tag.
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>Reason</title>
+    <para>
+At this moment it is very difficult to determine which libraries are needed 
+for certain functionality.
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>Proposers</title>
+    <para>
+      Egon Willighagen.
+    </para>
+  </refsect1>
+
+    <refsect1>
+    <title>Date</title>
+    <para>
+      2003-09-29.
+    </para>
+  </refsect1>
+
+</refentry>

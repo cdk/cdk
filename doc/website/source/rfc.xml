@@ -203,6 +203,13 @@
               <entry></entry>
               <entry></entry>
             </row>
+            <row>
+              <entry>24</entry>
+              <entry><ulink url="rfc24.html">JavaDoc of classes should mention required jar</ulink></entry>
+              <entry>2003-09-29</entry>
+              <entry></entry>
+              <entry></entry>
+            </row>
          </tbody>
         </tgroup>
     </informaltable>
