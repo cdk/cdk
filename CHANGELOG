@@ -4,6 +4,10 @@ CHANGELOG $Date$
 Changes in CVS
 ------------------------------------
 New:
+* Added the long awaited UniversalIsomophismTester.
+  This class provides methods for Isomophism-, Subgraph-
+  isomorphism- and Maximum Common Subgraph Isomorphism
+  testing. 
 * Added MFAnalyser.getElementCount()
 * Added SaturationChecker.saturateWithHydrogen(Molecule)
 * Added cdk.math.MinMax class (methods formerly in 
@@ -15,6 +19,11 @@ New:
 * cdk-fileconvert can generate SVG
 
 Fixes:
+* IsotopeFactory does now return Isotopes with 
+  correctly initialized flags and pointers.
+* flags[] array is now correctly cloned and copied
+  inside the ChemObject.clone() method. 
+  (fixes bug #617120)
 * JCPController2D now edits a bond order when in
   bond mode
 * Removed NoSuchAtomException's from core classes
