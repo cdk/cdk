@@ -2,7 +2,7 @@
  * $Author$
  * $Date$
  * $Revision$
- * 
+ *
  * Copyright (C) 1997-2001  The Chemistry Development Kit (CDK) project
  * 
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
@@ -36,10 +36,13 @@ import java.awt.*;
 
 public class Renderer3D {
 
+    private org.openscience.cdk.tools.LoggingTool logger;
+
     public Renderer3DModel r3dm;
 
     public Renderer3D() {
-        r3dm = new Renderer3DModel();
+       logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+       r3dm = new Renderer3DModel();
     }
 
     public Renderer3D(Renderer3DModel r3dm) {
@@ -47,9 +50,20 @@ public class Renderer3D {
     }
 
     public void paintMolecule(AtomContainer atomCon, Graphics g) {
+        logger.debug("Painting molecule");
+        paintBonds(atomCon, g);
+        paintAtoms(atomCon, g);
     }
 
     public void paintAtoms(AtomContainer atomCon, Graphics g) {
+        Atom[] atoms = atomCon.getAtoms();
+        for (int i=0; i<atoms.length; i++) {
+            logger.debug("Paint atom " + i);
+            Atom atom = atoms[i];
+            int atomRadius = 10;
+            g.fillRect((int)atom.getX2D() - (atomRadius / 2), (int)atom.getY2D() - (atomRadius / 2), atomRadius, atomRadius);
+            // g.drawOval(x - radius, y - radius, diameter, diameter);
+        }
     }
 
     private void paintBonds(AtomContainer atomCon, Graphics g) {

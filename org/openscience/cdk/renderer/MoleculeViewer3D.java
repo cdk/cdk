@@ -39,8 +39,9 @@ import java.awt.*;
 /**
  * A Swing-based implementation of Renderer3D for viewing molecules
  */
-public class MoleculeViewer3D extends JPanel implements CDKChangeListener
-{
+public class MoleculeViewer3D extends JPanel implements CDKChangeListener {
+    private org.openscience.cdk.tools.LoggingTool logger;
+
 	public AtomContainer atomContainer;
 	public Renderer3DModel r3dm;
 	public Renderer3D renderer;
@@ -53,9 +54,9 @@ public class MoleculeViewer3D extends JPanel implements CDKChangeListener
 	 * @param   molecule  The molecule to be displayed
 	 * @param   r3dm  The rendere settings determining how the molecule is displayed
 	 */
-	public MoleculeViewer3D(AtomContainer atomContainer,Renderer3DModel r3dm)
-	{
-		this.atomContainer = atomContainer;
+	public MoleculeViewer3D(AtomContainer atomContainer,Renderer3DModel r3dm) {
+        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        this.atomContainer = atomContainer;
 		this.r3dm = r3dm;
 		r3dm.addCDKChangeListener(this);
 		renderer = new Renderer3D(r3dm);
@@ -66,8 +67,8 @@ public class MoleculeViewer3D extends JPanel implements CDKChangeListener
 	 *
 	 * @param   molecule  The molecule to be displayed
 	 */
-	public MoleculeViewer3D(AtomContainer atomContainer)
-	{
+	public MoleculeViewer3D(AtomContainer atomContainer) {
+        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
 		setAtomContainer(atomContainer);
 		r3dm = new Renderer3DModel();
 		r3dm.addCDKChangeListener(this);
@@ -79,11 +80,11 @@ public class MoleculeViewer3D extends JPanel implements CDKChangeListener
 	 * Constructs a MoleculeViewer with a molecule to display
 	 *
 	 */
-	public MoleculeViewer3D()
-	{
-		r3dm = new Renderer3DModel();
-		r3dm.addCDKChangeListener(this);
-		renderer = new Renderer3D(r3dm);
+    public MoleculeViewer3D() {
+        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        r3dm = new Renderer3DModel();
+        r3dm.addCDKChangeListener(this);
+        renderer = new Renderer3D(r3dm);
 	}
 
 
@@ -109,16 +110,17 @@ public class MoleculeViewer3D extends JPanel implements CDKChangeListener
 	 *
 	 * @param   g  The graphics used to paint with.
 	 */
-	public void paint(Graphics g)
-	{
+	public void paint(Graphics g) {
 		super.paint(g);
-		if (atomContainer != null)
-		{
+		logger.debug("Called super.paint()");
+		if (atomContainer != null) {
+		    logger.debug("Painting structure...");
 			setBackground(r3dm.getBackColor());
 			GeometryTools.translateAllPositive(atomContainer);
 			GeometryTools.scaleMolecule(atomContainer, getSize(), 0.8);
 			GeometryTools.center(atomContainer, getSize());
 			renderer.paintMolecule(atomContainer, g);
+		} else {
 		}
 	}
 
