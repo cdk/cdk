@@ -282,7 +282,7 @@ public class RingPlacer
 			}
 		
 		addAngle = addAngle * direction;
-		atomPlacer.populatePolygonCorners(atomsToDraw, ringCenter, startAngle, addAngle, radius);
+		atomPlacer.populatePolygonCorners(atomsToDraw, ringCenter, startAngle, addAngle, radius, false);
 	}
 	
 	/**
@@ -337,7 +337,7 @@ public class RingPlacer
 		logger.debug("currentAtom  "+currentAtom);
 		logger.debug("startAtom  "+startAtom);
 
-		atomPlacer.populatePolygonCorners(atomsToDraw, ringCenter, startAngle, addAngle, radius);
+		atomPlacer.populatePolygonCorners(atomsToDraw, ringCenter, startAngle, addAngle, radius, false);
 	
 	}
 
@@ -470,7 +470,7 @@ public class RingPlacer
 			{
 				logger.debug("Caught an exception while logging in RingPlacer");
 			}
-		atomPlacer.populatePolygonCorners(atomsToDraw, ringCenter, startAngle, addAngle, radius);
+		atomPlacer.populatePolygonCorners(atomsToDraw, ringCenter, startAngle, addAngle, radius, false);
 	}
 	
 

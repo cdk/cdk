@@ -184,6 +184,7 @@ public class StructureDiagramGenerator {
 	public void generateCoordinates(Vector2d firstBondVector) throws java.lang.Exception {
         /* if molecule contains only one Atom, don't fail, simply
            set coordinates to simplest: 0,0. See bug #780545 */
+	   logger.debug("Entry point of generatorCoordinates()");
         if (molecule.getAtomCount() == 1) {
             molecule.getAtomAt(0).setPoint2D(new Point2d(0,0));
             return;
@@ -200,8 +201,12 @@ public class StructureDiagramGenerator {
 		/* First we check if we can map any templates with predifined coordinates 
 		 * Those are stored as MDL molfiles in data/templates 
 		 */
+		 logger.debug("Initializing TemplateHandler");
 		 TemplateHandler templateHandler = new TemplateHandler();
+		 logger.debug("TemplateHander initialized");
+		 logger.debug("Now starting Template Detection in Molecule...");
 		 templateMapped = templateHandler.mapTemplates(molecule);
+		 logger.debug("Template Detection finished");
 		 logger.debug("Template found: " + templateMapped);
 		int expectedRingCount = nrOfEdges - molecule.getAtomCount() + 1;
 		if (expectedRingCount > 0) {		
@@ -268,14 +273,13 @@ public class StructureDiagramGenerator {
 		do {
 			logger.debug("*** Start of handling the rest of the molecule. ***");
 			/* do layout for all aliphatic parts of the molecule which are 
-			 * connected to the parts which have already been laid out.
-			 */
-			 handleAliphatics();
+			* connected to the parts which have already been laid out.
+			*/
+			handleAliphatics();
 			/* do layout for the next ring aliphatic parts of the molecule which are 
-			 * connected to the parts which have already been laid out.
-			 */
+			* connected to the parts which have already been laid out.
+			*/
 			layoutNextRingSystem();
-			
 		} while(!atomPlacer.allPlaced(molecule));
 			
 		fixRest();
@@ -304,6 +308,7 @@ public class StructureDiagramGenerator {
 		int thisRing;
 		Ring ring = rs.getMostComplexRing(); /* Get the most complex ring in this RingSet */
         // determine first bond in Ring
+	logger.debug("Start of layoutRingSet");
         int i = 0;
         for (i = 0; i < ring.getElectronContainerCount(); i++) {
             if (ring.getElectronContainerAt(i) instanceof Bond) break;
@@ -336,6 +341,7 @@ public class StructureDiagramGenerator {
 			if (thisRing == rs.size()) thisRing = 0;
 			ring = (Ring)rs.elementAt(thisRing);
 		} while(!allPlaced(rs));
+		logger.debug("End of layoutRingSet");
 	}
 
 	
@@ -427,9 +433,9 @@ public class StructureDiagramGenerator {
 			}						
 			oldPoint2 = vectorAtom2.getPoint2D();
 			oldPoint1 = vectorAtom1.getPoint2D();
-			
-			//System.out.println("oldPoint1: " + oldPoint1);
-			//System.out.println("oldPoint2: " + oldPoint2);
+			logger.debug("Computing rotation of new ringset to fit old attachment bond orientation...");
+			logger.debug("oldPoint1: " + oldPoint1);
+			logger.debug("oldPoint2: " + oldPoint2);
 			angle1 = GeometryTools.getAngle(oldPoint2.x - oldPoint1.x, oldPoint2.y - oldPoint1.y);								
 			nextRingSystem = getRingSystemOfAtom(ringSystems, vectorAtom2);
 			ringSystem = new AtomContainer();
@@ -445,22 +451,23 @@ public class StructureDiagramGenerator {
 			newPoint2 = vectorAtom2.getPoint2D();
 			newPoint1 = vectorAtom1.getPoint2D();				
 
-			//System.out.println("newPoint1: " + newPoint1);
-			//System.out.println("newPoint2: " + newPoint2);
+			logger.debug("newPoint1: " + newPoint1);
+			logger.debug("newPoint2: " + newPoint2);
 
 			angle2 = GeometryTools.getAngle(newPoint2.x - newPoint1.x, newPoint2.y - newPoint1.y);				
 			Vector2d transVec = new Vector2d(oldPoint1);
 			transVec.sub(new Vector2d(newPoint1));
-
+			logger.debug("Finished computing rotation of new ringset to fit old attachment bond orientation...");
 			GeometryTools.translate2D(ringSystem, transVec);
 			//System.out.println(ringSystem.getAtomCount());
-			//System.out.println("oldPoint1 again: " + oldPoint1);
-			//System.out.println("and the angles: " + angle1 + ", " + angle2 + "; diff = " + (angle1 - angle2));				
-			
-			GeometryTools.rotate(ringSystem, oldPoint1,  (2.0 * Math.PI) +  angle1);
+			logger.debug("oldPoint1 again: " + oldPoint1);
+			logger.debug("and the angles: " + angle1 + ", " + angle2 + "; diff = " + (angle1 - angle2));				
+			GeometryTools.rotate(ringSystem, oldPoint1,  (0.5 * Math.PI) + (angle1 - angle2));
+			//GeometryTools.rotate(ringSystem, oldPoint1,  (2.0 * Math.PI) +  angle1);
 			//vectorAtom2.setPoint2D(oldPoint2);
 			vectorAtom1.setPoint2D(oldPoint1);				
 		}
+		logger.debug("End of layoutNextRingSystem()");
 	}
 
 	/**

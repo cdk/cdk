@@ -35,7 +35,7 @@ import org.openscience.cdk.geometry.*;
 import org.openscience.cdk.tools.*;
 import org.openscience.cdk.graph.PathTools;
 import javax.vecmath.*;
-import java.util.Vector;
+import java.util.*;
 import java.lang.Math;
 import java.awt.*;
 
@@ -60,6 +60,20 @@ public class AtomPlacer
 	 *  The molecule to be laid out. To be assigned from outside
 	 */
 	static Molecule molecule = null;
+	
+	static final Comparator ATOM_ORDER = new Comparator() 
+	{
+	    public int compare(Object o1, Object o2) 
+	    {
+		Atom a1 = (Atom) o1;
+		Atom a2 = (Atom) o2;
+		int i1 = ((Integer)a1.getProperty("Weight")).intValue();
+		int i2 = ((Integer)a2.getProperty("Weight")).intValue();
+		if (i1 < i2) return -1;
+		if (i1 == i2) return 0;
+		return 1;
+	    }
+	};
 
 
 	/**
@@ -110,7 +124,10 @@ public class AtomPlacer
 		double smallestDistance = Double.MAX_VALUE;
 		Atom[] nearestAtoms = new Atom[2];
 		Atom[] sortedAtoms = null;
-		double startAngle = 0.0, addAngle = 0.0, radius = 0.0, remainingAngle = 0.0;
+		double startAngle = 0.0;
+		double addAngle = 0.0;
+		double radius = 0.0;
+		double remainingAngle = 0.0;
 		/*
 		 *  calculate the direction away from the already placed partners of atom
 		 */
@@ -121,7 +138,7 @@ public class AtomPlacer
 		Vector2d occupiedDirection = new Vector2d(sharedAtomsCenter);
 		occupiedDirection.sub(newDirection);
 		Vector atomsToDraw = new Vector();
-		
+
 		if (sharedAtoms.getAtomCount() == 1)
 		{
 			for (int f = 0; f < partners.getAtomCount(); f++)
@@ -130,22 +147,23 @@ public class AtomPlacer
 			}
 
 			addAngle = Math.PI * 2 / (partners.getAtomCount() + sharedAtoms.getAtomCount());
-			/* IMPORTANT: At this point we need a calculation of the
-			   start angle. 
-			   Not done yet.
-			   */
+			/*
+			 *  IMPORTANT: At this point we need a calculation of the
+			 *  start angle.
+			 *  Not done yet.
+			 */
 			Atom placedAtom = sharedAtoms.getAtomAt(0);
 //			double xDiff = atom.getX2D() - placedAtom.getX2D();
 //			double yDiff = atom.getY2D() - placedAtom.getY2D();
 			double xDiff = placedAtom.getX2D() - atom.getX2D();
 			double yDiff = placedAtom.getY2D() - atom.getY2D();
 
-			startAngle = GeometryTools.getAngle(xDiff, yDiff); //- (Math.PI / 2.0);
-			populatePolygonCorners(atomsToDraw, new Point2d(atom.getPoint2D()), startAngle, addAngle, bondLength);
+			startAngle = GeometryTools.getAngle(xDiff, yDiff);
+			//- (Math.PI / 2.0);
+			populatePolygonCorners(atomsToDraw, new Point2d(atom.getPoint2D()), startAngle, addAngle, bondLength, true);
 			return;
 		}
-		
-		
+
 		/*
 		 *  if the least hindered side of the atom is clearly defined (bondLength / 10 is an arbitrary value that seemed reasonable)
 		 */
@@ -232,7 +250,7 @@ public class AtomPlacer
 		}
 		radius = bondLength;
 		startAngle = GeometryTools.getAngle(startAtom.getX2D() - atom.getX2D(), startAtom.getY2D() - atom.getY2D());
-		populatePolygonCorners(atomsToDraw, new Point2d(atom.getPoint2D()), startAngle, addAngle, radius);
+		populatePolygonCorners(atomsToDraw, new Point2d(atom.getPoint2D()), startAngle, addAngle, radius, true);
 
 	}
 
@@ -311,17 +329,24 @@ public class AtomPlacer
 
 	/**
 	 *  Populates the corners of a polygon with atoms. Used to place atoms in a
-	 *  geometrically regular way around a ring center or another atom
+	 *  geometrically regular way around a ring center or another atom. If this is
+	 *  used to place the bonding partner of an atom (and not to draw a ring) we
+	 *  want to place the atoms such that those with highest "weight" are placed
+	 *  farmost away from the rest of the molecules. The "weight" mentioned here is
+	 *  calculated by a modified morgan number algorithm.
 	 *
 	 *@param  atomsToDraw     All the atoms to draw
 	 *@param  startAngle      A start angle, giving the angle of the most clockwise
 	 *      atom which has already been placed
 	 *@param  addAngle        An angle to be added to startAngle for each atom from
 	 *      atomsToDraw
-	 *@param  rotationCenter  Description of the Parameter
-	 *@param  radius          Description of the Parameter
+	 *@param  rotationCenter  The center of a ring, or an atom for which the
+	 *      partners are to be placed
+	 *@param  radius          The radius of the polygon to be populated: bond
+	 *      length or ring radius
+	 *@param  doDistanceSort  Should the above mentioned distance sort be done?
 	 */
-	public void populatePolygonCorners(Vector atomsToDraw, Point2d rotationCenter, double startAngle, double addAngle, double radius)
+	public void populatePolygonCorners(Vector atomsToDraw, Point2d rotationCenter, double startAngle, double addAngle, double radius, boolean doDistanceSort)
 	{
 		Atom connectAtom = null;
 		double angle = startAngle;
@@ -329,40 +354,59 @@ public class AtomPlacer
 		double newY;
 		double x;
 		double y;
-		if (debug)
-		{
-			System.out.println("populatePolygonCorners->startAngle: " + Math.toDegrees(angle));
+		logger.debug("populatePolygonCorners->startAngle: " + Math.toDegrees(angle));
+		Vector points = new Vector();
+		Atom atom = null;
+		if (doDistanceSort)
+		{	  
+			calculateWeights(molecule);
+			System.out.println("listing atom weights before sorting...");
+			for (int f = 0; f < atomsToDraw.size(); f++)
+			{
+				atom = (Atom)atomsToDraw.elementAt(f);
+				System.out.println("Atom " + (f + 1) + ": " + atom.getProperty("Weight"));	
+			}
+			System.out.println("...done.");
+			Collections.sort(atomsToDraw, ATOM_ORDER);
+			System.out.println("listing atom weights after sorting...");
+			for (int f = 0; f < atomsToDraw.size(); f++)
+			{
+				atom = (Atom)atomsToDraw.elementAt(f);
+				System.out.println("Atom " + (f + 1) + ": " + atom.getProperty("Weight"));	
+			}
+			System.out.println("...done.");
+
 		}
+		
 		for (int i = 0; i < atomsToDraw.size(); i++)
 		{
-			connectAtom = (Atom) atomsToDraw.elementAt(i);
 			angle = angle + addAngle;
 			if (angle >= 2 * Math.PI)
 			{
 				angle -= 2 * Math.PI;
 			}
-			if (debug)
-			{
-				System.out.println("populatePolygonCorners->angle: " + Math.toDegrees(angle));
-			}
+			logger.debug("populatePolygonCorners->angle: " + Math.toDegrees(angle));
 			x = Math.cos(angle) * radius;
 			y = Math.sin(angle) * radius;
 			newX = x + rotationCenter.x;
 			newY = y + rotationCenter.y;
-			connectAtom.setPoint2D(new Point2d(newX, newY));
+			points.addElement(new Point2d(newX, newY));
 			try
 			{
-				if (debug)
-				{
-					System.out.println("populatePolygonCorners->connectAtom: " + (molecule.getAtomNumber(connectAtom) + 1) + " placed at " + connectAtom.getPoint2D());
-				}
+				logger.debug("populatePolygonCorners->connectAtom: " + (molecule.getAtomNumber(connectAtom) + 1) + " placed at " + connectAtom.getPoint2D());
 			} catch (Exception exc)
 			{
-
+				//nothing to catch here. This is just for logging
 			}
+		}
 
+		for (int i = 0; i < atomsToDraw.size(); i++)
+		{
+			connectAtom = (Atom) atomsToDraw.elementAt(i);
+			connectAtom.setPoint2D((Point2d)points.elementAt(i));
 			connectAtom.setFlag(CDKConstants.ISPLACED, true);
 		}
+
 	}
 
 
@@ -446,14 +490,14 @@ public class AtomPlacer
 	 *  appended to allow for it to be laid out. This gives us a vector for
 	 *  attaching the unplaced ring later.
 	 *
-	 *@param  molecule                                               The molecule
-	 *      to be search for the longest unplaced chain
-	 *@param  startAtom                                              A start atom
-	 *      from which the chain search starts
-	 *@return                                                        An
-	 *      AtomContainer holding the longest unplaced chain.
-	 *@exception  org.openscience.cdk.exception.CDKException         Description of
-	 *      the Exception
+	 *@param  molecule                                        The molecule to be
+	 *      search for the longest unplaced chain
+	 *@param  startAtom                                       A start atom from
+	 *      which the chain search starts
+	 *@return                                                 An AtomContainer
+	 *      holding the longest unplaced chain.
+	 *@exception  org.openscience.cdk.exception.CDKException  Description of the
+	 *      Exception
 	 */
 	public AtomContainer getLongestUnplacedChain(Molecule molecule, Atom startAtom) throws org.openscience.cdk.exception.CDKException
 	{
@@ -694,6 +738,60 @@ public class AtomPlacer
 			}
 		}
 		return ret;
+	}
+
+
+	/**
+	 *  Calculates weights for unplaced atoms. 
+	 *
+	 *@param  ac  The atomcontainer for which weights are to be calculated
+	 */
+	void calculateWeights(AtomContainer ac)
+	{
+		int[] weights = getWeightNumbers(ac);
+		for (int f = 0; f < ac.getAtomCount(); f++)
+		{
+			ac.getAtomAt(f).setProperty("Weight", new Integer(weights[f]));	
+		}
+	}
+
+
+	/**
+	 *  Makes an array containing morgan-number-like number for an atomContainer.
+	 *
+	 *@param  atomContainer  The atomContainer to analyse.
+	 *@return                The morgan numbers value.
+	 */
+	int[] getWeightNumbers(AtomContainer atomContainer)
+	{
+		int[] morganMatrix;
+		int[] tempMorganMatrix;
+		int N = atomContainer.getAtomCount();
+		morganMatrix = new int[N];
+		tempMorganMatrix = new int[N];
+		Atom[] atoms = null;
+		for (int f = 0; f < N; f++)
+		{
+			morganMatrix[f] = atomContainer.getBondCount(f);
+			tempMorganMatrix[f] = atomContainer.getBondCount(f);
+		}
+		for (int e = 0; e < N; e++)
+		{
+			for (int f = 0; f < N; f++)
+			{
+				morganMatrix[f] = 0;
+				atoms = atomContainer.getConnectedAtoms(atomContainer.getAtomAt(f));
+				for (int g = 0; g < atoms.length; g++)
+				{
+					if (!atoms[g].getFlag(CDKConstants.ISPLACED))
+					{
+						morganMatrix[f] += tempMorganMatrix[atomContainer.getAtomNumber(atoms[g])];
+					}
+				}
+			}
+			System.arraycopy(morganMatrix, 0, tempMorganMatrix, 0, N);
+		}
+		return tempMorganMatrix;
 	}
 
 }

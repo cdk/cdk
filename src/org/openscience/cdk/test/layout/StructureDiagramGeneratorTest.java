@@ -87,10 +87,10 @@ public class StructureDiagramGeneratorTest extends TestCase
 	{
 		moleculeListViewer = new MoleculeListViewer();
 		//MoleculeViewer2D.display(MoleculeFactory.loadMolecule("data/mdl/reserpine.mol"), true);
-		/*showIt(MoleculeFactory.loadMolecule("data/mdl/reserpine.mol"), "Reserpine");
+		showIt(MoleculeFactory.loadMolecule("data/mdl/reserpine.mol"), "Reserpine");
 		showIt(MoleculeFactory.loadMolecule("data/mdl/four-ring-5x10.mol"), "5x10 condensed four membered rings");
 		showIt(MoleculeFactory.loadMolecule("data/mdl/six-ring-4x4.mol"), "4x4 condensed six membered rings");
-		showIt(MoleculeFactory.loadMolecule("data/mdl/polycarpol.mol"), "Polycarpol");*/
+		showIt(MoleculeFactory.loadMolecule("data/mdl/polycarpol.mol"), "Polycarpol");
 		showIt(MoleculeFactory.makeAlphaPinene(), "alpha-Pinene");
 		showIt(MoleculeFactory.makeBiphenyl(), "Biphenyl");
 		showIt(MoleculeFactory.make4x3CondensedRings(), "4x3CondensedRings");
@@ -98,9 +98,10 @@ public class StructureDiagramGeneratorTest extends TestCase
 		showIt(MoleculeFactory.makeSpiroRings(), "Spiro");
 		showIt(MoleculeFactory.makeMethylDecaline(), "Methyldecaline");
 		showIt(MoleculeFactory.makeBranchedAliphatic(), "Branched aliphatic");
-		showIt(MoleculeFactory.makeDiamantane(), "Diamantane - A Problem! - Solve it! :-)");
+		showIt(MoleculeFactory.makeDiamantane(), "Diamantane - Was A Problem! - Solved :-)");
 		showIt(MoleculeFactory.makeEthylCyclohexane(), "Ethylcyclohexane");
 		showIt(MoleculeFactory.makeBicycloRings(), "Bicyclo-[2.2.2]-octane");		
+		showIt(makeBug736137(), "Bug 736137");
 	}
 
 
@@ -154,9 +155,10 @@ public class StructureDiagramGeneratorTest extends TestCase
 		try
 		{
 			StructureDiagramGeneratorTest sdg = new StructureDiagramGeneratorTest("StructureDiagramGeneratorTest");
-			sdg.runVisualTests();
+			//sdg.runVisualTests();
 			//sdg.bug736137();
 			//sdg.testSpiroRings();
+			sdg.testBugPMR();
 		} catch (Exception exc)
 		{
 			exc.printStackTrace();
@@ -169,24 +171,52 @@ public class StructureDiagramGeneratorTest extends TestCase
 	 *
 	 *@exception  java.lang.Exception  Description of the Exception
 	 */
-	public Molecule makeBug736137() throws java.lang.Exception
+	public Molecule makeBug736137()
 	{
 		//String filename = "data/mdl/bug736137.mol";
-		String filename = "data/r.cml";
-		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		//MDLReader reader = new MDLReader(new InputStreamReader(ins));
-		 CMLReader reader = new CMLReader(new InputStreamReader(ins));
-	 ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
-	      ChemSequence[] chemSequence = chemFile.getChemSequences();
-	      ChemModel[] chemModels = chemSequence[0].getChemModels();
-	      AtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModels[0]);
-
-		Molecule molecule = new Molecule(atomContainer);
+		Molecule molecule = null;
+		try
+		{
+			String filename = "data/r.cml";
+			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+			//MDLReader reader = new MDLReader(new InputStreamReader(ins));
+			 CMLReader reader = new CMLReader(new InputStreamReader(ins));
+		 ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+		      ChemSequence[] chemSequence = chemFile.getChemSequences();
+		      ChemModel[] chemModels = chemSequence[0].getChemModels();
+		      AtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModels[0]);
+	
+			molecule = new Molecule(atomContainer);
+		}
+		catch(Exception exc)
+		{
+			fail(exc.toString());	
+		}
 		return molecule;
 
 	}
 
-
+	public void testBugPMR()
+	{
+                String filename = "data/SL0016a.cml";
+		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+		try {
+		    CMLReader reader = new CMLReader(new InputStreamReader(ins));
+		    ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+		    ChemSequence seq = chemFile.getChemSequence(0);
+		    ChemModel model = seq.getChemModel(0);
+		    Molecule mol = model.getSetOfMolecules().getMolecule(0);
+		    MoleculeViewer2D.display(mol, true, true);
+		    //System.out.println(new SmilesGenerator().createSMILES(mol));
+		} catch (Exception e) 
+		{
+		    e.printStackTrace();
+		    fail(e.toString());
+		}
+	}
+	
+	
+	
 	/**
 	 *  A unit test for JUnit
 	 *
