@@ -95,9 +95,11 @@ public class HydrogenPlacerTest extends TestCase {
     }
     
     
-    /* This one tests adding hydrogens to all atoms of a molecule and doing the layout for them
+    /* This one tests adding hydrogens to all atoms of a molecule and doing the layout for them.
+    *  It is intended for visually checking the work of HydrogenPlacer, not to be run
+    *  as a JUnit test. Thus the name withouth "test".
     */
-	public void testFullMolecule2D()
+	public void visualFullMolecule2DEvaluation()
 	{
                 String filename = "data/mdl/hydrogenplacertest.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
@@ -125,7 +127,7 @@ public class HydrogenPlacerTest extends TestCase {
 			HydrogenPlacerTest hpt = new HydrogenPlacerTest("HydrogenPlacerTest");
 			hpt.standAlone = true;
 			//hpt.testPlaceHydrogens2D();
-			hpt.testFullMolecule2D();			
+			hpt.visualFullMolecule2DEvaluation();			
 		}
 		catch(Exception exc)
 		{
