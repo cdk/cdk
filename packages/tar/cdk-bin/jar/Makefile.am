@@ -14,4 +14,4 @@ alljardir = "${JARLIBDIR}"
 alljar_DATA = ${JARLIBS}
 
 cdk.jar:
-	cp ../../../../dist/jar/cdk.jar .
+	cp ../../../../dist/jar/cdk-with-java3d.jar cdk.jar
