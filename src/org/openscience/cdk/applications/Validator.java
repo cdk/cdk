@@ -78,18 +78,27 @@ public class Validator {
     public void outputErrors(String filename, ValidationReport report) {
         Enumeration errors = report.getErrors().elements();
         while (errors.hasMoreElements()) {
-            System.out.print(filename + ": <ERROR> " +
-                ((ValidationTest)errors.nextElement()).getError());
+            ValidationTest test = (ValidationTest)errors.nextElement();
+            System.out.println(filename + ": <ERROR> " + test.getError());
+            if (test.getDetails().length() > 0) {
+                System.out.println("  " + test.getDetails());
+            }
         }
         errors = report.getWarnings().elements();
         while (errors.hasMoreElements()) {
-            System.out.print(filename + ": <WARNING> " +
-                ((ValidationTest)errors.nextElement()).getError());
+            ValidationTest test = (ValidationTest)errors.nextElement();
+            System.out.println(filename + ": <WARNING> " + test.getError());
+            if (test.getDetails().length() > 0) {
+                System.out.println("  " + test.getDetails());
+            }
         }
         errors = report.getCDKErrors().elements();
         while (errors.hasMoreElements()) {
-            System.out.print(filename + ": <CDK ERROR> " +
-                ((ValidationTest)errors.nextElement()).getError());
+            ValidationTest test = (ValidationTest)errors.nextElement();
+            System.out.println(filename + ": <CDK ERROR> " + test.getError());
+            if (test.getDetails().length() > 0) {
+                System.out.println("  " + test.getDetails());
+            }
         }
     }
     
