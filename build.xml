@@ -230,7 +230,11 @@
         <target name="failIfNoDocletResults" depends="checkDocletResults" unless="dotjavafiles.uptodate">
             <fail>
               There seems to be a problem with building the cdk/src/*.javafiles.
-              Please report this to cdk-devel@lists.sf.net and send the output of
+              Often this is caused by malformed java source code, so please check the output
+              of the reallyRunDoclet target (ant reallyRunDoclet).
+              
+              If there is no reported source code error, please report this to 
+              cdk-devel@lists.sf.net and send the output of
               this command: ant -v info runDoclet.
             </fail>
         </target>
