@@ -49,6 +49,7 @@ import org.openscience.cdk.test.qsar.*;
 	suite.addTest(AromaticAtomsCountDescriptorTest.suite());
 	suite.addTest(IsProtonInConjugatedPiSystemDescriptorTest.suite());
 	suite.addTest(ProtonTotalPartialChargeDescriptorTest.suite());
+	suite.addTest(EffectivePolarizabilityDescriptorTest.suite());
         return suite;
     }
     
