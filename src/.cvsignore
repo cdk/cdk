@@ -1,1 +1,12 @@
 *.classes
+applications.javafiles
+core.javafiles
+experimental.javafiles
+extra.javafiles
+io.javafiles
+libio.javafiles
+render.javafiles
+standard.javafiles
+test-java3d.javafiles
+test-libio.javafiles
+test.javafiles
