@@ -1,13 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE
   book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
-              "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+              "../xml-dtd-4.2/docbookx.dtd" [
   <!ENTITY intro SYSTEM "intro.xml">
   <!ENTITY core SYSTEM "coreclasses.xml">
   <!ENTITY extra SYSTEM "extraclasses.xml">
   <!ENTITY % classes SYSTEM "../javadoc/classes.mod">
 %classes;
-  <!ENTITY validate.ValidatorInterface '<ulink url="api/org/openscience/cdk/validate/ValidatorInterface.html">validate.ValidatorInterface</ulink>'>
 ]>
 <book id="user-guide">
   <title>CDK User's Guide</title>

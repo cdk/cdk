@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE
-     book PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
-                 "file:///user/share/sgml/docbook/xml/4.2/docbookx.dtd" [
+     book PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN" "../xml-dtd-4.2/docbookx.dtd" [
   <!ENTITY packages SYSTEM "packages.xml">
   <!ENTITY preface SYSTEM "preface.xml">
   <!ENTITY docs SYSTEM "docs.xml">
