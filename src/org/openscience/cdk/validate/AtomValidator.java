@@ -1,6 +1,6 @@
 /* $RCSfile$
- * $Author$    
- * $Date$    
+ * $Author$
+ * $Date$
  * $Revision$
  * 
  * Copyright (C) 2003  The Chemistry Development Kit (CDK) project
@@ -57,6 +57,13 @@ public class AtomValidator {
                 errors.add(new ValidationWarning(atom, "Atom has an unlikely large negative charge"));
             }
             if (atom.getFormalCharge() > 1) {
+                errors.add(new ValidationWarning(atom, "Atom has an unlikely large positive charge"));
+            }
+        } else {
+            if (atom.getFormalCharge() < -2) {
+                errors.add(new ValidationWarning(atom, "Atom has an unlikely large negative charge"));
+            }
+            if (atom.getFormalCharge() > 2) {
                 errors.add(new ValidationWarning(atom, "Atom has an unlikely large positive charge"));
             }
         }

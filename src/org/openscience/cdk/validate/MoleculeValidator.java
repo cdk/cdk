@@ -26,6 +26,7 @@ package org.openscience.cdk.validate;
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.tools.SaturationChecker;
+import org.openscience.cdk.tools.AtomTypeFactory;
 import java.util.Vector;
 
 /**
@@ -53,6 +54,7 @@ public class MoleculeValidator {
                 
             }
             errors.addAll(validateAtomValency(atoms[i], molecule));
+            errors.addAll(validateBondOrderSum(atoms[i], molecule));
         }
         errors.add(
             new ValidationWarning(molecule, "Molecule contains PseudoAtom's. Won't be able to calculate some properties, like molecular mass.")
@@ -65,7 +67,7 @@ public class MoleculeValidator {
         try {
             SaturationChecker saturationChecker = new SaturationChecker();
             if (!saturationChecker.isSaturated(atom, molecule)) {
-                String error = "Atom " + atom.getSymbol() + " has an unfulfilled valency";
+                String error = "Atom " + atom.getSymbol() + " has an unfulfilled valency.";
                 errors.add(new SeriousValidationError(atom, error));
             }
         } catch (Exception exception) {
@@ -73,4 +75,23 @@ public class MoleculeValidator {
         }
         return errors;
     }
+
+    private static Vector validateBondOrderSum(Atom atom, Molecule molecule) {
+        Vector errors = new Vector();
+        try {
+            AtomTypeFactory atf = new AtomTypeFactory();
+            int bos = (int)molecule.getBondOrderSum(atom);
+            Atom copy = (Atom)atom.clone();
+            atf.configure(copy);
+            if (copy.getMaxBondOrderSum() != 0 &&
+                bos > copy.getMaxBondOrderSum()) {
+                String error = "Atom's total bond order is too high.";
+                errors.add(new SeriousValidationError(atom, error));
+            }
+        } catch (Exception exception) {
+            System.err.println("Error while performing atom bos validation: " + exception.toString());
+        }
+        return errors;
+    }
+
 }
