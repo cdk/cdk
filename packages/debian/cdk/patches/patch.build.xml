@@ -1,18 +1,32 @@
---- build.xml   2003-07-02 16:53:23.000000000 +0200
-+++ build.xml.debian    2003-07-02 17:05:13.000000000 +0200
-@@ -26,6 +26,7 @@
+--- build.xml	2003-10-17 10:21:30.649292000 +0200
++++ build.xml.debian	2003-10-17 11:37:35.869446000 +0200
+@@ -41,7 +41,10 @@
          <path id="project.class.path">
                  <pathelement
                  location="/usr/lib/j2sdk1.3/jre/lib/rt.jar" />
+-
 +                <pathelement location="/usr/share/java/junit.jar" />
-
++                <pathelement location="/usr/share/java/xercesImpl.jar" />
++                <pathelement location="/usr/share/java/xmlParserAPIs.jar" />
++                
                  <pathelement location="." />
                  <fileset dir="${lib}">
-@@ -36,7 +37,6 @@
-                         <include name="dadml.jar" />
-                         <include name="gnujaxp.jar" />
-                         <include name="JSX1.0.7.4.jar" />
--                        <include name="junit.jar" />
-                         <include name="log4j-core.jar" />
-                         <include name="log4j.jar" />
-                         <include name="mysql-2.0.4.jar" />
+                         <include name="batik-awt-util.jar" />
+@@ -59,7 +62,6 @@
+                         <include name="postgresql7.0-1.2.jar" />
+                         <include name="printf.jar" />
+                         <include name="vecmath1.2-1.14.jar" />
+-                        <include name="xerces-2.5.0.jar" />
+                         <include name="xindice.jar" />
+                         <include name="xmldb.jar" />
+                         <include name="stmml.jar" />
+@@ -285,7 +287,8 @@
+                             <include name="log4j-core.jar" />
+                             <include name="log4j.jar" />
+                             <include name="gnujaxp.jar" />
+-                            <include name="xerces-2.5.0.jar" />
++                            <include name="/usr/share/java/xercesImpl.jar" />
++                            <include name="/usr/share/java/xmlParserAPIs.jar" />
+                         </fileset>
+                         <fileset dir="${dist}/jar">
+                             <include name="cdk-core.jar" />

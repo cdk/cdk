@@ -1,3 +1,10 @@
+cdk (20031017-1) unstable; urgency=low
+
+  * New upstream release
+  * Now uses log4j*.jar from liblog4j1.2-java package
+
+ -- E.L. Willighagen (Egon) <egonw@sci.kun.nl>  Fri, 17 Oct 2003 11:11:00 +0100
+
 cdk (20030702-1) unstable; urgency=low
 
   * New upstream release
