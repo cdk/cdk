@@ -1,5 +1,5 @@
 /*
- *   Copyright (C) 2003-2004  University of Manchester
+ *   Copyright (C) 2003-2005  University of Manchester
  *
  *   This library is free software; you can redistribute it and/or
  *   modify it under the terms of the GNU Lesser General Public

@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2002-2004  The Jmol Development Team
+ * Copyright (C) 2002-2005  The Jmol Development Team
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
