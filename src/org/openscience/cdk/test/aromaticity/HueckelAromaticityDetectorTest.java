@@ -308,11 +308,7 @@ public class HueckelAromaticityDetectorTest extends TestCase
 			exc.printStackTrace();
 			fail();
 		}
-/* 		if (standAlone)
-		{
-			MoleculeViewer2D.display(molecule, false);
-		}
- */		assertTrue(isAromatic);
+		assertTrue(isAromatic);
 	}
 
 
@@ -358,10 +354,6 @@ public class HueckelAromaticityDetectorTest extends TestCase
 			exc.printStackTrace();
 			fail();
 		}
-/* 		if (standAlone)
-		{
-			MoleculeViewer2D.display(molecule, false);
-		}*/
 	}
 
 	/**
@@ -404,18 +396,13 @@ public class HueckelAromaticityDetectorTest extends TestCase
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
 				assertTrue(molecule.getAtomAt(f).getFlag(CDKConstants.ISAROMATIC) == testResults[f]);
-				//System.out.println(molecule.getAtomAt(f).getFlag(CDKConstants.ISAROMATIC) + ",");
 			}
-			//MoleculeViewer2D.display(molecule, false);
+
 		} catch (Exception exc)
 		{
 			exc.printStackTrace();
 			fail();
 		}
-/* 		if (standAlone)
-		{
-			MoleculeViewer2D.display(molecule, false);
-		}*/
 	}
 	
 	
