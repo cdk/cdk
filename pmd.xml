@@ -22,7 +22,8 @@
     
     <target name="pmd-core">
         <mkdir dir="${reports.tests}/pmd"/>
-        <pmd rulesetfiles="rulesets/basic.xml, rulesets/naming.xml, rulesets/unusedcode.xml, rulesets/imports.xml, rulesets/strings.xml, rulesets/codesize.xml">
+        <pmd shortFilenames="true"
+            rulesetfiles="rulesets/basic.xml, rulesets/naming.xml, rulesets/unusedcode.xml, rulesets/imports.xml, rulesets/strings.xml, rulesets/codesize.xml">
             <formatter type="summaryhtml" toFile="${reports.tests}/pmd/core.html"/>
             <fileset dir="${src}">
                 <includesfile name="${src}/core.javafiles"/>
@@ -32,9 +33,9 @@
 
     <target name="pmd-standard">
         <mkdir dir="${reports.tests}/pmd"/>
-        <pmd rulesetfiles="rulesets/basic.xml, rulesets/naming.xml, rulesets/unusedcode.xml, rulesets/imports.xml, rulesets/strings.xml, rulesets/codesize.xml">
-            <formatter type="net.sourceforge.pmd.renderers.HTMLRenderer" 
-                     toFile="${reports.tests}/pmd/standard.html"/>
+        <pmd shortFilenames="true"
+            rulesetfiles="rulesets/basic.xml, rulesets/naming.xml, rulesets/unusedcode.xml, rulesets/imports.xml, rulesets/strings.xml, rulesets/codesize.xml">
+            <formatter type="summaryhtml" toFile="${reports.tests}/pmd/standard.html"/>
             <fileset dir="${src}">
                 <includesfile name="${src}/standard.javafiles"/>
             </fileset>
@@ -43,9 +44,9 @@
 
     <target name="pmd-io">
         <mkdir dir="${reports.tests}/pmd"/>
-        <pmd rulesetfiles="rulesets/basic.xml, rulesets/naming.xml, rulesets/unusedcode.xml, rulesets/imports.xml, rulesets/strings.xml, rulesets/codesize.xml">
-            <formatter type="net.sourceforge.pmd.renderers.HTMLRenderer" 
-                     toFile="${reports.tests}/pmd/io.html"/>
+        <pmd shortFilenames="true"
+            rulesetfiles="rulesets/basic.xml, rulesets/naming.xml, rulesets/unusedcode.xml, rulesets/imports.xml, rulesets/strings.xml, rulesets/codesize.xml">
+            <formatter type="summaryhtml" toFile="${reports.tests}/pmd/io.html"/>
             <fileset dir="${src}">
                 <includesfile name="${src}/io.javafiles"/>
             </fileset>
@@ -54,9 +55,9 @@
 
     <target name="pmd-render">
         <mkdir dir="${reports.tests}/pmd"/>
-        <pmd rulesetfiles="rulesets/basic.xml, rulesets/naming.xml, rulesets/unusedcode.xml, rulesets/imports.xml, rulesets/strings.xml, rulesets/codesize.xml">
-            <formatter type="net.sourceforge.pmd.renderers.HTMLRenderer" 
-                     toFile="${reports.tests}/pmd/render.html"/>
+        <pmd shortFilenames="true"
+            rulesetfiles="rulesets/basic.xml, rulesets/naming.xml, rulesets/unusedcode.xml, rulesets/imports.xml, rulesets/strings.xml, rulesets/codesize.xml">
+            <formatter type="summaryhtml" toFile="${reports.tests}/pmd/render.html"/>
             <fileset dir="${src}">
                 <includesfile name="${src}/render.javafiles"/>
             </fileset>
@@ -65,10 +66,10 @@
 
     <target name="pmd-extra">
         <mkdir dir="${reports.tests}/pmd"/>
-        <pmd rulesetfiles="rulesets/basic.xml, rulesets/naming.xml, rulesets/unusedcode.xml, rulesets/imports.xml, rulesets/strings.xml, rulesets/codesize.xml">
-            <formatter type="net.sourceforge.pmd.renderers.HTMLRenderer" 
-                     toFile="${reports.tests}/pmd/extra.html"/>
-            <fileset dir="${src}">
+        <pmd shortFilenames="true"
+            rulesetfiles="rulesets/basic.xml, rulesets/naming.xml, rulesets/unusedcode.xml, rulesets/imports.xml, rulesets/strings.xml, rulesets/codesize.xml">
+            <formatter type="summaryhtml" toFile="${reports.tests}/pmd/extra.html"/>
+             <fileset dir="${src}">
                 <includesfile name="${src}/extra.javafiles"/>
             </fileset>
         </pmd>
@@ -76,9 +77,9 @@
 
     <target name="pmd-applications">
         <mkdir dir="${reports.tests}/pmd"/>
-        <pmd rulesetfiles="rulesets/basic.xml, rulesets/naming.xml, rulesets/unusedcode.xml, rulesets/imports.xml, rulesets/strings.xml, rulesets/codesize.xml">
-            <formatter type="net.sourceforge.pmd.renderers.HTMLRenderer" 
-                     toFile="${reports.tests}/pmd/applications.html"/>
+        <pmd shortFilenames="true"
+            rulesetfiles="rulesets/basic.xml, rulesets/naming.xml, rulesets/unusedcode.xml, rulesets/imports.xml, rulesets/strings.xml, rulesets/codesize.xml">
+            <formatter type="summaryhtml" toFile="${reports.tests}/pmd/applications.html"/>
             <fileset dir="${src}">
                 <includesfile name="${src}/applications.javafiles"/>
             </fileset>
@@ -87,9 +88,9 @@
 
     <target name="pmd-libio">
         <mkdir dir="${reports.tests}/pmd"/>
-        <pmd rulesetfiles="rulesets/basic.xml, rulesets/naming.xml, rulesets/unusedcode.xml, rulesets/imports.xml, rulesets/strings.xml, rulesets/codesize.xml">
-            <formatter type="net.sourceforge.pmd.renderers.HTMLRenderer" 
-                     toFile="${reports.tests}/pmd/libio.html"/>
+        <pmd shortFilenames="true"
+            rulesetfiles="rulesets/basic.xml, rulesets/naming.xml, rulesets/unusedcode.xml, rulesets/imports.xml, rulesets/strings.xml, rulesets/codesize.xml">
+            <formatter type="summaryhtml" toFile="${reports.tests}/pmd/libio.html"/>
             <fileset dir="${src}">
                 <includesfile name="${src}/libio.javafiles"/>
             </fileset>
@@ -98,9 +99,9 @@
 
     <target name="pmd-experimental">
         <mkdir dir="${reports.tests}/pmd"/>
-        <pmd rulesetfiles="rulesets/basic.xml, rulesets/naming.xml, rulesets/unusedcode.xml, rulesets/imports.xml, rulesets/strings.xml, rulesets/codesize.xml">
-            <formatter type="net.sourceforge.pmd.renderers.HTMLRenderer" 
-                     toFile="${reports.tests}/pmd/experimental.html"/>
+        <pmd shortFilenames="true"
+            rulesetfiles="rulesets/basic.xml, rulesets/naming.xml, rulesets/unusedcode.xml, rulesets/imports.xml, rulesets/strings.xml, rulesets/codesize.xml">
+            <formatter type="summaryhtml" toFile="${reports.tests}/pmd/experimental.html"/>
             <fileset dir="${src}">
                 <includesfile name="${src}/experimental.javafiles"/>
             </fileset>
