@@ -58,4 +58,17 @@ public class MathTools {
 		}
 		return min;
 	}
+    
+    public static boolean isOdd(int intValue) {
+        return !MathTools.isEven(intValue);
+    }
+    
+    public static boolean isEven(int intValue) {
+        if (Math.floor((double)intValue/2.0)*2.0 == (double)intValue) {
+            return true;
+        }
+        return false;
+    }
+    
 }
+
