@@ -16,7 +16,7 @@ New:
   of CDK classes, e.g. Descriptor's or ChemFormat's
 * Added a IteratingSMILESParser
 * Added getNaturalMass to MFAnalyser, giving mass as average of isotopes
-* Added AtomContainerManipulator.addAtomProperties()
+* Added *Manipulator.addAtomProperties()
 * The core module classes are now checked for coverage of JUnit testing
 
 Fixes:
@@ -28,6 +28,7 @@ Fixes:
 * PDBReader now uses static final String to set PDB properties leading to a
   1/3rd speed up for reading PDB files
 * The PDBReader now stores the PDB atom type with AtomType.setAtomTypeName()
+  (closes #1085910)
 
 API changes:
 * Moved SingleElectron to the core module
