@@ -1,3 +1,5 @@
+PREFIX=@prefix@
+
 SUBDIRS= xsl
 
 XML2MAN_RULE = \
@@ -21,6 +23,7 @@ CHECK_XML_RULE = for f in $^; \
 docbooks = cdk-fileconvert.xml cdk-dbadmin.xml cdk-view.xml cdk-download.xml \
   cdk-guessformat.xml
 
+mandir=${PREFIX}/share
 man_MANS = cdk-fileconvert.1 cdk-dbadmin.1 cdk-view.1 cdk-download.1 \
   cdk-guessformat.1
 
