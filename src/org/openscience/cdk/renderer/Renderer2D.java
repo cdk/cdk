@@ -118,28 +118,28 @@ public class Renderer2D   {
 
         
         // paint box around total
+        int width = 13;
         double[] minmaxReaction = new double[4];
         minmaxReaction[0] = Math.min(minmaxReactants[0], minmaxProducts[0]);
         minmaxReaction[1] = Math.min(minmaxReactants[1], minmaxProducts[1]);
         minmaxReaction[2] = Math.max(minmaxReactants[2], minmaxProducts[2]);
         minmaxReaction[3] = Math.max(minmaxReactants[3], minmaxProducts[3]);
-        paintBoundingBox(minmaxReaction, reaction.getID(), 20, graphics);
+        paintBoundingBox(minmaxReaction, reaction.getID(), 2*width, graphics);
         
         // paint reactants content
-        paintBoundingBox(minmaxReactants, "Reactants", 10, graphics);
+        paintBoundingBox(minmaxReactants, "Reactants", width, graphics);
         paintMolecule(reactantContainer, graphics);
 
         // paint products content
-        paintBoundingBox(minmaxProducts, "Products", 10, graphics);
+        paintBoundingBox(minmaxProducts, "Products", width, graphics);
         paintMolecule(productContainer, graphics);
 
         // paint arrow
         int[] ints = new int[4];
-        ints[0] = (int)(minmaxReactants[2]) + 15;
+        ints[0] = (int)(minmaxReactants[2]) + width+5;
         ints[1] = (int)(minmaxReactants[1] + (minmaxReactants[3]-minmaxReactants[1])/2);
-        ints[2] = (int)(minmaxProducts[0]) - 15;
+        ints[2] = (int)(minmaxProducts[0]) - (width+5);
         ints[3] = ints[1];
-        logger.debug("ints: " + ints[0] + ", " + ints[1] + ", " + ints[2] + ", " + ints[3]);
         int[] screenCoords = getScreenCoordinates(ints);
         int direction = reaction.getDirection();
         if (direction == Reaction.FORWARD) {
@@ -721,11 +721,9 @@ public class Renderer2D   {
 
         if (bond.getStereo() != CDKConstants.STEREO_BOND_NONE && bond.getStereo() != CDKConstants.STEREO_BOND_UNDEFINED) {
             // Draw stero information if available
-            logger.info("Painting wedge bond");
             if (bond.getStereo() >= CDKConstants.STEREO_BOND_UP) {
                 paintWedgeBond(bond, bondColor, graphics);
             } else {
-                logger.info("Painting it dashed");
                 paintDashedWedgeBond(bond, bondColor, graphics);
             }
         } else {
@@ -915,8 +913,6 @@ public class Renderer2D   {
 	 */
 	void paintDashedWedgeBond(Bond bond, Color bondColor, Graphics graphics)
 	{
-        logger.debug("Drawing dashed wedge bond");
-        
 	    graphics.setColor(bondColor);
 
 		double bondLength = bond.getLength();
