@@ -87,6 +87,20 @@ public class CDKDictionaryReferences {
         int selfCounter = 0;
         element.setProperty(prefix + ":field:symbol", "chemical:atomSymbol");
         element.setProperty(prefix + ":field:atomicNumber", "chemical:atomicNumber");
+        
+        if (element.getSymbol().equals("C")) {
+            element.setProperty(prefix + ":self:" + selfCounter++, "element:carbon");
+        } else if (element.getSymbol().equals("N")) {
+            element.setProperty(prefix + ":self:" + selfCounter++, "element:nitrogen");
+        } else if (element.getSymbol().equals("O")) {
+            element.setProperty(prefix + ":self:" + selfCounter++, "element:oxygen");
+        } else if (element.getSymbol().equals("H")) {
+            element.setProperty(prefix + ":self:" + selfCounter++, "element:hydrogen");
+        } else if (element.getSymbol().equals("S")) {
+            element.setProperty(prefix + ":self:" + selfCounter++, "element:sulphur");
+        } else if (element.getSymbol().equals("P")) {
+            element.setProperty(prefix + ":self:" + selfCounter++, "element:phosphorus");
+        }
     }
 
     private static void makeReferencesExplicitForIsotope(Isotope isotope) {
