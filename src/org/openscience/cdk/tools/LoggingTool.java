@@ -148,7 +148,26 @@ public class LoggingTool {
         debug("java.class.path: " + System.getProperty("java.class.path"));
     }
 
-    public void debug(Throwable problem) {
+    /**
+     * Shows debug output for the Object. If the object is an instanceof
+     * Throwable it will output the trace. Otherwise it will use the
+     * toString() method.
+     */
+    public void debug(Object object) {
+        if (debug) {
+            if (object instanceof Throwable) {
+                debugThrowable((Throwable)object);
+            } else {
+                if (tostdout) {
+                    toSTDOUT("DEBUG", object.toString());
+                } else {
+                    ((org.apache.log4j.Category)logger).debug(object.toString());
+                }
+            }
+        }
+    }
+    
+    private void debugThrowable(Throwable problem) {
         if (problem instanceof Error) {
             debug("Error: " + problem.getMessage());
         } else {
@@ -172,54 +191,48 @@ public class LoggingTool {
         }
     }
     
-    public void debug(String s) {
+    public void error(Object object) {
         if (debug) {
             if (tostdout) {
-                toSTDOUT("DEBUG", s);
+                toSTDOUT("ERROR", object.toString());
             } else {
-                ((org.apache.log4j.Category)logger).debug(s);
+                ((org.apache.log4j.Category)logger).error(object.toString());
             }
         }
     }
 
-    public void error(String s) {
+    public void fatal(Object object) {
         if (debug) {
             if (tostdout) {
-                toSTDOUT("ERROR", s);
+                toSTDOUT("FATAL", object.toString());
             } else {
-                ((org.apache.log4j.Category)logger).error(s);
+                ((org.apache.log4j.Category)logger).fatal(object.toString());
             }
         }
     }
 
-    public void fatal(String s) {
+    public void info(Object object) {
         if (debug) {
             if (tostdout) {
-                toSTDOUT("FATAL", s);
+                toSTDOUT("INFO", object.toString());
             } else {
-                ((org.apache.log4j.Category)logger).fatal(s);
+                ((org.apache.log4j.Category)logger).info(object.toString());
             }
         }
     }
 
-    public void info(String s) {
+    public void warn(Object object) {
         if (debug) {
             if (tostdout) {
-                toSTDOUT("INFO", s);
+                toSTDOUT("WARN", object.toString());
             } else {
-                ((org.apache.log4j.Category)logger).info(s);
+                ((org.apache.log4j.Category)logger).warn(object.toString());
             }
         }
     }
-
-    public void warn(String s) {
-        if (debug) {
-            if (tostdout) {
-                toSTDOUT("WARN", s);
-            } else {
-                ((org.apache.log4j.Category)logger).warn(s);
-            }
-        }
+    
+    public boolean isDebugEnabled() {
+        return debug;
     }
     
     private void toSTDOUT(String level, String message) {
