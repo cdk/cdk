@@ -45,18 +45,20 @@
   <target name="compile" depends="init">
     <mkdir dir="${build}"/>
     <javac destdir="${build}" optimize="on" deprecation="on">
-    	<src path="."/>
-    	<exclude name="org/openscience/cdk/renderer/AcceleratedRenderer3D*"/>
-	<exclude name="org/openscience/cdk/test/AcceleratedRenderer3DTest.java"/>    	
-	<classpath refid="project.class.path"/>
+      <src path="."/>
+      <exclude name="org/openscience/cdk/renderer/AcceleratedRenderer3D*"/>
+      <exclude name="org/openscience/cdk/renderer/OrbitalsRenderer3D*"/>
+      <exclude name="org/openscience/cdk/test/AcceleratedRenderer3DTest.java"/>
+      <exclude name="org/openscience/cdk/test/OrbitalsRenderer3DTest.java"/>
+      <classpath refid="project.class.path"/>
     </javac>
   </target>
 
   <target name="compile-with-java3d" depends="init">
     <mkdir dir="${build}"/>
     <javac destdir="${build}" optimize="on" deprecation="on">
-    	<src path="."/>
-	<classpath refid="project.class.path"/>
+      <src path="."/>
+      <classpath refid="project.class.path"/>
     </javac>
   </target>
 
