@@ -231,6 +231,25 @@ public class RingSearchTest extends TestCase
 		}
 	}
 	
+	public void testBug891021() {
+		Molecule molecule = null;
+		Ring ring = null;
+		try {
+			String filename = "data/mdl/too.many.rings.mol";
+			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+			MDLReader reader = new MDLReader(new InputStreamReader(ins));
+			molecule = (Molecule) reader.read((ChemObject) new Molecule());
+			if (standAlone) System.out.println("Testing " + filename);
+			
+			SSSRFinder sssrf = new SSSRFinder(molecule);
+			RingSet ringSet = sssrf.findSSSR();
+			if (standAlone) System.out.println("Found ring set of size: " + ringSet.size());
+		} catch (Exception exc) {
+			exc.printStackTrace();
+			fail();
+		}
+	}
+	
 	
 	/**
 	 *  The main program for the RingSearchTest class
