@@ -50,6 +50,8 @@ import java.util.regex.*;
  * which the ChemModel represents the molecule.
  *
  * @see org.openscience.cdk.io.IChIReader
+ *
+ * @since Java 1.4
  */
 public class IChIHandler extends DefaultHandler {
 

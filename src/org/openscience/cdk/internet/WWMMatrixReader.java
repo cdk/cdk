@@ -53,6 +53,8 @@ import org.w3c.dom.traversal.*;
  * @author Egon Willighagen <elw38@cam.ac.uk>
  *
  * @keyword world wide molecular matrix
+ *
+ * @since Java 1.4
  */
 public class WWMMatrixReader extends DefaultChemObjectReader {
 

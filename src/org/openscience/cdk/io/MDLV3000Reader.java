@@ -52,6 +52,8 @@ import java.util.regex.*;
  * @created 2003-10-05
  * 
  * @keyword MDL RXN V3000
+ *
+ * @since Java 1.4
  */
 public class MDLV3000Reader extends DefaultChemObjectReader {
 

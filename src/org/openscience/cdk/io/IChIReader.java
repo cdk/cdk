@@ -53,6 +53,8 @@ import java.io.*;
  * @keyword chemical identifier
  *
  * @see     org.openscience.cdk.io.ichi.IChIHandler
+ *
+ * @since Java 1.4
  */
 public class IChIReader extends DefaultChemObjectReader {
 

@@ -50,6 +50,8 @@ import java.util.regex.*;
  * @created    2003-07-24
  *
  * @keyword    file format, MACiE RDF
+ *
+ * @since Java 1.4
  */
 public class MACiEReader extends DefaultChemObjectReader {
 
