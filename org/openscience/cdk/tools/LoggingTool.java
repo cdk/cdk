@@ -28,6 +28,7 @@ import java.net.*;
 
 public class LoggingTool {
 
+    private boolean debug = false;
     private boolean tostdout = false;
 
     private Object logger;
@@ -44,12 +45,15 @@ public class LoggingTool {
             URL url = getClass().getClassLoader().getResource("org/openscience/cdk/config/log4j.properties");
             // debug(url.toString());
             //(org.apache.log4j.PropertyConfigurator).configure(url);
-	    org.apache.log4j.PropertyConfigurator.configure(url);
+            org.apache.log4j.PropertyConfigurator.configure(url);
         } catch (NoClassDefFoundError e) {
             tostdout = true;
         } catch (NullPointerException e) {
             tostdout = true;
             debug("Properties file not found!");
+        }
+        if (System.getProperty("cdk.debugging", "false").equals("true")) {
+            debug = true;
         }
     }
 
@@ -66,47 +70,57 @@ public class LoggingTool {
     }
 
     public void debug(String s) {
-        if (tostdout) {
-            System.out.print("DEBUG: ");
-            System.out.println(s);
-        } else {
-            ((org.apache.log4j.Category)logger).debug(s);
+        if (debug) {
+            if (tostdout) {
+                System.out.print("DEBUG: ");
+                System.out.println(s);
+            } else {
+                ((org.apache.log4j.Category)logger).debug(s);
+            }
         }
     }
 
     public void error(String s) {
-        if (tostdout) {
-            System.out.print("ERROR: ");
-            System.out.println(s);
-        } else {
-            ((org.apache.log4j.Category)logger).error(s);
+        if (debug) {
+            if (tostdout) {
+                System.out.print("ERROR: ");
+                System.out.println(s);
+            } else {
+                ((org.apache.log4j.Category)logger).error(s);
+            }
         }
     }
 
     public void fatal(String s) {
-        if (tostdout) {
-            System.out.print("FATAL: ");
-            System.out.println(s);
-        } else {
-            ((org.apache.log4j.Category)logger).fatal(s);
+        if (debug) {
+            if (tostdout) {
+                System.out.print("FATAL: ");
+                System.out.println(s);
+            } else {
+                ((org.apache.log4j.Category)logger).fatal(s);
+            }
         }
     }
 
     public void info(String s) {
-        if (tostdout) {
-            System.out.print("INFO: ");
-            System.out.println(s);
-        } else {
-            ((org.apache.log4j.Category)logger).info(s);
+        if (debug) {
+            if (tostdout) {
+                System.out.print("INFO: ");
+                System.out.println(s);
+            } else {
+                ((org.apache.log4j.Category)logger).info(s);
+            }
         }
     }
 
     public void warn(String s) {
-        if (tostdout) {
-            System.out.print("WARN: ");
-            System.out.println(s);
-        } else {
-            ((org.apache.log4j.Category)logger).warn(s);
+        if (debug) {
+            if (tostdout) {
+                System.out.print("WARN: ");
+                System.out.println(s);
+            } else {
+                ((org.apache.log4j.Category)logger).warn(s);
+            }
         }
     }
 
