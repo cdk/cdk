@@ -32,9 +32,6 @@
 package org.openscience.cdk.isomorphism;
 
 import java.util.*;
-import java.awt.Dimension;
-import javax.swing.JPanel;
-import javax.swing.JFrame;
 import java.io.*;
 import org.openscience.cdk.*;
 import org.openscience.cdk.tools.*;
