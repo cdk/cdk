@@ -29,23 +29,43 @@ package org.openscience.cdk.test;
 
 import java.awt.*;
 import javax.swing.*;
-import org.openscience.cdk.*;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.renderer.Renderer2D;
 
 
 public class TestPanel extends JPanel
 {
+	Image img;
 	Molecule molecule;
 	Renderer2D renderer;
+	Color foreColor = Color.black, backColor = Color.gray;
 	
 	public TestPanel(Molecule molecule)
 	{
 		this.molecule = molecule;
+		renderer = new Renderer2D();
+	
 	}
 	
 	public void paint(Graphics g)
 	{
-		renderer = new Renderer2D(g);
-		renderer.paintMolecule(molecule);
+		g.setColor(backColor);
+		g.fillRect(0,0,getSize().width,getSize().height); 
+		g.setColor(foreColor);
+		renderer.paintMolecule(molecule, g);
+//		if (img == null)
+//		{
+//			img = createImage(900,800);
+//		}
+//		paintBuffer(img.getGraphics());
+//		g.drawImage(img,0,0,this);
+	}
+	
+	public void paintBuffer(Graphics g)
+	{
+		System.out.println("repaint???????");
+//		renderer = new Renderer2D(g);
+		
 	}
 
 }

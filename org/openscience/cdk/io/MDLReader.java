@@ -71,18 +71,14 @@ public class MDLReader implements CDKConstants
 		{
 			do
 			{
-				do
-				{
-					str = new String(input.readLine());
-				}
-				while (!str.equals("$$$$") || !input.ready());
-				setOfMolecules.addMolecule(readMolecule());
+				str = new String(input.readLine());
 			}
-			while (str != null);
+			while (!str.equals("$$$$") || !input.ready());
+			setOfMolecules.addMolecule(readMolecule());
 		}
 		catch (Exception exc)
 		{
-			System.out.println(exc.toString());
+//			exc.printStackTrace();
 		}
 		try
 		{
@@ -90,6 +86,7 @@ public class MDLReader implements CDKConstants
 		}
 		catch (Exception exc)
 		{
+			exc.printStackTrace();
 		}
 		chemModel.addSetOfMolecules(setOfMolecules);
 		chemSequence.addChemModel(chemModel);

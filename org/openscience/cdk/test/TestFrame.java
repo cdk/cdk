@@ -29,22 +29,28 @@ package org.openscience.cdk.test;
 
 import java.awt.*;
 import javax.swing.*;
-import org.openscience.cdk.*;
+import org.openscience.cdk.Molecule;
 
 
 public class TestFrame extends JFrame
 {
 	TestPanel panel;
-	Renderer2D renderer;
 	Molecule molecule;
 	
 	public TestFrame(Molecule molecule)
 	{
-		panel = new TestPanel(molecule);
-		this.molecule = molecule;
-		setSize(new Dimension(900,800));
+//		JButton button = new JButton("wie geht");
 		setBackground(Color.white);
-		getContentPane().add(panel);
+		panel = new TestPanel(molecule);
+		JSlider slider = new JSlider(1);
+		this.molecule = molecule;
+//		getContentPane().add(panel);
+//		getContentPane().setLayout(new BorderLayout());
+//		getContentPane().add("West",slider);
+		panel.setPreferredSize(new Dimension(900,800));
+		getContentPane().add("Center",panel);
+//		getContentPane().add("Center", button);
+		pack();
 	}
 	
 }
