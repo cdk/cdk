@@ -153,6 +153,7 @@ public class CMLWriter implements ChemObjectWriter {
     private void write(Crystal crystal) {
         write("<molecule>\n");
         write("  <crystal>\n");
+        write("    <string builtin=\"spacegroup\">" + crystal.getSpaceGroup() + "</string>");
         write("    <floatArray title=\"a\" convention=\"PMP\">");
         write(crystal.getA());
         write("</floatArray>\n");
