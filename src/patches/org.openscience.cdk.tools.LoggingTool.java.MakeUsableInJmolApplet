@@ -8,7 +8,7 @@
      private String classname;
      
      /** Default number of StackTraceElements to be printed by debug(Exception) */
-@@ -46,59 +45,8 @@
+@@ -46,61 +45,8 @@
  
      public LoggingTool(String classname) {
          this.classname = classname;
@@ -24,12 +24,14 @@
 -             ****************************************************************/
 -            if (false)
 -              throw new ClassNotFoundException();
--            // configure Log4J
--            //URL url = getClass().getClassLoader().getResource("/org/openscience/cdk/config/log4j.properties");
--	    InputStream ins = this.getClass().getClassLoader().getResourceAsStream("org/openscience/cdk/config/log4j.properties");
--	    Properties props = new Properties();
--	    props.load(ins);
--            org.apache.log4j.PropertyConfigurator.configure(props);
+-            if (useConfig) {
+-                // configure Log4J
+-                URL url = getClass().getClassLoader().getResource("/org/openscience/cdk/config/log4j.properties");
+-                InputStream ins = this.getClass().getClassLoader().getResourceAsStream("org/openscience/cdk/config/log4j.properties");
+-                Properties props = new Properties();
+-                props.load(ins);
+-                org.apache.log4j.PropertyConfigurator.configure(props);
+-            }
 -        } catch (ClassNotFoundException e) {
 -            tostdout = true;
 -            debug("Log4J class not found!");

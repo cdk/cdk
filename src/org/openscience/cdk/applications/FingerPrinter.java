@@ -26,6 +26,7 @@ package org.openscience.cdk.applications;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.io.*;
 import org.openscience.cdk.fingerprint.Fingerprinter;
+import org.openscience.cdk.tools.LoggingTool;
 import freeware.PrintfFormat;
 import java.util.Enumeration;
 import java.util.Locale;
@@ -46,6 +47,10 @@ public class FingerPrinter {
             System.exit(0);
         }
         
+        // to make sure the CDK LoggingTool is configured
+        LoggingTool logger = new LoggingTool(true);
+
+        // loop over all files
         for (int i=0; i<args.length; i++) {
             String ifilename = args[i];
             try {

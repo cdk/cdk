@@ -26,6 +26,7 @@ package org.openscience.cdk.applications;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.smiles.*;
 import org.openscience.cdk.iupac.generator.*;
+import org.openscience.cdk.tools.LoggingTool;
 import freeware.PrintfFormat;
 import java.util.Enumeration;
 import java.util.Locale;
@@ -41,6 +42,9 @@ import java.util.Vector;
 public class IUPACNameGenerator {
 
     public static void main(String[] args) {
+
+        // to make sure the CDK LoggingTool is configured
+        LoggingTool logger = new LoggingTool(true);
 
         Locale l = new Locale("en", "US");
         String smiles = "";

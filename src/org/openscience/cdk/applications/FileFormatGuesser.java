@@ -26,6 +26,7 @@ package org.openscience.cdk.applications;
 import org.openscience.cdk.*;
 import org.openscience.cdk.io.*;
 import org.openscience.cdk.exception.*;
+import org.openscience.cdk.tools.LoggingTool;
 import java.io.*;
 import java.util.*;
 
@@ -46,6 +47,10 @@ public class FileFormatGuesser {
             System.exit(0);
         }
         
+        // to make sure the CDK LoggingTool is configured
+        LoggingTool logger = new LoggingTool(true);
+
+        // loop over all files
         for (int i=0; i<args.length; i++) {
             String ifilename = args[i];
             try {

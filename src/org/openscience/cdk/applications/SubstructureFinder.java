@@ -27,6 +27,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.smiles.*;
 import org.openscience.cdk.io.*;
 import org.openscience.cdk.isomorphism.mcss.*;
+import org.openscience.cdk.tools.LoggingTool;
 import freeware.PrintfFormat;
 import java.util.Enumeration;
 import java.util.Locale;
@@ -47,6 +48,9 @@ public class SubstructureFinder {
             System.exit(0);
         }
 
+        // to make sure the CDK LoggingTool is configured
+        LoggingTool logger = new LoggingTool(true);
+
         SmilesParser sp = new SmilesParser();
         Molecule substructure = null;
         try {
@@ -57,6 +61,7 @@ public class SubstructureFinder {
             System.exit(-1);
         }
         
+        // loop over all files
         for (int i=1; i<args.length; i++) {
             String ifilename = args[i];
             try {

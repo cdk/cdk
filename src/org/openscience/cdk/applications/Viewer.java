@@ -60,7 +60,7 @@ public class Viewer {
      *  Constructs a CDK structure viewer.
      */
     public Viewer() {
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName(), true);
         logger.dumpSystemProperties();
         logger.dumpClasspath();
         

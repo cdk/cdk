@@ -44,7 +44,15 @@ public class LoggingTool {
         this( LoggingTool.class.getName() );
     }
 
+    public LoggingTool(boolean useConfig) {
+        this( LoggingTool.class.getName(), useConfig );
+    }
+
     public LoggingTool(String classname) {
+        this(classname, false);
+    }
+    
+    public LoggingTool(String classname, boolean useConfig) {
         this.classname = classname;
         try {
             logger = org.apache.log4j.Category.getInstance( classname );
@@ -58,12 +66,14 @@ public class LoggingTool {
              ****************************************************************/
             if (false)
               throw new ClassNotFoundException();
-            // configure Log4J
-            //URL url = getClass().getClassLoader().getResource("/org/openscience/cdk/config/log4j.properties");
-	    InputStream ins = this.getClass().getClassLoader().getResourceAsStream("org/openscience/cdk/config/log4j.properties");
-	    Properties props = new Properties();
-	    props.load(ins);
-            org.apache.log4j.PropertyConfigurator.configure(props);
+            if (useConfig) {
+                // configure Log4J
+                URL url = getClass().getClassLoader().getResource("/org/openscience/cdk/config/log4j.properties");
+                InputStream ins = this.getClass().getClassLoader().getResourceAsStream("org/openscience/cdk/config/log4j.properties");
+                Properties props = new Properties();
+                props.load(ins);
+                org.apache.log4j.PropertyConfigurator.configure(props);
+            }
         } catch (ClassNotFoundException e) {
             tostdout = true;
             debug("Log4J class not found!");

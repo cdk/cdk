@@ -44,7 +44,7 @@ public class Validator {
     private org.openscience.cdk.tools.LoggingTool logger;
     
     public Validator() {
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName(), true);
     }
 
     public ValidationReport validate(File input) throws IOException {
