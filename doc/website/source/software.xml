@@ -62,6 +62,15 @@
         and is complete build upon CDK.
       </para>
     </section>
+
+    <section>
+      <title>Jmol</title>
+      <para>
+        <ulink url="http://jmol.sf.net/">Jmol</ulink> is a 3D chemical 
+        animator/viewer and use CDK for reading CML.
+      </para>
+    </section>
+    
     <para>
       If your CDK using software is missing from this list, please send
       an email to <ulink url="mailto:cdk-devel@lists.sf.net">cdk-devel@lists.sf.net</ulink>.

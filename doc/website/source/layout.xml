@@ -15,40 +15,38 @@
   <style src="example.css" type="text/css"/>
 
   <toc page="website.xml" filename="index.html">
-    <tocentry page="intro.xml" filename="intro.html"/>
-    <tocentry page="thelibrary.xml" filename="thelibrary.html">
-      <tocentry page="libraries.xml" filename="libraries.html"/>
+    <tocentry page="intro.xml" filename="intro.html">
+      <tocentry page="software.xml" filename="software.html"/>
       <tocentry page="related.xml" filename="related.html"/>
-      <tocentry page="javancss-stats.xml" filename="javancss-stats.html"/>
     </tocentry>
-    <tocentry page="development.xml" filename="development.html">
-      <tocentry page="guide.xml" filename="guide.html">
-        <tocentry page="guide-library-development.xml" filename="guide-library-development.html"/>
-        <tocentry page="guide-docs.xml" filename="guide-docs.html"/>
-        <tocentry page="guide-packages.xml" filename="guide-packages.html"/>
-        <tocentry page="guide-website-development.xml" filename="guide-website-development.html"/>
-      </tocentry>
-      <tocentry page="whoiswho.xml" filename="whoiswho.html"/>
-      <tocentry page="agenda.xml" filename="agenda.html"/>
-      <tocentry page="changelog.xml" filename="changelog.html"/>
+    <tocentry page="screenshots.xml" filename="screenshots.html"/>
+    <tocentry page="documentation.xml" filename="documentation.html">
+      <tocentry page="reference.xml" filename="reference.html"/>
+      <tocentry page="keywordindex.xml" filename="keywordindex.html"/>
+      <tocentry page="api.xml" filename="api.html"/>
+      <tocentry page="manpages.xml" filename="manpages.html"/>
       <tocentry page="rfc.xml" filename="rfc.html">
         <tocentry page="rfc1.xml" filename="rfc1.html"/>
         <tocentry page="rfc2.xml" filename="rfc2.html"/>
         <tocentry page="rfc3.xml" filename="rfc3.html"/>
         <tocentry page="rfc4.xml" filename="rfc4.html"/>
       </tocentry>
+      <tocentry page="biblio.xml" filename="biblio.html"/>
     </tocentry>
-    <tocentry page="documentation.xml" filename="documentation.html">
-      <tocentry page="reference.xml" filename="reference.html"/>
-      <tocentry page="keywordindex.xml" filename="keywordindex.html"/>
-      <tocentry page="api.xml" filename="api.html"/>
-      <tocentry page="manpages.xml" filename="manpages.html"/>
+    <tocentry page="development.xml" filename="development.html">
+      <tocentry page="whoiswho.xml" filename="whoiswho.html"/>
+      <tocentry page="agenda.xml" filename="agenda.html"/>
+      <tocentry page="guide.xml" filename="guide.html">
+        <tocentry page="guide-library-development.xml" filename="guide-library-development.html"/>
+        <tocentry page="guide-docs.xml" filename="guide-docs.html"/>
+        <tocentry page="guide-packages.xml" filename="guide-packages.html"/>
+        <tocentry page="guide-website-development.xml" filename="guide-website-development.html"/>
+      </tocentry>
       <tocentry page="javadoc-stats.xml" filename="javadoc-stats.html"/>
+      <tocentry page="javancss-stats.xml" filename="javancss-stats.html"/>
     </tocentry>
-    <tocentry page="screenshots.xml" filename="screenshots.html"/>
-    <tocentry page="software.xml" filename="software.html"/>
+    <tocentry page="changelog.xml" filename="changelog.html"/>
     <tocentry page="contact.xml" filename="contact.html"/>
     <tocentry page="download.xml" filename="download.html"/>
-    <tocentry page="biblio.xml" filename="biblio.html"/>
   </toc>
 </layout>

@@ -31,8 +31,10 @@ manpages.xml \
 reference.xml \
 related.xml \
 rfc.xml \
+rfc1.xml \
 rfc2.xml \
 rfc3.xml \
+rfc4.xml \
 screenshots.xml \
 software.xml \
 thelibrary.xml \
@@ -41,13 +43,21 @@ whoiswho.xml
 
 .PHONY : clean
 
-all: stats
+all:
 	make website
 	cp *.html ../target/.
 	mv ../target/index.html ../target/index_template.html
 
+update: update-stats update-keyword
+
 stats: javadoc-stats.html javancss-stats.html
 update-stats: javancss-tmp.xml
+
+keyword: ../../../reports/javadoc/keyword.index.xml
+update-keyword: ../../../reports/javadoc/keyword.index.xml
+
+../../../reports/javadoc/keyword.index.xml:
+	cd ../../../reports/javadoc; ant keyword.index
 
 include depends.tabular
 

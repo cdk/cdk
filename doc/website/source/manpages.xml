@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.0b1//EN" "dtd/website.dtd" [
-  <!ENTITY cdk-dbadmin SYSTEM "../../../packages/tar/cdk-bin/man/cdk-dbadmin.xml">
-  <!ENTITY cdk-fileconvert SYSTEM "../../../packages/tar/cdk-bin/man/cdk-fileconvert.xml">
-  <!ENTITY cdk-view SYSTEM "../../../packages/tar/cdk-bin/man/cdk-view.xml">
-  <!ENTITY cdk-download SYSTEM "../../../packages/tar/cdk-bin/man/cdk-download.xml">
+  <!ENTITY cdk-dbadmin SYSTEM "../../../packages/tar/cdk/man/cdk-dbadmin.xml">
+  <!ENTITY cdk-fileconvert SYSTEM "../../../packages/tar/cdk/man/cdk-fileconvert.xml">
+  <!ENTITY cdk-view SYSTEM "../../../packages/tar/cdk/man/cdk-view.xml">
+  <!ENTITY cdk-download SYSTEM "../../../packages/tar/cdk/man/cdk-download.xml">
 ]>
 <webpage id="manpages">
   <config param="last-change-by" value="$Author$"/>

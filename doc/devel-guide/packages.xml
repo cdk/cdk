@@ -1,29 +1,30 @@
     <chapter id="sect:tarpackages">
       <title>Tar packages</title>
       <para>
-        Currently only tar.gz packages are available. The packages
-        can be found in CVS /cdk/packages/tar. These packages can be
+        Currently a tar.gz package is available for CDK. The package
+        can be found in CVS /cdk/packages/tar. The package can be
         installed on UNIX type operating systems in a few steps
         (replace the 20020206 with the latest release date):
       <programlisting>
-$ gunzip cdk-libs-20020206.tar.gz
-$ tar xvf cdk-libs-20020206.tar
-$ cd cdk-libs-20020206
+$ gunzip cdk-20020206.tar.gz
+$ tar xvf cdk-20020206.tar
+$ cd cdk-20020206
 $ ./configure &amp;&amp; make &amp;&amp; install
 </programlisting>
       </para>
       <para>
-        Remember the correct order of installation is:
-        cdk-libs, cdk-bin, cdk-test.
+        The package can be downloaded
+        <ulink url="/download.html">here</ulink>.
       </para>
     </chapter>
 
     <chapter id="sect:linuxpackages">
       <title>Linux packages</title>
       <para>
+        The above packge is known to to install on Linux systems.
         At this moment Linux users should use and install the
-        above tar.gz packages, unless they are Debian users.
-        They can install a Debian package.
+        above tar.gz package, unless they are Debian users.
+        They can use the binary Debian package.
       </para>
 
       <section>
@@ -54,4 +55,18 @@ $ make deb
           RPM packages are planned but not yet available.
         </para>
       </section>
+    </chapter>
+
+    <chapter id="sect:windowspackages">
+      <title>Windows packages</title>
+      <para>
+        At this moment there is no Windows pacakges.
+        Windows users can best download the above tar.gz package
+        which can be unpacked with programs like WinZip.
+        The software can then be compiled with:
+        <programlisting>
+ant dist-all
+        </programlisting>
+        Compilation requires that you have Java3D installed.
+      </para>
     </chapter>
