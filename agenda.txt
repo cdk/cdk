@@ -5,9 +5,6 @@
 - Port more from Jmol 1.x to CDK
 
   1. non-accelerated 3D viewer
-  2. JMOLANIMATION.java (CML convention definition)
-
-- Implement a SMILES parser/generator pair 
 
 - Add SVG output
 
@@ -20,3 +17,6 @@
 
 - Add cdk-dbquery/cdk-dbinsert to interact with the chemical database
   (see also cdk-dbadmin)
+
+- Update JUnit classes to have it compile with JDK1.4 properly
+
