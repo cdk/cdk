@@ -281,9 +281,14 @@ public class AtomTypeFactory {
 	 */
 	public Atom configure(Atom atom)
 	{
-		try
-		{
-			AtomType at = getAtomType(atom.getAtomTypeName());
+		try {
+            AtomType at = null;
+            if (atom.getAtomTypeName() == null) {
+                logger.debug("Using atom symbol because atom type name is empty...");
+                at = getAtomType(atom.getSymbol());
+            } else {
+                at = getAtomType(atom.getAtomTypeName());
+            }
 			atom.setMaxBondOrder(at.getMaxBondOrder());
 			atom.setMaxBondOrderSum(at.getMaxBondOrderSum());
 			atom.setVanderwaalsRadius(at.getVanderwaalsRadius());
@@ -307,10 +312,11 @@ public class AtomTypeFactory {
 			{
 				logger.debug("Did not configure mass: AT.mass=" + at.getAtomicNumber());
 			}
-		} catch (Exception exc)
+		} catch (Exception exception)
 		{
 			logger.warn("Could not configure atom with unknown ID: " +
 					atom.toString() + " + (id=" + atom.getAtomTypeName() + ")");
+            logger.debug(exception);
 		}
 		logger.debug("Configured " + atom.toString());
 		return atom;
