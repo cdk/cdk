@@ -226,6 +226,7 @@ AC_OUTPUT([
    bin/cdk-fileconvert
    bin/cdk-guessformat
    bin/cdk-test
+   bin/cdk-validate
    bin/cdk-view
    man/Makefile
    man/xsl/Makefile

@@ -37,6 +37,9 @@ cdk-fileconvert.1: cdk-fileconvert.xml
 cdk-dbadmin.1: cdk-dbadmin.xml
 	$(XML2MAN_RULE)
 
+cdk-validate.1: cdk-validate.xml
+	$(XML2MAN_RULE)
+
 cdk-view.1: cdk-view.xml
 	$(XML2MAN_RULE)
 
