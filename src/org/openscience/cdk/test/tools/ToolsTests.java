@@ -39,7 +39,6 @@ public class ToolsTests {
     public static Test suite () {
         TestSuite suite= new TestSuite("The cdk.tools Tests");
         suite.addTest(AtomTypeFactoryTest.suite());
-        suite.addTest(CASNumberTest.suite());
         suite.addTest(ConnectivityCheckerTest.suite());
         suite.addTest(HydrogenAdderTest.suite());
         suite.addTest(IDCreatorTest.suite());

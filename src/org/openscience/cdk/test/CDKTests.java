@@ -34,6 +34,7 @@ import org.openscience.cdk.test.geometry.CrystalGeometryToolsTest;
 import org.openscience.cdk.test.geometry.GeometryToolsTest;
 import org.openscience.cdk.test.graph.invariant.MorganNumberToolsTest;
 import org.openscience.cdk.test.graph.rebond.RebondToolTest;
+import org.openscience.cdk.test.index.CASNumberTest;
 import org.openscience.cdk.test.io.IOTests;
 import org.openscience.cdk.test.isomorphism.IsomorphismTesterTest;
 import org.openscience.cdk.test.isomorphism.UniversalIsomorphismTesterTest;
@@ -95,6 +96,8 @@ public class CDKTests
         // from cdk.test.geometry
         suite.addTest(GeometryToolsTest.suite());
         suite.addTest(CrystalGeometryToolsTest.suite());
+        // from cdk.test.index
+        suite.addTest(CASNumberTest.suite());
         // from cdk.test.isomorphism
         suite.addTest(UniversalIsomorphismTesterTest.suite());
         // from cdk.test.aromaticity
