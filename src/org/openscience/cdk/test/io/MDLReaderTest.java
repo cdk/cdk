@@ -217,6 +217,25 @@ public class MDLReaderTest extends CDKTestCase {
             fail(e.toString());
         }
     }
+
+    public void testSDFFile() {
+        String filename = "data/mdl/test.sdf"; // a multi molecule SDF file
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        try {
+            MDLReader reader = new MDLReader(new InputStreamReader(ins));
+            ChemFile fileContents = (ChemFile)reader.read(new ChemFile());
+            assertEquals(1, fileContents.getChemSequenceCount());
+            ChemSequence sequence = fileContents.getChemSequence(0);
+            assertNotNull(sequence);
+            assertEquals(9, sequence.getChemModelCount());
+            for (int i=0; i<sequence.getChemModelCount(); i++) {
+                assertNotNull(sequence.getChemModel(i));
+            }
+        } catch (Exception e) {
+            fail(e.toString());
+        }
+    }
+
     /** 
      * Problem was filed as bug #835571
      */
