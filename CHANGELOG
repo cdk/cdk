@@ -8,3 +8,7 @@ changes since "cdk preview 20010511"
 * Added XYZReader.java
 * Added has2DCoordinates() and has3DCoordinates() to Geometry.class
 * Added MoleculesTable.java: a list of molecules
+* CDK adopted the Java CML Filter Library
+* Added a PDBReader
+* Added BioPolymer/Polymer and Monomer classes
+* vecmath library updated to 1.14
