@@ -82,13 +82,14 @@ public class SaturationCheckerTest extends TestCase
 
 
 	/**
-	 *  A unit test suite for JUnit
+	 * A unit test suite for JUnit
 	 *
-	 *@return    The test suite
+	 * @return    The test suite
 	 */
-	public static Test suite()
-	{
-		return new TestSuite(SaturationCheckerTest.class);
+    public static Test suite() {
+        TestSuite suite = new TestSuite(SaturationCheckerTest.class);
+        suite.addTest(HydrogenAdderTest.suite());
+        return suite;
 	}
 
 
