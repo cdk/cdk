@@ -41,7 +41,6 @@ public class ChemObject implements CDKConstants, Cloneable
 {
 	/** Vector for listener administration */
 	protected transient Vector chemObjects = new Vector();
-	protected int size;
 	/** 
 	  * A hashtable for the storage of physical properties 
 	  * of this ChemObject. 
@@ -116,31 +115,6 @@ public class ChemObject implements CDKConstants, Cloneable
 		}
 	}
 
-
-
-	/**
-	 * Return the size of this ChemObject. This could be 
-	 * the number of atoms for a Molecule or the number of Electron 
-	 * in a bond
-	 *
-	 * @return     The size of the ChemObject
-	 */
-	public int getSize()
-	{
-		return this.size;
-	}
-
-
-	/**
-	 * Set the Size of this ChemObject. 
-	 *
-	 * @param   size  The size of this ChemObject
-	 */
-	public void setSize(int size)
-	{
-		this.size = size;
-	}
-	
 
 	/**
 	 * Set a physical property for a ChemObject
