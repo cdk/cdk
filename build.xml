@@ -46,6 +46,9 @@
           <available classname="joelib.molecule.JOEAtom" 
                      classpath="${lib}/libio/joelib.jar" 
                      property="joelib.present"/>
+          <available classname="javax.media.j3d.Canvas3D"
+                     classpathref="project.class.path"
+                     property="java3D.present"/>
         </target>
 
         <target name="init" depends="check">
@@ -77,20 +80,12 @@
         </target>
 
         <target name="compile">
-                <echo message="Compiling only the classes that don't use Java3d."/>
-                <echo message="Use 'compile-with-java3d' target for full Java3D support."/>
-
                 <antcall target="compile-all"/>
-        </target>
-
-        <target name="compile-with-java3d">
-                <antcall target="compile-all"/>
-                <antcall target="compile-render-with-java3d"/>
         </target>
 
         <target name="compile-all" 
             depends="init, info, compile-core, compile-standard, compile-extra, compile-io, 
-                     compile-render, compile-libio">
+                     compile-render, compile-render-with-java3d, compile-libio">
         </target>
 
         <target name="compile-libio" depends="dist-standard, dont-compile-libio-joelib, compile-libio-joelib,
@@ -254,10 +249,21 @@
                 </javac>
         </target>
 
-        <target name="compile-render-with-java3d" depends="compile-render">
+        
+        <target name="compile-render-with-java3d" 
+                depends="dont-compile-render-with-java3d, do-compile-render-with-java3d"/>
+
+        <target name="dont-compile-render-with-java3d" depends="compile-render"
+                unless="java3D.present">
+                <echo message="Cannot compile Java3D based viewer classes. Java3D is not present" />
+        </target>
+        
+        <target name="do-compile-render-with-java3d" depends="compile-render"
+                if="java3D.present">
                 <mkdir dir="${build}" />
 
-                <javac destdir="${build}" optimize="${optimization}" 
+                <javac srcdir="${build.src}"
+                       destdir="${build}" optimize="${optimization}" 
                        debug="${debug}" deprecation="${deprecation}"
                        includesfile="${src}/java3d.classes">
 
@@ -445,10 +451,13 @@
                 </jar>
         </target>
 
-        <target name="dist-render-with-java3d" depends="compile-render-with-java3d">
-                <jar jarfile="${dist}/jar/cdk-render-java3d.jar">
+        <target name="dist-render-with-java3d" depends="compile-render-with-java3d"
+                if="java3D.present">
+                <jar jarfile="${dist}/jar/cdk-render.jar">
                     <fileset dir="${build}">
+                        <include name="org/openscience/cdk/renderer/**/*" />
                         <include name="org/openscience/cdk/controller/**/*" />
+                        <include name="org/openscience/cdk/event/**/*" />
                     </fileset>
                 </jar>
         </target>
@@ -474,7 +483,8 @@
 
         <target name="dist-all" depends="dist-core, dist-standard, 
                                          dist-io, dist-render, 
-                                         dist-extra, dist-libio" />
+                                         dist-extra, dist-libio,
+                                         dist-render-with-java3d" />
 
         <target name="dist" depends="dist-all" />
 

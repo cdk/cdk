@@ -12,6 +12,7 @@ New:
 Changes:
 * Added one-click (not-patented ;) deselect of atoms in lasso mode
 * Libio for Jmol and JOELib is now conditionally build
+* Java3D depending classes are now conditionally build
 
 Fixes:
 * Fixed reading of AtomType's with JSX
