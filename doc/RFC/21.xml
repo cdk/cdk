@@ -1,0 +1,53 @@
+<refentry id="cdk-rfc-21">
+
+  <refentryinfo>
+    <revhistory>
+      <revision>
+        <revnumber>1</revnumber>
+        <date>2003-09-04</date>
+        <authorinitials>elw</authorinitials>
+        <revremark>
+          See <ulink url="https://sourceforge.net/mailarchive/forum.php?thread_id=2944121&amp;forum_id=2178">email archive</ulink>.
+        </revremark>
+      </revision>
+    </revhistory>
+  </refentryinfo>
+
+
+  <refnamediv>
+    <refname>RFC CDK #21: Replacement of SetOfMolecules by SetOfAtomContainers</refname>
+  </refnamediv>
+
+  <refsect1>
+    <title>Proposal</title>
+    <para>
+      To create a new class called SetOfAtomContainers that will replace the
+      use of SetOfMolecules in ChemModel. The SetOfMolecules will not
+      be removed but will be a sublass of SetOfAtomContainers, and will
+      keep the API it has now, in addition to the methods inherited.
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>Reason</title>
+    <para>
+      A ChemModel should be able to contain a SetOfAtomContainers, in the
+      future allowing the possible removal of getCrystal().
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>Proposers</title>
+    <para>
+      Egon Willighagen.
+    </para>
+  </refsect1>
+
+    <refsect1>
+    <title>Date</title>
+    <para>
+      2003-08-12.
+    </para>
+  </refsect1>
+
+</refentry>

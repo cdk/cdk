@@ -1,21 +1,20 @@
 <?xml version="1.0"?>
 <!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.0b1//EN" 
                          "dtd/website.dtd" [
-  <!ENTITY rfc SYSTEM "../../RFC/1.xml">
-  <!ENTITY egonw SYSTEM "../../RFC/egonw.xml">
+  <!ENTITY rfc SYSTEM "../../RFC/19.xml">
 ]>
-<webpage id="rfc1">
+<webpage id="rfc19">
   <config param="last-change-by" value="$Author$"/>
   <config param="rcsdate" value="$Date$"/>
 
   <head>
-    <title>CDK Request for Comments #1</title>
-    <titleabbrev>RFC #1</titleabbrev>
+    <title>CDK Request for Comments #19</title>
+    <titleabbrev>RFC #19</titleabbrev>
     <summary></summary>
   </head>
 
   <section>
-    <title>CDK RFC #1</title>
+    <title>CDK RFC #19</title>
     &rfc;
   </section>
 

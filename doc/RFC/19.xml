@@ -1,0 +1,112 @@
+<refentry id="cdk-rfc-19">
+
+  <refentryinfo>
+    <revhistory>
+      <revision>
+        <revnumber>1</revnumber>
+        <date>2003-09-04</date>
+        <authorinitials>elw</authorinitials>
+        <revremark>
+          See <ulink url="http://sourceforge.net/mailarchive/forum.php?thread_id=2699111&amp;forum_id=2178">email archive</ulink>
+          for the original proposal. The comments on it have not been incorporated
+          yet!
+        </revremark>
+      </revision>
+    </revhistory>
+  </refentryinfo>
+
+
+  <refnamediv>
+    <refname>RFC CDK #19: Elements, Isotopes, and IsotopeMixtures</refname>
+  </refnamediv>
+
+  <refsect1>
+    <title>Replaces</title>
+    <para>
+      RFC #16 [1] if accepted.
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>Proposal</title>
+    <para>
+      The API of Element and Isotope to be (excluding appropriate
+      constructors, and clone(), toString()):
+      <programlisting>
+ Element extends ChemObject
+        void setSymbol(String)
+        String getSymbol()
+        void setAtomicNumber(int)
+        int getAtomicNumber()
+    
+ Isotope extends Element
+        void setMassNumber(int)
+        int getMassNumber()
+        boolean isMixture() = false
+        void setIsMixture(boolean)
+        void setExactMass(double)
+        double getExactMass()
+        void setNaturalAbundance(double)
+        double getNaturalAbundance()
+      </programlisting>
+    </para>
+    <para>
+      The Element is as such an abstract entitiy just related to the common element
+      idea with a symbol (e.g. "C") and a number of protons in the core, the atomic
+      number.
+    </para>
+    <para>
+      The Isotope, however, deals with the concept of mass number. The mass number
+      defines the actual isotope. E.g. the mass number of 13C is 13. The API 
+      signature suggests that the Isotope class is used for specific isotope 
+      instances only. Thus suggests that it does not allow for isotope mixtures; 
+      e.g. the natural macroscopic carbon atom, is actually a mixture of 13C and 
+      12C. To be able to calculate normal molecular masses, such 'isotope mixtures'
+      need to be able to be represented.
+    </para>
+    <para>
+      The class allows for Isotope mixtures by setting the isMixture field with 
+      setIsMixture(boolean). If set, the naturalAbundance, and massNumber fields
+      are undefined, and the exactMass then represents the mass of the isotope
+      mixture instead of a specific isotope. 
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>Reason</title>
+    <para>
+      The CDK does not formalize what an Isotope is. And the current class (not the 
+      proposed class) is used for both isotope mixtures and specific isotopes.
+      This RFC should formalize this behaviour.
+    </para>
+    <para>
+      Moreover, the CDK now has the massNumber stored in the Element class, which
+      is conceptually wrong. In addition, the method was named getAtomicMass() 
+      instead of getMassNumber() which is discussed in RFC #16. However, that RFC
+      incorrectly ascribes the method to the Isotope class, leading to the above 
+      proposal.
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>References</title>
+    <orderedlist>
+      <listitem><para><ulink url="rfc16.html">RFC #16</ulink></para></listitem>
+    </orderedlist>
+  </refsect1>
+
+  <refsect1>
+    <title>Proposers</title>
+    <para>
+      Egon Willighagen.
+    </para>
+  </refsect1>
+  
+  <refsect1>
+    <title>Date</title>
+    <para>
+      2003-07-02
+    </para>
+  </refsect1>
+
+</refentry>

@@ -1,0 +1,62 @@
+<refentry id="cdk-rfc-20">
+
+  <refentryinfo>
+    <revhistory>
+      <revision>
+        <revnumber>1</revnumber>
+        <date>2003-09-04</date>
+        <authorinitials>elw</authorinitials>
+        <revremark>
+          See <ulink url="http://sourceforge.net/mailarchive/forum.php?thread_id=2944120&amp;forum_id=2178">email archive</ulink>.
+        </revremark>
+      </revision>
+    </revhistory>
+  </refentryinfo>
+
+
+  <refnamediv>
+    <refname>RFC CDK #20: Removal of get/setRemark and get/setPhysicalProperty from ChemObject</refname>
+  </refnamediv>
+
+  <refsect1>
+    <title>Proposal</title>
+    <para>
+      To remove the get/setRemark() and get/setPhysicalProperty() methods from
+      the ChemObject class.
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>Reason</title>
+    <para>
+      First, they are not used in the CDK library itself, and only make the ChemObject
+      larger. Secondly, their use is easily replace by the more general
+      get/setProperty(), as remarks and physical properties are instances of the
+      general idea property.
+    </para>
+    <para>
+      Optionally, one can circumvent collisions with others in two ways:
+      If you use a String as a property identifier, as is done often in the CDK
+      library, you could use a namespace to prefix the property identifier. This
+      approach is followed by the current cdk.dict package. Secondly, one could
+      use a subclass of String, or any class, and use that class as a property
+      identifier; this is possible, because the ChemObject.setProperty() method
+      takes an Object as identifier, and not just String objects.
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>Proposers</title>
+    <para>
+      Egon Willighagen.
+    </para>
+  </refsect1>
+
+    <refsect1>
+    <title>Date</title>
+    <para>
+      2003-08-11.
+    </para>
+  </refsect1>
+
+</refentry>

@@ -159,6 +159,34 @@
               <entry></entry>
               <entry></entry>
             </row>
+            <row>
+              <entry>19</entry>
+              <entry><ulink url="rfc19.html">Elements, Isotopes, and IsotopeMixtures</ulink></entry>
+              <entry>2003-07-02</entry>
+              <entry></entry>
+              <entry></entry>
+            </row>
+            <row>
+              <entry>20</entry>
+              <entry><ulink url="rfc20.html">Removal of get/setRemark and get/setPhysicalProperty from ChemObject</ulink></entry>
+              <entry>2003-08-11</entry>
+              <entry></entry>
+              <entry></entry>
+            </row>
+            <row>
+              <entry>21</entry>
+              <entry><ulink url="rfc21.html">Replacement of SetOfMolecules by SetOfAtomContainers</ulink></entry>
+              <entry>2003-08-12</entry>
+              <entry></entry>
+              <entry></entry>
+            </row>
+            <row>
+              <entry>22</entry>
+              <entry><ulink url="rfc22.html">On hydrogen bonds and other non-covalent interactions</ulink></entry>
+              <entry>2003-08-12</entry>
+              <entry></entry>
+              <entry></entry>
+            </row>
          </tbody>
         </tgroup>
     </informaltable>

@@ -1,0 +1,72 @@
+<refentry id="cdk-rfc-22">
+
+  <refentryinfo>
+    <revhistory>
+      <revision>
+        <revnumber>1</revnumber>
+        <date>2003-09-04</date>
+        <authorinitials>elw</authorinitials>
+        <revremark>
+          See <ulink url="http://sourceforge.net/mailarchive/forum.php?thread_id=2944454&amp;forum_id=2178">email archive</ulink>.
+        </revremark>
+      </revision>
+    </revhistory>
+  </refentryinfo>
+
+
+  <refnamediv>
+    <refname>RFC CDK #22: On hydrogen bonds and other non-covalent interactions</refname>
+  </refnamediv>
+
+  <refsect1>
+    <title>Proposal</title>
+    <para>
+      To create an Association class that extends ElectronContainer, that
+      represents an interaction between two molecular entities, e.g. Atom's.
+    </para>
+    <para>
+      Subclasses of this new Association class can be classes, like
+      HydrogenBond, and IonicInteraction.
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>Reason</title>
+    <para>
+      The need to store supramolecular interactions. The current Bond
+      element is aimed at covalent bonding, or at least taken as such
+      by the PathTools class in cdk.graph.
+    </para>
+    <para>
+      The name seems appropriate; the IUPAC Comendium defines it as [1]:
+      <quote>The assembling of separate molecular entities into any aggregate,
+      especially of oppositely charged free ions into ione pairs ...</quote>.
+      About hydrogen bonds it says [2]: <quote>A form of association between an
+      electronegative atom and a hydrogen atom attached to a second,
+      relatively electronagative atom.</quote>
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>References</title>
+    <orderedlist>
+      <listitem><para><ulink url="http://www.chemsoc.org/chembytes/goldbook/A00472.pdf"/></para></listitem>
+      <listitem><para><ulink url="http://www.chemsoc.org/chembytes/goldbook/H02899.pdf"/></para></listitem>
+    </orderedlist>
+  </refsect1>
+
+  <refsect1>
+    <title>Proposers</title>
+    <para>
+      Egon Willighagen.
+    </para>
+  </refsect1>
+  
+  <refsect1>
+    <title>Date</title>
+    <para>
+      2003-08-12
+    </para>
+  </refsect1>
+
+</refentry>
