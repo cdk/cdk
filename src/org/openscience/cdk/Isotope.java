@@ -159,7 +159,7 @@ public class Isotope extends Element implements Cloneable {
         StringBuffer sb = new StringBuffer();
 		sb.append("Iso{"); sb.append(atomicMass);
 		sb.append(", EM:"); sb.append(exactMass);
-		sb.append(", AB:"); ab.append(naturalAbundance);
+		sb.append(", AB:"); sb.append(naturalAbundance);
         sb.append("}");
 		return sb.toString();
 	}
