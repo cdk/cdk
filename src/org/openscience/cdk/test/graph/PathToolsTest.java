@@ -1,6 +1,7 @@
-/* PathLengthTest.java
- * 
- * $RCSfile$    $Author$    $Date$    $Revision$
+/* $RCSfile$ 
+ * $Author$
+ * $Date$
+ * $Revision$
  * 
  * Copyright (C) 1997-2004  The Chemistry Development Kit (CDK) project
  * 
@@ -20,8 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
  */
-
-package org.openscience.cdk.test;
+package org.openscience.cdk.test.graph;
 
 import java.util.Vector;
 
@@ -37,34 +37,30 @@ import org.openscience.cdk.templates.MoleculeFactory;
 /**
  * @cdk.module test
  */
-public class PathLengthTest extends TestCase
+public class PathToolsTest extends TestCase
 {
-	Molecule molecule;
+	private Molecule molecule;
 	
-	public PathLengthTest(String name)
-	{
+	public PathToolsTest(String name) {
 		super(name);
 	}
 
-	public void setUp()
-	{
+	public void setUp() {
 		molecule = MoleculeFactory.makeAlphaPinene();
 	}
 
-	public static Test suite() 
-	{
-		return new TestSuite(PathLengthTest.class);
+	public static Test suite() {
+		return new TestSuite(PathToolsTest.class);
 	}
 
-	public void testPathLength()
-	{
+	public void testBreadthFirstTargetSearch() {
 		Atom atom1 = molecule.getAtomAt(0);
 		Atom atom2 = molecule.getAtomAt(8);
 		Vector sphere = new Vector();
 		sphere.addElement(atom1);
 		int length = PathTools.breadthFirstTargetSearch(molecule, sphere, atom2, 0, 3);
 		//System.out.println("PathLengthTest->length: " + length);
-		assertTrue(length == 3);
+		assertEquals(3, length);
 	}
 	
 }
