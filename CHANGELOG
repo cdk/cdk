@@ -14,6 +14,7 @@ New:
   hydrogens, e.g. H3C-
 * Stoichiometry and direction concepts added to Reaction
 * Added a reverse() Reaction method to ReactionManipulator
+* SmilesParser now understands '*' indication unknown elements
 * Debug CDK core classes that can help when developing CDK
   based applications (dist-core-debug task in build.xml)
 * Added cdk-experimental package with an experimental IUPAC
@@ -30,6 +31,9 @@ Fixes:
   one atom (fixed #780545)
 * Added missing PseudoAtom.getLabel() method
 * Renderer2D should display PseudoAtom's label instead of symbol
+* Proper rendering PseudoAtom labels
+* Fixed the 'organic subset' idea, and requirement for []'s
+  (fixed #784433)
 
 API changes:
 * ConnectivityChecker.partitionIntoMolecules() now returns a 
