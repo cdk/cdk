@@ -434,11 +434,11 @@ public class SmilesGenerator {
    * chemical validity of the molecule. The chiral smiles is done like in the <a href="http://www.daylight.com/dayhtml/doc/theory/theory.smiles.html">daylight theory manual</a>.
    * I did not find rules for canonical and chiral smiles, therefore there is no guarantee 
    * that the smiles complies to any externeal rules, but it is canonical compared to other smiles
-   * produced by this method. The method checks if there are 2D coordinates but does not do
+   * produced by this method. The method checks if there are 2D coordinates but does not
    * check if coordinates make sense. Invalid stereo configurations are ignored; if there are no 
    * valid stereo configuration the smiles will be the same as the non-chiral one.
    *
-   * @exception  CDKException  At least one atom has no Point2D; coordinates are needed for crating the chiral smiles.
+   * @exception  CDKException  At least one atom has no Point2D; coordinates are needed for creating the chiral smiles.
    * @param molecule The molecule to evaluate
    * @param doubleBondConfiguration[] Should double bond configurations be evaluated. If bond X (numbering as in the bonds array) should be evaluated isDoubleBondSpecified[x] should be true, if not false.
    * @see org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel.
@@ -584,7 +584,7 @@ public class SmilesGenerator {
         pretty uggly. The Atoms connected to the chiral center are put in sorted[] in the
         order they have to appear in the smiles. Then the Vector v is rearranged according 
         to sorted[]*/
-      	if(chiral && isStereo(container,atom)){
+        if(chiral && isStereo(container,atom) && container.getBond(parent,atom)!=null){
           Atom[] sorted=null;
           Vector chiralNeighbours=container.getConnectedAtomsVector(atom);
           if(isTetrahedral(container,atom)>0)
@@ -899,7 +899,6 @@ public class SmilesGenerator {
             }
           }
         }
-        //Check if this atom represents the end of a double bond configuration
         parent = atom;
       }
       else { //Have Vector
