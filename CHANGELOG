@@ -4,6 +4,7 @@ CHANGELOG $Date$
 Changes in CVS
 ------------------------------------
 New:
+* CDKRXNWriter.
 * Atom type list for PDB atom codes (implements RFE #1062516)
 * Implemented an iterating (event based) CML reader (implements RFE #824133)
 * ReaderFactory now uses the new CDK set io-formats instead of
