@@ -28,15 +28,18 @@
       <listitem>
         <para>More JUnit tests: not all methods of the core classes are tested.</para>
       </listitem>
+      <listitem>
+        <para>A IUPAC name generator is being developed.</para>
+      </listitem>
+      <listitem>
+        <para>Substructure is developed and is awaiting inclusion in CVS.</para>
+      </listitem>
     </itemizedlist>
 
   <para>This lists shows the things we would like to have/do:</para>
     <itemizedlist>
       <listitem>
-        <para>IUPAC name parser/producer</para>
-      </listitem>
-      <listitem>
-        <para>Substructure search</para>
+        <para>IUPAC name parser</para>
       </listitem>
       <listitem>
         <para>A energy minimizer / moleculare dynamics module</para>
@@ -55,9 +58,6 @@
       <listitem>
         <para>Improved CML reader that is able to read XHTML documents
           with CML fragments.</para>
-      </listitem>
-      <listitem>
-        <para>A SVGWriter class that generates SVG images.</para>
       </listitem>
       <listitem>
         <para>Command line tools (cdk-dbquery/cdk-dbinsert) to add structures 
