@@ -680,20 +680,31 @@ public class UniversalIsomorphismTester {
         b1 = bondsA1[((RNode) gr.getGraph().get(j)).getRMap().getId1()];
         b2 = bondsA2[((RNode) gr.getGraph().get(j)).getRMap().getId2()];
 
-        if (a1.equals(b1) || a2.equals(b2) ||
-            (!adjacency(a1, b1).equals(adjacency(a2, b2)))) {
-          x.getForbidden().set(j);
-          y.getForbidden().set(i);
-        } else if (!adjacency(a1, b1).equals("")) {
-          x.getExtension().set(j);
-          y.getExtension().set(i);
+        if (ac2 instanceof QueryAtomContainer) {
+            if (a1.equals(b1) || a2.equals(b2) ||
+                !queryAdjacency(a1, b1, a2, b2)) {
+                x.getForbidden().set(j);
+                y.getForbidden().set(i);
+            } else if (hasCommonAtom(a1, b1)) {
+                x.getExtension().set(j);
+                y.getExtension().set(i);
+            }
+        } else {
+            if (a1.equals(b1) || a2.equals(b2) ||
+                (!getCommonSymbol(a1, b1).equals(getCommonSymbol(a2, b2)))) {
+              x.getForbidden().set(j);
+              y.getForbidden().set(i);
+            } else if (hasCommonAtom(a1, b1)) {
+              x.getExtension().set(j);
+              y.getExtension().set(i);
+            }
         }
       }
     }
   }
 
-
-  /**
+  
+    /**
    *  Determines if 2 bond have 1 atom in common
    *
    * @param  a  first bond
@@ -701,17 +712,72 @@ public class UniversalIsomorphismTester {
    * @return    the symbol of the common atom or "" if
    *            the 2 bonds have no common atom
    */
-  private static String adjacency(Bond a, Bond b) {
-    String symbol = "";
+  private static boolean hasCommonAtom(Bond a, Bond b) {
+      
+    if (a.contains(b.getAtomAt(0))) {
+      return true;
+    } else if (a.contains(b.getAtomAt(1))) {
+      return true;
+    }
+    
+    return false;
+  }
 
+  /**
+   *  Determines if 2 bond have 1 atom in common and returns the common symbol
+   *
+   * @param  a  first bond
+   * @param  b  second bond
+   * @return    the symbol of the common atom or "" if
+   *            the 2 bonds have no common atom
+   */
+  private static String getCommonSymbol(Bond a, Bond b) {
+    String symbol = "";
+    
     if (a.contains(b.getAtomAt(0))) {
       symbol = b.getAtomAt(0).getSymbol();
     } else if (a.contains(b.getAtomAt(1))) {
       symbol = b.getAtomAt(1).getSymbol();
     }
+    
     return symbol;
   }
 
+    /**
+   *  Determines if 2 bond have 1 atom in common if second is a query AtomContainer
+   *
+   * @param  a  first bond
+   * @param  b  second bond
+   * @return    the symbol of the common atom or "" if
+   *            the 2 bonds have no common atom
+   */
+  private static boolean queryAdjacency(Bond a1, Bond b1, Bond a2, Bond b2) {
+      
+      Atom atom1 = null;
+      Atom atom2 = null;
+      
+      if (a1.contains(b1.getAtomAt(0))) {
+          atom1 = b1.getAtomAt(0);
+      } else if (a1.contains(b1.getAtomAt(1))) {
+          atom1 = b1.getAtomAt(1);
+      }
+      
+      if (a2.contains(b2.getAtomAt(0))) {
+          atom2 = b2.getAtomAt(0);
+      } else if (a2.contains(b2.getAtomAt(1))) {
+          atom2 = b2.getAtomAt(1);
+      }
+      
+      if (atom1 != null && atom2 != null){
+          return ((QueryAtom)atom2).matches(atom1);
+      } else if (atom1 == null && atom2 == null) {
+	      return true;
+      } else {
+	      return false;
+      }
+      
+  }
+  
 
   /**
    * Test purpose file reading method

@@ -6,6 +6,7 @@ Changes in CVS
 New:
 
 Fixes:
+* UniversalIsomorphismTester works with QueryAtomContainers
 * Now compiles with Java 1.5.0 aka 5.0
 * Faster SSSR algorithms
 * The core class now notify their listeners when things are changed
