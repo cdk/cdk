@@ -45,6 +45,7 @@ public class Viewer {
 
       logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
       logger.dumpSystemProperties();
+      logger.dumpClasspath();
 
       ChemFile chemFile = new ChemFile();
       try {
@@ -140,7 +141,7 @@ public class Viewer {
         String filename = "";
         if (args.length == 1) {
             filename = args[0];
-        } if (args.length > 1) {
+        } else if (args.length > 1) {
             // parse options
             for (int i=1; i<args.length; i++) {
                 String opt = args[i-1];
