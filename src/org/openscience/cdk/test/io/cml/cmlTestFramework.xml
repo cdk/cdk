@@ -66,6 +66,12 @@
     <bondArray atomRef1='a1 a1' atomRef2='a2 a3' bondID='b1 b2'/>
   </molecule>
 
+  <!-- JFragmentsTest.testBond5() -->
+  <molecule id='m1'>
+    <atomArray atomID='a1 a2 a3'/>
+    <bondArray atomRef1='a1 a1' atomRef2='a2 a3' order='1 1'/>
+  </molecule>
+
   <!-- JFragmentsTest.testBondId() -->
   <molecule id='m1'>
     <atomArray><atom id='a1'/><atom id='a2'/></atomArray>
@@ -131,6 +137,5 @@
 
   <!-- JFragmentsTest.testMoleculeId() -->
   <molecule id='m1'><atomArray><atom id='a1'/></atomArray></molecule>
-  
-  
+
 </cml>

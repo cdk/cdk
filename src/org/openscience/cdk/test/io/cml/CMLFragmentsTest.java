@@ -212,6 +212,22 @@ public class CMLFragmentsTest extends TestCase {
         assertEquals("b2", mol.getBondAt(1).getID());
     }
 
+    public void testBond5() {
+        String cmlString = "<molecule id='m1'><atomArray atomID='a1 a2 a3'/><bondArray atomRef1='a1 a1' atomRef2='a2 a3' order='1 1'/></molecule>";
+        
+        ChemFile chemFile = parseCMLString(cmlString);
+        Molecule mol = checkForSingleMoleculeFile(chemFile);
+
+        assertEquals(3, mol.getAtomCount());
+        assertEquals(2, mol.getBondCount());
+        Bond bond = mol.getBondAt(0);
+        assertEquals(2, bond.getAtomCount());
+        assertEquals(1.0, bond.getOrder(), 0.0001);
+        bond = mol.getBondAt(1);
+        assertEquals(2, bond.getAtomCount());
+        assertEquals(1.0, bond.getOrder(), 0.0001);
+    }
+
     
     public void testBondId() {
         String cmlString = "<molecule id='m1'><atomArray><atom id='a1'/><atom id='a2'/></atomArray><bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray></molecule>";
