@@ -154,7 +154,7 @@ public class CanonicalLabeler {
         inv.append(1);
       else
         inv.append(0);                                                              //Absolute charge
-      inv.append((int)Math.abs(a.getCharge()));                                     //Hydrogen count
+      inv.append((int)Math.abs(a.getFormalCharge()));                                     //Hydrogen count
       inv.append(a.getHydrogenCount());
       vect.add(new InvPair(Long.parseLong(inv.toString()), a));
     }
