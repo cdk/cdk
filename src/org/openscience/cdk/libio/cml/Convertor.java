@@ -58,6 +58,7 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.tools.*;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.dict.*;
+import org.openscience.cdk.io.setting.StringIOSetting;
 
 /**
  * Class that provides convertor procedures to
@@ -76,7 +77,8 @@ public class Convertor {
   private static org.openscience.cdk.tools.LoggingTool logger;
   private CMLDocument doc;
   private IsotopeFactory isotopeFactory;
-  boolean useCmlIdentifiers;
+  private boolean useCmlIdentifiers;
+  private String namespace="http://www.xml-cml.org/schema/cml2/core";
   
   
   public Convertor(){
@@ -96,7 +98,7 @@ public class Convertor {
      *
      * @param object A Molecule of SetOfMolecules object
      */
-    public Node convert(ChemObject object, CMLDocument doc, boolean useCmlIdentifiers) throws CDKException, CMLException {
+    public Node convert(ChemObject object, CMLDocument doc, boolean useCmlIdentifiers, boolean setNamespaceUri, boolean schemaInstanceOutput, StringIOSetting instanceLocation) throws CDKException, CMLException {
         logger.debug("Writing object in CML of type: " + object.getClass().getName());
         this.doc=doc;
         this.useCmlIdentifiers=useCmlIdentifiers;
@@ -122,6 +124,13 @@ public class Convertor {
         } else {
             logger.error("This object type is not supported.");
             throw new CDKException("This object type is not supported.");
+        }
+        if(setNamespaceUri){
+          ((Element)test.getFirstChild()).setAttribute("xmlns",namespace);
+          if (schemaInstanceOutput) {
+                ((Element)test.getFirstChild()).setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
+                ((Element)test.getFirstChild()).setAttribute("xsi:schemaLocation",namespace + " " + instanceLocation.getSetting());
+            }
         }
         return(test.getFirstChild());
     };
@@ -225,7 +234,7 @@ public class Convertor {
         Reaction[] reactions = reactionSet.getReactions();
         if (reactions.length > 0) {
             ReactionListImpl reactionlist=new ReactionListImpl(doc);
-            reactionlist.setAttribute("xmlns","http://www.xml-cml.org/schema/cml2/react");
+            namespace="http://www.xml-cml.org/schema/cml2/react";
             nodeToAppend.appendChild(reactionlist);
             addID(reactionSet, reactionlist);
             addTitle(reactionSet, reactionlist);
@@ -240,7 +249,7 @@ public class Convertor {
     
     private void writeReaction(Reaction reaction, Element nodeToAppend) throws CMLException{
         ReactionImpl reactionimpl=new ReactionImpl(doc);
-        reactionimpl.setAttribute("xmlns","http://www.xml-cml.org/schema/cml2/react");
+        namespace="http://www.xml-cml.org/schema/cml2/react";
         nodeToAppend.appendChild(reactionimpl);
         addID(reaction, reactionimpl);
         addTitle(reaction, reactionimpl);

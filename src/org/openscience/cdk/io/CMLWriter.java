@@ -135,7 +135,6 @@ public class CMLWriter extends DefaultChemObjectWriter {
     private boolean isRootElement;
 
     private String prefix = "";
-    private String namespace = "http://www.xml-cml.org/schema/cml2/core";
     
     private org.openscience.cdk.tools.LoggingTool logger;
     private IsotopeFactory isotopeFactory = null;
@@ -213,7 +212,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
             CMLDocumentFactory docfac = DocumentFactoryImpl.newInstance();
             cmldoc = (CMLDocument) docfac.createDocument();
             try{
-              cmldoc.appendChild(new Convertor().convert(object,cmldoc,cmlIds.isSet()));
+              cmldoc.appendChild(new Convertor().convert(object,cmldoc,cmlIds.isSet(),namespacedOutput.isSet(), schemaInstanceOutput.isSet(), instanceLocation));
             }
             catch(CMLException ex){
               throw new CDKException(ex.getMessage());
