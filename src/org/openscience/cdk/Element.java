@@ -27,9 +27,18 @@ package org.openscience.cdk;
 
 /**
  * Implements the idea of an element in the periodic table.
- * Use an element factory to get a ready-to-use element by name or number.
+ * 
+ * <p>Use the IsotopeFactory to get a ready-to-use elements
+ * by symbol or atomic number:
+ * <pre>
+ *   IsotopeFactory if = IsotopeFactory.getInstance();
+ *   Element e1 = if.getElement("C");
+ *   Element e2 = if.getElement(12);
+ * </pre>
  *
  * @keyword element
+ *
+ * @see tools.IsotopeFactory
  */
 public class Element extends ChemObject
 {
