@@ -4,6 +4,12 @@ CHANGELOG $Date$
 Changes in CVS
 ------------------------------------
 New:
+Fixes:
+API changes:
+
+20040917 Release
+------------------------------------
+New:
 * Added the cdk.graph.matrix package
 * SmilesGenerator can handle ring configurations which are not chiralities
 * Re-implementation of SSSRFinder with Berger-Gritzmann-deVries Algorithm
