@@ -65,5 +65,8 @@
     <tocentry page="contact.xml" filename="contact.html"/>
     <tocentry page="download.xml" filename="download.html"/>
     <tocentry page="license.xml" filename="license.html"/>
+    <tocentry id="SFPageURL" href="http://cdk.sf.net/">
+      <title>SF Project Page</title>
+    </tocentry>
   </toc>
 </layout>
