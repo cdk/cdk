@@ -352,7 +352,14 @@
         <target id="compile-extra" name="compile-extra" depends="dist-standard, javacc">
             <javac srcdir="${build.src}" destdir="${build}" optimize="${optimization}" 
                    debug="${debug}" deprecation="${deprecation}">
+
                 <classpath refid="project.class.path" />
+                <classpath>
+                    <fileset dir="${dist}/jar">
+                        <include name="cdk-core.jar" />
+                        <include name="cdk-standard.jar" />
+                    </fileset>
+                </classpath>
 
                 <excludesfile name="${src}/java3d.javafiles" />
                 <excludesfile name="${src}/experimental.javafiles" />
