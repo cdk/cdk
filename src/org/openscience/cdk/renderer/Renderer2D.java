@@ -381,13 +381,15 @@ public class Renderer2D   {
         int atomicMassNumber = atom.getAtomicMass();
         int isotopeW = 0; // unless next condition, this is the default
         int isotopeH = 0;
-        Isotope majorIsotope = isotopeFactory.getMajorIsotope(atomSymbol);
         String isotopeString = "";
-        if (atomicMassNumber != 0 && atomicMassNumber != majorIsotope.getAtomicMass()) {
-            // fm is identical, don't change
-            isotopeString = new Integer(atomicMassNumber).toString();
-            isotopeW = (new Integer(fm.stringWidth(isotopeString))).intValue();
-            isotopeH = (new Integer(fm.getAscent())).intValue();
+        if (atomicMassNumber != 0) {
+            Isotope majorIsotope = isotopeFactory.getMajorIsotope(atomSymbol);
+            if (atomicMassNumber != majorIsotope.getAtomicMass()) {
+                // fm is identical, don't change
+                isotopeString = new Integer(atomicMassNumber).toString();
+                isotopeW = (new Integer(fm.stringWidth(isotopeString))).intValue();
+                isotopeH = (new Integer(fm.getAscent())).intValue();
+            }
         }
 
         int labelX = 0;
