@@ -94,10 +94,10 @@ public class CMLWriter implements ChemObjectWriter {
      * @param out       Writer to redirect the output to.
      * @param fragment  Boolean denoting that the content is not
      */
-    public CMLWriter(Writer w, boolean fragment) {        
-		output = w;
-		this.fragment = fragment;
-		this.done = false;
+    public CMLWriter(Writer w, boolean fragment) {
+        output = w;
+        this.fragment = fragment;
+        this.done = false;
     }
 
     /**
@@ -113,46 +113,89 @@ public class CMLWriter implements ChemObjectWriter {
      * @param object A Molecule of SetOfMolecules object
      */
     public void write(ChemObject object) throws UnsupportedChemObjectException {
-		if (!done) {
-		    if (!fragment) {
-			write("<?xml version=\"1.0\"?>\n");
-		    }
-		    if (object instanceof SetOfMolecules) {
-				if (((SetOfMolecules)object).getMoleculeCount() > 1) 
-				    write("<list>\n");
-				for (int i = 0; i < ((SetOfMolecules)object).getMoleculeCount(); i++) {
-				    write(((SetOfMolecules)object).getMolecule(i));
-				}
-				if (((SetOfMolecules)object).getMoleculeCount() > 1) 
-				    write("</list>\n");
-		    } else if (object instanceof Molecule) {
-				write((Molecule)object);
-		    } else {
-				throw new UnsupportedChemObjectException("Only supported are SetOfMolecules and Molecule.");
-		    }	
-		    if (!fragment) {	       
-				done = true;
-		    }
-		} else {};
+        if (!done) {
+            if (!fragment) {
+                write("<?xml version=\"1.0\"?>\n");
+            }
+            if (object instanceof SetOfMolecules) {
+                write((SetOfMolecules)object);
+            } else if (object instanceof Molecule) {
+                write((Molecule)object);
+            } else if (object instanceof Crystal) {
+                write((Crystal)object);
+            } else if (object instanceof ChemSequence) {
+                write((ChemSequence)object);
+            } else {
+                throw new UnsupportedChemObjectException("This object type is not supported.");
+            }    
+            if (!fragment) {           
+                done = true;
+            }
+        } else {};
     };
 
     // Private procedures
 
+    private void write(Crystal crystal) {
+        write("<molecule>\n");
+        write("  <crystal>\n");
+        write("    <floatArray title=\"a\" convention=\"PMP\">");
+        write(crystal.getA());
+        write("    </floatArray>\n");
+        write("    <floatArray title=\"b\" convention=\"PMP\">");
+        write(crystal.getB());
+        write("    </floatArray>\n");
+        write("    <floatArray title=\"c\" convention=\"PMP\">");
+        write(crystal.getC());
+        write("    </floatArray>\n");
+        write("  </crystal>\n");
+        write((AtomContainer)crystal);
+        write("</molecule>\n");
+    }
+
+    private void write(AtomContainer ac) {
+        write(ac.getAtoms());
+        write(ac.getBonds());
+    }
+
     private void write(SetOfMolecules som) {
-		if (som.getMoleculeCount() > 1) 
-		    write("<list>\n");
-		for (int i = 0; i < som.getMoleculeCount(); i++) {
-		    this.write(som.getMolecule(i));
-		}
-		if (som.getMoleculeCount() > 1) 
-		    write("</list>\n");
+        int count = som.getMoleculeCount();
+        if (count > 1)
+            write("<list>\n");
+        for (int i = 0; i < count; i++) {
+            this.write(som.getMolecule(i));
+        }
+        if (count > 1)
+            write("</list>\n");
+    }
+
+    private void write(ChemSequence chemseq) {
+        int count = chemseq.getChemModelCount();
+        if (count > 1)
+            write("<list>\n");
+        for (int i = 0; i < count; i++) {
+            this.write(chemseq.getChemModel(i));
+        }
+        if (count > 1)
+            write("</list>\n");
+    }
+
+    private void write(ChemModel model) {
+        Crystal crystal = model.getCrystal();
+        SetOfMolecules som = model.getSetOfMolecules();
+        if (crystal != null) {
+            write(crystal);
+        } else if (som != null) {
+            write(som);
+        } else {
+            write("<!-- model contains no data -->\n");
+        }
     }
 
     private void write(Molecule mol) {
-		write("<molecule>\n");
-		write(mol.getAtoms());
-		write(mol.getBonds());
-		write("</molecule>\n");
+        write("<molecule>\n");
+        write((AtomContainer)mol);
+        write("</molecule>\n");
     }
 
     private void write(Atom atoms[]) {
@@ -227,6 +270,15 @@ public class CMLWriter implements ChemObjectWriter {
 		    write(new Float(p.z).toString());
 		    write("</float>\n");
 		}
+    }
+
+    private void write(double[] da) {
+        for (int i=0; i < da.length; i++) {
+            write(new Double(da[i]).toString());
+            if (i < (da.length -1)) {
+                write(" ");
+            }
+        }
     }
 
     private void write(String s) {

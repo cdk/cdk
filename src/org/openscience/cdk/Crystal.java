@@ -81,6 +81,18 @@ public class Crystal extends AtomContainer {
     }
 
     /**
+     * Gets the A unit cell axes in carthesian coordinates
+     * as a three element double array.
+     */
+    public double[] getA() {
+        double[] result = new double[3];
+        result[0] = ax;
+        result[1] = ay;
+        result[2] = az;
+        return result;
+    }
+
+    /**
      * Adds the atoms in the AtomContainer as cell content.
      */
     public void add(AtomContainer ac) {
@@ -103,10 +115,34 @@ public class Crystal extends AtomContainer {
     }
 
     /**
+     * Gets the B unit cell axes in carthesian coordinates
+     * as a three element double array.
+     */
+    public double[] getB() {
+        double[] result = new double[3];
+        result[0] = bx;
+        result[1] = by;
+        result[2] = bz;
+        return result;
+    }
+
+    /**
      * Sets the C unit cell axes in carthesian coordinates.
      */
     public void setC(double x, double y, double z) {
         cx = x; cy = y; cz = z;
+    }
+
+    /**
+     * Gets the C unit cell axes in carthesian coordinates
+     * as a three element double array.
+     */
+    public double[] getC() {
+        double[] result = new double[3];
+        result[0] = cx;
+        result[1] = cy;
+        result[2] = cz;
+        return result;
     }
 
     /**
@@ -145,36 +181,6 @@ public class Crystal extends AtomContainer {
      */
     public int getZ() {
         return Z;
-    }
-
-    /**
-     * Removes the atom at the given position from the AtomContainer
-     * and its symmetry related atoms too.
-     *
-     * This assumes that atom i is symmetry related too
-     * atom (i + getAtomCount()/getZ()).
-     */
-    public void removeAtom(int position) {
-        int add = getAtomCount()/getZ();
-        for (int i = (getZ() - 1); i >= 0; i--) {
-            super.removeAtom(position + i*add);
-        }
-    }
-
-    /**
-     * Removes the atom at the given position from the AtomContainer
-     * and its symmetry related atoms too.
-     *
-     * This assumes that atom i is symmetry related too
-     * atom (i + getAtomCount()/getZ()).
-     */
-    public void removeAtom(Atom atom) {
-        try {
-            int position = getAtomNumber(atom);
-            removeAtom(position);
-        } catch (NoSuchAtomException e) {
-            // do nothing
-        }
     }
 
     /**
