@@ -24,11 +24,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *  */
-
 package org.openscience.cdk;
-
 import javax.vecmath.*;
-
 /**
  *  Represents the idea of an chemical atom 
  *
@@ -40,7 +37,6 @@ public class Atom extends ChemObject {
 	 *  The element type of this atom 
 	 */
 	protected Element element;
-
 	/* Let's keep this exact specification
 	 * of what kind of point2d we're talking of here,
 	 * sinces there are so many around in the java standard api */
@@ -49,29 +45,23 @@ public class Atom extends ChemObject {
 	 *  space 
 	 */
 	protected javax.vecmath.Point2d point2D;
-
 	/**
 	 *  A 2D point specifying the location of this atom in a 3D coordinate 
 	 *  space 
 	 */
 	protected javax.vecmath.Point3d point3D;
-
 	/**
 	 *  The number of implicitly bound hydrogen atoms for this atom 
 	 */
 	protected int hydrogenCount;
-
 	/**
 	 *  The number of atoms directly bonded to this atom 
 	 */
 	protected int degree;
-
 	/**
 	 *  A stereo parity descriptor for the stereochemistry of this atom 
 	 */
 	protected int stereoParity;
-
-
 	/**
 	 *  Sets the element type of this atom 
 	 *
@@ -80,8 +70,6 @@ public class Atom extends ChemObject {
 	public void setElement(Element element) {
 		this.element = element;
 	}
-
-
 	/**
 	 *  Sets the hydrogen count of this atom. 
 	 *
@@ -90,8 +78,6 @@ public class Atom extends ChemObject {
 	public void setHydrogenCount(int hydrogenCount) {
 		this.hydrogenCount = hydrogenCount;
 	}
-
-
 	/**
 	 *  
 	 * Sets a point specifying the location of this
@@ -102,8 +88,6 @@ public class Atom extends ChemObject {
 	public void setPoint2D(javax.vecmath.Point2d point2D) {
 		this.point2D = point2D;
 	}
-
-
 	/**
 	 *  
 	 * Sets a point specifying the location of this
@@ -114,8 +98,6 @@ public class Atom extends ChemObject {
 	public void setPoint3D(javax.vecmath.Point3d point3D) {
 		this.point3D = point3D;
 	}
-
-
 	/**
 	 *  Sets the stereo parity for this atom 
 	 *
@@ -126,8 +108,6 @@ public class Atom extends ChemObject {
 	public void setStereoParity(int stereoParity) {
 		this.stereoParity = stereoParity;
 	}
-
-
 	/**
 	 *  
 	 * Returns the degree of this atom, i.e. the number of other atoms
@@ -138,8 +118,6 @@ public class Atom extends ChemObject {
 	public int getDegree() {
 		return this.degree;
 	}
-
-
 	/**
 	 *  Returns an Element representing the element type of this Atom. 
 	 *
@@ -148,9 +126,6 @@ public class Atom extends ChemObject {
 	public Element getElement() {
 		return this.element;
 	}
-
-
-
 	/**
 	 *  Returns the hydrogen count of this atom 
 	 *
@@ -159,9 +134,6 @@ public class Atom extends ChemObject {
 	public int getHydrogenCount() {
 		return this.hydrogenCount;
 	}
-
-
-
 	/**
 	 *  
 	 * Returns a point specifying the location of this
@@ -172,9 +144,6 @@ public class Atom extends ChemObject {
 	public javax.vecmath.Point2d getPoint2D() {
 		return this.point2D;
 	}
-
-
-
 	/**
 	 *  
 	 * Returns a point specifying the location of this
@@ -185,9 +154,6 @@ public class Atom extends ChemObject {
 	public javax.vecmath.Point3d getPoint3D() {
 		return this.point3D;
 	}
-
-
-
 	/**
 	 *  Returns the stereo parity of this atom 
 	 *
@@ -198,8 +164,6 @@ public class Atom extends ChemObject {
 	public int getStereoParity() {
 		return this.stereoParity;
 	}
-
-
 	/**
 	 *  
 	 * Internal method to set the degree of this atom, i.e. the number of other atoms
