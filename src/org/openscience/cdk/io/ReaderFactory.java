@@ -116,7 +116,8 @@ public class ReaderFactory {
                 logger.info("Gamess format detected");
                 return "org.openscience.cdk.io.GamessReader";
             } else if (lineNumber == 4 && (line.indexOf("v2000") >= 0 ||
-                                           line.indexOf("v3000") >= 0)) {
+                                           line.indexOf("V3000") >= 0 ||
+                                           line.indexOf("V2000") >= 0)) {
                 logger.info("MDL mol/sdf file format detected");
                 return "org.openscience.cdk.io.MDLReader";
             } else if (line.indexOf("ACES2") >= 0) {
@@ -219,7 +220,8 @@ public class ReaderFactory {
         boolean mdlFile = false;
         if (line4 != null) {
             if (line4.trim().endsWith("V2000") || 
-                line4.trim().endsWith("V3000")) {
+                line4.trim().endsWith("V3000") || 
+                line4.trim().endsWith("v2000")) {
                 mdlFile = true;
             } else if (line4.length() >= 6) {
                 try {
