@@ -7,6 +7,7 @@ New:
 * Added move operation to JCPController2D
 * Added ReaderFactory that guesses the file format based
   on the contents of the file (from the Jmol project)
+* XYZWriter (from the Jmol project)
 
 Changes:
 * Added one-click (not-patented ;) deselect of atoms in lasso mode
