@@ -100,7 +100,7 @@ public class Renderer2DTest extends JPanel
 	 * @param   args    The Arguments from the commandline
 	 */	public static void main(String[] args)
 	{
-		new Renderer2DTest(args[0]);
+		new Renderer2DTest("data/reserpine.mol");
 	}
 }
 

@@ -35,7 +35,7 @@ import javax.vecmath.*;
 public class Bond extends ElectronContainer implements Cloneable
 {
 	/** The bond order of this bond */
-	protected int order;
+	protected double order;
 
 	/** A list of atoms participating in this bond */
 	protected Atom[] atoms;
@@ -59,7 +59,7 @@ public class Bond extends ElectronContainer implements Cloneable
 	 * Constructs a bond with a given order from an array of atoms
 	 *
 	 */
-	public Bond(Atom atom1, Atom atom2, int order)
+	public Bond(Atom atom1, Atom atom2, double order)
 	{
 		atoms = new Atom[2];
 		setAtomAt(atom1, 0);
@@ -71,7 +71,7 @@ public class Bond extends ElectronContainer implements Cloneable
 	 * Constructs a bond with a given order and stereo orientation from an array of atoms
 	 *
 	 */
-	public Bond(Atom atom1, Atom atom2, int order, int stereo)
+	public Bond(Atom atom1, Atom atom2, double order, int stereo)
 	{
     this(atom1, atom2, order);
 		setStereo(stereo);
@@ -195,7 +195,7 @@ public class Bond extends ElectronContainer implements Cloneable
 	 *
 	 * @return The bond order of this bond
 	 */
-	public int getOrder()
+	public double getOrder()
 	{
 		return this.order;
 	}
@@ -207,7 +207,7 @@ public class Bond extends ElectronContainer implements Cloneable
 	 *
 	 * @param   order The bond order to be assigned to this bond
 	 */
-	public void setOrder(int order)
+	public void setOrder(double order)
 	{
 		this.order = order;
 	}

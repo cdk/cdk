@@ -216,7 +216,7 @@ public class HOSECodeGenerator implements java.io.Serializable, CDKConstants
 				if (treeNode.source == branch && !done[i])
 				{
 				    if (treeNode.bondType <= 4) {
-					code.append(bondSymbols[treeNode.bondType]);
+					code.append(bondSymbols[(int)treeNode.bondType]);
 				    } else {
 					// what should be done here? with wedges for example?
 					// see SF bug #126841
@@ -252,7 +252,7 @@ public class HOSECodeGenerator implements java.io.Serializable, CDKConstants
 			treeNode = (TreeNode)sphereNodes.elementAt(i);
 			treeNode.score += getElementRank(treeNode.symbol);
 			if (treeNode.bondType <= 4) {
-			    treeNode.score += bondRankings[treeNode.bondType];
+			    treeNode.score += bondRankings[(int)treeNode.bondType];
 			} else {
 			    // what should be done here? with wedges for example?
 			    // see SF bug #126841
@@ -319,10 +319,10 @@ public class HOSECodeGenerator implements java.io.Serializable, CDKConstants
 		String symbol;
 		Atom source;
 		Atom number; 
-		int bondType;
+		double bondType;
 		long score;
 		
-		TreeNode(String symbol, Atom source, Atom number, int bondType, long score)
+		TreeNode(String symbol, Atom source, Atom number, double bondType, long score)
 		{
 			this.symbol = symbol;
 			this.source = source;

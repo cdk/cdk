@@ -1,4 +1,4 @@
-/* StructureDiagramGeneratorTest.java
+/* 
  * 
  * $RCSfile$    $Author$    $Date$    $Revision$
  * 
@@ -28,32 +28,32 @@ import org.openscience.cdk.*;
 import org.openscience.cdk.io.*;
 import org.openscience.cdk.layout.*;
 import org.openscience.cdk.renderer.*;
+import org.openscience.cdk.structgen.*;
+import org.openscience.cdk.tools.*;
 import java.util.*;
 import java.io.*;
 import java.net.URL;
 import javax.vecmath.Vector2d;
 
-public class StructureDiagramGeneratorTest
+public class SingleStructureRandomGeneratorTest
 {
 	MoleculeListViewer moleculeListViewer = null;
 	
-	public StructureDiagramGeneratorTest()
+	public SingleStructureRandomGeneratorTest() throws Exception
 	{
+		System.out.println("Instantiating MoleculeListViewer");
 		moleculeListViewer = new MoleculeListViewer();
-		showIt(MoleculeFactory.loadMolecule("data/reserpine.mol"), "Reserpine");
-		showIt(MoleculeFactory.loadMolecule("data/four-ring-5x10.mol"), "5x10 condensed four membered rings");
-		showIt(MoleculeFactory.loadMolecule("data/six-ring-4x4.mol"), "4x4 condensed six membered rings");
-		showIt(MoleculeFactory.loadMolecule("data/polycarpol.mol"), "Polycarpol");
-		showIt(MoleculeFactory.makeAlphaPinene(), "alpha-Pinene");
-		showIt(MoleculeFactory.makeBiphenyl(), "Biphenyl");
-		showIt(MoleculeFactory.make4x3CondensedRings(), "4x3CondensedRings");
-		showIt(MoleculeFactory.makePhenylEthylBenzene(), "PhenylEthylBenzene");
-		showIt(MoleculeFactory.makeSpiroRings(), "Spiro");
-		showIt(MoleculeFactory.makeMethylDecaline(), "Methyldecaline");
-		showIt(MoleculeFactory.makeBranchedAliphatic(), "Branched aliphatic");
-		showIt(MoleculeFactory.makeDiamantane(), "Diamantane - A Problem! - Solve it! :-)");
-		showIt(MoleculeFactory.makeEthylCyclohexane(), "Ethylcyclohexane");	
-		showIt(MoleculeFactory.makeBicycloRings(), "Bicyclo-[2.2.2]-octane");
+		System.out.println("Instantiating SingleStructureRandomGenerator");
+		SingleStructureRandomGenerator ssrg = new SingleStructureRandomGenerator();
+		System.out.println("Assining unbonded set of atoms");
+		AtomContainer ac = getBunchOfUnbondedAtoms();
+		String mf = new MFAnalyser(ac).getMolecularFormula();
+		System.out.println("Molecular Formula is: " + mf);
+		ssrg.setAtomContainer(ac);
+		System.out.println("Generating a random structure");
+		ac = ssrg.generate();
+		System.out.println("Showing the structure");
+		showIt((Molecule)ac, "A randomly generated molecule for " + mf);
 	}
 
 
@@ -77,9 +77,31 @@ public class StructureDiagramGeneratorTest
 		return true;
 	}
 
+	private AtomContainer getBunchOfUnbondedAtoms()
+	{
+		Molecule molecule = MoleculeFactory.makeAlphaPinene();
+		molecule.removeAllBonds();
+		int[] hcounts = {1,0,1,2,1,2,1,0,3,3};
+		for (int f = 0; f < hcounts.length; f++)
+		{
+			molecule.getAtomAt(f).setHydrogenCount(hcounts[f]);
+		}
+		return (AtomContainer)molecule;
+	}
+	
 	public static void main(String[] args)
 	{
-		new StructureDiagramGeneratorTest();
+		System.out.println("Yes!");
+		try
+		{
+			new SingleStructureRandomGeneratorTest();
+		}
+		catch(Exception exc)
+		{
+			System.out.println("SingleStructureRandomGeneratorTest failed: ");
+			exc.printStackTrace();
+		}
+		System.out.println("Done");
 		
 	}
 }

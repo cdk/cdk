@@ -108,7 +108,35 @@ public class PathTools implements CDKConstants {
 		return A;
 	}
 
+	/**
+	 *  All-Pairs-Shortest-Path computation based on Floyds algorithm Takes an nxn
+	 *  matrix C of edge costs and produces an nxn matrix A of lengths of shortest
+	 *  paths.
+	 *
+	 *@param  C  Description of Parameter
+	 *@return    Description of the Returned Value
+	 */
+	public static int[][] computeFloydAPSP(double C[][]) {
+		int i;
+		int j;
+		int k;
+		int n = C.length;
+		int[][] A = new int[n][n];
+		//System.out.println("Matrix size: " + n);
+		for (i = 0; i < n; i++) {
+			for (j = 0; j < n; j++) {
+				if (C[i][j] == 0) {
+					A[i][j] = 0;
+				}
+				else {
+					A[i][j] = 1;
+				}
+			}
+		}
+		return computeFloydAPSP(A);
+	}
 
+	
 	/**
 	 *  Recursivly perfoms a depth first search in a molecular graphs contained in
 	 *  the AtomContainer molecule, starting at the root atom and returning when it

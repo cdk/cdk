@@ -172,7 +172,7 @@ public class MDLWriter implements CDKConstants
 					line = "";
 					line += formatMDLInt(molecule.getAtomNumber(bond.getAtomAt(0)) + 1,3);
 					line += formatMDLInt(molecule.getAtomNumber(bond.getAtomAt(1)) + 1,3);
-					line += formatMDLInt(bond.getOrder(),3);
+					line += formatMDLInt((int)bond.getOrder(),3);
 					line += " 0  0  0  0 ";
 					writer.write(line);
 					writer.newLine();

@@ -84,7 +84,7 @@ public class AcceleratedRenderer3DModel
 		Cylinder cylinder;
 		try
 		{
-			int[][] cm = container.getConnectionMatrix();
+			double[][] cm = container.getConnectionMatrix();
 			for(i=0; i<cm.length; i++)
 				for(j=0; j<i; j++)
 					if (cm[i][j]>0)

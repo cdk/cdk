@@ -333,7 +333,7 @@ public class AtomPlacer implements CDKConstants
 	 */
 	public AtomContainer getInitialLongestChain(Molecule molecule) throws org.openscience.cdk.exception.NoSuchAtomException
 	{
-		int [][] conMat = molecule.getConnectionMatrix();
+		double [][] conMat = molecule.getConnectionMatrix();
 		int [][] apsp  = PathTools.computeFloydAPSP(conMat);
 		int maxPathLength = 0;
 		int bestStartAtom = -1, bestEndAtom = -1;

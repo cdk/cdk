@@ -132,8 +132,9 @@ public class RandomGenerator
 	protected void mutate(AtomContainer ac)
 	{
 		int nrOfAtoms = ac.getAtomCount();
-		int x1 = 0, x2 = 0, y1 = 0, y2 = 0, a11 = 0, a12 = 0, a22 = 0, a21 = 0;
-		int b11 = 0, lowerborder = 0, upperborder = 0;
+		int x1 = 0, x2 = 0, y1 = 0, y2 = 0;
+		double a11 = 0, a12 = 0, a22 = 0, a21 = 0;
+		double b11 = 0, lowerborder = 0, upperborder = 0;
 
 		Atom ax1 = null, ax2 = null, ay1 = null, ay2  = null;
 		Bond b1 = null, b2 = null, b3 = null, b4 = null;
@@ -209,8 +210,8 @@ public class RandomGenerator
 			
 					
 			/* Compute the range for b11 (see Faulons formulae for details) */
-			int[] cmax = {0, a11 - a22, a11 + a12 - 3, a11 + a21 - 3};
-			int[] cmin = {3, a11 + a12, a11 + a21, a11 - a22 + 3};
+			double[] cmax = {0, a11 - a22, a11 + a12 - 3, a11 + a21 - 3};
+			double[] cmin = {3, a11 + a12, a11 + a21, a11 - a22 + 3};
 			lowerborder = max(cmax);
 			upperborder = min(cmin);
 			/* Randomly choose b11 != a11 in the range max > r > min */
@@ -222,11 +223,11 @@ public class RandomGenerator
 				System.out.println("lowerborder = " + lowerborder);
 			}
 			choiceCounter = 0;
-			for (int f = lowerborder; f <= upperborder; f++)
+			for (double f = lowerborder; f <= upperborder; f++)
 			{
 				if (f != a11)
 				{
-					choices[choiceCounter] = f;
+					choices[choiceCounter] = (int)f;
 					choiceCounter ++;
 				}
 			}
@@ -243,9 +244,9 @@ public class RandomGenerator
 		}
 		while (!(b11 != a11 && (b11 >= lowerborder && b11 <= upperborder)));
 
-		int b12 = a11 + a12 - b11;
-		int b21 = a11 + a21 - b11;
-		int b22 = a22 - a11 + b11;
+		double b12 = a11 + a12 - b11;
+		double b21 = a11 + a21 - b11;
+		double b22 = a22 - a11 + b11;
 		
 		
 		if (b11 > 0)
@@ -341,9 +342,9 @@ public class RandomGenerator
 	 * @param   values  the values to be searched for the largest value among them
 	 * @return   the largest value among a set of given values  
 	 */
-	protected int max(int[] values)
+	protected double max(double[] values)
 	{
-		int max = values[0];
+		double max = values[0];
 		for (int f = 0; f < values.length; f++)
 		{
 			if (values[f] > max)
@@ -360,9 +361,9 @@ public class RandomGenerator
 	 * @param   values  the values to be searched for the smallest value among them
 	 * @return   the smallest value among a set of given values  
 	 */
-	protected int min(int[] values)
+	protected double min(double[] values)
 	{
-		int min = values[0];
+		double min = values[0];
 		for (int f = 0; f < values.length; f++)
 		{
 			if (values[f] < min)
