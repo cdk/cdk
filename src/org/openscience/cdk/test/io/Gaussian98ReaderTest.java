@@ -4,17 +4,18 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.Reader;
-
 import junit.framework.Assert;
 import junit.framework.AssertionFailedError;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.Gaussian98Reader;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.tools.ChemFileManipulator;
+import org.openscience.cdk.CDKConstants;
 
 /**
  * A Test case for the gaussian 98 (G98Reader) class.
@@ -53,13 +54,40 @@ public class Gaussian98ReaderTest extends TestCase {
 	
 	public void testNMRReading()
 	{
+		AtomContainer atomContainer = null;
+		boolean foundOneShieldingEntry = false;
+		Double shielding = null;
+		Object object = null;
+		int shieldingCounter = 0;
 		try{
 			String filename = "data/gaussian/g98ReaderNMRTest.log";
 			BufferedReader inputReader = new BufferedReader(new FileReader(filename));
 			Gaussian98Reader g98Reader = new Gaussian98Reader(inputReader);
-			g98Reader.read(new ChemFile());
+			ChemFile chemFile = (ChemFile)g98Reader.read(new ChemFile());
+			AtomContainer[] atomContainers = ChemFileManipulator.getAllAtomContainers(chemFile);
+			assertNotNull(atomContainers);
+			assertTrue(atomContainers.length == 54);
+			//System.out.println("Found " + atomContainers.length + " atomContainers");
+			for (int f = 0; f < atomContainers.length; f++)
+			{	
+				shieldingCounter = 0;
+				atomContainer = atomContainers[f];
+				for (int g = 0; g <  atomContainer.getAtomCount(); g++)
+				{
+					object = atomContainer.getAtomAt(g).getProperty(CDKConstants.ISOTROPIC_SHIELDING);
+					if (object != null)
+					{
+						shielding = (Double)object;
+						shieldingCounter ++;
+					}
+				}
+				if (f < 53) assertTrue(shieldingCounter == 0);
+				else assertTrue(shieldingCounter == atomContainers[f].getAtomCount());
+				//System.out.println("AtomContainer " + (f + 1) + " has " + atomContainers[f].getAtomCount() + " atoms and " + shieldingCounter + " shielding entries");
+			}
 		}catch(Exception exc)
 		{
+			exc.printStackTrace();
 			fail();	
 		}
 		

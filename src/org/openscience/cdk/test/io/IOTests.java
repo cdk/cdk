@@ -43,6 +43,7 @@ public class IOTests {
         suite.addTest(CMLIOTests.suite());        
         suite.addTest(CrystClustReaderTest.suite());
         suite.addTest(GamessReaderTest.suite());
+	suite.addTest(Gaussian98ReaderTest.suite());
         suite.addTest(GhemicalReaderTest.suite());
         suite.addTest(HINReaderTest.suite());
         //suite.addTest(IChIReaderTest.suite());
