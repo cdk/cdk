@@ -200,10 +200,12 @@ public class Controller2D
 	public void mouseDragged(MouseEvent event)
 	{
 		isUndoableChange = false;
-		logger.debug("MouseDragged Event Props: mode=" + c2dm.getDrawModeString() +
-				", trigger=" + event.isPopupTrigger() +
-				", Button number: " + event.getButton() +
+		logger.debug("MouseDragged Event Props: mode=", c2dm.getDrawModeString());
+        if (logger.isDebugEnabled()) {
+            logger.debug("   trigger=" + event.isPopupTrigger() +
+				/* ", Button number: " + event.getButton() + */
 				", Click count: " + event.getClickCount());
+        }
 
 		int[] screenCoords = {event.getX(), event.getY()};
 		int[] mouseCoords = getWorldCoordinates(screenCoords);
@@ -295,12 +297,15 @@ public class Controller2D
 		int mouseX = mouseCoords[0];
 		int mouseY = mouseCoords[1];
 
-		logger.debug("MousePressed Event Props: mode=" + c2dm.getDrawModeString() +
-				", trigger=" + event.isPopupTrigger() +
-				", Button number: " + event.getButton() +
+		logger.debug("MousePressed Event Props: mode=", c2dm.getDrawModeString());
+        if (logger.isDebugEnabled()) {
+            logger.debug("   trigger=" + event.isPopupTrigger() +
+				/* ", Button number: " + event.getButton() + */
 				", Click count: " + event.getClickCount());
+        }
 
-		if (event.isPopupTrigger() || event.getButton() == MouseEvent.BUTTON3)
+		if (event.isPopupTrigger() || 
+            (event.getModifiers() & MouseEvent.BUTTON3_MASK) != 0)
 		{
 			logger.info("Popup menu triggered...");
 			popupMenuForNearestChemObject(mouseX, mouseY, event);
@@ -338,13 +343,14 @@ public class Controller2D
 	public void mouseReleased(MouseEvent event)
 	{
 		isUndoableChange = false;
-		logger.debug("MouseReleased Event Props: mode=" + c2dm.getDrawModeString() +
-				", trigger=" + event.isPopupTrigger() +
-				", Button number: " + event.getButton() +
+		logger.debug("MouseReleased Event Props: mode=", c2dm.getDrawModeString());
+        if (logger.isDebugEnabled()) {
+            logger.debug("   trigger=" + event.isPopupTrigger() +
+				/* ", Button number: " + event.getButton() + */
 				", Click count: " + event.getClickCount());
+        }
 
-		if (event.getButton() == MouseEvent.BUTTON1)
-		{
+        if ((event.getModifiers() & MouseEvent.BUTTON1_MASK) != 0) {
 			int[] screenCoords = {event.getX(), event.getY()};
 			int[] mouseCoords = getWorldCoordinates(screenCoords);
 			int mouseX = mouseCoords[0];

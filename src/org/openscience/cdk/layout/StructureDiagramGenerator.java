@@ -335,7 +335,7 @@ public class StructureDiagramGenerator
 		 *  First we check if we can map any templates with predifined coordinates
 		 *  Those are stored as MDL molfiles in data/templates
 		 */
-		if (useTemplates)
+		if (useTemplates && (System.getProperty("java.version").indexOf("1.3.") == -1))
 		{
 			logger.debug("Initializing TemplateHandler");
 			logger.debug("TemplateHander initialized");
