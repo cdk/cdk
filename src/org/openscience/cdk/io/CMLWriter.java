@@ -5,6 +5,8 @@
  *
  * Copyright (C) 2001-2003  The Chemistry Development Kit (CDK) project
  *
+ * Contact: cdk-devel@lists.sourceforge.net
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -289,14 +291,18 @@ public class CMLWriter implements ChemObjectWriter {
 		write("  </bondArray>\n");
     }
 
-    private void write(Atom atom) {
-		write("    <atom id=\"");
+    private void writeAtomID(Atom atom) {
         if (atom.getID() != null && atom.getID().length() != 0) {
             write(atom.getID());
         } else {
             // use some unique default -> the hashcode
             write("a" + atom.hashCode());
         }
+    }
+    
+    private void write(Atom atom) {
+		write("    <atom id=\"");
+        writeAtomID(atom);
         write("\" ");
 		write("elementType=\"");
 		write(atom.getSymbol());
@@ -313,6 +319,7 @@ public class CMLWriter implements ChemObjectWriter {
     private void write(Bond bond) {
         StringBuffer childElements = new StringBuffer();
 		write("    <bond id=\"");
+        logger.debug("Bond id: " + bond.getID());
         if (bond.getID() != null && bond.getID().length() != 0) {
             write(bond.getID());
         } else {
@@ -324,13 +331,19 @@ public class CMLWriter implements ChemObjectWriter {
         if (atoms.length == 2) {
             write("atomRefs2=\"");
             for (int i = 0; i < 2; i++) {
-                write("a" + atoms[i].hashCode() + " ");
+                writeAtomID(atoms[i]);
+                if (i == 0) {
+                    write(" ");
+                }
             }
             write("\" ");
         } else {
-            write("atomRefs2=\"");
+            write("atomRefs=\"");
             for (int i = 0; i < atoms.length; i++) {
-                write("a" + atoms[i].hashCode() + " ");
+                writeAtomID(atoms[i]);
+                if (i < atoms.length-1) {
+                    write(" ");
+                }
             }
             write("\" ");
         }
