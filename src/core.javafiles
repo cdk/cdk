@@ -27,3 +27,4 @@ org/openscience/cdk/LonePair.java
 org/openscience/cdk/Reaction.java
 org/openscience/cdk/SetOfReactions.java
 org/openscience/cdk/Mapping.java
+org/openscience/cdk/Association.java
