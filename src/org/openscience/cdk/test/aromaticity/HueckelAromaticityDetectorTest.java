@@ -171,7 +171,36 @@ public class HueckelAromaticityDetectorTest extends TestCase
 		assertTrue(isAromatic);
 	}
 
+	/**
+	 *  A unit test for JUnit
+	 */
+	public void testSN()
+	{
+		Molecule mol = MoleculeFactory.makeSN();
+		if (standAlone) {
+            display(mol);
+            //System.out.println("Testing SN HetereoCylcle");
+        }
+		boolean isAromatic = false;
+		try
+		{
+			isAromatic = HueckelAromaticityDetector.detectAromaticity(mol);
+		} catch (Exception exc)
+		{
+			if (standAlone)
+			{
+				exc.printStackTrace();
+			}
+            fail(exc.toString());
+		}
+		if (standAlone && isAromatic)
+		{
+			System.out.println("SN Heterocycle is aromatic");
+		}
+		assertTrue(isAromatic);
+	}
 
+	
 	/**
 	 *  A unit test for JUnit
 	 */
@@ -193,7 +222,7 @@ public class HueckelAromaticityDetectorTest extends TestCase
 			while (iter.hasNext()) {
 				r = (Ring) iter.next();
 				i++;
-				isAromatic = HueckelAromaticityDetector.isAromatic(mol, rs, r);
+				isAromatic = HueckelAromaticityDetector.isAromatic(mol, r);
 				if (standAlone && isAromatic) {
 					System.out.println("Ring " + i + " in test molecule is aromatic.");
 				} else if (standAlone && !isAromatic) {
@@ -215,7 +244,7 @@ public class HueckelAromaticityDetectorTest extends TestCase
 		HOSECodeGenerator hcg = null;
 		try
 		{
-			String filename = "data/HoseCodeTest.mol";
+			String filename = "data/test.mol";
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 			MDLReader reader = new MDLReader(new InputStreamReader(ins));
 			molecule = (Molecule)reader.read((ChemObject)new Molecule());
@@ -278,6 +307,7 @@ public class HueckelAromaticityDetectorTest extends TestCase
 		//hadt.testBenzeneFromSMILES();
 		//hadt.testIndole();
 		//hadt.testPyrrole();
+		//hadt.testSN();
 		hadt.test5();
 		//hadt.testPorphyrine();
 	}

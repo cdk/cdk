@@ -480,7 +480,24 @@ public class MoleculeFactory {
 		
 		return mol;
 	}
-	
+
+	public static Molecule makeSN()
+	{
+		Molecule mol = new Molecule();
+		mol.addAtom(new Atom("C")); // 0
+		mol.addAtom(new Atom("N")); // 1
+		mol.addAtom(new Atom("C")); // 2
+		mol.addAtom(new Atom("S")); // 3
+		mol.addAtom(new Atom("C")); // 4
+		
+		mol.addBond(0, 1, 1.0); // 1
+		mol.addBond(1, 2, 2.0); // 2
+		mol.addBond(2, 3, 1.0); // 3
+		mol.addBond(3, 4, 1.0); // 4
+		mol.addBond(4, 0, 2.0); // 5
+		
+		return mol;
+	}	
 
 	
 	public static Molecule makeSingleRing()

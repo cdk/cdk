@@ -322,7 +322,7 @@ public class MDLReader implements ChemObjectReader
                 }
             }
 		} catch (Exception e) {
-            String error = "Error (" + e.toString() + ") while parsing line: " + line;
+            String error = "Error (" + e.toString() + ") while parsing line: " + line + " in property block.";
 			logger.error(error);
             throw new CDKException(error);
 		}

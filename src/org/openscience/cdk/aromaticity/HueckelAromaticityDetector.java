@@ -42,7 +42,7 @@ import java.io.*;
  */
 public class HueckelAromaticityDetector
 {
-	static boolean debug = false;
+	static boolean debug = true;
 	
 	/**
 	 * Retrieves the set of all rings and performs an aromaticity detection
@@ -94,7 +94,7 @@ public class HueckelAromaticityDetector
 		{
 			ring = (Ring)ringSet.elementAt(f);
 			if (debug)System.out.println("Testing ring no " + f + " for aromaticity:");
-			if (isAromatic(ac, ringSet, ring))
+			if (AromaticityCalculator.isAromatic(ring, ac))
 			{
 				for (int g = 0; g < ring.getAtomCount(); g++)
 				{
@@ -116,7 +116,12 @@ public class HueckelAromaticityDetector
 		return foundSomething;
 	}
 
-	public static boolean isAromatic(AtomContainer ac, RingSet ringSet, Ring ring)
+	public static boolean isAromatic(AtomContainer ac, Ring ring)
+	{
+		return AromaticityCalculator.isAromatic(ring, ac);	
+	}
+	
+/*	public static boolean isAromatic(AtomContainer ac, Ring ring)
 	{
 		int piElectronCount = 0;
 		int freeElectronPairCount = 0;
@@ -127,13 +132,6 @@ public class HueckelAromaticityDetector
 		for (int g = 0; g < ring.getAtomCount(); g++)
 		{
 			atom = ring.getAtomAt(g);
-			/* The following if-clause needs to be refined 
-			 * I guess there should be a more rigorous way 
-			 * of determining whether a hetero atom
-			 * contributes a free electron or not. 
-			 * Think of the role of nitrogen in 
-			 * pyrrole and pyrridine
-			 */
 			if ("O-N-S-P".indexOf(atom.getSymbol()) > -1)
 			{
 				freeElectronPairCount += 1;
@@ -142,10 +140,8 @@ public class HueckelAromaticityDetector
 			{
 				aromaCounter ++;
 			}
-
 		}
-
-		for (int g = 0; g < ring.getElectronContainerCount(); g++) {
+	for (int g = 0; g < ring.getElectronContainerCount(); g++) {
             ElectronContainer ec = ring.getElectronContainerAt(g);
             if (ec instanceof Bond) {
                 bond = (Bond)ec;
@@ -153,8 +149,6 @@ public class HueckelAromaticityDetector
                     piElectronCount += 2*(bond.getOrder()-1);
                 }
             }
-            // this part only considers the electrons in atoms, not those
-            // in lone pairs!
 		}
 		for (int f = 0; f < ((ring.getAtomCount() - 2)/4) + 2; f ++)
 		{
@@ -169,6 +163,6 @@ public class HueckelAromaticityDetector
 			else if ((4 * f) + 2 == piElectronCount + (freeElectronPairCount * 2) && ring.getAtomCount() < piElectronCount + (freeElectronPairCount * 2)) return true;
 		}
 		return false;
-	}
+	}*/
 
 }

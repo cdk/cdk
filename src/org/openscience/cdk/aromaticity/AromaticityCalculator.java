@@ -29,7 +29,7 @@
 package org.openscience.cdk.aromaticity;
 
 import org.openscience.cdk.Ring;
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 
@@ -52,10 +52,10 @@ public class AromaticityCalculator
    *  if there is one bond of order 2. Otherwise sp<sup>3</sup> hybridization is assumed.
 	 *
 	 * @param  ring      the ring to test
-	 * @param  molecule  the molecule the ring is in
+	 * @param  atomContainer  the AtomContainer the ring is in
 	 * @return           true if the ring is aromatic false otherwise.
 	 */
-	public static boolean isAromatic(Ring ring, Molecule molecule)
+	public static boolean isAromatic(Ring ring, AtomContainer atomContainer)
 	{
 //    System.out.println("calculating aromaticity");
 		Atom[] ringAtoms = ring.getAtoms();
@@ -67,7 +67,7 @@ public class AromaticityCalculator
 		{
 			Atom atom = ringAtoms[i];
 			numDoubleBond = 0;
-			conectedBonds = molecule.getConnectedBonds(atom);
+			conectedBonds = atomContainer.getConnectedBonds(atom);
 			for (int j = 0; j < conectedBonds.length; j++)
 			{
 				Bond bond = conectedBonds[j];

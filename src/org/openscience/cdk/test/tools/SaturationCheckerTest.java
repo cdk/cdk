@@ -206,8 +206,14 @@ public class SaturationCheckerTest extends TestCase
 			mol.getAtomAt(f).flags[CDKConstants.ISAROMATIC] = true;
 			mol.getBondAt(f).flags[CDKConstants.ISAROMATIC] = true;
 		}
-		
-		satcheck.addHydrogensToSatisfyValency(mol);
+		try
+		{
+			satcheck.addHydrogensToSatisfyValency(mol);
+		}
+		catch(Exception exc)
+		{
+			fail();	
+		}
 		satcheck.saturate(mol);
 		MFAnalyser mfa = new MFAnalyser(mol);
 		if (standAlone)
