@@ -68,7 +68,7 @@ public class SMARTSTest extends TestCase {
         SymbolQueryAtom atom1 = new SymbolQueryAtom();
         atom1.setSymbol("N");
         SymbolQueryAtom atom2 = new SymbolQueryAtom();
-        atom1.setSymbol("C");
+        atom2.setSymbol("C");
         query.addAtom(atom1);
         query.addAtom(atom2);
         query.addBond(new OrderQueryBond(atom1, atom2, 2));
