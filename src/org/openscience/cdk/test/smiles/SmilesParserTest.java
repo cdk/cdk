@@ -209,6 +209,18 @@ public class SmilesParserTest extends TestCase
         }
     }
     
+    public void testReadingPartionedMolecules() {
+        try {
+            String smiles = "[Na+].[OH-]";
+            SmilesParser sp = new SmilesParser();
+            Molecule mol = sp.parseSmiles(smiles);
+            assertEquals(2, mol.getAtomCount());
+            assertEquals(0, mol.getBondCount());
+        } catch (Exception e) {
+            fail(e.toString());
+        }
+    }
+    
 	public static void main(String[] args)
 	{
 		SmilesParserTest spt = new SmilesParserTest("SmilesParserTest");
