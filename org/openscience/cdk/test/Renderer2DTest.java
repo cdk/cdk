@@ -60,7 +60,7 @@ public class Renderer2DTest extends JPanel
 		{
 			FileInputStream fis = new FileInputStream(inFile);
 			mr = new MDLReader(fis);
-			chemFile = mr.readChemFile();
+			chemFile = (ChemFile)mr.read((ChemObject)new ChemFile());
 			fis.close();
 			chemSequence = chemFile.getChemSequence(0);
 			chemModel = chemSequence.getChemModel(0);

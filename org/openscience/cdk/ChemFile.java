@@ -29,8 +29,7 @@ package org.openscience.cdk;
   * This is supposed to be the top level container, which can contain 
   * all the concepts stored in a chemical document
   */ 
-public class ChemFile 
-{
+public class ChemFile extends ChemObject {
 
 	/**
 	 *  Array of ChemSquences 

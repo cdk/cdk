@@ -27,6 +27,7 @@
 package org.openscience.cdk.io;
 
 import org.openscience.cdk.*;
+import org.openscience.cdk.exception.*;
 import java.io.*;
 import java.util.*;
 import javax.vecmath.*;
@@ -37,8 +38,8 @@ import javax.vecmath.*;
  * @author     steinbeck 
  * @created    October 2, 2000 
  */
-public class MDLReader implements CDKConstants
-{
+public class MDLReader implements CDKConstants, ChemObjectReader {
+
 	boolean debug = false;
 	BufferedReader input;
 
@@ -53,6 +54,16 @@ public class MDLReader implements CDKConstants
 	}
 	
 	
+    public ChemObject read(ChemObject object) throws UnsupportedChemObjectException {
+	if (object instanceof ChemFile) {
+	    return (ChemObject)readChemFile();
+	} else if (object instanceof Molecule) {
+	    return (ChemObject)readMolecule();
+	} else {
+	    throw new UnsupportedChemObjectException(
+		          "Only supported are ChemFile and Molecule.");
+	}
+    }
 	
 	/**
 	 * Read a ChemFile from a file in MDL sd format
