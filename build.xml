@@ -714,6 +714,32 @@
 
         <target id="run-test" name="run-test" depends="dist-core, dist-extra, dist-test, dist-standard" 
                 description="Runs an application">
+                <junit printsummary="yes" haltonfailure="yes">
+                    <classpath>
+                        <pathelement location="${dist}/jar/cdk-core.jar" />
+                        <pathelement location="${dist}/jar/cdk-standard.jar" />
+                        <pathelement location="${dist}/jar/cdk-io.jar" />
+                        <pathelement location="${dist}/jar/cdk-render.jar" />
+                        <pathelement location="${dist}/jar/cdk-extra.jar" />
+                        <pathelement location="${dist}/jar/cdk-apps.jar" />
+                        <pathelement location="${dist}/jar/cdk-test.jar" />
+                        <pathelement location="${dist}/jar/cdk-libio.jar" />
+                        <pathelement path="${java.class.path}" />
+                        <pathelement location="." />
+                        <fileset dir="${lib}">
+                                <include name="*.jar" />
+                        </fileset>
+                        <fileset dir="${lib}/libio">
+                                <include name="*.jar" />
+                        </fileset>
+                    </classpath>
+                    <test name="org.openscience.cdk.test.${testclass}"
+                        haltonfailure="no"
+                        todir="${reports.tests}"
+                        outfile="result.${testclass}">
+                        <formatter type="brief" />
+                    </test>
+                </junit>
                 <java classname="org.openscience.cdk.test.${testclass}" fork="yes">
                     <classpath>
                         <pathelement location="${dist}/jar/cdk-core.jar" />
