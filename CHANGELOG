@@ -9,6 +9,7 @@ New:
   RFE #824133)
 
 Fixes:
+* Fixed junit-test and run-test: missing cdk-data.jar
 
 API changes:
 
