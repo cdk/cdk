@@ -1,0 +1,146 @@
+<project name="CDK Website Build File" default="website" basedir=".">
+
+  <property name="build.dir" value="target"/>
+  <property name="source.dir" value="source"/>
+  <property name="docbook-xsl" value="website-2.5.0"/>
+  <property name="website-docbook-xsl.dir" value="${docbook-xsl}"/>
+  <property name="javancsslib" value="javancss21.41"/>
+  <property name="javancsslib.dir" value="${javancsslib}"/>
+
+  <target id="layout" name="layout" depends="includes">
+    <xslt in="${source.dir}/layout.xml" out="autolayout.xml" 
+          style="${website-docbook-xsl.dir}/xsl/autolayout.xsl"/>
+  </target>
+
+  <target name="website-from-autolayout" depends="layout">
+    <!-- does should work, but it doesn't -->
+    <xslt in="autolayout.xml" destdir="${build.dir}/" style="xsl/tabular.xsl"/>
+  </target>
+
+  <target id="clean" name="clean">
+    <delete file="javancss-tmp.xml"/>
+    <delete file="${source.dir}/javancss-data.xml"/>
+    <delete file="${source.dir}/javadoc-data.xml"/>
+    <delete file="${source.dir}/autolayout.xml"/>
+    <delete>
+      <fileset dir="${source.dir}" includes="*dicts.dbx"/>
+      <fileset dir="${source.dir}" includes="*atomtypes.dbx"/>
+    </delete>
+    <delete>
+      <fileset dir="${build.dir}/" includes="*.html"/>
+    </delete>
+    <delete dir="${website-docbook-xsl.dir}"/>
+    <delete dir="${javancss.dir}"/>
+  </target>
+  
+  <target name="info" id="info" depends="check.includes"/>
+
+  <target name="check.includes" id="check.includes">
+    <uptodate property="javancss.uptodate"
+      targetfile="${source.dir}/javancss-data.xml">
+      <srcfiles dir="../.." includes="CHANGELOG"/>
+    </uptodate>
+    <echo message="Java source stats uptodate: ${javancss.uptodate}"/>
+    <uptodate property="keywordindex.uptodate"
+      targetfile="../javadoc/keyword.index.xml">
+      <srcfiles dir="../.." includes="CHANGELOG"/>
+    </uptodate>
+    <echo message="Keyword index uptodate: ${keywordindex.uptodate}"/>
+    <uptodate property="depends.uptodate"
+      targetfile="../../javadoc/depends.xml">
+      <srcfiles dir="../../.." includes="CHANGELOG"/>
+    </uptodate>
+    <echo message="Dependency Overview uptodate: ${depends.uptodate}"/>
+    <uptodate property="refs.uptodate"
+      targetfile="../refs/cheminf.dbx">
+      <srcfiles dir="../refs" includes="cheminf.btx"/>
+    </uptodate>
+    <echo message="Bibliography index uptodate: ${refs.uptodate}"/>
+    <uptodate property="dicts.uptodate"
+      targetfile="${source.dir}/cdkdict.dbx">
+      <srcfiles dir="../../src/org/openscience/cdk/dict/data" includes="cdk.xml"/>
+    </uptodate>
+    <echo message="Dictionaries in Docbook uptodate: ${dicts.uptodate}"/>
+    <uptodate property="atlists.uptodate"
+      targetfile="${source.dir}/mol2_atomtypes.dbx">
+      <srcfiles dir="../../src/org/openscience/cdk/config/data" includes="mol2_atomtypes.xml"/>
+    </uptodate>
+    <echo message="Atom Type Lists in Docbook uptodate: ${atlists.uptodate}"/>
+  </target>
+
+  <target name="includes" id="includes" 
+      depends="check.docbook-xsl, check.includes, javancss, keyword.index, bibliography, dicts, atlists, depends"/>
+  
+  <target name="setup" id="setup">
+    <uptodate property="docbook-xsl.uptodate"
+	      targetfile="${website-docbook-xsl.dir}"
+	      srcfile="${docbook-xsl}.tar.gz" />
+    <uptodate property="javancsslib.uptodate"
+	      targetfile="${javancsslib.dir}"
+	      srcfile="${javancsslib}.zip" />
+  </target>
+
+  <target name="checks" id="checks" 
+      depends="check.docbook-xsl, check.javancss"/>
+  
+  <target name="check.docbook-xsl" depends="setup" unless="docbook-xsl.uptodate" >
+    <mkdir dir="${website-docbook-xsl.dir}" />
+    <untar src="${docbook-xsl}.tar.gz" dest="." compression="gzip" />
+  </target>
+
+  <target name="check.javancss" depends="setup" unless="javancsslib.uptodate" >
+    <mkdir dir="${javancsslib.dir}" />
+    <unzip src="${javancsslib}.zip" dest="." />
+  </target>
+
+  <target id="website" name="website" depends="layout">
+    <xslt basedir="${source.dir}" destdir="${build.dir}" extension=".html"
+      includes="*.xml" excludes="build.xml, *layout.xml, java*-data.xml, javancss-tmp.xml, keyword.index.xml"
+      style="${website-docbook-xsl.dir}/xsl/tabular.xsl"/>
+  </target>
+
+  <target name="javancss" unless="javancss.uptodate">
+    <java classname="javancss.Main" fork="yes"
+      output="javancss-tmp.xml">
+      <arg value="-package"/>
+      <arg value="-xml"/>
+      <arg value="-recursive"/>
+      <arg value="../../src"/>
+      <classpath>
+        <pathelement location="${javancsslib.dir}/lib/javancss.jar"/>
+        <pathelement location="${javancsslib.dir}/lib/ccl.jar"/>
+        <pathelement location="${javancsslib.dir}/lib/jhbasic.jar"/>
+      </classpath>
+    </java>
+    <xslt in="javancss-tmp.xml" out="${source.dir}/javancss-data.xml" style="${source.dir}/xsl/javancss2docbook.xsl"/>
+    <xslt in="javancss-tmp.xml" out="${source.dir}/javadoc-data.xml"  style="${source.dir}/xsl/javancss2docbook-javadoc.xsl"/>
+  </target>
+  
+  <target name="dicts" unless="dicts.uptodate">
+    <xslt in="../../src/org/openscience/cdk/dict/data/cdk.xml"      out="${source.dir}/cdkdict.dbx" style="xsl/cmldict2docbook.xsl"/>
+    <xslt in="../../src/org/openscience/cdk/dict/data/chemical.xml" out="${source.dir}/chemicaldict.dbx" style="xsl/cmldict2docbook.xsl"/>
+  </target>
+  
+  <target name="atlists" unless="atlists.uptodate">
+    <xslt in="../../src/org/openscience/cdk/config/data/hybridization_atomtypes.xml" out="${source.dir}/hybridization_atomtypes.dbx" style="${source.dir}/xsl/atomtypelist2docbook.xsl"/>
+    <xslt in="../../src/org/openscience/cdk/config/data/mol2_atomtypes.xml"          out="${source.dir}/mol2_atomtypes.dbx"          style="${source.dir}/xsl/atomtypelist2docbook.xsl"/>
+    <xslt in="../../src/org/openscience/cdk/config/data/valency_atomtypes.xml"       out="${source.dir}/valency_atomtypes.dbx"       style="${source.dir}/xsl/atomtypelist2docbook.xsl"/>
+    <xslt in="../../src/org/openscience/cdk/config/data/structgen_atomtypes.xml"     out="${source.dir}/structgen_atomtypes.dbx"     style="${source.dir}/xsl/atomtypelist2docbook.xsl"/>
+  </target>
+  
+  <target id="keyword.index" name="keyword.index" unless="keywordindex.uptodate">
+    <ant dir="../javadoc/" antfile="build.xml" target="keyword.index"/>
+    <copy file="keyword.index.xml" tofile="../javadoc/keyword.index.xml"/>
+  </target>
+
+  <target id="depends" name="depends" unless="depends.uptodate">
+    <ant dir="../javadoc/" antfile="build.xml" target="dependencies"/>
+    <copy file="builddepends.xml" tofile="../javadoc/builddepends.xml"/>
+    <copy file="depends.xml" tofile="../javadoc/depends.xml"/>
+  </target>
+
+  <target id="bibliography" name="bibliography" unless="refs.uptodate">
+    <ant dir="../refs/" antfile="build.xml" target="convertToDocBook" />
+  </target>
+
+</project>
