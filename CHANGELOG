@@ -9,6 +9,8 @@ New:
 Fixes:
 * Partly cleaned up source code of core classes using the PMD reports
 * Partly cleaned up JavaDoc of core classes using the DocCheck reports
+* Split up Controller2D ELEMENT and SYMBOL mode: the first uses the drawing
+  element, while the second implements the common element toggling
 
 API changes:
 * Moved AtomContainer.getAdjacencyMatrix to cdk.graph.matrix.AdjecencyMatrix

@@ -382,6 +382,41 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
                         currentCommonElement = 0;
 				}
 			}
+			if (c2dm.getDrawMode() == c2dm.ELEMENT) {
+
+				Atom atomInRange = r2dm.getHighlightedAtom();
+				if (atomInRange != null) {
+                    String symbol = c2dm.getDrawElement();
+                    if (!(atomInRange.getSymbol().equals(symbol))) {
+                        // only change symbol if needed
+                        
+                        atomInRange.setSymbol(symbol);
+                        // configure the atom, so that the atomic number matches the symbol
+                        try {
+                            IsotopeFactory.getInstance().configure(atomInRange);
+                        } catch (Exception exception) {
+                            logger.error("Error while configuring atom");
+                            logger.debug(exception);
+                        }
+                        // update atom
+                        AtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, atomInRange);
+                        updateAtom(container, atomInRange);
+                        
+                        /*
+                        *  PRESERVE THIS. This notifies the
+                        *  the listener responsible for
+                        *  undo and redo storage that it
+                        *  should store this change of an atom symbol
+                        */
+                        isUndoableChange = true;
+                        /*
+                        *  ---
+                        */
+                        r2dm.fireChange();
+                        fireChange();
+                    }
+				}
+			}
 
 			if (c2dm.getDrawMode() == c2dm.INCCHARGE)
 			{
