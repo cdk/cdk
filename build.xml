@@ -80,10 +80,11 @@
             <echo message="   Mac OS/X: ${isMacOsX}" />
             <echo message="" />
             <echo message="Environment:" />
-            <echo message="   Ant version: ${ant.version}" />
-            <echo message="   ${ANT_HOME}: ${ant.home}" />
             <echo message="  Java version: ${java.version}" />
             <echo message="  Java ext dir: ${java.ext.dirs}" />
+            <echo message="   Ant version: ${ant.version}" />
+            <echo message="   ${ANT_HOME}: ${ant.home}" />
+            <echo message="     build.xml: $Id$" />
             <echo message="  JOELib found: ${joelib.present}" />
             <echo message="  CMLDOM found: ${cmllibs.present}" />
             <echo message="  Java3D found: ${java3D.present}" />
