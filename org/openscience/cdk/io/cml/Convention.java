@@ -92,7 +92,7 @@ public class Convention implements ConventionInterface {
                        this.getClass().getName());
 	this.cdo = cdo;
   };
-  
+
     public Convention(Convention conv) {
 	inherit(conv);
     }
@@ -148,7 +148,7 @@ public class Convention implements ConventionInterface {
 
 
     public void startElement (String uri, String local, String raw, Attributes atts) {
-	String name = raw;
+	String name = local;
 	logger.debug("StartElement");
 	setCurrentElement(name);
 	switch (CurrentElement) {
@@ -349,7 +349,8 @@ public class Convention implements ConventionInterface {
             currentChars = currentChars + s;
 	    break;
 	case STRINGARRAY :
-	    if (BUILTIN.equals("id")) {
+	    if (BUILTIN.equals("id") || BUILTIN.equals("atomId")) {
+            // use of "id" seems incorrect by quick look at DTD
 		try {	  
 		    StringTokenizer st = new StringTokenizer(s);
 		    while (st.hasMoreTokens()) {
@@ -401,7 +402,7 @@ public class Convention implements ConventionInterface {
 	case INTEGERARRAY :
 	    logger.debug("IntegerArray: builtin = " + BUILTIN);
 	    if (BUILTIN.equals("formalCharge")) {
-		try {	  
+		try {
 		    StringTokenizer st = new StringTokenizer(s);		    
 		    while (st.hasMoreTokens()) {
 			String token = st.nextToken();
@@ -436,7 +437,7 @@ public class Convention implements ConventionInterface {
 		}
 	    } else if (BUILTIN.equals("x2")) {
 		logger.debug("New floatArray found.");
-		try {	  
+		try {
 		    StringTokenizer st = new StringTokenizer(s);
 		    while (st.hasMoreTokens()) x2.addElement(st.nextToken());
 		} catch (Exception e) {
@@ -515,18 +516,18 @@ public class Convention implements ConventionInterface {
 	logger.debug("Column: " + column);
     }
     
-    protected String toString(char ch[], int start, int length) {
-	StringBuffer x = new StringBuffer();
-	for (int i =0; i < length; i++)
-	    x.append(ch[start+i]);
-	return x.toString();
-    }
-    
     protected void storeData() {
-      int atomcount = elsym.size();
+      int atomcount = elid.size();
+      logger.debug("No atom ids: " + atomcount);
       boolean has3D = false;
       boolean has2D = false;
       boolean hasCharge = false;
+      boolean hasSymbols = false;
+      if (elsym.size() == atomcount) {
+        hasSymbols = true;
+      } else {
+        logger.debug("No atom symbols: " + elsym.size() + " != " + atomcount);
+      }
       if ((x3.size() == atomcount) &&
           (y3.size() == atomcount) &&
           (z3.size() == atomcount)) {
@@ -541,43 +542,38 @@ public class Convention implements ConventionInterface {
       } else {
         logger.debug("No 2D info: " + x2.size() + " " + y2.size() +
                        " != " + atomcount);
-      }     
+      }
       if (elcharge.size() == atomcount) {
         hasCharge = true;
       } else {
         logger.debug("No Charge info: " + elcharge.size() + " != " + atomcount);
       }
-      Enumeration atoms = elsym.elements();
-      Enumeration ids = elid.elements();
-      Enumeration charges = elcharge.elements();
-      Enumeration x3s = x3.elements();
-      Enumeration y3s = y3.elements();
-      Enumeration z3s = z3.elements();
-	    Enumeration x2s = x2.elements();
-	    Enumeration y2s = y2.elements();
-      while (atoms.hasMoreElements()) {
+      for (int i=0; i<atomcount; i++) {
+        logger.info("Storing atom: " + i);
         cdo.startObject("Atom");
-        cdo.setObjectProperty("Atom", "id", (String)ids.nextElement());
-        cdo.setObjectProperty("Atom", "type", (String)atoms.nextElement());
-        if (has3D) {
-          cdo.setObjectProperty("Atom", "x3", (String)x3s.nextElement());
-          cdo.setObjectProperty("Atom", "y3", (String)y3s.nextElement());
-          cdo.setObjectProperty("Atom", "z3", (String)z3s.nextElement());
+        cdo.setObjectProperty("Atom", "id", (String)elid.elementAt(i));
+        // store optional atom properties
+        if (hasSymbols) {
+            cdo.setObjectProperty("Atom", "type", (String)elsym.elementAt(i));
         }
-        // store optional charge
+        if (has3D) {
+          cdo.setObjectProperty("Atom", "x3", (String)x3.elementAt(i));
+          cdo.setObjectProperty("Atom", "y3", (String)y3.elementAt(i));
+          cdo.setObjectProperty("Atom", "z3", (String)z3.elementAt(i));
+        }
         if (hasCharge) {
-          cdo.setObjectProperty("Atom", "charge", (String)charges.nextElement());
+          cdo.setObjectProperty("Atom", "charge", (String)elcharge.elementAt(i));
         }
         if (has2D) {
-          cdo.setObjectProperty("Atom", "x2", (String)x2s.nextElement());
-          cdo.setObjectProperty("Atom", "y2", (String)y2s.nextElement());
+          cdo.setObjectProperty("Atom", "x2", (String)x2.elementAt(i));
+          cdo.setObjectProperty("Atom", "y2", (String)y2.elementAt(i));
         }
         cdo.endObject("Atom");
       }
       int bondcount = order.size();
       logger.debug("Testing a1,a2,stereo: " + bondARef1.size() + "," + bondARef2.size() + "," + bondStereo.size() + "=" + order.size());
       if ((bondARef1.size() == bondcount) &&
-	      (bondARef2.size() == bondcount)) {	
+          (bondARef2.size() == bondcount)) {
         logger.debug("About to add bond info to JChemPaintModel.");
         Enumeration orders = order.elements();
         Enumeration bar1s = bondARef1.elements();

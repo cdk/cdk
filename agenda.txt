@@ -1,12 +1,20 @@
-- Port much more from JChemPaint 1.x to CDK, among which
+- Very important: better documentation!
+
+- Port much more from JChemPaint 1.x to CDK
+
+- Port more from Jmol 1.x to CDK
+
+  1. non-accelerated 3D viewer
+  2. JMOLANIMATION.java (CML convention definition)
 
 - Implement a SMILES parser/generator pair 
 
+- Add SVG output
+
 - Improve CML reader:
 
-  1. replace CDOPI layer by CDK base classes
-  2. use catalog parser
-  3. be namespace aware (aka "parse XHTML docs with CML fragments") 
+  1. use catalog parser
+  2. parse XHTML docs with CML fragments
 
 - Add cdk-merge, to merge to content interactively of two source files
 

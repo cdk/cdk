@@ -42,8 +42,11 @@ import java.util.Iterator;
  */
 public class JumboTest extends TestCase {
 
+    private org.openscience.cdk.tools.LoggingTool logger;
+
     public JumboTest(String name) {
         super(name);
+        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
     }
 
     public static Test suite() {
@@ -66,6 +69,7 @@ public class JumboTest extends TestCase {
      */
     public void testCuran() {
         String filename = "data/cmltest/curan.xml";
+        logger.info("Testing: " + filename);
         try {
             File f = new File(filename);
             if (f.canRead()) {
@@ -91,8 +95,9 @@ public class JumboTest extends TestCase {
                 assertTrue(!GeometryTools.has3DCoordinates(mol));
                 assertTrue(GeometryTools.has2DCoordinates(mol));
             } else {
-                System.out.println("The CMLReader was not tested with a CML file.");
-                System.out.println("Due to missing file: " + filename);
+                logger.error("The CMLReader was not tested with a CML file.");
+                logger.error("Due to missing file: " + filename);
+                fail("Missing file: " + filename);
             }
         } catch (Exception e) {
             fail(e.toString());
@@ -106,6 +111,7 @@ public class JumboTest extends TestCase {
      */
     public void testCephNS() {
         String filename = "data/cmltest/ceph-ns.xml";
+        logger.info("Testing: " + filename);
         try {
             File f = new File(filename);
             if (f.canRead()) {
@@ -131,8 +137,9 @@ public class JumboTest extends TestCase {
                 assertTrue(!GeometryTools.has3DCoordinates(mol));
                 assertTrue(GeometryTools.has2DCoordinates(mol));
             } else {
-                System.out.println("The CMLReader was not tested with a CML file.");
-                System.out.println("Due to missing file: " + filename);
+                logger.error("The CMLReader was not tested with a CML file.");
+                logger.error("Due to missing file: " + filename);
+                fail("Missing file: " + filename);
             }
         } catch (Exception e) {
             fail(e.toString());
@@ -147,6 +154,7 @@ public class JumboTest extends TestCase {
      */
     public void testNucleustest() {
         String filename = "data/cmltest/nucleustest.xml";
+        logger.info("Testing: " + filename);
         try {
             File f = new File(filename);
             if (f.canRead()) {
@@ -167,13 +175,14 @@ public class JumboTest extends TestCase {
                 // test the molecule
                 Molecule mol = model.getSetOfMolecules().getMolecule(0);
                 assertNotNull(mol);
-                assertEquals(mol.getAtomCount(), 8);
+                assertEquals(mol.getAtomCount(), 11);
                 assertEquals(mol.getBondCount(), 12);
                 assertTrue(!GeometryTools.has3DCoordinates(mol));
                 assertTrue(!GeometryTools.has2DCoordinates(mol));
             } else {
-                System.out.println("The CMLReader was not tested with a CML file.");
-                System.out.println("Due to missing file: " + filename);
+                logger.error("The CMLReader was not tested with a CML file.");
+                logger.error("Due to missing file: " + filename);
+                fail("Missing file: " + filename);
             }
         } catch (Exception e) {
             fail(e.toString());

@@ -37,8 +37,8 @@ import java.util.Iterator;
 
 /**
  * TestCase for the reading CML files using a few test files
- * in data/cmltest as found in the original Jumbo3 release
- * (http://www.xml-cml.org/).
+ * in data/cmltest as found in the Jmol distribution
+ * (http://jmol.sf.org/).
  */
 public class JmolTest extends TestCase {
 
@@ -47,7 +47,7 @@ public class JmolTest extends TestCase {
     }
 
     public static Test suite() {
-        return new TestSuite(JumboTest.class);
+        return new TestSuite(JmolTest.class);
     }
 
     public static void main(String[] args) {

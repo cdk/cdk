@@ -118,7 +118,7 @@ public class PDBConvention extends Convention {
     }
 
     public void characterData (char ch[], int start, int length) {
-	String s = toString(ch, start, length).trim();
+	String s = new String(ch, start, length).trim();
 	if (isELSYM) {
 	    elsym.addElement(s);
 	} else if (isBond) {

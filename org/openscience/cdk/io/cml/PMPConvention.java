@@ -70,7 +70,7 @@ public class PMPConvention extends Convention {
     }
 
     public void characterData (char ch[], int start, int length) {
-	String s = toString(ch, start, length).trim();
+	String s = new String(ch, start, length).trim();
 	logger.debug("Start PMP chardata (" + CurrentElement + ") :" + s);
 	logger.debug(" ElTitle: " + elementTitle);
 	if (CurrentElement == STRING && BUILTIN.equals("spacegroup")) {

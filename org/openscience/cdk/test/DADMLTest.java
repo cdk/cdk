@@ -29,6 +29,7 @@ import org.openscience.cdk.io.*;
 import org.openscience.cdk.renderer.*;
 import org.openscience.cdk.tools.*;
 import org.openscience.cdk.geometry.*;
+import org.openscience.cdk.internet.*;
 import java.util.*;
 import java.io.*;
 

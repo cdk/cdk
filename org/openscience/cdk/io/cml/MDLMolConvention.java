@@ -34,49 +34,49 @@ import org.openscience.cdk.io.cml.cdopi.*;
 public class MDLMolConvention extends Convention {
 
     public MDLMolConvention(CDOInterface cdo) {
-	super(cdo);
+        super(cdo);
     };
-  
+
     public MDLMolConvention(Convention conv) {
-	super(conv);
+        super(conv);
     }
-    
+
     public CDOInterface returnCDO() {
-	return this.cdo;
+        return this.cdo;
     };
-  
+
     public void startDocument() {
-	super.startDocument();
-	cdo.startObject("Frame");
+        super.startDocument();
+        cdo.startObject("Frame");
     };
 
     public void endDocument() {
-	cdo.endObject("Frame");
-	super.endDocument();
-    };   
-    
+        cdo.endObject("Frame");
+        super.endDocument();
+    };
+
     public void startElement (String uri, String local, String raw, Attributes atts) {
-        logger.debug("MDLMol element: name");	
-	super.startElement(uri, local, raw, atts);
+        logger.debug("MDLMol element: name");
+        super.startElement(uri, local, raw, atts);
     };
 
     public void endElement (String uri, String local, String raw) {
-	super.endElement(uri, local, raw);
+        super.endElement(uri, local, raw);
     }
 
     public void characterData (char ch[], int start, int length) {
-	String s = toString(ch, start, length).trim();
-	if (CurrentElement == STRING && BUILTIN.equals("stereo")) {
-	    stereoGiven = true;
-	    if (s.trim().equals("W")) {
-		logger.debug("CML W stereo found");
-		bondStereo.addElement("1");
-	    } else if (s.trim().equals("H")) {
-		logger.debug("CML H stereo found");
-		bondStereo.addElement("6");
-	    }
-	} else {           
-	    super.characterData(ch, start, length);
-	}
+        String s = new String(ch, start, length).trim();
+        if (CurrentElement == STRING && BUILTIN.equals("stereo")) {
+            stereoGiven = true;
+            if (s.trim().equals("W")) {
+                logger.debug("CML W stereo found");
+                bondStereo.addElement("1");
+            } else if (s.trim().equals("H")) {
+                logger.debug("CML H stereo found");
+                bondStereo.addElement("6");
+            }
+        } else {
+            super.characterData(ch, start, length);
+        }
     }
 }
