@@ -30,6 +30,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 import java.util.ArrayList;
 import javax.vecmath.Point3d;
@@ -41,7 +42,7 @@ import javax.vecmath.Point3d;
  * @cdk.module test
  */
  
-public class RDFProtonDescriptorTest extends TestCase {
+public class RDFProtonDescriptorTest extends CDKTestCase {
 	
 	public  RDFProtonDescriptorTest() {}
     

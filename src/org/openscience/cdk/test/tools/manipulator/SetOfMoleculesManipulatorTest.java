@@ -31,6 +31,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.Reaction;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 
 /**
@@ -39,7 +40,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
  * @author     Kai Hartmann
  * @cdk.created    2004-02-20
  */
-public class SetOfMoleculesManipulatorTest extends TestCase {
+public class SetOfMoleculesManipulatorTest extends CDKTestCase {
 	
 	SetOfMolecules som = new SetOfMolecules();
 	

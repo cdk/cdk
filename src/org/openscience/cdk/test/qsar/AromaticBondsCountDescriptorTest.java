@@ -29,6 +29,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.exception.CDKException;
 
@@ -38,7 +39,7 @@ import org.openscience.cdk.exception.CDKException;
  * @cdk.module test
  */
  
-public class AromaticBondsCountDescriptorTest extends TestCase {
+public class AromaticBondsCountDescriptorTest extends CDKTestCase {
 	
 	public  AromaticBondsCountDescriptorTest() {}
     

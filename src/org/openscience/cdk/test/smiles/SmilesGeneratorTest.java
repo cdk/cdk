@@ -41,6 +41,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.layout.HydrogenPlacer;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
@@ -57,7 +58,7 @@ import org.openscience.cdk.io.MDLReader;
  *@cdk.created       February 9, 2004
  *@cdk.module    test
  */
-public class SmilesGeneratorTest extends TestCase
+public class SmilesGeneratorTest extends CDKTestCase
 {
 	boolean standAlone = false;
 

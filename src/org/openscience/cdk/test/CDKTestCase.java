@@ -37,6 +37,10 @@ public class CDKTestCase extends TestCase {
     static {
         LoggingTool.configureLog4j();
     }
+
+    public CDKTestCase() {
+        super();
+    }
     
     public CDKTestCase(String name) {
         super(name);

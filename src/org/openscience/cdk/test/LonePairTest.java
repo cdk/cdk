@@ -38,7 +38,7 @@ import org.openscience.cdk.LonePair;
  *
  * @cdk.module test
  */
-public class LonePairTest extends TestCase {
+public class LonePairTest extends CDKTestCase {
 
     public LonePairTest(String name) {
         super(name);

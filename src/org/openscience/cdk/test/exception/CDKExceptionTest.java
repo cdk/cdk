@@ -29,6 +29,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * Checks the funcitonality of the CDKException class.
@@ -37,7 +38,7 @@ import org.openscience.cdk.exception.CDKException;
  *
  * @see org.openscience.cdk.CDKException
  */
-public class CDKExceptionTest extends TestCase {
+public class CDKExceptionTest extends CDKTestCase {
 
     public CDKExceptionTest(String name) {
         super(name);

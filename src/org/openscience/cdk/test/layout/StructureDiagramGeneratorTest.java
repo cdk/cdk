@@ -40,6 +40,7 @@ import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.io.CMLReader;
@@ -57,7 +58,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  *@author     steinbeck
  *@cdk.created    August 29, 2003
  */
-public class StructureDiagramGeneratorTest extends TestCase
+public class StructureDiagramGeneratorTest extends CDKTestCase
 {
 
 	MoleculeListViewer moleculeListViewer = null;

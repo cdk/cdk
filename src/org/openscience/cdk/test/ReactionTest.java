@@ -38,7 +38,7 @@ import org.openscience.cdk.*;
  *
  * @cdk.module test
  */
-public class ReactionTest extends TestCase {
+public class ReactionTest extends CDKTestCase {
 
 	public ReactionTest(String name) {
 		super(name);

@@ -30,6 +30,7 @@ import junit.framework.TestCase;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import junit.framework.TestSuite;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.exception.CDKException;
 
@@ -39,7 +40,7 @@ import org.openscience.cdk.exception.CDKException;
  * @cdk.module test
  */
  
-public class PetitjeanNumberDescriptorTest extends TestCase {
+public class PetitjeanNumberDescriptorTest extends CDKTestCase {
 	
 	public  PetitjeanNumberDescriptorTest() {}
     

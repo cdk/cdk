@@ -38,7 +38,7 @@ import org.openscience.cdk.SingleElectron;
  *
  * @cdk.module test
  */
-public class SingleElectronTest extends TestCase {
+public class SingleElectronTest extends CDKTestCase {
 
     public SingleElectronTest(String name) {
         super(name);

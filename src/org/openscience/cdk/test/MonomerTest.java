@@ -41,7 +41,7 @@ import org.openscience.cdk.Monomer;
  * @author  Edgar Luttman <edgar@uni-paderborn.de>
  * @cdk.created 2001-08-09
  */
-public class MonomerTest extends TestCase {
+public class MonomerTest extends CDKTestCase {
 
 	public MonomerTest(String name) {
 		super(name);

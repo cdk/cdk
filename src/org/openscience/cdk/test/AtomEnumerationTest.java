@@ -40,7 +40,7 @@ import org.openscience.cdk.AtomEnumeration;
  *
  * @see org.openscience.cdk.AtomEnumeration
  */
-public class AtomEnumerationTest extends TestCase {
+public class AtomEnumerationTest extends CDKTestCase {
 
     public AtomEnumerationTest(String name) {
         super(name);

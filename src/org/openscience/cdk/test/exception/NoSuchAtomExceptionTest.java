@@ -29,6 +29,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.exception.NoSuchAtomException;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * Checks the funcitonality of the NoSuchAtomException class.
@@ -37,7 +38,7 @@ import org.openscience.cdk.exception.NoSuchAtomException;
  *
  * @see org.openscience.cdk.NoSuchAtomException
  */
-public class NoSuchAtomExceptionTest extends TestCase {
+public class NoSuchAtomExceptionTest extends CDKTestCase {
 
     public NoSuchAtomExceptionTest(String name) {
         super(name);

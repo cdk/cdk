@@ -33,6 +33,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
@@ -42,7 +43,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
 /**
  * @cdk.module test
  */
-public class RandomStructureGeneratorTest extends TestCase
+public class RandomStructureGeneratorTest extends CDKTestCase
 {
 	public boolean debug = false;
 	boolean standAlone = false;

@@ -30,6 +30,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.modeling.builder3d.ModelBuilder3D;
 
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.HydrogenAdder;
 import javax.vecmath.Point3d;
@@ -41,7 +42,7 @@ import javax.vecmath.Point3d;
  *@author     chhoppe
  *@cdk.created    2004-11-04
  */
-public class ModelBuilder3dTest extends TestCase {
+public class ModelBuilder3dTest extends CDKTestCase {
 	
 	boolean standAlone = false;
 	

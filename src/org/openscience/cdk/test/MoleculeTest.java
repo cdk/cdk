@@ -37,7 +37,7 @@ import org.openscience.cdk.*;
  *
  * @see org.openscience.cdk.Molecule
  */
-public class MoleculeTest extends TestCase {
+public class MoleculeTest extends CDKTestCase {
 
     public MoleculeTest(String name) {
         super(name);

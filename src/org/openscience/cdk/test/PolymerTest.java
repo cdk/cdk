@@ -42,7 +42,7 @@ import org.openscience.cdk.Polymer;
  * @cdk.created 2001-08-09
  * @cdk.module  test
  */
-public class PolymerTest extends TestCase {
+public class PolymerTest extends CDKTestCase {
 
 	public PolymerTest(String name) {
 		super(name);

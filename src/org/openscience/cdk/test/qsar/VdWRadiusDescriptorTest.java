@@ -30,13 +30,14 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.qsar.result.*;
 import java.io.*;
 
 /**
  * @cdk.module test
  */
-public class VdWRadiusDescriptorTest extends TestCase {
+public class VdWRadiusDescriptorTest extends CDKTestCase {
 	
 	public  VdWRadiusDescriptorTest() {}
     

@@ -33,6 +33,7 @@ import java.util.*;
 import java.io.*;
 
 import org.openscience.cdk.*;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.config.isotopes.IsotopeReader;
 
 /**
@@ -40,7 +41,7 @@ import org.openscience.cdk.config.isotopes.IsotopeReader;
  *
  * @cdk.module test
  */
-public class IsotopeReaderTest extends TestCase {
+public class IsotopeReaderTest extends CDKTestCase {
      
 	public IsotopeReaderTest(String name) {
 		super(name);

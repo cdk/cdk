@@ -29,6 +29,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.exception.CDKException;
@@ -40,7 +41,7 @@ import java.io.*;
  * @cdk.module test
  */
 
- public class KappaShapeIndicesDescriptorTest extends TestCase {
+ public class KappaShapeIndicesDescriptorTest extends CDKTestCase {
 	
 	public  KappaShapeIndicesDescriptorTest() {}
     

@@ -38,7 +38,7 @@ import org.openscience.cdk.*;
  *
  * @cdk.module test
  */
-public class CrystalTest extends TestCase {
+public class CrystalTest extends CDKTestCase {
 
     public CrystalTest(String name) {
         super(name);

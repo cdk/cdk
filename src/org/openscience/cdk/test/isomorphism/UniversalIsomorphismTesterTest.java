@@ -41,6 +41,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.isomorphism.matchers.QueryAtom;
 import org.openscience.cdk.isomorphism.matchers.SymbolQueryAtom;
@@ -57,7 +58,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
  * @cdk.module test
  * @cdk.require java1.4+
  */
-public class UniversalIsomorphismTesterTest extends TestCase
+public class UniversalIsomorphismTesterTest extends CDKTestCase
 {
 	
 	boolean standAlone = false;

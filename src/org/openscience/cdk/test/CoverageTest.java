@@ -39,7 +39,7 @@ import org.hansel.CoverageDecorator;
  *
  * @cdk.module test
  */
-abstract public class CoverageTest extends TestCase {
+abstract public class CoverageTest extends CDKTestCase {
 
     private final String basePackageName = "org.openscience.cdk.";
     private final String testPackageName = "test.";

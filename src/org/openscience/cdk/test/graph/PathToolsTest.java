@@ -31,13 +31,14 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.templates.MoleculeFactory;
 
 /**
  * @cdk.module test
  */
-public class PathToolsTest extends TestCase
+public class PathToolsTest extends CDKTestCase
 {
 	private Molecule molecule;
 	

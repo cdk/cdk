@@ -40,7 +40,7 @@ import org.openscience.cdk.ChemObjectListener;
  *
  * @see org.openscience.cdk.ChemModel
  */
-public class ChemModelTest extends TestCase {
+public class ChemModelTest extends CDKTestCase {
 
     public ChemModelTest(String name) {
         super(name);

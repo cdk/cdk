@@ -37,6 +37,7 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.RingSet;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.io.MDLReader;
@@ -53,7 +54,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
  *@author     steinbeck
  *@cdk.created    2002-10-06
  */
-public class HueckelAromaticityDetectorTest extends TestCase
+public class HueckelAromaticityDetectorTest extends CDKTestCase
 {
 	boolean standAlone = false;
 

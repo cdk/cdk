@@ -32,6 +32,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.graph.rebond.RebondTool;
 import org.openscience.cdk.config.AtomTypeFactory;
 
@@ -40,7 +41,7 @@ import org.openscience.cdk.config.AtomTypeFactory;
  *
  * @cdk.module test
  */
-public class RebondToolTest extends TestCase {
+public class RebondToolTest extends CDKTestCase {
     
   public RebondToolTest(String name) {
     super(name);

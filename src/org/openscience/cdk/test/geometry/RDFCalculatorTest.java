@@ -32,6 +32,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.geometry.*;
 
 /**
@@ -45,7 +46,7 @@ import org.openscience.cdk.geometry.*;
  *
  * @see org.openscience.cdk.geometry.RDFCalculator
  */
-public class RDFCalculatorTest extends TestCase {
+public class RDFCalculatorTest extends CDKTestCase {
 
     public RDFCalculatorTest(String name) {
         super(name);

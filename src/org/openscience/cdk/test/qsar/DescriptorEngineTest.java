@@ -29,6 +29,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.qsar.DescriptorEngine;
 import org.openscience.cdk.exception.CDKException;
 
@@ -37,7 +38,7 @@ import org.openscience.cdk.exception.CDKException;
  *
  * @cdk.module test
  */
-public class DescriptorEngineTest extends TestCase {
+public class DescriptorEngineTest extends CDKTestCase {
 	
    public  DescriptorEngineTest() {}
     

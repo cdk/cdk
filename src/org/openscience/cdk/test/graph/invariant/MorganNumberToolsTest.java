@@ -30,6 +30,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.graph.invariant.MorganNumbersTools;
 import org.openscience.cdk.templates.MoleculeFactory;
 
@@ -38,7 +39,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
  *
  * @cdk.module test
  */
-public class MorganNumberToolsTest extends TestCase
+public class MorganNumberToolsTest extends CDKTestCase
 {
 	// This is an array with the expected Morgan Numbers for a-pinene
 	int[] reference = {28776,17899,23549,34598,31846,36393,9847,45904,15669,15669};

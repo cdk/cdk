@@ -41,7 +41,7 @@ import org.openscience.cdk.ChemObjectListener;
  *
  * @see org.openscience.cdk.ChemSequence
  */
-public class ChemFileTest extends TestCase {
+public class ChemFileTest extends CDKTestCase {
 
     public ChemFileTest(String name) {
         super(name);

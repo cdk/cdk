@@ -31,6 +31,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
@@ -45,7 +46,7 @@ import java.io.*;
  * @cdk.module test
  */
 
-public class BCUTDescriptorTest extends TestCase {
+public class BCUTDescriptorTest extends CDKTestCase {
 	
 	public BCUTDescriptorTest() {}
     

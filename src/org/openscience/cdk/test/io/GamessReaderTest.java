@@ -13,6 +13,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.GamessReader;
 
@@ -28,7 +29,7 @@ import org.openscience.cdk.io.GamessReader;
  * @author Nathana&euml;l "M.Le_maudit" Mazuir
  */
 //TODO Update TestCase comments with appropriate information.
-public class GamessReaderTest extends TestCase {
+public class GamessReaderTest extends CDKTestCase {
 
 	/**
 	 * The "BufferedReader" object used as input parameter for the "GamessReader" object.

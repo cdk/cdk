@@ -32,6 +32,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.graph.ConnectivityChecker;
 
@@ -43,7 +44,7 @@ import org.openscience.cdk.graph.ConnectivityChecker;
  * @author     steinbeck
  * @cdk.created    2001-07-24
  */
-public class ConnectivityCheckerTest extends TestCase {
+public class ConnectivityCheckerTest extends CDKTestCase {
 
 	ConnectivityChecker cc = null;
 

@@ -34,6 +34,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Element;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.templates.MoleculeFactory;
@@ -43,7 +44,7 @@ import org.openscience.cdk.tools.MFAnalyser;
 /**
  * @cdk.module test
  */
-public class MFAnalyserTest extends TestCase {
+public class MFAnalyserTest extends CDKTestCase {
 	Molecule molecule;
 	
 	public MFAnalyserTest(String name)

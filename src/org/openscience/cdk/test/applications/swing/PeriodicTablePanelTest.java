@@ -31,6 +31,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.openscience.cdk.applications.swing.PeriodicTablePanel;
 import org.openscience.cdk.config.AtomTypeFactory;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  *  Checks the funcitonality of the PeriodicTablePanelTest
@@ -39,7 +40,7 @@ import org.openscience.cdk.config.AtomTypeFactory;
  *@cdk.created       February 10, 2004
  *@cdk.module    test
  */
-public class PeriodicTablePanelTest extends TestCase {
+public class PeriodicTablePanelTest extends CDKTestCase {
 
 	AtomTypeFactory atf = null;
 

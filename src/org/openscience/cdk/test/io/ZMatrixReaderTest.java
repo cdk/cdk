@@ -40,6 +40,7 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.ChemSequence;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.graph.rebond.RebondTool;
 import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.ZMatrixReader;
@@ -50,7 +51,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 /**
  * @cdk.module test-java3d
  */
-public class ZMatrixReaderTest extends TestCase {
+public class ZMatrixReaderTest extends CDKTestCase {
     
     private String inFile;
     private boolean standAlone;

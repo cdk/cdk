@@ -17,6 +17,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.geometry.alignment.KabschAlignment;
 
 /**
@@ -30,7 +31,7 @@ import org.openscience.cdk.geometry.alignment.KabschAlignment;
  *
  * @see org.openscience.cdk.geometry.alignment.KabschAlignment
  */
-public class KabschAlignmentTest extends TestCase {
+public class KabschAlignmentTest extends CDKTestCase {
 
     public void KabschAlignmentTest(String name) {
     }

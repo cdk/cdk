@@ -34,6 +34,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.isomorphism.matchers.OrderQueryBond;
@@ -51,7 +52,7 @@ import org.openscience.cdk.smiles.SmilesParser;
  * @cdk.module test
  * @cdk.require java1.4+
  */
-public class SMARTSTest extends TestCase {
+public class SMARTSTest extends CDKTestCase {
 	
 	public SMARTSTest(String name) {
 		super(name);

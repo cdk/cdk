@@ -39,6 +39,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.tools.BremserOneSphereHOSECodePredictor;
 import org.openscience.cdk.tools.HOSECodeGenerator;
@@ -51,7 +52,7 @@ import org.openscience.cdk.tools.HOSECodeGenerator;
  * @author     steinbeck
  * @cdk.created    2002-11-16
  */
-public class BremserPredictorTest extends TestCase
+public class BremserPredictorTest extends CDKTestCase
 {
 	
 	static boolean standAlone = false;

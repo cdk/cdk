@@ -27,6 +27,7 @@ import java.io.*;
 import java.util.*;
 import junit.framework.*;
 import org.openscience.cdk.*;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.exception.*;
 import org.openscience.cdk.io.*;
 import org.openscience.cdk.tools.*;
@@ -39,7 +40,7 @@ import org.openscience.cdk.reaction.ReactionBalancer;
  * @cdk.created 2004-02-20
  * @cdk.module  test
  */
-public class ReactionBalancerTest extends TestCase {
+public class ReactionBalancerTest extends CDKTestCase {
 
 	protected Reaction reaction1 = new Reaction();
 	protected Reaction reaction3 = new Reaction();

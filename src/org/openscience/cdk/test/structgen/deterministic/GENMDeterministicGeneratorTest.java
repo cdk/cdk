@@ -38,6 +38,7 @@ import org.openscience.cdk.structgen.deterministic.*;
 import org.openscience.cdk.applications.swing.*;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
@@ -48,7 +49,7 @@ import org.openscience.cdk.smiles.SmilesParser;
 /**
  * @cdk.module test
  */
-public class GENMDeterministicGeneratorTest extends TestCase
+public class GENMDeterministicGeneratorTest extends CDKTestCase
 {
 	public boolean debug = false;
 	boolean standAlone = false;

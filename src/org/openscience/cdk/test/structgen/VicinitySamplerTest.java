@@ -38,6 +38,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
@@ -50,7 +51,7 @@ import org.openscience.cdk.config.IsotopeFactory;
 /**
  * @cdk.module test
  */
-public class VicinitySamplerTest extends TestCase
+public class VicinitySamplerTest extends CDKTestCase
 {
 	
 	public VicinitySamplerTest(String name)

@@ -38,7 +38,7 @@ import org.openscience.cdk.*;
  *
  * @see org.openscience.cdk.Ring
  */
-public class RingTest extends TestCase {
+public class RingTest extends CDKTestCase {
 
     public RingTest(String name) {
         super(name);

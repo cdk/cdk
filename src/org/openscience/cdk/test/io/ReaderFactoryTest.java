@@ -39,6 +39,7 @@ import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Reaction;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
@@ -51,7 +52,7 @@ import org.openscience.cdk.io.formats.*;
  *
  * @cdk.module test
  */
-public class ReaderFactoryTest extends TestCase {
+public class ReaderFactoryTest extends CDKTestCase {
 
     private ReaderFactory factory;
     

@@ -38,7 +38,7 @@ import org.openscience.cdk.Atom;
  *
  * @see org.openscience.cdk.Association
  */
-public class AssociationTest extends TestCase {
+public class AssociationTest extends CDKTestCase {
 
     public AssociationTest(String name) {
         super(name);

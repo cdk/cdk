@@ -33,6 +33,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.templates.MoleculeFactory;
@@ -42,7 +43,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 /**
  * @cdk.module test
  */
-public class AtomContainerManipulatorTest extends TestCase {
+public class AtomContainerManipulatorTest extends CDKTestCase {
     AtomContainer ac;
 
     public AtomContainerManipulatorTest(String name)

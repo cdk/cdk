@@ -39,7 +39,7 @@ import org.openscience.cdk.PseudoAtom;
  *
  * @cdk.module test
  */
-public class PseudoAtomTest extends TestCase {
+public class PseudoAtomTest extends CDKTestCase {
 
     public PseudoAtomTest(String name) {
         super(name);

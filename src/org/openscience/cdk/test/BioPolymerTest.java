@@ -38,7 +38,7 @@ import org.openscience.cdk.BioPolymer;
  *
  * @see org.openscience.cdk.BioPolymer
  */
-public class BioPolymerTest extends TestCase {
+public class BioPolymerTest extends CDKTestCase {
 
     public BioPolymerTest(String name) {
         super(name);

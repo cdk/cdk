@@ -36,6 +36,7 @@ import org.openscience.cdk.ElectronContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.RingSet;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.renderer.Renderer2DModel;
@@ -45,7 +46,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
 /**
  * @cdk.module test
  */
-public class AllRingsFinderTest extends TestCase
+public class AllRingsFinderTest extends CDKTestCase
 {
 	boolean standAlone = false;
 	

@@ -20,6 +20,7 @@ package org.openscience.cdk.test.iupac;
 
 import junit.framework.*;
 import org.openscience.cdk.*;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.isomorphism.IsomorphismTester;
@@ -34,7 +35,7 @@ import org.openscience.cdk.exception.CDKException;
  *
  * @author Stephen Tomkinson
  */
-public class ParserTest extends TestCase
+public class ParserTest extends CDKTestCase
 {
     HydrogenAdder adder = new HydrogenAdder();
     IsomorphismTester comparer = new IsomorphismTester();

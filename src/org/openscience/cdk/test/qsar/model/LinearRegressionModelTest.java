@@ -27,6 +27,7 @@ package org.openscience.cdk.test.qsar.model;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.model.R.LinearRegressionModel;
 import org.openscience.cdk.qsar.model.QSARModelException;
+import org.openscience.cdk.test.CDKTestCase;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -39,7 +40,7 @@ import junit.framework.TestSuite;
  * @cdk.module test
  */
  
-public class LinearRegressionModelTest extends TestCase {
+public class LinearRegressionModelTest extends CDKTestCase {
 	
 	public  LinearRegressionModelTest() {}
     

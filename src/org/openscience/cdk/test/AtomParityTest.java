@@ -37,7 +37,7 @@ import org.openscience.cdk.AtomParity;
  *
  * @see org.openscience.cdk.AtomParity
  */
-public class AtomParityTest extends TestCase {
+public class AtomParityTest extends CDKTestCase {
 
     public AtomParityTest(String name) {
         super(name);

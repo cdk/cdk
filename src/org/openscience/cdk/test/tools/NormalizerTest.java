@@ -32,6 +32,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.Normalizer;
 import org.openscience.cdk.smiles.*;
@@ -44,7 +45,7 @@ import org.w3c.dom.*;
 /**
  * @cdk.module test
  */
-public class NormalizerTest extends TestCase {
+public class NormalizerTest extends CDKTestCase {
 	
 	public NormalizerTest(String name)
 	{

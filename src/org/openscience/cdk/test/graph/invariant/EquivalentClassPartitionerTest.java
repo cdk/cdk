@@ -26,6 +26,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.graph.invariant.EquivalentClassPartitioner;
 
 /**
@@ -33,7 +34,7 @@ import org.openscience.cdk.graph.invariant.EquivalentClassPartitioner;
  *
  * @cdk.module test
  */
-public class EquivalentClassPartitionerTest extends TestCase
+public class EquivalentClassPartitionerTest extends CDKTestCase
 {
 	AtomContainer C40C3V = null;
 	AtomContainer C24D6D = null;

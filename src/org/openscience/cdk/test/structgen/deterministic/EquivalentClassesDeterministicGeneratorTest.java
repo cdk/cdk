@@ -31,6 +31,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.renderer.Renderer2DModel;
@@ -40,7 +41,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
 /**
  * @cdk.module test
  */
-public class EquivalentClassesDeterministicGeneratorTest extends TestCase
+public class EquivalentClassesDeterministicGeneratorTest extends CDKTestCase
 {
 	boolean standAlone = false;
 	

@@ -34,6 +34,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.isomorphism.IsomorphismTester;
 import org.openscience.cdk.libio.joelib.Convertor;
@@ -41,7 +42,7 @@ import org.openscience.cdk.libio.joelib.Convertor;
 /**
  * @cdk.module test-libio
  */
-public class JOELibIOTest extends TestCase {
+public class JOELibIOTest extends CDKTestCase {
 
     public JOELibIOTest(String name) {
         super(name);

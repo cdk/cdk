@@ -39,7 +39,7 @@ import org.openscience.cdk.CDKConstants;
  *
  * @cdk.module test
  */
-public class AtomTest extends TestCase {
+public class AtomTest extends CDKTestCase {
 
     public AtomTest(String name) {
         super(name);

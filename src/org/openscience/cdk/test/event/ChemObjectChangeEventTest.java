@@ -30,6 +30,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.event.ChemObjectChangeEvent;
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * Checks the funcitonality of the ChemObjectChangeEvent class.
@@ -38,7 +39,7 @@ import org.openscience.cdk.Atom;
  *
  * @see org.openscience.cdk.event.ChemObjectChangeEvent
  */
-public class ChemObjectChangeEventTest extends TestCase {
+public class ChemObjectChangeEventTest extends CDKTestCase {
 
     public ChemObjectChangeEventTest(String name) {
         super(name);

@@ -26,6 +26,7 @@ package org.openscience.cdk.test.smiles.smarts;
 import junit.framework.*;
 
 import org.openscience.cdk.*;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom;
@@ -42,7 +43,7 @@ import org.openscience.cdk.smiles.smarts.*;
  *
  * @author Egon Willighagen
  */
-public class ParserTest extends TestCase {
+public class ParserTest extends CDKTestCase {
     
     public ParserTest() {}
 

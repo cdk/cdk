@@ -33,6 +33,7 @@ import junit.framework.TestCase;
 
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org.openscience.cdk.graph.BiconnectivityInspector;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * This class tests the BiconnectivityInspector class.
@@ -42,7 +43,7 @@ import org.openscience.cdk.graph.BiconnectivityInspector;
  * @author     Ulrich Bauer <baueru@cs.tum.edu>
  */
 
-public class BiconnectivityInspectorTest extends TestCase {
+public class BiconnectivityInspectorTest extends CDKTestCase {
 		
 	public void testBiconnectedSets() {
 		SimpleGraph g = new SimpleGraph(  );

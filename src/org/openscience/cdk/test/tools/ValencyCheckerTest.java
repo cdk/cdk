@@ -30,6 +30,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.ValencyChecker;
 
@@ -39,7 +40,7 @@ import org.openscience.cdk.tools.ValencyChecker;
  * @author     Egon Willighagen
  * @cdk.created    2004-01-08
  */
-public class ValencyCheckerTest extends TestCase
+public class ValencyCheckerTest extends CDKTestCase
 {
 
 	ValencyChecker satcheck = null;

@@ -33,13 +33,14 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.IDCreator;
 
 /**
  * @cdk.module test
  */
-public class IDCreatorTest extends TestCase {
+public class IDCreatorTest extends CDKTestCase {
 	
 	public IDCreatorTest(String name) {
 		super(name);

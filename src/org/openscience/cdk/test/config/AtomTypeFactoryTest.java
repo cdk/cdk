@@ -33,6 +33,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomType;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.config.AtomTypeFactory;
 
 
@@ -41,7 +42,7 @@ import org.openscience.cdk.config.AtomTypeFactory;
  *
  * @cdk.module test
  */
-public class AtomTypeFactoryTest extends TestCase {
+public class AtomTypeFactoryTest extends CDKTestCase {
 
     AtomTypeFactory atf = null;
     

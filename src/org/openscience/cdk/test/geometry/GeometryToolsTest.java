@@ -31,6 +31,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.geometry.GeometryTools;
 
 /**
@@ -44,7 +45,7 @@ import org.openscience.cdk.geometry.GeometryTools;
  *
  * @see org.openscience.cdk.geometry.GeometryTools
  */
-public class GeometryToolsTest extends TestCase {
+public class GeometryToolsTest extends CDKTestCase {
 
     public GeometryToolsTest(String name) {
         super(name);

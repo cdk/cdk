@@ -30,6 +30,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.exception.CDKException;
 import javax.vecmath.Point3d;
@@ -40,7 +41,7 @@ import javax.vecmath.Point3d;
  * @cdk.module test
  */
  
-public class DistanceToAtomDescriptorTest extends TestCase {
+public class DistanceToAtomDescriptorTest extends CDKTestCase {
 	
 	public  DistanceToAtomDescriptorTest() {}
     

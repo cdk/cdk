@@ -44,6 +44,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Crystal;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.CMLReader;
 
@@ -55,7 +56,7 @@ import org.openscience.cdk.io.CMLReader;
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  */
-public class CMLFragmentsTest extends TestCase {
+public class CMLFragmentsTest extends CDKTestCase {
 
     public CMLFragmentsTest(String name) {
         super(name);

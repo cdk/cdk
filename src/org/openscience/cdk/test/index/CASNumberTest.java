@@ -28,6 +28,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.index.CASNumber;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * Tests CDK's CAS Number class.
@@ -40,7 +41,7 @@ import org.openscience.cdk.index.CASNumber;
  * @cdk.created    2003-07-01
  * @cdk.require java1.4+
  */
-public class CASNumberTest extends TestCase {
+public class CASNumberTest extends CDKTestCase {
 
     public CASNumberTest(String name) {
         super(name);

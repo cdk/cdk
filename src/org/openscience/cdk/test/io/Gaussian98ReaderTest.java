@@ -10,6 +10,7 @@ import org.openscience.cdk.io.Gaussian98Reader;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * A Test case for the gaussian 98 (G98Reader) class.
@@ -19,7 +20,7 @@ import org.openscience.cdk.CDKConstants;
  * @author Christoph Steinbeck
  */
 
-public class Gaussian98ReaderTest extends TestCase {
+public class Gaussian98ReaderTest extends CDKTestCase {
 		
 	static boolean standAlone = false;
 	/**

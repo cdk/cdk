@@ -40,6 +40,7 @@ import org.openscience.cdk.BioPolymer;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemSequence;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.PDBReader;
 
@@ -54,7 +55,7 @@ import com.baysmith.io.FileUtilities;
  * @cdk.created 2001-08-09 				$
  *
  */
-public class PDBReaderTest extends TestCase {
+public class PDBReaderTest extends CDKTestCase {
 
 	public PDBReaderTest(String name) {
 		super(name);

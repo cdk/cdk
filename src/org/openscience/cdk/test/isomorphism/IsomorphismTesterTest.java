@@ -30,6 +30,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.isomorphism.IsomorphismTester;
 
 /**
@@ -37,7 +38,7 @@ import org.openscience.cdk.isomorphism.IsomorphismTester;
  *
  * @cdk.module test
  */
-public class IsomorphismTesterTest extends TestCase
+public class IsomorphismTesterTest extends CDKTestCase
 {
 	Molecule pinene_1 = null, pinene_2 = null, pinene_non = null;
 	public IsomorphismTesterTest(String name)

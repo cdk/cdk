@@ -31,6 +31,7 @@ import java.util.List;
 
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org.openscience.cdk.graph.MinimalPathIterator;
+import org.openscience.cdk.test.CDKTestCase;
 
 import junit.framework.TestCase;
 /**
@@ -41,7 +42,7 @@ import junit.framework.TestCase;
  * @author     Ulrich Bauer <baueru@cs.tum.edu>
  */
 
-public class MinimalPathIteratorTest extends TestCase {
+public class MinimalPathIteratorTest extends CDKTestCase {
 	
 	public void testMinimalPathIterator() {
 		 SimpleGraph g    = new SimpleGraph(  );

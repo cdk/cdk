@@ -37,6 +37,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -50,7 +51,7 @@ import org.openscience.cdk.tools.HOSECodeGenerator;
  *@author     steinbeck
  *@cdk.created    2002-11-16
  */
-public class HOSECodeTest extends TestCase
+public class HOSECodeTest extends CDKTestCase
 {
 	
 	static boolean standAlone = false;

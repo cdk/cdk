@@ -41,7 +41,7 @@ import org.openscience.cdk.event.ChemObjectChangeEvent;
  *
  * @cdk.module test
  */
-public class AtomContainerTest extends TestCase {
+public class AtomContainerTest extends CDKTestCase {
 
     public AtomContainerTest(String name) {
         super(name);

@@ -43,7 +43,7 @@ import org.openscience.cdk.CDKConstants;
  *
  * @see org.openscience.cdk.Bond
  */
-public class BondTest extends TestCase {
+public class BondTest extends CDKTestCase {
 
     public BondTest(String name) {
         super(name);

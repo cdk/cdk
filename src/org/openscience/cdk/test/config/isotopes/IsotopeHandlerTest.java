@@ -28,13 +28,14 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.openscience.cdk.config.isotopes.IsotopeHandler;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * Checks the funcitonality of the IsotopeFactory
  *
  * @cdk.module test
  */
-public class IsotopeHandlerTest extends TestCase {
+public class IsotopeHandlerTest extends CDKTestCase {
      
 	public IsotopeHandlerTest(String name) {
 		super(name);

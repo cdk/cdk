@@ -40,7 +40,7 @@ import org.openscience.cdk.ChemObjectListener;
  *
  * @see org.openscience.cdk.SetOfMolecules
  */
-public class SetOfAtomContainersTest extends TestCase {
+public class SetOfAtomContainersTest extends CDKTestCase {
 
     public SetOfAtomContainersTest(String name) {
         super(name);

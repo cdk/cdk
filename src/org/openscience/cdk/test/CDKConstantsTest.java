@@ -38,7 +38,7 @@ import org.openscience.cdk.CDKConstants;
  *
  * @see org.openscience.cdk.CDKConstants
  */
-public class CDKConstantsTest extends TestCase {
+public class CDKConstantsTest extends CDKTestCase {
 
     public CDKConstantsTest(String name) {
         super(name);

@@ -38,7 +38,7 @@ import org.openscience.cdk.SetOfReactions;
  *
  * @see org.openscience.cdk.SetOfReactions
  */
-public class SetOfReactionsTest extends TestCase {
+public class SetOfReactionsTest extends CDKTestCase {
 
     public SetOfReactionsTest(String name) {
         super(name);

@@ -30,6 +30,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.*;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.config.IsotopeFactory;
 
 /**
@@ -37,7 +38,7 @@ import org.openscience.cdk.config.IsotopeFactory;
  *
  * @cdk.module test
  */
-public class IsotopeFactoryTest extends TestCase
+public class IsotopeFactoryTest extends CDKTestCase
 {
 	boolean standAlone = false;
 	

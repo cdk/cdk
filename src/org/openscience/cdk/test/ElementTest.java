@@ -39,7 +39,7 @@ import org.openscience.cdk.Element;
  *
  * @see org.openscience.cdk.Element
  */
-public class ElementTest extends TestCase {
+public class ElementTest extends CDKTestCase {
 
     public ElementTest(String name) {
         super(name);

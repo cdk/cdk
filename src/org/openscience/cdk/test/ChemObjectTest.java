@@ -48,7 +48,7 @@ import org.openscience.cdk.ChemObjectListener;
  * @author Edgar Luttmann <edgar@uni-paderborn.de>
  * @cdk.created 2001-08-09
  */
-public class ChemObjectTest extends TestCase {
+public class ChemObjectTest extends CDKTestCase {
 
 	public ChemObjectTest(String name) {
 		super(name);

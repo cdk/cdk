@@ -29,13 +29,14 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.applications.APIVersionTester;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * Checks the functionality of the APIVersionTester.
  *
  * @cdk.module test
  */
-public class APIVersionTesterTest extends TestCase {
+public class APIVersionTesterTest extends CDKTestCase {
 
     public APIVersionTesterTest(String name) {
         super(name);

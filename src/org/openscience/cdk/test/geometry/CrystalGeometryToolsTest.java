@@ -31,6 +31,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.geometry.CrystalGeometryTools;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * This class defines regression tests that should ensure that the source code
@@ -45,7 +46,7 @@ import org.openscience.cdk.geometry.CrystalGeometryTools;
  *
  * @see org.openscience.cdk.geometry.CrystalGeometryTools
  */
-public class CrystalGeometryToolsTest extends TestCase {
+public class CrystalGeometryToolsTest extends CDKTestCase {
 
     public CrystalGeometryToolsTest(String name) {
         super(name);

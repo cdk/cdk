@@ -28,6 +28,7 @@ import org.openscience.cdk.qsar.result.*;
 import junit.framework.Test;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.test.CDKTestCase;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -39,7 +40,7 @@ import org.openscience.cdk.exception.CDKException;
  * @cdk.module test
  */
  
-public class BPolDescriptorTest extends TestCase {
+public class BPolDescriptorTest extends CDKTestCase {
 	
 	public  BPolDescriptorTest() {}
     

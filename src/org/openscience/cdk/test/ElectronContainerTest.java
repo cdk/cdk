@@ -38,7 +38,7 @@ import org.openscience.cdk.ElectronContainer;
  *
  * @see org.openscience.cdk.ElectronContainer
  */
-public class ElectronContainerTest extends TestCase {
+public class ElectronContainerTest extends CDKTestCase {
 
     public ElectronContainerTest(String name) {
         super(name);

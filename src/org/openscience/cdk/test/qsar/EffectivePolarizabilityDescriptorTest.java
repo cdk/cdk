@@ -31,13 +31,14 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.qsar.result.*;
 import java.io.*;
 
 /**
  * @cdk.module test
  */
-public class EffectivePolarizabilityDescriptorTest extends TestCase {
+public class EffectivePolarizabilityDescriptorTest extends CDKTestCase {
 	
 	public  EffectivePolarizabilityDescriptorTest() {}
     

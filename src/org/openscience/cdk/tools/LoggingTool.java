@@ -169,11 +169,8 @@ public class LoggingTool {
     public static void configureLog4j() {
         LoggingTool localLogger = new LoggingTool(LoggingTool.class);
         try {
-            InputStream ins = LoggingTool.class.getClassLoader()
-                .getResourceAsStream("org/openscience/cdk/config/data/log4j.properties");
-            Properties props = new Properties();
-            props.load(ins);
-            org.apache.log4j.PropertyConfigurator.configure(props);
+            org.apache.log4j.PropertyConfigurator.configure(
+                    LoggingTool.class.getResource("/org/openscience/cdk/config/data/log4j.properties"));
         } catch (NullPointerException e) { // NOPMD
             localLogger.error("Properties file not found: ", e.getMessage());
             localLogger.debug(e);

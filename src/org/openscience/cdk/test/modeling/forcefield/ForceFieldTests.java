@@ -34,6 +34,7 @@ import javax.vecmath.*;
 
 import org.openscience.cdk.modeling.forcefield.*;
 import org.openscience.cdk.*;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.exception.CDKException;
@@ -47,7 +48,7 @@ import org.openscience.cdk.geometry.AtomTools;
  *@cdk.module     test
  *@cdk.created    2005-01-17
  */
-public class ForceFieldTests extends TestCase {
+public class ForceFieldTests extends CDKTestCase {
 
 	AtomContainer ac = null;
 	GVector acCoordinates = new GVector(3);

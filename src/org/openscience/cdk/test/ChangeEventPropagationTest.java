@@ -49,7 +49,7 @@ import org.openscience.cdk.Bond;
  *
  * @see org.openscience.cdk.ChemFile
  */
-public class ChangeEventPropagationTest extends TestCase {
+public class ChangeEventPropagationTest extends CDKTestCase {
 
     public ChangeEventPropagationTest(String name) {
         super(name);

@@ -51,7 +51,7 @@ import org.openscience.cdk.test.CDKTestCase;
  *@author      steinbeck
  *@cdk.created 2003-09-19
  */
-public class SmilesParserTest extends TestCase
+public class SmilesParserTest extends CDKTestCase
 {
 	boolean standAlone = false;
 

@@ -32,6 +32,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Reaction;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
 /**
@@ -40,7 +41,7 @@ import org.openscience.cdk.tools.manipulator.ReactionManipulator;
  * @author     Egon Willighagen
  * @cdk.created    2003-07-23
  */
-public class ReactionManipulatorTest extends TestCase {
+public class ReactionManipulatorTest extends CDKTestCase {
 
 	public ReactionManipulatorTest(String name) {
 		super(name);

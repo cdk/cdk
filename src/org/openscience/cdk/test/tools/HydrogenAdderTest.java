@@ -37,6 +37,7 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.tools.HydrogenAdder;
@@ -52,7 +53,7 @@ import org.openscience.cdk.tools.SaturationChecker;
  * @author     egonw
  * @cdk.created    2003-06-18
  */
-public class HydrogenAdderTest extends TestCase {
+public class HydrogenAdderTest extends CDKTestCase {
 
     protected HydrogenAdder adder = null;
     private boolean standalone = false;

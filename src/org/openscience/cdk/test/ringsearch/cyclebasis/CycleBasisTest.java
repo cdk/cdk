@@ -32,6 +32,7 @@ import java.util.Arrays;
 import org._3pq.jgrapht.alg.ConnectivityInspector;
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org.openscience.cdk.ringsearch.cyclebasis.CycleBasis;
+import org.openscience.cdk.test.CDKTestCase;
 
 import junit.framework.TestCase;
 
@@ -43,7 +44,7 @@ import junit.framework.TestCase;
  * @author     Ulrich Bauer <baueru@cs.tum.edu>
  */
 
-public class CycleBasisTest extends TestCase {
+public class CycleBasisTest extends CDKTestCase {
 	
 	CycleBasis basis;
 	SimpleGraph g;

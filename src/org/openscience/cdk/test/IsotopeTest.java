@@ -38,7 +38,7 @@ import org.openscience.cdk.Isotope;
  *
  * @see org.openscience.cdk.Isotope
  */
-public class IsotopeTest extends TestCase {
+public class IsotopeTest extends CDKTestCase {
 
     public IsotopeTest(String name) {
         super(name);

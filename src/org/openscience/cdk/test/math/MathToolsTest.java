@@ -29,11 +29,12 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.math.MathTools;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * @cdk.module test
  */
-public class MathToolsTest extends TestCase {
+public class MathToolsTest extends CDKTestCase {
 
     public MathToolsTest(String name) {
         super(name);

@@ -37,7 +37,7 @@ import org.openscience.cdk.*;
  *
  * @see org.openscience.cdk.Mapping
  */
-public class MappingTest extends TestCase {
+public class MappingTest extends CDKTestCase {
 
     public MappingTest(String name) {
         super(name);

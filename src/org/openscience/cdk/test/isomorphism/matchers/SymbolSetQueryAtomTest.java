@@ -30,6 +30,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.isomorphism.matchers.SymbolSetQueryAtom;
 
 /**
@@ -37,7 +38,7 @@ import org.openscience.cdk.isomorphism.matchers.SymbolSetQueryAtom;
  *
  * @cdk.module test
  */
-public class SymbolSetQueryAtomTest extends TestCase
+public class SymbolSetQueryAtomTest extends CDKTestCase
 {
 	
     SymbolSetQueryAtom symbolSet = null;
