@@ -1183,17 +1183,13 @@ public class AtomContainer extends ChemObject implements Cloneable
 		ElectronContainer newEC = null;
 		Atom[] natoms;
 		Atom[] newAtoms;
-		try
-		{
+		try {
 			o = (AtomContainer)super.clone();
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace(System.err);
 		}
 		o.removeAllElements();
-		for (int f = 0; f < getAtomCount(); f++)
-		{
+		for (int f = 0; f < getAtomCount(); f++) {
 			o.addAtom((Atom) getAtomAt(f).clone());
 		}
 		for (int f = 0; f < getElectronContainerCount(); f++) {
@@ -1216,7 +1212,10 @@ public class AtomContainer extends ChemObject implements Cloneable
 				((Bond)newEC).setOrder(bond.getOrder());
 			} else if (ec instanceof LonePair) {
 				Atom a = ((LonePair)ec).getAtom();
+                newEC = new LonePair();
+                ((LonePair)newEC).setAtom(a);
 			} else {
+                System.out.println("Expecting EC, got: " + ec.getClass().getName());
 				newEC = (ElectronContainer)ec.clone();
 			}
 			o.addElectronContainer(newEC);
