@@ -32,7 +32,7 @@ import javax.vecmath.Point3d;
  * The crystal is described with molecules in fractional
  * coordinates and three cell axes: a,b and c.
  *
- * The crystal is designed to store only the assymetric atoms. 
+ * <p>The crystal is designed to store only the assymetric atoms.
  * Though this is not enforced, it is assumed by all methods.
  *
  * @keyword crystal
