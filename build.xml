@@ -46,8 +46,10 @@
                         <include name="batik-util.jar" />
                         <include name="batik-xml.jar" />
                         <include name="baysmith-io.jar" />
+                        <include name="bcel-5.1.jar" />
                         <include name="dadml.jar" />
                         <include name="gnujaxp.jar" />
+                        <include name="hansel-1.02.jar" />
                         <include name="junit.jar" />
                         <include name="log4j-core.jar" />
                         <include name="log4j.jar" />
