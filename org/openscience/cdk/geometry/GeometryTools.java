@@ -412,8 +412,31 @@ public class GeometryTools
 
 	}
 	
-	
-	
+	/** Determines if this model contains 2D coordinates
+	  *
+	  * @return  boolean indication that 2D coordinates are available 
+	 */
+  public static boolean has2DCoordinates(Molecule m) {
+      boolean hasinfo = true;
+      Atom[] atoms = m.getAtoms();
+      for (int i=0; i < atoms.length; i++) {
+          if (atoms[i].getPoint2D() == null) hasinfo = false;
+      }
+      return hasinfo;
+  }
+
+	/** Determines if this model contains 23 coordinates
+	  *
+	  * @return  boolean indication that 23 coordinates are available 
+	 */
+  public static boolean has3DCoordinates(Molecule m) {
+      boolean hasinfo = true;
+      Atom[] atoms = m.getAtoms();
+      for (int i=0; i < atoms.length; i++) {
+          if (atoms[i].getPoint3D() == null) hasinfo = false;
+      }
+      return hasinfo;
+  }
 }
 
 
