@@ -41,6 +41,26 @@ public class ConjugatedPiSystemsDetector {
      *  with Atom and Bond objects from the original AtomContainer. The aromaticity has to be known 
      *  before calling this method.
      *
+     *  An example for detection of Radical Allyl:
+     *
+     *	Atom a0 = new Atom("C"); mol.addAtom(a0);
+     *	Atom a1 = new Atom("C"); mol.addAtom(a1);
+     *	Atom a2 = new Atom("C"); mol.addAtom(a2);
+     *	Atom h1 = new Atom("H"); mol.addAtom(h1);
+     *	Atom h2 = new Atom("H"); mol.addAtom(h2);
+     *	Atom h3 = new Atom("H"); mol.addAtom(h3);
+     *	Atom h4 = new Atom("H"); mol.addAtom(h4);
+     *	Atom h5 = new Atom("H"); mol.addAtom(h5);
+     *	mol.addBond(0, 1, 2);
+     *	mol.addBond(1, 2, 1);
+     *	mol.addBond(0, 3, 1);
+     *	mol.addBond(0, 4, 1);
+     *	mol.addBond(1, 5, 1);
+     *	mol.addBond(2, 6, 1);
+     *	mol.addBond(2, 7, 1);
+     *	SingleElectron se = new SingleElectron(a2);
+     *	mol.addElectronContainer(se);
+     *
      *@param  ac  The AtomContainer for which to detect conjugated pi systems
      *@return     The set of AtomContainers with conjugated pi systems
      */
