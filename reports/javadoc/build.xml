@@ -27,7 +27,7 @@
             <package name="org.openscience.cdk.*"/>
 
             <sourcepath>
-                <pathelement path="../.."/>
+                <pathelement path="../../src/"/>
             </sourcepath>
 
         </javadoc>
