@@ -28,11 +28,17 @@
 
 package org.openscience.cdk.test.renderer;
 
-import org.openscience.cdk.math.*;
-import org.openscience.cdk.renderer.*;
-import org.openscience.cdk.applications.swing.*;
-import java.awt.*;
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+
+import javax.swing.JFrame;
+import javax.swing.WindowConstants;
+
+import org.openscience.cdk.applications.swing.GraphRenderer;
+import org.openscience.cdk.math.Function;
+import org.openscience.cdk.math.Matrix;
+import org.openscience.cdk.math.Vector;
+import org.openscience.cdk.renderer.GraphRendererModel;
 
 /**
  * @cdkPackage test

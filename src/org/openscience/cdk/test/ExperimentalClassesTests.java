@@ -23,8 +23,11 @@
  */
 package org.openscience.cdk.test;
 
-import junit.framework.*;
-import org.openscience.cdk.test.tools.*;
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
+import org.openscience.cdk.test.tools.HydrogenAdder2Test;
+import org.openscience.cdk.test.tools.ValencyCheckerTest;
 
 /**
  * TestSuite that runs all the sample tests for experimental classes.

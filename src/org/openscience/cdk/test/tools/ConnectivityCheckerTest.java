@@ -24,11 +24,15 @@
  */
 package org.openscience.cdk.test.tools;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.tools.*;
-import org.openscience.cdk.templates.*;
-import java.util.*;
-import junit.framework.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.tools.ConnectivityChecker;
 
 /**
  *  Checks the functionality of the ConnectivityChecker

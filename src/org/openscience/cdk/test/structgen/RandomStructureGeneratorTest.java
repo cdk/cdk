@@ -23,19 +23,21 @@
  */
 package org.openscience.cdk.test.structgen;
 
-import org.openscience.cdk.controller.*;
-import org.openscience.cdk.*;
-import org.openscience.cdk.io.*;
-import org.openscience.cdk.layout.*;
-import org.openscience.cdk.renderer.*;
-import org.openscience.cdk.applications.swing.*;
-import org.openscience.cdk.structgen.*;
-import org.openscience.cdk.templates.*;
-import java.util.*;
-import java.io.*;
-import java.net.URL;
+import java.util.Vector;
+
 import javax.vecmath.Vector2d;
-import junit.framework.*;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.applications.swing.MoleculeListViewer;
+import org.openscience.cdk.applications.swing.MoleculeViewer2D;
+import org.openscience.cdk.layout.StructureDiagramGenerator;
+import org.openscience.cdk.structgen.RandomGenerator;
+import org.openscience.cdk.templates.MoleculeFactory;
 
 /**
  * @cdkPackage test

@@ -25,10 +25,12 @@
 
 package org.openscience.cdk.test;
 
-import org.openscience.cdk.*;
-import java.util.*;
-import junit.framework.*;
-import javax.vecmath.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.ChemSequence;
 
 /**
  * Checks the funcitonality of the ChemSequence class.

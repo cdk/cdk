@@ -28,16 +28,36 @@
  */
 package org.openscience.cdk.test.math.qm;
  
-import org.openscience.cdk.*;
-import org.openscience.cdk.math.*;
-import org.openscience.cdk.math.qm.*;
-import org.openscience.cdk.io.*;
-import org.openscience.cdk.renderer.*;
-import org.openscience.cdk.tools.*;
-import java.io.*;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
+
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.WindowConstants;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.ChemSequence;
+import org.openscience.cdk.io.CMLReader;
+import org.openscience.cdk.io.ChemObjectReader;
+import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.io.XYZReader;
+import org.openscience.cdk.math.Vector;
+import org.openscience.cdk.math.qm.GaussiansBasis;
+import org.openscience.cdk.math.qm.OneElectronJob;
+import org.openscience.cdk.math.qm.Orbitals;
+import org.openscience.cdk.math.qm.SimpleBasisSet;
+import org.openscience.cdk.renderer.AcceleratedRenderer3D;
+import org.openscience.cdk.renderer.AcceleratedRenderer3DModel;
+import org.openscience.cdk.tools.ChemModelManipulator;
  
 /**
  * Demonstration of the quantum mechanical capabilities of CDK.

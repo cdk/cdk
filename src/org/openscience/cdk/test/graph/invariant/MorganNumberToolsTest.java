@@ -24,12 +24,14 @@
  */
 package org.openscience.cdk.test.graph.invariant;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.tools.*;
-import org.openscience.cdk.templates.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.graph.invariant.MorganNumbersTools;
-import java.util.*;
-import junit.framework.*;
+import org.openscience.cdk.templates.MoleculeFactory;
 
 /**
  * Checks the funcitonality of the MorganNumberTools

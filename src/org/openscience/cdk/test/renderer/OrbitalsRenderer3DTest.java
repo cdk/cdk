@@ -30,14 +30,22 @@
 
 package org.openscience.cdk.test.renderer;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.math.*;
-import org.openscience.cdk.math.qm.*;
-import org.openscience.cdk.renderer.*;
-import org.openscience.cdk.applications.swing.*;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.WindowConstants;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.math.Matrix;
+import org.openscience.cdk.math.Vector;
+import org.openscience.cdk.math.qm.GaussiansBasis;
+import org.openscience.cdk.math.qm.Orbitals;
+import org.openscience.cdk.renderer.AcceleratedRenderer3D;
+import org.openscience.cdk.renderer.AcceleratedRenderer3DModel;
 
 /**
  * This class test the OrbitalRenderer3D

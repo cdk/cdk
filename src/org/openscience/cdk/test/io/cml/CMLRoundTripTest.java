@@ -27,11 +27,27 @@
  *  */
 package org.openscience.cdk.test.io.cml;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.io.*;
-import java.io.*;
-import junit.framework.*;
-import javax.vecmath.*;
+import java.io.StringReader;
+import java.io.StringWriter;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.ChemSequence;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.io.CMLReader;
+import org.openscience.cdk.io.CMLWriter;
 
 /**
  * TestCase for the reading CML 2 files using a few test files

@@ -27,10 +27,15 @@
  *  */
 package org.openscience.cdk.test.io;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.io.*;
-import java.io.*;
-import junit.framework.*;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.io.SMILESReader;
 
 /**
  * TestCase for the reading MDL mol files using one test file.

@@ -29,18 +29,14 @@
 package org.openscience.cdk.test.isomorphism;
 
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.tools.*;
-import org.openscience.cdk.isomorphism.*;
-import org.openscience.cdk.aromaticity.*;
-import org.openscience.cdk.io.*;
-import org.openscience.cdk.templates.*;
-import org.openscience.cdk.layout.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
-import javax.swing.JFrame;
-import java.io.*;
-import java.util.*;
-import junit.framework.*;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
+import org.openscience.cdk.templates.MoleculeFactory;
 
 /**
  * @cdkPackage test

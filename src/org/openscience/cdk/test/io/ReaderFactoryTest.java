@@ -27,14 +27,21 @@
  *  */
 package org.openscience.cdk.test.io;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.io.*;
-import org.openscience.cdk.geometry.*;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.Reaction;
 import org.openscience.cdk.exception.CDKException;
-import java.io.*;
-import junit.framework.*;
-import com.baysmith.io.FileUtilities;
-import java.util.Iterator;
+import org.openscience.cdk.io.ChemObjectReader;
+import org.openscience.cdk.io.ReaderFactory;
 
 /**
  * TestCase for the reading CML files using a few test files

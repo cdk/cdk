@@ -24,11 +24,13 @@
 
 package org.openscience.cdk.test.database;
 
-import org.openscience.cdk.renderer.*;
-import org.openscience.cdk.applications.swing.*;
-import org.openscience.cdk.*;
-import org.openscience.cdk.database.*;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.applications.swing.MoleculeViewer2D;
+import org.openscience.cdk.database.DBReader;
+import org.openscience.cdk.renderer.Renderer2DModel;
 
 /**
  * @cdkPackage test

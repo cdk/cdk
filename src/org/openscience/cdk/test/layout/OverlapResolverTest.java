@@ -24,19 +24,27 @@
  */
 package org.openscience.cdk.test.layout;
 
-import org.openscience.cdk.controller.*;
-import org.openscience.cdk.*;
-import org.openscience.cdk.io.*;
-import org.openscience.cdk.smiles.*;
-import org.openscience.cdk.layout.*;
-import org.openscience.cdk.renderer.*;
-import org.openscience.cdk.applications.swing.*;
-import org.openscience.cdk.tools.*;
-import java.util.*;
-import java.io.*;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Vector;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.ChemSequence;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.applications.swing.MoleculeViewer2D;
+import org.openscience.cdk.io.CMLReader;
+import org.openscience.cdk.layout.OverlapResolver;
+import org.openscience.cdk.layout.StructureDiagramGenerator;
+import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.tools.ChemModelManipulator;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  *  Description of the Class

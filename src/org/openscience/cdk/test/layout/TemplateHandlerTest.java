@@ -24,19 +24,15 @@
  */
 package org.openscience.cdk.test.layout;
 
-import org.openscience.cdk.controller.*;
-import org.openscience.cdk.*;
-import org.openscience.cdk.io.*;
-import org.openscience.cdk.smiles.*;
-import org.openscience.cdk.layout.*;
-import org.openscience.cdk.renderer.*;
-import org.openscience.cdk.applications.swing.*;
-import org.openscience.cdk.tools.LoggingTool;
-import java.util.*;
-import java.io.*;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.applications.swing.MoleculeViewer2D;
+import org.openscience.cdk.layout.TemplateHandler;
+import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  *  Description of the Class

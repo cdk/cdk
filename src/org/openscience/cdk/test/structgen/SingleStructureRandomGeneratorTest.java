@@ -24,22 +24,22 @@
 
 package org.openscience.cdk.test.structgen;
 
-import org.openscience.cdk.controller.*;
-import org.openscience.cdk.*;
-import org.openscience.cdk.exception.*;
-import org.openscience.cdk.io.*;
-import org.openscience.cdk.layout.*;
-import org.openscience.cdk.renderer.*;
-import org.openscience.cdk.applications.swing.*;
-import org.openscience.cdk.structgen.*;
-import org.openscience.cdk.tools.*;
-import org.openscience.cdk.templates.*;
-import java.util.*;
-import java.io.*;
-import java.net.URL;
+import java.awt.event.ActionEvent;
+
+import javax.swing.AbstractAction;
+import javax.swing.JButton;
 import javax.vecmath.Vector2d;
-import javax.swing.*;
-import java.awt.event.*;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.applications.swing.MoleculeListViewer;
+import org.openscience.cdk.applications.swing.MoleculeViewer2D;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.layout.StructureDiagramGenerator;
+import org.openscience.cdk.structgen.SingleStructureRandomGenerator;
+import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.tools.MFAnalyser;
 
 /**
  * @cdkPackage test

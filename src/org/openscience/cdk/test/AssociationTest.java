@@ -24,10 +24,12 @@
  */
 package org.openscience.cdk.test;
 
-import org.openscience.cdk.*;
-import java.util.*;
-import junit.framework.*;
-import javax.vecmath.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import org.openscience.cdk.Association;
+import org.openscience.cdk.Atom;
 
 /**
  * Checks the functionality of the Association class.

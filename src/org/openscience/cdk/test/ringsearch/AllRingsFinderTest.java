@@ -24,21 +24,23 @@
  */
 package org.openscience.cdk.test.ringsearch;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.ringsearch.*;
-import org.openscience.cdk.io.*;
-import org.openscience.cdk.tools.*;
-import org.openscience.cdk.templates.*;
-import org.openscience.cdk.renderer.*;
-import org.openscience.cdk.applications.swing.*;
-import org.openscience.cdk.layout.*;
-import javax.vecmath.*;
+import javax.vecmath.Vector2d;
 
-import java.util.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
-import java.io.*;
-import java.net.URL;
-import junit.framework.*;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.ElectronContainer;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.Ring;
+import org.openscience.cdk.RingSet;
+import org.openscience.cdk.applications.swing.MoleculeViewer2D;
+import org.openscience.cdk.layout.StructureDiagramGenerator;
+import org.openscience.cdk.renderer.Renderer2DModel;
+import org.openscience.cdk.ringsearch.AllRingsFinder;
+import org.openscience.cdk.templates.MoleculeFactory;
 
 /**
  * @cdkPackage test

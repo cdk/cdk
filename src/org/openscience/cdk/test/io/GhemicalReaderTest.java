@@ -27,13 +27,18 @@
  *  */
 package org.openscience.cdk.test.io;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.io.*;
-import org.openscience.cdk.geometry.*;
-import java.io.*;
-import junit.framework.*;
-import com.baysmith.io.FileUtilities;
-import java.util.Iterator;
+import java.io.StringReader;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.io.GhemicalMMReader;
 
 /**
  * TestCase for the reading Ghemical molecular dynamics files using one test file.

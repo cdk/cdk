@@ -31,19 +31,21 @@
 package org.openscience.cdk.test.fingerprint;
 
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.tools.*;
-import org.openscience.cdk.fingerprint.*;
-import org.openscience.cdk.io.*;
-import org.openscience.cdk.renderer.*;
-import org.openscience.cdk.applications.swing.*;
-import org.openscience.cdk.templates.*;
-import org.openscience.cdk.layout.*;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.BitSet;
 
-import javax.swing.JFrame;
-import java.io.*;
-import java.util.*;
-import junit.framework.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.applications.swing.MoleculeViewer2D;
+import org.openscience.cdk.fingerprint.Fingerprinter;
+import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.templates.MoleculeFactory;
 
 /**
  * @cdkPackage test

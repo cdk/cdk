@@ -24,11 +24,15 @@
  */
 package org.openscience.cdk.test;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.tools.*;
-import java.util.*;
-import junit.framework.*;
-import javax.vecmath.*;
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.CDKConstants;
 
 /**
  * Checks the functionality of the AtomTypeFactory

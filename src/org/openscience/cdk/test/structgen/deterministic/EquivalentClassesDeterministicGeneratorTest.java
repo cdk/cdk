@@ -23,21 +23,19 @@
  */
 package org.openscience.cdk.test.structgen.deterministic;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.smiles.*;
-import org.openscience.cdk.io.*;
-import org.openscience.cdk.tools.*;
-import org.openscience.cdk.templates.*;
-import org.openscience.cdk.renderer.*;
-import org.openscience.cdk.applications.swing.*;
-import org.openscience.cdk.layout.*;
-import org.openscience.cdk.structgen.deterministic.*;
+import javax.vecmath.Vector2d;
 
-import javax.vecmath.*;
-import java.util.*;
-import java.io.*;
-import java.net.URL;
-import junit.framework.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.applications.swing.MoleculeViewer2D;
+import org.openscience.cdk.layout.StructureDiagramGenerator;
+import org.openscience.cdk.renderer.Renderer2DModel;
+import org.openscience.cdk.structgen.deterministic.EquivalentClassesDeterministicGenerator;
+import org.openscience.cdk.templates.MoleculeFactory;
 
 /**
  * @cdkPackage test

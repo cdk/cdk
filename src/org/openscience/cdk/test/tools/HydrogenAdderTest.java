@@ -23,25 +23,25 @@
  */
 package org.openscience.cdk.test.tools;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.tools.*;
-import org.openscience.cdk.io.*;
-import org.openscience.cdk.renderer.*;
-import org.openscience.cdk.applications.swing.*;
-import org.openscience.cdk.layout.*;
-import org.openscience.cdk.templates.*;
-import org.openscience.cdk.geometry.*;
-import org.openscience.cdk.aromaticity.*;
-import org.openscience.cdk.smiles.*;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
-import java.io.*;
-import javax.vecmath.*;
-import javax.swing.*;
-import javax.swing.tree.*;
-import java.util.*;
-import java.awt.*;
+import javax.vecmath.Point2d;
 
-import junit.framework.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.applications.swing.MoleculeViewer2D;
+import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.tools.HydrogenAdder;
+import org.openscience.cdk.tools.MFAnalyser;
+import org.openscience.cdk.tools.SaturationChecker;
 
 /**
  * Tests CDK's hydrogen adding capabilities in terms of

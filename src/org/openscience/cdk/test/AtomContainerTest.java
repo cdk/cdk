@@ -25,12 +25,18 @@
 
 package org.openscience.cdk.test;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.tools.*;
-import org.openscience.cdk.templates.MoleculeFactory;
-import java.util.*;
-import junit.framework.*;
-import javax.vecmath.*;
+import java.util.Enumeration;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.ElectronContainer;
+import org.openscience.cdk.LonePair;
+import org.openscience.cdk.Molecule;
 
 /**
  * Checks the funcitonality of the AtomContainer.

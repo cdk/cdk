@@ -24,15 +24,12 @@
 
 package org.openscience.cdk.test.internet;
 
-import org.openscience.cdk.*;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.applications.swing.AtomicTable;
+import org.openscience.cdk.applications.swing.MoleculeViewer2D;
+import org.openscience.cdk.internet.DADMLReader;
 import org.openscience.cdk.io.ChemObjectReader;
-import org.openscience.cdk.renderer.*;
-import org.openscience.cdk.applications.swing.*;
-import org.openscience.cdk.tools.*;
-import org.openscience.cdk.geometry.*;
-import org.openscience.cdk.internet.*;
-import java.util.*;
-import java.io.*;
 
 /**
  * @cdkPackage test

@@ -25,25 +25,28 @@
 package org.openscience.cdk.test.smiles;
 
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.exception.*;
-import org.openscience.cdk.smiles.*;
-import org.openscience.cdk.io.*;
-import org.openscience.cdk.tools.*;
-import org.openscience.cdk.aromaticity.*;
-import org.openscience.cdk.ringsearch.SSSRFinder;
+import java.io.IOException;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Vector2d;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.applications.swing.MoleculeViewer2D;
+import org.openscience.cdk.layout.HydrogenPlacer;
+import org.openscience.cdk.layout.StructureDiagramGenerator;
+import org.openscience.cdk.renderer.Renderer2DModel;
+import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.renderer.*;
-import org.openscience.cdk.applications.swing.*;
-import org.openscience.cdk.layout.*;
-import org.openscience.cdk.test.*;
-import javax.vecmath.*;
-
-import java.util.*;
-
-import java.io.*;
-import java.net.URL;
-import junit.framework.*;
+import org.openscience.cdk.tools.HydrogenAdder;
+import org.openscience.cdk.tools.IsotopeFactory;
+import org.openscience.cdk.tools.MFAnalyser;
 
 /**
  * @cdkPackage test

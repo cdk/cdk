@@ -29,19 +29,22 @@
 
 package org.openscience.cdk.test.structgen;
 
-import org.openscience.cdk.controller.*;
-import org.openscience.cdk.*;
-import org.openscience.cdk.io.*;
-import org.openscience.cdk.layout.*;
-import org.openscience.cdk.renderer.*;
-import org.openscience.cdk.applications.swing.*;
-import org.openscience.cdk.structgen.*;
-import org.openscience.cdk.templates.*;
-import org.openscience.cdk.tools.*;
-import org.openscience.cdk.smiles.*;
-import java.io.*;
-import java.util.*;
-import junit.framework.*;
+import java.util.Vector;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.applications.swing.MoleculeListViewer;
+import org.openscience.cdk.applications.swing.MoleculeViewer2D;
+import org.openscience.cdk.layout.StructureDiagramGenerator;
+import org.openscience.cdk.smiles.SmilesGenerator;
+import org.openscience.cdk.structgen.VicinitySampler;
+import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.tools.IsotopeFactory;
 
 
 /**

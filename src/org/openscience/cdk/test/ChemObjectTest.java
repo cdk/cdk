@@ -27,8 +27,11 @@
  *  */
 package org.openscience.cdk.test;
 
-import junit.framework.*;
-import org.openscience.cdk.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import org.openscience.cdk.ChemObject;
 
 /**
  * TestCase for the ChemObject class.

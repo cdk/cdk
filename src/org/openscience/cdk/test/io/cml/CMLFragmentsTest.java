@@ -27,13 +27,23 @@
  *  */
 package org.openscience.cdk.test.io.cml;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.io.*;
+import java.io.StringReader;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.ChemSequence;
+import org.openscience.cdk.Crystal;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.geometry.*;
-import java.io.*;
-import junit.framework.*;
-import java.util.Iterator;
+import org.openscience.cdk.io.CMLReader;
 
 /**
  * Atomic tests for the reading CML documents. All tested CML strings are valid CML 2,

@@ -25,10 +25,13 @@
 
 package org.openscience.cdk.test;
 
-import org.openscience.cdk.*;
-import java.util.*;
-import junit.framework.*;
-import javax.vecmath.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.AtomEnumeration;
 
 /**
  * Checks the funcitonality of the AtomEnumeration class.

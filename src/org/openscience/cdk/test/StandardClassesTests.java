@@ -24,11 +24,15 @@
 
 package org.openscience.cdk.test;
 
-import junit.framework.*;
-import org.openscience.cdk.test.geometry.*;
-import org.openscience.cdk.test.isomorphism.*;
-import org.openscience.cdk.test.smiles.*;
-import org.openscience.cdk.test.tools.*;
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
+import org.openscience.cdk.test.geometry.CrystalGeometryToolsTest;
+import org.openscience.cdk.test.isomorphism.IsomorphismTesterTest;
+import org.openscience.cdk.test.smiles.SmilesParserTest;
+import org.openscience.cdk.test.tools.AtomTypeFactoryTest;
+import org.openscience.cdk.test.tools.IsotopeFactoryTest;
+import org.openscience.cdk.test.tools.ReactionManipulatorTest;
 
 /**
  * TestSuite that runs all the sample tests

@@ -23,16 +23,19 @@
  */
 package org.openscience.cdk.test.tools;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.exception.*;
-import org.openscience.cdk.ringsearch.*;
-import org.openscience.cdk.io.*;
-import org.openscience.cdk.tools.*;
-import org.openscience.cdk.templates.*;
-import java.util.*;
-import java.io.*;
-import java.net.URL;
-import junit.framework.*;
+import java.io.IOException;
+import java.util.Hashtable;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.tools.HydrogenAdder;
+import org.openscience.cdk.tools.MFAnalyser;
 
 /**
  * @cdkPackage test

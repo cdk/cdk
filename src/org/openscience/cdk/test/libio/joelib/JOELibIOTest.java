@@ -24,15 +24,19 @@
 
 package org.openscience.cdk.test.libio.joelib;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.exception.*;
-import org.openscience.cdk.libio.joelib.*;
-import org.openscience.cdk.smiles.*;
-import joelib.molecule.JOEMol;
 import joelib.molecule.JOEAtom;
 import joelib.molecule.JOEBond;
-import junit.framework.*;
+import joelib.molecule.JOEMol;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.isomorphism.IsomorphismTester;
+import org.openscience.cdk.libio.joelib.Convertor;
 
 /**
  * @cdkPackage test-libio

@@ -24,11 +24,14 @@
  */
 package org.openscience.cdk.test.tools;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.tools.*;
-import java.util.*;
 import java.io.InputStream;
-import junit.framework.*;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import org.openscience.cdk.AtomType;
+import org.openscience.cdk.tools.AtomTypeFactory;
 
 
 /**

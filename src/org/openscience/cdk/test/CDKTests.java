@@ -24,24 +24,30 @@
 
 package org.openscience.cdk.test;
 
-import junit.framework.*;
-import org.openscience.cdk.renderer.*;
-import org.openscience.cdk.applications.swing.*;
-import org.openscience.cdk.test.fingerprint.*;
-import org.openscience.cdk.test.graph.invariant.*;
-import org.openscience.cdk.test.graph.rebond.*;
-import org.openscience.cdk.test.isomorphism.*;
-import org.openscience.cdk.test.io.*;
-import org.openscience.cdk.test.isomorphism.*;
-import org.openscience.cdk.test.layout.*;
-import org.openscience.cdk.test.renderer.*;
-import org.openscience.cdk.test.ringsearch.*;
-import org.openscience.cdk.test.smiles.*;
-import org.openscience.cdk.test.structgen.*;
-import org.openscience.cdk.test.tools.*;
-import org.openscience.cdk.test.aromaticity.*;
-import org.openscience.cdk.test.geometry.*;
-import org.openscience.cdk.test.iupac.*;
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
+import org.openscience.cdk.applications.swing.MoleculeListViewer;
+import org.openscience.cdk.test.aromaticity.HueckelAromaticityDetectorTest;
+import org.openscience.cdk.test.fingerprint.FingerprinterTest;
+import org.openscience.cdk.test.geometry.CrystalGeometryToolsTest;
+import org.openscience.cdk.test.geometry.GeometryToolsTest;
+import org.openscience.cdk.test.graph.invariant.MorganNumberToolsTest;
+import org.openscience.cdk.test.graph.rebond.RebondToolTest;
+import org.openscience.cdk.test.io.IOTests;
+import org.openscience.cdk.test.isomorphism.IsomorphismTesterTest;
+import org.openscience.cdk.test.isomorphism.UniversalIsomorphismTesterTest;
+import org.openscience.cdk.test.iupac.ParserTest;
+import org.openscience.cdk.test.layout.HydrogenPlacerTest;
+import org.openscience.cdk.test.layout.StructureDiagramGeneratorTest;
+import org.openscience.cdk.test.ringsearch.AllRingsFinderTest;
+import org.openscience.cdk.test.ringsearch.RingSearchTest;
+import org.openscience.cdk.test.smiles.SmilesGeneratorTest;
+import org.openscience.cdk.test.smiles.SmilesParserTest;
+import org.openscience.cdk.test.structgen.RandomStructureGeneratorTest;
+import org.openscience.cdk.test.tools.BremserPredictorTest;
+import org.openscience.cdk.test.tools.HOSECodeTest;
+import org.openscience.cdk.test.tools.ToolsTests;
 
 /**
  * TestSuite that runs all the sample tests

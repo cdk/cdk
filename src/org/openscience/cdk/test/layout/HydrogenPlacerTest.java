@@ -23,22 +23,28 @@
  */
 package org.openscience.cdk.test.layout;
 
-import org.openscience.cdk.controller.*;
-import org.openscience.cdk.*;
-import org.openscience.cdk.io.*;
-import org.openscience.cdk.layout.*;
-import org.openscience.cdk.renderer.*;
-import org.openscience.cdk.applications.swing.*;
-import org.openscience.cdk.smiles.*;
-import org.openscience.cdk.templates.*;
-import org.openscience.cdk.tools.*;
-import org.openscience.cdk.geometry.*;
-import java.util.*;
-import java.io.*;
-import java.net.URL;
-import javax.vecmath.Vector2d;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 import javax.vecmath.Point2d;
-import junit.framework.*;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.ChemSequence;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.applications.swing.MoleculeViewer2D;
+import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.layout.HydrogenPlacer;
+import org.openscience.cdk.tools.HydrogenAdder;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * @cdkPackage test

@@ -24,7 +24,9 @@
 
 package org.openscience.cdk.test.io;
 
-import junit.framework.*;
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
 import org.openscience.cdk.test.io.cml.CMLIOTests;
 
 /**

@@ -23,10 +23,15 @@
  */
 package org.openscience.cdk.test.geometry;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.geometry.*;
-import javax.vecmath.*;
-import junit.framework.*;
+import javax.vecmath.Point2d;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.geometry.GeometryTools;
 
 /**
  * This class defines regression tests that should ensure that the source code

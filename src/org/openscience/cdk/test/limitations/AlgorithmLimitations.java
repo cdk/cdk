@@ -23,8 +23,10 @@
  */
 package org.openscience.cdk.test.limitations;
 
-import junit.framework.*;
-import org.openscience.cdk.test.limitations.tools.*;
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
+import org.openscience.cdk.test.limitations.tools.SaturationCheckerTest;
 
 /**
  * TestSuite that runs all JUnit tests that fail bacause of limitations of

@@ -27,11 +27,16 @@
  *  */
 package org.openscience.cdk.test.io;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.io.*;
-import org.openscience.cdk.geometry.*;
-import java.io.*;
-import junit.framework.*;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import org.openscience.cdk.Crystal;
+import org.openscience.cdk.geometry.CrystalGeometryTools;
+import org.openscience.cdk.io.ShelXReader;
 
 public class ShelXReaderTest extends TestCase {
 

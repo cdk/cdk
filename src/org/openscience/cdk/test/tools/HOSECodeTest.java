@@ -28,24 +28,16 @@
  */
 package org.openscience.cdk.test.tools;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.tools.*;
-import org.openscience.cdk.io.*;
-import org.openscience.cdk.renderer.*;
-import org.openscience.cdk.layout.*;
-import org.openscience.cdk.templates.*;
-import org.openscience.cdk.geometry.*;
-import org.openscience.cdk.aromaticity.*;
-import org.openscience.cdk.smiles.*;
+import javax.swing.tree.DefaultMutableTreeNode;
 
-import java.io.*;
-import javax.vecmath.*;
-import javax.swing.*;
-import javax.swing.tree.*;
-import java.util.*;
-import java.awt.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
-import junit.framework.*;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.tools.HOSECodeGenerator;
 
 /**
  *  Tests the HOSECode genertor. This is *not* a JUnit test class!

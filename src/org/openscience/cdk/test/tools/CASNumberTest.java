@@ -23,8 +23,11 @@
  */
 package org.openscience.cdk.test.tools;
 
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
 import org.openscience.cdk.index.CASNumber;
-import junit.framework.*;
 
 /**
  * Tests CDK's CAS Number class.

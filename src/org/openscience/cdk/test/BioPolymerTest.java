@@ -25,10 +25,11 @@
 
 package org.openscience.cdk.test;
 
-import org.openscience.cdk.*;
-import java.util.*;
-import junit.framework.*;
-import javax.vecmath.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import org.openscience.cdk.BioPolymer;
 
 /**
  * Checks the functionality of the BioPolymer class.

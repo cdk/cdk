@@ -27,12 +27,23 @@
  *  */
 package org.openscience.cdk.test.io;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.io.*;
-import java.io.*;
-import junit.framework.*;
+import java.io.File;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.BioPolymer;
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.ChemSequence;
+import org.openscience.cdk.io.ChemObjectReader;
+import org.openscience.cdk.io.PDBReader;
+
 import com.baysmith.io.FileUtilities;
-import java.util.Iterator;
 
 /**
  * TestCase for the PDBReader class.

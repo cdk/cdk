@@ -24,8 +24,8 @@
 
 package org.openscience.cdk.test.io.cml;
 
-import junit.framework.*;
-import org.openscience.cdk.renderer.*;
+import junit.framework.Test;
+import junit.framework.TestSuite;
 
 /**
  * TestSuite for doing regression tests on the org.openscience.cdk.io.cml

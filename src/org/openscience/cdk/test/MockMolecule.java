@@ -27,8 +27,10 @@
  *  */
 package org.openscience.cdk.test;
 
-import org.openscience.cdk.*;
-import javax.vecmath.*;
+import javax.vecmath.Point3d;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.Molecule;
 
 /**
  * A molecule which looks like a cube. The center

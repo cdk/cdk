@@ -20,11 +20,13 @@
  */
 package org.openscience.cdk.test.graph.invariant;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.tools.*;
-import org.openscience.cdk.graph.invariant.*;
-import java.util.*;
-import junit.framework.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.graph.invariant.EquivalentClassPartitioner;
 
 /**
  * Checks the funcitonality of the TopologicalEquivalentClass

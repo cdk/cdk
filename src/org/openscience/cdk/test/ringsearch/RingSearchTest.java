@@ -24,16 +24,22 @@
  */
 package org.openscience.cdk.test.ringsearch;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.ringsearch.*;
-import org.openscience.cdk.smiles.*;
-import org.openscience.cdk.tools.*;
-import org.openscience.cdk.templates.*;
-import org.openscience.cdk.io.*;
-import java.util.*;
-import java.io.*;
-import java.net.URL;
-import junit.framework.*;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.Ring;
+import org.openscience.cdk.RingSet;
+import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.ringsearch.SSSRFinder;
+import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  *  This class tests the SSSRFinder class.

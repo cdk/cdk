@@ -23,10 +23,11 @@
  */
 package org.openscience.cdk.test.geometry;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.geometry.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
-import junit.framework.*;
+import org.openscience.cdk.geometry.CrystalGeometryTools;
 
 /**
  * This class defines regression tests that should ensure that the source code

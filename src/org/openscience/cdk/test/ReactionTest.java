@@ -27,8 +27,12 @@
  *  */
 package org.openscience.cdk.test;
 
-import junit.framework.*;
-import org.openscience.cdk.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.Reaction;
 
 /**
  * TestCase for the Reaction class.

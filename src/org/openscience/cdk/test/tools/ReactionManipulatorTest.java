@@ -23,10 +23,13 @@
  */
 package org.openscience.cdk.test.tools;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.tools.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
-import junit.framework.*;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.Reaction;
+import org.openscience.cdk.tools.ReactionManipulator;
 
 /**
  * @cdkPackage test

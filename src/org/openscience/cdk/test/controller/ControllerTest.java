@@ -24,16 +24,20 @@
 
 package org.openscience.cdk.test.controller;
 
-import org.openscience.cdk.controller.*;
-import org.openscience.cdk.*;
-import org.openscience.cdk.io.*;
-import org.openscience.cdk.layout.*;
-import org.openscience.cdk.renderer.*;
-import org.openscience.cdk.applications.swing.*;
-import java.util.*;
-import java.io.*;
-import java.net.URL;
-import javax.vecmath.Vector2d;
+import java.io.FileInputStream;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.ChemSequence;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.applications.swing.MoleculeViewer2D;
+import org.openscience.cdk.controller.CDKInputAdapter;
+import org.openscience.cdk.controller.Controller2DModel;
+import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.renderer.Renderer2DModel;
 
 /**
  * @cdkPackage test

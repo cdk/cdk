@@ -23,7 +23,8 @@
  */
 package org.openscience.cdk.test.tools;
 
-import junit.framework.*;
+import junit.framework.Test;
+import junit.framework.TestSuite;
 
 /**
  * TestSuite that runs all the sample tests in the

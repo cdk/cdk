@@ -23,20 +23,20 @@
  */
 package org.openscience.cdk.test.smiles;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.smiles.*;
-import org.openscience.cdk.io.*;
-import org.openscience.cdk.tools.*;
-import org.openscience.cdk.renderer.*;
-import org.openscience.cdk.applications.swing.*;
-import org.openscience.cdk.layout.*;
-import org.openscience.cdk.isomorphism.*;
-import javax.vecmath.*;
-import java.util.*;
 import java.awt.Dimension;
-import java.io.*;
-import java.net.URL;
-import junit.framework.*;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.applications.swing.MoleculeListViewer;
+import org.openscience.cdk.applications.swing.MoleculeViewer2D;
+import org.openscience.cdk.isomorphism.IsomorphismTester;
+import org.openscience.cdk.layout.StructureDiagramGenerator;
+import org.openscience.cdk.smiles.SmilesParser;
 
 /**
  * @cdkPackage test

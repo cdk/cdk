@@ -23,14 +23,16 @@
 
 package org.openscience.cdk.test;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.tools.*;
-import org.openscience.cdk.templates.*;
+import java.util.Vector;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.graph.PathTools;
-import java.util.*;
-import java.io.*;
-import java.net.URL;
-import junit.framework.*;
+import org.openscience.cdk.templates.MoleculeFactory;
 
 /**
  * @cdkPackage test

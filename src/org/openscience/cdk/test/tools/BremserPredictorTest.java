@@ -28,24 +28,20 @@
  */
 package org.openscience.cdk.test.tools;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.tools.*;
-import org.openscience.cdk.io.*;
-import org.openscience.cdk.renderer.*;
-import org.openscience.cdk.layout.*;
-import org.openscience.cdk.templates.*;
-import org.openscience.cdk.geometry.*;
-import org.openscience.cdk.aromaticity.*;
-import org.openscience.cdk.smiles.*;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
-import java.io.*;
-import javax.vecmath.*;
-import javax.swing.*;
-import javax.swing.tree.*;
-import java.util.*;
-import java.awt.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
-import junit.framework.*;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.tools.BremserOneSphereHOSECodePredictor;
+import org.openscience.cdk.tools.HOSECodeGenerator;
 
 /**
  * Tests the HOSECode genertor.

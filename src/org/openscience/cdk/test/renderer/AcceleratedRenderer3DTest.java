@@ -26,16 +26,26 @@
  */
 package org.openscience.cdk.test.renderer;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.io.*;
-import org.openscience.cdk.renderer.*;
-import org.openscience.cdk.applications.swing.*;
-import org.openscience.cdk.tools.*;
-import org.openscience.cdk.geometry.*;
-import java.util.*;
-import java.io.*;
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
+
+import javax.swing.JFrame;
+import javax.swing.WindowConstants;
+
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.ChemSequence;
+import org.openscience.cdk.io.CMLReader;
+import org.openscience.cdk.io.ChemObjectReader;
+import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.io.XYZReader;
+import org.openscience.cdk.renderer.AcceleratedRenderer3D;
+import org.openscience.cdk.renderer.AcceleratedRenderer3DModel;
+import org.openscience.cdk.tools.ChemModelManipulator;
 
 /**
  * @cdkPackage test-java3d
