@@ -61,9 +61,10 @@
                         <include name="xmldb.jar" />
                         <include name="stmml.jar" />
                         <include name="castor-0.9.5-xml.jar" />
-                        <include name="cmlAll.jar" />
-                        <include name="base.jar" />
-                        <include name="pmrlib.jar" />
+                        <include name="cmlAll_1.4.jar" />
+                        <include name="base_1.4.jar" />
+                        <include name="euclid_1.4.jar" />
+                        <include name="pmrdom_1.4.jar" />
                         <include name="jmolApis.jar" />
                         <include name="jmolIO.jar" />
                         <include name="commons-cli-1.0.jar" />
@@ -372,9 +373,10 @@
                 <classpath refid="project.class.path" />
                 <classpath>
                     <fileset dir="${lib}">
-                        <include name="base.jar" />
-                        <include name="cmlAll.jar" />
-                        <include name="pmrlib.jar" />
+                        <include name="base_1.4.jar" />
+                        <include name="cmlAll_1.4.jar" />
+                        <include name="euclid_1.4.jar" />
+                        <include name="pmrlib_1.4.jar" />
                     </fileset>
                 </classpath>
             </javac>
@@ -897,16 +899,17 @@
 
         <target name="check.libjars" id="check.libjars">
             <uptodate property="libjars.uptodate" targetfile="${appjars.dir}">
-                <srcfiles dir="${lib}" includes="base.jar"/>
+                <srcfiles dir="${lib}" includes="base_1.4.jar"/>
                 <srcfiles dir="${lib}" includes="batik-dom.jar"/>
                 <srcfiles dir="${lib}" includes="batik-awt-util.jar"/>
                 <srcfiles dir="${lib}" includes="batik-svggen.jar"/>
                 <srcfiles dir="${lib}" includes="batik-util.jar"/>
                 <srcfiles dir="${lib}" includes="batik-xml.jar"/>
                 <srcfiles dir="${lib}" includes="castor-0.9.5-xml.jar"/>
-                <srcfiles dir="${lib}" includes="cmlAll.jar"/>
+                <srcfiles dir="${lib}" includes="cmlAll_1.4.jar"/>
                 <srcfiles dir="${lib}" includes="commons-cli-1.0.jar"/>
                 <srcfiles dir="${lib}" includes="dadml.jar"/>
+                <srcfiles dir="${lib}" includes="euclid_1.4.jar"/>
                 <srcfiles dir="${lib}" includes="gnujaxp.jar"/>
                 <srcfiles dir="${lib}" includes="Jama-1.0.1.jar"/>
                 <srcfiles dir="${lib}" includes="jgrapht-0.5.3.jar"/>
@@ -916,7 +919,7 @@
                 <srcfiles dir="${lib}" includes="log4j-core.jar"/>
                 <srcfiles dir="${lib}" includes="log4j.jar"/>
                 <srcfiles dir="${lib}" includes="mysql-2.0.4.jar"/>
-                <srcfiles dir="${lib}" includes="pmrlib.jar"/>
+                <srcfiles dir="${lib}" includes="pmrdom_1.4.jar"/>
                 <srcfiles dir="${lib}" includes="postgresql7.0-1.2.jar"/>
                 <srcfiles dir="${lib}" includes="printf.jar"/>
                 <srcfiles dir="${lib}" includes="stmml.jar"/>
@@ -928,16 +931,17 @@
         
         <target name="libjars" id="libjars" depends="check.libjars" unless="libjars.uptodate">
             <mkdir dir="${appjars.dir}"/>
-            <unjar dest="${appjars.dir}" src="${lib}/base.jar"/>
+            <unjar dest="${appjars.dir}" src="${lib}/base_1.4.jar"/>
             <unjar dest="${appjars.dir}" src="${lib}/batik-dom.jar"/>
             <unjar dest="${appjars.dir}" src="${lib}/batik-awt-util.jar"/>
             <unjar dest="${appjars.dir}" src="${lib}/batik-svggen.jar"/>
             <unjar dest="${appjars.dir}" src="${lib}/batik-util.jar"/>
             <unjar dest="${appjars.dir}" src="${lib}/batik-xml.jar"/>
             <unjar dest="${appjars.dir}" src="${lib}/castor-0.9.5-xml.jar"/>
-            <unjar dest="${appjars.dir}" src="${lib}/cmlAll.jar"/>
+            <unjar dest="${appjars.dir}" src="${lib}/cmlAll_1.4.jar"/>
             <unjar dest="${appjars.dir}" src="${lib}/commons-cli-1.0.jar"/>
             <unjar dest="${appjars.dir}" src="${lib}/dadml.jar"/>
+            <unjar dest="${appjars.dir}" src="${lib}/euclid_1.4.jar"/>
             <unjar dest="${appjars.dir}" src="${lib}/gnujaxp.jar"/>
             <unjar dest="${appjars.dir}" src="${lib}/Jama-1.0.1.jar"/>
             <unjar dest="${appjars.dir}" src="${lib}/jgrapht-0.5.3.jar"/>
@@ -947,7 +951,7 @@
             <unjar dest="${appjars.dir}" src="${lib}/log4j-core.jar"/>
             <unjar dest="${appjars.dir}" src="${lib}/log4j.jar"/>
             <unjar dest="${appjars.dir}" src="${lib}/mysql-2.0.4.jar"/>
-            <unjar dest="${appjars.dir}" src="${lib}/pmrlib.jar"/>
+            <unjar dest="${appjars.dir}" src="${lib}/pmrdom_1.4.jar"/>
             <unjar dest="${appjars.dir}" src="${lib}/postgresql7.0-1.2.jar"/>
             <unjar dest="${appjars.dir}" src="${lib}/printf.jar"/>
             <unjar dest="${appjars.dir}" src="${lib}/stmml.jar"/>
