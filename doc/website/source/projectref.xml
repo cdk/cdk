@@ -1,4 +1,4 @@
-<section> 
+<section>
   <title>Programmers Reference</title>	
   <section> 
 	 <title>Introduction</title>
@@ -161,7 +161,7 @@
          <para>At this moment the following Input classes are available:
            <itemizedlist>
                 <listitem><para>&MDLReader;</para></listitem>
-                <listitem><para>&CMLReader; <xref linkend="WILLIGHAGEN2001"/></para></listitem>
+                <listitem><para>&CMLReader; <ulink url="bibliography.html#WILLIGHAGEN2001"/></para></listitem>
                 <listitem><para>&XYZReader;</para></listitem>
            </itemizedlist>
            To read a molecule use:
@@ -288,7 +288,7 @@
 			SingleStructureRandomGenerator</ulink>.
 			It does this by randomly choosing four atoms and
 			breaking old and forming new bonds according to rules
-			defined in <xref linkend="FAU96"/>.
+			defined in <ulink url="bibliography.html#FAU96"/>.
 			</para>
 		</listitem>
  		<listitem>
