@@ -436,12 +436,10 @@ public class Convertor {
             }
         }
         if (atom.getFlag(CDKConstants.ISAROMATIC)) {
-            Element scalar = this.createElement("scalar");
-            scalar.setAttribute("dataType","xsd:boolean");
-            scalar.setAttribute("dictRef","cdk:aromaticAtom");
-            scalar.setAttribute("title","isAromatic");
-            atomimpl.appendChild(scalar);
-            scalar.appendChild(doc.createTextNode("1"));
+            CMLAtomType atomType = new AtomTypeImpl(doc);
+            atomType.setId("aromatic");
+            atomType.setDictRef("cdk:aromaticAtom");
+            atomimpl.appendAtomType(atomType);
         }
         writeProperties(atom, atomimpl);
     }
