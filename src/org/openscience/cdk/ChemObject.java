@@ -1,6 +1,6 @@
 /* $RCSfile$
- * $Author$    
- * $Date$    
+ * $Author$
+ * $Date$
  * $Revision$
  * 
  * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
@@ -153,8 +153,7 @@ public class ChemObject implements java.io.Serializable, Cloneable
      *
      * @see     #setPhysicalProperty
 	 */
-	public Object getPhysicalProperty(Object description)
-	{
+	public Object getPhysicalProperty(Object description) {
 		return physicalProperties.get(description);
 	
 	}
@@ -183,6 +182,15 @@ public class ChemObject implements java.io.Serializable, Cloneable
 		return properties.get(description);
 	}
 
+    /**
+     * Returns a Map with the ChemObject's properties.
+     *
+     * @return  The object's properties
+     */
+    public Map getProperties() {
+        return properties;
+    }
+    
 	/**
 	 * Sets a remark for this ChemObject.
 	 *
