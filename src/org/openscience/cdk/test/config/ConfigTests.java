@@ -26,6 +26,8 @@ package org.openscience.cdk.test.config;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.test.config.isotopes.*;
+
 /**
  * TestSuite that runs all the sample tests in the
  * org.openscience.cdk.config package.
@@ -35,9 +37,13 @@ import junit.framework.TestSuite;
 public class ConfigTests {
 
     public static Test suite () {
-        TestSuite suite= new TestSuite("The cdk.tools Tests");
+        TestSuite suite= new TestSuite("The cdk.config Tests");
         suite.addTest(AtomTypeFactoryTest.suite());
         suite.addTest(IsotopeFactoryTest.suite());
+        suite.addTest(TXTBasedAtomTypeConfiguratorTest.suite());
+        // config.isotopes package
+        suite.addTest(IsotopeHandlerTest.suite());
+        suite.addTest(IsotopeReaderTest.suite());
         return suite;
     }
 

@@ -66,18 +66,18 @@ public class AtomTypeFactoryTest extends CDKTestCase {
 
 	public void testAtomTypeFactory() {
         assertTrue(atf != null);
-		assertTrue(atf.getSize() > 0);
+        assertNotSame(0, atf.getSize());
     }
     
-    public void testGetInstanceInputStream() {
+    public void testGetInstanceInputStream_InputStream_String() {
         try {
             String configFile = "org/openscience/cdk/config/data/structgen_atomtypes.xml";
             InputStream ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
             AtomTypeFactory atf = AtomTypeFactory.getInstance(ins, "xml");
             assertNotNull(atf);
-            assertTrue(atf.getSize() > 0);
+            assertNotSame(0, atf.getSize());
         } catch (Exception exception) {
-            fail();
+            fail(exception.getMessage());
         }
     }
     
@@ -85,13 +85,32 @@ public class AtomTypeFactoryTest extends CDKTestCase {
         try {
             AtomTypeFactory atf = AtomTypeFactory.getInstance();
             assertNotNull(atf);
-            assertTrue(atf.getSize() > 0);
         } catch (Exception exception) {
-            fail();
+            fail(exception.getMessage());
         }
     }
     
-    public void testGetAtomType() {
+    public void testGetSize() {
+        try {
+            AtomTypeFactory atf = AtomTypeFactory.getInstance();
+            assertNotSame(0, atf.getSize());
+        } catch (Exception exception) {
+            fail(exception.getMessage());
+        }
+    }
+    
+    public void testGetAllAtomTypes() {
+        try {
+            AtomTypeFactory atf = AtomTypeFactory.getInstance();
+            AtomType[] types = atf.getAllAtomTypes();
+            assertNotNull(types);
+            assertNotSame(0, types.length);
+        } catch (Exception exception) {
+            fail(exception.getMessage());
+        }
+    }
+    
+    public void testGetAtomType_String() {
 		AtomType atomType = null;
 		try {
 			atomType = atf.getAtomType("C4");
