@@ -141,6 +141,5 @@ public class Ring extends AtomContainer
 			}
 		}
 		return str;
-	
 	}
 }

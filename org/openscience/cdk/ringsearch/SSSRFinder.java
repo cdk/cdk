@@ -292,6 +292,7 @@ public class SSSRFinder
 		{
 			exc.printStackTrace();
 		}
+//		System.out.println("found Ring  "+ ring);
 		return ring;
 	}
 		

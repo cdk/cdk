@@ -51,23 +51,23 @@ public class ControllerTest
 //		molecule = buildMolecule2x3();
 //		molecule = buildMolecule2x4();
 //		molecule = buildSpiroRings();
-		molecule = loadMolecule(inFile);
-//		molecule = buildRing();
+//		molecule = loadMolecule(inFile);
+		molecule = buildRing();
 
 
-//		StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-//		sdg.setMolecule(molecule);
-//		try
-//		{
-//			sdg.generateCoordinates(new Vector2d(0,1));
-//		}
-//		catch(Exception exc)
-//		{
-//			System.out.println("*** Exit due to an unexpected error during coordinate generation ***");
-//			exc.printStackTrace();
-//			System.exit(1);
-//		}
-//		Molecule molecule = sdg.getMolecule();
+		StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+		sdg.setMolecule(molecule);
+		try
+		{
+			sdg.generateCoordinates(new Vector2d(0,1));
+		}
+		catch(Exception exc)
+		{
+			System.out.println("*** Exit due to an unexpected error during coordinate generation ***");
+			exc.printStackTrace();
+			System.exit(1);
+		}
+		Molecule molecule = sdg.getMolecule();
 
 
 		Renderer2DModel r2dm = new Renderer2DModel();

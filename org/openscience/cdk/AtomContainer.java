@@ -392,12 +392,11 @@ public class AtomContainer extends ChemObject implements Cloneable{
 	 */
 	public void removeBond(int position)
 	{
-		Bond bond = bonds[position];
-		for (int i = position; i < bondCount; i++)
+		for (int i = position; i < bondCount - 1; i++)
 		{
 			bonds[i] = bonds[i + 1];
 		}
-		bonds[bondCount] = null;
+		bonds[bondCount - 1] = null;
 		bondCount--;		
 	}
 	
@@ -429,12 +428,11 @@ public class AtomContainer extends ChemObject implements Cloneable{
 	 */
 	public void removeAtom(int position)
 	{
-		Atom atom = atoms[position];
-		for (int i = position; i < atomCount; i++)
+		for (int i = position; i < atomCount - 1; i++)
 		{
 			atoms[i] = atoms[i + 1];
 		}
-		atoms[atomCount] = null;
+		atoms[atomCount - 1] = null;
 		atomCount--;		
 	}
 	
