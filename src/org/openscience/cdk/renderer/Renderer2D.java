@@ -497,8 +497,8 @@ public class Renderer2D implements MouseMotionListener   {
             }
         }
         if (isRadical) {
-            logger.debug(" atom is radical, adding '*'");
-            atomSymbol += "*";
+            logger.debug(" atom is radical, adding \u00B7");
+            atomSymbol += "\u00B7";
         }
         graphics.setFont(normalFont);
         FontMetrics fm = graphics.getFontMetrics();
