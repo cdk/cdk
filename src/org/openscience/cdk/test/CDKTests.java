@@ -37,8 +37,7 @@ import org.openscience.cdk.test.graph.invariant.MorganNumberToolsTest;
 import org.openscience.cdk.test.graph.rebond.RebondToolTest;
 import org.openscience.cdk.test.index.CASNumberTest;
 import org.openscience.cdk.test.io.IOTests;
-import org.openscience.cdk.test.isomorphism.IsomorphismTesterTest;
-import org.openscience.cdk.test.isomorphism.UniversalIsomorphismTesterTest;
+import org.openscience.cdk.test.isomorphism.IsomorphismTests;
 import org.openscience.cdk.test.layout.HydrogenPlacerTest;
 import org.openscience.cdk.test.layout.StructureDiagramGeneratorTest;
 import org.openscience.cdk.test.layout.OverlapResolverTest;
@@ -80,7 +79,6 @@ public class CDKTests
         suite.addTest(MorganNumberToolsTest.suite());
         suite.addTest(RebondToolTest.suite());
         suite.addTest(PathLengthTest.suite());
-        suite.addTest(IsomorphismTesterTest.suite());
         //from cdk.test.applications
         suite.addTest(APIVersionTesterTest.suite());
 	//from cdk.test.ringsearch
@@ -102,7 +100,7 @@ public class CDKTests
         // from cdk.test.index
         suite.addTest(CASNumberTest.suite());
         // from cdk.test.isomorphism
-        suite.addTest(UniversalIsomorphismTesterTest.suite());
+        suite.addTest(IsomorphismTests.suite());
         // from cdk.test.aromaticity
         suite.addTest(HueckelAromaticityDetectorTest.suite());
         // from cdk.test.structgen
