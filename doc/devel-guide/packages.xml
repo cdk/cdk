@@ -22,14 +22,29 @@ $ ./configure &amp;&amp; make &amp;&amp; install
       <title>Linux packages</title>
       <para>
         At this moment Linux users should use and install the
-        above tar.gz packages. No binary packages are yet
-        available.
+        above tar.gz packages, unless they are Debian users.
+        They can install a Debian package.
       </para>
 
       <section>
         <title>Debian packages</title>
         <para>
-          Debian packages are planned but not yet available.
+          Debian packages are available from the SourceForge website and
+          can be build from CVS. To build Debian packages, first recompile
+          CDK with "ant dist-all" to make fresh and up to data jar's.
+          Then build the Debian packages in the directory packages/debian.
+          First build libcdkextra which is the Debian package for CDK's
+          cdk-libs tar package. It includes only those jars that are not
+          packaged in other Debian packages. The next package to build
+          is libcdk, which include the CDK jar files. It build-depends
+          on libcdkextra, so you will need to install that one first.
+          The last package to build is the package cdk. These latter two
+          correspond to the CDK tar package cdk-bin.
+          All debian packages are build by typing the following in the
+          appropriate directory:
+          <programlisting>
+$ make deb
+          </programlisting>
         </para>
       </section>
 
