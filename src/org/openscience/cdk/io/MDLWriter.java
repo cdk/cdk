@@ -48,6 +48,9 @@ import javax.vecmath.*;
  * writer.close();
  * </pre>
  *
+ * References:
+ *   <a href="http://www.sf.net/biblio.html#DAL92">DAL92</a>
+ *
  * @keyword file format, MDL molfile
  */
 public class MDLWriter implements CDKConstants, ChemObjectWriter {

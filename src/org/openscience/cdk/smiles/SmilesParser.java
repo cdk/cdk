@@ -35,6 +35,9 @@ import org.openscience.cdk.*;
  *  and the '%' tag for more than 10 rings at a time are supported, but this
  *  should be sufficient for most organic molecules.
  *
+ * References:
+ *   <a href="http://www.sf.net/biblio.html#WEI88">WEI88</a>
+ *
  *@author     steinbeck
  *@created    29. April 2002
  */

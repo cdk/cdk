@@ -39,7 +39,11 @@ import java.io.*;
 import java.net.*;
 
 /**
- * Reads a molecule in CML format from a Reader
+ * Reads a molecule in CML format from a Reader.
+ *
+ * References:
+ *   <a href="http://www.sf.net/biblio.html#PMR99">PMR99</a>,
+ *   <a href="http://www.sf.net/biblio.html#WILLIGHAGEN2001">WILLIGHAGEN2001</a>
  *
  * @author     Egon L. Willighagen
  * @created    February 2001

@@ -32,7 +32,10 @@ import java.util.Vector;
 import org.openscience.cdk.*;
 
 /**
- *  Description of the Class
+ * Generates HOSE codes.
+ *
+ * References:
+ *   <a href="http://www.sf.net/biblio.html#BRE78">BRE78</a>
  *
  *@author     steinbeck
  *@created    10. Mai 2002

@@ -58,8 +58,13 @@ import javax.vecmath.Point3d;
  *   cmlwriter.close();
  * </pre>
  *
+ * References:
+ *   <a href="http://www.sf.net/biblio.html#PMR99">PMR99</a>
+ *
  * @see FileWriter
  * @see StringWriter
+ *
+ * @author Egon Willighagen
  *
  * @keyword file format, CML
  */

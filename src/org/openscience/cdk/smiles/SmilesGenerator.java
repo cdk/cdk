@@ -35,6 +35,17 @@ import java.util.*;
 import java.io.IOException;
 import java.text.NumberFormat;
 
+/**
+ * Generates SMILES strings.
+ *
+ * References:
+ *   <a href="http://www.sf.net/biblio.html#WEI88">WEI88</a>,
+ *   <a href="http://www.sf.net/biblio.html#WEI89">WEI89</a>
+ *
+ * @author Oliver Horlacher
+ *
+ * @keyword SMILES, generator
+ */
 public class SmilesGenerator {
   private static boolean debug = false;
 
