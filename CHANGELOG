@@ -20,6 +20,7 @@ New:
 * Core CDK classes are now serializable
 * Added Manipulator classes that relay methods to 'lower' classes
 * Added classes for chemical semantic validation
+* CMLReader/-Writer now does isotopic information
 
 Changes:
 * Added one-click (not-patented ;) deselect of atoms in lasso mode
@@ -38,11 +39,14 @@ Fixes:
 * Fixed bug in Reaction.growProductArray()
 * Better layout of ChemObjectTree
 * Fixed reading of isotope information (closes #714010)
+* Several fixes in MDLReader/-Writer (thanx to Juergen)
 
-API chages:
+API changes:
 * Implemented RFC #11
 * Removed ChemModel.getAtomContainer (see ChemModelManipulator)
 * Returned bond order sum is now double (fixes #686451)
+* Method AtomContainer.getHighestCurrentBondOrder() renamed to
+  getMaximumBondOrder() (fixes #710695)
 
 20030217 Release
 ------------------------------------

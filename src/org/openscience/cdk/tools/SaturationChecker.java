@@ -5,7 +5,7 @@
  *
  *  Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  *
- *  Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ *  Contact: cdk-devel@lists.sourceforge.net
  *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public License
@@ -73,7 +73,7 @@ public class SaturationChecker
 	{
 
 		double bondOrderSum = ac.getBondOrderSum(atom);
-		double maxBondOrder = ac.getHighestCurrentBondOrder(atom);
+		double maxBondOrder = ac.getMaximumBondOrder(atom);
 		AtomType[] atomTypes = atf.getAtomTypes(atom.getSymbol(), atf.ATOMTYPE_ID_STRUCTGEN);
 		logger.debug("*** Checking for perfect configuration ***");
 		try
@@ -137,7 +137,7 @@ public class SaturationChecker
 	{
 		AtomType[] atomTypes = atf.getAtomTypes(atom.getSymbol(), atf.ATOMTYPE_ID_STRUCTGEN);
 		double bondOrderSum = ac.getBondOrderSum(atom);
-		double maxBondOrder = ac.getHighestCurrentBondOrder(atom);
+		double maxBondOrder = ac.getMaximumBondOrder(atom);
 		int hcount = atom.getHydrogenCount();
 		try
 		{
@@ -171,7 +171,7 @@ public class SaturationChecker
 	{
 		AtomType[] atomTypes = atf.getAtomTypes(atom.getSymbol(), atf.ATOMTYPE_ID_STRUCTGEN);
 		double bondOrderSum = ac.getBondOrderSum(atom);
-		double maxBondOrder = ac.getHighestCurrentBondOrder(atom);
+		double maxBondOrder = ac.getMaximumBondOrder(atom);
 		int hcount = atom.getHydrogenCount();
 		try
 		{

@@ -673,16 +673,24 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 		return count;
 	}
 
+    /**
+     * Deprecated wrapper method for getMaximumBondOrder().
+     *
+     * @see  getMaximumBondOrder()
+     * @deprecated
+     */
+    public double getHighestCurrentBondOrder(Atom atom) {
+        return getMaximumBondOrder(atom);
+    }
 
-	/**
+    /**
 	 *  Returns the maximum bond order that this atom currently has in the context
 	 *  of this AtomContainer.
 	 *
 	 *@param  atom  The atom
 	 *@return       The maximum bond order that this atom currently has
 	 */
-	public double getHighestCurrentBondOrder(Atom atom)
-	{
+	public double getMaximumBondOrder(Atom atom) {
 		double max = 0.0;
 		for (int i = 0; i < getElectronContainerCount(); i++)
 		{
