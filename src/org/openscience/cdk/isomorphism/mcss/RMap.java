@@ -1,16 +1,15 @@
-/*
- *  $RCSfile$
+/*  $RCSfile$
  *  $Author$
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2002-2003  The Chemistry Development Kit (CDK) project
  *
  *  This code has been kindly provided by Stephane Werner
  *  and Thierry Hanser from IXELIS mail@ixelis.net
  *
  *  IXELIS sarl - Semantic Information Systems
- *  17 rue des C�dres 67200 Strasbourg, France
+ *  17 Rue des Cedres 67200 Strasbourg, France
  *  Tel/Fax : +33(0)3 88 27 81 39 Email: mail@ixelis.net
  *
  *  CDK Contact: cdk-devel@lists.sf.net
@@ -36,8 +35,8 @@ package org.openscience.cdk.isomorphism.mcss;
  *  An RMap implements the association between an edge (bond) in G1 and an edge
  *  (bond) in G2, G1 and G2 being the compared graphs in a RGraph context.
  *
- * @author     Stephane Werner from IXELIS mail@ixelis.net
- * @created    24 juillet 2002
+ * @author     Stephane Werner, IXELIS <mail@ixelis.net>
+ * @created    2002-07-24
  */
 public class RMap {
   int id1 = 0;
