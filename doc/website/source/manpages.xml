@@ -15,14 +15,22 @@
   <section>
     <title>Manual Pages</title>
     <para>
-      <itemizedlist>
-        <listitem><para><ulink url="man-dbadmin.html">cdk-dbadmin</ulink></para></listitem>
-        <listitem><para><ulink url="man-download.html">cdk-download</ulink></para></listitem>
-        <listitem><para><ulink url="man-fileconvert.html">cdk-fileconvert</ulink></para></listitem>
-        <listitem><para><ulink url="man-test.html">cdk-test</ulink></para></listitem>
-        <listitem><para><ulink url="man-view.html">cdk-view</ulink></para></listitem>
-      </itemizedlist>
+      These are the manual pages of the UNIX command line tools available
+      for CDK. These programs wrap around one of the CDK application classes
+      in the org.openscience.cdk.applications packages. These manual pages
+      describe the functions of these programs.
     </para>
+    <itemizedlist>
+      <listitem><para><ulink url="man-dbadmin.html">cdk-dbadmin</ulink></para></listitem>
+      <listitem><para><ulink url="man-download.html">cdk-download</ulink></para></listitem>
+      <listitem><para><ulink url="man-fileconvert.html">cdk-fileconvert</ulink></para></listitem>
+      <listitem><para><ulink url="man-fingerprint.html">cdk-fingerprint</ulink></para></listitem>
+      <listitem><para><ulink url="man-guessformat.html">cdk-guessformat</ulink></para></listitem>
+      <listitem><para><ulink url="man-iupacname.html">cdk-iupacname</ulink></para></listitem>
+      <listitem><para><ulink url="man-substructure.html">cdk-substructure</ulink></para></listitem>
+      <listitem><para><ulink url="man-test.html">cdk-test</ulink></para></listitem>
+      <listitem><para><ulink url="man-view.html">cdk-view</ulink></para></listitem>
+    </itemizedlist>
   </section>
 
 </webpage>
