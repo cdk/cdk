@@ -25,11 +25,6 @@
             <doclet name="JavaDocStats" path="."/>
 
             <package name="org.openscience.cdk.*"/>
-
-            <sourcepath>
-                <pathelement path="../../src/"/>
-            </sourcepath>
-
         </javadoc>
     </target>
 
@@ -39,12 +34,10 @@
 
             <doclet name="MakeKeywordIndexDoclet" path="."/>
 
-            <package name="org.openscience.cdk.*"/>
-
-            <sourcepath>
-                <pathelement path="../../src/"/>
-            </sourcepath>
-
+            <packageset dir="../../src/">
+              <include name="org/openscience/cdk/**"/>
+              <exclude name="org/openscience/cdk/test/**"/>
+            </packageset>
         </javadoc>
     </target>
 
@@ -54,12 +47,10 @@
 
             <doclet name="XMIDoclet" path="."/>
 
-            <package name="org.openscience.cdk"/>
-
-            <sourcepath>
-                <pathelement path="../../src/"/>
-            </sourcepath>
-
+            <packageset dir="../../src/">
+              <include name="org/openscience/cdk/**"/>
+              <exclude name="org/openscience/cdk/test/**"/>
+            </packageset>
         </javadoc>
     </target>
 
