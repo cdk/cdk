@@ -41,7 +41,13 @@ public class ChemSequenceValidator {
         Vector errors = new Vector();
         ChemModel[] models = sequence.getChemModels();
         for (int i=0; i < models.length; i++) {
-            errors.addAll(ChemModelValidator.validate(models[i]));
+            if (models[i] == null) {
+                errors.add(
+                  new ValidationError(sequence, "ChemSequence contains a null object at position " + i)
+                );
+            } else {
+                errors.addAll(ChemModelValidator.validate(models[i]));
+            }
         }
         return errors;
     }

@@ -41,7 +41,13 @@ public class ChemFileValidator {
         Vector errors = new Vector();
         ChemSequence[] sequences = chemFile.getChemSequences();
         for (int i=0; i < sequences.length; i++) {
-            errors.addAll(ChemSequenceValidator.validate(sequences[i]));
+            if (sequences[i] == null) {
+                errors.add(
+                  new ValidationError(chemFile, "ChemFile contains a null object at position " + i)
+                );
+            } else {
+                errors.addAll(ChemSequenceValidator.validate(sequences[i]));
+            }
         }
         return errors;
     }
