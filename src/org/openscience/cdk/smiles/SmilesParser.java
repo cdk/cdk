@@ -39,8 +39,11 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.tools.ConnectivityChecker;
+import org.openscience.cdk.tools.HydrogenAdder;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  *  Parses a SMILES string and an AtomContainer. So far only the SSMILES subset
@@ -68,7 +71,7 @@ import org.openscience.cdk.tools.ConnectivityChecker;
 public class SmilesParser
 {
 
-	private org.openscience.cdk.tools.LoggingTool logger;
+	private LoggingTool logger;
 
 
 	/**
@@ -76,7 +79,7 @@ public class SmilesParser
 	 */
 	public SmilesParser()
 	{
-		logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+		logger = new LoggingTool(this);
 	}
 
 
@@ -134,8 +137,7 @@ public class SmilesParser
     }
     
     /**
-     * Parses a SMILES string and returns a Molecule object. The SMILES string
-     * may not contain any '.' characters.
+     * Parses a SMILES string and returns a Molecule object.
      *
      * @param  smiles    A SMILES string
      * @return           A Molecule representing the constitution
@@ -145,7 +147,6 @@ public class SmilesParser
     public Molecule parseSmiles(String smiles) throws InvalidSmilesException {
         logger.debug("parseSmiles()...");
 		Bond bond = null;
-		boolean aromaticAtom = false;
 		nodeCounter = 0;
 		bondStatus = 0;
         boolean bondExists = true;
@@ -193,15 +194,10 @@ public class SmilesParser
                     } else {
                         currentSymbol = getSymbolForOrganicSubsetElement(smiles, position);
                         if (currentSymbol != null) {
-                            if (bondStatus == CDKConstants.BONDORDER_AROMATIC && 
-                                !(mychar == 'c' || mychar == 'n' || mychar == 's' || mychar == 'o'))
-                            {
-                                bondStatus = CDKConstants.BONDORDER_SINGLE;
-                            }
                             atom = new Atom(currentSymbol);
                             if (currentSymbol.length() == 1) {
                                 if (!(currentSymbol.toUpperCase()).equals(currentSymbol)) {
-                                    atom.setFlag(CDKConstants.ISAROMATIC, true);
+                                    atom.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
                                     atom.setSymbol(currentSymbol.toUpperCase());
                                 }
                             }
@@ -217,16 +213,9 @@ public class SmilesParser
                     if ((lastNode != null) && bondExists) {
                         logger.debug("Creating bond between " + atom.getSymbol() + " and " + lastNode.getSymbol());
                         bond = new Bond(atom, lastNode, bondStatus);
-                        if (bondStatus == CDKConstants.BONDORDER_AROMATIC) {
-                            bond.setFlag(CDKConstants.ISAROMATIC, true);
-                        }
                         molecule.addBond(bond);
                     }
                     bondStatus = CDKConstants.BONDORDER_SINGLE;
-                    if (mychar == 'c' || mychar == 'n' || mychar == 's' || mychar == 'o')
-                    {
-                        bondStatus = CDKConstants.BONDORDER_AROMATIC;
-                    }
                     lastNode = atom;
                     nodeCounter++;
                     position = position + currentSymbol.length();
@@ -286,17 +275,10 @@ public class SmilesParser
                     logger.debug("Added atom: " + atom);
                     if (lastNode != null && bondExists) {
 						bond = new Bond(atom, lastNode, bondStatus);
-						if (bondStatus == CDKConstants.BONDORDER_AROMATIC) {
-							bond.setFlag(CDKConstants.ISAROMATIC, true);
-						}
 						molecule.addBond(new Bond(atom, lastNode, bondStatus));
                         logger.debug("Added bond: " + bond);
 					}
 					bondStatus = CDKConstants.BONDORDER_SINGLE;
-					if (mychar == 'c' || mychar == 'n' || mychar == 's' || mychar == 'o')
-					{
-						bondStatus = CDKConstants.BONDORDER_AROMATIC;
-					}
 					lastNode = atom;
 					nodeCounter++;
 					position = position + currentSymbol.length() + 2; // plus two for [ and ]
@@ -328,6 +310,21 @@ public class SmilesParser
             logger.debug("Parsing next char");
 		} while (position < smiles.length());
 
+        // conceive aromatic perception
+        Molecule[] moleculeSet = ConnectivityChecker.partitionIntoMolecules(molecule).getMolecules();
+        HydrogenAdder adder = new HydrogenAdder();
+        for (int i=0; i<moleculeSet.length; i++) {
+            try {
+                adder.addImplicitHydrogensToSatisfyValency(moleculeSet[i]);
+                if (HueckelAromaticityDetector.detectAromaticity(moleculeSet[i])) {
+                    logger.debug("Structure is aromatic...");
+                }
+            } catch (Exception exception) {
+                logger.error("Could not perceive aromaticity: ", exception.getMessage());
+                logger.debug(exception);
+            }
+        }
+        
 		return molecule;
 	}
 
@@ -470,7 +467,7 @@ public class SmilesParser
             return s.substring(pos, pos + 1);
         }
         if ("fpi".indexOf((s.charAt(pos))) >= 0) {
-            logger.warn("Element " + s + " is normally not aromatic");
+            logger.warn("Element " + s + " is normally not sp2 hybridisized!");
             return s.substring(pos, pos + 1);
         }
         logger.warn("Subset element not found!");
@@ -533,7 +530,7 @@ public class SmilesParser
                         atom = new Atom(currentSymbol);
                         if (currentSymbol.length() == 1) {
                             if (!(currentSymbol.toUpperCase()).equals(currentSymbol)) {
-                                atom.setFlag(CDKConstants.ISAROMATIC, true);
+                                atom.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
                                 atom.setSymbol(currentSymbol.toUpperCase());
                             }
                         }
@@ -625,29 +622,14 @@ public class SmilesParser
 		Atom partner = null;
 		Atom thisNode = rings[thisRing];
 		// lookup
-		if (thisNode != null)
-		{
-			/*
-			 *  Second occurence of this ring:
-			 *  - close ring
-			 */
-			if (bondStat == CDKConstants.BONDORDER_AROMATIC)
-			{
-				if (ringbonds[thisRing] != CDKConstants.BONDORDER_AROMATIC)
-				{
-					bondStat = CDKConstants.BONDORDER_SINGLE;
-				}
-			}
-
+		if (thisNode != null) {
 			partner = thisNode;
 			bond = new Bond(atom, partner, bondStat);
-			bond.setFlag(CDKConstants.ISAROMATIC, true);
 			molecule.addBond(bond);
 			rings[thisRing] = null;
 			ringbonds[thisRing] = -1;
 
-		} else
-		{
+		} else {
 			/*
 			 *  First occurence of this ring:
 			 *  - add current atom to list
