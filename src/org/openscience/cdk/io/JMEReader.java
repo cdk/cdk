@@ -42,6 +42,7 @@ import javax.vecmath.Point3d;
 import org.jmol.adapter.smarter.SmarterModelAdapter;
 import org.jmol.api.ModelAdapter;
 import org.jmol.api.ModelAdapter.AtomIterator;
+import org.jmol.api.ModelAdapter.BondIterator;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
@@ -132,23 +133,23 @@ public class JMEReader extends DefaultChemObjectReader {
         AtomIterator atomIterator = adapter.getAtomIterator(model);
         while (atomIterator.hasNext()) {
             Atom atom = new Atom(atomIterator.getElementSymbol());
-            atom.setX3d(atomIterator.x);
+            /* atom.setX3d(atomIterator.x);
             atom.setY3d(atomIterator.y);
-            atom.setZ3d(atomIterator.z);
+            atom.setZ3d(atomIterator.z); */
             molecule.addAtom(atom);
         }
         BondIterator bondIterator = adapter.getBondIterator(model);
         while (bondIterator.hasNext()) {
-            Object atom1 = bondIterator.getgetAtomUid1();
-            Object atom2 = bondIterator.getgetAtomUid2();
-            if (atom1 instanceof org.jmol.adapter.smarter.Atom) {
+            Object atom1 = bondIterator.getAtomUid1();
+            Object atom2 = bondIterator.getAtomUid2();
+            /* if (atom1 instanceof org.jmol.adapter.smarter.Atom) {
                 org.jmol.adapter.smarter.Atom atomOne =
                     (org.jmol.adapter.smarter.Atom)atom1;
                 org.jmol.adapter.smarter.Atom atomTwo =
                     (org.jmol.adapter.smarter.Atom)atom2;
                 // now I'm stuck... no idea which atoms this bond
                 // connects... consulting Miguel
-            }
+            } */
         }
 		return molecule;
 	}

@@ -61,6 +61,8 @@
                         <include name="cmlAll.jar" />
                         <include name="base.jar" />
                         <include name="pmrlib.jar" />
+                        <include name="jmolApis.jar" />
+                        <include name="jmolIO.jar" />
                 </fileset>
                 <fileset dir="${pathtojava3d}">
                         <include name="*.jar" />
@@ -691,6 +693,7 @@
         
         <target id="test-experimental" name="test-experimental" depends="noJunit"
                 description="Performs a full JUnit test for the CDK, including experimental classes.">
+                <mkdir dir="${reports.tests}"/>
                 <junit printsummary="yes" haltonfailure="yes" fork="yes">
                     <classpath>
                         <pathelement location="${dist}/jar/cdk-core.jar" />
@@ -724,6 +727,7 @@
         
         <target id="test" name="test" depends="dist-test, noJunit"
                 description="Performs a full JUnit test for the CDK." if="junit.present">
+                <mkdir dir="${reports.tests}"/>
                 <junit printsummary="yes" haltonfailure="yes" fork="yes">
                     <classpath>
                         <pathelement location="${dist}/jar/cdk-core.jar" />
