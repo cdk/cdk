@@ -77,7 +77,11 @@ import org.openscience.cdk.io.DefaultChemObjectReader;
  * <br><a href="http://www.msg.ameslab.gov/GAMESS/GAMESS.html">GAMESS</a> is a 
  * quantum chemistry program by Gordon research group atIowa State University.
  * 
- * @cdk.module experimental
+ * @cdk.module  experimental
+ * @cdk.keyword Gamess
+ * @cdk.keyword file format
+ * @cdk.keyword output
+ * @cdk.keyword log file
  * 
  * @author Bradley A. Smith
  * 
@@ -104,22 +108,18 @@ public class GamessReader extends DefaultChemObjectReader {
 	
 	/**
 	 * Boolean constant used to specify that the coordinates are given in Bohr units.
-	 * 
-	 * @see org.openscience.cdk.io.GamessReader#readChemFile()
 	 */
 	public static final boolean BOHR_UNIT = true;
 	
 	/**
 	 * Double constant that contains the convertion factor from Bohr unit to 
-	 * Angstr�m unit.
+	 * &Aring;ngstrom unit.
 	 */
 	//TODO Check the accuracy of this comment.
 	public static final double BOHR_TO_ANGSTROM = 0.529177249;
 	
 	/**
-	 * Boolean constant used to specify that the coordinates are given in Angstr�m units.
-	 * 
-	 * @see org.openscience.cdk.io.GamessReader#readChemFile()
+	 * Boolean constant used to specify that the coordinates are given in &Aring;ngstrom units.
 	 */
 	public static final boolean ANGSTROM_UNIT = false;
 	
@@ -143,14 +143,9 @@ public class GamessReader extends DefaultChemObjectReader {
 	 * 
 	 * @param	inputReader		The "Reader" object given as input parameter.
 	 * 
-	 * @see	org.openscience.cdk.io.GamessReader#input
 	 * @see org.openscience.cdk.io.GamessReader#accepts(ChemObject)
 	 * @see	java.io.Reader
 	 *  
-	 * @keyword	gamess
-	 * @keyword	file format
-	 * @keyword	output
-	 * @keyword log file
 	 */
     public GamessReader(Reader inputReader) {
 		this.input = new BufferedReader(inputReader);
@@ -427,14 +422,14 @@ public class GamessReader extends DefaultChemObjectReader {
 	 * 
 	 * @return	The scaling convertion factor: 1 if no scaling is needed and <code>BOHR_TO_ANGSTROM</code> if scaling has to be performed.
 	 * 
-	 * @see org.openscience.cdk.io.GamessReader#BOHR_TO_ANGSTROM
+	 * @see org.openscience.cdk.PhysicalConstants#BOHR_TO_ANGSTROM
 	 * @see org.openscience.cdk.io.GamessReader#BOHR_UNIT
 	 * @see org.openscience.cdk.io.GamessReader#ANGSTROM_UNIT
 	 */
 	//TODO Update method comments with appropriate information.
 	private static double scalesCoordinatesUnits(boolean coordinatesUnits) {
 		if (coordinatesUnits == GamessReader.BOHR_UNIT) {
-			return GamessReader.BOHR_TO_ANGSTROM;
+			return PhysicalConstants.BOHR_TO_ANGSTROM;
 		} else { //condition is: (coordinatesUnits == GamessReader.ANGTROM_UNIT)
 			return (double) 1;
 		}

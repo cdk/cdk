@@ -35,7 +35,7 @@ import org.openscience.cdk.SetOfAtomContainers;
 /**
  * @cdk.module standard
  *
- * @see org.openscience.cdk.tools.ChemModelManipulator
+ * @see ChemModelManipulator
  */
 public class SetOfAtomContainersManipulator {
     

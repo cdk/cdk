@@ -83,7 +83,7 @@ public class IDCreator {
      * Labels the Atom's and Bond's in the AtomContainer using the a1, a2, b1, b2
      * scheme often used in CML.
      *
-     * @see #createAtomContainerAndAtomAndBondIDs(SetOfAtomContainers)
+     * @see #createIDs(SetOfAtomContainers)
      */
     public void createIDs(AtomContainer container) {
         if (tabuList == null) tabuList = AtomContainerManipulator.getAllIDs(container);

@@ -117,9 +117,10 @@ public class DADMLReader extends DefaultChemObjectReader {
     }
 
     /**
-     * Sets the query in the form &quot;dadml://any/CAS-NUMBER?50-00-0&quot;.
+     * Sets the query in the form of an URI.
+     * An example URI is: dadml://any/CAS-NUMBER?50-00-0.
      *
-     * @param   URI     URI query.
+     * @param   query     URI query.
      */
     public void setQuery(URI query) throws URISyntaxException {
         this.query = query;

@@ -39,7 +39,7 @@ import org.openscience.cdk.SetOfReactions;
 /**
  * @cdk.module standard
  *
- * @see org.openscience.cdk.tools.ChemModelManipulator
+ * @see ChemModelManipulator
  */
 public class SetOfReactionsManipulator {
     

@@ -65,7 +65,7 @@ import org.openscience.cdk.io.setting.StringIOSetting;
  *
  * @author        shk3
  * @author        egonw
- * @created       2004-02-19
+ * @cdk.created   2004-02-19
  * @cdk.module    extra
  * @cdk.keyword   CML
  * @cdk.keyword   class convertor

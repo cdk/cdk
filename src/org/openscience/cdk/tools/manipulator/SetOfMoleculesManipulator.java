@@ -36,7 +36,7 @@ import org.openscience.cdk.SetOfMolecules;
 /**
  * @cdk.module standard
  *
- * @see org.openscience.cdk.tools.ChemModelManipulator
+ * @see ChemModelManipulator
  */
 public class SetOfMoleculesManipulator {
     

@@ -1,10 +1,9 @@
-/*
- *  $RCSfile$
+/*  $RCSfile$
  *  $Author$
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 1997-2004  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2004  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -42,10 +41,10 @@ import org.openscience.cdk.isomorphism.mcss.*;
 import org.w3c.dom.*;
 
 /**
- * Adjusts parts of an atomcontainer to the congiguratin of a fragment.
+ * Adjusts parts of an AtomContainer to the congiguratin of a fragment.
  *
  * @author        shk3
- * @created       March 4, 2004
+ * @cdk.created   2004-03-04
  * @cdk.module    standard
  */
 public class Normalizer {
@@ -53,8 +52,8 @@ public class Normalizer {
   /**
    *  The method takes an xml files like the following:<br>
    *  &lt;replace-set&gt;<br>
-       &lt;replace&gt;O=N=O&lt;/replace&gt;<br>
-       &lt;replacement&gt;[O-][N+]=O&lt;/replacement&gt;<br>
+   * �&lt;replace&gt;O=N=O&lt;/replace&gt;<br>
+   * �&lt;replacement&gt;[O-][N+]=O&lt;/replacement&gt;<br>
    *  &lt;/replace-set&gt;<br>
    *  All parts in ac which are the same as replace will be changed according to replacement.
    *  Currently the following changes are done: BondOrder, FormalCharge.

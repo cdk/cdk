@@ -47,7 +47,7 @@ import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
 
 /**
- * Reads an object from XYZ formated input
+ * Reads an object from XYZ formated input.
  *
  * <p>This class is based on Dan Gezelter's XYZReader from Jmol
  *

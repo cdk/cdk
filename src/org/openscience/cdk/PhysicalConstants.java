@@ -34,8 +34,8 @@ public class PhysicalConstants {
 
     public final static double MASS_PROTON   = 1.6726485E-27;
     public final static double MASS_ELECTRON = 9.109534E-31;
-;
 
+    public static final double BOHR_TO_ANGSTROM = 0.529177249;
 }
 
 

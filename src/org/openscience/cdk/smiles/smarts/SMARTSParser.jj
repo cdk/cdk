@@ -48,11 +48,11 @@ import org.openscience.cdk.isomorphism.matchers.smarts.TotalHCountAtom;
  * <p>See the cdk.test.smiles.smarts.ParserTest for examples of the implemented
  * subset.
  *
- * @see org.openscience.cdk.isomorphism.matcher.smarts.SMARTSAtom
- * @see org.openscience.cdk.smiles.smarts.ParserTest
+ * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom
+ * @see org.openscience.cdk.test.smiles.smarts.ParserTest
  *
  * @author  Egon Willighagen
- * @created 2004-03-29
+ * @cdk.created 2004-03-29
  *
  * @cdk.module experimental
  */

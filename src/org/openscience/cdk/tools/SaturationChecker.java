@@ -592,7 +592,6 @@ public class SaturationChecker implements ValencyCheckerInterface {
 	 * generated with the AtomTypeFactory.
 	 *
 	 * @param  atom      Description of the Parameter
-	 * @param  container  Description of the Parameter
 	 * @param  throwExceptionForUnknowAtom  Should an exception be thrown if an unknown atomtype is found or 0 returned ?
 	 * @return           Description of the Return Value
 	 * @see              AtomTypeFactory

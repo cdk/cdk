@@ -1,5 +1,9 @@
-/*
- *  Copyright (C) 2003  The Chemistry Development Kit (CDK) project
+/*  $RCSfile$
+ *  $Author$
+ *  $Date$
+ *  $Revision$
+ *
+ *  Copyright (C) 2004  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -31,18 +35,21 @@ import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.smiles.*;
 
 /**
- *  An implementation of Molodtsov structure generator. However the final part is not the original idea, such as
- * normalization, also the author omitted the strong canonicity as it needs other algorithms. Therefore it is a mixture
+ * An adapted implementation of Molodtsov structure generator. 
+ * The final part is not the original idea, such as
+ * normalization, also the author omitted the strong canonicity as it needs other algorithms. 
+ * Therefore, it is a mixture
  * of Molodtsov structure generator with other ideas.
- * details see the following papers
+ *
+ * <p>Details are found in the following papers.
  * Sergey G. Molodtsov, Computer-Aided Generation of Molecular Graphs, Match, 30(213),1994
  * Molchanova, Computer Generation of Molecular Structures by the SMOG Program, J.Chem.Inf.Comput.Sci., 36(889),1996
  * Chang-Yu Hu, Lu Xu, Algorithm for computer perception of topological symmetry, Analytical Chimica Acta,295(127),1994
  * Chang-Yu Hu, Lu Xu, A New Scheme for Assignment of a Canonical Connection Table, J.Chem.Inf.Comput.Sci.,34(840),1994
  * Hu CY, Computer perception of topological symmetry by all-paths algorithm, Chemom. Intell. Lab. Syst. 45(318),1999
  *
- * @author     Junfeng Hao
- * @created    2004-02-16
+ * @author      Junfeng Hao
+ * @cdk.created 2004-02-16
  */
 public class GENMDeterministicGenerator
 {
@@ -1532,7 +1539,6 @@ public class GENMDeterministicGenerator
 	  * @param	rowMatrix		the row which contains the filling line
 	  * @param	adjacencyMatrix		adjacency matrix
 	  * @param	previousMatrix		matrix to trace the change of adjacency matrix
-	  * @param	adjacencyMatrix		adjacency matrix
 	  * @param	parentID		array mainly used for complex bond
 	  * @return	a boolean value whether there is next WCF or not
 	  *
@@ -1724,10 +1730,10 @@ public class GENMDeterministicGenerator
 	 }
 	 
 	 /**
-	  * judge whether this line of the adjacency matrix is forced or not.
-	  * @param	step		the step of the generation
-	  * @param	previousMatrix	matrix to trace the change of adjacency matrix
-	  * @param	adjacencyMatrix	adjacency matrix 
+	  * Judge whether this line of the adjacency matrix is forced or not.
+	  * @param	step            the step of the generation
+	  * @param	previousMatrix  matrix to trace the change of adjacency matrix
+	  * @param	adjacency       adjacency matrix 
 	  * @return	a boolean value whether the line is force-filling or not
 	  *
 	  */
@@ -2659,12 +2665,12 @@ public class GENMDeterministicGenerator
 	 
 	 
 	 /**
-	 * A bridge between CDK SMILES format and adjacency matrix. It might be a temporary thing, later,
-	 * all should be done according to CDK.
-	 * @param	set			basic fragment set
-	 * @param	matrix			adjacency matrix of the corresponding structure
-	 * @param	structures		vector contains all generated structures
-	 */
+	  * A bridge between CDK SMILES format and adjacency matrix. It might be a temporary thing, later,
+	  * all should be done according to CDK.
+	  * @param	set      basic fragment set
+	  * @param	matrix   adjacency matrix of the corresponding structure
+	  * @param	smiles   vector contains all generated structures
+	  */
 	 public void convertToSMILES(Vector set,int[][] matrix,Vector smiles)
 	 {
 		 int i,j;

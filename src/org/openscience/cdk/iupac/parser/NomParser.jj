@@ -537,7 +537,9 @@ void tensNoUnits() :
 |   <CONT> { currentNumber *= 10; }
 }
 
-/** Deals with numbers above 30 where the base numbers set appear twice, i.e. in the tens and the units. */
+/** 
+ * Deals with numbers above 30 where the base numbers set appear twice.
+ * For example, in the tens and the units. */
 void tensWithUnits() :
 {
     int tempBackup;

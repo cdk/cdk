@@ -51,23 +51,22 @@ import org.openscience.cdk.CDKConstants;
 
 /**
  *  A reader for Gaussian98 output. Gaussian 98 is a quantum chemistry program
- *  by Gaussian, Inc. (http://www.gaussian.com/). <p>
+ *  by Gaussian, Inc. (http://www.gaussian.com/).
  *
- *  Molecular coordinates, energies, and normal coordinates of vibrations are
+ *  <p>Molecular coordinates, energies, and normal coordinates of vibrations are
  *  read. Each set of coordinates is added to the ChemFile in the order they are
  *  found. Energies and vibrations are associated with the previously read set
- *  of coordinates. <p>
+ *  of coordinates.
  *
- *  This reader was developed from a small set of example output files, and
+ *  <p>This reader was developed from a small set of example output files, and
  *  therefore, is not guaranteed to properly read all Gaussian98 output. If you
  *  have problems, please contact the author of this code, not the developers of
  *  Gaussian98.
  *
- *@author        Bradley A. Smith <yeldar@home.com>
- *@author        Egon Willighagen
- *@author        Christoph Steinbeck
- *@created       March 2, 2004
- *@cdk.module    io
+ * @author        Bradley A. Smith <yeldar@home.com>
+ * @author        Egon Willighagen
+ * @author        Christoph Steinbeck
+ * @cdk.module    io
  */
 public class Gaussian98Reader extends DefaultChemObjectReader
 {

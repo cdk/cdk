@@ -115,7 +115,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
      *
      * @param object class must be of type Molecule or SetOfMolecules.
      *
-     * @see ChemFile
+     * @see org.openscience.cdk.ChemFile
      */
 	public void write(ChemObject object) throws CDKException
 	{
