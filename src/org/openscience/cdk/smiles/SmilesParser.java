@@ -373,14 +373,21 @@ public class SmilesParser
 	 * @return      The ElementSymbol value
 	 */
      private String getElementSymbol(String s, int pos) {
-         logger.debug("Parsing element symbol from: " + s);
+         logger.debug("Parsing element symbol (pos=" + pos + ") from: " + s);
          if (pos < s.length() - 1) {
+             // try to match elements not in the organic subset.
+             // first, the two char elements
              String possibleSymbol = s.substring(pos, pos + 2);
              if (("HeLiBeNeNaMgAlSiClArCaScTiCrMnFeCoNiCuZnGaGeAsSe".indexOf(possibleSymbol) >= 0) ||
                  ("BrKrRbSrZrNbMoTcRuRhPdAgCdInSnSbTeXeCsBaLuHfTaRe".indexOf(possibleSymbol) >= 0) ||
                  ("OsIrPtAuHgTlPbBiPoAtRnFrRaLrRfDbSgBhHsMtDs".indexOf(possibleSymbol) >= 0)) {
                  return possibleSymbol;
-             }            
+             }
+             // if that fails, the one char elements
+             possibleSymbol = s.substring(pos, pos + 1);
+             if (("H".indexOf(possibleSymbol) >= 0)) {
+                 return possibleSymbol;
+             }
         }
         return getSymbolForOrganicSubsetElement(s, pos);
     }
