@@ -23,6 +23,11 @@ Fixes:
 
 API changes:
 * Moved IsotopeFactory from cdk-standard to the cdk-core module
+* Descriptor.calculate() now returns a DescriptorValue instead of
+  DescriptorResult.
+* Removed LoggingTool(boolean) and LoggingTool(Object, boolean)
+  (closes #1150670) because configuration should be done at application
+  level
 
 20050125 Release
 ------------------------------------
