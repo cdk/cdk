@@ -51,6 +51,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
     private int bond_a2;
     private double bond_order;
     private int bond_stereo;
+    private int bond_id;
     
     private double crystal_axis_x;
     private double crystal_axis_y;
@@ -255,6 +256,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
           currentAtom.setHydrogenCount(new Integer(propertyValue).intValue());
         } else if (propertyType.equals("id")) {
           logger.debug("id" + propertyValue);
+          // currentAtom.setID(propertyValue);
           atomEnumeration.put(propertyValue, new Integer(numberOfAtoms));
         }
       } else if (objectType.equals("Bond")) {
@@ -262,6 +264,9 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
           bond_a1 = new Integer(propertyValue).intValue();
         } else if (propertyType.equals("atom2")) {
           bond_a2 = new Integer(propertyValue).intValue();
+        } else if (propertyType.equals("id")) {
+          logger.debug("id" + propertyValue);
+          bond_id = propertyValue;
         } else if (propertyType.equals("order")) {
           try {
             bond_order = Double.parseDouble(propertyValue);

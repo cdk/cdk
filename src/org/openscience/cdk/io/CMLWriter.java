@@ -85,7 +85,7 @@ public class CMLWriter implements ChemObjectWriter {
      *
      * @param out Writer to redirect the output to.
      */
-    public CMLWriter(Writer out) {        
+    public CMLWriter(Writer out) {
 		this(out, false);
     }
 
@@ -137,8 +137,8 @@ public class CMLWriter implements ChemObjectWriter {
             } else {
                 logger.error("This object type is not supported.");
                 throw new CDKException("This object type is not supported.");
-            }    
-            if (!fragment) {           
+            }
+            if (!fragment) {
                 done = true;
             }
         } else {};
@@ -183,7 +183,7 @@ public class CMLWriter implements ChemObjectWriter {
     }
 
     private void write(SetOfMolecules som) {
-        logger.debug("Writing SOM");        
+        logger.debug("Writing SOM");
         int count = som.getMoleculeCount();
         logger.debug("Found " + count + " molecule(s) in set");
         if (count > 1) {

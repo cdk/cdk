@@ -872,12 +872,14 @@ public class CMLCoreModule implements ModuleInterface {
                     "About to add bond info to " + cdo.getClass().getName());
 
             Enumeration orders = order.elements();
+            Enumeration ids = bondid.elements();
             Enumeration bar1s = bondARef1.elements();
             Enumeration bar2s = bondARef2.elements();
             Enumeration stereos = bondStereo.elements();
 
             while (orders.hasMoreElements()) {
                 cdo.startObject("Bond");
+                cdo.setObjectProperty("Bond", "id", ids.nextElement());
                 cdo.setObjectProperty("Bond", "atom1", 
                                       new Integer(elid.indexOf(
                                                           (String)bar1s.nextElement())).toString());
