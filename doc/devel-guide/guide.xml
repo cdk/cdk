@@ -360,7 +360,6 @@ $ ./configure &amp;&amp; make &amp;&amp; install
     <chapter id="sect:linuxpackages">
       <title>Linux packages</title>
       <para>
-      <para>
         At this moment Linux users should use and install the
         above tar.gz packages. No binary packages are yet
         available.
