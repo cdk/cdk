@@ -139,10 +139,10 @@ public class MDLReader implements ChemObjectReader
             }
         } catch (CDKException cdkexc) {
             throw cdkexc;
-        } catch (Exception exc) {
-            String error = "Error while parsing SDF: " + exc.toString();
+        } catch (Exception exception) {
+            String error = "Error while parsing SDF";
             logger.error(error);
-            exc.printStackTrace();
+            logger.debug(exception);
             throw new CDKException(error);
         }
 		try {
@@ -368,11 +368,10 @@ public class MDLReader implements ChemObjectReader
             }
 		} catch (CDKException exception) {
             throw exception;
-		} catch (Exception e) {
-            String error = "Error (" + e.toString() + ") while parsing line "
-                + linecount + ": " + line + " in property block.";
-			logger.error(error);
-            e.printStackTrace();
+		} catch (Exception exception) {
+            String error = "Error while parsing line " + linecount + ": " + line + " in property block.";
+            logger.error(error);
+            logger.debug(exception);
             throw new CDKException(error);
 		}
 		return molecule;

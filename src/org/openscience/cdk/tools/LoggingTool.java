@@ -32,6 +32,11 @@ public class LoggingTool {
 
     private Object logger;
     private String classname;
+    
+    /** Default number of StackTraceElements to be printed by debug(Exception) */
+     private final int DEFAULT_STACK_LENGTH = 5;
+     
+     private int stackLength = DEFAULT_STACK_LENGTH;
 
     public LoggingTool() {
         this( LoggingTool.class.getName() );
@@ -96,10 +101,32 @@ public class LoggingTool {
         debug("java.vendor    : " + System.getProperty("java.vendor"));
     }
 
+    /**
+     * Sets the number of StackTraceElements to be printed in DEBUG mode.
+     * Defaults to DEFAULT_STACK_LENGTH.
+     *
+     * @see #DEFAULT_STACK_LENGTH
+     */
+    public void setStackLength(int length) {
+        this.stackLength = length;
+    }
+    
     public void dumpClasspath() {
         debug("java.class.path: " + System.getProperty("java.class.path"));
     }
 
+    public void debug(Exception exception) {
+        StackTraceElement[] stack = exception.getStackTrace();
+        String string = "Exception: " + exception.toString();
+        this.debug(string);
+        for (int i=0; i<stack.length; i++) {
+            string        = "       in: " + stack[i].getFileName() + " (line: " +
+            stack[i].getLineNumber() + ")";
+            this.debug(string);
+            if (i == this.stackLength) i = stack.length;
+        }
+    }
+    
     public void debug(String s) {
         if (debug) {
             if (tostdout) {
