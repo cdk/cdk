@@ -282,58 +282,6 @@ public class RingSet extends Vector implements java.io.Serializable, Cloneable
 		return false;
 	}
 
-    /**
-     * Sorts the rings in the set by size. The largest ring comes
-     * first.
-     */
-	public void sort()
-	{
-		Collections.sort(this, new RingSizeComparator(LARGE_FIRST));	
-	}
-	
-    /**
-     * Comparator to sort Ring sets by size.
-     */
-	public class RingSizeComparator implements java.util.Comparator {
-    
-		int sortOrder = SMALL_FIRST;
-        
-        /**
-         * Constructs a new comparator to sort rings by size.
-         *
-         * @param   order  Sort order: either RingSet.SMALL_FIRST or
-         *                                 RingSet.LARGE_FIRST.
-         */
-		public RingSizeComparator(int order)
-		{
-			sortOrder = order;
-		}
-		
-		public int compare(Object object1, Object object2) throws ClassCastException
-		{
-			int size1 = ((Ring)object1).getAtomCount();
-			int size2 = ((Ring)object2).getAtomCount();
-			if (size1 == size2) return 0;
-			if (size2 > size1 && sortOrder == SMALL_FIRST)
-			{
-				return 1;
-			}
-			if (size2 > size1 && sortOrder == LARGE_FIRST)
-			{
-				return -1;
-			}
-			if (size2 < size1 && sortOrder == SMALL_FIRST)
-			{
-				return -1;
-			}
-			if (size2 < size1 && sortOrder == LARGE_FIRST)
-			{
-				return 1;
-			}
-			return 0;
-		}
-	}
-
 	/**
 	 * Clones this <code>RingSet</code> including the Rings.
 	 *

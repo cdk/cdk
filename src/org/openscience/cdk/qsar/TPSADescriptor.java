@@ -37,6 +37,7 @@ import java.util.HashMap;
 import org.openscience.cdk.RingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.qsar.result.*;
+import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
  *  Calculation of polar surface area based on fragment contributions (TPSA),
@@ -256,7 +257,7 @@ public class TPSADescriptor implements Descriptor {
 				// isin3ring checker
 				if(rs.contains(atoms[i])) {
 					rsAtom = rs.getRings(atoms[i]);
-					rsAtom.sort();
+					RingSetManipulator.sort(rsAtom);
 					for (int f = 0; f < rsAtom.size(); f++)
 					{
 						ring = (Ring)rsAtom.elementAt(f);

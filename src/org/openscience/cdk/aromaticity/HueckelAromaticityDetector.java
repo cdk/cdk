@@ -36,6 +36,7 @@ import org.openscience.cdk.Ring;
 import org.openscience.cdk.RingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
  * The HueckelAromaticityDetector detects the aromaticity based on
@@ -126,7 +127,7 @@ public class HueckelAromaticityDetector {
 		}
 		
 		Ring ring = null;
-		ringSet.sort();
+		RingSetManipulator.sort(ringSet);
 		for (int f = 0; f < ringSet.size(); f++) {
 			ring = (Ring) ringSet.elementAt(f);
 			logger.debug("Testing for aromaticity in ring no ", f);

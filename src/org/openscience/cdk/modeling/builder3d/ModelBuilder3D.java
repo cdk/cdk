@@ -255,7 +255,7 @@ public class ModelBuilder3D {
 				atom.setFlag(CDKConstants.ISINRING, true);
 				atom.setFlag(CDKConstants.ISALIPHATIC, false);
 				ringSetA = ringSetMolecule.getRings(atom);
-				ringSetA.sort();
+				RingSetManipulator.sort(ringSetA);
 				Ring sring = (Ring) ringSetA.lastElement();
 				atom.setProperty("RING_SIZE", new Integer(sring.getRingSize()));
 				isInHeteroRing = isHeteroRingSystem(RingSetManipulator.getAllInOneContainer(ringSetA));
