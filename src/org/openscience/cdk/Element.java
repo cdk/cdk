@@ -48,6 +48,7 @@ public class Element extends ChemObject
 	 */
 	public Element()
 	{
+		super();
 	}
 
 	
@@ -59,6 +60,7 @@ public class Element extends ChemObject
 	 */
 	public Element(String symbol)
 	{
+		this();
 		this.symbol = symbol;
 	}
 
