@@ -147,6 +147,7 @@ public class Element extends ChemObject implements java.io.Serializable, Cloneab
         StringBuffer sb = new StringBuffer();
         sb.append("Element(");
         sb.append(getSymbol());
+        sb.append(", ID:"); sb.append(getID());
         sb.append(", AN:"); sb.append(getAtomicNumber());
         sb.append(")");
         return sb.toString();
