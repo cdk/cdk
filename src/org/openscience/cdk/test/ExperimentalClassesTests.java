@@ -50,15 +50,19 @@ public class ExperimentalClassesTests {
         ExperimentalClassesTests thisTest = new ExperimentalClassesTests();
         try {
             TestCase test = (TestCase)thisTest.getClass().getClassLoader().loadClass("org.openscience.cdk.test.iupac.ParserTest").newInstance();
-            suite.addTest(test);
+            TestSuite testSuite = new TestSuite(test.getClass());
+            suite.addTest(testSuite);
         } catch (Exception exception) {
             // ok, does not exist, just skip
+            System.out.println("Could not load the IUPAC Parser test: " + exception.getMessage());
         }
         try {
             TestCase test = (TestCase)thisTest.getClass().getClassLoader().loadClass("org.openscience.cdk.test.smiles.smarts.ParserTest").newInstance();
-            suite.addTest(test);
+            TestSuite testSuite = new TestSuite(test.getClass());
+            suite.addTest(testSuite);
         } catch (Exception exception) {
             // ok, does not exist, just skip
+            System.out.println("Could not load the SMARTS Parser test: " + exception.getMessage());
         }
         return suite;
     }

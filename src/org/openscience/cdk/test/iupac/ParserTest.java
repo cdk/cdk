@@ -39,13 +39,14 @@ public class ParserTest extends TestCase
     HydrogenAdder adder = new HydrogenAdder();
     IsomorphismTester comparer = new IsomorphismTester();
     
+    public ParserTest() {}
+
     public ParserTest(java.lang.String testName)
     {
         super(testName);
     }
     
-    public static Test suite()
-    {
+    public static Test suite() {
         TestSuite suite = new TestSuite(ParserTest.class);
         return suite;
     }

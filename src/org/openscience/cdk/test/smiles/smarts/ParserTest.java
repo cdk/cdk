@@ -29,6 +29,7 @@ import org.openscience.cdk.*;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.OrderQueryBond;
 import org.openscience.cdk.smiles.smarts.*;
 
 /**
@@ -41,6 +42,8 @@ import org.openscience.cdk.smiles.smarts.*;
  */
 public class ParserTest extends TestCase {
     
+    public ParserTest() {}
+
     public ParserTest(java.lang.String testName) {
         super(testName);
     }
@@ -115,4 +118,47 @@ public class ParserTest extends TestCase {
             fail(exception.getMessage());
         }
     }
+
+    public void testSingleBond() throws ParseException {
+        try {
+            QueryAtomContainer container = SMARTSParser.parse("C-C");
+            assertEquals(2, container.getAtomCount());
+            assertEquals(1, container.getBondCount());
+            Bond bond = container.getBondAt(0);
+            assertTrue(bond instanceof OrderQueryBond);
+            OrderQueryBond qBond = (OrderQueryBond)bond;
+            assertEquals(1.0, qBond.getOrder(), 0.001);
+        } catch (CDKException exception) {
+            fail(exception.getMessage());
+        }
+    }
+
+    public void testDoubleBond() throws ParseException {
+        try {
+            QueryAtomContainer container = SMARTSParser.parse("C=C");
+            assertEquals(2, container.getAtomCount());
+            assertEquals(1, container.getBondCount());
+            Bond bond = container.getBondAt(0);
+            assertTrue(bond instanceof OrderQueryBond);
+            OrderQueryBond qBond = (OrderQueryBond)bond;
+            assertEquals(2.0, qBond.getOrder(), 0.001);
+        } catch (CDKException exception) {
+            fail(exception.getMessage());
+        }
+    }
+
+    public void testTripleBond() throws ParseException {
+        try {
+            QueryAtomContainer container = SMARTSParser.parse("C#C");
+            assertEquals(2, container.getAtomCount());
+            assertEquals(1, container.getBondCount());
+            Bond bond = container.getBondAt(0);
+            assertTrue(bond instanceof OrderQueryBond);
+            OrderQueryBond qBond = (OrderQueryBond)bond;
+            assertEquals(3.0, qBond.getOrder(), 0.001);
+        } catch (CDKException exception) {
+            fail(exception.getMessage());
+        }
+    }
+
 }
