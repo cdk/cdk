@@ -17,6 +17,7 @@ New:
 * Added parsing reaction specifications in SMILES
 * Added field to Reaction for agents, like catalysts
 * Added generation of reaction SMILES
+* Added creation of atom-atom mappings in reactions
 
 Removed:
 * Viewer application. Use JChemPaint (jchempaint.sf.net) or Jmol (jmol.sf.net) instead
@@ -44,6 +45,8 @@ Fixes:
   (closes JCP #903412)
 * ChemObject.getID() was "" by default; corrected to null
 * Fixed reading of aromatic bonds ('A') from CML (closes #903379)
+* Fixed rendering of atom-atom mappings
+* Fixed reading of atom-atom mappings from MDL RXN files
 
 API changes:
 * Changed SetOfAtomContainers.getAtomContainerMultiplier() to .getMultiplier()
