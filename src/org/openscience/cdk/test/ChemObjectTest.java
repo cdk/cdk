@@ -121,6 +121,22 @@ public class ChemObjectTest extends TestCase {
         assertNull(chemObject.getID());
     }
     
+    public void testSetFlags(){
+      ChemObject chemObject=new ChemObject();
+      chemObject.setFlag(1,true);
+      ChemObject chemObject2=new ChemObject();
+      chemObject2.setFlags(chemObject.getFlags());
+      assertTrue(chemObject2.getFlag(1));
+    }
+    
+    public void testGetFlags(){
+      ChemObject chemObject=new ChemObject();
+      chemObject.setFlag(1,true);
+      ChemObject chemObject2=new ChemObject();
+      chemObject2.setFlags(chemObject.getFlags());
+      assertTrue(chemObject2.getFlag(1));
+    }
+
     public void testSetFlag_int_boolean() {
         ChemObject chemObject = new ChemObject();
         chemObject.setFlag(0, true);
