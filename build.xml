@@ -838,6 +838,7 @@
                 <srcfiles dir="${lib}" includes="dadml.jar"/>
                 <srcfiles dir="${lib}" includes="gnujaxp.jar"/>
                 <srcfiles dir="${lib}" includes="Jama-1.0.1.jar"/>
+                <srcfiles dir="${lib}" includes="jgrapht-0.5.3.jar"/>
                 <srcfiles dir="${lib}" includes="jmolApis.jar"/>
                 <srcfiles dir="${lib}" includes="jmolIO.jar"/>
                 <srcfiles dir="${lib}" includes="junit.jar"/>
@@ -870,6 +871,7 @@
             <unjar dest="${appjars.dir}" src="${lib}/dadml.jar"/>
             <unjar dest="${appjars.dir}" src="${lib}/gnujaxp.jar"/>
             <unjar dest="${appjars.dir}" src="${lib}/Jama-1.0.1.jar"/>
+            <unjar dest="${appjars.dir}" src="${lib}/jgrapht-0.5.3.jar"/>
             <unjar dest="${appjars.dir}" src="${lib}/jmolApis.jar"/>
             <unjar dest="${appjars.dir}" src="${lib}/jmolIO.jar"/>
             <unjar dest="${appjars.dir}" src="${lib}/junit.jar"/>
