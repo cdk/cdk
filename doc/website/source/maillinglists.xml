@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.0b1//EN" "dtd/website.dtd">
+<webpage id="maillinglist">
+  <config param="last-change-by" value="$Author$"/>
+  <config param="rcsdate" value="$Date$"/>
+
+  <head>
+    <title>The Chemical Development Kit</title>
+    <titleabbrev>Mailling Lists</titleabbrev>
+    <summary>Information about the CDK mailling lists.</summary>
+  </head>
+
+  <section>
+    <title>Mailling Lists</title>
+    <para>
+	  To keep up to date about the project, or to ask question about the software, there are
+	  three mailling lists to which you can
+	  <ulink url="http://sourceforge.net/mail/?group_id=20024">subscribe</ulink>.
+	  <variablelist><title>Lists</title>
+        <varlistentry><term><filename>cdk-commit</filename></term>
+          <listitem>
+            <para>
+			  List where all changes in
+			  <ulink url="http://sourceforge.net/cvs/?group_id=20024">CVS</ulink> are automatically
+			  posted. Intended to keep developers up to date on recent changes.
+			  <ulink url="http://www.geocrawler.com/lists/3/SourceForge/12111/0/">The archive</ulink>.
+		    </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry><term><filename>cdk-devel</filename></term>
+          <listitem>
+            <para>
+			  List to which developers are subscribed to discuss new ideas, new code, etc.
+			  If you are interested in the developement of the CDK library, subscription is
+			  recommended. <ulink url="http://www.geocrawler.com/lists/3/SourceForge/10854/0/">The
+			  archive</ulink>.
+		    </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry><term><filename>cdk-user</filename></term>
+          <listitem>
+            <para>
+			  This list is aimed at users of the binary utilities that accompany the CDK library, like
+			  cdk-fileconvert and cdk-dbadmin. But you can also post questions here on how to use
+			  the CDK library in your software.
+			  <ulink url="http://www.geocrawler.com/lists/3/SourceForge/18425/0/">The archive</ulink>.
+		    </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+	</para>
+  </section>
+
+</webpage>

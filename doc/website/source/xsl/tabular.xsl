@@ -57,11 +57,11 @@
 </xsl:template>
 
 <xsl:template name="home.navhead">
-<xsl:text>Navhead</xsl:text>
+<xsl:text> </xsl:text>
 </xsl:template>
 
 <xsl:template name="home.navhead.upperright">
-<xsl:text>Upper-right</xsl:text>
+<xsl:text> </xsl:text>
 </xsl:template>
 
 <xsl:template name="home.navhead.separator">

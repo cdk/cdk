@@ -12,26 +12,39 @@
 
   <section>
     <title>Downloading CDK</title>
-    <para>To use the CDK you have to download the source code (cdk-preview package),
-	  and the libraries that are used by CDK (cdk-libs package).
+    <para>To use the CDK you need to download the cdk-libs package that contains
+      required libraries that are used by CDK. A binary distribution is available in
+	  cdk-bin, and the source code can be found in the cdk-source package.
 	  <variablelist><title>Packages</title>
-        <varlistentry><term><filename>cdk-preview</filename></term>
+        <varlistentry><term><filename>cdk-source</filename></term>
           <listitem>
-            <para>Source code. Current version:
-			  <ulink url="http://sourceforge.net/project/showfiles.php?group_id=20024&amp;release_id=63744">20011201</ulink>
+            <para>Source code. To compile the source code you need cdk-libs 20020101.
+			  Current version: 20020101.
 		    </para>
           </listitem>
         </varlistentry>
         <varlistentry><term><filename>cdk-libs</filename></term>
           <listitem>
-            <para>Set of required and optional libraries
-			  (<ulink url="libraries.html">more info</ulink>). Current version:
-			  <ulink url="http://sourceforge.net/project/showfiles.php?group_id=20024&amp;release_id=63747">20011201</ulink>
+            <para>Set of required and optional libraries (<ulink url="libraries.html">more info</ulink>).
+			   Current version: 20020101.
+			</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry><term><filename>cdk-bin</filename></term>
+          <listitem>
+            <para>Binary distribution with two executables: cdk-fileconvert and cdk-dbadmin.
+			   The package is installable with <quote>configure &amp;&amp; make &amp;&amp; make install</quote>
+			   on Linux/Unix/BSD like systems. To run the software you need cdk-libs 20020101
+			   installed. Current version: 20020101.
 			</para>
           </listitem>
         </varlistentry>
       </variablelist>
     </para>
+	<para>
+	  Packages can be downloaded
+	  <ulink url="http://sourceforge.net/project/showfiles.php?group_id=20024">here</ulink>.
+	</para>
   </section>
 
 </webpage>

@@ -27,6 +27,7 @@
 	  <tocentry page="changelog.xml" filename="changelog.html"/>
 	</tocentry>
     <tocentry page="screenshots.xml" filename="screenshots.html"/>
+    <tocentry page="maillinglists.xml" filename="maillinglists.html"/>
     <tocentry page="download.xml" filename="download.html"/>
     <tocentry page="biblio.xml" filename="biblio.html"/>
   </toc>
