@@ -67,6 +67,7 @@
   
   <target id="keyword.index" name="keyword.index" unless="keywordindex.uptodate">
     <ant dir="../../javadoc/" antfile="build.xml" target="keyword.index"/>
+    <copy file="keyword.index.xml" tofile="../../javadoc/keyword.index.xml"/>
   </target>
 
   <target id="bibliography" name="bibliography" unless="refs.uptodate">

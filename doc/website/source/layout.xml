@@ -19,7 +19,10 @@
       <tocentry page="screenshots.xml" filename="screenshots.html"/>
     </tocentry>
     <tocentry page="software.xml" filename="software.html">
-      <tocentry page="plugins.xml" filename="plugins.html"/>
+      <tocentry page="plugins.xml" filename="plugins.html">
+        <tocentry page="plugin-rssviewer.xml" filename="plugin-rssviewer.html"/>
+        <tocentry page="plugin-wwmmplugin.xml" filename="plugin-wwmmplugin.html"/>
+      </tocentry>
     </tocentry>
     <tocentry page="documentation.xml" filename="documentation.html">
       <tocentry page="reference.xml" filename="reference.html">

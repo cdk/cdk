@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.0b1//EN" "dtd/website.dtd" []>
+<webpage id="plugin-rssviewer">
+  <config param="last-change-by" value="$Author$"/>
+  <config param="rcsdate" value="$Date$"/>
+
+  <!-- This page is maintained by the author(s) of the plugin. 
+       Discuss changes to this file with them first. -->
+  
+  <head>
+    <title>RSSViewer Plugin</title>
+    <titleabbrev>RSSViewer</titleabbrev>
+    <summary>Information about the RSSViewer plugin.</summary>
+  </head>
+
+  <section>
+    <title>RSSViewer</title>
+    <para>
+        Plugin that convert Jmol/JChemPaint into a CMLRSS reader. It extract chemical
+        information from an RSS newsfeed and displays it in Jmol or JChemPaint.
+    </para>
+    <para>
+        The source code can be found in the cdk-plugins module in CDK cvs.
+        It is licensed GPL.
+    </para>
+  </section>
+
+</webpage>
