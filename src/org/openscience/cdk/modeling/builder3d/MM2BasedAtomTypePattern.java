@@ -32,13 +32,13 @@ import java.util.regex.*;
 import java.util.*;
 
 /**
- *  Class stores hose code patterns to identify mm2 force field atom types
+ *  Class stores hose code patterns to identify mm2 force field atom types.
  *
  * @author     chhoppe
  * @cdk.created    2004-09-07
  * @cdk.module extra
  */
-class MM2BasedAtomTypePattern {
+public class MM2BasedAtomTypePattern {
 
 	private Vector atomTypePatterns = new Vector();
 
