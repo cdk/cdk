@@ -174,7 +174,7 @@ public class MoleculeViewer2D extends JPanel implements CDKChangeListener
 	{	
 		StructureDiagramGenerator sdg = new StructureDiagramGenerator();
 		MoleculeViewer2D mv = new MoleculeViewer2D();
-		mv.getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		mv.getFrame().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		Renderer2DModel r2dm = mv.getRenderer2DModel();
 		r2dm.setDrawNumbers(true);
 		
