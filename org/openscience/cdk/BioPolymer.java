@@ -37,6 +37,8 @@ package org.openscience.cdk;
  * @author     Edgar Luttmann
  * @created    2001-08-06 
  *
+ * @keyword    polymer
+ *
  */
 public class BioPolymer extends Polymer {
 }

@@ -29,6 +29,8 @@ import java.util.Vector;
  *
  * @author     steinbeck
  * @created    October 2, 2000
+ *
+ * @keyword    molecule
  */
 public class Molecule extends AtomContainer
 {

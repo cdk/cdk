@@ -40,6 +40,9 @@ import com.sun.j3d.utils.universe.*;
 import javax.media.j3d.*;
 import javax.vecmath.*;
  
+/**
+ * @keyword 3D-viewer
+ */
 public class AcceleratedRenderer3D extends Canvas3D
 {
 	//private Canvas3D canvas;

@@ -38,6 +38,9 @@ import javax.vecmath.*;
 /**
  * This class is expermiental
  * It reads Z matrices like in gaussians input file
+ *
+ * @keyword Z-matrix
+ * @keyword file format
  */
 public class ZMatrixReader implements ChemObjectReader 
 {

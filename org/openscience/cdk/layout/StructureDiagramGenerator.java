@@ -43,8 +43,10 @@ import java.awt.*;
  * or the coordinates have been discarded for some reason.
  * Usage: Create an instance of this class, thereby assigning a molecule, 
  * call generateCoordinates() and get your molecule back.
+ *
+ * @keyword layout
+ * @keyword 2D-coordinates
  */
-
 public class StructureDiagramGenerator implements CDKConstants
 {
 

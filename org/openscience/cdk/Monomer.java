@@ -39,6 +39,8 @@ import org.openscience.cdk.*;
  * @author     Edgar Luttmann
  * @created    2001-08-06 
  *
+ * @keyword    monomer
+ *
  */
 public class Monomer extends AtomContainer {
 	protected String _cMonomerName;		// the name of this monomer (e.g. Trp42)

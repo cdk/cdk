@@ -42,6 +42,9 @@ import org.openscience.cdk.math.qm.*;
  * This class render orbitals
  * The algorithm was from following site:
  * http://www.swin.edu.au/astronomy/pbourke/modelling/polygonise/
+ *
+ * @keyword orbital
+ * @keyword viewer
  */
 public class OrbitalsRenderer3D extends Switch
 {

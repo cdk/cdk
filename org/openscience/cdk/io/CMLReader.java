@@ -35,12 +35,16 @@ import org.openscience.cdk.*;
 import org.xml.sax.helpers.*;
 import org.xml.sax.*;
 import java.io.*;
+import java.net.*;
 
 /**
  * Reads a molecule in CML format from a Reader
  *
  * @author     Egon L. Willighagen
  * @created    February 2001
+ *
+ * @keyword CML
+ * @keyword file format
  */
 public class CMLReader implements CDKConstants, ChemObjectReader {
 

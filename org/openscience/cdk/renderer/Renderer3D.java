@@ -44,7 +44,10 @@ import java.awt.event.*;
  * This code is based on code from the Jmol Project.
  *
  * @author Egon Willighagen
- **/
+ *
+ * @keyword 3D-viewer
+ *
+ */
 public class Renderer3D extends JPanel implements Runnable {
 
     private org.openscience.cdk.tools.LoggingTool logger;

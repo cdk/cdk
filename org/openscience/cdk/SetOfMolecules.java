@@ -26,6 +26,9 @@ package org.openscience.cdk;
 
 /** 
  * A set of molecules, for example those taking part in a reaction
+ *
+ * @keyword reaction
+ * @keyword molecule
  */
 public class SetOfMolecules extends ChemObject
 {
