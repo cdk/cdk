@@ -46,12 +46,25 @@ public class CoreCoverageTest extends CoverageTest {
         super(name);
     }
 
+    public void setUp() {
+        super.setUp();
+        try {
+            super.loadClassList(CLASS_LIST);
+        } catch (Exception exception) {
+            fail("Could not load classes to test: " + exception.getMessage());
+        }
+    }
+
     public static Test suite() {
         return new TestSuite(CoreCoverageTest.class);
     }
 
     public void testCoverage() {
-        super.testClassList(CLASS_LIST);
+        super.runCoverageTest();
     }
+
+    /* public void testHansel() {
+        super.testClassList();
+    } */
 
 }

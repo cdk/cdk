@@ -78,7 +78,7 @@ public class GasteigerMarsiliPartialChargesTest extends TestCase {
 	public void testAssignGasteigerMarsiliPartialCharges(){
 		double [] testResult={0.07915,-0.25264,0.05783,0.05783,0.05783};
 		GasteigerMarsiliPartialCharges peoe=new GasteigerMarsiliPartialCharges();
-		HydrogenAdder hAdder=new HydrogenAdder();
+		HydrogenAdder hAdder = new HydrogenAdder();
 		try{
 			SmilesParser sp = new SmilesParser();
 			Molecule mol = sp.parseSmiles("CF");

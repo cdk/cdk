@@ -41,8 +41,11 @@ abstract public class CoverageTest extends TestCase {
 
     private ClassLoader classLoader;
     
+    private Vector classesToTest;
+    
     public CoverageTest(String name) {
         super(name);
+        classesToTest = null;
     }
 
     public void setUp() {
@@ -56,37 +59,40 @@ abstract public class CoverageTest extends TestCase {
         return null;
     }
 
-    protected void testClassList(String classList) {
-        int missingTestsCount = 0;
-        int uncoveredClassesCount = 0;
+    protected void loadClassList(String classList) throws Exception {
+        classesToTest = new Vector();
         
         // get the src/core.javafiles file
-        try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(
-                this.getClass().getClassLoader().getResourceAsStream(classList)
-            ));
-            while (reader.ready()) {
-                // load them one by one
-                String rawClassName = reader.readLine();
-                rawClassName = rawClassName.substring(20);
-                String className = convertSlash2Dot(
-                    rawClassName.substring(0, rawClassName.indexOf('.'))
-                );
-                int errors = checkClass(className);
-                missingTestsCount += errors;
-                if (errors > 0) uncoveredClassesCount++;
-            }
-        } catch (Exception exception) {
-            fail("Could not load the src/" + classList + " file!");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(
+            this.getClass().getClassLoader().getResourceAsStream(classList)
+        ));
+        while (reader.ready()) {
+            // load them one by one
+            String rawClassName = reader.readLine();
+            rawClassName = rawClassName.substring(20);
+            String className = convertSlash2Dot(
+                rawClassName.substring(0, rawClassName.indexOf('.'))
+            );
+            classesToTest.add(loadClass(className));
         }
-        
-        
+    }
+
+    protected void runCoverageTest() {
+        int missingTestsCount = 0;
+        int uncoveredClassesCount = 0;
+        Enumeration classes = classesToTest.elements();
+        while (classes.hasMoreElements()) {
+            String className = (String)classes.nextElement();
+            int errors = checkClass(className);
+            missingTestsCount += errors;
+            if (errors > 0) uncoveredClassesCount++;
+        }
         if (missingTestsCount > 0) {
             fail("The core module is not fully tested! Missing number of method tests: " + 
                  missingTestsCount + " in number of classes: " + uncoveredClassesCount);
         }
     }
-
+    
     private int checkClass(String className) {
         // System.out.println("Checking : " + className);
         
