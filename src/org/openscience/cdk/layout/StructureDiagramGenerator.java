@@ -129,6 +129,39 @@ public class StructureDiagramGenerator {
 		return molecule;
 	}
 
+    /**
+     * This method uses generateCoordinates, but it removes the hydrogens first,
+     * lays out the structuren and then adds them again. Note that it will add hydrogens
+     * based on CDK's idea on how many hydrogens should be attached, and not as many
+     * as were removed.
+     *
+     * <p>The method is rather experimental.
+     *
+     * @see @generateCoordinates
+     */
+    public void generateExperimentalCoordinates() throws java.lang.Exception {
+        generateCoordinates(new Vector2d(0, 1));
+    }
+
+    public void generateExperimentalCoordinates(Vector2d firstBondVector) throws java.lang.Exception {
+        // delete atoms
+        Atom[] atoms = molecule.getAtoms();
+        for (int j=0; j<atoms.length; j++) {
+            logger.debug("Checking atom: " + j);
+            if (atoms[j].getSymbol().equals("H")) {
+                logger.debug("Atom is a hydrogen");
+                molecule.removeAtomAndConnectedElectronContainers(atoms[j]);
+            }
+        }
+        // do layout
+        generateCoordinates(firstBondVector);
+        // add hydrogens
+        new HydrogenAdder().addExplicitHydrogensToSatisfyValency(molecule);
+        // create coordinates for new hydrogens
+        double bondLength = GeometryTools.getBondLengthAverage(molecule);
+        HydrogenPlacer.placeHydrogens2D(molecule, bondLength);
+    }
+    
 	/**
 	 * The main method of this StructurDiagramGenerator.
 	 * Assign a molecule to the StructurDiagramGenerator, call 
