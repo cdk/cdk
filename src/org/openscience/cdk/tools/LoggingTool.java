@@ -193,6 +193,12 @@ public class LoggingTool {
         }
     }
     
+    public void debug(Object object, boolean bool) {
+        if (debug) {
+            debugString("" + object + bool);
+        }
+    }
+    
     public void debug(Object obj, Object obj2, Object obj3) {
         if (debug) {
             debugString("" + obj + obj2 + obj3);
