@@ -1,4 +1,4 @@
-<refentry id="cdk-rfc-2">
+<refentry id="cdk-rfc-X">
 
   <refentryinfo>
     <revhistory>
@@ -15,8 +15,13 @@
 
 
   <refnamediv>
-    <refname>RFC CDK # </refname>
+    <refname>RFC CDK #X</refname>
   </refnamediv>
+
+  <refsect1>
+    <title>Replaces</title>
+    <para></para>
+  </refsect1>
 
   <refsect1>
     <title>Proposal</title>
@@ -26,6 +31,27 @@
   <refsect1>
     <title>Reason</title>
     <para></para>
+  </refsect1>
+
+  <refsect1>
+    <title>References</title>
+    <orderedlist>
+      <listitem><para><ulink url=""/></para></listitem>
+    </orderedlist>
+  </refsect1>
+
+  <refsect1>
+    <title>Proposers</title>
+    <para>
+      Egon Willighagen.
+    </para>
+  </refsect1>
+
+    <refsect1>
+    <title>Date</title>
+    <para>
+      20YY-MM-DD.
+    </para>
   </refsect1>
 
 </refentry>
