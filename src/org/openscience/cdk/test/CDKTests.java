@@ -42,6 +42,7 @@ import org.openscience.cdk.test.layout.HydrogenPlacerTest;
 import org.openscience.cdk.test.layout.StructureDiagramGeneratorTest;
 import org.openscience.cdk.test.layout.OverlapResolverTest;
 import org.openscience.cdk.test.layout.TemplateHandlerTest;
+import org.openscience.cdk.test.reaction.ReactionBalancerTest;
 import org.openscience.cdk.test.ringsearch.AllRingsFinderTest;
 import org.openscience.cdk.test.ringsearch.RingSearchTest;
 import org.openscience.cdk.test.smiles.SmilesGeneratorTest;
@@ -106,6 +107,8 @@ public class CDKTests
         suite.addTest(BremserPredictorTest.suite());
         // from cdk.test.structgen
         suite.addTest(RandomStructureGeneratorTest.suite());
+		// from cdk.test.reaction
+		suite.addTest(ReactionBalancerTest.suite());
         // from cdk.test.iupac
         try {
             Class testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.test.iupac.ParserTest");

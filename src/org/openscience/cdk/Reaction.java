@@ -97,12 +97,26 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
     }
 
     /**
-     * Returns an SetOfMolecules containing the products in this reaction.
+     * Assigns a SetOfMolecules to the reactants in this reaction.
+     */
+    public void setReactants(SetOfMolecules setOfMolecules) {
+        reactants = setOfMolecules;
+    }
+	
+    /**
+     * Returns an SetOfMolecules containing the products of this reaction.
      */
     public SetOfMolecules getProducts() {
         return products;
     }
     
+	/**
+     * Assigns a SetOfMolecules to the products of this reaction.
+     */
+    public void setProducts(SetOfMolecules setOfMolecules) {
+        products = setOfMolecules;
+    }
+	
     /**
      * Returns an SetOfMolecules containing the agents in this reaction.
      */
