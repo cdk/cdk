@@ -13,6 +13,7 @@ New:
 * Added IOWriter that generates CDK source code
 * Added new, alternative method to saturate a molecule by adjusting bond orders
 * Implemented a basic MDL v3000 MOL and RXN file reader
+* Added a basic CIF and mmCIF reader
 
 Fixes:
 * Removed use of JSX
