@@ -48,22 +48,36 @@ import javax.vecmath.*;
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  **/
-public interface ChemObjectReader extends ChemObjectIO {
+public interface ChemObjectIO {
 
     /**
-     * Reads an ChemObject of type "object" from input. The constructor
-     * of the actual implementation may take a Reader as input to get
-     * a very flexible reader that can read from string, files, etc.
-     * 
-     * @param  object    the type of object to return
-     * @return returns an object of that contains the content (or 
-     *         part) of the input content
-     *
-     * @exception CDKException it is thrown if
-     *            the type of information is not available from 
-     *            the input
-     **/
-    public ChemObject read(ChemObject object) throws CDKException;
+     * Returns whether the given ChemObject can be read or not.
+     */
+    public boolean accepts(ChemObject object);
+    
+    /**
+     * Closes the Reader's resources.
+     */
+    public void close() throws IOException;
 
+    /**
+     * Returns an Array of IOSettings defined by this reader.
+     */
+    public IOSetting[] getIOSettings();
+    
+    /**
+     * Adds a ChemObjectIOListener to this ChemObjectReader.
+     *
+     * @param listener the reader listener to add.
+     */
+    public void addChemObjectIOListener(ChemObjectIOListener l);
+
+    /**
+     * Removes a ChemObjectIOListener from this ChemObjectReader.
+     *
+     * @param listener the reader listener to remove.
+     */
+    public void removeChemObjectIOListener(ChemObjectIOListener l);
+    
 }
 

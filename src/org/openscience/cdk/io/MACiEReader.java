@@ -97,6 +97,8 @@ public class MACiEReader extends DefaultChemObjectReader {
         subLevelDatum = Pattern.compile("(.+):(.+)\\((.+)\\):(.+)");
         annotationTuple = Pattern.compile("(\\w+)=\\((.+?)\\);(.*)");
         residueLocator = Pattern.compile("\\w{3}\\d{1,5}");
+        
+        initIOSettings();
     }
 
 
@@ -430,21 +432,33 @@ public class MACiEReader extends DefaultChemObjectReader {
         input.close();
     }
 
-    private void customizeJob() {
+    private void initIOSettings() {
         selectedEntry = new IntegerIOSetting("SelectedEntry", IOSetting.LOW,
           "Which frame should I read?",
           "1");
-        fireReaderSettingQuestion(selectedEntry);
 
         readSecondaryFiles = new BooleanIOSetting("ReadSecondaryFiles", IOSetting.LOW,
           "Should I read the secondary files (if available)?",
           "true");
-        fireReaderSettingQuestion(readSecondaryFiles);
 
         readSecondaryDir = new StringIOSetting("ReadSecondaryDir", IOSetting.LOW,
           "Where can the secondary files be found?", 
           "/home/egonw/");
-        fireReaderSettingQuestion(readSecondaryDir);
     }
+    
+    private void customizeJob() {
+        fireIOSettingQuestion(selectedEntry);
+        fireIOSettingQuestion(readSecondaryFiles);
+        fireIOSettingQuestion(readSecondaryDir);
+    }
+
+    public IOSetting[] getIOSettings() {
+        IOSetting[] settings = new IOSetting[3];
+        settings[0] = selectedEntry;
+        settings[1] = readSecondaryFiles;
+        settings[2] = readSecondaryDir;
+        return settings;
+    }
+    
 }
 

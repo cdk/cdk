@@ -40,11 +40,11 @@ public abstract class DefaultChemObjectWriter implements ChemObjectWriter {
      */
     private Vector listenerList = new Vector();
 
-    public void addWriterListener(WriterListener listener) {
+    public void addChemObjectIOListener(ChemObjectIOListener listener) {
         listenerList.addElement(listener);
     }
 
-    public void removeWriterListener(WriterListener listener) {
+    public void removeChemObjectIOListener(ChemObjectIOListener listener) {
         listenerList.removeElement(listener);
     }
 
@@ -53,10 +53,15 @@ public abstract class DefaultChemObjectWriter implements ChemObjectWriter {
         return true;
     }
     
-    protected void fireWriterSettingQuestion(IOSetting setting) {
+    protected void fireIOSettingQuestion(IOSetting setting) {
         for (int i = 0; i < listenerList.size(); ++i) {
-            WriterListener listener = (WriterListener) listenerList.elementAt(i);            
-            listener.processWriterSettingQuestion(setting);
+            ChemObjectIOListener listener = (ChemObjectIOListener) listenerList.elementAt(i);
+            listener.processIOSettingQuestion(setting);
         }
     }
+
+    public IOSetting[] getIOSettings() {
+        return new IOSetting[0];
+    }
+    
 }

@@ -32,16 +32,6 @@ import java.util.EventListener;
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  */
-public interface WriterListener extends EventListener {
+public interface WriterListener extends ChemObjectIOListener {
   
-  /**
-   * Method triggered if the Reader needs information for
-   * parsing the file.
-   *
-   * @param event information about the event.
-   */
-  public void processWriterSettingQuestion(IOSetting setting);
 }
-
-
-

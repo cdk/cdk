@@ -27,6 +27,7 @@ package org.openscience.cdk.io;
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.setting.*;
 import org.openscience.cdk.tools.IsotopeFactory;
 import org.openscience.cdk.tools.LoggingTool;
 import java.io.Reader;
@@ -62,6 +63,9 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
     private BufferedReader input;
     private LoggingTool logger;
 
+    /** Customizable setting */
+    private BooleanIOSetting readOptimizedStructureOnly;
+    
     /**
      * Create an Gaussian98 output reader.
      *
@@ -83,6 +87,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
         } else {
             this.input = new BufferedReader(input);
         }
+        initIOSettings();
     }
 
     public boolean accepts(ChemObject object) {
@@ -94,6 +99,8 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
     }
     
     public ChemObject read(ChemObject object) throws CDKException {
+        customizeJob();
+         
         if (object instanceof ChemFile) {
             ChemFile file = null;
             try {
@@ -147,7 +154,11 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
                     
                     // Found a set of coordinates
                     // Add current frame to file and create a new one.
-                    sequence.addChemModel(model);
+                    if (!readOptimizedStructureOnly.isSet()) {
+                        sequence.addChemModel(model);
+                    } else {
+                        logger.info("Skipping frame, because I was told to do");
+                    }
                     fireFrameRead();
                     model = new ChemModel();
                     readCoordinates(model);
@@ -378,4 +389,20 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
         return st1.nextToken() + "/" + st1.nextToken();
     }
 
+    private void initIOSettings() {
+        readOptimizedStructureOnly = new BooleanIOSetting("ReadOptimizedStructureOnly", IOSetting.LOW,
+          "Should I only read the optimized structure from a geometry optimization?",
+          "false");
+    }
+    
+    private void customizeJob() {
+        fireIOSettingQuestion(readOptimizedStructureOnly);
+    }
+    
+    public IOSetting[] getIOSettings() {
+        IOSetting[] settings = new IOSetting[1];
+        settings[0] = readOptimizedStructureOnly;
+        return settings;
+    }
+    
 }

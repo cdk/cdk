@@ -9,6 +9,9 @@ Fixes:
 * Removed use of JSX
 
 API changes:
+* Added getIOSettings() to ChemObject[Reader|Writer]
+* Added ChemObjectIO and ChemObjectIOListener interfaces
+  to simplify IO API
 
 20030909 Release
 ------------------------------------

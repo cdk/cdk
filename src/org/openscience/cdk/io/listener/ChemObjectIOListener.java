@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2002-2003  The Jmol Development Team
+ * Copyright (C) 2003  The CDK Project Team
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -31,16 +31,17 @@ import java.util.EventListener;
 /**
  * Allows monitoring of progress of file reader activities.
  *
- * @author Bradley A. Smith <bradley@baysmith.com>
+ * @author Egon Willighagen
  */
-public interface ReaderListener extends ChemObjectIOListener {
+public interface ChemObjectIOListener extends EventListener {
 
   /**
-   * Indicates that a new frame has been read.
-   *
-   * @param event information about the event.
+   * Prompted when the IO filter needs information to process the
+   * file. The ReaderListener may redirect this question to the
+   * user, disregard it (and let the Reader take the default),
+   * or answer it itself.
    */
-  public void frameRead(ReaderEvent event);
+  public void processIOSettingQuestion(IOSetting setting);
   
 }
 

@@ -124,6 +124,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
         } catch (Exception exception) {
             logger.error("Failed to initiate isotope factory: " + exception.toString());
         }
+        initIOSettings();
     }
 
     /**
@@ -600,20 +601,32 @@ public class CMLWriter extends DefaultChemObjectWriter {
 		}
     }
     
-    private void customizeJob() {
+    private void initIOSettings() {
         cmlIds = new BooleanIOSetting("CMLIDs", IOSetting.LOW,
           "Should the output use CML identifiers?", 
           "yes");
-        fireWriterSettingQuestion(cmlIds);
 
         namespacedOutput = new BooleanIOSetting("NamespacedOutput", IOSetting.LOW,
           "Should the output use namespaced output?", 
           "no");
-        fireWriterSettingQuestion(namespacedOutput);
 
         xmlDecl = new BooleanIOSetting("XMLDeclaration", IOSetting.LOW,
           "Should the output use have a XMLDeclaration?", 
           "no");
-        fireWriterSettingQuestion(xmlDecl);
     }
+    
+    private void customizeJob() {
+        fireIOSettingQuestion(cmlIds);
+        fireIOSettingQuestion(namespacedOutput);
+        fireIOSettingQuestion(xmlDecl);
+    }
+
+    public IOSetting[] getIOSettings() {
+        IOSetting[] settings = new IOSetting[3];
+        settings[0] = cmlIds;
+        settings[1] = namespacedOutput;
+        settings[2] = xmlDecl;
+        return settings;
+    }
+    
 }

@@ -45,11 +45,11 @@ public abstract class DefaultChemObjectReader implements ChemObjectReader {
      */
     private Vector listenerList = new Vector();
 
-    public void addReaderListener(ReaderListener listener) {
+    public void addChemObjectIOListener(ChemObjectIOListener listener) {
         listenerList.addElement(listener);
     }
 
-    public void removeReaderListener(ReaderListener listener) {
+    public void removeChemObjectIOListener(ChemObjectIOListener listener) {
         listenerList.removeElement(listener);
     }
 
@@ -75,10 +75,15 @@ public abstract class DefaultChemObjectReader implements ChemObjectReader {
         }
     }
 
-    protected void fireReaderSettingQuestion(IOSetting setting) {
+    protected void fireIOSettingQuestion(IOSetting setting) {
         for (int i = 0; i < listenerList.size(); ++i) {
-            ReaderListener listener = (ReaderListener) listenerList.elementAt(i);
-            listener.processReaderSettingQuestion(setting);
+            ChemObjectIOListener listener = (ChemObjectIOListener) listenerList.elementAt(i);
+            listener.processIOSettingQuestion(setting);
         }
     }
+
+    public IOSetting[] getIOSettings() {
+        return new IOSetting[0];
+    }
+    
 }

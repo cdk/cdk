@@ -53,9 +53,8 @@ public class TextGUIListener implements ReaderListener, WriterListener {
      */
     public TextGUIListener(int level) {
         this.level = level;
-        
-        this.in = new BufferedReader(new InputStreamReader(System.in));
-        this.out = new PrintWriter(new OutputStreamWriter(System.out));
+        this.setInputReader(new InputStreamReader(System.in));
+        this.setOutputWriter(new OutputStreamWriter(System.out));
     }
     
     public void setLevel(int level) {
@@ -91,14 +90,6 @@ public class TextGUIListener implements ReaderListener, WriterListener {
     public void frameRead(ReaderEvent event) {
     };
     
-    public void processWriterSettingQuestion(IOSetting setting) {
-        processIOSetting(setting);
-    }
-    
-    public void processReaderSettingQuestion(IOSetting setting) {
-        processIOSetting(setting);
-    }
-    
     /**
      * Processes the IOSettings by listing the question, giving the options
      * and asking the user to provide their choice.
@@ -106,7 +97,7 @@ public class TextGUIListener implements ReaderListener, WriterListener {
      * <p>Note: if the input reader is <code>null</code>, then the method
      * does not wait for an answer, and takes the default.
      */
-    private void processIOSetting(IOSetting setting) {
+    public void processIOSettingQuestion(IOSetting setting) {
         // post the question
         if (setting.getLevel() < this.level) {
             // output the option name

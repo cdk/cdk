@@ -31,6 +31,7 @@ package org.openscience.cdk.io;
 import org.openscience.cdk.*;
 import org.openscience.cdk.exception.*;
 import org.openscience.cdk.io.listener.*;
+import org.openscience.cdk.io.setting.*;
 import java.io.*;
 import java.util.*;
 import java.text.*;
@@ -46,7 +47,7 @@ import javax.vecmath.*;
  *
  * @version  $Date$
  */
-public interface ChemObjectWriter {
+public interface ChemObjectWriter extends ChemObjectIO {
 
     /**
      * Writes the content of "object" to output
@@ -67,28 +68,4 @@ public interface ChemObjectWriter {
      */
     public ChemObject highestSupportedChemObject();
 
-    /**
-     * Returns whether the given ChemObject can be written or not.
-     */
-    public boolean accepts(ChemObject object);
-    
-    /*
-     * Closes the writer's resources.
-     */
-    public void close() throws IOException;
-
-    /**
-     * Adds a ReaderListener to this ChemObjectReader.
-     *
-     * @param listener the reader listener to add.
-     */
-    public void addWriterListener(WriterListener l);
-
-    /**
-     * Removes a ReaderListener from this ChemObjectReader.
-     *
-     * @param listener the reader listener to remove.
-     */
-    public void removeWriterListener(WriterListener l);
-    
 }
