@@ -32,7 +32,7 @@ import java.util.*;
  * AtomContainer is connected
  */
  
-public class ConnectivityChecker
+public class ConnectivityChecker implements CDKConstants
 {
 
 	public boolean isConnected(AtomContainer ac)
@@ -80,5 +80,33 @@ public class ConnectivityChecker
 		return true;
 	}
 	
+
+	public Vector partitionIntoMolecules(AtomContainer atomContainer) throws java.lang.Exception
+	{
+		AtomContainer ac = new AtomContainer();
+		Atom atom = null, nextAtom = null; 
+		Molecule molecule = null;
+		Vector molecules = new Vector();
+		Vector sphere = new Vector();
+		for (int f = 0; f < atomContainer.getAtomCount(); f++)
+		{
+			ac.addAtom(atomContainer.getAtomAt(f));
+		}
+		for (int f = 0; f < atomContainer.getBondCount(); f++)
+		{
+			ac.addBond(atomContainer.getBondAt(f));
+		}
+		do
+		{
+			atom = ac.getAtomAt(0);
+			molecule = new Molecule();
+			sphere.removeAllElements();
+			sphere.addElement(atom);
+			PathTools.breadthFirstSearch(ac, sphere, molecule);
+			molecules.addElement(molecule);
+			ac.remove(molecule);
+		}while(ac.getAtomCount() > 0);
+		return molecules;
+	}
 
 }

@@ -432,6 +432,20 @@ public class AtomContainer extends ChemObject implements Cloneable{
 		atomCount = 0;
 		bondCount = 0;	
 	}
+	
+	
+	public void remove(AtomContainer atomContainer) throws java.lang.Exception
+	{
+		for (int f = 0; f < atomContainer.getAtomCount(); f++)
+		{
+			removeAtom(atomContainer.getAtomAt(f));
+		}
+		for (int f = 0; f < atomContainer.getBondCount(); f++)
+		{
+			removeBond(atomContainer.getBondAt(f));
+		}
+		
+	}
 
 	/**
 	 *  Adds a bond to this container

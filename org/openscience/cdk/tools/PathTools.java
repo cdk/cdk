@@ -149,6 +149,32 @@ public class PathTools implements CDKConstants
 		return false;
 	}
 
+
+	public static void breadthFirstSearch(AtomContainer ac, Vector sphere, Molecule molecule)
+	{
+		Atom atom = null, nextAtom = null; 
+		Vector newSphere = new Vector();
+		for (int f = 0; f < sphere.size(); f++)
+		{
+			atom = (Atom)sphere.elementAt(f);
+			molecule.addAtom(atom);
+			atom.flags[VISITED] = true;
+			Bond[] bonds = ac.getConnectedBonds(atom);
+			for (int g = 0; g < bonds.length; g++)
+			{
+				molecule.addBond(bonds[g]);
+				nextAtom = bonds[g].getConnectedAtom(atom);
+				if (!nextAtom.flags[VISITED])
+				{
+					newSphere.addElement(nextAtom);
+				}
+			}
+		}
+		if (newSphere.size() >0)
+		{
+			breadthFirstSearch(ac, newSphere, molecule);
+		}
+	}
 }
 
 
