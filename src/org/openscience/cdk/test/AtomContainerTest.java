@@ -34,9 +34,8 @@ import junit.framework.*;
 import javax.vecmath.*;
 
 /**
- * Checks the funcitonality of the AtomTypeFactory
+ * Checks the funcitonality of the AtomContainer.
  */
- 
 public class AtomContainerTest extends TestCase {
 
     public AtomContainerTest(String name) {

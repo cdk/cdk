@@ -52,24 +52,26 @@ public class CDKTests {
 	public static Test suite ( ) 
 	{
 		TestSuite suite= new TestSuite("All CDK Tests");
+        
+        // Package Test Suites
 		suite.addTest(CoreClassesTests.suite());
+		suite.addTest(IOTests.suite());
+		suite.addTest(ToolsTests.suite());
+        
+        // Individual Tests
         suite.addTest(RingSearchTest.suite());
-		suite.addTest(ConnectivityCheckerTest.suite());
 		suite.addTest(MorganNumberToolsTest.suite());
-		suite.addTest(MFAnalyserTest.suite());
 		suite.addTest(PathLengthTest.suite());
 		suite.addTest(IsomorphismTesterTest.suite());
-		suite.addTest(IsotopeFactoryTest.suite());
 		suite.addTest(AllRingsFinderTest.suite());
 		suite.addTest(FingerprinterTest.suite());
 		suite.addTest(AtomTypeFactoryTest.suite());
         // from cdk.test.io.*
-		suite.addTest(IOTests.suite());
         // from cdk.test.smiles
 		suite.addTest(SmilesGeneratorTest.suite());
 		suite.addTest(SmilesParserTest.suite());
-	// from cdk.test.isomorphism
-		suite.addTest(UniversalIsomorphismTesterTest.suite());
+        // from cdk.test.isomorphism
+        suite.addTest(UniversalIsomorphismTesterTest.suite());
 
 	    return suite;
 	}
