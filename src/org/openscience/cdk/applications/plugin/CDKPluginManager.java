@@ -24,6 +24,7 @@
  */
 package org.openscience.cdk.applications.plugin;
 
+import org.openscience.cdk.event.ChemObjectChangeEvent;
 import org.openscience.cdk.tools.LoggingTool;
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -240,6 +241,24 @@ public class CDKPluginManager {
         }
     }
     
+    /**
+     * Signal the plugins that the ChemModel/ChemFile has changed.
+     */
+	public void stateChanged(ChemObjectChangeEvent sourceEvent) {
+        // send event to plugins
+        Enumeration plugins = getPlugins();
+        if (plugins.hasMoreElements()) {
+            while (plugins.hasMoreElements()) {
+                CDKPluginInterface plugin = (CDKPluginInterface)plugins.nextElement();
+                if (Double.parseDouble(plugin.getAPIVersion()) >= 1.6) {
+                    plugin.stateChanged(sourceEvent);
+                } else {
+                    logger.debug("Plugin API is not bigger than 1.6. Not send it the change event. : ");
+                }
+            }
+        }
+	}
+
     /**
      * Action that creates a dialog with the content defined by the plugin for
      * which the dialog is created.
