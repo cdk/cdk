@@ -43,17 +43,26 @@ public class LoggingTool {
 
             // configure Log4J
             URL url = getClass().getClassLoader().getResource("org/openscience/cdk/config/log4j.properties");
-            // debug(url.toString());
-            //(org.apache.log4j.PropertyConfigurator).configure(url);
             org.apache.log4j.PropertyConfigurator.configure(url);
         } catch (NoClassDefFoundError e) {
             tostdout = true;
         } catch (NullPointerException e) {
             tostdout = true;
             debug("Properties file not found!");
+        } catch (Exception e) {
+            tostdout = true;
         }
-        if (System.getProperty("cdk.debugging", "false").equals("true")) {
-            debug = true;
+        // Use a try {} to catch SecurityExceptions when used in applets
+        try {
+            // by default debugging is set off, but it can be turned on
+            // with starting java like "java -Dcdk.debugging=true"
+            if (System.getProperty("cdk.debugging", "false").equals("true")) {
+                debug = true;
+            }
+        } catch (Exception e) {
+            // guess what happens: security exception from applet runner
+            // do not debug in those cases
+            debug = false;
         }
     }
 
