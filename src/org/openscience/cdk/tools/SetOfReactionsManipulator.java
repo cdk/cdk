@@ -27,6 +27,8 @@
  *  */
 package org.openscience.cdk.tools;
 
+import java.util.Vector;
+
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ElectronContainer;
@@ -77,6 +79,16 @@ public class SetOfReactionsManipulator {
             moleculeSet.add(ReactionManipulator.getAllMolecules(reaction));
         }
         return moleculeSet;
+    }
+    
+    public static Vector getAllIDs(SetOfReactions set) {
+        Vector IDlist = new Vector();
+        Reaction[] reactions = set.getReactions();
+        for (int i=0; i < reactions.length; i++) {
+            Reaction reaction = reactions[i];
+            IDlist.addAll(ReactionManipulator.getAllIDs(reaction));
+        }
+        return IDlist;
     }
     
     /**

@@ -27,6 +27,8 @@
  *  */
 package org.openscience.cdk.tools;
 
+import java.util.Vector;
+
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ElectronContainer;
@@ -141,6 +143,22 @@ public class ReactionManipulator {
         );
     }
     
+    public static Vector getAllIDs(Reaction reaction) {
+        Vector IDlist = new Vector();
+        if (reaction.getID() != null) IDlist.addElement(reaction.getID());
+        Molecule[] reactants = reaction.getReactants().getMolecules();
+        for (int i=0; i<reactants.length; i++) {
+            Molecule mol = reactants[i];
+            IDlist.addAll(AtomContainerManipulator.getAllIDs(mol));
+        }
+        Molecule[] products = reaction.getProducts().getMolecules();
+        for (int i=0; i<products.length; i++) {
+            Molecule mol = products[i];
+            IDlist.addAll(AtomContainerManipulator.getAllIDs(mol));
+        }
+        return IDlist;
+    }
+
     /**
      * This badly named methods tries to determine which AtomContainer in the
      * ChemModel is best suited to contain added Atom's and Bond's.

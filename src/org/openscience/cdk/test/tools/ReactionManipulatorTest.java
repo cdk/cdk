@@ -23,10 +23,13 @@
  */
 package org.openscience.cdk.test.tools;
 
+import java.util.Vector;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.tools.ReactionManipulator;
@@ -63,6 +66,22 @@ public class ReactionManipulatorTest extends TestCase {
         assertEquals(2, reversedReaction.getProductCount());
         assertEquals(1, reversedReaction.getReactantCount());
         assertEquals(3.0, reversedReaction.getProductCoefficient(water), 0.00001);
+    }
+    
+    public void testGetAllIDs() {
+        Reaction reaction = new Reaction();
+        reaction.setID("r1");
+        Molecule water = new Molecule();
+        water.setID("m1");
+        Atom oxygen = new Atom("O");
+        oxygen.setID("a1");
+        water.addAtom(oxygen);
+        reaction.addReactant(water);
+        reaction.addProduct(water);
+        
+        Vector ids = ReactionManipulator.getAllIDs(reaction);
+        assertNotNull(ids);
+        assertEquals(5, ids.size());
     }
 }
 
