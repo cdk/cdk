@@ -28,14 +28,14 @@ import org.openscience.cdk.Atom;
 /**
  * @cdk.module extra
  */
-public abstract class QueryAtom extends Atom {
+public class SymbolQueryAtom extends Atom {
     
-    public QueryAtom() {
-        throw new InstantiationError("An abstract QueryAtom should not be used directly");
-    };
+    public SymbolQueryAtom(String elementSymbol) {
+        super(elementSymbol);
+    }
     
 	public boolean matches(Atom atom) {
-        throw new AbstractMethodError("The QueryBond class did not implement this method");
+        return this.getSymbol().equals(atom.getSymbol());
     };
 }
 

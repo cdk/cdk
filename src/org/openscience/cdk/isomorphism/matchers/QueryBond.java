@@ -24,18 +24,35 @@
 package org.openscience.cdk.isomorphism.matchers;
 
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.Bond;
 
 /**
  * @cdk.module extra
  */
-public abstract class QueryAtom extends Atom {
-    
-    public QueryAtom() {
-        throw new InstantiationError("An abstract QueryAtom should not be used directly");
+public abstract class QueryBond extends Bond {
+
+    public QueryBond() {
+        throw new InstantiationError("An abstract QueryBond should not be used directly");
     };
     
-	public boolean matches(Atom atom) {
+	public boolean matches(Bond bond) {
         throw new AbstractMethodError("The QueryBond class did not implement this method");
     };
+    
+    public void setAtoms(Atom[] atoms) {
+        if (atoms.length > 0 && atoms[0] instanceof QueryAtom) {
+            super.setAtoms(atoms);
+        } else {
+            throw new IllegalArgumentException("Array is not of type QueryAtom[]");
+        }
+	}
+    
+	public void setAtomAt(Atom atom, int position) {
+        if (atom instanceof QueryAtom) {
+            super.setAtomAt(atom, position);
+        } else {
+            throw new IllegalArgumentException("Atom is not of type QueryAtom");
+        }
+    }
 }
 

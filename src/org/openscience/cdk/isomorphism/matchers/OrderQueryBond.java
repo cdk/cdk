@@ -23,18 +23,18 @@
  */
 package org.openscience.cdk.isomorphism.matchers;
 
-import org.openscience.cdk.Atom;
+import org.openscience.cdk.Bond;
 
 /**
  * @cdk.module extra
  */
-public abstract class QueryAtom extends Atom {
+public class OrderQueryBond extends Bond {
+
+    public OrderQueryBond(QueryAtom atom1, QueryAtom atom2, double order) {
+        super(atom1, atom2, order);
+    }
     
-    public QueryAtom() {
-        throw new InstantiationError("An abstract QueryAtom should not be used directly");
-    };
-    
-	public boolean matches(Atom atom) {
+	public boolean matches(Bond bond) {
         throw new AbstractMethodError("The QueryBond class did not implement this method");
     };
 }
