@@ -52,8 +52,8 @@ public class Normalizer {
   /**
    *  The method takes an xml files like the following:<br>
    *  &lt;replace-set&gt;<br>
-   *  &lt;replace&gt;O=N=O&lt;/replace&gt;<br>
-   *  &lt;replacement&gt;[O-][N+]=O&lt;/replacement&gt;<br>
+   *  &lt;replace&gt;O=N=O&lt;/replace&gt;<br>
+   *  &lt;replacement&gt;[O-][N+]=O&lt;/replacement&gt;<br>
    *  &lt;/replace-set&gt;<br>
    *  All parts in ac which are the same as replace will be changed according to replacement.
    *  Currently the following changes are done: BondOrder, FormalCharge.
