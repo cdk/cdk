@@ -137,6 +137,7 @@ public class Ring extends AtomContainer implements java.io.Serializable, Cloneab
       *
 	  * @param molecule  A molecule to determine an atom number for each ring atom
       * @return          string representation of this ring
+      * @deprecated
 	  */
 	public String toString(Molecule molecule)
 	{
@@ -154,4 +155,13 @@ public class Ring extends AtomContainer implements java.io.Serializable, Cloneab
 		}
 		return str;
 	}
+	
+	public String toString() {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("Ring(");
+		buffer.append(super.toString());
+		buffer.append(")");
+		return buffer.toString();
+	}
+
 }
