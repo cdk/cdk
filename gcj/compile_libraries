@@ -1,0 +1,6 @@
+#! /bin/sh
+
+GCJ=gcj-3.0
+
+echo "Compiling vecmath..."
+${GCJ} -shared -o libvecmath.so ../jar/vecmath1.2-1.14.jar

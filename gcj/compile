@@ -7,18 +7,26 @@ CDKSRCDIR="../src"
 CDKBUILDDIR="../gcj/build"
 JARLIBS=`ls -1 $CDKLIBDIR/*.jar | perl -ne "s/\n|\r/:/g; print;"`
 
-CDKCORECLASSES=`cat core.classes | perl -n -e "s/\./\//g; print '$CDKSRCDIR/'; print;"`
+LIBRARIES="-L. "
 
-for FILE in $CDKCORECLASSES
+# Compile .so libraries
+for lib in core extra
 do
-    echo "Compiling $FILE..."
-    OPTIONS="-d $CDKBUILDDIR -I$CDKSRCDIR --CLASSPATH=$JARLIBS"
-    # Use the next line once all classes are compiled, and you
-    # want to check dependencies for non-core classes
-    #OPTIONS="-d $CDKBUILDDIR -I$CDKBUILDDIR --CLASSPATH=$JARLIBS"
-    if ! $GCJ $OPTIONS -C $FILE.java
+    echo "Compiling ${lib} library..."
+    OPTIONS="-shared -I${CDKSRCDIR} ${LIBRARIES} --CLASSPATH=$JARLIBS"
+    CLASSES=`./list-classes ${lib}.classes`
+    echo "  command: $GCJ $OPTIONS ${CLASSES} -o libcdk${lib}.so"
+    if ! $GCJ $OPTIONS ${CLASSES} -o libcdk${lib}.so
     then
-        echo "Error during compilation!"
+        echo "Error during compilation of ${lib} library!"
         exit 1
     fi
+    LIBRARIES="${LIBRARIES} -lcdk${lib}"
 done
+
+# Compile viewer application
+echo "Compiling cdk-fileconvertor application..."
+OPTIONS="-I${CDKSRCDIR} ${LIBRARIES} --CLASSPATH=$JARLIBS"
+CLASSES="../src/org/openscience/cdk/applications/FileConvertor.java"
+echo "  command: $GCJ $OPTIONS ${CLASSES} -o cdk-fileconvertor"
+$GCJ $OPTIONS ${CLASSES} -o cdk-fileconvertor

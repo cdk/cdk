@@ -1,0 +1,9 @@
+org.openscience.cdk.ChemFile
+# IO classes
+org.openscience.cdk.io.ChemObjectReader
+org.openscience.cdk.io.ChemObjectWriter
+org.openscience.cdk.io.PDBReader
+org.openscience.cdk.io.XYZReader
+org.openscience.cdk.io.CMLReader
+# Tool classes
+org.openscience.cdk.tools.LoggingTool

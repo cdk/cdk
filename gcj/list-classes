@@ -1,0 +1,18 @@
+#! /usr/bin/perl
+use diagnostics;
+use strict;
+
+my $CDKSRCDIR = "../src";
+
+open(CLASSES, "<$ARGV[0]");
+while (<CLASSES>) {
+    if (/^\s*\#/) {
+        # skip comment line
+    } else {
+        s/\./\//g;
+        s/[\n|\r]//;
+        print "$CDKSRCDIR/";
+        print;
+        print ".java\n";
+    }
+}
