@@ -47,7 +47,7 @@ public class IUPACNameGenerator {
     private Vector rules;
     private IUPACName name;
 
-    private SaturationChecker saturationChecker;
+    private HydrogenAdder hydrogenAdder;
 
     private org.openscience.cdk.tools.LoggingTool logger;
 
@@ -65,9 +65,9 @@ public class IUPACNameGenerator {
 
         // instantiate the saturation checker
         try {
-            saturationChecker = new SaturationChecker();
+            hydrogenAdder = new HydrogenAdder();
         } catch (Exception e) {
-            logger.error("Cannot instantiate SaturationChecker!");
+            logger.error("Cannot instantiate hydrogen adder!");
         }
 
         // this is dirty! Rules should be automatically detected!
@@ -132,7 +132,7 @@ public class IUPACNameGenerator {
          */
         Molecule molecule = new Molecule(m);
         try {
-            saturationChecker.addExplicitHydrogensToSatisfyValency(molecule);
+            hydrogenAdder.addExplicitHydrogensToSatisfyValency(molecule);
         } catch (Exception exception) {
             logger.error("Error while saturating molecule");
         };
