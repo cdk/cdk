@@ -45,7 +45,7 @@ import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.XYZReader;
 import org.openscience.cdk.renderer.AcceleratedRenderer3D;
 import org.openscience.cdk.renderer.AcceleratedRenderer3DModel;
-import org.openscience.cdk.tools.ChemModelManipulator;
+import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
  * @cdk.module test-java3d
