@@ -48,6 +48,7 @@ public class IOTests {
         suite.addTest(GhemicalReaderTest.suite());
         suite.addTest(ShelXReaderTest.suite());
         suite.addTest(VASPReaderTest.suite());
+	suite.addTest(MDLRXNReaderTest.suite());
         /* suite.addTest(ZMatrixReaderTest.suite()); This is not a JUnit test yet! */
         
         suite.addTest(ReaderFactoryTest.suite());
