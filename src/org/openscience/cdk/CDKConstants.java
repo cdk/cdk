@@ -33,6 +33,8 @@ package org.openscience.cdk;
  *   double singleBondOrder = CDKConstants.BONDORDER_SINGLE;
  * </pre>
  *
+ * <p>The lazyCreation patch has been applied to this class.
+ *
  * @keyword bond order
  * @keyword stereochemistry
  */
@@ -114,33 +116,42 @@ public class CDKConstants {
 
         /** Flag that is set if the chemobject is placed (somewhere).
          */
-        public final static int ISPLACED = 50;
+        public static int ISPLACED = 0;
         /** Flag that is set when the chemobject is part of a ring.
          */
-        public final static int ISINRING = 51;
+        public static int ISINRING = 1;
         /** Flag that is set if a chemobject is part of an alipahtic chain.
          */
-        public final static int ISALIPHATIC = 52;
+        public static int ISALIPHATIC = 2;
         /** Flag is set if chemobject has been visited.
          */
-        public final static int VISITED = 53; // Use in tree searches
+        public static int VISITED = 3; // Use in tree searches
         /** Flag is set if chemobject is part of an aromatic system. */
-        public final static int ISAROMATIC = 54;
+        public static int ISAROMATIC = 4;
         /** Flag is set if a chemobject is mapped to another chemobject.
          *  It is used for example in subgraph isomorphism search.
          */
-        public final static int MAPPED = 55;
+        public static int MAPPED = 5;
 
+    /**
+     * Maximum flags array index.
+     */
+    public final static int MAX_FLAG_INDEX = 5;
 
+    /**
+     * Maximum pointers array index.
+     */
+    public final static int MAX_POINTER_INDEX = 0;
+    
     /****************************************
     * Some predefined property names for    *
     * ChemObjects                           *
     ****************************************/
 
-    /** A String title. */
+    /** The title */
     public static final String TITLE = "Title";
 
-    /** A String remark. */
+    /** A remark */
     public static final String REMARK = "Remark";
 
     /** A String comment. */

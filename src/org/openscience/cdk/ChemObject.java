@@ -35,16 +35,18 @@ import java.util.*;
  * The base class for all chemical objects in this cdk. It provides methods
  * for adding listeners and for their notification of events, as well a 
  * a hash table for administration of physical or chemical properties
+ *
+ * <p>The lazyCreation patch has been applied to this class.
  */
 public class ChemObject implements java.io.Serializable, Cloneable {
     
 	/** Vector for listener administration. */
-	protected Vector chemObjects = new Vector();
+    private Vector chemObjects;
 	/** 
 	  * A hashtable for the storage of any kind of properties 
 	  * of this ChemObject. 
 	  */
-	protected Hashtable properties = new Hashtable();
+    private Hashtable properties;
 	/** You will frequently have to use some flags on a ChemObject.
 	 * For example, if you want to draw a molecule and see
 	 * if you've already drawn an atom, or in a ring search to 
@@ -53,14 +55,14 @@ public class ChemObject implements java.io.Serializable, Cloneable {
 	 * flag array with self-defined constants (flags[VISITED] = true).
 	 * 100 flags per object should be more than enough.
 	 */
-	protected boolean[] flags = new boolean[100];
+    private boolean[] flags = new boolean[CDKConstants.MAX_FLAG_INDEX + 1];
 
 	/** Array of multipurpose vectors. Handle like described for the
 	  * flags above.
 	  */
-	protected Vector[] pointers = new Vector[10];
+    private Vector[] pointers;
 
-    protected String id = ""; 
+    private String id = ""; 
     
     /**
      * Constructs a new ChemObject.
@@ -71,6 +73,18 @@ public class ChemObject implements java.io.Serializable, Cloneable {
 		init();
 	}
 	
+    /*
+     * Lazy creation of chemObjects Vector.
+     */
+    private Vector lazyChemObjects()
+    {
+	if (chemObjects == null)
+	    {
+		chemObjects = new Vector();
+	    }
+	return chemObjects;
+    }
+
 	/**
 	 * Use this to add yourself to this ChemObject as a listener. 
 	 * In order to do so, you must implement the ChemObjectListener Interface.
@@ -81,9 +95,11 @@ public class ChemObject implements java.io.Serializable, Cloneable {
 	 */
 	public void addListener(ChemObjectListener col)
 	{
-		if (!chemObjects.contains(col))
+	    Vector listeners = lazyChemObjects();
+
+		if (!listeners.contains(col))
 		{
-			chemObjects.addElement(col);
+			listeners.addElement(col);
 		}
 		// Should we through an exception if col is already in here or
 		// just silently ignore it?
@@ -101,9 +117,11 @@ public class ChemObject implements java.io.Serializable, Cloneable {
 	 */
 	public void removeListener(ChemObjectListener col)
 	{
-		if (chemObjects.contains(col))
+	    Vector listeners = lazyChemObjects();
+
+		if (listeners.contains(col))
 		{
-			chemObjects.removeElement(col);
+			listeners.removeElement(col);
 		}
 	}
 
@@ -112,15 +130,27 @@ public class ChemObject implements java.io.Serializable, Cloneable {
 	 * of an object to that the registered listeners can react to it.
 	 *
 	 */
-	protected void notifyChanged()
-	{
-		for (int f = 0; f < chemObjects.size(); f++)
-		{
-			((ChemObjectListener)chemObjects.elementAt(f)).stateChanged(new ChemObjectChangeEvent(this));
-		}
+	protected void notifyChanged() {
+	    Vector listeners = lazyChemObjects();
+	    for (int f = 0; f < listeners.size(); f++) {
+		((ChemObjectListener)listeners.elementAt(f)).stateChanged(new ChemObjectChangeEvent(this));
+	    }
 	}
 
-	/**
+    /*
+     * Lazy creation of properties hash.
+     */
+    private Hashtable lazyProperties()
+    {
+	if (properties == null)
+	    {
+		properties = new Hashtable();
+	    }
+	return properties;
+    }
+
+
+/**
 	 * Sets a property for a ChemObject.
 	 *
 	 * @param   description  An object description of the property (most likely a unique string)
@@ -130,7 +160,7 @@ public class ChemObject implements java.io.Serializable, Cloneable {
      * @see     #removeProperty
 	 */
 	public void setProperty(Object description, Object property) {
-		properties.put(description, property);
+		lazyProperties().put(description, property);
 	}
 
 	/**
@@ -142,7 +172,7 @@ public class ChemObject implements java.io.Serializable, Cloneable {
      * @see     #getProperty
 	 */
 	public void removeProperty(Object description) {
-		properties.remove(description);
+		lazyProperties().remove(description);
 	}
 
 	/**
@@ -155,7 +185,7 @@ public class ChemObject implements java.io.Serializable, Cloneable {
      * @see     #removeProperty
 	 */
 	public Object getProperty(Object description) {
-		return properties.get(description);
+		return lazyProperties().get(description);
 	}
 
     /**
@@ -164,9 +194,9 @@ public class ChemObject implements java.io.Serializable, Cloneable {
      * @return  The object's properties
      */
     public Hashtable getProperties() {
-        return properties;
+        return lazyProperties();
     }
-    
+
 	/**
 	 * Initializes all the service fields, vectors, hashtables, etc..
 	 *
@@ -174,12 +204,12 @@ public class ChemObject implements java.io.Serializable, Cloneable {
 	public void init()
 	{
 		/** Vector for listener administration */
-		chemObjects = new Vector();
+	    chemObjects = null;
 		/** 
 		  * A hashtable for the storage of any kind of properties 
 		  * of this ChemObject. 
 		  */
-		properties = new Hashtable();
+	    properties = null;
 		/** You will frequently have to use some flags on a ChemObject
 		 * for example if you want to draw a molecule and see
 		 * if you've already drawn an atom, or in a ring search to 
@@ -188,9 +218,9 @@ public class ChemObject implements java.io.Serializable, Cloneable {
 		 * flag array with self-defined constants (flags[VISITED] = true).
 		 * 10 flags per object should be more than enough.
 		 */
-		flags = new boolean[100];
+	    flags = new boolean[CDKConstants.MAX_FLAG_INDEX + 1];
         
-        pointers = new Vector[10];
+	    pointers = null;
 	}
 	
 	/**
@@ -209,7 +239,7 @@ public class ChemObject implements java.io.Serializable, Cloneable {
 		{
 			e.printStackTrace(System.err);
 		}
-		((ChemObject)o).flags = new boolean[100];
+		((ChemObject)o).flags = new boolean[CDKConstants.MAX_FLAG_INDEX + 1];
 		for (int f = 0; f < flags.length; f++)
 		{
 			((ChemObject)o).flags[f] = flags[f];	
@@ -270,7 +300,19 @@ public class ChemObject implements java.io.Serializable, Cloneable {
     public boolean getFlag(int flag_type) {
         return flags[flag_type];
     }
-    
+
+    /*
+     * Lazy creation of pointers array.
+     */
+    private Vector[] lazyPointers()
+    {
+	if (pointers == null)
+	    {
+		pointers = new Vector[CDKConstants.MAX_POINTER_INDEX + 1];
+	    }
+	return pointers;
+    }
+
     /**
      * Sets the value of some pointer.
      * 
@@ -278,7 +320,7 @@ public class ChemObject implements java.io.Serializable, Cloneable {
      * @param  pointer_value Value to assign to pointer
      */
     public void setPointer(int pointer_type, Vector pointer_value) {
-        pointers[pointer_type] = pointer_value;
+        lazyPointers()[pointer_type] = pointer_value;
     }
     
     /**
@@ -287,7 +329,7 @@ public class ChemObject implements java.io.Serializable, Cloneable {
      * @param  pointer_type  Pointer to retrieve the value of
      */
     public Vector getPointer(int pointer_type) {
-        return pointers[pointer_type];
+        return lazyPointers()[pointer_type];
     }
     
 	/**
