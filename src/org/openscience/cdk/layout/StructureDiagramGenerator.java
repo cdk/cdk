@@ -141,9 +141,13 @@ public class StructureDiagramGenerator {
      * @see @generateCoordinates
      */
     public void generateExperimentalCoordinates() throws java.lang.Exception {
-        generateCoordinates(new Vector2d(0, 1));
+        generateExperimentalCoordinates(new Vector2d(0, 1));
     }
 
+    /**
+     * Generates coordinates by first deleting all hydrogens and add them later again.
+     * Major downside is that hydrogen specific properties are lost at this moment.
+     */
     public void generateExperimentalCoordinates(Vector2d firstBondVector) throws java.lang.Exception {
         String hCountMarker = "org.openscience.cdk.layout.StructureDiagramGenerator.hCount";
         // first mark how many hydrogens each non-hydrogen has
