@@ -10,6 +10,8 @@
         <property name="reports.tests" value="reports" />
         <property name="javadoc.dir" value="javadoc" />
 
+        <property name="pathtojava3d" value="" />
+
         <path id="project.class.path">
                 <pathelement
                 location="/usr/lib/j2sdk1.3/jre/lib/rt.jar" />
@@ -17,6 +19,10 @@
                 <pathelement location="." />
 
                 <fileset dir="jar">
+                        <include name="*.jar" />
+                </fileset>
+
+                <fileset dir="${pathtojava3d}">
                         <include name="*.jar" />
                 </fileset>
         </path>
