@@ -161,6 +161,7 @@ public class MDLReader implements ChemObjectReader
 	 *@return    The Molecule that was read from the MDL file.
 	 */
 	private Molecule readMolecule() throws CDKException {
+        int linecount = 0;
 		int atoms = 0;
 		int bonds = 0;
 		int atom1 = 0;
@@ -178,9 +179,20 @@ public class MDLReader implements ChemObjectReader
         String line = "";
 
 		try {
-			String title = new String(input.readLine() + "\n" + input.readLine() + "\n" + input.readLine());
+            logger.info("Reading header");
+            line = input.readLine(); linecount++;
+            logger.debug("Line " + linecount + ": " + line);
+			String title = line + "\n";
+            line = input.readLine(); linecount++;
+            logger.debug("Line " + linecount + ": " + line);
+            title = line + "\n";
+            line = input.readLine(); linecount++;
+            logger.debug("Line " + linecount + ": " + line);
+            title = line + "\n";
 			molecule.setProperty(CDKConstants.TITLE, title);
-			StringBuffer strBuff = new StringBuffer(input.readLine());
+            line = input.readLine(); linecount++;
+            logger.debug("Line " + linecount + ": " + line);
+			StringBuffer strBuff = new StringBuffer(line);
 			strBuff.insert(3, " ");
 			StringTokenizer strTok = new StringTokenizer(strBuff.toString());
 			atoms = java.lang.Integer.valueOf(strTok.nextToken()).intValue();
@@ -191,7 +203,7 @@ public class MDLReader implements ChemObjectReader
             // read ATOM block
             logger.info("Reading atom block");
 			for (int f = 0; f < atoms; f++) {
-                line = input.readLine();
+                line = input.readLine(); linecount++;
 				strBuff = new StringBuffer(line);
 				strTok = new StringTokenizer(strBuff.toString().trim());
 				x = new Double(strTok.nextToken()).doubleValue();
@@ -247,7 +259,7 @@ public class MDLReader implements ChemObjectReader
             // read BOND block
             logger.info("Reading bond block");
 			for (int f = 0; f < bonds; f++) {
-                line = input.readLine();
+                line = input.readLine(); linecount++;
 				strBuff = new StringBuffer(line);
 				strBuff.insert(3, " ");
 				strBuff.insert(7, " ");
@@ -290,7 +302,7 @@ public class MDLReader implements ChemObjectReader
             // read PROPERTY block
             logger.info("Reading property block");
             while (input.ready()) {
-                line = input.readLine();
+                line = input.readLine(); linecount++;
                 if ("M  END".equals(line)) break;
                 
                 boolean lineRead = false;
@@ -322,8 +334,10 @@ public class MDLReader implements ChemObjectReader
                 }
             }
 		} catch (Exception e) {
-            String error = "Error (" + e.toString() + ") while parsing line: " + line + " in property block.";
+            String error = "Error (" + e.toString() + ") while parsing line "
+                + linecount + ": " + line + " in property block.";
 			logger.error(error);
+            e.printStackTrace();
             throw new CDKException(error);
 		}
 		return molecule;
