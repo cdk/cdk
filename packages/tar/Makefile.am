@@ -9,4 +9,4 @@ alljar_DATA = cdk.jar
 EXTRA_DIST=VERSION cdk.jar
 
 cdk.jar:
-	cp ../../../dist/jar/cdk.jar .
+	cp ../../dist/jar/cdk.jar .
