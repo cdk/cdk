@@ -39,6 +39,12 @@
       and as JavaDoc in the software. None of this is currently
       enforced or required.
     </para>
+
+    <para>
+      Important! This guide is an ongoing documentation project.
+      It is far from complete right now, many things are still missing.
+      Please, add additional content to cvs or email it to me.
+    </para>
   </preface>
 
   <part id="part:documentation">
@@ -101,6 +107,31 @@ cdk/$ ant -buildfile javadoc.xml html
           with the DocBookDoclet (<ulink
           url="http://freshmeat.net/projects/dbdoclet/">http://freshmeat.net/projects/dbdoclet/</ulink>).
           The DocBook output can in turn be generated into PDF files.
+        </para>
+      </section>
+
+      <section id="sect:javadocstats">
+        <title>JavaDoc Statistics</title>
+        <para>
+          Statistics can be generated on the use of JavaDoc in the
+          CDK library. It can be generated with:
+        <programlisting>
+$ cd cdk/reports/javadoc
+$ ant -Dpathtojava3d=/some/path overview
+        </programlisting>
+        </para>
+      </section>
+
+      <section id="sect:keywordindex">
+        <title>Keyword Index</title>
+        <para>
+          A keyword index is used for the website and is generated
+          with the MakeKeywordIndexDoclet doclet. The file
+          keyword.index.xml can be generated with:
+        <programlisting>
+$ cd cdk/reports/javadoc
+$ ant -Dpathtojava3d=/some/path keyword.index
+        </programlisting>
         </para>
       </section>
     </chapter>
@@ -326,6 +357,29 @@ $ ./configure &amp;&amp; make &amp;&amp; install
       </para>
     </chapter>
 
+    <chapter id="sect:linuxpackages">
+      <title>Linux packages</title>
+      <para>
+      <para>
+        At this moment Linux users should use and install the
+        above tar.gz packages. No binary packages are yet
+        available.
+      </para>
+
+      <section>
+        <title>Debian packages</title>
+        <para>
+          Debian packages are planned but not yet available.
+        </para>
+      </section>
+
+      <section>
+        <title>RPM packages</title>
+        <para>
+          RPM packages are planned but not yet available.
+        </para>
+      </section>
+    </chapter>
   </part>
 
 </book>
