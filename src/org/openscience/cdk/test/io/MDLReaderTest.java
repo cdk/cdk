@@ -191,4 +191,42 @@ public class MDLReaderTest extends TestCase {
             fail(e.toString());
         }
     }
+
+    /** 
+     * Problem was filed as bug #835571
+     */
+    public void testReadFromStringReader () {
+        String mdl =
+                "cyclopropane.mol\n" +
+                "\n" +
+                "\n" +
+                "  9  9  0  0  0                 1 V2000\n" +
+                "   -0.0073   -0.5272    0.9655 C   0  0  0  0  0\n" +
+                "   -0.6776   -0.7930   -0.3498 C   0  0  0  0  0\n" +
+                "    0.2103    0.4053   -0.1891 C   0  0  0  0  0\n" +
+                "    0.8019   -1.1711    1.2970 H   0  0  0  0  0\n" +
+                "   -0.6000   -0.2021    1.8155 H   0  0  0  0  0\n" +
+                "   -1.7511   -0.6586   -0.4435 H   0  0  0  0  0\n" +
+                "   -0.3492   -1.6277   -0.9620 H   0  0  0  0  0\n" +
+                "    1.1755    0.4303   -0.6860 H   0  0  0  0  0\n" +
+                "   -0.2264    1.3994   -0.1675 H   0  0  0  0  0\n" +
+                "  1  2  1  6  0  0\n" +
+                "  1  3  1  6  0  0\n" +
+                "  1  4  1  0  0  0\n" +
+                "  1  5  1  1  0  0\n" +
+                "  2  3  1  0  0  0\n" +
+                "  2  6  1  0  0  0\n" +
+                "  2  7  1  6  0  0\n" +
+                "  3  8  1  6  0  0\n" +
+                "  3  9  1  0  0  0\n" +
+                "M  END\n" +
+                "$$$$\n";
+        try {
+            ChemFile cf = (ChemFile) new MDLReader(new StringReader(mdl)).read(new ChemFile());
+            assertNotNull(cf);
+        } catch (Exception exception) {
+            fail();
+        }
+    }
+
 }
