@@ -110,10 +110,18 @@
               targetfile="${src}/core.javafiles">
               <srcfiles dir="${src}" includes="**/*.java" />
           </uptodate>
-          <uptodate property="dotjjfiles.uptodate" 
-              targetfile="${src}/org/openscience/cdk/iupac/parser/NomParser.java">
-              <srcfiles dir="${src}" includes="org/openscience/cdk/iupac/parser/NomParser.jj" />
-          </uptodate>
+          <condition property="dotjjfiles.uptodate">
+            <and>
+              <uptodate property="NomParserJavafiles.uptodate" 
+                  targetfile="${src}/org/openscience/cdk/iupac/parser/NomParser.java">
+                  <srcfiles dir="${src}" includes="org/openscience/cdk/iupac/parser/NomParser.jj" />
+              </uptodate>
+              <uptodate property="SMARTSParserJavafiles.uptodate" 
+                  targetfile="${src}/org/openscience/cdk/smiles/smarts/SMARTSParser.java">
+                  <srcfiles dir="${src}" includes="org/openscience/cdk/smiles/smarts/SMARTSParser.jj" />
+              </uptodate>
+            </and>
+          </condition>
         </target>
 
         <target id="init" name="init" depends="check, setupBuildDir"/>
@@ -342,6 +350,14 @@
           </delete>
           <javacc target="${src}/org/openscience/cdk/iupac/parser/NomParser.jj" 
             outputdirectory="${src}/org/openscience/cdk/iupac/parser/" 
+            javacchome="${lib}"/>
+          <delete>
+              <fileset id="javacc-generated" 
+              dir="${src}/org/openscience/cdk/smiles/smarts/" 
+              includes="*.java"/>
+          </delete>
+          <javacc target="${src}/org/openscience/cdk/smiles/smarts/SMARTSParser.jj" 
+            outputdirectory="${src}/org/openscience/cdk/smiles/smarts/" 
             javacchome="${lib}"/>
         </target>
 
