@@ -504,7 +504,7 @@ public class CMLCoreModule implements ModuleInterface {
                 break;
 
             case CRYSTAL:
-                if (unitcellparams[5] != -1.0) {
+                if (crystalScalar > 0) {
                     // convert unit cell parameters to cartesians
                     double[][] axes = CrystalGeometryTools.notionalToCartesian(
                         unitcellparams[0], unitcellparams[1], unitcellparams[2],
