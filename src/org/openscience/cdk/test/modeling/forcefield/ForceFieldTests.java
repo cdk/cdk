@@ -181,7 +181,6 @@ public class ForceFieldTests extends CDKTestCase {
 		
 		bs.setGradientMMFF94SumEB_InPoint(ac);
 		//System.out.println("gradientMMFF94SumEB_InPoint = " + bs.getGradientMMFF94SumEB_InWishedCoordinates());
-		
 		for (int i = 0; i < testResult_gradientSumEB.length; i++) {
 			assertEquals(testResult_gradientSumEB[i], bs.getGradientMMFF94SumEB_InWishedCoordinates().getElement(i), 0.00001);
 		}
