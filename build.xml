@@ -3,8 +3,8 @@
   <!-- comment this line out of you have not jikes installed -->
   <!--property name="build.compiler" value="jikes"/-->
   
-   <property name="build" value="build"/>
-  
+  <property name="build" value="build"/>
+  <property name="sourcedist" value="sourcedist"/>  
   
   <path id="project.class.path">
     <!-- adapt the next line to reflect you installation -->
@@ -20,6 +20,7 @@
     <tstamp/>
     <!-- Create the build directory structure used by compile -->
     <mkdir dir="${build}"/>
+    <mkdir dir="${sourcedist}"/>
   </target>
 
   
@@ -34,15 +35,33 @@
     <delete>
       <fileset dir="." includes="**/*~"/>
       <fileset dir="." includes="**/*.class"/>
+      <fileset dir="." includes="*.tar.gz"/>
+      <fileset dir="." includes="*.zip"/> 
     </delete>
+    <delete dir="${build}"/>
+    <delete dir="${sourcedist}"/>
   </target>
   
-    <target name="dist" depends="compile">
+  <target name="dist" depends="compile">
     <!-- Create the distribution directory -->
     <mkdir dir="${dist}/jar"/>
 
     <!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
     <jar jarfile="${dist}/jar/cdk-${DSTAMP}.jar" basedir="${build}"/>
+  </target>
+
+  <target name="sourcedist" depends="init">
+    <copy todir="${sourcedist}" >
+      <fileset dir="." includes="**/*java"/>
+      <fileset dir="." includes="build.xml"/>
+    </copy>
+    <copy todir="${sourcedist}/jar" >
+      <fileset dir="jar" includes="*jar"/>
+    </copy>
+    <tar tarfile="cdk-source-${DSTAMP}.tar" basedir="${sourcedist}" includes="**"/>
+    <gzip zipfile="cdk-source-${DSTAMP}.tar.gz" src="cdk-source-${DSTAMP}.tar"/>
+    <delete file="cdk-source-${DSTAMP}.tar" />
+    <zip zipfile="cdk-source-${DSTAMP}.zip" basedir="${sourcedist}" includes="**"/>
   </target>
 
 </project>
