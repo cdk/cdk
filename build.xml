@@ -42,7 +42,7 @@
                 <fileset dir="${lib}">
                         <include name="batik-awt-util.jar" />
                         <include name="batik-dom.jar" />
-                        <include name="batik-util.jar" />
+                        <include name="batik-svggen.jar" />
                         <include name="baysmith-io.jar" />
                         <include name="dadml.jar" />
                         <include name="gnujaxp.jar" />
@@ -54,7 +54,7 @@
                         <include name="postgresql7.0-1.2.jar" />
                         <include name="printf.jar" />
                         <include name="vecmath1.2-1.14.jar" />
-                        <include name="xerces-2.3.0.jar" />
+                        <include name="xerces-2.5.0.jar" />
                         <include name="xindice.jar" />
                         <include name="xmldb.jar" />
                         <include name="stmml.jar" />
@@ -229,7 +229,7 @@
                             <include name="log4j-core.jar" />
                             <include name="log4j.jar" />
                             <include name="gnujaxp.jar" />
-                            <include name="xerces-2.3.0.jar" />
+                            <include name="xerces-2.5.0.jar" />
                         </fileset>
                         <fileset dir="${dist}/jar">
                             <include name="cdk-core.jar" />

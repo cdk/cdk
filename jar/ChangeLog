@@ -1,3 +1,9 @@
+2003-08-15  egonw
+* xerces-*.jar
+    Uploaded Xerces 2.5.0
+* batik-*.jar
+	Uploaded Batik 1.5
+
 2002-09-30  egonw
 * batik-*.jar
 	Added Batik jars for SVG output filter.
