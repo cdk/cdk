@@ -76,7 +76,6 @@ public class CDKTests
         suite.addTest(ToolsTests.suite());
         
         // Individual Tests
-        suite.addTest(ChemFileTest.suite());
         // from cdk.test.applications
         suite.addTest(APIVersionTesterTest.suite());
         // from cdk.test.aromaticity

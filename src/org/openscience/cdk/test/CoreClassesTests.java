@@ -43,6 +43,7 @@ public class CoreClassesTests {
         suite.addTest(AtomTypeTest.suite());
         suite.addTest(BioPolymerTest.suite());
         suite.addTest(BondTest.suite());
+        suite.addTest(ChemFileTest.suite());
         suite.addTest(ChemModelTest.suite());
         suite.addTest(ChemObjectTest.suite());
         suite.addTest(ChemSequenceTest.suite());
