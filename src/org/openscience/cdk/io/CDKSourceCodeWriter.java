@@ -37,6 +37,7 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.IDCreator;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Converts a Molecule into CDK source code that would build the same
@@ -59,7 +60,7 @@ import org.openscience.cdk.tools.IDCreator;
 public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
 
     private BufferedWriter writer;
-    private org.openscience.cdk.tools.LoggingTool logger;
+    private LoggingTool logger;
 
     /**
      * Contructs a new CDKSourceCodeWriter.
@@ -68,7 +69,7 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
      */
     public CDKSourceCodeWriter(Writer out) {
         writer = new BufferedWriter(out);
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        logger = new LoggingTool(this);
     }
 
     public String getFormatName() {
@@ -101,7 +102,8 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
     public void writeMolecule(Molecule molecule) throws Exception {
         writer.write("{\n");
         writer.write("  Molecule mol = new Molecule();\n");
-        IDCreator.createAtomAndBondIDs(molecule);
+        IDCreator idCreator = new IDCreator();
+        idCreator.createIDs(molecule);
         Atom[] atoms = molecule.getAtoms();
         for (int i=0; i<atoms.length; i++) {
             Atom atom = atoms[i];

@@ -53,6 +53,7 @@ API changes:
   a usefull class first by ClassLoader.loadClass().getInstance() and then set the Reader
 * Matching of file formats has moved into the available Readers matches() methods
 * Added event handling to plugin API to get warned when ChemModel has changed
+* IDCreator has completely changed. See new JavaDoc.
 
 20040202 Release
 ------------------------------------

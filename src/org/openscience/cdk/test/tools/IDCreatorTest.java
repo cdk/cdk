@@ -23,30 +23,43 @@
  */
 package org.openscience.cdk.test.tools;
 
+import java.io.IOException;
+import java.util.Hashtable;
+
 import junit.framework.Test;
+import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.tools.IDCreator;
+
 /**
- * TestSuite that runs all the sample tests in the
- * org.openscience.cdk.tools package.
- *
  * @cdk.module test
  */
-public class ToolsTests {
+public class IDCreatorTest extends TestCase {
+	
+	public IDCreatorTest(String name) {
+		super(name);
+	}
 
-    public static Test suite () {
-        TestSuite suite= new TestSuite("The cdk.tools Tests");
-        suite.addTest(AtomTypeFactoryTest.suite());
-        suite.addTest(CASNumberTest.suite());
-        suite.addTest(ConnectivityCheckerTest.suite());
-        suite.addTest(HydrogenAdderTest.suite());
-        suite.addTest(IDCreatorTest.suite());
-        suite.addTest(IsotopeFactoryTest.suite());
-        suite.addTest(MFAnalyserTest.suite());
-        suite.addTest(ReactionManipulatorTest.suite());
-        suite.addTest(SaturationCheckerTest.suite());
-		suite.addTest(SetOfMoleculesManipulatorTest.suite());
-        return suite;
-    }
+	public void setUp() {};
 
+	public static Test suite() {
+		return new TestSuite(IDCreatorTest.class);
+	}
+
+	public void testKeepingIDs()	{
+		Molecule mol = new Molecule();
+        Atom atom = new Atom("C");
+        atom.setID("atom1");
+        
+        IDCreator idCreator = new IDCreator();
+        idCreator.createIDs(mol);
+        
+        assertEquals("atom1", atom.getID());
+	}
+	
 }
+

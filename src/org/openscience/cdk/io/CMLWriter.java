@@ -367,7 +367,8 @@ public class CMLWriter extends DefaultChemObjectWriter {
     private void writeMolecule(Molecule mol) {
         // create CML atom and bond ids
         if (cmlIds.isSet()) {
-            IDCreator.createAtomAndBondIDs(mol);
+            IDCreator idCreator = new IDCreator();
+            idCreator.createIDs(mol);
         }
 
         Hashtable moleculeAtts = new Hashtable();

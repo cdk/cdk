@@ -28,6 +28,8 @@
  */
 package org.openscience.cdk.tools;
 
+import java.util.Vector;
+
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
@@ -38,7 +40,8 @@ import org.openscience.cdk.SetOfReactions;
 /**
  * Class that provides methods to give unique IDs to ChemObjects.
  * Methods are implemented for Atom, Bond, AtomContainer, SetOfAtomContainers
- * and Reaction.
+ * and Reaction. It will only create missing IDs. If you want to create new
+ * IDs for all ChemObjects, you need to delete them first.
  *
  * @cdk.module standard
  *
@@ -50,36 +53,62 @@ import org.openscience.cdk.SetOfReactions;
 public class IDCreator {
 
     /**
-     * Labels the Atom's and Bond's in the AtomContainer using the a1, a2, b1, b2
-     * scheme often used in CML. It will not set an id for the AtomContainer.
-     *
-     * @see #createAtomContainerAndAtomAndBondIDs(SetOfAtomContainers)
+     * A list of taken IDs.
      */
-    public static void createAtomAndBondIDs(AtomContainer container) {
-        IDCreator.createAtomAndBondIDs(container, 0, 0);
+    private Vector tabuList;
+    
+    /**
+     * Keep track of numbers.
+     */
+    int atomCount;
+    int bondCount;
+    int moleculeCount;
+    int reactionCount;
+    
+    public IDCreator() {
+        reset();
     }
-
+    
+    public void reset() {
+        tabuList = null;
+        atomCount = 0;
+        bondCount = 0;
+        moleculeCount = 0;
+        reactionCount = 0;
+    }
+    
     /**
      * Labels the Atom's and Bond's in the AtomContainer using the a1, a2, b1, b2
-     * scheme often used in CML. It will not set an id for the AtomContainer.
-     *
-     * <p>An offset can be used to start numbering at, for example, a3 instead
-     * of a1 using an offset = 2.
-     *
-     * @param atomOffset  Lowest ID number to be used for the Atoms
-     * @param bondOffset  Lowest ID number to be used for the Bonds
+     * scheme often used in CML.
      *
      * @see #createAtomContainerAndAtomAndBondIDs(SetOfAtomContainers)
      */
-    public static void createAtomAndBondIDs(AtomContainer container,
-                                            int atomOffset, int bondOffset) {
+    public void createIDs(AtomContainer container) {
+        if (tabuList == null) tabuList = AtomContainerManipulator.getAllIDs(container);
+        
+        if (container.getID() == null) {
+            moleculeCount++;
+            while (tabuList.contains("m" + moleculeCount)) moleculeCount++;
+            container.setID("m" + moleculeCount);
+        }
+        
         Atom[] atoms = container.getAtoms();
         for (int i=0; i<atoms.length; i++) {
-            atoms[i].setID("a" + (i+1+atomOffset));
+            Atom atom = atoms[i];
+            if (atom.getID() == null) {
+                atomCount++;
+                while (tabuList.contains("a" + atomCount)) atomCount++;
+                atoms[i].setID("a" + atomCount);
+            }
         }
         Bond[] bonds = container.getBonds();
         for (int i=0; i<bonds.length; i++) {
-            bonds[i].setID("b" + (i+1+bondOffset));
+            Bond bond = bonds[i];
+            if (bond.getID() == null) {
+                bondCount++;
+                while (tabuList.contains("b" + bondCount)) bondCount++;
+                atoms[i].setID("b" + bondCount);
+            }
         }
     }
 
@@ -89,76 +118,49 @@ public class IDCreator {
      * them m1, m2, etc.
      * It will not the SetOfAtomContainers itself.
      */
-    public static void createAtomContainerAndAtomAndBondIDs(SetOfAtomContainers containerSet) {
-        IDCreator.createAtomContainerAndAtomAndBondIDs(containerSet, 0, 0, 0);
-    }
+    public void createIDs(SetOfAtomContainers containerSet) {
+        if (containerSet.getID() == null) {
+            moleculeCount++;
+            while (tabuList.contains("molSet" + moleculeCount)) moleculeCount++;
+            containerSet.setID("molSet" + moleculeCount);
+        }
 
-    /**
-     * Labels the Atom's and Bond's in each AtomContainer using the a1, a2, b1, b2
-     * scheme often used in CML. It will also set id's for all AtomContainers, naming
-     * them m1, m2, etc.
-     * It will not the SetOfAtomContainers itself.
-     *
-     * @param containerOffset  Lowest ID number to be used for the AtomContainers
-     * @param atomOffset  Lowest ID number to be used for the Atoms
-     * @param bondOffset  Lowest ID number to be used for the Bonds
-     */
-    public static void createAtomContainerAndAtomAndBondIDs(SetOfAtomContainers containerSet,
-                           int containerOffset, int atomOffset, int bondOffset) {
         AtomContainer[] containers = containerSet.getAtomContainers();
-        int atomCount = atomOffset;
-        int bondCount = bondOffset;
         for (int i=0; i<containers.length; i++) {
             AtomContainer container = containers[i];
-            container.setID("m" + (i+1+containerOffset));
-            IDCreator.createAtomAndBondIDs(container, atomCount, bondCount);
-            atomCount += container.getAtomCount();
-            bondCount += container.getBondCount();
+            if (container.getID() == null) {
+                createIDs(container);
+            }
         }
     }
     
     /**
      * Labels the reactants and products in the Reaction m1, m2, etc, and the atoms
-     * accordingly. It does not apply mapping such that mapped atoms have the same ID.
+     * accordingly, when no ID is given.
      */
-    public static void createIDs(Reaction reaction) {
-        IDCreator.createIDs(reaction, 0, 0, 0);
-    }
-    public static void createIDs(Reaction reaction,
-                           int containerOffset, int atomOffset, int bondOffset) {
+    public void createIDs(Reaction reaction) {
+        if (tabuList == null) tabuList = ReactionManipulator.getAllIDs(reaction);
+        
+        if (reaction.getID() == null) {
+            reactionCount++;
+            while (tabuList.contains("r" + reactionCount)) reactionCount++;
+            reaction.setID("r" + reactionCount);
+        }
+
         AtomContainer[] reactants = reaction.getReactants().getAtomContainers();
-        int atomCount = atomOffset;
-        int bondCount = bondOffset;
         for (int i=0; i<reactants.length; i++) {
-            AtomContainer container = reactants[i];
-            container.setID("m" + (i+1+containerOffset));
-            IDCreator.createAtomAndBondIDs(container, atomCount, bondCount);
-            atomCount += container.getAtomCount();
-            bondCount += container.getBondCount();
+            createIDs(reactants[i]);
         }
         AtomContainer[] products = reaction.getProducts().getAtomContainers();
         for (int i=0; i<products.length; i++) {
-            AtomContainer container = products[i];
-            container.setID("m" + (i+1+containerOffset));
-            IDCreator.createAtomAndBondIDs(container, atomCount, bondCount);
-            atomCount += container.getAtomCount();
-            bondCount += container.getBondCount();
+            createIDs(products[i]);
         }
     }
     
-    public static void createIDs(SetOfReactions reactionSet) {
+    public void createIDs(SetOfReactions reactionSet) {
         Reaction[] reactions = reactionSet.getReactions();
-        int containerCount = 0;
-        int atomCount = 0;
-        int bondCount = 0;
         for (int i=0; i<reactions.length; i++) {
-            Reaction reaction = reactions[i];
-            reaction.setID("r" + (i+1));
-            IDCreator.createIDs(reaction, containerCount, atomCount, bondCount);
-            containerCount += ReactionManipulator.getAllAtomContainers(reaction).length;
-            AtomContainer container = ReactionManipulator.getAllInOneContainer(reaction);
-            atomCount += container.getAtomCount();
-            bondCount += container.getBondCount();
+            createIDs(reactions[i]);
         }
     }
     

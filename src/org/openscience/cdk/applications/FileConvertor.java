@@ -585,7 +585,8 @@ public class FileConvertor {
     private void write(Molecule molecule, String outputFilename) throws IOException {
         try {
             if (cow instanceof CMLWriter) {
-                IDCreator.createAtomAndBondIDs(molecule);
+                IDCreator idCreator = new IDCreator();
+                idCreator.createIDs(molecule);
             }
             if (applyHAdding) {
 				System.out.println("Not implemented yet");
