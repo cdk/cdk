@@ -10,6 +10,7 @@ New:
 Fixes:
 
 API changes:
+* Moved SingleElectron to the core module
 
 20041201 Release
 ------------------------------------

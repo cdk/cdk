@@ -28,7 +28,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * TestSuite that runs all the sample tests
+ * TestSuite that runs all the sample tests.
  *
  * @cdk.module test
  */
@@ -60,7 +60,8 @@ public class CoreClassesTests {
         suite.addTest(RingSetTest.suite());
         suite.addTest(SetOfAtomContainersTest.suite());
         suite.addTest(SetOfMoleculesTest.suite());
-	suite.addTest(ChangeEventPropagationTest.suite());
+        suite.addTest(SingleElectronTest.suite());
+        suite.addTest(ChangeEventPropagationTest.suite());
         return suite;
     }
 

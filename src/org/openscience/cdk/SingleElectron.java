@@ -35,31 +35,37 @@ package org.openscience.cdk;
  *   radical.addElectronContainer(new SingleElectron(carbon));
  * </pre> 
  *
- * @cdk.module experimental
+ * @cdk.module core
  *
  * @cdk.keyword radical
+ * @cdk.keyword electron, unpaired
  */
 public class SingleElectron extends ElectronContainer implements java.io.Serializable, Cloneable
 {
 
-    /** Number of electrons in the lone pair. */
+    /** Number of electron for this class is defined as one. */
     protected final int electronCount = 1;
 
-    /** The atom with which this lone pair is associated. */
+    /** The atom with which this single electron is associated. */
     protected Atom atom;
 
     /**
-     * Constructs an lone pair on an Atom.
-     *
+     * Constructs an single electron orbital on an Atom.
      */
     public SingleElectron(Atom a) {
         this.atom = a;
     }
 
     /**
-     * Returns the number of electrons in a LonePair.
+     * Constructs an single electron orbital with an associated Atom.
+     */
+    public SingleElectron() {
+        this.atom = null;
+    }
+    /**
+     * Returns the number of electrons in this SingleElectron.
      *
-     * @return The number of electrons in a LonePair.
+     * @return The number of electrons in this SingleElectron.
      */
     public int getElectronCount() {
         return this.electronCount;
@@ -79,7 +85,7 @@ public class SingleElectron extends ElectronContainer implements java.io.Seriali
 	/**
 	 * Sets the associated Atom.
 	 *
-	 * @param atom the Atom this lone pair will be associated with
+	 * @param atom the Atom this SingleElectron will be associated with
      *
      * @see    #getAtom
 	 */
@@ -89,20 +95,20 @@ public class SingleElectron extends ElectronContainer implements java.io.Seriali
 	}
 
     /**
-     * Returns true if the given atom participates in this lone pair.
+     * Returns true if the given atom participates in this SingleElectron.
      *
      * @param   atom  The atom to be tested if it participates in this bond
-     * @return     true if this lone pair is associated with the atom
+     * @return     true if this SingleElectron is associated with the atom
      */
     public boolean contains(Atom atom)     {
         return (this.atom == atom) ? true : false;
     }
 
     /**
-     * Returns a one line string representation of this Container.
+     * Returns a one line string representation of this SingleElectron.
      * This method is conform RFC #9.
      *
-     * @return    The string representation of this Container
+     * @return    The string representation of this SingleElectron
      */
     public String toString() {
         StringBuffer s = new StringBuffer();
@@ -115,6 +121,27 @@ public class SingleElectron extends ElectronContainer implements java.io.Seriali
         s.append(")");
         return s.toString();
     }
+
+	/**
+	 * Clones this SingleElectron object, including a clone of the atom for which the
+     * SingleElectron is defined.
+	 *
+	 * @return    The cloned object
+	 */
+	public Object clone() {
+		SingleElectron clone = null;
+		try {
+			clone = (SingleElectron) super.clone();
+		} catch (Exception e) {
+			e.printStackTrace(System.err);
+		}
+        // clone the Atom
+        if (atom != null) {
+		    clone.atom = (Atom)atom.clone(); 
+        }
+		return clone;
+	}
+
 }
 
 
