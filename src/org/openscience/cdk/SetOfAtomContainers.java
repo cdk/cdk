@@ -42,6 +42,12 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
 	 */
 	protected int atomContainerCount;
 
+    /**
+     * Defines the number of instances of a certain molecule
+     * in the set. It is 1 by default.
+     */
+    protected double[] multipliers;
+
 	/**
 	 *  Amount by which the AtomContainers array grows when elements are added and
 	 *  the array is not large enough for that. 
@@ -56,21 +62,32 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
 	{
 		atomContainerCount = 0;
 		atomContainers = new AtomContainer[growArraySize];
+        multipliers = new double[growArraySize];
 	}
 
-
-	
 	/**
-	 *  Adds an atomContainer to this container.
+	 * Adds an atomContainer to this container.
 	 *
 	 * @param  atomContainer  The atomContainer to be added to this container 
 	 */
-	public void addAtomContainer(AtomContainer atomContainer)
+	public void addAtomContainer(AtomContainer atomContainer) {
+		addAtomContainer(atomContainer, 1.0);
+	}
+
+	/**
+	 * Adds an atomContainer to this container with the given
+     * multiplier.
+	 *
+	 * @param  atomContainer  The atomContainer to be added to this container 
+	 * @param  multiplier     The multiplier of this atomContainer
+	 */
+	public void addAtomContainer(AtomContainer atomContainer, double multiplier)
 	{
 		if (atomContainerCount + 1 >= atomContainers.length) {
 			growAtomContainerArray();
 		}
 		atomContainers[atomContainerCount] = atomContainer;
+		multipliers[atomContainerCount] = multiplier;
 		atomContainerCount++;
 	}
 
@@ -85,7 +102,6 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
             addAtomContainer(mols[i]);
         }
     }
-
 
 	/**
 	 *  Returns the array of AtomContainers of this container.
@@ -107,11 +123,36 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
 	 * @param  number  The position of the AtomContainer to be returned. 
 	 * @return         The AtomContainer at position <code>number</code> . 
 	 */
-	public AtomContainer  getAtomContainer(int number)
+	public AtomContainer getAtomContainer(int number)
 	{
 		return atomContainers[number];
 	}
 	
+	/**
+	 *  
+	 * Returns the multiplier for the AtomContainer at position <code>number</code> in the
+	 * container.
+	 *
+	 * @param  number  The position of the multiplier of the AtomContainer to be returned. 
+	 * @return         The multiplier for the AtomContainer at position <code>number</code> . 
+	 */
+     public double getAtomContainerMultiplier(int number) {
+		return multipliers[number];
+	}
+	
+    /**
+     * Returns the multiplier of the given AtomContainer.
+     *
+     * @return -1, if the given molecule is not a container in this set
+     */
+    public double getAtomContainerMultiplier(AtomContainer container) {
+        for (int i=0; i<atomContainerCount; i++) {
+            if (atomContainers[i].equals(container)) {
+                return multipliers[i];
+            }
+        }
+        return -1.0;
+    }
 	
 	/**
 	 *  Grows the atomContainer array by a given size.
@@ -124,6 +165,9 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
 		AtomContainer[] newatomContainers = new AtomContainer[atomContainers.length + growArraySize];
 		System.arraycopy(atomContainers, 0, newatomContainers, 0, atomContainers.length);
 		atomContainers = newatomContainers;
+		double[] newMultipliers = new double[multipliers.length + growArraySize];
+		System.arraycopy(multipliers, 0, newMultipliers, 0, multipliers.length);
+		multipliers = newMultipliers;
 	}
 	
 
