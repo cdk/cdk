@@ -86,25 +86,3 @@ $ ant -Dpathtojava3d=/some/path keyword.index
       </section>
     </chapter>
 
-    <chapter id="sect:UML-diagrams">
-      <title>UML Diagrams</title>
-
-      <para>
-        The CDK projects uses UML diagrams to visualize relations between
-        classes and libraries. Diagrams are drawn in
-        <ulink url="http://www.argouml.org/">ArgoUML</ulink> and
-        <ulink url="http://www.gentleware.com/download/download2.php3?target=poseidonCEzip">Poseidon 
-        for UML (Community Edition 1.2)</ulink>.
-        The latter is a commercialized version of the former and does quite an
-        excellent job in converting java source to UML diagrams, almost
-        automatically.
-      </para>
-    </chapter>
-
-    <chapter id="sect:cdk-tutorial">
-      <title>CDK Programming Tutorial</title>
-
-      <para>There is a sort of CDK Programming Tutorial online. It is
-        written in DocBook XML 4.1.2 (like most of our documentation).</para>
-    </chapter>
-
