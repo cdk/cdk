@@ -43,6 +43,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.io.CMLReader;
+import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
@@ -395,9 +396,13 @@ public class StructureDiagramGeneratorTest extends TestCase
 		return mol;
 	}
 	
-	public void testBug923825()
-	{
-		Molecule mol = makeBug923825();	
+	public void testBug923825() {
+        try {
+            Molecule mol = makeBug923825();	
+        } catch (Exception exception) {
+            fail(exception.getMessage());
+            exception.printStackTrace();
+        }
 	}
 	
 
