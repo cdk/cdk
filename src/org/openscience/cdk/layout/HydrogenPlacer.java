@@ -50,6 +50,7 @@ public class HydrogenPlacer {
 	public static boolean debug = false;
 	public static boolean debug1 = false;
 	
+	
 	public static void placeHydrogens2D(AtomContainer atomContainer, double bondLength)
 	{
 		LoggingTool logger = new LoggingTool("org.openscience.cdk.layout.HydrogenPlacer");
@@ -86,7 +87,6 @@ public class HydrogenPlacer {
 		AtomPlacer atomPlacer = new AtomPlacer();
 		atomPlacer.setMolecule((Molecule)atomContainer);
 		Vector atomVector = new Vector();
-		if (debug) System.out.println("bondLength" + bondLength);
 		logger.debug("bondLength" + bondLength);
 		Atom[] connectedAtoms = atomContainer.getConnectedAtoms(atom);
 		AtomContainer placedAtoms = new AtomContainer();
@@ -109,42 +109,7 @@ public class HydrogenPlacer {
 		{
 			logger.debug("H-" + f + ": " + unplacedAtoms.getAtomAt(f).getPoint2D());
 		}
-		if (placedAtoms.getAtomCount() > 1)
-		{
-			atomPlacer.distributePartners(atom, placedAtoms, placedAtoms.get2DCenter(), unplacedAtoms, bondLength);
-		}
-		else if (placedAtoms.getAtomCount() == 1)
-		{
-			for (int f = 0; f < unplacedAtoms.getAtomCount(); f++)
-			{
-				atomVector.addElement(unplacedAtoms.getAtomAt(f));
-			}
-
-			addAngle = Math.PI * 2 / (unplacedAtoms.getAtomCount() + placedAtoms.getAtomCount());
-			/* IMPORTANT: At this point we need a calculation of the
-			   start angle. 
-			   Not done yet.
-			   */
-			Atom placedAtom = placedAtoms.getAtomAt(0);
-//			double xDiff = atom.getX2D() - placedAtom.getX2D();
-//			double yDiff = atom.getY2D() - placedAtom.getY2D();
-			double xDiff = placedAtom.getX2D() - atom.getX2D();
-			double yDiff = placedAtom.getY2D() - atom.getY2D();
-
-			startAngle = GeometryTools.getAngle(xDiff, yDiff); //- (Math.PI / 2.0);
-			//System.out.println("startAngle = " + startAngle);
-			logger.debug("startAngle = " + startAngle);
-			atomPlacer.populatePolygonCorners(atomVector, new Point2d(atom.getPoint2D()), startAngle, addAngle, bondLength);	
-		}
-		
-		
-		if (debug) System.out.println("unplacedAtoms: " + unplacedAtoms);
-		if (debug) System.out.println("placedAtoms: " + placedAtoms);
-
-		if (placedAtoms.getAtomCount() > 1)
-		{
-			atomPlacer.distributePartners(atom, placedAtoms, placedAtoms.get2DCenter(), unplacedAtoms, bondLength);
-		}
+		atomPlacer.distributePartners(atom, placedAtoms, placedAtoms.get2DCenter(), unplacedAtoms, bondLength);
 		logger.debug("Atom placement after procedure:");
 		logger.debug("Center atom " + atom.getSymbol() + ": " + atom.getPoint2D());
 		for (int f = 0; f < unplacedAtoms.getAtomCount(); f++)
