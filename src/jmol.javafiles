@@ -40,6 +40,7 @@ org/openscience/cdk/config/isotopes/IsotopeReader.java
 org/openscience/cdk/config/AtomTypeConfigurator.java
 org/openscience/cdk/config/AtomTypeFactory.java
 org/openscience/cdk/config/IsotopeFactory.java
+org/openscience/cdk/event/ChemObjectChangeEvent.java
 org/openscience/cdk/exception/CDKException.java
 org/openscience/cdk/exception/NoSuchAtomTypeException.java
 org/openscience/cdk/geometry/BondTools.java
