@@ -85,7 +85,12 @@ public class Renderer2DModel {
      *  the element symbol. Example C-C-C instead of /\.
      */
     private boolean kekuleStructure = false;
-	
+
+    /** Determines wether methyl carbons' symbols should be drawn explicit
+     *  for methyl carbons. Example C/\C instead of /\.
+     */
+    private boolean showEndCarbons = true;
+
     private Dimension backgroupDimension = new Dimension(500,400);
     
     public Dimension getBackgroundDimension() {
@@ -265,6 +270,14 @@ public class Renderer2DModel {
 		this.kekuleStructure = kekule;
 	}
 
+    public boolean getShowEndCarbons() {
+        return this.showEndCarbons;
+    }
+    
+    public void setShowEndCarbons(boolean showThem) {
+        this.showEndCarbons = showThem;
+    }
+    
 	/**
 	 * Sets if the drawing of atom numbers is switched on for this model
 	 *

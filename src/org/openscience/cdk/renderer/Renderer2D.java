@@ -185,7 +185,8 @@ public class Renderer2D   {
 		    graphics.setColor(r2dm.getForeColor());
 		    graphics.drawString(Integer.toString(i+1), (int) (atom.getPoint2D().x + (xSymbOffset)), (int) (atom.getPoint2D().y - (ySymbOffset)));
 		    graphics.setColor(r2dm.getBackColor());
-		    graphics.drawLine((int) atom.getPoint2D().x, (int) atom.getPoint2D().y, (int) atom.getPoint2D().x, (int) atom.getPoint2D().y);
+		    graphics.drawLine((int) atom.getPoint2D().x, (int) atom.getPoint2D().y, 
+                              (int) atom.getPoint2D().x, (int) atom.getPoint2D().y);
 		} catch (Exception exception)
 		{
             logger.error("Error while drawing atom number:" + exception.toString());
@@ -205,11 +206,11 @@ public class Renderer2D   {
 		Atom atom;
 		for (int i = 0; i < atomCon.getAtomCount(); i++) {
 			atom = atomCon.getAtomAt(i);
-            paintAtom(atom, graphics);
+            paintAtom(atomCon, atom, graphics);
 		}
 	}
 
-	private void paintAtom(Atom atom, Graphics graphics) {
+	private void paintAtom(AtomContainer container, Atom atom, Graphics graphics) {
         Color atomColor = (Color) r2dm.getColorHash().get(atom);
         if (atom == r2dm.getHighlightedAtom()) {
             atomColor = r2dm.getHighlightColor();
@@ -233,8 +234,14 @@ public class Renderer2D   {
             // ... unless carbon is charged
             paintAtomSymbol(atom, atomColor, graphics);
             paintAtomCharge(atom, graphics);
+        } else if (container.getConnectedBonds(atom).length < 1) {
+            // ... unless carbon is unbonded
+            paintAtomSymbol(atom, atomColor, graphics);
+        } else if (r2dm.getShowEndCarbons() && (container.getConnectedBonds(atom).length == 1)) {
+            // ... unless carbon is an methyl, and the user wants those with symbol
+            paintAtomSymbol(atom, atomColor, graphics);
         }
-	}
+    }
 
 	/**
 	 *  Paints a rectangle of the given color at the position of the given atom.
