@@ -4,7 +4,7 @@
     <property name="pathtojava3d" value="" />
 
     <path id="project.class.path">
-        <pathelement location="/usr/local/j2sdk1.4.0/lib/rt.jar" />
+        <pathelement location="${java.ext.dirs}/rt.jar" />
 
         <pathelement location="." />
         <fileset dir="../../jar">
@@ -54,6 +54,28 @@
         </javadoc>
     </target>
 
+    <target name="compileDoclets">
+      <javac srcdir="source" destdir="."
+             includes="*.java">
+        <classpath>
+          <fileset dir="${java.ext.dirs}">
+            <include name="tools.jar" />
+          </fileset>
+        </classpath>
+      </javac>
+    </target>
+    
+<!-- things to compile
+JavaDocStats.class: source/JavaDocStats.java
+	${JAVAC} -classpath ${TOOLSJAR} -d . -O source/JavaDocStats.java
+
+MakeKeywordIndexDoclet.class: source/MakeKeywordIndexDoclet.java
+	${JAVAC} -classpath ${TOOLSJAR} -d . -O source/MakeKeywordIndexDoclet.java
+    
+XMIDoclet.class: source/XMIDoclet.java
+	${JAVAC} -classpath ${TOOLSJAR} -d . -O source/XMIDoclet.java
+-->
+    
 </project>
 
 
