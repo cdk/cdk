@@ -475,7 +475,7 @@ public class JCPController2D {
                                         atomCon = ChemModelManipulator.getRelevantAtomContainer(chemModel, newAtom2);
                                 } else {
                                         newAtom2 = new Atom(c2dm.getDefaultElementSymbol(), new Point2d(endX,endY));
-                                        atomCon = ChemModelManipulator.createNewMolecule(chemModel);
+                                        atomCon = ChemModelManipulator.getRelevantAtomContainer(chemModel, newAtom1);
                                         atomCon.addAtom(newAtom2);
                                 }
                                 newBond = new Bond(newAtom1, newAtom2, 1);
