@@ -92,7 +92,7 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
 	/**
 	 *  Sets the if attribute of the AtomType object.
 	 *
-	 * @param  id  The new AtomTypeID value
+	 * @param  id  The new AtomTypeID value. Null if unset.
      *
      * @see    #getAtomTypeName
 	 */

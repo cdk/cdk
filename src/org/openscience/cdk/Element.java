@@ -51,10 +51,10 @@ public class Element extends ChemObject implements java.io.Serializable, Cloneab
 
     /**
      * Constructs an empty Element.
-     *
      */
     public Element() {
         super();
+        this.symbol = null;
     }
 
     /**
@@ -105,12 +105,11 @@ public class Element extends ChemObject implements java.io.Serializable, Cloneab
     /**
      * Returns the element symbol of this element.
      *
-     * @return The element symbol of this element
+     * @return The element symbol of this element. Null if unset.
      *
      * @see    #setSymbol
      */
     public String getSymbol() {
-
         return this.symbol;
     }
 

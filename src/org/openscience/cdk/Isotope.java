@@ -46,7 +46,6 @@ package org.openscience.cdk;
  *
  * @keyword     isotope
  */
-
 public class Isotope extends Element implements java.io.Serializable, Cloneable 
 {
 
