@@ -16,7 +16,7 @@
     </path>
 
     <path id="fop.class.path">
-        <fileset dir="doc/devel-guide/jar">
+        <fileset dir="doc/jar">
             <include name="*.jar" />
         </fileset>
     </path>
