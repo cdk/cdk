@@ -1,3 +1,9 @@
+20020206
+=================
+* removed Xerces (no longer required)
+* removed Log4J (no longer required)
+* added JSX library
+
 20020101
 =================
 * first release
