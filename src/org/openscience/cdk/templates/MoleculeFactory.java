@@ -65,6 +65,30 @@ public class MoleculeFactory {
 		return mol;
 	}
 
+	/**
+	 * Generate an Alkane (chain of carbons with no hydrogens) of a given length.
+	 *
+	 * @param chainLength The number of carbon atoms to have in the chain.
+	 * @return A molecule containing a bonded chain of carbons.
+	 *
+	 * @author Stephen Tomkinson
+	 * @created 2003-08-15
+	 */
+  public static Molecule makeAlkane(int chainLength)
+  {
+    Molecule currentChain = new Molecule();
+
+    //Add the initial atom
+    currentChain.addAtom(new Atom("C"));
+
+    //Add further atoms and bonds as needed, a pair at a time.
+    for (int atomCount = 1; atomCount < chainLength; atomCount ++) {
+        currentChain.addAtom(new Atom("C"));
+        currentChain.addBond(atomCount, atomCount - 1, 1);
+    }  
+
+    return currentChain;
+  }
 
 	public static Molecule makeEthylCyclohexane()
 	{
