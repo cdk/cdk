@@ -24,6 +24,8 @@
         </fileset>
     </path>
 
+    <target name="doccheck-all" depends="doccheck-core, doccheck-standard, doccheck-io, doccheck-render, doccheck-extra"/>
+    
     <target name="html">        
         <mkdir dir="${javadoc.dir}" />
 
@@ -113,7 +115,7 @@
         </javadoc>
     </target>
 
-    <target name="javadoc-core">
+    <target name="doccheck-core">
         <mkdir dir="reports/javadoc/core/"/>
         <javadoc private="false" public="true"
                  destdir="reports/javadoc/core/"
@@ -131,7 +133,7 @@
         </javadoc>
     </target>
 
-    <target name="javadoc-standard">
+    <target name="doccheck-standard">
         <mkdir dir="reports/javadoc/standard/"/>
         <javadoc private="false" public="true"
                  destdir="reports/javadoc/standard/"
@@ -149,7 +151,7 @@
         </javadoc>
     </target>
 
-    <target name="javadoc-io">
+    <target name="doccheck-io">
         <mkdir dir="reports/javadoc/io/"/>
         <javadoc private="false" public="true"
                  destdir="reports/javadoc/io/"
@@ -167,7 +169,7 @@
         </javadoc>
     </target>
 
-    <target name="javadoc-render">
+    <target name="doccheck-render">
         <mkdir dir="reports/javadoc/render/"/>
         <javadoc private="false" public="true"
                  destdir="reports/javadoc/render/"
@@ -185,7 +187,7 @@
         </javadoc>
     </target>
 
-    <target name="javadoc-extra">
+    <target name="doccheck-extra">
         <mkdir dir="reports/javadoc/extra/"/>
         <javadoc private="false" public="true"
                  destdir="reports/javadoc/extra/"
