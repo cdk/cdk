@@ -272,6 +272,8 @@ public class FileConvertor {
             outputFilename = outputFilename + "pdb";
         } else if (format.equalsIgnoreCase("GIN")) {
             outputFilename = outputFilename + "in";
+        } else if (format.equalsIgnoreCase("CDK")) {
+            outputFilename = outputFilename + "java.fragment";
         }
         return outputFilename;
     }
