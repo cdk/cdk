@@ -190,9 +190,6 @@ public class PLSRegressionModel extends RModel {
         if (nrow != xx.length) {
             throw new QSARModelException("The number of values for the dependent variable does not match the number of rows of the design matrix");
         }
-        if (nrow != weights.length) {
-            throw new QSARModelException("The length of the weight vector does not match the number of rows of the design matrix");
-        }
         
         Double[][] x = new Double[nrow][this.nvar];
         Double[][] y = new Double[nrow][ncoly];
@@ -324,7 +321,8 @@ public class PLSRegressionModel extends RModel {
             if (!(obj instanceof Integer[])) {
                 throw new QSARModelException("The class of the 'ncomp' object must be Integer[]");
             }
-            if (obj.length != 1 && obj.length != 2) {
+            Integer[] tmp = (Integer[])obj;
+            if (tmp.length != 1 && tmp.length != 2) {
                 throw new QSARModelException("The 'ncomp' array can have a length of 1 or 2. See documentation");
             }
         }
@@ -339,8 +337,7 @@ public class PLSRegressionModel extends RModel {
      * This function uses a previously fitted model to obtain predicted values
      * for a new set of observations. If the model has not been fitted prior to this
      * call an exception will be thrown. Use <code>setParameters</code>
-     * to set the values of the independent variable for the new observations and the
-     * interval type.
+     * to set the values of the independent variable for the new observations.
      */
     public void predict() throws QSARModelException {
         if (this.modelfit == null) 
@@ -352,7 +349,7 @@ public class PLSRegressionModel extends RModel {
         }
             
         try {
-            this.modelpredict = (PLSRegressionModelPredict)revaluator.call("predictLM",
+            this.modelpredict = (PLSRegressionModelPredict)revaluator.call("predictPLS",
                     new Object[]{ getModelName(), this.params });
         } catch (Exception re) {
             throw new QSARModelException(re.toString());
@@ -369,7 +366,6 @@ public class PLSRegressionModel extends RModel {
      * 
      * @return An integer indicating the rank
      */
-    public int getFitRank() { return(this.modelfit.getRank()); }
 
     /**
      * Returns the residuals.
@@ -379,7 +375,6 @@ public class PLSRegressionModel extends RModel {
      * method of this class has been previously called.
      * @return A double[] contaning the residuals for each observation
      */
-    public double[] getFitResiduals() { return(this.modelfit.getResiduals()); }
     
     /**
      * Returns the estimated coefficients.
@@ -388,7 +383,6 @@ public class PLSRegressionModel extends RModel {
      * method of this class has been previously called.
      * @return A double[] containing the coefficients
      */
-    public double[] getFitCoefficients() { return(this.modelfit.getCoefficients()); }
 
     /**
      * Returns the residual degrees of freedom.
@@ -397,7 +391,6 @@ public class PLSRegressionModel extends RModel {
      * method of this class has been previously called.
      * @return An integr indicating the residual degrees of freedom
      */
-    public int getFitDFResidual() { return(this.modelfit.getdfResidual()); }
 
     /**
      * Returns the fitted mean values.
@@ -406,10 +399,6 @@ public class PLSRegressionModel extends RModel {
      * method of this class has been previously called.
      * @return A double[] containing the fitted  values
      */
-    public double[] getFitFitted() { return(this.modelfit.getFitted()); }
-    
-
-
 
 
     /* interface to predict object */
@@ -419,14 +408,12 @@ public class PLSRegressionModel extends RModel {
      *
      * @return An integer indicating degrees of freedom
      */
-    public int getPredictDF() { return(this.modelpredict.getDF()); }
 
     /**
      * Returns the residual standard deviations.
      *
      * @return A double indicating residual standard deviations
      */
-    public double getPredictResidualScale() { return(this.modelpredict.getResidualScale()); }
 
     /**
      * Returns the predicted values for the prediction set. 
@@ -436,7 +423,6 @@ public class PLSRegressionModel extends RModel {
      *
      * @return A double[] containing the predicted values
      */
-    public double[] getPredictPredicted() { return(this.modelpredict.getPredicted()); }
 
     /**
      * Returns the lower prediction bounds. 
@@ -448,7 +434,6 @@ public class PLSRegressionModel extends RModel {
      *
      * @return A double[] containing the lower bounds for the predictions
      */
-    public double[] getPredictLowerBound() { return(this.modelpredict.getLower()); }
 
     /**
      * Returns the upper prediction bounds. 
@@ -460,7 +445,6 @@ public class PLSRegressionModel extends RModel {
      *
      * @return A double[] containing the upper bounds for the predictions
      */
-    public double[] getPredictUpperBound() { return(this.modelpredict.getUpper()); }
 
     /** 
      * Returns the standard error of predictions.
@@ -470,5 +454,4 @@ public class PLSRegressionModel extends RModel {
      *
      * @return A double[] containing the standard error of predictions.
      */
-    public double[] getPredictSEPredictions() { return(this.modelpredict.getSEFit()); }
 }
