@@ -61,6 +61,7 @@ import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.io.setting.StringIOSetting;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
+import org.openscience.cdk.qsar.result.*;
 import org.openscience.cdk.tools.*;
 
 /**
@@ -390,7 +391,7 @@ public class Convertor {
                 scalar.appendChild(doc.createTextNode(value.toString()));
             } else if (key instanceof DescriptorSpecification) {
                 DescriptorSpecification specs = (DescriptorSpecification)key;
-                Object value = props.get(key);
+                DescriptorResult value = ((DescriptorValue)props.get(key)).getValue();
                 if (propList == null) {
                     propList = this.createElement("propertyList");
                 }
@@ -415,14 +416,7 @@ public class Convertor {
                 metaData.setAttribute("content", specs.getImplementationVendor());
                 metadataList.appendChild(metaData);
                 property.appendChild(metadataList);
-                Element scalar = this.createElement("scalar");
-                Object realValue = ((DescriptorValue)value).getValue();
-                if (realValue instanceof Double ||
-                    realValue instanceof Integer) { // Classes with a proper toString() method
-                    scalar.appendChild(doc.createTextNode(realValue.toString()));
-                } else {
-                    scalar.appendChild(doc.createTextNode(realValue.toString()));
-                }
+                Element scalar = this.createScalar(value);
                 scalar.setAttribute("dictRef", specsRef);
                 property.appendChild(scalar);
                 propList.appendChild(property);
@@ -448,6 +442,37 @@ public class Convertor {
         }
     }
 
+    private Element createScalar(DescriptorResult value) {
+        Element scalar = null;
+        if (value instanceof DoubleResult) {
+            scalar = this.createElement("scalar");
+            scalar.setAttribute("dataType", "xsd:double");
+            scalar.appendChild(doc.createTextNode("" + ((DoubleResult)value).doubleValue()));
+        } else if (value instanceof IntegerResult) {
+            scalar = this.createElement("scalar");
+            scalar.setAttribute("dataType", "xsd:int");
+            scalar.appendChild(doc.createTextNode("" + ((IntegerResult)value).intValue()));
+        } else if (value instanceof BooleanResult) {
+            scalar = this.createElement("scalar");
+            scalar.setAttribute("dataType", "xsd:boolean");
+            scalar.appendChild(doc.createTextNode("" + ((BooleanResult)value).booleanValue()));
+        } else if (value instanceof DoubleArrayResult) {
+            DoubleArrayResult result = (DoubleArrayResult)value;
+            scalar = this.createElement("array");
+            scalar.setAttribute("dataType", "xsd:double");
+            scalar.setAttribute("size", "" + result.size());
+            StringBuffer buffer = new StringBuffer();
+            for (int i=0; i<result.size(); i++) {
+                buffer.append(result.get(i) + " ");
+            }
+            scalar.appendChild(doc.createTextNode(buffer.toString()));
+        } else {
+            logger.error("Could not convert this object to a scalar element: ", value);
+            scalar.appendChild(doc.createTextNode(value.toString()));
+        }
+        return scalar;
+     }
+    
     /**
      * Picks the first dictRef it finds. CML support only one, but CDK 
      * tends to have more than one, i.e. also dictRefs for fields.
