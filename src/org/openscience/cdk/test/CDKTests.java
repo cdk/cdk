@@ -36,6 +36,7 @@ import org.openscience.cdk.test.renderer.*;
 import org.openscience.cdk.test.ringsearch.*;
 import org.openscience.cdk.test.structgen.*;
 import org.openscience.cdk.test.tools.*;
+import org.openscience.cdk.test.isomorphism.*;
 
 /**
  * TestSuite that runs all the sample tests
@@ -71,6 +72,8 @@ public class CDKTests {
         // from cdk.test.smiles
 		suite.addTest(SmilesGeneratorTest.suite());
 		suite.addTest(SmilesParserTest.suite());
+	// from cdk.test.isomorphism
+		suite.addTest(UniversalIsomorphismTesterTest.suite());
 
 	    return suite;
 	}
