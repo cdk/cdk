@@ -26,13 +26,14 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *
  */
-
 package org.openscience.cdk.io;
  
 import java.io.PrintStream;
 import java.io.OutputStream;
 
 /**
+ * @cdkPackage io
+ *
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
  * @created 2001-07-14
  */

@@ -26,6 +26,9 @@ package org.openscience.cdk.io;
 
 import java.io.Reader;
 
+/**
+ * @cdkPackage io
+ */
 public class JaguarReader extends DummyReader {
 
     public JaguarReader(Reader input) {

@@ -34,10 +34,12 @@ import java.util.*;
 import java.io.*;
 import javax.vecmath.*;
 
-/*
+/**
  * Reads an object from XYZ formated input
  *
- * This class is based on Dan Gezelter's XYZReader from Jmol
+ * <p>This class is based on Dan Gezelter's XYZReader from Jmol
+ *
+ * @cdkPackage io
  *
  * @keyword file format, XYZ
  */

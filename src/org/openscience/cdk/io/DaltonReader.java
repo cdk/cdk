@@ -26,6 +26,9 @@ package org.openscience.cdk.io;
 
 import java.io.Reader;
 
+/**
+ * @cdkPackage io
+ */
 public class DaltonReader extends DummyReader {
 
     public DaltonReader(Reader input) {

@@ -34,6 +34,8 @@ import org.xml.sax.*;
 
 /**
  * @author Egon Willighagen <egonw@sci.kun.nl>
+ *
+ * @cdkPackage io
  */
 public class JMOLANIMATIONConvention extends CMLCoreModule {
 

@@ -47,6 +47,8 @@ import javax.vecmath.Point3d;
  * <p>The CIF example on the IUCR website has been tested, as well as Crambin (1CRN)
  * in the PDB database.
  *
+ * @cdkPackage io
+ *
  * @keyword file format, CIF
  * @keyword file format, mmCIF
  *

@@ -26,6 +26,9 @@ package org.openscience.cdk.io;
 
 import java.io.Reader;
 
+/**
+ * @cdkPackage io
+ */
 public class MOPAC97Reader extends DummyReader {
 
     public MOPAC97Reader(Reader input) {

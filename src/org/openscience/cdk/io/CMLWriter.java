@@ -73,6 +73,8 @@ import java.util.Enumeration;
  * <p>References:
  *   <a href="http://cdk.sf.net/biblio.html#PMR99">PMR99</a>
  *
+ * @cdkPackage extra
+ *
  * @see java.io.FileWriter
  * @see java.io.StringWriter
  *

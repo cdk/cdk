@@ -3,7 +3,7 @@
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2002-2004  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -52,6 +52,8 @@ import org.openscience.cdk.validate.ProblemMarker;
  * <p>The coordinate system used for display has its origin in the
  * left-bottom corner, with the x axis to the right, and the y axis towards
  * the top of the screen. The system is thus right handed.
+ *
+ * @cdkPackage render
  *
  * @author     steinbeck
  * @author     egonw

@@ -36,13 +36,14 @@ import java.util.*;
 import java.text.*;
 import javax.vecmath.*;
 
-
 /**
  * This class is the interface that all IO readers should implement.
  * Programs need only care about this interface for any kind of IO.
  *
  * <p>Currently, database IO and file IO is supported. Internet IO is
  * expected.
+ *
+ * @cdkPackage io
  *
  * @version  $Date$
  */

@@ -34,6 +34,8 @@ import java.util.Enumeration;
 /**
  * List of names (String classes) of objects accepted by CDO.
  *
+ * @cdkPackage io
+ *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  */
 public class CDOAcceptedObjects {

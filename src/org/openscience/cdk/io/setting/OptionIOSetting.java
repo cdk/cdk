@@ -31,6 +31,8 @@ import java.util.Vector;
  * An class for a reader setting which must be found in the list 
  * of possible settings.
  *
+ * @cdkPackage io
+ *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  */
 public class OptionIOSetting extends IOSetting {

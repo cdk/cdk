@@ -53,6 +53,8 @@ import org.xml.sax.*;
  *     (of which version 1999 produces invalid CML 1.0)
  * </ul>
  *
+ * @cdkPackage io
+ *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  */
 public class PDBConvention extends CMLCoreModule {

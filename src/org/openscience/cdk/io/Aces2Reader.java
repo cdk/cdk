@@ -26,6 +26,9 @@ package org.openscience.cdk.io;
 
 import java.io.Reader;
 
+/**
+ * @cdkPackage io
+ */
 public class Aces2Reader extends DummyReader {
 
     public Aces2Reader(Reader input) {

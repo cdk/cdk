@@ -54,6 +54,8 @@ import javax.vecmath.Point3d;
  * please contact the author of this code, not the developers
  * of Gaussian98.
  *
+ * @cdkPackage io
+ *
  * @author Bradley A. Smith <yeldar@home.com>
  * @author Egon Willighagen
  */

@@ -38,6 +38,8 @@ import javax.vecmath.*;
 /**
  * Reads a molecule from an Mol2 file, such as written by Sybyl.
  *
+ * @cdkPackage io
+ *
  * @author     Egon Willighagen
  * @created    2003-08-21
  *

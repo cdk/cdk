@@ -38,6 +38,8 @@ import javax.swing.JOptionPane;
  * Allows processing of IOSetting quesions which are passed to the user
  * by using Swing dialogs.
  *
+ * @cdkPackage io
+ *
  * @author  Egon Willighagen <egonw@sci.kun.nl>
  * @created 2003-07-18
  */

@@ -38,6 +38,8 @@ import freeware.PrintfFormat;
  * <p>Serializes a SetOfMolecules or a Molecule object to ShelX code.
  * The output can be read with Platon.
  *
+ * @cdkPackage io
+ *
  * @author Egon Willighagen
  *
  * @keyword file format, ShelX

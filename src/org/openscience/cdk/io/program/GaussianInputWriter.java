@@ -39,6 +39,8 @@ import java.util.Vector;
  * File writer thats generates input files for Gaussian calculation
  * jobs. It was tested with Gaussian98.
  *
+ * @cdkPackage io
+ *
  * @author  Egon Willighagen <egonw@sci.kun.nl>
  *
  * @keyword Gaussian (tm), input file

@@ -43,6 +43,8 @@ import java.net.*;
  * ChemSequence. Each ChemModel has properties containing RSS specific stuff.
  * See the final statics of this class.
  *
+ * @cdkPackage io
+ *
  * @author     Egon Willighagen
  * @created    2003-09-07
  *

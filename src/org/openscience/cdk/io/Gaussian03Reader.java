@@ -63,6 +63,8 @@ import javax.vecmath.Point3d;
  * <p>This code was adaptated by Jonathan from Gaussian98Reader written by
  * Bradley, and ported to CDK by Egon.
  *
+ * @cdkPackage io
+ *
  * @author Jonathan C. Rienstra-Kiracofe <jrienst@emory.edu>
  * @author Bradley A. Smith <yeldar@home.com>
  * @author Egon Willighagen

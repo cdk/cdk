@@ -35,7 +35,9 @@ import java.io.*;
 /**
  * This class resolves DOCTYPE declaration for Chemical Markup Language (CML)
  * files and uses a local version for validation. More information about
- * CML can be found at http://www.xml-cml.org/.
+ * CML can be found at <a href="http://www.xml-cml.org/">http://www.xml-cml.org/</a>.
+ *
+ * @cdkPackage io
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  **/

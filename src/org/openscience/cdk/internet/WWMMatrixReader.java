@@ -47,7 +47,9 @@ import org.w3c.dom.traversal.*;
 
 /**
  * Reader for the World Wide Molecular Matrix, a project that can be found at
- * http://wwmm.ch.cam.ac.uk/.
+ * <a href="http://wwmm.ch.cam.ac.uk/">http://wwmm.ch.cam.ac.uk/</a>.
+ *
+ * @cdkPackage applications
  *
  * @author Yong Zhang <yz237@cam.ac.uk>
  * @author Egon Willighagen <elw38@cam.ac.uk>

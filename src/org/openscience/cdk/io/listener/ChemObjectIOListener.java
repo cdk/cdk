@@ -31,6 +31,8 @@ import java.util.EventListener;
 /**
  * Allows monitoring of progress of file reader activities.
  *
+ * @cdkPackage io
+ *
  * @author Egon Willighagen
  */
 public interface ChemObjectIOListener extends EventListener {

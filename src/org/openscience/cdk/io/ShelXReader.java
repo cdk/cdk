@@ -46,7 +46,10 @@ import javax.vecmath.Point3d;
  * <p>A reader for ShelX files. It currently supports ShelXL.
  *
  * <p>The ShelXL format is described on the net:
- *    http://www.msg.ucsf.edu/local/programs/shelxl/ch_07.html
+ * <a href="http://www.msg.ucsf.edu/local/programs/shelxl/ch_07.html"
+ * http://www.msg.ucsf.edu/local/programs/shelxl/ch_07.html</a>.
+ *
+ * @cdkPackage io
  *
  * @keyword file format, ShelXL
  * @author E.L. Willighagen

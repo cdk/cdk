@@ -46,6 +46,8 @@ import javax.vecmath.*;
  * System.out.print(stringWriter.toString());
  * </pre>
  *
+ * @cdkPackage io
+ *
  * @author  Egon Willighagen <egonw@sci.kun.nl>
  * @created 2003-10-01
  * 

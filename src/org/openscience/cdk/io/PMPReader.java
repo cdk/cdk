@@ -40,6 +40,8 @@ import javax.vecmath.*;
  * Reads an frames from a PMP formated input.
  * Both compilation and use of this class requires Java 1.4.
  *
+ * @cdkPackage io
+ *
  * @keyword file format, Polymorph Predictor (tm)
  *
  * @author E.L. Willighagen

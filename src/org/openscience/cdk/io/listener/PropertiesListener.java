@@ -45,6 +45,8 @@ import java.util.Vector;
  * Command=geometry optimization
  * </pre>
  *
+ * @cdkPackage io
+ *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  */
 public class PropertiesListener implements ReaderListener, WriterListener {

@@ -35,9 +35,11 @@ import java.util.*;
 import java.io.*;
 import javax.vecmath.*;
 
-/*
- * <p>This Reader reads files which has one SMILES string on each
+/**
+ * This Reader reads files which has one SMILES string on each
  * line. For each line a molecule is generated.
+ *
+ * @cdkPackage io
  *
  * @keyword file format, SMILES
  */

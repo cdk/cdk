@@ -34,6 +34,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 /**
+ * @cdkPackage io
+ *
  * @author  Bradley A. Smith <bradley@baysmith.com>
  * @author  J. Daniel Gezelter
  * @author  Egon Willighagen

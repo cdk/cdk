@@ -46,6 +46,8 @@ import java.util.regex.*;
  * <p>This implementation is based on a dump from their database
  * on 2003-07-14.
  *
+ * @cdkPackage extra
+ *
  * @author     Egon Willighagen
  * @created    2003-07-24
  *

@@ -26,6 +26,9 @@ package org.openscience.cdk.io;
 
 import java.io.Reader;
 
+/**
+ * @cdkPackage io
+ */
 public class ADFReader extends DummyReader {
 
     public ADFReader(Reader input) {

@@ -43,6 +43,8 @@ import javax.vecmath.Point3d;
 /**
  * Read output files generated with the VASP software.
  *
+ * @cdkPackage io
+ *
  * @author  Fabian Dortu <Fabian.Dortu@wanadoo.be>
  */
 public class VASPReader extends DefaultChemObjectReader {

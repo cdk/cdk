@@ -32,6 +32,8 @@ package org.openscience.cdk.io.cml.cdopi;
  * This is an dummy class that makes an application accepting basic
  * CML objects. But it just disregards all the information.
  *
+ * @cdkPackage io
+ *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  **/
 public class NMRCDO extends CMLCDO {

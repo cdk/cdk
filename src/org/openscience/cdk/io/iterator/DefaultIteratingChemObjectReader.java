@@ -34,6 +34,8 @@ import java.util.Vector;
 /**
  * Abstract class that IteratingChemObjectReader's can implement to have it
  * take care of basic stuff, like managing the ReaderListeners.
+ *
+ * @cdkPackage io
  */
 public abstract class DefaultIteratingChemObjectReader implements IteratingChemObjectReader {
 

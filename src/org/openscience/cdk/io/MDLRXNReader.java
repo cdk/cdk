@@ -41,6 +41,8 @@ import javax.vecmath.*;
  * <p>References:
  *   <a href="http://cdk.sf.net/biblio.html#DAL92">DAL92</a>
  *
+ * @cdkPackage io
+ *
  * @author     Egon Willighagen
  * @created    2003-07-24
  *

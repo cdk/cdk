@@ -34,6 +34,8 @@ import org.openscience.cdk.io.cml.cdopi.*;
 
 /**
  * This is an implementation for the CDK convention.
+ *
+ * @cdkPackage io
  * 
  * @author egonw
  */

@@ -39,6 +39,8 @@ import javax.vecmath.Point3d;
  * http://www.uku.fi/~thassine/ghemical/</a>)
  * molecular mechanics (*.mm1gp) files.
  *
+ * @cdkPackage io
+ *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  */
 public class GhemicalMMReader extends DummyReader {

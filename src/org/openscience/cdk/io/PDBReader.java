@@ -41,6 +41,8 @@ import javax.vecmath.*;
  * <p>A description can be found at <a href="http://www.rcsb.org/pdb/docs/format/pdbguide2.2/guide2.2_frame.html">
  * http://www.rcsb.org/pdb/docs/format/pdbguide2.2/guide2.2_frame.html</a>.
  *
+ * @cdkPackage io
+ *
  * @author     Edgar Luttmann
  * @author     Bradley Smith (bradley@baysmith.com)
  * @created    2001-08-06 

@@ -29,6 +29,8 @@ import org.openscience.cdk.exception.*;
 /**
  * An class for a reader setting which must be of type String.
  *
+ * @cdkPackage io
+ *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  */
 public class BooleanIOSetting extends IOSetting {

@@ -42,6 +42,8 @@ import org.xml.sax.helpers.*;
  * SAX2 implementation for a RSS handler. Data is stored into a ChemSequence
  * where each channel item is one ChemModel in this sequence.
  *
+ * @cdkPackage io
+ *
  * @author  Egon Willighagen <egonw@sci.kun.nl>
  * @created 2003-09-07
  */

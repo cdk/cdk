@@ -30,6 +30,8 @@ import java.util.EventListener;
 /**
  * Allows monitoring of progress of writing activities.
  *
+ * @cdkPackage io
+ *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  */
 public interface WriterListener extends ChemObjectIOListener {

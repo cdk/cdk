@@ -35,6 +35,8 @@ import org.openscience.cdk.io.cml.cdopi.*;
  * This interface describes the procedures classes must implement to be plugable
  * into the CMLHandler. Most procedures reflect those in SAX2.
  *
+ * @cdkPackage io
+ *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  **/
 public interface ModuleInterface{

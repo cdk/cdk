@@ -35,6 +35,8 @@ import java.io.IOException;
  * Class that will serve as a dummy for the ReaderFactory to return.
  * This Reader will throw a CDKException when someone tries to
  * read information from it, to signal that it is not imlemented.
+ *
+ * @cdkPackage io
  */
 public class DummyReader extends DefaultChemObjectReader {
 

@@ -34,6 +34,8 @@ import org.openscience.cdk.io.cml.cdopi.*;
 
 /**
  * @author Egon Willighagen <elw38@cam.ac.uk>
+ *
+ * @cdkPackage io
  */
 public class CMLReactionModule extends CMLCoreModule {
 

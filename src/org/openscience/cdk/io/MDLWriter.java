@@ -51,6 +51,8 @@ import javax.vecmath.*;
  * References:
  *   <a href="http://cdk.sf.net/biblio.html#DAL92">DAL92</a>
  *
+ * @cdkPackage io
+ *
  * @keyword file format, MDL molfile
  */
 public class MDLWriter extends DefaultChemObjectWriter {

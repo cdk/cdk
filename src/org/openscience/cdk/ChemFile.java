@@ -26,10 +26,12 @@ package org.openscience.cdk;
 
 
 /**
-  * A Object containing a number of ChemSequences. 
-  * This is supposed to be the top level container, which can contain 
-  * all the concepts stored in a chemical document
-  */ 
+ * A Object containing a number of ChemSequences. 
+ * This is supposed to be the top level container, which can contain 
+ * all the concepts stored in a chemical document
+ *
+ * @cdkPackage io
+ */ 
 public class ChemFile extends ChemObject implements java.io.Serializable, Cloneable 
 {
 

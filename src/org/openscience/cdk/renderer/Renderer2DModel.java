@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  * 
- * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2004  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -37,6 +37,8 @@ import java.util.*;
 
 /**
  * Model for Renderer2D that contains settings for drawing objects.
+ *
+ * @cdkPackage render
  */
 public class Renderer2DModel implements java.io.Serializable, Cloneable
 {

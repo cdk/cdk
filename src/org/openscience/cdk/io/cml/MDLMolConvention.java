@@ -35,6 +35,8 @@ import org.openscience.cdk.io.cml.cdopi.*;
 /**
  * Implementation of the MDLMol Covention for CML.
  *
+ * @cdkPackage io
+ *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  */
 public class MDLMolConvention extends CMLCoreModule {

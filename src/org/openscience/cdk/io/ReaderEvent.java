@@ -31,6 +31,8 @@ import java.util.EventObject;
  * primarily in place for future development when additional information
  * may be passed to <code>ReaderListener</code>s.
  *
+ * @cdkPackage io
+ *
  * @author Bradley A. Smith <bradley@baysmith.com>
  */
 public class ReaderEvent extends EventObject {

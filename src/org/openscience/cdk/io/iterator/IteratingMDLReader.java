@@ -43,6 +43,8 @@ import javax.vecmath.*;
  *
  * <p>For parsing the molecules it still uses the normal MDLReader.
  *
+ * @cdkPackage io
+ *
  * @see org.openscience.cdk.io.MDLReader
  * 
  * @author     Egon Willighagen <egonw@sci.kun.nl>

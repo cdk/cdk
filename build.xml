@@ -311,14 +311,12 @@
                 </javac>
         </target>
 
-        <target id="compile-io" name="compile-io" depends="init, dist-core, dist-standard, dist-extra">
+        <target id="compile-io" name="compile-io" depends="init, dist-core, dist-standard">
                 <echo message="Compiling classes for cdk-io module." />
 
                 <javac srcdir="${build.src}" destdir="${build}" optimize="${optimization}" 
-                       debug="${debug}" deprecation="${deprecation}">
-                    <include name="org/openscience/cdk/io/**/*"/>
-                    <include name="org/openscience/cdk/ChemFile.java"/>
-                    <include name="org/openscience/cdk/exception/UnsupportedChemObjectException.java"/>
+                       debug="${debug}" deprecation="${deprecation}"
+                       includesfile="${src}/io.javafiles">
 
                     <classpath refid="project.class.path" />
                     <classpath>

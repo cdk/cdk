@@ -26,6 +26,9 @@ package org.openscience.cdk.io;
 
 import java.io.Reader;
 
+/**
+ * @cdkPackage io
+ */
 public class Gaussian90Reader extends DummyReader {
 
     public Gaussian90Reader(Reader input) {

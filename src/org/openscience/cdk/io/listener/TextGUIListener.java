@@ -38,6 +38,8 @@ import java.util.Vector;
  * <p>This listener can also be used to list all the questions a ChemObjectWriter 
  * has, by using a dummy StringWriter, and a <code>null</code> Reader.
  *
+ * @cdkPackage io
+ *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  */
 public class TextGUIListener implements ReaderListener, WriterListener {

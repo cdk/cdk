@@ -31,6 +31,8 @@ import java.util.*;
 /**
  * CDO object needed as interface with the JCFL library for reading CML
  * encoded data.
+ *
+ * @cdkPackage io
  * 
  * @author Egon Willighagen <egonw@sci.kun.nl>
  */ 

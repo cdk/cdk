@@ -48,6 +48,8 @@ import org.w3c.dom.DOMImplementation;
  * use of the Batik library for producing SVG.
  * See <a href="http://xml.apache.org/">xml.apache.org</a>.
  *
+ * @cdkPackage extra
+ *
  * @keyword file format
  * @keyword vector graphics, SVG
  * @keyword scalable vector graphics

@@ -42,6 +42,8 @@ import org.xml.sax.helpers.*;
  * instantiating this class. This makes it possible that programs that do not
  * use CDK for internal data storage, use this CML library.
  *
+ * @cdkPackage io
+ *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  **/
 public class CMLHandler extends DefaultHandler {
