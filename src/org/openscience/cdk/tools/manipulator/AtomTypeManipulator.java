@@ -35,27 +35,28 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
- *  Class with utilities for the atomtype package (example: assign an
- *  hybridization state to an atom given an atom type).
+ * Class with utilities for the <code>AtomType</code> class.
  *
- *@author        mfe4
- *@author        egonw
- *@cdk.module standard
+ * @author     mfe4
+ * @author     egonw
+ * @cdk.module standard
  */
 public class AtomTypeManipulator {
 	
 	/**
-	 *  Method that assign properties to an atom given a particular atomType.
+	 * Method that assign properties to an atom given a particular atomType.
 	 *
-	 *@param  atom  Atom
-	 *@param  at    AtomType matched with atomtype.HybridizationStateATMatcher
+	 * @param  atom  Atom to configure
+	 * @param  at    AtomType
 	 */
-	public static void configure(Atom atom, AtomType at) throws CDKException {
-		AtomTypeFactory factory = null;
-		LoggingTool logger = null;
-		int hybr;
-		hybr = at.getHybridization();
-		atom.setHybridization(hybr);
+	public static void configure(Atom atom, AtomType at) {
+        atom.setMaxBondOrder(atomType.getMaxBondOrder());
+        atom.setBondOrderSum(atomType.getBondOrderSum());
+        atom.setVanderwaalsRadius(atomType.getVanderwaalsRadius());
+        atom.setCovalentRadius(atomType.getCovalentRadius());
+        atom.setFormalCharge(atomType.getFormalCharge());
+		atom.setHybridization(at.getHybridization());
+        atom.setFormalNeighbourCount(atomType.getFormalNeighbourCount());
 	}
 }
 
