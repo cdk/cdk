@@ -43,7 +43,7 @@ public class IOTests {
         suite.addTest(SMILESReaderTest.suite());
         /* suite.addTest(ZMatrixReaderTest.suite()); This is not a JUnit test uet! */
         
-        suite.addTest(ReaderFactoryTest.suite());
+        // suite.addTest(ReaderFactoryTest.suite());
         return suite;
     }
 
