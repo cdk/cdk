@@ -717,7 +717,12 @@
 
         <target id="run-test" name="run-test" depends="dist-core, dist-extra, dist-test, dist-standard" 
                 description="Runs an application">
-                <junit printsummary="yes" haltonfailure="yes" fork="yes">
+		<!-- *** Please leave this out. If the tests are to be run, we should *** 
+		     *** use the test target or make a "singletest" target.           ***
+		     *** I would like to have this method for debugging a class       ***
+		     *** and too many cdk.log output from tests which I'm not         ***
+		     *** interested in makes this difficult.                          *** -->
+                <!--junit printsummary="yes" haltonfailure="yes" fork="yes">
                     <jvmarg value="-Dcdk.debugging=true"/>
                     <classpath>
                         <pathelement location="${dist}/jar/cdk-core.jar" />
@@ -744,7 +749,7 @@
                         outfile="result.${testclass}">
                         <formatter type="brief" />
                     </test>
-                </junit>
+                </junit-->
                 <java classname="org.openscience.cdk.test.${testclass}" fork="yes">
                     <jvmarg value="-Dcdk.debugging=true"/>
 		    <classpath>
