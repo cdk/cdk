@@ -9,6 +9,9 @@ New:
 * More complete validation of chemical semantics in the
   org.openscience.cdk.validation package.
 * Added Swing implementation of Reader/WriterListener
+* Rewrote Renderer2D.paintAtomSymbol() which will now draw
+  isotope info, e.g. 13C, and properly align implicit
+  hydrogens, e.g. H3C-
 
 Fixes:
 * Added missing LGPL license to distributions.

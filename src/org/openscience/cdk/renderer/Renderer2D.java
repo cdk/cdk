@@ -138,8 +138,8 @@ public class Renderer2D   {
 
         // draw reaction ID
         Font unscaledFont = graphics.getFont();
-        int fontSize = getScreenSize(unscaledFont.getSize());
-        graphics.setFont(unscaledFont.deriveFont((float)fontSize));
+        float fontSize = getScreenSize(unscaledFont.getSize());
+        graphics.setFont(unscaledFont.deriveFont(fontSize));
         graphics.drawString(caption, (int)screenCoords[0], (int)screenCoords[1]);
         graphics.setFont(unscaledFont);
     }
@@ -272,14 +272,9 @@ public class Renderer2D   {
              *  unless (see below)...
              */
             paintAtomSymbol(atom, atomBackColor, graphics, alignment);
-            paintAtomCharge(atom, graphics);
         } else if (r2dm.getKekuleStructure()) {
             // ... unless carbon must be drawn because in Kekule mode
             paintAtomSymbol(atom, atomBackColor, graphics, alignment);
-        } else if (atom.getFormalCharge() != 0) {
-            // ... unless carbon is charged
-            paintAtomSymbol(atom, atomBackColor, graphics, alignment);
-            paintAtomCharge(atom, graphics);
         } else if (container.getConnectedBonds(atom).length < 1) {
             // ... unless carbon is unbonded
             paintAtomSymbol(atom, atomBackColor, graphics, alignment);
@@ -327,9 +322,9 @@ public class Renderer2D   {
         // The drawing fonts
         Font unscaledFont = graphics.getFont();
         int unscaledFontSize = unscaledFont.getSize();
-        int normalFontSize = getScreenSize(unscaledFontSize); // apply zoom factor
+        float normalFontSize = getScreenSize(unscaledFontSize); // apply zoom factor
         Font normalFont = unscaledFont.deriveFont(normalFontSize); // keep font, only change size
-        Font subscriptFont = normalFont.deriveFont((int)(normalFontSize*0.8)); // 80% of normal font
+        Font subscriptFont = normalFont.deriveFont(normalFontSize*0.8f); // 80% of normal font
 
         // calculate SYMBOL width, height
         String atomSymbol = atom.getSymbol();
@@ -417,8 +412,10 @@ public class Renderer2D   {
 
         // make empty space
         {
+            int border = 2; // number of pixels
             graphics.setColor(backColor);
-            int[] coords = {labelX, labelY, labelW, labelH};
+            int[] coords = {labelX - border, labelY - border, 
+                            labelW + 2*border, labelH + 2*border};
             int[] screenCoords = getScreenCoordinates(coords);
             graphics.fillRect(screenCoords[0], screenCoords[1], 
                               screenCoords[2], screenCoords[3]);
@@ -460,7 +457,7 @@ public class Renderer2D   {
                 } else { // right alignment
                     coords[0] = labelX + hSymbolW;
                 }
-                coords[1] = labelY + isotopeH + atomSymbolH + hMultiplierH;
+                coords[1] = labelY + isotopeH + atomSymbolH + hMultiplierH/2;
                 screenCoords = getScreenCoordinates(coords);
                 graphics.setColor(r2dm.getForeColor());
                 graphics.setFont(subscriptFont);
@@ -468,99 +465,40 @@ public class Renderer2D   {
             }
         }
         
-//        /* determine where to put the string, as seen from the atom coordinates
-//           in model coordinates */
-//		
-//         left align
-//		int xSymbOffset = (new Integer(fm.stringWidth(symbol.substring(0,1)) / 2)).intValue();
-//        if (alignment == -1) {
-//             right align
-//            xSymbOffset = (new Integer((fm.stringWidth(symbol.substring(symbol.length()-1)) / 2) +
-//                                       fm.stringWidth(symbol.substring(1)))).intValue();
-//        }
-//		int ySymbOffset = (new Integer(fm.getAscent() / 2)).intValue();
-//
-//		int xSymbOffsetForSubscript = (new Integer(fm.stringWidth(symbol))).intValue();
-//		int ySymbOffsetForSubscript = (new Integer(fm.getAscent())).intValue();
-//
-//        int[] hCoords = {(int) (atom.getPoint2D().x - xSymbOffset),
-//				         (int) (atom.getPoint2D().y + ySymbOffset) };
-//        hCoords = getScreenCoordinates(hCoords);
-//	    graphics.setColor(r2dm.getAtomColor(atom));
-//         apply zoom factor to font size
-//        Font unscaledFont = graphics.getFont();
-//        int fontSize = getScreenSize(unscaledFont.getSize());
-//        graphics.setFont(unscaledFont.deriveFont((float)fontSize));
-//        graphics.drawString(symbol, hCoords[0], hCoords[1]);
-//
-//        if (implicitHydrogen > 1) {
-//             draw subscript part
-//            int[] h2Coords = {(int) (atom.getPoint2D().x - xSymbOffset + xSymbOffsetForSubscript),
-//                              (int) (atom.getPoint2D().y + ySymbOffsetForSubscript) };
-//            h2Coords = getScreenCoordinates(h2Coords);
-//            graphics.setColor(r2dm.getForeColor());
-//             apply zoom factor to font size
-//            unscaledFont = graphics.getFont();
-//            fontSize = getScreenSize(unscaledFont.getSize())-1;
-//            graphics.setFont(unscaledFont.deriveFont((float)fontSize));
-//            graphics.drawString(new Integer(implicitHydrogen).toString(), h2Coords[0], h2Coords[1]);
-//        }
-//        
+        // draw CHARGE
+        if (formalCharge != 0) {
+            int[] coords = new int[2];
+            if (alignment == 1) { // left alignment
+                coords[0] = labelX + isotopeW + atomSymbolW + hSymbolW;
+            } else { // right alignment
+                coords[0] = labelX + hSymbolW + Math.max(isotopeW, hMultiplierW) +
+                            atomSymbolW;
+            }
+            coords[1] = labelY + isotopeH;
+            int[] screenCoords = getScreenCoordinates(coords);
+            graphics.setColor(r2dm.getForeColor());
+            graphics.setFont(subscriptFont);
+            graphics.drawString(formalChargeString, screenCoords[0], screenCoords[1]);
+        }
+        
+        // draw ISOTOPE
+        if (isotopeString.length() > 0) {
+            int[] coords = new int[2];
+            if (alignment == 1) { // left alignment
+                coords[0] = labelX;
+            } else { // right alignment
+                coords[0] = labelX + hSymbolW;
+            }
+            coords[1] = labelY + isotopeH;
+            int[] screenCoords = getScreenCoordinates(coords);
+            graphics.setColor(r2dm.getForeColor());
+            graphics.setFont(subscriptFont);
+            graphics.drawString(isotopeString, screenCoords[0], screenCoords[1]);
+        }
+        
         // reset old font
         graphics.setFont(unscaledFont);
-	}
-
-	/**
-	 * Paints the given atom symbol. It first outputs some empty space using the
-	 * background color, slightly larger than the space that the symbol occupies.
-	 * The atom symbol is then printed into the empty space.
-	 *
-	 * @param  atom       The atom to be drawn
-	 * @param  backColor  Description of the Parameter
-	 */
-	private void paintAtomCharge(Atom atom, Graphics graphics) {
-        FontMetrics fm = graphics.getFontMetrics();
-        int xSymbOffset = (new Integer(fm.stringWidth(atom.getSymbol()) / 2)).intValue();
-        int ySymbOffset = (new Integer(fm.getAscent() / 2)).intValue();
-
-            // show formal charge
-        if (atom.getFormalCharge() != 0) {
-            // print charge in smaller font size
-            Font unscaledFont = graphics.getFont();
-            int fontSize = getScreenSize(unscaledFont.getSize() - 1);
-            graphics.setFont(unscaledFont.deriveFont((float)fontSize));        
-
-            int charge = atom.getFormalCharge();
-            String chargeString = (new Integer(charge)).toString();
-            if (charge == 1 ) { 
-                chargeString = "+"; 
-            } else if (charge > 1 ) {
-                chargeString = charge + "+";
-            } else if (charge == -1) {
-                chargeString = "-"; 
-            } else if (charge < -1) {
-                chargeString = chargeString.substring(1) + "-";
-            }
-            // draw string
-            int[] hCoords = {(int)atom.getX2D() + xSymbOffset,
-                             (int)atom.getY2D() - ySymbOffset};
-            hCoords = getScreenCoordinates(hCoords);
-            graphics.drawString(chargeString, hCoords[0], hCoords[1]);
-            
-            /** Put circles around + or - sign
-            Rectangle2D stringBounds = fm.getStringBounds(chargeString, graphics);
-            int width = (int)stringBounds.getWidth();
-            int height = (int)stringBounds.getHeight();
-            int[] coords = {(int)atom.getX2D() + xSymbOffset - (width/2), 
-                            (int)atom.getY2D() - ySymbOffset - (height/2),
-                            (int)stringBounds.getWidth(), 
-                            (int)stringBounds.getWidth()};
-            coords = getScreenCoordinates(coords);
-            graphics.drawOval(coords[0], coords[1], coords[2], coords[3]); */
-            graphics.setFont(unscaledFont);
-        }
     }
-    
     
     /**
      * Triggers the suitable method to paint each of the given bonds and selects
@@ -898,8 +836,8 @@ public class Renderer2D   {
         return screenCoordinates;
     }
     
-    private int getScreenSize(int size) {
-        return (int)((double)size * r2dm.getZoomFactor());
+    private float  getScreenSize(int size) {
+        return (float)size * (float)r2dm.getZoomFactor();
     }
 }
 
