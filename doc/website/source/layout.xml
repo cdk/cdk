@@ -71,6 +71,7 @@
       </tocentry>
       <tocentry page="javadoc-stats.xml" filename="javadoc-stats.html"/>
       <tocentry page="javancss-stats.xml" filename="javancss-stats.html"/>
+      <tocentry page="pmd.xml" filename="pmd.html"/>
     </tocentry>
     <tocentry page="changelog.xml" filename="changelog.html"/>
     <tocentry page="contact.xml" filename="contact.html"/>

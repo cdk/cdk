@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.0b1//EN" 
+                         "dtd/website.dtd" [
+  <!ENTITY biblio SYSTEM "../../refs/cheminf.dbx">  
+]>
+<webpage id="pmd">
+  <config param="last-change-by" value="$Author$"/>
+  <config param="rcsdate" value="$Date$"/>
+
+  <head>
+    <title>PMD Results</title>
+    <titleabbrev>PMD</titleabbrev>
+    <summary>Test results for code quality using PMD.</summary>
+  </head>
+
+  <para>
+    Below are links to test results for the PMD tests for the
+    CDK modules.
+  </para>
+  
+  <itemizedlist>
+    <listitem><para><ulink url="/reports/pmd/core.html">core</ulink></para></listitem>
+    <listitem><para><ulink url="/reports/pmd/standard.html">standard</ulink></para></listitem>
+    <listitem><para><ulink url="/reports/pmd/io.html">io</ulink></para></listitem>
+    <listitem><para><ulink url="/reports/pmd/render.html">render</ulink></para></listitem>
+    <listitem><para><ulink url="/reports/pmd/extra.html">extra</ulink></para></listitem>
+    <listitem><para><ulink url="/reports/pmd/applications.html">applications</ulink></para></listitem>
+    <listitem><para><ulink url="/reports/pmd/experimental.html">experimental</ulink></para></listitem>
+    <listitem><para><ulink url="/reports/pmd/libio.html">libio</ulink></para></listitem>
+  </itemizedlist>
+
+</webpage>
