@@ -43,6 +43,7 @@ import java.awt.Color;
 public class TXTBasedAtomTypeConfigurator implements AtomTypeConfigurator {
 
     private String configFile = "jmol_atomtypes.txt";
+    private InputStream ins = null;
     
 	public TXTBasedAtomTypeConfigurator() {
 	}
@@ -50,8 +51,8 @@ public class TXTBasedAtomTypeConfigurator implements AtomTypeConfigurator {
     /**
      * Sets the file containing the config data
      */
-    public void setConfigFile(String configFile) {
-        this.configFile = configFile;
+    public void setInputStream(InputStream ins) {
+        this.ins = ins;
     };
     
     /**
@@ -60,10 +61,13 @@ public class TXTBasedAtomTypeConfigurator implements AtomTypeConfigurator {
     public Vector readAtomTypes() throws Exception {
         Vector atomTypes = new Vector();
 
-        InputStream ins = null;        
-        System.out.println("getResourceAsStream:" + configFile);
-        ins = getClass().getResourceAsStream(configFile);
-        if (ins == null) throw new IOException("There was a problem getting a stream for " + configFile);
+        if (ins == null) {
+            // trying the default
+            System.out.println("getResourceAsStream:" + configFile);
+            ins = getClass().getResourceAsStream(configFile);
+        }
+        if (ins == null) 
+            throw new IOException("There was a problem getting the default stream: " + configFile);
 
         // read the contents from file
         BufferedReader r = new BufferedReader(new InputStreamReader(ins), 1024);
@@ -123,7 +127,10 @@ public class TXTBasedAtomTypeConfigurator implements AtomTypeConfigurator {
                 }
             }    // end while
             ins.close();
-        } catch (IOException e) {}        
+        } catch (IOException e) {
+            System.err.println(e.toString());
+            e.printStackTrace();
+        }        
         return atomTypes;
     }
 }

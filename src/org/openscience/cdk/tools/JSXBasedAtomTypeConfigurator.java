@@ -47,6 +47,7 @@ import JSX.*;
 public class JSXBasedAtomTypeConfigurator implements AtomTypeConfigurator {
 
     private String configFile = "org.openscience.cdk.config.structgen_atomtypes.xml";
+    private InputStream ins = null;
     
     public JSXBasedAtomTypeConfigurator() {
     }
@@ -54,8 +55,8 @@ public class JSXBasedAtomTypeConfigurator implements AtomTypeConfigurator {
     /**
      * Sets the file containing the config data
      */
-    public void setConfigFile(String configFile) {
-        this.configFile = configFile;
+    public void setInputStream(InputStream ins) {
+        this.ins = ins;
     };
     
     /**
@@ -65,13 +66,14 @@ public class JSXBasedAtomTypeConfigurator implements AtomTypeConfigurator {
      */
     public Vector readAtomTypes() throws Exception {
         Vector atomTypes = new Vector(0);
-        InputStream ins = null;
-        try {
-            ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
-        } catch(Exception exc) {
-            throw new IOException("There was a problem getting a stream for " + configFile);
+        if (ins == null) {
+            try {
+                ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
+            } catch(Exception exc) {
+                throw new IOException("There was a problem getting a stream for " + configFile);
+            }
         }
-        if (ins == null) throw new IOException("There was a problem getting a stream for " + configFile);
+        if (ins == null) throw new IOException("There was a problem getting an input stream");
         ObjIn in = new ObjIn(ins, new Config().aliasID(false));
         atomTypes = (Vector) in.readObject();
         for (int f = 0; f < atomTypes.size(); f++) {

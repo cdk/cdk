@@ -24,13 +24,14 @@
 package org.openscience.cdk.tools;
 
 import java.util.Vector;
+import java.io.InputStream;
 
 public interface AtomTypeConfigurator {
-
+    
     /**
      * Sets the file containing the config data
      */
-    public void setConfigFile(String configFile);
+    public void setInputStream(InputStream ins);
     
     /**
      * Reads a set of configuref AtomType's into a Vector

@@ -81,7 +81,34 @@ public class AtomTypeFactory {
     }
     
     private void readConfiguration(String configFile) {
+        logger.info("Reading config file from " + configFile);
         AtomTypeConfigurator atc = null;
+        
+        InputStream ins = null;
+        
+        // try to see if this configFile is an actual file
+        File f = new File(configFile);
+        if (f.exists()) {
+            logger.debug("configFile is a File");
+            // what's next?
+            try {
+                ins = new FileInputStream(f);
+            } catch (Exception exc) {
+                logger.error(exc.toString());
+            }
+        } else {
+            logger.debug("configFile must be a stream");
+            // assume it is a default config file in distro
+            try {
+                ins = getClass().getResourceAsStream(configFile);
+            } catch(Exception exc) {
+                logger.error("There was a problem getting a stream for " + configFile);
+                logger.error(exc.toString());
+            }
+            if (ins == null) 
+                logger.error("There was a problem getting a stream for " + configFile);            
+        }
+        
         try {
             /* This class loading mechanism is used to not depend on JSX,
             * which is needed for old JVM's like in older browsers.
@@ -95,17 +122,20 @@ public class AtomTypeFactory {
                 loadClass("org.openscience.cdk.tools.JSXBasedAtomTypeConfigurator").
                 newInstance();
             }
+            logger.debug("Instantiated a AtomTypeConfigurator of class: " + 
+                atc.getClass().getName());
         } catch (Exception exc) {
             logger.error("Could not get instance of AtomTypeConfigurator for " + configFile); 
         }
         if (atc != null) {
-            atc.setConfigFile(configFile);
+            atc.setInputStream(ins);
             try {
                 atomTypes = atc.readAtomTypes();
             } catch (Exception exc) {
                 logger.error("Could not read AtomType's from file due to: " + exc.toString());
             }
         } else {
+            logger.debug("AtomTypeConfigurator was null!");
             atomTypes = new Vector();
         }
 	}
@@ -152,7 +182,8 @@ public class AtomTypeFactory {
 		return atomTypes;
 	}
     
-    public AtomType[] getAtomTypes() {
+    public org.openscience.cdk.AtomType[] getAllAtomTypes() {
+        logger.debug("Returning list of size: " + getSize());
 		ArrayList al = new ArrayList();
 		AtomType atomType = null;
 		for (int f = 0; f < atomTypes.size(); f++){
