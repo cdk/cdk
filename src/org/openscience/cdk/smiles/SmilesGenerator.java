@@ -1490,6 +1490,9 @@ public class SmilesGenerator {
         }
         buffer.append(mass);
         if (a.getFlag(CDKConstants.ISAROMATIC)) {
+            // Strictly speaking, this is wrong. Lower case is only used for sp2 atoms!
+            buffer.append(a.getSymbol().toLowerCase());
+        } else if (a.getHybridization() == CDKConstants.HYBRIDIZATION_SP2) {
             buffer.append(a.getSymbol().toLowerCase());
         } else {
             buffer.append(symbol);

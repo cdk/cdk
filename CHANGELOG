@@ -30,6 +30,7 @@ Fixes:
 * FileConvertor now really implements some of its features
 * Fixed rendering or aromatic rings with circles (closes #960709)
 * Fixed Mol2 reader (closes #964216)
+* Fixed SmilesGenerator: now takes into account sp2 states (closes #957632)
 
 API changes:
 * AtomTypeFactory and IsotopeFactory moved from cdk.tools to cdk.config
