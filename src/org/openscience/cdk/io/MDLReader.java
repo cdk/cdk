@@ -282,24 +282,28 @@ public class MDLReader extends DefaultChemObjectReader {
                         atom.setFormalCharge(-3);
                 }
                 
-                String stereoParity = strTok.nextToken();
-                String hCount = strTok.nextToken();
-                String stereoCare = strTok.nextToken();
-                String valence = strTok.nextToken();
-                String H0designator = strTok.nextToken();
-                String unused1 = strTok.nextToken();
-                String unused2 = strTok.nextToken();
-                
-                String reactionAtomIDString = strTok.nextToken().trim();
-                logger.debug("Parsing mapping id: " + reactionAtomIDString);
                 try {
-                    int reactionAtomID = Integer.parseInt(reactionAtomIDString);
-                    if (reactionAtomID != 0) {
-                        atom.setID(reactionAtomIDString);
+                    String stereoParity = strTok.nextToken();
+                    String hCount = strTok.nextToken();
+                    String stereoCare = strTok.nextToken();
+                    String valence = strTok.nextToken();
+                    String H0designator = strTok.nextToken();
+                    String unused1 = strTok.nextToken();
+                    String unused2 = strTok.nextToken();
+                    String reactionAtomIDString = strTok.nextToken().trim();
+                    logger.debug("Parsing mapping id: " + reactionAtomIDString);
+                    try {
+                        int reactionAtomID = Integer.parseInt(reactionAtomIDString);
+                        if (reactionAtomID != 0) {
+                            atom.setID(reactionAtomIDString);
+                        }
+                    } catch (Exception exception) {
+                        logger.error("Mapping number " + reactionAtomIDString + " is not an integer.");
+                        logger.debug(exception);
                     }
-                } catch (Exception exception) {
-                    logger.error("Mapping number " + reactionAtomIDString + " is not an integer.");
-                    logger.debug(exception);
+                } catch (NoSuchElementException exception) {
+                    // older mol files don't have all these fields...
+                    logger.warn("A few fields are missing. Older MDL MOL file?");
                 }
                 
 				molecule.addAtom(atom);

@@ -120,6 +120,9 @@ public class ReaderFactory {
                                            line.indexOf("V2000") >= 0)) {
                 logger.info("MDL mol/sdf file format detected");
                 return new org.openscience.cdk.io.MDLReader(originalBuffer);
+            } else if (line.startsWith("M  END")) {
+                logger.info("MDL mol/sdf file format detected");
+                return new org.openscience.cdk.io.MDLReader(originalBuffer);
             } else if (line.startsWith("$RXN")) {
                 logger.info("MDL rxn file format detected");
                 return new org.openscience.cdk.io.MDLRXNReader(originalBuffer);
@@ -178,6 +181,29 @@ public class ReaderFactory {
                        line.startsWith("TITL ")) {
                 logger.info("ShelX format detected");
                 return new org.openscience.cdk.io.ShelXReader(originalBuffer);
+            } else if (lineNumber == 4) { 
+                try {
+                    String atomCountString = line.substring(0, 3).trim();
+                    String bondCountString = line.substring(3, 6).trim();
+                    new Integer(atomCountString);
+                    new Integer(bondCountString);
+                    boolean mdlFile = true;
+                    if (line.length() > 6) {
+                        String remainder = line.substring(6).trim();
+                        for (int i = 0; i < remainder.length(); ++i) {
+                            char c = remainder.charAt(i);
+                            if (!(Character.isDigit(c) || Character.isWhitespace(c))) {
+                                mdlFile = false;
+                            }
+                        }
+                    }
+                    // all tests succeeded, likely to be a MDL file
+                    if (mdlFile) {
+                        return new org.openscience.cdk.io.MDLReader(originalBuffer);
+                    }
+                } catch (NumberFormatException nfe) {
+                    // Integers not found on fourth line; therefore not a MDL file
+                }
             }
             line = buffer.readLine();
             lineNumber++;
