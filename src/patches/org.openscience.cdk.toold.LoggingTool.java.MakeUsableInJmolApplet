@@ -1,0 +1,122 @@
+--- org/openscience/cdk/tools/LoggingTool.java	Fri Nov 22 12:06:46 2002
++++ org/openscience/cdk/tools/LoggingTool.applet.java	Mon Nov 18 14:50:22 2002
+@@ -1,8 +1,8 @@
+ /*
+- * $RCSfile$
++ * $RCSfile$
+  * $Author$
+- * $Date$
+- * $Revision$
++ * $Date$
++ * $Revision$
+  *
+  * Copyright (C) 2001-2002  The Chemistry Development Kit (CDK) project
+  *
+@@ -26,44 +26,17 @@
+ 
+ import java.net.*;
+ 
++/**
++ * Adapted version made for use in applets.
++ */
+ public class LoggingTool {
+ 
+-    private boolean debug = false;
+-    private boolean tostdout = false;
+-
+-    private Object logger;
+-
+     public LoggingTool() {
+         this( LoggingTool.class.getName() );
+     }
+ 
+     public LoggingTool(String classname) {
+-        try {
+-            logger = org.apache.log4j.Category.getInstance( classname );
+-
+-            // configure Log4J
+-            URL url = getClass().getClassLoader().getResource("org/openscience/cdk/config/log4j.properties");
+-            org.apache.log4j.PropertyConfigurator.configure(url);
+-        } catch (NoClassDefFoundError e) {
+-            tostdout = true;
+-        } catch (NullPointerException e) {
+-            tostdout = true;
+-            debug("Properties file not found!");
+-        } catch (Exception e) {
+-            tostdout = true;
+-        }
+-        // Use a try {} to catch SecurityExceptions when used in applets
+-        try {
+-            // by default debugging is set off, but it can be turned on
+-            // with starting java like "java -Dcdk.debugging=true"
+-            if (System.getProperty("cdk.debugging", "false").equals("true")) {
+-                debug = true;
+-            }
+-        } catch (Exception e) {
+-            // guess what happens: security exception from applet runner
+-            // do not debug in those cases
+-            debug = false;
+-        }
++        dumpSystemProperties();
+     }
+ 
+     public void dumpSystemProperties() {
+@@ -79,58 +52,24 @@
+     }
+ 
+     public void debug(String s) {
+-        if (debug) {
+-            if (tostdout) {
+-                System.out.print("DEBUG: ");
+-                System.out.println(s);
+-            } else {
+-                ((org.apache.log4j.Category)logger).debug(s);
+-            }
+-        }
+     }
+ 
+     public void error(String s) {
+-        if (debug) {
+-            if (tostdout) {
+                 System.out.print("ERROR: ");
+                 System.out.println(s);
+-            } else {
+-                ((org.apache.log4j.Category)logger).error(s);
+-            }
+-        }
+     }
+ 
+     public void fatal(String s) {
+-        if (debug) {
+-            if (tostdout) {
+                 System.out.print("FATAL: ");
+                 System.out.println(s);
+-            } else {
+-                ((org.apache.log4j.Category)logger).fatal(s);
+-            }
+-        }
+     }
+ 
+     public void info(String s) {
+-        if (debug) {
+-            if (tostdout) {
+-                System.out.print("INFO: ");
+-                System.out.println(s);
+-            } else {
+-                ((org.apache.log4j.Category)logger).info(s);
+-            }
+-        }
+     }
+ 
+     public void warn(String s) {
+-        if (debug) {
+-            if (tostdout) {
+                 System.out.print("WARN: ");
+                 System.out.println(s);
+-            } else {
+-                ((org.apache.log4j.Category)logger).warn(s);
+-            }
+-        }
+     }
+ 
+ }
