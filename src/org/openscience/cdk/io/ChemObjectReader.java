@@ -78,5 +78,10 @@ public interface ChemObjectReader {
      */
     public void removeReaderListener(ReaderListener l);
     
+    /**
+     * Closes the Reader's resources.
+     */
+    public void close() throws IOException;
+
 }
 

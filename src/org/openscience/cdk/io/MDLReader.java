@@ -400,5 +400,9 @@ public class MDLReader extends DefaultChemObjectReader {
 		}
 		return molecule;
 	}
+    
+    public void close() throws IOException {
+        input.close();
+    }
 }
 
