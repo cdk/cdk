@@ -22,7 +22,7 @@
       <property name="xpath" pluginname="true">
         <value>
           <![CDATA[
-//VariableDeclaratorId[string-length(@Image) > 20]
+//VariableDeclaratorId[string-length(@Image) > 30]
           ]]>
         </value>
         </property>
