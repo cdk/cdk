@@ -3,7 +3,7 @@
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  *
  *  Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  *
@@ -37,12 +37,17 @@ import org.openscience.cdk.*;
 import org.openscience.cdk.tools.*;
 
 /**
- *  A Renderer class which draws 2D representations of molecules onto a given
- *  graphics objects using information from a Renderer2DModel
+ * A Renderer class which draws 2D representations of molecules onto a given
+ * graphics objects using information from a Renderer2DModel.
  *
- *@author     steinbeck
- *@created    October 3, 2002
- *@keyword    viewer, 2D-viewer
+ * <p>This renderer uses two coordinate systems. One that is a world
+ * coordinates system which is generated from the document coordinates.
+ * Additionally, the screen coordinates make up the second system, and
+ * are calculated by applying a zoom factor to the world coordinates.
+ *
+ * @author     steinbeck
+ * @created    October 3, 2002
+ * @keyword    viewer, 2D-viewer
  */
 public class Renderer2D
 {
@@ -174,7 +179,7 @@ public class Renderer2D
 			return;
 		}
 		FontMetrics fm = g.getFontMetrics();
-		int fontSize = g.getFont().getSize();
+		int fontSize = getScreenSize(g.getFont().getSize());
 		int xSymbOffset = (new Integer(fm.stringWidth(atom.getSymbol()) / 2)).intValue();
 		int ySymbOffset = (new Integer(fm.getAscent() / 2)).intValue();
 
@@ -231,6 +236,10 @@ public class Renderer2D
         } else if (atomCon.getBondCount(atom) == 0) {
             // ... unless carbon has no bonds
             paintAtomSymbol(atom, atomColor);
+            paintAtomCharge(atom);
+        } else if (r2dm.getKekuleStructure()) {
+            // ... unless carbon must be drawn because in Kekule mode
+            paintAtomSymbol(atom, atomColor);
         } else if (atom.getFormalCharge() != 0) {
             // ... unless carbon is charged
             paintAtomSymbol(atom, atomColor);
@@ -249,7 +258,11 @@ public class Renderer2D
 	{
 		int atomRadius = r2dm.getAtomRadius();
 		g.setColor(color);
-		g.fillRect((int) atom.getX2D() - (atomRadius / 2), (int) atom.getY2D() - (atomRadius / 2), atomRadius, atomRadius);
+        int[] coords = {(int) atom.getX2D() - (atomRadius / 2), 
+                        (int) atom.getY2D() - (atomRadius / 2), 
+                        atomRadius, atomRadius};
+        coords = getScreenCoordinates(coords);
+		g.fillRect(coords[0], coords[1], coords[2], coords[3]);
 	}
 
 	/**
@@ -267,15 +280,17 @@ public class Renderer2D
 			return;
 		}
 		FontMetrics fm = g.getFontMetrics();
-		int fontSize = g.getFont().getSize();
+		int fontSize = getScreenSize(g.getFont().getSize());
 		int xSymbOffset = (new Integer(fm.stringWidth(atom.getSymbol()) / 2)).intValue();
 		int ySymbOffset = (new Integer(fm.getAscent() / 2)).intValue();
 		// make empty space
 		g.setColor(backColor);
-		g.fillRect((int) (atom.getPoint2D().x - (xSymbOffset * 1.8)),
-				(int) (atom.getPoint2D().y - (ySymbOffset * 0.8)),
-				(int) fontSize,
-				(int) fontSize);
+        int[] coords = {(int) (atom.getPoint2D().x - (xSymbOffset * 1.8)),
+				        (int) (atom.getPoint2D().y - (ySymbOffset * 0.8)),
+                        (int) fontSize,
+                        (int) fontSize };
+        coords = getScreenCoordinates(coords);                
+		g.fillRect(coords[0], coords[1], coords[2], coords[3]);
 		// draw symbol
 		g.setColor(r2dm.getForeColor());
 		// but first determine symbol
@@ -290,9 +305,10 @@ public class Renderer2D
 				symbol = symbol + implicitHydrogen;
 			}
 		}
-		g.drawString(symbol,
-				(int) (atom.getPoint2D().x - xSymbOffset),
-				(int) (atom.getPoint2D().y + ySymbOffset));
+        int[] hCoords = {(int) (atom.getPoint2D().x - xSymbOffset),
+				  (int) (atom.getPoint2D().y - ySymbOffset) };
+        hCoords = getScreenCoordinates(coords);
+		g.drawString(symbol, hCoords[0], hCoords[1]);
 //		g.setColor(r2dm.getBackColor());
 //		g.drawLine((int)atom.getPoint2D().x,(int)atom.getPoint2D().y,(int)atom.getPoint2D().x,(int)atom.getPoint2D().y);
 	}
@@ -549,6 +565,8 @@ public class Renderer2D
 		int[] newCoords = GeometryTools.distanceCalculator(coords, r2dm.getBondWidth() / 2);
 		int[] xCoords = {newCoords[0], newCoords[2], newCoords[4], newCoords[6]};
 		int[] yCoords = {newCoords[1], newCoords[3], newCoords[5], newCoords[7]};
+        xCoords = getScreenCoordinates(xCoords);
+        yCoords = getScreenCoordinates(yCoords);
 		g.fillPolygon(xCoords, yCoords, 4);
 	}
 
@@ -568,10 +586,14 @@ public class Renderer2D
         if (bond.getStereo() == CDKConstants.STEREO_BOND_UP) {
             int[] xCoords = {coords[0], newCoords[6], newCoords[4]};
             int[] yCoords = {coords[1], newCoords[7], newCoords[5]};
+            xCoords = getScreenCoordinates(xCoords);
+            yCoords = getScreenCoordinates(xCoords);
             g.fillPolygon(xCoords, yCoords, 3);
         } else {
             int[] xCoords = {coords[2], newCoords[0], newCoords[2]};
             int[] yCoords = {coords[3], newCoords[1], newCoords[3]};
+            xCoords = getScreenCoordinates(xCoords);
+            yCoords = getScreenCoordinates(xCoords);
             g.fillPolygon(xCoords, yCoords, 3);
         }
 	}
@@ -614,7 +636,9 @@ public class Renderer2D
 			offset.scale(i*widthStep);
 			q1.add(currentPoint, offset);
 			q2.sub(currentPoint, offset);
-			g.drawLine((int)q1.x, (int)q1.y, (int)q2.x, (int)q2.y);
+            int[] lineCoords = {(int)q1.x, (int)q1.y, (int)q2.x, (int)q2.y};
+            lineCoords = getScreenCoordinates(lineCoords);
+			g.drawLine(lineCoords[0], lineCoords[1], lineCoords[2], lineCoords[3]);
 			currentPoint.add(lengthStep);
 		}
 	}
@@ -632,10 +656,11 @@ public class Renderer2D
 		int[] xCoords = {newCoords[0], newCoords[2], newCoords[4], newCoords[6]};
 		int[] yCoords = {newCoords[1], newCoords[3], newCoords[5], newCoords[7]};
 		g.setColor(r2dm.getForeColor());
+        // apply zoomFactor
+        xCoords = getScreenCoordinates(xCoords);
+        yCoords = getScreenCoordinates(yCoords);
 		g.fillPolygon(xCoords, yCoords, 4);
 	}
-
-
 
 	/**
 	 *  Returns the Renderer2DModel of this Renderer
@@ -659,5 +684,25 @@ public class Renderer2D
 		this.r2dm = r2dm;
 	}
 
+    public Point getScreenCoordinates(Point p) {
+        Point screenCoordinate = new Point();
+        double zoomFactor = r2dm.getZoomFactor();
+        screenCoordinate.x = (int)((double)p.x * zoomFactor);
+        screenCoordinate.y = (int)((double)p.y * zoomFactor);
+        return screenCoordinate;
+    }
+
+    public int[] getScreenCoordinates(int[] coords) {
+        int[] screenCoordinates = new int[coords.length];
+        double zoomFactor = r2dm.getZoomFactor();
+        for (int i=0; i<coords.length; i++) {
+            screenCoordinates[i] = (int)((double)coords[i] * zoomFactor);
+        }
+        return screenCoordinates;
+    }
+    
+    public int getScreenSize(int size) {
+        return (int)((double)size * r2dm.getZoomFactor());
+    }
 }
 

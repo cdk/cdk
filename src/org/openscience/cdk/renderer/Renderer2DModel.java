@@ -3,7 +3,7 @@
  * $Date$    
  * $Revision$
  * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  * 
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  * 
@@ -37,15 +37,18 @@ import java.util.*;
 /**
  * Model for Renderer2D that contains settings for drawing objects.
  */
-public class Renderer2DModel
-{
-	private double scaleFactor = 60;
+public class Renderer2DModel {
+    
+	private double scaleFactor = 60.0;
+    
+    /** Determines how much the image is zoomed into on. */
+    private double zoomFactor = 1.0;
 	
-	private double bondWidth = 2;
+	private double bondWidth = 2.0;
 
-	private double bondDistance = 6;
+	private double bondDistance = 6.0;
 
-	private double bondLength = 30;
+	private double bondLength = 30.0;
 
 	private Color backColor = Color.white;
 
@@ -53,7 +56,7 @@ public class Renderer2DModel
 	
 	private Color highlightColor = Color.lightGray;
 	
-	private double highlightRadius = 10;
+	private double highlightRadius = 10.0;
 
 	private boolean drawNumbers = false;	
 	
@@ -76,15 +79,19 @@ public class Renderer2DModel
 	private AtomContainer selectedPart = null;
 	
 	private Vector lassoPoints = new Vector();
+    
+    /** Determines wether structures should be drawn as Kekule structures,
+     *  thus giving each carbon element explicitely, instead of not displaying
+     *  the element symbol. Example C-C-C instead of /\.
+     */
+    private boolean kekuleStructure = false;
 	
-
 	/**
 	 * Returns the distance between two lines in a double or triple bond
 	 *
 	 * @return     the distance between two lines in a double or triple bond
 	 */
-	public double getBondDistance()
-	{
+	public double getBondDistance() {
 		return this.bondDistance;
 	}
 
@@ -94,8 +101,7 @@ public class Renderer2DModel
 	 *
 	 * @param   bondDistance  the distance between two lines in a double or triple bond
 	 */
-	public void setBondDistance(double bondDistance)
-	{
+	public void setBondDistance(double bondDistance) {
 		this.bondDistance = bondDistance;
 	}
 
@@ -166,7 +172,24 @@ public class Renderer2DModel
 		this.scaleFactor = scaleFactor;
 	}
 
-	
+	/**
+	 * A zoom factor for the drawing.
+	 *
+	 * @return a zoom factor for the drawing
+	 */
+	public double getZoomFactor() {
+		return this.zoomFactor;
+	}
+
+
+	/**
+	 * Returns the zoom factor for the drawing
+	 *
+	 * @param   scaleZoom  the zoom factor for the drawing
+	 */
+	public void setZoomFactor(double zoomFactor) {
+		this.zoomFactor = zoomFactor;
+	}	
 
 	/**
 	 * returns the foreground color for the drawing
@@ -223,6 +246,13 @@ public class Renderer2DModel
 		return this.drawNumbers;
 	}
 
+	public boolean getKekuleStructure() {
+		return this.kekuleStructure;
+	}
+
+	public void setKekuleStructure(boolean kekule) {
+		this.kekuleStructure = kekule;
+	}
 
 	/**
 	 * Sets if the drawing of atom numbers is switched on for this model

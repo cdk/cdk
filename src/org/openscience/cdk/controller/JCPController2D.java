@@ -93,7 +93,8 @@ public class JCPController2D {
             // logger.debug("Mouse moved");
 
                 double highlightRadius = r2dm.getHighlightRadius();
-                int mouseX = e.getX(), mouseY = e.getY();
+                int mouseX = getWorldCoordinate(e.getX()); 
+                int mouseY = getWorldCoordinate(e.getY());
                 Atom atomInRange;
                 Bond bondInRange;
 
@@ -130,7 +131,8 @@ public class JCPController2D {
         {
             logger.debug("Mouse dragged");
 
-                int mouseX = e.getX(), mouseY = e.getY();
+                int mouseX = getWorldCoordinate(e.getX()); 
+                int mouseY = getWorldCoordinate(e.getY());
                 wasDragged = true;
 
 
@@ -213,7 +215,9 @@ public class JCPController2D {
             logger.debug("Mouse pressed");
 
             Atom atomInRange;
-            int mouseX = e.getX(), mouseY = e.getY(), startX = 0, startY = 0;
+            int mouseX = getWorldCoordinate(e.getX()); 
+            int mouseY = getWorldCoordinate(e.getY());
+            int startX = 0, startY = 0;
             r2dm.setPointerVectorStart(null);
             r2dm.setPointerVectorEnd(null);
             atomInRange = getAtomInRange(mouseX, mouseY);
@@ -236,7 +240,8 @@ public class JCPController2D {
             if (e.getButton() == MouseEvent.BUTTON1) {
                 logger.debug("Mouse released in modus: " + c2dm.getDrawModeString());
 
-                int mouseX = e.getX(), mouseY = e.getY();
+                int mouseX = getWorldCoordinate(e.getX()); 
+                int mouseY = getWorldCoordinate(e.getY());
 
                 /*************************************************************************
                  *                       SYMBOL MODE                                     *
@@ -588,9 +593,8 @@ public class JCPController2D {
          *
          * @param   e    MouseEvent object
          **/
-        public void mouseEntered(MouseEvent e)
-        {
-            logger.debug("Mouse entered");
+        public void mouseEntered(MouseEvent e) {
+            // logger.debug("Mouse entered");
         }
 
         /**
@@ -598,9 +602,8 @@ public class JCPController2D {
          *
          * @param   e    MouseEvent object
          **/
-        public void mouseExited(MouseEvent e)
-        {
-            logger.debug("Mouse exited");
+        public void mouseExited(MouseEvent e) {
+            // logger.debug("Mouse exited");
         }
 
         /**
@@ -650,19 +653,22 @@ public class JCPController2D {
         /**
          * Returns an Atom if it is in a certain range of the given point.
          * Used to highlight an atom that is near the cursor.
+         * 
+         * <p><b>Important: the coordinates must be given in world
+         * coordinates and not in screen coordinates!
          *
-         * @param   mouseX  The x coordinate of the point
-         * @param   mouseY  The y coordinate of the point
-         * @return    An Atom if it is in a certain range of the given point
+         * @param   X  The x world coordinate of the point
+         * @param   Y  The y world coordinate of the point
+         * @return  An Atom if it is in a certain range of the given point
          */
-        private Atom getAtomInRange(int mouseX, int mouseY)
+        private Atom getAtomInRange(int X, int Y)
         {
                 double highlightRadius = r2dm.getHighlightRadius();
-                Atom closestAtom = GeometryTools.getClosestAtom(mouseX, mouseY, atomCon);
+                Atom closestAtom = GeometryTools.getClosestAtom(X, Y, atomCon);
                 if (closestAtom == null) return null;
                 // logger.debug("closestAtom  "+ closestAtom);
-                if (Math.sqrt(Math.pow(closestAtom.getX2D() - mouseX, 2) + 
-                    Math.pow(closestAtom.getY2D() - mouseY, 2)) < highlightRadius) {
+                if (Math.sqrt(Math.pow(closestAtom.getX2D() - X, 2) + 
+                    Math.pow(closestAtom.getY2D() - Y, 2)) < highlightRadius) {
                         return closestAtom;
                 }
                 return null;
@@ -672,23 +678,24 @@ public class JCPController2D {
         /**
          * Returns a Bond if it is in a certain range of the given point.
          * Used to highlight a bond that is near the cursor.
+         * 
+         * <p><b>Important: the coordinates must be given in world
+         * coordinates and not in screen coordinates!
          *
-         * @param   mouseX  The x coordinate of the point
-         * @param   mouseY  The y coordinate of the point
-         * @return    An Atom if it is in a certain range of the given point
+         * @param   X  The x world coordinate of the point
+         * @param   Y  The y world coordinate of the point
+         * @return  An Atom if it is in a certain range of the given point
          */
-        private Bond getBondInRange(int mouseX, int mouseY)
-        {
+        private Bond getBondInRange(int X, int Y) {
                 double highlightRadius = r2dm.getHighlightRadius();
-                Bond closestBond = GeometryTools.getClosestBond(mouseX, mouseY, atomCon);
+                Bond closestBond = GeometryTools.getClosestBond(X, Y, atomCon);
                 if (closestBond == null) return null;
                 // logger.debug("closestBond  "+ closestBond);
                 int[] coords = GeometryTools.distanceCalculator(
                     GeometryTools.getBondCoordinates(closestBond),highlightRadius);
                 int[] xCoords = {coords[0],coords[2],coords[4],coords[6]};
                 int[] yCoords = {coords[1],coords[3],coords[5],coords[7]};
-                if ((new Polygon(xCoords, yCoords, 4)).contains(new Point(mouseX, mouseY)))
-                {
+                if ((new Polygon(xCoords, yCoords, 4)).contains(new Point(X, Y))) {
                         return closestBond;
                 }
                 return null;
@@ -820,4 +827,11 @@ public class JCPController2D {
                 return selectedPart;
         }
 
+    /**
+     * This methods corrects for the zoom factor, and thus transforms
+     * screen coordinates back into world coordinates.
+     */
+    private int getWorldCoordinate(int coord) {
+        return (int)((double)coord / r2dm.getZoomFactor());
+    }
 }
