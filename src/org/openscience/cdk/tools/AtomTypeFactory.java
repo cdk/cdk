@@ -1,9 +1,9 @@
-/*
- *  AtomTypeFactory.java
+/* $RCSfile$    
+ * $Author$    
+ * $Date$    
+ * $Revision$
  *
- *  $RCSfile$    $Author$    $Date$    $Revision$
- *
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  *
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  *
@@ -21,7 +21,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
- 
 package org.openscience.cdk.tools;
 
 import java.util.*;
@@ -37,10 +36,14 @@ import org.w3c.dom.*;
 import JSX.*;
 
 /**
- *  Used to store and return data of a particular AtomType
+ * Used to store and return data of a particular AtomType. The data is
+ * stored in an XML file which is read with the JSX library. The file
+ * can be found in org.openscience.cdk.config.structgen_atomtypes.xml.
  *
  * @author     steinbeck
  * @created    August 29, 2001
+ *
+ * @keyword    atom, type
  */
 
 public class AtomTypeFactory
