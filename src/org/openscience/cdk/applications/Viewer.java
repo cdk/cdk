@@ -97,61 +97,72 @@ public class Viewer {
      * @param m     AtomContainer to view
      */
     private void view(AtomContainer m) {
-        JFrame frame = new JFrame("CDK Molecule Viewer");
-        frame.getContentPane().setLayout(new BorderLayout());
+        if (GeometryTools.has2DCoordinates(m) ||
+            GeometryTools.has3DCoordinates(m)) {
 
-        // use Accelerated viewer if 3D coords are available
-        if (GeometryTools.has3DCoordinates(m) && use3D) {
-            logger.info("Viewing with 3D viewer");
+            logger.info("Viewing molecule...");
+            JFrame frame = new JFrame("CDK Molecule Viewer");
+            frame.getContentPane().setLayout(new BorderLayout());
 
-            boolean viewed = false;
-            if (useJmol) {
-                logger.debug(".. trying Jmol viewer");
-                try {
-                    frame.getContentPane().setLayout(new BorderLayout());
-                    org.openscience.jmol.PublicJmol jmol = org.openscience.jmol.PublicJmol.getJmol(frame);
-                    jmol.showChemFrame(Convertor.convert(m));
+            // use Accelerated viewer if 3D coords are available
+            if (GeometryTools.has3DCoordinates(m) && use3D) {
+                logger.info("Viewing with 3D viewer");
 
-                    frame.getContentPane().add(jmol, BorderLayout.CENTER);
-                    logger.debug(".. done");
+                boolean viewed = false;
+                if (useJmol) {
+                    logger.debug(".. trying Jmol viewer");
+                    try {
+                        frame.getContentPane().setLayout(new BorderLayout());
+                        org.openscience.jmol.PublicJmol jmol = org.openscience.jmol.PublicJmol.getJmol(frame);
+                        jmol.showChemFrame(Convertor.convert(m));
 
-                    viewed = true;
-                } catch (Exception e) {
-                    logger.error("Viewing did not succeed!");
-                    logger.error(e.toString());
-                    e.printStackTrace();
+                        frame.getContentPane().add(jmol, BorderLayout.CENTER);
+                        logger.debug(".. done");
+
+                        viewed = true;
+                    } catch (Exception e) {
+                        logger.error("Viewing did not succeed!");
+                        logger.error(e.toString());
+                        e.printStackTrace();
+                    }
                 }
-            }
 
-            if (useJava3D && !viewed) {
-                logger.debug(".. trying Java3D viewer");
-                try {
-                    AcceleratedRenderer3D renderer = new AcceleratedRenderer3D(
-                        new AcceleratedRenderer3DModel(m));
+                if (useJava3D && !viewed) {
+                    logger.debug(".. trying Java3D viewer");
+                    try {
+                        AcceleratedRenderer3D renderer = new AcceleratedRenderer3D(
+                            new AcceleratedRenderer3DModel(m));
 
-                    frame.getContentPane().add(renderer, BorderLayout.CENTER);
-                    logger.debug(".. done");
+                        frame.getContentPane().add(renderer, BorderLayout.CENTER);
+                        logger.debug(".. done");
 
-                    viewed = true;
-                } catch (Exception e) {
-                    logger.error("Viewing did not succeed!");
-                    logger.error(e.toString());
-                    e.printStackTrace();
+                        viewed = true;
+                    } catch (Exception e) {
+                        logger.error("Viewing did not succeed!");
+                        logger.error(e.toString());
+                        e.printStackTrace();
+                    }
                 }
-            }
 
-            // try to view it without Java3D
-            if (!viewed) {
-                logger.debug(".. trying non-Java3D viewer");
-                MoleculeViewer3D mv = new MoleculeViewer3D(m);
+                // try to view it without Java3D
+                if (!viewed) {
+                    logger.debug(".. trying non-Java3D viewer");
+                    MoleculeViewer3D mv = new MoleculeViewer3D(m);
+                    frame.getContentPane().add(mv, BorderLayout.CENTER);
+                    logger.debug(".. done");
+                }
+            } else if (GeometryTools.has2DCoordinates(m)) {
+                logger.info("Viewing with 2D viewer");
+                MoleculeViewer2D mv = new MoleculeViewer2D(m);
+                logger.debug(m.toString());
                 frame.getContentPane().add(mv, BorderLayout.CENTER);
-                logger.debug(".. done");
             }
-        } else if (GeometryTools.has2DCoordinates(m)) {
-            logger.info("Viewing with 2D viewer");
-            MoleculeViewer2D mv = new MoleculeViewer2D(m);
-            frame.getContentPane().add(mv, BorderLayout.CENTER);
+            frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            frame.setSize(500,500);
+            frame.setVisible(true);
+            frame.addWindowListener(new AppCloser());
         } else {
+            logger.info("Generating 2D coordinates");
             StructureDiagramGenerator sdg = new StructureDiagramGenerator();
             try {
                 sdg.setMolecule(new Molecule(m));
@@ -162,10 +173,6 @@ public class Viewer {
                 System.exit(1);
             }
         }
-        frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        frame.setSize(500,500);
-        frame.setVisible(true);
-        frame.addWindowListener(new AppCloser());
     }
 
     /**
@@ -174,7 +181,8 @@ public class Viewer {
      * @param SMILES    SMILES string representing the molecule to view
      */
     public void viewSMILES(String SMILES) {
-        SmilesParser sp = new SmilesParser();
+       logger.info("Viewing SMILES...");
+       SmilesParser sp = new SmilesParser();
         Molecule mol = null;
         try {
             mol = sp.parseSmiles(SMILES);
@@ -182,15 +190,7 @@ public class Viewer {
             System.out.println("Problem parsing SMILES: " +  exc.toString());
         }
         if (mol != null) {
-            StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-            try {
-                sdg.setMolecule((Molecule)mol.clone());
-                sdg.generateCoordinates(new Vector2d(0,1));
-                view(sdg.getMolecule());
-            } catch(Exception exc) {
-                System.out.println("*** Exit due to an unexpected error during coordinate generation ***");
-                exc.printStackTrace();
-            }
+            view(mol);
         }
     }
 
@@ -200,6 +200,7 @@ public class Viewer {
      * @param inFile    name of the file to show
      */
     public void viewFile(String inFile) {
+        logger.info("Viewing file...");
         ChemFile chemFile = new ChemFile();
         try {
             ChemObjectReader reader;
@@ -246,12 +247,14 @@ public class Viewer {
                 logger.info("  number of molecules in model " + model + ": " +
                                 setOfMolecules.getMoleculeCount());
                 for (int i = 0; i < setOfMolecules.getMoleculeCount(); i++) {
+                    logger.info("model: " + i);
                     Molecule m = setOfMolecules.getMolecule(i);
                     view(m);
                 }
             }
             crystal = chemModel.getCrystal();
             if (crystal != null) {
+                logger.info("Found crystal!");
                 view(crystal);
             }
           }
