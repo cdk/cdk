@@ -24,9 +24,24 @@
  */
 package org.openscience.cdk.test.tools;
 
+
 import org.openscience.cdk.*;
 import org.openscience.cdk.tools.*;
+import org.openscience.cdk.io.*;
 import org.openscience.cdk.renderer.*;
+import org.openscience.cdk.layout.*;
+import org.openscience.cdk.templates.*;
+import org.openscience.cdk.geometry.*;
+import org.openscience.cdk.aromaticity.*;
+import org.openscience.cdk.smiles.*;
+
+import java.io.*;
+import javax.vecmath.*;
+import javax.swing.*;
+import javax.swing.tree.*;
+import java.util.*;
+import java.awt.*;
+
 import junit.framework.*;
 
 /**
@@ -201,7 +216,27 @@ public class SaturationCheckerTest extends TestCase
 		}
 		assertEquals(mfa.getAtomCount("H"),6);
 	}
-	
+
+	public void testAddImplicitHydrogens()
+	{
+		Molecule molecule = null;
+		try
+		{
+			String filename = "data/saturationcheckertest.mol";
+			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+			MDLReader reader = new MDLReader(new InputStreamReader(ins));
+			molecule = (Molecule)reader.read((ChemObject)new Molecule());
+			new SaturationChecker().addHydrogensToSatisfyValency(molecule);
+		} catch (Exception exc)
+		{
+			exc.printStackTrace();
+		}
+		if (standAlone)
+		{
+			MoleculeViewer2D.display(molecule, true);
+		}
+	}
+
 	/**
 	 *  The main program for the SaturationCheckerTest class
 	 *
@@ -212,7 +247,7 @@ public class SaturationCheckerTest extends TestCase
 		SaturationCheckerTest sct = new SaturationCheckerTest("SaturationCheckerTest");
 		sct.standAlone = true;
 		sct.setUp();
-		sct.testAromaticSaturation();
+		sct.testAddImplicitHydrogens();
 	}
 }
 
