@@ -306,6 +306,8 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
       if (objectType.equals("Molecule")) {
         if (propertyType.equals("id")) {
           currentMolecule.setID(propertyValue);
+        } else if (propertyType.equals("inchi")) {
+          currentMolecule.setProperty("iupac.nist.chemical.identifier", propertyValue);
         }
       } else if (objectType.equals("PseudoAtom")) {
         if (propertyType.equals("label")) {

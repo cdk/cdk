@@ -30,6 +30,7 @@ import java.io.StringReader;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemSequence;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.ChemicalRSSReader;
 import org.openscience.cdk.tools.LoggingTool;
@@ -135,6 +136,17 @@ public class RSSHandler extends DefaultHandler {
                                 model = sequence.getChemModel(0);
                             } else {
                                 logger.warn("ChemSequence contains no ChemModel");
+                            }
+                            // also extract INChI
+                            if (model.getSetOfMolecules() != null) {
+                                if (model.getSetOfMolecules().getMoleculeCount() > 0) {
+                                    Molecule molecule = model.getSetOfMolecules().getMolecule(0);
+                                    String inchi = (String)molecule.getProperty("iupac.nist.chemical.identifier");
+                                    if (inchi != null) 
+                                        model.setProperty(ChemicalRSSReader.RSS_ITEM_INCHI, inchi);
+                                } else {
+                                    logger.warn("ChemModel does not contain Molecule; could not extract INChI");
+                                }
                             }
                         } else {
                             logger.warn("ChemFile contains no ChemSequene");
