@@ -145,25 +145,24 @@ public class SmilesGenerator {
   private boolean isEndOfDoubleBond(AtomContainer container, Atom atom, Atom parent){
     int lengthAtom=container.getConnectedAtoms(atom).length+atom.getHydrogenCount();
     int lengthParent=container.getConnectedAtoms(parent).length+parent.getHydrogenCount();
-    if(container.getBond(atom,parent).getOrder()==CDKConstants.BONDORDER_DOUBLE&&lengthAtom==3&&lengthParent==3){
-      Atom[] atoms=container.getConnectedAtoms(atom);
-      Atom one=null;;
-      Atom two=null;
-      for(int i=0;i<atoms.length;i++){
-        if(atoms[i]!=parent&&one==null){
-          one=atoms[i];
-        }else{
+    if(container.getBond(atom,parent)!=null){//!=null müßte nicht notwendig sein
+      if(container.getBond(atom,parent).getOrder()==CDKConstants.BONDORDER_DOUBLE&&lengthAtom==3&&lengthParent==3){
+        Atom[] atoms=container.getConnectedAtoms(atom);
+        Atom one=null;;
+        Atom two=null;
+        for(int i=0;i<atoms.length;i++){
+          if(atoms[i]!=parent&&one==null)
+            one=atoms[i];
           if(atoms[i]!=parent&&one!=null)
             two=atoms[i];
         }
+        if(two!=null&&one.getSymbol().equals(two.getSymbol()))
+          return(false);
+        else
+          return(true);
       }
-      if(two!=null&&one.getSymbol().equals(two.getSymbol()))
-        return(false);
-      else
-        return(true);
     }
-    else
-      return(false);
+    return(false);
   }
   
   /**
@@ -185,12 +184,10 @@ public class SmilesGenerator {
     for(int i=0;i< atoms.length;i++){
       if(atoms[i]!=parent&& container.getBond(atoms[i],a).getOrder()==CDKConstants.BONDORDER_DOUBLE&&isEndOfDoubleBond(container,atoms[i],a))
         doubleBond=true;
-      if(atoms[i]!=parent&&one==null){
+      if(atoms[i]!=parent&&one==null)
         one=atoms[i];
-      }else{
-        if(atoms[i]!=parent&&one!=null)
-          two=atoms[i];
-      }
+      if(atoms[i]!=parent&&one!=null)
+        two=atoms[i];
     }
     if(one!=two && doubleBond)
       return(true);
@@ -368,8 +365,10 @@ public class SmilesGenerator {
               }
               else
               {
-                if(morgannumbers[container.getAtomNumber(atoms[k])]==firstMorganNumber)
-                  symbolsWithDifferentMorganNumbers--;
+                if(morgannumbers[container.getAtomNumber(atoms[k])]==firstMorganNumber){
+                  symbolsWithDifferentMorganNumbers--;//alles mit allem
+                  break;
+                }
               }
             }
           }
@@ -386,7 +385,9 @@ public class SmilesGenerator {
               }
             }
           }
-          if((atoms.length==5 || atoms.length==6) && symbolsWithDifferentMorganNumbers+differentAtoms>1)
+          if((atoms.length==5 || atoms.length==6) && symbolsWithDifferentMorganNumbers+differentAtoms>2)//hier auch 2+x
+            return(true);
+          if(isSquarePlanar(container,a) && symbolsWithDifferentMorganNumbers+differentAtoms>2)//hier auch 2+2
             return(true);
           return false;
         }
@@ -420,8 +421,8 @@ public class SmilesGenerator {
    * I did not find rules for canonical and chiral smiles, therefore there is no guarantee 
    * that the smiles complies to any externeal rules, but it is canonical compared to other smiles
    * produced by this method. The method checks if there are 2D coordinates but does not do
-   * check if coordinates make sense. If there are no valid stereo configuration, the smiles will be the same 
-   * as the non-chiral one.
+   * check if coordinates make sense. Invalid stereo configurations are ignored; if there are no 
+   * valid stereo configuration the smiles will be the same as the non-chiral one.
    *
 	 * @exception  Coordinates2DMissingException  At least one atom has no Point2D; coordinates are needed for crating the chiral smiles.
    * @param molecule The molecule to evaluate
@@ -494,7 +495,12 @@ public class SmilesGenerator {
   private void createSMILES(Atom a, StringBuffer line, AtomContainer atomContainer, boolean chiral, boolean doubleBondConfiguration) {
     Vector tree = new Vector();
     createDFSTree(a, tree, null, atomContainer); //Dummy parent
-    parseChain(tree, line, atomContainer, null, chiral, doubleBondConfiguration);
+    /*if(isStereo(atomContainer,(Atom)tree.get(0))){
+            Object dummy=tree.get(0);
+            tree.set(0,tree.get(1));
+            tree.set(1,dummy);
+    }*/
+    parseChain(tree, line, atomContainer, null, chiral, doubleBondConfiguration,null);
   }
 
   /**
@@ -549,7 +555,7 @@ public class SmilesGenerator {
   /**
    * Parse a branch
    */
-  private void parseChain(Vector v, StringBuffer buffer, AtomContainer container, Atom parent, boolean chiral, boolean doubleBondConfiguration){
+  private void parseChain(Vector v, StringBuffer buffer, AtomContainer container, Atom parent, boolean chiral, boolean doubleBondConfiguration, Vector vectorBefore){
     int positionInVector=0;
     Atom atom;
     for(int h=0;h<v.size();h++){
@@ -558,6 +564,11 @@ public class SmilesGenerator {
         atom = (Atom)o;
         if(parent != null) {
           parseBond(buffer, atom, parent, container);
+        }
+        else
+        {
+          if(chiral&&isStereo(container,atom))
+            parent=(Atom)((Vector)v.get(1)).get(0);
         }
         parseAtom(atom, buffer, container, chiral,doubleBondConfiguration,parent);
       	if(chiral && isStereo(container,atom)){
@@ -878,51 +889,67 @@ public class SmilesGenerator {
           }
           else
           {
-            for(int i=0;i<numberOfAtoms;i++){
-              if(onew[i] instanceof Atom){
-                Vector vtemp=new Vector();
-                vtemp.add(onew[i]);
-                for(int k=positionInVector+1+numberOfAtoms;k<v.size();k++){
-                  if(v.get(k) instanceof Atom)
-                    vtemp.add(v.get(k));
-                }
-                Vector vtemp2=new Vector();
-                for(int k=0;k<positionInVector+1+numberOfAtoms-1;k++){
-                  if(k==positionInVector+1+i){
-                    vtemp2.add(vtemp);
+            if(onew[numberOfAtoms-1] instanceof Vector){//caveat
+              for(int i=0;i<numberOfAtoms;i++){
+                if(onew[i] instanceof Atom){
+                  Vector vtemp=new Vector();
+                  vtemp.add(onew[i]);
+                  for(int k=positionInVector+1+numberOfAtoms;k<v.size();k++){
+                    if(v.get(k) instanceof Atom)
+                      vtemp.add(v.get(k));
                   }
-                  else
-                  {
-                    if(k>positionInVector){
-                      vtemp2.add(onew[k-positionInVector-1]);
+                  Vector vtemp2=new Vector();
+                  for(int k=0;k<positionInVector+1+numberOfAtoms-1;k++){
+                    if(k==positionInVector+1+i){
+                      vtemp2.add(vtemp);
                     }
                     else
                     {
-                      vtemp2.add(v.get(k));
+                      if(k>positionInVector){
+                        vtemp2.add(onew[k-positionInVector-1]);
+                      }
+                      else
+                      {
+                        vtemp2.add(v.get(k));
+                      }
                     }
                   }
+                  for(int k=0;k<((Vector)onew[numberOfAtoms-1]).size();k++){
+                    vtemp2.add(((Vector)onew[numberOfAtoms-1]).get(k));
+                  }
+                  v=vtemp2;
+                  break;
                 }
-                for(int k=0;k<((Vector)onew[numberOfAtoms-1]).size();k++){
-                  vtemp2.add(((Vector)onew[numberOfAtoms-1]).get(k));
-                }
-                v=vtemp2;
-                break;
               }
             }
           }
         }
         if(atom!=null&&parent!=null&&doubleBondConfiguration && isEndOfDoubleBond(container,atom,parent)){
+          int position=-1;
           if(v.get(positionInVector+1) instanceof Vector){
+            if(positionInVector>0){
               endOfDoubleBondConfiguration.push(((Vector)v.get(positionInVector-1)).get(0));
               endOfDoubleBondConfiguration.push(new Integer(positionInVector+1));
+            }else{
+              for(int i=0;i<vectorBefore.size();i++){
+                if(vectorBefore.get(i) instanceof Atom && ((Atom)vectorBefore.get(i)).getPoint2D().equals(parent.getPoint2D()))
+                  position=i;
+              }
+              endOfDoubleBondConfiguration.push(vectorBefore.get(position-1));
+              endOfDoubleBondConfiguration.push(new Integer(positionInVector+1));
+            }
           }
           else
           {
             Atom viewFrom=null;
-            if(v.get(positionInVector-2) instanceof Atom)
-              viewFrom=(Atom)v.get(positionInVector-2);
-            else
-              viewFrom=(Atom)((Vector)v.get(positionInVector-2)).get(0);
+            if(positionInVector>2){
+              if(v.get(positionInVector-2) instanceof Atom)
+                viewFrom=(Atom)v.get(positionInVector-2);
+              else
+                viewFrom=(Atom)((Vector)v.get(positionInVector-2)).get(0);
+            }else{
+              viewFrom=(Atom)vectorBefore.get(position-1);
+            }
             boolean oldAtom=isLeft(viewFrom,atom, parent);
             boolean newAtom=isLeft((Atom)v.get(positionInVector+1),parent,atom);
             if(oldAtom==newAtom)
@@ -939,7 +966,7 @@ public class SmilesGenerator {
           brackets = false;
         if(brackets)
           buffer.append('(');
-        parseChain((Vector)o, buffer, container, parent, chiral, doubleBondConfiguration);
+        parseChain((Vector)o, buffer, container, parent, chiral, doubleBondConfiguration,v);
         if(brackets)
           buffer.append(')');
         if(doubleBondConfiguration){
@@ -1064,7 +1091,9 @@ public class SmilesGenerator {
     if(isAromatic(a1) && isAromatic(a2)) {
       return;
     }
-    int type = (int)atomContainer.getBond(a1, a2).getOrder();
+    int type=0;
+    if(atomContainer.getBond(a1, a2)!=null) //!=null müsste nicht notwendig sein
+      type = (int)atomContainer.getBond(a1, a2).getOrder();
     if (type == 1) {
     } else if (type == 2) {
       line.append("=");
