@@ -70,7 +70,17 @@ public class Mol2Reader extends DefaultChemObjectReader {
      * @exception  CDKException
      */
      public ChemObject read(ChemObject object) throws CDKException {
-         if (object instanceof ChemModel) {
+         if (object instanceof ChemFile) {
+             ChemFile file = new ChemFile();
+             ChemSequence sequence = new ChemSequence();
+             ChemModel model = new ChemModel();
+             SetOfMolecules moleculeSet = new SetOfMolecules();
+             moleculeSet.addMolecule(readMolecule());
+             model.setSetOfMolecules(moleculeSet);
+             sequence.addChemModel(model);
+             file.addChemSequence(sequence);
+             return file;
+         } else if (object instanceof ChemModel) {
              ChemModel model = new ChemModel();
              SetOfMolecules moleculeSet = new SetOfMolecules();
              moleculeSet.addMolecule(readMolecule());
@@ -84,7 +94,8 @@ public class Mol2Reader extends DefaultChemObjectReader {
      }
      
      public boolean accepts(ChemObject object) {
-         if (object instanceof ChemModel) {
+         if (object instanceof ChemFile) {
+         } else if (object instanceof ChemModel) {
              return true;
          }
          return false;
@@ -102,7 +113,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
         AtomTypeFactory atFactory = null;
         try {
             atFactory = AtomTypeFactory.getInstance(
-                "org/openscience/cdk/config/mol2_atomtypes.xml"
+                "org/openscience/cdk/config/mol2_atomtypes.txt"
             );
         } catch (Exception exception) {
             String error = "Could not instantiate an AtomTypeFactory";
@@ -143,7 +154,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
                         String xStr = line.substring(17, 26).trim();
                         String yStr = line.substring(27, 36).trim();
                         String zStr = line.substring(37, 46).trim();
-                        String atomTypeStr = line.substring(17, 52).trim();
+                        String atomTypeStr = line.substring(47, 52).trim();
                         AtomType atomType = atFactory.getAtomType(atomTypeStr);
                         if (atomType == null) {
                             atomType = atFactory.getAtomType("X");
@@ -186,6 +197,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
                         }
                     }
                 }
+                line = input.readLine();
             }
         } catch (IOException exception) {
             String error = "Error while reading general structure";
