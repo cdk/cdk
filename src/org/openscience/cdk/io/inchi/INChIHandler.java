@@ -216,36 +216,66 @@ public class INChIHandler extends DefaultHandler {
 
         Bond bondToAdd = null;
         /* Fixme: treatment of branching is too limited! */
-        Pattern pattern = Pattern.compile("^(\\d+)(\\(.*\\))?-?(.*)");
         String remainder = bondsEncoding;
         while (remainder.length() > 0) {
             logger.debug("Bond part: ", remainder);
-            Matcher matcher = pattern.matcher(remainder);
-            if (matcher.matches()) {
-                String targetStr = matcher.group(1);
-                int target = Integer.parseInt(targetStr);
-                logger.debug("Source atom: ", source);
-                logger.debug("Target atom: ", targetStr);
-                Atom targetAtom = tautomer.getAtomAt(target-1);
-                if (source != -1) {
-                    Atom sourceAtom = tautomer.getAtomAt(source-1);
-                    bondToAdd = new Bond(sourceAtom, targetAtom, 1.0);
-                    tautomer.addBond(bondToAdd);
+            if (remainder.charAt(0) == '(') {
+                String branch = chopBranch(remainder);
+                analyseBondsEncoding(branch, source);
+                if (branch.length()+2 <= remainder.length()) {
+                    remainder = remainder.substring(branch.length()+2);
+                } else {
+                    remainder = "";
                 }
-                String branch = matcher.group(2);
-                logger.debug("  branch: ", branch);
-                if (branch != null) {
-                    analyseBondsEncoding(branch.substring(1,branch.length()-1), target); // make branch from target
-                }
-                source = target;
-                remainder = matcher.group(3);
-                logger.debug("  remainder: ", remainder);
             } else {
-                logger.error("Could not get next bond info part");
-                return;
+                Pattern pattern = Pattern.compile("^(\\d+)-?(.*)");
+                Matcher matcher = pattern.matcher(remainder);
+                if (matcher.matches()) {
+                    String targetStr = matcher.group(1);
+                    int target = Integer.parseInt(targetStr);
+                    logger.debug("Source atom: ", source);
+                    logger.debug("Target atom: ", targetStr);
+                    Atom targetAtom = tautomer.getAtomAt(target-1);
+                    if (source != -1) {
+                        Atom sourceAtom = tautomer.getAtomAt(source-1);
+                        bondToAdd = new Bond(sourceAtom, targetAtom, 1.0);
+                        tautomer.addBond(bondToAdd);
+                    }
+                    remainder = matcher.group(2);
+                    source = target;
+                    logger.debug("  remainder: ", remainder);
+                } else {
+                    logger.error("Could not get next bond info part");
+                    return;
+                }
             }
         }
         return;
     }
 
+    /**
+     * Extracts the first full branch. It extracts everything between the first
+     * '(' and the corresponding ')' char.
+     */
+    private String chopBranch(String remainder) {
+        boolean doChop = false;
+        int branchLevel = 0;
+        StringBuffer choppedString = new StringBuffer();
+        for (int i=0; i<remainder.length(); i++) {
+            char currentChar = remainder.charAt(i);
+            if (currentChar == '(') {
+                if (doChop) choppedString.append(currentChar);
+                doChop = true;
+                branchLevel++;
+            } else if (currentChar == ')') {
+                branchLevel--;
+                if (branchLevel == 0) doChop = false;
+                if (doChop) choppedString.append(currentChar);
+            } else if (doChop) {
+                choppedString.append(currentChar);
+            }
+        }
+        return choppedString.toString();
+    }
+    
 }
