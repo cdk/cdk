@@ -62,7 +62,7 @@
 	to the JavaDoc documentation of the CDK classes on the CDK website.
       </para>
       <para>
-        For example, the module provides the <emph>org.Atom</emph> entity of which
+        For example, the module provides the <emphasis>org.Atom</emphasis> entity of which
 	the value is &lt;ulink url="http://cdk.sf.net/api/org/openscience/cdk/Atom.html">Atom&lt;/ulink>.
 	The <filename>classes.mod</filename> file is generated using a JavaDoc doclet,
 	in the <filename type="directory">cdk/doc/javadoc</filename> directory.
