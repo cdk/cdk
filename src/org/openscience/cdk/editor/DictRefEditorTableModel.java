@@ -35,6 +35,8 @@ import javax.swing.table.*;
 
 public class DictRefEditorTableModel extends AbstractTableModel {
     
+    public final static String DICTREFPROPERTYNAME = "org.openscience.cdk.dict";
+    
     private String[] columnNames;
     private Vector fields = new Vector();
     private Vector dicts = new Vector();
@@ -112,20 +114,26 @@ public class DictRefEditorTableModel extends AbstractTableModel {
     public void setChemObject(ChemObject object) {
         cleanTable();
         Map properties = object.getProperties();
-        Iterator iter = properties.getKeys().iterator();
+        Iterator iter = properties.keySet().iterator();
         while (iter.hasNext()) {
             Object key = iter.next();
             if (key instanceof String) {
                 String keyName = (String)key;
-                if (keyName.startsWith("org.openscience.cdk.dict") {
+                if (keyName.equals(DICTREFPROPERTYNAME)) {
+                    fields.addElement(keyName);
+                    String dictRef = (String)properties.get(keyName);
+                    int index = dictRef.indexOf(':');
+                    if (index != -1) {
+                        dicts.addElement(dictRef.substring(0,index));
+                        entries.addElement(dictRef.substring(index+1));
+                    } else {
+                        // The dictRef has no namespace
+                        dicts.addElement(dictRef);
+                        entries.addElement("");
+                    }
+                    fireTableDataChanged();
                 }
             }
-        }
-    }
-    
-    private void insertRow(Object[] dataInRow) {
-        for (int i=0; i<columnNames.length; i++) {
-            fields.addElement(dataInRow[i]);
         }
     }
     
