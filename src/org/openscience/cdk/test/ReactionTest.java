@@ -69,7 +69,7 @@ public class ReactionTest extends TestCase {
         reaction.addReactant(acetate);
         assertEquals(4, reaction.getReactantCount());
         
-        assertEquals(1, reaction.getReactantCoefficient(aceticAcid));
+        assertEquals(1.0, reaction.getReactantCoefficient(aceticAcid), 0.00001);
     }
 
     public void testAddReactant_int() {
@@ -78,8 +78,8 @@ public class ReactionTest extends TestCase {
         Molecule sulfate = new Molecule();
         reaction.addReactant(proton, 2);
         reaction.addReactant(sulfate, 1);
-        assertEquals(2, reaction.getReactantCoefficient(proton));
-        assertEquals(1, reaction.getReactantCoefficient(sulfate));
+        assertEquals(2.0, reaction.getReactantCoefficient(proton), 0.00001);
+        assertEquals(1.0, reaction.getReactantCoefficient(sulfate), 0.00001);
     }
     
     public void testAddProduct() {
@@ -97,35 +97,35 @@ public class ReactionTest extends TestCase {
         reaction.addProduct(acetate);
         assertEquals(4, reaction.getProductCount());
         
-        assertEquals(1, reaction.getProductCoefficient(aceticAcid));
+        assertEquals(1.0, reaction.getProductCoefficient(aceticAcid), 0.00001);
     }
 
     public void testAddProduct_int() {
         Reaction reaction = new Reaction();
         Molecule proton = new Molecule();
         Molecule sulfate = new Molecule();
-        reaction.addProduct(proton, 2);
-        reaction.addProduct(sulfate, 1);
-        assertEquals(2, reaction.getProductCoefficient(proton));
-        assertEquals(1, reaction.getProductCoefficient(sulfate));
+        reaction.addProduct(proton, 2.0);
+        reaction.addProduct(sulfate, 1.0);
+        assertEquals(2.0, reaction.getProductCoefficient(proton), 0.00001);
+        assertEquals(1.0, reaction.getProductCoefficient(sulfate), 0.00001);
     }
     
     public void testGetReactantCoefficient() {
         Reaction reaction = new Reaction();
         Molecule proton = new Molecule();
-        reaction.addReactant(proton, 2);
-        assertEquals(2, reaction.getReactantCoefficient(proton));
+        reaction.addReactant(proton, 2.0);
+        assertEquals(2.0, reaction.getReactantCoefficient(proton), 0.00001);
         
-        assertEquals(-1, reaction.getReactantCoefficient(new Molecule()));
+        assertEquals(-1.0, reaction.getReactantCoefficient(new Molecule()), 0.00001);
     }
 
     public void testGetProductCoefficient() {
         Reaction reaction = new Reaction();
         Molecule proton = new Molecule();
-        reaction.addProduct(proton, 2);
-        assertEquals(2, reaction.getProductCoefficient(proton));
+        reaction.addProduct(proton, 2.0);
+        assertEquals(2.0, reaction.getProductCoefficient(proton), 0.00001);
 
-        assertEquals(-1, reaction.getProductCoefficient(new Molecule()));
+        assertEquals(-1.0, reaction.getProductCoefficient(new Molecule()), 0.00001);
     }
     
     public void testGetReactants() {

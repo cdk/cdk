@@ -49,7 +49,7 @@ public class ReactionManipulatorTest extends TestCase {
         Reaction reaction = new Reaction();
         reaction.setDirection(Reaction.BACKWARD);
         Molecule water = new Molecule();
-        reaction.addReactant(water, 3);
+        reaction.addReactant(water, 3.0);
         reaction.addReactant(new Molecule());
         reaction.addProduct(new Molecule());
         
@@ -57,7 +57,7 @@ public class ReactionManipulatorTest extends TestCase {
         assertEquals(Reaction.FORWARD, reversedReaction.getDirection());
         assertEquals(2, reversedReaction.getProductCount());
         assertEquals(1, reversedReaction.getReactantCount());
-        assertEquals(3, reversedReaction.getProductCoefficient(water));
+        assertEquals(3.0, reversedReaction.getProductCoefficient(water), 0.00001);
     }
 }
 

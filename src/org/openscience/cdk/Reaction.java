@@ -51,11 +51,11 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
 	protected int growArraySize = 3;
 
     protected Molecule[] reactants;
-    protected int[] reactantStoichiometry;
+    protected double[] reactantStoichiometry;
     protected int reactantCount;
 
     protected Molecule[] products;
-    protected int[] productStoichiometry;
+    protected double[] productStoichiometry;
     protected int productCount;
     
     private int reactionDirection;
@@ -65,10 +65,10 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      */
     public Reaction() {
         this.reactants = new Molecule[growArraySize];
-        this.reactantStoichiometry = new int[growArraySize];
+        this.reactantStoichiometry = new double[growArraySize];
         reactantCount = 0;
         this.products = new Molecule[growArraySize];
-        this.productStoichiometry = new int[growArraySize];
+        this.productStoichiometry = new double[growArraySize];
         productCount = 0;
         reactionDirection = FORWARD;
     }
@@ -113,7 +113,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      * @param reactant   Molecule added as reactant to this reaction
      */
     public void addReactant(Molecule reactant) {
-        this.addReactant(reactant, 1);
+        this.addReactant(reactant, 1.0);
     }
     
     /**
@@ -122,7 +122,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      * @param reactant    Molecule added as reactant to this reaction
      * @param coefficient Stoichiometry coefficient for this molecule
      */
-    public void addReactant(Molecule reactant, int coefficient) {
+    public void addReactant(Molecule reactant, double coefficient) {
         if (reactantCount + 1 >= reactants.length) growReactantArray();
         reactants[reactantCount] = reactant;
         reactantStoichiometry[reactantCount] = coefficient;
@@ -135,7 +135,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      * @param product    Molecule added as product to this reaction
      */
     public void addProduct(Molecule product) {
-        this.addProduct(product, 1);
+        this.addProduct(product, 1.0);
     }
     
     /**
@@ -144,7 +144,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      * @param product     Molecule added as product to this reaction
      * @param coefficient Stoichiometry coefficient for this molecule
      */
-    public void addProduct(Molecule product, int coefficient) {
+    public void addProduct(Molecule product, double coefficient) {
         if (productCount + 1 >= products.length) growProductArray();
         products[productCount] = product;
         productStoichiometry[productCount] = coefficient;
@@ -156,13 +156,13 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      *
      * @return -1, if the given molecule is not a product in this Reaction
      */
-    public int getReactantCoefficient(Molecule reactant) {
+    public double getReactantCoefficient(Molecule reactant) {
         for (int i=0; i<reactantCount; i++) {
             if (reactants[i].equals(reactant)) {
                 return reactantStoichiometry[i];
             }
         }
-        return -1;
+        return -1.0;
     }
     
     /**
@@ -170,13 +170,13 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      *
      * @return -1, if the given molecule is not a product in this Reaction
      */
-    public int getProductCoefficient(Molecule product) {
+    public double getProductCoefficient(Molecule product) {
         for (int i=0; i<productCount; i++) {
             if (products[i].equals(product)) {
                 return productStoichiometry[i];
             }
         }
-        return -1;
+        return -1.0;
     }
     
     /**
@@ -197,7 +197,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
         Molecule[] newReactants = new Molecule[reactants.length + growArraySize];
         System.arraycopy(reactants, 0, newReactants, 0, reactants.length);
         reactants = newReactants;
-        int[] newCoeffs = new int[reactantStoichiometry.length + growArraySize];
+        double[] newCoeffs = new double[reactantStoichiometry.length + growArraySize];
         System.arraycopy(reactantStoichiometry, 0, newCoeffs, 0, reactantStoichiometry.length);
         reactantStoichiometry = newCoeffs;
     }
@@ -206,7 +206,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
         Molecule[] newProducts = new Molecule[products.length + growArraySize];
         System.arraycopy(products, 0, newProducts, 0, products.length);
         products = newProducts;
-        int[] newCoeffs = new int[productStoichiometry.length + growArraySize];
+        double[] newCoeffs = new double[productStoichiometry.length + growArraySize];
         System.arraycopy(productStoichiometry, 0, newCoeffs, 0, productStoichiometry.length);
         productStoichiometry = newCoeffs;
     }

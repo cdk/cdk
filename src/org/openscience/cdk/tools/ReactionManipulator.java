@@ -99,12 +99,12 @@ public class ReactionManipulator {
         }
         Molecule[] reactants = reaction.getReactants();
         for (int i=0; i<reactants.length; i++) {
-            int coefficient = reaction.getReactantCoefficient(reactants[i]);
+            double coefficient = reaction.getReactantCoefficient(reactants[i]);
             reversedReaction.addProduct(reactants[i], coefficient);
         }
         Molecule[] products = reaction.getProducts();
         for (int i=0; i<products.length; i++) {
-            int coefficient = reaction.getProductCoefficient(products[i]);
+            double coefficient = reaction.getProductCoefficient(products[i]);
             reversedReaction.addReactant(products[i], coefficient);
         }
         return reversedReaction;
