@@ -61,6 +61,7 @@ import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.io.setting.StringIOSetting;
 import org.openscience.cdk.tools.IDCreator;
 import org.openscience.cdk.tools.IsotopeFactory;
+import org.openscience.cdk.tools.LoggingTool;
 
 import org.openscience.cdk.libio.cml.Convertor;
 
@@ -136,7 +137,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
 
     private String prefix = "";
     
-    private org.openscience.cdk.tools.LoggingTool logger;
+    private LoggingTool logger;
     private IsotopeFactory isotopeFactory = null;
 
     /**
@@ -172,7 +173,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
     }
 
     public CMLWriter(boolean fragment) {
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        logger = new LoggingTool(this);
         this.fragment = fragment;
         this.done = false;
         try {
@@ -197,7 +198,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
      * @param object A Molecule of SetOfMolecules object
      */
     public void write(ChemObject object) throws CDKException {
-        logger.debug("Writing object in CML of type: " + object.getClass().getName());
+        logger.debug("Writing object in CML of type: ", object.getClass().getName());
         
         customizeJob();
         
@@ -211,31 +212,41 @@ public class CMLWriter extends DefaultChemObjectWriter {
             
             CMLDocumentFactory docfac = DocumentFactoryImpl.newInstance();
             cmldoc = (CMLDocument) docfac.createDocument();
-            try{
-              cmldoc.appendChild(new Convertor().convert(object,cmldoc,cmlIds.isSet(),namespacedOutput.isSet(), schemaInstanceOutput.isSet(), instanceLocation));
-            }
-            catch(CMLException ex){
-              throw new CDKException(ex.getMessage());
+            try {
+                Convertor convertor = new Convertor(cmlIds.isSet(),namespacedOutput.isSet(), 
+                                                    schemaInstanceOutput.isSet(), 
+                                                    instanceLocation.getSetting(),
+                                                    prefix);
+                cmldoc.appendChild(convertor.convert(object,cmldoc));
+            } catch (CMLException ex){
+                throw new CDKException(ex.getMessage());
             }
 
             if (!fragment) {
                 done = true;
             }
-        } else {};
+        } else {
+            logger.warn("I'm done. But what does this mean?!");
+        };
         
-        try{
-          TransformerFactory tFactory = TransformerFactory.newInstance();
-          Transformer transformer = tFactory.newTransformer();
-          if (fragment || !xmlDecl.isSet()) {
-            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-          }
-          if(indent.isSet())
-            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-          DOMSource source = new DOMSource(cmldoc);
-          StreamResult result = new StreamResult(output);
-          transformer.transform(source, result);
-        }catch(javax.xml.transform.TransformerException ex){
-          throw new CDKException(ex.getMessage());
+        try {
+            TransformerFactory tFactory = TransformerFactory.newInstance();
+            Transformer transformer = tFactory.newTransformer();
+            if (fragment || !xmlDecl.isSet()) {
+                logger.info("Omiting XML declaration");
+                transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+            }
+            if (indent.isSet()) {
+                logger.info("Indenting XML output");
+                transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            }
+            DOMSource source = new DOMSource(cmldoc);
+            StreamResult result = new StreamResult(output);
+            transformer.transform(source, result);
+        } catch (javax.xml.transform.TransformerException ex) {
+            logger.error("Error while transforming XML string: ", ex.getMessage());
+            logger.debug(ex);
+            throw new CDKException(ex.getMessage());
         }
     };
 
@@ -270,7 +281,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
 
         indent = new BooleanIOSetting("Indenting", IOSetting.LOW,
           "Should the output be indented?", 
-          "false");
+          "true");
     }
     
     private void customizeJob() {

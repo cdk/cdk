@@ -1,5 +1,4 @@
-/*
- *  $RCSfile$
+/*  $RCSfile$
  *  $Author$
  *  $Date$
  *  $Revision$
@@ -29,17 +28,17 @@
  */
 package org.openscience.cdk.libio.cml;
 
-import java.util.*;
+import java.util.Hashtable;
+import java.util.Enumeration;
+import java.util.Iterator;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
-
+import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
-
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.xmlcml.cmlimpl.*;
 import org.xmlcml.cml.*;
-
-import org.w3c.dom.*;
-
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Isotope;
 import org.openscience.cdk.PseudoAtom;
@@ -65,7 +64,8 @@ import org.openscience.cdk.io.setting.StringIOSetting;
  * convert CDK classes to cml classes/documents.
  *
  * @author        shk3
- * @created       February 19, 2004
+ * @author        egonw
+ * @created       2004-02-19
  * @cdk.module    extra
  * @cdk.keyword   CML
  * @cdk.keyword   class convertor
@@ -76,67 +76,76 @@ import org.openscience.cdk.io.setting.StringIOSetting;
  */
 public class Convertor {
 
-  public final static int COORDINATES_3D = 3;
-  public final static int COORDINATES_2D = 2;
-  private static org.openscience.cdk.tools.LoggingTool logger;
-  private CMLDocument doc;
-  private IsotopeFactory isotopeFactory;
-  private boolean useCmlIdentifiers;
-  private String namespace="http://www.xml-cml.org/schema/cml2/core";
-  
-  
-  public Convertor(){
-    super();
-    logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
-    try {
-        isotopeFactory = IsotopeFactory.getInstance();
-    } catch (Exception exception) {
-        logger.error("Failed to initiate isotope factory: " + exception.toString());
+    public final static int COORDINATES_3D = 3;
+    public final static int COORDINATES_2D = 2;
+    private static LoggingTool logger;
+    private CMLDocument doc;
+    private IsotopeFactory isotopeFactory;
+    private boolean useCmlIdentifiers;
+    private boolean setNamespaceUri;
+    private boolean schemaInstanceOutput;
+    private String prefix;
+    private String instanceLocation;
+    private String namespace = "http://www.xml-cml.org/schema/cml2/core";
+    
+    
+    public Convertor() {
+        this(true, false, false, "", "");
     }
-  }
 
-
-  
+    public Convertor (boolean useCmlIdentifiers, boolean setNamespaceUri, boolean schemaInstanceOutput, String instanceLocation, String prefix) {
+        logger = new LoggingTool(this);
+        try {
+            isotopeFactory = IsotopeFactory.getInstance();
+        } catch (Exception exception) {
+            logger.error("Failed to initiate isotope factory: ", exception.getMessage());
+            logger.debug(exception);
+        }
+        this.useCmlIdentifiers = useCmlIdentifiers;
+        this.setNamespaceUri = setNamespaceUri;
+        this.schemaInstanceOutput = schemaInstanceOutput;
+        this.instanceLocation = instanceLocation;
+        this.prefix = prefix;
+    }
+    
     /**
      * Serializes the ChemObject to CML and redirects it to the output Writer.
      *
      * @param object A Molecule of SetOfMolecules object
      */
-    public Node convert(ChemObject object, CMLDocument doc, boolean useCmlIdentifiers, boolean setNamespaceUri, boolean schemaInstanceOutput, StringIOSetting instanceLocation) throws CDKException, CMLException {
-        logger.debug("Writing object in CML of type: " + object.getClass().getName());
+    public Node convert(ChemObject object, CMLDocument doc) throws CDKException, CMLException {
+        logger.debug("Writing object in CML of type: ", object.getClass().getName());
         this.doc=doc;
-        this.useCmlIdentifiers=useCmlIdentifiers;
-        Element test=doc.createElement("test");
+        Element element = this.createElement("test");
         if (object instanceof SetOfMolecules) {
-            writeSetOfMolecules((SetOfMolecules)object, test);
+            writeSetOfMolecules((SetOfMolecules)object, element);
         } else if (object instanceof Molecule) {
-            writeMolecule((Molecule)object, test);
+            writeMolecule((Molecule)object, element);
         } else if (object instanceof Crystal) {
-            writeCrystal((Crystal)object, test);
+            writeCrystal((Crystal)object, element);
         } else if (object instanceof ChemSequence) {
-            writeChemSequence((ChemSequence)object, test);
+            writeChemSequence((ChemSequence)object, element);
         } else if (object instanceof ChemFile) {
-            writeChemFile((ChemFile)object, test);
+            writeChemFile((ChemFile)object, element);
         } else if (object instanceof ChemModel) {
-            writeChemModel((ChemModel)object, test);
+            writeChemModel((ChemModel)object, element);
         } else if (object instanceof Atom) {
-            writeAtom((Atom)object, test);
+            writeAtom((Atom)object, element);
         } else if (object instanceof Bond) {
-            writeBond((Bond)object, test);
+            writeBond((Bond)object, element);
         } else if (object instanceof Reaction) {
-            writeReaction((Reaction)object, test);
+            writeReaction((Reaction)object, element);
         } else {
             logger.error("This object type is not supported.");
             throw new CDKException("This object type is not supported.");
         }
-        if(setNamespaceUri){
-          ((Element)test.getFirstChild()).setAttribute("xmlns",namespace);
-          if (schemaInstanceOutput) {
-                ((Element)test.getFirstChild()).setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
-                ((Element)test.getFirstChild()).setAttribute("xsi:schemaLocation",namespace + " " + instanceLocation.getSetting());
-            }
+        if (setNamespaceUri && schemaInstanceOutput) {
+            Attr schemaLocAttr = doc.createAttributeNS("http://www.w3.org/2001/XMLSchema-instance", "schemaLocation");
+            schemaLocAttr.setPrefix("xsi");
+            schemaLocAttr.setValue(namespace + " " + instanceLocation);
+            ((Element)element.getFirstChild()).setAttributeNodeNS(schemaLocAttr);
         }
-        return(test.getFirstChild());
+        return(element.getFirstChild());
     };
 
     // Private procedures
@@ -162,20 +171,20 @@ public class Convertor {
         nodeToAppend.appendChild(mol);
         CrystalImpl crystalimp=new CrystalImpl(doc);
         mol.appendChild(crystalimp);
-        Element string=doc.createElement("string");
+        Element string = this.createElement("string");
         string.setAttribute("builtin","spacegroup");
         crystalimp.appendChild(string);
-        Element floatarraya=doc.createElement("floatArray");
+        Element floatarraya = this.createElement("floatArray");
         floatarraya.setAttribute("title","a");
         floatarraya.setAttribute("convention","PMP");
         crystalimp.appendChild(floatarraya);
         floatarraya.appendChild(doc.createTextNode(write(crystal.getA())));
-        Element floatarrayb=doc.createElement("floatArray");
+        Element floatarrayb = this.createElement("floatArray");
         floatarrayb.setAttribute("title","b");
         floatarrayb.setAttribute("convention","PMP");
         crystalimp.appendChild(floatarrayb);
         floatarrayb.appendChild(doc.createTextNode(write(crystal.getB())));
-        Element floatarrayc=doc.createElement("floatArray");
+        Element floatarrayc = this.createElement("floatArray");
         floatarrayc.setAttribute("title","c");
         floatarrayc.setAttribute("convention","PMP");
         crystalimp.appendChild(floatarrayc);
@@ -189,16 +198,16 @@ public class Convertor {
 
     private void writeSetOfMolecules(SetOfMolecules som, Element nodeToAppend) throws CMLException{
         logger.debug("Writing SOM");
-        int count = som.getMoleculeCount();
-        logger.debug("Found " + count + " molecule(s) in set");
-        if (count > 1) {
-            ListImpl list=new ListImpl(doc);
+        Molecule[] molecules = som.getMolecules();
+        logger.debug("Found # molecule(s) in set: ", molecules.length);
+        if (molecules.length > 1) {
+            ListImpl list = new ListImpl(doc);
             nodeToAppend.appendChild(list);
-            for (int i = 0; i < count; i++) {
-              writeMolecule(som.getMolecule(i), list);
+            for (int i = 0; i < molecules.length; i++) {
+                writeMolecule(molecules[i], list);
             }
-        }else{
-            writeMolecule(som.getMolecule(0), nodeToAppend);
+        } else if (molecules.length == 1) {
+            writeMolecule(molecules[0], nodeToAppend);
         }
     }
 
@@ -217,25 +226,28 @@ public class Convertor {
 
     private void writeChemModel(ChemModel model, Element nodeToAppend) throws CMLException {
         logger.debug("Writing ChemModel");
+        CmlImpl cml=new CmlImpl(doc);
+        nodeToAppend.appendChild(cml);
         Crystal crystal = model.getCrystal();
         SetOfMolecules som = model.getSetOfMolecules();
         SetOfReactions reactionSet = model.getSetOfReactions();
         if (crystal != null) {
-            writeCrystal(crystal, nodeToAppend);
+            writeCrystal(crystal, cml);
         }
         if (som != null) {
-            writeSetOfMolecules(som, nodeToAppend);
+            writeSetOfMolecules(som, cml);
         }
         if (reactionSet != null) {
-            writeSetOfReactions(reactionSet, nodeToAppend);
+            writeSetOfReactions(reactionSet, cml);
         }
         if (crystal == null && som == null && reactionSet == null) {
-            nodeToAppend.appendChild(doc.createComment("model contains no data -->\n"));
+            cml.appendChild(doc.createComment("model contains no data"));
         }
     }
 
     private void writeSetOfReactions(SetOfReactions reactionSet, Element nodeToAppend) throws CMLException{
         Reaction[] reactions = reactionSet.getReactions();
+        logger.debug("Writing SetOfReactions: ", reactions.length);
         if (reactions.length > 0) {
             ReactionListImpl reactionlist=new ReactionListImpl(doc);
             namespace="http://www.xml-cml.org/schema/cml2/react";
@@ -252,6 +264,7 @@ public class Convertor {
     }
     
     private void writeReaction(Reaction reaction, Element nodeToAppend) throws CMLException{
+        logger.debug("Writing Reaction...");
         ReactionImpl reactionimpl=new ReactionImpl(doc);
         namespace="http://www.xml-cml.org/schema/cml2/react";
         nodeToAppend.appendChild(reactionimpl);
@@ -301,6 +314,7 @@ public class Convertor {
     }
 
     private void writeMolecule(Molecule mol, Element nodeToAppend) throws CMLException{
+        logger.debug("Writing molecule");
         // create CML atom and bond ids
         if (useCmlIdentifiers) {
             new IDCreator().createIDs(mol);
@@ -338,13 +352,13 @@ public class Convertor {
             Object key = keys.nextElement();
             if (key instanceof DictRef) {
                 Object value = props.get(key);
-                Element scalar=doc.createElement("scalar");
+                Element scalar = this.createElement("scalar");
                 scalar.setAttribute("dictRef",((DictRef)key).getType());
                 nodeToAppend.appendChild(scalar);
                 scalar.appendChild(doc.createTextNode(value.toString()));
             } else if (key instanceof String && !((String)key).startsWith("org.openscience.cdk")) {
                 Object value = props.get(key);
-                Element scalar=doc.createElement("scalar");
+                Element scalar = this.createElement("scalar");
                 scalar.setAttribute("title",(String)key);
                 nodeToAppend.appendChild(scalar);
                 scalar.appendChild(doc.createTextNode(value.toString()));
@@ -462,7 +476,7 @@ public class Convertor {
             bondimpl.setAttribute("order", "T");
         } else {
             logger.warn("Outputing bond order in non CML2 default way.");
-            Element scalar=doc.createElement("scalar");
+            Element scalar = this.createElement("scalar");
             scalar.setAttribute("dataType","xsd:float");
             scalar.setAttribute("title","order");
             bondimpl.appendChild(scalar);
@@ -470,7 +484,7 @@ public class Convertor {
         }
         if (bond.getStereo() == CDKConstants.STEREO_BOND_UP ||
             bond.getStereo() == CDKConstants.STEREO_BOND_DOWN) {
-            Element scalar=doc.createElement("scalar");
+            Element scalar = this.createElement("scalar");
             scalar.setAttribute("dataType","xsd:string");
             scalar.setAttribute("dictRef","mdl:stereo");
             bondimpl.appendChild(scalar);
@@ -515,6 +529,21 @@ public class Convertor {
             }
         }
         return(sb.toString());
+    }
+    
+    private Element createElement(String elementName) {
+        logger.debug("Creating element: ", elementName);
+        Element element = null;
+        if (setNamespaceUri) {
+            logger.debug("Setting NS to: ", namespace);
+            element = doc.createElementNS(namespace, elementName);
+            if (prefix.length() > 0) {
+                element.setPrefix(prefix);
+            }
+        } else {
+            element = doc.createElement(elementName);
+        }
+        return element;
     }
 }
 
