@@ -49,7 +49,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.ChemModelManipulator;
 
 /**
- *  Description of the Class
+ *  A set of test cases for the StructureDiagramGenerator
  *
  * @cdkPackage test
  *

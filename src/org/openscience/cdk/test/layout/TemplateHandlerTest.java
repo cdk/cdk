@@ -33,6 +33,7 @@ import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.layout.TemplateHandler;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.templates.MoleculeFactory;
 
 /**
  *  Description of the Class
@@ -68,7 +69,7 @@ public class TemplateHandlerTest extends TestCase
 	 */
 	public void setUp()
 	{
-		logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+		logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName(),true);
 	}
 
 
@@ -103,6 +104,49 @@ public class TemplateHandlerTest extends TestCase
 		assertTrue(th.mapTemplates(mol));
 	}
 	
+	public void testAddMolecule() throws Exception
+	{
+		logger.debug("***TestAddMolecule***");
+		boolean itIsInThere = false;
+		TemplateHandler th = new TemplateHandler();
+		Molecule mol = MoleculeFactory.makeAlphaPinene();
+		String smiles = "C1=C(C)C2CC(C1)C2(C)(C)";
+		Molecule smilesMol = new SmilesParser().parseSmiles(smiles);
+		itIsInThere = th.mapTemplates(smilesMol);
+		logger.debug("Alpha-Pinene found by templateMapper: " + itIsInThere);
+		assertFalse(itIsInThere);
+		th.addMolecule(mol);
+		logger.debug("now adding template for alpha-Pinen and trying again.");
+		itIsInThere = th.mapTemplates(smilesMol);
+		logger.debug("Alpha-Pinene found by templateMapper: " + itIsInThere);
+		assertTrue(itIsInThere);
+	}
+
+	public void testRemoveMolecule() throws Exception
+	{
+		logger.debug("***TestRemoveMolecule***");
+		boolean itIsInThere = false;
+		TemplateHandler th = new TemplateHandler();
+		Molecule mol = MoleculeFactory.makeAlphaPinene();
+		String smiles = "C1=C(C)C2CC(C1)C2(C)(C)";
+		Molecule smilesMol = new SmilesParser().parseSmiles(smiles);
+		itIsInThere = th.mapTemplates(smilesMol);
+		logger.debug("Alpha-Pinene found by templateMapper: " + itIsInThere);
+		assertFalse(itIsInThere);
+		th.addMolecule(mol);
+		logger.debug("now adding template for alpha-Pinen and trying again.");
+		itIsInThere = th.mapTemplates(smilesMol);
+		logger.debug("Alpha-Pinene found by templateMapper: " + itIsInThere);
+		assertTrue(itIsInThere);
+		logger.debug("now removing template for alpha-Pinen again and trying again.");
+		th.removeMolecule(mol);
+		itIsInThere = th.mapTemplates(smilesMol);
+		logger.debug("Alpha-Pinene found by templateMapper: " + itIsInThere);
+		assertFalse(itIsInThere);
+		
+	}
+
+	
 	public void visualLayout() throws Exception
 	{
 		String smiles = "CC12C3(C6CC6)C4(C)C1C5(C(CC)C)C(C(CC)C)2C(C)3C45CC(C)C";
@@ -125,7 +169,9 @@ public class TemplateHandlerTest extends TestCase
 			tht.standAlone = true;
 			//tht.testInit();
 			//tht.testDetection();
-			tht.visualLayout();
+			//tht.visualLayout();
+			tht.testAddMolecule();
+			tht.testRemoveMolecule();
 		} catch (Exception exc)
 		{
 			exc.printStackTrace();
