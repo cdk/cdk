@@ -1,24 +1,25 @@
-/* SwissArmyKnife.java
+/*
+ * SwissArmyKnife.java
  *
  * $RCSfile$    $Author$    $Date$    $Revision$
- * 
+ *
  * Copyright (C) 1997-2001  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: steinbeck@ice.mpg.de, geelter@maul.chem.nd.edu, egonw@sci.kun.nl
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
 package org.openscience.cdk.tools;
@@ -27,31 +28,78 @@ import java.util.*;
 import java.io.*;
 import org.openscience.cdk.*;
 
-
-/** 
- * A set of utilities which did not really fit into any other category
+/**
+ *  A set of utilities which did not really fit into any other category
+ *
+ * @author     steinbeck
+ * @created    June 19, 2001
  */
-public class SwissArmyKnife
-{
+public class SwissArmyKnife {
 
-    public static boolean  debug = false; // minimum details
+	/**
+	 *  Description of the Field
+	 */
+	public static boolean debug = false;
+	// minimum details
 
+			/**
+	 *  Description of the Field
+	 */
 	public static int INFINITY = 1000000;
 
 
 	/**
-	 * Returns a string representation of a 2D int matrix
-	 * for printing or listing to the console
+	 *  Returns a string reporting the time passed between startTime and endTime, both given in milliseconds, in hours, minutes, seconds and milliseconds
 	 *
-	 * @param contab The 2D int matrix for which a string representation is to be generatred  
+	 * @param  startTime  The start time in milliseconds
+	 * @param  endTime    The end time in milliseconds
+	 * @return            A human readable representation of a timespan given in milliseconds
 	 */
-	public static String printInt2D(int[][] contab)
-	{
+	public static String getDuration(long startTime, long endTime) {
+		long diff = endTime - startTime;
+		return getDuration(diff);
+	}
+
+
+	/**
+	 *  Returns a String reporting the time passed during a given number of milliseconds.
+	 *
+	 * @param  diff  A time span in milliseconds
+	 * @return       A human readable representation of a timespan given in milliseconds
+	 */
+	public static String getDuration(long diff) {
+		GregorianCalendar calendar = new GregorianCalendar();
+		calendar.setTime(new Date(diff));
+		StringBuffer s = new StringBuffer();
+		if (calendar.get(Calendar.HOUR) > 1) {
+			s.append("hours: " + (calendar.get(Calendar.HOUR) - 1) + ", ");
+		}
+		if (calendar.get(Calendar.MINUTE) > 0) {
+			s.append("minutes: " + (calendar.get(Calendar.MINUTE)) + ", ");
+		}
+		if (calendar.get(Calendar.SECOND) > 0) {
+			s.append("seconds: " + (calendar.get(Calendar.SECOND)) + ", ");
+		}
+		if (calendar.get(Calendar.MILLISECOND) > 1) {
+			s.append("milliseconds: " + (calendar.get(Calendar.MILLISECOND)) + ", ");
+		}
+		s.append("total milliseconds: " + diff);
+		return s.toString();
+	}
+
+
+
+
+	/**
+	 *  Returns a string representation of a 2D int matrix for printing or listing to the console
+	 *
+	 * @param  contab  The 2D int matrix for which a string representation is to be generatred
+	 * @return         Description of the Returned Value
+	 */
+	public static String printInt2D(int[][] contab) {
 		String line = "";
-		for (int f = 0; f < contab.length; f++)
-		{
-			for (int g = 0; g < contab.length; g++)
-			{
+		for (int f = 0; f < contab.length; f++) {
+			for (int g = 0; g < contab.length; g++) {
 				line += contab[f][g] + " ";
 			}
 			line += "\n";
@@ -62,82 +110,45 @@ public class SwissArmyKnife
 
 
 	/**
-	 * Calculates the faculty for a given integer
+	 *  Calculates the faculty for a given integer
 	 *
-	 * @param   i The int value for which the faculty is to be returned  
-	 * @return The faculty of i    
+	 * @param  i  The int value for which the faculty is to be returned
+	 * @return    The faculty of i
 	 */
-	public static int faculty(int i)
-	{
-		if (i > 1) return i * faculty(i - 1);
+	public static int faculty(int i) {
+		if (i > 1) {
+			return i * faculty(i - 1);
+		}
 		return 1;
 	}
-	
+
 
 	/**
-	 * Returns a string reporting the time passed between startTime and endTime,
-	 * both given in milliseconds, in hours, minutes, seconds and milliseconds
+	 *  Gets a Molecule and an array of element symbols. Counts how many of each of these elements the molecule contains. Than it returns the elements followed by their number as a string, i.e. C15H8N3.
 	 *
-	 * @param   startTime  The start time in milliseconds
-	 * @param   endTime  The end time in milliseconds
-	 * @return  A human readable representation of a timespan given in milliseconds   
+	 * @param  mol       The Molecule to be searched
+	 * @param  elements  Description of Parameter
+	 * @return           The element formula as a string
 	 */
-	public static String getDuration(long startTime, long endTime)
-	{
-		long diff = endTime - startTime;
-		return getDuration(diff);		
-	}
-	
-
-	/**
-	 * Returns a String reporting the time passed during a given number of milliseconds.
-	 *
-	 * @param   diff A time span in milliseconds 
- 	 * @return  A human readable representation of a timespan given in milliseconds    
-	 */
-	public static String getDuration(long diff)
-	{
-		GregorianCalendar calendar = new GregorianCalendar();
-		calendar.setTime(new Date(diff));
-		StringBuffer s = new StringBuffer();
-		if (calendar.get(Calendar.HOUR) > 1) s.append("hours: " + (calendar.get(Calendar.HOUR) - 1) + ", ");		
-		if (calendar.get(Calendar.MINUTE) > 0) s.append("minutes: " + (calendar.get(Calendar.MINUTE)) + ", ");				
-		if (calendar.get(Calendar.SECOND) > 0) s.append("seconds: " + (calendar.get(Calendar.SECOND)) + ", ");				
-		if (calendar.get(Calendar.MILLISECOND) > 1) s.append("milliseconds: " + (calendar.get(Calendar.MILLISECOND)) + ", ");						
-		s.append("total milliseconds: " + diff);
-		return s.toString();		
-	}
-
-	/**
-	 * Gets a Molecule and an array of element symbols. Counts how many of each of these 
-	 * elements the molecule contains. Than it returns the elements followed by their 
-	 * number as a string, i.e. C15H8N3.
-	 *
-	 * @param   mol   The Molecule to be searched
-	 * @param   element  The array of element symbols
-	 * @return     The element formula as a string
-	 */
-	public static String generateElementFormula(Molecule mol, String[] elements)
-	{
+	public static String generateElementFormula(Molecule mol, String[] elements) {
 		int num = elements.length;
 		StringBuffer formula = new StringBuffer();
 		int[] elementCount = new int[num];
-		for (int i = 0; i < mol.getAtomCount(); i++)
-		{
+		for (int i = 0; i < mol.getAtomCount(); i++) {
 			String symbol = mol.getAtomAt(i).getElement().getSymbol();
-			for (int j = 0; j < num; j++)
-			{
-				if (elements[j].equals(mol.getAtomAt(i).getElement().getSymbol()))
-				{
-					elementCount[j] ++;
+			for (int j = 0; j < num; j++) {
+				if (elements[j].equals(mol.getAtomAt(i).getElement().getSymbol())) {
+					elementCount[j]++;
 				}
 			}
 		}
-		for (int i = 0; i < num; i++)
-		{
+		for (int i = 0; i < num; i++) {
 			formula.append(elements[i] + elementCount[i]);
 		}
 		return formula.toString();
 	}
+
+
+
 }
 

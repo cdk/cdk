@@ -61,7 +61,7 @@ public class HOSECodeGenerator implements java.io.Serializable, CDKConstants
 	protected int maxSphere = 0;  
 	protected StringBuffer HOSECode = null;
 	
-	protected Molecule molecule;
+	protected AtomContainer atomContainer;
 	
 	
 	protected String[] sphereDelimiters = 
@@ -81,13 +81,13 @@ public class HOSECodeGenerator implements java.io.Serializable, CDKConstants
 		HOSECode = new StringBuffer();
 	}
 	
-	public String getHOSECode(Molecule molecule, Atom root, int noOfSpheres)
+	public String getHOSECode(AtomContainer ac, Atom root, int noOfSpheres)
 	{
-		this.molecule = molecule;
+		this.atomContainer = ac;
 		maxSphere = noOfSpheres;
-		for (int i = 0; i < molecule.getAtomCount(); i++)
+		for (int i = 0; i < ac.getAtomCount(); i++)
 		{
-			molecule.getAtomAt(i).flags[VISITED] = false;
+			ac.getAtomAt(i).flags[VISITED] = false;
 		}
 		root.flags[VISITED] = true;
 			
@@ -96,7 +96,7 @@ public class HOSECodeGenerator implements java.io.Serializable, CDKConstants
 		   ranking of the first sphere, sinces the order of a node in a sphere
 		   depends on the order the preceding node in its branch */
 		//makeRingList();
-		ranking = new int[molecule.getDegree(root)];
+		ranking = new int[atomContainer.getDegree(root)];
 		HOSECode = new StringBuffer();
 		breadthFirstSearch(root);	
 		fillUpSphereDelimiters();
@@ -112,7 +112,7 @@ public class HOSECodeGenerator implements java.io.Serializable, CDKConstants
 	private void breadthFirstSearch(Atom root)
 	{
 		sphere = 0;
-		Atom[] conAtoms = molecule.getConnectedAtoms(root);
+		Atom[] conAtoms = atomContainer.getConnectedAtoms(root);
 		Atom atom;
 		Bond bond = null;
 		sphereNodes.removeAllElements();
@@ -121,7 +121,7 @@ public class HOSECodeGenerator implements java.io.Serializable, CDKConstants
 			atom = conAtoms[i];
 			try
 			{
-				bond = molecule.getBond(root, atom);
+				bond = atomContainer.getBond(root, atom);
 			}
 			catch (Exception exc)
 			{
@@ -156,7 +156,7 @@ public class HOSECodeGenerator implements java.io.Serializable, CDKConstants
 			if (!("&;#:,".indexOf(treeNode.symbol)>=0))
 			{
 				node = treeNode.number;
-				conAtoms = molecule.getConnectedAtoms(node);
+				conAtoms = atomContainer.getConnectedAtoms(node);
 				if (conAtoms.length == 1)
 				{
 					nextSphereNodes.addElement(new TreeNode(",", node, null, 0, treeNode.score  * 1000000));
@@ -167,17 +167,17 @@ public class HOSECodeGenerator implements java.io.Serializable, CDKConstants
 					{
 						try
 						{
-							if (debug) System.out.println("HOSECodeGenerator->nextSphere()->node.number:" + molecule.getAtomNumber(node));			
+							if (debug) System.out.println("HOSECodeGenerator->nextSphere()->node.number:" + atomContainer.getAtomNumber(node));			
 							toNode = conAtoms[j];
-							if (debug) System.out.println("HOSECodeGenerator->nextSphere()->toNode.number:" + molecule.getAtomNumber(toNode));
+							if (debug) System.out.println("HOSECodeGenerator->nextSphere()->toNode.number:" + atomContainer.getAtomNumber(toNode));
 							if (!toNode.flags[VISITED])							
 							{			   			   
-								nextSphereNodes.addElement(new TreeNode(toNode.getElement().getSymbol(), node, toNode, molecule.getBond(node, toNode).getOrder(), treeNode.score  * 1000000));
+								nextSphereNodes.addElement(new TreeNode(toNode.getElement().getSymbol(), node, toNode, atomContainer.getBond(node, toNode).getOrder(), treeNode.score  * 1000000));
 								toNode.flags[VISITED] = true;
 							}
 							else if (!toNode.equals(treeNode.source))
 							{
-								nextSphereNodes.addElement(new TreeNode("&", node, toNode, molecule.getBond(node, toNode).getOrder(), treeNode.score  * 1000000));
+								nextSphereNodes.addElement(new TreeNode("&", node, toNode, atomContainer.getBond(node, toNode).getOrder(), treeNode.score  * 1000000));
 							}
 						}
 						catch (Exception exc)

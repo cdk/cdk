@@ -41,8 +41,9 @@ public class CDKTests {
 		TestSuite suite= new TestSuite("All CDK Tests");
 		suite.addTest(RingSearchTest.suite());
 		suite.addTest(ConnectivityCheckerTest.suite());
-		suite.addTest(MFAnalyserTest.suite());
-		suite.addTest(PathLengthTest.suite());
+		suite.addTest(MorganNumberToolsTest.suite());		
+		//suite.addTest(MFAnalyserTest.suite());
+		//suite.addTest(PathLengthTest.suite());
 		//suite.addTest(StructureDiagramGeneratorTest.suite());
 		//suite.addTest(RandomStructureGeneratorTest.suite());
 		

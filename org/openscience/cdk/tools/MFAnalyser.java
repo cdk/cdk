@@ -31,10 +31,9 @@ package org.openscience.cdk.tools;
 import org.openscience.cdk.*;
 import java.util.Vector;
 
-/** MFAnalyser.java
+/** 
   * Analyses a molecular formula given in String format and builds 
-  * set of de.mpg.ice.compchem.Node's reflecting the elements as given by
-  * the molecular formula.
+  * an AtomContainer with the Atoms in the molecular formula.
   */
 public class MFAnalyser{
 	
