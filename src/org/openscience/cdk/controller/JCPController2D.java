@@ -699,7 +699,6 @@ public class JCPController2D {
                 return highlighted;
         }
         
-
         /**
          * Constructs a new Ring of a certain size that contains all the atoms and bonds
          * of the given AtomContainer and is filled up with new Atoms and Bonds.
