@@ -279,6 +279,36 @@ public class AtomContainer extends ChemObject implements Cloneable
 		}
 		return -1;
 	}
+  
+  
+	/**
+	 *  Returns the position of the bond between two given atoms in the bonds array. It returns -1 if
+     *  the bond does not exist.
+	 *
+	 * @param  a1    The first atom
+   * @param  a2    The second atom
+	 * @return       The Position of the bond between a1 and a2 in the bonds array.
+	 */
+  public int getBondNumber(Atom a1, Atom a2){
+    return(getBondNumber(getBond(a1,a2)));
+  }
+  
+  
+	/**
+	 *  Returns the position of a given bond in the bonds array. It returns -1 if
+     *  the bond does not exist.
+	 *
+	 * @param  b     The bond to be sought
+	 * @return       The Position of the bond in the bonds array.
+	 */
+  public int getBondNumber(Bond b){
+		for (int f = 0; f < getBondCount(); f++) {
+			if (getBondAt(f) == b) {
+				return f;
+			}
+		}
+		return -1;
+  }    
 
 
 	/**
