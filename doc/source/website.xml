@@ -1,4 +1,4 @@
-<!DOCTYPE website PUBLIC "-//Norman Walsh//DTD Website V1.7//EN" "/usr/share/sgml/docbook/custom/website/2.0b1/website.dtd" [
+<!DOCTYPE website PUBLIC "-//Norman Walsh//DTD Website V1.7//EN" "/documents/config/xml/website/website.dtd" [
 <!ENTITY about SYSTEM "about.xml">
 <!ENTITY news SYSTEM "news.xml">
 <!ENTITY introduction SYSTEM "intro.xml">
@@ -14,7 +14,7 @@
 <website>
 <homepage>
 <config param="desc" value="The Chemistry Development Kit Homepage"/>
-<config param="filename" value="index_template.html"/>
+<config param="filename" value="index.html"/>
 <config param="rcsdate" value="$Date$"/>
 <config param="footer" value="about.html" altval="About..."/>
 <config param="homebanner" value="images/cdklogo.gif"
@@ -71,6 +71,13 @@ structure diagram generation, Java, chemoinformatics, cheminformatics, computati
 <title>Screenshots</title>
 </head>
 &screenshots;
+
+</webpage>
+<webpage>
+<config param="rcsdate" value="$Date$"/>
+<config param="filename" value="http://cdk.sourceforge.net/api/"/>
+<config param="homebanner" value="images/cdklogo.gif"/>
+<head><title>API</title></head>
 </webpage>
 
 <webpage>
