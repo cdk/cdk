@@ -113,7 +113,7 @@ public class Controller2DModel implements java.io.Serializable, Cloneable
             case NORMALIZE:
                 return "Normalize";
             case LASSO:
-                break;
+                return "Select";
             case INCCHARGE:
                 return "Increase Charge";
             case DECCHARGE:
