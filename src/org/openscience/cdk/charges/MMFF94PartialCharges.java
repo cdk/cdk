@@ -94,7 +94,7 @@ public class MMFF94PartialCharges {
 			data = (Vector) parameterSet.get("data"+thisAtom.getID());
 			neighboors = ac.getConnectedAtoms(thisAtom);
 			formalCharge = thisAtom.getCharge();
-			theta = ((Double)data.get(4)).doubleValue();
+			theta = ((Double)data.get(5)).doubleValue();
 			charge = formalCharge * (1 - (neighboors.length * theta));
 			sumOfFormalCharges = 0;
 			sumOfBondIncrements = 0;
@@ -110,7 +110,7 @@ public class MMFF94PartialCharges {
 				}
 				else {
 					// Maybe not all bonds have pbci in mmff94.prm, i.e. C-N
-					sumOfBondIncrements += ( theta - ((Double)dataNeigh.get(4)).doubleValue() );
+					sumOfBondIncrements += ( theta - ((Double)dataNeigh.get(5)).doubleValue() );
 				}
 				
 				
