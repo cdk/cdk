@@ -37,7 +37,10 @@ import org.openscience.cdk.isomorphism.matchers.QueryAtom;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryBond;
 import org.openscience.cdk.isomorphism.matchers.SymbolQueryAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.AliphaticAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.AnyAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.AnyOrderQueryBond;
+import org.openscience.cdk.isomorphism.matchers.smarts.AromaticAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.AromaticQueryBond;
 import org.openscience.cdk.isomorphism.matchers.smarts.DegreeAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.FormalChargeAtom;
@@ -49,11 +52,11 @@ import org.openscience.cdk.isomorphism.matchers.smarts.OrderQueryBond;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
- * This parser implements a subset of the SMARTS syntax as defined on
+ * This parser implements a (small) subset of the SMARTS syntax as defined on
  * <a href="http://www.daylight.com/dayhtml/doc/theory/theory.smarts.html">the
  * Daylight website</a>. But note that not all parsed strings are yet converted
  * in the corresponding queries. Not all concepts can yet be represented in
- * SMARTSAtom.
+ * SMARTSAtom. This code is very experimental.
  *
  * <p>Example code using SMARTS substructure search looks like:
  * <pre>
@@ -99,12 +102,30 @@ public class SMARTSParser {
 PARSER_END(SMARTSParser)
 
 JAVACODE
-void AddNewSMARTSAtom() {
+void AddAnyAtom() {
     Token tok = getToken(-1);
     logger.debug("Adding SMARTS atom: " + tok.image);
-    SMARTSAtom atom = new SMARTSAtom();
-    atom.setLabel(tok.image);
+    AnyAtom atom = new AnyAtom();
     container.addAtom(atom);
+    if (previousAtom != null) AddCurrentBond(previousAtom, atom);
+    previousAtom = atom;
+}
+
+JAVACODE
+void AddAliphaticAtom() {
+    logger.debug("Adding aliphatic atom");
+    AliphaticAtom atom = new AliphaticAtom();
+    container.addAtom(atom);
+    if (previousAtom != null) AddCurrentBond(previousAtom, atom);
+    previousAtom = atom;
+}
+
+JAVACODE
+void AddAromaticAtom() {
+    logger.debug("Adding aromatic atom");
+    AromaticAtom atom = new AromaticAtom();
+    container.addAtom(atom);
+    if (previousAtom != null) AddCurrentBond(previousAtom, atom);
     previousAtom = atom;
 }
 
@@ -112,13 +133,14 @@ JAVACODE
 void AddCurrentBond(QueryAtom atom, QueryAtom atom2) {
     if (currentBond == null) {
         // add default bond
-    } else {
-        Atom[] atoms = new Atom[2];
-        atoms[0] = (Atom)atom;
-        atoms[1] = (Atom)atom2;
-        currentBond.setAtoms(atoms);
-        container.addBond(currentBond);
+        currentBond = new AnyOrderQueryBond();
     }
+    Atom[] atoms = new Atom[2];
+    atoms[0] = (Atom)atom;
+    atoms[1] = (Atom)atom2;
+    currentBond.setAtoms(atoms);
+    container.addBond(currentBond);
+    currentBond = null;
 }
 
 JAVACODE
@@ -127,8 +149,7 @@ void AddNewElementAtom() {
     logger.debug("Adding SMARTS atom: " + tok.image);
     SymbolQueryAtom atom = new SymbolQueryAtom(new Atom(tok.image));
     container.addAtom(atom);
-    AddCurrentBond(previousAtom, atom);
-    currentBond = null;
+    if (previousAtom != null) AddCurrentBond(previousAtom, atom);
     previousAtom = atom;
 }
 
@@ -138,6 +159,7 @@ void AddNewDegreeAtom() {
     logger.debug("Adding SMARTS degree atom: " + tok.image);
     DegreeAtom atom = new DegreeAtom(Integer.parseInt(tok.image));
     container.addAtom(atom);
+    if (previousAtom != null) AddCurrentBond(previousAtom, atom);
     previousAtom = atom;
 }
 
@@ -147,6 +169,7 @@ void AddNewFormalChargeAtom() {
     logger.debug("Adding SMARTS formal charge atom: " + tok.image);
     FormalChargeAtom atom = new FormalChargeAtom(Integer.parseInt(tok.image));
     container.addAtom(atom);
+    if (previousAtom != null) AddCurrentBond(previousAtom, atom);
     previousAtom = atom;
 }
 
@@ -156,6 +179,7 @@ void AddNewImplicitHCountAtom() {
     logger.debug("Adding SMARTS implicit Hcount atom: " + tok.image);
     ImplicitHCountAtom atom = new ImplicitHCountAtom(Integer.parseInt(tok.image));
     container.addAtom(atom);
+    if (previousAtom != null) AddCurrentBond(previousAtom, atom);
     previousAtom = atom;
 }
 
@@ -165,6 +189,7 @@ void AddNewTotalHCountAtom() {
     logger.debug("Adding SMARTS total Hcount atom: " + tok.image);
     TotalHCountAtom atom = new TotalHCountAtom(Integer.parseInt(tok.image));
     container.addAtom(atom);
+    if (previousAtom != null) AddCurrentBond(previousAtom, atom);
     previousAtom = atom;
 }
 
@@ -212,8 +237,10 @@ void AtomExpression() :
 void SMARTSAtomExpression() :
 {}
 {
-    (("*" | "A" | "a") AddNewSMARTSAtom()) 
-|   (InBracketsSMARTSAtom()) 
+    "*" AddAnyAtom()        |
+    "a" AddAromaticAtom()   |
+    "A" AddAliphaticAtom()  |
+    (InBracketsSMARTSAtom()) 
 }
 
 void InBracketsSMARTSAtom() :

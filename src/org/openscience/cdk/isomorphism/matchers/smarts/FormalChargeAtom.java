@@ -24,8 +24,6 @@
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.PseudoAtom;
-import org.openscience.cdk.isomorphism.matchers.QueryAtom;
 
 /**
  * This matcher checks the formal charge of the Atom.

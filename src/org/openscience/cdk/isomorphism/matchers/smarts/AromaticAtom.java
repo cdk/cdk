@@ -24,33 +24,28 @@
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.CDKConstants;
 
 /**
- * This matcher checks the formal charge of the Atom.
- * This cannot be matched with a unpreprocessed Atom!
+ * This matcher any aromatic atom. This assumes that aromaticity in the molecule
+ * has been perceived.
  *
  * @cdk.module experimental
  */
-public class TotalHCountAtom extends SMARTSAtom {
+public class AromaticAtom extends SMARTSAtom {
     
-    private int hCount;
-    
-    public TotalHCountAtom(int hCount) {
-        this.hCount = hCount;
+    public AromaticAtom() {
     }
     
 	public boolean matches(Atom atom) {
-        int hCount = ((Integer)atom.getProperty("org.openscience.cdk.Atom.totalHCount")).intValue();
-        return (hCount == this.hCount);
+        if (atom.getFlag(CDKConstants.ISAROMATIC)) {
+            return true;
+        }
+        return false;
     };
 
     public String toString() {
-		StringBuffer s = new StringBuffer();
-		s.append("TotalHCountAtom(");
-        s.append(this.hashCode() + ", ");
-		s.append("HC:" + hCount);
-		s.append(")");
-		return s.toString();
+		return "AromaticAtom()";
     }
 }
 

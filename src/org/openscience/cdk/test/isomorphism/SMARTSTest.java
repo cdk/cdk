@@ -37,6 +37,8 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.isomorphism.matchers.OrderQueryBond;
+import org.openscience.cdk.isomorphism.matchers.SymbolQueryAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.AnyAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.DegreeAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.FormalChargeAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.ImplicitHCountAtom;
@@ -63,9 +65,9 @@ public class SMARTSTest extends TestCase {
 		SmilesParser sp = new SmilesParser();
         AtomContainer atomContainer = sp.parseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
         QueryAtomContainer query = new QueryAtomContainer();
-        SMARTSAtom atom1 = new SMARTSAtom();
+        SymbolQueryAtom atom1 = new SymbolQueryAtom();
         atom1.setSymbol("N");
-        SMARTSAtom atom2 = new SMARTSAtom();
+        SymbolQueryAtom atom2 = new SymbolQueryAtom();
         atom1.setSymbol("C");
         query.addAtom(atom1);
         query.addAtom(atom2);
@@ -78,9 +80,8 @@ public class SMARTSTest extends TestCase {
 		SmilesParser sp = new SmilesParser();
         AtomContainer atomContainer = sp.parseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
         QueryAtomContainer query = new QueryAtomContainer();
-        SMARTSAtom atom1 = new SMARTSAtom();
-        atom1.setLabel("*");
-        SMARTSAtom atom2 = new SMARTSAtom();
+        AnyAtom atom1 = new AnyAtom();
+        SymbolQueryAtom atom2 = new SymbolQueryAtom();
         atom2.setSymbol("C");
         query.addAtom(atom1);
         query.addAtom(atom2);

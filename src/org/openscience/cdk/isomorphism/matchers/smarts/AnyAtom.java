@@ -26,31 +26,21 @@ package org.openscience.cdk.isomorphism.matchers.smarts;
 import org.openscience.cdk.Atom;
 
 /**
- * This matcher checks the formal charge of the Atom.
- * This cannot be matched with a unpreprocessed Atom!
+ * This matcher any Atom.
  *
  * @cdk.module experimental
  */
-public class TotalHCountAtom extends SMARTSAtom {
+public class AnyAtom extends SMARTSAtom {
     
-    private int hCount;
-    
-    public TotalHCountAtom(int hCount) {
-        this.hCount = hCount;
+    public AnyAtom() {
     }
     
 	public boolean matches(Atom atom) {
-        int hCount = ((Integer)atom.getProperty("org.openscience.cdk.Atom.totalHCount")).intValue();
-        return (hCount == this.hCount);
+        return true; // :)
     };
 
     public String toString() {
-		StringBuffer s = new StringBuffer();
-		s.append("TotalHCountAtom(");
-        s.append(this.hashCode() + ", ");
-		s.append("HC:" + hCount);
-		s.append(")");
-		return s.toString();
+		return "AnyAtom()";
     }
 }
 

@@ -32,18 +32,11 @@ import org.openscience.cdk.isomorphism.matchers.QueryAtom;
  *
  * @cdk.module experimental
  */
-public class SMARTSAtom extends PseudoAtom implements QueryAtom {
+public abstract class SMARTSAtom extends PseudoAtom implements QueryAtom {
     
     public SMARTSAtom() {}
     
 	public boolean matches(Atom atom) {
-        if (this.getLabel().equals("*")) {
-            // this matches any atom
-            return true;
-        } else if (this.getSymbol().equals(atom.getSymbol())) {
-            // else match symbol
-            return true;
-        } // else 
         return false;
     };
 }
