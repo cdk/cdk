@@ -228,37 +228,39 @@ public class Renderer2D implements MouseMotionListener   {
         paintBoundingBox(minmaxProducts, "Products", width, graphics);
         paintMolecule(productContainer, graphics);
 
-        // paint arrow
-        int[] ints = new int[4];
-        ints[0] = (int)(minmaxReactants[2]) + width+5;
-        ints[1] = (int)(minmaxReactants[1] + (minmaxReactants[3]-minmaxReactants[1])/2);
-        ints[2] = (int)(minmaxProducts[0]) - (width+5);
-        ints[3] = ints[1];
-        int[] screenCoords = getScreenCoordinates(ints);
-        int direction = reaction.getDirection();
-        if (direction == Reaction.FORWARD) {
-            graphics.drawLine(screenCoords[0], screenCoords[1],
+        if (productContainer.getAtomCount() > 0 && reactantContainer.getAtomCount() > 0) {
+            // paint arrow
+            int[] ints = new int[4];
+            ints[0] = (int)(minmaxReactants[2]) + width+5;
+            ints[1] = (int)(minmaxReactants[1] + (minmaxReactants[3]-minmaxReactants[1])/2);
+            ints[2] = (int)(minmaxProducts[0]) - (width+5);
+            ints[3] = ints[1];
+            int[] screenCoords = getScreenCoordinates(ints);
+            int direction = reaction.getDirection();
+            if (direction == Reaction.FORWARD) {
+                graphics.drawLine(screenCoords[0], screenCoords[1],
                 screenCoords[2], screenCoords[3]);
-            graphics.drawLine(screenCoords[2], screenCoords[3],
+                graphics.drawLine(screenCoords[2], screenCoords[3],
                 screenCoords[2]-7, screenCoords[3]-7);
-            graphics.drawLine(screenCoords[2], screenCoords[3],
+                graphics.drawLine(screenCoords[2], screenCoords[3],
                 screenCoords[2]-7, screenCoords[3]+7);
-        } else if (direction == Reaction.BACKWARD) {
-            graphics.drawLine(screenCoords[0], screenCoords[1],
+            } else if (direction == Reaction.BACKWARD) {
+                graphics.drawLine(screenCoords[0], screenCoords[1],
                 screenCoords[2], screenCoords[3]);
-            graphics.drawLine(screenCoords[0], screenCoords[1],
+                graphics.drawLine(screenCoords[0], screenCoords[1],
                 screenCoords[0]+7, screenCoords[1]-7);
-            graphics.drawLine(screenCoords[0], screenCoords[1],
+                graphics.drawLine(screenCoords[0], screenCoords[1],
                 screenCoords[0]+7, screenCoords[1]+7);
-        } else if (direction == Reaction.BIDIRECTIONAL) {
-            graphics.drawLine(screenCoords[0], screenCoords[1] - 3,
+            } else if (direction == Reaction.BIDIRECTIONAL) {
+                graphics.drawLine(screenCoords[0], screenCoords[1] - 3,
                 screenCoords[2], screenCoords[3] - 3);
-            graphics.drawLine(screenCoords[0], screenCoords[1] - 3,
+                graphics.drawLine(screenCoords[0], screenCoords[1] - 3,
                 screenCoords[0]+7, screenCoords[1] - 3 - 7);
-            graphics.drawLine(screenCoords[0], screenCoords[1] + 3,
+                graphics.drawLine(screenCoords[0], screenCoords[1] + 3,
                 screenCoords[2], screenCoords[3] + 3);
-            graphics.drawLine(screenCoords[2], screenCoords[3] + 3,
+                graphics.drawLine(screenCoords[2], screenCoords[3] + 3,
                 screenCoords[2]-7, screenCoords[3] + 3 + 7);
+            }
         }
     }
 
