@@ -246,10 +246,12 @@ public class BasicValidator implements ValidatorInterface {
             "Bond order exceeds the maximum for one of its atoms."
         );
         try {
-            AtomTypeFactory atf = AtomTypeFactory.getInstance();
+            AtomTypeFactory structgenATF = AtomTypeFactory.getInstance(
+                "org/openscience/cdk/config/structgen_atomtypes.xml"
+            );
             for (int i=0; i<bond.getAtomCount(); i++) {
                 Atom atom = bond.getAtomAt(i);
-                AtomType[] atomTypes = atf.getAtomTypes(atom.getSymbol(), atf.ATOMTYPE_ID_STRUCTGEN);
+                AtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
                 AtomType failedOn = null;
                 boolean foundMatchingAtomType = false;
                 for (int j=0; j<atomTypes.length; j++) {
@@ -340,9 +342,11 @@ public class BasicValidator implements ValidatorInterface {
             "The atom's total bond order is too high."
         );
         try {
-            AtomTypeFactory atf = AtomTypeFactory.getInstance();
+            AtomTypeFactory structgenATF = AtomTypeFactory.getInstance(
+                "org/openscience/cdk/config/structgen_atomtypes.xml"
+            );
             int bos = (int)molecule.getBondOrderSum(atom);
-            AtomType[] atomTypes = atf.getAtomTypes(atom.getSymbol(), atf.ATOMTYPE_ID_STRUCTGEN);
+            AtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
             AtomType failedOn = null;
             boolean foundMatchingAtomType = false;
             for (int j=0; j<atomTypes.length; j++) {

@@ -45,13 +45,13 @@ import java.io.*;
 public class SaturationChecker
 {
 
-	AtomTypeFactory atf;
+	AtomTypeFactory structgenATF;
 
 	private org.openscience.cdk.tools.LoggingTool logger;
 
 	public SaturationChecker() throws IOException, ClassNotFoundException
 	{
-		atf = AtomTypeFactory.getInstance();
+		structgenATF = AtomTypeFactory.getInstance("org/openscience/cdk/config/structgen_atomtypes.xml");
 		logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
 	}
 
@@ -61,7 +61,7 @@ public class SaturationChecker
 
 		double bondOrderSum = ac.getBondOrderSum(atom);
 		double maxBondOrder = ac.getMaximumBondOrder(atom);
-		AtomType[] atomTypes = atf.getAtomTypes(atom.getSymbol(), atf.ATOMTYPE_ID_STRUCTGEN);
+		AtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
 		logger.debug("*** Checking for perfect configuration ***");
 		try
 		{
@@ -109,7 +109,7 @@ public class SaturationChecker
 	{
 		//System.out.println("In here :-), checking atom " + atom.getSymbol());
 		
-		AtomType[] atomTypes = atf.getAtomTypes(atom.getSymbol(), atf.ATOMTYPE_ID_STRUCTGEN);
+		AtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
 		double bondOrderSum = ac.getBondOrderSum(atom);
 		double maxBondOrder = ac.getMaximumBondOrder(atom);
 		int hcount = atom.getHydrogenCount();
@@ -145,7 +145,7 @@ public class SaturationChecker
 	 */
 	public boolean isOverSaturated(Atom atom, AtomContainer ac)
 	{
-		AtomType[] atomTypes = atf.getAtomTypes(atom.getSymbol(), atf.ATOMTYPE_ID_STRUCTGEN);
+		AtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
 		double bondOrderSum = ac.getBondOrderSum(atom);
 		double maxBondOrder = ac.getMaximumBondOrder(atom);
 		int hcount = atom.getHydrogenCount();
@@ -180,7 +180,7 @@ public class SaturationChecker
 	 */
 	public double getCurrentMaxBondOrder(Atom atom, AtomContainer ac)
 	{
-		AtomType[] atomTypes = atf.getAtomTypes(atom.getSymbol(), atf.ATOMTYPE_ID_STRUCTGEN);
+		AtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
 		double bondOrderSum = ac.getBondOrderSum(atom);
 		int hcount = atom.getHydrogenCount();
 		double max = 0;
@@ -218,7 +218,7 @@ public class SaturationChecker
 			{
 				atom = atomContainer.getAtomAt(f);
 				//System.out.println(atom.getSymbol());
-				atomTypes1 = atf.getAtomTypes(atom.getSymbol(), atf.ATOMTYPE_ID_STRUCTGEN);
+				atomTypes1 = structgenATF.getAtomTypes(atom.getSymbol());
 				//System.out.println(atomTypes1[0]);
 				if (atomContainer.getBondCount(atom) == i)
 				{
@@ -228,7 +228,7 @@ public class SaturationChecker
 						{
 							partner = partners[g];
 							//System.out.println("Atom has " + partners.length + " partners");
-							atomTypes2 = atf.getAtomTypes(partner.getSymbol(), atf.ATOMTYPE_ID_STRUCTGEN);
+							atomTypes2 = structgenATF.getAtomTypes(partner.getSymbol());
 							if (atomContainer.getBond(partner,atom).getFlag(CDKConstants.ISAROMATIC) && atomContainer.getBondOrderSum(partner) < atomTypes2[0].getMaxBondOrderSum() - partner.getHydrogenCount())
 							{
 								//System.out.println("Partner has " + atomContainer.getBondOrderSum(partner) + ", may have: " + atomTypes2[0].getMaxBondOrderSum());
@@ -248,7 +248,7 @@ public class SaturationChecker
 						{
 							partner = partners[g];
 							//System.out.println("Atom has " + partners.length + " partners");
-							atomTypes2 = atf.getAtomTypes(partner.getSymbol(), atf.ATOMTYPE_ID_STRUCTGEN);
+							atomTypes2 = structgenATF.getAtomTypes(partner.getSymbol());
 							if (atomContainer.getBondOrderSum(partner) < atomTypes2[0].getMaxBondOrderSum() - partner.getHydrogenCount())
 							{
 								//System.out.println("Partner has " + atomContainer.getBondOrderSum(partner) + ", may have: " + atomTypes2[0].getMaxBondOrderSum());
@@ -361,7 +361,7 @@ public class SaturationChecker
         } else {
             logger.info("Calculating number of missing hydrogen atoms");
             // get default atom
-            AtomType[] atomTypes = atf.getAtomTypes(atom.getSymbol(), atf.ATOMTYPE_ID_STRUCTGEN);
+            AtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
             logger.debug("Found atomtypes: " + atomTypes.length);
             if (atomTypes.length > 0) {
                 AtomType defaultAtom = atomTypes[0];

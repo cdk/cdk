@@ -43,8 +43,14 @@ import org.openscience.cdk.exception.*;
  *  <pre>
  *  AtomTypeFactory factory = AtomTypeFactory.getInstance();
  *  </pre>
+ *  For each atom type list a separate AtomTypeFactory is instantiated.
  *
- * <p>For each atom type list a separate AtomTypeFactory is instantiated.
+ *  <p>To get all the atom types of an element from a specific list, this 
+ *  code can be used:
+ *  <pre>
+ *  AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/jmol_atomtypes.txt");
+ *  AtomType[] types = factory.getAtomTypes("C");
+ *  </pre>
  *
  * @author     steinbeck
  * @created    2001-08-29
