@@ -480,7 +480,7 @@
                 <javac srcdir="${build.src}"
                        destdir="${build}" optimize="${optimization}" 
                        debug="${debug}" deprecation="${deprecation}"
-                       includesfile="${src}/render-java3d.javafiles">
+                       includesfile="${src}/java3d.javafiles">
 
                         <classpath refid="project.class.path" />
                 </javac>
@@ -618,7 +618,7 @@
                 <jar jarfile="${dist}/jar/cdk-render.jar">
                     <fileset dir="${build}">
                         <includesfile name="${src}/render.classes" />
-                        <includesfile name="${src}/render-java3d.classes" />
+                        <includesfile name="${src}/java3d.classes" />
                     </fileset>
                 </jar>
         </target>
