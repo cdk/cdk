@@ -38,9 +38,20 @@ public class CNNRegressionModelPredict {
     private int noutput;
     private double[][] predval;
 
-    public CNNRegressionModelPredict(int noutput, double[][] values) { 
+    private double[][] vectorToMatrix(double[] v, int nrow, int ncol) {
+        double[][] m = new double[nrow][ncol];
+        for (int i = 0; i < ncol; i++) {
+            for (int j = 0; j < nrow; j++) {
+                m[j][i] = v[j + i*nrow];
+            }
+        }
+        return(m);
+    }
+
+    public CNNRegressionModelPredict(int noutput, double[] values) { 
         this.noutput = noutput;
-        setPredicted(values);
+        int nrow = values.length / noutput;
+        setPredicted(vectorToMatrix(values,nrow,noutput));
     }
 
     public double[][] getPredicted() { return(this.predval); }

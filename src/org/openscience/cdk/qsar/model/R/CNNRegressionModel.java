@@ -222,11 +222,15 @@ public class CNNRegressionModel extends RModel {
         if (key.equals("y")) {
             if (!(obj instanceof Double[][])) {
                 throw new QSARModelException("The class of the 'y' object must be Double[][]");
+            } else {
+                noutput = ((Double[][])obj)[0].length;
             }
         }
         if (key.equals("x")) {
             if (!(obj instanceof Double[][])) {
                 throw new QSARModelException("The class of the 'x' object must be Double[][]");
+            } else { 
+                nvar = ((Double[][])obj)[0].length; 
             }
         }
         if (key.equals("weights")) {
@@ -316,9 +320,23 @@ public class CNNRegressionModel extends RModel {
      * to set the values of the independent variable for the new observations and the
      * interval type.
      */
-    public void predict() throws QSARModelException {};
+    public void predict() throws QSARModelException {
+        if (this.modelfit == null) 
+            throw new QSARModelException("Before calling predict() you must fit the model using build()");
 
-
+        Double[][] newx = (Double[][])this.params.get("newdata");
+        if (newx[0].length != this.nvar) {
+            throw new QSARModelException("Number of independent variables used for prediction must match those used for fitting");
+        }
+            
+        try {
+            this.modelpredict = (CNNRegressionModelPredict)revaluator.call("predictCNN",
+                    new Object[]{ getModelName(), this.params });
+        } catch (Exception re) {
+            throw new QSARModelException(re.toString());
+        }
+    }
+        
     public double getFitValue() {
         return(this.modelfit.getValue());
     }
@@ -333,6 +351,10 @@ public class CNNRegressionModel extends RModel {
     }
     public double[][] getFitHessian() {
         return(this.modelfit.getHessian());
+    }
+
+    public double[][] getPredictPredicted() {
+        return(this.modelpredict.getPredicted());
     }
 
 

@@ -109,9 +109,15 @@ function(obj,...)
         noutput, nobs,obj$wts, obj$fitted, obj$residuals, obj$value)
     }
 }
-cnnPredictConverter <- function(preds,...) {
+cnnPredictConverter <-
+function(obj,...) {
+    # The obj we get is actually a 'matrix' but we set its class
+    # to cnnregprediction so that SJava would send it specifically
+    # to us. So we should convert obj back to class 'matrix' so 
+    # that SJava can send it correctly to the Java side
+    class(obj) <- 'matrix'
     .JNew("org.openscience.cdk.qsar.model.R.CNNRegressionModelPredict",
-    ncol(preds), preds)
+    ncol(obj), obj)
 }
     
 #############################################
@@ -120,13 +126,13 @@ cnnPredictConverter <- function(preds,...) {
 setJavaFunctionConverter(lmFitConverter, function(x,...){inherits(x,"lm")},
                           description="lm fit object to Java",
                           fromJava=F)
-setJavaFunctionConverter(lmPredictConverter, function(x,...){inherits(x,"lmprediction")},
+setJavaFunctionConverter(lmPredictConverter, function(x,...){inherits(x,"lmregprediction")},
                           description="lm predict object to Java",
                           fromJava=F)
 setJavaFunctionConverter(cnnFitConverter, function(x,...){inherits(x,"nnet")},
                           description="cnn (nnet) fit object to Java",
                           fromJava=F)
-setJavaFunctionConverter(cnnPredictConverter, function(x,...){inherits(x,"cnnprediction")},
+setJavaFunctionConverter(cnnPredictConverter, function(x,...){inherits(x,"cnnregprediction")},
                           description="cnn (nnet) predict object to Java",
                           fromJava=F)
                           
@@ -168,7 +174,7 @@ predictLM <- function( modelname, params) {
         interval = 'confidence'
     } 
     preds <- predict( get(modelname), newx, se.fit = TRUE, interval=interval);
-    class(preds) <- 'lmprediction'
+    class(preds) <- 'lmregprediction'
 
     detach(paramlist)
     preds
@@ -199,10 +205,26 @@ buildCNN <-  function(modelname, params) {
     decay=decay,maxit=maxit,Hess=Hess,trace=trace,MaxNWts=MaxNWts,
     abstol=abstol,reltol=reltol), pos=1)
 
-    tmp <- get(modelname)
-    save(x,y,Wts, file='myrun')
     detach(paramlist)
     get(modelname)
+}
+
+predictCNN <- function(modelname, params) {
+    # Since buildCNN should have been called before this
+    # we don't bother loading the nnet library
+    paramlist <- hashmap.to.list(params)
+    attach(paramlist)
+
+    newx <- data.frame( matrix(unlist(newdata), nrow=length(newdata), byrow=TRUE) )
+    if (type == '' || !(type %in% c('raw','class')) ) { 
+        type = 'raw'
+    } 
+
+    preds <- predict( get(modelname), newdata=newx, type=type);
+    class(preds) <- 'cnnregprediction'
+
+    detach(paramlist)
+    preds
 }
     
 
