@@ -1,14 +1,14 @@
---- src/org/openscience/cdk/test/CDKTests.java	2003-09-14 19:27:27.000000000 +0100
-+++ src/org/openscience/cdk/test/CDKTests.java.noAnt16	2003-09-14 20:47:05.000000000 +0100
-@@ -39,7 +39,6 @@
- import org.openscience.cdk.test.tools.*;
- import org.openscience.cdk.test.aromaticity.*;
- import org.openscience.cdk.test.geometry.*;
--import org.openscience.cdk.test.iupac.*;
- 
- /**
-  * TestSuite that runs all the sample tests
-@@ -87,8 +86,6 @@
+--- src/org/openscience/cdk/test/CDKTests.java	2004-02-03 11:52:50.000000000 +0100
++++ src/org/openscience/cdk/test/CDKTests.java.noAnt16	2004-02-03 17:10:41.301972000 +0100
+@@ -37,7 +37,6 @@
+ import org.openscience.cdk.test.io.IOTests;
+ import org.openscience.cdk.test.isomorphism.IsomorphismTesterTest;
+ import org.openscience.cdk.test.isomorphism.UniversalIsomorphismTesterTest;
+-import org.openscience.cdk.test.iupac.ParserTest;
+ import org.openscience.cdk.test.layout.HydrogenPlacerTest;
+ import org.openscience.cdk.test.layout.StructureDiagramGeneratorTest;
+ import org.openscience.cdk.test.ringsearch.AllRingsFinderTest;
+@@ -98,8 +97,6 @@
          suite.addTest(BremserPredictorTest.suite());
          // from cdk.test.structgen
          suite.addTest(RandomStructureGeneratorTest.suite());
