@@ -39,6 +39,9 @@ public interface CDKEditBus {
     public void showChemFile(ChemFile file);
     public void showChemModel(ChemModel model);
 
+    public ChemModel getChemModel();
+    public ChemFile getChemFile();
+    
 }
 
 

@@ -4,6 +4,15 @@ CHANGELOG $Date$
 Changes in CVS
 ------------------------------------
 New:
+
+Fixes:
+* Added missing get() methods to cdk.applications.plugin.EditBus interface
+
+API changes:
+
+20031017 Release
+------------------------------------
+New:
 * IUPAC Name parser added, thanks to University of Manchester (Req. ANT >= 1.6alpha)
 * Added a method AtomContainer.removeAllBonds()
 * A rebond() method in cdk.graph.rebond that calculates bond from 3D coordinates
