@@ -666,6 +666,10 @@
                 <fileset dir="${src}/org/openscience/cdk/dict/data/" includes="*.xml"/>
             </copy>
 
+            <copy todir="${build}/org/openscience/cdk/modeling/forcefield/data/">
+                <fileset dir="${src}/org/openscience/cdk/modeling/forcefield/data/" includes="*.prm"/>
+            </copy>
+
             <copy todir="${build}/org/openscience/cdk/qsar/model/data/">
                 <fileset dir="${src}/org/openscience/cdk/qsar/model/data/" includes="*.R"/>
             </copy>
@@ -709,6 +713,7 @@
                     </fileset>
                     <fileset dir="${build}">
                         <include name="org/openscience/cdk/dict/data/*.xml" />
+                        <include name="org/openscience/cdk/modeling/forcefield/data/*.prm"/>
                     </fileset>
                 </jar>
         </target>
