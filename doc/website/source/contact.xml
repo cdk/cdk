@@ -25,7 +25,6 @@
 			  List where all changes in
 			  <ulink url="http://sourceforge.net/cvs/?group_id=20024">CVS</ulink> are automatically
 			  posted. Intended to keep developers up to date on recent changes.
-			  <ulink url="http://www.geocrawler.com/lists/3/SourceForge/12111/0/">The archive</ulink>.
 		    </para>
           </listitem>
         </varlistentry>
@@ -34,7 +33,7 @@
             <para>
 			  List to which developers are subscribed to discuss new ideas, new code, etc.
 			  If you are interested in the developement of the CDK library, subscription is
-			  recommended. <ulink url="http://www.geocrawler.com/lists/3/SourceForge/10854/0/">The
+			  recommended. <ulink url="https://sourceforge.net/mailarchive/forum.php?forum_id=2178">The
 			  archive</ulink>.
 		    </para>
           </listitem>
@@ -45,7 +44,7 @@
 			  This list is aimed at users of the binary utilities that accompany the CDK library, like
 			  cdk-fileconvert and cdk-dbadmin. But you can also post questions here on how to use
 			  the CDK library in your software.
-			  <ulink url="http://www.geocrawler.com/lists/3/SourceForge/18425/0/">The archive</ulink>.
+			  <ulink url="https://sourceforge.net/mailarchive/forum.php?forum_id=7623">The archive</ulink>.
 		    </para>
           </listitem>
         </varlistentry>
