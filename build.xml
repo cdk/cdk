@@ -1193,7 +1193,7 @@
         </target>
 
 	
-        <target id="run" name="run" depends="dist-core, dist-extra, dist-test, dist-standard" 
+        <target id="run" name="run" depends="dist-core, dist-extra, dist-test, dist-standard, dist-data" 
                 description="Runs an application (org.openscience.cdk.&lt;class>) with -Drunclass=&lt;class>.">
                 <java classname="org.openscience.cdk.${runclass}" fork="yes" >
                    <arg value="${arg1}" />
@@ -1209,6 +1209,7 @@
                         <pathelement location="${dist}/jar/cdk-apps.jar" />
                         <pathelement location="${dist}/jar/cdk-test.jar" />
                         <pathelement location="${dist}/jar/cdk-libio.jar" />
+                        <pathelement location="${dist}/jar/cdk-data.jar" />
                         <pathelement path="${java.class.path}" />
                         <pathelement location="." />
                         <fileset dir="${lib}">
