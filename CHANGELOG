@@ -5,6 +5,8 @@ Changes in CVS
 ------------------------------------
 * Added --no3D option to cdk.applications.Viewer
 * Do not fail if bond order != integer, assume order=1
+* Classes are now separated into two jar files: cdk-core and cdk-extra.
+* Several yet unnamed bugfixes
 
 20020518 Release
 ------------------------------------
