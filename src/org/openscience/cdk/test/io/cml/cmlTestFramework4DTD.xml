@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE list SYSTEM "../../../io/cml/data/cml1_0_1.dtd" []>
+<list title="Regression tests for valid DTD documents for CML 1.x">
+
+  <!-- JFragmentsTest.test2dCoord() -->
+  <molecule id='m1'><atomArray><atom id='a1'><coordinate2 builtin="xy2">84 138</coordinate2></atom></atomArray></molecule>
+
+</list>

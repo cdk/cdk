@@ -67,6 +67,8 @@ public class CMLCoreModule implements ModuleInterface {
     public final static int FEATURE = 23;
     protected final String SYSTEMID = "CML-1999-05-15";
     protected CDOInterface cdo;
+    
+    protected int atomCounter;
     protected Vector elsym;
     protected Vector elid;
     protected Vector formalCharges;
@@ -80,6 +82,8 @@ public class CMLCoreModule implements ModuleInterface {
     protected Vector hCounts;
     protected Vector atomParities;
     protected Vector atomDictRefs;
+
+    protected int bondCounter;
     protected Vector bondid;
     protected Vector bondARef1;
     protected Vector bondARef2;
@@ -109,6 +113,7 @@ public class CMLCoreModule implements ModuleInterface {
             this.logger = conv.logger;
             this.cdo = conv.returnCDO();
             this.BUILTIN = conv.BUILTIN;
+            this.atomCounter = conv.atomCounter;
             this.elsym = conv.elsym;
             this.elid = conv.elid;
             this.formalCharges = conv.formalCharges;
@@ -122,6 +127,7 @@ public class CMLCoreModule implements ModuleInterface {
             this.hCounts = conv.hCounts;
             this.atomParities = conv.atomParities;
             this.atomDictRefs = conv.atomDictRefs;
+            this.bondCounter = conv.bondCounter;
             this.bondid = conv.bondid;
             this.bondARef1 = conv.bondARef1;
             this.bondARef2 = conv.bondARef2;
@@ -129,6 +135,8 @@ public class CMLCoreModule implements ModuleInterface {
             this.bondStereo = conv.bondStereo;
             this.bondDictRefs = conv.bondDictRefs;
             this.curRef = conv.curRef;
+        } else {
+            logger.warn("Cannot inherit information from module: " + convention.getClass().getName());
         }
     }
 
@@ -148,6 +156,7 @@ public class CMLCoreModule implements ModuleInterface {
      * Clean all data about read atoms.
      */
     protected void newAtomData() {
+        atomCounter = 0;
         elsym = new Vector();
         elid = new Vector();
         formalCharges = new Vector();
@@ -167,6 +176,7 @@ public class CMLCoreModule implements ModuleInterface {
      * Clean all data about read bonds.
      */
     protected void newBondData() {
+        bondCounter = 0;
         bondid = new Vector();
         bondARef1 = new Vector();
         bondARef2 = new Vector();
@@ -200,6 +210,7 @@ public class CMLCoreModule implements ModuleInterface {
 
             case ATOM:
 
+                atomCounter++;
                 for (int i = 0; i < atts.getLength(); i++) {
 
                     String att = atts.getQName(i);
@@ -246,6 +257,7 @@ public class CMLCoreModule implements ModuleInterface {
 
             case BOND:
 
+                bondCounter++;
                 for (int i = 0; i < atts.getLength(); i++) {
                     String att = atts.getQName(i);
                     logger.debug(
@@ -582,13 +594,12 @@ public class CMLCoreModule implements ModuleInterface {
 
                 if (BUILTIN.equals("id") || BUILTIN.equals("atomId")) {
 
-                    // use of "id" seems incorrect by quick look at DTD
                     try {
-
+                        boolean countAtoms = (atomCounter == 0) ? true : false;
                         StringTokenizer st = new StringTokenizer(s);
 
                         while (st.hasMoreTokens()) {
-
+                            if (countAtoms) { atomCounter++; }
                             String token = st.nextToken();
                             logger.debug("StringArray (Token): " + token);
                             elid.addElement(token);
@@ -599,11 +610,13 @@ public class CMLCoreModule implements ModuleInterface {
                 } else if (BUILTIN.equals("elementType")) {
 
                     try {
-
+                        boolean countAtoms = (atomCounter == 0) ? true : false;
                         StringTokenizer st = new StringTokenizer(s);
 
-                        while (st.hasMoreTokens())
+                        while (st.hasMoreTokens()) {
+                            if (countAtoms) { atomCounter++; }
                             elsym.addElement(st.nextToken());
+                        }
                     } catch (Exception e) {
                         notify("CMLParsing error: " + e, SYSTEMID, 194, 1);
                     }
@@ -612,11 +625,11 @@ public class CMLCoreModule implements ModuleInterface {
                     logger.debug("New atomRefs found: " + curRef);
 
                     try {
-
+                        boolean countBonds = (bondCounter == 0) ? true : false;
                         StringTokenizer st = new StringTokenizer(s);
 
                         while (st.hasMoreTokens()) {
-
+                            if (countBonds) { bondCounter++; }
                             String token = st.nextToken();
                             logger.debug("Token: " + token);
 
@@ -816,15 +829,12 @@ public class CMLCoreModule implements ModuleInterface {
     }
 
     protected void storeAtomData() {
-        boolean hasID = true;
-        int atomcount = elid.size();
-        logger.debug("No atom ids: " + atomcount);
-        if (atomcount == 0) {
-            logger.warn("Using element symbols as back up indication for number of atoms");
-            atomcount = elsym.size();
-            hasID = false;
+        logger.debug("No atoms: " + atomCounter);
+        if (atomCounter == 0) {
+            return;
         }
 
+        boolean hasID = false;
         boolean has3D = false;
         boolean has2D = false;
         boolean hasFormalCharge = false;
@@ -834,71 +844,78 @@ public class CMLCoreModule implements ModuleInterface {
         boolean hasIsotopes = false;
         boolean hasDictRefs = false;
 
-        if (elsym.size() == atomcount) {
+        if (elid.size() == atomCounter) {
+            hasID = true;
+        } else {
+            logger.debug(
+                    "No atom ids: " + elsym.size() + " != " + atomCounter);
+        }
+
+        if (elsym.size() == atomCounter) {
             hasSymbols = true;
         } else {
             logger.debug(
-                    "No atom symbols: " + elsym.size() + " != " + atomcount);
+                    "No atom symbols: " + elsym.size() + " != " + atomCounter);
         }
 
-        if ((x3.size() == atomcount) && (y3.size() == atomcount) && 
-            (z3.size() == atomcount)) {
+        if ((x3.size() == atomCounter) && (y3.size() == atomCounter) && 
+            (z3.size() == atomCounter)) {
             has3D = true;
         } else {
             logger.debug(
                     "No 3D info: " + x3.size() + " " + y3.size() + " " + 
-                    z3.size() + " != " + atomcount);
+                    z3.size() + " != " + atomCounter);
         }
 
-        if ((x2.size() == atomcount) && (y2.size() == atomcount)) {
+        if ((x2.size() == atomCounter) && (y2.size() == atomCounter)) {
             has2D = true;
         } else {
             logger.debug(
                     "No 2D info: " + x2.size() + " " + y2.size() + " != " + 
-                    atomcount);
+                    atomCounter);
         }
 
-        if (formalCharges.size() == atomcount) {
+        if (formalCharges.size() == atomCounter) {
             hasFormalCharge = true;
         } else {
             logger.debug(
                     "No formal Charge info: " + formalCharges.size() + 
-                    " != " + atomcount);
+                    " != " + atomCounter);
         }
 
-        if (partialCharges.size() == atomcount) {
+        if (partialCharges.size() == atomCounter) {
             hasPartialCharge = true;
         } else {
             logger.debug(
                     "No partial Charge info: " + partialCharges.size() + 
-                    " != " + atomcount);
+                    " != " + atomCounter);
         }
 
-        if (hCounts.size() == atomcount) {
+        if (hCounts.size() == atomCounter) {
             hasHCounts = true;
         } else {
             logger.debug(
                     "No hydrogen Count info: " + hCounts.size() + 
-                    " != " + atomcount);
+                    " != " + atomCounter);
         }
 
-        if (atomDictRefs.size() == atomcount) {
+        if (atomDictRefs.size() == atomCounter) {
             hasDictRefs = true;
         } else {
             logger.debug(
                     "No dictRef info: " + atomDictRefs.size() + 
-                    " != " + atomcount);
+                    " != " + atomCounter);
         }
 
-        if (isotope.size() == atomcount) {
+        if (isotope.size() == atomCounter) {
             hasIsotopes = true;
         } else {
             logger.debug(
                     "No isotope info: " + isotope.size() + 
-                    " != " + atomcount);
+                    " != " + atomCounter);
         }
 
-        for (int i = 0; i < atomcount; i++) {
+        for (int i = 0; i < atomCounter; i++) {
             logger.info("Storing atom: " + i);
             cdo.startObject("Atom");
             if (hasID) {
@@ -957,16 +974,14 @@ public class CMLCoreModule implements ModuleInterface {
     }
     
     protected void storeBondData() {
-        int bondcount = order.size();
         logger.debug(
-                "Testing a1,a2,stereo: " + bondARef1.size() + "," + 
-                bondARef2.size() + "," + bondStereo.size() + "=" + 
-                order.size());
+                "Testing a1,a2,stereo,order = count: " + bondARef1.size() + "," + 
+                bondARef2.size() + "," + bondStereo.size() + "," + order.size() + "=" +
+                bondCounter);
 
-        if ((bondARef1.size() == bondcount) && 
-            (bondARef2.size() == bondcount)) {
-            logger.debug(
-                    "About to add bond info to " + cdo.getClass().getName());
+        if ((bondARef1.size() == bondCounter) && 
+            (bondARef2.size() == bondCounter)) {
+            logger.debug("About to add bond info to " + cdo.getClass().getName());
 
             Enumeration orders = order.elements();
             Enumeration ids = bondid.elements();
@@ -974,7 +989,7 @@ public class CMLCoreModule implements ModuleInterface {
             Enumeration bar2s = bondARef2.elements();
             Enumeration stereos = bondStereo.elements();
 
-            while (orders.hasMoreElements()) {
+            while (bar1s.hasMoreElements()) {
                 cdo.startObject("Bond");
                 if (ids.hasMoreElements()) {
                     cdo.setObjectProperty("Bond", "id", (String)ids.nextElement());
@@ -986,18 +1001,20 @@ public class CMLCoreModule implements ModuleInterface {
                                       new Integer(bondElid.indexOf(
                                                           (String)bar2s.nextElement())).toString());
 
-                String bondOrder = (String)orders.nextElement();
-
-                if ("S".equals(bondOrder)) {
-                    cdo.setObjectProperty("Bond", "order", "1");
-                } else if ("D".equals(bondOrder)) {
-                    cdo.setObjectProperty("Bond", "order", "2");
-                } else if ("T".equals(bondOrder)) {
-                    cdo.setObjectProperty("Bond", "order", "3");
-                } else if ("A".equals(bondOrder)) {
-                    cdo.setObjectProperty("Bond", "order", "1.5");
-                } else {
-                    cdo.setObjectProperty("Bond", "order", bondOrder);
+                if (orders.hasMoreElements()) {
+                    String bondOrder = (String)orders.nextElement();
+                    
+                    if ("S".equals(bondOrder)) {
+                        cdo.setObjectProperty("Bond", "order", "1");
+                    } else if ("D".equals(bondOrder)) {
+                        cdo.setObjectProperty("Bond", "order", "2");
+                    } else if ("T".equals(bondOrder)) {
+                        cdo.setObjectProperty("Bond", "order", "3");
+                    } else if ("A".equals(bondOrder)) {
+                        cdo.setObjectProperty("Bond", "order", "1.5");
+                    } else {
+                        cdo.setObjectProperty("Bond", "order", bondOrder);
+                    }
                 }
 
                 if (stereos.hasMoreElements()) {

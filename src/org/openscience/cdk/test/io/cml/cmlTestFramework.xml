@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<cml title="Regression tests for valid XML Schema documents for CML 2.0"
+
+  xmlns="http://www.xml-cml.org/schema/cml2/core"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://www.xml-cml.org/schema/cml2/core ../../../io/cml/data/cmlCore.xsd">
+  
+  <!-- JFragmentsTest.testAtomId() -->
+  <molecule id='m1'><atomArray><atom id='a1'/></atomArray></molecule>
+  
+  <!-- JFragmentsTest.testAtomId2() -->
+  <molecule id='m1'><atomArray><stringArray builtin='id'>a1</stringArray></atomArray></molecule>
+  
+  <!-- JFragmentsTest.testAtomElementType() -->
+  <molecule id='m1'><atomArray><stringArray builtin='elementType'>C</stringArray></atomArray></molecule>
+  
+  <!-- JFragmentsTest.testAtomElementType2() -->
+  <molecule id='m1'><atomArray><atom id='a1'><string builtin='elementType'>C</string></atom></atomArray></molecule>  
+  
+  <!-- JFragmentsTest.test2dCoord2() -->
+  <molecule id='m1'>
+    <atomArray>
+      <stringArray builtin="id">a1</stringArray>
+      <floatArray builtin="x2">2.0833</floatArray>
+      <floatArray builtin="y2">4.9704</floatArray>
+    </atomArray>
+  </molecule>
+  
+  <!-- JFragmentsTest.testBond() -->
+  <molecule id='m1'>
+    <atomArray><atom id='a1'/><atom id='a2'/></atomArray>
+    <bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray>
+  </molecule>
+  
+  <!-- JFragmentsTest.testBond2() -->
+  <molecule id='m1'>
+    <atomArray><stringArray builtin='id'>a1 a2</stringArray></atomArray>
+    <bondArray>
+      <stringArray builtin='atomRefs'>a1</stringArray>
+      <stringArray builtin='atomRefs'>a2</stringArray>
+    </bondArray>
+  </molecule>
+
+  <!-- JFragmentsTest.testBond3() -->
+  <molecule id='m1'>
+    <atomArray><stringArray builtin='id'>a1 a2</stringArray></atomArray>
+    <bondArray>
+      <bond id='b1'>
+        <string builtin='atomRef'>a1</string>
+        <string builtin='atomRef'>a2</string>
+      </bond>
+    </bondArray>
+  </molecule>
+
+  <!-- JFragmentsTest.testBondId() -->
+  <molecule id='m1'>
+    <atomArray><atom id='a1'/><atom id='a2'/></atomArray>
+    <bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray>
+  </molecule>
+  
+</cml>
