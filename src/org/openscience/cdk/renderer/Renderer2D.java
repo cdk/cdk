@@ -55,7 +55,7 @@ import org.openscience.cdk.validate.ProblemMarker;
 public class Renderer2D   {
 
     private LoggingTool logger;
-    
+    boolean debug = false;
 	SSSRFinder sssrf = new SSSRFinder();
     private IsotopeFactory isotopeFactory;
 
@@ -255,6 +255,7 @@ public class Renderer2D   {
 		    graphics.drawPolygon(r2dm.getSelectRect());
 		}
 		paintLassoLines(graphics);
+		
 	}
 
 
@@ -778,17 +779,18 @@ public class Renderer2D   {
 	 */
 	private void paintRingBond(Bond bond, Ring ring, Color bondColor, Graphics graphics)
 	{
-		if (bond.getOrder() == 1)
-		{
-			paintSingleBond(bond, bondColor, graphics);
-		} else if (bond.getOrder() == 2)
-		{
-			paintSingleBond(bond, bondColor, graphics);
-			paintInnerBond(bond, ring, bondColor, graphics);
-		} else if (bond.getOrder() == 1.5 || bond.getFlag(CDKConstants.ISAROMATIC))
+		if (bond.getAtomAt(0).getFlag(CDKConstants.ISAROMATIC) && bond.getAtomAt(1).getFlag(CDKConstants.ISAROMATIC))
 		{
 			paintSingleBond(bond, bondColor, graphics);
 			paintInnerBond(bond, ring, Color.lightGray, graphics);
+		}
+		else if (bond.getOrder() == 1)
+		{
+			paintSingleBond(bond, bondColor, graphics);
+		}else if (bond.getOrder() == 2)
+		{
+			paintSingleBond(bond, bondColor, graphics);
+			paintInnerBond(bond, ring, bondColor, graphics);
 		} else if (bond.getOrder() == 3)
 		{
 			paintTripleBond(bond, bondColor, graphics);
