@@ -51,8 +51,6 @@
                     path="jar/dbdoclet.jar">
                 <param name="-properties" value="jar/dbdoclet.properties"/>
             </doclet>
-            <tag name="keyword" scope="all" description="Keywords:" />
-            <tag name="created" scope="all" description="Created on:" />
             <package name="org.openscience.cdk"/>
             <sourcepath>
                 <pathelement path="${src}"/>
