@@ -27,7 +27,26 @@
     <tbody>
         <xsl:for-each select="javancss/packages/package">
           <xsl:sort select="ncss" data-type="number" order="descending"/>
-          <xsl:apply-templates select="."/>
+          <xsl:apply-templates select="self::node()[not(contains(./name, 'test'))]"/>
+        </xsl:for-each>
+    </tbody>
+  </tgroup>
+</informaltable>
+<para>And for the test classes:</para>
+<informaltable frame='none'>
+  <tgroup cols="3">
+    <thead>
+        <row>
+          <entry>Package</entry>
+          <entry>Classes</entry>
+          <entry>Functions</entry>
+          <entry>NCSS</entry>
+        </row>
+    </thead>
+    <tbody>
+        <xsl:for-each select="javancss/packages/package">
+          <xsl:sort select="ncss" data-type="number" order="descending"/>
+          <xsl:apply-templates select="self::node()[contains(./name, 'test')]"/>
         </xsl:for-each>
     </tbody>
   </tgroup>

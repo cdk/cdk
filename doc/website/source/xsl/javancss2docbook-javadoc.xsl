@@ -37,7 +37,36 @@
     <tbody>
         <xsl:for-each select="javancss/packages/package">
           <xsl:sort select="javadocs" data-type="number" order="descending"/>
-          <xsl:apply-templates select="."/>
+          <xsl:apply-templates select="self::node()[not(contains(./name, 'test'))]"/>
+        </xsl:for-each>
+    </tbody>
+  </tgroup>
+</informaltable>
+<para>And for the test classes:</para>
+<informaltable frame='none'>
+  <tgroup cols="3">
+    <thead>
+        <row>
+          <entry>Package</entry>
+          <entry>Classes</entry>
+          <entry>Functions</entry>
+          <entry>Javadocs</entry>
+          <entry>Javadocs</entry>
+          <entry>Done</entry>
+        </row>
+        <row>
+          <entry></entry>
+          <entry></entry>
+          <entry></entry>
+          <entry>Expected</entry>
+          <entry>Found</entry>
+          <entry></entry>
+        </row>
+    </thead>
+    <tbody>
+        <xsl:for-each select="javancss/packages/package">
+          <xsl:sort select="javadocs" data-type="number" order="descending"/>
+          <xsl:apply-templates select="self::node()[contains(./name, 'test')]"/>
         </xsl:for-each>
     </tbody>
   </tgroup>

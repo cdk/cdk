@@ -2,9 +2,6 @@
 
   <property name="build.dir" value="../target"/>
 
-  <target id="keyword.index" name="keyword.index">
-  </target>
-
   <target id="layout" name="layout">
     <xslt in="layout.xml" out="autolayout.xml" style="xsl/autolayout.xsl"/>
   </target>
@@ -14,7 +11,16 @@
     <xslt in="autolayout.xml" destdir="${build.dir}/" style="xsl/tabular.xsl"/>
   </target>
 
-  <target id="website" name="website" depends="layout">
+  <target id="clean" name="clean">
+    <delete file="javancss-tmp.xml"/>
+    <delete file="javancss-data.xml"/>
+    <delete file="javadoc-data.xml"/>
+    <delete>
+      <fileset dir="${build.dir}/" includes="*.html"/>
+    </delete>
+  </target>
+  
+  <target id="website" name="website" depends="layout, javancss, keyword.index">
     <!-- note the duplication. If I understand the Ant website correctly, it should
          be possible to use the includes="*.xml" instead with Ant 1.5.2/Xalan and the
          reloadstylesheet attribute. But I only have Ant 1.5.1 at the moment :( -->
@@ -65,6 +71,28 @@
     <xslt in="thelibrary.xml" out="${build.dir}/thelibrary.html" style="xsl/tabular.xsl"/>
     <xslt in="website.xml" out="${build.dir}/website.html" style="xsl/tabular.xsl"/>
     <xslt in="whoiswho.xml" out="${build.dir}/whoiswho.html" style="xsl/tabular.xsl"/>
+  </target>
+
+  <target name="javancss">
+    <java classname="javancss.Main" fork="yes"
+      output="javancss-tmp.xml">
+      <arg value="-package"/>
+      <arg value="-xml"/>
+      <arg value="-recursive"/>
+      <arg value="../../../src"/>
+      <classpath>
+        <pathelement location="javancss/lib/javancss.jar"/>
+        <pathelement location="javancss/lib/ccl.jar"/>
+        <pathelement location="javancss/lib/jhbasic.jar"/>
+      </classpath>
+    </java>
+    <xslt in="javancss-tmp.xml" out="javancss-data.xml" style="xsl/javancss2docbook.xsl"/>
+    <xslt in="javancss-tmp.xml" out="javadoc-data.xml" style="xsl/javancss2docbook-javadoc.xsl"/>
+  </target>
+  
+  <target id="keyword.index" name="keyword.index">
+    <ant dir="../../javadoc/" antfile="build.xml" target="keyword.index"/>
+    <move file="keyword.index.xml" todir="../../javadoc"/>
   </target>
 
 </project>
