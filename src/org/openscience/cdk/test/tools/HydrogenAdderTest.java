@@ -92,6 +92,34 @@ public class HydrogenAdderTest extends TestCase {
         assertEquals(4, new MFAnalyser(mol).getAtomCount("H"));
         assertEquals(4, mol.getBondCount(carbon));
     }
+    
+    public void testAminomethane()
+    {
+        Molecule aminomethane = new Molecule();
+        Atom carbon = new Atom("C");
+        Point2d carbonPos = new Point2d(0.0,0.0);
+        carbon.setPoint2D(carbonPos);
+        Atom nitrogen = new Atom("N");
+        Point2d nitrogenPos = new Point2d(1.0,1.0);
+        nitrogen.setPoint2D(nitrogenPos);
+        aminomethane.addAtom(carbon);
+	aminomethane.addAtom(nitrogen);
+        aminomethane.addBond(new Bond(carbon, nitrogen));
+        
+        // generate new coords
+       try {
+            adder.addExplicitHydrogensToSatisfyValency(aminomethane);
+        } catch (Exception exception) {
+            System.err.println(exception);
+            exception.printStackTrace();
+            fail();
+        }	
+
+	assertEquals(7, aminomethane.getAtomCount());
+	
+        if (standalone) MoleculeViewer2D.display(aminomethane, false);
+        // check that previously set coordinates are kept
+    }    
 
     public void testAmmonia() {
         Molecule mol = new Molecule();
@@ -402,8 +430,7 @@ public class HydrogenAdderTest extends TestCase {
         HydrogenAdderTest test = new HydrogenAdderTest("HydrogenAdderTest");
         test.standalone = true;
         test.setUp();
-        test.testAddImplicitHydrogens();
-        test.testAromaticSaturation();
+	test.testAminomethane();
     }
     
 }
