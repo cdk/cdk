@@ -40,7 +40,7 @@ public class ReaderEvent extends EventObject {
      *
      * @param source the object on which the event initially occurred.
      */
-    ReaderEvent(Object source) {
+    public ReaderEvent(Object source) {
         super(source);
     }
 
