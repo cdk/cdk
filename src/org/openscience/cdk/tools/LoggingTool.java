@@ -223,14 +223,44 @@ public class LoggingTool {
     
     public void error(Object object) {
         if (debug) {
-            if (tostdout) {
-                toSTDOUT("ERROR", object.toString());
-            } else {
-                ((org.apache.log4j.Category)logger).error(object.toString());
-            }
+            errorString(object.toString());
         }
     }
 
+    private void errorString(String string) {
+        if (tostdout) {
+            toSTDOUT("ERROR", string);
+        } else {
+            ((org.apache.log4j.Category)logger).error(string);
+        }
+    }
+    
+    public void error(Object object, Object object2) {
+        if (debug) {
+            errorString(object.toString() + object2.toString());
+        }
+    }
+    
+    public void error(Object obj, Object obj2, Object obj3) {
+        if (debug) {
+            errorString(obj.toString() + obj2.toString() + obj3.toString());
+        }
+    }
+    
+    public void error(Object obj, Object obj2, Object obj3, Object obj4) {
+        if (debug) {
+            errorString(obj.toString() + obj2.toString() + obj3.toString() +
+                  obj4.toString());
+        }
+    }
+    
+    public void error(Object obj, Object obj2, Object obj3, Object obj4, Object obj5) {
+        if (debug) {
+            errorString(obj.toString() + obj2.toString() + obj3.toString() +
+                  obj4.toString() + obj5.toString());
+        }
+    }
+    
     public void fatal(Object object) {
         if (debug) {
             if (tostdout) {
@@ -243,24 +273,83 @@ public class LoggingTool {
 
     public void info(Object object) {
         if (debug) {
-            if (tostdout) {
-                toSTDOUT("INFO", object.toString());
-            } else {
-                ((org.apache.log4j.Category)logger).info(object.toString());
-            }
+            infoString(object.toString());
         }
     }
 
-    public void warn(Object object) {
-        if (debug) {
-            if (tostdout) {
-                toSTDOUT("WARN", object.toString());
-            } else {
-                ((org.apache.log4j.Category)logger).warn(object.toString());
-            }
+    private void infoString(String string) {
+        if (tostdout) {
+            toSTDOUT("INFO", string);
+        } else {
+            ((org.apache.log4j.Category)logger).info(string);
         }
     }
     
+    public void info(Object object, Object object2) {
+        if (debug) {
+            infoString(object.toString() + object2.toString());
+        }
+    }
+    
+    public void info(Object obj, Object obj2, Object obj3) {
+        if (debug) {
+            infoString(obj.toString() + obj2.toString() + obj3.toString());
+        }
+    }
+    
+    public void info(Object obj, Object obj2, Object obj3, Object obj4) {
+        if (debug) {
+            infoString(obj.toString() + obj2.toString() + obj3.toString() +
+                  obj4.toString());
+        }
+    }
+    
+    public void info(Object obj, Object obj2, Object obj3, Object obj4, Object obj5) {
+        if (debug) {
+            infoString(obj.toString() + obj2.toString() + obj3.toString() +
+                  obj4.toString() + obj5.toString());
+        }
+    }
+    public void warn(Object object) {
+        if (debug) {
+            warnString(object.toString());
+        }
+    }
+    
+    private void warnString(String string) {
+        if (tostdout) {
+            toSTDOUT("WARN", string);
+        } else {
+            ((org.apache.log4j.Category)logger).warn(string);
+        }
+    }
+    
+    public void warn(Object object, Object object2) {
+        if (debug) {
+            warnString(object.toString() + object2.toString());
+        }
+    }
+    
+    public void warn(Object obj, Object obj2, Object obj3) {
+        if (debug) {
+            warnString(obj.toString() + obj2.toString() + obj3.toString());
+        }
+    }
+    
+    public void warn(Object obj, Object obj2, Object obj3, Object obj4) {
+        if (debug) {
+            warnString(obj.toString() + obj2.toString() + obj3.toString() +
+                  obj4.toString());
+        }
+    }
+    
+    public void warn(Object obj, Object obj2, Object obj3, Object obj4, Object obj5) {
+        if (debug) {
+            warnString(obj.toString() + obj2.toString() + obj3.toString() +
+                  obj4.toString() + obj5.toString());
+        }
+    }
+
     public boolean isDebugEnabled() {
         return debug;
     }
