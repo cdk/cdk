@@ -1,6 +1,16 @@
 <project name="CDK" default="compile" basedir=".">
 
+        <!-- compile options -->
         <property name="build.compiler" value="javac1.4" />
+        <property name="debug" value="on" />
+        <property name="deprecation" value="off" />
+        <property name="optimization" value="off" />
+
+        <!-- where to find Java3D -->
+        <property name="pathtojava3d" value="" />
+        <property name="pathtojoelib" value="../../JoeLib/joelib/" />
+
+        <!-- directories -->
         <property name="build" value="build" />
         <property name="sourcedist" value="sourcedist" />
         <property name="dist" value="dist" />
@@ -10,9 +20,8 @@
         <property name="lib" value="jar" />
         <property name="src.tests" value="${src}/org/openscience/cdk/test" />
         <property name="reports.tests" value="reports" />
-        <property name="pathtojava3d" value="" />
-        <property name="pathtojoelib" value="../../JoeLib/joelib/" />
 
+        <!-- CLASSPATH -->
         <path id="project.class.path">
                 <pathelement
                 location="/usr/lib/j2sdk1.3/jre/lib/rt.jar" />
@@ -72,7 +81,8 @@
 
                 <mkdir dir="${build}" />
 
-                <javac destdir="${build}" optimize="off" debug="on" deprecation="off">
+                <javac destdir="${build}" optimize="${optimization}" 
+                       debug="${debug}" deprecation="${deprecation}">
                         <src path="${build.src}" />
                         <exclude name="org/openscience/cdk/applications/Viewer.java" />
                         <exclude name="org/openscience/cdk/renderer/AcceleratedRenderer3D.java" />
@@ -100,8 +110,8 @@
                 <!-- Task to build the libio classes. Clearly, this requires extra
                      jars, and these should be located in ${lib}/libio -->
 
-                <javac destdir="${build}" optimize="off"
-                       debug="on" deprecation="off">
+                <javac destdir="${build}" optimize="${optimization}" 
+                       debug="${debug}" deprecation="${deprecation}">
                         <src path="${build.src}/org/openscience/cdk/libio" />
                         <src path="${build.src}/org/openscience/cdk/test/libio" />
                         <src path="${build.src}/org/openscience/cdk/applications"/>
@@ -120,8 +130,8 @@
                      jars, like those in ${lib}/libio -->
                 <echo message="Compiling classes defined in ${src}/applications.classes." />
 
-                <javac srcdir="${build.src}" destdir="${build}"
-                       optimize="off" debug="on" deprecation="off"
+                <javac srcdir="${build.src}" destdir="${build}" optimize="${optimization}" 
+                       debug="${debug}" deprecation="${deprecation}"
                        includesfile="${src}/applications.classes">
 
                         <classpath refid="project.class.path" />
@@ -136,8 +146,8 @@
         <target name="compile-core" depends="init">
                 <echo message="Compiling classes for cdk-core module." />
 
-                <javac srcdir="${build.src}" destdir="${build}"
-                       optimize="on" debug="off" deprecation="off"
+                <javac srcdir="${build.src}" destdir="${build}" optimize="${optimization}" 
+                       debug="${debug}" deprecation="${deprecation}"
                        includesfile="${src}/core.classes">
                     <classpath refid="project.class.path" />
                 </javac>
@@ -146,8 +156,8 @@
         <target name="compile-standard" depends="init">
                 <echo message="Compiling classes for cdk-standard module." />
 
-                <javac srcdir="${build.src}" destdir="${build}"
-                       optimize="on" debug="on" deprecation="off"
+                <javac srcdir="${build.src}" destdir="${build}" optimize="${optimization}" 
+                       debug="${debug}" deprecation="${deprecation}"
                        includesfile="${src}/standard.classes">
                     <classpath>
                         <fileset dir="${lib}">
@@ -166,8 +176,8 @@
         <target name="compile-io" depends="init, dist-core, dist-standard">
                 <echo message="Compiling classes for cdk-io module." />
 
-                <javac srcdir="${build.src}" destdir="${build}"
-                       optimize="off" debug="on" deprecation="off">
+                <javac srcdir="${build.src}" destdir="${build}" optimize="${optimization}" 
+                       debug="${debug}" deprecation="${deprecation}">
                     <include name="org/openscience/cdk/io/**/*"/>
                     <include name="org/openscience/cdk/ChemFile.java"/>
                     <include name="org/openscience/cdk/exception/UnsupportedChemObjectException.java"/>
@@ -185,8 +195,8 @@
         <target name="compile-render" depends="init, dist-core, dist-standard">
                 <echo message="Compiling classes for cdk-render module." />
 
-                <javac srcdir="${build.src}" destdir="${build}"
-                       optimize="off" debug="on" deprecation="off">
+                <javac srcdir="${build.src}" destdir="${build}" optimize="${optimization}" 
+                       debug="${debug}" deprecation="${deprecation}">
                     <include name="org/openscience/cdk/renderer/**/*"/>
                     <include name="org/openscience/cdk/controller/**/*"/>
 
@@ -211,8 +221,8 @@
                    originalfile="${build.src}/org/openscience/cdk/tools/LoggingTool.java"
                    dir="${build.src}/org/openscience/cdk/tools"/>
 
-            <javac srcdir="${build.src}" destdir="${build}"
-                   optimize="off" debug="on" deprecation="off"
+            <javac srcdir="${build.src}" destdir="${build}" optimize="${optimization}" 
+                   debug="${debug}" deprecation="${deprecation}"
                    includesfile="${src}/cml.classes">
                 <classpath refid="project.class.path" />
             </javac>
@@ -223,8 +233,8 @@
         <target name="compile-test" depends="compile">
                 <!-- Task to build the test classes. -->
                 <javac srcdir="${src}/org/openscience/cdk/test"
-                       destdir="${build}" optimize="off" debug="on"
-                       deprecation="off">
+                       destdir="${build}" optimize="${optimization}" 
+                       debug="${debug}" deprecation="${deprecation}">
                         <exclude name="renderer/Accel*.java" />
                         <exclude name="renderer/Orbitals*.java" />
                         <exclude name="libio/**/*.java" />
@@ -238,7 +248,8 @@
         <target name="compile-with-java3d" depends="compile">
                 <mkdir dir="${build}" />
 
-                <javac destdir="${build}" optimize="on" deprecation="off" debug="on">
+                <javac destdir="${build}" optimize="${optimization}" 
+                       debug="${debug}" deprecation="${deprecation}">
                         <src path="${build.src}" />
 
                         <!-- exclude libio classes that require additional
