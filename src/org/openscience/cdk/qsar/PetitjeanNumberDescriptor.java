@@ -131,9 +131,9 @@ public class PetitjeanNumberDescriptor implements Descriptor {
 					radius = radius; 
 				}
 			}
-			System.out.println("row " + i + ", radius: " +radius + ", diameter: " +diameter);
+			// System.out.println("row " + i + ", radius: " +radius + ", diameter: " +diameter);
 		}
-		System.out.println("diameter: " +diameter);
+		// System.out.println("diameter: " +diameter);
 		
 		petitjeanNumber = (diameter - radius)/diameter;
 		return new DoubleResult(petitjeanNumber);
