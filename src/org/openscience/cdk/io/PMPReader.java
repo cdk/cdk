@@ -36,7 +36,9 @@ import java.io.*;
 import javax.vecmath.*;
 
 /*
- * Reads an frames from a PMP formated input
+ * Reads an frames from a PMP formated input.
+ *
+ * Both compilation and use of this class requires Java 1.4.
  *
  * @keyword file format, Polymorph Predictor (tm)
  *
@@ -182,7 +184,7 @@ public class PMPReader implements ChemObjectReader {
                                 // process frame data
                                 if (line.startsWith("%%Atom Coords")) {
                                     // add atomC as atoms to crystal
-                                    crystal.add(atomC);
+                                    crystal.add((AtomContainer)atomC.clone());
                                     int expatoms = atomC.getAtomCount();
                                     // exception
                                     for (int i=0; i < expatoms; i++) {

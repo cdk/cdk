@@ -151,13 +151,13 @@ public class CMLWriter implements ChemObjectWriter {
         write("  <crystal>\n");
         write("    <floatArray title=\"a\" convention=\"PMP\">");
         write(crystal.getA());
-        write("    </floatArray>\n");
+        write("</floatArray>\n");
         write("    <floatArray title=\"b\" convention=\"PMP\">");
         write(crystal.getB());
-        write("    </floatArray>\n");
+        write("</floatArray>\n");
         write("    <floatArray title=\"c\" convention=\"PMP\">");
         write(crystal.getC());
-        write("    </floatArray>\n");
+        write("</floatArray>\n");
         write("  </crystal>\n");
         write((AtomContainer)crystal);
         write("</molecule>\n");

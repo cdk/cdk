@@ -33,8 +33,8 @@ import java.util.*;
 /**
  * Program that converts a file from one format to a file with another format.
  * Supported formats are:
- *   input: CML, XYZ, MDLMolfile
- *  output: CML, MDL Molfile
+ *   input: CML, XYZ, MDL Molfile, PMP, ShelX
+ *  output: CML, MDL Molfile, SMILES, ShelX
  *
  *  @keyword command line util
  *  @keyword file format
@@ -43,8 +43,8 @@ public class FileConvertor {
 
     private org.openscience.cdk.tools.LoggingTool logger;
 
-    private ChemObjectReader input;
-    private ChemObjectWriter output;
+    private ChemObjectReader cor;
+    private ChemObjectWriter cow;
     private ChemFile chemFile;
 
     private String iformat;
@@ -58,51 +58,40 @@ public class FileConvertor {
         this.oformat = oformat;
     }
 
-  public boolean convert(File input, File output) {
-    boolean success = true;
-    try {
-      FileReader fr = new FileReader(input);
-      FileWriter fw = new FileWriter(output);
+    public boolean convert(File input, File output) {
+        boolean success = true;
+        try {
+            FileReader fr = new FileReader(input);
+            FileWriter fw = new FileWriter(output);
 
-      ChemObjectReader cor = getChemObjectReader(this.iformat, fr);
-      if (cor == null) {
-        logger.warn("Format " + iformat + " is an unsupported input format.");
-        System.err.println("Unsupported input format!");
-        return false;
-      }
-      ChemObjectWriter cow = getChemObjectWriter(this.oformat, fw);
-      if (cow == null) {
-        logger.warn("Format " + oformat + " is an unsupported output format.");
-        System.err.println("Unsupported output format!");
-        return false;
-      }
+            cor = getChemObjectReader(this.iformat, fr);
+            if (cor == null) {
+                logger.warn("Format " + iformat + " is an unsupported input format.");
+                System.err.println("Unsupported input format!");
+                return false;
+            }
+            cow = getChemObjectWriter(this.oformat, fw);
+            if (cow == null) {
+                logger.warn("Format " + oformat + " is an unsupported output format.");
+                System.err.println("Unsupported output format!");
+                return false;
+            }
 
-      ChemFile content = (ChemFile)cor.read((ChemObject)new ChemFile());
-      fr.close();
-      if (content == null) {
-        return false;
-      }
-      try {
-          cow.write(content.getChemSequence(0).getChemModel(0).getCrystal());
-      } catch (UnsupportedChemObjectException e) {
-          logger.error("Cannot add Crystal: " + e.toString());
-          return false;
-      }
-      try {
-          cow.write(content.getChemSequence(0).getChemModel(0).getSetOfMolecules());
-      } catch (UnsupportedChemObjectException e) {
-          logger.error("Cannot add SetOfMolecules: " + e.toString());
-          return false;
-      }
-      fw.flush();
-      fw.close();
-    } catch (Exception e) {
-      success = false;
-      logger.error(e.toString());
-      e.printStackTrace();
+            ChemFile content = (ChemFile)cor.read((ChemObject)new ChemFile());
+            fr.close();
+            if (content == null) {
+                return false;
+            }
+            write(content);
+            fw.flush();
+            fw.close();
+        } catch (Exception e) {
+            success = false;
+            logger.error(e.toString());
+            e.printStackTrace();
+        }
+        return success;
     }
-    return success;
-  }
 
   /**
    * actual program
@@ -166,6 +155,66 @@ public class FileConvertor {
         }
         return null;
     }
+
+    /**
+    * Since we do not know what kind of ChemObject the Writer supports,
+    * and we want to output as much information as possible, use
+    * the generalized mechanism below.
+    */
+    private void write(ChemFile cf) {
+        try {
+            cow.write(cf);
+        } catch (UnsupportedChemObjectException e) {
+            logger.info("Cannot write ChemFile, recursing into ChemSequence's.");
+            for (int i=0; i < cf.getChemSequenceCount(); i++) {
+                write(cf.getChemSequence(i));
+            }
+        }
+    }
+
+    private void write(ChemSequence cs) {
+        try {
+            cow.write(cs);
+        } catch (UnsupportedChemObjectException e) {
+            logger.info("Cannot write ChemSequence, recursing into ChemModel's.");
+            for (int i=0; i < cs.getChemModelCount(); i++) {
+                write(cs.getChemModel(i));
+            }
+        }
+    }
+
+    private void write(ChemModel cm) {
+        try {
+            cow.write(cm);
+        } catch (UnsupportedChemObjectException e) {
+            logger.info("Cannot write ChemSequence, trying Crystal.");
+            Crystal crystal = cm.getCrystal();
+            if (crystal != null) {
+                write(crystal);
+            }
+            SetOfMolecules som = cm.getSetOfMolecules();
+            if (som != null) {
+                write(som);
+            }
+        }
+    }
+
+    private void write(Crystal c) {
+        try {
+            cow.write(c);
+        } catch (UnsupportedChemObjectException e) {
+            logger.error("Cannot write Crystal!");
+        }
+    }
+
+    private void write(SetOfMolecules som) {
+        try {
+            cow.write(som);
+        } catch (UnsupportedChemObjectException e) {
+            logger.error("Cannot write SetOfMolecules!");
+        }
+    }
+
 }
 
 

@@ -73,7 +73,7 @@ public class Viewer {
         this.useJava3D = b;
     }
 
-    private void view(Molecule m) {
+    private void view(AtomContainer m) {
         JFrame frame = new JFrame("CDK Molecule Viewer");
         frame.getContentPane().setLayout(new BorderLayout());
 
@@ -192,6 +192,7 @@ public class Viewer {
         ChemSequence chemSequence;
         ChemModel chemModel;
         SetOfMolecules setOfMolecules;
+        Crystal crystal;
         logger.info("  number of sequences: " + chemFile.getChemSequenceCount());
         for (int sequence = 0; sequence < chemFile.getChemSequenceCount(); sequence++) {
           chemSequence = chemFile.getChemSequence(sequence);
@@ -200,11 +201,17 @@ public class Viewer {
           for (int model = 0; model < chemSequence.getChemModelCount(); model++) {
             chemModel = chemSequence.getChemModel(model);
             setOfMolecules = chemModel.getSetOfMolecules();
-            logger.info("  number of molecules in model " + model + ": " +
-                               setOfMolecules.getMoleculeCount());
-            for (int i = 0; i < setOfMolecules.getMoleculeCount(); i++) {
-                Molecule m = setOfMolecules.getMolecule(i);
-                view(m);
+            if (setOfMolecules != null) {
+                logger.info("  number of molecules in model " + model + ": " +
+                                setOfMolecules.getMoleculeCount());
+                for (int i = 0; i < setOfMolecules.getMoleculeCount(); i++) {
+                    Molecule m = setOfMolecules.getMolecule(i);
+                    view(m);
+                }
+            }
+            crystal = chemModel.getCrystal();
+            if (crystal != null) {
+                view(crystal);
             }
           }
         }
