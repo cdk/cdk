@@ -1,0 +1,38 @@
+The following was reported by Daniel on:
+
+http://mentors.debian.net/phpbb/viewtopic.php?t=45
+
+===================================================================================================
+When trying to install cdk and libcdk-java, dpkg returns an error-code: 
+
+Quote:
+# apt-get install cdk libcdk-java 
+ Reading Package Lists... Done 
+ Building Dependency Tree... Done 
+ Suggested packages: 
+ jchempaint 
+ The following NEW packages will be installed: 
+ cdk libcdk-java 
+ 0 upgraded, 2 newly installed, 0 to remove and 0 not upgraded. 
+ Need to get 0B/7123kB of archives. 
+ After unpacking 8024kB of additional disk space will be used. 
+ Selecting previously deselected package libcdk-java. 
+ (Reading database ... 159046 files and directories currently installed.) 
+ Unpacking libcdk-java (from .../libcdk-java_20040513_all.deb) ... 
+ Selecting previously deselected package cdk. 
+ Unpacking cdk (from .../archives/cdk_20040513_all.deb) ... 
+ dpkg: error processing /var/cache/apt/archives/cdk_20040513_all.deb (--unpack): 
+ trying to overwrite `/usr/share/doc/cdk/changelog.gz', which is also in package libcdk-java 
+ Errors were encountered while processing: 
+ /var/cache/apt/archives/cdk_20040513_all.deb 
+ E: Sub-process /usr/bin/dpkg returned an error code (1)
+ 
+I solved the problem with adding a diversion: 
+  
+
+Quote:
+# dpkg-divert --package cdk --add /usr/share/doc/cdk/changelog.gz
+ 
+BTW: The package jchempaint does not exist. I think the package cdk should suggest jcpcdk. 
+===================================================================================================
+ 
