@@ -39,12 +39,23 @@ import org.openscience.cdk.ChemModel;
 public interface CDKEditBus {
 
     /**
+     * Should return the version of the implemented CDKEditBus API.
+     * This can be used by plugins to see what features are available.
+     */
+    public String getAPIVersion();
+
+    /**
      * Tells the application in which the plugin is loaded to
      * show the given ChemFile.
      *
      * @see org.openscience.cdk.ChemFile
      */
     public void showChemFile(ChemFile file);
+    /**
+     * Tells the application in which the plugin is loaded to
+     * show the chemistry in the given String.
+     */
+    public void showChemFile(String file);
     /**
      * Tells the application in which the plugin is loaded to
      * show the given ChemModel.
