@@ -133,7 +133,7 @@ public class Convertor {
     if (bond != null) {
       BondImpl convertedBond = new BondImpl(doc);
       if (ac != null) {
-        convertedBond.setAtomRefs2("a" + ac.getAtomNumber(bond.getAtoms()[0]) + " a" + ac.getAtomNumber(bond.getAtoms()[1]));
+        convertedBond.setAtomRefs2("a" + (ac.getAtomNumber(bond.getAtoms()[0])+1) + " a" + (ac.getAtomNumber(bond.getAtoms()[1])+1));
         convertedBond.setId("b" + (ac.getBondNumber(bond) + 1));
       }
       convertedBond.setOrder(((int) bond.getOrder()) + "");
