@@ -60,33 +60,33 @@ public class MDLRXNReaderTest extends TestCase {
         try {
             MDLRXNReader reader1 = new MDLRXNReader(new InputStreamReader(ins1));
             Reaction reaction1 = new Reaction();
-	    reaction1 = (Reaction)reader1.read(reaction1);
-            
-            assertNotNull(reaction1);
-            assertEquals(2, reaction1.getReactantCount());
-	    assertEquals(1, reaction1.getProductCount());
-	    
-	    reader1.close();
-	    
+			reaction1 = (Reaction)reader1.read(reaction1);
+			
+			assertNotNull(reaction1);
+			assertEquals(2, reaction1.getReactantCount());
+			assertEquals(1, reaction1.getProductCount());
+			
+	    	reader1.close();
+			
         } catch (Exception e) {
             fail(e.toString());
         }
     }
 
     public void testReadReactions2() {
-	String filename2 = "data/mdl/reaction-2.rxn";
-	logger.info("Testing: " + filename2);
-	InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(filename2);
+		String filename2 = "data/mdl/reaction-2.rxn";
+		logger.info("Testing: " + filename2);
+		InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(filename2);
         try {
-	    MDLRXNReader reader2 = new MDLRXNReader(new InputStreamReader(ins2));
-	    Reaction reaction2 = (Reaction)reader2.read(reaction1);
-            
-            assertNotNull(reaction2);
-            assertEquals(2, reaction2.getReactantCount());
-	    assertEquals(2, reaction2.getProductCount());
-	    
-	    reader2.close();
-	    
+			MDLRXNReader reader2 = new MDLRXNReader(new InputStreamReader(ins2));
+			Reaction reaction2 = (Reaction)reader2.read(reaction1);
+			
+			assertNotNull(reaction2);
+			assertEquals(2, reaction2.getReactantCount());
+			assertEquals(2, reaction2.getProductCount());
+			
+			reader2.close();
+	    	
         } catch (Exception e) {
             fail(e.toString());
         }
