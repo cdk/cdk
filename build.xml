@@ -296,19 +296,16 @@
                 <junit printsummary="yes" haltonfailure="yes">
                         <classpath>
                                 <pathelement
-                                location="${dist}/jar/cdk.jar" />
-
-                                <pathelement
                                 path="${java.class.path}" />
-
-                                <pathelement location="." />
-
                                 <fileset dir="${lib}">
                                         <include name="*.jar" />
                                 </fileset>
-                        </classpath>
-                        <test
-                        name="org.openscience.cdk.test.CDKTests"
+                                <fileset dir="${dist}/jar">
+                                        <include name="*.jar" />
+                                </fileset>
+
+			</classpath>
+                        <test name="org.openscience.cdk.test.CDKTests"
                         haltonfailure="no"
                         todir="${reports.tests}"
                         outfile="result">
@@ -358,7 +355,7 @@
         </target>
 
         <target name="run" depends="dist">
-                <java classname="org.openscience.cdk.test.FingerprinterTest" fork="yes">
+                <java classname="org.openscience.cdk.test.smiles.SmilesParserTest" fork="yes">
                         <classpath>
                                 <pathelement location="${dist}/jar/cdk-core.jar" />
                                 <pathelement location="${dist}/jar/cdk-extra.jar" />
