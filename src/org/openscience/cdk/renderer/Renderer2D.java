@@ -725,6 +725,7 @@ public class Renderer2D   {
         Color bondColor;
         Ring ring;
         Bond[] bonds = atomCon.getBonds();
+        logger.debug("Painting bonds...");
         for (int i = 0; i < bonds.length; i++){
             Bond currentBond = bonds[i];
             bondColor = (Color) r2dm.getColorHash().get(currentBond);
@@ -740,13 +741,49 @@ public class Renderer2D   {
             }
             ring = ringSet.getHeaviestRing(currentBond);
             if (ring != null) {
-                paintRingBond(currentBond, ring, bondColor, graphics);
+                logger.debug("Found ring to draw");
+                if (ringIsAromatic(ring) && r2dm.getShowAromaticity()) {
+                    logger.debug("Ring is aromatic");
+                    if (r2dm.getShowAromaticityInCDKStyle()) {
+                        paintAromaticRingBondCDKStyle(currentBond, ring, bondColor, graphics);
+                    } else {
+                        // FIXME: don't draw the circle this many times!
+                        paintRingRing(ring, bondColor, graphics);
+                        paintSingleBond(currentBond, bondColor, graphics);
+                    }
+                } else {
+                    logger.debug("Ring is *not* aromatic");
+                    paintRingBond(currentBond, ring, bondColor, graphics);
+                }
             } else {
+                logger.debug("Drawing a non-ring bond");
                 paintBond(currentBond, bondColor, graphics);
             }
         }
     }
 
+    /**
+     * A ring is defined aromatic if all atoms are aromatic,
+     * -or- all bonds are aromatic.
+     */
+    public boolean ringIsAromatic(Ring ring) {
+        boolean isAromatic = true;
+        Atom[] atoms = ring.getAtoms();
+        for (int i=0; i<atoms.length; i++) {
+            if (!atoms[i].getFlag(CDKConstants.ISAROMATIC))
+                isAromatic = false;
+        }
+        if (!isAromatic) {
+            isAromatic = true;
+            Bond[] bonds = ring.getBonds();
+            for (int i=0; i<bonds.length; i++) {
+                if (!bonds[i].getFlag(CDKConstants.ISAROMATIC))
+                    return false;
+            }
+        }
+        return isAromatic;
+    }
+    
 
 	/**
 	 * Triggers the paint method suitable to the bondorder of the given bond.
@@ -782,7 +819,7 @@ public class Renderer2D   {
 
 	/**
 	 * Triggers the paint method suitable to the bondorder of the given bond that
-	 * is part of a ring.
+	 * is part of a ring with CDK's grey inner bonds.
 	 *
 	 * @param  bond       The Bond to be drawn.
 	 * @param  ring       Description of the Parameter
@@ -790,21 +827,53 @@ public class Renderer2D   {
 	 */
 	public void paintRingBond(Bond bond, Ring ring, Color bondColor, Graphics graphics)
 	{
-        if (r2dm.getShowAromaticity() &&
-            bond.getAtomAt(0).getFlag(CDKConstants.ISAROMATIC) && 
-            bond.getAtomAt(1).getFlag(CDKConstants.ISAROMATIC)) {
+        if (bond.getOrder() == 1.0) {
             paintSingleBond(bond, bondColor, graphics);
-            paintInnerBond(bond, ring, Color.lightGray, graphics);
-        } else if (bond.getOrder() == 1) {
-            paintSingleBond(bond, bondColor, graphics);
-        } else if (bond.getOrder() == 2) {
+        } else if (bond.getOrder() == 2.0) {
             paintSingleBond(bond, bondColor, graphics);
             paintInnerBond(bond, ring, bondColor, graphics);
-        } else if (bond.getOrder() == 3) {
+        } else if (bond.getOrder() == 3.0) {
             paintTripleBond(bond, bondColor, graphics);
+        } else {
+            logger.warn("Drawing bond as single even though it has order:" + bond.getOrder()); 
+            paintSingleBond(bond, bondColor, graphics);
         }
     }
 
+    /**
+     * Draws the ring in an aromatic ring.
+     */
+    public void paintRingRing(Ring ring, Color bondColor, Graphics graphics) {
+		Point2d center = ring.get2DCenter();
+
+        double[] minmax = GeometryTools.getMinMax(ring);
+        double width = (minmax[2]- minmax[0])*0.7;
+        double height = (minmax[3]- minmax[1])*0.7;
+		int[] coords = {(int)(center.x - (width/2.0)), (int)(center.y - (height/2.0))};
+        int[] screenCoords = getScreenCoordinates(coords);
+        graphics.fillOval(screenCoords[0], screenCoords[1], 
+                          (int)(width*r2dm.getZoomFactor()), 
+                          (int)(height*r2dm.getZoomFactor()));
+        
+        double innerWidth = width*0.9;
+        double innerHeight = height*0.9;
+		int[] innerCoords = {(int)(center.x - (innerWidth/2.0)), (int)(center.y - (innerHeight/2.0))};
+        screenCoords = getScreenCoordinates(innerCoords);
+        graphics.setColor(r2dm.getBackColor());
+        graphics.fillOval(screenCoords[0], screenCoords[1], 
+                          (int)(innerWidth*r2dm.getZoomFactor()), 
+                          (int)(innerHeight*r2dm.getZoomFactor()));
+        graphics.setColor(bondColor);
+    }
+    
+    /**
+     * Paint a Bond in an aromatic ring, using CDK style, meaning grey inner bonds.
+     */
+    public void paintAromaticRingBondCDKStyle(Bond bond, Ring ring, Color bondColor, Graphics graphics)
+	{
+        paintSingleBond(bond, bondColor, graphics);
+        paintInnerBond(bond, ring, Color.lightGray, graphics);
+    }
 
 	/**
 	 * Paints the given single bond.

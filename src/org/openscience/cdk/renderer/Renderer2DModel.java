@@ -107,6 +107,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 
     /** Determines wether rings should be drawn with a circle if they are aromatic. */
     private boolean showAromaticity = true;
+    private boolean showAromaticityInCDKStyle = false;
 
     /** Determines wether atoms are colored by type. */
     private boolean colorAtomsByType = true;
@@ -342,6 +343,14 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
     
     public void setShowAromaticity(boolean showIt) {
         this.showAromaticity = showIt;
+    }
+    
+    public boolean getShowAromaticityInCDKStyle() {
+        return this.showAromaticityInCDKStyle;
+    }
+    
+    public void setShowAromaticityInCDKStyle(boolean showIt) {
+        this.showAromaticityInCDKStyle = showIt;
     }
     
 	/**
