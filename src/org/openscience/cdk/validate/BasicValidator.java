@@ -357,10 +357,23 @@ public class BasicValidator implements ValidatorInterface {
             AtomType failedOn = null;
             boolean foundMatchingAtomType = false;
             for (int j=0; j<atomTypes.length; j++) {
-                if (bos <= atomTypes[j].getBondOrderSum()) {
-                    foundMatchingAtomType = true;
+                if (atom.getSymbol().equals("H")) {
+                    if (atom.getFormalCharge() != 0 && bos > 0) {
+                        // H- and H+ without bonds
+                        failedOn = atomTypes[j];
+                    } else if (bos == 1) {
+                        // H--X
+                        foundMatchingAtomType = true;
+                    } else {
+                        // bad
+                        failedOn = atomTypes[j];
+                    }
                 } else {
-                    failedOn = atomTypes[j];
+                    if (bos <= (atomTypes[j].getBondOrderSum() + atom.getFormalCharge())) {
+                        foundMatchingAtomType = true;
+                    } else {
+                        failedOn = atomTypes[j];
+                    }
                 }
             }
             if (foundMatchingAtomType) {
