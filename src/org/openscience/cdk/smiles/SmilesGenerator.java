@@ -1397,95 +1397,95 @@ public class SmilesGenerator {
       return Integer.toString(a.getMassNumber());
     }
   }
-}
-
-/**
- *  Description of the Class
- *
- * @author     shk3
- * @created    2003-06-17
- */
-class BrokenBond {
-
 
   /**
-   *The atoms which close the ring
-   */
-  private Atom a1, a2;
-
-  /**
-   * The number of the marker
-   */
-  private int marker;
-
-
-  /**
-   * Construct a BrokenBond between <code>a1</code> and <code>a2</code> with
-   * the marker <code>marker</code>.
-   *
-   * @param  marker  the ring closure marker. (Great comment!)
-   * @param  a1      Description of Parameter
-   * @param  a2      Description of Parameter
-   */
-  BrokenBond(Atom a1, Atom a2, int marker) {
-    this.a1 = a1;
-    this.a2 = a2;
-    this.marker = marker;
-  }
-
-
-  /**
-   * Getter method for a1 property
-   *
-   * @return    The a1 value
-   */
-  public Atom getA1() {
-    return a1;
-  }
-
-
-  /**
-   * Getter method for a2 property
-   *
-   * @return    The a2 value
-   */
-  public Atom getA2() {
-    return a2;
-  }
-
-
-  /**
-   * Getter method for marker property
-   *
-   * @return    The marker value
-   */
-  public int getMarker() {
-    return marker;
-  }
-
-
-  /**
-   *  Description of the Method
-   *
-   * @return    Description of the Returned Value
-   */
-  public String toString() {
-    return Integer.toString(marker);
-  }
-
-
-  /**
-   *  Description of the Method
-   *
-   * @param  o  Description of Parameter
-   * @return    Description of the Returned Value
-   */
-  public boolean equals(Object o) {
-    if (!(o instanceof BrokenBond)) {
-      return false;
-    }
-    BrokenBond bond = (BrokenBond) o;
-    return (a1.equals(bond.getA1()) && a2.equals(bond.getA2())) || (a1.equals(bond.getA2()) && a2.equals(bond.getA1()));
+  *  Description of the Class
+  *
+  * @author     shk3
+  * @created    2003-06-17
+  */
+  class BrokenBond {
+      
+      
+      /**
+      *The atoms which close the ring
+      */
+      private Atom a1, a2;
+      
+      /**
+      * The number of the marker
+      */
+      private int marker;
+      
+      
+      /**
+      * Construct a BrokenBond between <code>a1</code> and <code>a2</code> with
+      * the marker <code>marker</code>.
+      *
+      * @param  marker  the ring closure marker. (Great comment!)
+      * @param  a1      Description of Parameter
+      * @param  a2      Description of Parameter
+      */
+      BrokenBond(Atom a1, Atom a2, int marker) {
+          this.a1 = a1;
+          this.a2 = a2;
+          this.marker = marker;
+      }
+      
+      
+      /**
+      * Getter method for a1 property
+      *
+      * @return    The a1 value
+      */
+      public Atom getA1() {
+          return a1;
+      }
+      
+      
+      /**
+      * Getter method for a2 property
+      *
+      * @return    The a2 value
+      */
+      public Atom getA2() {
+          return a2;
+      }
+      
+      
+      /**
+      * Getter method for marker property
+      *
+      * @return    The marker value
+      */
+      public int getMarker() {
+          return marker;
+      }
+      
+      
+      /**
+      *  Description of the Method
+      *
+      * @return    Description of the Returned Value
+      */
+      public String toString() {
+          return Integer.toString(marker);
+      }
+      
+      
+      /**
+      *  Description of the Method
+      *
+      * @param  o  Description of Parameter
+      * @return    Description of the Returned Value
+      */
+      public boolean equals(Object o) {
+          if (!(o instanceof BrokenBond)) {
+              return false;
+          }
+          BrokenBond bond = (BrokenBond) o;
+          return (a1.equals(bond.getA1()) && a2.equals(bond.getA2())) || (a1.equals(bond.getA2()) && a2.equals(bond.getA1()));
+      }
   }
 }
 
