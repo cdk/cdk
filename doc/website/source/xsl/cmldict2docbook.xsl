@@ -12,33 +12,39 @@
 
   <xsl:template match="/">
 <section>
-<title><xsl:value-of select=".//*[name(.)='dictionary']/@title"/></title>
+<title><xsl:value-of select=".//*[name(.)='dictionary']/@title"/>
+[<xsl:value-of select=".//*[name(.)='dictionary']/@id"/>]</title>
 <para>
-  <xsl:value-of select=".//*[name(.)='description']"/>
+  <xsl:value-of select=".//*[name(.)='dictionary']/*[name(.)='description']"/>
 </para>
 <informaltable frame='none'>
   <tgroup cols="2">
     <thead>
         <row>
+          <entry>ID</entry>
           <entry>Entry</entry>
           <entry>Definition</entry>
         </row>
     </thead>
     <tbody>
         <xsl:for-each select=".//*[name(.)='entry']">
-          <xsl:apply-templates select="self::node()"/>
+          <xsl:sort select="./@id" data-type="number" order="descending"/>
+          <row>
+            <entry><xsl:value-of select="./@id"/></entry>
+            <entry><xsl:value-of select="./@term"/></entry>
+            <entry><xsl:value-of select="./*[name(.)='definition']"/></entry>
+          </row>
         </xsl:for-each>
     </tbody>
   </tgroup>
 </informaltable>
+<para>
+  This dictionary was last modified by 
+  [<xsl:value-of select=".//*[name(.)='metadata' and ./@name='cvs:last-change-by']/@content"/>]
+  on
+  [<xsl:value-of select=".//*[name(.)='metadata' and ./@name='cvs:date']/@content"/>]
+</para>
 </section>
   </xsl:template>
 
-  <xsl:template match="//*[name(.)='entry']">
-      <row>
-        <entry><xsl:value-of select="./@term"/></entry>
-        <entry><xsl:value-of select="./*[name(.)='definition']"/></entry>
-      </row>
-  </xsl:template>
-  
 </xsl:stylesheet>
