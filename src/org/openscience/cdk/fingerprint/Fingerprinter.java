@@ -85,7 +85,7 @@ public class Fingerprinter
 		for (Enumeration e = pathes.elements(); e.hasMoreElements(); )
 		{
 			path = (String) e.nextElement();
-			position = new java.util.Random(path.hashCode()).nextInt(defaultSize); 
+			position = new java.util.Random(path.hashCode()).nextInt(size); 
 			if (debug) System.out.println("Setting bit " + position + " for " + path);
 			bs.set(position);
 		}
