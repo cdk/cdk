@@ -130,9 +130,9 @@ public class Convertor {
 
     private void writeChemFile(ChemFile cf, Element nodeToAppend) throws CMLException{
         CmlImpl cml=new CmlImpl(doc);
+        nodeToAppend.appendChild(cml);
         if (cf.getChemSequenceCount() > 1) {
             cml.setTitle("sequence");
-            nodeToAppend.appendChild(cml);
             for (int i=0; i < cf.getChemSequenceCount(); i++ ) {
                 writeChemSequence(cf.getChemSequence(i),cml);
             }
