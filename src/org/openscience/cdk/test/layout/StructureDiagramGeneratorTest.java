@@ -34,6 +34,7 @@ import java.util.*;
 import java.io.*;
 import java.net.URL;
 import javax.vecmath.Vector2d;
+import javax.vecmath.Point2d;
 import junit.framework.*;
 
 public class StructureDiagramGeneratorTest extends TestCase {
@@ -154,6 +155,5 @@ public class StructureDiagramGeneratorTest extends TestCase {
         mol.addAtom(new Atom("C"));
         AtomContainer ac = generateCoordinates(mol);
 	}
-    
 }
 
