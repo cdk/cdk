@@ -6,6 +6,7 @@ Changes in CVS
 New:
 * Added MFAnalyser.removeHydrogensPreserveMultiplyBonded() method
 * Added CDKEditBus.setChemModel(String) for plain IO formats
+* Added IUPAC/NIST Chemical Identifier reader
 
 Fixes:
 
