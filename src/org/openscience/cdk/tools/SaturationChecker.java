@@ -111,18 +111,19 @@ public class SaturationChecker
 		double bondOrderSum = ac.getBondOrderSum(atom);
 		double maxBondOrder = ac.getMaximumBondOrder(atom);
 		int hcount = atom.getHydrogenCount();
-		try
-		{
+		int charge = atom.getFormalCharge();
+		try {
 			logger.debug("*** Checking saturation of atom " + ac.getAtomNumber(atom) + " ***");
 			logger.debug("bondOrderSum: " + bondOrderSum);
 			logger.debug("maxBondOrder: " + maxBondOrder);
 			logger.debug("hcount: " + hcount);
-		} catch (Exception exc)
-		{
+		} catch (Exception exc) {
+            logger.debug(exc);
 		}
 		for (int f = 0; f < atomTypes.length; f++)
 		{
-			if (bondOrderSum >= atomTypes[f].getMaxBondOrderSum() - hcount && maxBondOrder <= atomTypes[f].getMaxBondOrder())
+			if (bondOrderSum - charge + hcount == atomTypes[f].getMaxBondOrderSum() && 
+                maxBondOrder <= atomTypes[f].getMaxBondOrder())
 			{
 				logger.debug("*** Good ! ***");
 				return true;
@@ -145,6 +146,7 @@ public class SaturationChecker
 		double bondOrderSum = ac.getBondOrderSum(atom);
 		double maxBondOrder = ac.getMaximumBondOrder(atom);
 		int hcount = atom.getHydrogenCount();
+		int charge = atom.getFormalCharge();
 		try
 		{
 			logger.debug("*** Checking saturation of atom " + ac.getAtomNumber(atom) + " ***");
@@ -156,7 +158,7 @@ public class SaturationChecker
 		}
 		for (int f = 0; f < atomTypes.length; f++)
 		{
-			if (bondOrderSum > atomTypes[f].getMaxBondOrderSum() - hcount)
+			if (bondOrderSum - charge + hcount > atomTypes[f].getMaxBondOrderSum())
 			{
 				logger.debug("*** Good ! ***");
 				return true;
