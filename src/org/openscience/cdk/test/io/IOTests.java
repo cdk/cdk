@@ -40,7 +40,7 @@ public class IOTests {
     public static Test suite () {
         TestSuite suite= new TestSuite("The cdk.io Tests");
         
-        suite.addTest(CMLIOTests.suite());        
+        suite.addTest(CMLIOTests.suite());
         suite.addTest(CrystClustReaderTest.suite());
         suite.addTest(GamessReaderTest.suite());
         suite.addTest(Gaussian98ReaderTest.suite());

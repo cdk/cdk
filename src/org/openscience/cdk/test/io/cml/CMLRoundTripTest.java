@@ -45,10 +45,14 @@ import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.Reaction;
 import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.SetOfReactions;
+import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.CMLWriter;
 import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * TestCase for the reading CML 2 files using a few test files
@@ -58,11 +62,11 @@ import org.openscience.cdk.test.CDKTestCase;
  */
 public class CMLRoundTripTest extends CDKTestCase {
 
-    private org.openscience.cdk.tools.LoggingTool logger;
+    private LoggingTool logger;
 
     public CMLRoundTripTest(String name) {
         super(name);
-        logger = new org.openscience.cdk.tools.LoggingTool(this);
+        logger = new LoggingTool(this);
     }
 
     public static Test suite() {
@@ -316,6 +320,47 @@ public class CMLRoundTripTest extends CDKTestCase {
         return roundTrippedMol;
     }
     
+    private Reaction roundTripReaction(Reaction reaction) {
+        StringWriter stringWriter = new StringWriter();
+        try {
+            CMLWriter writer = new CMLWriter(stringWriter);
+            writer.write(reaction);
+        } catch (Exception exception) {
+            String message = "Failed when writing CML";
+            logger.error(message);
+            logger.debug(exception);
+            fail(message);
+        }
+        
+        Reaction roundTrippedReaction = null;
+        try {
+            String cmlString = stringWriter.toString();
+            logger.debug("CML string: " + cmlString);
+            CMLReader reader = new CMLReader(new StringReader(cmlString));
+            
+            ChemFile file = (ChemFile)reader.read(new ChemFile());
+            assertNotNull(file);
+            assertEquals(1, file.getChemSequenceCount());
+            ChemSequence sequence = file.getChemSequence(0);
+            assertNotNull(sequence);
+            assertEquals(1, sequence.getChemModelCount());
+            ChemModel chemModel = sequence.getChemModel(0);
+            assertNotNull(chemModel);
+            SetOfReactions reactionSet = chemModel.getSetOfReactions();
+            assertNotNull(reactionSet);
+            assertEquals(1, reactionSet.getReactionCount());
+            roundTrippedReaction = reactionSet.getReaction(0);
+            assertNotNull(roundTrippedReaction);
+        } catch (Exception exception) {
+            String message = "Failed when reading CML";
+            logger.error(message);
+            logger.debug(exception);
+            fail(message);
+        }
+        
+        return roundTrippedReaction;
+    }
+
     public void testPartialCharge() {
         Molecule mol = new Molecule();
         Atom atom = new Atom("C");
@@ -330,4 +375,34 @@ public class CMLRoundTripTest extends CDKTestCase {
         assertEquals(charge, roundTrippedAtom.getCharge(), 0.0001);
     }
 
+    public void testSpinMultiplicity() {
+        Molecule mol = new Molecule();
+        Atom atom = new Atom("C");
+        mol.addAtom(atom);
+        mol.addElectronContainer(new SingleElectron(atom));
+        
+        Molecule roundTrippedMol = roundTripMolecule(mol);
+        
+        assertEquals(1, roundTrippedMol.getAtomCount());
+        assertEquals(1, roundTrippedMol.getElectronContainerCount());
+        Atom roundTrippedAtom = roundTrippedMol.getAtomAt(0);
+        assertEquals(1, roundTrippedMol.getSingleElectronSum(roundTrippedAtom));
+    }
+
+    public void testReaction() {
+        Reaction reaction = new Reaction();
+        Molecule reactant = new Molecule();
+        Atom atom = new Atom("C");
+        reactant.addAtom(atom);
+        reaction.addReactant(reactant);
+        
+        Reaction roundTrippedReaction = roundTripReaction(reaction);
+        
+        assertNotNull(roundTrippedReaction);
+        SetOfMolecules reactants = roundTrippedReaction.getReactants();
+        assertNotNull(reactants);
+        assertEquals(1, reactants.getMoleculeCount());
+        Molecule roundTrippedReactant = reactants.getMolecule(0);
+        assertEquals(1, roundTrippedReactant.getAtomCount());
+    }
 }

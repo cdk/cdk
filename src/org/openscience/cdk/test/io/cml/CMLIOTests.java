@@ -49,19 +49,23 @@ public class CMLIOTests {
         suite.addTest(Jumbo46CMLFragmentsTest.suite());
         
         // the following classes require Java 1.4
-        try {
-            Class testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.test.io.CML2WriterTest");
-            suite.addTest(new TestSuite(testClass));
-        } catch (Exception exception) {
-            // ok, do without. Probably compiled not Java 1.4
-            System.out.println("Could not load the CML2Writer test: " + exception.getMessage());
-        }
-        try {
-            Class testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.test.io.CMLRoundTripTest");
-            suite.addTest(new TestSuite(testClass));
-        } catch (Exception exception) {
-            // ok, do without. Probably compiled not Java 1.4
-            System.out.println("Could not load the CML Roundtrip test: " + exception.getMessage());
+        if (System.getProperty("java.version").startsWith("1.4")) {
+            try {
+                Class testClass = suite.getClass().getClassLoader().loadClass("org.openscience.cdk.test.io.cml.CML2WriterTest");
+                suite.addTest(new TestSuite(testClass));
+            } catch (Exception exception) {
+                // ok, do without. Probably compiled not Java 1.4
+                System.out.println("Could not load the CML2Writer test: " + exception.getMessage());
+                exception.printStackTrace();
+            }
+            try {
+                Class testClass = suite.getClass().getClassLoader().loadClass("org.openscience.cdk.test.io.cml.CMLRoundTripTest");
+                suite.addTest(new TestSuite(testClass));
+            } catch (Exception exception) {
+                // ok, do without. Probably compiled not Java 1.4
+                System.out.println("Could not load the CML Roundtrip test: " + exception.getMessage());
+                exception.printStackTrace();
+            }
         }
         return suite;
     }
