@@ -71,6 +71,7 @@ public class AtomValenceDescriptor implements Descriptor {
 		logger = new LoggingTool(this);
 		if (valencesTable == null) { 
 		valencesTable = new Hashtable();
+		valencesTable.put("H", new Integer(1));
 		valencesTable.put("Li", new Integer(1));
 		valencesTable.put("Be", new Integer(2));
 		valencesTable.put("B", new Integer(3));
