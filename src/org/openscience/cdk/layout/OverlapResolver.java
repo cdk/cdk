@@ -64,7 +64,7 @@ public class OverlapResolver
 		logger.debug("End of resolveOverlap");
 	}
 
-	static double getOverlapScore(AtomContainer ac)
+	public static double getOverlapScore(AtomContainer ac)
 	{
 		Atom atom1 = null, atom2 = null;
 		Point2d p1 = null, p2 = null;
