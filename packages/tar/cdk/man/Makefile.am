@@ -20,12 +20,12 @@ CHECK_XML_RULE = for f in $^; \
   rm -f $$f.dbx; \
  done
 
-docbooks = cdk-fileconvert.xml cdk-dbadmin.xml cdk-view.xml cdk-download.xml \
+docbooks = cdk-fileconvert.xml cdk-dbadmin.xml cdk-download.xml \
   cdk-guessformat.xml cdk-test.xml cdk-iupacname.1 cdk-substructure.xml \
   cdk-fingerprinter.xml cdk-validate.xml cdk-iupacname.xml
 
 mandir=${PREFIX}/share/man
-man_MANS = cdk-fileconvert.1 cdk-dbadmin.1 cdk-view.1 cdk-download.1 \
+man_MANS = cdk-fileconvert.1 cdk-dbadmin.1 cdk-download.1 \
   cdk-guessformat.1 cdk-test.1 cdk-validate.1 cdk-iupacname.1 \
   cdk-substructure.1 cdk-fingerprinter.1 cdk-validate.1 cdk-iupacname.1
 
@@ -40,9 +40,6 @@ cdk-dbadmin.1: cdk-dbadmin.xml
 	$(XML2MAN_RULE)
 
 cdk-validate.1: cdk-validate.xml
-	$(XML2MAN_RULE)
-
-cdk-view.1: cdk-view.xml
 	$(XML2MAN_RULE)
 
 cdk-download.1: cdk-download.xml
