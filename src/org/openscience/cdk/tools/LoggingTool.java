@@ -150,9 +150,12 @@ public class LoggingTool {
         String trace = stackTraceWriter.toString();
         try {
             BufferedReader reader = new BufferedReader(new StringReader(trace));
-            while (reader.ready()) {
+            if (reader.ready()) {
                 String traceLine = reader.readLine();
-                debug(traceLine);
+                while (reader.ready() && traceLine != null) {
+                    debug(traceLine);
+                    traceLine = reader.readLine();
+                }
             }
         } catch (Exception ioException) {
             error("Serious error in LoggingTool while printing exception stack trace: " + 
