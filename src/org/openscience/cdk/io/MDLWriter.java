@@ -186,12 +186,21 @@ public class MDLWriter implements ChemObjectWriter {
 		    {
 				Atom atom = molecule.getAtomAt(f);
 		        line = "";
-		        line += formatMDLFloat((float) atom.getX2D());
-		        line += formatMDLFloat((float) atom.getY2D());
-			if(atom.getZ3D()!=0)
-				line += formatMDLFloat((float) atom.getZ3D())+" ";
-			else
-				line += "    0.0000 ";
+                if (atom.getPoint3D() != null) {
+                    line += formatMDLFloat((float) atom.getX3D());
+                    line += formatMDLFloat((float) atom.getY3D());
+                    line += formatMDLFloat((float) atom.getZ3D()) + " ";
+                } else if (atom.getPoint2D() != null) {
+                    line += formatMDLFloat((float) atom.getX2D());
+                    line += formatMDLFloat((float) atom.getY2D());
+                    line += "    0.0000 ";
+                } else {
+                    // if no coordinates available, then output a number
+                    // of zeros
+                    line += formatMDLFloat((float)0.0);
+                    line += formatMDLFloat((float)0.0);
+                    line += formatMDLFloat((float)0.0) + " ";
+                }
 		        line += formatMDLString(molecule.getAtomAt(f).getSymbol(), 3);
 		        line += " 0  0  0  0  0  0  0  0  0  0  0  0";
 			    writer.write(line);
