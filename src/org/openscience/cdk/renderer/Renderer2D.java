@@ -163,7 +163,7 @@ public class Renderer2D
 //			g.setColor(r2dm.getBackColor());
 //			g.fillRect((int)(atom.getPoint2D().x - (xSymbOffset * 1.8)),(int)(atom.getPoint2D().y - (ySymbOffset * 0.8)),(int)fontSize,(int)fontSize); 
 			g.setColor(r2dm.getForeColor());
-			g.drawString(new Integer(i).toString(),(int)(atom.getPoint2D().x + (xSymbOffset)),(int)(atom.getPoint2D().y - (ySymbOffset)));
+			g.drawString(new Integer(i+1).toString(),(int)(atom.getPoint2D().x + (xSymbOffset)),(int)(atom.getPoint2D().y - (ySymbOffset)));
 			g.setColor(r2dm.getBackColor());
 			g.drawLine((int)atom.getPoint2D().x,(int)atom.getPoint2D().y,(int)atom.getPoint2D().x,(int)atom.getPoint2D().y);
 		}
@@ -489,3 +489,4 @@ public class Renderer2D
 	}
 
 }
+
