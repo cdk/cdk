@@ -60,54 +60,96 @@ public class MakeKeywordIndexDoclet {
         }
     }
 
+    private void processKeyword(String word, String markedUpName) throws IOException {
+        // System.out.println("Processing: " + word + " in " + markedUpName);
+        if (word.indexOf(",") != -1) {
+            StringTokenizer st = new StringTokenizer(word, ",");
+            String primaryWord = st.nextToken().trim();
+            String secondaryWord = st.nextToken().trim(); // dirty, should check!
+
+            // add prim word to list of keywords if not available yet
+            // i.e. "file format" is added as file format
+            if (!this.keywords.containsKey(primaryWord)) {
+                this.keywords.put(primaryWord, "");
+            }
+            // add secondary word to primary word
+            // ie.e "file format, CML" is added as file format -> CML
+            Vector v = new Vector();
+            if (this.primaryToSecondary.containsKey(primaryWord)) {
+                v = (Vector)this.primaryToSecondary.get(primaryWord);
+                if (!v.contains(word)) {
+                    v.add(word);
+                }
+            } else {
+                v.add(word);
+            }
+            this.primaryToSecondary.put(primaryWord, v);
+            // what is done here?
+            if (this.secondaryKeywords.containsKey(word)) {
+                this.secondaryKeywords.put(word,
+                        this.secondaryKeywords.get(word) + ", " +
+                        markedUpName);
+            } else {
+                this.secondaryKeywords.put(word, markedUpName);
+            }
+            // make copy based on secondary word, i.e.
+            // "file format, CML" is placed as file format -> CML
+            // and as CML
+            if (this.keywords.containsKey(secondaryWord)) {
+                this.keywords.put(secondaryWord, this.keywords.get(secondaryWord) + ", " +
+                                        markedUpName);
+            } else {
+                this.keywords.put(secondaryWord, markedUpName);
+            }
+        } else {
+            if (this.keywords.containsKey(word)) {
+                String text = (String)this.keywords.get(word);
+                if (text.length() > 0)
+                    markedUpName =  text + ", " + markedUpName;
+            }
+            this.keywords.put(word, markedUpName);
+        }
+        // System.out.println("done");
+    }
+
+    private void processClass(ClassDoc classDoc) throws IOException {
+        Tag[] tags = classDoc.tags("keyword");
+        for (int j=0; j<tags.length; j++) {
+            String word = tags[j].text();
+            String className = classDoc.qualifiedName().substring(omitPackageNamePart.length());
+            String markedUpClassName = "<ulink url=\"" + rootToAPI +
+                                    toAPIPath(className) + "\">" +
+                                    className + "</ulink>";
+            processKeyword(word, markedUpClassName);
+        }
+    }
+
+    private void processMethod(MethodDoc methodDoc, String className) throws IOException {
+        // System.out.println("Processing: " + methodDoc.qualifiedName());
+        Tag[] tags = methodDoc.tags("keyword");
+        for (int j=0; j<tags.length; j++) {
+            String word = tags[j].text();
+            String methodName = methodDoc.name();
+            String markedUpMethodName = "<ulink url=\"" + rootToAPI +
+                                    toAPIPath(className) + "#" +
+                                    methodName + "()\">" +
+                                    className + "." +
+                                    methodName + "()</ulink>";
+            processKeyword(word, markedUpMethodName);
+        }
+        // System.out.println("done");
+    }
+
     private void processClasses(ClassDoc[] classes) throws IOException {
         for (int i=0; i<classes.length; i++) {
-            // process tags
-            Tag[] tags = classes[i].tags("keyword");
-            for (int j=0; j<tags.length; j++) {
-                String word = tags[j].text();
-                String className = classes[i].qualifiedName().substring(omitPackageNamePart.length());
-                String markedUpClassName = "<ulink url=\"" + rootToAPI +
-                                           toAPIPath(className) + "\">" +
-                                           className + "</ulink>";
-                if (word.indexOf(",") != -1) {
-                    StringTokenizer st = new StringTokenizer(word, ",");
-                    String primaryWord = st.nextToken().trim();
-                    String secondaryWord = st.nextToken().trim(); // dirty, should check!
-                    Vector v = new Vector();
-                    if (this.primaryToSecondary.containsKey(primaryWord)) {
-                        v = (Vector)this.primaryToSecondary.get(primaryWord);
-                        if (!v.contains(word)) {
-                            v.add(word);
-                        }
-                    } else {
-                        v.add(word);
-                    }
-                    this.primaryToSecondary.put(primaryWord, v);
-                    if (this.secondaryKeywords.containsKey(word)) {
-                        this.secondaryKeywords.put(word,
-                                this.secondaryKeywords.get(word) + ", " +
-                                markedUpClassName);
-                    } else {
-                        this.secondaryKeywords.put(word, markedUpClassName);
-                    }
-                    // make copy based on secondary word, i.e.
-                    // "file format, CML" is placed as file format -> CML
-                    // and as CML
-                    if (this.keywords.containsKey(secondaryWord)) {
-                        this.keywords.put(secondaryWord, this.keywords.get(secondaryWord) + ", " +
-                                                markedUpClassName);
-                    } else {
-                        this.keywords.put(secondaryWord, markedUpClassName);
-                    }
-                } else {
-                    if (this.keywords.containsKey(word)) {
-                        this.keywords.put(word, this.keywords.get(word) + ", " +
-                                                markedUpClassName);
-                    } else {
-                        this.keywords.put(word, markedUpClassName);
-                    }
-                }
+            ClassDoc doc = classes[i];
+            // process keyword tags
+            processClass(doc);
+            // process class methods
+            String className = doc.qualifiedName().substring(omitPackageNamePart.length());
+            MethodDoc[] methods = doc.methods();
+            for (int j=0; j<methods.length; j++) {
+                processMethod(methods[j], className);
             }
         }
     }
