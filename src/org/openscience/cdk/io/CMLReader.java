@@ -113,7 +113,7 @@ public class CMLReader implements ChemObjectReader {
     }
 
     /**
-     * Read a ChemFile from input
+     * Read a ChemObject from input
      *
      * @return the content in a ChemFile object
      */
