@@ -1,9 +1,9 @@
-/* $RCSfile $
- * $Author $
- * $Date $
- * $Revision $
+/* $RCSfile$
+ * $Author$
+ * $Date$
+ * $Revision$
  *
- * Copyright (C) 2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2003-2004  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@slists.sourceforge.net
  * 
@@ -24,7 +24,8 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- *  */
+ *
+ */
 package org.openscience.cdk.test.io;
 
 import org.openscience.cdk.*;
@@ -52,13 +53,10 @@ public class MDLRXNReaderTest extends TestCase {
         return new TestSuite(MDLRXNReaderTest.class);
     }
 
-    public void testReadReactions1And2() {
+    public void testReadReactions1() {
         String filename1 = "data/mdl/reaction-1.rxn";
-	String filename2 = "data/mdl/reaction-2.rxn";
         logger.info("Testing: " + filename1);
-	logger.info("Testing: " + filename2);
         InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename1);
-	InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(filename2);
         try {
             MDLRXNReader reader1 = new MDLRXNReader(new InputStreamReader(ins1));
             Reaction reaction1 = new Reaction();
@@ -70,6 +68,16 @@ public class MDLRXNReaderTest extends TestCase {
 	    
 	    reader1.close();
 	    
+        } catch (Exception e) {
+            fail(e.toString());
+        }
+    }
+
+    public void testReadReactions2() {
+	String filename2 = "data/mdl/reaction-2.rxn";
+	logger.info("Testing: " + filename2);
+	InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(filename2);
+        try {
 	    MDLRXNReader reader2 = new MDLRXNReader(new InputStreamReader(ins2));
 	    Reaction reaction2 = (Reaction)reader2.read(reaction1);
             
