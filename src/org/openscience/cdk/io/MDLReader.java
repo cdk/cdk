@@ -36,7 +36,7 @@ import java.util.*;
 import javax.vecmath.*;
 
 /**
- *  Reads a molecule from an MDL molfile or SDF file. References: <a
+ *  Reads a molecule from an MDL MOL or SDF file. References: <a
  *  href="http://cdk.sf.net/biblio.html#DAL92">DAL92</a>.
  *
  * <p>From the Atom block it reads atomic coordinates, element types and
@@ -58,7 +58,7 @@ public class MDLReader extends DefaultChemObjectReader {
     private IsotopeFactory isotopeFactory = null;
 
 	/**
-	 *  Contructs a new MDLReader that can read Molecule from a given InputStream
+	 *  Contructs a new MDLReader that can read Molecule from a given InputStream.
 	 *
 	 *@param  in  The InputStream to read from
 	 */
@@ -68,7 +68,7 @@ public class MDLReader extends DefaultChemObjectReader {
 
 
 	/**
-	 *  Contructs a new MDLReader that can read Molecule from a given InputStream
+	 *  Contructs a new MDLReader that can read Molecule from a given Reader.
 	 *
 	 *@param  in  The Reader to read from
 	 */
@@ -84,7 +84,7 @@ public class MDLReader extends DefaultChemObjectReader {
 
 
 	/**
-	 *  Takes an object which subclasses ChemObject, e.g.Molecule, and will read
+	 *  Takes an object which subclasses ChemObject, e.g. Molecule, and will read
 	 *  this (from file, database, internet etc). If the specific implementation
 	 *  does not support a specific ChemObject it will throw an Exception.
 	 *
@@ -105,9 +105,9 @@ public class MDLReader extends DefaultChemObjectReader {
 
 
 	/**
-	 *  Read a ChemFile from a file in MDL sd format
+	 * Read a ChemFile from a file in MDL SDF format.
 	 *
-	 *@return    The ChemFile that was read from the MDL file.
+	 * @return    The ChemFile that was read from the MDL file.
 	 */
 	private ChemFile readChemFile() throws CDKException {
 		ChemFile chemFile = new ChemFile();
