@@ -345,8 +345,8 @@ public class MDLReader implements ChemObjectReader
                     try {
                         String countString = line.substring(6,9).trim();
                         int infoCount = Integer.parseInt(countString);
+                        StringTokenizer st = new StringTokenizer(line.substring(9));
                         for (int i=1; i <= infoCount; i++) {
-                            StringTokenizer st = new StringTokenizer(line.substring(9));
                             int atomNumber = Integer.parseInt(st.nextToken().trim());
                             int absMass = Integer.parseInt(st.nextToken().trim());
                             if (absMass != 0) { 
