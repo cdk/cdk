@@ -785,8 +785,14 @@ public class CMLCoreModule implements ModuleInterface {
 
     protected void storeData() {
 
+        boolean hasID = true;
         int atomcount = elid.size();
         logger.debug("No atom ids: " + atomcount);
+        if (atomcount == 0) {
+            logger.warn("Using element symbols as back up indication for number of atoms");
+            atomcount = elsym.size();
+            hasID = false;
+        }
 
         boolean has3D = false;
         boolean has2D = false;
@@ -794,6 +800,8 @@ public class CMLCoreModule implements ModuleInterface {
         boolean hasPartialCharge = false;
         boolean hasHCounts = false;
         boolean hasSymbols = false;
+        boolean hasIsotopes = false;
+        boolean hasDictRefs = false;
 
         if (elsym.size() == atomcount) {
             hasSymbols = true;
@@ -843,16 +851,28 @@ public class CMLCoreModule implements ModuleInterface {
                     " != " + atomcount);
         }
 
-        if (atomDictRefs.size() != atomcount) {
+        if (atomDictRefs.size() == atomcount) {
+            hasDictRefs = true;
+        } else {
             logger.debug(
                     "No dictRef info: " + atomDictRefs.size() + 
+                    " != " + atomcount);
+        }
+
+        if (isotope.size() == atomcount) {
+            hasIsotopes = true;
+        } else {
+            logger.debug(
+                    "No isotope info: " + isotope.size() + 
                     " != " + atomcount);
         }
 
         for (int i = 0; i < atomcount; i++) {
             logger.info("Storing atom: " + i);
             cdo.startObject("Atom");
-            cdo.setObjectProperty("Atom", "id", (String)elid.elementAt(i));
+            if (hasID) {
+                cdo.setObjectProperty("Atom", "id", (String)elid.elementAt(i));
+            }
 
             // store optional atom properties
             if (hasSymbols) {
@@ -888,11 +908,13 @@ public class CMLCoreModule implements ModuleInterface {
                     cdo.setObjectProperty("Atom", "y2", (String)y2.elementAt(i));
             }
             
-            if (atomDictRefs.elementAt(i) != null)
+            if (hasDictRefs) {
                 cdo.setObjectProperty("Atom", "dictRef", (String)atomDictRefs.elementAt(i));
+            }
 
-            if (isotope.elementAt(i) != null)
+            if (hasIsotopes) {
                 cdo.setObjectProperty("Atom", "massNumber", (String)isotope.elementAt(i));
+            }
 
             cdo.endObject("Atom");
         }
