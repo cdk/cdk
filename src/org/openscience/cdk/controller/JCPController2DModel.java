@@ -32,23 +32,23 @@ package org.openscience.cdk.controller;
 public class JCPController2DModel 
 {
 	
-    public static int DRAWBOND = 0;
-    public static int MOVE = 1;
-    public static int SELECT = 2;
-    public static int ERASER = 3;
-    public static int ELEMENT = 4;
-    public static int SYMBOL = 5;
-	public static int RING = 6;
-    public static int CLEANUP=7;
-    public static int FLIP_H=8;
-    public static int FLIP_V=9;
-    public static int ROTATION=10;
-    public static int UP_BOND=11;
-    public static int DOWN_BOND=12;
-	public static int NORMALIZE=13;
-	public static int LASSO=14;
-	public static int INCCHARGE=15;
-	public static int DECCHARGE=16;
+    public final static int DRAWBOND = 0;
+    public final static int MOVE = 1;
+    public final static int SELECT = 2;
+    public final static int ERASER = 3;
+    public final static int ELEMENT = 4;
+    public final static int SYMBOL = 5;
+	public final static int RING = 6;
+    public final static int CLEANUP=7;
+    public final static int FLIP_H=8;
+    public final static int FLIP_V=9;
+    public final static int ROTATION=10;
+    public final static int UP_BOND=11;
+    public final static int DOWN_BOND=12;
+	public final static int NORMALIZE=13;
+	public final static int LASSO=14;
+	public final static int INCCHARGE=15;
+	public final static int DECCHARGE=16;
 	
 	private int drawMode = 6;
 	private int ringSize = 6;
@@ -65,7 +65,7 @@ public class JCPController2DModel
 	
 	
 	/**
-	 * Returns the draw mode
+	 * Returns the draw mode.
 	 *
 	 * @return   The draw mode
 	 */
@@ -74,6 +74,48 @@ public class JCPController2DModel
 		return this.drawMode;
 	}
 
+	/**
+	 * Returns the String representation of the draw mode.
+	 *
+	 * @return   A String
+	 */
+	public String getDrawModeString() {
+        switch (this.drawMode) {
+            case DRAWBOND:
+                return "Draw";
+            case MOVE:
+                return "Move";
+            case SELECT:
+                return "Select";
+            case ERASER:
+                return "Delete";
+            case ELEMENT:
+                return "Element";
+            case SYMBOL:
+                return "Symbol";
+            case RING:
+                return "Ring";
+            case CLEANUP:
+                return "Clean";
+            case FLIP_H:
+            case FLIP_V:
+            case ROTATION:
+                break;
+            case UP_BOND:
+                return "Wedge Up";
+            case DOWN_BOND:
+                return "Wedge Down";
+            case NORMALIZE:
+                return "Normalize";
+            case LASSO:
+                break;
+            case INCCHARGE:
+                return "Increase Charge";
+            case DECCHARGE:
+                return "Decrease Charge";
+        }
+		return "";
+	}
 
 	/**
 	 * Sets the draw mode 
