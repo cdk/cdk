@@ -67,8 +67,11 @@ public class ZMatrixReader implements ChemObjectReader
     try 
     {
       String line = input.readLine();
-      while (input.ready() && line != null) 
-      {
+      while (line.startsWith("#"))
+        line = input.readLine();
+      /*while (input.ready() && line != null) 
+      {*/
+        System.out.println("lauf");
         // parse frame by frame
         tokenizer = new StringTokenizer(line, "\t ,;");
                 
@@ -86,10 +89,13 @@ public class ZMatrixReader implements ChemObjectReader
         double[] d = new double[number_of_atoms]; int[] d_atom = new int[number_of_atoms]; // Distances
         double[] a = new double[number_of_atoms]; int[] a_atom = new int[number_of_atoms]; // Angles
         double[] da = new double[number_of_atoms]; int[] da_atom = new int[number_of_atoms]; // Diederangles
+        Point3d[] pos = new Point3d[number_of_atoms]; // calculated positions
                 
-        for (int i = 0; i < number_of_atoms; i++) 
+        int i = 0;
+        while(i < number_of_atoms)
         {
           line = input.readLine();
+          System.out.println("line:\""+line+"\"");
           if (line == null) break;
           if (line.startsWith("#")) 
           {
@@ -110,39 +116,49 @@ public class ZMatrixReader implements ChemObjectReader
             else if (i==0)
             {
               types[i] = tokenizer.nextToken();
+              m.addAtom(new Atom(types[i], calcPos(i, pos, d, d_atom, a, a_atom, da, da_atom)));
+              i++;
             }
             else if (i==1)
             {
               types[i] = tokenizer.nextToken();
+              d_atom[i] = (new Integer(tokenizer.nextToken())).intValue()-1;
               d[i] = (new Double(tokenizer.nextToken())).doubleValue();
-              d_atom[i] = (new Integer(tokenizer.nextToken())).intValue();
+              m.addAtom(new Atom(types[i], calcPos(i, pos, d, d_atom, a, a_atom, da, da_atom)));
+              i++;
             }
             else if (i==2)
             {
               types[i] = tokenizer.nextToken();
+              d_atom[i] = (new Integer(tokenizer.nextToken())).intValue()-1;
               d[i] = (new Double(tokenizer.nextToken())).doubleValue();
-              d_atom[i] = (new Integer(tokenizer.nextToken())).intValue();
+              a_atom[i] = (new Integer(tokenizer.nextToken())).intValue()-1;
               a[i] = (new Double(tokenizer.nextToken())).doubleValue();
-              a_atom[i] = (new Integer(tokenizer.nextToken())).intValue();
+              m.addAtom(new Atom(types[i], calcPos(i, pos, d, d_atom, a, a_atom, da, da_atom)));
+              i++;
             }
             else
             {
               types[i] = tokenizer.nextToken();
+              d_atom[i] = (new Integer(tokenizer.nextToken())).intValue()-1;
               d[i] = (new Double(tokenizer.nextToken())).doubleValue();
-              d_atom[i] = (new Integer(tokenizer.nextToken())).intValue();
+              a_atom[i] = (new Integer(tokenizer.nextToken())).intValue()-1;
               a[i] = (new Double(tokenizer.nextToken())).doubleValue();
-              a_atom[i] = (new Integer(tokenizer.nextToken())).intValue();
+              da_atom[i] = (new Integer(tokenizer.nextToken())).intValue()-1;
               da[i] = (new Double(tokenizer.nextToken())).doubleValue();
-              da_atom[i] = (new Integer(tokenizer.nextToken())).intValue();
+              m.addAtom(new Atom(types[i], calcPos(i, pos, d, d_atom, a, a_atom, da, da_atom)));
+              i++;
             }
           }
         }
+
+        System.out.println("molecule:\n"+m);
 
         setOfMolecules.addMolecule(m);
         chemModel.setSetOfMolecules(setOfMolecules);
         chemSequence.addChemModel(chemModel);
         line = input.readLine();
-      }
+      /*}*/
       file.addChemSequence(chemSequence);
     } catch (IOException e) 
     {
@@ -152,34 +168,43 @@ public class ZMatrixReader implements ChemObjectReader
     return file;
   }
 
-  private Vector3d calcPos(int index, double[] d, int[] d_atom,
-                                      double[] a, int[] a_atom,
-                                      double[] da, int[] da_atom)
+  private Point3d calcPos(int index, Point3d[] pos, double[] d, int[] d_atom,
+                                                    double[] a, int[] a_atom,
+                                                    double[] da, int[] da_atom)
   { 
     if (index==0)
-      return new Vector3d(0d,0d,0d);
+    {
+      pos[index] = new Point3d(0d,0d,0d);
+      return pos[index];
+    }
     else if (index==1)
-      return new Vector3d(d[1],0d,0d);
+    {
+      pos[index] = new Point3d(d[1],0d,0d);
+      return pos[index];
+    }
     else if (index==2)
     { 
-      return new Vector3d(-Math.cos(a[2])*d[2]+d[1], 
-                           Math.sin(a[2])*d[2],
-                           0d);
+      pos[index] = new Point3d(-Math.cos((a[2]/180)*Math.PI)*d[2]+d[1],
+                                Math.sin((a[2]/180)*Math.PI)*d[2],
+                                0d);
+      return pos[index];
     }
     else 
     { 
       Vector3d cd = new Vector3d();
-      cd.sub(calcPos(da_atom[index], d, d_atom, a, a_atom, da, da_atom),
-             calcPos(a_atom[index], d, d_atom, a, a_atom, da, da_atom));
+      cd.sub(pos[da_atom[index]],
+             pos[a_atom[index]]);
 
       Vector3d bc = new Vector3d();
-      bc.sub(calcPos(a_atom[index], d, d_atom, a, a_atom, da, da_atom),
-             calcPos(d_atom[index], d, d_atom, a, a_atom, da, da_atom));
+      bc.sub(pos[a_atom[index]],
+             pos[d_atom[index]]);
 
       Vector3d n1 = new Vector3d();
       n1.cross(cd, bc);
+      n1.normalize();
 
       Vector3d n2 = rotate(n1,bc,da[index]);
+      n2.normalize();
       Vector3d ba = rotate(bc,n2,-a[index]);
 
       ba.normalize();
@@ -187,8 +212,9 @@ public class ZMatrixReader implements ChemObjectReader
       Vector3d ban = new Vector3d(ba);
       ban.scale(d[index]);
 
-      Vector3d result = new Vector3d();
-      result.add(calcPos(d_atom[index], d, d_atom, a, a_atom, da, da_atom), ba);
+      Point3d result = new Point3d();
+      result.add(pos[d_atom[index]], ba);
+      pos[index] = result;
       return result;
     }
   }
@@ -196,7 +222,7 @@ public class ZMatrixReader implements ChemObjectReader
   private Vector3d rotate(Vector3d vector, Vector3d axis, double angle)
   {
     Matrix3d rotate = new Matrix3d();
-    rotate.set(new AxisAngle4d(axis.x, axis.y, axis.z, angle));
+    rotate.set(new AxisAngle4d(axis.x, axis.y, axis.z, (angle/180)*Math.PI));
     Vector3d result = new Vector3d();
     rotate.transform(vector, result);
     return result;

@@ -53,6 +53,8 @@
       <exclude name="org/openscience/cdk/renderer/OrbitalsRenderer3D*"/>
       <exclude name="org/openscience/cdk/test/AcceleratedRenderer3DTest.java"/>
       <exclude name="org/openscience/cdk/test/OrbitalsRenderer3DTest.java"/>
+      <exclude name="org/openscience/cdk/test/VisualGaussiansCalculationTest.java"/>
+      <exclude name="org/openscience/cdk/test/ZMatrixReaderTest.java"/>
       <classpath refid="project.class.path"/>
     </javac>
     <copy todir="${build}" >
