@@ -1,5 +1,4 @@
-/* MDLReader.java
- * 
+/* 
  * $RCSfile$
  * $Author$
  * $Date$
@@ -39,7 +38,7 @@ public class Projector implements CDKConstants {
   public static void project2D(Molecule m) {
     for (int i = 0; i < m.getAtomCount(); i++) {
       Atom a = m.getAtomAt(i);
-      if ((a.getX3D != null) && (a.getY3D != null)) {
+      if (a.getPoint3D() != null) {
         a.setX2D(a.getX3D());
         a.setY2D(a.getY3D());
       } else {
