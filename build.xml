@@ -56,7 +56,7 @@
                 <delete dir="${reports.tests}" />
         </target>
 
-        <target name="compile" depends="info, clean, init">
+        <target name="compile" depends="info, init">
                 <echo message="Compiling only the classes that don't use Java3d." />
 
                 <echo
@@ -78,6 +78,8 @@
                         <!-- exclude application classes that require additional
                              libraries, and which are compiled elsewhere -->
                         <exclude name="org/openscience/cdk/applications/**/*.java" />
+                        <!-- exclude patch versions -->
+                        <exclude name="org/openscience/cdk/**/*.applet.java" />
 
                         <classpath refid="project.class.path" />
                 </javac>
@@ -150,6 +152,8 @@
                     </classpath>
                 </javac>
         </target>
+
+        <target name="compile-extra" depends="compile"/>
 
         <target name="compile-cml">
                 <!-- Task to build the CML Lib classes. (For Jmol) -->
@@ -265,10 +269,10 @@
                 </jar>
         </target>
 
-        <target name="dist-extra" depends="dist-core">
+        <target name="dist-extra" depends="dist-core, compile-extra">
                 <jar jarfile="${dist}/jar/cdk-extra.jar">
                     <fileset dir="${build}">
-                        <include name="**/cdk/**" />
+                        <include name="org/openscience/cdk/**/**" />
                         <!-- Exclude core classes -->
                         <exclude name="org/openscience/cdk/AtomContainer.class" />
                         <exclude name="org/openscience/cdk/AtomEnumeration.class" />
