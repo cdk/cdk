@@ -2,11 +2,5 @@
 PREFIX="@prefix@"
 SUBDIRS= bin jar
 
-alljardir = "${PREFIX}/share/java"
+EXTRA_DIST=VERSION
 
-alljar_DATA = cdk.jar
-
-EXTRA_DIST=VERSION cdk.jar
-
-cdk.jar:
-	cp ../../../dist/jar/cdk.jar .

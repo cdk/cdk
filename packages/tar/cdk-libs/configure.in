@@ -2,7 +2,7 @@ dnl
 dnl $Id$
 dnl
 AC_INIT()
-AM_INIT_AUTOMAKE(cdk, `cat VERSION`)
+AM_INIT_AUTOMAKE(cdk-libs, `cat VERSION`)
 
 dnl Checks for programs.
 AC_PROG_INSTALL
