@@ -496,23 +496,27 @@ public class GeometryTools {
 	}
 	
 	/** 
-	  * An average of all bond length values is produced 
+	  * An average of all 2D bond length values is produced. Bonds which have
+      * Atom's with no coordinates are disregarded.
 	  *
 	  * @param   ac The AtomContainer for which the average bond length is to be calculated
 	  * @return  the average bond length 
 	 */
-
-	public static double getBondLengthAverage(AtomContainer ac)
-	{
+    public static double getBondLengthAverage(AtomContainer ac) {
 		double bondLengthSum = 0;
-		Bond bond = null; 
 		Bond[] bonds = ac.getBonds();
+        int bondCounter = 0;
 		for (int f = 0; f < bonds.length; f++) {
-			bond = bonds[f];
-			bondLengthSum += bond.getLength();
+			Bond bond = bonds[f];
+            Atom atom1 = bond.getAtomAt(0);
+            Atom atom2 = bond.getAtomAt(1);
+            if (atom1.getPoint2D() != null &&
+                atom2.getPoint2D() != null) {
+                bondCounter++;
+                bondLengthSum += bond.getLength();
+            }
 		}
-		return bondLengthSum/ac.getBondCount();
-
+		return bondLengthSum/bondCounter;
 	}
 	
 	
