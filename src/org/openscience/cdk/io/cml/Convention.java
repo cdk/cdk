@@ -289,7 +289,7 @@ public class Convention implements ConventionInterface {
                 break;
             case ATOM :
                 if (x3.size() > formalCharges.size()) {
-                  formalCharges.add(new Integer(0));
+                  formalCharges.add("0");
                 }
                 break;
             case MOLECULE :
@@ -360,6 +360,9 @@ public class Convention implements ConventionInterface {
                 } else if (BUILTIN.equals("order")) {
                     // NOTE: this combination is in violation of the CML DTD!!!
                     order.addElement(s.trim());
+                } else if (BUILTIN.equals("charge") ||
+                           BUILTIN.equals("partialCharge")) {
+                    partialCharges.addElement(s.trim());
                 }
                 break;
             case INTEGER :
@@ -485,7 +488,7 @@ public class Convention implements ConventionInterface {
                     } catch (Exception e) {
                         notify("CMLParsing error: " + e, SYSTEMID, 454,1);
                     }
-                } else if (elementTitle.equals("partialCharge")) {
+                } else if (BUILTIN.equals("partialCharge")) {
                     logger.debug("New floatArray with partial charges found.");
                     try {
                         StringTokenizer st = new StringTokenizer(s);
