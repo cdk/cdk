@@ -28,6 +28,7 @@ import junit.framework.*;
 import org.openscience.cdk.renderer.*;
 import org.openscience.cdk.test.fingerprint.*;
 import org.openscience.cdk.test.graph.invariant.*;
+import org.openscience.cdk.test.graph.rebond.*;
 import org.openscience.cdk.test.isomorphism.*;
 import org.openscience.cdk.test.io.*;
 import org.openscience.cdk.test.isomorphism.*;
@@ -67,6 +68,7 @@ public class CDKTests
         suite.addTest(ChemFileTest.suite());
         suite.addTest(RingSearchTest.suite());
         suite.addTest(MorganNumberToolsTest.suite());
+        suite.addTest(RebondToolTest.suite());
         suite.addTest(PathLengthTest.suite());
         suite.addTest(IsomorphismTesterTest.suite());
         suite.addTest(AllRingsFinderTest.suite());
