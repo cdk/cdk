@@ -28,11 +28,19 @@
  */
 package org.openscience.cdk.io.cml;
 
+/**
+ * Low weigth alternative to Sun's Stack class.
+ *
+ * @keyword stack
+ */
 public class CMLStack {
 
   String[] stack = new String[64];
   int sp = 0;
 
+  /**
+   * Adds an entry to the stack.
+   */
   public void push(String item) {
     if (sp == stack.length) {
       String[] temp = new String[2 * sp];
@@ -42,11 +50,31 @@ public class CMLStack {
     stack[sp++] = item;
   }
 
+  /**
+   * Retrieves and deletes to last added entry.
+   *
+   * @see #current()
+   */
   public String pop() {
     return stack[--sp];
   }
-  
 
+  /**
+   * Returns the last added entry.
+   *
+   * @see #pop()
+   */
+  public String current() {
+    if (sp > 0) {
+        return stack[sp-1];
+    } else {
+        return "";
+    }
+  }
+
+  /**
+   * Returns a String representation of the stack.
+   */
   public String toString() {
     StringBuffer sb = new StringBuffer();
     sb.append("/");
