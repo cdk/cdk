@@ -882,6 +882,36 @@ public class SmilesParserTest extends TestCase
 		}
 	}
     
+	public void testPyridine() {
+		try {
+			SmilesParser sp = new SmilesParser();
+
+			Molecule mol = sp.parseSmiles("c1ccncc1");
+			assertEquals(6, mol.getAtomCount());
+            // it's a bit hard to detect two double bonds in the pyrrole ring
+            // but I do can check the total order in the whole molecule
+            double totalBondOrder = 0.0;
+            Bond[] bonds = mol.getBonds();
+            for (int i=0; i<bonds.length; i++) {
+                totalBondOrder += bonds[i].getOrder();
+            }
+            assertEquals(9.0, totalBondOrder, 0.001);
+            // I can also check wether the total neighbor count around the 
+            // nitrogen is 3, all single bonded
+            Atom nitrogen = mol.getAtomAt(4); // the second atom
+            assertEquals("N", nitrogen.getSymbol());
+            totalBondOrder = 0.0;
+            bonds = mol.getConnectedBonds(nitrogen);
+            assertEquals(2, bonds.length);
+            for (int i=0; i<bonds.length; i++) {
+                totalBondOrder += bonds[i].getOrder();
+            }
+            assertEquals(3.0, totalBondOrder, 0.001);
+		} catch (Exception exception) {
+			fail(exception.toString());
+		}
+	}
+
 	/**
 	 *  The main program for the SmilesParserTest class
 	 *
