@@ -370,6 +370,9 @@ public class Renderer2D implements MouseMotionListener   {
         } else if (r2dm.getKekuleStructure()) {
             // ... unless carbon must be drawn because in Kekule mode
             drawSymbol = true;
+        } else if (atom.getFormalCharge() != 0) {
+            // ... unless carbon is charged
+            drawSymbol = true;
         } else if (container.getConnectedBonds(atom).length < 1) {
             // ... unless carbon is unbonded
             drawSymbol = true;

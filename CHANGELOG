@@ -17,6 +17,7 @@ Fixes:
   in HydrogenPlacer
 * Fixed output of CML bond orders for bonds with CDKConstants.BONDORDER_AROMATIC
 * Added missing cdk:bondOrder dictRef for CML2 output CDK's double bond orders
+* Make sure to draw an atom label for charged atoms (closes JCP #957625)
 
 API changes:
 
