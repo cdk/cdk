@@ -15,6 +15,7 @@ New:
   file reading
 * More jUnit tests (total now: 217, of which 102 for core classes)
 * Added MFAnalyser.removeHydrogens()
+* CMLReader can now use J2SE 1.4 JAXP XML reader
 
 Fixes:
 * Fixed reading/writing of isotopes from/to MDL molfiles
@@ -27,6 +28,7 @@ Fixes:
 * Fixed bug in Crystal.getP1() method
 * Fixed Bond.toString() and Bond.getAtoms
 * Fixed a number of bugs in SmilesGenerator
+* Fixed CMLResolver to use EntityResolver
 
 API changes:
 * ChemObject now has protected flags/pointers (implements RFC #13)
