@@ -1,10 +1,9 @@
-/*
- * $RCSfile$
+/* $RCSfile$
  * $Author$
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2001-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2001-2003  The Chemistry Development Kit (CDK) project
  *
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  *
@@ -32,12 +31,14 @@ public class LoggingTool {
     private boolean tostdout = false;
 
     private Object logger;
+    private String classname;
 
     public LoggingTool() {
         this( LoggingTool.class.getName() );
     }
 
     public LoggingTool(String classname) {
+        this.classname = classname;
         try {
             logger = org.apache.log4j.Category.getInstance( classname );
             /****************************************************************
@@ -55,8 +56,10 @@ public class LoggingTool {
             org.apache.log4j.PropertyConfigurator.configure(url);
         } catch (ClassNotFoundException e) {
             tostdout = true;
+            debug("Log4J class not found!");
         } catch (NoClassDefFoundError e) {
             tostdout = true;
+            debug("Log4J class not found!");
         } catch (NullPointerException e) {
             tostdout = true;
             debug("Properties file not found!");
@@ -100,8 +103,7 @@ public class LoggingTool {
     public void debug(String s) {
         if (debug) {
             if (tostdout) {
-                System.out.print("DEBUG: ");
-                System.out.println(s);
+                toSTDOUT("DEBUG", s);
             } else {
                 ((org.apache.log4j.Category)logger).debug(s);
             }
@@ -111,8 +113,7 @@ public class LoggingTool {
     public void error(String s) {
         if (debug) {
             if (tostdout) {
-                System.out.print("ERROR: ");
-                System.out.println(s);
+                toSTDOUT("ERROR", s);
             } else {
                 ((org.apache.log4j.Category)logger).error(s);
             }
@@ -122,8 +123,7 @@ public class LoggingTool {
     public void fatal(String s) {
         if (debug) {
             if (tostdout) {
-                System.out.print("FATAL: ");
-                System.out.println(s);
+                toSTDOUT("FATAL", s);
             } else {
                 ((org.apache.log4j.Category)logger).fatal(s);
             }
@@ -133,8 +133,7 @@ public class LoggingTool {
     public void info(String s) {
         if (debug) {
             if (tostdout) {
-                System.out.print("INFO: ");
-                System.out.println(s);
+                toSTDOUT("INFO", s);
             } else {
                 ((org.apache.log4j.Category)logger).info(s);
             }
@@ -144,12 +143,19 @@ public class LoggingTool {
     public void warn(String s) {
         if (debug) {
             if (tostdout) {
-                System.out.print("WARN: ");
-                System.out.println(s);
+                toSTDOUT("WARN", s);
             } else {
                 ((org.apache.log4j.Category)logger).warn(s);
             }
         }
+    }
+    
+    private void toSTDOUT(String level, String message) {
+        System.out.print(classname);
+        System.out.print(" ");
+        System.out.print(level);
+        System.out.print(": ");
+        System.out.println(message);
     }
 
 }
