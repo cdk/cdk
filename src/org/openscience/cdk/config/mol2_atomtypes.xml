@@ -1,0 +1,31 @@
+<atomTypeList xmlns="http://www.xml-cml.org/schema/cml2/core"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://www.xml-cml.org/schema/cml2/core ../io/cml/data/cmlAll.xsd"
+  id="mol2" title="MOL2 AtomTypes">
+
+  <atomType id="P.3">
+    <atom elementType="P"/>
+  </atomType>
+  <atomType id="O.2">
+    <atom elementType="O"/>
+  </atomType>
+  <atomType id="O.3">
+    <atom elementType="O"/>
+  </atomType>
+  <atomType id="C.1">
+    <atom elementType="C"/>
+  </atomType>
+  <atomType id="C.2">
+    <atom elementType="C"/>
+  </atomType>
+  <atomType id="N.pl">
+    <atom elementType="N"/>
+  </atomType>
+  <atomType id="N.2">
+    <atom elementType="N"/>
+  </atomType>
+  <atomType id="N.1">
+    <atom elementType="N"/>
+  </atomType>
+</atomTypeList>
+
