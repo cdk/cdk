@@ -25,8 +25,7 @@
     </xsl:call-template>
   </xsl:variable>
 
-  <xsl:variable name="textbgcolor"
-                value="green"/>
+  <xsl:variable name="textbgcolor"><xsl:text>#FCF0DA</xsl:text></xsl:variable>
 
   <xsl:variable name="homebanner"
                 select="/autolayout/config[@param='homebanner-tabular'][1]"/>

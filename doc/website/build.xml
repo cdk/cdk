@@ -111,7 +111,7 @@
     </replace>
   </target>
 
-  <target name="check.javancss" depends="setup" unless="javancsslib.uptodate" >
+  <target name="check.javancss" depends="setup, checks" unless="javancss.uptodate" >
     <mkdir dir="${javancsslib.dir}" />
     <unzip src="${javancsslib}.zip" dest="." />
   </target>
