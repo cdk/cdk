@@ -498,17 +498,24 @@ public class Controller2D {
                     Atom highlightedAtom = r2dm.getHighlightedAtom();
                     Bond highlightedBond = r2dm.getHighlightedBond();
                     if (highlightedAtom != null) {
+                        AtomContainer container = ChemModelManipulator.getAllInOneContainer(chemModel);
+                        logger.debug("Atoms before delete: " + container.getAtomCount());
                         ChemModelManipulator.removeAtomAndConnectedElectronContainers(chemModel, highlightedAtom);
+                        container = ChemModelManipulator.getAllInOneContainer(chemModel);
+                        logger.debug("Atoms before delete: " + container.getAtomCount());
                     } else if (highlightedBond != null) {
                         ChemModelManipulator.removeElectronContainer(chemModel, highlightedBond);
+                    } else {
+                        logger.warn("Cannot deleted if nothing is highlighted");
+                        return;
                     }
-		    /* PRESERVE THIS. This notifies the 
-		     * the listener responsible for 
-		     * undo and redo storage that it
-		     * should store this change of an atom symbol
-		     */
-		    isUndoableChange = true;
-		    /* --- */
+                    /* PRESERVE THIS. This notifies the 
+                    * the listener responsible for 
+                    * undo and redo storage that it
+                    * should store this change of an atom symbol
+                    */
+                    isUndoableChange = true;
+                    /* --- */
                     r2dm.fireChange();
                     fireChange();
                 }
@@ -843,6 +850,8 @@ public class Controller2D {
                           Math.pow(closestAtom.getY2D() - Y, 2)) < highlightRadius)) {
                         closestAtom = null;
                     }
+                } else {
+                    logger.warn("Cannot find nearest atom!");
                 }
                 return closestAtom;
         }
