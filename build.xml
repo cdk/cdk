@@ -73,6 +73,7 @@
 
                         <include name="antlr.jar" />
                         <include name="sjava-0.68.jar" />
+                        <include name="jas.jar" />
                 </fileset>
                 <fileset dir="${pathtojava3d}">
                         <include name="*.jar" />
@@ -482,8 +483,7 @@
                     <excludesfile name="${src}/java1.4+.javafiles" if="isJava13"/>
                     <excludesfile name="${src}/java1.4.javafiles" unless="isJava14"/>
                     <excludesfile name="${src}/ant1.6.javafiles" unless="hasAnt16"/>
-                    <!-- qsar.javafiles will contain the model hierarchy by default, so see if we need to remove it -->
-                    <exclude name="org/openscience/cdk/qsar/model/**" unless="rispresent"/>
+                    <excludesfile name="${src}/r-project.javafiles" unless="rispresent"/>
                 </javac>
         </target>
 
@@ -575,6 +575,7 @@
                 <excludesfile name="${src}/java1.4+.javafiles" if="isJava13"/>
                 <excludesfile name="${src}/java1.4.javafiles" unless="isJava14"/>
                 <excludesfile name="${src}/ant1.6.javafiles" unless="hasAnt16"/>
+                <excludesfile name="${src}/r-project.javafiles" unless="rispresent"/>
 
                 <classpath refid="project.class.path" />
                 <classpath>
