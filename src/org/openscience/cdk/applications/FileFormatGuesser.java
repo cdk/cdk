@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2001-2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2003  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -41,23 +41,24 @@ public class FileFormatGuesser {
      * Actual program.
      */
     public static void main(String[] args) {
-        File input;
-        if (args.length == 1) {
-            String ifilename = args[0];
-            
+        if (args.length < 1) {
+            System.err.println("syntax: FileFormatGuesser <file> <file2> ...");
+            System.exit(0);
+        }
+        
+        for (int i=0; i<args.length; i++) {
+            String ifilename = args[i];
             try {
                 ReaderFactory factory = new ReaderFactory();
-                String format = factory.guessFormat(new FileReader(
-                    new File(ifilename)));
-                System.out.println("Format: " + format);
+                File input = new File(ifilename);
+                if (!input.isDirectory()) {
+                    String format = factory.guessFormat(new FileReader(input));
+                    System.out.println(ifilename + ": format=" + format);
+                }
             } catch (Exception exception) {
-                System.err.println("Could not determine format due to error:");
+                System.err.println(ifilename + ": error=");
                 exception.printStackTrace();
             }
-            
-        } else {
-            System.err.println("syntax: FileFormatGuesser <file>");
-            System.exit(1);
         }
     }
 }

@@ -1,10 +1,10 @@
 #! /bin/sh -e
 
-PREFIX=@prefix@
-RTJAR=@PATHTORTJAR@
-JAVA=@PATHTOJAVA@
-CDKLIBDIR=@CDKLIBDIR@
-CDKJARDIR=@CDKJARDIR@
+PREFIX=/usr/local/cdk
+RTJAR=
+JAVA=/usr/lib/j2se/1.4/bin/java
+CDKLIBDIR=/usr/local/cdk/lib/cdk
+CDKJARDIR=/usr/local/cdk/share/java
 
 JARLIBS=`ls -1 ${CDKLIBDIR}/*.jar | perl -ne "s/\n|\r/:/g; print;"`
 CDKLIBS=`ls -1 ${CDKJARDIR}/*.jar | perl -ne "s/\n|\r/:/g; print;"`

@@ -57,28 +57,19 @@ public class ReaderFactory {
         currentLine = 0;
     }
     
-    public String guessFormat(Reader input) throws IOException {
-        ChemObjectReader reader = createReader(input);
-        if (reader == null) {
-            return "unknown";
-        } else {
-            return reader.getClass().getName();
-        }
-    }
-    
     /**
-     * Creates a ChemObjectReader of the type determined by
-     * reading the input. The input is read line-by-line
+     * Creates a String of the Class name of the ChemObject reader
+     * for this file format. The input is read line-by-line
      * until a line containing an identifying string is
      * found.
      *
-     * @return  If the input type is determined, a
-     *   ChemFileReader subclass is returned; otherwise,
-     *   null is returned.
+     * <p>The ReaderFactory detects more formats than the CDK
+     * has Readers for.
+     *
      * @throws IOException  if an I/O error occurs
      * @throws IllegalArgumentException if the input is null
      */
-    public ChemObjectReader createReader(Reader input) throws IOException {
+    public String guessFormat(Reader input) throws IOException {
         org.openscience.cdk.tools.LoggingTool logger = 
             new org.openscience.cdk.tools.LoggingTool(
                 "org.openscience.cdk.io.ReaderFactory"
@@ -99,12 +90,66 @@ public class ReaderFactory {
         /* Search file for a line containing an identifying keyword */
         String line = buffer.readLine();
         int lineNumber = 0;
-        while (buffer.ready() && (line != null) && lineNumber < 25) {
+        while (buffer.ready() && (line != null) && lineNumber < 100) {
             logger.debug(line);
-            if (line.startsWith("HEADER") || line.startsWith("ATOM  ")) {
-                logger.info("PDB format detected");
+            if (line.indexOf("Gaussian(R) 98") >= 0 ||
+                line.indexOf("Gaussian 98") >= 0) {
+                logger.info("Gaussian98 format detected");
+                return "org.openscience.cdk.io.Gaussian98Reader";
+            } else if (line.indexOf("Gaussian(R) 03") >= 0) {
+                logger.info("Gaussian03 format detected");
+                return "org.openscience.cdk.io.Gaussian03Reader";
+            } else if (line.indexOf("Gaussian 95") >= 0) {
+                logger.info("Gaussian95 format detected");
+                return "org.openscience.cdk.io.Gaussian95Reader";
+            } else if (line.indexOf("Gaussian 94") >= 0) {
+                logger.info("Gaussian94 format detected");
+                return "org.openscience.cdk.io.Gaussian94Reader";
+            } else if (line.indexOf("Gaussian 92") >= 0) {
+                logger.info("Gaussian92 format detected");
+                return "org.openscience.cdk.io.Gaussian92Reader";
+            } else if (line.indexOf("Gaussian G90") >= 0) {
+                logger.info("Gaussian90 format detected");
+                return "org.openscience.cdk.io.Gaussian90Reader";
+            } else if (line.indexOf("GAMESS") >= 0) {
+                logger.info("Gamess format detected");
+                return "org.openscience.cdk.io.GamessReader";
+            } else if (line.indexOf("ACES2") >= 0) {
+                logger.info("Aces2 format detected");
+                return "org.openscience.cdk.io.Aces2Reader";
+            } else if (line.indexOf("Amsterdam Density Functional") >= 0) {
+                logger.info("ADF format detected");
+                return "org.openscience.cdk.io.ADFReader";
+            } else if (line.indexOf("DALTON") >= 0) {
+                logger.info("Dalton format detected");
+                return "org.openscience.cdk.io.DaltonReader";
+            } else if (line.indexOf("Jaguar") >= 0) {
+                logger.info("Jaguar format detected");
+                return "org.openscience.cdk.io.JaguarReader";
+            } else if (line.indexOf("MOPAC:  VERSION  7.00") >= 0) {
+                logger.info("Mopac7 format detected");
+                return "org.openscience.cdk.io.MOPAC7Reader";
+            } else if ((line.indexOf("MOPAC  97.00") >= 0) ||
+                       (line.indexOf("MOPAC2002") >= 0)) {
+                logger.info("Mopac97 format detected");
+                return "org.openscience.cdk.io.Mopac97Reader";
+            } else if (line.startsWith("molstruct")) {
+                logger.info("CAChe format detected");
+                return "org.openscience.cdk.io.CACheReader";
+            } else if (line.indexOf("NCLASS=") >= 0) {
+                logger.info("VASP format detected");
+                return "org.openscience.cdk.io.VASPReader";
+            } else if (line.indexOf("mm1gp") >= 0) {
+                logger.info("GhemicalMM format detected");
+                return "org.openscience.cdk.io.GhemicalMMReader";
+            } else if (line.indexOf("natom") >= 0 ||
+                       line.indexOf("ABINIT") >= 0) {
+                logger.info("ABINIT format detected");
                 buffer.reset();
-                return new PDBReader(input);
+                return "org.openscience.cdk.io.ABINITReader";
+            } else if (line.startsWith("HEADER") || line.startsWith("ATOM  ")) {
+                logger.info("PDB format detected");
+                return "org.openscience.cdk.io.PDBReader";
             } else if ((line.indexOf("<atom") != -1) ||
                        (line.indexOf("<molecule") != -1) ||
                        (line.indexOf("<reaction") != -1) ||
@@ -112,20 +157,20 @@ public class ReaderFactory {
                        (line.indexOf("<bond") != -1)) {
                 logger.info("CML format detected");
                 buffer.reset();
-                return new CMLReader(buffer);
+                return "org.openscience.cdk.io.CMLReader";
             } else if (line.indexOf("<identifier") != -1) {
                 logger.info("IChI format detected");
                 buffer.reset();
-                return new IChIReader(buffer);
+                return "org.openscience.cdk.io.IChIReader";
             } else if (line.startsWith("%%Header Start")) {
                 logger.info("PolyMorph Predictor format detected");
                 buffer.reset();
-                return new PMPReader(buffer);
+                return "org.openscience.cdk.io.PMPReader";
             } else if (line.startsWith("ZERR ") ||
                        line.startsWith("TITL ")) {
                 logger.info("ShelX format detected");
                 buffer.reset();
-                return new ShelXReader(buffer);
+                return "org.openscience.cdk.io.ShelXReader";
             }
             line = buffer.readLine();
             lineNumber++;
@@ -134,17 +179,17 @@ public class ReaderFactory {
 
         if (isMDLMolfile(buffer)) {
             logger.info("MDL Molfile format detected");
-            return new MDLReader(buffer);
+            return "org.openscience.cdk.io.MDLReader";
         }
 
         if (isXYZfile(buffer)) {
             logger.info("XYZ format detected");
-            return new XYZReader(buffer);
+            return "org.openscience.cdk.io.XYZReader";
         }
         
         if (isSMILESfile(buffer)) {
             logger.info("SMILES format detected");
-            return new SMILESReader(buffer);
+            return "org.openscience.cdk.io.SMILESReader";
         }
 
         logger.warn("File format undetermined");
