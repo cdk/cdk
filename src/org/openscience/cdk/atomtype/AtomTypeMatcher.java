@@ -24,16 +24,18 @@
 package org.openscience.cdk.atomtype;
 
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.AtomType;
 import org.openscience.cdk.exception.CDKException;
 
 /**
  * Classes that implement this interface are atomtypes matchers.
  *
- * @cdk.module atomtype
+ * @cdk.module core
  */
 public interface AtomTypeMatcher {
-	//method that returns the atom type
+
+	/** Method that assign an atom type to a given atom. belonging to an atom container */
     public void findMatchingAtomType(AtomContainer ac, Atom atom);
 
 }

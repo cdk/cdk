@@ -30,14 +30,17 @@ import org.openscience.cdk.AtomType;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.config.AtomTypeFactory;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  *@author         mfe4
  *@cdk.created    2004-12-02
  *@cdk.module     core
  */
+
 public class HybridizationStateATMatcher {
 
+	private LoggingTool logger;
 	double charge = 0;
 	int neighboorsCount = 0;
 
@@ -59,7 +62,9 @@ public class HybridizationStateATMatcher {
 	/**
 	 *  Constructor for the HybridizationStateATMatcher object
 	 */
-	public HybridizationStateATMatcher() { }
+	public HybridizationStateATMatcher() {
+		logger = new LoggingTool(this);
+	}
 
 
 	/**
@@ -70,6 +75,7 @@ public class HybridizationStateATMatcher {
 	 *@exception  CDKException  Description of the Exception
 	 */
 	public void findMatchingAtomType(AtomContainer ac, Atom atom) throws CDKException {
+		
 		symbol = atom.getSymbol();
 		//Hs are included?
 		Atom[] neighboors = ac.getConnectedAtoms(atom);
@@ -90,7 +96,7 @@ public class HybridizationStateATMatcher {
 				tmp_bondOrderSum = type[i].getBondOrderSum();
 				tmp_neighboorsCount = type[i].getFormalNeighbourCount();
 				tmp_charge = type[i].getFormalCharge();
-				System.out.println(i + "ATOM TYPE " + tmp_bondOrderSum + " " + tmp_maxbondOrder + " " + tmp_neighboorsCount);
+				//System.out.println(i + "ATOM TYPE " + tmp_bondOrderSum + " " + tmp_maxbondOrder + " " + tmp_neighboorsCount);
 				if (tmp_maxbondOrder == maxbondOrder && tmp_bondOrderSum == bondOrderSum) {
 					if (tmp_neighboorsCount == neighboorsCount) {
 						//System.out.println("!!!!! ATOM TYPE FOUND");
@@ -104,6 +110,7 @@ public class HybridizationStateATMatcher {
 			}
 
 		} catch (Exception ex1) {
+			logger.debug(ex1);
 			throw new CDKException("Problems with AtomTypeFactory due to " + ex1.toString());
 		}
 	}
