@@ -31,6 +31,7 @@ package org.openscience.cdk.io;
 import java.io.*;
 import org.openscience.cdk.*;
 import org.openscience.cdk.exception.*;
+import org.openscience.cdk.tools.IsotopeFactory;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
@@ -79,6 +80,7 @@ public class CMLWriter implements ChemObjectWriter {
     private boolean fragment;
 
     private org.openscience.cdk.tools.LoggingTool logger;
+    private IsotopeFactory isotopeFactory = null;
 
     /**
      * Constructs a new CMLWriter class. Output will be stored in the Writer
@@ -104,6 +106,11 @@ public class CMLWriter implements ChemObjectWriter {
         logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
         this.fragment = fragment;
         this.done = false;
+        try {
+            isotopeFactory = IsotopeFactory.getInstance();
+        } catch (Exception exception) {
+            logger.error("Failed to initiate isotope factory: " + exception.toString());
+        }
     }
 
     /**
@@ -318,6 +325,16 @@ public class CMLWriter implements ChemObjectWriter {
         int hydrogenCount = atom.getHydrogenCount();
         if (hydrogenCount != 0) {
             write("hydrogenCount=\"" + hydrogenCount + "\" ");
+        }
+        int atomicNumber = atom.getAtomicNumber();
+        Isotope majorIsotope = isotopeFactory.getMajorIsotope(atom.getSymbol());
+        if (majorIsotope != null) {
+            int majorNumber = majorIsotope.getAtomicNumber();
+            if (atomicNumber != 0 && atomicNumber != majorNumber) {
+                write("isotope=\"" + atomicNumber + "\" ");
+            }
+        } else {
+            logger.warn("Could not find major isotope for : " + atom.getSymbol());
         }
 		write("/>\n");
     }
