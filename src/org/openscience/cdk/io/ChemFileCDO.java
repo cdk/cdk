@@ -92,7 +92,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
      * Procedure required by the CDOInterface. This function is only
      * supposed to be called by the JCFL library
      */
-    public void endDocument() {        
+    public void endDocument() {
         if (currentSetOfReactions != null && currentSetOfReactions.getReactionCount() == 0 &&
             currentReaction != null) {
             logger.debug("Adding reaction to SetOfReactions");
@@ -138,6 +138,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
       } else if (objectType.equals("Animation")) {
         currentChemSequence = new ChemSequence();
       } else if (objectType.equals("Frame")) {
+        currentMolecule = new Molecule();
       } else if (objectType.equals("Crystal")) {
         currentMolecule = new Crystal(currentMolecule);
       } else if (objectType.equals("a-axis") ||
@@ -177,6 +178,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
             currentChemSequence.addChemModel(currentChemModel);
             /* FIXME: this should be when document is closed! */ 
         } else if (objectType.equals("Frame")) {
+            endObject("Molecule");
         } else if (objectType.equals("Animation")) {
             addChemSequence(currentChemSequence);
             logger.info("This file has " + getChemSequenceCount() + " sequence(s).");
