@@ -229,6 +229,9 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
                 if (bond_stereo != -99) {
                     b.setStereo(bond_stereo);
                 }
+                if (bond_order == CDKConstants.BONDORDER_AROMATIC) {
+                    b.setFlag(CDKConstants.ISAROMATIC, true);
+                }
                 currentMolecule.addBond(b);
             }
         } else if (objectType.equals("a-axis")) {

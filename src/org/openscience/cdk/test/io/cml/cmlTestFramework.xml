@@ -78,6 +78,12 @@
     <bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray>
   </molecule>
   
+  <!-- JFragmentsTest.testBondAromatic() -->
+  <molecule id='m1'>
+    <atomArray atomID='a1 a2'/>
+    <bondArray atomRef1='a1' atomRef2='a2' order='A'/>
+  </molecule>
+
   <!-- JFragmentsTest.testList() -->
   <list> 
     <molecule id='m1'><atomArray><atom id='a1'/><atom id='a2'/></atomArray><bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray></molecule>

@@ -39,6 +39,7 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.ChemSequence;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Crystal;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
@@ -240,6 +241,17 @@ public class CMLFragmentsTest extends TestCase {
         assertEquals(1.0, bond.getOrder(), 0.0001);
     }
 
+    public void testBondAromatic() {
+        String cmlString = "<molecule id='m1'><atomArray atomID='a1 a2'/><bondArray atomRef1='a1' atomRef2='a2' order='A'/></molecule>";
+        ChemFile chemFile = parseCMLString(cmlString);
+        Molecule mol = checkForSingleMoleculeFile(chemFile);
+
+        assertEquals(2, mol.getAtomCount());
+        assertEquals(1, mol.getBondCount());
+        Bond bond = mol.getBondAt(0);
+        assertEquals(CDKConstants.BONDORDER_AROMATIC, bond.getOrder(), 0.0001);
+        assertEquals(true, bond.getFlag(CDKConstants.ISAROMATIC));
+    }
     
     public void testBondId() {
         String cmlString = "<molecule id='m1'><atomArray><atom id='a1'/><atom id='a2'/></atomArray><bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray></molecule>";
