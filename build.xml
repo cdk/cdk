@@ -90,6 +90,7 @@
             <echo message="  Java ext dir: ${java.ext.dirs}" />
             <echo message="   Ant version: ${ant.version}" />
             <echo message="   ${ANT_HOME}: ${ant.home}" />
+            <echo message="      hasAnt16: ${hasAnt16}" />
             <echo message="" />
             <echo message="CDK Environment:" />
             <echo message="   CDK version: ${version}" />
@@ -185,6 +186,13 @@
                         <exclude name="jmol*.javafiles" />
                     </fileset>
                     <fileset dir="doc/javadoc" includes="MakeJavaFilesFilesDoclet.class" />
+                    <!-- remove java files generated with JavaCC -->
+                    <fileset dir="${src}/org/openscience/cdk/smiles/smarts" includes="*.java" />
+                    <fileset dir="${src}/org/openscience/cdk/iupac/parser" includes="*.java">
+                        <!-- the next are from CVS -->
+                        <exclude name="AttachedGroup.java" />
+                        <exclude name="MoleculeBuilder.java" />
+                    </fileset>
                 </delete>
 
                 <delete dir="${build}" />
@@ -382,6 +390,7 @@
                     <includesfile name="${src}/core.javafiles"/>
                     <excludesfile name="${src}/java1.4+.javafiles" if="isJava13"/>
                     <excludesfile name="${src}/java1.4.javafiles" unless="isJava14"/>
+                    <excludesfile name="${src}/ant1.6.javafiles" unless="hasAnt16"/>
                 </javac>
         </target>
 
@@ -417,6 +426,7 @@
                     <includesfile name="${src}/io.javafiles"/>
                     <excludesfile name="${src}/java1.4+.javafiles" if="isJava13"/>
                     <excludesfile name="${src}/java1.4.javafiles" unless="isJava14"/>
+                    <excludesfile name="${src}/ant1.6.javafiles" unless="hasAnt16"/>
                     <classpath refid="project.class.path" />
                     <classpath>
                         <fileset dir="${dist}/jar">
@@ -453,6 +463,7 @@
                     <includesfile name="${src}/qsar.javafiles"/>
                     <excludesfile name="${src}/java1.4+.javafiles" if="isJava13"/>
                     <excludesfile name="${src}/java1.4.javafiles" unless="isJava14"/>
+                    <excludesfile name="${src}/ant1.6.javafiles" unless="hasAnt16"/>
                 </javac>
         </target>
 
@@ -465,11 +476,13 @@
                     <includesfile name="${src}/builder3d.javafiles"/>
                     <excludesfile name="${src}/java1.4+.javafiles" if="isJava13"/>
                     <excludesfile name="${src}/java1.4.javafiles" unless="isJava14"/>
+                    <excludesfile name="${src}/ant1.6.javafiles" unless="hasAnt16"/>
                 </javac>
         </target>
 
         <!-- Convert the JavaCC .jj file to the correct .java files for the IUPAC parser -->
         <target id="javacc" name="javacc" depends="init, check" if="hasAnt16" unless="dotjjfiles.uptodate">
+          <echo message="Compiling Ant 1.6 depending classes." />
           <!-- the IUPAC name parser -->
           <delete>
               <fileset id="javacc-generated" 
@@ -495,6 +508,7 @@
                 <includesfile name="${src}/extra.javafiles"/>
                 <excludesfile name="${src}/java1.4+.javafiles" if="isJava13"/>
                 <excludesfile name="${src}/java1.4.javafiles" unless="isJava14"/>
+                <excludesfile name="${src}/ant1.6.javafiles" unless="hasAnt16"/>
 
                 <classpath refid="project.class.path" />
                 <classpath>
@@ -517,6 +531,7 @@
                 <includesfile name="${src}/experimental.javafiles"/>
                 <excludesfile name="${src}/java1.4+.javafiles" if="isJava13"/>
                 <excludesfile name="${src}/java1.4.javafiles" unless="isJava14"/>
+                <excludesfile name="${src}/ant1.6.javafiles" unless="hasAnt16"/>
                 <classpath refid="project.class.path" />
                 <classpath>
                     <fileset dir="${dist}/jar">
@@ -539,6 +554,7 @@
                 <includesfile name="${src}/test.javafiles"/>
                 <excludesfile name="${src}/java1.4+.javafiles" if="isJava13"/>
                 <excludesfile name="${src}/java1.4.javafiles" unless="isJava14"/>
+                <excludesfile name="${src}/ant1.6.javafiles" unless="hasAnt16"/>
 
                 <classpath refid="project.class.path" />
                 <classpath>

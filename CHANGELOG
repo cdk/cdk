@@ -20,6 +20,7 @@ Fixes:
   not specific enough
 * Fixed output of molecule ID and title in Convert for CML2
 * Fixed definition of N.sp2 which has 2 (not 3) formal neighbours
+* Fixed building CDK with Ant 1.5.x
 
 API changes:
 * Moved SingleElectron to the core module
