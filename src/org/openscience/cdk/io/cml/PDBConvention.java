@@ -91,9 +91,8 @@ public class PDBConvention extends CMLCoreModule {
                               Attributes atts) {
         String name = raw;
         isELSYM = false;
-        setCurrentElement(name);
 
-        if (CurrentElement == LIST) {
+        if ("list".equals(name)) {
 
             for (int i = 0; i < atts.getLength(); i++) {
 

@@ -64,9 +64,8 @@ public class CDKConvention extends CMLCoreModule {
 
     public void startElement(Stack xpath, String uri, String local, String raw, Attributes atts) {
         String name = raw;
-        setCurrentElement(name);
         isBond = false;
-        if (CurrentElement == STRING) {
+        if (xpath.toString().endsWith("string/")) {
             for (int i = 0; i < atts.getLength(); i++) {
                 if (atts.getQName(i).equals("buildin") &&
                     atts.getValue(i).equals("order")) {

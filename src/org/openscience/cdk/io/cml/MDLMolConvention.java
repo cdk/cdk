@@ -72,7 +72,7 @@ public class MDLMolConvention extends CMLCoreModule {
 
     public void characterData(Stack xpath, char ch[], int start, int length) {
         String s = new String(ch, start, length).trim();
-        if (CurrentElement == STRING && BUILTIN.equals("stereo")) {
+        if (xpath.toString().endsWith("string/") && BUILTIN.equals("stereo")) {
             stereoGiven = true;
             if (s.trim().equals("W")) {
                 logger.debug("CML W stereo found");

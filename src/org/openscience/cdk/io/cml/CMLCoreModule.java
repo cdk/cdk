@@ -45,32 +45,6 @@ import org.xml.sax.*;
 public class CMLCoreModule implements ModuleInterface {
 
     protected org.openscience.cdk.tools.LoggingTool logger;
-    public final static int UNKNOWN = -1;
-    public final static int STRING = 1;
-    public final static int LINK = 2;
-    public final static int FLOAT = 3;
-    public final static int INTEGER = 4;
-    public final static int STRINGARRAY = 5;
-    public final static int FLOATARRAY = 6;
-    public final static int INTEGERARRAY = 7;
-    public final static int FLOATMATRIX = 8;
-    public final static int COORDINATE2 = 9;
-    public final static int COORDINATE3 = 10;
-    public final static int ANGLE = 11;
-    public final static int TORSION = 12;
-    public final static int LIST = 13;
-    public final static int MOLECULE = 14;
-    public final static int ATOM = 15;
-    public final static int ATOMARRAY = 16;
-    public final static int BOND = 17;
-    public final static int BONDARRAY = 18;
-    public final static int ELECTRON = 19;
-    public final static int REACTION = 20;
-    public final static int CRYSTAL = 21;
-    public final static int SEQUENCE = 22;
-    public final static int FEATURE = 23;
-    public final static int SCALAR = 24;
-    public final static int SYMMETRY = 25;
     protected final String SYSTEMID = "CML-1999-05-15";
     protected CDOInterface cdo;
     
@@ -115,7 +89,7 @@ public class CMLCoreModule implements ModuleInterface {
     private double[] b;
     private double[] c;
     boolean cartesianAxesSet = false;
-
+    
     public CMLCoreModule(CDOInterface cdo) {
         logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
         this.cdo = cdo;
@@ -242,7 +216,7 @@ public class CMLCoreModule implements ModuleInterface {
 
         String name = local;
         logger.debug("StartElement");
-        setCurrentElement(name);
+        currentChars = "";
         
         BUILTIN = "";
         DICTREF = "";
@@ -262,314 +236,480 @@ public class CMLCoreModule implements ModuleInterface {
                 logger.debug("Qname: " + qname);
             }
         }
-        switch (CurrentElement) {
-
-            case ATOM:
-
-                atomCounter++;
-                for (int i = 0; i < atts.getLength(); i++) {
-
-                    String att = atts.getQName(i);
-                    String value = atts.getValue(i);
-
-                    if (att.equals("id")) { // this is supported in CML 1.x
-                        elid.addElement(value);
-                    } // this is supported in CML 2.0 
-                    else if (att.equals("elementType")) {
-                        elsym.addElement(value);
-                    } // this is supported in CML 2.0 
-                    else if (att.equals("x2")) {
-                        x2.addElement(value);
-                    } // this is supported in CML 2.0 
-                    else if (att.equals("xy2")) {
-                        StringTokenizer tokenizer = new StringTokenizer(value);
-                        x2.addElement(tokenizer.nextToken());
-                        y2.addElement(tokenizer.nextToken());
-                    } // this is supported in CML 2.0 
-                    else if (att.equals("xyzFract")) {
-                        StringTokenizer tokenizer = new StringTokenizer(value);
-                        xfract.addElement(tokenizer.nextToken());
-                        yfract.addElement(tokenizer.nextToken());
-                        zfract.addElement(tokenizer.nextToken());
-                    } // this is supported in CML 2.0 
-                    else if (att.equals("xyz3")) {
-                        StringTokenizer tokenizer = new StringTokenizer(value);
-                        x3.addElement(tokenizer.nextToken());
-                        y3.addElement(tokenizer.nextToken());
-                        z3.addElement(tokenizer.nextToken());
-                    } // this is supported in CML 2.0 
-                    else if (att.equals("y2")) {
-                        y2.addElement(value);
-                    } // this is supported in CML 2.0 
-                    else if (att.equals("x3")) {
-                        x3.addElement(value);
-                    } // this is supported in CML 2.0 
-                    else if (att.equals("y3")) {
-                        y3.addElement(value);
-                    } // this is supported in CML 2.0 
-                    else if (att.equals("z3")) {
-                        z3.addElement(value);
-                    } // this is supported in CML 2.0 
-                    else if (att.equals("xFract")) {
-                        xfract.addElement(value);
-                    } // this is supported in CML 2.0 
-                    else if (att.equals("yFract")) {
-                        yfract.addElement(value);
-                    } // this is supported in CML 2.0 
-                    else if (att.equals("zFract")) {
-                        zfract.addElement(value);
-                    } // this is supported in CML 2.0 
-                    else if (att.equals("formalCharge")) {
-                        formalCharges.addElement(value);
-                    } // this is supported in CML 2.0 
-                    else if (att.equals("hydrogenCount")) {
-                        hCounts.addElement(value);
-                    }
-                    else if (att.equals("isotope")) {
-                        isotope.addElement(value);
-                    }
-                    else if (att.equals("dictRef")) {
-                        atomDictRefs.addElement(value);
-                    } else {
-                        logger.warn("Unsupported attribute: " + att);
-                    }
+        
+        if ("atom".equals(name)) {
+            atomCounter++;
+            for (int i = 0; i < atts.getLength(); i++) {
+                
+                String att = atts.getQName(i);
+                String value = atts.getValue(i);
+                
+                if (att.equals("id")) { // this is supported in CML 1.x
+                    elid.addElement(value);
+                } // this is supported in CML 2.0 
+                else if (att.equals("elementType")) {
+                    elsym.addElement(value);
+                } // this is supported in CML 2.0 
+                else if (att.equals("x2")) {
+                    x2.addElement(value);
+                } // this is supported in CML 2.0 
+                else if (att.equals("xy2")) {
+                    StringTokenizer tokenizer = new StringTokenizer(value);
+                    x2.addElement(tokenizer.nextToken());
+                    y2.addElement(tokenizer.nextToken());
+                } // this is supported in CML 2.0 
+                else if (att.equals("xyzFract")) {
+                    StringTokenizer tokenizer = new StringTokenizer(value);
+                    xfract.addElement(tokenizer.nextToken());
+                    yfract.addElement(tokenizer.nextToken());
+                    zfract.addElement(tokenizer.nextToken());
+                } // this is supported in CML 2.0 
+                else if (att.equals("xyz3")) {
+                    StringTokenizer tokenizer = new StringTokenizer(value);
+                    x3.addElement(tokenizer.nextToken());
+                    y3.addElement(tokenizer.nextToken());
+                    z3.addElement(tokenizer.nextToken());
+                } // this is supported in CML 2.0 
+                else if (att.equals("y2")) {
+                    y2.addElement(value);
+                } // this is supported in CML 2.0 
+                else if (att.equals("x3")) {
+                    x3.addElement(value);
+                } // this is supported in CML 2.0 
+                else if (att.equals("y3")) {
+                    y3.addElement(value);
+                } // this is supported in CML 2.0 
+                else if (att.equals("z3")) {
+                    z3.addElement(value);
+                } // this is supported in CML 2.0 
+                else if (att.equals("xFract")) {
+                    xfract.addElement(value);
+                } // this is supported in CML 2.0 
+                else if (att.equals("yFract")) {
+                    yfract.addElement(value);
+                } // this is supported in CML 2.0 
+                else if (att.equals("zFract")) {
+                    zfract.addElement(value);
+                } // this is supported in CML 2.0 
+                else if (att.equals("formalCharge")) {
+                    formalCharges.addElement(value);
+                } // this is supported in CML 2.0 
+                else if (att.equals("hydrogenCount")) {
+                    hCounts.addElement(value);
                 }
-
-                break;
-
-            case BOND:
-
-                bondCounter++;
-                for (int i = 0; i < atts.getLength(); i++) {
-                    String att = atts.getQName(i);
-                    logger.debug(
-                            "B2 " + att + "=" + 
-                            atts.getValue(i));
-
-                    if (att.equals("id")) {
-                        bondid.addElement(atts.getValue(i));
-                        logger.debug("B3 " + bondid);
-                    } else if (att.equals("atomRefs") || // this is CML 1.x support
-                               att.equals("atomRefs2")) { // this is CML 2.0 support
-
-                        // expect exactly two references
-                        try {
-                            StringTokenizer st = new StringTokenizer(atts.getValue(
-                                                                             i));
-                            bondARef1.addElement((String)st.nextElement());
-                            bondARef2.addElement((String)st.nextElement());
-                        } catch (Exception e) {
-                            logger.error("Error in CML file: " + e.toString());
-                        }
-                    } else if (att.equals("order")) { // this is CML 2.0 support
-                        order.addElement(atts.getValue(i).trim());
-                    } else if (att.equals("dictRef")) {
-                        bondDictRefs.addElement(atts.getValue(i).trim());
-                    }
+                else if (att.equals("isotope")) {
+                    isotope.addElement(value);
                 }
-
-                stereoGiven = false;
-                curRef = 0;
-
-                break;
-
-            case COORDINATE2:
-                break;
-
-            case COORDINATE3:
-                break;
-
-            case STRING:
-                break;
-
-            case FLOAT:
-                break;
-
-            case INTEGER:
-                break;
-
-            case ATOMARRAY:
-                break;
-
-            case INTEGERARRAY:
-                break;
-
-            case STRINGARRAY:
-                break;
-
-            case FLOATARRAY:
-                break;
-
-            case MOLECULE:
-                newMolecule();
-                BUILTIN = "";
-                cdo.startObject("Molecule");
-
-                break;
-
-            case CRYSTAL:
-                newCrystalData();
-                cdo.startObject("Crystal");
-                for (int i = 0; i < atts.getLength(); i++) {
-                    String att = atts.getQName(i);
-                    if (att.equals("z")) {
-                        cdo.setObjectProperty("Crystal", "z", atts.getValue(i));
-                    }
+                else if (att.equals("dictRef")) {
+                    atomDictRefs.addElement(value);
+                } else {
+                    logger.warn("Unsupported attribute: " + att);
                 }
-                break;
-
-            case SYMMETRY:
-                for (int i = 0; i < atts.getLength(); i++) {
-                    String att = atts.getQName(i);
-                    if (att.equals("spaceGroup")) {
-                        cdo.setObjectProperty("Crystal", "spacegroup", atts.getValue(i));
+            }
+        } else if ("bond".equals(name)) {
+            bondCounter++;
+            for (int i = 0; i < atts.getLength(); i++) {
+                String att = atts.getQName(i);
+                logger.debug(
+                "B2 " + att + "=" + 
+                atts.getValue(i));
+                
+                if (att.equals("id")) {
+                    bondid.addElement(atts.getValue(i));
+                    logger.debug("B3 " + bondid);
+                } else if (att.equals("atomRefs") || // this is CML 1.x support
+                att.equals("atomRefs2")) { // this is CML 2.0 support
+                    
+                    // expect exactly two references
+                    try {
+                        StringTokenizer st = new StringTokenizer(atts.getValue(
+                        i));
+                        bondARef1.addElement((String)st.nextElement());
+                        bondARef2.addElement((String)st.nextElement());
+                    } catch (Exception e) {
+                        logger.error("Error in CML file: " + e.toString());
                     }
+                } else if (att.equals("order")) { // this is CML 2.0 support
+                    order.addElement(atts.getValue(i).trim());
+                } else if (att.equals("dictRef")) {
+                    bondDictRefs.addElement(atts.getValue(i).trim());
                 }
-                break;
-
-            case SCALAR:
-                if (xpath.toString().endsWith("crystal/scalar/"))
-                    crystalScalar++;
-                break;
+            }
             
-            case LIST:
-                cdo.startObject("SetOfMolecules");
-                break;
+            stereoGiven = false;
+            curRef = 0;
+        } else if ("molecule".equals(name)) {
+            newMolecule();
+            BUILTIN = "";
+            cdo.startObject("Molecule");
+        } else if ("crystal".equals(name)) {
+            newCrystalData();
+            cdo.startObject("Crystal");
+            for (int i = 0; i < atts.getLength(); i++) {
+                String att = atts.getQName(i);
+                if (att.equals("z")) {
+                    cdo.setObjectProperty("Crystal", "z", atts.getValue(i));
+                }
+            }
+        } else if ("symmetry".equals(name)) {
+            for (int i = 0; i < atts.getLength(); i++) {
+                String att = atts.getQName(i);
+                if (att.equals("spaceGroup")) {
+                    cdo.setObjectProperty("Crystal", "spacegroup", atts.getValue(i));
+                }
+            }
+        } else if ("scalar".equals(name)) {
+            if (xpath.toString().endsWith("crystal/scalar/"))
+                crystalScalar++;
+        } else if ("list".equals(name)) {
+            cdo.startObject("SetOfMolecules");
         }
     }
 
     public void endElement(Stack xpath, String uri, String name, String raw) {
         logger.debug("EndElement: " + name);
-        setCurrentElement(name);
 
-        switch (CurrentElement) {
-
-            case BOND:
-
-                if (!stereoGiven)
-                    bondStereo.addElement("");
-                if (bondStereo.size() > bondDictRefs.size())
-                    bondDictRefs.addElement(null);
-
-                break;
-
-            case ATOM:
-           
-                if (atomCounter > formalCharges.size()) {
-                    /* while strictly undefined, assume zero 
-                    charge when no number is given */
-                    formalCharges.addElement("0");
+        String cData = currentChars;
+        
+        if ("bond".equals(name)) {
+            if (!stereoGiven)
+                bondStereo.addElement("");
+            if (bondStereo.size() > bondDictRefs.size())
+                bondDictRefs.addElement(null);
+        } else if ("atom".equals(name)) {
+            if (atomCounter > formalCharges.size()) {
+                /* while strictly undefined, assume zero 
+                charge when no number is given */
+                formalCharges.addElement("0");
+            }
+            if (atomCounter > hCounts.size()) {
+                /* while strictly undefined, assume zero 
+                implicit hydrogens when no number is given */
+                hCounts.addElement("0");
+            }
+            if (atomCounter > atomDictRefs.size()) {
+                atomDictRefs.addElement(null);
+            }
+            if (atomCounter > isotope.size()) {
+                isotope.addElement(null);
+            }
+            /* It may happen that not all atoms have
+            associated 2D or 3D coordinates. accept that */
+            if (atomCounter > x2.size() && x2.size() != 0) {
+                /* apparently, the previous atoms had atomic
+                coordinates, add 'null' for this atom */
+                x2.addElement(null);
+                y2.addElement(null);
+            }
+            if (atomCounter > x3.size() && x3.size() != 0) {
+                /* apparently, the previous atoms had atomic
+                coordinates, add 'null' for this atom */
+                x3.addElement(null);
+                y3.addElement(null);
+                z3.addElement(null);
+            }
+            
+            if (atomCounter > xfract.size() && xfract.size() != 0) {
+                /* apparently, the previous atoms had atomic
+                coordinates, add 'null' for this atom */
+                xfract.addElement(null);
+                yfract.addElement(null);
+                zfract.addElement(null);
+            }
+        } else if ("molecule".equals(name)) {
+            storeData();
+            cdo.endObject("Molecule");
+        } else if ("crystal".equals(name)) {
+            if (crystalScalar > 0) {
+                // convert unit cell parameters to cartesians
+                double[][] axes = CrystalGeometryTools.notionalToCartesian(
+                unitcellparams[0], unitcellparams[1], unitcellparams[2],
+                unitcellparams[3], unitcellparams[4], unitcellparams[5]
+                );
+                a[0] = axes[0][0];
+                a[1] = axes[0][1];
+                a[2] = axes[0][2];
+                b[0] = axes[1][0];
+                b[1] = axes[1][1];
+                b[2] = axes[1][2];
+                c[0] = axes[2][0];
+                c[1] = axes[2][1];
+                c[2] = axes[2][2];
+                cartesianAxesSet = true;
+                cdo.startObject("a-axis");
+                cdo.setObjectProperty("a-axis", "x", new Double(a[0]).toString());
+                cdo.setObjectProperty("a-axis", "y", new Double(a[1]).toString());
+                cdo.setObjectProperty("a-axis", "z", new Double(a[2]).toString());
+                cdo.endObject("a-axis");
+                cdo.startObject("b-axis");
+                cdo.setObjectProperty("b-axis", "x", new Double(b[0]).toString());
+                cdo.setObjectProperty("b-axis", "y", new Double(b[1]).toString());
+                cdo.setObjectProperty("b-axis", "z", new Double(b[2]).toString());
+                cdo.endObject("b-axis");
+                cdo.startObject("c-axis");
+                cdo.setObjectProperty("c-axis", "x", new Double(c[0]).toString());
+                cdo.setObjectProperty("c-axis", "y", new Double(c[1]).toString());
+                cdo.setObjectProperty("c-axis", "z", new Double(c[2]).toString());
+                cdo.endObject("c-axis");
+            } else {
+                logger.error("Could not find crystal unit cell parameters");
+            }
+            cdo.endObject("Crystal");
+        } else if ("list".equals(name)) {
+            cdo.endObject("SetOfMolecules");
+        } else if ("coordinate3".equals(name)) {
+            if (BUILTIN.equals("xyz3")) {
+                logger.debug("New coord3 xyz3 found: " + currentChars);
+                
+                try {
+                    
+                    StringTokenizer st = new StringTokenizer(currentChars);
+                    x3.addElement(st.nextToken());
+                    y3.addElement(st.nextToken());
+                    z3.addElement(st.nextToken());
+                    logger.debug("coord3 x3.length: " + x3.size());
+                    logger.debug("coord3 y3.length: " + y3.size());
+                    logger.debug("coord3 z3.length: " + z3.size());
+                } catch (Exception exception) {
+                    logger.error(
+                    "CMLParsing error while setting coordinate3!");
+                    logger.debug(exception);
                 }
-                if (atomCounter > hCounts.size()) {
-                    /* while strictly undefined, assume zero 
-                    implicit hydrogens when no number is given */
-                    hCounts.addElement("0");
+            } else {
+                logger.warn("Unknown coordinate3 BUILTIN: " + BUILTIN);
+            }
+        } else if ("string".equals(name)) {
+            if (BUILTIN.equals("elementType")) {
+                logger.debug("Element: " + cData.trim());
+                elsym.addElement(cData);
+            } else if (BUILTIN.equals("atomRef")) {
+                curRef++;
+                logger.debug("Bond: ref #" + curRef);
+                
+                if (curRef == 1) {
+                    bondARef1.addElement(cData.trim());
+                } else if (curRef == 2) {
+                    bondARef2.addElement(cData.trim());
                 }
-                if (atomCounter > atomDictRefs.size()) {
-                    atomDictRefs.addElement(null);
+            } else if (BUILTIN.equals("order")) {
+                logger.debug("Bond: order " + cData.trim());
+                order.addElement(cData.trim());
+            } else if (BUILTIN.equals("formalCharge")) {
+                // NOTE: this combination is in violation of the CML DTD!!!
+                logger.warn("formalCharge BUILTIN accepted but violating CML DTD");
+                logger.debug("Charge: " + cData.trim());
+                String charge = cData.trim();
+                if (charge.startsWith("+") && charge.length() > 1) {
+                    charge = charge.substring(1);
                 }
-                if (atomCounter > isotope.size()) {
-                    isotope.addElement(null);
+                formalCharges.addElement(charge);
+            }
+        } else if ("float".equals(name)) {
+            if (BUILTIN.equals("x3")) {
+                x3.addElement(cData.trim());
+            } else if (BUILTIN.equals("y3")) {
+                y3.addElement(cData.trim());
+            } else if (BUILTIN.equals("z3")) {
+                z3.addElement(cData.trim());
+            } else if (BUILTIN.equals("x2")) {
+                x2.addElement(cData.trim());
+            } else if (BUILTIN.equals("y2")) {
+                y2.addElement(cData.trim());
+            } else if (BUILTIN.equals("order")) {
+                // NOTE: this combination is in violation of the CML DTD!!!
+                order.addElement(cData.trim());
+            } else if (BUILTIN.equals("charge") || BUILTIN.equals("partialCharge")) {
+                partialCharges.addElement(cData.trim());
+            }
+        } else if ("integer".equals(name)) {
+            if (BUILTIN.equals("formalCharge")) {
+                formalCharges.addElement(cData.trim());
+            }
+        } else if ("coordinate2".equals(name)) {
+            if (BUILTIN.equals("xy2")) {
+                logger.debug("New coord2 xy2 found." + cData);
+                
+                try {
+                    
+                    StringTokenizer st = new StringTokenizer(cData);
+                    x2.addElement(st.nextToken());
+                    y2.addElement(st.nextToken());
+                } catch (Exception e) {
+                    notify("CMLParsing error: " + e, SYSTEMID, 175, 1);
                 }
-                /* It may happen that not all atoms have
-                   associated 2D or 3D coordinates. accept that */
-                if (atomCounter > x2.size() && x2.size() != 0) {
-                    /* apparently, the previous atoms had atomic
-                       coordinates, add 'null' for this atom */
-                    x2.addElement(null);
-                    y2.addElement(null);
-                }
-                if (atomCounter > x3.size() && x3.size() != 0) {
-                    /* apparently, the previous atoms had atomic
-                       coordinates, add 'null' for this atom */
-                    x3.addElement(null);
-                    y3.addElement(null);
-                    z3.addElement(null);
-                }
-
-                if (atomCounter > xfract.size() && xfract.size() != 0) {
-                    /* apparently, the previous atoms had atomic
-                       coordinates, add 'null' for this atom */
-                    xfract.addElement(null);
-                    yfract.addElement(null);
-                    zfract.addElement(null);
-                }
-
-                break;
-
-            case MOLECULE:
-                storeData();
-                cdo.endObject("Molecule");
-
-                break;
-
-            case CRYSTAL:
-                if (crystalScalar > 0) {
-                    // convert unit cell parameters to cartesians
-                    double[][] axes = CrystalGeometryTools.notionalToCartesian(
-                        unitcellparams[0], unitcellparams[1], unitcellparams[2],
-                        unitcellparams[3], unitcellparams[4], unitcellparams[5]
-                    );
-                    a[0] = axes[0][0];
-                    a[1] = axes[0][1];
-                    a[2] = axes[0][2];
-                    b[0] = axes[1][0];
-                    b[1] = axes[1][1];
-                    b[2] = axes[1][2];
-                    c[0] = axes[2][0];
-                    c[1] = axes[2][1];
-                    c[2] = axes[2][2];
-                    cartesianAxesSet = true;
-                    cdo.startObject("a-axis");
-                    cdo.setObjectProperty("a-axis", "x", new Double(a[0]).toString());
-                    cdo.setObjectProperty("a-axis", "y", new Double(a[1]).toString());
-                    cdo.setObjectProperty("a-axis", "z", new Double(a[2]).toString());
-                    cdo.endObject("a-axis");
-                    cdo.startObject("b-axis");
-                    cdo.setObjectProperty("b-axis", "x", new Double(b[0]).toString());
-                    cdo.setObjectProperty("b-axis", "y", new Double(b[1]).toString());
-                    cdo.setObjectProperty("b-axis", "z", new Double(b[2]).toString());
-                    cdo.endObject("b-axis");
-                    cdo.startObject("c-axis");
-                    cdo.setObjectProperty("c-axis", "x", new Double(c[0]).toString());
-                    cdo.setObjectProperty("c-axis", "y", new Double(c[1]).toString());
-                    cdo.setObjectProperty("c-axis", "z", new Double(c[2]).toString());
-                    cdo.endObject("c-axis");
-                } else {
-                    logger.error("Could not find crystal unit cell parameters");
-                }
-                cdo.endObject("Crystal");
-
-                break;
-
-            case LIST:
-                cdo.endObject("SetOfMolecules");
-
-                break;
-            case COORDINATE3:
-
-                if (BUILTIN.equals("xyz3")) {
-                    logger.debug("New coord3 xyz3 found: " + currentChars);
-
-                    try {
-
-                        StringTokenizer st = new StringTokenizer(currentChars);
-                        x3.addElement(st.nextToken());
-                        y3.addElement(st.nextToken());
-                        z3.addElement(st.nextToken());
-                        logger.debug("coord3 x3.length: " + x3.size());
-                        logger.debug("coord3 y3.length: " + y3.size());
-                        logger.debug("coord3 z3.length: " + z3.size());
-                    } catch (Exception exception) {
-                        logger.error(
-                                "CMLParsing error while setting coordinate3!");
-                        logger.debug(exception);
+            }
+        } else if ("stringArray".equals(name)) {
+            if (BUILTIN.equals("id") || BUILTIN.equals("atomId")) {
+                
+                try {
+                    boolean countAtoms = (atomCounter == 0) ? true : false;
+                    StringTokenizer st = new StringTokenizer(cData);
+                    
+                    while (st.hasMoreTokens()) {
+                        if (countAtoms) { atomCounter++; }
+                        String token = st.nextToken();
+                        logger.debug("StringArray (Token): " + token);
+                        elid.addElement(token);
                     }
-                } else {
-                    logger.warn("Unknown coordinate3 BUILTIN: " + BUILTIN);
+                } catch (Exception e) {
+                    notify("CMLParsing error: " + e, SYSTEMID, 186, 1);
                 }
-
-                break;
+            } else if (BUILTIN.equals("elementType")) {
+                
+                try {
+                    boolean countAtoms = (atomCounter == 0) ? true : false;
+                    StringTokenizer st = new StringTokenizer(cData);
+                    
+                    while (st.hasMoreTokens()) {
+                        if (countAtoms) { atomCounter++; }
+                        elsym.addElement(st.nextToken());
+                    }
+                } catch (Exception e) {
+                    notify("CMLParsing error: " + e, SYSTEMID, 194, 1);
+                }
+            } else if (BUILTIN.equals("atomRefs")) {
+                curRef++;
+                logger.debug("New atomRefs found: " + curRef);
+                
+                try {
+                    boolean countBonds = (bondCounter == 0) ? true : false;
+                    StringTokenizer st = new StringTokenizer(cData);
+                    
+                    while (st.hasMoreTokens()) {
+                        if (countBonds) { bondCounter++; }
+                        String token = st.nextToken();
+                        logger.debug("Token: " + token);
+                        
+                        if (curRef == 1) {
+                            bondARef1.addElement(token);
+                        } else if (curRef == 2) {
+                            bondARef2.addElement(token);
+                        }
+                    }
+                } catch (Exception e) {
+                    notify("CMLParsing error: " + e, SYSTEMID, 194, 1);
+                }
+            } else if (BUILTIN.equals("order")) {
+                logger.debug("New bond order found.");
+                
+                try {
+                    
+                    StringTokenizer st = new StringTokenizer(cData);
+                    
+                    while (st.hasMoreTokens()) {
+                        
+                        String token = st.nextToken();
+                        logger.debug("Token: " + token);
+                        order.addElement(token);
+                    }
+                } catch (Exception e) {
+                    notify("CMLParsing error: " + e, SYSTEMID, 194, 1);
+                }
+            }
+        } else if ("integerArray".equals(name)) {
+            logger.debug("IntegerArray: builtin = " + BUILTIN);
+            
+            if (BUILTIN.equals("formalCharge")) {
+                
+                try {
+                    
+                    StringTokenizer st = new StringTokenizer(cData);
+                    
+                    while (st.hasMoreTokens()) {
+                        
+                        String token = st.nextToken();
+                        logger.debug("Charge added: " + token);
+                        formalCharges.addElement(token);
+                    }
+                } catch (Exception e) {
+                    notify("CMLParsing error: " + e, SYSTEMID, 205, 1);
+                }
+            }
+        } else if ("scalar".equals(name)) {
+            if (xpath.toString().endsWith("crystal/scalar/")) {
+                logger.debug("Going to set a crystal parameter: " + crystalScalar + 
+                    " to " + cData);
+                try {
+                    unitcellparams[crystalScalar-1] = Double.parseDouble(cData.trim());
+                } catch (NumberFormatException exception) {
+                    logger.error("Content must a float: " + cData);
+                }
+            } else {
+                logger.warn("Ignoring scaler: " + xpath);
+            }
+        } else if ("floatArray".equals(name)) {
+            if (BUILTIN.equals("x3")) {
+                
+                try {
+                    
+                    StringTokenizer st = new StringTokenizer(cData);
+                    
+                    while (st.hasMoreTokens())
+                        x3.addElement(st.nextToken());
+                } catch (Exception e) {
+                    notify("CMLParsing error: " + e, SYSTEMID, 205, 1);
+                }
+            } else if (BUILTIN.equals("y3")) {
+                
+                try {
+                    
+                    StringTokenizer st = new StringTokenizer(cData);
+                    
+                    while (st.hasMoreTokens())
+                        y3.addElement(st.nextToken());
+                } catch (Exception e) {
+                    notify("CMLParsing error: " + e, SYSTEMID, 213, 1);
+                }
+            } else if (BUILTIN.equals("z3")) {
+                
+                try {
+                    
+                    StringTokenizer st = new StringTokenizer(cData);
+                    
+                    while (st.hasMoreTokens())
+                        z3.addElement(st.nextToken());
+                } catch (Exception e) {
+                    notify("CMLParsing error: " + e, SYSTEMID, 221, 1);
+                }
+            } else if (BUILTIN.equals("x2")) {
+                logger.debug("New floatArray found.");
+                
+                try {
+                    
+                    StringTokenizer st = new StringTokenizer(cData);
+                    
+                    while (st.hasMoreTokens())
+                        x2.addElement(st.nextToken());
+                } catch (Exception e) {
+                    notify("CMLParsing error: " + e, SYSTEMID, 205, 1);
+                }
+            } else if (BUILTIN.equals("y2")) {
+                logger.debug("New floatArray found.");
+                
+                try {
+                    
+                    StringTokenizer st = new StringTokenizer(cData);
+                    
+                    while (st.hasMoreTokens())
+                        y2.addElement(st.nextToken());
+                } catch (Exception e) {
+                    notify("CMLParsing error: " + e, SYSTEMID, 454, 1);
+                }
+            } else if (BUILTIN.equals("partialCharge")) {
+                logger.debug("New floatArray with partial charges found.");
+                
+                try {
+                    
+                    StringTokenizer st = new StringTokenizer(cData);
+                    
+                    while (st.hasMoreTokens())
+                        partialCharges.addElement(st.nextToken());
+                } catch (Exception e) {
+                    notify("CMLParsing error: " + e, SYSTEMID, 462, 1);
+                }
+            }
+        } else {
+            logger.warn("Skipping element: " + name);
         }
 
         currentChars = "";
@@ -578,337 +718,8 @@ public class CMLCoreModule implements ModuleInterface {
     }
 
     public void characterData(Stack xpath, char[] ch, int start, int length) {
-        logger.debug("CD");
-
-        String s = new String(ch, start, length);
-
-        switch (CurrentElement) {
-
-            case STRING:
-                logger.debug("Builtin: " + BUILTIN);
-
-                if (BUILTIN.equals("elementType")) {
-                    logger.debug("Element: " + s.trim());
-                    elsym.addElement(s);
-                } else if (BUILTIN.equals("atomRef")) {
-                    curRef++;
-                    logger.debug("Bond: ref #" + curRef);
-
-                    if (curRef == 1) {
-                        bondARef1.addElement(s.trim());
-                    } else if (curRef == 2) {
-                        bondARef2.addElement(s.trim());
-                    }
-                } else if (BUILTIN.equals("order")) {
-                    logger.debug("Bond: order " + s.trim());
-                    order.addElement(s.trim());
-                } else if (BUILTIN.equals("formalCharge")) {
-                    // NOTE: this combination is in violation of the CML DTD!!!
-                    logger.warn("formalCharge BUILTIN accepted but violating CML DTD");
-                    logger.debug("Charge: " + s.trim());
-                    String charge = s.trim();
-                    if (charge.startsWith("+") && charge.length() > 1) {
-                        charge = charge.substring(1);
-                    }
-                    formalCharges.addElement(charge);
-                }
-
-                break;
-
-            case FLOAT:
-
-                if (BUILTIN.equals("x3")) {
-                    x3.addElement(s.trim());
-                } else if (BUILTIN.equals("y3")) {
-                    y3.addElement(s.trim());
-                } else if (BUILTIN.equals("z3")) {
-                    z3.addElement(s.trim());
-                } else if (BUILTIN.equals("x2")) {
-                    x2.addElement(s.trim());
-                } else if (BUILTIN.equals("y2")) {
-                    y2.addElement(s.trim());
-                } else if (BUILTIN.equals("order")) {
-
-                    // NOTE: this combination is in violation of the CML DTD!!!
-                    order.addElement(s.trim());
-                } else if (BUILTIN.equals("charge") || 
-                           BUILTIN.equals("partialCharge")) {
-                    partialCharges.addElement(s.trim());
-                }
-
-                break;
-
-            case INTEGER:
-
-                if (BUILTIN.equals("formalCharge")) {
-                    formalCharges.addElement(s.trim());
-                }
-
-                break;
-
-            case COORDINATE2:
-
-                if (BUILTIN.equals("xy2")) {
-                    logger.debug("New coord2 xy2 found." + s);
-
-                    try {
-
-                        StringTokenizer st = new StringTokenizer(s);
-                        x2.addElement(st.nextToken());
-                        y2.addElement(st.nextToken());
-                    } catch (Exception e) {
-                        notify("CMLParsing error: " + e, SYSTEMID, 175, 1);
-                    }
-                }
-
-                break;
-
-            case COORDINATE3:
-                currentChars = currentChars + s;
-
-                break;
-
-            case STRINGARRAY:
-
-                if (BUILTIN.equals("id") || BUILTIN.equals("atomId")) {
-
-                    try {
-                        boolean countAtoms = (atomCounter == 0) ? true : false;
-                        StringTokenizer st = new StringTokenizer(s);
-
-                        while (st.hasMoreTokens()) {
-                            if (countAtoms) { atomCounter++; }
-                            String token = st.nextToken();
-                            logger.debug("StringArray (Token): " + token);
-                            elid.addElement(token);
-                        }
-                    } catch (Exception e) {
-                        notify("CMLParsing error: " + e, SYSTEMID, 186, 1);
-                    }
-                } else if (BUILTIN.equals("elementType")) {
-
-                    try {
-                        boolean countAtoms = (atomCounter == 0) ? true : false;
-                        StringTokenizer st = new StringTokenizer(s);
-
-                        while (st.hasMoreTokens()) {
-                            if (countAtoms) { atomCounter++; }
-                            elsym.addElement(st.nextToken());
-                        }
-                    } catch (Exception e) {
-                        notify("CMLParsing error: " + e, SYSTEMID, 194, 1);
-                    }
-                } else if (BUILTIN.equals("atomRefs")) {
-                    curRef++;
-                    logger.debug("New atomRefs found: " + curRef);
-
-                    try {
-                        boolean countBonds = (bondCounter == 0) ? true : false;
-                        StringTokenizer st = new StringTokenizer(s);
-
-                        while (st.hasMoreTokens()) {
-                            if (countBonds) { bondCounter++; }
-                            String token = st.nextToken();
-                            logger.debug("Token: " + token);
-
-                            if (curRef == 1) {
-                                bondARef1.addElement(token);
-                            } else if (curRef == 2) {
-                                bondARef2.addElement(token);
-                            }
-                        }
-                    } catch (Exception e) {
-                        notify("CMLParsing error: " + e, SYSTEMID, 194, 1);
-                    }
-                } else if (BUILTIN.equals("order")) {
-                    logger.debug("New bond order found.");
-
-                    try {
-
-                        StringTokenizer st = new StringTokenizer(s);
-
-                        while (st.hasMoreTokens()) {
-
-                            String token = st.nextToken();
-                            logger.debug("Token: " + token);
-                            order.addElement(token);
-                        }
-                    } catch (Exception e) {
-                        notify("CMLParsing error: " + e, SYSTEMID, 194, 1);
-                    }
-                }
-
-                break;
-
-            case INTEGERARRAY:
-                logger.debug("IntegerArray: builtin = " + BUILTIN);
-
-                if (BUILTIN.equals("formalCharge")) {
-
-                    try {
-
-                        StringTokenizer st = new StringTokenizer(s);
-
-                        while (st.hasMoreTokens()) {
-
-                            String token = st.nextToken();
-                            logger.debug("Charge added: " + token);
-                            formalCharges.addElement(token);
-                        }
-                    } catch (Exception e) {
-                        notify("CMLParsing error: " + e, SYSTEMID, 205, 1);
-                    }
-                }
-            
-            case SCALAR:
-                if (xpath.toString().endsWith("crystal/scalar/")) {
-                    logger.debug("Going to set a crystal parameter: " + crystalScalar + 
-                        " to " + s);
-                    try {
-                        unitcellparams[crystalScalar-1] = Double.parseDouble(s);
-                    } catch (NumberFormatException exception) {
-                        logger.error("Content must a float: " + s);
-                    }
-                } else {
-                    logger.warn("Ignoring scaler: " + xpath);
-                }
-                break;
-
-            case FLOATARRAY:
-
-                if (BUILTIN.equals("x3")) {
-
-                    try {
-
-                        StringTokenizer st = new StringTokenizer(s);
-
-                        while (st.hasMoreTokens())
-                            x3.addElement(st.nextToken());
-                    } catch (Exception e) {
-                        notify("CMLParsing error: " + e, SYSTEMID, 205, 1);
-                    }
-                } else if (BUILTIN.equals("y3")) {
-
-                    try {
-
-                        StringTokenizer st = new StringTokenizer(s);
-
-                        while (st.hasMoreTokens())
-                            y3.addElement(st.nextToken());
-                    } catch (Exception e) {
-                        notify("CMLParsing error: " + e, SYSTEMID, 213, 1);
-                    }
-                } else if (BUILTIN.equals("z3")) {
-
-                    try {
-
-                        StringTokenizer st = new StringTokenizer(s);
-
-                        while (st.hasMoreTokens())
-                            z3.addElement(st.nextToken());
-                    } catch (Exception e) {
-                        notify("CMLParsing error: " + e, SYSTEMID, 221, 1);
-                    }
-                } else if (BUILTIN.equals("x2")) {
-                    logger.debug("New floatArray found.");
-
-                    try {
-
-                        StringTokenizer st = new StringTokenizer(s);
-
-                        while (st.hasMoreTokens())
-                            x2.addElement(st.nextToken());
-                    } catch (Exception e) {
-                        notify("CMLParsing error: " + e, SYSTEMID, 205, 1);
-                    }
-                } else if (BUILTIN.equals("y2")) {
-                    logger.debug("New floatArray found.");
-
-                    try {
-
-                        StringTokenizer st = new StringTokenizer(s);
-
-                        while (st.hasMoreTokens())
-                            y2.addElement(st.nextToken());
-                    } catch (Exception e) {
-                        notify("CMLParsing error: " + e, SYSTEMID, 454, 1);
-                    }
-                } else if (BUILTIN.equals("partialCharge")) {
-                    logger.debug("New floatArray with partial charges found.");
-
-                    try {
-
-                        StringTokenizer st = new StringTokenizer(s);
-
-                        while (st.hasMoreTokens())
-                            partialCharges.addElement(st.nextToken());
-                    } catch (Exception e) {
-                        notify("CMLParsing error: " + e, SYSTEMID, 462, 1);
-                    }
-                }
-
-                break;
-        }
-    }
-
-    protected void setCurrentElement(String name) {
-
-        // logger.debug("CE: " + name);
-        if (name.equals("string")) {
-            CurrentElement = STRING;
-        } else if (name.equals("link")) {
-            CurrentElement = LINK;
-        } else if (name.equals("float")) {
-            CurrentElement = FLOAT;
-        } else if (name.equals("integer")) {
-            CurrentElement = INTEGER;
-        } else if (name.equals("stringArray")) {
-            CurrentElement = STRINGARRAY;
-        } else if (name.equals("floatArray")) {
-            CurrentElement = FLOATARRAY;
-        } else if (name.equals("integerArray")) {
-            CurrentElement = INTEGERARRAY;
-        } else if (name.equals("floatMatrix")) {
-            CurrentElement = FLOATMATRIX;
-        } else if (name.equals("coordinate2")) {
-            CurrentElement = COORDINATE2;
-        } else if (name.equals("coordinate3")) {
-            CurrentElement = COORDINATE3;
-        } else if (name.equals("angle")) {
-            CurrentElement = ANGLE;
-        } else if (name.equals("torsion")) {
-            CurrentElement = TORSION;
-        } else if (name.equals("list")) {
-            CurrentElement = LIST;
-        } else if (name.equals("molecule")) {
-            CurrentElement = MOLECULE;
-        } else if (name.equals("atom")) {
-            CurrentElement = ATOM;
-        } else if (name.equals("atomArray")) {
-            CurrentElement = ATOMARRAY;
-        } else if (name.equals("bond")) {
-            CurrentElement = BOND;
-        } else if (name.equals("bondArray")) {
-            CurrentElement = BONDARRAY;
-        } else if (name.equals("electron")) {
-            CurrentElement = ELECTRON;
-        } else if (name.equals("reaction")) {
-            CurrentElement = REACTION;
-        } else if (name.equals("crystal")) {
-            CurrentElement = CRYSTAL;
-        } else if (name.equals("sequence")) {
-            CurrentElement = SEQUENCE;
-        } else if (name.equals("feature")) {
-            CurrentElement = FEATURE;
-        } else if (name.equals("scalar")) {
-            CurrentElement = SCALAR;
-        } else if (name.equals("symmetry")) {
-            CurrentElement = SYMMETRY;
-        } else {
-            CurrentElement = UNKNOWN;
-        }
-
-        ;
+        currentChars = currentChars + new String(ch, start, length);
+        logger.debug("CD: " + currentChars);
     }
 
     protected void notify(String message, String systemId, int line, 
