@@ -259,7 +259,103 @@ public class SaturationCheckerTest extends TestCase
 		assertTrue(satcheck.isSaturated(h2, m));
     }
     
-	/**
+    public void testBug777529() {
+      // test methane with explicit hydrogen
+      Molecule m = new Molecule();
+      m.addAtom(new Atom("C"));
+      m.addAtom(new Atom("C"));
+      m.addAtom(new Atom("C"));
+      m.addAtom(new Atom("C"));
+      m.addAtom(new Atom("C"));
+      m.addAtom(new Atom("C"));
+      m.addAtom(new Atom("C"));
+      m.addAtom(new Atom("C"));
+      m.addAtom(new Atom("C"));
+      m.addAtom(new Atom("C"));
+      m.addAtom(new Atom("C"));
+      m.addAtom(new Atom("C"));
+      m.addAtom(new Atom("C"));
+      m.addAtom(new Atom("C"));
+      m.addAtom(new Atom("C"));
+      m.addAtom(new Atom("C"));
+      m.addAtom(new Atom("C"));
+      m.addAtom(new Atom("C"));
+      m.addAtom(new Atom("C"));
+      m.addAtom(new Atom("C"));
+      m.addAtom(new Atom("O"));
+      m.addAtom(new Atom("O"));
+      m.addAtom(new Atom("F"));
+      m.getAtomAt(0).setHydrogenCount(1);
+      m.getAtomAt(2).setHydrogenCount(1);
+      m.getAtomAt(3).setHydrogenCount(1);
+      m.getAtomAt(6).setHydrogenCount(1);
+      m.getAtomAt(7).setHydrogenCount(1);
+      m.getAtomAt(8).setHydrogenCount(1);
+      m.getAtomAt(9).setHydrogenCount(1);
+      //m.getAtomAt(10).setHydrogenCount(1);
+      //m.getAtomAt(12).setHydrogenCount(1);
+      m.getAtomAt(14).setHydrogenCount(1);
+      m.getAtomAt(15).setHydrogenCount(1);
+      m.getAtomAt(17).setHydrogenCount(1);
+      m.getAtomAt(18).setHydrogenCount(1);
+      m.getAtomAt(19).setHydrogenCount(3);
+      m.addBond(0, 1, 1);
+      m.addBond(1, 2, 1);
+      m.addBond(2, 3, 1);
+      m.addBond(3, 4, 1);
+      m.addBond(4, 5, 1);
+      m.addBond(5, 6, 1);
+      m.addBond(6, 7, 1);
+      m.addBond(7, 8, 1);
+      m.addBond(8, 9, 1);
+      m.addBond(5, 10, 1);
+      m.addBond(9, 10, 1);
+      m.addBond(10, 11, 1);
+      m.addBond(0, 12, 1);
+      m.addBond(4, 12, 1);
+      m.addBond(11, 12, 1);
+      m.addBond(11, 13, 1);
+      m.addBond(13, 14, 1);
+      m.addBond(14, 15, 1);
+      m.addBond(15, 16, 1);
+      m.addBond(16, 17, 1);
+      m.addBond(13, 18, 1);
+      m.addBond(17, 18, 1);
+      m.addBond(20, 16, 1);
+      m.addBond(11, 21, 1);
+      m.addBond(22, 1, 1);
+      m.addBond(20, 19, 1);
+      m.getAtomAt(0).setFlag(CDKConstants.ISAROMATIC,true);
+      m.getAtomAt(1).setFlag(CDKConstants.ISAROMATIC,true);
+      m.getAtomAt(2).setFlag(CDKConstants.ISAROMATIC,true);
+      m.getAtomAt(3).setFlag(CDKConstants.ISAROMATIC,true);
+      m.getAtomAt(4).setFlag(CDKConstants.ISAROMATIC,true);
+      m.getAtomAt(12).setFlag(CDKConstants.ISAROMATIC,true);
+      m.getAtomAt(5).setFlag(CDKConstants.ISAROMATIC,true);
+      m.getAtomAt(6).setFlag(CDKConstants.ISAROMATIC,true);
+      m.getAtomAt(7).setFlag(CDKConstants.ISAROMATIC,true);
+      m.getAtomAt(8).setFlag(CDKConstants.ISAROMATIC,true);
+      m.getAtomAt(9).setFlag(CDKConstants.ISAROMATIC,true);
+      m.getAtomAt(10).setFlag(CDKConstants.ISAROMATIC,true);
+      m.getBondAt(0).setFlag(CDKConstants.ISAROMATIC,true);
+      m.getBondAt(1).setFlag(CDKConstants.ISAROMATIC,true);
+      m.getBondAt(2).setFlag(CDKConstants.ISAROMATIC,true);
+      m.getBondAt(3).setFlag(CDKConstants.ISAROMATIC,true);
+      m.getBondAt(5).setFlag(CDKConstants.ISAROMATIC,true);
+      m.getBondAt(6).setFlag(CDKConstants.ISAROMATIC,true);
+      m.getBondAt(7).setFlag(CDKConstants.ISAROMATIC,true);
+      m.getBondAt(8).setFlag(CDKConstants.ISAROMATIC,true);
+      m.getBondAt(9).setFlag(CDKConstants.ISAROMATIC,true);
+      m.getBondAt(10).setFlag(CDKConstants.ISAROMATIC,true);
+      m.getBondAt(12).setFlag(CDKConstants.ISAROMATIC,true);
+      m.getBondAt(13).setFlag(CDKConstants.ISAROMATIC,true);
+      satcheck.saturate(m);
+      assertTrue(m.getBondAt(4).getOrder()==1);
+      assertTrue(m.getBondAt(9).getOrder()==2 ^ m.getBondAt(5).getOrder()==2);
+      assertTrue(m.getBondAt(13).getOrder()==2 ^ m.getBondAt(3).getOrder()==2);
+    }
+
+    /**
 	 *  The main program for the SaturationCheckerTest class
 	 *
 	 *@param  args  The command line arguments
