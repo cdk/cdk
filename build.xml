@@ -54,9 +54,12 @@
                 </fileset>
         </path>
 
-        <target id="info" name="info" 
+        <target id="info" name="info" depends="check" 
                 description="Gives information about the building process.">
             <echo message="Using compiler: ${build.compiler}" />
+            <echo message="    Jmol found: ${jmol.present}" />
+            <echo message="  JOELib found: ${joelib.present}" />
+            <echo message="  Java3D found: ${java3D.present}" />            
         </target>
 
         <target id="check" name="check"
