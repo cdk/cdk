@@ -21,6 +21,7 @@ New:
 * Mol2 atom types now include hybridization which is now also read
 * SubstructureFinder now uses the SMARTS engine
 * Renderer2D font can now be set (closes JCP RFE #901009)
+* Renderer2D now has a field for using AntiAliasing
 
 Fixes:
 * Tropylium is now recognised as aromatic (closes CDK bug #957627)

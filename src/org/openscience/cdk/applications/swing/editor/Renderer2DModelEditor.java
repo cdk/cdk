@@ -56,6 +56,7 @@ public class Renderer2DModelEditor extends FieldTablePanel implements ActionList
     private JCheckBox showAromaticityInCDKStyle;
     private JCheckBox colorAtomsByType;
     private JCheckBox showToolTip;
+    private JCheckBox useAA;
     private JLabel fontName;
     private JButton chooseFontButton;
     private Font currentFont;
@@ -88,6 +89,8 @@ public class Renderer2DModelEditor extends FieldTablePanel implements ActionList
         addField("Use CDK style aromaticity indicators", showAromaticityInCDKStyle);
         colorAtomsByType = new JCheckBox();
         addField("Color atoms by element", colorAtomsByType);
+        useAA = new JCheckBox();
+        addField("Use Anti-Aliasing", useAA);
         showToolTip = new JCheckBox();
         addField("Show tooltips", showToolTip);        
         fontName = new JLabel();
@@ -108,6 +111,7 @@ public class Renderer2DModelEditor extends FieldTablePanel implements ActionList
         showAromaticity.setSelected(model.getShowAromaticity());
         showAromaticityInCDKStyle.setSelected(model.getShowAromaticityInCDKStyle());
         colorAtomsByType.setSelected(model.getColorAtomsByType());
+        useAA.setSelected(model.getUseAntiAliasing());
         showToolTip.setSelected(model.getShowTooltip());
         currentFont = model.getFont();
         if (currentFont != null) {
@@ -125,6 +129,7 @@ public class Renderer2DModelEditor extends FieldTablePanel implements ActionList
         model.setShowAromaticity(showAromaticity.isSelected());
         model.setShowAromaticityInCDKStyle(showAromaticityInCDKStyle.isSelected());
         model.setColorAtomsByType(colorAtomsByType.isSelected());
+        model.setUseAntiAliasing(useAA.isSelected());
         model.setShowTooltip(showToolTip.isSelected());
         model.setFont(currentFont);
     }

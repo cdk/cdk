@@ -75,6 +75,8 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 
     private boolean showAtomAtomMapping = true;
 
+    private boolean useAntiAliasing = true;
+
 	private int atomRadius = 8;
 	
 	private Atom highlightedAtom = null;
@@ -138,6 +140,14 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
     
     public void setFont(Font font) {
         this.customFont = font;
+    }
+    
+    public boolean getUseAntiAliasing() {
+        return useAntiAliasing;
+    }
+    
+    public void setUseAntiAliasing(boolean bool) {
+        this.useAntiAliasing = bool;
     }
     
     /**
