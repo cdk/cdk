@@ -78,11 +78,13 @@ public class CMLCoreModule implements ModuleInterface {
     protected Vector y2;
     protected Vector hCounts;
     protected Vector atomParities;
+    protected Vector atomDictRefs;
     protected Vector bondid;
     protected Vector bondARef1;
     protected Vector bondARef2;
     protected Vector order;
     protected Vector bondStereo;
+    protected Vector bondDictRefs;
     protected boolean stereoGiven;
     protected int curRef;
     protected int CurrentElement;
@@ -116,11 +118,13 @@ public class CMLCoreModule implements ModuleInterface {
             this.y2 = conv.y2;
             this.hCounts = conv.hCounts;
             this.atomParities = conv.atomParities;
+            this.atomDictRefs = conv.atomDictRefs;
             this.bondid = conv.bondid;
             this.bondARef1 = conv.bondARef1;
             this.bondARef2 = conv.bondARef2;
             this.order = conv.order;
             this.bondStereo = conv.bondStereo;
+            this.bondDictRefs = conv.bondDictRefs;
             this.curRef = conv.curRef;
         }
     }
@@ -141,11 +145,13 @@ public class CMLCoreModule implements ModuleInterface {
         y2 = new Vector();
         hCounts = new Vector();
         atomParities = new Vector();
+        atomDictRefs = new Vector();
         bondid = new Vector();
         bondARef1 = new Vector();
         bondARef2 = new Vector();
         order = new Vector();
         bondStereo = new Vector();
+        bondDictRefs = new Vector();
     }
 
     public void startDocument() {
@@ -203,6 +209,9 @@ public class CMLCoreModule implements ModuleInterface {
                     } // this is supported in CML 2.0 
                     else if (att.equals("hydrogenCount")) {
                         hCounts.addElement(value);
+                    }
+                    else if (att.equals("dictRef")) {
+                        atomDictRefs.addElement(value);
                     } else {
                         logger.warn("Unsupported attribute: " + att);
                     }
@@ -235,6 +244,8 @@ public class CMLCoreModule implements ModuleInterface {
                         }
                     } else if (att.equals("order")) { // this is CML 2.0 support
                         order.addElement(atts.getValue(i).trim());
+                    } else if (att.equals("dictRef")) {
+                        bondDictRefs.addElement(atts.getValue(i).trim());
                     }
                 }
 
@@ -377,6 +388,8 @@ public class CMLCoreModule implements ModuleInterface {
 
                 if (!stereoGiven)
                     bondStereo.addElement("");
+                if (bondStereo.size() > bondDictRefs.size())
+                    bondDictRefs.addElement(null);
 
                 break;
 
@@ -391,6 +404,9 @@ public class CMLCoreModule implements ModuleInterface {
                     /* while strictly undefined, assume zero 
                     implicit hydrogens when no number is given */
                     hCounts.addElement("0");
+                }
+                if (elsym.size() > atomDictRefs.size()) {
+                    atomDictRefs.addElement(null);
                 }
                 /* It may happen that not all atoms have
                    associated 2D coordinates. accept that */
@@ -818,6 +834,12 @@ public class CMLCoreModule implements ModuleInterface {
                     " != " + atomcount);
         }
 
+        if (atomDictRefs.size() != atomcount) {
+            logger.debug(
+                    "No dictRef info: " + atomDictRefs.size() + 
+                    " != " + atomcount);
+        }
+
         for (int i = 0; i < atomcount; i++) {
             logger.info("Storing atom: " + i);
             cdo.startObject("Atom");
@@ -856,6 +878,9 @@ public class CMLCoreModule implements ModuleInterface {
                 if (y2.elementAt(i) != null)
                     cdo.setObjectProperty("Atom", "y2", (String)y2.elementAt(i));
             }
+            
+            if (atomDictRefs.elementAt(i) != null)
+                cdo.setObjectProperty("Atom", "dictRef", (String)atomDictRefs.elementAt(i));
 
             cdo.endObject("Atom");
         }
