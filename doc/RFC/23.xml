@@ -1,0 +1,63 @@
+<refentry id="cdk-rfc-23">
+
+  <refentryinfo>
+    <revhistory>
+      <revision>
+        <revnumber>1</revnumber>
+        <date>2003-09-29</date>
+        <authorinitials>elw</authorinitials>
+        <revremark>
+          See <ulink url="http://sourceforge.net/mailarchive/message.php?msg_id=5977831">email archive</ulink>.
+        </revremark>
+      </revision>
+    </revhistory>
+  </refentryinfo>
+
+
+  <refnamediv>
+    <refname>RFC CDK #23</refname>
+  </refnamediv>
+
+  <refsect1>
+    <title>Proposal</title>
+    <para>
+Geometry optimization results should be stored as a ChemFile with three 
+ChemSequences; the first with only one ChemModel being the structure given to 
+the optimization program, the second containing the complete optimization 
+run, and the last ChemSequence again with only one ChemModel being the
+optimized structure.
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>Reason</title>
+    <para>
+In the last few weeks I've ported two <ulink url="http://www.gaussian.com/">Gaussian</ulink> readers from 
+<ulink url="http://jmol.sf.net">Jmol</ulink> to CDK (98 
+and 03), which are both used by Jmol-HEAD... All gaussian 'frames' are now 
+stored in one ChemSequence, reflecting the behavior of the Jmol versions of 
+these readers... However, the .log file contains not just the geometry 
+optimization run, but also the starting material... This would suggest the 
+put the later in a separate ChemSequence... And what about the optimized 
+structure which should be used to put in a XYZ file when it is converted into 
+that format... Thus, we might need a separate ChemSequence with a duplicate 
+of the optimzed geometry too, hence the proposal. The problem is applicable
+to other geometry optimization programs too, like ABINIT.
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>Proposers</title>
+    <para>
+      Egon Willighagen.
+    </para>
+  </refsect1>
+
+    <refsect1>
+    <title>Date</title>
+    <para>
+      2003-09-04
+    </para>
+  </refsect1>
+
+</refentry>

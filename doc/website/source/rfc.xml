@@ -196,6 +196,13 @@
               <entry>accepted</entry>
               <entry>2003-09-12</entry>
             </row>
+            <row>
+              <entry>23</entry>
+              <entry><ulink url="rfc23.html">Storage of geometry optimization results</ulink></entry>
+              <entry>2003-09-04</entry>
+              <entry></entry>
+              <entry></entry>
+            </row>
          </tbody>
         </tgroup>
     </informaltable>
