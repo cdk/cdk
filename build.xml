@@ -797,7 +797,7 @@
                     <test name="org.openscience.cdk.test.ExperimentalClassesTests"
                         haltonfailure="no"
                         todir="${reports.tests}"
-                        outfile="experimental">
+                        outfile="result.experimental">
                                 <formatter type="brief" />
                         </test>
                 </junit>
