@@ -64,19 +64,16 @@ public class AtomTypeHandler extends DefaultHandler { //NOPMD
 
     // SAX Parser methods
 
-    public void doctypeDecl(String name, String publicId, String systemId) {
+    /* public void doctypeDecl(String name, String publicId, String systemId) {
         logger.info("DocType root element: " + name);
         logger.info("DocType root PUBLIC: " + publicId);
         logger.info("DocType root SYSTEM: " + systemId);
-    }
+    } */
 
     public void startDocument() {
         atomTypes = new Vector();
         scalarType = SCALAR_UNSET;
         atomType = null;
-    }
-
-    public void endDocument() {
     }
 
     public void endElement(String uri, String local, String raw) {  //NOPMD
