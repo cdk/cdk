@@ -422,8 +422,8 @@ public class CMLCoreModule implements ModuleInterface {
                 if (elsym.size() > x2.size() && x2.size() != 0) {
                     /* apparently, the previous atoms had atomic
                        coordinates, add 'null' for this atom */
-                    x2.add(null);
-                    y2.add(null);
+                    x2.addElement(null);
+                    y2.addElement(null);
                 }
 
                 break;
