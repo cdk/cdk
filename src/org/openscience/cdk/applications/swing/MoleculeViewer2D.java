@@ -3,7 +3,7 @@
  *  $Date$    
  *  $Revision$
  *
- *  Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2002-2004  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -39,7 +39,7 @@ import java.awt.*;
 
 
 /**
- *  A Swing-based implementation of Renderer2D for viewing molecules
+ * A Swing-based implementation of Renderer2D for viewing molecules.
  *
  * @author     steinbeck
  * @created    2002-05-30
@@ -52,6 +52,7 @@ public class MoleculeViewer2D extends JPanel implements CDKChangeListener
 	public String title = "Molecule Viewer";
 
 	private JFrame frame = null;
+    private Dimension preferredSize;
 
 
 	/**
@@ -62,7 +63,9 @@ public class MoleculeViewer2D extends JPanel implements CDKChangeListener
 	public MoleculeViewer2D(AtomContainer atomContainer, Renderer2DModel r2dm)
 	{
 		this.atomContainer = atomContainer;
+        preferredSize = new Dimension(500, 500);
 		this.r2dm = r2dm;
+        r2dm.setBackgroundDimension(preferredSize);
 		r2dm.addCDKChangeListener(this);
 		renderer = new Renderer2D(r2dm);
 		frame = new JFrame();
@@ -160,9 +163,8 @@ public class MoleculeViewer2D extends JPanel implements CDKChangeListener
 	 *  Contructs a JFrame into which this JPanel is put and displays the frame with 
      *  the molecule.
 	 */
-	public void display()
-	{
-		setPreferredSize(new Dimension(600, 400));
+	public void display() {
+		setPreferredSize(preferredSize);
 		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		frame.getContentPane().add(this);
 		frame.setTitle(title);
@@ -214,8 +216,8 @@ public class MoleculeViewer2D extends JPanel implements CDKChangeListener
 		{
 			setBackground(r2dm.getBackColor());
 			GeometryTools.translateAllPositive(atomContainer);
-			GeometryTools.scaleMolecule(atomContainer, getSize(), 0.8);
-			GeometryTools.center(atomContainer, getSize());
+			GeometryTools.scaleMolecule(atomContainer, preferredSize, 0.8);
+			GeometryTools.center(atomContainer, preferredSize);
 			renderer.paintMolecule(atomContainer, g);
 		}
 	}

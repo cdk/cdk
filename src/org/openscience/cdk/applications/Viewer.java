@@ -3,7 +3,7 @@
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 2002-2003  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2002-2004  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -26,7 +26,6 @@ package org.openscience.cdk.applications;
 import org.openscience.cdk.*;
 import org.openscience.cdk.io.*;
 import org.openscience.cdk.applications.swing.*;
-import org.openscience.cdk.renderer.*;
 import org.openscience.cdk.tools.*;
 import org.openscience.cdk.geometry.*;
 import org.openscience.cdk.smiles.*;
@@ -192,6 +191,7 @@ public class Viewer {
             frame.setSize(500, 500);
             frame.setVisible(true);
             frame.addWindowListener(new AppCloser());
+            frame.show();
         } else {
             logger.info("Generating 2D coordinates");
             StructureDiagramGenerator sdg = new StructureDiagramGenerator();
