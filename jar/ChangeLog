@@ -1,3 +1,8 @@
+2001-12-18  egonw
+* dadml.jar
+        Uploaded dadml.jar for downloading chemical structures from the internet
+        (ported from JChemPaint)
+
 2001-12-13  egonw
 * dbdoclet.jar
         Uploaded dbdoclet 0.4 for converting JavaDoc to DocBook XML 4.1.2
