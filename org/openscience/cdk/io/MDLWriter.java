@@ -46,8 +46,8 @@ import javax.vecmath.*;
 public class MDLWriter implements CDKConstants
 {
 	static BufferedWriter writer;
-	
-	
+
+
 	/**
 	 * Contructs a new MDLWriter that can write an array of Molecules to a given OutputStream
 	 *
@@ -63,9 +63,21 @@ public class MDLWriter implements CDKConstants
 		{
 		}
 	}
-	
-	
-	public void write(ChemObject object) throws UnsupportedChemObjectException 
+
+	/**
+	 * Contructs a new MDLWriter that can write an array of Molecules to a Writer
+	 *
+	 * @param   out  The Writer to write to
+	 */
+	public MDLWriter(FileOutputStream out) {
+		try {
+			writer = new BufferedWriter(out);
+		} catch (Exception exc) {
+		}
+	}
+
+
+	public void write(ChemObject object) throws UnsupportedChemObjectException
 	{
 		if (object instanceof SetOfMolecules)
 		{
