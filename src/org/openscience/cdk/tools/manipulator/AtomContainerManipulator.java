@@ -216,6 +216,8 @@ public class AtomContainerManipulator {
                 neighb.setHydrogenCount(neighb.getHydrogenCount() + 1);
             }
         }
+        mol.setProperties(atomContainer.getProperties());
+        mol.setFlags(atomContainer.getFlags());
 
         return (mol);
     }
