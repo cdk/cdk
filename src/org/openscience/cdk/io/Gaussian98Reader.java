@@ -83,7 +83,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
     }
     
     public String getFormatName() {
-        return "Gaussian98 (not implemented, post a feature request if you need it)";
+        return "Gaussian98";
     }
     /**
      * Create an Gaussian98 output reader.
