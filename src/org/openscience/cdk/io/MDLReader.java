@@ -31,6 +31,7 @@ package org.openscience.cdk.io;
 import org.openscience.cdk.exception.*;
 import org.openscience.cdk.tools.*;
 import org.openscience.cdk.*;
+import org.openscience.cdk.io.setting.*;
 import java.io.*;
 import java.util.*;
 import javax.vecmath.*;
@@ -59,6 +60,12 @@ public class MDLReader extends DefaultChemObjectReader {
     private org.openscience.cdk.tools.LoggingTool logger = null;
     private IsotopeFactory isotopeFactory = null;
 
+    private BooleanIOSetting forceReadAs3DCoords;
+    
+    public MDLReader() {
+        this(new StringReader(""));
+    }
+    
 	/**
 	 *  Contructs a new MDLReader that can read Molecule from a given InputStream.
 	 *
@@ -77,6 +84,7 @@ public class MDLReader extends DefaultChemObjectReader {
 	public MDLReader(Reader in) {
         logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
         input = new BufferedReader(in);
+        initIOSettings();
         try {
             isotopeFactory = IsotopeFactory.getInstance();
         } catch (Exception exception) {
@@ -311,7 +319,7 @@ public class MDLReader extends DefaultChemObjectReader {
             }
             
             // convert to 2D, if totalZ == 0
-            if (totalZ == 0.0) {
+            if (totalZ == 0.0 && !forceReadAs3DCoords.isSet()) {
                 logger.info("Total 3D Z is 0.0, interpreting it as a 2D structure");
                 Atom[] atomsToUpdate = molecule.getAtoms();
                 for (int f = 0; f<atomsToUpdate.length; f++) {
@@ -438,6 +446,22 @@ public class MDLReader extends DefaultChemObjectReader {
     
     public void close() throws IOException {
         input.close();
+    }
+    
+    private void initIOSettings() {
+        forceReadAs3DCoords = new BooleanIOSetting("ForceReadAs3DCoordinates", IOSetting.LOW,
+          "Should coordinates always be read as 3D?", 
+          "no");
+    }
+    
+    private void customizeJob() {
+        fireIOSettingQuestion(forceReadAs3DCoords);
+    }
+
+    public IOSetting[] getIOSettings() {
+        IOSetting[] settings = new IOSetting[1];
+        settings[0] = forceReadAs3DCoords;
+        return settings;
     }
 }
 
