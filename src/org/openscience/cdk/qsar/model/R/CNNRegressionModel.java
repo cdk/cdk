@@ -31,6 +31,82 @@ import java.util.HashMap;
 
 /** 
  * A modeling class that provides a computational neural network regression model.
+ *
+ * When instantiated this class ensures that the R/Java interface has been 
+ * initialized. The response and independent variables can be specified at construction
+ * time or via the <code>setParameters</code> method. 
+ * The actual fitting procedure is carried out by <code>build</code> after which 
+ * the model may be used to make predictions, via <code>predict</code>. An example of the use
+ * of this class is shown below:
+ * <pre>
+ * double[][] x;
+ * double[] y;
+ * Double[] wts;
+ * Double[][] newx;
+ * ...
+ * try {
+ *     CNNRegressionModel cnnrm = new CNNRegressionModel(x,y,3);
+ *     cnnrm.setParameters("Wts",wts);
+ *     cnnrm.build();
+ *     
+ *     double fitValue = cnnrm.getFitValue();
+ *     
+ *     cnnrm.setParameters("newdata", newx);
+ *     cnnrm.setParameters("type", "raw");
+ *     cnnrm.predict();
+ *
+ *     double[][] preds = cnnrm.getPredictPredicted();
+ * } catch (QSARModelException qme) {
+ *     System.out.println(qme.toString());
+ * }
+ * </pre>
+ * The above code snippet builds a 3-3-1 CNN model.
+ * Multiple output neurons are easily
+ * specified by supplying a matrix for y (i.e., double[][]) with the output variables
+ * in the columns. 
+ * <p>
+ * Nearly all the arguments to 
+ * <a href="http://www.maths.lth.se/help/R/.R/library/nnet/html/nnet.html" target="_top">nnet()</a> are
+ * supported via the <code>setParameters</code> method. The table below lists the names of the arguments,
+ * the expected type of the argument and the default setting for the arguments supported by this wrapper class.
+ * <center>
+ * <table border=1 cellpadding=5>
+ * <THEAD>
+ * <tr>
+ * <th>Name</th><th>Java Type</th><th>Default</th><th>Notes</th>
+ * </tr>
+ * </thead>
+ * <tbody>
+ * <tr><td>x</td><td>Double[][]</td><td>None</td><td>This must be set by the caller via the constructors or via <code>setParameters</code></td></tr>
+ * <tr><td>y</td><td>Double[][]</td><td>None</td><td>This must be set by the caller via the constructors or via <code>setParameters</code></td></tr>
+ * <tr><td>weights</td><td>Double[]</td><td>rep(1,nobs)</td><td>The default case weights is a vector of 1's equal in length to the number of observations, nobs</td></tr>
+ * <tr><td>size</td><td>Integer</td><td>None</td><td>This must be set by the caller via the constructors or via <code>setParameters</code></td></tr>
+ * <tr><td>subset</td><td>Integer[]</td><td>1:nobs</td><td>This is supposed to be an index vector specifying which observations are to be used in building the model. The default indicates that all should be used</td></tr>
+ * <tr><td>Wts</td><td>Double[]</td><td>runif(1,nwt)</td><td>The initial weight vector is set to a random vector of length equal to the number of weights if not set by the user</td></tr>
+ * <tr><td>mask</td><td>Boolean[]</td><td>rep(TRUE,nwt)</td><td>All weights are to be optimized unless otherwise specified by the user</td></tr>
+ * <tr><td>linout</td><td>Boolean</td><td>TRUE</td><td>Since this class performs regression this need not be changed</td></tr>
+ * <tr><td>entropy</td><td>Boolean</td><td>FALSE</td><td></td></tr>
+ * <tr><td>softmax</td><td>Boolean</td><td>FALSE</td><td></td></tr>
+ * <tr><td>censored</td><td>Boolean</td><td>FALSE</td><td></td></tr>
+ * <tr><td>skip</td><td>Boolean</td><td>FALSE</td><td></td></tr>
+ * <tr><td>rang</td><td>Double</td><td>0.7</td><td></td></tr>
+ * <tr><td>decay</td><td>Double</td><td>0.0</td><td></td></tr>
+ * <tr><td>maxit</td><td>Integer</td><td>100</td><td></td></tr>
+ * <tr><td>Hess</td><td>Boolean</td><td>FALSE</td><td></td></tr>
+ * <tr><td>trace</td><td>Boolean</td><td>TRUE</td><td></td></tr>
+ * <tr><td>MaxNWts</td><td>Integer</td><td>1000</td><td></td></tr>
+ * <tr><td>abstol</td><td>Double</td><td>1.0e-4</td><td></td></tr>
+ * <tr><td>reltol</td><td>Double</td><td>1.0e-8</td><td></td></tr>
+ * </tbody>
+ * </table>
+ * </center>
+ * <p>
+ * In general the <code>getFit*</code> methods provide access to results from the fit
+ * and <code>getPredict*</code> methods provide access to results from the prediction (i.e.,
+ * prediction using the model on new data). The values returned correspond to the various 
+ * values returned by the <a href="http://www.maths.lth.se/help/R/.R/library/nnet/html/nnet.html" target="_top">nnet</a> and
+ * <a href="http://www.maths.lth.se/help/R/.R/library/nnet/html/predict.nnet.html" target="_top">predict.nnet</a> functions
+ * in R
  * <p>
  * See {@link RModel} for details regarding the R and SJava environment.
  * @author Rajarshi Guha
@@ -94,8 +170,9 @@ public class CNNRegressionModel extends RModel {
      * the number of observations in y an exception will be thrown.
      * <p>
      * Other parameters that are required to be set should be done via
-     * calls to setParameters(). A number of parameters are set to the
-     * defaults as specified in the manpage for nnet.
+     * calls to <code>setParameters</code>. A number of parameters are set to the
+     * defaults as specified in the manpage for 
+     * <a href="http://www.maths.lth.se/help/R/.R/library/nnet/html/nnet.html" target="_top">nnet</a>.
      *
      * @param x An array of independent variables. Observations should be in
      * the rows and variables in the columns.
@@ -143,8 +220,9 @@ public class CNNRegressionModel extends RModel {
      * the number of observations in y an exception will be thrown.
      * <p>
      * Other parameters that are required to be set should be done via
-     * calls to setParameters(). A number of parameters are set to the
-     * defaults as specified in the manpage for nnet.
+     * calls to <code>setParameters</code>. A number of parameters are set to the
+     * defaults as specified in the manpage for 
+     * <a href="http://www.maths.lth.se/help/R/.R/library/nnet/html/nnet.html" target="_top">nnet</a>.
      *
      * @param x An array of independent variables. Observations should be in
      * the rows and variables in the columns.
@@ -190,7 +268,7 @@ public class CNNRegressionModel extends RModel {
      * Get the name of the model.
      *
      * This function returns the name of the variable that the actual
-     * linear model is stored in within the R session. In general this is 
+     * CNN model is stored in within the R session. In general this is 
      * not used for the end user. In the future this might be changed 
      * to a private method.
      *
@@ -204,7 +282,11 @@ public class CNNRegressionModel extends RModel {
      * Sets parameters required for building a linear model or using one for prediction.
      *
      * This function allows the caller to set the various parameters available
-     * for the lm() and predict.lm() R routines. See the R help pages for the details of the available
+     * for the 
+     * <a href="http://www.maths.lth.se/help/R/.R/library/nnet/html/nnet.html" target="_top">nnet</a>
+     * and 
+     * <a href="http://www.maths.lth.se/help/R/.R/library/nnet/html/predict.nnet.html" target="_top">predict.nnet</a>
+     * R routines. See the R help pages for the details of the available
      * parameters.
      * 
      * @param key A String containing the name of the parameter as described in the 
@@ -317,8 +399,9 @@ public class CNNRegressionModel extends RModel {
      * This function uses a previously fitted model to obtain predicted values
      * for a new set of observations. If the model has not been fitted prior to this
      * call an exception will be thrown. Use <code>setParameters</code>
-     * to set the values of the independent variable for the new observations and the
-     * interval type.
+     * to set the values of the independent variable for the new observations. You can also
+     * set the <code>type</code> argument (see <a href="http://www.maths.lth.se/help/R/.R/library/nnet/html/nnet.html" target="_top">here</a>). 
+     * However, since this class performs CNN regression, the default setting (<code>type='raw'</code>) is sufficient.
      */
     public void predict() throws QSARModelException {
         if (this.modelfit == null) 
@@ -337,22 +420,83 @@ public class CNNRegressionModel extends RModel {
         }
     }
         
+    /**
+     * Gets final value of the fitting criteria.
+     *
+     * This method only returns meaningful results if the <code>build</code>
+     * method of this class has been previously called.
+     * 
+     * @return  A double indicating the  value of the fitting criterion plus weight decay term.
+     */
     public double getFitValue() {
         return(this.modelfit.getValue());
     }
+
+    /**
+     * Gets optimized weights for the model.
+     *
+     * This method only returns meaningful results if the <code>build</code>
+     * method of this class has been previously called.
+     * 
+     * @return  A double[] containing the weights. The number of weights will be
+     * equal to <center>(Ni * Nh) + (Nh * No) + Nh + No</center> where Ni, Nh and No
+     * are the number of input, hidden and output neurons.
+     */
     public double[] getFitWeights() {
         return(this.modelfit.getWeights());
     }
+    /**
+     * Gets fitted values from the final model.
+     *
+     * This method only returns meaningful results if the <code>build</code>
+     * method of this class has been previously called.
+     * 
+     * @return  A double[][] containing the fitted values for each output neuron
+     * in the columns. Note that even if a single output neuron was specified during
+     * model building the return value is still a 2D array (with a single column).
+     */
     public double[][] getFitFitted() {
         return(this.modelfit.getFitted());
     }
+    /**
+     * Gets residuals for the fitted values from the final model.
+     *
+     * This method only returns meaningful results if the <code>build</code>
+     * method of this class has been previously called.
+     * 
+     * @return  A double[][] containing the residuals for each output neuron
+     * in the columns. Note that even if a single output neuron was specified during
+     * model building the return value is still a 2D array (with a single column).
+     */
     public double[][] getFitResiduals() {
         return(this.modelfit.getResiduals());
     }
+    /**
+     * Gets the Hessian of the measure of fit.
+     *
+     * If the <code>Hess</code> option was set to TRUE before the call to build
+     * then the CNN routine will return the Hessian of the measure of fit at the best set of
+     * weights found.  * This method only returns meaningful results if the <code>build</code>
+     * method of this class has been previously called.
+     * 
+     * @return  A double[][] containing the Hessian. It will be a square array
+     * with dimensions equal to the Nwt x Nwt, where Nwt is the total number of weights
+     * in the CNN model.
+     */
     public double[][] getFitHessian() {
         return(this.modelfit.getHessian());
     }
 
+    /**
+     * Gets predicted values for new data using a previously built model.
+     *
+     * This method only returns meaningful results if the <code>build</code>
+     * method of this class has been previously called.
+     * 
+     * @return  A double[][] containing the predicted for each output neuron
+     * in the columns. Note that even if a single output neuron was specified during
+     * model building the return value is still a 2D array (with a single column).
+     */
     public double[][] getPredictPredicted() {
         return(this.modelpredict.getPredicted());
     }

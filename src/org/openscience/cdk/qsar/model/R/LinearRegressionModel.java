@@ -34,7 +34,7 @@ import java.util.HashMap;
  *
  * When instantiated this class ensures that the R/Java interface has been 
  * initialized. The response and independent variables can be specified at construction
- * time or via the setParameters() method. The actual fitting procedure is carried out by <code>build</code> after which 
+ * time or via the <code>setParameters</code> method. The actual fitting procedure is carried out by <code>build</code> after which 
  * the model may be used to make predictions.
  * <p>
  * Currently, the design of the class is quite sparse as it does not allow subsetting,
@@ -62,7 +62,7 @@ import java.util.HashMap;
  * calls to setParameters(). The following table lists the parameters that can be set and their 
  * expected types. More detailed informationis available in the R documentation.
  * <center>
- * <table border=1 cellpadding=2>
+ * <table border=1 cellpadding=5>
  * <THEAD>
  * <tr>
  * <th>Name</th><th>Java Type</th><th>Notes</th>

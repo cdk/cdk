@@ -196,7 +196,7 @@ buildCNN <-  function(modelname, params) {
     
     if (!weights) weights <- rep(1, nrow(y))
     if (!subset) subset <- 1:nrow(y)
-    if (!Wts) { Wts <- rep(1,nwt) }
+    if (!Wts) { Wts <- runif(nwt) }
     if (!mask) { mask <- rep(TRUE, nwt) }
 
     assign(modelname, 
