@@ -73,7 +73,7 @@ import org.openscience.cdk.tools.LoggingTool;
 public class Fingerprinter 
 {
 	static int defaultSize = 1024;
-	static int searchDepth = 6;
+	static int defaultSearchDepth = 6;
 	static Hashtable pathes;
 	static boolean debug = true;
 	static int debugCounter = 0;
@@ -86,11 +86,13 @@ public class Fingerprinter
 	 *  Generates a fingerprint of the default size for the given AtomContainer
 	 *
 	 * @param  ac  The AtomContainer for which a Fingerprint is generated
+	 *		default size of the fingerprint= 1024
+	 *		default depth of search= 6
 	 * @return     The Fingerprint (A one-dimensional bit array)
 	 */
 	public static BitSet getFingerprint(AtomContainer ac) throws NoSuchAtomException
 	{
-		return getFingerprint(ac, defaultSize);
+		return getFingerprint(ac, defaultSize, defaultSearchDepth);
 	}
 
 
@@ -99,9 +101,10 @@ public class Fingerprinter
 	 *
 	 * @param  ac    The AtomContainer for which a Fingerprint is generated
 	 * @param  size  The desired size of the fingerprint
+	 * @param  searchDepth The desired depth of search
 	 * @return       The Fingerprint (A one-dimensional bit array)
 	 */
-	public static BitSet getFingerprint(AtomContainer ac, int size) throws NoSuchAtomException
+	public static BitSet getFingerprint(AtomContainer ac, int size, int searchDepth) throws NoSuchAtomException
 	{
 		String path = null;
 		int position = -1;
@@ -113,7 +116,7 @@ public class Fingerprinter
 		long after = System.currentTimeMillis();
 		logger.debug("time for aromaticity calculation: " + (after - before) + " milliseconds");
 		// logger.debug("Finished Aromaticity Detection");
-		findPathes(ac);
+		findPathes(ac,searchDepth);
 		BitSet bs = new BitSet(size);
 		for (Enumeration e = pathes.elements(); e.hasMoreElements(); )
 		{
@@ -167,7 +170,7 @@ public class Fingerprinter
 	 *
 	 * @param  ac  The AtomContainer which is to be searched.
 	 */
-	static void findPathes(AtomContainer ac)
+	static void findPathes(AtomContainer ac,int searchDepth)
 	{
 		pathes = new Hashtable();
 		Vector currentPath = new Vector();
@@ -178,7 +181,7 @@ public class Fingerprinter
 			currentPath.addElement(ac.getAtomAt(f));
 			checkAndStore(currentPath);
 			// logger.info("Starting at atom " + (f + 1) + " with symbol " + ac.getAtomAt(f).getSymbol());
-			depthFirstSearch(ac, ac.getAtomAt(f), currentPath, 0);
+			depthFirstSearch(ac, ac.getAtomAt(f), currentPath, 0, searchDepth);
 
 		}
 	}
@@ -191,7 +194,7 @@ public class Fingerprinter
 	 * @param  currentPath   The Path that has been generated so far
 	 * @param  currentDepth  The current depth in this recursive search
 	 */
-	static void depthFirstSearch(AtomContainer ac, Atom root, Vector currentPath, int currentDepth)
+	static void depthFirstSearch(AtomContainer ac, Atom root, Vector currentPath, int currentDepth,int searchDepth)
 	{
 		Bond[] bonds = ac.getConnectedBonds(root);
 		/* try
@@ -229,7 +232,7 @@ public class Fingerprinter
 				}
 				else
 				{
-					depthFirstSearch(ac, nextAtom, newPath, currentDepth);
+					depthFirstSearch(ac, nextAtom, newPath, currentDepth,searchDepth);
 					//logger.debug("DepthFirstSearch Fallback to searchDepth " + currentDepth);
 				}
 			}
