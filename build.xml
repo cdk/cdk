@@ -63,6 +63,7 @@
                         <include name="pmrlib.jar" />
                         <include name="jmolApis.jar" />
                         <include name="jmolIO.jar" />
+                        <include name="commons-cli-1.0.jar" />
                 </fileset>
                 <fileset dir="${pathtojava3d}">
                         <include name="*.jar" />

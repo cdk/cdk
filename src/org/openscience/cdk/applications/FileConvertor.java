@@ -36,6 +36,15 @@ import java.util.Vector;
 
 import javax.vecmath.Vector2d;
 
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.PosixParser;
+import org.apache.commons.cli.OptionBuilder;
+import org.apache.commons.cli.ParseException;
+import org.apache.commons.cli.HelpFormatter;
+
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemFile;
@@ -84,8 +93,9 @@ import org.openscience.cdk.tools.SaturationChecker;
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  *
- * @cdk.keyword command line util
- * @cdk.keyword file format
+ * @cdk.keyword      command line util
+ * @cdk.keyword      file format
+ * @cdk.builddepends commons-cli-1.0.jar
  */
 public class FileConvertor {
 
@@ -95,7 +105,7 @@ public class FileConvertor {
  *  to logger statements
  */	
 
-    private org.openscience.cdk.tools.LoggingTool logger;
+    private LoggingTool logger;
 
     private ChemObjectReader cor;
     private String oformat;
@@ -167,7 +177,7 @@ public class FileConvertor {
                                 try {
                                     factory.configure(atoms[j]);
                                 } catch (CDKException exception) {
-                                    logger.warn("Could not configure atom: " + exception.getMessage());
+                                    logger.warn("Could not configure atom: ", exception.getMessage());
                                     logger.debug(exception);
                                 }
                             }
@@ -175,18 +185,16 @@ public class FileConvertor {
                     }
                     if (applyHAdding) {
                         logger.info("Adding Hydrogens...");
-                        HydrogenAdder adder = new HydrogenAdder();
+                        HydrogenAdder adder = new HydrogenAdder("org.openscience.cdk.tools.ValencyChecker");
                         adder.addExplicitHydrogensToSatisfyValency(
                             new Molecule(container)
                         );
-                    }
-                    if (applyHRemoval) {
-                        System.out.print("Cannot remove hydrogens at this moment.");
-                        System.exit(-1);
-                    }
-                    if (apply2DCleanup) {
-                        System.out.print("Cannot create new 2D coordinates at this moment.");
-                        System.exit(-1);
+                    } else if (applyHRemoval) {
+                        for (int atomi=0; atomi<atoms.length; atomi++) {
+                            if (atoms[atomi].getSymbol().equals("H")) {
+                                container.removeAtomAndConnectedElectronContainers(atoms[atomi]);
+                            }
+                        }
                     }
                     if (apply3DRebonding) {
                         logger.info("Creating bonds from 3D coordinates");
@@ -195,6 +203,21 @@ public class FileConvertor {
                         SaturationChecker satChecker = new SaturationChecker();
                         satChecker.saturate(container);
                     }
+                    if (apply2DCleanup) {
+                        logger.info("Creating 2D coordinates");
+                        StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+                        try {
+                            sdg.setMolecule(new Molecule(container), false); // false -> don't make clone!
+                            sdg.generateCoordinates(new Vector2d(0, 1));
+                            container = sdg.getMolecule();
+                            logger.debug("###########", container);
+                        } catch (Exception exc) {
+                            System.out.println("Could not generate coordinates for this molecule.");
+                            logger.info("Could not generate coordinates for this molecule: ", exc.getMessage());
+                            logger.debug(exc);
+                            System.exit(1);
+                        }
+                    }
                 }
                 
                 // create output file
@@ -202,7 +225,7 @@ public class FileConvertor {
                 FileWriter fileWriter = new FileWriter(new File(ofilename));
                 cow = getChemObjectWriter(this.oformat, fileWriter);
                 if (cow == null) {
-                    logger.warn("Format " + oformat + " is an unsupported output format.");
+                    logger.warn("Format ", oformat, " is an unsupported output format.");
                     System.err.println("Unsupported output format!");
                     return false;
                 }
@@ -228,11 +251,11 @@ public class FileConvertor {
         FileConvertor convertor = new FileConvertor();
 
         // process options
-        int firstNonOptionArgument = convertor.parseCommandLineOptions(args);
+        String[] filesToConvert = convertor.parseCommandLineOptions(args);
 
         // do conversion(s)
-        for (int i=firstNonOptionArgument; i < args.length; i++) {
-            String inputFilename = args[i];
+        for (int i=0; i < filesToConvert.length; i++) {
+            String inputFilename = filesToConvert[i];
             System.out.print("Converting " + inputFilename + " ... ");
             boolean success = convertor.convert(inputFilename);
             if (success) {
@@ -324,96 +347,11 @@ public class FileConvertor {
         return outputFilename;
     }
 
-    /**
-     * Parses the options in the command line arguments and returns
-     * the index of the first non-option argument.
-     */
-    private int parseCommandLineOptions(String[] args) {
-        int i = 0;
-
-        // parse options
-        if (args.length == 0) {
-            printHelp();
-            System.exit(0);
-        }
-        while (args[i].startsWith("-")) {
-            // parse option
-            String option = args[i];
-            logger.debug("Parsing option: " + option);
-            if (option.startsWith("--question:") && option.length() > 11) {
-                String levelString = option.substring(11);
-                if (levelString.equals("none")) {
-                    this.level = 0;
-                } else if (levelString.equals("fewest")) {
-                    this.level = 1;
-                } else if (levelString.equals("some")) {
-                    this.level = 2;
-                } else if (levelString.equals("all")) {
-                    this.level = 3;
-                } else {
-                    System.out.println("Unrecognized question level: " + levelString);
-                    System.exit(1);
-                }
-                settingListener = new TextGUIListener(this.level);
-            } else if (option.equals("--help") || option.equals("-h")) {
-                printHelp();
-                System.exit(0);
-            } else if (option.startsWith("-o") && option.length() > 2) {
-                this.oformat = option.substring(2);
-            } else if (option.startsWith("--outputformat:") && option.length() > 15) {
-                this.oformat = option.substring(15);
-            } else if (option.startsWith("--listoptions:") && option.length() > 14) {
-                String format = option.substring(14);
-                listOptionsForIOClass(format);
-                System.exit(0);
-            } else if (option.startsWith("--properties:") && option.length() > 13) {
-                String filename = option.substring(13);
-                try {
-                    File file = new File(filename);
-                    Properties props = new Properties();
-                    props.load(new FileInputStream(file));
-                    propsListener = new PropertiesListener(props);
-                    settingListener = null;
-                } catch (FileNotFoundException exception) {
-                    System.out.println("Cannot find properties file: " + filename);
-                    System.exit(1);
-                } catch (IOException exception) {
-                    System.out.println("Cannot read properties file: " + filename);
-                    System.exit(1);
-                }
-			} else if (option.equals("--addHydrogens")) {
-				this.applyHAdding = true;
-			} else if (option.equals("--removeHydrogens")) {
-				this.applyHRemoval = true;
-			} else if (option.equals("--create2DCoordinates")) {
-				this.apply2DCleanup = true;
-			} else if (option.equals("--rebondFrom3DCoordinates")) {
-				this.apply3DRebonding = true;
-            } else {
-                System.out.println("Unrecognized option: " + args[i]);
-                System.exit(1);
-            }
-            i++;
-        } // done parsing options
-
-        // return the index of the first non-option command line arguments
-        return i;
-    }
-
-    private void printHelp() {
-        System.out.println(" FileConverter [OPTIONS] <files>");
-        System.out.println();
-        System.out.println(" Output files are written to the directory from which the program is run.");
-        System.out.println(" The default output format is CML 2.");
-        System.out.println();
-        System.out.println(" OPTIONS:");
-        System.out.println("  --help                            Print this help");
-        System.out.println("   -h");
-        System.out.println("  --question:[none|fewest|some|all] Ask none|fewest|some|all customization questions");
-        System.out.println("  --outputformat:<format>           Output the files in the given format");
-        System.out.println("   -o<format>");
-        System.out.println("  --listoptions:<format>            Output customizable IOSettings for this Writer");
-        System.out.println("  --properties:<file>               Java Properties file with IOSetting values");
+    private void printHelp(Options options) {
+        HelpFormatter formatter = new HelpFormatter();
+        formatter.printHelp("FileConvertor", options);
+        
+        // now report on the supported formats
         System.out.println();
         System.out.println(" OUTPUT FORMATS:");
         System.out.println("  cml    Chemical Markup Language (the default)");
@@ -425,6 +363,133 @@ public class FileConvertor {
         System.out.println("  smi    SMILES");
         System.out.println("  svg    Scalable Vector Graphics");
         System.out.println("  xyz    XYZ");
+        
+        System.exit(0);
+    }
+    
+    /**
+     * Parses the options in the command line arguments and returns
+     * the index of the first non-option argument.
+     */
+    private String[] parseCommandLineOptions(String[] args) {
+
+        Options options = new Options();
+        options.addOption("h", "help", false, "give this help page");
+        options.addOption(
+            OptionBuilder.withLongOpt("question").
+                          withDescription("level of IO questions [none|fewest|some|all]").
+                          withValueSeparator('=').
+                          hasArg().
+                          create("q")
+        );
+        options.addOption(
+            OptionBuilder.withLongOpt("outputformat").
+                          withDescription("see below for supported formats (CML2 is default)").
+                          withValueSeparator('=').
+                          hasArg().
+                          create("o")
+        );
+        options.addOption(
+            OptionBuilder.withLongOpt("listoptions").
+                          withDescription("lists the IO questions for the given format").
+                          withValueSeparator('=').
+                          hasArg().
+                          create("l")
+        );
+        options.addOption(
+            OptionBuilder.withLongOpt("properties").
+                          withDescription("Java properties file with the IO settings").
+                          withValueSeparator('=').
+                          hasArg().
+                          create("p")
+        );
+        options.addOption(
+            OptionBuilder.withLongOpt("addHydrogens").
+                          withDescription("add explicit hydrogens where missing").
+                          create("a")
+        );
+        options.addOption(
+            OptionBuilder.withLongOpt("removeHydrogens").
+                          withDescription("remove all explicit hydrogens").
+                          create("r")
+        );
+        options.addOption(
+            OptionBuilder.withLongOpt("create2DCoordinates").
+                          withDescription("create 2D coordinates using a layout algorithm").
+                          create("2")
+        );
+        options.addOption(
+            OptionBuilder.withLongOpt("rebondFrom3DCoordinates").
+                          withDescription("calculate bonds from 3D coordinates").
+                          create("b")
+        );
+        
+        CommandLine line = null;
+        try {
+            CommandLineParser parser = new PosixParser();
+            line = parser.parse(options, args);
+        } catch (ParseException exception) {
+            System.err.println("Unexpected exception: " + exception.toString());
+        }
+    
+        if (line.hasOption("o")) {
+            this.oformat = line.getOptionValue("o");
+        }
+        if (line.hasOption("q")) {
+            String level = line.getOptionValue("q");
+            if ("none".equals(level)) {
+                settingListener = new TextGUIListener(0);
+            } else if ("fewest".equals(level)) {
+                settingListener = new TextGUIListener(1);
+            } else if ("some".equals(level)) {
+                settingListener = new TextGUIListener(2);
+            } else if ("all".equals(level)) {
+                settingListener = new TextGUIListener(3);
+            } else {
+                System.out.println("Only supported levels: none, fewest, some, all");
+                System.exit(1);
+            }
+        }
+        if (line.hasOption("l")) {
+            listOptionsForIOClass(line.getOptionValue("l"));
+            System.exit(0);
+        }
+        if (line.hasOption("p")) {
+            String filename = line.getOptionValue("p");
+            try {
+                File file = new File(filename);
+                Properties props = new Properties();
+                props.load(new FileInputStream(file));
+                propsListener = new PropertiesListener(props);
+                settingListener = null;
+            } catch (FileNotFoundException exception) {
+                System.out.println("Cannot find properties file: " + filename);
+                System.exit(1);
+            } catch (IOException exception) {
+                System.out.println("Cannot read properties file: " + filename);
+                System.exit(1);
+            }
+        }
+        if (line.hasOption("a")) {
+            this.applyHAdding = true;
+        }
+        if (line.hasOption("r")) {
+            this.applyHRemoval = true;
+        }
+        if (line.hasOption("2")) {
+            this.apply2DCleanup = true;
+        }
+        if (line.hasOption("b")) {
+            this.apply3DRebonding = true;
+        }
+
+        String[] filesToConvert = line.getArgs();
+        
+        if (filesToConvert.length == 0 || line.hasOption("h")) {
+            printHelp(options);
+        }
+        
+        return filesToConvert;
     }
 
     public void listOptionsForIOClass(String ioClassName) {
@@ -542,7 +607,7 @@ public class FileConvertor {
         try {
             cow.write(c);
         } catch (CDKException exception) {
-            logger.error("Cannot write Crystal: " + exception.getMessage());
+            logger.error("Cannot write Crystal: ", exception.getMessage());
         }
     }
 
@@ -584,34 +649,10 @@ public class FileConvertor {
 
     private void write(Molecule molecule, String outputFilename) throws IOException {
         try {
-            if (cow instanceof CMLWriter) {
-                IDCreator idCreator = new IDCreator();
-                idCreator.createIDs(molecule);
-            }
-            if (applyHAdding) {
-				System.out.println("Not implemented yet");
-				System.exit(1);
-			}
-            if (applyHRemoval) {
-				System.out.println("Not implemented yet");
-				System.exit(1);
-			}
-            if (apply2DCleanup) {
-				logger.info("Creating 2D coordinates");
-            	StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-	            try {
-	                sdg.setMolecule(molecule, false); // false -> don't make clone!
-	                sdg.generateCoordinates(new Vector2d(0, 1));
-	                molecule = sdg.getMolecule();
-	                logger.debug("###########" + molecule.toString());
-	            } catch (Exception exc) {
-	                System.out.println("Could not generate coordinates for this molecule.");
-	                System.exit(1);
-	            }
-			}
             cow.write(molecule);
         } catch (CDKException exception) {
-            logger.error("Cannot write Molecule: " + exception.getMessage());
+            logger.error("Cannot write molecule: ", exception.getMessage());
+            logger.debug(exception);
         }
     }
 
@@ -625,7 +666,7 @@ public class FileConvertor {
         String twoName = two.getClass().getName();
         int twoIndex   = chemObjectNames.indexOf(twoName);
         int diff = twoIndex - oneIndex;
-        logger.debug("Comparing " + oneName + " and " + twoName + ": " + diff);
+        logger.debug("Comparing ", oneName, " and ", twoName, ": " + diff);
         return diff;
     }
 

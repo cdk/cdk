@@ -14,6 +14,7 @@ New:
 * Readded element toggling between common elements in SYMBOL mode
   in Controller2D
 * Added cdk.applications.APIVersionTester for testing version numbers
+* FileConvertor now makes use of Apache's CommandLineInterface
 
 Fixes:
 * Tropylium is now recognised as aromatic (closes CDK bug #957627)
@@ -22,6 +23,7 @@ Fixes:
 * Fixed output of CML bond orders for bonds with CDKConstants.BONDORDER_AROMATIC
 * Added missing cdk:bondOrder dictRef for CML2 output CDK's double bond orders
 * Make sure to draw an atom label for charged atoms (closes JCP #957625)
+* FileConvertor now really implements some of its features
 
 API changes:
 
