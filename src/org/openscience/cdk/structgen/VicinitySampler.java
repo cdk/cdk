@@ -41,11 +41,7 @@ import org.openscience.cdk.graph.ConnectivityChecker;
  * RandomGenerator is a generator of Constitutional Isomers. It needs to be 
  * provided with a starting constitution and it makes random moves in 
  * constitutional space from there. 
- * This generator was first suggested by
- * Faulon, J.-L.
- * 
- * References:
- *   <a href="http://cdk.sf.net/biblio.html#FAU96">FAU96</a>
+ * This generator was first suggested by J.-L. Faulon {@cdk.cite FAU96}.
  *
  * @cdk.keyword structure generator
  */

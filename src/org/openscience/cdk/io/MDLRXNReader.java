@@ -46,10 +46,7 @@ import org.openscience.cdk.SetOfReactions;
 import org.openscience.cdk.exception.CDKException;
 
 /**
- * Reads a molecule from an MDL RXN file.
- *
- * <p>References:
- *   <a href="http://cdk.sf.net/biblio.html#DAL92">DAL92</a>
+ * Reads a molecule from an MDL RXN file {@cdk.cite DAL92}.
  *
  * @cdk.module io
  *

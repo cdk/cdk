@@ -41,20 +41,18 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
 /**
- * Reads the content of a IUPAC Chemical Identifier (IChI) document. See
- * <a href="http://www.nist.gov/public_affairs/update/upd20020610.htm#International">this
- * press release</a>. Recently a new IChI format was introduced an files generated
+ * Reads the content of a IUPAC Chemical Identifier (IChI) document.
+ * See {@cdk.cite HEL01}.
+ * Recently a new IChI format was introduced an files generated
  * with the latest IChI generator cannot be parsed with this class. This class
  * needs to be updated.
  *
  * <P>The elements that are read are given in the IChIHandler class.
  *
- * <p>Reference: <a href="http://cdk.sf.net/biblio.html#HEL01">HEL01</a>.
- *
  * @cdk.module experimental
  *
  * @author     Egon Willighagen <egonw@sci.kun.nl>
- * @cdk.created    25 September 2002
+ * @cdk.created    2002-009-25
  *
  * @cdk.keyword file format, IChI
  * @cdk.keyword chemical identifier

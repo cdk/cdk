@@ -42,11 +42,10 @@ import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 
 /**
- *  Generates HOSE codes. References: <a
- *  href="http://cdk.sf.net/biblio.html#BRE78">BRE78</a>
+ * Generates HOSE codes {@cdk.cite BRE78}.
  *
- *@author     steinbeck
- *@cdk.created    2002-05-10
+ * @author     steinbeck
+ * @cdk.created    2002-05-10
  */
 public class HOSECodeGenerator implements java.io.Serializable
 {

@@ -34,10 +34,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 
 /**
- * Implementation of a Path as needed by HAN96.
- *
- * <p>References:
- *   <a href="http://cdk.sf.net/biblio.html#HAN96">HAN96</a>
+* Implementation of a Path as needed by {@cdk.cite HAN96}.
  *
  * @cdk.module standard
  *

@@ -28,10 +28,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 
 /**
- * Tool for calculating Morgan numbers.
- *
- * References:
- *   <a href="http://cdk.sf.net/biblio.html#MOR65">MOR65</a>
+ * Tool for calculating Morgan numbers {@cdk.cite MOR65}.
  *
  * @cdk.module standard
  *

@@ -39,7 +39,7 @@ import org.openscience.cdk.RingSet;
 
 /** 
  * Finds the Set of all Rings.
- *  This is an implementation of the algorithm published in HAN96.
+ *  This is an implementation of the algorithm published in {@cdk.cite HAN96}.
  *  Some of the comments refer to pseudo code fragments listed in this article.
  *  The concept is that a regular molecular graph is converted into a path graph first,
  *  i.e. a graph where the edges are actually pathes, i.e. can list several
@@ -47,9 +47,6 @@ import org.openscience.cdk.RingSet;
  *  The pathes that join one endnode are step by step fused and the joined nodes
  *  deleted from the pathgraph. What remains is a graph of pathes that have the
  *  same start and endpoint and are thus rings.
- *
- * <p>References:
- *   <a href="http://cdk.sf.net/biblio.html#HAN96">HAN96</a>
  *
  * @cdk.module standard
  */

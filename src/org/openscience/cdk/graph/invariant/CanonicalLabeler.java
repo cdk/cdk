@@ -38,12 +38,9 @@ import org.openscience.cdk.smiles.InvPair;
 
 /**
  * Canonically lables an atom container implementing
- * the algorithm published in David Weininger et.al. [WEI89].
+ * the algorithm published in David Weininger et.al. {@cdk.cite WEI89}.
  * The Collections.sort() method uses a merge sort which is 
  * stable and runs in n log(n).
- *
- * <p>References:
- *   <a href="http://cdk.sf.net/biblio.html#WEI89">WEI89</a>
  *
  * @cdk.module standard
  *
@@ -60,16 +57,15 @@ public class CanonicalLabeler {
   /**
    * Canonicaly label the fragment.
    * This is an implementation of the algorithm published in
-   * David Weininger et.al. (see WEI89).
+   * David Weininger et.al. {@cdk.cite WEI89}.
    * 
-   * <p>The Collections.sort() method uses a merge sort which is stable and runs in n log(n).
+   * <p>The Collections.sort() method uses a merge sort which is 
+   * stable and runs in n log(n).
    * 
-   * <p>It is assumed that a chemicaly valid AtomContainer is provided: this method does not check
-   * the correctness of the AtomContainer.  Negative H counts will cause a NumberFormatException
-   * to be thrown.
-   *
-   * References:
-   *   <a href="http://cdk.sf.net/biblio.html#WEI89">WEI89</a>
+   * <p>It is assumed that a chemicaly valid AtomContainer is provided: 
+   * this method does not check
+   * the correctness of the AtomContainer. Negative H counts will 
+   * cause a NumberFormatException to be thrown.
    */
   public synchronized void canonLabel(AtomContainer atomContainer) {
     if (atomContainer.getAtomCount() == 0)

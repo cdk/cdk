@@ -35,10 +35,7 @@ import org.openscience.cdk.math.Vector;
 
 /**
  * At this time this class does not work correcly.
- * The theory were from MAR89.
- *
- * References:
- *   <a href="http://cdk.sf.net/biblio.html#MAR89">MAR89</a>
+ * The theory were from {@cdk.cite MAR89}.
  *
  * @author    Stephan Michels <stephan@vern.chem.tu-berlin.de>
  * @cdk.created   2001-07-02

@@ -33,7 +33,8 @@ import org.openscience.cdk.graph.invariant.exception.IndexOutOfBoundsException;
 import org.openscience.cdk.graph.matrix.ConnectionMatrix;
 
 /**
- * Collection of methods for the calculation of topological indices of a molecular graph.
+ * Collection of methods for the calculation of topological indices of a 
+ * molecular graph.
  */
 public class HuLuIndexTool 
 {
@@ -41,11 +42,7 @@ public class HuLuIndexTool
 	
    /**
    * Calculates the extended adjacency matrix index.
-   * An implementation of the algorithm published in
-   * the reference.
-   *
-   * References:
-   *   <a href="http://cdk.sf.net/biblio.html#HU96">HU96</a>
+   * An implementation of the algorithm published in {@cdk.cite HU96}.
    *
    * @cdk.keyword EAID number
    */

@@ -49,7 +49,7 @@ import org.openscience.cdk.config.IsotopeFactory;
 
 
 /**
- * Writes a molecule or an array of molecules to a MDL mol or sdf file.
+ * Writes a molecule or an array of molecules to a MDL mol or SDF file.
  *
  * <pre>
  * MDLWriter writer = new MDLWriter(new FileWriter(new File("output.mol")));
@@ -57,8 +57,7 @@ import org.openscience.cdk.config.IsotopeFactory;
  * writer.close();
  * </pre>
  *
- * References:
- *   <a href="http://cdk.sf.net/biblio.html#DAL92">DAL92</a>
+ * See {@cdk.cite DAL92}.
  *
  * @cdk.module io
  *

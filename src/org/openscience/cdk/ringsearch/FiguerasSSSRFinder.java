@@ -40,13 +40,9 @@ import org.openscience.cdk.tools.LoggingTool;
 /**
  * Finds the Smallest Set of Smallest Rings. 
  * This is an implementation of the algorithm published in
- * FIG96.
- *
- * <p>References:
- *   <a href="http://cdk.sf.net/biblio.html#FIG96">FIG96</a>
+ * {@cdk.cite FIG96}.
  *
  * @cdk.module standard
- *
  * @cdk.keyword smallest-set-of-rings
  * @cdk.keyword ring search
  */

@@ -56,7 +56,8 @@ import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.config.IsotopeFactory;
 
 /**
- * Generates SMILES strings. It takes into account the isotope and formal charge
+ * Generates SMILES strings {@cdk.cite WEI88, @cdk.cite WEI89}. 
+ * It takes into account the isotope and formal charge
  * information of the atoms. In addition to this it takes stereochemistry in account
  * for both Bond's and Atom's.
  *

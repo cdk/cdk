@@ -59,7 +59,7 @@ import org.openscience.cdk.tools.ValencyHybridChecker;
  *
  * <p>This parser does not parse stereochemical information.
  *
- * <p>References: <a href="http://cdk.sf.net/biblio.html#WEI88">WEI88</a>
+ * <p>See {@cdk.cite WEI88}.
  *
  * @cdk.module standard
  *

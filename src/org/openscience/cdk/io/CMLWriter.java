@@ -82,7 +82,8 @@ import org.xmlcml.cmlimpl.*;
 
 
 /**
- * <p>Serializes a SetOfMolecules or a Molecule object to CML 2 code.
+ * Serializes a SetOfMolecules or a Molecule object to CML 2 code.
+ * Chemical Markup Language is an XML based file format {@cdk.cite PMR99}.
  * Output can be redirected to other Writer objects like StringWriter
  * and FileWriter. An example:
  *
@@ -106,9 +107,6 @@ import org.xmlcml.cmlimpl.*;
  *
  * <p>For atoms it outputs: coordinates, element type and formal charge.
  * For bonds it outputs: order, atoms (2, or more) and wedges.
- * 
- * <p>References:
- *   <a href="http://cdk.sf.net/biblio.html#PMR99">PMR99</a>
  *
  * @cdk.module extra
  *
