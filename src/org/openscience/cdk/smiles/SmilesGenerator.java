@@ -1,4 +1,5 @@
-/*  $RCSfile$
+/*
+ *  $RCSfile$
  *  $Author$
  *  $Date$
  *  $Revision$
@@ -130,6 +131,129 @@ public class SmilesGenerator {
 
 
   /**
+   * Generate canonical SMILES from the <code>molecule</code>.  This method
+   * canonicaly lables the molecule but does not perform any checks on the
+   * chemical validity of the molecule.
+   *
+   * @param  molecule  The molecule to evaluate
+   * @return           Description of the Returned Value
+   * @see              org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel(AtomContainer)
+   */
+  public synchronized String createSMILES(Molecule molecule) {
+    try {
+      return (createSMILES(molecule, false, new boolean[molecule.getBondCount()]));
+    } catch (CDKException exception) {
+      // This exception can only happen if a chiral smiles is requested
+      return ("");
+    }
+  }
+
+
+  /**
+   * Generate canonical and chiral SMILES from the <code>molecule</code>.  This method
+   * canonicaly lables the molecule but dose not perform any checks on the
+   * chemical validity of the molecule. The chiral smiles is done like in the <a href="http://www.daylight.com/dayhtml/doc/theory/theory.smiles.html">daylight theory manual</a>.
+   * I did not find rules for canonical and chiral smiles, therefore there is no guarantee
+   * that the smiles complies to any externeal rules, but it is canonical compared to other smiles
+   * produced by this method. The method checks if there are 2D coordinates but does not
+   * check if coordinates make sense. Invalid stereo configurations are ignored; if there are no
+   * valid stereo configuration the smiles will be the same as the non-chiral one. Note that often
+   * stereo configurations are only complete and can be converted to a smiles if explicit Hs are given.
+   *
+   * @param  molecule                 The molecule to evaluate
+   * @param  doubleBondConfiguration  Description of Parameter
+   * @return                          Description of the Returned Value
+   * @exception  CDKException         At least one atom has no Point2D; coordinates are needed for creating the chiral smiles.
+   * @see                             org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel(AtomContainer)
+   */
+  public synchronized String createChiralSMILES(Molecule molecule, boolean[] doubleBondConfiguration) throws CDKException {
+    return (createSMILES(molecule, true, doubleBondConfiguration));
+  }
+
+
+  /**
+   * Generate canonical SMILES from the <code>molecule</code>.  This method
+   * canonicaly lables the molecule but dose not perform any checks on the
+   * chemical validity of the molecule. This method also takes care of multiple molecules.
+   *
+   * @param  molecule                 The molecule to evaluate
+   * @param  chiral                   true=SMILES will be chiral, false=SMILES will not be chiral.
+   * @param  doubleBondConfiguration  Description of Parameter
+   * @return                          Description of the Returned Value
+   * @exception  CDKException         At least one atom has no Point2D; coordinates are needed for crating the chiral smiles. This excpetion can only be thrown if chiral smiles is created, ignore it if you want a non-chiral smiles (createSMILES(AtomContainer) does not throw an exception).
+   * @see                             org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel(AtomContainer)
+   */
+  public synchronized String createSMILES(Molecule molecule, boolean chiral, boolean doubleBondConfiguration[]) throws CDKException {
+    SetOfMolecules moleculeSet = ConnectivityChecker.partitionIntoMolecules(molecule);
+    if (moleculeSet.getMoleculeCount() > 1) {
+      StringBuffer fullSMILES = new StringBuffer();
+      Molecule[] molecules = moleculeSet.getMolecules();
+      for (int i = 0; i < molecules.length; i++) {
+        Molecule molPart = molecules[i];
+        fullSMILES.append(createSMILESWithoutCheckForMultipleMolecules(molPart, chiral, doubleBondConfiguration));
+        if (i < (molecules.length - 1)) {
+          // are there more molecules?
+          fullSMILES.append('.');
+        }
+      }
+      return fullSMILES.toString();
+    } else {
+      return (createSMILESWithoutCheckForMultipleMolecules(molecule, chiral, doubleBondConfiguration));
+    }
+  }
+
+
+  /**
+   * Generate canonical SMILES from the <code>molecule</code>.  This method
+   * canonicaly lables the molecule but dose not perform any checks on the
+   * chemical validity of the molecule. Does not care about multiple molecules.
+   *
+   * @param  molecule                 The molecule to evaluate
+   * @param  chiral                   true=SMILES will be chiral, false=SMILES will not be chiral.
+   * @param  doubleBondConfiguration  Description of Parameter
+   * @return                          Description of the Returned Value
+   * @exception  CDKException         At least one atom has no Point2D; coordinates are needed for crating the chiral smiles. This excpetion can only be thrown if chiral smiles is created, ignore it if you want a non-chiral smiles (createSMILES(AtomContainer) does not throw an exception).
+   * @see                             org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel(AtomContainer)
+   */
+  public synchronized String createSMILESWithoutCheckForMultipleMolecules(Molecule molecule, boolean chiral, boolean doubleBondConfiguration[]) throws CDKException {
+    if (molecule.getAtomCount() == 0) {
+      return "";
+    }
+    canLabler.canonLabel(molecule);
+    brokenBonds.clear();
+    ringMarker = 0;
+    arromaticRings.clear();
+    Atom[] all = molecule.getAtoms();
+    Atom start = null;
+    for (int i = 0; i < all.length; i++) {
+      Atom atom = all[i];
+      if (chiral && atom.getPoint2D() == null) {
+        throw new CDKException("Atom number " + i + " has no 2D coordinates, but 2D coordinates are needed for creating chiral smiles");
+      }
+      atom.setFlag(CDKConstants.VISITED, false);
+      if (((Long) atom.getProperty("CanonicalLable")).longValue() == 1) {
+        start = atom;
+      }
+    }
+
+    //Sort aromatic rings
+    SSSRFinder ringFinder = new SSSRFinder();
+    RingSet rings = ringFinder.findSSSR(molecule);
+    Iterator it = rings.iterator();
+    while (it.hasNext()) {
+      Ring ring = (Ring) it.next();
+      if (AromaticityCalculator.isAromatic(ring, molecule)) {
+        arromaticRings.add(ring);
+      }
+    }
+
+    StringBuffer l = new StringBuffer();
+    createSMILES(start, l, molecule, chiral, doubleBondConfiguration);
+    return l.toString();
+  }
+
+
+  /**
    * Says if an atom is the end of a double bond configuration
    *
    * @param  atom                     The atom which is the end of configuration
@@ -157,7 +281,7 @@ public class SmilesGenerator {
           }
         }
         String[] morgannumbers = MorganNumbersTools.getMorganNumbersWithElementSymbol(container);
-        if ((one !=null && two == null && atom.getSymbol().equals("N") && Math.abs(giveAngleBothMethods(parent, atom, one, true)) > Math.PI / 10) || (!atom.getSymbol().equals("N") && one !=null && two != null && !morgannumbers[container.getAtomNumber(one)].equals(morgannumbers[container.getAtomNumber(two)]))) {
+        if ((one != null && two == null && atom.getSymbol().equals("N") && Math.abs(giveAngleBothMethods(parent, atom, one, true)) > Math.PI / 10) || (!atom.getSymbol().equals("N") && one != null && two != null && !morgannumbers[container.getAtomNumber(one)].equals(morgannumbers[container.getAtomNumber(two)]))) {
           return (true);
         } else {
           return (false);
@@ -199,133 +323,11 @@ public class SmilesGenerator {
       }
     }
     String[] morgannumbers = MorganNumbersTools.getMorganNumbersWithElementSymbol(container);
-    if (one!=null && ((!a.getSymbol().equals("N") && two!=null && !morgannumbers[container.getAtomNumber(one)].equals(morgannumbers[container.getAtomNumber(two)]) && doubleBond && doubleBondConfiguration[container.getBondNumber(a, nextAtom)]) || (doubleBond && a.getSymbol().equals("N") && Math.abs(giveAngleBothMethods(nextAtom, a, parent, true)) > Math.PI / 10))) {
+    if (one != null && ((!a.getSymbol().equals("N") && two != null && !morgannumbers[container.getAtomNumber(one)].equals(morgannumbers[container.getAtomNumber(two)]) && doubleBond && doubleBondConfiguration[container.getBondNumber(a, nextAtom)]) || (doubleBond && a.getSymbol().equals("N") && Math.abs(giveAngleBothMethods(nextAtom, a, parent, true)) > Math.PI / 10))) {
       return (true);
     } else {
       return (false);
     }
-  }
-
-
-  /**
-   * Generate canonical SMILES from the <code>molecule</code>.  This method
-   * canonicaly lables the molecule but does not perform any checks on the
-   * chemical validity of the molecule.
-   *
-   * @param  molecule  The molecule to evaluate
-   * @return           Description of the Returned Value
-   * @see              org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel(AtomContainer)
-   */
-  public synchronized String createSMILES(Molecule molecule) {
-    try {
-      return (createSMILES(molecule, false, new boolean[molecule.getBondCount()]));
-    } catch (CDKException exception) {
-      // This exception can only happen if a chiral smiles is requested
-      return ("");
-    }
-  }
-
-
-  /**
-   * Generate canonical and chiral SMILES from the <code>molecule</code>.  This method
-   * canonicaly lables the molecule but dose not perform any checks on the
-   * chemical validity of the molecule. The chiral smiles is done like in the <a href="http://www.daylight.com/dayhtml/doc/theory/theory.smiles.html">daylight theory manual</a>.
-   * I did not find rules for canonical and chiral smiles, therefore there is no guarantee
-   * that the smiles complies to any externeal rules, but it is canonical compared to other smiles
-   * produced by this method. The method checks if there are 2D coordinates but does not
-   * check if coordinates make sense. Invalid stereo configurations are ignored; if there are no
-   * valid stereo configuration the smiles will be the same as the non-chiral one. Note that often
-   * stereo configurations are only complete and can be converted to a smiles if explicit Hs are given.
-   *
-   * @param  molecule                   The molecule to evaluate
-   * @param  doubleBondConfiguration    Description of Parameter
-   * @return                            Description of the Returned Value
-   * @exception  CDKException           At least one atom has no Point2D; coordinates are needed for creating the chiral smiles.
-   * @see              org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel(AtomContainer)
-   */
-  public synchronized String createChiralSMILES(Molecule molecule, boolean[] doubleBondConfiguration) throws CDKException {
-    return (createSMILES(molecule, true, doubleBondConfiguration));
-  }
-
-
-  /**
-   * Generate canonical SMILES from the <code>molecule</code>.  This method
-   * canonicaly lables the molecule but dose not perform any checks on the
-   * chemical validity of the molecule. This method also takes care of multiple molecules.
-   *
-   * @param  molecule                   The molecule to evaluate
-   * @param  chiral                     true=SMILES will be chiral, false=SMILES will not be chiral.
-   * @param  doubleBondConfiguration    Description of Parameter
-   * @return                            Description of the Returned Value
-   * @exception  CDKException           At least one atom has no Point2D; coordinates are needed for crating the chiral smiles. This excpetion can only be thrown if chiral smiles is created, ignore it if you want a non-chiral smiles (createSMILES(AtomContainer) does not throw an exception).
-   * @see              org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel(AtomContainer)
-   */
-  public synchronized String createSMILES(Molecule molecule, boolean chiral, boolean doubleBondConfiguration[]) throws CDKException {
-    SetOfMolecules moleculeSet = ConnectivityChecker.partitionIntoMolecules(molecule);
-    if (moleculeSet.getMoleculeCount() > 1) {
-      StringBuffer fullSMILES = new StringBuffer();
-      Molecule[] molecules = moleculeSet.getMolecules();
-      for (int i=0; i<molecules.length; i++) {
-        Molecule molPart = molecules[i];
-        fullSMILES.append(createSMILESWithoutCheckForMultipleMolecules(molPart, chiral, doubleBondConfiguration));
-        if (i<(molecules.length-1)) { // are there more molecules?
-          fullSMILES.append('.');
-        }
-      }
-      return fullSMILES.toString();
-    } else {
-      return (createSMILESWithoutCheckForMultipleMolecules(molecule, chiral, doubleBondConfiguration));
-    }
-  }
-
-
-  /**
-   * Generate canonical SMILES from the <code>molecule</code>.  This method
-   * canonicaly lables the molecule but dose not perform any checks on the
-   * chemical validity of the molecule. Does not care about multiple molecules.
-   *
-   * @param  molecule                   The molecule to evaluate
-   * @param  chiral                     true=SMILES will be chiral, false=SMILES will not be chiral.
-   * @param  doubleBondConfiguration    Description of Parameter
-   * @return                            Description of the Returned Value
-   * @exception  CDKException           At least one atom has no Point2D; coordinates are needed for crating the chiral smiles. This excpetion can only be thrown if chiral smiles is created, ignore it if you want a non-chiral smiles (createSMILES(AtomContainer) does not throw an exception).
-   * @see              org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel(AtomContainer)
-   */
-  public synchronized String createSMILESWithoutCheckForMultipleMolecules(Molecule molecule, boolean chiral, boolean doubleBondConfiguration[]) throws CDKException {
-    if (molecule.getAtomCount() == 0) {
-      return "";
-    }
-    canLabler.canonLabel(molecule);
-    brokenBonds.clear();
-    ringMarker = 0;
-    arromaticRings.clear();
-    Atom[] all = molecule.getAtoms();
-    Atom start = null;
-    for (int i = 0; i < all.length; i++) {
-      Atom atom = all[i];
-      if (chiral && atom.getPoint2D() == null) {
-        throw new CDKException("Atom number " + i + " has no 2D coordinates, but 2D coordinates are needed for creating chiral smiles");
-      }
-      atom.setFlag(CDKConstants.VISITED, false);
-      if (((Long) atom.getProperty("CanonicalLable")).longValue() == 1) {
-        start = atom;
-      }
-    }
-
-    //Sort aromatic rings
-    SSSRFinder ringFinder = new SSSRFinder();
-    RingSet rings = ringFinder.findSSSR(molecule);
-    Iterator it = rings.iterator();
-    while (it.hasNext()) {
-      Ring ring = (Ring) it.next();
-      if (AromaticityCalculator.isAromatic(ring, molecule)) {
-        arromaticRings.add(ring);
-      }
-    }
-
-    StringBuffer l = new StringBuffer();
-    createSMILES(start, l, molecule, chiral, doubleBondConfiguration);
-    return l.toString();
   }
 
 
@@ -598,6 +600,26 @@ public class SmilesGenerator {
 
 
   /**
+   * Determines if the atom <code>a</code> is a atom with a ring
+   * marker.
+   *
+   * @param  a1  Description of Parameter
+   * @param  a2  Description of Parameter
+   * @return     true if the atom participates in a bond that was broken in the first pass.
+   */
+  private boolean isRingOpening(Atom a1, Atom a2) {
+    Iterator it = brokenBonds.iterator();
+    while (it.hasNext()) {
+      BrokenBond bond = (BrokenBond) it.next();
+      if ((bond.getA1().equals(a1) && bond.getA2().equals(a2)) || (bond.getA1().equals(a2) && bond.getA2().equals(a1))) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+
+  /**
    * Return the neighbours of atom <code>a</code> in canonical order with the atoms that have
    * high bond order at the front.
    *
@@ -676,6 +698,22 @@ public class SmilesGenerator {
       }
     }
     return false;
+  }
+
+
+  /**
+   *  Gets the last atom object (not Vector) in a Vector as created by createDSFTree.
+   *
+   * @param  v  The Vector
+   * @param  i  The number of the last element (size -1)
+   * @return    The last atom.
+   */
+  private Atom getLastAtom(Vector v, int i) {
+    if (v.get(i) instanceof Atom) {
+      return ((Atom) v.get(i));
+    } else {
+      return (getLastAtom(v, i - 1));
+    }
   }
 
 
@@ -771,11 +809,11 @@ public class SmilesGenerator {
    * Performes a DFS search on the <code>atomContainer</code>.  Then parses the resulting
    * tree to create the SMILES string.
    *
-   * @param  a                          the atom to start the search at.
-   * @param  line                       the StringBuffer that the SMILES is to be appended to.
-   * @param  chiral                     true=SMILES will be chiral, false=SMILES will not be chiral.
-   * @param  atomContainer              the AtomContainer that the SMILES string is generated for.
-   * @param  doubleBondConfiguration    Description of Parameter
+   * @param  a                        the atom to start the search at.
+   * @param  line                     the StringBuffer that the SMILES is to be appended to.
+   * @param  chiral                   true=SMILES will be chiral, false=SMILES will not be chiral.
+   * @param  atomContainer            the AtomContainer that the SMILES string is generated for.
+   * @param  doubleBondConfiguration  Description of Parameter
    */
   private void createSMILES(Atom a, StringBuffer line, AtomContainer atomContainer, boolean chiral, boolean[] doubleBondConfiguration) {
     Vector tree = new Vector();
@@ -1181,7 +1219,7 @@ public class SmilesGenerator {
       } else {
         //Have Vector
         boolean brackets = true;
-        if (isRingOpening(parent) && container.getBondCount(parent) < 4) {
+        if (isRingOpening(parent, getLastAtom((Vector) o, ((Vector) o).size() - 1)) && container.getBondCount(parent) < 4) {
           brackets = false;
         }
         if (brackets) {
@@ -1230,14 +1268,14 @@ public class SmilesGenerator {
   /**
    * Generates the SMILES string for the atom
    *
-   * @param  a                          the atom to generate the SMILES for.
-   * @param  buffer                     the string buffer that the atom is to be apended to.
-   * @param  container                  the AtomContainer to analyze.
-   * @param  chiral                     is a chiral smiles wished?
-   * @param  parent                     the atom we came from.
-   * @param  atomsInOrderOfSmiles       a vector containing the atoms in the order they are in the smiles.
-   * @param  currentChain               The chain we currently deal with.
-   * @param  doubleBondConfiguration    Description of Parameter
+   * @param  a                        the atom to generate the SMILES for.
+   * @param  buffer                   the string buffer that the atom is to be apended to.
+   * @param  container                the AtomContainer to analyze.
+   * @param  chiral                   is a chiral smiles wished?
+   * @param  parent                   the atom we came from.
+   * @param  atomsInOrderOfSmiles     a vector containing the atoms in the order they are in the smiles.
+   * @param  currentChain             The chain we currently deal with.
+   * @param  doubleBondConfiguration  Description of Parameter
    */
   private void parseAtom(Atom a, StringBuffer buffer, AtomContainer container, boolean chiral, boolean[] doubleBondConfiguration, Atom parent, Vector atomsInOrderOfSmiles, Vector currentChain) {
     String symbol = a.getSymbol();
