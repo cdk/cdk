@@ -57,7 +57,6 @@ public class ValencyChecker implements ValencyCheckerInterface {
     private final String atomTypeList = "org/openscience/cdk/config/data/valency_atomtypes.xml";
     
 	private AtomTypeFactory structgenATF;
-
 	private LoggingTool logger;
 
 	public ValencyChecker() throws IOException, ClassNotFoundException {
@@ -121,9 +120,16 @@ public class ValencyChecker implements ValencyCheckerInterface {
      * Determines if the atom can be of type AtomType.
      */
     public boolean couldMatchAtomType(AtomContainer container, Atom atom, AtomType type) {
-        logger.debug("   ... matching atom ", atom.getSymbol(), " vs ", type);
         double bondOrderSum = container.getBondOrderSum(atom);
         double maxBondOrder = container.getMaximumBondOrder(atom);
+        return couldMatchAtomType(atom, bondOrderSum, maxBondOrder, type);
+    }
+
+    /**
+     * Determines if the atom can be of type AtomType.
+     */
+    public boolean couldMatchAtomType(Atom atom, double bondOrderSum, double maxBondOrder, AtomType type) {
+        logger.debug("   ... matching atom ", atom.getSymbol(), " vs ", type);
         int hcount = atom.getHydrogenCount();
         int charge = atom.getFormalCharge();
         if (charge == type.getFormalCharge()) {
@@ -150,12 +156,13 @@ public class ValencyChecker implements ValencyCheckerInterface {
 	public int calculateMissingHydrogen(Atom atom, AtomContainer container) throws CDKException {
         return this.calculateMissingHydrogen(atom, 
             container.getBondOrderSum(atom),
-            container.getMaximumBondOrder(atom)
+            container.getMaximumBondOrder(atom),
+            container.getConnectedAtoms(atom).length
         );
     }
     
 	public int calculateMissingHydrogen(Atom atom) throws CDKException {
-        return this.calculateMissingHydrogen(atom, 0,0);
+        return this.calculateMissingHydrogen(atom, 0.0, 0.0, 0);
     }
 
     /** 
@@ -163,7 +170,7 @@ public class ValencyChecker implements ValencyCheckerInterface {
      * the atom's valency. It will return 0 for PseudoAtoms, and for atoms for which it
      * does not have an entry in the configuration file.
      */
-	public int calculateMissingHydrogen(Atom atom, double bondOrderSum, double maxBondOrder) 
+	public int calculateMissingHydrogen(Atom atom, double bondOrderSum, double maxBondOrder, int neighbourCount) 
         throws CDKException {
 
         int missingHydrogen = 0;
@@ -186,17 +193,14 @@ public class ValencyChecker implements ValencyCheckerInterface {
         logger.debug("Found atomtypes: ", atomTypes.length);
         for (int f = 0; f < atomTypes.length; f++) {
             AtomType type = atomTypes[f];
-            if (charge == type.getFormalCharge()) {
-                if (bondOrderSum + hcount <= type.getBondOrderSum() && 
-                    maxBondOrder <= type.getMaxBondOrder()) {
-                    logger.debug("This type matches: ", type);
-                    missingHydrogen = (int) (type.getBondOrderSum() - bondOrderSum);
-                    break;
-                }
-            } // else: formal charges don't match
+            if (couldMatchAtomType(atom, bondOrderSum, maxBondOrder, type)) {
+                logger.debug("This type matches: ", type);
+                missingHydrogen = (int) (type.getBondOrderSum() - bondOrderSum);
+                break;
+            }
         }
         
-        logger.debug("missing hydrogens: " + missingHydrogen);
+        logger.debug("missing hydrogens: ", missingHydrogen);
         return missingHydrogen;
     }
     
