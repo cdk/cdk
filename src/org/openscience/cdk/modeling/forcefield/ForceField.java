@@ -23,7 +23,7 @@ import org.openscience.cdk.graph.ConnectivityChecker;
  */
 public class ForceField extends GeometricMinimizer{
 	
-	private Molecule molecule;
+
 	private String potentialFunction="mmff94";
 	ForceFieldTools ffTools = new ForceFieldTools();
 	
@@ -42,16 +42,6 @@ public class ForceField extends GeometricMinimizer{
 		potentialFunction=potentialName;
 	}
 	
-
-	public void setMolecule(Molecule mol, boolean clone) {
-
-		if (clone) {
-			this.molecule = (Molecule) mol.clone();
-		} else {
-			this.molecule = mol;
-		}
-	}
-
 		
 	public void minimize( ) throws Exception{
 		ConnectivityChecker cc = new ConnectivityChecker();
@@ -59,25 +49,30 @@ public class ForceField extends GeometricMinimizer{
 			throw new Exception("CDKError: Molecule is NOT connected,could not layout.");
 		}
 		GVector moleculeCoords = new GVector(3);
-		
+		MMFF94EnergyFunction mmff94PF=null;
 		if (potentialFunction=="mmff94"){
-			setMMFF94Tables(molecule);
+		    System.out.println("SET POTENTIAL FUNCTION TO MMFF94");
+		    setMMFF94Tables(molecule);
+		    mmff94PF=new MMFF94EnergyFunction((AtomContainer)molecule,getPotentialParameterSet());
 		}
 		moleculeCoords.setSize(molecule.getAtomCount() * 3);
 		moleculeCoords.set(ffTools.getCoordinates3xNVector((AtomContainer)molecule));
 		
-	
+		System.out.println("PotentialFunction set:"+potentialFunction+"MoleculeCoords set:"+moleculeCoords.getSize()+" Hashtable:"+getPotentialParameterSet().size());
 		
-		//steepestDescentsMinimization(molecule3Coordinates,);
-		//conjugateGradientMinimization(molecule3Coordinates, tpf);
-		//conjugateGradientMinimization(molecule3Coordinates, tpf);
-		ffTools.assignCoordinatesToMolecule(moleculeCoords, (AtomContainer) molecule);
+		
+		//steepestDescentsMinimization(moleculeCoords,mmff94PF);
+
+		conjugateGradientMinimization(moleculeCoords, mmff94PF);
+		//conjugateGradientMinimization(moleculeCoords, tpf);
+	
+
+		System.out.println("Minimization READY");
+		//ffTools.assignCoordinatesToMolecule(moleculeCoords, (AtomContainer) molecule); 
 	}
 			
 
-	public Molecule getMolecule() {
-		return this.molecule;
-	}
+
 
 }
 

@@ -24,7 +24,7 @@ public class GeometricMinimizer {
 	double SDconvergenceCriterion = 0.001;
 	double NRconvergenceCriterion = 0.001;
 
-	GVector kCoordinates = new GVector(3);
+        GVector kCoordinates = null;
 	GVector kplus1Coordinates = new GVector(3);
 	int AtomsNumber =1;
 	int dimension = 1;
@@ -44,6 +44,9 @@ public class GeometricMinimizer {
 	
 	ForceFieldTools ffTools = new ForceFieldTools();
 
+
+	Molecule molecule;
+
 /*
 	double B11 = 0;
 	double B12 = 0;
@@ -58,6 +61,20 @@ public class GeometricMinimizer {
 	 *  Constructor for the GeometricMinimizer object
 	 */
 	public GeometricMinimizer() { }
+
+
+	public void setMolecule(Molecule mol, boolean clone) {
+
+		if (clone) {
+			this.molecule = (Molecule) mol.clone();
+		} else {
+			this.molecule = mol;
+		}
+	}
+
+    	public Molecule getMolecule() {
+		return this.molecule;
+	}
 
 
 	/**
@@ -96,8 +113,9 @@ public class GeometricMinimizer {
 		
 		dimension = initialCoord.getSize();
 		AtomsNumber = dimension/3;
-		kCoordinates.setSize(dimension);
-		kCoordinates.set(initialCoord);
+		//kCoordinates.setSize(dimension);
+		//kCoordinates.set(initialCoord);
+		kCoordinates=initialCoord;
 		//System.out.println("Coordinates at iteration 1: X1 = " + kCoordinates);
 		gradient.setSize(dimension);
 		kplus1Coordinates.setSize(kCoordinates.getSize());
@@ -156,7 +174,7 @@ public class GeometricMinimizer {
 	 * @param  changeSDMaximumIteration  Maximum number of iteration for steepest descents method. 
 	 * @param  changeSDConvergenceCriterion  Convergence criterion for steepest descents method.
 	 */
-	public void setConvergenceParametersForSDM(int changeSDMaximumIteration, double changeSDConvergenceCriterion){
+    public void setConvergenceParametersForSDM(int changeSDMaximumIteration, double changeSDConvergenceCriterion){
 		SDMaximumIteration = changeSDMaximumIteration;
 		SDconvergenceCriterion = changeSDConvergenceCriterion;
 		return;
@@ -168,11 +186,13 @@ public class GeometricMinimizer {
 	 *
 	 * @param  forceField		The potential function to be used
 	 */
-	public void steepestDescentsMinimization(GVector initialCoordinates, PotentialFunction forceField) {
+    public void steepestDescentsMinimization(GVector initialCoordinates, PotentialFunction forceField) {
 		
 		initializeMinimizationParameters(initialCoordinates);
-
+		//System.out.println("STEEPESTDM: initial coords:"+initialCoordinates);
 		forceField.setEnergyGradient(kCoordinates);
+		//System.out.println("STEEPESTDM: kcoordinates coords:"+kCoordinates);
+				
 		gradient.set(forceField.getEnergyGradient());
 		//System.out.println("gradient at iteration 1 : g1 = " + gradient);
 
@@ -192,6 +212,7 @@ public class GeometricMinimizer {
 			iterationNumberBefore += 1;
 			//System.out.println("");
 			//System.out.println("SD Iteration number: " + iterationNumber);
+			//System.out.println("gm.steepestDescentsMinimisation, Energy Gradient:"+forceField.getEnergyGradient());
 			
 			if (iterationNumber != 1) {
 				kCoordinates.set(kplus1Coordinates);
@@ -221,10 +242,14 @@ public class GeometricMinimizer {
 			//System.out.println("");
 			//System.out.println("f(x" + iterationNumberBefore + ") = " + forceField.functionInPoint(kCoordinates));
 			//System.out.println("f(x" + iterationNumber + ") = " + forceField.functionInPoint(kplus1Coordinates));
+			if (molecule !=null){
+			    //System.out.println("STEEPESTDM: kplus1Coordinates:"+kplus1Coordinates);
+			    ffTools.assignCoordinatesToMolecule(kplus1Coordinates, molecule); 
+			}
 
 		}
 		steepestDescentsMinimum.set(kplus1Coordinates);
-		//   System.out.println("The SD minimum energy is at: " + steepestDescentsMinimum);
+		   System.out.println("The SD minimum energy is at: " + steepestDescentsMinimum);
 		
 		return;
 	}
@@ -258,7 +283,7 @@ public class GeometricMinimizer {
 	 * @param  forceField		The potential function to be used
 	 */
 	public void conjugateGradientMinimization(GVector initialCoordinates,  PotentialFunction forceField) {
-		
+	    System.out.println("CGM Method");
 		initializeMinimizationParameters(initialCoordinates);
 		
 		forceField.setEnergyGradient(kCoordinates);
@@ -273,7 +298,7 @@ public class GeometricMinimizer {
 		//System.out.println("FORCEFIELDTESTS ConjugatedGradientTest");
 		
 		ConjugateGradientMethod cgm = new ConjugateGradientMethod(kCoordinates);
-		
+		       
 		while ((iterationNumber < CGMaximumIteration) & (convergence == false)) {
 			
 			iterationNumber += 1;
@@ -311,6 +336,12 @@ public class GeometricMinimizer {
 			//System.out.println("");
 			//System.out.println("f(x" + iterationNumberBefore + ") = " + forceField.functionInPoint(kCoordinates));
 			//System.out.println("f(x" + iterationNumber + ") = " + forceField.functionInPoint(kplus1Coordinates));
+
+			if (molecule !=null){
+			    System.out.println("CGM: kplus1Coordinates:"+kplus1Coordinates);
+			    ffTools.assignCoordinatesToMolecule(kplus1Coordinates, molecule); 
+			}
+
 		 }
 		 
 		 conjugateGradientMinimum.set(kplus1Coordinates);
