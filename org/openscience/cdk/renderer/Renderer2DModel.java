@@ -27,6 +27,9 @@
 package org.openscience.cdk.renderer;
 
 import java.awt.Color;
+import org.openscience.cdk.*;
+import org.openscience.cdk.event.*;
+import java.util.*;
 
 
 public class Renderer2DModel
@@ -47,7 +50,16 @@ public class Renderer2DModel
 
 	private boolean drawNumbers = false;	
 	
-	private int atomRadius = 6;
+	private int atomRadius = 8;
+	
+	private Atom highlightedAtom = null;
+	
+	private Bond highlightedBond = null;
+	
+	private Hashtable colorHash = new Hashtable();
+	
+	private CDKEventListenerList listeners = new CDKEventListenerList();
+	
 
 	/**
 	 * Returns the distance between two lines in a double or triple bond
@@ -173,7 +185,6 @@ public class Renderer2DModel
 		this.drawNumbers = drawNumbers;
 	}
 
-	
 
 	/**
 	 *
@@ -196,7 +207,6 @@ public class Renderer2DModel
 	this.highlightColor = highlightColor;
 	}
 
-	
 
 	/**
 	 *
@@ -240,5 +250,89 @@ public class Renderer2DModel
 	public void setAtomRadius(int atomRadius)
 	{
 		this.atomRadius = atomRadius;
+	}
+
+	
+
+	/**
+	 *
+	 *
+	 * @return     
+	 */
+	public Atom getHighlightedAtom()
+	{
+		return this.highlightedAtom;
+	}
+
+
+	/**
+	 *
+	 *
+	 * @param   highlghtedAtom  
+	 */
+	public void setHighlightedAtom(Atom highlightedAtom)
+	{
+		this.highlightedAtom = highlightedAtom;
+	}
+
+	
+
+	/**
+	 *
+	 *
+	 * @return     
+	 */
+	public Bond getHighlightedBond()
+	{
+		return this.highlightedBond;
+	}
+
+
+	/**
+	 *
+	 *
+	 * @param   highlightedBond  
+	 */
+	public void setHighlightedBond(Bond highlightedBond)
+	{
+		this.highlightedBond = highlightedBond;
+	}
+
+	
+
+	/**
+	 *
+	 *
+	 * @return     
+	 */
+	public Hashtable getColorHash()
+	{
+		return this.colorHash;
+	}
+
+
+	/**
+	 *
+	 *
+	 * @param   colorHash  
+	 */
+	public void setColorHash(Hashtable colorHash)
+	{
+		this.colorHash = colorHash;
+	}
+	
+	
+	public void addCDKChangeListener(CDKChangeListener listener)
+	{
+		listeners.add(listener);
+	}
+	
+	public void fireChange()
+	{
+		EventObject event = new EventObject(this);
+		for (int i = 0; i < listeners.size(); i++)
+		{
+			((CDKChangeListener)listeners.get(i)).stateChanged(event);
+		}
 	}
 }

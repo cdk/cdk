@@ -42,9 +42,7 @@ public class Renderer2D
 	public Renderer2DModel r2dm;
 	Graphics g;
 	Molecule molecule;
-	Hashtable colorHash = new Hashtable();
-	private Bond highlightedBond;
-	private Atom highlightedAtom;
+//	Hashtable colorHash = new Hashtable();
 	
 
 	/**
@@ -144,8 +142,8 @@ public class Renderer2D
 		for (int i = 0; i < number; i++)
 		{
 			atom = atoms[i];
-			atomColor = (Color)colorHash.get(atom);
-			if (atom == highlightedAtom) atomColor = r2dm.getHighlightColor();
+			atomColor = (Color)r2dm.getColorHash().get(atom);
+			if (atom == r2dm.getHighlightedAtom()) atomColor = r2dm.getHighlightColor();
 			if (atomColor != null)
 			{
 				paintColouredAtom(atom, atomColor);
@@ -216,9 +214,9 @@ public class Renderer2D
 		for (int i = 0; i < number; i++)
 		{
 			bond = bonds[i];
-			bondColor = (Color)colorHash.get(bond);
+			bondColor = (Color)r2dm.getColorHash().get(bond);
 			if (bondColor == null) bondColor = r2dm.getForeColor();
-			if (bond == highlightedBond)
+			if (bond == r2dm.getHighlightedBond())
 			{
 				bondColor = r2dm.getHighlightColor();
 				for (int j = 0; j < bond.getAtomCount(); j++)
@@ -390,49 +388,4 @@ public class Renderer2D
 		g.fillPolygon(xCoords,yCoords,4);
 	}
 
-	
-
-	/**
-	 * Returns the current highlighted Atom
-	 *
-	 * @return   The current highlighted Atom  
-	 */
-	public Atom getHighlightedAtom()
-	{
-		return this.highlightedAtom;
-	}
-
-
-	/**
-	 * Sets the current highlighted Atom
-	 *
-	 * @param   highlightedAtom   The Atom to be highlghted
-	 */
-	public void setHighlightedAtom(Atom highlightedAtom)
-	{
-		this.highlightedAtom = highlightedAtom;
-	}
-
-	
-
-	/**
-	 * Returns the current highlighted Bond
-	 *
-	 * @return   The current highlighted Bond  
-	 */
-	public Bond getHighlightedBond()
-	{
-		return this.highlightedBond;
-	}
-
-
-	/**
-	 * Sets the current highlighted Bond
-	 *
-	 * @param   highlightedBond   The bond to be highlighted
-	 */
-	public void setHighlightedBond(Bond highlightedBond)
-	{
-		this.highlightedBond = highlightedBond;
-	}
 }

@@ -89,10 +89,9 @@ public class DrawPolygonTest
 			System.exit(1);
 		}
 		molecule = (Molecule)sdg.getMolecule();
-		MoleculeViewer2D mv = new MoleculeViewer2D(molecule);
 		Renderer2DModel r2dm = new Renderer2DModel();
+		MoleculeViewer2D mv = new MoleculeViewer2D(molecule, r2dm);
 		r2dm.setDrawNumbers(true);
-		mv.setRenderer2DModel(r2dm);
 		mv.display();
 	
 	

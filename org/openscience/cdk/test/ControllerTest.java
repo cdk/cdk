@@ -65,13 +65,13 @@ public class ControllerTest
 			System.exit(1);
 		}
 		Molecule molecule = sdg.getMolecule();
-		MoleculeViewer2D mv = new MoleculeViewer2D(sdg.getMolecule());
+		SetOfMolecules som = new SetOfMolecules();
+		som.addMolecule(molecule);
 		Renderer2DModel r2dm = new Renderer2DModel();
+		MoleculeViewer2D mv = new MoleculeViewer2D(molecule, r2dm);
 		r2dm.setDrawNumbers(true);
-		mv.setRenderer2DModel(r2dm);
 		mv.display();
-		System.out.println("mouse moved");
-		mv.addMouseMotionListener(new CDKMouseMotionAdapter(mv, molecule, mv.renderer));
+		mv.addMouseMotionListener(new CDKInputAdapter(som, r2dm));
 		
 	}
 

@@ -69,7 +69,6 @@ public class StructureDiagramGeneratorTest
 		MoleculeViewer2D mv = new MoleculeViewer2D(sdg.getMolecule());
 		Renderer2DModel r2dm = new Renderer2DModel();
 		r2dm.setDrawNumbers(true);
-		mv.setRenderer2DModel(r2dm);
 		mv.display();
 
 	}

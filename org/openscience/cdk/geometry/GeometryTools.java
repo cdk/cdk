@@ -276,20 +276,25 @@ public class GeometryTools
 	 * @param   molecule  The molecule that is searched for the closest atom
 	 * @return   The atom that is closest to the given coordinates  
 	 */
-	public static Atom getClosestAtom(int xPosition, int yPosition, Molecule molecule)
+	public static Atom getClosestAtom(int xPosition, int yPosition, SetOfMolecules setOfMolecules)
 	{
+		Molecule molecule;
 		Atom closestAtom = null, currentAtom;
 		double smallestMouseDistance = -1, mouseDistance, atomX, atomY;
-		for (int i = 0; i < molecule.getAtomCount(); i++)
+		for (int f = 0; f < setOfMolecules.getMoleculeCount(); f++)
 		{
-			currentAtom = molecule.getAtomAt(i);
-			atomX = currentAtom.getX2D();
-			atomY = currentAtom.getY2D();
-			mouseDistance = Math.sqrt(Math.pow(atomX - xPosition, 2) + Math.pow(atomY - yPosition, 2));
-			if (mouseDistance < smallestMouseDistance || smallestMouseDistance == -1)
+			molecule = setOfMolecules.getMolecule(f);
+			for (int i = 0; i < molecule.getAtomCount(); i++)
 			{
-				smallestMouseDistance = mouseDistance;
-				closestAtom = currentAtom;
+				currentAtom = molecule.getAtomAt(i);
+				atomX = currentAtom.getX2D();
+				atomY = currentAtom.getY2D();
+				mouseDistance = Math.sqrt(Math.pow(atomX - xPosition, 2) + Math.pow(atomY - yPosition, 2));
+				if (mouseDistance < smallestMouseDistance || smallestMouseDistance == -1)
+				{
+					smallestMouseDistance = mouseDistance;
+					closestAtom = currentAtom;
+				}
 			}
 		}
 		return closestAtom;
@@ -305,20 +310,25 @@ public class GeometryTools
 	 * @param   molecule  The molecule that is searched for the closest bond
 	 * @return   The bond that is closest to the given coordinates  
 	 */
-	public static Bond getClosestBond(int xPosition, int yPosition, Molecule molecule)
+	public static Bond getClosestBond(int xPosition, int yPosition, SetOfMolecules setOfMolecules)
 	{
+		Molecule molecule;
 		Point2d bondCenter;
 		Bond closestBond = null, currentBond;
 		double smallestMouseDistance = -1, mouseDistance, bondCenterX, bondCenterY;
-		for (int i = 0; i < molecule.getBondCount(); i++)
+		for (int f = 0; f < setOfMolecules.getMoleculeCount(); f++)
 		{
-			currentBond = molecule.getBondAt(i);
-			bondCenter = get2DCenter(currentBond.getAtomsVector());
-			mouseDistance = Math.sqrt(Math.pow(bondCenter.x - xPosition, 2) + Math.pow(bondCenter.y - yPosition, 2));
-			if (mouseDistance < smallestMouseDistance || smallestMouseDistance == -1)
+			molecule = setOfMolecules.getMolecule(f);
+			for (int i = 0; i < molecule.getBondCount(); i++)
 			{
-				smallestMouseDistance = mouseDistance;
-				closestBond = currentBond;
+				currentBond = molecule.getBondAt(i);
+				bondCenter = get2DCenter(currentBond.getAtomsVector());
+				mouseDistance = Math.sqrt(Math.pow(bondCenter.x - xPosition, 2) + Math.pow(bondCenter.y - yPosition, 2));
+				if (mouseDistance < smallestMouseDistance || smallestMouseDistance == -1)
+				{
+					smallestMouseDistance = mouseDistance;
+					closestBond = currentBond;
+				}
 			}
 		}
 		return closestBond;

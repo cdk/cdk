@@ -30,6 +30,7 @@ import org.openscience.cdk.ringsearch.*;
 import org.openscience.cdk.io.*;
 import org.openscience.cdk.tools.*;
 import org.openscience.cdk.geometry.*;
+import org.openscience.cdk.event.*;
 import java.util.*;
 import java.io.*;
 import javax.swing.*;
@@ -37,22 +38,31 @@ import java.awt.*;
 import java.awt.event.*;
 
 
-public class MoleculeViewer2D extends JPanel
+public class MoleculeViewer2D extends JPanel implements CDKChangeListener
 {
 	static Molecule molecule;
 	
 	public Renderer2DModel r2dm;
 	public Renderer2D renderer;
 
+	public MoleculeViewer2D(Molecule molecule,Renderer2DModel r2dm)
+	{
+		this.molecule = molecule;
+		this.r2dm = r2dm;
+		r2dm.addCDKChangeListener(this);
+		renderer = new Renderer2D(r2dm);
+	}
+	
 	public MoleculeViewer2D(Molecule molecule)
 	{
 		this.molecule = molecule;
 		r2dm = new Renderer2DModel();
+		r2dm.addCDKChangeListener(this);
+		renderer = new Renderer2D(r2dm);
 	}
 	
 	public void display()
 	{
-		renderer = new Renderer2D(r2dm);
 		setPreferredSize(new Dimension(600, 400));
 		setBackground(r2dm.getBackColor());
 		GeometryTools.translateAllPositive(molecule);
@@ -94,20 +104,14 @@ public class MoleculeViewer2D extends JPanel
 			exc.printStackTrace();		
 		}
 
-		new MoleculeViewer2D(molecule);
+		new MoleculeViewer2D(molecule, new Renderer2DModel());
 	}
 
-
-	
-	public Renderer2DModel getRenderer2DModel()
+	public void stateChanged(EventObject e)
 	{
-		return this.r2dm;
+		repaint();
 	}
 
-	public void setRenderer2DModel(Renderer2DModel r2dm)
-	{
-		this.r2dm = r2dm;
-	}
 }
 
 

@@ -31,24 +31,21 @@ import org.openscience.cdk.renderer.*;
 import org.openscience.cdk.geometry.*;
 import org.openscience.cdk.*;
 import java.awt.*;
+import java.awt.event.*;
 
 
 public class Controller2D 
 {
 	boolean debug = true;
-	Renderer2D renderer;
 	Renderer2DModel r2dm;
-	Molecule molecule;
-	Container panel;
+	SetOfMolecules setOfMolecules;
 	
 	
 
-	public Controller2D(Container panel, Molecule molecule, Renderer2D renderer)
+	public Controller2D(SetOfMolecules setOfMolecules, Renderer2DModel r2dm)
 	{
-		this.molecule = molecule;
-		this.panel = panel;
-		this.renderer = renderer;
-		this.r2dm = renderer.r2dm;
+		this.setOfMolecules = setOfMolecules;
+		this.r2dm = r2dm;
 	}
 	
 
@@ -58,33 +55,70 @@ public class Controller2D
 	 * @param   mouseX  The x position of the mouse
 	 * @param   mouseY  The y position of the mouse
 	 */
-	public void mouseMoved(int mouseX, int mouseY)
+	public void mouseMoved(MouseEvent e)
 	{
+		int mouseX = e.getX(), mouseY = e.getY();
+		
 		/** highlighting **/
-		renderer.setHighlightedAtom(null);
-		renderer.setHighlightedBond(null);
+		r2dm.setHighlightedAtom(null);
+		r2dm.setHighlightedBond(null);
 		double highlightRadius = r2dm.getHighlightRadius();
 		double atomX = 0, atomY = 0;
-		Atom closestAtom = GeometryTools.getClosestAtom(mouseX, mouseY, molecule);
+		Atom closestAtom = GeometryTools.getClosestAtom(mouseX, mouseY, setOfMolecules);
 		if (debug) System.out.println("closestAtom  "+ closestAtom);
 		if (Math.sqrt(Math.pow(closestAtom.getX2D() - mouseX, 2) + Math.pow(closestAtom.getY2D() - mouseY, 2)) < highlightRadius)
 		{
-			renderer.setHighlightedAtom(closestAtom);
+			r2dm.setHighlightedAtom(closestAtom);
 		}
 		else
 		{
-			Bond closestBond = GeometryTools.getClosestBond(mouseX, mouseY, molecule);
+			Bond closestBond = GeometryTools.getClosestBond(mouseX, mouseY, setOfMolecules);
 			if (debug) System.out.println("closestBond  "+ closestBond);
 			int[] coords = GeometryTools.distanceCalculator(GeometryTools.getBondCoordinates(closestBond),highlightRadius);
 			int[] xCoords = {coords[0],coords[2],coords[4],coords[6]};
 			int[] yCoords = {coords[1],coords[3],coords[5],coords[7]};
 			if ((new Polygon(xCoords, yCoords, 4)).contains(new Point(mouseX, mouseY)))
 			{
-				renderer.setHighlightedBond(closestBond);
+				r2dm.setHighlightedBond(closestBond);
 			}	
-		}	
-		panel.repaint();
-		
+		}
+		r2dm.fireChange();		
+	}
+	
+	public void mouseClicked(MouseEvent e)
+	{
+	}
+	
+	public void mouseEntered(MouseEvent e)
+	{
+	}
+	
+	public void mouseExited(MouseEvent e)
+	{
+	}
+	
+	public void mousePressed(MouseEvent e)
+	{
+	}
+	
+	public void mouseReleased(MouseEvent e)
+	{
+	}
+	
+	public void mouseDragged(MouseEvent e)
+	{
+	}
+	
+	public void keyPressed(KeyEvent e)
+	{
+	}
+	
+	public void keyReleased(KeyEvent e)
+	{
+	}
+	
+	public void keyTyped(KeyEvent e)
+	{
 	}
 
 }
