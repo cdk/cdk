@@ -21,19 +21,19 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *  */
 package org.openscience.cdk.io;
 
-import org.openscience.cdk.*;
 import org.openscience.cdk.exception.*;
-import org.openscience.cdk.io.cml.*;
 import org.openscience.cdk.io.cml.cdopi.*;
-import org.xml.sax.*;
+import org.openscience.cdk.io.cml.*;
+import org.openscience.cdk.*;
 import org.xml.sax.helpers.*;
+import org.xml.sax.*;
 import java.io.*;
 
 /**
@@ -45,9 +45,8 @@ import java.io.*;
 public class CMLReader implements CDKConstants, ChemObjectReader {
 
     private XMLReader parser;
-    private ContentHandler handler;
-    private EntityResolver resolver;
     private Reader input;
+    private String url;
 
     private org.openscience.cdk.tools.LoggingTool logger;
 
@@ -58,35 +57,45 @@ public class CMLReader implements CDKConstants, ChemObjectReader {
      * @param input Reader type input
      */
     public CMLReader(Reader input) {
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
-
-		boolean success = false;
-		if (!success) {
-          try {
-            parser = new org.apache.xerces.parsers.SAXParser();
-		    logger.info("Using Xerces XML parser.");
-		    success = true;
-          } catch (Exception e) {
-            logger.warn("Could not instantiate Xerces XML reader!");
-          }
-		}
-		// Xerces is prefered. Aelfred2 seems to ignore the entity handler. Removal of the
-		// DocType line will make Aelfred2 work properly.
-		if (!success) {
-          try {
-		    parser = new gnu.xml.aelfred2.XmlReader();
-		    logger.info("Using Aelfred2 XML parser.");
-		    success = true;
-          } catch (Exception e) {
-            logger.warn("Could not instantiate Aelfred2 XML reader!");
-          }
-		}
-		if (!success) {
-		  logger.error("Could not instantiate any XML parser!");
-		}
+        this.init();
         this.input = input;
     }
 
+    public CMLReader(String url) {
+        this.init();
+        this.url = url;
+    }
+
+    private void init() {
+        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+
+        url = ""; // make sure it is not null
+
+        boolean success = false;
+        // Aelfred is prefered.
+        if (!success) {
+            try {
+                parser = new gnu.xml.aelfred2.XmlReader();
+                logger.info("Using Aelfred2 XML parser.");
+                success = true;
+            } catch (Exception e) {
+                logger.warn("Could not instantiate Aelfred2 XML reader!");
+            }
+        }
+        // If Aelfred is not available try Xerces
+        if (!success) {
+            try {
+                parser = new org.apache.xerces.parsers.SAXParser();
+                logger.info("Using Xerces XML parser.");
+                success = true;
+            } catch (Exception e) {
+                logger.warn("Could not instantiate Xerces XML reader!");
+            }
+        }
+        if (!success) {
+            logger.error("Could not instantiate any XML parser!");
+        }
+    }
 
     /**
      * Read a ChemFile from input
@@ -104,29 +113,32 @@ public class CMLReader implements CDKConstants, ChemObjectReader {
 
     // private functions
 
-    private ChemFile readChemFile()
-	{
-		ChemFileCDO cdo = new ChemFileCDO();
-		handler = new CMLHandler((CDOInterface)cdo);
-		try {
-		    parser.setFeature("http://xml.org/sax/features/validation", false);
-		} catch (SAXException e) {
-		    logger.warn("Cannot activate validation.");
-		    return cdo;
-		}
-		resolver = new CMLResolver();
-		parser.setContentHandler(handler);
-		parser.setEntityResolver(resolver);
-		try {
-		    parser.parse(new InputSource(input));
-		} catch (IOException e) {
-		    logger.warn("IOException: " + e.toString());
-		} catch (SAXException saxe) {
-		    logger.warn("SAXException: " + saxe.getClass().getName());
-		    logger.warn(saxe.toString());
-		    // e.printStackTrace();
-		}
-		return cdo;
+    private ChemFile readChemFile() {
+        ChemFileCDO cdo = new ChemFileCDO();
+        try {
+            parser.setFeature("http://xml.org/sax/features/validation", false);
+            logger.info("Deactivated validation");
+        } catch (SAXException e) {
+            logger.warn("Cannot deactivate validation.");
+            return cdo;
+        }
+        parser.setContentHandler(new CMLHandler((CDOInterface)cdo));
+        parser.setEntityResolver(new CMLResolver());
+        parser.setErrorHandler(new CMLErrorHandler());
+        try {
+            if (input == null) {
+                parser.parse(url);
+            } else {
+                parser.parse(new InputSource(input));
+            }
+        } catch (IOException e) {
+            logger.warn("IOException: " + e.toString());
+        } catch (SAXException saxe) {
+            logger.warn("SAXException: " + saxe.getClass().getName());
+            logger.warn(saxe.toString());
+            // e.printStackTrace();
+        }
+        return cdo;
     }
 
 }

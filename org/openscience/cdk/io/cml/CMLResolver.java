@@ -33,28 +33,29 @@ public class CMLResolver implements EntityResolver {
 
     private org.openscience.cdk.tools.LoggingTool logger;
 
-	public CMLResolver() {
+    public CMLResolver() {
         logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
-	}
+    }
 
     public InputSource resolveEntity (String publicId, String systemId) {
-        logger.warn("CMLResolver: resolving " + publicId + ", " + systemId);
+        logger.debug("CMLResolver: resolving " + publicId + ", " + systemId);
         systemId = systemId.toLowerCase();
-        if ((systemId.indexOf("cml-1999-05-15.dtd") != -1) || (systemId.indexOf("cml.dtd") != -1)) {
+        if ((systemId.indexOf("cml-1999-05-15.dtd") != -1) ||
+            (systemId.indexOf("cml.dtd") != -1)) {
             return getCMLType( "org/openscience/cdk/io/cml/data/cml.dtd" );
         } else {
-		    logger.warn("Could not resolve " + systemId);
+            logger.warn("Could not resolve " + systemId);
             return null;
         }
     }
 
     private InputSource getCMLType( String type ) {
-	try {
-	    URL url = ClassLoader.getSystemResource(type);
-	    return new InputSource(new BufferedReader(new InputStreamReader(url.openStream())));
-	} catch (Exception e) {
-	    System.err.println("Error while trying to read CML DTD (" + type + "): " + e.toString());
-	    return null;
-	}
+        try {
+            URL url = ClassLoader.getSystemResource(type);
+            return new InputSource(new BufferedReader(new InputStreamReader(url.openStream())));
+        } catch (Exception e) {
+            logger.error("Error while trying to read CML DTD (" + type + "): " + e.toString());
+            return null;
+        }
     }
 }
