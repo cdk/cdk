@@ -71,6 +71,7 @@
             <echo message="  Java version: ${java.version}" />
             <echo message="  Java ext dir: ${java.ext.dirs}" />
             <echo message="  JOELib found: ${joelib.present}" />
+            <echo message="  CMLDOM found: ${cmllibs.present}" />
             <echo message="  Java3D found: ${java3D.present}" />
             <echo message="   Junit found: ${junit.present}" />
             <echo message="" />
@@ -88,6 +89,9 @@
           <available classname="joelib.molecule.JOEAtom" 
                      classpath="${lib}/libio/joelib.jar" 
                      property="joelib.present"/>
+          <available classname="org.xmlcml.cml.CMLDocument" 
+                     classpath="${lib}/cmlAll.jar" 
+                     property="cmllibs.present"/>
           <available classname="javax.media.j3d.Canvas3D"
                      classpathref="project.class.path"
                      property="java3D.present"/>
@@ -183,14 +187,18 @@
             description="Compiles the CDK, including experimental classes.">
         </target>
 
-        <target id="compile-libio" name="compile-libio" depends="dist-standard, dont-compile-libio-joelib, 
-                                              compile-libio-joelib" />
+        <target id="compile-libio" name="compile-libio" depends="dist-standard,
+                                         compile-libio-joelib, compile-libio-cml" />
         
         <target name="dont-compile-libio-joelib" unless="joelib.present">
             <echo message="Not compiling libio for JOELib, jar/libio/joelib.jar is not present" /> 
         </target>
         
-        <target name="compile-libio-joelib" if="joelib.present">
+        <target name="dont-compile-libio-cml" unless="cmllibs.present">
+            <echo message="Not compiling libio for CMLDOM, jar/cmlAll.jar is not present" /> 
+        </target>
+        
+        <target name="compile-libio-joelib" if="joelib.present" depends="dont-compile-libio-joelib">
             <!-- Task to build the libio classes for JOELib. -->
             <echo message="Compiling libio for JOELib" /> 
 
@@ -203,6 +211,26 @@
                 <classpath>
                     <fileset dir="${lib}/libio">
                         <include name="*.jar" />
+                    </fileset>
+                </classpath>
+            </javac>
+        </target>
+
+        <target name="compile-libio-cml" if="cmllibs.present" depends="dont-compile-libio-cml">
+            <!-- Task to build the libio classes for CMLDOM. -->
+            <echo message="Compiling libio for CMLDOM" /> 
+
+            <javac destdir="${build}" optimize="${optimization}" 
+                   debug="${debug}" deprecation="${deprecation}">
+                <src path="${src}/org/openscience/cdk/libio/cml" />
+                <src path="${src}/org/openscience/cdk/test/libio/cml" />
+                
+                <classpath refid="project.class.path" />
+                <classpath>
+                    <fileset dir="${lib}">
+                        <include name="base.jar" />
+                        <include name="cmlAll.jar" />
+                        <include name="pmrlib.jar" />
                     </fileset>
                 </classpath>
             </javac>
