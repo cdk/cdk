@@ -30,7 +30,7 @@ import org.openscience.cdk.ChemObject;
  * Error found during sematical validation of a ChemObject.
  *
  * @author   Egon Willighagen
- * @created  2003-03-28
+ * @cdk.created  2003-03-28
  *
  * @see      org.openscience.cdk.ChemObject
  * @cdk.keyword atom, chemical validation

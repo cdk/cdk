@@ -45,7 +45,7 @@ import org.openscience.cdk.LonePair;
  * @cdk.module standard
  *
  * @author  Egon Willighagen
- * @created 2003-08-07
+ * @cdk.created 2003-08-07
  */
 public class AtomContainerManipulator {
     

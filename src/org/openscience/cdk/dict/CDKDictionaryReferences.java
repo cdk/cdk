@@ -47,7 +47,7 @@ import org.openscience.cdk.Reaction;
  * by :'number' to allow for more than one reference.
  *
  * @author     Egon Willighagen <egonw@sci.kun.nl>
- * @created    2003-08-06
+ * @cdk.created    2003-08-06
  * @cdk.keyword    dictionary, implicit CDK references
  */
 public class CDKDictionaryReferences {

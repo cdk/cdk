@@ -36,7 +36,7 @@ import org.openscience.cdk.math.Function;
  * This class handles a set of function for the GraphRenderer
  *
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
- * @created 2001-07-02
+ * @cdk.created 2001-07-02
  */ 
 public class GraphRendererModel
 {

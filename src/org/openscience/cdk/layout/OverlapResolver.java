@@ -46,7 +46,7 @@ import org.openscience.cdk.RingSet;
  * overlaps after the actual SDG was done
  *
  * @author     steinbeck
- * @created    2003-09-4
+ * @cdk.created    2003-09-4
  *
  * @cdk.keyword    layout
  * @cdk.keyword    2D-coordinates
@@ -294,7 +294,7 @@ public class OverlapResolver
 	 *  A little helper class to store pairs of overlapping atoms.
 	 *
 	 *@author     steinbeck
-	 *@created    October 1, 2003
+	 *@cdk.created    October 1, 2003
 	 */
 	public class OverlapPair
 	{

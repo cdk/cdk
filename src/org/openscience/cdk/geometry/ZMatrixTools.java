@@ -38,7 +38,7 @@ import javax.vecmath.Vector3d;
  * @cdk.module standard
  * @cdk.keyword    Z Matrix
  *
- * @created 2004-02-09
+ * @cdk.created 2004-02-09
  */
 public class ZMatrixTools {
 

@@ -37,7 +37,7 @@ package org.openscience.cdk;
  * @cdk.module core
  *
  * @author     steinbeck
- * @created    2001-08-08
+ * @cdk.created    2001-08-08
  *
  * @cdk.keyword     atom, type
  */

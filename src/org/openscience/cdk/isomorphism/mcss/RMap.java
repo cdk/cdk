@@ -36,7 +36,7 @@ package org.openscience.cdk.isomorphism.mcss;
  *  (bond) in G2, G1 and G2 being the compared graphs in a RGraph context.
  *
  * @author     Stephane Werner, IXELIS <mail@ixelis.net>
- * @created    2002-07-24
+ * @cdk.created    2002-07-24
  */
 public class RMap {
   int id1 = 0;

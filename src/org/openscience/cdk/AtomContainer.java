@@ -43,7 +43,7 @@ import javax.vecmath.Point3d;
  * @cdk.module core
  *
  * @author     steinbeck
- * @created    2000-10-02
+ * @cdk.created    2000-10-02
  */
 public class AtomContainer extends ChemObject implements java.io.Serializable, Cloneable {
 

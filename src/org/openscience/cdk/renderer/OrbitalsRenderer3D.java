@@ -54,7 +54,7 @@ import org.openscience.cdk.math.qm.Orbitals;
  * @cdk.module java3d
  *
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
- * @created 2001-07-20
+ * @cdk.created 2001-07-20
  *
  * @cdk.keyword orbital
  * @cdk.keyword viewer

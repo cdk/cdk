@@ -38,7 +38,7 @@ import freeware.PrintfFormat;
  * @cdk.module applications
  *
  * @author     Egon Willighagen
- * @created    2003-10-22
+ * @cdk.created    2003-10-22
  * @cdk.keyword    IUPAC name
  */
 public class IUPACNameGenerator

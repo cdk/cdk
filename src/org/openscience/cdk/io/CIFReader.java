@@ -60,7 +60,7 @@ import org.openscience.cdk.geometry.CrystalGeometryTools;
  * @cdk.keyword file format, mmCIF
  *
  * @author  E.L. Willighagen
- * @created 2003-10-12
+ * @cdk.created 2003-10-12
  */
 public class CIFReader extends DefaultChemObjectReader {
 

@@ -49,7 +49,7 @@ import org.openscience.cdk.ringsearch.SSSRFinder;
  *
  * @author     steinbeck
  * @author  Egon Willighagen
- * @created    2001-09-04
+ * @cdk.created    2001-09-04
  *
  * @cdk.keyword    saturation
  * @cdk.keyword    atom, valency
@@ -266,7 +266,7 @@ public class SaturationChecker implements ValencyCheckerInterface {
 	 *
 	 * @cdk.keyword            bond order, calculation
      *
-     * @created 2003-10-03
+     * @cdk.created 2003-10-03
 	 */
     public void newSaturate(AtomContainer atomContainer) throws CDKException {
         logger.info("Saturating atomContainer by adjusting bond orders...");

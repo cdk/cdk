@@ -44,7 +44,7 @@ package org.openscience.cdk;
  * @cdk.module core
  *
  * @author     steinbeck
- * @created    2001-08-21
+ * @cdk.created    2001-08-21
  *
  * @cdk.keyword     isotope
  */

@@ -51,7 +51,7 @@ import javax.swing.JPopupMenu;
  *  This class requires Java 1.4 or higher.
  *
  *@author     steinbeck
- *@created    February 4, 2004
+ *@cdk.created    February 4, 2004
  *@cdk.keyword    mouse events
  */
 public class Controller2D

@@ -38,7 +38,7 @@ import org.openscience.cdk.geometry.CrystalGeometryTools;
  * @cdk.module test
  *
  * @author     Egon Willighagen
- * @created    2003-08-19
+ * @cdk.created    2003-08-19
  *
  * @see org.openscience.cdk.geometry.CrystalGeometryTools
  */

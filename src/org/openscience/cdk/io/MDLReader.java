@@ -73,7 +73,7 @@ import org.openscience.cdk.tools.IsotopeFactory;
  *
  * @author     steinbeck
  * @author     Egon Willighagen
- * @created    2000-10-02
+ * @cdk.created    2000-10-02
  * @cdk.keyword    file format, MDL molfile
  * @cdk.keyword    file format, SDF
  */

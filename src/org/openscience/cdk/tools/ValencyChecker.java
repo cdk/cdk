@@ -46,7 +46,7 @@ import org.openscience.cdk.exception.CDKException;
  * <p>The atoms are matched against the valency_atomtype.xml list.
  *
  * @author     Egon Willighagen
- * @created    2004-01-07
+ * @cdk.created    2004-01-07
  *
  * @cdk.keyword    atom, valency
  */

@@ -52,7 +52,7 @@ import org.openscience.cdk.tools.IDCreator;
  * @cdk.module io
  *
  * @author  Egon Willighagen <egonw@sci.kun.nl>
- * @created 2003-10-01
+ * @cdk.created 2003-10-01
  * 
  * @cdk.keyword file format, CDK source code
  */

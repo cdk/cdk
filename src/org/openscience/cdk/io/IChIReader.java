@@ -53,7 +53,7 @@ import org.xml.sax.XMLReader;
  * @cdk.module experimental
  *
  * @author     Egon Willighagen <egonw@sci.kun.nl>
- * @created    25 September 2002
+ * @cdk.created    25 September 2002
  *
  * @cdk.keyword file format, IChI
  * @cdk.keyword chemical identifier

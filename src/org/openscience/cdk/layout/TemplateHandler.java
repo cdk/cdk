@@ -51,7 +51,7 @@ import org.openscience.cdk.isomorphism.mcss.RMap;
  *  layout, like cubane, adamantane, porphyrin, etc.
  *
  *@author     steinbeck
- *@created    September 4, 2003
+ *@cdk.created    September 4, 2003
  *@cdk.keyword    layout
  *@cdk.keyword    2D-coordinates
  *@since      Java 1.4

@@ -36,7 +36,7 @@ import org.openscience.cdk.tools.AtomTypeFactory;
  *  Checks the funcitonality of the PeriodicTablePanelTest
  *
  *@author        Steinbeck
- *@created       February 10, 2004
+ *@cdk.created       February 10, 2004
  *@cdk.module    test
  */
 public class PeriodicTablePanelTest extends TestCase {

@@ -31,7 +31,7 @@ package org.openscience.cdk.smiles;
  * @cdk.module standard
  *
  * @author  Oliver Horlacher <oliver.horlacher@therastrat.com>
- * @created 2002-02-26
+ * @cdk.created 2002-02-26
  *
  * @cdk.keyword prime numbers
  */

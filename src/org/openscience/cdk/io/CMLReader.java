@@ -56,7 +56,7 @@ import org.xml.sax.XMLReader;
  * @cdk.module io
  *
  * @author     Egon L. Willighagen
- * @created    2001-02-01
+ * @cdk.created    2001-02-01
  *
  * @cdk.keyword file format, CML
  */

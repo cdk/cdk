@@ -53,7 +53,7 @@ import org.openscience.cdk.exception.NoSuchAtomException;
  * </pre>
  *
  * @author     steinbeck
- * @created    2002-02-24
+ * @cdk.created    2002-02-24
  *
  * @cdk.keyword    fingerprint
  * @cdk.keyword    similarity

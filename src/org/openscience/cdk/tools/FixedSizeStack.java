@@ -35,7 +35,7 @@ package org.openscience.cdk.tools;
  *  this to hold the 10 best structures, e. g.
  *
  *@author     steinbeck
- *@created    2001-06-05
+ *@cdk.created    2001-06-05
  */
 public class FixedSizeStack extends java.util.Vector implements java.io.Serializable {
 

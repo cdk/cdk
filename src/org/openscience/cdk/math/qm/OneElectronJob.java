@@ -37,7 +37,7 @@ import org.openscience.cdk.math.Vector;
  * without electron electron interactions
  * 
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
- * @created 2001-09-03
+ * @cdk.created 2001-09-03
  */
 public class OneElectronJob
 {

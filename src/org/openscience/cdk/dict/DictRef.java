@@ -33,7 +33,7 @@ package org.openscience.cdk.dict;
  * denote that this property is a dictionary reference for this ChemObject.
  *
  * @author     Egon Willighagen
- * @created    2003-08-24
+ * @cdk.created    2003-08-24
  */
 public class DictRef implements java.io.Serializable, Cloneable  {
 

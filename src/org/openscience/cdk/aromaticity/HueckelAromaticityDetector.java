@@ -46,7 +46,7 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
  * @cdk.module standard
  *
  * @author     steinbeck, kaihartmann
- * @created    2001-09-04
+ * @cdk.created    2001-09-04
  */
 public class HueckelAromaticityDetector {
 	static boolean debug = false;

@@ -32,7 +32,7 @@ import org.openscience.cdk.graph.PathTools;
  * of topological symmetry" C. Hu and L. Xu. Analytica Chimica Acta, Vol. 295, pp. 127-134, 1994.
  *
  *@author	Junfeng Hao
- *@created	2003-09-24
+ *@cdk.created	2003-09-24
  */
  
  public class EquivalentClassPartitioner

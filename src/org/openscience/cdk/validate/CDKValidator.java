@@ -46,7 +46,7 @@ import org.openscience.cdk.SetOfReactions;
  * tries to detect inconsistencies in it.
  *
  * @author   Egon Willighagen
- * @created  2003-08-22
+ * @cdk.created  2003-08-22
  */ 
 public class CDKValidator implements ValidatorInterface {
 

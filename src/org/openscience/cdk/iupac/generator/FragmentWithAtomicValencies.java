@@ -39,7 +39,7 @@ import org.openscience.cdk.exception.NoSuchAtomException;
  * @cdk.module experimental
  *
  * @author     egonw
- * @created    August 14th 2002
+ * @cdk.created    August 14th 2002
  *
  * @cdk.keyword    fragment
  * @cdk.keyword    free valence

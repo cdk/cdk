@@ -50,7 +50,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * Validator which tests a number of basic chemical semantics.
  *
  * @author   Egon Willighagen
- * @created  2003-08-22
+ * @cdk.created  2003-08-22
  */ 
 public class BasicValidator implements ValidatorInterface {
 

@@ -44,7 +44,7 @@ import org.openscience.cdk.exception.CDKException;
  * @cdk.keyword    bond, recalculation
  * 
  * @author  Miguel Howard
- * @created 2003-05-23
+ * @cdk.created 2003-05-23
  *
  * @see org.openscience.cdk.graph.rebond.Bspt
  */

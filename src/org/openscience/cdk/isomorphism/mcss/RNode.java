@@ -44,7 +44,7 @@ import java.util.BitSet;
  *  this node in the same solution)
  *
  *@author     Stephane Werner from IXELIS mail@ixelis.net
- *@created    2002-07-17
+ *@cdk.created    2002-07-17
  */
 public class RNode
 {

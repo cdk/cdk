@@ -52,7 +52,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module test
  *
  *@author     steinbeck
- *@created    September 4, 2003
+ *@cdk.created    September 4, 2003
  */
 public class OverlapResolverTest extends TestCase
 {

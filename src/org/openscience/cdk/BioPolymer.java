@@ -36,7 +36,7 @@ package org.openscience.cdk;
  * @cdk.module core
  *
  * @author     Edgar Luttmann <edgar@uni-paderborn.de>
- * @created    2001-08-06 
+ * @cdk.created    2001-08-06 
  *
  * @cdk.keyword    polymer
  * @cdk.keyword    biopolymer

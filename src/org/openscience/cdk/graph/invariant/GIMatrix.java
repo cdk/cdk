@@ -41,7 +41,7 @@ import org.openscience.cdk.graph.invariant.exception.MatrixNotInvertibleExceptio
  *
  * @author Jean-Sebastien Senecal
  * @version 1.0
- * @created 1999-05-20
+ * @cdk.created 1999-05-20
  */
 public class GIMatrix {
 

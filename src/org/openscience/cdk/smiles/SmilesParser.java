@@ -58,7 +58,7 @@ import org.openscience.cdk.exception.InvalidSmilesException;
  *
  * @author     Christoph Steinbeck
  * @author     Egon Willighagen
- * @created    2002-04-29
+ * @cdk.created    2002-04-29
  * @cdk.keyword    SMILES, parser
  */
 public class SmilesParser

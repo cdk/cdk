@@ -38,7 +38,7 @@ import org.openscience.cdk.tools.SaturationChecker;
  * @cdk.module test
  *
  * @author     steinbeck
- * @created    2003-02-20
+ * @cdk.created    2003-02-20
  */
 public class SaturationCheckerTest extends TestCase
 {

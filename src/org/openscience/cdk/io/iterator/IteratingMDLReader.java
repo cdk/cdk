@@ -48,7 +48,7 @@ import org.openscience.cdk.io.MDLReader;
  * @see org.openscience.cdk.io.MDLReader
  * 
  * @author     Egon Willighagen <egonw@sci.kun.nl>
- * @created    2003-10-19
+ * @cdk.created    2003-10-19
  *
  * @cdk.keyword    file format, MDL molfile
  * @cdk.keyword    file format, SDF

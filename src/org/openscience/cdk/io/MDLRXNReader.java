@@ -54,7 +54,7 @@ import org.openscience.cdk.exception.CDKException;
  * @cdk.module io
  *
  * @author     Egon Willighagen
- * @created    2003-07-24
+ * @cdk.created    2003-07-24
  *
  * @cdk.keyword    file format, MDL RXN
  */

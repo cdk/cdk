@@ -36,7 +36,7 @@ import javax.vecmath.Point3d;
  * @cdk.module core
  *
  * @author     steinbeck
- * @created    2003-10-02
+ * @cdk.created    2003-10-02
  * @cdk.keyword    bond
  * @cdk.keyword    atom
  * @cdk.keyword    electron

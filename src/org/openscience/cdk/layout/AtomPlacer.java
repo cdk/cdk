@@ -49,7 +49,7 @@ import org.openscience.cdk.graph.PathTools;
  *  buildup of molecules by the user.
  *
  *@author     steinbeck
- *@created    2003-08-29
+ *@cdk.created    2003-08-29
  */
 public class AtomPlacer
 {

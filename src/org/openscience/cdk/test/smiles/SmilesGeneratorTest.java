@@ -49,7 +49,7 @@ import org.openscience.cdk.tools.MFAnalyser;
 
 /**
  *@author        steinbeck
- *@created       February 9, 2004
+ *@cdk.created       February 9, 2004
  *@cdk.module    test
  */
 public class SmilesGeneratorTest extends TestCase

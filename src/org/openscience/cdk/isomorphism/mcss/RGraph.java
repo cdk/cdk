@@ -99,7 +99,7 @@ import java.util.ListIterator;
   *  STRASBOURG 1993.
   *
   * @author     Stephane Werner from IXELIS mail@ixelis.net
-  * @created    2002-07-17
+  * @cdk.created    2002-07-17
   *
   * @since Java 1.4
   */

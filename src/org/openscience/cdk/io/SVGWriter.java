@@ -61,7 +61,7 @@ import org.w3c.dom.Document;
  * @cdk.keyword scalable vector graphics
  *
  * @author  Egon Willighagen
- * @created 2002-09-30
+ * @cdk.created 2002-09-30
  *
  * @cdk.builddepends batik-awt-util.jar
  * @cdk.builddepends batik-dom.jar

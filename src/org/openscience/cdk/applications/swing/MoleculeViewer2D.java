@@ -48,7 +48,7 @@ import org.openscience.cdk.renderer.Renderer2DModel;
  * @cdk.module applications
  *
  * @author     steinbeck
- * @created    2002-05-30
+ * @cdk.created    2002-05-30
  */
 public class MoleculeViewer2D extends JPanel implements CDKChangeListener
 {

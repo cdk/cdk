@@ -68,7 +68,7 @@ import org.openscience.cdk.tools.ReactionManipulator;
  * @cdk.module experimental
  *
  * @author     Egon Willighagen
- * @created    2003-07-24
+ * @cdk.created    2003-07-24
  *
  * @cdk.keyword    file format, MACiE RDF
  *

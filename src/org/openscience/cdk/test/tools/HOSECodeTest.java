@@ -45,7 +45,7 @@ import org.openscience.cdk.tools.HOSECodeGenerator;
  * @cdk.module test
  *
  *@author     steinbeck
- *@created    2002-11-16
+ *@cdk.created    2002-11-16
  */
 public class HOSECodeTest extends TestCase
 {

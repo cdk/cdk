@@ -41,7 +41,7 @@ import org.openscience.cdk.io.ChemObjectIO;
  * @see org.openscience.cdk.io.ChemObjectIO
  *
  * @author  Egon Willighagen <egonw@sci.kun.nl>
- * @created 2003-10-19
+ * @cdk.created 2003-10-19
  */
 public interface IteratingChemObjectReader extends ChemObjectIO, Iterator {
 

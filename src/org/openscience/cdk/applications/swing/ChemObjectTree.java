@@ -59,7 +59,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module applications
  *
  * @author     egonw
- * @created    2002-12-29
+ * @cdk.created    2002-12-29
  * @cdk.keyword    tree, ChemObject
  */
 public class ChemObjectTree extends JPanel {

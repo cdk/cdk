@@ -45,7 +45,7 @@ import org.openscience.cdk.exception.CDKException;
  *  href="http://cdk.sf.net/biblio.html#BRE78">BRE78</a>
  *
  *@author     steinbeck
- *@created    2002-05-10
+ *@cdk.created    2002-05-10
  */
 public class HOSECodeGenerator implements java.io.Serializable
 {
@@ -689,7 +689,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 	 *  search
 	 *
 	 * @author     steinbeck
-	 * @created    2002-11-16
+	 * @cdk.created    2002-11-16
 	 */
 	class TreeNode
 	{

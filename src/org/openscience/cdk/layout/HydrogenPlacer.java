@@ -44,7 +44,7 @@ import java.awt.*;
  * which already has coordinates for the rest of the atoms.
  *
  * @author   Christop Steinbeck
- * @created  2003-08-06
+ * @cdk.created  2003-08-06
  */
 public class HydrogenPlacer {
 	public static boolean debug = false;

@@ -37,7 +37,7 @@ import org.openscience.cdk.tools.ValencyChecker;
  * @cdk.module test
  *
  * @author     Egon Willighagen
- * @created    2004-01-08
+ * @cdk.created    2004-01-08
  */
 public class ValencyCheckerTest extends TestCase
 {

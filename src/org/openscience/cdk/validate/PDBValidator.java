@@ -59,7 +59,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module experimental
  *
  * @author   Egon Willighagen
- * @created  2003-08-27
+ * @cdk.created  2003-08-27
  *
  * @since Java 1.4
  */ 

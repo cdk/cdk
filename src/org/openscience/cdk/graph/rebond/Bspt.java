@@ -70,7 +70,7 @@ import java.util.Enumeration;
  * </ul>
  *
  * @author  Miguel Howard
- * @created 2003-05
+ * @cdk.created 2003-05
  *
  * @cdk.keyword rebonding
  * @cdk.keyword Binary Space Partitioning Tree

@@ -43,7 +43,7 @@ import org.xml.sax.helpers.DefaultHandler;
  * @cdk.module io
  *
  * @author  Egon Willighagen <egonw@sci.kun.nl>
- * @created 2003-09-07
+ * @cdk.created 2003-09-07
  */
 public class RSSHandler extends DefaultHandler {
     

@@ -42,7 +42,7 @@ import org.openscience.cdk.smiles.SmilesParser;
  * @cdk.module test
  *
  *@author     steinbeck
- *@created    September 19, 2003
+ *@cdk.created    September 19, 2003
  */
 public class SmilesParserTest extends TestCase
 {

@@ -32,7 +32,7 @@ import org.openscience.cdk.AtomContainer;
  *  An implementation of Faulons equivalent classes deterministic generator 
  *
  * @author     steinbeck
- * @created    2000-10-02
+ * @cdk.created    2000-10-02
  */
 public class Graph extends Vector
 {

@@ -45,7 +45,7 @@ import org.openscience.cdk.tools.MFAnalyser;
  * @cdk.module experimental
  *
  * @author  Egon Willighagen <egonw@sci.kun.nl> 
- * @created 2002-05-21
+ * @cdk.created 2002-05-21
  *
  * @cdk.keyword IUPAC name
  */

@@ -48,7 +48,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module io
  *
  * @author  Egon Willighagen <egonw@sci.kun.nl>
- * @created 2003-10-05
+ * @cdk.created 2003-10-05
  * 
  * @cdk.keyword MDL V3000
  *

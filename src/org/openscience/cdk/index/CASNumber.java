@@ -34,7 +34,7 @@ import java.util.regex.Pattern;
  * Tools to work with CAS registry numbers. 
  *
  * @author  Egon Willighagen <egonw@sci.kun.nl>
- * @created 2003-06-30
+ * @cdk.created 2003-06-30
  *
  * @cdk.keyword CAS number
  *

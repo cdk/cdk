@@ -39,7 +39,7 @@ import org.openscience.cdk.Monomer;
  * @cdk.module test
  *
  * @author  Edgar Luttman <edgar@uni-paderborn.de>
- * @created 2001-08-09
+ * @cdk.created 2001-08-09
  */
 public class MonomerTest extends TestCase {
 

@@ -44,7 +44,7 @@ import javax.swing.JScrollPane;
  * @cdk.module applications
  *
  * @author     steinbeck
- * @created    2002-10-29
+ * @cdk.created    2002-10-29
  */
 public class MoleculeListViewer extends JFrame
 {
@@ -142,7 +142,7 @@ public class MoleculeListViewer extends JFrame
 
 	/**
 	 * @author     steinbeck
-	 * @created    2002-10-29
+	 * @cdk.created    2002-10-29
 	 */
 	class StrucContainer extends JPanel
 	{

@@ -55,7 +55,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * </pre>
  *
  * @author   Egon Willighagen <egonw@sci.kun.nl>
- * @created  2003-08-22
+ * @cdk.created  2003-08-22
  */ 
 public class ValidatorEngine implements ValidatorInterface {
     

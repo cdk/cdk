@@ -54,7 +54,7 @@ import com.sun.j3d.utils.geometry.Sphere;
  * @cdk.module java3d
  *
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
- * @created 2001-07-20
+ * @cdk.created 2001-07-20
  */
 public class AcceleratedRenderer3DModel {
 	private TransformGroup root = new TransformGroup();

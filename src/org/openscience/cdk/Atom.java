@@ -52,7 +52,7 @@ import javax.vecmath.Point3d;
  * @cdk.module core
  *
  * @author     steinbeck
- * @created    2000-10-02
+ * @cdk.created    2000-10-02
  * @cdk.keyword    atom
  *
  * @see  org.openscience.cdk.tools.IsotopeFactory#getInstance()

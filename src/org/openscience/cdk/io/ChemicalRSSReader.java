@@ -50,7 +50,7 @@ import org.xml.sax.XMLReader;
  * @cdk.module io
  *
  * @author     Egon Willighagen
- * @created    2003-09-07
+ * @cdk.created    2003-09-07
  *
  * @cdk.keyword    news feed
  * @cdk.keyword    file format, RSS

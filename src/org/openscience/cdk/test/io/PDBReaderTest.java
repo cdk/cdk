@@ -51,7 +51,7 @@ import com.baysmith.io.FileUtilities;
  * @cdk.module test
  *
  * @author  Edgar Luttmann <edgar@uni-paderborn.de>
- * @created 2001-08-09 				$
+ * @cdk.created 2001-08-09 				$
  *
  */
 public class PDBReaderTest extends TestCase {

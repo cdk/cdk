@@ -35,7 +35,7 @@ import java.io.PrintStream;
  * @cdk.module io
  *
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
- * @created 2001-07-14
+ * @cdk.created 2001-07-14
  */
 public class LogWriter
 {

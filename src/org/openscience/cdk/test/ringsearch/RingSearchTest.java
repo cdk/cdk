@@ -47,7 +47,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module test
  *
  *@author     steinbeck
- *@created    October 17, 2003
+ *@cdk.created    October 17, 2003
  */
 public class RingSearchTest extends TestCase
 {

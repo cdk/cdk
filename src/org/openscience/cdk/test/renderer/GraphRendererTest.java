@@ -44,7 +44,7 @@ import org.openscience.cdk.renderer.GraphRendererModel;
  * @cdk.module test
  *
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
- * @created 2001-07-23
+ * @cdk.created 2001-07-23
  */
 public class GraphRendererTest
 {

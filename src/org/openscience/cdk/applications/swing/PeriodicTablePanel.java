@@ -42,7 +42,7 @@ import org.openscience.cdk.event.CDKChangeListener;
  *
  *@author        Egon Willighagen
  *@author        Geert Josten
- *@created       February 10, 2004
+ *@cdk.created       February 10, 2004
  *@cdk.module    applications
  */
 public class PeriodicTablePanel extends JPanel
@@ -259,7 +259,7 @@ public class PeriodicTablePanel extends JPanel
 	 *  Description of the Class
 	 *
 	 *@author     steinbeck
-	 *@created    February 10, 2004
+	 *@cdk.created    February 10, 2004
 	 */
 	public class ElementButtonAction extends AbstractAction
 	{
@@ -281,7 +281,7 @@ public class PeriodicTablePanel extends JPanel
 	 *  Description of the Class
 	 *
 	 *@author     steinbeck
-	 *@created    February 10, 2004
+	 *@cdk.created    February 10, 2004
 	 */
 	class ElementButton extends Button
 	{

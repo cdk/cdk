@@ -38,7 +38,7 @@ import java.util.Hashtable;
  * and entities.
  *
  * @author     Egon Willighagen
- * @created    2003-04-06
+ * @cdk.created    2003-04-06
  * @cdk.keyword    dictionary
  * @cdk.depends    stmml.jar
  * @cdk.depends    castor.jar

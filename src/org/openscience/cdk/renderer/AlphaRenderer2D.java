@@ -48,7 +48,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @author     akrassavine
  *
- * @created    2004-02-04
+ * @cdk.created    2004-02-04
  */
 public class AlphaRenderer2D extends Renderer2D {
     

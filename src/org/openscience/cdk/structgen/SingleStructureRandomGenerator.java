@@ -58,7 +58,7 @@ import org.openscience.cdk.tools.SaturationChecker;
  *         - add a seed for random generator for reproducability
  *
  * @author     steinbeck
- * @created    2001-09-04
+ * @cdk.created    2001-09-04
  */
 public class SingleStructureRandomGenerator
 {

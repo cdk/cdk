@@ -50,7 +50,7 @@ import org.openscience.cdk.tools.SaturationChecker;
  * @cdk.module test
  *
  * @author     egonw
- * @created    2003-06-18
+ * @cdk.created    2003-06-18
  */
 public class HydrogenAdderTest extends TestCase {
 

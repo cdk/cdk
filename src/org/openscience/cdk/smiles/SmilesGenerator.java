@@ -64,7 +64,7 @@ import org.openscience.cdk.tools.IsotopeFactory;
  *
  * @author     Oliver Horlacher,
  * @author     Stefan Kuhn (chiral smiles)
- * @created    2002-02-26
+ * @cdk.created    2002-02-26
  * @cdk.keyword    SMILES, generator
  */
 public class SmilesGenerator {
@@ -1411,7 +1411,7 @@ public class SmilesGenerator {
   *  Description of the Class
   *
   * @author     shk3
-  * @created    2003-06-17
+  * @cdk.created    2003-06-17
   */
   class BrokenBond {
       

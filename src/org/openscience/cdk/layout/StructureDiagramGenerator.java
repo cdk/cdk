@@ -64,7 +64,7 @@ import org.openscience.cdk.tools.HydrogenAdder;
  *  partitionIntoMolecules(AtomContainer) can help here.
  *
  *@author     steinbeck
- *@created    February 2, 2004
+ *@cdk.created    February 2, 2004
  *@see        org.openscience.cdk.tools.ConnectivityChecker#partitionIntoMolecules(AtomContainer)
  *@cdk.keyword    layout
  *@cdk.keyword    2D-coordinates

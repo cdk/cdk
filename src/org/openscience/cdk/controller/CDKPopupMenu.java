@@ -40,7 +40,7 @@ import javax.swing.JPopupMenu;
  * the ChemObject source.
  *
  * @author  Egon Willighagen <egonw@sci.kun.nl>
- * @created 2003-07-36
+ * @cdk.created 2003-07-36
  */
 public class CDKPopupMenu extends JPopupMenu {
    

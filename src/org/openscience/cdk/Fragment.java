@@ -29,7 +29,7 @@ package org.openscience.cdk;
  * residues in a protein generator.
  *
  * @author     egonw
- * @created    2002-08-14
+ * @cdk.created    2002-08-14
  *
  * @cdk.keyword    fragment
  * @cdk.keyword    free valence

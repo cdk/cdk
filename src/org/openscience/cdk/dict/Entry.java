@@ -36,7 +36,7 @@ package org.openscience.cdk.dict;
  * DOM type thing.
  *
  * @author     Egon Willighagen
- * @created    2003-08-23
+ * @cdk.created    2003-08-23
  * @cdk.keyword    dictionary
  */
 public class Entry {

@@ -40,7 +40,7 @@ import org.openscience.cdk.geometry.GeometryTools;
  * @cdk.module test
  *
  * @author     Egon Willighagen
- * @created    2004-01-30
+ * @cdk.created    2004-01-30
  *
  * @see org.openscience.cdk.geometry.GeometryTools
  */

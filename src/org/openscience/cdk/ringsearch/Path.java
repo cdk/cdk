@@ -44,7 +44,7 @@ import org.openscience.cdk.AtomContainer;
  * @cdk.keyword graph, path
  *
  * @author     steinbeck
- * @created    2002-02-28
+ * @cdk.created    2002-02-28
  */
 public class Path extends Vector
 {

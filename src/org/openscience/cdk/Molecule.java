@@ -31,7 +31,7 @@ package org.openscience.cdk;
  * @cdk.module core
  *
  * @author     steinbeck
- * @created    2000-10-02
+ * @cdk.created    2000-10-02
  *
  * @cdk.keyword    molecule
  */

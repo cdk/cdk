@@ -36,7 +36,7 @@ import org.openscience.cdk.AtomContainer;
  * @cdk.module standard
  *
  * @author     shk3
- * @created    2003-06-30
+ * @cdk.created    2003-06-30
  * @cdk.keyword    Morgan number
  */
 

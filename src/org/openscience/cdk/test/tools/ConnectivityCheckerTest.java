@@ -40,7 +40,7 @@ import org.openscience.cdk.tools.ConnectivityChecker;
  * @cdk.module test
  *
  * @author     steinbeck
- * @created    2001-07-24
+ * @cdk.created    2001-07-24
  */
 public class ConnectivityCheckerTest extends TestCase {
 

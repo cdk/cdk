@@ -43,7 +43,7 @@ import org.openscience.cdk.SetOfReactions;
  * @cdk.module standard
  *
  * @author   Egon Willighagen
- * @created  2003-04-01
+ * @cdk.created  2003-04-01
  *
  * @cdk.keyword  id, creation
  */

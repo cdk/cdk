@@ -58,7 +58,7 @@ import org.openscience.cdk.tools.isotopes.IsotopeReader;
  * @cdk.module standard
  *
  * @author     steinbeck
- * @created    2001-08-29
+ * @cdk.created    2001-08-29
  * @cdk.keyword    isotope
  * @cdk.keyword    element
  */

@@ -85,7 +85,7 @@ public class MoleculeFactory {
 	 * @param chainLength The number of carbon atoms to have in the chain.
 	 * @return A molecule containing a bonded chain of carbons.
 	 *
-	 * @created 2003-08-15
+	 * @cdk.created 2003-08-15
 	 */
   public static Molecule makeAlkane(int chainLength)
   {

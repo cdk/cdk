@@ -48,7 +48,7 @@ import org.openscience.cdk.io.MDLWriter;
  * @cdk.module experimental
  *
  * @author  Yong Zhang <yz237@cam.ac.uk>
- * @created  2003-06-13
+ * @cdk.created  2003-06-13
  *
  * @see org.openscience.cdk.io.IChIReader
  */

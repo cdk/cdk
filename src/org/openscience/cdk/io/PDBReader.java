@@ -56,7 +56,7 @@ import org.openscience.cdk.exception.CDKException;
  *
  * @author     Edgar Luttmann
  * @author     Bradley Smith (bradley@baysmith.com)
- * @created    2001-08-06 
+ * @cdk.created    2001-08-06 
  *
  * @cdk.keyword file format, PDB
  */

@@ -51,7 +51,7 @@ import com.sun.j3d.utils.universe.SimpleUniverse;
  * @cdk.module java3d
  * 
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
- * @created 2001-07-20
+ * @cdk.created 2001-07-20
  *
  * @cdk.keyword viewer, 3D-viewer
  */

@@ -35,7 +35,7 @@ import org.openscience.cdk.index.CASNumber;
  * @cdk.module test
  *
  * @author     Egon Willighagen <egonw@sci.kun.nl>
- * @created    2003-07-01
+ * @cdk.created    2003-07-01
  */
 public class CASNumberTest extends TestCase {
 

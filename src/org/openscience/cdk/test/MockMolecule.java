@@ -39,7 +39,7 @@ import org.openscience.cdk.Molecule;
  * @cdk.module test
  *
  * @author  Edgar Luttmann <edgar@uni-paderborn.de>
- * @created 2001-08-09
+ * @cdk.created 2001-08-09
  */
 class MockMolecule extends Molecule {
 	public MockMolecule () {

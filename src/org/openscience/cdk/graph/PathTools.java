@@ -42,7 +42,7 @@ import org.openscience.cdk.Molecule;
  * @cdk.module standard
  *
  * @author     steinbeck
- * @created    2001-06-17
+ * @cdk.created    2001-06-17
  */
 public class PathTools  {
 	

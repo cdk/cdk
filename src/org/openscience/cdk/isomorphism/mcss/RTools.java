@@ -87,7 +87,7 @@ import org.openscience.cdk.tools.ChemModelManipulator;
  *   < /FONT> 
  * 
  * @author     Stephane Werner from IXELIS mail@ixelis.net
- * @created    2002-07-17
+ * @cdk.created    2002-07-17
  *
  * @since Java 1.4
  */

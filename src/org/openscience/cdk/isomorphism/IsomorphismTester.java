@@ -42,7 +42,7 @@ import org.openscience.cdk.graph.invariant.MorganNumbersTools;
  * @cdk.module standard
  *
  * @author     steinbeck
- * @created    2001-09-10
+ * @cdk.created    2001-09-10
  *
  * @cdk.keyword    isomorphism
  *

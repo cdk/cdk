@@ -35,7 +35,7 @@ package org.openscience.cdk;
  * @cdk.keyword reaction, atom mapping
  *
  * @author  Egon Willighagen
- * @created 2003-08-16
+ * @cdk.created 2003-08-16
  */
 public class Mapping extends ChemObject implements java.io.Serializable, Cloneable {
 

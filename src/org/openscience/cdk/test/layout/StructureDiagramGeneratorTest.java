@@ -54,7 +54,7 @@ import org.openscience.cdk.tools.ChemModelManipulator;
  * @cdk.module test
  *
  *@author     steinbeck
- *@created    August 29, 2003
+ *@cdk.created    August 29, 2003
  */
 public class StructureDiagramGeneratorTest extends TestCase
 {

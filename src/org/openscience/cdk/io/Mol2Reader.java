@@ -50,7 +50,7 @@ import org.openscience.cdk.tools.AtomTypeFactory;
  * @cdk.module io
  *
  * @author     Egon Willighagen
- * @created    2003-08-21
+ * @cdk.created    2003-08-21
  *
  * @cdk.keyword    file format, Mol2
  */

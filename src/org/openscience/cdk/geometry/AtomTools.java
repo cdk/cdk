@@ -41,7 +41,7 @@ import org.openscience.cdk.CDKConstants;
  * A set of static utility classes for geometric calculations on Atoms.
  *
  * @author Peter Murray-Rust
- * @created 2003-06-14
+ * @cdk.created 2003-06-14
  */
 public class AtomTools {
     

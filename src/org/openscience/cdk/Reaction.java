@@ -40,7 +40,7 @@ package org.openscience.cdk;
  * @cdk.module core
  *
  * @author     Egon Willighagen <elw38@cam.ac.uk>
- * @created    2003-02-13
+ * @cdk.created    2003-02-13
  * @cdk.keyword    reaction
  */
 public class Reaction extends ChemObject implements java.io.Serializable, Cloneable {

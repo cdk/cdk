@@ -51,7 +51,7 @@ import org.openscience.cdk.tools.ValencyCheckerInterface;
  * @cdk.module experimental
  *
  * @author   Egon Willighagen
- * @created  2004-01-14
+ * @cdk.created  2004-01-14
  */ 
 public class ValencyValidator implements ValidatorInterface {
 

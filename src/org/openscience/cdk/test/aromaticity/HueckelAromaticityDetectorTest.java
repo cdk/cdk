@@ -49,7 +49,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
  * @cdk.module test
  *
  *@author     steinbeck
- *@created    2002-10-06
+ *@cdk.created    2002-10-06
  */
 public class HueckelAromaticityDetectorTest extends TestCase
 {

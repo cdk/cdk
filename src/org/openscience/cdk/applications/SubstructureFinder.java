@@ -39,7 +39,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module applications
  *
  * @author  Egon Willighagen
- * @created 2003-08-14
+ * @cdk.created 2003-08-14
  *
  * @since Java 1.4
  */

@@ -47,7 +47,7 @@ import org.openscience.cdk.io.setting.StringIOSetting;
  * @cdk.module io
  *
  * @author  Egon Willighagen <egonw@sci.kun.nl>
- * @created 2003-07-18
+ * @cdk.created 2003-07-18
  */
 public class SwingGUIListener implements ReaderListener, WriterListener {
 

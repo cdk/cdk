@@ -59,7 +59,7 @@ import org.openscience.cdk.smiles.SmilesParser;
  *
  * @author     steinbeck
  * @author     egonw
- * @created    2002-10-03
+ * @cdk.created    2002-10-03
  *
  * @cdk.keyword    command line util
  */

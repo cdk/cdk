@@ -67,7 +67,7 @@ import org.openscience.cdk.tools.ChemModelManipulator;
  * @cdk.module test-java3d
  *
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
- * @created 2001-06-09
+ * @cdk.created 2001-06-09
  *
  * @cdk.keyword command line util
  */

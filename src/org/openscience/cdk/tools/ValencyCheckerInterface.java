@@ -37,7 +37,7 @@ import org.openscience.cdk.exception.CDKException;
  * to be able to have HydrogenAdder use both.
  *
  * @author     Egon Willighagen
- * @created    2004-01-08
+ * @cdk.created    2004-01-08
  */
 public interface ValencyCheckerInterface {
 

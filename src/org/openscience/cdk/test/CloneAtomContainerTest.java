@@ -40,7 +40,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
  * @cdk.module test
  *
  * @author  Christoph Steinbeck
- * @created 2001-08-09
+ * @cdk.created 2001-08-09
  */
 public class CloneAtomContainerTest extends TestCase {
 

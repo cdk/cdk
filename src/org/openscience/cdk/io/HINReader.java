@@ -49,7 +49,7 @@ import org.openscience.cdk.exception.CDKException;
  * @cdk.module io
  *
  * @author  Rajarshi Guha <rajarshi@presidency.com>
- * @created 2004-01-27
+ * @cdk.created 2004-01-27
  *
  * @cdk.keyword file format, HIN 
  */

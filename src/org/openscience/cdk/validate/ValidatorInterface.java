@@ -45,7 +45,7 @@ import org.openscience.cdk.SetOfReactions;
  * Interface that Validators need to implement to be used in validation.
  *
  * @author   Egon Willighagen
- * @created  2003-03-28
+ * @cdk.created  2003-03-28
  */ 
 public interface ValidatorInterface {
 

@@ -45,7 +45,7 @@ import org.xml.sax.XMLReader;
  * DOM type thing.
  *
  * @author     Egon Willighagen
- * @created    2003-08-23
+ * @cdk.created    2003-08-23
  * @cdk.keyword    dictionary
  */
 public class Dictionary {

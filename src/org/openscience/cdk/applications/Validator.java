@@ -47,7 +47,7 @@ import org.openscience.cdk.validate.ValidatorEngine;
  * @cdk.module applications
  *
  * @author     egonw
- * @created    2003-07-14
+ * @cdk.created    2003-07-14
  *
  * @cdk.keyword    command line util
  */

@@ -33,7 +33,7 @@ import org.openscience.cdk.ChemObject;
  * @cdk.module standard
  *
  * @author   Egon Willighagen
- * @created  2003-08-11
+ * @cdk.created  2003-08-11
  */
 public class ProblemMarker {
 
