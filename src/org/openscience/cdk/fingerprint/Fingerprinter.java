@@ -56,6 +56,14 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * <p>The FingerPrinter assumes that hydrogens are explicitely given!
  *
+  *  <p><font color="#FF0000">
+ *     warning :  The daylight manual says: "Fingerprints are not so definite: 
+ *	              if a fingerprint indicates a pattern is missing then it certainly 
+ *                is, but it can only indicate a pattern's presence with some probability."
+ *                In the case of very small molecules, the probability that you get the
+ *                same fingerprint for different molecules is high.
+ *   </font></p>
+ *
  * @author     steinbeck
  * @cdk.created    2002-02-24
  *

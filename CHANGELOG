@@ -16,6 +16,7 @@ New:
 * Added cdk.applications.APIVersionTester for testing version numbers
 
 Fixes:
+* Tropylium is now recognised as aromatic (closes CDK bug #957627)
 * No longer calculates 2D coords for hydrogens which already have 2D coords
   in HydrogenPlacer
 * Fixed output of CML bond orders for bonds with CDKConstants.BONDORDER_AROMATIC
