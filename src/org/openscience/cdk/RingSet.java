@@ -1,6 +1,4 @@
-/* RingSet.java
- * 
- * $RCSfile$    
+/* $RCSfile$
  * $Author$    
  * $Date$    
  * $Revision$
@@ -37,8 +35,10 @@ import javax.vecmath.*;
  * @keyword     ring, set of
  */
 public class RingSet extends Vector{
-	
+
+    /** Flag to denote that the set is order with the largest ring first? */
 	public final static int LARGE_FIRST = 1;
+    /** Flag to denote that the set is order with the smallest ring first? */
 	public final static int SMALL_FIRST = 2;
 	
 	/**
@@ -339,11 +339,20 @@ public class RingSet extends Vector{
 		return ringList;
 		
 	}
-	
-	public class RingSizeComparator implements java.util.Comparator
-	{
+
+    /**
+     * Comparator to sort Ring sets by size.
+     */
+	public class RingSizeComparator implements java.util.Comparator {
+    
 		int sortOrder = SMALL_FIRST;
-		
+        
+        /**
+         * Constructs a new comparator to sort rings by size.
+         *
+         * @param   so  Sort order: either RingSet.SMALL_FIRST or
+         *                                 RingSet.LARGE_FIRST.
+         */
 		public RingSizeComparator(int so)
 		{
 			sortOrder = so;

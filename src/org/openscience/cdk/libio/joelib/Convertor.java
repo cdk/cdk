@@ -192,20 +192,16 @@ public class Convertor {
             for (int i=0; i<NOatoms; i++) {
                 converted.addAtom(convert(mol.getAtomAt(i)));
             }
-            try {
-                double[][] matrix = mol.getConnectionMatrix();
-                for (int i=0; i<NOatoms-1; i++) {
-                    for (int j=i+1; j<NOatoms; j++) {
-                        if (matrix[i][j] != 0.0) {
-                            // atoms i,j are connected
-                            /* JOEMol.addBond() needs atom ids [1,...] */
-                            converted.addBond(i+1,j+1, (int)matrix[i][j]);
-                        } else {
-                        }
+            double[][] matrix = mol.getConnectionMatrix();
+            for (int i=0; i<NOatoms-1; i++) {
+                for (int j=i+1; j<NOatoms; j++) {
+                    if (matrix[i][j] != 0.0) {
+                        // atoms i,j are connected
+                        /* JOEMol.addBond() needs atom ids [1,...] */
+                        converted.addBond(i+1,j+1, (int)matrix[i][j]);
+                    } else {
                     }
                 }
-            } catch (NoSuchAtomException e) {
-                // this is stupid, see bug #590570
             }
             return converted;
         } else {

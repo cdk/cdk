@@ -41,8 +41,7 @@ import java.util.*;
 public class MorganNumbersTools 
 {
 	
-	public static int[] getMorganNumbers(AtomContainer atomContainer) throws NoSuchAtomException
-	{
+	public static int[] getMorganNumbers(AtomContainer atomContainer) {
 		int [] morganMatrix, tempMorganMatrix;
 		int N = atomContainer.getAtomCount();
 		morganMatrix = new int[N];

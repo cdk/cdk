@@ -12,6 +12,8 @@ New:
 Fixes:
 * JCPController2D now edits a bond order when in
   bond mode
+* Removed NoSuchAtomException's from core classes
+  (see RFC #4, fixes bugs #590570 and #590576)
 
 API changes:
 * Removed obsolete cdk.structgen.stoichastic.ConvertTools

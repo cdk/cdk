@@ -12,7 +12,7 @@ public class ChemGraph
 	protected int dim;
 	/*Number of atoms needed to form subgraph*/
 	protected int numAtoms;
-	protected int[][] contab;
+	protected double[][] contab;
 	/*Number of atoms that have been traversed */
 	protected int travIndex;
 	/*Flag: true if atom visited during a traversal*/
@@ -24,8 +24,8 @@ public class ChemGraph
 	{
 		dim = chrom.getAtomCount();
 		numAtoms = (int)(dim/2);
-		contab = new int[dim][dim];
-		contab = ConvertTools.createConnectionTable(chrom);				 		
+		contab = new double[dim][dim];
+		contab = chrom.getConnectionMatrix();
 	}
 	
 	public Vector pickDFgraph()
@@ -41,7 +41,7 @@ public class ChemGraph
 	
 		return subGraph;
 	}
-	
+
 	private void recursiveDFT(int atom)
 	{
 		if ((travIndex < numAtoms)&&(!visited[atom]))
@@ -55,7 +55,7 @@ public class ChemGraph
             Vector adjSet = new Vector();
             for (int nextAtom = 0; nextAtom < dim; nextAtom++)
             {
-				if (contab[atom][nextAtom] != 0)
+				if ((int)contab[atom][nextAtom] != 0)
 				{
 					adjSet.add(new Integer(nextAtom));
 				}
@@ -94,7 +94,7 @@ public class ChemGraph
 			Vector adjSet = new Vector();
             for (int nextAtom = 0; nextAtom < dim; nextAtom++)
             {
-				if ((contab[foreAtom][nextAtom] != 0)&&(!visited[nextAtom]))
+				if (((int)contab[foreAtom][nextAtom] != 0)&&(!visited[nextAtom]))
 				{
 					adjSet.add(new Integer(nextAtom));
 				}

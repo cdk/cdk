@@ -31,7 +31,7 @@
 package org.openscience.cdk;
 
 /**
- *  Isotope.java Used to store data of a particular isotope
+ * Used to store and retrieve data of a particular isotope.
  *
  * @author     steinbeck
  * @created    August 21, 2001
@@ -41,8 +41,10 @@ package org.openscience.cdk;
 
 public class Isotope extends Element implements Cloneable {
 
-	public double exactMass = (double) -1;
-	public double naturalAbundance = (double) -1;
+    /** Exact mass of this isotope. */
+    public double exactMass = (double) -1;
+    /** Natural abundance of this isotope */
+    public double naturalAbundance = (double) -1;
 
 
 	/**

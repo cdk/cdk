@@ -36,7 +36,7 @@ import java.util.Vector;
  */
 public class Molecule extends AtomContainer
 {
-	public String title;
+    private String title;
 	private Vector chemNames;
 	private String autonomName = "";
 	private String casRN = "";

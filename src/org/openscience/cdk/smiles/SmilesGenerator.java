@@ -347,7 +347,6 @@ public class SmilesGenerator {
         differentAtoms++;
     }
     if(differentAtoms!=atoms.length){
-      try{
         int[] morgannumbers= MorganNumbersTools.getMorganNumbers(container);
         Vector differentSymbols=new Vector();
         for(int i=0;i<atoms.length;i++){
@@ -398,10 +397,6 @@ public class SmilesGenerator {
             return(true);
           return false;
         }
-      }
-      catch(NoSuchAtomException ex){
-        ex.printStackTrace();
-      }
     }
     return(true);
   }

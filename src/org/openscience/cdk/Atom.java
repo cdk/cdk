@@ -67,11 +67,11 @@ public class Atom extends AtomType implements Cloneable {
         /**
          * Constructs an Atom from a String containing an element symbol
          *
-         * @param   element  The String describing the element for the Atom 
+         * @param   elementSymbol  The String describing the element for the Atom
          */
         public Atom(String elementSymbol)
         {
-		super(elementSymbol);
+                super(elementSymbol);
                 this.point3D = null;
                 this.point2D = null;
         }
@@ -79,8 +79,8 @@ public class Atom extends AtomType implements Cloneable {
         /**
          * Constructs an Atom from an Element and a Point3D
          *
-         * @param   element   The Element
-         * @param   point3D   The Point
+         * @param   elementSymbol   The symbol of the atom
+         * @param   point3D         The 3D coordinates of the atom
          */
         public Atom(String elementSymbol, javax.vecmath.Point3d point3D)
         {
@@ -91,8 +91,8 @@ public class Atom extends AtomType implements Cloneable {
         /**
          * Constructs an Atom from an Element and a Point2D
          *
-         * @param   element   The Element
-         * @param   point2D   The Point
+         * @param   elementSymbol   The Element
+         * @param   point2D         The Point
          */
         public Atom(String elementSymbol, javax.vecmath.Point2d point2D)
         {
@@ -103,7 +103,7 @@ public class Atom extends AtomType implements Cloneable {
         /**
          *  Sets the partial charge of this atom
          *
-         * @param  element  The partial charge
+         * @param  charge  The partial charge
          */
         public void setCharge(double charge) {
                this.charge = charge;
@@ -111,6 +111,8 @@ public class Atom extends AtomType implements Cloneable {
 
         /**
          *  Returns the partial charge of this atom
+         *
+         * @return the charge of this atom
          */
         public double getCharge() {
                return this.charge;
@@ -340,11 +342,11 @@ public class Atom extends AtomType implements Cloneable {
 
 
         /**
-         *  Returns the stereo parity of this atom
+         *  Returns the stereo parity of this atom. It uses the predefined values
+         *  found in CDKConstants.
          *
          * @return    The stereo parity for this atom
          * @see       org.openscience.cdk.CDKConstants
-         *      org.openscience.cdk.CDKConstants for predefined values.
          */
         public int getStereoParity() {
                 return this.stereoParity;
@@ -353,6 +355,7 @@ public class Atom extends AtomType implements Cloneable {
         /**
          * Compares a atom with this atom
          *
+         * @param     object of type Atom
          * @return    return true, if the atoms are equal
          */
         public boolean compare(Object object)

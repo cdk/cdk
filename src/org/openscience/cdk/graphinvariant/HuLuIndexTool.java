@@ -1,4 +1,4 @@
-/* $RCSfile$    
+/* $RCSfile$
  * $Author$    
  * $Date$    
  * $Revision$
@@ -75,20 +75,21 @@ public class HuLuIndexTool
 			System.out.println("final matrix - the sum of the powers of EA matrix: ");
 			System.out.println();
 			displayMatrix(matrix.getArrayValue());
-			System.out.println();		
+			System.out.println();
 			System.out.println("eaid number: "+ eaid);
 			System.out.println();
 		}
-		
+
 		return eaid;
 	}
-	
-	
-	public static double[][] getExtendedAdjacenyMatrix(AtomContainer atomContainer) throws org.openscience.cdk.exception.NoSuchAtomException
+
+
+	public static double[][] getExtendedAdjacenyMatrix(AtomContainer atomContainer) 
+        throws org.openscience.cdk.exception.NoSuchAtomException
 	{
 		boolean debug = false;
-		double[][] adjaMatrix = getAdjacenyMatrix(atomContainer);
-		if (debug) 
+		double[][] adjaMatrix = atomContainer.getConnectionMatrix();
+		if (debug)
 		{
 			System.out.println("adjacency matrix: ");
 			System.out.println();
@@ -140,7 +141,7 @@ public class HuLuIndexTool
 
 		int k = 0;
 		double[] weightArray = new double[atomContainer.getAtomCount()];
-		double[][] adjaMatrix = getAdjacenyMatrix(atomContainer);
+		double[][] adjaMatrix = atomContainer.getConnectionMatrix();
 		
 		int[][] apspMatrix = PathTools.computeFloydAPSP(adjaMatrix);		
 		int[] atomLayers = getAtomLayers(apspMatrix);
@@ -185,9 +186,9 @@ public class HuLuIndexTool
 				weightArray[i] = 6 - atom.getHydrogenCount();
 			else
 				weightArray[i] = 4 - atom.getHydrogenCount();			
-			 	
-			
-			
+
+
+
 			for (int j = 0; j < apspMatrix.length; j++)
 			{
 				if(atomContainer.getAtomAt(j).getSymbol()=="O")
@@ -207,7 +208,7 @@ public class HuLuIndexTool
 				endAtomPosition = atomContainer.getAtomNumber(endAtom);
 				
 				
-				
+
 
 				if (Math.abs(apspMatrix[i][headAtomPosition] - apspMatrix[i][endAtomPosition]) == 1)
 				{
@@ -242,34 +243,7 @@ public class HuLuIndexTool
 		}
 		return weightArray;
 	}
-	
-	
-	
-	public static double[][] getAdjacenyMatrix(AtomContainer atomContainer)
-	{
-		int dim =atomContainer.getAtomCount();
-		double[][] adjaMatrix = new double[dim][dim];
-		
-		for (int j = 0; j < dim; j++){
-			for (int i = 0; i < dim; i++)
-				adjaMatrix[i][j] = 0;
-		}		
-		
-		for (int f = 0; f < atomContainer.getBondCount(); f++)
-		{
-			Bond bond = atomContainer.getBondAt(f);
-			try
-			{
-				int i = atomContainer.getAtomNumber(bond.getAtomAt(0));
-				int j = atomContainer.getAtomNumber(bond.getAtomAt(1));
-				adjaMatrix[i][j] = (int)bond.getOrder();
-				adjaMatrix[j][i] = (int)bond.getOrder();
-			}
-			catch(NoSuchAtomException e){}			
-		}
-		return adjaMatrix;
-	}	
-		
+
 	public static int[] getAtomLayers(int[][]apspMatrix)
 	{
 		int[] atomLayers  = new int[apspMatrix.length];
@@ -285,7 +259,7 @@ public class HuLuIndexTool
 		}
 		return atomLayers;
 	}
-	
+
 	/** Lists a 2D double matrix to the System console */
 	public static void displayMatrix(double[][] matrix){
 		String line;

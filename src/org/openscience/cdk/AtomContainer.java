@@ -234,22 +234,20 @@ public class AtomContainer extends ChemObject implements Cloneable
 
 
 	/**
-	 *  Returns the position of a given atom in the atoms array
+	 *  Returns the position of a given atom in the atoms array. It returns -1 if
+     *  the atom atom does not exist.
 	 *
 	 * @param  atom  The atom to be sought
 	 * @return       The Position of the atom in the atoms array.
 	 */
 
-	public int getAtomNumber(Atom atom) throws org.openscience.cdk.exception.NoSuchAtomException
-	{
-		for (int f = 0; f < getAtomCount(); f++)
-		{
-			if (getAtomAt(f) == atom)
-			{
+	public int getAtomNumber(Atom atom) {
+		for (int f = 0; f < getAtomCount(); f++) {
+			if (getAtomAt(f) == atom) {
 				return f;
 			}
 		}
-		throw new org.openscience.cdk.exception.NoSuchAtomException("No such Atom");
+		return -1;
 	}
 
 
@@ -464,10 +462,13 @@ public class AtomContainer extends ChemObject implements Cloneable
 	
 	/**
 	 *  Compares this AtomContainer with another given AtomContainer and returns 
-     *  the Intersection between them Important Note: This is not a maximum common
-     *  substructure
-	 *
-	 * @return     An AtomContainer containing the Intersection between this AtomContainer 
+     *  the Intersection between them.
+     *
+     *  <p><b>Important Note</b>: This is not a maximum common
+     *  substructure.
+     *
+     * @param  ac  an AtomContainer object
+	 * @return     An AtomContainer containing the Intersection between this AtomContainer
      *             and another given one
 	 */
 
@@ -558,8 +559,7 @@ public class AtomContainer extends ChemObject implements Cloneable
 	 * @return A connection matrix representation of this AtomContainer
 	 */
 
-	public double[][] getConnectionMatrix() throws org.openscience.cdk.exception.NoSuchAtomException
-	{
+	public double[][] getConnectionMatrix() {
 		Bond bond = null;
 		int i;
 		int j;
@@ -581,6 +581,7 @@ public class AtomContainer extends ChemObject implements Cloneable
      *  number of atoms in the AtomContainer. The element i,j of the matrix is
      *  1, if the i-th and the j-th atom in the atomcontainer share a bond. Otherwise it
      *  is zero.
+     *
      *  References:
      *  <a href="http://cdk.sf.net/biblio.html#TRI1992">TRI1992</a>,
      *
@@ -588,7 +589,7 @@ public class AtomContainer extends ChemObject implements Cloneable
      *
      * @keyword adjacency matrix
      */
-    public int[][] getAdjacencyMatrix() throws org.openscience.cdk.exception.NoSuchAtomException {
+    public int[][] getAdjacencyMatrix() {
         Bond bond = null;
         int i;
         int j;
@@ -705,10 +706,9 @@ public class AtomContainer extends ChemObject implements Cloneable
 	/**
 	 *  Removes all atoms and bonds of a given atomcontainer from this container
 	 *
-	 * @param  atomContainer                                          The atomcontainer to be removed
+	 * @param  atomContainer  The atomcontainer to be removed
 	 */
-	public void remove(AtomContainer atomContainer) throws org.openscience.cdk.exception.NoSuchAtomException
-	{
+	public void remove(AtomContainer atomContainer) {
 		for (int f = 0; f < atomContainer.getAtomCount(); f++)
 		{
 			removeAtom(atomContainer.getAtomAt(f));
@@ -803,17 +803,16 @@ public class AtomContainer extends ChemObject implements Cloneable
 	 *  Removes the given atom and all connected bonds from the AtomContainer 
 	 *
 	 * @param  atom  The atom to be removed
-	 * @exception  org.openscience.cdk.exception.NoSuchAtomException  throws if the atom is not in the container
 	 */
-	public void removeAtomAndConnectedBonds(Atom atom) throws org.openscience.cdk.exception.NoSuchAtomException
-	{
+	public void removeAtomAndConnectedBonds(Atom atom) {
 		int position = getAtomNumber(atom);
-		Bond[] bonds = getConnectedBonds(atom);
-		for (int f = 0; f < bonds.length; f++)
-		{
-			removeBond(bonds[f]);	
-		}
-		removeAtom(position);
+        if (position != -1) {
+            Bond[] bonds = getConnectedBonds(atom);
+            for (int f = 0; f < bonds.length; f++) {
+                removeBond(bonds[f]);
+            }
+            removeAtom(position);
+        }
 	}
 
 
@@ -823,12 +822,12 @@ public class AtomContainer extends ChemObject implements Cloneable
      * bonds to this atom from the container.
 	 *
 	 * @param  atom  The atom to be removed
-	 * @exception  org.openscience.cdk.exception.NoSuchAtomException  throws if the atom is not in the container
 	 */
-	public void removeAtom(Atom atom) throws org.openscience.cdk.exception.NoSuchAtomException
-	{
+	public void removeAtom(Atom atom) {
 		int position = getAtomNumber(atom);
-		removeAtom(position);
+        if (position != -1) {
+            removeAtom(position);
+        }
 	}
 
 

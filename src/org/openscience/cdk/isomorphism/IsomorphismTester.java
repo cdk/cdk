@@ -1,4 +1,4 @@
-/*  $RCSfile$    
+/*  $RCSfile$
  *  $Author$    
  *  $Date$    
  *  $Revision$
@@ -71,8 +71,7 @@ public class IsomorphismTester implements java.io.Serializable
 	 * @param  mol2                     A second molecule to check against the first
 	 * @return                          True, if the two molecules are isomorphic
 	 */
-	public boolean isIsomorphic(Molecule mol1, Molecule mol2) throws NoSuchAtomException
-	{
+	public boolean isIsomorphic(Molecule mol1, Molecule mol2) {
 		setBaseTable(mol1);
 		return isIsomorphic(mol2);
 	}
@@ -86,8 +85,7 @@ public class IsomorphismTester implements java.io.Serializable
 	 * @return                          True, if the two molecules are isomorphic 
 	 * @exception  NoSuchAtomException  A problem with the structures
 	 */
-	public boolean isIsomorphic(Molecule mol2) throws NoSuchAtomException
-	{
+	public boolean isIsomorphic(Molecule mol2) {
 		boolean found;
 		Atom atom1 = null;
 		Atom atom2 = null;
@@ -109,7 +107,8 @@ public class IsomorphismTester implements java.io.Serializable
 				{
 					atom1 = base.getAtomAt(f);
 					atom2 = compare.getAtomAt(g);
-					if (!(atom1.getSymbol().equals(atom2.getSymbol())) && atom1.getHydrogenCount() == atom2.getHydrogenCount())
+					if (!(atom1.getSymbol().equals(atom2.getSymbol())) && 
+                          atom1.getHydrogenCount() == atom2.getHydrogenCount())
 					{
 						return false;
 					}
@@ -147,8 +146,7 @@ public class IsomorphismTester implements java.io.Serializable
 	 *
 	 * @param  mol                      The new BaseTable value
 	 */
-	private void setBaseTable(Molecule mol) throws NoSuchAtomException
-	{
+	private void setBaseTable(Molecule mol) {
 		this.base = mol;
 		this.baseTable = MorganNumbersTools.getMorganNumbers(base);
 		sortedBaseTable = new int[baseTable.length];
@@ -162,8 +160,7 @@ public class IsomorphismTester implements java.io.Serializable
 	 *
 	 * @param  mol                      The new CompareTable value
 	 */
-	private void setCompareTable(Molecule mol) throws NoSuchAtomException
-	{
+	private void setCompareTable(Molecule mol) {
 		this.compare = mol;
 		this.compareTable = MorganNumbersTools.getMorganNumbers(compare);
 		sortedCompareTable = new int[compareTable.length];

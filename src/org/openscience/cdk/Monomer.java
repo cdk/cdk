@@ -43,9 +43,12 @@ import org.openscience.cdk.*;
  *
  */
 public class Monomer extends AtomContainer {
-	protected String _cMonomerName;		// the name of this monomer (e.g. Trp42)
-	protected String _cMonomerType;		// the type of this monomer (e.g. TRP)
-	
+
+    /** The name of this monomer (e.g. Trp42). */
+    protected String _cMonomerName;
+    /** The type of this monomer (e.g. TRP). */
+    protected String _cMonomerType;
+
 	/**
 	 *
 	 * Contructs a new Monomer.
