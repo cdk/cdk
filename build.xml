@@ -66,7 +66,7 @@
                 </copy>
         </target>
 
-        <target name="clean">
+        <target name="clean" description="Removes unneccessary stuff">
                 <delete>
                         <fileset dir="." includes="**/*~" />
                         <fileset dir="." includes="*.tar.gz" />
@@ -79,7 +79,7 @@
                 <delete dir="${reports.tests}" />
         </target>
 
-        <target name="compile">
+        <target name="compile" description="Compiles all parts of the CDK">
                 <antcall target="compile-all"/>
         </target>
 
@@ -486,7 +486,7 @@
                                          dist-extra, dist-libio,
                                          dist-render-with-java3d" />
 
-        <target name="dist" depends="dist-all" />
+        <target name="dist" depends="dist-all" description="Builds jar file for all parts of the CDK"/>
 
         <target name="sourcedist" depends="init">
                 <property name="package" value="cdk-source-${DSTAMP}"/>
@@ -575,7 +575,7 @@
             </junit>
         </target>
 
-        <target name="test" depends="dist-all, dist-test">
+        <target name="test" depends="dist-all, dist-test" description="Performs a full JUnit test for the CDK">
                 <junit printsummary="yes" haltonfailure="yes">
                         <classpath>
                                 <pathelement path="${java.class.path}" />
@@ -639,7 +639,7 @@
                 </java>
         </target>
 
-        <target name="run" depends="dist-core, dist-extra, dist-test, dist-standard">
+        <target name="run" depends="dist-core, dist-extra, dist-test, dist-standard" description="Runs an application">
                 <java classname="org.openscience.cdk.test.tools.SaturationCheckerTest" fork="yes">
                     <classpath>
                         <pathelement location="${dist}/jar/cdk-core.jar" />
