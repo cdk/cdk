@@ -35,6 +35,7 @@ import javax.vecmath.*;
 
 import java.util.*;
 
+import java.awt.Dimension;
 import java.io.*;
 import java.net.URL;
 import junit.framework.*;
@@ -70,7 +71,8 @@ public class SmilesParserTest extends TestCase
 			"CN(C)CCC2=CNC1=CC=CC(OP(O)(O)=O)=C12",
 			"O=C(O)C1C(OC(C3=CC=CC=C3)=O)CC2N(C)C1CC2", 
 			"C1(C2(C)(C))C(C)=CCC2C1",
-			"C1(C=C(C=C(C=C(C=C(C=CC%35=C%36)C%31=C%35C%32=C%33C%36=C%34)C%22=C%31C%23=C%32C%24=C%25C%33=C%26C%34=CC%27=CC%28=CC=C%29)C%14=C%22C%15=C%23C%16=C%24C%17=C%18C%25=C%19C%26=C%27C%20=C%28C%29=C%21)C6=C%14C7=C%15C8=C%16C9=C%17C%12=C%11C%18=C%10C%19=C%20C%21=CC%10=CC%11=CC(C=C%30)=C%12%13)=C(C6=C(C7=C(C8=C(C9=C%13C%30=C5)C5=C4)C4=C3)C3=C2)C2=CC=C1"
+			"C1(C=C(C=C(C=C(C=C(C=CC%35=C%36)C%31=C%35C%32=C%33C%36=C%34)C%22=C%31C%23=C%32C%24=C%25C%33=C%26C%34=CC%27=CC%28=CC=C%29)C%14=C%22C%15=C%23C%16=C%24C%17=C%18C%25=C%19C%26=C%27C%20=C%28C%29=C%21)C6=C%14C7=C%15C8=C%16C9=C%17C%12=C%11C%18=C%10C%19=C%20C%21=CC%10=CC%11=CC(C=C%30)=C%12%13)=C(C6=C(C7=C(C8=C(C9=C%13C%30=C5)C5=C4)C4=C3)C3=C2)C2=CC=C1",
+			"CC1(C(=C(CC(C1)O)C)C=CC(=CC=CC(=CC=CC=C(C=CC=C(C=CC1=C(CC(CC1(C)C)O)C)C)C)C)C)C"			
 		};
 		for (int f = 0; f < smiles.length; f++)
 		{
@@ -100,7 +102,56 @@ public class SmilesParserTest extends TestCase
 							
 	}
 
-    /**
+	public void testSFBug630475()
+	{
+		SmilesParser sp = new SmilesParser();
+		MoleculeListViewer mlv = new MoleculeListViewer();
+		mlv.setMolViewDim(new Dimension(400, 600));
+		String[] smiles = 
+		{
+			"CC1(C(=C(CC(C1)O)C)C=CC(=CC=CC(=CC=CC=C(C=CC=C(C=CC1=C(CC(CC1(C)C)O)C)C)C)C)C)C"			
+		};
+		for (int f = 0; f < smiles.length; f++)
+		{
+			try{
+				Molecule mol = sp.parseSmiles(smiles[f]);
+				StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+				MoleculeViewer2D mv = new MoleculeViewer2D();
+				//mv.getRenderer2DModel().setDrawNumbers(true);
+				sdg.setMolecule((Molecule)mol.clone());
+				sdg.generateCoordinates();
+				mv.setAtomContainer(sdg.getMolecule());
+				mlv.addStructure(mv, "Structure " + (f + 1)); 
+			}catch(Exception exc){exc.printStackTrace();}
+		}
+	}
+	
+	public void testSFBug585811()
+	{
+		SmilesParser sp = new SmilesParser();
+		MoleculeListViewer mlv = new MoleculeListViewer();
+		mlv.setMolViewDim(new Dimension(400, 600));
+		String[] smiles = 
+		{
+			"CC(C(C8CCC(CC8)=O)C3C4C(CC5(CCC(C9=CC(C=CN%10)=C%10C=C9)CCCC5)C4)C2CCC1CCC7(CCC7)C6(CC6)C1C2C3)=O"			
+		};
+		for (int f = 0; f < smiles.length; f++)
+		{
+			try{
+				Molecule mol = sp.parseSmiles(smiles[f]);
+				StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+				MoleculeViewer2D mv = new MoleculeViewer2D();
+				//mv.getRenderer2DModel().setDrawNumbers(true);
+				sdg.setMolecule((Molecule)mol.clone());
+				sdg.generateCoordinates();
+				mv.setAtomContainer(sdg.getMolecule());
+				mlv.addStructure(mv, "Structure " + (f + 1)); 
+			}catch(Exception exc){exc.printStackTrace();}
+		}
+	}
+	
+	
+/**
      * This tests the fix made for bug #593648.
      */
     public void testSFBug593648() {
@@ -121,7 +172,9 @@ public class SmilesParserTest extends TestCase
 		SmilesParserTest spt = new SmilesParserTest("SmilesParserTest");
 		spt.setStandAlone(true);
 		spt.testSmilesParser();
-        spt.testSFBug593648();
+		spt.testSFBug630475();
+		spt.testSFBug585811();
+		spt.testSFBug593648();
 	}
 }
 
