@@ -194,6 +194,16 @@ public class IsotopeFactory
     }
 
     /**
+     * Checks wether the given element exists.
+     *
+     * @param  elementName   The element name to test
+     * @return               True is the element exists, false otherwise
+     */
+    public boolean isElement(String elementName) {
+        return (getElement(elementName) != null);
+    }
+    
+    /**
      *  Returns the most abundant (major) isotope whose symbol equals element.
      *
      *@param  symbol  Description of the Parameter
