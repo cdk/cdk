@@ -357,7 +357,7 @@ public class AtomContainerTest extends TestCase {
         container.setAtomAt(0, c);
         
         assertNotNull(container.getAtomAt(0));
-        assertTrue("C".equals(container.getAtomAt(0).getSymbol()));
+        assertEquals("C", container.getAtomAt(0).getSymbol());
     }
     
     public void testGetAtomAt() {
@@ -374,16 +374,16 @@ public class AtomContainerTest extends TestCase {
         
         Atom a1 = acetone.getAtomAt(0);
         assertNotNull(a1);
-        assertTrue("C".equals(a1.getSymbol()));
+        assertEquals("C", a1.getSymbol());
         Atom a2 = acetone.getAtomAt(1);
         assertNotNull(a2);
-        assertTrue("N".equals(a2.getSymbol()));
+        assertEquals("N", a2.getSymbol());
         Atom a3 = acetone.getAtomAt(2);
         assertNotNull(a3);
-        assertTrue("O".equals(a3.getSymbol()));
+        assertEquals("O", a3.getSymbol());
         Atom a4 = acetone.getAtomAt(3);
         assertNotNull(a4);
-        assertTrue("S".equals(a4.getSymbol()));
+        assertEquals("S", a4.getSymbol());
     }
     
     public void testGetBondAt() {
@@ -399,16 +399,16 @@ public class AtomContainerTest extends TestCase {
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        Bond b1 = new Bond(c1, c2,3);
-        Bond b2 = new Bond(c1, o, 2);
-        Bond b3 = new Bond(c1, c3,1);
+        Bond b1 = new Bond(c1, c2,3.0);
+        Bond b2 = new Bond(c1, o, 2.0);
+        Bond b3 = new Bond(c1, c3,1.0);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
         
-        assertEquals(3, (int)acetone.getBondAt(0).getOrder());
-        assertEquals(2, (int)acetone.getBondAt(1).getOrder());
-        assertEquals(1, (int)acetone.getBondAt(2).getOrder());
+        assertEquals(3.0, acetone.getBondAt(0).getOrder(), 0.00001);
+        assertEquals(2.0, acetone.getBondAt(1).getOrder(), 0.00001);
+        assertEquals(1.0, acetone.getBondAt(2).getOrder(), 0.00001);
     }
     
     public void testSetElectronContainerAt() {
@@ -422,7 +422,7 @@ public class AtomContainerTest extends TestCase {
         
         assertTrue(container.getElectronContainerAt(3) instanceof Bond);
         Bond bond = (Bond)container.getElectronContainerAt(3);
-        assertEquals(3, (int)bond.getOrder());
+        assertEquals(3.0, bond.getOrder(), 0.00001);
     }
     
     public void testGetElectronContainerCount() {
@@ -573,7 +573,7 @@ public class AtomContainerTest extends TestCase {
         container.addAtom(o);
         
         assertNotNull(container.getFirstAtom());
-        assertTrue("C".equals(container.getFirstAtom().getSymbol()));
+        assertEquals("C", container.getFirstAtom().getSymbol());
     }
 
     public void testGetLastAtom() {
@@ -586,7 +586,7 @@ public class AtomContainerTest extends TestCase {
         container.addAtom(o);
         
         assertNotNull(container.getLastAtom());
-        assertTrue("H".equals(container.getLastAtom().getSymbol()));
+        assertEquals("H", container.getLastAtom().getSymbol());
     }
     
     public void testGetAtomNumber() {
@@ -768,10 +768,10 @@ public class AtomContainerTest extends TestCase {
         acetone.addElectronContainer(lp1);
         acetone.addElectronContainer(lp2);
         
-        assertEquals(2, acetone.getLonePairCount(c1));
+        assertEquals(2, acetone.getLonePairCount(o));
         assertEquals(0, acetone.getLonePairCount(c2));
         assertEquals(0, acetone.getLonePairCount(c3));
-        assertEquals(0, acetone.getLonePairCount(o));
+        assertEquals(0, acetone.getLonePairCount(c1));
     }
 
     public void testGetBondOrderSum_Atom() {
