@@ -128,7 +128,7 @@ public class RingPlacer
 				primaryAtoms.removeAllElements();
 				atom = ring.getAtomAt(k);
 				rings = rs.getRings(atom);
-				centerOfRingGravity = rings.get2DCenter();
+				centerOfRingGravity = GeometryTools.get2DCenter(rings);
 				atomPlacer.partitionPartners(atom, unplacedPartners, sharedAtoms);
 				atomPlacer.markNotPlaced(unplacedPartners);
 				try
