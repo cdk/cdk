@@ -424,6 +424,10 @@ public class MDLReader extends DefaultChemObjectReader {
                 line = input.readLine(); linecount++;
                 if ("M  END".equals(line)) break;
                 
+                if (line == null) {
+                    throw new CDKException("The expected property block is missing!");
+                }
+                
                 boolean lineRead = false;
                 if (line.startsWith("M  CHG")) {
                     // FIXME: if this is encountered for the first time, all
@@ -486,6 +490,7 @@ public class MDLReader extends DefaultChemObjectReader {
                 }
             }
 		} catch (CDKException exception) {
+            String error = "Error while parsing line " + linecount + ": " + line + " in property block: " + exception.getMessage();
             throw exception;
 		} catch (Exception exception) {
             String error = "Error while parsing line " + linecount + ": " + line + " in property block: " + exception.getMessage();

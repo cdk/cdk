@@ -42,6 +42,7 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.iterator.IteratingMDLReader;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.test.CDKTestCase;
@@ -84,6 +85,22 @@ public class IteratingMDLReaderTest extends CDKTestCase {
             assertEquals(6, molCount);
         } catch (Exception e) {
             fail(e.toString());
+        }
+    }
+
+    public void testCorruptSDF() {
+        // 'M  END' is missing from the prop block
+        String filename = "data/mdl/corruptfile_bothcap.sd";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        try {
+            IteratingMDLReader reader = new IteratingMDLReader(new InputStreamReader(ins));
+            
+            int molCount = 0;
+            assertFalse(reader.hasNext());
+            // the expected CDKException is catched by the Iterator 
+        } catch (Exception exception) {
+            fail(exception.getMessage());
         }
     }
 }

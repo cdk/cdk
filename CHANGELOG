@@ -5,8 +5,7 @@ Changes in CVS
 ------------------------------------
 New:
 * Atom type list for PDB atom codes (implements RFE #1062516)
-* Implemented an iterating (event based) CML reader (implements
-  RFE #824133)
+* Implemented an iterating (event based) CML reader (implements RFE #824133)
 * ReaderFactory now uses the new CDK set io-formats instead of
   hardcoding the recognized formats
 * The PluginManager now adds the plugin menu to the plugin
@@ -14,7 +13,7 @@ New:
 * Jmol API and IO from CVS HEAD on 10.05
 * Added AminoAcid templates
 * The libio.cml.Convertor now also accepts AtomContainer
-* Added customization of atom color for Renderer[2D|3D]Model
+* Added customization of atom color for Renderer[2D|3D]Model 
   (closes RFE #949751)
 
 Fixes:
@@ -23,13 +22,14 @@ Fixes:
 * Don't consume Exceptions while writing MDL
 * Removed entry for 'D' in the isotope list; '2H' is still present
   (closes #1118689)
+* Fail more informative on (corrupt) MDL files that lack the property block
+
 API changes:
 * Moved IsotopeFactory from cdk-standard to the cdk-core module
 * Descriptor.calculate() now returns a DescriptorValue instead of
   DescriptorResult.
 * Removed LoggingTool(boolean) and LoggingTool(Object, boolean)
-  (closes #1150670) because configuration should be done at application
-  level
+  (closes #1150670) because configuration should be done at application level
 
 20050125 Release
 ------------------------------------
