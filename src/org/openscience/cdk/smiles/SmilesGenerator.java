@@ -28,12 +28,15 @@ package org.openscience.cdk.smiles;
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.tools.IsotopeFactory;
+import org.openscience.cdk.graphinvariant.MorganNumbersTools;
 import org.openscience.cdk.test.MoleculeFactory;
 import org.openscience.cdk.ringsearch.SSSRFinder;
+import org.openscience.cdk.exception.NoSuchAtomException;
 
 import java.util.*;
 import java.io.IOException;
 import java.text.NumberFormat;
+import javax.vecmath.Vector2d;
 
 /**
  * Generates SMILES strings.
@@ -76,6 +79,129 @@ public class SmilesGenerator {
       e.printStackTrace();
     }
   }
+  
+  private double giveAngle(Atom from, Atom to1, Atom to2){
+    double[] A=new double[2];
+    from.getPoint2D().get(A);
+    double[] B=new double[2];
+    to1.getPoint2D().get(B);
+    double[] C=new double[2];
+    to2.getPoint2D().get(C);
+    return(Math.atan2(A[1]-B[1],A[0]-B[0])-Math.atan2(A[1]-C[1],A[0]-C[0]));
+  }
+
+  public int isTetrahedral(AtomContainer container, Atom a) {
+    Atom[] atoms=container.getConnectedAtoms(a);
+    Bond[] bonds=container.getConnectedBonds(a);
+    int normal=0;
+    int up=0;
+    int down=0;
+    for(int i=0;i<bonds.length;i++){
+      if(bonds[i].getStereo()==CDKConstants.STEREO_BOND_UNDEFINED ||bonds[i].getStereo()==0)
+        normal++;
+      if(bonds[i].getStereo()==CDKConstants.STEREO_BOND_UP)
+        up++;
+      if(bonds[i].getStereo()==CDKConstants.STEREO_BOND_DOWN)
+        down++;
+    }
+    if(up==1 && down==1)
+      return 1;
+    if(up==2 && down==2){
+      if(stereosAreOpposite(container, a)){
+        return 2;
+      }
+      return 0;
+    }
+    return 0;
+  }
+  
+  public boolean stereosAreOpposite(AtomContainer container, Atom a) {
+    Atom[] atoms=container.getConnectedAtoms(a);
+    int stereoOne=container.getBond(a,atoms[0]).getStereo();
+    double largestAngle=0;
+    int oppositeAtom=0;
+    for(int i=1;i<4;i++){
+      double angle=giveAngle(a,atoms[0],atoms[i]);
+      if(angle>largestAngle){
+        largestAngle=angle;
+        oppositeAtom=i;
+      }
+    }
+    if(container.getBond(a,atoms[oppositeAtom]).getStereo()==stereoOne)
+      return true;
+    else
+      return false;
+  }
+      
+
+  public boolean isStereo(AtomContainer container, Atom a) {
+    Atom[] atoms=container.getConnectedAtoms(a);
+    if(atoms.length!=4)
+      return(false);
+    Bond[] bonds=container.getConnectedBonds(a);
+    boolean stereo=false;
+    for(int i=0;i<bonds.length;i++){
+      if(bonds[i].getStereo()!=0){
+        stereo=true;
+      }
+    }
+    if(!stereo)
+      return false;
+    int differentAtoms=0;
+    for(int i=0;i<atoms.length;i++){
+      boolean isDifferent=true;
+      for(int k=0;k<i;k++){
+        if(atoms[i].getSymbol().equals(atoms[k].getSymbol())){
+          isDifferent=false;
+          break;
+        }
+      }
+      if(isDifferent)
+        differentAtoms++;
+    }
+    if(differentAtoms!=atoms.length){
+      try{
+        int[] morgannumbers= MorganNumbersTools.getMorganNumbers(container);
+        Vector differentSymbols=new Vector();
+        for(int i=0;i<atoms.length;i++){
+          if(!differentSymbols.contains(atoms[i].getSymbol()))
+            differentSymbols.add(atoms[i].getSymbol());
+        }
+        int symbolsWithDifferentMorganNumbers=differentSymbols.size();
+        for(int i=0;i<differentSymbols.size();i++){
+          int firstMorganNumber=-1;
+          for(int k=0;k<atoms.length;k++){
+            if(((String)differentSymbols.get(i)).equals(atoms[k].getSymbol())){
+              if(firstMorganNumber==-1)
+              {
+                firstMorganNumber=morgannumbers[container.getAtomNumber(atoms[k])];
+              }
+              else
+              {
+                if(morgannumbers[container.getAtomNumber(atoms[k])]==firstMorganNumber)
+                  symbolsWithDifferentMorganNumbers--;
+              }
+            }
+          }
+        }
+        if(symbolsWithDifferentMorganNumbers!=differentSymbols.size())
+          return false;
+      }
+      catch(NoSuchAtomException ex){
+        ex.printStackTrace();
+      }
+    }
+    return(true);
+  }
+  
+  
+  public synchronized String createSMILES(Molecule molecule) {
+    return (createSMILES(molecule, false));
+  }
+  
+  public synchronized String createChiralSMILES(Molecule molecule) {
+    return(createSMILES(molecule, true));
+  }
 
   /**
    * Generate canonical SMILES from the <code>molecule</code>.  This method
@@ -85,7 +211,7 @@ public class SmilesGenerator {
    * @see org.openscience.cdk.smiles.CanonicalLabeler#canonLabel
    *
    */
-  public synchronized String createSMILES(Molecule molecule) {
+  public synchronized String createSMILES(Molecule molecule, boolean chiral) {
     if (molecule.getAtomCount() == 0)
       return "";
     canLabler.canonLabel(molecule);
@@ -115,7 +241,7 @@ public class SmilesGenerator {
     }
 
     StringBuffer l = new StringBuffer();
-    createSMILES(start, l, molecule);
+    createSMILES(start, l, molecule, chiral);
     return l.toString();
   }
 
@@ -127,10 +253,10 @@ public class SmilesGenerator {
    * @param line the StringBuffer that the SMILES is to be appended to.
    * @param atomContainer the AtomContainer that the SMILES string is generated for.
    */
-  private void createSMILES(Atom a, StringBuffer line, AtomContainer atomContainer) {
+  private void createSMILES(Atom a, StringBuffer line, AtomContainer atomContainer, boolean chiral) {
     Vector tree = new Vector();
     createDFSTree(a, tree, null, atomContainer); //Dummy parent
-    parseChain(tree, line, atomContainer, null);
+    parseChain(tree, line, atomContainer, null, chiral);
   }
 
   /**
@@ -171,10 +297,22 @@ public class SmilesGenerator {
     }
   }
 
+  private boolean isBondBroken(Atom a1, Atom a2) {
+    Iterator it = brokenBonds.iterator();
+    while (it.hasNext()) {
+      BrokenBond bond=((BrokenBond) it.next());
+      if((bond.getA1().equals(a1)|| bond.getA1().equals(a2))&&(bond.getA2().equals(a1)|| bond.getA2().equals(a2))){
+        return(true);
+      }
+    }
+    return false;
+  }
+
   /**
    * Parse a branch
    */
-  private void parseChain(Vector v, StringBuffer buffer, AtomContainer container, Atom parent){
+  private void parseChain(Vector v, StringBuffer buffer, AtomContainer container, Atom parent, boolean chiral){
+    int positionInVector=0;
     Iterator it = v.iterator();
     Atom atom;
     while (it.hasNext()) {
@@ -184,7 +322,179 @@ public class SmilesGenerator {
         if(parent != null) {
           parseBond(buffer, atom, parent, container);
         }
-        parseAtom(atom, buffer);
+        parseAtom(atom, buffer, container, chiral);
+      	if(chiral && isStereo(container,atom)){
+          Atom[] sorted=new Atom[3];
+          Vector chiralNeighbours=container.getConnectedAtomsVector(atom);
+          if(isTetrahedral(container,atom)==1){
+            if(container.getBond(parent,atom).getStereo()==CDKConstants.STEREO_BOND_DOWN){
+              for(int i=0;i<chiralNeighbours.size();i++){
+                if(chiralNeighbours.get(i)!=parent){
+                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==0&&isLeft(((Atom)chiralNeighbours.get(i)),parent,atom)&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
+                    sorted[0]=(Atom)chiralNeighbours.get(i);
+                  }
+                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==0&&!isLeft(((Atom)chiralNeighbours.get(i)),parent,atom)&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
+                    sorted[2]=(Atom)chiralNeighbours.get(i);
+                  }
+                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==CDKConstants.STEREO_BOND_UP&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
+                    sorted[1]=(Atom)chiralNeighbours.get(i);
+                  }
+                }
+              }
+            }
+            if(container.getBond(parent,atom).getStereo()==CDKConstants.STEREO_BOND_UP){
+              for(int i=0;i<chiralNeighbours.size();i++){
+                
+                if(chiralNeighbours.get(i)!=parent){
+                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==0&&isLeft(((Atom)chiralNeighbours.get(i)),parent,atom)&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
+                    sorted[2]=(Atom)chiralNeighbours.get(i);
+                  }
+                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==0&&!isLeft(((Atom)chiralNeighbours.get(i)),parent,atom)&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
+                    sorted[1]=(Atom)chiralNeighbours.get(i);
+                  }
+                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==CDKConstants.STEREO_BOND_DOWN&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
+                    sorted[0]=(Atom)chiralNeighbours.get(i);
+                  }
+                }
+              }
+            }
+            if(container.getBond(parent,atom).getStereo()==CDKConstants.STEREO_BOND_UNDEFINED||container.getBond(parent,atom).getStereo()==0){
+              boolean normalBindingIsLeft=false;
+              for(int i=0;i<chiralNeighbours.size();i++){
+                if(chiralNeighbours.get(i)!=parent){
+                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==0){
+                    if(isLeft(((Atom)chiralNeighbours.get(i)),parent,atom)){
+                      normalBindingIsLeft=true;
+                      break;
+                    }
+                  }
+                }
+              }
+              for(int i=0;i<chiralNeighbours.size();i++){
+                if(chiralNeighbours.get(i)!=parent){
+                if(normalBindingIsLeft){
+                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==0&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
+                    sorted[0]=(Atom)chiralNeighbours.get(i);
+                  }
+                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==CDKConstants.STEREO_BOND_UP&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
+                    sorted[2]=(Atom)chiralNeighbours.get(i);
+                  }
+                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==CDKConstants.STEREO_BOND_DOWN&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
+                    sorted[1]=(Atom)chiralNeighbours.get(i);
+                  }
+                }
+                else
+                {
+                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==CDKConstants.STEREO_BOND_UP&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
+                    sorted[1]=(Atom)chiralNeighbours.get(i);
+                  }
+                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==0&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
+                    sorted[0]=(Atom)chiralNeighbours.get(i);
+                  }
+                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==CDKConstants.STEREO_BOND_DOWN&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
+                    sorted[2]=(Atom)chiralNeighbours.get(i);
+                  }
+                }
+                }
+              }
+            }
+          }
+          if(isTetrahedral(container,atom)==2){
+            if(container.getBond(parent,atom).getStereo()==CDKConstants.STEREO_BOND_UP){
+              for(int i=0;i<chiralNeighbours.size();i++){
+                if(chiralNeighbours.get(i)!=parent){
+                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==CDKConstants.STEREO_BOND_DOWN&&isLeft(((Atom)chiralNeighbours.get(i)),parent,atom)&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
+                    sorted[1]=(Atom)chiralNeighbours.get(i);
+                  }
+                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==CDKConstants.STEREO_BOND_DOWN&&!isLeft(((Atom)chiralNeighbours.get(i)),parent,atom)&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
+                    sorted[2]=(Atom)chiralNeighbours.get(i);
+                  }
+                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==CDKConstants.STEREO_BOND_UP&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
+                    sorted[0]=(Atom)chiralNeighbours.get(i);
+                  }
+                }
+              }
+            }
+            if(container.getBond(parent,atom).getStereo()==CDKConstants.STEREO_BOND_DOWN){
+              for(int i=0;i<chiralNeighbours.size();i++){
+                if(chiralNeighbours.get(i)!=parent){
+                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==CDKConstants.STEREO_BOND_UP&&isLeft(((Atom)chiralNeighbours.get(i)),parent,atom)&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
+                    sorted[0]=(Atom)chiralNeighbours.get(i);
+                  }
+                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==CDKConstants.STEREO_BOND_UP&&!isLeft(((Atom)chiralNeighbours.get(i)),parent,atom)&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
+                    sorted[2]=(Atom)chiralNeighbours.get(i);
+                  }
+                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==CDKConstants.STEREO_BOND_DOWN&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
+                    sorted[1]=(Atom)chiralNeighbours.get(i);
+                  }
+                }
+              }
+            }
+          }
+          int numberOfAtoms=3-getRingOpenings(atom).size();
+          Atom[] sortedNew=new Atom[numberOfAtoms];
+          int l=0;
+          for(int k=0;k<sorted.length;k++){
+            if(sorted[k]!=null){
+              sortedNew[l]=sorted[k];
+              l++;
+            }
+          }
+          Object[] omy=new Object[numberOfAtoms];
+          Object[] onew=new Object[numberOfAtoms];
+          for(int k=0;k<omy.length;k++){
+            omy[k]=v.get(positionInVector+1+k);
+          }
+          l=0;
+          for(int k=0;k<sorted.length;k++){
+            for(int m=0;m<omy.length;m++){
+              if(omy[m] instanceof Atom){
+                if(sorted[k]!=null&&omy[m]==sorted[k]){
+                  onew[l]=omy[m];
+                }
+              }
+              else
+              {
+                if(sorted[k]!=null&&((Vector)omy[m]).get(0)==sorted[k]){
+                  onew[l]=omy[m];
+                }
+              }
+            }
+            if(sorted[k]!=null)
+            l++;
+          }
+          int k=0;
+          while(!(onew[numberOfAtoms-1] instanceof Atom)){
+            Object dummy=onew[numberOfAtoms-1];
+            for(int m=numberOfAtoms-1;m>0;m--){
+              onew[m]=onew[m-1];
+            }
+            onew[0]=dummy;
+            k++;
+            if(k>numberOfAtoms)
+              break;
+          }
+          if(!(onew[numberOfAtoms-1] instanceof Atom)){
+            Vector vneigh=getCanNeigh(atom, container);
+            for(int i=0;i<vneigh.size();i++){
+              if(isBondBroken(atom,((Atom)vneigh.get(0))))
+                vneigh.remove(0);
+              if(vneigh.get(0)==parent)
+                vneigh.remove(0);
+            }
+            //Diese sortierung muss atome, die als zahlen vorliegen, berücksichtigen
+            while(((Vector)onew[0]).get(0)!=vneigh.get(0)){
+              Object dummy=onew[numberOfAtoms-1];
+              for(int m=numberOfAtoms-1;m>0;m--){
+                onew[m]=onew[m-1];
+              }
+              onew[0]=dummy;
+            }
+          }
+          for(int m=0;m<numberOfAtoms-1;m++){
+            v.set(positionInVector+1+m,onew[m]);
+          }
+        }
         parent = atom;
       }
       else { //Have Vector
@@ -193,10 +503,39 @@ public class SmilesGenerator {
           brackets = false;
         if(brackets)
           buffer.append('(');
-        parseChain((Vector)o, buffer, container, parent);
+        parseChain((Vector)o, buffer, container, parent, chiral);
         if(brackets)
           buffer.append(')');
       }
+      positionInVector++;
+    }
+  }
+  
+  private boolean isLeft(Atom whereIs, Atom viewFrom, Atom viewTo){
+    double[] A=new double[2];
+    viewFrom.getPoint2D().get(A);
+    double[] B=new double[2];
+    viewTo.getPoint2D().get(B);
+    double[] C=new double[2];
+    whereIs.getPoint2D().get(C);
+    double[] D=new double[2];
+    whereIs.getPoint2D().get(D);
+    D[0]=D[0]-1;
+    double d0 = A[0]*B[1] - A[1]*B[0];
+    double d1 = C[0]*D[1] - C[1]*D[0];
+    double den = (B[1]-A[1])*(C[0]-D[0]) - (A[0]-B[0])*(D[1]-C[1]);
+    double x = (d0*(C[0]-D[0]) - d1*(A[0]-B[0])) / den;
+    double y = (d1*(B[1]-A[1]) - d0*(D[1]-C[1])) / den;
+    if(y>C[1]){
+      if(x>C[0])
+        return false;
+      else
+        return true;
+    } else {
+      if(x>C[0])
+        return true;
+      else
+        return false;
     }
   }
 
@@ -267,8 +606,9 @@ public class SmilesGenerator {
    * @param atom the atom to generate the SMILES for
    * @param buffer the string buffer that the atom is to be apended to.
    */
-  private void parseAtom(Atom a, StringBuffer buffer) {
+  private void parseAtom(Atom a, StringBuffer buffer, AtomContainer container, boolean chiral) {
     String symbol = a.getSymbol();
+    boolean stereo=isStereo(container,a);
     boolean brackets = symbol.equals("B") || symbol.equals("C") || symbol.equals("N") || symbol.equals("O") || symbol.equals("P") || symbol.equals("S") || symbol.equals("F") || symbol.equals("Br") || symbol.equals("I") || symbol.equals("Cl");
     brackets = !brackets;
 
@@ -278,6 +618,8 @@ public class SmilesGenerator {
     String charge = generateChargeString(a);
     brackets = brackets | !charge.equals("");
 
+    if(chiral && stereo)
+      brackets=true;
     if(brackets)
       buffer.append('[');
     buffer.append(mass);
@@ -285,6 +627,8 @@ public class SmilesGenerator {
      buffer.append(a.getSymbol().toLowerCase());
     else
       buffer.append(symbol);
+    if(chiral && stereo)
+      buffer.append('@');
     //chiral
     //hcount
     buffer.append(charge);
@@ -429,10 +773,12 @@ class BrokenBond {
     return Integer.toString(marker);
   }
 
-  public boolean equals(Object o) {
+  public boolean equals(Object o){
     if(!(o instanceof BrokenBond))
       return false;
     BrokenBond bond = (BrokenBond)o;
     return (a1.equals(bond.getA1()) && a2.equals(bond.getA2())) || (a1.equals(bond.getA2()) && a2.equals(bond.getA1()));
   }
 }
+
+
