@@ -145,7 +145,7 @@
                        includesfile="${src}/standard.classes">
                     <classpath>
                         <fileset dir="${lib}">
-                            <include name="JSX1.0.6.0.jar" />
+                            <include name="JSX1.0.7.2.jar" />
                             <include name="vecmath1.2-1.14.jar" />
                             <include name="log4j-core.jar" />
                             <include name="log4j.jar" />
@@ -263,6 +263,9 @@
                 <copy
                 file="${src}/org/openscience/cdk/config/structgen_atomtypes.xml"
                 tofile="${build}/org/openscience/cdk/config/structgen_atomtypes.xml" />
+                <copy
+                file="${src}/org/openscience/cdk/config/jmol_atomtypes.txt"
+                tofile="${build}/org/openscience/cdk/config/jmol_atomtypes.txt" />
                 <copy
                 file="${src}/org/openscience/cdk/config/log4j.properties"
                 tofile="${build}/org/openscience/cdk/config/log4j.properties" />
