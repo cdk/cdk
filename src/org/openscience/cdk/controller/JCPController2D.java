@@ -32,6 +32,7 @@ import org.openscience.cdk.layout.*;
 import org.openscience.cdk.renderer.*;
 import org.openscience.cdk.geometry.*;
 import org.openscience.cdk.*;
+import org.openscience.cdk.event.*;
 import org.openscience.cdk.tools.LoggingTool;
 import java.awt.*;
 import java.util.*;
@@ -51,6 +52,9 @@ public class JCPController2D {
     AtomContainer atomCon;
     JCPController2DModel c2dm;
     boolean wasDragged = false;
+    
+   private Vector listeners = new Vector();
+
 
     private LoggingTool logger;
     
@@ -254,6 +258,7 @@ public class JCPController2D {
                         }
                         atomInRange.setSymbol((String)commonElements.get(index));
                         r2dm.fireChange();
+			fireChange();
                     }
                 }
 
@@ -272,6 +277,7 @@ public class JCPController2D {
                     if (atomInRange != null) {
                         atomInRange.setFormalCharge(atomInRange.getFormalCharge() - 1);
                         r2dm.fireChange();
+			fireChange();
                     }
                 }                
                 
@@ -323,6 +329,7 @@ public class JCPController2D {
                             }
                         }
                         r2dm.fireChange();
+			fireChange();
                 }
                 
                 /*************************************************************************
@@ -346,6 +353,7 @@ public class JCPController2D {
                             logger.warn("No bond in range!");
                         }
                         r2dm.fireChange();
+			fireChange();
                 }
                 
                 /*************************************************************************
@@ -369,6 +377,7 @@ public class JCPController2D {
                             logger.warn("No bond in range!");
                         }
                         r2dm.fireChange();
+			fireChange();
                 }
                 
                 /*************************************************************************
@@ -398,6 +407,7 @@ public class JCPController2D {
                         atomCon.removeElectronContainer(highlightedBond);
                     }
                     r2dm.fireChange();
+		    fireChange();
                 }
                 
                 /*************************************************************************
@@ -540,6 +550,7 @@ public class JCPController2D {
                                 }
                         }
                         r2dm.fireChange();
+			fireChange();
                 }
                 
            /*************************************************************************
@@ -565,6 +576,7 @@ public class JCPController2D {
                                 r2dm.setSelectedPart(getContainedAtoms(polygon));
                                 r2dm.getLassoPoints().removeAllElements();
                                 r2dm.fireChange();
+				fireChange();
                         }
                 }
                 wasDragged = false;
@@ -829,4 +841,42 @@ public class JCPController2D {
     private int getWorldCoordinate(int coord) {
         return (int)((double)coord / r2dm.getZoomFactor());
     }
+    
+    
+    	/**
+	 * Adds a change listener to the list of listeners
+	 *
+	 * @param   listener  The listener added to the list 
+	 */
+
+	public void addCDKChangeListener(CDKChangeListener listener)
+	{
+		listeners.add(listener);
+	}
+	
+
+	/**
+	 * Removes a change listener from the list of listeners
+	 *
+	 * @param   listener  The listener removed from the list 
+	 */
+	public void removeCDKChangeListener(CDKChangeListener listener)
+	{
+		listeners.remove(listener);
+	}
+
+
+	/**
+	 * Notifies registered listeners of certain changes
+	 * that have occurred in this model.
+	 */
+	public void fireChange()
+	{
+		EventObject event = new EventObject(this);
+		for (int i = 0; i < listeners.size(); i++)
+		{
+			((CDKChangeListener)listeners.get(i)).stateChanged(event);
+		}
+	}
+
 }
