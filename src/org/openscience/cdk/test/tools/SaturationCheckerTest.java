@@ -208,8 +208,7 @@ public class SaturationCheckerTest extends TestCase
 	/**
 	 *  A unit test for JUnit
 	 */
-	public void testSaturate() throws CDKException
-	{
+	public void testSaturate() throws CDKException {
 		// test ethene
 		Atom c1 = new Atom("C");
 		c1.setHydrogenCount(2);
@@ -223,6 +222,37 @@ public class SaturationCheckerTest extends TestCase
 		m.addBond(b);
 		satcheck.saturate(m);
 		assertEquals(2.0, b.getOrder(), 0.0001);
+	}
+
+	/**
+	 *  A unit test for JUnit
+	 */
+	public void testSaturate_Butene() throws CDKException {
+		// test ethene
+		Atom c1 = new Atom("C");
+		c1.setHydrogenCount(2);
+		Atom c2 = new Atom("C");
+		c2.setHydrogenCount(1);
+		Atom c3 = new Atom("C");
+		c3.setHydrogenCount(1);
+		Atom c4 = new Atom("C");
+		c4.setHydrogenCount(2);
+		Bond b1 = new Bond(c1, c2, 1);
+		Bond b2 = new Bond(c3, c2, 1);
+		Bond b3 = new Bond(c3, c4, 1);
+		// force single bond, saturate() must fix that
+		Molecule m = new Molecule();
+		m.addAtom(c1);
+		m.addAtom(c2);
+		m.addAtom(c3);
+		m.addAtom(c4);
+		m.addBond(b1);
+		m.addBond(b2);
+		m.addBond(b3);
+		satcheck.saturate(m);
+		assertEquals(2.0, b1.getOrder(), 0.0001);
+		assertEquals(1.0, b2.getOrder(), 0.0001);
+		assertEquals(2.0, b3.getOrder(), 0.0001);
 	}
 
     /**

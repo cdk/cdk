@@ -107,38 +107,61 @@ public class SaturationChecker
         return true;
     }
 
-	public boolean isSaturated(Atom atom, AtomContainer ac) throws CDKException
-	{
-		//System.out.println("In here :-), checking atom " + atom.getSymbol());
-		
+    /**
+     * Returns wether a bond is unsaturated. A bond is unsaturated if 
+     * <b>both</b> Atoms in the bond are unsaturated.
+     */
+    public boolean isUnsaturated(Bond bond, AtomContainer atomContainer) throws CDKException {
+        Atom[] atoms = bond.getAtoms();
+        boolean isUnsaturated = true;
+        for (int i=0; i<atoms.length; i++) {
+            isUnsaturated = isUnsaturated && !isSaturated(atoms[i], atomContainer);
+        }
+        return isUnsaturated;
+    }
+    
+    /**
+     * Returns wether a bond is saturated. A bond is saturated if 
+     * <b>both</b> Atoms in the bond are saturated.
+     */
+    public boolean isSaturated(Bond bond, AtomContainer atomContainer) throws CDKException {
+        Atom[] atoms = bond.getAtoms();
+        boolean isSaturated = true;
+        for (int i=0; i<atoms.length; i++) {
+            isSaturated = isSaturated && isSaturated(atoms[i], atomContainer);
+        }
+        return isSaturated;
+    }
+    
+    /**
+     * Checks wether an Atom is saturated by comparing it with known AtomTypes.
+     */
+	public boolean isSaturated(Atom atom, AtomContainer ac) throws CDKException {
 		AtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
-    if(atomTypes.length==0)
-      throw new CDKException("Missing entry in structgen_atomtypes.xml for "+atom.getSymbol());
-		double bondOrderSum = ac.getBondOrderSum(atom);
-		double maxBondOrder = ac.getMaximumBondOrder(atom);
-		int hcount = atom.getHydrogenCount();
-		int charge = atom.getFormalCharge();
-		try {
-			logger.debug("*** Checking saturation of atom " + ac.getAtomNumber(atom) + " ***");
-			logger.debug("bondOrderSum: " + bondOrderSum);
-			logger.debug("maxBondOrder: " + maxBondOrder);
-			logger.debug("hcount: " + hcount);
-		} catch (Exception exc) {
-			logger.debug(exc);
-		}
-		for (int f = 0; f < atomTypes.length; f++)
-		{
-			if (bondOrderSum - charge + hcount == atomTypes[f].getMaxBondOrderSum() && 
-                maxBondOrder <= atomTypes[f].getMaxBondOrder())
-			{
-				logger.debug("*** Good ! ***");
-				return true;
-			}
-		}
-		logger.debug("*** Bad ! ***");
-		//System.out.println("Done checking atom " + atom.getSymbol());
-		return false;
-	}
+        if(atomTypes.length==0)
+            throw new CDKException("Missing entry in structgen_atomtypes.xml for "+atom.getSymbol());
+        double bondOrderSum = ac.getBondOrderSum(atom);
+        double maxBondOrder = ac.getMaximumBondOrder(atom);
+        int hcount = atom.getHydrogenCount();
+        int charge = atom.getFormalCharge();
+        try {
+            logger.debug("*** Checking saturation of atom " + atom.getSymbol() + ac.getAtomNumber(atom) + " ***");
+            logger.debug("bondOrderSum: " + bondOrderSum);
+            logger.debug("maxBondOrder: " + maxBondOrder);
+            logger.debug("hcount: " + hcount);
+        } catch (Exception exc) {
+            logger.debug(exc);
+        }
+        for (int f = 0; f < atomTypes.length; f++) {
+            if (bondOrderSum - charge + hcount == atomTypes[f].getMaxBondOrderSum() && 
+                maxBondOrder <= atomTypes[f].getMaxBondOrder()) {
+                    logger.debug("*** Good ! ***");
+                    return true;
+                }
+        }
+        logger.debug("*** Bad ! ***");
+        return false;
+    }
 
 	/**
 	 * Checks if the current atom has exceeded its bond order sum value.
@@ -209,7 +232,13 @@ public class SaturationChecker
      * Resets the bond orders of all atoms to 1.0.
      */
     public void unsaturate(AtomContainer atomContainer) {
-        Bond[] bonds = atomContainer.getBonds();
+        unsaturate(atomContainer.getBonds());
+    }
+    
+    /**
+     * Resets the bond order of the Bond to 1.0.
+     */
+    public void unsaturate(Bond[] bonds) {
         for (int i = 1; i < bonds.length; i++) {
             bonds[i].setOrder(1.0);
         }
@@ -218,10 +247,150 @@ public class SaturationChecker
 	/**
 	 * Saturates a molecule by setting appropriate bond orders.
 	 *
-	 *@param  molecule  Description of the Parameter
-	 *@keyword          bond order, calculation
+	 * @keyword            bond order, calculation
+     *
+     * @author  Egon Willighagen
+     * @created 2003-10-03
 	 */
+    public void newSaturate(AtomContainer atomContainer) throws CDKException {
+        logger.info("Saturating atomContainer by adjusting bond orders...");
+        boolean allSaturated = allSaturated(atomContainer);
+        if (!allSaturated) {
+            boolean succeeded = newSaturate(atomContainer.getBonds(), atomContainer);
+            if (!succeeded) {
+                throw new CDKException("Could not saturate this atomContainer!");
+            }
+        }
+    }
+
+    /**
+     * Saturates a set of Bonds in an AtomContainer.
+     *
+     * @author  Egon Willighagen
+     * @created 2003-10-03
+     */
+    public boolean newSaturate(Bond[] bonds, AtomContainer atomContainer) throws CDKException {
+        logger.debug("Saturating bond set of size: " + bonds.length);
+        boolean bondsAreFullySaturated = true;
+        if (bonds.length > 0) {
+            Bond bond = bonds[0];
+
+            // determine bonds left
+            int leftBondCount = bonds.length-1;
+            Bond[] leftBonds = new Bond[leftBondCount];
+            System.arraycopy(bonds, 1, leftBonds, 0, leftBondCount);
+
+            // examine this bond
+            if (isUnsaturated(bond, atomContainer)) {
+                // either this bonds should be saturated or not
+                
+                // try to leave this bond unsaturated and saturate the left bondssaturate this bond
+                if (leftBondCount > 0) {
+                    logger.debug("Recursing with saturated bond with #bonds: " + leftBondCount);
+                    bondsAreFullySaturated = newSaturate(leftBonds, atomContainer) 
+                                             && !isUnsaturated(bond, atomContainer);
+                } else {
+                    bondsAreFullySaturated = false;
+                }
+
+                // ok, did it work? if not, saturate this bond, and recurse
+                if (!bondsAreFullySaturated) {
+                    logger.debug("First try did not work...");
+                    // ok, revert saturating this bond, and recurse again
+                    boolean couldSaturate = newSaturate(bond, atomContainer);
+                    if (couldSaturate) {
+                        if (leftBondCount > 0) {
+                            logger.debug("Recursing with saturated bond with #bonds: " + leftBondCount);
+                            bondsAreFullySaturated = newSaturate(leftBonds, atomContainer) 
+                                                     && !isUnsaturated(bond, atomContainer);
+                        } else {
+                            bondsAreFullySaturated = !isUnsaturated(bond, atomContainer);
+                        }
+                    } else {
+                        bondsAreFullySaturated = false;
+                        // no need to recurse, because we already know that this bond
+                        // unsaturated does not work
+                    }
+                }
+            } else {
+                logger.debug("Cannot saturate this bond");
+                // but, still recurse (if possible)
+                if (leftBondCount > 0) {
+                    logger.debug("Recursing with saturated bond with #bonds: " + leftBondCount);
+                    bondsAreFullySaturated = newSaturate(leftBonds, atomContainer) 
+                                             && !isUnsaturated(bond, atomContainer);
+                } else {
+                    bondsAreFullySaturated = !isUnsaturated(bond, atomContainer);
+                }
+            }
+        }
+        logger.debug("Is bond set fully saturated?: " + bondsAreFullySaturated);
+        logger.debug("Returning to level: " + (bonds.length + 1));
+        return bondsAreFullySaturated;
+    }
+    
+    /**
+     * Saturate atom by adjusting its bond orders.
+     *
+     * @author  Egon Willighagen
+     * @created 2003-10-03
+     */
+    public boolean newSaturate(Bond bond, AtomContainer atomContainer) throws CDKException {
+        Atom[] atoms = bond.getAtoms();
+        Atom atom = atoms[0];
+        Atom partner = atoms[1];
+        logger.debug("  saturating bond: " + atom.getSymbol() + "-" + partner.getSymbol());
+        AtomType[] atomTypes1 = structgenATF.getAtomTypes(atom.getSymbol());
+        AtomType[] atomTypes2 = structgenATF.getAtomTypes(partner.getSymbol());
+        boolean bondOrderIncreased = true;
+        while (bondOrderIncreased && !isSaturated(bond, atomContainer)) {
+            logger.debug("Can increase bond order");
+            bondOrderIncreased = false;
+            for (int atCounter1=0; atCounter1<atomTypes1.length&& !bondOrderIncreased; atCounter1++) {
+                AtomType aType1 = atomTypes1[atCounter1];
+                logger.debug("  condidering atom type: " + aType1);
+                if (couldMatchAtomType(atomContainer, atom, aType1)) {
+                    logger.debug("  trying atom type: " + aType1);
+                    for (int atCounter2=0; atCounter2<atomTypes2.length && !bondOrderIncreased; atCounter2++) {
+                        AtomType aType2 = atomTypes2[atCounter2];
+                        logger.debug("  condidering partner type: " + aType1);
+                        if (couldMatchAtomType(atomContainer, partner, atomTypes2[atCounter2])) {
+                            logger.debug("    with atom type: " + aType2);
+                            if (bond.getOrder() >= aType2.getMaxBondOrder() || 
+                                bond.getOrder() >= aType1.getMaxBondOrder()) {
+                                logger.debug("Bond order not increased: atoms has reached (or exceeded) maximum bond order for this atom type");
+                            } else if (bond.getOrder() < aType2.getMaxBondOrder() &&
+                                       bond.getOrder() < aType1.getMaxBondOrder()) {
+                                bond.setOrder(bond.getOrder() + 1);
+                                logger.debug("Bond order now " + bond.getOrder());
+                                bondOrderIncreased = true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return isSaturated(bond, atomContainer);
+    }
+
+    /**
+     * Determines if the atom can be of type AtomType.
+     */
+    public boolean couldMatchAtomType(AtomContainer atomContainer, Atom atom, AtomType atomType) {
+        logger.debug("   ... matching atom " + atom.getSymbol() + " vs " + atomType);
+        int neighbours = atomContainer.getConnectedAtoms(atom).length;
+        if (atomContainer.getBondOrderSum(atom) + atom.getHydrogenCount() < atomType.getMaxBondOrderSum()) {
+           logger.debug("    Match!");
+           return true;
+        }
+        logger.debug("    No Match");
+        return false;
+    }
+
     public void saturate(AtomContainer atomContainer) throws CDKException {
+        /* newSaturate(atomContainer);
+    }
+    public void oldSaturate(AtomContainer atomContainer) throws CDKException { */
         logger.info("Saturating atomContainer by adjusting bond orders...");
         Atom[] atoms = atomContainer.getAtoms();
         boolean allSaturated = allSaturated(atomContainer);
@@ -243,8 +412,8 @@ public class SaturationChecker
                         if (i == atomTypes1.length  && 
                             k == atomContainer.getConnectedAtoms(atom).length) {
                             logger.debug("symbol: " + atom.getSymbol() + " (=a" + f + ")");
-                            boolean success = false;
-                            for (int atCounter1=0; (atCounter1< atomTypes1.length && !success); atCounter1++) {
+                            boolean valencyFixed = false;
+                            for (int atCounter1=0; (atCounter1< atomTypes1.length && !valencyFixed); atCounter1++) {
                                 AtomType aType1 = atomTypes1[atCounter1];
                                 logger.debug("Considering atom type: " + aType1);
                                 logger.debug("  atom BOS= " +  atomContainer.getBondOrderSum(atom));
@@ -252,7 +421,7 @@ public class SaturationChecker
                                 logger.debug("  atom type MBOS= " +  aType1.getMaxBondOrderSum());
                                 if (atomContainer.getBondOrderSum(atom) == aType1.getMaxBondOrderSum() - atom.getHydrogenCount()) {
                                     logger.info("Atom is fine.");
-                                    success = true;
+                                    valencyFixed = true;
                                 } else if (atomContainer.getBondOrderSum(atom) < aType1.getMaxBondOrderSum() - atom.getHydrogenCount()) {
                                     logger.debug("Atom has bond order sum " + atomContainer.getBondOrderSum(atom) + 
                                                  ", and may have: " + aType1.getMaxBondOrderSum());
@@ -262,21 +431,20 @@ public class SaturationChecker
                                     // first take into account partners with only one atom type, then two, etc
                                     for (int j=1; j<4; j++) {
                                         logger.debug("Looking for a partner with #atom types: " + j);
-                                        for (int partnerCounter = 0; (partnerCounter < partners.length && !success); partnerCounter++) {
+                                        for (int partnerCounter = 0; (partnerCounter < partners.length && !valencyFixed); partnerCounter++) {
                                             Atom partner = partners[partnerCounter];
                                             AtomType[] atomTypes2 = structgenATF.getAtomTypes(partner.getSymbol());
                                             if (atomTypes2.length==0)
                                                 throw new CDKException("Missing entry in structgen_atomtypes.xml for "+partner.getSymbol());
                                             if (atomTypes2.length == j) {
-                                                for (int atCounter2=0; (atCounter2< atomTypes2.length && !success); atCounter2++) {
+                                                for (int atCounter2=0; (atCounter2< atomTypes2.length); atCounter2++) {
                                                     AtomType aType2 = atomTypes2[atCounter2];
                                                     logger.debug("Considering partner atom type: " + aType2);
                                                     logger.debug("  partner BOS= " +  atomContainer.getBondOrderSum(partner));
                                                     logger.debug("  partner HC= " +  partner.getHydrogenCount());
                                                     logger.debug("  partner atom type MBOS= " +  aType2.getMaxBondOrderSum());
                                                     if (atomContainer.getBondOrderSum(partner) == aType2.getMaxBondOrderSum() - partner.getHydrogenCount()) {
-                                                        logger.info("Atom is fine.");
-                                                        success = true;
+                                                        logger.info("Atom is fine. Step to next one.");
                                                     } else if (atomContainer.getBondOrderSum(partner) < aType2.getMaxBondOrderSum() - partner.getHydrogenCount()) {
                                                         logger.debug("Partner (" + partner.getSymbol() + ") has bond order sum " + atomContainer.getBondOrderSum(partner) + 
                                                                      ", may have: " + aType2.getMaxBondOrderSum());
@@ -284,16 +452,15 @@ public class SaturationChecker
                                                              atomContainer.getBond(partner,atom).getFlag(CDKConstants.ISAROMATIC))) {
                                                             Bond bond = atomContainer.getBond(atom, partner);
                                                             logger.debug("Bond order was " + bond.getOrder());
-                                                            if (bond.getOrder() < aType2.getMaxBondOrder() && 
-                                                            bond.getOrder() < aType1.getMaxBondOrder()) { 
+                                                            if (bond.getOrder() >= aType2.getMaxBondOrder() || 
+                                                                bond.getOrder() >= aType1.getMaxBondOrder()) {
+                                                                logger.debug("Bond order not increased: atoms has reached (or exceeded) maximum bond order for this atom type");
+                                                            } else if (bond.getOrder() < aType2.getMaxBondOrder() && 
+                                                                       bond.getOrder() < aType1.getMaxBondOrder()) {
                                                                 bond.setOrder(bond.getOrder() + 1);
                                                                 logger.debug("Bond order now " + bond.getOrder());
-                                                                success = true;
-                                                            } else {
-                                                                logger.debug("Bond order not increased: atoms has reached (or exceeded) maximum bond order for this atom type");
+                                                                valencyFixed = true;
                                                             }
-                                                        } else {
-                                                            logger.debug("Cannot increase bond order");
                                                         }
                                                     }
                                                 }
@@ -319,8 +486,7 @@ public class SaturationChecker
             }
         }
     }
-
-
+    
 	public void saturateRingSystems(AtomContainer atomContainer) throws CDKException
 	{
 		RingSet rs = new SSSRFinder().findSSSR((Molecule)atomContainer);
