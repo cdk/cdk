@@ -6,6 +6,9 @@ Changes in CVS
 New:
 
 Fixes:
+* Fixed calculation of cartesian atomic coordinates from fractional coordinates
+  in CrystalGeometry
+* Cleaned up import statements
 
 API changes:
 
