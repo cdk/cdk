@@ -44,6 +44,10 @@
       <fileset dir="${build}">
         <!-- Put only required class files in the jar -->
         <include name="**/*.class" />
+        <!-- These config and data files are also needed -->
+        <include name="org/openscience/cdk/io/cml/data/**" />
+        <include name="org/openscience/cdk/config/log4j.properties" />
+        <include name="org/openscience/cdk/config/jmol_atomtypes.txt" />
       </fileset>
     </jar>
   </target>
