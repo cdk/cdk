@@ -37,7 +37,8 @@ public class CMLHandler extends DefaultHandler {
     private Hashtable userConventions;
 
     public CMLHandler(CDOInterface cdo) {
-        logger = new org.openscience.cdk.tools.LoggingTool();
+        logger = new org.openscience.cdk.tools.LoggingTool(
+                       this.getClass().getName());
         conv = new Convention(cdo);
         userConventions = new Hashtable();
     }
@@ -47,7 +48,7 @@ public class CMLHandler extends DefaultHandler {
     }
 
     public void characters(char ch[], int start, int length) {
-       logger.debug("CMLHandler: character data");
+       logger.debug("character data");
        conv.characterData(ch, start, length);
     }
 
@@ -58,7 +59,7 @@ public class CMLHandler extends DefaultHandler {
     }
 
     public void endElement(String uri, String local, String raw) {
-       logger.debug("CMLHandler: end element");
+       logger.debug("end element: " + raw);
        conv.endElement(uri, local, raw);
     }
 
@@ -71,7 +72,7 @@ public class CMLHandler extends DefaultHandler {
     }
 
     public void startElement(String uri, String local, String raw, Attributes atts) {
-      logger.debug("CMLHandler.startElement:");
+      logger.debug("startElement: " + raw);
         logger.debug("uri: " + uri);
         logger.debug("local: " + local);
         logger.debug("raw: " + raw);
@@ -80,7 +81,7 @@ public class CMLHandler extends DefaultHandler {
         {
             if (atts.getQName(i).equals("convention"))
             {
-                logger.debug(new StringBuffer("New Convention: ").append(atts.getValue(i)).toString());
+                logger.info(new StringBuffer("New Convention: ").append(atts.getValue(i)).toString());
                 if (atts.getValue(i).equals("CML")) {
                     logger.debug("Doing nothing");
                 } else if (atts.getValue(i).equals("PDB")) {

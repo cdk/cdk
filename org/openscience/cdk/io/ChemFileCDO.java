@@ -50,19 +50,20 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
     private int bond_order;
     private int bond_stereo;
 
-     protected org.openscience.cdk.tools.LoggingTool logger;
+    protected org.openscience.cdk.tools.LoggingTool logger;
 
     /**
      * Basic contructor
      */
     public ChemFileCDO() {
-      logger = new org.openscience.cdk.tools.LoggingTool();
+      logger = new org.openscience.cdk.tools.LoggingTool(
+                     this.getClass().getName() );
       currentChemSequence = new ChemSequence();
       currentChemModel = new ChemModel();
       currentSetOfMolecules = new SetOfMolecules();
       atomEnumeration = new Hashtable();
     }
-    
+
     // procedures required by CDOInterface
 
     /**
@@ -70,7 +71,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
      * supposed to be called by the JCFL library
      */
     public void startDocument() {
-      logger.debug("New Document");
+      logger.info("New CDO Object");
       currentChemSequence = new ChemSequence();
       currentChemModel = new ChemModel();
       currentSetOfMolecules = new SetOfMolecules();
@@ -82,11 +83,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
      * supposed to be called by the JCFL library
      */
     public void endDocument() {
-	    currentSetOfMolecules.addMolecule(currentMolecule);
-	    currentChemModel.setSetOfMolecules(currentSetOfMolecules);
-	    currentChemSequence.addChemModel(currentChemModel);
-	    this.addChemSequence(currentChemSequence);
-	    logger.debug("Molecule added");
+      logger.info("End CDO Object");
     };
 
     /**
@@ -94,7 +91,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
      * supposed to be called by the JCFL library
      */
     public void setDocumentProperty(String type, String value) {};
-    
+
     /**
      * Procedure required by the CDOInterface. This function is only
      * supposed to be called by the JCFL library
@@ -122,16 +119,16 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
         currentChemModel.setSetOfMolecules(currentSetOfMolecules);
         currentChemSequence.addChemModel(currentChemModel);
         addChemSequence(currentChemSequence);
-        logger.debug("This file has " + getChemSequenceCount() + " sequences.");
-        logger.debug("Molecule added: \n" + currentMolecule.toString());
+        logger.info("This file has " + getChemSequenceCount() + " sequence(s).");
+        logger.info("Molecule added: \n" + currentMolecule.toString());
       } else if (objectType.equals("Atom")) {
         currentMolecule.addAtom(currentAtom);
       } else if (objectType.equals("Bond")) {
         logger.debug("Bond: " + bond_a1 + ", " + bond_a2 + ", " + bond_order);
         currentMolecule.addBond(bond_a1, bond_a2, bond_order);
       }
-    };  
-    
+    };
+
     /**
      * Procedure required by the CDOInterface. This function is only
      * supposed to be called by the JCFL library
@@ -167,9 +164,9 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
           bond_order = new Integer(propertyValue).intValue();
         }
       }
-      logger.debug("Set...");
+      logger.debug("Object property set...");
     };
-    
+
     /**
      * Procedure required by the CDOInterface. This function is only
      * supposed to be called by the JCFL library
@@ -180,7 +177,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
       objects.add("Fragment");
       objects.add("Atom");
       objects.add("Bond");
-      return objects;      
+      return objects;
     };
 }
 

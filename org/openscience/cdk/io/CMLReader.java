@@ -49,39 +49,39 @@ public class CMLReader implements CDKConstants, ChemObjectReader {
     private EntityResolver resolver;
     private Reader input;
 
+    private org.openscience.cdk.tools.LoggingTool logger;
+
     /**
      * Define this CMLReader to take the input from a java.io.Reader
      * class. Possible readers are (among others) StringReader and FileReader.
      *
      * @param input Reader type input
      */
-    public CMLReader(Reader input) 
-	{
-		try 
-		{
-		    parser = new org.apache.xerces.parsers.SAXParser();
-		    this.input = input;
-		} 
-		catch (Exception e) 
-		{
-		    System.out.println("CMLReader: You found a serious bug! Please report it!");
-		    System.exit(1);			       
-		}
+    public CMLReader(Reader input) {
+        logger = new org.openscience.cdk.tools.LoggingTool(
+                       this.getClass().getName());
+        try {
+          parser = new org.apache.xerces.parsers.SAXParser();
+          this.input = input;
+        } catch (Exception e) {
+          logger.error("CMLReader: You found a serious bug! Please report it!");
+          System.exit(1);
+        }
     }
 
-	
+
     /**
      * Read a ChemFile from input
      *
      * @return The content in a ChemFile object
      */
     public ChemObject read(ChemObject object) throws UnsupportedChemObjectException {
-		if (object instanceof ChemFile) {
-		    return (ChemObject)readChemFile();
-		} else {
-		    throw new UnsupportedChemObjectException(
-			"Only supported is ChemFile.");
-		}
+      if (object instanceof ChemFile) {
+        return (ChemObject)readChemFile();
+      } else {
+        throw new UnsupportedChemObjectException(
+          "Only supported is ChemFile.");
+      }
     }
 
     // private functions
@@ -93,7 +93,7 @@ public class CMLReader implements CDKConstants, ChemObjectReader {
 		try {
 		    parser.setFeature("http://xml.org/sax/features/validation", false);
 		} catch (SAXException e) {
-		    System.err.println("Cannot activate validation.");
+		    logger.warn("Cannot activate validation.");
 		    return cdo;
 		}
 		resolver = new CMLResolver();
@@ -102,9 +102,10 @@ public class CMLReader implements CDKConstants, ChemObjectReader {
 		try {
 		    parser.parse(new InputSource(input));
 		} catch (IOException e) {
-		    System.out.println("CMLReader (IOException): " + e.toString());
+		    logger.warn("IOException: " + e.toString());
 		} catch (SAXException saxe) {
-		    System.out.println("CMLReader (SAXException): " + saxe.toString());
+		    logger.warn("SAXException: " + saxe.getClass().getName());
+		    logger.warn(saxe.toString());
 		    // e.printStackTrace();
 		}
 		return cdo;

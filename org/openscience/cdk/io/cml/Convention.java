@@ -86,7 +86,8 @@ public class Convention implements ConventionInterface {
     protected String elementTitle;
 
     public Convention(CDOInterface cdo) {
-        logger = new org.openscience.cdk.tools.LoggingTool();
+        logger = new org.openscience.cdk.tools.LoggingTool(
+                       this.getClass().getName());
 	this.cdo = cdo;
   };
   
@@ -119,7 +120,8 @@ public class Convention implements ConventionInterface {
     };
   
     public void startDocument() {
-	logger.debug("Start Doc");
+	logger.info("Start XML Doc");
+	cdo.startDocument();
 	elsym = new Vector();
 	elid = new Vector();
 	elcharge = new Vector();
@@ -138,7 +140,8 @@ public class Convention implements ConventionInterface {
     };
 
     public void endDocument() {
-	logger.debug("End Doc");
+	cdo.endDocument();
+	logger.info("End XML Doc");
     };
 
 
@@ -148,28 +151,23 @@ public class Convention implements ConventionInterface {
 	setCurrentElement(name);
 	switch (CurrentElement) {
 	case ATOM :
-	    logger.debug("T1");
 	    for (int i = 0; i < atts.getLength(); i++) {
-		logger.debug("T2");
 		if (atts.getQName(i).equals("id")) {
 		    logger.debug("T3 " + atts.getValue(i));
 		    elid.addElement(atts.getValue(i));
-		    logger.debug("T3 " + elid);          
+		    logger.debug("T3 " + elid);
 		}
 	    }
-	    logger.debug("T4");
 	    break;
-	case BOND :        
-	    logger.debug("B1");
+	case BOND :
 	    for (int i = 0; i < atts.getLength(); i++) {
-		logger.debug("B2 " + atts.getQName(i) + "=" + atts.getValue(i));          
+		logger.debug("B2 " + atts.getQName(i) + "=" + atts.getValue(i));
 		if (atts.getQName(i).equals("id")) {
 		    bondid.addElement(atts.getValue(i));
 		    logger.debug("B3 " + bondid);
 		}
 	    }
 	    stereoGiven = false;
-	    logger.debug("B4");
 	    curRef = 0;
 	    break;
 	case COORDINATE2 :
@@ -190,7 +188,7 @@ public class Convention implements ConventionInterface {
 	case STRING :
 	    for (int i = 0; i < atts.getLength(); i++) {
 		if (atts.getQName(i).equals("builtin")) {
-		    BUILTIN = atts.getValue(i); 
+		    BUILTIN = atts.getValue(i);
 		} else if (atts.getQName(i).equals("title")) {
 		    elementTitle = atts.getValue(i);
 		}
@@ -199,34 +197,34 @@ public class Convention implements ConventionInterface {
 	case FLOAT :
 	    for (int i = 0; i < atts.getLength(); i++) {
 		if (atts.getQName(i).equals("builtin")) {
-		    BUILTIN = atts.getValue(i); 
+		    BUILTIN = atts.getValue(i);
 		} else if (atts.getQName(i).equals("title")) {
 		    elementTitle = atts.getValue(i);
 		}
 	    }
 	    break;
-	case ATOMARRAY :       
-	    break;	
-	case INTEGERARRAY :       
+	case ATOMARRAY :
+	    break;
+	case INTEGERARRAY :
 	    for (int i = 0; i < atts.getLength(); i++) {
 		if (atts.getQName(i).equals("builtin"))
 		    BUILTIN = atts.getValue(i);
 	    }
-	    break;	
-	case STRINGARRAY :       
+	    break;
+	case STRINGARRAY :
 	    for (int i = 0; i < atts.getLength(); i++) {
 		if (atts.getQName(i).equals("builtin"))
 		    BUILTIN = atts.getValue(i);
 	    }
-	    break;	
-	case FLOATARRAY :       
+	    break;
+	case FLOATARRAY :
 	    for (int i = 0; i < atts.getLength(); i++) {
 		if (atts.getQName(i).equals("builtin"))
 		    BUILTIN = atts.getValue(i);
 		if (atts.getQName(i).equals("title"))
 		    elementTitle = atts.getValue(i);
 	    }
-	    break;	
+	    break;
 	case MOLECULE :
 	    elsym = new Vector();
 	    elid = new Vector();
@@ -247,7 +245,7 @@ public class Convention implements ConventionInterface {
 	    break;
 	}
     }
-    
+
     public void endElement(String uri, String local, String raw) {
 	String name = raw;
 	logger.debug("EndElement");
