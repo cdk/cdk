@@ -36,6 +36,7 @@ import java.util.NoSuchElementException;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Iterating MDL SDF reader. It allows to iterate over all molecules
@@ -56,9 +57,13 @@ import org.openscience.cdk.io.MDLReader;
  */
 public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
 
-    private BufferedReader input = null;
-    private org.openscience.cdk.tools.LoggingTool logger = null;
-    private String currentLine = "";
+    private BufferedReader input;
+    private LoggingTool logger;
+    private String currentLine;
+    
+    private boolean nextAvailableIsKnown;
+    private boolean hasNext;
+    private Molecule nextMolecule;
     
     /**
      * Contructs a new MDLReader that can read Molecule from a given Reader.
@@ -66,8 +71,11 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
      * @param  in  The Reader to read from
      */
     public IteratingMDLReader(Reader in) {
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        logger = new LoggingTool(this);
         input = new BufferedReader(in);
+        nextMolecule = null;
+        nextAvailableIsKnown = false;
+        hasNext = false;
     }
 
     public String getFormatName() {
@@ -75,46 +83,59 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
     }
 
     public boolean hasNext() {
-        try {
-            return input.ready();
-        } catch (Exception exception) {
-            logger.error("Error while reading next molecule: " +
-                exception.getMessage());
-            logger.debug(exception);
-            return false;
+        if (!nextAvailableIsKnown) {
+            hasNext = false;
+            
+            // now try to parse the next Molecule
+            try {
+                if (input.ready()) {
+                    currentLine = input.readLine();
+                    StringBuffer buffer = new StringBuffer();
+                    while (input.ready() && currentLine != null && !currentLine.equals("$$$$")) {
+                        // still in a molecule
+                        buffer.append(currentLine);
+                        buffer.append("\n");
+                        currentLine = input.readLine();
+                    }
+                    MDLReader reader = new MDLReader(new StringReader(buffer.toString()));
+                    nextMolecule = (Molecule)reader.read(new Molecule());
+                    if (nextMolecule.getAtomCount() > 0) {
+                        hasNext = true;
+                    } else {
+                        hasNext = false;
+                    }
+                } else {
+                    hasNext = false;
+                }
+            } catch (Exception exception) {
+                logger.error("Error while reading next molecule: " +
+                             exception.getMessage());
+                logger.debug(exception);
+                hasNext = false;
+            }
+            if (!hasNext) nextMolecule = null;
+            nextAvailableIsKnown = true;
         }
+        return hasNext;
     }
     
     public Object next() {
-        Molecule molecule = new Molecule();
-        try {
-            currentLine = input.readLine();
-            StringBuffer buffer = new StringBuffer();
-            while (currentLine != null && !currentLine.equals("$$$$")) {
-                // still in a molecule
-                buffer.append(currentLine);
-                buffer.append("\n");
-                currentLine = input.readLine();
-            }
-            MDLReader reader = new MDLReader(new StringReader(buffer.toString()));
-            molecule = (Molecule)reader.read(new Molecule());
-        } catch (CDKException exception) {
-            logger.error("CDK exception while reading next molecule: " +
-                exception.getMessage());
-            logger.debug(exception);
-            throw new NoSuchElementException();
-        } catch (Exception exception) {
-            logger.error("Error while reading next molecule: " +
-                exception.getMessage());
-            logger.debug(exception);
+        if (!nextAvailableIsKnown) {
+            hasNext();
+        }
+        nextAvailableIsKnown = false;
+        if (!hasNext) {
             throw new NoSuchElementException();
         }
-        return molecule;
+        return nextMolecule;
     }
     
     public void close() throws IOException {
         input.close();
     }
     
+    public void remove() {
+        throw new UnsupportedOperationException();
+    }
 }
 
