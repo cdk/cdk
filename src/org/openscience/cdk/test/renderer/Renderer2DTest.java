@@ -26,6 +26,7 @@ package org.openscience.cdk.test.renderer;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.util.Hashtable;
@@ -110,7 +111,7 @@ public class Renderer2DTest extends JPanel
 	public void paint(Graphics g)
 	{
 		super.paint(g);
-		renderer.paintMolecule(molecule, g);
+		renderer.paintMolecule(molecule, (Graphics2D)g);
 	}
 
 	/**
