@@ -29,10 +29,12 @@ public class ForceFieldTests {
 		//	Get atoms coordinates and force field function
 
 		GeometricMinimizer geometricMinimizerObject = new GeometricMinimizer();
-		geometricMinimizerObject.initialize();
+		geometricMinimizerObject.setInitial3dCoordinates();
 
 		// Force field type *** The program has to decide the best force field to be used ***  Waiting to be completed
-		TestPotentialFunction forceFieldFunction = new TestPotentialFunction(geometricMinimizerObject.getInitial3dCoordinates());
+
+		PotentialFunction forceFieldFunction = new TestPotentialFunction(geometricMinimizerObject.getInitial3dCoordinates());
+
 		/*int forceFieldCode = 1;
 		switch (forceFieldCode) {
 						case 1:
@@ -44,51 +46,16 @@ public class ForceFieldTests {
 							System.out.println("Hey, that's not a valid force field code!");
 							break;
 		}*/
-		System.out.println("Force field function : " + forceFieldFunction.functionShape);
-		System.out.println("Gradient of the force field function : " + forceFieldFunction.gradientShape);
+
 		System.out.println("r = " + geometricMinimizerObject.getInitial3dCoordinates());
-		System.out.println("Wished point size : " + forceFieldFunction.wishedPoint.getSize());
-		System.out.println("Wished point = " + forceFieldFunction.wishedPoint);
-		System.out.println("Force field function evaluate in " + geometricMinimizerObject.getInitial3dCoordinates() + " : " + forceFieldFunction.evaluateInPoint(geometricMinimizerObject.getInitial3dCoordinates()));
+		System.out.println("Force field function evaluate in " + geometricMinimizerObject.getInitial3dCoordinates() + " : " + forceFieldFunction.functionInPoint(geometricMinimizerObject.getInitial3dCoordinates()));
 		System.out.println("Gradient of the force field function evaluate in " + geometricMinimizerObject.getInitial3dCoordinates() + " : " + forceFieldFunction.gradientInPoint(geometricMinimizerObject.getInitial3dCoordinates()));
 
 		System.out.println("");
-		System.out.println("Started energy optimisation");
-		GVector kplus1Coordinates = new GVector(geometricMinimizerObject.getInitial3dCoordinates());
-		GVector kCoordinates = new GVector(geometricMinimizerObject.getInitial3dCoordinates().getSize());
-		int SDMaxIter = 100;
-		int iterationNumber=0;
-		boolean convergenceSD;
-		boolean convergenceIt;
-		boolean convergence = false;
-		GVector gK = new GVector(geometricMinimizerObject.getInitial3dCoordinates().getSize());
-		
-		System.out.println("");
-		System.out.println("FORCEFIELDTESTS steepestDescentTest");
-		
-		SteepestDescentsMethod sdm = new SteepestDescentsMethod(geometricMinimizerObject.getInitial3dCoordinates());
-		
-		do { 
-			System.out.println("");
-			System.out.println("Iteration number: " + iterationNumber);
-			gK.set(forceFieldFunction.gradientInPoint(kCoordinates));
-			sdm.vectorSkCalculation(gK);
-			System.out.println("Step size : " + sdm.getStepSize());
-			kplus1Coordinates.set(sdm.newCoordinates(kCoordinates));
-			System.out.println("New coordinates : " + kplus1Coordinates);
-			System.out.println("");
-			System.out.println("Slope of the line in the direction of the gradient in " + kCoordinates + " : " + forceFieldFunction.slopeInPoint(kCoordinates));
-			iterationNumber = iterationNumber + 1;
-			convergenceSD = geometricMinimizerObject.checkConvergence(forceFieldFunction.evaluateInPoint(kCoordinates), forceFieldFunction.evaluateInPoint(kplus1Coordinates));
-			//convergenceIt = iterationNumber.equals(SDMaxIter);
-			if ((convergenceSD == true) | (iterationNumber == 100)) {
-				convergence = true;
-			}
-			else {
-				kCoordinates.set(kplus1Coordinates);
-			}	
-
-		} while  (convergence != true);
+		System.out.println("START ENERGY OPTIMISATION");
+		geometricMinimizerObject.energyOptimization(10,20,50,forceFieldFunction);
+		GVector minimum = new GVector(geometricMinimizerObject.getMinimumCoordinates());
+		System.out.println("The minimum energy is at " + minimum + " coordinates");
 	}
 }
 
