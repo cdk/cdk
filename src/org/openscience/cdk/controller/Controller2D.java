@@ -78,7 +78,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 	private int dragMode = DRAG_UNSET;
 
 	private Vector commonElements;
-    private int currentCommonElement = 1;
+    private HashMap currentCommonElement = new HashMap();
 
 	// Helper classes
 	HydrogenAdder hydrogenAdder = new HydrogenAdder("org.openscience.cdk.tools.ValencyChecker");
@@ -348,7 +348,10 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 
 				Atom atomInRange = r2dm.getHighlightedAtom();
 				if (atomInRange != null) {
-                    String symbol = (String)commonElements.elementAt(currentCommonElement);
+                    if(currentCommonElement.get(atomInRange)==null)
+                      currentCommonElement.put(atomInRange, new Integer(1));
+                    int oldCommonElement=((Integer)currentCommonElement.get(atomInRange)).intValue();
+                    String symbol = (String)commonElements.elementAt(oldCommonElement);
                     if (!(atomInRange.getSymbol().equals(symbol))) {
                         // only change symbol if needed
                         
@@ -377,9 +380,10 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
                         r2dm.fireChange();
                         fireChange();
                     }
-                    currentCommonElement++;
-                    if (currentCommonElement == commonElements.size())
-                        currentCommonElement = 0;
+                    oldCommonElement++;
+                    if (oldCommonElement == commonElements.size())
+                        oldCommonElement = 0;
+                     currentCommonElement.put(atomInRange, new Integer(oldCommonElement));  
 				}
 			}
 			if (c2dm.getDrawMode() == c2dm.ELEMENT) {
