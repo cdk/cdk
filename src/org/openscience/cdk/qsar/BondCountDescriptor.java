@@ -33,52 +33,52 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 
 /**
- * Descriptor based on the number of atoms of a certain element type.
+ * Descriptor based on the number of bonds of a certain element type.
  *
  * @author     mfe4
  * @created    2004-11-13
  */
-public class AtomCountDescriptor implements Descriptor {
+public class BondCountDescriptor implements Descriptor {
 
-    private String elementName = null;
+    private double order = -1.0;
 
-    public AtomCountDescriptor() {}
+    public BondCountDescriptor() {}
 
     public void setParameters(Object[] params) throws CDKException {
         if (params.length > 1)
-            throw new CDKException("AtomCount only expects one parameter");
-        if (!(params[0] instanceof String))
-            throw new CDKException("The parameter must be of type String");
+            throw new CDKException("BondCount only expects one parameter");
+        if (!(params[0] instanceof Double))
+            throw new CDKException("The parameter must be of type Double");
         // ok, all should be fine
-        elementName = (String)params[0];
+        order = ((Double)params[0]).doubleValue();
     }
     
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
         Object[] params = new Object[1];
-        params[0] = elementName;
+        params[0] = new Double(order);
         return params;
     }
 
     public Object calculate(AtomContainer container) {
-        int atomCount = 0;
-        Atom[] atoms = container.getAtoms();
-        for (int i = 0; i < atoms.length; i++) {
-            if (container.getAtomAt(i).getSymbol().equals(elementName)) {
-                atomCount += 1;
-            }
-        }
-        return new Integer(atomCount);
+		int bondCount = 0;
+		Bond[] bonds = container.getBonds();
+		for (int i = 0; i < bonds.length; i++) {
+			if (container.getBondAt(i).getOrder() == order) {
+				bondCount += 1;
+			}
+		}
+        return new Integer(bondCount);
     }
     
     public String[] getParameterNames() {
         String[] params = new String[1];
-        params[0] = "Element Symbol";
+        params[0] = "Bond Order";
         return params;
     };
     public Object getParameterType(String name) {
         Object[] paramTypes = new Object[1];
-        paramTypes[0] = new String();
+        paramTypes[0] = new Double(0.0);
         return paramTypes;
     };
 }

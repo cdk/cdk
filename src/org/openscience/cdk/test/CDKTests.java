@@ -49,7 +49,7 @@ import org.openscience.cdk.test.smiles.SmilesParserTest;
 import org.openscience.cdk.test.structgen.RandomStructureGeneratorTest;
 import org.openscience.cdk.test.tools.ToolsTests;
 import org.openscience.cdk.test.charges.GasteigerMarsiliPartialChargesTest;
-import org.openscience.cdk.test.qsar.QsarDescriptors2DTest;
+import org.openscience.cdk.test.qsar.*;
 /**
  * TestSuite that runs all the sample tests
  *
@@ -81,16 +81,16 @@ public class CDKTests
         suite.addTest(GraphTests.suite());
         //from cdk.test.applications
         suite.addTest(APIVersionTesterTest.suite());
-	//from cdk.test.ringsearch
+        //from cdk.test.ringsearch
         suite.addTest(AllRingsFinderTest.suite());
-	suite.addTest(RingSearchTest.suite());
-	// cdk.test.fingerprint
+        suite.addTest(RingSearchTest.suite());
+        // cdk.test.fingerprint
         suite.addTest(FingerprinterTest.suite());
         // from cdk.test.layout.*
         suite.addTest(StructureDiagramGeneratorTest.suite());
         suite.addTest(HydrogenPlacerTest.suite());
-	suite.addTest(OverlapResolverTest.suite());
-	suite.addTest(TemplateHandlerTest.suite());
+        suite.addTest(OverlapResolverTest.suite());
+        suite.addTest(TemplateHandlerTest.suite());
         // from cdk.test.smiles
         suite.addTest(SmilesGeneratorTest.suite());
         suite.addTest(SmilesParserTest.suite());
@@ -105,11 +105,12 @@ public class CDKTests
         suite.addTest(HueckelAromaticityDetectorTest.suite());
         // from cdk.test.structgen
         suite.addTest(RandomStructureGeneratorTest.suite());
-	// from cdk.test.reaction
-	suite.addTest(ReactionBalancerTest.suite());
-	// from cdk.test.charges
-	suite.addTest(GasteigerMarsiliPartialChargesTest.suite());
-	suite.addTest(QsarDescriptors2DTest.suite());
+        // from cdk.test.reaction
+        suite.addTest(ReactionBalancerTest.suite());
+        // from cdk.test.charges
+        suite.addTest(GasteigerMarsiliPartialChargesTest.suite());
+        // from cdk.test.qsar
+        suite.addTest(QSARDescriptorTests.suite());
         // from cdk.test.iupac
         try {
             Class testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.test.iupac.ParserTest");
