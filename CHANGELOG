@@ -3,7 +3,8 @@ CHANGELOG $Date$
 
 Changes in CVS
 ------------------------------------
-
+Fixes:
+* Added missing LGPL license from distributions.
 
 20030702 Release
 ------------------------------------
