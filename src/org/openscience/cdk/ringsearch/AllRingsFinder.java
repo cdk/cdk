@@ -65,6 +65,7 @@ public class AllRingsFinder
 	public  RingSet findAllRings(AtomContainer atomContainer) throws org.openscience.cdk.exception.NoSuchAtomException
 	{
 		Vector pathes = new Vector();
+		Atom atom = null;
 		RingSet ringSet = new RingSet();
 		AtomContainer ac = new AtomContainer();
 		originalAc = atomContainer;
@@ -81,9 +82,10 @@ public class AllRingsFinder
 		if (debug) System.out.println("BondCount: " + ac.getBondCount() + ", PathCount: " + pathes.size());
 		do
 		{
-			remove(selectAtom(ac), ac, pathes, ringSet);
+			atom = selectAtom(ac);
+			if (atom != null) remove(atom, ac, pathes, ringSet);
 		}
-		while(pathes.size() > 0);
+		while(pathes.size() > 0 && atom != null);
 		if (debug) System.out.println("pathes.size(): " + pathes.size());
 		if (debug) System.out.println("ringSet.size(): " + ringSet.size());
 		return ringSet;	  
@@ -215,11 +217,11 @@ public class AllRingsFinder
 		int degree = minDegree;
 		Atom minAtom = null;
 		Atom atom = null;
-		
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
 			atom = ac.getAtomAt(f);
 			degree = ac.getDegree(atom);
+			
 			if (degree < minDegree)
 			{
 				minAtom = atom;
@@ -234,6 +236,7 @@ public class AllRingsFinder
 		{
 			exc.printStackTrace();
 		}
+		
 		return minAtom;
 	}
 }
