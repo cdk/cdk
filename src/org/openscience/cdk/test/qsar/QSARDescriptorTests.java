@@ -72,6 +72,7 @@ import org.openscience.cdk.test.qsar.*;
 	suite.addTest(RDFProtonDescriptorTest.suite());
 	suite.addTest(MomentOfInertiaDescriptorTest.suite());
 	suite.addTest(VdWRadiusDescriptorTest.suite());
+	suite.addTest(BondsToAtomDescriptorTest.suite());
 	return suite;
     }
     
