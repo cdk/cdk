@@ -381,13 +381,18 @@ public class Renderer2D   {
             return;
         }
         
-        // The drawing fonts
-        Font unscaledFont = graphics.getFont();
-        int unscaledFontSize = unscaledFont.getSize();
-        float normalFontSize = getScreenSize(unscaledFontSize); // apply zoom factor
-        Font normalFont = unscaledFont.deriveFont(normalFontSize); // keep font, only change size
-        Font subscriptFont = normalFont.deriveFont(normalFontSize*0.8f); // 80% of normal font
-
+        // The fonts for calculating geometries
+        float subscriptFraction = 0.7f;
+        Font normalFont = graphics.getFont();
+        int normalFontSize = normalFont.getSize();
+        Font subscriptFont = normalFont.deriveFont(
+            normalFontSize*subscriptFraction);
+        // get drawing fonts
+        float normalScreenFontSize = getScreenSize(normalFontSize);
+        Font normalScreenFont = normalFont.deriveFont(normalScreenFontSize);
+        Font subscriptScreenFont = normalScreenFont.deriveFont(
+            normalScreenFontSize*subscriptFraction);
+        
         // calculate SYMBOL width, height
         String atomSymbol = atom.getSymbol();
         graphics.setFont(normalFont);
@@ -433,7 +438,8 @@ public class Renderer2D   {
             formalChargeString = "-";
         }
         if (formalCharge != 0) {
-            // fm is identical, don't change
+            graphics.setFont(normalFont);
+            fm = graphics.getFontMetrics();
             formalChargeW = (new Integer(fm.stringWidth(formalChargeString))).intValue();
             formalChargeH = (new Integer(fm.getAscent())).intValue();
         }
@@ -447,7 +453,8 @@ public class Renderer2D   {
         if (atomicMassNumber != 0) {
             Isotope majorIsotope = isotopeFactory.getMajorIsotope(atomSymbol);
             if (atomicMassNumber != majorIsotope.getAtomicMass()) {
-                // fm is identical, don't change
+                graphics.setFont(subscriptFont);
+                fm = graphics.getFontMetrics();
                 isotopeString = new Integer(atomicMassNumber).toString();
                 isotopeW = (new Integer(fm.stringWidth(isotopeString))).intValue();
                 isotopeH = (new Integer(fm.getAscent())).intValue();
@@ -496,7 +503,7 @@ public class Renderer2D   {
             coords[1] = labelY + isotopeH + atomSymbolH;
             int[] screenCoords = getScreenCoordinates(coords);
             graphics.setColor(r2dm.getAtomColor(atom));
-            graphics.setFont(normalFont);
+            graphics.setFont(normalScreenFont);
             graphics.drawString(atomSymbol, screenCoords[0], screenCoords[1]);
 
             // possibly underline SYMBOL
@@ -542,7 +549,7 @@ public class Renderer2D   {
             coords[1] = labelY + isotopeH + atomSymbolH;
             int[] screenCoords = getScreenCoordinates(coords);
             graphics.setColor(r2dm.getForeColor());
-            graphics.setFont(normalFont);
+            graphics.setFont(normalScreenFont);
             graphics.drawString(hSymbol, screenCoords[0], screenCoords[1]);
             if (implicitHydrogenCount > 1) {
                 // draw number of hydrogens
@@ -555,7 +562,7 @@ public class Renderer2D   {
                 coords[1] = labelY + isotopeH + atomSymbolH + hMultiplierH/2;
                 screenCoords = getScreenCoordinates(coords);
                 graphics.setColor(r2dm.getForeColor());
-                graphics.setFont(subscriptFont);
+                graphics.setFont(subscriptScreenFont);
                 graphics.drawString(hMultiplierString, screenCoords[0], screenCoords[1]);
             }
         }
@@ -572,7 +579,7 @@ public class Renderer2D   {
             coords[1] = labelY + isotopeH;
             int[] screenCoords = getScreenCoordinates(coords);
             graphics.setColor(r2dm.getForeColor());
-            graphics.setFont(subscriptFont);
+            graphics.setFont(subscriptScreenFont);
             graphics.drawString(formalChargeString, screenCoords[0], screenCoords[1]);
         }
         
@@ -587,12 +594,12 @@ public class Renderer2D   {
             coords[1] = labelY + isotopeH;
             int[] screenCoords = getScreenCoordinates(coords);
             graphics.setColor(r2dm.getForeColor());
-            graphics.setFont(subscriptFont);
+            graphics.setFont(subscriptScreenFont);
             graphics.drawString(isotopeString, screenCoords[0], screenCoords[1]);
         }
         
         // reset old font & color
-        graphics.setFont(unscaledFont);
+        graphics.setFont(normalFont);
         graphics.setColor(r2dm.getForeColor());
     }
     
@@ -611,12 +618,12 @@ public class Renderer2D   {
             return;
         }
 
-        // The drawing fonts
-        Font unscaledFont = graphics.getFont();
-        int unscaledFontSize = unscaledFont.getSize();
-        float normalFontSize = getScreenSize(unscaledFontSize); // apply zoom factor
-        Font normalFont = unscaledFont.deriveFont(normalFontSize); // keep font, only change size
-        Font subscriptFont = normalFont.deriveFont(normalFontSize*0.8f); // 80% of normal font
+        // The calculation fonts
+        Font normalFont = graphics.getFont();
+        int normalFontSize = normalFont.getSize();
+        // get drawing fonts
+        float normalScreenFontSize = getScreenSize(normalFontSize);
+        Font normalScreenFont = normalFont.deriveFont(normalScreenFontSize);
 
         // calculate SYMBOL width, height
         String atomSymbol = atom.getLabel();
@@ -657,12 +664,12 @@ public class Renderer2D   {
                              labelY + atomSymbolH};
             int[] screenCoords = getScreenCoordinates(coords);
             graphics.setColor(Color.BLACK);
-            graphics.setFont(normalFont);
+            graphics.setFont(normalScreenFont);
             graphics.drawString(atomSymbol, screenCoords[0], screenCoords[1]);
         }
 
         // reset old font & color
-        graphics.setFont(unscaledFont);
+        graphics.setFont(normalFont);
         graphics.setColor(r2dm.getForeColor());
     }
     
