@@ -2,14 +2,10 @@
 
     <property name="javadoc.dir" value="doc/api" />
     <property name="pathtojava3d" value="" />
-    <property name="src" value="build/src" />
-
-		<!-- Call javacc target in build.xml to re-generate the source code -->
-    <ant target="javacc"/>
+    <property name="build" value="build" />
+    <property name="src" value="src" />
 
     <path id="project.class.path">
-        <pathelement location="/usr/local/j2sdk1.4.0/lib/rt.jar" />
-
         <pathelement location="." />
         <fileset dir="jar">
             <include name="*.jar" />
@@ -31,6 +27,9 @@
     <target name="html">        
         <mkdir dir="${javadoc.dir}" />
 
+        <!-- Call javacc target in build.xml to re-generate the source code -->
+        <ant antfile="build.xml" target="javacc"/>
+
         <javadoc destdir="${javadoc.dir}"
                  author="true" version="true" use="true"
                  public="true"
@@ -39,7 +38,7 @@
             <tag name="keyword" scope="all" description="Keywords:" />
             <tag name="created" scope="all" description="Created on:" />
             <tag name="jar"     scope="all" description="Requires the Library:" />
-            <packageset dir="${src}" defaultexcludes="yes">
+            <packageset dir="${build}/${src}" defaultexcludes="yes">
                 <include name="org/openscience/cdk/**" />
                 <exclude name="org/openscience/cdk/test/**"/>
                 <exclude name="org/openscience/cdk/applications/**"/>
