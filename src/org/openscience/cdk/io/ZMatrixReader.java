@@ -51,10 +51,11 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.ZMatrixTools;
 
 /**
- * This class is experimental.
- * It reads Z matrices like in gaussians input file
+ * It reads Z matrices like in Gaussian input files. It seems that it cannot
+ * handle Z matrices where values are given via a stringID for which the value
+ * is given later.
  *
- * @cdk.module io
+ * @cdk.module experimental
  *
  * @cdk.keyword file format, Z-matrix
  */
