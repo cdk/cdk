@@ -3,7 +3,7 @@
 <project name="CDK" default="compile" basedir=".">	
   
   <!-- comment this line out of you have not jikes installed -->
-  <property name="build.compiler" value="jikes"/>
+  <!--property name="build.compiler" value="jikes"/-->
   
   <property name="build" value="build"/>
   <property name="sourcedist" value="sourcedist"/>

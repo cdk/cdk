@@ -1,3 +1,2 @@
-CDKInputAdapter.class
-JCPController2D.class
-JCPController2DModel.class
+*.class
+*~
