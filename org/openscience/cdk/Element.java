@@ -41,6 +41,15 @@ public class Element extends ChemObject
 	protected double atomicMass;	
 
 	/**
+	 * Constructs an empty Element
+	 *
+	 */
+	public Element()
+	{
+	}
+
+	
+	/**
 	 * Constructs an Element with a given 
 	 * element symbol.
 	 *

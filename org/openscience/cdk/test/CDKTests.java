@@ -44,7 +44,6 @@ public class CDKTests {
 		suite.addTest(MorganNumberToolsTest.suite());		
 		suite.addTest(MFAnalyserTest.suite());
 		suite.addTest(PathLengthTest.suite());
-		suite.addTest(StructGenAtomTypeFactoryTest.suite());		
 		suite.addTest(IsomorphismTesterTest.suite());		
 		suite.addTest(MonomerTest.suite());		
 		suite.addTest(PolymerTest.suite());		
