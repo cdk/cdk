@@ -434,6 +434,10 @@ public class CMLCoreModule implements ModuleInterface {
 
                 break;
 
+            case CRYSTAL:
+                cdo.endObject("Crystal");
+
+                break;
             case COORDINATE3:
 
                 if (BUILTIN.equals("xyz3")) {
