@@ -19,7 +19,7 @@
   <entry id="absoluteAbundance" term="Absolute Abundance">
     <description>
        For each isotope the abundance is given as a percentage, and the sum
-       of all these abundances is 100%.
+       of all these abundances is 100%.
     </description>
     <relatedEntry type="seeAlso" href="isotopeAbundance"/>
   </entry>
@@ -73,7 +73,7 @@
   <entry id="relativeAbundance" term="Relative Abundance">
     <description>
       The major isotope has abundance 100 by default, and the other isotopes
-      have abundances relative to the major one.
+      have abundances relative to the major one.
     </description>
     <relatedEntry type="seeAlso" href="isotopeAbundance"/>
   </entry>
@@ -81,7 +81,7 @@
   <entry id="isotopeAbundance" term="Isotope Abundance">
     <description>
       The amount of isotope of one element compared with the amounts of the
-      other isotopes of that element in a natural mixture of isotopes.
+      other isotopes of that element in a natural mixture of isotopes.
     </description>
   </entry>
 
