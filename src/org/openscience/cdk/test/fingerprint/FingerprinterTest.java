@@ -261,11 +261,11 @@ public class FingerprinterTest extends TestCase
 		try{
 			FingerprinterTest fpt = new FingerprinterTest("FingerprinterTest");
 			fpt.standAlone = true;
-			/*fpt.testFingerprinter();	
+			fpt.testFingerprinter();	
 			fpt.testBug706786();
 			fpt.testBug771485();
-			fpt.testBug853254();*/
-			fpt.testBugXXX();
+			fpt.testBug853254();
+			
 		}
 		catch(Exception exc)
 		{
