@@ -195,6 +195,8 @@
                             <include name="vecmath1.2-1.14.jar" />
                             <include name="log4j-core.jar" />
                             <include name="log4j.jar" />
+                            <include name="gnujaxp.jar" />
+                            <include name="xerces-2.3.0.jar" />
                         </fileset>
                         <fileset dir="${dist}/jar">
                             <include name="cdk-core.jar" />
