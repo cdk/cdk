@@ -113,7 +113,7 @@ public class ConnectivityChecker implements CDKConstants
 			ac.addBond(atomContainer.getBondAt(f));
 		}
 //		System.out.println("atomcontainer  "+ ac);
-		do
+		while(ac.getAtomCount() > 0)
 		{
 			atom = ac.getAtomAt(0);
 			molecule = new Molecule();
@@ -123,7 +123,7 @@ public class ConnectivityChecker implements CDKConstants
 			PathTools.breadthFirstSearch(ac, sphere, molecule);
 			molecules.addElement(molecule);
 			ac.remove(molecule);
-		}while(ac.getAtomCount() > 0);
+		}
 		return molecules;
 	}
 }

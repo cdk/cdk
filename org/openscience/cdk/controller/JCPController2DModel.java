@@ -48,7 +48,7 @@ public class JCPController2DModel
 	public static int NORMALIZE=13;
 	public static int LASSO=14;
 	
-	private int drawMode = 6;
+	private int drawMode = 0;
 	private int ringSize = 6;
 	
 	private boolean snapToGridAngle = true;

@@ -43,7 +43,7 @@ public class JCPController2D
 	boolean debug = false;
 	Renderer2DModel r2dm;
 	AtomContainer atomCon;
-	JCPController2DModel c2dm = new JCPController2DModel();
+	JCPController2DModel c2dm;
 	boolean wasDragged = false;
 	
 	
@@ -60,6 +60,7 @@ public class JCPController2D
 	{
 		this.atomCon = atomCon;
 		this.r2dm = r2dm;
+		this.c2dm = new JCPController2DModel();
 	}
 	
 

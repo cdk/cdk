@@ -38,9 +38,9 @@ import java.awt.*;
 public class CDKInputAdapter extends JCPController2D implements MouseMotionListener, MouseListener, KeyListener
 {
 	
-	public CDKInputAdapter(AtomContainer atomCon, Renderer2DModel r2dm)
+	public CDKInputAdapter(AtomContainer atomCon, Renderer2DModel r2dm, JCPController2DModel c2dm)
 	{
-		super(atomCon, r2dm);
+		super(atomCon, r2dm, c2dm);
 	}
 	
 }
