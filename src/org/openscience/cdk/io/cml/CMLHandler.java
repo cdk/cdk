@@ -66,7 +66,7 @@ public class CMLHandler extends DefaultHandler {
      * @param ch        characters to handle
      */
     public void characters(char ch[], int start, int length) {
-       logger.debug("character data");
+       logger.debug(new String(ch, start, length));
        conv.characterData(ch, start, length);
     }
 
@@ -80,7 +80,7 @@ public class CMLHandler extends DefaultHandler {
     }
 
     public void endElement(String uri, String local, String raw) {
-       logger.debug("end element: " + raw);
+       logger.debug("</" + raw + ">");
        conv.endElement(uri, local, raw);
     }
 
@@ -93,10 +93,11 @@ public class CMLHandler extends DefaultHandler {
     }
 
     public void startElement(String uri, String local, String raw, Attributes atts) {
-        logger.debug("startElement: " + raw);
-        logger.debug("uri: " + uri);
-        logger.debug("local: " + local);
-        logger.debug("raw: " + raw);
+        StringBuffer sb = new StringBuffer();
+        sb.append("<" + raw);
+        if (uri.length() > 0) sb.append(" xmlns=\"" + uri + "\"");
+        sb.append(">");
+        logger.debug(sb.toString());
         String name = raw;
         // Detect CML modules, like CRML and CCML
         if (local.startsWith("reaction")) {
