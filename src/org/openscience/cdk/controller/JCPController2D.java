@@ -1148,6 +1148,7 @@ public class JCPController2D {
             logger.warn("No atoms selected: temporarily selecting nearest atom/bond");
             draggingSelected = false;
             AtomContainer selected = new AtomContainer();
+            Atom atomInRange = getAtomInRange(mouseX, mouseY);
             if (atomInRange != null) {
                 selected.addAtom(atomInRange);
                 r2dm.setSelectedPart(selected);
