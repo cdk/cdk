@@ -235,7 +235,7 @@ public class BasicValidator extends AbstractValidator {
         );
         try {
             AtomTypeFactory structgenATF = AtomTypeFactory.getInstance(
-                "org/openscience/cdk/config/structgen_atomtypes.xml"
+                "org/openscience/cdk/config/data/structgen_atomtypes.xml"
             );
             for (int i=0; i<bond.getAtomCount(); i++) {
                 Atom atom = bond.getAtomAt(i);
@@ -317,7 +317,7 @@ public class BasicValidator extends AbstractValidator {
         );
         try {
             AtomTypeFactory structgenATF = AtomTypeFactory.getInstance(
-                "org/openscience/cdk/config/valency_atomtypes.xml"
+                "org/openscience/cdk/config/data/valency_atomtypes.xml"
             );
             int bos = (int)molecule.getBondOrderSum(atom);
             AtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
@@ -355,7 +355,8 @@ public class BasicValidator extends AbstractValidator {
                 }
             }
         } catch (Exception exception) {
-            System.err.println("Error while performing atom bos validation: " + exception.toString());
+            logger.error("Error while performing atom bos validation: ", exception.getMessage());
+            logger.debug(exception);
         }
         return report;
     }

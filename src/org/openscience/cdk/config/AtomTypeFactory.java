@@ -85,7 +85,7 @@ public class AtomTypeFactory {
      */
     public static String ATOMTYPE_ID_JMOL = "jmol";
     
-    private static org.openscience.cdk.tools.LoggingTool logger;
+    private static LoggingTool logger;
 
     private static Hashtable tables = null;
     
@@ -133,7 +133,6 @@ public class AtomTypeFactory {
 
     /**
      * Method to create a default AtomTypeFactory, using the structgen atom type list.
-     * An AtomType of this kind is not cached.
      *
      * @see #getInstance(String)
      */
@@ -142,11 +141,12 @@ public class AtomTypeFactory {
     }
 
     /**
-     * Method to create a default AtomTypeFactory. Available configFiles in CDK are:
+     * Method to create a specialized AtomTypeFactory. Available lists in CDK are:
      * <ul>
-     *  <li>org/openscience/cdk/config/structgen_atomtypes.xml
-     *  <li>org/openscience/cdk/config/jmol_atomtypes.txt
-     *  <li>org/openscience/cdk/config/mol2_atomtypes.txt
+     *  <li>org/openscience/cdk/config/data/jmol_atomtypes.txt
+     *  <li>org/openscience/cdk/config/data/mol2_atomtypes.xml
+     *  <li>org/openscience/cdk/config/data/structgen_atomtypes.xml
+     *  <li>org/openscience/cdk/config/data/valency_atomtypes.xml
      * </ul>
      */
     public static AtomTypeFactory getInstance(String configFile) throws IOException, OptionalDataException, ClassNotFoundException {
@@ -160,9 +160,9 @@ public class AtomTypeFactory {
     }
 
 	/**
-	 *  Read the config from a text file
+	 * Read the config from a text file.
 	 *
-	 *@param  configFile  name of the config file
+	 * @param  configFile  name of the config file
 	 */
 	private void readConfiguration(String configFile)
 	{
@@ -247,9 +247,9 @@ public class AtomTypeFactory {
 
 
 	/**
-	 *  Gets the size attribute of the AtomTypeFactory object
+	 * Returns the number of atom types in this list.
 	 *
-	 *@return    The size value
+	 * @return    The number of atom types
 	 */
 	public int getSize()
 	{
@@ -258,11 +258,11 @@ public class AtomTypeFactory {
 
 
 	/**
-	 *  Get an AtomTyp
+	 * Get an AtomType with the given ID.
 	 *
-	 *@param  id                           an ID for a particular atom type (like C$)
-	 *@return                              The AtomType for this id
-	 *@exception  NoSuchAtomTypeException  Thrown if the atom type does not exist.
+	 * @param  id                           an ID for a particular atom type (like C$)
+	 * @return                              The AtomType for this id
+	 * @exception  NoSuchAtomTypeException  Thrown if the atom type does not exist.
 	 */
 	public AtomType getAtomType(String id) throws NoSuchAtomTypeException
 	{
@@ -280,12 +280,12 @@ public class AtomTypeFactory {
 
 
 	/**
-	 *  Get an array of all atomTypes known to the AtomTypeFactory for the given
-	 *  element symbol and atomtype class
+	 * Get an array of all atomTypes known to the AtomTypeFactory for the given
+	 * element symbol and atomtype class.
 	 *
-	 *@param  symbol  An element symbol to search for
-	 *@return         An array of atomtypes that matches the given element symbol
-	 *                and atomtype class
+	 * @param  symbol  An element symbol to search for
+	 * @return         An array of atomtypes that matches the given element symbol
+	 *                 and atomtype class
 	 */
 	public AtomType[] getAtomTypes(String symbol)
 	{
@@ -311,9 +311,9 @@ public class AtomTypeFactory {
 
 
 	/**
-	 *  Gets the allAtomTypes attribute of the AtomTypeFactory object
+	 * Gets the allAtomTypes attribute of the AtomTypeFactory object.
 	 *
-	 *@return    The allAtomTypes value
+	 * @return    The allAtomTypes value
 	 */
 	public org.openscience.cdk.AtomType[] getAllAtomTypes()
 	{
