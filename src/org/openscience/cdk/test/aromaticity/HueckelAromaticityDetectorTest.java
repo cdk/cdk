@@ -1,10 +1,9 @@
-/*
- *  $RCSfile$
+/*  $RCSfile$
  *  $Author$
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  *
  *  Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  *
@@ -58,8 +57,7 @@ public class HueckelAromaticityDetectorTest extends TestCase
 	 *
 	 *@param  name  Description of the Parameter
 	 */
-	public HueckelAromaticityDetectorTest(String name)
-	{
+	public HueckelAromaticityDetectorTest(String name) {
 		super(name);
 	}
 
@@ -92,25 +90,23 @@ public class HueckelAromaticityDetectorTest extends TestCase
 	public void testAzulene()
 	{
 		Molecule mol = MoleculeFactory.makeAzulene();
-		display(mol
-				);
-		System.out.println("Testing Azulene");
+		if (standAlone) {
+            display(mol);
+            System.out.println("Testing Azulene");
+        }
 		boolean isAromatic = false;
-		try
-		{
+		try {
 			isAromatic = HueckelAromaticityDetector.detectAromaticity(mol);
-		} catch (Exception exc)
-		{
-			if (standAlone)
-			{
+		} catch (Exception exc) {
+			if (standAlone) {
 				exc.printStackTrace();
 			}
+            fail(exc.toString());
 		}
-		if (standAlone && isAromatic)
-		{
+		if (standAlone && isAromatic) {
 			System.out.println("Azulene is aromatic");
 		}
-		assertTrue(isAromatic == true);
+		assertTrue(isAromatic);
 
 	}
 
@@ -121,8 +117,10 @@ public class HueckelAromaticityDetectorTest extends TestCase
 	public void testIndole()
 	{
 		Molecule mol = MoleculeFactory.makeIndole();
-		display(mol);
-		System.out.println("Testing Indole");
+		if (standAlone) {
+            display(mol);
+            System.out.println("Testing Indole");
+        }
 		boolean isAromatic = false;
 		try
 		{
@@ -133,12 +131,13 @@ public class HueckelAromaticityDetectorTest extends TestCase
 			{
 				exc.printStackTrace();
 			}
+            fail(exc.toString());
 		}
 		if (standAlone && isAromatic)
 		{
 			System.out.println("Indole is aromatic");
 		}
-		assertTrue(isAromatic == true);
+		assertTrue(isAromatic);
 
 	}
 
@@ -149,8 +148,10 @@ public class HueckelAromaticityDetectorTest extends TestCase
 	public void testPyrrole()
 	{
 		Molecule mol = MoleculeFactory.makePyrrole();
-		display(mol);
-		System.out.println("Testing Pyrrole");
+		if (standAlone) {
+            display(mol);
+            System.out.println("Testing Pyrrole");
+        }
 		boolean isAromatic = false;
 		try
 		{
@@ -161,24 +162,22 @@ public class HueckelAromaticityDetectorTest extends TestCase
 			{
 				exc.printStackTrace();
 			}
+            fail(exc.toString());
 		}
 		if (standAlone && isAromatic)
 		{
 			System.out.println("Pyrrole is aromatic");
 		}
-		assertTrue(isAromatic == true);
+		assertTrue(isAromatic);
 	}
 
 
 	/**
 	 *  A unit test for JUnit
 	 */
-	public void testBenzeneFromSMILES()
-	{
+	public void testBenzeneFromSMILES() {
 		boolean isAromatic = false;
-		try
-		{
-
+		try {
 			SmilesParser sp = new SmilesParser();
 
 			Molecule mol = sp.parseSmiles("C1CCCc2c1cccc2");
@@ -191,28 +190,23 @@ public class HueckelAromaticityDetectorTest extends TestCase
 			Iterator iter = rs.iterator();
 			Ring r = null;
 			int i = 0;
-			while (iter.hasNext())
-			{
+			while (iter.hasNext()) {
 				r = (Ring) iter.next();
 				i++;
 				isAromatic = HueckelAromaticityDetector.isAromatic(mol, rs, r);
-				if (standAlone && isAromatic)
-				{
+				if (standAlone && isAromatic) {
 					System.out.println("Ring " + i + " in test molecule is aromatic.");
-				}
-				else if (standAlone && !isAromatic)
-				{
+				} else if (standAlone && !isAromatic) {
 					System.out.println("Ring " + i + " in test molecule is not aromatic.");
 				}
 			}
-		} catch (Exception exc)
-		{
-			if (standAlone)
-			{
+		} catch (Exception exc) {
+			if (standAlone) {
 				exc.printStackTrace();
 			}
+            fail(exc.toString());
 		}
-		assertTrue(isAromatic == true);
+		assertTrue(isAromatic);
 	}
 
 

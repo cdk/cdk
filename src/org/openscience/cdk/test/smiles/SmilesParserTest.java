@@ -42,25 +42,24 @@ public class SmilesParserTest extends TestCase
 {
 	boolean standAlone = false;
 	
-	public SmilesParserTest(String name)
-	{
+	public SmilesParserTest(String name) {
 		super(name);
 	}
 
-	public static Test suite()
-	{
+	public static Test suite() {
 		return new TestSuite(SmilesParserTest.class);
 	}
 
-	public void setStandAlone(boolean standAlone)
-	{
+	public void setStandAlone(boolean standAlone) {
 		this.standAlone = standAlone;
 	}
 	
-	public void testSmilesParser()
-	{
+	public void testSmilesParser() {
 		SmilesParser sp = new SmilesParser();
-		MoleculeListViewer mlv = new MoleculeListViewer();
+        MoleculeListViewer mlv = null;
+        if (standAlone) {
+            mlv = new MoleculeListViewer();
+        }
 		String[] smiles = 
 		{
 			"C1c2c(c3c(c(O)cnc3)cc2)CC(=O)C1",
@@ -72,20 +71,25 @@ public class SmilesParserTest extends TestCase
 			"C1(C=C(C=C(C=C(C=C(C=CC%35=C%36)C%31=C%35C%32=C%33C%36=C%34)C%22=C%31C%23=C%32C%24=C%25C%33=C%26C%34=CC%27=CC%28=CC=C%29)C%14=C%22C%15=C%23C%16=C%24C%17=C%18C%25=C%19C%26=C%27C%20=C%28C%29=C%21)C6=C%14C7=C%15C8=C%16C9=C%17C%12=C%11C%18=C%10C%19=C%20C%21=CC%10=CC%11=CC(C=C%30)=C%12%13)=C(C6=C(C7=C(C8=C(C9=C%13C%30=C5)C5=C4)C4=C3)C3=C2)C2=CC=C1",
 			"CC1(C(=C(CC(C1)O)C)C=CC(=CC=CC(=CC=CC=C(C=CC=C(C=CC1=C(CC(CC1(C)C)O)C)C)C)C)C)C"			
 		};
-		for (int f = 0; f < smiles.length; f++)
-		{
-			try{
+		for (int f = 0; f < smiles.length; f++) {
+			try {
 				Molecule mol = sp.parseSmiles(smiles[f]);
-				StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-				MoleculeViewer2D mv = new MoleculeViewer2D();
-				sdg.setMolecule((Molecule)mol.clone());
-				sdg.generateCoordinates();
-				mv.setAtomContainer(sdg.getMolecule());
-				mlv.addStructure(mv, "Structure " + (f + 1)); 
-			}catch(Exception exc){exc.printStackTrace();}
+                if (standAlone) {
+                    StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+                    MoleculeViewer2D mv = new MoleculeViewer2D();
+                    sdg.setMolecule((Molecule)mol.clone());
+                    sdg.generateCoordinates();
+                    mv.setAtomContainer(sdg.getMolecule());
+                    mlv.addStructure(mv, "Structure " + (f + 1));
+                }
+			} catch (Exception exc){
+              exc.printStackTrace();
+              fail(exc.toString());
+            }
 		}
-		long l1 = System.currentTimeMillis();
-			try{
+        if (standAlone) {
+            long l1 = System.currentTimeMillis();
+			try {
 				Molecule mol = sp.parseSmiles(smiles[6]);
 				StructureDiagramGenerator sdg = new StructureDiagramGenerator();
 				MoleculeViewer2D mv = new MoleculeViewer2D();
@@ -94,57 +98,71 @@ public class SmilesParserTest extends TestCase
 				mv.setAtomContainer(sdg.getMolecule());
 				mv.display();
 				//mlv.addStructure(mv, "Structure " + (f + 1)); 
-			}catch(Exception exc){exc.printStackTrace();}
-		long l2 = System.currentTimeMillis();
-		System.out.println(l2-l1);
-							
+			} catch (Exception exc) {exc.printStackTrace();}
+            long l2 = System.currentTimeMillis();
+            System.out.println(l2-l1);
+        }					
 	}
 
-	public void testSFBug630475()
-	{
+	public void testSFBug630475() {
 		SmilesParser sp = new SmilesParser();
-		MoleculeListViewer mlv = new MoleculeListViewer();
-		mlv.setMolViewDim(new Dimension(400, 600));
+        MoleculeListViewer mlv = null;
+        if (standAlone) {
+            mlv = new MoleculeListViewer();
+            mlv.setMolViewDim(new Dimension(400, 600));
+        }
 		String[] smiles = 
 		{
 			"CC1(C(=C(CC(C1)O)C)C=CC(=CC=CC(=CC=CC=C(C=CC=C(C=CC1=C(CC(CC1(C)C)O)C)C)C)C)C)C"			
 		};
-		for (int f = 0; f < smiles.length; f++)
-		{
-			try{
+		for (int f = 0; f < smiles.length; f++) {
+			try {
 				Molecule mol = sp.parseSmiles(smiles[f]);
-				StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-				MoleculeViewer2D mv = new MoleculeViewer2D();
-				//mv.getRenderer2DModel().setDrawNumbers(true);
-				sdg.setMolecule((Molecule)mol.clone());
-				sdg.generateCoordinates();
-				mv.setAtomContainer(sdg.getMolecule());
-				mlv.addStructure(mv, "Structure " + (f + 1)); 
-			}catch(Exception exc){exc.printStackTrace();}
+                if (standAlone) {
+                    StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+                    MoleculeViewer2D mv = new MoleculeViewer2D();
+                    //mv.getRenderer2DModel().setDrawNumbers(true);
+                    sdg.setMolecule((Molecule)mol.clone());
+                    sdg.generateCoordinates();
+                    mv.setAtomContainer(sdg.getMolecule());
+                    mlv.addStructure(mv, "Structure " + (f + 1));
+                }
+			} catch (Exception exc) { 
+              exc.printStackTrace();
+              fail(exc.toString());
+            }
 		}
 	}
 	
 	public void testSFBug585811()
 	{
 		SmilesParser sp = new SmilesParser();
-		MoleculeListViewer mlv = new MoleculeListViewer();
-		mlv.setMolViewDim(new Dimension(400, 600));
 		String[] smiles = 
 		{
 			"CC(C(C8CCC(CC8)=O)C3C4C(CC5(CCC(C9=CC(C=CN%10)=C%10C=C9)CCCC5)C4)C2CCC1CCC7(CCC7)C6(CC6)C1C2C3)=O"			
 		};
+        MoleculeListViewer mlv = null;
+        if (standAlone) {
+            mlv = new MoleculeListViewer();
+            mlv.setMolViewDim(new Dimension(400, 600));
+        }
 		for (int f = 0; f < smiles.length; f++)
 		{
 			try{
 				Molecule mol = sp.parseSmiles(smiles[f]);
-				StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-				MoleculeViewer2D mv = new MoleculeViewer2D();
-				//mv.getRenderer2DModel().setDrawNumbers(true);
-				sdg.setMolecule((Molecule)mol.clone());
-				sdg.generateCoordinates();
-				mv.setAtomContainer(sdg.getMolecule());
-				mlv.addStructure(mv, "Structure " + (f + 1)); 
-			}catch(Exception exc){exc.printStackTrace();}
+                if (standAlone) {
+                    StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+                    MoleculeViewer2D mv = new MoleculeViewer2D();
+                    //mv.getRenderer2DModel().setDrawNumbers(true);
+                    sdg.setMolecule((Molecule)mol.clone());
+                    sdg.generateCoordinates();
+                    mv.setAtomContainer(sdg.getMolecule());
+                    mlv.addStructure(mv, "Structure " + (f + 1));
+                }
+			} catch (Exception exc) { 
+                exc.printStackTrace();
+                fail(exc.toString());
+            }
 		}
 	}
 	

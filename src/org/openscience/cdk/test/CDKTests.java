@@ -37,6 +37,7 @@ import org.openscience.cdk.test.ringsearch.*;
 import org.openscience.cdk.test.smiles.*;
 import org.openscience.cdk.test.structgen.*;
 import org.openscience.cdk.test.tools.*;
+import org.openscience.cdk.test.aromaticity.*;
 
 /**
  * TestSuite that runs all the sample tests
@@ -73,6 +74,8 @@ public class CDKTests {
 		suite.addTest(SmilesParserTest.suite());
         // from cdk.test.isomorphism
         suite.addTest(UniversalIsomorphismTesterTest.suite());
+        // from cdk.test.aromaticity
+        suite.addTest(HueckelAromaticityDetectorTest.suite());
 
 	    return suite;
 	}

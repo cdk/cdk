@@ -47,7 +47,7 @@ import java.util.*;
 import java.awt.*;
 
 /**
- *  Description of the Class
+ *  Tests the HOSECode genertor. This is *not* a JUnit test class!
  *
  *@author     steinbeck
  *@created    November 16, 2002
