@@ -38,7 +38,7 @@ public class BondStretching {
 	double[] deltar = null;	// The difference between actual and reference bond lengths
 	
 	double[][] dDeltar = null;
-	GMatrix ddDeltar = null;
+	double[][][] ddDeltar = null;
 
 
 	/**
@@ -141,12 +141,13 @@ public class BondStretching {
 		Atom[] atomsInBond = null;
 		Double forAtomNumber = null;
 		int atomNumber = 0;
+		int coordinate;
 		for (int i = 0; i < point.getSize(); i++) {
 			
 			dDeltar[i] = new double[bonds.length];
 			
 			forAtomNumber = new Double(i/3);
-			int coordinate = i % 3;
+			coordinate = i % 3;
 			//System.out.println("coordinate = " + coordinate);
 
 			atomNumber = forAtomNumber.intValue();
@@ -158,7 +159,7 @@ public class BondStretching {
 				atomsInBond = bonds[j].getAtoms();
 				//System.out.println("atomsInBond[0] : " + atomsInBond[0].toString());
 				//System.out.println("atomsInBond[1] : " + atomsInBond[1].toString());
-				if (molecule.getAtomNumber(atomsInBond[0]) == atomNumber) {
+				if ((molecule.getAtomNumber(atomsInBond[0]) == atomNumber) | (molecule.getAtomNumber(atomsInBond[1]) == atomNumber)) {
 					switch (coordinate) {
 						case 0: dDeltar[i][j] = (atomsInBond[0].getX3d() - atomsInBond[1].getX3d())
 								/ Math.sqrt(Math.pow(atomsInBond[0].getX3d() - atomsInBond[1].getX3d(),2) + Math.pow(atomsInBond[0].getY3d() - atomsInBond[1].getY3d(),2) + Math.pow(atomsInBond[0].getZ3d() - atomsInBond[1].getZ3d(),2)); 
@@ -169,19 +170,10 @@ public class BondStretching {
 						case 2: dDeltar[i][j] = (atomsInBond[0].getZ3d() - atomsInBond[1].getZ3d())
 								/ Math.sqrt(Math.pow(atomsInBond[0].getX3d() - atomsInBond[1].getX3d(),2) + Math.pow(atomsInBond[0].getY3d() - atomsInBond[1].getY3d(),2) + Math.pow(atomsInBond[0].getZ3d() - atomsInBond[1].getZ3d(),2)); 
 							break;
-					}		
-				} else if (molecule.getAtomNumber(atomsInBond[1]) == atomNumber) {
-						switch (coordinate) {
-							case 0: dDeltar[i][j] = (atomsInBond[0].getX3d() - atomsInBond[1].getX3d()) * (-1)
-									/ Math.sqrt(Math.pow(atomsInBond[0].getX3d() - atomsInBond[1].getX3d(),2) + Math.pow(atomsInBond[0].getY3d() - atomsInBond[1].getY3d(),2) + Math.pow(atomsInBond[0].getZ3d() - atomsInBond[1].getZ3d(),2)); 
-								break;
-							case 1:	dDeltar[i][j] = (atomsInBond[0].getY3d() - atomsInBond[1].getY3d()) * (-1)
-									/ Math.sqrt(Math.pow(atomsInBond[0].getX3d() - atomsInBond[1].getX3d(),2) + Math.pow(atomsInBond[0].getY3d() - atomsInBond[1].getY3d(),2) + Math.pow(atomsInBond[0].getZ3d() - atomsInBond[1].getZ3d(),2)); 
-								break;
-							case 2: dDeltar[i][j] = (atomsInBond[0].getZ3d() - atomsInBond[1].getZ3d()) * (-1)
-									/ Math.sqrt(Math.pow(atomsInBond[0].getX3d() - atomsInBond[1].getX3d(),2) + Math.pow(atomsInBond[0].getY3d() - atomsInBond[1].getY3d(),2) + Math.pow(atomsInBond[0].getZ3d() - atomsInBond[1].getZ3d(),2)); 
-								break;
-						}
+					}
+					if (molecule.getAtomNumber(atomsInBond[1]) == atomNumber) {
+						dDeltar[i][j] = (-1) * dDeltar[i][j];
+					}
 				} else {
 					dDeltar[i][j] = 0;
 				}
@@ -243,8 +235,99 @@ public class BondStretching {
 	 */
 	public void setBondLengthsSecondDerivative_InPoint(AtomContainer molecule) {
 		GVector point = new GVector(ffTools.getCoordinates3xNVector(molecule));
-		ddDeltar = new GMatrix(point.getSize(),point.getSize());
-		ddDeltar.setZero();
+		ddDeltar = new double[point.getSize()][][];
+		
+		Atom[] atomsInBond = null;
+		Double forAtomNumber = null;
+		int atomNumberi;
+		int atomNumberj;
+		int coordinatei;
+		int coordinatej;
+		double ddDeltar1;
+		double ddDeltar2;
+		
+		if (dDeltar == null) {
+			setBondLengthsFirstDerivative_InPoint(molecule);
+		}
+		
+		for (int i=0; i<point.getSize(); i++) {
+			ddDeltar[i] = new double[point.getSize()][];
+			
+			forAtomNumber = new Double(i/3);
+			coordinatei = i % 3;
+			//System.out.println("coordinatei = " + coordinatei);
+				
+			atomNumberi = forAtomNumber.intValue();
+			//System.out.println("atomNumberi = " + atomNumberi);
+			//System.out.println("atomi : " + molecule.getAtomAt(atomNumberi));
+				
+			for (int j=0; j<point.getSize(); j++) {
+				ddDeltar[i][j] = new double[bonds.length];
+				
+				forAtomNumber = new Double(j/3);
+				coordinatej = j % 3;
+				//System.out.println("coordinatej = " + coordinatej);
+				
+				atomNumberj = forAtomNumber.intValue();
+				//System.out.println("atomNumberj = " + atomNumberj);
+				//System.out.println("atomj : " + molecule.getAtomAt(atomNumberj));
+				
+				for (int k=0; k < bonds.length; k++) {
+					atomsInBond = bonds[k].getAtoms();
+					//System.out.println("atomsInBond[0] : " + atomsInBond[0].toString());
+					//System.out.println("atomsInBond[1] : " + atomsInBond[1].toString());
+					
+					if ((molecule.getAtomNumber(atomsInBond[0]) == atomNumberj) | (molecule.getAtomNumber(atomsInBond[1]) == atomNumberj)) {
+						//System.out.println("r[" + k + "] = " + r[k]);
+						ddDeltar1 = (-1) / Math.pow(r[k],3);
+						ddDeltar2 = 1 / r[k];
+						//System.out.println("OK: had d1");
+						
+						switch (coordinatej) {
+							case 0: ddDeltar1 = (atomsInBond[0].getX3d() - atomsInBond[1].getX3d()) * ddDeltar[i][j][k];
+								//System.out.println("OK: d1 x");
+								break;
+							case 1:	ddDeltar1 = (atomsInBond[0].getY3d() - atomsInBond[1].getY3d()) * ddDeltar[i][j][k];
+								//System.out.println("OK: d1 y");
+								break;
+							case 2:	ddDeltar1 = (atomsInBond[0].getZ3d() - atomsInBond[1].getZ3d()) * ddDeltar[i][j][k];
+								//System.out.println("OK: d1 z");
+								break;
+						}
+						
+						if (molecule.getAtomNumber(atomsInBond[1]) == atomNumberj) {
+								ddDeltar1 = (-1) * ddDeltar1;
+								ddDeltar2 = (-1) * ddDeltar2;
+								//System.out.println("OK: bond 1");
+						} 
+	
+						if ((molecule.getAtomNumber(atomsInBond[0]) == atomNumberi) | (molecule.getAtomNumber(atomsInBond[1]) == atomNumberi)) {
+							switch (coordinatei) {
+								case 0: ddDeltar1 = ddDeltar1 * (atomsInBond[0].getX3d() - atomsInBond[1].getX3d());
+									//System.out.println("OK: have d2 x");
+									break;
+								case 1:	ddDeltar1 = ddDeltar1 * (atomsInBond[0].getY3d() - atomsInBond[1].getY3d());
+									//System.out.println("OK: have d2 y");
+									break;
+								case 2: ddDeltar1 = ddDeltar1 * (atomsInBond[0].getZ3d() - atomsInBond[1].getZ3d());
+									//System.out.println("OK: have d2 z");
+									break;
+							}
+							if (molecule.getAtomNumber(atomsInBond[1]) == atomNumberi) {
+								ddDeltar1 = (-1) * ddDeltar1;
+								ddDeltar2 = (-1) * ddDeltar2;
+								//System.out.println("OK: d2 bond 1");
+							}
+						}
+						ddDeltar[i][j][k] = ddDeltar1 + ddDeltar2;
+					} else {
+						ddDeltar[i][j][k] = 0;
+						//System.out.println("OK: 0");
+					}
+					//System.out.println("bond " + k + " : " + "ddDeltar[" + i + "][" + j + "][" + k + "] = " + ddDeltar[i][j][k]);
+				}
+			}
+		}	
 	}
 
 
@@ -253,7 +336,7 @@ public class BondStretching {
 	 *
 	 *@return        Bond lengths second derivative value [dimension(3xN)] [bonds Number]
 	 */
-	public GMatrix getBondLengthsSecondDerivative_InPoint() {
+	 public double[][][] getBondLengthsSecondDerivative_InPoint() {
 		return ddDeltar;
 	}
 
@@ -262,17 +345,12 @@ public class BondStretching {
 	 *  Evaluate the hessian for the bond stretching.
 	 *
 	 *@param  molecule       The molecule like an AtomContainer object.
-	 *@return        Hessian value of the bond stretching term.
 	 */
-	public GMatrix hessianInPoint(AtomContainer molecule) {
+	public void setHessianInPoint(AtomContainer molecule) {
 		
 		GVector point = new GVector(ffTools.getCoordinates3xNVector(molecule)); 
 		
 		double[] forHessian = new double[point.getSize() * point.getSize()];
-		
-		if (dDeltar == null) {
-			setBondLengthsFirstDerivative_InPoint(molecule);
-		}
 		
 		setBondLengthsSecondDerivative_InPoint(molecule);
 		
@@ -283,7 +361,7 @@ public class BondStretching {
 				sumHessianEB = 0;
 				for (int k = 0; k < bonds.length; k++) {
 					sumHessianEB = sumHessianEB + (2 * k2[k] + 6 * k3[k] * deltar[k] + 12 * k4[k] * Math.pow(deltar[k],2)) * dDeltar[i][k] * dDeltar[j][k]
-								+ (k2[k] * 2 * deltar[k] + k3[k] * 3 * Math.pow(deltar[k],2) + k4[k] * 4 * Math.pow(deltar[k],3)) * ddDeltar.getElement(0,0);
+								+ (k2[k] * 2 * deltar[k] + k3[k] * 3 * Math.pow(deltar[k],2) + k4[k] * 4 * Math.pow(deltar[k],3)) * ddDeltar[i][j][k];
 				}
 				forHessianIndex = i*point.getSize()+j;
 				forHessian[forHessianIndex] = sumHessianEB;
@@ -293,8 +371,18 @@ public class BondStretching {
 		hessianMMFF94SumEB_InWishedCoordinates.setSize(point.getSize(), point.getSize());
 		hessianMMFF94SumEB_InWishedCoordinates.set(forHessian); 
 		//System.out.println("hessianMMFF94SumEB_InWishedCoordinates : " + hessianMMFF94SumEB_InWishedCoordinates);
+	}
+
+
+	/**
+	 *  Get the hessian for the bond stretching.
+	 *
+	 *@return        Hessian value of the bond stretching term.
+	 */
+	public GMatrix getHessianInPoint() {
 		return hessianMMFF94SumEB_InWishedCoordinates;
 	}
+
 
 }
 
