@@ -47,16 +47,29 @@ import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.geometry.GeometryTools;
 
 /**
- *  the main class to generate the 3D coordinates of a molecule ModelBuilder3D
- *  mb3d = new ModelBuilder3D(); mb3d.setTemplateHandler();
- *  mb3d.setParameterSet("mm2"); mb3d.setMolecule(molecule, false);
- *  mb3d.generate3DCoordinates(); molecule = mb3d.getMolecule(); Problems: -
- *  condensed ring systems which are unknown for the template class - vdWaals
- *  clashes - stereochemistry - chains running through ring systems
+ *  The main class to generate the 3D coordinates of a molecule ModelBuilder3D.
+ *  Its use looks like:
+ *  <pre>
+ *  ModelBuilder3D mb3d = new ModelBuilder3D();
+ *  mb3d.setTemplateHandler();
+ *  mb3d.setParameterSet("mm2");
+ *  mb3d.setMolecule(molecule, false);
+ *  mb3d.generate3DCoordinates();
+ *  Molecule molecule = mb3d.getMolecule();
+ *  </pre>
  *
- *@author         cho, steinbeck
- *@cdk.created    2004-09-07
- * @cdk.module    builder3d
+ *  <p>Standing problems:
+ *  <ul>
+ *    <li>condensed ring systems which are unknown for the template class 
+ *    <li>vdWaals clashes
+ *    <li>stereochemistry
+ *    <li>chains running through ring systems
+ *  </ul>
+ *
+ * @author      cho
+ * @aythor      steinbeck
+ * @cdk.created 2004-09-07
+ * @cdk.module  builder3d
  */
 public class ModelBuilder3D {
 
