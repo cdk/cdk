@@ -46,13 +46,27 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">3.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
     </atom>
-    <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp</scalar>
+    <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp1</scalar>
   </atomType>
-  <atomType id="Cplus">
+  <atomType id="C.default">
+    <atom elementType="C" formalCharge="0">
+      <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">3.0</scalar>
+      <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
+    </atom>
+  </atomType>
+  <atomType id="Cplus.sp3">
     <atom elementType="C" formalCharge="1">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">3.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">3.0</scalar>
     </atom>
+    <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
+  </atomType>
+  <atomType id="Cplus.sp2">
+    <atom elementType="C" formalCharge="1">
+      <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
+      <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">3.0</scalar>
+    </atom>
+    <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
   </atomType>
   <atomType id="Cminus">
     <atom elementType="C" formalCharge="-1">
@@ -67,11 +81,25 @@
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">3.0</scalar>
     </atom>
   </atomType>
+  <atomType id="N.sp2">
+    <atom elementType="N" formalCharge="0">
+      <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
+      <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">3.0</scalar>
+    </atom>
+    <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
+  </atomType>
   <atomType id="Nplus">
     <atom elementType="N" formalCharge="1">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
     </atom>
+  </atomType>
+  <atomType id="Nplus.sp3">
+    <atom elementType="N" formalCharge="1">
+      <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
+      <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
+    </atom>
+    <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
   </atomType>
   <atomType id="O">
     <atom elementType="O" formalCharge="0">
