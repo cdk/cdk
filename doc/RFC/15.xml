@@ -1,0 +1,59 @@
+<refentry id="cdk-rfc-15">
+
+  <refentryinfo>
+    <revhistory>
+      <revision>
+        <revnumber>1</revnumber>
+        <date>2003-06-08</date>
+        <authorinitials>elw</authorinitials>
+        <revremark>
+          See <ulink url="">email archive</ulink>.
+        </revremark>
+      </revision>
+    </revhistory>
+  </refentryinfo>
+
+
+  <refnamediv>
+    <refname>RFC CDK #15: What IO should and should not do </refname>
+  </refnamediv>
+
+  <refsect1>
+    <title>Proposal</title>
+    <para>
+This proposal defines how IO classes should behave and be written. The
+guidelines below are written for readers, but apply to writers too: when
+reading "reading from" this also includes "writing to", etc.
+</para>
+<para>
+ The IO class should:
+<itemizedlist>
+<listitem><para>implement CDK's ChemObjectReader</para></listitem>
+<listitem><para>read all information from the file that the JavaDoc mentions it reads</para></listitem>
+<listitem><para>define all information it reads from file in the class' JavaDoc</para></listitem>
+<listitem><para>flush the writer after finishing the writing</para></listitem>
+<listitem><para>read everything the corresponding CDK writer can output</para></listitem>
+<listitem><para>write everything the corresponding CDK reader can read</para></listitem>
+</itemizedlist>
+</para>
+<para>
+ The IO class should *not*:
+<itemizedlist>
+<listitem><para>expect any information in the file other than actually stated in the
+   file. It may implement knowledge not given in the file, but stated in the
+   file format's specification. Thus, it must not expect "C" to be carbons
+   unless the specification says so.</para></listitem>
+<listitem><para>close the Reader after done reading</para></listitem>
+</itemizedlist>
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>Reason</title>
+    <para>
+The IO classes seems to use these guidelines, but it is nice to have them
+written down somewhere. (And a RFC is the place then).
+    </para>
+  </refsect1>
+
+</refentry>

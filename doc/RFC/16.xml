@@ -1,0 +1,40 @@
+<refentry id="cdk-rfc-16">
+
+  <refentryinfo>
+    <revhistory>
+      <revision>
+        <revnumber>1</revnumber>
+        <date>2003-06-08</date>
+        <authorinitials>elw</authorinitials>
+        <revremark>
+          See <ulink url="">email archive</ulink>.
+        </revremark>
+      </revision>
+    </revhistory>
+  </refentryinfo>
+
+
+  <refnamediv>
+    <refname>RFC CDK #16: Isotope.getAtomicMass() should be renamed to Isotope.getMassNumber()</refname>
+  </refnamediv>
+
+  <refsect1>
+    <title>Proposal</title>
+    <para>
+The method Isotope.getAtomicMass() should be renamed to 
+Isotope.getMassNumber() (Or .getNucleonNumber(), but that is not proposed).
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>Reason</title>
+    <para>
+Mass number (or nucleon number) seems to be the accepted
+names for the information contained in the field which is currently accessed 
+by the getAtomicMass() method. MassNumber can be found in several
+scientific dictionaries, e.g. those indexed on 
+<ulink url="http://www.xrefer.com/">www.xrefer.com</ulink>.
+    </para>
+  </refsect1>
+
+</refentry>

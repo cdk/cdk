@@ -58,6 +58,8 @@
     <xslt in="rfc12.xml" out="${build.dir}/rfc12.html" style="xsl/tabular.xsl"/>
     <xslt in="rfc13.xml" out="${build.dir}/rfc13.html" style="xsl/tabular.xsl"/>
     <xslt in="rfc14.xml" out="${build.dir}/rfc14.html" style="xsl/tabular.xsl"/>
+    <xslt in="rfc15.xml" out="${build.dir}/rfc15.html" style="xsl/tabular.xsl"/>
+    <xslt in="rfc16.xml" out="${build.dir}/rfc16.html" style="xsl/tabular.xsl"/>
     <xslt in="screenshots.xml" out="${build.dir}/screenshots.html" style="xsl/tabular.xsl"/>
     <xslt in="software.xml" out="${build.dir}/software.html" style="xsl/tabular.xsl"/>
     <xslt in="thelibrary.xml" out="${build.dir}/thelibrary.html" style="xsl/tabular.xsl"/>

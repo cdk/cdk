@@ -40,7 +40,7 @@ electrons)...</para>
 To make a LonePair useful in CDK, the AtomContainer would need to have
 to be changed to have set/get methods for this. This can be achieved in a few
 different ways, but I would like to propose:
-<orderedlist>
+<itemizedlist>
 <listitem><para>change addBond(Bond) method into setElectronContainer(ElectronContainer)</para></listitem>
 <listitem><para>change addBonds(AtomContainer) into addElectronContainers(AtomContainer)</para></listitem>
 <listitem><para>change contains(Bond) into contains(ElectronContainer)</para></listitem>
@@ -53,7 +53,7 @@ removeAtomAndConnectedElectronContainers(Atom)</para></listitem>
 <listitem><para>change setBondAt(int, Bond) into setElectronContainer(int,
 ElectronContainer)</para></listitem>
 <listitem><para>change setBonds(Bonds[]) into setElectronContainers(ElectronContainer[])</para></listitem>
-</orderedlist>
+</itemizedlist>
 </para>
 
 <para>This would change the API, but as a Bond is a subclass of ElectronContainer,
