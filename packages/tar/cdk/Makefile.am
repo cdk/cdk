@@ -24,7 +24,7 @@ alljardir = "${JARLIBDIR}"
 
 alljar_DATA = ${JARLIBS}
 
-EXTRA_DIST=VERSION ChangeLog build.xml javadoc.xml data src
+EXTRA_DIST=VERSION ChangeLog build.xml javadoc.xml data src LICENSE
 
 CLEANFILES= cdk-core.jar cdk-extra.jar \
         cdk-libio.jar cdk-apps.jar cdk-test.jar \

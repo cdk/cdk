@@ -7,13 +7,16 @@ ANT=@PATHTOANT@
 TAR=@PATHTOTAR@
 GZIP=@PATHTOGZIP@
 
-EXTRA_DIST=${DOCTAR}
+EXTRA_DIST=${DOCTAR} lgpl.license
 
 CLEANFILES=$(DOCTAR)
 
 alldocdir = "${PREFIX}/share/doc"
 
 alldoc_DATA = ${DOCTAR}
+
+lgpl.license: ../../../../doc/lgpl.license
+	cp ../../../../doc/lgpl.license .
 
 javadoc.tar.gz:
 	cd ..; ${ANT} -buildfile javadoc.xml html
