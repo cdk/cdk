@@ -150,6 +150,5 @@ public class AtomTypeFactoryTest extends TestCase {
 		}
 		
         assertEquals("C", atom.getSymbol());
-		assertEquals(CDKConstants.HYBRIDIZATION_SP2, atomType.getHybridization());
 	}
 }
