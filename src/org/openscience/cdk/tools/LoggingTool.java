@@ -120,8 +120,13 @@ public class LoggingTool {
         String string = "Exception: " + exception.toString();
         this.debug(string);
         for (int i=0; i<stack.length; i++) {
-            string        = "       in: " + stack[i].getFileName() + " (line: " +
-            stack[i].getLineNumber() + ")";
+            string = "       in: " + stack[i].getClassName() +
+                     "." + stack[i].getMethodName();
+            String filename = stack[i].getFileName();
+            if (filename != null) {
+                string = string + "(" + filename + " line: " +
+                         stack[i].getLineNumber() + ")";
+            }
             this.debug(string);
             if (i == this.stackLength) i = stack.length;
         }
