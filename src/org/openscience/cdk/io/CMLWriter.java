@@ -212,15 +212,57 @@ public class CMLWriter implements ChemObjectWriter {
         logger.debug("Writing ChemModel");
         Crystal crystal = model.getCrystal();
         SetOfMolecules som = model.getSetOfMolecules();
+        SetOfReactions reactionSet = model.getSetOfReactions();
         if (crystal != null) {
             write(crystal);
-        } else if (som != null) {
+        }
+        if (som != null) {
             write(som);
-        } else {
+        }
+        if (reactionSet != null) {
+            write(reactionSet);
+        }
+        if (crystal == null && som == null && reactionSet == null) {
             write("<!-- model contains no data -->\n");
         }
     }
 
+    private void write(SetOfReactions reactionSet) {
+        Reaction[] reactions = reactionSet.getReactions();
+        if (reactions.length > 0) {
+            write("<reactionList>\n");
+            for (int i=0; i < reactions.length; i++) {
+                write(reactions[i]);
+            }
+            write("</reactionList>\n");
+        }
+    }
+    
+    private void write(Reaction reaction) {
+        write("<reaction>\n");
+        Molecule[] reactants = reaction.getReactants();
+        if (reactants.length > 0) {
+            write("    <reactantList>\n");
+            for (int i=0; i<reactants.length; i++) {
+                write("    <reactant>\n");
+                write(reactants[i]);
+                write("    </reactant>\n");
+            }
+            write("    </reactantList>\n");
+        }
+        Molecule[] products = reaction.getReactants();
+        if (products.length > 0) {
+            write("  <productList>\n");
+            for (int i=0; i<products.length; i++) {
+                write("    <product>\n");
+                write(products[i]);
+                write("    </product>\n");
+            }
+            write("  </productList>\n");
+        }
+        write("</reaction>\n");
+    }
+    
     private void write(Molecule mol) {
         write("<molecule");
         if (mol.getID() != null) {
