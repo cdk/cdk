@@ -219,6 +219,7 @@
                        debug="${debug}" deprecation="${deprecation}">
                     <include name="org/openscience/cdk/renderer/**/*"/>
                     <include name="org/openscience/cdk/controller/**/*"/>
+                    <include name="org/openscience/cdk/editor/**/*"/>
                     <excludesfile name="${src}/java3d.javafiles"/>
 
                     <classpath refid="project.class.path" />
@@ -349,6 +350,7 @@
                         <!-- Exclude classes in cdk-render module-->
                         <exclude name="org/openscience/cdk/renderer/**" />
                         <exclude name="org/openscience/cdk/controller/**" />
+                        <exclude name="org/openscience/cdk/editor/**" />
                         <exclude name="org/openscience/cdk/event/**" />
                         <!-- Exclude libio classes -->
                         <exclude name="org/openscience/cdk/libio/**" />
@@ -408,6 +410,7 @@
                     <fileset dir="${build}">
                         <include name="org/openscience/cdk/renderer/**/*" />
                         <include name="org/openscience/cdk/controller/**/*" />
+                        <include name="org/openscience/cdk/editor/**/*" />
                         <include name="org/openscience/cdk/event/**/*" />
                         <excludesfile name="${src}/java3d.classes" />
                     </fileset>
