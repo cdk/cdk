@@ -11,6 +11,11 @@ org/openscience/cdk/Element.java
 org/openscience/cdk/Isotope.java
 org/openscience/cdk/Molecule.java
 org/openscience/cdk/SetOfMolecules.java
+org/openscience/cdk/io/ReaderFactory.java
+org/openscience/cdk/io/MDLReader.java
+org/openscience/cdk/io/PDBReader.java
+org/openscience/cdk/io/ShelXReader.java
+org/openscience/cdk/io/XYZReader.java
 org/openscience/cdk/io/cml/cdopi/CDOInterface.java
 org/openscience/cdk/io/cml/cdopi/CDOAcceptedObjects.java
 org/openscience/cdk/io/cml/cdopi/ANIMATIONCDO.java
@@ -26,7 +31,6 @@ org/openscience/cdk/io/cml/JMOLANIMATIONConvention.java
 org/openscience/cdk/io/cml/PDBConvention.java
 org/openscience/cdk/io/cml/PMPConvention.java
 org/openscience/cdk/io/cml/XMLHandler.java
-org/openscience/cdk/io/ShelXReader.java
 org/openscience/cdk/geometry/BondTools.java
 org/openscience/cdk/renderer/color/AtomColorer.java
 org/openscience/cdk/renderer/color/PartialAtomicChargeColors.java
