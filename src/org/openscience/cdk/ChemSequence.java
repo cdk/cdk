@@ -83,17 +83,19 @@ public class ChemSequence extends ChemObject implements java.io.Serializable, Cl
 	}
 
 
-	/**
-	 *  Returns the array of ChemModels of this container.
-	 *
-	 * @return    The array of ChemModels of this container
+    /**
+     * Returns an array of ChemModels of length matching the number of ChemModels 
+     * in this container.
      *
-     * @see            #addChemModel
-	 */
-	public ChemModel[] getChemModels()
-	{
-		return chemModels;
-	}
+     * @return    The array of ChemModels in this container
+     *
+     * @see       #addChemModel
+     */
+     public ChemModel[] getChemModels() {
+         ChemModel[] returnModels = new ChemModel[getChemModelCount()];
+         System.arraycopy(this.chemModels, 0, returnModels, 0, returnModels.length);
+         return returnModels;
+     }
 
 
 	/**

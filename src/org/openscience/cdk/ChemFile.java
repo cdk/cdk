@@ -79,15 +79,17 @@ public class ChemFile extends ChemObject implements java.io.Serializable, Clonea
 
 
 	/**
-	 *  Returns the array of ChemSequences of this container.
+     * Returns the array of ChemSequences of this container.
 	 *
 	 * @return    The array of ChemSequences of this container
      *
      * @see       #addChemSequence
 	 */
-	public ChemSequence[] getChemSequences()
-	{
-		return chemSequences;
+	public ChemSequence[] getChemSequences() {
+         ChemSequence[] returnChemSequences = new ChemSequence[getChemSequenceCount()];
+         System.arraycopy(this.chemSequences, 0, returnChemSequences, 
+                                              0, returnChemSequences.length);
+         return returnChemSequences;
 	}
 
 
