@@ -89,8 +89,9 @@ public class Renderer2D   {
     public void paintChemModel(ChemModel model, Graphics graphics) {
         if (model.getSetOfReactions() != null) {
             paintSetOfReactions(model.getSetOfReactions(), graphics);
-        } else {
-            paintMolecule(ChemModelManipulator.getAllInOneContainer(model), graphics);
+        }
+        if (model.getSetOfMolecules() != null) {
+            paintSetOfMolecules(model.getSetOfMolecules(), graphics);
         }
     }
     
@@ -98,6 +99,13 @@ public class Renderer2D   {
         Reaction[] reactions = reactionSet.getReactions();
         for (int i=0; i<reactions.length; i++) {
             paintReaction(reactions[i], graphics);
+        }
+    }
+    
+    public void paintSetOfMolecules(SetOfMolecules moleculeSet, Graphics graphics) {
+        Molecule[] molecules = moleculeSet.getMolecules();
+        for (int i=0; i<molecules.length; i++) {
+            paintMolecule(molecules[i], graphics);
         }
     }
     
