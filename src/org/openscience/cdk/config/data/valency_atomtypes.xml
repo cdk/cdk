@@ -3,6 +3,12 @@
   xsi:schemaLocation="http://www.xml-cml.org/schema/cml2/core ../../io/cml/data/cmlAll.xsd"
   id="valency" title="Valency AtomTypes">
 
+  <metadataList>
+    <metadata name="cvs:last-change-by" content="$Author$"/>
+    <metadata name="cvs:date" content="$Date$"/>
+    <metadata name="cvs:revision" content="$Revision$"/>
+  </metadataList>
+  
   <atomType id="H">
     <atom elementType="H" formalCharge="0">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
