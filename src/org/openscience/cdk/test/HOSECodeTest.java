@@ -41,7 +41,10 @@ import org.openscience.cdk.smiles.*;
 
 import java.io.*;
 import javax.vecmath.*;
+import javax.swing.*;
+import javax.swing.tree.*;
 import java.util.*;
+import java.awt.*;
 
 /**
  *  Description of the Class
@@ -169,6 +172,67 @@ public class HOSECodeTest
 	}
 	
 	
+	public boolean test5()
+	{
+		Molecule molecule = null;
+		HOSECodeGenerator hcg = null;
+
+		try
+		{
+			molecule = (new SmilesParser()).parseSmiles("C12=CC=CC=C1NC=C2");
+			//molecule = (new SmilesParser()).parseSmiles("C1(C=CN2)=C2C=CC=C1");
+			boolean isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
+			hcg = new HOSECodeGenerator();
+			String s = null;
+			s = hcg.getHOSECode(molecule, molecule.getAtomAt(5), 4);
+			System.out.println(s);
+		} catch (Exception exc)
+		{
+			exc.printStackTrace();
+			return false;
+		}
+		
+		JFrame frame = new JFrame("HOSECodeTest");
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(new BorderLayout());
+		DefaultMutableTreeNode top = hcg.getRootNode();
+		StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+		MoleculeViewer2D mv = new MoleculeViewer2D();
+		Renderer2DModel r2dm = mv.getRenderer2DModel();
+		r2dm.setDrawNumbers(true);
+
+		try
+		{
+			sdg.setMolecule((Molecule) molecule.clone());
+			sdg.generateCoordinates(new Vector2d(0, 1));
+			mv.setAtomContainer(sdg.getMolecule());
+			//mv.display();
+		} catch (Exception exc)
+		{
+			System.out.println("*** Exit due to an unexpected error during coordinate generation ***");
+			exc.printStackTrace();
+		}
+		
+		final JTree tree = new JTree(top);
+		JScrollPane treeView = new JScrollPane(tree);
+		frame.getContentPane().add("West", treeView);
+		mv.setPreferredSize(new Dimension(400,400));
+		frame.getContentPane().add("Center", mv);
+		for (int f = 0; f < tree.getRowCount(); f ++)
+		{
+			tree.expandRow(f);	
+		}
+		frame.pack();
+		frame.show();
+		return true;
+	}
+	
+	private void assembleNodes(DefaultMutableTreeNode top, HOSECodeGenerator hcg)
+	{
+		DefaultMutableTreeNode node = null;
+		
+	}
+	
 	
 	/**
 	 *  Description of the Method
@@ -208,6 +272,7 @@ public class HOSECodeTest
 		//hct.test2();
 		hct.test3();
 		hct.test4();
+		hct.test5();
 	}
 }
 
