@@ -41,68 +41,10 @@
   <target name="includes" id="includes" 
       depends="check.includes, javancss, keyword.index, bibliography"/>
   
-  <target id="website" name="website" depends="layout, includes">
-    <!-- note the duplication. If I understand the Ant website correctly, it should
-         be possible to use the includes="*.xml" instead with Ant 1.5.2/Xalan and the
-         reloadstylesheet attribute. But I only have Ant 1.5.1 at the moment :( -->
-    <xslt in="agenda.xml" out="${build.dir}/agenda.html" style="xsl/tabular.xsl"/>
-    <xslt in="api.xml" out="${build.dir}/api.html" style="xsl/tabular.xsl"/>
-    <xslt in="biblio.xml" out="${build.dir}/biblio.html" style="xsl/tabular.xsl"/>
-    <xslt in="changelog.xml" out="${build.dir}/changelog.html" style="xsl/tabular.xsl"/>
-    <xslt in="contact.xml" out="${build.dir}/contact.html" style="xsl/tabular.xsl"/>
-    <xslt in="deprecrfc.xml" out="${build.dir}/deprecrfc.html" style="xsl/tabular.xsl"/>
-    <xslt in="development.xml" out="${build.dir}/development.html" style="xsl/tabular.xsl"/>
-    <xslt in="documentation.xml" out="${build.dir}/documentation.html" style="xsl/tabular.xsl"/>
-    <xslt in="download.xml" out="${build.dir}/download.html" style="xsl/tabular.xsl"/>
-    <xslt in="guide-docs.xml" out="${build.dir}/guide-docs.html" style="xsl/tabular.xsl"/>
-    <xslt in="guide-library-development.xml" out="${build.dir}/guide-library-development.html" style="xsl/tabular.xsl"/>
-    <xslt in="guide-packages.xml" out="${build.dir}/guide-packages" style="xsl/tabular.xsl"/>
-    <xslt in="guide-website-development.xml" out="${build.dir}/guide-website-development.html" style="xsl/tabular.xsl"/>
-    <xslt in="guide.xml" out="${build.dir}/guide.html" style="xsl/tabular.xsl"/>
-    <xslt in="intro.xml" out="${build.dir}/intro.html" style="xsl/tabular.xsl"/>
-    <xslt in="javadoc-stats.xml" out="${build.dir}/javadoc-stats.html" style="xsl/tabular.xsl"/>
-    <xslt in="javancss-stats.xml" out="${build.dir}/javancss-stats.html" style="xsl/tabular.xsl"/>
-    <xslt in="keywordindex.xml" out="${build.dir}/keywordindex.html" style="xsl/tabular.xsl"/>
-    <xslt in="libraries.xml" out="${build.dir}/libraries.html" style="xsl/tabular.xsl"/>
-    <xslt in="license.xml" out="${build.dir}/license.html" style="xsl/tabular.xsl"/>
-    <xslt in="man-dbadmin.xml" out="${build.dir}/man-dbadmin.html" style="xsl/tabular.xsl"/>
-    <xslt in="man-download.xml" out="${build.dir}/man-download.html" style="xsl/tabular.xsl"/>
-    <xslt in="man-fileconvert.xml" out="${build.dir}/man-fileconvert.html" style="xsl/tabular.xsl"/>
-    <xslt in="man-test.xml" out="${build.dir}/man-test.html" style="xsl/tabular.xsl"/>
-    <xslt in="manpages.xml" out="${build.dir}/manpages.html" style="xsl/tabular.xsl"/>
-    <xslt in="reference.xml" out="${build.dir}/reference.html" style="xsl/tabular.xsl"/>
-    <xslt in="related.xml" out="${build.dir}/related.html" style="xsl/tabular.xsl"/>
-    <xslt in="rfc.xml" out="${build.dir}/rfc.html" style="xsl/tabular.xsl"/>
-    <xslt in="rfc1.xml" out="${build.dir}/rfc1.html" style="xsl/tabular.xsl"/>
-    <xslt in="rfc2.xml" out="${build.dir}/rfc2.html" style="xsl/tabular.xsl"/>
-    <xslt in="rfc3.xml" out="${build.dir}/rfc3.html" style="xsl/tabular.xsl"/>
-    <xslt in="rfc4.xml" out="${build.dir}/rfc4.html" style="xsl/tabular.xsl"/>
-    <xslt in="rfc5.xml" out="${build.dir}/rfc5.html" style="xsl/tabular.xsl"/>
-    <xslt in="rfc6.xml" out="${build.dir}/rfc6.html" style="xsl/tabular.xsl"/>
-    <xslt in="rfc7.xml" out="${build.dir}/rfc7.html" style="xsl/tabular.xsl"/>
-    <xslt in="rfc8.xml" out="${build.dir}/rfc8.html" style="xsl/tabular.xsl"/>
-    <xslt in="rfc9.xml" out="${build.dir}/rfc9.html" style="xsl/tabular.xsl"/>
-    <xslt in="rfc10.xml" out="${build.dir}/rfc10.html" style="xsl/tabular.xsl"/>
-    <xslt in="rfc11.xml" out="${build.dir}/rfc11.html" style="xsl/tabular.xsl"/>
-    <xslt in="rfc12.xml" out="${build.dir}/rfc12.html" style="xsl/tabular.xsl"/>
-    <xslt in="rfc13.xml" out="${build.dir}/rfc13.html" style="xsl/tabular.xsl"/>
-    <xslt in="rfc14.xml" out="${build.dir}/rfc14.html" style="xsl/tabular.xsl"/>
-    <xslt in="rfc15.xml" out="${build.dir}/rfc15.html" style="xsl/tabular.xsl"/>
-    <xslt in="rfc16.xml" out="${build.dir}/rfc16.html" style="xsl/tabular.xsl"/>
-    <xslt in="rfc17.xml" out="${build.dir}/rfc17.html" style="xsl/tabular.xsl"/>
-    <xslt in="rfc18.xml" out="${build.dir}/rfc18.html" style="xsl/tabular.xsl"/>
-    <xslt in="rfc19.xml" out="${build.dir}/rfc19.html" style="xsl/tabular.xsl"/>
-    <xslt in="rfc20.xml" out="${build.dir}/rfc20.html" style="xsl/tabular.xsl"/>
-    <xslt in="rfc21.xml" out="${build.dir}/rfc21.html" style="xsl/tabular.xsl"/>
-    <xslt in="rfc22.xml" out="${build.dir}/rfc22.html" style="xsl/tabular.xsl"/>
-    <xslt in="screenshots.xml" out="${build.dir}/screenshots.html" style="xsl/tabular.xsl"/>
-    <xslt in="software.xml" out="${build.dir}/software.html" style="xsl/tabular.xsl"/>
-    <xslt in="thelibrary.xml" out="${build.dir}/thelibrary.html" style="xsl/tabular.xsl"/>
-    <xslt in="user-core.xml" out="${build.dir}/user-core.html" style="xsl/tabular.xsl"/>
-    <xslt in="user-extra.xml" out="${build.dir}/user-extra.html" style="xsl/tabular.xsl"/>
-    <xslt in="user-io.xml" out="${build.dir}/user-io.html" style="xsl/tabular.xsl"/>
-    <xslt in="website.xml" out="${build.dir}/website.html" style="xsl/tabular.xsl"/>
-    <xslt in="whoiswho.xml" out="${build.dir}/whoiswho.html" style="xsl/tabular.xsl"/>
+  <target id="website" name="website" depends="layout">
+    <xslt basedir="." destdir="${build.dir}" extension=".html"
+      includes="*.xml" excludes="build.xml, *layout.xml, java*-data.xml, javancss-tmp.xml"
+      style="xsl/tabular.xsl"/>
   </target>
 
   <target name="javancss" unless="javancss.uptodate">
