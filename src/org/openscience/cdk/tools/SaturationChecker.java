@@ -215,62 +215,46 @@ public class SaturationChecker
 	public void saturate(AtomContainer atomContainer) throws CDKException
 	{
         logger.info("Saturating atomContainer by adjusting bond orders...");
-		Atom partner = null;
-		Atom atom = null;
-		Atom[] partners = null;
-		AtomType[] atomTypes1 = null;
-		AtomType[] atomTypes2 = null;
-		Bond bond = null;
-		for (int i = 1; i < 4; i++)
-		{
+		for (int i = 1; i < 4; i++) {
+            logger.debug("Considering atoms with " + i + " neighbours...");
 			// handle atoms with degree 1 first and then proceed to higher order
-			for (int f = 0; f < atomContainer.getAtomCount(); f++)
-			{
-				atom = atomContainer.getAtomAt(f);
-				logger.debug("symbol: " + atom.getSymbol());
-				atomTypes1 = structgenATF.getAtomTypes(atom.getSymbol());
-				logger.debug("first atom type: " + atomTypes1[0]);
+			for (int f = 0; f < atomContainer.getAtomCount(); f++) {
+				Atom atom = atomContainer.getAtomAt(f);
 				if (atomContainer.getBondCount(atom) == i) {
-                    if (atom.getFlag(CDKConstants.ISAROMATIC) && atomContainer.getBondOrderSum(atom) < atomTypes1[0].getMaxBondOrderSum() - atom.getHydrogenCount()){
-						partners = atomContainer.getConnectedAtoms(atom);
-						for (int g = 0; g < partners.length; g++)
-						{
-							partner = partners[g];
-							logger.debug("Atom has " + partners.length + " partners");
-							atomTypes2 = structgenATF.getAtomTypes(partner.getSymbol());
-							if (atomContainer.getBond(partner,atom).getFlag(CDKConstants.ISAROMATIC) && atomContainer.getBondOrderSum(partner) < atomTypes2[0].getMaxBondOrderSum() - partner.getHydrogenCount())
-							{
-								logger.debug("Partner has " + atomContainer.getBondOrderSum(partner) + ", may have: " + atomTypes2[0].getMaxBondOrderSum());
-								bond = atomContainer.getBond(atom, partner);
-								logger.debug("Bond order was " + bond.getOrder());
-								bond.setOrder(bond.getOrder() + 1);
-								logger.debug("Bond order now " + bond.getOrder());
-								break;
-							}
-						}
-					}
-					if (atomContainer.getBondOrderSum(atom) < atomTypes1[0].getMaxBondOrderSum() - atom.getHydrogenCount())
-					{
-						logger.debug("Atom has " + atomContainer.getBondOrderSum(atom) + ", may have: " + atomTypes1[0].getMaxBondOrderSum());
-						partners = atomContainer.getConnectedAtoms(atom);
-						for (int g = 0; g < partners.length; g++)
-						{
-							partner = partners[g];
-							logger.debug("Atom has " + partners.length + " partners");
-							atomTypes2 = structgenATF.getAtomTypes(partner.getSymbol());
-              if(atomTypes2.length==0)
-                throw new CDKException("Missing entry in structgen_atomtypes.xml for "+partner.getSymbol());
-							if (atomContainer.getBondOrderSum(partner) < atomTypes2[0].getMaxBondOrderSum() - partner.getHydrogenCount())
-							{
-								logger.debug("Partner has " + atomContainer.getBondOrderSum(partner) + ", may have: " + atomTypes2[0].getMaxBondOrderSum());
-								bond = atomContainer.getBond(atom, partner);
-								logger.debug("Bond order was " + bond.getOrder());
-								bond.setOrder(bond.getOrder() + 1);
-								logger.debug("Bond order now " + bond.getOrder());
-								break;
-							}
-						}
-					}
+                    logger.debug("symbol: " + atom.getSymbol());
+                    AtomType[] atomTypes1 = structgenATF.getAtomTypes(atom.getSymbol());
+                    boolean success = false;
+                    for (int atCounter1=0; (atCounter1< atomTypes1.length && !success); atCounter1++) {
+                        AtomType aType1 = atomTypes1[atCounter1];
+                        if (atomContainer.getBondOrderSum(atom) < aType1.getMaxBondOrderSum() - atom.getHydrogenCount()) {
+                            logger.debug("Atom has " + atomContainer.getBondOrderSum(atom) + ", may have: " + aType1.getMaxBondOrderSum());
+                            Atom[] partners = atomContainer.getConnectedAtoms(atom);
+                            
+                            for (int partnerCounter = 0; (partnerCounter < partners.length && !success); partnerCounter++) {
+                                logger.debug("Atom has " + partners.length + " partners");
+                                Atom partner = partners[partnerCounter];
+                                AtomType[] atomTypes2 = structgenATF.getAtomTypes(partner.getSymbol());
+                                if (atomTypes2.length==0)
+                                    throw new CDKException("Missing entry in structgen_atomtypes.xml for "+partner.getSymbol());
+                                
+                                for (int atCounter2=0; (atCounter2< atomTypes2.length && !success); atCounter2++) {
+                                    if (atomContainer.getBondOrderSum(partner) < atomTypes2[atCounter2].getMaxBondOrderSum() - partner.getHydrogenCount()) {
+                                        if (!atom.getFlag(CDKConstants.ISAROMATIC) || (atom.getFlag(CDKConstants.ISAROMATIC) && atomContainer.getBond(partner,atom).getFlag(CDKConstants.ISAROMATIC))) {
+                                            logger.debug("Partner has " + atomContainer.getBondOrderSum(partner) + ", may have: " + atomTypes2[0].getMaxBondOrderSum());
+                                            Bond bond = atomContainer.getBond(atom, partner);
+                                            logger.debug("Bond order was " + bond.getOrder());
+                                            bond.setOrder(bond.getOrder() + 1);
+                                            logger.debug("Bond order now " + bond.getOrder());
+                                            success = true;
+                                        } else {
+                                            logger.debug("Partner has " + atomContainer.getBondOrderSum(partner) + ", may have: " + atomTypes2[0].getMaxBondOrderSum());
+                                            logger.debug("Cannot increase bond order");
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
 				}
 			}
 		}
