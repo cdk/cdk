@@ -1,0 +1,72 @@
+/*  $RCSfile$
+ *  $Author$
+ *  $Date$
+ *  $Revision$
+ *
+ *  Copyright (C) 2003  The Chemistry Development Kit (CDK) project
+ *
+ *  Contact: cdk-devel@lists.sourceforge.net
+ *
+ *  This program is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public License
+ *  as published by the Free Software Foundation; either version 2.1
+ *  of the License, or (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+package org.openscience.cdk.test.tools;
+
+import org.openscience.cdk.index.CASNumber;
+import junit.framework.*;
+
+/**
+ * Tests CDK's CAS Number class.
+ *
+ * @author     Egon Willighagen <egonw@sci.kun.nl>
+ * @created    2003-07-01
+ */
+public class CASNumberTest extends TestCase {
+
+    public CASNumberTest(String name) {
+        super(name);
+    }
+
+    /**
+     * The JUnit setup method
+     */
+    public void setUp() {}
+
+    /**
+     * A unit test suite for JUnit
+     *
+     * @return    The test suite
+     */
+    public static Test suite() {
+        return new TestSuite(CASNumberTest.class);
+    }
+
+    public void testIsValid() {
+        assertTrue(CASNumber.isValid("50-00-0")); // formaldehyde
+        assertTrue(CASNumber.isValid("548-00-5"));
+        assertTrue(CASNumber.isValid("2622-26-6"));
+        assertTrue(CASNumber.isValid("15299-99-7"));
+        
+        assertFalse(CASNumber.isValid("50-00-1"));
+        assertFalse(CASNumber.isValid("50-00-2"));
+        assertFalse(CASNumber.isValid("50-00-3"));
+        assertFalse(CASNumber.isValid("50-00-4"));
+        assertFalse(CASNumber.isValid("50-00-5"));
+        assertFalse(CASNumber.isValid("50-00-6"));
+        assertFalse(CASNumber.isValid("50-00-7"));
+        assertFalse(CASNumber.isValid("50-00-8"));
+        assertFalse(CASNumber.isValid("50-00-9"));
+    }
+}
+

@@ -38,6 +38,7 @@ public class ToolsTests {
         suite.addTest(MFAnalyserTest.suite());
         suite.addTest(SaturationCheckerTest.suite());
         suite.addTest(AtomTypeFactoryTest.suite());
+        suite.addTest(CASNumberTest.suite());
         return suite;
     }
 
