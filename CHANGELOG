@@ -19,6 +19,7 @@ Fixes:
 * Fixed lassoing of atoms in Renderer2D
 * New spiro rings are now using the bond length specified in
   the renderer model
+* Removed obsolote cdk-cml module and tasks
 
 20030217 Release
 ------------------------------------
