@@ -188,4 +188,26 @@ public class Element extends ChemObject implements java.io.Serializable, Cloneab
         sb.append(")");
         return sb.toString();
     }
+    
+    /**
+     * Compare an Element with this Element.
+     *
+     * @param  object Object of type AtomType
+     * @return        Return true, if the atomtypes are equal
+     */
+    public boolean compare(Object object) {
+        if (!(object instanceof Element)) {
+            return false;
+        }
+        if (!super.compare(object)) {
+            return false;
+        }
+        Element elem = (Element)object;
+        if (atomicMass == elem.atomicMass &&
+            atomicNumber == elem.atomicNumber &&
+            symbol == elem.symbol) {
+            return true;
+        }
+        return false;
+    }
 }

@@ -26,7 +26,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *
  */
-
 package org.openscience.cdk;
 
 /**
@@ -169,5 +168,27 @@ public class Isotope extends Element implements java.io.Serializable, Cloneable
         sb.append(")");
 		return sb.toString();
 	}
+    
+    /**
+     * Compare a atom type with this atom type.
+     *
+     * @param  object Object of type AtomType
+     * @return        Return true, if the atomtypes are equal
+     */
+    public boolean compare(Object object) {
+        if (!(object instanceof Isotope)) {
+            return false;
+        }
+        if (!super.compare(object)) {
+            return false;
+        }
+        Isotope isotope = (Isotope)object;
+        if (exactMass == isotope.exactMass &&
+            naturalAbundance == isotope.naturalAbundance) {
+            return true;
+        }
+        return false;
+    }
+    
 }
 

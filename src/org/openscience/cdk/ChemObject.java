@@ -275,6 +275,23 @@ public class ChemObject implements java.io.Serializable, Cloneable
 	}
 
     /**
+     * Compare a ChemObject with this ChemObject.
+     *
+     * @param  object Object of type AtomType
+     * @return        Return true, if the atomtypes are equal
+     */
+    public boolean compare(Object object) {
+        if (!(object instanceof ChemObject)) {
+            return false;
+        }
+        ChemObject chemObj = (ChemObject)object;
+        if (id == chemObj.id) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Returns the identifier (ID) of this object.
      *
      * @see setID

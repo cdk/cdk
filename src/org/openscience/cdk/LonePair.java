@@ -1,6 +1,6 @@
 /* $RCSfile$
- * $Author$    
- * $Date$    
+ * $Author$
+ * $Date$
  * $Revision$
  *
  * Copyright (C) 2002-2003  The Chemistry Development Kit (CDK) project
@@ -98,21 +98,24 @@ public class LonePair extends ElectronContainer implements java.io.Serializable,
         return (this.atom == a) ? true : false;
     }
 
-	/**
-	 * Returns a one line string representation of this Container.
+    /**
+     * Returns a one line string representation of this Container.
      * This method is conform RFC #9.
-	 *
-	 * @return    The string representation of this Container
-	 */
-	public String toString() {
-		ElectronContainer ec;
-		StringBuffer s = new StringBuffer();
+     *
+     * @return    The string representation of this Container
+     */
+    public String toString() {
+        ElectronContainer ec;
+        StringBuffer s = new StringBuffer();
         s.append("LonePair(");
-        s.append(this.hashCode() + ", ");
-        s.append(atom.hashCode());
+        s.append(this.hashCode());
+        if (atom != null) {
+            s.append(", ");
+            s.append(atom.toString());
+        }
         s.append(")");
-		return s.toString();
-	}
+        return s.toString();
+    }
 }
 
 

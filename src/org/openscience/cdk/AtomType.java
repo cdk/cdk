@@ -166,18 +166,22 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
 	}
 
     /**
-    * Compare a atom type with this atom type.
-    *
-    * @param  object Object of type AtomType
-    * @return        Return true, if the atomtypes are equal
-    */
-    public boolean compare(Object object)
-    {
-        if (object instanceof AtomType) {
-            AtomType type = (AtomType) object;
-            if ((getAtomTypeName()==type.getAtomTypeName()) &&
-                (maxBondOrder==type.maxBondOrder) &&
-            (maxBondOrderSum==type.maxBondOrderSum))
+     * Compare a atom type with this atom type.
+     *
+     * @param  object Object of type AtomType
+     * @return        Return true, if the atomtypes are equal
+     */
+    public boolean compare(Object object) {
+        if (!(object instanceof AtomType)) {
+            return false;
+        }
+        if (!super.compare(object)) {
+            return false;
+        }
+        AtomType type = (AtomType) object;
+        if ((getAtomTypeName()==type.getAtomTypeName()) &&
+            (maxBondOrder==type.maxBondOrder) &&
+            (maxBondOrderSum==type.maxBondOrderSum)) {
             return true;
         }
         return false;

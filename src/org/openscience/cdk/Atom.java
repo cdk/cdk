@@ -435,7 +435,7 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
          * @see       #setStereoParity
          */
         public int getStereoParity() {
-                return this.stereoParity;
+            return this.stereoParity;
         }
 
         /**
@@ -446,19 +446,20 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
          */
         public boolean compare(Object object)
         {
-          if (object instanceof Atom)
-          {
-            Atom atom = (Atom) object;
-            if ((getAtomTypeName()== atom.getAtomTypeName()) &&
-                (maxBondOrder==atom.maxBondOrder) &&
-                (maxBondOrderSum==atom.maxBondOrderSum) &&
-                ((point2D==atom.point2D) || ((point2D!=null) && (point2D.equals(atom.point2D)))) &&
-                ((point3D==atom.point3D) || ((point3D!=null) && (point3D.equals(atom.point3D)))) &&
-                (hydrogenCount==atom.hydrogenCount) &&
-                (stereoParity==atom.stereoParity) &&
-                (charge==atom.charge))
+          if (!(object instanceof Atom)) {
+              return false;
+          }
+          if (!super.compare(object)) {
+              return false;
+          }
+          Atom atom = (Atom) object;
+          if (((point2D==atom.point2D) || ((point2D!=null) && (point2D.equals(atom.point2D)))) &&
+              ((point3D==atom.point3D) || ((point3D!=null) && (point3D.equals(atom.point3D)))) &&
+              (hydrogenCount==atom.hydrogenCount) &&
+              (stereoParity==atom.stereoParity) &&
+              (charge==atom.charge)) {
               return true;
-            }
+          }
           return false;
         }
 
