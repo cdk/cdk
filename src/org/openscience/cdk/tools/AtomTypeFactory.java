@@ -289,7 +289,10 @@ public class AtomTypeFactory {
 		}
 		AtomType[] atomTypes = new AtomType[al.size()];
 		al.copyInto(atomTypes);
-		logger.debug("Atomtype for symbol " + symbol + " looks like this: " + atomTypes[0]);
+    if(atomTypes.length>0)
+      logger.debug("Atomtype for symbol " + symbol + " looks like this: " + atomTypes[0]);
+    else
+      logger.debug("No atomtype for symbol " + symbol);
 		return atomTypes;
 	}
 
