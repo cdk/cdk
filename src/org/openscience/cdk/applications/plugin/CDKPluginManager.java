@@ -66,7 +66,7 @@ public class CDKPluginManager {
      */
     public CDKPluginManager(String pluginDirName, String pluginConfigDirName,
                             CDKEditBus editBus) {
-        this.logger = new LoggingTool(this.getClass().getName());
+        this.logger = new LoggingTool(this);
         this.editBus = editBus;
         this.pluginDirName = pluginDirName;
         this.pluginConfigDirName = pluginConfigDirName;
@@ -136,18 +136,29 @@ public class CDKPluginManager {
                 if (Double.parseDouble(cdkPlugin.getAPIVersion()) < 1.4) {
                     // ignore old plugins
                     logger.warn("Will not load plugins with old API: " + className);
+                    logger.debug("  the plugin has API version: " + cdkPlugin.getAPIVersion());
                 } else {
+                    boolean loadPlugin = false;
                     if (cdkPlugins.containsKey(className)) {
                         // deal with already loaded plugins
                         CDKPluginInterface alreadyLoadedPlugin = (CDKPluginInterface)cdkPlugins.get(className);
                         /* ok, here's the deal: the plugin with the latest version stays */
-                        if (Double.parseDouble(alreadyLoadedPlugin.getPluginVersion()) >=
-                        Double.parseDouble(cdkPlugin.getPluginVersion())) {
-                            cdkPlugin.setEditBus(editBus);
-                            cdkPlugins.put(className, cdkPlugin);
+                        if (Double.parseDouble(alreadyLoadedPlugin.getPluginVersion()) <=
+                            Double.parseDouble(cdkPlugin.getPluginVersion())) {
+                            loadPlugin = true;
                         } // already loaded plugin is of same version, or better
                     } else {
-                        // this plugin is not loaded yet
+                        loadPlugin = true;
+                    }
+                    if (loadPlugin) {
+                        // this plugin is not loaded yet, or there is a newer version installed
+                        if (Double.parseDouble(cdkPlugin.getAPIVersion()) >= 1.5) {
+                            logger.debug("Setting prop dir in plugin...");
+                            cdkPlugin.setPropertyDirectory(pluginConfigDirName);
+                        } else {
+                            logger.warn("Plugin is too old to set property directory");
+                            logger.debug("  the plugin has API version: " + cdkPlugin.getAPIVersion());
+                        }
                         cdkPlugin.setEditBus(editBus);
                         cdkPlugins.put(className, cdkPlugin);
                     }
@@ -164,6 +175,9 @@ public class CDKPluginManager {
         } catch (InstantiationException exception) {
             logger.error("Could not instantiate object");
             logger.debug(exception);
+        } catch (NoSuchMethodError error) {
+            logger.warn("Plugin is too old. Download a more recent version.");
+            logger.debug(error);
         }
     }
     
@@ -179,8 +193,7 @@ public class CDKPluginManager {
      */
     private void loadPlugins() {
         cdkPlugins = new Hashtable();
-        File uhome = new File(System.getProperty("user.home"));
-        File pluginDir = new File(uhome + "/" + pluginDirName);
+        File pluginDir = new File(pluginDirName);
         logger.info("User dict dir: " + pluginDir);
         logger.debug("       exists: " + pluginDir.exists());
         logger.debug("  isDirectory: " + pluginDir.isDirectory());
@@ -210,6 +223,8 @@ public class CDKPluginManager {
                                 URL urlList[] = {
                                     plugins[i].toURL()
                                 };
+                                logger.debug("Plugin URL: " + plugins[i].toURL());
+                                URL u = new URL("jar", "", plugins[i].toURL() + "!/");
                                 ClassLoader loader = new URLClassLoader(urlList);
                                 loadPlugin(loader, pluginName);
                                 logger.info("  loaded.");
