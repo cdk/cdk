@@ -27,18 +27,10 @@
  *  */
 package org.openscience.cdk.geometry;
 
-import java.awt.Dimension;
-import java.util.Vector;
-
-import javax.vecmath.Point2d;
+import javax.vecmath.AxisAngle4d;
+import javax.vecmath.Matrix3d;
 import javax.vecmath.Point3d;
-import javax.vecmath.Vector2d;
-
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.AtomEnumeration;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.tools.LoggingTool;
+import javax.vecmath.Vector3d;
 
 /**
  * A set of static utility classes for dealing with Z matrices.
@@ -48,12 +40,6 @@ import org.openscience.cdk.tools.LoggingTool;
  * @created 2004-02-09
  */
 public class ZMatrixTools {
-
-    private static LoggingTool logger = null;
-    
-    static {
-        if (logger == null) logger = new LoggingTool("org.openscience.cdk.geometry.ZMatrixTools");
-    }
 
     /**
      * Takes the given Z Matrix coordinates and converts them to cartesian coordinates.
@@ -72,15 +58,15 @@ public class ZMatrixTools {
                                         double[] angles,    int[] second_atoms,
                                         double[] dihedrals, int[] third_atoms) {
         Point3d[] cartesianCoords = new Point3d[distances.length];
-        for (index=0; index<distances.length; index++) {
+        for (int index=0; index<distances.length; index++) {
             if (index==0) {
                 cartesianCoords[index] = new Point3d(0d,0d,0d);
             } else if (index==1) {
                 cartesianCoords[index] = new Point3d(distances[1],0d,0d);
             } else if (index==2) {
-                pos[index] = new Point3d(-Math.cos((angles[2]/180)*Math.PI)*distances[2]+distances[1],
-                                         Math.sin((angles[2]/180)*Math.PI)*distances[2],
-                                         0d);
+                cartesianCoords[index] = new Point3d(-Math.cos((angles[2]/180)*Math.PI)*distances[2]+distances[1],
+                                           Math.sin((angles[2]/180)*Math.PI)*distances[2],
+                                           0d);
             } else {
                 Vector3d cd = new Vector3d();
                 cd.sub(cartesianCoords[third_atoms[index]], cartesianCoords[second_atoms[index]]);
@@ -107,6 +93,14 @@ public class ZMatrixTools {
             }
         }
         return cartesianCoords;
+    }
+    
+    private Vector3d rotate(Vector3d vector, Vector3d axis, double angle) {
+        Matrix3d rotate = new Matrix3d();
+        rotate.set(new AxisAngle4d(axis.x, axis.y, axis.z, (angle/180)*Math.PI));
+        Vector3d result = new Vector3d();
+        rotate.transform(vector, result);
+        return result;
     }
     
 }
