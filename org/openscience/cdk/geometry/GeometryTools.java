@@ -259,7 +259,7 @@ public class GeometryTools
 	 * @param   dist  The vertical distance between the given points and those to be calculated
 	 * @return     The coordinates of the calculated four points
 	 */
-	public static int[] distanceCalculator(int[] coords,double dist)
+	public static int[] distanceCalculator(int[] coords, double dist)
 	{
 		double angle;
 		if ((coords[2] - coords[0]) == 0) angle = Math.PI/2;
@@ -387,6 +387,33 @@ public class GeometryTools
 			}
 		}while(doneSomething);
 	}
+	
+	/** Determines the scale factor for displaying a structure loaded from disk in a frame.
+	  * An average of all bond length values is produced and the structure is scaled
+	  * such that the resulting bond length divided by the
+	  * character size equals the current JChemPaintModels bondlengthToCharactersizeRatio
+	  * setting.
+	  *
+	  * @param   ac The AtomContainer for which the ScaleFactor is to be calculated
+	  * @return  The ScaleFactor with which the AtomContainer must be scaled 
+	 */
+
+	public static double getScaleFactor(AtomContainer ac, double bondLength)
+	{
+		double bondLengthSum = 0;
+		Bond bond = null; 
+		Atom a1 = null, a2 = null; 
+		for (int f = 0; f < ac.getBondCount(); f++)
+		{
+			bond = ac.getBondAt(f);
+			bondLengthSum += bond.getLength();
+		}
+		return bondLength/(bondLengthSum/ac.getBondCount());
+
+	}
+	
+	
+	
 }
 
 
