@@ -106,6 +106,9 @@ public class CDKPluginManager {
                 if (hasOneOrMoreDefaultMenuItems) {
                     pluginMenu.addSeparator();
                 };
+                if (customPluginMenu.getText().length() == 0) {
+                    customPluginMenu.setText("Plugin's menu");
+                }
                 pluginMenu.add(customPluginMenu);
             }
             menu.add(pluginMenu);
@@ -198,6 +201,7 @@ public class CDKPluginManager {
             plugin.start();
             if (pluginPanel != null) {
                 JDialog pluginWindow = new JDialog();
+                pluginWindow.setTitle(plugin.getName());
                 pluginWindow.getContentPane().add(pluginPanel);
                 pluginWindow.pack();
                 pluginWindow.show();
