@@ -639,9 +639,6 @@
                 <copy 
                   file="${src}/org/openscience/cdk/dict/data/elements.xml"
                   tofile="${sourcedist.dir}/${src}/org/openscience/cdk/dict/data/elements.xml" />
-                <copy todir="${sourcedist.dir}/${src}/patches/">
-                    <fileset dir="${src}/patches/" includes="*" />
-                </copy>
                 <copy todir="${sourcedist.dir}/${src}/">
                     <fileset dir="${src}/" includes="*.manifest" />
                 </copy>
