@@ -173,8 +173,8 @@ diff -x CVS -r -u src/org/openscience/cdk/io/ChemFileCDO.java src-rfc11/org/open
          } else if (objectType.equals("Bond")) {
              logger.debug("Bond: " + bond_a1 + ", " + bond_a2 + ", " + bond_order);
 -            currentMolecule.addBond(bond_a1, bond_a2, (int)bond_order);
-+            Atom a1 = currentMolecule.getAtomAt(bond_a1 -1);
-+            Atom a2 = currentMolecule.getAtomAt(bond_a2 -1);
++            Atom a1 = currentMolecule.getAtomAt(bond_a1);
++            Atom a2 = currentMolecule.getAtomAt(bond_a2);
 +            Bond b = new Bond(a1, a2, bond_order);
 +            if (bond_id != null) b.setID(bond_id);
 +            currentMolecule.addBond(b);
