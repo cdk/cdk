@@ -8,7 +8,7 @@ New:
 * Added Atom field for fractional coordinates as used in crystal representation
 * Added missing SetOfAtomContainer class
 * Added a limitations task to build.xml to show known limitations of implemented
-  algorithms
+  algorithms (closes #825454)
 
 Fixes:
 * Added missing get() methods to cdk.applications.plugin.EditBus interface
