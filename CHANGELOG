@@ -3,6 +3,9 @@ CHANGELOG $Date$
 
 Changes in CVS
 ------------------------------------
+
+20040120 Release
+------------------------------------
 New:
 * An interface for iterated reading of data from a file, e.g. a SDF file.
 * Added Atom field for fractional coordinates as used in crystal representation
