@@ -7,7 +7,7 @@
  * Copyright (C) 1997-2000  The CompChem project
  * 
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -120,7 +120,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
         currentChemSequence.addChemModel(currentChemModel);
         addChemSequence(currentChemSequence);
         logger.info("This file has " + getChemSequenceCount() + " sequence(s).");
-        logger.info("Molecule added: \n" + currentMolecule.toString());
+        // logger.info("Molecule added: \n" + currentMolecule.toString());
       } else if (objectType.equals("Atom")) {
         currentMolecule.addAtom(currentAtom);
       } else if (objectType.equals("Bond")) {

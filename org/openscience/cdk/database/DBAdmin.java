@@ -3,7 +3,7 @@
  * $RCSfile$    $Author$    $Date$    $Revision$
  * 
  * Copyright (C) 1997-2001  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  * 
  * This program is free software; you can redistribute it and/or
@@ -14,16 +14,16 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
- * 
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ *
  */
 
 package org.openscience.cdk.database;
@@ -34,15 +34,19 @@ import java.io.*;
 import org.openscience.cdk.*;
 import org.openscience.cdk.io.*;
 
+/**
+  * A command line application for administering the database
+  *
+  * @author unknown
+  * @author egonw
+  */
+public class DBAdmin {
+
+    private org.openscience.cdk.tools.LoggingTool logger;
 
 
-/** 
-  * A command line application for administering the database  */
-
-public class DBAdmin 
-{
     /**
-     *  The default URL for the DB to administer 
+     *  The default URL for the DB to administer
      *   overwritten by command line option --useURL.
      **/
     public String url = "jdbc:postgresql://lemon.ice.mpg.de:5432/martinstestdb";
@@ -69,7 +73,7 @@ public class DBAdmin
      *  Some booleans for bookkeeping while parsing command line options
      **/
     public boolean createDefaultTables = false, listTables = false, deleteTables = false, loadReferences = false;
-    public boolean useURL = false, useHost = false, addContributor = false, insertMolecule = false;
+    public boolean useURL = false, useHost = false, addContributor = false, insertMolecule = false, useDriver = false;
 
     /**
      *  Some strings for bookkeeping of the arguments of the command line options
@@ -86,11 +90,16 @@ public class DBAdmin
      *  Driver for database
      **/
     public String driver = "postgresql";
-    
+
     /**
      *  An object representing a connection to a database
      **/
     public Connection db = null;
+
+    /**
+     *
+     **/
+    public String databaseName = null;
 
     /**
      *  A statement send to the database
@@ -105,31 +114,29 @@ public class DBAdmin
     /**
      *  Main method, just instantiates a DBAdmin object.
      **/
-    public static void main(String args[])
-    {
-        try
-        {
-            new DBAdmin(args);
-        }
-        catch(Exception exc)
-        {
+    public static void main(String args[]) {
+        try {
+           new DBAdmin(args);
+        } catch(Exception exc) {
             System.out.println(usage);
-			exc.printStackTrace();
+            exc.printStackTrace();
         }
     }
 
     /**
      *
      **/
-    DBAdmin(String args[])
-    {
-        String option = null;
+    DBAdmin(String args[]) {
+        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+
+	String option = null;
         usage = "Usage: java DBAdmin options\n";
         usage += "Options:\n";
         usage += "--useURL 'thisURL' -r            Administer DB specified by 'thisURL'\n";
         usage += "                                 (example: \"jdbc:postgresql://www.nmrshiftdb.org/nmrshiftdb\")\n";
         usage += "--useHost 'thisHost' -h          Administer DB specified by 'thisHost'\n";
         usage += "                                 (URL is formed as follows: \"jdbc:postgresql://thisHost/nmrshiftdb\")\n";
+        usage += "--useDatabase 'thisDB' -b         Database name\n";
         usage += "--useDriver 'thisDriver' -D      Driver for DB specified by 'thisDriver'\n";
         usage += "                                 (mysql | postgresql)\n";
         usage += "--username 'thisUser' -u         Log into database using 'thisUser' as the username\n";
@@ -139,51 +146,44 @@ public class DBAdmin
         usage += "--listTables -l                  List tables, their structure and some info on their content\n";
         usage += "--deleteTables -d                Delete all the tables in the database\n";
 
-        if (args.length == 0)
-        {
+        if (args.length == 0) {
             	System.out.println(usage);
              	System.exit(0);
-
         }
-        for (int f = 0;f < args.length;f++)
-        {
+        for (int f = 0;f < args.length;f++) {
             option = args[f];
 
-            if (option.equals("--useURL") || option.equals("-r"))
-            {
+            if (option.equals("--useURL") || option.equals("-r")) {
                 useURL = true;
                 url = args[++f];
-                System.out.println("Using URL: " + url);
-            } else if(option.equals("--useHost") || option.equals("-h"))
-            {
+                logger.info("Using URL: " + url);
+            } else if(option.equals("--useHost") || option.equals("-h")) {
                 useHost = true;
                 host = args[++f];
-            } else if(option.equals("--username") || option.equals("-u"))
-            {
+                logger.info("Using Host: " + host);
+            } else if(option.equals("--username") || option.equals("-u")) {
                 user = args[++f];
-            } else if(option.equals("--useDriver") || option.equals("-D"))
-            {
+                logger.info("Using user name: " + user);
+            } else if(option.equals("--useDriver") || option.equals("-D")) {
+	        useDriver = true;
                 driver = args[++f];
-                System.out.println("Using Driver: " + driver);
-            } else if(option.equals("--passwd") || option.equals("-p"))
-            {
+                logger.info("Using Driver: " + driver);
+            } else if(option.equals("--useDatabase") || option.equals("-b")) {
+                databaseName = args[++f];
+                logger.info("Using Database: " + databaseName);
+            } else if(option.equals("--passwd") || option.equals("-p")) {
                 pwd = args[++f];
-            } else if(option.equals("--createDefaultTables") || option.equals("-c"))
-            {
+            } else if(option.equals("--createDefaultTables") || option.equals("-c")) {
                 createDefaultTables = true;
-            } else if(option.equals("--listTables") || option.equals("-l"))
-            {
+            } else if(option.equals("--listTables") || option.equals("-l")) {
                 listTables = true;
-            } else if(option.equals("--insertMolecule") || option.equals("-i"))
-            {
+            } else if(option.equals("--insertMolecule") || option.equals("-i")) {
             	insertMolecule = true;
-	        	  thisMol = args[++f];
-            }
-            else if(option.equals("--deleteTables") || option.equals("-d"))
-            {
+	        thisMol = args[++f];
+            } else if(option.equals("--deleteTables") || option.equals("-d")) {
             	deleteTables = true;
             } else {
-              System.out.println("Unknown option: " + args[f]);
+                System.err.println("Unknown option: " + args[f]);
             	System.out.println(usage);
             	System.exit(0);
             }
@@ -192,36 +192,41 @@ public class DBAdmin
 	/*
 	 *  Parsing of command line options done, do it now
 	 */
-	 	
-        try
-        {
-            if (driver.equals("postgresql")) {
-              System.out.print("Loading PostGres driver... ");
-              Class.forName("org.postgresql.Driver");
-            } else if (driver.equals("mysql")) {
-              System.out.print("Loading MySQL driver... ");
-              Class.forName("org.gjt.mm.mysql.Driver").newInstance();
+
+	 // try to load database driver
+        try {
+            if (useHost || useDriver) {
+                if (driver.equals("postgresql")) {
+                    logger.info("Loading PostGres driver... ");
+                    Class.forName("org.postgresql.Driver");
+                } else if (driver.equals("mysql")) {
+                    logger.info("Loading MySQL driver... ");
+                    Class.forName("org.gjt.mm.mysql.Driver").newInstance();
+                }
+                logger.info("done.");
+	    }
+            if (useHost) {
+            	url = "jdbc:" + driver + "://" + host + "/" + databaseName;
             }
-            System.out.println("done.");
-            if (useURL) {
-            	db = DriverManager.getConnection(url,user,pwd);
-            } else if (useHost) {
-            	url = "jdbc:" + driver + "://" + host + "/testdb";
-            	db = DriverManager.getConnection(url,user,pwd);
-            }
-        }
-        catch(Exception exc)
-        {
+        }catch(Exception exc) {
             criticalExit("Error while trying to load JDBC driver",exc);
         }
-        try
-        {
+
+        // detect yet unsupported PostgreSQL
+		if (driver.equals("postgresql") || url.contains("postgresql")) {
+		    System.out.println("PostGresQL is not yet supported.");
+		}
+
+	// try to make connection to database
+        try {
+	    logger.info("Trying to connect to dabase...");
             db = DriverManager.getConnection(url,user,pwd);
+	    logger.info("done");
+        }catch(Exception exc) {
+	    criticalExit("Error while trying to connect to database",exc);
         }
-        catch(Exception exc)
-        {
-            criticalExit("Error while trying to connect to database",exc);
-        }
+
+	// execute command
         if(createDefaultTables)
         {
        	    createDefaultTables();
@@ -265,34 +270,43 @@ public class DBAdmin
              */
             st = db.createStatement();
             query = "CREATE TABLE molecules (";
-            query += "autonomname TEXT";
-            query += ", casrn TEXT";
-            query += ", brn TEXT";
-            query += ", C INT4, H INT4, N INT4, O INT4, S INT4, P INT4, F INT4, Cl INT4, Br INT4, I INT4";
-            query += ", CMLcode TEXT";
-            query += ", molid int(11) NOT NULL auto_increment, PRIMARY KEY (molid)";
+            query += "molid INT, CMLcode TEXT";
             query += ");";
-            System.out.println(query);
+            logger.debug(query);
             st.executeUpdate(query);
             System.out.println("Default tables 'molecules' created.");
-            
+            logger.info("Default tables 'molecules' created.");
+
             /* table for names of structures.
-             * 'names' consists of a name and a link to a 'molecule' (by using it's OID) 
+             * 'names' consists of a name and a link to a 'molecule' (by using it's OID)
              * for which this name
              * is valid. This allows for having as many different names for a molecules
              * as one likes.
              */
             st = db.createStatement();
             query = "CREATE TABLE chemnames (";
-            query += "molid int(11) NOT NULL";
-			query += ", name TEXT";
+            query += "molid INT, autonom TEXT, name TEXT";
             query += ");";
-            System.out.println(query);            
+            logger.debug(query);
             st.executeUpdate(query);
             System.out.println("Default tables 'chemnames' created.");
-        }
-        catch(Exception exc)
-        {
+            logger.info("Default tables 'chemnames' created.");
+
+	   /* table for names of structures.
+             * 'names' consists of a name and a link to a 'molecule' (by using it's OID)
+             * for which this name
+             * is valid. This allows for having as many different names for a molecules
+             * as one likes.
+             */
+            st = db.createStatement();
+            query = "CREATE TABLE indices (";
+            query += "molid INT, cas TEXT, beilstein TEXT";
+            query += ");";
+            logger.debug(query);
+            st.executeUpdate(query);
+            System.out.println("Default tables 'indices' created.");
+            logger.info("Default tables 'indices' created.");
+        } catch(Exception exc) {
             criticalExit("Error while trying to create tables in database",exc);
         }
     }
@@ -301,22 +315,29 @@ public class DBAdmin
     /**
      *
      **/
-    protected void insertMolecule(String s)
-    {
-		Molecule molecule;
-		DBWriter dbw = new DBWriter(db);
+    protected void insertMolecule(String s) {
+	DBWriter dbw = new DBWriter(db);
         File file = new File(s);
         System.out.println(file.getAbsolutePath());
-		try
-		{
-			FileInputStream fis = new FileInputStream(file);
-			MDLReader mdlr = new MDLReader(fis);
-			molecule = (Molecule)mdlr.read(new Molecule());			
-			fis.close();
-			dbw.write(molecule);
-		}
-		catch (Exception exc)
-		{
+		try {
+			CMLReader mdlr = new CMLReader(new FileReader(file));
+			ChemFile cf = (ChemFile)mdlr.read(new ChemFile());
+	                for (int sequence = 0; sequence < cf.getChemSequenceCount(); sequence++) {
+			     ChemSequence chemSequence = cf.getChemSequence(sequence);
+ 			     logger.info("number of models in sequence " + sequence + ": " +
+                                 chemSequence.getChemModelCount());
+			     for (int model = 0; model < chemSequence.getChemModelCount(); model++) {
+				  ChemModel chemModel = chemSequence.getChemModel(model);
+				  SetOfMolecules setOfMolecules = chemModel.getSetOfMolecules();
+				  logger.info("number of molecules in model " + model + ": " +
+                                      setOfMolecules.getMoleculeCount());
+	                          for (int i = 0; i < setOfMolecules.getMoleculeCount(); i++) {
+                                      Molecule molecule = setOfMolecules.getMolecule(i);
+			              dbw.write(molecule);
+                                  }
+                             }
+	                }
+		} catch (Exception exc) {
 			exc.printStackTrace();
 		}
     }
@@ -439,11 +460,12 @@ public class DBAdmin
     /**
      *
      **/
-    protected void criticalExit(String s, Exception exc)
-    {
+    protected void criticalExit(String s, Exception exc) {
         System.out.println(s);
-        System.out.println(exc);
+        logger.error(s);
+        logger.error(exc.toString());
         System.out.println("Existing program.... Done!");
+        logger.error("Existing program.... Done!");
         System.exit(1);
     }
 

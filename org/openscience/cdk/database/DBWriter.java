@@ -36,110 +36,111 @@ import org.openscience.cdk.exception.*;
 import org.openscience.cdk.tools.*;
 import org.openscience.cdk.*;
 
+/**
+ *  Writer that is used to store molecules in JDBC databases.
+ **/
+public class DBWriter implements ChemObjectWriter {
 
+	private org.openscience.cdk.tools.LoggingTool logger;
 
-public class DBWriter implements ChemObjectWriter
-{
-	Connection con;
-	StringWriter writer;
-	CMLWriter cmlw;
-	
-	public DBWriter(Connection con)
-	{
+	private Connection con;
+	private StringWriter writer;
+	private CMLWriter cmlw;
+
+	public DBWriter(Connection con) {
+		this.logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
 		this.con = con;
 	}
-	
+
 	/**
 	 *
 	 *
-	 * @param object 
+	 * @param object
 	 */
-	public void write(ChemObject object) throws UnsupportedChemObjectException 
-	{
-		if (object instanceof Molecule)
-		{
+	public void write(ChemObject object) throws UnsupportedChemObjectException {
+		if (object instanceof Molecule) {
 			writeMolecule((Molecule)object);
-		}
-		else if (object instanceof SetOfMolecules) 
-		{
+		} else if (object instanceof SetOfMolecules) {
 			writeSetOfMolecules((SetOfMolecules)object);
-		}
-		else 
-		{
+		} else {
 		    throw new UnsupportedChemObjectException("Only supported SetOfMolecules and Molecule.");
 		}
 	}
 
     /**
-     * Stores a Molecule to the database.
+     * Stores a Molecule in the database.
      *
-     * @param   co The molecule to be stored
+     * @param   mol    The molecule to be stored
      */
-    public void writeMolecule(Molecule mol) throws UnsupportedChemObjectException
-    {
+    public void writeMolecule(Molecule mol) throws UnsupportedChemObjectException {
 		PreparedStatement ps;
-		//The Molecule is turned into a CML string
+		// The Molecule is turned into a CML string
 		writer = new StringWriter();
 		cmlw = new CMLWriter(writer);
 		cmlw.write(mol);
 		String moleculeString = writer.toString();
-		String[] elements = {"C","H","N","O","S","P","F","Cl","Br","I"};
-		String elementFormula = SwissArmyKnife.generateElementFormula(mol, elements);
-		System.out.println(elementFormula);
-		System.out.println(elementFormula.substring(elementFormula.indexOf("C") + 1, elementFormula.indexOf("H")));
-				
-		try
-		{
+		// String[] elements = {"C","H","N","O","S","P","F","Cl","Br","I"};
+		// String elementFormula = SwissArmyKnife.generateElementFormula(mol, elements);
+		// System.out.println(elementFormula);
+		// System.out.println(elementFormula.substring(elementFormula.indexOf("C") + 1, elementFormula.indexOf("H")));
+
+		try {
 			con.setAutoCommit(false);
-			ps = con.prepareStatement("INSERT INTO molecules VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,\"\")");
-			ps.setString(1, mol.getAutonomName());
-			ps.setString(2, mol.getCasRN());
-			ps.setString(3, mol.getBeilsteinRN());
-			ps.setInt(4, new Integer(elementFormula.substring(elementFormula.indexOf("C") + 1, elementFormula.indexOf("H"))).intValue());
-			ps.setInt(5, new Integer(elementFormula.substring(elementFormula.indexOf("H") + 1, elementFormula.indexOf("N"))).intValue());
-			ps.setInt(6, new Integer(elementFormula.substring(elementFormula.indexOf("N") + 1, elementFormula.indexOf("O"))).intValue());
-			ps.setInt(7, new Integer(elementFormula.substring(elementFormula.indexOf("O") + 1, elementFormula.indexOf("S"))).intValue());
-			ps.setInt(8, new Integer(elementFormula.substring(elementFormula.indexOf("S") + 1, elementFormula.indexOf("P"))).intValue());
-			ps.setInt(9, new Integer(elementFormula.substring(elementFormula.indexOf("P") + 1, elementFormula.indexOf("F"))).intValue());
-			ps.setInt(10, new Integer(elementFormula.substring(elementFormula.indexOf("F") + 1, elementFormula.indexOf("Cl"))).intValue());
-			ps.setInt(11, new Integer(elementFormula.substring(elementFormula.indexOf("Cl") + 2, elementFormula.indexOf("Br"))).intValue());
-			ps.setInt(12, new Integer(elementFormula.substring(elementFormula.indexOf("Br") + 2, elementFormula.indexOf("I"))).intValue());
-			ps.setInt(13, new Integer(elementFormula.substring(elementFormula.indexOf("I") + 1)).intValue());
-			ps.setBytes(14, moleculeString.getBytes());
+			logger.info("Inserting molecule into molecules...");
+			ps = con.prepareStatement("INSERT INTO molecules VALUES('', ?)");
+			ps.setString(1, moleculeString);
+			logger.debug("SQL: " + ps.toString());
 			ps.executeUpdate();
 			ps.close();
+			logger.info("done");
 			con.commit();
+
+			ps = con.prepareStatement("INSERT INTO chemnames VALUES('', ?, ?)");
+			logger.info("Inserting molecule into chemnames...");
+			ps.setString(1, mol.getAutonomName());
+			ps.setString(2, "");
+			logger.debug("SQL: " + ps.toString());
+			ps.executeUpdate();
+			ps.close();
+			logger.info("done");
+			con.commit();
+
+			ps = con.prepareStatement("INSERT INTO indices VALUES('', ?, ?)");
+			logger.info("Inserting molecule into indices...");
+			ps.setString(1, mol.getCasRN());
+			ps.setString(2, mol.getBeilsteinRN());
+			logger.debug("SQL: " + ps.toString());
+			ps.executeUpdate();
+			ps.close();
+			logger.info("done");
+			con.commit();
+
 			con.setAutoCommit(true);
-    	}
-		catch(Exception exc)
-    	{
+
+			// some old stuff i should have a look at
+			// ps.setInt(4, new Integer(elementFormula.substring(elementFormula.indexOf("C") + 1, elementFormula.indexOf("H"))).intValue());
+			// ps.setInt(5, new Integer(elementFormula.substring(elementFormula.indexOf("H") + 1, elementFormula.indexOf("N"))).intValue());
+			// ps.setInt(6, new Integer(elementFormula.substring(elementFormula.indexOf("N") + 1, elementFormula.indexOf("O"))).intValue());
+			// ps.setInt(7, new Integer(elementFormula.substring(elementFormula.indexOf("O") + 1, elementFormula.indexOf("S"))).intValue());
+			// ps.setInt(8, new Integer(elementFormula.substring(elementFormula.indexOf("S") + 1, elementFormula.indexOf("P"))).intValue());
+			// ps.setInt(9, new Integer(elementFormula.substring(elementFormula.indexOf("P") + 1, elementFormula.indexOf("F"))).intValue());
+			// ps.setInt(10, new Integer(elementFormula.substring(elementFormula.indexOf("F") + 1, elementFormula.indexOf("Cl"))).intValue());
+			// ps.setInt(11, new Integer(elementFormula.substring(elementFormula.indexOf("Cl") + 2, elementFormula.indexOf("Br"))).intValue());
+			// ps.setInt(12, new Integer(elementFormula.substring(elementFormula.indexOf("Br") + 2, elementFormula.indexOf("I"))).intValue());
+			// ps.setInt(13, new Integer(elementFormula.substring(elementFormula.indexOf("I") + 1)).intValue());
+    	} catch(Exception exc) {
         	System.out.println("Error while trying to add molecule to table");
-			exc.printStackTrace();  
-    	}
-		
-//	
-//		for (int i = 0; i < mol.getChemNames().size(); i++)
-//		{
-//	    	try
-//	    	{
-//				ps = con.prepareStatement("INSERT INTO chemnames VALUES(?,?)");
-//				ps.setBytes(1, moleculeString.getBytes());
-//				ps.setString(2, mol.getChemName(i));
-//				ps.execute();
-//				ps.close();
-//	    	}
-//			catch(Exception exc)
-//	    	{
-//	        	System.out.println("Error while trying to add molecule to table");
-//	        	System.out.println(exc);   
-//	    	}
-//		}
+		logger.error("Error while trying to add molecule to table");
+		exc.printStackTrace();
+		logger.error(exc.toString());
+	}
+
     }
-	
+
 	/**
 	 * Stores a SetOfMolecules to the database.
 	 *
-	 * @param   co The molecule to be stored
+	 * @param  som    The set of molecules to be stored
 	 */
 	private void writeSetOfMolecules(SetOfMolecules som) throws UnsupportedChemObjectException
 	{
