@@ -1,14 +1,25 @@
---- src/org/openscience/cdk/applications/Viewer.java	Sun Mar  2 12:47:33 2003
-+++ src-non3D/org/openscience/cdk/applications/Viewer.java	Sun Mar  2 12:46:26 2003
-@@ -173,9 +173,9 @@
- 					logger.debug(".. trying Java3D viewer");
- 					try
- 					{
--						AcceleratedRenderer3D renderer = new AcceleratedRenderer3D(new AcceleratedRenderer3DModel(m));
-+						//AcceleratedRenderer3D renderer = new AcceleratedRenderer3D(new AcceleratedRenderer3DModel(m));
- 
--						frame.getContentPane().add(renderer, BorderLayout.CENTER);
-+						//frame.getContentPane().add(renderer, BorderLayout.CENTER);
- 						logger.debug(".. done");
- 
- 						viewed = true;
+--- src/org/openscience/cdk/applications/Viewer.java	2003-06-18 11:43:55.441699000 +0200
++++ src/org/openscience/cdk/applications/Viewer.java.noJ3D	2003-06-25 14:16:51.395839000 +0200
+@@ -157,22 +157,6 @@
+                     }
+                 }
+                 
+-                if (useJava3D && !viewed) {
+-                    logger.debug(".. trying Java3D viewer");
+-                    try {
+-                        AcceleratedRenderer3D renderer = new AcceleratedRenderer3D(new AcceleratedRenderer3DModel(m));
+-                        
+-                        frame.getContentPane().add(renderer, BorderLayout.CENTER);
+-                        logger.debug(".. done");
+-                        
+-                        viewed = true;
+-                    } catch (Exception e) {
+-                        logger.error("Viewing did not succeed!");
+-                        logger.error(e.toString());
+-                        e.printStackTrace();
+-                    }
+-                }
+-                
+             } else if (GeometryTools.has2DCoordinates(m)) {
+                 logger.info("Viewing with 2D viewer");
+                 MoleculeViewer2D mv = new MoleculeViewer2D(m);
