@@ -120,4 +120,24 @@ public class AtomParityTest extends TestCase {
         assertEquals(parityInt, parity.getParity());
     }
     
+    /** Test for RFC #9 */
+    public void testToString() {
+        Atom carbon = new Atom("C");
+        carbon.setID("central");
+        Atom carbon1 = new Atom("C");
+        carbon1.setID("c1");
+        Atom carbon2 = new Atom("C");
+        carbon2.setID("c2");
+        Atom carbon3 = new Atom("C");
+        carbon3.setID("c3");
+        Atom carbon4 = new Atom("C");
+        carbon4.setID("c4");
+        int parityInt = 1;
+        AtomParity parity = new AtomParity(carbon, carbon1, carbon2, carbon3, carbon4, parityInt);
+        String description = parity.toString();
+        for (int i=0; i< description.length(); i++) {
+            assertTrue(description.charAt(i) != '\n');
+            assertTrue(description.charAt(i) != '\r');
+        }
+    }
 }

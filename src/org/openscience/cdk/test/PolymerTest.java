@@ -85,4 +85,55 @@ public class PolymerTest extends TestCase {
 		assertEquals(oMono2, oPolymer.getMonomer("HOH"));
 		assertEquals(oPolymer.getMonomer("HOH").getAtomCount(), 1);
 	}
+	
+	public void testGetMonomerCount() {
+		Polymer oPolymer = new Polymer();
+		assertEquals(0, oPolymer.getMonomerCount()); // there is a default monomer
+		
+		Monomer oMono1 = new Monomer();
+		oMono1.setMonomerName(new String("TRP279"));
+		Monomer oMono2 = new Monomer();
+		oMono2.setMonomerName(new String("HOH"));
+		Atom oAtom1 = new Atom("C1");
+		Atom oAtom2 = new Atom("C2");
+		Atom oAtom3 = new Atom("C3");
+		oPolymer.addAtom(oAtom1);
+		oPolymer.addAtom(oAtom2, oMono1);
+		oPolymer.addAtom(oAtom3, oMono2);
+		assertNotNull(oPolymer.getAtomAt(0));
+		assertNotNull(oPolymer.getAtomAt(1));
+		assertNotNull(oPolymer.getAtomAt(2));
+		assertEquals(oAtom1, oPolymer.getAtomAt(0));
+		assertEquals(oAtom2, oPolymer.getAtomAt(1));
+		assertEquals(oAtom3, oPolymer.getAtomAt(2));
+
+		assertEquals(2, oPolymer.getMonomerCount());
+	}
+	
+	public void testGetMonomerNames() {
+		Polymer oPolymer = new Polymer();
+		assertEquals(1, oPolymer.getMonomerNames().size()); // there is a default monomer
+		
+		Monomer oMono1 = new Monomer();
+		oMono1.setMonomerName(new String("TRP279"));
+		Monomer oMono2 = new Monomer();
+		oMono2.setMonomerName(new String("HOH"));
+		Atom oAtom1 = new Atom("C1");
+		Atom oAtom2 = new Atom("C2");
+		Atom oAtom3 = new Atom("C3");
+		oPolymer.addAtom(oAtom1);
+		oPolymer.addAtom(oAtom2, oMono1);
+		oPolymer.addAtom(oAtom3, oMono2);
+		assertNotNull(oPolymer.getAtomAt(0));
+		assertNotNull(oPolymer.getAtomAt(1));
+		assertNotNull(oPolymer.getAtomAt(2));
+		assertEquals(oAtom1, oPolymer.getAtomAt(0));
+		assertEquals(oAtom2, oPolymer.getAtomAt(1));
+		assertEquals(oAtom3, oPolymer.getAtomAt(2));
+
+		assertEquals(3, oPolymer.getMonomerNames().size());
+		assertTrue(oPolymer.getMonomerNames().contains(oMono1.getMonomerName()));
+		assertTrue(oPolymer.getMonomerNames().contains(oMono2.getMonomerName()));
+	}
+	
 }

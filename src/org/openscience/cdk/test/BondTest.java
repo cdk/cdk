@@ -75,7 +75,7 @@ public class BondTest extends TestCase {
         assertEquals(CDKConstants.STEREO_BOND_NONE, bond.getStereo());
     }
     
-    public void testBond_Atom_Atom_Double() {
+    public void testBond_Atom_Atom_double() {
         Atom c = new Atom("C");
         Atom o = new Atom("O");
         Bond bond = new Bond(c, o, 2.0);
@@ -87,7 +87,7 @@ public class BondTest extends TestCase {
         assertEquals(CDKConstants.STEREO_BOND_NONE, bond.getStereo());
     }
     
-    public void testBond_Atom_Atom_Double_Int() {
+    public void testBond_Atom_Atom_double_int() {
         Atom c = new Atom("C");
         Atom o = new Atom("O");
         Bond bond = new Bond(c, o, 1.0, CDKConstants.STEREO_BOND_UP);
@@ -99,7 +99,7 @@ public class BondTest extends TestCase {
         assertEquals(CDKConstants.STEREO_BOND_UP, bond.getStereo());
     }
     
-    public void testCompare() {
+    public void testCompare_Object() {
         Atom c = new Atom("C");
         Atom o = new Atom("O");
         
@@ -140,6 +140,16 @@ public class BondTest extends TestCase {
         assertEquals(o, atoms[1]);
     }
     
+    public void testGetAtomAt_int() {
+        Atom c = new Atom("C");
+        Atom o = new Atom("O");
+        
+        Bond b = new Bond(c, o, 2.0); // C=O bond
+        
+        assertEquals(c, b.getAtomAt(0));
+        assertEquals(o, b.getAtomAt(1));
+    }
+    
     public void testGetConnectedAtom_Atom() {
         Atom c = new Atom("C");
         Atom o = new Atom("O");
@@ -151,10 +161,12 @@ public class BondTest extends TestCase {
     }
     
     public void testGetOrder() {
-        Atom c = new Atom("C");
-        Atom o = new Atom("O");
+        Bond b = new Bond(new Atom("C"), new Atom("O"), 2.0); // C=O bond
         
-        Bond b = new Bond(c, o, 2.0); // C=O bond
+        assertEquals(2.0, b.getOrder(), 0.001);
+    }
+    public void testSetOrder_double() {
+        Bond b = new Bond(new Atom("C"), new Atom("O"), 2.0); // C=O bond
         
         assertEquals(2.0, b.getOrder(), 0.001);
         

@@ -68,16 +68,29 @@ public class AtomTypeTest extends TestCase {
         assertEquals("C4", at.getAtomTypeName());
     }
 
+    public void testGetAtomTypeName() {
+        AtomType at = new AtomType("C4", "C");
+        assertEquals("C4", at.getAtomTypeName());
+    }
+    
     public void testSetMaxBondOrder_double() {
         AtomType at = new AtomType("C");
         at.setMaxBondOrder(3.0);
         assertEquals(3.0, at.getMaxBondOrder(), 0.001);
     }
 
+    public void testGetMaxBondOrder() {
+        testSetMaxBondOrder_double();
+    }
+
     public void testSetBondOrderSum_double() {
         AtomType at = new AtomType("C");
         at.setBondOrderSum(4.0);
         assertEquals(4.0, at.getBondOrderSum(), 0.001);
+    }
+    
+    public void testGetBondOrderSum() {
+        testSetBondOrderSum_double();
     }
     
     public void testCompare() {
@@ -92,11 +105,18 @@ public class AtomTypeTest extends TestCase {
         at.setVanderwaalsRadius(1.0);
         assertEquals(1.0, at.getVanderwaalsRadius(), 0.001);
     }
+    public void testGetVanderwaalsRadius() {
+        testSetVanderwaalsRadius_double();
+    }
+    
     
     public void testSetCovalentRadius_double() {
         AtomType at = new AtomType("C");
         at.setCovalentRadius(1.0);
         assertEquals(1.0, at.getCovalentRadius(), 0.001);
+    }
+    public void testGetCovalentRadius() {
+        testSetCovalentRadius_double();
     }
     
     /**
@@ -109,6 +129,9 @@ public class AtomTypeTest extends TestCase {
         a.setFormalCharge(charge);
         assertEquals(charge, a.getFormalCharge());
     }
+    public void testGetFormalCharge() {
+        testSetFormalCharge_int();
+    }
 
     public void testSetFormalNeighbourCount_int() {
         int count = 4;
@@ -117,6 +140,9 @@ public class AtomTypeTest extends TestCase {
         a.setFormalNeighbourCount(count);
         assertEquals(count, a.getFormalNeighbourCount());
     }
+    public void testGetFormalNeighbourCount() {
+        testSetFormalNeighbourCount_int();
+    }
 
     public void testSetHybridization_int() {
         int hybridization = CDKConstants.HYBRIDIZATION_SP3;
@@ -124,6 +150,9 @@ public class AtomTypeTest extends TestCase {
         AtomType atom = new AtomType("C");
         atom.setHybridization(hybridization);
         assertEquals(hybridization, atom.getHybridization());
+    }
+    public void testGetHybridization() {
+        testSetHybridization_int();
     }
 
     /**
