@@ -479,6 +479,7 @@ public class Convertor {
             logger.warn("Outputing bond order in non CML2 default way.");
             Element scalar = this.createElement("scalar");
             scalar.setAttribute("dataType","xsd:float");
+            scalar.setAttribute("dictRef","cdk:bondOrder");
             scalar.setAttribute("title","order");
             bondimpl.appendChild(scalar);
             scalar.appendChild(doc.createTextNode(bond.getOrder()+""));
