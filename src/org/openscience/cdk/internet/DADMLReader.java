@@ -39,6 +39,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Enumeration;
+import java.util.Vector;
 
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
@@ -111,14 +112,14 @@ public class DADMLReader extends DefaultChemObjectReader {
         try {
             this.query = new URI("dadml://any/" + indexType + "?" + value);
         } catch (URISyntaxException exception) {
-            logger.error("Serious error: " + exception.getMessage());
+            logger.error("Serious error: ", exception.getMessage());
             logger.debug(exception);
         }
     }
 
     /**
      * Sets the query in the form of an URI.
-     * An example URI is: dadml://any/CAS-NUMBER?50-00-0.
+     * An example URI is: <code>dadml://any/CAS-NUMBER?50-00-0</code>.
      *
      * @param   query     URI query.
      */
@@ -155,14 +156,37 @@ public class DADMLReader extends DefaultChemObjectReader {
             // this has to be reformulated
             molecule = this.downloadURL(resource);
         } catch (Exception exception) {
-            logger.error("File Not Found: " + exception.getMessage());
+            logger.error("File Not Found: ", exception.getMessage());
             logger.debug(exception);
         }
         return molecule;
     }
     
+    /**
+     * Resolved the given DADML URI into a URL from which content can possibly be
+     * downloaded.
+     *
+     * @param dadmlRI The DADML URI to be resolved.
+     */
     public URL resolveLink(URI dadmlRI) {
+        Vector links = resolveLinks(dadmlRI);
+        if (links.size() > 0) {
+            return (URL)links.elementAt(0);
+        } // else
+        return null;
+    }
+    
+    /**
+     * Resolved the given DADML URI into a list of URLs from which content can possibly be
+     * downloaded. The URL classes returned are of type <code>DADMLResult</code>.
+     *
+     * @param dadmlRI The DADML URI to be resolved.
+     *
+     * @see   org.openscience.cdk.internet.DADMLResult
+     */
+    public Vector resolveLinks(URI dadmlRI) {
         logger.debug("Resolving URI: ", dadmlRI);
+        Vector links = new Vector();
         
         boolean found = false; // this is true when a structure is downloaded
         boolean done = false;  // this is true when all URLS have been tested
@@ -173,7 +197,7 @@ public class DADMLReader extends DefaultChemObjectReader {
         Molecule molecule = new Molecule();
         DBLIST dblist = new DBLIST();
         try {
-            logger.info("Downloading DADML super database: " + this.superdb);
+            logger.info("Downloading DADML super database: ", this.superdb);
             // Proxy authorization has to be ported from Chemistry Development Kit (CDK)
             // for now, do without authorization
             DBLISTFileReader reader = new DBLISTFileReader();
@@ -187,10 +211,10 @@ public class DADMLReader extends DefaultChemObjectReader {
             DATABASE database = (DATABASE)dbases.nextElement();
             String dburl = database.getURL() + database.getDefinition();
             DBDEF dbdef = new DBDEF();
-            // Proxy authorization has to be ported from Chemistry Development Kit (CKD)
+            // Proxy authorization has to be ported from Chemistry Development Kit (CDK)
             // for now, do without authorization
             try {
-                logger.info("Downloading: " + dburl);
+                logger.info("Downloading: ", dburl);
                 // do without authorization
                 DBDEFFileReader reader = new DBDEFFileReader();
                 dbdef = reader.read(dburl);
@@ -199,7 +223,7 @@ public class DADMLReader extends DefaultChemObjectReader {
             }
             if (DBDEFInfo.hasINDEX(dbdef, indexType)) {
                 // oke, find a nice URL to use for download
-                logger.debug("Trying: " + dbdef.getTITLE());
+                logger.debug("Trying: ", dbdef.getTITLE());
                 Enumeration fields = dbdef.fields();
                 while (fields.hasMoreElements()) {
                     FIELD field = (FIELD)fields.nextElement();
@@ -210,37 +234,37 @@ public class DADMLReader extends DefaultChemObjectReader {
                          mime.equals("chemical/x-cml")) &&
                          (ftype.equals("3DSTRUCTURE") ||
                           ftype.equals("2DSTRUCTURE"))) {
-                        logger.info("Accepted: " + field.getMIMETYPE() + "," + field.getTYPE());
+                        logger.info("Accepted: ", field.getMIMETYPE(), ",", field.getTYPE());
                         Enumeration indices = field.getINDEX();
                         while (indices.hasMoreElements()) {
                             INDEX ind = (INDEX)indices.nextElement();
                             if (ind.getTYPE().equals(indexType)) {
                                 // here is the URL composed
                                 String url = dbdef.getURL() + ind.getACCESS_PREFIX() + index + ind.getACCESS_SUFFIX();
-                                logger.debug("Will retrieve information from: ", url);
+                                logger.debug("Adding to resolved links: ", url);
                                 try {
-                                    return new URL(url);
+                                    links.add(new DADMLResult(new URL(url), field));
                                 } catch (MalformedURLException exception) {
-                                    logger.error("Malformed URL: " + exception.getMessage());
+                                    logger.error("Malformed URL: ", exception.getMessage());
                                     logger.debug(exception);
                                 }
                            }
                         }
                     } else {
                         // reject other mime types && type structures
-                        logger.info("Rejected: " + field.getMIMETYPE() + "," + field.getTYPE());
+                        logger.info("Rejected: ", field.getMIMETYPE(), ",", field.getTYPE());
                     }
                 }
             } else {
-                logger.warn("Database does not have indexType: " + indexType);
+                logger.warn("Database does not have indexType: ", indexType);
             }
         }
-        return null;
+        return links;
     }
 
     private Molecule downloadURL(URL resource) {
         Molecule molecule = new Molecule();
-        logger.debug("Downloading from URL: " + resource);
+        logger.debug("Downloading from URL: ", resource);
         try {
             URLConnection connection = resource.openConnection();
             BufferedReader bufReader = new BufferedReader(
@@ -248,18 +272,18 @@ public class DADMLReader extends DefaultChemObjectReader {
             );
             ChemObjectReader reader = new ReaderFactory().createReader(bufReader);
             ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
-            logger.debug("#sequences: " + chemFile.getChemSequenceCount());
+            logger.debug("#sequences: ", chemFile.getChemSequenceCount());
             ChemSequence chemSequence = chemFile.getChemSequence(0);
-            logger.debug("#models in sequence: " + chemSequence.getChemModelCount());
+            logger.debug("#models in sequence: ", chemSequence.getChemModelCount());
             ChemModel chemModel = chemSequence.getChemModel(0);
             SetOfMolecules moleculeSet = chemModel.getSetOfMolecules();
-            logger.debug("#mols in model: " + moleculeSet.getMoleculeCount());
+            logger.debug("#mols in model: ", moleculeSet.getMoleculeCount());
             molecule = moleculeSet.getMolecule(0);
         } catch (UnsupportedChemObjectException exception) {
-            logger.error("Unsupported ChemObject type: " + exception.getMessage());
+            logger.error("Unsupported ChemObject type: ", exception.getMessage());
             logger.debug(exception);
         } catch (FileNotFoundException exception) {
-            logger.error("File not found: " + exception.getMessage());
+            logger.error("File not found: ", exception.getMessage());
             logger.debug(exception);
         } catch (Exception exception) {
             logger.error(exception.getMessage());
