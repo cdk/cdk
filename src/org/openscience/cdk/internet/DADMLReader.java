@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2001-2003  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -46,8 +46,9 @@ import org.openscience.dadml.tools.*;
  * application that makes it possible to define how databases can be accessed
  * via URLs.
  *
- * @author     egonw
- * @created    December 18th, 2001
+ * @author     Egon Willighagen <egonw@sci.kun.nl>
+ * @created    2001-12-18
+ *
  * @keyword    internet
  * @keyword    database
  */
@@ -90,7 +91,7 @@ public class DADMLReader extends DefaultChemObjectReader {
 	 * @return   The ChemObject read
 	 * @exception   UnsupportedChemObjectException
 	 */
-    public ChemObject read(ChemObject object) throws UnsupportedChemObjectException 	{
+    public ChemObject read(ChemObject object) throws UnsupportedChemObjectException {
         if (object instanceof Molecule) {
 		    return (ChemObject)readMolecule();
 		} else {
