@@ -10,8 +10,13 @@ New:
 * A Renderer2D subclass that uses masks for making backgrounds empty
   (closes #889829)
 * Added a ZMatrixTools.zmatrixToCartesian() method
+* PeriodicTablePanel is now interactive. You can register as a CDKListener and 
+  will be notified of users selecting a particular element, which you can then get by 
+  psepanel.getSelectedElement().
 
 Fixes:
+* A nasty threading bug in StructureDiagramGenerator has been fixed, preventing 
+  users from running multiple instances of SDG in seperate threads (closes # 837827).
 * Removed all static methods and, most importantly, a static molecule(!) variable 
   from AtomPlacer, which is likely to have caused the problems with hanging layout threads.
 * Fixed calculation of cartesian atomic coordinates from fractional coordinates
