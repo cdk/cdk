@@ -3,7 +3,7 @@
  * $Date$    
  * $Revision$
  *
- * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2004  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -70,37 +70,37 @@ public class CDKConstants {
          * ChemObject.physicalProperties hashtable.
          * @see org.openscience.cdk.ChemObject
          */
-        public static String NMRSHIFT_CARBON = "carbon nmr shift";
+        public final static String NMRSHIFT_CARBON = "carbon nmr shift";
 
         /** Hydrogen NMR shift contant for use as a key in the
           * ChemObject.physicalProperties hashtable.
           * @see org.openscience.cdk.ChemObject
           */
-        public static String NMRSHIFT_HYDROGEN = "hydrogen nmr shift";
+        public final static String NMRSHIFT_HYDROGEN = "hydrogen nmr shift";
 
         /** Nitrogen NMR shift contant for use as a key in the
           * ChemObject.physicalProperties hashtable.
           * @see org.openscience.cdk.ChemObject
           */
-        public static String NMRSHIFT_NITROGEN = "nitrogen nmr shift";
+        public final static String NMRSHIFT_NITROGEN = "nitrogen nmr shift";
 
         /** Phosphorus NMR shift contant for use as a key in the
           * ChemObject.physicalProperties hashtable.
           * @see org.openscience.cdk.ChemObject
           */
-        public static String NMRSHIFT_PHOSPORUS = "phosphorus nmr shift";
+        public final static String NMRSHIFT_PHOSPORUS = "phosphorus nmr shift";
 
         /** Fluorine NMR shift contant for use as a key in the
           * ChemObject.physicalProperties hashtable.
           * @see org.openscience.cdk.ChemObject
           */
-        public static String NMRSHIFT_FLUORINE = "fluorine nmr shift";
+        public final static String NMRSHIFT_FLUORINE = "fluorine nmr shift";
 
         /** Deuterium NMR shift contant for use as a key in the
           * ChemObject.physicalProperties hashtable.
           * @see org.openscience.cdk.ChemObject
           */
-        static String NMRSHIFT_DEUTERIUM = "deuterium nmr shift";
+        public final static String NMRSHIFT_DEUTERIUM = "deuterium nmr shift";
 
 
         /****************************************
@@ -111,22 +111,22 @@ public class CDKConstants {
 
         /** Flag that is set if the chemobject is placed (somewhere).
          */
-        public static int ISPLACED = 50;
+        public final static int ISPLACED = 50;
         /** Flag that is set when the chemobject is part of a ring.
          */
-        public static int ISINRING = 51;
+        public final static int ISINRING = 51;
         /** Flag that is set if a chemobject is part of an alipahtic chain.
          */
-        public static int ISALIPHATIC = 52;
+        public final static int ISALIPHATIC = 52;
         /** Flag is set if chemobject has been visited.
          */
-        public static int VISITED = 53; // Use in tree searches
+        public final static int VISITED = 53; // Use in tree searches
         /** Flag is set if chemobject is part of an aromatic system. */
-        public static int ISAROMATIC = 54;
+        public final static int ISAROMATIC = 54;
         /** Flag is set if a chemobject is mapped to another chemobject.
          *  It is used for example in subgraph isomorphism search.
          */
-        public static int MAPPED = 55;
+        public final static int MAPPED = 55;
 
 
     /****************************************

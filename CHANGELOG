@@ -31,6 +31,7 @@ Fixes:
 * Fixed coordinate system of Renderer2D (partly fixes #834515)
 * Deal with charges and H is special case (closes JCP bug #850143)
 * Fixed writing of SDF files (closes #870911)
+* Made all CDKConstants  really constant (i.e. final)
 
 API changes:
 * SetOfMolecules now extends SetOfAtomContainers which gives it additional
