@@ -37,17 +37,22 @@ import java.util.*;
  */
 public class FileConvertor {
 
-  private ChemObjectReader input;
-  private ChemObjectWriter output;
-  private ChemFile chemFile;
+    private org.openscience.cdk.tools.LoggingTool logger;
 
-  private String iformat;
-  private String oformat;
+    private ChemObjectReader input;
+    private ChemObjectWriter output;
+    private ChemFile chemFile;
 
-  public FileConvertor(String iformat, String oformat) {
-    this.iformat = iformat;
-    this.oformat = oformat;
-  }
+    private String iformat;
+    private String oformat;
+
+    public FileConvertor(String iformat, String oformat) {
+        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        logger.dumpSystemProperties();
+
+        this.iformat = iformat;
+        this.oformat = oformat;
+    }
 
   public boolean convert(File input, File output) {
     boolean success = true;

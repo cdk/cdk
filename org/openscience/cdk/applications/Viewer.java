@@ -38,8 +38,13 @@ public class Viewer {
 
     private org.openscience.cdk.tools.LoggingTool logger;
 
-    public Viewer(String inFile) {
-      logger = new org.openscience.cdk.tools.LoggingTool();
+    private boolean useJava3D;
+
+    public Viewer(String inFile, boolean useJava3D) {
+        this.useJava3D = useJava3D;
+
+      logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+      logger.dumpSystemProperties();
 
       ChemFile chemFile = new ChemFile();
       try {
@@ -86,23 +91,36 @@ public class Viewer {
 			  if (GeometryTools.has3DCoordinates(m)) {
 			      logger.info("Viewing with 3D viewer");
 
-				  try {
-			          JFrame frame = new JFrame("AcceleratedRenderer3DTest");
-		              frame.getContentPane().setLayout(new BorderLayout());
+				  boolean viewed = false;
+				  if (useJava3D) {
+            	      logger.debug(".. trying Java3D viewer");
+                	  try {
+                          JFrame frame = new JFrame("AcceleratedRenderer3DTest");
+                          frame.getContentPane().setLayout(new BorderLayout());
 
-					  AtomContainer atomContainer = chemModel.getAllInOneContainer();
-	    	          AcceleratedRenderer3D renderer = new AcceleratedRenderer3D(
-			              new AcceleratedRenderer3DModel(atomContainer));
+                          AtomContainer atomContainer = chemModel.getAllInOneContainer();
+                          AcceleratedRenderer3D renderer = new AcceleratedRenderer3D(
+                              new AcceleratedRenderer3DModel(atomContainer));
 
-    		          frame.getContentPane().add(renderer, BorderLayout.CENTER);
+                          frame.getContentPane().add(renderer, BorderLayout.CENTER);
 
-			          frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-			          frame.setSize(500,500);
-    	              frame.setVisible(true);
-                  } catch (Exception e) {
-				      logger.error("Viewing did not succeed!");
-					  logger.error(e.toString());
-				  }
+                          frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+                          frame.setSize(500,500);
+                          frame.setVisible(true);
+                          logger.debug(".. done");
+                          viewed = true;
+                      } catch (Exception e) {
+                          logger.error("Viewing did not succeed!");
+                          logger.error(e.toString());
+                      }
+                  }
+
+                  // try to view it without Java3D
+                  if (!viewed) {
+                      logger.debug(".. trying non-Java3D viewer");
+                      MoleculeViewer3D mv = new MoleculeViewer3D(m);
+                      logger.debug(".. done");
+                  }
 			  } else if (GeometryTools.has2DCoordinates(m)) {
 			      logger.info("Viewing with 2D viewer");
                   MoleculeViewer2D mv = new MoleculeViewer2D(m);
@@ -116,16 +134,37 @@ public class Viewer {
     }
     
     public static void main(String[] args) {
-      if (args.length == 1) {
-        String filename = args[0];
-        if (new File(filename).canRead()) {
-          new Viewer(filename);
+
+        boolean useJava3D = true;
+
+        String filename = "";
+        if (args.length == 1) {
+            filename = args[0];
+        } if (args.length > 1) {
+            // parse options
+            for (int i=1; i<args.length; i++) {
+                String opt = args[i-1];
+                if (opt.equals("--nojava3D")) {
+                    useJava3D = false;
+                } else {
+                    System.err.println("Unknown option: " + opt);
+                    System.exit(1);
+                }
+            }
+
+            filename = args[args.length -1];
         } else {
-          System.out.println("File " + filename + " does not exist!");
+            System.out.println("Syntax : Viewer [options] <inputfile>");
+            System.out.println();
+            System.out.println("options: --nojava3D    Disable Java3D support");
+			System.exit(0);
         }
-      } else {
-        System.out.println("Syntax: Viewer <inputfile>");
-      }
+
+        if (new File(filename).canRead()) {
+            new Viewer(filename, useJava3D);
+        } else {
+            System.out.println("File " + filename + " does not exist!");
+        }
     }
 }
 

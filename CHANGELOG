@@ -5,6 +5,9 @@ Changes in CVS
 ------------------------------------
 * added cdk-view executable
 * added Viewer application that detects 3D/2D
+* added dumpSystemProperties() to LoggerTool
+  (lists OS version/arch and Java version/vendor)
+* adding Rendered3D which does not use Java3D
 
 20020101.1 Release
 ------------------------------------
