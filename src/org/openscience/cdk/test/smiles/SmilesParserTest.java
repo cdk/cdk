@@ -492,6 +492,42 @@ public class SmilesParserTest extends TestCase
 		}
 	}
 
+	public void testSingleBracketH() {
+		try {
+			String smiles = "[H]";
+			SmilesParser sp = new SmilesParser();
+			Molecule mol = sp.parseSmiles(smiles);
+			assertEquals(1, mol.getAtomCount());
+		} catch (Exception e) {
+			fail(e.toString());
+		}
+	}
+
+	public void testSingleH() {
+		try {
+			String smiles = "H";
+			SmilesParser sp = new SmilesParser();
+            Molecule mol = sp.parseSmiles(smiles);
+			fail("The SMILES string 'H' is not valid: H is not in the organic element subset");
+		} catch (Exception e) {
+            // yes! it should fail
+		}
+	}
+    
+	/**
+	 * See SF bug #862930.
+	 */
+	public void testHydroxonium() {
+		try {
+			String smiles = "[H][O+]([H])[H]";
+			SmilesParser sp = new SmilesParser();
+			Molecule mol = sp.parseSmiles(smiles);
+			assertEquals(4, mol.getAtomCount());
+		} catch (Exception e) {
+			fail(e.toString());
+		}
+	}
+
 	/**
 	 *  The main program for the SmilesParserTest class
 	 *
@@ -501,10 +537,7 @@ public class SmilesParserTest extends TestCase
 	{
 		SmilesParserTest spt = new SmilesParserTest("SmilesParserTest");
 		spt.setStandAlone(true);
-		spt.testSmilesParser();
-		spt.testSFBug630475();
-		spt.testSFBug585811();
-		spt.testSFBug593648();
+		spt.testSMILESFromXYZ();
 	}
 }
 

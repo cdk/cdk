@@ -14,12 +14,14 @@ Fixes:
 * cdk-* shell wrapper now accept -X java options (closes #882990)
 * Refactored build process (closes #883519)
 * Fixed rendering of stereo bonds in rings (closes #884935)
+* Fixed parsing of [H] string (closes #881330, #862930)
 
 API changes:
 * Moved a number of Swing based classes to cdk.applications.swing (addresses #847584)
 * The distribution of classes among cdk-*.jar has slightly changed due
   to the new build process. Do 'ant compile.init' and look in cdk/src/*.classes
   to see in which jar classes end up.
+* Added a getPluginVersion() method to the plugin API
 
 20040120 Release
 ------------------------------------

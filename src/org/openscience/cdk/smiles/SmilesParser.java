@@ -90,6 +90,7 @@ public class SmilesParser
      * @exception        InvalidSmilesException  Exception thrown when the SMILES string is invalid
      */
     public Molecule parseSmiles(String smiles) throws InvalidSmilesException {
+        logger.debug("parseSmiles()...");
 		Bond bond = null;
 		boolean aromaticAtom = false;
 		nodeCounter = 0;
@@ -317,7 +318,7 @@ public class SmilesParser
      *@return    The Charge value
      */
     private int getCharge(String chargeString, int position) {
-        logger.debug("Parsing charge from: " + chargeString.substring(position));
+        logger.debug("getCharge(): Parsing charge from: " + chargeString.substring(position));
         int charge = 0;
         if (chargeString.charAt(position) == '+') {
             charge = +1;
@@ -347,7 +348,7 @@ public class SmilesParser
     }
     
     private int getImplicitHydrogenCount(String s, int position) {
-        logger.debug("Parsing implicit hydrogens from: " + s);
+        logger.debug("getImplicitHydrogenCount(): Parsing implicit hydrogens from: " + s);
         int count = 1;
         if (s.charAt(position) == 'H') {
             StringBuffer multiplier = new StringBuffer();
@@ -374,23 +375,26 @@ public class SmilesParser
 	 * @param  pos  Description of the Parameter
 	 * @return      The ElementSymbol value
 	 */
-     private String getElementSymbol(String s, int pos) {
-         logger.debug("Parsing element symbol (pos=" + pos + ") from: " + s);
-         if (pos < s.length() - 1) {
-             // try to match elements not in the organic subset.
-             // first, the two char elements
-             String possibleSymbol = s.substring(pos, pos + 2);
-             if (("HeLiBeNeNaMgAlSiClArCaScTiCrMnFeCoNiCuZnGaGeAsSe".indexOf(possibleSymbol) >= 0) ||
-                 ("BrKrRbSrZrNbMoTcRuRhPdAgCdInSnSbTeXeCsBaLuHfTaRe".indexOf(possibleSymbol) >= 0) ||
-                 ("OsIrPtAuHgTlPbBiPoAtRnFrRaLrRfDbSgBhHsMtDs".indexOf(possibleSymbol) >= 0)) {
-                 return possibleSymbol;
-             }
-             // if that fails, the one char elements
-             possibleSymbol = s.substring(pos, pos + 1);
-             if (("H".indexOf(possibleSymbol) >= 0)) {
-                 return possibleSymbol;
-             }
+    private String getElementSymbol(String s, int pos) {
+        logger.debug("getElementSymbol(): Parsing element symbol (pos=" + pos + ") from: " + s);
+        // try to match elements not in the organic subset.
+        // first, the two char elements
+        if (pos < s.length() - 1) {
+            String possibleSymbol = s.substring(pos, pos + 2);
+            logger.debug("possibleSymbol: " + possibleSymbol);
+            if (("HeLiBeNeNaMgAlSiClArCaScTiCrMnFeCoNiCuZnGaGeAsSe".indexOf(possibleSymbol) >= 0) ||
+                ("BrKrRbSrZrNbMoTcRuRhPdAgCdInSnSbTeXeCsBaLuHfTaRe".indexOf(possibleSymbol) >= 0) ||
+                ("OsIrPtAuHgTlPbBiPoAtRnFrRaLrRfDbSgBhHsMtDs".indexOf(possibleSymbol) >= 0)) {
+                return possibleSymbol;
+            }
         }
+        // if that fails, the one char elements
+        String possibleSymbol = s.substring(pos, pos + 1);
+        logger.debug("possibleSymbol: " + possibleSymbol);
+        if (("H".indexOf(possibleSymbol) >= 0)) {
+             return possibleSymbol;
+        }
+        // if that failed too, then possibly a organic subset element
         return getSymbolForOrganicSubsetElement(s, pos);
     }
 
@@ -402,7 +406,7 @@ public class SmilesParser
      * http://www.daylight.com/dayhtml/smiles/smiles-atoms.html</a>.
 	 */
      private String getSymbolForOrganicSubsetElement(String s, int pos) {
-         logger.debug("Parsing organic subset element from: " + s);
+         logger.debug("getSymbolForOrganicSubsetElement(): Parsing organic subset element from: " + s);
          if (pos < s.length() - 1) {
              String possibleSymbol = s.substring(pos, pos + 2);
              if (("ClBr".indexOf(possibleSymbol) >= 0)) {
@@ -428,8 +432,8 @@ public class SmilesParser
 	 *@param  pos  Description of the Parameter
 	 *@return      The RingNumber value
 	 */
-	private String getRingNumber(String s, int pos)
-	{
+     private String getRingNumber(String s, int pos) {
+        logger.debug("getRingNumber()");
 		char mychar = ' ';
 		String retString = "";
 		pos++;
@@ -453,7 +457,7 @@ public class SmilesParser
 	 *@exception  InvalidSmilesException  Description of the Exception
 	 */
 	private Atom assembleAtom(String s, int nodeCounter) throws InvalidSmilesException {
-        logger.debug("Assembling atom from: " + s);
+        logger.debug("assembleAtom(): Assembling atom from: " + s);
         Atom atom = null;
         int position = 0;
         String currentSymbol = null;
@@ -561,8 +565,8 @@ public class SmilesParser
 	 *
 	 *@param  atom  Description of the Parameter
 	 */
-	private void handleRing(Atom atom)
-	{
+	private void handleRing(Atom atom) {
+        logger.debug("handleRing():");
 		double bondStat = bondStatus;
 		Bond bond = null;
 		Atom partner = null;
