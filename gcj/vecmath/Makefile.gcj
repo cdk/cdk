@@ -1,4 +1,4 @@
-GCJ=gcj-3.0
+GCJ=gcj
 CLASSDIR = classes
 PCDIR = pc
 CLASSPATH = $(CLASSDIR):/vol/acfiles7/egonw/j2sdk1.4.0/jre/lib/rt.jar
