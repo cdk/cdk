@@ -81,28 +81,62 @@ public class NomParser {
         NomParser parser = new NomParser (stringReader);               
         parser.completeChemicalName();
         
-
-        // Useful debug code for printing all the tokens and their moleculer positions
-        // according to the parser.
-/*        System.out.println ("Main chain: " + mainChainPrefix.image);
-        System.out.println ("Substituents:");
-        Iterator iterator = attachedSubstituents.iterator();
-        while (iterator.hasNext())
-        {
-            System.out.println (iterator.next());
-        }
-        System.out.println ("Groups:");
-        iterator = attachedGroups.iterator();
-        while (iterator.hasNext())
-        {
-            System.out.println (iterator.next());
-        }
-*/
+        //Scan substituents for a too high connection point
+        checkConnections (attachedSubstituents.iterator());
+        
+        //Scan functional groups for a too high connection point
+        checkConnections (attachedGroups.iterator());
 
         MoleculeBuilder moleculeBuilder = new MoleculeBuilder();
         Molecule returnedMolecule = moleculeBuilder.buildMolecule(mainChainPrefix, attachedSubstituents, attachedGroups, isMainCyclic, stringToParse);
         
         return returnedMolecule;
+    }
+
+    /**
+     * Checks to ensure that all groups/substituents attached to the main chain
+     * are connected to a valid atom which occurs on the main chain.
+     *
+     * @param vectorIterator An iterator which provides instances of AttachedGroup to check
+     * @throws ParseException A taylored instance of ParseException so nomen can display
+     * the error to the user.
+     */
+    private static void checkConnections (Iterator vectorIterator) throws ParseException
+    {
+        while (vectorIterator.hasNext())
+        {
+            AttachedGroup ag = (AttachedGroup) vectorIterator.next();
+            Vector locations = ag.getLocations();
+
+            Iterator locationsIterator = locations.iterator();
+            while (locationsIterator.hasNext())
+            {
+                Token tok = (Token) locationsIterator.next();
+
+                try
+                {
+                    if (Integer.parseInt(tok.image) > mainChainPrefix)
+                    {
+                        //Create a tiny 2D array with a single slot for data, 
+                        //insert 0 into it as as to reference the first slot in the stringArray
+                        int [][] intArray = new int [1][1];
+                        intArray [0][0] = 0;
+
+                        //Put useful message in stringArray
+                        String [] stringArray = new String [1];
+                        stringArray [0] = " MUST BE BELOW " + (mainChainPrefix + 1) + " ";
+
+                        tok.next = tok;
+
+                        throw new ParseException (tok, intArray, stringArray);
+                    }
+                }
+                catch (NumberFormatException nfe)
+                {
+                    //Do nothing, as this should never happen
+                }
+            }
+        }
     }
 }
 
@@ -271,8 +305,9 @@ TOKEN :  /*PREFIXES*/
         |       < OXO: "oxo" >
         |       < PHENYL: "phenyl" >
         |       < AMINO: "amino" >
-	  |	    < ALUMINO: "alumino" >
-	  |	    < LITHO: "litho" >
+        |       < ALUMINO: "alumino" >
+        |	< LITHO: "litho" >
+        |	< HYDROXY: "hydroxy" >
 }		
 		
 TOKEN :  /*FUNCTIONAL GROUP SUFFIXES*/
@@ -627,6 +662,7 @@ void prefixFunctionalGroups() :
 |       <OXO>
 |       <PHENYL>
 |       <AMINO>
+|       <HYDROXY>
 }
 
 /**
