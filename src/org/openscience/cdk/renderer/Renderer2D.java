@@ -383,9 +383,12 @@ public class Renderer2D implements MouseMotionListener   {
         
         int alignment = GeometryTools.getBestAlignmentForLabel(container, atom);
         boolean drawSymbol = false;
+        boolean isRadical = (container.getSingleElectronSum(atom) > 0);
         if (atom instanceof PseudoAtom) {
             drawSymbol = false;
-            paintPseudoAtomLabel((PseudoAtom)atom, atomBackColor, graphics, alignment);
+            paintPseudoAtomLabel((PseudoAtom)atom, atomBackColor, graphics, 
+                alignment, isRadical);
+            return;
         } else if (!atom.getSymbol().equals("C")) {
             /*
             *  only show element for non-carbon atoms,
@@ -418,7 +421,6 @@ public class Renderer2D implements MouseMotionListener   {
         if (r2dm.drawNumbers()) {
             drawSymbol = true;
         }
-        boolean isRadical = (container.getSingleElectronSum(atom) > 0);
         if (drawSymbol || isRadical) {
             paintAtomSymbol(atom, atomBackColor, graphics, alignment, 
                 container.getAtomNumber(atom) + 1, isRadical);
@@ -750,7 +752,8 @@ public class Renderer2D implements MouseMotionListener   {
      * @param  atom       The atom to be drawn
      * @param  backColor  Description of the Parameter
      */
-    public void paintPseudoAtomLabel(PseudoAtom atom, Color backColor, Graphics2D graphics, int alignment) {
+    public void paintPseudoAtomLabel(PseudoAtom atom, Color backColor, 
+                    Graphics2D graphics, int alignment, boolean isRadical) {
         if (atom.getPoint2d() == null) {
             logger.warn("Cannot draw atom without 2D coordinate");
             return;
@@ -759,6 +762,10 @@ public class Renderer2D implements MouseMotionListener   {
         if (atomSymbol == null) {
             logger.warn("Cannot draw null symbol: taking symbol as default.");
             atomSymbol = atom.getSymbol();
+        }
+        if (isRadical) {
+            logger.debug(" atom is radical, adding \u00B7");
+            atomSymbol += "\u00B7";
         }
 
         // The calculation fonts
