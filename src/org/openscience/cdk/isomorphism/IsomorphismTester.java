@@ -35,12 +35,15 @@ import java.util.*;
  * <p><b>Important:</b> as it uses the MorganNumbersTools it does not take bond
  * order into account.
  *
+ * <p>Alternatively, you can use the UniversalIsomorphismTester.
+ *
  * @author     steinbeck
  * @created    2001-09-10
  *
  * @keyword    isomorphism
  *
  * @see        org.openscience.cdk.graph.invariant.MorganNumbersTools
+ * @see        org.openscience.cdk.isomorphism.UniversalIsomorphismTester
  */
 public class IsomorphismTester implements java.io.Serializable
 {
