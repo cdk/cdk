@@ -19,6 +19,7 @@ API changes:
   to simplify IO API
 * Renamed [s|g]etAtomicMass to [s|g]etMassNumber (fixes #721117) and moved it
   from Element into Isotope
+* Removed physical props and remarks from ChemObject (implements RFC #20)
 
 20030909 Release
 ------------------------------------

@@ -41,19 +41,10 @@ public class ChemObject implements java.io.Serializable, Cloneable {
 	/** Vector for listener administration. */
 	protected Vector chemObjects = new Vector();
 	/** 
-	  * A hashtable for the storage of physical properties 
-	  * of this ChemObject. 
-	  */
-	protected Hashtable physicalProperties = new Hashtable();
-	/** 
 	  * A hashtable for the storage of any kind of properties 
 	  * of this ChemObject. 
 	  */
 	protected Hashtable properties = new Hashtable();
-	/** 
-	  * A hashtable for the storage of the remarks.
-	  */
-	protected Hashtable remarks = new Hashtable();
 	/** You will frequently have to use some flags on a ChemObject.
 	 * For example, if you want to draw a molecule and see
 	 * if you've already drawn an atom, or in a ring search to 
@@ -129,35 +120,6 @@ public class ChemObject implements java.io.Serializable, Cloneable {
 		}
 	}
 
-
-	/**
-	 * Sets a physical property for a ChemObject.
-	 *
-	 * @param   description  An object description of the property (most likely a unique string)
-	 * @param   property  An object with the property itself
-     *
-     * @see     #getPhysicalProperty
-	 */
-	public void setPhysicalProperty(Object description, Object property)
-	{
-		physicalProperties.put(description, property);
-
-	}
-
-
-	/**
-	 * Returns a physical property for the ChemObject.
-	 *
-	 * @param   description  An object description of the property (most likely a unique string)
-	 * @return  The object containing the property
-     *
-     * @see     #setPhysicalProperty
-	 */
-	public Object getPhysicalProperty(Object description) {
-		return physicalProperties.get(description);
-	
-	}
-
 	/**
 	 * Sets a property for a ChemObject.
 	 *
@@ -203,30 +165,6 @@ public class ChemObject implements java.io.Serializable, Cloneable {
     }
     
 	/**
-	 * Sets a remark for this ChemObject.
-	 *
-	 * @param   description  An object description of the remark (most likely an Integer or an unique ID string)
-	 * @param   remark  An object with the remark (most likely a String)
-     *
-     * @see     #getRemark
-	 */
-	public void setRemark(Object description, Object remark) {
-		remarks.put(description, remark);
-	}
-
-	/**
-	 * Returns a remark for this ChemObject.
-	 *
-	 * @param   description  An object description of the remark (most likely an Integer or an unique ID string)
-	 * @return  The object containing the remark
-     *
-     * @see     #setRemark
-	 */
-	public Object getRemark(Object description) {
-		return remarks.get(description);
-	}
-
-	/**
 	 * Initializes all the service fields, vectors, hashtables, etc..
 	 *
 	 */
@@ -235,19 +173,10 @@ public class ChemObject implements java.io.Serializable, Cloneable {
 		/** Vector for listener administration */
 		chemObjects = new Vector();
 		/** 
-		  * A hashtable for the storage of physical properties 
-		  * of this ChemObject. 
-		  */
-		physicalProperties = new Hashtable();
-		/** 
 		  * A hashtable for the storage of any kind of properties 
 		  * of this ChemObject. 
 		  */
 		properties = new Hashtable();
-		/** 
-		  * A hashtable for the storage of the remarks.
-		  */
-		remarks = new Hashtable();
 		/** You will frequently have to use some flags on a ChemObject
 		 * for example if you want to draw a molecule and see
 		 * if you've already drawn an atom, or in a ring search to 
