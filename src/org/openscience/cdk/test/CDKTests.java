@@ -50,7 +50,7 @@ import org.openscience.cdk.test.smiles.SmilesParserTest;
 import org.openscience.cdk.test.structgen.RandomStructureGeneratorTest;
 import org.openscience.cdk.test.tools.ToolsTests;
 import org.openscience.cdk.test.charges.GasteigerMarsiliPartialChargesTest;
-
+import org.openscience.cdk.test.qsar.QsarDescriptors2DTest;
 /**
  * TestSuite that runs all the sample tests
  *
@@ -110,6 +110,7 @@ public class CDKTests
 	suite.addTest(ReactionBalancerTest.suite());
 	// from cdk.test.charges
 	suite.addTest(GasteigerMarsiliPartialChargesTest.suite());
+	suite.addTest(QsarDescriptors2DTest.suite());
         // from cdk.test.iupac
         try {
             Class testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.test.iupac.ParserTest");
