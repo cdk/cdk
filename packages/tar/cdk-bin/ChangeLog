@@ -1,3 +1,8 @@
+CVS
+=================
+* For once and all fixed path to dir where CDK jars are stored
+* Added cdk-download program
+
 20020805
 =================
 * Updated cdk-view man page

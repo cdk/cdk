@@ -2,8 +2,8 @@
 ## $Id$
 
 PREFIX="@prefix@"
-JARLIBDIR="${PREFIX}/share/java"
-JARLIBS=cdk-core.jar cdk-extra.jar cdk-libio.jar
+JARLIBDIR="@CDKLIBDIR@"
+JARLIBS=cdk-core.jar cdk-extra.jar cdk-libio.jar cdk-apps.jar
 
 EXTRA_DIST= $(JARLIBS)
 
@@ -23,3 +23,6 @@ cdk-extra.jar:
 
 cdk-libio.jar:
 	cp ../../../../dist/jar/cdk-libio.jar cdk-libio.jar
+
+cdk-apps.jar:
+	cp ../../../../dist/jar/cdk-apps.jar cdk-apps.jar

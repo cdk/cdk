@@ -60,6 +60,9 @@ AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
 
+CDKJARDIR=$prefix/share/java
+AC_SUBST(CDKJARDIR)
+
 AC_MSG_CHECKING(for CDK libraries)
 for d in $prefix/lib/cdk $prefix/share/cdk/lib /usr/share/cdk/lib
 do
