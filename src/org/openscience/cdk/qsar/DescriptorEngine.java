@@ -130,7 +130,7 @@ public class DescriptorEngine {
         
         // some validation. Maybe add some constants to CDKConstants?
         String[] validTypes = {"constitutional","molecular","topological","electronic","geometrical"};
-        if (descriptorClasses.length == 0) {
+        if (descriptorClasses == null  || descriptorClasses.length == 0) {
             descriptorClasses = validTypes;
         } else {
             for (int i = 0; i < descriptorClasses.length; i++) {
