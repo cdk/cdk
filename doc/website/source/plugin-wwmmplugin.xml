@@ -14,10 +14,11 @@
   </head>
 
   <section>
-    <title>World Wide Molecular Matrix(WWMM) Plugin</title>
+    <title>World Wide Molecular Matrix (WWMM) Plugin</title>
     <para>
       Plugins that allows you to interact from within your CDK application with
-      the World Wide Molecule Matrix, or by a similarly typed local XIndice database.
+      the <ulink url="http://wwmm.ch.cam.ac.uk/moin/">World Wide Molecule Matrix</ulink>,
+      or by a similarly typed local XIndice database.
     </para>
     <para>
       The source code can be found in the cdk-plugins module in CDK cvs.
