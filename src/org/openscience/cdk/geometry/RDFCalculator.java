@@ -42,6 +42,19 @@ import org.openscience.cdk.tools.LoggingTool;
  * a point, i.e. the first bin starts at 0 &Aring; and ends at 0.5*resolution
  * &Aring;, and the second bins ends at 1.5*resulution &Aring;.
  *
+ * <p>By default, the RDF is unweighted. By implementing and registering a
+ * <code>RDFWeightFunction</code>, the RDF can become weighted. For example,
+ * to weight according to partial charge interaction, this code could be used:
+ * <pre>
+ * RDFCalculator calculator = new RDFCalculator(0.0, 5.0, 0.1, 0.0,
+ *     new RDFWeightFunction() {
+ *         public double calculate(Atom atom, Atom atom2) {
+ *             return atom.getCharge()*atom2.getCharge();
+ *         }
+ *     }
+ * );
+ * </pre>
+ *
  * @cdk.module  extra
  *
  * @author      Egon Willighagen
@@ -49,6 +62,8 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @keyword     radial distribution function
  * @keyword     RDF
+ *
+ * @see         org.openscience.cdk.geometry.RDFWeightFunction
  */
 public class RDFCalculator {
 
