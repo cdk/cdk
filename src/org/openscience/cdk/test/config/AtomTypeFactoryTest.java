@@ -98,7 +98,7 @@ public class AtomTypeFactoryTest extends TestCase {
 			fail("Problem getting AtomType for 'structgen.C4' from AtomTypeFactory: "  +  exc.getMessage());
 		}
 		
-		
+        assertNotNull(atomType);
         assertEquals("C", atomType.getSymbol());
         assertEquals("C4", atomType.getAtomTypeName());
 		assertEquals(4.0, atomType.getBondOrderSum(), 0.001);
@@ -114,6 +114,7 @@ public class AtomTypeFactoryTest extends TestCase {
 			fail("Problem getting AtomType for 'valency:O+' from AtomTypeFactory: "  +  exc.getMessage());
 		}
 		
+        assertNotNull(atomType);
         assertEquals("O", atomType.getSymbol());
         assertEquals("Oplus", atomType.getAtomTypeName());
 		assertEquals(1, atomType.getFormalCharge());
@@ -130,11 +131,13 @@ public class AtomTypeFactoryTest extends TestCase {
 			fail("Problem getting AtomType for 'hybridization:C.sp2' from AtomTypeFactory: "  +  exc.getMessage());
 		}
 		
+        assertNotNull(atomType);
         assertEquals("C", atomType.getSymbol());
         assertEquals("C.sp2", atomType.getAtomTypeName());
 		assertEquals(0, atomType.getFormalCharge());
 		assertEquals(4.0, atomType.getBondOrderSum(), 0.0001);
 		assertEquals(2.0, atomType.getMaxBondOrder(), 0.0001);
+		assertEquals(3, atomType.getFormalNeighbourCount());
 		assertEquals(CDKConstants.HYBRIDIZATION_SP2, atomType.getHybridization());
 	}
 

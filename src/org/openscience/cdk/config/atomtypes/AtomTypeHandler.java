@@ -42,6 +42,7 @@ public class AtomTypeHandler extends DefaultHandler {
     private final int SCALAR_MAXBONDORDER = 1; 
     private final int SCALAR_BONDORDERSUM = 2;
     private final int SCALAR_HYBRIDIZATION = 3;
+    private final int SCALAR_FORMALNEIGHBOURCOUNT = 4;
     
     private LoggingTool logger;
     private String currentChars;
@@ -91,6 +92,8 @@ public class AtomTypeHandler extends DefaultHandler {
                     atomType.setBondOrderSum(Double.parseDouble(currentChars));
                 } else if (scalarType == SCALAR_MAXBONDORDER) {
                     atomType.setMaxBondOrder(Double.parseDouble(currentChars));
+                } else if (scalarType == SCALAR_FORMALNEIGHBOURCOUNT) {
+                    atomType.setFormalNeighbourCount(Integer.parseInt(currentChars));
                 } else if (scalarType == SCALAR_HYBRIDIZATION) {
                     if ("sp1".equals(currentChars)) {
                         atomType.setHybridization(CDKConstants.HYBRIDIZATION_SP1);
@@ -145,6 +148,8 @@ public class AtomTypeHandler extends DefaultHandler {
                         scalarType = SCALAR_BONDORDERSUM;
                     } else if ("cdk:hybridization".equals(atts.getValue(i))) {
                         scalarType = SCALAR_HYBRIDIZATION;
+                    } else if ("cdk:formalNeighbourCount".equals(atts.getValue(i))) {
+                        scalarType = SCALAR_FORMALNEIGHBOURCOUNT;
                     }
                 }
             }

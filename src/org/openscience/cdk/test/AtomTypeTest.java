@@ -110,6 +110,14 @@ public class AtomTypeTest extends TestCase {
         assertEquals(charge, a.getFormalCharge());
     }
 
+    public void testSetFormalNeighbourCount() {
+        int count = 4;
+
+        AtomType a = new AtomType("C");
+        a.setFormalNeighbourCount(count);
+        assertEquals(count, a.getFormalNeighbourCount());
+    }
+
     public void testSetHybridization() {
         int hybridization = CDKConstants.HYBRIDIZATION_SP3;
 

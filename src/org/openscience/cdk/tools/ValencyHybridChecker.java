@@ -55,13 +55,12 @@ import org.openscience.cdk.exception.CDKException;
 public class ValencyHybridChecker extends ValencyChecker {
 
 	public ValencyHybridChecker() throws IOException, ClassNotFoundException {
-        String atomTypeList = "org/openscience/cdk/config/data/hybridization_atomtypes.xml";
-        logger.info("Using configuration file: ", atomTypeList);
-		structgenATF = AtomTypeFactory.getInstance(atomTypeList);
+        super("org/openscience/cdk/config/data/hybridization_atomtypes.xml");
 	}
 
     /**
-     * Determines if the atom can be of type AtomType.
+     * Determines if the atom can be of type AtomType. That is, it sees if this
+     * AtomType only differs in bond orders, or implicit hydrogen count.
      */
     public boolean couldMatchAtomType(Atom atom, double bondOrderSum, double maxBondOrder, AtomType type) {
         logger.debug("   ... matching atom ", atom, " vs ", type);
@@ -109,16 +108,17 @@ public class ValencyHybridChecker extends ValencyChecker {
             AtomType type = atomTypes[f];
             if (couldMatchAtomType(atom, bondOrderSum, maxBondOrder, type)) {
                 logger.debug("This type matches: ", type);
+                int formalNeighbourCount = type.getFormalNeighbourCount();
                 if (type.getHybridization() == CDKConstants.HYBRIDIZATION_UNSET) {
                     missingHydrogens = (int) (type.getBondOrderSum() - bondOrderSum);
                 } else {
                     switch (atom.getHybridization()) {
                         case CDKConstants.HYBRIDIZATION_SP3:
-                            missingHydrogens = 4 - neighbourCount; break;
+                            missingHydrogens = formalNeighbourCount - neighbourCount; break;
                         case CDKConstants.HYBRIDIZATION_SP2:
-                            missingHydrogens = 3 - neighbourCount; break;
+                            missingHydrogens = formalNeighbourCount - neighbourCount; break;
                         case CDKConstants.HYBRIDIZATION_SP1:
-                            missingHydrogens = 2 - neighbourCount; break;
+                            missingHydrogens = formalNeighbourCount - neighbourCount; break;
                         default:
                             missingHydrogens = (int) (type.getBondOrderSum() - bondOrderSum);
                     }

@@ -77,6 +77,13 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
     protected int hybridization;
 
     /**
+     * The formal number of neighbours this atom type can have.
+     * This includes explicitely and implicitely connected atoms. The latter
+     * includes implicit hydrogens.
+     */
+    protected int formalNeighbourCount;
+
+    /**
 	 *  Constructor for the AtomType object.
      *
      * @param elementSymbol  Symbol of the atom
@@ -201,6 +208,28 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
     }
     
     /**
+     *  Sets the formal neighbour count of this atom.
+     *
+     * @param  charge  The neighbour count
+     *
+     * @see    #getFormalNeighbourCount
+     */
+    public void setFormalNeighbourCount(int count) {
+        this.formalNeighbourCount = count;
+    }
+    
+    /**
+     *  Returns the formal neighbour count of this atom.
+     *
+     * @return the formal neighbour count of this atom
+     *
+     * @see    #setFormalNeighbourCount
+     */
+    public int getFormalNeighbourCount() {
+        return this.formalNeighbourCount;
+    }
+    
+    /**
      *  Sets the hybridization of this atom.
      *
      * @param  hybridization  The hybridization
@@ -268,6 +297,7 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
         sb.append("BOS:" + getBondOrderSum() + ", ");
         sb.append("FC:" + getFormalCharge() + ", ");
         sb.append("H:" + getHybridization() + ", ");
+        sb.append("NC:" + getFormalNeighbourCount() + ", ");
         sb.append(super.toString());
         sb.append(")");
         return sb.toString(); 
