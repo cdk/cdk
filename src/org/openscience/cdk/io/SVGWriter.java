@@ -39,7 +39,7 @@ import java.text.*;
 import java.awt.*;
 import javax.vecmath.*;
 import javax.swing.*;
-import org.apache.batik.util.awt.svg.SVGGraphics2D;
+import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.dom.GenericDOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.DOMImplementation;
@@ -127,8 +127,6 @@ public class SVGWriter extends DefaultChemObjectWriter {
         boolean useCSS = false;
         try {
             svgGenerator.stream(writer, useCSS);
-        } catch (UnsupportedEncodingException f) {
-            logger.error("Encoding UTF-8 not supported.");
         } catch (IOException h) {
             logger.error("Error while writen SVG.");
         }
