@@ -584,6 +584,7 @@
                 <jar jarfile="${dist}/jar/cdk-io.jar">
                     <fileset dir="${build}">
                         <includesfile name="${src}/io.classes" />
+                        <include name="org/openscience/cdk/io/cml/data/**" />
                     </fileset>
                 </jar>
         </target>
