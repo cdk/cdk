@@ -5,9 +5,15 @@ Changes in CVS
 ------------------------------------
 New:
 * Coloring of atom symbols in 2D display by atom type.
+* More complete validation of chemical semantics in the
+  org.openscience.cdk.validation package.
 
 Fixes:
 * Added missing LGPL license from distributions.
+
+API changes:
+* ConnectivityChecker.partitionIntoMolecules() now returns a 
+  SetOfMolecules instead of a Vector.
 
 20030702 Release
 ------------------------------------
