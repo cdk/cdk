@@ -46,6 +46,9 @@ Fixes:
 API changes:
 * ConnectivityChecker.partitionIntoMolecules() now returns a 
   SetOfMolecules instead of a Vector.
+* AtomTypeFactory is now a singleton class, see getInstance()
+* Added patch to remove get/setPhysicalProperty and 
+  get/setRemark (implements RFC #20)
 
 20030702 Release
 ------------------------------------
