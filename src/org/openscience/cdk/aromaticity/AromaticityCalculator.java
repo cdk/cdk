@@ -29,6 +29,7 @@
 package org.openscience.cdk.aromaticity;
 
 import org.openscience.cdk.Ring;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
@@ -58,6 +59,8 @@ public class AromaticityCalculator
 	public static boolean isAromatic(Ring ring, AtomContainer atomContainer)
 	{
 //    System.out.println("calculating aromaticity");
+		int twoElectronContributors = 0;
+		int oneElectronContributors = 0;
 		Atom[] ringAtoms = ring.getAtoms();
 		int eCount = 0;
 		Bond[] conectedBonds;
@@ -81,10 +84,18 @@ public class AromaticityCalculator
 				//C or heteroatoms both contibute 1 electron in sp2 hybridized form
 				eCount++;
 			}
+			else if (atom.flags[CDKConstants.ISAROMATIC])
+			{
+				eCount++;
+			}
 			else if (!atom.getSymbol().equals("C"))
 			{
 				//Heteroatom probably in sp3 hybrid therefore 2 electrons contributed.
 				eCount = eCount + 2;
+			}
+			else
+			{
+				return false;	
 			}
 		}
 		if (eCount - 2 != 0 && (eCount - 2) % 4 == 0)
