@@ -99,6 +99,10 @@ public class HydrogenPlacer
 			}
 
 			addAngle = Math.PI * 2 / unplacedAtoms.getAtomCount() - 1;
+			/* IMPORTANT: At this point we need a calculation of the
+			   start angle. 
+			   Not done yet.
+			   */
 			atomPlacer.populatePolygonCorners(atomVector, new Point2d(atom.getPoint2D()), startAngle, addAngle, bondLength);	
 		}
 			
