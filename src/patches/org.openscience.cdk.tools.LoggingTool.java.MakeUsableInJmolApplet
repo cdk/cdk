@@ -1,6 +1,6 @@
---- src/org/openscience/cdk/tools/LoggingTool.java	2003-09-04 11:41:59.612452000 +0200
-+++ src/org/openscience/cdk/tools/LoggingTool.java.JmolApplet	2003-09-04 11:41:26.398364000 +0200
-@@ -32,7 +32,6 @@
+--- src/org/openscience/cdk/tools/LoggingTool.java	2003-10-21 14:01:56.000000000 +0200
++++ src/org/openscience/cdk/tools/LoggingTool.java.MakeUsableInJmolApplet	2003-10-23 18:45:12.319831000 +0200
+@@ -40,7 +40,6 @@
      private boolean debug = false;
      private boolean tostdout = false;
  
@@ -8,9 +8,9 @@
      private String classname;
      
      /** Default number of StackTraceElements to be printed by debug(Exception) */
-@@ -46,61 +45,8 @@
- 
-     public LoggingTool(String classname) {
+@@ -62,61 +61,8 @@
+     
+     public LoggingTool(String classname, boolean useConfig) {
          this.classname = classname;
 -        try {
 -            logger = org.apache.log4j.Category.getInstance( classname );
@@ -71,23 +71,23 @@
      }
  
      public void dumpSystemProperties() {
-@@ -124,70 +72,23 @@
+@@ -142,70 +88,24 @@
      }
  
      public void debug(Exception exception) {
--        StackTraceElement[] stack = exception.getStackTrace();
--        String string = "Exception: " + exception.toString();
--        this.debug(string);
--        for (int i=0; i<stack.length; i++) {
--            string = "       in: " + stack[i].getClassName() +
--                     "." + stack[i].getMethodName();
--            String filename = stack[i].getFileName();
--            if (filename != null) {
--                string = string + "(" + filename + " line: " +
--                         stack[i].getLineNumber() + ")";
+-        debug("Exception: " + exception.getMessage());
+-        java.io.StringWriter stackTraceWriter = new java.io.StringWriter();
+-        exception.printStackTrace(new PrintWriter(stackTraceWriter));
+-        String trace = stackTraceWriter.toString();
+-        try {
+-            BufferedReader reader = new BufferedReader(new StringReader(trace));
+-            while (reader.ready()) {
+-                String traceLine = reader.readLine();
+-                debug(traceLine);
 -            }
--            this.debug(string);
--            if (i == this.stackLength) i = stack.length;
+-        } catch (Exception ioException) {
+-            error("Serious error in LoggingTool while printing exception stack trace: " + 
+-            ioException.getMessage());
 -        }
      }
      
@@ -131,6 +131,7 @@
 -                ((org.apache.log4j.Category)logger).info(s);
 -            }
 -        }
++        toSTDOUT("INFO", s);
      }
  
      public void warn(String s) {
