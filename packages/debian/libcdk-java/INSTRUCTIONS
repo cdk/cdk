@@ -72,20 +72,27 @@ Debian New Maintainer's Guide first (http://www.debian.org/doc/maint-guide/).
    in the base-dir and follow the instructions.
 
 7. Adjust all files in debian/ to prepare packaging (maybe you want to adjust
-   changelog and/or Makefile). All files are prepared for including JAVA3D and
-   JOElib (see special notes).
+   debian/changelog, debian/Makefile, debian/reportbugs/control). All files
+   are prepared for including JAVA3D and JOElib (see special notes).
 
 8. Adjust the build.xml file in the base-dir (you can refer to the build.xml
    file in the debian/, which should be up-2-date, so you can also copy the
    file to the base-dir).
 
-9. Go to the base-dir and type: debuild.
+9. Copy *.xml-files for manpages to debian/cdk-manpages. This directory
+   includes such files, but they can be out of date (refer to the cvs-source).
 
-10. That's it. The package is copied to the upper directory. Copy it to your 
+10. Adjust the shell wrappers in cdk-binary if necessary (refer to the
+    cvs-source).
+
+11. Go to the base-dir and type: debuild.
+
+12. That's it. The package is copied to the upper directory. Copy it to your 
     local repository or install it directly with dpkg -i <package>.
 
 
 If you want to send me a package for a different architecture than i386 (maybe
 you don't have a repositiory to put the package in, you can write to
 daniel.leidert@wgdd.de. Then I will add it to the my (unofficial) repositiory, 
-where the i386-binary-packages are located.
+where the i386-binary-packages are located
+(see http://www.wgdd.de/debian/dists).
