@@ -40,6 +40,8 @@ import java.io.*;
  * <a href="http://www.nist.gov/public_affairs/update/upd20020610.htm#International">this
  * press release</a>.
  *
+ * <p>Reference: <a href="http://cdk.sf.net/biblio.html#HEL01">HEL01</a>.
+ *
  * @author     Egon Willighagen
  * @created    25 September 2002
  *
