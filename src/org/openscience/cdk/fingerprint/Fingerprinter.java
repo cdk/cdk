@@ -31,6 +31,7 @@ package org.openscience.cdk.fingerprint;
 import java.util.BitSet;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Vector;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
@@ -38,6 +39,7 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.NoSuchAtomException;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  *  Generates a Fingerprint for a given AtomContainer. Fingerprints are one-dimensional 
@@ -63,8 +65,11 @@ public class Fingerprinter
 	static int defaultSize = 1024;
 	static int searchDepth = 6;
 	static Hashtable pathes;
-	static boolean debug = false;
+	static boolean debug = true;
 	static int debugCounter = 0;
+	
+	
+	private static LoggingTool logger = new LoggingTool(Fingerprinter.class.getName(), true);
 
 
 	/**
@@ -91,17 +96,17 @@ public class Fingerprinter
 		String path = null;
 		int position = -1;
 		boolean isAromatic = false;
-		if (debug) System.out.println("Entering Fingerprinter");
-		if (debug) System.out.println("Starting Aromaticity Detection");
+		// logger.debug("Entering Fingerprinter");
+		// logger.debug("Starting Aromaticity Detection");
 		isAromatic = HueckelAromaticityDetector.detectAromaticity(ac);
-		if (debug) System.out.println("Finished Aromaticity Detection");
+		// logger.debug("Finished Aromaticity Detection");
 		findPathes(ac);
 		BitSet bs = new BitSet(size);
 		for (Enumeration e = pathes.elements(); e.hasMoreElements(); )
 		{
 			path = (String) e.nextElement();
 			position = new java.util.Random(path.hashCode()).nextInt(size); 
-			if (debug) System.out.println("Setting bit " + position + " for " + path);
+			// logger.debug("Setting bit " + position + " for " + path);
 			bs.set(position);
 		}
 		return bs;
@@ -141,6 +146,7 @@ public class Fingerprinter
 		return false;
 	}
 
+	
 
 	/**
 	 * Gets all pathes of length 1 up to the length given by the 'searchDepth" parameter. 
@@ -151,15 +157,18 @@ public class Fingerprinter
 	static void findPathes(AtomContainer ac)
 	{
 		pathes = new Hashtable();
+		Vector currentPath = new Vector();
 		debugCounter = 0;
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
-			checkAndStore(ac.getAtomAt(f).getSymbol());
-			if (debug) System.out.println("Starting at atom " + f + " with symbol " + ac.getAtomAt(f).getSymbol());
-			depthFirstSearch(ac, ac.getAtomAt(f), ac.getAtomAt(f).getSymbol(), 0);
+			currentPath.removeAllElements();
+			currentPath.addElement(ac.getAtomAt(f));
+			checkAndStore(currentPath);
+			// logger.info("Starting at atom " + (f + 1) + " with symbol " + ac.getAtomAt(f).getSymbol());
+			depthFirstSearch(ac, ac.getAtomAt(f), currentPath, 0);
+
 		}
 	}
-
 
 	/**
 	 *  Performs a recursive depth first search
@@ -169,84 +178,132 @@ public class Fingerprinter
 	 * @param  currentPath   The Path that has been generated so far
 	 * @param  currentDepth  The current depth in this recursive search
 	 */
-	static void depthFirstSearch(AtomContainer ac, Atom root, String currentPath, int currentDepth)
+	static void depthFirstSearch(AtomContainer ac, Atom root, Vector currentPath, int currentDepth)
 	{
 		Bond[] bonds = ac.getConnectedBonds(root);
-		Atom nextAtom = null;
-		String newPath = null;
-
+		/* try
+		{
+			logger.debug("Currently at atom no. " + (ac.getAtomNumber(root)  + 1) + " with symbol "  + root.getSymbol());
+		} 
+		catch(Exception exc){} */
+		Atom nextAtom = null, tempAtom = null;
+		Vector newPath = null;
+		String symbol = null;
+		String bondSymbol = null;
 		currentDepth++;
+		// logger.info("New incremented searchDepth " + currentDepth);
+		// logger.info("Current Path is: " + currentPath);
 		for (int f = 0; f < bonds.length; f++)
 		{
-			if (currentDepth == 1)
-			{
-				for (int g = 0; g < ac.getAtomCount(); g++)
-				{
-					ac.getAtomAt(g).setFlag(CDKConstants.VISITED, false);
-				}
-				root.setFlag(CDKConstants.VISITED, true);
-			}
 			nextAtom = bonds[f].getConnectedAtom(root);
-			if (!nextAtom.getFlag(CDKConstants.VISITED))
+			/* try
 			{
-				newPath = new String(currentPath);
-				if (bonds[f].getFlag(CDKConstants.ISAROMATIC))
-				{
-					newPath += ":";
-				}
-				else if (bonds[f].getOrder() == 1)
-				{
-					newPath += "-";
-				}
-				else if (bonds[f].getOrder() == 2)
-				{
-					newPath += "=";
-				}
-				else if (bonds[f].getOrder() == 3)
-				{
-					newPath += "#";
-				}
+				logger.debug("Found connected atom no. " + (ac.getAtomNumber(nextAtom) + 1) + " with symbol "  + nextAtom.getSymbol() + "...");
+			}
+			catch(Exception exc){} */
 
-				newPath += nextAtom.getSymbol();
-				nextAtom.setFlag(CDKConstants.VISITED, true);
+			if (!currentPath.contains(nextAtom))
+			{
+				newPath = new Vector(currentPath);
+				bondSymbol = getBondSymbol(bonds[f]);
+				newPath.addElement(bondSymbol);
+				//logger.debug("Bond has symbol " + bondSymbol);
+				newPath.addElement(nextAtom);
 				checkAndStore(newPath);
 				if (currentDepth == searchDepth)
 				{
 					return;
 				}
-				if (currentDepth < searchDepth)
+				else
 				{
 					depthFirstSearch(ac, nextAtom, newPath, currentDepth);
+					//logger.debug("DepthFirstSearch Fallback to searchDepth " + currentDepth);
 				}
+			}
+			else
+			{
+				//logger.debug("... already visited!");	
 			}
 		}
 	}
 	
-	private static void checkAndStore(String newPath)
+	private static void checkAndStore(Vector newPath)
 	{
-		String storePath = new String(newPath);
+		String newPathString = "";
+		for (int f = 0; f < newPath.size(); f++)
+		{
+			if ((newPath.elementAt(f)) instanceof org.openscience.cdk.Atom)
+			{
+				newPathString += convertSymbol(((Atom)newPath.elementAt(f)).getSymbol());	
+			}
+			else newPathString += (String)newPath.elementAt(f);
+		}
+		//logger.debug("Checking for existence of Path " +  newPathString);
+		String storePath = new String(newPathString);
 		String reversePath = new StringBuffer(storePath).reverse().toString();
-		
-		if (reversePath.compareTo(newPath) < 0)
+		/* Pathes can be found twice (search from one or the other side) 
+		* so they will occur in reversed order. We only handle the  
+		* lexicographically smaller path (This is an arbitrary choice) */
+		if (reversePath.compareTo(newPathString) < 0)
 		{
 			/* reversePath is smaller than newPath
 			   so we keep reversePath */
 			storePath = reversePath;	
-		}
-		if (debug) System.out.println("Checking for existence of Path " +  storePath);				
-		/* At this point we need to check wether the 
-		same path has already been found in reversed order. If so, we need to store the 
-		lexicographically smaller path (This is an arbitrary choice) */
+		}				
 		if (!pathes.containsKey(storePath))
 		{
 			pathes.put(storePath, storePath);
 			if (debug)
 			{
 				debugCounter++;
-				if (debug) System.out.println("Storing path no. " + debugCounter + ": " +  storePath + ", Hash: " + storePath.hashCode());
+				//logger.debug("Storing path no. " + debugCounter + ": " +  storePath + ", Hash: " + storePath.hashCode());
 			}
 		}
-		
+		else
+		{
+			//logger.debug("Path " + storePath + " already contained");
+		}
 	}
+	
+	private static String convertSymbol(String symbol)
+	{	
+		String returnSymbol = symbol;
+		if (symbol.equals("Cl")) symbol = "X";
+		else if (symbol.equals("Si")) symbol = "Y";
+		else if (symbol.equals("Br")) symbol = "Z";
+		return returnSymbol;
+			
+	}
+	
+	private static String getBondSymbol(Bond bond)
+	{
+		String bondSymbol = "";
+		if (bond.getFlag(CDKConstants.ISAROMATIC))
+		{
+			bondSymbol= ":";
+		}
+		else if (bond.getOrder() == 1)
+		{
+			bondSymbol= "-";
+		}
+		else if (bond.getOrder() == 2)
+		{
+			bondSymbol= "=";
+		}
+		else if (bond.getOrder() == 3)
+		{
+			bondSymbol = "#";
+		}
+		return bondSymbol;
+	}
+	
+	public static void listDifferences(BitSet bs1, BitSet bs2)
+	{	logger.debug("Listing bit positions set in bs2 but not in bs1");
+		for (int f = 0; f < bs2.size(); f++)
+		{
+			if (bs2.get(f) && !bs1.get(f)) logger.debug("Bit " + f + " not set in bs1"); 
+		}
+	}
+
 }
 
