@@ -33,6 +33,7 @@ import org.openscience.cdk.test.config.ConfigTests;
 import org.openscience.cdk.test.fingerprint.FingerprinterTest;
 import org.openscience.cdk.test.geometry.CrystalGeometryToolsTest;
 import org.openscience.cdk.test.geometry.GeometryToolsTest;
+import org.openscience.cdk.test.geometry.RDFCalculatorTest;
 import org.openscience.cdk.test.geometry.alignment.KabschAlignmentTest;
 import org.openscience.cdk.test.graph.GraphTests;
 import org.openscience.cdk.test.index.CASNumberTest;
@@ -89,6 +90,7 @@ public class CDKTests
         // from cdk.test.geometry
         suite.addTest(GeometryToolsTest.suite());
         suite.addTest(CrystalGeometryToolsTest.suite());
+        suite.addTest(RDFCalculatorTest.suite());
         // from cdk.test.geometry.align
         suite.addTest(KabschAlignmentTest.suite());
         // from cdk.test.graph

@@ -23,30 +23,31 @@
  */
 package org.openscience.cdk.test.geometry;
 
-import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.geometry.RDFCalculator;
 
 /**
  * This class defines regression tests that should ensure that the source code
- * of the org.openscience.cdk.geometry.GeometryTools is not broken.
+ * of the org.openscience.cdk.geometry.RDFCalculator is not broken.
  *
- * @cdk.module test
+ * @cdk.module    test
  *
- * @author     Egon Willighagen
- * @cdk.created    2004-01-30
+ * @author        Egon Willighagen
+ * @cdk.created   2005-01-12
  *
- * @see org.openscience.cdk.geometry.GeometryTools
+ * @see org.openscience.cdk.geometry.RDFCalculator
  */
-public class GeometryToolsTest extends TestCase {
+public class RDFCalculatorTest extends TestCase {
 
-    public GeometryToolsTest(String name) {
+    public RDFCalculatorTest(String name) {
         super(name);
     }
     
@@ -57,16 +58,35 @@ public class GeometryToolsTest extends TestCase {
      * with JUnit.
      */
     public static Test suite() {
-        TestSuite suite = new TestSuite(GeometryToolsTest.class);
+        TestSuite suite = new TestSuite(RDFCalculatorTest.class);
         return suite;
     }
     
-    public void testGetLength() {
-        Atom o = new Atom("O", new Point2d(0.0, 0.0));
-        Atom c = new Atom("C", new Point2d(1.0, 0.0));
-        Bond bond = new Bond(c,o);
+    public void testRDFCalculator() {
+        RDFCalculator calculator = new RDFCalculator(0.0, 5.0, 0.1, 0.0);
         
-        assertEquals(1.0, GeometryTools.getLength2D(bond), 0.001);
+        assertNotNull(calculator);
+    }
+    
+    public void testCalculate() {
+        RDFCalculator calculator = new RDFCalculator(0.0, 5.0, 0.1, 0.0);
+        AtomContainer h2mol = new AtomContainer();
+        Atom h1 = new Atom("H"); h1.setPoint3d(new Point3d(-0.5, 0.0, 0.0));
+        Atom h2 = new Atom("H"); h2.setPoint3d(new Point3d( 0.5, 0.0, 0.0));
+        h2mol.addAtom(h1); h2mol.addAtom(h2);
+        
+        double[] rdf1 = calculator.calculate(h2mol, h1);
+        double[] rdf2 = calculator.calculate(h2mol, h2);
+
+        // test wether the double array length is ok
+        assertEquals(50, rdf1.length);
+        
+        // test wether the RDFs are identical
+        assertEquals(rdf1.length, rdf2.length);
+        for (int i=0; i<rdf1.length; i++) {
+            assertEquals(rdf1[i], rdf2[i], 0.00001);
+        }
+        
     }
     
 }
