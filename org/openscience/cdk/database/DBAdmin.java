@@ -213,7 +213,7 @@ public class DBAdmin {
         }
 
         // detect yet unsupported PostgreSQL
-		if (driver.equals("postgresql") || url.contains("postgresql")) {
+		if (driver.equals("postgresql") || (url.indexOf("postgresql") != -1)) {
 		    System.out.println("PostGresQL is not yet supported.");
 		}
 
