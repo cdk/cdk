@@ -1,6 +1,6 @@
 <project name="CDK" default="dist" basedir=".">
 
-        <property name="version" value="20040604-CVS" />
+        <property file="build.props"/>
 
         <!-- compile options -->
         <property name="build.sysclasspath" value="ignore" />
@@ -91,6 +91,7 @@
             <echo message="   ${ANT_HOME}: ${ant.home}" />
             <echo message="" />
             <echo message="CDK Environment:" />
+            <echo message="   CDK version: ${version}" />
             <echo message="     build.xml: $Id$" />
             <echo message="  JOELib found: ${joelib.present}" />
             <echo message="  CMLDOM found: ${cmllibs.present}" />

@@ -1,5 +1,7 @@
 <project name="CDK" default="html" basedir=".">
 
+    <property file="build.props"/>
+
     <!-- $Id$ -->
 
     <property name="javadoc.dir" value="doc/api" />
@@ -31,7 +33,7 @@
         <javadoc destdir="${javadoc.dir}"
                  author="true" version="true" use="true"
                  public="true"
-                 windowtitle="CDK API">
+                 windowtitle="CDK API - version ${version}">
             <classpath refid="project.class.path" />
             <tag name="cdk.keyword" scope="all" description="Keywords:" />
             <tag name="cdk.created" scope="all" description="Created on:" />
