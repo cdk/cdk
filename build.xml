@@ -1,4 +1,4 @@
-<project name="CDK" default="dist-default" basedir=".">
+<project name="CDK" default="dist" basedir=".">
 
         <!-- compile options -->
         <property name="build.sysclasspath" value="ignore" />
@@ -70,8 +70,8 @@
                 </fileset>
         </path>
 
-        <target id="info" name="info" depends="check" 
-                description="Gives information about the building process.">
+        <target id="info" name="info" depends="check"> 
+            <!-- Gives information about the building process. -->
             <echo message="Environment:" />
             <echo message="   Ant version: ${ant.version}" />
             <echo message="  Java version: ${java.version}" />
@@ -88,8 +88,8 @@
             <echo message="Patches to apply" />
         </target>
 
-        <target id="check" name="check"
-                description="Checks which parts of CDK can be build.">
+        <target id="check" name="check">
+            <!-- Checks which parts of CDK can be build. -->
           <available classname="org.openscience.jmol.app.Jmol"
                      classpath="${lib}/libio/jmol.jar"
                      property="jmol.present"/>
@@ -177,14 +177,16 @@
                 <delete dir="${reports.tests}" />
         </target>
 
-        <target id="compile" name="compile" description="Compiles all parts of the CDK">
-                <antcall target="compile-all"/>
-        </target>
-
-        <target name="compile-all" 
+        <target id="compile" name="compile" 
+            description="Compiles the CDK."
             depends="init, info, compile-core, compile-standard, compile-extra, compile-io, 
                      compile-render, compile-render-with-java3d, compile-libio,
                      compile-apps">
+                <antcall target="compile-all"/>
+        </target>
+
+        <target id="compile-all" name="compile-all" depends="compile, compile-experimental"
+            description="Compiles the CDK, including experimental classes.">
         </target>
 
         <target name="compile-libio" depends="dist-standard, dont-compile-libio-joelib, 
@@ -605,7 +607,8 @@
                 </jar>
         </target>
 
-        <target id="dist-large" name="dist-large" depends="compile-all, dist.init">
+        <target id="dist-large" name="dist-large" depends="compile-all, dist.init"
+            description="Builds on big jar file for the CDK, including experimental classes.">
                 <jar jarfile="${dist}/jar/cdk-all.jar">
                     <fileset dir="${build}/${src}">
                         <include name="org/openscience/cdk/**" />
@@ -613,22 +616,18 @@
                 </jar>
         </target>
 
-        <target name="dist-default" depends="dist-core, dist-standard, 
-                                             dist-io, dist-render,
-                                             dist-extra, dist-libio,
-                                             dist-apps" />
-
-        <target name="dist-all" depends="dist, dist-experimental" />
+        <target id="dist-all" name="dist-all" depends="dist, dist-experimental"
+                description="Builds the jar files for the CDK, including experimental classes."/>
 
         <target id="dist" name="dist" depends="dist-core, dist-standard, 
                                          dist-io, dist-render,
                                          dist-extra, dist-libio,
                                          dist-render-with-java3d,
                                          dist-apps" 
-                description="Builds the jar files for all parts of the CDK."/>
+                description="Builds the jar files for the CDK."/>
 
         <target id="sourcedist" name="sourcedist" depends="init"
-                description="Build the source packages">
+                description="Builds the source packages.">
                 <property name="package" value="cdk-source-${DSTAMP}"/>
                 <property name="sourcedist.dir" value="${sourcedist}/${package}"/>
                 <copy todir="${sourcedist.dir}/${src}">
@@ -735,7 +734,7 @@
         </target>
 
         <target id="test-all" name="test-all" depends="test"
-                description="Performs a full JUnit test for the CDK experimental">
+                description="Performs a full JUnit test for the CDK, including experimental classes.">
                 <junit printsummary="yes" haltonfailure="yes" fork="yes">
                     <classpath>
                         <pathelement location="${dist}/jar/cdk-core.jar" />
@@ -764,7 +763,7 @@
         </target>
 
         <target id="test" name="test" depends="dist-test"
-                description="Performs a full JUnit test for the CDK">
+                description="Performs a full JUnit test for the CDK.">
                 <junit printsummary="yes" haltonfailure="yes" fork="yes">
                     <classpath>
                         <pathelement location="${dist}/jar/cdk-core.jar" />
@@ -792,7 +791,7 @@
         </target>
 
         <target id="limitations" name="limitations" depends="dist-test"
-                description="Performs a JUnit tests that indicate limitations of certain CDK algorithms">
+                description="Performs a JUnit tests that indicate limitations of certain CDK algorithms/classes.">
                 <junit printsummary="yes" haltonfailure="yes" fork="yes">
                     <classpath>
                         <pathelement location="${dist}/jar/cdk-core.jar" />
@@ -803,7 +802,6 @@
                         <pathelement location="${dist}/jar/cdk-apps.jar" />
                         <pathelement location="${dist}/jar/cdk-test.jar" />
                         <pathelement location="${dist}/jar/cdk-libio.jar" />
-                        <pathelement location="${dist}/jar/cdk-experimental.jar" />
                         <fileset dir="${lib}">
                                 <include name="*.jar" />
                         </fileset>
@@ -865,7 +863,7 @@
         </target>
 
         <target id="run-test" name="run-test" depends="dist-core, dist-extra, dist-test, dist-standard" 
-                description="Runs an application">
+                description="Runs one specific JUnit test suite (org.openscience.cdk.test.&lt;class>) as a standalone application with -Dtestclass=&lt;class>.">
                 <echo message="Running test class: testclass=${testclass}"/>
                 <java classname="org.openscience.cdk.test.${testclass}" fork="yes">
                     <jvmarg value="-Dcdk.debugging=true"/>
@@ -889,7 +887,7 @@
         </target>
 
         <target id="junit-test" name="junit-test" depends="dist-core, dist-extra, dist-test, dist-standard" 
-                description="Runs one specific JUnit test set with -Dtestclass=&lt;class>">
+                description="Runs one specific JUnit test suite (org.openscience.cdk.test.&lt;class>) with -Dtestclass=&lt;class>.">
                 <echo message="JUnit tests class: testclass=${testclass}"/>
                 <junit printsummary="yes" haltonfailure="no" fork="yes">
                     <jvmarg value="-Dcdk.debugging=true"/>
@@ -924,7 +922,7 @@
 
 	
         <target id="run" name="run" depends="dist-core, dist-extra, dist-test, dist-standard" 
-                description="Runs an application">
+                description="Runs an application (org.openscience.cdk.&lt;class>) with -Drunclass=&lt;class>.">
                 <java classname="org.openscience.cdk.${runclass}" fork="yes" >
 		   <arg value="${arg1}" />
 		   <arg value="${arg2}" />
