@@ -4,6 +4,8 @@ CHANGELOG $Date$
 Changes in CVS
 ------------------------------------
 New:
+* File format detection for Spartan, Q-Chem and Ghemical SPM files
+* Added WHIM and BCUT descriptor
 
 Fixes:
 
