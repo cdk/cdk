@@ -47,7 +47,7 @@ import org.openscience.cdk.AtomType;
  */
 public class TXTBasedAtomTypeConfigurator implements AtomTypeConfigurator {
 
-    private String configFile = "jmol_atomtypes.txt";
+    private String configFile = "org/openscience/cdk/config/data/jmol_atomtypes.txt";
     private InputStream ins = null;
     
 	public TXTBasedAtomTypeConfigurator() {
@@ -70,7 +70,7 @@ public class TXTBasedAtomTypeConfigurator implements AtomTypeConfigurator {
             // trying the default
             //System.out.println("readAtomTypes getResourceAsStream:"
             //                   + configFile);
-            ins = getClass().getResourceAsStream(configFile);
+            ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
         }
         if (ins == null) 
             throw new IOException("There was a problem getting the default stream: " + configFile);
