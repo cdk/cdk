@@ -1,0 +1,182 @@
+/* $RCSfile$
+ * $Author$
+ * $Date$
+ * $Revision$
+ *
+ * Copyright (C) 2001-2003  The Chemistry Development Kit (CDK) project
+ *
+ * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License as published by the Free Software Foundation; either
+ *  version 2.1 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
+ *  02111-1307  USA.
+ */
+package org.openscience.cdk.io;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.Reader;
+
+import java.util.StringTokenizer;
+
+
+/**
+ * A factory for creating ChemObjectReaders. The type of reader 
+ * created is determined from the content of the input.
+ *
+ * @author  Bradley A. Smith (bradley@baysmith.com)
+ */
+public class ReaderFactory {
+
+    /**
+     * Creates a ChemFObjectReader of the type determined by
+     * reading the input. The input is read line-by-line
+     * until a line containing an identifying string is
+     * found.
+     *
+     * @return  If the input type is determined, a
+     *   ChemFileReader subclass is returned; otherwise,
+     *   null is returned.
+     * @throws IOException  if an I/O error occurs
+     * @throws IllegalArgumentException if the input is null
+     */
+    public static ChemObjectReader createReader(Reader input)
+                                         throws IOException
+    {
+        org.openscience.cdk.tools.LoggingTool logger = 
+            new org.openscience.cdk.tools.LoggingTool(
+                "org.openscience.cdk.io.ReaderFactory"
+            );
+        
+        if (input == null) {
+            throw new IllegalArgumentException("input cannot be null");
+        }
+
+        BufferedReader buffer = new BufferedReader(input);
+        
+        if (isMDLMolfile(buffer)) {
+            logger.info("MDL Molfile format detected");
+            return new MDLReader(input);
+        }
+
+        if (isXYZfile(buffer)) {
+            logger.info("XYZ format detected");
+            return new XYZReader(input);
+        }
+
+        /* Search file for a line containing an identifying keyword */
+        String line = buffer.readLine();
+        while (buffer.ready() && (line != null)) {
+
+            if (line.startsWith("HEADER") || line.startsWith("ATOM  ")) {
+                logger.info("PDB format detected");
+                buffer.reset();
+                return new PDBReader(input);
+            } else if (line.indexOf("<atom") != 0) {
+                logger.info("CML format detected");
+                buffer.reset();
+                return new CMLReader(input);
+            } else if (line.indexOf("<identifier") != 0) {
+                logger.info("IChI format detected");
+                buffer.reset();
+                return new IChIReader(input);
+            } else if (line.indexOf("%%Header Start") != 0) {
+                logger.info("PolyMorph Predictor format detected");
+                buffer.reset();
+                return new PMPReader(input);
+            } else if (line.startsWith("ZERR ") ||
+                       line.startsWith("TITL ")) {
+                logger.info("ShelX format detected");
+                buffer.reset();
+                return new ShelXReader(buffer);
+            }
+            line = buffer.readLine();
+        }
+
+        logger.warn("File format undetermined");
+
+        return null;
+    }
+    
+    private static boolean isMDLMolfile(BufferedReader buffer)
+                                         throws IOException
+    {
+        buffer.readLine();
+        buffer.readLine();
+        String line4 = buffer.readLine();
+        buffer.reset();
+        
+        // If the fourth line contains the MDL Ctab version tag or
+        // contains two integers in the first 6 characters and the
+        // rest of the line only contains whitespace and digits,
+        // the file is identified as an MDL file
+        boolean mdlFile = false;
+        if (line4 != null) {
+            if (line4.trim().endsWith("V2000") || 
+                line4.trim().endsWith("V3000")) {
+                mdlFile = true;
+            } else if (line4.length() >= 6) {
+                try {
+                    String atomCountString = line4.substring(0, 3).trim();
+                    String bondCountString = line4.substring(3, 6).trim();
+                    new Integer(atomCountString);
+                    new Integer(bondCountString);
+                    mdlFile = true;
+                    if (line4.length() > 6) {
+                        String remainder = line4.substring(6).trim();
+                        for (int i = 0; i < remainder.length(); ++i) {
+                            char c = remainder.charAt(i);
+                            if (!(Character.isDigit(c) || Character.isWhitespace(c))) {
+                                mdlFile = false;
+                            }
+                        }
+                    }
+                } catch (NumberFormatException nfe) {
+                    // Integer not found on first line; therefore not a MDL file
+                }
+            }
+        }
+        return mdlFile;
+    }
+    
+    private static boolean isXYZfile(BufferedReader buffer)
+                                         throws IOException
+    {
+        // An integer on the first line is a special test for XYZ files
+        buffer.reset();
+        buffer.mark(1024);
+        String line = buffer.readLine();
+        boolean xyzFile = false;
+        if (line != null) {
+            StringTokenizer tokenizer = new StringTokenizer(line.trim());
+            try {
+                int tokenCount = tokenizer.countTokens();
+                if (tokenCount == 1) {
+                    new Integer(tokenizer.nextToken());
+                    xyzFile = true;
+                } else if (tokenCount == 2) {
+                    new Integer(tokenizer.nextToken());
+                    if ("Bohr".equalsIgnoreCase(tokenizer.nextToken())) {
+                        xyzFile = true;
+                    }
+                }
+            } catch (NumberFormatException nfe) {
+                // Integer not found on first line; therefore not a XYZ file
+                xyzFile = false;
+            }
+        }
+        buffer.reset();
+        return xyzFile;
+    }
+}

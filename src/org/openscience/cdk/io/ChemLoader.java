@@ -32,13 +32,17 @@ import org.openscience.cdk.*;
 import java.io.*;
 
 /**
- * ChemLoader is a central point for reading any kind of chemical file. It is not possible
- * to instantiate an oject of this class, and the only supplied method is a static one.
- * 
- * TODO:
- * Besides looking at the extension the ChemLoader could also examine the interior of the file to judge.
+ * <p>ChemLoader is a central point for reading any kind of chemical file. 
+ * It is not possible to instantiate an oject of this class, and the only 
+ * supplied method is a static one.
  *
- * @author  edgar luttmann
+ * <p>The ReaderFactory does the same job based on the content of the file.
+ * 
+ * @author  Edgar Luttmann
+ * 
+ * @keyword file IO
+ *
+ * @see org.openscience.cdk.io.ReaderFactory
  */
 public class ChemLoader {
 
@@ -65,6 +69,12 @@ public class ChemLoader {
                   reader = new CMLReader(new FileReader(inFile));
             } else if (inFile.endsWith(".pdb")) {
                   reader = new PDBReader(new FileReader(inFile));
+            } else if (inFile.endsWith(".smi")) {
+                  reader = new SmilesReader(new FileReader(inFile));
+            } else if (inFile.endsWith(".pmp")) {
+                  reader = new PMPReader(new FileReader(inFile));
+            } else if (inFile.endsWith(".mol")) {
+                  reader = new MDLReader(new FileReader(inFile));
             } else {
               reader = new MDLReader(new FileInputStream(inFile));
             }

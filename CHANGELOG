@@ -5,9 +5,11 @@ Changes in CVS
 ------------------------------------
 New:
 * Added move operation to JCPController2D
+* Added ReaderFactory that guesses the file format based
+  on the contents of the file (from the Jmol project)
 
 Changes:
-* Added one-click (not-patented ;) deselect on lasso mode
+* Added one-click (not-patented ;) deselect of atoms in lasso mode
 
 Fixes:
 * Fixed reading of AtomType's with JSX
