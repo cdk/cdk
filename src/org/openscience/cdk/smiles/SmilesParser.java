@@ -237,19 +237,19 @@ public class SmilesParser {
 				} else if (mychar == '=')
 				{
           position++;
-          if(status==2){
+          if(status==2 || smiles.length()==position+1 || !(smiles.charAt(position)>= '0' &&  smiles.charAt(position)<= '9')){
             bondStatus = CDKConstants.BONDORDER_DOUBLE;
           }else{
             bondStatusForRingClosure = CDKConstants.BONDORDER_DOUBLE;
           }
 				} else if (mychar == '#')
 				{
-          if(status==2){
+					position++;
+          if(status==2 || smiles.length()==position+1 || !(smiles.charAt(position)>= '0' &&  smiles.charAt(position)<= '9')){
             bondStatus = CDKConstants.BONDORDER_TRIPLE;
           }else{
             bondStatusForRingClosure = CDKConstants.BONDORDER_TRIPLE;
           }
-					position++;
 				} else if (mychar == '(')
 				{
 					atomStack.push(lastNode);
@@ -328,7 +328,7 @@ public class SmilesParser {
 			} catch (Exception exception) {
                 logger.error("Error while parsing char: " + mychar);
                 logger.debug(exception);
-				throw new InvalidSmilesException("Error while parsing char: " + mychar);
+  			throw new InvalidSmilesException("Error while parsing char: " + mychar);
 			}
             logger.debug("Parsing next char");
 		} while (position < smiles.length());
