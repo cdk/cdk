@@ -46,6 +46,7 @@ import java.util.ArrayList;
 public class ProtonTotalPartialChargeDescriptor implements Descriptor {
 
 	private int atomPosition = 0;
+	private GasteigerMarsiliPartialCharges peoe = null;
 
 
 	/**
@@ -113,7 +114,7 @@ public class ProtonTotalPartialChargeDescriptor implements Descriptor {
 		int counter = 1;
 		Molecule mol = new Molecule(ac);
 		try {
-			GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
+			peoe = new GasteigerMarsiliPartialCharges();
 		//	HydrogenAdder hAdder = new HydrogenAdder();
 		//	hAdder.addExplicitHydrogensToSatisfyValency(mol);
 			peoe.assignGasteigerMarsiliPartialCharges(mol, true);

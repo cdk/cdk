@@ -44,7 +44,7 @@ import org.openscience.cdk.tools.LoggingTool;
 public class VdWRadiusDescriptor implements Descriptor {
 
 	private int atomPosition = 0;
-
+	private AtomTypeFactory factory = null;
 	private LoggingTool logger;
 
 
@@ -111,7 +111,7 @@ public class VdWRadiusDescriptor implements Descriptor {
 		double vdwradius = 0;
 		int atomicNumber = 0;
 		try {
-			AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/jmol_atomtypes.txt");
+			factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/jmol_atomtypes.txt");
 			String symbol = container.getAtomAt(atomPosition).getSymbol();
 			AtomType type = factory.getAtomType(symbol);
 			vdwradius = type.getVanderwaalsRadius();

@@ -45,7 +45,7 @@ import org.openscience.cdk.tools.LoggingTool;
 public class APolDescriptor implements Descriptor {
 
     private LoggingTool logger;
-    
+    private IsotopeFactory ifac = null;
     /* Atomic polarizabilities ordered by atomic number from 1 to 102. */
     private static double[] polarizabilities;
     
@@ -108,7 +108,7 @@ public class APolDescriptor implements Descriptor {
 		double apol = 0;
 		int atomicNumber = 0;
 		try {
-			IsotopeFactory ifac = IsotopeFactory.getInstance();			
+			ifac = IsotopeFactory.getInstance();			
 			Element element = null;
 			Atom[] atoms = container.getAtoms();
 			String symbol = null;

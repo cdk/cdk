@@ -46,11 +46,26 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class BPolDescriptor implements Descriptor {
     private LoggingTool logger;
+    private IsotopeFactory ifac = null;
+    /* Atomic polarizabilities ordered by atomic number from 1 to 102. */
+    private static double[] polarizabilities;
+    
     /**
      *  Constructor for the APolDescriptor object
      */
     public BPolDescriptor() {
         logger = new LoggingTool(this);
+	// atomic polarizabilities ordered by atomic number from 1 to 102
+	if (polarizabilities == null) {
+            polarizabilities = new double[] {0, 0.666793, 0.204956, 24.3, 5.6, 3.03, 1.76, 
+		        1.1, 0.802, 0.557, 0.3956, 23.6, 10.6, 6.8, 5.38, 3.63, 2.9, 2.18, 1.6411, 
+		        43.4, 22.8, 17.8, 14.6, 12.4, 11.6, 9.4, 8.4, 7.5, 6.8, 6.1, 7.1, 8.12, 6.07, 
+		        4.31, 3.77, 3.05, 2.4844, 47.3, 27.6, 22.7, 17.9, 15.7, 12.8, 11.4, 9.6, 8.6, 
+		        4.8, 7.2, 7.2, 10.2, 7.7, 6.6, 5.5, 5.35, 4.044, 59.6, 39.7, 31.1, 29.6, 28.2, 
+		        31.4, 30.1, 28.8, 27.7, 23.5, 25.5, 24.5, 23.6, 22.7, 21.8, 21, 21.9, 16.2, 
+		        13.1, 11.1, 9.7, 8.5, 7.6, 6.5, 5.8, 5.7, 7.6, 6.8, 7.4, 6.8, 6, 5.3, 48.7, 
+		        38.3, 32.1, 32.1, 25.4, 27.4, 24.8, 24.5, 23.3, 23, 22.7, 20.5,19.7,23.8,18.2,17.5};
+        }
     }
 
 	public DescriptorSpecification getSpecification() {
@@ -93,23 +108,13 @@ public class BPolDescriptor implements Descriptor {
 	 
 
 	public DescriptorValue calculate(AtomContainer container) throws CDKException {
-		// atomic polarizabilities ordered by atomic number from 1 to 102
-		
-		double[] polarizabilities = {0, 0.666793, 0.204956, 24.3, 5.6, 3.03, 1.76, 
-		1.1, 0.802, 0.557, 0.3956, 23.6, 10.6, 6.8, 5.38, 3.63, 2.9, 2.18, 1.6411, 
-		43.4, 22.8, 17.8, 14.6, 12.4, 11.6, 9.4, 8.4, 7.5, 6.8, 6.1, 7.1, 8.12, 6.07, 
-		4.31, 3.77, 3.05, 2.4844, 47.3, 27.6, 22.7, 17.9, 15.7, 12.8, 11.4, 9.6, 8.6, 
-		4.8, 7.2, 7.2, 10.2, 7.7, 6.6, 5.5, 5.35, 4.044, 59.6, 39.7, 31.1, 29.6, 28.2, 
-		31.4, 30.1, 28.8, 27.7, 23.5, 25.5, 24.5, 23.6, 22.7, 21.8, 21, 21.9, 16.2, 
-		13.1, 11.1, 9.7, 8.5, 7.6, 6.5, 5.8, 5.7, 7.6, 6.8, 7.4, 6.8, 6, 5.3, 48.7, 
-		38.3, 32.1, 32.1, 25.4, 27.4, 24.8, 24.5, 23.3, 23, 22.7, 20.5,19.7,23.8,18.2,17.5};
 		
 		double bpol = 0;
 		int atomicNumber0 = 0;
 		int atomicNumber1 = 0;
 		double difference = 0;
 		try {
-			IsotopeFactory ifac = IsotopeFactory.getInstance();			
+			ifac = IsotopeFactory.getInstance();			
 			Element element0 = null;
 			Element element1 = null;
 			Bond[] bonds = container.getBonds();

@@ -43,6 +43,7 @@ import java.util.Hashtable;
 public class EffectivePolarizabilityDescriptor implements Descriptor {
 
 	private int atomPosition = 0;
+	private Polarizability pol = null;
 
 
 	/**
@@ -108,7 +109,7 @@ public class EffectivePolarizabilityDescriptor implements Descriptor {
 	 */
 	public DescriptorValue calculate(AtomContainer ac) throws CDKException {
 		Molecule mol = new Molecule(ac);
-		Polarizability pol = new Polarizability();
+		pol = new Polarizability();
 		
 		Atom target = mol.getAtomAt(atomPosition);
 		Atom[] neighboors = mol.getConnectedAtoms(target);

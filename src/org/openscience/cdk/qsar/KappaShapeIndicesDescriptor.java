@@ -48,6 +48,9 @@ import java.util.ArrayList;
 
 public class KappaShapeIndicesDescriptor implements Descriptor {
 
+	private ArrayList singlePaths = null;
+	private ArrayList doublePaths = null;
+	private ArrayList triplePaths = null;
 	/**
 	 *  Constructor for the KappaShapeIndicesDescriptor object
 	 */
@@ -114,9 +117,9 @@ public class KappaShapeIndicesDescriptor implements Descriptor {
 		double kier2 = 0;
 		double kier3 = 0;
 		double atomsCount = atoms.length;
-		ArrayList singlePaths = new ArrayList();
-		ArrayList doublePaths = new ArrayList();
-		ArrayList triplePaths = new ArrayList();
+		singlePaths = new ArrayList();
+		doublePaths = new ArrayList();
+		triplePaths = new ArrayList();
 		double[] sorterFirst = new double[2];
 		double[] sorterSecond = new double[3];
 		String tmpbond2 = "";

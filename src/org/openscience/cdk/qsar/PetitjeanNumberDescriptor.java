@@ -47,6 +47,8 @@ import org.openscience.cdk.graph.matrix.*;
  */
 public class PetitjeanNumberDescriptor implements Descriptor {
 
+	private ConnectionMatrix connectionMatrix = null;
+	private PathTools pathTools = null;
 	/**
 	 *  Constructor for the PetitjeanNumberDescriptor object
 	 */
@@ -102,9 +104,9 @@ public class PetitjeanNumberDescriptor implements Descriptor {
 		double partialDiameter = 0;
 		double radius = 0;
 		double rowMax = 0;
-		ConnectionMatrix connectionMatrix = new ConnectionMatrix();
+		connectionMatrix = new ConnectionMatrix();
 		double[][] matr = connectionMatrix.getMatrix(atomContainer);
-		PathTools pathTools = new PathTools();
+		pathTools = new PathTools();
 		int[][] distances = pathTools.computeFloydAPSP(matr);
 		for (int i = 0; i < distances.length; i++) {
 			rowMax = 0;
