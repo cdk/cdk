@@ -42,6 +42,7 @@ import org.openscience.cdk.Reaction;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
+import org.openscience.cdk.io.formats.*;
 
 /**
  * TestCase for the reading CML files using a few test files
@@ -65,131 +66,124 @@ public class ReaderFactoryTest extends TestCase {
 
     public void testGaussian94() {
         expectFormat("data/gaussian/4-cyanophenylnitrene-Benzazirine-TS.g94.out", 
-                     "org.openscience.cdk.io.Gaussian94Reader");
+                     new Gaussian94Format());
     }
     public void testGaussian98() {
-        expectReader("data/gaussian/g98.out", 
-                     "org.openscience.cdk.io.Gaussian98Reader");
+        expectReader("data/gaussian/g98.out", new Gaussian98Format());
     }
     public void testGaussian92() {
-        expectFormat("data/gaussian/phenylnitrene.g92.out", 
-                     "org.openscience.cdk.io.Gaussian92Reader");
+        expectFormat("data/gaussian/phenylnitrene.g92.out", new Gaussian92Format());
     }
 
     public void testGhemical() {
-        expectReader("data/ethene.mm1gp", "org.openscience.cdk.io.GhemicalMMReader");
+        expectReader("data/ethene.mm1gp", new GhemicalMMFormat());
     }
 
     public void testJaguar() {
-        expectFormat("data/ch4-opt.out", "org.openscience.cdk.io.JaguarReader");
+        expectFormat("data/ch4-opt.out", new JaguarFormat());
     }
 
     public void testIChI() {
-        expectReader("data/ichi/random.ichi", 
-                     "org.openscience.cdk.io.IChIReader");
+        expectReader("data/ichi/random.ichi", new IChIFormat());
     }
 
     public void testINChI() {
-        expectReader("data/ichi/guanine.inchi.xml", 
-                     "org.openscience.cdk.io.INChIReader");
+        expectReader("data/ichi/guanine.inchi.xml", new INChIFormat());
     }
 
     public void testINChIPlainText() {
-        expectReader("data/ichi/guanine.inchi", 
-                     "org.openscience.cdk.io.INChIPlainTextReader");
+        expectReader("data/ichi/guanine.inchi", new INChIPlainTextFormat());
     }
 
     public void testVASP() {
-        expectReader("data/LiMoS2_optimisation_ISIF3.vasp", 
-                     "org.openscience.cdk.io.VASPReader");
+        expectReader("data/LiMoS2_optimisation_ISIF3.vasp", new VASPFormat());
     }
 
     public void testAces2() {
-        expectFormat("data/ch3oh_ace.out", "org.openscience.cdk.io.Aces2Reader");
+        expectFormat("data/ch3oh_ace.out", new Aces2Format());
     }
 
     public void testADF() {
-        expectFormat("data/ammonia.adf.out", "org.openscience.cdk.io.ADFReader");
+        expectFormat("data/ammonia.adf.out", new ADFFormat());
     }
 
     public void testGamess() {
-        expectReader("data/ch3oh_gam.out", "org.openscience.cdk.io.GamessReader");
+        expectReader("data/ch3oh_gam.out", new GamessFormat());
     }
 
     public void testABINIT() {
-        expectFormat("data/t54.in", "org.openscience.cdk.io.ABINITReader");
+        expectFormat("data/t54.in", new ABINITFormat());
     }
 
     public void testCML() {
-        expectReader("data/cmltest/estron.cml", "org.openscience.cdk.io.CMLReader");
+        expectReader("data/cmltest/estron.cml", new CMLFormat());
     }
 
     public void testXYZ() {
-        expectReader("data/bf3.xyz", "org.openscience.cdk.io.XYZReader");
+        expectReader("data/bf3.xyz", new XYZFormat());
     }
 
     public void testShelX() {
-        expectReader("data/frame_1.res", "org.openscience.cdk.io.ShelXReader");
+        expectReader("data/frame_1.res", new ShelXFormat());
     }
     
     public void testMDLMol() {
-        expectReader("data/mdl/methylbenzol.mol", "org.openscience.cdk.io.MDLReader");
+        expectReader("data/mdl/methylbenzol.mol", new MDLFormat());
     }
 
     public void testPDB() {
-        expectReader("data/coffeine.pdb", "org.openscience.cdk.io.PDBReader");
+        expectReader("data/coffeine.pdb", new PDBFormat());
     }
     
     public void testSMILES() {
-        expectReader("data/smiles.txt", "org.openscience.cdk.io.SMILESReader");
+        expectReader("data/smiles.txt", new SMILESFormat());
     }
     
-    private void expectFormat(String filename, String expectedFormat) {
-        expectFormatAndReader(filename, expectedFormat, false);
-    }
-    private void expectReader(String filename, String expectedFormat) {
-        expectFormatAndReader(filename, expectedFormat, true);
-    }
-        
-    private void expectFormatAndReader(String filename, String expectedFormat, boolean andReader) {
+    private void expectFormat(String filename, ChemFormat expectedFormat) {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         if (ins == null) {
             fail("Cannot find file: " + filename);
         }
         try {
-            ChemObjectReader reader = factory.createReader(new InputStreamReader(ins));
-            if (andReader) {
-                assertNotNull(reader);
-                String format = reader.getClass().getName();
-                if (format.equals(expectedFormat)) {
-                    // ok
-                } else {
-                    fail("Wrong file format detected for " + filename + 
-                    ". Expected " + expectedFormat + ", but found: " + format);
-                }
-                // now try reading something from it
-                ChemObject[] objects = { 
-                    new ChemFile(), new ChemModel(), new Molecule(),
-                    new Reaction()
-                };
-                boolean read = false;
-                for (int i=0; (i<objects.length && !read); i++) {
-                    try {
-                        reader.read(objects[i]);
-                    } catch (CDKException exception) {
-                        // was not able to read info
-                    }
-                    read = true;
-                }
-                if (read) {
-                    // ok, reseting worked
-                } else {
-                    fail("Reading an ChemObject from the Reader did not work properly.");
-                }
-            } // else ok format is detected, but no reader is available
+            ChemFormat format = factory.guessFormat(ins);
+            assertEquals(expectedFormat.getFormatName(), format.getFormatName());
         } catch (Exception exception) {
             exception.printStackTrace();
-            fail(exception.toString());
+            fail(exception.getMessage());
+        }
+    }
+    private void expectReader(String filename, ChemFormat expectedFormat) {
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        if (ins == null) {
+            fail("Cannot find file: " + filename);
+        }
+        try {
+            ChemObjectReader reader = factory.createReader(ins);
+            assertNotNull(reader);
+            ChemFormat format = reader.getFormat();
+            assertEquals(expectedFormat.getFormatName(), format.getFormatName());
+            // now try reading something from it
+            ChemObject[] objects = { 
+                new ChemFile(), new ChemModel(), new Molecule(),
+                new Reaction()
+            };
+            boolean read = false;
+            for (int i=0; (i<objects.length && !read); i++) {
+                try {
+                    reader.read(objects[i]);
+                } catch (CDKException exception) {
+                    // was not able to read info
+                }
+                read = true;
+            }
+            if (read) {
+                // ok, reseting worked
+            } else {
+                fail("Reading an ChemObject from the Reader did not work properly.");
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            fail(exception.getMessage());
         }
     }
 }
