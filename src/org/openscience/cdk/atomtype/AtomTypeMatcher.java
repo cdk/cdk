@@ -37,7 +37,13 @@ import org.openscience.cdk.exception.CDKException;
  */
 public interface AtomTypeMatcher {
 
-	/** Method that assigns an atom type to a given atom belonging to an atom container. */
-    public void findMatchingAtomType(AtomContainer ac, Atom atom);
+	/**
+     * Method that assigns an atom type to a given atom belonging to an atom 
+     * container.
+     *
+     * @param container AtomContainer of which the <code>atom</code> is part
+     * @param atom      Atom for which a matching atom type is searched
+     */
+    public void findMatchingAtomType(AtomContainer container, Atom atom);
 
 }

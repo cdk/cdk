@@ -113,6 +113,8 @@ public class LoggingTool {
     /**
      * Constructs a LoggingTool which produces log lines indicating them to be
      * for the Class of the <code>Object</code>.
+     *
+     * @param object Object from which the log messages originate
      */
     public LoggingTool(Object object) {
         this(object.getClass());
@@ -122,7 +124,7 @@ public class LoggingTool {
      * Constructs a LoggingTool which produces log lines indicating them to be
      * for the given Class.
      *
-     * @param classInst Class from which the message originates
+     * @param classInst Class from which the log messages originate
      */
     public LoggingTool(Class classInst) {
         this.logger = this;
@@ -166,6 +168,11 @@ public class LoggingTool {
         }
     }
     
+    /**
+     * Forces the <code>LoggingTool</code> to configurate the Log4J toolkit.
+     * Normally this should be done by the application that uses the CDK library,
+     * but is available for convenience.
+     */
     public static void configureLog4j() {
         LoggingTool localLogger = new LoggingTool(LoggingTool.class);
         try {
