@@ -191,6 +191,51 @@ public class PathTools  {
 	 *      that are found during search
 	 */
 	public static void breadthFirstSearch(AtomContainer ac, Vector sphere, Molecule molecule) {
+    breadthFirstSearch(ac, sphere, molecule, -1);
+  }
+  
+  
+    /** 
+      * Returns the atoms which are closest to an atom in an AtomContainer by bonds.
+      * If number of atoms in or below sphere x&lt;max andnumber of atoms in or below sphere x+1&gt;max then atoms in or below sphere x+1 are returned. 
+      *
+      * @param   ac The AtomContainer to examine
+      * @param   a the atom to start from
+      * @param   max the number of neighbours to return
+      * @return  the average bond length 
+     */  public static Atom[] findClosestByBond(AtomContainer ac, Atom a, int max){
+    Molecule mol=new Molecule();
+    Vector v=new Vector();
+    v.add(a);
+    breadthFirstSearch(ac, v, mol, max);
+    Atom[] returnValue=new Atom[mol.getAtoms().length-1];
+    int k=0;
+    for(int i=0;i<mol.getAtoms().length;i++){
+      if(mol.getAtoms()[i]!=a){
+        returnValue[k]=mol.getAtoms()[i];
+        k++;
+      }
+    }
+    return(returnValue);
+  }
+
+    
+  /**
+	 *  Performs a breadthFirstSearch in an AtomContainer starting with a
+	 *  particular sphere, which usually consists of one start atom. While
+	 *  searching the graph, the method marks each visited atom. It then puts all
+	 *  the atoms connected to the atoms in the given sphere into a new vector
+	 *  which forms the sphere to search for the next recursive method call. All
+	 *  atoms that have been visited are put into a molecule container. This
+	 *  breadthFirstSearch does thus find the connected graph for a given start
+	 *  atom.
+	 *
+	 *@param  ac        The AtomContainer to be searched
+	 *@param  sphere    A sphere of atoms to start the search with
+	 *@param  molecule  A molecule into which all the atoms and bonds are stored
+	 *      that are found during search
+	 */
+	public static void breadthFirstSearch(AtomContainer ac, Vector sphere, Molecule molecule, int max) {
 		Atom atom = null;
 		Atom nextAtom = null;
 		Vector newSphere = new Vector();
@@ -212,9 +257,11 @@ public class PathTools  {
 					nextAtom.setFlag(CDKConstants.VISITED, true);
 				}
 			}
+      if(max>-1 && molecule.getAtomCount()>max)
+        return;
 		}
 		if (newSphere.size() > 0) {
-			breadthFirstSearch(ac, newSphere, molecule);
+			breadthFirstSearch(ac, newSphere, molecule,max);
 		}
 	}
 
