@@ -44,7 +44,7 @@ import java.util.Properties;
  * information is closely bound to one specific Class, not subclasses and not instances.
  *
  * <p>The logger has five logging levels:
- * <dl>
+ * <ul><dl>
  *  <dt>DEBUG
  *  <dd>Default mode. Used for information you might need to track down the cause of a
  *      bug in the source code, or to understand how an algorithm works.
@@ -61,6 +61,7 @@ import java.util.Properties;
  *  <dt>ERROR
  *  <dd>This level is used for situations that should not have happened *and* thus
  *      indicate a bug.
+ * </dl></ul>
  *
  * <p>Consider that the debugging will not always be turned on. Therefore, it is better
  * not to concatenate string in the logger.debug() call, but have the LoggingTool do
@@ -79,7 +80,7 @@ import java.util.Properties;
  * <code>isDebugEnabled()</code> method:
  * <pre>
  * if (logger.isDebugEnabled()) {
- *   logger.info("The 1056389822 prime that is used is: ",
+ *   logger.info("The 1056389822th prime that is used is: ",
  *               calculatePrime(1056389822));
  * }
  * </pre>
@@ -97,7 +98,7 @@ public class LoggingTool {
     private String classname;
     
     /** Default number of StackTraceElements to be printed by debug(Exception) */
-    private final int DEFAULT_STACK_LENGTH = 5;
+    public final int DEFAULT_STACK_LENGTH = 5;
      
     private int stackLength = DEFAULT_STACK_LENGTH;
 
@@ -188,6 +189,11 @@ public class LoggingTool {
         }
     }
 
+    /**
+     * Outputs system properties for the operating system and the java
+     * version. More specifically: os.name, os.version, os.arch, java.version
+     * and java.vendor.
+     */
     public void dumpSystemProperties() {
         debug("os.name        : " + System.getProperty("os.name"));
         debug("os.version     : " + System.getProperty("os.version"));
@@ -197,13 +203,19 @@ public class LoggingTool {
     }
 
     /**
-     * Sets the number of StackTraceElements to be printed in DEBUG mode.
-     * Defaults to DEFAULT_STACK_LENGTH.
+     * Sets the number of StackTraceElements to be printed in DEBUG mode when
+     * calling <code>debug(Throwable)</code>.
+     * The default value is DEFAULT_STACK_LENGTH.
+     *
+     * @see #DEFAULT_STACK_LENGTH
      */
     public void setStackLength(int length) {
         this.stackLength = length;
     }
     
+    /**
+     * Outputs the system property for java.class.path.
+     */
     public void dumpClasspath() {
         debug("java.class.path: " + System.getProperty("java.class.path"));
     }
@@ -463,7 +475,7 @@ public class LoggingTool {
      * For example:
      * <pre>
      * if (logger.isDebugEnabled()) {
-     *   logger.info("The 1056389822 prime that is used is: ",
+     *   logger.info("The 1056389822th prime that is used is: ",
      *               calculatePrime(1056389822));
      * }
      * </pre>
