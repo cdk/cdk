@@ -18,12 +18,6 @@
         </fileset>
     </path>
 
-    <path id="fop.class.path">
-        <fileset dir="doc/jar">
-            <include name="*.jar" />
-        </fileset>
-    </path>
-
     <target name="doccheck-all" depends="doccheck-core, doccheck-standard, doccheck-io, doccheck-render, doccheck-extra"/>
     
     <target name="html" depends="compileTaglets">
@@ -49,41 +43,6 @@
                 <exclude name="org/openscience/cdk/test/**"/>
             </packageset>
         </javadoc>
-    </target>
-
-    <target name="core.docbook">
-        <javadoc private="false" public="true"
-                 excludepackagenames="org.openscience.cdk.test.*">
-            <classpath refid="project.class.path" />
-
-            <doclet name="com.mf.doclet.docbook.DocBookDoclet"
-                    path="jar/dbdoclet.jar">
-                <param name="-properties" value="jar/dbdoclet.properties"/>
-            </doclet>
-            <package name="org.openscience.cdk"/>
-            <sourcepath>
-                <pathelement path="${src}"/>
-            </sourcepath>
-        </javadoc>
-        <copy file="javadoc.dbxml"
-              tofile="core.dbxml" />
-    </target>
-
-    <target name="core.fo">
-        <!-- alternatively, you can use the much faster xsltproc -->
-        <java classname="org.apache.xalan.xslt.Process"
-              args="-IN core.dbxml -XSL doc/lib/xslt/docbook/fo/docbook.xsl -OUT core.fo"
-              dir="." fork="yes">
-            <classpath refid="fop.class.path" />
-        </java>
-    </target>
-
-    <target name="core.pdf">
-        <java classname="org.apache.fop.apps.Fop"
-              args="-fo core.fo -pdf core.pdf"
-              dir="." fork="yes">
-            <classpath refid="fop.class.path" />
-        </java>
     </target>
 
   <target name="jjdoc" description="Create JJDoc documentation from the .jj file">   
