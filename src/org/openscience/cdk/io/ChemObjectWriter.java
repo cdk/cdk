@@ -46,12 +46,11 @@ import javax.vecmath.*;
  *
  * @version  $Date$
  */
-
 public interface ChemObjectWriter {
-    
-    /*
+
+    /**
      * Writes the content of "object" to output
-     * 
+     *
      * @param  object    the object of which the content is outputed
      *
      * @exception UnsupportedChemObjectException is thrown if the output
@@ -59,6 +58,14 @@ public interface ChemObjectWriter {
      */
     public void write(ChemObject object) throws UnsupportedChemObjectException;
 
+    /**
+     * Returns an instance of a Class containing the most information.
+     *
+     * For example, the ShelX format can only output one crystal structure
+     * at a time. Accordingly highestSupportedChemObject() will return
+     * an instance of Crystal and not of ChemFile.
+     */
+    public ChemObject highestSupportedChemObject();
 
     /*
      * Closes the writer's resources.

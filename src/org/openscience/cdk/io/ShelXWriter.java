@@ -74,6 +74,10 @@ public class ShelXWriter implements ChemObjectWriter {
         }
     };
 
+    public ChemObject highestSupportedChemObject() {
+        return new Crystal();
+    }
+
     // Private procedures
 
     private void write(Crystal crystal) {
@@ -98,7 +102,7 @@ public class ShelXWriter implements ChemObjectWriter {
         write(format.sprintf(beta) + " ");
         write(format.sprintf(gamma) + "\n");
         format = new PrintfFormat("%1.5lf");
-        write("ZERR " + format.sprintf(crystal.getZ()) +
+        write("ZERR " + format.sprintf((double)crystal.getZ()) +
               "    0.01000  0.01000   0.01000   0.0100   0.0100   0.0100\n");
         String spaceGroup = crystal.getSpaceGroup();
         if ("P1".equals(spaceGroup)) {
@@ -141,7 +145,7 @@ public class ShelXWriter implements ChemObjectWriter {
             write(format.sprintf(fracs[1]) + "   ");
             write(format.sprintf(fracs[2]) + "    11.00000    0.05000\n");
         }
-        write("END");
+        write("END\n");
     }
 
     private void write(String s) {

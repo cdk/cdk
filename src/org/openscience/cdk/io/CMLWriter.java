@@ -136,6 +136,10 @@ public class CMLWriter implements ChemObjectWriter {
         } else {};
     };
 
+    public ChemObject highestSupportedChemObject() {
+        return new ChemFile();
+    }
+
     // Private procedures
 
     private void write(ChemFile cf) {

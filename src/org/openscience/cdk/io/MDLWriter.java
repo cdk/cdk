@@ -115,7 +115,9 @@ public class MDLWriter implements ChemObjectWriter {
 		}
 	}
 	
-	
+    public ChemObject highestSupportedChemObject() {
+        return new SetOfMolecules();
+    }
 
 	/**
 	 * Writes an array of Molecules to an OutputStream in MDL sdf format

@@ -43,12 +43,17 @@ public class FileConvertor {
 
     private org.openscience.cdk.tools.LoggingTool logger;
 
+    private String iformat;
+    private String ifilename;
     private ChemObjectReader cor;
+
+    private String oformat;
+    private String ofilename;
     private ChemObjectWriter cow;
+
     private ChemFile chemFile;
 
-    private String iformat;
-    private String oformat;
+    private Vector chemObjectNames = new Vector();
 
     public FileConvertor(String iformat, String oformat) {
         logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
@@ -56,35 +61,42 @@ public class FileConvertor {
 
         this.iformat = iformat;
         this.oformat = oformat;
+        
+        chemObjectNames.add("org.openscience.cdk.Molecule");
+        chemObjectNames.add("org.openscience.cdk.SetOfMolecules");
+        chemObjectNames.add("org.openscience.cdk.Crystal");
+        chemObjectNames.add("org.openscience.cdk.ChemModel");
+        chemObjectNames.add("org.openscience.cdk.ChemSequence");
+        chemObjectNames.add("org.openscience.cdk.ChemFile");
     }
 
-    public boolean convert(File input, File output) {
+    public boolean convert(String ifilename, String ofilename) {
         boolean success = true;
+        this.ifilename = ifilename;
+        this.ofilename = ofilename;
         try {
-            FileReader fr = new FileReader(input);
-            FileWriter fw = new FileWriter(output);
-
-            cor = getChemObjectReader(this.iformat, fr);
+            cor = getChemObjectReader(this.iformat, 
+                                      new FileReader(new File(ifilename)));
             if (cor == null) {
                 logger.warn("Format " + iformat + " is an unsupported input format.");
                 System.err.println("Unsupported input format!");
                 return false;
             }
-            cow = getChemObjectWriter(this.oformat, fw);
+
+            ChemFile content = (ChemFile)cor.read((ChemObject)new ChemFile());
+            if (content == null) {
+                return false;
+            }
+            
+            // create output file
+            cow = getChemObjectWriter(this.oformat, ofilename);
             if (cow == null) {
                 logger.warn("Format " + oformat + " is an unsupported output format.");
                 System.err.println("Unsupported output format!");
                 return false;
             }
-
-            ChemFile content = (ChemFile)cor.read((ChemObject)new ChemFile());
-            fr.close();
-            if (content == null) {
-                return false;
-            }
             write(content);
-            fw.flush();
-            fw.close();
+            cow.close();
         } catch (Exception e) {
             success = false;
             logger.error(e.toString());
@@ -108,12 +120,12 @@ public class FileConvertor {
       if (args[1].startsWith("-o")) {
         output_format = args[1].substring(2);
       }
-      input = new File(args[2]);
-      output = new File(args[3]);
+      String ifilename = args[2];
+      String ofilename = args[3];
 
       // do conversion
       FileConvertor fc = new FileConvertor(input_format, output_format);
-      boolean success = fc.convert(input, output);
+      boolean success = fc.convert(ifilename, ofilename);
       if (success) {
           System.out.println("Conversion succeeded!");
       } else {
@@ -143,15 +155,17 @@ public class FileConvertor {
         return null;
     }
 
-    private ChemObjectWriter getChemObjectWriter(String format, FileWriter f) {
+    private ChemObjectWriter getChemObjectWriter(String format, String ofilename) 
+        throws IOException {
+        FileWriter fw = new FileWriter(new File(ofilename));
         if (format.equalsIgnoreCase("CML")) {
-            return new CMLWriter(f);
+            return new CMLWriter(fw);
         } else if (format.equalsIgnoreCase("MOL")) {
-            return new MDLWriter(f);
+            return new MDLWriter(fw);
         } else if (format.equalsIgnoreCase("SMILES")) {
-            return new SMILESWriter(f);
+            return new SMILESWriter(fw);
         } else if (format.equalsIgnoreCase("SHELX")) {
-            return new ShelXWriter(f);
+            return new ShelXWriter(fw);
         }
         return null;
     }
@@ -161,33 +175,49 @@ public class FileConvertor {
     * and we want to output as much information as possible, use
     * the generalized mechanism below.
     */
-    private void write(ChemFile cf) {
+    private void write(ChemFile cf) throws IOException {
         try {
             cow.write(cf);
         } catch (UnsupportedChemObjectException e) {
             logger.info("Cannot write ChemFile, recursing into ChemSequence's.");
-            for (int i=0; i < cf.getChemSequenceCount(); i++) {
+            int count = cf.getChemSequenceCount();
+            boolean needMoreFiles =
+              (compare(new ChemSequence(), cow.highestSupportedChemObject()) < 0);
+            for (int i=0; i < count; i++) {
+                if (needMoreFiles) {
+                    cow.close(); // possibly closing empty file
+                    String fname = ofilename + "." + (i+1);
+                    cow = getChemObjectWriter(this.oformat, fname);
+                }
                 write(cf.getChemSequence(i));
             }
         }
     }
 
-    private void write(ChemSequence cs) {
+    private void write(ChemSequence cs) throws IOException {
         try {
             cow.write(cs);
         } catch (UnsupportedChemObjectException e) {
+            int count = cs.getChemModelCount();
+            boolean needMoreFiles =
+              (compare(new ChemModel(), cow.highestSupportedChemObject()) < 0);
             logger.info("Cannot write ChemSequence, recursing into ChemModel's.");
-            for (int i=0; i < cs.getChemModelCount(); i++) {
+            for (int i=0; i < count; i++) {
+                if (needMoreFiles) {
+                    cow.close(); // possibly closing empty file
+                    String fname = ofilename + "." + (i+1);
+                    cow = getChemObjectWriter(this.oformat, fname);
+                }
                 write(cs.getChemModel(i));
             }
         }
     }
 
-    private void write(ChemModel cm) {
+    private void write(ChemModel cm) throws IOException {
         try {
             cow.write(cm);
         } catch (UnsupportedChemObjectException e) {
-            logger.info("Cannot write ChemSequence, trying Crystal.");
+            logger.info("Cannot write ChemModel, trying Crystal.");
             Crystal crystal = cm.getCrystal();
             if (crystal != null) {
                 write(crystal);
@@ -199,7 +229,7 @@ public class FileConvertor {
         }
     }
 
-    private void write(Crystal c) {
+    private void write(Crystal c) throws IOException {
         try {
             cow.write(c);
         } catch (UnsupportedChemObjectException e) {
@@ -207,12 +237,26 @@ public class FileConvertor {
         }
     }
 
-    private void write(SetOfMolecules som) {
+    private void write(SetOfMolecules som) throws IOException {
         try {
             cow.write(som);
         } catch (UnsupportedChemObjectException e) {
             logger.error("Cannot write SetOfMolecules!");
         }
+    }
+
+    /**
+     * Returns -1 if first object is 'larger' than second, zero
+     * if equal and 1 if second is 'larger'.
+     */
+    private int compare(ChemObject one, ChemObject two) {
+        String oneName = one.getClass().getName();
+        int oneIndex   = chemObjectNames.indexOf(oneName);
+        String twoName = two.getClass().getName();
+        int twoIndex   = chemObjectNames.indexOf(twoName);
+        int diff = twoIndex - oneIndex;
+        logger.debug("Comparing " + oneName + " and " + twoName + ": " + diff);
+        return diff;
     }
 
 }

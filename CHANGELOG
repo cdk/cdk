@@ -9,6 +9,10 @@ New:
   *.pmp files
 * Added a class for reading ShelX files
 * The SMILES generator now also supports chirality
+* cdk-fileconvert supports one-to-many conversion
+  (e.g. PMP contains many crystals, while ShelX 
+   can contain only one crystal. Thus, when converting
+   PMP to ShelX more than one file is created.)
 
 Fixes:
 * Added initialization of atoms Array in Bond.java
