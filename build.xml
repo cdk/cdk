@@ -197,12 +197,12 @@
 
         <target name="compileDoclet.MacOSX" id="compileDoclet.MacOSX" if="isMacOsX">
             <javac srcdir="doc/javadoc/source" destdir="doc/javadoc"
-                   includes="MakeJavaFilesFilesDoclet.java" />
+                   includes="MakeJavaFilesFilesDoclet.java, MakeCDKSetFilesDoclet.java" />
         </target>
 
         <target name="compileDoclet.Other" id="compileDoclet.Other" unless="isMacOsX">
             <javac srcdir="doc/javadoc/source" destdir="doc/javadoc" 
-                   includes="MakeJavaFilesFilesDoclet.java">
+                   includes="MakeJavaFilesFilesDoclet.java, MakeCDKSetFilesDoclet.java">
                 <classpath>
                     <fileset dir="${java.ext.dirs}">
                         <include name="tools.jar" />
@@ -251,10 +251,26 @@
                 </packageset>
 
             </javadoc>
+            <javadoc private="false" public="true">
+                <classpath refid="project.class.path" />
+                <classpath>
+                    <fileset dir="${lib}/libio">
+                        <include name="*.jar" />
+                    </fileset>
+                </classpath>
+
+                <doclet name="MakeCDKSetFilesDoclet" path="${doc}/javadoc"/>
+
+                <packageset dir="${src}">
+                    <include name="org/openscience/cdk/**"/>
+                </packageset>
+
+            </javadoc>
             <move todir="${src}" failonerror="true">
                 <fileset dir=".">
                   <include name="*.javafiles"/>
                   <include name="*.classes"/>
+                  <include name="*.set"/>
                 </fileset>
             </move>
         </target>
@@ -712,7 +728,10 @@
                         <excludesfile name="${src}/java1.4+.classes" if="isJava13"/>
                         <excludesfile name="${src}/java1.4.classes" unless="isJava14"/>
                         <excludesfile name="${src}/ant1.6.classes" unless="hasAnt16"/>
-                   </fileset>
+                    </fileset>
+                    <fileset dir="${src}">
+                        <include name="qsar-descriptors.set"/>
+                    </fileset>
                 </jar>
         </target>
 
@@ -747,6 +766,9 @@
                     <fileset dir="packages/tar/cdk">
                         <include name="AUTHORS" />
                     </fileset>
+                    <fileset dir="${src}">
+                        <include name="qsar-descriptors.set"/>
+                    </fileset>
                     <fileset dir="${appjars.dir}" includes="**/*.class"/>
                 </jar>
         </target>
@@ -764,6 +786,7 @@
                 <srcfiles dir="${lib}" includes="commons-cli-1.0.jar"/>
                 <srcfiles dir="${lib}" includes="dadml.jar"/>
                 <srcfiles dir="${lib}" includes="gnujaxp.jar"/>
+                <srcfiles dir="${lib}" includes="Jama-1.0.1.jar"/>
                 <srcfiles dir="${lib}" includes="jmolApis.jar"/>
                 <srcfiles dir="${lib}" includes="jmolIO.jar"/>
                 <srcfiles dir="${lib}" includes="junit.jar"/>
@@ -795,6 +818,7 @@
             <unjar dest="${appjars.dir}" src="${lib}/commons-cli-1.0.jar"/>
             <unjar dest="${appjars.dir}" src="${lib}/dadml.jar"/>
             <unjar dest="${appjars.dir}" src="${lib}/gnujaxp.jar"/>
+            <unjar dest="${appjars.dir}" src="${lib}/Jama-1.0.1.jar"/>
             <unjar dest="${appjars.dir}" src="${lib}/jmolApis.jar"/>
             <unjar dest="${appjars.dir}" src="${lib}/jmolIO.jar"/>
             <unjar dest="${appjars.dir}" src="${lib}/junit.jar"/>
