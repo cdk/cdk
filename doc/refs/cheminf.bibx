@@ -205,10 +205,21 @@
     </bibtex:article>
   </bibtex:entry>
   
+  <bibtex:entry id="KAT96">
+      <bibtex:article>
+          <bibtex:author>Katritzky, A.R. and Mu, L. and Lobanov, V.S. and Karelson, M.</bibtex:author>
+          <bibtex:title>Correlation of Boiling Points With Molecular Structure. 1. A Training Set of 298 Diverse Organics and a Test Set of 9 Simple Inorganics</bibtex:title>
+          <bibtex:journal>J. Phys. Chem.</bibtex:journal>
+          <bibtex:year>1996</bibtex:year>
+          <bibtex:volume>100</bibtex:volume>
+          <bibtex:pages>10400-10407</bibtex:pages>
+      </bibtex:article>
+  </bibtex:entry>
+
   <bibtex:entry id="KRA00">
-    <bibtex:article>
-      <bibtex:author>Krause, Stefan and Willighagen, Egon and Steinbeck,
-          Christoph</bibtex:author>
+      <bibtex:article>
+          <bibtex:author>Krause, Stefan and Willighagen, Egon and Steinbeck,
+              Christoph</bibtex:author>
       <bibtex:title>JChemPaint - Using the Collaborative Forces of the Internet to
           Develop a Free Editor for 2D Chemical Structures</bibtex:title>
       <bibtex:journal>Molecules</bibtex:journal>
@@ -428,6 +439,20 @@
       <bibtex:volume>29</bibtex:volume>
       <bibtex:number>2</bibtex:number>
       <bibtex:pages>97-101</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+  
+  <bibtex:entry id="WES98">
+    <bibtex:article>
+        <bibtex:author>Wessel, M.D. and Jurs, P.C. and Tolan, J.W. and Muskal, S.M.
+        </bibtex:author>
+        <bibtex:title>Prediction of Human Intestinal Absorption of Drug Compounds
+        From Molecular Structure</bibtex:title>
+      <bibtex:journal>Journal of Chemical Information and Computer
+          Sciences</bibtex:journal>
+      <bibtex:year>1998</bibtex:year>
+      <bibtex:volume>38</bibtex:volume>
+      <bibtex:pages>726-735</bibtex:pages>
     </bibtex:article>
   </bibtex:entry>
 
