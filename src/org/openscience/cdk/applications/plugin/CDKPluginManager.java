@@ -116,7 +116,41 @@ public class CDKPluginManager {
         return menu;
     }
     
-    /* Loads the plugins */
+    /** 
+     * Load a plugin based on it's class name.
+     *
+     * @param className Class name of the class constituting the plugin main class.
+     */
+    public void loadPlugin(String className) {
+        loadPlugin(this.getClass().getClassLoader(), className);
+    }
+     
+    public void loadPlugin(ClassLoader classLoader, String className) {
+        try {
+            Class c = classLoader.loadClass(className);
+            Object plugin = c.newInstance();
+            if (plugin instanceof CDKPluginInterface) {
+                CDKPluginInterface cdkPlugin = (CDKPluginInterface)plugin;
+                cdkPlugin.setEditBus(editBus);
+                cdkPlugins.addElement(plugin);
+            } else {
+                logger.info("Class is not type CDKPluginInterface");
+            }
+        } catch (ClassNotFoundException exception) {
+            logger.error("Could not find class");
+            logger.debug(exception);
+        } catch (IllegalAccessException exception) {
+            logger.error("Don't have access to class");
+            logger.debug(exception);
+        } catch (InstantiationException exception) {
+            logger.error("Could not instantiate object");
+            logger.debug(exception);
+        }
+    }
+    
+    /**
+     * Loads the plugins from a certain directory.
+     */
     private void loadPlugins() {
         cdkPlugins = new Vector();
         File uhome = new File(System.getProperty("user.home"));
@@ -145,33 +179,15 @@ public class CDKPluginManager {
                                 }
                                 String pluginName = buffer.toString().substring(0, buffer.toString().indexOf(".class"));
                                 logger.info("Plugin class found: " + pluginName);
-                                try {
-                                    // FIXME: use a classloader that loads the whole jar
-                                    URL urlList[] = {
-                                        plugins[i].toURL()
-                                    };
-                                    ClassLoader loader = new URLClassLoader(urlList);
-                                    Class c = loader.loadClass(pluginName);
-                                    Object plugin = c.newInstance();
-                                    logger.info("  loaded.");
-                                    if (plugin instanceof CDKPluginInterface) {
-                                        CDKPluginInterface cdkPlugin = (CDKPluginInterface)plugin;
-                                        cdkPlugin.setEditBus(editBus);
-                                        cdkPlugins.addElement(plugin);
-                                    } else {
-                                        logger.info("Class is not type CDKPluginInterface");
-                                    }
-                                    break;
-                                } catch (ClassNotFoundException exception) {
-                                    logger.error("Could not find class");
-                                    logger.debug(exception);
-                                } catch (IllegalAccessException exception) {
-                                    logger.error("Don't have access to class");
-                                    logger.debug(exception);
-                                } catch (InstantiationException exception) {
-                                    logger.error("Could not instantiate object");
-                                    logger.debug(exception);
-                                }
+
+                                // FIXME: use a classloader that loads the whole jar
+                                URL urlList[] = {
+                                    plugins[i].toURL()
+                                };
+                                ClassLoader loader = new URLClassLoader(urlList);
+                                loadPlugin(loader, pluginName);
+                                logger.info("  loaded.");
+                                break;
                             }
                         }
                     } catch (IOException exception) {

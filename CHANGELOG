@@ -15,6 +15,7 @@ New:
 * Added method for id-ing SetOfAtomContainers, Reaction and SetOfReactions
 * Added trigger to auto update of number of implicit hydrogens 
   (implements JCP RFE #813152)
+* Added a loadPlugin(String pluginClassName) method to the CDKPluginManager
 
 Fixes:
 * Added missing get() methods to cdk.applications.plugin.EditBus interface
