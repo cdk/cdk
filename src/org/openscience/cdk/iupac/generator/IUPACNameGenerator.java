@@ -112,8 +112,14 @@ public class IUPACNameGenerator {
      *    <li>determine fragments that are left behind
      *    <li>for each f in fragments recurse to step 1.
      *  </ol>
+     *
+     * @param moleculeToname Must be a Molecule or a Fragment which needs to be
+     * named, an attempt to name any other AtomContainer will fail.
      */
-    public void generateName(AtomContainer m) {
+    public void generateName(AtomContainer moleculeToName) {       
+        //Must use a clone to avoid deleting the user's atoms.
+        AtomContainer m = (AtomContainer) moleculeToName.clone();
+        
         if (!(m instanceof Fragment || m instanceof Molecule)) {
             return;
         }
