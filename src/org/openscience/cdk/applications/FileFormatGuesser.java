@@ -56,7 +56,9 @@ public class FileFormatGuesser {
         }
         
         // to make sure the CDK LoggingTool is configured
-        LoggingTool logger = new LoggingTool(true);
+        LoggingTool logger = new LoggingTool();
+        LoggingTool.configureLog4j();
+        logger.dumpSystemProperties();
 
         // loop over all files
         for (int i=0; i<args.length; i++) {

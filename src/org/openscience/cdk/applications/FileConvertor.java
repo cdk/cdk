@@ -125,8 +125,8 @@ public class FileConvertor {
 
     public FileConvertor() {
         logger = new LoggingTool(this);
-        logger.dumpSystemProperties();
         LoggingTool.configureLog4j();
+        logger.dumpSystemProperties();
 
         settingListener = new TextGUIListener(level);
         propsListener = null;

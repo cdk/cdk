@@ -57,9 +57,9 @@ public class DescriptorCalculator {
     private PropertiesListener propsListener;
     private DescriptorEngine engine;
 
-
     public DescriptorCalculator() {
-        logger = new LoggingTool(true);
+        logger = new LoggingTool();
+        LoggingTool.configureLog4j();
         logger.dumpSystemProperties();
 
         ouputFormat = "cml";

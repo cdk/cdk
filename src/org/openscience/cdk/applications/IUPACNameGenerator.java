@@ -54,6 +54,8 @@ public class IUPACNameGenerator
 
 		// to make sure the CDK LoggingTool is configured
 		LoggingTool logger = new LoggingTool(true);
+        LoggingTool.configureLog4j();
+        logger.dumpSystemProperties();
 
 		Locale l = new Locale("en", "US");
 		String smiles = "";

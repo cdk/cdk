@@ -64,6 +64,8 @@ public class Validator {
     
     public Validator() {
         logger = new LoggingTool(this);
+        LoggingTool.configureLog4j();
+        logger.dumpSystemProperties();
     }
     
     public ValidationReport validate(File input) throws IOException {
