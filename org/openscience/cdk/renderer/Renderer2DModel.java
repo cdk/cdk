@@ -58,7 +58,7 @@ public class Renderer2DModel
 	
 	private Hashtable colorHash = new Hashtable();
 	
-	private CDKEventListenerList listeners = new CDKEventListenerList();
+	private Vector listeners = new Vector();
 	
 
 	/**
