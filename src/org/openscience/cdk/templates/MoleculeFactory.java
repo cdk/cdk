@@ -78,7 +78,7 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("C")); // 7
 		mol.addAtom(new Atom("C")); // 8
 		
-		mol.addBond(0, 1, 2); // 1
+		mol.addBond(0, 1, 1); // 1
 		mol.addBond(1, 2, 1); // 2
 		mol.addBond(2, 3, 1); // 3
 		mol.addBond(3, 4, 1); // 4
@@ -90,6 +90,45 @@ public class MoleculeFactory {
 	}
 
 
+	public static Molecule makeCyclohexene()
+	{
+		Molecule mol = new Molecule();
+		mol.addAtom(new Atom("C")); // 1
+		mol.addAtom(new Atom("C")); // 2
+		mol.addAtom(new Atom("C")); // 3
+		mol.addAtom(new Atom("C")); // 4
+		mol.addAtom(new Atom("C")); // 5
+		mol.addAtom(new Atom("C")); // 6
+		
+		mol.addBond(0, 1, 1); // 1
+		mol.addBond(1, 2, 1); // 2
+		mol.addBond(2, 3, 1); // 3
+		mol.addBond(3, 4, 1); // 4
+		mol.addBond(4, 5, 1); // 5
+		mol.addBond(5, 0, 2); // 6
+		return mol;
+	}
+	
+	public static Molecule makeCyclohexane()
+	{
+		Molecule mol = new Molecule();
+		mol.addAtom(new Atom("C")); // 1
+		mol.addAtom(new Atom("C")); // 2
+		mol.addAtom(new Atom("C")); // 3
+		mol.addAtom(new Atom("C")); // 4
+		mol.addAtom(new Atom("C")); // 5
+		mol.addAtom(new Atom("C")); // 6
+		
+		mol.addBond(0, 1, 1); // 1
+		mol.addBond(1, 2, 1); // 2
+		mol.addBond(2, 3, 1); // 3
+		mol.addBond(3, 4, 1); // 4
+		mol.addBond(4, 5, 1); // 5
+		mol.addBond(5, 0, 1); // 6
+		return mol;
+	}
+
+	
 	public static Molecule makeBiphenyl()
 	{
 		Molecule mol = new Molecule();
