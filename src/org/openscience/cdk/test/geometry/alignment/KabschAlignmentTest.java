@@ -28,7 +28,7 @@ import org.openscience.cdk.geometry.alignment.KabschAlignment;
  * @author     Rajarshi Guha
  * @cdk.created    2004-12-11
  *
- * @see org.openscience.cdk.geometry.alignment.KabschAlignment;
+ * @see org.openscience.cdk.geometry.alignment.KabschAlignment
  */
 public class KabschAlignmentTest extends TestCase {
 
