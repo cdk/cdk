@@ -4,6 +4,7 @@ CHANGELOG $Date$
 Changes in CVS
 ------------------------------------
 New:
+* The CDKPluginManager will only load the plugin with the highest version
 
 Fixes:
 * Fixed calculation of cartesian atomic coordinates from fractional coordinates
@@ -31,6 +32,7 @@ Fixes:
 * Fixed rendering of stereo bonds in rings (closes #884935)
 * Fixed parsing of [H]-like thingies (closes #881330, #862930, #809412)
 * Also store inversed stereo chemistry in MDL mol files (closes #885512)
+* Fixed reading of unit cell angles
 
 API changes:
 * Moved a number of Swing based classes to cdk.applications.swing (addresses #847584)

@@ -30,7 +30,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.Vector;
+import java.util.Hashtable;
 import java.util.Enumeration;
 import java.util.jar.JarFile;
 import java.util.jar.JarEntry;
@@ -49,7 +49,7 @@ import javax.swing.JPanel;
 public class CDKPluginManager {
 
     private LoggingTool logger;
-    private Vector cdkPlugins;
+    private Hashtable cdkPlugins;
     
     private String pluginDirName;
     private String pluginConfigDirName;
@@ -133,8 +133,25 @@ public class CDKPluginManager {
             Object plugin = c.newInstance();
             if (plugin instanceof CDKPluginInterface) {
                 CDKPluginInterface cdkPlugin = (CDKPluginInterface)plugin;
-                cdkPlugin.setEditBus(editBus);
-                cdkPlugins.addElement(plugin);
+                if (Double.parseDouble(cdkPlugin.getAPIVersion()) < 1.4) {
+                    // ignore old plugins
+                    logger.warn("Will not load plugins with old API: " + className);
+                } else {
+                    if (cdkPlugins.containsKey(className)) {
+                        // deal with already loaded plugins
+                        CDKPluginInterface alreadyLoadedPlugin = (CDKPluginInterface)cdkPlugins.get(className);
+                        /* ok, here's the deal: the plugin with the latest version stays */
+                        if (Double.parseDouble(alreadyLoadedPlugin.getPluginVersion()) >=
+                        Double.parseDouble(cdkPlugin.getPluginVersion())) {
+                            cdkPlugin.setEditBus(editBus);
+                            cdkPlugins.put(className, cdkPlugin);
+                        } // already loaded plugin is of same version, or better
+                    } else {
+                        // this plugin is not loaded yet
+                        cdkPlugin.setEditBus(editBus);
+                        cdkPlugins.put(className, cdkPlugin);
+                    }
+                }
             } else {
                 logger.info("Class is not type CDKPluginInterface");
             }
@@ -161,7 +178,7 @@ public class CDKPluginManager {
      * Loads the plugins from a certain directory.
      */
     private void loadPlugins() {
-        cdkPlugins = new Vector();
+        cdkPlugins = new Hashtable();
         File uhome = new File(System.getProperty("user.home"));
         File pluginDir = new File(uhome + "/" + pluginDirName);
         logger.info("User dict dir: " + pluginDir);
