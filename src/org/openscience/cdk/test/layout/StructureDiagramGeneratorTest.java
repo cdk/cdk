@@ -90,10 +90,28 @@ public class StructureDiagramGeneratorTest extends TestCase {
     }
     
 	public static void main(String[] args) {
+		try{
 		StructureDiagramGeneratorTest sdg = new StructureDiagramGeneratorTest("StructureDiagramGeneratorTest");
-        sdg.runVisualTests();
+        //sdg.runVisualTests();
+	sdg.bug736137();
+	}
+	catch(Exception exc)
+	{
+		exc.printStackTrace();	
+	}
 	}
 
+	public void bug736137() throws java.lang.Exception
+	{
+		String filename = "data/mdl/bug736137.mol";
+		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+		MDLReader reader = new MDLReader(new InputStreamReader(ins));
+		Molecule molecule = (Molecule) reader.read((ChemObject) new Molecule());	
+		MoleculeViewer2D.display(molecule, true);
+		
+	}
+	
+	
     public void testAlphaPinene() throws Exception {
         Molecule m = MoleculeFactory.makeAlphaPinene();
         AtomContainer ac = generateCoordinates(m);
