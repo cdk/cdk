@@ -48,7 +48,7 @@ public class DictionaryDatabase {
     private org.openscience.cdk.tools.LoggingTool logger;
     
     private String[] dictionaryNames = {
-        "chemical"
+        "chemical", "elements"
     };
     
     private Hashtable dictionaries;
@@ -60,19 +60,22 @@ public class DictionaryDatabase {
         dictionaries = new Hashtable();
         for (int i=0; i<dictionaryNames.length; i++) {
             String name = dictionaryNames[i];
-            dictionaries.put(name, readDatabase("org.openscience.cdk.dict.data." + name + ".xml"));
+            dictionaries.put(name, readDatabase("org/openscience/cdk/dict/data/" + name + ".xml"));
             logger.info("Read dictionary: " + name);
         }
     }
 
     private Dictionary readDatabase(String databaseLocator) {
         Dictionary dictionary = null;
+        logger.info("Reading dictionary from " + databaseLocator);
         try {
             InputStreamReader reader = new InputStreamReader(
                 this.getClass().getClassLoader().getResourceAsStream(databaseLocator));
             dictionary = Dictionary.unmarshal(reader);
         } catch (Exception exception) {
             dictionary = new Dictionary();
+            logger.error("Could not read dictionary " + databaseLocator);
+            logger.debug(exception);
         }
         return dictionary;
     };
@@ -90,11 +93,14 @@ public class DictionaryDatabase {
     public String[] getDictionaryEntries(String dictionaryName) {
         Dictionary dictionary = (Dictionary)dictionaries.get(dictionaryName);
         if (dictionary == null) {
+            logger.error("Cannot find requested dictionary");
             return new String[0];
         } else {
             // FIXME: dummy method that needs an implementation
             Entry[] entries = dictionary.getEntry();
             String[] entryNames = new String[entries.length];
+            logger.info("Found " + entryNames.length + " entries in dictionary " + 
+              dictionaryName);
             for (int i=0; i<entries.length; i++) {
                 entryNames[i] = entries[i].getTerm();
             }
