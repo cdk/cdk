@@ -124,7 +124,7 @@ public class MACiEReader extends DefaultChemObjectReader {
         topLevelDatum = Pattern.compile("(.+):(.+)");
         subLevelDatum = Pattern.compile("(.+):(.+)\\((.+)\\):(.+)");
         annotationTuple = Pattern.compile("(\\w+)=\\((.+?)\\);(.*)");
-        residueLocator = Pattern.compile("\\w{3}\\d{1,5}");
+        residueLocator = Pattern.compile("[A-Z][a-z][a-z]\\d{1,5}"); // e.g. Lys150
         
         initIOSettings();
     }
