@@ -29,16 +29,18 @@ import java.io.FileReader;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
-import org.openscience.cdk.isomorphism.mcss.RTools;
-import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
+import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
+import org.openscience.cdk.smiles.smarts.SMARTSParser;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
- * Command line utility that will generate fingerprints for a set of files.
+ * Command line utility that matches the given SMARTS against the given set of 
+ * files.
  *
  * @cdk.module applications
  *
- * @author  Egon Willighagen
+ * @author      Egon Willighagen
  * @cdk.created 2003-08-14
  * @cdk.require java1.4
  */
@@ -52,44 +54,49 @@ public class SubstructureFinder {
 	
     public static void main(String[] args) {
         if (args.length < 2) {
-            System.err.println("syntax: SubstructureFinder <SMILES> <file> <file2> ...");
+            System.err.println("syntax: SubstructureFinder <SMARTS> <file> <file2> ...");
             System.exit(0);
         }
 
         // to make sure the CDK LoggingTool is configured
         LoggingTool logger = new LoggingTool(true);
 
-        SmilesParser sp = new SmilesParser();
-        Molecule substructure = null;
+        QueryAtomContainer substructure = null;
+        String smarts = args[0];
         try {
-            substructure = sp.parseSmiles(args[0]);
+            substructure = SMARTSParser.parse(smarts);
         } catch (Exception exc) {
-            System.err.println("Problem parsing SMILES: " + args[0]); 
+            System.err.println("Problem parsing SMARTS: " + smarts); 
             System.err.println("Error: " + exc.toString());
             System.exit(-1);
         }
+        if (substructure != null) {
         
-        // loop over all files
-        for (int i=1; i<args.length; i++) {
-            String ifilename = args[i];
-            try {
-                File input = new File(ifilename);
-                if (!input.isDirectory()) {
-                    ChemObjectReader reader = new ReaderFactory().createReader(new FileReader(input));
-                    if (reader.accepts(new Molecule())) {
-                        Molecule molecule = (Molecule)reader.read(new Molecule());
-                        if (molecule != null) {
-                            boolean matches = RTools.isSubgraph(molecule, substructure);
-                            if (matches) {
-                                System.out.println(ifilename + ": matches!");
+            // loop over all files
+            for (int i=1; i<args.length; i++) {
+                String ifilename = args[i];
+                try {
+                    File input = new File(ifilename);
+                    if (!input.isDirectory()) {
+                        ChemObjectReader reader = new ReaderFactory().createReader(new FileReader(input));
+                        if (reader.accepts(new Molecule())) {
+                            Molecule molecule = (Molecule)reader.read(new Molecule());
+                            if (molecule != null) {
+                                boolean matches = UniversalIsomorphismTester.isSubgraph(molecule, substructure);
+                                if (matches) {
+                                    System.out.println(ifilename + ": matches!");
+                                }
                             }
                         }
                     }
+                } catch (Exception exception) {
+                    System.err.println(ifilename + ": error=");
+                    exception.printStackTrace();
                 }
-            } catch (Exception exception) {
-                System.err.println(ifilename + ": error=");
-                exception.printStackTrace();
             }
+        } else {
+            System.err.println("No SMARTS given!"); 
+            System.exit(-1);
         }
     }
 

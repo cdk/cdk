@@ -19,6 +19,7 @@ New:
 * Added a wrapper for Jmol's MOPAC 93/97/2002 reader
 * Added a AtomParity class which can be stored in AtomContainer
 * Mol2 atom types now include hybridization which is now also read
+* SubstructureFinder now uses the SMARTS engine
 
 Fixes:
 * Tropylium is now recognised as aromatic (closes CDK bug #957627)
