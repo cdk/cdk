@@ -48,6 +48,12 @@ import java.util.zip.GZIPInputStream;
  * created is determined from the content of the input. Formats
  * of GZiped files can be detected too.
  *
+ * A typical example is:
+ * <pre>
+ *   StringReader stringReader = "&lt;molecule/>";
+ *   ChemObjectReader reader = new ReaderFactory().createReader(stringReader);
+ * </pre>
+ *
  * @cdkPackage experimental
  *
  * @author  Egon Willighagen <egonw@sci.kun.nl>
