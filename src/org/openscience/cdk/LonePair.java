@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2002-2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2002-2004  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -105,7 +105,6 @@ public class LonePair extends ElectronContainer implements java.io.Serializable,
      * @return    The string representation of this Container
      */
     public String toString() {
-        ElectronContainer ec;
         StringBuffer s = new StringBuffer();
         s.append("LonePair(");
         s.append(this.hashCode());

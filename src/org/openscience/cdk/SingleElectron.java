@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2002-2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2004  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -102,7 +102,6 @@ public class SingleElectron extends ElectronContainer implements java.io.Seriali
      * @return    The string representation of this Container
      */
     public String toString() {
-        ElectronContainer ec;
         StringBuffer s = new StringBuffer();
         s.append("SingleElectron(");
         s.append(this.hashCode());

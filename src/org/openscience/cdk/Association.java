@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2004  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -151,7 +151,6 @@ public class Association extends ElectronContainer implements java.io.Serializab
      * @return    The string representation of this Container
      */
     public String toString() {
-        ElectronContainer ec;
         StringBuffer s = new StringBuffer();
         s.append("Association(");
         s.append(this.hashCode());
