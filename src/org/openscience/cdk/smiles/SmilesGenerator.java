@@ -1089,8 +1089,8 @@ public class SmilesGenerator {
                 }
               }
               Object[] ohere = hm.values().toArray();
-              for (int i = ohere.length - 1; i > -1; i--) {
-                sorted[i] = ((Atom) chiralNeighbours.get(((Integer) ohere[i]).intValue()));
+              for (int i = 0; i < ohere.length; i++) {
+                sorted[ohere.length-i] = ((Atom) chiralNeighbours.get(((Integer) ohere[i]).intValue()));
               }
             }
             if (container.getBond(parent, atom).getStereo() == 0) {
