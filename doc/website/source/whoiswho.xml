@@ -16,11 +16,56 @@
       <informaltable frame='none'>
         <tgroup cols="3">
           <thead>
-            <row><entry>Name</entry><entry>Specialties</entry><entry>Classes</entry></row>
+            <row><entry>Name</entry><entry>Specialties</entry><entry>Packages</entry></row>
           </thead>
           <tbody>
             <row>
-			  <entry>Christoph Steinbeck</entry>
+			  <entry>Christoph Steinbeck (<ulink url="http://sourceforge.net/users/steinbeck/">steinbeck</ulink>)</entry>
+			  <entry></entry>
+			  <entry></entry>
+		    </row>
+            <row>
+			  <entry>Egon Willighagen (<ulink url="http://sourceforge.net/users/egonw/">egonw</ulink>)</entry>
+			  <entry>Chemical Markup Language (CML)</entry>
+			  <entry>org.openscience.cdk.io, org.openscience.cdk.database</entry>
+		    </row>
+            <row>
+			  <entry>Bradley Smith (<ulink url="http://sourceforge.net/users/yeldar/">yeldar</ulink>)</entry>
+			  <entry></entry>
+			  <entry></entry>
+		    </row>
+            <row>
+			  <entry>Stephan Michels (<ulink url="http://sourceforge.net/users/benedikta/">benedikta</ulink>)</entry>
+			  <entry></entry>
+			  <entry></entry>
+		    </row>
+            <row>
+			  <entry>Christian Bleiholder (<ulink url="http://sourceforge.net/users/cbleihol/">cbleihol</ulink>)</entry>
+			  <entry></entry>
+			  <entry></entry>
+		    </row>
+            <row>
+			  <entry>Dav Coleman (<ulink url="http://sourceforge.net/users/dav10/">dav10</ulink>)</entry>
+			  <entry></entry>
+			  <entry></entry>
+		    </row>
+            <row>
+			  <entry>Edgar Luttmann (<ulink url="http://sourceforge.net/users/edgarl/">edgarl</ulink>)</entry>
+			  <entry></entry>
+			  <entry></entry>
+		    </row>
+            <row>
+			  <entry>Hendrik Pfeiffer (<ulink url="http://sourceforge.net/users/h_pfeiffer/">h_pfeiffer</ulink>)</entry>
+			  <entry></entry>
+			  <entry></entry>
+		    </row>
+            <row>
+			  <entry>Martin Ehmsen (<ulink url="http://sourceforge.net/users/thames/">thames</ulink>)</entry>
+			  <entry></entry>
+			  <entry></entry>
+		    </row>
+            <row>
+			  <entry>Yongquan Han (<ulink url="http://sourceforge.net/users/yongquan/">yongquan</ulink>)</entry>
 			  <entry></entry>
 			  <entry></entry>
 		    </row>

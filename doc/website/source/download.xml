@@ -12,9 +12,26 @@
 
   <section>
     <title>Downloading CDK</title>
-    <para>The CDK source code can be downloaded from SourceForge. You will
-	  need to download the CDK source code and the required libraries, which are
-	  all packaged in the file cdk-libs.tar.gz.</para>
+    <para>To use the CDK you have to download the source code (cdk-preview package),
+	  and the libraries that are used by CDK (cdk-libs package).
+	  <variablelist><title>Packages</title>
+        <varlistentry><term><filename>cdk-preview</filename></term>
+          <listitem>
+            <para>Source code. Current version:
+			  <ulink url="http://sourceforge.net/project/shownotes.php?release_id=63744">20011201</ulink>
+		    </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry><term><filename>cdk-libs</filename></term>
+          <listitem>
+            <para>Set of required and optional libraries
+			  (<ulink url="libraries.html">more info</ulink>). Current version:
+			  <ulink url="http://sourceforge.net/project/shownotes.php?release_id=63747">20011201</ulink>
+			</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </para>
   </section>
 
 </webpage>

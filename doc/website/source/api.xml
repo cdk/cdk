@@ -10,6 +10,7 @@
     <summary>Information about the Java classes of the CDK.</summary>
   </head>
 
-  <para>The documentation is available as HTML.</para>
+  <para>The documentation is currently only available as
+    <ulink url="http://cdk.sourceforge.net/api/">HTML</ulink>.</para>
 
 </webpage>
