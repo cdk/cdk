@@ -1133,12 +1133,12 @@ public class SmilesGenerator {
   private String generateMassString(Atom a) {
     Isotope majorIsotope = isotopeFactory.getMajorIsotope(a.getSymbol());
     if(majorIsotope.getExactMass() == a.getExactMass()) {
-      return "";
+        return "";
     } else if (a.getAtomicMass() == 0) {
-			return "";
-	  } else {
-      return Integer.toString(a.getAtomicMass());
-		}
+        return "";
+    } else {
+        return Integer.toString(a.getAtomicMass());
+    }
   }
 
   private Vector getRingOpenings(Atom a) {
