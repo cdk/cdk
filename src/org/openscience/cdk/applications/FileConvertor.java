@@ -459,6 +459,22 @@ public class FileConvertor {
 
     private void write(SetOfMolecules som, String outputFilename) throws IOException {
         try {
+	        if (apply2DCleanup) {
+				logger.info("Creating 2D coordinates");
+				Molecule[] mols = som.getMolecules();
+	           	StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+				for (int i=0; i<mols.length; i++) {
+					Molecule molecule = mols[i];
+		            try {
+		                sdg.setMolecule(molecule, false); // false -> don't make clone!
+		                sdg.generateCoordinates(new Vector2d(0, 1));
+		                molecule = sdg.getMolecule();
+		            } catch (Exception exc) {
+		                System.out.println("Could not generate coordinates for this molecule.");
+		                System.exit(1);
+		            }
+				}
+			}
             cow.write(som);
         } catch (CDKException e) {
             int count = som.getMoleculeCount();
