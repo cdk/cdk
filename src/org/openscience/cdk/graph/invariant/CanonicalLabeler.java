@@ -29,6 +29,7 @@ package org.openscience.cdk.graph.invariant;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.smiles.InvPair;
 
 import java.util.Vector;
 import java.util.Iterator;

@@ -28,8 +28,9 @@
 
 package org.openscience.cdk.math.qm;
 
+import org.openscience.cdk.PhysicalConstants;
 import org.openscience.cdk.math.*;
- 
+
 /**
  * At his time this class does not work correcly.
  * The theory were from MAR89.
