@@ -49,6 +49,7 @@ public class Controller2DModel implements java.io.Serializable, Cloneable
 	public final static int INCCHARGE=15;
 	public final static int DECCHARGE=16;
 	public final static int BENZENERING=17;
+	public final static int MAPATOMATOM=18;
 	
 	private int drawMode = 6;
 	private int ringSize = 6;
@@ -117,6 +118,8 @@ public class Controller2DModel implements java.io.Serializable, Cloneable
                 return "Increase Charge";
             case DECCHARGE:
                 return "Decrease Charge";
+            case MAPATOMATOM:
+                return "Map Atom-Atom";
         }
 		return "";
 	}

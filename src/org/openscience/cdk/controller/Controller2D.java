@@ -220,7 +220,8 @@ public class Controller2D
 		}
 
 
-		if (c2dm.getDrawMode() == c2dm.DRAWBOND)
+		if (c2dm.getDrawMode() == c2dm.DRAWBOND ||
+            c2dm.getDrawMode() == c2dm.MAPATOMATOM )
 		{
 			int startX = r2dm.getPointerVectorStart().x;
 			int startY = r2dm.getPointerVectorStart().y;
@@ -454,6 +455,41 @@ public class Controller2D
 				}
 			}
 
+            if (c2dm.getDrawMode() == c2dm.MAPATOMATOM) {
+                logger.debug("Should make new mapping...");
+				if (wasDragged) {
+                    int endX = r2dm.getPointerVectorEnd().x;
+                    int endY = r2dm.getPointerVectorEnd().y;
+                    Atom mappedToAtom = getAtomInRange(endX, endY);
+                    if (mappedToAtom != null) {
+                        int startX = r2dm.getPointerVectorStart().x;
+                        int startY = r2dm.getPointerVectorStart().y;
+                        Atom mappedFromAtom = getAtomInRange(startX, startY);
+                        if (mappedFromAtom != null) {
+                            Mapping mapping = new Mapping(mappedFromAtom, mappedToAtom);
+                            logger.debug("Created mapping: ", mapping);
+                            logger.debug("  between ", mappedFromAtom);
+                            logger.debug("  and ", mappedToAtom);
+                            // ok, now figure out if they are in one reaction
+                            Reaction reaction1 = ChemModelManipulator.getRelevantReaction(chemModel, mappedFromAtom);
+                            Reaction reaction2 = ChemModelManipulator.getRelevantReaction(chemModel, mappedToAtom);
+                            if (reaction1 != null && reaction2 != null && reaction1 == reaction2) {
+                                logger.debug("Adding mapping to reaction: ", reaction1.getID());
+                                reaction1.addMapping(mapping);
+                            } else {
+                                logger.warn("Reactions do not match, or one or both are reactions are null");
+                            }
+                        } else {
+                            logger.debug("Dragging did not start in atom...");
+                        }
+                    } else {
+                        logger.debug("Dragging did not end in atom...");
+                    }
+                } else {
+                    logger.debug("Not dragged in mapping mode");
+                }
+            }
+            
 			if (c2dm.getDrawMode() == c2dm.DRAWBOND)
 			{
 				Atom atomInRange;
