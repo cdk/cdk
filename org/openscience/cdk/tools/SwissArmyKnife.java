@@ -30,6 +30,8 @@ package org.openscience.cdk.tools;
 
 import java.util.*;
 import java.io.*;
+import org.openscience.cdk.*;
+
 
 /** 
  * A set of utilities which did not really fit into any other category
@@ -110,4 +112,37 @@ public class SwissArmyKnife
 		s.append("total milliseconds: " + diff);
 		return s.toString();		
 	}
+
+	/**
+	 * Gets a Molecule and an array of element symbols. Counts how many of each of these 
+	 * elements the molecule contains. Than it returns the elements followed by their 
+	 * number as a string, i.e. C15H8N3.
+	 *
+	 * @param   mol   The Molecule to be searched
+	 * @param   element  The array of element symbols
+	 * @return     The element formula as a string
+	 */
+	public static String elementFormulaGenerator(Molecule mol, String[] elements)
+	{
+		int num = elements.length;
+		StringBuffer formula = new StringBuffer();
+		int[] elementCount = new int[num];
+		for (int i = 0; i < mol.getAtomCount(); i++)
+		{
+			String symbol = mol.getAtomAt(i).getElement().getSymbol();
+			for (int j = 0; j < num; j++)
+			{
+				if (elements[j].equals(mol.getAtomAt(i).getElement().getSymbol()))
+				{
+					elementCount[j] ++;
+				}
+			}
+		}
+		for (int i = 0; i < num; i++)
+		{
+			formula.append(elements[i] + elementCount[i]);
+		}
+		return formula.toString();
+	}
 }
+
