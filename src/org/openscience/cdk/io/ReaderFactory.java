@@ -62,6 +62,8 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class ReaderFactory {
     
+    private final static String IO_FORMATS_LIST = "io-formats.set";
+
     private int headerLength;
     private LoggingTool logger;
 
@@ -96,68 +98,35 @@ public class ReaderFactory {
 
     private void loadReaders() {
         if (formats == null) {
-            logger.debug("Starting loading Readers...");
-            // IMPORTANT: the order in the next series *is* important!
-            String[] formatNames = {
-                "org.openscience.cdk.io.formats.ABINITFormat",
-                "org.openscience.cdk.io.formats.Aces2Format",
-                "org.openscience.cdk.io.formats.ADFFormat",
-                "org.openscience.cdk.io.formats.CACheFormat",
-                "org.openscience.cdk.io.formats.CIFFormat",
-                "org.openscience.cdk.io.formats.CMLFormat",
-                "org.openscience.cdk.io.formats.CrystClustFormat",
-                "org.openscience.cdk.io.formats.DaltonFormat",
-                "org.openscience.cdk.io.formats.GamessFormat",
-                "org.openscience.cdk.io.formats.Gaussian03Format",
-                "org.openscience.cdk.io.formats.Gaussian98Format",
-                "org.openscience.cdk.io.formats.Gaussian95Format",
-                "org.openscience.cdk.io.formats.Gaussian94Format",
-                "org.openscience.cdk.io.formats.Gaussian92Format",
-                "org.openscience.cdk.io.formats.Gaussian90Format",
-                "org.openscience.cdk.io.formats.GhemicalMMFormat",
-                "org.openscience.cdk.io.formats.GhemicalSPMFormat",
-                "org.openscience.cdk.io.formats.HINFormat",
-                "org.openscience.cdk.io.formats.IChIFormat",
-                "org.openscience.cdk.io.formats.INChIPlainTextFormat",
-                "org.openscience.cdk.io.formats.INChIFormat",
-                "org.openscience.cdk.io.formats.JaguarFormat",
-                "org.openscience.cdk.io.formats.MACiEFormat",
-                "org.openscience.cdk.io.formats.MDLFormat",
-                "org.openscience.cdk.io.formats.MDLRXNV3000Format",
-                "org.openscience.cdk.io.formats.MDLRXNFormat",
-                "org.openscience.cdk.io.formats.MDLV3000Format",
-                "org.openscience.cdk.io.formats.Mol2Format",
-                "org.openscience.cdk.io.formats.MOPAC7Format",
-                "org.openscience.cdk.io.formats.MOPAC93Format",
-                "org.openscience.cdk.io.formats.MOPAC97Format",
-                "org.openscience.cdk.io.formats.MOPAC2002Format",
-                "org.openscience.cdk.io.formats.NWChemFormat",
-                "org.openscience.cdk.io.formats.PDBFormat",
-                "org.openscience.cdk.io.formats.PMPFormat",
-                "org.openscience.cdk.io.formats.QChemFormat",
-                "org.openscience.cdk.io.formats.ShelXFormat",
-                "org.openscience.cdk.io.formats.SpartanFormat",
-                "org.openscience.cdk.io.formats.VASPFormat",
-                "org.openscience.cdk.io.formats.ZMatrixFormat",
-                "org.openscience.cdk.io.formats.SMILESFormat",
-                "org.openscience.cdk.io.formats.XYZFormat",
-            };
             formats = new Vector();
-            for (int i=0; i<formatNames.length; i++) {
-                // load them one by one
-                try {
-                    ChemFormat format = (ChemFormat)this.getClass().getClassLoader().
-                        loadClass(formatNames[i]).newInstance();
-                    formats.addElement(format);
-                } catch (ClassNotFoundException exception) {
-                    logger.error("Could not find this ChemObjectReader: ", formatNames[i]);
-                    logger.debug(exception);
-                } catch (Exception exception) {
-                    logger.error("Could not load this ChemObjectReader: ", formatNames[i]);
-                    logger.debug(exception);
+            try {
+                logger.debug("Starting loading Readers...");
+                BufferedReader reader = new BufferedReader(new InputStreamReader(
+                    this.getClass().getClassLoader().getResourceAsStream(IO_FORMATS_LIST)
+                ));
+                int formatCount = 0;
+                while (reader.ready()) {
+                    // load them one by one
+                    String formatName = reader.readLine();
+                    formatCount++;
+                    try {
+                        ChemFormatMatcher format = (ChemFormatMatcher)this.getClass().getClassLoader().
+                            loadClass(formatName).newInstance();
+                        formats.addElement(format);
+                        logger.info("Loaded IO format: " + format.getClass().getName());
+                    } catch (ClassNotFoundException exception) {
+                        logger.error("Could not find this ChemObjectReader: ", formatName);
+                        logger.debug(exception);
+                    } catch (Exception exception) {
+                        logger.error("Could not load this ChemObjectReader: ", formatName);
+                        logger.debug(exception);
+                    }
                 }
+                logger.info("Number of loaded formats used in detection: ", formatCount);
+            } catch (Exception exception) {
+                logger.error("Could not load this io format list: ", IO_FORMATS_LIST);
+                logger.debug(exception);
             }
-            logger.info("Number of loaded formats used in detection: ", formats.size());
         }
     }
 

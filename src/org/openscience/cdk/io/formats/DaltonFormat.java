@@ -29,6 +29,7 @@ import java.io.StringReader;
 
 /**
  * @cdk.module io
+ * @cdk.set    io-formats
  */
 public class DaltonFormat implements ChemFormatMatcher {
 

@@ -28,6 +28,7 @@ import java.io.Reader;
 
 /**
  * @cdk.module io
+ * @cdk.set    io-formats
  */
 public class Gaussian95Format implements ChemFormatMatcher {
 

@@ -784,6 +784,9 @@
                         <excludesfile name="${src}/ant1.6.classes" unless="hasAnt16"/>
                         <include name="org/openscience/cdk/io/cml/data/**" />
                     </fileset>
+                    <fileset dir="${src}">
+                        <include name="io-formats.set"/>
+                    </fileset>
                 </jar>
         </target>
 

@@ -29,6 +29,7 @@ import org.openscience.cdk.math.MathTools;
 
 /**
  * @cdk.module io
+ * @cdk.set    io-formats
  */
 public class HINFormat implements ChemFormatMatcher {
 
