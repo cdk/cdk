@@ -221,8 +221,21 @@ public class CDKConstants {
       * isotropic shielding value of a standard (e.g. TMS).
       */
     public static final String ISOTROPIC_SHIELDING = "IsotropicShielding";
-    
-    
+
+    /** Records for PDB information **/
+    public static final String PDB_RECORD     = "pdb.record";
+    public static final String PDB_SERIAL     = "pdb.serial";
+    public static final String PDB_NAME       = "pdb.name";
+    public static final String PDB_ALTLOC     = "pdb.altLoc";
+    public static final String PDB_RESNAME    = "pdb.resName";
+    public static final String PDB_CHAINID    = "pdb.chainID";
+    public static final String PDB_RESSEQ     = "pdb.resSeq";
+    public static final String PDB_ICODE      = "pdb.iCode";
+    public static final String PDB_OCCOPANCY  = "pdb.occupancy";
+    public static final String PDB_TEMPFACTOR = "pdb.tempFactor";
+    public static final String PDB_SEGID      = "pdb.segID";
+    public static final String PDB_ELEMENT    = "pdb.element";
+    public static final String PDB_CHARGE     = "pdb.charge";
 }
 
 
