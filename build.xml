@@ -1,19 +1,13 @@
 <project name="CDK" default="compile" basedir=".">
 
         <property name="build.compiler" value="modern" />
-
         <property name="build" value="build" />
-
         <property name="sourcedist" value="sourcedist" />
-
         <property name="dist" value="dist" />
-
         <property name="src.tests"
-	
-        value="org/openscience/cdk/test" />
+                          value="org/openscience/cdk/test" />
 
         <property name="reports.tests" value="reports" />
-
         <property name="javadoc.dir" value="javadoc" />
 
         <path id="project.class.path">
@@ -31,29 +25,21 @@
                 <tstamp />
 
                 <mkdir dir="${build}" />
-
                 <mkdir dir="${sourcedist}" />
-
                 <mkdir dir="${dist}" />
-
                 <mkdir dir="${reports.tests}" />
         </target>
 
         <target name="clean">
                 <delete>
                         <fileset dir="." includes="**/*~" />
-
                         <fileset dir="." includes="**/*.class" />
-
                         <fileset dir="." includes="*.tar.gz" />
-
                         <fileset dir="." includes="*.zip" />
                 </delete>
 
                 <delete dir="${build}" />
-
                 <delete dir="${sourcedist}" />
-
                 <delete dir="${reports.tests}" />
         </target>
 
@@ -69,21 +55,17 @@
                 <javac destdir="${build}" optimize="off" debug="on" deprecation="off">
                         <src path="." />
 
+                        <exclude name="${sourcedist}/**" />
                         <exclude
                         name="org/openscience/cdk/renderer/AcceleratedRenderer3D*" />
-
                         <exclude
                         name="org/openscience/cdk/renderer/OrbitalsRenderer3D*" />
-
                         <exclude
                         name="org/openscience/cdk/test/AcceleratedRenderer3DTest.java" />
-
                         <exclude
                         name="org/openscience/cdk/test/OrbitalsRenderer3DTest.java" />
-
                         <exclude
                         name="org/openscience/cdk/test/VisualGaussiansCalculationTest.java" />
-
                         <exclude
                         name="org/openscience/cdk/test/ZMatrixReaderTest.java" />
 
@@ -143,20 +125,6 @@
 
                 <jar jarfile="${dist}/jar/cdk-with-java3d.jar"
                 basedir="${build}" />
-        </target>
-
-        <target name="libdist" depends="init">
-                <copy todir="${sourcedist}/jar">
-                        <fileset dir="jar" includes="*jar" />
-                        <fileset dir="jar" includes="ChangeLog" />
-                </copy>
-
-                <tar tarfile="cdk-libs-${DSTAMP}.tar" basedir="${sourcedist}" includes="**" />
-
-                <gzip zipfile="cdk-libs-${DSTAMP}.tar.gz" src="cdk-libs-${DSTAMP}.tar" />
-                <zip zipfile="cdk-libs-${DSTAMP}.zip" basedir="${sourcedist}" includes="**" />
-
-                <delete file="cdk-libs-${DSTAMP}.tar" />
         </target>
 
         <target name="sourcedist" depends="init">
