@@ -75,6 +75,7 @@ import org.openscience.cdk.test.qsar.*;
 	suite.addTest(BondsToAtomDescriptorTest.suite());
 	suite.addTest(DistanceToAtomDescriptorTest.suite());
 	suite.addTest(AtomDegreeDescriptorTest.suite());
+	suite.addTest(AtomValenceDescriptorTest.suite());
 	return suite;
     }
     
