@@ -1,5 +1,7 @@
 <project name="CDK" default="dist" basedir=".">
 
+        <property name="version" value="20040604-CVS" />
+
         <!-- compile options -->
         <property name="build.sysclasspath" value="ignore" />
         <property name="build.compiler" value="modern" />
@@ -8,7 +10,6 @@
         <property name="optimization" value="off" />
 
         <!-- patches to apply -->
-        <property name="do.patch.rfc20" value="yes" />
 
         <!-- where to find Java3D -->
         <property name="pathtojava3d" value="" />
@@ -23,6 +24,7 @@
         <property name="lib" value="jar" />
         <property name="src.tests" value="${src}/org/openscience/cdk/test" />
         <property name="reports.tests" value="reports" />
+        <property name="appjars.dir" value="${dist}/appjars" />
  
         <!-- class to run for testing-->
         <property name="testclass" value="CDKTests" />
@@ -614,9 +616,20 @@
                 </jar>
         </target>
 
-        <target id="dist-large" name="dist-large" depends="compile-all, dist.init"
+        <target id="dist-large" name="dist-large" depends="compile-all, dist.init, libjars"
             description="Builds on big jar file for the CDK, including experimental classes.">
                 <jar jarfile="${dist}/jar/cdk-all.jar">
+                    <manifest>
+                        <attribute name="Main-Class" value="org.openscience.cdk.applications.DistLargeInfo"/>
+                        <section name="org.openscience.cdk">
+                            <attribute name="Specification-Title" value="The Chemistry Development Kit"/>
+                            <attribute name="Specification-Version" value="1.0"/>
+                            <attribute name="Specification-Vendor" value="The CDK Project"/>
+                            <attribute name="Implementation-Title" value="org.openscience.cdk"/>
+                            <attribute name="Implementation-Version" value="${version}"/>
+                            <attribute name="Implementation-Vendor" value="The CDK Project"/>
+                        </section>
+                    </manifest>
                     <fileset dir="${build}">
                         <include name="org/openscience/cdk/**" />
                     </fileset>
@@ -631,7 +644,69 @@
                     <fileset dir="packages/tar/cdk">
                         <include name="AUTHORS" />
                     </fileset>
+                    <fileset dir="${appjars.dir}" includes="**/*.class"/>
                 </jar>
+        </target>
+
+        <target name="check.libjars" id="check.libjars">
+            <uptodate property="libjars.uptodate" targetfile="${appjars.dir}">
+                <srcfiles dir="${lib}" includes="base.jar"/>
+                <srcfiles dir="${lib}" includes="batik-dom.jar"/>
+                <srcfiles dir="${lib}" includes="batik-awt-util.jar"/>
+                <srcfiles dir="${lib}" includes="batik-svggen.jar"/>
+                <srcfiles dir="${lib}" includes="batik-util.jar"/>
+                <srcfiles dir="${lib}" includes="batik-xml.jar"/>
+                <srcfiles dir="${lib}" includes="castor-0.9.5-xml.jar"/>
+                <srcfiles dir="${lib}" includes="cmlAll.jar"/>
+                <srcfiles dir="${lib}" includes="commons-cli-1.0.jar"/>
+                <srcfiles dir="${lib}" includes="dadml.jar"/>
+                <srcfiles dir="${lib}" includes="gnujaxp.jar"/>
+                <srcfiles dir="${lib}" includes="jmolApis.jar"/>
+                <srcfiles dir="${lib}" includes="jmolIO.jar"/>
+                <srcfiles dir="${lib}" includes="junit.jar"/>
+                <srcfiles dir="${lib}" includes="log4j-core.jar"/>
+                <srcfiles dir="${lib}" includes="log4j.jar"/>
+                <srcfiles dir="${lib}" includes="mysql-2.0.4.jar"/>
+                <srcfiles dir="${lib}" includes="pmrlib.jar"/>
+                <srcfiles dir="${lib}" includes="postgresql7.0-1.2.jar"/>
+                <srcfiles dir="${lib}" includes="printf.jar"/>
+                <srcfiles dir="${lib}" includes="stmml.jar"/>
+                <srcfiles dir="${lib}" includes="vecmath1.2-1.14.jar"/>
+                <srcfiles dir="${lib}" includes="xerces-2.6.2.jar"/>
+                <srcfiles dir="${lib}" includes="xindice.jar"/>
+                <srcfiles dir="${lib}" includes="xmlApis-2.6.2.jar"/>
+                <srcfiles dir="${lib}" includes="xmldb.jar"/>
+            </uptodate>
+        </target>
+        
+        <target name="libjars" id="libjars" depends="check.libjars" unless="libjars.uptodate">
+            <mkdir dir="${appjars.dir}"/>
+            <unjar dest="${appjars.dir}" src="${lib}/base.jar"/>
+            <unjar dest="${appjars.dir}" src="${lib}/batik-dom.jar"/>
+            <unjar dest="${appjars.dir}" src="${lib}/batik-awt-util.jar"/>
+            <unjar dest="${appjars.dir}" src="${lib}/batik-svggen.jar"/>
+            <unjar dest="${appjars.dir}" src="${lib}/batik-util.jar"/>
+            <unjar dest="${appjars.dir}" src="${lib}/batik-xml.jar"/>
+            <unjar dest="${appjars.dir}" src="${lib}/castor-0.9.5-xml.jar"/>
+            <unjar dest="${appjars.dir}" src="${lib}/cmlAll.jar"/>
+            <unjar dest="${appjars.dir}" src="${lib}/commons-cli-1.0.jar"/>
+            <unjar dest="${appjars.dir}" src="${lib}/dadml.jar"/>
+            <unjar dest="${appjars.dir}" src="${lib}/gnujaxp.jar"/>
+            <unjar dest="${appjars.dir}" src="${lib}/jmolApis.jar"/>
+            <unjar dest="${appjars.dir}" src="${lib}/jmolIO.jar"/>
+            <unjar dest="${appjars.dir}" src="${lib}/junit.jar"/>
+            <unjar dest="${appjars.dir}" src="${lib}/log4j-core.jar"/>
+            <unjar dest="${appjars.dir}" src="${lib}/log4j.jar"/>
+            <unjar dest="${appjars.dir}" src="${lib}/mysql-2.0.4.jar"/>
+            <unjar dest="${appjars.dir}" src="${lib}/pmrlib.jar"/>
+            <unjar dest="${appjars.dir}" src="${lib}/postgresql7.0-1.2.jar"/>
+            <unjar dest="${appjars.dir}" src="${lib}/printf.jar"/>
+            <unjar dest="${appjars.dir}" src="${lib}/stmml.jar"/>
+            <unjar dest="${appjars.dir}" src="${lib}/vecmath1.2-1.14.jar"/>
+            <unjar dest="${appjars.dir}" src="${lib}/xerces-2.6.2.jar"/>
+            <unjar dest="${appjars.dir}" src="${lib}/xindice.jar"/>
+            <unjar dest="${appjars.dir}" src="${lib}/xmlApis-2.6.2.jar"/>
+            <unjar dest="${appjars.dir}" src="${lib}/xmldb.jar"/>
         </target>
 
         <target id="dist-all" name="dist-all" depends="dist, dist-experimental, dist-apps"
