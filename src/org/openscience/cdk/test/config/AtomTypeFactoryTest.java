@@ -32,6 +32,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomType;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.AtomTypeFactory;
 
 
@@ -120,6 +121,23 @@ public class AtomTypeFactoryTest extends TestCase {
 		assertEquals(2.0, atomType.getMaxBondOrder(), 0.0001);
 	}
 
+    public void testGetAtomTypeFromHybrid() {
+		AtomType atomType = null;
+		try {
+            AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/hybridization_atomtypes.xml");
+			atomType = factory.getAtomType("C.sp2");
+		} catch(Exception exc) {
+			fail("Problem getting AtomType for 'hybridization:C.sp2' from AtomTypeFactory: "  +  exc.getMessage());
+		}
+		
+        assertEquals("C", atomType.getSymbol());
+        assertEquals("C.sp2", atomType.getAtomTypeName());
+		assertEquals(0, atomType.getFormalCharge());
+		assertEquals(4.0, atomType.getBondOrderSum(), 0.0001);
+		assertEquals(2.0, atomType.getMaxBondOrder(), 0.0001);
+		assertEquals(CDKConstants.HYBRIDIZATION_SP2, atomType.getHybridization());
+	}
+
     public void testConfigure_Atom() {
 		AtomType atomType = null;
         Atom atom = new Atom("X");
@@ -128,9 +146,10 @@ public class AtomTypeFactoryTest extends TestCase {
             AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/mol2_atomtypes.xml");
 			atomType = factory.configure(atom);
 		} catch(Exception exc) {
-			fail("Problem getting AtomType for 'valency:O+' from AtomTypeFactory: "  +  exc.getMessage());
+			fail("Problem getting AtomType for 'mol2:C.ar' from AtomTypeFactory: "  +  exc.getMessage());
 		}
 		
         assertEquals("C", atom.getSymbol());
+		assertEquals(CDKConstants.HYBRIDIZATION_SP2, atomType.getHybridization());
 	}
 }
