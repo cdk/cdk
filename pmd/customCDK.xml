@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<ruleset name="customNaming">
+
+  <description>
+    This ruleset checks the CDK sources for bad code.
+  </description>
+
+  <!-- rule name="CDK_MissingLoggerStatementInCatch"
+        message="Catched Exceptions must report to CDK's LoggingTool"
+        class="net.sourceforge.pmd.rules.XPathRule">
+    <description>
+      Detects missing LoggingTool.debug(Exception) calls in the catch blocks
+      of try statements. The LoggingTool instance is assumed to be named logger.
+    </description>
+    <priority>3</priority>
+    <properties>
+      <property name="xpath" pluginname="true">
+        <value>
+          <![CDATA[
+//TryStatement[@Catch='true']//StatementExpression/PrimaryExpression[PrimaryPrefix/Name/@Image = 'logger.debug'][PrimarySuffix/Arguments//Name[@Image = ../../../../../../../../../../../../FormalParameter/VariableDeclaratorId/@Image]][count(*) = 0]
+           ]]>
+        </value>
+        </property>
+    </properties>
+  </rule -->
+
+</ruleset>
