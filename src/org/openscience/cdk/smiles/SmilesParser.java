@@ -1,7 +1,8 @@
-/* $RCSfile$
- * $Author$    
- * $Date$    
- * $Revision$
+/*
+ *  $RCSfile$
+ *  $Author$
+ *  $Date$
+ *  $Revision$
  *
  *  Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
  *
@@ -35,32 +36,33 @@ import org.openscience.cdk.*;
 /**
  *  Parses a SMILES string and an AtomContainer. So far only the SSMILES subset
  *  and the '%' tag for more than 10 rings at a time are supported, but this
- *  should be sufficient for most organic molecules.
- *
- *  An example:
- *  <pre>
+ *  should be sufficient for most organic molecules. An example: <pre>
  *  try {
  *    SmilesParser sp = new SmilesParser();
  *    Molecule m = sp.parseSMILES("c1ccccc1");
  *  } catch (InvalidSmilesException ise) {
  *  }
- *  </pre>
+ *  </pre> References: <a href="http://cdk.sf.net/biblio.html#WEI88">WEI88</a>
  *
- * References:
- *   <a href="http://cdk.sf.net/biblio.html#WEI88">WEI88</a>
- *
- * @author     steinbeck
- * @created    29. April 2002
- * @keyword    SMILES, parser
+ *@author     steinbeck
+ *@created    29. April 2002
+ *@keyword    SMILES, parser
  */
 
-public class SmilesParser {
+public class SmilesParser
+{
 
-    private org.openscience.cdk.tools.LoggingTool logger;
-    
-    public SmilesParser() {
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
-    }
+	private org.openscience.cdk.tools.LoggingTool logger;
+
+
+	/**
+	 *  Constructor for the SmilesParser object
+	 */
+	public SmilesParser()
+	{
+		logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+	}
+
 
 	String message = "Can't handle SMILES string";
 	int position = -1;
@@ -72,16 +74,20 @@ public class SmilesParser {
 	int thisRing = -1;
 	Molecule molecule = null;
 	String currentSymbol = null;
-	
+
+
 	/**
 	 *  Parses a SMILES string and returns a Molecule object
 	 *
-	 *@param  smiles   A SMILES string
-	 *@return          A molecule representing the constitution given in the SMILES string
-	 *@exception       InvalidSMILESException  thrown if we could not parse the SMILES string
+	 *@param  smiles                      A SMILES string
+	 *@return                             A molecule representing the constitution
+	 *      given in the SMILES string
+	 *@exception  InvalidSmilesException  Description of the Exception
 	 */
 	public Molecule parseSmiles(String smiles) throws InvalidSmilesException
 	{
+		Bond bond = null;
+		boolean aromaticAtom = false;
 		nodeCounter = 0;
 		bondStatus = 0;
 		thisRing = -1;
@@ -97,7 +103,6 @@ public class SmilesParser {
 			ringbonds[f] = -1;
 		}
 
-
 		char mychar;
 		char[] chars = new char[1];
 		Atom lastNode = null;
@@ -111,9 +116,12 @@ public class SmilesParser {
 			try
 			{
 				mychar = smiles.charAt(position);
-                logger.debug("");
-                logger.debug("Processing: " + mychar);
-                if (lastNode != null) logger.debug("Lastnode: " + lastNode.hashCode());
+				logger.debug("");
+				logger.debug("Processing: " + mychar);
+				if (lastNode != null)
+				{
+					logger.debug("Lastnode: " + lastNode.hashCode());
+				}
 				if ((mychar >= 'A' && mychar <= 'Z') || (mychar >= 'a' && mychar <= 'z'))
 				{
 					currentSymbol = getElementSymbol(smiles, position);
@@ -122,11 +130,21 @@ public class SmilesParser {
 						bondStatus = CDKConstants.BONDORDER_SINGLE;
 					}
 					atom = new Atom(currentSymbol);
+					if (currentSymbol.length() == 1)
+					{
+						if (!(currentSymbol.toUpperCase()).equals(currentSymbol))
+						{
+							atom.flags[CDKConstants.ISAROMATIC] = true;	
+						}
+					}
+
 					molecule.addAtom(atom);
 					logger.debug("Adding atom " + atom.hashCode());
 					if (lastNode != null)
 					{
-						molecule.addBond(new Bond(atom, lastNode, bondStatus));
+						bond = new Bond(atom, lastNode, bondStatus);
+						bond.flags[CDKConstants.ISAROMATIC] = true;
+						molecule.addBond(bond);
 					}
 					bondStatus = CDKConstants.BONDORDER_SINGLE;
 					if (mychar == 'c' || mychar == 'n' || mychar == 's' || mychar == 'o')
@@ -136,65 +154,62 @@ public class SmilesParser {
 					lastNode = atom;
 					nodeCounter++;
 					position = position + currentSymbol.length();
-				}
-				else if (mychar == '=')
+				} else if (mychar == '=')
 				{
 					bondStatus = CDKConstants.BONDORDER_DOUBLE;
 					position++;
-				}
-				else if (mychar == '#')
+				} else if (mychar == '#')
 				{
 					bondStatus = CDKConstants.BONDORDER_TRIPLE;
 					position++;
-				}
-				else if (mychar == '(')
+				} else if (mychar == '(')
 				{
-                    atomStack.push(lastNode);
-                    logger.debug("Stack:");
-                    Enumeration ses = atomStack.elements();
-                    while (ses.hasMoreElements()) {
-                        Atom a = (Atom)ses.nextElement();
-                        logger.debug("" + a.hashCode());
-                    }
-                    logger.debug("------");
+					atomStack.push(lastNode);
+					logger.debug("Stack:");
+					Enumeration ses = atomStack.elements();
+					while (ses.hasMoreElements())
+					{
+						Atom a = (Atom) ses.nextElement();
+						logger.debug("" + a.hashCode());
+					}
+					logger.debug("------");
 					bondStack.push(new Double(bondStatus));
 					position++;
-				}
-				else if (mychar == ')')
+				} else if (mychar == ')')
 				{
-                    lastNode = (Atom) atomStack.pop();
-                    logger.debug("Stack:");
-                    Enumeration ses = atomStack.elements();
-                    while (ses.hasMoreElements()) {
-                        Atom a = (Atom)ses.nextElement();
-                        logger.debug("" + a.hashCode());
-                    }
-                    logger.debug("------");
+					lastNode = (Atom) atomStack.pop();
+					logger.debug("Stack:");
+					Enumeration ses = atomStack.elements();
+					while (ses.hasMoreElements())
+					{
+						Atom a = (Atom) ses.nextElement();
+						logger.debug("" + a.hashCode());
+					}
+					logger.debug("------");
 					bondStatus = ((Double) bondStack.pop()).doubleValue();
 					position++;
-				}
-				else if (mychar >= '0' && mychar <= '9')
+				} else if (mychar >= '0' && mychar <= '9')
 				{
 					chars[0] = mychar;
 					currentSymbol = new String(chars);
 					thisRing = (new Integer(new String(chars))).intValue();
 					handleRing(lastNode);
 					position++;
-				}
-				else if (mychar == '%')
+				} else if (mychar == '%')
 				{
 					currentSymbol = getRingNumber(smiles, position);
 					thisRing = (new Integer(currentSymbol)).intValue();
 					handleRing(lastNode);
 					position += currentSymbol.length() + 1;
-				}
-				else if (mychar == '[')
+				} else if (mychar == '[')
 				{
 					currentSymbol = getAtomString(smiles, position);
 					atom = assembleAtom(currentSymbol, nodeCounter);
 					molecule.addAtom(atom);
 					if (lastNode != null)
 					{
+						bond = new Bond(atom, lastNode, bondStatus);
+						bond.flags[CDKConstants.ISAROMATIC] = true;
 						molecule.addBond(new Bond(atom, lastNode, bondStatus));
 					}
 					bondStatus = CDKConstants.BONDORDER_SINGLE;
@@ -205,13 +220,11 @@ public class SmilesParser {
 					lastNode = atom;
 					nodeCounter++;
 					position = position + currentSymbol.length();
-				}
-				else
+				} else
 				{
 					throw new InvalidSmilesException(message);
 				}
-			}
-			catch (Exception exc)
+			} catch (Exception exc)
 			{
 				exc.printStackTrace();
 				throw new InvalidSmilesException(message);
@@ -225,7 +238,10 @@ public class SmilesParser {
 	/**
 	 *  Gets the AtomString attribute of the SmilesParser object
 	 *
-	 *@return      The AtomString value
+	 *@param  s                           Description of the Parameter
+	 *@param  pos                         Description of the Parameter
+	 *@return                             The AtomString value
+	 *@exception  InvalidSmilesException  Description of the Exception
 	 */
 	private String getAtomString(String s, int pos) throws InvalidSmilesException
 	{
@@ -236,16 +252,17 @@ public class SmilesParser {
 			{
 				if (s.substring(f, 1).equals("]"))
 				{
-					break;	
+					break;
+				} else
+				{
+					as.append(s.substring(f, 1));
 				}
-				else as.append(s.substring(f, 1));
-				
+
 			}
-		}
-		catch(Exception exc)
+		} catch (Exception exc)
 		{
 			String message = "Problem parsing Atom specification given in brackets.\n";
-			message += "Invalid SMILES string was: " + s; 
+			message += "Invalid SMILES string was: " + s;
 			throw new InvalidSmilesException(message);
 		}
 		return as.toString();
@@ -255,6 +272,7 @@ public class SmilesParser {
 	/**
 	 *  Gets the Charge attribute of the SmilesParser object
 	 *
+	 *@param  s  Description of the Parameter
 	 *@return    The Charge value
 	 */
 	private int getCharge(String s)
@@ -265,8 +283,7 @@ public class SmilesParser {
 		{
 			signPos = s.indexOf("+");
 
-		}
-		else
+		} else
 		{
 			charge = -1;
 		}
@@ -277,6 +294,8 @@ public class SmilesParser {
 	/**
 	 *  Gets the ElementSymbol attribute of the SmilesParser object
 	 *
+	 *@param  s    Description of the Parameter
+	 *@param  pos  Description of the Parameter
 	 *@return      The ElementSymbol value
 	 */
 	private String getElementSymbol(String s, int pos)
@@ -284,10 +303,9 @@ public class SmilesParser {
 		if (pos < s.length() - 1 && "BrCl".indexOf((s.substring(pos, pos + 2))) >= 0)
 		{
 			return s.substring(pos, pos + 2);
-		}
-		else if ("BCcNnOoPSsFI".indexOf((s.substring(pos, pos + 1))) >= 0)
+		} else if ("BCcNnOoPSsFI".indexOf((s.substring(pos, pos + 1))) >= 0)
 		{
-			return s.substring(pos, pos + 1).toUpperCase();
+			return s.substring(pos, pos + 1);
 		}
 		return null;
 	}
@@ -296,6 +314,8 @@ public class SmilesParser {
 	/**
 	 *  Gets the RingNumber attribute of the SmilesParser object
 	 *
+	 *@param  s    Description of the Parameter
+	 *@param  pos  Description of the Parameter
 	 *@return      The RingNumber value
 	 */
 	private String getRingNumber(String s, int pos)
@@ -313,6 +333,15 @@ public class SmilesParser {
 		return retString;
 	}
 
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  s                           Description of the Parameter
+	 *@param  nodeCounter                 Description of the Parameter
+	 *@return                             Description of the Return Value
+	 *@exception  InvalidSmilesException  Description of the Exception
+	 */
 	private Atom assembleAtom(String s, int nodeCounter) throws InvalidSmilesException
 	{
 		Atom atom = null;
@@ -328,22 +357,18 @@ public class SmilesParser {
 				{
 					currentSymbol = getElementSymbol(s, position);
 					position = position + currentSymbol.length();
-				}
-				else if (mychar >= '0' && mychar <= '9')
+				} else if (mychar >= '0' && mychar <= '9')
 				{
 					position++;
-				}
-				else
+				} else
 				{
 					throw new InvalidSmilesException(message);
 				}
-			}
-			catch (Exception exc)
+			} catch (Exception exc)
 			{
 				throw new InvalidSmilesException(message);
 			}
 		} while (position < s.length());
-
 
 
 		return atom;
@@ -351,17 +376,23 @@ public class SmilesParser {
 
 
 	/**
-	 *  We call this method when a ring (depicted by a number)
-	 * has been found.
+	 *  We call this method when a ring (depicted by a number) has been found.
+	 *
+	 *@param  atom  Description of the Parameter
 	 */
-	private void handleRing(Atom atom) {
+	private void handleRing(Atom atom)
+	{
 		double bondStat = bondStatus;
+		Bond bond = null;
 		Atom partner = null;
-		Atom thisNode = rings[thisRing]; // lookup
-		if (thisNode != null) {
-            /* Second occurence of this ring:
-             *   - close ring
-             */
+		Atom thisNode = rings[thisRing];
+		// lookup
+		if (thisNode != null)
+		{
+			/*
+			 *  Second occurence of this ring:
+			 *  - close ring
+			 */
 			if (bondStat == CDKConstants.BONDORDER_AROMATIC)
 			{
 				if (ringbonds[thisRing] != CDKConstants.BONDORDER_AROMATIC)
@@ -371,16 +402,20 @@ public class SmilesParser {
 			}
 
 			partner = thisNode;
-			molecule.addBond(new Bond(atom, partner, bondStat));
+			bond = new Bond(atom, partner, bondStat);
+			bond.flags[CDKConstants.ISAROMATIC] = true;
+			molecule.addBond(bond);
 			rings[thisRing] = null;
 			ringbonds[thisRing] = -1;
 
-		} else {
-            /* First occurence of this ring:
-             *   - add current atom to list
-             */
-            rings[thisRing] = atom;
-            ringbonds[thisRing] = bondStatus;
+		} else
+		{
+			/*
+			 *  First occurence of this ring:
+			 *  - add current atom to list
+			 */
+			rings[thisRing] = atom;
+			ringbonds[thisRing] = bondStatus;
 		}
 	}
 }
