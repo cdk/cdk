@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.5.0//EN" 
+                         "../website-2.5.0/schema/dtd/website.dtd" [
+<!ENTITY changelog SYSTEM "../../../CHANGELOG">
+]>
+<webpage id="cdknews-suppl">
+  <config param="last-change-by" value="$Author$"/>
+  <config param="rcsdate" value="$Date$"/>
+
+  <head>
+    <title>CDK News - Supplementing Material</title>
+    <titleabbrev>Supplements</titleabbrev>
+    <summary>Webpage with supplementing material to CDK News articles.</summary>
+  </head>
+
+  <para>
+    This page contains supplementing material to CDK News articles.
+  </para>
+  
+  <orderedlist>
+    <listitem><para>R. Guha, Using thr CDK as a backend to R, CDK News, 2.1</para>
+      <itemizedlist>
+        <listitem><para>
+          <ulink url="http://cdk.sf.net/cdknews/art11/cdkfp.R">cdkfp.R</ulink> - source code for the fingerprint function</para></listitem>
+        <listitem><para>
+          <ulink url="http://cdk.sf.net/cdknews/art11/fpdata.tgz">fpdata.tgz</ulink> - MOL &amp; HIN files (first 59 taken from Avery et al., 
+            J.Med. Chem., 2002, 45, 292-303 and the remainder from Goll et al., J. Chem.Inf. Conmput.Sci., 1999, 
+            39, 974-983.</para></listitem>
+        <listitem><para>
+          <ulink url="http://blue.chem.psu.edu/~rajarshi/code/R/index.html#bfp">Binary fingerprint tools
+            package for R</ulink></para></listitem>
+        <listitem><para>
+          <ulink url="http://cdk.sf.net/cdknews/art11/cdklm.R">cdklm.R</ulink> - source code for the the descriptor calculation function</para></listitem> 
+        <listitem><para>
+          <ulink url="http://cdk.sf.net/cdknews/art11/lmdata.tgz">lmdata.tgz</ulink> - HIN formatted structures for the regression model example described in 
+          the article. The tarball also contains the file called depv.txt which lists the boiling point values for the
+          277 molecules. (taken from Goll et al., J. Chem.Inf. Conmput.Sci., 1999, 39, 974-983).</para></listitem>
+      </itemizedlist>
+    </listitem>
+  </orderedlist>
+  
+</webpage>
