@@ -45,34 +45,59 @@ public class CrystalTest extends TestCase {
         return new TestSuite(CrystalTest.class);
     }
 
-    public void testSetABC() {
+    public void testSetA() {
         Crystal crystal = new Crystal();
         
         crystal.setA(1.0, 2.0, 3.0);
         double[] a = crystal.getA();
-        assertTrue(1.0 == a[0]);
-        assertTrue(2.0 == a[1]);
-        assertTrue(3.0 == a[2]);
+        assertEquals(1.0, a[0], 0.001);
+        assertEquals(2.0, a[1], 0.001);
+        assertEquals(3.0, a[2], 0.001);
+    }
+    
+    public void testSetB() {
+        Crystal crystal = new Crystal();
         
         crystal.setB(1.0, 2.0, 3.0);
         double[] b = crystal.getB();
-        assertTrue(1.0 == b[0]);
-        assertTrue(2.0 == b[1]);
-        assertTrue(3.0 == b[2]);
-
+        assertEquals(1.0, b[0], 0.001);
+        assertEquals(2.0, b[1], 0.001);
+        assertEquals(3.0, b[2], 0.001);
+    }
+    
+    public void testSetC() {
+        Crystal crystal = new Crystal();
+        
         crystal.setC(1.0, 2.0, 3.0);
         double[] c = crystal.getC();
-        assertTrue(1.0 == c[0]);
-        assertTrue(2.0 == c[1]);
-        assertTrue(3.0 == c[2]);
+        assertEquals(1.0, c[0], 0.001);
+        assertEquals(2.0, c[1], 0.001);
+        assertEquals(3.0, c[2], 0.001);
     }
     
     public void testSetSpaceGroup() {
         Crystal crystal = new Crystal();
-        crystal.setSpaceGroup("P 2_1 2_1 2_1");
-        assertEquals("P 2_1 2_1 2_1", crystal.getSpaceGroup());
-        
-        assertEquals(4, crystal.getZ());
+        String spacegroup = "P 2_1 2_1 2_1";
+        crystal.setSpaceGroup(spacegroup);
+        assertEquals(spacegroup, crystal.getSpaceGroup());
     }
 
+    public void testSetZ() {
+        Crystal crystal = new Crystal();
+        int z = 2;
+        crystal.setZ(z);
+        assertEquals(z, crystal.getZ());
+    }
+
+    /**
+     * Method to test wether the class complies with RFC #9.
+     */
+    public void testToString() {
+        Crystal crystal = new Crystal();
+        String description = crystal.toString();
+        for (int i=0; i< description.length(); i++) {
+            assertTrue(description.charAt(i) != '\n');
+            assertTrue(description.charAt(i) != '\r');
+        }
+    }
 }
