@@ -178,7 +178,7 @@ public class DADMLReader extends DefaultChemObjectReader {
     public URL resolveLink(URI dadmlRI) {
         Vector links = resolveLinks(dadmlRI);
         if (links.size() > 0) {
-            return (URL)links.elementAt(0);
+            return ((DADMLResult)links.elementAt(0)).getURL();
         } // else
         return null;
     }
