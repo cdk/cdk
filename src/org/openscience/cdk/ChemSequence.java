@@ -50,7 +50,7 @@ public class ChemSequence extends ChemObject implements java.io.Serializable, Cl
 	 *  Amount by which the chemModels array grows when elements are added and
 	 *  the array is not large enough for that. 
 	 */
-	protected int growArraySize = 5;
+	protected int growArraySize = 4;
 
 
 

@@ -48,7 +48,7 @@ public class ChemFile extends ChemObject implements java.io.Serializable, Clonea
 	 *  Amount by which the chemsequence array grows when elements are added and
 	 *  the array is not large enough for that. 
 	 */
-	protected int growArraySize = 5;
+	protected int growArraySize = 4;
 
 	/**
 	 *  Constructs an empty SetOfChemSequences.
