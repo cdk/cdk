@@ -59,7 +59,7 @@
   </target>
 
   <target name="includes" id="includes" 
-      depends="check.includes, javancss, keyword.index, bibliography, dicts, atlists"/>
+      depends="check.includes, javancss, keyword.index, bibliography, dicts, atlists, depends"/>
   
   <target id="website" name="website" depends="layout">
     <xslt basedir="." destdir="${build.dir}" extension=".html"
