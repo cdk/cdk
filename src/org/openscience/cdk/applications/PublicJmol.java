@@ -96,22 +96,9 @@ public class PublicJmol extends JPanel {
   private JViewport port;
   static DisplayPanel display;
   StatusBar status;
-  private AtomPropsMenu apm;
   static AtomTypeTable atomTypeTable;
-  private Preferences prefs;
-  private Animate anim;
-  private Vibrate vib;
-  private PropertyGraph pg;
-  private Measure meas;
-  private MeasurementList mlist;
-  private RecentFilesDialog recentFiles;
-  protected ScriptWindow scriptWindow;
   protected static JFrame frame;
   private ChemFile chemFile;
-  private JFileChooser openChooser;
-  private JFileChooser saveChooser;
-  private FileTyper fileTyper;
-  private JFileChooser exportChooser;
 
   /**
    * Button group for toggle buttons in the toolbar.
@@ -188,22 +175,6 @@ public class PublicJmol extends JPanel {
     status = (StatusBar) createStatusBar();
     splash.showStatus("Initializing 3D display...");
     display = new DisplayPanel(status, settings);
-    splash.showStatus("Initializing Preferences...");
-    prefs = new Preferences(frame, display);
-    splash.showStatus("Initializing Animate...");
-    anim = new Animate(frame, display);
-    splash.showStatus("Initializing Vibrate...");
-    vib = new Vibrate(frame, display);
-    splash.showStatus("Initializing Recent Files...");
-    recentFiles = new RecentFilesDialog(frame);
-    splash.showStatus("Initializing Property Graph...");
-    pg = new PropertyGraph(frame);
-    splash.showStatus("Initializing Measurements...");
-    mlist = new MeasurementList(frame, display);
-    meas = new Measure(frame, display);
-    meas.setMeasurementList(mlist);
-    display.setMeasure(meas);
-    mlist.addMeasurementListListener(display);
     port.add(display);
     splash.showStatus("Initializing Chemical Shifts...");
     chemicalShifts.initialize();
@@ -216,18 +187,6 @@ public class PublicJmol extends JPanel {
       Action a = actions[i];
       commands.put(a.getValue(Action.NAME), a);
     }
-
-    // Fix for actions that confict with the operation of
-    // vibration animations
-    Action[] animActions = anim.getActions();
-    for (int i = 0; i < animActions.length; ++i) {
-      vib.addConflictingAction(animActions[i]);
-    }
-    vib.addConflictingAction(getAction(openAction));
-    menuItems = new Hashtable();
-    splash.showStatus("Building Menubar...");
-    menubar = createMenubar();
-    // add("North", menubar);
 
     JPanel panel = new JPanel();
     panel.setLayout(new BorderLayout());
@@ -245,22 +204,6 @@ public class PublicJmol extends JPanel {
 
     splash.showStatus("Reading AtomTypes...");
     atomTypeTable = new AtomTypeTable(frame, UserAtypeFile);
-    splash.showStatus("Setting up File Choosers...");
-    File currentDir = getUserDirectory();
-    openChooser = new JFileChooser();
-    openChooser.setCurrentDirectory(currentDir);
-    saveChooser = new JFileChooser();
-    fileTyper = new FileTyper();
-    saveChooser.addPropertyChangeListener(fileTyper);
-    saveChooser.setAccessory(fileTyper);
-    saveChooser.setCurrentDirectory(currentDir);
-    exportChooser = new JFileChooser();
-    exportChooser.setCurrentDirectory(currentDir);
-
-    addPropertyChangeListener(moleculeProperty, saveAction);
-    addPropertyChangeListener(moleculeProperty, exportAction);
-    addPropertyChangeListener(moleculeProperty, povrayAction);
-    addPropertyChangeListener(moleculeProperty, printAction);
   }
 
   public static PublicJmol getJmol(JFrame frame) {
@@ -279,93 +222,8 @@ public class PublicJmol extends JPanel {
     frame.addWindowListener(new PublicJmol.AppCloser());
     frame.pack();
     frame.setSize(400, 400);
-    ImageIcon jmolIcon =
-      JmolResourceHandler.getInstance().getIcon("Jmol.icon");
-    Image iconImage = jmolIcon.getImage();
-    frame.setIconImage(iconImage);
-    splash.showStatus("Launching main frame...");
     frame.show();
     return window;
-  }
-
-  /**
-   * Opens a file with a hint to use a particular reader, defaulting to
-   * the ReaderFactory if the hint doesn't match any known file types.
-   */
-  public void openFile(File theFile, String typeHint) {
-
-    if (theFile != null) {
-      frame.setCursor(new Cursor(Cursor.WAIT_CURSOR));
-      ChemFile newChemFile = null;
-
-      try {
-        FileInputStream is = new FileInputStream(theFile);
-
-        if (typeHint.equals("PDB")) {
-          ChemFileReader reader = new PDBReader(new InputStreamReader(is));
-          newChemFile = reader.read();
-        } else if (typeHint.equals("CML")) {
-          ChemFileReader reader = new CMLReader(theFile.toURL());
-          newChemFile = ((CMLReader) reader).readValidated();
-        } else if (typeHint.equals("XYZ (xmol)")) {
-          ChemFileReader reader = new XYZReader(new InputStreamReader(is));
-          newChemFile = reader.read();
-        } else if (typeHint.equals("Ghemical Molecular Dynamics")) {
-          ChemFileReader reader =
-            new GhemicalMMReader(new InputStreamReader(is));
-          newChemFile = reader.read();
-        } else {
-
-          // Try to automagically determine file type:
-          ChemFileReader reader =
-            ReaderFactory.createReader(new InputStreamReader(is));
-          if (reader == null) {
-            throw new JmolException("openFile", "Unknown file type");
-          }
-          newChemFile = reader.read();
-        }
-
-        if (newChemFile != null) {
-          if (newChemFile.getNumberFrames() > 0) {
-            setChemFile(newChemFile);
-
-            frame.setTitle(theFile.getName());
-            currentFileName = theFile.getName();
-
-            // Add the file to the recent files list
-            recentFiles.addFile(theFile.toString(), typeHint);
-          } else {
-            JOptionPane.showMessageDialog(PublicJmol.this,
-                "The file \"" + theFile + "\" appears to be empty."
-                  + "\nIf this is in error, please contact the Jmol development team.",
-                    "Empty file", JOptionPane.ERROR_MESSAGE);
-          }
-        } else {
-          JOptionPane.showMessageDialog(PublicJmol.this,
-              "Unknown error reading file \"" + theFile + "\"."
-                + "\nPlease contact the Jmol development team.",
-                  "Unknown error", JOptionPane.ERROR_MESSAGE);
-        }
-
-      } catch (java.io.FileNotFoundException ex) {
-        JOptionPane.showMessageDialog(PublicJmol.this,
-            "Unable to find file \"" + theFile + "\"", "File not found",
-              JOptionPane.ERROR_MESSAGE);
-      } catch (JmolException ex) {
-        JOptionPane.showMessageDialog(PublicJmol.this,
-            "Unable to determine type for file \"" + theFile + "\"",
-              "Unknown file type", JOptionPane.ERROR_MESSAGE);
-      } catch (Exception ex) {
-        JOptionPane.showMessageDialog(PublicJmol.this,
-            "Unexpected exception: " + ex.getMessage()
-              + "\nPlease contact the Jmol development team.",
-                "Unexpected error", JOptionPane.ERROR_MESSAGE);
-        ex.printStackTrace();
-      } finally {
-        frame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-      }
-      return;
-    }
   }
 
   // transfer molecule to Jmol as serialized XML string
@@ -389,13 +247,6 @@ public class PublicJmol extends JPanel {
     String name = "from Jumbo";
     if (chemFile != null) {
       display.setChemFile(chemFile);
-      anim.setChemFile(chemFile);
-      vib.setChemFile(chemFile);
-      pg.setChemFile(chemFile);
-      apm.replaceList(chemFile.getAtomPropertyList());
-      mlist.clear();
-
-      chemicalShifts.setChemFile(chemFile, apm);
     }
   }
 
@@ -414,14 +265,7 @@ public class PublicJmol extends JPanel {
     ChemFile oldChemFile = this.chemFile;
     this.chemFile = chemFile;
     display.setChemFile(chemFile);
-    anim.setChemFile(chemFile);
-    vib.setChemFile(chemFile);
-    pg.setChemFile(chemFile);
-    apm.replaceList(chemFile.getAtomPropertyList());
-    mlist.clear();
-
-    chemicalShifts.setChemFile(chemFile, apm);
-
+    
     firePropertyChange(moleculeProperty, oldChemFile, chemFile);
   }
 
@@ -439,17 +283,8 @@ public class PublicJmol extends JPanel {
   public Action[] getActions() {
 
     Action[] displayActions = display.getActions();
-    Action[] prefActions = prefs.getActions();
-    Action[] animActions = anim.getActions();
-    Action[] measActions = meas.getActions();
-    Action[] mlistActions = mlist.getActions();
-    Action[] vibActions = vib.getActions();
-    Action[] pgActions = pg.getActions();
 
-    int nactions = defaultActions.length + displayActions.length
-                     + prefActions.length + animActions.length
-                     + vibActions.length + measActions.length
-                     + mlistActions.length + pgActions.length;
+    int nactions = defaultActions.length + displayActions.length;
 
     Action[] theActions = new Action[nactions];
 
@@ -458,25 +293,6 @@ public class PublicJmol extends JPanel {
     System.arraycopy(defaultActions, 0, theActions, 0, defaultActions.length);
     System.arraycopy(displayActions, 0, theActions, defaultActions.length,
         displayActions.length);
-    System.arraycopy(prefActions, 0, theActions,
-        defaultActions.length + displayActions.length, prefActions.length);
-    System.arraycopy(animActions, 0, theActions,
-        defaultActions.length + displayActions.length + prefActions.length,
-          animActions.length);
-    System.arraycopy(measActions, 0, theActions,
-        defaultActions.length + displayActions.length + prefActions.length
-          + animActions.length, measActions.length);
-    System.arraycopy(mlistActions, 0, theActions,
-        defaultActions.length + displayActions.length + prefActions.length
-          + animActions.length + measActions.length, mlistActions.length);
-    System.arraycopy(vibActions, 0, theActions,
-        defaultActions.length + displayActions.length + prefActions.length
-          + animActions.length + measActions.length + mlistActions.length,
-            vibActions.length);
-    System.arraycopy(pgActions, 0, theActions,
-        defaultActions.length + displayActions.length + prefActions.length
-          + animActions.length + measActions.length + mlistActions.length
-            + vibActions.length, pgActions.length);
     return theActions;
   }
 
@@ -716,115 +532,6 @@ public class PublicJmol extends JPanel {
     return new StatusBar();
   }
 
-  /**
-   * Create the menubar for the app.  By default this pulls the
-   * definition of the menu from the associated resource file.
-   */
-  protected JMenuBar createMenubar() {
-
-    JMenuItem mi;
-    JMenuBar mb = new JMenuBar();
-
-    String[] menuKeys =
-      tokenize(JmolResourceHandler.getInstance().getString("Jmol.menubar"));
-    for (int i = 0; i < menuKeys.length; i++) {
-      if (menuKeys[i].equals("-")) {
-        mb.add(Box.createHorizontalGlue());
-      } else {
-        JMenu m = createMenu(menuKeys[i], false);
-
-        if (m != null) {
-          mb.add(m);
-        }
-        String mnem = JmolResourceHandler.getInstance().getString("Jmol."
-                        + menuKeys[i] + mnemonicSuffix);
-        if (mnem != null) {
-          char mn = mnem.charAt(0);
-          m.setMnemonic(mn);
-        }
-
-      }
-    }
-    return mb;
-  }
-
-  /**
-   * Create a menu for the app.  By default this pulls the
-   * definition of the menu from the associated resource file.
-   */
-  protected JMenu createMenu(String key, boolean isPopup) {
-
-    // Get list of items from resource file:
-    String[] itemKeys;
-    if (isPopup) {
-      itemKeys = tokenize(JmolResourceHandler.getInstance().getString("Jmol."
-          + key + popupSuffix));
-    } else {
-      itemKeys = tokenize(JmolResourceHandler.getInstance().getString("Jmol."
-          + key));
-    }
-
-    // Get label associated with this menu:
-    JMenu menu = new JMenu(JmolResourceHandler.getInstance().getString("Jmol."
-                   + key + "Label"));
-
-    // Loop over the items in this menu:
-    for (int i = 0; i < itemKeys.length; i++) {
-
-      // Check to see if it is a radio group:
-      String radiogroup = JmolResourceHandler.getInstance().getString("Jmol."
-                            + itemKeys[i] + radioSuffix);
-      if (radiogroup != null) {
-
-        // Get the list of items in the radio group:
-        String[] radioKeys = tokenize(radiogroup);
-
-        // See what is the selected member of the radio group:
-        String si = JmolResourceHandler.getInstance().getString("Jmol."
-                      + itemKeys[i] + selectedSuffix);
-
-        // Create the button group:
-        ButtonGroup bg = new ButtonGroup();
-
-        // Loop over the items in the radio group:
-        for (int j = 0; j < radioKeys.length; j++) {
-          JRadioButtonMenuItem mi =
-            (JRadioButtonMenuItem) createMenuItem(radioKeys[j], true);
-          menu.add(mi);
-          bg.add(mi);
-          if (radioKeys[j].equals(si)) {
-            mi.setSelected(true);
-          }
-        }
-      } else {
-        if (itemKeys[i].equals("-")) {
-          menu.addSeparator();
-        } else {
-
-          // Check to see if it is a popup menu:
-          String popup = JmolResourceHandler.getInstance().getString("Jmol."
-                           + itemKeys[i] + popupSuffix);
-          if (popup != null) {
-            if (popup.equals("prop")) {
-              apm = new AtomPropsMenu(JmolResourceHandler.getInstance()
-                  .getString("Jmol." + itemKeys[i] + "Label"), settings);
-              menu.add(apm);
-            } else {
-              JMenu pm;
-              pm = createMenu(itemKeys[i], true);
-              menu.add(pm);
-            }
-          } else {
-            JMenuItem mi = createMenuItem(itemKeys[i], false);
-            menu.add(mi);
-          }
-        }
-      }
-    }
-    return menu;
-  }
-
-
   private class ActionChangedListener implements PropertyChangeListener {
 
     AbstractButton button;
@@ -1041,13 +748,6 @@ public class PublicJmol extends JPanel {
     }
 
     public void actionPerformed(ActionEvent e) {
-
-      int retval = openChooser.showOpenDialog(PublicJmol.this);
-      if (retval == 0) {
-        File theFile = openChooser.getSelectedFile();
-        openFile(theFile, "");
-        return;
-      }
     }
   }
 
@@ -1088,38 +788,6 @@ public class PublicJmol extends JPanel {
     }
 
     public void actionPerformed(ActionEvent e) {
-
-      Frame frame = getFrame();
-      int retval = saveChooser.showSaveDialog(PublicJmol.this);
-      if (retval == 0) {
-        File theFile = saveChooser.getSelectedFile();
-        if (theFile != null) {
-          try {
-            FileOutputStream os = new FileOutputStream(theFile);
-
-            if (fileTyper.getType().equals("XYZ (xmol)")) {
-              XYZSaver xyzs = new XYZSaver(getCurrentFile(), os);
-              xyzs.writeFile();
-            } else if (fileTyper.getType().equals("PDB")) {
-              PdbSaver ps = new PdbSaver(getCurrentFile(), os);
-              ps.writeFile();
-            } else if (fileTyper.getType().equals("CML")) {
-              CMLSaver cs = new CMLSaver(getCurrentFile(), os);
-              cs.writeFile();
-            } else {
-            }
-
-            os.flush();
-            os.close();
-
-          } catch (Exception exc) {
-            status.setStatus(1, "Exception:");
-            status.setStatus(2, exc.toString());
-            exc.printStackTrace();
-          }
-          return;
-        }
-      }
     }
 
   }
@@ -1132,54 +800,6 @@ public class PublicJmol extends JPanel {
     }
 
     public void actionPerformed(ActionEvent e) {
-
-      Frame frame = getFrame();
-
-
-      ImageTyper it = new ImageTyper(exportChooser);
-
-      // GIF doesn't support more than 8 bits:
-      if (settings.getAtomDrawMode() == DisplaySettings.SHADING) {
-        it.disableGIF();
-      }
-      exportChooser.setAccessory(it);
-
-      int retval = exportChooser.showSaveDialog(PublicJmol.this);
-      if (retval == 0) {
-        File theFile = exportChooser.getSelectedFile();
-
-        if (theFile != null) {
-          try {
-            Image eImage = display.takeSnapshot();
-            FileOutputStream os = new FileOutputStream(theFile);
-
-            if (it.getType().equals("JPEG")) {
-              int qual = 10 * it.getQuality();
-              JpegEncoder jc = new JpegEncoder(eImage, qual, os);
-              jc.Compress();
-            } else if (it.getType().equals("PNG")) {
-              PngEncoder png = new PngEncoder(eImage);
-              byte[] pngbytes = png.pngEncode();
-              os.write(pngbytes);
-            } else if (it.getType().equals("BMP")) {
-              BMPFile bmp = new BMPFile();
-              bmp.saveBitmap(os, eImage);
-            } else {
-
-              // Do nothing
-            }
-
-            os.flush();
-            os.close();
-
-          } catch (IOException exc) {
-            status.setStatus(1, "IO Exception:");
-            status.setStatus(2, exc.toString());
-            System.out.println(exc.toString());
-          }
-          return;
-        }
-      }
     }
 
   }
@@ -1191,14 +811,6 @@ public class PublicJmol extends JPanel {
     }
 
     public void actionPerformed(ActionEvent e) {
-
-      recentFiles.show();
-      String selection = recentFiles.getFile();
-      if (selection != null) {
-        System.out.println("Recent File: " + selection + " ("
-            + recentFiles.getFileType() + ")");
-        openFile(new File(selection), recentFiles.getFileType());
-      }
     }
   }
 
@@ -1209,7 +821,6 @@ public class PublicJmol extends JPanel {
     }
 
     public void actionPerformed(ActionEvent e) {
-      scriptWindow.show();
     }
   }
 
