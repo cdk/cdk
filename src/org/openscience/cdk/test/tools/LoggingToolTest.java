@@ -49,18 +49,8 @@ public class LoggingToolTest extends TestCase {
         assertNotNull(logger);
     }
 	
-	public void testLoggingTool() {
-        LoggingTool logger = new LoggingTool();
-        assertNotNull(logger);
-    }
-
 	public void testLoggingTool_boolean() {
         LoggingTool logger = new LoggingTool(true);
-        assertNotNull(logger);
-    }
-	
-	public void testLoggingTool_String() {
-        LoggingTool logger = new LoggingTool("Bla");
         assertNotNull(logger);
     }
 	
@@ -69,12 +59,12 @@ public class LoggingToolTest extends TestCase {
         assertNotNull(logger);
     }
 	
-	public void testLoggingTool_String_boolean() {
-        LoggingTool logger = new LoggingTool("Bla", true);
+	public void testLoggingTool_Object_boolean() {
+        LoggingTool logger = new LoggingTool(this, true);
         assertNotNull(logger);
     }
 	
-	public void testLoggingTool_Object_boolean() {
+	public void testLoggingTool_Class_boolean() {
         LoggingTool logger = new LoggingTool(this, true);
         assertNotNull(logger);
     }

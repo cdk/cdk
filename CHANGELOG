@@ -8,6 +8,7 @@ New:
 Fixes:
 
 API changes:
+* Removed deprecated methods from LoggingTool
 
 20050116 Release
 ------------------------------------

@@ -104,17 +104,6 @@ public class LoggingTool {
 
     /**
      * Constructs a LoggingTool which produces log lines without any special
-     * indication which class the message originates from. Neither is any
-     * configuration done.
-     *
-     * @deprecated Use the constructor LoggingTool(Object) instead.
-     */
-    public LoggingTool() {
-        this( LoggingTool.class.getName() );
-    }
-
-    /**
-     * Constructs a LoggingTool which produces log lines without any special
      * indication which class the message originates from. It allows determining
      * wether the log4j should be configurated.
      *
@@ -125,20 +114,6 @@ public class LoggingTool {
         this( LoggingTool.class.getName(), useConfig );
     }
 
-    /**
-     * Constructs a LoggingTool which produces log lines indicating them to be
-     * for the Class with the name <code>classname</code>. No special
-     * configuration of the Log4J engine is done.
-     *
-     * @param classname String with the name of the class from which the messages
-     *                  originate
-     *
-     * @deprecated Use the constructor LoggingTool(Object) instead.
-     */
-    public LoggingTool(String classname) {
-        this(classname, false);
-    }
-    
     /**
      * Constructs a LoggingTool which produces log lines indicating them to be
      * for the Class of the <code>Object</code>. The Log4J engine is configurated
@@ -158,7 +133,7 @@ public class LoggingTool {
      * @param classInst Class from which the message originates
      */
     public LoggingTool(Class classInst) {
-        this(classInst.getName(), true);
+        this(classInst, true);
     }
     
     /**
@@ -172,7 +147,7 @@ public class LoggingTool {
      * @param object Object from which the message originates
      */
     public LoggingTool(Object object, boolean useConfig) {
-        this(object.getClass().getName(), useConfig);
+        this(object.getClass(), useConfig);
     }
 
     /**
@@ -180,17 +155,15 @@ public class LoggingTool {
      * for the Class with the name <code>classname</code>. It allows determining
      * wether the log4j should be configurated.
      *
-     * @param classname String with the name of the class from which the messages
+     * @param classInst String with the name of the class from which the messages
      *                  originate
      * @param useConfig if true, the Log4J engine is configurated with a CDK
      *                  specific configuration file
-     *
-     * @deprecated Use the constructor LoggingTool(Object) instead.
      */
-    public LoggingTool(String classname, boolean useConfig) {
+    public LoggingTool(Class classInst, boolean useConfig) {
         this.logger = this;
         this.stackLength = DEFAULT_STACK_LENGTH;
-        this.classname = classname;
+        this.classname = classInst.getName();
         try {
             log4jLogger = (org.apache.log4j.Category)org.apache.log4j.Category
                                                      .getInstance( classname );
