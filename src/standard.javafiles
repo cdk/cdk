@@ -16,3 +16,7 @@ org/openscience/cdk/exception/NoSuchAtomException.java
 org/openscience/cdk/exception/NoSuchAtomTypeException.java
 org/openscience/cdk/exception/UnsupportedChemObjectException.java
 org/openscience/cdk/smiles/SmilesParser.java
+org/openscience/cdk/tools/ChemObjectManipulator.java
+org/openscience/cdk/tools/SetOfMoleculesManipulator.java
+org/openscience/cdk/tools/SetOfReactionsManipulator.java
+org/openscience/cdk/tools/ReactionManipulator.java
