@@ -97,18 +97,28 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
         Atom[] atoms = molecule.getAtoms();
         for (int i=0; i<atoms.length; i++) {
             Atom atom = atoms[i];
-            writer.write("  Atom " + atom.getID() + " = new Atom(\"" + atom.getSymbol() +
-                         "\");\n");
+            writeAtom(atom);
+            writer.write("  mol.addAtom(" + atom.getID() + ");\n");
         }
         Bond[] bonds = molecule.getBonds();
         for (int i=0; i<bonds.length; i++) {
             Bond bond = bonds[i];
-            writer.write("  Bond " + bond.getID() + " = new Bond(" + 
-                         bond.getAtomAt(0).getID() + ", " +
-                         bond.getAtomAt(1).getID() + ", " +
-                         bond.getOrder() + ");\n");
+            writeBond(bond);
+            writer.write("  mol.addBond(" + bond.getID() + ");\n");
         }
         writer.write("}\n");
+    }
+
+    public void writeAtom(Atom atom) throws Exception {
+        writer.write("  Atom " + atom.getID() + " = new Atom(\"" + atom.getSymbol() +
+                     "\");\n");
+    }
+    
+    public void writeBond(Bond bond) throws Exception {
+        writer.write("  Bond " + bond.getID() + " = new Bond(" + 
+                     bond.getAtomAt(0).getID() + ", " +
+                     bond.getAtomAt(1).getID() + ", " +
+                     bond.getOrder() + ");\n");
     }
     
 }
