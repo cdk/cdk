@@ -107,9 +107,9 @@ public class CrystalGeometryTools {
     public static double[] fractionalToCartesian(double[] a, double[] b, double[] c,
                                                  double[] frac) {
         double[] cart = new double[3];
-        cart[0] = frac[0]*a[0] + frac[1]*a[1] + frac[2]*a[2];
-        cart[1] = frac[0]*b[0] + frac[1]*b[1] + frac[2]*b[2];
-        cart[2] = frac[0]*c[0] + frac[1]*c[1] + frac[2]*c[2];
+        cart[0] = frac[0]*a[0] + frac[1]*b[0] + frac[2]*c[0];
+        cart[1] = frac[0]*a[1] + frac[1]*b[1] + frac[2]*c[1];
+        cart[2] = frac[0]*a[2] + frac[1]*b[2] + frac[2]*c[2];
         return cart;
     }
     
@@ -126,9 +126,9 @@ public class CrystalGeometryTools {
      * @param alength   length of the a axis
      * @param blength   length of the b axis
      * @param clength   length of the c axis
-     * @param alpha     angle between b and c axes
-     * @param beta      angle between a and c axes
-     * @param gamma     angle between a and b axes
+     * @param alpha     angle between b and c axes in degrees
+     * @param beta      angle between a and c axes in degrees
+     * @param gamma     angle between a and b axes in degrees
      * @return         a 3x3 matrix with the three cartesian vectors representing
      *                  the unit cell axes. The a axis is the first row.
      *
