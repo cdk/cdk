@@ -128,7 +128,11 @@ public class CoreCoverageTest extends TestCase {
                     String testMethod = "test" + capitalizeName(removePackage(constructors[i].getName()));
                     Class[] paramTypes = constructors[i].getParameterTypes();
                     for (int j=0; j<paramTypes.length; j++) {
-                        testMethod = testMethod + "_" + removePackage(paramTypes[j].getName());
+                        if (paramTypes[j].isArray()) {
+                            testMethod = testMethod + "_array" + removePackage(paramTypes[j].getComponentType().getName());
+                        } else {
+                            testMethod = testMethod + "_" + removePackage(paramTypes[j].getName());
+                        }
                     }
                     if (!testMethodNames.contains(testMethod)) {
                         System.out.println(removePackage(coreClass.getName()) + ": missing the expected test method: " + testMethod);
@@ -145,7 +149,11 @@ public class CoreCoverageTest extends TestCase {
                     String testMethod = "test" + capitalizeName(removePackage(methods[i].getName()));
                     Class[] paramTypes = methods[i].getParameterTypes();
                     for (int j=0; j<paramTypes.length; j++) {
-                        testMethod = testMethod + "_" + removePackage(paramTypes[j].getName());
+                        if (paramTypes[j].isArray()) {
+                            testMethod = testMethod + "_array" + removePackage(paramTypes[j].getComponentType().getName());
+                        } else {
+                            testMethod = testMethod + "_" + removePackage(paramTypes[j].getName());
+                        }
                     }
                     if (!testMethodNames.contains(testMethod)) {
                         System.out.println(removePackage(coreClass.getName()) + ": missing the expected test method: " + testMethod);
