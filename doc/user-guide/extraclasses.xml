@@ -30,8 +30,7 @@
            </listitem>
            <listitem>
              <para>
-               <ulink url="api/org/openscience/cdk/tools/HoseCodeGenerator.html">
-               HoseCodeGenerator</ulink>
+               &tools.HOSECodeGenerator;
                generates HOSECodes for atoms in a
                molecule. HOSE stands for Hierarchically Ordered
                Spherical Environment and is a method for describing the
@@ -47,8 +46,7 @@
            </listitem>
            <listitem>
              <para>
-               <ulink url="api/org/openscience/cdk/tools/SwissArmyKnife.html">
-               SwissArmyKnife</ulink>
+               &tools.SwissArmyKnife;
                is an allround tools for methods that
                really didn't fit into anything else. I'm not sure if
                there is any justification for such a class or if it is
@@ -68,13 +66,11 @@
         <itemizedlist>
             <listitem>
                 <para>
-                <ulink url="api/org/openscience/cdk/structgen/RandomGenerator.html">
-                RandomGenerator</ulink>
+                &structgen.RandomGenerator;:
                 This structure generator makes small random moves in
                 structure space, starting from a given constitutional
                 formula, which might be generated using 
-                <ulink url="api/org/openscience/cdk/structgen/SingleStructureRandomGenerator.html">
-                SingleStructureRandomGenerator</ulink>.
+                &structgen.SingleStructureRandomGenerator;.
                 It does this by randomly choosing four atoms and
                 breaking old and forming new bonds according to rules
                 defined in <ulink url="biblio.html#FAU96"/>.
@@ -82,8 +78,7 @@
             </listitem>
             <listitem>
                 <para>
-                <ulink url="api/org/openscience/cdk/structgen/SingleStructureRandomGenerator.html">
-                SingleStructureRandomGenerator</ulink>
+                &structgen.SingleStructureRandomGenerator;:
                 Randomly generates a single, connected, correctly bonded structure for 
                 a given molecular formula
                 To see it working run the graphical 

@@ -59,7 +59,7 @@ public static Molecule makeAlphaPinene() {
         properties very similar to a molecule, the Molecule is not the actual base
         class that has all the addBond(Bond), addAtom(Atom) and other methods that you
         would probly exspect in it. The base class in fact the 
-        <ulink url="api/org/openscience/cdk/AtomContainer.html">AtomContainer.class</ulink>
+        &AtomContainer; class
         which is then subclassed by classes like Ring, Substructure, etc. Thus, if you
         want to know what a Molecule, a Ring, a Substructure can do, look at the
         JavaDoc documentation of the AtomContainer class first and then at the
