@@ -114,6 +114,7 @@ public class PseudoAtom extends Atom implements java.io.Serializable, Cloneable
      * Returns the label of this PseudoAtom.
      *
      * @return The label for this PseudoAtom
+     * @see    #setLabel
      */
     public String getLabel() {
         return label;
@@ -123,6 +124,7 @@ public class PseudoAtom extends Atom implements java.io.Serializable, Cloneable
      * Sets the label of this PseudoAtom.
      *
      * @param label The new label for this PseudoAtom
+     * @see   #getLabel
      */
     public void setLabel(String label) {
         this.label = label;

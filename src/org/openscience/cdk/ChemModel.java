@@ -127,7 +127,7 @@ public class ChemModel extends ChemObject implements java.io.Serializable, Clone
     /**
      * Sets the Crystal contained in this ChemModel.
      *
-     * @param   c     the Crystal to store in this model
+     * @param   crystal  the Crystal to store in this model
      *
      * @see      #getCrystal
      */

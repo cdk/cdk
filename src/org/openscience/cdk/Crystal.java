@@ -68,7 +68,7 @@ public class Crystal extends AtomContainer implements java.io.Serializable, Clon
      * Constructs a new crystal with zero length cell axis
      * and adds the atoms in the AtomContainer as cell content.
      *
-     * @param ac  the AtomContainer providing the atoms and bonds
+     * @param container  the AtomContainer providing the atoms and bonds
      */
     public Crystal(AtomContainer container) {
         this();
@@ -185,7 +185,8 @@ public class Crystal extends AtomContainer implements java.io.Serializable, Clon
     /**
      * Gets the number of asymmetric parts in the unit cell.
      *
-     * @return Z
+     * @return the number of assymetric parts in the unit cell
+     * @see    #setZ
      */
     public int getZ() {
         return zValue;
@@ -194,8 +195,8 @@ public class Crystal extends AtomContainer implements java.io.Serializable, Clon
     /**
      * Sets the number of assymmetric parts in the unit cell.
      *
-     * @param   z the number of assymetric parts in the unit cell
-     * @see       #getZ
+     * @param   value the number of assymetric parts in the unit cell
+     * @see           #getZ
      */
     public void setZ(int value) {
         this.zValue = value;

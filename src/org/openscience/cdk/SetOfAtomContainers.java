@@ -77,7 +77,10 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
 	/**
      * Sets the coefficient of a AtomContainer to a given value.
      *
-     * @return  true if AtomContainer was found and multiplier set.
+     * @param  container  The AtomContainer for which the multiplier is set
+     * @param  multiplier The new multiplier for the AtomContatiner
+     * @return true if multiplier has been set
+     * @see    #getMultiplier(AtomContainer)
      */
     public boolean setMultiplier(AtomContainer container, double multiplier) {
         for (int i=0; i<atomContainers.length; i++) {
@@ -92,7 +95,11 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
 	/**
      * Sets the coefficient of a AtomContainer to a given value.
      *
-     * @return  true if AtomContainer was found and multiplier set.
+     * @param  position   The position of the AtomContainer for which the multiplier is
+     *                    set in [0,..]
+     * @param  multiplier The new multiplier for the AtomContatiner at 
+     *                    <code>position</code>
+     * @see    #getMultiplier(int)
      */
     public void setMultiplier(int position, double multiplier) {
         multipliers[position] = multiplier;
@@ -101,6 +108,9 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
 	/**
      * Returns an array of double with the stoichiometric coefficients
 	 * of the products.
+     *
+     * @return The multipliers for the AtomContainer's in this set
+     * @see    #setMultipliers
      */
     public double[] getMultipliers() {
         double[] returnArray = new double[this.atomContainerCount];
@@ -111,7 +121,9 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
 	/**
      * Sets the multipliers of the AtomContainers.
      *
-     * @return  true if multipliers have been set.
+     * @param  newMultipliers The new multipliers for the AtomContainers in this set
+     * @return true if multipliers have been set.
+     * @see    #getMultipliers
      */
     public boolean setMultipliers(double[] newMultipliers) {
         if (newMultipliers.length == atomContainerCount) {
@@ -182,7 +194,8 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
 	 * container.
 	 *
 	 * @param  number  The position of the multiplier of the AtomContainer to be returned. 
-	 * @return         The multiplier for the AtomContainer at position <code>number</code> . 
+	 * @return         The multiplier for the AtomContainer at position <code>number</code> .
+     * @see    #setMultiplier(int, double)
 	 */
      public double getMultiplier(int number) {
 		return multipliers[number];
@@ -191,7 +204,9 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
     /**
      * Returns the multiplier of the given AtomContainer.
      *
+     * @param  container The AtomContainer for which the multiplier is given
      * @return -1, if the given molecule is not a container in this set
+     * @see    #setMultiplier(AtomContainer, double)
      */
     public double getMultiplier(AtomContainer container) {
         for (int i=0; i<atomContainerCount; i++) {
@@ -229,6 +244,11 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
 		return this.atomContainerCount;
 	}
 
+    /**
+     * Returns the String representation of this SetOfAtomContainers.
+     *
+     * @return The String representation of this SetOfAtomContainers
+     */
     public String toString() {
         StringBuffer buffer = new StringBuffer();
         buffer.append("SetOfAtomContainers(");

@@ -103,6 +103,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      * Returns a SetOfMolecules containing the reactants in this reaction.
      *
      * @return A SetOfMolecules containing the reactants in this reaction
+     * @see    #setReactants
      */
     public SetOfMolecules getReactants() {
         return reactants;
@@ -112,6 +113,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      * Assigns a SetOfMolecules to the reactants in this reaction.
      *
      * @param setOfMolecules The new set of reactants
+     * @see   #getReactants
      */
     public void setReactants(SetOfMolecules setOfMolecules) {
         reactants = setOfMolecules;
@@ -121,6 +123,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      * Returns a SetOfMolecules containing the products of this reaction.
      *
      * @return A SetOfMolecules containing the products in this reaction
+     * @see    #setProducts
      */
     public SetOfMolecules getProducts() {
         return products;
@@ -130,6 +133,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      * Assigns a SetOfMolecules to the products of this reaction.
      *
      * @param setOfMolecules The new set of products
+     * @see   #getProducts
      */
     public void setProducts(SetOfMolecules setOfMolecules) {
         products = setOfMolecules;
@@ -139,14 +143,17 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      * Returns a SetOfMolecules containing the agents in this reaction.
      *
      * @return A SetOfMolecules containing the agents in this reaction
+     * @see    #addAgent
      */
     public SetOfMolecules getAgents() {
         return agents;
     }
     
     /**
-     * Returns an array of Molecule with a length matching he number
-     * of products in this reaction.
+     * Returns the mappings between the reactant and the product side.
+     *
+     * @return An array of Mapping's.
+     * @see    #addMapping
      */
     public Mapping[] getMappings() {
         Mapping[] returnMappings = new Mapping[mappingCount];
@@ -158,6 +165,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      * Adds a reactant to this reaction.
      *
      * @param reactant   Molecule added as reactant to this reaction
+     * @see   #getReactants
      */
     public void addReactant(Molecule reactant) {
         addReactant(reactant, 1.0);
@@ -167,6 +175,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      * Adds an agent to this reaction.
      *
      * @param agent   Molecule added as agent to this reaction
+     * @see   #getAgents
      */
     public void addAgent(Molecule agent) {
         agents.addAtomContainer(agent);
@@ -177,6 +186,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      *
      * @param reactant    Molecule added as reactant to this reaction
      * @param coefficient Stoichiometry coefficient for this molecule
+     * @see   #getReactants
      */
     public void addReactant(Molecule reactant, double coefficient) {
         reactants.addAtomContainer(reactant, coefficient);
@@ -186,6 +196,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      * Adds a product to this reaction.
      *
      * @param product    Molecule added as product to this reaction
+     * @see   #getProducts
      */
     public void addProduct(Molecule product) {
         this.addProduct(product, 1.0);
@@ -196,6 +207,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      *
      * @param product     Molecule added as product to this reaction
      * @param coefficient Stoichiometry coefficient for this molecule
+     * @see   #getProducts
      */
     public void addProduct(Molecule product, double coefficient) {
         products.addAtomContainer(product, coefficient);
@@ -204,7 +216,9 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
     /**
      * Returns the stoichiometry coefficient of the given reactant.
      *
+     * @param  reactant Reactant for which the coefficient is returned.
      * @return -1, if the given molecule is not a product in this Reaction
+     * @see    #setReactantCoefficient
      */
     public double getReactantCoefficient(Molecule reactant) {
         return reactants.getMultiplier(reactant);
@@ -213,7 +227,9 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
     /**
      * Returns the stoichiometry coefficient of the given product.
      *
+     * @param  product Product for which the coefficient is returned.
      * @return -1, if the given molecule is not a product in this Reaction
+     * @see    #setProductCoefficient
      */
     public double getProductCoefficient(Molecule product) {
         return products.getMultiplier(product);
@@ -222,7 +238,10 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
 	/**
      * Sets the coefficient of a a reactant to a given value.
      *
+     * @param   reactant    Reactant for which the coefficient is set
+     * @param   coefficient The new coefficient for the given reactant
      * @return  true if Molecule has been found and stoichiometry has been set.
+     * @see     #getReactantCoefficient
      */
     public boolean setReactantCoefficient(Molecule reactant, double coefficient) {
         return reactants.setMultiplier(reactant, coefficient);
@@ -232,7 +251,10 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
 	/**
      * Sets the coefficient of a a product to a given value.
      *
+     * @param   product     Product for which the coefficient is set
+     * @param   coefficient The new coefficient for the given product
      * @return  true if Molecule has been found and stoichiometry has been set.
+     * @see     #getProductCoefficient
      */
     public boolean setProductCoefficient(Molecule product, double coefficient) {
         return products.setMultiplier(product, coefficient);
@@ -241,6 +263,9 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
 	/**
      * Returns an array of double with the stoichiometric coefficients
 	 * of the reactants.
+     *
+     * @return An array of double's containing the coefficients of the reactants
+     * @see    #setReactantCoefficients
      */
     public double[] getReactantCoefficients() {
         return reactants.getMultipliers();
@@ -249,6 +274,9 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
 	/**
      * Returns an array of double with the stoichiometric coefficients
 	 * of the products.
+     *
+     * @return An array of double's containing the coefficients of the products
+     * @see    #setProductCoefficients
      */
     public double[] getProductCoefficients() {
         return products.getMultipliers();
@@ -256,25 +284,32 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
 	
 	
 	/**
-     * Sets the coefficient of the reactants.
+     * Sets the coefficients of the reactants.
      *
+     * @param   coefficient An array of double's containing the coefficients of the reactants
      * @return  true if coefficients have been set.
+     * @see     #getReactantCoefficients
      */
-    public boolean setReactantCoefficients(double[] reactantCoefficients) {
+    public boolean setReactantCoefficients(double[] coefficient) {
         return reactants.setMultipliers(reactantCoefficients);
     }
 	
 	/**
      * Sets the coefficient of the products.
      *
+     * @param   coefficient An array of double's containing the coefficients of the products
      * @return  true if coefficients have been set.
+     * @see     #getProductCoefficients
      */
-    public boolean setProductCoefficients(double[] productCoefficients) {
+    public boolean setProductCoefficients(double[] coefficient) {
         return products.setMultipliers(productCoefficients);
     }
 	
     /**
      * Sets the direction of the reaction.
+     *
+     * @param direction The new reaction direction
+     * @see   #getDirection
      */
     public void setDirection(int direction) {
         reactionDirection = direction;
@@ -284,8 +319,8 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      * Returns the direction of the reaction.
      *
      * @return The direction of this reaction (FORWARD, BACKWARD or BIDIRECTIONAL)
-     *
-     * @see BIDIRECTIONAL
+     * @see    BIDIRECTIONAL
+     * @see    #setDirection
      */
     public int getDirection() {
         return reactionDirection;
@@ -296,6 +331,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      * Reaction.
      *
      * @param mapping Mapping to add.
+     * @see   #getMappings
      */
     public void addMapping(Mapping mapping) {
         if (mappingCount + 1 >= map.length) growMappingArray();

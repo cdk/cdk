@@ -44,6 +44,8 @@ public class Mapping extends ChemObject implements java.io.Serializable, Cloneab
     /**
      * Constructs an unconnected lone pair.
      *
+     * @param objectOne The first ChemObject of the mapping
+     * @param objectTwo The second ChemObject of the mapping
      */
     public Mapping(ChemObject objectOne, ChemObject objectTwo) {
         relation = new ChemObject[2];
@@ -54,6 +56,7 @@ public class Mapping extends ChemObject implements java.io.Serializable, Cloneab
     /**
      * Returns an array of the two ChemObject's.
      *
+     * @return An array of two ChemObject's that define the mapping
      */
     public ChemObject[] getRelatedChemObjects() {
         return relation;

@@ -89,11 +89,11 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 
 
 	/**
-	 *  Constructs an AtomContainer with a copy of the atoms and electronContainers
-	 *  of another AtomContainer (A shallow copy, i.e., with the same objects as in
-	 *  the original AtomContainer).
+	 * Constructs an AtomContainer with a copy of the atoms and electronContainers
+	 * of another AtomContainer (A shallow copy, i.e., with the same objects as in
+	 * the original AtomContainer).
 	 *
-	 *@param  ac  An AtomContainer to copy the atoms and electronContainers from
+	 * @param  container  An AtomContainer to copy the atoms and electronContainers from
 	 */
 	public AtomContainer(AtomContainer container)
 	{
@@ -123,6 +123,9 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
     /**
      * Adds an AtomParity to this container. If a parity is already given for the
      * affected Atom, it is overwritten.
+     *
+     * @param parity The new AtomParity for this container
+     * @see   #getAtomParity
      */
     public void addAtomParity(AtomParity parity) {
         atomParities.put(parity.getAtom(), parity);
@@ -131,6 +134,11 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
     /**
      * Returns the atom parity for the given Atom. If no parity is associated
      * with the given Atom, it returns null.
+     *
+     * @param  atom   Atom for which the parity must be returned
+     * @return The AtomParity for the given Atom, or null if that Atom does
+     *         not have an associated AtomParity
+     * @see    #addAtomParity
      */
     public AtomParity getAtomParity(Atom atom) {
         return (AtomParity)atomParities.get(atom);
@@ -205,11 +213,11 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 
 
 	/**
-	 *  Sets the ElectronContainer at position <code>number</code> in [0,..].
+	 * Sets the ElectronContainer at position <code>number</code> in [0,..].
 	 *
-	 *@param  number  The position of the ElectronContainer to be set.
-	 *@param  ec      The ElectronContainer to be stored at position <code>number</code>
-	 *@see            #getElectronContainerAt
+	 * @param  number            The position of the ElectronContainer to be set.
+	 * @param  electronContainer The ElectronContainer to be stored at position <code>number</code>
+	 * @see                      #getElectronContainerAt
 	 */
 	public void setElectronContainerAt(int number, ElectronContainer electronContainer)
 	{
@@ -218,11 +226,11 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 
 
 	/**
-	 *  Sets the number of electronContainers in this container.
+	 * Sets the number of electronContainers in this container.
 	 *
-	 *@param  electronContainerCount  The number of electronContainers in this
-	 *      container
-	 *@see                            #getElectronContainerCount
+	 * @param  electronContainerCount  The number of electronContainers in this
+	 *                                 container
+	 * @see                            #getElectronContainerCount
 	 */
 	public void setElectronContainerCount(int electronContainerCount)
 	{
@@ -402,10 +410,10 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	 *  Returns the position of the bond between two given atoms in the
 	 *  electronContainers array. It returns -1 if the bond does not exist.
 	 *
-	 *@param  a1  The first atom
-	 *@param  a2  The second atom
-	 *@return     The Position of the bond between a1 and a2 in the
-	 *      electronContainers array.
+	 *@param  atom1  The first atom
+	 *@param  atom2  The second atom
+	 *@return        The Position of the bond between a1 and a2 in the
+	 *               electronContainers array.
 	 */
 	public int getBondNumber(Atom atom1, Atom atom2)
 	{
@@ -417,8 +425,8 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	 *  Returns the position of a given bond in the electronContainers array. It
 	 *  returns -1 if the bond does not exist.
 	 *
-	 *@param  b  The bond to be sought
-	 *@return    The Position of the bond in the electronContainers array in [0,..].
+	 *@param  bond  The bond to be sought
+	 *@return       The Position of the bond in the electronContainers array in [0,..].
 	 */
 	public int getBondNumber(Bond bond)
 	{
@@ -448,11 +456,11 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 
 
 	/**
-	 *  Returns the bond that connectes the two given atoms.
+	 * Returns the bond that connectes the two given atoms.
 	 *
-	 *@param  a1  The first atom
-	 *@param  a2  The second atom
-	 *@return     The bond that connectes the two atoms
+	 * @param  atom1  The first atom
+	 * @param  atom2  The second atom
+	 * @return        The bond that connectes the two atoms
 	 */
 	public Bond getBond(Atom atom1, Atom atom2)
 	{
@@ -597,9 +605,10 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 
 
 	/**
-	 *  Returns the number of ElectronContainers in this Container.
+	 * Returns the number of ElectronContainers in this Container.
 	 *
-	 *@return    The number of ElectronContainers in this Container
+	 * @return    The number of ElectronContainers in this Container
+     * @see       #setElectronContainerCount
 	 */
 	public int getElectronContainerCount()
 	{
@@ -710,6 +719,8 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
     /**
      * Deprecated wrapper method for getMaximumBondOrder().
      *
+     * @param atom Atom for which the maximum bond order is returned
+     * @return     The maximum bond order for the given Atom
      * @see #getMaximumBondOrder
      * @deprecated
      */
@@ -764,14 +775,14 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 
 
 	/**
-	 *  Compares this AtomContainer with another given AtomContainer and returns
-	 *  the Intersection between them. <p>
+	 * Compares this AtomContainer with another given AtomContainer and returns
+	 * the Intersection between them. <p>
+	 * 
+	 * <b>Important Note</b> : This is not the maximum common substructure.
 	 *
-	 *  <b>Important Note</b> : This is not a maximum common substructure.
-	 *
-	 *@param  ac  an AtomContainer object
-	 *@return     An AtomContainer containing the Intersection between this
-	 *      AtomContainer and another given one
+	 * @param  container  an AtomContainer object
+	 * @return            An AtomContainer containing the Intersection between this
+	 *                    AtomContainer and another given one
 	 */
 
 	public AtomContainer getIntersection(AtomContainer container)
@@ -925,7 +936,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	/**
 	 *  Adds a ElectronContainer to this AtomContainer.
 	 *
-	 *@param  ec  The ElectronContainer to added to this container
+	 *@param  electronContainer  The ElectronContainer to added to this container
 	 */
 	public void addElectronContainer(ElectronContainer electronContainer)
 	{
@@ -961,10 +972,10 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 
 
 	/**
-	 *  Removes the bond at the given position from this container.
+	 * Removes the bond at the given position from this container.
 	 *
-	 *@param  position  The position of the bond in the electronContainers array
-	 *@return           Bond that was removed
+	 * @param  position  The position of the bond in the electronContainers array
+	 * @return           Bond that was removed
 	 */
 	public ElectronContainer removeElectronContainer(int position)
 	{
@@ -980,10 +991,10 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 
 
 	/**
-	 *  Removes this ElectronContainer from this container.
+	 * Removes this ElectronContainer from this container.
 	 *
-	 *@param  ec    Description of the Parameter
-	 *@return       Bond that was removed
+	 * @param  electronContainer    Description of the Parameter
+	 * @return                      Bond that was removed
 	 */
 	public ElectronContainer removeElectronContainer(ElectronContainer electronContainer)
 	{
@@ -999,11 +1010,11 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 
 
 	/**
-	 *  Removes the bond that connects the two given atoms.
+	 * Removes the bond that connects the two given atoms.
 	 *
-	 *@param  a1  The first atom
-	 *@param  a2  The second atom
-	 *@return     The bond that connectes the two atoms
+	 * @param  atom1  The first atom
+	 * @param  atom2  The second atom
+	 * @return        The bond that connectes the two atoms
 	 */
 	public Bond removeBond(Atom atom1, Atom atom2)
 	{
@@ -1168,8 +1179,8 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	/**
 	 *  True, if the AtomContainer contains the given ElectronContainer object.
 	 *
-	 *@param  ec    Description of the Parameter
-	 *@return       True, if the AtomContainer contains the given bond object
+	 *@param  electronContainer ElectronContainer that is searched for
+	 *@return                   True, if the AtomContainer contains the given bond object
 	 */
 	public boolean contains(ElectronContainer electronContainer)
 	{

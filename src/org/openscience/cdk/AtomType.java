@@ -272,6 +272,7 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
      * Sets the Vanderwaals radius for this AtomType.
      *
      * @param radius The Vanderwaals radius for this AtomType
+     * @see   #getVanderwaalsRadius
      */
     public void setVanderwaalsRadius(double radius) {
         this.vanderwaalsRadius = radius;
@@ -281,6 +282,7 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
      * Returns the Vanderwaals radius for this AtomType.
      *
      * @return The Vanderwaals radius for this AtomType
+     * @see    #setVanderwaalsRadius
      */
     public double getVanderwaalsRadius() {
         return this.vanderwaalsRadius;
@@ -290,6 +292,7 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
      * Sets the covalent radius for this AtomType.
      *
      * @param radius The covalent radius for this AtomType
+     * @see    #getCovalentRadius
      */
     public void setCovalentRadius(double radius) {
         this.covalentRadius = radius;
@@ -299,6 +302,7 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
      * Returns the covalent radius for this AtomType.
      *
      * @return The covalent radius for this AtomType
+     * @see    #setCovalentRadius
      */
     public double getCovalentRadius() {
         return this.covalentRadius;

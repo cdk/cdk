@@ -101,6 +101,7 @@ public class Isotope extends Element implements java.io.Serializable, Cloneable
 	 * Constructor for the Isotope object.
 	 *
 	 * @param  elementSymbol  The element symbol, "O" for Oxygen, etc.
+	 * @param  massNumber     The atomic mass of the isotope, 16 for Oxygen, e.g.
 	 */
 	public Isotope(String elementSymbol, int massNumber) {
 		super(elementSymbol);

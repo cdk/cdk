@@ -55,7 +55,7 @@ public class AtomEnumeration implements java.io.Serializable, Cloneable, Enumera
     /**
      *  Constructs a new AtomEnumeration.
      *
-     *  @param      copntainer      AtomContainer which contains the atoms
+     *  @param  container  AtomContainer which contains the atoms
      */
 	public AtomEnumeration(AtomContainer container)
 	{

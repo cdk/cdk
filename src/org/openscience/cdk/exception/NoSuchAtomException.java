@@ -39,7 +39,7 @@ public class NoSuchAtomException extends CDKException {
     /**
      * Constructs a new NoSuchAtomException with the given message.
      *
-     * @param Message for the constructed exception
+     * @param message for the constructed exception
      */
     public NoSuchAtomException(String message) {
         super( message );

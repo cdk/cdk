@@ -256,7 +256,7 @@ public class ChemObject implements java.io.Serializable, Cloneable {
     /**
      * Sets the identifier (ID) of this object.
      *
-     * @param id a String representing the ID value
+     * @param identifier  a String representing the ID value
      * @see #getID
      */
     public void setID(final String identifier) {

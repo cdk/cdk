@@ -249,7 +249,7 @@ public class RingSet extends Vector implements java.io.Serializable, Cloneable
 	/**
 	 * Adds all rings of another RingSet if they are not allready part of this ring set.
 	 *
-	 * @param   rs  the ring set to be united with this one.
+	 * @param   ringSet  the ring set to be united with this one.
 	 */
 	public void add(RingSet ringSet)
 	{

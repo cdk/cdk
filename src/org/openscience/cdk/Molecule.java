@@ -61,7 +61,7 @@ public class Molecule extends AtomContainer implements java.io.Serializable, Clo
 	 * Constructs a Molecule with
 	 * a shallow copy of the atoms and bonds of an AtomContainer.
 	 *
-	 * @param   ac  An Molecule to copy the atoms and bonds from
+	 * @param   container  An Molecule to copy the atoms and bonds from
 	 */
 	public Molecule(AtomContainer container)
 	{

@@ -255,7 +255,7 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
          *
          * @return    A point in 3d fractional unit cell space. Null if unset.
          *
-         * @see       #setPoint3d
+         * @see       #setFractionalPoint3d
          * @see       org.openscience.cdk.CDKConstants for predefined values.
          */
         public javax.vecmath.Point3d getFractionalPoint3d() {
@@ -351,9 +351,9 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
         }
 
         /**
-         * Sets the x coordinate for of the fractional coordinate of this atom.
+         * Sets the x coordinate of the fractional coordinate of this atom.
          *
-         * @return the x coordinate for of the fractional coordinate of this atom.
+         * @param xFract The x coordinate of the fractional coordinate of this atom.
          *
          * @see    #getFractX3d
          */
@@ -364,9 +364,9 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
             fractionalPoint3d.x = xFract;
         }
         /**
-         * Sets the y coordinate for of the fractional coordinate of this atom.
+         * Sets the y coordinate of the fractional coordinate of this atom.
          *
-         * @return the y coordinate for of the fractional coordinate of this atom.
+         * @param yFract The y coordinate of the fractional coordinate of this atom.
          *
          * @see    #getFractY3d
          */
@@ -377,9 +377,9 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
             fractionalPoint3d.y = yFract;
         }
         /**
-         * Sets the z coordinate for of the fractional coordinate of this atom.
+         * Sets the z coordinate of the fractional coordinate of this atom.
          *
-         * @return the z coordinate for of the fractional coordinate of this atom.
+         * @param zFract The z coordinate of the fractional coordinate of this atom.
          *
          * @see    #getFractZ3d
          */
@@ -437,7 +437,7 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
          * You should know your context here. There is no guarantee that point2d and point3d
          * contain consistent information. Both are handled independently.
          *
-         * @param   x  the new x coordinate for of the 2D location of this atom
+         * @param   xCoord  the new x coordinate for of the 2D location of this atom
          *
          * @see     #getX2d
          */
@@ -454,7 +454,7 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
          * You should know your context here. There is no guarantee that point2d and point3d
          * contain consistent information. Both are handled independently.
          *
-         * @param   y  the new y coordinate for of the 2D location of this atom
+         * @param   yCoord  the new y coordinate for of the 2D location of this atom
          *
          * @see     #getY2d
          */
@@ -471,7 +471,7 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
          * You should know your context here. There is no guarantee that point2d and point3d
          * contain consistent information. Both are handled independently.
          *
-         * @param   x  the new x coordinate for of the 3D location of this atom
+         * @param   xCoord  the new x coordinate for of the 3D location of this atom
          *
          * @see     #getX3d
          */
@@ -488,7 +488,7 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
          * You should know your context here. There is no guarantee that point2d and point3d
          * contain consistent information. Both are handled independently.
          *
-         * @param   y  the new y coordinate for of the 3D location of this atom
+         * @param   yCoord  the new y coordinate for of the 3D location of this atom
          *
          * @see     #getY3d
          */
@@ -505,7 +505,7 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
          * You should know your context here. There is no guarantee that point2d and point3d
          * contain consistent information. Both are handled independently.
          *
-         * @param   z  the new z coordinate for of the 3d location of this atom
+         * @param   zCoord  the new z coordinate for of the 3d location of this atom
          *
          * @see     #getZ3d
          */
@@ -534,7 +534,7 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
          * Compares a atom with this atom.
          *
          * @param     object of type Atom
-         * @return    return true, if the atoms are equal
+         * @return    true, if the atoms are equal
          */
         public boolean compare(Object object)
         {
