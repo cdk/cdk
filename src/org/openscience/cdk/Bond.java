@@ -1,6 +1,6 @@
 /* $RCSfile$
- * $Author$    
- * $Date$    
+ * $Author$
+ * $Date$
  * $Revision$
  * 
  * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
@@ -41,6 +41,9 @@ public class Bond extends ElectronContainer implements java.io.Serializable, Clo
 	/** The bond order of this bond. */
 	protected double order;
 
+    /** Number of atoms contained by this object. */
+    protected int atomCount = 2;
+    
 	/** A list of atoms participating in this bond. */
 	protected Atom[] atoms;
 
@@ -104,10 +107,11 @@ public class Bond extends ElectronContainer implements java.io.Serializable, Clo
      *
      * @see    #setAtoms
 	 */
-	public Atom[] getAtoms()
-	{
-		return this.atoms;
-	}
+    public Atom[] getAtoms() {
+        Atom[] returnAtoms = new Atom[getAtomCount()];
+        System.arraycopy(this.atoms, 0, returnAtoms, 0, returnAtoms.length);
+        return returnAtoms;
+    }
 	
 	/**
 	 * Prepares and returns a Vector containing all the 
@@ -146,7 +150,7 @@ public class Bond extends ElectronContainer implements java.io.Serializable, Clo
 	 */
 	public int getAtomCount()
 	{
-		return atoms.length;
+		return atomCount;
 	}
 
 	/**
@@ -381,14 +385,18 @@ public class Bond extends ElectronContainer implements java.io.Serializable, Clo
 		ElectronContainer ec;
 		StringBuffer s = new StringBuffer();
         s.append("Bond(");
-        s.append(this.hashCode() + ", ");
-        Atom[] atoms = getAtoms();
-        s.append("#A:" + atoms.length + ", ");
-        s.append("#O:" + getOrder() + ", ");
-        s.append("#S:" + getStereo() + ", ");
+        s.append(this.hashCode());
+        s.append(", #O:" + getOrder());
+        s.append(", #S:" + getStereo());
         // s.append("#L:" + getLength() + ", ");
+        Atom[] atoms = getAtoms();
+        s.append(", #A:" + atoms.length);
         for (int i=0; i < atoms.length; i++) {
-            s.append(atoms[i].hashCode() + ", ");
+            if (atoms[i] == null) {
+                s.append(", null");
+            } else {
+                s.append(", " + atoms[i].toString());
+            }
         }
         s.append(")");
 		return s.toString();
