@@ -612,6 +612,32 @@ public class SmilesParserTest extends TestCase
     /**
      * A bug found with JCP.
      */
+    public void testSFBug956926() {
+		try {
+			String smiles = "[c+]1ccccc1";
+			Molecule mol = sp.parseSmiles(smiles);
+			assertEquals(6, mol.getAtomCount());
+            // it's a bit hard to detect three double bonds in the phenyl ring
+            // but I do can check the total order in the whole molecule
+            double totalBondOrder = 0.0;
+            Bond[] bonds = mol.getBonds();
+            for (int i=0; i<bonds.length; i++) {
+                totalBondOrder += bonds[i].getOrder();
+            }
+            assertEquals(9.0, totalBondOrder, 0.001);
+            // I can also check wether all carbons have exact two neighbors
+            Atom[] atoms = mol.getAtoms();
+            for (int i=0; i<atoms.length; i++) {
+                assertEquals(2, mol.getConnectedAtoms(atoms[i]).length);
+            }
+		} catch (Exception e) {
+			fail(e.toString());
+		}
+    }
+    
+    /**
+     * A bug found with JCP.
+     */
     public void testSFBug956929() {
 		try {
 			String smiles = "Cn1cccc1";
@@ -625,12 +651,13 @@ public class SmilesParserTest extends TestCase
                 totalBondOrder += bonds[i].getOrder();
             }
             assertEquals(8.0, totalBondOrder, 0.001);
-            // I can also check wether the total bond order around the nitrogen
-            // is 3
+            // I can also check wether the total neighbor count around the 
+            // nitrogen is 3, all single bonded
             Atom nitrogen = mol.getAtomAt(1); // the second atom
             assertEquals("N", nitrogen.getSymbol());
             totalBondOrder = 0.0;
             bonds = mol.getConnectedBonds(nitrogen);
+            assertEquals(3, bonds.length);
             for (int i=0; i<bonds.length; i++) {
                 totalBondOrder += bonds[i].getOrder();
             }
@@ -640,6 +667,27 @@ public class SmilesParserTest extends TestCase
 		}
     }
     
+    /**
+     * A bug found with JCP.
+     */
+    public void testSFBug956921() {
+		try {
+			String smiles = "[cH-]1cccc1";
+			Molecule mol = sp.parseSmiles(smiles);
+			assertEquals(5, mol.getAtomCount());
+            // each atom should have 1 implicit hydrogen, and two neighbors
+            Atom[] atoms = mol.getAtoms();
+            for (int i=0; i<atoms.length; i++) {
+                assertEquals(1, atoms[i].getHydrogenCount());
+                assertEquals(2, mol.getConnectedAtoms(atoms[i]).length);
+            }
+            // and the first atom should have a negative charge
+            assertEquals(-1, mol.getAtomAt(0).getFormalCharge());
+		} catch (Exception e) {
+			fail(e.toString());
+		}
+    }
+
     /**
      * Example taken from 'Handbook of Chemoinformatics', Gasteiger, 2003,
      * page 89 (Part I).

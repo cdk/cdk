@@ -31,6 +31,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
@@ -274,6 +275,44 @@ public class HueckelAromaticityDetectorTest extends TestCase
 		}
 	}
 
+    /**
+     * This is a bug reported for JCP.
+     */
+    public void testSFBug956924() {
+		try {
+			SmilesParser sp = new SmilesParser();
+
+			Molecule mol = sp.parseSmiles("[cH+]1cccccc1"); // tropylium cation
+			assertTrue(HueckelAromaticityDetector.detectAromaticity(mol));
+            Atom[] atoms = mol.getAtoms();
+            assertEquals(7, atoms.length);
+			for (int f = 0; f < atoms.length; f++) {
+				assertTrue(atoms[f].getFlag(CDKConstants.ISAROMATIC));
+			}
+		} catch (Exception exc) {
+			fail(exc.toString());
+		}
+	}
+
+    /**
+     * This is a bug reported for JCP.
+     */
+    public void testSFBug956923() {
+		boolean testResults[] = {false, true, true, true, true, true, true, true};
+		try {
+			SmilesParser sp = new SmilesParser();
+
+			Molecule mol = sp.parseSmiles("O=c1cccccc1"); // tropone
+			assertTrue(HueckelAromaticityDetector.detectAromaticity(mol));
+            Atom[] atoms = mol.getAtoms();
+            assertEquals(testResults.length, atoms.length);
+			for (int f = 0; f < atoms.length; f++) {
+				assertTrue(atoms[f].getFlag(CDKConstants.ISAROMATIC) == testResults[f]);
+			}
+		} catch (Exception exc) {
+			fail(exc.toString());
+		}
+	}
 
 	/**
 	 *  A unit test for JUnit

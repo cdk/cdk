@@ -656,12 +656,36 @@ public class SmilesGeneratorTest extends TestCase
 		assertEquals("N1(C)CCC1", smiles);
 	}
 
-
 	/**
-	 *  Description of the Method
-	 *
-	 *@param  mol  Description of the Parameter
+	 * A bug reported for JChemPaint.
 	 */
+	public void testSFBug956923() {
+		SmilesGenerator sg = new SmilesGenerator();
+		String smiles = "";
+		Molecule molecule = new Molecule();
+        Atom sp2CarbonWithOneHydrogen = new Atom("C");
+        sp2CarbonWithOneHydrogen.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+        sp2CarbonWithOneHydrogen.setHydrogenCount(1);
+		molecule.addAtom(sp2CarbonWithOneHydrogen);
+		molecule.addAtom((Atom)sp2CarbonWithOneHydrogen.clone());
+		molecule.addAtom((Atom)sp2CarbonWithOneHydrogen.clone());
+		molecule.addAtom((Atom)sp2CarbonWithOneHydrogen.clone());
+		molecule.addAtom((Atom)sp2CarbonWithOneHydrogen.clone());
+		molecule.addAtom((Atom)sp2CarbonWithOneHydrogen.clone());
+		molecule.addBond(0, 1, 1.0);
+		molecule.addBond(1, 2, 1.0);
+		molecule.addBond(2, 3, 1.0);
+		molecule.addBond(3, 4, 1.0);
+		molecule.addBond(4, 5, 1.0);
+		molecule.addBond(5, 0, 1.0);
+		try {
+			smiles = sg.createSMILES(molecule);
+		} catch (Exception exc) {
+			fail(exc.getMessage());
+		}
+		assertEquals("c1ccccc1", smiles);
+	}
+
 	private void fixCarbonHCount(Molecule mol)
 	{
 		/*
