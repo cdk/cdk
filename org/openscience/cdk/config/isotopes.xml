@@ -1,1115 +1,1191 @@
-<isotopes>
-<isotope>
-<atomicnumber>1<atomicnumber><symbol>H</symbol>
-<atomicmass>1</atomicmass>
-<exactmass>1.00782504</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>1<atomicnumber><symbol>H</symbol>
-<atomicmass>2</atomicmass>
-<exactmass>2.01410179</exactmass>
-<naturalabundance>0.015</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>1<atomicnumber><symbol>D</symbol>
-<atomicmass>2</atomicmass>
-<exactmass>2.01410179</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>2<atomicnumber><symbol>He</symbol>
-<atomicmass>3</atomicmass>
-<exactmass>3.01602929</exactmass>
-<naturalabundance>1.0E-4</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>2<atomicnumber><symbol>He</symbol>
-<atomicmass>4</atomicmass>
-<exactmass>4.00260325</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>4<atomicnumber><symbol>Li</symbol>
-<atomicmass>6</atomicmass>
-<exactmass>6.0151232</exactmass>
-<naturalabundance>8.1081</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>4<atomicnumber><symbol>Li</symbol>
-<atomicmass>7</atomicmass>
-<exactmass>7.0160045</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>5<atomicnumber><symbol>Be</symbol>
-<atomicmass>9</atomicmass>
-<exactmass>9.0121825</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>6<atomicnumber><symbol>B</symbol>
-<atomicmass>10</atomicmass>
-<exactmass>10.012938</exactmass>
-<naturalabundance>24.8439</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>6<atomicnumber><symbol>B</symbol>
-<atomicmass>11</atomicmass>
-<exactmass>11.0093053</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>6<atomicnumber><symbol>C</symbol>
-<atomicmass>12</atomicmass>
-<exactmass>12.0</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>6<atomicnumber><symbol>C</symbol>
-<atomicmass>13</atomicmass>
-<exactmass>13.0033548</exactmass>
-<naturalabundance>1.1122</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>7<atomicnumber><symbol>N</symbol>
-<atomicmass>14</atomicmass>
-<exactmass>14.003074</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>7<atomicnumber><symbol>N</symbol>
-<atomicmass>15</atomicmass>
-<exactmass>15.000109</exactmass>
-<naturalabundance>0.3673</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>8<atomicnumber><symbol>O</symbol>
-<atomicmass>16</atomicmass>
-<exactmass>15.9949146</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>8<atomicnumber><symbol>O</symbol>
-<atomicmass>17</atomicmass>
-<exactmass>16.9991306</exactmass>
-<naturalabundance>0.0381</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>8<atomicnumber><symbol>O</symbol>
-<atomicmass>18</atomicmass>
-<exactmass>17.9991594</exactmass>
-<naturalabundance>0.2005</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>9<atomicnumber><symbol>F</symbol>
-<atomicmass>19</atomicmass>
-<exactmass>18.9984033</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>10<atomicnumber><symbol>Ne</symbol>
-<atomicmass>20</atomicmass>
-<exactmass>19.9924391</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>10<atomicnumber><symbol>Ne</symbol>
-<atomicmass>21</atomicmass>
-<exactmass>20.9938453</exactmass>
-<naturalabundance>0.2983</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>10<atomicnumber><symbol>Ne</symbol>
-<atomicmass>22</atomicmass>
-<exactmass>21.9913837</exactmass>
-<naturalabundance>10.1867</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>11<atomicnumber><symbol>Na</symbol>
-<atomicmass>23</atomicmass>
-<exactmass>22.9897697</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>12<atomicnumber><symbol>Mg</symbol>
-<atomicmass>24</atomicmass>
-<exactmass>23.985045</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>12<atomicnumber><symbol>Mg</symbol>
-<atomicmass>25</atomicmass>
-<exactmass>24.9858392</exactmass>
-<naturalabundance>12.6598</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>12<atomicnumber><symbol>Mg</symbol>
-<atomicmass>26</atomicmass>
-<exactmass>25.9825954</exactmass>
-<naturalabundance>13.938</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>13<atomicnumber><symbol>Al</symbol>
-<atomicmass>27</atomicmass>
-<exactmass>26.9815413</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>14<atomicnumber><symbol>Si</symbol>
-<atomicmass>28</atomicmass>
-<exactmass>27.9769284</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>14<atomicnumber><symbol>Si</symbol>
-<atomicmass>29</atomicmass>
-<exactmass>28.9764964</exactmass>
-<naturalabundance>5.0634</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>14<atomicnumber><symbol>Si</symbol>
-<atomicmass>30</atomicmass>
-<exactmass>29.9737717</exactmass>
-<naturalabundance>3.3612</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>15<atomicnumber><symbol>P</symbol>
-<atomicmass>31</atomicmass>
-<exactmass>30.9737634</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>16<atomicnumber><symbol>S</symbol>
-<atomicmass>32</atomicmass>
-<exactmass>31.9720718</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>16<atomicnumber><symbol>S</symbol>
-<atomicmass>33</atomicmass>
-<exactmass>32.9714591</exactmass>
-<naturalabundance>0.7893</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>16<atomicnumber><symbol>S</symbol>
-<atomicmass>34</atomicmass>
-<exactmass>33.9678677</exactmass>
-<naturalabundance>4.4306</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>16<atomicnumber><symbol>S</symbol>
-<atomicmass>36</atomicmass>
-<exactmass>35.967079</exactmass>
-<naturalabundance>0.022</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>17<atomicnumber><symbol>Cl</symbol>
-<atomicmass>35</atomicmass>
-<exactmass>34.9688527</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>17<atomicnumber><symbol>Cl</symbol>
-<atomicmass>37</atomicmass>
-<exactmass>36.9659026</exactmass>
-<naturalabundance>31.978</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>19<atomicnumber><symbol>K</symbol>
-<atomicmass>39</atomicmass>
-<exactmass>38.9637079</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>19<atomicnumber><symbol>K</symbol>
-<atomicmass>40</atomicmass>
-<exactmass>39.9639988</exactmass>
-<naturalabundance>0.013</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>19<atomicnumber><symbol>K</symbol>
-<atomicmass>42</atomicmass>
-<exactmass>40.9618254</exactmass>
-<naturalabundance>7.217</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>20<atomicnumber><symbol>Ar</symbol>
-<atomicmass>36</atomicmass>
-<exactmass>35.9675456</exactmass>
-<naturalabundance>0.338</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>20<atomicnumber><symbol>Ar</symbol>
-<atomicmass>38</atomicmass>
-<exactmass>37.9627322</exactmass>
-<naturalabundance>0.063</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>20<atomicnumber><symbol>Ar</symbol>
-<atomicmass>40</atomicmass>
-<exactmass>39.9623831</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>20<atomicnumber><symbol>Ca</symbol>
-<atomicmass>40</atomicmass>
-<exactmass>39.9625907</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>20<atomicnumber><symbol>Ca</symbol>
-<atomicmass>42</atomicmass>
-<exactmass>41.9586218</exactmass>
-<naturalabundance>0.6674</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>20<atomicnumber><symbol>Ca</symbol>
-<atomicmass>43</atomicmass>
-<exactmass>42.9587704</exactmass>
-<naturalabundance>0.1393</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>20<atomicnumber><symbol>Ca</symbol>
-<atomicmass>44</atomicmass>
-<exactmass>43.9554848</exactmass>
-<naturalabundance>2.1518</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>20<atomicnumber><symbol>Ca</symbol>
-<atomicmass>46</atomicmass>
-<exactmass>45.953689</exactmass>
-<naturalabundance>0.0041</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>20<atomicnumber><symbol>Ca</symbol>
-<atomicmass>48</atomicmass>
-<exactmass>47.952532</exactmass>
-<naturalabundance>0.1929</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>22<atomicnumber><symbol>Sc</symbol>
-<atomicmass>45</atomicmass>
-<exactmass>44.9559136</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>24<atomicnumber><symbol>Ti</symbol>
-<atomicmass>46</atomicmass>
-<exactmass>45.952633</exactmass>
-<naturalabundance>10.8401</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>24<atomicnumber><symbol>Ti</symbol>
-<atomicmass>47</atomicmass>
-<exactmass>46.951765</exactmass>
-<naturalabundance>9.8916</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>24<atomicnumber><symbol>Ti</symbol>
-<atomicmass>48</atomicmass>
-<exactmass>47.947947</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>24<atomicnumber><symbol>Ti</symbol>
-<atomicmass>49</atomicmass>
-<exactmass>48.947871</exactmass>
-<naturalabundance>7.4526</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>24<atomicnumber><symbol>Ti</symbol>
-<atomicmass>50</atomicmass>
-<exactmass>49.944786</exactmass>
-<naturalabundance>7.3171</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>25<atomicnumber><symbol>V</symbol>
-<atomicmass>50</atomicmass>
-<exactmass>49.947161</exactmass>
-<naturalabundance>0.251</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>25<atomicnumber><symbol>V</symbol>
-<atomicmass>51</atomicmass>
-<exactmass>50.943963</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>26<atomicnumber><symbol>Cr</symbol>
-<atomicmass>50</atomicmass>
-<exactmass>49.946046</exactmass>
-<naturalabundance>5.1915</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>26<atomicnumber><symbol>Cr</symbol>
-<atomicmass>52</atomicmass>
-<exactmass>51.94051</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>26<atomicnumber><symbol>Cr</symbol>
-<atomicmass>53</atomicmass>
-<exactmass>52.940651</exactmass>
-<naturalabundance>11.3379</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>26<atomicnumber><symbol>Cr</symbol>
-<atomicmass>54</atomicmass>
-<exactmass>53.938882</exactmass>
-<naturalabundance>2.8166</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>27<atomicnumber><symbol>Mn</symbol>
-<atomicmass>55</atomicmass>
-<exactmass>54.938046</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>28<atomicnumber><symbol>Fe</symbol>
-<atomicmass>54</atomicmass>
-<exactmass>53.939612</exactmass>
-<naturalabundance>6.3236</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>28<atomicnumber><symbol>Fe</symbol>
-<atomicmass>56</atomicmass>
-<exactmass>55.934939</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>28<atomicnumber><symbol>Fe</symbol>
-<atomicmass>57</atomicmass>
-<exactmass>56.935396</exactmass>
-<naturalabundance>2.3986</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>28<atomicnumber><symbol>Fe</symbol>
-<atomicmass>58</atomicmass>
-<exactmass>57.933278</exactmass>
-<naturalabundance>0.3053</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>29<atomicnumber><symbol>Ni</symbol>
-<atomicmass>58</atomicmass>
-<exactmass>57.935347</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>29<atomicnumber><symbol>Ni</symbol>
-<atomicmass>60</atomicmass>
-<exactmass>59.930789</exactmass>
-<naturalabundance>38.2305</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>29<atomicnumber><symbol>Ni</symbol>
-<atomicmass>61</atomicmass>
-<exactmass>60.931059</exactmass>
-<naturalabundance>1.6552</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>29<atomicnumber><symbol>Ni</symbol>
-<atomicmass>62</atomicmass>
-<exactmass>61.928346</exactmass>
-<naturalabundance>5.2585</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>29<atomicnumber><symbol>Ni</symbol>
-<atomicmass>64</atomicmass>
-<exactmass>63.927968</exactmass>
-<naturalabundance>1.3329</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>29<atomicnumber><symbol>Co</symbol>
-<atomicmass>59</atomicmass>
-<exactmass>58.933198</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>31<atomicnumber><symbol>Cu</symbol>
-<atomicmass>63</atomicmass>
-<exactmass>62.9295991</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>31<atomicnumber><symbol>Cu</symbol>
-<atomicmass>65</atomicmass>
-<exactmass>64.9277921</exactmass>
-<naturalabundance>44.571</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>32<atomicnumber><symbol>Zn</symbol>
-<atomicmass>64</atomicmass>
-<exactmass>63.929145</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>32<atomicnumber><symbol>Zn</symbol>
-<atomicmass>66</atomicmass>
-<exactmass>65.926035</exactmass>
-<naturalabundance>57.4074</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>32<atomicnumber><symbol>Zn</symbol>
-<atomicmass>67</atomicmass>
-<exactmass>66.927129</exactmass>
-<naturalabundance>8.4362</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>32<atomicnumber><symbol>Zn</symbol>
-<atomicmass>68</atomicmass>
-<exactmass>67.924846</exactmass>
-<naturalabundance>38.6831</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>32<atomicnumber><symbol>Zn</symbol>
-<atomicmass>70</atomicmass>
-<exactmass>69.925325</exactmass>
-<naturalabundance>1.2346</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>34<atomicnumber><symbol>Ga</symbol>
-<atomicmass>69</atomicmass>
-<exactmass>68.925581</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>34<atomicnumber><symbol>Ga</symbol>
-<atomicmass>71</atomicmass>
-<exactmass>70.924701</exactmass>
-<naturalabundance>66.389</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>37<atomicnumber><symbol>Ge</symbol>
-<atomicmass>70</atomicmass>
-<exactmass>69.92425</exactmass>
-<naturalabundance>56.1644</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>37<atomicnumber><symbol>Ge</symbol>
-<atomicmass>72</atomicmass>
-<exactmass>71.92208</exactmass>
-<naturalabundance>75.0685</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>37<atomicnumber><symbol>Ge</symbol>
-<atomicmass>73</atomicmass>
-<exactmass>72.923464</exactmass>
-<naturalabundance>21.3698</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>37<atomicnumber><symbol>Ge</symbol>
-<atomicmass>74</atomicmass>
-<exactmass>73.921179</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>37<atomicnumber><symbol>Ge</symbol>
-<atomicmass>76</atomicmass>
-<exactmass>75.921403</exactmass>
-<naturalabundance>21.3698</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>37<atomicnumber><symbol>As</symbol>
-<atomicmass>75</atomicmass>
-<exactmass>74.921596</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>39<atomicnumber><symbol>Br</symbol>
-<atomicmass>79</atomicmass>
-<exactmass>78.918336</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>39<atomicnumber><symbol>Br</symbol>
-<atomicmass>81</atomicmass>
-<exactmass>80.91629</exactmass>
-<naturalabundance>97.2776</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>40<atomicnumber><symbol>Se</symbol>
-<atomicmass>74</atomicmass>
-<exactmass>73.922477</exactmass>
-<naturalabundance>1.8145</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>40<atomicnumber><symbol>Se</symbol>
-<atomicmass>76</atomicmass>
-<exactmass>75.919207</exactmass>
-<naturalabundance>18.1451</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>40<atomicnumber><symbol>Se</symbol>
-<atomicmass>77</atomicmass>
-<exactmass>76.919908</exactmass>
-<naturalabundance>15.3226</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>40<atomicnumber><symbol>Se</symbol>
-<atomicmass>78</atomicmass>
-<exactmass>77.917304</exactmass>
-<naturalabundance>47.379</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>40<atomicnumber><symbol>Se</symbol>
-<atomicmass>80</atomicmass>
-<exactmass>79.916521</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>40<atomicnumber><symbol>Se</symbol>
-<atomicmass>82</atomicmass>
-<exactmass>81.916709</exactmass>
-<naturalabundance>18.9516</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>42<atomicnumber><symbol>Kr</symbol>
-<atomicmass>78</atomicmass>
-<exactmass>77.920397</exactmass>
-<naturalabundance>0.614</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>42<atomicnumber><symbol>Kr</symbol>
-<atomicmass>80</atomicmass>
-<exactmass>79.916375</exactmass>
-<naturalabundance>3.9474</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>42<atomicnumber><symbol>Kr</symbol>
-<atomicmass>82</atomicmass>
-<exactmass>81.913483</exactmass>
-<naturalabundance>20.3509</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>42<atomicnumber><symbol>Kr</symbol>
-<atomicmass>83</atomicmass>
-<exactmass>82.914134</exactmass>
-<naturalabundance>20.1754</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>42<atomicnumber><symbol>Kr</symbol>
-<atomicmass>84</atomicmass>
-<exactmass>83.911506</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>42<atomicnumber><symbol>Kr</symbol>
-<atomicmass>86</atomicmass>
-<exactmass>85.910614</exactmass>
-<naturalabundance>30.3509</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>42<atomicnumber><symbol>Rb</symbol>
-<atomicmass>85</atomicmass>
-<exactmass>84.9117996</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>42<atomicnumber><symbol>Rb</symbol>
-<atomicmass>87</atomicmass>
-<exactmass>86.909184</exactmass>
-<naturalabundance>38.571</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>44<atomicnumber><symbol>Sr</symbol>
-<atomicmass>84</atomicmass>
-<exactmass>83.913428</exactmass>
-<naturalabundance>0.6781</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>44<atomicnumber><symbol>Sr</symbol>
-<atomicmass>86</atomicmass>
-<exactmass>85.909273</exactmass>
-<naturalabundance>11.9399</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>44<atomicnumber><symbol>Sr</symbol>
-<atomicmass>87</atomicmass>
-<exactmass>86.90889</exactmass>
-<naturalabundance>8.4766</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>44<atomicnumber><symbol>Sr</symbol>
-<atomicmass>88</atomicmass>
-<exactmass>87.905625</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>44<atomicnumber><symbol>Y</symbol>
-<atomicmass>89</atomicmass>
-<exactmass>88.905856</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>45<atomicnumber><symbol>Zr</symbol>
-<atomicmass>90</atomicmass>
-<exactmass>89.904708</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>45<atomicnumber><symbol>Zr</symbol>
-<atomicmass>91</atomicmass>
-<exactmass>90.905644</exactmass>
-<naturalabundance>21.9048</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>45<atomicnumber><symbol>Zr</symbol>
-<atomicmass>92</atomicmass>
-<exactmass>91.905039</exactmass>
-<naturalabundance>33.3722</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>45<atomicnumber><symbol>Zr</symbol>
-<atomicmass>94</atomicmass>
-<exactmass>93.906319</exactmass>
-<naturalabundance>33.6832</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>45<atomicnumber><symbol>Zr</symbol>
-<atomicmass>96</atomicmass>
-<exactmass>95.908272</exactmass>
-<naturalabundance>5.4033</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>46<atomicnumber><symbol>Nb</symbol>
-<atomicmass>93</atomicmass>
-<exactmass>92.906378</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>49<atomicnumber><symbol>Mo</symbol>
-<atomicmass>92</atomicmass>
-<exactmass>91.906809</exactmass>
-<naturalabundance>61.5002</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>49<atomicnumber><symbol>Mo</symbol>
-<atomicmass>94</atomicmass>
-<exactmass>93.905086</exactmass>
-<naturalabundance>38.334</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>49<atomicnumber><symbol>Mo</symbol>
-<atomicmass>95</atomicmass>
-<exactmass>94.905838</exactmass>
-<naturalabundance>65.976</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>49<atomicnumber><symbol>Mo</symbol>
-<atomicmass>96</atomicmass>
-<exactmass>95.904676</exactmass>
-<naturalabundance>69.1256</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>49<atomicnumber><symbol>Mo</symbol>
-<atomicmass>97</atomicmass>
-<exactmass>96.906018</exactmass>
-<naturalabundance>39.5773</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>49<atomicnumber><symbol>Mo</symbol>
-<atomicmass>98</atomicmass>
-<exactmass>97.905405</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>49<atomicnumber><symbol>Mo</symbol>
-<atomicmass>100</atomicmass>
-<exactmass>99.907473</exactmass>
-<naturalabundance>39.9088</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>51<atomicnumber><symbol>Ru</symbol>
-<atomicmass>96</atomicmass>
-<exactmass>95.907596</exactmass>
-<naturalabundance>17.4684</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>51<atomicnumber><symbol>Ru</symbol>
-<atomicmass>98</atomicmass>
-<exactmass>97.905287</exactmass>
-<naturalabundance>5.9494</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>51<atomicnumber><symbol>Ru</symbol>
-<atomicmass>99</atomicmass>
-<exactmass>98.905937</exactmass>
-<naturalabundance>40.1899</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>51<atomicnumber><symbol>Ru</symbol>
-<atomicmass>100</atomicmass>
-<exactmass>99.904218</exactmass>
-<naturalabundance>39.8734</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>51<atomicnumber><symbol>Ru</symbol>
-<atomicmass>101</atomicmass>
-<exactmass>100.905581</exactmass>
-<naturalabundance>53.7975</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>51<atomicnumber><symbol>Ru</symbol>
-<atomicmass>102</atomicmass>
-<exactmass>101.904348</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>51<atomicnumber><symbol>Ru</symbol>
-<atomicmass>104</atomicmass>
-<exactmass>103.905422</exactmass>
-<naturalabundance>59.1772</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>51<atomicnumber><symbol>Rh</symbol>
-<atomicmass>103</atomicmass>
-<exactmass>102.905503</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>53<atomicnumber><symbol>Pd</symbol>
-<atomicmass>102</atomicmass>
-<exactmass>101.905609</exactmass>
-<naturalabundance>3.7322</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>53<atomicnumber><symbol>Pd</symbol>
-<atomicmass>104</atomicmass>
-<exactmass>103.904026</exactmass>
-<naturalabundance>40.7611</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>53<atomicnumber><symbol>Pd</symbol>
-<atomicmass>105</atomicmass>
-<exactmass>104.905075</exactmass>
-<naturalabundance>81.7051</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>53<atomicnumber><symbol>Pd</symbol>
-<atomicmass>106</atomicmass>
-<exactmass>105.903475</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>53<atomicnumber><symbol>Pd</symbol>
-<atomicmass>108</atomicmass>
-<exactmass>107.903894</exactmass>
-<naturalabundance>96.8167</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>53<atomicnumber><symbol>Pd</symbol>
-<atomicmass>110</atomicmass>
-<exactmass>109.905169</exactmass>
-<naturalabundance>42.883</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>53<atomicnumber><symbol>Ag</symbol>
-<atomicmass>107</atomicmass>
-<exactmass>106.905095</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>53<atomicnumber><symbol>Ag</symbol>
-<atomicmass>109</atomicmass>
-<exactmass>108.904754</exactmass>
-<naturalabundance>92.905</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>57<atomicnumber><symbol>Cd</symbol>
-<atomicmass>106</atomicmass>
-<exactmass>105.906461</exactmass>
-<naturalabundance>4.3508</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>57<atomicnumber><symbol>Cd</symbol>
-<atomicmass>108</atomicmass>
-<exactmass>107.904186</exactmass>
-<naturalabundance>3.0978</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>57<atomicnumber><symbol>Cd</symbol>
-<atomicmass>110</atomicmass>
-<exactmass>109.903007</exactmass>
-<naturalabundance>43.4737</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>57<atomicnumber><symbol>Cd</symbol>
-<atomicmass>111</atomicmass>
-<exactmass>110.904182</exactmass>
-<naturalabundance>44.5527</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>57<atomicnumber><symbol>Cd</symbol>
-<atomicmass>112</atomicmass>
-<exactmass>111.902761</exactmass>
-<naturalabundance>83.9888</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>57<atomicnumber><symbol>Cd</symbol>
-<atomicmass>113</atomicmass>
-<exactmass>112.904401</exactmass>
-<naturalabundance>42.5339</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>57<atomicnumber><symbol>Cd</symbol>
-<atomicmass>114</atomicmass>
-<exactmass>113.903361</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>57<atomicnumber><symbol>Cd</symbol>
-<atomicmass>116</atomicmass>
-<exactmass>115.904758</exactmass>
-<naturalabundance>26.0703</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>57<atomicnumber><symbol>In</symbol>
-<atomicmass>113</atomicmass>
-<exactmass>112.904056</exactmass>
-<naturalabundance>4.4932</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>57<atomicnumber><symbol>In</symbol>
-<atomicmass>115</atomicmass>
-<exactmass>114.903875</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>60<atomicnumber><symbol>Sn</symbol>
-<atomicmass>112</atomicmass>
-<exactmass>111.904823</exactmass>
-<naturalabundance>3.0864</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>60<atomicnumber><symbol>Sn</symbol>
-<atomicmass>114</atomicmass>
-<exactmass>113.902781</exactmass>
-<naturalabundance>2.1605</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>60<atomicnumber><symbol>Sn</symbol>
-<atomicmass>115</atomicmass>
-<exactmass>114.903344</exactmass>
-<naturalabundance>1.2346</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>60<atomicnumber><symbol>Sn</symbol>
-<atomicmass>116</atomicmass>
-<exactmass>115.901744</exactmass>
-<naturalabundance>45.3704</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>60<atomicnumber><symbol>Sn</symbol>
-<atomicmass>117</atomicmass>
-<exactmass>116.902954</exactmass>
-<naturalabundance>23.7654</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>60<atomicnumber><symbol>Sn</symbol>
-<atomicmass>118</atomicmass>
-<exactmass>117.901607</exactmass>
-<naturalabundance>75.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>60<atomicnumber><symbol>Sn</symbol>
-<atomicmass>119</atomicmass>
-<exactmass>118.90331</exactmass>
-<naturalabundance>26.5432</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>60<atomicnumber><symbol>Sn</symbol>
-<atomicmass>120</atomicmass>
-<exactmass>119.902199</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>60<atomicnumber><symbol>Sn</symbol>
-<atomicmass>122</atomicmass>
-<exactmass>121.90344</exactmass>
-<naturalabundance>14.1975</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>60<atomicnumber><symbol>Sn</symbol>
-<atomicmass>124</atomicmass>
-<exactmass>123.905271</exactmass>
-<naturalabundance>17.284</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>60<atomicnumber><symbol>Sb</symbol>
-<atomicmass>121</atomicmass>
-<exactmass>120.903824</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>60<atomicnumber><symbol>Sb</symbol>
-<atomicmass>123</atomicmass>
-<exactmass>122.904222</exactmass>
-<naturalabundance>74.5201</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>63<atomicnumber><symbol>I</symbol>
-<atomicmass>127</atomicmass>
-<exactmass>126.904477</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>65<atomicnumber><symbol>Te</symbol>
-<atomicmass>120</atomicmass>
-<exactmass>119.904021</exactmass>
-<naturalabundance>0.284</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>65<atomicnumber><symbol>Te</symbol>
-<atomicmass>122</atomicmass>
-<exactmass>121.903055</exactmass>
-<naturalabundance>7.6923</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>65<atomicnumber><symbol>Te</symbol>
-<atomicmass>123</atomicmass>
-<exactmass>122.904278</exactmass>
-<naturalabundance>2.6864</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>65<atomicnumber><symbol>Te</symbol>
-<atomicmass>124</atomicmass>
-<exactmass>123.902825</exactmass>
-<naturalabundance>14.2485</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>65<atomicnumber><symbol>Te</symbol>
-<atomicmass>125</atomicmass>
-<exactmass>124.904435</exactmass>
-<naturalabundance>21.1243</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>65<atomicnumber><symbol>Te</symbol>
-<atomicmass>126</atomicmass>
-<exactmass>125.90331</exactmass>
-<naturalabundance>56.0651</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>65<atomicnumber><symbol>Te</symbol>
-<atomicmass>128</atomicmass>
-<exactmass>127.904464</exactmass>
-<naturalabundance>93.7574</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>65<atomicnumber><symbol>Te</symbol>
-<atomicmass>130</atomicmass>
-<exactmass>129.906229</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>66<atomicnumber><symbol>Xe</symbol>
-<atomicmass>124</atomicmass>
-<exactmass>123.90612</exactmass>
-<naturalabundance>0.3717</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>66<atomicnumber><symbol>Xe</symbol>
-<atomicmass>126</atomicmass>
-<exactmass>125.904281</exactmass>
-<naturalabundance>0.3346</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>66<atomicnumber><symbol>Xe</symbol>
-<atomicmass>128</atomicmass>
-<exactmass>127.903531</exactmass>
-<naturalabundance>7.1004</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>66<atomicnumber><symbol>Xe</symbol>
-<atomicmass>129</atomicmass>
-<exactmass>128.90478</exactmass>
-<naturalabundance>98.1413</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>66<atomicnumber><symbol>Xe</symbol>
-<atomicmass>130</atomicmass>
-<exactmass>129.90351</exactmass>
-<naturalabundance>15.2416</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>66<atomicnumber><symbol>Xe</symbol>
-<atomicmass>131</atomicmass>
-<exactmass>130.90508</exactmass>
-<naturalabundance>78.8104</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>66<atomicnumber><symbol>Xe</symbol>
-<atomicmass>132</atomicmass>
-<exactmass>131.904148</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>66<atomicnumber><symbol>Xe</symbol>
-<atomicmass>134</atomicmass>
-<exactmass>133.905395</exactmass>
-<naturalabundance>38.6617</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>66<atomicnumber><symbol>Xe</symbol>
-<atomicmass>136</atomicmass>
-<exactmass>135.907219</exactmass>
-<naturalabundance>33.0855</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>66<atomicnumber><symbol>Cs</symbol>
-<atomicmass>133</atomicmass>
-<exactmass>132.905433</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>69<atomicnumber><symbol>Ba</symbol>
-<atomicmass>130</atomicmass>
-<exactmass>129.906277</exactmass>
-<naturalabundance>0.1478</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>69<atomicnumber><symbol>Ba</symbol>
-<atomicmass>132</atomicmass>
-<exactmass>131.905042</exactmass>
-<naturalabundance>0.1409</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>69<atomicnumber><symbol>Ba</symbol>
-<atomicmass>134</atomicmass>
-<exactmass>133.90449</exactmass>
-<naturalabundance>3.371</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>69<atomicnumber><symbol>Ba</symbol>
-<atomicmass>135</atomicmass>
-<exactmass>134.905668</exactmass>
-<naturalabundance>9.1939</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>69<atomicnumber><symbol>Ba</symbol>
-<atomicmass>136</atomicmass>
-<exactmass>135.904556</exactmass>
-<naturalabundance>10.954</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>69<atomicnumber><symbol>Ba</symbol>
-<atomicmass>137</atomicmass>
-<exactmass>136.905816</exactmass>
-<naturalabundance>15.6625</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>69<atomicnumber><symbol>Ba</symbol>
-<atomicmass>138</atomicmass>
-<exactmass>137.905236</exactmass>
-<naturalabundance>100.0</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>69<atomicnumber><symbol>La</symbol>
-<atomicmass>138</atomicmass>
-<exactmass>137.907114</exactmass>
-<naturalabundance>0.0901</naturalabundance>
-</isotope>
-<isotope>
-<atomicnumber>69<atomicnumber><symbol>La</symbol>
-<atomicmass>139</atomicmass>
-<exactmass>138.906355</ex
+<java.util.Vector>
+  <org.openscience.cdk.Isotope
+   symbol="H"
+   atomicNumber="1"
+   atomicMass="1"
+   exactMass="1.00782504"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="H"
+   atomicNumber="1"
+   atomicMass="2"
+   exactMass="2.01410179"
+   naturalAbundance="0.015"/>
+  <org.openscience.cdk.Isotope
+   symbol="D"
+   atomicNumber="1"
+   atomicMass="2"
+   exactMass="2.01410179"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="He"
+   atomicNumber="2"
+   atomicMass="3"
+   exactMass="3.01602929"
+   naturalAbundance="1.0E-4"/>
+  <org.openscience.cdk.Isotope
+   symbol="He"
+   atomicNumber="2"
+   atomicMass="4"
+   exactMass="4.00260325"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="Li"
+   atomicNumber="3"
+   atomicMass="6"
+   exactMass="6.0151232"
+   naturalAbundance="8.1081"/>
+  <org.openscience.cdk.Isotope
+   symbol="Li"
+   atomicNumber="3"
+   atomicMass="7"
+   exactMass="7.0160045"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="Be"
+   atomicNumber="4"
+   atomicMass="9"
+   exactMass="9.0121825"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="B"
+   atomicNumber="5"
+   atomicMass="10"
+   exactMass="10.012938"
+   naturalAbundance="24.8439"/>
+  <org.openscience.cdk.Isotope
+   symbol="B"
+   atomicNumber="5"
+   atomicMass="11"
+   exactMass="11.0093053"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="C"
+   atomicNumber="6"
+   atomicMass="12"
+   exactMass="12.0"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="C"
+   atomicNumber="6"
+   atomicMass="13"
+   exactMass="13.0033548"
+   naturalAbundance="1.1122"/>
+  <org.openscience.cdk.Isotope
+   symbol="N"
+   atomicNumber="7"
+   atomicMass="14"
+   exactMass="14.003074"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="N"
+   atomicNumber="7"
+   atomicMass="15"
+   exactMass="15.000109"
+   naturalAbundance="0.3673"/>
+  <org.openscience.cdk.Isotope
+   symbol="O"
+   atomicNumber="8"
+   atomicMass="16"
+   exactMass="15.9949146"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="O"
+   atomicNumber="8"
+   atomicMass="17"
+   exactMass="16.9991306"
+   naturalAbundance="0.0381"/>
+  <org.openscience.cdk.Isotope
+   symbol="O"
+   atomicNumber="8"
+   atomicMass="18"
+   exactMass="17.9991594"
+   naturalAbundance="0.2005"/>
+  <org.openscience.cdk.Isotope
+   symbol="F"
+   atomicNumber="9"
+   atomicMass="19"
+   exactMass="18.9984033"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ne"
+   atomicNumber="10"
+   atomicMass="20"
+   exactMass="19.9924391"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ne"
+   atomicNumber="10"
+   atomicMass="21"
+   exactMass="20.9938453"
+   naturalAbundance="0.2983"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ne"
+   atomicNumber="10"
+   atomicMass="22"
+   exactMass="21.9913837"
+   naturalAbundance="10.1867"/>
+  <org.openscience.cdk.Isotope
+   symbol="Na"
+   atomicNumber="11"
+   atomicMass="23"
+   exactMass="22.9897697"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="Mg"
+   atomicNumber="12"
+   atomicMass="24"
+   exactMass="23.985045"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="Mg"
+   atomicNumber="12"
+   atomicMass="25"
+   exactMass="24.9858392"
+   naturalAbundance="12.6598"/>
+  <org.openscience.cdk.Isotope
+   symbol="Mg"
+   atomicNumber="12"
+   atomicMass="26"
+   exactMass="25.9825954"
+   naturalAbundance="13.938"/>
+  <org.openscience.cdk.Isotope
+   symbol="Al"
+   atomicNumber="13"
+   atomicMass="27"
+   exactMass="26.9815413"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="Si"
+   atomicNumber="14"
+   atomicMass="28"
+   exactMass="27.9769284"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="Si"
+   atomicNumber="14"
+   atomicMass="29"
+   exactMass="28.9764964"
+   naturalAbundance="5.0634"/>
+  <org.openscience.cdk.Isotope
+   symbol="Si"
+   atomicNumber="14"
+   atomicMass="30"
+   exactMass="29.9737717"
+   naturalAbundance="3.3612"/>
+  <org.openscience.cdk.Isotope
+   symbol="P"
+   atomicNumber="15"
+   atomicMass="31"
+   exactMass="30.9737634"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="S"
+   atomicNumber="16"
+   atomicMass="32"
+   exactMass="31.9720718"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="S"
+   atomicNumber="16"
+   atomicMass="33"
+   exactMass="32.9714591"
+   naturalAbundance="0.7893"/>
+  <org.openscience.cdk.Isotope
+   symbol="S"
+   atomicNumber="16"
+   atomicMass="34"
+   exactMass="33.9678677"
+   naturalAbundance="4.4306"/>
+  <org.openscience.cdk.Isotope
+   symbol="S"
+   atomicNumber="16"
+   atomicMass="36"
+   exactMass="35.967079"
+   naturalAbundance="0.022"/>
+  <org.openscience.cdk.Isotope
+   symbol="Cl"
+   atomicNumber="17"
+   atomicMass="35"
+   exactMass="34.9688527"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="Cl"
+   atomicNumber="17"
+   atomicMass="37"
+   exactMass="36.9659026"
+   naturalAbundance="31.978"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ar"
+   atomicNumber="18"
+   atomicMass="36"
+   exactMass="35.9675456"
+   naturalAbundance="0.338"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ar"
+   atomicNumber="18"
+   atomicMass="38"
+   exactMass="37.9627322"
+   naturalAbundance="0.063"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ar"
+   atomicNumber="18"
+   atomicMass="40"
+   exactMass="39.9623831"
+   naturalAbundance="100.0"/>
+   <org.openscience.cdk.Isotope
+   symbol="K"
+   atomicNumber="19"
+   atomicMass="39"
+   exactMass="38.9637079"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="K"
+   atomicNumber="19"
+   atomicMass="40"
+   exactMass="39.9639988"
+   naturalAbundance="0.013"/>
+  <org.openscience.cdk.Isotope
+   symbol="K"
+   atomicNumber="19"
+   atomicMass="42"
+   exactMass="40.9618254"
+   naturalAbundance="7.217"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ca"
+   atomicNumber="20"
+   atomicMass="40"
+   exactMass="39.9625907"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ca"
+   atomicNumber="20"
+   atomicMass="42"
+   exactMass="41.9586218"
+   naturalAbundance="0.6674"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ca"
+   atomicNumber="20"
+   atomicMass="43"
+   exactMass="42.9587704"
+   naturalAbundance="0.1393"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ca"
+   atomicNumber="20"
+   atomicMass="44"
+   exactMass="43.9554848"
+   naturalAbundance="2.1518"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ca"
+   atomicNumber="20"
+   atomicMass="46"
+   exactMass="45.953689"
+   naturalAbundance="0.0041"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ca"
+   atomicNumber="20"
+   atomicMass="48"
+   exactMass="47.952532"
+   naturalAbundance="0.1929"/>
+  <org.openscience.cdk.Isotope
+   symbol="Sc"
+   atomicNumber="21"
+   atomicMass="45"
+   exactMass="44.9559136"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ti"
+   atomicNumber="22"
+   atomicMass="46"
+   exactMass="45.952633"
+   naturalAbundance="10.8401"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ti"
+   atomicNumber="22"
+   atomicMass="47"
+   exactMass="46.951765"
+   naturalAbundance="9.8916"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ti"
+   atomicNumber="22"
+   atomicMass="48"
+   exactMass="47.947947"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ti"
+   atomicNumber="22"
+   atomicMass="49"
+   exactMass="48.947871"
+   naturalAbundance="7.4526"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ti"
+   atomicNumber="22"
+   atomicMass="50"
+   exactMass="49.944786"
+   naturalAbundance="7.3171"/>
+  <org.openscience.cdk.Isotope
+   symbol="V"
+   atomicNumber="23"
+   atomicMass="50"
+   exactMass="49.947161"
+   naturalAbundance="0.251"/>
+  <org.openscience.cdk.Isotope
+   symbol="V"
+   atomicNumber="23"
+   atomicMass="51"
+   exactMass="50.943963"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="Cr"
+   atomicNumber="24"
+   atomicMass="50"
+   exactMass="49.946046"
+   naturalAbundance="5.1915"/>
+  <org.openscience.cdk.Isotope
+   symbol="Cr"
+   atomicNumber="24"
+   atomicMass="52"
+   exactMass="51.94051"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="Cr"
+   atomicNumber="24"
+   atomicMass="53"
+   exactMass="52.940651"
+   naturalAbundance="11.3379"/>
+  <org.openscience.cdk.Isotope
+   symbol="Cr"
+   atomicNumber="24"
+   atomicMass="54"
+   exactMass="53.938882"
+   naturalAbundance="2.8166"/>
+  <org.openscience.cdk.Isotope
+   symbol="Mn"
+   atomicNumber="25"
+   atomicMass="55"
+   exactMass="54.938046"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="Fe"
+   atomicNumber="26"
+   atomicMass="54"
+   exactMass="53.939612"
+   naturalAbundance="6.3236"/>
+  <org.openscience.cdk.Isotope
+   symbol="Fe"
+   atomicNumber="26"
+   atomicMass="56"
+   exactMass="55.934939"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="Fe"
+   atomicNumber="26"
+   atomicMass="57"
+   exactMass="56.935396"
+   naturalAbundance="2.3986"/>
+  <org.openscience.cdk.Isotope
+   symbol="Fe"
+   atomicNumber="26"
+   atomicMass="58"
+   exactMass="57.933278"
+   naturalAbundance="0.3053"/>
+  <org.openscience.cdk.Isotope
+   symbol="Co"
+   atomicNumber="27"
+   atomicMass="59"
+   exactMass="58.933198"
+   naturalAbundance="100.0"/>
+   <org.openscience.cdk.Isotope
+   symbol="Ni"
+   atomicNumber="28"
+   atomicMass="58"
+   exactMass="57.935347"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ni"
+   atomicNumber="28"
+   atomicMass="60"
+   exactMass="59.930789"
+   naturalAbundance="38.2305"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ni"
+   atomicNumber="28"
+   atomicMass="61"
+   exactMass="60.931059"
+   naturalAbundance="1.6552"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ni"
+   atomicNumber="28"
+   atomicMass="62"
+   exactMass="61.928346"
+   naturalAbundance="5.2585"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ni"
+   atomicNumber="28"
+   atomicMass="64"
+   exactMass="63.927968"
+   naturalAbundance="1.3329"/>
+  <org.openscience.cdk.Isotope
+   symbol="Cu"
+   atomicNumber="29"
+   atomicMass="63"
+   exactMass="62.9295991"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="Cu"
+   atomicNumber="29"
+   atomicMass="65"
+   exactMass="64.9277921"
+   naturalAbundance="44.571"/>
+  <org.openscience.cdk.Isotope
+   symbol="Zn"
+   atomicNumber="30"
+   atomicMass="64"
+   exactMass="63.929145"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="Zn"
+   atomicNumber="30"
+   atomicMass="66"
+   exactMass="65.926035"
+   naturalAbundance="57.4074"/>
+  <org.openscience.cdk.Isotope
+   symbol="Zn"
+   atomicNumber="30"
+   atomicMass="67"
+   exactMass="66.927129"
+   naturalAbundance="8.4362"/>
+  <org.openscience.cdk.Isotope
+   symbol="Zn"
+   atomicNumber="30"
+   atomicMass="68"
+   exactMass="67.924846"
+   naturalAbundance="38.6831"/>
+  <org.openscience.cdk.Isotope
+   symbol="Zn"
+   atomicNumber="30"
+   atomicMass="70"
+   exactMass="69.925325"
+   naturalAbundance="1.2346"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ga"
+   atomicNumber="31"
+   atomicMass="69"
+   exactMass="68.925581"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ga"
+   atomicNumber="31"
+   atomicMass="71"
+   exactMass="70.924701"
+   naturalAbundance="66.389"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ge"
+   atomicNumber="32"
+   atomicMass="70"
+   exactMass="69.92425"
+   naturalAbundance="56.1644"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ge"
+   atomicNumber="32"
+   atomicMass="72"
+   exactMass="71.92208"
+   naturalAbundance="75.0685"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ge"
+   atomicNumber="32"
+   atomicMass="73"
+   exactMass="72.923464"
+   naturalAbundance="21.3698"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ge"
+   atomicNumber="32"
+   atomicMass="74"
+   exactMass="73.921179"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ge"
+   atomicNumber="32"
+   atomicMass="76"
+   exactMass="75.921403"
+   naturalAbundance="21.3698"/>
+  <org.openscience.cdk.Isotope
+   symbol="As"
+   atomicNumber="33"
+   atomicMass="75"
+   exactMass="74.921596"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="Se"
+   atomicNumber="34"
+   atomicMass="74"
+   exactMass="73.922477"
+   naturalAbundance="1.8145"/>
+  <org.openscience.cdk.Isotope
+   symbol="Se"
+   atomicNumber="34"
+   atomicMass="76"
+   exactMass="75.919207"
+   naturalAbundance="18.1451"/>
+  <org.openscience.cdk.Isotope
+   symbol="Se"
+   atomicNumber="34"
+   atomicMass="77"
+   exactMass="76.919908"
+   naturalAbundance="15.3226"/>
+  <org.openscience.cdk.Isotope
+   symbol="Se"
+   atomicNumber="34"
+   atomicMass="78"
+   exactMass="77.917304"
+   naturalAbundance="47.379"/>
+  <org.openscience.cdk.Isotope
+   symbol="Se"
+   atomicNumber="34"
+   atomicMass="80"
+   exactMass="79.916521"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="Se"
+   atomicNumber="34"
+   atomicMass="82"
+   exactMass="81.916709"
+   naturalAbundance="18.9516"/>
+   <org.openscience.cdk.Isotope
+   symbol="Br"
+   atomicNumber="35"
+   atomicMass="79"
+   exactMass="78.918336"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="Br"
+   atomicNumber="35"
+   atomicMass="81"
+   exactMass="80.91629"
+   naturalAbundance="97.2776"/>
+  <org.openscience.cdk.Isotope
+   symbol="Kr"
+   atomicNumber="36"
+   atomicMass="78"
+   exactMass="77.920397"
+   naturalAbundance="0.614"/>
+  <org.openscience.cdk.Isotope
+   symbol="Kr"
+   atomicNumber="36"
+   atomicMass="80"
+   exactMass="79.916375"
+   naturalAbundance="3.9474"/>
+  <org.openscience.cdk.Isotope
+   symbol="Kr"
+   atomicNumber="36"
+   atomicMass="82"
+   exactMass="81.913483"
+   naturalAbundance="20.3509"/>
+  <org.openscience.cdk.Isotope
+   symbol="Kr"
+   atomicNumber="36"
+   atomicMass="83"
+   exactMass="82.914134"
+   naturalAbundance="20.1754"/>
+  <org.openscience.cdk.Isotope
+   symbol="Kr"
+   atomicNumber="36"
+   atomicMass="84"
+   exactMass="83.911506"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="Kr"
+   atomicNumber="36"
+   atomicMass="86"
+   exactMass="85.910614"
+   naturalAbundance="30.3509"/>
+  <org.openscience.cdk.Isotope
+   symbol="Rb"
+   atomicNumber="37"
+   atomicMass="85"
+   exactMass="84.9117996"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="Rb"
+   atomicNumber="37"
+   atomicMass="87"
+   exactMass="86.909184"
+   naturalAbundance="38.571"/>
+  <org.openscience.cdk.Isotope
+   symbol="Sr"
+   atomicNumber="38"
+   atomicMass="84"
+   exactMass="83.913428"
+   naturalAbundance="0.6781"/>
+  <org.openscience.cdk.Isotope
+   symbol="Sr"
+   atomicNumber="38"
+   atomicMass="86"
+   exactMass="85.909273"
+   naturalAbundance="11.9399"/>
+  <org.openscience.cdk.Isotope
+   symbol="Sr"
+   atomicNumber="38"
+   atomicMass="87"
+   exactMass="86.90889"
+   naturalAbundance="8.4766"/>
+  <org.openscience.cdk.Isotope
+   symbol="Sr"
+   atomicNumber="38"
+   atomicMass="88"
+   exactMass="87.905625"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="Y"
+   atomicNumber="39"
+   atomicMass="89"
+   exactMass="88.905856"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="Zr"
+   atomicNumber="40"
+   atomicMass="90"
+   exactMass="89.904708"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="Zr"
+   atomicNumber="40"
+   atomicMass="91"
+   exactMass="90.905644"
+   naturalAbundance="21.9048"/>
+  <org.openscience.cdk.Isotope
+   symbol="Zr"
+   atomicNumber="40"
+   atomicMass="92"
+   exactMass="91.905039"
+   naturalAbundance="33.3722"/>
+  <org.openscience.cdk.Isotope
+   symbol="Zr"
+   atomicNumber="40"
+   atomicMass="94"
+   exactMass="93.906319"
+   naturalAbundance="33.6832"/>
+  <org.openscience.cdk.Isotope
+   symbol="Zr"
+   atomicNumber="40"
+   atomicMass="96"
+   exactMass="95.908272"
+   naturalAbundance="5.4033"/>
+  <org.openscience.cdk.Isotope
+   symbol="Nb"
+   atomicNumber="41"
+   atomicMass="93"
+   exactMass="92.906378"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="Mo"
+   atomicNumber="442"
+   atomicMass="92"
+   exactMass="91.906809"
+   naturalAbundance="61.5002"/>
+  <org.openscience.cdk.Isotope
+   symbol="Mo"
+   atomicNumber="42"
+   atomicMass="94"
+   exactMass="93.905086"
+   naturalAbundance="38.334"/>
+  <org.openscience.cdk.Isotope
+   symbol="Mo"
+   atomicNumber="42"
+   atomicMass="95"
+   exactMass="94.905838"
+   naturalAbundance="65.976"/>
+  <org.openscience.cdk.Isotope
+   symbol="Mo"
+   atomicNumber="42"
+   atomicMass="96"
+   exactMass="95.904676"
+   naturalAbundance="69.1256"/>
+  <org.openscience.cdk.Isotope
+   symbol="Mo"
+   atomicNumber="42"
+   atomicMass="97"
+   exactMass="96.906018"
+   naturalAbundance="39.5773"/>
+  <org.openscience.cdk.Isotope
+   symbol="Mo"
+   atomicNumber="42"
+   atomicMass="98"
+   exactMass="97.905405"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="Mo"
+   atomicNumber="42"
+   atomicMass="100"
+   exactMass="99.907473"
+   naturalAbundance="39.9088"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ru"
+   atomicNumber="44"
+   atomicMass="96"
+   exactMass="95.907596"
+   naturalAbundance="17.4684"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ru"
+   atomicNumber="44"
+   atomicMass="98"
+   exactMass="97.905287"
+   naturalAbundance="5.9494"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ru"
+   atomicNumber="44"
+   atomicMass="99"
+   exactMass="98.905937"
+   naturalAbundance="40.1899"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ru"
+   atomicNumber="44"
+   atomicMass="100"
+   exactMass="99.904218"
+   naturalAbundance="39.8734"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ru"
+   atomicNumber="44"
+   atomicMass="101"
+   exactMass="100.905581"
+   naturalAbundance="53.7975"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ru"
+   atomicNumber="44"
+   atomicMass="102"
+   exactMass="101.904348"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ru"
+   atomicNumber="44"
+   atomicMass="104"
+   exactMass="103.905422"
+   naturalAbundance="59.1772"/>
+  <org.openscience.cdk.Isotope
+   symbol="Rh"
+   atomicNumber="45"
+   atomicMass="103"
+   exactMass="102.905503"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="Pd"
+   atomicNumber="46"
+   atomicMass="102"
+   exactMass="101.905609"
+   naturalAbundance="3.7322"/>
+  <org.openscience.cdk.Isotope
+   symbol="Pd"
+   atomicNumber="46"
+   atomicMass="104"
+   exactMass="103.904026"
+   naturalAbundance="40.7611"/>
+  <org.openscience.cdk.Isotope
+   symbol="Pd"
+   atomicNumber="46"
+   atomicMass="105"
+   exactMass="104.905075"
+   naturalAbundance="81.7051"/>
+  <org.openscience.cdk.Isotope
+   symbol="Pd"
+   atomicNumber="46"
+   atomicMass="106"
+   exactMass="105.903475"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="Pd"
+   atomicNumber="46"
+   atomicMass="108"
+   exactMass="107.903894"
+   naturalAbundance="96.8167"/>
+  <org.openscience.cdk.Isotope
+   symbol="Pd"
+   atomicNumber="46"
+   atomicMass="110"
+   exactMass="109.905169"
+   naturalAbundance="42.883"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ag"
+   atomicNumber="47"
+   atomicMass="107"
+   exactMass="106.905095"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ag"
+   atomicNumber="47"
+   atomicMass="109"
+   exactMass="108.904754"
+   naturalAbundance="92.905"/>
+  <org.openscience.cdk.Isotope
+   symbol="Cd"
+   atomicNumber="48"
+   atomicMass="106"
+   exactMass="105.906461"
+   naturalAbundance="4.3508"/>
+  <org.openscience.cdk.Isotope
+   symbol="Cd"
+   atomicNumber="48"
+   atomicMass="108"
+   exactMass="107.904186"
+   naturalAbundance="3.0978"/>
+  <org.openscience.cdk.Isotope
+   symbol="Cd"
+   atomicNumber="48"
+   atomicMass="110"
+   exactMass="109.903007"
+   naturalAbundance="43.4737"/>
+  <org.openscience.cdk.Isotope
+   symbol="Cd"
+   atomicNumber="48"
+   atomicMass="111"
+   exactMass="110.904182"
+   naturalAbundance="44.5527"/>
+  <org.openscience.cdk.Isotope
+   symbol="Cd"
+   atomicNumber="48"
+   atomicMass="112"
+   exactMass="111.902761"
+   naturalAbundance="83.9888"/>
+  <org.openscience.cdk.Isotope
+   symbol="Cd"
+   atomicNumber="48"
+   atomicMass="113"
+   exactMass="112.904401"
+   naturalAbundance="42.5339"/>
+  <org.openscience.cdk.Isotope
+   symbol="Cd"
+   atomicNumber="48"
+   atomicMass="114"
+   exactMass="113.903361"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="Cd"
+   atomicNumber="48"
+   atomicMass="116"
+   exactMass="115.904758"
+   naturalAbundance="26.0703"/>
+  <org.openscience.cdk.Isotope
+   symbol="In"
+   atomicNumber="49"
+   atomicMass="113"
+   exactMass="112.904056"
+   naturalAbundance="4.4932"/>
+  <org.openscience.cdk.Isotope
+   symbol="In"
+   atomicNumber="49"
+   atomicMass="115"
+   exactMass="114.903875"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="Sn"
+   atomicNumber="50"
+   atomicMass="112"
+   exactMass="111.904823"
+   naturalAbundance="3.0864"/>
+  <org.openscience.cdk.Isotope
+   symbol="Sn"
+   atomicNumber="50"
+   atomicMass="114"
+   exactMass="113.902781"
+   naturalAbundance="2.1605"/>
+  <org.openscience.cdk.Isotope
+   symbol="Sn"
+   atomicNumber="50"
+   atomicMass="115"
+   exactMass="114.903344"
+   naturalAbundance="1.2346"/>
+  <org.openscience.cdk.Isotope
+   symbol="Sn"
+   atomicNumber="50"
+   atomicMass="116"
+   exactMass="115.901744"
+   naturalAbundance="45.3704"/>
+  <org.openscience.cdk.Isotope
+   symbol="Sn"
+   atomicNumber="50"
+   atomicMass="117"
+   exactMass="116.902954"
+   naturalAbundance="23.7654"/>
+  <org.openscience.cdk.Isotope
+   symbol="Sn"
+   atomicNumber="50"
+   atomicMass="118"
+   exactMass="117.901607"
+   naturalAbundance="75.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="Sn"
+   atomicNumber="50"
+   atomicMass="119"
+   exactMass="118.90331"
+   naturalAbundance="26.5432"/>
+  <org.openscience.cdk.Isotope
+   symbol="Sn"
+   atomicNumber="50"
+   atomicMass="120"
+   exactMass="119.902199"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="Sn"
+   atomicNumber="50"
+   atomicMass="122"
+   exactMass="121.90344"
+   naturalAbundance="14.1975"/>
+  <org.openscience.cdk.Isotope
+   symbol="Sn"
+   atomicNumber="50"
+   atomicMass="124"
+   exactMass="123.905271"
+   naturalAbundance="17.284"/>
+  <org.openscience.cdk.Isotope
+   symbol="Sb"
+   atomicNumber="51"
+   atomicMass="121"
+   exactMass="120.903824"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="Sb"
+   atomicNumber="51"
+   atomicMass="123"
+   exactMass="122.904222"
+   naturalAbundance="74.5201"/>
+  <org.openscience.cdk.Isotope
+   symbol="Te"
+   atomicNumber="52"
+   atomicMass="120"
+   exactMass="119.904021"
+   naturalAbundance="0.284"/>
+  <org.openscience.cdk.Isotope
+   symbol="Te"
+   atomicNumber="52"
+   atomicMass="122"
+   exactMass="121.903055"
+   naturalAbundance="7.6923"/>
+  <org.openscience.cdk.Isotope
+   symbol="Te"
+   atomicNumber="52"
+   atomicMass="123"
+   exactMass="122.904278"
+   naturalAbundance="2.6864"/>
+  <org.openscience.cdk.Isotope
+   symbol="Te"
+   atomicNumber="52"
+   atomicMass="124"
+   exactMass="123.902825"
+   naturalAbundance="14.2485"/>
+  <org.openscience.cdk.Isotope
+   symbol="Te"
+   atomicNumber="52"
+   atomicMass="125"
+   exactMass="124.904435"
+   naturalAbundance="21.1243"/>
+  <org.openscience.cdk.Isotope
+   symbol="Te"
+   atomicNumber="52"
+   atomicMass="126"
+   exactMass="125.90331"
+   naturalAbundance="56.0651"/>
+  <org.openscience.cdk.Isotope
+   symbol="Te"
+   atomicNumber="52"
+   atomicMass="128"
+   exactMass="127.904464"
+   naturalAbundance="93.7574"/>
+  <org.openscience.cdk.Isotope
+   symbol="Te"
+   atomicNumber="52"
+   atomicMass="130"
+   exactMass="129.906229"
+   naturalAbundance="100.0"/>
+   <org.openscience.cdk.Isotope
+   symbol="I"
+   atomicNumber="53"
+   atomicMass="127"
+   exactMass="126.904477"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="Xe"
+   atomicNumber="54"
+   atomicMass="124"
+   exactMass="123.90612"
+   naturalAbundance="0.3717"/>
+  <org.openscience.cdk.Isotope
+   symbol="Xe"
+   atomicNumber="54"
+   atomicMass="126"
+   exactMass="125.904281"
+   naturalAbundance="0.3346"/>
+  <org.openscience.cdk.Isotope
+   symbol="Xe"
+   atomicNumber="54"
+   atomicMass="128"
+   exactMass="127.903531"
+   naturalAbundance="7.1004"/>
+  <org.openscience.cdk.Isotope
+   symbol="Xe"
+   atomicNumber="54"
+   atomicMass="129"
+   exactMass="128.90478"
+   naturalAbundance="98.1413"/>
+  <org.openscience.cdk.Isotope
+   symbol="Xe"
+   atomicNumber="54"
+   atomicMass="130"
+   exactMass="129.90351"
+   naturalAbundance="15.2416"/>
+  <org.openscience.cdk.Isotope
+   symbol="Xe"
+   atomicNumber="54"
+   atomicMass="131"
+   exactMass="130.90508"
+   naturalAbundance="78.8104"/>
+  <org.openscience.cdk.Isotope
+   symbol="Xe"
+   atomicNumber="54"
+   atomicMass="132"
+   exactMass="131.904148"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="Xe"
+   atomicNumber="54"
+   atomicMass="134"
+   exactMass="133.905395"
+   naturalAbundance="38.6617"/>
+  <org.openscience.cdk.Isotope
+   symbol="Xe"
+   atomicNumber="54"
+   atomicMass="136"
+   exactMass="135.907219"
+   naturalAbundance="33.0855"/>
+  <org.openscience.cdk.Isotope
+   symbol="Cs"
+   atomicNumber="55"
+   atomicMass="133"
+   exactMass="132.905433"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ba"
+   atomicNumber="56"
+   atomicMass="130"
+   exactMass="129.906277"
+   naturalAbundance="0.1478"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ba"
+   atomicNumber="56"
+   atomicMass="132"
+   exactMass="131.905042"
+   naturalAbundance="0.1409"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ba"
+   atomicNumber="56"
+   atomicMass="134"
+   exactMass="133.90449"
+   naturalAbundance="3.371"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ba"
+   atomicNumber="56"
+   atomicMass="135"
+   exactMass="134.905668"
+   naturalAbundance="9.1939"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ba"
+   atomicNumber="56"
+   atomicMass="136"
+   exactMass="135.904556"
+   naturalAbundance="10.954"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ba"
+   atomicNumber="56"
+   atomicMass="137"
+   exactMass="136.905816"
+   naturalAbundance="15.6625"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ba"
+   atomicNumber="56"
+   atomicMass="138"
+   exactMass="137.905236"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="La"
+   atomicNumber="57"
+   atomicMass="138"
+   exactMass="137.907114"
+   naturalAbundance="0.0901"/>
+  <org.openscience.cdk.Isotope
+   symbol="La"
+   atomicNumber="57"
+   atomicMass="139"
+   exactMass="138.906355"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ce"
+   atomicNumber="58"
+   atomicMass="136"
+   exactMass="135.90714"
+   naturalAbundance="0.2147"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ce"
+   atomicNumber="58"
+   atomicMass="138"
+   exactMass="137.905996"
+   naturalAbundance="0.2825"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ce"
+   atomicNumber="58"
+   atomicMass="140"
+   exactMass="139.905442"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="Ce"
+   atomicNumber="58"
+   atomicMass="142"
+   exactMass="141.909249"
+   naturalAbundance="12.5226"/>
+  <org.openscience.cdk.Isotope
+   symbol="Pr"
+   atomicNumber="59"
+   atomicMass="141"
+   exactMass="140.907657"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="Nd"
+   atomicNumber="60"
+   atomicMass="142"
+   exactMass="141.907731"
+   naturalAbundance="100.0"/>
+  <org.openscience.cdk.Isotope
+   symbol="Nd"
+   atomicNumber="60"
+   atomicMass="143"
+   exactMass="142.909823"
+   naturalAbundance="44.8949"/>
+  <org.openscience.cdk.Isotope
+   symbol="Nd"
+   atomicNumber="60"
+   atomicMass="144"
+   exactMass="143.910096"
+   naturalAbundance="87.7258"/>
+  <org.openscience.cdk.Isotope
+   symbol="Nd"
+   atomicNumber="60"
+   atomicMass="145"
+   exactMass="144.912582"
+   naturalAbundance="30.5934"/>
+  <org.openscience.cdk.Isotope
+   symbol="Nd"
+   atomicNumber="60"
+   atomicMass="146"
+   exactMass="145.913126"
+   naturalAbundance="63.3616"/>
+  <org.openscience.cdk.Isotope
+   symbol="Nd"
+   atomicNumber="60"
+   atomicMass="148"
+   exactMass="147.916901"
+   naturalAbundance="21.2311"/>
+  <org.openscience.cdk.Isotope
+   symbol="Nd"
+   atomicNumber="60"
+   atomicMass="150"
+   exactMass="149.9209"
+   naturalAbundance="20.7888"/>
+</java.util.Vector>
+

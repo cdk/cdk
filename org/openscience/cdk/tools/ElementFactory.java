@@ -33,10 +33,6 @@ import java.util.*;
 import java.io.*;
 import org.openscience.cdk.*;
 
-import org.xml.sax.*;
-import javax.xml.parsers.*;
-import org.w3c.dom.*;
-
 /**
  *  Used to store and return data of a particular element
  *
@@ -44,99 +40,22 @@ import org.w3c.dom.*;
  * @created    July 23, 2001
  */
 
-public class ElementFactory {
-
-	org.openscience.cdk.Element[] elements = {};
-
+public class ElementFactory extends IsotopeFactory
+{
 
 	/**
 	 *  Constructor for the ElementFactory object
 	 */
-	public ElementFactory() {
-	}
-
-
-	/**
-	 *  Gets the Size attribute of the ElementFactory object
-	 *
-	 * @return    The Size value
-	 */
-	public int getSize() {
-		return elements.length;
-	}
-
-
-
-	/**
-	 *  Description of the Method
-	 *
-	 * @param  pos  Description of Parameter
-	 * @return      Description of the Returned Value
-	 */
-	public org.openscience.cdk.Element elementAt(int pos) {
-		if (pos >= 0 && pos < getSize()) {
-			return (org.openscience.cdk.Element) elements[pos].clone();
-		}
-		return null;
-	}
-
-
-	/**
-	 *  Writes an xml description of the elements to a given file
-	 *
-	 * @param  writer  Description of Parameter
-	 */
-	public void writeElements(Writer writer) throws IOException 
+	public ElementFactory() throws  IOException, OptionalDataException, ClassNotFoundException
 	{
-		org.openscience.cdk.Element e = null;
-		writer.write("<elements>\n");
-		for (int f = 0; f < elements.length; f++)
-		{
-			e = elements[f];
-			writer.write("<element>\n");
-			writer.write("</element>\n");				
-		}
-		writer.write("</elements>\n");
+		super();
 	}
 
-	public void readFlatFile(Reader reader) throws IOException
+	public Element getElement(String symbol)
 	{
+		Isotope i = getMajorIsotope(symbol);
 		
-		
+		return (Element)i;
 	}
-	
-	public void readElements(Reader reader) throws IOException
-	{
-	}
-
-	public org.openscience.cdk.Element readElement(Node node)
-	{
-		org.openscience.cdk.Element element = null;
-		org.w3c.dom.Node newNode = null;
-		for (int f = 0; f < node.getChildNodes().getLength(); f++)
-		{
-			newNode = node.getChildNodes().item(f);
-			if (XMLTools.typeName[newNode.getNodeType()].equals("Element"))
-			{
-				if (newNode.getNodeName().toLowerCase().equals("element"))
-				{
-				
-				}
-			}
-		}	
-		return element;
-	}
-	
-	
-	/**
-	 *  Description of the Method
-	 */
-	private void enlargeElementArray() {
-		int newSize = (int) (elements.length * 1.1);
-		org.openscience.cdk.Element[] newElements = new org.openscience.cdk.Element[newSize];
-		System.arraycopy(elements, 0, newElements, 0, elements.length);
-		elements = newElements;
-	}
-
 }
 

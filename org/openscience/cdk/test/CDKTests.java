@@ -49,6 +49,8 @@ public class CDKTests {
 		suite.addTest(PolymerTest.suite());		
 		suite.addTest(PDBReaderTest.suite());		
 		suite.addTest(ChemObjectTest.suite());
+		suite.addTest(IsotopeFactoryTest.suite());
+		suite.addTest(ElementFactoryTest.suite());
 		
 	    return suite;
 	}
