@@ -384,8 +384,8 @@ public class MoleculeFactory
 		mol.addAtom(new Atom("C")); // 4
 		mol.addAtom(new Atom("C")); // 5
 		mol.addAtom(new Atom("C")); // 6
-		mol.addAtom(new Atom("N")); // 7
-		mol.addAtom(new Atom("C")); // 8
+		mol.addAtom(new Atom("C")); // 7
+		mol.addAtom(new Atom("N")); // 8
 
 		
 		mol.addBond(0, 1, 2); // 1
@@ -396,8 +396,7 @@ public class MoleculeFactory
 		mol.addBond(5, 6, 1); // 6
 		mol.addBond(6, 7, 2); // 8
 		mol.addBond(7, 8, 1); // 9
-		mol.addBond(8, 9, 2); // 10
-		mol.addBond(8, 5, 1); // 11
+		mol.addBond(0, 5, 1); // 11
 		mol.addBond(8, 0, 1); // 12
 		
 		return mol;

@@ -33,50 +33,59 @@ import org.openscience.cdk.*;
 import org.openscience.cdk.tools.*;
 import org.openscience.cdk.io.*;
 import java.io.*;
+import org.openscience.cdk.renderer.*;
+import org.openscience.cdk.layout.*;
+import javax.vecmath.*;
+
 
 public class HOSECodeTest
 {
-	public static boolean test()
+	public boolean test()
 	{
-		MDLReader mr;
-		ChemFile chemFile;
-		ChemSequence chemSequence;
-		ChemModel chemModel;
-		SetOfMolecules setOfMolecules;
 		Molecule molecule;
-		int repeat = 1000;
-		System.out.println("*** This is HOSECodeTest. ***");
-		System.out.println("Running HOSECode Generation for bremser.mol " + repeat + " times");
-		long startTime = System.currentTimeMillis();
 		String s = null;
-		for (int f = 0; f < repeat; f++)
+		try
 		{
-			try
+			molecule=MoleculeFactory.makeIndole();
+			display(molecule);
+			HOSECodeGenerator hcg = new HOSECodeGenerator();
+			System.out.println("Listing 1-sphere HOSE codes for Indole:\n");
+			for (int f = 0; f < molecule.getAtomCount();f++)
 			{
-				FileInputStream fis = new FileInputStream("Z:/develop/CompChem/compchem/test/molecules/Bremser.mol");
-				mr = new MDLReader(fis);
-				chemFile = (ChemFile)mr.read((ChemObject)new ChemFile());
-				fis.close();
-				
-				chemSequence = chemFile.getChemSequence(0);
-				chemModel = chemSequence.getChemModel(0);
-				setOfMolecules = chemModel.getSetOfMolecules();
-				molecule = setOfMolecules.getMolecule(0);
-			
-				HOSECodeGenerator hcg = new HOSECodeGenerator();
-				s = hcg.getHOSECode(molecule, molecule.getAtomAt(1), 4);
+				s = hcg.getHOSECode(molecule, molecule.getAtomAt(f), 1);
+				System.out.println("Atom " + f + ": " + s);
 			}
-			catch(Exception exc)
-			{
-				exc.printStackTrace();
-			}
-		}		
-		long endTime = System.currentTimeMillis();
-		System.out.println(s);
-		System.out.println("Time for each HOSECode calculation: " + SwissArmyKnife.getDuration((long)((endTime-startTime)/repeat)));
-		System.out.println("*** HOSECodeTest successfully completed. ***");		   		
+		}
+		catch(Exception exc)
+		{
+			exc.printStackTrace();
+		}
+			   		
 		return true;
 	}
+	
+	
+	private void display(Molecule molecule)
+	{	
+		StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+		MoleculeViewer2D mv = new MoleculeViewer2D();
+		Renderer2DModel r2dm = mv.getRenderer2DModel();
+		r2dm.setDrawNumbers(true);
+		
+		try
+		{
+			sdg.setMolecule((Molecule)molecule.clone());
+			sdg.generateCoordinates(new Vector2d(0,1));
+			mv.setAtomContainer(sdg.getMolecule());
+			mv.display();
+		}
+		catch(Exception exc)
+		{
+			System.out.println("*** Exit due to an unexpected error during coordinate generation ***");
+			exc.printStackTrace();
+		}
+	}
+
 
 	public static void main(String[] args)
 	{
