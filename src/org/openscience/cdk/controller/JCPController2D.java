@@ -112,110 +112,58 @@ public class JCPController2D {
     public void setController2DModel(JCPController2DModel model) {
         this.c2dm = model;
     }
-        /**
-         * manages all actions that will be invoked when the mouse is moved
-         *
-         * @param   e    MouseEvent object
-         **/
-        public void mouseMoved(MouseEvent event) {
-            /* logger.debug("MouseMoved Event Props: mode=" + c2dm.getDrawModeString() + 
-                         ", trigger=" + event.isPopupTrigger() +
-                         ", Button number: " + event.getButton() +
-                         ", Click count: " + event.getClickCount()); */
 
-                int mouseX = getWorldCoordinate(event.getX()); 
-                int mouseY = getWorldCoordinate(event.getY());
-                Atom atomInRange;
-                Bond bondInRange;
+    /**
+    * Manages all actions that will be invoked when the mouse is moved.
+    *
+    * @param   e    MouseEvent object
+    **/
+    public void mouseMoved(MouseEvent event) {
+        int mouseX = getWorldCoordinate(event.getX()); 
+        int mouseY = getWorldCoordinate(event.getY());
+        
+        highlightNearestChemObject(mouseX, mouseY);
+    }
 
-                /** highlighting **/
-                atomInRange = getAtomInRange(mouseX, mouseY);
-                if (atomInRange != null)
-                {
-                        r2dm.setHighlightedAtom(atomInRange);
-                        r2dm.setHighlightedBond(null);
-                }
-
-                else
-                {
-                        r2dm.setHighlightedAtom(null);
-                        bondInRange = getBondInRange(mouseX, mouseY);
-                        if (bondInRange != null)
-                        {
-                                r2dm.setHighlightedBond(bondInRange);
-                        }
-                        else
-                        {
-                                r2dm.setHighlightedBond(null);
-                        }
-                }
+    /**
+     * Manages all actions that will be invoked when the mouse is dragged.
+     *
+     * @param   e    MouseEvent object
+     **/
+    public void mouseDragged(MouseEvent event) {
+        logger.debug("MouseDragged Event Props: mode=" + c2dm.getDrawModeString() + 
+                     ", trigger=" + event.isPopupTrigger() +
+                     ", Button number: " + event.getButton() +
+                     ", Click count: " + event.getClickCount());
+        
+        int mouseX = getWorldCoordinate(event.getX()); 
+        int mouseY = getWorldCoordinate(event.getY());
+        
+        if (!wasDragged) {
+            prevDragCoordX = mouseX;
+            prevDragCoordY = mouseY;
+            wasDragged = true;
+        }
+        
+        
+        /*************************************************************************
+         *                       DRAWBONDMODE                                    *
+         *************************************************************************/
+        if (c2dm.getDrawMode() == c2dm.DRAWBOND) {
+            int startX = r2dm.getPointerVectorStart().x;
+            int startY = r2dm.getPointerVectorStart().y;
+            
+            drawProposedBond(startX, startY, mouseX, mouseY);
         }
 
-
-        /**
-         * manages all actions that will be invoked when the mouse is dragged
-         *
-         * @param   e    MouseEvent object
-         **/
-        public void mouseDragged(MouseEvent event) {
-            logger.debug("MouseDragged Event Props: mode=" + c2dm.getDrawModeString() + 
-                         ", trigger=" + event.isPopupTrigger() +
-                         ", Button number: " + event.getButton() +
-                         ", Click count: " + event.getClickCount());
-
-            int mouseX = getWorldCoordinate(event.getX()); 
-            int mouseY = getWorldCoordinate(event.getY());
-
-            if (!wasDragged) {
-                prevDragCoordX = mouseX;
-                prevDragCoordY = mouseY;
-                wasDragged = true;
-            }
-
-
-                /*************************************************************************
-                 *                       DRAWBONDMODE                                    *
-                 *************************************************************************/
-                if (c2dm.getDrawMode() == c2dm.DRAWBOND)
-                {
-                        int endX = 0, endY = 0;
-                        double pointerVectorLength = c2dm.getBondPointerLength();
-                        double angle = 0;
-                        int startX = r2dm.getPointerVectorStart().x;
-                        int startY = r2dm.getPointerVectorStart().y;
-                        Atom atomInRange;
-
-                        angle = GeometryTools.getAngle(startX - mouseX, startY - mouseY);
-                        if (c2dm.getSnapToGridAngle())
-                        {
-                                angle = snapAngle(angle);
-                        }
-                        atomInRange = getAtomInRange(mouseX, mouseY);
-                        if (atomInRange != null)
-                        {
-                                endX = (int)atomInRange.getX2D();
-                                endY = (int)atomInRange.getY2D();
-                        }
-                        else
-                        {
-                                endX = startX - (int)(Math.cos(angle) * pointerVectorLength);
-                                endY = startY - (int)(Math.sin(angle) * pointerVectorLength);
-                        }
-                        logger.debug("End point: " + endX + ", " + endY);
-                        r2dm.setPointerVectorEnd(new Point(endX, endY));
-                }
-
-                /*************************************************************************
-                 *                       SELECTMODE                                      *
-                 *************************************************************************/
-                if (c2dm.getDrawMode() == c2dm.SELECT)
-                {
-                        int startX = r2dm.getPointerVectorStart().x;
-                        int startY = r2dm.getPointerVectorStart().y;
-                        int[] xPoints = {startX, startX, mouseX, mouseX};
-                        int[] yPoints = {startY, mouseY, mouseY, startY};
-                        r2dm.setSelectRect(new Polygon(xPoints, yPoints, 4));
-                }
+        /*************************************************************************
+         *                       SELECTMODE                                      *
+         *************************************************************************/
+        if (c2dm.getDrawMode() == c2dm.SELECT) {
+            int startX = r2dm.getPointerVectorStart().x;
+            int startY = r2dm.getPointerVectorStart().y;
+            selectRectangularArea(startX, startY, mouseX, mouseY);
+        }
 
                 /*************************************************************************
                  *                          RINGMODE                                     *
@@ -242,37 +190,29 @@ public class JCPController2D {
                     r2dm.addLassoPoint(new Point(event.getX(), event.getY()));
                 }
 
-                /*************************************************************************
-                 *                          MOVE MODE                                    *
-                 *************************************************************************/
-                if (c2dm.getDrawMode() == c2dm.MOVE) {
-                    // all these are in model coordinates
-                    logger.debug("Dragging selected atoms");
-                    int deltaX = mouseX - prevDragCoordX;
-                    int deltaY = mouseY - prevDragCoordY;
-                    AtomContainer container = r2dm.getSelectedPart();
-                    if (container != null) {
-                        // only move selected atoms if count > 0
-                        Atom[] atoms = container.getAtoms();
-                        for (int i=0; i < atoms.length; i++) {
-                            Atom atom = atoms[i];
-                            atom.setX2D(atom.getX2D()+deltaX);
-                            atom.setY2D(atom.getY2D()+deltaY);
-                        }
-                    }
-		    /* PRESERVE THIS. This notifies the 
-		     * the listener responsible for 
-		     * undo and redo storage that it
-		     * should not store this change
-		     */
-		    isUndoableChange = false;
-		    /* --- */
-                    fireChange();
-                }
-                
-                prevDragCoordX = mouseX;
-                prevDragCoordY = mouseY;
+        /*************************************************************************
+         *                          MOVE MODE                                    *
+         *************************************************************************/
+        if (c2dm.getDrawMode() == c2dm.MOVE) {
+            // all these are in model coordinates
+            logger.debug("Dragging selected atoms");
+            int deltaX = mouseX - prevDragCoordX;
+            int deltaY = mouseY - prevDragCoordY;
+            moveSelectedAtomsWith(deltaX, deltaY);
+            /* PRESERVE THIS. This notifies the 
+             * the listener responsible for 
+             * undo and redo storage that it
+             * should not store this change
+             */
+            isUndoableChange = false;
+            /* --- */
+            fireChange();
         }
+
+        // make note of current coordinates for next DraggedEvent
+        prevDragCoordX = mouseX;
+        prevDragCoordY = mouseY;
+    }
 
         /**
          * manages all actions that will be invoked when a mouse button is pressed
@@ -1151,4 +1091,80 @@ public class JCPController2D {
         }
     }
 
+    // ------------ CHEMICAL OPERATIONS -------------- //
+    
+    /**
+     * Highlight the nearest Atom or Bond.
+     *
+     * <p>FIXME: this needs to be extended for other ChemObjects.
+     *
+     * @param mouseX     x coordinate in world coordinates (not screen coordinates)
+     * @param mouseY     y coordinate in world coordinates (not screen coordinates)
+     */
+    private void highlightNearestChemObject(int mouseX, int mouseY) {
+        Atom atomInRange = getAtomInRange(mouseX, mouseY);
+        Bond bondInRange = getBondInRange(mouseX, mouseY);
+        
+        if (atomInRange != null) {
+            r2dm.setHighlightedAtom(atomInRange);
+            r2dm.setHighlightedBond(null);
+        } else {
+            r2dm.setHighlightedBond(bondInRange); 
+            // if bondInRange is null, then the previous command is used to *unset* the highlightedBond
+            r2dm.setHighlightedAtom(null);
+        }
+    }
+    
+    /**
+     * Create a new bond. Possibly connecting the end point to the nearest Atom.
+     *
+     * <p>All coordinates are world coordinates.
+     */
+    private void createNewBond(int startX, int startY, int endX, int endY) {
+        
+    }
+    
+    private void drawProposedBond(int startX, int startY, int mouseX, int mouseY) {
+        int endX = 0, endY = 0;
+        double pointerVectorLength = c2dm.getBondPointerLength();
+        double angle = 0;
+        Atom atomInRange;
+        
+        angle = GeometryTools.getAngle(startX - mouseX, startY - mouseY);
+        if (c2dm.getSnapToGridAngle()) {
+            angle = snapAngle(angle);
+        }
+        atomInRange = getAtomInRange(mouseX, mouseY);
+        if (atomInRange != null) {
+            endX = (int)atomInRange.getX2D();
+            endY = (int)atomInRange.getY2D();
+        } else {
+            endX = startX - (int)(Math.cos(angle) * pointerVectorLength);
+            endY = startY - (int)(Math.sin(angle) * pointerVectorLength);
+        }
+        logger.debug("End point: " + endX + ", " + endY);
+        r2dm.setPointerVectorEnd(new Point(endX, endY));
+    }
+    
+    private void selectRectangularArea(int startX, int startY, int mouseX, int mouseY) {
+        int[] xPoints = {startX, startX, mouseX, mouseX};
+        int[] yPoints = {startY, mouseY, mouseY, startY};
+        r2dm.setSelectRect(new Polygon(xPoints, yPoints, 4));
+    }
+    
+    /** 
+     * Move an Atom by the specified change in coordinates.
+     */
+    private void moveSelectedAtomsWith(int deltaX, int deltaY) {
+        AtomContainer container = r2dm.getSelectedPart();
+        if (container != null) {
+            // only move selected atoms if count > 0
+            Atom[] atoms = container.getAtoms();
+            for (int i=0; i < atoms.length; i++) {
+                Atom atom = atoms[i];
+                atom.setX2D(atom.getX2D()+deltaX);
+                atom.setY2D(atom.getY2D()+deltaY);
+            }
+        }
+    }
 }
