@@ -45,6 +45,10 @@ public class BooleanIOSetting extends IOSetting {
     public void setSetting(String setting) throws CDKException {
         if (setting.equals("true") || setting.equals("false")) {
             this.setting = setting;
+        } else if (setting.equals("yes") || setting.equals("y")) {
+            this.setting = "true";
+        } else if (setting.equals("no") || setting.equals("n")) {
+            this.setting = "false";
         } else {
             throw new CDKException("Setting " + setting + " is not a boolean.");
         }
