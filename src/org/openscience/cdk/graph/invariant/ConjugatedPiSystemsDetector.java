@@ -128,27 +128,35 @@ public class ConjugatedPiSystemsDetector {
 		if(ac.getMaximumBondOrder(atom) > 1.0) { counterOfPi ++; }
 	    }
 	    if(counterOfPi > 0) check = 0;
-	        ///////////////////////////////////////////////////////////// 
-        } else {
-            int singleBondCount = 0;
-            int highOrderBondCount = 0;
-            for (int j = 0; j < atoms.size(); j++) {
-                Atom atom = (Atom) atoms.get(j);
-                Bond bond = (Bond) bonds.get(j);
-                if (bond == null || bond.getOrder() > 1) {
-                    highOrderBondCount++;
-                } else {
-                    singleBondCount++;
-                }
-            }
-            if (highOrderBondCount == 1) {
-                check = 0;
-            } else if (highOrderBondCount > 1) {
-                check = 1;
-            }
+        }  else { 
+		LonePair lp = new LonePair(currentAtom);
+		int se = ac.getSingleElectronSum(currentAtom);
+		if (se == 1) {
+			check = 0;  //// DETECTION of radicals
+		}
+		else if (lp.getElectronCount() > 0 && currentAtom.getSymbol().equals("N")) {
+			check = 0;  //// DETECTION of AMIDE-LIKE SYSTEMS, with delocalization of nitrogen lone pair
+		}
+		else {
+		    int singleBondCount = 0;
+		    int highOrderBondCount = 0;
+		    for (int j = 0; j < atoms.size(); j++) {
+			Atom atom = (Atom) atoms.get(j);
+			Bond bond = (Bond) bonds.get(j);
+			if (bond == null || bond.getOrder() > 1) {
+			    highOrderBondCount++;
+			} else {
+			    singleBondCount++;
+			}
+		    }
+		    if (highOrderBondCount == 1) {
+			check = 0;
+		    } else if (highOrderBondCount > 1) {
+			check = 1;
+		    }
+		}
         }
         return check;
     }
-
 }
 
