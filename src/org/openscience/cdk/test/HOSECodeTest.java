@@ -179,13 +179,18 @@ public class HOSECodeTest
 
 		try
 		{
-			molecule = (new SmilesParser()).parseSmiles("C12=CC=CC=C1NC=C2");
+			//molecule = (new SmilesParser()).parseSmiles("C12=CC=CC=C1NC=C2");
 			//molecule = (new SmilesParser()).parseSmiles("C1(C=CN2)=C2C=CC=C1");
+			molecule = (new SmilesParser()).parseSmiles("ClC1CCCC1");
 			boolean isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
 			hcg = new HOSECodeGenerator();
 			String s = null;
-			s = hcg.getHOSECode(molecule, molecule.getAtomAt(5), 4);
-			System.out.println(s);
+			for (int f = 0; f < molecule.getAtomCount(); f++)
+			{
+				System.out.println("Atom " + molecule.getAtomAt(f).getSymbol() + "-" + (f + 1));
+				s = hcg.getHOSECode(molecule, molecule.getAtomAt(f), 4);
+				System.out.println(s);
+			}
 		} catch (Exception exc)
 		{
 			exc.printStackTrace();
@@ -270,8 +275,8 @@ public class HOSECodeTest
 		HOSECodeTest hct = new HOSECodeTest();
 		//hct.test1();
 		//hct.test2();
-		hct.test3();
-		hct.test4();
+		//hct.test3();
+		//hct.test4();
 		hct.test5();
 	}
 }
