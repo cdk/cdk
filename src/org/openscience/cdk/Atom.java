@@ -100,6 +100,7 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
         public Atom(String elementSymbol)
         {
                 super(elementSymbol);
+                this.fractionalPoint3D = null;
                 this.point3D = null;
                 this.point2D = null;
         }
@@ -246,7 +247,7 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
          * Returns a point specifying the location of this
          * atom in a 2D space.
          *
-         * @return    A point in a 2D plane
+         * @return    A point in a 2D plane. Null if unset.
          *
          * @see       #setPoint2D
          */
@@ -257,7 +258,7 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
          * Returns a point specifying the location of this
          * atom in a 3D space.
          *
-         * @return    A point in 3-dimensional space
+         * @return    A point in 3-dimensional space. Null if unset.
          *
          * @see       #setPoint3D
          */
@@ -269,7 +270,7 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
          * Returns a point specifying the location of this
          * atom in a Crystal unit cell.
          *
-         * @return    A point in 3d fractional unit cell space
+         * @return    A point in 3d fractional unit cell space. Null if unset.
          *
          * @see       #setPoint3D
          * @see       org.openscience.cdk.CDKConstants for predefined values.
