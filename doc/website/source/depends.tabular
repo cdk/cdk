@@ -1,4 +1,4 @@
-website: intro.html software.html related.html screenshots.html documentation.html reference.html keywordindex.html api.html manpages.html rfc.html rfc1.html rfc2.html rfc3.html rfc4.html biblio.html development.html whoiswho.html agenda.html guide.html guide-library-development.html guide-docs.html guide-packages.html guide-website-development.html javadoc-stats.html javancss-stats.html changelog.html contact.html download.html index.html 
+website: intro.html software.html related.html screenshots.html documentation.html reference.html keywordindex.html api.html manpages.html rfc.html rfc1.html rfc2.html rfc3.html rfc4.html rfc5.html rfc6.html biblio.html development.html whoiswho.html agenda.html guide.html guide-library-development.html guide-docs.html guide-packages.html guide-website-development.html javadoc-stats.html javancss-stats.html changelog.html contact.html download.html index.html 
 
 index.html: website.xml
 intro.html: intro.xml
@@ -15,6 +15,8 @@ rfc1.html: rfc1.xml
 rfc2.html: rfc2.xml
 rfc3.html: rfc3.xml
 rfc4.html: rfc4.xml
+rfc5.html: rfc5.xml
+rfc6.html: rfc6.xml
 biblio.html: biblio.xml
 development.html: development.xml
 whoiswho.html: whoiswho.xml
@@ -31,5 +33,5 @@ contact.html: contact.xml
 download.html: download.xml
 
 clean:
-	rm -f intro.html software.html related.html screenshots.html documentation.html reference.html keywordindex.html api.html manpages.html rfc.html rfc1.html rfc2.html rfc3.html rfc4.html biblio.html development.html whoiswho.html agenda.html guide.html guide-library-development.html guide-docs.html guide-packages.html guide-website-development.html javadoc-stats.html javancss-stats.html changelog.html contact.html download.html index.html 
+	rm -f intro.html software.html related.html screenshots.html documentation.html reference.html keywordindex.html api.html manpages.html rfc.html rfc1.html rfc2.html rfc3.html rfc4.html rfc5.html rfc6.html biblio.html development.html whoiswho.html agenda.html guide.html guide-library-development.html guide-docs.html guide-packages.html guide-website-development.html javadoc-stats.html javancss-stats.html changelog.html contact.html download.html index.html 
 

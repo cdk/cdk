@@ -1,0 +1,83 @@
+<refentry id="cdk-rfc-5">
+
+  <refentryinfo>
+    <revhistory>
+      <revision>
+        <revnumber>2</revnumber>
+        <date>2002-10-07</date>
+        <authorinitials>elw</authorinitials>
+        <revremark>
+          Implemented Christoph's comment.
+          See <ulink url="http://sourceforge.net/mailarchive/forum.php?thread_id=1154521&amp;forum_id=2178">email archive</ulink>.
+        </revremark>
+        <revnumber>1</revnumber>
+        <date>2002-10-03</date>
+        <authorinitials>elw</authorinitials>
+        <revremark>
+          First version, posted by Egon.
+          See <ulink url="http://sourceforge.net/mailarchive/forum.php?thread_id=1140161&amp;forum_id=2178">email archive</ulink>.
+        </revremark>
+      </revision>
+    </revhistory>
+  </refentryinfo>
+
+
+  <refnamediv>
+    <refname>The Lone Pair Concept</refname>
+  </refnamediv>
+
+  <refsect1>
+    <title>Proposal</title>
+    <para>
+    for a project I am working on I need the concept of "lone pair", i.e.
+an orbital-like concept with a constant number of 2 electrons...
+You know, like those lobs on oxygens...</para>
+    <para>
+Anyway, it would extend ElelectronContainer, like Bond does, not
+it would only have one accociated Atom (and as said a constant number of
+electrons)...</para>
+    <para>
+To make a LonePair useful in CDK, the AtomContainer would need to have
+to be changed to have set/get methods for this. This can be achieved in a few
+different ways, but I would like to propose:
+<orderedlist>
+<listitem><para>change addBond(Bond) method into setElectronContainer(ElectronContainer)</para></listitem>
+<listitem><para>change addBonds(AtomContainer) into addElectronContainers(AtomContainer)</para></listitem>
+<listitem><para>change contains(Bond) into contains(ElectronContainer)</para></listitem>
+<listitem><para>change getBondAt(int) into getElectronContainer(int)</para></listitem>
+<listitem><para>change removeBond(Bond) into removeElectronContainer(ElectronContainer)</para></listitem>
+<listitem><para>change removeBond(int) into removeElectronContainer(int)</para></listitem>
+<listitem><para>change removeAllBonds() into removeAllElectronContainers()</para></listitem>
+<listitem><para>change removeAtomAndConnectedBonds(Atom) into
+removeAtomAndConnectedElectronContainers(Atom)</para></listitem>
+<listitem><para>change setBondAt(int, Bond) into setElectronContainer(int,
+ElectronContainer)</para></listitem>
+<listitem><para>change setBonds(Bonds[]) into setElectronContainers(ElectronContainer[])</para></listitem>
+</orderedlist>
+</para>
+
+<para>This would change the API, but as a Bond is a subclass of ElectronContainer,
+a string replace of method names should be enough. The old methods are
+rewritten to be wrappers for the more general ones.
+The following methods would be kept: addBond(int, int, int)
+addBond(int,int,int, int), addBonds(double),
+getBond(Atom, Atom), getBondCount(), getBondCount(Atom), getBondCount(int),
+getBondOrderSum(Atom), getBonds(), getConnectedBonds(Atom)
+</para>
+
+<para>
+And these methods would be added:
+addLonePair(int) (to add a EC to an Atom)
+getLonePairs(Atom) (all LPs on an Atom)
+getLonePairCount(Atom) (the number of LPs on an Atom)
+getLonePairs() (all LPs in the AtomContainer)
+</para>
+  </refsect1>
+
+  <refsect1>
+    <title>Reason</title>
+    <para>To have a class for the lone pair concept. I need this for a JCPCDK 
+      where I want to draw/view/drag lone pairs.</para>
+  </refsect1>
+
+</refentry>

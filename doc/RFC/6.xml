@@ -1,0 +1,36 @@
+<refentry id="cdk-rfc-6">
+
+  <refentryinfo>
+    <revhistory>
+      <revision>
+        <revnumber>1</revnumber>
+        <date>2002-10-03</date>
+        <authorinitials>elw</authorinitials>
+        <revremark>
+          See <ulink url="http://sourceforge.net/mailarchive/forum.php?thread_id=1140162&amp;forum_id=2178">email archive</ulink>.
+        </revremark>
+      </revision>
+    </revhistory>
+  </refentryinfo>
+
+
+  <refnamediv>
+    <refname>A formal charge field for Atom</refname>
+  </refnamediv>
+
+  <refsect1>
+    <title>Proposal</title>
+    <para>Add getFormalCharge() and setFormalCharge(double) to the Atom class.
+The get/setCharge() method is now used for partial atomic charges.
+</para>
+  </refsect1>
+
+  <refsect1>
+    <title>Reason</title>
+    <para>In 2D chemical structure editors it is quite common to have atoms labeled with 
+its formal charge, like a O^-1 atom. Unlink the partials atomic charge which 
+is available, this charge does not really exist on this atom.
+</para>
+  </refsect1>
+
+</refentry>
