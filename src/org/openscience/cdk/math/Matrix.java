@@ -1,10 +1,9 @@
-/* Matrix.java
- * 
- * Autor: Stephan Michels 
- * EMail: stephan@vern.chem.tu-berlin.de
- * Datum: 7.6.2001
- * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+/* $RCSfile$
+ * $Author$
+ * $Date$
+ * $Revision$
+ *
+ * Copyright (C) 2001-2003  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -25,8 +24,8 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- *  */
-
+ *
+ */
 package org.openscience.cdk.math;
  
 import java.io.StreamTokenizer;
@@ -35,7 +34,10 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 
 /**
- * This class contains a matrix
+ * This class contains a matrix.
+ *
+ * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
+ * @created 2001-06-07
  */
 public class Matrix
 {
@@ -43,13 +45,13 @@ public class Matrix
   /** the content of this matrix **/
   public double[][] matrix;
 
-  /** the count of rows of this matrix */
+  /** the number of rows of this matrix */
   public int rows;
-  /** the count of columns of this matrix */
+  /** the number of columns of this matrix */
   public int columns;
 
   /**
-   * Creates a matrix
+   * Creates a new Matrix.
    */ 
   public Matrix(int rows, int columns)
   {
@@ -59,7 +61,7 @@ public class Matrix
   }
 
   /**
-   * Creates a matrix with content of an array
+   * Creates a Matrix with content of an array.
    */
   public Matrix(double[][] array)
   {
@@ -76,7 +78,7 @@ public class Matrix
   }
 
   /**
-   * Returns the count of rows
+   * Returns the number of rows.
    */ 
   public int getRows()
   {
@@ -84,7 +86,7 @@ public class Matrix
   }
 
   /**
-   * Returns the count of columns
+   * Returns the number of columns.
    */
   public int getColumns()
   {
@@ -92,7 +94,7 @@ public class Matrix
   }
 
   /**
-   * Creates a vector with the content of a row from this matrix
+   * Creates a Vector with the content of a row from this Matrix.
    */
   public Vector getVectorFromRow(int index)
   {
@@ -103,7 +105,7 @@ public class Matrix
   }
 
   /**
-   * Creates a vector with the content of a column from this matrix
+   * Creates a Vector with the content of a column from this Matrix.
    */
   public Vector getVectorFromColumn(int index)
   {
@@ -114,7 +116,7 @@ public class Matrix
   }
 
   /**
-   * Creates a vector with the content of the diagonal elements from this matrix
+   * Creates a Vector with the content of the diagonal elements from this Matrix.
    */
   public Vector getVectorFromDiagonal()
   {
@@ -126,7 +128,7 @@ public class Matrix
   }
 
   /**
-   *  Addition from two matrices
+   * Adds two matrices.
    */
   public Matrix add(Matrix b)
   {
@@ -143,7 +145,7 @@ public class Matrix
   }
   
   /**
-   *  Subtraktion from two matrices
+   * Subtracts from two matrices.
    */
   public Matrix sub(Matrix b)
   {
@@ -160,7 +162,7 @@ public class Matrix
   }
 
   /**
-   *  Multiplikation from two matrices
+   * Multiplies this Matrix with another one.
    */
   public Matrix mul(Matrix b)
   {
@@ -184,7 +186,7 @@ public class Matrix
   }
   
   /**
-   *  Multiplikation from a vector and a matrix
+   *  Multiplies a Vector with this Matrix.
    */
   public Vector mul(Vector a)
   {
@@ -206,7 +208,7 @@ public class Matrix
   }
 
   /**
-   *  Multiplikation from a scalar and a matrix
+   * Multiplies a scalar with this Matrix.
    */
   public Matrix mul(double a)
   {
@@ -220,7 +222,7 @@ public class Matrix
   }
 
   /**
-   *  Copy a matrix
+   * Copies a matrix.
    */
   public Matrix duplicate()
   {
@@ -233,7 +235,7 @@ public class Matrix
   }
 
   /**
-   *  Transpose a matrix
+   * Transposes a matrix.
    */
   public Matrix transpose()
   { 
@@ -280,7 +282,7 @@ public class Matrix
   }  
   
   /**
-   *  Return a matrix as a string
+   *  Return a matrix as a String.
    */
   public String toString()
   {
@@ -321,6 +323,9 @@ public class Matrix
    *
    * @param nrot Count of max. rotations
    * @return Matrix m, with m^t * this * m = diagonal
+   *
+   * @keyword Jacobi algorithm
+   * @keyword diagonalization
    */
   public Matrix diagonalize(int nrot)
   {
@@ -366,7 +371,7 @@ public class Matrix
           sm += Math.abs(m.matrix[ip][iq]);
       }   
 
-      // Fertig ??
+      // Ready ??
       if (sm == 0.0)
         return v;
 
@@ -454,7 +459,9 @@ public class Matrix
   }
 
   /**
-   * Solves a linear equationsystem with Gauss elimination
+   * Solves a linear equation system with Gauss elimination.
+   *
+   * @keyword Gauss elimination
    */
   public static Vector elimination(Matrix matrix, Vector vector)
   {
@@ -479,7 +486,7 @@ public class Matrix
           ipvt = i;
         } 
         
-      // Vertausche Zeilen, wenn notwendig
+      // Exchanges rows when necessary
       if (pivot[j]!=ipvt)
       {
         pivot[j] = ipvt;
@@ -496,22 +503,22 @@ public class Matrix
         b.vector[pivot[j]] = temp;
       } 
       
-      // Multiplikatoren speichern
+      // Store multipliers
       for(i=j+1; i<n; i++)
         a.matrix[i][j] = a.matrix[i][j] / a.matrix[j][j];
         
-      // Bildung von Nullen unter Diagonalen
+      // Give elements below the diagonal a zero value
       for(i=j+1; i<n; i++)
       {
         for(k=j+1; k<n; k++)
           a.matrix[i][k] = a.matrix[i][k] - a.matrix[i][j]*a.matrix[j][k];
         b.vector[i] = b.vector[i] - a.matrix[i][j]*b.vector[j];
         
-        a.matrix[i][j] = 0; // Nicht notwendig
+        a.matrix[i][j] = 0; // Not necessary
       } 
     } 
     
-    // Rückwärtseinsetzen
+    // Rueckwaertseinsetzen (which is?)
     result.vector[n-1] = b.vector[n-1]/a.matrix[n-1][n-1];
     for(j=n-2; j>=0; j--)
     {
@@ -525,7 +532,10 @@ public class Matrix
   }
 
   /**
-   * Orthonormalize the vectors of this matrix by Gram-Schmidt
+   * Orthonormalize the vectors of this matrix by Gram-Schmidt.
+   *
+   * @keyword orthonormalization
+   * @keyword Gram-Schmidt algorithm
    */
   public Matrix orthonormalize(Matrix S)
   {
@@ -536,16 +546,16 @@ public class Matrix
     double length;
     //Matrix scr = S.mul(this);
     Matrix result = duplicate();
-    for(p=0; p<columns; p++) // Geht alle Vektoren in dieser Matrix durch
+    for(p=0; p<columns; p++) // Loops over all vectors
     {
       for(i=0; i<rows; i++)
         result.matrix[i][p] = matrix[i][p];
 
-      for(k=0; k<p; k++)  // Substrahiert die vorherriegen Vektoren 
+      for(k=0; k<p; k++)  // Substracts the previous vector 
       {
-        // Zuerst die Berechnung des Produktes <phi_p|phi_k>=length
+        // First the calculation of the product <phi_p|phi_k>=length
         length = 0;
-        for(i=0; i<rows; i++) // Geht alle Komponenten der Vektoren durch
+        for(i=0; i<rows; i++) // Loops over all vectors
         { 
           innersum = 0;
           for(j=0; j<rows; j++)
@@ -555,12 +565,12 @@ public class Matrix
           length += result.matrix[i][k]*innersum;
         } 
 
-        // Dann die Subtraktion von phi_k*length
+        // Then the substraction of  phi_k*length
         for(q=0; q<rows; q++)
           result.matrix[q][p] -= result.matrix[q][k]*length;
       }
 
-      //Berechnet das Intergal für die normierung  
+      // Calculates the integral for normalization
       length = 0;
       for(i=0; i<rows; i++)
         for(j=0; j<rows; j++)
@@ -568,27 +578,27 @@ public class Matrix
 
       length = Math.sqrt(length);
 
-      //Normiert den Vektor
+      // Normalizes the vector
       if (length!=0d)
         for(q=0; q<rows; q++)
           result.matrix[q][p] /= length;
       else
-        System.out.println("Warning(orthonormalize):"+(p+1)+".Vektor hat die Länge null");
+        System.out.println("Warning(orthonormalize):"+(p+1)+". Vector has length null");
     }
     return result;
   }
 
   /**
-   * Normalizes the vectors of this matrix
+   * Normalizes the vectors of this matrix.
    */
   public Matrix normalize(Matrix S)
   {
     int p,q,i,j;
     double length;
     Matrix result = duplicate();
-    for(p=0; p<columns; p++) // Geht alle Vektoren in dieser Matrix durch
+    for(p=0; p<columns; p++) // Loops over all vectors
     {
-      //Berechnet das Intergal für die normierung 
+      // Calculates the normalization factor
       length = 0;
       for(i=0; i<rows; i++)
         for(j=0; j<rows; j++)
@@ -596,47 +606,14 @@ public class Matrix
           
       length = Math.sqrt(length);
       
-      //Normiert den Vektor
+      // Normalizes the vector
       if (length!=0d)
         for(q=0; q<rows; q++)
           result.matrix[q][p] /= length;
       else
-        System.out.println("Warning(orthonormalize):"+(p+1)+".Vektor hat die Länge null");
+        System.out.println("Warning(orthonormalize):"+(p+1)+". Vector has length null");
     }
     return result;
   }
 
-  /*public static Matrix read(InputStream in) throws IOException
-  { 
-    StreamTokenizer stok = new StreamTokenizer(in);
-    stok.resetSyntax();
-    stok.commentChar('!');
-    stok.whitespaceChars(0, 32);
-    stok.wordChars(34, 126);
-    stok.parseNumbers();
-    stok.eolIsSignificant(true);
-    
-    int rows = (int) readValue(stok);
-    int columns = (int) readValue(stok);
-    Matrix result = new Matrix(rows, columns);
-    for(int i=0; i<rows; i++)
-      for(int j=0; j<columns; j++)
-        result.matrix[i][j] = readValue(stok);
-    return result;
-  }
-
-  private static double readValue(StreamTokenizer stok) throws IOException
-  {
-    int type;
-    do
-    {
-      type = stok.nextToken();
-    } while ((type!=stok.TT_NUMBER) &&  (type!=stok.TT_EOF));
-
-    if (type==stok.TT_NUMBER)
-      return stok.nval;
-
-    stok.pushBack();
-    return Double.NaN;
-  }*/
 }

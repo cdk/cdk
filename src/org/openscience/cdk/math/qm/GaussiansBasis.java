@@ -36,20 +36,24 @@ import org.openscience.cdk.Atom;
 
 /**
  * This class contains the information to use gauss function as a base 
- * for calculation of quantum mechanics
- *
+ * for calculation of quantum mechanics:
+ * <pre>
  * f(x,y,z) = (x-rx)^nx * (y-ry)^ny * (z-rz)^nz * exp(-alpha*(r-ri)^2)
+ * </pre>
  *
- * S = <phi_i|phi_j>
- * J = <d/dr phi_i | d/dr phi_j>
- * V = <phi_i | 1/r | phi_j>
+ * <p>
+ * S = &lt;phi_i|phi_j><br>
+ * J = &lt;d/dr phi_i | d/dr phi_j><br>
+ * V = &lt;phi_i | 1/r | phi_j><br>
  * 
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
  * @created 2001-06-14
+ *
+ * @keyword Gaussian basis set
  */ 
 public class GaussiansBasis implements Basis
 {
-  private int count; // count of the bases
+  private int count; // number of the basis functions
   private int[] nx; // [base]
   private int[] ny; // [base]
   private int[] nz; // [base]
@@ -57,7 +61,7 @@ public class GaussiansBasis implements Basis
   private double[] norm; // Normalize the bases
   private Vector[] r; // [basis] Positions of base functions
 
-  private int count_atoms; // count of the atoms
+  private int count_atoms; // number of the atoms
   private Vector[] rN; // [atom] Positions of the atoms
   private int[] oz; // [atom] Atomic numbers of the atoms
   
@@ -72,7 +76,7 @@ public class GaussiansBasis implements Basis
 
   /**
    * Set up basis with gauss funktions
-   * f(x,y,z) = (x-rx)^nx * (y-ry)^ny * (z-rz)^nz * exp(-alpha*(r-ri)^2)
+   * f(x,y,z) = (x-rx)^nx * (y-ry)^ny * (z-rz)^nz * exp(-alpha*(r-ri)^2).
    *
    * @param atoms The atom will need to calculate the core potential
    */
@@ -83,7 +87,7 @@ public class GaussiansBasis implements Basis
 
   /**
    * Set up basis with gauss funktions
-   * f(x,y,z) = (x-rx)^nx * (y-ry)^ny * (z-rz)^nz * exp(-alpha*(r-ri)^2)
+   * f(x,y,z) = (x-rx)^nx * (y-ry)^ny * (z-rz)^nz * exp(-alpha*(r-ri)^2).
    *
    * @param atoms The atom will need to calculate the core potential
    */
@@ -102,7 +106,7 @@ public class GaussiansBasis implements Basis
     { 
       this.rN[i] = (new Vector(atoms[i].getPoint3D())).mul(1.8897);
       this.oz[i] = atoms[i].getAtomicNumber();
-      System.out.println((i+1)+".Atom Z="+this.oz[i]+" r="+(new Vector(atoms[i].getPoint3D()))+"[å]");
+      System.out.println((i+1)+".Atom Z="+this.oz[i]+" r="+(new Vector(atoms[i].getPoint3D()))+"[angstrom]");
     }
     System.out.println();
 
@@ -162,7 +166,7 @@ public class GaussiansBasis implements Basis
   }
 
   /**
-   * Get the count of base vectors
+   * Gets the number of base vectors.
    */
   public int getSize()
   {
@@ -170,7 +174,7 @@ public class GaussiansBasis implements Basis
   }
 
   /**
-   * Get the dimension of the volume, which descripes the base
+   * Gets the dimension of the volume, which describes the base.
    */
   public double getMinX()
   {
@@ -178,7 +182,7 @@ public class GaussiansBasis implements Basis
   }
 
   /**
-   * Get the dimension of the volume, which descripes the base
+   * Gets the dimension of the volume, which describes the base.
    */
   public double getMaxX()
   {
@@ -186,7 +190,7 @@ public class GaussiansBasis implements Basis
   }
 
   /**
-   * Get the dimension of the volume, which descripes the base
+   * Gets the dimension of the volume, which describes the base.
    */
   public double getMinY()
   {
@@ -194,7 +198,7 @@ public class GaussiansBasis implements Basis
   }
   
   /**
-   * Get the dimension of the volume, which descripes the base
+   * Gets the dimension of the volume, which describes the base.
    */
   public double getMaxY()
   {
@@ -202,7 +206,7 @@ public class GaussiansBasis implements Basis
   }
 
   /**
-   * Get the dimension of the volume, which descripes the base
+   * Gets the dimension of the volume, which describes the base.
    */
   public double getMinZ()
   {
@@ -210,7 +214,7 @@ public class GaussiansBasis implements Basis
   }
   
   /**
-   * Get the dimension of the volume, which descripes the base
+   * Gets the dimension of the volume, which describes the base.
    */
   public double getMaxZ()
   {
@@ -218,7 +222,7 @@ public class GaussiansBasis implements Basis
   }
 
   /**
-   * Calculates the function value an (x,y,z)
+   * Calculates the function value an (x,y,z).
    * @param index The number of the base 
    */
   public double getValue(int index, double x, double y, double z)
@@ -238,7 +242,7 @@ public class GaussiansBasis implements Basis
   }
 
   /**
-   * Calculates the function values
+   * Calculates the function values.
    * @param index The number of the base 
    */
   public Vector getValues(int index, Matrix m)
@@ -312,16 +316,13 @@ public class GaussiansBasis implements Basis
   }
 
   /**
-   * Get the position of a base
+   * Gets the position of a base.
    */
   public Vector getPosition(int index)
   {
     return r[index].duplicate().mul(0.52918);
   }
 
-  /**
-   * Calculates the "Überlappungsintegrale"
-   */
   public double calcD(double normi, double normj, double alphai, double alphaj, Vector ri, Vector rj)
   {
     double dx = ri.vector[0]-rj.vector[0];
@@ -331,7 +332,7 @@ public class GaussiansBasis implements Basis
   }
 
   /**
-   * Transfer equation for the calculation of the "Überlappungsintegrale"
+   * Transfer equation for the calculation of the overlap integral..
    */
   private double calcI(int ni, int nj, double alphai, double alphaj, double xi, double xj)
   {
@@ -368,10 +369,6 @@ public class GaussiansBasis implements Basis
     return I[nj][ni];
   }
 
-  /**
-   * Calculate the "Überlappungsintegrale"
-   * S = <phi_i|phi_j>
-   */
   public double calcS(int i, int j)
   {
     //System.out.println("S: i="+i+" j="+j+" r[i]="+r[i]+" r[j]="+r[j]);
@@ -401,10 +398,6 @@ public class GaussiansBasis implements Basis
     return Double.NaN; // Falls fehlerhafte Parameter
   }
 
-  /**
-   * calculates the impulse
-   * J = -<d/dr chi_i | d/dr chi_j>
-   */
   public double calcJ(int i, int j)
   {
     return calcD(norm[i], norm[j], alpha[i],alpha[j],r[i],r[j])*
@@ -444,7 +437,7 @@ public class GaussiansBasis implements Basis
   }
 
   /**
-   * Transfer equation for the calculation of core potentials
+   * Transfer equation for the calculation of core potentials.
    */
   private double calcI(int ni, int nj, double t, double alphai, double alphaj, 
                         double xi, double xj, double xN)
@@ -461,8 +454,8 @@ public class GaussiansBasis implements Basis
   }
 
   /**
-   * Calculates the core potential
-   * It use a 10 point simpson formula
+   * Calculates the core potential.
+   * It use a 10 point Simpson formula.
    *
    * @param i Index of the first base
    * @param j Index of the second base
@@ -476,7 +469,6 @@ public class GaussiansBasis implements Basis
     double sum1,sum2;
     double f1,f2;
 
-    // Berechnen der Integration nach Simson
     int steps = 10;
     double h = 1d/steps;
 
@@ -537,8 +529,8 @@ public class GaussiansBasis implements Basis
   }
 
   /**
-   * Calculates the core potential
-   * It use a 10 point simpson formula
+   * Calculates the core potential.
+   * It use a 10 point Simpson formula.
    *
    * @param i Index of the first base
    * @param j Index of the second base
@@ -557,7 +549,7 @@ public class GaussiansBasis implements Basis
   }
 
   /**
-   * Transfer equation for a four center integral
+   * Transfer equation for a four center integral.
    */
   public double calcG(int n, int m, double u, 
      double alphai, double alphaj, double alphak, double alphal, double xi, double xj, double xk, double xl)
@@ -621,7 +613,7 @@ public class GaussiansBasis implements Basis
   }  
 
   /**
-   * Transfer equation for a four center integral
+   * Transfer equation for a four center integral.
    */
   public double calcI(int ni, int nj, int nk, int nl, double u, 
                       double alphai, double alphaj, double alphak, double alphal,
@@ -645,15 +637,6 @@ public class GaussiansBasis implements Basis
     return Double.NaN;
   }
 
-  /**
-   * Calculates a two eletron fout center integral
-   * I = <chi_i chi_j | 1/r12 | chi_k chi_l >
-   *
-   * @param i Index of the first base
-   * @param j Index of the second base
-   * @param k Index of the third base
-   * @param l Index of the fourth base
-   */
   public double calcI(int i, int j, int k, int l)
   {
     double f,t;
