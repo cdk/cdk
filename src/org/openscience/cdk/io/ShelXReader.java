@@ -80,13 +80,19 @@ public class ShelXReader extends DefaultChemObjectReader {
      */
     public ChemObject read(ChemObject object) throws CDKException {
         if (object instanceof ChemFile) {
-            ChemFile cf = null;
             try {
-                cf = readChemFile();
+                return readChemFile();
             } catch (IOException e) {
-                logger.error("Input/Output error while reading from input.");
+                logger.error("Input/Output error while reading from input: " + e.getMessage());
+                throw new CDKException(e.getMessage());
             }
-            return cf;
+        } else if (object instanceof Crystal) {
+            try {
+                return readCrystal();
+            } catch (IOException e) {
+                logger.error("Input/Output error while reading from input: " + e.getMessage());
+                throw new CDKException(e.getMessage());
+            }
         } else {
             throw new CDKException("Only supported is reading of ChemFile.");
         }
@@ -102,6 +108,14 @@ public class ShelXReader extends DefaultChemObjectReader {
         ChemFile file = new ChemFile();
         ChemSequence seq = new ChemSequence();
         ChemModel model = new ChemModel();
+        Crystal crystal = readCrystal();
+        model.setCrystal(crystal);
+        seq.addChemModel(model);
+        file.addChemSequence(seq);
+        return file;
+    }
+
+    private Crystal readCrystal() throws IOException {
         Crystal crystal = new Crystal();
 
         String line = input.readLine();
@@ -301,12 +315,9 @@ public class ShelXReader extends DefaultChemObjectReader {
             }
             line = input.readLine();
         }
-        model.setCrystal(crystal);
-        seq.addChemModel(model);
-        file.addChemSequence(seq);
-        return file;
+        return crystal;
     }
-
+    
     public void close() throws IOException {
         input.close();
     }
