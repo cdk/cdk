@@ -36,7 +36,7 @@ import junit.framework.TestSuite;
  *
  * @cdk.module test
  */
-public class CoreCoverageTest extends TestCase {
+public class CoreCoverageTest extends CoverageTest {
 
     private final static String CLASS_LIST = "core.javafiles";
     
@@ -46,155 +46,12 @@ public class CoreCoverageTest extends TestCase {
         super(name);
     }
 
-    public void setUp() {
-        classLoader = this.getClass().getClassLoader();
-    }
-
     public static Test suite() {
         return new TestSuite(CoreCoverageTest.class);
     }
 
-    private Class loadClass(String className) {
-        Class loadedClass = null;
-        try {
-            loadedClass = classLoader.loadClass(className);
-        } catch (ClassNotFoundException exception) {
-            fail("Could not find class: " + exception.getMessage());
-        } catch (NoSuchMethodError error) {
-            fail("No such method in class: " + error.getMessage());
-        }
-        return loadedClass;
-    }
-    
     public void testCoverage() {
-        int missingTestsCount = 0;
-        int uncoveredClassesCount = 0;
-        
-        // get the src/core.javafiles file
-        try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(
-                this.getClass().getClassLoader().getResourceAsStream(CLASS_LIST)
-            ));
-            while (reader.ready()) {
-                // load them one by one
-                String rawClassName = reader.readLine();
-                rawClassName = rawClassName.substring(20);
-                String className = convertSlash2Dot(
-                    rawClassName.substring(0, rawClassName.indexOf('.'))
-                );
-                int errors = checkClass(className);
-                missingTestsCount += errors;
-                if (errors > 0) uncoveredClassesCount++;
-            }
-        } catch (Exception exception) {
-            fail("Could not load the src/" + CLASS_LIST + " file!");
-        }
-        
-        
-        if (missingTestsCount > 0) {
-            fail("The core module is not fully tested! Missing number of method tests: " + 
-                 missingTestsCount + " in number of classes: " + uncoveredClassesCount);
-        }
+        super.testClassList(CLASS_LIST);
     }
 
-    private int checkClass(String className) {
-        // System.out.println("Checking : " + className);
-        
-        // the naming scheme: <package><class>Test
-        final String basePackageName = "org.openscience.cdk.";
-        final String testPackageName = "test.";
-        
-        // load both classes
-        Class coreClass = loadClass(basePackageName + className);
-
-        if (!coreClass.isInterface()) {
-            Class testClass = loadClass(basePackageName + testPackageName + className + "Test");
-            
-            int missingTestsCount = 0;
-
-            // make map of methods in the test class
-            Vector testMethodNames = new Vector();
-            Method[] testMethods = testClass.getMethods();
-            for (int i=0; i<testMethods.length; i++) {
-                testMethodNames.add(testMethods[i].getName());
-            }
-            
-            // now process the methods of the class to be tested
-            // first the constructors
-            Constructor[] constructors = coreClass.getDeclaredConstructors();
-            for (int i=0; i<constructors.length; i++) {
-                int modifiers = constructors[i].getModifiers();
-                if (!Modifier.isPrivate(modifiers) && !Modifier.isProtected(modifiers)) {
-                    String testMethod = "test" + capitalizeName(removePackage(constructors[i].getName()));
-                    Class[] paramTypes = constructors[i].getParameterTypes();
-                    for (int j=0; j<paramTypes.length; j++) {
-                        if (paramTypes[j].isArray()) {
-                            testMethod = testMethod + "_array" + removePackage(paramTypes[j].getComponentType().getName());
-                        } else {
-                            testMethod = testMethod + "_" + removePackage(paramTypes[j].getName());
-                        }
-                    }
-                    if (!testMethodNames.contains(testMethod)) {
-                        System.out.println(removePackage(coreClass.getName()) + ": missing the expected test method: " + testMethod);
-                        missingTestsCount++;
-                    }
-                }
-            }
-            
-            // now the methods.
-            Method[] methods = coreClass.getDeclaredMethods();
-            for (int i=0; i<methods.length; i++) {
-                int modifiers = methods[i].getModifiers();
-                if (!Modifier.isPrivate(modifiers) && !Modifier.isProtected(modifiers)) {
-                    String testMethod = "test" + capitalizeName(removePackage(methods[i].getName()));
-                    Class[] paramTypes = methods[i].getParameterTypes();
-                    for (int j=0; j<paramTypes.length; j++) {
-                        if (paramTypes[j].isArray()) {
-                            testMethod = testMethod + "_array" + removePackage(paramTypes[j].getComponentType().getName());
-                        } else {
-                            testMethod = testMethod + "_" + removePackage(paramTypes[j].getName());
-                        }
-                    }
-                    if (!testMethodNames.contains(testMethod)) {
-                        System.out.println(removePackage(coreClass.getName()) + ": missing the expected test method: " + testMethod);
-                        missingTestsCount++;
-                    }
-                }
-            }
-            
-            return missingTestsCount;
-        } else {
-            // interfaces should not be tested
-            return 0;
-        }
-    }
-    
-    private String removePackage(String className) {
-        return className.substring(1+className.lastIndexOf('.'));
-    }
-    
-    private String capitalizeName(String name) {
-        String capitalizedName = "";
-        if (name == null) {
-            capitalizedName = null;
-        } else if (name.length() == 1) {
-            capitalizedName = name.toUpperCase();
-        } else if (name.length() > 1) {
-            capitalizedName = name.substring(0,1).toUpperCase() + name.substring(1);
-        }
-        return capitalizedName;
-    }
-    
-    private String convertSlash2Dot(String className) {
-        StringBuffer sb = new StringBuffer();
-        className = className;
-        for (int i=0; i<className.length(); i++) {
-            if (className.charAt(i) == '/') {
-                sb.append('.');
-            } else {
-                sb.append(className.charAt(i));
-            }
-        }
-        return sb.toString();
-    }
 }
