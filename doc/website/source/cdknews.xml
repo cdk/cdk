@@ -23,15 +23,22 @@
   <para>
     Issues can be downloaded from the SourceForge website:
     <itemizedlist>
-      <listitem><para><ulink url="https://sourceforge.net/project/showfiles.php?group_id=20024&amp;package_id=124796&amp;release_id=255211">1/1</ulink>, 
-        July 2004</para></listitem>
+      <listitem>
+        <para><ulink url="https://sourceforge.net/project/showfiles.php?group_id=20024&amp;package_id=124796&amp;release_id=255211">1/1</ulink>, 
+          July 2004
+        </para>
+        <para>articles: <emphasis>NMRShiftBD</emphasis>, 
+                        <emphasis>What's 2004 going to bring?</emphasis>, 
+                        <emphasis>Submitting articles to CDK News</emphasis>.
+        </para> 
+      </listitem>
     </itemizedlist>
   </para>
   
   <para>
     The editorial board of the news letter consists of
     Egon Willighagen and Christoph Steinbeck, who are Editor-in-Chief,
-    and Rajarshi Guha.
+    Uli Fechner and Rajarshi Guha.
   </para>
   
   <section>
