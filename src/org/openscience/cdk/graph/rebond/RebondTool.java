@@ -63,7 +63,8 @@ public class RebondTool {
     
   /**
    * Rebonding using a Binary Space Partition Tree. Note, that any bonds
-   * defined will be deleted first.
+   * defined will be deleted first. It assumes the unit of 3D space to
+   * be 1 &Acircle;ngstrom.
    *
    * @author  Miguel Howard
    * @created 2003-05-23
