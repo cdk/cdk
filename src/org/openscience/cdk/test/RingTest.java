@@ -46,4 +46,26 @@ public class RingTest extends TestCase {
     public static Test suite() {
         return new TestSuite(RingTest.class);
     }
+    
+    public void testRing_int_String() {
+        Ring r = new Ring(5, "C");
+        assertEquals(5, r.getAtomCount());
+        assertEquals(5, r.getBondCount());
+    }
+    
+    public void testRing_int() {
+        Ring r = new Ring(5);
+        assertEquals(0, r.getAtomCount());
+        assertEquals(0, r.getBondCount());
+    }
+    
+    public void testGetOrderSum() {
+        Ring r = new Ring(5, "C");
+        assertEquals(5, r.getOrderSum());
+    }
+    
+    public void testRingSize() {
+        Ring r = new Ring(5, "C");
+        assertEquals(5, r.getRingSize());
+    }
 }

@@ -46,4 +46,54 @@ public class RingSetTest extends TestCase {
     public static Test suite() {
         return new TestSuite(RingSetTest.class);
     }
+    
+    public void testRingSet() {
+        RingSet rs = new RingSet();
+    }
+    
+    public void testRingAlreadyInSet() {
+        Ring r1 = new Ring(5, "C");
+        Ring r2 = new Ring(3, "C");
+        
+        RingSet rs = new RingSet();
+        assertTrue(!rs.ringAlreadyInSet(r1));
+        assertTrue(!rs.ringAlreadyInSet(r2));
+        
+        rs.add(r1);
+        assertTrue(rs.ringAlreadyInSet(r1));
+        assertTrue(!rs.ringAlreadyInSet(r2));
+        
+        rs.add(r2);
+        assertTrue(rs.ringAlreadyInSet(r1));
+        assertTrue(rs.ringAlreadyInSet(r2));
+    }
+    
+    public void testGetRingSetInAtomContainer() {
+        Ring r1 = new Ring(5, "C");
+        Ring r2 = new Ring(3, "C");
+        
+        RingSet rs = new RingSet();
+        rs.add(r1);
+        rs.add(r2);
+        
+        AtomContainer ac = rs.getRingSetInAtomContainer();
+        assertTrue(ac != null);
+        assertEquals(8, ac.getAtomCount());
+        assertEquals(8, ac.getBondCount());
+    }
+    
+    public void testAdd_RingSet() {
+        Ring r1 = new Ring(5, "C");
+        Ring r2 = new Ring(3, "C");
+        
+        RingSet rs = new RingSet();
+        rs.add(r1);
+        
+        RingSet rs2 = new RingSet();
+        rs2.add(r2);
+        rs2.add(rs);
+        
+        assertEquals(1, rs.size());
+        assertEquals(2, rs2.size());
+    }
 }

@@ -56,7 +56,7 @@ public class ElementTest extends TestCase {
     
     public void testElement2() {
         Element e = new Element("H", 1, 1);
-        assertEquals("C", e.getSymbol());
+        assertEquals("H", e.getSymbol());
         assertEquals(1, e.getAtomicNumber());
         assertEquals(1, e.getAtomicMass());
     }
