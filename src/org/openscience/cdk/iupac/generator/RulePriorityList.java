@@ -31,13 +31,12 @@ import java.util.Locale;
  *  be localized.
  *
  *  An instance from this class is made by:
- *
  *  <pre>
- *  Locale l = new Locale("NL");
+ *  Locale l = new Locale("NL"); // Dutch
  *  RulePriorityList priorities = RulePrioritList.getInstance(l);
  *  </pre>
  *
- * @see java.lang.Locale
+ * @see java.util.Locale
  * @author Egon Willighagen
  */
 public class RulePriorityList {

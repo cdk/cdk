@@ -50,7 +50,7 @@ public class GeometryTools {
 	 * such that all coordinates are positive and the smallest x or y coordinate 
 	 * is exactly zero.
 	 *
-	 * @param   molecule for which all the atoms are translated to positive coordinates
+	 * @param   atomCon AtomContainer for which all the atoms are translated to positive coordinates
 	 */
     public static void translateAllPositive(AtomContainer atomCon) {
         double minX = Double.MAX_VALUE, 
@@ -74,7 +74,7 @@ public class GeometryTools {
 	/**
 	 * Translates the given molecule by the given Vector.
 	 *
-	 * @param   molecule  The molecule to be translated
+	 * @param   atomCon The molecule to be translated
 	 * @param   transX  translation in x direction
 	 * @param   transY  translation in y direction
 	 */
@@ -87,7 +87,7 @@ public class GeometryTools {
 	/**
 	 * Multiplies all the coordinates of the atoms of the given molecule with the scalefactor.
 	 *
-	 * @param   molecule  The molecule to be scaled
+	 * @param   atomCon  The molecule to be scaled
 	 */
 	public static void scaleMolecule(AtomContainer atomCon, double scaleFactor) {
 		for (int i = 0; i < atomCon.getAtomCount(); i++)
@@ -104,7 +104,7 @@ public class GeometryTools {
 	/**
 	 * Rotates a molecule around a given center by a given angle
 	 *
-	 * @param   molecule  The molecule to be rotated
+	 * @param   atomCon  The molecule to be rotated
 	 * @param   center    A point giving the rotation center
 	 * @param   angle      The angle by which to rotate the molecule 
 	 */
@@ -129,9 +129,9 @@ public class GeometryTools {
     /**
 	 * Scales a molecule such that it fills a given percentage of a given dimension
 	 *
-	 * @param   molecule  The molecule to be scaled
-	 * @param   dim       The dimension to be filled
-	 * @param   percentage  The percentage of the dimension to be filled
+	 * @param   atomCon    The molecule to be scaled
+	 * @param   areaDim    The dimension to be filled
+	 * @param   fillFactor The percentage of the dimension to be filled
 	 */
 	public static void scaleMolecule(AtomContainer atomCon, Dimension areaDim, double fillFactor)
 	{
@@ -145,8 +145,8 @@ public class GeometryTools {
 	/**
 	 * Returns the java.awt.Dimension of a molecule
 	 *
-	 * @param   molecule of which the dimension should be returned
-	 * @return The java.awt.Dimension of this molecule
+	 * @param  atomCon of which the dimension should be returned
+	 * @return         The java.awt.Dimension of this molecule
 	 */
 	public static Dimension get2DDimension(AtomContainer atomCon) {
         double[] minmax = getMinMax(atomCon);
@@ -212,7 +212,6 @@ public class GeometryTools {
 	 * Translates a molecule from the origin to a new point denoted by a vector.
 	 *
 	 * @param atomCon  molecule to be translated
-	 * @param vector   dimension that represents the translation vector
 	 */
 	public static void translate2DCentreOfMassTo(AtomContainer atomCon, Point2d p) {
         Point2d com = get2DCentreOfMass(atomCon);
@@ -394,8 +393,8 @@ public class GeometryTools {
 	 *
 	 * @param   xPosition  The x coordinate
 	 * @param   yPosition  The y coordinate	
-	 * @param   molecule  The molecule that is searched for the closest atom
-	 * @return   The atom that is closest to the given coordinates  
+	 * @param   atomCon    The molecule that is searched for the closest atom
+	 * @return             The atom that is closest to the given coordinates  
 	 */
 	public static Atom getClosestAtom(int xPosition, int yPosition, AtomContainer atomCon)
 	{
@@ -423,8 +422,8 @@ public class GeometryTools {
 	 *
 	 * @param   xPosition  The x coordinate
 	 * @param   yPosition  The y coordinate	
-	 * @param   molecule  The molecule that is searched for the closest bond
-	 * @return   The bond that is closest to the given coordinates  
+	 * @param   atomCon    The molecule that is searched for the closest bond
+	 * @return             The bond that is closest to the given coordinates  
 	 */
 	public static Bond getClosestBond(int xPosition, int yPosition, AtomContainer atomCon)
 	{

@@ -43,9 +43,9 @@ public class CDKInputAdapter extends Controller2D
 
     /**
      * Constructs a <code>CDKInputAdapter</code> that acts on the
-     * specified AtomContainer.
+     * specified ChemModel.
      *
-     * @param atomCon   AtomContainer to act on
+     * @param model   Data on which this adapter should act.
      */
 	public CDKInputAdapter(ChemModel model, Renderer2DModel r2dm,
                            Controller2DModel c2dm) {

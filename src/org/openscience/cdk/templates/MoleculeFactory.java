@@ -3,7 +3,7 @@
  * $Date$    
  * $Revision$
  * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -74,10 +74,11 @@ public class MoleculeFactory {
 	/**
 	 * Generate an Alkane (chain of carbons with no hydrogens) of a given length.
 	 *
+     * <p>This method was written by Stephen Tomkinson.
+     *
 	 * @param chainLength The number of carbon atoms to have in the chain.
 	 * @return A molecule containing a bonded chain of carbons.
 	 *
-	 * @author Stephen Tomkinson
 	 * @created 2003-08-15
 	 */
   public static Molecule makeAlkane(int chainLength)

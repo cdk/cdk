@@ -39,8 +39,8 @@ public class ConnectivityChecker
 	/**
 	 * Check whether a set of atoms in an atomcontainer is connected
 	 *
-	 * @param   ac  The AtomContainer to be check for connectedness
-	 * @return  true if the AtomContainer is connected   
+	 * @param   atomContainer  The AtomContainer to be check for connectedness
+	 * @return                 true if the AtomContainer is connected   
 	 */
 	public boolean isConnected(AtomContainer atomContainer)
 	{

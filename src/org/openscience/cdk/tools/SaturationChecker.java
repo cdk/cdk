@@ -36,10 +36,12 @@ import java.io.*;
 
 /**
  * Provides methods for checking whether an atoms valences are saturated with
- * respect to a particular atom type
+ * respect to a particular atom type.
  *
  * @author     steinbeck
+ * @author  Egon Willighagen
  * @created    2001-09-04
+ *
  * @keyword    saturation
  * @keyword    atom, valency
  */
@@ -250,7 +252,6 @@ public class SaturationChecker
 	 *
 	 * @keyword            bond order, calculation
      *
-     * @author  Egon Willighagen
      * @created 2003-10-03
 	 */
     public void newSaturate(AtomContainer atomContainer) throws CDKException {
@@ -266,9 +267,6 @@ public class SaturationChecker
 
     /**
      * Saturates a set of Bonds in an AtomContainer.
-     *
-     * @author  Egon Willighagen
-     * @created 2003-10-03
      */
     public boolean newSaturate(Bond[] bonds, AtomContainer atomContainer) throws CDKException {
         logger.debug("Saturating bond set of size: " + bonds.length);
@@ -339,9 +337,6 @@ public class SaturationChecker
     
     /**
      * Saturate atom by adjusting its bond orders.
-     *
-     * @author  Egon Willighagen
-     * @created 2003-10-03
      */
     public boolean newSaturate(Bond bond, AtomContainer atomContainer) throws CDKException {
         Atom[] atoms = bond.getAtoms();
@@ -547,13 +542,13 @@ public class SaturationChecker
 	 * generated with the AtomTypeFactory.
 	 *
 	 * @param  atom      Description of the Parameter
-	 * @param  molecule  Description of the Parameter
+	 * @param  container Description of the Parameter
 	 * @return           Description of the Return Value
 	 * @see              AtomTypeFactory
 	 */
 	public int calculateMissingHydrogen(Atom atom, AtomContainer container) throws CDKException {
-    return calculateMissingHydrogen(atom, container, false);
-  }
+        return calculateMissingHydrogen(atom, container, false);
+    }
   
 	/**
 	 * Calculate the number of missing hydrogens by substracting the number of
@@ -562,7 +557,7 @@ public class SaturationChecker
 	 * generated with the AtomTypeFactory.
 	 *
 	 * @param  atom      Description of the Parameter
-	 * @param  molecule  Description of the Parameter
+	 * @param  container  Description of the Parameter
 	 * @param  throwExceptionForUnknowAtom  Should an exception be thrown if an unknown atomtype is found or 0 returned ?
 	 * @return           Description of the Return Value
 	 * @see              AtomTypeFactory

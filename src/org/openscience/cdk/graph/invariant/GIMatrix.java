@@ -3,7 +3,7 @@
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -33,16 +33,13 @@ import org.openscience.cdk.graph.invariant.exception.*;
  * double class is the best way I have developped to perform exact operation on numbers; however, for
  * irdoubles, normal operations on float and doubles have to be performed, with the well-known risks of error
  * this implies. This class also provides a way of representing matrix as arrays of String for output use.
+ *
  * <P>Please note that although in most books matrix elements' indexes take values between [1..n] I chose not
  * to disturb Java language way of calling indexes; so the indexes used here take values between [0..n-1] instead.
  *
- * @see tatien.toolbox#double
  * @author Jean-Sebastien Senecal
  * @version 1.0
  * @created 1999-05-20
- *
- * modified 10/06/02
- * adds method - add(Matrix matrix), matrix
  */
 public class GIMatrix {
 
@@ -96,8 +93,8 @@ public class GIMatrix {
      * Class constructor. Creates a new Matrix object with fixed dimensions. The matrix is
      * initialised to the "zero" matrix.
      *
-     * @param m number of columns
-     * @param n number of lines
+     * @param line number of lines
+     * @param col number of columns
      */
     public GIMatrix(int line, int col) {
 		array = new double[line][col];

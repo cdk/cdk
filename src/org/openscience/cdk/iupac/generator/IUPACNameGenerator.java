@@ -92,7 +92,7 @@ public class IUPACNameGenerator {
     /**
      *  Generates a IUPAC name for a molecule.
      *
-     *  Mechanism:
+     *  <p>Mechanism:
      *  <ol>
      *    <li>
      *      apply the first applicable rule
@@ -113,8 +113,8 @@ public class IUPACNameGenerator {
      *    <li>for each f in fragments recurse to step 1.
      *  </ol>
      *
-     * @param moleculeToname Must be a Molecule or a Fragment which needs to be
-     * named, an attempt to name any other AtomContainer will fail.
+     * @param moleculeToName Must be a Molecule or a Fragment which needs to be
+     *                       named, an attempt to name any other AtomContainer will fail.
      */
     public void generateName(AtomContainer moleculeToName) {       
         //Must use a clone to avoid deleting the user's atoms.

@@ -49,6 +49,8 @@ import org.openscience.cdk.validate.ProblemMarker;
  * are calculated by applying a zoom factor to the world coordinates.
  *
  * @author     steinbeck
+ * @author     egonw
+ *
  * @created    2002-10-03
  * @keyword    viewer, 2D-viewer
  */
@@ -379,9 +381,6 @@ public class Renderer2D   {
      * @param  graphics   Graphics to draw too
      * @param  alignment  How to align the H's
      * @param  atomNumber Number of the atom in the AtomContainer, 0 is not in container
-     *
-     * @author  Egon Willighagen <egonw@users.sf.net>
-     * @created 2003-07-21
      */
     public void paintAtomSymbol(Atom atom, Color backColor, Graphics graphics, int alignment, int atomNumber) {
         if (atom.getPoint2D() == null) {
@@ -649,9 +648,6 @@ public class Renderer2D   {
      *
      * @param  atom       The atom to be drawn
      * @param  backColor  Description of the Parameter
-     *
-     * @author  Egon Willighagen <egonw@users.sf.net>
-     * @created 2003-08-08
      */
     public void paintPseudoAtomLabel(PseudoAtom atom, Color backColor, Graphics graphics, int alignment) {
         if (atom.getPoint2D() == null) {

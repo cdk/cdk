@@ -1,10 +1,9 @@
-/*
- * $RCSfile$
+/* $RCSfile$
  * $Author$
  * $Date$
  * $Revision$
  *
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -162,7 +161,7 @@ public class Convertor {
      *   - atoms which it conects
      *   - bond order
      *
-     * @param   atom    class to be converted
+     * @param   bond    class to be converted
      * @return          converted class in JOELib
      **/
     public static JOEBond convert(Bond bond) {
@@ -185,7 +184,7 @@ public class Convertor {
      *   - atoms which it conects
      *   - bond order
      *
-     * @param   atom    class to be converted
+     * @param   bond    class to be converted
      * @return          converted class in CDK
      **/
     public static Bond convert(JOEBond bond) {
@@ -227,7 +226,7 @@ public class Convertor {
      *   - bonds
      *
      *
-     * @param   atom      class to be converted
+     * @param   mol       class to be converted
      * @param   coordType coordinates to use. if -1 this converter uses the available coordinates.
      *                    If 3D and 2D coordinates are available, the 3D coordinates are used
      * @return            converted class in JOELib
@@ -276,7 +275,7 @@ public class Convertor {
      *   - atoms
      *   - bonds
      *
-     * @param   atom    class to be converted
+     * @param   mol     class to be converted
      * @return          converted class in CDK
      **/
     public static Molecule convert(JOEMol mol) {

@@ -58,8 +58,8 @@ public class SSSRFinder {
 	/**
 	 * Finds the Smallest Set of Smallest Rings.
 	 *
-	 * @param   molecule the molecule to be searched for rings 
-	 * @return a RingSet containing the rings in molecule    
+	 * @param   mol the molecule to be searched for rings 
+	 * @return      a RingSet containing the rings in molecule    
 	 */
 	public  RingSet findSSSR(Molecule mol)
 	{

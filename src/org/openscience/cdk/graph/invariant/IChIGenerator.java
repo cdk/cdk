@@ -122,9 +122,10 @@ public class IChIGenerator {
     }
 
     /**
-     * Generate IChI from inputfile (mol or sdf)
-     * @inputFile   Input mol or sdf file
-     * @outputFile  Generated IChI file
+     * Main method for a program that can generate an IChI for an inputfile 
+     * (mol or sdf). It takes two arguments:
+     * the filename of the input file (-IN filename), 
+     * and the filename of the output file (-OUT filename).
      */
     public static void main(String args[]) {
         logger = new org.openscience.cdk.tools.LoggingTool(IChIGenerator.class.getName());

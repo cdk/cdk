@@ -224,16 +224,16 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 
 
 	/**
-	 * Returns the zoom factor for the drawing
+	 * Returns the zoom factor for the drawing.
 	 *
-	 * @param   scaleZoom  the zoom factor for the drawing
+	 * @param   zoomFactor  the zoom factor for the drawing
 	 */
 	public void setZoomFactor(double zoomFactor) {
 		this.zoomFactor = zoomFactor;
 	}	
 
 	/**
-	 * returns the foreground color for the drawing
+	 * Returns the foreground color for the drawing.
 	 *
 	 * @return the foreground color for the drawing    
 	 */
@@ -677,7 +677,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	/**
 	 * Adds a point to the list of lasso points
 	 *
-	 * @param   lassoPoints  
+	 * @param   point  Point to add to list
 	 */
 	public void addLassoPoint(Point point)
 	{

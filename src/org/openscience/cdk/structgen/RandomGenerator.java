@@ -1,10 +1,9 @@
-/*
- * $RCSfile$    
+/* $RCSfile$    
  * $Author$    
  * $Date$    
  * $Revision$
  * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -375,9 +374,9 @@ public class RandomGenerator
 	 *
 	 * @param   molecule  a starting structure for this generator
 	 */
-	public void setMolecule(Molecule mol)
+	public void setMolecule(Molecule molecule)
 	{
-		this.molecule = mol;	
+		this.molecule = molecule;	
 	}
 
 

@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -51,8 +51,8 @@ public class MoleculeViewer3D extends JPanel implements CDKChangeListener {
 	 * Constructs a MoleculeViewer with a molecule to display
 	 * and a Renderer3DModel containing the information on how to display it.
 	 *
-	 * @param   molecule  The molecule to be displayed
-	 * @param   r3dm  The rendere settings determining how the molecule is displayed
+	 * @param atomContainer The molecule to be displayed
+	 * @param r3dm          The renderer settings determining how the molecule is displayed
 	 */
 	public MoleculeViewer3D(AtomContainer atomContainer,Renderer3DModel r3dm) {
         logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
@@ -65,7 +65,7 @@ public class MoleculeViewer3D extends JPanel implements CDKChangeListener {
 	/**
 	 * Constructs a MoleculeViewer with a molecule to display
 	 *
-	 * @param   molecule  The molecule to be displayed
+	 * @param   atomContainer  The molecule to be displayed
 	 */
 	public MoleculeViewer3D(AtomContainer atomContainer) {
         logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
@@ -128,7 +128,7 @@ public class MoleculeViewer3D extends JPanel implements CDKChangeListener {
 	/**
 	 * Sets a Renderer3DModel which determins the way a molecule is displayed
 	 *
-	 * @param   r3Dm  The Renderer3DModel
+	 * @param   r3dm  The Renderer3DModel
 	 */
 	public void setRenderer3DModel(Renderer3DModel r3dm)
 	{

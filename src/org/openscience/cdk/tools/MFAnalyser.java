@@ -84,9 +84,6 @@ public class MFAnalyser{
    * formulae in Swing components or on the web.
    *
    * @return A HTML representation of the molecular formula.
-   *
-   * @author   Stephen Tomkinson
-   * @created  2003-08-14
    */
    public String getHTMLMolecularFormula(){
      boolean lastCharacterWasDigit = false;

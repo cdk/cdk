@@ -112,10 +112,10 @@ public class AtomTools {
      * Rescales Point2 so that length 1-2 is sum of covalent radii.
      * if covalent radii cannot be found, use bond length of 1.0
      *
-     * @param Atom atom1 stationary atom
-     * @param Atom atom2 moveable atom
-     * @param Point3d point2 coordinates for atom2
-     * @return Point3d new coords for atom 2
+     * @param  atom1  stationary atom
+     * @param  atom2  moveable atom
+     * @param  point2 coordinates for atom 2
+     * @return        new coords for atom 2
      */
     public static Point3d rescaleBondLength(
         Atom atom1, Atom atom2, Point3d point2) {
@@ -348,7 +348,7 @@ public class AtomTools {
     }
     
     /** 
-     * Calculate new point(s) X in a B-A-C system to form B-A(-C)-X. 
+     * Calculate new point(s) X in a B-A-C system. It forms form a B-A(-C)-X system.
      *
      * (2) 2 ligands(B, C) of refAtom A
      *    (i) 1 points  required; vector in ABC plane bisecting AB, AC. If ABC is
@@ -405,7 +405,7 @@ public class AtomTools {
     }
     
     /** 
-     * Calculate new point X in a B-A(-D)-C system to form B-A(-D)(-C)-X. 
+     * Calculate new point X in a B-A(-D)-C system. It forms a B-A(-D)(-C)-X system.
      *
      * (3) 3 ligands(B, C, D) of refAtom A
      *    (i) 1 points  required; if A, B, C, D coplanar, no points. 

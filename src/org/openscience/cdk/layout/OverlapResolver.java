@@ -1,10 +1,9 @@
-/*
- *  $RCSfile$
+/*  $RCSfile$
  *  $Author$
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2003  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -42,13 +41,14 @@ import java.util.*;
 import java.awt.geom.*;
 
 /**
- *  Helper class for Structure Diagram Generation. Resolves atom or bond
- *  overlaps after the actual SDG was done
+ * Helper class for Structure Diagram Generation. Resolves atom or bond
+ * overlaps after the actual SDG was done
  *
- *@author     steinbeck
- *@created    September 4, 2003
- *@keyword    layout
- *@keyword    2D-coordinates
+ * @author     steinbeck
+ * @created    2003-09-4
+ *
+ * @keyword    layout
+ * @keyword    2D-coordinates
  */
 public class OverlapResolver
 {
@@ -65,11 +65,10 @@ public class OverlapResolver
 	
 	
 	/**
-	 *  main method to be called to resolve overlap situations
+	 * Main method to be called to resolve overlap situations.
 	 *
-	 *@param  ac    The atomcontainer in which the atom or bond overlap exists
-	 *@param  sssr  A ring set for this atom container if one exists, otherwhise
-	 *      null
+	 * @param  ac    The atomcontainer in which the atom or bond overlap exists
+	 * @param  sssr  A ring set for this atom container if one exists, otherwhise null
 	 */
 	public double resolveOverlap(AtomContainer ac, RingSet sssr)
 	{
@@ -89,7 +88,7 @@ public class OverlapResolver
 
 	/**
 	 *  Makes a small displacement to some atoms or rings in the given
-	 *  atomcontainer
+	 *  atomcontainer.
 	 *
 	 *@param  ac                The AtomContainer to work on
 	 *@param  overlappingAtoms  Description of the Parameter
@@ -302,10 +301,10 @@ public class OverlapResolver
 
 
 		/**
-		 *  Constructor for the OverlapPair object
+		 * Constructor for the OverlapPair object.
 		 *
-		 *@param  a1  Description of the Parameter
-		 *@param  a2  Description of the Parameter
+		 * @param  co1  Description of the Parameter
+		 * @param  co2  Description of the Parameter
 		 */
 		public OverlapPair(ChemObject co1, ChemObject co2)
 		{

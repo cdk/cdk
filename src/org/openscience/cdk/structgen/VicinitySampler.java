@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -59,7 +59,7 @@ public class VicinitySampler
 	int molCounter = 0;
 
 	/**
-	 * The empty contructor
+	 * The empty contructor.
 	 */
 	public VicinitySampler()
 	{
@@ -69,7 +69,7 @@ public class VicinitySampler
 
 
 	/**
-	 * Constructs a RandomGenerator with a given starting structure
+	 * Constructs a RandomGenerator with a given starting structure.
 	 *
 	 * @param   molecule  The starting structure
 	 */
@@ -210,7 +210,7 @@ public class VicinitySampler
 	}
 
 	/**
-	 * Analog of Math.max that returns the largest int value in an array of ints
+	 * Analog of Math.max that returns the largest int value in an array of ints.
 	 *
 	 * @param   values  the values to be searched for the largest value among them
 	 * @return   the largest value among a set of given values  
@@ -229,7 +229,7 @@ public class VicinitySampler
 	}
 
 	/**
-	 * Analog of Math.min that returns the largest int value in an array of ints
+	 * Analog of Math.min that returns the largest int value in an array of ints.
 	 *
 	 * @param   values  the values to be searched for the smallest value among them
 	 * @return   the smallest value among a set of given values  
@@ -353,19 +353,19 @@ public class VicinitySampler
 	
 	
 	/**
-	 * Assigns a starting structure to this generator
+	 * Assigns a starting structure to this generator.
 	 *
 	 * @param   molecule  a starting structure for this generator
 	 */
-	public void setMolecule(Molecule mol)
+	public void setMolecule(Molecule molecule)
 	{
-		this.molecule = mol;	
+		this.molecule = molecule;	
 	}
 
 
 	/**
 	 * Returns the molecule which reflects the current state of this
-	 * Stochastic Structure Generator
+	 * Stochastic Structure Generator.
 	 *
 	 * @return The molecule    
 	 */

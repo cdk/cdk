@@ -122,7 +122,7 @@ public class Controller2D {
     /**
     * Manages all actions that will be invoked when the mouse is moved.
     *
-    * @param   e    MouseEvent object
+    * @param   event    MouseEvent object
     **/
     public void mouseMoved(MouseEvent event) {
         int mouseX = getWorldCoordinate(event.getX()); 
@@ -134,7 +134,7 @@ public class Controller2D {
     /**
      * Manages all actions that will be invoked when the mouse is dragged.
      *
-     * @param   e    MouseEvent object
+     * @param   event    MouseEvent object
      **/
     public void mouseDragged(MouseEvent event) {
         logger.debug("MouseDragged Event Props: mode=" + c2dm.getDrawModeString() + 
@@ -223,7 +223,7 @@ public class Controller2D {
         /**
          * manages all actions that will be invoked when a mouse button is pressed
          *
-         * @param   e    MouseEvent object
+         * @param   event    MouseEvent object
          **/
         public void mousePressed(MouseEvent event) {
 
@@ -262,7 +262,7 @@ public class Controller2D {
         /**
          * manages all actions that will be invoked when a mouse button is released
          *
-         * @param   e    MouseEvent object
+         * @param   event    MouseEvent object
          **/
         public void mouseReleased(MouseEvent event) {
             

@@ -55,10 +55,10 @@ public class NamingRule implements Rule {
     /**
      * Sets the localizer for this rule.
      *
-     * @param IUPACNameLocalizer An localizer set with the current locale.
+     * @param localizer A IUPACNameLocalizer set with the current locale.
      */
-    public void setIUPACNameLocalizer(IUPACNameLocalizer l) {
-        this.localizer = l;
+    public void setIUPACNameLocalizer(IUPACNameLocalizer localizer) {
+        this.localizer = localizer;
     }
 
     /**

@@ -90,7 +90,7 @@ public class StructureDiagramGenerator {
 	 * Assings a molecule to be layed out. Call 
 	 * generateCoordinates() to do the actual layout.
 	 *
-	 * @param   molecule  the molecule for which coordinates are to be generated.
+	 * @param   mol    the molecule for which coordinates are to be generated.
 	 * @param   clone  Should the whole process be performed with a cloned copy?
 	 */
 	public void setMolecule(Molecule mol, boolean clone) {
@@ -138,7 +138,7 @@ public class StructureDiagramGenerator {
      * This method uses generateCoordinates, but it removes the hydrogens first,
      * lays out the structuren and then adds them again.
      *
-     * @see @generateCoordinates
+     * @see #generateCoordinates
      */
     public void generateExperimentalCoordinates() throws java.lang.Exception {
         generateExperimentalCoordinates(new Vector2d(0, 1));

@@ -237,7 +237,7 @@ public class HydrogenAdder {
     /**
      *  Method that saturates a molecule by adding implicit hydrogens.
      *
-     *@param  molecule  Molecule to saturate
+     *@param  container  Molecule to saturate
      *@keyword          hydrogen, adding
      *@keyword          implicit hydrogen
      */
@@ -256,7 +256,7 @@ public class HydrogenAdder {
     /**
      * Method that saturates an atom in a molecule by adding implicit hydrogens.
      *
-     * @param  molecule  Molecule to saturate
+     * @param  container  Molecule to saturate
      * @param  atom      Atom to satureate.
      * @keyword          hydrogen, adding
      * @keyword          implicit hydrogen

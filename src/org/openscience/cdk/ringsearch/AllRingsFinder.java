@@ -3,7 +3,7 @@
  * $Date$    
  * $Revision$
  * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -60,8 +60,8 @@ public class AllRingsFinder
 	/**
 	 * Fings the set of all rings in a molecule 
 	 *
-	 * @param   molecule the molecule to be searched for rings 
-	 * @return a RingSet containing the rings in molecule    
+	 * @param   atomContainer the molecule to be searched for rings 
+	 * @return                a RingSet containing the rings in molecule    
 	 */
 	public  RingSet findAllRings(AtomContainer atomContainer) throws org.openscience.cdk.exception.NoSuchAtomException
 	{

@@ -270,9 +270,8 @@ public class AtomTypeFactory {
 	 *  element symbol and atomtype class
 	 *
 	 *@param  symbol  An element symbol to search for
-	 *@param  id      The configuration file
 	 *@return         An array of atomtypes that matches the given element symbol
-	 *      and atomtype class
+	 *                and atomtype class
 	 */
 	public AtomType[] getAtomTypes(String symbol)
 	{

@@ -242,14 +242,7 @@ public class Controller2DModel implements java.io.Serializable, Cloneable
 		this.ringSize = ringSize;
 	}
 
-	
-	/**
-	 * Allows for adding a CDKChangeListener to this model
-	 *
-	 * @param   listener  The listener to be added to this model
-	 */
-	public String getDefaultElementSymbol()
-	{
+	public String getDefaultElementSymbol() {
 		return this.defaultElementSymbol;
 	}
 
@@ -257,7 +250,7 @@ public class Controller2DModel implements java.io.Serializable, Cloneable
 	/**
 	 * Sets the default element symbol
 	 *
-	 * @param   elementSymbol  
+	 * @param   defaultElementSymbol  
 	 */
 	public void setDefaultElementSymbol(String defaultElementSymbol)
 	{
@@ -278,7 +271,7 @@ public class Controller2DModel implements java.io.Serializable, Cloneable
 	/**
 	 * Sets the pointer length
 	 *
-	 * @param   pointerVectorLength  
+	 * @param   bondPointerLength  
 	 */
 	public void setBondPointerLength(double bondPointerLength)
 	{
@@ -300,7 +293,7 @@ public class Controller2DModel implements java.io.Serializable, Cloneable
 	/**
 	 * Sets the pointer length
 	 *
-	 * @param   pointerVectorLength  
+	 * @param   ringPointerLength  
 	 */
 	public void setRingPointerLength(double ringPointerLength)
 	{

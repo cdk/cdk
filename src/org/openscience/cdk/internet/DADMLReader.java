@@ -51,7 +51,7 @@ import org.openscience.dadml.tools.*;
  *
  * @keyword    internet
  * @keyword    database
- * @build-depends dadml.jar
+ * @builddepends dadml.jar
  */
 public class DADMLReader extends DefaultChemObjectReader {
 
@@ -63,9 +63,9 @@ public class DADMLReader extends DefaultChemObjectReader {
     private static final String sax2parser = "org.apache.xerces.parsers.SAXParser";
 
 	/**
-	 * Contructs a new DADMLReader that can read Molecule from the internet
+	 * Contructs a new DADMLReader that can read Molecule from the internet.
 	 *
-	 * @param   supersb DADML super database to look up structure from
+	 * @param   superdb DADML super database to look up structure from
 	 */
 	public DADMLReader(String superdb) {
 		logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
@@ -73,7 +73,7 @@ public class DADMLReader extends DefaultChemObjectReader {
 	}
 
 	/**
-	 * Sets the query
+	 * Sets the query.
 	 *
 	 * @param   index   Index type (e.g. CAS-NUMBER)
 	 * @param   value   Index of molecule to download (e.g. 50-00-0)
@@ -101,7 +101,7 @@ public class DADMLReader extends DefaultChemObjectReader {
     }
 
 	/**
-	 * Read a Molecule from a DADML super database
+	 * Read a Molecule from a DADML super database.
 	 *
 	 * @return The Molecule that was read
 	 */

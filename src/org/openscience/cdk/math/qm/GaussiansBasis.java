@@ -534,8 +534,6 @@ public class GaussiansBasis implements Basis
    *
    * @param i Index of the first base
    * @param j Index of the second base
-   * @param rN Position the core potential
-   * @param Z Atomic number of the nucleous
    */
   public double calcV(int i, int j)
   {

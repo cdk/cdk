@@ -43,6 +43,9 @@ import org.openscience.cdk.exception.CDKException;
  * @keyword    rebonding
  * @keyword    bond, recalculation
  * 
+ * @author  Miguel Howard
+ * @created 2003-05-23
+ *
  * @see org.openscience.cdk.graph.rebond.Bspt
  */
 public class RebondTool {
@@ -65,9 +68,6 @@ public class RebondTool {
    * Rebonding using a Binary Space Partition Tree. Note, that any bonds
    * defined will be deleted first. It assumes the unit of 3D space to
    * be 1 &Acircle;ngstrom.
-   *
-   * @author  Miguel Howard
-   * @created 2003-05-23
    */
   public void rebond(AtomContainer container) throws CDKException {
     container.removeAllBonds();
