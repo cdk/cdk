@@ -153,6 +153,9 @@
         </target>
 
         <target name="compile-apps" depends="dist-extra, dist-libio">
+                <fail message="Jmol is required for building the CDK applications." unless="jmol.present"/>
+                <fail message="Java3D is required for building the CDK applications." unless="java3d.present"/>
+        
                 <!-- Task to build the applications classes. Some require extra
                      jars, like those in ${lib}/libio -->
                 <echo message="Compiling classes defined in ${src}/applications.javafiles." />
