@@ -51,6 +51,7 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
     IOSetting basis;
     IOSetting comment;
     IOSetting command;
+    IOSetting memory;
     BooleanIOSetting shell;
     IntegerIOSetting proccount;
     BooleanIOSetting usecheckpoint;
@@ -102,6 +103,10 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
             writer.write("%nprocl=" + proccount.getSettingValue());
             writer.newLine();
         }
+        if (!memory.getSetting().equals("unset")) {
+            writer.write("%Mem=" + memory.getSetting());
+            writer.newLine();
+        }
         if (usecheckpoint.isSet()) {
             if (mol.getID() != null && mol.getID().length() > 0) {
                 writer.write("%chk=" + mol.getID() + ".chk");
@@ -122,6 +127,8 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
             writer.write("opt");
         } else if (commandString.equals("IR frequency calculation")) {
             writer.write("freq");
+        } else if (commandString.equals("IR frequency calculation (with Raman)")) {
+            writer.write("freq=noraman");
         }
         writer.newLine();
         
@@ -178,12 +185,14 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
         Vector basisOptions = new Vector();
         basisOptions.add("6-31g");
         basisOptions.add("6-31g*");
+        basisOptions.add("6-31g(d)");
         basisOptions.add("6-311g");
         basisOptions.add("6-311+g**");
         basis = new OptionIOSetting("Basis", IOSetting.MEDIUM,
           "Which basis set do you want to use?", basisOptions, "6-31g");
 
         Vector methodOptions = new Vector();
+        methodOptions.add("rb3lyp");
         methodOptions.add("b3lyp");
         methodOptions.add("rhf");
         method = new OptionIOSetting("Method", IOSetting.MEDIUM,
@@ -193,6 +202,7 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
         commandOptions.add("energy calculation");
         commandOptions.add("geometry optimization");
         commandOptions.add("IR frequency calculation");
+        commandOptions.add("IR frequency calculation (with Raman)");
         command = new OptionIOSetting("Command", IOSetting.HIGH,
           "What kind of job do you want to perform?", commandOptions, 
           "energy calculation");
@@ -200,6 +210,10 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
         comment = new StringIOSetting("Comment", IOSetting.LOW,
           "What comment should be put in the file?", 
           "Created with CDK (http://cdk.sf.net/)");
+        
+        memory = new StringIOSetting("Memory", IOSetting.LOW,
+          "How much memory do you want to use?", 
+          "unset");
         
         shell = new BooleanIOSetting("OpenShell", IOSetting.MEDIUM,
           "Should the calculation be open shell?", 
@@ -221,6 +235,7 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
         fireIOSettingQuestion(comment);
         fireIOSettingQuestion(shell);
         fireIOSettingQuestion(proccount);
+        fireIOSettingQuestion(memory);
         fireIOSettingQuestion(usecheckpoint);
     }
     
@@ -233,6 +248,7 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
         settings[4] = shell;
         settings[5] = proccount;
         settings[6] = usecheckpoint;
+        settings[6] = memory;
         return settings;
     }
 }
