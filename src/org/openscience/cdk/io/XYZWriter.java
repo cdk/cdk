@@ -47,7 +47,7 @@ public class XYZWriter extends DefaultChemObjectWriter {
     * @param cf the ChemFile to dump.
     * @param out the stream to write the XYZ file to.
     */
-    public XYZWriter(Writer out) throws IOException {
+    public XYZWriter(Writer out) {
         writer = new BufferedWriter(out);
     }
 
