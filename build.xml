@@ -303,6 +303,7 @@
                   <include name="*.javafiles"/>
                   <include name="*.classes"/>
                   <include name="*.set"/>
+                  <include name="*.entitylist"/>
                 </fileset>
             </move>
         </target>
