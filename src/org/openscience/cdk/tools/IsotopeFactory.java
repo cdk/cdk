@@ -249,6 +249,17 @@ public class IsotopeFactory
 		return (org.openscience.cdk.Element) i;
 	}
 
+    /**
+     * Returns the symbol matching the element with the given atomic number
+     *
+     * @param  atomicNumber  The elements atomic number
+     * @return               The symbol of the Element
+     */
+    public String getElementSymbol(int atomicNumber) {
+        Isotope i = getMajorIsotope(atomicNumber);
+        return i.getSymbol();
+    }
+
 	/**
 	 *  Configures an atom. Finds the correct element type
 	 *  by looking at the atoms element symbol.
