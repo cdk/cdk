@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE molecule SYSTEM "cml.dtd" []>
+<molecule id="a-pinen">
+  <atomArray>
+    <stringArray builtin="id">a1 a2 a3 a4 a5 a6 a7 a8 a9 a10</stringArray>
+    <stringArray builtin="elementType">C C C C C C C C C C</stringArray>
+    <floatArray builtin="x2" units="arbitrary">
+      2.0833 3.3556 3.5513 4.8236 4.8236 5.8610 3.7348 6.0958 5.0071 2.4626 
+    </floatArray>
+    <floatArray builtin="y2" units="arbitrary">
+      4.9704 4.2364 4.9704 5.7044 4.2364 5.2738 2.8173 3.5024 2.0833 2.0833 
+    </floatArray>
+  </atomArray>
+  <bondArray>
+    <stringArray builtin="atomRefs">a1 a1 a2 a2 a3 a3 a4 a5 a5 a7 a7</stringArray>
+    <stringArray builtin="atomRefs">a2 a3 a5 a7 a4 a7 a6 a6 a8 a9 a10</stringArray>
+    <stringArray builtin="order">1 1 1 1 1 1 1 2 1 1 1</stringArray>
+  </bondArray>
+</molecule>
