@@ -66,6 +66,7 @@ org/openscience/cdk/renderer/color/AtomColorer.java
 org/openscience/cdk/renderer/color/PartialAtomicChargeColors.java
 org/openscience/cdk/tools/AtomTypeFactory.java
 org/openscience/cdk/tools/ChemModelManipulator.java
+org/openscience/cdk/tools/SetOfMoleculesManipulator.java
 org/openscience/cdk/tools/IsotopeFactory.java
 org/openscience/cdk/tools/LoggingTool.java
 org/openscience/cdk/tools/TXTBasedAtomTypeConfigurator.java

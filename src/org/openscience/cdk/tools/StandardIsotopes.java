@@ -5,7 +5,7 @@
  * 
  * Copyright (C) 1997-2002  The Chemistry Development Kit (CKD) project
  *
- * Contact: steinbeck@ice.mpg.de
+ * Contact: cdk-devel@lists.sourceforge.net
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
