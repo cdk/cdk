@@ -218,7 +218,7 @@ public class RingPlacer implements CDKConstants
 	 * @param   ringCenterVector  A vector pointing the the center of the new ring
 	 * @param   bondLength  The standard bondlength
 	 */
-	private void placeSpiroRing(Ring ring, AtomContainer sharedAtoms, Point2d sharedAtomsCenter, Vector2d ringCenterVector, double bondLength)
+	public void placeSpiroRing(Ring ring, AtomContainer sharedAtoms, Point2d sharedAtomsCenter, Vector2d ringCenterVector, double bondLength)
 	{
 
 		if (debug) System.out.println("placeSpiroRing");

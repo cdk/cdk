@@ -56,9 +56,9 @@ public class Ring extends AtomContainer
 		for (int i = 1; i < ringSize; i++)
 		{
 			atoms[i] = new Atom(elementSymbol);
-			super.bonds[i] = new Bond(atoms[i - 1], atoms[i], 1);
+			super.bonds[i - 1] = new Bond(atoms[i - 1], atoms[i], 1);
 		}
-		super.bonds[0] = new Bond(atoms[ringSize], atoms[0], 1);
+		super.bonds[ringSize - 1] = new Bond(atoms[ringSize - 1], atoms[0], 1);
 		super.atoms = atoms;
 	}
 	
@@ -89,12 +89,12 @@ public class Ring extends AtomContainer
 
 	/**
 	 * Returns the next bond in order, relative to a given bond and atom.
-	 * Example: Let the ring be composed of 0-1, 1-2, 2-3 and 3-0. A request getNextAtom(1-2, 2)
-	 * will return Atom 3 from Bond 2-3.
+	 * Example: Let the ring be composed of 0-1, 1-2, 2-3 and 3-0. A request getNextBond(1-2, 2)
+	 * will return Bond 2-3.
 	 *
 	 * @param   bond  A bond for which an atom from a consecutive bond is sought
 	 * @param   atom  A atom from the bond above to assign a search direction
-	 * @return  A bond from the next bond in the order given by the above assignment   
+	 * @return  The next bond in the order given by the above assignment   
 	 */
 	public Bond getNextBond(Bond bond, Atom atom)
 	{

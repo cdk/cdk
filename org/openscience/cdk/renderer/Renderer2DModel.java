@@ -55,7 +55,7 @@ public class Renderer2DModel
 	
 	private int atomRadius = 8;
 	
-	private String defaultElementSymbol = "C";
+//	private String defaultElementSymbol = "C";
 	
 	private Atom highlightedAtom = null;
 	
@@ -351,28 +351,6 @@ public class Renderer2DModel
 		this.colorHash = colorHash;
 	}
 	
-
-	/**
-	 * Allows for adding a CDKChangeListener to this model
-	 *
-	 * @param   listener  The listener to be added to this model
-	 */
-	public String getDefaultElementSymbol()
-	{
-		return this.defaultElementSymbol;
-	}
-
-
-	/**
-	 *
-	 *
-	 * @param   elementSymbol  
-	 */
-	public void setDefaultElementSymbol(String defaultElementSymbol)
-	{
-		this.defaultElementSymbol = defaultElementSymbol;
-	}
-
 
 	/**
 	 *

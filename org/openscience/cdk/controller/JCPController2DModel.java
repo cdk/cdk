@@ -38,28 +38,28 @@ public class JCPController2DModel
     public static int ERASER = 3;
     public static int ELEMENT = 4;
     public static int SYMBOL = 5;
-    public static int TRIANGLE = 6;
-    public static int SQUARE = 7;
-    public static int PENTAGON = 8;
-    public static int HEXAGON = 9;
-    public static int HEPTAGON = 10;
-    public static int OCTAGON = 11;
-    public static int CLEANUP=12;
-    public static int FLIP_H=13;
-    public static int FLIP_V=14;
-    public static int ROTATION=15;
-    public static int UP_BOND=16;
-    public static int DOWN_BOND=17;
-	public static int NORMALIZE=18;
+	public static int RING = 6;
+    public static int CLEANUP=7;
+    public static int FLIP_H=8;
+    public static int FLIP_V=9;
+    public static int ROTATION=10;
+    public static int UP_BOND=11;
+    public static int DOWN_BOND=12;
+	public static int NORMALIZE=13;
 	
-	private int drawMode = 0;
+	private int drawMode = 6;
+	private int ringSize = 5;
 	
 	private boolean snapToGridAngle = true;
 	private int snapAngle = 15;
 	private boolean snapToGridCartesian = true;
 	private int snapCartesian = 10;	
 	
-
+	private double defaultBondLength = 70;
+	
+	private String defaultElementSymbol = "C";
+	
+	
 	/**
 	 * Returns the draw mode
 	 *
@@ -171,4 +171,73 @@ public class JCPController2DModel
 	{
 		this.snapCartesian = snapCartesian;
 	}
+
+	
+
+	/**
+	 *
+	 *
+	 * @return     
+	 */
+	public int getRingSize()
+	{
+		return this.ringSize;
+	}
+
+
+	/**
+	 *
+	 *
+	 * @param   ringSize  
+	 */
+	public void setRingSize(int ringSize)
+	{
+		this.ringSize = ringSize;
+	}
+
+	
+
+	/**
+	 *
+	 *
+	 * @return     
+	 */
+	public double getDefaultBondLength()
+	{
+		return this.defaultBondLength;
+	}
+
+
+	/**
+	 *
+	 *
+	 * @param   defaultBondLength  
+	 */
+	public void setDefaultBondLength(double defaultBondLength)
+	{
+		this.defaultBondLength = defaultBondLength;
+	}
+	
+
+	/**
+	 * Allows for adding a CDKChangeListener to this model
+	 *
+	 * @param   listener  The listener to be added to this model
+	 */
+	public String getDefaultElementSymbol()
+	{
+		return this.defaultElementSymbol;
+	}
+
+
+	/**
+	 *
+	 *
+	 * @param   elementSymbol  
+	 */
+	public void setDefaultElementSymbol(String defaultElementSymbol)
+	{
+		this.defaultElementSymbol = defaultElementSymbol;
+	}
+
 }

@@ -116,7 +116,7 @@ public class AtomContainer extends ChemObject implements Cloneable{
 	 * @param  number  The position of the atom to be set. 
 	 * @param  atom    The atom to be stored at position <code>number</code> 
 	 */
-	public void setAtom(int number, Atom atom)
+	public void setAtomAt(int number, Atom atom)
 	{
 		atoms[number] = atom;
 	}
@@ -127,7 +127,7 @@ public class AtomContainer extends ChemObject implements Cloneable{
 	 * @param  number  The position of the bond to be set. 
 	 * @param  bond    The bond to be stored at position <code>number</code> 
 	 */
-	public void setBond(int number, Bond bond)
+	public void setBondAt(int number, Bond bond)
 	{
 		bonds[number] = bond;
 	}

@@ -200,7 +200,7 @@ public class JCPController2D
 			}
 			else
 			{
-				newAtom1 = new Atom(new Element(r2dm.getDefaultElementSymbol()), new Point2d(startX,startY));
+				newAtom1 = new Atom(new Element(c2dm.getDefaultElementSymbol()), new Point2d(startX,startY));
 				atomCon.addAtom(newAtom1);
 			}
 			
@@ -215,7 +215,7 @@ public class JCPController2D
 				}
 				else
 				{
-					newAtom2 = new Atom(new Element(r2dm.getDefaultElementSymbol()), new Point2d(endX,endY));
+					newAtom2 = new Atom(new Element(c2dm.getDefaultElementSymbol()), new Point2d(endX,endY));
 					atomCon.addAtom(newAtom2);
 				}
 				newBond = new Bond(newAtom1, newAtom2, 1);
@@ -291,12 +291,114 @@ public class JCPController2D
 		}
 		
 		/*************************************************************************
-		 *                       POLYGONMODE                                     *
+		 *                          RINGMODE                                     *
 		 *************************************************************************/
-		if (c2dm.getDrawMode() >= c2dm.SQUARE && c2dm.getDrawMode() <= c2dm.OCTAGON)
+		if (c2dm.getDrawMode() == c2dm.RING)
 		{
-			Ring newRing = new Ring(c2dm.getDrawMode(), r2dm.getDefaultElementSymbol());
-			AtomContainer highlighted = getHighlightedAtoms();
+			RingPlacer ringPlacer = new RingPlacer();
+			
+			Ring newRing = new Ring(c2dm.getRingSize(), c2dm.getDefaultElementSymbol());
+			AtomContainer sharedAtoms = new AtomContainer();
+			Point2d sharedAtomsCenter;
+			Vector2d ringCenterVector;
+			double bondLength;
+			
+			int ringSize = c2dm.getRingSize();
+			String symbol = c2dm.getDefaultElementSymbol();
+			double ringRadius, angle, xDiff, yDiff, distance1, distance2;
+			AtomContainer conAtoms = new AtomContainer(), highlighted;
+			Atom currentAtom, firstAtom, secondAtom, sharedAtom1, sharedAtom2;
+			Atom[] conAtomsArray, ringAtoms;
+			Point2d conAtomsCenter, newPoint1, newPoint2;
+			
+			
+			if (r2dm.getHighlightedBond() != null)
+			{
+				highlighted = getHighlightedAtoms();
+				sharedAtomsCenter = highlighted.get2DCenter();
+				for (int i = 0; i < highlighted.getAtomCount(); i++)
+				{
+					currentAtom = highlighted.getAtomAt(i);
+					conAtoms.addAtom(currentAtom);
+					conAtomsArray = atomCon.getConnectedAtoms(currentAtom);
+					for (int j = 0; j < conAtomsArray.length; j++)
+					{
+						conAtoms.addAtom(conAtomsArray[j]);
+					}
+				}
+				conAtomsCenter = conAtoms.get2DCenter();
+				firstAtom = highlighted.getAtomAt(0);
+				secondAtom = highlighted.getAtomAt(1);
+				xDiff = secondAtom.getX2D() - firstAtom.getX2D();
+				yDiff = secondAtom.getY2D() - firstAtom.getY2D();
+				bondLength = Math.sqrt(Math.pow(xDiff, 2) + Math.pow(yDiff, 2));
+				angle = GeometryTools.getAngle(xDiff, yDiff);
+				System.out.println("angle  "+ (angle / Math.PI) * 180);
+				newPoint1 = new Point2d((Math.cos(angle + (Math.PI / 2)) * 20) + sharedAtomsCenter.x, (Math.sin(angle + (Math.PI / 2)) * 20) + sharedAtomsCenter.y);
+				newPoint2 = new Point2d((Math.cos(angle - (Math.PI / 2)) * 20) + sharedAtomsCenter.x, (Math.sin(angle - (Math.PI / 2)) * 20) + sharedAtomsCenter.y);
+				if (debug)
+				{
+					Atom atom1 = new Atom(new Element("o"), newPoint1);
+					atomCon.addAtom(atom1);
+					Atom atom2 = new Atom(new Element("o"), newPoint2);
+					atomCon.addAtom(atom2);
+					System.out.println("newPoint1  "+ newPoint1);
+					System.out.println("newPoint2  "+ newPoint2);
+				}
+				distance1 = Math.sqrt(Math.pow(newPoint1.x - conAtomsCenter.x, 2) + Math.pow(newPoint1.y - conAtomsCenter.y, 2));
+				distance2 = Math.sqrt(Math.pow(newPoint2.x - conAtomsCenter.x, 2) + Math.pow(newPoint2.y - conAtomsCenter.y, 2));
+				ringCenterVector = new Vector2d(sharedAtomsCenter);	
+				if (distance1 < distance2)
+				{
+					ringCenterVector.sub(newPoint1);
+				}
+				else
+				{
+					ringCenterVector.sub(newPoint2);
+				}
+				
+
+				ringAtoms = new Atom[ringSize];
+				for (int i = 0; i < 2; i++)
+				{
+					ringAtoms[i] = highlighted.getAtomAt(i);
+					sharedAtoms.addAtom(ringAtoms[i]);
+				}
+				for (int i = 2; i < ringSize; i++)
+				{
+					ringAtoms[i] = new Atom(symbol);
+				}
+				for (int i = 0; i < ringSize - 1; i++)
+				{
+					newRing.setBondAt(i,new Bond(ringAtoms[i], ringAtoms[i + 1], 1));
+				}
+				newRing.setBondAt(ringSize - 1, new Bond(ringAtoms[ringSize - 1], ringAtoms[0], 1));
+				newRing.setAtoms(ringAtoms);
+				sharedAtoms.addBond(newRing.getBondAt(0));
+				
+				ringPlacer.placeFusedRing(newRing, sharedAtoms, sharedAtomsCenter, ringCenterVector, bondLength);
+				
+				
+
+			}
+			else if (r2dm.getHighlightedAtom() != null)
+			{
+				System.out.println("spiro");
+			}
+			else			
+			{
+				bondLength = c2dm.getDefaultBondLength();
+				ringRadius = (bondLength / 2) /Math.sin(Math.PI / c2dm.getRingSize());
+				sharedAtomsCenter = new Point2d(mouseX, mouseY - ringRadius);
+				firstAtom = newRing.getAtomAt(0);
+				firstAtom.setPoint2D(sharedAtomsCenter);
+				sharedAtoms.addAtom(firstAtom);
+				ringCenterVector = new Vector2d(new Point2d(mouseX, mouseY));
+				ringCenterVector.sub(sharedAtomsCenter);
+				ringPlacer.placeSpiroRing(newRing, sharedAtoms, sharedAtomsCenter, ringCenterVector, bondLength);
+			}
+			atomCon.add(newRing);
+			r2dm.fireChange();
 		}
 		wasDragged = false;
 	}
@@ -380,8 +482,8 @@ public class JCPController2D
 		}
 		else if (highlightedBond != null)
 		{
-//			highlighted.addBond(highlightedBond);
-			for (int i = 0; i < highlightedBond.getAtoms().length; i++)
+			highlighted.addBond(highlightedBond);
+			for (int i = 0; i < highlightedBond.getAtomCount(); i++)
 			{
 				highlighted.addAtom(highlightedBond.getAtomAt(i));
 			}

@@ -284,9 +284,9 @@ public class SSSRFinder
 		{
 			for (int i = 0; i < atomCount - 1; i++)
 			{
-				ring.setBond(i,mol.getBond(atoms[i], atoms[i + 1]));
+				ring.setBondAt(i,mol.getBond(atoms[i], atoms[i + 1]));
 			}
-			ring.setBond(atomCount - 1,mol.getBond(atoms[0], atoms[atomCount - 1]));
+			ring.setBondAt(atomCount - 1,mol.getBond(atoms[0], atoms[atomCount - 1]));
 		}
 		catch (Exception exc)
 		{
