@@ -1,0 +1,3 @@
+The webpages can be uploaded to the SourceForge website with:
+
+scp *.html cdk.sf.net:/home/groups/c/cd/cdk/htdocs
