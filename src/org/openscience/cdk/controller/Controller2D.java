@@ -125,9 +125,11 @@ public class Controller2D {
     * @param   event    MouseEvent object
     **/
     public void mouseMoved(MouseEvent event) {
-        int mouseX = getWorldCoordinate(event.getX()); 
-        int mouseY = getWorldCoordinate(event.getY());
-        
+        int[] screenCoords = { event.getX(), event.getY() };
+        int[] mouseCoords = getWorldCoordinates(screenCoords);
+        int mouseX = mouseCoords[0];
+        int mouseY = mouseCoords[1];
+
         highlightNearestChemObject(mouseX, mouseY);
     }
 
@@ -137,28 +139,30 @@ public class Controller2D {
      * @param   event    MouseEvent object
      **/
     public void mouseDragged(MouseEvent event) {
-        logger.debug("MouseDragged Event Props: mode=" + c2dm.getDrawModeString() + 
+        logger.debug("MouseDragged Event Props: mode=" + c2dm.getDrawModeString() +
                      ", trigger=" + event.isPopupTrigger() +
                      ", Button number: " + event.getButton() +
                      ", Click count: " + event.getClickCount());
-        
-        int mouseX = getWorldCoordinate(event.getX()); 
-        int mouseY = getWorldCoordinate(event.getY());
-        
+
+        int[] screenCoords = { event.getX(), event.getY() };
+        int[] mouseCoords = getWorldCoordinates(screenCoords);
+        int mouseX = mouseCoords[0];
+        int mouseY = mouseCoords[1];
+
         if (!wasDragged) {
             prevDragCoordX = mouseX;
             prevDragCoordY = mouseY;
             wasDragged = true;
         }
-        
-        
+
+
         /*************************************************************************
          *                       DRAWBONDMODE                                    *
          *************************************************************************/
         if (c2dm.getDrawMode() == c2dm.DRAWBOND) {
             int startX = r2dm.getPointerVectorStart().x;
             int startY = r2dm.getPointerVectorStart().y;
-            
+
             drawProposedBond(startX, startY, mouseX, mouseY);
         }
 
@@ -227,8 +231,10 @@ public class Controller2D {
          **/
         public void mousePressed(MouseEvent event) {
 
-            int mouseX = getWorldCoordinate(event.getX());
-            int mouseY = getWorldCoordinate(event.getY());
+            int[] screenCoords = { event.getX(), event.getY() };
+            int[] mouseCoords = getWorldCoordinates(screenCoords);
+            int mouseX = mouseCoords[0];
+            int mouseY = mouseCoords[1];
 
             logger.debug("MousePressed Event Props: mode=" + c2dm.getDrawModeString() + 
                          ", trigger=" + event.isPopupTrigger() +
@@ -272,8 +278,10 @@ public class Controller2D {
                          ", Click count: " + event.getClickCount());
            
             if (event.getButton() == MouseEvent.BUTTON1) {
-                int mouseX = getWorldCoordinate(event.getX()); 
-                int mouseY = getWorldCoordinate(event.getY());
+                int[] screenCoords = { event.getX(), event.getY() };
+                int[] mouseCoords = getWorldCoordinates(screenCoords);
+                int mouseX = mouseCoords[0];
+                int mouseY = mouseCoords[1];
 
                 /*************************************************************************
                  *                       SYMBOL MODE                                     *
@@ -1094,18 +1102,13 @@ public class Controller2D {
      * This methods corrects for the zoom factor, and thus transforms
      * screen coordinates back into world coordinates.
      */
-    private int getWorldCoordinate(int coord) {
-        return (int)((double)coord / r2dm.getZoomFactor());
-    }
-    
-    /**
-     * This methods corrects for the zoom factor, and thus transforms
-     * screen coordinates back into world coordinates.
-     */
     private int[] getWorldCoordinates(int[] coords) {
         int[] worldCoords = new int[coords.length];
-        for (int i=0; i<coords.length; i++) {
+        int coordCount = coords.length / 2;
+        int height = (int)(r2dm.getBackgroundDimension()).getHeight();
+        for (int i=0; i<coordCount; i++) {
             worldCoords[i] = (int)((double)coords[i] / r2dm.getZoomFactor());
+            worldCoords[i+1] = height - (int)((double)coords[i+1] / r2dm.getZoomFactor());
         }
         return worldCoords;
     }

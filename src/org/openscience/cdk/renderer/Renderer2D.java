@@ -49,6 +49,10 @@ import org.openscience.cdk.validate.ProblemMarker;
  * Additionally, the screen coordinates make up the second system, and
  * are calculated by applying a zoom factor to the world coordinates.
  *
+ * <p>The coordinate system used for display has its origin in the
+ * left-bottom corner, with the x axis to the right, and the y axis towards
+ * the top of the screen. The system is thus right handed.
+ *
  * @author     steinbeck
  * @author     egonw
  *
@@ -63,6 +67,9 @@ public class Renderer2D implements MouseMotionListener   {
     private IsotopeFactory isotopeFactory;
 
 	private Renderer2DModel r2dm;
+
+    private int graphicsWidth;
+    private int graphicsHeight;
 
 	/**
 	 * Constructs a Renderer2D with a default settings model.
@@ -91,6 +98,8 @@ public class Renderer2D implements MouseMotionListener   {
 	}
 
     public void paintChemModel(ChemModel model, Graphics graphics) {
+        graphicsHeight = (int)r2dm.getBackgroundDimension().getHeight();
+        graphicsWidth  = (int)r2dm.getBackgroundDimension().getWidth();
         if (model.getSetOfReactions() != null) {
             paintSetOfReactions(model.getSetOfReactions(), graphics);
         }
@@ -213,7 +222,7 @@ public class Renderer2D implements MouseMotionListener   {
                 screenCoords[2]-7, screenCoords[3] + 3 + 7);
         }
     }
-    
+
     /**
      * @param minmax array of length for with min and max 2D coordinates
      */
@@ -362,10 +371,10 @@ public class Renderer2D implements MouseMotionListener   {
 		int atomRadius = r2dm.getAtomRadius();
 	    graphics.setColor(color);
         int[] coords = {(int) atom.getX2D() - (atomRadius / 2), 
-                        (int) atom.getY2D() - (atomRadius / 2), 
-                        atomRadius, atomRadius};
+                        (int) atom.getY2D() + (atomRadius / 2)};
+        int radius = (int)getScreenSize(atomRadius);
         coords = getScreenCoordinates(coords);
-	    graphics.fillRect(coords[0], coords[1], coords[2], coords[3]);
+	    graphics.fillRect(coords[0], coords[1], radius, radius);
 	}
 
     /**
@@ -392,7 +401,7 @@ public class Renderer2D implements MouseMotionListener   {
             logger.warn("Cannot draw atom without 2D coordinate");
             return;
         }
-        
+
         // The fonts for calculating geometries
         float subscriptFraction = 0.7f;
         Font normalFont = graphics.getFont();
@@ -404,9 +413,9 @@ public class Renderer2D implements MouseMotionListener   {
         Font normalScreenFont = normalFont.deriveFont(normalScreenFontSize);
         Font subscriptScreenFont = normalScreenFont.deriveFont(
             normalScreenFontSize*subscriptFraction);
-        
+
         // STEP 1: calculate widths and heights for all parts in the label
-        
+
         // calculate SYMBOL width, height
         String atomSymbol = atom.getSymbol();
         if (r2dm.drawNumbers()) {
@@ -444,7 +453,7 @@ public class Renderer2D implements MouseMotionListener   {
             hMultiplierW = (new Integer(fm.stringWidth(hMultiplierString))).intValue();
             hMultiplierH = (new Integer(fm.getAscent())).intValue();
         }
-        
+
         // calculate CHARGE width, height
         // font is still subscript, that's fine
         int formalCharge = atom.getFormalCharge();
@@ -488,16 +497,16 @@ public class Renderer2D implements MouseMotionListener   {
 
         int labelX = 0;
         int labelY = 0;
-        
+
         if (alignment == 1) { // left alignment
             labelX = (int)(atom.getPoint2D().x - (atomSymbolXOffset + isotopeW));
         } else { // right alignment
-            labelX = (int)(atom.getPoint2D().x - 
+            labelX = (int)(atom.getPoint2D().x -
                      (atomSymbolXOffset + Math.max(isotopeW,hMultiplierW) + hSymbolW));
         }
         // labelY and labelH are the same for both left/right aligned
-        labelY = (int)(atom.getPoint2D().y - (atomSymbolYOffset + isotopeH));
-        
+        labelY = (int)(atom.getPoint2D().y + (atomSymbolYOffset + isotopeH));
+
         // xy for atom symbol
         int[] atomSymbolCoords = new int[2];
         if (alignment == 1) { // left alignment
@@ -505,7 +514,7 @@ public class Renderer2D implements MouseMotionListener   {
         } else { // right alignment
             atomSymbolCoords[0] = labelX + hSymbolW + Math.max(isotopeW, hMultiplierW);
         }
-        atomSymbolCoords[1] = labelY + isotopeH + atomSymbolH;
+        atomSymbolCoords[1] = labelY - isotopeH - atomSymbolH;
 
         // xy for implicit hydrogens
         int[] hSymbolCoords = new int[2];
@@ -514,7 +523,7 @@ public class Renderer2D implements MouseMotionListener   {
         } else { // right alignment
             hSymbolCoords[0] = labelX;
         }
-        hSymbolCoords[1] = labelY + isotopeH + atomSymbolH;
+        hSymbolCoords[1] = labelY - isotopeH - atomSymbolH;
         // xy for implicit hydrogens multiplier
         int[] hMultiplierCoords = new int[2];
         if (alignment == 1) { // left alignment
@@ -522,8 +531,8 @@ public class Renderer2D implements MouseMotionListener   {
         } else { // right alignment
             hMultiplierCoords[0] = labelX + hSymbolW;
         }
-        hMultiplierCoords[1] = labelY + isotopeH + atomSymbolH + hMultiplierH/2;
-        
+        hMultiplierCoords[1] = labelY - isotopeH - atomSymbolH - hMultiplierH/2;
+
         // xy for charge
         int[] chargeCoords = new int[2];
         if (alignment == 1) { // left alignment
@@ -532,8 +541,8 @@ public class Renderer2D implements MouseMotionListener   {
             chargeCoords[0] = labelX + hSymbolW + Math.max(isotopeW, hMultiplierW) +
                         atomSymbolW;
         }
-        chargeCoords[1] = labelY + isotopeH;
-        
+        chargeCoords[1] = labelY - isotopeH;
+
         //xy for isotope
         int[] isotopeCoords = new int[2];
         if (alignment == 1) { // left alignment
@@ -541,27 +550,27 @@ public class Renderer2D implements MouseMotionListener   {
         } else { // right alignment
             isotopeCoords[0] = labelX + hSymbolW;
         }
-        isotopeCoords[1] = labelY + isotopeH;
-        
+        isotopeCoords[1] = labelY - isotopeH;
+
         // STEP 3: draw empty backgrounds for all parts in the label
 
         int border = 2; // border for clearing background in pixels
 
-        paintEmptySpace(atomSymbolCoords[0], atomSymbolCoords[1] - atomSymbolH,
+        paintEmptySpace(atomSymbolCoords[0], atomSymbolCoords[1] + atomSymbolH,
                         atomSymbolW, atomSymbolH, border, backColor, graphics);
-        paintEmptySpace(hSymbolCoords[0], hSymbolCoords[1] - hSymbolH,
+        paintEmptySpace(hSymbolCoords[0], hSymbolCoords[1] + hSymbolH,
                         hSymbolW, hSymbolH, border, backColor, graphics);
-        paintEmptySpace(hMultiplierCoords[0], hMultiplierCoords[1] - hMultiplierH,
+        paintEmptySpace(hMultiplierCoords[0], hMultiplierCoords[1] + hMultiplierH,
                         hMultiplierW, hMultiplierH, border, backColor, graphics);
-        paintEmptySpace(chargeCoords[0], chargeCoords[1] - formalChargeH,
+        paintEmptySpace(chargeCoords[0], chargeCoords[1] + formalChargeH,
                         formalChargeW, formalChargeH, border, backColor, graphics);
-        paintEmptySpace(isotopeCoords[0], isotopeCoords[1] - isotopeH,
+        paintEmptySpace(isotopeCoords[0], isotopeCoords[1] + isotopeH,
                         isotopeW, isotopeH, border, backColor, graphics);
 
         // STEP 4: draw all parts in the label
 
         Color atomColor = r2dm.getAtomColor(atom);
-        
+
         // draw SYMBOL
         {
             int[] screenCoords = getScreenCoordinates(atomSymbolCoords);
@@ -587,9 +596,9 @@ public class Renderer2D implements MouseMotionListener   {
                     int[] lineCoords = new int[6];
                     int halfspacing = spacing/2;
                     lineCoords[0]=atomSymbolCoords[0] + (atomSymbolW/2) + (i*spacing) - halfspacing;
-                    lineCoords[1]=atomSymbolCoords[1] + 1*width;
+                    lineCoords[1]=atomSymbolCoords[1] - 1*width;
                     lineCoords[2]=lineCoords[0]+halfspacing;
-                    lineCoords[3]=atomSymbolCoords[1] + 2*width;
+                    lineCoords[3]=atomSymbolCoords[1] - 2*width;
                     lineCoords[4]=lineCoords[2]+halfspacing;
                     lineCoords[5]=lineCoords[1];
                     int[] lineScreenCoords = getScreenCoordinates(lineCoords);
@@ -600,7 +609,7 @@ public class Renderer2D implements MouseMotionListener   {
                 }
             }
         }
-        
+
         // draw IMPLICIT H's
         if (implicitHydrogenCount > 0 && r2dm.getShowImplicitHydrogens()) {
             int[] screenCoords = getScreenCoordinates(hSymbolCoords);
@@ -615,7 +624,7 @@ public class Renderer2D implements MouseMotionListener   {
                 graphics.drawString(hMultiplierString, screenCoords[0], screenCoords[1]);
             }
         }
-        
+
         // draw CHARGE
         if (formalCharge != 0) {
             int[] screenCoords = getScreenCoordinates(chargeCoords);
@@ -623,7 +632,7 @@ public class Renderer2D implements MouseMotionListener   {
             graphics.setFont(normalScreenFont);
             graphics.drawString(formalChargeString, screenCoords[0], screenCoords[1]);
         }
-        
+
         // draw ISOTOPE
         if (isotopeString.length() > 0) {
             int[] screenCoords = getScreenCoordinates(isotopeCoords);
@@ -631,27 +640,28 @@ public class Renderer2D implements MouseMotionListener   {
             graphics.setFont(subscriptScreenFont);
             graphics.drawString(isotopeString, screenCoords[0], screenCoords[1]);
         }
-        
+
         // reset old font & color
         graphics.setFont(normalFont);
         graphics.setColor(r2dm.getForeColor());
     }
-    
+
     /**
      * Makes a clear empty space using the background color.
      */
-    public void paintEmptySpace(int x, int y, int w, int h, int border, 
+    public void paintEmptySpace(int x, int y, int w, int h, int border,
                                 Color backColor, Graphics graphics) {
         Color saveColor = graphics.getColor();
         graphics.setColor(backColor);
-        int[] coords = {x - border, y - border, 
-                        w + 2*border, h + 2*border};
+        int[] coords = {x - border, y + border};
+        int[] bounds = {(int)getScreenSize(w + 2*border),
+                        (int)getScreenSize(h + 2*border)};
         int[] screenCoords = getScreenCoordinates(coords);
-        graphics.fillRect(screenCoords[0], screenCoords[1], 
-                          screenCoords[2], screenCoords[3]);
+        graphics.fillRect(screenCoords[0], screenCoords[1],
+                          bounds[0], bounds[1]);
         graphics.setColor(saveColor);
     }
-    
+
     /**
      * Paints the label of the given PseudoAtom, instead of it's symbol.
      *
@@ -691,22 +701,23 @@ public class Renderer2D implements MouseMotionListener   {
             labelX = (int)(atom.getPoint2D().x - (atomSymbolW + atomSymbolLastCharW/2));
         }
         // labelY and labelH are the same for both left/right aligned
-        labelY = (int)(atom.getPoint2D().y - (atomSymbolH/2));
+        labelY = (int)(atom.getPoint2D().y + (atomSymbolH/2));
 
         // make empty space
         {
             int border = 2; // number of pixels
             graphics.setColor(backColor);
-            int[] coords = {labelX - border, labelY - border, 
-                            labelW + 2*border, labelH + 2*border};
+            int[] coords = {labelX - border, labelY + border};
+            int[] bounds = {(int)getScreenSize(labelW + 2*border),
+                            (int)getScreenSize(labelH + 2*border)};
             int[] screenCoords = getScreenCoordinates(coords);
-            graphics.fillRect(screenCoords[0], screenCoords[1], 
-                              screenCoords[2], screenCoords[3]);
+            graphics.fillRect(screenCoords[0], screenCoords[1],
+                              bounds[0], bounds[1]);
         }
-        
+
         // draw label
         {
-            int[] coords = { labelX, 
+            int[] coords = { labelX,
                              labelY + atomSymbolH};
             int[] screenCoords = getScreenCoordinates(coords);
             graphics.setColor(Color.black);
@@ -797,7 +808,7 @@ public class Renderer2D implements MouseMotionListener   {
 	 * @param  bondColor  Description of the Parameter
 	 */
 	public void paintBond(Bond bond, Color bondColor, Graphics graphics) {
-		if (bond.getAtomAt(0).getPoint2D() == null || 
+		if (bond.getAtomAt(0).getPoint2D() == null ||
             bond.getAtomAt(1).getPoint2D() == null) {
 			return;
 		}
@@ -983,10 +994,17 @@ public class Renderer2D implements MouseMotionListener   {
 	{
 	    graphics.setColor(bondColor);
 		int[] newCoords = GeometryTools.distanceCalculator(coords, r2dm.getBondWidth() / 2);
-		int[] xCoords = {newCoords[0], newCoords[2], newCoords[4], newCoords[6]};
-		int[] yCoords = {newCoords[1], newCoords[3], newCoords[5], newCoords[7]};
-        xCoords = getScreenCoordinates(xCoords);
-        yCoords = getScreenCoordinates(yCoords);
+        String s = "newCoords: ";
+        for (int i=0; i<newCoords.length; i++)
+            s += newCoords[i] + ", ";
+        logger.debug(s);
+        int[] screenCoords = getScreenCoordinates(newCoords);
+        s = "screenCoords: ";
+        for (int i=0; i<screenCoords.length; i++)
+            s += screenCoords[i] + ", ";
+        logger.debug(s);
+		int[] xCoords = {screenCoords[0], screenCoords[2], screenCoords[4], screenCoords[6]};
+		int[] yCoords = {screenCoords[1], screenCoords[3], screenCoords[5], screenCoords[7]};
 	    graphics.fillPolygon(xCoords, yCoords, 4);
 	}
 
@@ -1001,19 +1019,17 @@ public class Renderer2D implements MouseMotionListener   {
         double wedgeWidth = r2dm.getBondWidth() * 2.0; // this value should be made customazible
         
         int[] coords = GeometryTools.getBondCoordinates(bond);
+        int[] screenCoords = getScreenCoordinates(coords);
         graphics.setColor(bondColor);
         int[] newCoords = GeometryTools.distanceCalculator(coords, wedgeWidth);
+        int[] newScreenCoords = getScreenCoordinates(newCoords);
         if (bond.getStereo() == CDKConstants.STEREO_BOND_UP) {
-            int[] xCoords = {coords[0], newCoords[6], newCoords[4]};
-            int[] yCoords = {coords[1], newCoords[7], newCoords[5]};
-            xCoords = getScreenCoordinates(xCoords);
-            yCoords = getScreenCoordinates(yCoords);
+            int[] xCoords = {screenCoords[0], newScreenCoords[6], newScreenCoords[4]};
+            int[] yCoords = {screenCoords[1], newScreenCoords[7], newScreenCoords[5]};
             graphics.fillPolygon(xCoords, yCoords, 3);
         } else {
-            int[] xCoords = {coords[2], newCoords[0], newCoords[2]};
-            int[] yCoords = {coords[3], newCoords[1], newCoords[3]};
-            xCoords = getScreenCoordinates(xCoords);
-            yCoords = getScreenCoordinates(yCoords);
+            int[] xCoords = {screenCoords[2], newScreenCoords[0], newScreenCoords[2]};
+            int[] yCoords = {screenCoords[3], newScreenCoords[1], newScreenCoords[3]};
             graphics.fillPolygon(xCoords, yCoords, 3);
         }
 	}
@@ -1070,12 +1086,11 @@ public class Renderer2D implements MouseMotionListener   {
 		Point endPoint = r2dm.getPointerVectorEnd();
 		int[] points = {startPoint.x, startPoint.y, endPoint.x, endPoint.y};
 		int[] newCoords = GeometryTools.distanceCalculator(points, r2dm.getBondWidth() / 2);
-		int[] xCoords = {newCoords[0], newCoords[2], newCoords[4], newCoords[6]};
-		int[] yCoords = {newCoords[1], newCoords[3], newCoords[5], newCoords[7]};
+        int[] screenCoords = getScreenCoordinates(newCoords);
+		int[] xCoords = {screenCoords[0], screenCoords[2], screenCoords[4], screenCoords[6]};
+		int[] yCoords = {screenCoords[1], screenCoords[3], screenCoords[5], screenCoords[7]};
 	    graphics.setColor(r2dm.getForeColor());
         // apply zoomFactor
-        xCoords = getScreenCoordinates(xCoords);
-        yCoords = getScreenCoordinates(yCoords);
 	    graphics.fillPolygon(xCoords, yCoords, 4);
 	}
 
@@ -1105,19 +1120,26 @@ public class Renderer2D implements MouseMotionListener   {
         Point screenCoordinate = new Point();
         double zoomFactor = r2dm.getZoomFactor();
         screenCoordinate.x = (int)((double)p.x * zoomFactor);
-        screenCoordinate.y = (int)((double)p.y * zoomFactor);
+        screenCoordinate.y = graphicsHeight - (int)((double)p.y * zoomFactor);
         return screenCoordinate;
     }
 
+    /**
+     * Expects an array of even length with x's at the uneven indices
+     * and y's at the even indices.
+     */
     private int[] getScreenCoordinates(int[] coords) {
         int[] screenCoordinates = new int[coords.length];
         double zoomFactor = r2dm.getZoomFactor();
-        for (int i=0; i<coords.length; i++) {
-            screenCoordinates[i] = (int)((double)coords[i] * zoomFactor);
+        final int coordCount = coords.length / 2;
+        logger.debug("pairs: " + coordCount);
+        for (int i=0; i<coordCount; i++) {
+            screenCoordinates[i*2] = (int)((double)coords[i*2] * zoomFactor);
+            screenCoordinates[i*2+1] = graphicsHeight - (int)((double)coords[i*2+1] * zoomFactor);
         }
         return screenCoordinates;
     }
-    
+
     private float  getScreenSize(int size) {
         return (float)size * (float)r2dm.getZoomFactor();
     }
