@@ -23,6 +23,7 @@ API changes:
   to the new build process. Do 'ant compile.init' and look in cdk/src/*.classes
   to see in which jar classes end up.
 * Added a getPluginVersion() method to the plugin API
+* Moved bond.getLength() to cdk.geometry.GeometryTools (closes #874901)
 
 20040120 Release
 ------------------------------------

@@ -82,6 +82,7 @@ public class CDKTests
         suite.addTest(SmilesGeneratorTest.suite());
         suite.addTest(SmilesParserTest.suite());
         // from cdk.test.geometry
+        suite.addTest(GeometryToolsTest.suite());
         suite.addTest(CrystalGeometryToolsTest.suite());
         // from cdk.test.isomorphism
         suite.addTest(UniversalIsomorphismTesterTest.suite());

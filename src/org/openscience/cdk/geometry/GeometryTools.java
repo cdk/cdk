@@ -519,26 +519,41 @@ public class GeometryTools {
             if (atom1.getPoint2D() != null &&
                 atom2.getPoint2D() != null) {
                 bondCounter++;
-                bondLengthSum += bond.getLength();
+                bondLengthSum += getLength2D(bond);
             }
 		}
 		return bondLengthSum/bondCounter;
 	}
 	
-	
-	
+	/**
+	 * Returns the geometric length of this bond in 2D space.
+	 *
+	 * @return    The geometric length of this bond
+	 */
+	public static double getLength2D(Bond bond) {
+        if (bond.getAtomAt(0) == null || 
+            bond.getAtomAt(1) == null) {
+            return 0.0;
+        }
+		Point2d p1 = bond.getAtomAt(0).getPoint2D();
+		Point2d p2 = bond.getAtomAt(1).getPoint2D();
+        if (p1 == null || p2 == null) {
+            return 0.0;
+        }
+		return p1.distance(p2);
+	}
 	
 	/** Determines if this AtomContainer contains 2D coordinates.
-	  *
-	  * @return  boolean indication that 2D coordinates are available 
-	 */
-     public static boolean has2DCoordinates(AtomContainer m) {
-         Atom[] atoms = m.getAtoms();
-         for (int i=0; i < atoms.length; i++) {
-             if (atoms[i].getPoint2D() == null) return false;
-         }
-         return true;
-     }
+	 *
+	 * @return  boolean indication that 2D coordinates are available 
+     */
+    public static boolean has2DCoordinates(AtomContainer m) {
+        Atom[] atoms = m.getAtoms();
+        for (int i=0; i < atoms.length; i++) {
+            if (atoms[i].getPoint2D() == null) return false;
+        }
+        return true;
+    }
 
 	/** Determines if this Atom contains 2D coordinates.
 	  *

@@ -185,14 +185,6 @@ public class BondTest extends TestCase {
         assertTrue(0.5 == b.get3DCenter().z);
     }
 
-    public void testGetLength() {
-        Atom o = new Atom("O", new Point2d(0.0, 0.0));
-        Atom c = new Atom("C", new Point2d(1.0, 0.0));
-        Bond b = new Bond(c,o);
-        
-        assertTrue(1.0 == b.getLength());
-    }
-    
     public void testClone() {
         Bond bond = new Bond();
         Object clone = bond.clone();

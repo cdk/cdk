@@ -329,27 +329,6 @@ public class Bond extends ElectronContainer implements java.io.Serializable, Clo
 		return new Point3d(x / getAtomCount(), y / getAtomCount(), z / getAtomCount());
 	}
 
-
-
-	/**
-	 * Returns the geometric length of this bond in 2D space.
-	 *
-	 * @return    The geometric length of this bond
-	 */
-	public double getLength()
-	{
-        if (getAtomAt(0) == null || getAtomAt(1) == null) {
-            return 0.0;
-        }
-		Point2d p1 = getAtomAt(0).getPoint2D();
-		Point2d p2 = getAtomAt(1).getPoint2D();
-        if (p1 == null || p2 == null) {
-            return 0.0;
-        }
-		return p1.distance(p2);
-	}
-
-
 	/**
 	 *  Compares a bond with this bond.
 	 *
@@ -432,7 +411,6 @@ public class Bond extends ElectronContainer implements java.io.Serializable, Clo
 		s.append(this.hashCode());
 		s.append(", #O:" + getOrder());
 		s.append(", #S:" + getStereo());
-		s.append(", #L:" + getLength());
 		Atom[] atoms = getAtoms();
 		s.append(", #A:" + atoms.length);
 		for (int i = 0; i < atoms.length; i++)

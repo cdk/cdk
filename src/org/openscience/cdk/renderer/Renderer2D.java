@@ -1045,7 +1045,7 @@ public class Renderer2D implements MouseMotionListener   {
 	{
 	    graphics.setColor(bondColor);
 
-		double bondLength = bond.getLength();
+		double bondLength = GeometryTools.getLength2D(bond);
 		int numberOfLines = (int)(bondLength / 4.0);  // this value should be made customizable
         double wedgeWidth = r2dm.getBondWidth() * 2.0; // this value should be made customazible
 
