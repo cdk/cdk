@@ -87,7 +87,11 @@ public class ControllerTest
 	 */
 	public static void main(String[] args)
 	{
+	    if (args.length == 1) {
 		new ControllerTest(args[0]);
+	    } else {
+		System.out.println("Syntax: ControllerTest <filename>");
+	    }
 	}
 	
 	/* build a molecule from 4 condensed triangles */
