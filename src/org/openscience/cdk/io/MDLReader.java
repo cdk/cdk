@@ -110,40 +110,6 @@ public class MDLReader extends DefaultChemObjectReader {
         }
     }
 
-    public boolean matches(int lineNumber, String line) {
-        if (lineNumber == 4 && (line.indexOf("v2000") >= 0 ||
-                                line.indexOf("V2000") >= 0)) {
-            return true;
-        } else if (line.startsWith("M  END")) {
-            return true;
-        } else if (lineNumber == 4 && line.length()>7) {
-            // possibly a MDL mol file
-            try {
-                String atomCountString = line.substring(0, 3).trim();
-                String bondCountString = line.substring(3, 6).trim();
-                new Integer(atomCountString);
-                new Integer(bondCountString);
-                boolean mdlFile = true;
-                if (line.length() > 6) {
-                    String remainder = line.substring(6).trim();
-                    for (int i = 0; i < remainder.length(); ++i) {
-                        char c = remainder.charAt(i);
-                        if (!(Character.isDigit(c) || Character.isWhitespace(c))) {
-                            mdlFile = false;
-                        }
-                    }
-                }
-                // all tests succeeded, likely to be a MDL file
-                if (mdlFile) {
-                    return true;
-                }
-            } catch (NumberFormatException nfe) {
-                // Integers not found on fourth line; therefore not a MDL file
-            }
-        }
-        return false;
-    }
-
 	/**
 	 *  Contructs a new MDLReader that can read Molecule from a given Reader.
 	 *

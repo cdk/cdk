@@ -109,15 +109,6 @@ public class PDBReader extends DefaultChemObjectReader {
         }
     }
 
-    public boolean matches(int lineNumber, String line) {
-        if (line.startsWith("HEADER") ||
-            line.startsWith("HETATM ") ||
-            line.startsWith("ATOM  ")) {
-            return true;
-        }
-        return false;
-    }
-    
   /**
    *
    * Takes an object which subclasses ChemObject, e.g. Molecule, and will

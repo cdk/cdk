@@ -96,14 +96,6 @@ public class ShelXReader extends DefaultChemObjectReader {
         }
     }
     
-    public boolean matches(int lineNumber, String line) {
-        if (line.startsWith("ZERR ") ||
-            line.startsWith("TITL ")) {
-            return true;
-        }
-        return false;
-    }
-
     /**
      * Read a ChemFile from input
      *

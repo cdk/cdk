@@ -75,13 +75,6 @@ public class CrystClustReader extends DefaultChemObjectReader {
         }
     }
 
-    public boolean matches(int lineNumber, String line) {
-        if (lineNumber == 1 && line.startsWith("frame: ")) {
-            return true;
-        }
-        return false;
-    }
-
     public ChemObject read(ChemObject object) throws CDKException {
         if (object instanceof ChemFile) {
             ChemFile cf = readChemFile();

@@ -102,17 +102,6 @@ public class CMLReader extends DefaultChemObjectReader {
         this.input = reader;
     }
 
-    public boolean matches(int lineNumber, String line) {
-        if ((line.indexOf("<atom") != -1) ||
-            (line.indexOf("<molecule") != -1) ||
-            (line.indexOf("<reaction") != -1) ||
-            (line.indexOf("<cml") != -1) ||
-            (line.indexOf("<bond") != -1)) {
-            return true;
-        }
-        return false;
-    }
-    
     private void init() {
         logger = new LoggingTool(this);
 

@@ -109,14 +109,6 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         }
     }
 
-    public boolean matches(int lineNumber, String line) {
-        if (lineNumber == 4 && (line.indexOf("v3000") >= 0 ||
-                                           line.indexOf("V3000") >= 0)) {
-            return true;
-        }
-        return false;
-    }
-
     public ChemObject read(ChemObject object) throws CDKException {
         if (object instanceof Molecule) {
             return readMolecule();

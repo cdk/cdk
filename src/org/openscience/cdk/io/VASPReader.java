@@ -113,13 +113,6 @@ public class VASPReader extends DefaultChemObjectReader {
         }
     }
 
-    public boolean matches(int lineNumber, String line) {
-        if (line.indexOf("NCLASS=") >= 0) {
-            return true;
-        }
-        return false;
-    }
-
     public ChemObject read(ChemObject object) throws CDKException {
         if (object instanceof ChemFile) {
             ChemFile cf = null;

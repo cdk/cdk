@@ -161,25 +161,6 @@ public class Gaussian98Reader extends DefaultChemObjectReader
 		}
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  lineNumber  Description of the Parameter
-	 *@param  line        Description of the Parameter
-	 *@return             Description of the Return Value
-	 */
-	public boolean matches(int lineNumber, String line)
-	{
-		if (line.indexOf("Gaussian(R) 98") >= 0 ||
-				line.indexOf("Gaussian 98") >= 0)
-		{
-			return true;
-		}
-		return false;
-	}
-
-
 	/**
 	 *  Description of the Method
 	 *

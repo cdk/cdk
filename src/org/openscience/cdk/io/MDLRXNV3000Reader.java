@@ -81,13 +81,6 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
         }
     }
 
-    public boolean matches(int lineNumber, String line) {
-        if (line.startsWith("$RXN V3000")) {
-            return true;
-        }
-        return false;
-    }
-    
     public ChemObject read(ChemObject object) throws CDKException {
          if (object instanceof Reaction) {
              return (ChemObject) readReaction();

@@ -88,18 +88,6 @@ public class HINReader extends DefaultChemObjectReader {
         }
     }
 
-    public boolean matches(int lineNumber, String line) {
-        if (line.indexOf(";") == 0 ||
-            line.startsWith("forcefield") ||
-            line.startsWith("sys") ||
-            line.startsWith("view") ||
-            line.startsWith("mol") ||
-            line.startsWith("endmol")) {
-            return true;
-        }
-        return false;
-    }
-
     /**
      * Reads the content from a HIN input. It can only return a
      * ChemObject of type ChemFile

@@ -102,13 +102,6 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
         }
     }
 
-    public boolean matches(int lineNumber, String line) {
-        if (line.startsWith("INChI=")) {
-            return true;
-        }
-        return false;
-    }
-
     /**
      * Initializes this reader.
      */

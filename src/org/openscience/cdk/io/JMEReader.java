@@ -93,11 +93,6 @@ public class JMEReader extends DefaultChemObjectReader {
         }
     }
 
-    public boolean matches(int lineNumber, String line) {
-        return false;
-    }
-
-
 	public ChemObject read(ChemObject object) throws CDKException {
         if (object instanceof Molecule) {
 			return readMolecule((Molecule)object);

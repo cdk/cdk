@@ -86,13 +86,6 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
         }
     }
 
-    public boolean matches(int lineNumber, String line) {
-        if (line.indexOf("mm1gp") >= 0) {
-            return true;
-        }
-        return false;
-    }
-
     public void close() {
     }
     

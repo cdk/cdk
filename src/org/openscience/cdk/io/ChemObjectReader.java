@@ -71,17 +71,6 @@ public interface ChemObjectReader extends ChemObjectIO {
     public ChemObject read(ChemObject object) throws CDKException;
 
     /**
-     * Method that checks wether the given line is part of the format
-     * read by this reader.
-     *
-     * @param lineNumber  number of the line
-     * @param line        line in the file being checked
-     *
-     * @return true if the line is of a file format read by this reader
-     */
-    public boolean matches(int lineNumber, String line);
-
-    /**
      * Sets the Reader from which this ChemObjectReader should read
      * the contents.
      */

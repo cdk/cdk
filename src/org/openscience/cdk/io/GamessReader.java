@@ -163,13 +163,6 @@ public class GamessReader extends DefaultChemObjectReader {
         this.input = input;
     }
 
-    public boolean matches(int lineNumber, String line) {
-        if (line.indexOf("GAMESS") >= 0) {
-            return true;
-        }
-        return false;
-    }
-
 	/* (non-Javadoc) (Javadoc is automaticly inherited from the link below)
 	 * @see org.openscience.cdk.io.ChemObjectReader#read(org.openscience.cdk.ChemObject)
 	 */

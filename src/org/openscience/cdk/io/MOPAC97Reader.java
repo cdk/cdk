@@ -86,15 +86,6 @@ public class MOPAC97Reader extends DefaultChemObjectReader {
         }
     }
 
-    public boolean matches(int lineNumber, String line) {
-        if ((line.indexOf("MOPAC  97.00") >= 0) ||
-            (line.indexOf("MOPAC  93") >= 0) ||
-            (line.indexOf("MOPAC2002") >= 0)) {
-            return true;
-        }
-        return false;
-    }
-
 	public ChemObject read(ChemObject object) throws CDKException {
         if (object instanceof Molecule) {
 			return readMolecule((Molecule)object);
