@@ -60,6 +60,7 @@ import org.openscience.cdk.tools.HydrogenAdder;
  *
  *@author     mfe4
  *@created    November 13, 2004
+ * @cdk.module qsar
  */
 public class QsarDescriptors2D {
 

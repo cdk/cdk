@@ -38,6 +38,7 @@ import java.util.Hashtable;
  *
  *@author     mfe4
  *@cdk.created    2004-11-03
+ * @cdk.module qsar
  */
 public class VAdjMaDescriptor implements Descriptor {
 

@@ -43,6 +43,7 @@ import java.util.Hashtable;
  *
  *@author     mfe4
  *@created    2004-11-13
+ * @cdk.module qsar
  */
 public class WeightDescriptor implements Descriptor {
 

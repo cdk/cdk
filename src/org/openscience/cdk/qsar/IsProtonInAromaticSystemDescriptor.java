@@ -41,6 +41,7 @@ import org.openscience.cdk.Molecule;
  *
  *@author     mfe4
  *@cdk.created    2004-11-03
+ * @cdk.module qsar
  */
 public class IsProtonInAromaticSystemDescriptor implements Descriptor {
 

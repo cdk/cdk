@@ -40,6 +40,7 @@ import java.util.Hashtable;
  *
  *@author     mfe4
  *@cdk.created    2004-11-03
+ * @cdk.module qsar
  */
 public class RotatableBondsCountDescriptor implements Descriptor {
 	private boolean includeTerminals = false;

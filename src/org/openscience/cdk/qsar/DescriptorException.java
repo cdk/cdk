@@ -27,6 +27,7 @@ import org.openscience.cdk.exception.CDKException;
 /**
  * Exception that is thrown by descriptor routines when a problem has occured
  *
+ * @cdk.module qsar
  */
 public class DescriptorException extends CDKException {
 

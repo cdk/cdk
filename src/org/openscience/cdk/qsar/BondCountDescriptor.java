@@ -35,6 +35,7 @@ import java.util.Hashtable;
  *
  *@author     mfe4
  *@cdk.created    2004-11-13
+ * @cdk.module qsar
  */
 public class BondCountDescriptor implements Descriptor {
 
