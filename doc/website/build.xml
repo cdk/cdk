@@ -9,7 +9,7 @@
   <property name="javancsslib" value="javancss21.41"/>
   <property name="javancsslib.dir" value="${javancsslib}"/>
 
-  <target id="layout" name="layout" depends="includes">
+  <target id="layout" name="layout" depends="checks, includes">
     <xslt in="${source.dir}/layout.xml" out="${source.dir}/autolayout.xml" 
           style="${website-docbook-xsl}/xsl/autolayout.xsl"/>
   </target>
@@ -72,7 +72,7 @@
   </target>
 
   <target name="includes" id="includes" 
-      depends="check.docbook-xsl, check.includes, javancss, keyword.index, bibliography, dicts, atlists, depends"/>
+      depends="checks, javancss, keyword.index, bibliography, dicts, atlists, depends"/>
   
   <target name="setup" id="setup">
     <uptodate property="website-docbook-xsl.uptodate"
