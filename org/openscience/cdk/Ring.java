@@ -24,6 +24,8 @@
 package org.openscience.cdk;
 
 
+import java.awt.Point;
+
 public class Ring extends AtomContainer
 {
 
@@ -58,4 +60,59 @@ public class Ring extends AtomContainer
 	{
 		return this.atomCount;
 	}
+	
+	
+	public Point getCenter()
+	{
+		double centerX = 0, centerY = 0;
+		for (int i = 0; i < atomCount; i++)
+		{
+			centerX += atoms[i].getPoint3D().x;
+			centerY += atoms[i].getPoint3D().y;
+		}
+		Point point = new Point((int)(centerX / atomCount), (int)(centerY / atomCount));
+		return point;
+	}
+	
+	public boolean contains(Bond bond)
+	{
+		for (int i = 0; i < bondCount; i++)
+		{
+			if (bond.equals(bonds[i]))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public int getOrderSum()
+	{
+		int orderSum = 0;
+		for (int i = 0; i < bondCount; i++)
+		{
+			orderSum += bonds[i].getOrder();
+		}
+		return orderSum;
+	}
+	
+//	public Bond getNextBond(Bond bond) throws Exception
+//	{
+//		for (int i = 0; i < bondCount; i++)
+//		{
+//			if (bond.equals(bonds[i]))
+//			{
+//				if (i == 0)
+//				{
+//					return bonds[bondCount - 1];
+//				}
+//				else
+//				{
+//					return bonds[i - 1];
+//				}
+//			}
+//		}
+//		throw new Exception("bond not in this Ring");	
+//	}
+	
 }

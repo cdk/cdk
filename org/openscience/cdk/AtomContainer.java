@@ -235,35 +235,26 @@ public class AtomContainer extends ChemObject implements Cloneable{
 	 *
 	 * @param   atom  The atom the bond partners are searched of.
 	 * @return     The array with the size of connected atoms
-	 * @exception   Exception  
 	 */
-	public Atom[] getConnectedAtoms(Atom atom) throws Exception
+	public Atom[] getConnectedAtoms(Atom atom)
 	{
-		Atom[] conAtoms = new Atom[atom.getDegree()];
+		Vector atomsVec = new Vector();  
 		Bond bond;
-		int conAtomCount = 0;
 		for (int i = 0; i < bondCount; i++)
 		{
 			bond = bonds[i];
-			if (bond.contains(atom))
-			{
+//			if (bond.contains(atom))
+//			{
 				try
 				{
-					conAtoms[conAtomCount] = bond.getConnectedAtom(atom);
-					conAtomCount++;
+					atomsVec.addElement(bond.getConnectedAtom(atom));
 				}
 				catch (Exception exc)
-				{
-					throw exc;
-				}
-			}
+				{}
+//			}
 		}
-		if (atom.getDegree() != conAtomCount)
-		{
-			System.out.println("degree:  "+ atom.getDegree()+"  atomcount  "+ conAtomCount);
-			System.out.println("atom  "+ atom.toString());
-			throw new Exception("wrong number of connected Atoms");
-		}
+		Atom[] conAtoms = new Atom[atomsVec.size()];
+		atomsVec.copyInto(conAtoms);
 		return conAtoms;
 	}
 	
@@ -274,27 +265,44 @@ public class AtomContainer extends ChemObject implements Cloneable{
 	 *
 	 * @param   atom  The atom the connected bonds are searched of
 	 * @return     The array with the size of connected atoms
-	 * @exception   Exception  
 	 */
-	public Bond[] getConnectedBonds(Atom atom) throws Exception
+	public Bond[] getConnectedBonds(Atom atom)
 	{
-		Bond[] bonds = new Bond[atom.getDegree()];
+		Vector bondsVec = new Vector();
 		Bond bond;
-		int conBondCount = 0;
 		for (int i = 0; i < bondCount; i++)
 		{
 			bond = bonds[i];
 			if (bond.contains(atom))
 			{
-				bonds[conBondCount] = bond;
-				conBondCount++;
+				bondsVec.addElement(bond);
 			}
 		}
-		if (atom.getDegree() != conBondCount)
+		Bond[] conBonds = new Bond[bondsVec.size()];
+		bondsVec.copyInto(bonds);
+		return conBonds;
+	}
+	
+
+	/**
+	 * Returns the number of connected atoms (degree) to the given atom
+	 *
+	 * @param   atom   The atom the degree is searched of
+	 * @return     The number of connected atoms (degree)
+	 */
+	public int getDegree(Atom atom)
+	{
+		int degree = 0;
+		Bond bond;
+		for (int i = 0; i < bondCount; i++)
 		{
-			throw new Exception("wrong number of connected Bonds");
+			bond = bonds[i];
+			if (bond.contains(atom))
+			{
+				degree++;
+			}
 		}
-		return bonds;
+		return degree;
 	}
 	
 	/**
@@ -329,8 +337,6 @@ public class AtomContainer extends ChemObject implements Cloneable{
 		// already in here and add them if neccessary?
 		bonds[bondCount] = bond;
 		bondCount++;
-		bond.getAtomAt(0).incrementDegree();
-		bond.getAtomAt(1).incrementDegree();
 	}
 	
 	
@@ -343,8 +349,6 @@ public class AtomContainer extends ChemObject implements Cloneable{
 	public void removeBond(int position)
 	{
 		Bond bond = bonds[position];
-		bond.getAtomAt(0).decrementDegree();
-		bond.getAtomAt(1).decrementDegree();
 		for (int i = position; i < bondCount; i++)
 		{
 			bonds[i] = bonds[i + 1];
@@ -519,11 +523,10 @@ public class AtomContainer extends ChemObject implements Cloneable{
 		{
 			e.printStackTrace(System.err);
 		}
-		o.atoms = (Atom[])o.atoms.clone();
-		o.bonds = (Bond[])o.bonds.clone();
+		o.atoms = (Atom[])atoms.clone();
+		o.bonds = (Bond[])bonds.clone();
 		return o;
 	}
-
 }
 
 

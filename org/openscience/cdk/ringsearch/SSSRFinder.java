@@ -41,10 +41,10 @@ public class SSSRFinder
 
 
 	/**
-	 *Finds the Smallest Set of Smallest Rings. 
-	 *This is an implementation of the algorithm published in
-	 *John Figueras, "Ring Perception Using Breadth-First Search", 
-	 *J. Chem. Inf. Comput Sci. 1996, 36, 986-991.
+	 * Finds the Smallest Set of Smallest Rings. 
+	 * This is an implementation of the algorithm published in
+	 * John Figueras, "Ring Perception Using Breadth-First Search", 
+	 * J. Chem. Inf. Comput Sci. 1996, 36, 986-991.
 	 *
 	 * @param   molecule  
 	 * @return     
@@ -54,7 +54,7 @@ public class SSSRFinder
 		RingSet sssr = new RingSet();
 		Molecule molecule = (Molecule)mol.clone();
 		Atom smallest;
-		int smallestDegree, nodesToBreakCounter;
+		int smallestDegree, nodesToBreakCounter, degree;
 		Atom[] rememberNodes;
 		Ring ring;
 	
@@ -83,21 +83,22 @@ public class SSSRFinder
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
 				Atom atom = molecule.getAtom(f);
-				if (atom.getDegree() == 0)
+				degree = molecule.getDegree(atom);
+				if (degree == 0)
 				{
 					if (!trimSet.contains(atom))
 					{
 						trimSet.addElement(atom);
 					}
 				}
-				if (atom.getDegree() == 2)
+				if (degree == 2)
 				{
 					nodesN2.addElement(atom);
 				}
-				if (atom.getDegree() < smallestDegree && atom.getDegree() > 0)
+				if (degree < smallestDegree && degree > 0)
 				{
 					smallest = atom;
-					smallestDegree = atom.getDegree();
+					smallestDegree = degree;
 				}
 			}
 			if (smallest == null )	break;	
@@ -170,6 +171,7 @@ public class SSSRFinder
 	private Ring getRing(Atom rootNode, Molecule molecule)
 	{
 		Atom node, neighbor, mAtom; 
+		Atom[] neighbors, mAtoms;
 		/** OKatoms is Figueras nomenclature, giving the number of 
 		    atoms in the structure */
 		int OKatoms = molecule.getAtomCount();
@@ -192,10 +194,11 @@ public class SSSRFinder
 		try
 		{
 			// Initialize the queue with nodes attached to rootNode
-			for (int f = 0; f < rootNode.getDegree(); f++){
+			neighbors = molecule.getConnectedAtoms(rootNode);
+			for (int f = 0; f < neighbors.length; f++){
 				//if the degree of the f-st neighbor of rootNode is greater 
 				//than zero (i.e., it has not yet been deleted from the list)
-				neighbor = molecule.getConnectedAtoms(rootNode)[f];
+				neighbor = neighbors[f];
 				// push the f-st node onto our FIFO queue	
 				// after assigning rootNode as its source
 				queue.push(neighbor);
@@ -204,8 +207,9 @@ public class SSSRFinder
 			}
 			while (queue.size() > 0){	
 				node = (Atom)queue.pop();
-				for (int f = 0; f < node.getDegree(); f++){
-					mAtom = molecule.getConnectedAtoms(node)[f];
+				mAtoms = molecule.getConnectedAtoms(node);
+				for (int f = 0; f < mAtoms.length; f++){
+					mAtom = mAtoms[f];
 					if (mAtom != node.pointers[PATH].elementAt(node.pointers[PATH].size() - 2)){
 						if (mAtom.pointers[PATH].size() > 0){
 							intersection = getIntersection(node.pointers[PATH], mAtom.pointers[PATH]);

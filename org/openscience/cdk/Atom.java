@@ -55,10 +55,6 @@ public class Atom extends ChemObject implements Cloneable {
 	 */
 	protected int hydrogenCount;
 	/**
-	 *  The number of atoms directly bonded to this atom 
-	 */
-	protected int degree;
-	/**
 	 *  A stereo parity descriptor for the stereochemistry of this atom 
 	 */
 	protected int stereoParity;
@@ -132,16 +128,6 @@ public class Atom extends ChemObject implements Cloneable {
 		this.stereoParity = stereoParity;
 	}
 	/**
-	 *  
-	 * Returns the degree of this atom, i.e. the number of other atoms
-	 * directly bonded to it.
-	 *
-	 * @return    The degree of this atom 
-	 */
-	public int getDegree() {
-		return this.degree;
-	}
-	/**
 	 *  Returns an Element representing the element type of this Atom. 
 	 *
 	 * @return    An Element representing the element type of this Atom. 
@@ -188,32 +174,6 @@ public class Atom extends ChemObject implements Cloneable {
 		return this.stereoParity;
 	}
 	/**
-	 *  
-	 * Internal method to set the degree of this atom, i.e. the number of other atoms
-	 * directly bonded to it.
-	 *
-	 * @param  degree  The degree of this atom 
-	 */
-	protected void setDegree(int degree) {
-		this.degree = degree;
-	}
-	/**
-	 * increments the degree of this atom, i.e. the number of other atoms
-	 * directly bonded to it.
-	 */
-	protected void incrementDegree()
-	{
-		this.degree++;
-	}
-	/**
-	 * decrements the degree of this atom, i.e. the number of other atoms
-	 * directly bonded to it.
-	 */
-	protected void decrementDegree()
-	{
-		this.degree--;
-	}
-	/**
 	 * Returns a string representation of this Atom.
 	 *
 	 * @return  The string representation of this Atom   
@@ -222,7 +182,6 @@ public class Atom extends ChemObject implements Cloneable {
 	{
 		StringBuffer s = new StringBuffer();
 		s.append("Atom " + getElement().getSymbol() + "\n");
-		s.append("Degree: " + getDegree() + "\n");
 		s.append("Hydrogen count: " + getHydrogenCount() + "\n");
 		s.append("Stereo Parity: " + getStereoParity() + "\n");
 		s.append("2D coordinates: " + getPoint2D() + "\n");
@@ -248,9 +207,8 @@ public class Atom extends ChemObject implements Cloneable {
 		{
 			e.printStackTrace(System.err);
 		}
-		o.degree = this.degree;
-		o.point2D = this.point2D;
-		o.point3D = this.point3D;
+//		o.point2D = this.point2D;
+//		o.point3D = this.point3D;
 		return o;
 	}
 

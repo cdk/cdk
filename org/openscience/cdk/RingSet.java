@@ -87,28 +87,61 @@ public class RingSet extends Vector{
 		return false;	
 	}
 	
-
-	/**
-	 * Returns a vector that contains all bonds participating
-	 * in one of the rings in this ringset.
-	 *
-	 * @return   The Vector that contains all the bonds
-	 */
-	public Vector getBonds()
+	
+	public Vector getRings(Bond bond)
 	{
-		Vector bonds = new Vector();
+		Vector rings = new Vector();
 		Ring ring;
-		for (int i = 0; i < this.size(); i++)
+		for (int i = 0; i < this.size();i++)
 		{
 			ring = (Ring)elementAt(i);
-			for (int f = 0; f < ring.getRingSize(); f++)
+			if (ring.contains(bond))
 			{
-				if (!bonds.contains(ring.getBond(f)))
-				{
-					bonds.addElement(ring.getBond(f));
-				}
-			} 
-		}	
-		return bonds;
+				rings.addElement(ring);
+			}
+		}
+		return rings;
 	}
+	
+	
+	public Ring getHeaviestRing(Bond bond)
+	{
+		Vector rings = getRings(bond);
+		Ring ring = null;
+		int maxOrderSum = 0;
+		for (int i = 0; i < rings.size(); i++)
+		{
+			if (maxOrderSum < ((Ring)rings.elementAt(i)).getOrderSum()) 
+			{
+				ring = (Ring)rings.elementAt(i);
+				maxOrderSum = ring.getOrderSum();
+			} 
+		}
+		return ring;
+	}
+
+
+//	/**
+//	 * Returns a vector that contains all bonds participating
+//	 * in one of the rings in this ringset.
+//	 *
+//	 * @return   The Vector that contains all the bonds
+//	 */
+//	public Vector getBonds()
+//	{
+//		Vector bonds = new Vector();
+//		Ring ring;
+//		for (int i = 0; i < this.size(); i++)
+//		{
+//			ring = (Ring)elementAt(i);
+//			for (int f = 0; f < ring.getRingSize(); f++)
+//			{
+//				if (!bonds.contains(ring.getBond(f)))
+//				{
+//					bonds.addElement(ring.getBond(f));
+//				}
+//			} 
+//		}	
+//		return bonds;
+//	}
 }

@@ -227,7 +227,7 @@ public class Bond extends ElectronContainer implements Cloneable
 		{
 			e.printStackTrace(System.err);
 		}
-		o.atoms = (Atom[])o.atoms.clone();
+		o.atoms = (Atom[])atoms.clone();
 		return o;
 	}
 	

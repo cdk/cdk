@@ -57,12 +57,12 @@ public class Renderer2D implements Renderer2DSettings
 	 */
 	public void paintMolecule(Molecule mol)
 	{
-		Molecule molecule = scaleMolecule(mol);
+		Molecule molecule = (Molecule)mol.clone();
+		molecule = scaleMolecule(molecule);
 	    molecule = translateAllPositive(molecule);
 		molecule = translate(molecule,20,20);
 		RingSet ringSet = sssrf.findSSSR(mol);
-		Vector ringBonds = ringSet.getBonds();
-		paintBonds(molecule.getBonds(), molecule.getBondCount(), ringBonds);
+		paintBonds(molecule.getBonds(), molecule.getBondCount(), ringSet);
 		paintAtoms(molecule.getAtoms(), molecule.getAtomCount());
 	}
 	
@@ -84,30 +84,7 @@ public class Renderer2D implements Renderer2DSettings
 			}
 		}
 	}
-	
 
-	/**
-	 * Searches through all the bonds in the given array and triggers the paintBond method.
-	 *
-	 * @param   bonds     The array of bonds
-	 * @param   number    The number of bonds in this array 
-	 * @param   ringBonds   The bonds participating in a ring
-	 */
-	private void paintBonds(Bond[] bonds, int number, Vector ringBonds)
-	{
-		for (int i = 0; i < number; i++)
-		{
-			if (ringBonds.contains(bonds[i]))
-			{
-				paintRingBond(bonds[i]);
-			}
-			else
-			{
-				paintBond(bonds[i]);
-			}
-		}
-	}
-	
 
 	/**
 	 * Paints the given atom.
@@ -129,6 +106,24 @@ public class Renderer2D implements Renderer2DSettings
 		g.drawString(atom.getElement().getSymbol(),(int)(atom.getPoint3D().x - xSymbOffset),(int)(atom.getPoint3D().y + ySymbOffset));
 		g.setColor(Color.white);
 		g.drawLine((int)atom.getPoint3D().x,(int)atom.getPoint3D().y,(int)atom.getPoint3D().x,(int)atom.getPoint3D().y);
+	}
+
+	private void paintBonds(Bond[] bonds, int number, RingSet ringSet)
+	{
+		Ring ring;
+		for (int i = 0; i < number; i++)
+		{
+			ring = ringSet.getHeaviestRing(bonds[i]);
+			if (ring != null)
+			{
+					paintRingBond(bonds[i], ring);
+
+			}
+			else
+			{
+				paintBond(bonds[i]);
+			}
+		}
 	}
 	
 
@@ -155,11 +150,12 @@ public class Renderer2D implements Renderer2DSettings
 	
 	
 	/**
-	 * Triggers the paint method suitable to the bondorder of the given bond.
+	 * Triggers the paint method suitable to the bondorder of the given bond
+	 * that is part of a ring.
 	 *
 	 * @param   bond    The Bond to be drawn.
 	 */
-	private void paintRingBond(Bond bond)
+	private void paintRingBond(Bond bond, Ring ring)
 	{
 		if (bond.getOrder() == 1)
 		{
@@ -168,12 +164,112 @@ public class Renderer2D implements Renderer2DSettings
 		else if (bond.getOrder() == 2)
 		{
 			paintSingleBond(bond);
-			paintInnerBond(bond);
+			paintInnerBond(bond,ring);
 		}
 		else if (bond.getOrder() == 3)
 		{
 			paintTripleBond(bond);
 		}
+	}
+
+	/**
+	 * Paints the given singlebond.
+	 *
+	 * @param   bond  The singlebond to be drawn
+	 */
+	private void paintSingleBond(Bond bond)
+	{
+		paintOneBond(getBondCoordinates(bond));
+		
+	}
+	
+
+	/**
+	 * Paints The given doublebond.
+	 *
+	 * @param   bond  The doublebond to be drawn
+	 */
+	private void paintDoubleBond(Bond bond)
+	{
+		int[] coords = distanceCalculator(getBondCoordinates(bond),bondDistance/2);
+		
+		int[] newCoords1 = {coords[0],coords[1],coords[6],coords[7]};
+		paintOneBond(newCoords1);
+		
+		int[] newCoords2 = {coords[2],coords[3],coords[4],coords[5]};
+		paintOneBond(newCoords2);
+				
+	}
+	
+	/**
+	 * Paints the given triplebond.
+	 *
+	 * @param   bond  The triplebond to be drawn
+	 */
+	private void paintTripleBond(Bond bond)
+	{
+		paintSingleBond(bond);
+		
+		int[] coords = distanceCalculator(getBondCoordinates(bond),(bondWidth/2 + bondDistance));
+		
+		int[] newCoords1 = {coords[0],coords[1],coords[6],coords[7]};
+		paintOneBond(newCoords1);
+		
+		int[] newCoords2 = {coords[2],coords[3],coords[4],coords[5]};
+		paintOneBond(newCoords2);
+	}
+	
+	/**
+	 * Paints the inner bond of a doublebond that is part of a ring.
+	 *
+	 * @param   bond  The bond to be drawn
+	 * @param   ring  The ring the bond is part of
+	 */
+	private void paintInnerBond(Bond bond, Ring ring)
+	{
+		Point center = ring.getCenter();
+		int[] coords = distanceCalculator(getBondCoordinates(bond),(bondWidth/2 + bondDistance));
+		double dist1 = Math.sqrt(Math.pow((coords[0] - center.x),2) + Math.pow((coords[1] - center.y),2));
+		double dist2 = Math.sqrt(Math.pow((coords[2] - center.x),2) + Math.pow((coords[3] - center.y),2));
+		if (dist1 < dist2)	
+		{
+			int[] newCoords1 = {coords[0],coords[1],coords[6],coords[7]};
+			paintOneBond(shortenBond(newCoords1));
+		}
+		else
+		{
+			int[] newCoords2 = {coords[2],coords[3],coords[4],coords[5]};
+			paintOneBond(shortenBond(newCoords2));
+		}	
+	}
+	
+	private int[] shortenBond(int[] coords)
+	{
+//		double length = Math.sqrt(Math.pow((coords[0] - coords[2]),2) + Math.pow((coords[1] - coords[3]),2));
+//		double angle;
+//		if ((coords[2] - coords[0]) == 0) angle = Math.PI/2;
+//		else
+//		{
+//			angle = Math.atan(((double)coords[3] - (double)coords[1]) / ((double)coords[2] - (double)coords[0]));
+//		}
+		int xDiff = (coords[0] - coords[2]) / 8;
+		int yDiff = (coords[1] - coords[3]) / 8;
+		int[] newCoords = {coords[0] - xDiff,coords[1] - yDiff,coords[2] + xDiff,coords[3] + yDiff};
+		return newCoords;
+	}
+
+	/**
+	 * Really paints the bond. It is triggered by all the other paintbond methods
+	 * to draw a polygon as wide as bondwidth.  
+	 *
+	 * @param   coords  
+	 */
+	private void paintOneBond(int[] coords)
+	{
+		int[] newCoords = distanceCalculator(coords, bondWidth/2);
+		int[] xCoords = {newCoords[0],newCoords[2],newCoords[4],newCoords[6]};
+		int[] yCoords = {newCoords[1],newCoords[3],newCoords[5],newCoords[7]};
+		g.fillPolygon(xCoords,yCoords,4);
 	}
 	
 
@@ -208,7 +304,7 @@ public class Renderer2D implements Renderer2DSettings
 		if ((coords[2] - coords[0]) == 0) angle = Math.PI/2;
 		else
 		{
-	    	angle = Math.atan((coords[3] - coords[1])/(coords[2] - coords[0]));
+			angle = Math.atan(((double)coords[3] - (double)coords[1]) / ((double)coords[2] - (double)coords[0]));
 		}
 		int begin1X = (int)(Math.cos(angle + Math.PI/2) * dist + coords[0]);
 		int begin1Y = (int)(Math.sin(angle + Math.PI/2) * dist + coords[1]);
@@ -217,86 +313,10 @@ public class Renderer2D implements Renderer2DSettings
 		int end1X = (int)(Math.cos(angle - Math.PI/2) * dist + coords[2]);
 		int end1Y = (int)(Math.sin(angle - Math.PI/2) * dist + coords[3]);
 		int end2X = (int)(Math.cos(angle + Math.PI/2) * dist + coords[2]);
-		int end2Y = (int)(Math.sin(angle + Math.PI/2) * dist + coords[3]);		
+		int end2Y = (int)(Math.sin(angle + Math.PI/2) * dist + coords[3]);
 		
 		int[] newCoords = {begin1X,begin1Y,begin2X,begin2Y,end1X,end1Y,end2X,end2Y};
 		return newCoords; 
-	}
-
-	/**
-	 * Paints the given singlebond.
-	 *
-	 * @param   bond  The singlebond to be drawn
-	 */
-	private void paintSingleBond(Bond bond)
-	{
-		int[] coords = distanceCalculator(getBondCoordinates(bond),bondWidth/2);		
-		int[] xCoords = {coords[0],coords[2],coords[4],coords[6]};
-		int[] yCoords = {coords[1],coords[3],coords[5],coords[7]};
-		g.fillPolygon(xCoords,yCoords,4);
-		
-	}
-	
-
-	/**
-	 * Paints The given doublebond.
-	 *
-	 * @param   bond  The doublebond to be drawn
-	 */
-	private void paintDoubleBond(Bond bond)
-	{
-		int[] coords = distanceCalculator(getBondCoordinates(bond),bondDistance/2);
-		
-		int[] newCoords1 = {coords[0],coords[1],coords[6],coords[7]};
-		int[] coords1 = distanceCalculator(newCoords1,bondWidth/2);
-		int[] xCoords1 = {coords1[0],coords1[2],coords1[4],coords1[6]};
-		int[] yCoords1 = {coords1[1],coords1[3],coords1[5],coords1[7]};
-		g.fillPolygon(xCoords1,yCoords1,4);
-		
-		int[] newCoords2 = {coords[2],coords[3],coords[4],coords[5]};
-		int[] coords2 = distanceCalculator(newCoords2,bondWidth/2);
-		int[] xCoords2 = {coords2[0],coords2[2],coords2[4],coords2[6]};
-		int[] yCoords2 = {coords2[1],coords2[3],coords2[5],coords2[7]};
-		g.fillPolygon(xCoords2,yCoords2,4);
-				
-	}
-	
-	/**
-	 * Paints The given triplebond.
-	 *
-	 * @param   bond  The triplebond to be drawn
-	 */
-	private void paintTripleBond(Bond bond)
-	{
-		int[] coords = distanceCalculator(getBondCoordinates(bond),bondWidth/2);
-		int[] xCoords = {coords[0],coords[2],coords[4],coords[6]};
-		int[] yCoords = {coords[1],coords[3],coords[5],coords[7]};
-		g.fillPolygon(xCoords,yCoords,4);
-		
-		coords = distanceCalculator(getBondCoordinates(bond),(bondWidth/2 + bondDistance));
-		
-		int[] newCoords1 = {coords[0],coords[1],coords[6],coords[7]};
-		int[] coords1 = distanceCalculator(newCoords1,bondWidth/2);
-		int[] xCoords1 = {coords1[0],coords1[2],coords1[4],coords1[6]};
-		int[] yCoords1 = {coords1[1],coords1[3],coords1[5],coords1[7]};
-		g.fillPolygon(xCoords1,yCoords1,4);
-		
-		int[] newCoords2 = {coords[2],coords[3],coords[4],coords[5]};
-		int[] coords2 = distanceCalculator(newCoords2,bondWidth/2);
-		int[] xCoords2 = {coords2[0],coords2[2],coords2[4],coords2[6]};
-		int[] yCoords2 = {coords2[1],coords2[3],coords2[5],coords2[7]};
-		g.fillPolygon(xCoords2,yCoords2,4);
-	}
-	
-	
-	private void paintInnerBond(Bond bond)
-	{
-		int[] coords = distanceCalculator(getBondCoordinates(bond),(bondWidth/2 + bondDistance));
-		int[] newCoords1 = {coords[0],coords[1],coords[6],coords[7]};
-		int[] coords1 = distanceCalculator(newCoords1,bondWidth/2);
-		int[] xCoords1 = {coords1[0],coords1[2],coords1[4],coords1[6]};
-		int[] yCoords1 = {coords1[1],coords1[3],coords1[5],coords1[7]};
-		g.fillPolygon(xCoords1,yCoords1,4);
 	}
 	
 	/**
