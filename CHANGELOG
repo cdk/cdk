@@ -15,6 +15,7 @@ Fixes:
 API changes:
 * Renderer2D.getScreenSize() and .getScreenCoordinates() are now protected
 * LoggingTool methods now accept Objects and convert them toString internally
+* CDKPluginInterface.setPropertyDirectory() was added
 
 20040202 Release
 ------------------------------------
