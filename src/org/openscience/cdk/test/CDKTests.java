@@ -38,6 +38,7 @@ import org.openscience.cdk.test.smiles.*;
 import org.openscience.cdk.test.structgen.*;
 import org.openscience.cdk.test.tools.*;
 import org.openscience.cdk.test.aromaticity.*;
+import org.openscience.cdk.test.geometry.*;
 
 /**
  * TestSuite that runs all the sample tests
@@ -74,6 +75,8 @@ public class CDKTests {
         // from cdk.test.smiles
 		suite.addTest(SmilesGeneratorTest.suite());
 		suite.addTest(SmilesParserTest.suite());
+        // from cdk.test.geometry
+        suite.addTest(CrystalGeometryToolsTest.suite());
         // from cdk.test.isomorphism
         suite.addTest(UniversalIsomorphismTesterTest.suite());
         // from cdk.test.aromaticity
