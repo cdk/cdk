@@ -147,24 +147,30 @@ public class UniversalIsomorphismTesterTest extends TestCase
         String queryfile = "data/mdl/decalin.mol";
         Molecule mol = new Molecule();
         Molecule temp = new Molecule();
-        QueryAtomContainer query = null;
+        QueryAtomContainer query1 = null;
+        QueryAtomContainer query2 = null;
         
         try {
             MDLReader reader = new MDLReader(new FileReader(molfile));
             reader.read(mol);
             reader = new MDLReader(new FileReader(queryfile));
             reader.read(temp);
-            query = QueryAtomContainerCreator.createBasicQueryContainer(temp);
+            query1 = QueryAtomContainerCreator.createBasicQueryContainer(temp);
+            
+            SmilesParser sp = new SmilesParser();
+            AtomContainer atomContainer = sp.parseSmiles("C1CCCCC1");
+            query2 = QueryAtomContainerCreator.createBasicQueryContainer(atomContainer);
             
         } catch (Exception ex) {
             System.err.println("testQueryAtomContainer: " + ex.getMessage());
         }
         
-        List list = UniversalIsomorphismTester.getSubgraphMaps(mol, temp);
-        List list2 = UniversalIsomorphismTester.getSubgraphMaps(mol, query);
+        List list = UniversalIsomorphismTester.getSubgraphMap(mol, query1);
+        assertEquals(11, list.size());
         
-        assertTrue(!list.isEmpty());
-        assertTrue(!list2.isEmpty());
+        list = UniversalIsomorphismTester.getSubgraphMap(mol, query2);
+        assertEquals(6, list.size());
+        
     }
     
     
