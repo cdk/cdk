@@ -97,6 +97,7 @@ public class CMLReader extends DefaultChemObjectReader {
                 success = true;
             } catch (Exception e) {
                 logger.warn("Could not instantiate Aelfred2 XML reader!");
+                logger.debug(e);
             }
         }
         // If Aelfred is not available try Xerces
@@ -109,6 +110,21 @@ public class CMLReader extends DefaultChemObjectReader {
                 success = true;
             } catch (Exception e) {
                 logger.warn("Could not instantiate Xerces XML reader!");
+                logger.debug(e);
+            }
+        }
+        // If Xerces is not available try JAXP
+        if (!success) {
+            try {
+                javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
+                spf.setNamespaceAware(true);
+                javax.xml.parsers.SAXParser saxParser = spf.newSAXParser();
+                parser = saxParser.getXMLReader();
+                logger.info("Using JAXP/SAX XML parser.");
+                success = true;
+            } catch (Exception e) {
+                logger.warn("Could not instantiate JAXP/SAX XML reader!");
+                logger.debug(e);
             }
         }
         if (!success) {
