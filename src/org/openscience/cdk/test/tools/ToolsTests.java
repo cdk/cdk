@@ -33,12 +33,13 @@ public class ToolsTests {
 
     public static Test suite () {
         TestSuite suite= new TestSuite("The cdk.tools Tests");
+        suite.addTest(AtomTypeFactoryTest.suite());
+        suite.addTest(CASNumberTest.suite());
         suite.addTest(ConnectivityCheckerTest.suite());
         suite.addTest(IsotopeFactoryTest.suite());
         suite.addTest(MFAnalyserTest.suite());
+        suite.addTest(ReactionManipulatorTest.suite());
         suite.addTest(SaturationCheckerTest.suite());
-        suite.addTest(AtomTypeFactoryTest.suite());
-        suite.addTest(CASNumberTest.suite());
         return suite;
     }
 
