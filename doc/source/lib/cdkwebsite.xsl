@@ -9,8 +9,7 @@
 
 <!-- This stylesheet does not work with XT. Use xtchunk.xsl instead. -->
 
-<xsl:include href="/usr/lib/sgml/stylesheet/xsl/docbook/nwalsh/website/1.9/chunk-tabular.xsl"/>
-<!--xsl:include href="/documents/config/xml/website/xsl/chunk-tabular.xsl"/-->
+<xsl:import href="docbookimport.xsl"/>
 
 <xsl:template match="homepage">
   <xsl:variable name="id">
