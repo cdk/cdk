@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
-<!DOCTYPE 
-     book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
-                 "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!DOCTYPE
+     book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+                 "lib/dtd/docbookx.dtd" [
 ]>
 <book id="devel-guide">
   <title>CDK Developer's Guide</title>
@@ -50,17 +50,57 @@
       <para>
         Most of the documentation about the CDK classes is done in the
         java source files itself. The format used for this is the JavaDoc
-        format. An overview/introduction can be found <ulink
-        url="http://java.sun.com/j2se/javadoc/writingdoccomments/">here</ulink>.
+        format. An overview/introduction can be found at <ulink
+        url="http://java.sun.com/j2se/javadoc/writingdoccomments/">http://java.sun.com/j2se/javadoc/writingdoccomments/</ulink>.
       </para>
+
+      <para>
+        JavaDoc documentation is now generated using Javadoc and
+        Ant:
+        <programlisting>
+cdk/$ ant -buildfile javadoc.xml html
+        </programlisting>
+      </para>
+
+      <section id="sect:javadoctags">
+        <title>JavaDoc Tags</title>
+
+        <para>
+          The two sub sections contain suggested policy and is not yet as such
+          approved.
+        </para>
+
+        <section>
+          <title>Tagging classes</title>
+          <para>
+            Java classes should have the JavaDoc tags
+            @copyright and @author.
+          </para>
+        </section>
+
+        <section>
+          <title>Tagging procedures</title>
+          <para>
+            Procedures of classes should give information about what they do
+            and information about parameters (@param) and things they
+            return (@return).
+          </para>
+          <para>
+            If the procedure performs a method found in literature, it should
+            mention the reference. No format for the reference has been determined,
+            but the BibTex format should do fine.
+          </para>
+        </section>
+      </section>
 
       <section id="sect:docbookdoclet">
         <title>DocbookDoclet</title>
 
         <para>
           The JavaDoc documentation can be converted into DocBook code
-          with the <ulink
-          url="http://freshmeat.net/projects/dbdoclet/">DocBookDoclet</ulink>.
+          with the DocBookDoclet (<ulink
+          url="http://freshmeat.net/projects/dbdoclet/">http://freshmeat.net/projects/dbdoclet/</ulink>).
+          The DocBook output can in turn be generated into PDF files.
         </para>
       </section>
     </chapter>
@@ -76,6 +116,70 @@
 
   <part id="part:cdk-library">
     <title>The CDK Library</title>
+
+    <chapter id="sect:goal">
+      <title>The Goal</title>
+      <para>
+        The goal of the CDK is to be a library of java classes to support
+        java software to solve typical chemical computational and informational
+        problems.
+      </para>
+    </chapter>
+
+    <chapter id="sect:classcategories">
+      <title>Class categories</title>
+      <para>
+        All CDK classes are categorized into four classes:
+        core, standard, extra, and project.
+      </para>
+      <section>
+        <title>Core classes</title>
+        <para>
+          Core classes represent chemical entities, like bonds, atoms, molecules, and
+          more abstract entities, like connectivity tables, used for in common
+          computational and information chemistry.
+        </para>
+      </section>
+      <section>
+        <title>Standard classes</title>
+        <para>
+          Standard classes are all classes that do not represent some entity,
+          but are common to many applications dealing with chemical problems.
+          These classes deal with manipulation and other ways of dealing with the
+          core classes. These can be further grouped into two subclasses.
+          One class changes the content of the entities, the other does not.
+        </para>
+        <para>
+          Example classes that do not change the content of core classes, are
+          IO classes and viewers. In this subclass belong also the classes that
+          generate instances of core classes, example classes are classes that
+          generate 3D coordinates, for example.
+        </para>
+        <para>
+          The other subclass contains classes that change the content of the
+          core classes. E.g. classes implementing a molecular dynamics run
+          and editors.
+        </para>
+        <para>
+          <remark>This subclassification seems to be too artificial.</remark>
+        </para>
+      </section>
+      <section>
+        <title>Extra classes</title>
+        <para>
+          Classes that are too specific for general use belong to the class Extra.
+        </para>
+      </section>
+      <section>
+        <title>Project classes</title>
+        <para>
+          Java classes and packages in this category are not really
+          part of the CDK library, but are aimed to help manage the
+          project, by ways of testing and generating documentation and
+          project statistics.
+        </para>
+      </section>
+    </chapter>
 
   <chapter id="sect:compiling">
     <title>Compiling the CDK source</title>
@@ -130,24 +234,25 @@ cdk/$ ant
   <part id="part:website">
     <title>The CDK Website</title>
 
-	<chapter id="sect:htmlgeneration">
-	  <title>HTML Generation</title>
+    <chapter id="sect:htmlgeneration">
+      <title>HTML Generation</title>
       <para>
         The website is written as DocBook XML 4.1.2 fragments and
         compiled into HTML with the Website DTD 2.0.
       </para>
-	</chapter>
+    </chapter>
   </part>
 
   <part id="part:packages">
     <title>Binary Packages</title>
 
-	<chapter id="sect:tarpackages">
-	  <title>Tar packages</title>
+    <chapter id="sect:tarpackages">
+      <title>Tar packages</title>
       <para>
-        Currently only tar.gz packages are available.
+        Currently only tar.gz packages are available. The packages
+        can be found in CVS /cdk/packages/tar.
       </para>
-	</chapter>
+    </chapter>
 
   </part>
 

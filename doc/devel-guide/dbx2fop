@@ -1,0 +1,11 @@
+#! /bin/sh
+
+DBXXSLDIR=/home/egonw/data/Projects/cdk-article/cdkarticle/lib/xslt
+
+FOPLIBDIR=/home/egonw/data/Projects/cdk-article/cdkarticle/jar
+FOPLIBS=`ls -1 ${FOPLIBDIR}/*.jar | perl -ne "s/\n|\r/:/g; print;"`
+
+OUTPUT=$1
+
+xsltproc ${DBXXSLDIR}/docbook/fo/docbook.xsl $1 > ${OUTPUT}.fo
+java -cp ${FOPLIBS} org.apache.fop.apps.Fop -fo ${OUTPUT}.fo -pdf ${OUTPUT}.pdf

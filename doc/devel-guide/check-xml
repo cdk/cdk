@@ -1,0 +1,2 @@
+#! /bin/sh
+nsgmls -s /usr/lib/sgml/declaration/xml.dcl  guide.xml
