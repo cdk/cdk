@@ -148,4 +148,15 @@ public class ChemFile extends ChemObject implements java.io.Serializable, Clonea
         buffer.append(")");
         return buffer.toString();
     }
+
+	public Object clone() {
+		ChemFile clone = (ChemFile)super.clone();
+        // clone the chemModels
+        clone.chemSequenceCount = getChemSequenceCount();
+		clone.chemSequences = new ChemSequence[clone.chemSequenceCount];
+		for (int f = 0; f < clone.chemSequenceCount; f++) {
+			clone.chemSequences[f] = (ChemSequence)chemSequences[f].clone();
+		}
+		return clone;
+	}
 }

@@ -63,7 +63,7 @@ public class Mapping extends ChemObject implements java.io.Serializable, Cloneab
     }
 
 	/**
-	 * Clones this <code>ChemObject</code> and the mapped <code>ChemObject</code>s.
+	 * Clones this <code>Mapoing</code> and the mapped <code>ChemObject</code>s.
 	 *
 	 * @return  The cloned object
 	 */

@@ -154,4 +154,14 @@ public class ChemSequence extends ChemObject implements java.io.Serializable, Cl
         return buffer.toString();
     }
 	
+	public Object clone() {
+		ChemSequence clone = (ChemSequence)super.clone();
+        // clone the chemModels
+        clone.chemModelCount = getChemModelCount();
+		clone.chemModels = new ChemModel[clone.chemModelCount];
+		for (int f = 0; f < clone.chemModelCount; f++) {
+			clone.chemModels[f] = (ChemModel)chemModels[f].clone();
+		}
+		return clone;
+	}
 }
