@@ -3,7 +3,7 @@
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 2004  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2004-2005  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -57,7 +57,6 @@ import org.openscience.cdk.fingerprint.Fingerprinter;
  *
  *@author     cho,steinbeck
  *@cdk.created    2004-09-21
- *@cdk.require    java1.4
  *@cdk.module     builder3d
  */
 public class TemplateHandler3D{
