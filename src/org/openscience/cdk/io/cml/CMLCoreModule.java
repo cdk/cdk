@@ -411,6 +411,7 @@ public class CMLCoreModule implements ModuleInterface {
                 break;
 
             case LIST:
+                cdo.startObject("SetOfMolecules");
                 break;
         }
     }
@@ -467,6 +468,11 @@ public class CMLCoreModule implements ModuleInterface {
 
             case CRYSTAL:
                 cdo.endObject("Crystal");
+
+                break;
+
+            case LIST:
+                cdo.endObject("SetOfMolecules");
 
                 break;
             case COORDINATE3:

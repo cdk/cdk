@@ -94,6 +94,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
      * supposed to be called by the JCFL library
      */
     public void endDocument() {
+        logger.debug("Closing document");
         if (currentSetOfReactions != null && currentSetOfReactions.getReactionCount() == 0 &&
             currentReaction != null) {
             logger.debug("Adding reaction to SetOfReactions");
@@ -102,6 +103,10 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
         if (currentSetOfReactions != null && currentChemModel.getSetOfReactions() == null) {
             logger.debug("Adding SOR to ChemModel");
             currentChemModel.setSetOfReactions(currentSetOfReactions);
+        }
+        if (currentSetOfMolecules != null && currentSetOfMolecules.getMoleculeCount() != 0) {
+            logger.debug("Adding reaction to SetOfMolecules");
+            currentChemModel.setSetOfMolecules(currentSetOfMolecules);
         }
         if (currentChemSequence.getChemModelCount() == 0) {
             logger.debug("Adding ChemModel to ChemSequence");
@@ -141,6 +146,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
         currentChemSequence = new ChemSequence();
       } else if (objectType.equals("Frame")) {
         currentChemModel = new ChemModel();
+      } else if (objectType.equals("SetOfMolecules")) {
         currentSetOfMolecules = new SetOfMolecules();
         currentMolecule = new Molecule();
       } else if (objectType.equals("Crystal")) {
@@ -173,14 +179,17 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
         logger.debug("END: " + objectType);
         if (objectType.equals("Molecule")) {
             if (currentMolecule instanceof Molecule) {
+                logger.debug("Adding molecule to set");
                 currentSetOfMolecules.addMolecule((Molecule)currentMolecule);
-                currentChemModel.setSetOfMolecules(currentSetOfMolecules);
+                logger.debug("#mols in set: " + currentSetOfMolecules.getMoleculeCount());
             } else if (currentMolecule instanceof Crystal) {
                 logger.debug("Adding crystal to chemModel");
                 currentChemModel.setCrystal((Crystal)currentMolecule);
+                currentChemSequence.addChemModel(currentChemModel);
             }
+        } else if (objectType.equals("SetOfMolecules")) {
+            currentChemModel.setSetOfMolecules(currentSetOfMolecules);
             currentChemSequence.addChemModel(currentChemModel);
-            /* FIXME: this should be when document is closed! */ 
         } else if (objectType.equals("Frame")) {
             // endObject("Molecule");
         } else if (objectType.equals("Animation")) {
