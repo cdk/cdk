@@ -231,13 +231,30 @@
 		</listitem>
 		 <listitem>
 			<para>
-	 		<ulink url="api/org/openscience/cdk/tools/StandardIsotopes.html">
-			StandardIsotopes</ulink>
-			contains a list of the first 150 known
-			isotopes of the table of elements with their exact
-			weight and their relative occurrence. It can, for example
-			return the
-			major isotope for a given element symbol.
+	 		<ulink url="api/org/openscience/cdk/tools/IsotopeFactory.html">
+			IsotopeFactory</ulink>
+			Produces Isotopes for a given ElementSymbol, based on 
+			an XML configuration file in org/openscience/cdk/config
+			</para>
+		</listitem>
+		 <listitem>
+			<para>
+	 		<ulink url="api/org/openscience/cdk/tools/ElementFactory.html">
+			ElementFactory</ulink>
+			Produces Element for a given ElementSymbol, based on 
+			an XML configuration file in org/openscience/cdk/config
+			</para>
+		</listitem>
+		 <listitem>
+			<para>
+	 		<ulink url="api/org/openscience/cdk/tools/AtomTypeFactory.html">
+			AtomTypeFactory</ulink>
+			Produces AtomTypes for a given ElementSymbol and AtomType class, based on 
+			an XML configuration file in org/openscience/cdk/config.
+			AtomTypes are often related to some kind of appliation.
+			An AtomType in Molecular Mechanics will be defined
+			differently from on that is used in Structure Generation
+			in order to decide whether an atom is saturated or not.
 			</para>
 		</listitem>
 		 <listitem>
@@ -251,7 +268,49 @@
 			if is only has one method. 
 			</para>
 		</listitem>
-	
+	</itemizedlist>
+	 </para>
+</section>
+  <section> 
+	 <title>The Structure Generator Classes</title> 
+	 <para> The Structure Generator classes are located in the org.openscience.cdk.structgen package. 
+	 They are related to generating constitutional isomers for a given
+	 molecular formula, often obeying certain contraints. 
+	 <itemizedlist>
+ 		<listitem>
+			<para>
+	 		<ulink url="api/org/openscience/cdk/structgen/RandomGenerator.html">
+			RandomGenerator</ulink>
+			This structure generator makes small random moves in
+			structure space, starting from a given constitutional
+			formula, which might be generated using 
+			<ulink url="api/org/openscience/cdk/structgen/SingleStructureRandomGenerator.html">
+			SingleStructureRandomGenerator</ulink>.
+			It does this by randomly choosing four atoms and
+			breaking old and forming new bonds according to rules
+			defined in <xref linkend="FAU96"/>.
+			</para>
+		</listitem>
+ 		<listitem>
+			<para>
+	 		<ulink url="api/org/openscience/cdk/structgen/SingleStructureRandomGenerator.html">
+			SingleStructureRandomGenerator</ulink>
+			Randomly generates a single, connected, correctly bonded structure for 
+			a given molecular formula
+			To see it working run the graphical 
+			test org.openscience.cdk.test.SingleStructureRandomGeneratorTest
+			and add more structures to the panel using the "More" button. 
+			In order to use this class, use MFAnalyser to get an AtomContainer from 
+			a molecular formula string.
+			Assign hydrogen counts to each heavy atom. The hydrogens should not be
+			in the atom pool but should be assigned implicitly to the heavy atoms in 
+			order to reduce computational cost.
+			Assign this AtomContainer to the  
+			SingleStructureRandomGenerator and retrieve a randomly generated, but correctly bonded
+			structure by using the generate() method. You can then repeatedly call
+			the generate() method in order to retrieve further structures. 
+			</para>
+		</listitem>		
 	</itemizedlist>
 	 </para>
 </section>

@@ -110,7 +110,24 @@ Bremser, W.
 			 url="http://www.mdli.com/downloads/literature/ctfile.pdf">http://www.mdli.com/downloads/literature/ctfile.pdf</ulink>.</phrase></bibliomisc>
 		
 	 </biblioentry> 
-
+	 <biblioentry id="FAU96"> 
+		<abbrev>FAU96</abbrev> 
+		<biblioset relation="article"> 
+		  <authorgroup> 
+			 <author> 
+				<firstname>J.-L.</firstname> 
+				<surname>Faulon</surname> 
+			 </author> 
+		  </authorgroup> 
+		  <title>Stochastic Generator of Chemical Structure. 
+		  2. Using Simulated Annealing To Search the Space of Constitutional Isomers</title> 
+		  <pagenums>731-740</pagenums> 
+		  <pubdate>1996</pubdate> 
+		</biblioset> 
+		<biblioset relation="journal"> 
+		  <title>Journal of Chemical Information and Computer Sciences</title> 
+		</biblioset> 
+	 </biblioentry> 
 	 <biblioentry id="HEL99"> 
 		<abbrev>HEL99</abbrev> 
 		<biblioset relation="article"> 

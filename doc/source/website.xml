@@ -15,6 +15,7 @@
 <homepage>
 <config param="desc" value="The Chemistry Development Kit Homepage"/>
 <config param="filename" value="index.html"/>
+
 <config param="rcsdate" value="$Date$"/>
 <config param="footer" value="about.html" altval="About..."/>
 <config param="homebanner" value="images/cdklogo.gif"

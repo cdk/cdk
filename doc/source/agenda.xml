@@ -6,8 +6,5 @@
 	 <listitem>
 		<para>A substructure search</para>
 	 </listitem>
-	 <listitem>
-		<para>A 3D renderer and a 3D controler (a CDK based JMol)</para>
-	 </listitem>
 </itemizedlist>
 </para> 
