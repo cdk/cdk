@@ -46,7 +46,7 @@ import org.openscience.cdk.RingSet;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.ringsearch.RingPartitioner;
-import org.openscience.cdk.ringsearch.SSSRFinder;
+import org.openscience.cdk.ringsearch.FiguerasSSSRFinder;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.tools.HydrogenAdder;
 
@@ -83,7 +83,7 @@ public class StructureDiagramGenerator
 	RingSet sssr;
 	double bondLength = 1.5;
 	Vector2d firstBondVector;
-	SSSRFinder sssrf = new SSSRFinder();
+	FiguerasSSSRFinder sssrf = new FiguerasSSSRFinder();
 	RingPlacer ringPlacer = new RingPlacer();
 	AtomPlacer atomPlacer = new AtomPlacer();
 	Vector ringSystems = null;
