@@ -37,6 +37,20 @@ import org.openscience.cdk.graph.PathTools;
 /**
  * Tool class for checking whether the (sub)structure in an
  * AtomContainer is connected.
+ * To check wether an AtomContainer is connected this code
+ * can be used:
+ * <pre>
+ *   ConnectivityChecker connChecker = new ConnectivityChecker();
+ *   boolean isConnected = connChecker.isConnected(atomContainer);
+ * </pre>
+ *
+ * <p>A disconnected AtomContainer can be fragmented into connected
+ * fragments by using code like:
+ * <pre>
+ *   ConnectivityChecker connChecker = new ConnectivityChecker();
+ *   SetOfMolecules fragments = connChecker.partitionIntoMolecules(disconnectedContainer);
+ *   int fragmentCount = fragments.getMoleculeCount();
+ * </pre> 
  *
  * @cdk.module standard
  *
