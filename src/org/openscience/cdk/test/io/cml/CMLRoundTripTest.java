@@ -201,6 +201,18 @@ public class CMLRoundTripTest extends TestCase {
         assertEquals(atom.getStereoParity(), roundTrippedAtom.getStereoParity());
     }
     
+    public void testIsotope() {
+        Molecule mol = new Molecule();
+        Atom atom = new Atom("C");
+        atom.setMassNumber(13);
+        mol.addAtom(atom);
+        Molecule roundTrippedMol = roundTripMolecule(mol);
+        
+        assertEquals(1, roundTrippedMol.getAtomCount());
+        Atom roundTrippedAtom = roundTrippedMol.getAtomAt(0);
+        assertEquals(atom.getMassNumber(), roundTrippedAtom.getMassNumber());
+    }
+    
     public void testBond() {
         Molecule mol = new Molecule();
         Atom atom = new Atom("C");
