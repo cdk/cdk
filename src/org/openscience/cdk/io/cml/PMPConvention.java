@@ -79,7 +79,12 @@ public class PMPConvention extends Convention {
         logger.debug("Start PMP chardata (" + CurrentElement + ") :" + s);
         logger.debug(" ElTitle: " + elementTitle);
         if (CurrentElement == STRING && BUILTIN.equals("spacegroup")) {
-            cdo.setObjectProperty("Crystal", "spacegroup", s);
+            String sg = "P1";
+            // standardize space group names (see Crystal.java)
+            if ("P 21 21 21 (1)".equals(s)) {
+                sg = "P 2_1 2_1 2_1";
+            }
+            cdo.setObjectProperty("Crystal", "spacegroup", sg);
         } else if (CurrentElement == FLOATARRAY &&
            (elementTitle.equals("a") || elementTitle.equals("b") ||
             elementTitle.equals("c"))) {

@@ -1,6 +1,11 @@
 CHANGELOG
 ------------------------------------
 
+Changes in CVS
+------------------------------------
+* Added two classes for representing crystals: 
+  Crystal and MolecularCrystal
+
 20020902 Release
 ------------------------------------
 Fixes:

@@ -35,11 +35,19 @@ public class ChemModel extends ChemObject
 {
 
 	/**
-	 *  SetOfMolecules 
+	 *  A SetOfMolecules
 	 */
-	protected SetOfMolecules setOfMolecules;
+	protected SetOfMolecules setOfMolecules = null;
+
+	/**
+	 *  A RingSet
+	 */
+	protected RingSet ringSet = null;
 	
-	protected RingSet ringSet;
+    /**
+	 *  A Crystal
+	 */
+     protected Crystal crystal = null;
 
 	/**
 	 *  Constructs an empty SetOfMolecules
@@ -103,11 +111,29 @@ public class ChemModel extends ChemObject
 	/**
 	 * Sets the RingSet of this ChemModel
 	 *
-	 * @param   ringSet  
+	 * @param   ringSet
 	 */
 	public void setRingSet(RingSet ringSet)
 	{
 		this.ringSet = ringSet;
 	}
+
+    /**
+     * Gets the Crystal contained in this ChemModel
+     *
+     * @return The crystal in this model
+     */
+    public Crystal getCrystal() {
+        return this.crystal;
+    }
+
+    /**
+     * Sets the Crystal contained in this ChemModel
+     *
+     * @param   c     the Crystal to store in this model
+     */
+    public void setCrystal(Crystal c) {
+        this.crystal = c;
+    }
 }
-	
+

@@ -35,11 +35,12 @@ import java.util.*;
  */ 
 public class ChemFileCDO extends ChemFile implements CDOInterface {
 
-    private Molecule currentMolecule;
+    private AtomContainer currentMolecule;
     private SetOfMolecules currentSetOfMolecules;
     private ChemModel currentChemModel;
     private ChemSequence currentChemSequence;
     private Atom currentAtom;
+    private Crystal currentCrystal;
 
     private Hashtable atomEnumeration;
 
@@ -49,6 +50,10 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
     private int bond_a2;
     private int bond_order;
     private int bond_stereo;
+    
+    private double crystal_axis_x;
+    private double crystal_axis_y;
+    private double crystal_axis_z;
 
     protected org.openscience.cdk.tools.LoggingTool logger;
 
@@ -117,6 +122,14 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
       } else if (objectType.equals("Animation")) {
         currentChemSequence = new ChemSequence();
       } else if (objectType.equals("Frame")) {
+      } else if (objectType.equals("Crystal")) {
+        currentMolecule = new Crystal(currentMolecule);
+      } else if (objectType.equals("a-axis") ||
+                 objectType.equals("b-axis") ||
+                 objectType.equals("c-axis")) {
+          crystal_axis_x = 0.0;
+          crystal_axis_y = 0.0;
+          crystal_axis_z = 0.0;
       }
     };
 
@@ -125,21 +138,48 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
      * supposed to be called by the JCFL library
      */
     public void endObject(String objectType) {
-      logger.debug("END: " + objectType);
-      if (objectType.equals("Molecule")) {
-        currentSetOfMolecules.addMolecule(currentMolecule);
-        currentChemModel.setSetOfMolecules(currentSetOfMolecules);
-        currentChemSequence.addChemModel(currentChemModel);
-      } else if (objectType.equals("Frame")) {
-      } else if (objectType.equals("Animation")) {
-        addChemSequence(currentChemSequence);
-        logger.info("This file has " + getChemSequenceCount() + " sequence(s).");
-      } else if (objectType.equals("Atom")) {
-        currentMolecule.addAtom(currentAtom);
-      } else if (objectType.equals("Bond")) {
-        logger.debug("Bond: " + bond_a1 + ", " + bond_a2 + ", " + bond_order);
-        currentMolecule.addBond(bond_a1, bond_a2, bond_order);
-      }
+        logger.debug("END: " + objectType);
+        if (objectType.equals("Molecule")) {
+            if (currentMolecule instanceof Molecule) {
+                currentSetOfMolecules.addMolecule((Molecule)currentMolecule);
+                currentChemModel.setSetOfMolecules(currentSetOfMolecules);
+            } else if (currentMolecule instanceof Crystal) {
+                logger.debug("Adding crystal to chemModel");
+                currentChemModel.setCrystal((Crystal)currentMolecule);
+            }
+            currentChemSequence.addChemModel(currentChemModel);
+        } else if (objectType.equals("Frame")) {
+        } else if (objectType.equals("Animation")) {
+            addChemSequence(currentChemSequence);
+            logger.info("This file has " + getChemSequenceCount() + " sequence(s).");
+        } else if (objectType.equals("Atom")) {
+            currentMolecule.addAtom(currentAtom);
+        } else if (objectType.equals("Bond")) {
+            logger.debug("Bond: " + bond_a1 + ", " + bond_a2 + ", " + bond_order);
+            currentMolecule.addBond(bond_a1, bond_a2, bond_order);
+        } else if (objectType.equals("a-axis")) {
+          // set these variables
+          if (currentMolecule instanceof Crystal) {
+              Crystal current = (Crystal)currentMolecule;
+              current.setA(crystal_axis_x,
+                           crystal_axis_y,
+                           crystal_axis_z);
+          }
+        } else if (objectType.equals("b-axis")) {
+          if (currentMolecule instanceof Crystal) {
+              Crystal current = (Crystal)currentMolecule;
+              current.setB(crystal_axis_x,
+                           crystal_axis_y,
+                           crystal_axis_z);
+          }
+        } else if (objectType.equals("c-axis")) {
+          if (currentMolecule instanceof Crystal) {
+              Crystal current = (Crystal)currentMolecule;
+              current.setC(crystal_axis_x,
+                           crystal_axis_y,
+                           crystal_axis_z);
+          }
+        }
     };
 
     /**
@@ -147,7 +187,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
      * supposed to be called by the JCFL library
      */
     public void setObjectProperty(String objectType, String propertyType,
-		    String propertyValue) {
+                                  String propertyValue) {
       logger.debug("objectType: " + objectType);
       logger.debug("propType: " + propertyType);
       logger.debug("property: " + propertyValue);
@@ -181,6 +221,34 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
             bond_order = 1;
           }
         }
+      } else if (objectType.equals("Crystal")) {
+          // set these variables
+          if (currentMolecule instanceof Crystal) {
+              Crystal current = (Crystal)currentMolecule;
+              if (propertyType.equals("spacegroup")) {
+                  current.setSpaceGroup(propertyValue);
+              }
+          } else {
+              logger.warn("Cannot add crystal cell parameters to a non " +
+                           "Crystal class!");
+          }
+      } else if (objectType.equals("a-axis") ||
+                 objectType.equals("b-axis") ||
+                 objectType.equals("c-axis")) {
+          // set these variables
+          if (currentMolecule instanceof Crystal) {
+              Crystal current = (Crystal)currentMolecule;
+              if (propertyType.equals("x")) {
+                  crystal_axis_x = Double.parseDouble(propertyValue);
+              } else if (propertyType.equals("y")) {
+                  crystal_axis_y = Double.parseDouble(propertyValue);
+              } else if (propertyType.equals("z")) {
+                  crystal_axis_z = Double.parseDouble(propertyValue);
+              }
+          } else {
+              logger.warn("Cannot add crystal cell parameters to a non " +
+                           "Crystal class!");
+          }
       }
       logger.debug("Object property set...");
     };
@@ -190,13 +258,17 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
      * supposed to be called by the JCFL library
      */
     public CDOAcceptedObjects acceptObjects() {
-      CDOAcceptedObjects objects = new CDOAcceptedObjects();
-      objects.add("Molecule");
-      objects.add("Fragment");
-      objects.add("Atom");
-      objects.add("Bond");
-      objects.add("Animation");
-      objects.add("Frame");
+        CDOAcceptedObjects objects = new CDOAcceptedObjects();
+        objects.add("Molecule");
+        objects.add("Fragment");
+        objects.add("Atom");
+        objects.add("Bond");
+        objects.add("Animation");
+        objects.add("Frame");
+        objects.add("Crystal");
+        objects.add("a-axis");
+        objects.add("b-axis");
+        objects.add("c-axis");
       return objects;
     };
 }
