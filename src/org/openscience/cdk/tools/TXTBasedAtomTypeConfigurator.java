@@ -61,12 +61,8 @@ public class TXTBasedAtomTypeConfigurator implements AtomTypeConfigurator {
         Vector atomTypes = new Vector();
 
         InputStream ins = null;        
-        try {
-            URL url = this.getClass().getClassLoader().getResource(configFile);
-            ins = url.openStream();
-        } catch(Exception exc) {
-            throw new IOException("There was a problem getting a stream for " + configFile);
-        }
+        System.out.println("getResourceAsStream:" + configFile);
+        ins = getClass().getResourceAsStream(configFile);
         if (ins == null) throw new IOException("There was a problem getting a stream for " + configFile);
 
         // read the contents from file
