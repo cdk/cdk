@@ -37,7 +37,7 @@ import java.util.*;
  * Program that converts a file from one format to a file with another format.
  * Supported formats are:
  *   input: CML, MDL MOL/SDF file, PDB, PMP, ShelX, SMILES, XYZ
- *  output: CML, MDL MOL/SDF file, ShelX, SMILES, XYZ, Gaussian Input
+ *  output: CML, MDL MOL/SDF file, PDB, ShelX, SMILES, SVG, XYZ, Gaussian Input
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  *
@@ -300,7 +300,18 @@ public class FileConvertor {
         System.out.println("   -h");
         System.out.println("  --question:[none|fewest|some|all] Ask none|fewest|some|all customization questions");
         System.out.println("  --outputformat:<format>           Output the files in the given format");
+        System.out.println("  --listoptions:<format>            Output customizable IOSettings for this Writer");
         System.out.println("   -o<format>");
+        System.out.println();
+        System.out.println(" OUTPUT FORMATS:");
+        System.out.println("  cml    Chemical Markup Language (the default)");
+        System.out.println("  gin    Gaussian Input File");
+        System.out.println("  mol    MDL molfile");
+        System.out.println("  pdb    PDB");
+        System.out.println("  shelx  ShelX");
+        System.out.println("  smi    SMILES");
+        System.out.println("  svg    Scalable Vector Graphics");
+        System.out.println("  xyz    XYZ");
     }
     
     /**
