@@ -24,6 +24,7 @@ Fixes:
   ReaderListener before trying to cast it
 * Fixed constructor of MACiEReader which resulted in a NPE
 * MACiEReader now actually throws an frameRead event when a frame is read
+* Added better output about missing src/*.javafiles
 
 API changes:
 * Moved *Manipulator from cdk.tools into cdk.tools.manipulator
