@@ -1,7 +1,7 @@
 /* AromaticityCalculator.java
  *
- * $ author: 	Oliver Horlacher		$
- * $ contact: 	oliver.horlacher@therastrat.com 	$
+ * $ author: 	Oliver Horlacher, Stefan Kuhn (chiral smiles)		$
+ * $ contact: 	oliver.horlacher@therastrat.com, skuhn@ice.mpg.de 	$
  * $ date: 		Feb 26, 2002			$
  *
  * Copyright (C) 2001-2002
@@ -32,6 +32,7 @@ import org.openscience.cdk.graphinvariant.MorganNumbersTools;
 import org.openscience.cdk.test.MoleculeFactory;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.exception.NoSuchAtomException;
+import org.openscience.cdk.exception.Coordinates2DMissingException;
 
 import java.util.*;
 import java.io.IOException;
@@ -80,6 +81,15 @@ public class SmilesGenerator {
     }
   }
   
+  /**
+   * Gives the angle between two lines starting at atom from and going to
+   * to1 and to2
+   *
+   * @param from  the atom to view from
+   * @param to1   first direction to look in
+   * @param to2   second direction to look in
+   * @return The angle in from 0 to 2*PI
+   */
   private double giveAngle(Atom from, Atom to1, Atom to2){
     double[] A=new double[2];
     from.getPoint2D().get(A);
@@ -87,10 +97,20 @@ public class SmilesGenerator {
     to1.getPoint2D().get(B);
     double[] C=new double[2];
     to2.getPoint2D().get(C);
-    return(Math.atan2(A[1]-B[1],A[0]-B[0])-Math.atan2(A[1]-C[1],A[0]-C[0]));
+    double angle=Math.atan2(A[1]-B[1],A[0]-B[0])-Math.atan2(A[1]-C[1],A[0]-C[0]);
+    if(angle<0)
+      angle=(2*Math.PI)+angle;
+    return(angle);
   }
 
-  public int isTetrahedral(AtomContainer container, Atom a) {
+  /**
+   * Says if an atom as a center of a tetrahedral chirality 
+   *
+   * @param a         The atom which is the center
+   * @param container The atomContainer the atom is in
+   * @return 0=is not tetrahedral;>1 is a certain depiction of tetrahedrality (evaluated in parse chain) 
+   */
+  private int isTetrahedral(AtomContainer container, Atom a) {
     Atom[] atoms=container.getConnectedAtoms(a);
     Bond[] bonds=container.getConnectedBonds(a);
     int normal=0;
@@ -112,40 +132,82 @@ public class SmilesGenerator {
       }
       return 0;
     }
+    if(up==1&&down==0)
+      return 3;
+    if(down==1&&up==0)
+      return 4;
     return 0;
   }
   
-  public boolean stereosAreOpposite(AtomContainer container, Atom a) {
+  /**
+   * Says if an atom as a center of a square planar chirality 
+   *
+   * @param a         The atom which is the center
+   * @param container The atomContainer the atom is in
+   * @return true=is square planar, false=is not
+   */
+  private boolean isSquarePlanar(AtomContainer container, Atom a) {
     Atom[] atoms=container.getConnectedAtoms(a);
-    int stereoOne=container.getBond(a,atoms[0]).getStereo();
-    double largestAngle=0;
-    int oppositeAtom=0;
-    for(int i=1;i<4;i++){
-      double angle=giveAngle(a,atoms[0],atoms[i]);
-      if(angle>largestAngle){
-        largestAngle=angle;
-        oppositeAtom=i;
-      }
+    Bond[] bonds=container.getConnectedBonds(a);
+    int normal=0;
+    int up=0;
+    int down=0;
+    for(int i=0;i<bonds.length;i++){
+      if(bonds[i].getStereo()==CDKConstants.STEREO_BOND_UNDEFINED ||bonds[i].getStereo()==0)
+        normal++;
+      if(bonds[i].getStereo()==CDKConstants.STEREO_BOND_UP)
+        up++;
+      if(bonds[i].getStereo()==CDKConstants.STEREO_BOND_DOWN)
+        down++;
     }
-    if(container.getBond(a,atoms[oppositeAtom]).getStereo()==stereoOne)
+    if(up==2 && down==2 && !stereosAreOpposite(container, a))
+      return true;
+    return false;
+  }
+
+  /**
+   * Says if of four atoms connected two one atom the up and down bonds are
+   * opposite or not, i. e.if it's tetrehedral or square planar. The method doesnot check if 
+   * there are four atoms and if two or up and two are down
+   *
+   * @param a         The atom which is the center
+   * @param container The atomContainer the atom is in
+   * @return true=are opposite, false=are not
+   */
+  private boolean stereosAreOpposite(AtomContainer container, Atom a) {
+    Vector atoms=container.getConnectedAtomsVector(a);
+    TreeMap hm=new TreeMap();
+    for(int i=1;i<atoms.size();i++){
+      hm.put(new Double(giveAngle(a, (Atom)atoms.get(0), ((Atom)atoms.get(i)))),new Integer(i));
+    }
+    Object[] ohere=hm.values().toArray();
+    int stereoOne=container.getBond(a,(Atom)atoms.get(0)).getStereo();
+    int stereoOpposite=container.getBond(a,(Atom)atoms.get((((Integer)ohere[1])).intValue())).getStereo();
+    if(stereoOpposite==stereoOne)
       return true;
     else
       return false;
   }
-      
 
+  /**
+   * Says if an atom as a center of any valid stereo configuration or not
+   *
+   * @param a         The atom which is the center
+   * @param container The atomContainer the atom is in
+   * @return true=isStereo, false= is not
+   */
   public boolean isStereo(AtomContainer container, Atom a) {
     Atom[] atoms=container.getConnectedAtoms(a);
     if(atoms.length!=4)
       return(false);
     Bond[] bonds=container.getConnectedBonds(a);
-    boolean stereo=false;
+    int stereo=0;
     for(int i=0;i<bonds.length;i++){
       if(bonds[i].getStereo()!=0){
-        stereo=true;
+        stereo++;
       }
     }
-    if(!stereo)
+    if(stereo==0)
       return false;
     int differentAtoms=0;
     for(int i=0;i<atoms.length;i++){
@@ -184,8 +246,21 @@ public class SmilesGenerator {
             }
           }
         }
-        if(symbolsWithDifferentMorganNumbers!=differentSymbols.size())
+        if(symbolsWithDifferentMorganNumbers!=differentSymbols.size()){
+          //Check if it's a cis/trans ring fusion
+          if(stereo==1){
+            for(int i=0;i<atoms.length;i++){
+              RingSet rs=new SSSRFinder().findSSSR((Molecule)container);
+              RingSet rs1=rs.getRings(a);
+              RingSet rs2=rs1.getRings(atoms[i]);
+              if(rs2.size()>1){
+                System.err.println("AAAAAAAAAAAA");
+                return true;
+              }
+            }
+          }
           return false;
+        }
       }
       catch(NoSuchAtomException ex){
         ex.printStackTrace();
@@ -194,15 +269,6 @@ public class SmilesGenerator {
     return(true);
   }
   
-  
-  public synchronized String createSMILES(Molecule molecule) {
-    return (createSMILES(molecule, false));
-  }
-  
-  public synchronized String createChiralSMILES(Molecule molecule) {
-    return(createSMILES(molecule, true));
-  }
-
   /**
    * Generate canonical SMILES from the <code>molecule</code>.  This method
    * canonicaly lables the molecule but dose not perform any checks on the
@@ -211,7 +277,41 @@ public class SmilesGenerator {
    * @see org.openscience.cdk.smiles.CanonicalLabeler#canonLabel
    *
    */
-  public synchronized String createSMILES(Molecule molecule, boolean chiral) {
+  public synchronized String createSMILES(Molecule molecule) {
+    try{
+      return (createSMILES(molecule, false));
+    }
+    catch(Coordinates2DMissingException ex){return("");}//This exception can only happen if a chiral smiles is requested
+  }
+  
+  /**
+   * Generate canonical and chiral SMILES from the <code>molecule</code>.  This method
+   * canonicaly lables the molecule but dose not perform any checks on the
+   * chemical validity of the molecule. The chiral smiles is done like in the <a href="http://www.daylight.com/dayhtml/doc/theory/theory.smiles.html">daylight theory manual</a>.
+   * I did not find rules for canonical and chiral smiles, therefore there is no guarantee 
+   * that the smiles complies to any externeal rules, but it is canonical compared to other smiles
+   * produced by this method. The method checks if there are 2D coordinates but does not do
+   * check if coordinates make sense.
+   *
+	 * @exception  Coordinates2DMissingException  At least one atom has no Point2D; coordinates are needed for crating the chiral smiles.
+   * @see org.openscience.cdk.smiles.CanonicalLabeler#canonLabel.
+   *
+   */
+  public synchronized String createChiralSMILES(Molecule molecule) throws Coordinates2DMissingException {
+    return(createSMILES(molecule, true));
+  }
+
+  /**
+   * Generate canonical SMILES from the <code>molecule</code>.  This method
+   * canonicaly lables the molecule but dose not perform any checks on the
+   * chemical validity of the molecule.
+   *
+   * @see org.openscience.cdk.smiles.CanonicalLabeler#canonLabel.
+   * @param chiral true=SMILES will be chiral, false=SMILES will not be chiral.
+	 * @exception  Coordinates2DMissingException  At least one atom has no Point2D; coordinates are needed for crating the chiral smiles. This excpetion can only be thrown if chiral smiles is created, ignore it if you want a non-chiral smiles (createSMILES(AtomContainer) does not throw an exception).
+   *
+   */
+  public synchronized String createSMILES(Molecule molecule, boolean chiral) throws Coordinates2DMissingException{
     if (molecule.getAtomCount() == 0)
       return "";
     canLabler.canonLabel(molecule);
@@ -222,6 +322,8 @@ public class SmilesGenerator {
     Atom start = null;
     for (int i = 0; i < all.length; i++) {
       Atom atom = all[i];
+      if(chiral && atom.getPoint2D()==null)
+        throw new Coordinates2DMissingException("Atom number "+i+" has not get 2D coordinates");
       if (atom.flags == null) atom.flags = new boolean[100];
       atom.flags[CDKConstants.VISITED] = false;
       if (((Long)atom.getProperty("CanonicalLable")).longValue() == 1) {
@@ -313,10 +415,9 @@ public class SmilesGenerator {
    */
   private void parseChain(Vector v, StringBuffer buffer, AtomContainer container, Atom parent, boolean chiral){
     int positionInVector=0;
-    Iterator it = v.iterator();
     Atom atom;
-    while (it.hasNext()) {
-      Object o = (Object) it.next();
+    for(int h=0;h<v.size();h++){
+      Object o=v.get(h);
       if(o instanceof Atom) {
         atom = (Atom)o;
         if(parent != null) {
@@ -344,7 +445,6 @@ public class SmilesGenerator {
             }
             if(container.getBond(parent,atom).getStereo()==CDKConstants.STEREO_BOND_UP){
               for(int i=0;i<chiralNeighbours.size();i++){
-                
                 if(chiralNeighbours.get(i)!=parent){
                   if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==0&&isLeft(((Atom)chiralNeighbours.get(i)),parent,atom)&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
                     sorted[2]=(Atom)chiralNeighbours.get(i);
@@ -373,25 +473,25 @@ public class SmilesGenerator {
               for(int i=0;i<chiralNeighbours.size();i++){
                 if(chiralNeighbours.get(i)!=parent){
                 if(normalBindingIsLeft){
-                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==0&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
+                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==0){//&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
                     sorted[0]=(Atom)chiralNeighbours.get(i);
                   }
-                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==CDKConstants.STEREO_BOND_UP&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
+                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==CDKConstants.STEREO_BOND_UP){//&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
                     sorted[2]=(Atom)chiralNeighbours.get(i);
                   }
-                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==CDKConstants.STEREO_BOND_DOWN&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
+                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==CDKConstants.STEREO_BOND_DOWN){//&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
                     sorted[1]=(Atom)chiralNeighbours.get(i);
                   }
                 }
                 else
                 {
-                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==CDKConstants.STEREO_BOND_UP&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
+                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==CDKConstants.STEREO_BOND_UP){//&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
                     sorted[1]=(Atom)chiralNeighbours.get(i);
                   }
-                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==0&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
+                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==0){//&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
                     sorted[0]=(Atom)chiralNeighbours.get(i);
                   }
-                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==CDKConstants.STEREO_BOND_DOWN&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
+                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==CDKConstants.STEREO_BOND_DOWN){//&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
                     sorted[2]=(Atom)chiralNeighbours.get(i);
                   }
                 }
@@ -431,68 +531,193 @@ public class SmilesGenerator {
               }
             }
           }
-          int numberOfAtoms=3-getRingOpenings(atom).size();
-          Atom[] sortedNew=new Atom[numberOfAtoms];
-          int l=0;
-          for(int k=0;k<sorted.length;k++){
-            if(sorted[k]!=null){
-              sortedNew[l]=sorted[k];
-              l++;
+          if(isTetrahedral(container,atom)==3){
+            System.err.println("BBBBBBBBBBBBBBBB");
+            if(container.getBond(parent,atom).getStereo()==CDKConstants.STEREO_BOND_UP){
+              TreeMap hm=new TreeMap();
+              for(int i=0;i<chiralNeighbours.size();i++){
+                if(chiralNeighbours.get(i)!=parent&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
+                  hm.put(new Double(giveAngle(atom, parent, ((Atom)chiralNeighbours.get(i)))),new Integer(i));
+                }
+              }
+              Object[] ohere=hm.values().toArray();
+              for(int i=ohere.length-1;i>-1;i--){
+                sorted[i]=((Atom)chiralNeighbours.get(((Integer)ohere[i]).intValue()));
+              }
+            }
+            if(container.getBond(parent,atom).getStereo()==0){
+              for(int i=0;i<chiralNeighbours.size();i++){
+                if(chiralNeighbours.get(i)!=parent){
+                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==0&&isLeft(((Atom)chiralNeighbours.get(i)),parent,atom)&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
+                    sorted[2]=(Atom)chiralNeighbours.get(i);
+                  }
+                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==0&&!isLeft(((Atom)chiralNeighbours.get(i)),parent,atom)&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
+                    sorted[1]=(Atom)chiralNeighbours.get(i);
+                  }
+                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==CDKConstants.STEREO_BOND_UP&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
+                    sorted[0]=(Atom)chiralNeighbours.get(i);
+                  }
+                }
+              }
             }
           }
+          if(isTetrahedral(container,atom)==4){
+            System.err.println("CCCCCCCCCCCCCCCCC");
+            if(container.getBond(parent,atom).getStereo()==CDKConstants.STEREO_BOND_DOWN){
+              TreeMap hm=new TreeMap();
+              for(int i=0;i<chiralNeighbours.size();i++){
+                if(chiralNeighbours.get(i)!=parent&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
+                  hm.put(new Double(giveAngle(atom, parent, ((Atom)chiralNeighbours.get(i)))),new Integer(i));
+                }
+              }
+              Object[] ohere=hm.values().toArray();
+              System.err.println("CCCCCCCCCCCCCCCCC "+ohere.length);
+              for(int i=ohere.length-1;i>-1;i--){
+                sorted[i]=((Atom)chiralNeighbours.get(((Integer)ohere[i]).intValue()));
+              }
+            }
+            if(container.getBond(parent,atom).getStereo()==0){
+              for(int i=0;i<chiralNeighbours.size();i++){
+                if(chiralNeighbours.get(i)!=parent){
+                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==0&&isLeft(((Atom)chiralNeighbours.get(i)),parent,atom)&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
+                    sorted[2]=(Atom)chiralNeighbours.get(i);
+                  }
+                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==0&&!isLeft(((Atom)chiralNeighbours.get(i)),parent,atom)&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
+                    sorted[1]=(Atom)chiralNeighbours.get(i);
+                  }
+                  if(container.getBond((Atom)chiralNeighbours.get(i),atom).getStereo()==CDKConstants.STEREO_BOND_DOWN&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
+                    sorted[0]=(Atom)chiralNeighbours.get(i);
+                  }
+                }
+              }
+            }
+          }
+          if(isSquarePlanar(container,atom)){
+            //This produces a U=SP1 order in every case
+            TreeMap hm=new TreeMap();
+            for(int i=0;i<chiralNeighbours.size();i++){
+              if(chiralNeighbours.get(i)!=parent&&!isBondBroken((Atom)chiralNeighbours.get(i),atom)){
+                hm.put(new Double(giveAngle(atom, parent, ((Atom)chiralNeighbours.get(i)))),new Integer(i));
+              }
+            }
+            Object[] ohere=hm.values().toArray();
+            for(int i=0;i<ohere.length;i++){
+              sorted[i]=((Atom)chiralNeighbours.get(((Integer)ohere[i]).intValue()));
+            }
+          }
+          int numberOfAtoms=3;
           Object[] omy=new Object[numberOfAtoms];
           Object[] onew=new Object[numberOfAtoms];
-          for(int k=0;k<omy.length;k++){
-            omy[k]=v.get(positionInVector+1+k);
+          for(int k=getRingOpenings(atom).size();k<3;k++){
+            omy[k]=v.get(positionInVector+1+k-getRingOpenings(atom).size());
           }
-          l=0;
           for(int k=0;k<sorted.length;k++){
-            for(int m=0;m<omy.length;m++){
-              if(omy[m] instanceof Atom){
-                if(sorted[k]!=null&&omy[m]==sorted[k]){
-                  onew[l]=omy[m];
+            if(sorted[k]!=null){
+              for(int m=0;m<omy.length;m++){
+                if(omy[m] instanceof Atom){
+                  if(omy[m]==sorted[k]){
+                    onew[k]=omy[m];
+                  }
+                }
+                else
+                {
+                  if(omy[m]==null){
+                    onew[k]=null;
+                  }
+                  else
+                  {
+                    if(((Vector)omy[m]).get(0)==sorted[k]){
+                      onew[k]=omy[m];
+                    }
+                  }
                 }
               }
-              else
-              {
-                if(sorted[k]!=null&&((Vector)omy[m]).get(0)==sorted[k]){
-                  onew[l]=omy[m];
-                }
-              }
             }
-            if(sorted[k]!=null)
-            l++;
+            else
+            {
+              onew[k]=null;
+            }
           }
-          int k=0;
-          while(!(onew[numberOfAtoms-1] instanceof Atom)){
-            Object dummy=onew[numberOfAtoms-1];
-            for(int m=numberOfAtoms-1;m>0;m--){
-              onew[m]=onew[m-1];
-            }
-            onew[0]=dummy;
-            k++;
-            if(k>numberOfAtoms)
-              break;
-          }
-          if(!(onew[numberOfAtoms-1] instanceof Atom)){
-            Vector vneigh=getCanNeigh(atom, container);
-            for(int i=0;i<vneigh.size();i++){
-              if(isBondBroken(atom,((Atom)vneigh.get(0))))
-                vneigh.remove(0);
-              if(vneigh.get(0)==parent)
-                vneigh.remove(0);
-            }
-            //Diese sortierung muss atome, die als zahlen vorliegen, berücksichtigen
-            while(((Vector)onew[0]).get(0)!=vneigh.get(0)){
+          if(!isSquarePlanar(container,atom)){
+            int k=0;
+            while(!(onew[numberOfAtoms-1] instanceof Atom)){
               Object dummy=onew[numberOfAtoms-1];
               for(int m=numberOfAtoms-1;m>0;m--){
                 onew[m]=onew[m-1];
               }
               onew[0]=dummy;
+              k++;
+              if(k>numberOfAtoms)
+                break;
+            }
+            if(isRingOpening(parent)){
+              k=0;
+              while(onew[0]!=null){
+                Object dummy=onew[numberOfAtoms-1];
+                for(int m=numberOfAtoms-1;m>0;m--){
+                  onew[m]=onew[m-1];
+                }
+                onew[0]=dummy;
+                k++;
+                if(k>numberOfAtoms)
+                  break;
+              }
+            }
+            if(!(onew[numberOfAtoms-1] instanceof Atom)){
+              Vector vneigh=getCanNeigh(atom, container);
+              for(int i=0;i<vneigh.size();i++){
+                if(isBondBroken(atom,((Atom)vneigh.get(i)))){
+                  vneigh.remove(i);
+                }
+                else{
+                  if(vneigh.get(i)==parent)
+                    vneigh.remove(i);
+                }
+              }
+            }
+            k=0;
+            for(int m=0;m<onew.length;m++){
+              if(onew[m]!=null){
+                v.set(positionInVector+1+k,onew[m]);
+                k++;
+              }
             }
           }
-          for(int m=0;m<numberOfAtoms-1;m++){
-            v.set(positionInVector+1+m,onew[m]);
+          else
+          {
+            if(!(onew[numberOfAtoms-1] instanceof Atom)){
+              for(int i=0;i<numberOfAtoms;i++){
+                if(onew[i] instanceof Atom){
+                  Vector vtemp=new Vector();
+                  vtemp.add(onew[i]);
+                  for(int k=positionInVector+1+numberOfAtoms;k<v.size();k++){
+                    if(v.get(k) instanceof Atom)
+                      vtemp.add(v.get(k));
+                  }
+                  Vector vtemp2=new Vector();
+                  for(int k=0;k<positionInVector+1+numberOfAtoms-1;k++){
+                    if(k==positionInVector+1+i){
+                      vtemp2.add(vtemp);
+                    }
+                    else
+                    {
+                      if(k>positionInVector){
+                        vtemp2.add(onew[k-positionInVector-1]);
+                      }
+                      else
+                      {
+                        vtemp2.add(v.get(k));
+                      }
+                    }
+                  }
+                  for(int k=0;k<((Vector)onew[numberOfAtoms-1]).size();k++){
+                    vtemp2.add(((Vector)onew[numberOfAtoms-1]).get(k));
+                  }
+                  v=vtemp2;
+                  break;
+                }
+              }
+            }
           }
         }
         parent = atom;
@@ -511,6 +736,16 @@ public class SmilesGenerator {
     }
   }
   
+  /**
+   * Says if an atom is on the left side of a another atom seen from 
+   * a certain atom or not
+   *
+   * @param whereIs  The atom the position of which is returned
+   * @param viewFrom The atom from which to look
+   * @param viewTo   The atom to which to look
+   * @return true=is left, false = is not
+   *
+   */
   private boolean isLeft(Atom whereIs, Atom viewFrom, Atom viewTo){
     double[] A=new double[2];
     viewFrom.getPoint2D().get(A);
@@ -629,6 +864,8 @@ public class SmilesGenerator {
       buffer.append(symbol);
     if(chiral && stereo)
       buffer.append('@');
+    if(chiral && stereo && isSquarePlanar(container,a))
+      buffer.append("SP1");
     //chiral
     //hcount
     buffer.append(charge);
