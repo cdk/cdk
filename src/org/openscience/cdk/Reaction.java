@@ -45,9 +45,10 @@ package org.openscience.cdk;
  */
 public class Reaction extends ChemObject implements java.io.Serializable, Cloneable {
 
-    public static final int FORWARD        = 1;
-    public static final int BACKWARD       = 2;
-    public static final int BIDIRECTIONAL = 3;
+    public static final int UNKNOWN_DIRECTION = 0;
+    public static final int FORWARD           = 1;
+    public static final int BACKWARD          = 2;
+    public static final int BIDIRECTIONAL     = 3;
     
 	protected int growArraySize = 3;
 
