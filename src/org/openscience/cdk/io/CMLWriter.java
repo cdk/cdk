@@ -105,17 +105,20 @@ public class CMLWriter extends DefaultChemObjectWriter {
 
     private Writer output;
 
+    private BooleanIOSetting xmlDecl;
     private BooleanIOSetting cmlIds;
     private BooleanIOSetting namespacedOutput;
-    private StringIOSetting targetNamespace;
-    private BooleanIOSetting xmlDecl;
+    private StringIOSetting namespacePrefix;
+    private BooleanIOSetting schemaInstanceOutput;
+    private StringIOSetting instanceLocation;
     
-    private final String namespace = "cml";
-
     private boolean done;
     private boolean fragment;
     private boolean isRootElement;
 
+    private String prefix = "";
+    private String namespace = "http://www.xml-cml.org/schema/cml2/core";
+    
     private org.openscience.cdk.tools.LoggingTool logger;
     private IsotopeFactory isotopeFactory = null;
 
@@ -182,6 +185,8 @@ public class CMLWriter extends DefaultChemObjectWriter {
         
         isRootElement = true;
         
+        prefix = namespacePrefix.getSetting();
+        
         if (!done) {
             if (!fragment && xmlDecl.isSet()) {
                 write("<?xml version=\"1.0\"?>\n");
@@ -203,6 +208,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
             } else if (object instanceof Bond) {
                 writeBond((Bond)object);
             } else if (object instanceof Reaction) {
+                namespace = "http://www.xml-cml.org/schema/cml2/react";
                 writeReaction((Reaction)object);
             } else {
                 logger.error("This object type is not supported.");
@@ -301,6 +307,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
             writeSetOfMolecules(som);
         }
         if (reactionSet != null) {
+            namespace = "http://www.xml-cml.org/schema/cml2/react";
             writeSetOfReactions(reactionSet);
         }
         if (crystal == null && som == null && reactionSet == null) {
@@ -590,8 +597,8 @@ public class CMLWriter extends DefaultChemObjectWriter {
     }
 
     private void writeElementName(String name) {
-        if (namespacedOutput.isSet()) {
-            write(namespace + ":");
+        if (namespacedOutput.isSet() && prefix.length() > 0) {
+            write(prefix + ":");
         }
         write(name);
     }
@@ -628,7 +635,17 @@ public class CMLWriter extends DefaultChemObjectWriter {
         }
         // if root element, write namespace declaration
         if (isRootElement && namespacedOutput.isSet()) {
-            write(" xmlns:" + namespace + "=\"" + targetNamespace.getSetting() + "\"");
+            if (prefix.toString().length() > 0) {
+                write(" xmlns:" + prefix);
+            } else {
+                write(" xmlns");
+            }
+            write("=\"" + namespace + "\"");
+            if (schemaInstanceOutput.isSet()) {
+                write(" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"");
+                write(" xsi:schemaLocation=\"");
+                write(namespace + " " + instanceLocation.getSetting() + "\"");
+            }
         }
     }
     
@@ -665,26 +682,45 @@ public class CMLWriter extends DefaultChemObjectWriter {
           "Should the output use namespaced output?", 
           "true");
 
-        targetNamespace = new StringIOSetting("TargetNamespace", IOSetting.LOW,
-          "What is the target namespace?",
-          "http://www.xml-cml.org/schema/cml2/core");
+        namespacePrefix = new StringIOSetting("NamespacePrefix", IOSetting.LOW,
+          "What should the namespace prefix be? [empty is no prefix]",
+          "");
           
         xmlDecl = new BooleanIOSetting("XMLDeclaration", IOSetting.LOW,
           "Should the output use have a XMLDeclaration?", 
           "true");
+          
+        schemaInstanceOutput = new BooleanIOSetting("SchemaInstance", IOSetting.LOW,
+          "Should the output use the Schema-Instance attribute?", 
+          "false");
+        
+        instanceLocation = new StringIOSetting("InstanceLocation", IOSetting.LOW,
+          "Where is the schema found?",
+          "");
+
     }
     
     private void customizeJob() {
+        fireIOSettingQuestion(xmlDecl);
         fireIOSettingQuestion(cmlIds);
         fireIOSettingQuestion(namespacedOutput);
-        fireIOSettingQuestion(xmlDecl);
+        if (namespacedOutput.isSet()) {
+            fireIOSettingQuestion(namespacePrefix);
+        }
+        fireIOSettingQuestion(schemaInstanceOutput);
+        if (schemaInstanceOutput.isSet()) {
+            fireIOSettingQuestion(instanceLocation);
+        }
     }
 
     public IOSetting[] getIOSettings() {
-        IOSetting[] settings = new IOSetting[3];
-        settings[0] = cmlIds;
-        settings[1] = namespacedOutput;
-        settings[2] = xmlDecl;
+        IOSetting[] settings = new IOSetting[6];
+        settings[0] = xmlDecl;
+        settings[1] = cmlIds;
+        settings[2] = namespacedOutput;
+        settings[3] = namespacePrefix;
+        settings[4] = schemaInstanceOutput;
+        settings[5] = instanceLocation;
         return settings;
     }
     
