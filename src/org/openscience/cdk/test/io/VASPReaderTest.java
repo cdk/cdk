@@ -32,8 +32,9 @@ import org.openscience.cdk.io.*;
 import org.openscience.cdk.geometry.*;
 import java.io.*;
 import junit.framework.*;
+import org.openscience.cdk.test.CDKTestCase;
 
-public class VASPReaderTest extends TestCase {
+public class VASPReaderTest extends CDKTestCase {
 
     private org.openscience.cdk.tools.LoggingTool logger;
 

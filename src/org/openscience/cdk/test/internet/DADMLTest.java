@@ -31,6 +31,7 @@ import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.internet.DADMLReader;
 import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * @cdk.module test
@@ -41,6 +42,7 @@ public class DADMLTest {
 
     public DADMLTest(String superdb, String type, String index) {
       logger = new LoggingTool(this);
+      LoggingTool.configureLog4j();
 
       try {
         ChemObjectReader reader;

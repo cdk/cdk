@@ -44,6 +44,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.io.Mol2Reader;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * TestCase for the reading SYBYL mol2 files using a test file.
@@ -52,7 +53,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @see org.openscience.cdk.io.Mol2Reader
  */
-public class Mol2ReaderTest extends TestCase {
+public class Mol2ReaderTest extends CDKTestCase {
 
     private org.openscience.cdk.tools.LoggingTool logger;
 

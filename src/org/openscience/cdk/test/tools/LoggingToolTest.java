@@ -28,17 +28,16 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * @cdk.module test
  */
-public class LoggingToolTest extends TestCase {
+public class LoggingToolTest extends CDKTestCase {
 	
 	public LoggingToolTest(String name) {
 		super(name);
 	}
-
-	public void setUp() {};
 
 	public static Test suite() {
 		return new TestSuite(LoggingToolTest.class);
@@ -49,8 +48,8 @@ public class LoggingToolTest extends TestCase {
         assertNotNull(logger);
     }
 	
-	public void testLoggingTool_boolean() {
-        LoggingTool logger = new LoggingTool(true);
+	public void testLoggingTool() {
+        LoggingTool logger = new LoggingTool();
         assertNotNull(logger);
     }
 	
@@ -59,18 +58,16 @@ public class LoggingToolTest extends TestCase {
         assertNotNull(logger);
     }
 	
-	public void testLoggingTool_Object_boolean() {
-        LoggingTool logger = new LoggingTool(this, true);
-        assertNotNull(logger);
-    }
-	
-	public void testLoggingTool_Class_boolean() {
-        LoggingTool logger = new LoggingTool(this, true);
-        assertNotNull(logger);
-    }
-	
 	public void testClass$_String() {
         // no idea why the Coverage test requires this test
+    }
+
+    public void testConfigureLog4j() {
+        try {
+            LoggingTool.configureLog4j();
+        } catch (Exception exception) {
+            fail("Exception during debug: " + exception.getMessage());
+        }
     }
 	
 	public void testDebug_Object() {

@@ -33,6 +33,7 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.smiles.smarts.SMARTSParser;
 import org.openscience.cdk.smiles.smarts.ParseException;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * JUnit test routines for the SMARTS substructure search.
@@ -42,12 +43,10 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @author Egon Willighagen
  */
-public class SMARTSSearchTest extends TestCase {
+public class SMARTSSearchTest extends CDKTestCase {
     
     private LoggingTool logger;
     
-    public SMARTSSearchTest() {}
-
     public SMARTSSearchTest(java.lang.String testName) {
         super(testName);
         logger = new LoggingTool(this);

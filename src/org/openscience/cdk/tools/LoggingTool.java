@@ -104,22 +104,15 @@ public class LoggingTool {
 
     /**
      * Constructs a LoggingTool which produces log lines without any special
-     * indication which class the message originates from. It allows determining
-     * wether the log4j should be configurated.
-     *
-     * @param useConfig if true, the Log4J engine is configurated with a CDK
-     *                  specific configuration file
+     * indication which class the message originates from.
      */
-    public LoggingTool(boolean useConfig) {
-        this( LoggingTool.class.getName(), useConfig );
+    public LoggingTool() {
+        this(LoggingTool.class);
     }
 
     /**
      * Constructs a LoggingTool which produces log lines indicating them to be
-     * for the Class of the <code>Object</code>. The Log4J engine is configurated
-     * with CDK customized properties.
-     *
-     * @param object Object from which the message originates
+     * for the Class of the <code>Object</code>.
      */
     public LoggingTool(Object object) {
         this(object.getClass());
@@ -127,54 +120,17 @@ public class LoggingTool {
     
     /**
      * Constructs a LoggingTool which produces log lines indicating them to be
-     * for the given Class. The Log4J engine is configurated
-     * with CDK customized properties.
+     * for the given Class.
      *
      * @param classInst Class from which the message originates
      */
     public LoggingTool(Class classInst) {
-        this(classInst, true);
-    }
-    
-    /**
-     * Constructs a LoggingTool which produces log lines indicating them to be
-     * for the Class of the <code>Object</code>. It allows determining
-     * wether the log4j should be configurated.
-     *
-     * @param useConfig if true, the Log4J engine is configurated with a CDK
-     *                  specific configuration file
-     *
-     * @param object Object from which the message originates
-     */
-    public LoggingTool(Object object, boolean useConfig) {
-        this(object.getClass(), useConfig);
-    }
-
-    /**
-     * Constructs a LoggingTool which produces log lines indicating them to be
-     * for the Class with the name <code>classname</code>. It allows determining
-     * wether the log4j should be configurated.
-     *
-     * @param classInst String with the name of the class from which the messages
-     *                  originate
-     * @param useConfig if true, the Log4J engine is configurated with a CDK
-     *                  specific configuration file
-     */
-    public LoggingTool(Class classInst, boolean useConfig) {
         this.logger = this;
         stackLength = DEFAULT_STACK_LENGTH;
         this.classname = classInst.getName();
         try {
             log4jLogger = (org.apache.log4j.Category)org.apache.log4j.Category
                                                      .getInstance( classname );
-            if (useConfig) {
-                // configure Log4J
-                InputStream ins = this.getClass().getClassLoader()
-                    .getResourceAsStream("org/openscience/cdk/config/data/log4j.properties");
-                Properties props = new Properties();
-                props.load(ins);
-                org.apache.log4j.PropertyConfigurator.configure(props);
-            }
         } catch (NoClassDefFoundError e) {
             tostdout = true;
             logger.debug("Log4J class not found!");
@@ -207,6 +163,23 @@ public class LoggingTool {
             logger.debug("guessed what happened: security exception thrown by applet runner");
             logger.debug("  therefore, do not debug");
           }
+        }
+    }
+    
+    public static void configureLog4j() {
+        LoggingTool localLogger = new LoggingTool(LoggingTool.class);
+        try {
+            InputStream ins = LoggingTool.class.getClassLoader()
+                .getResourceAsStream("org/openscience/cdk/config/data/log4j.properties");
+            Properties props = new Properties();
+            props.load(ins);
+            org.apache.log4j.PropertyConfigurator.configure(props);
+        } catch (NullPointerException e) { // NOPMD
+            localLogger.error("Properties file not found: ", e.getMessage());
+            localLogger.debug(e);
+        } catch (Exception e) {
+            localLogger.error("Unknown error occured: ", e.getMessage());
+            localLogger.debug(e);
         }
     }
 

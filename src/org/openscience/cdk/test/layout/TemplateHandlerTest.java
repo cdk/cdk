@@ -34,6 +34,7 @@ import org.openscience.cdk.layout.TemplateHandler;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  *  Description of the Class
@@ -44,7 +45,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
  *@cdk.created    September 4, 2003
  * @cdk.require java1.4+
  */
-public class TemplateHandlerTest extends TestCase
+public class TemplateHandlerTest extends CDKTestCase
 {
 
 	/**
@@ -68,8 +69,9 @@ public class TemplateHandlerTest extends TestCase
 	/**
 	 *  The JUnit setup method
 	 */
-	public void setUp()
+	public void setUp() throws Exception
 	{
+        super.setUp();
 		logger = new LoggingTool(this);
 	}
 

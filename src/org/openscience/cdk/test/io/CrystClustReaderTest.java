@@ -46,6 +46,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.io.CrystClustReader;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * TestCase for the reading MDL mol files using one test file.
@@ -54,7 +55,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @see org.openscience.cdk.io.CrystClustReader
  */
-public class CrystClustReaderTest extends TestCase {
+public class CrystClustReaderTest extends CDKTestCase {
 
     private org.openscience.cdk.tools.LoggingTool logger;
 

@@ -50,6 +50,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * TestCase for the reading CML 2 files using a few test files
@@ -57,7 +58,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @cdk.module test
  */
-public class CML2WriterTest extends TestCase {
+public class CML2WriterTest extends CDKTestCase {
 
     private LoggingTool logger;
 

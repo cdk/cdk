@@ -38,6 +38,8 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.io.MDLWriter;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.test.CDKTestCase;
+
 /**
  * TestCase for the writer MDL mol files using one test file.
  *
@@ -45,7 +47,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @see org.openscience.cdk.io.MDLWriter
  */
-public class MDLWriterTest extends TestCase {
+public class MDLWriterTest extends CDKTestCase {
 
     private org.openscience.cdk.tools.LoggingTool logger;
 

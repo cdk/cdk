@@ -37,14 +37,16 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Crystal;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.io.ShelXReader;
+import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.tools.LoggingTool;
 
-public class ShelXReaderTest extends TestCase {
+public class ShelXReaderTest extends CDKTestCase {
 
-    private org.openscience.cdk.tools.LoggingTool logger;
+    private LoggingTool logger;
 
     public ShelXReaderTest(String name) {
         super(name);
-        logger = new org.openscience.cdk.tools.LoggingTool(this);
+        logger = new LoggingTool(this);
     }
 
     public static Test suite() {

@@ -35,24 +35,24 @@ import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetector;
+import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * Checks the funcitonality of the ConjugatedPiSystemsCalculator
  *
  * @cdk.module test
  */
-public class ConjugatedPiSystemsDetectorTest extends TestCase
+public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 {
 	
-    private org.openscience.cdk.tools.LoggingTool logger;
+    private LoggingTool logger;
     
 	public ConjugatedPiSystemsDetectorTest(String name)
 	{
 		super(name);
-        logger = new org.openscience.cdk.tools.LoggingTool(this);
+        logger = new LoggingTool(this);
 	}
-	
-	public void setUp() {}
 	
 	public static Test suite() {
 		return new TestSuite(ConjugatedPiSystemsDetectorTest.class);

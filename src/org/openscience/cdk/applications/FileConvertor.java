@@ -28,6 +28,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.InputStream;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
@@ -123,8 +124,9 @@ public class FileConvertor {
     private boolean apply3DRebonding = false;
 
     public FileConvertor() {
-        logger = new LoggingTool(this, true);
+        logger = new LoggingTool(this);
         logger.dumpSystemProperties();
+        LoggingTool.configureLog4j();
 
         settingListener = new TextGUIListener(level);
         propsListener = null;

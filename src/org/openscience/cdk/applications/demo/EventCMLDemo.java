@@ -68,6 +68,7 @@ import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.IDCreator;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.SaturationChecker;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * Demo that shows how to use the EvenCMLReader.
@@ -86,7 +87,8 @@ public class EventCMLDemo {
     private EventCMLReader cor;
 
     public EventCMLDemo() {
-        logger = new LoggingTool(this, true);
+        logger = new LoggingTool(this);
+        LoggingTool.configureLog4j();
     }
 
     /**

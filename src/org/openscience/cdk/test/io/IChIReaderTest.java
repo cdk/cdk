@@ -41,6 +41,7 @@ import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.io.IChIReader;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * TestCase for the reading IChI files using one test file.
@@ -50,7 +51,7 @@ import org.openscience.cdk.io.IChIReader;
  * @see org.openscience.cdk.io.IChIReader
  * @cdk.require java1.4+
  */
-public class IChIReaderTest extends TestCase {
+public class IChIReaderTest extends CDKTestCase {
 
     private org.openscience.cdk.tools.LoggingTool logger;
 

@@ -39,6 +39,7 @@ import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * This class tests the SSSRFinder class.
@@ -48,7 +49,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @author     steinbeck
  * @cdk.created    2003-10-17
  */
-public class RingSearchTest extends TestCase
+public class RingSearchTest extends CDKTestCase
 {
 
 	static boolean standAlone = false;
@@ -69,7 +70,8 @@ public class RingSearchTest extends TestCase
 	/**
 	 *  The JUnit setup method
 	 */
-	public void setUp() {
+	public void setUp() throws Exception {
+        super.setUp();
 		logger = new LoggingTool(this);
 	}
 
@@ -260,11 +262,14 @@ public class RingSearchTest extends TestCase
 	{
 		RingSearchTest rst = new RingSearchTest("RingSearchTest");
 		standAlone = true;
-		rst.setUp();
-		rst.testProblem1();
-		rst.testProblem2();
-		rst.testProblem3();
-
+        try {
+            rst.setUp();
+            rst.testProblem1();
+            rst.testProblem2();
+            rst.testProblem3();
+        } catch(Exception exc) {
+            System.err.println("Could setup the TestCase");
+        }
 	}
 
 	 /**

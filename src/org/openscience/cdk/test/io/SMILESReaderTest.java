@@ -36,6 +36,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.io.SMILESReader;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * TestCase for the reading MDL mol files using one test file.
@@ -44,7 +45,7 @@ import org.openscience.cdk.io.SMILESReader;
  *
  * @see org.openscience.cdk.io.MDLReader
  */
-public class SMILESReaderTest extends TestCase {
+public class SMILESReaderTest extends CDKTestCase {
 
     private org.openscience.cdk.tools.LoggingTool logger;
 

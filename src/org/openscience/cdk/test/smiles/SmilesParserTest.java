@@ -43,6 +43,7 @@ import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * @cdk.module test
@@ -930,6 +931,7 @@ public class SmilesParserTest extends TestCase
 	 */
 	public static void main(String[] args) {
         LoggingTool logger = new LoggingTool(SmilesParserTest.class);
+        LoggingTool.configureLog4j();
 		SmilesParserTest spt = new SmilesParserTest("SmilesParserTest");
 		spt.setStandAlone(true);
 		spt.viewSmilesStructures();

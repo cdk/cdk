@@ -44,6 +44,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.io.CMLReader;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * TestCase for the reading CML files using a few test files
@@ -52,7 +53,7 @@ import org.openscience.cdk.io.CMLReader;
  *
  * @cdk.module test
  */
-public class JmolTest extends TestCase {
+public class JmolTest extends CDKTestCase {
 
     private org.openscience.cdk.tools.LoggingTool logger;
 

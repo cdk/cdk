@@ -43,6 +43,7 @@ import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * TestCase for the reading MDL mol files using one test file.
@@ -51,7 +52,7 @@ import org.openscience.cdk.io.MDLReader;
  *
  * @see org.openscience.cdk.io.MDLReader
  */
-public class MDLReaderTest extends TestCase {
+public class MDLReaderTest extends CDKTestCase {
 
     private org.openscience.cdk.tools.LoggingTool logger;
 

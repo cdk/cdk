@@ -45,6 +45,7 @@ import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  *  Description of the Class
@@ -55,7 +56,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *@cdk.created    September 4, 2003
  * @cdk.require java1.4+
  */
-public class OverlapResolverTest extends TestCase
+public class OverlapResolverTest extends CDKTestCase
 {
 
 	/**
@@ -79,8 +80,9 @@ public class OverlapResolverTest extends TestCase
 	/**
 	 *  The JUnit setup method
 	 */
-	public void setUp()
+	public void setUp() throws Exception
 	{
+        super.setUp();
 		logger = new LoggingTool(this);
 		StructureDiagramGenerator sdg = new StructureDiagramGenerator();
 	}

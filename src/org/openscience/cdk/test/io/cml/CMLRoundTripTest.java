@@ -48,6 +48,7 @@ import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.CMLWriter;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * TestCase for the reading CML 2 files using a few test files
@@ -55,7 +56,7 @@ import org.openscience.cdk.io.CMLWriter;
  *
  * @cdk.module test
  */
-public class CMLRoundTripTest extends TestCase {
+public class CMLRoundTripTest extends CDKTestCase {
 
     private org.openscience.cdk.tools.LoggingTool logger;
 

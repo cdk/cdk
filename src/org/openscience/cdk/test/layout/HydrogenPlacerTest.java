@@ -45,11 +45,12 @@ import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.layout.HydrogenPlacer;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * @cdk.module test
  */
-public class HydrogenPlacerTest extends TestCase {
+public class HydrogenPlacerTest extends CDKTestCase {
     
     public boolean standAlone = false;
     private LoggingTool logger = null;
@@ -58,9 +59,10 @@ public class HydrogenPlacerTest extends TestCase {
         super(name);
     }
 
-    public void setUp() 
+    public void setUp() throws Exception
     {
-	logger = new org.openscience.cdk.tools.LoggingTool(this);
+        super.setUp();
+        logger = new LoggingTool(this);
     }
 
     public static Test suite() {

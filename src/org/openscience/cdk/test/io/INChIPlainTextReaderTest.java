@@ -42,6 +42,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.io.INChIPlainTextReader;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * TestCase for the reading INChI plain text files.
@@ -51,7 +52,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @see org.openscience.cdk.io.INChIReader
  * @cdk.require java1.4+
  */
-public class INChIPlainTextReaderTest extends TestCase {
+public class INChIPlainTextReaderTest extends CDKTestCase {
 
     private LoggingTool logger;
 

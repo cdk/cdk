@@ -39,6 +39,7 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.io.GhemicalMMReader;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * TestCase for the reading Ghemical molecular dynamics files using one test file.
@@ -47,7 +48,7 @@ import org.openscience.cdk.io.GhemicalMMReader;
  *
  * @see org.openscience.cdk.io.GhemicalReader
  */
-public class GhemicalReaderTest extends TestCase {
+public class GhemicalReaderTest extends CDKTestCase {
 
     private org.openscience.cdk.tools.LoggingTool logger;
 

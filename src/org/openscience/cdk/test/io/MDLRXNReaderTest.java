@@ -33,6 +33,7 @@ import org.openscience.cdk.io.*;
 import org.openscience.cdk.tools.LoggingTool;
 import java.io.*;
 import junit.framework.*;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * TestCase for the reading MDL RXN files using one test file.
@@ -41,7 +42,7 @@ import junit.framework.*;
  *
  * @see org.openscience.cdk.io.MDLRXNReader
  */
-public class MDLRXNReaderTest extends TestCase {
+public class MDLRXNReaderTest extends CDKTestCase {
 
     private LoggingTool logger;
 

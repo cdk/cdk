@@ -42,6 +42,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.io.INChIReader;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * TestCase for the reading INChI files using one test file.
@@ -51,7 +52,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @see org.openscience.cdk.io.INChIReader
  * @cdk.require java1.4+
  */
-public class INChIReaderTest extends TestCase {
+public class INChIReaderTest extends CDKTestCase {
 
     private LoggingTool logger;
 
