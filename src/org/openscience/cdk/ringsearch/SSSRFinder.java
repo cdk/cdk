@@ -411,7 +411,8 @@ public class SSSRFinder
 		Ring r1, r2;
 		RingSet ringSet = new RingSet();
 		Bond bond;
-		int minMaxSize = 0, minMax = 0;
+		int minMaxSize = Integer.MAX_VALUE;
+		int minMax = 0;
 		System.out.println(molecule);
 		for (int i = 0; i < ring.getBondCount(); i++)
 		{
