@@ -19,6 +19,7 @@
     <tocentry page="thelibrary.xml" filename="thelibrary.html">
       <tocentry page="libraries.xml" filename="libraries.html"/>
       <tocentry page="related.xml" filename="related.html"/>
+      <tocentry page="javancss-stats.xml" filename="javancss-stats.html"/>
     </tocentry>
     <tocentry page="development.xml" filename="development.html">
       <tocentry page="guide.xml" filename="guide.html">
@@ -38,6 +39,7 @@
         <tocentry page="core-api.xml" filename="core-api.html"/>
       </tocentry>
       <tocentry page="manpages.xml" filename="manpages.html"/>
+      <tocentry page="javadoc-stats.xml" filename="javadoc-stats.html"/>
     </tocentry>
    <tocentry page="screenshots.xml" filename="screenshots.html"/>
     <tocentry page="maillinglists.xml" filename="maillinglists.html"/>
