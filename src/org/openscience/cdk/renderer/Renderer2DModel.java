@@ -55,9 +55,9 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	private double bondLength = 36.0;
 
 	private Color backColor = Color.white;
-
 	private Color foreColor = Color.black;
-	
+	private Color mappingColor = Color.gray;
+    
 	private Color highlightColor = Color.lightGray;
 	
 	private double highlightRadius = 10.0;
@@ -271,6 +271,24 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	{
 		this.backColor = backColor;
 	}
+
+    /**
+     * Returns the atom-atom mapping line color 
+     *
+     * @return the atom-atom mapping line color     
+     */
+    public Color getAtomAtomMappingLineColor() {
+        return this.backColor;
+    }
+
+    /**
+     * Sets the atom-atom mapping line color 
+     *
+     * @param   mappingColor the atom-atom mapping line color  
+     */
+    public void setAtomAtomMappingLineColor(Color mappingColor) {
+        this.mappingColor = mappingColor;
+    }
 
 	
 	/**
