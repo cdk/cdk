@@ -1,10 +1,9 @@
-/*
- * $RCSfile$
+/* $RCSfile$
  * $Author$
  * $Date$
  * $Revision$
  *
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  *
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  *
@@ -29,22 +28,20 @@
  */
 package org.openscience.cdk.io.cml;
 
+import org.openscience.cdk.io.cml.cdopi.*;
 import java.util.*;
 import org.xml.sax.*;
-import org.openscience.cdk.io.cml.cdopi.*;
 
 /**
- * Core CML 1.0 conventions are parsable by this class.
+ * Core CML 1.x and 2.0 elements are parsed by this class.
  *
- * Please report a bug report if this parser fails to parse
- * a certain element or attribute value.
+ * <p>Please file a bug report if this parser fails to parse
+ * a certain element or attribute value in a valid CML document.
  **/
 public class Convention implements ConventionInterface {
 
     protected org.openscience.cdk.tools.LoggingTool logger;
-
     public final static int UNKNOWN = -1;
-    
     public final static int STRING = 1;
     public final static int LINK = 2;
     public final static int FLOAT = 3;
@@ -68,44 +65,36 @@ public class Convention implements ConventionInterface {
     public final static int CRYSTAL = 21;
     public final static int SEQUENCE = 22;
     public final static int FEATURE = 23;
-    
     protected final String SYSTEMID = "CML-1999-05-15";
-    
     protected CDOInterface cdo;
-    
     protected Vector elsym;
     protected Vector elid;
     protected Vector formalCharges;
     protected Vector partialCharges;
-
     protected Vector x3;
     protected Vector y3;
     protected Vector z3;
-  
     protected Vector x2;
     protected Vector y2;
-
+    protected Vector hCounts;
+    protected Vector atomParities;
     protected Vector bondid;
     protected Vector bondARef1;
     protected Vector bondARef2;
     protected Vector order;
     protected Vector bondStereo;
     protected boolean stereoGiven;
-
     protected int curRef;
-
     protected int CurrentElement;
     protected String BUILTIN;
     protected String elementTitle;
-
     protected String currentChars;
 
     public Convention(CDOInterface cdo) {
-        logger = new org.openscience.cdk.tools.LoggingTool(
-                       this.getClass().getName());
+        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
         this.cdo = cdo;
-    };
-
+    }
+    
     public Convention(Convention conv) {
         inherit(conv);
     }
@@ -123,6 +112,8 @@ public class Convention implements ConventionInterface {
         this.z3 = conv.z3;
         this.x2 = conv.x2;
         this.y2 = conv.y2;
+        this.hCounts = conv.hCounts;
+        this.atomParities = conv.atomParities;
         this.bondid = conv.bondid;
         this.bondARef1 = conv.bondARef1;
         this.bondARef2 = conv.bondARef2;
@@ -132,9 +123,10 @@ public class Convention implements ConventionInterface {
     }
 
     public CDOInterface returnCDO() {
-        return (CDOInterface)this.cdo;
-    };
 
+        return (CDOInterface)this.cdo;
+    }
+    
     private void newMolecule() {
         elsym = new Vector();
         elid = new Vector();
@@ -145,6 +137,8 @@ public class Convention implements ConventionInterface {
         z3 = new Vector();
         x2 = new Vector();
         y2 = new Vector();
+        hCounts = new Vector();
+        atomParities = new Vector();
         bondid = new Vector();
         bondARef1 = new Vector();
         bondARef2 = new Vector();
@@ -158,148 +152,253 @@ public class Convention implements ConventionInterface {
         newMolecule();
         BUILTIN = "";
         curRef = 0;
-    };
-
+    }
+    
     public void endDocument() {
         cdo.endDocument();
         logger.info("End XML Doc");
-    };
+    }
+    
+    public void startElement(String uri, String local, String raw, 
+                              Attributes atts) {
 
-
-    public void startElement (String uri, String local, String raw, Attributes atts) {
         String name = local;
         logger.debug("StartElement");
         setCurrentElement(name);
+
         switch (CurrentElement) {
-        case ATOM :
-            for (int i = 0; i < atts.getLength(); i++) {
-                if (atts.getQName(i).equals("id")) {
-                    logger.debug("T3 " + atts.getValue(i));
-                    elid.addElement(atts.getValue(i));
-                    logger.debug("T3 " + elid);
-                }
-            }
-            break;
-        case BOND :
-            for (int i = 0; i < atts.getLength(); i++) {
-            logger.debug("B2 " + atts.getQName(i) + "=" + atts.getValue(i));
-            if (atts.getQName(i).equals("id")) {
-                bondid.addElement(atts.getValue(i));
-                logger.debug("B3 " + bondid);
-            } else if (atts.getQName(i).equals("atomRefs")) {
-                // expect only two references
-                try {
-                StringTokenizer st = new StringTokenizer(atts.getValue(i));
-                bondARef1.addElement((String)st.nextElement());
-                bondARef2.addElement((String)st.nextElement());
-                } catch (Exception e) {
-                logger.error("Error in CML file: " + e.toString());
-                }
-            }
-            }
-            stereoGiven = false;
-            curRef = 0;
-            break;
-        case COORDINATE2 :
-            for (int i = 0; i < atts.getLength(); i++) {
-            if (atts.getQName(i).equals("builtin")) {
-                BUILTIN = atts.getValue(i);
-                logger.debug("Valid element coord found, builtin: " + atts.getValue(i));
-            }
-            }
-            break;
-        case COORDINATE3 :
-            for (int i = 0; i < atts.getLength(); i++) {
-            if (atts.getQName(i).equals("builtin")) {
-                        logger.debug("BUILTIN value set for coordinate3: " +atts.getValue(i));
-                BUILTIN = atts.getValue(i);
-            } else {
-                        logger.warn("Unkown coordinate3 builtin value: " + atts.getValue(i));
+
+            case ATOM:
+
+                for (int i = 0; i < atts.getLength(); i++) {
+
+                    String att = atts.getQName(i);
+                    String value = atts.getValue(i);
+
+                    if (att.equals("id")) { // this is supported in CML 1.x
+                        elid.addElement(value);
+                    } // this is supported in CML 2.0 
+                    else if (att.equals("elementType")) {
+                        elsym.addElement(value);
+                    } // this is supported in CML 2.0 
+                    else if (att.equals("x2")) {
+                        x2.addElement(value);
+                    } // this is supported in CML 2.0 
+                    else if (att.equals("y2")) {
+                        y2.addElement(value);
+                    } // this is supported in CML 2.0 
+                    else if (att.equals("x3")) {
+                        x3.addElement(value);
+                    } // this is supported in CML 2.0 
+                    else if (att.equals("y3")) {
+                        y3.addElement(value);
+                    } // this is supported in CML 2.0 
+                    else if (att.equals("z3")) {
+                        z3.addElement(value);
+                    } // this is supported in CML 2.0 
+                    else if (att.equals("formalCharge")) {
+                        formalCharges.addElement(value);
+                    } // this is supported in CML 2.0 
+                    else if (att.equals("hydrogenCount")) {
+                        hCounts.addElement(value);
+                    } else {
+                        logger.warn("Unsupported attribute: " + att);
                     }
-            }
-            break;
-        case STRING :
-            for (int i = 0; i < atts.getLength(); i++) {
-            if (atts.getQName(i).equals("builtin")) {
-                BUILTIN = atts.getValue(i);
-            } else if (atts.getQName(i).equals("title")) {
-                elementTitle = atts.getValue(i);
-            }
-            }
-            break;
-        case FLOAT :
-            for (int i = 0; i < atts.getLength(); i++) {
-                if (atts.getQName(i).equals("builtin")) {
-                    BUILTIN = atts.getValue(i);
-                } else if (atts.getQName(i).equals("title")) {
-                    elementTitle = atts.getValue(i);
                 }
-            }
-            break;
-        case INTEGER :
-            for (int i = 0; i < atts.getLength(); i++) {
-                if (atts.getQName(i).equals("builtin")) {
-                    BUILTIN = atts.getValue(i);
-                } else if (atts.getQName(i).equals("title")) {
-                    elementTitle = atts.getValue(i);
+
+                break;
+
+            case BOND:
+
+                for (int i = 0; i < atts.getLength(); i++) {
+                    String att = atts.getQName(i);
+                    logger.debug(
+                            "B2 " + att + "=" + 
+                            atts.getValue(i));
+
+                    if (att.equals("id")) {
+                        bondid.addElement(atts.getValue(i));
+                        logger.debug("B3 " + bondid);
+                    } else if (att.equals("atomRefs") || // this is CML 1.x support
+                               att.equals("atomRefs2")) { // this is CML 2.0 support
+
+                        // expect exactly two references
+                        try {
+                            StringTokenizer st = new StringTokenizer(atts.getValue(
+                                                                             i));
+                            bondARef1.addElement((String)st.nextElement());
+                            bondARef2.addElement((String)st.nextElement());
+                        } catch (Exception e) {
+                            logger.error("Error in CML file: " + e.toString());
+                        }
+                    } else if (att.equals("order")) { // this is CML 2.0 support
+                        order.addElement(atts.getValue(i).trim());
+                    }
                 }
-            }
-            break;
-        case ATOMARRAY :
-            break;
-        case INTEGERARRAY :
-            for (int i = 0; i < atts.getLength(); i++) {
-            if (atts.getQName(i).equals("builtin"))
-                BUILTIN = atts.getValue(i);
-            }
-            break;
-        case STRINGARRAY :
-            for (int i = 0; i < atts.getLength(); i++) {
-            if (atts.getQName(i).equals("builtin"))
-                BUILTIN = atts.getValue(i);
-            }
-            break;
-        case FLOATARRAY :
-            for (int i = 0; i < atts.getLength(); i++) {
-            if (atts.getQName(i).equals("builtin"))
-                BUILTIN = atts.getValue(i);
-            if (atts.getQName(i).equals("title"))
-                elementTitle = atts.getValue(i);
-            }
-            break;
-        case MOLECULE :
-            newMolecule();
-            BUILTIN = "";
-            cdo.startObject("Molecule");
-            break;
-        case CRYSTAL:
-            cdo.startObject("Crystal");
-            break;
-        case LIST :
-            break;
+
+                stereoGiven = false;
+                curRef = 0;
+
+                break;
+
+            case COORDINATE2:
+
+                for (int i = 0; i < atts.getLength(); i++) {
+
+                    if (atts.getQName(i).equals("builtin")) {
+                        BUILTIN = atts.getValue(i);
+                        logger.debug(
+                                "Valid element coord found, builtin: " + 
+                                atts.getValue(i));
+                    }
+                }
+
+                break;
+
+            case COORDINATE3:
+
+                for (int i = 0; i < atts.getLength(); i++) {
+
+                    if (atts.getQName(i).equals("builtin")) {
+                        logger.debug(
+                                "BUILTIN value set for coordinate3: " + 
+                                atts.getValue(i));
+                        BUILTIN = atts.getValue(i);
+                    } else {
+                        logger.warn(
+                                "Unkown coordinate3 builtin value: " + 
+                                atts.getValue(i));
+                    }
+                }
+
+                break;
+
+            case STRING:
+
+                for (int i = 0; i < atts.getLength(); i++) {
+
+                    if (atts.getQName(i).equals("builtin")) {
+                        BUILTIN = atts.getValue(i);
+                    } else if (atts.getQName(i).equals("title")) {
+                        elementTitle = atts.getValue(i);
+                    }
+                }
+
+                break;
+
+            case FLOAT:
+
+                for (int i = 0; i < atts.getLength(); i++) {
+
+                    if (atts.getQName(i).equals("builtin")) {
+                        BUILTIN = atts.getValue(i);
+                    } else if (atts.getQName(i).equals("title")) {
+                        elementTitle = atts.getValue(i);
+                    }
+                }
+
+                break;
+
+            case INTEGER:
+
+                for (int i = 0; i < atts.getLength(); i++) {
+
+                    if (atts.getQName(i).equals("builtin")) {
+                        BUILTIN = atts.getValue(i);
+                    } else if (atts.getQName(i).equals("title")) {
+                        elementTitle = atts.getValue(i);
+                    }
+                }
+
+                break;
+
+            case ATOMARRAY:
+                break;
+
+            case INTEGERARRAY:
+
+                for (int i = 0; i < atts.getLength(); i++) {
+
+                    if (atts.getQName(i).equals("builtin"))
+                        BUILTIN = atts.getValue(i);
+                }
+
+                break;
+
+            case STRINGARRAY:
+
+                for (int i = 0; i < atts.getLength(); i++) {
+
+                    if (atts.getQName(i).equals("builtin"))
+                        BUILTIN = atts.getValue(i);
+                }
+
+                break;
+
+            case FLOATARRAY:
+
+                for (int i = 0; i < atts.getLength(); i++) {
+
+                    if (atts.getQName(i).equals("builtin"))
+                        BUILTIN = atts.getValue(i);
+
+                    if (atts.getQName(i).equals("title"))
+                        elementTitle = atts.getValue(i);
+                }
+
+                break;
+
+            case MOLECULE:
+                newMolecule();
+                BUILTIN = "";
+                cdo.startObject("Molecule");
+
+                break;
+
+            case CRYSTAL:
+                cdo.startObject("Crystal");
+
+                break;
+
+            case LIST:
+                break;
         }
     }
 
     public void endElement(String uri, String name, String raw) {
         logger.debug("EndElement: " + name);
         setCurrentElement(name);
+
         switch (CurrentElement) {
-            case BOND :
-                if (!stereoGiven) bondStereo.addElement("");
+
+            case BOND:
+
+                if (!stereoGiven)
+                    bondStereo.addElement("");
+
                 break;
-            case ATOM :
+
+            case ATOM:
+
                 if (x3.size() > formalCharges.size()) {
-                  formalCharges.addElement("0");
+                    formalCharges.addElement("0");
                 }
+
                 break;
-            case MOLECULE :
+
+            case MOLECULE:
                 storeData();
                 cdo.endObject("Molecule");
+
                 break;
+
             case COORDINATE3:
+
                 if (BUILTIN.equals("xyz3")) {
                     logger.debug("New coord3 xyz3 found: " + currentChars);
+
                     try {
+
                         StringTokenizer st = new StringTokenizer(currentChars);
                         x3.addElement(st.nextToken());
                         y3.addElement(st.nextToken());
@@ -308,30 +407,38 @@ public class Convention implements ConventionInterface {
                         logger.debug("coord3 y3.length: " + y3.size());
                         logger.debug("coord3 z3.length: " + z3.size());
                     } catch (Exception e) {
-                        logger.error("CMLParsing error while setting coordinate3!");
+                        logger.error(
+                                "CMLParsing error while setting coordinate3!");
                     }
                 } else {
                     logger.warn("Unknown coordinate3 BUILTIN: " + BUILTIN);
                 }
+
                 break;
         }
+
         currentChars = "";
         BUILTIN = "";
         elementTitle = "";
     }
 
-    public void characterData (char ch[], int start, int length) {
+    public void characterData(char[] ch, int start, int length) {
         logger.debug("CD");
+
         String s = new String(ch, start, length);
+
         switch (CurrentElement) {
-            case STRING :
+
+            case STRING:
                 logger.debug("Builtin: " + BUILTIN);
+
                 if (BUILTIN.equals("elementType")) {
                     logger.debug("Element: " + s.trim());
                     elsym.addElement(s);
                 } else if (BUILTIN.equals("atomRef")) {
                     curRef++;
                     logger.debug("Bond: ref #" + curRef);
+
                     if (curRef == 1) {
                         bondARef1.addElement(s.trim());
                     } else if (curRef == 2) {
@@ -341,12 +448,16 @@ public class Convention implements ConventionInterface {
                     logger.debug("Bond: order " + s.trim());
                     order.addElement(s.trim());
                 } else if (BUILTIN.equals("formalCharge")) {
+
                     // NOTE: this combination is in violation of the CML DTD!!!
                     logger.debug("Charge: " + s.trim());
                     formalCharges.addElement(s.trim());
                 }
+
                 break;
-            case FLOAT :
+
+            case FLOAT:
+
                 if (BUILTIN.equals("x3")) {
                     x3.addElement(s.trim());
                 } else if (BUILTIN.equals("y3")) {
@@ -358,150 +469,216 @@ public class Convention implements ConventionInterface {
                 } else if (BUILTIN.equals("y2")) {
                     y2.addElement(s.trim());
                 } else if (BUILTIN.equals("order")) {
+
                     // NOTE: this combination is in violation of the CML DTD!!!
                     order.addElement(s.trim());
-                } else if (BUILTIN.equals("charge") ||
+                } else if (BUILTIN.equals("charge") || 
                            BUILTIN.equals("partialCharge")) {
                     partialCharges.addElement(s.trim());
                 }
+
                 break;
-            case INTEGER :
+
+            case INTEGER:
+
                 if (BUILTIN.equals("formalCharge")) {
                     formalCharges.addElement(s.trim());
                 }
+
                 break;
-            case COORDINATE2 :
+
+            case COORDINATE2:
+
                 if (BUILTIN.equals("xy2")) {
                     logger.debug("New coord2 xy2 found." + s);
-                try {      
-                    StringTokenizer st = new StringTokenizer(s);
-                    x2.addElement(st.nextToken());
-                    y2.addElement(st.nextToken());
-                } catch (Exception e) {
-                    notify("CMLParsing error: " + e, SYSTEMID, 175,1);
+
+                    try {
+
+                        StringTokenizer st = new StringTokenizer(s);
+                        x2.addElement(st.nextToken());
+                        y2.addElement(st.nextToken());
+                    } catch (Exception e) {
+                        notify("CMLParsing error: " + e, SYSTEMID, 175, 1);
+                    }
                 }
-                }
+
                 break;
-            case COORDINATE3 :
+
+            case COORDINATE3:
                 currentChars = currentChars + s;
+
                 break;
-            case STRINGARRAY :
+
+            case STRINGARRAY:
+
                 if (BUILTIN.equals("id") || BUILTIN.equals("atomId")) {
+
                     // use of "id" seems incorrect by quick look at DTD
                     try {
+
                         StringTokenizer st = new StringTokenizer(s);
+
                         while (st.hasMoreTokens()) {
+
                             String token = st.nextToken();
                             logger.debug("StringArray (Token): " + token);
                             elid.addElement(token);
                         }
                     } catch (Exception e) {
-                        notify("CMLParsing error: " + e, SYSTEMID, 186,1);
+                        notify("CMLParsing error: " + e, SYSTEMID, 186, 1);
                     }
                 } else if (BUILTIN.equals("elementType")) {
+
                     try {
+
                         StringTokenizer st = new StringTokenizer(s);
-                        while (st.hasMoreTokens()) elsym.addElement(st.nextToken());
+
+                        while (st.hasMoreTokens())
+                            elsym.addElement(st.nextToken());
                     } catch (Exception e) {
-                        notify("CMLParsing error: " + e, SYSTEMID, 194,1);
+                        notify("CMLParsing error: " + e, SYSTEMID, 194, 1);
                     }
                 } else if (BUILTIN.equals("atomRefs")) {
                     curRef++;
                     logger.debug("New atomRefs found: " + curRef);
+
                     try {
+
                         StringTokenizer st = new StringTokenizer(s);
+
                         while (st.hasMoreTokens()) {
-                        String token = st.nextToken();
-                        logger.debug("Token: " + token);
-                        if (curRef == 1) {
-                            bondARef1.addElement(token);
-                        } else if (curRef == 2) {
-                            bondARef2.addElement(token);
-                        }
+
+                            String token = st.nextToken();
+                            logger.debug("Token: " + token);
+
+                            if (curRef == 1) {
+                                bondARef1.addElement(token);
+                            } else if (curRef == 2) {
+                                bondARef2.addElement(token);
+                            }
                         }
                     } catch (Exception e) {
-                        notify("CMLParsing error: " + e, SYSTEMID, 194,1);
+                        notify("CMLParsing error: " + e, SYSTEMID, 194, 1);
                     }
                 } else if (BUILTIN.equals("order")) {
                     logger.debug("New bond order found.");
+
                     try {
+
                         StringTokenizer st = new StringTokenizer(s);
+
                         while (st.hasMoreTokens()) {
+
                             String token = st.nextToken();
                             logger.debug("Token: " + token);
                             order.addElement(token);
                         }
                     } catch (Exception e) {
-                        notify("CMLParsing error: " + e, SYSTEMID, 194,1);
+                        notify("CMLParsing error: " + e, SYSTEMID, 194, 1);
                     }
                 }
+
                 break;
-            case INTEGERARRAY :
+
+            case INTEGERARRAY:
                 logger.debug("IntegerArray: builtin = " + BUILTIN);
+
                 if (BUILTIN.equals("formalCharge")) {
+
                     try {
+
                         StringTokenizer st = new StringTokenizer(s);
+
                         while (st.hasMoreTokens()) {
+
                             String token = st.nextToken();
                             logger.debug("Charge added: " + token);
                             formalCharges.addElement(token);
                         }
                     } catch (Exception e) {
-                        notify("CMLParsing error: " + e, SYSTEMID, 205,1);
+                        notify("CMLParsing error: " + e, SYSTEMID, 205, 1);
                     }
                 }
-            case FLOATARRAY :
+
+            case FLOATARRAY:
+
                 if (BUILTIN.equals("x3")) {
+
                     try {
+
                         StringTokenizer st = new StringTokenizer(s);
-                        while (st.hasMoreTokens()) x3.addElement(st.nextToken());
+
+                        while (st.hasMoreTokens())
+                            x3.addElement(st.nextToken());
                     } catch (Exception e) {
-                        notify("CMLParsing error: " + e, SYSTEMID, 205,1);
+                        notify("CMLParsing error: " + e, SYSTEMID, 205, 1);
                     }
                 } else if (BUILTIN.equals("y3")) {
+
                     try {
+
                         StringTokenizer st = new StringTokenizer(s);
-                        while (st.hasMoreTokens()) y3.addElement(st.nextToken());
+
+                        while (st.hasMoreTokens())
+                            y3.addElement(st.nextToken());
                     } catch (Exception e) {
-                        notify("CMLParsing error: " + e, SYSTEMID, 213,1);
+                        notify("CMLParsing error: " + e, SYSTEMID, 213, 1);
                     }
                 } else if (BUILTIN.equals("z3")) {
+
                     try {
+
                         StringTokenizer st = new StringTokenizer(s);
-                        while (st.hasMoreTokens()) z3.addElement(st.nextToken());
+
+                        while (st.hasMoreTokens())
+                            z3.addElement(st.nextToken());
                     } catch (Exception e) {
-                        notify("CMLParsing error: " + e, SYSTEMID, 221,1);
+                        notify("CMLParsing error: " + e, SYSTEMID, 221, 1);
                     }
                 } else if (BUILTIN.equals("x2")) {
                     logger.debug("New floatArray found.");
+
                     try {
+
                         StringTokenizer st = new StringTokenizer(s);
-                        while (st.hasMoreTokens()) x2.addElement(st.nextToken());
+
+                        while (st.hasMoreTokens())
+                            x2.addElement(st.nextToken());
                     } catch (Exception e) {
-                        notify("CMLParsing error: " + e, SYSTEMID, 205,1);
+                        notify("CMLParsing error: " + e, SYSTEMID, 205, 1);
                     }
                 } else if (BUILTIN.equals("y2")) {
                     logger.debug("New floatArray found.");
+
                     try {
+
                         StringTokenizer st = new StringTokenizer(s);
-                        while (st.hasMoreTokens()) y2.addElement(st.nextToken());
+
+                        while (st.hasMoreTokens())
+                            y2.addElement(st.nextToken());
                     } catch (Exception e) {
-                        notify("CMLParsing error: " + e, SYSTEMID, 454,1);
+                        notify("CMLParsing error: " + e, SYSTEMID, 454, 1);
                     }
                 } else if (BUILTIN.equals("partialCharge")) {
                     logger.debug("New floatArray with partial charges found.");
+
                     try {
+
                         StringTokenizer st = new StringTokenizer(s);
-                        while (st.hasMoreTokens()) partialCharges.addElement(st.nextToken());
+
+                        while (st.hasMoreTokens())
+                            partialCharges.addElement(st.nextToken());
                     } catch (Exception e) {
-                        notify("CMLParsing error: " + e, SYSTEMID, 462,1);
+                        notify("CMLParsing error: " + e, SYSTEMID, 462, 1);
                     }
                 }
+
                 break;
         }
     }
 
     protected void setCurrentElement(String name) {
+
         // logger.debug("CE: " + name);
         if (name.equals("string")) {
             CurrentElement = STRING;
@@ -551,10 +728,13 @@ public class Convention implements ConventionInterface {
             CurrentElement = FEATURE;
         } else {
             CurrentElement = UNKNOWN;
-        };
+        }
+
+        ;
     }
 
-    protected void notify(String message, String systemId, int line, int column) {
+    protected void notify(String message, String systemId, int line, 
+                          int column) {
         logger.debug("Message: " + message);
         logger.debug("SystemId: " + systemId);
         logger.debug("Line: " + line);
@@ -562,99 +742,151 @@ public class Convention implements ConventionInterface {
     }
 
     protected void storeData() {
-      int atomcount = elid.size();
-      logger.debug("No atom ids: " + atomcount);
-      boolean has3D = false;
-      boolean has2D = false;
-      boolean hasFormalCharge = false;
-      boolean hasPartialCharge = false;
-      boolean hasSymbols = false;
-      if (elsym.size() == atomcount) {
-        hasSymbols = true;
-      } else {
-        logger.debug("No atom symbols: " + elsym.size() + " != " + atomcount);
-      }
-      if ((x3.size() == atomcount) &&
-          (y3.size() == atomcount) &&
-          (z3.size() == atomcount)) {
-        has3D = true;
-      } else {
-        logger.debug("No 3D info: " + x3.size() + " " + y3.size() +
-                       " " + z3.size() + " != " + atomcount);
-      }
-      if ((x2.size() == atomcount) &&
-          (y2.size() == atomcount)) {
-        has2D = true;
-      } else {
-        logger.debug("No 2D info: " + x2.size() + " " + y2.size() +
-                       " != " + atomcount);
-      }
-      if (formalCharges.size() == atomcount) {
-        hasFormalCharge = true;
-      } else {
-        logger.debug("No formal Charge info: " + formalCharges.size() + " != " + atomcount);
-      }
-      if (partialCharges.size() == atomcount) {
-        hasPartialCharge = true;
-      } else {
-        logger.debug("No partial Charge info: " + partialCharges.size() + " != " + atomcount);
-      }
-      for (int i=0; i<atomcount; i++) {
-        logger.info("Storing atom: " + i);
-        cdo.startObject("Atom");
-        cdo.setObjectProperty("Atom", "id", (String)elid.elementAt(i));
-        // store optional atom properties
-        if (hasSymbols) {
-            cdo.setObjectProperty("Atom", "type", (String)elsym.elementAt(i));
+
+        int atomcount = elid.size();
+        logger.debug("No atom ids: " + atomcount);
+
+        boolean has3D = false;
+        boolean has2D = false;
+        boolean hasFormalCharge = false;
+        boolean hasPartialCharge = false;
+        boolean hasHCounts = false;
+        boolean hasSymbols = false;
+
+        if (elsym.size() == atomcount) {
+            hasSymbols = true;
+        } else {
+            logger.debug(
+                    "No atom symbols: " + elsym.size() + " != " + atomcount);
         }
-        if (has3D) {
-          cdo.setObjectProperty("Atom", "x3", (String)x3.elementAt(i));
-          cdo.setObjectProperty("Atom", "y3", (String)y3.elementAt(i));
-          cdo.setObjectProperty("Atom", "z3", (String)z3.elementAt(i));
+
+        if ((x3.size() == atomcount) && (y3.size() == atomcount) && 
+            (z3.size() == atomcount)) {
+            has3D = true;
+        } else {
+            logger.debug(
+                    "No 3D info: " + x3.size() + " " + y3.size() + " " + 
+                    z3.size() + " != " + atomcount);
         }
-        if (hasFormalCharge) {
-          cdo.setObjectProperty("Atom", "charge", (String)formalCharges.elementAt(i));
+
+        if ((x2.size() == atomcount) && (y2.size() == atomcount)) {
+            has2D = true;
+        } else {
+            logger.debug(
+                    "No 2D info: " + x2.size() + " " + y2.size() + " != " + 
+                    atomcount);
         }
-        if (hasPartialCharge) {
-          logger.debug("Storing partial atomic charge...");
-          cdo.setObjectProperty("Atom", "partialCharge", (String)partialCharges.elementAt(i));
+
+        if (formalCharges.size() == atomcount) {
+            hasFormalCharge = true;
+        } else {
+            logger.debug(
+                    "No formal Charge info: " + formalCharges.size() + 
+                    " != " + atomcount);
         }
-        if (has2D) {
-          cdo.setObjectProperty("Atom", "x2", (String)x2.elementAt(i));
-          cdo.setObjectProperty("Atom", "y2", (String)y2.elementAt(i));
+
+        if (partialCharges.size() == atomcount) {
+            hasPartialCharge = true;
+        } else {
+            logger.debug(
+                    "No partial Charge info: " + partialCharges.size() + 
+                    " != " + atomcount);
         }
-        cdo.endObject("Atom");
-      }
-      int bondcount = order.size();
-      logger.debug("Testing a1,a2,stereo: " + bondARef1.size() + "," + bondARef2.size() + "," + bondStereo.size() + "=" + order.size());
-      if ((bondARef1.size() == bondcount) &&
-          (bondARef2.size() == bondcount)) {
-        logger.debug("About to add bond info to " + cdo.getClass().getName());
-        Enumeration orders = order.elements();
-        Enumeration bar1s = bondARef1.elements();
-        Enumeration bar2s = bondARef2.elements();
-        Enumeration stereos = bondStereo.elements();
-      while (orders.hasMoreElements()) {
-          cdo.startObject("Bond");
-          cdo.setObjectProperty("Bond", "atom1", new Integer(elid.indexOf((String)bar1s.nextElement())).toString());
-          cdo.setObjectProperty("Bond", "atom2", new Integer(elid.indexOf((String)bar2s.nextElement())).toString());
-          String bondOrder = (String)orders.nextElement();
-          if ("S".equals(bondOrder)) {
-              cdo.setObjectProperty("Bond", "order", "1");
-          } else if ("D".equals(bondOrder)) {
-              cdo.setObjectProperty("Bond", "order", "2");
-          } else if ("T".equals(bondOrder)) {
-              cdo.setObjectProperty("Bond", "order", "3");
-          } else if ("A".equals(bondOrder)) {
-              cdo.setObjectProperty("Bond", "order", "1.5");
-          } else {
-              cdo.setObjectProperty("Bond", "order", bondOrder);
-          }
-          if (stereos.hasMoreElements()) {
-            cdo.setObjectProperty("Bond", "stereo", (String)stereos.nextElement()); 
-          }
-          cdo.endObject("Bond");
+
+        if (hCounts.size() == atomcount) {
+            hasHCounts = true;
+        } else {
+            logger.debug(
+                    "No hydrogen Count info: " + hCounts.size() + 
+                    " != " + atomcount);
         }
-      }
+
+        for (int i = 0; i < atomcount; i++) {
+            logger.info("Storing atom: " + i);
+            cdo.startObject("Atom");
+            cdo.setObjectProperty("Atom", "id", (String)elid.elementAt(i));
+
+            // store optional atom properties
+            if (hasSymbols) {
+                cdo.setObjectProperty("Atom", "type", 
+                                      (String)elsym.elementAt(i));
+            }
+
+            if (has3D) {
+                cdo.setObjectProperty("Atom", "x3", (String)x3.elementAt(i));
+                cdo.setObjectProperty("Atom", "y3", (String)y3.elementAt(i));
+                cdo.setObjectProperty("Atom", "z3", (String)z3.elementAt(i));
+            }
+
+            if (hasFormalCharge) {
+                cdo.setObjectProperty("Atom", "formalCharge", 
+                                      (String)formalCharges.elementAt(i));
+            }
+
+            if (hasPartialCharge) {
+                logger.debug("Storing partial atomic charge...");
+                cdo.setObjectProperty("Atom", "partialCharge", 
+                                      (String)partialCharges.elementAt(i));
+            }
+
+            if (hasHCounts) {
+                cdo.setObjectProperty("Atom", "hydrogenCount", (String)hCounts.elementAt(i));
+            }
+
+            if (has2D) {
+                cdo.setObjectProperty("Atom", "x2", (String)x2.elementAt(i));
+                cdo.setObjectProperty("Atom", "y2", (String)y2.elementAt(i));
+            }
+
+            cdo.endObject("Atom");
+        }
+
+        int bondcount = order.size();
+        logger.debug(
+                "Testing a1,a2,stereo: " + bondARef1.size() + "," + 
+                bondARef2.size() + "," + bondStereo.size() + "=" + 
+                order.size());
+
+        if ((bondARef1.size() == bondcount) && 
+            (bondARef2.size() == bondcount)) {
+            logger.debug(
+                    "About to add bond info to " + cdo.getClass().getName());
+
+            Enumeration orders = order.elements();
+            Enumeration bar1s = bondARef1.elements();
+            Enumeration bar2s = bondARef2.elements();
+            Enumeration stereos = bondStereo.elements();
+
+            while (orders.hasMoreElements()) {
+                cdo.startObject("Bond");
+                cdo.setObjectProperty("Bond", "atom1", 
+                                      new Integer(elid.indexOf(
+                                                          (String)bar1s.nextElement())).toString());
+                cdo.setObjectProperty("Bond", "atom2", 
+                                      new Integer(elid.indexOf(
+                                                          (String)bar2s.nextElement())).toString());
+
+                String bondOrder = (String)orders.nextElement();
+
+                if ("S".equals(bondOrder)) {
+                    cdo.setObjectProperty("Bond", "order", "1");
+                } else if ("D".equals(bondOrder)) {
+                    cdo.setObjectProperty("Bond", "order", "2");
+                } else if ("T".equals(bondOrder)) {
+                    cdo.setObjectProperty("Bond", "order", "3");
+                } else if ("A".equals(bondOrder)) {
+                    cdo.setObjectProperty("Bond", "order", "1.5");
+                } else {
+                    cdo.setObjectProperty("Bond", "order", bondOrder);
+                }
+
+                if (stereos.hasMoreElements()) {
+                    cdo.setObjectProperty("Bond", "stereo", 
+                                          (String)stereos.nextElement());
+                }
+
+                cdo.endObject("Bond");
+            }
+        }
     }
 }
