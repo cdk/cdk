@@ -13,9 +13,6 @@
   <para>This is the list of stuff that is still missing in CDK:
     <itemizedlist>
          <listitem>
-                <para>a SMILES parser/producer</para>
-         </listitem>
-         <listitem>
                 <para>a IUPAC name parser/producer</para>
          </listitem>
          <listitem>
@@ -29,7 +26,7 @@
 				  (like Tinker, Gaussian, Mopac etc)</para>
          </listitem>
          <listitem>
-                <para>A non-accelerated 3D viewer</para>
+                <para>A working non-accelerated 3D viewer</para>
          </listitem>
     </itemizedlist>
   </para>

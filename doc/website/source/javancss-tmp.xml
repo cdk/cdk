@@ -1,26 +1,26 @@
 <?xml version="1.0"?>
 <javancss>
-  <date>2002-06-05</date>
-  <time>14:49:42</time>
+  <date>2002-08-17</date>
+  <time>21:55:54</time>
   <packages>
     <package>
       <name>org.openscience.cdk</name>
       <classes>23</classes>
-      <functions>222</functions>
-      <ncss>1083</ncss>
-      <javadocs>238</javadocs>
-      <javadoc_lines>1558</javadoc_lines>
+      <functions>226</functions>
+      <ncss>1079</ncss>
+      <javadocs>248</javadocs>
+      <javadoc_lines>1626</javadoc_lines>
       <single_comment_lines>12</single_comment_lines>
-      <multi_comment_lines>613</multi_comment_lines>
+      <multi_comment_lines>642</multi_comment_lines>
     </package>
     <package>
       <name>org.openscience.cdk.applications</name>
       <classes>2</classes>
-      <functions>7</functions>
-      <ncss>197</ncss>
+      <functions>8</functions>
+      <ncss>235</ncss>
       <javadocs>3</javadocs>
       <javadoc_lines>17</javadoc_lines>
-      <single_comment_lines>4</single_comment_lines>
+      <single_comment_lines>9</single_comment_lines>
       <multi_comment_lines>47</multi_comment_lines>
     </package>
     <package>
@@ -94,6 +94,26 @@
       <multi_comment_lines>26</multi_comment_lines>
     </package>
     <package>
+      <name>org.openscience.cdk.graphinvariant</name>
+      <classes>3</classes>
+      <functions>52</functions>
+      <ncss>560</ncss>
+      <javadocs>45</javadocs>
+      <javadoc_lines>262</javadoc_lines>
+      <single_comment_lines>135</single_comment_lines>
+      <multi_comment_lines>52</multi_comment_lines>
+    </package>
+    <package>
+      <name>org.openscience.cdk.graphinvariant.exception</name>
+      <classes>3</classes>
+      <functions>0</functions>
+      <ncss>6</ncss>
+      <javadocs>0</javadocs>
+      <javadoc_lines>0</javadoc_lines>
+      <single_comment_lines>0</single_comment_lines>
+      <multi_comment_lines>0</multi_comment_lines>
+    </package>
+    <package>
       <name>org.openscience.cdk.grid.test</name>
       <classes>1</classes>
       <functions>1</functions>
@@ -111,25 +131,25 @@
       <javadocs>5</javadocs>
       <javadoc_lines>37</javadoc_lines>
       <single_comment_lines>10</single_comment_lines>
-      <multi_comment_lines>27</multi_comment_lines>
+      <multi_comment_lines>28</multi_comment_lines>
     </package>
     <package>
       <name>org.openscience.cdk.io</name>
-      <classes>12</classes>
-      <functions>71</functions>
-      <ncss>891</ncss>
-      <javadocs>48</javadocs>
-      <javadoc_lines>318</javadoc_lines>
+      <classes>13</classes>
+      <functions>73</functions>
+      <ncss>919</ncss>
+      <javadocs>59</javadocs>
+      <javadoc_lines>392</javadoc_lines>
       <single_comment_lines>45</single_comment_lines>
-      <multi_comment_lines>372</multi_comment_lines>
+      <multi_comment_lines>397</multi_comment_lines>
     </package>
     <package>
       <name>org.openscience.cdk.io.cml</name>
       <classes>11</classes>
       <functions>81</functions>
       <ncss>956</ncss>
-      <javadocs>18</javadocs>
-      <javadoc_lines>92</javadoc_lines>
+      <javadocs>21</javadocs>
+      <javadoc_lines>113</javadoc_lines>
       <single_comment_lines>14</single_comment_lines>
       <multi_comment_lines>322</multi_comment_lines>
     </package>
@@ -138,30 +158,50 @@
       <classes>5</classes>
       <functions>20</functions>
       <ncss>53</ncss>
-      <javadocs>5</javadocs>
-      <javadoc_lines>20</javadoc_lines>
+      <javadocs>24</javadocs>
+      <javadoc_lines>110</javadoc_lines>
       <single_comment_lines>0</single_comment_lines>
       <multi_comment_lines>145</multi_comment_lines>
+    </package>
+    <package>
+      <name>org.openscience.cdk.isomorphism</name>
+      <classes>2</classes>
+      <functions>13</functions>
+      <ncss>110</ncss>
+      <javadocs>8</javadocs>
+      <javadoc_lines>47</javadoc_lines>
+      <single_comment_lines>0</single_comment_lines>
+      <multi_comment_lines>67</multi_comment_lines>
     </package>
     <package>
       <name>org.openscience.cdk.layout</name>
       <classes>3</classes>
       <functions>54</functions>
-      <ncss>795</ncss>
+      <ncss>818</ncss>
       <javadocs>52</javadocs>
       <javadoc_lines>324</javadoc_lines>
-      <single_comment_lines>21</single_comment_lines>
+      <single_comment_lines>35</single_comment_lines>
       <multi_comment_lines>188</multi_comment_lines>
     </package>
     <package>
+      <name>org.openscience.cdk.libio.joelib</name>
+      <classes>1</classes>
+      <functions>6</functions>
+      <ncss>85</ncss>
+      <javadocs>7</javadocs>
+      <javadoc_lines>58</javadoc_lines>
+      <single_comment_lines>6</single_comment_lines>
+      <multi_comment_lines>53</multi_comment_lines>
+    </package>
+    <package>
       <name>org.openscience.cdk.math</name>
-      <classes>8</classes>
-      <functions>117</functions>
-      <ncss>996</ncss>
-      <javadocs>108</javadocs>
-      <javadoc_lines>354</javadoc_lines>
-      <single_comment_lines>26</single_comment_lines>
-      <multi_comment_lines>261</multi_comment_lines>
+      <classes>7</classes>
+      <functions>104</functions>
+      <ncss>899</ncss>
+      <javadocs>94</javadocs>
+      <javadoc_lines>309</javadoc_lines>
+      <single_comment_lines>25</single_comment_lines>
+      <multi_comment_lines>233</multi_comment_lines>
     </package>
     <package>
       <name>org.openscience.cdk.math.qm</name>
@@ -176,10 +216,10 @@
     <package>
       <name>org.openscience.cdk.renderer</name>
       <classes>15</classes>
-      <functions>162</functions>
-      <ncss>1539</ncss>
-      <javadocs>126</javadocs>
-      <javadoc_lines>610</javadoc_lines>
+      <functions>163</functions>
+      <ncss>1560</ncss>
+      <javadocs>125</javadocs>
+      <javadoc_lines>603</javadoc_lines>
       <single_comment_lines>75</single_comment_lines>
       <multi_comment_lines>438</multi_comment_lines>
     </package>
@@ -197,7 +237,7 @@
       <name>org.openscience.cdk.ringsearch</name>
       <classes>5</classes>
       <functions>27</functions>
-      <ncss>396</ncss>
+      <ncss>399</ncss>
       <javadocs>24</javadocs>
       <javadoc_lines>153</javadoc_lines>
       <single_comment_lines>31</single_comment_lines>
@@ -206,22 +246,22 @@
     <package>
       <name>org.openscience.cdk.smiles</name>
       <classes>7</classes>
-      <functions>55</functions>
-      <ncss>573</ncss>
+      <functions>56</functions>
+      <ncss>581</ncss>
       <javadocs>44</javadocs>
-      <javadoc_lines>271</javadoc_lines>
-      <single_comment_lines>22</single_comment_lines>
-      <multi_comment_lines>160</multi_comment_lines>
+      <javadoc_lines>274</javadoc_lines>
+      <single_comment_lines>21</single_comment_lines>
+      <multi_comment_lines>159</multi_comment_lines>
     </package>
     <package>
       <name>org.openscience.cdk.structgen</name>
-      <classes>3</classes>
-      <functions>23</functions>
-      <ncss>426</ncss>
-      <javadocs>25</javadocs>
-      <javadoc_lines>151</javadoc_lines>
+      <classes>4</classes>
+      <functions>29</functions>
+      <ncss>492</ncss>
+      <javadocs>31</javadocs>
+      <javadoc_lines>204</javadoc_lines>
       <single_comment_lines>1</single_comment_lines>
-      <multi_comment_lines>96</multi_comment_lines>
+      <multi_comment_lines>124</multi_comment_lines>
     </package>
     <package>
       <name>org.openscience.cdk.structgen.deterministic</name>
@@ -234,14 +274,64 @@
       <multi_comment_lines>53</multi_comment_lines>
     </package>
     <package>
+      <name>org.openscience.cdk.structgen.stochastic</name>
+      <classes>1</classes>
+      <functions>4</functions>
+      <ncss>40</ncss>
+      <javadocs>4</javadocs>
+      <javadoc_lines>14</javadoc_lines>
+      <single_comment_lines>0</single_comment_lines>
+      <multi_comment_lines>4</multi_comment_lines>
+    </package>
+    <package>
+      <name>org.openscience.cdk.structgen.stochastic.operator</name>
+      <classes>2</classes>
+      <functions>10</functions>
+      <ncss>148</ncss>
+      <javadocs>3</javadocs>
+      <javadoc_lines>9</javadoc_lines>
+      <single_comment_lines>4</single_comment_lines>
+      <multi_comment_lines>47</multi_comment_lines>
+    </package>
+    <package>
       <name>org.openscience.cdk.test</name>
-      <classes>41</classes>
-      <functions>192</functions>
-      <ncss>2566</ncss>
-      <javadocs>27</javadocs>
-      <javadoc_lines>114</javadoc_lines>
-      <single_comment_lines>662</single_comment_lines>
-      <multi_comment_lines>1000</multi_comment_lines>
+      <classes>32</classes>
+      <functions>154</functions>
+      <ncss>1878</ncss>
+      <javadocs>22</javadocs>
+      <javadoc_lines>89</javadoc_lines>
+      <single_comment_lines>649</single_comment_lines>
+      <multi_comment_lines>780</multi_comment_lines>
+    </package>
+    <package>
+      <name>org.openscience.cdk.test.database</name>
+      <classes>2</classes>
+      <functions>8</functions>
+      <ncss>199</ncss>
+      <javadocs>0</javadocs>
+      <javadoc_lines>0</javadoc_lines>
+      <single_comment_lines>3</single_comment_lines>
+      <multi_comment_lines>47</multi_comment_lines>
+    </package>
+    <package>
+      <name>org.openscience.cdk.test.internet</name>
+      <classes>1</classes>
+      <functions>2</functions>
+      <ncss>34</ncss>
+      <javadocs>0</javadocs>
+      <javadoc_lines>0</javadoc_lines>
+      <single_comment_lines>0</single_comment_lines>
+      <multi_comment_lines>23</multi_comment_lines>
+    </package>
+    <package>
+      <name>org.openscience.cdk.test.io</name>
+      <classes>3</classes>
+      <functions>11</functions>
+      <ncss>232</ncss>
+      <javadocs>2</javadocs>
+      <javadoc_lines>8</javadoc_lines>
+      <single_comment_lines>3</single_comment_lines>
+      <multi_comment_lines>78</multi_comment_lines>
     </package>
     <package>
       <name>org.openscience.cdk.test.io.cml</name>
@@ -254,30 +344,60 @@
       <multi_comment_lines>83</multi_comment_lines>
     </package>
     <package>
+      <name>org.openscience.cdk.test.libio.joelib</name>
+      <classes>1</classes>
+      <functions>6</functions>
+      <ncss>56</ncss>
+      <javadocs>0</javadocs>
+      <javadoc_lines>0</javadoc_lines>
+      <single_comment_lines>12</single_comment_lines>
+      <multi_comment_lines>23</multi_comment_lines>
+    </package>
+    <package>
+      <name>org.openscience.cdk.test.renderer</name>
+      <classes>2</classes>
+      <functions>5</functions>
+      <ncss>105</ncss>
+      <javadocs>1</javadocs>
+      <javadoc_lines>5</javadoc_lines>
+      <single_comment_lines>2</single_comment_lines>
+      <multi_comment_lines>48</multi_comment_lines>
+    </package>
+    <package>
+      <name>org.openscience.cdk.test.smiles</name>
+      <classes>2</classes>
+      <functions>12</functions>
+      <ncss>116</ncss>
+      <javadocs>0</javadocs>
+      <javadoc_lines>0</javadoc_lines>
+      <single_comment_lines>1</single_comment_lines>
+      <multi_comment_lines>46</multi_comment_lines>
+    </package>
+    <package>
       <name>org.openscience.cdk.tools</name>
       <classes>18</classes>
-      <functions>95</functions>
-      <ncss>1662</ncss>
-      <javadocs>79</javadocs>
-      <javadoc_lines>509</javadoc_lines>
+      <functions>114</functions>
+      <ncss>1722</ncss>
+      <javadocs>99</javadocs>
+      <javadoc_lines>642</javadoc_lines>
       <single_comment_lines>29</single_comment_lines>
-      <multi_comment_lines>503</multi_comment_lines>
+      <multi_comment_lines>475</multi_comment_lines>
     </package>
     <total>
-      <classes>186</classes>
-      <functions>1337</functions>
-      <ncss>14806</ncss>
-      <javadocs>971</javadocs>
-      <javadoc_lines>5360</javadoc_lines>
-      <single_comment_lines>1065</single_comment_lines>
-      <multi_comment_lines>5336</multi_comment_lines>
+      <classes>201</classes>
+      <functions>1449</functions>
+      <ncss>15955</ncss>
+      <javadocs>1090</javadocs>
+      <javadoc_lines>6128</javadoc_lines>
+      <single_comment_lines>1235</single_comment_lines>
+      <multi_comment_lines>5630</multi_comment_lines>
     </total>
     <table>
       <tr><td>Packages</td><td>Classes</td><td>Functions</td><td>NCSS</td><td>Javadocs</td><td>per</td></tr>
-      <tr><td>26.00</td><td>186.00</td><td>1,337.00</td><td>14,806.00</td><td>971.00</td><td>Project</td></tr>
-      <tr><td></td><td>7.15</td><td>51.42</td><td>569.46</td><td>37.35</td><td>Package</td></tr>
-      <tr><td></td><td></td><td>7.19</td><td>79.60</td><td>5.22</td><td>Class</td></tr>
-      <tr><td></td><td></td><td></td><td>11.07</td><td>11.07</td><td>Function</td></tr>
+      <tr><td>38.00</td><td>201.00</td><td>1,449.00</td><td>15,955.00</td><td>1,090.00</td><td>Project</td></tr>
+      <tr><td></td><td>5.29</td><td>38.13</td><td>419.87</td><td>28.68</td><td>Package</td></tr>
+      <tr><td></td><td></td><td>7.21</td><td>79.38</td><td>5.42</td><td>Class</td></tr>
+      <tr><td></td><td></td><td></td><td>11.01</td><td>11.01</td><td>Function</td></tr>
     </table>
   </packages>
 </javancss>

@@ -34,7 +34,7 @@ depends: autolayout.xml
 	$(PROC) ${STYLEDIR}/makefile-dep.xsl $^ > depends.tabular
 
 javancss-tmp.xml:
-	cd javancss/bin; ./javancss -package -xml -recursive ../../../../../org > ../../javancss-tmp.xml
+	cd javancss/bin; ./javancss -package -xml -recursive ../../../../../src > ../../javancss-tmp.xml
 
 javancss-data.xml: javancss-tmp.xml xsl/javancss2docbook.xsl
 	xsltproc xsl/javancss2docbook.xsl javancss-tmp.xml > javancss-data.xml
