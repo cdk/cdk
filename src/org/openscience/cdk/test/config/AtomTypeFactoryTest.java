@@ -141,6 +141,20 @@ public class AtomTypeFactoryTest extends TestCase {
 		assertEquals(CDKConstants.HYBRIDIZATION_SP2, atomType.getHybridization());
 	}
 
+    public void testGetAtomTypeFromPDB() {
+		AtomType atomType = null;
+		try {
+            AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/pdb_atomtypes.xml");
+			atomType = factory.getAtomType("ALA.CA");
+		} catch(Exception exc) {
+			fail("Problem getting AtomType for 'hybridization:ALA.CA' from AtomTypeFactory: "  +  exc.getMessage());
+		}
+		
+        assertNotNull(atomType);
+        assertEquals("C", atomType.getSymbol());
+        assertEquals("ALA.CA", atomType.getAtomTypeName());
+	}
+
     public void testConfigure_Atom() {
 		AtomType atomType = null;
         Atom atom = new Atom("X");
