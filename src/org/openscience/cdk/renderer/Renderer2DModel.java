@@ -1,6 +1,7 @@
-/* Renderer2DSettings.java
- * 
- * $RCSfile$    $Author$    $Date$    $Revision$
+/* $RCSfile$    
+ * $Author$    
+ * $Date$    
+ * $Revision$
  * 
  * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
  * 
@@ -470,9 +471,9 @@ public class Renderer2DModel
 		{
 			getColorHash().put(selectedPart.getAtomAt(i), getHighlightColor());
 		}
-		for (int i = 0; i < selectedPart.getBondCount(); i++)
-		{
-			getColorHash().put(selectedPart.getBondAt(i), getHighlightColor());
+        Bond[] bonds = selectedPart.getBonds();
+		for (int i = 0; i < bonds.length; i++) {
+			getColorHash().put(bonds[i], getHighlightColor());
 		}		
 	}
 

@@ -58,12 +58,13 @@ public class ConnectivityChecker
 			atomContainer.getAtomAt(f).flags[CDKConstants.VISITED] = false;
 			ac.addAtom(atomContainer.getAtomAt(f));
 		}
-		for (int f = 0; f < atomContainer.getBondCount(); f++)
+        Bond[] bonds = atomContainer.getBonds();
+		for (int f = 0; f < bonds.length; f++)
 		{
-			bond = atomContainer.getBondAt(f);
+			bond = bonds[f];
 			if (bond.flags == null) bond.flags = new boolean[100];
-			atomContainer.getBondAt(f).flags[CDKConstants.VISITED] = false;
-			ac.addBond(atomContainer.getBondAt(f));
+			bonds[f].flags[CDKConstants.VISITED] = false;
+			ac.addBond(bonds[f]);
 		}
 		atom = ac.getAtomAt(0);
 		sphere.addElement(atom);
@@ -101,9 +102,9 @@ public class ConnectivityChecker
 			atom.flags[CDKConstants.VISITED] = false;
 			ac.addAtom(atom);
 		}
-		for (int f = 0; f < atomContainer.getBondCount(); f++)
-		{
-			bond = atomContainer.getBondAt(f);
+        Bond[] bonds = atomContainer.getBonds();
+		for (int f = 0; f < bonds.length; f++){
+			bond = bonds[f];
 			if (bond.flags == null) bond.flags = new boolean[100];
 			bond.flags[CDKConstants.VISITED] = false;
 			ac.addBond(bond);

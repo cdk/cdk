@@ -264,7 +264,12 @@ public class StructureDiagramGenerator
 		Point2d ringCenter;
 		int thisRing;
 		Ring ring = rs.getMostComplexRing(); /* Get the most complex ring in this RingSet */
-		sharedAtoms = placeFirstBond(ring.getBondAt(0),firstBondVector); /* Place the most complex ring at the origin of the coordinate system */
+        // determine first bond in Ring
+        int i = 0;
+        for (i = 0; i < ring.getElectronContainerCount(); i++) {
+            if (ring.getElectronContainerAt(i) instanceof Bond) break;
+        }
+		sharedAtoms = placeFirstBond((Bond)ring.getElectronContainerAt(i),firstBondVector); /* Place the most complex ring at the origin of the coordinate system */
 		/* 
 		 * Call the method which lays out the new ring.
 		 */
@@ -375,7 +380,7 @@ public class StructureDiagramGenerator
 
 
 	/**
-	 * Does the layout for the next RingSystem that is connected to 
+	 * Does the layout for the next RingSystem that is connected to
 	 * those parts of the molecule that have already been laid out.
 	 */
 	private void layoutNextRingSystem()
@@ -402,7 +407,7 @@ public class StructureDiagramGenerator
 				vectorAtom1 = nextRingAttachmentBond.getAtomAt(0);
 			}						
 			oldPoint2 = vectorAtom2.getPoint2D();
-			oldPoint1 = vectorAtom1.getPoint2D();		
+			oldPoint1 = vectorAtom1.getPoint2D();
 			
 			//System.out.println("oldPoint1: " + oldPoint1);
 			//System.out.println("oldPoint2: " + oldPoint2);
@@ -414,7 +419,7 @@ public class StructureDiagramGenerator
 			/* Do the layout of the next ring system */
 			layoutRingSet(firstBondVector, nextRingSystem);
 			/* Place all the substituents of next ring system */
-			atomPlacer.markNotPlaced(tempAc);				
+			atomPlacer.markNotPlaced(tempAc);
 			ringSystem.add(ringPlacer.placeRingSubstituents(nextRingSystem, bondLength));
 			atomPlacer.markPlaced(tempAc);				
 
@@ -493,18 +498,20 @@ public class StructureDiagramGenerator
 	 */
 	private Atom getNextAtomWithAliphaticUnplacedNeigbors()
 	{
-		Bond bond = null; 
-		for (int f = 0; f < molecule.getBondCount(); f++)
-		{
-			bond = molecule.getBondAt(f);
-			if (bond.getAtomAt(1).flags[CDKConstants.ISPLACED] && !bond.getAtomAt(0).flags[CDKConstants.ISPLACED] )
-			{
-				return bond.getAtomAt(1);
-			}
-			
-			if (bond.getAtomAt(0).flags[CDKConstants.ISPLACED] &&  !bond.getAtomAt(1).flags[CDKConstants.ISPLACED]  )
-			{
-				return bond.getAtomAt(0);
+		Bond bond = null;
+		for (int f = 0; f < molecule.getElectronContainerCount(); f++) {
+            ElectronContainer ec = molecule.getElectronContainerAt(f);
+            if (ec instanceof Bond) {
+                bond = (Bond)ec;
+                if (bond.getAtomAt(1).flags[CDKConstants.ISPLACED] && !bond.getAtomAt(0).flags[CDKConstants.ISPLACED] )
+                {
+                    return bond.getAtomAt(1);
+                }
+
+                if (bond.getAtomAt(0).flags[CDKConstants.ISPLACED] &&  !bond.getAtomAt(1).flags[CDKConstants.ISPLACED]  )
+                {
+                    return bond.getAtomAt(0);
+                }
 			}
 		}
 		return null;
@@ -519,10 +526,10 @@ public class StructureDiagramGenerator
 	 */
 	private Bond getNextBondWithUnplacedRingAtom()
 	{
-		Bond bond = null; 
-		for (int f = 0; f < molecule.getBondCount(); f++)
-		{
-			bond = molecule.getBondAt(f);
+		Bond bond = null;
+        Bond[] bonds = molecule.getBonds();
+		for (int f = 0; f < bonds.length; f++) {
+			bond = bonds[f];
 			if (bond.getAtomAt(1).flags[CDKConstants.ISPLACED] && !bond.getAtomAt(0).flags[CDKConstants.ISPLACED]  && bond.getAtomAt(0).flags[CDKConstants.ISINRING])
 			{
 				return bond;

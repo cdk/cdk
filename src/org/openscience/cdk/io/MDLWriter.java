@@ -196,23 +196,24 @@ public class MDLWriter implements ChemObjectWriter {
 			    writer.write(line);
 			    writer.newLine();
 		    }
-			for (int g = 0; g < molecule.getBondCount(); g++)
-			{ 
-				Bond bond = molecule.getBondAt(g);
-				if (bond.getAtoms().length != 2) 
-				{ 
-					System.out.println("keine 2 Atome");
-				}
-				else
-				{
-					line = "";
-					line += formatMDLInt(molecule.getAtomNumber(bond.getAtomAt(0)) + 1,3);
-					line += formatMDLInt(molecule.getAtomNumber(bond.getAtomAt(1)) + 1,3);
-					line += formatMDLInt((int)bond.getOrder(),3);
-					line += "  0  0  0  0 ";
-					writer.write(line);
-					writer.newLine();
-				}
+			for (int g = 0; g < molecule.getElectronContainerCount(); g++) { 
+                if (molecule.getElectronContainerAt(g) instanceof Bond) {
+                    Bond bond = (Bond)molecule.getElectronContainerAt(g);
+                    if (bond.getAtoms().length != 2)
+                    {
+                        System.out.println("keine 2 Atome");
+                    }
+                    else
+                    {
+                        line = "";
+                        line += formatMDLInt(molecule.getAtomNumber(bond.getAtomAt(0)) + 1,3);
+                        line += formatMDLInt(molecule.getAtomNumber(bond.getAtomAt(1)) + 1,3);
+                        line += formatMDLInt((int)bond.getOrder(),3);
+                        line += "  0  0  0  0 ";
+                        writer.write(line);
+                        writer.newLine();
+                    }
+                }
 			}
 			writer.write("M  END");
 			writer.newLine();

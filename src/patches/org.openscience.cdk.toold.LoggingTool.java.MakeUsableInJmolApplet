@@ -1,17 +1,5 @@
 --- org/openscience/cdk/tools/LoggingTool.java	Fri Nov 22 12:06:46 2002
 +++ org/openscience/cdk/tools/LoggingTool.applet.java	Mon Nov 18 14:50:22 2002
-@@ -1,8 +1,8 @@
- /*
-- * $RCSfile$
-+ * $RCSfile$
-  * $Author$
-- * $Date$
-- * $Revision$
-+ * $Date$
-+ * $Revision$
-  *
-  * Copyright (C) 2001-2002  The Chemistry Development Kit (CDK) project
-  *
 @@ -26,44 +26,17 @@
  
  import java.net.*;

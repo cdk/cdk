@@ -1,4 +1,4 @@
-/* $RCSfile$    
+/* $RCSfile$
  * $Author$    
  * $Date$    
  * $Revision$
@@ -170,7 +170,7 @@ public class SSSRFinder
 						sssr.addElement(ring);
 					}
 					brokenBond = checkEdges(ring, molecule);
-					molecule.removeBond(brokenBond);
+					molecule.removeElectronContainer(brokenBond);
 				}
 			}
 		}
@@ -305,15 +305,10 @@ public class SSSRFinder
 	 * @param   atom  The atom to be disconnecred
 	 * @param   molecule  The molecule containing the atom
 	 */
-	 private void trim(Atom atom, Molecule molecule)
-	 {
-	 	for (int i = 0; i < molecule.getBondCount(); i++)
-	 	{
-			Bond bond = molecule.getBondAt(i);
-			if (bond.contains(atom))
-			{
-				molecule.removeBond(i);
-			}
+	 private void trim(Atom atom, Molecule molecule) {
+        Bond[] bonds = molecule.getConnectedBonds(atom);
+	 	for (int i = 0; i < bonds.length; i++) {
+            molecule.removeElectronContainer(bonds[i]);
 	 	}
 		// you are erased! Har, har, har.....  >8-)
 	 }
@@ -388,11 +383,12 @@ public class SSSRFinder
 	 */
 	private void breakBond(Atom atom, Molecule molecule)
 	{
-		for (int i = 0; i < molecule.getBondCount(); i++)
+        Bond[] bonds = molecule.getBonds();
+		for (int i = 0; i < bonds.length; i++)
 		{
-			if (molecule.getBondAt(i).contains(atom))
+			if (bonds[i].contains(atom))
 			{
-				molecule.removeBond(i);
+				molecule.removeElectronContainer(bonds[i]);
 				break;
 			}
 		}
@@ -402,6 +398,9 @@ public class SSSRFinder
 	/**
 	 * Selects an optimum edge for elimination in structures without N2 nodes.
 	 *
+     * <p>This might be severely broken! Would have helped if there was an
+     * explanation of how this algorithm worked.
+     *
 	 * @param   ring  
 	 * @param   mol  
 	 * @return     
@@ -414,10 +413,11 @@ public class SSSRFinder
 		int minMaxSize = Integer.MAX_VALUE;
 		int minMax = 0;
 		System.out.println(molecule);
-		for (int i = 0; i < ring.getBondCount(); i++)
+        Bond[] bonds = ring.getBonds();
+		for (int i = 0; i < bonds.length; i++)
 		{
-			bond = ring.getBondAt(i);
-			molecule.removeBond(bond);
+			bond = bonds[i];
+			molecule.removeElectronContainer(bond);
 			r1 = getRing(bond.getAtomAt(0),molecule);
 			r2 = getRing(bond.getAtomAt(1),molecule);
 			System.out.println("checkEdges: " + bond);
@@ -439,7 +439,7 @@ public class SSSRFinder
 				minMax = i;
 			}
 		}
-		return ring.getBondAt(minMax);
+		return (Bond)ring.getElectronContainerAt(minMax);
 	}
 	
 	

@@ -394,9 +394,10 @@ public class GeometryTools
 		Point2d bondCenter;
 		Bond closestBond = null, currentBond;
 		double smallestMouseDistance = -1, mouseDistance, bondCenterX, bondCenterY;
-		for (int i = 0; i < atomCon.getBondCount(); i++)
+        Bond[] bonds = atomCon.getBonds();
+		for (int i = 0; i < bonds.length; i++)
 		{
-			currentBond = atomCon.getBondAt(i);
+			currentBond = bonds[i];
 			bondCenter = get2DCenter(currentBond.getAtomsVector());
 			mouseDistance = Math.sqrt(Math.pow(bondCenter.x - xPosition, 2) + Math.pow(bondCenter.y - yPosition, 2));
 			if (mouseDistance < smallestMouseDistance || smallestMouseDistance == -1)
@@ -456,9 +457,9 @@ public class GeometryTools
 		double bondLengthSum = 0;
 		Bond bond = null; 
 		Atom a1 = null, a2 = null; 
-		for (int f = 0; f < ac.getBondCount(); f++)
-		{
-			bond = ac.getBondAt(f);
+        Bond[] bonds = ac.getBonds();
+		for (int f = 0; f < bonds.length; f++) {
+			bond = bonds[f];
 			bondLengthSum += 1.0;
 		}
 		return bondLength/(bondLengthSum/ac.getBondCount());

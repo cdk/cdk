@@ -84,7 +84,7 @@ public class SingleStructureRandomGeneratorTest
 	{
 		Molecule molecule = MoleculeFactory.makeAlphaPinene();
 		fixCarbonHCount(molecule);
-		molecule.removeAllBonds();
+		molecule.removeAllElectronContainers();
 		return (AtomContainer)molecule;
 	}
 	

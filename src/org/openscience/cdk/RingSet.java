@@ -61,6 +61,7 @@ public class RingSet extends Vector{
 	{
 		Ring ring;
 		Bond[] bonds;
+		Bond[] newBonds;
 		Bond bond;
 		int equalCount;
 		boolean equals;
@@ -70,15 +71,12 @@ public class RingSet extends Vector{
 			equalCount = 0;
 			ring = (Ring)this.elementAt(f);
 			bonds = ring.getBonds();
-			if (bonds.length == newRing.getBonds().length)
-			{
-				for (int i = 0; i < bonds.length; i++)
-				{
-					bond = newRing.getBondAt(i);
-					for (int n = 0; n < bonds.length; n++)
-					{
-						if (bond == bonds[n])
-						{
+            newBonds = newRing.getBonds();
+			if (bonds.length == newBonds.length) {
+				for (int i = 0; i < bonds.length; i++) {
+					bond = newBonds[i];
+					for (int n = 0; n < bonds.length; n++) {
+						if (bond == bonds[n]) {
 							equals = true;
 							equalCount++;
 							break;
@@ -87,8 +85,7 @@ public class RingSet extends Vector{
 					if (!equals) break;
 				}
 			}
-			if (equalCount == bonds.length)
-			{
+			if (equalCount == bonds.length) {
 				return true;
 			}
 		}

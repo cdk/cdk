@@ -330,7 +330,7 @@ public class JCPController2D {
                                         Bond[] conBonds = atomCon.getConnectedBonds(highlightedAtom);
                                         for (int i = 0; i < conBonds.length; i++)
                                         {
-                                                atomCon.removeBond(conBonds[i]);
+                                                atomCon.removeElectronContainer(conBonds[i]);
                                         }
                                 }
                                 catch (Exception exc)
@@ -340,7 +340,7 @@ public class JCPController2D {
                         }
                         else if (highlightedBond != null)
                         {
-                                atomCon.removeBond(highlightedBond);
+                                atomCon.removeElectronContainer(highlightedBond);
                         }
                         r2dm.fireChange();
                 }
@@ -688,9 +688,9 @@ public class JCPController2D {
                 {
                         ringAtoms[i] = new Atom(symbol);
                 }
-                for (int i = 0; i < sharedAtoms.getBondCount(); i++)
-                {
-                        newRing.setBondAt(i, sharedAtoms.getBondAt(i));
+                Bond[] bonds = sharedAtoms.getBonds();
+                for (int i = 0; i < bonds.length; i++) {
+                        newRing.setBondAt(i, bonds[i]);
                 }
                 for (int i = sharedAtoms.getBondCount(); i < ringSize - 1; i++)
                 {
@@ -749,11 +749,11 @@ public class JCPController2D {
                                 selectedPart.addAtom(currentAtom);
                         }
                 }
-                for (int i = 0; i < atomCon.getBondCount(); i++)
+                Bond[] bonds = atomCon.getBonds();
+                for (int i = 0; i < bonds.length; i++)
                 {
-                        currentBond = atomCon.getBondAt(i);
-                        for (int j = 0; j < selectedPart.getAtomCount(); j++)
-                        {
+                        currentBond = bonds[i];
+                        for (int j = 0; j < selectedPart.getAtomCount(); j++) {
                                 currentAtom = selectedPart.getAtomAt(j);
                                 if (selectedPart.contains(currentBond.getConnectedAtom(currentAtom)))
                                 {
@@ -764,5 +764,5 @@ public class JCPController2D {
                 }
                 return selectedPart;
         }
-        
+
 }

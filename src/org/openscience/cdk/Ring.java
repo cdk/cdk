@@ -63,9 +63,9 @@ public class Ring extends AtomContainer
 		for (int i = 1; i < ringSize; i++)
 		{
 			atoms[i] = new Atom(elementSymbol);
-			super.bonds[i - 1] = new Bond(atoms[i - 1], atoms[i], 1);
+			super.addElectronContainer(new Bond(atoms[i - 1], atoms[i], 1));
 		}
-		super.bonds[ringSize - 1] = new Bond(atoms[ringSize - 1], atoms[0], 1);
+		super.addElectronContainer(new Bond(atoms[ringSize - 1], atoms[0], 1));
 		super.atoms = atoms;
 	}
 	
@@ -106,13 +106,14 @@ public class Ring extends AtomContainer
 	public Bond getNextBond(Bond bond, Atom atom)
 	{
 		Bond tempBond;
-		for (int f = 0; f < getBondCount(); f++)
-		{
-			tempBond = getBondAt(f);
-			if (tempBond.contains(atom) && bond != tempBond)
-			{
-				return tempBond;
-			}
+		for (int f = 0; f < getElectronContainerCount(); f++) {
+            ElectronContainer ec = getElectronContainerAt(f);
+            if (ec instanceof Bond) {
+                tempBond = (Bond)ec;
+                if (tempBond.contains(atom) && bond != tempBond) {
+                    return tempBond;
+                }
+            }
 		}
 		return null;
 	}
@@ -126,10 +127,12 @@ public class Ring extends AtomContainer
 	{
 		int orderSum = 0;
 		Bond tempBond;
-		for (int i = 0; i < getBondCount(); i++)
-		{
-			tempBond = getBondAt(i);
-			orderSum += tempBond.getOrder();
+		for (int i = 0; i < getElectronContainerCount(); i++) {
+            ElectronContainer ec = getElectronContainerAt(i);
+            if (ec instanceof Bond) {
+                tempBond = (Bond)ec;
+                orderSum += tempBond.getOrder();
+            }
  		}
 		return orderSum;
 	}

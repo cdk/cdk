@@ -306,31 +306,32 @@ public class Renderer2D
 		Color bondColor;
 		Ring ring;
 		Bond bond;
-		for (int i = 0; i < atomCon.getBondCount(); i++)
-		{
-			bond = atomCon.getBondAt(i);
-			bondColor = (Color) r2dm.getColorHash().get(bond);
-			if (bondColor == null)
-			{
-				bondColor = r2dm.getForeColor();
-			}
-			if (bond == r2dm.getHighlightedBond())
-			{
-				bondColor = r2dm.getHighlightColor();
-				for (int j = 0; j < bond.getAtomCount(); j++)
-				{
-					paintColouredAtom(bond.getAtomAt(j), bondColor);
-				}
-			}
-			ring = ringSet.getHeaviestRing(bond);
-			if (ring != null)
-			{
-				paintRingBond(bond, ring, bondColor);
+		for (int i = 0; i < atomCon.getElectronContainerCount(); i++){
+            if (atomCon.getElectronContainerAt(i) instanceof Bond) {
+                bond = (Bond)atomCon.getElectronContainerAt(i);
+                bondColor = (Color) r2dm.getColorHash().get(bond);
+                if (bondColor == null)
+                {
+                    bondColor = r2dm.getForeColor();
+                }
+                if (bond == r2dm.getHighlightedBond())
+                {
+                    bondColor = r2dm.getHighlightColor();
+                    for (int j = 0; j < bond.getAtomCount(); j++)
+                    {
+                        paintColouredAtom(bond.getAtomAt(j), bondColor);
+                    }
+                }
+                ring = ringSet.getHeaviestRing(bond);
+                if (ring != null)
+                {
+                    paintRingBond(bond, ring, bondColor);
 
-			} else
-			{
-				paintBond(bond, bondColor);
-			}
+                } else
+                {
+                    paintBond(bond, bondColor);
+                }
+            }
 		}
 	}
 

@@ -104,7 +104,7 @@ public class SingleStructureRandomGenerator
 		do
 		{
 			iteration++;
-			atomContainer.removeAllBonds();
+			atomContainer.removeAllElectronContainers();
 			do
 			{
 				bondFormed = false;

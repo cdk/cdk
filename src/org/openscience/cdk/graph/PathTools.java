@@ -1,4 +1,4 @@
-/* $RCSfile$    
+/* $RCSfile$
  * $Author$    
  * $Date$    
  * $Revision$
@@ -158,7 +158,7 @@ public class PathTools  {
 					if (!depthFirstTargetSearch(molecule, nextAtom, target, path)) {
 						// we did not find the target
 						path.removeAtom(nextAtom);
-						path.removeBond(bonds[f]);
+						path.removeElectronContainer(bonds[f]);
 					}
 					else {
 						return true;
@@ -270,9 +270,9 @@ public class PathTools  {
 		{
 			ac.getAtomAt(f).flags[CDKConstants.VISITED] = false;	
 		}
-		for (int f = 0; f < ac.getBondCount(); f++)
+		for (int f = 0; f < ac.getElectronContainerCount(); f++)
 		{
-			ac.getBondAt(f).flags[CDKConstants.VISITED] = false;	
+			ac.getElectronContainerAt(f).flags[CDKConstants.VISITED] = false;
 		}
 		
 	}

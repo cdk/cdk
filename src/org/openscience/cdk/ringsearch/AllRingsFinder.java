@@ -104,7 +104,7 @@ public class AllRingsFinder
 				atom = (Atom)e.nextElement();
 				if (ac.getBondCount(atom) == 1)
 				{
-					ac.removeAtomAndConnectedBonds(atom);
+					ac.removeAtomAndConnectedElectronContainers(atom);
 					removedSomething = true;
 				}
 			}
@@ -166,7 +166,7 @@ public class AllRingsFinder
 			pathes.addElement(newPathes.elementAt(f));	
 		}
 		detectRings(potentialRings, rings, originalAc);
-		ac.removeAtomAndConnectedBonds(atom);	
+		ac.removeAtomAndConnectedElectronContainers(atom);	
 	}
 	
 	private void detectRings(Vector pathes, RingSet ringSet, AtomContainer ac)
@@ -186,12 +186,13 @@ public class AllRingsFinder
 				{
 					ring.addAtom((Atom)path.elementAt(g));
 				}
-				for (int g = 0; g < ac.getBondCount(); g++)
+                Bond[] bonds = ac.getBonds();
+				for (int g = 0; g < bonds.length; g++)
 				{
-					bond = ac.getBondAt(g);
+					bond = bonds[g];
 					if (ring.contains(bond.getAtomAt(0)) && ring.contains(bond.getAtomAt(0)))
 					{
-						ring.addBond(bond);	
+						ring.addBond(bond);
 					}
 				}
 				ringSet.add(ring);
@@ -203,9 +204,10 @@ public class AllRingsFinder
 	{
 		Bond bond = null;
 		Path path = null;
-		for (int f = 0; f < ac.getBondCount(); f++)
+        Bond[] bonds = ac.getBonds();
+		for (int f = 0; f < bonds.length; f++)
 		{
-			bond = ac.getBondAt(f);
+			bond = bonds[f];
 			path = new Path(bond.getAtomAt(0), bond.getAtomAt(1));
 			pathes.add(path);
 			if (debug) System.out.println("initPathGraph: " + path.toString(originalAc));

@@ -1,6 +1,7 @@
-/* AtomPlacer.java
- * 
- * $RCSfile$    $Author$    $Date$    $Revision$
+/* $RCSfile$    
+ * $Author$    
+ * $Date$    
+ * $Revision$
  * 
  * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
  * 
@@ -25,7 +26,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *  
  */
- 
 package org.openscience.cdk.layout;
 
 import org.openscience.cdk.*;
@@ -97,7 +97,7 @@ public class AtomPlacer
 		Vector2d occupiedDirection = new Vector2d(sharedAtomsCenter);
 		occupiedDirection.sub(newDirection);
 		Vector atomsToDraw = new Vector();
-		/* if the least hindered side of the atom is clearly defined (bondLength / 10 is an arbitrary value that seemed reasonable) */	
+		/* if the least hindered side of the atom is clearly defined (bondLength / 10 is an arbitrary value that seemed reasonable) */
 		//newDirection.sub(sharedAtomsCenterVector);
 		sharedAtomsCenterVector.sub(newDirection);
 		newDirection = sharedAtomsCenterVector;
@@ -205,7 +205,7 @@ public class AtomPlacer
 		Atom atom = null; 
 		Point2d atomPoint = null;
 		Point2d nextAtomPoint = null;
-		Atom nextAtom = null;		
+		Atom nextAtom = null;
 		Atom rootAtom = ac.getAtomAt(0);
 		Point2d tempAtomPoint = null;
 		for (int f = 0; f < ac.getAtomCount() - 1; f++)
@@ -421,7 +421,7 @@ public class AtomPlacer
 	 */
 	public static void breadthFirstSearch(AtomContainer ac, Vector sphere, AtomContainer[] pathes) throws org.openscience.cdk.exception.NoSuchAtomException
 	{
-		Atom atom = null, nextAtom = null; 
+		Atom atom = null, nextAtom = null;
 		int atomNr, nextAtomNr;
 		AtomContainer path = null;
 		Vector newSphere = new Vector();
@@ -449,7 +449,7 @@ public class AtomPlacer
 						}
 
 						nextAtomNr = ac.getAtomNumber(nextAtom);
-						pathes[nextAtomNr] = getCopy(pathes[atomNr]);
+						pathes[nextAtomNr] = (AtomContainer)pathes[atomNr].shallowCopy();
 						pathes[nextAtomNr].addAtom(nextAtom);
 						if (debug) System.out.println("Adding atom " + (nextAtomNr + 1) + " to path " + (nextAtomNr + 1));
 						pathes[nextAtomNr].addBond(bonds[g]);
@@ -592,26 +592,5 @@ public class AtomPlacer
 		}
 		return ret;
 	}
-
-	/**
-	 * Get a new AtomContainer with a copy of the all bonds and atom of the given one
-	 *
-	 * @param   ac  The AtomContainer to be copied
-	 * @return  An AtomContainer containing all bond and atom of the old one
-	 */
-	public  static AtomContainer getCopy(AtomContainer ac)
-	{
-		AtomContainer ret = new AtomContainer();
-		for (int f = 0; f < ac.getAtomCount(); f++)
-		{
-			ret.addAtom(ac.getAtomAt(f));
-		}
-		for (int f = 0; f < ac.getBondCount(); f++)
-		{
-			ret.addBond(ac.getBondAt(f));
-		}
-		return ret;
-	}
-	
 
 }

@@ -1,6 +1,7 @@
-/* RingPlacer.java
- * 
- * $RCSfile$    $Author$    $Date$    $Revision$
+/* $RCSfile$    
+ * $Author$    
+ * $Date$    
+ * $Revision$
  * 
  * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
  * 
@@ -25,7 +26,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *  
  */
- 
+
 package org.openscience.cdk.layout;
 
 import org.openscience.cdk.*;
@@ -245,7 +246,12 @@ public class RingPlacer
 		startAngle = GeometryTools.getAngle(startAtom.getX2D() - ringCenter.x, startAtom.getY2D() - ringCenter.y);
 
 		Atom currentAtom = startAtom;
-		Bond currentBond = sharedAtoms.getBondAt(0);
+        // determine first bond in Ring
+        int k = 0;
+        for (k = 0; k < ring.getElectronContainerCount(); k++) {
+            if (ring.getElectronContainerAt(k) instanceof Bond) break;
+        }
+        Bond currentBond = (Bond)sharedAtoms.getElectronContainerAt(k);
 		Vector atomsToDraw = new Vector();
 		for (int i = 0; i < ring.getBondCount() - 2; i++)
 		{
@@ -433,7 +439,12 @@ public class RingPlacer
 		startAngle = GeometryTools.getAngle(startAtom.getX2D() - ringCenter.x, startAtom.getY2D() - ringCenter.y);
 	
 		Atom currentAtom = startAtom;
-		Bond currentBond = sharedAtoms.getBondAt(0);
+        // determine first bond in Ring
+        int k = 0;
+        for (k = 0; k < ring.getElectronContainerCount(); k++) {
+            if (ring.getElectronContainerAt(k) instanceof Bond) break;
+        }
+        Bond currentBond = (Bond)sharedAtoms.getElectronContainerAt(k);
 		Vector atomsToDraw = new Vector();
 		for (int i = 0; i < ring.getBondCount() - 2; i++)
 		{

@@ -285,7 +285,7 @@ public class VicinitySampler
 		}
 		else if (b1 != null)
 		{
-			ac.removeBond(b1);
+			ac.removeElectronContainer(b1);
 			if (debug) System.out.println("removing bond " + x1 + "-" + y1);			
 		}
 		
@@ -305,7 +305,7 @@ public class VicinitySampler
 		}
 		else if (b2 != null)
 		{
-			ac.removeBond(b2);
+			ac.removeElectronContainer(b2);
 			if (debug) System.out.println("removing bond " + x1 + "-" + y2);			
 		}
 		
@@ -325,7 +325,7 @@ public class VicinitySampler
 		}
 		else if (b3 != null)
 		{
-			ac.removeBond(b3);
+			ac.removeElectronContainer(b3);
 			if (debug) System.out.println("removing bond " + x2 + "-" + y1);
 		}
 
@@ -345,7 +345,7 @@ public class VicinitySampler
 		}
 		else if (b4 != null)
 		{
-			ac.removeBond(b4);
+			ac.removeElectronContainer(b4);
 			if (debug) System.out.println("removing bond " + x2 + "-" + y2);
 		}
 		return ac;

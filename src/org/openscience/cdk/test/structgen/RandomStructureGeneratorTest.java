@@ -1,6 +1,7 @@
-/* RandomStructureGeneratorTest.java
- * 
- * $RCSfile$    $Author$    $Date$    $Revision$
+/* $RCSfile$    
+ * $Author$    
+ * $Date$    
+ * $Revision$
  * 
  * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
  * 
@@ -81,9 +82,10 @@ public class RandomStructureGeneratorTest
 					}
 					System.out.println(s);
 					s = "Bonds: ";
-					for (int g = 0; g < mol.getBondCount(); g++)
+                    Bond[] bonds = mol.getBonds();
+					for (int g = 0; g < bonds.length; g++)
 					{
-						s += mol.getBondAt(g).getOrder() + " ";
+						s += bonds[g].getOrder() + " ";
 					}
 					System.out.println(s);
 				}

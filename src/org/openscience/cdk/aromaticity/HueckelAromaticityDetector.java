@@ -78,17 +78,17 @@ public class HueckelAromaticityDetector
 		boolean foundSomething = false;
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
-			ac.getAtomAt(f).flags[CDKConstants.ISAROMATIC] = false;		
+			ac.getAtomAt(f).flags[CDKConstants.ISAROMATIC] = false;
 		}
-		for (int f = 0; f < ac.getBondCount(); f++)
-		{
-			ac.getBondAt(f).flags[CDKConstants.ISAROMATIC] = false;		
+		for (int f = 0; f < ac.getElectronContainerCount(); f++) {
+            ElectronContainer ec = ac.getElectronContainerAt(f);
+            if (ec instanceof Bond) ec.flags[CDKConstants.ISAROMATIC] = true;
 		}
-		
+
 		Ring ring = null;
 		Atom atom = null;
 		ringSet.sort();
-		for (int f = ringSet.size() - 1; f >= 0 ; f--) 
+		for (int f = ringSet.size() - 1; f >= 0 ; f--)
 		{
 			ring = (Ring)ringSet.elementAt(f);
 			if (debug)System.out.println("Testing ring no " + f + " for aromaticity:");
@@ -98,20 +98,20 @@ public class HueckelAromaticityDetector
 				{
 					ring.getAtomAt(g).flags[CDKConstants.ISAROMATIC] = true;
 				}
-				for (int g = 0; g < ring.getBondCount(); g++)
-				{
-					ring.getBondAt(g).flags[CDKConstants.ISAROMATIC] = true;
+				for (int g = 0; g < ring.getElectronContainerCount(); g++) {
+                    ElectronContainer ec = ring.getElectronContainerAt(g);
+                    if (ec instanceof Bond) ec.flags[CDKConstants.ISAROMATIC] = true;
 				}
 				foundSomething = true;
-				if (debug)System.out.println("Ring no " + f + " is aromatic.");				
+				if (debug)System.out.println("Ring no " + f + " is aromatic.");
 			}
 			else
 			{
-				if (debug)System.out.println("Ring no " + f + " is not aromatic.");	
+				if (debug)System.out.println("Ring no " + f + " is not aromatic.");
 			}
 		}
 		return foundSomething;
-	}	
+	}
 
 	public static boolean isAromatic(AtomContainer ac, RingSet ringSet, Ring ring)
 	{
@@ -133,22 +133,25 @@ public class HueckelAromaticityDetector
 			 */
 			if ("O-N-S-P".indexOf(atom.getSymbol()) > -1)
 			{
-				freeElectronPairCount += 1;	
+				freeElectronPairCount += 1;
 			}
 			if (atom.flags[CDKConstants.ISAROMATIC])
 			{
-				aromaCounter ++;	
+				aromaCounter ++;
 			}
-			
+
 		}
-		
-		for (int g = 0; g < ring.getBondCount(); g++)
-		{
-			bond = ring.getBondAt(g);
-			if (bond.getOrder() > 1)
-			{
-				piElectronCount += 2*(bond.getOrder()-1);
-			}
+
+		for (int g = 0; g < ring.getElectronContainerCount(); g++) {
+            ElectronContainer ec = ring.getElectronContainerAt(g);
+            if (ec instanceof Bond) {
+                bond = (Bond)ec;
+                if (bond.getOrder() > 1) {
+                    piElectronCount += 2*(bond.getOrder()-1);
+                }
+            }
+            // this part only considers the electrons in atoms, not those
+            // in lone pairs!
 		}
 		for (int f = 0; f < ((ring.getAtomCount() - 2)/4) + 2; f ++)
 		{

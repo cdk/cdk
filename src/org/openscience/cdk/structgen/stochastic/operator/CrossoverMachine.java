@@ -135,52 +135,50 @@ public class CrossoverMachine
 		
 		for (int j = 0; j < blueAtoms.size(); j++)
 		{
-			for (int i = 0; i < redChild[0].getBondCount(); i++)
-			{
-				if (redChild[0].getBondAt(i).contains(redChild[0].getAtomAt(((Integer)blueAtoms.elementAt(j)).intValue())))
+            Bond[] bonds = redChild[1].getBonds();
+			for (int i = 0; i < bonds.length; i++) {
+				if (bonds[i].contains(redChild[0].getAtomAt(((Integer)blueAtoms.elementAt(j)).intValue())))
 				{
-					redChild[0].removeBond(i);
-					i--;				
+					redChild[0].removeElectronContainer(bonds[i]);
+					i--;
 				}
 			}
 		}
-		
-		
+
+
 		for (int j = 0; j < blueAtoms.size(); j++)
 		{
-			
-			for (int i = 0; i < redChild[1].getBondCount(); i++)
-			{
-				if (redChild[1].getBondAt(i).contains(redChild[1].getAtomAt(((Integer)blueAtoms.elementAt(j)).intValue())))
+            Bond[] bonds = redChild[1].getBonds();
+			for (int i = 0; i < bonds.length; i++) {
+				if (bonds[i].contains(redChild[1].getAtomAt(((Integer)blueAtoms.elementAt(j)).intValue())))
 				{
-					redChild[1].removeBond(i);
-					i--;				
-				}
-			}
-		}	
-		
-		
-		for (int j = 0; j < redAtoms.size(); j++)
-		{
-			for (int i = 0; i < blueChild[0].getBondCount(); i++)
-			{
-				if (blueChild[0].getBondAt(i).contains(blueChild[0].getAtomAt(((Integer)redAtoms.elementAt(j)).intValue())))
-				{
-					blueChild[0].removeBond(i);
-					i--;				
+					redChild[1].removeElectronContainer(bonds[i]);
+					i--;
 				}
 			}
 		}
-		
-		
+
+
 		for (int j = 0; j < redAtoms.size(); j++)
 		{
-			for (int i = 0; i < blueChild[1].getBondCount(); i++)
-			{
-				if (blueChild[1].getBondAt(i).contains(blueChild[1].getAtomAt(((Integer)redAtoms.elementAt(j)).intValue())))
+            Bond[] bonds = blueChild[0].getBonds();
+			for (int i = 0; i < bonds.length; i++) {
+				if (bonds[i].contains(blueChild[0].getAtomAt(((Integer)redAtoms.elementAt(j)).intValue())))
 				{
-					blueChild[1].removeBond(i);
-					i--;				
+					blueChild[0].removeElectronContainer(bonds[i]);
+					i--;
+				}
+			}
+		}
+
+
+		for (int j = 0; j < redAtoms.size(); j++) {
+            Bond[] bonds = blueChild[1].getBonds();
+			for (int i = 0; i < bonds.length; i++) {
+				if (bonds[i].contains(blueChild[1].getAtomAt(((Integer)redAtoms.elementAt(j)).intValue())))
+				{
+					blueChild[1].removeElectronContainer(bonds[i]);
+					i--;
 				}
 			}
 		}
