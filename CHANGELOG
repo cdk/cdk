@@ -37,6 +37,7 @@ Fixes:
   (fixes #692410)
 * Fixed bug in Reaction.growProductArray()
 * Better layout of ChemObjectTree
+* Fixed reading of isotope information (closes #714010)
 
 API chages:
 * Implemented RFC #11

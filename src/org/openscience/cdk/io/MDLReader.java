@@ -312,26 +312,34 @@ public class MDLReader implements ChemObjectReader
                     StringTokenizer st = new StringTokenizer(line.substring(9));
                     for (int i=1; i <= infoCount; i++) {
                         String token = st.nextToken();
-                        //System.out.println("T1:" + token);
                         int atomNumber = Integer.parseInt(token.trim());
                         token = st.nextToken();
-                        //System.out.println("T2:" + token);
                         int charge = Integer.parseInt(token.trim());
                         molecule.getAtomAt(atomNumber - 1).setFormalCharge(charge);
                     }
                 } else if (line.startsWith("M  ISO")) {
-                    int infoCount = Integer.parseInt(line.substring(6,8));
-                    for (int i=1; i <= infoCount; i++) {
-                        StringTokenizer st = new StringTokenizer(line.substring(9));
-                        int atomNumber = Integer.parseInt(st.nextToken());
-                        int mass = Integer.parseInt(st.nextToken());
-                        molecule.getAtomAt(atomNumber - 1).setAtomicMass(mass);
+                    try {
+                        String countString = line.substring(6,9).trim();
+                        int infoCount = Integer.parseInt(countString);
+                        for (int i=1; i <= infoCount; i++) {
+                            StringTokenizer st = new StringTokenizer(line.substring(9));
+                            int atomNumber = Integer.parseInt(st.nextToken().trim());
+                            int mass       = Integer.parseInt(st.nextToken().trim());
+                            molecule.getAtomAt(atomNumber - 1).setAtomicMass(mass);
+                        }
+                    } catch (NumberFormatException exception) {
+                        String error = "Error (" + exception.toString() + ") while parsing line "
+                        + linecount + ": " + line + " in property block.";
+                        logger.error(error);
+                        throw new CDKException("NumberFormatException in isotope information on line: " + line);
                     }
                 }
                 if (!lineRead) {
                     logger.warn("Skipping line in property block: " + line);
                 }
             }
+		} catch (CDKException exception) {
+            throw exception;
 		} catch (Exception e) {
             String error = "Error (" + e.toString() + ") while parsing line "
                 + linecount + ": " + line + " in property block.";
