@@ -1,3 +1,7 @@
+2002-09-12  egonw
+* printf.jar
+        Added printf.jar with a class to format strings, like C's printf.
+
 2002-05-18  egonw
 * dbdoclet.jar
         Uploaded dbdoclet 0.28
