@@ -161,7 +161,7 @@ public class AtomTypeFactory {
 			} else if (configFile.endsWith("xml"))
 			{
 				atc = (AtomTypeConfigurator) this.getClass().getClassLoader().
-						loadClass("org.openscience.cdk.tools.JSXBasedAtomTypeConfigurator").
+						loadClass("org.openscience.cdk.tools.CDKBasedAtomTypeConfigurator").
 						newInstance();
 			}
 			logger.debug("Instantiated a AtomTypeConfigurator of class: " +
