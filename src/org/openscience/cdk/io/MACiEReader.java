@@ -85,8 +85,10 @@ public class MACiEReader extends DefaultChemObjectReader {
     private String reactionStepAnnotation;
     private String reactionStepComments;
     
+    private boolean readThisEntry = true;
+    
     /**
-     * Contructs a new MDLReader that can read Molecule from a given Reader.
+     * Contructs a new MACiEReader that can read Molecule from a given Reader.
      *
      * @param  in  The Reader to read from
      */
@@ -169,7 +171,7 @@ public class MACiEReader extends DefaultChemObjectReader {
             } else if (line.startsWith("$DATM")) {
                 entries.setProperty(CreationDate, line.substring(7));
             } else if (line.startsWith("$RIREG")) {
-                // new entry
+                // new entry, store previous entry if any
                 if (currentEntry != null) {
                     // store previous entry
                     currentEntry.setSetOfReactions(currentReactionStepSet);
@@ -184,6 +186,11 @@ public class MACiEReader extends DefaultChemObjectReader {
                 }
                 currentEntry = new ChemModel();
                 entryCounter++;
+                if (!selectEntry || entryCounter == selectedEntry.getSettingValue()) {
+                    readThisEntry = true;
+                } else {
+                    readThisEntry = false;
+                }
                 currentReactionStepSet = new SetOfReactions();
             } else if (line.startsWith("$DTYPE")) {
                 String[] tuple = readDtypeDatumTuple(line);
@@ -257,7 +264,8 @@ public class MACiEReader extends DefaultChemObjectReader {
             fullDatum.append(datum.substring(0,datum.length()-1));
             do {
                 line = input.readLine();
-                fullDatum.append(line.substring(0,line.length()-1));
+                if (line.length() > 0) 
+                    fullDatum.append(line.substring(0,line.length()-1));
             } while (line.endsWith("+"));
             datum = fullDatum.toString();
         }
@@ -291,7 +299,7 @@ public class MACiEReader extends DefaultChemObjectReader {
         logger.debug("Processing sub level field");
         if (field.equals("OVERALL REACTION")) {
             if (subfield.equals("REACTION_ID")) {
-                if (readSecondaryFiles.isSet()) {
+                if (readSecondaryFiles.isSet() && readThisEntry) {
                     // parse referenced file
                     String filename = readSecondaryDir.getSetting() + datum + ".rxn";
                     File file = new File(filename);
@@ -308,6 +316,8 @@ public class MACiEReader extends DefaultChemObjectReader {
                         logger.error(error);
                         throw new CDKException(error);
                     }
+                } else {
+                    logger.warn("Not reading overall reaction for this entry");
                 }
             } else if (subfield.equals("OVERALL REACTION ANNOTATION")) {
                 parseReactionAnnotation(datum, currentReaction);
@@ -326,7 +336,7 @@ public class MACiEReader extends DefaultChemObjectReader {
                 reactionStepComments = datum;
             } else if (subfield.equals("STEP_ID")) {
                 // read secondary RXN files?
-                if (readSecondaryFiles.isSet()) {
+                if (readSecondaryFiles.isSet() && readThisEntry) {
                     // parse referenced file
                     String filename = readSecondaryDir.getSetting() + datum + ".rxn";
                     File file = new File(filename);
@@ -340,19 +350,21 @@ public class MACiEReader extends DefaultChemObjectReader {
                     } else {
                         logger.error("Cannot find secondary file: " + filename);
                     }
+                    // convert PseudoAtom's in EnzymeResidueLocator's if appropriate
+                    markEnzymeResidueLocatorAtoms(currentReaction);
+                    // now parse annotation
+                    if (reactionStepAnnotation != null) {
+                        parseReactionAnnotation(reactionStepAnnotation, currentReaction);
+                    }
+                    // and set comments
+                    if (reactionStepComments != null) {
+                        currentReaction.setProperty(CDKConstants.COMMENT, reactionStepComments);
+                    }
+                    // now, I'm ready to add reaction
+                    currentReactionStepSet.addReaction(currentReaction);
+                } else {
+                    logger.warn("Not reading reactions of this entry.");
                 }
-                // convert PseudoAtom's in EnzymeResidueLocator's if appropriate
-                markEnzymeResidueLocatorAtoms(currentReaction);
-                // now parse annotation
-                if (reactionStepAnnotation != null) {
-                    parseReactionAnnotation(reactionStepAnnotation, currentReaction);
-                }
-                // and set comments
-                if (reactionStepComments != null) {
-                    currentReaction.setProperty(CDKConstants.COMMENT, reactionStepComments);
-                }
-                // now, I'm ready to add reaction
-                currentReactionStepSet.addReaction(currentReaction);
             }
         } else if (field.equals("REFERENCES")) {
              if (subfield.equals("MEDLINE_ID")) {
