@@ -32,6 +32,8 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.HydrogenAdder;
@@ -108,7 +110,72 @@ public class MFAnalyserTest extends TestCase {
       assertEquals(10, ac.getAtomCount());
       assertEquals("C10H16", mfa.getMolecularFormula());//Formula should still contain Hs because hydrogenCount is used for building formula
     }
-    
+
+    /**
+     * Test removeHydrogens for B2H6, which contains two multiply bonded H.
+     *
+     * @throws IOException
+     * @throws ClassNotFoundException
+     * @throws CDKException
+     */
+    public void testRemoveHydrogensBorane() throws IOException, ClassNotFoundException, CDKException
+    {
+        SmilesParser parser = new SmilesParser();
+        Molecule mol = parser.parseSmiles("B1([H])([H])[H]B([H])([H])[H]1");
+        AtomContainer ac = new MFAnalyser(mol).removeHydrogens();
+
+        // Should be two disconnected Bs with H-count == 4
+        assertEquals("incorrect atom count", 2, ac.getAtomCount());
+        assertEquals("incorrect bond count", 0, ac.getBondCount());
+        assertEquals("incorrect hydrogen count", 4, ac.getAtomAt(0).getHydrogenCount());
+        assertEquals("incorrect hydrogen count", 4, ac.getAtomAt(1).getHydrogenCount());
+    }
+
+    /**
+     * Test removeHydrogensPreserveMultiplyBonded for B2H6, which contains two multiply bonded H.
+     *
+     * @throws IOException
+     * @throws ClassNotFoundException
+     * @throws CDKException
+     */
+    public void testRemoveHydrogensPreserveMulitplyBondedBorane() throws IOException, ClassNotFoundException, CDKException
+    {
+        SmilesParser parser = new SmilesParser();
+        Molecule mol = parser.parseSmiles("B1([H])([H])[H]B([H])([H])[H]1");
+        AtomContainer ac = new MFAnalyser(mol).removeHydrogensPreserveMultiplyBonded();
+
+        // Should be two connected Bs with H-count == 2 and two explicit Hs.
+        assertEquals("incorrect atom count", 4, ac.getAtomCount());
+        assertEquals("incorrect bond count", 4, ac.getBondCount());
+
+        int b = 0;
+        int h = 0;
+        for (int i = 0;
+                i < ac.getAtomCount();
+                i++)
+        {
+            final Atom atom = ac.getAtomAt(i);
+            String sym = atom.getSymbol();
+            if (sym.equals("B"))
+            {
+                // Each B has two explicit and two implicit H.
+                b++;
+                assertEquals("incorrect hydrogen count", 2, atom.getHydrogenCount());
+                Atom[] nbs = ac.getConnectedAtoms(atom);
+                assertEquals("incorrect connected count", 2, nbs.length);
+                assertEquals("incorrect bond", "H", nbs[0].getSymbol());
+                assertEquals("incorrect bond", "H", nbs[1].getSymbol());
+            }
+            else if (sym.equals("H"))
+            {
+                h++;
+            }
+        }
+        assertEquals("incorrect no. Bs", 2, b);
+        assertEquals("incorrect no. Hs", 2, h);
+    }
+
+
     public void testGetFormulaHashtable() {
 	MFAnalyser mfa=new MFAnalyser(molecule);
 	Hashtable formula = mfa.getFormulaHashtable();

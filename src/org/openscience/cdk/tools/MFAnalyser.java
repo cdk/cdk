@@ -162,49 +162,146 @@ public class MFAnalyser{
         return mass;
     }
 
-		
-  /**
-   * Produces an AtomContainer without explicit Hs but with H count from one with Hs. The new molecule is a deep copy.
-   *
-   * @return                The mol without Hs.
-   */
-  public AtomContainer removeHydrogens(){
-    AtomContainer ac = getAtomContainer();
-    Molecule mol = new Molecule();
-    Map map=new HashMap();
-    for (int i = 0; i < ac.getAtomCount(); i++) {
-      Atom atom = ac.getAtomAt(i);
-      if (!atom.getSymbol().equals("H")) {
-        Atom a = (Atom)atom.clone();
-        a.setHydrogenCount(0);
-        mol.addAtom(a);
-        map.put(ac.getAtomAt(i),a);
-      }
+    /**
+     * Produces an AtomContainer without explicit Hs but with H count from one with Hs.
+     * The new molecule is a deep copy.
+     *
+     * @return The mol without Hs.
+     * @cdk.keyword hydrogen, removal
+     */
+    public AtomContainer removeHydrogens()
+    {
+        return removeHydrogens(new ArrayList());
     }
-    for (int i = 0; i < ac.getBondCount(); i++) {
-      Atom[] atoms = ac.getBondAt(i).getAtoms();
-      boolean isH = false;
-      for (int k = 0; k < atoms.length; k++) {
-        if (atoms[k].getSymbol().equals("H")) {
-          isH = true;
-          break;
+
+    /**
+     * Produces an AtomContainer without explicit Hs but with H count from one with Hs.
+     * Hs bonded to more than one heavy atom are preserved.  The new molecule is a deep copy.
+     *
+     * @return The mol without Hs.
+     * @cdk.keyword hydrogen, removal
+     */
+    public AtomContainer removeHydrogensPreserveMultiplyBonded()
+    {
+        AtomContainer ac = getAtomContainer();
+
+        List h = new ArrayList();       // H list.
+        List multi_h = new ArrayList(); // multiply bonded H
+
+        // Find multiply bonded H.
+        int count = ac.getBondCount();
+        for (int i = 0;
+             i < count;
+             i++)
+        {
+            final Atom[] atoms = ac.getBondAt(i).getAtoms();
+            final int length = atoms.length;
+            for (int k = 0;
+                 k < length;
+                 k++)
+            {
+                final Atom atom = atoms[k];
+                if (atom.getSymbol().equals("H"))
+                {
+                    (h.contains(atom) ? multi_h : h).add(atom);
+                }
+            }
+
+            // The short version (assumes atoms.length == 2 is always true).
+//            (h.contains(atoms[0]) ? multi_h : h).add(atoms[0]);
+//            (h.contains(atoms[1]) ? multi_h : h).add(atoms[1]);
         }
-      }
-      if (!isH) {
-        Bond bond = (Bond)ac.getBondAt(i).clone();
-        bond.setAtoms(new Atom[]{(Atom)map.get(atoms[0]),(Atom)map.get(atoms[1])});
-        mol.addBond(bond);
-      }
+
+        return removeHydrogens(multi_h);
     }
-    for (int i = 0; i < ac.getAtomCount(); i++) {
-      if(ac.getAtomAt(i).getSymbol().equals("H"))
-        ((Atom)map.get(ac.getConnectedAtoms(ac.getAtomAt(i))[0])).setHydrogenCount(((Atom)map.get(ac.getConnectedAtoms(ac.getAtomAt(i))[0])).getHydrogenCount()+1);
+
+    /**
+     * Produces an AtomContainer without explicit Hs (except those listed) but with H count from one with Hs.
+     * The new molecule is a deep copy.
+     *
+     * @param preserve a list of H atoms to preserve.
+     * @return The mol without Hs.
+     * @cdk.keyword hydrogen, removal
+     */
+    private AtomContainer removeHydrogens(List preserve)
+    {
+        AtomContainer ac = getAtomContainer();
+
+        Map map = new HashMap();        // maps original atoms to clones.
+        List remove = new ArrayList();  // lists removed Hs.
+
+        // Clone atoms except those to be removed.
+        Molecule mol = new Molecule();
+        int count = ac.getAtomCount();
+        for (int i = 0;
+             i < count;
+             i++)
+        {
+            // Clone/remove this atom?
+            Atom atom = ac.getAtomAt(i);
+            if (!atom.getSymbol().equals("H") || preserve.contains(atom))
+            {
+                Atom a = (Atom) atom.clone();
+                a.setHydrogenCount(0);
+                mol.addAtom(a);
+                map.put(atom, a);
+            }
+            else
+            {
+                remove.add(atom);   // maintain list of removed H.
+            }
+        }
+
+        // Clone bonds except those involving removed atoms.
+        count = ac.getBondCount();
+        for (int i = 0;
+             i < count;
+             i++)
+        {
+            // Check bond.
+            final Bond bond = ac.getBondAt(i);
+            Atom[] atoms = bond.getAtoms();
+            boolean remove_bond = false;
+            final int length = atoms.length;
+            for (int k = 0;
+                 k < length;
+                 k++)
+            {
+                if (remove.contains(atoms[k]))
+                {
+                    remove_bond = true;
+                    break;
+                }
+            }
+
+            // Clone/remove this bond?
+            if (!remove_bond)
+            // if (!remove.contains(atoms[0]) && !remove.contains(atoms[1]))
+            {
+                Bond clone = (Bond) ac.getBondAt(i).clone();
+                clone.setAtoms(new Atom[]{(Atom) map.get(atoms[0]), (Atom) map.get(atoms[1])});
+                mol.addBond(clone);
+            }
+        }
+
+        // Recompute hydrogen counts of neighbours of removed Hydrogens.
+        for (Iterator i = remove.iterator();
+             i.hasNext();)
+        {
+            // Process neighbours.
+            for (Iterator n = ac.getConnectedAtomsVector((Atom) i.next()).iterator();
+                    n.hasNext();)
+            {
+                final Atom neighb = (Atom) map.get(n.next());
+                neighb.setHydrogenCount(neighb.getHydrogenCount() + 1);
+            }
+        }
+
+        return (mol);
     }
-    return (mol);
-  }
 
 
-  	/** 
+  	/**
      * Returns a set of nodes excluding all the hydrogens
      *
      * @cdk.keyword hydrogen, removal
