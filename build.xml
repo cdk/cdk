@@ -122,7 +122,7 @@
 		</junit>
 	</target>  
 	<target name="run-with-java3d" depends="dist-with-java3d">
-		<java classname="org.openscience.cdk.test.AcceleratedRenderer3DTest" fork="yes">
+		<java classname="org.openscience.cdk.test.OrbitalsRenderer3DTest" fork="yes">
 			<arg value="data/reserpine.mol"/>
 			<classpath>
 				<pathelement location="${dist}/jar/cdk-with-java3d.jar"/>
