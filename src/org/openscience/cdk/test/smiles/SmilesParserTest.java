@@ -85,7 +85,7 @@ public class SmilesParserTest extends TestCase
 	/**
 	 *  A unit test for JUnit
 	 */
-	public void xtestSmilesParser()
+	public void testSmilesParser()
 	{
 		SmilesParser sp = new SmilesParser();
 		MoleculeListViewer mlv = null;
@@ -151,7 +151,7 @@ public class SmilesParserTest extends TestCase
 	/**
 	 *  A unit test for JUnit
 	 */
-	public void xtestSFBug630475()
+	public void testSFBug630475()
 	{
 		SmilesParser sp = new SmilesParser();
 		MoleculeListViewer mlv = null;
@@ -191,7 +191,7 @@ public class SmilesParserTest extends TestCase
 	/**
 	 *  A unit test for JUnit
 	 */
-	public void xtestSFBug585811()
+	public void testSFBug585811()
 	{
 		SmilesParser sp = new SmilesParser();
 		String[] smiles =
@@ -231,7 +231,7 @@ public class SmilesParserTest extends TestCase
 	/**
 	 *  This tests the fix made for bug #593648.
 	 */
-	public void xtestSFBug593648()
+	public void testSFBug593648()
 	{
 		try
 		{
@@ -275,7 +275,7 @@ public class SmilesParserTest extends TestCase
 	/**
 	 *  A unit test for JUnit
 	 */
-	public void xtestReadingOfTwoCharElements()
+	public void testReadingOfTwoCharElements()
 	{
 		try
 		{
@@ -294,7 +294,7 @@ public class SmilesParserTest extends TestCase
 	/**
 	 *  A unit test for JUnit
 	 */
-	public void xtestOrganicSubsetUnderstanding()
+	public void testOrganicSubsetUnderstanding()
 	{
 		try
 		{
@@ -325,7 +325,7 @@ public class SmilesParserTest extends TestCase
 	/**
 	 *  A unit test for JUnit
 	 */
-	public void xtestMassNumberReading()
+	public void testMassNumberReading()
 	{
 		try
 		{
@@ -345,7 +345,7 @@ public class SmilesParserTest extends TestCase
 	/**
 	 *  A unit test for JUnit
 	 */
-	public void xtestFormalChargeReading()
+	public void testFormalChargeReading()
 	{
 		try
 		{
@@ -365,7 +365,7 @@ public class SmilesParserTest extends TestCase
 	/**
 	 *  A unit test for JUnit
 	 */
-	public void xtestReadingPartionedMolecules()
+	public void testReadingPartionedMolecules()
 	{
 		try
 		{
@@ -384,7 +384,7 @@ public class SmilesParserTest extends TestCase
 	/**
 	 *  A unit test for JUnit
 	 */
-	public void xtestUnkownAtomType()
+	public void testUnkownAtomType()
 	{
 		try
 		{
@@ -418,7 +418,7 @@ public class SmilesParserTest extends TestCase
 	/**
 	 *  A unit test for JUnit
 	 */
-	public void xtestBondCreation()
+	public void testBondCreation()
 	{
 		try
 		{
@@ -448,7 +448,7 @@ public class SmilesParserTest extends TestCase
 	/**
 	 *  A unit test for JUnit
 	 */
-	public void xtestSFBug784433()
+	public void testSFBug784433()
 	{
 		try
 		{
@@ -466,7 +466,7 @@ public class SmilesParserTest extends TestCase
 	/**
 	 * See SF bug #873783.
 	 */
-	public void xtestProton() {
+	public void testProton() {
 		try {
 			String smiles = "[H+]";
 			SmilesParser sp = new SmilesParser();
@@ -481,7 +481,7 @@ public class SmilesParserTest extends TestCase
 	/**
 	 * See SF bug #881330.
 	 */
-	public void xtestSMILESFromXYZ() {
+	public void testSMILESFromXYZ() {
 		try {
 			String smiles = "C.C.N.C.C.C.[H].[H].[H].[H].[H].C.C.[H].[H].[H].[H].[H]";
 			SmilesParser sp = new SmilesParser();
@@ -492,7 +492,7 @@ public class SmilesParserTest extends TestCase
 		}
 	}
 
-	public void xtestSingleBracketH() {
+	public void testSingleBracketH() {
 		try {
 			String smiles = "[H]";
 			SmilesParser sp = new SmilesParser();
@@ -503,7 +503,7 @@ public class SmilesParserTest extends TestCase
 		}
 	}
 
-	public void xtestSingleH() {
+	public void testSingleH() {
 		try {
 			String smiles = "H";
 			SmilesParser sp = new SmilesParser();
@@ -517,7 +517,7 @@ public class SmilesParserTest extends TestCase
 	/**
 	 * See SF bug #862930.
 	 */
-	public void xtestHydroxonium() {
+	public void testHydroxonium() {
 		try {
 			String smiles = "[H][O+]([H])[H]";
 			SmilesParser sp = new SmilesParser();
@@ -548,7 +548,7 @@ public class SmilesParserTest extends TestCase
 	{
 		SmilesParserTest spt = new SmilesParserTest("SmilesParserTest");
 		spt.setStandAlone(true);
-		spt.xtestSMILESFromXYZ();
+		spt.testSMILESFromXYZ();
 	}
 }
 
