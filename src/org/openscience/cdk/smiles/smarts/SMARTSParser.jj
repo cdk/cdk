@@ -262,13 +262,18 @@ void BondExpression() :
 void TwoCharElement() :
 {}
 {
-	<CL> | <BR> | <LI> | <OS> | <AU> | <AG> | <HG> | <RH> 
+	<HE> | <LI> | <BE> | <NE> | <NA> | <MG> | <AL> | <SI> | <AR> | <CA> | <SC> |
+    <TI> | <CR> | <MN> | <FE> | <CO> | <NI> | <CU> | <ZN> | <GA> | <GE> | <AS> |
+    <SE> | <BR> | <KR> | <RB> | <SR> | <ZR> | <NB> | <MO> | <TC> | <RU> | <RH> |
+    <PD> | <AG> | <CD> | <IN> | <SN> | <SB> | <TE> | <XE> | <CS> | <BA> | <LA> |
+    <HF> | <TA> | <RE> | <OS> | <IR> | <PT> | <AU> | <HG> | <TL> | <PB> | <BI> |
+    <PO> | <AT> | <RN> | <FR> | <RA> | <AC> | <TH> | <PA>
 }
 
 void OneCharElement() :
 {}
 {
-	<C> | <H> | <N> | <P> | <S> | <I>
+	<H> | <B> | <C> | <N> | <O> | <F> | <P> | <S> | <K> | <V> | <Y> | <I> | <U>
 }
 
 
@@ -279,20 +284,83 @@ TOKEN :
 
 TOKEN : /* ELEMENTS */
 {
-	< CL: "Cl" >
-|   < C:  "C" >
-|   < N:  "N" >
-|   < H:  "H" >
-|   < P:  "P" >
-|   < O:  "O" >
-|   < S:  "S" >
-|   < I:  "I" >
-|   < BR:  "Br" >
-|   < LI:  "Li" >
-|   < OS:  "Os" >
-|   < AU:  "Au" >
-|   < AG:  "Ag" >
-|   < HG:  "Hg" >
-|   < RH:  "Rh" >
+	<  H: "H" >
+|   < HE: "He" >
+|   < LI: "Li" >
+|   < BE: "Be" >
+|   <  B: "B" >
+|   <  C: "C" >
+|   <  N: "N" >
+|   <  O: "O" >
+|   <  F: "F" >
+|   < NE: "Ne" >
+|   < NA: "Na" >
+|   < MG: "Mg" >
+|	< AL: "Al" >
+|	< SI: "Si" >
+|   <  P: "P" >
+|   <  S: "S" >
+|	< CL: "Cl" >
+|	< AR: "Ar" >
+|   <  K: "K" >
+|   < CA: "Ca" >
+|   < SC: "Sc" >
+|   < TI: "Ti" >
+|   <  V: "V" >
+|   < CR: "Cr" >
+|   < MN: "Mn" >
+|   < FE: "Fe" >
+|   < CO: "Co" >
+|   < NI: "Ni" >
+|   < CU: "Cu" >
+|   < ZN: "Zn" >
+|   < GA: "Ga" >
+|   < GE: "Ge" >
+|   < AS: "As" >
+|   < SE: "Se" >
+|   < BR: "Br" >
+|   < KR: "Kr" >
+|   < RB: "Rb" >
+|   < SR: "Sr" >
+|   <  Y: "Y" >
+|   < ZR: "Zr" >
+|   < NB: "Nb" >
+|   < MO: "Mo" >
+|   < TC: "Tc" >
+|   < RU: "Ru" >
+|   < RH: "Rh" >
+|   < PD: "Pd" >
+|   < AG: "Ag" >
+|   < CD: "Cd" >
+|   < IN: "In" >
+|   < SN: "Sn" >
+|   < SB: "Sb" >
+|   < TE: "Te" >
+|   <  I: "I" >
+|   < XE: "Xe" >
+|   < CS: "Cs" >
+|   < BA: "Ba" >
+|   < LA: "La" >
+|   < HF: "Hf" >
+|   < TA: "Ta" >
+|   <  W: "W" >
+|   < RE: "Re" >
+|   < OS: "Os" >
+|   < IR: "Ir" >
+|   < PT: "Pt" >
+|   < AU: "Au" >
+|   < HG: "Hg" >
+|   < TL: "Tl" >
+|   < PB: "Pb" >
+|   < BI: "Bi" >
+|   < PO: "Po" >
+|   < AT: "At" >
+|   < RN: "Rn" >
+|   < FR: "Fr" >
+|   < RA: "Ra" >
+|   < AC: "Ac" >
+|   < TH: "Th" >
+|   < PA: "Pa" >
+|   <  U: "U" >
 }
 
