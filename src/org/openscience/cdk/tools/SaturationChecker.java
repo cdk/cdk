@@ -30,6 +30,7 @@
 package org.openscience.cdk.tools;
 
 import org.openscience.cdk.*;
+import org.openscience.cdk.ringsearch.*;
 import java.util.Vector;
 import java.io.*;
 
@@ -226,7 +227,7 @@ public class SaturationChecker
 	 *@param  molecule  Description of the Parameter
 	 *@keyword          bond order, calculation
 	 */
-	public void saturate(Molecule molecule)
+	public void saturate(AtomContainer atomContainer)
 	{
 		Atom partner = null;
 		Atom atom = null;
@@ -237,25 +238,25 @@ public class SaturationChecker
 		for (int i = 1; i < 4; i++)
 		{
 			// handle atoms with degree 1 first and then proceed to higher order
-			for (int f = 0; f < molecule.getAtomCount(); f++)
+			for (int f = 0; f < atomContainer.getAtomCount(); f++)
 			{
-				atom = molecule.getAtomAt(f);
+				atom = atomContainer.getAtomAt(f);
 				//System.out.println(atom.getSymbol());
 				atomTypes1 = atf.getAtomTypes(atom.getSymbol(), atf.ATOMTYPE_ID_STRUCTGEN);
 				//System.out.println(atomTypes1[0]);
-				if (molecule.getBondCount(atom) == i)
+				if (atomContainer.getBondCount(atom) == i)
 				{
-					if (molecule.getBondOrderSum(atom) < atomTypes1[0].getMaxBondOrderSum() - atom.getHydrogenCount())
+					if (atomContainer.getBondOrderSum(atom) < atomTypes1[0].getMaxBondOrderSum() - atom.getHydrogenCount())
 					{
-						partners = molecule.getConnectedAtoms(atom);
+						partners = atomContainer.getConnectedAtoms(atom);
 						for (int g = 0; g < partners.length; g++)
 						{
 							partner = partners[g];
 							atomTypes2 = atf.getAtomTypes(partner.getSymbol(), atf.ATOMTYPE_ID_STRUCTGEN);
 
-							if (molecule.getBondOrderSum(partner) < atomTypes2[0].getMaxBondOrderSum() - partner.getHydrogenCount())
+							if (atomContainer.getBondOrderSum(partner) < atomTypes2[0].getMaxBondOrderSum() - partner.getHydrogenCount())
 							{
-								bond = molecule.getBond(atom, partner);
+								bond = atomContainer.getBond(atom, partner);
 								bond.setOrder(bond.getOrder() + 1);
 								break;
 							}
@@ -267,6 +268,19 @@ public class SaturationChecker
 	}
 
 
+	public void saturateRingSystems(AtomContainer atomContainer)
+	{
+		RingSet rs = new SSSRFinder().findSSSR((Molecule)atomContainer);
+		Vector ringSets = RingPartitioner.partitionRings(rs);
+		AtomContainer ac;
+		for (int f = 0; f < ringSets.size(); f++)
+		{
+			rs = (RingSet)ringSets.elementAt(f);
+			ac = rs.getRingSetInAtomContainer();
+			saturate(ac);
+		}
+	}
+	
 	/**
 	 *  Recursivly fixes bond orders in a molecule for 
 	 *  which only connectivities but no bond orders are know.
