@@ -266,6 +266,9 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
         AtomContainer[] atomContainers = getAtomContainers();
         for (int i=0; i<atomContainers.length; i++) {
             buffer.append(atomContainers[i].toString());
+            if (i<atomContainers.length-1) {
+                buffer.append(", ");
+            }
         }
         buffer.append(")");
         return buffer.toString();
