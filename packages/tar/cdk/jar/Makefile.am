@@ -13,8 +13,6 @@ JARLIBS=vecmath1.2-1.14.jar \
   baysmith-io.jar \
   dadml.jar \
   junit.jar \
-  xerces-2.6.2.jar \
-  xmlApis-2.6.2.jar \
   batik-awt-util.jar \
   batik-dom.jar \
   batik-svggen.jar \

@@ -7,7 +7,7 @@ JAVA3DDIR=@JAVA3DDIR@
 
 JARLIBDIR=@CDKJARDIR@
 JARLIBS=cdk-core.jar cdk-standard.jar cdk-io.jar cdk-extra.jar cdk-render.jar \
-        cdk-test.jar cdk-apps.jar cdk-experimental.jar
+        cdk-data.jar cdk-apps.jar cdk-experimental.jar
 
 # set the Java compiler
 JAVAC=${JAVACOMPILER}
@@ -25,18 +25,18 @@ CLEANFILES= cdk-core.jar cdk-extra.jar \
         cdk-io.jar cdk-experimental.jar cdk-render.jar cdk-standard.jar \
         dist/jar/cdk-core.jar dist/jar/cdk-standard.jar \
         dist/jar/cdk-libio.jar dist/jar/cdk-extra.jar \
-        dist/jar/cdk-test.jar dist/jar/cdk-apps.jar \
+        dist/jar/cdk-data.jar dist/jar/cdk-apps.jar \
         dist/jar/cdk-io.jar dist/jar/cdk-experimental.jar \
         dist/jar/cdk-render.jar dist/jar/cdk-standard.jar
 
 dist/jar/cdk-core.jar:
 	ant ${JAVAC} info dist-core
 
-cdk-test.jar: dist/jar/cdk-test.jar
-	cp dist/jar/cdk-test.jar .
+cdk-data.jar: dist/jar/cdk-data.jar
+	cp dist/jar/cdk-data.jar .
 
-dist/jar/cdk-test.jar:
-	ant ${JAVAC} dist-test
+dist/jar/cdk-data.jar:
+	ant ${JAVAC} dist-data
 
 dist/jar/cdk-standard.jar:
 	ant ${JAVAC} dist-standard
