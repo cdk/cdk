@@ -71,7 +71,6 @@ public class AtomContainer extends ChemObject implements Cloneable
 	 */
 	protected Bond[] bonds;
 
-
 	/**
 	 *  Constructs an empty AtomContainer
 	 *
@@ -113,7 +112,6 @@ public class AtomContainer extends ChemObject implements Cloneable
 		atoms = new Atom[atomCount];
 		bonds = new Bond[bondCount];
 	}
-
 
 	/**
 	 *  Sets the array of atoms of this AtomContainer
@@ -190,6 +188,10 @@ public class AtomContainer extends ChemObject implements Cloneable
 		return returnAtoms;
 	}
 
+	public Enumeration atoms()
+	{
+		return new AtomEnumeration(this);	
+	}
 
 	/**
 	 *  Returns the array of bonds of this AtomContainer
