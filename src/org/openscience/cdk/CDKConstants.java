@@ -109,6 +109,9 @@ public interface CDKConstants
 	static int VISITED = 53; // Use in tree searches
 	/** Is a chemobject (an atom, a bond, a ring ...) part of an aromatic system? */
 	static int ISAROMATIC = 54;
+	/** Has a chemobject (an atom, a bond, a ring ...) been mapped to another chemobject (i.e. in subgraph isomorphism search) */
+	static int MAPPED = 55;
+
 }
 
 
