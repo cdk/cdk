@@ -18,6 +18,7 @@ New:
   atomic charge
 
 Fixes:
+* HOSECodeGenerator now generates correctly ranked n-sphere codes.
 * Reading of 3D coordinates from ShelX files
 * Fixed "M  END" line in MDL output (fixes bug #624656)
 * Fixed conversion of coordinates in libio/joelib/Convertor 

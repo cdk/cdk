@@ -30,6 +30,9 @@
 package org.openscience.cdk.tools;
 
 import java.util.Vector;
+import javax.swing.*;
+import javax.swing.tree.*;
+import java.math.*;
 import org.openscience.cdk.*;
 import org.openscience.cdk.exception.*;
 
@@ -92,7 +95,9 @@ public class HOSECodeGenerator implements java.io.Serializable
 			{
 			"", "", "=", "%", "*"
 			};
-
+	public TreeNode rootNode = null;
+			
+			
 	boolean debug = false;
 
 	/**
@@ -138,15 +143,11 @@ public class HOSECodeGenerator implements java.io.Serializable
 	 *  Produces a HOSE code for Atom 'root' in the AtomContainer 'ac'. The HOSE
 	 *  code is produced for the number of spheres given by noOfSpheres
 	 *
-	 *@param  ac                                              The AtomContainer
-	 *      with the molecular skeleton in which the root atom resides
-	 *@param  root                                            The root atom for
-	 *      which to produce the HOSE code
-	 *@param  noOfSpheres                                     The number of spheres
-	 *      to look at
-	 *@return                                                 The HOSECode value
-	 *@exception  org.openscience.cdk.exception.CDKException  Thrown if something
-	 *      is wrong
+	 *@param  ac  The AtomContainer with the molecular skeleton in which the root atom resides
+	 *@param  root The root atom for which to produce the HOSE code
+	 *@param  noOfSpheres  The number of spheres to look at
+	 *@return The HOSECode value
+	 *@exception  org.openscience.cdk.exception.CDKException  Thrown if something is wrong
 	 */
 	public String getHOSECode(AtomContainer ac, Atom root, int noOfSpheres) throws org.openscience.cdk.exception.CDKException
 	{
@@ -158,7 +159,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 			ac.getAtomAt(i).flags[CDKConstants.VISITED] = false;
 		}
 		root.flags[CDKConstants.VISITED] = true;
-
+		rootNode = new TreeNode(root.getSymbol(), null, root, (double)0, atomContainer.getBondCount(root), 0);
 		/*
 		 *  All we need to observe is how the ranking of substituents
 		 *  in the subsequent spheres of the root nodes influences the
@@ -181,14 +182,13 @@ public class HOSECodeGenerator implements java.io.Serializable
 	 *  Prepares for a breadth first search within the AtomContainer. The actual
 	 *  recursion is done in nextSphere()
 	 *
-	 *@param  root                                            The atom at which we
-	 *      start the search
-	 *@exception  org.openscience.cdk.exception.CDKException  If something goes
-	 *      wrong.
+	 *@param  root  The atom at which we start the search
+	 *@exception  org.openscience.cdk.exception.CDKException  If something goes wrong.
 	 */
 	private void breadthFirstSearch(Atom root) throws org.openscience.cdk.exception.CDKException
 	{
 		sphere = 0;
+		TreeNode tempNode = null;
 		Atom[] conAtoms = atomContainer.getConnectedAtoms(root);
 		Atom atom;
 		Bond bond = null;
@@ -200,20 +200,20 @@ public class HOSECodeGenerator implements java.io.Serializable
 			{
 				atom = conAtoms[i];
 				bond = atomContainer.getBond(root, atom);
-
 				/*
 				 *  In the first sphere the atoms are labled with
 				 *  their own atom atom as source
 				 */
 				if (bond.flags[CDKConstants.ISAROMATIC])
 				{
-					sphereNodes.addElement(new TreeNode(atom.getSymbol(), new TreeNode(root.getSymbol(), null, root, (double)0, 0, (long)0), atom, 4,  atomContainer.getBondCount(atom), 0));
+					tempNode = new TreeNode(atom.getSymbol(), new TreeNode(root.getSymbol(), null, root, (double) 0, 0, (long) 0), atom, 4, atomContainer.getBondCount(atom), 0);
 				} else
 				{
-					sphereNodes.addElement(new TreeNode(atom.getSymbol(), new TreeNode(root.getSymbol(), null, root, (double)0, 0, (long)0), atom, bond.getOrder(),  atomContainer.getBondCount(atom), 0));
+					tempNode = new TreeNode(atom.getSymbol(), new TreeNode(root.getSymbol(), null, root, (double) 0, 0, (long) 0), atom, bond.getOrder(), atomContainer.getBondCount(atom), 0);
 				}
+				sphereNodes.addElement(tempNode);
+				rootNode.childs.addElement(tempNode);
 				atom.flags[CDKConstants.VISITED] = true;
-
 			} catch (Exception exc)
 			{
 				throw new CDKException("Error in HOSECodeGenerator->breadthFirstSearch.");
@@ -222,17 +222,14 @@ public class HOSECodeGenerator implements java.io.Serializable
 		nextSphere(sphereNodes);
 	}
 
-
 	/**
 	 *  The actual recursion method for our breadth first search Each node in
 	 *  sphereNodes is inspected for its decendants which are then stored in
 	 *  nextSphereNodes, which again is passed to the next recursion level of
 	 *  nextSphere()
 	 *
-	 *@param  sphereNodes                                     The sphereNodes to be
-	 *      inspected
-	 *@exception  org.openscience.cdk.exception.CDKException  If something goes
-	 *      wrong
+	 *@param  sphereNodes The sphereNodes to be inspected
+	 *@exception  org.openscience.cdk.exception.CDKException  If something goes wrong
 	 */
 	private void nextSphere(Vector sphereNodes) throws org.openscience.cdk.exception.CDKException
 	{
@@ -261,26 +258,15 @@ public class HOSECodeGenerator implements java.io.Serializable
 					for (int j = 0; j < conAtoms.length; j++)
 					{
 						toNode = conAtoms[j];
-						if (!toNode.flags[CDKConstants.VISITED])
+						if (toNode != treeNode.source.atom)
 						{
 							bond = atomContainer.getBond(node, toNode);
 							if (bond.flags[CDKConstants.ISAROMATIC])
 							{
-								nextSphereNodes.addElement(new TreeNode(toNode.getSymbol(), treeNode, toNode, 4,  atomContainer.getBondCount(toNode), treeNode.score * 1000000));
+								nextSphereNodes.addElement(new TreeNode(toNode.getSymbol(), treeNode, toNode, 4, atomContainer.getBondCount(toNode), treeNode.score * 1000000));
 							} else
 							{
-								nextSphereNodes.addElement(new TreeNode(toNode.getSymbol(), treeNode, toNode, bond.getOrder(),  atomContainer.getBondCount(toNode), treeNode.score * 1000000));
-							}
-							toNode.flags[CDKConstants.VISITED] = true;
-						} else if (!toNode.equals(treeNode.source))
-						{
-							bond = atomContainer.getBond(node, toNode);
-							if (bond.flags[CDKConstants.ISAROMATIC])
-							{
-								nextSphereNodes.addElement(new TreeNode("&", treeNode, toNode, 4, atomContainer.getBondCount(toNode), treeNode.score * 1000000));
-							} else
-							{
-								nextSphereNodes.addElement(new TreeNode("&", treeNode, toNode, bond.getOrder(), atomContainer.getBondCount(toNode), treeNode.score * 1000000));
+								nextSphereNodes.addElement(new TreeNode(toNode.getSymbol(), treeNode, toNode, bond.getOrder(), atomContainer.getBondCount(toNode), treeNode.score * 1000000));
 							}
 						}
 					}
@@ -295,21 +281,79 @@ public class HOSECodeGenerator implements java.io.Serializable
 	}
 
 	/**
-	 *  After recursivly having established the spheres and assigning each node an appropriate score, 
-	 *  we now generate the complete HOSE code.
+	 *  After recursivly having established the spheres and assigning each node an
+	 *  appropriate score, we now generate the complete HOSE code.
+	 *
+	 *@exception  org.openscience.cdk.exception.CDKException  Thrown if something goes wrong
 	 */
 	private void createCode() throws org.openscience.cdk.exception.CDKException
 	{
 		Vector sphereNodes = null;
 		TreeNode tn = null;
+		for (int f = 0; f < atomContainer.getAtomCount(); f++)
+		{
+			atomContainer.getAtomAt(f).flags[CDKConstants.VISITED] = false;
+		}
+
 		for (int f = 0; f < maxSphere; f++)
 		{
 			sphereNodes = spheres[maxSphere - f];
 			for (int g = 0; g < sphereNodes.size(); g++)
 			{
-				tn = (TreeNode)sphereNodes.elementAt(g);
-				if (tn.source != null) tn.source.ranking += tn.degree;					
+				tn = (TreeNode) sphereNodes.elementAt(g);
+				if (tn.source != null)
+				{
+					tn.source.ranking += tn.degree;
+				}
+				
 			}
+		}
+
+		for (int f = 0; f < maxSphere; f++)
+		{
+			sphereNodes = spheres[f];
+			calculateNodeScores(sphereNodes);
+			sortNodesByScore(sphereNodes);
+		}
+
+		for (int f = 0; f < maxSphere; f++)
+		{
+			sphereNodes = spheres[maxSphere - f];
+			for (int g = 0; g < sphereNodes.size(); g++)
+			{
+				tn = (TreeNode) sphereNodes.elementAt(g);
+				if (tn.source != null)
+				{
+					tn.source.score += tn.score;
+				}
+				
+			}
+		}
+		
+		for (int f = 0; f < maxSphere; f++)
+		{
+			sphereNodes = spheres[f];
+			for (int g = 0; g < sphereNodes.size() ; g++)
+			{
+				tn = (TreeNode) sphereNodes.elementAt(g);
+				tn.score += tn.ranking;
+			}
+			sortNodesByScore(sphereNodes);
+		}
+		BigInteger big = new BigInteger("10");
+		long temp, tempScore;
+		for (int f = 0; f < maxSphere; f++)
+		{
+			sphereNodes = spheres[f];
+			for (int g = 0; g < sphereNodes.size() ; g++)
+			{
+				tn = (TreeNode) sphereNodes.elementAt(g);
+				temp = (big.pow(maxSphere - f + 7)).longValue();
+				tempScore = tn.source.sortOrder * temp;
+				tn.score = tn.score + tempScore;
+				tn.score += tn.source.score;
+			}
+			sortNodesByScore(sphereNodes);
 		}
 		for (int f = 0; f < maxSphere; f++)
 		{
@@ -323,11 +367,9 @@ public class HOSECodeGenerator implements java.io.Serializable
 	/**
 	 *  Generates the string code for a given sphere
 	 *
-	 *@param  sphereNodes                                     A vector of tree
-	 *      nodes for which a string code is to be generated
-	 *@return                                                 The SphereCode value
-	 *@exception  org.openscience.cdk.exception.CDKException  Thrown if something
-	 *      goes wrong
+	 *@param  sphereNodes A vector of TreeNodes for which a string code is to be generated
+	 *@return The SphereCode value
+	 *@exception  org.openscience.cdk.exception.CDKException  Thrown if something goes wrong
 	 */
 	private String getSphereCode(Vector sphereNodes) throws org.openscience.cdk.exception.CDKException
 	{
@@ -335,54 +377,56 @@ public class HOSECodeGenerator implements java.io.Serializable
 		{
 			return "";
 		}
-		boolean[] done = new boolean[sphereNodes.size()];
 		Atom node = null;
 		TreeNode treeNode = null;
-
 		StringBuffer code = new StringBuffer();
-		calculateNodeScores(sphereNodes);
-		sortNodes(sphereNodes);
 		/*
 		 *  append the tree node code to the HOSECode in
 		 *  their now determined order, using commas to
 		 *  separate nodes from different branches
 		 */
-		Atom branch = ((TreeNode)(((TreeNode) sphereNodes.elementAt(0)).source)).atom;
+		Atom branch = ((TreeNode) (((TreeNode) sphereNodes.elementAt(0)).source)).atom;
 		Atom nextBranch;
 		int start = 0;
-		do
+		StringBuffer tempCode = null;
+		nextBranch = null;
+		for (int i = 0; i < sphereNodes.size(); i++)
 		{
-			nextBranch = null;
-			for (int i = start; i < sphereNodes.size(); i++)
+			treeNode = (TreeNode) sphereNodes.elementAt(i);
+			tempCode = new StringBuffer();
+			if (!treeNode.source.stopper && treeNode.source.atom != branch)
 			{
-				treeNode = (TreeNode) sphereNodes.elementAt(i);
-				if (treeNode.source.atom == branch && !done[i])
-				{
-					if (treeNode.bondType <= 4)
-					{
-						code.append(bondSymbols[(int) treeNode.bondType]);
-					} else
-					{
-						throw new CDKException("Unknown bond type");
-					}
-					code.append(getElementSymbol(treeNode.symbol));
-					done[i] = true;
-				}
-				if (treeNode.source.atom != branch && nextBranch == null && !done[i])
-				{
-					nextBranch = treeNode.source.atom;
-				}
-			}
-			if (nextBranch != null)
-			{
+				branch = treeNode.source.atom;
 				code.append(",");
-				branch = nextBranch;
-				start++;
 			}
-		} while (nextBranch != null);
+			if (!treeNode.source.stopper && treeNode.source.atom == branch)
+			{
+				if (treeNode.bondType <= 4)
+				{
+					tempCode.append(bondSymbols[(int) treeNode.bondType]);
+				} else
+				{
+					throw new CDKException("Unknown bond type");
+				}
+				if (!treeNode.atom.flags[CDKConstants.VISITED])
+				{
+					tempCode.append(getElementSymbol(treeNode.symbol));
+				}
+				else
+				{
+					tempCode.append("&");
+					treeNode.stopper = true;
+				}
+				code.append(tempCode);
+				treeNode.hSymbol = tempCode.toString();
+			}
+			treeNode.atom.flags[CDKConstants.VISITED] = true;
+			if (treeNode.source.stopper) treeNode.stopper = true;
+		}
 		code.append(sphereDelimiters[sphere - 1]);
 		return code.toString();
 	}
+
 
 	/**
 	 *  Gets the element rank for a given element symbol as given in Bremser's
@@ -404,10 +448,9 @@ public class HOSECodeGenerator implements java.io.Serializable
 		return ((double) 800000 - isotope.getAtomicMass());
 	}
 
-
 	/**
-	 *  Returns the Bremser-compatible symbols for a given element Silicon, for
-	 *  example, is acutually "Q". :-)
+	 *  Returns the Bremser-compatible symbols for a given element. Silicon, for
+	 *  example, is actually "Q". :-)
 	 *
 	 *@param  sym  The element symbol to be converted
 	 *@return      The converted symbol
@@ -435,13 +478,11 @@ public class HOSECodeGenerator implements java.io.Serializable
 
 
 	/**
-	 *  Determins the ranking score for each node, allowing for a sorting of nodes
+	 *  Determines the ranking score for each node, allowing for a sorting of nodes
 	 *  within one sphere.
 	 *
-	 *@param  sphereNodes                                     The nodes for which
-	 *      the score is to be calculated.
-	 *@exception  org.openscience.cdk.exception.CDKException  Thrown if something
-	 *      goes wrong.
+	 *@param  sphereNodes The nodes for which the score is to be calculated.
+	 *@exception  org.openscience.cdk.exception.CDKException  Thrown if something goes wrong.
 	 */
 	private void calculateNodeScores(Vector sphereNodes) throws org.openscience.cdk.exception.CDKException
 	{
@@ -461,65 +502,24 @@ public class HOSECodeGenerator implements java.io.Serializable
 		}
 	}
 
-
 	/**
 	 *  Sorts the nodes (atoms) in the sphereNode vector according to their score
 	 *  This is used for the essential ranking of nodes in HOSE code sphere
 	 *
 	 *@param  sphereNodes  A vector with sphere nodes to be sorted.
 	 */
-	private void sortNodes(Vector sphereNodes)
+	private void sortNodesByScore(Vector sphereNodes)
 	{
 		Object obj;
 		boolean changed;
-		//System.out.println("Sphere " + sphere);
-		/* We only need a three step sort here, first be root atom, 
-		 * then by score within the nodes belonging to the same root atom
-		 * and finally, if they have the same score, by degree of the following atoms. 
+		/*
+		 *  Now we sort by score
 		 */
-		/* 1. Sort by sortOrder of root atom */
 		do
 		{
 			changed = false;
 			for (int i = 0; i < sphereNodes.size() - 1; i++)
 			{
-				if (((TreeNode) sphereNodes.elementAt(i + 1)).sortOrder > ((TreeNode) sphereNodes.elementAt(i)).sortOrder)
-				{
-					obj = sphereNodes.elementAt(i + 1);
-					sphereNodes.removeElementAt(i + 1);
-					sphereNodes.insertElementAt(obj, i);
-					changed = true;
-				}
-			}
-		} while (changed);
-		
-		do
-		{
-			changed = false;
-			for (int i = 0; i < sphereNodes.size() - 1; i++)
-			{
-				if (((TreeNode) sphereNodes.elementAt(i + 1)).source.atom == ((TreeNode) sphereNodes.elementAt(i)).source.atom){
-					//System.out.println("yes");
-					if (((TreeNode) sphereNodes.elementAt(i + 1)).score > ((TreeNode) sphereNodes.elementAt(i)).score)
-					{
-						obj = sphereNodes.elementAt(i + 1);
-						sphereNodes.removeElementAt(i + 1);
-						sphereNodes.insertElementAt(obj, i);
-						changed = true;
-					}
-				}
-				else
-				{
-					//System.out.println("No");
-					//System.out.println(((TreeNode) sphereNodes.elementAt(i + 1)).source);
-					//System.out.println(((TreeNode) sphereNodes.elementAt(i)).source);
-				}
-			}
-		} while (changed);
-		for (int i = 0; i < sphereNodes.size(); i++)
-		{
-			if (((TreeNode) sphereNodes.elementAt(i + 1)).source.atom == ((TreeNode) sphereNodes.elementAt(i)).source.atom){
-				//System.out.println("yes");
 				if (((TreeNode) sphereNodes.elementAt(i + 1)).score > ((TreeNode) sphereNodes.elementAt(i)).score)
 				{
 					obj = sphereNodes.elementAt(i + 1);
@@ -528,15 +528,17 @@ public class HOSECodeGenerator implements java.io.Serializable
 					changed = true;
 				}
 			}
-			else
-			{
-				//System.out.println("No");
-				//System.out.println(((TreeNode) sphereNodes.elementAt(i + 1)).source);
-				//System.out.println(((TreeNode) sphereNodes.elementAt(i)).source);
-			}
+		} while (changed);
+		/* Having sorted a sphere, we lable the nodes with their sort order */
+		int counter = 0;
+		TreeNode root = ((TreeNode) sphereNodes.elementAt(0));
+		TreeNode temp = null;
+		for (int i = 0; i < sphereNodes.size(); i++)
+		{
+			temp = ((TreeNode) sphereNodes.elementAt(i));
+			temp.sortOrder = sphereNodes.size() - i;
 		}
 	}
-
 
 	/**
 	 *  If we use less than four sphere, this fills up the code with the missing
@@ -550,7 +552,48 @@ public class HOSECodeGenerator implements java.io.Serializable
 		}
 	}
 
-
+	public DefaultMutableTreeNode getRootNode()
+	{
+		DefaultMutableTreeNode top = new DefaultMutableTreeNode(rootNode);
+		DefaultMutableTreeNode workNode = null;
+		DefaultMutableTreeNode rootNode = null;
+		Vector treeNodes = new Vector();
+		Vector newTreeNodes = new Vector();
+		Vector sphereNodes = null;
+		TreeNode tn = null;
+		sphereNodes = spheres[0];
+		for (int g = 0; g < sphereNodes.size(); g++)
+		{
+			tn = (TreeNode) sphereNodes.elementAt(g);
+			workNode = new DefaultMutableTreeNode(tn); 
+			top.add(workNode);
+			treeNodes.add(workNode);
+		}
+		for (int f = 1; f < maxSphere; f++)
+		{
+			sphereNodes = spheres[f];
+			for (int h = 0; h < treeNodes.size(); h++)
+			{
+				rootNode = (DefaultMutableTreeNode)treeNodes.elementAt(h);
+				for (int g = 0; g < sphereNodes.size(); g++)
+				{
+					tn = (TreeNode) sphereNodes.elementAt(g);
+					if (tn.source == rootNode.getUserObject())
+					{
+						workNode = new DefaultMutableTreeNode(tn);
+						rootNode.add(workNode);
+						newTreeNodes.add(workNode);
+						
+					}
+				}
+			}
+			treeNodes = newTreeNodes;
+			newTreeNodes = new Vector();
+		}
+		return top;
+	}
+	
+	
 	/**
 	 *  Helper class for storing the properties of a node in our breadth first
 	 *  search
@@ -567,17 +610,21 @@ public class HOSECodeGenerator implements java.io.Serializable
 		int degree;
 		long score;
 		int ranking;
-		int sortOrder = -1;
+		int sortOrder = 1;
+		Vector childs = null;
+		String hSymbol = null;
+		boolean stopper = false;
 
 		/**
 		 *  Constructor for the TreeNode object
 		 *
 		 *@param  symbol    The Element symbol of the node
 		 *@param  source    The preceding node for this node
-		 *@param  atom    The cdk atom object belonging to this node
+		 *@param  atom      The cdk atom object belonging to this node
 		 *@param  bondType  The bond type by which this node was connect to its
 		 *      predecessor
 		 *@param  score     The score used to rank this node within its sphere.
+		 *@param  degree    Description of the Parameter
 		 */
 		TreeNode(String symbol, TreeNode source, Atom atom, double bondType, int degree, long score)
 		{
@@ -588,6 +635,54 @@ public class HOSECodeGenerator implements java.io.Serializable
 			this.score = score;
 			this.bondType = bondType;
 			ranking = 0;
+			sortOrder = 1;
+			childs = new Vector();
+		}
+
+
+		/**
+		 *  A TreeNode is equal to another TreeNode if it
+		 *  stands for the same atom object
+		 *
+		 *@param  o  The object tht we compare this TreeNode to
+		 *@return    True, if the this TreeNode's atom object equals the one of the other TreeNode
+		 */
+		public boolean equals(Object o)
+		{
+			try
+			{
+				if (this.atom == ((TreeNode) o).atom)
+				{
+					return true;
+				}
+			}
+			catch(Exception exc)
+			{
+				/* we do nothing here because anything 
+				that could seriously happen here is the we 
+				got something which is not a TreeNode and then got 
+				a class cast exception. Thus we can just wait until the
+				end of the method returns a "false" */
+			}
+			return false;
+		}
+		
+		public String toString()
+		{
+			String s = "";
+			try
+			{
+				s += (atomContainer.getAtomNumber(atom) + 1);
+				s += " " + hSymbol;
+				s += "; s=" + score; 
+				s += "; r=" + ranking;
+				s += "; d = " + degree;
+			}
+			catch(Exception exc)
+			{
+				return exc.toString();	
+			}
+			return s;
 		}
 	}
 }
