@@ -432,7 +432,8 @@ public class CMLWriter extends DefaultChemObjectWriter {
         if (!addID(atomAtts, atom)) addAtomID(atomAtts, atom);
         addDictRef(atomAtts, atom);
         if (atom instanceof PseudoAtom) {
-            atomAtts.put("title", ((PseudoAtom)atom).getLabel());
+            String label = ((PseudoAtom)atom).getLabel();
+            if (label != null) atomAtts.put("title", label);
             atomAtts.put("elementType", "Du");
         } else {
             atomAtts.put("elementType", atom.getSymbol());
