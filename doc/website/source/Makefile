@@ -11,6 +11,7 @@ STYLEOPT=
 all:
 	make website
 	cp *.html ../target/.
+	cp index.html ../target/index_template.html
 
 include depends.tabular
 
