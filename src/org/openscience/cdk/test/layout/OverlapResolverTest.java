@@ -92,7 +92,7 @@ public class OverlapResolverTest extends TestCase
 	 */
 	public static Test suite()
 	{
-		return new TestSuite(TemplateHandlerTest.class);
+		return new TestSuite(OverlapResolverTest.class);
 	}
 
 
@@ -116,10 +116,14 @@ public class OverlapResolverTest extends TestCase
 			AtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModels[0]);
 			
 			OverlapResolver or = new OverlapResolver();
+			double score = new OverlapResolver().getAtomOverlapScore(atomContainer, new Vector());
+			logger.debug("Overlap Score before treatment: " +  score);
+			assertTrue(score > 0);
 			or.resolveOverlap(atomContainer, null);
 			//MoleculeViewer2D.display(new Molecule(atomContainer), false);
-			double score = new OverlapResolver().getAtomOverlapScore(atomContainer, new Vector());
-			assertTrue(score > 0);
+			score = new OverlapResolver().getAtomOverlapScore(atomContainer, new Vector());
+			logger.debug("Overlap Score after treatment: " +  score);
+			assertTrue(score == 0);
 		} catch (Exception exc)
 		{
 			fail(exc.toString());
