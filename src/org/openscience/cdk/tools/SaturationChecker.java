@@ -214,6 +214,7 @@ public class SaturationChecker
 	 */
 	public void saturate(AtomContainer atomContainer) throws CDKException
 	{
+        logger.info("Saturating atomContainer by adjusting bond orders...");
 		Atom partner = null;
 		Atom atom = null;
 		Atom[] partners = null;
@@ -229,9 +230,8 @@ public class SaturationChecker
 				logger.debug("symbol: " + atom.getSymbol());
 				atomTypes1 = structgenATF.getAtomTypes(atom.getSymbol());
 				logger.debug("first atom type: " + atomTypes1[0]);
-				if (atomContainer.getBondCount(atom) == i)
-				{
-          if (atom.getFlag(CDKConstants.ISAROMATIC) && atomContainer.getBondOrderSum(atom) < atomTypes1[0].getMaxBondOrderSum() - atom.getHydrogenCount()){
+				if (atomContainer.getBondCount(atom) == i) {
+                    if (atom.getFlag(CDKConstants.ISAROMATIC) && atomContainer.getBondOrderSum(atom) < atomTypes1[0].getMaxBondOrderSum() - atom.getHydrogenCount()){
 						partners = atomContainer.getConnectedAtoms(atom);
 						for (int g = 0; g < partners.length; g++)
 						{
