@@ -22,7 +22,7 @@
         </fileset>
     </path>
 
-    <target name="doccheck-all" depends="doccheck-core, doccheck-standard, doccheck-io, doccheck-render, doccheck-extra"/>
+    <target name="doccheck-all" depends="doccheck-core, doccheck-standard, doccheck-io, doccheck-render, doccheck-extra, doccheck-qsar"/>
     
     <target name="html" depends="compileTaglets">
         <mkdir dir="${javadoc.dir}" />
@@ -162,6 +162,24 @@
                     path="jar/doccheck.jar" />
             <fileset dir="${src}">
                 <includesfile name="${src}/extra.javafiles"/>
+            </fileset>
+            <sourcepath>
+                <pathelement path="${src}"/>
+            </sourcepath>
+        </javadoc>
+    </target>
+
+   <target name="doccheck-qsar">
+        <mkdir dir="reports/javadoc/qsar/"/>
+        <javadoc private="false" public="true"
+                 destdir="reports/javadoc/qsar/"
+                 excludepackagenames="org.openscience.cdk.test.*">
+            <classpath refid="project.class.path" />
+
+            <doclet name="com.sun.tools.doclets.doccheck.DocCheck"
+                    path="jar/doccheck.jar" />
+            <fileset dir="${src}">
+                <includesfile name="${src}/qsar.javafiles"/>
             </fileset>
             <sourcepath>
                 <pathelement path="${src}"/>

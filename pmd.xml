@@ -100,4 +100,14 @@
         </pmd>
     </target>
 
+    <target name="pmd-qsar">
+        <mkdir dir="${reports.tests}/pmd"/>
+        <pmd shortFilenames="true" rulesetfiles="pmd/custom.xml">
+            <formatter type="summaryhtml" toFile="${reports.tests}/pmd/qsar.html"/>
+            <fileset dir="${src}">
+                <includesfile name="${src}/qsar.javafiles"/>
+            </fileset>
+        </pmd>
+    </target>
+
 </project>
