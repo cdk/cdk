@@ -24,6 +24,7 @@ Fixes:
 * Fixed creation of IDs for SetOfMolecules (closes #JCP 1000637)
 * Fixed creation of IDs for Bond's
 * CMLRSSHandler now propagates whitespace from CML fragments
+* Fixed output or aromatic bonds in MDLWriter
 
 API changes:
 * Moved AtomContainer.getAdjacencyMatrix to cdk.graph.matrix.AdjecencyMatrix
