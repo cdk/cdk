@@ -62,7 +62,7 @@ public class JCPController2D {
     private int prevDragCoordY = 0;
     private boolean draggingSelected = true;
     
-    Vector commonElements;
+    private Vector commonElements;
 
     /**
      * Constructs a controller that performs operations on the
@@ -99,12 +99,11 @@ public class JCPController2D {
          *
          * @param   e    MouseEvent object
          **/
-        public void mouseMoved(MouseEvent e) {
+        public void mouseMoved(MouseEvent event) {
             // logger.debug("Mouse moved");
 
-                double highlightRadius = r2dm.getHighlightRadius();
-                int mouseX = getWorldCoordinate(e.getX()); 
-                int mouseY = getWorldCoordinate(e.getY());
+                int mouseX = getWorldCoordinate(event.getX()); 
+                int mouseY = getWorldCoordinate(event.getY());
                 Atom atomInRange;
                 Bond bondInRange;
 
@@ -137,11 +136,11 @@ public class JCPController2D {
          *
          * @param   e    MouseEvent object
          **/
-        public void mouseDragged(MouseEvent e) {
+        public void mouseDragged(MouseEvent event) {
             logger.debug("Mouse dragged in mode: " + c2dm.getDrawModeString());
 
-            int mouseX = getWorldCoordinate(e.getX()); 
-            int mouseY = getWorldCoordinate(e.getY());
+            int mouseX = getWorldCoordinate(event.getX()); 
+            int mouseY = getWorldCoordinate(event.getY());
 
             if (!wasDragged) {
                 prevDragCoordX = mouseX;
@@ -204,8 +203,6 @@ public class JCPController2D {
                         double pointerVectorLength = c2dm.getRingPointerLength();
                         Point2d center = getHighlighted().get2DCenter();
                         r2dm.setPointerVectorStart(new Point((int)center.x, (int)center.y));
-                        int startX = 0;
-                        int startY = 0;
                         angle = GeometryTools.getAngle(center.x - mouseX, center.y - mouseY);
                         endX = (int)center.x - (int)(Math.cos(angle) * pointerVectorLength);
                         endY = (int)center.y - (int)(Math.sin(angle) * pointerVectorLength);
@@ -218,7 +215,7 @@ public class JCPController2D {
                 if (c2dm.getDrawMode() == c2dm.LASSO) {
                     /* Draw polygon in screencoordinates, convert them
                        to world coordinates when mouse release */
-                    r2dm.addLassoPoint(new Point(e.getX(), e.getY()));
+                    r2dm.addLassoPoint(new Point(event.getX(), event.getY()));
                 }
 
                 /*************************************************************************
@@ -251,22 +248,26 @@ public class JCPController2D {
          *
          * @param   e    MouseEvent object
          **/
-        public void mousePressed(MouseEvent e) {
+        public void mousePressed(MouseEvent event) {
 
-            int mouseX = getWorldCoordinate(e.getX());
-            int mouseY = getWorldCoordinate(e.getY());
+            int mouseX = getWorldCoordinate(event.getX());
+            int mouseY = getWorldCoordinate(event.getY());
 
-            if (e.isPopupTrigger()) {
+            if (event.isPopupTrigger()) {
                 logger.info("Popup menu triggered...");
                 
                 Atom atomInRange = getAtomInRange(mouseX, mouseY);
                 Bond bondInRange = getBondInRange(mouseX, mouseY);
                 if (atomInRange != null) {
                     JPopupMenu popup = c2dm.getAtomPopupMenu();
-                    if (popup != null ) popup.show(e.getComponent(), e.getX(), e.getY());
+                    if (popup != null ) {
+                        popup.show(event.getComponent(), event.getX(), event.getY());
+                    }
                 } else if (bondInRange != null) {
                     JPopupMenu popup = c2dm.getBondPopupMenu();
-                    if (popup != null ) popup.show(e.getComponent(), e.getX(), e.getY());
+                    if (popup != null ) {
+                        popup.show(event.getComponent(), event.getX(), event.getY());
+                    }
                 } else {
                     logger.warn("Popup for model has not been implemented yet!");
                 }
@@ -324,12 +325,12 @@ public class JCPController2D {
          *
          * @param   e    MouseEvent object
          **/
-        public void mouseReleased(MouseEvent e) {
-            if (e.getButton() == MouseEvent.BUTTON1) {
+        public void mouseReleased(MouseEvent event) {
+            if (event.getButton() == MouseEvent.BUTTON1) {
                 logger.debug("Mouse released in modus: " + c2dm.getDrawModeString());
 
-                int mouseX = getWorldCoordinate(e.getX()); 
-                int mouseY = getWorldCoordinate(e.getY());
+                int mouseX = getWorldCoordinate(event.getX()); 
+                int mouseY = getWorldCoordinate(event.getY());
 
                 /*************************************************************************
                  *                       SYMBOL MODE                                     *
@@ -474,8 +475,6 @@ public class JCPController2D {
                  *************************************************************************/
                 if (c2dm.getDrawMode() == c2dm.SELECT && wasDragged)
                 {
-                        Atom currentAtom;
-                        Bond currentBond;
                         AtomContainer selectedPart = new AtomContainer();
                         r2dm.setSelectedPart(selectedPart);
                         r2dm.setSelectedPart(getContainedAtoms(r2dm.getSelectRect()));
@@ -781,13 +780,13 @@ public class JCPController2D {
         {
                 double highlightRadius = r2dm.getHighlightRadius();
                 Atom closestAtom = GeometryTools.getClosestAtom(X, Y, atomCon);
-                if (closestAtom == null) return null;
-                // logger.debug("closestAtom  "+ closestAtom);
-                if (Math.sqrt(Math.pow(closestAtom.getX2D() - X, 2) + 
-                    Math.pow(closestAtom.getY2D() - Y, 2)) < highlightRadius) {
-                        return closestAtom;
+                if (closestAtom != null) {
+                    if (!(Math.sqrt(Math.pow(closestAtom.getX2D() - X, 2) + 
+                          Math.pow(closestAtom.getY2D() - Y, 2)) < highlightRadius)) {
+                        closestAtom = null;
+                    }
                 }
-                return null;
+                return closestAtom;
         }
 
 
@@ -956,10 +955,11 @@ public class JCPController2D {
      * screen coordinates back into world coordinates.
      */
     private int[] getWorldCoordinates(int[] coords) {
+        int[] worldCoords = new int[coords.length];
         for (int i=0; i<coords.length; i++) {
-            coords[i] = (int)((double)coords[i] / r2dm.getZoomFactor());
+            worldCoords[i] = (int)((double)coords[i] / r2dm.getZoomFactor());
         }
-        return coords;
+        return worldCoords;
     }
     
     	/**
