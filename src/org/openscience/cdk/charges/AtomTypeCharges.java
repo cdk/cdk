@@ -1,16 +1,16 @@
 /*
- *  Copyright (C) 2004 Christian Hoppe
+ *  $RCSfile$
+ *  $Author$
+ *  $Date$
+ *   *
+ *  Copyright (C) 1997-2004  The Chemistry Development Kit (CDK) project
  *
- *  Contact: c.hoppe_@web.de
+ *  Contact: cdk-devel@list.sourceforge.net
  *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public License
  *  as published by the Free Software Foundation; either version 2.1
  *  of the License, or (at your option) any later version.
- *  All we ask is that proper credit is given for our work, which includes
- *  - but is not limited to - adding the above copyright notice to the beginning
- *  of your source code files, and to any copyright notice that you may distribute
- *  with programs based on this work.
  *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -20,10 +20,8 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- *
- *
- *  AtomTypeCharges.java
  */
+ 
 package org.openscience.cdk.charges;
 
 import java.util.regex.*;
@@ -34,9 +32,10 @@ import org.openscience.cdk.tools.HOSECodeGenerator;
 
 /**
  *  Assigns charges to atom types
+ *  Both compilation and use of this class requires Java 1.4.
  *
  *@author     chhoppe
- *@cdk.created    3. November 2004
+ *@cdk.created    2004-11-03
  */
 public class AtomTypeCharges {
 	HOSECodeGenerator hcg = new HOSECodeGenerator();
@@ -54,8 +53,14 @@ public class AtomTypeCharges {
 
 
 	/**
-	 *  Sets the charge attribute of the AtomTypeCharges object
-	 *  if no forcefield data is used it assign simple initial charges
+	 *  Sets initial charges for atom types
+	 * +1 for cationic atom types
+	 * -1 for anionic atom types
+	 * carboxylic oxygen -0.5
+	 * phosphorylic oxygen -0.66
+	 * sulfanilic oxygen -0.5
+	 * or to formal charge (which must be determined elsewhere or set manually)
+	 * polycations are not handled by this approach
 	 *
 	 *@param  atomContainer  AtomContainer
 	 *@return                AtomContainer with set charges
@@ -83,8 +88,8 @@ public class AtomTypeCharges {
 	/**
 	 *  Sets the initialCharges attribute of the AtomTypeCharges object
 	 *
-	 *@param  ac                The new initialCharges value
-	 *@return                   Description of the Return Value
+	 *@param  ac                AtomContainer
+	 *@return                   AtomContainer with (new) partial charges
 	 *@exception  CDKException  Description of the Exception
 	 */
 	private AtomContainer setInitialCharges(AtomContainer ac) throws CDKException {
