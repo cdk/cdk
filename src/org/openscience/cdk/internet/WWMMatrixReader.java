@@ -64,9 +64,8 @@ import org.openscience.cdk.layout.StructureDiagramGenerator;
  * @author Yong Zhang <yz237@cam.ac.uk>
  * @author Egon Willighagen <elw38@cam.ac.uk>
  *
- * @cdk.keyword world wide molecular matrix
- *
- * @since Java 1.4
+ * @cdk.keyword world wide molecular matrix, WWMM
+ * @cdk.require java1.4
  */
 public class WWMMatrixReader extends DefaultChemObjectReader {
 

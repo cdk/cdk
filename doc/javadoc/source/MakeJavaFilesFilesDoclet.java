@@ -8,6 +8,7 @@ import java.io.*;
 public class MakeJavaFilesFilesDoclet {
 
     private final String javaDocModuleTag = "cdk.module";
+    private final String javaDocRequireTag = "cdk.require";
     private Hashtable cdkPackages;
 
     public MakeJavaFilesFilesDoclet() {
@@ -67,12 +68,20 @@ public class MakeJavaFilesFilesDoclet {
     
     private void processClass(ClassDoc classDoc) throws IOException {
         String className = classDoc.qualifiedName();
+        // first deal with modules
         Tag[] tags = classDoc.tags(javaDocModuleTag);
         String cdkPackage = "extra"; // if not given then it is part of cdk-extra
         if (tags.length > 0) {
-            cdkPackage = tags[0].text();
+            cdkPackage = tags[0].text(); // a class can be in only one module!
         }
         addClassToCDKPackage(className, cdkPackage);
+        // then deal with restrictions
+        String restriction = null;
+        tags = classDoc.tags(javaDocRequireTag);
+        for (int i=0; i<tags.length; i++) {
+            String cdkRequirement = tags[0].text();
+            addClassToCDKPackage(className, cdkRequirement);
+        }
     }
     
     private void processClasses(ClassDoc[] classes) throws IOException {

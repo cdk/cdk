@@ -58,10 +58,9 @@ import org.xml.sax.XMLReader;
  *
  * @cdk.keyword file format, IChI
  * @cdk.keyword chemical identifier
+ * @cdk.require java1.4
  *
  * @see     org.openscience.cdk.io.ichi.IChIHandler
- *
- * @since Java 1.4
  */
 public class IChIReader extends DefaultChemObjectReader {
 

@@ -42,6 +42,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
  *
  *@author     steinbeck
  *@cdk.created    September 4, 2003
+ * @cdk.require java1.4
  */
 public class TemplateHandlerTest extends TestCase
 {

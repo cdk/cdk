@@ -58,7 +58,7 @@ import org.xml.sax.helpers.DefaultHandler;
  *
  * @see org.openscience.cdk.io.IChIReader
  *
- * @since Java 1.4
+ * @cdk.require java1.4
  */
 public class IChIHandler extends DefaultHandler {
 

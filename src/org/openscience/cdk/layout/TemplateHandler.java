@@ -54,7 +54,7 @@ import org.openscience.cdk.isomorphism.mcss.RMap;
  *@cdk.created    September 4, 2003
  *@cdk.keyword    layout
  *@cdk.keyword    2D-coordinates
- *@since      Java 1.4
+ * @cdk.require java1.4
  */
 public class TemplateHandler
 {

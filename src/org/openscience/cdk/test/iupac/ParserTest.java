@@ -30,6 +30,7 @@ import org.openscience.cdk.exception.CDKException;
  * JUnit test routines for the core parser.
  *
  * @cdk.module test
+ * @cdk.require ant1.6
  *
  * @author Stephen Tomkinson
  */

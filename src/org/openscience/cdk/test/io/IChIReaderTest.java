@@ -48,6 +48,7 @@ import org.openscience.cdk.io.IChIReader;
  * @cdk.module test
  *
  * @see org.openscience.cdk.io.IChIReader
+ * @cdk.require java1.4
  */
 public class IChIReaderTest extends TestCase {
 

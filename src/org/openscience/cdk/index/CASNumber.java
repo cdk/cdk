@@ -37,8 +37,7 @@ import java.util.regex.Pattern;
  * @cdk.created 2003-06-30
  *
  * @cdk.keyword CAS number
- *
- * @since Java 1.4
+ * @cdk.require java1.4
  */
 public class CASNumber {
 
