@@ -66,16 +66,19 @@ public class FileConvertor {
       ChemObjectReader cor = getChemObjectReader(this.iformat, fr);
       if (cor == null) {
         System.err.println("Unsupported input format!");
-	return false;
+        return false;
       }
       ChemObjectWriter cow = getChemObjectWriter(this.oformat, fw);
       if (cow == null) {
         System.err.println("Unsupported output format!");
-	return false;
+        return false;
       }
 
       ChemFile content = (ChemFile)cor.read((ChemObject)new ChemFile());
       fr.close();
+      if (content == null) {
+        return false;
+      }
       cow.write(content.getChemSequence(0).getChemModel(0).getSetOfMolecules());
       fw.flush();
       fw.close();
@@ -106,16 +109,17 @@ public class FileConvertor {
 
       // do conversion
       FileConvertor fc = new FileConvertor(input_format, output_format);
-      if (fc.convert(input, output)) {
+      boolean success = fc.convert(input, output);
+      if (success) {
         System.out.println("Conversion succeeded!");
       } else {
         System.out.println("Converstion failed!");
+        System.exit(1);
       }
     } else {
       System.err.println("syntax: FileConverter -i<format> -o<format> <input> <output>");
       System.exit(1);
     }
-
   }
 
   private ChemObjectReader getChemObjectReader(String format, FileReader f) {

@@ -114,20 +114,27 @@ public class MDLReader implements CDKConstants, ChemObjectReader {
 		ChemSequence chemSequence = new ChemSequence();
 		ChemModel chemModel = new ChemModel();
 		SetOfMolecules setOfMolecules = new SetOfMolecules();
-		setOfMolecules.addMolecule(readMolecule());
+        Molecule m = readMolecule();
+        if (m == null) return null;
+		setOfMolecules.addMolecule(m);
 		String str;
 		try
 		{
 			do
 			{
 				str = new String(input.readLine());
-				if (str.equals("$$$$")) setOfMolecules.addMolecule(readMolecule());
+				if (str.equals("$$$$")) {
+                    m = readMolecule();
+                    /** if reading of molecule fails, then fail reading
+                        complete document **/
+                    if (m == null) return null;
+                    setOfMolecules.addMolecule(m);
+                }
 			}
 			while (input.ready());
 		}
-		catch (Exception exc)
-		{
-//			exc.printStackTrace();
+		catch (Exception exc) {
+            // exc.printStackTrace();
 		}
 		try
 		{
@@ -140,7 +147,7 @@ public class MDLReader implements CDKConstants, ChemObjectReader {
 		chemModel.setSetOfMolecules(setOfMolecules);
 		chemSequence.addChemModel(chemModel);
 		chemFile.addChemSequence(chemSequence);
-		
+
 		return chemFile;
 	}
 
@@ -216,6 +223,7 @@ public class MDLReader implements CDKConstants, ChemObjectReader {
 	        System.err.println("Error while reading MDL Molfile.");
 	        System.err.println("Reason for failure: ");
 			e.printStackTrace();
+            molecule = null;
 	    }
 		return molecule;
 	}

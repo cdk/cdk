@@ -11,6 +11,8 @@ Changes in CVS
 * More JavaDoc documentation
 * Added int[][] AtomContainer.getAdjacencyMatrix() method
 * Fixed bug in cdk-view (#588043)
+* Fixes in MDLReader and FileConvertor (fixes bugs 
+  #599536 and #599539)
 
 20020805 Release
 ------------------------------------
