@@ -378,10 +378,16 @@ public class CMLCoreModule implements ModuleInterface {
                 int count = 0;
                 if (att.equals("bondID")) {
                     count = addArrayElementsTo(bondid, atts.getValue(i));
+                } else if (att.equals("atomRefs1")) {
+                    count = addArrayElementsTo(bondARef1, atts.getValue(i));
+                } else if (att.equals("atomRefs2")) {
+                    count = addArrayElementsTo(bondARef2, atts.getValue(i));
                 } else if (att.equals("atomRef1")) {
                     count = addArrayElementsTo(bondARef1, atts.getValue(i));
                 } else if (att.equals("atomRef2")) {
                     count = addArrayElementsTo(bondARef2, atts.getValue(i));
+                } else if (att.equals("order")) {
+                    count = addArrayElementsTo(order, atts.getValue(i));
                 } else {
                     logger.warn("Unparsed attribute: " + att);
                 }
