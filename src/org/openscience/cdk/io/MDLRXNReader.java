@@ -37,13 +37,13 @@ import javax.vecmath.*;
 /**
  * Reads a molecule from an MDL RXN file.
  *
+ * <p>References:
+ *   <a href="http://cdk.sf.net/biblio.html#DAL92">DAL92</a>
+ *
  * @author     Egon Willighagen
  * @created    2003-07-24
  *
  * @keyword    file format, MDL RXN
- *
- * <p>References:
- *   href="http://cdk.sf.net/biblio.html#DAL92">DAL92</a>
  */
 public class MDLRXNReader extends DefaultChemObjectReader {
 
