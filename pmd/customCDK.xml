@@ -19,12 +19,28 @@
           <![CDATA[
 //TryStatement[@Catch='true'][not(FormalParameter/following-sibling::Block//Name[@Image='logger.debug'])]
           ]]>
-<!-- old one:
-//TryStatement[@Catch='true']//StatementExpression/PrimaryExpression[PrimaryPrefix/Name/@Image = 'logger.debug'][PrimarySuffix/Arguments//Name[@Image = ../../../../../../../../../../../../FormalParameter/VariableDeclaratorId/@Image]][count(*) = 0]
--->
         </value>
         </property>
     </properties>
   </rule>
+
+  <rule name="CDK_MoreThanOneLoggingToolInstantiated"
+        message="More than one LoggingTool is instantiated"
+        class="net.sourceforge.pmd.rules.XPathRule">
+    <description>
+      Detects instantiation of more than one LoggingTool.
+    </description>
+    <priority>3</priority>
+    <properties>
+      <property name="xpath" pluginname="true">
+        <value>
+          <![CDATA[
+//ClassBody[count(//VariableDeclarator[../Type/Name[@Image='LoggingTool']]) &gt;1 ]
+          ]]>
+        </value>
+        </property>
+    </properties>
+  </rule>
+
 
 </ruleset>

@@ -15,12 +15,14 @@
         </fileset>
     </path>
 
-    <taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask" 
+    <taskdef name="pmd" id="pmd" classname="net.sourceforge.pmd.ant.PMDTask" 
                         classpathref="pmd.classpath"/>
 
-    <target name="pmd" depends="pmd-data, pmd-core, pmd-standard, pmd-io, pmd-extra, pmd-render, pmd-applications, pmd-libio, pmd-experimental"/>
+    <target name="pmd" id="pmd" depends="pmd-data, pmd-core, pmd-standard, pmd-io, 
+        pmd-extra, pmd-render, pmd-applications, pmd-libio, pmd-experimental,
+        pmd-builder3d, pmd-test"/>
     
-    <target name="pmd-data">
+    <target name="pmd-data" id="pmd-data">
         <mkdir dir="${reports.tests}/pmd"/>
         <pmd shortFilenames="true" rulesetfiles="pmd/custom-data.xml">
             <formatter type="summaryhtml" toFile="${reports.tests}/pmd/data.html"/>
@@ -30,7 +32,7 @@
         </pmd>
     </target>
 
-    <target name="pmd-core">
+    <target name="pmd-core" id="pmd-core">
         <mkdir dir="${reports.tests}/pmd"/>
         <pmd shortFilenames="true" rulesetfiles="pmd/custom.xml">
             <formatter type="summaryhtml" toFile="${reports.tests}/pmd/core.html"/>
@@ -40,7 +42,7 @@
         </pmd>
     </target>
 
-    <target name="pmd-standard">
+    <target name="pmd-standard" id="pmd-standard">
         <mkdir dir="${reports.tests}/pmd"/>
         <pmd shortFilenames="true" rulesetfiles="pmd/custom.xml">
             <formatter type="summaryhtml" toFile="${reports.tests}/pmd/standard.html"/>
@@ -50,7 +52,7 @@
         </pmd>
     </target>
 
-    <target name="pmd-io">
+    <target name="pmd-io" id="pmd-io">
         <mkdir dir="${reports.tests}/pmd"/>
         <pmd shortFilenames="true" rulesetfiles="pmd/custom.xml">
             <formatter type="summaryhtml" toFile="${reports.tests}/pmd/io.html"/>
@@ -60,7 +62,7 @@
         </pmd>
     </target>
 
-    <target name="pmd-render">
+    <target name="pmd-render" id="pmd-render">
         <mkdir dir="${reports.tests}/pmd"/>
         <pmd shortFilenames="true" rulesetfiles="pmd/custom.xml">
             <formatter type="summaryhtml" toFile="${reports.tests}/pmd/render.html"/>
@@ -70,7 +72,7 @@
         </pmd>
     </target>
 
-    <target name="pmd-extra">
+    <target name="pmd-extra" id="pmd-extra">
         <mkdir dir="${reports.tests}/pmd"/>
         <pmd shortFilenames="true" rulesetfiles="pmd/custom.xml">
             <formatter type="summaryhtml" toFile="${reports.tests}/pmd/extra.html"/>
@@ -80,7 +82,7 @@
         </pmd>
     </target>
 
-    <target name="pmd-applications">
+    <target name="pmd-applications" id="pmd-applications">
         <mkdir dir="${reports.tests}/pmd"/>
         <pmd shortFilenames="true" rulesetfiles="pmd/custom.xml">
             <formatter type="summaryhtml" toFile="${reports.tests}/pmd/applications.html"/>
@@ -90,7 +92,7 @@
         </pmd>
     </target>
 
-    <target name="pmd-libio">
+    <target name="pmd-libio" id="pmd-libio">
         <mkdir dir="${reports.tests}/pmd"/>
         <pmd shortFilenames="true" rulesetfiles="pmd/custom.xml">
             <formatter type="summaryhtml" toFile="${reports.tests}/pmd/libio.html"/>
@@ -100,7 +102,7 @@
         </pmd>
     </target>
 
-    <target name="pmd-experimental">
+    <target name="pmd-experimental" id="pmd-experimental">
         <mkdir dir="${reports.tests}/pmd"/>
         <pmd shortFilenames="true" rulesetfiles="pmd/custom.xml">
             <formatter type="summaryhtml" toFile="${reports.tests}/pmd/experimental.html"/>
@@ -110,7 +112,7 @@
         </pmd>
     </target>
 
-    <target name="pmd-qsar">
+    <target name="pmd-qsar" id="pmd-qsar">
         <mkdir dir="${reports.tests}/pmd"/>
         <pmd shortFilenames="true" rulesetfiles="pmd/custom.xml">
             <formatter type="summaryhtml" toFile="${reports.tests}/pmd/qsar.html"/>
@@ -120,12 +122,22 @@
         </pmd>
     </target>
 
-    <target name="pmd-builder3d">
+    <target name="pmd-builder3d" id="pmd-builder3d">
         <mkdir dir="${reports.tests}/pmd"/>
         <pmd shortFilenames="true" rulesetfiles="pmd/custom.xml">
             <formatter type="summaryhtml" toFile="${reports.tests}/pmd/builder3d.html"/>
             <fileset dir="${src}">
                 <includesfile name="${src}/builder3d.javafiles"/>
+            </fileset>
+        </pmd>
+    </target>
+
+    <target name="pmd-test" id="pmd-test">
+        <mkdir dir="${reports.tests}/pmd"/>
+        <pmd shortFilenames="true" rulesetfiles="pmd/custom-test.xml">
+            <formatter type="summaryhtml" toFile="${reports.tests}/pmd/test.html"/>
+            <fileset dir="${src}">
+                <includesfile name="${src}/test.javafiles"/>
             </fileset>
         </pmd>
     </target>

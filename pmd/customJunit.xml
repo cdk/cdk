@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<ruleset name="customJunit">
+
+  <description>
+    This ruleset checks the CDK sources for bad code.
+  </description>
+
+  <rule ref="rulesets/junit.xml">
+    <exclude name="JUnitAssertionsShouldIncludeMessage"/>
+  </rule>
+
+</ruleset>

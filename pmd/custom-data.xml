@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<ruleset name="custom">
+<ruleset name="custom-data">
 
   <description>
     This ruleset checks the CDK sources for bad code.
@@ -17,6 +17,8 @@
   <rule ref="rulesets/imports.xml"/>
   <rule ref="rulesets/strings.xml"/>
   <rule ref="rulesets/codesize.xml"/>
+  <rule ref="rulesets/strictexception.xml"/>
+  <rule ref="rulesets/clone.xml"/>
 
   <!-- Rules specific for CDK -->
 
