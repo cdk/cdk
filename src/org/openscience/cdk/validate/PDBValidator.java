@@ -60,7 +60,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @author   Egon Willighagen
  * @cdk.created  2003-08-27
- * @cdk.require java1.4
+ * @cdk.require java1.4+
  */ 
 public class PDBValidator extends AbstractValidator {
 

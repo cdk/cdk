@@ -74,7 +74,7 @@ import org.openscience.cdk.tools.manipulator.ReactionManipulator;
  * @cdk.created    2003-07-24
  *
  * @cdk.keyword    file format, MACiE RDF
- * @cdk.require java1.4
+ * @cdk.require java1.4+
  */
 public class MACiEReader extends DefaultChemObjectReader {
 

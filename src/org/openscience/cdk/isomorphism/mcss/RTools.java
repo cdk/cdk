@@ -87,7 +87,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  * 
  * @author     Stephane Werner from IXELIS mail@ixelis.net
  * @cdk.created    2002-07-17
- * @cdk.require java1.4
+ * @cdk.require java1.4+
  */
 public class RTools
 {

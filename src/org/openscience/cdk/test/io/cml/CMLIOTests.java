@@ -45,9 +45,17 @@ public class CMLIOTests {
         // suite.addTest(JmolTest.suite());
         suite.addTest(JChemPaintTest.suite());
         suite.addTest(CML2Test.suite());
-        suite.addTest(CML2WriterTest.suite());
         suite.addTest(CMLFragmentsTest.suite());
-        suite.addTest(CMLRoundTripTest.suite());
+        
+        // the following classes require Java 1.4
+        try {
+            Class testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.test.io.CML2WriterTest");
+            suite.addTest(new TestSuite(testClass));
+        } catch (Exception exception) {}
+        try {
+            Class testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.test.io.CMLRoundTripTest");
+            suite.addTest(new TestSuite(testClass));
+        } catch (Exception exception) {}
         return suite;
     }
 

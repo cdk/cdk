@@ -49,7 +49,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module test
  *
  * @see org.openscience.cdk.io.INChIReader
- * @cdk.require java1.4
+ * @cdk.require java1.4+
  */
 public class INChIPlainTextReaderTest extends TestCase {
 

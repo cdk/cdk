@@ -65,7 +65,7 @@ import org.openscience.cdk.io.inchi.INChIContentProcessorTool;
  *
  * @cdk.keyword file format, INChI
  * @cdk.keyword chemical identifier
- * @cdk.require java1.4
+ * @cdk.require java1.4+
  *
  * @see     org.openscience.cdk.io.INChIReader
  */

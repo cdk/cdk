@@ -49,7 +49,7 @@ import org.openscience.cdk.SetOfReactions;
  *
  * @author   Egon Willighagen
  * @cdk.created  2004-03-27
- * @cdk.require java1.4
+ * @cdk.require java1.4+
  */ 
 public class AbstractValidator implements ValidatorInterface {
 

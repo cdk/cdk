@@ -49,7 +49,7 @@ import org.openscience.cdk.smiles.SmilesParser;
 
 /**
  * @cdk.module test
- * @cdk.require java1.4
+ * @cdk.require java1.4+
  */
 public class SMARTSTest extends TestCase {
 	

@@ -38,7 +38,7 @@ import org.openscience.cdk.index.CASNumber;
  * @author Nathana&euml;l "M.Le_maudit" Mazuir
  *
  * @cdk.created    2003-07-01
- * @cdk.require java1.4
+ * @cdk.require java1.4+
  */
 public class CASNumberTest extends TestCase {
 

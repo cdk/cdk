@@ -67,7 +67,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.created 2003-10-05
  * 
  * @cdk.keyword MDL RXN V3000
- * @cdk.require java1.4
+ * @cdk.require java1.4+
  */
 public class MDLV3000Reader extends DefaultChemObjectReader {
 

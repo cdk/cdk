@@ -133,6 +133,18 @@
           <condition property="isJava13">
             <contains string="${java.version}" substring="1.3"/>
           </condition>
+          <condition property="isJava14">
+            <contains string="${java.version}" substring="1.4"/>
+          </condition>
+          <condition property="isJava14+">
+            <or>
+              <contains string="${java.version}" substring="1.4"/>
+              <contains string="${java.version}" substring="1.5"/>
+            </or>
+          </condition>
+          <condition property="isJava15">
+            <contains string="${java.version}" substring="1.5"/>
+          </condition>
           <uptodate property="dotjavafiles.uptodate"
               targetfile="${src}/core.javafiles">
               <srcfiles dir="${src}" includes="**/*.java" />
@@ -316,7 +328,8 @@
             <javac srcdir="${src}" destdir="${build}" optimize="${optimization}" 
                    debug="${debug}" deprecation="${deprecation}">
                 <includesfile name="${src}/applications.javafiles"/>
-                <excludesfile name="${src}/java1.4.javafiles" if="isJava13"/>
+                <excludesfile name="${src}/java1.4+.javafiles" if="isJava13"/>
+                <excludesfile name="${src}/java1.4.javafiles" unless="isJava14"/>
                 <excludesfile name="${src}/ant1.6.javafiles" unless="hasAnt16"/>
                 <classpath refid="project.class.path" />
                 <classpath>
@@ -342,9 +355,11 @@
                 <echo message="Compiling classes for cdk-core module." />
 
                 <javac srcdir="${src}" destdir="${build}" optimize="${optimization}" 
-                       debug="${debug}" deprecation="${deprecation}"
-                       includesfile="${src}/core.javafiles">
+                       debug="${debug}" deprecation="${deprecation}">
                     <classpath refid="project.class.path" />
+                    <includesfile name="${src}/core.javafiles"/>
+                    <excludesfile name="${src}/java1.4+.javafiles" if="isJava13"/>
+                    <excludesfile name="${src}/java1.4.javafiles" unless="isJava14"/>
                 </javac>
         </target>
 
@@ -353,8 +368,9 @@
 
                 <javac srcdir="${src}" destdir="${build}" optimize="${optimization}" 
                        debug="${debug}" deprecation="${deprecation}">
-                <includesfile name="${src}/standard.javafiles"/>
-                <excludesfile name="${src}/java1.4.javafiles" if="isJava13"/>
+                    <includesfile name="${src}/standard.javafiles"/>
+                    <excludesfile name="${src}/java1.4+.javafiles" if="isJava13"/>
+                    <excludesfile name="${src}/java1.4.javafiles" unless="isJava14"/>
                     <classpath>
                         <fileset dir="${lib}">
                             <include name="vecmath1.2-1.14.jar" />
@@ -376,8 +392,9 @@
 
                 <javac srcdir="${src}" destdir="${build}" optimize="${optimization}" 
                        debug="${debug}" deprecation="${deprecation}">
-                <includesfile name="${src}/io.javafiles"/>
-                <excludesfile name="${src}/java1.4.javafiles" if="isJava13"/>
+                    <includesfile name="${src}/io.javafiles"/>
+                    <excludesfile name="${src}/java1.4+.javafiles" if="isJava13"/>
+                    <excludesfile name="${src}/java1.4.javafiles" unless="isJava14"/>
                     <classpath refid="project.class.path" />
                     <classpath>
                         <fileset dir="${dist}/jar">
@@ -430,8 +447,8 @@
             <javac srcdir="${src}" destdir="${build}" optimize="${optimization}" 
                    debug="${debug}" deprecation="${deprecation}">
                 <includesfile name="${src}/extra.javafiles"/>
-                <excludesfile name="${src}/java1.4.javafiles" if="isJava13"/>
-                <excludesfile name="${src}/ant1.6.javafiles" unless="hasAnt16"/>
+                <excludesfile name="${src}/java1.4+.javafiles" if="isJava13"/>
+                <excludesfile name="${src}/java1.4.javafiles" unless="isJava14"/>
 
                 <classpath refid="project.class.path" />
                 <classpath>
@@ -450,8 +467,10 @@
             <echo message="Compiling classes for cdk-experimental module." />
 
             <javac srcdir="${src}" destdir="${build}" optimize="${optimization}" 
-                   debug="${debug}" deprecation="${deprecation}"
-                   includesfile="${src}/experimental.javafiles">
+                   debug="${debug}" deprecation="${deprecation}">
+                <includesfile name="${src}/experimental.javafiles"/>
+                <excludesfile name="${src}/java1.4+.javafiles" if="isJava13"/>
+                <excludesfile name="${src}/java1.4.javafiles" unless="isJava14"/>
                 <classpath refid="project.class.path" />
                 <classpath>
                     <fileset dir="${dist}/jar">
@@ -472,8 +491,8 @@
                    destdir="${build}" optimize="${optimization}" 
                    debug="${debug}" deprecation="${deprecation}">
                 <includesfile name="${src}/test.javafiles"/>
-                <excludesfile name="${src}/java1.4.javafiles" if="isJava13"/>
-                <excludesfile name="${src}/ant1.6.javafiles" unless="hasAnt16"/>
+                <excludesfile name="${src}/java1.4+.javafiles" if="isJava13"/>
+                <excludesfile name="${src}/java1.4.javafiles" unless="isJava14"/>
 
                 <classpath refid="project.class.path" />
                 <classpath>
@@ -553,6 +572,9 @@
                 <jar jarfile="${dist}/jar/cdk-core.jar">
                     <fileset dir="${build}">
                         <includesfile name="${src}/core.classes" />
+                        <excludesfile name="${src}/java1.4+.classes" if="isJava13"/>
+                        <excludesfile name="${src}/java1.4.classes" unless="isJava14"/>
+                        <excludesfile name="${src}/ant1.6.classes" unless="hasAnt16"/>
                    </fileset>
                 </jar>
         </target>
@@ -561,6 +583,9 @@
                 <jar jarfile="${dist}/jar/cdk-extra.jar">
                     <fileset dir="${build}">
                         <includesfile name="${src}/extra.classes" />
+                        <excludesfile name="${src}/java1.4+.classes" if="isJava13"/>
+                        <excludesfile name="${src}/java1.4.classes" unless="isJava14"/>
+                        <excludesfile name="${src}/ant1.6.classes" unless="hasAnt16"/>
                     </fileset>
                     <fileset dir="${build}">
                         <include name="org/openscience/cdk/dict/data/*.xml" />
@@ -572,6 +597,9 @@
                 <jar jarfile="${dist}/jar/cdk-experimental.jar">
                     <fileset dir="${build}">
                         <includesfile name="${src}/experimental.classes" />
+                        <excludesfile name="${src}/java1.4+.classes" if="isJava13"/>
+                        <excludesfile name="${src}/java1.4.classes" unless="isJava14"/>
+                        <excludesfile name="${src}/ant1.6.classes" unless="hasAnt16"/>
                     </fileset>
                 </jar>
         </target>
@@ -580,6 +608,9 @@
                 <jar jarfile="${dist}/jar/cdk-apps.jar" manifest="${src}/cdk-apps.manifest">
                     <fileset dir="${build}">
                         <includesfile name="${src}/applications.classes" />
+                        <excludesfile name="${src}/java1.4+.classes" if="isJava13"/>
+                        <excludesfile name="${src}/java1.4.classes" unless="isJava14"/>
+                        <excludesfile name="${src}/ant1.6.classes" unless="hasAnt16"/>
                     </fileset>
                 </jar>
         </target>
@@ -588,6 +619,9 @@
                 <jar jarfile="${dist}/jar/cdk-test.jar">
                     <fileset dir="${build}">
                         <includesfile name="${src}/test.classes" />
+                        <excludesfile name="${src}/java1.4+.classes" if="isJava13"/>
+                        <excludesfile name="${src}/java1.4.classes" unless="isJava14"/>
+                        <excludesfile name="${src}/ant1.6.classes" unless="hasAnt16"/>
                     </fileset>
                     <fileset dir=".">
                         <include name="data/**" />
@@ -599,6 +633,9 @@
                 <jar jarfile="${dist}/jar/cdk-libio.jar">
                     <fileset dir="${build}">
                         <includesfile name="${src}/libio.classes" />
+                        <excludesfile name="${src}/java1.4+.classes" if="isJava13"/>
+                        <excludesfile name="${src}/java1.4.classes" unless="isJava14"/>
+                        <excludesfile name="${src}/ant1.6.classes" unless="hasAnt16"/>
                     </fileset>
                     <fileset dir="${build}">
                         <include name="org/openscience/jmol/**" />
@@ -610,6 +647,9 @@
                 <jar jarfile="${dist}/jar/cdk-io.jar">
                     <fileset dir="${build}">
                         <includesfile name="${src}/io.classes" />
+                        <excludesfile name="${src}/java1.4+.classes" if="isJava13"/>
+                        <excludesfile name="${src}/java1.4.classes" unless="isJava14"/>
+                        <excludesfile name="${src}/ant1.6.classes" unless="hasAnt16"/>
                         <include name="org/openscience/cdk/io/cml/data/**" />
                     </fileset>
                 </jar>
@@ -619,6 +659,9 @@
                 <jar jarfile="${dist}/jar/cdk-render.jar">
                     <fileset dir="${build}">
                         <includesfile name="${src}/render.classes" />
+                        <excludesfile name="${src}/java1.4+.classes" if="isJava13"/>
+                        <excludesfile name="${src}/java1.4.classes" unless="isJava14"/>
+                        <excludesfile name="${src}/ant1.6.classes" unless="hasAnt16"/>
                     </fileset>
                 </jar>
         </target>
@@ -629,6 +672,9 @@
                     <fileset dir="${build}">
                         <includesfile name="${src}/render.classes" />
                         <includesfile name="${src}/java3d.classes" />
+                        <excludesfile name="${src}/java1.4+.classes" if="isJava13"/>
+                        <excludesfile name="${src}/java1.4.classes" unless="isJava14"/>
+                        <excludesfile name="${src}/ant1.6.classes" unless="hasAnt16"/>
                     </fileset>
                 </jar>
         </target>
@@ -638,6 +684,9 @@
                     <fileset dir="${build}">
                         <includesfile name="${src}/standard.classes" />
                         <include name="org/openscience/cdk/config/**" />
+                        <excludesfile name="${src}/java1.4+.classes" if="isJava13"/>
+                        <excludesfile name="${src}/java1.4.classes" unless="isJava14"/>
+                        <excludesfile name="${src}/ant1.6.classes" unless="hasAnt16"/>
                     </fileset>
                 </jar>
         </target>
@@ -658,6 +707,9 @@
                     </manifest>
                     <fileset dir="${build}">
                         <include name="org/openscience/cdk/**" />
+                        <excludesfile name="${src}/java1.4+.classes" if="isJava13"/>
+                        <excludesfile name="${src}/java1.4.classes" unless="isJava14"/>
+                        <excludesfile name="${src}/ant1.6.classes" unless="hasAnt16"/>
                     </fileset>
                     <fileset dir=".">
                         <include name="CHANGELOG" />
@@ -994,10 +1046,10 @@
         <target id="run" name="run" depends="dist-core, dist-extra, dist-test, dist-standard" 
                 description="Runs an application (org.openscience.cdk.&lt;class>) with -Drunclass=&lt;class>.">
                 <java classname="org.openscience.cdk.${runclass}" fork="yes" >
-		   <arg value="${arg1}" />
-		   <arg value="${arg2}" />
-		   <arg value="${arg3}" />
-		   <arg value="${arg4}" />
+                   <arg value="${arg1}" />
+                   <arg value="${arg2}" />
+                   <arg value="${arg3}" />
+                   <arg value="${arg4}" />
                    <classpath>
                         <pathelement location="${dist}/jar/cdk-core.jar" />
                         <pathelement location="${dist}/jar/cdk-standard.jar" />

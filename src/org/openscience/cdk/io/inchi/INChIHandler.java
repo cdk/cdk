@@ -55,7 +55,7 @@ import org.xml.sax.helpers.DefaultHandler;
  *
  * @see org.openscience.cdk.io.INChIReader
  *
- * @cdk.require java1.4
+ * @cdk.require java1.4+
  */
 public class INChIHandler extends DefaultHandler {
 

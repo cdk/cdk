@@ -62,7 +62,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  * @cdk.keyword file format, Polymorph Predictor (tm)
  *
  * @author E.L. Willighagen
- * @cdk.require java1.4
+ * @cdk.require java1.4+
  */
 public class PMPReader extends DefaultChemObjectReader {
 

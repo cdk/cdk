@@ -42,7 +42,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @author      Egon Willighagen
  * @cdk.created 2003-08-14
- * @cdk.require java1.4
+ * @cdk.require java1.4+
  * @cdk.require ant1.6
  */
 public class SubstructureFinder {

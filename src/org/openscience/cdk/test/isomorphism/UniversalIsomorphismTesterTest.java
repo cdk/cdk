@@ -55,7 +55,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
 
 /**
  * @cdk.module test
- * @cdk.require java1.4
+ * @cdk.require java1.4+
  */
 public class UniversalIsomorphismTesterTest extends TestCase
 {
