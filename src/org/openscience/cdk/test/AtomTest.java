@@ -99,7 +99,7 @@ public class AtomTest extends TestCase {
     /**
      * Method to test the get/setCharge() methods.
      */
-    public void testSetCharge() {
+    public void testSetCharge_double() {
         double charge = 0.15;
 
         Atom a = new Atom("C");
@@ -110,7 +110,7 @@ public class AtomTest extends TestCase {
     /**
      * Method to test the get/setHydrogenCount() methods.
      */
-    public void testSetHydrogenCount() {
+    public void testSetHydrogenCount_int() {
         int count = 1;
 
         Atom a = new Atom("C");
@@ -121,7 +121,7 @@ public class AtomTest extends TestCase {
     /**
      * Method to test the setFractional3D() methods.
      */
-    public void testSetFractional3D() {
+    public void testSetFractional3D_Point3d() {
         Atom a = new Atom("C");
         a.setFractionalPoint3d(new Point3d(0.5, 0.5, 0.5));
         Point3d fract = a.getFractionalPoint3d();
@@ -149,21 +149,21 @@ public class AtomTest extends TestCase {
         assertEquals(0.7, a.getFractZ3d(), 0.001);
     }
 
-    public void testSetFractX3D() {
+    public void testSetFractX3D_double() {
         Atom a = new Atom("C");
         a.setFractX3d(0.5);
         Point3d point3d = a.getFractionalPoint3d();
         assertEquals(0.5, point3d.x, 0.001);
     }
 
-    public void testSetFractY3D() {
+    public void testSetFractY3D_double() {
         Atom a = new Atom("C");
         a.setFractY3d(0.5);
         Point3d point3d = a.getFractionalPoint3d();
         assertEquals(0.5, point3d.y, 0.001);
     }
 
-    public void testSetFractZ3D() {
+    public void testSetFractZ3D_double() {
         Atom a = new Atom("C");
         a.setFractZ3d(0.5);
         Point3d point3d = a.getFractionalPoint3d();
@@ -190,9 +190,9 @@ public class AtomTest extends TestCase {
         Point3d point3d = new Point3d(1.0, 2.0, 3.0);
         
         Atom a = new Atom("C", point3d);
-        assertTrue(point3d.x == a.getX3d());
-        assertTrue(point3d.y == a.getY3d());
-        assertTrue(point3d.z == a.getZ3d());
+        assertEquals(point3d.x, a.getX3d(), 0.001);
+        assertEquals(point3d.y, a.getY3d(), 0.001);
+        assertEquals(point3d.z, a.getZ3d(), 0.001);
     }
 
     /**
@@ -221,7 +221,7 @@ public class AtomTest extends TestCase {
     /**
      * Method to test the get/setHydrogenCount() methods.
      */
-    public void testSetStereoParity() {
+    public void testSetStereoParity_int() {
         int parity = CDKConstants.STEREO_ATOM_PARITY_PLUS;
 
         Atom a = new Atom("C");

@@ -49,7 +49,7 @@ public class NoSuchAtomExceptionTest extends TestCase {
         return new TestSuite(NoSuchAtomExceptionTest.class);
     }
     
-    public void testNoSuchAtomException() {
+    public void testNoSuchAtomException_String() {
         final String EXPLANATION = "Buckybull is not an element!";
         NoSuchAtomException exception = new NoSuchAtomException(EXPLANATION);
         assertNotNull(exception);

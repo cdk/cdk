@@ -28,15 +28,15 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.Reaction;
-import org.openscience.cdk.SetOfReactions;
+import org.openscience.cdk.event.ChemObjectChangeEvent;
+import org.openscience.cdk.Atom;
 
 /**
  * Checks the funcitonality of the ChemObjectChangeEvent class.
  *
  * @cdk.module test
  *
- * @see org.openscience.cdk.ChemObjectChangeEvent
+ * @see org.openscience.cdk.event.ChemObjectChangeEvent
  */
 public class ChemObjectChangeEventTest extends TestCase {
 
@@ -49,5 +49,9 @@ public class ChemObjectChangeEventTest extends TestCase {
     public static Test suite() {
         return new TestSuite(ChemObjectChangeEventTest.class);
     }
-    
+
+    public void testChemObjectChangeEvent_Object() {
+        ChemObjectChangeEvent event = new ChemObjectChangeEvent(new Atom());
+        assertNotNull(event);
+    }    
 }

@@ -426,7 +426,7 @@ public class AtomContainerTest extends TestCase {
         assertEquals(3, container.getBondCount());
     }
     
-    public void testSetAtomAt() {
+    public void testSetAtomAt_int_Atom() {
         AtomContainer container = new AtomContainer();
         Atom c = new Atom("C");
         container.setAtomAt(0, c);
@@ -435,7 +435,7 @@ public class AtomContainerTest extends TestCase {
         assertEquals("C", container.getAtomAt(0).getSymbol());
     }
     
-    public void testGetAtomAt() {
+    public void testGetAtomAt_int() {
         AtomContainer acetone = new AtomContainer();
         
         Atom c = new Atom("C");
@@ -461,7 +461,7 @@ public class AtomContainerTest extends TestCase {
         assertEquals("S", a4.getSymbol());
     }
     
-    public void testGetBondAt() {
+    public void testGetBondAt_int() {
         // acetone molecule
         Molecule acetone = new Molecule();
         assertEquals(0, acetone.getBondCount());
@@ -486,7 +486,7 @@ public class AtomContainerTest extends TestCase {
         assertEquals(1.0, acetone.getBondAt(2).getOrder(), 0.00001);
     }
     
-    public void testSetElectronContainerAt() {
+    public void testSetElectronContainerAt_int_ElectronContainer() {
         AtomContainer container = new AtomContainer();
         Atom c1 = new Atom("C");
         Atom c2 = new Atom("C");
@@ -527,14 +527,14 @@ public class AtomContainerTest extends TestCase {
         assertEquals(5, acetone.getElectronContainerCount());
     }
     
-    public void testSetElectronContainerCount() {
+    public void testSetElectronContainerCount_int() {
         AtomContainer container = new AtomContainer();
         container.setElectronContainerCount(2);
         
         assertEquals(2, container.getElectronContainerCount());
     }
     
-    public void testSetAtomCount() {
+    public void testSetAtomCount_int() {
         AtomContainer container = new AtomContainer();
         container.setAtomCount(2);
         
@@ -726,7 +726,7 @@ public class AtomContainerTest extends TestCase {
         assertEquals(2, acetone.getBondNumber(c1, c3));
     }
     
-    public void testGetBond() {
+    public void testGetBond_Atom_Atom() {
         Molecule acetone = new Molecule();
         Atom c1 = new Atom("C");
         Atom c2 = new Atom("C");
@@ -748,7 +748,7 @@ public class AtomContainerTest extends TestCase {
         assertTrue(b3.equals(acetone.getBond(c1, c3)));        
     }
     
-    public void testGetConnectedAtoms() {
+    public void testGetConnectedAtoms_Atom() {
         Molecule acetone = new Molecule();
         Atom c1 = new Atom("C");
         Atom c2 = new Atom("C");

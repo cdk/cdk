@@ -49,7 +49,7 @@ public class CDKExceptionTest extends TestCase {
         return new TestSuite(CDKExceptionTest.class);
     }
     
-    public void testCDKException() {
+    public void testCDKException_String() {
         final String EXPLANATION = "No, CDK cannot compute the multidollar ligand you search for target X.";
         CDKException exception = new CDKException(EXPLANATION);
         assertNotNull(exception);

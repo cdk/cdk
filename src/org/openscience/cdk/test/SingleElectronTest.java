@@ -61,12 +61,23 @@ public class SingleElectronTest extends TestCase {
         assertTrue(radical.getAtom().compare(atom));
         assertTrue(radical.contains(atom));
     }
+
+    public void testGetElectronCount() {
+        SingleElectron radical = new SingleElectron();
+        assertEquals(1, radical.getElectronCount());
+    }
     
-    public void testSetAtom() {
+    public void testSetAtom_Atom() {
         Atom atom = new Atom("N");
         SingleElectron radical = new SingleElectron();
         assertTrue(radical.getAtom() == null);
         radical.setAtom(atom);
+        assertTrue(radical.getAtom().compare(atom));
+    }
+
+    public void testGetAtom() {
+        Atom atom = new Atom("N");
+        SingleElectron radical = new SingleElectron(atom);
         assertTrue(radical.getAtom().compare(atom));
     }
     
