@@ -70,7 +70,7 @@
             <echo message="Using compiler: ${build.compiler}" />
             <echo message="    Jmol found: ${jmol.present}" />
             <echo message="  JOELib found: ${joelib.present}" />
-            <echo message="  Java3D found: ${java3D.present}" />            
+            <echo message="  Java3D found: ${java3D.present}" />
         </target>
 
         <target id="check" name="check"
@@ -340,8 +340,11 @@
         <target id="dist.init" name="dist.init">
                 <mkdir dir="${dist}/jar" />
 
-                <mkdir
-                dir="${build}/org/openscience/cdk/config" />
+                <!-- copy data files -->
+
+                <mkdir dir="${build}/org/openscience/cdk/config" />
+                <mkdir dir="${build}/org/openscience/cdk/io/cml/data" />
+                <mkdir dir="${build}/org/openscience/cdk/iupac/generator/data" />
 
                 <copy
                 file="${src}/org/openscience/cdk/config/isotopes.xml"
@@ -356,15 +359,16 @@
                 file="${src}/org/openscience/cdk/config/log4j.properties"
                 tofile="${build}/org/openscience/cdk/config/log4j.properties" />
 
-                <mkdir
-                dir="${build}/org/openscience/cdk/io/cml/data" />
-
                 <copy
                 file="${src}/org/openscience/cdk/io/cml/data/cml1_0.dtd"
                 tofile="${build}/org/openscience/cdk/io/cml/data/cml1_0.dtd" />
                 <copy
                 file="${src}/org/openscience/cdk/io/cml/data/cml1_0_1.dtd"
                 tofile="${build}/org/openscience/cdk/io/cml/data/cml1_0_1.dtd" />
+
+                <copy 
+                file="${src}/org/openscience/cdk/iupac/generator/data/IUPACNames.properties"
+                tofile="${build}/org/openscience/cdk/iupac/generator/data/IUPACNames.properties" />
 
                 <!-- generate lists of class files that should end up in
                      the jars for the modules -->
@@ -434,6 +438,7 @@
                 <jar jarfile="${dist}/jar/cdk-experimental.jar">
                     <fileset dir="${build}">
                         <includesfile name="${src}/experimental.classes" />
+                        <include name="org/openscience/cdk/iupac/generator/data/**" />
                    </fileset>
                 </jar>
         </target>
