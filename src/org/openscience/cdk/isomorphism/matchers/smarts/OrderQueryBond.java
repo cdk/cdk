@@ -40,5 +40,30 @@ public class OrderQueryBond extends SMARTSBond {
         super(atom1, atom2, order);
     }
     
+	public boolean matches(Bond bond) {
+        if (this.getOrder() == bond.getOrder()) {
+            // bond orders match
+            return true;
+        } // else
+        return false;
+    };
+
+    public String toString() {
+		StringBuffer s = new StringBuffer();
+		s.append("OrderQueryBond(");
+        s.append(this.hashCode() + ", ");
+		s.append("#O:" + getOrder());
+		Atom[] atoms = getAtoms();
+		s.append(", #A:" + atoms.length);
+		for (int i = 0; i < atoms.length; i++) {
+			if (atoms[i] == null) {
+				s.append(", null");
+			} else {
+				s.append(", " + atoms[i].toString());
+			}
+		}
+		s.append(")");
+		return s.toString();
+    }
 }
 
