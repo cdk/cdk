@@ -90,14 +90,15 @@
       javacchome="jar"/>
   </target>
 
+    <!-- The doclet used in the following targets cannot be put in CVS because it is 
+         licensed otherwise, but it can be downloaded from:
+         
+         http://java.sun.com/j2se/javadoc/doccheck/
+         
+      -->
+          
     <target name="doccheck">
-        <!-- The doclet used here cannot be put in CVS because it is licensed
-             otherwise, but it can be downloaded from:
-             
-             http://java.sun.com/j2se/javadoc/doccheck/
-             
-          -->
-        <mkdir dir="report/doccheck"/>
+        <mkdir dir="reports/doccheck"/>
         <javadoc private="false" public="true"
                  destdir="reports/doccheck/"
                  excludepackagenames="org.openscience.cdk.test.*">
@@ -106,6 +107,96 @@
             <doclet name="com.sun.tools.doclets.doccheck.DocCheck"
                     path="jar/doccheck.jar" />
             <package name="org.openscience.cdk"/>
+            <sourcepath>
+                <pathelement path="${src}"/>
+            </sourcepath>
+        </javadoc>
+    </target>
+
+    <target name="javadoc-core">
+        <mkdir dir="reports/javadoc/core/"/>
+        <javadoc private="false" public="true"
+                 destdir="reports/javadoc/core/"
+                 excludepackagenames="org.openscience.cdk.test.*">
+            <classpath refid="project.class.path" />
+
+            <doclet name="com.sun.tools.doclets.doccheck.DocCheck"
+                    path="jar/doccheck.jar" />
+            <fileset dir="${src}">
+                <includesfile name="${src}/core.javafiles"/>
+            </fileset>
+            <sourcepath>
+                <pathelement path="${src}"/>
+            </sourcepath>
+        </javadoc>
+    </target>
+
+    <target name="javadoc-standard">
+        <mkdir dir="reports/javadoc/standard/"/>
+        <javadoc private="false" public="true"
+                 destdir="reports/javadoc/standard/"
+                 excludepackagenames="org.openscience.cdk.test.*">
+            <classpath refid="project.class.path" />
+
+            <doclet name="com.sun.tools.doclets.doccheck.DocCheck"
+                    path="jar/doccheck.jar" />
+            <fileset dir="${src}">
+                <includesfile name="${src}/standard.javafiles"/>
+            </fileset>
+            <sourcepath>
+                <pathelement path="${src}"/>
+            </sourcepath>
+        </javadoc>
+    </target>
+
+    <target name="javadoc-io">
+        <mkdir dir="reports/javadoc/io/"/>
+        <javadoc private="false" public="true"
+                 destdir="reports/javadoc/io/"
+                 excludepackagenames="org.openscience.cdk.test.*">
+            <classpath refid="project.class.path" />
+
+            <doclet name="com.sun.tools.doclets.doccheck.DocCheck"
+                    path="jar/doccheck.jar" />
+            <fileset dir="${src}">
+                <includesfile name="${src}/io.javafiles"/>
+            </fileset>
+            <sourcepath>
+                <pathelement path="${src}"/>
+            </sourcepath>
+        </javadoc>
+    </target>
+
+    <target name="javadoc-render">
+        <mkdir dir="reports/javadoc/render/"/>
+        <javadoc private="false" public="true"
+                 destdir="reports/javadoc/render/"
+                 excludepackagenames="org.openscience.cdk.test.*">
+            <classpath refid="project.class.path" />
+
+            <doclet name="com.sun.tools.doclets.doccheck.DocCheck"
+                    path="jar/doccheck.jar" />
+            <fileset dir="${src}">
+                <includesfile name="${src}/render.javafiles"/>
+            </fileset>
+            <sourcepath>
+                <pathelement path="${src}"/>
+            </sourcepath>
+        </javadoc>
+    </target>
+
+    <target name="javadoc-extra">
+        <mkdir dir="reports/javadoc/extra/"/>
+        <javadoc private="false" public="true"
+                 destdir="reports/javadoc/extra/"
+                 excludepackagenames="org.openscience.cdk.test.*">
+            <classpath refid="project.class.path" />
+
+            <doclet name="com.sun.tools.doclets.doccheck.DocCheck"
+                    path="jar/doccheck.jar" />
+            <fileset dir="${src}">
+                <includesfile name="${src}/extra.javafiles"/>
+            </fileset>
             <sourcepath>
                 <pathelement path="${src}"/>
             </sourcepath>
