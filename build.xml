@@ -332,12 +332,8 @@
                 <echo message="Compiling classes for cdk-render module." />
 
                 <javac srcdir="${build.src}" destdir="${build}" optimize="${optimization}" 
-                       debug="${debug}" deprecation="${deprecation}">
-                    <include name="org/openscience/cdk/renderer/**/*"/>
-                    <include name="org/openscience/cdk/controller/**/*"/>
-                    <include name="org/openscience/cdk/editor/**/*"/>
-                    <include name="org/openscience/cdk/io/SVGWriter.java"/>
-                    <excludesfile name="${src}/java3d.javafiles"/>
+                       debug="${debug}" deprecation="${deprecation}"
+                       includesfile="${src}/render.javafiles">
 
                     <classpath refid="project.class.path" />
                     <classpath>

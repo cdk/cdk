@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  * 
- * Copyright (C) 2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2003-2004  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -31,6 +31,8 @@ import java.util.Vector;
 /**
  * Tool to mark ChemObject's as having a problem. There are two levels:
  * a problem, and a warning, to allow for different coloring by renderer's.
+ *
+ * @cdkPackage standard
  *
  * @author   Egon Willighagen
  * @created  2003-08-11
