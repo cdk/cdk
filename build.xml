@@ -68,6 +68,7 @@
                         <include name="commons-cli-1.0.jar" />
                         <include name="jfontchooser.jar" />
                         <include name="jgrapht-0.5.3.jar" />
+                        <include name="Jama-1.0.1.jar" />
                 </fileset>
                 <fileset dir="${pathtojava3d}">
                         <include name="*.jar" />
