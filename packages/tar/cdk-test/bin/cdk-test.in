@@ -5,10 +5,12 @@ XERCESJAR=@PATHTOXERCES@
 LOGJAVA=@PATHTOLOGJAVA@
 RTJAR=@PATHTORTJAR@
 JAVA=@PATHTOJAVA@
+CDKLIBDIR=@CDKLIBDIR@
+CDKDIR=@CDKDIR@
 
-JARLIBDIR=${PREFIX}/lib/cdk
-JARLIBS=`ls -1 ${JARLIBDIR}/*.jar | perl -ne "s/\n|\r/:/g; print;"`
-CLASSPATH=${RTJAR}:${LOGJAVA}:${XERCESJAR}:${JARLIBS}
+JARLIBS=`ls -1 ${CDKLIBDIR}/*.jar | perl -ne "s/\n|\r/:/g; print;"`
+CDKLIBS=`ls -1 ${CDKDIR}/cdk*.jar | perl -ne "s/\n|\r/:/g; print;"`
+CLASSPATH=${RTJAR}:${LOGJAVA}:${XERCESJAR}:${JARLIBS}:${CDKLIBS}
 
 # Collect -D options as java arguments
 command=${JAVA}

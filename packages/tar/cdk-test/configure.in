@@ -52,26 +52,28 @@ AC_PROG_MAKE_SET
 AC_MSG_CHECKING(for CDK libraries)
 if test -f "$prefix/lib/cdk/dadml.jar"
 then
-    CDKLIBDIR="$prefix"
+    CDKLIBDIR="$prefix/lib/cdk"
     AC_MSG_RESULT($CDKLIBDIR)
 else
     AC_MSG_RESULT(no)
-	echo "The required libraries for CDK are not installed. Please download and install"
-	echo "the cdk-libs distribution."
+    echo "The required libraries for CDK are not installed. Please download and install"
+    echo "the cdk-libs distribution."
     exit 1
 fi
+AC_SUBST(CDKLIBDIR)
 
 AC_MSG_CHECKING(for CDK binary)
-if test -f "$prefix/lib/cdk/dadml.jar"
+if test -f "$prefix/share/java/cdk-core.jar"
 then
-    CDKLIBDIR="$prefix"
-    AC_MSG_RESULT($CDKLIBDIR)
+    CDKDIR="$prefix/share/java"
+    AC_MSG_RESULT($CDKDIR)
 else
     AC_MSG_RESULT(no)
         echo "The required CDK binary is not installed. Please download and install"
         echo "the cdk-bin distribution."
     exit 1
 fi
+AC_SUBST(CDKDIR)
 
 AC_CHECK_PROG(HASJAVA, java, yes, no)
 if test "xyes" = "x$HASJAVA"
