@@ -224,7 +224,7 @@ public class MDLReader implements ChemObjectReader
 				logger.debug("Coordinates: " + x + "; " + y + "; " + z);
                 String element = strTok.nextToken();
                 logger.debug("Atom type: " + element);
-				atom = new Atom(element, new Point3d(x, y, z));
+				atom = isotopeFactory.configure(new Atom(element, new Point3d(x, y, z)));
 				atom.setPoint2D(new Point2d(x, y));
 
                 // parse further fields
@@ -351,8 +351,7 @@ public class MDLReader implements ChemObjectReader
                             int massDiff = Integer.parseInt(st.nextToken().trim());
                             if (massDiff != 0) { 
                                 Atom isotope = molecule.getAtomAt(atomNumber - 1);
-                                Isotope major = isotopeFactory.getMajorIsotope(isotope.getSymbol());
-                                isotope.setAtomicNumber(major.getAtomicMass() + massDiff);
+                                isotope.setAtomicMass(massDiff);
                             }
                         }
                     } catch (NumberFormatException exception) {
