@@ -100,6 +100,11 @@ public class JCPController2D {
 	    return isUndoableChange;
     }
     
+    public void setUndoableChange(boolean isUndoable)
+    {
+	    this.isUndoableChange = isUndoable;
+    }
+    
     public void setController2DModel(JCPController2DModel model) {
         this.c2dm = model;
     }
