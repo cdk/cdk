@@ -267,6 +267,8 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
             currentAtom.setProperty("org.openscience.cdk.dict", propertyValue);
         } else if (propertyType.equals("atomicNumber")) {
             currentAtom.setAtomicNumber(Integer.parseInt(propertyValue));
+        } else if (propertyType.equals("massNumber")) {
+            currentAtom.setAtomicMass(Integer.parseInt(propertyValue));
         } else if (propertyType.equals("id")) {
           logger.debug("id" + propertyValue);
           currentAtom.setID(propertyValue);

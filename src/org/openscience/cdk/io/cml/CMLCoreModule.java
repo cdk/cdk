@@ -892,7 +892,7 @@ public class CMLCoreModule implements ModuleInterface {
                 cdo.setObjectProperty("Atom", "dictRef", (String)atomDictRefs.elementAt(i));
 
             if (isotope.elementAt(i) != null)
-                cdo.setObjectProperty("Atom", "atomicNumber", (String)isotope.elementAt(i));
+                cdo.setObjectProperty("Atom", "massNumber", (String)isotope.elementAt(i));
 
             cdo.endObject("Atom");
         }
