@@ -183,6 +183,40 @@ public class SmilesParserTest extends TestCase
         }
     }
 
+    public void testReadingOfTwoCharElements() {
+        try {
+            String smiles = "[Na]";
+            SmilesParser sp = new SmilesParser();
+            Molecule mol = sp.parseSmiles(smiles);
+            assertEquals(1, mol.getAtomCount());
+            assertEquals("Na", mol.getAtomAt(0).getSymbol());
+        } catch (Exception e) {
+            fail(e.toString());
+        }
+    }
+    
+    public void testOrganicSubsetUnderstanding() {
+        try {
+            String smiles = "[Ni]";
+            SmilesParser sp = new SmilesParser();
+            Molecule mol = sp.parseSmiles(smiles);
+            assertEquals(1, mol.getAtomCount());
+            assertEquals("Ni", mol.getAtomAt(0).getSymbol());
+        } catch (Exception e) {
+            fail(e.toString());
+        }
+        try {
+            String smiles = "Ni";
+            SmilesParser sp = new SmilesParser();
+            Molecule mol = sp.parseSmiles(smiles);
+            assertEquals(2, mol.getAtomCount());
+            assertEquals("N", mol.getAtomAt(0).getSymbol());
+            assertEquals("I", mol.getAtomAt(1).getSymbol());
+        } catch (Exception e) {
+            fail(e.toString());
+        }
+    }
+    
     public void testMassNumberReading() {
         try {
             String smiles = "[13C]";
@@ -230,6 +264,50 @@ public class SmilesParserTest extends TestCase
             assertEquals(1, mol.getBondCount());
             assertTrue(mol.getAtomAt(0) instanceof PseudoAtom);
             assertFalse(mol.getAtomAt(1) instanceof PseudoAtom);
+        } catch (Exception e) {
+            fail(e.toString());
+        }
+        try {
+            String smiles = "[*]C";
+            SmilesParser sp = new SmilesParser();
+            Molecule mol = sp.parseSmiles(smiles);
+            assertEquals(2, mol.getAtomCount());
+            assertEquals(1, mol.getBondCount());
+            assertTrue(mol.getAtomAt(0) instanceof PseudoAtom);
+            assertFalse(mol.getAtomAt(1) instanceof PseudoAtom);
+        } catch (Exception e) {
+            fail(e.toString());
+        }
+    }
+    
+    public void testBondCreation() {
+        try {
+            String smiles = "CC";
+            SmilesParser sp = new SmilesParser();
+            Molecule mol = sp.parseSmiles(smiles);
+            assertEquals(2, mol.getAtomCount());
+            assertEquals(1, mol.getBondCount());
+        } catch (Exception e) {
+            fail(e.toString());
+        }
+        try {
+            String smiles = "cc";
+            SmilesParser sp = new SmilesParser();
+            Molecule mol = sp.parseSmiles(smiles);
+            assertEquals(2, mol.getAtomCount());
+            assertEquals(1, mol.getBondCount());
+        } catch (Exception e) {
+            fail(e.toString());
+        }
+    }
+    
+    public void testSFBug784433() {
+        try {
+            String smiles = "c1cScc1";
+            SmilesParser sp = new SmilesParser();
+            Molecule mol = sp.parseSmiles(smiles);
+            assertEquals(5, mol.getAtomCount());
+            assertEquals(5, mol.getBondCount());
         } catch (Exception e) {
             fail(e.toString());
         }

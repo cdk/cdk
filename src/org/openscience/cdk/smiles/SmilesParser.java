@@ -50,7 +50,7 @@ import org.openscience.cdk.*;
  *
  * @author     Christoph Steinbeck
  * @author     Egon Willighagen
- * @created    29. April 2002
+ * @created    2002-04-29
  * @keyword    SMILES, parser
  */
 public class SmilesParser
@@ -68,7 +68,6 @@ public class SmilesParser
 	}
 
 
-	String message = "Can't handle SMILES string";
 	int position = -1;
 	int nodeCounter = -1;
 	String smiles = null;
@@ -129,42 +128,52 @@ public class SmilesParser
 				if ((mychar >= 'A' && mychar <= 'Z') || (mychar >= 'a' && mychar <= 'z') ||
                     (mychar == '*'))
 				{
+                    logger.debug("Found a must-be 'organic subset' element");
+                    // only 'organic subset' elements allowed
+                    atom = null;
                     if (mychar == '*') {
                         currentSymbol = "*";
                         atom = new PseudoAtom("*");
                     } else {
-                        currentSymbol = getElementSymbol(smiles, position);
-                        if (bondStatus == CDKConstants.BONDORDER_AROMATIC && !(mychar == 'c' || mychar == 'n' || mychar == 's' || mychar == 'o'))
-                        {
-                            bondStatus = CDKConstants.BONDORDER_SINGLE;
-                        }
-                        atom = new Atom(currentSymbol);
-                        if (currentSymbol.length() == 1) {
-                            if (!(currentSymbol.toUpperCase()).equals(currentSymbol)) {
-                                atom.setFlag(CDKConstants.ISAROMATIC, true);
-                                atom.setSymbol(currentSymbol.toUpperCase());
+                        currentSymbol = getSymbolForOrganicSubsetElement(smiles, position);
+                        if (currentSymbol != null) {
+                            if (bondStatus == CDKConstants.BONDORDER_AROMATIC && 
+                                !(mychar == 'c' || mychar == 'n' || mychar == 's' || mychar == 'o'))
+                            {
+                                bondStatus = CDKConstants.BONDORDER_SINGLE;
                             }
+                            atom = new Atom(currentSymbol);
+                            if (currentSymbol.length() == 1) {
+                                if (!(currentSymbol.toUpperCase()).equals(currentSymbol)) {
+                                    atom.setFlag(CDKConstants.ISAROMATIC, true);
+                                    atom.setSymbol(currentSymbol.toUpperCase());
+                                }
+                            }
+                        } else {
+                            throw new InvalidSmilesException(
+                                "Found element which is not a 'organic subset' element. You must " +
+                                "use [" + mychar + "].");
                         }
                     }
 
-					molecule.addAtom(atom);
-					logger.debug("Adding atom " + atom.hashCode());
+                    molecule.addAtom(atom);
+                    logger.debug("Adding atom " + atom.hashCode());
                     if ((lastNode != null) && bondExists) {
                         logger.debug("Creating bond between " + atom.getSymbol() + " and " + lastNode.getSymbol());
-						bond = new Bond(atom, lastNode, bondStatus);
-						if (bondStatus == CDKConstants.BONDORDER_AROMATIC) {
-							bond.setFlag(CDKConstants.ISAROMATIC, true);
+                        bond = new Bond(atom, lastNode, bondStatus);
+                        if (bondStatus == CDKConstants.BONDORDER_AROMATIC) {
+                            bond.setFlag(CDKConstants.ISAROMATIC, true);
                         }
-						molecule.addBond(bond);
-					}
-					bondStatus = CDKConstants.BONDORDER_SINGLE;
-					if (mychar == 'c' || mychar == 'n' || mychar == 's' || mychar == 'o')
-					{
-						bondStatus = CDKConstants.BONDORDER_AROMATIC;
-					}
-					lastNode = atom;
-					nodeCounter++;
-					position = position + currentSymbol.length();
+                        molecule.addBond(bond);
+                    }
+                    bondStatus = CDKConstants.BONDORDER_SINGLE;
+                    if (mychar == 'c' || mychar == 'n' || mychar == 's' || mychar == 'o')
+                    {
+                        bondStatus = CDKConstants.BONDORDER_AROMATIC;
+                    }
+                    lastNode = atom;
+                    nodeCounter++;
+                    position = position + currentSymbol.length();
                     bondExists = true;
 				} else if (mychar == '=')
 				{
@@ -256,7 +265,7 @@ public class SmilesParser
 			} catch (Exception exception) {
                 logger.error("Error while parsing char: " + mychar);
                 logger.debug(exception);
-				throw new InvalidSmilesException(message);
+				throw new InvalidSmilesException("Error while parsing char: " + mychar);
 			}
 		} while (position < smiles.length());
 
@@ -367,7 +376,28 @@ public class SmilesParser
                  return possibleSymbol;
              }            
         }
-        if ("HBCcNnOoFPSsIU".indexOf((s.charAt(pos))) >= 0) {
+        return getSymbolForOrganicSubsetElement(s, pos);
+    }
+
+	/**
+	 * Gets the ElementSymbol for an element in the 'organic subset' for which
+     * brackets may be omited.
+     *
+     * <p>See: <a href="http://www.daylight.com/dayhtml/smiles/smiles-atoms.html">
+     * http://www.daylight.com/dayhtml/smiles/smiles-atoms.html</a>.
+	 */
+     private String getSymbolForOrganicSubsetElement(String s, int pos) {
+         if (pos < s.length() - 1) {
+             String possibleSymbol = s.substring(pos, pos + 2);
+             if (("ClBr".indexOf(possibleSymbol) >= 0)) {
+                 return possibleSymbol;
+             }            
+        }
+        if ("BCcNnOoFPSsI".indexOf((s.charAt(pos))) >= 0) {
+            return s.substring(pos, pos + 1);
+        }
+        if ("fpi".indexOf((s.charAt(pos))) >= 0) {
+            logger.warn("Element " + s + " is normally not aromatic");
             return s.substring(pos, pos + 1);
         }
         return null;
@@ -433,6 +463,12 @@ public class SmilesParser
                 } else if (mychar >= '0' && mychar <= '9') {
                     isotopicNumber.append(mychar);
                     position++;
+                } else if (mychar == '*') {
+                    currentSymbol = "*";
+                    atom = new PseudoAtom(currentSymbol);
+                    logger.debug("Made atom: " + atom);
+                    position++;
+                    break;
                 } else {
                     throw new InvalidSmilesException("Found unexpected char: " + mychar);
                 }
