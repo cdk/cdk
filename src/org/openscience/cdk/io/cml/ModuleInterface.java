@@ -35,6 +35,16 @@ import org.openscience.cdk.io.cml.cdopi.*;
  * This interface describes the procedures classes must implement to be plugable
  * into the CMLHandler. Most procedures reflect those in SAX2.
  **/
-public interface ConventionInterface extends ModuleInterface {
+public interface ModuleInterface{
 
+  void startDocument();
+  void endDocument();
+  void startElement(String uri, String local, String raw, Attributes atts);
+  void endElement(String uri, String local, String raw);
+  void characterData(char ch[], int start, int length);
+  
+  CDOInterface returnCDO();
+
+  void inherit(ModuleInterface conv);
+  
 }

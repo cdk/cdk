@@ -35,10 +35,10 @@ import org.xml.sax.HandlerBase;
 
 public class XMLHandler extends HandlerBase {
     
-    private CMLCoreConvention conv;
+    private CMLCoreModule conv;
 
     public XMLHandler(CDOInterface cdo) {
-        conv = new CMLCoreConvention(cdo);
+        conv = new CMLCoreModule(cdo);
     }
 
     public void doctypeDecl(String name, String publicId, String systemId) throws Exception {}

@@ -38,13 +38,13 @@ import org.openscience.cdk.io.cml.cdopi.*;
  *  PMP stands for PolyMorph Predictor and is a module
  *  of Cerius2 (tm).
  */
-public class PMPConvention extends CMLCoreConvention {
+public class PMPConvention extends CMLCoreModule {
 
     public PMPConvention(CDOInterface cdo) {
         super(cdo);
     };
 
-    public PMPConvention(ConventionInterface conv) {
+    public PMPConvention(ModuleInterface conv) {
         super(conv);
         logger.debug("New PMP Convention!");
     }

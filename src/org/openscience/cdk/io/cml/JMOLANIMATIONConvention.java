@@ -32,7 +32,7 @@ import java.util.*;
 import org.openscience.cdk.io.cml.cdopi.*;
 import org.xml.sax.*;
 
-public class JMOLANIMATIONConvention extends CMLCoreConvention {
+public class JMOLANIMATIONConvention extends CMLCoreModule {
 
     private final int UNKNOWN = -1;
     private final int ENERGY = 1;
@@ -46,7 +46,7 @@ public class JMOLANIMATIONConvention extends CMLCoreConvention {
         current = UNKNOWN;
     };
 
-    public JMOLANIMATIONConvention(ConventionInterface conv) {
+    public JMOLANIMATIONConvention(ModuleInterface conv) {
         super(conv);
     };
 

@@ -31,14 +31,15 @@ import org.xml.sax.*;
 import org.xml.sax.helpers.*;
 
 /**
- * SAX2 implementation for CML XML fragment parsing.
+ * SAX2 implementation for CML XML fragment reading. CML Core is supported
+ * as well is the CRML module.
  *
- * Data is stored into the Chemical Document Object which is passed when
+ * <p>Data is stored into the Chemical Document Object which is passed when
  * instantiating this class.
  **/
 public class CMLHandler extends DefaultHandler {
     
-    private ConventionInterface conv;
+    private ModuleInterface conv;
     private org.openscience.cdk.tools.LoggingTool logger;
 
     private Hashtable userConventions;
@@ -51,11 +52,11 @@ public class CMLHandler extends DefaultHandler {
     public CMLHandler(CDOInterface cdo) {
         logger = new org.openscience.cdk.tools.LoggingTool(
                        this.getClass().getName());
-        conv = new CMLCoreConvention(cdo);
+        conv = new CMLCoreModule(cdo);
         userConventions = new Hashtable();
     }
 
-    public void registerConvention(String convention, ConventionInterface conv) {
+    public void registerConvention(String convention, ModuleInterface conv) {
       userConventions.put(convention, conv);
     }
 
@@ -97,28 +98,36 @@ public class CMLHandler extends DefaultHandler {
         logger.debug("local: " + local);
         logger.debug("raw: " + raw);
         String name = raw;
-        for (int i = 0; i < atts.getLength(); i++) 
-        {
-            if (atts.getQName(i).equals("convention"))
-            {
-                logger.info(new StringBuffer("New Convention: ").append(atts.getValue(i)).toString());
-                if (atts.getValue(i).equals("CML")) {
-                    logger.debug("Doing nothing");
-                } else if (atts.getValue(i).equals("PDB")) {
-                    conv = new PDBConvention(conv);
-                } else if (atts.getValue(i).equals("PMP")) {
-                    conv = new PMPConvention(conv);
-                } else if (atts.getValue(i).equals("MDLMol")) {
-                    logger.debug("MDLMolConvention instantiated...");
-                    conv = new MDLMolConvention(conv);
-                } else if (atts.getValue(i).equals("JMOL-ANIMATION")) {
-                    conv = new JMOLANIMATIONConvention(conv);
-                } else {
-                    //unknown convention. userConvention?
-                    if (userConventions.containsKey(atts.getValue(i))) {
-                      ConventionInterface newconv = (ConventionInterface)userConventions.get(atts.getValue(i));
-                      newconv.inherit(conv);
-                      conv = newconv;
+        // Detect CML modules, like CRML and CCML
+        if (local.startsWith("reaction")) {
+            // e.g. reactionList, reaction -> CRML module
+            logger.info("Detected CRML module");
+            conv = new CMLReactionModule(conv);
+        } else {
+            // assume CML Core
+                
+            // Detect conventions
+            for (int i = 0; i < atts.getLength(); i++) {
+                if (atts.getQName(i).equals("convention")) {
+                    logger.info(new StringBuffer("New Convention: ").append(atts.getValue(i)).toString());
+                    if (atts.getValue(i).equals("CML")) {
+                        logger.debug("Doing nothing");
+                    } else if (atts.getValue(i).equals("PDB")) {
+                        conv = new PDBConvention(conv);
+                    } else if (atts.getValue(i).equals("PMP")) {
+                        conv = new PMPConvention(conv);
+                    } else if (atts.getValue(i).equals("MDLMol")) {
+                        logger.debug("MDLMolConvention instantiated...");
+                        conv = new MDLMolConvention(conv);
+                    } else if (atts.getValue(i).equals("JMOL-ANIMATION")) {
+                        conv = new JMOLANIMATIONConvention(conv);
+                    } else {
+                        //unknown convention. userConvention?
+                        if (userConventions.containsKey(atts.getValue(i))) {
+                            ConventionInterface newconv = (ConventionInterface)userConventions.get(atts.getValue(i));
+                            newconv.inherit(conv);
+                            conv = newconv;
+                        }
                     }
                 }
             }

@@ -52,7 +52,7 @@ import org.xml.sax.*;
  *   - read CML files generated with Steve Zara's PDB 2 CML converter
  *
  */
-public class PDBConvention extends CMLCoreConvention {
+public class PDBConvention extends CMLCoreModule {
 
     private boolean connectionTable;
     private boolean isELSYM;
@@ -63,7 +63,7 @@ public class PDBConvention extends CMLCoreConvention {
         super(cdo);
     }
     
-    public PDBConvention(ConventionInterface conv) {
+    public PDBConvention(ModuleInterface conv) {
         super(conv);
     }
 

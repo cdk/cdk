@@ -35,13 +35,13 @@ import org.openscience.cdk.io.cml.cdopi.*;
 /***
  *  Implementation of the MDLMol Covention for CML.
  */
-public class MDLMolConvention extends CMLCoreConvention {
+public class MDLMolConvention extends CMLCoreModule {
 
     public MDLMolConvention(CDOInterface cdo) {
         super(cdo);
     };
 
-    public MDLMolConvention(ConventionInterface conv) {
+    public MDLMolConvention(ModuleInterface conv) {
         super(conv);
     }
 

@@ -35,7 +35,7 @@ import org.openscience.cdk.io.cml.cdopi.*;
 /**
  * This is an implementation for the CDK convention.
  */
-public class CDKConvention extends CMLCoreConvention {
+public class CDKConvention extends CMLCoreModule {
 
     private boolean isBond;
 
@@ -43,7 +43,7 @@ public class CDKConvention extends CMLCoreConvention {
         super(cdo);
     };
 
-    public CDKConvention(ConventionInterface conv) {
+    public CDKConvention(ModuleInterface conv) {
         super(conv);
     }
     
