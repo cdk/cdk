@@ -471,26 +471,3 @@ public final class Bspt {
   }
 }
 
-class Point implements Bspt.Tuple {
-  double x;
-  double y;
-  double z;
-
-  Point(double x, double y, double z) {
-    this.x = x;
-    this.y = y;
-    this.z = z;
-  }
-
-  public double getDimValue(int dim) {
-    if (dim == 0)
-      return x;
-    if (dim == 1)
-      return y;
-    return z;
-  }
-
-  public String toString() {
-    return "<" + x + "," + y + "," + z + ">";
-  }
-}
