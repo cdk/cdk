@@ -45,6 +45,11 @@ import javax.swing.JPanel;
  * Manager that loads and maintains CDK plugins. In addition, it provides a JMenu 
  * to allow access to the plugin's functionality.
  *
+ * <p>Plugins can be loaded by name, but by default it will download the plugins
+ * in the <code>pluginDirName</code> directory passed as argument to the
+ * constructor. The jars in this directory are browsed, and the first class
+ * it encounters which name ends in Plugin will be loaded as plugin.
+ *
  * @cdk.module applications
  */
 public class CDKPluginManager {

@@ -31,11 +31,23 @@ import org.openscience.cdk.event.ChemObjectChangeEvent;
 
 /**
  * Interface that CDK Plugins must implement. The version of this
- * interface is given below.
+ * interface is given below, and the plugin implementing this interface
+ * should return this value in its <code>getAPIVersion()</code> method.
+ *
+ * <p>It is important to name your plugin like *Plugin.java, because the
+ * CDKPluginManager used by Jmol and JChemPaint will only load
+ * plugin classes which name end with 'Plugin'.
+ *
+ * <p>The plugin interacts with the application in which it is loaded
+ * using an <code>CDKEditBus</code> object. Check its API to see how to
+ * interact with the application.
  *
  * @cdk.module applications
  *
  * @version $Revision$
+ *
+ * @see org.openscience.cdk.applications.plugin.CDKEditBus
+ * @see org.openscience.cdk.applications.plugin.CDKPluginManager
  */
 public interface CDKPluginInterface {
 
@@ -95,7 +107,9 @@ public interface CDKPluginInterface {
     public void stop();
     
     /**
-     * Method called when the ChemObject is changed.
+     * Method called when the active ChemObject is changed and is used
+     * to keep the information in the plugin synchronized with the
+     * application.
      */
     public void stateChanged(ChemObjectChangeEvent e);
 }

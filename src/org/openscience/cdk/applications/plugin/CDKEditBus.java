@@ -38,10 +38,36 @@ import org.openscience.cdk.ChemModel;
  */
 public interface CDKEditBus {
 
+    /**
+     * Tells the application in which the plugin is loaded to
+     * show the given ChemFile.
+     *
+     * @see org.openscience.cdk.ChemFile
+     */
     public void showChemFile(ChemFile file);
+    /**
+     * Tells the application in which the plugin is loaded to
+     * show the given ChemModel.
+     *
+     * @see org.openscience.cdk.ChemModel
+     */
     public void showChemModel(ChemModel model);
 
+    /**
+     * Asks the application to return the active ChemModel.
+     * It may return a <code>NoSuchMethodError</code> when the
+     * application does not implement this method.
+     *
+     * @see org.openscience.cdk.ChemFile
+     */
     public ChemModel getChemModel();
+    /**
+     * Asks the application to return the active ChemFile.
+     * It may return a <code>NoSuchMethodError</code> when the
+     * application does not implement this method.
+     *
+     * @see org.openscience.cdk.ChemModel
+     */
     public ChemFile getChemFile();
     
 }
