@@ -73,6 +73,11 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
     protected int hybridization;
 
     /**
+     *  The Electron Valency of this atom.
+     */
+    protected int electronValency;
+
+    /**
      * The formal number of neighbours this atom type can have.
      * This includes explicitely and implicitely connected atoms. The latter
      * includes implicit hydrogens.
@@ -316,6 +321,29 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
         return this.covalentRadius;
     }
     
+	/**
+	 *  Sets the the exact electron valency of the AtomType object.
+	 *
+	 * @param  electronValency  The new electronValency value
+	 *
+	 */
+	public void setValency(int valency)
+	{
+		this.electronValency = valency;
+		notifyChanged();
+	}
+
+	/**
+	 *  Gets the the exact electron valency of the AtomType object.
+	 *
+	 * @param  electronValency  The new electronValency value
+	 *
+	 */
+	public int getValency()
+	{
+		return this.electronValency;
+	}
+
     public String toString() {
         StringBuffer resultString = new StringBuffer();
         resultString.append("AtomType(");
@@ -327,6 +355,7 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
         resultString.append("NC:").append(getFormalNeighbourCount()).append(", ");
         resultString.append("CR:").append(getCovalentRadius()).append(", ");
         resultString.append("VDWR:").append(getVanderwaalsRadius()).append(", ");
+	resultString.append("EV:").append(getValency()).append(", ");
         resultString.append(super.toString());
         resultString.append(")");
         return resultString.toString(); 
