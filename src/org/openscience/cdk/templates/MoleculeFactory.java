@@ -37,6 +37,12 @@ import org.openscience.cdk.tools.*;
  */
 public class MoleculeFactory {
 
+    private static LoggingTool logger = null;
+    
+    static {
+        logger = new LoggingTool("org.openscience.cdk.templates.MoleculeFactory");
+    }
+    
 	public static Molecule makeAlphaPinene() {
 		Molecule mol = new Molecule();
 		mol.addAtom(new Atom("C")); // 1
@@ -705,6 +711,8 @@ public class MoleculeFactory {
 		catch(Exception exc)
 		{
 			// we just return null if something went wrong
+            logger.error("An exception occured while loading a molecule: " + inFile);
+            logger.debug(exc);
 		}
 		
 		return molecule;
@@ -718,7 +726,8 @@ public class MoleculeFactory {
 		}
 		catch(Exception exc)
 		{
-			exc.printStackTrace();
+            logger.error("Could not configure molecule!");
+            logger.debug(exc);
 		}
 	}
 
