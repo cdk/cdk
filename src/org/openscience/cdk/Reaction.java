@@ -210,4 +210,28 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
         System.arraycopy(productStoichiometry, 0, newCoeffs, 0, productStoichiometry.length);
         productStoichiometry = newCoeffs;
     }
+
+    /**
+     * Returns a one line string representation of this Atom.
+     * Methods is conform RFC #9.
+     *
+     * @return  The string representation of this Atom
+     */
+    public String toString() {
+        StringBuffer description = new StringBuffer();
+        description.append("Reaction(");
+        description.append(getID() + ", ");
+        description.append("#R:" + reactantCount + ", ");
+        description.append("#P:" + productCount + ", ");
+        Molecule[] reactants = getReactants();
+        for (int i=0; i<reactantCount; i++) {
+            description.append(reactants[i].toString());
+        }
+        Molecule[] products = getProducts();
+        for (int i=0; i<productCount; i++) {
+            description.append(products[i].toString());
+        }
+        description.append(")");
+        return description.toString();
+    }
 }

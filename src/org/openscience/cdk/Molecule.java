@@ -85,6 +85,21 @@ public class Molecule extends AtomContainer implements java.io.Serializable, Clo
                 }
                 return o;
         }
+
+    /**
+     * Returns a one line string representation of this Atom.
+     * Methods is conform RFC #9.
+     *
+     * @return  The string representation of this Atom
+     */
+    public String toString() {
+        StringBuffer description = new StringBuffer();
+        description.append("Molecule(");
+        description.append(getID() + ", ");
+        description.append(super.toString());
+        description.append(")");
+        return description.toString();
+    }
 }
 
 
