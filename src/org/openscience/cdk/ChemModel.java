@@ -66,12 +66,14 @@ public class ChemModel extends ChemObject
 	 *
 	 * @return  The AtomContainer with all the Molecules of this container   
 	 */
-	public AtomContainer getAllInOneContainer()
-	{
+	public AtomContainer getAllInOneContainer() {
 		AtomContainer ac = new AtomContainer();
-		for (int i = 0; i < setOfMolecules.getMoleculeCount(); i++)
-		{
-			ac.add(setOfMolecules.getMolecule(i));
+		for (int i = 0; i < setOfMolecules.getMoleculeCount(); i++) {
+            Molecule m = setOfMolecules.getMolecule(i);
+            // FIXME: should remove sanity check
+            if (m != null) {
+                ac.add(m);
+            }
 		}
 		return ac;
 	}
