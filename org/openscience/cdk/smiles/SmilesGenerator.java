@@ -84,6 +84,7 @@ public class SmilesGenerator {
     Atom start = null;
     for (int i = 0; i < all.length; i++) {
       Atom atom = all[i];
+      if (atom.flags == null) atom.flags = new boolean[100];
       atom.flags[Atom.VISITED] = false;
       if (((Long)atom.getProperty("CanonicalLable")).longValue() == 1) {
         start = atom;
