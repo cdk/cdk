@@ -3,4 +3,4 @@ Makefile.in
 configure
 config.*
 cdk.jar
-cdk-bin-*.tar.gz
+cdk-libs-*.tar.gz
