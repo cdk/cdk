@@ -47,13 +47,16 @@ public class GeometryTools
 		double transX = 0,transY = 0;
 		for (int i = 0; i < molecule.getAtomCount(); i++)
 		{
-			if (molecule.getAtomAt(i).getPoint2D().x < transX)
+			if (molecule.getAtomAt(i).getPoint2D() != null)
 			{
-				transX = molecule.getAtomAt(i).getPoint2D().x;
-			}
-			if (molecule.getAtomAt(i).getPoint2D().y < transY)
-			{
-				transY = molecule.getAtomAt(i).getPoint2D().y;
+				if (molecule.getAtomAt(i).getPoint2D().x < transX)
+				{
+					transX = molecule.getAtomAt(i).getPoint2D().x;
+				}
+				if (molecule.getAtomAt(i).getPoint2D().y < transY)
+				{
+					transY = molecule.getAtomAt(i).getPoint2D().y;
+				}
 			}
 		}
 		translate2D(molecule,transX * -1,transY * -1);		
@@ -82,8 +85,12 @@ public class GeometryTools
 	{
 		for (int i = 0; i < molecule.getAtomCount(); i++)
 		{
-			molecule.getAtomAt(i).getPoint2D().x *= scaleFactor;
-			molecule.getAtomAt(i).getPoint2D().y *= scaleFactor;
+			if (molecule.getAtomAt(i).getPoint2D() != null)
+			{
+			
+				molecule.getAtomAt(i).getPoint2D().x *= scaleFactor;
+				molecule.getAtomAt(i).getPoint2D().y *= scaleFactor;
+			}
 		}
 	}
 	
@@ -113,16 +120,20 @@ public class GeometryTools
 	{
 		double xOffset = 0, yOffset = 0;
 		double maxX = Double.MIN_VALUE, maxY = Double.MIN_VALUE, minX = Double.MAX_VALUE, minY = Double.MAX_VALUE;
-		for (int f = 0; f < molecule.getAtomCount(); f++)
+		for (int i = 0; i < molecule.getAtomCount(); i++)
 		{
-			if (molecule.getAtomAt(f).getX2D() > maxX)
-				maxX = molecule.getAtomAt(f).getX2D();
-			if (molecule.getAtomAt(f).getY2D() > maxY)
-				maxY = molecule.getAtomAt(f).getY2D();
-			if (molecule.getAtomAt(f).getX2D() < minX)
-				minX = molecule.getAtomAt(f).getX2D();
-			if (molecule.getAtomAt(f).getY2D() < minY)
-				minY = molecule.getAtomAt(f).getY2D();
+			if (molecule.getAtomAt(i).getPoint2D() != null)
+			{
+		
+				if (molecule.getAtomAt(i).getX2D() > maxX)
+					maxX = molecule.getAtomAt(i).getX2D();
+				if (molecule.getAtomAt(i).getY2D() > maxY)
+					maxY = molecule.getAtomAt(i).getY2D();
+				if (molecule.getAtomAt(i).getX2D() < minX)
+					minX = molecule.getAtomAt(i).getX2D();
+				if (molecule.getAtomAt(i).getY2D() < minY)
+					minY = molecule.getAtomAt(i).getY2D();
+			}	
 		}
 		return new Dimension((int)(maxX - minX + 1),
 			(int)(maxY - minY + 1));
@@ -138,9 +149,12 @@ public class GeometryTools
 	 */
 	public static void translate2D(Molecule molecule, Vector2d vector)
 	{
-		for (int f = 0; f < molecule.getAtomCount(); f++)
+		for (int i = 0; i < molecule.getAtomCount(); i++)
 		{
-			molecule.getAtomAt(f).getPoint2D().add(vector);
+			if (molecule.getAtomAt(i).getPoint2D() != null)
+			{
+				molecule.getAtomAt(i).getPoint2D().add(vector);
+			}
 		}
 	}
 	
@@ -165,8 +179,11 @@ public class GeometryTools
 		for (int f = 0; f < atoms.size(); f++)
 		{
 			atom = (Atom)atoms.elementAt(f);
-			x += atom.getX2D();
-			y += atom.getY2D();						
+			if (atom.getPoint2D() != null)
+			{
+				x += atom.getX2D();
+				y += atom.getY2D();						
+			}
 		}
 		return new Point2d(x/(double)atoms.size(), y/(double)atoms.size());
 	}
@@ -175,6 +192,8 @@ public class GeometryTools
 	public static double getAngle(double xDiff, double yDiff)
 	{
 		double angle = 0; 
+//		System.out.println("getAngle->xDiff: " + xDiff);
+//		System.out.println("getAngle->yDiff: " + yDiff);		
 		if (xDiff >= 0 && yDiff >= 0)
 		{
 		    angle = Math.atan(yDiff / xDiff);
@@ -192,6 +211,39 @@ public class GeometryTools
 		    angle = 2 * Math.PI + Math.atan(yDiff / xDiff);
 		}
 		return angle;
+	}
+	
+
+	/**
+	 * Sorts a Vector of atoms such that the 2D distances of the 
+	 * atom locations from a given point are smallest for the first
+	 * atoms in the vector 
+	 *
+	 * @param   point  The point from which the distances to the atoms are measured
+	 * @param   atoms  The atoms for which the distances to point are measured
+	 */
+	public static void sortBy2DDistance(Atom[] atoms, Point2d point)
+	{
+		double distance1, distance2;
+		Atom atom1 = null, atom2 = null;
+		boolean doneSomething = false;
+		do
+		{
+			doneSomething = false;
+			for (int f = 0; f < atoms.length - 1; f++)
+			{
+				atom1 = atoms[f];
+				atom2 = atoms[f + 1];
+				distance1 = point.distance(atom1.getPoint2D());				
+				distance2 = point.distance(atom2.getPoint2D());
+				if (distance2 < distance1)
+				{
+					atoms[f] = atom2;
+					atoms[f + 1] = atom1;					
+					doneSomething = true;
+				}								
+			}
+		}while(doneSomething);
 	}
 }
 

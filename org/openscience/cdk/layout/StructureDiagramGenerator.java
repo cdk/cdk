@@ -31,6 +31,7 @@ package org.openscience.cdk.layout;
 import org.openscience.cdk.*;
 import org.openscience.cdk.ringsearch.*;
 import org.openscience.cdk.geometry.*;
+import org.openscience.cdk.tools.*;
 import javax.vecmath.*;
 import java.util.Vector;
 import java.lang.Math;
@@ -44,20 +45,23 @@ import java.awt.*;
  * call generateCoordinates() and get your molecule back.
  */
 
-public class StructureDiagramGenerator 
+public class StructureDiagramGenerator implements CDKConstants
 {
 
 	Molecule molecule;
 	RingSet sssr;
-	double bondLength = 1;
+	double bondLength = 1.5;
 	Vector2d firstBondVector;
 	SSSRFinder sssrf = new SSSRFinder();
+	RingPlacer ringPlacer = new RingPlacer();
+	AtomPlacer atomPlacer = new AtomPlacer();	
+	Vector ringSystems = null;
+	public static boolean debug = false;
 
-	public static boolean debug = true;
-	static int SPIRO = 1;
-	static int FUSED = 2;
-	static int BRIDGED = 3;		
-
+	static int FUSED = 0;
+	static int BRIDGED = 1;		
+	static int SPIRO = 2;
+	
 	/**
 	 * The empty constructor
 	 */
@@ -65,7 +69,6 @@ public class StructureDiagramGenerator
 	{
 
 	}
-
 
 	/**
 	 * Creates an instance of this class while assigning a molecule to be layed out
@@ -96,6 +99,8 @@ public class StructureDiagramGenerator
 		{
 			this.molecule = molecule;
 		}
+		atomPlacer.setMolecule(this.molecule);
+		ringPlacer.setMolecule(this.molecule);
 	}
 
 
@@ -130,12 +135,27 @@ public class StructureDiagramGenerator
 	 * Assign a molecule to the StructurDiagramGenerator, call 
 	 * the generateCoordinates() method and get your molecule back.
 	 */
-	public void generateCoordinates(Vector2d firstBondVector)
+	public void generateCoordinates(Vector2d firstBondVector) throws java.lang.Exception
 	{
-		handleRings(firstBondVector);
+		/* compute the minimum number of rings as 
+		   given by Frerejacque, Bull. Soc. Chim. Fr., 5, 1008 (1939) */
+		int nrOfEdges = molecule.getBondCount();
+		int expectedRingCount = nrOfEdges - molecule.getAtomCount() + 1;
+		// if there are rings, get them...
+		if (debug) System.out.println("StructureDiagramGenerator->: " + expectedRingCount + " rings expected");
+		if (expectedRingCount > 0)
+		{
+			handleRings(firstBondVector);
+			placeRingSubstituents();
+		}
+		else
+		{
+			Atom complexAtom = getComplexCentralAtom();
+			Bond[] bonds = molecule.getConnectedBonds(complexAtom);
+			placeFirstBond(bonds[0], firstBondVector);
+		}
 		handleAliphatics();
-		fixRest();
-		System.out.println(getMolecule());
+//		fixRest();
 	}
 
 	/**
@@ -143,10 +163,95 @@ public class StructureDiagramGenerator
 	 * Assign a molecule to the StructurDiagramGenerator, call 
 	 * the generateCoordinates() method and get your molecule back.
 	 */
-	public void generateCoordinates()
+	public void generateCoordinates() throws java.lang.Exception
 	{
 		generateCoordinates(new Vector2d(0, 1));
 	}
+
+	public void placeRingSubstituents() throws java.lang.Exception
+	{
+		RingSet rs = null; 
+		Ring ring = null;
+		Atom atom = null;
+		AtomContainer aliphaticPartners = new AtomContainer();;
+		AtomContainer sharedAtoms = new AtomContainer();
+		for (int i = 0; i < ringSystems.size(); i++)
+		{
+			rs = (RingSet)ringSystems.elementAt(i); /* Get the i-th RingSet */
+			for (int j = 0; j < rs.size(); j++)
+			{
+				ring = (Ring)rs.elementAt(j); /* Get the j-th Ring in RingSet rs */
+				
+				for (int k = 0; k < ring.getAtomCount(); k++)
+				{
+				
+					aliphaticPartners.removeAllElements();
+					sharedAtoms.removeAllElements();
+					System.out.println(aliphaticPartners.getAtomCount());
+					atom = ring.getAtomAt(k);
+					partitionPartners(atom, aliphaticPartners, sharedAtoms);
+					System.out.println(aliphaticPartners.getAtomCount());
+					if (aliphaticPartners.getAtomCount() > 0)
+					{
+						atomPlacer.distributePartners(atom, sharedAtoms, aliphaticPartners, bondLength);
+					}
+				}
+			}
+		}
+	
+	}
+	
+	
+	private Atom getComplexCentralAtom() throws java.lang.Exception
+	{
+		int[][] conMat = molecule.getConnectionMatrix();
+		int[][] apsp = PathTools.computeFloydAPSP(conMat);
+		int[] apspCol = PathTools.getInt2DColumnSum(apsp);
+		int position = 0;
+		int max = molecule.getAtomCount() * molecule.getAtomCount();
+		Atom atom = null, mostComplexAtom = null;
+		
+		
+		Vector[] complexity = new Vector[10];
+		for (int i = 0; i < 10; i++)
+		{
+			complexity[i] = new Vector();
+		}		
+		for (int i = 0; i < molecule.getAtomCount(); i++)
+		{
+			complexity[molecule.getDegree(i)].addElement(molecule.getAtomAt(i));
+		}
+		for (int i = 9; i >= 0; i--)
+		{
+			if (complexity[i].size() > 0)
+			{
+				/* This is the Vector with the most substituted atoms
+				 * in the molecule.
+				 */
+				for (int j = 0; j < complexity[i].size(); j++)
+				{
+				    atom = (Atom)complexity[i].elementAt(j);
+					System.out.println(i + ", " + j + ", " + apspCol[molecule.getAtomNumber(atom)]);
+					/* for each atom the molecule check its apsp distance sum */
+					if (apspCol[molecule.getAtomNumber(atom)] < max)
+					{
+						max = apspCol[molecule.getAtomNumber(atom)];
+						mostComplexAtom = atom;
+					}
+				}
+				break;
+			}
+		}
+		try
+		{
+			System.out.println(molecule.getAtomNumber(mostComplexAtom));
+		}
+		catch(Exception exc)
+		{
+			
+		}
+		return mostComplexAtom;
+ 	}
 
 	/**
 	 * Does a layout of all the non-ring parts of the molecule
@@ -167,10 +272,18 @@ public class StructureDiagramGenerator
 		Bond bond;
 		Vector2d ringCenterVector;
 		Point2d ringCenter;
+		int thisRing;
+		
 		/*
 		 * Get the smallest set of smallest rings on this molecule
 		 */
 		sssr = sssrf.findSSSR(molecule);
+		if (sssr.size() < 1)
+		{
+			return;
+		}
+		markRingAtoms(sssr);
+		ringPlacer.setMolecule(molecule);
 		if (debug) System.out.println("StructureDiagramGenerator -> handleRings -> sssr.size(): " + sssr.size());
 		/*
 		 * Partition the smallest set of smallest rings into disconnected ring system.
@@ -178,35 +291,44 @@ public class StructureDiagramGenerator
 		 * rings that are connected to each other either as bridged ringsystems, fused rings or 
 		 * via spiro connections. 
 		 */
-		Vector ringSystems = RingPartitioner.partitionRings(sssr);
+		ringSystems = RingPartitioner.partitionRings(sssr);
 		if (debug) System.out.println("StructureDiagramGenerator -> handleRings -> ringSystems.size(): " + ringSystems.size());
 		/*
 		 * Do an independent layout of the each of the RingSets. They will be translated and rotated 
 		 * to their final position later.
 		 */
-		for (int f = 0; f < 1; f++)
+		for (int f = 0; f < ringSystems.size(); f++)
 		{
 			rs = (RingSet)ringSystems.elementAt(f); /* Get the f-th RingSet */
 			Ring ring = rs.getMostComplexRing(); /* Get the most complex ring in this RingSet */
-			System.out.println("Most complex ring: " + ring.toString(molecule));
-			sharedAtoms = placeFirstBondOfFirstRing(ring,firstBondVector); /* Place the most complex ring at the origin of the coordinate system */
+//			if (debug) System.out.println("Most complex ring: " + ring.toString(molecule));
+			sharedAtoms = placeFirstBond(ring.getBondAt(0),firstBondVector); /* Place the most complex ring at the origin of the coordinate system */
 			/* 
 			 * Call the method which lays out the new ring.
 			 */
-    		ringCenter = sharedAtoms.get2DCenter();
 			ringCenterVector = getRingCenterOfFirstRing(ring, firstBondVector); 
-			ringCenter.add(ringCenterVector);
-			molecule.addAtom(new Atom(new Element("N"), ringCenter));
-//			RingPlacer.placeRing(ring, sharedAtoms, sharedAtoms.get2DCenter(), ringCenterVector, bondLength);
+			ringPlacer.placeRing(ring, sharedAtoms, sharedAtoms.get2DCenter(), ringCenterVector, bondLength);
 			/* 
 			 * Mark the ring as placed
 			 */
-//			ring.flags[RingPlacer.ISPLACED] = true;
+			ring.flags[ISPLACED] = true;
 			/* 
 			 * Place all other rings in this ringsystem.
 			 */
-
-//			placeConnectedRings(rs, ring);
+			thisRing = 0;
+			do
+			{
+				if (ring.flags[ISPLACED])
+				{
+					placeConnectedRings(rs, ring, FUSED);
+					placeConnectedRings(rs, ring, BRIDGED);
+					placeConnectedRings(rs, ring, SPIRO);
+				}
+				thisRing ++;
+				if (thisRing == rs.size()) thisRing = 0;
+				ring = (Ring)rs.elementAt(thisRing);
+			}while(!allPlaced(rs));
+												
 		}
 
 	}
@@ -219,23 +341,23 @@ public class StructureDiagramGenerator
 	 * @param   ring  The ring for which the first bond is to be placed
 	 * @param   bondVector  A 2D vector to point to the position of the second bond atom
 	 */
-	private AtomContainer placeFirstBondOfFirstRing(Ring ring, Vector2d bondVector)
+	private AtomContainer placeFirstBond(Bond bond, Vector2d bondVector)
 	{
 		AtomContainer sharedAtoms = null;
 		try
 		{
-			bondVector.scale(bondLength/bondVector.length());
-
+			bondVector.normalize();
+			if (debug) System.out.println("placeFirstBondOfFirstRing->bondVector.length():" +  bondVector.length());
+			bondVector.scale(bondLength);
+			if (debug) System.out.println("placeFirstBondOfFirstRing->bondVector.length() after scaling:" +  bondVector.length());
 			Atom atom;
-			Bond bond = ring.getBondAt(0);
 			Point2d point = new Point2d(0, 0);
 			atom = bond.getAtomAt(0);
-			System.out.println("Atom 1 of first Bond: " + molecule.getAtomNumber(atom));
+			if (debug) System.out.println("Atom 1 of first Bond: " + molecule.getAtomNumber(atom));
 			atom.setPoint2D(point);
 			point = new Point2d(0, 0);
 			atom = bond.getAtomAt(1);
-			System.out.println("Atom 2 of first Bond: " + molecule.getAtomNumber(atom));		
-			bondVector.scale(bondLength);
+			if (debug) System.out.println("Atom 2 of first Bond: " + molecule.getAtomNumber(atom));		
 			point.add(bondVector);
 			atom.setPoint2D(point);
 			/* 
@@ -268,19 +390,15 @@ public class StructureDiagramGenerator
 	private Vector2d getRingCenterOfFirstRing(Ring ring, Vector2d bondVector)
 	{
 		int size = ring.getAtomCount();
-		double angle = Math.PI / ring.getAtomCount();
-		double ringCenterVectorSize = bondLength / (2 * Math.tan(angle));
-		/* Define a vector for the y axis */
-		Vector2d xAxis = new Vector2d(1, 0);
+		double radius = bondLength / (2 * Math.sin((Math.PI) / size));
+		double newRingPerpendicular = Math.sqrt(Math.pow(radius, 2) - Math.pow(bondLength/2, 2));		
+		if (debug) System.out.println("getRingCenterOfFirstRing->radius: " + radius);
+		if (debug) System.out.println("getRingCenterOfFirstRing->newRingPerpendicular: " + newRingPerpendicular);		
 		/* get the angle between the x axis and the bond vector */
 		double rotangle = GeometryTools.getAngle(bondVector.x, bondVector.y);
-		double atanrotangle = Math.atan(bondVector.y/bondVector.x);
-		System.out.println("Vector angle between the x axis and the bond vector: " + rotangle);
-		System.out.println("atan angle between the x axis and the bond vector: " + atanrotangle);		
-		System.out.println("new method angle between the x axis and the bond vector: " + GeometryTools.getAngle(bondVector.x, bondVector.y));				
 		/* Add 90 Degrees to this angle, this is supposed to be the new ringcenter vector */
 		rotangle += Math.PI / 2;
-		return new Vector2d(Math.cos(rotangle) * ringCenterVectorSize, Math.sin(rotangle) * ringCenterVectorSize);
+		return new Vector2d(Math.cos(rotangle) * newRingPerpendicular, Math.sin(rotangle) * newRingPerpendicular);
 	}
 
 
@@ -290,7 +408,7 @@ public class StructureDiagramGenerator
 	 * @param   rs  The RingSet to be searched for rings connected to Ring
 	 * @param   ring  The Ring for which all connected rings in RingSet are to be layed out. 
 	 */
-	private void placeConnectedRings(RingSet rs, Ring ring)
+	private void placeConnectedRings(RingSet rs, Ring ring, int handleType)
 	{
 		Vector connectedRings = rs.getConnectedRings(ring);
 		Ring connectedRing;
@@ -300,24 +418,18 @@ public class StructureDiagramGenerator
 		Vector2d tempVector, oldRingCenterVector, newRingCenterVector;
 		Bond bond;
 
-		System.out.println(rs.reportRingList(molecule)); 
+//		if (debug) System.out.println(rs.reportRingList(molecule)); 
 		for (int i = 0; i < connectedRings.size(); i++)
 		{
 			connectedRing = (Ring)connectedRings.elementAt(i);
-
-			if (!connectedRing.flags[RingPlacer.ISPLACED])
+			if (!connectedRing.flags[ISPLACED])
 			{
-
-				System.out.println(ring.toString(molecule));
-				System.out.println(connectedRing.toString(molecule));				
+//				if (debug) System.out.println(ring.toString(molecule));
+//				if (debug) System.out.println(connectedRing.toString(molecule));				
 				sharedAtoms = ring.getIntersection(connectedRing);
-				if (debug)
-				{
-					System.out.println("**** start of shared atoms");
-					System.out.println(sharedAtoms);
-					System.out.println("**** end of shared atoms");
-				}
-				if (sharedAtoms.getAtomCount() > 0)
+				sac = sharedAtoms.getAtomCount();
+				if (debug) System.out.println("placeConnectedRings-> connectedRing: " + (ring.toString(molecule)));
+				if ((sac == 2 && handleType == FUSED) ||(sac == 1 && handleType == SPIRO)||(sac > 2 && handleType == BRIDGED))
 				{
 					sharedAtomsCenter = sharedAtoms.get2DCenter();
 					if (debug) molecule.addAtom(new Atom(new Element("B"), new Point2d(sharedAtomsCenter)));
@@ -339,16 +451,17 @@ public class StructureDiagramGenerator
 					}
 					tempPoint = new Point2d(sharedAtomsCenter);
 					tempPoint.add(newRingCenterVector);
-					if (debug) molecule.addAtom(new Atom(new Element("N"), tempPoint));
-					RingPlacer.placeRing(connectedRing, sharedAtoms, sharedAtomsCenter, newRingCenterVector, bondLength);RingPlacer.placeRing(connectedRing, sharedAtoms, sharedAtomsCenter, newRingCenterVector, bondLength);
-					connectedRing.flags[RingPlacer.ISPLACED] = true;
-					placeConnectedRings(rs, connectedRing);
+					ringPlacer.placeRing(connectedRing, sharedAtoms, sharedAtomsCenter, newRingCenterVector, bondLength);ringPlacer.placeRing(connectedRing, sharedAtoms, sharedAtomsCenter, newRingCenterVector, bondLength);
+					connectedRing.flags[ISPLACED] = true;
+					placeConnectedRings(rs, connectedRing, handleType);
 				}
 			}
 		}
 
 	}
 
+
+		
 
 	/**
 	 * This method will go as soon as the rest works. 
@@ -377,9 +490,67 @@ public class StructureDiagramGenerator
 	{
 		for (int f = 0; f < rs.size(); f++)
 		{
-			((Ring)rs.elementAt(f)).flags[RingPlacer.ISPLACED] = false;
+			((Ring)rs.elementAt(f)).flags[ISPLACED] = false;
 		}
 	}
 
+	/**
+	 * Are all rings in the Vector placed?
+	 *
+	 * @param   rings  The Vector to be checked
+	 */
+	private boolean allPlaced(Vector rings)
+	{
+		for (int f = 0; f < rings.size(); f++)
+		{
+			if (!((Ring)rings.elementAt(f)).flags[ISPLACED])
+			{
+				if (debug) System.out.println("allPlaced->Ring " + f + " not placed");			
+				return false;
+			}				
+		}
+		
+		return true;
+	}
+
+	/**
+	 * Mark all atoms in the molecule as being part of a ring
+	 *
+	 * @param   rings  The Vector to be checked
+	 */
+	private void markRingAtoms(Vector rings)
+	{
+		Ring ring = null;
+		for (int i = 0; i < rings.size(); i++)
+		{
+			ring = (Ring)rings.elementAt(i);
+			for (int j = 0; j < ring.getAtomCount(); j++)
+			{
+				ring.getAtomAt(j).flags[ISINRING] = true;
+			}
+		}
+	}
+
+	/**
+	 * Get all aliphatic atoms bonded to a given atom
+	 *
+	 * 
+	 */
+	private void partitionPartners(Atom atom, AtomContainer aliphaticPartners, AtomContainer ringPartners)
+	{
+		Atom[] atoms = molecule.getConnectedAtoms(atom);
+		for (int i = 0; i < atoms.length; i++)
+		{
+			if (atoms[i].flags[ISINRING])
+			{
+				ringPartners.addAtom(atoms[i]);
+			}
+			else
+			{
+				aliphaticPartners.addAtom(atoms[i]);
+			}
+		}
+	}
+	
 
 }

@@ -45,16 +45,26 @@ public class StructureDiagramGeneratorTest
 	
 	public StructureDiagramGeneratorTest(String inFile)
 	{
-		molecule = buildFusedRings();
+//		molecule = buildFusedRings();
 //		molecule = buildMolecule4x3();
 //		molecule = buildMolecule2x3();
 //		molecule = buildMolecule2x4();
 //		molecule = buildSpiroRings();
-//		molecule = loadMolecule(inFile);
+		molecule = loadMolecule(inFile);
 //		molecule = buildRing();
 		StructureDiagramGenerator sdg = new StructureDiagramGenerator();
 		sdg.setMolecule(molecule);
-		sdg.generateCoordinates(new Vector2d(0,1));
+		try
+		{
+			sdg.generateCoordinates(new Vector2d(0,1));
+		}
+		catch(Exception exc)
+		{
+			System.out.println("*** Exit due to an unexpected error during coordinate generation ***");
+			exc.printStackTrace();
+			System.exit(1);
+		}
+	
 		Molecule molecule = sdg.getMolecule();
 		MoleculeViewer2D mv = new MoleculeViewer2D(sdg.getMolecule());
 		Renderer2DModel r2dm = new Renderer2DModel();
@@ -84,20 +94,17 @@ public class StructureDiagramGeneratorTest
 		mol.addAtom(new Atom("C")); // 2
 		mol.addAtom(new Atom("C")); // 3
 		mol.addAtom(new Atom("C")); // 4
-		mol.addAtom(new Atom("C")); // 5
-		mol.addAtom(new Atom("C")); // 6		
+		mol.addAtom(new Atom("C")); // 4		
 		
 		mol.addBond(0, 1, 1); // 1
 		mol.addBond(1, 2, 1); // 2
-		mol.addBond(2, 3, 1); // 3
-		mol.addBond(3, 4, 1); // 4
-		mol.addBond(4, 5, 1); // 5
-		mol.addBond(5, 6, 1); // 6
-		mol.addBond(2, 0, 1); // 7
-		mol.addBond(1, 3, 1); // 8
-		mol.addBond(4, 2, 1); // 9
-		mol.addBond(6, 4, 1); // 9		
-		
+		mol.addBond(2, 0, 1); // 3
+		mol.addBond(2, 3, 1); // 4
+		mol.addBond(3, 1, 1); // 5
+		mol.addBond(3, 4, 1); // 7
+		mol.addBond(4, 2, 1); // 8
+		mol.addBond(4, 5, 1); // 9		
+		mol.addBond(5, 2, 1); // 10		
 		return mol;
 	}
 	

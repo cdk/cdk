@@ -58,7 +58,7 @@ public class DrawPolygonTest
 		int segments = 13;
 		double rotangle = 0;
 		Vector2d bondVector;
-		int f = 10;
+		int f = 0;
 //		for (int f = 0; f < segments; f++)
 //		{
 			rotangle = Math.PI * 2 / segments * f;
@@ -78,7 +78,16 @@ public class DrawPolygonTest
 		StructureDiagramGenerator sdg = new StructureDiagramGenerator();
 		sdg.setMolecule(molecule, true);
 	
-		sdg.generateCoordinates(bondVector);
+		try
+		{
+			sdg.generateCoordinates(bondVector);
+		}
+		catch(Exception exc)
+		{
+			System.out.println("*** Exit due to an unexpected error during coordinate generation ***");
+			exc.printStackTrace();
+			System.exit(1);
+		}
 		molecule = (Molecule)sdg.getMolecule();
 		MoleculeViewer2D mv = new MoleculeViewer2D(molecule);
 		Renderer2DModel r2dm = new Renderer2DModel();

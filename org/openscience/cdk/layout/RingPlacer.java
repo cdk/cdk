@@ -30,6 +30,7 @@ package org.openscience.cdk.layout;
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.ringsearch.*;
+import org.openscience.cdk.geometry.*;
 import javax.vecmath.*;
 import java.util.Vector;
 import java.lang.Math;
@@ -44,8 +45,15 @@ import java.awt.*;
 
 public class RingPlacer implements CDKConstants
 {
-	static boolean debug = true;
+	static boolean debug = false;
 	public static int ISPLACED = 0;	
+	
+	private Molecule molecule; 
+	
+	public RingPlacer()
+	{
+	
+	}
 
 
 	/**
@@ -57,10 +65,10 @@ public class RingPlacer implements CDKConstants
 	 * @param   ringCenterVector  
 	 * @param   bondLength  
 	 */
-	public static void placeRing(Ring ring, AtomContainer sharedAtoms, Point2d sharedAtomsCenter, Vector2d ringCenterVector, double bondLength)
+	public void placeRing(Ring ring, AtomContainer sharedAtoms, Point2d sharedAtomsCenter, Vector2d ringCenterVector, double bondLength)
 	{
 		int sharedAtomCount = sharedAtoms.getAtomCount();
-		System.out.println("placeRing -> sharedAtomCount: " + sharedAtomCount);
+		if (debug) System.out.println("placeRing -> sharedAtomCount: " + sharedAtomCount);
 		if (sharedAtomCount > 2) 
 		{
 			placeBridgedRing(ring, sharedAtoms, sharedAtomsCenter, ringCenterVector, bondLength);
@@ -77,20 +85,38 @@ public class RingPlacer implements CDKConstants
 	}
 	
 	
-	private static void placeBridgedRing(Ring ring, AtomContainer sharedAtoms, Point2d sharedAtomsCenter, Vector2d ringCenterVector, double bondLength )
+	private  void placeBridgedRing(Ring ring, AtomContainer sharedAtoms, Point2d sharedAtomsCenter, Vector2d ringCenterVector, double bondLength )
 	{
+		double radius = getNativeRingRadius(ring, bondLength);
 		Point2d ringCenter = new Point2d(sharedAtomsCenter);
+		ringCenterVector.normalize();
+		if (debug) System.out.println("placeFusedRing->: ringCenterVector.length()" + ringCenterVector.length());	
+		ringCenterVector.scale(radius);
 		ringCenter.add(ringCenterVector);
-		double occupiedAngle = 2 * Math.atan((bondLength / 2) / ringCenterVector.length());
-		double remainingAngle = (2 * Math.PI) - occupiedAngle;
-		double addAngle = remainingAngle / (ring.getRingSize() - (sharedAtoms.getAtomCount() - 1));
-	
+
+
 		Atom[] bridgeAtoms = getBridgeAtoms(sharedAtoms);
-//		Atom bondAtom1 = bridgeAtoms[0];
-//		Atom bondAtom2 = bridgeAtoms[1];
-		Atom bondAtom1 = sharedAtoms.getAtomAt(0);
-		Atom bondAtom2 = sharedAtoms.getAtomAt(1);
+		Atom bondAtom1 = bridgeAtoms[0];
+		Atom bondAtom2 = bridgeAtoms[1];
+
+		Vector2d bondAtom1Vector = new Vector2d(bondAtom1.getPoint2D());
+		Vector2d bondAtom2Vector = new Vector2d(bondAtom2.getPoint2D());		
+		Vector2d originRingCenterVector = new Vector2d(ringCenter);		
+
+		bondAtom1Vector.sub(originRingCenterVector);
+		bondAtom2Vector.sub(originRingCenterVector);		
+
+		double occupiedAngle = bondAtom1Vector.angle(bondAtom2Vector);		
 		
+		double remainingAngle = (2 * Math.PI) - occupiedAngle;
+		double addAngle = remainingAngle / (ring.getRingSize() - sharedAtoms.getAtomCount() + 1);
+
+		if (debug) System.out.println("placeFusedRing->occupiedAngle: " + Math.toDegrees(occupiedAngle));
+		if (debug) System.out.println("placeFusedRing->remainingAngle: " + Math.toDegrees(remainingAngle));
+
+		if (debug) System.out.println("placeFusedRing->addAngle: " + Math.toDegrees(addAngle));				
+
+
 		Atom startAtom;
 
 		double centerX = ringCenter.x;
@@ -99,13 +125,13 @@ public class RingPlacer implements CDKConstants
 		double xDiff = bondAtom1.getX2D() - bondAtom2.getX2D();
 		double yDiff = bondAtom1.getY2D() - bondAtom2.getY2D();
 		
-		double startAngle = Math.atan(yDiff/xDiff);	
+		double startAngle;;	
 		
 		int direction = 1;
 		// if bond is vertical
-		  if (xDiff == 0)
+		if (xDiff == 0)
 		{
-			startAngle = Math.abs(startAngle);
+			if (debug) System.out.println("placeFusedRing->Bond is vertical");
 			//starts with the lower Atom
 			if (bondAtom1.getY2D() > bondAtom2.getY2D())
 			{
@@ -150,10 +176,10 @@ public class RingPlacer implements CDKConstants
 				direction = -1;
 			}
 		}
-		
+		startAngle = GeometryTools.getAngle(startAtom.getX2D() - ringCenter.x, startAtom.getY2D() - ringCenter.y);
+
 		Atom currentAtom = startAtom;
-		Bond[] bonds = sharedAtoms.getConnectedBonds(currentAtom);
-		Bond currentBond = bonds[0];
+		Bond currentBond = sharedAtoms.getBondAt(0);
 		Vector atomsToDraw = new Vector();
 		for (int i = 0; i < ring.getBondCount() - 2; i++)
 		{
@@ -161,18 +187,29 @@ public class RingPlacer implements CDKConstants
 			currentAtom = currentBond.getConnectedAtom(currentAtom);
 			atomsToDraw.addElement(currentAtom);
 		}
-		if (debug) System.out.println("currentAtom  "+currentAtom);
-		if (debug) System.out.println("startAtom  "+startAtom);
-	
-		drawPolygon(atomsToDraw, ringCenter, startAngle, addAngle, bondLength);
+		try
+		{
+			if (debug) System.out.println("placeFusedRing->startAtom is: " + molecule.getAtomNumber(startAtom));
+		}
+		catch(Exception exc)
+		{
+		
+		}
+		if (debug) System.out.println("placeFusedRing->startAngle: " + Math.toDegrees(startAngle));
+		if (debug) System.out.println("placeFusedRing->addAngle: " + Math.toDegrees(addAngle));		
+
+		addAngle = addAngle * direction;
+		drawPolygon(atomsToDraw, ringCenter, startAngle, addAngle, radius);
 	}
 	
-	private static void placeSpiroRing(Ring ring, AtomContainer sharedAtoms, Point2d sharedAtomsCenter, Vector2d ringCenterVector, double bondLength)
+	private void placeSpiroRing(Ring ring, AtomContainer sharedAtoms, Point2d sharedAtomsCenter, Vector2d ringCenterVector, double bondLength)
 	{
-		System.out.println("placeSpiroRing");
-		double ringRadius = getNativeRingRadius(ring, bondLength);
+
+		if (debug) System.out.println("placeSpiroRing");
+		double radius = getNativeRingRadius(ring, bondLength);
 		Point2d ringCenter = new Point2d(sharedAtomsCenter);
-		ringCenterVector.scale(ringRadius/ringCenterVector.length());
+		ringCenterVector.normalize();
+		ringCenterVector.scale(radius);
 		ringCenter.add(ringCenterVector);
 		double addAngle = 2 * Math.PI / ring.getRingSize();
 
@@ -181,19 +218,18 @@ public class RingPlacer implements CDKConstants
 		double centerX = ringCenter.x;
 		double centerY = ringCenter.y;
 		
-		double startAngle = addAngle;	
-		
 		int direction = 1;
 
 		Atom currentAtom = startAtom;
+		double startAngle = GeometryTools.getAngle(startAtom.getX2D() - ringCenter.x, startAtom.getY2D() - ringCenter.y);
 		/* 
 		 * Get one bond connected to the spiro bridge atom.
 		 * It doesn't matter in which direction we draw.
 		 */ 
 		Bond[] bonds = ring.getConnectedBonds(startAtom);
-		System.out.println(startAtom);
+		if (debug) System.out.println(startAtom);
 		Bond currentBond = bonds[0];
-		System.out.println(bonds.length + ", " + bonds[0] + ", " + bonds[1]);
+		if (debug) System.out.println(bonds.length + ", " + bonds[0] + ", " + bonds[1]);
 		Vector atomsToDraw = new Vector();
 		/* 
 		 * Store all atoms to draw in consequtive order relative to the 
@@ -208,7 +244,7 @@ public class RingPlacer implements CDKConstants
 		if (debug) System.out.println("currentAtom  "+currentAtom);
 		if (debug) System.out.println("startAtom  "+startAtom);
 
-		drawPolygon(atomsToDraw, ringCenter, startAngle, addAngle, ringRadius);
+		drawPolygon(atomsToDraw, ringCenter, startAngle, addAngle, radius);
 	
 	}
 
@@ -222,46 +258,34 @@ public class RingPlacer implements CDKConstants
 	 * @param   ringCenterVector  
 	 * @param   bondLength  
 	 */
-	public static void placeFusedRing(Ring ring, AtomContainer sharedAtoms, Point2d sharedAtomsCenter, Vector2d ringCenterVector, double bondLength )
+	public  void placeFusedRing(Ring ring, AtomContainer sharedAtoms, Point2d sharedAtomsCenter, Vector2d ringCenterVector, double bondLength )
 	{
 		Point2d ringCenter = new Point2d(sharedAtomsCenter);
-		double newRingPerpendicular = Math.sqrt(Math.pow(getNativeRingRadius(ring, bondLength), 2) - Math.pow(bondLength/2, 2));
-		ringCenterVector.scale(newRingPerpendicular/ringCenterVector.length());
-
+		double radius = getNativeRingRadius(ring, bondLength);
+		double newRingPerpendicular = Math.sqrt(Math.pow(radius, 2) - Math.pow(bondLength/2, 2));
+		ringCenterVector.normalize();
+		if (debug) System.out.println("placeFusedRing->: ringCenterVector.length()" + ringCenterVector.length());	
+		ringCenterVector.scale(newRingPerpendicular);
 		ringCenter.add(ringCenterVector);
 
-		double occupiedAngle = Math.PI * 2 / (ring.getAtomCount());
-		double remainingAngle = (2 * Math.PI) - occupiedAngle;
-		double addAngle = remainingAngle / (ring.getRingSize() - 1);
-		double ringRadius = Math.sqrt(Math.pow(ringCenterVector.length(), 2) + Math.pow(bondLength/2, 2));
-	
-	
-	
-		System.out.println("remainingAngle: " + remainingAngle);
-		System.out.println("addAngle: " + addAngle);				
-	
-	
-	
 		Atom bondAtom1 = sharedAtoms.getAtomAt(0);
 		Atom bondAtom2 = sharedAtoms.getAtomAt(1);
 
-		Vector2d atom1Vector = new Vector2d(bondAtom1.getPoint2D());
-		Vector2d atom2Vector = new Vector2d(bondAtom2.getPoint2D());		
-		Vector2d originRingCenterVector = new Vector2d(ringCenter);
-		
-		Vector2d yAxisVector = new Vector2d(0, 1);
+		Vector2d bondAtom1Vector = new Vector2d(bondAtom1.getPoint2D());
+		Vector2d bondAtom2Vector = new Vector2d(bondAtom2.getPoint2D());		
+		Vector2d originRingCenterVector = new Vector2d(ringCenter);		
 
-		/* Now we have two vectors pointing from the ring center to 
-		 * each of the two existing atoms. 
-		 */
-		atom1Vector.sub(originRingCenterVector);
-		atom2Vector.sub(originRingCenterVector);		
-		/* Get the angle between the two atoms and the y axis.  */
-		occupiedAngle = atom2Vector.angle(atom1Vector);
-		double angle1 = atom1Vector.angle(yAxisVector);
-		double angle2 = atom2Vector.angle(yAxisVector);		
-		System.out.println("angle 1: " + angle1);
-		System.out.println("angle 2: " + angle2);
+		bondAtom1Vector.sub(originRingCenterVector);
+		bondAtom2Vector.sub(originRingCenterVector);		
+
+		double occupiedAngle = bondAtom1Vector.angle(bondAtom2Vector);		
+		
+		double remainingAngle = (2 * Math.PI) - occupiedAngle;
+		double addAngle = remainingAngle / (ring.getRingSize()-1);
+	
+		if (debug) System.out.println("placeFusedRing->occupiedAngle: " + Math.toDegrees(occupiedAngle));
+		if (debug) System.out.println("placeFusedRing->remainingAngle: " + Math.toDegrees(remainingAngle));
+		if (debug) System.out.println("placeFusedRing->addAngle: " + Math.toDegrees(addAngle));				
 
 
 		Atom startAtom;
@@ -278,7 +302,7 @@ public class RingPlacer implements CDKConstants
 		// if bond is vertical
      	if (xDiff == 0)
 		{
-			System.out.println("Bond is vertical");
+			if (debug) System.out.println("placeFusedRing->Bond is vertical");
 			//starts with the lower Atom
 			if (bondAtom1.getY2D() > bondAtom2.getY2D())
 			{
@@ -292,11 +316,11 @@ public class RingPlacer implements CDKConstants
 			//changes the drawing direction
 			if (centerX < bondAtom1.getX2D())
 			{
-				direction = -1;
+				direction = 1;
 			}
 			else
 			{
-				direction = 1;
+				direction = -1;
 			}
 		}
 
@@ -323,15 +347,8 @@ public class RingPlacer implements CDKConstants
 				direction = -1;
 			}
 		}
-		System.out.println("ringCenterVector: " + ringCenterVector);		
-		System.out.println("Angle to X axis: " + ringCenterVector.angle(new Vector2d(1,0)));
-		System.out.println("Angle to Y axis: " + ringCenterVector.angle(new Vector2d(0,1)));		
-		if (debug) System.out.println("startAtom  "+startAtom);
-
-		ringCenterVector.negate();
-		startAngle = Math.atan(ringCenterVector.y / ringCenterVector.x) + (addAngle / 2  * direction);
-		System.out.println("atan Angle to x axis: " + Math.atan(ringCenterVector.y / ringCenterVector.x));		
-		
+		startAngle = GeometryTools.getAngle(startAtom.getX2D() - ringCenter.x, startAtom.getY2D() - ringCenter.y);
+	
 		Atom currentAtom = startAtom;
 		Bond currentBond = sharedAtoms.getBondAt(0);
 		Vector atomsToDraw = new Vector();
@@ -341,126 +358,19 @@ public class RingPlacer implements CDKConstants
 			currentAtom = currentBond.getConnectedAtom(currentAtom);
 			atomsToDraw.addElement(currentAtom);
 		}
-		System.out.println("startAngle: " + startAngle);
-		System.out.println("addAngle: " + addAngle);		
+		try
+		{
+			if (debug) System.out.println("placeFusedRing->startAtom is: " + molecule.getAtomNumber(startAtom));
+		}
+		catch(Exception exc)
+		{
+		
+		}
+		if (debug) System.out.println("placeFusedRing->startAngle: " + Math.toDegrees(startAngle));
+		if (debug) System.out.println("placeFusedRing->addAngle: " + Math.toDegrees(addAngle));		
 
 		addAngle = addAngle * direction;
-		drawPolygon(atomsToDraw, ringCenter, startAngle, addAngle, ringRadius);
-	}
-	
-
-	/**
-	 *
-	 *
-	 * @param   ring  
-	 * @param   sharedAtoms  
-	 * @param   sharedAtomsCenter  
-	 * @param   ringCenterVector  
-	 * @param   bondLength  
-	 */
-	public static void oldPlaceFusedRing(Ring ring, AtomContainer sharedAtoms, Point2d sharedAtomsCenter, Vector2d ringCenterVector, double bondLength )
-	{
-		Point2d ringCenter = new Point2d(sharedAtomsCenter);
-		ringCenter.add(ringCenterVector);
-		double occupiedAngle = Math.PI * 2 / (ring.getAtomCount());
-		double remainingAngle = (2 * Math.PI) - occupiedAngle;
-		double addAngle = remainingAngle / (ring.getRingSize() - 1);
-		double ringRadius = Math.sqrt(Math.pow(ringCenterVector.length(), 2) + Math.pow(bondLength/2, 2));
-	
-//		newRingPerpendicular = Math.sqrt(Math.pow(getNativeRingRadius(connectedRing, bondLength), 2) - Math.pow(bondLength/2, 2));
-//		newRingCenterVector.scale(newRingPerpendicular/oldRingCenterVector.length());
-	
-	
-		System.out.println("occupiedAngle: " + occupiedAngle);
-		System.out.println("remainingAngle: " + remainingAngle);
-		System.out.println("addAngle: " + addAngle);				
-	
-	
-	
-		Atom bondAtom1 = sharedAtoms.getAtomAt(0);
-		Atom bondAtom2 = sharedAtoms.getAtomAt(1);
-		Atom startAtom;
-
-		double centerX = ringCenter.x;
-		double centerY = ringCenter.y;
-		
-		double xDiff = bondAtom1.getX2D() - bondAtom2.getX2D();
-		double yDiff = bondAtom1.getY2D() - bondAtom2.getY2D();
-		
-		double startAngle;;	
-		
-		int direction = 1;
-		// if bond is vertical
-		  if (xDiff == 0)
-		{
-			System.out.println("Bond is vertical");
-			//starts with the lower Atom
-			if (bondAtom1.getY2D() > bondAtom2.getY2D())
-			{
-				startAtom = bondAtom1;
-			}
-			else
-			{
-				startAtom = bondAtom2;
-			}
-			
-			//changes the drawing direction
-			if (centerX < bondAtom1.getX2D())
-			{
-				direction = -1;
-			}
-			else
-			{
-				direction = 1;
-			}
-		}
-
-		  // if bond is not vertical
-		else
-		{
-			//starts with the left Atom
-			if (bondAtom1.getX2D() > bondAtom2.getX2D())
-			{
-				startAtom = bondAtom1;
-			}
-			else
-			{
-				startAtom = bondAtom2;
-			}
-			
-			//changes the drawing direction
-			if (centerY - bondAtom1.getY2D() > (centerX - bondAtom1.getX2D()) * yDiff / xDiff)
-			{
-				direction = 1;
-			}
-			else
-			{
-				direction = -1;
-			}
-		}
-		System.out.println("ringCenterVector: " + ringCenterVector);		
-		System.out.println("Angle to X axis: " + ringCenterVector.angle(new Vector2d(1,0)));
-		System.out.println("Angle to Y axis: " + ringCenterVector.angle(new Vector2d(0,1)));		
-		if (debug) System.out.println("startAtom  "+startAtom);
-
-		ringCenterVector.negate();
-		startAngle = Math.atan(ringCenterVector.y / ringCenterVector.x) + (addAngle / 2  * direction);
-		System.out.println("atan Angle to x axis: " + Math.atan(ringCenterVector.y / ringCenterVector.x));		
-		
-		Atom currentAtom = startAtom;
-		Bond currentBond = sharedAtoms.getBondAt(0);
-		Vector atomsToDraw = new Vector();
-		for (int i = 0; i < ring.getBondCount() - 2; i++)
-		{
-			currentBond = ring.getNextBond(currentBond, currentAtom);
-			currentAtom = currentBond.getConnectedAtom(currentAtom);
-			atomsToDraw.addElement(currentAtom);
-		}
-		System.out.println("startAngle: " + startAngle);
-		System.out.println("addAngle: " + addAngle);		
-
-		addAngle = addAngle * direction;
-		drawPolygon(atomsToDraw, ringCenter, startAngle, addAngle, ringRadius);
+		drawPolygon(atomsToDraw, ringCenter, startAngle, addAngle, radius);
 	}
 	
 
@@ -475,56 +385,35 @@ public class RingPlacer implements CDKConstants
 	 * @param   direction  
 	 * @param   bondLength  
 	 */
-	private static void drawOuterAnglePolygon(Atom startAtom, Vector atomsToDraw, double startAngle, double addAngle, double direction, double bondLength)
-	{
-		Atom connectAtom = null;
-		double angle = startAngle;
-		double sumX = startAtom.getX2D(), sumY = startAtom.getY2D(), x = 0, y = 0;
-		Atom[] connectedAtoms;
-		for (int i = 0; i < atomsToDraw.size(); i++)
-		{
-			connectAtom = (Atom)atomsToDraw.elementAt(i);
-		    angle = angle + addAngle * direction;
-		    x = Math.cos(angle) * bondLength;
-		    y = Math.sin(angle) * bondLength;
-			sumX = sumX + x;
-			sumY = sumY + y;
-			if (connectAtom.getPoint2D() == null)
-			{
-				connectAtom.setPoint2D(new Point2d(sumX, sumY));				
-			}
-		}
-		
-	}
-	
-	
-	/**
-	 *
-	 *
-	 * @param   startAtom  
-	 * @param   atomsToDraw  
-	 * @param   startAngle  
-	 * @param   addAngle  
-	 * @param   direction  
-	 * @param   bondLength  
-	 */
-	private static void drawPolygon(Vector atomsToDraw, Point2d ringCenter, double startAngle, double addAngle, double ringRadius)
+	public void drawPolygon(Vector atomsToDraw, Point2d rotationCenter, double startAngle, double addAngle, double radius)
 	{
 		Atom connectAtom = null;
 		double angle = startAngle;
 		double newX, newY, x, y;
-		System.out.println("drawPolygon->angle: " + angle);
-		for (int i = 0; i < atomsToDraw.size() - 0; i++)
+		if (debug) System.out.println("drawPolygon->startAngle: " + Math.toDegrees(angle));
+		for (int i = 0; i < atomsToDraw.size(); i++)
 		{
 			connectAtom = (Atom)atomsToDraw.elementAt(i);
+			try
+			{
+				if (debug) System.out.println("drawPolygon->number of connectAtom: " + molecule.getAtomNumber(connectAtom));
+			}
+			catch(Exception exc)
+			{
+			
+			}
 		    angle = angle + addAngle;
-		    System.out.println("drawPolygon->angle: " + angle);
-		    x = Math.cos(angle) * ringRadius;
-		    System.out.println("drawPolygon-> x " + x);
-		    y = Math.sin(angle) * ringRadius;
-			System.out.println("drawPolygon-> y " + y);
-			newX = x + ringCenter.x;
-			newY = y + ringCenter.y;
+			if (angle >= 2 * Math.PI)
+			{
+				angle -= 2*Math.PI;
+			}
+		    if (debug)  System.out.println("drawPolygon->angle: " +Math.toDegrees( angle));
+		    x = Math.cos(angle) * radius;
+		    if (debug) System.out.println("drawPolygon-> x " + x);
+		    y = Math.sin(angle) * radius;
+			if (debug) System.out.println("drawPolygon-> y " + y);
+			newX = x + rotationCenter.x;
+			newY = y + rotationCenter.y;
 //			angle = angle + addAngle;
 			if (connectAtom.getPoint2D() == null)
 			{
@@ -549,7 +438,7 @@ public class RingPlacer implements CDKConstants
 	 * @param   rs  
 	 * @return     
 	 */
-	public static boolean allPlaced(RingSet rs)
+	public  boolean allPlaced(RingSet rs)
 	{
 		for (int i = 0; i < rs.size(); i++)
 		{
@@ -567,7 +456,7 @@ public class RingPlacer implements CDKConstants
 	 * @param   sharedAtoms  
 	 * @return     
 	 */
-	private static Atom[] getBridgeAtoms(AtomContainer sharedAtoms)
+	private  Atom[] getBridgeAtoms(AtomContainer sharedAtoms)
 	{
 		Atom[] bridgeAtoms = new Atom[2];
 		Atom atom;
@@ -593,13 +482,23 @@ public class RingPlacer implements CDKConstants
 	 * @param   bondLength  The bond length for each bond in the ring
 	 * @return  The radius of the ring.   
 	 */
-	public static double getNativeRingRadius(Ring ring, double bondLength)
+	public  double getNativeRingRadius(Ring ring, double bondLength)
 	{
 		int size = ring.getAtomCount();
-		double angle = 2 * Math.PI / size;
-		double ringRadius = bondLength / (2 * Math.sin(angle/2));
-		return ringRadius;
+		double radius = bondLength / (2 * Math.sin((Math.PI) / size));
+		return radius;
 	}
 
 
+
+	
+	public Molecule getMolecule()
+	{
+		return this.molecule;
+	}
+
+	public void setMolecule(Molecule molecule)
+	{
+		this.molecule = molecule;
+	}
 }

@@ -52,6 +52,16 @@ public interface CDKConstants
 	/** A bonds which end is above the drawing plane */
 	static int STEREO_ATOM_PARITY_MINUS = -1;
 
+	/****************************************
+	 * Some flags used for structure layout *
+	 ****************************************/
+
+	/** A bonds which end is above the drawing plane */
+	static int ISPLACED = 7;
+	static int ISINRING = 8;
+	static int ISALIPHATIC = 9;
+
+
 }
 
 

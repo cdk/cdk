@@ -89,6 +89,7 @@ public class AtomContainer extends ChemObject implements Cloneable{
 		bonds = new Bond[bondCount];
 	}
 	
+
 	/**
 	 *  Sets the array of atoms of this AtomContainer 
 	 *
@@ -138,7 +139,9 @@ public class AtomContainer extends ChemObject implements Cloneable{
 	 */
 	public Atom[] getAtoms()
 	{
-		return this.atoms;
+		Atom[] returnAtoms = new Atom[getAtomCount()];
+		System.arraycopy(this.atoms, 0, returnAtoms, 0, returnAtoms.length);
+		return returnAtoms;
 	}
 
 	/**
@@ -148,7 +151,9 @@ public class AtomContainer extends ChemObject implements Cloneable{
 	 */
 	public Bond[] getBonds()
 	{
-		return this.bonds;
+		Bond[] returnBonds = new Bond[getBondCount()];
+		System.arraycopy(this.bonds, 0, returnBonds, 0, returnBonds.length);
+		return returnBonds;
 	}
 
 	/**
@@ -383,6 +388,18 @@ public class AtomContainer extends ChemObject implements Cloneable{
 	
 
 	/**
+	 * removes all atoms and bond from this container
+	 *
+	 */
+	public void removeAllElements()
+	{
+		atoms = new Atom[growArraySize];
+		bonds = new Bond[growArraySize];
+		atomCount = 0;
+		bondCount = 0;	
+	}
+
+	/**
 	 *  Adds a bond to this container
 	 *
 	 * @param   atom1   Order of the first atom of the Bond
@@ -555,6 +572,22 @@ public class AtomContainer extends ChemObject implements Cloneable{
 		return point;
 	}
 
+
+	public int[][] getConnectionMatrix() throws java.lang.Exception
+	{
+		Bond bond = null;
+		int i, j;
+		int[][] conMat = new int[getAtomCount()][getAtomCount()];
+		for (int f = 0; f < getBondCount(); f++)
+		{
+			bond = getBondAt(f);
+			i = getAtomNumber(bond.getAtomAt(0));
+			j = getAtomNumber(bond.getAtomAt(1));
+			conMat[i][j] = bond.getOrder();
+			conMat[j][i] = bond.getOrder();
+		}
+		return conMat;
+	}
 
 
 	/**

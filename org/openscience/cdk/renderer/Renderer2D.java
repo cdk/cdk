@@ -120,10 +120,12 @@ public class Renderer2D
 	*/
 	private void paintNumber(Atom atom)
 	{
+		if (atom.getPoint2D() == null) return;
 		FontMetrics fm = g.getFontMetrics();
 		int fontSize = g.getFont().getSize();
 		int xSymbOffset = (new Integer(fm.stringWidth(atom.getElement().getSymbol())/2)).intValue();
 		int ySymbOffset = (new Integer(fm.getAscent()/2)).intValue();
+
 		try
 		{
 			int i = molecule.getAtomNumber(atom);
@@ -151,6 +153,7 @@ public class Renderer2D
 	 */
 	private void paintAtom(Atom atom)
 	{
+		if (atom.getPoint2D() == null) return;
 		FontMetrics fm = g.getFontMetrics();
 		int fontSize = g.getFont().getSize();
 		int xSymbOffset = (new Integer(fm.stringWidth(atom.getElement().getSymbol())/2)).intValue();
@@ -189,6 +192,7 @@ public class Renderer2D
 	 */
 	private void paintBond(Bond bond)
 	{
+		if (bond.getAtomAt(0).getPoint2D() == null || bond.getAtomAt(1).getPoint2D() == null) return;
 		if (bond.getOrder() == 1)
 		{
 			paintSingleBond(bond);

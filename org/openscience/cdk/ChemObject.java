@@ -51,6 +51,7 @@ public class ChemObject implements CDKConstants, Cloneable
 	 * flag array with self-defined constants (flags[VISITED] = true).
 	 * 10 flags per object should be more than enough.
 	 */
+	 
 	public boolean[] flags = new boolean[10];
 	/** Array of multipurpose vectors. Handle like described for the
 	  * flags above 
@@ -127,6 +128,32 @@ public class ChemObject implements CDKConstants, Cloneable
 		this.size = size;
 	}
 	
+
+	/**
+	 * Set a physical property for a ChemObject
+	 *
+	 * @param   description  An object description of the property (most likely a unique string)
+	 * @param   property  An object with the property itself
+	 */
+	public void setPhysicalProperty(Object description, Object property)
+	{
+		physicalProperties.put(description, property);
+	
+	}
+	
+
+	/**
+	 * Returns a physical property for the ChemObject
+	 *
+	 * param   description  An object description of the property (most likely a unique string)
+	 * @return  The object containing the property   
+	 */
+	public Object getPhysicalProperty(Object description)
+	{
+		return physicalProperties.get(description);
+	
+	}
+
 	/**
 	 * Clones this object.
 	 *
