@@ -40,9 +40,10 @@ import javax.vecmath.*;
  *  href="http://cdk.sf.net/biblio.html#DAL92">DAL92</a>.
  *
  * <p>From the Atom block it reads atomic coordinates, element types and
- * formal charges.
- *
- * <p>From the Bond block it reads the bonds and the orders.
+ * formal charges. From the Bond block it reads the bonds and the orders.
+ * 
+ * <p>Additionally, it reads M  CHG and M  ISO lines from the property
+ * block.
  *
  *@author     steinbeck
  *@created    October 2, 2000
@@ -103,43 +104,47 @@ public class MDLReader implements ChemObjectReader
 	 *
 	 *@return    The ChemFile that was read from the MDL file.
 	 */
-	private ChemFile readChemFile()
-	{
+	private ChemFile readChemFile() throws CDKException {
 		ChemFile chemFile = new ChemFile();
 		ChemSequence chemSequence = new ChemSequence();
 		ChemModel chemModel = new ChemModel();
 		SetOfMolecules setOfMolecules = new SetOfMolecules();
 		Molecule m = readMolecule();
-		if (m != null)
-		{
+		if (m != null) {
 			setOfMolecules.addMolecule(m);
 		}
 		String str;
-		try
-		{
-			do
-			{
-				str = new String(input.readLine());
-				if (str.equals("$$$$"))
-				{
-					m = readMolecule();
+        try {
+            if (input.ready()) {
+                // apparently, this is a SDF file, continue with 
+                // reading mol files
+                do {
+                    str = new String(input.readLine());
+                    if (str.equals("$$$$")) {
+                        m = readMolecule();
 
-					if (m != null)
-					{
-						setOfMolecules.addMolecule(m);
-					}
-				}
-			} while (input.ready());
-		} catch (Exception exc)
-		{
-			// exc.printStackTrace();
-		}
-		try
-		{
+                        if (m != null) {
+                            setOfMolecules.addMolecule(m);
+                        }
+                    } else {
+                        // skip stuff between "M  END" and "$$$$" 
+                    }
+                } while (input.ready());
+            }
+        } catch (CDKException cdkexc) {
+            throw cdkexc;
+        } catch (Exception exc) {
+            String error = "Error while parsing SDF: " + exc.toString();
+            logger.error(error);
+            exc.printStackTrace();
+            throw new CDKException(error);
+        }
+		try {
 			input.close();
-		} catch (Exception exc)
-		{
-			exc.printStackTrace();
+		} catch (Exception exc) {
+            String error = "Error while closing file: " + exc.toString();
+            logger.error(error);
+			throw new CDKException(error);
 		}
 		chemModel.setSetOfMolecules(setOfMolecules);
 		chemSequence.addChemModel(chemModel);
@@ -155,7 +160,7 @@ public class MDLReader implements ChemObjectReader
 	 *
 	 *@return    The Molecule that was read from the MDL file.
 	 */
-	private Molecule readMolecule() {
+	private Molecule readMolecule() throws CDKException {
 		int atoms = 0;
 		int bonds = 0;
 		int atom1 = 0;
@@ -170,6 +175,7 @@ public class MDLReader implements ChemObjectReader
 		Molecule molecule = new Molecule();
 		Bond bond;
 		Atom atom;
+        String line = "";
 
 		try {
 			String title = new String(input.readLine() + "\n" + input.readLine() + "\n" + input.readLine());
@@ -181,8 +187,12 @@ public class MDLReader implements ChemObjectReader
 			logger.debug("Atomcount: " + atoms);
 			bonds = java.lang.Integer.valueOf(strTok.nextToken()).intValue();
 			logger.debug("Bondcount: " + bonds);
+            
+            // read ATOM block
+            logger.info("Reading atom block");
 			for (int f = 0; f < atoms; f++) {
-				strBuff = new StringBuffer(input.readLine());
+                line = input.readLine();
+				strBuff = new StringBuffer(line);
 				strTok = new StringTokenizer(strBuff.toString().trim());
 				x = new Double(strTok.nextToken()).doubleValue();
 				y = new Double(strTok.nextToken()).doubleValue();
@@ -233,9 +243,12 @@ public class MDLReader implements ChemObjectReader
                 }
 				molecule.addAtom(atom);
 			}
-			for (int f = 0; f < bonds; f++)
-			{
-				strBuff = new StringBuffer(input.readLine());
+            
+            // read BOND block
+            logger.info("Reading bond block");
+			for (int f = 0; f < bonds; f++) {
+                line = input.readLine();
+				strBuff = new StringBuffer(line);
 				strBuff.insert(3, " ");
 				strBuff.insert(7, " ");
 				strBuff.insert(11, " ");
@@ -273,12 +286,45 @@ public class MDLReader implements ChemObjectReader
 					molecule.addBond(bond);
 				}
 			}
+            
+            // read PROPERTY block
+            logger.info("Reading property block");
+            while (input.ready()) {
+                line = input.readLine();
+                if ("M  END".equals(line)) break;
+                
+                boolean lineRead = false;
+                if (line.startsWith("M  CHG")) {
+                    // FIXME: if this is encountered for the first time, all
+                    // atom charges should be set to zero first!
+                    int infoCount = Integer.parseInt(line.substring(6,9).trim());
+                    StringTokenizer st = new StringTokenizer(line.substring(9));
+                    for (int i=1; i <= infoCount; i++) {
+                        String token = st.nextToken();
+                        System.out.println("T1:" + token);
+                        int atomNumber = Integer.parseInt(token.trim());
+                        token = st.nextToken();
+                        System.out.println("T2:" + token);
+                        int charge = Integer.parseInt(token.trim());
+                        molecule.getAtomAt(atomNumber - 1).setFormalCharge(charge);
+                    }
+                } else if (line.startsWith("M  ISO")) {
+                    int infoCount = Integer.parseInt(line.substring(6,8));
+                    for (int i=1; i <= infoCount; i++) {
+                        StringTokenizer st = new StringTokenizer(line.substring(9));
+                        int atomNumber = Integer.parseInt(st.nextToken());
+                        int mass = Integer.parseInt(st.nextToken());
+                        molecule.getAtomAt(atomNumber - 1).setAtomicMass(mass);
+                    }
+                }
+                if (!lineRead) {
+                    logger.warn("Skipping line in property block: " + line);
+                }
+            }
 		} catch (Exception e) {
-			logger.error("Error while reading MDL Molfile.");
-			logger.error("Reason for failure: ");
-			logger.error(e.toString());
-            e.printStackTrace();
-			molecule = null;
+            String error = "Error (" + e.toString() + ") while parsing line: " + line;
+			logger.error(error);
+            throw new CDKException(error);
 		}
 		return molecule;
 	}
