@@ -41,8 +41,8 @@ public class SetOfMoleculesManipulator {
             Molecule mol = molecules[i];
             if (mol.contains(atom)) {
                 mol.removeAtomAndConnectedElectronContainers(atom);
+                return;
             }
-            return;
         }
     }
     
@@ -52,8 +52,8 @@ public class SetOfMoleculesManipulator {
             Molecule mol = molecules[i];
             if (mol.contains(electrons)) {
                 mol.removeElectronContainer(electrons);
+                return;
             }
-            return;
         }
     }
     
