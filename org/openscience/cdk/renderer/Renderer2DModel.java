@@ -43,6 +43,8 @@ public class Renderer2DModel
 	
 	private double bondDistance = 6;
 
+	private double bondLength = 30;
+
 	private Color backColor = Color.white;
 
 	private Color foreColor = Color.black;
@@ -118,6 +120,27 @@ public class Renderer2DModel
 		this.bondWidth = bondWidth;
 	}
 
+
+	/**
+	 * Returns the length of a bond line (XXX what are the dimensions? XXX)
+	 *
+	 * @return     the length of a bond line
+	 */
+	public double getBondLength()
+	{
+		return this.bondLength;
+	}
+
+
+	/**
+	 * Sets the length of a bond line (XXX what are the dimensions? XXX)
+	 *
+	 * @param   bondLength  the length of a bond line
+	 */
+	public void setBondLength(double bondLength)
+	{
+		this.bondLength = bondLength;
+	}
 	
 
 	/**
