@@ -176,9 +176,38 @@
                 <delete dir="${reports.tests}" />
         </target>
 
+        <target name="compileDoclet" id="compileDoclet">
+            <javac srcdir="doc/javadoc/source" destdir="doc/javadoc" 
+                   includes="MakeJavaFilesFilesDoclet.java">
+                <classpath>
+                    <fileset dir="${java.ext.dirs}">
+                        <include name="tools.jar" />
+                    </fileset>
+                </classpath>
+            </javac>
+        </target>
+
+        <target name="src.star.javafiles" id="src.star.javafiles" depends="compileDoclet">
+            <javadoc private="false" public="true">
+                <classpath refid="project.class.path" />
+        
+                <doclet name="MakeJavaFilesFilesDoclet" path="${doc}/javadoc"/>
+        
+                <packageset dir="${src}">
+                    <include name="org/openscience/cdk/**"/>
+                </packageset>
+            </javadoc>
+            <move todir="${src}">
+                <fileset dir=".">
+                  <include name="*.javafiles"/>
+                </fileset>
+            </move>
+        </target>
+        
         <target id="compile" name="compile" 
             description="Compiles the CDK."
-            depends="init, info, compile-core, compile-standard, compile-extra, compile-io, 
+            depends="init, info, src.star.javafiles, 
+                     compile-core, compile-standard, compile-extra, compile-io, 
                      compile-render, compile-render-with-java3d, compile-libio,
                      compile-apps">
         </target>

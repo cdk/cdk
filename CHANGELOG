@@ -7,9 +7,11 @@ New:
 * Added a JPanel of the periodic table
 
 Fixes:
+* cdk-* shell wrapper now accept -X java options (closes #882990)
+* Refactored build process (closes #883519)
 
 API changes:
-* Moved a number of Swing based classes to cdk.applications.swing
+* Moved a number of Swing based classes to cdk.applications.swing (addresses #847584)
 
 20040120 Release
 ------------------------------------
