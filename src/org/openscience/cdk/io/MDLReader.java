@@ -149,12 +149,14 @@ public class MDLReader extends DefaultChemObjectReader {
 		}
 		String str;
         try {
-            if (input.ready()) {
+            String line = input.readLine();
+            logger.debug("line: " + line);
+            if (input.ready() && line != null) {
                 // apparently, this is a SDF file, continue with 
                 // reading mol files
                 do {
-                    str = new String(input.readLine());
-                    if (str.equals("$$$$") && input.ready()) {
+                    str = new String(line);
+                    if (str.equals("$$$$") && input.ready() && line != null) {
                         m = readMolecule();
 
                         if (m != null) {
@@ -163,7 +165,8 @@ public class MDLReader extends DefaultChemObjectReader {
                     } else {
                         // skip stuff between "M  END" and "$$$$" 
                     }
-                } while (input.ready());
+                    line = input.readLine();
+                } while (input.ready() && line != null);
             }
         } catch (CDKException cdkexc) {
             throw cdkexc;
@@ -214,7 +217,11 @@ public class MDLReader extends DefaultChemObjectReader {
         try {
             logger.info("Reading header");
             line = input.readLine(); linecount++;
+            if (line == null) {
+                return molecule;
+            }
             logger.debug("Line " + linecount + ": " + line);
+
             if (line.startsWith("$$$$")) {
                 logger.debug("File is empty, returning empty molecule");
                 return molecule;
@@ -368,7 +375,7 @@ public class MDLReader extends DefaultChemObjectReader {
             
             // read PROPERTY block
             logger.info("Reading property block");
-            while (input.ready()) {
+            while (input.ready() && line != null) {
                 line = input.readLine(); linecount++;
                 if ("M  END".equals(line)) break;
                 
