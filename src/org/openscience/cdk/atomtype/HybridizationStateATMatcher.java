@@ -34,12 +34,12 @@ import org.openscience.cdk.tools.LoggingTool;
 /**
  * AtomType matcher that deduces the hybridization state of an atom based on
  * the max bond order, bond order sum and neighbor count properties of the Atom.
- * 
- * @author         mfe4
- * @cdk.created    2004-12-02
- * @cdk.module     core
+ *
+ *@author         mfe4
+ *@cdk.created    2004-12-02
+ *@cdk.module     core
  */
-public class HybridizationStateATMatcher implements AtomTypeMatcher {
+public class HybridizationStateATMatcher {
 
 	private LoggingTool logger;
 	double charge = 0;
@@ -71,11 +71,11 @@ public class HybridizationStateATMatcher implements AtomTypeMatcher {
 	/**
 	 * Assign the hybridization state to a given atom.
 	 *
-	 *@param  acontainer        AtomContainer
+	 *@param  ac                AtomContainer
 	 *@param  atom              the target atom
 	 *@exception  CDKException  Description of the Exception
 	 */
-	public void findMatchingAtomType(AtomContainer container, Atom atom) throws CDKException {
+	public void findMatchingAtomType(AtomContainer ac, Atom atom) throws CDKException {
 		
 		symbol = atom.getSymbol();
 		//Hs are included?
