@@ -1,5 +1,4 @@
-/* MDLReader.java
- * 
+/* 
  * $RCSfile$
  * $Author$
  * $Date$

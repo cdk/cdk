@@ -123,5 +123,5 @@ public class ChemFile extends ChemObject {
 		return this.chemSequenceCount;
 	}
 
-	
+
 }

@@ -1,738 +1,371 @@
-/* AtomContainer.java
- * 
- * $RCSfile$    $Author$    $Date$    $Revision$
- * 
- * Copyright (C) 1997-2000  The CompChem project
- * 
- * Contact: steinbeck@ice.mpg.de, geelter@maul.chem.nd.edu, egonw@sci.kun.nl
- * 
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public License
- * as published by the Free Software Foundation; either version 2.1
- * of the License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
- */
+/* Decompiled by Mocha from AtomContainer.class */
+/* Originally compiled from AtomContainer.java */
 
 package org.openscience.cdk;
 
-import java.util.*;
-import javax.vecmath.*;
+import java.io.PrintStream;
+import java.util.Vector;
+import javax.vecmath.Point2d;
 
-/**
- *  
- * Base class for all chemical objects that maintain a list of Atoms and
- * Bonds
- *
- * @author     steinbeck 
- * @created    October 2, 2000 
- */
-public class AtomContainer extends ChemObject implements Cloneable{
+public class AtomContainer extends ChemObject implements Cloneable
+{
+    protected int atomCount;
+    protected int bondCount;
+    protected int growArraySize;
+    protected Atom atoms[];
+    protected Bond bonds[];
 
-	/**
-	 *  Number of atoms contained by this object 
-	 */
-	protected int atomCount;
-
-	/**
-	 *  Number of bonds contained by this object 
-	 */
-	protected int bondCount;
-
-	/**
-	 *  
-	 * Amount by which the bond and arom arrays grow when elements are added
-	 * and the arrays are not large enough for that.
-	 */
-	protected int growArraySize = 10;
-
-	/**
-	 *  Internal array of atoms 
-	 */
-	protected Atom[] atoms;
-
-	/**
-	 *  Internal array of bond 
-	 */
-	protected Bond[] bonds;
-
-	/**
-	 *  Constructs an empty AtomContainer 
-	 */
-	public AtomContainer()
-	{
-		atomCount = 0;
-		bondCount = 0;
-		atoms = new Atom[growArraySize];
-		bonds = new Bond[growArraySize];
-	}
-	
-	/**
-	 * Constructs an empty AtomContainer that will contain a certain
-	 * number of atoms and bonds.
-	 *
-	 * @param   atomCount  Number of atoms to be in this container
-	 * @param   bondCount  Number of bonds to be in this container
-	 */
-	public AtomContainer(int atomCount, int bondCount)
-	{
-		this.atomCount = atomCount;
-		this.bondCount = bondCount;
-		atoms = new Atom[atomCount];
-		bonds = new Bond[bondCount];
-	}
-	
-
-	/**
-	 *  Sets the array of atoms of this AtomContainer 
-	 *
-	 * @param  atoms  The array of atoms to be assigned to this AtomContainer 
-	 */
-	public void setAtoms(Atom[] atoms)
-	{
-		this.atoms = atoms;
-	}
-
-	/**
-	 *  Sets the array of bonds of this AtomContainer 
-	 *
-	 * @param  bonds  The array of Bonds to be assigned to this AtomContainer 
-	 */
-	public void setBonds(Bond[] bonds)
-	{
-		this.bonds = bonds;
-	}
-
-	/**
-	 *  Set the atom at position <code>number</code> . 
-	 *
-	 * @param  number  The position of the atom to be set. 
-	 * @param  atom    The atom to be stored at position <code>number</code> 
-	 */
-	public void setAtomAt(int number, Atom atom)
-	{
-		atoms[number] = atom;
-	}
-
-	/**
-	 *  Sets the bond at position <code>number</code> . 
-	 *
-	 * @param  number  The position of the bond to be set. 
-	 * @param  bond    The bond to be stored at position <code>number</code> 
-	 */
-	public void setBondAt(int number, Bond bond)
-	{
-		bonds[number] = bond;
-	}
-
-	/**
-	 *  Returns the array of atoms of this AtomContainer 
-	 *
-	 * @return    The array of atoms of this AtomContainer 
-	 */
-	public Atom[] getAtoms()
-	{
-		Atom[] returnAtoms = new Atom[getAtomCount()];
-		System.arraycopy(this.atoms, 0, returnAtoms, 0, returnAtoms.length);
-		return returnAtoms;
-	}
-
-	/**
-	 *  Returns the array of bonds of this AtomContainer 
-	 *
-	 * @return    The array of bonds of this AtomContainer 
-	 */
-	public Bond[] getBonds()
-	{
-		Bond[] returnBonds = new Bond[getBondCount()];
-		System.arraycopy(this.bonds, 0, returnBonds, 0, returnBonds.length);
-		return returnBonds;
-	}
-
-	/**
-	 *  
-	 * Returns the atom at position <code>number</code> in the
-	 * container
-	 *
-	 * @param  number  The position of the atom to be returned. 
-	 * @return         The atom at position <code>number</code> . 
-	 */
-	public Atom getAtomAt(int number)
-	{
-		return atoms[number];
-	}
-
-
-	/**
-	 *  
-	 * Returns the position of a given atom in the atoms array 
-	 *
-	 * @param  atom    The atom to be sought
-	 * @return         The Position of the atom in the atoms array. 
-	 */
-
-	public int getAtomNumber(Atom atom) throws Exception
-	{
-		for (int f = 0; f < getAtomCount(); f++)
-		{
-			if (getAtomAt(f) == atom)
-			{
-				return f;
-			}
-		}
-		throw new Exception("No such Atom");
-	}
-	
-
-	/**
-	 *  
-	 * Returns the bond at position <code>number</code> in the
-	 * container
-	 *
-	 * @param  number  The position of the bond to be returned. 
-	 * @return         The bond at position <code>number</code> . 
-	 */
-	public Bond getBondAt(int number)
-	{
-		return bonds[number];
-	}
-	
-
-	/**
-	 * Returns the bond that connectes the two given atoms.
-	 *
-	 * @param   a1  The first atom
-	 * @param   a2  The second atom
-	 * @return     The bond that connectes the two atoms
-	 * @exception   Exception  thrown if the two atoms are not connected
-	 */
-	public Bond getBond(Atom a1, Atom a2) throws Exception
-	{
-		for (int i = 0; i < getBondCount(); i++)
-		{
-			if (bonds[i].contains(a1))
-			{
-				try
-				{
-					if (bonds[i].getConnectedAtom(a1) == a2)
-					{
-						return bonds[i];
-					}
-				}
-				catch (Exception exc)
-				{
-					throw exc;
-				}
-			}
-		}
-		System.out.println("atom1  "+a1.toString()+"atom2  "+a2.toString());
-		throw new Exception("atoms not connected");
-	}
-
-	/**
-	 * Returns an array of all atoms connected to the given atom.
-	 *
-	 * @param   atom  The atom the bond partners are searched of.
-	 * @return     The array with the size of connected atoms
-	 */
-	public Atom[] getConnectedAtoms(Atom atom)
-	{
-		Vector atomsVec = new Vector();  
-		Bond bond;
-		for (int i = 0; i < bondCount; i++)
-		{
-			bond = bonds[i];
-			if (bond.contains(atom))
-			{
-				atomsVec.addElement(bond.getConnectedAtom(atom));
-			}
-		}
-		Atom[] conAtoms = new Atom[atomsVec.size()];
-		atomsVec.copyInto(conAtoms);
-		return conAtoms;
-	}
-	
-	
-
-	/**
-	 * Returns an array of all bonds connected to the given atom
-	 *
-	 * @param   atom  The atom the connected bonds are searched of
-	 * @return     The array with the size of connected atoms
-	 */
-	public Bond[] getConnectedBonds(Atom atom)
-	{
-		Vector bondsVec = new Vector();
-		Bond bond;
-		for (int i = 0; i < bondCount; i++)
-		{
-			if (bonds[i].contains(atom))
-			{
-				bondsVec.addElement(bonds[i]);
-			}
-		}
-		Bond[] conBonds = new Bond[bondsVec.size()];
-		bondsVec.copyInto(conBonds);
-		return conBonds;
-	}
-	
-	/**
-	 * Returns the number of connected atoms (degree) to the given atom
-	 *
-	 * @param   atomnumber   The atomnumber the degree is searched for
-	 * @return  The number of connected atoms (degree)
-	 */
-	public int getDegree(int atomnumber)
-	{
-		return getDegree(getAtomAt(atomnumber));
-	}
-
-
-	/**
-	 * Returns the number of connected atoms (degree) to the given atom
-	 *
-	 * @param   atom   The atom the degree is searched of
-	 * @return     The number of connected atoms (degree)
-	 */
-	public int getDegree(Atom atom)
-	{
-		int degree = 0;
-		Bond bond;
-		for (int i = 0; i < bondCount; i++)
-		{
-			bond = bonds[i];
-			if (bond.contains(atom))
-			{
-				degree++;
-			}
-		}
-		return degree;
-	}
-	
-   /**
-     * Adds all atoms and bonds of a given atomcontainer to this container
-     *
-     * @param   atomContainer  The atomcontainer to be added
-     */
-    public void add(AtomContainer atomContainer)
+    public void setAtoms(Atom aatom[])
     {
-            for (int f = 0; f < atomContainer.getAtomCount(); f++)
-            {
-                    addAtom(atomContainer.getAtomAt(f));
-            }
-            for (int f = 0; f < atomContainer.getBondCount(); f++)
-            {
-                    addBond(atomContainer.getBondAt(f));
-            }
+        atoms = aatom;
     }
 
-	/**
-	 *  Adds an atom to this container 
-	 *
-	 * @param  atom  The atom to be added to this container 
-	 */
-	public void addAtom(Atom atom)
-	{
-		if (atomCount + 1 >= atoms.length)
-		{
-			growAtomArray();
-		}
-		atoms[atomCount] = atom;
-		atomCount++;
-	}
-	
-	
-	
-	/**
-	 *  Adds a bond to this container 
-	 *
-	 * @param  bond  The bond to added to this container 
-	 */
-	public void addBond(Bond bond)
-	{
-		if (bondCount + 1 >= bonds.length)
-		{
-			growBondArray();
-		}
-		// are we supposed to check if the atoms forming this bond are
-		// already in here and add them if neccessary?
-		bonds[bondCount] = bond;
-		bondCount++;
-	}
-	
-    /**
-     * Removes all atoms and bonds of a given atomcontainer from this container
-     *
-     * @param   atomContainer  The atomcontainer to be removed
-     * @exception   Exception  
-     */
-    public void remove(AtomContainer atomContainer) throws java.lang.Exception
+    public void setBonds(Bond abond[])
     {
-            for (int f = 0; f < atomContainer.getAtomCount(); f++)
+        bonds = abond;
+    }
+
+    public void setAtomAt(int i, Atom atom)
+    {
+        atoms[i] = atom;
+    }
+
+    public void setBondAt(int i, Bond bond)
+    {
+        bonds[i] = bond;
+    }
+
+    public Atom[] getAtoms()
+    {
+        Atom aatom[] = new Atom[getAtomCount()];
+        System.arraycopy(atoms, 0, aatom, 0, aatom.length);
+        return aatom;
+    }
+
+    public Bond[] getBonds()
+    {
+        Bond abond[] = new Bond[getBondCount()];
+        System.arraycopy(bonds, 0, abond, 0, abond.length);
+        return abond;
+    }
+
+    public Atom getAtomAt(int i)
+    {
+        return atoms[i];
+    }
+
+    public int getAtomNumber(Atom atom)
+        throws Exception
+    {
+        for (int i = 0; i < getAtomCount(); i++)
+            if (getAtomAt(i) == atom)
+                return i;
+        throw new Exception("No such Atom");
+    }
+
+    public Bond getBondAt(int i)
+    {
+        return bonds[i];
+    }
+
+    public Bond getBond(Atom atom1, Atom atom2)
+        throws Exception
+    {
+        for (int i = 0; i < getBondCount(); i++)
+        {
+            if (bonds[i].contains(atom1))
             {
-                    removeAtom(atomContainer.getAtomAt(f));
+                try
+                {
+                    if (bonds[i].getConnectedAtom(atom1) == atom2)
+                        return bonds[i];
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
             }
-            for (int f = 0; f < atomContainer.getBondCount(); f++)
+        }
+        System.out.println("atom1  " + atom1.toString() + "atom2  " + atom2.toString());
+        throw new Exception("atoms not connected");
+    }
+
+    public Atom[] getConnectedAtoms(Atom atom)
+    {
+        Vector vector = new Vector();
+        for (int i = 0; i < bondCount; i++)
+        {
+            Bond bond = bonds[i];
+            if (bond.contains(atom))
+                vector.addElement(bond.getConnectedAtom(atom));
+        }
+        Atom aatom[] = new Atom[vector.size()];
+        vector.copyInto(aatom);
+        return aatom;
+    }
+
+    public Bond[] getConnectedBonds(Atom atom)
+    {
+        Vector vector = new Vector();
+        for (int i = 0; i < bondCount; i++)
+            if (bonds[i].contains(atom))
+                vector.addElement(bonds[i]);
+        Bond abond[] = new Bond[vector.size()];
+        vector.copyInto(abond);
+        return abond;
+    }
+
+    public int getDegree(int i)
+    {
+        return getDegree(getAtomAt(i));
+    }
+
+    public int getDegree(Atom atom)
+    {
+        int i = 0;
+        for (int j = 0; j < bondCount; j++)
+        {
+            Bond bond = bonds[j];
+            if (bond.contains(atom))
+                i++;
+        }
+        return i;
+    }
+
+    public void add(AtomContainer atomContainer)
+    {
+        for (int i = 0; i < atomContainer.getAtomCount(); i++)
+            addAtom(atomContainer.getAtomAt(i));
+        for (int j = 0; j < atomContainer.getBondCount(); j++)
+            addBond(atomContainer.getBondAt(j));
+    }
+
+    public void addAtom(Atom atom)
+    {
+        if (atomCount + 1 >= atoms.length)
+            growAtomArray();
+        atoms[atomCount] = atom;
+        atomCount++;
+    }
+
+    public void addBond(Bond bond)
+    {
+        if (bondCount + 1 >= bonds.length)
+            growBondArray();
+        bonds[bondCount] = bond;
+        bondCount++;
+    }
+
+    public void remove(AtomContainer atomContainer)
+        throws Exception
+    {
+        for (int i = 0; i < atomContainer.getAtomCount(); i++)
+            removeAtom(atomContainer.getAtomAt(i));
+        for (int j = 0; j < atomContainer.getBondCount(); j++)
+            removeBond(atomContainer.getBondAt(j));
+    }
+
+    public void removeBond(int i)
+    {
+        for (int j = i; j < bondCount - 1; j++)
+            bonds[j] = bonds[j + 1];
+        bonds[bondCount - 1] = null;
+        bondCount--;
+    }
+
+    public void removeBond(Bond bond)
+    {
+        for (int i = 0; i < bondCount; i++)
+            if (bonds[i].equals(bond))
+                removeBond(i);
+    }
+
+    public void removeAtom(int i)
+    {
+        for (int j = i; j < atomCount - 1; j++)
+            atoms[j] = atoms[j + 1];
+        atoms[atomCount - 1] = null;
+        atomCount--;
+    }
+
+    public void removeAtom(Atom atom)
+        throws Exception
+    {
+        int i = getAtomNumber(atom);
+        removeAtom(i);
+    }
+
+    public void removeAllElements()
+    {
+        atoms = new Atom[growArraySize];
+        bonds = new Bond[growArraySize];
+        atomCount = 0;
+        bondCount = 0;
+    }
+
+    public void addBond(int i1, int j, int k, int i2)
+    {
+        if (bondCount >= bonds.length)
+            growBondArray();
+        Bond bond = new Bond(getAtomAt(i1), getAtomAt(j), k, i2);
+        addBond(bond);
+    }
+
+    public void addBond(int i, int j, int k)
+    {
+        if (bondCount >= bonds.length)
+            growBondArray();
+        Bond bond = new Bond(getAtomAt(i), getAtomAt(j), k);
+        addBond(bond);
+    }
+
+    protected void growBondArray()
+    {
+        growArraySize = bonds.length;
+        Bond abond[] = new Bond[bonds.length + growArraySize];
+        System.arraycopy(bonds, 0, abond, 0, bonds.length);
+        bonds = abond;
+    }
+
+    protected void growAtomArray()
+    {
+        growArraySize = atoms.length;
+        Atom aatom[] = new Atom[atoms.length + growArraySize];
+        System.arraycopy(atoms, 0, aatom, 0, atoms.length);
+        atoms = aatom;
+    }
+
+    public int getAtomCount()
+    {
+        return atomCount;
+    }
+
+    public void setAtomCount(int i)
+    {
+        atomCount = i;
+    }
+
+    public int getBondCount()
+    {
+        return bondCount;
+    }
+
+    public AtomContainer getIntersection(AtomContainer atomContainer1)
+    {
+        AtomContainer atomContainer2 = new AtomContainer();
+        for (int i = 0; i < getAtomCount(); i++)
+            if (atomContainer1.contains(getAtomAt(i)))
+                atomContainer2.addAtom(getAtomAt(i));
+        for (int j = 0; j < getBondCount(); j++)
+            if (atomContainer1.contains(getBondAt(j)))
+                atomContainer2.addBond(getBondAt(j));
+        return atomContainer2;
+    }
+
+    public boolean contains(Bond bond)
+    {
+        for (int i = 0; i < getBondCount(); i++)
+            if (bond == bonds[i])
+                return true;
+        return false;
+    }
+
+    public boolean contains(Atom atom)
+    {
+        for (int i = 0; i < getAtomCount(); i++)
+            if (atom == atoms[i])
+                return true;
+        return false;
+    }
+
+    public Point2d get2DCenter()
+    {
+        double d1 = 0.0;
+        double d2 = 0.0;
+        for (int i = 0; i < getAtomCount(); i++)
+        {
+            d1 += atoms[i].getPoint2D().x;
+            d2 += atoms[i].getPoint2D().y;
+        }
+        Point2d point2d = new Point2d(d1 / atomCount, d2 / atomCount);
+        return point2d;
+    }
+
+    public int[][] getConnectionMatrix()
+        throws Exception
+    {
+        Bond bond = null;
+        int aan[][] = new int[getAtomCount()][getAtomCount()];
+        for (int k = 0; k < getBondCount(); k++)
+        {
+            bond = getBondAt(k);
+            int i = getAtomNumber(bond.getAtomAt(0));
+            int j = getAtomNumber(bond.getAtomAt(1));
+            aan[i][j] = bond.getOrder();
+            aan[j][i] = bond.getOrder();
+        }
+        return aan;
+    }
+
+    public String toString()
+    {
+        StringBuffer stringBuffer = new StringBuffer();
+        System.out.println(new StringBuffer("Atomcount: ").append(getAtomCount()).toString());
+        for (int i = 0; i < getAtomCount(); i++)
+            stringBuffer.append(i + ". " + getAtomAt(i));
+        System.out.println(new StringBuffer("Bondcount: ").append(getBondCount()).toString());
+        for (int j = 0; j < getBondCount(); j++)
+        {
+            Bond bond = getBondAt(j);
+            stringBuffer.append("Bond: ");
+            for (int k = 0; k < bond.getAtomCount(); k++)
             {
-                    removeBond(atomContainer.getBondAt(f));
+                try
+                {
+                    stringBuffer.append(getAtomNumber(bond.getAtomAt(k)) + "   ");
+                }
+                catch (Exception e)
+                {
+                    stringBuffer.append("Inconsistent Bond Setting");
+                    e.printStackTrace();
+                }
             }
-    }	
+            stringBuffer.append("\n");
+        }
+        return stringBuffer.toString();
+    }
 
-	/**
-	 * removes the bond at the given position from this container
-	 *
-	 * @param   position  The position of the bond in the bonds array
-	 */
-	public void removeBond(int position)
-	{
-		for (int i = position; i < bondCount - 1; i++)
-		{
-			bonds[i] = bonds[i + 1];
-		}
-		bonds[bondCount - 1] = null;
-		bondCount--;		
-	}
-	
-	
-	/**
-	 * removes this bond from this container
-	 *
-	 * @param   bond  The bond to be removed
-	 */
-	public void removeBond(Bond bond)
-	{
-		for (int i = 0; i < bondCount; i++)
-		{
-			if (bonds[i].equals(bond))
-			{
-				removeBond(i);
-			}
-		}
-	}
-	
+    public Object clone()
+    {
+        AtomContainer atomContainer = null;
+        try
+        {
+            atomContainer = (AtomContainer)super.clone();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace(System.err);
+        }
+        atomContainer.atoms = (Atom[])atoms.clone();
+        atomContainer.bonds = (Bond[])bonds.clone();
+        return atomContainer;
+    }
 
+    public AtomContainer()
+    {
+        growArraySize = 10;
+        atomCount = 0;
+        bondCount = 0;
+        atoms = new Atom[growArraySize];
+        bonds = new Bond[growArraySize];
+    }
 
-	/**
-	 * Removes the atom at the given position from the AtomContainer
-	 * !!! Note that the bonds are unaffected, You also have to take care of 
-	 * removeing all bonds to this atom from the container.
-	 *
-	 * @param   position  The position of the atom to be removed.
-	 */
-	public void removeAtom(int position)
-	{
-		for (int i = position; i < atomCount - 1; i++)
-		{
-			atoms[i] = atoms[i + 1];
-		}
-		atoms[atomCount - 1] = null;
-		atomCount--;		
-	}
-	
-
-	/**
-	 * Removes the given atom from the AtomContainer
-	 * !!! Note that the bonds are unaffected, You also have to take care of 
-	 * removeing all bonds to this atom from the container.
-	 *
-	 * @param   atom  The atom to be removed
-	 * @exception   Exception  throws if the atom is not in the container
-	 */
-	public void removeAtom(Atom atom) throws java.lang.Exception
-	{
-		int position = getAtomNumber(atom);
-		removeAtom(position);
-	}
-
-	/**
-	 * removes all atoms and bond from this container
-	 *
-	 */
-	public void removeAllElements()
-	{
-		atoms = new Atom[growArraySize];
-		bonds = new Bond[growArraySize];
-		atomCount = 0;
-		bondCount = 0;	
-	}
-	
-
-	/**
-	 *  Adds a bond to this container
-	 *
-	 * @param   atom1   Order of the first atom of the Bond
-	 * @param   atom2   Order of the second atom of the Bond
-	 * @param   order   Bondorder
-	 * @param   stereo   Stereochemical orientation 
-	 */
-	public void addBond(int atom1, int atom2, int order, int stereo)
-	{
-		if (bondCount >= bonds.length)
-		{
-			growBondArray();
-		}
-		Bond bond = new Bond(getAtomAt(atom1), getAtomAt(atom2), order, stereo);
-		addBond(bond);
-	}
-
-
-	 /**
-	  *  Adds a bond to this container
-	  *
-	  * @param   atom1   Order of the first atom of the Bond
-	  * @param   atom2   Order of the second atom of the Bond
-	  * @param   order   Bondorder
-	 */
-	public void addBond(int atom1, int atom2, int order)
-	{
-		if (bondCount >= bonds.length)
-		{
-			growBondArray();
-		}
-		Bond bond = new Bond(getAtomAt(atom1), getAtomAt(atom2), order);
-		addBond(bond);
-	}
-
-
-
-	/**
-	 *  Grows the bond array by a given size 
-	 *
-	 * @see    org.openscience.cdk.AtomContainer#growArraySize growArraySize 
-	 */
-	protected void growBondArray()
-	{
-		growArraySize = bonds.length;
-		Bond[] newbonds = new Bond[bonds.length + growArraySize];
-		System.arraycopy(bonds, 0, newbonds, 0, bonds.length);
-		bonds = newbonds;
-	}
-	/**
-	 *  Grows the atom array by a given size 
-	 *
-	 * @see    org.openscience.cdk.AtomContainer#growArraySize growArraySize 
-	 */
-	protected void growAtomArray()
-	{
-		growArraySize = atoms.length;
-		Atom[] newatoms = new Atom[atoms.length + growArraySize];
-		System.arraycopy(atoms, 0, newatoms, 0, atoms.length);
-		atoms = newatoms;
-	}
-
-
-	/**
-	 * Returns the number of Atoms in this Container
-	 *
-	 * @return   The number of Atoms in this Container  
-	 */
-	public int getAtomCount()
-	{
-		return this.atomCount;
-	}
-
-	/**
-	 * Sets the number of atoms in this container
-	 *
-	 * @param   atomCount  The number of atoms in this container
-	 */
-	public void setAtomCount(int atomCount)
-	{
-		this.atomCount = atomCount;
-	}	
-
-	/**
-	 * Returns the number of Bonds in this Container
-	 *
-	 * @return  The number of Bonds in this Container   
-	 */
-	public int getBondCount()
-	{
-		return this.bondCount;
-	}
-
-
-	/**
-	 * Compares this AtomContainer with another given AtomContainer 
-	 * and returns the Intersection between them
-	 * Important Note: This is not a maximum common substructure
-	 *
-	 * @return  An AtomContainer containing the Intersection between this AtomContainer and another given one
-	 */
-	
-	public AtomContainer getIntersection(AtomContainer ac)
-	{
-		AtomContainer intersection = new AtomContainer();
-	
-		for (int i = 0; i < getAtomCount(); i++)
-		{
-			if (ac.contains(getAtomAt(i)))
-			{
-				 intersection.addAtom(getAtomAt(i));
-			}
-		}
-		for (int i = 0; i < getBondCount(); i++)
-		{
-			if (ac.contains(getBondAt(i)))
-			{
-				 intersection.addBond(getBondAt(i));
-			}
-		}
-		return intersection;
-	}
-
-
-	/**
-	 * True, if the AtomContainer contains the given bond object
-	 *
-	 * @param   bond  the bond this AtomContainer is searched for
-	 * @return  True, if the AtomContainer contains the given bond object   
-	 */
-	public boolean contains(Bond bond)
-	{
-		for (int i = 0; i < getBondCount(); i++)
-		{
-			if (bond == bonds[i])
-			{
-				return true;
-			}
-		}
-		return false;
-	}
-
-	/**
-	 * True, if the AtomContainer contains the given atom object
-	 *
-	 * @param   atom  the atom this AtomContainer is searched for
-	 * @return  True, if the AtomContainer contains the given atom object   
-	 */
-	public boolean contains(Atom atom)
-	{
-		for (int i = 0; i < getAtomCount(); i++)
-		{
-			if (atom == atoms[i])
-			{
-				return true;
-			}
-		}
-		return false;
-	}
-	
-
-	
-
-	/**
-	 * Returns the geometric center of all the atoms in this atomContainer
-	 *
-	 * @return the geometric center of the atoms in this atomContainer
-	 */
-	public Point2d get2DCenter()
-	{
-		double centerX = 0, centerY = 0;
-		for (int i = 0; i < getAtomCount(); i++)
-		{
-			centerX += atoms[i].getPoint2D().x;
-			centerY += atoms[i].getPoint2D().y;
-		}
-		Point2d point = new Point2d(centerX / ((double)atomCount), centerY / ((double)atomCount));
-		return point;
-	}
-
-
-	/**
-	 * Returns a connection matrix representation 
-	 * of this AtomContainer
-	 *
-	 * @return  A connection matrix representation of this AtomContainer
-	 */
-
-	public int[][] getConnectionMatrix() throws java.lang.Exception
-	{
-		Bond bond = null;
-		int i, j;
-		int[][] conMat = new int[getAtomCount()][getAtomCount()];
-		for (int f = 0; f < getBondCount(); f++)
-		{
-			bond = getBondAt(f);
-			i = getAtomNumber(bond.getAtomAt(0));
-			j = getAtomNumber(bond.getAtomAt(1));
-			conMat[i][j] = bond.getOrder();
-			conMat[j][i] = bond.getOrder();
-		}
-		return conMat;
-	}
-
-
-	/**
-	 * Returns a string representation of this Container.
-	 *
-	 * @return  The string representation of this Container   
-	 */
-	public String toString()
-	{
-		Bond bond;
-		StringBuffer s = new StringBuffer();
-		System.out.println("Atomcount: " + getAtomCount());
-		for (int i = 0; i < getAtomCount(); i++)
-		{
-			s.append(i + ". " + getAtomAt(i));
-		}
-		System.out.println("Bondcount: " + getBondCount());
-		for (int i = 0; i < getBondCount(); i++)
-		{
-			bond = getBondAt(i);
-			s.append("Bond: ");
-			for (int j = 0; j < bond.getAtomCount(); j++)
-			{
-				try
-				{
-					s.append(getAtomNumber(bond.getAtomAt(j)) +  "   ");
-				}
-				catch(Exception e)
-				{
-					s.append("Inconsistent Bond Setting");
-					e.printStackTrace();
-				}
-			}
-			s.append("\n");
-		}
-		
-		return s.toString();
-	}
-
-	/**
-	 * Clones this atomContainer object.
-	 *
-	 * @return  The cloned object   
-	 */
-	public Object clone()
-	{
-		AtomContainer o = null;
-		try
-		{
-			o = (AtomContainer)super.clone();
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace(System.err);
-		}
-		o.atoms = (Atom[])atoms.clone();
-		o.bonds = (Bond[])bonds.clone();
-		return o;
-	}
+    public AtomContainer(int i, int j)
+    {
+        growArraySize = 10;
+        atomCount = i;
+        bondCount = j;
+        atoms = new Atom[i];
+        bonds = new Bond[j];
+    }
 }
-
-
-
-
-
-
-
-

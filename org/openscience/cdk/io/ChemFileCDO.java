@@ -27,6 +27,7 @@ package org.openscience.cdk.io;
 import org.openscience.cdk.*;
 import org.openscience.cml.*;
 import org.openscience.cdopi.*;
+import java.util.*;
 
 /**
  * 
@@ -39,6 +40,10 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
     private ChemSequence currentChemSequence;
     private Atom currentAtom;
 
+    private Hashtable atomEnumeration;
+
+    private int numberOfAtoms = 0;
+
     private int bond_a1;
     private int bond_a2;
     private int bond_order;
@@ -48,6 +53,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
 	currentChemSequence = new ChemSequence();
 	currentChemModel = new ChemModel();
 	currentSetOfMolecules = new SetOfMolecules();
+	atomEnumeration = new Hashtable();
     }
     
     // procedures required by CDOInterface
@@ -57,6 +63,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
 	currentChemSequence = new ChemSequence();
 	currentChemModel = new ChemModel();
 	currentSetOfMolecules = new SetOfMolecules();
+	atomEnumeration = new Hashtable();
     };
 
     public void endDocument() {
@@ -75,6 +82,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
 	    currentMolecule = new Molecule();
 	} else if (objectType.equals("Atom")) {
 	    currentAtom = new Atom("H");
+	    numberOfAtoms++;
 	} else if (objectType.equals("Bond")) {
 	}
     };
@@ -82,18 +90,16 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
     public void endObject(String objectType) {
 	System.out.println("END: " + objectType);
 	if (objectType.equals("Molecule")) {
-	    System.out.println("About to add molecule");
-	    currentSetOfMolecules.addMolecule(currentMolecule);	    
-	    System.out.println("test");
+	    currentSetOfMolecules.addMolecule(currentMolecule);
 	    currentChemModel.setSetOfMolecules(currentSetOfMolecules);
-	    System.out.println("test");
 	    currentChemSequence.addChemModel(currentChemModel);
-	    System.out.println("test");
-	    this.addChemSequence(currentChemSequence);
-	    System.out.println("Molecule added");
+	    addChemSequence(currentChemSequence);
+	    System.out.println("This file has " + getChemSequenceCount() + " sequences.");
+	    System.out.println("Molecule added: \n" + currentMolecule.toString());
 	} else if (objectType.equals("Atom")) {
 	    currentMolecule.addAtom(currentAtom);
 	} else if (objectType.equals("Bond")) {
+	    System.out.println("Bond: " + bond_a1 + " " + bond_a2 + " " + bond_order);
 	    currentMolecule.addBond(bond_a1, bond_a2, bond_order);
 	}
     };
@@ -111,12 +117,15 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
 		currentAtom.setX2D(new Double(propertyValue).doubleValue());
 	    } else if (propertyType.equals("y2")) {
 		currentAtom.setY2D(new Double(propertyValue).doubleValue());
+	    } else if (propertyType.equals("id")) {
+		System.out.println("id" + propertyValue);
+		atomEnumeration.put(propertyValue, new Integer(numberOfAtoms));
 	    }
 	} else if (objectType.equals("Bond")) {
 	    if (propertyType.equals("atom1")) {
-		bond_a1 = java.lang.Integer.valueOf(propertyValue).intValue() + 1;
+		bond_a1 = new Integer(propertyValue).intValue();
 	    } else if (propertyType.equals("atom2")) {
-		bond_a2 = java.lang.Integer.valueOf(propertyValue).intValue() + 1;
+		bond_a2 = new Integer(propertyValue).intValue();
 	    } else if (propertyType.equals("order")) {
 		bond_order = java.lang.Integer.valueOf(propertyValue).intValue();
 	    }
