@@ -381,7 +381,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
     }
     
 	/**
-	 * Sets if the drawing of atom numbers is switched on for this model
+	 * Sets if the drawing of atom numbers is switched on for this model.
 	 *
 	 * @param   drawNumbers  true if the drawing of atom numbers is to be switched on for this model
 	 */
@@ -390,9 +390,15 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 		this.drawNumbers = drawNumbers;
 	}
 
+	/**
+	 * Returns true if atom numbers are drawn.
+	 */
+	public boolean getDrawNumbers() {
+		return drawNumbers;
+	}
 
 	/**
-	 * Returns the color used for highlighting things in this model 
+	 * Returns the color used for highlighting things in this model.
 	 *
 	 * @return     the color used for highlighting things in this model 
 	 */
@@ -403,7 +409,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 
 
 	/**
-	 * Sets the color used for highlighting things in this model 
+	 * Sets the color used for highlighting things in this model.
 	 *
 	 * @param   highlightColor  the color to be used for highlighting things in this model 
 	 */
@@ -415,7 +421,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 
 	/**
 	 * Returns the radius around an atoms, for which the atom is 
-	 * marked highlighted if a pointer device is placed within this radius
+	 * marked highlighted if a pointer device is placed within this radius.
 	 * 
 	 * @return The highlight radius for all atoms   
 	 */
@@ -427,7 +433,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 
 	/**
 	 * Sets the radius around an atoms, for which the atom is 
-	 * marked highlighted if a pointer device is placed within this radius
+	 * marked highlighted if a pointer device is placed within this radius.
 	 *
 	 * @param   highlightRadius  the highlight radius of all atoms
 	 */
@@ -460,7 +466,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 
 
 	/**
-	 * XXX No idea what this is about
+	 * XXX No idea what this is about.
 	 *
 	 * @param   atomRadius   XXX No idea what this is about
 	 */
@@ -472,7 +478,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	
 
 	/**
-	 * Returns the atom currently highlighted
+	 * Returns the atom currently highlighted.
 	 *
 	 * @return the atom currently highlighted    
 	 */
@@ -483,7 +489,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 
 
 	/**
-	 * Sets the atom currently highlighted
+	 * Sets the atom currently highlighted.
 	 *
 	 * @param   highlightedAtom The atom to be highlighted  
 	 */
@@ -501,7 +507,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	
 
 	/**
-	 * Returns the Bond currently highlighted
+	 * Returns the Bond currently highlighted.
 	 *
 	 * @return the Bond currently highlighted    
 	 */
@@ -512,7 +518,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 
 
 	/**
-	 * Sets the Bond currently highlighted
+	 * Sets the Bond currently highlighted.
 	 *
 	 * @param   highlightedBond  The Bond to be currently highlighted
 	 */
@@ -530,7 +536,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	
 
 	/**
-	 * Returns the hashtable used for coloring substructures 
+	 * Returns the hashtable used for coloring substructures.
 	 *
 	 * @return the hashtable used for coloring substructures     
 	 */
