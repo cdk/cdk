@@ -481,7 +481,7 @@ public class MoleculeFactory {
 		return mol;
 	}
 
-	public static Molecule makeSN()
+	public static Molecule makeThiazole()
 	{
 		Molecule mol = new Molecule();
 		mol.addAtom(new Atom("C")); // 0
