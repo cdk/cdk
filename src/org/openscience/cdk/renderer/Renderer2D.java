@@ -29,6 +29,7 @@
 package org.openscience.cdk.renderer;
 
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import javax.vecmath.*;
 import java.util.*;
 import org.openscience.cdk.ringsearch.*;
@@ -273,44 +274,50 @@ public class Renderer2D
 	 *@param  atom       The atom to be drawn
 	 *@param  backColor  Description of the Parameter
 	 */
-	private void paintAtomSymbol(Atom atom, Color backColor)
-	{
-		if (atom.getPoint2D() == null)
-		{
+	private void paintAtomSymbol(Atom atom, Color backColor) {
+		if (atom.getPoint2D() == null) {
 			return;
 		}
-		FontMetrics fm = g.getFontMetrics();
-		int fontSize = getScreenSize(g.getFont().getSize());
-		int xSymbOffset = (new Integer(fm.stringWidth(atom.getSymbol()) / 2)).intValue();
-		int ySymbOffset = (new Integer(fm.getAscent() / 2)).intValue();
-		// make empty space
-		g.setColor(backColor);
-        int[] coords = {(int) (atom.getPoint2D().x - (xSymbOffset * 1.8)),
-				        (int) (atom.getPoint2D().y - (ySymbOffset * 0.8)),
-                        (int) fontSize,
-                        (int) fontSize };
-        coords = getScreenCoordinates(coords);                
-		g.fillRect(coords[0], coords[1], coords[2], coords[3]);
-		// draw symbol
-		g.setColor(r2dm.getForeColor());
+        
 		// but first determine symbol
 		String symbol = atom.getSymbol();
-		// if there are implicit hydrogens, draw them
+		// if there are implicit hydrogens, add them to string to display
 		int implicitHydrogen = atom.getHydrogenCount();
-		if (implicitHydrogen > 0)
-		{
+		if (implicitHydrogen > 0) {
 			symbol = symbol + "H";
-			if (implicitHydrogen > 1)
-			{
+			if (implicitHydrogen > 1) {
 				symbol = symbol + implicitHydrogen;
 			}
 		}
+        
+        // draw string:
+
+        /* determine where to put the string, as seen from the atom coordinates
+           in model coordinates */
+		FontMetrics fm = g.getFontMetrics();        
+		int xSymbOffset = (new Integer(fm.stringWidth(symbol.substring(0,1)) / 2)).intValue();
+		int ySymbOffset = (new Integer(fm.getAscent() / 2)).intValue();
+
+		// make empty space
+		g.setColor(backColor);
+        Rectangle2D stringBounds = fm.getStringBounds(symbol, g);
+        int[] coords = {(int) (atom.getPoint2D().x - (xSymbOffset * 1.2)), 
+                        (int) (atom.getPoint2D().y - (ySymbOffset * 1.2)),
+                        (int) (stringBounds.getWidth() * 1.4), 
+                        (int) (stringBounds.getHeight() * 1.4) };
+        coords = getScreenCoordinates(coords);                
+		g.fillRect(coords[0], coords[1], coords[2], coords[3]);
+
         int[] hCoords = {(int) (atom.getPoint2D().x - xSymbOffset),
-				  (int) (atom.getPoint2D().y - ySymbOffset) };
-        hCoords = getScreenCoordinates(coords);
+				         (int) (atom.getPoint2D().y + ySymbOffset) };
+        hCoords = getScreenCoordinates(hCoords);
+		g.setColor(r2dm.getForeColor());
+        // apply zoom factor to font size
+        Font unscaledFont = g.getFont();
+        int fontSize = getScreenSize(unscaledFont.getSize());
+        g.setFont(unscaledFont.deriveFont((float)fontSize));        
 		g.drawString(symbol, hCoords[0], hCoords[1]);
-//		g.setColor(r2dm.getBackColor());
-//		g.drawLine((int)atom.getPoint2D().x,(int)atom.getPoint2D().y,(int)atom.getPoint2D().x,(int)atom.getPoint2D().y);
+        g.setFont(unscaledFont);
 	}
 
 	/**
