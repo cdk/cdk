@@ -84,6 +84,16 @@ public class ChemSequenceTest extends TestCase {
         assertEquals(3, cs.getChemModelCount());
     }
 
+    public void testGetChemModel_int() {
+        ChemSequence cs = new ChemSequence();
+        cs.addChemModel(new ChemModel());
+        ChemModel second = new ChemModel();
+        cs.addChemModel(second);
+        cs.addChemModel(new ChemModel());
+        
+        assertEquals(second, cs.getChemModel(1));
+    }
+
     public void testGetChemModels() {
         ChemSequence cs = new ChemSequence();
         cs.addChemModel(new ChemModel());

@@ -235,6 +235,13 @@ public class AtomTest extends TestCase {
         assertEquals(point3d.y, a.getPoint3d().y, 0.001);
         assertEquals(point3d.z, a.getPoint3d().z, 0.001);
     }
+    public void testSetPoint3d_Point3d() {
+        Point3d point3d = new Point3d(1.0, 2.0, 3.0);
+        
+        Atom a = new Atom("C");
+        a.setPoint3d(point3d);
+        assertEquals(point3d, a.getPoint3d());
+    }
     
     /**
      * Method to test the set[XY]2D() methods.
@@ -273,9 +280,16 @@ public class AtomTest extends TestCase {
         Point2d point2d = new Point2d(1.0, 2.0);
         
         Atom a = new Atom("C", point2d);
-	assertNotNull(a.getPoint2d());
+        assertNotNull(a.getPoint2d());
         assertEquals(point2d.x, a.getPoint2d().x, 0.001);
         assertEquals(point2d.y, a.getPoint2d().y, 0.001);
+    }
+    public void testSetPoint2d_Point2d() {
+        Point2d point2d = new Point2d(1.0, 2.0);
+        
+        Atom a = new Atom("C");
+        a.setPoint2d(point2d);
+        assertEquals(point2d, a.getPoint2d());
     }
 
     /**
@@ -288,11 +302,14 @@ public class AtomTest extends TestCase {
         a.setStereoParity(parity);
         assertEquals(parity, a.getStereoParity());
     }
+    public void testGetStereoParity() {
+        testSetStereoParity_int();
+    }
     
     /**
      * Method to test the compare() method.
      */
-    public void testCompare() {
+    public void testCompare_Object() {
         Atom atom = new Atom("C");
         assertTrue(atom.compare(atom));
         Atom hydrogen = new Atom("H");

@@ -50,6 +50,8 @@ public class CrystalTest extends TestCase {
         return new TestSuite(CrystalTest.class);
     }
 
+    
+    
     public void testSetA_Vector3d() {
         Crystal crystal = new Crystal();
         
