@@ -3,7 +3,6 @@ The Chemical Development Kit (CDK)
 Maintainers:
 
 Christoph Steinbeck
-Dan Gezelter
 Egon Willighagen
 
 Co-authors:
@@ -16,4 +15,5 @@ Contributors:
 
 Thanks to:
 
-<these must be added>
+Dan Gezelter           for writing Jmol, and inviting Christoph and Egon to Notre Dame University, and 
+                       for help in designing the first CDK classes.
