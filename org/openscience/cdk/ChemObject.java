@@ -39,6 +39,7 @@ import java.util.*;
 
 public class ChemObject implements CDKConstants
 {
+	/** Vector for listener administration */
 	protected Vector chemObjects = new Vector();
 	protected int size;
 	protected Hashtable physicalProperties = new Hashtable();
@@ -51,6 +52,10 @@ public class ChemObject implements CDKConstants
 	 * 10 flags per object should be more than enough.
 	 */
 	protected boolean[] flags = new boolean[10];
+	/** Array of multipurpose vectors. Handle like described for the
+	  * flags above 
+	  */
+	public Vector[] pointers;
 
 	/**
 	 * Use this to add yourself to this ChemObject as a listener. 

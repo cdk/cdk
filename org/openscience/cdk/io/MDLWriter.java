@@ -125,10 +125,11 @@ public class MDLWriter implements CDKConstants
 			writer.newLine();
 		    for (int f = 0; f < molecule.getAtomCount(); f++)
 		    {
+				Atom atom = molecule.getAtom(f);
 		        line = "";
-		        line += formatMDLFloat((float) molecule.getAtom(f).getPoint3D().x);
-		        line += formatMDLFloat((float) molecule.getAtom(f).getPoint3D().y);
-		        line += formatMDLFloat((float) molecule.getAtom(f).getPoint3D().z);
+		        line += formatMDLFloat((float) atom.getPoint3D().x);
+		        line += formatMDLFloat((float) atom.getPoint3D().y);
+		        line += formatMDLFloat((float) atom.getPoint3D().z);
 		        line += " ";
 		        line += formatMDLString(molecule.getAtom(f).getElement().getSymbol(), 3);
 		        line += " 0  0  0  0  0  0  0  0  0  0  0  0";
@@ -137,17 +138,17 @@ public class MDLWriter implements CDKConstants
 		    }
 			for (int g = 0; g < molecule.getBondCount(); g++)
 			{ 
-				if (molecule.getBond(g).getAtoms().length != 2) 
+				Bond bond = molecule.getBond(g);
+				if (bond.getAtoms().length != 2) 
 				{ 
 					System.out.println("keine 2 Atome");
-//					throw wasweissichexception;
 				}
 				else
 				{
 					line = "";
-					line += formatMDLInt(molecule.getAtomNumber(molecule.getBond(g).getAtoms()[0]) + 1,3);
-					line += formatMDLInt(molecule.getAtomNumber(molecule.getBond(g).getAtoms()[1]) + 1,3);
-					line += formatMDLInt(molecule.getBond(g).getOrder(),3);
+					line += formatMDLInt(molecule.getAtomNumber(bond.getAtomAt(0)) + 1,3);
+					line += formatMDLInt(molecule.getAtomNumber(bond.getAtomAt(1)) + 1,3);
+					line += formatMDLInt(bond.getOrder(),3);
 					line += " 0  0  0  0 ";
 					writer.write(line);
 					writer.newLine();

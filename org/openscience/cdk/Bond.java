@@ -103,13 +103,53 @@ public class Bond extends ElectronContainer
 	/**
 	 * Returns an Atom from this bond.
 	 *
-	 * @param   position  The position in this bond where the atom is to be inserted
+	 * @param   position  The position in this bond where the atom is 
 	 */
 	public Atom getAtomAt(int position)
 	{
 		return atoms[position];
 	}
 
+    
+
+	/**
+	 * Returns the atom connected to the given atom or null if there is none.
+	 *
+	 * @param   atom  The atom the bond partner is searched of
+	 * @return     the connected atom or null
+	 */
+	public Atom getConnectedAtom(Atom atom) throws Exception
+	{
+		if (atoms[0] == atom)
+		{
+			return atoms[1];
+		}
+		else if (atoms[1] == atom)
+		{
+			return atoms[0];
+		}
+		else
+		{
+			throw new Exception("no atom connected");
+		}
+	}
+
+	/**
+	 * Returns true if the given atom participates in this bond.
+	 *
+	 * @param   atom  The atom to be tested if it participates in this bond
+	 * @return     true if the atom participates in this bond
+	 */
+	public boolean contains(Atom atom)
+	{
+		boolean contains = false;
+		if (atoms[0] == atom || atoms[1] == atom)		
+		{
+			contains = true;
+		}		
+		return contains;
+	}
+	
 
 	/**
 	 * Sets an Atom in this bond.

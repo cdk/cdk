@@ -62,6 +62,11 @@ public class Atom extends ChemObject {
 	 *  A stereo parity descriptor for the stereochemistry of this atom 
 	 */
 	protected int stereoParity;
+	/**
+	 * source is needed for Figueras' (SSSR) ring perception algorithm
+	 * and denotes the  
+	 */
+	protected int source; 
 	
 
 
@@ -74,8 +79,6 @@ public class Atom extends ChemObject {
 	{
 		this.element = element;
 	}
-	
-
 	/**
 	 * Constructs an Atom from an Element and a Point3D
 	 *
@@ -87,7 +90,6 @@ public class Atom extends ChemObject {
 		this(element);
 		this.point3D = point3D;
 	}
-
 	/**
 	 *  Sets the element type of this atom 
 	 *
@@ -133,6 +135,17 @@ public class Atom extends ChemObject {
 	 */
 	public void setStereoParity(int stereoParity) {
 		this.stereoParity = stereoParity;
+	}
+
+	/**
+	 * Sets the source of this atom needed for Figueras' 
+	 * (SSSR) ring perception algorithm
+	 *
+	 * @param   source   The source
+	 */
+	public void setSource(int source)
+	{
+		this.source = source;
 	}
 	/**
 	 *  
@@ -190,6 +203,17 @@ public class Atom extends ChemObject {
 	public int getStereoParity() {
 		return this.stereoParity;
 	}
+
+	/**
+	 * Returns the source of this atom needed for Figueras' 
+	 * (SSSR) ring perception algorithm
+	 *
+	 * @return  The source of this atom   
+	 */
+	public int getSource()
+	{
+		return this.source;
+	}
 	/**
 	 *  
 	 * Internal method to set the degree of this atom, i.e. the number of other atoms
@@ -200,9 +224,22 @@ public class Atom extends ChemObject {
 	protected void setDegree(int degree) {
 		this.degree = degree;
 	}
-
-
-
+	/**
+	 * increments the degree of this atom, i.e. the number of other atoms
+	 * directly bonded to it.
+	 */
+	protected void incrementDegree()
+	{
+		this.degree++;
+	}
+	/**
+	 * decrements the degree of this atom, i.e. the number of other atoms
+	 * directly bonded to it.
+	 */
+	protected void decrementDegree()
+	{
+		this.degree--;
+	}
 	/**
 	 * Returns a string representation of this Atom.
 	 *

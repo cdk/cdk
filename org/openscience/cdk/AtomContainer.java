@@ -105,7 +105,7 @@ public class AtomContainer extends ChemObject {
 	}
 
 	/**
-	 *  Set the bond at position <code>number</code> . 
+	 *  Sets the bond at position <code>number</code> . 
 	 *
 	 * @param  number  The position of the bond to be set. 
 	 * @param  bond    The bond to be stored at position <code>number</code> 
@@ -184,6 +184,43 @@ public class AtomContainer extends ChemObject {
 	}
 	
 	
+
+	/**
+	 * Returns an array of all atoms connected to the given atom.
+	 *
+	 * @param   atom  The atom the bond partners are searched of.
+	 * @return     The array with the size of connected atoms
+	 * @exception   Exception  
+	 */
+	public Atom[] getConnectedAtoms(Atom atom) throws Exception
+	{
+		Atom[] conAtoms = new Atom[atom.getDegree()];
+		Bond bond;
+		int conAtomCount = 0;
+		for (int i = 0; i < bondCount; i++)
+		{
+			bond = bonds[i];
+			if (bond.participateInBond(atom))
+			{
+				try
+				{
+					conAtoms[conAtomCount] = bond.getConnectedAtom(atom);
+					conAtomCount++;
+				}
+				catch (Exception exc)
+				{
+					throw exc;
+				}
+			}
+		}
+		if (atom.getDegree() != conAtomCount)
+		{
+			throw new Exception("wrong number of connected Atoms");
+		}
+		return conAtoms;
+	}
+	
+	
 	/**
 	 *  Adds an atom to this container 
 	 *
@@ -198,6 +235,7 @@ public class AtomContainer extends ChemObject {
 		atoms[atomCount] = atom;
 		atomCount++;
 	}
+	
 	
 	
 	/**
@@ -215,8 +253,30 @@ public class AtomContainer extends ChemObject {
 		// already in here and add them if neccessary?
 		bonds[bondCount] = bond;
 		bondCount++;
-		
+		bond.getAtomAt(0).incrementDegree();
+		bond.getAtomAt(1).incrementDegree();
 	}
+	
+	
+
+	/**
+	 * removes the bond at the given position from this container
+	 *
+	 * @param   position  The position of the bond in the bonds array
+	 */
+	public void removeBond(int position)
+	{
+		Bond bond = bonds[position];
+		bond.getAtomAt(0).decrementDegree();
+		bond.getAtomAt(1).decrementDegree();
+		for (int i = position; i < bondCount; i++)
+		{
+			bonds[i] = bonds[i + 1];
+		}
+		bonds[bondCount] = null;
+		bondCount--;		
+	}
+	
 
 
 	/**
