@@ -118,6 +118,8 @@ public class CDKTests
         try {
             Class testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.test.smiles.smarts.ParserTest");
             suite.addTest(new TestSuite(testClass));
+            testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.test.smiles.smarts.SMARTSSearchTest");
+            suite.addTest(new TestSuite(testClass));
         } catch (Exception exception) {} //ok, do without. Probably compiled with Ant < 1.6
         return suite;
     }
