@@ -34,8 +34,23 @@ import java.util.Vector;
 import java.io.*;
 
 /**
- *  Randomly generates a single, connected, correctly bonded structure for 
- *  a given molecular formula
+ * Randomly generates a single, connected, correctly bonded structure for 
+ * a given molecular formula
+ * To see it working run the graphical 
+ * test org.openscience.cdk.test.SingleStructureRandomGeneratorTest
+ * and add more structures to the panel using the "More" button. 
+ * In order to use this class, use MFAnalyser to get an AtomContainer from 
+ * a molecular formula string.
+ * Assign hydrogen counts to each heavy atom. The hydrogens should not be
+ * in the atom pool but should be assigned implicitly to the heavy atoms in 
+ * order to reduce computational cost.
+ * Assign this AtomContainer to the  
+ * SingleStructureRandomGenerator and retrieve a randomly generated, but correctly bonded
+ * structure by using the generate() method. You can then repeatedly call
+ * the generate() method in order to retrieve further structures. 
+ * 
+ * Agenda: - add a method for randomly adding hydrogens to the atoms
+ *         - add a seed for random generator for reproducability
  *
  * @author     steinbeck
  * @created    September 4, 2001
