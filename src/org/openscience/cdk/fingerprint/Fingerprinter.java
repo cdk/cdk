@@ -95,7 +95,18 @@ public class Fingerprinter
 		return getFingerprint(ac, defaultSize, defaultSearchDepth);
 	}
 
-
+	/**
+	 *  Generates a fingerprint of a given size for the given AtomContainer
+	 *
+	 * @param  ac    The AtomContainer for which a Fingerprint is generated
+	 * @param  size  The desired size of the fingerprint
+	 * @return       The Fingerprint (A one-dimensional bit array)
+	 */
+	public static BitSet getFingerprint(AtomContainer ac, int size) throws NoSuchAtomException
+	{
+		return getFingerprint(ac, size, defaultSearchDepth);
+	}
+	
 	/**
 	 *  Generates a fingerprint of a given size for the given AtomContainer
 	 *
