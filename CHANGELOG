@@ -30,6 +30,7 @@ Fixes:
 * The PDBReader now stores the PDB atom type with AtomType.setAtomTypeName()
   (closes #1085910)
 * Added missing Ring.toString() and RingSet.toString() methods
+* Fixed setting of undefined stereoparity in PseudoAtom constructor
 
 API changes:
 * Moved SingleElectron to the core module

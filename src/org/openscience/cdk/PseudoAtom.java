@@ -63,7 +63,7 @@ public class PseudoAtom extends Atom implements java.io.Serializable, Cloneable
         this.point2d = null;
         // set these default, unchangable values
         super.setHydrogenCount(0);
-        super.setStereoParity(-1);
+        super.setStereoParity(0);
         super.setExactMass(0.0);
         super.setFormalCharge(0);
         super.setCharge(0.0);
