@@ -1,28 +1,27 @@
-/* MoleculeViewer2D.java
- * 
- * $RCSfile$    $Author$    $Date$    $Revision$
- * 
- * Copyright (C) 1997-2001  The Chemistry Development Kit (CDK) project
- * 
- * Contact: steinbeck@ice.mpg.de, geelter@maul.chem.nd.edu, egonw@sci.kun.nl
- * 
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public License
- * as published by the Free Software Foundation; either version 2.1
- * of the License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
+/*
+ *  MoleculeViewer2D.java
+ *
+ *  $RCSfile$    $Author$    $Date$    $Revision$
+ *
+ *  Copyright (C) 1997-2001  The Chemistry Development Kit (CDK) project
+ *
+ *  Contact: steinbeck@ice.mpg.de, geelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ *
+ *  This program is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public License
+ *  as published by the Free Software Foundation; either version 2.1
+ *  of the License, or (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-
 package org.openscience.cdk.renderer;
-
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.renderer.*;
@@ -37,122 +36,85 @@ import javax.swing.*;
 import java.awt.*;
 
 
-
-/** 
- * A Swing-based implementation of Renderer2D for viewing molecules
+/**
+ *  A Swing-based implementation of Renderer2D for viewing molecules
+ *
+ * @author     steinbeck
+ * @created    May 30, 2002
  */
 public class MoleculeViewer2D extends JPanel implements CDKChangeListener
 {
+	/**
+	 *  Description of the Field
+	 */
 	public AtomContainer atomContainer;
+	/**
+	 *  Description of the Field
+	 */
 	public Renderer2DModel r2dm;
+	/**
+	 *  Description of the Field
+	 */
 	public Renderer2D renderer;
+	/**
+	 *  Description of the Field
+	 */
 	public String title = "Molecule Viewer";
 
+	private JFrame frame = null;
+
+
 	/**
-	 * Constructs a MoleculeViewer with a molecule to display
-	 * and a Renderer2DModel containing the information on how to display it.
+	 *  Constructs a MoleculeViewer with a molecule to display and a Renderer2DModel containing the information on how to display it.
 	 *
-	 * @param   molecule  The molecule to be displayed
-	 * @param   r2dm  The rendere settings determining how the molecule is displayed
+	 * @param  r2dm           The rendere settings determining how the molecule is displayed
+	 * @param  atomContainer  Description of Parameter
 	 */
-	public MoleculeViewer2D(AtomContainer atomContainer,Renderer2DModel r2dm)
+	public MoleculeViewer2D(AtomContainer atomContainer, Renderer2DModel r2dm)
 	{
 		this.atomContainer = atomContainer;
 		this.r2dm = r2dm;
 		r2dm.addCDKChangeListener(this);
 		renderer = new Renderer2D(r2dm);
+		frame = new JFrame();
 	}
-	
+
+
 	/**
-	 * Constructs a MoleculeViewer with a molecule to display
+	 *  Constructs a MoleculeViewer with a molecule to display
 	 *
-	 * @param   molecule  The molecule to be displayed
+	 * @param  atomContainer  Description of Parameter
 	 */
 	public MoleculeViewer2D(AtomContainer atomContainer)
 	{
-		setAtomContainer(atomContainer);
-		r2dm = new Renderer2DModel();
-		r2dm.addCDKChangeListener(this);
-		renderer = new Renderer2D(r2dm);
+		this(atomContainer, new Renderer2DModel());
 	}
-	
+
 
 	/**
-	 * Constructs a MoleculeViewer with a molecule to display
-	 *
+	 *  Constructs a MoleculeViewer with a molecule to display
 	 */
 	public MoleculeViewer2D()
 	{
-		r2dm = new Renderer2DModel();
-		r2dm.addCDKChangeListener(this);
-		renderer = new Renderer2D(r2dm);
+		this(null, new Renderer2DModel());
 	}
 
 
 	/**
-	 * Contructs a JFrame into which this JPanel is
-	 * put and displays the frame with the molecule
+	 *  Sets the Frame attribute of the MoleculeViewer2D object
+	 *
+	 * @param  frame  The new Frame value
 	 */
-	public void display()
+	public void setFrame(JFrame frame)
 	{
-		setPreferredSize(new Dimension(600, 400));
-		JFrame frame = new JFrame();
-		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		frame.getContentPane().add(this);
-		frame.setTitle(title);
-		frame.pack();
-		frame.setVisible(true);
-		
-	}
-	
-
-	/**
-	 * Paints the molecule onto the JPanel
-	 *
-	 * @param   g  The graphics used to paint with.
-	 */
-	public void paint(Graphics g)
-	{
-		super.paint(g);
-		if (atomContainer != null)
-		{
-			setBackground(r2dm.getBackColor());
-			GeometryTools.translateAllPositive(atomContainer);
-			GeometryTools.scaleMolecule(atomContainer, getSize(), 0.8);			
-			GeometryTools.center(atomContainer, getSize());
-			renderer.paintMolecule(atomContainer, g);
-		}
-	}
-
-	/**
-	 * The main method.
-	 *
-	 * @param   args    An MDL molfile
-	 */	
-
-	 public static void main(String[] args)
-	 {
-	 	AtomContainer ac = null;
-		try
-		{
-			FileInputStream fis = new FileInputStream(args[0]);
-			MDLReader mr = new MDLReader(fis);
-			ac = ((ChemFile)mr.read(new ChemFile())).getChemSequence(0).getChemModel(0).getSetOfMolecules().getMolecule(0);
-			fis.close();
-		}
-		catch(Exception exc)
-		{
-			exc.printStackTrace();		
-		}
-		
-		new MoleculeViewer2D(ac, new Renderer2DModel());
+		this.frame = frame;
 	}
 
 
 	/**
-	 * Sets a Renderer2DModel which determins the way a molecule is displayed
+	 *  Sets a Renderer2DModel which determins the way a molecule is displayed
 	 *
-	 * @param   r2dm  The Renderer2DModel
+	 * @param  r2dm  The Renderer2DModel
 	 */
 	public void setRenderer2DModel(Renderer2DModel r2dm)
 	{
@@ -161,45 +123,119 @@ public class MoleculeViewer2D extends JPanel implements CDKChangeListener
 		renderer = new Renderer2D(r2dm);
 	}
 
+
 	/**
-	 * Gets the Renderer2DModel which determins the way a molecule is displayed
+	 *  Sets the AtomContainer to be displayed
+	 *
+	 * @param  atomContainer  The AtomContainer to be displayed
+	 */
+	public void setAtomContainer(AtomContainer atomContainer)
+	{
+		this.atomContainer = atomContainer;
+	}
+
+
+	/**
+	 *  Gets the Frame attribute of the MoleculeViewer2D object
+	 *
+	 * @return    The Frame value
+	 */
+	public JFrame getFrame()
+	{
+		return frame;
+	}
+
+
+	/**
+	 *  Gets the Renderer2DModel which determins the way a molecule is displayed
+	 *
+	 * @return    The Renderer2DModel value
 	 */
 	public Renderer2DModel getRenderer2DModel()
 	{
 		return renderer.getRenderer2DModel();
 	}
 
-	
-	
-	/**
-	 * Method to notify this CDKChangeListener if something 
-	 * has changed in another object
-	 *
-	 * @param   e  The EventObject containing information on the nature and source of the event
-	 */
-	public void stateChanged(EventObject e)
-	{
-		repaint();
-	}
 
 	/**
-	 * Returns the AtomContainer which is being displayed
+	 *  Returns the AtomContainer which is being displayed
 	 *
-	 * @return The AtomContainer which is being displayed    
+	 * @return    The AtomContainer which is being displayed
 	 */
 	public AtomContainer getAtomContainer()
 	{
 		return this.atomContainer;
 	}
 
+
+
 	/**
-	 * Sets the AtomContainer to be displayed
-	 *
-	 * @param   atomContainer The AtomContainer to be displayed 
+	 *  Contructs a JFrame into which this JPanel is put and displays the frame with the molecule
 	 */
-	public void setAtomContainer(AtomContainer atomContainer)
+	public void display()
 	{
-		this.atomContainer = atomContainer;
+		setPreferredSize(new Dimension(600, 400));
+		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		frame.getContentPane().add(this);
+		frame.setTitle(title);
+		frame.pack();
+		frame.setVisible(true);
+	}
+
+
+	/**
+	 *  Paints the molecule onto the JPanel
+	 *
+	 * @param  g  The graphics used to paint with.
+	 */
+	public void paint(Graphics g)
+	{
+		super.paint(g);
+		if (atomContainer != null)
+		{
+			setBackground(r2dm.getBackColor());
+			GeometryTools.translateAllPositive(atomContainer);
+			GeometryTools.scaleMolecule(atomContainer, getSize(), 0.8);
+			GeometryTools.center(atomContainer, getSize());
+			renderer.paintMolecule(atomContainer, g);
+		}
+	}
+
+
+
+	/**
+	 *  Method to notify this CDKChangeListener if something has changed in another object
+	 *
+	 * @param  e  The EventObject containing information on the nature and source of the event
+	 */
+	public void stateChanged(EventObject e)
+	{
+		repaint();
+	}
+
+
+	/**
+	 *  The main method.
+	 *
+	 * @param  args  An MDL molfile
+	 */
+
+	public static void main(String[] args)
+	{
+		AtomContainer ac = null;
+		try
+		{
+			FileInputStream fis = new FileInputStream(args[0]);
+			MDLReader mr = new MDLReader(fis);
+			ac = ((ChemFile) mr.read(new ChemFile())).getChemSequence(0).getChemModel(0).getSetOfMolecules().getMolecule(0);
+			fis.close();
+		}
+		catch (Exception exc)
+		{
+			exc.printStackTrace();
+		}
+
+		new MoleculeViewer2D(ac, new Renderer2DModel());
 	}
 }
 

@@ -402,6 +402,25 @@ public class MoleculeFactory
 		return mol;
 	}
 
+	
+	static Molecule makePyrrole()
+	{
+		Molecule mol = new Molecule();
+		mol.addAtom(new Atom("C")); // 0
+		mol.addAtom(new Atom("N")); // 1
+		mol.addAtom(new Atom("C")); // 2
+		mol.addAtom(new Atom("C")); // 3
+		mol.addAtom(new Atom("C")); // 4
+		
+		mol.addBond(0, 1, 1); // 1
+		mol.addBond(1, 2, 1); // 2
+		mol.addBond(2, 3, 2); // 3
+		mol.addBond(3, 4, 1); // 4
+		mol.addBond(4, 0, 2); // 5
+		
+		return mol;
+	}
+	
 
 	
 	static Molecule makeSingleRing()

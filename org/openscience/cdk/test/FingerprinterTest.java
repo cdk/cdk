@@ -32,12 +32,18 @@ import org.openscience.cdk.*;
 import org.openscience.cdk.tools.*;
 import org.openscience.cdk.fingerprint.*;
 import org.openscience.cdk.io.*;
+import org.openscience.cdk.renderer.*;
+import org.openscience.cdk.layout.*;
+
+import javax.swing.JFrame;
 import java.io.*;
 import java.util.*;
 import junit.framework.*;
 
 public class FingerprinterTest extends TestCase
 {
+	
+	boolean standAlone = false;
 	
 	public FingerprinterTest(String name)
 	{
@@ -49,25 +55,21 @@ public class FingerprinterTest extends TestCase
 		return new TestSuite(FingerprinterTest.class);
 	}
 
-	public  void testFingerprinter()
+	public void testFingerprinter() throws java.lang.Exception
 	{
-		Molecule mol = MoleculeFactory.makeAlphaPinene();
+		Molecule mol = MoleculeFactory.makeIndole();
+		//display(mol);
 		BitSet bs = Fingerprinter.getFingerprint(mol);
-		Molecule frag1 = makeFragment1();
-		Molecule frag2 = makeFragment2();
-		Molecule frag3 = makeFragment3();
-		Molecule frag4 = makeFragment4();
+		Molecule frag1 = MoleculeFactory.makePyrrole();
+		//display(frag1);
 		BitSet bs1 = Fingerprinter.getFingerprint(frag1);
-		BitSet bs2 = Fingerprinter.getFingerprint(frag2);
-		BitSet bs3 = Fingerprinter.getFingerprint(frag3);
-		BitSet bs4 = Fingerprinter.getFingerprint(frag4);
+		System.out.println("bs: " + bs);
 		System.out.println("bs1: " + bs1);
-		System.out.println("bs2: " + bs2);
-		System.out.println("bs3: " + bs3);
-		System.out.println("bs4: " + bs4);
-		assertTrue(Fingerprinter.isSubset(bs, bs1));
-		assertTrue(!Fingerprinter.isSubset(bs, bs2));
-		assertTrue(!Fingerprinter.isSubset(bs, bs3));
+		if (Fingerprinter.isSubset(bs, bs1))
+		{
+			System.out.println("Pyrrole is subset of Indole");	
+		}
+		if (!standAlone) assertTrue(Fingerprinter.isSubset(bs, bs1));
 	}
 
 	public static Molecule makeFragment1()
@@ -142,10 +144,41 @@ public class FingerprinterTest extends TestCase
 		return mol;
 	}
 	
+	private void display(Molecule molecule)
+	{	
+		StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+		MoleculeViewer2D mv = new MoleculeViewer2D();
+		mv.getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		Renderer2DModel r2dm = mv.getRenderer2DModel();
+		r2dm.setDrawNumbers(true);
+		
+		try
+		{
+			sdg.setMolecule((Molecule)molecule.clone());
+			sdg.generateCoordinates();
+			mv.setAtomContainer(sdg.getMolecule());
+			mv.display();
+		}
+		catch(Exception exc)
+		{
+			System.out.println("*** Exit due to an unexpected error during coordinate generation ***");
+			exc.printStackTrace();
+		}
+	}
+
+	
 	
 	public static void main(String[] args)
 	{
-		FingerprinterTest fpt = new FingerprinterTest("FingerprinterTest");
-		fpt.testFingerprinter();
+		try{
+			FingerprinterTest fpt = new FingerprinterTest("FingerprinterTest");
+			fpt.standAlone = true;
+			fpt.testFingerprinter();
+			
+		}
+		catch(Exception exc)
+		{
+			exc.printStackTrace();
+		}
 	}
 }

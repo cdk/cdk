@@ -58,29 +58,6 @@ public class HueckelAromaticityDetectorTest extends TestCase
 		this.standAlone = standAlone;
 	}
 	
-	public void testBenzene()
-	{
-		Molecule mol = MoleculeFactory.makeBenzene();
-		System.out.println("Testing benzene");
-		boolean isAromatic = false;
-		try
-		{
-			isAromatic = HueckelAromaticityDetector.detectAromaticity(mol);
-		}
-		catch(Exception exc)
-		{
-			if (standAlone)
-			{
-				exc.printStackTrace();	
-			}
-		}
-		if (standAlone && isAromatic)
-		{
-			System.out.println("Benzene is aromatic");
-		}
-		assertTrue(isAromatic == true);
-	}	
-
 	public void testAzulene()
 	{
 		Molecule mol = MoleculeFactory.makeAzulene();
@@ -116,7 +93,7 @@ public class HueckelAromaticityDetectorTest extends TestCase
 		boolean isAromatic = false;
 		try
 		{
-			//isAromatic = HueckelAromaticityDetector.detectAromaticity(mol);
+			isAromatic = HueckelAromaticityDetector.detectAromaticity(mol);
 		}
 		catch(Exception exc)
 		{
@@ -132,17 +109,31 @@ public class HueckelAromaticityDetectorTest extends TestCase
 		assertTrue(isAromatic == true);
 	
 	}	
-	
-	public void testAlphaPinene()
+
+	public void testPyrrole()
 	{
-	
+		Molecule mol = MoleculeFactory.makePyrrole();
+		display(mol);
+		System.out.println("Testing Pyrrole");
+		boolean isAromatic = false;
+		try
+		{
+			isAromatic = HueckelAromaticityDetector.detectAromaticity(mol);
+		}
+		catch(Exception exc)
+		{
+			if (standAlone)
+			{
+				exc.printStackTrace();	
+			}
+		}
+		if (standAlone && isAromatic)
+		{
+			System.out.println("Pyrrole is aromatic");
+		}
+		assertTrue(isAromatic == true);
 	}	
 
-
-	public void testPorphyrine()
-	{
-	
-	}	
 
 	
 	private void display(Molecule molecule)
@@ -171,10 +162,11 @@ public class HueckelAromaticityDetectorTest extends TestCase
 	{
 		HueckelAromaticityDetectorTest hadt = new HueckelAromaticityDetectorTest("HueckelAromaticityDetectorTest");
 		hadt.setStandAlone(true);
-		hadt.testBenzene();
+		//hadt.testBenzene();
 		//hadt.testAlphaPinene();
-		hadt.testAzulene();
-		//hadt.testIndole();
+		//hadt.testAzulene();
+		hadt.testIndole();
+		hadt.testPyrrole();
 		//hadt.testPorphyrine();
 	}	
 }
