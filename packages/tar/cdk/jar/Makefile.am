@@ -23,7 +23,10 @@ JARLIBS=vecmath1.2-1.14.jar \
   stmml.jar \
   xindice.jar \
   xmldb.jar \
-  javacc.jar
+  javacc.jar \
+  base.jar \
+  cmlAll.jar \
+  pmrlib.jar
 
 EXTRA_DIST=${JARLIBS}
 
