@@ -97,6 +97,33 @@ public class GeometryTools
 		}
 	}
 	
+
+	/**
+	 * Rotates a molecule around a given center by a given angle
+	 *
+	 * @param   molecule  The molecule to be rotated
+	 * @param   center    A point giving the rotation center
+	 * @param   angle      The angle by which to rotate the molecule 
+	 */
+	public static void rotate(AtomContainer atomCon, Point2d center, double angle)
+	{
+		Point2d p = null;
+		double distance;
+		double offsetAngle;
+		Atom atom = null;
+		for (int i = 0; i < atomCon.getAtomCount(); i++)
+		{
+			atom = atomCon.getAtomAt(i);		
+			p = atom.getPoint2D();
+			offsetAngle = GeometryTools.getAngle(p.x - center.x, p.y - center.y);
+			distance = p.distance(center);
+			System.out.println("rotate -> distance: " +  distance);
+			p.x = center.x + (Math.sin(angle + offsetAngle) * distance);
+			p.y = center.y - (Math.cos(angle + offsetAngle) * distance);				
+		}
+	}
+
+
     /**
 	 * Scales a molecule such that it fills a given percentage of a given dimension
 	 *

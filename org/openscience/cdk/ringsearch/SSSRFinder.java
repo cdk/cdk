@@ -57,7 +57,8 @@ public class SSSRFinder
 	{
 		Bond brokenBond = null;
 		RingSet sssr = new RingSet();
-		Molecule molecule = (Molecule)mol.clone();
+		Molecule molecule = new Molecule();
+		molecule.add(mol);
 		Atom smallest;
 		int smallestDegree, nodesToBreakCounter, degree;
 		Atom[] rememberNodes;
@@ -403,13 +404,12 @@ public class SSSRFinder
 	 * @param   mol  
 	 * @return     
 	 */
-	private Bond checkEdges(Ring ring, Molecule mol)
+	private Bond checkEdges(Ring ring, Molecule molecule)
 	{
 		Ring r1, r2;
 		RingSet ringSet = new RingSet();
 		Bond bond;
 		int minMaxSize = 0, minMax = 0;
-		Molecule molecule = (Molecule)mol.clone();
 		for (int i = 0; i < ring.getBondCount(); i++)
 		{
 			bond = ring.getBondAt(i);

@@ -1,3 +1,2 @@
-set CDK_HOME=c:\home\develop\cdk
-REM c:\home\bin\pscp -r %CDK_HOME%\doc\htdocs\* steinbeck@compchem.sourceforge.net:/home/groups/compchem/htdocs
-c:\home\bin\pscp -r %CDK_HOME%\doc\htdocs\libraries.html steinbeck@compchem.sourceforge.net:/home/groups/compchem/htdocs
+set JCP_HOME=z:\develop\cdk
+z:\bin\pscp -r %JCP_HOME%\doc\htdocs\* steinbeck@cdk.sourceforge.net:/home/groups/cdk/htdocs

@@ -45,11 +45,10 @@ import java.awt.*;
 
 public class AtomPlacer implements CDKConstants
 {
-	Molecule molecule;
 	public boolean debug = false;
 	
-	
-	
+	/** The molecule to be laid out. To be assigned from outside */
+	Molecule molecule = null;
 
 	/**
 	 * Return the molecule the AtomPlacer currently works with
@@ -98,6 +97,7 @@ public class AtomPlacer implements CDKConstants
 		Vector2d occupiedDirection = new Vector2d(sharedAtomsCenter);
 		occupiedDirection.sub(newDirection);
 		Vector atomsToDraw = new Vector();
+		if (debug) System.out.println(listNumbers(molecule, partners));
 		/* if the least hindered side of the atom is clearly defined (bondLength / 10 is an arbitrary value that seemed reasonable) */	
 		//newDirection.sub(sharedAtomsCenterVector);
 		sharedAtomsCenterVector.sub(newDirection);
@@ -108,10 +108,6 @@ public class AtomPlacer implements CDKConstants
 		Point2d distanceMeasure = new Point2d(atom.getPoint2D());	
 		distanceMeasure.add(newDirection);
 
-//		Atom marker = new Atom(new Element("O"), new Point2d(sharedAtomsCenter));
-//		marker.flags[ISPLACED] = true;
-//		molecule.addAtom(marker);			
-		
 		/* get the two sharedAtom partners with the smallest distance to the new center */
 		sortedAtoms = sharedAtoms.getAtoms();
 		GeometryTools.sortBy2DDistance(sortedAtoms, distanceMeasure);
@@ -160,9 +156,6 @@ public class AtomPlacer implements CDKConstants
 				startAtom = sortedAtoms[1];
 			}
 		}
-		
-				 
-
 		double remainingAngle = (2 * Math.PI) - occupiedAngle;
 		double addAngle = remainingAngle / (partners.getAtomCount() + 1);
 		if (debug)
@@ -181,45 +174,6 @@ public class AtomPlacer implements CDKConstants
 		populatePolygonCorners(atomsToDraw, new Point2d(atom.getPoint2D()), startAngle, addAngle, radius);
 		
 	}
-
-	/**
-	 * Grows a chain. 
-	 * Expects the first atom to be placed and places the next 
-	 * atom according to initialBondVector.
-	 * The rest of the chain is placed such that it is as linear as possible
-	 * (in the overall result, the angles in the chain are set to 120 Deg.)
-	 *
-	 * @param   ac  The AtomContainer containing the chain atom to be placed
-	 * @param   initialBondVector  The Vector indicating the direction of the first bond
-	 */
-	public void growChain(AtomContainer ac, Atom atom, Vector2d initialBondVector, double bondLength)
-	{
-		Vector2d bondVector = initialBondVector;
-		Point2d atomPoint = null;
-		Point2d nextAtomPoint = null;
-		Atom nextAtom = null;		
-		Atom rootAtom = ac.getAtomAt(0);
-		Point2d tempAtomPoint = null;
-		Bond[] bonds;
-		for (int f = 0; f < ac.getAtomCount() - 1; f++)
-		{
-			bonds= molecule.getConnectedBonds(atom);
-			for (int g = 0; g < bonds.length; g++)
-			{
-				nextAtom = bonds[g].getConnectedAtom(atom);
-				if (!nextAtom.flags[VISITED]) break;
-			}
-			nextAtom.flags[VISITED] = true;
-			atomPoint = new Point2d(atom.getPoint2D());
-			bondVector.normalize();
-			bondVector.scale(bondLength);	
-			atomPoint.add(bondVector);
-			nextAtom.setPoint2D(atomPoint);		
-			bondVector = getNextBondVector(nextAtom, atom, rootAtom);
-		}
-	}
-	
-	
 
 	/**
 	 * Places the atoms in a linear chain. 
@@ -250,7 +204,7 @@ public class AtomPlacer implements CDKConstants
 			atomPoint.add(bondVector);
 			nextAtom.setPoint2D(atomPoint);		
 			nextAtom.flags[ISPLACED] = true;
-			bondVector = getNextBondVector(nextAtom, atom, rootAtom);
+			bondVector = getNextBondVector(nextAtom, atom, molecule.get2DCenter());
 		}
 	}
 	
@@ -264,10 +218,10 @@ public class AtomPlacer implements CDKConstants
 	 *
 	 * @param   atom  An atom for which the vector to the next atom to draw is calculated
 	 * @param   previousAtom  The preceding atom for angle calculation
-	 * @param   rootAtom  A root atom from which the next atom is to be farmost away
+	 * @param   distanceMeasure  A point from which the next atom is to be farmost away
 	 * @return  A vector pointing to the location of the next atom to draw   
 	 */
-	protected Vector2d getNextBondVector(Atom atom, Atom previousAtom, Atom rootAtom)
+	protected Vector2d getNextBondVector(Atom atom, Atom previousAtom, Point2d distanceMeasure)
 	{
 		double angle = GeometryTools.getAngle(previousAtom.getX2D() - atom.getX2D(), previousAtom.getY2D() - atom.getY2D());
 		double addAngle = Math.toRadians(120);
@@ -275,17 +229,14 @@ public class AtomPlacer implements CDKConstants
 		Vector2d vec1 = new Vector2d(Math.cos(angle), Math.sin(angle));
 		Point2d point1 = new Point2d(atom.getPoint2D());
 		point1.add(vec1);
-		double distance1 = point1.distance(rootAtom.getPoint2D());
+		double distance1 = point1.distance(distanceMeasure);
 		angle += addAngle;
 		Vector2d vec2 = new Vector2d(Math.cos(angle), Math.sin(angle));
 		Point2d point2 = new Point2d(atom.getPoint2D());
 		point2.add(vec2);
-		double distance2 = point2.distance(rootAtom.getPoint2D());
+		double distance2 = point2.distance(distanceMeasure);
 		if (distance2 > distance1) return vec2;
 		return vec1;
-		
-		
-		
 	}
 
 	/**
@@ -329,123 +280,48 @@ public class AtomPlacer implements CDKConstants
 			if (debug) System.out.println("drawPolygon-> y " + y);
 			newX = x + rotationCenter.x;
 			newY = y + rotationCenter.y;
-			if (connectAtom.getPoint2D() == null)
-			{
-				connectAtom.setPoint2D(new Point2d(newX, newY));				
-				connectAtom.flags[ISPLACED] = true;
-			}
+			connectAtom.setPoint2D(new Point2d(newX, newY));				
+			connectAtom.flags[ISPLACED] = true;
 		}
-		
 	}
-
-	public Atom getMostClockwiseConnectedAtom(Atom atom)
-	{
-		Atom mostClockwiseAtom = null, tempAtom = null;
-		Point2d mostClockwisePoint = null, atomPoint  = null, tempPoint = null;
-		double mostClockwiseAngle = -1, angle = -1;
-		atomPoint = atom.getPoint2D();
-		if (atomPoint != null)
-		{
-			Bond[] bonds = molecule.getConnectedBonds(atom);
-			for (int f = 0; f < bonds.length; f++)
-			{
-				tempAtom = bonds[f].getConnectedAtom(atom);
-				tempPoint = tempAtom.getPoint2D();
-				if (tempPoint != null)
-				{
-					angle = GeometryTools.getAngle(tempPoint.x - atomPoint.x, tempPoint.y - atomPoint.y);
-					if ((angle > mostClockwiseAngle && angle - mostClockwiseAngle < Math.PI)||(angle < mostClockwiseAngle && mostClockwiseAngle - angle > Math.PI))
-					{
-						mostClockwiseAngle = angle;
-						mostClockwiseAtom = tempAtom;
-					}
-				
-				}
-			}
-		}
-		return mostClockwiseAtom;
-	}
-
-	public Atom[] getLargestUnoccupiedAngleAtoms(Atom atom)
-	{
-		AtomContainer ac = new AtomContainer();
-		Point2d atomPoint = atom.getPoint2D(), unoccupiedAngleCenter = null;
-		Vector2d placedAtomsVector = null, unoccupiedAngleVector = null; 
-		Atom[] atoms = new Atom[2];
-		Atom atom1 = null, atom2 = null;
-		if (atomPoint != null)
-		{
-			Bond[] bonds = molecule.getConnectedBonds(atom);
-			for (int f = 0; f < bonds.length; f++)
-			{
-				atom1 = bonds[f].getConnectedAtom(atom);
-				if (atom1.getPoint2D() != null)
-				{
-					ac.addAtom(atom1);
-				}
-			}
-			if (ac.getAtomCount() < 2)
-			{
-				return null;
-			} 
-			placedAtomsVector = new Vector2d(ac.get2DCenter());
-			molecule.addAtom(new Atom(new Element("S"), new Point2d(ac.get2DCenter())));
-			unoccupiedAngleVector = new Vector2d(atomPoint);
-			unoccupiedAngleVector.sub(placedAtomsVector);
-			unoccupiedAngleCenter  = new Point2d(atomPoint);
-			unoccupiedAngleCenter.add(unoccupiedAngleVector);
-			/* Now we have a point in the middle of the
-			 * largest unoccupied angle and can get the two atoms with 
-			 * the smallest distance to it
-			 */
-			 molecule.addAtom(new Atom(new Element("O"), new Point2d(unoccupiedAngleCenter)));
-			 for (int f = 0; f < ac.getAtomCount(); f++)
-			 {
-			 	if (atoms[0] == null)
-				{
-					atoms[0] = ac.getAtomAt(f);
-				}
-				else if (unoccupiedAngleCenter.distance(ac.getAtomAt(f).getPoint2D()) < unoccupiedAngleCenter.distance(atoms[0].getPoint2D()))
-				{
-					atoms[1] = atoms[0];
-					atoms[0] = ac.getAtomAt(f);
-				}
-				else if (atoms[1] == null)
-				{
-					atoms[1] = ac.getAtomAt(f);				
-				}
-				else if (unoccupiedAngleCenter.distance(ac.getAtomAt(f).getPoint2D()) < unoccupiedAngleCenter.distance(atoms[1].getPoint2D()))
-				{
-					atoms[1] = ac.getAtomAt(f);
-				}
-			 }
-		}
-		
-		return atoms;
-	}
-
 
 	/**
-	 * Get all aliphatic atoms bonded to a given atom
+	 * Partition the bonding partners of a given atom into placed (coordinates assinged) and 
+	 * not placed.
 	 *
-	 * 
+	 * @param   atom  The atom whose bonding partners are to be partitioned
+	 * @param   unplacedPartners  A vector for the unplaced bonding partners to go in
+	 * @param   placedPartners  A vector for the placed bonding partners to go in
+	 * @exception   Exception  If something goes wrong
 	 */
-	public void partitionPartners(Atom atom, AtomContainer aliphaticPartners, AtomContainer ringPartners)
+	public void partitionPartners(Atom atom, AtomContainer unplacedPartners, AtomContainer placedPartners) throws java.lang.Exception
 	{
 		Atom[] atoms = molecule.getConnectedAtoms(atom);
 		for (int i = 0; i < atoms.length; i++)
 		{
-			if (atoms[i].flags[ISINRING])
+			if (atoms[i].flags[ISPLACED])
 			{
-				ringPartners.addAtom(atoms[i]);
+				if (debug) System.out.println(molecule.getAtomNumber(atoms[i]) + " is placed");
+				placedPartners.addAtom(atoms[i]);
 			}
 			else
 			{
-				aliphaticPartners.addAtom(atoms[i]);
+				if (debug) System.out.println(molecule.getAtomNumber(atoms[i]) + " is not placed");
+				unplacedPartners.addAtom(atoms[i]);
 			}
 		}
 	}
 	
+	/**
+	 * Search an aliphatic molecule for the longest chain. 
+	 * This is the method to be used if there are no rings in 
+	 * the molecule and you want to layout the longest chain in the molecule
+	 * as a starting point of the structure diagram generation.
+	 *
+	 * @param   molecule  The molecule to be search for the longest unplaced chain
+	 * @return  An AtomContainer holding the longest chain.   
+	 * @exception   Exception  If something goes wrong
+	 */
 	public AtomContainer getInitialLongestChain(Molecule molecule) throws java.lang.Exception
 	{
 		int [][] conMat = molecule.getConnectionMatrix();
@@ -478,6 +354,20 @@ public class AtomPlacer implements CDKConstants
 		return path;
 	}
 	
+
+
+
+	/**
+	 * Search a molecule for the longest unplaced, aliphatic chain in it.
+	 * If an aliphatic chain encounters an unplaced ring atom, the ring atom is also 
+	 * appended to allow for it to be laid out. This gives us a vector for attaching
+	 * the unplaced ring later.
+	 *
+	 * @param   molecule  The molecule to be search for the longest unplaced chain
+	 * @param   startAtom  A start atom from which the chain search starts
+	 * @return  An AtomContainer holding the longest unplaced chain.   
+	 * @exception   Exception  If something goes wrong
+	 */
 	public AtomContainer getLongestUnplacedChain(Molecule molecule, Atom startAtom) throws java.lang.Exception
 	{
 		int longest = 0;
@@ -558,6 +448,101 @@ public class AtomPlacer implements CDKConstants
 		
 			breadthFirstSearch(ac, newSphere, pathes);
 		}
+	}
+
+
+	/**
+	 * Returns a string with the numbers of all placed atoms in an AtomContainer
+	 *
+	 * @param   ac  The AtomContainer for which the placed atoms are to be listed
+	 * @return  A string with the numbers of all placed atoms in an AtomContainer   
+	 */
+	public String listPlaced(AtomContainer ac)
+	{
+		String s = "Placed: ";
+		for (int f = 0; f < ac.getAtomCount(); f++)
+		{
+			if (ac.getAtomAt(f).flags[ISPLACED]) 
+			{
+				s += f + "+ ";
+			}
+			else
+			{
+				s += f + "- ";
+			}
+		}
+		return s;
+	}
+
+	 /**
+	  * Returns a string with the numbers of all atoms in an AtomContainer
+	  * relative to a given molecule, i.e. the number the is listesd is the position
+	  * of each atom in the molecule.
+	  *
+	  * @param   ac  The AtomContainer for which the placed atoms are to be listed
+	  * @return  A string with the numbers of all placed atoms in an AtomContainer   
+	 * @exception   Exception thrown if the number cannot be determined 
+	 */
+	public String listNumbers(Molecule mol, AtomContainer ac) throws java.lang.Exception
+	{
+		String s = "Numbers: ";
+		for (int f = 0; f < ac.getAtomCount(); f++)
+		{
+			s += mol.getAtomNumber(ac.getAtomAt(f)) +  " ";
+		}
+		return s;
+	}
+
+	/**
+	 * True is all the atoms in the given AtomContainer have been placed
+	 *
+	 * @param   ac  The AtomContainer to be searched
+	 * @return  True is all the atoms in the given AtomContainer have been placed   
+	 */
+	public static boolean allPlaced(AtomContainer ac)
+	{
+		for (int f = 0; f < ac.getAtomCount(); f++)
+		{
+			if (!ac.getAtomAt(f).flags[ISPLACED]) return false;
+		}
+		return true;
+	}
+
+	public static void markNotPlaced(AtomContainer ac)
+	{
+		for (int f = 0; f < ac.getAtomCount(); f++)
+		{
+			ac.getAtomAt(f).flags[ISPLACED] = false;
+		}
+
+	}
+
+	public static void markPlaced(AtomContainer ac)
+	{
+		for (int f = 0; f < ac.getAtomCount(); f++)
+		{
+			ac.getAtomAt(f).flags[ISPLACED] = true;
+		}
+	}
+
+
+	/**
+	 * Get all the placed atoms in an AtomContainer
+	 *
+	 * @param   ac  The AtomContainer to be searched for placed atoms
+	 * @return  An AtomContainer containing all the placed atoms
+	 */
+	public  AtomContainer getPlacedAtoms(AtomContainer ac)
+	{
+		AtomContainer ret = new AtomContainer();
+		for (int f = 0; f < ac.getAtomCount(); f++)
+		{
+			if (ac.getAtomAt(f).flags[ISPLACED])
+			{
+				ret.addAtom(ac.getAtomAt(f));
+			}
+		}
+		return ret;
 	}
 
 

@@ -99,6 +99,7 @@ public class Renderer2D
 		}
 		paintBonds(atomCon, ringSet);
 		paintAtoms(atomCon);
+		System.out.println(r2dm.drawNumbers());
 		if (r2dm.drawNumbers()) 
 		{
 			paintNumbers(atomCon.getAtoms(), atomCon.getAtomCount());
@@ -136,6 +137,7 @@ public class Renderer2D
 	 */
 	private void paintNumbers(Atom[] atoms, int number)
 	{
+		System.out.println("paintNumbers");
 		for (int i = 0; i < number; i++)
 		{
 				paintNumber(atoms[i]);
@@ -454,4 +456,29 @@ public class Renderer2D
 		g.setColor(r2dm.getForeColor());
 		g.fillPolygon(xCoords,yCoords,4);
 	}
+	
+	
+
+	/**
+	 * Returns the Renderer2DModel of this Renderer
+	 *
+	 * @return     the Renderer2DModel of this Renderer
+	 */
+	public Renderer2DModel getRenderer2DModel()
+	{
+		return this.r2dm;
+	}
+
+
+
+	/**
+	 * Sets the Renderer2DModel of this Renderer
+	 *
+	 * @param   r2dm  the new Renderer2DModel for this Renderer
+	 */
+	public void setRenderer2DModel(Renderer2DModel r2dm)
+	{
+		this.r2dm = r2dm;
+	}
+
 }

@@ -48,7 +48,7 @@ public class MoleculeListViewer extends JFrame
 	/** 
 	  * The dimension of a single MoleculeViewerPanel
 	  */
-	protected Dimension molViewDim = new Dimension(300,300);
+	protected Dimension molViewDim = new Dimension(350,350);
 
 	protected Vector moleculeViewerPanels = new Vector();
 
@@ -61,7 +61,7 @@ public class MoleculeListViewer extends JFrame
 		setTitle("Structure Display");
 		panel = new StrucContainer();
 		scrollPane = new JScrollPane(panel);
-		scrollPane.setPreferredSize(new Dimension(600, 400));
+		scrollPane.setPreferredSize(new Dimension(800, 600));
 		getContentPane().add("Center",scrollPane);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("MoleculeListViewer");
@@ -82,6 +82,7 @@ public class MoleculeListViewer extends JFrame
 		mv.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), title));
 		moleculeViewerPanels.addElement(mv);
 		panel.add(mv);
+		panel.revalidate();
 	}
 	
 	public void paint(Graphics g)

@@ -52,13 +52,13 @@ public class StructureDiagramGeneratorTest extends TestCase
 	}
 
 
-	/** A complex alkaloid with two separate ring systems to 
-	  * be laid out.
-	  */
-	public void testReserpine()
-	{
-		assert(showIt(MoleculeFactory.loadMolecule("data/reserpine.mol"), "Reserpine"));
-	}
+//	/** A complex alkaloid with two separate ring systems to 
+//	  * be laid out.
+//	  */
+//	public void testReserpine()
+//	{
+//		assert(showIt(MoleculeFactory.loadMolecule("data/reserpine.mol"), "Reserpine"));
+//	}
 	
 //	public void testAlphaPinene()
 //	{
@@ -70,6 +70,18 @@ public class StructureDiagramGeneratorTest extends TestCase
 //	{
 //		assert(showIt(MoleculeFactory.loadMolecule("data/polycarpol.mol"), "Polycarpol"));
 //	}
+//
+//
+//	public void testBiphenyl()
+//	{
+//		assert(showIt(MoleculeFactory.makeBiphenyl(), "Biphenyl"));
+//	}
+//
+//	public void testPhenylEthylBenzene()
+//	{
+//		assert(showIt(MoleculeFactory.makePhenylEthylBenzene(), "PhenylEthylBenzene"));
+//	}
+//
 //
 //
 //	public void testSpiro()
@@ -95,6 +107,8 @@ public class StructureDiagramGeneratorTest extends TestCase
 //	}
 //
 //
+//
+//
 //	/** This was interesting because the 
 //	  * method "placeRingSubstituents" just places
 //	  * the next aliphatic atom close to a ring
@@ -106,6 +120,12 @@ public class StructureDiagramGeneratorTest extends TestCase
 //		assert(showIt(MoleculeFactory.makeEthylCyclohexane(), "Ethylcyclohexane"));
 //	}
 //
+	public void testBicycloRings()
+	{
+		assert(showIt(MoleculeFactory.makeBicycloRings(), "Bicyclo-[2.2.2]-octane"));
+	}
+
+
 	private boolean showIt(Molecule molecule, String name)
 	{
 		StructureDiagramGenerator sdg = new StructureDiagramGenerator();
@@ -125,6 +145,7 @@ public class StructureDiagramGeneratorTest extends TestCase
 			return false;
 		}
 		mv.setAtomContainer(sdg.getMolecule());
+//		mv.display();
 		CDKTests.moleculeListViewer.addStructure(mv, name);
 		return true;
 	}

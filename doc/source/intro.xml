@@ -89,15 +89,18 @@
 			access via SSH up'n running and can actually do some programming.
 		</para>	
 		<para>
-			We have three projects on Sourceforge
+			Our chemoinformatics and computational chemistry projects on Sourceforge
+			are:
 			<orderedlist>
 				<listitem>
 					<para>
-						<ulink url="http://www.sourceforge.net/projects/compchem">http://www.sourceforge.net/projects/compchem</ulink>
-						which contains the "old" compchem sources but will now be almost
-						completely dedicated to the CDK development
+						<ulink
+						url="http://cdk.sourceforge.net">The Chemistry Development Kit (CDK)</ulink>,
+						which is our "new" library for
+						Chemoinformatics and
+						Computational Chemistry.
 					</para>
-				</listitem>	
+				</listitem>					
 				<listitem>
 					<para>
 						<ulink url="http://www.sourceforge.net/projects/JChemPaint">http://www.sourceforge.net/projects/JChemPaint</ulink>
@@ -108,15 +111,22 @@
 					<para>
 						<ulink url="http://www.sourceforge.net/projects/JMDraw">http://www.sourceforge.net/projects/JMDraw</ulink>
 						for the development of JMDraw, which is the 2D rendering engine, also used in JChemPaint
+						1.0
 					</para>	
-				</listitem>	
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://www.sourceforge.net/projects/compchem">http://www.sourceforge.net/projects/compchem</ulink>
+						which contains the "old" compchem sources
+					</para>
+				</listitem>
 			</orderedlist>
 		</para>
 		<para>
 			Of course, at Notre Dame we were not able to do all the implementations.
 			We decided to take some more care this time and start with UML. There
 			are some UML diagrams on the CVS at
-			http://www.sourceforge.net/projects/compchem which can be views with the
+			http://www.sourceforge.net/projects/cdk which can be views with the
 			program Linux program dia. Egon has moved them to ArgoUML,
 			which is Java and can also be used under Windows. 
 		</para>
@@ -130,14 +140,14 @@
 		 <title>Who develops the CDK?</title> 
 		 <para>
 			The CDK is a joint venture of the JMol and JChemPaint developers who would like to see a general-purpose open-source library for 
-			computational chemistry and chemoinformatics. Check the developers list on the <ulink url="http://www.sourceforge.net/projects/CompChem">CDK pages.</ulink>
+			computational chemistry and chemoinformatics. Check the developers list on the <ulink url="http://www.sourceforge.net/projects/cdk">CDK pages.</ulink>
 		</para> 
 	  </section> 
 	  <section> 
 		 <title>How is the CDK developed</title> 
 		 <para>
 			The CDK is mantained as a <ulink url="http://www.sourceforge.net">SourceForge</ulink> project under
-			<ulink url="http://www.sourceforge.net/projects/CompChem">http://www.sourceforge.net/projects/CompChem</ulink>. 
+			<ulink url="http://www.sourceforge.net/projects/cdk">http://www.sourceforge.net/projects/cdk</ulink>. 
 			Please check the SourceForge site documentation for more.
 			SourceForge gives us bugtracking, mailing lists, support manager and last not least CVS access.
 		</para> 

@@ -3,6 +3,17 @@
 		<para> 
 		  <itemizedlist> 
                          <listitem>
+                                <para>(12. Feb. 2001) The CDK now has its own SourceForge project 
+				<ulink url="http://sourceforge.net/projects/cdk">(http://sourceforge.net/projects/cdk)</ulink>
+                                </para>
+                         </listitem>
+                         <listitem>
+                                <para>(11. Feb. 2001) The 2D chemical editor  
+				<ulink url="http://jchempaint.sourceforge.net">JChemPaint</ulink>,
+				just released as version 1.0, will now be ported to the CDK.
+                                </para>
+                         </listitem>
+                         <listitem>
                                 <para>(06. Feb. 2001) New page design based on Norm Walsh's website dtd
                                 </para>
                          </listitem>

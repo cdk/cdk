@@ -1,6 +1,6 @@
 set JAVA_HOME=c:\programme\jdk1.3\bin
-REM set MY_HOME=z:\
-set MY_HOME=c:\home
+set MY_HOME=z:\
+REM set MY_HOME=c:\home
 set APP_HOME=%MY_HOME%\develop\classes\jar
 set XML_HOME=%MY_HOME%\documents\config\xml
 set XMLSOURCE=..\website.xml

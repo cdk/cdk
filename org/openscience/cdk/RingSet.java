@@ -289,6 +289,23 @@ public class RingSet extends Vector{
 		return false;
 	}
 
+	/**
+	 * Returns all the atoms and bonds from all the rings in the molecule 
+	 * in one AtomContainer
+	 *
+	 * @return true, if the ringset contains the atom
+	 */
+	public AtomContainer getRingSetInAtomContainer()
+	{
+		AtomContainer ac = new AtomContainer();
+		for (int i = 0; i < size(); i++)
+		{
+			ac.add((Ring)elementAt(i));
+		}
+		return ac;
+	}
+
+
 
 	/**
 	 * Returns a sequence of string representations for all rings in the 

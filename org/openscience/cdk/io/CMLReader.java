@@ -1,4 +1,5 @@
-/* 
+/* MDLReader.java
+ * 
  * $RCSfile$
  * $Author$
  * $Date$
@@ -44,29 +45,20 @@ import java.io.*;
  */
 public class CMLReader implements CDKConstants, ChemObjectReader {
 
+    private static final String pClass = "org.apache.xerces.parsers.SAXParser";
     private XMLReader parser;
     private ContentHandler handler;
     private EntityResolver resolver;
     private Reader input;
 
-    /**
-     * Define this CMLReader to take the input from a java.io.Reader
-     * class. Possible readers are (among others) StringReader and FileReader.
-     *
-     * @param input Reader type input
-     */
-    public CMLReader(Reader input) 
-	{
-		try 
-		{
-		    parser = new org.apache.xerces.parsers.SAXParser();
-		    this.input = input;
-		} 
-		catch (Exception e) 
-		{
-		    System.out.println("CMLReader: You found a serious bug! Please report it!");
-		    System.exit(1);			       
-		}
+    public CMLReader(Reader input) {
+	try {
+	    parser = (XMLReader)Class.forName(pClass).newInstance();
+	    this.input = input;
+	} catch (Exception e) {
+	    System.out.println("CMLReader: You found a serious bug! Please report it!");
+	    System.exit(1);			       
+	}
     }
 
 	
@@ -75,52 +67,27 @@ public class CMLReader implements CDKConstants, ChemObjectReader {
      *
      * @return The content in a ChemFile object
      */
-    public ChemObject read(ChemObject object) throws UnsupportedChemObjectException 
-	{
-		if (object instanceof ChemFile) 
-		{
-		    return (ChemObject)readChemFile();
-		} 
-		else 
-		{
-		    throw new UnsupportedChemObjectException(
-			"Only supported is ChemFile.");
-		}
+    public ChemObject read(ChemObject object) throws UnsupportedChemObjectException {
+	if (object instanceof ChemFile) {
+	    return (ChemObject)readChemFile();
+	} else {
+	    throw new UnsupportedChemObjectException(
+		"Only supported is ChemFile.");
+	}
     }
 
     // private functions
 
-    private ChemFile readChemFile() 
-	{
-		ChemFileCDO cdo = new ChemFileCDO();
-		handler = new CMLHandler((CDOInterface)cdo);
-		try 
-		{
-		    parser.setFeature("http://xml.org/sax/features/validation", true);
-		} 
-		catch (SAXException e) 
-		{
-		    System.err.println("Cannot activate validation."); 
-		    return cdo;
-		}
-		resolver = new org.openscience.cml.CMLResolver();
-		parser.setContentHandler(handler);
-		parser.setEntityResolver(resolver);
-		try 
-		{
-		    parser.parse(new InputSource(input));
-		} 
-		catch (IOException e) 
-		{
-		    System.out.println("CMLReader (IOException): " + e.toString());
-		} 
-		catch (SAXException e) 
-		{
-		    System.out.println("CMLReader (SAXException): " + e.toString());
-		    e.printStackTrace();
-		}
-		return cdo;
+    private ChemFile readChemFile() {
+	ChemFileCDO cdo = new ChemFileCDO();
+	handler = new CMLHandler((CDOInterface)cdo);
+	parser.setContentHandler(handler);
+	try {
+	    parser.parse(new InputSource(input));
+	} catch (IOException e) {
+	} catch (SAXException e) {
+	}
+	return cdo;
     }
-	
 }
 

@@ -45,7 +45,7 @@ import java.awt.*;
 
 public class RingPlacer implements CDKConstants
 {
-	static boolean debug = false;
+	static boolean debug = true;
 
 	private Molecule molecule; 
 	
@@ -80,6 +80,53 @@ public class RingPlacer implements CDKConstants
 		}
 
 	}
+	
+	
+	/**
+	 * Positions the aliphatic substituents of a ring system
+	 *
+	 * @param   rs The RingSystem for which the substituents are to be laid out 
+	 * @return  A list of atoms that where laid out   
+	 * @exception   Exception  
+	 */
+	public AtomContainer placeRingSubstituents(RingSet rs, double bondLength) throws java.lang.Exception
+	{
+		Ring ring = null;
+		Atom atom = null;
+		RingSet rings = null;
+		AtomContainer unplacedPartners = new AtomContainer();;
+		AtomContainer sharedAtoms = new AtomContainer();
+		AtomContainer primaryAtoms = new AtomContainer();
+		AtomContainer treatedAtoms = new AtomContainer();
+		Point2d centerOfRingGravity = null;
+		for (int j = 0; j < rs.size(); j++)
+		{
+			ring = (Ring)rs.elementAt(j); /* Get the j-th Ring in RingSet rs */
+			System.out.println(atomPlacer.listNumbers(ring));
+			for (int k = 0; k < ring.getAtomCount(); k++)
+			{
+			
+				unplacedPartners.removeAllElements();
+				sharedAtoms.removeAllElements();
+				primaryAtoms.removeAllElements();
+				if (debug) System.out.println("k = " + k + ", unplacedPartners.getAtomCount(): " + unplacedPartners.getAtomCount());
+				atom = ring.getAtomAt(k);
+				rings = rs.getRings(atom);
+				centerOfRingGravity = rings.get2DCenter();
+				atomPlacer.partitionPartners(atom, unplacedPartners, sharedAtoms);
+//				partitionNonRingPartners(atom, ring, sharedAtoms, unplacedPartners);
+				atomPlacer.markNotPlaced(unplacedPartners);
+				treatedAtoms.add(unplacedPartners);
+				if (unplacedPartners.getAtomCount() > 0)
+				{
+					System.out.println("unplacedPartners: " + atomPlacer.listNumbers(unplacedPartners));
+					atomPlacer.distributePartners(atom, sharedAtoms, centerOfRingGravity, unplacedPartners, bondLength);
+				}
+			}
+		}
+		return treatedAtoms;
+	}
+	
 	
 	/**
 	 * Generated coordinates for a given ring, which is connected to another ring a bridged ring, 
@@ -435,6 +482,31 @@ public class RingPlacer implements CDKConstants
 	}
 
 
+
+
+	/**
+	 * Get all atoms bonded to a given atom in a given ring, which are not part of this ring
+	 *
+	 * 
+	 */
+	public void partitionNonRingPartners(Atom atom, Ring ring, AtomContainer ringAtoms, AtomContainer unPlacedPartners) throws java.lang.Exception
+	{
+		Atom[] atoms = molecule.getConnectedAtoms(atom);
+		for (int i = 0; i < atoms.length; i++)
+		{
+			if (!ring.contains(atoms[i]))
+			{
+				unPlacedPartners.addAtom(atoms[i]);
+			}
+			else
+			{
+				ringAtoms.addAtom(atoms[i]);
+			}
+		}
+	}
+
+
+
 	/**
 	 * Returns the ring radius of a perfect polygons of size ring.getAtomCount()
 	 * The ring radius is the distance of each atom to the ringcenter.
@@ -459,5 +531,16 @@ public class RingPlacer implements CDKConstants
 	public void setMolecule(Molecule molecule)
 	{
 		this.molecule = molecule;
+	}
+
+	
+	public AtomPlacer getAtomPlacer()
+	{
+		return this.atomPlacer;
+	}
+
+	public void setAtomPlacer(AtomPlacer atomPlacer)
+	{
+		this.atomPlacer = atomPlacer;
 	}
 }

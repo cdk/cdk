@@ -1,4 +1,4 @@
-<!DOCTYPE website SYSTEM "/home/documents/config/xml/website/website.dtd" [
+<!DOCTYPE website SYSTEM "/documents/config/xml/website/website.dtd" [
 <!ENTITY about SYSTEM "about.xml">
 <!ENTITY news SYSTEM "news.xml">
 <!ENTITY introduction SYSTEM "intro.xml">
@@ -27,8 +27,8 @@
 Chemistry Development Kit, an open-source java library for computational chemistry and chemoinformatics</summary>
 <keywords>Chemistry Development Kit, open-source, OpenScience, molecules, chemical structures, structure editor,
 structure diagram generation, Java, chemoinformatics, cheminformatics, computational chemistry</keywords>
-<copyright><year>1999</year><year>2000</year>
-<holder role="http://compchem.sourceforge.net/">The CDK Project</holder></copyright>
+<copyright><year>1999</year><year>2000</year><year>2001</year>
+<holder role="http://cdk.sourceforge.net/">The CDK Project</holder></copyright>
 <style src="example.css" class="global"></style>
 </head>
 	 &news;
@@ -36,7 +36,7 @@ structure diagram generation, Java, chemoinformatics, cheminformatics, computati
 		<title>Quickstart</title>
 		<para>
 		  <ulink
-			url="http://sourceforge.net/projects/compchem"><emphasis>Shortcut to the
+			url="http://sourceforge.net/projects/cdk"><emphasis>Shortcut to the
 			 CDK's SourceForge project page with download
 			 option</emphasis></ulink></para>
 	 </section>
@@ -46,7 +46,7 @@ structure diagram generation, Java, chemoinformatics, cheminformatics, computati
 		<title>About the CDK Homepages</title>
 		<summary>About the CDK Homepages</summary>
 		</head>
-	 	<!--&about;-->
+	 	&about;
 	 </webpage>
 </homepage>
 

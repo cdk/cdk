@@ -75,6 +75,20 @@ public class AtomContainer extends ChemObject implements Cloneable{
 	}
 	
 	/**
+	 * Constructs an AtomContainer with 
+	 * a copy of the atoms and bonds of another AtomContainer
+	 * (A shallow copy, i.e., with the same objects as in the original AtomContainer)
+	 *
+	 * @param   ac  An AtomContainer to copy the atoms and bonds from 
+	 */
+	public AtomContainer(AtomContainer ac)
+	{
+		this();
+		add(ac);
+	}
+
+
+	/**
 	 * Constructs an empty AtomContainer that will contain a certain
 	 * number of atoms and bonds.
 	 *
@@ -350,11 +364,17 @@ public class AtomContainer extends ChemObject implements Cloneable{
     {
             for (int f = 0; f < atomContainer.getAtomCount(); f++)
             {
-                    addAtom(atomContainer.getAtomAt(f));
+				if (!contains(atomContainer.getAtomAt(f)))
+				{
+					addAtom(atomContainer.getAtomAt(f));
+				}
             }
             for (int f = 0; f < atomContainer.getBondCount(); f++)
             {
+	            if (!contains(atomContainer.getBondAt(f)))
+	            {
                     addBond(atomContainer.getBondAt(f));
+	            }
             }
     }
 
@@ -661,12 +681,17 @@ public class AtomContainer extends ChemObject implements Cloneable{
 	public Point2d get2DCenter()
 	{
 		double centerX = 0, centerY = 0;
+		double counter = 0;
 		for (int i = 0; i < getAtomCount(); i++)
 		{
-			centerX += atoms[i].getPoint2D().x;
-			centerY += atoms[i].getPoint2D().y;
+			if (atoms[i].getPoint2D() != null)
+			{
+				centerX += atoms[i].getPoint2D().x;
+				centerY += atoms[i].getPoint2D().y;
+				counter ++;
+			}
 		}
-		Point2d point = new Point2d(centerX / ((double)atomCount), centerY / ((double)atomCount));
+		Point2d point = new Point2d(centerX / (counter), centerY / (counter));
 		return point;
 	}
 

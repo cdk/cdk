@@ -101,6 +101,7 @@ public class StructureDiagramGenerator implements CDKConstants
 		}
 		atomPlacer.setMolecule(this.molecule);
 		ringPlacer.setMolecule(this.molecule);
+		ringPlacer.setAtomPlacer(this.atomPlacer);
 	}
 
 
@@ -142,9 +143,11 @@ public class StructureDiagramGenerator implements CDKConstants
 		int nrOfEdges = molecule.getBondCount();
 		Bond nextRingAttachmentBond = null;
 		Vector2d ringSystemVector = null, newRingSystemVector = null;
-		
-		Atom ringAtom = null;
+		AtomContainer ringSystem = null, tempAc = null;
+		Atom vectorAtom1 = null, vectorAtom2 = null;
+		Point2d oldPoint1 = null, newPoint1 = null, oldPoint2 = null, newPoint2 = null;
 		RingSet nextRingSystem = null;
+		double angle, angle1, angle2;
 		int expectedRingCount = nrOfEdges - molecule.getAtomCount() + 1;
 		// if there are rings, get them...
 		if (debug) System.out.println("StructureDiagramGenerator->: " + expectedRingCount + " rings expected");
@@ -172,7 +175,7 @@ public class StructureDiagramGenerator implements CDKConstants
 			if (debug) System.out.println("StructureDiagramGenerator -> handleRings -> ringSystems.size(): " + ringSystems.size());
 			
 			handleRings(firstBondVector, (RingSet)ringSystems.elementAt(0));
-			placeRingSubstituents((RingSet)ringSystems.elementAt(0));
+			ringPlacer.placeRingSubstituents((RingSet)ringSystems.elementAt(0), bondLength);
 			
 		}
 		else
@@ -183,48 +186,68 @@ public class StructureDiagramGenerator implements CDKConstants
 			/* place the first bond such that the whole chain will be vertically 
 			 * alligned on the x axis
 			 */
-			double angle = Math.toRadians(-30);
+			angle = Math.toRadians(-30);
 			atomPlacer.placeLinearChain(longestChain, new Vector2d(Math.cos(angle), Math.sin(angle)), bondLength);
 		}
+		System.out.println("Placed initial chain or ring. Now do the rest");
 		do
 		{
 			handleAliphatics();
+			atomPlacer.listPlaced(molecule);
 			resetUnplacedRings();
+			tempAc = atomPlacer.getPlacedAtoms(molecule);
+			atomPlacer.listPlaced(molecule);
 			nextRingAttachmentBond = getNextBondWithUnplacedRingAtom();
 
 			if (nextRingAttachmentBond != null)
 			{
-				if (nextRingAttachmentBond.getAtomAt(0).flags[ISINRING])
+				vectorAtom2 = getRingAtom(nextRingAttachmentBond);
+				if (nextRingAttachmentBond.getAtomAt(0) == vectorAtom1)
 				{
-					ringSystemVector = new Vector2d(nextRingAttachmentBond.getAtomAt(1).getPoint2D());
-					ringSystemVector.sub(new Vector2d(nextRingAttachmentBond.getAtomAt(0).getPoint2D()));
+					vectorAtom1 = nextRingAttachmentBond.getAtomAt(1);
 				}						
 				else
 				{
-					ringSystemVector = new Vector2d(nextRingAttachmentBond.getAtomAt(0).getPoint2D());
-					ringSystemVector.sub(new Vector2d(nextRingAttachmentBond.getAtomAt(1).getPoint2D()));
+					vectorAtom1 = nextRingAttachmentBond.getAtomAt(0);
 				}						
+				System.out.println("generateCoordinates -> molecule.getAtomNumber(vectorAtom1)" + molecule.getAtomNumber(vectorAtom1));
+				System.out.println("generateCoordinates -> molecule.getAtomNumber(vectorAtom2)" + molecule.getAtomNumber(vectorAtom2));
+				oldPoint2 = vectorAtom2.getPoint2D();
+				oldPoint1 = vectorAtom1.getPoint2D();				
 
-				ringAtom = getRingAtom(nextRingAttachmentBond);
-				nextRingSystem = getRingSystemOfAtom(ringSystems, ringAtom);
+				angle1 = GeometryTools.getAngle(oldPoint2.x - oldPoint1.x, oldPoint2.y - oldPoint1.y);								
+				nextRingSystem = getRingSystemOfAtom(ringSystems, vectorAtom2);
+				ringSystem = new AtomContainer();
+				ringSystem.add(nextRingSystem.getRingSetInAtomContainer());
+
+				/* Do the layout of the next ring system */
 				handleRings(firstBondVector, nextRingSystem);
-				placeRingSubstituents(nextRingSystem);
+				/* Place all the substituents of next ring system */
+				atomPlacer.markNotPlaced(tempAc);				
+				ringSystem.add(ringPlacer.placeRingSubstituents(nextRingSystem, bondLength));
+				atomPlacer.markPlaced(tempAc);				
 
-				if (nextRingAttachmentBond.getAtomAt(0).flags[ISINRING])
-				{
-					newRingSystemVector = new Vector2d(nextRingAttachmentBond.getAtomAt(1).getPoint2D());
-					newRingSystemVector.sub(new Vector2d(nextRingAttachmentBond.getAtomAt(0).getPoint2D()));
-				}						
-				else
-				{
-					newRingSystemVector = new Vector2d(nextRingAttachmentBond.getAtomAt(0).getPoint2D());
-					newRingSystemVector.sub(new Vector2d(nextRingAttachmentBond.getAtomAt(1).getPoint2D()));
-				}						
-				System.out.println("Angle: " + ringSystemVector.angle(newRingSystemVector));
+				newPoint2 = vectorAtom2.getPoint2D();
+				newPoint1 = vectorAtom1.getPoint2D();				
+				
+				angle2 = GeometryTools.getAngle(newPoint2.x - newPoint1.x, newPoint2.y - newPoint2.y);				
+				System.out.println("Angle: " + angle1 + ", " + angle2);
+				System.out.println("Points: " + oldPoint1 + ", " + oldPoint2 + ", " + newPoint1 + ", " + newPoint2);				
+				Vector2d transVec = new Vector2d(oldPoint1);
+				transVec.sub(new Vector2d(newPoint1));
+//				ringSystem.removeAtom(vectorAtom1);
+
+				System.out.println("RingSystem to rotate" + atomPlacer.listNumbers(ringSystem));				
+				GeometryTools.translate2D(ringSystem, transVec);				
+				GeometryTools.rotate(ringSystem, oldPoint1, angle1 - angle2);
+				vectorAtom1.setPoint2D(oldPoint1);				
+				System.out.println("Am End");
+				atomPlacer.listPlaced(molecule);
 			}
 
-//		}while(!allPlaced(molecule));		
-		}while(!true);				
+
+		}while(!atomPlacer.allPlaced(molecule));		
+//		}while(!true);				
 		fixRest();
 	}
 
@@ -278,46 +301,6 @@ public class StructureDiagramGenerator implements CDKConstants
 		}while(!allPlaced(rs));
 	}
 
-	/**
-	 * Positions the aliphatic substituents of a ring system
-	 *
-	 * @exception   Exception  Thrown if something goes wrong.
-	 */
-	public void placeRingSubstituents(RingSet rs) throws java.lang.Exception
-	{
-		Ring ring = null;
-		Atom atom = null;
-		RingSet rings = null;
-		AtomContainer aliphaticPartners = new AtomContainer();;
-		AtomContainer sharedAtoms = new AtomContainer();
-		AtomContainer primaryAtoms = new AtomContainer();
-		Point2d centerOfRingGravity = null;
-		for (int j = 0; j < rs.size(); j++)
-		{
-			ring = (Ring)rs.elementAt(j); /* Get the j-th Ring in RingSet rs */
-			
-			for (int k = 0; k < ring.getAtomCount(); k++)
-			{
-			
-				aliphaticPartners.removeAllElements();
-				sharedAtoms.removeAllElements();
-				primaryAtoms.removeAllElements();
-				if (debug) System.out.println("k = " + k + ", aliphaticPartners.getAtomCount(): " + aliphaticPartners.getAtomCount());
-				atom = ring.getAtomAt(k);
-				rings = rs.getRings(atom);
-				centerOfRingGravity = rings.get2DCenter();
-				atomPlacer.partitionPartners(atom, aliphaticPartners, sharedAtoms);
-				markNotPlaced(aliphaticPartners);
-			
-				if (aliphaticPartners.getAtomCount() > 0)
-				{
-					System.out.println("aliphaticPartners");
-					listNumbers(aliphaticPartners);
-					atomPlacer.distributePartners(atom, sharedAtoms, centerOfRingGravity, aliphaticPartners, bondLength);
-				}
-			}
-		}
-	}
 	
 	
 
@@ -351,7 +334,8 @@ public class StructureDiagramGenerator implements CDKConstants
 				placedAtoms = getPlacedAtoms(atom);
 
 				longestUnplacedChain = atomPlacer.getLongestUnplacedChain(molecule, atom);
-				listNumbers(longestUnplacedChain);
+				System.out.println("longestUnplacedChain: " + atomPlacer.listNumbers(longestUnplacedChain));
+		
 				if (longestUnplacedChain.getAtomCount() > 1)
 				{
 					
@@ -364,7 +348,7 @@ public class StructureDiagramGenerator implements CDKConstants
 					}
 					else
 					{
-						direction = atomPlacer.getNextBondVector(atom, placedAtoms.getAtomAt(0), placedAtoms.getAtomAt(0));
+						direction = atomPlacer.getNextBondVector(atom, placedAtoms.getAtomAt(0), molecule.get2DCenter());
 					}
 					
 					for (int f = 1; f < longestUnplacedChain.getAtomCount(); f++)
@@ -373,12 +357,6 @@ public class StructureDiagramGenerator implements CDKConstants
 					}
 
 					atomPlacer.placeLinearChain(longestUnplacedChain, direction, bondLength);
-//					if (longestUnplacedChain.getLastAtom().flags[ISINRING])
-//					{
-//						System.out.println("Atom " + molecule.getAtomNumber(longestUnplacedChain.getLastAtom()) + "is in a ring ");
-//						longestUnplacedChain.getLastAtom().flags[ISPLACED] = false;
-//						done = true;
-//					}
 				}
 				else
 				{
@@ -431,8 +409,9 @@ public class StructureDiagramGenerator implements CDKConstants
 		for (int f = 0; f < molecule.getBondCount(); f++)
 		{
 			bond = molecule.getBondAt(f);
-			if (bond.getAtomAt(1).flags[ISPLACED] && !bond.getAtomAt(0).flags[ISPLACED]  && !bond.getAtomAt(0).flags[ISINRING])
+			if (bond.getAtomAt(1).flags[ISPLACED] && !bond.getAtomAt(0).flags[ISPLACED] )
 			{
+				// && !bond.getAtomAt(0).flags[ISINRING]
 				try
 				{
 					System.out.println("Atom " + molecule.getAtomNumber(bond.getAtomAt(1)) + " is placed");
@@ -447,8 +426,9 @@ public class StructureDiagramGenerator implements CDKConstants
 				return bond.getAtomAt(1);
 			}
 			
-			if (bond.getAtomAt(0).flags[ISPLACED] &&  !bond.getAtomAt(1).flags[ISPLACED]  && !bond.getAtomAt(1).flags[ISINRING])
+			if (bond.getAtomAt(0).flags[ISPLACED] &&  !bond.getAtomAt(1).flags[ISPLACED]  )
 			{
+				//&& !bond.getAtomAt(1).flags[ISINRING]
 				try
 				{
 					System.out.println("Atom " + molecule.getAtomNumber(bond.getAtomAt(1)) + " is placed");
@@ -630,6 +610,7 @@ public class StructureDiagramGenerator implements CDKConstants
 		}
 	}
 
+
 	/**
 	 * Initializes all rings in RingSet rs as not placed
 	 *
@@ -734,8 +715,8 @@ public class StructureDiagramGenerator implements CDKConstants
 
 	private Atom getRingAtom(Bond bond)
 	{
-		if (bond.getAtomAt(0).flags[ISINRING]) return bond.getAtomAt(0);
-		if (bond.getAtomAt(1).flags[ISINRING]) return bond.getAtomAt(1);
+		if (bond.getAtomAt(0).flags[ISINRING] && !bond.getAtomAt(0).flags[ISPLACED]) return bond.getAtomAt(0);
+		if (bond.getAtomAt(1).flags[ISINRING] && !bond.getAtomAt(1).flags[ISPLACED]) return bond.getAtomAt(1);
 		return null;
 	}
 	
@@ -768,53 +749,6 @@ public class StructureDiagramGenerator implements CDKConstants
 				}
 			}
 		}
-	}
-
-	
-	private boolean allPlaced(AtomContainer ac)
-	{
-		for (int f = 0; f < ac.getAtomCount(); f++)
-		{
-			if (!ac.getAtomAt(f).flags[ISPLACED]) return false;
-		}
-		return true;
-	}
-
-	private void markNotPlaced(AtomContainer ac)
-	{
-		for (int f = 0; f < ac.getAtomCount(); f++)
-		{
-			ac.getAtomAt(f).flags[ISPLACED] = false;
-		}
-
-	}
-
-
-	private void listPlaced(AtomContainer ac)
-	{
-		String s = "Placed: ";
-		for (int f = 0; f < ac.getAtomCount(); f++)
-		{
-			if (ac.getAtomAt(f).flags[ISPLACED]) 
-			{
-				s += f + "+ ";
-			}
-			else
-			{
-				s += f + "- ";
-			}
-		}
-		System.out.println(s);
-	}
-
-	private String listNumbers(AtomContainer ac) throws java.lang.Exception
-	{
-		String s = "Numbers: ";
-		for (int f = 0; f < ac.getAtomCount(); f++)
-		{
-			s += molecule.getAtomNumber(ac.getAtomAt(f)) +  " ";
-		}
-		return s;
 	}
 
 
