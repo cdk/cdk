@@ -49,12 +49,14 @@ public class CDKConstants {
 
         /** A bonds which end is above the drawing plane. */
         public static int STEREO_BOND_UP = 1;
+        public static int STEREO_BOND_UP_INV = 2;
 
         /** A bonds for which the stereochemistry is undefined. */
         public static int STEREO_BOND_UNDEFINED = 0;
 
         /** A bonds which end is below the drawing plane. */
         public static int STEREO_BOND_DOWN = -1;
+        public static int STEREO_BOND_DOWN_INV = -2;
 
         /** A bonds which end is above the drawing plane. */
         public static int STEREO_ATOM_PARITY_PLUS = 1;

@@ -1,5 +1,4 @@
-/*
- *  $RCSfile$
+/*  $RCSfile$
  *  $Author$
  *  $Date$
  *  $Revision$
@@ -47,7 +46,11 @@ import org.openscience.cdk.tools.*;
  */
 public class Renderer2D
 {
+
+    private LoggingTool logger;
+    
 	SSSRFinder sssrf = new SSSRFinder();
+
 	/**
 	 *  Description of the Field
 	 */
@@ -57,22 +60,22 @@ public class Renderer2D
 
 
 	/**
-	 *  Constructs a Renderer2D
+	 * Constructs a Renderer2D with a default settings model.
 	 */
-	public Renderer2D()
-	{
-		r2dm = new Renderer2DModel();
+	public Renderer2D() {
+		this(new Renderer2DModel());
 	}
 
 
 	/**
-	 *  Constructs a Renderer2D
+	 * Constructs a Renderer2D.
 	 *
-	 *@param  r2dm  Description of the Parameter
+	 * @param  r2dm  The settings model to use for rendering.
 	 */
 	public Renderer2D(Renderer2DModel r2dm)
 	{
 		this.r2dm = r2dm;
+        logger = new LoggingTool(this.getClass().getName());
 	}
 
 
@@ -202,36 +205,38 @@ public class Renderer2D
 	{
 		Color atomColor;
 		Atom atom;
-		for (int i = 0; i < atomCon.getAtomCount(); i++)
-		{
+		for (int i = 0; i < atomCon.getAtomCount(); i++) {
 			atom = atomCon.getAtomAt(i);
-			atomColor = (Color) r2dm.getColorHash().get(atom);
-			if (atom == r2dm.getHighlightedAtom())
-			{
-				atomColor = r2dm.getHighlightColor();
-			}
-			if (atomColor != null)
-			{
-				paintColouredAtom(atom, atomColor);
-			} else
-			{
-				atomColor = r2dm.getBackColor();
-			}
-			if (!atom.getSymbol().equals("C"))
-			{
-				/*
-				 *  only show element for non-carbon atoms,
-				 *  unless (see below)...
-				 */
-				paintAtomSymbol(atom, atomColor);
-			} else if (atomCon.getBondCount(atom) == 0)
-			{
-				// if atom has no bond always show element
-				paintAtomSymbol(atom, atomColor);
-			}
+            paintAtom(atom);
 		}
 	}
 
+	private void paintAtom(Atom atom) {
+        Color atomColor = (Color) r2dm.getColorHash().get(atom);
+        if (atom == r2dm.getHighlightedAtom()) {
+            atomColor = r2dm.getHighlightColor();
+        }
+        if (atomColor != null) {
+            paintColouredAtom(atom, atomColor);
+        } else {
+            atomColor = r2dm.getBackColor();
+        }
+        if (!atom.getSymbol().equals("C")) {
+            /*
+             *  only show element for non-carbon atoms,
+             *  unless (see below)...
+             */
+            paintAtomSymbol(atom, atomColor);
+            // paintAtomCharge(atom);
+        } else if (atomCon.getBondCount(atom) == 0) {
+            // ... unless carbon has no bonds
+            paintAtomSymbol(atom, atomColor);
+        } else if (atom.getFormalCharge() != 0) {
+            // ... unless carbon is charged
+            paintAtomSymbol(atom, atomColor);
+            // paintAtomCharge(atom);
+        }
+	}
 
 	/**
 	 *  Paints a rectangle of the given color at the position of the given atom.
@@ -246,7 +251,6 @@ public class Renderer2D
 		g.setColor(color);
 		g.fillRect((int) atom.getX2D() - (atomRadius / 2), (int) atom.getY2D() - (atomRadius / 2), atomRadius, atomRadius);
 	}
-
 
 	/**
 	 *  Paints the given atom symbol. It first outputs some empty space using the
@@ -293,7 +297,45 @@ public class Renderer2D
 //		g.drawLine((int)atom.getPoint2D().x,(int)atom.getPoint2D().y,(int)atom.getPoint2D().x,(int)atom.getPoint2D().y);
 	}
 
+	/**
+	 *  Paints the given atom symbol. It first outputs some empty space using the
+	 *  background color, slightly larger than the space that the symbol occupies.
+	 *  The atom symbol is then printed into the empty space.
+	 *
+	 *@param  atom       The atom to be drawn
+	 *@param  backColor  Description of the Parameter
+	 */
+	private void paintAtomCharge(Atom atom) {
+        FontMetrics fm = g.getFontMetrics();
+        int xSymbOffset = (new Integer(fm.stringWidth(atom.getSymbol()) / 2)).intValue();
+        int ySymbOffset = (new Integer(fm.getAscent() / 2)).intValue();
 
+            // show formal charge
+        if (atom.getFormalCharge() != 0) {
+            // print charge in smaller font size
+            Font normal = g.getFont();
+            float current_size = g.getFont().getSize2D();
+            g.setFont(normal.deriveFont((float)(current_size - 2.0)));
+
+            int charge = atom.getFormalCharge();
+            String chargeString = (new Integer(charge)).toString();
+            if (charge == 1 ) { 
+                chargeString = "+"; 
+            } else if (charge > 1 ) {
+                chargeString = charge + "+";
+            } else if (charge == -1) {
+                chargeString = "-"; 
+            } else if (charge < -1) {
+                chargeString = chargeString.substring(1) + "-";
+            }
+            g.drawString(chargeString,
+                (int)atom.getX2D() + xSymbOffset,
+                (int)atom.getY2D() - ySymbOffset);
+            g.setFont(normal);
+        }
+    }
+    
+    
 	/**
 	 *  Triggers the suitable method to paint each of the given bonds and selects
 	 *  the right color.
@@ -344,22 +386,32 @@ public class Renderer2D
 	 */
 	private void paintBond(Bond bond, Color bondColor)
 	{
-//		System.out.println("Renderer2D: bondorder: " + bond.getOrder());
+		logger.debug("bond order: " + bond.getOrder());
+		logger.debug("bond stereo: " + bond.getStereo());
 
 		if (bond.getAtomAt(0).getPoint2D() == null || bond.getAtomAt(1).getPoint2D() == null)
 		{
 			return;
 		}
 
-		if (bond.getOrder() == 1)
-		{
-			paintSingleBond(bond, bondColor);
-		} else if (bond.getOrder() == 2)
-		{
-			paintDoubleBond(bond, bondColor);
-		} else if (bond.getOrder() == 3)
-		{
-			paintTripleBond(bond, bondColor);
+        if (bond.getStereo() != CDKConstants.STEREO_BOND_UNDEFINED) {
+            // Draw stero information if available
+            logger.info("Painting wedge bond");
+            if (bond.getStereo() >= CDKConstants.STEREO_BOND_UP) {
+                paintWedgeBond(bond, bondColor);
+            } else {
+                logger.info("Painting it dashed");
+                paintDashedWedgeBond(bond, bondColor);
+            }
+        } else {
+            // Draw bond order when no stereo info is available
+            if (bond.getOrder() == CDKConstants.BONDORDER_SINGLE) {
+                paintSingleBond(bond, bondColor);
+            } else if (bond.getOrder() == CDKConstants.BONDORDER_DOUBLE) {
+                paintDoubleBond(bond, bondColor);
+            } else if (bond.getOrder() == CDKConstants.BONDORDER_TRIPLE) {
+                paintTripleBond(bond, bondColor);
+            }
 		}
 	}
 
@@ -404,7 +456,6 @@ public class Renderer2D
 
 	}
 
-
 	/**
 	 *  Paints The given doublebond.
 	 *
@@ -420,9 +471,7 @@ public class Renderer2D
 
 		int[] newCoords2 = {coords[2], coords[3], coords[4], coords[5]};
 		paintOneBond(newCoords2, bondColor);
-
 	}
-
 
 	/**
 	 *  Paints the given triplebond.
@@ -503,7 +552,72 @@ public class Renderer2D
 		g.fillPolygon(xCoords, yCoords, 4);
 	}
 
+	/**
+	 *  Paints the given bond as a wedge bond.
+	 *
+	 *@param  bond       The singlebond to be drawn
+	 *@param  bondColor  Description of the Parameter
+	 */
+	void paintWedgeBond(Bond bond, Color bondColor)
+	{
+        double wedgeWidth = r2dm.getBondWidth() * 2.0; // this value should be made customazible
+        
+        int[] coords = GeometryTools.getBondCoordinates(bond);
+		g.setColor(bondColor);
+		int[] newCoords = GeometryTools.distanceCalculator(coords, wedgeWidth);
+        if (bond.getStereo() == CDKConstants.STEREO_BOND_UP) {
+            int[] xCoords = {coords[0], newCoords[6], newCoords[4]};
+            int[] yCoords = {coords[1], newCoords[7], newCoords[5]};
+            g.fillPolygon(xCoords, yCoords, 3);
+        } else {
+            int[] xCoords = {coords[2], newCoords[0], newCoords[2]};
+            int[] yCoords = {coords[3], newCoords[1], newCoords[3]};
+            g.fillPolygon(xCoords, yCoords, 3);
+        }
+	}
 
+	/**
+	 *  Paints the given bond as a dashed wedge bond.
+	 *
+	 *@param  bond       The singlebond to be drawn
+	 *@param  bondColor  Description of the Parameter
+	 */
+	void paintDashedWedgeBond(Bond bond, Color bondColor)
+	{
+        logger.debug("Drawing dashed wedge bond");
+        
+        int[] coords = GeometryTools.getBondCoordinates(bond);
+		g.setColor(bondColor);
+
+		double bondLength = bond.getLength();
+		int numberOfLines = (int)(bondLength / 4.0);  // this value should be made customizable
+        double wedgeWidth = r2dm.getBondWidth() * 2.0; // this value should be made customazible
+
+		double widthStep = wedgeWidth/(double)numberOfLines;
+        Point2d p1 = bond.getAtomAt(0).getPoint2D();
+        Point2d p2 = bond.getAtomAt(1).getPoint2D();
+        if (bond.getStereo() == CDKConstants.STEREO_BOND_DOWN_INV) {
+            // draw the wedge bond the other way around
+            p1 = bond.getAtomAt(1).getPoint2D();
+            p2 = bond.getAtomAt(0).getPoint2D();
+        }
+		Vector2d lengthStep = new Vector2d(p2);
+		lengthStep.sub(p1);
+		lengthStep.scale(1.0/numberOfLines);
+		Vector2d p = GeometryTools.calculatePerpendicularUnitVector(p1, p2);
+
+		Point2d currentPoint = new Point2d(p1);
+		Point2d q1 = new Point2d();
+		Point2d q2 = new Point2d();
+		for (int i=0; i <= numberOfLines; ++i) {
+			Vector2d offset = new Vector2d(p);
+			offset.scale(i*widthStep);
+			q1.add(currentPoint, offset);
+			q2.sub(currentPoint, offset);
+			g.drawLine((int)q1.x, (int)q1.y, (int)q2.x, (int)q2.y);
+			currentPoint.add(lengthStep);
+		}
+	}
 
 	/**
 	 *  Paints a line between the startpoint and endpoint of the pointervector that

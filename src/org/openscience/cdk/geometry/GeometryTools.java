@@ -491,6 +491,19 @@ public class GeometryTools
       }
       return hasinfo;
   }
+
+    /** Determines the normalized vector orthogonal on the vector p1->p2.
+     *
+     */
+    public static Vector2d calculatePerpendicularUnitVector(Point2d p1, Point2d p2) {
+        Vector2d v = new Vector2d();
+        v.sub(p2, p1);
+        v.normalize();
+
+        // Return the perpendicular vector
+        return new Vector2d(-1.0 * v.y, v.x);
+    }
+
 }
 
 

@@ -100,7 +100,7 @@
                 <!-- Task to build the libio classes. Clearly, this requires extra
                      jars, and these should be located in ${lib}/libio -->
 
-                <javac destdir="${build}" optimize="off" 
+                <javac destdir="${build}" optimize="off"
                        debug="on" deprecation="off">
                         <src path="${build.src}/org/openscience/cdk/libio" />
                         <src path="${build.src}/org/openscience/cdk/test/libio" />
@@ -163,7 +163,7 @@
                 </javac>
         </target>
 
-        <target name="compile-io" depends="init, dist-core">
+        <target name="compile-io" depends="init, dist-core, dist-standard">
                 <echo message="Compiling classes for cdk-io module." />
 
                 <javac srcdir="${build.src}" destdir="${build}"
@@ -171,6 +171,24 @@
                     <include name="org/openscience/cdk/io/**/*"/>
                     <include name="org/openscience/cdk/ChemFile.java"/>
                     <include name="org/openscience/cdk/exception/UnsupportedChemObjectException.java"/>
+
+                    <classpath refid="project.class.path" />
+                    <classpath>
+                        <fileset dir="${dist}/jar">
+                            <include name="cdk-core.jar" />
+                            <include name="cdk-standard.jar" />
+                        </fileset>
+                    </classpath>
+                </javac>
+        </target>
+
+        <target name="compile-render" depends="init, dist-core, dist-standard">
+                <echo message="Compiling classes for cdk-render module." />
+
+                <javac srcdir="${build.src}" destdir="${build}"
+                       optimize="off" debug="on" deprecation="off">
+                    <include name="org/openscience/cdk/renderer/**/*"/>
+                    <include name="org/openscience/cdk/controller/**/*"/>
 
                     <classpath refid="project.class.path" />
                     <classpath>
@@ -192,20 +210,20 @@
             <patch patchfile="${src}/patches/org.openscience.cdk.toold.LoggingTool.java.MakeUsableInJmolApplet"
                    originalfile="${build.src}/org/openscience/cdk/tools/LoggingTool.java"
                    dir="${build.src}/org/openscience/cdk/tools"/>
-                
+
             <javac srcdir="${build.src}" destdir="${build}"
                    optimize="off" debug="on" deprecation="off"
                    includesfile="${src}/cml.classes">
                 <classpath refid="project.class.path" />
             </javac>
-            
+
             <!-- delete file="${build.src}/org/openscience/cdk/tools/LoggingTool.java"/ -->
         </target>
 
         <target name="compile-test" depends="compile">
                 <!-- Task to build the test classes. -->
                 <javac srcdir="${src}/org/openscience/cdk/test"
-                       destdir="${build}" optimize="off" debug="on" 
+                       destdir="${build}" optimize="off" debug="on"
                        deprecation="off">
                         <exclude name="renderer/Accel*.java" />
                         <exclude name="renderer/Orbitals*.java" />
@@ -323,6 +341,11 @@
                         <exclude name="org/openscience/cdk/Ring.class" />
                         <exclude name="org/openscience/cdk/RingSet.class" />
                         <exclude name="org/openscience/cdk/SetOfMolecules.class" />
+                        <!-- Exclude classes in cdk-io module-->
+                        <exclude name="org/openscience/cdk/io/**" />
+                        <!-- Exclude classes in cdk-render module-->
+                        <exclude name="org/openscience/cdk/renderer/**" />
+                        <exclude name="org/openscience/cdk/controller/**" />
                         <!-- Exclude libio classes -->
                         <exclude name="org/openscience/cdk/libio/**" />
                         <exclude name="org/openscience/cdk/test/libio/**" />
@@ -330,8 +353,6 @@
                         <exclude name="org/openscience/cdk/applications/**" />
                         <!-- Exclude test classes -->
                         <exclude name="org/openscience/cdk/test/**" />
-                        <!-- Exclude classes in cdk-io module-->
-                        <exclude name="org/openscience/cdk/io/**" />
                         <!-- Exclude classes in cdk-standard module-->
                         <exclude name="org/openscience/cdk/tools/LoggingTool.class" />
                         <exclude name="org/openscience/cdk/tools/IsotopeFactory.class" />
@@ -396,6 +417,15 @@
                 </jar>
         </target>
 
+        <target name="dist-render" depends="compile-render">
+                <jar jarfile="${dist}/jar/cdk-render.jar">
+                    <fileset dir="${build}">
+                        <include name="org/openscience/cdk/renderer/**/*" />
+                        <include name="org/openscience/cdk/controller/**/*" />
+                    </fileset>
+                </jar>
+        </target>
+
         <target name="dist-standard" depends="compile-standard, dist.init">
                 <jar jarfile="${dist}/jar/cdk-standard.jar">
                     <fileset dir="${build}">
@@ -411,10 +441,12 @@
                 </jar>
         </target>
 
-        <target name="dist-all" depends="dist-with-java3d, dist-core, dist-extra, dist-libio,
-                                         dist-cml, dist-apps, dist-test, dist-io" />
+        <target name="dist-all" depends="dist-core, dist-standard, 
+                                         dist-io, dist-render, 
+                                         dist-extra, dist-libio,
+                                         dist-apps, dist-test" />
 
-        <target name="dist" depends="dist-extra" />
+        <target name="dist" depends="dist-all" />
 
         <target name="dist-with-java3d" depends="compile-with-java3d, dist-core">
                 <jar jarfile="${dist}/jar/cdk-extra-with-java3d.jar">
@@ -532,23 +564,24 @@
 
         <target name="run" depends="dist-core, dist-extra, dist-test, dist-standard">
                 <java classname="org.openscience.cdk.test.HOSECodeTest" fork="yes">
-			<classpath>
-                                <pathelement location="${dist}/jar/cdk-core.jar" />
-				<pathelement location="${dist}/jar/cdk-standard.jar" />
-                                <pathelement location="${dist}/jar/cdk-extra.jar" />
-                                <pathelement location="${dist}/jar/cdk-apps.jar" />
-                                <pathelement location="${dist}/jar/cdk-test.jar" />
-				<pathelement location="${dist}/jar/cdk-libio.jar" />				
-                                <pathelement path="${java.class.path}" />
-                                <pathelement location="." />
-                                <fileset dir="${lib}">
-                                        <include name="*.jar" />
-                                </fileset>
-                                <fileset dir="${lib}/libio">
-                                        <include name="*.jar" />
-                                </fileset>
-				
-                        </classpath>
+                    <classpath>
+                        <pathelement location="${dist}/jar/cdk-core.jar" />
+                        <pathelement location="${dist}/jar/cdk-standard.jar" />
+                        <pathelement location="${dist}/jar/cdk-io.jar" />
+                        <pathelement location="${dist}/jar/cdk-render.jar" />
+                        <pathelement location="${dist}/jar/cdk-extra.jar" />
+                        <pathelement location="${dist}/jar/cdk-apps.jar" />
+                        <pathelement location="${dist}/jar/cdk-test.jar" />
+                        <pathelement location="${dist}/jar/cdk-libio.jar" />
+                        <pathelement path="${java.class.path}" />
+                        <pathelement location="." />
+                        <fileset dir="${lib}">
+                                <include name="*.jar" />
+                        </fileset>
+                        <fileset dir="${lib}/libio">
+                                <include name="*.jar" />
+                        </fileset>
+                    </classpath>
                 </java>
         </target>
 

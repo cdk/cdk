@@ -124,7 +124,7 @@ public class JCPController2D {
          **/
         public void mouseDragged(MouseEvent e)
         {
-            // logger.debug("Mouse dragged");
+            logger.debug("Mouse dragged");
 
                 int mouseX = e.getX(), mouseY = e.getY();
                 wasDragged = true;
@@ -230,7 +230,7 @@ public class JCPController2D {
          **/
         public void mouseReleased(MouseEvent e)
         {
-            logger.debug("Mouse released");
+                logger.debug("Mouse released in modus: " + c2dm.getDrawMode());
 
                 int mouseX = e.getX(), mouseY = e.getY();
 
@@ -268,10 +268,12 @@ public class JCPController2D {
                         if (bondInRange != null) {
                             // increase Bond order
                             double order = bondInRange.getOrder();
-                            if (order >= 3.0) {
-                                bondInRange.setOrder(1.0);
+                            if (order >= CDKConstants.BONDORDER_TRIPLE) {
+                                bondInRange.setOrder(CDKConstants.BONDORDER_SINGLE);
                             } else {
                                 bondInRange.setOrder(order + 1.0);
+                                // this is tricky as it depends on the fact that the 
+                                // constants are unidistant, i.e. {1.0, 2.0, 3.0}.
                             };
                         } else {
                             if (atomInRange != null) {
@@ -297,6 +299,52 @@ public class JCPController2D {
                                 newBond = new Bond(newAtom1, newAtom2, 1);
                                 atomCon.addBond(newBond);
                             }
+                        }
+                        r2dm.fireChange();
+                }
+                
+                /*************************************************************************
+                 *                       UP BOND MODE                                    *
+                 *************************************************************************/
+                if (c2dm.getDrawMode() == c2dm.UP_BOND) 
+                {
+                        Bond bondInRange = r2dm.getHighlightedBond();
+                                                          
+                        if (bondInRange != null) {
+                            // toggle bond stereo
+                            double stereo = bondInRange.getStereo();
+                            if (stereo == CDKConstants.STEREO_BOND_UP) {
+                                bondInRange.setStereo(CDKConstants.STEREO_BOND_UP_INV);
+                            } else if (stereo >= CDKConstants.STEREO_BOND_UP_INV) {
+                                bondInRange.setStereo(CDKConstants.STEREO_BOND_UNDEFINED);
+                            } else {
+                                bondInRange.setStereo(CDKConstants.STEREO_BOND_UP);
+                            };
+                        } else {
+                            logger.warn("No bond in range!");
+                        }
+                        r2dm.fireChange();
+                }
+                
+                /*************************************************************************
+                 *                       DOWN BOND MODE                                  *
+                 *************************************************************************/
+                if (c2dm.getDrawMode() == c2dm.DOWN_BOND) {
+                        logger.info("Toggling stereo bond down");
+                        Bond bondInRange = r2dm.getHighlightedBond();
+                                                          
+                        if (bondInRange != null) {
+                            // toggle bond stereo
+                            double stereo = bondInRange.getStereo();
+                            if (stereo == CDKConstants.STEREO_BOND_DOWN) {
+                                bondInRange.setStereo(CDKConstants.STEREO_BOND_DOWN_INV);
+                            } else if (stereo == CDKConstants.STEREO_BOND_DOWN_INV) {
+                                bondInRange.setStereo(CDKConstants.STEREO_BOND_UNDEFINED);
+                            } else {
+                                bondInRange.setStereo(CDKConstants.STEREO_BOND_DOWN);
+                            };
+                        } else {
+                            logger.warn("No bond in range!");
                         }
                         r2dm.fireChange();
                 }

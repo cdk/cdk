@@ -4,7 +4,7 @@ CHANGELOG $Date$
 Changes in CVS
 ------------------------------------
 New:
-* A Crystal convertor to Jmol is added.
+* A Crystal convertor to Jmol v5 is added.
 * StructureDiagramGenerator now uses LoggingTool.
 * It is now possible to say if the double bond 
   configurations should be evaluated for every 
@@ -18,6 +18,7 @@ New:
   atomic charge
 * A LonePair class is implemented (RFC #5)
 * More JUnit Tests.
+* Added rendering of wedge bonds (up/down) in Renderer2D
 
 Fixes:
 * HOSECodeGenerator now generates correctly ranked n-sphere codes.
