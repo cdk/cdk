@@ -26,6 +26,12 @@ org/openscience/cdk/SetOfMolecules.java
 org/openscience/cdk/SetOfReactions.java
 org/openscience/cdk/Vibration.java
 org/openscience/cdk/applications/plugin/CDKEditBus.java
+org/openscience/cdk/applications/plugin/CDKEditBus.java
+org/openscience/cdk/applications/plugin/CDKPluginInterface.java
+org/openscience/cdk/applications/plugin/CDKPluginManager.java
+org/openscience/cdk/applications/plugin/PluginClassLoader.java
+org/openscience/cdk/applications/swing/SortedTableModel.java
+org/openscience/cdk/applications/swing/ListeningTableModel.java
 org/openscience/cdk/exception/CDKException.java
 org/openscience/cdk/exception/NoSuchAtomTypeException.java
 org/openscience/cdk/geometry/BondTools.java
@@ -70,8 +76,6 @@ org/openscience/cdk/io/VASPReader.java
 org/openscience/cdk/io/XYZReader.java
 org/openscience/cdk/io/XYZWriter.java
 org/openscience/cdk/io/ZMatrixReader.java
-org/openscience/cdk/io/ChemicalRSSReader.java
-org/openscience/cdk/io/chemrss/RSSHandler.java
 org/openscience/cdk/io/cml/ChemFileCDO.java
 org/openscience/cdk/io/cml/CMLCoreModule.java
 org/openscience/cdk/io/cml/CMLErrorHandler.java
@@ -116,10 +120,5 @@ org/openscience/cdk/tools/SetOfMoleculesManipulator.java
 org/openscience/cdk/tools/IsotopeFactory.java
 org/openscience/cdk/tools/LoggingTool.java
 org/openscience/cdk/tools/TXTBasedAtomTypeConfigurator.java
-org/openscience/cdk/applications/plugin/CDKEditBus.java
-org/openscience/cdk/applications/plugin/CDKPluginInterface.java
-org/openscience/cdk/applications/plugin/CDKPluginManager.java
-org/openscience/cdk/applications/swing/SortedTableModel.java
-org/openscience/cdk/applications/swing/ListeningTableModel.java
 
 
