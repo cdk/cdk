@@ -57,7 +57,8 @@ import org.openscience.cdk.fingerprint.Fingerprinter;
  *
  *@author     cho,steinbeck
  *@cdk.created    2004-09-21
- *@cdk.require java1.4
+ *@cdk.require    java1.4
+ *@cdk.module     builder3d
  */
 public class TemplateHandler3D{
 	Molecule molecule;

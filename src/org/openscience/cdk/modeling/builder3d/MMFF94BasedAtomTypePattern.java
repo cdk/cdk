@@ -36,6 +36,7 @@ import java.util.*;
  *
  * @author     chhoppe
  * @cdk.created    2004-09-07
+ * @cdk.module     builder3d
  */
 public class MMFF94BasedAtomTypePattern {
 

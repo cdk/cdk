@@ -34,9 +34,9 @@ import java.util.*;
 /**
  *  Class stores hose code patterns to identify mm2 force field atom types.
  *
- * @author     chhoppe
- * @cdk.created    2004-09-07
- * @cdk.module extra
+ * @author      chhoppe
+ * @cdk.created 2004-09-07
+ * @cdk.module  builder3d
  */
 public class MM2BasedAtomTypePattern {
 

@@ -60,6 +60,7 @@ import org.openscience.cdk.ringsearch.RingPartitioner;
  *
  *@author         cho, steinbeck
  *@cdk.created    2004-09-07
+ * @cdk.module    builder3d
  */
 public class ModelBuilder3D {
 

@@ -50,6 +50,7 @@ import org.openscience.cdk.CDKConstants;
  *
  * @author     chhoppe
  * @cdk.created    2004-09-07
+ * @cdk.module     builder3d
  */
 public class ForceFieldConfigurator {
 

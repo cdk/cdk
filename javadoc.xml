@@ -187,6 +187,24 @@
         </javadoc>
     </target>
 
+   <target name="doccheck-builder3d">
+        <mkdir dir="reports/javadoc/builder3d/"/>
+        <javadoc private="false" public="true"
+                 destdir="reports/javadoc/builder3d/"
+                 excludepackagenames="org.openscience.cdk.test.*">
+            <classpath refid="project.class.path" />
+
+            <doclet name="com.sun.tools.doclets.doccheck.DocCheck"
+                    path="jar/doccheck.jar" />
+            <fileset dir="${src}">
+                <includesfile name="${src}/builder3d.javafiles"/>
+            </fileset>
+            <sourcepath>
+                <pathelement path="${src}"/>
+            </sourcepath>
+        </javadoc>
+    </target>
+
   <target id="check" name="check">
     <condition property="isMacOsX">
       <and>

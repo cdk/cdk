@@ -47,6 +47,7 @@ import org.openscience.cdk.CDKConstants;
  *
  *@author         Peter Murray-Rust,chhoppe,egonw
  *@cdk.created    2003-??-??
+ * @cdk.module    builder3d
  */
 public class AtomTetrahedralLigandPlacer3D {
 

@@ -286,7 +286,7 @@
             description="Compiles the CDK."
             depends="compile-core, compile-standard, compile-extra, compile-io, 
                      compile-render, compile-render-with-java3d, compile-libio,
-                     compile-qsar">
+                     compile-qsar, compile-builder3d">
         </target>
 
         <target id="compile-all" name="compile-all" depends="compile, compile-experimental, compile-apps"
@@ -451,6 +451,18 @@
                        debug="${debug}" deprecation="${deprecation}">
                     <classpath refid="project.class.path" />
                     <includesfile name="${src}/qsar.javafiles"/>
+                    <excludesfile name="${src}/java1.4+.javafiles" if="isJava13"/>
+                    <excludesfile name="${src}/java1.4.javafiles" unless="isJava14"/>
+                </javac>
+        </target>
+
+        <target id="compile-builder3d" name="compile-builder3d" depends="compile.init">
+                <echo message="Compiling classes for cdk-builder3d module." />
+
+                <javac srcdir="${src}" destdir="${build}" optimize="${optimization}" 
+                       debug="${debug}" deprecation="${deprecation}">
+                    <classpath refid="project.class.path" />
+                    <includesfile name="${src}/builder3d.javafiles"/>
                     <excludesfile name="${src}/java1.4+.javafiles" if="isJava13"/>
                     <excludesfile name="${src}/java1.4.javafiles" unless="isJava14"/>
                 </javac>
@@ -739,6 +751,21 @@
                 </jar>
         </target>
 
+        <target id="dist-builder3d" name="dist-builder3d" depends="compile-builder3d, dist.init">
+                <jar jarfile="${dist}/jar/cdk-builder3d.jar">
+                    <fileset dir="${build}">
+                        <includesfile name="${src}/builder3d.classes" />
+                        <excludesfile name="${src}/java1.4+.classes" if="isJava13"/>
+                        <excludesfile name="${src}/java1.4.classes" unless="isJava14"/>
+                        <excludesfile name="${src}/ant1.6.classes" unless="hasAnt16"/>
+                    </fileset>
+                    <fileset dir="data/templates">
+                        <include name="ringTemplateFingerprints.txt"/>
+                        <include name="ringTemplateStructures.sdf"/>
+                    </fileset>
+                </jar>
+        </target>
+
         <target id="dist-large" name="dist-large" depends="compile-all, dist.init, libjars"
             description="Builds on big jar file for the CDK, including experimental classes.">
                 <jar jarfile="${dist}/jar/cdk-${version}.jar">
@@ -770,8 +797,12 @@
                     <fileset dir="packages/tar/cdk">
                         <include name="AUTHORS" />
                     </fileset>
-                    <fileset dir="${src}">
+                    <fileset dir="${src}"> <!-- from qsar module -->
                         <include name="qsar-descriptors.set"/>
+                    </fileset>
+                    <fileset dir="data/templates"> <!-- from builder3d module -->
+                        <include name="ringTemplateFingerprints.txt"/>
+                        <include name="ringTemplateStructures.sdf"/>
                     </fileset>
                     <fileset dir="${appjars.dir}" includes="**/*.class"/>
                 </jar>
@@ -847,7 +878,7 @@
                                          dist-io, dist-render,
                                          dist-extra, dist-libio,
                                          dist-render-with-java3d,
-                                         dist-qsar" 
+                                         dist-qsar, dist-builder3d" 
                 description="Builds the jar files for the CDK."/>
 
         <target id="sourcedist" name="sourcedist" depends="init"

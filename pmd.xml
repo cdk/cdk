@@ -110,4 +110,14 @@
         </pmd>
     </target>
 
+    <target name="pmd-builder3d">
+        <mkdir dir="${reports.tests}/pmd"/>
+        <pmd shortFilenames="true" rulesetfiles="pmd/custom.xml">
+            <formatter type="summaryhtml" toFile="${reports.tests}/pmd/builder3d.html"/>
+            <fileset dir="${src}">
+                <includesfile name="${src}/builder3d.javafiles"/>
+            </fileset>
+        </pmd>
+    </target>
+
 </project>

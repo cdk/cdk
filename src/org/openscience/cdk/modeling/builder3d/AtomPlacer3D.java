@@ -41,6 +41,7 @@ import org.openscience.cdk.CDKConstants;
  * @author         chhoppe
  * @cdk.keyword    AtomPlacer3D
  * @cdk.created    2004-10-8
+ * @cdk.module     builder3d
  */
 public class AtomPlacer3D {
 

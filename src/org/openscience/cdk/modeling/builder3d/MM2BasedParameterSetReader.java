@@ -47,7 +47,7 @@ import org.openscience.cdk.AtomType;
  *
  * @author         chhoppe
  * @cdk.created    2004-09-07
- * @cdk.module     standard
+ * @cdk.module     builder3d
  * @cdk.keyword    atom, type, mm2
  */
 public class MM2BasedParameterSetReader {
