@@ -531,7 +531,7 @@
             </junit>
         </target>
 	
-        <target name="test" depends="dist-core, dist-extra, dist-test">
+        <target name="test" depends="dist-all, dist-test">
                 <junit printsummary="yes" haltonfailure="yes">
                         <classpath>
                                 <pathelement
