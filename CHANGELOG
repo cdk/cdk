@@ -1,6 +1,12 @@
 CHANGELOG
 ------------------------------------
 
+Changes in CVS
+------------------------------------
+* Added Fragment class (fixes wishlist #591476)
+* Merged IsotopeFactory and ElementFactory
+* Made IsotopeFactory a singleton class
+
 20020805 Release
 ------------------------------------
 * Added --no3D option to cdk.applications.Viewer
