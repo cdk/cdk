@@ -6,5 +6,11 @@
 	 <listitem>
 		<para>A substructure search</para>
 	 </listitem>
+	 <listitem>
+		<para>A energy minimizer / moleculare dynamics module</para>
+	 </listitem>
+	 <listitem>
+		<para>An interface API to other programs and implementation</para>
+	 </listitem>
 </itemizedlist>
-</para> 
+</para>

@@ -144,8 +144,8 @@
 		particular number of electrons contained by the entity in question. </para> 
 	 <para> Ensembles of Molecules, like those involved in a chemical reaction,
 		can be organized in a 
-	 	<ulink url="api/org/openscience/cdk/SetOfMolecules.html">SetOfMolecules</ulink>		
-		class. </para> 
+	 	<ulink url="api/org/openscience/cdk/SetOfMolecules.html">SetOfMolecules</ulink>
+		class. </para>
 	 <para> Due to the dedication of the Model/View/Controller paradigm, the
 		programmer will find a 
 	 	<ulink url="api/org/openscience/cdk/ChemModel.html">ChemModel</ulink>,
@@ -161,7 +161,7 @@
          <para>At this moment the following Input classes are available:
            <itemizedlist>
                 <listitem><para>&MDLReader;</para></listitem>
-                <listitem><para>&CMLReader;</para></listitem>
+                <listitem><para>&CMLReader; <xref linkend="WILLIGHAGEN2001"/></para></listitem>
                 <listitem><para>&XYZReader;</para></listitem>
            </itemizedlist>
            To read a molecule use:

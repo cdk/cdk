@@ -1,10 +1,51 @@
-<para>Libraries that the CDK uses:
-  <itemizedlist> 
-    <listitem> 
+<para>Below is a list of libraries that are used by CDK. They can be downloaded manually, and some
+   might even be installed on your machine already. They can also be downloaded in one bundle as
+   <ulink url="https://sourceforge.net/project/showfiles.php?group_id=20024">cdk-libs</ulink>.
+</para>
+<para>
+  <itemizedlist>
+    <listitem>
       <para><ulink url="http://java.sun.com/products/java-media/3D/index.html">javax.vecmath</ulink></para>
       <para>Version: ??</para>
       <para>License: ??</para>
       <para>Sun's java library for vector algebra from the Java3D package.</para>
+    </listitem>
+    <listitem>
+      <para><ulink url="http://xml.apache.org/xerces-j/">Xerces</ulink></para>
+      <para>Version: 1.3.0</para>
+      <para>License: Apache Software License, Version 1.1</para>
+      <para>Apache's XML parser.</para>
+    </listitem>
+    <listitem>
+      <para><ulink url="http://xml.apache.org/xalan-j/">Xalan</ulink></para>
+      <para>Version: 2.0.1</para>
+      <para>License: Apache Software License, Version 1.1</para>
+      <para>Apache's XSLT processor.</para>
+    </listitem>
+    <listitem>
+      <para><ulink url="http://jakarta.apache.org/log4j/docs/">Log4J</ulink></para>
+      <para>Version: ??</para>
+      <para>License: ??</para>
+      <para>Apache's logging tool.</para>
+    </listitem>
+    <listitem>
+      <para>JUnit</para>
+      <para>Version: ??</para>
+      <para>License: ??</para>
+    </listitem>
+  </itemizedlist>
+</para>
+<para>Additionally, a number of database drivers are used:
+  <itemizedlist>
+    <listitem>
+      <para>MySQL</para>
+      <para>Version: ??</para>
+      <para>License: ??</para>
+    </listitem>
+    <listitem>
+      <para>PostgreSQL</para>
+      <para>Version: ??</para>
+      <para>License: ??</para>
     </listitem>
   </itemizedlist>
 </para>

@@ -1,13 +1,41 @@
-  <para> 
+  <para>
     Revision History of the CDK:
     <itemizedlist>
-      <listitem><para>CVS Version
+      <listitem><para>CVS version
+        <itemizedlist>
+           <listitem><para>Nothing yet</para></listitem>
+        </itemizedlist>
+      </para></listitem>
+    </itemizedlist>
+    <itemizedlist>
+      <listitem><para>Preview 20011201
+        <itemizedlist>
+           <listitem><para>Splitted required libraries from CDK source</para></listitem>
+           <listitem><para>Fixed (again) CML reading</para></listitem>
+        </itemizedlist>
+      </para></listitem>
+    </itemizedlist>
+    <itemizedlist>
+      <listitem><para>Preview 20011015 and 20011013
+        <itemizedlist>
+           <listitem><para>Improvements to SingleRandomStructureGenerator</para></listitem>
+           <listitem><para>Added Log4J as (optional) logging tool</para></listitem>
+           <listitem><para>Fixed a problem in PathTools.breadthFirstTargetSearch()</para></listitem>
+           <listitem><para>Added to convenience methods to XMLTools for serializing
+               and de-serializing</para></listitem>
+        </itemizedlist>
+      </para></listitem>
+    </itemizedlist>
+    <itemizedlist>
+      <listitem><para>Preview 20010909
         <itemizedlist>
            <listitem><para>Added TestCases for PDBReader, Monomer, Polymer and ChemObject.</para></listitem>
            <listitem><para>Added get/setProperty and get/setRemark to ChemObject.</para></listitem>
            <listitem><para>Added classes for rendering graphes</para></listitem>
            <listitem><para>Added classes for complex numbers, vectors and matrices</para></listitem>
            <listitem><para>Change name from Job to ClosedShellJob</para></listitem>
+           <listitem><para>Added Factories for AtomType, Element and Isotope as well as
+              their testcases.</para></listitem>
         </itemizedlist>
       </para></listitem>
     </itemizedlist>
