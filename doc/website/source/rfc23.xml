@@ -3,7 +3,7 @@
                          "dtd/website.dtd" [
   <!ENTITY rfc SYSTEM "../../RFC/23.xml">
 ]>
-<webpage id="rfc22">
+<webpage id="rfc23">
   <config param="last-change-by" value="$Author$"/>
   <config param="rcsdate" value="$Date$"/>
 
