@@ -84,7 +84,7 @@ public class DBWriter implements ChemObjectWriter
 		cmlw.write(mol);
 		String moleculeString = writer.toString();
 		String[] elements = {"C","H","N","O","S","P","F","Cl","Br","I"};
-		String elementFormula = SwissArmyKnife.elementFormulaGenerator(mol, elements);
+		String elementFormula = SwissArmyKnife.generateElementFormula(mol, elements);
 		System.out.println(elementFormula);
 		System.out.println(elementFormula.substring(elementFormula.indexOf("C") + 1, elementFormula.indexOf("H")));
 				

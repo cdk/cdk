@@ -122,7 +122,7 @@ public class SwissArmyKnife
 	 * @param   element  The array of element symbols
 	 * @return     The element formula as a string
 	 */
-	public static String elementFormulaGenerator(Molecule mol, String[] elements)
+	public static String generateElementFormula(Molecule mol, String[] elements)
 	{
 		int num = elements.length;
 		StringBuffer formula = new StringBuffer();
