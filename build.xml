@@ -375,7 +375,7 @@
         
 	      <!-- Convert the JavaCC .jj file to the correct .java files for the IUPAC parser -->
         <target id="javacc" name="javacc" depends="nojavacc, dojavacc"/>
-        <target name="dojavacc" depends="init, check" unless="dotjjfiles.uptodate">
+        <target name="dojavacc" depends="init, check" if="hasAnt16" unless="dotjjfiles.uptodate">
           <delete>
               <fileset id="javacc-generated" 
               dir="${build.src}/org/openscience/cdk/iupac/parser/" 
