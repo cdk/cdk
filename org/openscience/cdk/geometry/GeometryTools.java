@@ -425,9 +425,9 @@ public class GeometryTools
       return hasinfo;
   }
 
-	/** Determines if this model contains 23 coordinates
+	/** Determines if this model contains 3D coordinates
 	  *
-	  * @return  boolean indication that 23 coordinates are available 
+	  * @return  boolean indication that 3D coordinates are available 
 	 */
   public static boolean has3DCoordinates(Molecule m) {
       boolean hasinfo = true;

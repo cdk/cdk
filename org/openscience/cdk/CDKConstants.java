@@ -90,8 +90,8 @@ public interface CDKConstants
 
 	/****************************************
 	 * Some predefined flags - keep the     *
-	 * numbers below 50 free for other      * 
-	 * purposes                             * 
+	 * numbers below 50 free for other      *
+	 * purposes                             *
 	 ****************************************/
 
 	/** Has a chemobject been placed (Wheresoever)? Flags for Structure Diagram Generation and other uses */
@@ -102,8 +102,6 @@ public interface CDKConstants
 	static int ISALIPHATIC = 52;
 	/** Has a chemobject been visited during a search? Flags for Structure Diagram Generation and other uses */
 	static int VISITED = 53; // Use in tree searches
-
-
 
 }
 

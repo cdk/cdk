@@ -3,11 +3,16 @@ CHANGELOG
 
 Changes in CVS
 ------------------------------------
-* added cdk-view executable
-* added Viewer application that detects 3D/2D
+
+20020206 Release
+------------------------------------
+* added Viewer application that detects 3D/2D (cdk-view executable)
 * added dumpSystemProperties() to LoggerTool
   (lists OS version/arch and Java version/vendor)
-* adding Rendered3D which does not use Java3D
+* adding Rendered3D which does not use Java3D (not yet operational)
+* fixed Atom.point2D == null problem
+* fixed reading of CML files with DTD for Aelfred2 
+  (closes bug #???)
 
 20020101.1 Release
 ------------------------------------

@@ -55,7 +55,8 @@ public class Viewer {
   	      reader = new XYZReader(new FileReader(inFile));
           logger.info("Expecting XYZ format...");
         } else if (inFile.endsWith(".cml")) {
-  	      reader = new CMLReader(new FileReader(inFile));
+          String url = "file:" + System.getProperty("user.dir") + "/" + inFile;
+          reader = new CMLReader(url);
           logger.info("Expecting CML format...");
         } else if (inFile.endsWith(".pdb")) {
   	      reader = new PDBReader(new FileReader(inFile));
@@ -123,16 +124,16 @@ public class Viewer {
                       mv.display();
                       logger.debug(".. done");
                   }
-			  } else if (GeometryTools.has2DCoordinates(m)) {
-			      logger.info("Viewing with 2D viewer");
+              } else if (GeometryTools.has2DCoordinates(m)) {
+                  logger.info("Viewing with 2D viewer");
                   MoleculeViewer2D mv = new MoleculeViewer2D(m);
                   mv.display();
-			  } else {
-			      System.out.println("Molecule has no coordinates.");
-			  }
+              } else {
+                  System.out.println("Molecule has no coordinates.");
+              }
             }
           }
-	      }
+      }
     }
     
     public static void main(String[] args) {
@@ -146,7 +147,7 @@ public class Viewer {
             // parse options
             for (int i=1; i<args.length; i++) {
                 String opt = args[i-1];
-                if (opt.equals("--nojava3D")) {
+                if ("--nojava3d".equalsIgnoreCase(opt)) {
                     useJava3D = false;
                 } else {
                     System.err.println("Unknown option: " + opt);
@@ -159,7 +160,7 @@ public class Viewer {
             System.out.println("Syntax : Viewer [options] <inputfile>");
             System.out.println();
             System.out.println("options: --nojava3D    Disable Java3D support");
-			System.exit(0);
+            System.exit(0);
         }
 
         if (new File(filename).canRead()) {

@@ -27,6 +27,7 @@
  *  */
 package org.openscience.cdk.renderer;
 
+import org.openscience.cdk.renderer.color.*;
 import org.openscience.cdk.geometry.*;
 import org.openscience.cdk.tools.*;
 import org.openscience.cdk.*;
@@ -41,8 +42,7 @@ public class Renderer3D {
     public Renderer3DModel r3dm;
 
     public Renderer3D() {
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
-        r3dm = new Renderer3DModel();
+        this(new Renderer3DModel());
     }
 
     public Renderer3D(Renderer3DModel r3dm) {
@@ -61,9 +61,15 @@ public class Renderer3D {
         for (int i=0; i<atoms.length; i++) {
             logger.debug("Paint atom " + i);
             Atom atom = atoms[i];
-            int atomRadius = 10;
-            g.fillRect((int)atom.getX2D() - (atomRadius / 2), (int)atom.getY2D() - (atomRadius / 2), atomRadius, atomRadius);
-            // g.drawOval(x - radius, y - radius, diameter, diameter);
+            int atomRadius = 20;
+            g.setColor(r3dm.getAtomColor(atom));
+            g.fillOval((int)atom.getX2D() - (atomRadius / 2),
+                       (int)atom.getY2D() - (atomRadius / 2),
+                       atomRadius, atomRadius);
+            g.setColor(Color.black);
+            g.drawOval((int)atom.getX2D() - (atomRadius / 2),
+                       (int)atom.getY2D() - (atomRadius / 2),
+                       atomRadius, atomRadius);
         }
     }
 

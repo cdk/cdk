@@ -27,10 +27,11 @@
  *  */
 package org.openscience.cdk.renderer;
 
-import java.awt.*;
-import org.openscience.cdk.*;
+import org.openscience.cdk.renderer.color.*;
 import org.openscience.cdk.event.*;
+import org.openscience.cdk.*;
 import java.util.*;
+import java.awt.*;
 
 
 /**
@@ -39,6 +40,7 @@ import java.util.*;
 public class Renderer3DModel {
 
     private Color backColor = Color.white;
+    private AtomColorer atomColorer = new CDKAtomColors();
 
     private Vector listeners = new Vector();
 
@@ -91,5 +93,14 @@ public class Renderer3DModel {
      */
     public void setBackColor(Color backColor) {
         this.backColor = backColor;
+    }
+
+    /**
+     * Returns the atom colorer
+     *
+     * @return the atom colorer
+     */
+    public Color getAtomColor(Atom a) {
+        return atomColorer.getAtomColor(a);
     }
 }
