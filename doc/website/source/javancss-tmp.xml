@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <javancss>
-  <date>2002-05-05</date>
-  <time>10:22:57</time>
+  <date>2002-05-18</date>
+  <time>11:18:01</time>
   <packages>
     <package>
       <name>org.openscience.cdk</name>
@@ -178,8 +178,8 @@
       <classes>15</classes>
       <functions>160</functions>
       <ncss>1539</ncss>
-      <javadocs>123</javadocs>
-      <javadoc_lines>580</javadoc_lines>
+      <javadocs>124</javadocs>
+      <javadoc_lines>587</javadoc_lines>
       <single_comment_lines>75</single_comment_lines>
       <multi_comment_lines>437</multi_comment_lines>
     </package>
@@ -236,11 +236,11 @@
     <package>
       <name>org.openscience.cdk.test</name>
       <classes>40</classes>
-      <functions>183</functions>
-      <ncss>2469</ncss>
+      <functions>184</functions>
+      <ncss>2466</ncss>
       <javadocs>27</javadocs>
       <javadoc_lines>114</javadoc_lines>
-      <single_comment_lines>650</single_comment_lines>
+      <single_comment_lines>649</single_comment_lines>
       <multi_comment_lines>966</multi_comment_lines>
     </package>
     <package>
@@ -256,28 +256,28 @@
     <package>
       <name>org.openscience.cdk.tools</name>
       <classes>18</classes>
-      <functions>94</functions>
-      <ncss>1643</ncss>
-      <javadocs>67</javadocs>
-      <javadoc_lines>415</javadoc_lines>
-      <single_comment_lines>28</single_comment_lines>
-      <multi_comment_lines>484</multi_comment_lines>
+      <functions>95</functions>
+      <ncss>1662</ncss>
+      <javadocs>79</javadocs>
+      <javadoc_lines>509</javadoc_lines>
+      <single_comment_lines>29</single_comment_lines>
+      <multi_comment_lines>503</multi_comment_lines>
     </package>
     <total>
       <classes>184</classes>
-      <functions>1316</functions>
-      <ncss>14445</ncss>
-      <javadocs>932</javadocs>
-      <javadoc_lines>5116</javadoc_lines>
+      <functions>1318</functions>
+      <ncss>14461</ncss>
+      <javadocs>945</javadocs>
+      <javadoc_lines>5217</javadoc_lines>
       <single_comment_lines>1052</single_comment_lines>
-      <multi_comment_lines>5193</multi_comment_lines>
+      <multi_comment_lines>5212</multi_comment_lines>
     </total>
     <table>
       <tr><td>Packages</td><td>Classes</td><td>Functions</td><td>NCSS</td><td>Javadocs</td><td>per</td></tr>
-      <tr><td>26.00</td><td>184.00</td><td>1,316.00</td><td>14,445.00</td><td>932.00</td><td>Project</td></tr>
-      <tr><td></td><td>7.08</td><td>50.62</td><td>555.58</td><td>35.85</td><td>Package</td></tr>
-      <tr><td></td><td></td><td>7.15</td><td>78.51</td><td>5.07</td><td>Class</td></tr>
-      <tr><td></td><td></td><td></td><td>10.98</td><td>10.98</td><td>Function</td></tr>
+      <tr><td>26.00</td><td>184.00</td><td>1,318.00</td><td>14,461.00</td><td>945.00</td><td>Project</td></tr>
+      <tr><td></td><td>7.08</td><td>50.69</td><td>556.19</td><td>36.35</td><td>Package</td></tr>
+      <tr><td></td><td></td><td>7.16</td><td>78.59</td><td>5.14</td><td>Class</td></tr>
+      <tr><td></td><td></td><td></td><td>10.97</td><td>10.97</td><td>Function</td></tr>
     </table>
   </packages>
 </javancss>

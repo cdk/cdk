@@ -41,7 +41,8 @@
       <tocentry page="manpages.xml" filename="manpages.html"/>
       <tocentry page="javadoc-stats.xml" filename="javadoc-stats.html"/>
     </tocentry>
-   <tocentry page="screenshots.xml" filename="screenshots.html"/>
+    <tocentry page="screenshots.xml" filename="screenshots.html"/>
+    <tocentry page="software.xml" filename="software.html"/>
     <tocentry page="maillinglists.xml" filename="maillinglists.html"/>
     <tocentry page="download.xml" filename="download.html"/>
     <tocentry page="biblio.xml" filename="biblio.html"/>
