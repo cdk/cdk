@@ -60,10 +60,9 @@ public class ElementTest extends TestCase {
     }
     
     public void testElement2() {
-        Element e = new Element("H", 1, 1);
+        Element e = new Element("H", 1);
         assertEquals("H", e.getSymbol());
         assertEquals(1, e.getAtomicNumber());
-        assertEquals(1, e.getAtomicMass());
     }
     
     // test methods
@@ -76,14 +75,8 @@ public class ElementTest extends TestCase {
         
     public void testSetAtomicNumber() {
         Element e = new Element("H");
-        e.setAtomicMass(1);
-        assertEquals(1, e.getAtomicMass());
-    }
-
-    public void testSetAtomicMass() {
-        Element e = new Element("D");
-        e.setAtomicMass(2);
-        assertEquals(2, e.getAtomicMass());
+        e.setAtomicNumber(1);
+        assertEquals(1, e.getAtomicNumber());
     }
 
     public void testClone() {

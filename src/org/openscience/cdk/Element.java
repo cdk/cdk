@@ -49,9 +49,6 @@ public class Element extends ChemObject implements java.io.Serializable, Cloneab
     /** The atomic number for this element giving their position in the periodic table. */
     protected int atomicNumber = 0;
 
-    /** The atomic mass of this element. */
-    protected int atomicMass;
-
     /**
      * Constructs an empty Element.
      *
@@ -77,35 +74,10 @@ public class Element extends ChemObject implements java.io.Serializable, Cloneab
      *
      * @param   symbol  The element symbol of this element.
      * @param   atomicNumber  The atomicNumber of this element.
-     * @param   atomicMass  The atomicMass of this element.
      */
-    public Element(String symbol, int atomicNumber, int atomicMass) {
+    public Element(String symbol, int atomicNumber) {
         this(symbol);
         this.atomicNumber = atomicNumber;
-        this.atomicMass = atomicMass;
-    }
-
-    /**
-     * Returns the atomic mass of this element.
-     *
-     * @return The atomic mass of this element
-     *
-     * @see    #setAtomicMass
-     */
-    public int getAtomicMass() {
-
-        return this.atomicMass;
-    }
-
-    /**
-     * Sets the atomic mass of this element.
-     *
-     * @param   atomicMass The atomic mass to be assigned to this element
-     *
-     * @see    #getAtomicMass
-     */
-    public void setAtomicMass(int atomicMass) {
-        this.atomicMass = atomicMass;
     }
 
     /**
@@ -116,14 +88,6 @@ public class Element extends ChemObject implements java.io.Serializable, Cloneab
      * @see    #setAtomicNumber
      */
     public int getAtomicNumber() {
-
-        /*         Isotope isotope = null;
-                if (this.atomicNumber == 0)
-                {
-                    isotope    = new org.openscience.cdk.tools.StandardIsotopes().getMajorIsotope(getSymbol());
-                    this.atomicNumber = (int)(isotope.atomicMass / 2);
-                }
-         */
         return this.atomicNumber;
     }
 
@@ -184,7 +148,6 @@ public class Element extends ChemObject implements java.io.Serializable, Cloneab
         sb.append("Element(");
         sb.append(getSymbol());
         sb.append(", AN:"); sb.append(getAtomicNumber());
-        sb.append(", MASS:"); sb.append(getAtomicMass());
         sb.append(")");
         return sb.toString();
     }
@@ -203,8 +166,7 @@ public class Element extends ChemObject implements java.io.Serializable, Cloneab
             return false;
         }
         Element elem = (Element)object;
-        if (atomicMass == elem.atomicMass &&
-            atomicNumber == elem.atomicNumber &&
+        if (atomicNumber == elem.atomicNumber &&
             symbol == elem.symbol) {
             return true;
         }

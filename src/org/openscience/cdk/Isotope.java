@@ -32,8 +32,13 @@ package org.openscience.cdk;
  * Used to store and retrieve data of a particular isotope.
  * For example, an carbon 13 isotope can be created with:
  * <pre>
- *   Isotope carbon = new Isotope("C");
- *   carbon.setAtomicMass(13);
+ *   Isotope carbon = new Isotope("C", 13);
+ * </pre>
+ *
+ * <p>A full specification can be constructed with:
+ * <pre>
+ *   // make deuterium
+ *   Isotope carbon = new Isotope(1, "H", 2, 2.01410179, 100.0);
  * </pre>
  *
  * @author     steinbeck
@@ -49,6 +54,8 @@ public class Isotope extends Element implements java.io.Serializable, Cloneable
     public double exactMass = (double) -1;
     /** Natural abundance of this isotope. */
     public double naturalAbundance = (double) -1;
+    /** The mass number for this isotope. */
+    private int massNumber = 0;
 
 
 	/**
@@ -65,29 +72,39 @@ public class Isotope extends Element implements java.io.Serializable, Cloneable
 	 *
 	 * @param  atomicNumber   The atomic number of the isotope
 	 * @param  elementSymbol  The element symbol, "O" for Oxygen, etc.
-	 * @param  atomicMass     The atomic mass of the isotope, 16 for Oxygen, e.g.
+	 * @param  massNumber     The atomic mass of the isotope, 16 for Oxygen, e.g.
 	 * @param  exactMass      The exact mass of the isotope, be a little more explicit here :-)
 	 * @param  nA             The natural abundance of the isotope
 	 */
-	public Isotope(int atomicMass, String elementSymbol, int atomicNumber, double exactMass, double nA) {
-		super(elementSymbol, atomicNumber, atomicMass);
-		this.exactMass = exactMass;
-		this.naturalAbundance = nA;
+	public Isotope(int atomicNumber, String elementSymbol, int massNumber, double exactMass, double nA) {
+		this(atomicNumber, elementSymbol, exactMass, nA);
+        this.massNumber = massNumber;
 	}
 
 
 	/**
 	 *  Constructor for the Isotope object.
 	 *
-	 * @param  atomicMass     The atomic number of the isotope
+	 * @param  atomicNumber   The atomic number of the isotope, 8 for Oxygen
 	 * @param  elementSymbol  The element symbol, "O" for Oxygen, etc.
 	 * @param  exactMass      The exact mass of the isotope, be a little more explicit here :-)
 	 * @param  nA             The natural abundance of the isotope
 	 */
-	public Isotope(int atomicMass, String elementSymbol, double exactMass, double nA) {
-		this(atomicMass, elementSymbol, (int) (atomicMass / 2), exactMass, nA);
+	public Isotope(int atomicNumber, String elementSymbol, double exactMass, double nA) {
+		super(elementSymbol, atomicNumber);
+		this.exactMass = exactMass;
+		this.naturalAbundance = nA;
 	}
 
+	/**
+	 * Constructor for the Isotope object.
+	 *
+	 * @param  elementSymbol  The element symbol, "O" for Oxygen, etc.
+	 */
+	public Isotope(String elementSymbol, int massNumber) {
+		super(elementSymbol);
+		this.massNumber = massNumber;
+	}
 
 	/**
 	 *  Sets the NaturalAbundance attribute of the Isotope object.
@@ -136,6 +153,28 @@ public class Isotope extends Element implements java.io.Serializable, Cloneable
 		return this.exactMass;
 	}
 
+    /**
+     * Returns the atomic mass of this element.
+     *
+     * @return The atomic mass of this element
+     *
+     * @see    #setAtomicMass
+     */
+    public int getMassNumber() {
+
+        return this.massNumber;
+    }
+
+    /**
+     * Sets the atomic mass of this element.
+     *
+     * @param   atomicMass The atomic mass to be assigned to this element
+     *
+     * @see    #getAtomicMass
+     */
+    public void setMassNumber(int massNumber) {
+        this.massNumber = massNumber;
+    }
 
 	/**
 	 *  Clones this atom object.
@@ -161,7 +200,7 @@ public class Isotope extends Element implements java.io.Serializable, Cloneable
 	 */
 	public String toString() {
         StringBuffer sb = new StringBuffer();
-		sb.append("Isotope("); sb.append(atomicMass);
+		sb.append("Isotope("); sb.append(massNumber);
 		sb.append(", EM:"); sb.append(exactMass);
 		sb.append(", AB:"); sb.append(naturalAbundance);
         sb.append(", "); sb.append(super.toString());
@@ -183,7 +222,8 @@ public class Isotope extends Element implements java.io.Serializable, Cloneable
             return false;
         }
         Isotope isotope = (Isotope)object;
-        if (exactMass == isotope.exactMass &&
+        if (massNumber == isotope.massNumber && 
+            exactMass == isotope.exactMass &&
             naturalAbundance == isotope.naturalAbundance) {
             return true;
         }

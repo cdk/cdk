@@ -53,8 +53,8 @@ public class IsotopeTest extends TestCase {
     }
     
     public void testIsotope_int_String_int_double_double() {
-        Isotope i = new Isotope(12, "C", 6, 12.001, 80.0);
-        assertEquals(12, i.getAtomicMass());
+        Isotope i = new Isotope(6, "C", 12, 12.001, 80.0);
+        assertEquals(12, i.getMassNumber());
         assertEquals("C", i.getSymbol());
         assertEquals(6, i.getAtomicNumber());
         assertTrue(12.001 == i.getExactMass());
@@ -71,6 +71,12 @@ public class IsotopeTest extends TestCase {
         Isotope i = new Isotope("C");
         i.setExactMass(12.03);
         assertTrue(12.03 == i.getExactMass());
+    }
+
+    public void testSetMassNumber() {
+        Isotope i = new Isotope("D");
+        i.setMassNumber(2);
+        assertEquals(2, i.getMassNumber());
     }
 
     /**
