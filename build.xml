@@ -64,8 +64,7 @@
 
                 <mkdir dir="${build}" />
 
-                <javac destdir="${build}" optimize="on"
-                deprecation="off">
+                <javac destdir="${build}" optimize="on" deprecation="off">
                         <src path="." />
 
                         <exclude

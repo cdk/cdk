@@ -39,6 +39,8 @@ public class CDKTests {
 	public static Test suite ( ) 
 	{
 		TestSuite suite= new TestSuite("All CDK Tests");
+		suite.addTest(ChemObjectTest.suite());
+		suite.addTest(CloneAtomContainerTest.suite());
 		suite.addTest(RingSearchTest.suite());
 		suite.addTest(ConnectivityCheckerTest.suite());
 		suite.addTest(MorganNumberToolsTest.suite());		
@@ -48,7 +50,6 @@ public class CDKTests {
 		suite.addTest(MonomerTest.suite());		
 		suite.addTest(PolymerTest.suite());		
 		suite.addTest(PDBReaderTest.suite());		
-		suite.addTest(ChemObjectTest.suite());
 		suite.addTest(IsotopeFactoryTest.suite());
 		suite.addTest(ElementFactoryTest.suite());
 		//suite.addTest(AtomTypeFactoryTest.suite());	//Can't find a class like AtomTypeFactoryTest, Stephan

@@ -232,6 +232,25 @@ public class Molecule extends AtomContainer
 	{
 		this.chemNames.addElement(chemName);
 	}
+	
+	       /**
+         * Clones this molecule object.
+         *
+         * @return  The cloned molecule object   
+         */
+        public Object clone()
+        {
+                Object o = null;
+                try
+                {
+                        o = super.clone();
+                }
+                catch (Exception e)
+                {
+                        e.printStackTrace(System.err);
+                }
+                return o;
+        }
 }
 
 

@@ -57,10 +57,12 @@ public class RandomStructureGeneratorTest
 		RandomGenerator rg = new RandomGenerator();
 		rg.setMolecule(molecule);
 	
-		for (int f = 0; f < 100; f++)
+		for (int f = 0; f < 1000; f++)
 		{
+			if (debug) System.out.println("Proposing structure no. " + f);
+			if (debug) System.out.println("Entering rg.proposeStructure()");
 			mol = rg.proposeStructure();
-			if ((double)f/(double)5 == f/5)
+			if ((double)f/(double)50 == f/50)
 			{
 				structures.addElement(mol.clone());
 				if (debug)

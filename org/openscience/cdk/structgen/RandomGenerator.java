@@ -82,28 +82,28 @@ public class RandomGenerator
 	 */
 	public Molecule proposeStructure()
 	{
+		if(debug) System.out.println("RandomGenerator->proposeStructure() Start");
 		do
 		{
-			trial.removeAllBonds();
-			trial.addBonds(molecule);
+			//System.out.println("molecule: " + molecule);
+			trial = (Molecule)molecule.clone();
+			//System.out.println("trial: " + trial);
 			mutate(trial);
-			if (true)
+			if(debug)
 			{
-			String s = "BondCounts:    ";
-			for (int f = 0; f < trial.getAtomCount(); f++)
-			{
-				s += trial.getBondCount(trial.getAtomAt(f)) + " ";
+				String s = "BondCounts:    ";
+				for (int f = 0; f < trial.getAtomCount(); f++)
+				{
+					s += trial.getBondCount(trial.getAtomAt(f)) + " ";
+				}
+				System.out.println(s);
+				s = "BondOrderSums: ";
+				for (int f = 0; f < trial.getAtomCount(); f++)
+				{
+					s += trial.getBondOrderSum(trial.getAtomAt(f)) + " ";
+				}
+				System.out.println(s);
 			}
-			System.out.println(s);
-			s = "BondOrderSums: ";
-			for (int f = 0; f < trial.getAtomCount(); f++)
-			{
-				s += trial.getBondOrderSum(trial.getAtomAt(f)) + " ";
-			}
-			System.out.println(s);
-			}
-
-
 		}
 		while(!cc.isConnected(trial));
 		proposedStructure = trial;
@@ -134,6 +134,7 @@ public class RandomGenerator
 	 */
 	protected void mutate(AtomContainer ac)
 	{
+		if(debug) System.out.println("RandomGenerator->mutate() Start");
 		int nrOfAtoms = ac.getAtomCount();
 		int x1 = 0, x2 = 0, y1 = 0, y2 = 0;
 		double a11 = 0, a12 = 0, a22 = 0, a21 = 0;
@@ -158,6 +159,7 @@ public class RandomGenerator
 					x2 = (int)(Math.random() * nrOfAtoms);
 					y1 = (int)(Math.random() * nrOfAtoms);
 					y2 = (int)(Math.random() * nrOfAtoms);
+					if (debug) System.out.println("RandomGenerator->mutate(): x1, x2, y1, y2: " + x1 + ", " + x2 + ", " + y1 + ", " + y2);
 				}
 				while (!(x1 != x2 && x1 != y1 && x1 != y2 && x2 != y1 && x2 != y2 && y1 != y2));
 				ax1 = ac.getAtomAt(x1);
@@ -209,6 +211,7 @@ public class RandomGenerator
 				{
 					a22 = 0;
 				}
+				if(debug) System.out.println("RandomGenerator->mutate()->The old bond orders: a11, a12, a21, a22: " +  + a11 + ", " + a12 + ", " + a21 + ", " + a22);
 			}while(nonZeroBondsCounter < 2);
 			
 					
