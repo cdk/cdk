@@ -24,7 +24,6 @@ package org.openscience.jmol;
 
 import java.io.File;
 
-import com.obrador.JpegEncoder;
 import java.awt.Container;
 import java.awt.Image;
 import java.awt.PrintJob;
