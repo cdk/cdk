@@ -34,9 +34,8 @@ import java.util.*;
 import java.io.*;
 import javax.vecmath.*;
 
-/* This class is based on Dan Gezelter's XYZReader from Jmol */
 /**
- * This class is experimental
+ * This class is experimental.
  * It reads Z matrices like in gaussians input file
  *
  * @keyword file format, Z-matrix
@@ -51,10 +50,13 @@ public class ZMatrixReader extends DefaultChemObjectReader {
    *
    * @param     input   Reader containing the data to read
    */
-  public ZMatrixReader(Reader input) 
-  {
+  public ZMatrixReader(Reader input) {
     this.input = new BufferedReader(input);
   }
+  
+    public ZMatrixReader() {
+        this(new StringReader(""));
+    }
   
     public String getFormatName() {
         return "ZMatrix";

@@ -278,29 +278,33 @@ public class ReaderFactory {
                        line.startsWith("loop_")) {
                 logger.info("CIF format detected");
                 return new org.openscience.cdk.io.CIFReader(originalBuffer);
-            } else if (lineNumber == 4 && line.length()>7) {
-                // possibly a MDL mol file
-                try {
-                    String atomCountString = line.substring(0, 3).trim();
-                    String bondCountString = line.substring(3, 6).trim();
-                    new Integer(atomCountString);
-                    new Integer(bondCountString);
-                    boolean mdlFile = true;
-                    if (line.length() > 6) {
-                        String remainder = line.substring(6).trim();
-                        for (int i = 0; i < remainder.length(); ++i) {
-                            char c = remainder.charAt(i);
-                            if (!(Character.isDigit(c) || Character.isWhitespace(c))) {
-                                mdlFile = false;
+            } else if (lineNumber == 4) {
+                if (line.indexOf("Z Matrix") != -1) {
+                    return new org.openscience.cdk.io.ZMatrixReader();
+                } else if (line.length()>7) {
+                    // possibly a MDL mol file
+                    try {
+                        String atomCountString = line.substring(0, 3).trim();
+                        String bondCountString = line.substring(3, 6).trim();
+                        new Integer(atomCountString);
+                        new Integer(bondCountString);
+                        boolean mdlFile = true;
+                        if (line.length() > 6) {
+                            String remainder = line.substring(6).trim();
+                            for (int i = 0; i < remainder.length(); ++i) {
+                                char c = remainder.charAt(i);
+                                if (!(Character.isDigit(c) || Character.isWhitespace(c))) {
+                                    mdlFile = false;
+                                }
                             }
                         }
+                        // all tests succeeded, likely to be a MDL file
+                        if (mdlFile) {
+                            return new org.openscience.cdk.io.MDLReader(originalBuffer);
+                        }
+                    } catch (NumberFormatException nfe) {
+                        // Integers not found on fourth line; therefore not a MDL file
                     }
-                    // all tests succeeded, likely to be a MDL file
-                    if (mdlFile) {
-                        return new org.openscience.cdk.io.MDLReader(originalBuffer);
-                    }
-                } catch (NumberFormatException nfe) {
-                    // Integers not found on fourth line; therefore not a MDL file
                 }
             }
             line = buffer.readLine();
