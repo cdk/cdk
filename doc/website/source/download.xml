@@ -19,7 +19,7 @@
         <varlistentry><term><filename>cdk-source</filename></term>
           <listitem>
             <para>Source code. To compile the source code you need cdk-libs 20020206.
-			  Current version: 20020206.
+			  Current version: 20020419.
 		    </para>
           </listitem>
         </varlistentry>
@@ -35,8 +35,24 @@
             <para>Binary distribution with two executables: cdk-fileconvert and cdk-dbadmin.
 			   The package is installable with <quote>configure &amp;&amp; make &amp;&amp; make install</quote>
 			   on Linux/Unix/BSD like systems. To run the software you need cdk-libs 20020206
-			   installed. Current version: 20020206.
+			   installed. Current version: 20020419.
 			</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry><term><filename>cdk-test</filename></term>
+          <listitem>
+            <para>Binary distribution with one executable: cdk-test. It is used to run JUnit tests for CDK.
+                  The package is installable with <quote>configure &amp;&amp; make &amp;&amp; make install</quote>
+                  on Linux/Unix/BSD like systems. To run the software you need cdk-libs 20020206
+                  installed. Current version: 20020419.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry><term><filename>cdk-doc</filename></term>
+          <listitem>
+            <para>
+              Contains the JavaDoc of the library. Current version: 20020206.
+            </para>
           </listitem>
         </varlistentry>
       </variablelist>
