@@ -308,7 +308,8 @@ public class Renderer2D   {
         int alignment = GeometryTools.getBestAlignmentForLabel(container, atom);
         boolean drawSymbol = false;
         if (atom instanceof PseudoAtom) {
-            drawSymbol = true;
+            drawSymbol = false;
+            paintPseudoAtomLabel((PseudoAtom)atom, atomBackColor, graphics, alignment);
         } else if (!atom.getSymbol().equals("C")) {
             /*
             *  only show element for non-carbon atoms,
