@@ -25,7 +25,8 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- *  */
+ *
+ */
 package org.openscience.cdk.io;
 
 import org.openscience.cdk.*;
@@ -34,30 +35,30 @@ import java.io.*;
 import java.util.*;
 import javax.vecmath.*;
 
-/*
+/**
  * This class is the interface that all IO readers should implement.
  * Programs need only care about this interface for any kind of IO.
  *
  * Currently, database IO and file IO is supported. Internet IO is
  * expected.
  *
- * @version  $Date$
- */
+ * @version  $Revision$
+ **/
 public interface ChemObjectReader {
 
-    /*
+    /**
      * Reads an ChemObject of type "object" from input. The constructure
      * of the actual implementation may take a Reader as input to get
      * a very flexible reader that can read from string, files, etc.
      * 
      * @param  object    the type of object to return
      * @return returns an object of that contains the content (or 
-               part) of the input content
+     *         part) of the input content
      *
      * @exception UnsupportedChemObjectException it is thrown if
      *            the type of information is not available from 
      *            the input
-     */
+     **/
     public ChemObject read(ChemObject object) throws UnsupportedChemObjectException;
 
 }
