@@ -225,6 +225,7 @@ public class PDBReader extends DefaultChemObjectReader {
         new Point3d(new Double(cLine.substring(30, 38)).doubleValue(),
           new Double(cLine.substring(38, 46)).doubleValue(),
             new Double(cLine.substring(46, 54)).doubleValue()));
+    oAtom.setProperty("pdb.record", cLine);
     oAtom.setProperty("pdb.serial", new Integer(cLine.substring(6, 11).trim()));
     oAtom.setProperty("pdb.name", (new String(cLine.substring(12, 16))).trim());
     oAtom.setProperty("pdb.altLoc", (new String(cLine.substring(16, 17))).trim());
