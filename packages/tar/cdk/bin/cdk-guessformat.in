@@ -17,4 +17,4 @@ while [ `echo $1 | egrep '^-D' | wc -l` != 0 ]; do
         shift
 done
 
-${JAVA} -cp ${CLASSPATH} org.openscience.cdk.applications.FileFormatGuesser $*
+${command} -cp ${CLASSPATH} org.openscience.cdk.applications.FileFormatGuesser $*

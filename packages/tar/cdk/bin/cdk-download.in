@@ -25,4 +25,4 @@ while [ `echo $1 | egrep '^-D' | wc -l` != 0 ]; do
         shift
 done
 
-${command} -Dcdk.debugging=true -cp ${CLASSPATH} org.openscience.cdk.test.internet.DADMLTest http://cdk.sf.net/super.xml CAS-NUMBER $*
+${command} -cp ${CLASSPATH} org.openscience.cdk.test.internet.DADMLTest http://cdk.sf.net/super.xml CAS-NUMBER $*

@@ -17,4 +17,4 @@ while [ `echo $1 | egrep '^-D' | wc -l` != 0 ]; do
         shift
 done
 
-${JAVA} -Dcdk.debugging=true -cp ${CLASSPATH} org.openscience.cdk.applications.FileConvertor $*
+${command} -cp ${CLASSPATH} org.openscience.cdk.applications.FileConvertor $*
