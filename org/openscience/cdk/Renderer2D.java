@@ -234,26 +234,19 @@ public class Renderer2D implements Renderer2DSettings
 		if (dist1 < dist2)	
 		{
 			int[] newCoords1 = {coords[0],coords[1],coords[6],coords[7]};
-			paintOneBond(shortenBond(newCoords1));
+			paintOneBond(shortenBond(newCoords1, ring.getRingSize()));
 		}
 		else
 		{
 			int[] newCoords2 = {coords[2],coords[3],coords[4],coords[5]};
-			paintOneBond(shortenBond(newCoords2));
+			paintOneBond(shortenBond(newCoords2, ring.getRingSize()));
 		}	
 	}
 	
-	private int[] shortenBond(int[] coords)
+	private int[] shortenBond(int[] coords, int edges)
 	{
-//		double length = Math.sqrt(Math.pow((coords[0] - coords[2]),2) + Math.pow((coords[1] - coords[3]),2));
-//		double angle;
-//		if ((coords[2] - coords[0]) == 0) angle = Math.PI/2;
-//		else
-//		{
-//			angle = Math.atan(((double)coords[3] - (double)coords[1]) / ((double)coords[2] - (double)coords[0]));
-//		}
-		int xDiff = (coords[0] - coords[2]) / 8;
-		int yDiff = (coords[1] - coords[3]) / 8;
+		int xDiff = (coords[0] - coords[2]) / (edges * 2);
+		int yDiff = (coords[1] - coords[3]) / (edges * 2);
 		int[] newCoords = {coords[0] - xDiff,coords[1] - yDiff,coords[2] + xDiff,coords[3] + yDiff};
 		return newCoords;
 	}

@@ -118,7 +118,7 @@ public class Bond extends ElectronContainer implements Cloneable
 	 * @param   atom  The atom the bond partner is searched of
 	 * @return     the connected atom or null
 	 */
-	public Atom getConnectedAtom(Atom atom) throws Exception
+	public Atom getConnectedAtom(Atom atom)
 	{
 		if (atoms[0] == atom)
 		{
@@ -128,10 +128,7 @@ public class Bond extends ElectronContainer implements Cloneable
 		{
 			return atoms[0];
 		}
-		else
-		{
-			throw new Exception("no atom connected");
-		}
+		return null;
 	}
 
 	/**
@@ -143,10 +140,14 @@ public class Bond extends ElectronContainer implements Cloneable
 	public boolean contains(Atom atom)
 	{
 		boolean contains = false;
-		if (atoms[0] == atom || atoms[1] == atom)		
+		if (atoms[0] == atom)		
 		{
 			contains = true;
-		}		
+		}
+		else if (atoms[1] == atom)
+		{
+			contains = true;
+		}
 		return contains;
 	}
 	

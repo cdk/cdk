@@ -51,6 +51,7 @@ public class SSSRFinder
 	 */
 	public  RingSet findSSSR(Molecule mol)
 	{
+		Bond brokenBond = null;
 		RingSet sssr = new RingSet();
 		Molecule molecule = (Molecule)mol.clone();
 		Atom smallest;
@@ -66,6 +67,8 @@ public class SSSRFinder
 		Vector trimSet = new Vector();
 		Vector nodesN2 = new Vector();
 		
+		initPath(molecule);
+		
 		// load fullSet with the numbers of our atoms
 		for (int f = 0; f < molecule.getAtomCount(); f++)
 		{
@@ -80,6 +83,7 @@ public class SSSRFinder
 			//greater than zero.	
 			smallestDegree = 7;
 			smallest = null;
+			nodesN2.removeAllElements();
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
 				Atom atom = molecule.getAtom(f);
@@ -119,15 +123,12 @@ public class SSSRFinder
 				for (int f = 0; f < nodesN2.size(); f++)
 				{
 					ring = getRing((Atom)nodesN2.elementAt(f), molecule);
-					if (ring.getRingSize() > 0)
+					// check, if this ring already is in SSSR
+					if (!sssr.ringAlreadyInSet(ring))
 					{
-						// check, if this ring already is in SSSR
-						if (!sssr.ringAlreadyInSet(ring))
-						{
-							sssr.addElement(ring);
-							rememberNodes[nodesToBreakCounter] = (Atom)nodesN2.elementAt(f);
-							nodesToBreakCounter++;
-						}
+						sssr.addElement(ring);
+						rememberNodes[nodesToBreakCounter] = (Atom)nodesN2.elementAt(f);
+						nodesToBreakCounter++;
 					}
 				}
 				if (nodesToBreakCounter == 0)
@@ -138,20 +139,23 @@ public class SSSRFinder
 				for (int f = 0; f < nodesToBreakCounter; f++){
 					breakBond(rememberNodes[f], molecule);
 				}
+				if (brokenBond != null)
+				{
+					molecule.addBond(brokenBond);
+					brokenBond = null;
+				}
 			}
 			// if there are nodes of degree 3
 			else if (smallestDegree == 3)
 			{
 				ring = getRing(smallest, molecule);
-				if (ring.getRingSize() > 0)
+				// check, if this ring already is in SSSR
+				if (!sssr.ringAlreadyInSet(ring))
 				{
-					// check, if this ring already is in SSSR
-					if (!sssr.ringAlreadyInSet(ring))
-					{
-						sssr.addElement(ring);
-					}
+					sssr.addElement(ring);
 				}
-				molecule.removeBond(checkEdges(ring, molecule));
+				brokenBond = checkEdges(ring, molecule);
+				molecule.removeBond(brokenBond);
 			}
 		}
 		while(trimSet.size() < fullSet.size());
@@ -177,74 +181,66 @@ public class SSSRFinder
 		int OKatoms = molecule.getAtomCount();
 		/** queue for Breadth First Search of this graph */
 		Queue queue = new Queue();
-//		/** ringsset stores the smallest ring found and returns it */
-//		Ring ringset = new Ring();
 		/* Initialize a path Vector for each node
 		*/
 		Vector pfad1,pfad2,pfad3,pfad4,pfad5;
 		Vector path[] = new Vector[OKatoms];
 		Vector intersection = new Vector();
 		Vector ring = new Vector();
-		initPath(molecule);
 
-		for (int f = 0; f < OKatoms; f++){
+
+		for (int f = 0; f < OKatoms; f++)
+		{
 			path[f] = new Vector();		
 			molecule.getAtom(f).pointers[PATH].removeAllElements();
 		}
-		try
-		{
-			// Initialize the queue with nodes attached to rootNode
-			neighbors = molecule.getConnectedAtoms(rootNode);
-			for (int f = 0; f < neighbors.length; f++){
-				//if the degree of the f-st neighbor of rootNode is greater 
-				//than zero (i.e., it has not yet been deleted from the list)
-				neighbor = neighbors[f];
-				// push the f-st node onto our FIFO queue	
-				// after assigning rootNode as its source
-				queue.push(neighbor);
-				neighbor.pointers[PATH].addElement(rootNode);
-				neighbor.pointers[PATH].addElement(neighbor);
-			}
-			while (queue.size() > 0){	
-				node = (Atom)queue.pop();
-				mAtoms = molecule.getConnectedAtoms(node);
-				for (int f = 0; f < mAtoms.length; f++){
-					mAtom = mAtoms[f];
-					if (mAtom != node.pointers[PATH].elementAt(node.pointers[PATH].size() - 2)){
-						if (mAtom.pointers[PATH].size() > 0){
-							intersection = getIntersection(node.pointers[PATH], mAtom.pointers[PATH]);
-							if (intersection.size() == 1){
-								// we have found a valid ring closure
-								// now let's prepare the path to
-								// return in tempAtomSet
-								if (debug){
-									System.out.println("path1  "+node.pointers[PATH].toString());
-									System.out.println("path2  "+mAtom.pointers[PATH].toString());
-									System.out.println("rootNode  "+rootNode);
-									System.out.println("ring   "+ ring.toString());
-								}
-								ring = getUnion(node.pointers[PATH], mAtom.pointers[PATH]);
-								return prepareRing(ring,molecule);
+		// Initialize the queue with nodes attached to rootNode
+		neighbors = molecule.getConnectedAtoms(rootNode);
+		for (int f = 0; f < neighbors.length; f++){
+			//if the degree of the f-st neighbor of rootNode is greater 
+			//than zero (i.e., it has not yet been deleted from the list)
+			neighbor = neighbors[f];
+			// push the f-st node onto our FIFO queue	
+			// after assigning rootNode as its source
+			queue.push(neighbor);
+			neighbor.pointers[PATH].addElement(rootNode);
+			neighbor.pointers[PATH].addElement(neighbor);
+		}
+		while (queue.size() > 0){	
+			node = (Atom)queue.pop();
+			mAtoms = molecule.getConnectedAtoms(node);
+			for (int f = 0; f < mAtoms.length; f++){
+				mAtom = mAtoms[f];
+				if (mAtom != node.pointers[PATH].elementAt(node.pointers[PATH].size() - 2)){
+					if (mAtom.pointers[PATH].size() > 0){
+						intersection = getIntersection(node.pointers[PATH], mAtom.pointers[PATH]);
+						if (intersection.size() == 1){
+							// we have found a valid ring closure
+							// now let's prepare the path to
+							// return in tempAtomSet
+							if (debug){
+								System.out.println("path1  "+node.pointers[PATH].toString());
+								System.out.println("path2  "+mAtom.pointers[PATH].toString());
+								System.out.println("rootNode  "+rootNode);
+								System.out.println("ring   "+ ring.toString());
 							}
+							ring = getUnion(node.pointers[PATH], mAtom.pointers[PATH]);
+							return prepareRing(ring,molecule);
 						}
-						else 
-						{   
-							// if path[mNumber] is null
-						    // update the path[mNumber]							
-							pfad2 = node.pointers[PATH];
-							mAtom.pointers[PATH] = (Vector)node.pointers[PATH].clone();
-							mAtom.pointers[PATH].addElement(mAtom);
-							pfad1 = mAtom.pointers[PATH];
-							// now push the node m onto the queue
-							queue.push(mAtom);	
-						}
+					}
+					else 
+					{   
+						// if path[mNumber] is null
+					    // update the path[mNumber]							
+						pfad2 = node.pointers[PATH];
+						mAtom.pointers[PATH] = (Vector)node.pointers[PATH].clone();
+						mAtom.pointers[PATH].addElement(mAtom);
+						pfad1 = mAtom.pointers[PATH];
+						// now push the node m onto the queue
+						queue.push(mAtom);	
 					}
 				}
 			}
-		}
-		catch (Exception exc)
-		{
-			exc.printStackTrace();
 		}
 		return new Ring();
 	}

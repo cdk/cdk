@@ -78,7 +78,7 @@ public class Ring extends AtomContainer
 	{
 		for (int i = 0; i < bondCount; i++)
 		{
-			if (bond.equals(bonds[i]))
+			if (bond == bonds[i])
 			{
 				return true;
 			}
@@ -100,7 +100,7 @@ public class Ring extends AtomContainer
 //	{
 //		for (int i = 0; i < bondCount; i++)
 //		{
-//			if (bond.equals(bonds[i]))
+//			if (bond == bonds[i])
 //			{
 //				if (i == 0)
 //				{
