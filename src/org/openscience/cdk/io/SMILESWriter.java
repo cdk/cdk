@@ -28,13 +28,17 @@
  */
 package org.openscience.cdk.io;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.exception.*;
-import org.openscience.cdk.smiles.*;
-import java.io.*;
-import java.util.*;
-import java.text.*;
-import javax.vecmath.*;
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.smiles.SmilesGenerator;
 
 /**
  * Writes the SMILES strings to a plain text file.

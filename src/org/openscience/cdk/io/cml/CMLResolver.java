@@ -27,10 +27,12 @@
 
 package org.openscience.cdk.io.cml;
 
-import org.xml.sax.*;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 import org.xml.sax.EntityResolver;
-import java.net.URL;
-import java.io.*;
+import org.xml.sax.InputSource;
 
 /**
  * This class resolves DOCTYPE declaration for Chemical Markup Language (CML)

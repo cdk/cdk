@@ -24,10 +24,26 @@
  */
 package org.openscience.cdk.validate;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.tools.IsotopeFactory;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.AtomType;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.ChemSequence;
+import org.openscience.cdk.Crystal;
+import org.openscience.cdk.ElectronContainer;
+import org.openscience.cdk.Element;
+import org.openscience.cdk.Isotope;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.Reaction;
+import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.SetOfReactions;
 import org.openscience.cdk.tools.AtomTypeFactory;
-import org.openscience.cdk.tools.SaturationChecker;
+import org.openscience.cdk.tools.IsotopeFactory;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**

@@ -23,16 +23,15 @@
  */
 package org.openscience.cdk.applications;
 
+import java.io.File;
+import java.io.FileReader;
+
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.smiles.*;
-import org.openscience.cdk.io.*;
-import org.openscience.cdk.isomorphism.mcss.*;
+import org.openscience.cdk.io.ChemObjectReader;
+import org.openscience.cdk.io.ReaderFactory;
+import org.openscience.cdk.isomorphism.mcss.RTools;
+import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.LoggingTool;
-import freeware.PrintfFormat;
-import java.util.Enumeration;
-import java.util.Locale;
-import java.util.Vector;
-import java.io.*;
 
 /**
  * Command line utility that will generate fingerprints for a set of files.

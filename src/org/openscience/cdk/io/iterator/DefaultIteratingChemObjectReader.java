@@ -24,12 +24,13 @@
  */
 package org.openscience.cdk.io.iterator;
 
-import org.openscience.cdk.io.DefaultChemObjectReader;
-import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.io.*;
-import org.openscience.cdk.io.setting.*;
-import org.openscience.cdk.io.listener.*;
 import java.util.Vector;
+
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.io.ReaderEvent;
+import org.openscience.cdk.io.listener.ChemObjectIOListener;
+import org.openscience.cdk.io.listener.ReaderListener;
+import org.openscience.cdk.io.setting.IOSetting;
 
 /**
  * Abstract class that IteratingChemObjectReader's can implement to have it

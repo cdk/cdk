@@ -23,9 +23,12 @@
  */
 package org.openscience.cdk.tools;
 
-import java.net.*;
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.io.StringReader;
+import java.net.URL;
+import java.util.Properties;
 
 /**
  * Useful for logging messages. Often used as a class static variable instantiated like:

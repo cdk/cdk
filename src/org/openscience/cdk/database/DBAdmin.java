@@ -27,11 +27,21 @@
  */
 package org.openscience.cdk.database;
 
-import java.util.*;
-import java.sql.*;
-import java.io.*;
-import org.openscience.cdk.*;
-import org.openscience.cdk.io.*;
+import java.io.File;
+import java.io.FileReader;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Vector;
+
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.ChemSequence;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.io.CMLReader;
 
 /**
   * A command line application for administering the database

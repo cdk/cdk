@@ -23,12 +23,13 @@
  */
 package org.openscience.cdk.iupac.generator;
 
-import org.openscience.cdk.AtomContainer;
+import java.util.Enumeration;
+import java.util.Vector;
+
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Fragment;
 import org.openscience.cdk.exception.NoSuchAtomException;
-import java.util.Vector;
-import java.util.Enumeration;
 
 /**
  * Represents the concept of a fragment with free valences.

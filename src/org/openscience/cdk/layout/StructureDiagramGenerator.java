@@ -29,15 +29,25 @@
  */
 package org.openscience.cdk.layout;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.ringsearch.*;
-import org.openscience.cdk.exception.*;
-import org.openscience.cdk.geometry.*;
-import org.openscience.cdk.tools.*;
-import javax.vecmath.*;
 import java.util.Vector;
-import java.lang.Math;
-import java.awt.*;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Vector2d;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.ElectronContainer;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.Ring;
+import org.openscience.cdk.RingSet;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.ringsearch.RingPartitioner;
+import org.openscience.cdk.ringsearch.SSSRFinder;
+import org.openscience.cdk.tools.ConnectivityChecker;
+import org.openscience.cdk.tools.HydrogenAdder;
 
 /**
  *  Generates 2D coordinates for a molecule for which only connectivity is known

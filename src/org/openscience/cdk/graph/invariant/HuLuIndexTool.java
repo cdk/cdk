@@ -24,12 +24,12 @@
  */
 package org.openscience.cdk.graph.invariant;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.tools.*;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
 import org.openscience.cdk.graph.PathTools;
-import org.openscience.cdk.graph.invariant.exception.*;
-import org.openscience.cdk.exception.*;
-import java.util.*;
+import org.openscience.cdk.graph.invariant.exception.BadMatrixFormatException;
+import org.openscience.cdk.graph.invariant.exception.MatrixIndexOutOfBoundsException;
 
 /**
  * Collection of methods for the calculation of topological indices of a molecular graph.

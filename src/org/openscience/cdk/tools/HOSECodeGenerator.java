@@ -28,12 +28,17 @@
  */
 package org.openscience.cdk.tools;
 
+import java.math.BigInteger;
 import java.util.Vector;
-import javax.swing.*;
-import javax.swing.tree.*;
-import java.math.*;
-import org.openscience.cdk.*;
-import org.openscience.cdk.exception.*;
+
+import javax.swing.tree.DefaultMutableTreeNode;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.Isotope;
+import org.openscience.cdk.exception.CDKException;
 
 /**
  *  Generates HOSE codes. References: <a

@@ -26,19 +26,19 @@
 package org.openscience.cdk.applications.swing;
 
 
-import javax.swing.table.TableModel;
-import javax.swing.event.TableModelEvent;
-
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.JTable;
-import javax.swing.table.TableColumnModel;
-import java.beans.PropertyChangeSupport;
 import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
+
+import javax.swing.JTable;
+import javax.swing.event.TableModelEvent;
+import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableModel;
 
 /**
  *  A sorted table model. The objects in the model must implement the Comparable

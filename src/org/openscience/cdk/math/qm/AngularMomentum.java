@@ -28,7 +28,10 @@
  */
 package org.openscience.cdk.math.qm;
 
-import org.openscience.cdk.math.*;
+import org.openscience.cdk.math.Complex;
+import org.openscience.cdk.math.IMatrix;
+import org.openscience.cdk.math.Matrix;
+import org.openscience.cdk.math.Vector;
 
 /**
  * This class is used to calculate angular momentum states

@@ -28,8 +28,11 @@
  */
 package org.openscience.cdk.renderer;
  
-import java.awt.*;
-import javax.vecmath.*;
+import java.awt.Color;
+
+import javax.vecmath.Color3f;
+import javax.vecmath.Point3d;
+import javax.vecmath.Vector3f;
 
 /**
  * @cdkPackage java3d

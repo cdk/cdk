@@ -24,7 +24,6 @@
  */
 package org.openscience.cdk.graph.rebond;
 
-import java.util.Enumeration;
 
 /**
  * @author  Miguel Howard

@@ -27,8 +27,7 @@
  *  */
 package org.openscience.cdk.tools;
 
-import org.openscience.cdk.*;
-import java.util.*;
+import java.util.Comparator;
 
 /** 
   * Compares elements based on the order commonly used in 

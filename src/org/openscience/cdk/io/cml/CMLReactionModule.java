@@ -28,9 +28,8 @@
  */
 package org.openscience.cdk.io.cml;
 
-import java.util.*;
-import org.xml.sax.*;
-import org.openscience.cdk.io.cml.cdopi.*;
+import org.openscience.cdk.io.cml.cdopi.CDOInterface;
+import org.xml.sax.Attributes;
 
 /**
  * @author Egon Willighagen <elw38@cam.ac.uk>

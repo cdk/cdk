@@ -29,19 +29,38 @@
 package org.openscience.cdk.io;
 
 import java.io.IOException;
-import java.io.Writer;
 import java.io.StringWriter;
-import org.openscience.cdk.*;
-import org.openscience.cdk.exception.*;
-import org.openscience.cdk.tools.IsotopeFactory;
-import org.openscience.cdk.tools.IDCreator;
-import org.openscience.cdk.io.setting.*;
-import org.openscience.cdk.dict.*;
+import java.io.Writer;
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.Iterator;
+
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
-import java.util.Iterator;
-import java.util.Hashtable;
-import java.util.Enumeration;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.ChemSequence;
+import org.openscience.cdk.Crystal;
+import org.openscience.cdk.Isotope;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.Reaction;
+import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.SetOfReactions;
+import org.openscience.cdk.dict.DictRef;
+import org.openscience.cdk.dict.DictionaryDatabase;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.setting.BooleanIOSetting;
+import org.openscience.cdk.io.setting.IOSetting;
+import org.openscience.cdk.io.setting.StringIOSetting;
+import org.openscience.cdk.tools.IDCreator;
+import org.openscience.cdk.tools.IsotopeFactory;
 
 
 /**

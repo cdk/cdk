@@ -25,18 +25,16 @@
  */
 package org.openscience.cdk.io.chemrss;
 
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemSequence;
-import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.io.ChemicalRSSReader;
-import org.openscience.cdk.io.CMLReader;
-import org.openscience.cdk.tools.LoggingTool;
 import java.io.StringReader;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.Vector;
-import org.xml.sax.*;
-import org.xml.sax.helpers.*;
+
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.ChemSequence;
+import org.openscience.cdk.io.CMLReader;
+import org.openscience.cdk.io.ChemicalRSSReader;
+import org.openscience.cdk.tools.LoggingTool;
+import org.xml.sax.Attributes;
+import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * SAX2 implementation for a RSS handler. Data is stored into a ChemSequence

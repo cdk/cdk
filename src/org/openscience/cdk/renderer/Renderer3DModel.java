@@ -27,11 +27,14 @@
  *  */
 package org.openscience.cdk.renderer;
 
-import org.openscience.cdk.renderer.color.*;
-import org.openscience.cdk.event.*;
-import org.openscience.cdk.*;
-import java.util.*;
-import java.awt.*;
+import java.awt.Color;
+import java.util.EventObject;
+import java.util.Vector;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.event.CDKChangeListener;
+import org.openscience.cdk.renderer.color.AtomColorer;
+import org.openscience.cdk.renderer.color.CDKAtomColors;
 
 
 /**

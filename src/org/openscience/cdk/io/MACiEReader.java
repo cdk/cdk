@@ -27,15 +27,34 @@
  */
 package org.openscience.cdk.io;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.exception.*;
-import org.openscience.cdk.io.setting.*;
-import org.openscience.cdk.dict.DictionaryDatabase;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.LineNumberReader;
+import java.io.Reader;
+import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.ChemSequence;
+import org.openscience.cdk.EnzymeResidueLocator;
+import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.Reaction;
+import org.openscience.cdk.SetOfReactions;
 import org.openscience.cdk.dict.DictRef;
+import org.openscience.cdk.dict.DictionaryDatabase;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.setting.BooleanIOSetting;
+import org.openscience.cdk.io.setting.IOSetting;
+import org.openscience.cdk.io.setting.IntegerIOSetting;
+import org.openscience.cdk.io.setting.StringIOSetting;
 import org.openscience.cdk.tools.ReactionManipulator;
-import java.io.*;
-import java.util.*;
-import java.util.regex.*;
 
 /**
  * Reads an export from the MACiE enzyme reaction database.

@@ -24,12 +24,13 @@
 
 package org.openscience.cdk.structgen.stochastic.operator;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.structgen.*;
-import org.openscience.cdk.tools.*;
-import org.openscience.cdk.structgen.stochastic.*;
 import java.util.Vector;
+
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.structgen.stochastic.PartialFilledStructureMerger;
+import org.openscience.cdk.tools.RandomNumbersTool;
 
 /**
  * Modified molecular structures by applying crossover operator on a pair of parent structures 

@@ -28,7 +28,6 @@
  */
 package org.openscience.cdk.math;
 
-import java.io.*;
 
 /**
  * Converts a String representation of a Fortran double to a double.

@@ -23,7 +23,8 @@
  */
 package org.openscience.cdk.templates.saturatedhydrocarbons;
 
-import org.openscience.cdk.*;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.Molecule;
 
 public class IsoAlkanes {
 

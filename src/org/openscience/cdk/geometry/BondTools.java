@@ -28,7 +28,7 @@
  *  */
 package org.openscience.cdk.geometry;
 
-import org.openscience.cdk.*;
+import org.openscience.cdk.Atom;
 
 /**
  * A set of static utility classes for geometric calculations on Bonds.

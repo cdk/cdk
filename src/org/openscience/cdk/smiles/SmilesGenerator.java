@@ -28,21 +28,30 @@
  */
 package org.openscience.cdk.smiles;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
-import org.openscience.cdk.tools.IsotopeFactory;
-import org.openscience.cdk.tools.ConnectivityChecker;
-import org.openscience.cdk.graph.invariant.MorganNumbersTools;
-import org.openscience.cdk.graph.invariant.CanonicalLabeler;
-import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.ringsearch.*;
-import org.openscience.cdk.exception.NoSuchAtomException;
-import org.openscience.cdk.exception.CDKException;
-
-import java.util.*;
 import java.io.IOException;
-import java.text.NumberFormat;
-import javax.vecmath.Vector2d;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.TreeMap;
+import java.util.Vector;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.Isotope;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.RingSet;
+import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.invariant.CanonicalLabeler;
+import org.openscience.cdk.graph.invariant.MorganNumbersTools;
+import org.openscience.cdk.ringsearch.AllRingsFinder;
+import org.openscience.cdk.ringsearch.SSSRFinder;
+import org.openscience.cdk.tools.ConnectivityChecker;
+import org.openscience.cdk.tools.IsotopeFactory;
 
 /**
  * Generates SMILES strings. It takes into account the isotope and formal charge

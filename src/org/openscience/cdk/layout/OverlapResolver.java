@@ -28,17 +28,18 @@
  */
 package org.openscience.cdk.layout;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.io.*;
-import org.openscience.cdk.geometry.*;
-import org.openscience.cdk.tools.*;
-import org.openscience.cdk.renderer.*;
-import org.openscience.cdk.isomorphism.*;
-import org.openscience.cdk.isomorphism.mcss.*;
-import javax.vecmath.*;
-import java.io.*;
-import java.util.*;
-import java.awt.geom.*;
+import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
+import java.util.Vector;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Vector2d;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.RingSet;
 
 /**
  * Helper class for Structure Diagram Generation. Resolves atom or bond

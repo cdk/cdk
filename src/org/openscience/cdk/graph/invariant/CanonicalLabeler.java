@@ -27,14 +27,14 @@
  *  */
 package org.openscience.cdk.graph.invariant;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.Vector;
+
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.smiles.InvPair;
-
-import java.util.Vector;
-import java.util.Iterator;
-import java.util.Comparator;
-import java.util.Collections;
 
 /**
  * Canonically lables an atom container implementing

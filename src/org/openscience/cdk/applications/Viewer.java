@@ -23,20 +23,34 @@
  */
 package org.openscience.cdk.applications;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.io.*;
-import org.openscience.cdk.applications.swing.*;
-import org.openscience.cdk.renderer.*;
-import org.openscience.cdk.tools.*;
-import org.openscience.cdk.geometry.*;
-import org.openscience.cdk.smiles.*;
-import org.openscience.cdk.layout.*;
-import java.util.*;
-import java.io.*;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import javax.vecmath.*;
+import java.awt.BorderLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.FileReader;
+
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.WindowConstants;
+import javax.vecmath.Vector2d;
+
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.ChemSequence;
+import org.openscience.cdk.Crystal;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.applications.swing.ChemObjectTree;
+import org.openscience.cdk.applications.swing.MoleculeViewer2D;
+import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.io.ChemObjectReader;
+import org.openscience.cdk.io.ReaderFactory;
+import org.openscience.cdk.layout.StructureDiagramGenerator;
+import org.openscience.cdk.renderer.AcceleratedRenderer3D;
+import org.openscience.cdk.renderer.AcceleratedRenderer3DModel;
+import org.openscience.cdk.smiles.SmilesParser;
 
 /**
  * Command line utility for viewing chemical information from files.

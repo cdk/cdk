@@ -27,13 +27,24 @@
  *  */
 package org.openscience.cdk.io;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.io.*;
-import org.openscience.cdk.exception.*;
-import org.openscience.cdk.tools.LoggingTool;
-import java.io.*;
-import java.util.*;
-import javax.vecmath.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.util.Vector;
+
+import javax.vecmath.Point3d;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.BioPolymer;
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.ChemSequence;
+import org.openscience.cdk.Monomer;
+import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.exception.CDKException;
 
 /**
  * Reads the contents of a PDBFile.

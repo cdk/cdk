@@ -23,13 +23,13 @@
  */
 package org.openscience.cdk.iupac.generator.sectiona;
 
-import org.openscience.cdk.iupac.generator.*;
-import org.openscience.cdk.iupac.generator.tools.*;
-import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.isomorphism.IsomorphismTester;
-import org.openscience.cdk.templates.*;
+import org.openscience.cdk.iupac.generator.IUPACNamePart;
+import org.openscience.cdk.iupac.generator.NamingRule;
+import org.openscience.cdk.iupac.generator.tools.CarbonChainNames;
+import org.openscience.cdk.templates.MoleculeFactory;
 
 /**
  *  This class implements IUPAC rule 1.1 in Section A: Alkanes.

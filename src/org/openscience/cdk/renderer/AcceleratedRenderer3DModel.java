@@ -27,13 +27,28 @@
  */
 package org.openscience.cdk.renderer;
 
-import javax.media.j3d.*;
-import javax.vecmath.*;
-import com.sun.j3d.utils.geometry.*;
-import java.util.Vector;
 import java.awt.Color;
-import org.openscience.cdk.*;
+import java.util.Vector;
+
+import javax.media.j3d.Appearance;
+import javax.media.j3d.ColoringAttributes;
+import javax.media.j3d.Material;
+import javax.media.j3d.Transform3D;
+import javax.media.j3d.TransformGroup;
+import javax.vecmath.AxisAngle4d;
+import javax.vecmath.Color3f;
+import javax.vecmath.Matrix4d;
+import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
 import org.openscience.cdk.math.qm.Orbitals;
+
+import com.sun.j3d.utils.geometry.Cylinder;
+import com.sun.j3d.utils.geometry.Primitive;
+import com.sun.j3d.utils.geometry.Sphere;
 
 /**
  * @cdkPackage java3d

@@ -28,9 +28,13 @@
  */
 package org.openscience.cdk.graph;
 
-import org.openscience.cdk.*;
-import java.util.*;
-import java.io.*;
+import java.util.Vector;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.Molecule;
 
 /**
  * Tools class with methods for handling molecular graphs.

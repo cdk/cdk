@@ -28,13 +28,13 @@
  */
 package org.openscience.cdk.libio.joelib;
 
-import org.openscience.cdk.Atom;
 import joelib.molecule.JOEAtom;
-import org.openscience.cdk.Bond;
 import joelib.molecule.JOEBond;
-import org.openscience.cdk.Molecule;
 import joelib.molecule.JOEMol;
-import org.openscience.cdk.exception.NoSuchAtomException;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.Molecule;
 
 /**
  * Abstract class that provides convertor procedures to

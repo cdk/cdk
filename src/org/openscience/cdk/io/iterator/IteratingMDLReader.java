@@ -27,14 +27,14 @@
  */
 package org.openscience.cdk.io.iterator;
 
-import org.openscience.cdk.exception.*;
-import org.openscience.cdk.tools.*;
-import org.openscience.cdk.*;
-import org.openscience.cdk.io.*;
-import org.openscience.cdk.io.setting.*;
-import java.io.*;
-import java.util.*;
-import javax.vecmath.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
+
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.MDLReader;
 
 /**
  * Iterating MDL SDF reader. It allows to iterate over all molecules

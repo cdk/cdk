@@ -28,8 +28,8 @@
  */
 package org.openscience.cdk.io;
  
-import java.io.PrintStream;
 import java.io.OutputStream;
+import java.io.PrintStream;
 
 /**
  * @cdkPackage io

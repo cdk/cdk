@@ -27,8 +27,21 @@
  *  */
 package org.openscience.cdk.tools;
 
-import org.openscience.cdk.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
+import java.util.TreeSet;
+import java.util.Vector;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.Isotope;
+import org.openscience.cdk.Molecule;
 
 /** 
  * Analyses a molecular formula given in String format and builds 

@@ -23,9 +23,8 @@
  */
 package org.openscience.cdk.iupac.generator.tools;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.exception.*;
-import org.openscience.cdk.isomorphism.IsomorphismTester;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
 
 /**
  * Methods for playing with Adjacency Matrices

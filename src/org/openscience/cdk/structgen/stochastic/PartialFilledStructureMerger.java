@@ -29,11 +29,12 @@
 package org.openscience.cdk.structgen.stochastic;
 
 
-import org.openscience.cdk.*;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.tools.*;
-import java.util.Vector;
-import java.io.*;
+import org.openscience.cdk.tools.ConnectivityChecker;
+import org.openscience.cdk.tools.SaturationChecker;
 
 /**
  * Randomly generates a single, connected, correctly bonded structure for 

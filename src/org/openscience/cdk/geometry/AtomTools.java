@@ -28,11 +28,14 @@
 package org.openscience.cdk.geometry;
 
 import java.util.Vector;
-import org.openscience.cdk.*;
-import org.openscience.cdk.layout.AtomPlacer;
 
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKConstants;
 
 /**
  * A set of static utility classes for geometric calculations on Atoms.

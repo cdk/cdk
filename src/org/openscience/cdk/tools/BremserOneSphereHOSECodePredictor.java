@@ -29,6 +29,7 @@
 package org.openscience.cdk.tools;
 
 import java.util.Hashtable;
+
 import org.openscience.cdk.exception.CDKException;
 
 /**

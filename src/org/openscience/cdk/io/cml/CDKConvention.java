@@ -28,9 +28,10 @@
  */
 package org.openscience.cdk.io.cml;
 
-import java.util.*;
-import org.xml.sax.*;
-import org.openscience.cdk.io.cml.cdopi.*;
+import java.util.StringTokenizer;
+
+import org.openscience.cdk.io.cml.cdopi.CDOInterface;
+import org.xml.sax.Attributes;
 
 /**
  * This is an implementation for the CDK convention.

@@ -28,14 +28,22 @@
 
 package org.openscience.cdk.renderer;
 
-import java.awt.Color;
 import java.util.Vector;
 
-import javax.vecmath.*;
-import javax.media.j3d.*;
+import javax.media.j3d.Appearance;
+import javax.media.j3d.ColoringAttributes;
+import javax.media.j3d.Geometry;
+import javax.media.j3d.PolygonAttributes;
+import javax.media.j3d.Shape3D;
+import javax.media.j3d.Switch;
+import javax.media.j3d.TransparencyAttributes;
+import javax.media.j3d.TriangleArray;
+import javax.vecmath.Point3d;
+import javax.vecmath.Vector3f;
 
-import org.openscience.cdk.math.*;
-import org.openscience.cdk.math.qm.*;
+import org.openscience.cdk.math.Matrix;
+import org.openscience.cdk.math.qm.Basis;
+import org.openscience.cdk.math.qm.Orbitals;
 
 /**
  * This class render orbitals. The algorithm used was found on the

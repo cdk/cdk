@@ -27,10 +27,12 @@
  */
 package org.openscience.cdk.tools;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.exception.*;
-import java.util.Vector;
 import java.util.Enumeration;
+import java.util.Vector;
+
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemSequence;
 
 /**
  * Class with convenience methods that provide methods from

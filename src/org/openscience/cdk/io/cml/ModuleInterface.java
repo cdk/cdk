@@ -28,8 +28,8 @@
  */
 package org.openscience.cdk.io.cml;
 
-import org.xml.sax.*;
-import org.openscience.cdk.io.cml.cdopi.*;
+import org.openscience.cdk.io.cml.cdopi.CDOInterface;
+import org.xml.sax.Attributes;
 
 /**
  * This interface describes the procedures classes must implement to be plugable

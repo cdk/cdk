@@ -28,8 +28,9 @@
  */
 package org.openscience.cdk.math.qm;
 
-import org.openscience.cdk.math.*;
 import org.openscience.cdk.io.LogWriter;
+import org.openscience.cdk.math.Matrix;
+import org.openscience.cdk.math.Vector;
 
 /**
  * Calculates the orbitals and orbital energies of electron systems

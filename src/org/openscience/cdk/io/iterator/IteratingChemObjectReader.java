@@ -27,8 +27,9 @@
  */
 package org.openscience.cdk.io.iterator;
 
-import org.openscience.cdk.io.*;
 import java.util.Iterator;
+
+import org.openscience.cdk.io.ChemObjectIO;
 
 /**
  * Interface for an iterating molecule reader. It allows to iterate over all molecules

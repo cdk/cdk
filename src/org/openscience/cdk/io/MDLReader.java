@@ -28,13 +28,33 @@
  */
 package org.openscience.cdk.io;
 
-import org.openscience.cdk.exception.*;
-import org.openscience.cdk.tools.*;
-import org.openscience.cdk.*;
-import org.openscience.cdk.io.setting.*;
-import java.io.*;
-import java.util.*;
-import javax.vecmath.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringReader;
+import java.util.StringTokenizer;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.ChemSequence;
+import org.openscience.cdk.Isotope;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.setting.BooleanIOSetting;
+import org.openscience.cdk.io.setting.IOSetting;
+import org.openscience.cdk.tools.AtomContainerManipulator;
+import org.openscience.cdk.tools.IsotopeFactory;
 
 /**
  * Reads a molecule from an MDL MOL or SDF file [DAL92].

@@ -23,9 +23,6 @@
  */
 package org.openscience.cdk.iupac.generator;
 
-import java.util.Enumeration;
-import java.util.Locale;
-import java.util.Vector;
 
 /**
  *  This class implements a IUPAC name.

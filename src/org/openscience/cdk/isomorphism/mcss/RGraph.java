@@ -32,11 +32,11 @@
 
 package org.openscience.cdk.isomorphism.mcss;
 
-import java.util.List;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.ListIterator;
 import java.util.BitSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
 /**
   * This class implements the Resolution Graph (RGraph).

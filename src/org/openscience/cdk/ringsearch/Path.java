@@ -29,7 +29,9 @@
 package org.openscience.cdk.ringsearch;
 
 import java.util.Vector;
-import org.openscience.cdk.*;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
 
 /**
  * Implementation of a Path as needed by HAN96.

@@ -27,13 +27,20 @@
  *  */
 package org.openscience.cdk.renderer;
 
-import org.openscience.cdk.renderer.color.CDK2DAtomColors;
-import org.openscience.cdk.tools.LoggingTool;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.Polygon;
-import org.openscience.cdk.*;
-import org.openscience.cdk.event.*;
-import java.util.*;
+import java.util.EventObject;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Vector;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.event.CDKChangeListener;
+import org.openscience.cdk.renderer.color.CDK2DAtomColors;
 
 /**
  * Model for Renderer2D that contains settings for drawing objects.

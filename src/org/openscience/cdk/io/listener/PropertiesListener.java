@@ -24,13 +24,14 @@
  */
 package org.openscience.cdk.io.listener;
 
-import org.openscience.cdk.exception.*;
-import org.openscience.cdk.io.ReaderEvent;
-import org.openscience.cdk.io.setting.*;
-import java.io.*;
-import java.util.EventListener;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.Writer;
 import java.util.Properties;
-import java.util.Vector;
+
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.ReaderEvent;
+import org.openscience.cdk.io.setting.IOSetting;
 
 /**
  * Answers the questions by looking up the values in a Properties

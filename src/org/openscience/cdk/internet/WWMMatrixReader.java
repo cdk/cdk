@@ -27,23 +27,31 @@
  */
 package org.openscience.cdk.internet;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.io.*;
-import org.openscience.cdk.exception.*;
-import org.openscience.cdk.layout.*;
-import org.openscience.cdk.geometry.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.vecmath.Vector2d;
+
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.ChemSequence;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
-import java.io.*;
-import java.net.*;
-import java.util.Enumeration;
-import java.util.regex.*;
-import javax.vecmath.*;
-import javax.xml.parsers.*;
-import org.apache.xpath.XPathAPI;
-import org.xml.sax.*;
-import org.w3c.dom.*;
-import org.w3c.dom.traversal.*;
+import org.openscience.cdk.exception.UnsupportedChemObjectException;
+import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.io.CMLReader;
+import org.openscience.cdk.io.DefaultChemObjectReader;
+import org.openscience.cdk.layout.StructureDiagramGenerator;
 
 /**
  * Reader for the World Wide Molecular Matrix, a project that can be found at

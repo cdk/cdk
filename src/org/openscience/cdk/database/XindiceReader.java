@@ -28,13 +28,18 @@
  */
 package org.openscience.cdk.database;
 
-import java.sql.*;
-import java.io.*;
-import org.openscience.cdk.*;
-import org.openscience.cdk.io.*;
-import org.openscience.cdk.exception.*;
+import java.io.IOException;
+import java.io.StringReader;
 
-//The next for Xindice
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.ChemSequence;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.CMLReader;
+import org.openscience.cdk.io.DefaultChemObjectReader;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.Database;
@@ -42,7 +47,6 @@ import org.xmldb.api.base.Resource;
 import org.xmldb.api.base.ResourceIterator;
 import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.base.XMLDBException;
-import org.xmldb.api.modules.XMLResource;
 import org.xmldb.api.modules.XPathQueryService;
 
 /**

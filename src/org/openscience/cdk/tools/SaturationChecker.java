@@ -28,11 +28,20 @@
  */
 package org.openscience.cdk.tools;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.ringsearch.*;
-import org.openscience.cdk.exception.CDKException;
+import java.io.IOException;
 import java.util.Vector;
-import java.io.*;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.AtomType;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.RingSet;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.ringsearch.RingPartitioner;
+import org.openscience.cdk.ringsearch.SSSRFinder;
 
 /**
  * Provides methods for checking whether an atoms valences are saturated with

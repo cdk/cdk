@@ -23,9 +23,9 @@
  */
 package org.openscience.cdk.tools;
 
-import java.util.*;
-import java.io.*;
-import org.openscience.cdk.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  *  A set of utilities which did not really fit into any other category

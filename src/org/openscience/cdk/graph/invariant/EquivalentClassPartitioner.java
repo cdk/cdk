@@ -20,10 +20,11 @@
  */
 package org.openscience.cdk.graph.invariant;
 
-import org.openscience.cdk.*;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.graph.PathTools;
-import org.openscience.cdk.exception.*;
-import java.util.*;
 
 /**
  * An algorithm for topological symmetry.

@@ -28,14 +28,22 @@
  */
 package org.openscience.cdk.io;
 
-import org.openscience.cdk.exception.*;
-import org.openscience.cdk.io.cml.cdopi.*;
-import org.openscience.cdk.io.cml.*;
-import org.openscience.cdk.*;
-import org.xml.sax.helpers.*;
-import org.xml.sax.*;
-import java.io.*;
-import java.net.*;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
+
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.cml.CMLErrorHandler;
+import org.openscience.cdk.io.cml.CMLHandler;
+import org.openscience.cdk.io.cml.CMLResolver;
+import org.openscience.cdk.io.cml.ChemFileCDO;
+import org.openscience.cdk.io.cml.cdopi.CDOInterface;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
+import org.xml.sax.XMLReader;
 
 /**
  * Reads a molecule in CML 1.0 and 1.1 format from a Reader.

@@ -23,17 +23,18 @@
  */
 package org.openscience.cdk.applications.swing;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.renderer.*;
-import org.openscience.cdk.ringsearch.*;
-import org.openscience.cdk.io.*;
-import org.openscience.cdk.tools.*;
-import org.openscience.cdk.geometry.*;
-import org.openscience.cdk.event.*;
-import java.util.*;
-import java.io.*;
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.util.EventObject;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.event.CDKChangeListener;
+import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.renderer.Renderer3D;
+import org.openscience.cdk.renderer.Renderer3DModel;
 
 /**
  * A Swing-based implementation of Renderer3D for viewing molecules.

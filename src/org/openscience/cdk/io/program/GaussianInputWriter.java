@@ -24,16 +24,23 @@
  */
 package org.openscience.cdk.io.program;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.io.*;
-import org.openscience.cdk.io.setting.*;
-import org.openscience.cdk.exception.CDKException;
-import javax.vecmath.Point3d;
-import java.io.Writer;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.OutputStream;
+import java.io.Writer;
 import java.util.Vector;
+
+import javax.vecmath.Point3d;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.DefaultChemObjectWriter;
+import org.openscience.cdk.io.setting.BooleanIOSetting;
+import org.openscience.cdk.io.setting.IOSetting;
+import org.openscience.cdk.io.setting.IntegerIOSetting;
+import org.openscience.cdk.io.setting.OptionIOSetting;
+import org.openscience.cdk.io.setting.StringIOSetting;
 
 /**
  * File writer thats generates input files for Gaussian calculation

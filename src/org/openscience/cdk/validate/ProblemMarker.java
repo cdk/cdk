@@ -24,9 +24,7 @@
  */
 package org.openscience.cdk.validate;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.tools.IsotopeFactory;
-import java.util.Vector;
+import org.openscience.cdk.ChemObject;
 
 /**
  * Tool to mark ChemObject's as having a problem. There are two levels:

@@ -28,11 +28,13 @@
  */
 package org.openscience.cdk.io.cml;
 
-import org.openscience.cdk.io.cml.cdopi.*;
-import org.openscience.cdk.io.cml.cdopi.*;
+import java.util.Enumeration;
+import java.util.StringTokenizer;
+import java.util.Vector;
+
 import org.openscience.cdk.geometry.CrystalGeometryTools;
-import java.util.*;
-import org.xml.sax.*;
+import org.openscience.cdk.io.cml.cdopi.CDOInterface;
+import org.xml.sax.Attributes;
 
 /**
  * Core CML 1.x and 2.0 elements are parsed by this class.

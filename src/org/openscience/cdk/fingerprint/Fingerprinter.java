@@ -28,10 +28,16 @@
  */
 package org.openscience.cdk.fingerprint;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.aromaticity.*;
-import org.openscience.cdk.exception.*;
-import java.util.*;
+import java.util.BitSet;
+import java.util.Enumeration;
+import java.util.Hashtable;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.exception.NoSuchAtomException;
 
 /**
  *  Generates a Fingerprint for a given AtomContainer. Fingerprints are one-dimensional 

@@ -27,11 +27,13 @@
  */
 package org.openscience.cdk.applications.swing;
 
-import org.openscience.cdk.*;
-import java.util.*;
-import javax.swing.*;
-import javax.swing.event.*;
-import javax.swing.table.*;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Vector;
+
+import javax.swing.table.AbstractTableModel;
+
+import org.openscience.cdk.ChemObject;
 
 /**
  * @cdkPackage applications

@@ -23,12 +23,11 @@
  */
 package org.openscience.cdk.applications;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.io.*;
-import org.openscience.cdk.exception.*;
+import java.io.File;
+import java.io.FileReader;
+
+import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.tools.LoggingTool;
-import java.io.*;
-import java.util.*;
 
 /**
  * Program that guesses the format of a file.

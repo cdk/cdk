@@ -23,13 +23,11 @@
  */
 package org.openscience.cdk.iupac.generator.sectionc;
 
-import org.openscience.cdk.iupac.generator.*;
-import org.openscience.cdk.iupac.generator.tools.*;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.Fragment;
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.isomorphism.IsomorphismTester;
+import org.openscience.cdk.Fragment;
+import org.openscience.cdk.iupac.generator.IUPACNamePart;
+import org.openscience.cdk.iupac.generator.NamingRule;
 
 /**
  *  This class implements IUPAC rule 102.1 in Section C.

@@ -24,8 +24,9 @@
  */
 package org.openscience.cdk.io.setting;
 
-import org.openscience.cdk.exception.*;
 import java.util.Vector;
+
+import org.openscience.cdk.exception.CDKException;
 
 /**
  * An class for a reader setting which must be found in the list 

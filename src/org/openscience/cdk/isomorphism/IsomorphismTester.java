@@ -24,10 +24,12 @@
  */
 package org.openscience.cdk.isomorphism;
 
-import org.openscience.cdk.*;
+import java.util.Arrays;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.graph.invariant.MorganNumbersTools;
-import org.openscience.cdk.exception.*;
-import java.util.*;
 
 /**
  * A too simplistic implementation of an isomorphism test for chemical graphs.

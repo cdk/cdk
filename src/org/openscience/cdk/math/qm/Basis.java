@@ -28,7 +28,8 @@
  */
 package org.openscience.cdk.math.qm;
 
-import org.openscience.cdk.math.*;
+import org.openscience.cdk.math.Matrix;
+import org.openscience.cdk.math.Vector;
 
 /**
  * A basis set must implement this class.

@@ -24,18 +24,29 @@
  */
 package org.openscience.cdk.io;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.exception.*;
-import org.openscience.cdk.io.setting.*;
-import org.openscience.cdk.tools.IsotopeFactory;
-import org.openscience.cdk.tools.LoggingTool;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.Reader;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.StringTokenizer;
-import java.util.Vector;
-import java.io.*;
-import javax.vecmath.*;
-import java.util.regex.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.setting.IOSetting;
+import org.openscience.cdk.tools.IsotopeFactory;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Class that implements the new MDL rxn format introduced in August 2002.

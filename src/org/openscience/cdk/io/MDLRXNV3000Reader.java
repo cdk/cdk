@@ -24,13 +24,20 @@
  */
 package org.openscience.cdk.io;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.exception.*;
-import org.openscience.cdk.io.setting.*;
-import org.openscience.cdk.tools.LoggingTool;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
 import java.util.StringTokenizer;
-import java.util.Vector;
-import java.io.*;
+
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.Reaction;
+import org.openscience.cdk.SetOfReactions;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.setting.IOSetting;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Class that implements the new MDL mol format introduced in August 2002.

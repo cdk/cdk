@@ -25,8 +25,9 @@
 
 package org.openscience.cdk.renderer.color;
 
-import org.openscience.cdk.Atom;
 import java.awt.Color;
+
+import org.openscience.cdk.Atom;
 
 /**
  * Interface to a class for coloring atoms.

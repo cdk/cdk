@@ -23,8 +23,8 @@
  */
 package org.openscience.cdk.tools;
 
-import java.util.Vector;
 import java.io.InputStream;
+import java.util.Vector;
 
 /**
  *

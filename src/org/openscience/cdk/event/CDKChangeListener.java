@@ -27,7 +27,8 @@
  */
 package org.openscience.cdk.event;
 
-import java.util.*;
+import java.util.EventListener;
+import java.util.EventObject;
  
 /**
  * A ChangeListener for the CDK, to be independent from the Swing package.

@@ -23,11 +23,6 @@
  */
 package org.openscience.cdk.iupac.generator.tools;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Fragment;
-import org.openscience.cdk.isomorphism.IsomorphismTester;
 
 /**
  * This class is used the name carbon chains.

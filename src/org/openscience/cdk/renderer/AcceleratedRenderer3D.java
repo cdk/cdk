@@ -27,14 +27,23 @@
  */
 package org.openscience.cdk.renderer;
 
-import java.awt.*;
-import java.awt.event.*;
-import com.sun.j3d.utils.geometry.*;
-import com.sun.j3d.utils.behaviors.mouse.*;
-import com.sun.j3d.utils.behaviors.picking.*;
-import com.sun.j3d.utils.universe.*;
-import javax.media.j3d.*;
-import javax.vecmath.*;
+import java.awt.Color;
+
+import javax.media.j3d.Background;
+import javax.media.j3d.BoundingSphere;
+import javax.media.j3d.BranchGroup;
+import javax.media.j3d.Canvas3D;
+import javax.media.j3d.DirectionalLight;
+import javax.media.j3d.Transform3D;
+import javax.media.j3d.TransformGroup;
+import javax.vecmath.Color3f;
+import javax.vecmath.Point3d;
+import javax.vecmath.Vector3f;
+
+import com.sun.j3d.utils.behaviors.mouse.MouseRotate;
+import com.sun.j3d.utils.behaviors.mouse.MouseTranslate;
+import com.sun.j3d.utils.behaviors.mouse.MouseZoom;
+import com.sun.j3d.utils.universe.SimpleUniverse;
  
 /**
  * 3D Renderer using Java3D.

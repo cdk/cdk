@@ -28,13 +28,20 @@
  */
 package org.openscience.cdk.applications.swing;
 
-import org.openscience.cdk.math.*;
-import org.openscience.cdk.renderer.GraphRendererModel;
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
-import java.util.*;
-import javax.swing.*;
 import java.text.DecimalFormat;
+
+import javax.swing.JComponent;
+
+import org.openscience.cdk.math.Function;
+import org.openscience.cdk.renderer.GraphRendererModel;
  
 /**
  * This class is a function plotter

@@ -25,10 +25,10 @@
  */
 package org.openscience.cdk.applications.swing;
 
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
-import javax.swing.event.TableModelListener;
-import javax.swing.event.TableModelEvent;
 
 /**
  *  A table model wrapper which listens to model changes and fowards them

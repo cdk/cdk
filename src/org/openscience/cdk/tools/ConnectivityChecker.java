@@ -24,9 +24,15 @@
  */
 package org.openscience.cdk.tools;
 
-import org.openscience.cdk.*;
+import java.util.Vector;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.graph.PathTools;
-import java.util.*;
 
 /**
  * Tool class for checking whether the (sub)structure in an

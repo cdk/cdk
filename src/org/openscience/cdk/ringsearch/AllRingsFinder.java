@@ -28,8 +28,14 @@
  */
 package org.openscience.cdk.ringsearch;
 
-import java.util.*;
-import org.openscience.cdk.*;
+import java.util.Enumeration;
+import java.util.Vector;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.Ring;
+import org.openscience.cdk.RingSet;
 
 /** 
  * Finds the Set of all Rings.

@@ -28,9 +28,7 @@
  */
 package org.openscience.cdk.tools;
 
-import java.util.*;
-import java.io.*;
-import org.openscience.cdk.*;
+import org.openscience.cdk.Isotope;
 
 /**
  * Used to store data of a particular isotope.

@@ -28,10 +28,13 @@
  */
 package org.openscience.cdk.aromaticity;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.ringsearch.*;
-import java.util.Vector;
-import java.io.*;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.ElectronContainer;
+import org.openscience.cdk.Ring;
+import org.openscience.cdk.RingSet;
+import org.openscience.cdk.ringsearch.AllRingsFinder;
 
 /**
  * The HuckelAromaticityDetector detects the aromaticity based on

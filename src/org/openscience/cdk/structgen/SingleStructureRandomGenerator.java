@@ -28,11 +28,15 @@
  */
 package org.openscience.cdk.structgen;
 
-import org.openscience.cdk.*;
+import java.util.Random;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.tools.*;
-import java.util.*;
-import java.io.*;
+import org.openscience.cdk.tools.ConnectivityChecker;
+import org.openscience.cdk.tools.SaturationChecker;
 
 /**
  * Randomly generates a single, connected, correctly bonded structure for 

@@ -28,11 +28,9 @@
  */
 package org.openscience.cdk.math.qm;
  
-import java.io.StreamTokenizer;
-import java.io.InputStream;
-import java.io.IOException;
-import org.openscience.cdk.math.*;
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.math.Matrix;
+import org.openscience.cdk.math.Vector;
 
 /**
  * This class contains the information to use gauss function as a base

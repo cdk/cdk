@@ -29,8 +29,6 @@ package org.openscience.cdk.smiles;
 
 import org.openscience.cdk.Atom;
 
-import java.io.*;
-
 
 /**
  * This is used to hold the invariance numbers for the cannonical labeling of

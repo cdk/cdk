@@ -24,12 +24,10 @@
  */
 package org.openscience.cdk.io;
 
+import java.io.IOException;
+
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.io.setting.*;
-import org.openscience.cdk.io.listener.*;
-import java.util.Vector;
-import java.io.IOException;
 
 /**
  * Class that will serve as a dummy for the ReaderFactory to return.

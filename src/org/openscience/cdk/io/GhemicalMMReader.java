@@ -25,14 +25,21 @@
  */
 package org.openscience.cdk.io;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.tools.IsotopeFactory;
-import org.openscience.cdk.exception.CDKException;
 import java.io.BufferedReader;
 import java.io.Reader;
 import java.util.StringTokenizer;
+
 import javax.vecmath.Point3d;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.tools.IsotopeFactory;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Reads Ghemical (<a href="http://www.uku.fi/~thassine/ghemical/">

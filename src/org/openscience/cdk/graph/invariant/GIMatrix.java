@@ -24,7 +24,9 @@
  */
 package org.openscience.cdk.graph.invariant;
 
-import org.openscience.cdk.graph.invariant.exception.*;
+import org.openscience.cdk.graph.invariant.exception.BadMatrixFormatException;
+import org.openscience.cdk.graph.invariant.exception.MatrixIndexOutOfBoundsException;
+import org.openscience.cdk.graph.invariant.exception.MatrixNotInvertibleException;
 
 /**
  * This class is intended to provide the user an efficient way of implementing matrix of double number and

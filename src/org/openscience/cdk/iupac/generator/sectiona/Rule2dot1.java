@@ -23,13 +23,18 @@
  */
 package org.openscience.cdk.iupac.generator.sectiona;
 
-import org.openscience.cdk.iupac.generator.*;
-import org.openscience.cdk.iupac.generator.tools.*;
-import org.openscience.cdk.*;
-import org.openscience.cdk.exception.*;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.isomorphism.IsomorphismTester;
-import org.openscience.cdk.templates.saturatedhydrocarbons.*;
+import org.openscience.cdk.iupac.generator.IUPACNamePart;
+import org.openscience.cdk.iupac.generator.NamingRule;
+import org.openscience.cdk.iupac.generator.NumberingRule;
+import org.openscience.cdk.iupac.generator.tools.CarbonChainNames;
 import org.openscience.cdk.layout.AtomPlacer;
+import org.openscience.cdk.templates.saturatedhydrocarbons.IsoAlkanes;
 
 /**
  *  This class implements IUPAC rule 2.1 in Section A.

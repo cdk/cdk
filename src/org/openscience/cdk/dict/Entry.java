@@ -28,8 +28,6 @@
  */
 package org.openscience.cdk.dict;
 
-import java.io.InputStreamReader;
-import java.util.Hashtable;
 
 /**
  * Dictionary with entries.

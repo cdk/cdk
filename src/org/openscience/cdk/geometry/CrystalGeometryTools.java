@@ -27,11 +27,11 @@
  *  */
 package org.openscience.cdk.geometry;
 
-import javax.vecmath.*;
-import org.openscience.cdk.*;
-import org.openscience.cdk.exception.*;
-import java.awt.Dimension;
-import java.util.Vector;
+import javax.vecmath.Point3d;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.Crystal;
+import org.openscience.cdk.exception.CDKException;
 
 /**
  * A set of static methods for working with crystal coordinates.

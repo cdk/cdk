@@ -23,15 +23,12 @@
  */
 package org.openscience.cdk.tools;
 
-import java.util.*;
-import java.io.*;
-import org.openscience.cdk.*;
-import org.openscience.cdk.exception.*;
-import org.openscience.cdk.tools.atomtypes.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Vector;
 
-import org.xml.sax.*;
-import javax.xml.parsers.*;
-import org.w3c.dom.*;
+import org.openscience.cdk.tools.atomtypes.AtomTypeReader;
 
 /**
  * @cdkPackage standard

@@ -27,15 +27,17 @@
  *  */
 package org.openscience.cdk.renderer;
 
-import org.openscience.cdk.renderer.color.*;
-import org.openscience.cdk.geometry.*;
-import org.openscience.cdk.tools.*;
-import org.openscience.cdk.*;
-import javax.vecmath.*;
-import javax.swing.*;
-import java.util.*;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
+
+import javax.swing.JPanel;
+import javax.vecmath.Matrix4d;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
 
 /**
  * Three dimensional renderer which depicts atoms as cartoonlike

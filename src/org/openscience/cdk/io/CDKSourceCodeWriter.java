@@ -27,13 +27,16 @@
  */
 package org.openscience.cdk.io;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.exception.*;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.Writer;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.IDCreator;
-import java.io.*;
-import java.util.*;
-import java.text.*;
-import javax.vecmath.*;
 
 /**
  * Converts a Molecule into CDK source code that would build the same

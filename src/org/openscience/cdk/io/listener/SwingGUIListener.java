@@ -24,15 +24,21 @@
  */
 package org.openscience.cdk.io.listener;
 
-import org.openscience.cdk.exception.*;
-import org.openscience.cdk.io.ReaderEvent;
-import org.openscience.cdk.io.setting.*;
-import java.io.*;
-import java.util.EventListener;
-import java.util.Vector;
+import java.awt.Component;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.Enumeration;
-import java.awt.*;
+import java.util.Vector;
+
 import javax.swing.JOptionPane;
+
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.ReaderEvent;
+import org.openscience.cdk.io.setting.BooleanIOSetting;
+import org.openscience.cdk.io.setting.IOSetting;
+import org.openscience.cdk.io.setting.OptionIOSetting;
+import org.openscience.cdk.io.setting.StringIOSetting;
 
 /**
  * Allows processing of IOSetting quesions which are passed to the user

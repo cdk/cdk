@@ -28,11 +28,9 @@
  */
 package org.openscience.cdk.tools;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.ringsearch.*;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
-import java.util.Vector;
-import java.io.*;
 
 /**
  * A common interface for SaturationChecker and ValencyChecker. Mainly created

@@ -23,12 +23,19 @@
  */
 package org.openscience.cdk.iupac.generator;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.exception.*;
-import org.openscience.cdk.tools.*;
 import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Vector;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Fragment;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.exception.NoSuchAtomException;
+import org.openscience.cdk.tools.ConnectivityChecker;
+import org.openscience.cdk.tools.HydrogenAdder;
+import org.openscience.cdk.tools.MFAnalyser;
 
 /**
  * This class implements a IUPAC name generator.

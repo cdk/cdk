@@ -23,23 +23,55 @@
  */
 package org.openscience.cdk.applications;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.io.*;
-import org.openscience.cdk.io.program.*;
-import org.openscience.cdk.io.listener.*;
-import org.openscience.cdk.io.setting.*;
-import org.openscience.cdk.exception.*;
-import org.openscience.cdk.graph.rebond.*;
-import org.openscience.cdk.layout.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.Writer;
+import java.util.Properties;
+import java.util.Vector;
+
+import javax.vecmath.Vector2d;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.ChemSequence;
+import org.openscience.cdk.Crystal;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.rebond.RebondTool;
+import org.openscience.cdk.io.CDKSourceCodeWriter;
+import org.openscience.cdk.io.CMLWriter;
+import org.openscience.cdk.io.ChemObjectIO;
+import org.openscience.cdk.io.ChemObjectReader;
+import org.openscience.cdk.io.ChemObjectWriter;
+import org.openscience.cdk.io.HINWriter;
+import org.openscience.cdk.io.MDLWriter;
+import org.openscience.cdk.io.PDBWriter;
+import org.openscience.cdk.io.ReaderFactory;
+import org.openscience.cdk.io.SMILESWriter;
+import org.openscience.cdk.io.SVGWriter;
+import org.openscience.cdk.io.ShelXWriter;
+import org.openscience.cdk.io.XYZWriter;
+import org.openscience.cdk.io.listener.PropertiesListener;
+import org.openscience.cdk.io.listener.TextGUIListener;
+import org.openscience.cdk.io.program.GaussianInputWriter;
+import org.openscience.cdk.io.setting.IOSetting;
+import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.tools.AtomTypeFactory;
 import org.openscience.cdk.tools.ChemFileManipulator;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.IDCreator;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.SaturationChecker;
-import java.io.*;
-import java.util.*;
-import javax.vecmath.*;
 
 /**
  * Program that converts a file from one format to a file with another format.

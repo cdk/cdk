@@ -28,16 +28,35 @@
  */
 package org.openscience.cdk.internet;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.io.*;
-import org.openscience.cdk.exception.*;
-import java.io.*;
-import java.util.*;
-import java.net.*;
-import javax.vecmath.*;
-import org.openscience.dadml.*;
-import org.openscience.dadml.filereaders.*;
-import org.openscience.dadml.tools.*;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.Enumeration;
+
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.ChemSequence;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.exception.UnsupportedChemObjectException;
+import org.openscience.cdk.io.ChemObjectReader;
+import org.openscience.cdk.io.DefaultChemObjectReader;
+import org.openscience.cdk.io.ReaderFactory;
+import org.openscience.dadml.DATABASE;
+import org.openscience.dadml.DBDEF;
+import org.openscience.dadml.DBLIST;
+import org.openscience.dadml.FIELD;
+import org.openscience.dadml.INDEX;
+import org.openscience.dadml.filereaders.DBDEFFileReader;
+import org.openscience.dadml.filereaders.DBLISTFileReader;
+import org.openscience.dadml.tools.DBDEFInfo;
 
 /**
  * Reads a molecule from a DADML super database.

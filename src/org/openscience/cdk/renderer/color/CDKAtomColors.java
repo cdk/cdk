@@ -24,8 +24,9 @@
  */
 package org.openscience.cdk.renderer.color;
 
-import org.openscience.cdk.*;
 import java.awt.Color;
+
+import org.openscience.cdk.Atom;
 
 /**
  * Gives a short table of atom colors for 3D display.

@@ -28,9 +28,15 @@
  */
 package org.openscience.cdk.smiles;
 
-import java.util.*;
+import java.util.Enumeration;
+import java.util.Stack;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.exception.InvalidSmilesException;
-import org.openscience.cdk.*;
 
 /**
  *  Parses a SMILES string and an AtomContainer. So far only the SSMILES subset

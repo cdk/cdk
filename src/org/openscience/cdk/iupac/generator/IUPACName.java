@@ -23,10 +23,9 @@
  */
 package org.openscience.cdk.iupac.generator;
 
-import java.util.Enumeration;
-import java.util.Locale;
-import java.util.LinkedList;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Locale;
 
 /**
  *  This class implements an IUPAC name.

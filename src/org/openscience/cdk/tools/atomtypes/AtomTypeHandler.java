@@ -24,14 +24,12 @@
  */
 package org.openscience.cdk.tools.atomtypes;
 
-import java.io.PrintStream;
-import java.util.Hashtable;
-import java.util.StringTokenizer;
 import java.util.Vector;
+
+import org.openscience.cdk.AtomType;
 import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.*;
-import org.xml.sax.*;
-import org.xml.sax.helpers.*;
+import org.xml.sax.Attributes;
+import org.xml.sax.helpers.DefaultHandler;
 
 /**
  *

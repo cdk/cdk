@@ -28,12 +28,9 @@
  */
 package org.openscience.cdk.renderer;
 
-import org.openscience.cdk.math.*;
-import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.util.*;
-import javax.swing.*;
-import java.text.DecimalFormat;
+import java.awt.Color;
+
+import org.openscience.cdk.math.Function;
 
 /**
  * This class handles a set of function for the GraphRenderer

@@ -24,15 +24,21 @@
  */
 package org.openscience.cdk.io.ichi;
 
-import java.io.PrintStream;
-import java.util.Hashtable;
 import java.util.StringTokenizer;
-import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.ChemSequence;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.*;
-import org.xml.sax.*;
-import org.xml.sax.helpers.*;
-import java.util.regex.*;
+import org.xml.sax.Attributes;
+import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * SAX2 implementation for IChI XML fragment parsing.

@@ -23,15 +23,18 @@
  */
 package org.openscience.cdk.tools;
 
-import java.util.*;
-import java.io.*;
-import org.openscience.cdk.*;
-import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.tools.isotopes.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OptionalDataException;
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.Vector;
 
-import org.xml.sax.*;
-import javax.xml.parsers.*;
-import org.w3c.dom.*;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Isotope;
+import org.openscience.cdk.tools.isotopes.IsotopeReader;
 
 /**
  * Used to store and return data of a particular isotope. As this class is a

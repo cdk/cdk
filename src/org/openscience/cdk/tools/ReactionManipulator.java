@@ -27,8 +27,12 @@
  *  */
 package org.openscience.cdk.tools;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.exception.*;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.ElectronContainer;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.Reaction;
+import org.openscience.cdk.SetOfMolecules;
 
 /**
  * @cdkPackage standard

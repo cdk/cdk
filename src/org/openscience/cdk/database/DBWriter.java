@@ -29,13 +29,19 @@
 
 package org.openscience.cdk.database;
 
-import java.sql.*;
-import java.util.*;
-import java.io.*;
-import org.openscience.cdk.io.*;
-import org.openscience.cdk.exception.*;
-import org.openscience.cdk.tools.*;
-import org.openscience.cdk.*;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.UnsupportedChemObjectException;
+import org.openscience.cdk.io.CMLWriter;
+import org.openscience.cdk.io.DefaultChemObjectWriter;
 
 /**
  *  Writer that is used to store molecules in JDBC databases.

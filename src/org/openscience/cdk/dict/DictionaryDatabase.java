@@ -30,8 +30,8 @@ package org.openscience.cdk.dict;
 
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.util.Hashtable;
 import java.util.Enumeration;
+import java.util.Hashtable;
 
 /**
  * Database of dictionaries listing entries with compounds, fragments

@@ -24,7 +24,7 @@
  */
 package org.openscience.cdk.io.setting;
 
-import org.openscience.cdk.exception.*;
+import org.openscience.cdk.exception.CDKException;
 
 /**
  * An interface for reader settings. It is subclassed by implementations,

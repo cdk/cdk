@@ -24,8 +24,6 @@
  */
 package org.openscience.cdk.io.listener;
 
-import org.openscience.cdk.io.setting.*;
-import java.util.EventListener;
 
 /**
  * Allows monitoring of progress of writing activities.

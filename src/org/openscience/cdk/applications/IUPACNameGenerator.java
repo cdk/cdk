@@ -23,14 +23,14 @@
  */
 package org.openscience.cdk.applications;
 
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.smiles.*;
-import org.openscience.cdk.iupac.generator.*;
-import org.openscience.cdk.tools.LoggingTool;
-import freeware.PrintfFormat;
-import java.util.Enumeration;
 import java.util.Locale;
-import java.util.Vector;
+
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.iupac.generator.IUPACName;
+import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.tools.LoggingTool;
+
+import freeware.PrintfFormat;
 
 /**
  * This class implements a IUPAC name generator.

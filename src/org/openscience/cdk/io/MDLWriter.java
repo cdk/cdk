@@ -29,13 +29,22 @@
 package org.openscience.cdk.io;
 
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.exception.*;
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.text.NumberFormat;
+import java.util.Locale;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.IsotopeFactory;
-import java.io.*;
-import java.util.*;
-import java.text.*;
-import javax.vecmath.*;
 
 
 

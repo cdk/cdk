@@ -28,12 +28,16 @@
  */
 package org.openscience.cdk.io;
 
-import org.openscience.cdk.exception.*;
+import java.io.IOException;
+import java.io.Reader;
+
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.ichi.IChIHandler;
-import org.openscience.cdk.*;
-import org.xml.sax.helpers.*;
-import org.xml.sax.*;
-import java.io.*;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
 
 /**
  * Reads the content of a IUPAC Chemical Identifier (IChI) document. See

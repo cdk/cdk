@@ -23,12 +23,15 @@
  */
 package org.openscience.cdk.tools;
 
-import java.util.*;
-import java.io.*;
-import java.net.URL;
-import org.openscience.cdk.*;
-import org.openscience.cdk.exception.*;
 import java.awt.Color;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+import java.util.Vector;
+
+import org.openscience.cdk.AtomType;
 
 /**
  * AtomType list configurator that uses the AtomTypes originally

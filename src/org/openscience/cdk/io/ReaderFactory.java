@@ -25,11 +25,6 @@
  */
 package org.openscience.cdk.io;
 
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.exception.InvalidSmilesException;
-import org.openscience.cdk.tools.LoggingTool;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.CharArrayReader;
@@ -37,11 +32,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-
 import java.util.StringTokenizer;
-import java.util.Vector;
-
 import java.util.zip.GZIPInputStream;
+
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.exception.InvalidSmilesException;
+import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * A factory for creating ChemObjectReaders. The type of reader

@@ -24,9 +24,7 @@
  */
 package org.openscience.cdk.io.listener;
 
-import org.openscience.cdk.io.setting.*;
 import org.openscience.cdk.io.ReaderEvent;
-import java.util.EventListener;
 
 /**
  * Allows monitoring of progress of file reader activities.

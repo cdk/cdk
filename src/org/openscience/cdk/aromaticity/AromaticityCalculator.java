@@ -28,11 +28,11 @@
  */
 package org.openscience.cdk.aromaticity;
 
-import org.openscience.cdk.Ring;
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.Ring;
 
 /**
  * @cdkPackage standard

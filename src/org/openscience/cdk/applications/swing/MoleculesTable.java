@@ -23,18 +23,19 @@
  */
 package org.openscience.cdk.applications.swing;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.renderer.*;
-import org.openscience.cdk.ringsearch.*;
-import org.openscience.cdk.io.*;
-import org.openscience.cdk.tools.*;
-import org.openscience.cdk.geometry.*;
-import org.openscience.cdk.event.*;
-import java.util.*;
-import java.io.*;
-import javax.swing.*;
-import javax.swing.table.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.util.EventObject;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.AbstractTableModel;
+
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.event.CDKChangeListener;
 
 /**
  * @cdkPackage applications

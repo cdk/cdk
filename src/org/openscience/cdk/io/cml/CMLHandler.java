@@ -25,14 +25,11 @@
  */
 package org.openscience.cdk.io.cml;
 
-import java.io.PrintStream;
-import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.Stack;
-import java.util.Vector;
+
 import org.openscience.cdk.io.cml.cdopi.CDOInterface;
-import org.xml.sax.*;
-import org.xml.sax.helpers.*;
+import org.xml.sax.Attributes;
+import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * SAX2 implementation for CML XML fragment reading. CML Core is supported

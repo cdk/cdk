@@ -24,8 +24,6 @@
  */
 package org.openscience.cdk.validate;
 
-import java.util.List;
-import java.util.ArrayList;
 import java.util.Vector;
 
 /**

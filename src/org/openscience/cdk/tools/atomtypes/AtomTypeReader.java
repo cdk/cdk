@@ -27,13 +27,14 @@
  */
 package org.openscience.cdk.tools.atomtypes;
 
-import org.openscience.cdk.exception.*;
-import org.openscience.cdk.*;
-import org.openscience.cdk.tools.LoggingTool;
-import org.xml.sax.helpers.*;
-import org.xml.sax.*;
-import java.io.*;
+import java.io.IOException;
+import java.io.Reader;
 import java.util.Vector;
+
+import org.openscience.cdk.tools.LoggingTool;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
 
 /**
  * @cdkPackage standard

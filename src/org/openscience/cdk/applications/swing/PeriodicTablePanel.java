@@ -24,9 +24,12 @@
  */
 package org.openscience.cdk.applications.swing;
 
-import org.openscience.cdk.*;
-import java.awt.*;
-import javax.swing.*;
+import java.awt.Button;
+import java.awt.GridLayout;
+
+import javax.swing.JPanel;
+
+import org.openscience.cdk.Element;
 
 /**
  * JPanel version of the periodic system.

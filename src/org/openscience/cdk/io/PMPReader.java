@@ -28,13 +28,26 @@
  */
 package org.openscience.cdk.io;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.exception.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.util.Hashtable;
+import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.ChemSequence;
+import org.openscience.cdk.Crystal;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.ChemModelManipulator;
-import java.util.*;
-import java.util.regex.*;
-import java.io.*;
-import javax.vecmath.*;
 
 /**
  * Reads an frames from a PMP formated input.

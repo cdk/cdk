@@ -28,11 +28,16 @@
  */
 package org.openscience.cdk.tools;
 
-import org.openscience.cdk.*;
+import java.io.IOException;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.Isotope;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
-import java.util.Vector;
-import java.io.*;
 
 /**
  * Provides methods for adding missing hydrogen atoms.

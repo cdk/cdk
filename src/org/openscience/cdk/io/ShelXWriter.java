@@ -25,13 +25,17 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.*;
-import java.util.*;
-import org.openscience.cdk.*;
-import org.openscience.cdk.exception.*;
-import org.openscience.cdk.tools.*;
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
+import java.io.IOException;
+import java.io.Writer;
+import java.util.Enumeration;
+import java.util.Vector;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.Crystal;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.tools.MFAnalyser;
+
 import freeware.PrintfFormat;
 
 /**

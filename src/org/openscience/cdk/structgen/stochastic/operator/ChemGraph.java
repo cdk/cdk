@@ -1,10 +1,10 @@
 package org.openscience.cdk.structgen.stochastic.operator;
 
 
-import org.openscience.cdk.*;
 import java.util.Vector;
-import org.openscience.cdk.tools.*;
-import org.openscience.cdk.structgen.stochastic.*;
+
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.tools.RandomNumbersTool;
 
 public class ChemGraph
 {

@@ -24,9 +24,10 @@
  */
 package org.openscience.cdk.structgen.deterministic;
 
-import java.util.*;
-import javax.vecmath.*;
-import org.openscience.cdk.*;
+import java.util.Vector;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
 /**
  *  An implementation of Faulons equivalent classes deterministic generator 
  *

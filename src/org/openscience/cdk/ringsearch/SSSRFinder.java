@@ -28,8 +28,13 @@
  */
 package org.openscience.cdk.ringsearch;
 
-import java.util.*;
-import org.openscience.cdk.*;
+import java.util.Vector;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.Ring;
+import org.openscience.cdk.RingSet;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**

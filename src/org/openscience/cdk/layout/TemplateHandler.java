@@ -28,16 +28,21 @@
  */
 package org.openscience.cdk.layout;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.io.*;
-import org.openscience.cdk.geometry.*;
-import org.openscience.cdk.tools.*;
-import org.openscience.cdk.renderer.*;
-import org.openscience.cdk.isomorphism.*;
-import org.openscience.cdk.isomorphism.mcss.*;
-import javax.vecmath.*;
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.List;
+import java.util.Vector;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.RingSet;
+import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
+import org.openscience.cdk.isomorphism.mcss.RMap;
 
 /**
  *  Helper class for Structure Diagram Generation. Handles templates. This is

@@ -28,9 +28,10 @@
  */
 package org.openscience.cdk.io.cml;
 
-import java.util.*;
-import org.openscience.cdk.io.cml.cdopi.*;
-import org.xml.sax.*;
+import java.util.StringTokenizer;
+
+import org.openscience.cdk.io.cml.cdopi.CDOInterface;
+import org.xml.sax.Attributes;
 
 /**
  * Implements the PDB convention used by PDB2CML.

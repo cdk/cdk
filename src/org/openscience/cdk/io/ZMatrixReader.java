@@ -28,11 +28,26 @@
  */
 package org.openscience.cdk.io;
 
-import org.openscience.cdk.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
+import java.util.StringTokenizer;
+
+import javax.vecmath.AxisAngle4d;
+import javax.vecmath.Matrix3d;
+import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.ChemSequence;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
-import java.util.*;
-import java.io.*;
-import javax.vecmath.*;
 
 /**
  * This class is experimental.

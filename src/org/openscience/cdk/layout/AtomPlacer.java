@@ -29,15 +29,19 @@
  */
 package org.openscience.cdk.layout;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.ringsearch.*;
-import org.openscience.cdk.geometry.*;
-import org.openscience.cdk.tools.*;
+import java.util.Comparator;
+import java.util.Vector;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Vector2d;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.PathTools;
-import javax.vecmath.*;
-import java.util.*;
-import java.lang.Math;
-import java.awt.*;
 
 /**
  *  Methods for generating coordinates for atoms in various situations. They can

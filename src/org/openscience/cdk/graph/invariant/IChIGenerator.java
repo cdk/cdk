@@ -29,21 +29,17 @@
 package org.openscience.cdk.graph.invariant;
 
 import java.io.BufferedReader;
-import java.io.DataInputStream;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.FileReader;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.Thread;
-import java.net.URL;
-
 import java.util.Random;
 
-import org.openscience.cdk.io.ChemObjectWriter;
-import org.openscience.cdk.io.MDLWriter;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.ChemObjectWriter;
+import org.openscience.cdk.io.MDLWriter;
 
 /**
  * Generates and IChI for a Molecule. Requires the ichi.exe program

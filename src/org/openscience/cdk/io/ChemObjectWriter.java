@@ -27,14 +27,8 @@
  *  */
 package org.openscience.cdk.io;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.exception.*;
-import org.openscience.cdk.io.listener.*;
-import org.openscience.cdk.io.setting.*;
-import java.io.*;
-import java.util.*;
-import java.text.*;
-import javax.vecmath.*;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.exception.CDKException;
 
 /**
  * This class is the interface that all IO readers should implement.

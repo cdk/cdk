@@ -27,11 +27,18 @@
  *  */
 package org.openscience.cdk.geometry;
 
-import javax.vecmath.*;
-import org.openscience.cdk.*;
-import org.openscience.cdk.tools.LoggingTool;
 import java.awt.Dimension;
 import java.util.Vector;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+import javax.vecmath.Vector2d;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.AtomEnumeration;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * A set of static utility classes for geometric calculations and operations.

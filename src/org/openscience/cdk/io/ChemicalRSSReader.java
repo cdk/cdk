@@ -28,14 +28,18 @@
  */
 package org.openscience.cdk.io;
 
-import org.openscience.cdk.exception.*;
-import org.openscience.cdk.io.chemrss.*;
-import org.openscience.cdk.*;
+import java.io.IOException;
+import java.io.Reader;
+
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.ChemSequence;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.chemrss.RSSHandler;
 import org.openscience.cdk.tools.LoggingTool;
-import org.xml.sax.helpers.*;
-import org.xml.sax.*;
-import java.io.*;
-import java.net.*;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
+import org.xml.sax.XMLReader;
 
 /**
  * Parses a RSS feed and extracts chemical content from it. Each RSS channel

@@ -24,10 +24,11 @@
  */
 package org.openscience.cdk.io;
 
-import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.io.setting.*;
-import org.openscience.cdk.io.listener.*;
 import java.util.Vector;
+
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.io.listener.ChemObjectIOListener;
+import org.openscience.cdk.io.setting.IOSetting;
 
 /**
  * Abstract class that ChemObjectReader's can implement to have it

@@ -24,13 +24,19 @@
  */
 package org.openscience.cdk.io;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.exception.CDKException;
-import javax.vecmath.Point3d;
-import java.io.Writer;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.OutputStream;
+import java.io.Writer;
+
+import javax.vecmath.Point3d;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.exception.CDKException;
 
 /**
  * Writer that outputs in the HIN format.

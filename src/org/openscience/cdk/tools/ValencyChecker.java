@@ -28,11 +28,13 @@
  */
 package org.openscience.cdk.tools;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.ringsearch.*;
+import java.io.IOException;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.AtomType;
+import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.exception.CDKException;
-import java.util.Vector;
-import java.io.*;
 
 /**
  * This class is an experimental alternative to the SaturationChecker.

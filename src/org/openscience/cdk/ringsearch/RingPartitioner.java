@@ -28,8 +28,10 @@
 package org.openscience.cdk.ringsearch;
 
 
-import java.util.*;
-import org.openscience.cdk.*;
+import java.util.Vector;
+
+import org.openscience.cdk.Ring;
+import org.openscience.cdk.RingSet;
 
 /**
  * Partitions a RingSet into RingSets of connected rings.

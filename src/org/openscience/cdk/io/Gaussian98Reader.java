@@ -25,18 +25,28 @@
  */
 package org.openscience.cdk.io;
 
-import org.openscience.cdk.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.StreamTokenizer;
+import java.io.StringReader;
+import java.util.StringTokenizer;
+
+import javax.vecmath.Point3d;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.ChemSequence;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.io.setting.*;
+import org.openscience.cdk.io.setting.BooleanIOSetting;
+import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.tools.IsotopeFactory;
 import org.openscience.cdk.tools.LoggingTool;
-import java.io.Reader;
-import java.io.BufferedReader;
-import java.io.StringReader;
-import java.io.IOException;
-import java.io.StreamTokenizer;
-import java.util.StringTokenizer;
-import javax.vecmath.Point3d;
 
 /**
  * A reader for Gaussian98 output.

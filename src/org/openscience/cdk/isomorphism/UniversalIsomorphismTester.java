@@ -31,15 +31,28 @@
  */
 package org.openscience.cdk.isomorphism;
 
-import java.util.*;
-import java.io.*;
-import org.openscience.cdk.*;
-import org.openscience.cdk.tools.*;
-import org.openscience.cdk.renderer.*;
-import org.openscience.cdk.geometry.*;
-import org.openscience.cdk.io.*;
-import org.openscience.cdk.exception.*;
-import org.openscience.cdk.isomorphism.mcss.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.BitSet;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Vector;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.ChemObjectReader;
+import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.isomorphism.mcss.RGraph;
+import org.openscience.cdk.isomorphism.mcss.RMap;
+import org.openscience.cdk.isomorphism.mcss.RNode;
 import org.openscience.cdk.tools.ChemModelManipulator;
 
 /**

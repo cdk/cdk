@@ -23,10 +23,19 @@
  */
 package org.openscience.cdk.tools;
 
-import java.util.*;
-import java.io.*;
-import org.openscience.cdk.*;
-import org.openscience.cdk.exception.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OptionalDataException;
+import java.util.Hashtable;
+import java.util.Vector;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomType;
+import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.NoSuchAtomTypeException;
 
 /**
  *  General class for defining AtomTypes. This class itself does not define the

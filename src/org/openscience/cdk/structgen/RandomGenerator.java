@@ -29,10 +29,13 @@
 
 package org.openscience.cdk.structgen;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.tools.*;
-
 import java.util.Vector;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.tools.ConnectivityChecker;
 
 /**
  * RandomGenerator is a generator of Constitutional Isomers. It needs to be 

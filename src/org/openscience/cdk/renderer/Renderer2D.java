@@ -28,16 +28,38 @@
  */
 package org.openscience.cdk.renderer;
 
-import java.awt.*;
-import java.awt.geom.Rectangle2D;
-import java.awt.event.*;
-import javax.vecmath.*;
-import java.util.*;
-import org.openscience.cdk.ringsearch.*;
-import org.openscience.cdk.geometry.*;
-import org.openscience.cdk.*;
-import org.openscience.cdk.tools.*;
-import org.openscience.cdk.renderer.color.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
+import java.util.Vector;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Vector2d;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.Isotope;
+import org.openscience.cdk.Mapping;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.Reaction;
+import org.openscience.cdk.Ring;
+import org.openscience.cdk.RingSet;
+import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.SetOfReactions;
+import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.ringsearch.SSSRFinder;
+import org.openscience.cdk.tools.ConnectivityChecker;
+import org.openscience.cdk.tools.IsotopeFactory;
+import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.validate.ProblemMarker;
 
 /**

@@ -27,21 +27,27 @@
  *  */
 package org.openscience.cdk.io;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.exception.*;
-import org.openscience.cdk.smiles.*;
-import org.openscience.cdk.renderer.*;
-import org.openscience.cdk.geometry.*;
-import java.io.*;
-import java.util.*;
-import java.text.*;
-import java.awt.*;
-import javax.vecmath.*;
-import javax.swing.*;
-import org.apache.batik.svggen.SVGGraphics2D;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+
+import javax.swing.JPanel;
+
 import org.apache.batik.dom.GenericDOMImplementation;
-import org.w3c.dom.Document;
+import org.apache.batik.svggen.SVGGraphics2D;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.renderer.Renderer2D;
 import org.w3c.dom.DOMImplementation;
+import org.w3c.dom.Document;
 
 /**
  * Writes the SVG strings to output. This class makes

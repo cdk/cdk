@@ -23,13 +23,23 @@
  */
 package org.openscience.cdk.applications;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.io.*;
-import org.openscience.cdk.exception.*;
-import org.openscience.cdk.validate.*;
-import java.io.*;
-import java.util.Vector;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
 import java.util.Enumeration;
+
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.ChemObjectReader;
+import org.openscience.cdk.io.ReaderFactory;
+import org.openscience.cdk.validate.BasicValidator;
+import org.openscience.cdk.validate.CDKValidator;
+import org.openscience.cdk.validate.ValidationReport;
+import org.openscience.cdk.validate.ValidationTest;
+import org.openscience.cdk.validate.ValidatorEngine;
 
 /**
  * Command line utility for checking the chemical information from files.
