@@ -63,6 +63,8 @@
 
                         <exclude name="${sourcedist}/**" />
                         <exclude
+                        name="org/openscience/cdk/applications/Viewer.java" />
+                        <exclude
                         name="org/openscience/cdk/renderer/AcceleratedRenderer3D*" />
                         <exclude
                         name="org/openscience/cdk/renderer/OrbitalsRenderer3D*" />
