@@ -48,15 +48,16 @@ public class CMLHandler extends DefaultHandler {
     
     private ModuleInterface conv;
     private org.openscience.cdk.tools.LoggingTool logger;
-    private boolean debug = false;
+    private boolean debug = true;
     
     private Hashtable userConventions;
 
   // this is a problem under MSFT ie jvm
   //private Stack xpath;
     private CMLStack xpath;
-    
-    
+    private CMLStack conventionStack;
+
+
     /**
      * Constructor for the CMLHandler.
      *
@@ -68,6 +69,7 @@ public class CMLHandler extends DefaultHandler {
         conv = new CMLCoreModule(cdo);
         userConventions = new Hashtable();
         xpath = new CMLStack();
+        conventionStack = new CMLStack();
     }
 
     public void registerConvention(String convention, ModuleInterface conv) {
@@ -94,9 +96,10 @@ public class CMLHandler extends DefaultHandler {
     }
 
     public void endElement(String uri, String local, String raw) {
-       if (debug) logger.debug("</" + raw + ">");
-       conv.endElement(xpath, uri, local, raw);
-       xpath.pop();
+        if (debug) logger.debug("</" + raw + ">");
+        conv.endElement(xpath, uri, local, raw);
+        xpath.pop();
+        conventionStack.pop();
     }
 
     public CDOInterface returnCDO() {
@@ -105,6 +108,8 @@ public class CMLHandler extends DefaultHandler {
 
     public void startDocument() {
         conv.startDocument();
+        conventionStack.push("CML");
+
     }
 
     public void startElement(String uri, String local, String raw, Attributes atts) {
@@ -115,35 +120,50 @@ public class CMLHandler extends DefaultHandler {
             // e.g. reactionList, reaction -> CRML module
             logger.info("Detected CRML module");
             conv = new CMLReactionModule(conv);
+            conventionStack.push(conventionStack.current());
         } else {
             // assume CML Core
                 
             // Detect conventions
+            String convName = "";
             for (int i = 0; i < atts.getLength(); i++) {
                 if (atts.getQName(i).equals("convention")) {
-                    logger.info(new StringBuffer("New Convention: ").append(atts.getValue(i)).toString());
-                    if (atts.getValue(i).equals("CML")) {
-                        if (debug) logger.debug("Doing nothing");
-                    } else if (atts.getValue(i).equals("PDB")) {
+                    convName = atts.getValue(i);
+                }
+            }
+            if (convName.length() > 0) {
+                conventionStack.push(convName);
+                if (convName.equals(conventionStack.current())) {
+                    logger.debug("Same convention as parent");
+                } else {
+                    logger.info("New Convention: " + convName);
+                    if (convName.equals("CML")) {
+                        conv = new CMLCoreModule(conv);
+                    } else if (convName.equals("PDB")) {
                         conv = new PDBConvention(conv);
-                    } else if (atts.getValue(i).equals("PMP")) {
+                    } else if (convName.equals("PMP")) {
                         conv = new PMPConvention(conv);
-                    } else if (atts.getValue(i).equals("MDLMol")) {
+                    } else if (convName.equals("MDLMol")) {
                         if (debug) logger.debug("MDLMolConvention instantiated...");
                         conv = new MDLMolConvention(conv);
-                    } else if (atts.getValue(i).equals("JMOL-ANIMATION")) {
+                    } else if (convName.equals("JMOL-ANIMATION")) {
                         conv = new JMOLANIMATIONConvention(conv);
                     } else {
                         //unknown convention. userConvention?
-                        if (userConventions.containsKey(atts.getValue(i))) {
-                            ConventionInterface newconv = (ConventionInterface)userConventions.get(atts.getValue(i));
+                        if (userConventions.containsKey(convName)) {
+                            ConventionInterface newconv = (ConventionInterface)userConventions.get(convName);
                             newconv.inherit(conv);
                             conv = newconv;
                         }
                     }
+
                 }
+            } else {
+                // no convention set/reset: take convention of parent
+                conventionStack.push(conventionStack.current());
             }
         }
+        if (debug) logger.debug("Conventions -> " + conventionStack);
         conv.startElement(xpath, uri, local, raw, atts);
     }
 
