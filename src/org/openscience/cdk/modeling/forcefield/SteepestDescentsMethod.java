@@ -91,74 +91,12 @@ public class SteepestDescentsMethod {
 	 *@param  stepSizeK  Description of the Parameter
 	 *@return            New coordinates of the atoms, k+1 step
 	 */
-	public GVector newCoordinatesCalculation(GVector oldCoordinates, double stepSizeK) {
+	public GVector setNewCoordinates(GVector oldCoordinates, double stepSizeK) {
 		newCoordinates.set(sk);
 		newCoordinates.scale(stepSizeK);
 		newCoordinates.add(oldCoordinates);
 		System.out.println("New coordinates : " + newCoordinates);
 		return newCoordinates;
-	}
-
-
-	/**
-	 *  Search line approach: Obtain line of search (Interception xk and slope like
-	 *  Sk) *** Waiting to be completed completed
-	 *
-	 *@param  interception          xk
-	 *@param  interceptionGradient  Sk
-	 *@return                       Description of the Return Value
-	 */
-	public String searchLine(GVector interception, GVector interceptionGradient) {
-		String lineEquation = "";
-		// System.out.println("Slope of the line in the direction of the gradient in " + interception + " : " + forceFieldFunction.slopeInPoint(kCoordinates));
-		return lineEquation;
-	}
-
-
-	/**
-	 *  Search line approach: Look for 3 points along the line where the energy of
-	 *  the middle point is lower than the energy of the two outer points ***
-	 *  Waiting to be completed
-	 *
-	 *@param  line  Description of the Parameter
-	 *@return       Description of the Return Value
-	 */
-	public String linePointsSeeking(String line) {
-
-		String lineSegment = "";
-		return lineSegment;
-	}
-
-
-	/**
-	 *  Search line approach: Minimize The fitted function on the line *** Waiting
-	 *  to be completed
-	 *
-	 *@param  function  Description of the Parameter
-	 *@param  segment   Description of the Parameter
-	 *@return           Description of the Return Value
-	 */
-	public Vector minimizeFitFunction(String function, String segment) {
-
-		Vector fitFunctionMinimum = new Vector();
-		return fitFunctionMinimum;
-	}
-
-
-	/**
-	 *  Search line approach: Fit a function of order p with the three point of the
-	 *  line // To check comment *** Waiting to be completed
-	 *
-	 *@param  point1  Description of the Parameter
-	 *@param  point2  Description of the Parameter
-	 *@param  point3  Description of the Parameter
-	 *@param  order   Description of the Parameter
-	 *@return         Description of the Return Value
-	 */
-	public String fitFunction(Vector point1, Vector point2, Vector point3, byte order) {
-
-		String fitFunctionShape = "";
-		return fitFunctionShape;
 	}
 
 
