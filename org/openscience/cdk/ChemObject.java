@@ -51,7 +51,7 @@ public class ChemObject implements CDKConstants, Cloneable
 	 * flag array with self-defined constants (flags[VISITED] = true).
 	 * 10 flags per object should be more than enough.
 	 */
-	protected boolean[] flags = new boolean[10];
+	public boolean[] flags = new boolean[10];
 	/** Array of multipurpose vectors. Handle like described for the
 	  * flags above 
 	  */

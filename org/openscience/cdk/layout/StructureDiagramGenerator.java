@@ -90,13 +90,19 @@ public class StructureDiagramGenerator
 	public void generateCoordinates(){
 	
 		sssr = sssrf.findSSSR(molecule);
-		if (debug) System.out.println("\n\n" + sssr.size() + " rings found:\n\n");
+//		if (debug) System.out.println("\n\n" + sssr.size() + " rings found:\n\n");
+
 		Ring ring = sssr.getMostComplexRing();
-		if (debug) System.out.println("\n\nMost complex ring is:\n " + ring);
-		/* Place the most complex ring at th */
+		/* Place the most complex ring at the origin of the coordinate system */
 		placeFirstBondOfFirstRing(ring, new Vector2d(0, 1));
 		RingPlacer.placeRing(ring, ring.getBondAt(0), getRingCenterOfFirstRing(ring), bondLength);
-		if (debug) System.out.println("\n\nFirst ring placed:\n " + ring);
+		ring.flags[RingPlacer.ISPLACED] = true;
+//		if (debug) System.out.println("\n\nFirst ring placed:\n " + ring);
+//		System.out.println("*** status of molecule before drawing ***\n");
+//		System.out.println(molecule + "\n");
+//		System.out.println("*** status of molecule before drawing ***\n");
+		placeConnectedRings(sssr, ring);
+		fixRest();
 		
 	}
 	
@@ -120,6 +126,59 @@ public class StructureDiagramGenerator
 		double angle = ((size - 2) * Math.PI / size);
 		double ringCenterVectorSize = bondLength / 2 * Math.tan(angle/2);
 		return new Vector2d(ringCenterVectorSize, 0);
+	}
+	
+	private void placeConnectedRings(RingSet rs, Ring ring)
+	{
+		Vector connectedRings = rs.getConnectedRings(ring);
+		Ring connectedRing;
+		Bond bond;
+		Point2d oldRingCenter, newRingCenter, bondCenter;
+		Vector2d tempVector;
+		 
+		for (int i = 0; i < connectedRings.size(); i++)
+		{
+			connectedRing = (Ring)connectedRings.elementAt(i);
+			if (!connectedRing.flags[RingPlacer.ISPLACED])
+			{
+				bond = ring.getFusionBond(connectedRing);
+				bondCenter = bond.get2DCenter();
+				oldRingCenter = ring.get2DCenter();
+//				molecule.addAtom(new Atom(new Element("O"), new Point2d(oldRingCenter)));			
+				tempVector = (new Vector2d(bondCenter));
+				tempVector.sub(new Vector2d(oldRingCenter));
+//				System.out.println("placeConnectedRing -> tempVector: " + tempVector + ", tempVector.length: " + tempVector.length());
+				newRingCenter = new Point2d(bondCenter);
+//				System.out.println("placeConnectedRing -> bondCenter: " + bondCenter);			
+//				molecule.addAtom(new Atom(new Element("B"), new Point2d(bondCenter)));
+				newRingCenter.add(tempVector);
+//				molecule.addAtom(new Atom(new Element("N"), new Point2d(newRingCenter)));
+				RingPlacer.placeRing(connectedRing, bond, new Vector2d(tempVector), bondLength);
+				connectedRing.flags[RingPlacer.ISPLACED] = true;
+				placeConnectedRings(rs, connectedRing);
+			}
+		}
+	
+	}
+	
+	private void fixRest()
+	{
+		for (int f = 0; f < molecule.getAtomCount(); f++)
+		{
+			if (molecule.getAtomAt(f).getPoint2D() == null)
+			{
+				molecule.getAtomAt(f).setPoint2D(new Point2d(0,0));
+			}
+		}
+	}
+	
+	
+	private void markNotPlaced(RingSet rs)
+	{
+		for (int f = 0; f < rs.size(); f++)
+		{
+			((Ring)rs.elementAt(f)).flags[RingPlacer.ISPLACED] = false;
+		}
 	}
 
 }

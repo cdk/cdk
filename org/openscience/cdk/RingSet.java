@@ -128,8 +128,26 @@ public class RingSet extends Vector{
 		return ring;
 	}
 
+	public Vector getConnectedRings(Ring ring)
+	{
+		Vector connectedRings = new Vector();
+		Ring tempRing;
+		Bond bond;
+		for (int i  = 0; i < ring.getBondCount(); i++)
+		{
+			bond = ring.getBondAt(i);
+			for (int j = 0; j < size(); j++)
+			{	
+				tempRing = (Ring)elementAt(j);
+				if (tempRing != ring && tempRing.contains(bond))
+				{
+					connectedRings.addElement(tempRing);
+				}
+			}
+		}
+		return connectedRings;
+	}
 	
-
 	/**
 	 * Returns the ring with the highest numbers of other rings attached to it.
 	 *

@@ -93,6 +93,19 @@ public class Atom extends ChemObject implements Cloneable {
 		this(element);
 		this.point3D = point3D;
 	}
+
+	/**
+	 * Constructs an Atom from an Element and a Point2D
+	 *
+	 * @param   element   The Element
+	 * @param   point2D   The Point
+	 */
+	public Atom(Element element, javax.vecmath.Point2d point2D)
+	{
+		this(element);
+		this.point2D = point2D;
+	}
+
 	/**
 	 *  Sets the element type of this atom 
 	 *

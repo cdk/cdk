@@ -40,7 +40,6 @@ public class ConnectivityCheckerTest
 	
 		ConnectivityChecker cc = new ConnectivityChecker();
 		Molecule mol = buildConnectedMolecule();
-		System.out.println(mol);
 		System.out.println(cc.isConnected(mol));
 	
 	}

@@ -51,6 +51,7 @@ public interface CDKConstants
 	
 	/** A bonds which end is above the drawing plane */
 	static int STEREO_ATOM_PARITY_MINUS = -1;
+
 }
 
 

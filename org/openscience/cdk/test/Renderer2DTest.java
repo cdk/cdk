@@ -75,7 +75,7 @@ public class Renderer2DTest extends JPanel
 			exc.printStackTrace();		
 		}
 		JFrame frame = new JFrame();
-		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().add(this);
 		frame.pack();
 		frame.setVisible(true);

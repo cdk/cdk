@@ -35,10 +35,8 @@ import org.openscience.cdk.*;
 public class SSSRFinder
 {
 
-	 public boolean debug = false; // minimum details
-
+	public boolean debug = false; // minimum details
 	private static final int PATH = 0;
-
 
 	/**
 	 * Finds the Smallest Set of Smallest Rings. 

@@ -42,13 +42,16 @@ import java.awt.*;
  * buildup of ringsystems by the user. 
  **/
 
-public class RingPlacer 
+public class RingPlacer implements CDKConstants
 {
 	static boolean debug = true;
+	public static int ISPLACED = 0;	
 
 	public static void placeRing(Ring ring, Bond bond, Vector2d ringCenterVector, double bondLength)
 	{
-		Point2d ringCenter = bond.get2DCenter(), newAtomPoint;
+		Point2d ringCenter = bond.get2DCenter();
+		if (debug) System.out.println("placeRing -> bondCenter " + ringCenter);		
+		if (debug) System.out.println("placeRing -> ringCenterVector: " + ringCenterVector + ", placeRing -> ringCenterVector.length(): " + ringCenterVector.length());
 		ringCenter.add(ringCenterVector);
 		double ringRadius = Math.sqrt(Math.pow(ringCenterVector.length(), 2) + Math.pow(bondLength / 2, 2));
 		if (debug) System.out.println("ringRadius: " + ringRadius);
@@ -56,20 +59,134 @@ public class RingPlacer
 		if (debug) System.out.println("occupiedAngle: " + occupiedAngle + " (" + occupiedAngle / Math.PI * 180 + ")");
 		double remainingAngle = (2 * Math.PI) - occupiedAngle;
 		if (debug) System.out.println("remainingAngle: " + remainingAngle + " (" + remainingAngle / Math.PI * 180 + ")");
-		double addAngle = remainingAngle / ring.getRingSize() - 1;
-		double currentAngle = occupiedAngle / 2;
-		for (int i = 0; i < ring.getRingSize() - 1; i++)
-		{
-			currentAngle += addAngle;
-			Vector2d newVector = new Vector2d(Math.cos(currentAngle) * ringRadius, Math.sin(currentAngle) * ringRadius); 
-			newAtomPoint = ringCenter;
-			newAtomPoint.add(newVector);
-		}
-							
+		double addAngle = remainingAngle / (ring.getRingSize() - 1);
+
+		completeRing(ring, bond, ringCenterVector, addAngle, bondLength);
 	}
 	
+	/**
+	 * attaches a polygon to a chemical structure, the ring attaches to two atoms
+	 */
+    public static void completeRing(Ring ring, Bond bond, Vector2d ringCenterVector, double addAngle, double bondLength)
+    {
+	
+    	Atom atom;
+        Atom firstAtom = null, connectAtom;
+		int direction = 0;
+ 	    double angle = 0, x = 0, y = 0;
+    	Atom bondAtom1 = bond.getAtomAt(0);
+        Atom bondAtom2 = bond.getAtomAt(1);
+
+		Bond currentBond = bond;
+
+    	double bondlength, xDiff=0, yDiff=0,sumX = 0,sumY = 0, centerX = 0, centerY = 0;
+		boolean bondExists;
+
+		Point2d ringCenter = bond.get2DCenter();
+		ringCenter.add(ringCenterVector);
+
+
+		centerX = ringCenter.x;
+		centerY = ringCenter.y;
+		
+		xDiff = bondAtom1.getX2D() - bondAtom2.getX2D();
+		yDiff = bondAtom1.getY2D() - bondAtom2.getY2D();
+
+		angle = Math.atan(yDiff/xDiff);	 
+		
+	  //*************** the cases *******************************************		
+		
+		// if bond is vertical
+	    if (xDiff == 0)
+		{
+			angle = Math.abs(angle);
+			//starts with the lower Atom
+			if (bondAtom1.getY2D() > bondAtom2.getY2D())
+			{
+				firstAtom = bondAtom1;
+			}
+			else
+			{
+				firstAtom = bondAtom2;
+			}
+			
+			//changes the drawing direction
+			if (centerX < bondAtom1.getX2D())
+			{
+				direction = 1;
+			}
+			else
+			{
+				direction = -1;
+			}
+		}
+
+	    // if bond is not vertical
+		else
+		{
+			//starts with the left Atom
+			if (bondAtom1.getX2D() > bondAtom2.getX2D())
+			{
+				firstAtom = bondAtom1;
+			}
+			else
+			{
+				firstAtom = bondAtom2;
+			}
+			
+			//changes the drawing direction
+			if (centerY - bondAtom1.getY2D() > (centerX - bondAtom1.getX2D()) * yDiff / xDiff)
+			{
+				direction = 1;
+			}
+			else
+			{
+				direction = -1;
+			}
+		}
+		sumX = firstAtom.getX2D();
+		sumY = firstAtom.getY2D();
+		
+		
+	 
+	  //************* draw polygon **************************************
+		
+	    connectAtom = firstAtom;
+        for (int i = 0; i < ring.getAtomCount() - 2; i++)
+        {
+			currentBond = ring.getNextBond(currentBond, connectAtom);
+			connectAtom = currentBond.getConnectedAtom(connectAtom);
+	        angle = angle + addAngle * direction;
+	        x = Math.cos(angle) * bondLength;
+	        y = Math.sin(angle) * bondLength;
+			sumX = sumX + x;
+			sumY = sumY + y;
+			if (connectAtom.getPoint2D() == null)
+			{
+				connectAtom.setPoint2D(new Point2d(sumX, sumY));				
+			}
+        }
+   	}
 	
 	
+
+	/**
+	 * True if coordinates have been assigned to all atoms in all rings. 
+	 *
+	 * @param   rs  The ringset to be checked
+	 * @return  True if coordinates have been assigned to all atoms in all rings.    
+	 */
+	public static boolean allPlaced(RingSet rs)
+	{
+		for (int i = 0; i < rs.size(); i++)
+		{
+			if (!((Ring)rs.elementAt(i)).flags[ISPLACED])
+			{
+				return false;
+			}
+		}
+		return true;
+	}
 	
 
 

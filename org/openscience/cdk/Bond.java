@@ -239,7 +239,7 @@ public class Bond extends ElectronContainer implements Cloneable
 			x += getAtomAt(f).getX2D();
 			y += getAtomAt(f).getY2D();
 		}
-		return new Point2d(x / getAtomCount(), y / getAtomCount());
+		return new Point2d(x / ((double)getAtomCount()), y / ((double)getAtomCount()));
 	}
 	
 

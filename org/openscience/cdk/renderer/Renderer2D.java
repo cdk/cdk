@@ -28,6 +28,7 @@ package org.openscience.cdk.renderer;
 
 
 import java.awt.*;
+import javax.vecmath.*;
 import java.util.Vector;
 import org.openscience.cdk.ringsearch.*;
 import org.openscience.cdk.*;
@@ -236,7 +237,7 @@ public class Renderer2D
 	 */
 	private void paintInnerBond(Bond bond, Ring ring)
 	{
-		Point center = ring.getCenter();
+		Point2d center = ring.get2DCenter();
 
 		int[] coords = distanceCalculator(getBondCoordinates(bond),(r2dm.getBondWidth()/2 + r2dm.getBondDistance()));
 		double dist1 = Math.sqrt(Math.pow((coords[0] - center.x),2) + Math.pow((coords[1] - center.y),2));
