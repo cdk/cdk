@@ -72,12 +72,12 @@ public class ReaderFactory {
         
         if (isMDLMolfile(buffer)) {
             logger.info("MDL Molfile format detected");
-            return new MDLReader(input);
+            return new MDLReader(buffer);
         }
 
         if (isXYZfile(buffer)) {
             logger.info("XYZ format detected");
-            return new XYZReader(input);
+            return new XYZReader(buffer);
         }
 
         /* Search file for a line containing an identifying keyword */
@@ -99,11 +99,11 @@ public class ReaderFactory {
             } else if (line.indexOf("<identifier") != -1) {
                 logger.info("IChI format detected");
                 buffer.reset();
-                return new IChIReader(input);
+                return new IChIReader(buffer);
             } else if (line.startsWith("%%Header Start")) {
                 logger.info("PolyMorph Predictor format detected");
                 buffer.reset();
-                return new PMPReader(input);
+                return new PMPReader(buffer);
             } else if (line.startsWith("ZERR ") ||
                        line.startsWith("TITL ")) {
                 logger.info("ShelX format detected");
@@ -115,7 +115,7 @@ public class ReaderFactory {
 
         if (isSMILESfile(buffer)) {
             logger.info("SMILES format detected");
-            return new SMILESReader(input);
+            return new SMILESReader(buffer);
         }
 
         logger.warn("File format undetermined");
