@@ -85,9 +85,9 @@ AC_SUBST(PATHTORTJAR)
 
 AC_MSG_CHECKING(for Java3D lib)
 if test -f "$JAVA3DDIR/lib/ext/j3dcore.jar"
-    AC_MSG_RESULT($JAVA3DDIR/lib/ext/j3dcore.jar)
-    PATHTO3DJAR="$JAVA3DDIR/lib/ext/j3dcore.jar:$JAVA3DDIR/lib/ext/j3dutils.jar:$JAVA3DDIR/lib/ext/vecmath.jar"
 then
+    PATHTO3DJAR="$JAVA3DDIR/lib/ext/j3dcore.jar:$JAVA3DDIR/lib/ext/j3dutils.jar:$JAVA3DDIR/lib/ext/vecmath.jar"
+else
     if test "x$prefix" = xNONE
     then
         # order these with prefered one at the end
@@ -101,12 +101,17 @@ then
 
     for d in $try_dirs
     do
-        if test -f "$d/j3dcore.jar"
-        then 
-            AC_MSG_RESULT($d/j3dcore.jar)
-            PATHTO3DJAR="$d/j3dcore.jar:$d/j3dutils.jar:$d/vecmath.jar"
+        if test -f "$d/lib/ext/j3dcore.jar"
+        then
+            PATHTO3DJAR="$d/lib/ext/j3dcore.jar:$d/lib/ext/j3dutils.jar:$d/lib/ext/vecmath.jar"
         fi
     done
+fi
+if test "x$PATHTO3DJAR" = "x"
+then
+    AC_MSG_RESULT(no)
+else
+    AC_MSG_RESULT($PATHTO3DJAR)
 fi
 AC_SUBST(PATHTO3DJAR)
 

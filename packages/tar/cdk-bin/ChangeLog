@@ -1,3 +1,8 @@
+20020518
+=================
+* removed bugs in detection of Java3D
+* added Java3D jars to cdk-view classpath
+
 20020419
 =================
 * added SMILES output for cdk-fileconvertor
