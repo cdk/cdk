@@ -58,6 +58,8 @@ public class JCPController2DModel
 	private double defaultBondLength = 70;
 	
 	private String defaultElementSymbol = "C";
+	private int bondPointerLength = 80;
+	private int ringPointerLength = 60;
 	
 	
 	/**
@@ -239,5 +241,49 @@ public class JCPController2DModel
 	{
 		this.defaultElementSymbol = defaultElementSymbol;
 	}
+
+	/**
+	 *
+	 *
+	 * @return     
+	 */
+	public int getBondPointerLength()
+	{
+		return this.bondPointerLength;
+	}
+
+
+	/**
+	 *
+	 *
+	 * @param   pointerVectorLength  
+	 */
+	public void setBondPointerLength(int bondPointerLength)
+	{
+		this.bondPointerLength = bondPointerLength;
+	}
+
+
+	/**
+	 *
+	 *
+	 * @return     
+	 */
+	public int getRingPointerLength()
+	{
+		return this.ringPointerLength;
+	}
+
+
+	/**
+	 *
+	 *
+	 * @param   pointerVectorLength  
+	 */
+	public void setRingPointerLength(int ringPointerLength)
+	{
+		this.ringPointerLength = ringPointerLength;
+	}
+
 
 }

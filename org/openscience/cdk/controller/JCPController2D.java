@@ -40,7 +40,7 @@ import javax.vecmath.*;
 
 public class JCPController2D 
 {
-	boolean debug = true;
+	boolean debug = false;
 	Renderer2DModel r2dm;
 	AtomContainer atomCon;
 	JCPController2DModel c2dm = new JCPController2DModel();
@@ -109,7 +109,7 @@ public class JCPController2D
 		if (c2dm.getDrawMode() == c2dm.DRAWBOND)
 		{
 			int endX = 0, endY = 0;
-			int pointerVectorLength = r2dm.getPointerVectorLength();
+			int pointerVectorLength = c2dm.getBondPointerLength();
 			double angle = 0;
 			int startX = r2dm.getPointerVectorStart().x;
 			int startY = r2dm.getPointerVectorStart().y;
@@ -145,6 +145,23 @@ public class JCPController2D
 			int[] yPoints = {startY, mouseY, mouseY, startY};
 			r2dm.setSelectRect(new Polygon(xPoints, yPoints, 4));
 		}	
+	
+		/*************************************************************************
+		 *                          RINGMODE                                     *
+		 *************************************************************************/
+		 if (c2dm.getDrawMode() == c2dm.RING)
+		 {
+			 int endX = 0, endY = 0;
+			 double angle = 0;
+			 int pointerVectorLength = c2dm.getRingPointerLength();
+			 int startX = r2dm.getPointerVectorStart().x;
+			 int startY = r2dm.getPointerVectorStart().y;
+	
+			 angle = GeometryTools.getAngle(startX - mouseX, startY - mouseY);
+			 endX = startX - (int)(Math.cos(angle) * pointerVectorLength);
+			 endY = startY - (int)(Math.sin(angle) * pointerVectorLength);
+			 r2dm.setPointerVectorEnd(new Point(endX, endY));
+		 }
 	}
 	
 	/**
@@ -295,130 +312,23 @@ public class JCPController2D
 		 *************************************************************************/
 		if (c2dm.getDrawMode() == c2dm.RING)
 		{
-			RingPlacer ringPlacer = new RingPlacer();
-			int ringSize = c2dm.getRingSize();
-			String symbol = c2dm.getDefaultElementSymbol();
-			
 			Ring newRing;
-			AtomContainer sharedAtoms;
 			Point2d sharedAtomsCenter;
 			Vector2d ringCenterVector;
 			double bondLength;
+			int pointerMarkX, pointerMarkY;
 			
-			double ringRadius, angle, xDiff, yDiff, distance1, distance2;
-			AtomContainer conAtoms, highlighted;
-			Atom currentAtom, firstAtom, secondAtom, sharedAtom1, sharedAtom2;
-			Atom[] conAtomsArray, ringAtoms;
-			Point2d conAtomsCenter, newPoint1, newPoint2;
+			double ringRadius, angle, xDiff, yDiff, distance1 = 0, distance2 = 0;
+			Atom firstAtom, secondAtom, spiroAtom;
+			Point2d conAtomsCenter = null, newPoint1, newPoint2;
 			
-			/*********************** FUSED *****************************************/
-			if (r2dm.getHighlightedBond() != null)
-			{
-				highlighted = getHighlightedAtoms();
-				
-				// searching all the atoms attached to the 2 highlighted ones
-				// and calculating the center point.
-				conAtoms = new AtomContainer();
-				sharedAtomsCenter = highlighted.get2DCenter();
-				for (int i = 0; i < highlighted.getAtomCount(); i++)
-				{
-					currentAtom = highlighted.getAtomAt(i);
-					conAtoms.addAtom(currentAtom);
-					conAtomsArray = atomCon.getConnectedAtoms(currentAtom);
-					for (int j = 0; j < conAtomsArray.length; j++)
-					{
-						conAtoms.addAtom(conAtomsArray[j]);
-					}
-				}
-				conAtomsCenter = conAtoms.get2DCenter();
-				
-				// calculate two points that are perpendicular to the highlighted bond
-				// and have a certain distance from the bondcenter
-				firstAtom = highlighted.getAtomAt(0);
-				secondAtom = highlighted.getAtomAt(1);
-				xDiff = secondAtom.getX2D() - firstAtom.getX2D();
-				yDiff = secondAtom.getY2D() - firstAtom.getY2D();
-				bondLength = Math.sqrt(Math.pow(xDiff, 2) + Math.pow(yDiff, 2));
-				angle = GeometryTools.getAngle(xDiff, yDiff);
-				newPoint1 = new Point2d((Math.cos(angle + (Math.PI / 2)) * bondLength / 4) + sharedAtomsCenter.x, (Math.sin(angle + (Math.PI / 2)) * bondLength / 4) + sharedAtomsCenter.y);
-				newPoint2 = new Point2d((Math.cos(angle - (Math.PI / 2)) * bondLength / 4) + sharedAtomsCenter.x, (Math.sin(angle - (Math.PI / 2)) * bondLength / 4) + sharedAtomsCenter.y);
-				
-				// check which one of the two points is nearest to the the center of the 
-				// center of the connected atoms to make the ringCenterVector point
-				// into the right direction.
-				distance1 = Math.sqrt(Math.pow(newPoint1.x - conAtomsCenter.x, 2) + Math.pow(newPoint1.y - conAtomsCenter.y, 2));
-				distance2 = Math.sqrt(Math.pow(newPoint2.x - conAtomsCenter.x, 2) + Math.pow(newPoint2.y - conAtomsCenter.y, 2));
-				if (debug)
-				{
-					System.out.println("angle  "+ (angle / Math.PI) * 180);
-					Atom atom1 = new Atom(new Element("o"), newPoint1);
-					atomCon.addAtom(atom1);
-					Atom atom2 = new Atom(new Element("o"), newPoint2);
-					atomCon.addAtom(atom2);
-					Atom atom3 = new Atom(new Element("a"), conAtomsCenter);
-					atomCon.addAtom(atom3);
-					System.out.println("distance1  "+ distance1);
-					System.out.println("distance2  "+ distance2);
-				}
-				ringCenterVector = new Vector2d(sharedAtomsCenter);	
-				if (distance1 < distance2)
-				{
-					ringCenterVector.sub(newPoint1);
-				}
-				else if (distance2 < distance1)
-				{
-					ringCenterVector.sub(newPoint2);
-				}
-//				else
-//				{
-//					System.out.println("don't know where to draw the new Ring");
-//				}
-				
-				// construct a new Ring that contains the highlighted bond an its two atoms
-				newRing = new Ring(ringSize);
-				ringAtoms = new Atom[ringSize];
-				sharedAtoms = new AtomContainer();
-				for (int i = 0; i < 2; i++)
-				{
-					ringAtoms[i] = highlighted.getAtomAt(i);
-					sharedAtoms.addAtom(ringAtoms[i]);
-				}
-				for (int i = 2; i < ringSize; i++)
-				{
-					ringAtoms[i] = new Atom(symbol);
-				}
-				for (int i = 0; i < ringSize - 1; i++)
-				{
-					newRing.setBondAt(i,new Bond(ringAtoms[i], ringAtoms[i + 1], 1));
-				}
-				newRing.setBondAt(ringSize - 1, new Bond(ringAtoms[ringSize - 1], ringAtoms[0], 1));
-				newRing.setAtoms(ringAtoms);
-				sharedAtoms.addBond(newRing.getBondAt(0));
-				
-				// places the new atoms in the new ring
-				ringPlacer.placeFusedRing(newRing, sharedAtoms, sharedAtomsCenter, ringCenterVector, bondLength);
-				
-				// removes the highlighed bond and its atoms from the ring to add only
-				// the new placed aoms to the atom container to be drawn.		
-				try
-				{
-					newRing.remove(sharedAtoms);
-				}
-				catch (Exception exc)
-				{
-					exc.printStackTrace();
-				}
-				atomCon.add(newRing);
-			}
-			
-			/*********************** SPIRO *****************************************/
-			else if (r2dm.getHighlightedAtom() != null)
-			{
-				System.out.println("spiro");
-			}
+			RingPlacer ringPlacer = new RingPlacer();
+			int ringSize = c2dm.getRingSize();
+			String symbol = c2dm.getDefaultElementSymbol();
+			AtomContainer sharedAtoms = getHighlighted();
 			
 			/******************** NO ATTACHMENT ************************************/
-			else			
+			if (sharedAtoms.getAtomCount() == 0)			
 			{
 				sharedAtoms = new AtomContainer();
 				newRing = new Ring(ringSize, symbol);
@@ -433,34 +343,171 @@ public class JCPController2D
 				ringPlacer.placeSpiroRing(newRing, sharedAtoms, sharedAtomsCenter, ringCenterVector, bondLength);
 				atomCon.add(newRing);
 			}
+			
+			/*********************** SPIRO *****************************************/
+			else if (sharedAtoms.getAtomCount() == 1)
+			{
+				spiroAtom = sharedAtoms.getAtomAt(0);
+				sharedAtomsCenter = sharedAtoms.get2DCenter();
+				newRing = createAttachRing(sharedAtoms, ringSize, symbol);
+				bondLength = 50;
+				conAtomsCenter = getConnectedAtomsCenter(sharedAtoms);				
+				if (conAtomsCenter.equals(spiroAtom.getPoint2D()))
+				{
+					ringCenterVector = new Vector2d(0, 1);
+				}
+				else
+				{
+					ringCenterVector = new Vector2d(sharedAtomsCenter);
+					ringCenterVector.sub(conAtomsCenter);
+				}
+				ringPlacer.placeSpiroRing(newRing, sharedAtoms, sharedAtomsCenter, ringCenterVector, bondLength);
+				// removes the highlighed atom from the ring to add only the new placed
+			    // atoms to the AtomContainer.		
+				try
+				{
+					newRing.removeAtom(spiroAtom);
+				}
+				catch (Exception exc)
+				{
+					exc.printStackTrace();
+				}
+				atomCon.add(newRing);
+			}
+			
+			/*********************** FUSED *****************************************/
+			else if (sharedAtoms.getAtomCount() == 2)
+			{
+				sharedAtomsCenter = sharedAtoms.get2DCenter();
+				
+				// calculate two points that are perpendicular to the highlighted bond
+				// and have a certain distance from the bondcenter
+				firstAtom = sharedAtoms.getAtomAt(0);
+				secondAtom = sharedAtoms.getAtomAt(1);
+				xDiff = secondAtom.getX2D() - firstAtom.getX2D();
+				yDiff = secondAtom.getY2D() - firstAtom.getY2D();
+				bondLength = Math.sqrt(Math.pow(xDiff, 2) + Math.pow(yDiff, 2));
+				angle = GeometryTools.getAngle(xDiff, yDiff);
+				newPoint1 = new Point2d((Math.cos(angle + (Math.PI / 2)) * bondLength / 4) + sharedAtomsCenter.x, (Math.sin(angle + (Math.PI / 2)) * bondLength / 4) + sharedAtomsCenter.y);
+				newPoint2 = new Point2d((Math.cos(angle - (Math.PI / 2)) * bondLength / 4) + sharedAtomsCenter.x, (Math.sin(angle - (Math.PI / 2)) * bondLength / 4) + sharedAtomsCenter.y);
+				if (wasDragged)
+				{
+					// check where the pointer points
+					pointerMarkX = r2dm.getPointerVectorEnd().x;
+					pointerMarkY = r2dm.getPointerVectorEnd().y;
+					distance1 = Math.sqrt(Math.pow(newPoint1.x - pointerMarkX, 2) + Math.pow(newPoint1.y - pointerMarkY, 2));
+					distance2 = Math.sqrt(Math.pow(newPoint2.x - pointerMarkX, 2) + Math.pow(newPoint2.y - pointerMarkY, 2));
+					r2dm.setPointerVectorStart(new Point(pointerMarkX, pointerMarkX));
+				}
+				else
+				{
+					// check which one of the two points is nearest to the center of the
+					// connected atoms to make the ringCenterVector point into the right direction.
+					conAtomsCenter = getConnectedAtomsCenter(sharedAtoms);
+					distance1 = Math.sqrt(Math.pow(newPoint1.x - conAtomsCenter.x, 2) + Math.pow(newPoint1.y - conAtomsCenter.y, 2));
+					distance2 = Math.sqrt(Math.pow(newPoint2.x - conAtomsCenter.x, 2) + Math.pow(newPoint2.y - conAtomsCenter.y, 2));
+				}
+				ringCenterVector = new Vector2d(sharedAtomsCenter);	
+				if (distance1 < distance2)
+				{
+					ringCenterVector.sub(newPoint1);
+				}
+				else if (distance2 < distance1)
+				{
+					ringCenterVector.sub(newPoint2);
+				}
+				else
+				{
+					System.out.println("don't know where to draw the new Ring");
+				}
+				if (debug)
+				{
+					System.out.println("angle  "+ (angle / Math.PI) * 180);
+					Atom atom1 = new Atom(new Element("o"), newPoint1);
+					atomCon.addAtom(atom1);
+					Atom atom2 = new Atom(new Element("o"), newPoint2);
+					atomCon.addAtom(atom2);
+					Atom atom3 = new Atom(new Element("a"), conAtomsCenter);
+					atomCon.addAtom(atom3);
+					System.out.println("distance1  "+ distance1);
+					System.out.println("distance2  "+ distance2);
+				}
+				// construct a new Ring that contains the highlighted bond an its two atoms
+				newRing = createAttachRing(sharedAtoms, ringSize, symbol);
+//				sharedAtoms.addBond(newRing.getBondAt(0));
+				
+				// place the new atoms of the new ring to the right position
+				ringPlacer.placeFusedRing(newRing, sharedAtoms, sharedAtomsCenter, ringCenterVector, bondLength);
+				
+				// removes the highlighed bond and its atoms from the ring to add only
+				// the new placed atoms to the AtomContainer.		
+				try
+				{
+					newRing.remove(sharedAtoms);
+				}
+				catch (Exception exc)
+				{
+					exc.printStackTrace();
+				}
+				atomCon.add(newRing);
+			}
 			r2dm.fireChange();
 		}
 		wasDragged = false;
 	}
 	
 	
-	
+	/**
+	 * manages all actions that will be invoked when a mouse button is clicked
+	 *
+	 * @param   e	 MouseEvent object
+	 **/
 	public void mouseClicked(MouseEvent e)
 	{
 	}
 	
-	public void keyReleased(KeyEvent e)
-	{
-	}
-	
-	public void keyTyped(KeyEvent e)
-	{
-	}
-	
-	public void keyPressed(KeyEvent e)
-	{
-	}
-	
+	/**
+	 * manages all actions that will be invoked when a mouse enters a component
+	 *
+	 * @param   e	 MouseEvent object
+	 **/
 	public void mouseEntered(MouseEvent e)
 	{
 	}
 	
+	/**
+	 * manages all actions that will be invoked when a mouse exits a component
+	 *
+	 * @param   e	 MouseEvent object
+	 **/
 	public void mouseExited(MouseEvent e)
+	{
+	}
+	
+	/**
+	 * manages all actions that will be invoked when a key is released
+	 *
+	 * @param   e	 MouseEvent object
+	 **/
+	public void keyReleased(KeyEvent e)
+	{
+	}
+	
+	/**
+	 * manages all actions that will be invoked when a key is typed
+	 *
+	 * @param   e	 MouseEvent object
+	 **/
+	public void keyTyped(KeyEvent e)
+	{
+	}
+	
+	/**
+	 * manages all actions that will be invoked when a key is pressed
+	 *
+	 * @param   e	 MouseEvent object
+	 **/
+	public void keyPressed(KeyEvent e)
 	{
 	}
 	
@@ -477,6 +524,15 @@ public class JCPController2D
 	}
 	
 	
+
+	/**
+	 * Returns an Atom if it is in a certain range of the given point.
+	 * Used to highlight an atom that is near the cursor.
+	 *
+	 * @param   mouseX  The x coordinate of the point
+	 * @param   mouseY  The y coordinate of the point
+	 * @return    An Atom if it is in a certain range of the given point 
+	 */
 	private Atom getAtomInRange(int mouseX, int mouseY)
 	{
 		double highlightRadius = r2dm.getHighlightRadius();
@@ -490,6 +546,15 @@ public class JCPController2D
 		return null;
 	}
 
+
+	/**
+	 * Returns a Bond if it is in a certain range of the given point.
+	 * Used to highlight a bond that is near the cursor.
+	 *
+	 * @param   mouseX  The x coordinate of the point
+	 * @param   mouseY  The y coordinate of the point
+	 * @return    An Atom if it is in a certain range of the given point 
+	 */
 	private Bond getBondInRange(int mouseX, int mouseY)
 	{	
 		double highlightRadius = r2dm.getHighlightRadius();
@@ -506,7 +571,14 @@ public class JCPController2D
 		return null;
 	}
 	
-	private AtomContainer getHighlightedAtoms()
+
+	/**
+	 * Returns an AtomContainer that contains the atom or the the bond with its
+	 * two atoms that are highlighted at the moment.
+	 *
+	 * @return  An AtomContainer containig the highlighted atom\atoms\bond  
+	 */
+	private AtomContainer getHighlighted()
 	{
 		AtomContainer highlighted = new AtomContainer();
 		Atom highlightedAtom = r2dm.getHighlightedAtom();
@@ -526,4 +598,67 @@ public class JCPController2D
 		if (debug) System.out.println("sharedAtoms  "+ highlighted);
 		return highlighted;
 	}
+	
+
+	/**
+	 * Constructs a new Ring of a certain size that contains all the atoms and bonds
+	 * of the given AtomContainer and is filled up with new Atoms and Bonds.
+	 *
+	 * @param   sharedAtoms  The AtomContainer containing the Atoms and bonds for the new Ring
+	 * @param   ringSize  The size (number of Atoms) the Ring will have
+	 * @param   symbol  The element symbol the new atoms will have
+	 * @return     The constructed Ring
+	 */
+	private Ring createAttachRing(AtomContainer sharedAtoms, int ringSize, String symbol)
+	{
+		Ring newRing = new Ring(ringSize);
+		Atom[] ringAtoms = new Atom[ringSize];
+		for (int i = 0; i < sharedAtoms.getAtomCount(); i++)
+		{
+			ringAtoms[i] = sharedAtoms.getAtomAt(i);
+		}
+		for (int i = sharedAtoms.getAtomCount(); i < ringSize; i++)
+		{
+			ringAtoms[i] = new Atom(symbol);
+		}
+		for (int i = 0; i < sharedAtoms.getBondCount(); i++)
+		{
+			newRing.setBondAt(i, sharedAtoms.getBondAt(i));
+		}
+		for (int i = sharedAtoms.getBondCount(); i < ringSize - 1; i++)
+		{
+			newRing.setBondAt(i,new Bond(ringAtoms[i], ringAtoms[i + 1], 1));
+		}
+		newRing.setBondAt(ringSize - 1, new Bond(ringAtoms[ringSize - 1], ringAtoms[0], 1));
+		newRing.setAtoms(ringAtoms);
+		return newRing;
+	}
+	
+
+	/**
+	 * Searches all the atoms attached to the Atoms in the given AtomContainer
+	 * and calculates the center point of them.
+	 *
+	 * @param   sharedAtoms   The Atoms the attached partners are searched of
+	 * @return     The Center Point of all the atoms found
+	 */
+	private Point2d getConnectedAtomsCenter(AtomContainer sharedAtoms)
+	{
+		Atom currentAtom;
+		Atom[] conAtomsArray;
+		AtomContainer conAtoms = new AtomContainer();
+		for (int i = 0; i < sharedAtoms.getAtomCount(); i++)
+		{
+			currentAtom = sharedAtoms.getAtomAt(i);
+			conAtoms.addAtom(currentAtom);
+			conAtomsArray = atomCon.getConnectedAtoms(currentAtom);
+			for (int j = 0; j < conAtomsArray.length; j++)
+			{
+				conAtoms.addAtom(conAtomsArray[j]);
+			}
+		}
+		return conAtoms.get2DCenter();
+		
+	}
+	
 }

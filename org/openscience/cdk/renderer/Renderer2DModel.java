@@ -55,8 +55,6 @@ public class Renderer2DModel
 	
 	private int atomRadius = 8;
 	
-//	private String defaultElementSymbol = "C";
-	
 	private Atom highlightedAtom = null;
 	
 	private Bond highlightedBond = null;
@@ -68,8 +66,6 @@ public class Renderer2DModel
 	private Point pointerVectorStart = null;
 	
 	private Point pointerVectorEnd = null;
-	
-	private int pointerVectorLength = 80;
 	
 	private Polygon selectRect = null;
 	
@@ -399,29 +395,6 @@ public class Renderer2DModel
 	}
 	
 	
-
-	/**
-	 *
-	 *
-	 * @return     
-	 */
-	public int getPointerVectorLength()
-	{
-		return this.pointerVectorLength;
-	}
-
-
-	/**
-	 *
-	 *
-	 * @param   pointerVectorLength  
-	 */
-	public void setPointerVectorLength(int pointerVectorLength)
-	{
-		this.pointerVectorLength = pointerVectorLength;
-	}
-
-
 
 	/**
 	 *
