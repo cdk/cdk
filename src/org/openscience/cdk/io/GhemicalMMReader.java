@@ -177,8 +177,7 @@ public class GhemicalMMReader extends DummyReader {
                     AtomContainer container = new AtomContainer();
                     for (int i = 0; i < numberOfAtoms; i++) {
                         try {
-                            Element element = IsotopeFactory.getInstance().getElement(atoms[i]);
-                            Atom atom = new Atom(element.getSymbol());
+                            Atom atom = new Atom(IsotopeFactory.getInstance().getElementSymbol(atoms[i]));
                             atom.setPoint3D(new Point3d(atomxs[i], atomys[i], atomzs[i]));
                             atom.setCharge(atomcharges[i]);
                             container.addAtom(atom);
