@@ -508,7 +508,7 @@ public class MoleculeBuilder
      * @param isMainCyclic An indiacation of if the main chain is cyclic.
      * @return The molecule as built from the parsed tokens.
      */
-    protected Molecule buildMolecule(int mainChain, Vector attachedSubstituents, Vector attachedGroups, boolean isMainCyclic, String name)
+    protected Molecule buildMolecule(int mainChain, Vector attachedSubstituents, Vector attachedGroups, boolean isMainCyclic, String name) throws CDKException
     {
         //Set up the molecle's name
         currentMolecule.setID(name);
