@@ -19,7 +19,7 @@ JARLIBS=vecmath1.2-1.14.jar \
   batik-svggen.jar \
   batik-util.jar \
   batik-xml.jar \
-  castor-0.9.4.3-xml.jar \
+  castor-0.9.5-xml.jar \
   stmml.jar \
   xindice.jar \
   xmldb.jar
