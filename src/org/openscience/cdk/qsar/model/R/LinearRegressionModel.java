@@ -113,7 +113,7 @@ public class LinearRegressionModel extends RModel {
             throw new QSARModelException("The number of values for the dependent variable does not match the number of rows of the design matrix");
         }
         
-        this.x = new double[ncol][nrow];
+        this.x = new double[nrow][ncol];
         this.y = new double[nrow];
         this.weights = new double[nrow];
 
@@ -123,7 +123,7 @@ public class LinearRegressionModel extends RModel {
         }
         for (int i = 0; i < nrow; i++) {
             for (int j = 0; j < ncol; j++) 
-                this.x[j][i] = xx[i][j];
+                this.x[i][j] = xx[i][j];
         }
     }
         
@@ -239,13 +239,13 @@ public class LinearRegressionModel extends RModel {
         int nrow = newx.length;
         int ncol = newx[0].length;
 
-        if (ncol != this.x.length) 
+        if (ncol != this.x[0].length) 
             throw new QSARModelException("Number of independent variables used for prediction must match those used for fitting");
 
-        this.newx = new double[ncol][nrow];
+        this.newx = new double[nrow][ncol];
         for (int i = 0; i < nrow; i++) {
             for (int j = 0; j < ncol; j++) 
-                this.newx[j][i] = newx[i][j];
+                this.newx[i][j] = newx[i][j];
         }
     }
        

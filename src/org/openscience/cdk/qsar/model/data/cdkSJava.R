@@ -99,7 +99,7 @@ setJavaFunctionConverter(lmPredictConverter, function(x,...){inherits(x,"lmpredi
                           
 buildLM <- function(modelname, x,y,wts) {
     # x will come in as a double[][]
-    x <- matrix(unlist(x), ncol=length(x))
+    x <- matrix(unlist(x), nrow=length(x), byrow=TRUE)
 
     # assumes y ~ all columns of x
     d <- data.frame(y=y,x)
@@ -110,7 +110,7 @@ buildLM <- function(modelname, x,y,wts) {
     get(modelname)
 }
 predictLM <- function( modelname, newx, interval) {
-    newx <- data.frame( matrix(unlist(newx), ncol=length(newx)) )
+    newx <- data.frame( matrix(unlist(newx), nrow=length(newx), byrow=TRUE) )
     if (interval == '' || !(interval %in% c('confidence','prediction')) ) { 
         interval = 'confidence'
     }
