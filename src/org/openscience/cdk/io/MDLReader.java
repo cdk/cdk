@@ -225,28 +225,21 @@ public class MDLReader extends DefaultChemObjectReader {
             logger.info("Reading rest of file");
             line = input.readLine(); linecount++;
             logger.debug("Line " + linecount + ": " + line);
-			StringBuffer strBuff = new StringBuffer(line);
-			strBuff.insert(3, " ");
-			StringTokenizer strTok = new StringTokenizer(strBuff.toString());
-			atoms = java.lang.Integer.valueOf(strTok.nextToken()).intValue();
-			logger.debug("Atomcount: " + atoms);
-			bonds = java.lang.Integer.valueOf(strTok.nextToken()).intValue();
-			logger.debug("Bondcount: " + bonds);
+            atoms = Integer.valueOf(line.substring(0,3).trim()).intValue();
+            logger.debug("Atomcount: " + atoms);
+            bonds = Integer.valueOf(line.substring(3,6).trim()).intValue();
+            logger.debug("Bondcount: " + bonds);
             
             // read ATOM block
             logger.info("Reading atom block");
-			for (int f = 0; f < atoms; f++) {
+            for (int f = 0; f < atoms; f++) {
                 line = input.readLine(); linecount++;
-                // FIXME: MDL molfile does not use whitespace, but column based
-                // field! This StringBuffer should not be used!
-				strBuff = new StringBuffer(line);
-				strTok = new StringTokenizer(strBuff.toString().trim());
-				x = new Double(strTok.nextToken()).doubleValue();
-				y = new Double(strTok.nextToken()).doubleValue();
-				z = new Double(strTok.nextToken()).doubleValue();
+                x = new Double(line.substring( 0,10).trim()).doubleValue();
+                y = new Double(line.substring(10,20).trim()).doubleValue();
+                z = new Double(line.substring(20,30).trim()).doubleValue();
                 totalZ += z;
-				logger.debug("Coordinates: " + x + "; " + y + "; " + z);
-                String element = strTok.nextToken();
+                logger.debug("Coordinates: " + x + "; " + y + "; " + z);
+                String element = line.substring(21,24).trim();
                 logger.debug("Atom type: " + element);
 
                 // try to determine Isotope
@@ -260,7 +253,7 @@ public class MDLReader extends DefaultChemObjectReader {
                 atom.setPoint3D(new Point3d(x, y, z));
                 
                 // parse further fields
-                String massDiffString = strTok.nextToken();
+                String massDiffString = line.substring(24,26).trim();
                 logger.debug("Mass difference: " + massDiffString);
                 if (!(atom instanceof PseudoAtom)) {
                     try {
@@ -277,7 +270,7 @@ public class MDLReader extends DefaultChemObjectReader {
                 }
                 
                 
-                String chargeCodeString = strTok.nextToken();
+                String chargeCodeString = line.substring(26,29).trim();
                 logger.debug("Atom charge code: " + chargeCodeString);
                 int chargeCode = Integer.parseInt(chargeCodeString);
                 if (chargeCode == 0) {
@@ -298,14 +291,7 @@ public class MDLReader extends DefaultChemObjectReader {
                 }
                 
                 try {
-                    String stereoParity = strTok.nextToken();
-                    String hCount = strTok.nextToken();
-                    String stereoCare = strTok.nextToken();
-                    String valence = strTok.nextToken();
-                    String H0designator = strTok.nextToken();
-                    String unused1 = strTok.nextToken();
-                    String unused2 = strTok.nextToken();
-                    String reactionAtomIDString = strTok.nextToken().trim();
+                    String reactionAtomIDString = line.substring(50,53).trim();;
                     logger.debug("Parsing mapping id: " + reactionAtomIDString);
                     try {
                         int reactionAtomID = Integer.parseInt(reactionAtomIDString);
@@ -316,13 +302,13 @@ public class MDLReader extends DefaultChemObjectReader {
                         logger.error("Mapping number " + reactionAtomIDString + " is not an integer.");
                         logger.debug(exception);
                     }
-                } catch (NoSuchElementException exception) {
+                } catch (Exception exception) {
                     // older mol files don't have all these fields...
                     logger.warn("A few fields are missing. Older MDL MOL file?");
                 }
                 
-				molecule.addAtom(atom);
-			}
+                molecule.addAtom(atom);
+            }
             
             // convert to 2D, if totalZ == 0
             if (totalZ == 0.0) {
