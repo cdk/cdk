@@ -49,7 +49,7 @@ public class ChemObject implements java.io.Serializable, Cloneable
 	/**
 	 *  Vector for listener administration.
 	 */
-	private Vector chemObjects;
+	private Vector chemObjectListeners;
 	/**
 	 *  A hashtable for the storage of any kind of properties of this ChemObject.
 	 */
@@ -76,24 +76,24 @@ public class ChemObject implements java.io.Serializable, Cloneable
 	public ChemObject()
 	{
 		flags = new boolean[CDKConstants.MAX_FLAG_INDEX + 1];
-		chemObjects = null;
+		chemObjectListeners = null;
 		properties = null;
 		identifier = null;
 	}
 
 
 	/**
-	 *  Lazy creation of chemObjects Vector.
+	 *  Lazy creation of chemObjectListeners Vector.
 	 *
 	 *@return    Vector with the ChemObjects associated.
 	 */
 	private Vector lazyChemObjects()
 	{
-		if (chemObjects == null)
+		if (chemObjectListeners == null)
 		{
-			chemObjects = new Vector();
+			chemObjectListeners = new Vector();
 		}
-		return chemObjects;
+		return chemObjectListeners;
 	}
 
 
@@ -124,11 +124,11 @@ public class ChemObject implements java.io.Serializable, Cloneable
 	 */
 	public int getListenerCount()
 	{
-		if (chemObjects == null)
+		if (chemObjectListeners == null)
 		{
 			return 0;
 		}
-		return chemObjects.size();
+		return chemObjectListeners.size();
 	}
 
 
@@ -301,7 +301,7 @@ public class ChemObject implements java.io.Serializable, Cloneable
 			((ChemObject) clone).properties = clonedHashtable;
 		}
 		// delete all listeners
-		((ChemObject) clone).chemObjects = null;
+		((ChemObject) clone).chemObjectListeners = null;
 		return clone;
 	}
 
