@@ -68,15 +68,12 @@ public class StructureDiagramGeneratorTest extends TestCase {
 		showIt(MoleculeFactory.makeBicycloRings(), "Bicyclo-[2.2.2]-octane");
 	}
 
-	private boolean showIt(Molecule molecule, String name)
-	{
+	private boolean showIt(Molecule molecule, String name) {
 		MoleculeViewer2D mv = new MoleculeViewer2D();
 		try {
 			mv.setAtomContainer(generateCoordinates(molecule));
 			moleculeListViewer.addStructure(mv, name);
-		}
-		catch(Exception exc)
-		{
+		} catch(Exception exc) {
 			System.out.println("*** Exit due to an unexpected error during coordinate generation ***");
 			exc.printStackTrace();
 			return false;

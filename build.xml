@@ -530,19 +530,17 @@
                 </test>
             </junit>
         </target>
-	
+
         <target name="test" depends="dist-all, dist-test">
                 <junit printsummary="yes" haltonfailure="yes">
                         <classpath>
-                                <pathelement
-                                path="${java.class.path}" />
+                                <pathelement path="${java.class.path}" />
                                 <fileset dir="${lib}">
                                         <include name="*.jar" />
                                 </fileset>
                                 <fileset dir="${dist}/jar">
                                         <include name="*.jar" />
                                 </fileset>
-
                         </classpath>
                         <test name="org.openscience.cdk.test.CDKTests"
                         haltonfailure="no"
