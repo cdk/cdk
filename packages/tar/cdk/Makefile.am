@@ -22,10 +22,12 @@ JAVAC=
 endif
 
 alljardir = "${JARLIBDIR}"
-
 alljar_DATA = ${JARLIBS}
 
-EXTRA_DIST=VERSION ChangeLog build.xml javadoc.xml data src LICENSE
+alldocdir = "${PREFIX}/share/doc/${PACKAGE}"
+alldoc_DATA = README AUTHORS ChangeLog
+
+EXTRA_DIST=VERSION ChangeLog build.xml javadoc.xml data src LICENSE README AUTHORS
 
 CLEANFILES= cdk-core.jar cdk-extra.jar \
         cdk-libio.jar cdk-apps.jar cdk-test.jar \

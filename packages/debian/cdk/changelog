@@ -1,3 +1,15 @@
+cdk (20040112-1) unstable; urgency=low
+
+  * New upstream release taken from CVS
+  * Fixed Depends to have java2-runtime (control)
+  * Added list of contributors to AUTHORS
+  * More information in README
+  * Removed CVS dir from debian/patches
+  * Added upstream ChangeLog
+  * Moved package to science subsection (control)
+
+ -- E.L. Willighagen (Egon) <egonw@sci.kun.nl>  Mon, 12 Jan 2004 12:46:00 +0100
+
 cdk (20031017-1) unstable; urgency=low
 
   * New upstream release

@@ -14,6 +14,8 @@ DEBIANFILES=changelog control copyright dirs postinst Makefile prerm rules
 
 JAVA_HOME=/usr/lib/j2se/1.4
 
+READONLYFILES=AUTHORS COPYING ChangeLog INSTALL LICENSE NEWS README VERSION
+
 all: deb
 
 clean:
@@ -32,6 +34,7 @@ setup: clean
 	mkdir -p /tmp/cdk-${VERSION}/debian
 	cp ${DEBIANFILES} /tmp/cdk-${VERSION}/debian
 	cp -R patches /tmp/cdk-${VERSION}/debian/.
+	find /tmp/cdk-${VERSION} -name "CVS" | xargs rm -R
 	@echo " ... removing files provided by other Debian packages"
 	rm /tmp/cdk-${VERSION}/jar/xerces-2.5.0.jar
 	rm /tmp/cdk-${VERSION}/jar/junit.jar
@@ -43,7 +46,13 @@ setup: clean
 	cd /tmp/cdk-${VERSION}; cat Makefile.am | perl -n -e "s#ant#JAVA_HOME=/usr/lib/j2se/1.4 ant#; print;" > Makefile.am2 && mv Makefile.am2 Makefile.am
 	@echo " ... adapt build.xml for debian needs"
 	cd /tmp/cdk-${VERSION}; patch < debian/patches/patch.build.xml
-
+	@echo " ... fixing some file permissions and other stuff"
+	cd /tmp/cdk-${VERSION}; chmod 644 ${READONLYFILES}
+	cd /tmp/cdk-${VERSION}; rm -R -f sourcedist reports
+	@echo " ... renaming ChangeLog to changelog"
+	cd /tmp/cdk-${VERSION}; mv ChangeLog changelog
+	cd /tmp/cdk-${VERSION}; cat Makefile.am | perl -n -e "s/ChangeLog/changelog/; print;" > Makefile.am2 && mv Makefile.am2 Makefile.am
+    
 deb: setup
 	@echo "Building package for version ${VERSION}"
 	cd /tmp/cdk-${VERSION}; dpkg-buildpackage -rfakeroot
