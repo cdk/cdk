@@ -183,9 +183,13 @@ public class RSSHandler extends DefaultHandler {
         }
         if (uri != null) {
             buffer.append(" ");
-            buffer.append("xmlns:");
-            String namespace = raw.substring(0, raw.indexOf(":"));
-            buffer.append(namespace);
+            if (raw.indexOf(":") != -1) {
+                buffer.append("xmlns:");
+                String namespace = raw.substring(0, raw.indexOf(":"));
+                buffer.append(namespace);
+            } else {
+                buffer.append("xmlns");
+            }
             buffer.append("=\"");
             buffer.append(uri);
             buffer.append("\"");
