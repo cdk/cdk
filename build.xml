@@ -1,6 +1,6 @@
 <project name="CDK" default="compile" basedir=".">
 
-        <property name="build.compiler" value="modern" />
+        <property name="build.compiler" value="javac1.4" />
         <property name="build" value="build" />
         <property name="sourcedist" value="sourcedist" />
         <property name="dist" value="dist" />
@@ -25,7 +25,17 @@
                 </fileset>
         </path>
 
-        <target name="init">
+        <target name="info">
+            <echo message="Using compiler: ${build.compiler}" />
+        </target>
+
+        <target name="check">
+          <available classname="org.openscience.jmol.Crystal"
+                     classpath="${lib}/libio/jmol.jar"
+                     property="jmol.present"/>
+        </target>
+
+        <target name="init" depends="check">
                 <tstamp />
                 <mkdir dir="${build}" />
                 <mkdir dir="${sourcedist}" />
@@ -45,8 +55,8 @@
                 <delete dir="${sourcedist}" />
                 <delete dir="${reports.tests}" />
         </target>
-	
-        <target name="compile" depends="clean, init">
+
+        <target name="compile" depends="info, clean, init">
                 <echo message="Compiling only the classes that don't use Java3d." />
 
                 <echo
@@ -124,20 +134,42 @@
                 </javac>
         </target>
 
+        <target name="compile-cml">
+                <!-- Task to build the CML Lib classes. (For Jmol) -->
+                <echo message="Compiling classes defined in ${src}/cml.classes." />
+
+                <!-- apply patch to remove dependency on Log4J -->
+                <copy   file="${src}/org/openscience/cdk/tools/LoggingTool.java"
+                      tofile="${src}/org/openscience/cdk/tools/LoggingTool.withLog4J.java"/>
+                <copy   file="${src}/org/openscience/cdk/tools/LoggingTool.applet.java"
+                      tofile="${src}/org/openscience/cdk/tools/LoggingTool.java"/>
+
+                <javac srcdir="${src}" destdir="${build}"
+                       optimize="off" debug="on" deprecation="off"
+                       includesfile="${src}/cml.classes">
+                    <classpath refid="project.class.path" />
+                </javac>
+
+                <!-- restore original file -->
+                <move   file="${src}/org/openscience/cdk/tools/LoggingTool.withLog4J.java"
+                      tofile="${src}/org/openscience/cdk/tools/LoggingTool.java"/>
+        </target>
+
         <target name="compile-test" depends="compile">
                 <!-- Task to build the test classes. -->
-                <javac destdir="${build}" optimize="off" debug="on" deprecation="off">
-                        <src path="${src}/org/openscience/cdk/test" />
-                       <exclude name="renderer/Accel*.java" />
-		       <exclude name="renderer/Orbitals*.java" />
-		       <exclude name="libio/**/*.java" />
-		       <exclude name="math/qm/VisualGaussiansCalculationTest.java" />
-		       <exclude name="io/ZMatrixReaderTest.java" />		       
-	       
+                <javac srcdir="${src}/org/openscience/cdk/test"
+                       destdir="${build}" optimize="off" debug="on" deprecation="off"
+                       >
+                        <exclude name="renderer/Accel*.java" />
+                        <exclude name="renderer/Orbitals*.java" />
+                        <exclude name="libio/**/*.java" />
+                        <exclude name="math/qm/VisualGaussiansCalculationTest.java" />
+                        <exclude name="io/ZMatrixReaderTest.java" />
+
                         <classpath refid="project.class.path" />
                 </javac>
-        </target>	
-	
+        </target>
+
         <target name="compile-with-java3d" depends="clean, init">
                 <mkdir dir="${build}" />
 
@@ -183,7 +215,7 @@
                 tofile="${build}/org/openscience/cdk/io/cml/data/cml1_0_1.dtd" />
         </target>
 
-        <target name="dist-core" depends="compile, dist.init">
+        <target name="dist-core" depends="compile-core, dist.init">
                 <jar jarfile="${dist}/jar/cdk-core.jar">
                     <fileset dir="${build}">
                         <!-- As proposed in CDK-RFC 2 -->
@@ -272,7 +304,7 @@
                 </jar>
         </target>
 
-        <target name="dist-libio" depends="compile-libio">
+        <target name="dist-libio" depends="compile-libio" unless="libio.present">
                 <jar jarfile="${dist}/jar/cdk-libio.jar">
                     <fileset dir="${build}">
                         <include name="org/openscience/cdk/libio/**" />
@@ -284,12 +316,13 @@
                 </jar>
         </target>
 
-        <target name="dist-cml" depends="dist-core">
+        <target name="dist-cml" depends="dist-core, compile-cml">
                 <jar jarfile="${dist}/jar/cdk-cml.jar">
                     <fileset dir="${build}">
                         <include name="org/openscience/cdk/io/cml/**" />
                         <include name="org/openscience/cdk/io/cml/cdopi/**" />
                         <include name="org/openscience/cdk/tools/LoggingTool*" />
+                        <include name="org/openscience/cdk/io/cml/data/**" />
                         <include name="org/openscience/cdk/config/log4j.properties" />
                     </fileset>
                 </jar>
