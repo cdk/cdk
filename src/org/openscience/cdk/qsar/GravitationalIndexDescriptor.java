@@ -62,7 +62,8 @@ import java.util.Hashtable;
  *
  * @author      Rajarshi Guha
  * @created     2004-11-23
- * @cdk.module qsar
+ * @cdk.module  qsar
+ * @cdk.set     qsar-descriptors
  */
 public class GravitationalIndexDescriptor implements Descriptor {
     

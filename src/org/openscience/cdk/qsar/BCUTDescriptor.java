@@ -69,6 +69,7 @@ import Jama.EigenvalueDecomposition;
  * @cdk.depends Jama-1.0.1.jar
  *
  * @cdk.module qsar
+ * @cdk.set    qsar-descriptors
  */
 
 public class BCUTDescriptor implements Descriptor {

@@ -35,11 +35,12 @@ import java.util.Map;
 import java.util.Hashtable;
 
 /**
- *  This Class contains a method that returns the number of aromatic atoms in an atom container
+ * This Class contains a method that returns the number of aromatic atoms in an AtomContainer.
  *
- *@author     mfe4
- *@cdk.created    2004-11-03
- * @cdk.module qsar
+ * @author      mfe4
+ * @cdk.created 2004-11-03
+ * @cdk.module  qsar
+ * @cdk.set     qsar-descriptors
  */
 public class AromaticBondsCountDescriptor implements Descriptor {
 	private boolean checkAromaticity = false;

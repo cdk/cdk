@@ -34,9 +34,10 @@ import java.util.Hashtable;
 /**
  *  Sigma electronegativity is given by X = a + bq + c(q*q)
  *
- *@author     mfe4
- *@cdk.created    2004-11-03
- * @cdk.module qsar
+ * @author      mfe4
+ * @cdk.created 2004-11-03
+ * @cdk.module  qsar
+ * @cdk.set     qsar-descriptors
  */
 public class SigmaElectronegativityDescriptor implements Descriptor {
 

@@ -39,9 +39,10 @@ import org.openscience.cdk.Molecule;
 /**
  *  This descriptor returns true if the protons of an heavy bond 
  *
- *@author     mfe4
- *@cdk.created    2004-11-03
- * @cdk.module qsar
+ * @author      mfe4
+ * @cdk.created 2004-11-03
+ * @cdk.module  qsar
+ * @cdk.set     qsar-descriptors
  */
 public class IsProtonInAromaticSystemDescriptor implements Descriptor {
 

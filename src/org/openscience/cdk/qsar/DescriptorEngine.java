@@ -24,6 +24,8 @@
  */
 package org.openscience.cdk.qsar;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
@@ -40,13 +42,17 @@ import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Engine that calculates the values for a set of Descriptors and add this
- * to a Molecule.
+ * to a Molecule. The set of descriptors is created from the Java sources of
+ * the CDK QSAR source code, using <code>@cdk.set qsar-descriptors</code> tags
+ * in the JavaDoc.
  *
  * @cdk.created 2004-12-02
  * @cdk.module  qsar
  */
 public class DescriptorEngine {
 
+    private final static String QSAR_DESCRIPTOR_LIST = "qsar-descriptors.set";
+    
     private List descriptors;
     private LoggingTool logger;
 
@@ -56,23 +62,29 @@ public class DescriptorEngine {
         
         /* the next is stupid, we don't want to hard code this, but it seems
            we don't have a better alternative just yet */
-        String[] descriptorClassNames = {
-            "org.openscience.cdk.qsar.AtomCountDescriptor",
-            "org.openscience.cdk.qsar.BondCountDescriptor",
-        };
-        for (int i=0; i<descriptorClassNames.length; i++) {
-            // load them one by one
-            try {
-                Descriptor descriptor = (Descriptor)this.getClass().getClassLoader().
-                    loadClass(descriptorClassNames[i]).newInstance();
-                descriptors.add(descriptor);
-            } catch (ClassNotFoundException exception) {
-                logger.error("Could not find this Descriptor: ", descriptorClassNames[i]);
-                logger.debug(exception);
-            } catch (Exception exception) {
-                logger.error("Could not load this Descriptor: ", descriptorClassNames[i]);
-                logger.debug(exception);
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(
+                this.getClass().getClassLoader().getResourceAsStream(QSAR_DESCRIPTOR_LIST)
+            ));
+            while (reader.ready()) {
+                // load them one by one
+                String descriptorName = reader.readLine();
+                try {
+                    Descriptor descriptor = (Descriptor)this.getClass().getClassLoader().
+                    loadClass(descriptorName).newInstance();
+                    descriptors.add(descriptor);
+                    logger.info("Loaded descriptor: ", descriptorName);
+                } catch (ClassNotFoundException exception) {
+                    logger.error("Could not find this Descriptor: ", descriptorName);
+                    logger.debug(exception);
+                } catch (Exception exception) {
+                    logger.error("Could not load this Descriptor: ", descriptorName);
+                    logger.debug(exception);
+                }
             }
+        } catch (Exception exception) {
+            logger.error("Could not load this descriptor list: ", QSAR_DESCRIPTOR_LIST);
+            logger.debug(exception);
         }
     }
 

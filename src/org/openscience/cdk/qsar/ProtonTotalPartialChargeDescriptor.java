@@ -37,9 +37,10 @@ import java.util.ArrayList;
 /**
  *  The calculation of partial charges of an heavy atom and its protons is based on Gasteiger Marsili (PEOE)
  *
- *@author         mfe4
- *@cdk.created    2004-11-03
- * @cdk.module qsar
+ * @author      mfe4
+ * @cdk.created 2004-11-03
+ * @cdk.module  qsar
+ * @cdk.set     qsar-descriptors
  */
 public class ProtonTotalPartialChargeDescriptor implements Descriptor {
 

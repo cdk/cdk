@@ -40,9 +40,10 @@ import java.util.ArrayList;
  *  chi1 is the Atomic connectivity index (order 1),
  *  chi1_C is the Carbon connectivity index (order 1);
  *
- *@author         mfe4
- *@cdk.created    2004-11-03
+ * @author      mfe4
+ * @cdk.created 2004-11-03
  * @cdk.module	qsar
+ * @cdk.set     qsar-descriptors
  */
 public class ConnectivityOrderOneDescriptor implements Descriptor {
 

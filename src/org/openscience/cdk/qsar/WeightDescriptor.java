@@ -41,9 +41,10 @@ import java.util.Hashtable;
  *  element is specified, the returned value is the Molecular Weight. molecular
  *  weight.
  *
- *@author     mfe4
- *@created    2004-11-13
- * @cdk.module qsar
+ * @author      mfe4
+ * @cdk.created 2004-11-13
+ * @cdk.module  qsar
+ * @cdk.set     qsar-descriptors
  */
 public class WeightDescriptor implements Descriptor {
 

@@ -45,9 +45,10 @@ import java.util.ArrayList;
  *  chi0_C is the Carbon valence connectivity index (order 0);
  *  valence is the number of s and p valence electrons of atom.
  *
- *@author         mfe4
- *@cdk.created    2004-11-03
+ * @author      mfe4
+ * @cdk.created 2004-11-03
  * @cdk.module	qsar
+ * @cdk.set     qsar-descriptors
  */
 public class ValenceConnectivityOrderZeroDescriptor implements Descriptor {
 

@@ -33,9 +33,10 @@ import java.util.Hashtable;
 /**
  *  Descriptor based on the number of bonds of a certain bond order.
  *
- *@author     mfe4
- *@cdk.created    2004-11-13
- * @cdk.module qsar
+ * @author      mfe4
+ * @cdk.created 2004-11-13
+ * @cdk.module  qsar
+ * @cdk.set     qsar-descriptors
  */
 public class BondCountDescriptor implements Descriptor {
 

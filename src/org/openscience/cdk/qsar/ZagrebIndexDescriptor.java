@@ -33,9 +33,10 @@ import java.util.Hashtable;
 /**
  *   Zagreb index: the sum of the squares of atom degree over all heavy atoms i.
  *
- *@author     mfe4
- *@cdk.created    2004-11-03
- * @cdk.module qsar
+ * @author      mfe4
+ * @cdk.created 2004-11-03
+ * @cdk.module  qsar
+ * @cdk.set     qsar-descriptors
  */
 public class ZagrebIndexDescriptor implements Descriptor {
 

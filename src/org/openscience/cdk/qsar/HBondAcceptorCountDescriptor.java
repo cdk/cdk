@@ -34,16 +34,17 @@ import java.util.Map;
 import java.util.Hashtable;
 
 /**
- *  The number of hydrogen bond acceptors. It is defined by Daylight:
- *  (http://www.daylight.com/dayhtml_tutorials/languages/smarts/smarts_examples.html)
- *  "A H-bond acceptor is a heteroatom with no positive charge, note that negatively 
- *  charged oxygen or sulphur are included. Excluded are halogens, including F, 
- *  heteroaromatic oxygen, sulphur and pyrrole N. Higher oxidation levels of N,P,S are excluded. 
- *  Note P(III) is currently included. Zeneca's work would imply that (O=S=O) shoud also be excluded".
+ * The number of hydrogen bond acceptors. It is defined by Daylight:
+ * (http://www.daylight.com/dayhtml_tutorials/languages/smarts/smarts_examples.html)
+ * "A H-bond acceptor is a heteroatom with no positive charge, note that negatively 
+ * charged oxygen or sulphur are included. Excluded are halogens, including F, 
+ * heteroaromatic oxygen, sulphur and pyrrole N. Higher oxidation levels of N,P,S are excluded. 
+ * Note P(III) is currently included. Zeneca's work would imply that (O=S=O) shoud also be excluded".
  *
- *@author     mfe4
- *@cdk.created    2004-11-03
- * @cdk.module qsar
+ * @author      mfe4
+ * @cdk.created 2004-11-03
+ * @cdk.module  qsar
+ * @cdk.set     qsar-descriptors
  */
 public class HBondAcceptorCountDescriptor implements Descriptor {
 	

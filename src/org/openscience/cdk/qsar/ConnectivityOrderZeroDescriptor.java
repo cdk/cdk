@@ -39,9 +39,10 @@ import java.util.ArrayList;
  *  chi0 is the Atomic connectivity index (order 0),
  *  chi0_C is the Carbon connectivity index (order 0);
  *
- *@author         mfe4
- *@cdk.created    2004-11-03
+ * @author      mfe4
+ * @cdk.created 2004-11-03
  * @cdk.module	qsar
+ * @cdk.set     qsar-descriptors
  */
 public class ConnectivityOrderZeroDescriptor implements Descriptor {
 

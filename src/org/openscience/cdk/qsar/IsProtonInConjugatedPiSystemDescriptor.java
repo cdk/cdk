@@ -39,9 +39,10 @@ import org.openscience.cdk.Molecule;
 /**
  *  Description of the Class
  *
- *@author     mfe4
- *@cdk.created    2004-11-03
- * @cdk.module qsar
+ * @author      mfe4
+ * @cdk.created 2004-11-03
+ * @cdk.module  qsar
+ * @cdk.set     qsar-descriptors
  */
 public class IsProtonInConjugatedPiSystemDescriptor implements Descriptor {
 

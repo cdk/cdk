@@ -39,9 +39,10 @@ import java.util.Hashtable;
  *  (http://www.daylight.com/dayhtml_tutorials/languages/smarts/smarts_examples.html)
  *  [!H0;#7,#8,#9].
  *
- *@author     mfe4
- *@cdk.created    2004-11-03
- * @cdk.module qsar
+ * @author      mfe4
+ * @cdk.created 2004-11-03
+ * @cdk.module  qsar
+ * @cdk.set     qsar-descriptors
  */
 public class HBondDonorCountDescriptor implements Descriptor {
 	

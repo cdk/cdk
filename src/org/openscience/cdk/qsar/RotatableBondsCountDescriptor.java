@@ -38,9 +38,10 @@ import java.util.Hashtable;
 /**
  *  The number of rotatable bonds is definde by this SMARTS: [!$(*#*)&!D1]-&!@[!$(*#*)&!D1]
  *
- *@author     mfe4
- *@cdk.created    2004-11-03
- * @cdk.module qsar
+ * @author      mfe4
+ * @cdk.created 2004-11-03
+ * @cdk.module  qsar
+ * @cdk.set     qsar-descriptors
  */
 public class RotatableBondsCountDescriptor implements Descriptor {
 	private boolean includeTerminals = false;

@@ -36,13 +36,14 @@ import java.util.Map;
 import java.util.Hashtable;
 
 /**
- *  Descriptor based on the number of atoms of a certain element type. It is
- *  possible to use the wild card symbol * as element type to get the count of
- *  all atoms.
+ * Descriptor based on the number of atoms of a certain element type. It is
+ * possible to use the wild card symbol * as element type to get the count of
+ * all atoms.
  *
- *@author     mfe4
- *@created    2004-11-13
- * @cdk.module qsar
+ * @author      mfe4
+ * @cdk.created 2004-11-13
+ * @cdk.module  qsar
+ * @cdk.set     qsar-descriptors
  */
 public class AtomCountDescriptor implements Descriptor {
 

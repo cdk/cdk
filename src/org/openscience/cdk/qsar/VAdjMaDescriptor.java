@@ -36,9 +36,10 @@ import java.util.Hashtable;
  *   1 + log2 m where m is the number of heavy-heavy bonds. If m is zero, then zero is returned.
  *   (definition from MOE tutorial on line) 
  *
- *@author     mfe4
- *@cdk.created    2004-11-03
- * @cdk.module qsar
+ * @author      mfe4
+ * @cdk.created 2004-11-03
+ * @cdk.module  qsar
+ * @cdk.set     qsar-descriptors
  */
 public class VAdjMaDescriptor implements Descriptor {
 

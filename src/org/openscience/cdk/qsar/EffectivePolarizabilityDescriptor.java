@@ -35,11 +35,11 @@ import java.util.ArrayList;
 
 /**
  *  Effective polarizability of an heavy atom and its protons
- * 
  *
- *@author         mfe4
- *@cdk.created    2004-11-03
- * @cdk.module qsar
+ * @author      mfe4
+ * @cdk.created 2004-11-03
+ * @cdk.module  qsar
+ * @cdk.set     qsar-descriptors
  */
 public class EffectivePolarizabilityDescriptor implements Descriptor {
 
