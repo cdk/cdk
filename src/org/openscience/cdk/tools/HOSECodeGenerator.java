@@ -330,7 +330,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 				conAtoms = atomContainer.getConnectedAtoms(node);
 				if (conAtoms.length == 1)
 				{
-					nextSphereNodes.addElement(new TreeNode(",", treeNode, null, 0, 0, treeNode.score * 1000000));
+          nextSphereNodes.addElement(new TreeNode(",", treeNode, null, 0, 0, treeNode.score));
 				} else
 				{
 					for (int j = 0; j < conAtoms.length; j++)
@@ -341,10 +341,10 @@ public class HOSECodeGenerator implements java.io.Serializable
 							bond = atomContainer.getBond(node, toNode);
 							if (bond.getFlag(CDKConstants.ISAROMATIC))
 							{
-								nextSphereNodes.addElement(new TreeNode(toNode.getSymbol(), treeNode, toNode, 4, atomContainer.getBondCount(toNode), treeNode.score * 1000000));
+								nextSphereNodes.addElement(new TreeNode(toNode.getSymbol(), treeNode, toNode, 4, atomContainer.getBondCount(toNode), treeNode.score));
 							} else
 							{
-								nextSphereNodes.addElement(new TreeNode(toNode.getSymbol(), treeNode, toNode, bond.getOrder(), atomContainer.getBondCount(toNode), treeNode.score * 1000000));
+								nextSphereNodes.addElement(new TreeNode(toNode.getSymbol(), treeNode, toNode, bond.getOrder(), atomContainer.getBondCount(toNode), treeNode.score));
 							}
 						}
 					}
@@ -425,7 +425,7 @@ public class HOSECodeGenerator implements java.io.Serializable
         while(localscore.length()<6){
           localscore="0"+localscore;
         }
-        tn.stringscore=localscore+""+tn.source.stringscore;
+        tn.stringscore=tn.source.stringscore+""+localscore;
 			}
 			sortNodesByScore(sphereNodes);
 		}
