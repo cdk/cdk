@@ -321,7 +321,34 @@ public class SmilesGeneratorTest extends TestCase
 		if (standAlone) System.err.println("SMILES 1: " + smiles1);
         assertNotNull(smiles1);
   	assertTrue(smiles1.equals("F/C(=C\\(F)S)S"));
-	}
+    try{
+      new SaturationChecker().addHydrogensToSatisfyValency(mol1);
+    }
+    catch(IOException ex){}
+    catch(ClassNotFoundException ex){}
+    bool=new boolean[mol1.getBondCount()];
+    bool[2]=true;
+		try
+		{
+			smiles1 = sg.createSMILES(mol1,true,bool);
+		}
+    catch(Exception exc) {
+			System.out.println(exc);
+            if (!standAlone) fail();
+		}
+    assertTrue(smiles1.equals("[H]S/C(F)=C/(F)S[H]"));
+    mol1.getAtomAt(5).setPoint2D(new Point2d(0,3));
+    mol1.getAtomAt(4).setPoint2D(new Point2d(2,3));
+		try
+		{
+			smiles1 = sg.createSMILES(mol1,true,bool);
+		}
+    catch(Exception exc) {
+			System.out.println(exc);
+            if (!standAlone) fail();
+		}
+    assertTrue(smiles1.equals("[H]S/C(F)=C\\(F)S[H]"));
+ }
 
     public void testPartitioning() {
         SmilesGenerator sg = new SmilesGenerator();
