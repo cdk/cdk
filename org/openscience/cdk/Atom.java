@@ -64,11 +64,24 @@ public class Atom extends ChemObject {
 	protected int stereoParity;
 	
 
+
+	/**
+	 * Constructs an Atom from an Element
+	 *
+	 * @param   element  The Element the Atom is constructed of
+	 */
 	public Atom(Element element)
 	{
 		this.element = element;
 	}
 	
+
+	/**
+	 * Constructs an Atom from an Element and a Point3D
+	 *
+	 * @param   element   The Element
+	 * @param   point3D   The Point
+	 */
 	public Atom(Element element, javax.vecmath.Point3d point3D)
 	{
 		this(element);
@@ -187,7 +200,14 @@ public class Atom extends ChemObject {
 	protected void setDegree(int degree) {
 		this.degree = degree;
 	}
-	
+
+
+
+	/**
+	 * Returns a string representation of this Atom.
+	 *
+	 * @return  The string representation of this Atom   
+	 */
 	public String toString()
 	{
 		StringBuffer s = new StringBuffer();

@@ -27,11 +27,22 @@ package org.openscience.cdk;
 
 public class SetOfMolecules extends ChemObject 
 {
-	protected int growArraySize = 5;
+
+	/**
+	 *  Array of Molecules 
+	 */
 	protected Molecule[] molecules;
 	
+	/**
+	 *  Number of Molecules contained by this container 
+	 */
 	protected int moleculeCount;
 
+	/**
+	 *  Amount by which the Molecules array grows when elements are added and
+	 *  the array is not large enough for that. 
+	 */
+	protected int growArraySize = 5;
 
 
 	/**
@@ -103,7 +114,7 @@ public class SetOfMolecules extends ChemObject
 	/**
 	 * Returns the number of Molecules in this Container
 	 *
-	 * @return     
+	 * @return     The number of Molecules in this Container
 	 */
 	public int getMoleculeCount()
 	{

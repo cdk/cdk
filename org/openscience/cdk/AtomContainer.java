@@ -219,6 +219,14 @@ public class AtomContainer extends ChemObject {
 	}
 
 
+	/**
+	 *  Adds a bond to this container
+	 *
+	 * @param   atom1   Order of the first atom of the Bond
+	 * @param   atom2   Order of the second atom of the Bond
+	 * @param   order   Bondorder
+	 * @param   stereo   Stereochemical orientation 
+	 */
 	public void addBond(int atom1, int atom2, int order, int stereo)
 	{
 		if (bondCount >= bonds.length)
@@ -229,6 +237,14 @@ public class AtomContainer extends ChemObject {
 		addBond(bond);
 	}
 
+
+	 /**
+	  *  Adds a bond to this container
+	  *
+	  * @param   atom1   Order of the first atom of the Bond
+	  * @param   atom2   Order of the second atom of the Bond
+	  * @param   order   Bondorder
+	 */
 	public void addBond(int atom1, int atom2, int order)
 	{
 		if (bondCount >= bonds.length)
@@ -270,7 +286,7 @@ public class AtomContainer extends ChemObject {
 	/**
 	 * Returns the number of Atoms in this Container
 	 *
-	 * @return     
+	 * @return   The number of Atoms in this Container  
 	 */
 	public int getAtomCount()
 	{
@@ -281,13 +297,19 @@ public class AtomContainer extends ChemObject {
 	/**
 	 * Returns the number of Bonds in this Container
 	 *
-	 * @return     
+	 * @return  The number of Bonds in this Container   
 	 */
 	public int getBondCount()
 	{
 		return this.bondCount;
 	}
 
+
+	/**
+	 * Returns a string representation of this Container.
+	 *
+	 * @return  The string representation of this Container   
+	 */
 	public String toString()
 	{
 		Bond bond;

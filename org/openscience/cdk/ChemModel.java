@@ -27,9 +27,21 @@ package org.openscience.cdk;
 
 public class ChemModel extends ChemObject 
 {
+
+	/**
+	 *  Array of SetOfMolecules 
+	 */
 	protected SetOfMolecules[] setsOfMolecules;
 	
+	/**
+	 *  Number of SetOfMolecules contained by this container 
+	 */
 	protected int setOfMoleculesCount;
+
+	/**
+	 *  Amount by which the setsOfMolecules array grows when elements are added and
+	 *  the array is not large enough for that. 
+	 */
 	protected int growArraySize = 5;
 
 
@@ -105,7 +117,7 @@ public class ChemModel extends ChemObject
 	/**
 	 * Returns the number of Molecules in this Container
 	 *
-	 * @return     
+	 * @return    The number of Molecules in this Container
 	 */
 	public int getSetOfMoleculeCount()
 	{

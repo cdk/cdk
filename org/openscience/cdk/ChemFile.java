@@ -27,9 +27,23 @@ package org.openscience.cdk;
 
 public class ChemFile extends ChemObject 
 {
+
+	/**
+	 *  Array of ChemSquences 
+	 */
 	protected ChemSequence[] chemSequences;
+	
+	/**
+	 *  Number of ChemSequences contained by this container 
+	 */
 	protected int chemSequenceCount;
+
+	/**
+	 *  Amount by which the chemsequence array grows when elements are added and
+	 *  the array is not large enough for that. 
+	 */
 	protected int growArraySize = 5;
+	
 
 
 
@@ -103,7 +117,7 @@ public class ChemFile extends ChemObject
 	/**
 	 * Returns the number of ChemSequences in this Container
 	 *
-	 * @return     
+	 * @return   The number of ChemSequences in this Container   
 	 */
 	public int getChemSequenceCount()
 	{

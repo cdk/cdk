@@ -61,7 +61,7 @@ public class MDLWriter implements CDKConstants
 	
 
 	/**
-	 * Writes an array of Molecules to an OutputStream in MDL sd format
+	 * Writes an array of Molecules to an OutputStream in MDL sdf format
 	 *
 	 * @param   molecules  Array of Molecules that is written to an OutputStream 
 	 */
@@ -94,7 +94,7 @@ public class MDLWriter implements CDKConstants
 	
 
 	/**
-	 * Writes a Molecule to an OutputStream in MDL sd format
+	 * Writes a Molecule to an OutputStream in MDL sdf format
 	 *
 	 * @param   molecule  Molecule that is written to an OutputStream 
 	 */
@@ -162,35 +162,20 @@ public class MDLWriter implements CDKConstants
 			
 			
 			
-//		                if (value == Atom.BONDORDER_SINGLE_UP_AWAY)
-//		                {
-//		                    bondvalue = 1;
-//		                    mdlstereovalue = 1;        
-//		                }
-//		                if (value == Atom.BONDORDER_SINGLE_UP_TOWARDS)
-//		                {
-//		                    bondvalue = 1;
-//		                    mdlstereovalue = 1;        
-//		                }
-//		                if (value == Atom.BONDORDER_SINGLE_DOWN_AWAY)
-//		                {
-//		                    bondvalue = 1;
-//		                    mdlstereovalue = 6;        
-//		                }
-//		                if (value == Atom.BONDORDER_SINGLE_DOWN_TOWARDS)
-//		                {
-//		                    bondvalue = 1;
-//		                    mdlstereovalue = 6;        
-//		                }
-//		        }
-//		    }
-//		    fwr.write("M  END\n");
 
 
 
 
 	
 
+
+	/**
+	 * Formats an int to fit into the connectiontable and changes it to a String
+	 *
+	 * @param   i  The int to be formated
+	 * @param   l  Length of the String
+	 * @return     The String to be written into the connectiontable
+	 */
     private static String formatMDLInt(int i, int l)
     {
         String s = "", fs = "";
@@ -206,7 +191,16 @@ public class MDLWriter implements CDKConstants
         fs += s;
         return fs;
     }
+	
+	
 
+
+	/**
+	 * Formats a float to fit into the connectiontable and changes it to a String
+	 *
+	 * @param   fl  The float to be formated
+	 * @return      The String to be written into the connectiontable
+	 */
     private static String formatMDLFloat(float fl)
     {
         String s = "", fs = "";
@@ -226,6 +220,14 @@ public class MDLWriter implements CDKConstants
     }
 
 
+
+	/**
+	 * Formats a String to fit into the connectiontable
+	 *
+	 * @param   s    The String to be formated
+	 * @param   le   The length of the String
+	 * @return       The String to be written in the connectiontable
+	 */
     private static String formatMDLString(String s, int le)
     {
         s = s.trim();
