@@ -40,6 +40,7 @@ New:
   (thanx to Stephen Tomkinson)
 * Added a Mol2 reader
 * Partly ported the Gaussian03 from Jmol to CDK
+* The structure layout generator can now use templates (fixes #590227)
 
 Fixes:
 * An angle error in the StructureDiagramGenerator has been
@@ -64,6 +65,7 @@ Fixes:
 * Fixes in the SMILES generator (fixes #791091)
 * CMLReader is now much more CML2 compliant
 * Removed use of tokenizers in MDLReader (fixes #719663)
+* Fixed display of atom numbers in Renderer2D (fixes #792466)
 
 API changes:
 * ConnectivityChecker.partitionIntoMolecules() now returns a 
