@@ -40,27 +40,6 @@
       </tocentry>
       <tocentry page="rfc.xml" filename="rfc.html">
         <tocentry page="deprecrfc.xml" filename="deprecrfc.html"/>
-        <tocentry page="rfc2.xml" filename="rfc2.html"/>
-        <tocentry page="rfc3.xml" filename="rfc3.html"/>
-        <tocentry page="rfc4.xml" filename="rfc4.html"/>
-        <tocentry page="rfc5.xml" filename="rfc5.html"/>
-        <tocentry page="rfc6.xml" filename="rfc6.html"/>
-        <tocentry page="rfc7.xml" filename="rfc7.html"/>
-        <tocentry page="rfc8.xml" filename="rfc8.html"/>
-        <tocentry page="rfc9.xml" filename="rfc9.html"/>
-        <tocentry page="rfc10.xml" filename="rfc10.html"/>
-        <tocentry page="rfc11.xml" filename="rfc11.html"/>
-        <tocentry page="rfc12.xml" filename="rfc12.html"/>
-        <tocentry page="rfc13.xml" filename="rfc13.html"/>
-        <tocentry page="rfc14.xml" filename="rfc14.html"/>
-        <tocentry page="rfc15.xml" filename="rfc15.html"/>
-        <tocentry page="rfc16.xml" filename="rfc16.html"/>
-        <tocentry page="rfc17.xml" filename="rfc17.html"/>
-        <tocentry page="rfc18.xml" filename="rfc18.html"/>
-        <tocentry page="rfc19.xml" filename="rfc19.html"/>
-        <tocentry page="rfc20.xml" filename="rfc20.html"/>
-        <tocentry page="rfc21.xml" filename="rfc21.html"/>
-        <tocentry page="rfc22.xml" filename="rfc22.html"/>
       </tocentry>
       <tocentry page="biblio.xml" filename="biblio.html"/>
     </tocentry>
