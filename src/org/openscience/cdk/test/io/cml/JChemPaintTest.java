@@ -50,19 +50,14 @@ public class JChemPaintTest extends TestCase {
     }
 
     public static Test suite() {
-        return new TestSuite(JmolTest.class);
-    }
-
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(new TestSuite(JmolTest.class));
+        return new TestSuite(JChemPaintTest.class);
     }
 
     /**
-     * This one tests the ability to read CML generator with
-     * Steve Zara's PDB2CML tool written in 1999.
+     * This one tests a CML2 file.
      */
-    public void testMethanolOne() {
-        String filename = "data/cmltest/methanol1.cml";
+    public void testSalt() {
+        String filename = "data/cmltest/COONa.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
@@ -84,7 +79,7 @@ public class JChemPaintTest extends TestCase {
             // test the molecule
             Molecule mol = model.getSetOfMolecules().getMolecule(0);
             assertNotNull(mol);
-            assertEquals(mol.getAtomCount(), 6);
+            assertEquals(4, mol.getAtomCount());
             assertTrue(GeometryTools.has3DCoordinates(mol));
         } catch (Exception e) {
             fail(e.toString());

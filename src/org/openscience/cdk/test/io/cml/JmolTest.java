@@ -116,17 +116,17 @@ public class JmolTest extends TestCase {
             // test the resulting ChemFile content
             assertNotNull(chemFile);
             assertEquals(1, chemFile.getChemSequenceCount());
-            //System.out.println("NO sequences: " + chemFile.getChemSequenceCount());
             ChemSequence seq = chemFile.getChemSequence(0);
             assertNotNull(seq);
             assertEquals(34, seq.getChemModelCount());
-            //System.out.println("NO models: " + seq.getChemModelCount());
             ChemModel model = seq.getChemModel(0);
             assertNotNull(model);
-            assertEquals(1, model.getSetOfMolecules().getMoleculeCount());
+            SetOfMolecules som = model.getSetOfMolecules();
+            assertNotNull(som);
+            assertEquals(1, som.getMoleculeCount());
 
             // test the molecule
-            Molecule mol = model.getSetOfMolecules().getMolecule(0);
+            Molecule mol = som.getMolecule(0);
             assertNotNull(mol);
             assertEquals(mol.getAtomCount(), 25);
             assertTrue(GeometryTools.has3DCoordinates(mol));
@@ -190,10 +190,11 @@ public class JmolTest extends TestCase {
             //System.out.println("NO models: " + seq.getChemModelCount());
             ChemModel model = seq.getChemModel(0);
             assertNotNull(model);
-            assertEquals(1, model.getSetOfMolecules().getMoleculeCount());
+            SetOfMolecules som = model.getSetOfMolecules();
+            assertEquals(1, som.getMoleculeCount());
 
             // test the molecule
-            Molecule mol = model.getSetOfMolecules().getMolecule(0);
+            Molecule mol = som.getMolecule(0);
             assertNotNull(mol);
             assertEquals(mol.getAtomCount(), 6);
             assertTrue(GeometryTools.has3DCoordinates(mol));
