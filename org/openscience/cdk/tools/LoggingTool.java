@@ -24,6 +24,8 @@
  */
 package org.openscience.cdk.tools;
 
+import java.net.*;
+
 public class LoggingTool {
 
     private boolean tostdout = false;
@@ -39,9 +41,14 @@ public class LoggingTool {
             logger = org.apache.log4j.Category.getInstance( classname );
 
             // configure Log4J
-            (org.apache.log4j.PropertyConfigurator).configure("org/openscience/cdk/config/log4j.properties");
+            URL url = getClass().getClassLoader().getResource("org/openscience/cdk/config/log4j.properties");
+            // debug(url.toString());
+            (org.apache.log4j.PropertyConfigurator).configure(url);
         } catch (NoClassDefFoundError e) {
             tostdout = true;
+        } catch (NullPointerException e) {
+            tostdout = true;
+            debug("Properties file not found!");
         }
     }
 
@@ -89,7 +96,7 @@ public class LoggingTool {
             System.out.print("INFO: ");
             System.out.println(s);
         } else {
-            ((org.apache.log4j.Category)logger).warn(s);
+            ((org.apache.log4j.Category)logger).info(s);
         }
     }
 
