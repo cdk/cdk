@@ -610,19 +610,19 @@ public class Renderer2D   {
         double wedgeWidth = r2dm.getBondWidth() * 2.0; // this value should be made customazible
         
         int[] coords = GeometryTools.getBondCoordinates(bond);
-	    graphics.setColor(bondColor);
-		int[] newCoords = GeometryTools.distanceCalculator(coords, wedgeWidth);
+        graphics.setColor(bondColor);
+        int[] newCoords = GeometryTools.distanceCalculator(coords, wedgeWidth);
         if (bond.getStereo() == CDKConstants.STEREO_BOND_UP) {
             int[] xCoords = {coords[0], newCoords[6], newCoords[4]};
             int[] yCoords = {coords[1], newCoords[7], newCoords[5]};
             xCoords = getScreenCoordinates(xCoords);
-            yCoords = getScreenCoordinates(xCoords);
+            yCoords = getScreenCoordinates(yCoords);
             graphics.fillPolygon(xCoords, yCoords, 3);
         } else {
             int[] xCoords = {coords[2], newCoords[0], newCoords[2]};
             int[] yCoords = {coords[3], newCoords[1], newCoords[3]};
             xCoords = getScreenCoordinates(xCoords);
-            yCoords = getScreenCoordinates(xCoords);
+            yCoords = getScreenCoordinates(yCoords);
             graphics.fillPolygon(xCoords, yCoords, 3);
         }
 	}
