@@ -29,6 +29,7 @@ package org.openscience.cdk.geometry;
 
 import javax.vecmath.*;
 import org.openscience.cdk.*;
+import org.openscience.cdk.tools.LoggingTool;
 import java.awt.Dimension;
 import java.util.Vector;
 
@@ -38,6 +39,12 @@ import java.util.Vector;
  */
 public class GeometryTools {
 
+    private static LoggingTool logger = null;
+    
+    static {
+        if (logger == null) logger = new LoggingTool("org.openscience.cdk.geometry.GeometryTools");
+    }
+    
 	/**
 	 * Adds an automatically calculated offset to the coordinates of all atoms
 	 * such that all coordinates are positive and the smallest x or y coordinate 
@@ -45,25 +52,23 @@ public class GeometryTools {
 	 *
 	 * @param   molecule for which all the atoms are translated to positive coordinates
 	 */
-	public static void translateAllPositive(AtomContainer atomCon)
-	{
-		double transX = Double.MAX_VALUE, transY = Double.MAX_VALUE;
-		for (int i = 0; i < atomCon.getAtomCount(); i++)
-		{
-			if (atomCon.getAtomAt(i).getPoint2D() != null)
-			{
-				if (atomCon.getAtomAt(i).getPoint2D().x < transX)
-				{
-					transX = atomCon.getAtomAt(i).getPoint2D().x;
-				}
-				if (atomCon.getAtomAt(i).getPoint2D().y < transY)
-				{
-					transY = atomCon.getAtomAt(i).getPoint2D().y;
-				}
-			}
-		}
-		translate2D(atomCon,transX * -1,transY * -1);		
-	}
+    public static void translateAllPositive(AtomContainer atomCon) {
+        double minX = Double.MAX_VALUE, 
+               minY = Double.MAX_VALUE;
+        Atom[] atoms = atomCon.getAtoms();
+        for (int i = 0; i < atoms.length; i++) {
+            if (atoms[i].getPoint2D() != null) {
+                if (atoms[i].getPoint2D().x < minX) {
+                    minX = atoms[i].getPoint2D().x;
+                }
+                if (atoms[i].getPoint2D().y < minY) {
+                    minY = atoms[i].getPoint2D().y;
+                }
+            }
+        }
+        logger.debug("Translating: minx=" + minX + ", minY=" + minY);
+        translate2D(atomCon, minX * -1, minY * -1);		
+    }
 	
 
 	/**
@@ -192,16 +197,16 @@ public class GeometryTools {
 	 * @param atomCon  molecule to be translated
 	 * @param vector   dimension that represents the translation vector
 	 */
-	public static void translate2D(AtomContainer atomCon, Vector2d vector)
-	{
-		for (int i = 0; i < atomCon.getAtomCount(); i++)
-		{
-			if (atomCon.getAtomAt(i).getPoint2D() != null)
-			{
-				atomCon.getAtomAt(i).getPoint2D().add(vector);
-			}
-		}
-	}
+    public static void translate2D(AtomContainer atomCon, Vector2d vector) {
+        Atom[] atoms = atomCon.getAtoms();
+        for (int i = 0; i < atoms.length; i++) {
+            if (atoms[i].getPoint2D() != null) {
+                atoms[i].getPoint2D().add(vector);
+            } else {
+                logger.warn("Could not translate atom in 2D space");
+            }
+        }
+    }
 	
 	/**
 	 * Translates a molecule from the origin to a new point denoted by a vector.
