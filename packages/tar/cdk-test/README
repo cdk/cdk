@@ -1,3 +1,7 @@
-Not much to read yet. Sorry for that.
+Package for regression testing of CDK.
+
+Use:
+
+cdk-test org.openscience.cdk.test.CDKTests
 
 Egon Willighagen <egonw@sci.kun.nl>
