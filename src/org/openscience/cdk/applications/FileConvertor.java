@@ -128,7 +128,14 @@ public class FileConvertor {
                     AtomContainer container = containers[i];
                     Atom[] atoms = container.getAtoms();
                     for (int j=0; j<atoms.length; j++) {
-                        factory.configure(atoms[j]);
+                        if (!(atoms[i] instanceof PseudoAtom)) {
+                            try {
+                                factory.configure(atoms[j]);
+                            } catch (CDKException exception) {
+                                logger.warn("Could not configure atom: " + exception.getMessage());
+                                logger.debug(exception);
+                            }
+                        }
                     }
                     if (applyHAdding) {
                         logger.info("Adding Hydrogens...");
