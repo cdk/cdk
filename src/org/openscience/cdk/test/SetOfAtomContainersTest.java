@@ -73,14 +73,14 @@ public class SetOfAtomContainersTest extends TestCase {
         SetOfAtomContainers som = new SetOfAtomContainers();
         som.addAtomContainer(new AtomContainer());
 
-        assertEquals(1.0, som.getAtomContainerMultiplier(0), 0.00001);
+        assertEquals(1.0, som.getMultiplier(0), 0.00001);
     }
     
     public void testGetAtomContainerMultiplier2() {
         SetOfAtomContainers som = new SetOfAtomContainers();
         som.addAtomContainer(new AtomContainer());
 
-        assertEquals(-1.0, som.getAtomContainerMultiplier(new AtomContainer()), 0.00001);
+        assertEquals(-1.0, som.getMultiplier(new AtomContainer()), 0.00001);
     }
     
     public void testAddAtomContainer() {
@@ -104,7 +104,7 @@ public class SetOfAtomContainersTest extends TestCase {
         SetOfAtomContainers som = new SetOfAtomContainers();
         som.addAtomContainer(new AtomContainer(), 2.0);
         assertEquals(1, som.getAtomContainerCount());
-        assertEquals(2.0, som.getAtomContainerMultiplier(0), 0.00001);
+        assertEquals(2.0, som.getMultiplier(0), 0.00001);
     }
     
     public void testGrowAtomContainerArray() {

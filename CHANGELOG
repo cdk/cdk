@@ -36,6 +36,7 @@ Fixes:
 * Fixed handling of CML content in RSS channel when no namespace prefix was used
 
 API changes:
+* Changed SetOfAtomContainers.getAtomContainerMultiplier() to .getMultiplier()
 * Renderer2D.getScreenSize() and .getScreenCoordinates() are now protected
 * LoggingTool methods now accept Objects and convert them toString internally
 * CDKPluginInterface.setPropertyDirectory() was added

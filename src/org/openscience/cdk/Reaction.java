@@ -154,7 +154,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      * @return -1, if the given molecule is not a product in this Reaction
      */
     public double getReactantCoefficient(Molecule reactant) {
-        return reactants.getAtomContainerMultiplier(reactant);
+        return reactants.getMultiplier(reactant);
     }
     
     /**
@@ -163,7 +163,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      * @return -1, if the given molecule is not a product in this Reaction
      */
     public double getProductCoefficient(Molecule product) {
-        return products.getAtomContainerMultiplier(product);
+        return products.getMultiplier(product);
     }
 	
 	/**
