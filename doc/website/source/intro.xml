@@ -45,10 +45,19 @@
 			which is Java and can also be used under Windows.
 		</para>
 		<para>
-			The first step to do now is to create java classes for of all the
-			existing UML diagrams. The second step is to fill them with life as it become clear what is
-			needed while porting JChemPaint to them
+			In the past two years, the CDK library evolved enormously. In the end of this
+            year JChemPaint will have a first stable release based on CDK, and Jmol will
+            follow somewhere in Janury 2003. In addition to this, three other programs
+            are developed that are based on CDK. You can learn about these on the
+            page "Software using CDK" (see menu on the left).
 		</para>
+        <para>
+            More information about using CDK can be found in the Documentation section
+            of this website. People interested in the CDK development are encouraged
+            to check out the Development section as well. If you have questions about
+            CDK (any question), please see the Contact section for information on how
+            to reach the CDK developers.
+        </para>
 	</section>
 
 </webpage>

@@ -17,7 +17,6 @@
   <toc page="website.xml" filename="index.html">
     <tocentry page="intro.xml" filename="intro.html">
       <tocentry page="software.xml" filename="software.html"/>
-      <tocentry page="related.xml" filename="related.html"/>
     </tocentry>
     <tocentry page="screenshots.xml" filename="screenshots.html"/>
     <tocentry page="documentation.xml" filename="documentation.html">
