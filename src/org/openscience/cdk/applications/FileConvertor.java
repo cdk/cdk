@@ -53,6 +53,7 @@ public class FileConvertor {
     private ChemObjectWriter cow;
     
     private TextGUIListener settingListener;
+    private PropertiesListener propsListener;
     private int level;
     private Vector chemObjectNames = new Vector();
 
@@ -61,6 +62,7 @@ public class FileConvertor {
         logger.dumpSystemProperties();
 
         settingListener = new TextGUIListener(level);
+        propsListener = null;
         
         this.level = 0;
         this.oformat = "cml";
@@ -178,7 +180,12 @@ public class FileConvertor {
             reader = new XYZReader(fileReader);
         }
         if (reader != null) {
-            reader.addReaderListener(settingListener);
+            if (settingListener != null) {
+                reader.addReaderListener(settingListener);
+            }
+            if (propsListener != null) {
+                reader.addReaderListener(propsListener);
+            }
         }
         return reader;
     }
@@ -204,7 +211,12 @@ public class FileConvertor {
         }
         if (writer != null) {
             logger.debug(format + " -> " + writer.getClass().getName());
-            writer.addWriterListener(settingListener);
+            if (settingListener != null) {
+                writer.addWriterListener(settingListener);
+            }
+            if (propsListener != null) {
+                writer.addWriterListener(propsListener);
+            }
         } else {
             logger.debug(format + " -> null");
         }
@@ -278,6 +290,21 @@ public class FileConvertor {
                 String format = option.substring(14);
                 listOptionsForFormat(format);
                 System.exit(0);
+            } else if (option.startsWith("--properties:") && option.length() > 13) {
+                String filename = option.substring(13);
+                try {
+                    File file = new File(filename);
+                    Properties props = new Properties();
+                    props.load(new FileInputStream(file));
+                    propsListener = new PropertiesListener(props);
+                    settingListener = null;
+                } catch (FileNotFoundException exception) {
+                    System.out.println("Cannot find properties file: " + filename);
+                    System.exit(1);
+                } catch (IOException exception) {
+                    System.out.println("Cannot read properties file: " + filename);
+                    System.exit(1);
+                }
             } else {
                 System.out.println("Unrecognized option: " + args[i]);
                 System.exit(1);
@@ -300,8 +327,9 @@ public class FileConvertor {
         System.out.println("   -h");
         System.out.println("  --question:[none|fewest|some|all] Ask none|fewest|some|all customization questions");
         System.out.println("  --outputformat:<format>           Output the files in the given format");
-        System.out.println("  --listoptions:<format>            Output customizable IOSettings for this Writer");
         System.out.println("   -o<format>");
+        System.out.println("  --listoptions:<format>            Output customizable IOSettings for this Writer");
+        System.out.println("  --properties:<file>               Java Properties file with IOSetting values");
         System.out.println();
         System.out.println(" OUTPUT FORMATS:");
         System.out.println("  cml    Chemical Markup Language (the default)");
