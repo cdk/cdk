@@ -60,7 +60,7 @@ public class QsarDescriptors2DTest extends TestCase {
 		this.standAlone = standAlone;
 	}
 	public void testgetProtonPartialCharges() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		double [] testResult = {10.0522783,10.05783,20.05783}; // 0.05783
+		double [] testResult = {0.05783,0.05783,0.05783}; // 0.05783
 		//try {
 			QsarDescriptors2D qd2d = new QsarDescriptors2D();
 			SmilesParser sp = new SmilesParser();
