@@ -876,6 +876,9 @@ public class Renderer2D implements MouseMotionListener   {
                 paintDoubleBond(bond, bondColor, graphics);
             } else if (bond.getOrder() == CDKConstants.BONDORDER_TRIPLE) {
                 paintTripleBond(bond, bondColor, graphics);
+            } else {
+                // paint all other bonds as single bonds
+                paintSingleBond(bond, bondColor, graphics);
             }
 		}
 	}

@@ -27,6 +27,7 @@ Fixes:
 * Added better output about missing src/*.javafiles
 * Updated Xerces to version 2.6.2 which fixes a CML serialization bugs
   (closes #930489)
+* Fixed rendering of non-ring bonds marked as aromatic (closes #927342)
 
 API changes:
 * Moved *Manipulator from cdk.tools into cdk.tools.manipulator
