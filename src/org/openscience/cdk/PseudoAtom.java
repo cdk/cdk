@@ -77,6 +77,7 @@ public class PseudoAtom extends Atom implements java.io.Serializable, Cloneable
         this.fractionalPoint3D = atom.fractionalPoint3D;
         this.point3D = atom.point3D;
         this.point2D = atom.point2D;
+        this.label = atom.getSymbol();
         super.setHydrogenCount(atom.getHydrogenCount());
         super.setStereoParity(atom.getStereoParity());
         super.setExactMass(atom.getExactMass());
