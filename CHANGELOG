@@ -4,6 +4,14 @@ CHANGELOG $Date$
 Changes in CVS
 ------------------------------------
 New:
+
+Fixes:
+
+API changes:
+
+20041201 Release
+------------------------------------
+New:
 * Added isomorphism.ConjugatedPiSystemsDetector
 * ChemFormat and ChemFormatMatchers interfaces in new io.formats package
 * Added charges.GasteigerMarsiliPartialCharges calculation
@@ -22,7 +30,7 @@ API changes:
 * ChemObjectIO.getFormatName() is replaced by ChemObjectIO.getFormat()
 * ReaderFactory.getFormat() now returns a ChemFormat object
 
-20051015 Release
+20041015 Release
 ------------------------------------
 New:
 
