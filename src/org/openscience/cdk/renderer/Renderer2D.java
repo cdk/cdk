@@ -50,8 +50,7 @@ import org.openscience.cdk.tools.*;
  * @created    October 3, 2002
  * @keyword    viewer, 2D-viewer
  */
-public class Renderer2D
-{
+public class Renderer2D   {
 
     private LoggingTool logger;
     
@@ -61,9 +60,6 @@ public class Renderer2D
 	 *  Description of the Field
 	 */
 	public Renderer2DModel r2dm;
-	Graphics g;
-	AtomContainer atomCon;
-
 
 	/**
 	 * Constructs a Renderer2D with a default settings model.
@@ -71,7 +67,6 @@ public class Renderer2D
 	public Renderer2D() {
 		this(new Renderer2DModel());
 	}
-
 
 	/**
 	 * Constructs a Renderer2D.
@@ -90,19 +85,18 @@ public class Renderer2D
 	 *  it.
 	 *
 	 *@param  atomCon  Description of the Parameter
-	 *@param  g        Description of the Parameter
+	 *@param  graphics        Description of the Parameter
 	 */
-	public void paintMolecule(AtomContainer atomCon, Graphics g) {
-		this.g = g;
-		this.atomCon = atomCon;
+	public void paintMolecule(AtomContainer atomCon, Graphics graphics) {
 		RingSet ringSet = new RingSet();
 		Vector molecules = null;
 		try
 		{
 			molecules = ConnectivityChecker.partitionIntoMolecules(atomCon);
-		} catch (Exception exc)
+		} catch (Exception exception)
 		{
-			exc.printStackTrace();
+            logger.warn("Could not partition molecule: " + exception.toString());
+			exception.printStackTrace();
 		}
 		for (int i = 0; i < molecules.size(); i++)
 		{
@@ -110,27 +104,27 @@ public class Renderer2D
 		}
 		if (r2dm.getPointerVectorStart() != null && r2dm.getPointerVectorEnd() != null)
 		{
-			paintPointerVector();
+			paintPointerVector(graphics);
 		}
-		paintBonds(atomCon, ringSet);
-		paintAtoms(atomCon);
+		paintBonds(atomCon, ringSet, graphics);
+		paintAtoms(atomCon, graphics);
 		if (r2dm.drawNumbers())
 		{
-			paintNumbers(atomCon.getAtoms(), atomCon.getAtomCount());
+			paintNumbers(atomCon, atomCon.getAtomCount(), graphics);
 		}
 		if (r2dm.getSelectRect() != null)
 		{
-			g.setColor(r2dm.getHighlightColor());
-			g.drawPolygon(r2dm.getSelectRect());
+		    graphics.setColor(r2dm.getHighlightColor());
+		    graphics.drawPolygon(r2dm.getSelectRect());
 		}
-		paintLassoLines();
+		paintLassoLines(graphics);
 	}
 
 
 	/**
 	 *  Description of the Method
 	 */
-	private void paintLassoLines()
+	private void paintLassoLines(Graphics graphics)
 	{
 		Vector points = r2dm.getLassoPoints();
 		if (points.size() > 1)
@@ -140,7 +134,7 @@ public class Renderer2D
 			for (int i = 1; i < points.size(); i++)
 			{
 				point2 = (Point) points.elementAt(i);
-				g.drawLine(point1.x, point1.y, point2.x, point2.y);
+			    graphics.drawLine(point1.x, point1.y, point2.x, point2.y);
 				point1 = point2;
 			}
 		}
@@ -153,11 +147,12 @@ public class Renderer2D
 	 *@param  atoms   The array of atoms
 	 *@param  number  The number of atoms in this array
 	 */
-	private void paintNumbers(Atom[] atoms, int number)
+	private void paintNumbers(AtomContainer container, int number, Graphics graphics)
 	{
+        Atom[] atoms = container.getAtoms();
 		for (int i = 0; i < number; i++)
 		{
-			paintNumber(atoms[i]);
+			paintNumber(container, atoms[i], graphics);
 		}
 	}
 
@@ -172,29 +167,28 @@ public class Renderer2D
 	 *
 	 *@param  atom  Description of the Parameter
 	 */
-	private void paintNumber(Atom atom)
+	private void paintNumber(AtomContainer container, Atom atom, Graphics graphics)
 	{
 		if (atom.getPoint2D() == null)
 		{
 			return;
 		}
-		FontMetrics fm = g.getFontMetrics();
-		int fontSize = getScreenSize(g.getFont().getSize());
+		FontMetrics fm = graphics.getFontMetrics();
 		int xSymbOffset = (new Integer(fm.stringWidth(atom.getSymbol()) / 2)).intValue();
 		int ySymbOffset = (new Integer(fm.getAscent() / 2)).intValue();
 
 		try
 		{
-			int i = atomCon.getAtomNumber(atom);
-//			g.setColor(r2dm.getBackColor());
-//			g.fillRect((int)(atom.getPoint2D().x - (xSymbOffset * 1.8)),(int)(atom.getPoint2D().y - (ySymbOffset * 0.8)),(int)fontSize,(int)fontSize);
-			g.setColor(r2dm.getForeColor());
-			g.drawString(new Integer(i + 1).toString(), (int) (atom.getPoint2D().x + (xSymbOffset)), (int) (atom.getPoint2D().y - (ySymbOffset)));
-			g.setColor(r2dm.getBackColor());
-			g.drawLine((int) atom.getPoint2D().x, (int) atom.getPoint2D().y, (int) atom.getPoint2D().x, (int) atom.getPoint2D().y);
-		} catch (Exception exc)
+			int i = container.getAtomNumber(atom);
+//		    graphics.setColor(r2dm.getBackColor());
+//		    graphics.fillRect((int)(atom.getPoint2D().x - (xSymbOffset * 1.8)),(int)(atom.getPoint2D().y - (ySymbOffset * 0.8)),(int)fontSize,(int)fontSize);
+		    graphics.setColor(r2dm.getForeColor());
+		    graphics.drawString(Integer.toString(i+1), (int) (atom.getPoint2D().x + (xSymbOffset)), (int) (atom.getPoint2D().y - (ySymbOffset)));
+		    graphics.setColor(r2dm.getBackColor());
+		    graphics.drawLine((int) atom.getPoint2D().x, (int) atom.getPoint2D().y, (int) atom.getPoint2D().x, (int) atom.getPoint2D().y);
+		} catch (Exception exception)
 		{
-
+            logger.error("Error while drawing atom number:" + exception.toString());
 		}
 	}
 
@@ -206,23 +200,22 @@ public class Renderer2D
 	 *
 	 *@param  atomCon  Description of the Parameter
 	 */
-	private void paintAtoms(AtomContainer atomCon)
+	private void paintAtoms(AtomContainer atomCon, Graphics graphics)
 	{
-		Color atomColor;
 		Atom atom;
 		for (int i = 0; i < atomCon.getAtomCount(); i++) {
 			atom = atomCon.getAtomAt(i);
-            paintAtom(atom);
+            paintAtom(atom, graphics);
 		}
 	}
 
-	private void paintAtom(Atom atom) {
+	private void paintAtom(Atom atom, Graphics graphics) {
         Color atomColor = (Color) r2dm.getColorHash().get(atom);
         if (atom == r2dm.getHighlightedAtom()) {
             atomColor = r2dm.getHighlightColor();
         }
         if (atomColor != null) {
-            paintColouredAtom(atom, atomColor);
+            paintColouredAtom(atom, atomColor, graphics);
         } else {
             atomColor = r2dm.getBackColor();
         }
@@ -231,19 +224,15 @@ public class Renderer2D
              *  only show element for non-carbon atoms,
              *  unless (see below)...
              */
-            paintAtomSymbol(atom, atomColor);
-            paintAtomCharge(atom);
-        } else if (atomCon.getBondCount(atom) == 0) {
-            // ... unless carbon has no bonds
-            paintAtomSymbol(atom, atomColor);
-            paintAtomCharge(atom);
+            paintAtomSymbol(atom, atomColor, graphics);
+            paintAtomCharge(atom, graphics);
         } else if (r2dm.getKekuleStructure()) {
             // ... unless carbon must be drawn because in Kekule mode
-            paintAtomSymbol(atom, atomColor);
+            paintAtomSymbol(atom, atomColor, graphics);
         } else if (atom.getFormalCharge() != 0) {
             // ... unless carbon is charged
-            paintAtomSymbol(atom, atomColor);
-            paintAtomCharge(atom);
+            paintAtomSymbol(atom, atomColor, graphics);
+            paintAtomCharge(atom, graphics);
         }
 	}
 
@@ -254,15 +243,15 @@ public class Renderer2D
 	 *@param  atom   The atom to be drawn
 	 *@param  color  The color of the atom to be drawn
 	 */
-	private void paintColouredAtom(Atom atom, Color color)
+	private void paintColouredAtom(Atom atom, Color color, Graphics graphics)
 	{
 		int atomRadius = r2dm.getAtomRadius();
-		g.setColor(color);
+	    graphics.setColor(color);
         int[] coords = {(int) atom.getX2D() - (atomRadius / 2), 
                         (int) atom.getY2D() - (atomRadius / 2), 
                         atomRadius, atomRadius};
         coords = getScreenCoordinates(coords);
-		g.fillRect(coords[0], coords[1], coords[2], coords[3]);
+	    graphics.fillRect(coords[0], coords[1], coords[2], coords[3]);
 	}
 
 	/**
@@ -273,7 +262,7 @@ public class Renderer2D
 	 *@param  atom       The atom to be drawn
 	 *@param  backColor  Description of the Parameter
 	 */
-	private void paintAtomSymbol(Atom atom, Color backColor) {
+	private void paintAtomSymbol(Atom atom, Color backColor, Graphics graphics) {
 		if (atom.getPoint2D() == null) {
 			return;
 		}
@@ -293,30 +282,30 @@ public class Renderer2D
 
         /* determine where to put the string, as seen from the atom coordinates
            in model coordinates */
-		FontMetrics fm = g.getFontMetrics();        
+		FontMetrics fm = graphics.getFontMetrics();
 		int xSymbOffset = (new Integer(fm.stringWidth(symbol.substring(0,1)) / 2)).intValue();
 		int ySymbOffset = (new Integer(fm.getAscent() / 2)).intValue();
 
 		// make empty space
-		g.setColor(backColor);
-        Rectangle2D stringBounds = fm.getStringBounds(symbol, g);
-        int[] coords = {(int) (atom.getPoint2D().x - (xSymbOffset * 1.2)), 
+	    graphics.setColor(backColor);
+        Rectangle2D stringBounds = fm.getStringBounds(symbol, graphics);
+        int[] coords = {(int) (atom.getPoint2D().x - (xSymbOffset * 1.2)),
                         (int) (atom.getPoint2D().y - (ySymbOffset * 1.2)),
-                        (int) (stringBounds.getWidth() * 1.4), 
+                        (int) (stringBounds.getWidth() * 1.4),
                         (int) (stringBounds.getHeight() * 1.4) };
-        coords = getScreenCoordinates(coords);                
-		g.fillRect(coords[0], coords[1], coords[2], coords[3]);
+        coords = getScreenCoordinates(coords);
+	    graphics.fillRect(coords[0], coords[1], coords[2], coords[3]);
 
         int[] hCoords = {(int) (atom.getPoint2D().x - xSymbOffset),
 				         (int) (atom.getPoint2D().y + ySymbOffset) };
         hCoords = getScreenCoordinates(hCoords);
-		g.setColor(r2dm.getForeColor());
+	    graphics.setColor(r2dm.getForeColor());
         // apply zoom factor to font size
-        Font unscaledFont = g.getFont();
+        Font unscaledFont = graphics.getFont();
         int fontSize = getScreenSize(unscaledFont.getSize());
-        g.setFont(unscaledFont.deriveFont((float)fontSize));        
-		g.drawString(symbol, hCoords[0], hCoords[1]);
-        g.setFont(unscaledFont);
+        graphics.setFont(unscaledFont.deriveFont((float)fontSize));        
+        graphics.drawString(symbol, hCoords[0], hCoords[1]);
+        graphics.setFont(unscaledFont);
 	}
 
 	/**
@@ -327,17 +316,17 @@ public class Renderer2D
 	 *@param  atom       The atom to be drawn
 	 *@param  backColor  Description of the Parameter
 	 */
-	private void paintAtomCharge(Atom atom) {
-        FontMetrics fm = g.getFontMetrics();
+	private void paintAtomCharge(Atom atom, Graphics graphics) {
+        FontMetrics fm = graphics.getFontMetrics();
         int xSymbOffset = (new Integer(fm.stringWidth(atom.getSymbol()) / 2)).intValue();
         int ySymbOffset = (new Integer(fm.getAscent() / 2)).intValue();
 
             // show formal charge
         if (atom.getFormalCharge() != 0) {
             // print charge in smaller font size
-            Font unscaledFont = g.getFont();
+            Font unscaledFont = graphics.getFont();
             int fontSize = getScreenSize(unscaledFont.getSize() - 1);
-            g.setFont(unscaledFont.deriveFont((float)fontSize));        
+            graphics.setFont(unscaledFont.deriveFont((float)fontSize));        
 
             int charge = atom.getFormalCharge();
             String chargeString = (new Integer(charge)).toString();
@@ -354,10 +343,10 @@ public class Renderer2D
             int[] hCoords = {(int)atom.getX2D() + xSymbOffset,
                              (int)atom.getY2D() - ySymbOffset};
             hCoords = getScreenCoordinates(hCoords);
-            g.drawString(chargeString, hCoords[0], hCoords[1]);
+            graphics.drawString(chargeString, hCoords[0], hCoords[1]);
             
             /** Put circles around + or - sign
-            Rectangle2D stringBounds = fm.getStringBounds(chargeString, g);
+            Rectangle2D stringBounds = fm.getStringBounds(chargeString, graphics);
             int width = (int)stringBounds.getWidth();
             int height = (int)stringBounds.getHeight();
             int[] coords = {(int)atom.getX2D() + xSymbOffset - (width/2), 
@@ -365,8 +354,8 @@ public class Renderer2D
                             (int)stringBounds.getWidth(), 
                             (int)stringBounds.getWidth()};
             coords = getScreenCoordinates(coords);
-            g.drawOval(coords[0], coords[1], coords[2], coords[3]); */
-            g.setFont(unscaledFont);
+            graphics.drawOval(coords[0], coords[1], coords[2], coords[3]); */
+            graphics.setFont(unscaledFont);
         }
     }
     
@@ -378,7 +367,7 @@ public class Renderer2D
 	 *@param  ringSet  The set of rings the molecule contains
 	 *@param  atomCon  Description of the Parameter
 	 */
-	private void paintBonds(AtomContainer atomCon, RingSet ringSet)
+	private void paintBonds(AtomContainer atomCon, RingSet ringSet, Graphics graphics)
 	{
 		Color bondColor;
 		Ring ring;
@@ -396,17 +385,17 @@ public class Renderer2D
                     bondColor = r2dm.getHighlightColor();
                     for (int j = 0; j < bond.getAtomCount(); j++)
                     {
-                        paintColouredAtom(bond.getAtomAt(j), bondColor);
+                        paintColouredAtom(bond.getAtomAt(j), bondColor, graphics);
                     }
                 }
                 ring = ringSet.getHeaviestRing(bond);
                 if (ring != null)
                 {
-                    paintRingBond(bond, ring, bondColor);
+                    paintRingBond(bond, ring, bondColor, graphics);
 
                 } else
                 {
-                    paintBond(bond, bondColor);
+                    paintBond(bond, bondColor, graphics);
                 }
             }
 		}
@@ -419,7 +408,7 @@ public class Renderer2D
 	 *@param  bond       The Bond to be drawn.
 	 *@param  bondColor  Description of the Parameter
 	 */
-	private void paintBond(Bond bond, Color bondColor) {
+	private void paintBond(Bond bond, Color bondColor, Graphics graphics) {
 		logger.debug("bond order: " + bond.getOrder());
 		logger.debug("bond stereo: " + bond.getStereo());
 
@@ -432,19 +421,19 @@ public class Renderer2D
             // Draw stero information if available
             logger.info("Painting wedge bond");
             if (bond.getStereo() >= CDKConstants.STEREO_BOND_UP) {
-                paintWedgeBond(bond, bondColor);
+                paintWedgeBond(bond, bondColor, graphics);
             } else {
                 logger.info("Painting it dashed");
-                paintDashedWedgeBond(bond, bondColor);
+                paintDashedWedgeBond(bond, bondColor, graphics);
             }
         } else {
             // Draw bond order when no stereo info is available
             if (bond.getOrder() == CDKConstants.BONDORDER_SINGLE) {
-                paintSingleBond(bond, bondColor);
+                paintSingleBond(bond, bondColor, graphics);
             } else if (bond.getOrder() == CDKConstants.BONDORDER_DOUBLE) {
-                paintDoubleBond(bond, bondColor);
+                paintDoubleBond(bond, bondColor, graphics);
             } else if (bond.getOrder() == CDKConstants.BONDORDER_TRIPLE) {
-                paintTripleBond(bond, bondColor);
+                paintTripleBond(bond, bondColor, graphics);
             }
 		}
 	}
@@ -458,22 +447,22 @@ public class Renderer2D
 	 *@param  ring       Description of the Parameter
 	 *@param  bondColor  Description of the Parameter
 	 */
-	private void paintRingBond(Bond bond, Ring ring, Color bondColor)
+	private void paintRingBond(Bond bond, Ring ring, Color bondColor, Graphics graphics)
 	{
 		if (bond.getOrder() == 1)
 		{
-			paintSingleBond(bond, bondColor);
+			paintSingleBond(bond, bondColor, graphics);
 		} else if (bond.getOrder() == 2)
 		{
-			paintSingleBond(bond, bondColor);
-			paintInnerBond(bond, ring, bondColor);
+			paintSingleBond(bond, bondColor, graphics);
+			paintInnerBond(bond, ring, bondColor, graphics);
 		} else if (bond.getOrder() == 1.5 || bond.flags[CDKConstants.ISAROMATIC])
 		{
-			paintSingleBond(bond, bondColor);
-			paintInnerBond(bond, ring, Color.lightGray);
+			paintSingleBond(bond, bondColor, graphics);
+			paintInnerBond(bond, ring, Color.lightGray, graphics);
 		} else if (bond.getOrder() == 3)
 		{
-			paintTripleBond(bond, bondColor);
+			paintTripleBond(bond, bondColor, graphics);
 		}
 	}
 
@@ -484,9 +473,9 @@ public class Renderer2D
 	 *@param  bond       The singlebond to be drawn
 	 *@param  bondColor  Description of the Parameter
 	 */
-	private void paintSingleBond(Bond bond, Color bondColor) {
+	private void paintSingleBond(Bond bond, Color bondColor, Graphics graphics) {
         if (GeometryTools.has2DCoordinates(bond)) { 
-            paintOneBond(GeometryTools.getBondCoordinates(bond), bondColor);
+            paintOneBond(GeometryTools.getBondCoordinates(bond), bondColor, graphics);
         }
 	}
 
@@ -496,15 +485,15 @@ public class Renderer2D
 	 *@param  bond       The doublebond to be drawn
 	 *@param  bondColor  Description of the Parameter
 	 */
-	private void paintDoubleBond(Bond bond, Color bondColor)
+	private void paintDoubleBond(Bond bond, Color bondColor, Graphics graphics)
 	{
 		int[] coords = GeometryTools.distanceCalculator(GeometryTools.getBondCoordinates(bond), r2dm.getBondDistance() / 2);
 
 		int[] newCoords1 = {coords[0], coords[1], coords[6], coords[7]};
-		paintOneBond(newCoords1, bondColor);
+		paintOneBond(newCoords1, bondColor, graphics);
 
 		int[] newCoords2 = {coords[2], coords[3], coords[4], coords[5]};
-		paintOneBond(newCoords2, bondColor);
+		paintOneBond(newCoords2, bondColor, graphics);
 	}
 
 	/**
@@ -513,17 +502,17 @@ public class Renderer2D
 	 *@param  bond       The triplebond to be drawn
 	 *@param  bondColor  Description of the Parameter
 	 */
-	private void paintTripleBond(Bond bond, Color bondColor)
+	private void paintTripleBond(Bond bond, Color bondColor, Graphics graphics)
 	{
-		paintSingleBond(bond, bondColor);
+		paintSingleBond(bond, bondColor, graphics);
 
 		int[] coords = GeometryTools.distanceCalculator(GeometryTools.getBondCoordinates(bond), (r2dm.getBondWidth() / 2 + r2dm.getBondDistance()));
 
 		int[] newCoords1 = {coords[0], coords[1], coords[6], coords[7]};
-		paintOneBond(newCoords1, bondColor);
+		paintOneBond(newCoords1, bondColor, graphics);
 
 		int[] newCoords2 = {coords[2], coords[3], coords[4], coords[5]};
-		paintOneBond(newCoords2, bondColor);
+		paintOneBond(newCoords2, bondColor, graphics);
 	}
 
 
@@ -534,7 +523,7 @@ public class Renderer2D
 	 *@param  ring       The ring the bond is part of
 	 *@param  bondColor  Description of the Parameter
 	 */
-	private void paintInnerBond(Bond bond, Ring ring, Color bondColor)
+	private void paintInnerBond(Bond bond, Ring ring, Color bondColor, Graphics graphics)
 	{
 		Point2d center = ring.get2DCenter();
 
@@ -544,11 +533,11 @@ public class Renderer2D
 		if (dist1 < dist2)
 		{
 			int[] newCoords1 = {coords[0], coords[1], coords[6], coords[7]};
-			paintOneBond(shortenBond(newCoords1, ring.getRingSize()), bondColor);
+			paintOneBond(shortenBond(newCoords1, ring.getRingSize()), bondColor, graphics);
 		} else
 		{
 			int[] newCoords2 = {coords[2], coords[3], coords[4], coords[5]};
-			paintOneBond(shortenBond(newCoords2, ring.getRingSize()), bondColor);
+			paintOneBond(shortenBond(newCoords2, ring.getRingSize()), bondColor, graphics);
 		}
 	}
 
@@ -577,15 +566,15 @@ public class Renderer2D
 	 *@param  coords
 	 *@param  bondColor  Description of the Parameter
 	 */
-	private void paintOneBond(int[] coords, Color bondColor)
+	private void paintOneBond(int[] coords, Color bondColor, Graphics graphics)
 	{
-		g.setColor(bondColor);
+	    graphics.setColor(bondColor);
 		int[] newCoords = GeometryTools.distanceCalculator(coords, r2dm.getBondWidth() / 2);
 		int[] xCoords = {newCoords[0], newCoords[2], newCoords[4], newCoords[6]};
 		int[] yCoords = {newCoords[1], newCoords[3], newCoords[5], newCoords[7]};
         xCoords = getScreenCoordinates(xCoords);
         yCoords = getScreenCoordinates(yCoords);
-		g.fillPolygon(xCoords, yCoords, 4);
+	    graphics.fillPolygon(xCoords, yCoords, 4);
 	}
 
 	/**
@@ -594,25 +583,25 @@ public class Renderer2D
 	 *@param  bond       The singlebond to be drawn
 	 *@param  bondColor  Description of the Parameter
 	 */
-	void paintWedgeBond(Bond bond, Color bondColor)
+	void paintWedgeBond(Bond bond, Color bondColor, Graphics graphics)
 	{
         double wedgeWidth = r2dm.getBondWidth() * 2.0; // this value should be made customazible
         
         int[] coords = GeometryTools.getBondCoordinates(bond);
-		g.setColor(bondColor);
+	    graphics.setColor(bondColor);
 		int[] newCoords = GeometryTools.distanceCalculator(coords, wedgeWidth);
         if (bond.getStereo() == CDKConstants.STEREO_BOND_UP) {
             int[] xCoords = {coords[0], newCoords[6], newCoords[4]};
             int[] yCoords = {coords[1], newCoords[7], newCoords[5]};
             xCoords = getScreenCoordinates(xCoords);
             yCoords = getScreenCoordinates(xCoords);
-            g.fillPolygon(xCoords, yCoords, 3);
+            graphics.fillPolygon(xCoords, yCoords, 3);
         } else {
             int[] xCoords = {coords[2], newCoords[0], newCoords[2]};
             int[] yCoords = {coords[3], newCoords[1], newCoords[3]};
             xCoords = getScreenCoordinates(xCoords);
             yCoords = getScreenCoordinates(xCoords);
-            g.fillPolygon(xCoords, yCoords, 3);
+            graphics.fillPolygon(xCoords, yCoords, 3);
         }
 	}
 
@@ -622,12 +611,11 @@ public class Renderer2D
 	 *@param  bond       The singlebond to be drawn
 	 *@param  bondColor  Description of the Parameter
 	 */
-	void paintDashedWedgeBond(Bond bond, Color bondColor)
+	void paintDashedWedgeBond(Bond bond, Color bondColor, Graphics graphics)
 	{
         logger.debug("Drawing dashed wedge bond");
         
-        int[] coords = GeometryTools.getBondCoordinates(bond);
-		g.setColor(bondColor);
+	    graphics.setColor(bondColor);
 
 		double bondLength = bond.getLength();
 		int numberOfLines = (int)(bondLength / 4.0);  // this value should be made customizable
@@ -656,7 +644,7 @@ public class Renderer2D
 			q2.sub(currentPoint, offset);
             int[] lineCoords = {(int)q1.x, (int)q1.y, (int)q2.x, (int)q2.y};
             lineCoords = getScreenCoordinates(lineCoords);
-			g.drawLine(lineCoords[0], lineCoords[1], lineCoords[2], lineCoords[3]);
+		    graphics.drawLine(lineCoords[0], lineCoords[1], lineCoords[2], lineCoords[3]);
 			currentPoint.add(lengthStep);
 		}
 	}
@@ -665,7 +653,7 @@ public class Renderer2D
 	 *  Paints a line between the startpoint and endpoint of the pointervector that
 	 *  is stored in the Renderer2DModel.
 	 */
-	private void paintPointerVector()
+	private void paintPointerVector(Graphics graphics)
 	{
 		Point startPoint = r2dm.getPointerVectorStart();
 		Point endPoint = r2dm.getPointerVectorEnd();
@@ -673,11 +661,11 @@ public class Renderer2D
 		int[] newCoords = GeometryTools.distanceCalculator(points, r2dm.getBondWidth() / 2);
 		int[] xCoords = {newCoords[0], newCoords[2], newCoords[4], newCoords[6]};
 		int[] yCoords = {newCoords[1], newCoords[3], newCoords[5], newCoords[7]};
-		g.setColor(r2dm.getForeColor());
+	    graphics.setColor(r2dm.getForeColor());
         // apply zoomFactor
         xCoords = getScreenCoordinates(xCoords);
         yCoords = getScreenCoordinates(yCoords);
-		g.fillPolygon(xCoords, yCoords, 4);
+	    graphics.fillPolygon(xCoords, yCoords, 4);
 	}
 
 	/**
