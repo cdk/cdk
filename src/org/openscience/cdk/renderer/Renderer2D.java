@@ -137,13 +137,31 @@ public class Renderer2D   {
         ints[3] = ints[1];
         logger.debug("ints: " + ints[0] + ", " + ints[1] + ", " + ints[2] + ", " + ints[3]);
         int[] screenCoords = getScreenCoordinates(ints);
-        graphics.drawLine(screenCoords[0], screenCoords[1],
-                          screenCoords[2], screenCoords[3]);
-        graphics.drawLine(screenCoords[2], screenCoords[3],
-                          screenCoords[2]-7, screenCoords[3]-7);
-        graphics.drawLine(screenCoords[2], screenCoords[3],
-                          screenCoords[2]-7, screenCoords[3]+7);
-        
+        int direction = reaction.getDirection();
+        if (direction == Reaction.FORWARD) {
+            graphics.drawLine(screenCoords[0], screenCoords[1],
+                screenCoords[2], screenCoords[3]);
+            graphics.drawLine(screenCoords[2], screenCoords[3],
+                screenCoords[2]-7, screenCoords[3]-7);
+            graphics.drawLine(screenCoords[2], screenCoords[3],
+                screenCoords[2]-7, screenCoords[3]+7);
+        } else if (direction == Reaction.BACKWARD) {
+            graphics.drawLine(screenCoords[0], screenCoords[1],
+                screenCoords[2], screenCoords[3]);
+            graphics.drawLine(screenCoords[0], screenCoords[1],
+                screenCoords[0]+7, screenCoords[1]-7);
+            graphics.drawLine(screenCoords[0], screenCoords[1],
+                screenCoords[0]+7, screenCoords[1]+7);
+        } else if (direction == Reaction.BIDIRECTIONAL) {
+            graphics.drawLine(screenCoords[0], screenCoords[1] - 3,
+                screenCoords[2], screenCoords[3] - 3);
+            graphics.drawLine(screenCoords[0], screenCoords[1] - 3,
+                screenCoords[0]+7, screenCoords[1] - 3 - 7);
+            graphics.drawLine(screenCoords[0], screenCoords[1] + 3,
+                screenCoords[2], screenCoords[3] + 3);
+            graphics.drawLine(screenCoords[2], screenCoords[3] + 3,
+                screenCoords[2]-7, screenCoords[3] + 3 + 7);
+        }
     }
     
     /**
@@ -565,8 +583,6 @@ public class Renderer2D   {
         int labelY = 0;
         int labelW = atomSymbolW;
         int labelH = atomSymbolH;
-        
-        logger.debug("Drawing " + atomSymbol + " with alignment " + alignment);
         
         if (alignment == 1) { // left alignment
             labelX = (int)(atom.getPoint2D().x - (atomSymbolFirstCharW/2));
