@@ -40,28 +40,28 @@ import org.openscience.cdk.Atom;
  */
 public class PartialAtomicChargeColors implements AtomColorer {
 
-    public Color getAtomColor(Atom a) {
-        return getAtomColor(a, Color.white);
+    public Color getAtomColor(Atom atom) {
+        return getAtomColor(atom, Color.white);
     }
     
-    public Color getAtomColor(Atom a, Color defaultColor) {
-        Color c = defaultColor;
-        double charge = a.getCharge();
+    public Color getAtomColor(Atom atom, Color defaultColor) {
+        Color color = defaultColor;
+        double charge = atom.getCharge();
         if (charge > 0.0) {
             if (charge < 1.0) {
                 int index = 255 - (int)(charge*255.0);
-                c = new Color(index, index, 255);
+                color = new Color(index, index, 255);
             } else {
-                c = Color.blue;
+                color = Color.blue;
             }
         } else if (charge < 0.0) {
             if (charge > -1.0) {
                 int index = 255 + (int)(charge*255.0);
-                c = new Color(255, index, index);
+                color = new Color(255, index, index);
             } else {
-                c = Color.red;
+                color = Color.red;
             }
         }
-        return c;
+        return color;
     }
 }

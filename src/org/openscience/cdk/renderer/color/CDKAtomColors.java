@@ -35,32 +35,32 @@ import org.openscience.cdk.Atom;
  */
 public class CDKAtomColors implements AtomColorer {
 
-    private final Color HYDROGEN       = Color.white;
-    private final Color CARBON         = Color.black;
-    private final Color NITROGEN       = Color.blue;
-    private final Color OXYGEN         = Color.red;
-    private final Color PHOSPHORUS     = Color.green;
-    private final Color SULPHUR        = Color.yellow;
-    private final Color CHLORINE       = Color.magenta;
+    private final static Color HYDROGEN       = Color.white;
+    private final static Color CARBON         = Color.black;
+    private final static Color NITROGEN       = Color.blue;
+    private final static Color OXYGEN         = Color.red;
+    private final static Color PHOSPHORUS     = Color.green;
+    private final static Color SULPHUR        = Color.yellow;
+    private final static Color CHLORINE       = Color.magenta;
 
-    private final Color DEFAULT        = Color.darkGray;
+    private final static Color DEFAULT        = Color.darkGray;
 
-    public Color getAtomColor(Atom a) {
-        return getAtomColor(a, DEFAULT);
+    public Color getAtomColor(Atom atom) {
+        return getAtomColor(atom, DEFAULT);
     }
     
-    public Color getAtomColor(Atom a, Color defaultColor) {
-        Color c = defaultColor;
-        int atomnumber = a.getAtomicNumber();
+    public Color getAtomColor(Atom atom, Color defaultColor) {
+        Color color = defaultColor;
+        int atomnumber = atom.getAtomicNumber();
         switch (atomnumber) {
-            case 1:    c = this.HYDROGEN; break;
-            case 6:    c = this.CARBON; break;
-            case 7:    c = this.NITROGEN; break;
-            case 8:    c = this.OXYGEN; break;
-            case 15:   c = this.PHOSPHORUS; break;
-            case 16:   c = this.SULPHUR; break;
-            case 17:   c = this.CHLORINE; break;
+            case 1:  color = HYDROGEN; break;
+            case 6:  color = CARBON; break;
+            case 7:  color = NITROGEN; break;
+            case 8:  color = OXYGEN; break;
+            case 15: color = PHOSPHORUS; break;
+            case 16: color = SULPHUR; break;
+            case 17: color = CHLORINE; break;
         }
-        return c;
+        return color;
     }
 }

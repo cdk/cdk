@@ -144,19 +144,19 @@ public class ReactionManipulator {
     }
     
     public static Vector getAllIDs(Reaction reaction) {
-        Vector IDlist = new Vector();
-        if (reaction.getID() != null) IDlist.addElement(reaction.getID());
+        Vector idList = new Vector();
+        if (reaction.getID() != null) idList.addElement(reaction.getID());
         Molecule[] reactants = reaction.getReactants().getMolecules();
         for (int i=0; i<reactants.length; i++) {
             Molecule mol = reactants[i];
-            IDlist.addAll(AtomContainerManipulator.getAllIDs(mol));
+            idList.addAll(AtomContainerManipulator.getAllIDs(mol));
         }
         Molecule[] products = reaction.getProducts().getMolecules();
         for (int i=0; i<products.length; i++) {
             Molecule mol = products[i];
-            IDlist.addAll(AtomContainerManipulator.getAllIDs(mol));
+            idList.addAll(AtomContainerManipulator.getAllIDs(mol));
         }
-        return IDlist;
+        return idList;
     }
 
     /**

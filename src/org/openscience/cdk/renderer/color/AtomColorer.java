@@ -39,11 +39,11 @@ public interface AtomColorer {
     /**
      * Returns the color for a certain atom type.
      */
-    public Color getAtomColor(Atom a);
+    public Color getAtomColor(Atom atom);
 
     /**
      * Returns the color for a certain atom type, and uses the
      * given default color if it fails to identify the atom type.
      */
-    public Color getAtomColor(Atom a, Color defaultColor);
+    public Color getAtomColor(Atom atom, Color defaultColor);
 }

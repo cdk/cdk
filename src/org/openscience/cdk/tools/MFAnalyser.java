@@ -56,6 +56,8 @@ import org.openscience.cdk.config.IsotopeFactory;
  */
 public class MFAnalyser{
 	
+    private static final String H_ELEMENT_SYMBOL = "H";
+
 	private String MF;
 	private AtomContainer atomContainer;
 	private int HCount = 0;
@@ -146,7 +148,7 @@ public class MFAnalyser{
             System.err.println("Could not instantiate the IsotopeFactory: " + exception.getMessage());
         }
         AtomContainer ac = getAtomContainer();
-        Isotope h= si.getMajorIsotope("H");
+        Isotope h= si.getMajorIsotope(H_ELEMENT_SYMBOL);
         for(int f = 0; f < ac.getAtomCount();f++)
         {
             i = si.getMajorIsotope(ac.getAtomAt(f).getSymbol());
@@ -190,7 +192,7 @@ public class MFAnalyser{
                  k++)
             {
                 final Atom atom = atoms[k];
-                if (atom.getSymbol().equals("H"))
+                if (atom.getSymbol().equals(H_ELEMENT_SYMBOL))
                 {
                     (h.contains(atom) ? multi_h : h).add(atom);
                 }
@@ -228,7 +230,7 @@ public class MFAnalyser{
         {
             // Clone/remove this atom?
             Atom atom = ac.getAtomAt(i);
-            if (!atom.getSymbol().equals("H") || preserve.contains(atom))
+            if (!atom.getSymbol().equals(H_ELEMENT_SYMBOL) || preserve.contains(atom))
             {
                 Atom a = (Atom) atom.clone();
                 a.setHydrogenCount(0);
@@ -300,7 +302,7 @@ public class MFAnalyser{
 		ArrayList newAc = new ArrayList();
 		AtomContainer ac = getAtomContainer();
 		for (int f = 0; f < ac.getAtomCount(); f++){
-			if (!ac.getAtomAt(f).getSymbol().equals("H"))
+			if (!ac.getAtomAt(f).getSymbol().equals(H_ELEMENT_SYMBOL))
 			{
 				newAc.add(ac.getAtomAt(f));
 			}
@@ -373,12 +375,12 @@ public class MFAnalyser{
 				symbols.put(symbol,new Integer(1));
 		}
 		mf = addSymbolToFormula(symbols, "C", mf);
-    if(symbols.get("H")!=null){
-      mf = addSymbolToFormula(symbols, "H", mf);
+    if(symbols.get(H_ELEMENT_SYMBOL)!=null){
+      mf = addSymbolToFormula(symbols, H_ELEMENT_SYMBOL, mf);
     }else{
       if (HCount > 0){
-        mf += "H";
-        if (HCount > 1) mf += new Integer(HCount).toString();
+        mf += H_ELEMENT_SYMBOL;
+        if (HCount > 1) mf += Integer.toString(HCount);
       }
 		}
 		mf = addSymbolToFormula(symbols, "N", mf);
@@ -388,7 +390,7 @@ public class MFAnalyser{
 		Iterator it = symbols.keySet().iterator();
 		while (it.hasNext()) {
 			Object key = it.next();
-			if(!((String)key).equals("C")&&!((String)key).equals("H")&&!((String)key).equals("N")&&!((String)key).equals("O")&&!((String)key).equals("S")&&!((String)key).equals("P")){
+			if(!((String)key).equals("C")&&!((String)key).equals(H_ELEMENT_SYMBOL)&&!((String)key).equals("N")&&!((String)key).equals("O")&&!((String)key).equals("S")&&!((String)key).equals("P")){
 				mf=addSymbolToFormula(symbols, (String)key, mf);
 			}
 		}
@@ -421,7 +423,7 @@ public class MFAnalyser{
 	 */
 	public int getAtomCount(String thisElement){
 		int atomCount = 0;
-		if (thisElement.equals("H") &&  HCount > 0) return HCount;
+		if (thisElement.equals(H_ELEMENT_SYMBOL) &&  HCount > 0) return HCount;
 		for (int f = 0; f < atomContainer.getAtomCount(); f++){
 			if (atomContainer.getAtomAt(f).getSymbol().equals(thisElement))
 			{

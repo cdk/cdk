@@ -44,9 +44,9 @@ public class SetOfAtomContainersManipulator {
     public static void removeAtomAndConnectedElectronContainers(SetOfAtomContainers set, Atom atom) {
         AtomContainer[] acs = set.getAtomContainers();
         for (int i=0; i < acs.length; i++) {
-            AtomContainer ac = acs[i];
-            if (ac.contains(atom)) {
-                ac.removeAtomAndConnectedElectronContainers(atom);
+            AtomContainer container = acs[i];
+            if (container.contains(atom)) {
+                container.removeAtomAndConnectedElectronContainers(atom);
                 return;
             }
         }
@@ -55,9 +55,9 @@ public class SetOfAtomContainersManipulator {
     public static void removeElectronContainer(SetOfAtomContainers set, ElectronContainer electrons) {
         AtomContainer[] acs = set.getAtomContainers();
         for (int i=0; i < acs.length; i++) {
-            AtomContainer ac = acs[i];
-            if (ac.contains(electrons)) {
-                ac.removeElectronContainer(electrons);
+            AtomContainer container = acs[i];
+            if (container.contains(electrons)) {
+                container.removeElectronContainer(electrons);
                 return;
             }
         }
@@ -73,8 +73,7 @@ public class SetOfAtomContainersManipulator {
         AtomContainer container = new AtomContainer();
         AtomContainer[] acs = set.getAtomContainers();
         for (int i=0; i < acs.length; i++) {
-            AtomContainer ac = acs[i];
-            container.add(ac);
+            container.add(acs[i]);
         }
         return container;
     }
@@ -118,22 +117,20 @@ public class SetOfAtomContainersManipulator {
 	public static int getTotalHydrogenCount(SetOfAtomContainers set) {
 		int hCount = 0;
 		for (int i = 0; i < set.getAtomContainerCount(); i++) {
-			AtomContainer ac = set.getAtomContainer(i);
-			hCount += AtomContainerManipulator.getTotalHydrogenCount(ac);
+			hCount += AtomContainerManipulator.getTotalHydrogenCount(set.getAtomContainer(i));
 		}
 		return hCount;
 	}
 	
     public static Vector getAllIDs(SetOfAtomContainers set) {
-        Vector IDlist = new Vector();
+        Vector idList = new Vector();
         if (set != null) {
-            if (set.getID() != null) IDlist.addElement(set.getID());
+            if (set.getID() != null) idList.addElement(set.getID());
             for (int i = 0; i < set.getAtomContainerCount(); i++) {
-                AtomContainer ac = set.getAtomContainer(i);
-                IDlist.add(AtomContainerManipulator.getAllIDs(ac));
+                idList.add(AtomContainerManipulator.getAllIDs(set.getAtomContainer(i)));
             }
         }
-        return IDlist;
+        return idList;
     }
 }
 

@@ -200,14 +200,14 @@ public class CrystalGeometryTools {
 
         /* 3. now the c axis, with more complex maths */
         axes[2] = new Vector3d();
-        double V = alength * blength * clength *
-                   Math.sqrt(1.0 - cosalpha*cosalpha -
-                             cosbeta*cosbeta -
-                             cosgamma*cosgamma +
-                             2.0*cosalpha*cosbeta*cosgamma);
+        double volume = alength * blength * clength *
+                        Math.sqrt(1.0 - cosalpha*cosalpha -
+                                  cosbeta*cosbeta -
+                                  cosgamma*cosgamma +
+                                  2.0*cosalpha*cosbeta*cosgamma);
         axes[2].x = clength*cosbeta;
         axes[2].y = clength*(cosalpha-cosbeta*cosgamma)/singamma;
-        axes[2].z = V/(alength*blength*singamma);
+        axes[2].z = volume/(alength*blength*singamma);
         
         return axes;
     }

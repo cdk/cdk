@@ -42,6 +42,6 @@ public interface CDKChangeListener extends EventListener
 	 *
 	 * @param   e  The EventObject
 	 */
-    void stateChanged(EventObject e);
+    void stateChanged(EventObject event);
 }
 

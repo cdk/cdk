@@ -81,7 +81,6 @@ public class AtomContainerManipulator {
                 }
             }
         }
-
     }
 
 
@@ -119,21 +118,21 @@ public class AtomContainerManipulator {
     }
 
     public static Vector getAllIDs(AtomContainer mol) {
-        Vector IDlist = new Vector();
+        Vector idList = new Vector();
         if (mol != null) {
-            if (mol.getID() != null) IDlist.addElement(mol.getID());
+            if (mol.getID() != null) idList.addElement(mol.getID());
             Atom[] atoms = mol.getAtoms();
             for (int i=0; i<atoms.length; i++) {
                 Atom atom = atoms[i];
-                if (atom.getID() != null) IDlist.addElement(atom.getID());
+                if (atom.getID() != null) idList.addElement(atom.getID());
             }
             Bond[] bonds = mol.getBonds();
             for (int i=0; i<bonds.length; i++) {
                 Bond bond = bonds[i];
-                if (bond.getID() != null) IDlist.addElement(bond.getID());
+                if (bond.getID() != null) idList.addElement(bond.getID());
             }
         }
-        return IDlist;
+        return idList;
     }
 
 
@@ -145,26 +144,26 @@ public class AtomContainerManipulator {
      * @return The mol without Hs.
      * @cdk.keyword hydrogen, removal
      */
-    public static AtomContainer removeHydrogens(AtomContainer ac)
+    public static AtomContainer removeHydrogens(AtomContainer atomContainer)
     {
         Map map = new HashMap();        // maps original atoms to clones.
         List remove = new ArrayList();  // lists removed Hs.
 
         // Clone atoms except those to be removed.
         Molecule mol = new Molecule();
-        int count = ac.getAtomCount();
+        int count = atomContainer.getAtomCount();
         for (int i = 0;
                 i < count;
                 i++)
         {
             // Clone/remove this atom?
-            Atom atom = ac.getAtomAt(i);
+            Atom atom = atomContainer.getAtomAt(i);
             if (!atom.getSymbol().equals("H"))
             {
-                Atom a = (Atom) atom.clone();
-                a.setHydrogenCount(0);
-                mol.addAtom(a);
-                map.put(atom, a);
+                Atom clonedAtom = (Atom) atom.clone();
+                clonedAtom.setHydrogenCount(0);
+                mol.addAtom(clonedAtom);
+                map.put(atom, clonedAtom);
             }
             else
             {
@@ -173,13 +172,13 @@ public class AtomContainerManipulator {
         }
 
         // Clone bonds except those involving removed atoms.
-        count = ac.getBondCount();
+        count = atomContainer.getBondCount();
         for (int i = 0;
                 i < count;
                 i++)
         {
             // Check bond.
-            final Bond bond = ac.getBondAt(i);
+            final Bond bond = atomContainer.getBondAt(i);
             Atom[] atoms = bond.getAtoms();
             boolean remove_bond = false;
             final int length = atoms.length;
@@ -198,7 +197,7 @@ public class AtomContainerManipulator {
             if (!remove_bond)
                 // if (!remove.contains(atoms[0]) && !remove.contains(atoms[1]))
             {
-                Bond clone = (Bond) ac.getBondAt(i).clone();
+                Bond clone = (Bond) atomContainer.getBondAt(i).clone();
                 clone.setAtoms(new Atom[]{(Atom) map.get(atoms[0]), (Atom) map.get(atoms[1])});
                 mol.addBond(clone);
             }
@@ -209,7 +208,7 @@ public class AtomContainerManipulator {
                 i.hasNext();)
         {
             // Process neighbours.
-            for (Iterator n = ac.getConnectedAtomsVector((Atom) i.next()).iterator();
+            for (Iterator n = atomContainer.getConnectedAtomsVector((Atom) i.next()).iterator();
                     n.hasNext();)
             {
                 final Atom neighb = (Atom) map.get(n.next());

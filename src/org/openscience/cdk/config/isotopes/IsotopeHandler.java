@@ -145,8 +145,8 @@ public class IsotopeHandler extends DefaultHandler {
         }
     }
 
-    public void characters(char ch[], int start, int length) {
-        currentChars += new String(ch, start, length);
+    public void characters(char chars[], int start, int length) {
+        currentChars += new String(chars, start, length);
     }
 
 }

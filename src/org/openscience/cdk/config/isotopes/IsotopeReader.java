@@ -105,19 +105,22 @@ public class IsotopeReader {
         try {
             parser.setFeature("http://xml.org/sax/features/validation", false);
             logger.info("Deactivated validation");
-        } catch (SAXException e) {
-            logger.warn("Cannot deactivate validation.");
+        } catch (SAXException exception) {
+            logger.warn("Cannot deactivate validation: ", exception.getMessage());
+            logger.debug(exception);
         }
         IsotopeHandler handler = new IsotopeHandler();
         parser.setContentHandler(handler);
         try {
             parser.parse(new InputSource(input));
             isotopes = handler.getIsotopes();
-        } catch (IOException e) {
-            logger.error("IOException: " + e.toString());
+        } catch (IOException exception) {
+            logger.error("IOException: ", exception.getMessage());
+            logger.debug(exception);
         } catch (SAXException saxe) {
-            logger.error("SAXException: " + saxe.getClass().getName());
-            logger.error(saxe.toString());
+            logger.error("SAXException: ", saxe.getClass().getName());
+            logger.error(saxe.getMessage());
+            logger.debug(saxe);
         }
         return isotopes;
     }
