@@ -32,6 +32,11 @@ package org.openscience.cdk;
 
 /**
  * Used to store and retrieve data of a particular isotope.
+ * For example, an carbon 13 isotope can be created with:
+ * <pre>
+ *   Isotope carbon = new Isotope("C");
+ *   carbon.setAtomicMass(13);
+ * </pre>
  *
  * @author     steinbeck
  * @created    August 21, 2001
