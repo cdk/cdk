@@ -5,6 +5,7 @@ Changes in CVS
 ------------------------------------
 New:
 * IUPAC Name parser added, thanks to University of Manchester (Req. ANT >= 1.6alpha)
+* Added a method AtomContainer.removeAllBonds()
 
 Fixes:
 * Removed use of JSX

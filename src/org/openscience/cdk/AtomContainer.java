@@ -1160,7 +1160,15 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 		electronContainerCount = 0;
 	}
 
-
+    /**
+     *  Removes all Bonds from this container.
+     */
+    public void removeAllBonds() {
+        Bond[] bonds = getBonds();
+        for (int i=0; i<bonds.length; i++) {
+            removeElectronContainer(bonds[i]);
+        }
+    }
 
 	/**
 	 *  Adds a bond to this container.
