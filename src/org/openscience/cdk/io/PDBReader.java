@@ -1,10 +1,9 @@
-/* PDBReader.java
- * 
- * $ author: 	Edgar Luttmann 			$ 
- * $ contact: 	edgar@uni-paderborn.de 	$
- * $ date: 		2001-08-06 				$
- * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+/* $RCSfile$
+ * $Author$
+ * $Date$
+ * $Revision$
+ *
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  * 
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  * 
@@ -81,15 +80,15 @@ public class PDBReader implements ChemObjectReader {
 	 * an Exception.
 	 *
 	 * @param oObj  The object that subclasses ChemObject
-	 * @return   	The ChemObject read  
-	 * @exception   UnsupportedChemObjectException  
+	 * @return      The ChemObject read  
+	 * @exception   CDKException  
 	 *
 	 */
-   public ChemObject read(ChemObject oObj) throws UnsupportedChemObjectException {
+   public ChemObject read(ChemObject oObj) throws CDKException {
 		if (oObj instanceof ChemFile) {
 			return (ChemObject)readChemFile();
 		} else {
-			throw new UnsupportedChemObjectException("Only supported are ChemFile.");
+			throw new CDKException("Only supported is reading of ChemFile objects.");
 		}
 	}
 

@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2002-2003  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sf.net
  *
@@ -38,9 +38,11 @@ import java.io.*;
 /**
  * Reads the content of a IUPAC Chemical Identifier (IChI) document. See
  * <a href="http://www.nist.gov/public_affairs/update/upd20020610.htm#International">this
- * press release</a>.
+ * press release</a>. Recently a new IChI format was introduced an files generated
+ * with the latest IChI generator cannot be parsed with this class. This class
+ * needs to be updated.
  *
- * The elements that are read are given in the IChIHandler class.
+ * <P>The elements that are read are given in the IChIHandler class.
  *
  * <p>Reference: <a href="http://cdk.sf.net/biblio.html#HEL01">HEL01</a>.
  *
@@ -89,12 +91,11 @@ public class IChIReader implements ChemObjectReader {
      * @param  object type of requested ChemObject
      * @return the content in a ChemFile object
      */
-    public ChemObject read(ChemObject object) throws UnsupportedChemObjectException {
+    public ChemObject read(ChemObject object) throws CDKException {
       if (object instanceof ChemFile) {
         return (ChemObject)readChemFile();
       } else {
-        throw new UnsupportedChemObjectException(
-          "Only supported is ChemFile.");
+        throw new CDKException("Only supported is reading of ChemFile objects.");
       }
     }
 

@@ -117,12 +117,11 @@ public class CMLReader implements ChemObjectReader {
      *
      * @return the content in a ChemFile object
      */
-    public ChemObject read(ChemObject object) throws UnsupportedChemObjectException {
+    public ChemObject read(ChemObject object) throws CDKException {
       if (object instanceof ChemFile) {
         return (ChemObject)readChemFile();
       } else {
-        throw new UnsupportedChemObjectException(
-          "Only supported is ChemFile.");
+        throw new CDKException("Only supported is reading of ChemFile objects.");
       }
     }
 

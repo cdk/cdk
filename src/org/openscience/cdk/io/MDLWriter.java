@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  * 
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  * 
@@ -94,7 +94,7 @@ public class MDLWriter implements ChemObjectWriter {
      *
      * @see ChemFile
      */
-	public void write(ChemObject object) throws UnsupportedChemObjectException
+	public void write(ChemObject object) throws CDKException
 	{
 		if (object instanceof SetOfMolecules)
 		{
@@ -111,7 +111,7 @@ public class MDLWriter implements ChemObjectWriter {
 		}
 		else
 		{
-		    throw new UnsupportedChemObjectException("Only supported are ChemFile and Molecule.");
+		    throw new CDKException("Only supported is writing of ChemFile and Molecule objects.");
 		}
 	}
 	

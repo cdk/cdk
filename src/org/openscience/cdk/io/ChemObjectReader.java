@@ -55,7 +55,7 @@ public interface ChemObjectReader {
      * @return returns an object of that contains the content (or 
      *         part) of the input content
      *
-     * @exception UnsupportedChemObjectException it is thrown if
+     * @exception CDKException it is thrown if
      *            the type of information is not available from 
      *            the input
      **/

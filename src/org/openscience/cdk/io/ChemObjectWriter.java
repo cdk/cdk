@@ -52,7 +52,7 @@ public interface ChemObjectWriter {
      *
      * @param  object    the object of which the content is outputed
      *
-     * @exception UnsupportedChemObjectException is thrown if the output
+     * @exception CDKException is thrown if the output
      *            does not support the data in the object
      */
     public void write(ChemObject object) throws CDKException;

@@ -116,7 +116,7 @@ public class CMLWriter implements ChemObjectWriter {
      *
      * @param object A Molecule of SetOfMolecules object
      */
-    public void write(ChemObject object) throws UnsupportedChemObjectException {
+    public void write(ChemObject object) throws CDKException {
         logger.debug("Writing object in CML of type: " + object.getClass().getName());
         if (!done) {
             if (!fragment) {
@@ -136,7 +136,7 @@ public class CMLWriter implements ChemObjectWriter {
                 write((ChemModel)object);
             } else {
                 logger.error("This object type is not supported.");
-                throw new UnsupportedChemObjectException("This object type is not supported.");
+                throw new CDKException("This object type is not supported.");
             }    
             if (!fragment) {           
                 done = true;

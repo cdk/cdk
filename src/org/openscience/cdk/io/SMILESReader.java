@@ -64,11 +64,11 @@ public class SMILESReader implements ChemObjectReader {
      *
      * @see ChemFile
      */
-    public ChemObject read(ChemObject object) throws UnsupportedChemObjectException {
+    public ChemObject read(ChemObject object) throws CDKException {
         if (object instanceof SetOfMolecules) {
             return (ChemObject)readSetOfMolecules();
         } else {
-            throw new UnsupportedChemObjectException("Only supported is SetOfMolecules.");
+            throw new CDKException("Only supported is reading of SetOfMolecules objects.");
         }
     }
 

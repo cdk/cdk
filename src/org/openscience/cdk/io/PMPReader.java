@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2002-2003  The Chemistry Development Kit (CDK) project
  * 
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  * 
@@ -87,11 +87,11 @@ public class PMPReader implements ChemObjectReader {
      *
      * @see ChemFile
      */
-    public ChemObject read(ChemObject object) throws UnsupportedChemObjectException {
+    public ChemObject read(ChemObject object) throws CDKException {
         if (object instanceof ChemFile) {
             return (ChemObject)readChemFile();
         } else {
-            throw new UnsupportedChemObjectException("Only supported is ChemFile.");
+            throw new Exception("Only supported is reading of ChemFile objects.");
         }
     }
 
