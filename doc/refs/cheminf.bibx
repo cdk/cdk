@@ -420,7 +420,7 @@
       <bibtex:volume>43</bibtex:volume>
       <bibtex:number>3</bibtex:number>
       <bibtex:pages>757-772</bibtex:pages>
-      <bibtex:doi>http://dx.doi.org/10.1021/ci0256541</bibtex:doi>
+      <bibtex:doi>10.1021/ci0256541</bibtex:doi>
     </bibtex:article>
   </bibtex:entry>
 
@@ -433,7 +433,7 @@
       <bibtex:volume>44</bibtex:volume>
       <bibtex:number>2</bibtex:number>
       <bibtex:pages>462-469</bibtex:pages>
-      <bibtex:doi>http://dx.doi.org/10.1021/ci034244p</bibtex:doi>
+      <bibtex:doi>10.1021/ci034244p</bibtex:doi>
     </bibtex:article>
   </bibtex:entry>
 
@@ -471,7 +471,7 @@
           heterogeneous network of almost any number and type of computers, thus allowing
           for parallel CASE computations on ordinary networks, present in almost any
           institution.[References: 23]</bibtex:abstract>
-      <bibtex:doi>http://dx.doi.org/10.1021/ci000407n</bibtex:doi>
+      <bibtex:doi>10.1021/ci000407n</bibtex:doi>
       <bibtex:keywords>Chemical-structure,Natural-products,Spectroscopy,Molecules,Search.,
           Chemistry in Current Contents(R)/Physical, Chemical and Earth,Sciences.</bibtex:keywords>
     </bibtex:article>
@@ -485,7 +485,7 @@
       <bibtex:year>2002</bibtex:year>
       <bibtex:volume>43</bibtex:volume>
       <bibtex:number>6</bibtex:number>
-      <bibtex:doi>http://dx.doi.org/10.1021/ci0341363</bibtex:doi>
+      <bibtex:doi>10.1021/ci0341363</bibtex:doi>
     </bibtex:article>
   </bibtex:entry>
 
@@ -497,7 +497,8 @@
       <bibtex:year>2003</bibtex:year>
       <bibtex:volume>43</bibtex:volume>
       <bibtex:pages>493-500</bibtex:pages>
-      <bibtex:doi>http://dx.doi.org/10.1021/ci025584y</bibtex:doi>
+      <bibtex:doi>10.1021/ci025584y</bibtex:doi>
+      <bibtex:url>http://www.cdk.org/</bibtex:url>
     </bibtex:article>
   </bibtex:entry>
 
