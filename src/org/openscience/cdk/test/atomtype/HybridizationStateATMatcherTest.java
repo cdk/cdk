@@ -30,13 +30,14 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
-
+import org.openscience.cdk.AtomType;
 import org.openscience.cdk.atomtype.*;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.HydrogenAdder;
+import org.openscience.cdk.tools.manipulator.*;
 
 /**
  * Checks the functionality of the AtomType-HybridizationStateATMatcher.
@@ -71,7 +72,10 @@ public class HybridizationStateATMatcherTest extends CDKTestCase {
 	Atom atom = mol.getAtomAt(0);
 	
 	HybridizationStateATMatcher atm = new HybridizationStateATMatcher();
-	atm.findMatchingAtomType(mol, atom);
+	AtomType matched = atm.findMatchingAtomType(mol, atom);
+	
+	AtomTypeManipulator atman = new AtomTypeManipulator();
+	atman.configure(atom, matched);
 	
 	int hybridization = atom.getHybridization();
 	int thisHybridization = CDKConstants.HYBRIDIZATION_SP1;
