@@ -90,7 +90,7 @@ public class OrbitalsRenderer3DTest {
 			}
 			orbitals.setCountElectrons(count_electrons);
 			System.out.println("Running Gaussian calculation ...");
-			Job job = new Job(orbitals);
+			ClosedShellJob job = new ClosedShellJob(orbitals);
 			
 			orbitals = job.calculate();
 			System.out.println("Gaussian calculation finished");

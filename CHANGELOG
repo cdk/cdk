@@ -5,6 +5,9 @@ changes since "cdk preview 20010807"
 ------------------------------------
 * Added TestCases for PDBReader, Monomer, Polymer and ChemObject.
 * Added get/setProperty and get/setRemark to ChemObject.
+* Added classes for rendering graphes
+* Added classes for complex numbers, vectors and matrices
+* Change name from Job to ClosedShellJob
 
 changes since "cdk preview 20010511"
 ------------------------------------
