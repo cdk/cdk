@@ -273,7 +273,12 @@ public class Crystal extends AtomContainer implements java.io.Serializable, Clon
                     syma.setPoint3D(newPoint);
                     result.addAtom(syma);
                 } else {
-                    System.err.println("WARN: Did not copy 3D coordinates!");
+                    Atom syma = (Atom)a.clone();
+                    result.addAtom(syma);
+                    syma = (Atom)a.clone();
+                    result.addAtom(syma);
+                    syma = (Atom)a.clone();
+                    result.addAtom(syma);
                 }
             }
         } else {
