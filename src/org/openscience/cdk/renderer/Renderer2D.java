@@ -68,7 +68,6 @@ public class Renderer2D implements MouseMotionListener   {
 
 	private Renderer2DModel r2dm;
 
-    private int graphicsWidth;
     private int graphicsHeight;
 
 	/**
@@ -98,8 +97,6 @@ public class Renderer2D implements MouseMotionListener   {
 	}
 
     public void paintChemModel(ChemModel model, Graphics graphics) {
-        graphicsHeight = (int)r2dm.getBackgroundDimension().getHeight();
-        graphicsWidth  = (int)r2dm.getBackgroundDimension().getWidth();
         if (model.getSetOfReactions() != null) {
             paintSetOfReactions(model.getSetOfReactions(), graphics);
         }
@@ -1117,6 +1114,7 @@ public class Renderer2D implements MouseMotionListener   {
 	}
 
     private Point getScreenCoordinates(Point p) {
+        graphicsHeight = (int)r2dm.getBackgroundDimension().getHeight();
         Point screenCoordinate = new Point();
         double zoomFactor = r2dm.getZoomFactor();
         screenCoordinate.x = (int)((double)p.x * zoomFactor);
@@ -1129,6 +1127,7 @@ public class Renderer2D implements MouseMotionListener   {
      * and y's at the even indices.
      */
     private int[] getScreenCoordinates(int[] coords) {
+        graphicsHeight = (int)r2dm.getBackgroundDimension().getHeight();
         int[] screenCoordinates = new int[coords.length];
         double zoomFactor = r2dm.getZoomFactor();
         final int coordCount = coords.length / 2;
