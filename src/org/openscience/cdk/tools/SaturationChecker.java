@@ -569,10 +569,23 @@ public class SaturationChecker implements ValencyCheckerInterface {
 	 * @see              AtomTypeFactory
 	 */
 	public int calculateMissingHydrogen(Atom atom, AtomContainer container) throws CDKException {
-        return calculateMissingHydrogen(atom, container, false);
+        return this.calculateMissingHydrogen(atom, container, false);
     }
-  
-	/**
+    
+	public int calculateMissingHydrogen(Atom atom) throws CDKException {
+        Bond[] bonds = new Bond[0];
+        return this.calculateMissingHydrogen(atom, 0, bonds, false);
+    }
+
+	public int calculateMissingHydrogen(Atom atom, AtomContainer container, boolean throwExceptionForUnknowAtom) throws CDKException {
+        return this.calculateMissingHydrogen(atom, 
+            container.getBondOrderSum(atom),
+            container.getConnectedBonds(atom),
+            throwExceptionForUnknowAtom
+        );
+    }
+    
+    /**
 	 * Calculate the number of missing hydrogens by substracting the number of
 	 * bonds for the atom from the expected number of bonds. Charges are included
 	 * in the calculation. The number of expected bonds is defined by the AtomType
@@ -584,13 +597,14 @@ public class SaturationChecker implements ValencyCheckerInterface {
 	 * @return           Description of the Return Value
 	 * @see              AtomTypeFactory
 	 */
-	public int calculateMissingHydrogen(Atom atom, AtomContainer container, boolean throwExceptionForUnknowAtom) throws CDKException {
+	public int calculateMissingHydrogen(Atom atom, double bondOrderSum, Bond[] connectedBonds, boolean throwExceptionForUnknowAtom) 
+        throws CDKException {
+
         int missingHydrogen = 0;
         if (atom instanceof PseudoAtom) {
             // don't figure it out... it simply does not lack H's
         } else if (atom.getAtomicNumber() == 1 || atom.getSymbol().equals("H")) {
-            missingHydrogen = (int) (1 - container.getBondOrderSum(atom) -
-                    atom.getFormalCharge());
+            missingHydrogen = (int) (1 - bondOrderSum - atom.getFormalCharge());
         } else {
             logger.info("Calculating number of missing hydrogen atoms");
             // get default atom
@@ -602,10 +616,8 @@ public class SaturationChecker implements ValencyCheckerInterface {
                 AtomType defaultAtom = atomTypes[0];
                 logger.debug("DefAtom: ", defaultAtom);
                 missingHydrogen = (int) (defaultAtom.getBondOrderSum() -
-                    container.getBondOrderSum(atom) +
-                    atom.getFormalCharge());
+                    bondOrderSum + atom.getFormalCharge());
                 if (atom.getFlag(CDKConstants.ISAROMATIC)){
-                    Bond[] connectedBonds=container.getConnectedBonds(atom);
                     boolean subtractOne=true;
                     for(int i=0;i<connectedBonds.length;i++){
                         if(connectedBonds[i].getOrder()==2 || connectedBonds[i].getOrder()==CDKConstants.BONDORDER_AROMATIC)
@@ -616,7 +628,7 @@ public class SaturationChecker implements ValencyCheckerInterface {
                 }
                 logger.debug("Atom: ", atom.getSymbol());
                 logger.debug("  max bond order: " + defaultAtom.getBondOrderSum());
-                logger.debug("  bond order sum: " + container.getBondOrderSum(atom));
+                logger.debug("  bond order sum: " + bondOrderSum);
                 logger.debug("  charge        : " + atom.getFormalCharge());
             } else {
                 logger.warn("Could not find atom type for ", atom.getSymbol());
