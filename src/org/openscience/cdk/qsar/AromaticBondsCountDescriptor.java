@@ -26,35 +26,38 @@ package org.openscience.cdk.qsar;
 
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.RingSet;
+import org.openscience.cdk.ringsearch.AllRingsFinder;
+import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import java.util.Map;
 import java.util.Hashtable;
 
 /**
- *  Descriptor based on the number of bonds of a certain element type.
+ *  This Class contains a method that returns the number of aromatic atoms in an atom container
  *
  *@author     mfe4
- *@cdk.created    2004-11-13
+ *@cdk.created    2004-11-03
  */
-public class BondCountDescriptor implements Descriptor {
-
-	private double order = -1.0;
+public class AromaticBondsCountDescriptor implements Descriptor {
+	private boolean checkAromaticity = false;
 
 
 	/**
-	 *  Constructor for the BondCountDescriptor object
+	 *  Constructor for the AromaticBondsCountDescriptor object
 	 */
-	public BondCountDescriptor() { }
+	public AromaticBondsCountDescriptor() { }
 
 
 	/**
-	 *  Gets the specification attribute of the BondCountDescriptor object
+	 *  Gets the specification attribute of the AromaticBondsCountDescriptor object
 	 *
 	 *@return    The specification value
 	 */
 	public Map getSpecification() {
 		Hashtable specs = new Hashtable();
-		specs.put("Specification-Reference", "http://qsar.sourceforge.net/dicts/qsar-descriptors:bondCount");
+		specs.put("Specification-Reference", "http://qsar.sourceforge.net/dicts/qsar-descriptors:aromaticBondsCount");
 		specs.put("Implementation-Title", this.getClass().getName());
 		specs.put("Implementation-Identifier", "$Id$");
 		// added by CVS
@@ -64,75 +67,83 @@ public class BondCountDescriptor implements Descriptor {
 
 
 	/**
-	 *  Sets the parameters attribute of the BondCountDescriptor object
+	 *  Sets the parameters attribute of the AromaticBondsCountDescriptor object
 	 *
-	 *@param  params            The new parameters value
-	 *@exception  CDKException  Description of the Exception
+	 *@param  params            Parameter is only one: a boolean.
+	 *@exception  CDKException  Possible Exceptions
 	 */
 	public void setParameters(Object[] params) throws CDKException {
 		if (params.length > 1) {
-			throw new CDKException("BondCount only expects one parameter");
+			throw new CDKException("AromaticBondsCountDescriptor only expects one parameter");
 		}
-		if (!(params[0] instanceof Double)) {
-			throw new CDKException("The parameter must be of type Double");
+		if (!(params[0] instanceof Boolean)) {
+			throw new CDKException("The first parameter must be of type Boolean");
 		}
 		// ok, all should be fine
-		order = ((Double) params[0]).doubleValue();
+		checkAromaticity = ((Boolean) params[0]).booleanValue();
 	}
 
 
 	/**
-	 *  Gets the parameters attribute of the BondCountDescriptor object
+	 *  Gets the parameters attribute of the AromaticBondsCountDescriptor object
 	 *
 	 *@return    The parameters value
 	 */
 	public Object[] getParameters() {
 		// return the parameters as used for the descriptor calculation
 		Object[] params = new Object[1];
-		params[0] = new Double(order);
+		params[0] = new Boolean(checkAromaticity);
 		return params;
 	}
 
 
 	/**
-	 *  This method calculate the number of bonds of a given type in an atomContainer
+	 *  the method take a boolean checkAromaticity: if the boolean is true, it means that
+	 *  aromaticity has to be checked.
 	 *
-	 *@param  container  AtomContainer
-	 *@return            The number of bonds of a certain type.
+	 *@param  ac                atom container
+	 *@return                   number of aromatic bonds in the atom container
+	 *@exception  CDKException  Possible Exceptions
 	 */
-	public Object calculate(AtomContainer container) {
-		int bondCount = 0;
-		Bond[] bonds = container.getBonds();
+	public Object calculate(AtomContainer ac) throws CDKException {
+		int aromaticBondsCount = 0;
+		if (checkAromaticity) {
+			RingSet rs = (new AllRingsFinder()).findAllRings(ac);
+			HueckelAromaticityDetector.detectAromaticity(ac, rs, true);
+		}
+		Bond[] bonds = ac.getBonds();
 		for (int i = 0; i < bonds.length; i++) {
-			if (container.getBondAt(i).getOrder() == order) {
-				bondCount += 1;
+			if (ac.getBondAt(i).getFlag(CDKConstants.ISAROMATIC)) {
+				aromaticBondsCount += 1;
 			}
 		}
-		return new Integer(bondCount);
+		return new Integer(aromaticBondsCount);
 	}
 
 
 	/**
-	 *  Gets the parameterNames attribute of the BondCountDescriptor object
+	 *  Gets the parameterNames attribute of the AromaticBondsCountDescriptor
+	 *  object
 	 *
 	 *@return    The parameterNames value
 	 */
 	public String[] getParameterNames() {
 		String[] params = new String[1];
-		params[0] = "Bond Order";
+		params[0] = "True is the aromaticity has to be checked";
 		return params;
 	}
 
 
+
 	/**
-	 *  Gets the parameterType attribute of the BondCountDescriptor object
+	 *  Gets the parameterType attribute of the AromaticBondsCountDescriptor object
 	 *
 	 *@param  name  Description of the Parameter
 	 *@return       The parameterType value
 	 */
 	public Object getParameterType(String name) {
 		Object[] paramTypes = new Object[1];
-		paramTypes[0] = new Double(0.0);
+		paramTypes[0] = new Boolean(true);
 		return paramTypes;
 	}
 }

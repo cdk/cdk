@@ -24,6 +24,7 @@
  */
 package org.openscience.cdk.qsar;
 
+import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
@@ -33,31 +34,31 @@ import java.util.Map;
 import java.util.Hashtable;
 
 /**
- *  Sigma electronegativity is given by X = a + bq + c(q*q)
+ *  The calculation of partial charges of an heavy atom and its protons is based on Gasteiger Marsili (PEOE)
  *
- *@author     mfe4
+ *@author         mfe4
  *@cdk.created    2004-11-03
  */
-public class SigmaElectronegativityDescriptor implements Descriptor {
+public class ProtonTotalPartialChargeDescriptor implements Descriptor {
 
 	private int atomPosition = 0;
 
 
 	/**
-	 *  Constructor for the SigmaElectronegativityDescriptor object
+	 *  Constructor for the ProtonTotalPartialChargeDescriptor object
 	 */
-	public SigmaElectronegativityDescriptor() { }
+	public ProtonTotalPartialChargeDescriptor() { }
 
 
 	/**
-	 *  Gets the specification attribute of the SigmaElectronegativityDescriptor
+	 *  Gets the specification attribute of the ProtonTotalPartialChargeDescriptor
 	 *  object
 	 *
 	 *@return    The specification value
 	 */
 	public Map getSpecification() {
 		Hashtable specs = new Hashtable();
-		specs.put("Specification-Reference", "http://qsar.sourceforge.net/dicts/qsar-descriptors:sigmaElectronegativity");
+		specs.put("Specification-Reference", "http://qsar.sourceforge.net/dicts/qsar-descriptors:protonPartialCharge");
 		specs.put("Implementation-Title", this.getClass().getName());
 		specs.put("Implementation-Identifier", "$Id$");
 		// added by CVS
@@ -67,15 +68,15 @@ public class SigmaElectronegativityDescriptor implements Descriptor {
 
 
 	/**
-	 *  Sets the parameters attribute of the SigmaElectronegativityDescriptor
+	 *  Sets the parameters attribute of the ProtonTotalPartialChargeDescriptor
 	 *  object
 	 *
-	 *@param  params            Atom position
+	 *@param  params            The new parameters value
 	 *@exception  CDKException  Description of the Exception
 	 */
 	public void setParameters(Object[] params) throws CDKException {
 		if (params.length > 1) {
-			throw new CDKException("SigmaElectronegativityDescriptor only expects one parameter");
+			throw new CDKException("ProtonTotalPartialChargeDescriptor only expects one parameter");
 		}
 		if (!(params[0] instanceof Integer)) {
 			throw new CDKException("The parameter must be of type Integer");
@@ -85,7 +86,7 @@ public class SigmaElectronegativityDescriptor implements Descriptor {
 
 
 	/**
-	 *  Gets the parameters attribute of the SigmaElectronegativityDescriptor
+	 *  Gets the parameters attribute of the ProtonTotalPartialChargeDescriptor
 	 *  object
 	 *
 	 *@return    The parameters value
@@ -99,47 +100,52 @@ public class SigmaElectronegativityDescriptor implements Descriptor {
 
 
 	/**
-	 *  it calculates the sigma electronegativity of a given atom
+	 *  The method returns partial charges assigned to an heavy atom and its protons through Gasteiger Marsili
 	 *
 	 *@param  ac                AtomContainer
-	 *@return                   return the sigma electronegativity
+	 *@return                   an array of doubles with partial charges of [heavy, proton_1 ... proton_n]
 	 *@exception  CDKException  Possible Exceptions
 	 */
 	public Object calculate(AtomContainer ac) throws CDKException {
-		double sigmaElectronegativity = 0;
+		int counter = 1;
 		Molecule mol = new Molecule(ac);
-		GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
-		HydrogenAdder hAdder = new HydrogenAdder();
 		try {
+			GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
+			HydrogenAdder hAdder = new HydrogenAdder();
 			hAdder.addExplicitHydrogensToSatisfyValency(mol);
-			System.out.println("AtomNr:" + mol.getAtomAt(atomPosition).getSymbol());
 			peoe.assignGasteigerMarsiliPartialCharges(mol, true);
-			double[] gasteigerFactors = peoe.assignGasteigerMarsiliFactors(mol);
-			int stepSize = peoe.getStepSize();
-			int start = (stepSize * (atomPosition) + atomPosition);
-			sigmaElectronegativity = ((gasteigerFactors[start]) + (mol.getAtomAt(atomPosition).getCharge() * gasteigerFactors[start + 1]) + (gasteigerFactors[start + 2] * ((mol.getAtomAt(atomPosition).getCharge() * mol.getAtomAt(atomPosition).getCharge()))));
-			return new Double(sigmaElectronegativity);
 		} catch (Exception ex1) {
 			throw new CDKException("Problems with HydrogenAdder due to " + ex1.toString());
 		}
+		Atom target = mol.getAtomAt(atomPosition);
+		Atom[] neighboors = mol.getConnectedAtoms(target);
+		double[] protonPartialCharge = new double[neighboors.length + 1];
+		protonPartialCharge[0] = target.getCharge();
+		for (int i = 0; i < neighboors.length; i++) {
+			if (neighboors[i].getSymbol().equals("H")) {
+				protonPartialCharge[counter] = neighboors[i].getCharge();
+				counter++;
+			}
+		}
+		return protonPartialCharge;
 	}
 
 
 	/**
-	 *  Gets the parameterNames attribute of the SigmaElectronegativityDescriptor
+	 *  Gets the parameterNames attribute of the ProtonTotalPartialChargeDescriptor
 	 *  object
 	 *
 	 *@return    The parameterNames value
 	 */
 	public String[] getParameterNames() {
 		String[] params = new String[1];
-		params[0] = "The position of the atom whose calculate sigma electronegativity";
+		params[0] = "The position of the atom whose protons calculate total partial charge";
 		return params;
 	}
 
 
 	/**
-	 *  Gets the parameterType attribute of the SigmaElectronegativityDescriptor
+	 *  Gets the parameterType attribute of the ProtonTotalPartialChargeDescriptor
 	 *  object
 	 *
 	 *@param  name  Description of the Parameter

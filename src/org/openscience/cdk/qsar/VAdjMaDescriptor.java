@@ -24,48 +24,75 @@
  */
 package org.openscience.cdk.qsar;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomType;
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.tools.*;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.exception.NoSuchAtomException;
 import java.lang.Math;
 import java.util.Map;
 import java.util.Hashtable;
 
-
+/**
+ *   Vertex adjacency information (magnitude): 
+ *   1 + log2 m where m is the number of heavy-heavy bonds. If m is zero, then zero is returned.
+ *   (definition from MOE tutorial on line) 
+ *
+ *@author     mfe4
+ *@cdk.created    2004-11-03
+ */
 public class VAdjMaDescriptor implements Descriptor {
-	
-	
+
+	/**
+	 *  Constructor for the VAdjMaDescriptor object
+	 */
 	public VAdjMaDescriptor() { }
 
-    public Map getSpecification() {
-        Hashtable specs = new Hashtable();
-        specs.put("Specification-Reference", "http://qsar.sourceforge.net/dicts/qsar-descriptors:vAdjMa");
-        specs.put("Implementation-Title", this.getClass().getName());
-        specs.put("Implementation-Identifier", "$Id$"); // added by CVS
-        specs.put("Implementation-Vendor", "The Chemistry Development Kit");
-        return specs;
-    };
 
+	/**
+	 *  Gets the specification attribute of the VAdjMaDescriptor object
+	 *
+	 *@return    The specification value
+	 */
+	public Map getSpecification() {
+		Hashtable specs = new Hashtable();
+		specs.put("Specification-Reference", "http://qsar.sourceforge.net/dicts/qsar-descriptors:vAdjMa");
+		specs.put("Implementation-Title", this.getClass().getName());
+		specs.put("Implementation-Identifier", "$Id$");
+		// added by CVS
+		specs.put("Implementation-Vendor", "The Chemistry Development Kit");
+		return specs;
+	}
+
+
+	/**
+	 *  Sets the parameters attribute of the VAdjMaDescriptor object
+	 *
+	 *@param  params            The new parameters value
+	 *@exception  CDKException  Description of the Exception
+	 */
 	public void setParameters(Object[] params) throws CDKException {
-		if (params.length > 0) {
-			throw new CDKException("VAdjMaDescriptor expects not parameters");
-		}
+		// no parameters for this descriptor
 	}
 
+
+	/**
+	 *  Gets the parameters attribute of the VAdjMaDescriptor object
+	 *
+	 *@return    The parameters value
+	 */
 	public Object[] getParameters() {
-		// return the parameters as used for the descriptor calculation
-		Object[] params = new Object[1];
-		return params;
+		// no parameters to return
+		return (null);
 	}
 
-	public Object calculate(AtomContainer ac) throws CDKException{
+
+	/**
+	 *  calculates the VAdjMa descriptor for an atom container
+	 *
+	 *@param  ac                AtomContainer
+	 *@return                   VAdjMa
+	 *@exception  CDKException  Possible Exceptions
+	 */
+	public Object calculate(AtomContainer ac) throws CDKException {
 		MFAnalyser formula = new MFAnalyser(ac);
 		int magnitude = formula.getHeavyAtoms().size();
 		double vadjMa = 0;
@@ -74,20 +101,28 @@ public class VAdjMaDescriptor implements Descriptor {
 		}
 		return new Double(vadjMa);
 	}
-	
-	
+
+
+	/**
+	 *  Gets the parameterNames attribute of the VAdjMaDescriptor object
+	 *
+	 *@return    The parameterNames value
+	 */
 	public String[] getParameterNames() {
-		String[] params = new String[1];
-		params[0] = "...";
-		return params;
+		// no param names to return
+		return (null);
 	}
 
 
-	
+
+	/**
+	 *  Gets the parameterType attribute of the VAdjMaDescriptor object
+	 *
+	 *@param  name  Description of the Parameter
+	 *@return       The parameterType value
+	 */
 	public Object getParameterType(String name) {
-		Object[] paramTypes = new Object[1];
-		paramTypes[0] = new Double(0);
-		return paramTypes;
+		return (null);
 	}
 }
 

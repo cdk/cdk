@@ -26,32 +26,38 @@ package org.openscience.cdk.qsar;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.RingSet;
+import org.openscience.cdk.ringsearch.AllRingsFinder;
+import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import java.util.Map;
 import java.util.Hashtable;
 
 /**
- *   Zagreb index: the sum of the squares of atom degree over all heavy atoms i.
+ *  Class that returns the number of aromatic atoms in an atom container
  *
  *@author     mfe4
  *@cdk.created    2004-11-03
  */
-public class ZagrebIndexDescriptor implements Descriptor {
+public class AromaticAtomsCountDescriptor implements Descriptor {
+	private boolean checkAromaticity = false;
+
 
 	/**
-	 *  Constructor for the ZagrebIndexDescriptor object
+	 *  Constructor for the AromaticAtomsCountDescriptor object
 	 */
-	public ZagrebIndexDescriptor() { }
+	public AromaticAtomsCountDescriptor() { }
 
 
 	/**
-	 *  Gets the specification attribute of the ZagrebIndexDescriptor object
+	 *  Gets the specification attribute of the AromaticAtomsCountDescriptor object
 	 *
 	 *@return    The specification value
 	 */
 	public Map getSpecification() {
 		Hashtable specs = new Hashtable();
-		specs.put("Specification-Reference", "http://qsar.sourceforge.net/dicts/qsar-descriptors:zagrebIndex");
+		specs.put("Specification-Reference", "http://qsar.sourceforge.net/dicts/qsar-descriptors:aromaticAtomsCount");
 		specs.put("Implementation-Title", this.getClass().getName());
 		specs.put("Implementation-Identifier", "$Id$");
 		// added by CVS
@@ -61,71 +67,86 @@ public class ZagrebIndexDescriptor implements Descriptor {
 
 
 	/**
-	 *  Sets the parameters attribute of the ZagrebIndexDescriptor object
+	 *  Sets the parameters attribute of the AromaticAtomsCountDescriptor object
 	 *
 	 *@param  params            The new parameters value
 	 *@exception  CDKException  Description of the Exception
 	 */
 	public void setParameters(Object[] params) throws CDKException {
-		// no parameters for this descriptor
+		if (params.length > 1) {
+			throw new CDKException("AromaticAtomsCountDescriptor only expects one parameter");
+		}
+		if (!(params[0] instanceof Boolean)) {
+			throw new CDKException("The first parameter must be of type Boolean");
+		}
+		// ok, all should be fine
+		checkAromaticity = ((Boolean) params[0]).booleanValue();
 	}
 
 
 	/**
-	 *  Gets the parameters attribute of the ZagrebIndexDescriptor object
+	 *  Gets the parameters attribute of the AromaticAtomsCountDescriptor object
 	 *
 	 *@return    The parameters value
 	 */
 	public Object[] getParameters() {
-		return (null);
-		// no parameters to return
+		// return the parameters as used for the descriptor calculation
+		Object[] params = new Object[1];
+		params[0] = new Boolean(checkAromaticity);
+		return params;
 	}
 
 
 	/**
-	 *  Description of the Method
+	 *  The method require one parameter:
+	 *  if checkAromaticity is true, the method check the aromaticity,
+	 *  if false, means that the aromaticity has already been checked
+	 *
 	 *
 	 *@param  ac                AtomContainer
-	 *@return                   zagreb index
+	 *@return                   the number of aromatic atoms of this atom container
 	 *@exception  CDKException  Possible Exceptions
 	 */
 	public Object calculate(AtomContainer ac) throws CDKException {
-		double zagreb = 0;
+		int aromaticAtomsCount = 0;
+		if (checkAromaticity) {
+			RingSet rs = (new AllRingsFinder()).findAllRings(ac);
+			HueckelAromaticityDetector.detectAromaticity(ac, rs, true);
+		}
 		Atom[] atoms = ac.getAtoms();
 		for (int i = 0; i < atoms.length; i++) {
-			int atomDegree = 0;
-			Atom[] neighboors = ac.getConnectedAtoms(atoms[i]);
-			for (int a = 0; a < neighboors.length; a++) {
-				if (!neighboors[a].getSymbol().equals("H")) {
-					atomDegree += 1;
-				}
+			if (ac.getAtomAt(i).getFlag(CDKConstants.ISAROMATIC)) {
+				aromaticAtomsCount += 1;
 			}
-			zagreb += (atomDegree * atomDegree);
 		}
-		return new Double(zagreb);
+		return new Integer(aromaticAtomsCount);
 	}
 
 
 	/**
-	 *  Gets the parameterNames attribute of the ZagrebIndexDescriptor object
+	 *  Gets the parameterNames attribute of the AromaticAtomsCountDescriptor
+	 *  object
 	 *
 	 *@return    The parameterNames value
 	 */
 	public String[] getParameterNames() {
-		// no param names to return
-		return (null);
+		String[] params = new String[1];
+		params[0] = "True is the aromaticity has to be checked";
+		return params;
 	}
 
 
 
 	/**
-	 *  Gets the parameterType attribute of the ZagrebIndexDescriptor object
+	 *  Gets the parameterType attribute of the AromaticAtomsCountDescriptor object
 	 *
 	 *@param  name  Description of the Parameter
 	 *@return       The parameterType value
 	 */
 	public Object getParameterType(String name) {
-		return (null);
+		Object[] paramTypes = new Object[1];
+		paramTypes[0] = new Boolean(true);
+		return paramTypes;
 	}
 }
 
