@@ -303,7 +303,34 @@ public class CMLCoreModule implements ModuleInterface {
                 else if (att.equals("dictRef")) {
                     atomDictRefs.addElement(value);
                 } else {
-                    logger.warn("Unsupported attribute: " + att);
+                    logger.warn("Unparsed attribute: " + att);
+                }
+            }
+        } else if ("atomArray".equals(name)) {
+            boolean atomsCounted = false;
+            for (int i = 0; i < atts.getLength(); i++) {
+                String att = atts.getQName(i);
+                int count = 0;
+                if (att.equals("atomID")) {
+                    count = addArrayElementsTo(elid, atts.getValue(i));
+                } else if (att.equals("elementType")) {
+                    count = addArrayElementsTo(elsym, atts.getValue(i));
+                } else if (att.equals("x2")) {
+                    count = addArrayElementsTo(x2, atts.getValue(i));
+                } else if (att.equals("y2")) {
+                    count = addArrayElementsTo(y2, atts.getValue(i));
+                } else if (att.equals("x3")) {
+                    count = addArrayElementsTo(x3, atts.getValue(i));
+                } else if (att.equals("y3")) {
+                    count = addArrayElementsTo(y3, atts.getValue(i));
+                } else if (att.equals("z3")) {
+                    count = addArrayElementsTo(z3, atts.getValue(i));
+                } else {
+                    logger.warn("Unparsed attribute: " + att);
+                }
+                if (!atomsCounted) {
+                    atomCounter += count;
+                    atomsCounted = true;
                 }
             }
         } else if ("bond".equals(name)) {
@@ -338,6 +365,25 @@ public class CMLCoreModule implements ModuleInterface {
             
             stereoGiven = false;
             curRef = 0;
+        } else if ("bondArray".equals(name)) {
+            boolean bondsCounted = false;
+            for (int i = 0; i < atts.getLength(); i++) {
+                String att = atts.getQName(i);
+                int count = 0;
+                if (att.equals("bondID")) {
+                    count = addArrayElementsTo(bondid, atts.getValue(i));
+                } else if (att.equals("atomRef1")) {
+                    count = addArrayElementsTo(bondARef1, atts.getValue(i));
+                } else if (att.equals("atomRef2")) {
+                    count = addArrayElementsTo(bondARef2, atts.getValue(i));
+                } else {
+                    logger.warn("Unparsed attribute: " + att);
+                }
+                if (!bondsCounted) {
+                    bondCounter += count;
+                    bondsCounted = true;
+                }
+            }
         } else if ("molecule".equals(name)) {
             newMolecule();
             BUILTIN = "";
@@ -962,4 +1008,13 @@ public class CMLCoreModule implements ModuleInterface {
         newBondData();
     }
 
+    private int addArrayElementsTo(Vector toAddto, String array) {
+        StringTokenizer tokenizer = new StringTokenizer(array);
+        int i = 0;
+        while (tokenizer.hasMoreElements()) {
+            toAddto.add(tokenizer.nextToken());
+            i++;
+        }
+        return i;
+    }
 }
