@@ -34,13 +34,13 @@ import java.util.Vector;
 import java.io.*;
 
 /**
- *  Provides methods for checking whether an atoms valences are saturated with
- *  respect to a particular atom type
+ * Provides methods for checking whether an atoms valences are saturated with
+ * respect to a particular atom type
  *
- *@author     steinbeck
- *@created    2001-09-04
- *@keyword    saturation
- *@keyword    atom, valency
+ * @author     steinbeck
+ * @created    2001-09-04
+ * @keyword    saturation
+ * @keyword    atom, valency
  */
 public class SaturationChecker
 {
@@ -49,13 +49,6 @@ public class SaturationChecker
 
 	private org.openscience.cdk.tools.LoggingTool logger;
 
-
-	/**
-	 *  Constructor for the SaturationChecker object
-	 *
-	 *@exception  IOException  Description of the Exception
-   *@exception  ClassNotFoundException  Description of the Exception
-	 */
 	public SaturationChecker() throws IOException, ClassNotFoundException
 	{
 		atf = new AtomTypeFactory();
@@ -63,13 +56,6 @@ public class SaturationChecker
 	}
 
 
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  atom  Description of the Parameter
-	 *@param  ac    Description of the Parameter
-	 *@return       Description of the Return Value
-	 */
 	public boolean hasPerfectConfiguration(Atom atom, AtomContainer ac)
 	{
 
@@ -107,13 +93,6 @@ public class SaturationChecker
 		return false;
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  ac  Description of the Parameter
-	 *@return     Description of the Return Value
-	 */
 	public boolean allSaturated(AtomContainer ac)
 	{
 		for (int f = 0; f < ac.getAtomCount(); f++)
@@ -126,14 +105,6 @@ public class SaturationChecker
 		return true;
 	}
 
-
-	/**
-	 *  Gets the saturated attribute of the SaturationChecker object
-	 *
-	 *@param  atom  Description of the Parameter
-	 *@param  ac    Description of the Parameter
-	 *@return       The saturated value
-	 */
 	public boolean isSaturated(Atom atom, AtomContainer ac)
 	{
 		AtomType[] atomTypes = atf.getAtomTypes(atom.getSymbol(), atf.ATOMTYPE_ID_STRUCTGEN);
@@ -162,11 +133,11 @@ public class SaturationChecker
 	}
 
 	/**
-	 *  Checks if the current atom has exceeded its bond order sum value
+	 * Checks if the current atom has exceeded its bond order sum value.
 	 *
-	 *@param  atom The Atom to check
-	 *@param  ac   The atomcontainer context
-	 *@return      oversaturated or not
+	 * @param  atom The Atom to check
+	 * @param  ac   The atomcontainer context
+	 * @return      oversaturated or not
 	 */
 	public boolean isOverSaturated(Atom atom, AtomContainer ac)
 	{
@@ -194,12 +165,13 @@ public class SaturationChecker
 		logger.debug("*** Bad ! ***");
 		return false;
 	}
+    
 	/**
-	 *  Returns the currently maximum formable bond order for this atom
+	 * Returns the currently maximum formable bond order for this atom.
 	 *
-	 *@param  atom  The atom to be checked
-	 *@param  ac    The AtomContainer that provides the context
-	 *@return       the currently maximum formable bond order for this atom
+	 * @param  atom  The atom to be checked
+	 * @param  ac    The AtomContainer that provides the context
+	 * @return       the currently maximum formable bond order for this atom
 	 */
 	public double getCurrentMaxBondOrder(Atom atom, AtomContainer ac)
 	{
@@ -221,7 +193,7 @@ public class SaturationChecker
 
 
 	/**
-	 *  Saturates a molecule by setting appropriate bond orders.
+	 * Saturates a molecule by setting appropriate bond orders.
 	 *
 	 *@param  molecule  Description of the Parameter
 	 *@keyword          bond order, calculation
@@ -299,13 +271,13 @@ public class SaturationChecker
 		}
 	}
 	
-	/**
-	 *  Recursivly fixes bond orders in a molecule for 
-	 *  which only connectivities but no bond orders are know.
+	/*
+	 * Recursivly fixes bond orders in a molecule for 
+	 * which only connectivities but no bond orders are know.
 	 *
-	 *@param  molecule  The molecule to fix the bond orders for
-	 *@param  bond      The number of the bond to treat in this recursion step
-	 *@return           true if the bond order which was implemented was ok.
+	 *@ param  molecule  The molecule to fix the bond orders for
+	 *@ param  bond      The number of the bond to treat in this recursion step
+	 *@ return           true if the bond order which was implemented was ok.
 	 */
 	/*private boolean recursiveBondOrderFix(Molecule molecule, int bondNumber)
 	{	
@@ -465,13 +437,11 @@ public class SaturationChecker
     }
     
 	/**
-	 *  Method that saturates a molecule by adding implicit hydrogens.
+	 * Method that saturates a molecule by adding implicit hydrogens.
 	 *
-	 *@param  molecule  Molecule to saturate
-	 *@keyword          hydrogen, adding
-	 *@keyword          implicit hydrogen
-     *
-     * @deprecated Use org.openscience.cdk.tools.HydrogenAdder.
+	 * @param  molecule  Molecule to saturate
+	 * @keyword          hydrogen, adding
+	 * @keyword          implicit hydrogen
      *
      * @deprecated Use org.openscience.cdk.tools.HydrogenAdder.
 	 */
@@ -490,6 +460,8 @@ public class SaturationChecker
      * @param  molecule  Molecule to saturate
      * @keyword          hydrogen, adding
      * @keyword          implicit hydrogen
+     *
+     * @deprecated Use org.openscience.cdk.tools.HydrogenAdder.
      */
     public void addImplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom)
     {
