@@ -25,7 +25,7 @@
  * 
  */
 
-package org.openscience.cdk.test;
+package org.openscience.cdk.test.structgen;
 
 import org.openscience.cdk.controller.*;
 import org.openscience.cdk.*;
