@@ -33,6 +33,7 @@ Fixes:
 * Fixed IteratingMDLReader: added missing readLine() statement and added missing newlines
   to the buffer send to MDLReader. Also fixed throwing of an exception as the interface
   describes (closes #895973)
+* Fixed handling of CML content in RSS channel when no namespace prefix was used
 
 API changes:
 * Renderer2D.getScreenSize() and .getScreenCoordinates() are now protected
@@ -42,6 +43,7 @@ API changes:
 * Added setReader(Reader) method to ChemObjectReader so that it can allow instantiating
   a usefull class first by ClassLoader.loadClass().getInstance() and then set the Reader
 * Matching of file formats has moved into the available Readers matches() methods
+* Added event handling to plugin API to get warned when ChemModel has changed
 
 20040202 Release
 ------------------------------------
