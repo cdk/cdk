@@ -11,6 +11,8 @@ New:
 * Added a IChI reader
 * Added a class for constant physical property values
 * Added a SVG output filter
+* cdk-view now views IChI files
+* cdk-fileconvert can generate SVG
 
 Fixes:
 * JCPController2D now edits a bond order when in
