@@ -100,88 +100,118 @@ public class AtomTypeFactory
 	}
 
 
-	/**
-	 *  Read the config from a text file
-	 *
-	 *@param  configFile  name of the config file
-	 */
-	private void readConfiguration(String configFile)
-	{
-		logger.info("Reading config file from " + configFile);
-		AtomTypeConfigurator atc = null;
+  /**
+   *  Read the config from a text file
+   *
+   *@param  configFile  name of the config file
+   */
+  private void readConfiguration(String configFile)
+  {
+    logger.info("Reading config file from " + configFile);
+    System.out.println("readConfiguration:" + configFile);
+    AtomTypeConfigurator atc = null;
 
-		InputStream ins = null;
-		{
-			// try to see if this configFile is an actual file
-			File f = new File(configFile);
-            if (f.exists()) {
-                logger.debug("configFile is a File");
-                // what's next?
-                try {
-                    ins = new FileInputStream(f);
-                } catch (Exception exc) {
-                    logger.error(exc.toString());
-                }
-			} else {
-			 
-                logger.debug("configFile must be a stream");
-                // assume it is a default config file in distro
-                /*
-                *  this has to be this.getClass.getClassLoader.getResource,
-                *  getClass.getResource fails, elw
-                */            
-                ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
+    InputStream ins = null;
+    {
+      /*
+       * mth 2003 05 05
+       * Egon, I'm leaving these comments in here so that you can
+       * clean them up.
+       * The code that was here was breaking the applet.
+       * In addition, I do not understand the purpose of some
+       * of the tests ... let's talk
+       */
+      // try to see if this configFile is an actual file
+      System.out.println("make a file");
+      File f = new File(configFile);
+      System.out.println("made a file");
+      try {
+        /*
+         * mth 2003 05 05
+         * You cannot do this f.exists() test in an applet
+         * ... security violation
+         */
+        if (f.exists()) {
+          System.out.println("it exists");
+          logger.debug("configFile is a File");
+          // what's next?
+          try {
+            System.out.println("trying as a FileInputStream");
+            ins = new FileInputStream(f);
+          } catch (Exception exc) {
+            logger.error(exc.toString());
+          }
+        }
+      } catch (Exception e) {
+        System.out.println("exception raised testing file existence");
+      }
+      if (ins == null) {
+        System.out.println("it does not exist");
+        logger.debug("configFile must be a stream");
+        // assume it is a default config file in distro
+        /*
+         *  this has to be this.getClass.getClassLoader.getResource,
+         *  getClass.getResource fails, elw
+         *
+         * mth 2003 05 05
+         * not sure in what context it is failing
+         * If you want to look for files which are in the same
+         * directory as this file, then you don't want to
+         * put in the call to getClassLoader
+         */            
+        System.out.println("made it to getResourceAsStream:" + configFile);
+        ins = getClass().getResourceAsStream(configFile);
+      }
+      if (ins == null)
+        {
+          logger.error("There was a problem getting a stream for " +
+                       configFile);
+          System.out.println("failed getResourceAsStream");
+        }
+    }
+
+    try
+      {
+        /*
+         *  This class loading mechanism is used to not depend on JSX,
+         *  which is needed for old JVM's like in older browsers.
+         */
+        if (configFile.endsWith("txt"))
+          {
+            atc = (AtomTypeConfigurator) this.getClass().getClassLoader().
+              loadClass("org.openscience.cdk.tools.TXTBasedAtomTypeConfigurator").
+              newInstance();
+          } else if (configFile.endsWith("xml"))
+            {
+              atc = (AtomTypeConfigurator) this.getClass().getClassLoader().
+                loadClass("org.openscience.cdk.tools.JSXBasedAtomTypeConfigurator").
+                newInstance();
             }
-            
-			if (ins == null)
-			{
-				logger.error("There was a problem getting a stream for " +
-						configFile);
-			}
-		}
-
-		try
-		{
-			/*
-			 *  This class loading mechanism is used to not depend on JSX,
-			 *  which is needed for old JVM's like in older browsers.
-			 */
-			if (configFile.endsWith("txt"))
-			{
-				atc = (AtomTypeConfigurator) this.getClass().getClassLoader().
-						loadClass("org.openscience.cdk.tools.TXTBasedAtomTypeConfigurator").
-						newInstance();
-			} else if (configFile.endsWith("xml"))
-			{
-				atc = (AtomTypeConfigurator) this.getClass().getClassLoader().
-						loadClass("org.openscience.cdk.tools.JSXBasedAtomTypeConfigurator").
-						newInstance();
-			}
-			logger.debug("Instantiated a AtomTypeConfigurator of class: " +
-					atc.getClass().getName());
-		} catch (Exception exc)
-		{
-			logger.error("Could not get instance of AtomTypeConfigurator for " + configFile);
-		}
-		if (atc != null)
-		{
-			atc.setInputStream(ins);
-			try
-			{
-				atomTypes = atc.readAtomTypes();
-			} catch (Exception exc)
-			{
-				logger.error("Could not read AtomType's from file due to: " + exc.toString());
-			}
-		} else
-		{
-			logger.debug("AtomTypeConfigurator was null!");
-			atomTypes = new Vector();
-		}
-	}
+        logger.debug("Instantiated a AtomTypeConfigurator of class: " +
+                     atc.getClass().getName());
+      } catch (Exception exc)
+        {
+          logger.error("Could not get instance of AtomTypeConfigurator for " + configFile);
+        }
+    if (atc != null)
+      {
+        atc.setInputStream(ins);
+        try
+          {
+            atomTypes = atc.readAtomTypes();
+          } catch (Exception exc)
+            {
+              logger.error("Could not read AtomType's from file due to: " + exc.toString());
+            }
+      } else
+        {
+          logger.debug("AtomTypeConfigurator was null!");
+          atomTypes = new Vector();
+        }
+  }
 
 
-	/**
+  /**
 	 *  Gets the size attribute of the AtomTypeFactory object
 	 *
 	 *@return    The size value
