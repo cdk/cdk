@@ -100,7 +100,7 @@
                 <mkdir dir="${build}" />
 
                 <javac destdir="${build}" optimize="off" debug="on" deprecation="off">
-                        <src path="." />
+                        <src path="org" />
                         <exclude name="${sourcedist}/**" />
                         <exclude
                         name="org/openscience/cdk/applications/Viewer.java" />
@@ -129,7 +129,7 @@
                 <mkdir dir="${build}" />
 
                 <javac destdir="${build}" optimize="on" deprecation="off" debug="on">
-                        <src path="." />
+                        <src path="org" />
 
                         <exclude name="${sourcedist}/**" />
 
