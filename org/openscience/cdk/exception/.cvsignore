@@ -1,2 +1,3 @@
 CDKException.class
 UnsupportedChemObjectException.class
+NoSuchAtomException.class
