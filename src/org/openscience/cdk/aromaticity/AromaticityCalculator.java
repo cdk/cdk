@@ -56,7 +56,7 @@ public class AromaticityCalculator
 	 * @param  atomContainer  the AtomContainer the ring is in
 	 * @return           true if the ring is aromatic false otherwise.
 	 */
-	public static boolean isAromatic(Ring ring, AtomContainer atomContainer)
+	protected static boolean isAromatic(Ring ring, AtomContainer atomContainer)
 	{
 //    System.out.println("calculating aromaticity");
 		int twoElectronContributors = 0;
@@ -74,9 +74,15 @@ public class AromaticityCalculator
 			for (int j = 0; j < conectedBonds.length; j++)
 			{
 				Bond bond = conectedBonds[j];
-				if (bond.getOrder() == 2)
+				if (bond.getOrder() == 2 && ring.contains(bond))
 				{
 					numDoubleBond++;
+				}
+				
+				// Count the Electron if bond order = 1.5
+				if (bond.getOrder() == 1.5 && ring.contains(bond))
+				{
+					numDoubleBond = 1;
 				}
 			}
 			if (numDoubleBond == 1)
@@ -84,15 +90,16 @@ public class AromaticityCalculator
 				//C or heteroatoms both contibute 1 electron in sp2 hybridized form
 				eCount++;
 			}
-			else if (atom.getFlag(CDKConstants.ISAROMATIC))
-			{
-				eCount++;
-			}
 			else if (!atom.getSymbol().equals("C"))
 			{
 				//Heteroatom probably in sp3 hybrid therefore 2 electrons contributed.
 				eCount = eCount + 2;
 			}
+			else if (atom.getFlag(CDKConstants.ISAROMATIC))
+			{
+				eCount++;
+			}
+			
 			else
 			{
 				return false;	

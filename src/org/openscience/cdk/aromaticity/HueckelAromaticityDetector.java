@@ -102,21 +102,25 @@ public class HueckelAromaticityDetector
 		Ring ring = null;
 		Atom atom = null;
 		ringSet.sort();
-		for (int f = ringSet.size() - 1; f >= 0 ; f--)
+		for (int f = 0; f <ringSet.size(); f++)
 		{
 			ring = (Ring)ringSet.elementAt(f);
 			if (debug)System.out.println("Testing ring no " + f + " for aromaticity:");
 			if (AromaticityCalculator.isAromatic(ring, ac))
 			{
+				ring.setFlag(CDKConstants.ISAROMATIC, true);
+				
 				for (int g = 0; g < ring.getAtomCount(); g++)
 				{
 					ring.getAtomAt(g).setFlag(CDKConstants.ISAROMATIC, true);
 				}
+				
 				for (int g = 0; g < ring.getElectronContainerCount(); g++) 
 				{
 					ElectronContainer ec = ring.getElectronContainerAt(g);
 					if (ec instanceof Bond) ec.setFlag(CDKConstants.ISAROMATIC, true);
 				}
+				
 				foundSomething = true;
 				if (debug)System.out.println("Ring no " + f + " is aromatic.");
 			}
@@ -128,7 +132,7 @@ public class HueckelAromaticityDetector
 		return foundSomething;
 	}
 
-	public static boolean isAromatic(AtomContainer ac, Ring ring)
+	/*public static boolean isAromatic(AtomContainer ac, Ring ring)
 	{
 		return AromaticityCalculator.isAromatic(ring, ac);	
 	}
