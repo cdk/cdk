@@ -3,6 +3,9 @@ CHANGELOG $Date$
 
 Changes in CVS
 ------------------------------------
+New:
+* Coloring of atom symbols in 2D display by atom type.
+
 Fixes:
 * Added missing LGPL license from distributions.
 

@@ -30,7 +30,7 @@ import java.awt.Color;
 /**
  * Gives a short table of atom colors for 2D display.
  */
-public class CDK2DAtomColors implements AtomColorer {
+public class CDK2DAtomColors implements AtomColorer, java.io.Serializable {
 
     private final Color HYDROGEN       = Color.black;
     private final Color CARBON         = Color.black;
@@ -47,13 +47,29 @@ public class CDK2DAtomColors implements AtomColorer {
     public Color getAtomColor(Atom a) {
         Color c = DEFAULT;
         int atomnumber = a.getAtomicNumber();
-        switch (atomnumber) {
-            case 1:    c = this.HYDROGEN; break;
-            case 6:    c = this.CARBON; break;
-            case 7:    c = this.NITROGEN; break;
-            case 8:    c = this.OXYGEN; break;
-            case 15:   c = this.PHOSPHORUS; break;
-            case 16:   c = this.SULPHUR; break;
+        if (atomnumber != 0) {
+            switch (atomnumber) {
+                case 1:    c = this.HYDROGEN; break;
+                case 6:    c = this.CARBON; break;
+                case 7:    c = this.NITROGEN; break;
+                case 8:    c = this.OXYGEN; break;
+                case 15:   c = this.PHOSPHORUS; break;
+                case 16:   c = this.SULPHUR; break;
+            }
+        } else {
+            String symbol = a.getSymbol();
+            if (symbol.equals("N")) {
+                c = this.NITROGEN;
+            }
+            if (symbol.equals("O")) {
+                c = this.OXYGEN;
+            }
+            if (symbol.equals("P")) {
+                c = this.PHOSPHORUS;
+            }
+            if (symbol.equals("S")) {
+                c = this.SULPHUR;
+            }
         }
         return c;
     }

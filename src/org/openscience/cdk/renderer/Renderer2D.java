@@ -36,6 +36,7 @@ import org.openscience.cdk.ringsearch.*;
 import org.openscience.cdk.geometry.*;
 import org.openscience.cdk.*;
 import org.openscience.cdk.tools.*;
+import org.openscience.cdk.renderer.color.*;
 
 /**
  * A Renderer class which draws 2D representations of molecules onto a given
@@ -56,9 +57,6 @@ public class Renderer2D   {
     
 	SSSRFinder sssrf = new SSSRFinder();
 
-	/**
-	 *  Description of the Field
-	 */
 	private Renderer2DModel r2dm;
 
 	/**
@@ -269,47 +267,41 @@ public class Renderer2D   {
 	}
 
 	private void paintAtom(AtomContainer container, Atom atom, Graphics graphics) {
-        Color atomColor = (Color) r2dm.getColorHash().get(atom);
-        if (atom == r2dm.getHighlightedAtom()) {
-            atomColor = r2dm.getHighlightColor();
-        }
-        if (atomColor != null) {
-            paintColouredAtom(atom, atomColor, graphics);
-        } else {
-            atomColor = r2dm.getBackColor();
-        }
+        Color atomBackColor = r2dm.getAtomBackgroundColor(atom);
+        // paintColouredAtomBackground(atom, atomBackColor, graphics);
+
         int alignment = GeometryTools.getBestAlignmentForLabel(container, atom);
         if (!atom.getSymbol().equals("C")) {
             /*
              *  only show element for non-carbon atoms,
              *  unless (see below)...
              */
-            paintAtomSymbol(atom, atomColor, graphics, alignment);
+            paintAtomSymbol(atom, atomBackColor, graphics, alignment);
             paintAtomCharge(atom, graphics);
         } else if (r2dm.getKekuleStructure()) {
             // ... unless carbon must be drawn because in Kekule mode
-            paintAtomSymbol(atom, atomColor, graphics, alignment);
+            paintAtomSymbol(atom, atomBackColor, graphics, alignment);
         } else if (atom.getFormalCharge() != 0) {
             // ... unless carbon is charged
-            paintAtomSymbol(atom, atomColor, graphics, alignment);
+            paintAtomSymbol(atom, atomBackColor, graphics, alignment);
             paintAtomCharge(atom, graphics);
         } else if (container.getConnectedBonds(atom).length < 1) {
             // ... unless carbon is unbonded
-            paintAtomSymbol(atom, atomColor, graphics, alignment);
+            paintAtomSymbol(atom, atomBackColor, graphics, alignment);
         } else if (r2dm.getShowEndCarbons() && (container.getConnectedBonds(atom).length == 1)) {
             // ... unless carbon is an methyl, and the user wants those with symbol
-            paintAtomSymbol(atom, atomColor, graphics, alignment);
+            paintAtomSymbol(atom, atomBackColor, graphics, alignment);
         }
     }
 
 	/**
-	 *  Paints a rectangle of the given color at the position of the given atom.
-	 *  For example when the atom is highlighted.
+	 * Paints a rectangle of the given color at the position of the given atom.
+	 * For example when the atom is highlighted.
 	 *
-	 *@param  atom   The atom to be drawn
-	 *@param  color  The color of the atom to be drawn
+	 * @param  atom   The atom to be drawn
+	 * @param  color  The color of the atom to be drawn
 	 */
-	private void paintColouredAtom(Atom atom, Color color, Graphics graphics)
+	private void paintColouredAtomBackground(Atom atom, Color color, Graphics graphics)
 	{
 		int atomRadius = r2dm.getAtomRadius();
 	    graphics.setColor(color);
@@ -358,7 +350,7 @@ public class Renderer2D   {
 		int xSymbOffsetForSubscript = (new Integer(fm.stringWidth(symbol))).intValue();
 		int ySymbOffsetForSubscript = (new Integer(fm.getAscent())).intValue();
 
-		// make empty space
+        // make empty space
 	    graphics.setColor(backColor);
         Rectangle2D stringBounds = fm.getStringBounds(symbol, graphics);
         int[] coords = {(int) (atom.getPoint2D().x - (xSymbOffset * 1.2)),
@@ -371,7 +363,7 @@ public class Renderer2D   {
         int[] hCoords = {(int) (atom.getPoint2D().x - xSymbOffset),
 				         (int) (atom.getPoint2D().y + ySymbOffset) };
         hCoords = getScreenCoordinates(hCoords);
-	    graphics.setColor(r2dm.getForeColor());
+	    graphics.setColor(r2dm.getAtomColor(atom));
         // apply zoom factor to font size
         Font unscaledFont = graphics.getFont();
         int fontSize = getScreenSize(unscaledFont.getSize());
@@ -472,7 +464,7 @@ public class Renderer2D   {
                     bondColor = r2dm.getHighlightColor();
                     for (int j = 0; j < bond.getAtomCount(); j++)
                     {
-                        paintColouredAtom(bond.getAtomAt(j), bondColor, graphics);
+                        paintColouredAtomBackground(bond.getAtomAt(j), bondColor, graphics);
                     }
                 }
                 ring = ringSet.getHeaviestRing(bond);

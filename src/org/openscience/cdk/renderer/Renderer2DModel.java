@@ -5,7 +5,7 @@
  * 
  * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  * 
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -27,18 +27,21 @@
  *  */
 package org.openscience.cdk.renderer;
 
+import org.openscience.cdk.renderer.color.CDK2DAtomColors;
+import org.openscience.cdk.tools.LoggingTool;
 import java.awt.*;
 import java.awt.Polygon;
 import org.openscience.cdk.*;
 import org.openscience.cdk.event.*;
 import java.util.*;
 
-
 /**
  * Model for Renderer2D that contains settings for drawing objects.
  */
 public class Renderer2DModel implements java.io.Serializable, Cloneable 
 {
+    
+    // private LoggingTool logger = new LoggingTool("org.openscience.cdk.render.Renderer2DModel");
     
     private double scaleFactor = 60.0;
     
@@ -67,7 +70,12 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	
 	private Bond highlightedBond = null;
 	
+    /** 
+     * The color hash is used to color substructures.
+     * @see #getColorHash()
+     */
 	private Hashtable colorHash = new Hashtable();
+    private CDK2DAtomColors colorer = new CDK2DAtomColors();
 	
 	private transient Vector listeners = new Vector();
 	
@@ -88,9 +96,12 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
     private boolean kekuleStructure = false;
 
     /** Determines wether methyl carbons' symbols should be drawn explicit
-     *  for methyl carbons. Example C/\C instead of /\.
+     *  for methyl carbons. Example C/\C instead of /\. 
      */
     private boolean showEndCarbons = true;
+
+    /** Determines wether atoms are colored by type. */
+    private boolean colorAtomsByType = true;
 
     private Dimension backgroupDimension = new Dimension(500,400);
     
@@ -271,6 +282,14 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 		this.kekuleStructure = kekule;
 	}
 
+    public boolean getColorAtomsByType() {
+        return this.colorAtomsByType;
+    }
+    
+    public void setColorAtomsByType(boolean bool) {
+        this.colorAtomsByType = bool;
+    }
+
     public boolean getShowEndCarbons() {
         return this.showEndCarbons;
     }
@@ -427,7 +446,44 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	{
 		return this.colorHash;
 	}
+    
+    /**
+     * Returns the drawing color of the given atom.
+     * An atom is colored as highlighted if hightlighted.
+     * The atom is color marked if in a substructure.
+     * If not, the color from the CDK2DAtomColor is used
+     * (if selected). Otherwise, the atom is colored black.
+     */
+    public Color getAtomColor(Atom atom) {
+        // logger.debug("Getting atom front color for " + atom.toString());
+        Color atomColor = getForeColor();
+        if (colorAtomsByType) {
+            // logger.debug("Coloring atom by type");
+            atomColor = colorer.getAtomColor(atom);
+        }
+        // logger.debug("Color: " + atomColor.toString());
+        return atomColor;
+    }
 
+    /**
+     * Returns the background color of the given atom.
+     */
+    public Color getAtomBackgroundColor(Atom atom) {
+        // logger.debug("Getting atom back color for " + atom.toString());
+        Color atomColor = getBackColor();
+        // logger.debug("  BackColor: " + atomColor.toString());
+        Color hashColor = (Color) this.getColorHash().get(atom);
+        if (hashColor != null) {
+            // logger.debug("Background color atom according to hashing (substructure)");
+            atomColor = hashColor;
+        }
+        if (atom == this.getHighlightedAtom()) {
+            // logger.debug("Background color atom according to highlighting");
+            atomColor = this.getHighlightColor();
+        }
+        // logger.debug("Color: " + atomColor.toString());
+        return atomColor;
+    }
 
 	/**
 	 * Sets the hashtable used for coloring substructures 
