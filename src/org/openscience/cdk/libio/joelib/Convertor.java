@@ -35,6 +35,7 @@ import org.openscience.cdk.Bond;
 import joelib.molecule.JOEBond;
 import org.openscience.cdk.Molecule;
 import joelib.molecule.JOEMol;
+import org.openscience.cdk.exception.NoSuchAtomException;
 
 /**
  * Abstract class that provides convertor procedures to
@@ -65,21 +66,18 @@ public class Convertor {
         if (atom != null) {
             JOEAtom convertedAtom = new JOEAtom();
             if (atom.getPoint3D() != null) {
-                System.out.println("getPoint3D() success");
                 convertedAtom.setVector(
                     atom.getX3D(),
                     atom.getY3D(),
                     atom.getZ3D()
                 );
             } else if (atom.getPoint2D() != null) {
-                System.out.println("getPoint2D() success");
                 convertedAtom.setVector(
                     atom.getX2D(),
                     atom.getY2D(),
                     0.0
                 );
             } else {
-                System.out.println("set coords to 0,0,0");
                 convertedAtom.setVector(0.0, 0.0, 0.0);
             }
             convertedAtom.setAtomicNum(atom.getAtomicNumber());
@@ -113,9 +111,9 @@ public class Convertor {
             }
             try {
                 // try to give the atom its coordinates
-                convertedAtom.setX3D(atom.x());
-                convertedAtom.setY3D(atom.y());
-                convertedAtom.setZ3D(atom.z());
+                convertedAtom.setX3D(atom.getVector().x());
+                convertedAtom.setY3D(atom.getVector().y());
+                convertedAtom.setZ3D(atom.getVector().z());
             } catch (java.lang.Exception e) {
             }
             try {
@@ -193,9 +191,19 @@ public class Convertor {
             for (int i=0; i<NOatoms; i++) {
                 converted.addAtom(convert(mol.getAtomAt(i)));
             }
-            int NObonds = mol.getBondCount();
-            for (int i=0; i<NObonds; i++) {
-                converted.addBond(convert(mol.getBondAt(i)));
+            try {
+                double[][] matrix = mol.getConnectionMatrix();
+                for (int i=0; i<NOatoms-1; i++) {
+                    for (int j=i+1; j<NOatoms; j++) {
+                        if (matrix[i][j] != 0.0) {
+                            // atoms i,j are connected
+                            converted.addBond(i+1,j+1, (int)matrix[i][j]);
+                        } else {
+                        }
+                    }
+                }
+            } catch (NoSuchAtomException e) {
+                // this is stupid, see bug #590570
             }
             return converted;
         } else {

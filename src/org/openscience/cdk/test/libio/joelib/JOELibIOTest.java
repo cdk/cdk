@@ -25,11 +25,13 @@
 package org.openscience.cdk.test.libio.joelib;
 
 import org.openscience.cdk.*;
+import org.openscience.cdk.exception.*;
 import org.openscience.cdk.libio.joelib.*;
 import joelib.molecule.JOEMol;
 import joelib.molecule.JOEAtom;
 import joelib.molecule.JOEBond;
 import junit.framework.*;
+import org.openscience.cdk.tools.IsomorphismTester;
 
 public class JOELibIOTest extends TestCase {
 
@@ -88,6 +90,13 @@ public class JOELibIOTest extends TestCase {
 
         assertEquals(mol.getAtomCount(), reverted.getAtomCount());
         assertEquals(mol.getBondCount(), reverted.getBondCount());
+
+        try {
+            IsomorphismTester it = new IsomorphismTester(mol);
+            assertTrue(it.isIsomorphic(reverted));
+        } catch (NoSuchAtomException e) {
+            assertTrue(false);
+        }
     }
 
     public static void main(String[] args) {
