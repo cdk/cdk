@@ -30,6 +30,7 @@
 package org.openscience.cdk.layout;
 
 import java.util.Vector;
+import java.util.Enumeration;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
@@ -50,18 +51,19 @@ import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.tools.HydrogenAdder;
 
 /**
- *  Generates 2D coordinates for a molecule for which only connectivity is known
- *  or the coordinates have been discarded for some reason. Usage: Create an
- *  instance of this class, thereby assigning a molecule, call
- *  generateCoordinates() and get your molecule back: <pre>
+ * Generates 2D coordinates for a molecule for which only connectivity is known
+ * or the coordinates have been discarded for some reason. Usage: Create an
+ * instance of this class, thereby assigning a molecule, call
+ * generateCoordinates() and get your molecule back:
+ * <pre>
  * StructureDiagramGenerator sdg = new StructureDiagramGenerator();
  * sdg.setMolecule(someMolecule);
  * sdg.generateCoordinates();
  * Molecule layedOutMol = sdg.getMolecule();
- * </pre> <p>
+ * </pre>
  *
- *  The method will fail if the molecule is disconnected. The
- *  partitionIntoMolecules(AtomContainer) can help here.
+ * <p>The method will fail if the molecule is disconnected. The
+ * partitionIntoMolecules(AtomContainer) can help here.
  *
  *@author     steinbeck
  *@cdk.created    February 2, 2004
@@ -232,60 +234,31 @@ public class StructureDiagramGenerator
 	}
 
 
-	/**
-	 *  Generates coordinates by first deleting all hydrogens and add them later
-	 *  again. Major downside is that hydrogen specific properties are lost at this
-	 *  moment.
-	 *
-	 *@param  firstBondVector          Description of the Parameter
-	 *@exception  java.lang.Exception  Description of the Exception
-	 */
-	public void generateExperimentalCoordinates(Vector2d firstBondVector) throws java.lang.Exception
-	{
-		String hCountMarker = "org.openscience.cdk.layout.StructureDiagramGenerator.hCount";
-		// first mark how many hydrogens each non-hydrogen has
-		Atom[] atoms = molecule.getAtoms();
-		for (int i = 0; i < atoms.length; i++)
-		{
-			if (!atoms[i].getSymbol().equals("H"))
-			{
-				Atom[] neighbours = molecule.getConnectedAtoms(atoms[i]);
-				int hCount = 0;
-				for (int j = 0; j < neighbours.length; j++)
-				{
-					if (neighbours[j].getSymbol().equals("H"))
-					{
-						hCount++;
-					}
-				}
-				atoms[i].setProperty(hCountMarker, new Integer(hCount));
-			}
-		}
-		atoms = molecule.getAtoms();
-		for (int i = 0; i < atoms.length; i++)
-		{
-			if (atoms[i].getSymbol().equals("H"))
-			{
-				logger.debug("Atom is a hydrogen");
-				molecule.removeAtomAndConnectedElectronContainers(atoms[i]);
-			}
-		}
-		// do layout
-		generateCoordinates(firstBondVector);
-		// add hydrogens, which automatically creates 2D coordinates too if needed
-		atoms = molecule.getAtoms();
-		for (int i = 0; i < atoms.length; i++)
-		{
-			int hydrogensToAdd = ((Integer) atoms[i].getProperty(hCountMarker)).intValue();
-			if (hydrogensToAdd > 0)
-			{
-				// FIXME: almost correct.
-				new HydrogenAdder().addExplicitHydrogensToSatisfyValency(
-						molecule, atoms[i], hydrogensToAdd, molecule
-						);
-			}
-		}
-	}
+    /**
+     * Generates 2D coordinates on the non-hydrogen skeleton, after which
+     * coordinates for the hydrogens are calculated.
+     */
+    public void generateExperimentalCoordinates(Vector2d firstBondVector) throws java.lang.Exception {
+        // first make a shallow copy: Atom/Bond references are kept
+        Molecule original = molecule;
+        Molecule shallowCopy = (Molecule)molecule.shallowCopy();
+        // ok, delete H's from 
+        Atom[] atoms = shallowCopy.getAtoms();
+        for (int i = 0; i < atoms.length; i++) {
+            if (atoms[i].getSymbol().equals("H")) {
+                shallowCopy.removeAtomAndConnectedElectronContainers(atoms[i]);
+                atoms[i].setPoint2d(null);
+            }
+        }
+        // do layout on the shallow copy
+        molecule = shallowCopy;
+        generateCoordinates(firstBondVector);
+        double bondLength = GeometryTools.getBondLengthAverage(molecule);
+        // ok, now create the coordinates for the hydrogens
+        HydrogenPlacer hPlacer = new HydrogenPlacer();
+        molecule = original;
+        hPlacer.placeHydrogens2D(molecule, bondLength);
+    }
 
 
 	/**
