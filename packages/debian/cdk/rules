@@ -6,7 +6,6 @@ package=cdk
 
 build:
 	$(checkdir)
-# next one is tricky: only install files in jar!
 	./configure --prefix=/usr
 	$(MAKE) -f Makefile
 	touch build
@@ -14,7 +13,7 @@ build:
 clean:
 	$(checkdir)
 	-rm -f build
-	./configure
+	./configure --prefix=/usr
 	-$(MAKE) -f Makefile clean
 	-rm -f `find . -name "*~"`
 	-rm -rf debian/tmp debian/files* core debian/substvars

@@ -16,6 +16,9 @@ all: deb
 
 clean:
 
+install:
+	cd /tmp/cdk-${VERSION}; make install
+
 setup: clean
 	@echo "Cleaning old stuff..."
 	@echo "Setting up build dir for version ${VERSION}"

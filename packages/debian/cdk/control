@@ -1,6 +1,5 @@
 Source: cdk
 Build-Depends: libxerces-java, junit, lib-sax-java, ant (>= 1.4), jikes
-Conflicts: libcdk libcdkextra
 Section: misc
 Priority: optional
 Maintainer: Egon Willighagen <egonw@sci.kun.nl>
@@ -8,7 +7,7 @@ Standards-Version: 3.1.1
 
 Package: cdk
 Architecture: any
-Depends: java-virtual-machine, libcdk (>=20020805)
+Depends: java-virtual-machine
 Description: The Chemical Development Kit
  The Chemical Development Kit is a library of Java classes used
  in computational and information chemistry and in bioinformatics. 
