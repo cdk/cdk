@@ -672,15 +672,17 @@ public class Renderer2D implements MouseMotionListener   {
      */
     public void paintEmptySpace(int x, int y, int w, int h, int border,
                                 Color backColor, Graphics graphics) {
-        Color saveColor = graphics.getColor();
-        graphics.setColor(backColor);
-        int[] coords = {x - border, y + border};
-        int[] bounds = {(int)getScreenSize(w + 2*border),
-                        (int)getScreenSize(h + 2*border)};
-        int[] screenCoords = getScreenCoordinates(coords);
-        graphics.fillRect(screenCoords[0], screenCoords[1],
-                          bounds[0], bounds[1]);
-        graphics.setColor(saveColor);
+        if (w != 0 && h != 0) {
+            Color saveColor = graphics.getColor();
+            graphics.setColor(backColor);
+            int[] coords = {x - border, y + border};
+            int[] bounds = {(int)getScreenSize(w + 2*border),
+                            (int)getScreenSize(h + 2*border)};
+            int[] screenCoords = getScreenCoordinates(coords);
+            graphics.fillRect(screenCoords[0], screenCoords[1], 
+                              bounds[0], bounds[1]);
+            graphics.setColor(saveColor);
+        } // else nothing to make empty
     }
 
     /**
@@ -1152,7 +1154,7 @@ public class Renderer2D implements MouseMotionListener   {
      * Expects an array of even length with x's at the uneven indices
      * and y's at the even indices.
      */
-    private int[] getScreenCoordinates(int[] coords) {
+    protected int[] getScreenCoordinates(int[] coords) {
         graphicsHeight = (int)r2dm.getBackgroundDimension().getHeight();
         int[] screenCoordinates = new int[coords.length];
         double zoomFactor = r2dm.getZoomFactor();
@@ -1164,7 +1166,7 @@ public class Renderer2D implements MouseMotionListener   {
         return screenCoordinates;
     }
 
-    private float  getScreenSize(int size) {
+    protected float getScreenSize(int size) {
         return (float)size * (float)r2dm.getZoomFactor();
     }
 
