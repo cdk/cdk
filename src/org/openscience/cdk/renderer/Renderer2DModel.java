@@ -30,6 +30,7 @@ package org.openscience.cdk.renderer;
 import org.openscience.cdk.renderer.color.CDK2DAtomColors;
 import org.openscience.cdk.tools.LoggingTool;
 import java.awt.*;
+import java.awt.event.*;
 import java.awt.Polygon;
 import org.openscience.cdk.*;
 import org.openscience.cdk.event.*;
@@ -38,7 +39,7 @@ import java.util.*;
 /**
  * Model for Renderer2D that contains settings for drawing objects.
  */
-public class Renderer2DModel implements java.io.Serializable, Cloneable 
+public class Renderer2DModel implements java.io.Serializable, Cloneable, MouseMotionListener
 {
     
     // private LoggingTool logger = new LoggingTool("org.openscience.cdk.render.Renderer2DModel");
@@ -113,6 +114,12 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
     private boolean colorAtomsByType = true;
 
     private Dimension backgroundDimension = new Dimension(500,1200);
+    
+    public boolean showTooltip = false;
+    
+    public HashMap toolTipTextMap = new HashMap();
+    
+    private Atom lastHighlightedAtom = null;
     
     public Dimension getZoomedBackgroundDimension() {
         return new Dimension((int)((double)backgroundDimension.getWidth() * zoomFactor),
@@ -733,6 +740,43 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 			((CDKChangeListener)listeners.get(i)).stateChanged(event);
 		}
 	}
+  
+  
+  /**
+   *  Gets the toolTipText for a certain atom.
+   *
+   * @param  a  The atom.
+   * @return    The toolTipText value.
+   */
+  public String getToolTipText(Atom a) {
+    if (toolTipTextMap.get(a) != null) {
+      return ((String) toolTipTextMap.get(a));
+    } else {
+      return (null);
+    }
+  }
+  
+  
+    /**
+   *  The mouseMoved event (used for atom toolTipTexts).
+   *
+   * @param  e  The event.
+   */
+  public void mouseMoved(MouseEvent e) {
+    if (highlightedAtom != null) {
+      showTooltip = true;
+    } else {
+      showTooltip = false;
+    }
+    lastHighlightedAtom = highlightedAtom;
+  }
 
-	
+
+  /**
+   *  The mouseDragged event (not used currently).
+   *
+   * @param  e  The event.
+   */
+  public void mouseDragged(MouseEvent e) {
+  }
 }

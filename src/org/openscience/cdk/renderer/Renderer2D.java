@@ -344,6 +344,9 @@ public class Renderer2D   {
         if (drawSymbol) {
             paintAtomSymbol(atom, atomBackColor, graphics, alignment, container.getAtomNumber(atom) + 1);
         }
+        if (r2dm.showTooltip && atom == r2dm.getHighlightedAtom() && r2dm.getToolTipText(r2dm.getHighlightedAtom()) != null) {
+          paintToolTip(atom, graphics);
+        }
     }
 
 	/**
@@ -1116,6 +1119,26 @@ public class Renderer2D   {
     
     private float  getScreenSize(int size) {
         return (float)size * (float)r2dm.getZoomFactor();
+    }
+
+    
+    /**
+     *  Paints the toolTipText for an atom
+     *
+     * @param  atom      The atom.
+     * @param  graphics  The current graphics object.
+     */
+    public void paintToolTip(Atom atom, Graphics graphics) {
+      String text = r2dm.getToolTipText(r2dm.getHighlightedAtom());
+      Font normalFont = graphics.getFont();
+      graphics.setFont(normalFont);
+      FontMetrics fm = graphics.getFontMetrics();
+      int atomSymbolW = (new Integer(fm.stringWidth(text))).intValue();
+      int atomSymbolH = (new Integer(fm.getAscent())).intValue();
+      graphics.setColor(Color.YELLOW);
+      graphics.fillRect((int) atom.getX2D(), (int) atom.getY2D(), atomSymbolW + 4, atomSymbolH + 4);
+      graphics.setColor(Color.BLACK);
+      graphics.drawString(text, ((int) atom.getX2D()) + 2, ((int) atom.getY2D()) + atomSymbolH + 2);
     }
 }
 
