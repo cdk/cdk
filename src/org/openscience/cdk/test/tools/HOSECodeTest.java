@@ -80,63 +80,54 @@ public class HOSECodeTest extends TestCase
 	}
 
 	
-	
 	/**
 	 *  A unit test for JUnit
 	 *
 	 *@return    Description of the Return Value
 	 */
-	public void test1()
+	public void test1Sphere()
 	{
-		Molecule molecule;
-		String s = null;
-		boolean isAromatic = false;
-		try
-		{
-			molecule = MoleculeFactory.makeIndole();
-			//display(molecule);
-			isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
-			HOSECodeGenerator hcg = new HOSECodeGenerator();
-			//System.out.println("Listing 1-sphere HOSE codes for Indole:\n");
-			for (int f = 0; f < molecule.getAtomCount(); f++)
-			{
-				s = hcg.getHOSECode(molecule, molecule.getAtomAt(f), 1);
-				System.out.println(s + ",");
-			}
-		} catch (Exception exc)
-		{
-			exc.printStackTrace();
-		}
-	}
-	
-
-
-	/**
-	 *  A unit test for JUnit
-	 *
-	 *@return    Description of the Return Value
-	 */
-	public void test2()
-	{
+		String[] result = { 
+     "O-1;=C(//)",
+     "C-3;=OCC(//)",
+     "C-2;CC(//)",
+     "C-2;CC(//)",
+     "C-3;CCC(//)",
+     "C-2;CC(//)",
+     "C-2;CC(//)",
+     "C-3;CCC(//)",
+     "C-3;CCC(//)",
+     "C-2;CC(//)",
+     "C-2;CC(//)",
+     "C-2;CC(//)",
+     "C-2;CC(//)",
+     "C-3;CCO(//)",
+     "O-2;CC(//)",
+     "C-3;CCO(//)",
+     "C-3;CCO(//)",
+     "O-2;CC(//)",
+     "C-1;O(//)",
+     "C-2;CC(//)",
+     "C-3;CCC(//)",
+     "C-3;CCC(//)",
+     "C-3;CCC(//)"};
+		
 		try
 		{
 			Molecule molecule = (new SmilesParser()).parseSmiles("O=c1ccc2ccc4c5ccccc5Oc3c(OC)cc1c2c34");
-			//display(molecule);
 			boolean isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
 			HOSECodeGenerator hcg = new HOSECodeGenerator();
-			//System.out.println("Listing 1-sphere HOSE codes for Indole:\n");
 			String s = null;
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
-				s = hcg.getHOSECode(molecule, molecule.getAtomAt(f), 4);
-				System.out.println(s + ",");
+				s = hcg.getHOSECode(molecule, molecule.getAtomAt(f), 1);
+				assertTrue(result[f].equals(s));
 				
 			}
 		} catch (Exception exc)
 		{
 			exc.printStackTrace();
 		}
-
 	}
 
 	/**
@@ -144,25 +135,127 @@ public class HOSECodeTest extends TestCase
 	 *
 	 *@return    Description of the Return Value
 	 */
-	public void test3()
+	public void testMakeBremserCompliant()
 	{
+		String[] startData = { 
+     "O-1;=C(//)",
+     "C-3;=OCC(//)",
+     "C-2;CC(//)",
+     "C-2;CC(//)",
+     "C-3;CCC(//)",
+     "C-2;CC(//)",
+     "C-2;CC(//)",
+     "C-3;CCC(//)",
+     "C-3;CCC(//)",
+     "C-2;CC(//)",
+     "C-2;CC(//)",
+     "C-2;CC(//)",
+     "C-2;CC(//)",
+     "C-3;CCO(//)",
+     "O-2;CC(//)",
+     "C-3;CCO(//)",
+     "C-3;CCO(//)",
+     "O-2;CC(//)",
+     "C-1;O(//)",
+     "C-2;CC(//)",
+     "C-3;CCC(//)",
+     "C-3;CCC(//)",
+     "C-3;CCC(//)"};
+
+		String[] result = { 
+     "=C(//)",
+     "=OCC(//)",
+     "CC(//)",
+     "CC(//)",
+     "CCC(//)",
+     "CC(//)",
+     "CC(//)",
+     "CCC(//)",
+     "CCC(//)",
+     "CC(//)",
+     "CC(//)",
+     "CC(//)",
+     "CC(//)",
+     "CCO(//)",
+     "CC(//)",
+     "CCO(//)",
+     "CCO(//)",
+     "CC(//)",
+     "O(//)",
+     "CC(//)",
+     "CCC(//)",
+     "CCC(//)",
+     "CCC(//)"
+		};
+		
 		try
 		{
-			Molecule molecule = (new SmilesParser()).parseSmiles("C12=CC=CC=C1NC=C2");
-			//display(molecule);
+			String s = null;
+			HOSECodeGenerator hcg = new HOSECodeGenerator();
+			for (int f = 0; f < startData.length; f++)
+			{
+				s = hcg.makeBremserCompliant(startData[f]);
+				assertTrue(result[f].equals(s));
+				
+			}
+		} catch (Exception exc)
+		{
+			exc.printStackTrace();
+		}
+	}	
+	
+	/**
+	 *  A unit test for JUnit
+	 *
+	 *@return    Description of the Return Value
+	 */
+	public void test4Sphere()
+	{
+		String[] result = { 
+		     "O-1;=C(CC/CC,C/CC,C,&)",
+     "C-3;=OCC(,CC,C/CC,C,&/CC,&C,&O)",
+     "C-2;CC(=OC,C/,CC,&C/C&,C,C)",
+     "C-2;CC(C,CC/=OC,C&,C/,&C,CC,&)",
+     "C-3;CCC(CC,C,C/CC,CC,&,&/=O&,C,C&,&O)",
+     "C-2;CC(CC,C/CC,C,&C/C&,CC,&,CC)",
+     "C-2;CC(CC,C/CC,CC,&C/C&,CO,C&,C,C)",
+     "C-3;CCC(CC,CC,C/CC,CO,C&,C,&/CC,C&,&O,&,C,&)",
+     "C-3;CCC(CC,OC,C/CC,C,&,C,&/CC,C&,&,&)",
+     "C-2;CC(CC,C/CC,CO,&/CC,C,&,&)",
+     "C-2;CC(C,C/CC,&/CC,&O)",
+     "C-2;CC(C,C/CO,&/C&,C)",
+     "C-2;CC(CO,C/CC,C,&/CC,&,&C)",
+     "C-3;COC(CC,C,C/CC,C,&C,&/C&,C,&,CO)",
+     "O-2;CC(CC,CC/CC,CO,&C,C/CC,&C,&,C,C,&)",
+     "C-3;CCO(CC,CO,C/CC,CC,&,C,&C/&C,CC,&C,&,,C)",
+     "C-3;CCO(C,CO,C/CC,&C,C,/=OC,&C,CC,&C)",
+     "O-2;CC(CC,/CO,C/CC,C,&C)",
+     "C-1;O(C/CC/CO,C)",
+     "C-2;CC(CC,CO/=OC,CC,&O,C/,C,&C,&C,C,)",
+     "C-3;CCC(=OC,CC,C/,C,CC,&C,&O/&,CC,&O,&,C)",
+     "C-3;CCC(CC,CC,CC/=OC,C,CC,&O,&,&/,&,&O,CC,&,&)",
+     "C-3;CCC(CC,CC,CO/CC,CC,CC,&,&O,&/=OC,&,&,&,C&,C,C)"
+		};
+		
+		
+		try
+		{
+			Molecule molecule = (new SmilesParser()).parseSmiles("O=c1ccc2ccc4c5ccccc5Oc3c(OC)cc1c2c34");
 			boolean isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
 			HOSECodeGenerator hcg = new HOSECodeGenerator();
 			String s = null;
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
 				s = hcg.getHOSECode(molecule, molecule.getAtomAt(f), 4);
-				System.out.println(s + ",");
+				assertTrue(result[f].equals(s));
 			}
 		} catch (Exception exc)
 		{
 			exc.printStackTrace();
 		}
-}
+
+	}
+
 
 	/**
 	 *  A unit test for JUnit
@@ -171,6 +264,16 @@ public class HOSECodeTest extends TestCase
 	 */
 	public void test4()
 	{
+		String[] result = {
+		     "C-3;*C*C*C(*C*N,*C,*C/*C,*&,*&,*&/*&)",
+     "C-2;*C*C(*C*C,*N/*C*&,*C,*&/*C,*&)",
+     "C-2;*C*N(*C,*C/*&*C,*&*C/,*C,*C)",
+     "N-2;*C*C(*C*C,*C/*&*C,*C,*&/,*C,*&)",
+     "C-3;*C*C*N(*C*C,*C,*C/*C,*&,*&,*&/*&)",
+     "C-2;*C*C(*C*N,*C/*C*C,*C,*&/*&,*&,*&)",
+     "C-2;*C*C(*C,*C/*C*N,*&/*C*&,*C)",
+     "C-2;*C*C(*C,*C/*C*C,*&/*&*N,*C)",
+     "C-2;*C*C(*C*C,*C/*C*N,*C,*&/*&,*&,*&)"};
 		try
 		{
 			Molecule molecule = (new SmilesParser()).parseSmiles("C1(C=CN2)=C2C=CC=C1");
@@ -181,7 +284,8 @@ public class HOSECodeTest extends TestCase
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
 				s = hcg.getHOSECode(molecule, molecule.getAtomAt(f), 4);
-				System.out.println(s + ",");
+				//System.out.println("\"" + s + "\",");
+				assertTrue(result[f].equals(s));
 			}
 		} catch (Exception exc)
 		{
@@ -195,6 +299,12 @@ public class HOSECodeTest extends TestCase
 	{
 		Molecule molecule = null;
 		HOSECodeGenerator hcg = null;
+		String[] result = {
+		    "C-1;C(=C/Y/)",
+     "C-2;=CC(Y,//)",
+     "C-2;=CY(C,//)",
+     "Br-1;C(=C/C/)"
+		};
 
 		try
 		{
@@ -205,12 +315,7 @@ public class HOSECodeTest extends TestCase
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
 				s = hcg.getHOSECode(molecule, molecule.getAtomAt(f), 4);
-				System.out.println(s + ",");
-			}
-			Bond[] bonds = molecule.getBonds();
-			for (int f = 0; f < bonds.length; f++)
-			{
-				//System.out.println(bonds[f].flags[CDKConstants.ISAROMATIC]);
+				assertTrue(result[f].equals(s));
 			}
 
 		} catch (Exception exc)
@@ -218,7 +323,7 @@ public class HOSECodeTest extends TestCase
 			exc.printStackTrace();
 		}
 		
-		JFrame frame = new JFrame("HOSECodeTest");
+		/*JFrame frame = new JFrame("HOSECodeTest");
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout());
 		DefaultMutableTreeNode top = hcg.getRootNode();
@@ -248,7 +353,7 @@ public class HOSECodeTest extends TestCase
 			tree.expandRow(f);	
 		}
 		frame.pack();
-		frame.show();
+		frame.show(); */
 	}
 
 	private void assembleNodes(DefaultMutableTreeNode top, HOSECodeGenerator hcg)
@@ -267,11 +372,7 @@ public class HOSECodeTest extends TestCase
 	{
 		standAlone = true;
 		HOSECodeTest hct = new HOSECodeTest("HOSECodeTest");
-		//hct.test1();
-		//hct.test2();
-		//hct.test3();
-		//hct.test4();
-		hct.testBug655169();
+		//hct.testBug655169();
 	}
 }
 
