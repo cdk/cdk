@@ -115,6 +115,10 @@ public class ReaderFactory {
             } else if (line.indexOf("GAMESS") >= 0) {
                 logger.info("Gamess format detected");
                 return "org.openscience.cdk.io.GamessReader";
+            } else if (lineNumber == 4 && (line.indexOf("v2000") >= 0 ||
+                                           line.indexOf("v3000") >= 0)) {
+                logger.info("MDL mol/sdf file format detected");
+                return "org.openscience.cdk.io.MDLReader";
             } else if (line.indexOf("ACES2") >= 0) {
                 logger.info("Aces2 format detected");
                 return "org.openscience.cdk.io.Aces2Reader";
