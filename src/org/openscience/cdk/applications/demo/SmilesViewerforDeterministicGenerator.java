@@ -120,11 +120,13 @@ public class SmilesViewerforDeterministicGenerator extends JApplet implements Ac
 					MoleculeListViewer mlv = null;
 					mlv = new MoleculeListViewer();
 					mlv.setMolViewDim(new Dimension(400, 600));
-					SmilesParser sp=new SmilesParser();
+					SmilesParser sp = new SmilesParser();
 					Molecule mol=sp.parseSmiles(smilesString);
 					StructureDiagramGenerator sdg = new StructureDiagramGenerator();
 					MoleculeViewer2D mv = new MoleculeViewer2D();
-					//mv.getRenderer2DModel().setDrawNumbers(true);
+                    mv.getRenderer2DModel().setDrawNumbers(toggleNumbers.getState());
+                    mv.getRenderer2DModel().setKekuleStructure(toggleSymbols.getState());
+                    mv.getRenderer2DModel().setShowImplicitHydrogens(toggleHydrogens.getState());
 					sdg.setMolecule((Molecule) mol.clone());
 					sdg.generateCoordinates();
 					mv.setAtomContainer(sdg.getMolecule());
