@@ -120,7 +120,8 @@ public class XindiceReader extends DefaultChemObjectReader {
                 try {
                   col.close();
                 } catch (Exception eCol) {
-                  System.err.println("XML:DB Exception occured " + eCol.getMessage());
+                  logger.error("XML:DB Exception occured " + eCol.getMessage());
+		  logger.debug(eCol);
                 }
             }
         }

@@ -44,6 +44,12 @@ import java.io.*;
  */
 public class SubstructureFinder {
 
+	/*
+	 *  This is a command line application            *
+	 *  Do not convert these System.out/err.println() *
+	 *  to logger statements
+	 */
+	
     public static void main(String[] args) {
         if (args.length < 2) {
             System.err.println("syntax: SubstructureFinder <SMILES> <file> <file2> ...");

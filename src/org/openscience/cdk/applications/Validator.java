@@ -43,10 +43,18 @@ public class Validator {
 
     private org.openscience.cdk.tools.LoggingTool logger;
     
+	/*
+	 *  This is a command line application            *
+	 *  Do not convert these System.out/err.println() *
+	 *  to logger statements
+	 */
+    
     public Validator() {
         logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName(), true);
     }
 
+    
+    
     public ValidationReport validate(File input) throws IOException {
         Reader fileReader = new FileReader(input);
         ChemObjectReader reader = new ReaderFactory().createReader(fileReader);

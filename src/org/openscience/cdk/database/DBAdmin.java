@@ -39,6 +39,7 @@ import org.openscience.cdk.io.*;
   * @author unknown
   * @author egonw
   *
+  * @deprecated
   * @keyword MySQL
   * @depends postgresql7.0-1.2.jar
   * @depends mysql-2.0.4.jar
@@ -121,6 +122,9 @@ public class DBAdmin {
         try {
            new DBAdmin(args);
         } catch(Exception exc) {
+		/* This is a command line application            *
+		 * Do not convert these System.out/err.println() *
+		 * to logger statements                          */
             System.out.println(usage);
             exc.printStackTrace();
         }
@@ -217,6 +221,9 @@ public class DBAdmin {
 
         // detect yet unsupported PostgreSQL
 		if (driver.equals("postgresql") || (url.indexOf("postgresql") != -1)) {
+			/* This is a command line application            *
+			 * Do not convert these System.out/err.println() *
+			 * to logger statements                          */			
 		    System.out.println("PostGresQL is not yet supported.");
 		}
 

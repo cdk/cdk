@@ -606,7 +606,8 @@ public class Controller2D {
                                 }
                                 catch (Exception exc)
                                 {
-                                        exc.printStackTrace();
+					logger.error("Could not remove atom from ring");
+                                        logger.debug(exc);
                                 }
                                 AtomContainer atomCon = ChemModelManipulator.getRelevantAtomContainer(chemModel, spiroAtom);
                                 atomCon.add(newRing);
@@ -707,7 +708,8 @@ public class Controller2D {
                                         }
                                         catch (Exception exc)
                                         {
-                                                exc.printStackTrace();
+						logger.error("Could not remove atom from ring");
+						logger.debug(exc);
                                         }
                                         atomCon.add(newRing);
                                 }

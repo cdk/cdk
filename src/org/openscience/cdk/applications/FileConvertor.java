@@ -55,6 +55,12 @@ import javax.vecmath.*;
  */
 public class FileConvertor {
 
+/*
+ *  This is a command line application           
+ *  Do not convert System.out/err.println() 
+ *  to logger statements
+ */	
+
     private org.openscience.cdk.tools.LoggingTool logger;
 
     private ChemObjectReader cor;

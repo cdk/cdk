@@ -113,7 +113,8 @@ public class MDLWriter extends DefaultChemObjectWriter {
 		    		writeMolecule((Molecule)object);
 			}
 			catch(Exception ex){
-				System.err.println(ex.getMessage());
+				logger.error(ex.getMessage());
+				logger.debug(ex);
 			}
 		}
 		else

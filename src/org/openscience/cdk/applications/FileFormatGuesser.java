@@ -41,6 +41,12 @@ public class FileFormatGuesser {
     /**
      * Actual program.
      */
+     
+	/*
+	 *  This is a command line application            *
+	 *  Do not convert these System.out/err.println() *
+	 *  to logger statements
+	 */
     public static void main(String[] args) {
         if (args.length < 1) {
             System.err.println("syntax: FileFormatGuesser <file> <file2> ...");

@@ -160,20 +160,20 @@ public class CDKPluginManager {
                                     }
                                     break;
                                 } catch (ClassNotFoundException exception) {
-                                    System.err.println("Could not find class");
-                                    exception.printStackTrace();
+                                    logger.error("Could not find class");
+                                    logger.debug(exception);
                                 } catch (IllegalAccessException exception) {
-                                    System.err.println("Don't have access to class");
-                                    exception.printStackTrace();
+                                    logger.error("Don't have access to class");
+                                    logger.debug(exception);
                                 } catch (InstantiationException exception) {
-                                    System.err.println("Could not instantiate object");
-                                    exception.printStackTrace();
+                                    logger.error("Could not instantiate object");
+                                    logger.debug(exception);
                                 }
                             }
                         }
                     } catch (IOException exception) {
                         logger.error("Could not load plugin jar file: ");
-                        logger.debug(exception.toString());
+                        logger.debug(exception);
                     }
                 }
             }
