@@ -42,3 +42,4 @@ org/openscience/cdk/tools/SetOfMoleculesManipulator.java
 org/openscience/cdk/tools/IsotopeFactory.java
 org/openscience/cdk/tools/LoggingTool.java
 org/openscience/cdk/tools/TXTBasedAtomTypeConfigurator.java
+org/openscience/cdk/applications/plugin/CDKEditBus.java
