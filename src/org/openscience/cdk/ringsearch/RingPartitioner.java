@@ -54,12 +54,20 @@ public class RingPartitioner
 	{
 		Vector ringSets = new Vector();
 		Ring ring;
-		RingSet rs = (RingSet)ringSet.clone();
+		RingSet tempRingSet = null;
+		//RingSet rs = (RingSet)ringSet.clone();
+		RingSet rs = new RingSet();
+		for (int f = 0; f < ringSet.size(); f++)
+		{
+			rs.addElement(ringSet.elementAt(f));	
+		}
 		do
 		{
 			ring = (Ring)rs.elementAt(0);
 			RingSet newRs = new RingSet();
 			newRs.addElement(ring);
+			tempRingSet = walkRingSystem(rs, ring, newRs);
+			if (debug) System.out.println("found ringset with ringcount: " + tempRingSet.size());
 			ringSets.addElement(walkRingSystem(rs, ring, newRs));
 		
 		}while(rs.size() > 0);
