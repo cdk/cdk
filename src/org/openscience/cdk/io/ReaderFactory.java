@@ -48,7 +48,7 @@ import java.util.zip.GZIPInputStream;
  * created is determined from the content of the input. Formats
  * of GZiped files can be detected too.
  *
- * @cdkPackage extra
+ * @cdkPackage experimental
  *
  * @author  Egon Willighagen <egonw@sci.kun.nl>
  * @author  Bradley A. Smith <bradley@baysmith.com>

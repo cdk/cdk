@@ -31,7 +31,9 @@ import java.util.*;
 import java.io.*;
 import javax.vecmath.*;
 
-
+/**
+ * @cdkPackage test
+ */
 public class DrawPolygonTest
 {
 	Molecule molecule;
