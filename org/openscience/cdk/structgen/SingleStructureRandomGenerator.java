@@ -91,7 +91,7 @@ public class SingleStructureRandomGenerator
 	 * @return    Description of the Returned Value
 	 * @since
 	 */
-	public AtomContainer generate()
+	public Molecule generate()
 	{
 		boolean structureFound = false;
 		boolean bondFormed;
@@ -141,7 +141,7 @@ public class SingleStructureRandomGenerator
 		{
 			System.out.println("Structure found after " + iteration + " iterations.");	
 		}
-		return atomContainer;
+		return new Molecule(atomContainer);
 	}
 
 	

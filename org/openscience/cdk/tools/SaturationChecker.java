@@ -174,7 +174,10 @@ public class SaturationChecker
 		{
 			if (bondOrderSum >= atomTypes[f].getMaxBondOrderSum() - hcount && maxBondOrder <= atomTypes[f].getMaxBondOrder())
 			{
-				System.out.println("*** Good ! ***");
+				if (debug)
+				{
+					System.out.println("*** Good ! ***");
+				}
 				return true;
 			}
 		}

@@ -43,6 +43,8 @@ import javax.xml.parsers.DocumentBuilder;
 import org.w3c.dom.Document;
 import org.w3c.dom.DOMException;
 
+import JSX.*;
+
 
 /**
  *  A collection of tools for handling an xml document as a DOM tree
@@ -154,4 +156,14 @@ public class XMLTools
 		return document;
 	}
 
+	public static String getAsXMLString(Object obj) throws java.io.IOException
+	{
+		StringWriter writer = new StringWriter();
+		PrintWriter printWriter = new PrintWriter(writer);
+		ObjOut out = new ObjOut(printWriter); 
+    		out.writeObject(obj); 
+		printWriter.flush();
+		writer.flush();
+		return writer.toString();
+	}
 }
