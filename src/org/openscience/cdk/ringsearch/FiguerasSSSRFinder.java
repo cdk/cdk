@@ -53,7 +53,7 @@ public class FiguerasSSSRFinder {
     private LoggingTool logger;
     
 	int trimCounter = 0;
-	private static final int PATH = 0;
+	private static final String PATH = "org.openscience.cdk.ringsearch.FiguerasSSSRFinderRFinder.PATH";
 
     public FiguerasSSSRFinder() {
         logger = new LoggingTool(this);
@@ -219,7 +219,7 @@ public class FiguerasSSSRFinder {
 		for (int f = 0; f < OKatoms; f++)
 		{
 			path[f] = new Vector();		
-			molecule.getAtomAt(f).getPointer(PATH).removeAllElements();
+			((Vector)molecule.getAtomAt(f).getProperty(PATH)).removeAllElements();
 		}
 		// Initialize the queue with nodes attached to rootNode
 		neighbors = molecule.getConnectedAtoms(rootNode);
@@ -230,26 +230,26 @@ public class FiguerasSSSRFinder {
 			// push the f-st node onto our FIFO queue	
 			// after assigning rootNode as its source
 			queue.push(neighbor);
-			neighbor.getPointer(PATH).addElement(rootNode);
-			neighbor.getPointer(PATH).addElement(neighbor);
+			((Vector)neighbor.getProperty(PATH)).addElement(rootNode);
+			((Vector)neighbor.getProperty(PATH)).addElement(neighbor);
 		}
 		while (queue.size() > 0){	
 			node = (Atom)queue.pop();
 			mAtoms = molecule.getConnectedAtoms(node);
 			for (int f = 0; f < mAtoms.length; f++){
 				mAtom = mAtoms[f];
-				if (mAtom != node.getPointer(PATH).elementAt(node.getPointer(PATH).size() - 2)){
-					if (mAtom.getPointer(PATH).size() > 0){
-						intersection = getIntersection(node.getPointer(PATH), mAtom.getPointer(PATH));
+				if (mAtom != ((Vector)node.getProperty(PATH)).elementAt(((Vector)node.getProperty(PATH)).size() - 2)){
+					if (((Vector)mAtom.getProperty(PATH)).size() > 0){
+						intersection = getIntersection((Vector)node.getProperty(PATH), (Vector)mAtom.getProperty(PATH));
 						if (intersection.size() == 1){
 							// we have found a valid ring closure
 							// now let's prepare the path to
 							// return in tempAtomSet
-							logger.debug("path1  ", node.getPointer(PATH));
-							logger.debug("path2  ", mAtom.getPointer(PATH));
+							logger.debug("path1  ", ((Vector)node.getProperty(PATH)));
+							logger.debug("path2  ", ((Vector)mAtom.getProperty(PATH)));
 							logger.debug("rootNode  ", rootNode);
 							logger.debug("ring   ", ring);
-							ring = getUnion(node.getPointer(PATH), mAtom.getPointer(PATH));
+							ring = getUnion(((Vector)node.getProperty(PATH)), ((Vector)mAtom.getProperty(PATH)));
 							return prepareRing(ring,molecule);
 						}
 					}
@@ -257,10 +257,10 @@ public class FiguerasSSSRFinder {
 					{   
 						// if path[mNumber] is null
 					    // update the path[mNumber]							
-						pfad2 = node.getPointer(PATH);
-						mAtom.setPointer(PATH, (Vector)node.getPointer(PATH).clone());
-						mAtom.getPointer(PATH).addElement(mAtom);
-						pfad1 = mAtom.getPointer(PATH);
+						pfad2 = (Vector)node.getProperty(PATH);
+						mAtom.setProperty(PATH, (Vector)((Vector)node.getProperty(PATH)).clone());
+						((Vector)mAtom.getProperty(PATH)).addElement(mAtom);
+						pfad1 = (Vector)mAtom.getProperty(PATH);
 						// now push the node m onto the queue
 						queue.push(mAtom);	
 					}
@@ -339,7 +339,7 @@ public class FiguerasSSSRFinder {
 	{
 	 	for (int i = 0; i < molecule.getAtomCount(); i++) {
 			Atom atom = molecule.getAtomAt(i);
-			atom.setPointer(PATH, new Vector());
+			atom.setProperty(PATH, new Vector());
 	 	}		
 	}
 

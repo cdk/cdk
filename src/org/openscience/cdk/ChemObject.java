@@ -60,12 +60,6 @@ public class ChemObject implements java.io.Serializable, Cloneable {
 	 */
     private boolean[] flags;
 
-	/** 
-     * Array of multipurpose vectors. Handle like described for the
-	 * flags above.
-	 */
-    private Vector[] pointers;
-
     /**
      * The ID is null by default.
      */
@@ -78,7 +72,6 @@ public class ChemObject implements java.io.Serializable, Cloneable {
 		flags = new boolean[CDKConstants.MAX_FLAG_INDEX + 1];
 		chemObjects = null;
         properties = null;
-        pointers = null;
         identifier = null;
 	}
 	
@@ -251,15 +244,6 @@ public class ChemObject implements java.io.Serializable, Cloneable {
         }
         // delete all listeners
         ((ChemObject)clone).chemObjects = null;
-        // clone the pointer vectors
-        if (pointers != null) {
-		    ((ChemObject)clone).pointers = new Vector[CDKConstants.MAX_POINTER_INDEX + 1];
-            for (int f = 0; f < pointers.length; f++) {
-                if (pointers[f] != null) {
-                    ((ChemObject)clone).pointers[f] = (Vector)pointers[f].clone();
-                }
-            }
-        }
 		return clone;
 	}
 
@@ -322,40 +306,6 @@ public class ChemObject implements java.io.Serializable, Cloneable {
         return flags[flag_type];
     }
 
-    /*
-     * Lazy creation of pointers array.
-     */
-    private Vector[] lazyPointers()
-    {
-	if (pointers == null)
-	    {
-		pointers = new Vector[CDKConstants.MAX_POINTER_INDEX + 1];
-	    }
-	return pointers;
-    }
-
-    /**
-     * Sets the value of some pointer.
-     * 
-     * @param  pointer_type  Pointer to set
-     * @param  pointer_value Value to assign to pointer
-     * @see    #getPointer
-     */
-    public void setPointer(int pointer_type, Vector pointer_value) {
-        lazyPointers()[pointer_type] = pointer_value;
-    }
-    
-    /**
-     * Returns the value of some pointer.
-     *
-     * @param  pointer_type  Pointer to retrieve the value of
-     * @return a Vector with pointers for the given type
-     * @see    #setPointer
-     */
-    public Vector getPointer(int pointer_type) {
-        return lazyPointers()[pointer_type];
-    }
-    
 	/**
 	 * Sets the properties of this object.
      *

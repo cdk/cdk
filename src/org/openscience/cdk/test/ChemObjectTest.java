@@ -188,22 +188,6 @@ public class ChemObjectTest extends TestCase {
         public void stateChanged(ChemObjectChangeEvent event) {};
     }
     
-    public void testClone_Pointers() {
-        ChemObject chemObject1 = new ChemObject();
-        Vector pointers = new Vector();
-        Atom atom1 = new Atom("C");
-        pointers.addElement(atom1);
-        chemObject1.setPointer(1, pointers);
-        ChemObject chemObject2 = (ChemObject)chemObject1.clone();
-
-        // test cloning of pointer vectors field
-        assertEquals(pointers, chemObject1.getPointer(1));
-        assertNotSame(chemObject1.getPointer(1), chemObject2.getPointer(1));
-        assertEquals(chemObject1.getPointer(1).size(), chemObject2.getPointer(1).size());
-        // the contents of the vectors are not cloned
-        assertEquals(atom1, chemObject2.getPointer(1).elementAt(0));
-    }
-    
    public void testShallowCopy() {
         ChemObject chemObject = new ChemObject();
         Object clone = chemObject.clone();
