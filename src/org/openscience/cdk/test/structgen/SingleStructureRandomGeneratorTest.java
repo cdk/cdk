@@ -1,4 +1,4 @@
-/* 
+/*
  * 
  * $RCSfile$    $Author$    $Date$    $Revision$
  * 
@@ -30,6 +30,7 @@ import org.openscience.cdk.layout.*;
 import org.openscience.cdk.renderer.*;
 import org.openscience.cdk.structgen.*;
 import org.openscience.cdk.tools.*;
+import org.openscience.cdk.templates.*;
 import java.util.*;
 import java.io.*;
 import java.net.URL;

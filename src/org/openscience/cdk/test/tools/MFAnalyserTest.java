@@ -28,6 +28,7 @@ import org.openscience.cdk.*;
 import org.openscience.cdk.ringsearch.*;
 import org.openscience.cdk.io.*;
 import org.openscience.cdk.tools.*;
+import org.openscience.cdk.templates.*;
 import java.util.*;
 import java.io.*;
 import java.net.URL;

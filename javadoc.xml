@@ -47,6 +47,8 @@
                 <param name="-properties" value="jar/dbdoclet.properties"/>
             </doclet>
 
+            <tag name="keyword" scope="all" description="Keywords:" />
+
             <package name="org.openscience.cdk"/>
 
             <sourcepath>

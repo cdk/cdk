@@ -30,6 +30,7 @@ import org.openscience.cdk.tools.*;
 import org.openscience.cdk.renderer.*;
 import org.openscience.cdk.layout.*;
 import org.openscience.cdk.isomorphism.*;
+import org.openscience.cdk.templates.*;
 import javax.vecmath.*;
 
 import java.util.*;
@@ -105,7 +106,7 @@ public class SmilesParserTest extends TestCase
     public void testSFBug593648() {
         try {
             String smiles = "CC1=CCC2CC1C(C)2C";
-            Molecule apinene = org.openscience.cdk.test.MoleculeFactory.makeAlphaPinene();
+            Molecule apinene = MoleculeFactory.makeAlphaPinene();
             SmilesParser sp = new SmilesParser();
             Molecule mol = sp.parseSmiles(smiles);
             IsomorphismTester it = new IsomorphismTester(apinene);

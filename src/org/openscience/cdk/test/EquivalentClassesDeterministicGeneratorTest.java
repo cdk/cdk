@@ -1,5 +1,8 @@
 /*
- * $RCSfile$    $Author$    $Date$    $Revision$
+ * $RCSfile$    
+ * $Author$    
+ * $Date$    
+ * $Revision$
  * 
  * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
  * 
@@ -27,6 +30,7 @@ import org.openscience.cdk.*;
 import org.openscience.cdk.smiles.*;
 import org.openscience.cdk.io.*;
 import org.openscience.cdk.tools.*;
+import org.openscience.cdk.templates.*;
 import org.openscience.cdk.renderer.*;
 import org.openscience.cdk.layout.*;
 import org.openscience.cdk.structgen.deterministic.*;

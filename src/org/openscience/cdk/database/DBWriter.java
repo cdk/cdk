@@ -60,12 +60,10 @@ public class DBWriter implements ChemObjectWriter {
         // FIXME: connection should be closed
     }
 
+    public ChemObject highestSupportedChemObject() {
+        return new SetOfMolecules();
+    };
 
-    /**
-	 *
-	 *
-	 * @param object
-	 */
 	public void write(ChemObject object) throws UnsupportedChemObjectException {
 		if (object instanceof Molecule) {
 			writeMolecule((Molecule)object);

@@ -28,6 +28,7 @@ import org.openscience.cdk.*;
 import org.openscience.cdk.io.*;
 import org.openscience.cdk.layout.*;
 import org.openscience.cdk.renderer.*;
+import org.openscience.cdk.templates.*;
 import java.util.*;
 import java.io.*;
 import java.net.URL;

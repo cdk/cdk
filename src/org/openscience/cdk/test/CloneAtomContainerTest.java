@@ -1,9 +1,8 @@
-/* CloneAtomContainerTest.java
- * 
- * $ author: 	Christoph Steinbeck $ 
- * $ contact: 	steinbeck@ice.mpg.de 	$
- * $ date: 		2001-08-09 				$
- * 
+/* $RCSfile$
+ * $Author$
+ * $Date$
+ * $Revision$
+ *
  * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
  * 
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
@@ -30,11 +29,13 @@ package org.openscience.cdk.test;
 
 import junit.framework.*;
 import org.openscience.cdk.*;
+import org.openscience.cdk.templates.MoleculeFactory;
 
 /**
+ * TestCase for the AtomContainer class.
  *
- * TestCase for the ChemObject class.
- *
+ * @author Christoph Steinbeck
+ * @since  2001-08-09
  */
 public class CloneAtomContainerTest extends TestCase {
 

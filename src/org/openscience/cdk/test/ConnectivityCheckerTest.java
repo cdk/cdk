@@ -1,7 +1,8 @@
 /*
- * ConnectivityCheckerTest.java
- *
- * $RCSfile$    $Author$    $Date$    $Revision$
+ * $RCSfile$    
+ * $Author$    
+ * $Date$    
+ * $Revision$
  *
  * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
  *
@@ -27,6 +28,7 @@ package org.openscience.cdk.test;
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.tools.*;
+import org.openscience.cdk.templates.*;
 import java.util.*;
 import junit.framework.*;
 

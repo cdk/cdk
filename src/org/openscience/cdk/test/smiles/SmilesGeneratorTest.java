@@ -27,7 +27,7 @@ import org.openscience.cdk.*;
 import org.openscience.cdk.smiles.*;
 import org.openscience.cdk.io.*;
 import org.openscience.cdk.tools.*;
-import org.openscience.cdk.test.MoleculeFactory;
+import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.renderer.*;
 import org.openscience.cdk.layout.*;
 import org.openscience.cdk.test.*;

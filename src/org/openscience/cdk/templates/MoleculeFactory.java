@@ -1,6 +1,7 @@
-/* MoleculeFactory.java
- * 
- * $RCSfile$    $Author$    $Date$    $Revision$
+/* $RCSfile$
+ * $Author$    
+ * $Date$    
+ * $Revision$
  * 
  * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
  * 
@@ -21,7 +22,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
  */
 
-package org.openscience.cdk.test;
+package org.openscience.cdk.templates;
 
 import java.io.*;
 import org.openscience.cdk.*;
@@ -29,11 +30,14 @@ import org.openscience.cdk.ringsearch.*;
 import org.openscience.cdk.io.*;
 import org.openscience.cdk.tools.*;
 
-public class MoleculeFactory
-{
+/**
+ * This class contains methods for generating simple organic molecules.
+ *
+ * @keyword templates
+ */
+public class MoleculeFactory {
 
-	public static Molecule makeAlphaPinene()
-	{
+	public static Molecule makeAlphaPinene() {
 		Molecule mol = new Molecule();
 		mol.addAtom(new Atom("C")); // 1
 		mol.addAtom(new Atom("C")); // 2
@@ -43,9 +47,9 @@ public class MoleculeFactory
 		mol.addAtom(new Atom("C")); // 6
 		mol.addAtom(new Atom("C")); // 7
 		mol.addAtom(new Atom("C")); // 8
-		mol.addAtom(new Atom("C")); // 9 
+		mol.addAtom(new Atom("C")); // 9
 		mol.addAtom(new Atom("C")); // 10
-		
+
 		mol.addBond(0, 1, 2); // 1
 		mol.addBond(1, 2, 1); // 2
 		mol.addBond(2, 3, 1); // 3
@@ -60,7 +64,7 @@ public class MoleculeFactory
 		configureAtoms(mol);
 		return mol;
 	}
-	
+
 
 	public static Molecule makeEthylCyclohexane()
 	{
