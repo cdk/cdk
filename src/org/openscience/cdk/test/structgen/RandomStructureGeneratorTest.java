@@ -74,20 +74,20 @@ public class RandomStructureGeneratorTest
 					{
 						s += mol.getBondCount(mol.getAtomAt(g)) + " ";
 					}
-					System.out.println(s);
+					//System.out.println(s);
 					s = "BondOrderSums: ";
 					for (int g = 0; g < mol.getAtomCount(); g++)
 					{
 						s += mol.getBondOrderSum(mol.getAtomAt(g)) + " ";
 					}
-					System.out.println(s);
+					//System.out.println(s);
 					s = "Bonds: ";
                     Bond[] bonds = mol.getBonds();
 					for (int g = 0; g < bonds.length; g++)
 					{
 						s += bonds[g].getOrder() + " ";
 					}
-					System.out.println(s);
+					//System.out.println(s);
 				}
 			}
 			rg.acceptStructure();

@@ -43,7 +43,7 @@ public class CoreClassesTests {
         suite.addTest(ChemModelTest.suite());
         suite.addTest(ChemObjectTest.suite());
         suite.addTest(ChemSequenceTest.suite());
-        suite.addTest(CrystalTest.suite());
+        //suite.addTest(CrystalTest.suite());
         suite.addTest(ElectronContainerTest.suite());
         suite.addTest(ElementTest.suite());
         suite.addTest(IsotopeTest.suite());

@@ -1,4 +1,5 @@
-/*  $RCSfile$
+/*
+ *  $RCSfile$
  *  $Author$
  *  $Date$
  *  $Revision$
@@ -57,7 +58,8 @@ public class HueckelAromaticityDetectorTest extends TestCase
 	 *
 	 *@param  name  Description of the Parameter
 	 */
-	public HueckelAromaticityDetectorTest(String name) {
+	public HueckelAromaticityDetectorTest(String name)
+	{
 		super(name);
 	}
 
@@ -85,210 +87,280 @@ public class HueckelAromaticityDetectorTest extends TestCase
 
 
 	/**
-	 *  A unit test for JUnit
+	 *  A unit test for JUnit The special difficulty with Azulene is that only the
+	 *  outermost larger 10-ring is aromatic according to Hueckel rule.
 	 */
 	public void testAzulene()
 	{
-		Molecule mol = MoleculeFactory.makeAzulene();
-		if (standAlone) {
-            display(mol);
-            System.out.println("Testing Azulene");
-        }
+		boolean[] testResult =
+				{true,
+				true,
+				true,
+				true,
+				true,
+				true,
+				true,
+				true,
+				true,
+				true
+				};
+		Molecule molecule = MoleculeFactory.makeAzulene();
 		boolean isAromatic = false;
-		try {
-			isAromatic = HueckelAromaticityDetector.detectAromaticity(mol);
-		} catch (Exception exc) {
-			if (standAlone) {
+		boolean result = false;
+		try
+		{
+			isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
+		} catch (Exception exc)
+		{
+			if (standAlone)
+			{
 				exc.printStackTrace();
 			}
-            fail(exc.toString());
+			fail(exc.toString());
 		}
-		if (standAlone && isAromatic) {
+		for (int f = 0; f < molecule.getAtomCount(); f++)
+		{
+			result = (molecule.getAtomAt(f).flags[CDKConstants.ISAROMATIC] == testResult[f]);
+			assertTrue(result);
+			if (standAlone)
+			{
+				System.out.println("Result for atom " + f + " is correct?: " + result);
+			}
+		}
+		if (standAlone && isAromatic)
+		{
 			System.out.println("Azulene is aromatic");
 		}
-		assertTrue(isAromatic);
-
 	}
 
 
 	/**
-	 *  A unit test for JUnit
+	 *  A unit test for JUnit. The N has to be counted correctly
 	 */
 	public void testIndole()
 	{
-		Molecule mol = MoleculeFactory.makeIndole();
-		if (standAlone) {
-            display(mol);
-            System.out.println("Testing Indole");
-        }
+		Molecule molecule = MoleculeFactory.makeIndole();
+		boolean testResults[] = {
+				true,
+				true,
+				true,
+				true,
+				true,
+				true,
+				true,
+				true,
+				true
+				};
 		boolean isAromatic = false;
 		try
 		{
-			isAromatic = HueckelAromaticityDetector.detectAromaticity(mol);
+			isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
+			for (int f = 0; f < molecule.getAtomCount(); f++)
+			{
+				assertTrue(molecule.getAtomAt(f).flags[CDKConstants.ISAROMATIC] == testResults[f]);
+			}
 		} catch (Exception exc)
 		{
 			if (standAlone)
 			{
 				exc.printStackTrace();
 			}
-            fail(exc.toString());
+			fail(exc.toString());
 		}
-		if (standAlone && isAromatic)
-		{
-			System.out.println("Indole is aromatic");
-		}
-		assertTrue(isAromatic);
-
 	}
 
 
 	/**
 	 *  A unit test for JUnit
 	 */
-	public void testPyrrole()
+	public void testThiazole()
 	{
-		Molecule mol = MoleculeFactory.makePyrrole();
-		if (standAlone) {
-            display(mol);
-            System.out.println("Testing Pyrrole");
-        }
+		Molecule molecule = MoleculeFactory.makeThiazole();
 		boolean isAromatic = false;
+		boolean[] testResults = {true, true, true, true, true};
 		try
 		{
-			isAromatic = HueckelAromaticityDetector.detectAromaticity(mol);
+			isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
+			for (int f = 0; f < molecule.getAtomCount(); f++)
+			{
+				assertTrue(molecule.getAtomAt(f).flags[CDKConstants.ISAROMATIC] == testResults[f]);
+			}
+
 		} catch (Exception exc)
 		{
 			if (standAlone)
 			{
 				exc.printStackTrace();
 			}
-            fail(exc.toString());
+			fail(exc.toString());
 		}
-		if (standAlone && isAromatic)
-		{
-			System.out.println("Pyrrole is aromatic");
-		}
-		assertTrue(isAromatic);
+
 	}
+
 
 	/**
 	 *  A unit test for JUnit
 	 */
-	public void testSN()
+	public void testTetraDehydroDecaline()
 	{
-		Molecule mol = MoleculeFactory.makeSN();
-		if (standAlone) {
-            display(mol);
-            //System.out.println("Testing SN HetereoCylcle");
-        }
 		boolean isAromatic = false;
+		boolean testResults[] = {false, true, false};
 		try
 		{
-			isAromatic = HueckelAromaticityDetector.detectAromaticity(mol);
-		} catch (Exception exc)
-		{
-			if (standAlone)
-			{
-				exc.printStackTrace();
-			}
-            fail(exc.toString());
-		}
-		if (standAlone && isAromatic)
-		{
-			System.out.println("SN Heterocycle is aromatic");
-		}
-		assertTrue(isAromatic);
-	}
-
-	
-	/**
-	 *  A unit test for JUnit
-	 */
-	public void testBenzeneFromSMILES() {
-		boolean isAromatic = false;
-		try {
 			SmilesParser sp = new SmilesParser();
 
 			Molecule mol = sp.parseSmiles("C1CCCc2c1cccc2");
-			StructureDiagramGenerator sdg = new
-					StructureDiagramGenerator();
-			sdg.setMolecule((Molecule) mol.clone());
-			sdg.generateCoordinates(new Vector2d(0, 1));
-			mol = sdg.getMolecule();
-			RingSet rs = (new SSSRFinder()).findSSSR(mol);
+			RingSet rs = (new AllRingsFinder()).findAllRings(mol);
 			Iterator iter = rs.iterator();
 			Ring r = null;
 			int i = 0;
-			while (iter.hasNext()) {
+			while (iter.hasNext())
+			{
 				r = (Ring) iter.next();
-				i++;
 				isAromatic = HueckelAromaticityDetector.isAromatic(mol, r);
-				if (standAlone && isAromatic) {
+				assertTrue(testResults[i] == isAromatic);
+				i++;
+				if (standAlone && isAromatic)
+				{
 					System.out.println("Ring " + i + " in test molecule is aromatic.");
-				} else if (standAlone && !isAromatic) {
+				} else if (standAlone && !isAromatic)
+				{
 					System.out.println("Ring " + i + " in test molecule is not aromatic.");
 				}
 			}
-		} catch (Exception exc) {
-			if (standAlone) {
+		} catch (Exception exc)
+		{
+			if (standAlone)
+			{
 				exc.printStackTrace();
 			}
-            fail(exc.toString());
+			fail(exc.toString());
 		}
-		assertTrue(isAromatic);
 	}
 
-	public boolean test5()
+
+	/**
+	 *  A unit test for JUnit
+	 */
+	public void testPorphyrine()
 	{
 		Molecule molecule = null;
-		HOSECodeGenerator hcg = null;
+		boolean isAromatic = false;
+		boolean testResults[] = {
+				false,
+				false,
+				false,
+				false,
+				false,
+				true,
+				true,
+				true,
+				true,
+				true,
+				false,
+				true,
+				true,
+				true,
+				false,
+				true,
+				true,
+				false,
+				false,
+				true,
+				true,
+				true,
+				false,
+				false,
+				true,
+				true,
+				false,
+				true,
+				false,
+				true,
+				true,
+				false,
+				false,
+				false,
+				false,
+				true,
+				true,
+				true,
+				true,
+				false,
+				false,
+				false
+				};
 		try
 		{
-			String filename = "data/test.mol";
+			String filename = "data/porphyrin.mol";
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 			MDLReader reader = new MDLReader(new InputStreamReader(ins));
-			molecule = (Molecule)reader.read((ChemObject)new Molecule());
-   
-			boolean isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
-			String s = null;
+			molecule = (Molecule) reader.read((ChemObject) new Molecule());
+
+			isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
-				System.out.println("Atom " + molecule.getAtomAt(f).getSymbol() + "-" + (f + 1) + " isAromatic? " + molecule.getAtomAt(f).flags[CDKConstants.ISAROMATIC]);
+				assertTrue(molecule.getAtomAt(f).flags[CDKConstants.ISAROMATIC] == testResults[f]);
 			}
 		} catch (Exception exc)
 		{
 			exc.printStackTrace();
-			return false;
+			fail();
 		}
-		return true;
+/* 		if (standAlone)
+		{
+			MoleculeViewer2D.display(molecule, false);
+		}
+ */		assertTrue(isAromatic);
 	}
 
-	
-	
-	
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  molecule  Description of the Parameter
-	 */
-	private void display(Molecule molecule)
-	{
-		StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-		MoleculeViewer2D mv = new MoleculeViewer2D();
-		Renderer2DModel r2dm = mv.getRenderer2DModel();
-		r2dm.setDrawNumbers(true);
 
+	/**
+	 *  A unit test for JUnit
+	 */
+	public void testBug698152()
+	{
+		Molecule molecule = null;
+		boolean isAromatic = false;
+		boolean[] testResults = {true,
+				true,
+				true,
+				true,
+				true,
+				true,
+				false,
+				false,
+				false,
+				false,
+				false,
+				false,
+				false,
+				false,
+				false,
+				false,
+				false,
+				false};
 		try
 		{
-			sdg.setMolecule((Molecule) molecule.clone());
-			sdg.generateCoordinates(new Vector2d(0, 1));
-			mv.setAtomContainer(sdg.getMolecule());
-			mv.display();
+			String filename = "data/bug698152.mol";
+			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+			MDLReader reader = new MDLReader(new InputStreamReader(ins));
+			molecule = (Molecule) reader.read((ChemObject) new Molecule());
+
+			isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
+			for (int f = 0; f < molecule.getAtomCount(); f++)
+			{
+				assertTrue(molecule.getAtomAt(f).flags[CDKConstants.ISAROMATIC] == testResults[f]);
+			}
 		} catch (Exception exc)
 		{
-			System.out.println("*** Exit due to an unexpected error during coordinate generation ***");
 			exc.printStackTrace();
+			fail();
 		}
+/* 		if (standAlone)
+		{
+			MoleculeViewer2D.display(molecule, false);
+		}*/
 	}
 
 
@@ -301,15 +373,12 @@ public class HueckelAromaticityDetectorTest extends TestCase
 	{
 		HueckelAromaticityDetectorTest hadt = new HueckelAromaticityDetectorTest("HueckelAromaticityDetectorTest");
 		hadt.setStandAlone(true);
-		//hadt.testBenzene();
-		//hadt.testAlphaPinene();
-		//hadt.testAzulene();
-		//hadt.testBenzeneFromSMILES();
-		//hadt.testIndole();
-		//hadt.testPyrrole();
-		//hadt.testSN();
-		hadt.test5();
-		//hadt.testPorphyrine();
+		hadt.testAzulene();
+		hadt.testTetraDehydroDecaline();
+		hadt.testIndole();
+		hadt.testThiazole();
+		hadt.testBug698152();
+		hadt.testPorphyrine();
 	}
 }
 

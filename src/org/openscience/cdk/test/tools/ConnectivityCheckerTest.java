@@ -67,7 +67,7 @@ public class ConnectivityCheckerTest extends TestCase {
 	 *  A unit test for JUnit
 	 */
 	public void testPartitioning() {
-		System.out.println(atomCon);
+		//System.out.println(atomCon);
 		atomCon.add(MoleculeFactory.make4x3CondensedRings());
 		atomCon.add(MoleculeFactory.makeAlphaPinene());
 		atomCon.add(MoleculeFactory.makeSpiroRings());

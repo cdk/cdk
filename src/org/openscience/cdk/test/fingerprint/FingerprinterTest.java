@@ -67,11 +67,11 @@ public class FingerprinterTest extends TestCase
 		Molecule frag1 = MoleculeFactory.makePyrrole();
 		//display(frag1);
 		BitSet bs1 = Fingerprinter.getFingerprint(frag1);
-		System.out.println("bs: " + bs);
-		System.out.println("bs1: " + bs1);
+		//System.out.println("bs: " + bs);
+		//System.out.println("bs1: " + bs1);
 		if (Fingerprinter.isSubset(bs, bs1))
 		{
-			System.out.println("Pyrrole is subset of Indole");	
+			//System.out.println("Pyrrole is subset of Indole");	
 		}
 		if (!standAlone) assertTrue(Fingerprinter.isSubset(bs, bs1));
 	}

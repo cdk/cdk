@@ -58,7 +58,7 @@ public class PathLengthTest extends TestCase
 		Vector sphere = new Vector();
 		sphere.addElement(atom1);
 		int length = PathTools.breadthFirstTargetSearch(molecule, sphere, atom2, 0, 3);
-		System.out.println("PathLengthTest->length: " + length);
+		//System.out.println("PathLengthTest->length: " + length);
 		assertTrue(length == 3);
 	}
 	

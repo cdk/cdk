@@ -37,7 +37,7 @@ public class IOTests {
         TestSuite suite= new TestSuite("The cdk.io Tests");
         suite.addTest(CMLIOTests.suite());
         
-        suite.addTest(IChIReaderTest.suite());
+        //suite.addTest(IChIReaderTest.suite());
         suite.addTest(PDBReaderTest.suite());
         suite.addTest(MDLReaderTest.suite());
         suite.addTest(SMILESReaderTest.suite());

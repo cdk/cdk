@@ -74,10 +74,10 @@ public class VicinitySamplerTest extends TestCase
 		{
 			temp = (Molecule)structures.elementAt(f);
 			sg = new SmilesGenerator();
-			System.out.println(sg.createSMILES(temp) + " Structure " + (f + 1));
+			//System.out.println(sg.createSMILES(temp) + " Structure " + (f + 1));
 		}
 
-		System.out.println("There are " + structures.size() + " structures in Faulon-Distance 1 for EthylPropylPhenantren"); 
+		//System.out.println("There are " + structures.size() + " structures in Faulon-Distance 1 for EthylPropylPhenantren"); 
 		display(structures);
 	}
 	private static void configureAtoms(Molecule mol)

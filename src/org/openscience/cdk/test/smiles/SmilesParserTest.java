@@ -100,7 +100,7 @@ public class SmilesParserTest extends TestCase
 				//mlv.addStructure(mv, "Structure " + (f + 1)); 
 			} catch (Exception exc) {exc.printStackTrace();}
             long l2 = System.currentTimeMillis();
-            System.out.println(l2-l1);
+            //System.out.println(l2-l1);
         }					
 	}
 

@@ -95,7 +95,6 @@ public class JmolTest extends TestCase {
             assertTrue(b[1] != 0.0);
             double[] c = crystal.getC();
             assertTrue(c[2] != 0.0);
-            System.out.println("Testing is complete...");
         } catch (Exception e) {
             fail(e.toString());
         }
