@@ -1,0 +1,125 @@
+/*  $RCSfile$
+ *  $Author$
+ *  $Date$
+ *  $Revision$
+ *
+ *  Copyright (C) 2004  The Chemistry Development Kit (CDK) project
+ *
+ *  Contact: cdk-devel@lists.sourceforge.net
+ *
+ *  This program is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public License
+ *  as published by the Free Software Foundation; either version 2.1
+ *  of the License, or (at your option) any later version.
+ *  All we ask is that proper credit is given for our work, which includes
+ *  - but is not limited to - adding the above copyright notice to the beginning
+ *  of your source code files, and to any copyright notice that you may distribute
+ *  with programs based on this work.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ *
+ */
+package org.openscience.cdk.renderer;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Shape;
+import java.awt.geom.Area;
+import java.awt.geom.Rectangle2D;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.RingSet;
+import org.openscience.cdk.ringsearch.SSSRFinder;
+import org.openscience.cdk.tools.ConnectivityChecker;
+import org.openscience.cdk.tools.LoggingTool;
+
+/**
+ * A subclass of Renderer2D that uses masks (Area Class) to make an area
+ * erased to background.
+ *
+ * @cdkPackage render
+ *
+ * @author     akrassavine
+ *
+ * @created    2004-02-04
+ */
+public class AlphaRenderer2D extends Renderer2D {
+    
+    private LoggingTool logger;
+    private Renderer2DModel r2dm = null;
+    private Area mask = null;
+    private SSSRFinder sssrf = new SSSRFinder();
+    
+    public AlphaRenderer2D()
+    {
+        this(new Renderer2DModel());
+    }
+    
+    public AlphaRenderer2D(Renderer2DModel r2dm)
+    {
+        super(r2dm);
+        this.r2dm = r2dm;
+        logger = new LoggingTool(this);
+    }
+    
+    public void paintEmptySpace(int x, int y, int w, int h, int border, Color backColor, Graphics g)
+    {
+        if ((w != 0) || (h != 0)) {
+            int[] coords = { x - border, y + border };
+            double[] bounds = {getScreenSize(w + 2 * border), getScreenSize(h + 2 * border)};
+            int[] screenCoords = getScreenCoordinates(coords);
+            
+            mask.subtract(new Area(new Rectangle2D.Double(screenCoords[0], screenCoords[1], bounds[0], bounds[1])));
+        }
+    }
+    
+    protected RingSet getRingSet(AtomContainer atomCon)
+    {
+        RingSet ringSet = new RingSet();
+        Molecule[] molecules = null;
+        try
+        {
+            molecules = ConnectivityChecker.partitionIntoMolecules(atomCon).getMolecules();
+        }
+        catch (Exception exception)
+        {
+            logger.warn("Could not partition molecule: " + exception.getMessage());
+            logger.debug(exception);
+            return ringSet;
+        }
+        for (int i = 0; i < molecules.length; i++)
+        {
+            ringSet.add(sssrf.findSSSR(molecules[i]));
+        }
+        
+        return ringSet;
+    }
+    
+    public void paintMolecule(AtomContainer atomCon, Graphics graphics)
+    {
+        mask = new Area(new Rectangle2D.Double(0, 0, r2dm.getBackgroundDimension().width, r2dm.getBackgroundDimension().height));
+        
+        if (r2dm.getPointerVectorStart() != null && r2dm.getPointerVectorEnd() != null)
+        {
+            paintPointerVector(graphics);
+        }
+        paintAtoms(atomCon, graphics);
+        
+        Shape oldClip = graphics.getClip();
+        graphics.setClip(mask);
+        paintBonds(atomCon, getRingSet(atomCon), graphics);
+        graphics.setClip(oldClip);
+        
+        paintLassoLines(graphics);
+        
+        mask = null;
+    }
+
+}

@@ -1169,7 +1169,6 @@ public class Renderer2D implements MouseMotionListener   {
     protected float getScreenSize(int size) {
         return (float)size * (float)r2dm.getZoomFactor();
     }
-
     
     /**
      *  Paints the toolTipText for an atom

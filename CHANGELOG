@@ -5,6 +5,10 @@ Changes in CVS
 ------------------------------------
 New:
 * The CDKPluginManager will only load the plugin with the highest version
+* Added IO settings for CMLWriter for the namespace prefix and the Schema
+  Instance Location attribute
+* A Renderer2D subclass that uses masks for making backgrounds empty
+  (closes #889829)
 
 Fixes:
 * Fixed calculation of cartesian atomic coordinates from fractional coordinates
