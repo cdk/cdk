@@ -1,4 +1,4 @@
-<chapter> 
+<section> 
   <title>Programmers Reference</title>	
   <section> 
 	 <title>Introduction</title>
@@ -69,44 +69,16 @@
   </section> 
   <section> 
 	 <title>The Base Classes</title> 
-	 <para>The base classes are located in the top level hirarchy of the CDK, which is
+	 <para>The base classes are located in the top level hierarchy of the CDK, which is
 	  org.openscience.cdk.
 	  A chemist will find many of his/her well known concepts implemented
 		as classes in the CDK:
 		<itemizedlist>
-			<listitem>
-				<para>
-					<ulink
-					url="api/org/openscience/cdk/Element.html">Element</ulink>
-				</para>
-			</listitem>
-			<listitem>
-				<para>
-					<ulink
-					url="api/org/openscience/cdk/Isotope.html">Isotope</ulink>
-				</para>
-			</listitem>
-			<listitem>
-				<para>
-					<ulink
-					url="api/org/openscience/cdk/Atom.html">Atom</ulink>
-
-				</para>
-			</listitem>
-			<listitem>
-				<para>
-					<ulink
-					url="api/org/openscience/cdk/Bond.html">Bond</ulink>
-
-				</para>
-			</listitem>
-			<listitem>
-				<para>
-					<ulink
-					url="api/org/openscience/cdk/Molecule.html">Molecule</ulink>
-
-				</para>
-			</listitem>
+                        <listitem><para>&Element;</para></listitem>
+                        <listitem><para>&Isotope;</para></listitem>
+			<listitem><para>&Atom;</para></listitem>
+                        <listitem><para>&Bond;</para></listitem>
+                        <listitem><para>&Molecule;</para></listitem>
 			<listitem>
 				<para>
 					<ulink
@@ -122,7 +94,7 @@
 		</itemizedlist>
 
 		A molecule is build by creating an instance of the Molecule.class and the
-		successivly adding instances of Atom.class and Bond.class to the Molecule
+		successivly adding instances of &Atom;.class and &Bond;.class to the Molecule
 		container: 
 		<example>
 		  <title>Creating a Molecule</title>
@@ -184,6 +156,38 @@
 		in a ChemSequence. A ChemFile, the highest level concept, in our CDK hierarchy,
 		can store all of the above concepts. </para> 
   </section> 
+  <section>
+	 <title>File I/O Classes</title>
+         <para>At this moment the following Input classes are available:
+           <itemizedlist>
+                <listitem><para>&MDLReader;</para></listitem>
+                <listitem><para>&CMLReader;</para></listitem>
+                <listitem><para>&XYZReader;</para></listitem>
+           </itemizedlist>
+           To read a molecule use:
+           <example>
+             <programlisting>
+        ChemObjectReader reader;
+        String inFile = "filetoread.xyz";
+        if (inFile.endsWith(".xyz")) {
+              reader = new XYZReader(new FileReader(inFile));
+        } else if (inFile.endsWith(".cml")) {
+              reader = new CMLReader(new FileReader(inFile));
+        } else {
+              reader = new MDLReader(new FileInputStream(inFile));
+        }
+        ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+             </programlisting>
+           </example>
+           But a class is planned that does automatic detection of the correct file type.
+         </para>
+         <para>And these Output classes:
+         <itemizedlist>
+                <listitem><para><ulink url="api/org/openscience/cdk/io/MDLWriter.html">MDLWriter</ulink></para></listitem>
+                <listitem><para><ulink url="api/org/openscience/cdk/io/CMLWriter.html">CMLWriter</ulink></para></listitem>
+         </itemizedlist>
+         </para>
+  </section>
   <section> 
 	 <title>The Tools Classes</title> 
 	 <para> The tools classes are located in the org.openscience.cdk.tools package. 
@@ -376,4 +380,4 @@ It is the goal to move all the tests to this framework so that one only has to r
 </para>
 </section>	 
 
-</chapter>
+</section>

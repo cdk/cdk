@@ -1,4 +1,4 @@
-  <chapter> 
+  <section> 
   	<title>Introduction?</title>
 	<section>	
 		 <title>What is the CDK?</title> 
@@ -76,7 +76,7 @@
 			started programming SENECA, my system for Computer Assisted Structure Elucidation. 
 			It turned out that some of
 			the code had design flaws that prevented others, like the authors of
-			(<ulink URL="http://www.openscience.org/jmol">JMol</ulink>) to use it. 
+			(<ulink url="http://www.openscience.org/jmol">JMol</ulink>) to use it. 
 			Egon, Dan and I now met last month at the University of Notre Dame,
 			South Bend, Chicago, and redesigned the CompChem classes, calling the
 			new project the "Chemistry Development Kit, CDK". 
@@ -160,5 +160,5 @@
 			add you to the developers list
 		</para> 
 	  </section> 
-  </chapter>
+  </section>
 

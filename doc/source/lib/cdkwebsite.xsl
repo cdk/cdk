@@ -9,8 +9,9 @@
 
 <!-- This stylesheet does not work with XT. Use xtchunk.xsl instead. -->
 
-<!--xsl:include href="/usr/lib/sgml/stylesheet/xsl/docbook/nwalsh/website/1.8/chunk-tabular.xsl"/-->
-<xsl:include href="/documents/config/xml/website/xsl/chunk-tabular.xsl"/>
+<xsl:include href="/usr/lib/sgml/stylesheet/xsl/docbook/nwalsh/website/1.9/chunk-tabular.xsl"/>
+<!--xsl:include href="/documents/config/xml/website/xsl/chunk-tabular.xsl"/-->
+
 <xsl:template match="homepage">
   <xsl:variable name="id">
     <xsl:call-template name="object.id"/>
@@ -74,9 +75,9 @@
 
   <xsl:choose>
     <xsl:when test="$using.xt != 0">
-      <xt:document method="html" href="{$filename}">
+      <!-- Sheet does not work anyway xt:document method="html" href="{$filename}">
 	<xsl:copy-of select="$page-content"/>
-      </xt:document>
+      </xt:document -->
     </xsl:when>
     <xsl:otherwise>
       <xalanredirect:write file="{$filename}">
@@ -161,9 +162,9 @@
 
   <xsl:choose>
     <xsl:when test="$using.xt != 0">
-      <xt:document method="html" href="{$filename}">
+      <!-- Sheet does not work with XT anyway xt:document method="html" href="{$filename}">
 	<xsl:copy-of select="$page-content"/>
-      </xt:document>
+      </xt:document -->
     </xsl:when>
     <xsl:otherwise>
       <xalanredirect:write file="{$filename}">

@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!DOCTYPE book SYSTEM "file:/c:/home/documents/config/xml/dtd/docbookx/docbookx.dtd" [
+<!DOCTYPE book SYSTEM "file:/usr/lib/sgml/dtd/docbook-xml-4.1/docbookx.dtd" [
 <!ENTITY about SYSTEM "about.xml">
 <!ENTITY intro SYSTEM "intro.xml">
 <!ENTITY projectref SYSTEM "projectref.xml">
