@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  * 
- * Copyright (C) 2002-2005  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2005  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -29,13 +29,15 @@ import org.openscience.cdk.AtomType;
 import org.openscience.cdk.exception.CDKException;
 
 /**
- * Classes that implement this interface are atomtypes matchers.
+ * Classes that implement this interface are atomtype matchers.
  *
+ * @author         mfe4
+ * @cdk.created    2004-12-02
  * @cdk.module core
  */
 public interface AtomTypeMatcher {
 
-	/** Method that assign an atom type to a given atom. belonging to an atom container */
+	/** Method that assigns an atom type to a given atom belonging to an atom container. */
     public void findMatchingAtomType(AtomContainer ac, Atom atom);
 
 }

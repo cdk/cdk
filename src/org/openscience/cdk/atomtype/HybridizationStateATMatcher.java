@@ -1,10 +1,9 @@
-/*
- *  $RCSfile$
+/*  $RCSfile$
  *  $Author$
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 2004-2005  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2005  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -37,7 +36,6 @@ import org.openscience.cdk.tools.LoggingTool;
  *@cdk.created    2004-12-02
  *@cdk.module     core
  */
-
 public class HybridizationStateATMatcher {
 
 	private LoggingTool logger;
@@ -60,7 +58,7 @@ public class HybridizationStateATMatcher {
 
 
 	/**
-	 *  Constructor for the HybridizationStateATMatcher object
+	 * Constructor for the HybridizationStateATMatcher object.
 	 */
 	public HybridizationStateATMatcher() {
 		logger = new LoggingTool(this);
@@ -68,7 +66,7 @@ public class HybridizationStateATMatcher {
 
 
 	/**
-	 *  Assign the hybridization state to a given atom
+	 * Assign the hybridization state to a given atom.
 	 *
 	 *@param  ac                AtomContainer
 	 *@param  atom              the target atom
@@ -90,16 +88,16 @@ public class HybridizationStateATMatcher {
 			type = factory.getAtomTypes(symbol);
 
 			// ...and then search the exact atom type with these parameters
-			//System.out.println("My ATOM TYPE "+symbol+" "+bondOrderSum+" "+maxbondOrder+" "+neighboorsCount);
+			logger.debug("My ATOM TYPE "+symbol+" "+bondOrderSum+" "+maxbondOrder+" "+neighboorsCount);
 			for (int i = 0; i < type.length; i++) {
 				tmp_maxbondOrder = type[i].getMaxBondOrder();
 				tmp_bondOrderSum = type[i].getBondOrderSum();
 				tmp_neighboorsCount = type[i].getFormalNeighbourCount();
 				tmp_charge = type[i].getFormalCharge();
-				//System.out.println(i + "ATOM TYPE " + tmp_bondOrderSum + " " + tmp_maxbondOrder + " " + tmp_neighboorsCount);
+				logger.debug(i + "ATOM TYPE " + tmp_bondOrderSum + " " + tmp_maxbondOrder + " " + tmp_neighboorsCount);
 				if (tmp_maxbondOrder == maxbondOrder && tmp_bondOrderSum == bondOrderSum) {
 					if (tmp_neighboorsCount == neighboorsCount) {
-						//System.out.println("!!!!! ATOM TYPE FOUND");
+						logger.debug("!!!!! ATOM TYPE FOUND");
 						atName = type[i].getAtomTypeName();
 						type[i].setAtomTypeName(atName);
 						hybr = type[i].getHybridization();
@@ -110,6 +108,7 @@ public class HybridizationStateATMatcher {
 			}
 
 		} catch (Exception ex1) {
+            logger.error(ex1.getMessage();
 			logger.debug(ex1);
 			throw new CDKException("Problems with AtomTypeFactory due to " + ex1.toString());
 		}
