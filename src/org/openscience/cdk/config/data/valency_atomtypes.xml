@@ -167,13 +167,13 @@
     </atom>
   </atomType>
   <atomType id="Li">
-    <atom elementType="Se" formalCharge="0">
+    <atom elementType="Li" formalCharge="0">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">1.0</scalar>
     </atom>
   </atomType>
   <atomType id="As">
-    <atom elementType="Se" formalCharge="0">
+    <atom elementType="As" formalCharge="0">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">1.0</scalar>
     </atom>
