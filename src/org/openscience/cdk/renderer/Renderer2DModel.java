@@ -102,6 +102,9 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
      */
     private boolean showEndCarbons = true;
 
+    /** Determines wether implicit hydrogens should be drawn. */
+    private boolean showImplicitHydrogens = true;
+
     /** Determines wether atoms are colored by type. */
     private boolean colorAtomsByType = true;
 
@@ -298,6 +301,14 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
     
     public void setShowEndCarbons(boolean showThem) {
         this.showEndCarbons = showThem;
+    }
+    
+    public boolean getShowImplicitHydrogens() {
+        return this.showImplicitHydrogens;
+    }
+    
+    public void setShowImplicitHydrogens(boolean showThem) {
+        this.showImplicitHydrogens = showThem;
     }
     
 	/**

@@ -541,7 +541,7 @@ public class Renderer2D   {
         }
         
         // draw IMPLICIT H's
-        if (implicitHydrogenCount > 0) {
+        if (implicitHydrogenCount > 0 && r2dm.getShowImplicitHydrogens()) {
             int[] coords = new int[2];
             if (alignment == 1) { // left alignment
                 coords[0] = labelX + isotopeW + atomSymbolW;

@@ -8,6 +8,7 @@ New:
 
 Fixes:
 * Removed use of JSX
+* Added missing switch for display of implicit hydrogens in Renderer2D
 
 API changes:
 * Added getIOSettings() to ChemObject[Reader|Writer]
