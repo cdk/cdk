@@ -549,6 +549,22 @@ public class SaturationChecker
 	 * @see              AtomTypeFactory
 	 */
 	public int calculateMissingHydrogen(Atom atom, AtomContainer container) throws CDKException {
+    return calculateMissingHydrogen(atom, container, false);
+  }
+  
+	/**
+	 * Calculate the number of missing hydrogens by substracting the number of
+	 * bonds for the atom from the expected number of bonds. Charges are included
+	 * in the calculation. The number of expected bonds is defined by the AtomType
+	 * generated with the AtomTypeFactory.
+	 *
+	 * @param  atom      Description of the Parameter
+	 * @param  molecule  Description of the Parameter
+	 * @param  throwExceptionForUnknowAtom  Should an exception be thrown if an unknown atomtype is found or 0 returned ?
+	 * @return           Description of the Return Value
+	 * @see              AtomTypeFactory
+	 */
+	public int calculateMissingHydrogen(Atom atom, AtomContainer container, boolean throwExceptionForUnknowAtom) throws CDKException {
         int missingHydrogen = 0;
         if (atom instanceof PseudoAtom) {
             // don't figure it out... it simply does not lack H's
@@ -559,7 +575,7 @@ public class SaturationChecker
             logger.info("Calculating number of missing hydrogen atoms");
             // get default atom
             AtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
-            if(atomTypes.length==0)
+            if(atomTypes.length==0 && throwExceptionForUnknowAtom)
               throw new CDKException("Missing entry in structgen_atomtypes.xml for "+atom.getSymbol());
             logger.debug("Found atomtypes: " + atomTypes.length);
             if (atomTypes.length > 0) {
