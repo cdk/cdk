@@ -60,6 +60,30 @@ public class CrystalTest extends TestCase {
         assertEquals(3.0, a.z, 0.001);
     }
     
+    public void testGetA() {
+        Crystal crystal = new Crystal();
+        
+        crystal.setA(new Vector3d(1.0, 2.0, 3.0));
+        Vector3d a = crystal.getA();
+	assertNotNull(a);
+    }
+    
+    public void testGetB() {
+        Crystal crystal = new Crystal();
+        
+        crystal.setB(new Vector3d(1.0, 2.0, 3.0));
+        Vector3d a = crystal.getB();
+	assertNotNull(a);
+    }
+    
+    public void testGetC() {
+        Crystal crystal = new Crystal();
+        
+        crystal.setC(new Vector3d(1.0, 2.0, 3.0));
+        Vector3d a = crystal.getC();
+	assertNotNull(a);
+    }
+    
     public void testSetB_Vector3d() {
         Crystal crystal = new Crystal();
         
@@ -85,6 +109,14 @@ public class CrystalTest extends TestCase {
         String spacegroup = "P 2_1 2_1 2_1";
         crystal.setSpaceGroup(spacegroup);
         assertEquals(spacegroup, crystal.getSpaceGroup());
+    }
+
+    public void testGetSpaceGroup() {
+        Crystal crystal = new Crystal();
+        assertNull(crystal.getSpaceGroup());
+        String spacegroup = "P 2_1 2_1 2_1";
+        crystal.setSpaceGroup(spacegroup);
+        assertNotNull(crystal.getSpaceGroup());
     }
 
     public void testSetZ_int() {

@@ -51,7 +51,20 @@ public class ChemSequenceTest extends TestCase {
         return new TestSuite(ChemSequenceTest.class);
     }
     
-    public void testAddChemModel() {
+    public void testChemSequence() {
+        ChemSequence cs = new ChemSequence();
+	assertNotNull(cs);
+    }
+    
+    public void testAddChemModel_ChemModel() {
+        ChemSequence cs = new ChemSequence();
+        cs.addChemModel(new ChemModel());
+        cs.addChemModel(new ChemModel());
+        cs.addChemModel(new ChemModel());
+        assertEquals(3, cs.getChemModelCount());
+    }
+
+    public void testGrowChemModelArray() {
         ChemSequence cs = new ChemSequence();
         cs.addChemModel(new ChemModel());
         cs.addChemModel(new ChemModel());
@@ -61,6 +74,14 @@ public class ChemSequenceTest extends TestCase {
         cs.addChemModel(new ChemModel());
         cs.addChemModel(new ChemModel()); // this one should enfore array grow
         assertEquals(6, cs.getChemModelCount());
+    }
+
+    public void testGetChemModelCount() {
+        ChemSequence cs = new ChemSequence();
+        cs.addChemModel(new ChemModel());
+        cs.addChemModel(new ChemModel());
+        cs.addChemModel(new ChemModel());
+        assertEquals(3, cs.getChemModelCount());
     }
 
     public void testGetChemModels() {
