@@ -26,7 +26,8 @@
 package org.openscience.cdk;
 
 /**
- * Base class for entities containing electrons, like bonds, orbitals, lone-pairs.
+ * A LonePair is an orbital primarily located with one Atom, containing
+ * two electrons.
  *
  * @keyword orbital
  * @keyword lone-pair
@@ -58,9 +59,9 @@ public class LonePair extends ElectronContainer implements java.io.Serializable,
     }
 
     /**
-     * Returns the number of electrons in this electron container.
+     * Returns the number of electrons in a LonePair.
      *
-     * @return The number of electrons in this electron container.
+     * @return The number of electrons in a LonePair.
      */
     public int getElectronCount() {
         return this.electronCount;
