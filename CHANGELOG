@@ -13,6 +13,10 @@ New:
   (e.g. PMP contains many crystals, while ShelX 
    can contain only one crystal. Thus, when converting
    PMP to ShelX more than one file is created.)
+* Added a method MFAnalyser.getElement() which returns
+  a Vector with asorted element names
+* Added a Comparator that can sort element names
+  according to: C,H, then others (alphabetically)
 
 Fixes:
 * Added initialization of atoms Array in Bond.java

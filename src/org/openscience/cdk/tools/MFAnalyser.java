@@ -43,8 +43,7 @@ public class MFAnalyser{
 	private String MF;
 	private AtomContainer atomContainer;
 	private int HCount = 0;
-	private boolean verbose = false;
-	
+
 	/** Construct an instance of MFAnalyser, initialized with a molecular 
 	  * formula string. The string is immediatly analysed and a set of Nodes
 	  * is built based on this analysis
@@ -202,8 +201,8 @@ public class MFAnalyser{
 		this.HCount = HCount;
 		return mf;
 	}
-	
- 	/** 
+    
+ 	/**
 	 * Adds an element to a chemical formual string
 	 *
 	 * @param   sm         The map containing the elements
@@ -220,7 +219,7 @@ public class MFAnalyser{
 	}
 
 
- 	/** 
+ 	/**
 	 * Checks a set of Nodes for the occurence of a particular
 	 * element.
 	 *
@@ -237,15 +236,28 @@ public class MFAnalyser{
 		}
 		return atomCount;
 	}
-
- 	/**
-	 * If true the class talks when doing its work. 
-	 *
-	 */
-	public void setVerbose(boolean verbose)
-	{
-		this.verbose = verbose;
-	}
+    
+    /**
+     * Returns a Vector with asorted element names.
+     * The order is determined by ElementComparator.
+     *
+     * @see ElementComparator
+     */
+    public Vector getElements() {
+        TreeSet elements = new TreeSet(new ElementComparator());
+        for (int f = 0; f < atomContainer.getAtomCount(); f++){
+            String symbol = atomContainer.getAtomAt(f).getSymbol();
+            if (!elements.contains(symbol)) {
+                elements.add(symbol);
+            }
+        }
+        Vector results = new Vector();
+        Iterator iter = elements.iterator();
+        while (iter.hasNext()) {
+            results.add((String)iter.next());
+        }
+        return results;
+    }
 }
 
 

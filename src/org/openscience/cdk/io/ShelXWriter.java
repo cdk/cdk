@@ -26,8 +26,10 @@
 package org.openscience.cdk.io;
 
 import java.io.*;
+import java.util.*;
 import org.openscience.cdk.*;
 import org.openscience.cdk.exception.*;
+import org.openscience.cdk.tools.*;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 import freeware.PrintfFormat;
@@ -113,9 +115,19 @@ public class ShelXWriter implements ChemObjectWriter {
             write("SYMM     -X   , 1/2+Y   , 1/2-Z\n");
             write("SYMM  1/2-X   ,    -Y   , 1/2+Z\n");
         }
-        /* hack for estrone */
-        write("SFAC  C   H   O\n");
-        write("UNIT  18  22  2\n");
+        MFAnalyser mfa = new MFAnalyser(crystal);
+        String elemNames = "";
+        String elemCounts = "";
+        Vector asortedElements = mfa.getElements();
+        Enumeration elements = asortedElements.elements();
+        while (elements.hasMoreElements()) {
+            String symbol = (String)elements.nextElement();
+            elemNames += symbol + "    ".substring(symbol.length());
+            String countS = new Integer(mfa.getAtomCount(symbol)).toString();
+            elemCounts += countS + "    ".substring(countS.length());
+        }
+        write("SFAC  " + elemNames + "\n");
+        write("UNIT  " + elemCounts + "\n");
         /* write atoms */
         format = new PrintfFormat("%7.5lf");
         for (int i = 0; i < crystal.getAtomCount(); i++) {
@@ -132,15 +144,9 @@ public class ShelXWriter implements ChemObjectWriter {
                 write(" ");
             }
             write("     ");
-            /* hack for estrone */
-            if ("C".equals(symbol)) {
-                write("1");
-            } else if ("H".equals(symbol)) {
-                write("2");
-            } else if ("O".equals(symbol)) {
-                write("3");
-            }
-            write("   ");
+            String elemID = new Integer(asortedElements.indexOf(symbol)+1).toString();
+            write(elemID);
+            write("    ".substring(elemID.length()));
             write(format.sprintf(fracs[0]) + "   ");
             write(format.sprintf(fracs[1]) + "   ");
             write(format.sprintf(fracs[2]) + "    11.00000    0.05000\n");
