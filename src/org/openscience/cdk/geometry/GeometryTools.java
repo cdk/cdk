@@ -355,8 +355,7 @@ public class GeometryTools {
 	 * @param   bond   The given bond 
 	 * @return     The array with the coordinates
 	 */
-	public static int[] getBondCoordinates(Bond bond)
-	{
+	public static int[] getBondCoordinates(Bond bond) {
 		int beginX = (int)bond.getAtomAt(0).getPoint2D().x;
 		int endX = (int)bond.getAtomAt(1).getPoint2D().x;
 		int beginY = (int)bond.getAtomAt(0).getPoint2D().y;
@@ -481,18 +480,37 @@ public class GeometryTools {
 
 	}
 	
-	/** Determines if this model contains 2D coordinates
+	/** Determines if this AtomContainer contains 2D coordinates.
 	  *
 	  * @return  boolean indication that 2D coordinates are available 
 	 */
-  public static boolean has2DCoordinates(AtomContainer m) {
-      boolean hasinfo = true;
-      Atom[] atoms = m.getAtoms();
-      for (int i=0; i < atoms.length; i++) {
-          if (atoms[i].getPoint2D() == null) hasinfo = false;
-      }
-      return hasinfo;
-  }
+     public static boolean has2DCoordinates(AtomContainer m) {
+         Atom[] atoms = m.getAtoms();
+         for (int i=0; i < atoms.length; i++) {
+             if (atoms[i].getPoint2D() == null) return false;
+         }
+         return true;
+     }
+
+	/** Determines if this Atom contains 2D coordinates.
+	  *
+	  * @return  boolean indication that 2D coordinates are available 
+	 */
+     public static boolean has2DCoordinates(Atom a) {
+         return (a.getPoint2D() != null);
+     }
+     
+	/** Determines if this Bond contains 2D coordinates.
+	  *
+	  * @return  boolean indication that 2D coordinates are available 
+	 */
+     public static boolean has2DCoordinates(Bond b) {
+         Atom[] atoms = b.getAtoms();
+         for (int i=0; i < atoms.length; i++) {
+             if (atoms[i].getPoint2D() == null) return false;
+         }
+         return true;
+     }
 
 	/** Determines if this model contains 3D coordinates
 	  *
