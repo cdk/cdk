@@ -1,0 +1,179 @@
+<?xml version="1.0"?>
+<!DOCTYPE list SYSTEM "cml.dtd" >
+<!--CML conversion of file 100-11-8.pdb
+Produced by PDB2CML (c) Steve Zara 1999-->
+<list title="molecules" convention="PDB">
+    <list title="model">
+        <list title="header">
+            <string title="classification">NCI NSC 4609</string>
+        </list>
+        <string title="title">NCI    2</string>
+        <list title="compounds">
+            <string title="compound">4-Nitrobenzyl bromide</string>
+        </list>
+        <list title="authors">
+            <string title="author">National Cancer Institute   NCI    4</string>
+        </list>
+        <list title="revision data">
+            <list title="revision">
+                <string title="modDate">0-Oct-00</string>
+                <string title="modId">0</string>
+            </list>
+        </list>
+        <list title="sequence" id="1">
+            <list title="" id="0">
+                <string builtin="residueType"></string>
+                <atom title="atom" id="1">
+                    <string title="name">N</string>
+                    <coordinate3 builtin="xyz3">3.716 0.000 -0.295</coordinate3>
+                    <float builtin="occupancy">0.00</float>
+                    <float title="tempFactor">0.00</float>
+                    <string builtin="elementType">N</string>
+                    <string builtin="formalCharge">+1</string>
+                </atom>
+                <atom title="atom" id="2">
+                    <string title="name">O</string>
+                    <coordinate3 builtin="xyz3">4.304 -1.055 -0.452</coordinate3>
+                    <float builtin="occupancy">0.00</float>
+                    <float title="tempFactor">0.00</float>
+                    <string builtin="elementType">O</string>
+                    <string builtin="formalCharge">-1</string>
+                </atom>
+                <atom title="atom" id="3">
+                    <string title="name">O</string>
+                    <coordinate3 builtin="xyz3">4.303 1.054 -0.460</coordinate3>
+                    <float builtin="occupancy">0.00</float>
+                    <float title="tempFactor">0.00</float>
+                    <string builtin="elementType">O</string>
+                    <string builtin="formalCharge">+0</string>
+                </atom>
+                <atom title="atom" id="4">
+                    <string title="name">C</string>
+                    <coordinate3 builtin="xyz3">2.287 0.000 0.090</coordinate3>
+                    <float builtin="occupancy">0.00</float>
+                    <float title="tempFactor">0.00</float>
+                    <string builtin="elementType">C</string>
+                    <string builtin="formalCharge">+0</string>
+                </atom>
+                <atom title="atom" id="5">
+                    <string title="name">C</string>
+                    <coordinate3 builtin="xyz3">1.619 1.197 0.268</coordinate3>
+                    <float builtin="occupancy">0.00</float>
+                    <float title="tempFactor">0.00</float>
+                    <string builtin="elementType">C</string>
+                    <string builtin="formalCharge">+0</string>
+                </atom>
+                <atom title="atom" id="6">
+                    <string title="name">C</string>
+                    <coordinate3 builtin="xyz3">1.618 -1.197 0.266</coordinate3>
+                    <float builtin="occupancy">0.00</float>
+                    <float title="tempFactor">0.00</float>
+                    <string builtin="elementType">C</string>
+                    <string builtin="formalCharge">+0</string>
+                </atom>
+                <atom title="atom" id="7">
+                    <string title="name">C</string>
+                    <coordinate3 builtin="xyz3">0.284 1.198 0.628</coordinate3>
+                    <float builtin="occupancy">0.00</float>
+                    <float title="tempFactor">0.00</float>
+                    <string builtin="elementType">C</string>
+                    <string builtin="formalCharge">+0</string>
+                </atom>
+                <atom title="atom" id="8">
+                    <string title="name">C</string>
+                    <coordinate3 builtin="xyz3">0.283 -1.197 0.626</coordinate3>
+                    <float builtin="occupancy">0.00</float>
+                    <float title="tempFactor">0.00</float>
+                    <string builtin="elementType">C</string>
+                    <string builtin="formalCharge">+0</string>
+                </atom>
+                <atom title="atom" id="9">
+                    <string title="name">C</string>
+                    <coordinate3 builtin="xyz3">-0.383 0.001 0.809</coordinate3>
+                    <float builtin="occupancy">0.00</float>
+                    <float title="tempFactor">0.00</float>
+                    <string builtin="elementType">C</string>
+                    <string builtin="formalCharge">+0</string>
+                </atom>
+                <atom title="atom" id="10">
+                    <string title="name">C</string>
+                    <coordinate3 builtin="xyz3">-1.838 0.001 1.201</coordinate3>
+                    <float builtin="occupancy">0.00</float>
+                    <float title="tempFactor">0.00</float>
+                    <string builtin="elementType">C</string>
+                    <string builtin="formalCharge">+0</string>
+                </atom>
+                <atom title="atom" id="11">
+                    <string title="name">Br</string>
+                    <coordinate3 builtin="xyz3">-2.953 0.000 -0.418</coordinate3>
+                    <float builtin="occupancy">0.00</float>
+                    <float title="tempFactor">0.00</float>
+                    <string builtin="elementType">Br</string>
+                    <string builtin="formalCharge">+0</string>
+                </atom>
+                <atom title="atom" id="12">
+                    <string title="name">H</string>
+                    <coordinate3 builtin="xyz3">2.141 2.132 0.127</coordinate3>
+                    <float builtin="occupancy">0.00</float>
+                    <float title="tempFactor">0.00</float>
+                    <string builtin="elementType">H</string>
+                    <string builtin="formalCharge">+0</string>
+                </atom>
+                <atom title="atom" id="13">
+                    <string title="name">H</string>
+                    <coordinate3 builtin="xyz3">2.138 -2.132 0.122</coordinate3>
+                    <float builtin="occupancy">0.00</float>
+                    <float title="tempFactor">0.00</float>
+                    <string builtin="elementType">H</string>
+                    <string builtin="formalCharge">+0</string>
+                </atom>
+                <atom title="atom" id="14">
+                    <string title="name">H</string>
+                    <coordinate3 builtin="xyz3">-0.237 2.133 0.767</coordinate3>
+                    <float builtin="occupancy">0.00</float>
+                    <float title="tempFactor">0.00</float>
+                    <string builtin="elementType">H</string>
+                    <string builtin="formalCharge">+0</string>
+                </atom>
+                <atom title="atom" id="15">
+                    <string title="name">H</string>
+                    <coordinate3 builtin="xyz3">-0.239 -2.132 0.763</coordinate3>
+                    <float builtin="occupancy">0.00</float>
+                    <float title="tempFactor">0.00</float>
+                    <string builtin="elementType">H</string>
+                    <string builtin="formalCharge">+0</string>
+                </atom>
+                <atom title="atom" id="16">
+                    <string title="name">H</string>
+                    <coordinate3 builtin="xyz3">-2.055 -0.888 1.793</coordinate3>
+                    <float builtin="occupancy">0.00</float>
+                    <float title="tempFactor">0.00</float>
+                    <string builtin="elementType">H</string>
+                    <string builtin="formalCharge">+0</string>
+                </atom>
+                <atom title="atom" id="17">
+                    <string title="name">H</string>
+                    <coordinate3 builtin="xyz3">-2.055 0.892 1.791</coordinate3>
+                    <float builtin="occupancy">0.00</float>
+                    <float title="tempFactor">0.00</float>
+                    <string builtin="elementType">H</string>
+                    <string builtin="formalCharge">+0</string>
+                </atom>
+            </list>
+        </list>
+        <list title="connections">
+            <list title="connect" id="1">2 3 4 0</list>
+            <list title="connect" id="2">1 0 0 0</list>
+            <list title="connect" id="3">1 0 0 0</list>
+            <list title="connect" id="4">1 5 6 0</list>
+            <list title="connect" id="5">4 7 12 0</list>
+            <list title="connect" id="6">4 8 13 0</list>
+            <list title="connect" id="7">5 9 14 0</list>
+            <list title="connect" id="8">6 9 15 0</list>
+            <list title="connect" id="9">7 10 8 0</list>
+            <list title="connect" id="10">9 11 16 17</list>
+            <list title="connect" id="11">10 0 0 0</list>
+        </list>
+    </list>
+</list>
+
