@@ -91,6 +91,9 @@ public class LoggingTool {
             if (System.getProperty("cdk.debugging", "false").equals("true")) {
               debug = true;
             }
+            if (System.getProperty("cdk.debug.stdout", "false").equals("true")) {
+              tostdout = true;
+            }
           } catch (Exception e) {
             // guess what happens: security exception from applet runner
             // do not debug in those cases
