@@ -70,7 +70,7 @@ public class MMFF94BasedAtomTypePattern {
 		//Csp2
 		atomTypePatterns.addElement(Pattern.compile("[CS]-[0-3];[H]{0,2}+[A-Za-z]*+=[NOPS]{1}+.*+"));
 		//Csp2 C=
-		atomTypePatterns.addElement(Pattern.compile("C-[0-2];%.*+"));
+		atomTypePatterns.addElement(Pattern.compile("C-[0-2];[H]{0,1}+%.*+"));
 		//csp
 		atomTypePatterns.addElement(Pattern.compile("[CS]-[3][-]?+;[A-Za-z]{0,2}+=O=O[A-Za-z]{0,2}+[(].*+"));
 		//C(S)O2-M

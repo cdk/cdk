@@ -53,7 +53,7 @@ public class AtomTetrahedralLigandPlacer3D {
 
 	private Hashtable pSet = null;
 	private final double DEFAULT_BOND_LENGTH_H = 1.0;
-	private final double DEFAULT_BOND_LENGTH_HA = 1.3;
+	//private final double DEFAULT_BOND_LENGTH_HA = 1.3;
 
 	/**
 	 *  Description of the Field
@@ -119,7 +119,6 @@ public class AtomTetrahedralLigandPlacer3D {
 				}
 				Point3d[] newPoints = get3DCoordinatesForLigands(refAtom,
 						noCoords, withCoords, atomC, nwanted, DEFAULT_BOND_LENGTH_H, -1);
-
 				for (int j = 0; j < noCoords.getAtomCount(); j++) {
 					Atom ligand = noCoords.getAtomAt(j);
 					Point3d newPoint = rescaleBondLength(refAtom, ligand, newPoints[j]);
@@ -219,9 +218,15 @@ public class AtomTetrahedralLigandPlacer3D {
 		if (refAtom.getFormalNeighbourCount() == 1 || refAtom.getMaxBondOrder() > 4) {
 		} else if (refAtom.getFormalNeighbourCount() == 2 || refAtom.getMaxBondOrder() == 3) {
 			//sp
+			if (angle == -1){
+				angle=SP_ANGLE;
+			}
 			newPoints[0] = get3DCoordinatesForSPLigands(refAtom, withCoords, length, angle);
 		} else if (refAtom.getFormalNeighbourCount() == 3 || (refAtom.getMaxBondOrder() > 1 && refAtom.getMaxBondOrder() < 3)) {
 			//sp2
+			if (angle == -1){
+				angle=SP2_ANGLE;
+			}
 			try {
 				newPoints = get3DCoordinatesForSP2Ligands(refAtom, noCoords, withCoords, atomC, length, angle);
 			} catch (Exception ex1) {

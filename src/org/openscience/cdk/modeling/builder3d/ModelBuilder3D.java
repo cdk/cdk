@@ -36,18 +36,12 @@ import java.io.IOException;
 import java.util.Vector;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.Bond;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.ringsearch.SSSRFinder;
-import org.openscience.cdk.Ring;
 import org.openscience.cdk.RingSet;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
-import org.openscience.cdk.tools.HOSECodeGenerator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
-import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.layout.AtomPlacer;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.geometry.GeometryTools;
@@ -183,8 +177,7 @@ public class ModelBuilder3D {
 			return 1;
 		}
 		//Assing Atoms to Rings,Aliphatic and Atomtype
-		RingSet ringSetMolecule = assignAtoms();
-		//Profiler.getDifferenceToString(System.currentTimeMillis());
+		RingSet ringSetMolecule = ffc.assignAtomTyps(molecule);
 		Vector ringSystems = null;
 		RingSet largestRingSet = null;
 		double NumberOfRingAtoms = 0;
@@ -228,60 +221,6 @@ public class ModelBuilder3D {
 		return 1;
 	}
 
-
-	/**
-	 *  Method assigns atom types to atoms (calculates sssr and aromaticity)
-	 *
-	 *@return                sssrf set
-	 *@exception  Exception  Description of the Exception
-	 */
-	private RingSet assignAtoms() throws Exception {
-		Atom atom = null;
-		String hoseCode = "";
-		HOSECodeGenerator hcg = new HOSECodeGenerator();
-		int NumberOfRingAtoms = 0;
-		RingSet ringSetA = null;
-		RingSet ringSetMolecule = new SSSRFinder(molecule).findSSSR();
-		boolean isInHeteroRing = false;
-		try {
-			HueckelAromaticityDetector.detectAromaticity(molecule);
-		} catch (Exception cdk1) {
-			System.out.println("AROMATICITYError: Cannot determine aromaticity due to: " + cdk1.toString());
-		}
-
-		for (int i = 0; i < molecule.getAtomCount(); i++) {
-			atom = molecule.getAtomAt(i);
-			if (ringSetMolecule.contains(atom)) {
-				NumberOfRingAtoms = NumberOfRingAtoms + 1;
-				atom.setFlag(CDKConstants.ISINRING, true);
-				atom.setFlag(CDKConstants.ISALIPHATIC, false);
-				ringSetA = ringSetMolecule.getRings(atom);
-				RingSetManipulator.sort(ringSetA);
-				Ring sring = (Ring) ringSetA.lastElement();
-				atom.setProperty("RING_SIZE", new Integer(sring.getRingSize()));
-				isInHeteroRing = isHeteroRingSystem(RingSetManipulator.getAllInOneContainer(ringSetA));
-			} else {
-				atom.setFlag(CDKConstants.ISALIPHATIC, true);
-				atom.setFlag(CDKConstants.ISINRING, false);
-				isInHeteroRing = false;
-			}
-			atom.setProperty("MAX_BOND_ORDER", new Double(molecule.getMaximumBondOrder(atom)));
-			try {
-				hoseCode = hcg.getHOSECode(molecule, atom, 3);
-				//System.out.print("HOSECODE GENERATION: ATOM "+i+" HoseCode: "+hoseCode+" ");
-			} catch (CDKException ex1) {
-				System.out.println("Could not build HOSECode from atom " + i + " due to " + ex1.toString());
-				throw new CDKException("Could not build HOSECode from atom");
-			}
-			try {
-				ffc.configureAtom(atom, hoseCode, isInHeteroRing);
-			} catch (CDKException ex2) {
-				System.out.println("Could not final configure atom " + i + " due to " + ex2.toString());
-				throw new Exception("Could not final configure atom due to problems with force field");
-			}
-		}
-		return ringSetMolecule;
-	}
 
 
 	/**
@@ -541,7 +480,6 @@ public class ModelBuilder3D {
 		//System.out.println("****** PLACE LINEAR CHAINS ******");
 		Atom dihPlacedAtom = null;
 		Atom thirdPlacedAtom = null;
-		boolean flagRingAtom = false;
 		AtomContainer longestUnplacedChain = new AtomContainer();
 		if (startAtoms.getAtomCount() == 0) {
 			//no branch points ->linear chain
@@ -597,24 +535,6 @@ public class ModelBuilder3D {
 				//ac.getAtomAt(i).setFlag(CDKConstants.ISPLACED, true);
 			}
 		}
-	}
-
-
-	/**
-	 *  Returns true if atom is in hetreo ring system
-	 *
-	 *@param  ac  AtomContainer
-	 *@return     true/false
-	 */
-	private boolean isHeteroRingSystem(AtomContainer ac) {
-		if (ac != null) {
-			for (int i = 0; i < ac.getAtomCount(); i++) {
-				if (!(ac.getAtomAt(i).getSymbol()).equals("H") && !(ac.getAtomAt(i).getSymbol()).equals("C")) {
-					return true;
-				}
-			}
-		}
-		return false;
 	}
 
 

@@ -28,13 +28,10 @@
 package org.openscience.cdk.modeling.builder3d;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Vector;
-import java.io.FileReader;
 import java.util.BitSet;
 import java.util.StringTokenizer;
 
@@ -83,7 +80,7 @@ public class TemplateHandler3D{
 		//System.out.println("TEMPLATE START");
 		IteratingMDLReader imdl=null;
 		int [] statistics=new int [13];
-		int maxRingSize=0;
+		//int maxRingSize=0;
 		InputStream ins = null;
 		BufferedReader fin =null;
 			

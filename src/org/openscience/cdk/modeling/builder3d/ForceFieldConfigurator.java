@@ -38,6 +38,16 @@ import org.openscience.cdk.exception.NoSuchAtomTypeException;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.ringsearch.SSSRFinder;
+import org.openscience.cdk.tools.HOSECodeGenerator;
+import org.openscience.cdk.RingSet;
+import org.openscience.cdk.tools.manipulator.RingSetManipulator;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.Ring;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.AtomContainer;
+
 
 /**
  *  Reads in a force field configuration file, set the atom types into a vector, and the data into a hashtable
@@ -54,7 +64,6 @@ import org.openscience.cdk.CDKConstants;
  */
 public class ForceFieldConfigurator {
 
-	private File f;
 	private String ffName = "mm2";
 	private Vector atomTypes;
 	private Hashtable parameterSet=null;
@@ -206,6 +215,80 @@ public class ForceFieldConfigurator {
 		throw new NoSuchAtomTypeException("AtomType " + ID + " could not be found");
 	}
 
+	
+	/**
+	 *  Method assigns atom types to atoms (calculates sssr and aromaticity)
+	 *
+	 *@return                sssrf set
+	 *@exception  Exception  Description of the Exception
+	 */
+	public RingSet assignAtomTyps(Molecule molecule) throws Exception {
+		Atom atom = null;
+		String hoseCode = "";
+		HOSECodeGenerator hcg = new HOSECodeGenerator();
+		int NumberOfRingAtoms = 0;
+		RingSet ringSetA = null;
+		RingSet ringSetMolecule = new SSSRFinder(molecule).findSSSR();
+		boolean isInHeteroRing = false;
+		try {
+			HueckelAromaticityDetector.detectAromaticity(molecule);
+		} catch (Exception cdk1) {
+			System.out.println("AROMATICITYError: Cannot determine aromaticity due to: " + cdk1.toString());
+		}
+
+		for (int i = 0; i < molecule.getAtomCount(); i++) {
+			atom = molecule.getAtomAt(i);
+			if (ringSetMolecule.contains(atom)) {
+				NumberOfRingAtoms = NumberOfRingAtoms + 1;
+				atom.setFlag(CDKConstants.ISINRING, true);
+				atom.setFlag(CDKConstants.ISALIPHATIC, false);
+				ringSetA = ringSetMolecule.getRings(atom);
+				RingSetManipulator.sort(ringSetA);
+				Ring sring = (Ring) ringSetA.lastElement();
+				atom.setProperty("RING_SIZE", new Integer(sring.getRingSize()));
+				isInHeteroRing = isHeteroRingSystem(RingSetManipulator.getAllInOneContainer(ringSetA));
+			} else {
+				atom.setFlag(CDKConstants.ISALIPHATIC, true);
+				atom.setFlag(CDKConstants.ISINRING, false);
+				isInHeteroRing = false;
+			}
+			atom.setProperty("MAX_BOND_ORDER", new Double(molecule.getMaximumBondOrder(atom)));
+			try {
+				hoseCode = hcg.getHOSECode(molecule, atom, 3);
+				//System.out.print("HOSECODE GENERATION: ATOM "+i+" HoseCode: "+hoseCode+" ");
+			} catch (CDKException ex1) {
+				System.out.println("Could not build HOSECode from atom " + i + " due to " + ex1.toString());
+				throw new CDKException("Could not build HOSECode from atom");
+			}
+			try {
+				configureAtom(atom, hoseCode, isInHeteroRing);
+			} catch (CDKException ex2) {
+				System.out.println("Could not final configure atom " + i + " due to " + ex2.toString());
+				throw new Exception("Could not final configure atom due to problems with force field");
+			}
+		}
+		return ringSetMolecule;
+	}
+	
+
+	/**
+	 *  Returns true if atom is in hetreo ring system
+	 *
+	 *@param  ac  AtomContainer
+	 *@return     true/false
+	 */
+	private boolean isHeteroRingSystem(AtomContainer ac) {
+		if (ac != null) {
+			for (int i = 0; i < ac.getAtomCount(); i++) {
+				if (!(ac.getAtomAt(i).getSymbol()).equals("H") && !(ac.getAtomAt(i).getSymbol()).equals("C")) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	
 	/**
 	 *  Assigns an atom type to an atom
 	 *
@@ -430,12 +513,9 @@ public class ForceFieldConfigurator {
 		Vector atomTypePattern = null;
 		MMFF94BasedAtomTypePattern atp = new MMFF94BasedAtomTypePattern();
 		atomTypePattern = atp.getAtomTypePatterns();
-		Boolean b_tmp = null;
-		Double d_tmp = null;
 		Pattern p = null;
 		Pattern p2 = null;
 		String ID = "";
-		Atom configAtom = null;
 		boolean atomTypeFlag = false;
 		Matcher mat=null;
 		Matcher mat2=null;
