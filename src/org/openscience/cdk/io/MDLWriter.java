@@ -30,6 +30,7 @@ package org.openscience.cdk.io;
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.exception.*;
+import org.openscience.cdk.tools.IsotopeFactory;
 import java.io.*;
 import java.util.*;
 import java.text.*;
@@ -38,7 +39,7 @@ import javax.vecmath.*;
 
 
 /**
- * Writes a molecule or an array of molecules to a MDL molfile.
+ * Writes a molecule or an array of molecules to a MDL mol or sdf file.
  *
  * <pre>
  * MDLWriter writer = new MDLWriter(new FileWriter(new File("output.mol")));
@@ -53,19 +54,35 @@ import javax.vecmath.*;
  */
 public class MDLWriter implements ChemObjectWriter {
 
-    static BufferedWriter writer;
+    private BufferedWriter writer;
+    private org.openscience.cdk.tools.LoggingTool logger;
+    private IsotopeFactory isotopeFactory = null;
 
-	/**
-	 * Contructs a new MDLWriter that can write an array of
+    /**
+     * Contructs a new MDLWriter that can write an array of
      * Molecules to a given OutputStream.
-	 *
-	 * @param   out  The OutputStream to write to
-	 */
-	public MDLWriter(FileOutputStream out) throws Exception
-	{
-			writer = new BufferedWriter(new OutputStreamWriter(out));
-		
-	}
+     *
+     * @param   out  The OutputStream to write to
+     */
+    public MDLWriter(FileOutputStream out) throws Exception {
+        this(new BufferedWriter(new OutputStreamWriter(out)));
+    }
+
+    /**
+     * Contructs a new MDLWriter that can write an array of 
+     * Molecules to a Writer.
+     *
+     * @param   out  The Writer to write to
+     */
+    public MDLWriter(Writer out) {
+        writer = new BufferedWriter(out);
+        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        try {
+            isotopeFactory = IsotopeFactory.getInstance();
+        } catch (Exception exception) {
+            logger.error("Failed to initiate isotope factory: " + exception.toString());
+        }
+    }
 
     /**
      * Flushes the output and closes this object.
@@ -73,17 +90,6 @@ public class MDLWriter implements ChemObjectWriter {
     public void close() throws IOException {
         writer.close();
     }
-
-	/**
-	 * Contructs a new MDLWriter that can write an array of 
-     * Molecules to a Writer.
-	 *
-	 * @param   out  The Writer to write to
-	 */
-	public MDLWriter(Writer out) {
-			writer = new BufferedWriter(out);
-	}
-
 
     /**
      * Writes a ChemObject to the MDL molfile formated output. 
@@ -124,7 +130,7 @@ public class MDLWriter implements ChemObjectWriter {
 	 *
 	 * @param   molecules  Array of Molecules that is written to an OutputStream 
 	 */
-	private void  writeSetOfMolecules(SetOfMolecules som)
+	private void writeSetOfMolecules(SetOfMolecules som)
 	{
 		Molecule[] molecules = som.getMolecules();
 			try
@@ -157,105 +163,116 @@ public class MDLWriter implements ChemObjectWriter {
 	 *
 	 * @param   molecule  Molecule that is written to an OutputStream 
 	 */
-	public static void writeMolecule(Molecule molecule) throws Exception
-	{
-		int Bonorder, stereo;
-		String line = "";
-		int index = -1;
-		int rows = 4;
-		String title = (String)molecule.getProperty(CDKConstants.TITLE);
-		if (title == null) title = "";
-		do
-		{
-			index = title.indexOf("\n",index + 1);
-			rows--;
-		}
-		while (index != -1);
-			writer.write(title);
-			for(int i = 0; i < rows; i++)
-			{
-				writer.newLine();
-			}
-		    line += formatMDLInt(molecule.getAtomCount(), 3);
-		    line += formatMDLInt(molecule.getBondCount(), 3);
-		    line += "  0  0  0  0  0  0  0  0999 V2000";
-			writer.write(line);
-			writer.newLine();
-            // write Atom block
-		    for (int f = 0; f < molecule.getAtomCount(); f++)
-		    {
-				Atom atom = molecule.getAtomAt(f);
-		        line = "";
-                if (atom.getPoint3D() != null) {
-                    line += formatMDLFloat((float) atom.getX3D());
-                    line += formatMDLFloat((float) atom.getY3D());
-                    line += formatMDLFloat((float) atom.getZ3D()) + " ";
-                } else if (atom.getPoint2D() != null) {
-                    line += formatMDLFloat((float) atom.getX2D());
-                    line += formatMDLFloat((float) atom.getY2D());
-                    line += "    0.0000 ";
-                } else {
-                    // if no coordinates available, then output a number
-                    // of zeros
-                    line += formatMDLFloat((float)0.0);
-                    line += formatMDLFloat((float)0.0);
-                    line += formatMDLFloat((float)0.0) + " ";
-                }
-		        line += formatMDLString(molecule.getAtomAt(f).getSymbol(), 3);
-		        line += " 0  0  0  0  0  0  0  0  0  0  0  0";
-			    writer.write(line);
-			    writer.newLine();
-		    }
-            // write Bond block
-			for (int g = 0; g < molecule.getElectronContainerCount(); g++) { 
-                if (molecule.getElectronContainerAt(g) instanceof Bond) {
-                    Bond bond = (Bond)molecule.getElectronContainerAt(g);
-                    if (bond.getAtoms().length != 2)
-                    {
-                        System.out.println("keine 2 Atome");
-                    }
-                    else
-                    {
-                        line = "";
-                        line += formatMDLInt(molecule.getAtomNumber(bond.getAtomAt(0)) + 1,3);
-                        line += formatMDLInt(molecule.getAtomNumber(bond.getAtomAt(1)) + 1,3);
-                        line += formatMDLInt((int)bond.getOrder(),3);
-                        line += "  ";
-                        switch(bond.getStereo()){
-                          case 1:
-                            line += "1";
-                            break;
-                          case -1:
-                            line += "6";
-                            break;
-                          default:
-                            line += "0";
-                        }
-                        line += "  0  0  0 ";
-                        writer.write(line);
-                        writer.newLine();
-                    }
-                }
-			}
-            // write formal atomic charges
-		    for (int atomNumber = 1; atomNumber < molecule.getAtomCount(); atomNumber++) {
-                Atom atom = molecule.getAtomAt(atomNumber-1);
-                int charge = atom.getFormalCharge();
-                if (charge != 0) {
-                    writer.write("M  CHG  1 ");
-                    writer.write(formatMDLInt(atomNumber,3));
-                    writer.write(" ");
-                    writer.write(formatMDLInt(charge,3));
-                    writer.newLine();
-                }
-            }
-            // close molecule
-			writer.write("M  END");
-			writer.newLine();
-			writer.flush();
-			writer.close();
+    public void writeMolecule(Molecule molecule) throws Exception {
+        int Bonorder, stereo;
+        String line = "";
+        
+        // write header block
+        String title = (String)molecule.getProperty(CDKConstants.TITLE);
+        if (title == null) title = "";
+        writer.write(title + "\n");
+        writer.write("  CDK\n");
+        String comment = (String)molecule.getProperty(CDKConstants.REMARK);
+        if (comment == null) comment = "";
+        writer.write(comment + "\n");
+        
+        // write Counts line
+        line += formatMDLInt(molecule.getAtomCount(), 3);
+        line += formatMDLInt(molecule.getBondCount(), 3);
+        line += "  0  0  0  0  0  0  0  0999 V2000\n";
+        writer.write(line);
 
-	}
+        // write Atom block
+        Atom[] atoms = molecule.getAtoms();
+        for (int f = 0; f < atoms.length; f++) {
+            Atom atom = atoms[f];
+            line = "";
+            if (atom.getPoint3D() != null) {
+                line += formatMDLFloat((float) atom.getX3D());
+                line += formatMDLFloat((float) atom.getY3D());
+                line += formatMDLFloat((float) atom.getZ3D()) + " ";
+            } else if (atom.getPoint2D() != null) {
+                line += formatMDLFloat((float) atom.getX2D());
+                line += formatMDLFloat((float) atom.getY2D());
+                line += "    0.0000 ";
+            } else {
+                // if no coordinates available, then output a number
+                // of zeros
+                line += formatMDLFloat((float)0.0);
+                line += formatMDLFloat((float)0.0);
+                line += formatMDLFloat((float)0.0) + " ";
+            }
+            line += formatMDLString(molecule.getAtomAt(f).getSymbol(), 3);
+            line += " 0  0  0  0  0  0  0  0  0  0  0  0";
+            writer.write(line);
+            writer.newLine();
+        }
+
+        // write Bond block
+        Bond[] bonds = molecule.getBonds();
+        for (int g = 0; g < bonds.length; g++) {
+            Bond bond = bonds[g];
+            if (bond.getAtoms().length != 2) {
+                logger.warn("Skipping bond with more/less than two atoms: " + bond);
+            } else {
+                line = formatMDLInt(molecule.getAtomNumber(bond.getAtomAt(0)) + 1,3);
+                line += formatMDLInt(molecule.getAtomNumber(bond.getAtomAt(1)) + 1,3);
+                double bondOrder = bond.getOrder();
+                if (bondOrder == CDKConstants.BONDORDER_AROMATIC) {
+                    line += formatMDLInt(4,3);
+                } else {
+                    line += formatMDLInt((int)bond.getOrder(),3);
+                }
+                line += "  ";
+                switch(bond.getStereo()){
+                    case 1:
+                    line += "1";
+                    break;
+                    case -1:
+                    line += "6";
+                    break;
+                    default:
+                    line += "0";
+                }
+                line += "  0  0  0 ";
+                writer.write(line);
+                writer.newLine();
+            }
+        }
+
+        // write formal atomic charges
+        for (int i = 0; i < atoms.length; i++) {
+            Atom atom = atoms[i];
+            int charge = atom.getFormalCharge();
+            if (charge != 0) {
+                writer.write("M  CHG  1 ");
+                writer.write(formatMDLInt(i+1,3));
+                writer.write(" ");
+                writer.write(formatMDLInt(charge,3));
+                writer.newLine();
+            }
+        }
+        
+        // write formal isotope information
+        for (int i = 0; i < atoms.length; i++) {
+            Atom atom = atoms[i];
+            int atomicNumber = atom.getAtomicNumber();
+            int majorNumber = isotopeFactory.getMajorIsotope(atom.getSymbol()).getAtomicNumber();
+            if (atomicNumber != 0 && atomicNumber != majorNumber) {
+                writer.write("M  ISO  1 ");
+                writer.write(formatMDLInt(i+1,3));
+                writer.write(" ");
+                writer.write(formatMDLInt(atomicNumber - majorNumber,3));
+                writer.newLine();
+            }
+        }
+        
+        // close molecule
+        writer.write("M  END");
+        writer.newLine();
+        writer.flush();
+        writer.close();
+    }
 
 	/**
 	 * Formats an int to fit into the connectiontable and changes it 
@@ -265,8 +282,7 @@ public class MDLWriter implements ChemObjectWriter {
 	 * @param   l  Length of the String
 	 * @return     The String to be written into the connectiontable
 	 */
-    private static String formatMDLInt(int i, int l)
-    {
+    private String formatMDLInt(int i, int l) {
         String s = "", fs = "";
         NumberFormat nf = NumberFormat.getNumberInstance(Locale.ENGLISH);
         nf.setParseIntegerOnly(true);
@@ -291,8 +307,7 @@ public class MDLWriter implements ChemObjectWriter {
 	 * @param   fl  The float to be formated
 	 * @return      The String to be written into the connectiontable
 	 */
-    private static String formatMDLFloat(float fl)
-    {
+    private String formatMDLFloat(float fl) {
         String s = "", fs = "";
         int l;
         NumberFormat nf = NumberFormat.getNumberInstance(Locale.ENGLISH);
@@ -318,8 +333,7 @@ public class MDLWriter implements ChemObjectWriter {
 	 * @param   le   The length of the String
 	 * @return       The String to be written in the connectiontable
 	 */
-    private static String formatMDLString(String s, int le)
-    {
+    private String formatMDLString(String s, int le) {
         s = s.trim();
         if (s.length() > le)
             return s.substring(0, le);
