@@ -30,6 +30,7 @@ package org.openscience.cdk.io;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.io.StringWriter;
 import org.openscience.cdk.*;
 import org.openscience.cdk.exception.*;
 import org.openscience.cdk.tools.IsotopeFactory;
@@ -106,6 +107,10 @@ public class CMLWriter extends DefaultChemObjectWriter {
         this(out, false);
     }
 
+    public CMLWriter() {
+        this(new StringWriter());
+    }
+
     public String getFormatName() {
         return "Chemical Markup Language";
     }
@@ -153,7 +158,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
         customizeJob();
         
         if (!done) {
-            if (!fragment) {
+            if (!fragment && xmlDecl.isSet()) {
                 write("<?xml version=\"1.0\"?>\n");
             }
             if (object instanceof SetOfMolecules) {
