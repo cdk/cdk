@@ -79,7 +79,7 @@ public class AtomPlacer
 	 */
 	public AtomPlacer()
 	{
-		logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+		logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName(), true);
 	}
 
 
@@ -297,6 +297,7 @@ public class AtomPlacer
 	 */
 	public void placeLinearChain(AtomContainer ac, Vector2d initialBondVector, double bondLength)
 	{
+		logger.debug("Placing linear chain of length " + ac.getAtomCount());
 		Vector2d bondVector = initialBondVector;
 		Atom atom = null;
 		Point2d atomPoint = null;

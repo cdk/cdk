@@ -161,7 +161,8 @@ public class StructureDiagramGeneratorTest extends TestCase
 			//sdg.runVisualTests();
 			//sdg.bug736137();
 			//sdg.testSpiroRings();
-			sdg.visualBugPMR();
+			//sdg.visualBugPMR();
+			sdg.testBranchedAliphatic();
 		} catch (Exception exc)
 		{
 			exc.printStackTrace();

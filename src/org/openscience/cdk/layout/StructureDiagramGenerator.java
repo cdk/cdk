@@ -78,7 +78,7 @@ public class StructureDiagramGenerator {
 	 * The empty constructor.
 	 */
 	public StructureDiagramGenerator() {
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName(), true);
 	}
 
 	/**
@@ -202,6 +202,7 @@ public class StructureDiagramGenerator {
         /* if molecule contains only one Atom, don't fail, simply
            set coordinates to simplest: 0,0. See bug #780545 */
 	   logger.debug("Entry point of generatorCoordinates()");
+	   logger.debug("We have a molecules with " + molecule.getAtomCount() + " atoms.");
 		if (molecule.getAtomCount() == 1) {
 		    molecule.getAtomAt(0).setPoint2D(new Point2d(0,0));
 		    return;
@@ -209,8 +210,14 @@ public class StructureDiagramGenerator {
 		ConnectivityChecker conCheck = new ConnectivityChecker();
 		if (!conCheck.isConnected(molecule))
 		{
+			logger.debug("Molecule is not connected. Throwing exception.");
 			throw new CDKException(disconnectedMessage);	
 		}
+		else
+		{
+			logger.debug("Molecule is connected.");
+		}
+		
         
 		/* compute the minimum number of rings as 
 		   given by Frerejacque, Bull. Soc. Chim. Fr., 5, 1008 (1939) */
