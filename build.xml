@@ -46,6 +46,8 @@
                         <include name="xerces-2.3.0.jar" />
                         <include name="xindice.jar" />
                         <include name="xmldb.jar" />
+                        <include name="stmml.jar" />
+                        <include name="castor-0.9.4.3-xml.jar" />
                 </fileset>
                 <fileset dir="${pathtojava3d}">
                         <include name="*.jar" />
@@ -439,7 +441,7 @@
         <target id="dist" name="dist" depends="dist-all" 
                 description="Builds the jar files for all parts of the CDK."/>
 
-        <target name="sourcedist" depends="init">
+        <target id="sourcedist" name="sourcedist" depends="init">
                 <property name="package" value="cdk-source-${DSTAMP}"/>
                 <property name="sourcedist.dir" value="${sourcedist}/${package}"/>
                 <copy todir="${sourcedist.dir}/${src}">
@@ -462,6 +464,9 @@
                 <copy todir="${sourcedist.dir}/${src}/org/openscience/cdk/config/">
                         <fileset dir="${src}/org/openscience/cdk/config/"
                                  includes="*" />
+                </copy>
+                <copy todir="${sourcedist.dir}/${src}/patches/">
+                    <fileset dir="${src}/patches/" includes="*" />
                 </copy>
                 <tar tarfile="${package}.tar" basedir="${sourcedist}/" includes="${package}/**" />
                 <gzip zipfile="${package}.tar.gz" src="cdk-source-${DSTAMP}.tar" />
