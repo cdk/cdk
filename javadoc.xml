@@ -31,30 +31,32 @@
         <javadoc packagenames="org.openscience.cdk.*"
                  sourcepath="${src}" destdir="${javadoc.dir}"
                  defaultexcludes="yes"
+                 excludepackagenames="org.openscience.cdk.test.*"
                  author="true" version="true" use="true"
                  public="true"
                  windowtitle="CDK API">
             <classpath refid="project.class.path" />
+            <tag name="keyword" scope="all" description="Keywords:" />
+            <tag name="created" scope="all" description="Created on:" />
+            <package name="org.openscience.cdk"/>
         </javadoc>
     </target>
 
     <target name="core.docbook">
-        <javadoc private="false" public="true">
+        <javadoc private="false" public="true"
+                 excludepackagenames="org.openscience.cdk.test.*">
             <classpath refid="project.class.path" />
 
             <doclet name="com.mf.doclet.docbook.DocBookDoclet"
                     path="jar/dbdoclet.jar">
                 <param name="-properties" value="jar/dbdoclet.properties"/>
             </doclet>
-
             <tag name="keyword" scope="all" description="Keywords:" />
-
+            <tag name="created" scope="all" description="Created on:" />
             <package name="org.openscience.cdk"/>
-
             <sourcepath>
                 <pathelement path="${src}"/>
             </sourcepath>
-
         </javadoc>
         <copy file="javadoc.dbxml"
               tofile="core.dbxml" />
