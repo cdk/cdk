@@ -63,7 +63,7 @@ import Jama.EigenvalueDecomposition;
  * of heavy atoms present.
  * 
  * @author      Rajarshi Guha
- * @created     2004-11-30
+ * @cdk.created     2004-11-30
  * 
  * @cdk.builddepends Jama-1.0.1.jar
  * @cdk.depends Jama-1.0.1.jar
@@ -94,7 +94,7 @@ public class BCUTDescriptor implements Descriptor {
     };
 
     /**
-     *  Sets the parameters attribute of the BCUTDescriptor object
+     *  Sets the parameters attribute of the BCUTDescriptor object.
      *
      *@param  params            The new parameter values. This descriptor takes 2 parameters: number of highest
      *                          eigenvalues and number of lowest eigenvalues. If 0 is specified for either (the default)
@@ -118,7 +118,7 @@ public class BCUTDescriptor implements Descriptor {
     }
 
     /**
-     *  Gets the parameters attribute of the BCUTDescriptor object
+     *  Gets the parameters attribute of the BCUTDescriptor object.
      *
      *@return    Two element array of Integer representing number of highest and lowest eigenvalues
      *           to return respectively
@@ -143,7 +143,7 @@ public class BCUTDescriptor implements Descriptor {
 
 
     /**
-     *  Gets the parameterType attribute of the BCUTDescriptor object
+     *  Gets the parameterType attribute of the BCUTDescriptor object.
      *
      *@param  name  Description of the Parameter (can be either 'nhigh' or 'nlow')
      *@return       The parameterType value
@@ -198,7 +198,7 @@ public class BCUTDescriptor implements Descriptor {
     }
     
    /**
-     *  Calculates the three classes of BCUT descriptors
+     *  Calculates the three classes of BCUT descriptors.
      *
      *@param  container  Parameter is the atom container.
      *@return            An ArrayList containing the descriptors. The default is to return

@@ -44,7 +44,7 @@ import Jama.EigenvalueDecomposition;
 
 
 /**
- * Holistic descriptors described by Todeschini et al. ({@cdk.cite TOD98}) 
+ * Holistic descriptors described by Todeschini et al ({@cdk.cite TOD98}). 
  * The descriptors are based on a number of atom weightings. There are 6 different
  * possible weightings:
  * <ol>
@@ -68,7 +68,7 @@ import Jama.EigenvalueDecomposition;
  * @todo        Fix up the &gamm; descriptors
  * 
  * @author      Rajarshi Guha
- * @created     2004-12-1
+ * @cdk.created     2004-12-1
  * 
  * @cdk.builddepends Jama-1.0.1.jar
  * @cdk.depends Jama-1.0.1.jar
@@ -181,7 +181,7 @@ public class WHIMDescriptor implements Descriptor {
     };
 
     /**
-     *  Sets the parameters attribute of the WHIMDescriptor object
+     *  Sets the parameters attribute of the WHIMDescriptor object.
      *
      *@param  params            The new parameter values. The Object array should have a single element
      *                          which should be a String. The possible values of this String are: unity,
@@ -205,7 +205,7 @@ public class WHIMDescriptor implements Descriptor {
     }
 
     /**
-     *  Gets the parameters attribute of the WHIMDescriptor object
+     *  Gets the parameters attribute of the WHIMDescriptor object.
      *
      *@return    Two element array of Integer representing number of highest and lowest eigenvalues
      *           to return respectively
@@ -216,7 +216,7 @@ public class WHIMDescriptor implements Descriptor {
         return(o);
     }
     /**
-     *  Gets the parameterNames attribute of the WHIMDescriptor object
+     *  Gets the parameterNames attribute of the WHIMDescriptor object.
      *
      *@return    The parameterNames value
      */
@@ -240,7 +240,7 @@ public class WHIMDescriptor implements Descriptor {
 
 
    /**
-     *  Calculates 11 directional and 6 non-directional WHIM descriptors for 
+     *  Calculates 11 directional and 6 non-directional WHIM descriptors for. 
      *  the specified weighting scheme
      *
      *@param  container  Parameter is the atom container.
