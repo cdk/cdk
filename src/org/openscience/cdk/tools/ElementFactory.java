@@ -38,8 +38,9 @@ import org.openscience.cdk.*;
  *
  * @author     steinbeck
  * @created    July 23, 2001
+ *
+ * @keyword    element
  */
-
 public class ElementFactory extends IsotopeFactory
 {
 
