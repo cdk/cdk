@@ -249,16 +249,27 @@ public class BasicValidator implements ValidatorInterface {
             AtomTypeFactory atf = AtomTypeFactory.getInstance();
             for (int i=0; i<bond.getAtomCount(); i++) {
                 Atom atom = bond.getAtomAt(i);
-                Atom copy = (Atom)atom.clone();
-                atf.configure(copy);
-                if (bond.getOrder() > copy.getMaxBondOrder()) {
-                    maxBO.setDetails(
-                        "Bond order (" + bond.getOrder() +") is larger than maximum " +
-                        "for atom " + copy.getSymbol() + "."
-                    );
-                    report.addError(maxBO);
-                } else {
+                AtomType[] atomTypes = atf.getAtomTypes(atom.getSymbol(), atf.ATOMTYPE_ID_STRUCTGEN);
+                AtomType failedOn = null;
+                boolean foundMatchingAtomType = false;
+                for (int j=0; j<atomTypes.length; j++) {
+                    if (bond.getOrder() <= atomTypes[j].getMaxBondOrder()) {
+                        foundMatchingAtomType = true;
+                    } else {
+                        failedOn = atomTypes[j];
+                    }
+                }
+                if (foundMatchingAtomType) {
                     report.addOK(maxBO);
+                } else {
+                    if (failedOn != null) {
+                        maxBO.setDetails(
+                            "Bond order exceeds the one allowed for atom " +
+                            atom.getSymbol() + " for which the maximum bond order is " +
+                            failedOn.getMaxBondOrder()
+                        );
+                    }
+                    report.addError(maxBO);
                 }
             }
         } catch (Exception exception) {
@@ -331,12 +342,27 @@ public class BasicValidator implements ValidatorInterface {
         try {
             AtomTypeFactory atf = AtomTypeFactory.getInstance();
             int bos = (int)molecule.getBondOrderSum(atom);
-            Atom copy = (Atom)atom.clone();
-            atf.configure(copy);
-            if (copy.getMaxBondOrderSum() != 0 && bos > copy.getMaxBondOrderSum()) {
-                report.addError(checkBondSum);
-            } else {
+            AtomType[] atomTypes = atf.getAtomTypes(atom.getSymbol(), atf.ATOMTYPE_ID_STRUCTGEN);
+            AtomType failedOn = null;
+            boolean foundMatchingAtomType = false;
+            for (int j=0; j<atomTypes.length; j++) {
+                if (bos <= atomTypes[j].getMaxBondOrderSum()) {
+                    foundMatchingAtomType = true;
+                } else {
+                    failedOn = atomTypes[j];
+                }
+            }
+            if (foundMatchingAtomType) {
                 report.addOK(checkBondSum);
+            } else {
+                if (failedOn != null) {
+                    checkBondSum.setDetails(
+                        "Bond order exceeds the one allowed for atom " +
+                        atom.getSymbol() + " for which the maximum bond order is " +
+                        failedOn.getMaxBondOrderSum()
+                    );
+                }
+                report.addError(checkBondSum);
             }
         } catch (Exception exception) {
             System.err.println("Error while performing atom bos validation: " + exception.toString());
