@@ -202,6 +202,30 @@ public class ChemObjectTest extends TestCase {
         assertEquals(0, chemObject2.getListenerCount());
     }
     
+    public void testAddListener_ChemObjectListener() {
+        ChemObject chemObject1 = new ChemObject();
+        assertEquals(0, chemObject1.getListenerCount());
+        DummyChemObjectListener listener = new DummyChemObjectListener();
+        chemObject1.addListener(listener);
+        assertEquals(1, chemObject1.getListenerCount());
+    }
+    
+    public void testRemoveListener_ChemObjectListener() {
+        ChemObject chemObject1 = new ChemObject();
+        DummyChemObjectListener listener = new DummyChemObjectListener();
+        chemObject1.addListener(listener);
+        assertEquals(1, chemObject1.getListenerCount());
+        chemObject1.removeListener(listener);
+        assertEquals(0, chemObject1.getListenerCount());
+    }
+    
+    public void testGetListenerCount() {
+        ChemObject chemObject1 = new ChemObject();
+        DummyChemObjectListener listener = new DummyChemObjectListener();
+        chemObject1.addListener(listener);
+        assertEquals(1, chemObject1.getListenerCount());
+    }
+
     class DummyChemObjectListener implements ChemObjectListener {
         public void stateChanged(ChemObjectChangeEvent event) {};
     }
@@ -213,4 +237,46 @@ public class ChemObjectTest extends TestCase {
         assertTrue(clone instanceof ChemObject);
     }
 
+    public void testCompare_Object() {
+        ChemObject chemObject = new ChemObject();
+        assertTrue(chemObject.compare(chemObject));
+        ChemObject secondObject = new ChemObject();
+        assertTrue(chemObject.compare(secondObject));
+        secondObject.setID("second");
+        assertFalse(chemObject.compare(secondObject));
+    }
+    
+    public void testStateChanged_ChemObjectChangeEvent() {
+        ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
+        ChemObject chemObject = new ChemObject();
+        chemObject.addListener(listener);
+        
+        chemObject.setID("Changed");
+        assertTrue(listener.changed);
+    }
+    
+    public void testNotifyChanged() {
+        ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
+        ChemObject chemObject = new ChemObject();
+        chemObject.addListener(listener);
+        
+        chemObject.setID("Changed");
+        assertTrue(listener.changed);
+    }
+    
+    private class ChemObjectListenerImpl implements ChemObjectListener {
+        private boolean changed;
+        
+        private ChemObjectListenerImpl() {
+            changed = false;
+        }
+        
+        public void stateChanged(ChemObjectChangeEvent e) {
+            changed = true;
+        }
+        
+        public void reset() {
+            changed = false;
+        }
+    }
 }
