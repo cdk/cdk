@@ -26,8 +26,8 @@
     <ant antfile="build.xml" target="clean"/>
     <ant antfile="build.xml" target="init"/>
     <!-- do them one by one, compile-extra, compile-io requires 1.4 -->
-    <javac srcdir="${build.src}" destdir="${build}" optimize="on" 
-           debug="off" deprecation="off"
+    <javac srcdir="${build.src}" destdir="${build}" optimize="off" 
+           debug="on" deprecation="off" target="1.1"
            includesfile="${src}/jmol.classes">
       <classpath refid="project.class.path" />
     </javac>
