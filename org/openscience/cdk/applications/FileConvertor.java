@@ -117,6 +117,8 @@ public class FileConvertor {
       return new XYZReader(f);
     } else if (format.equalsIgnoreCase("MOL")) {
       return new MDLReader(f);
+    } else if (format.equalsIgnoreCase("PDB")) {
+      return new PDBReader(f);
     }
     return null;
   }

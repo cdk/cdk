@@ -50,7 +50,7 @@ public class PDBReader implements CDKConstants, ChemObjectReader {
 
 	/**
 	 *
-	 * Contructs a new PDBReader that can read Molecules from a given 
+	 * Contructs a new PDBReader that can read Molecules from a given
 	 * InputStream.
 	 *
 	 * @param oIn  The InputStream to read from
@@ -62,9 +62,21 @@ public class PDBReader implements CDKConstants, ChemObjectReader {
 
 	/**
 	 *
-	 * Takes an object which subclasses ChemObject, e.g. Molecule, and will 
-	 * read this (from file, database, internet etc). If the specific 
-	 * implementation does not support a specific ChemObject it will throw 
+	 * Contructs a new PDBReader that can read Molecules from a given
+	 * Reader.
+	 *
+	 * @param oIn  The Reader to read from
+	 *
+	 */
+	public PDBReader(Reader oIn) {
+		_oInput = new BufferedReader(oIn);
+	}
+
+	/**
+	 *
+	 * Takes an object which subclasses ChemObject, e.g. Molecule, and will
+	 * read this (from file, database, internet etc). If the specific
+	 * implementation does not support a specific ChemObject it will throw
 	 * an Exception.
 	 *
 	 * @param oObj  The object that subclasses ChemObject
