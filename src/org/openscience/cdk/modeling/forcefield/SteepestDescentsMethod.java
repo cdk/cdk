@@ -22,10 +22,10 @@ public class SteepestDescentsMethod {
 	/**
 	 *  Constructor for the SteepestDescentsMethod object
 	 *
-	 *@param  point  Coordinates from current point
+	 *@param  coords3d  Coordinates from current point
 	 */
-	public SteepestDescentsMethod(GVector point) {
-		sk.setSize(point.getSize());
+	public SteepestDescentsMethod(GVector coords3d) {
+		sk.setSize(coords3d.getSize());
 	}
 
 

@@ -202,13 +202,13 @@ public class VanDerWaalsInteractions {
 	/**
 	 *  Calculate the actual Rij
 	 *
-	 *@param  point  Current molecule coordinates.
+	 *@param  coords3d  Current molecule coordinates.
 	 */
-	public void setAtomDistance(GVector point) throws Exception{
+	public void setAtomDistance(GVector coords3d) throws Exception{
 
 		for (int l = 0; l < vdwInteractionNumber; l++) {
 
-			r[l] = ffTools.distanceBetweenTwoAtomsFrom3xNCoordinates(point, vdWiAtomPosition[l][0], vdWiAtomPosition[l][1]);
+			r[l] = ffTools.distanceBetweenTwoAtomsFrom3xNCoordinates(coords3d, vdWiAtomPosition[l][0], vdWiAtomPosition[l][1]);
 			//System.out.println("r[" + l + "]= " + r[l]);
 		}
 	}
@@ -227,10 +227,10 @@ public class VanDerWaalsInteractions {
 	/**
 	 *  Evaluate the MMFF94 Van Der Waals interaction term.
 	 *
-	 *@param  point  Current molecule coordinates.
+	 *@param  coords3d  Current molecule coordinates.
 	 *@return        MMFF94 Van Der Waals interaction term value.
 	 */
-	public double functionMMFF94SumEvdW(GVector point) {
+	public double functionMMFF94SumEvdW(GVector coords3d) {
 		mmff94SumEvdW = 0;
 		for (int l = 0; l < vdwInteractionNumber; l++) {
 			mmff94SumEvdW = mmff94SumEvdW +
@@ -246,10 +246,10 @@ public class VanDerWaalsInteractions {
 	/**
 	 *  Evaluate the CCG Van Der Waals interaction term.
 	 *
-	 *@param  point  Current molecule coordinates.
+	 *@param  coords3d  Current molecule coordinates.
 	 *@return        CCG Van Der Waals interaction term value.
 	 */
-	public double functionCCGSumEvdWSK(GVector point, double[] s) {
+	public double functionCCGSumEvdWSK(GVector coords3d, double[] s) {
 		ccgSumEvdWSlaterKirkwood = 0;
 		double c;
 		for (int l = 0; l < vdwInteractionNumber; l++) {
@@ -268,10 +268,10 @@ public class VanDerWaalsInteractions {
 	/**
 	 *  Evaluate the CCG Van Der Waals interaction term.
 	 *
-	 *@param  point  Current molecule coordinates.
+	 *@param  coords3d  Current molecule coordinates.
 	 *@return        CCG Van Der Waals interaction term value.
 	 */
-	public double functionCCGSumEvdWAv(GVector point, double[] s) {
+	public double functionCCGSumEvdWAv(GVector coords3d, double[] s) {
 		ccgSumEvdWAverage = 0;
 		double c;
 		for (int l = 0; l < vdwInteractionNumber; l++) {
@@ -292,12 +292,12 @@ public class VanDerWaalsInteractions {
 	 *  Set the gradient of the MMFF94 Van Der Waals interaction term.
 	 *
 	 *
-	 *@param  point  Current molecule coordinates.
+	 *@param  coords3d  Current molecule coordinates.
 	 */
-	public void setGradientMMFF94SumEvdW(GVector point) {
+	public void setGradientMMFF94SumEvdW(GVector coords3d) {
 
-		gradientMMFF94SumEvdW.setSize(point.getSize());
-		dR.setSize(point.getSize());
+		gradientMMFF94SumEvdW.setSize(coords3d.getSize());
+		dR.setSize(coords3d.getSize());
 		
 		double sumGradientEvdW;
 		for (int i = 0; i < gradientMMFF94SumEvdW.getSize(); i++) {
@@ -335,10 +335,10 @@ public class VanDerWaalsInteractions {
 	 *  Evaluate the gradient of the CCG Van Der Waals interaction term.
 	 *  
 	 *
-	 *@param  point  Current molecule coordinates.
+	 *@param  coords3d  Current molecule coordinates.
 	 *@return           CCG Van Der Waals interaction gradient value.
 	 */
-/*	public GVector gradientMMFF94SumEvdW(GVector point, double[] s) {
+/*	public GVector gradientMMFF94SumEvdW(GVector coords3d, double[] s) {
 
 		gradientCCGSumEvdWSlaterKirkwood.setSize(molecule.getAtomCount() * 3);
 		dR.setSize(molecule.getAtomCount() * 3);
@@ -380,15 +380,15 @@ public class VanDerWaalsInteractions {
 	/**
 	 *  Evaluate the hessian of the CCG Van Der Waals interaction term.
 	 *
-	 *@param  point  Current molecule coordinates.
+	 *@param  coords3d  Current molecule coordinates.
 	 *@return        Hessian value of the CCG Van Der Waals interaction term.
 	 */
-/*	public GMatrix hessian(GVector point) {
+/*	public GMatrix hessian(GVector coords3d) {
 
-		double[] forHessian = new double[point.getSize() * point.getSize()];
+		double[] forHessian = new double[coords3d.getSize() * coords3d.getSize()];
 		double sumHessianEvdW = 0;
 
-		GMatrix ddR = new GMatrix(point.getSize(),point.getSize());
+		GMatrix ddR = new GMatrix(coords3d.getSize(),coords3d.getSize());
 		ddR.setZero();
 
 		for (int i = 0; i < forHessian.length; i++) {
@@ -398,7 +398,7 @@ public class VanDerWaalsInteractions {
 			forHessian[i] = sumHessianEvdW;
 		}
 
-		hessianMMFF94SumEvdW.setSize(point.getSize(), point.getSize());
+		hessianMMFF94SumEvdW.setSize(coords3d.getSize(), coords3d.getSize());
 		hessianMMFF94SumEvdW.set(forHessian); 
 		//System.out.println("hessianMMFF94SumEvdW : " + hessianMMFF94SumEvdW);
 		return hessianMMFF94SumEvdW;

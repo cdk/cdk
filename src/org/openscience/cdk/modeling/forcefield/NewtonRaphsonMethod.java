@@ -25,10 +25,10 @@ public class NewtonRaphsonMethod {
 	/**
 	 *  Constructor for the NewtonRaphsonMethod object
 	 *
-	 *@param  point  Coordinates from current point
+	 *@param  coords3d  Coordinates from current point
 	 */
-	public NewtonRaphsonMethod(GVector point) {
-		gradientPerInverseHessianVector.setSize(point.getSize());
+	public NewtonRaphsonMethod(GVector coords3d) {
+		gradientPerInverseHessianVector.setSize(coords3d.getSize());
 	}
 
 

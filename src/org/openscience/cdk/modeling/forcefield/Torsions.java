@@ -136,15 +136,15 @@ public class Torsions {
 	/**
 	 *  Calculate the actual phi
 	 *
-	 *@param  point  Current molecule coordinates.
+	 *@param  coords3d  Current molecule coordinates.
 	 */
-	public void setPhi(GVector point) {
+	public void setPhi(GVector coords3d) {
 
 		phi = new double[torsionNumber];
 		
 		for (int m = 0; m < torsionNumber; m++) {
 			
-			phi[m] = ffTools.torsionAngleFrom3xNCoordinates(point, torsionAtomPosition[m][0], torsionAtomPosition[m][1], 
+			phi[m] = ffTools.torsionAngleFrom3xNCoordinates(coords3d, torsionAtomPosition[m][0], torsionAtomPosition[m][1], 
 						torsionAtomPosition[m][2], torsionAtomPosition[m][3]);
 			//System.out.println("phi : " + phi[m]);	
 		}
@@ -154,11 +154,11 @@ public class Torsions {
 	/**
 	 *  Evaluate the MMFF94 torsions term.
 	 *
-	 *@param  point  Current molecule coordinates.
+	 *@param  coords3d  Current molecule coordinates.
 	 *@return        MMFF94 torsions term value.
 	 */
-	public double functionMMFF94SumET(GVector point) {
-		setPhi(point);
+	public double functionMMFF94SumET(GVector coords3d) {
+		setPhi(coords3d);
 		mmff94SumET = 0;
 		for (int m = 0; m < torsionNumber; m++) {
 			mmff94SumET = mmff94SumET + 0.5 * (v1[m] * (1 + Math.cos(phi[m])) + v2[m] * (1 - Math.cos(2 * phi[m])) + v3[m] * (1 + Math.cos(3 * phi[m])));
@@ -172,12 +172,12 @@ public class Torsions {
 	 *  Evaluate the gradient of the torsions term.
 	 *  
 	 *
-	 *@param  point  Current molecule coordinates.
+	 *@param  coords3d  Current molecule coordinates.
 	 */
-	public void setGradientMMFF94SumET(GVector point) {
+	public void setGradientMMFF94SumET(GVector coords3d) {
 
-		gradientMMFF94SumET.setSize(point.getSize());
-		dPhi.setSize(point.getSize());
+		gradientMMFF94SumET.setSize(coords3d.getSize());
+		dPhi.setSize(coords3d.getSize());
 
 		double sumGradientET;
 		for (int i = 0; i < gradientMMFF94SumET.getSize(); i++) {
@@ -213,15 +213,15 @@ public class Torsions {
 	/**
 	 *  Evaluate the hessian of the torsions.
 	 *
-	 *@param  point  Current molecule coordinates.
+	 *@param  coords3d  Current molecule coordinates.
 	 */
-	public void setHessianMMFF94SumET(GVector point) {
+	public void setHessianMMFF94SumET(GVector coords3d) {
 
-		double[] forHessian = new double[point.getSize() * point.getSize()];
-		double[] ddPhi = new double[point.getSize() * point.getSize()];
+		double[] forHessian = new double[coords3d.getSize() * coords3d.getSize()];
+		double[] ddPhi = new double[coords3d.getSize() * coords3d.getSize()];
 		
 		double sumHessianET = 0;
-		for (int i = 0; i < point.getSize(); i++) {
+		for (int i = 0; i < coords3d.getSize(); i++) {
 			for (int j = 0; j < dPhi.getSize(); j++) {
 				ddPhi[i*j] = 0;
 				for (int m = 0; m < torsionNumber; m++) {
@@ -233,7 +233,7 @@ public class Torsions {
 			forHessian[i] = 0.5 * sumHessianET;
 		}
 
-		hessianMMFF94SumET.setSize(point.getSize(), point.getSize());
+		hessianMMFF94SumET.setSize(coords3d.getSize(), coords3d.getSize());
 		hessianMMFF94SumET.set(forHessian); 
 		//System.out.println("hessianMMFF94SumET : " + hessianMMFF94SumET);
 	}

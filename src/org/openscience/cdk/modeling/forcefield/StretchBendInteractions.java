@@ -135,18 +135,18 @@ public class StretchBendInteractions {
 	/**
 	 *  Calculate the actual bond angles vijk, bond distances rij and rkj, and the difference with the reference angles and bonds
 	 *
-	 *@param  point  Current molecule coordinates.
+	 *@param  coords3d  Current molecule coordinates.
 	 */
-	public void calculateDeltarAndv(GVector point) {
+	public void calculateDeltarAndv(GVector coords3d) {
 
 		for (int i = 0; i < angleNumber; i++) {
-			v[i] = ffTools.angleBetweenTwoBondsFrom3xNCoordinates(point, angleAtomPosition[i][0],angleAtomPosition[i][1],angleAtomPosition[i][2]);
+			v[i] = ffTools.angleBetweenTwoBondsFrom3xNCoordinates(coords3d, angleAtomPosition[i][0],angleAtomPosition[i][1],angleAtomPosition[i][2]);
 			deltav[i] = v[i] - v0[i];
 
-			rij[i] = ffTools.distanceBetweenTwoAtomsFrom3xNCoordinates(point, angleAtomPosition[i][0], angleAtomPosition[i][1]);
+			rij[i] = ffTools.distanceBetweenTwoAtomsFrom3xNCoordinates(coords3d, angleAtomPosition[i][0], angleAtomPosition[i][1]);
 			deltarij[i] = rij[i] - r0IJ[i];
 
-			rkj[i] = ffTools.distanceBetweenTwoAtomsFrom3xNCoordinates(point, angleAtomPosition[i][2], angleAtomPosition[i][1]);
+			rkj[i] = ffTools.distanceBetweenTwoAtomsFrom3xNCoordinates(coords3d, angleAtomPosition[i][2], angleAtomPosition[i][1]);
 			deltarkj[i] = rkj[i] - r0KJ[i];
 		}
 	}
@@ -155,11 +155,11 @@ public class StretchBendInteractions {
 	/**
 	 *  Evaluate the MMFF94 stretch-bend interaction term.
 	 *
-	 *@param  point  Current molecule coordinates.
+	 *@param  coords3d  Current molecule coordinates.
 	 *@return        MMFF94 stretch-bend interaction term value.
 	 */
-	public double functionMMFF94SumEBA(GVector point) {
-		calculateDeltarAndv(point);
+	public double functionMMFF94SumEBA(GVector coords3d) {
+		calculateDeltarAndv(coords3d);
 		mmff94SumEBA = 0;
 		for (int j = 0; j < angleNumber; j++) {
 			mmff94SumEBA = mmff94SumEBA + 2.51210 * (kbaIJK[j] * deltarij[j] + kbaKJI[j] * deltarkj[j]) * deltav[j];
@@ -173,14 +173,14 @@ public class StretchBendInteractions {
 	 *  Evaluate the gradient of the stretch-bend interaction term. 
 	 *  
 	 *
-	 *@param  point  Current molecule coordinates.
+	 *@param  coords3d  Current molecule coordinates.
 	 */
-	public void setGradientMMFF94SumEBA(GVector point) {
+	public void setGradientMMFF94SumEBA(GVector coords3d) {
 
-		gradientMMFF94SumEBA.setSize(point.getSize());
-		dDeltav.setSize(point.getSize());
-		dDeltarij.setSize(point.getSize());
-		dDeltarkj.setSize(point.getSize());
+		gradientMMFF94SumEBA.setSize(coords3d.getSize());
+		dDeltav.setSize(coords3d.getSize());
+		dDeltarij.setSize(coords3d.getSize());
+		dDeltarkj.setSize(coords3d.getSize());
 
 		double sumGradientEBA;
 		for (int i = 0; i < gradientMMFF94SumEBA.getSize(); i++) {
@@ -217,18 +217,18 @@ public class StretchBendInteractions {
 	/**
 	 *  Evaluate the hessian of the stretch-bend interaction.
 	 *
-	 *@param  point  Current molecule coordinates.
+	 *@param  coords3d  Current molecule coordinates.
 	 */
-	public void setHessianMMFF94SumEBA(GVector point) {
+	public void setHessianMMFF94SumEBA(GVector coords3d) {
 
-		double[] forHessian = new double[point.getSize() * point.getSize()];
+		double[] forHessian = new double[coords3d.getSize() * coords3d.getSize()];
 		double sumHessianEBA = 0;
 
-		GMatrix ddDeltav = new GMatrix(point.getSize(),point.getSize());
+		GMatrix ddDeltav = new GMatrix(coords3d.getSize(),coords3d.getSize());
 		ddDeltav.setZero();
-		GMatrix ddDeltarij = new GMatrix(point.getSize(),point.getSize());
+		GMatrix ddDeltarij = new GMatrix(coords3d.getSize(),coords3d.getSize());
 		ddDeltarij.setZero();
-		GMatrix ddDeltarkj = new GMatrix(point.getSize(),point.getSize());
+		GMatrix ddDeltarkj = new GMatrix(coords3d.getSize(),coords3d.getSize());
 		ddDeltarkj.setZero();
 
 		for (int i = 0; i < forHessian.length; i++) {
@@ -241,7 +241,7 @@ public class StretchBendInteractions {
 			forHessian[i] = sumHessianEBA;
 		}
 
-		hessianMMFF94SumEBA.setSize(point.getSize(), point.getSize());
+		hessianMMFF94SumEBA.setSize(coords3d.getSize(), coords3d.getSize());
 		hessianMMFF94SumEBA.set(forHessian); 
 		//System.out.println("hessianMMFF94SumEBA : " + hessianMMFF94SumEBA);
 	}

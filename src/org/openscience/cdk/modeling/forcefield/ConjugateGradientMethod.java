@@ -7,7 +7,7 @@ import javax.vecmath.*;
 import org.openscience.cdk.*;
 
 /**
- *  Find a direction from a point of the coordinates space using the conjugate gradient approach.
+ *  Find a direction from a point of the 3xN coordinates space using the conjugate gradient approach.
  *
  *@author     vlabarta
  *
@@ -23,9 +23,9 @@ public class ConjugateGradientMethod {
 	public ConjugateGradientMethod() { }
 
 
-	public ConjugateGradientMethod(GVector point) {
-		vk.setSize(point.getSize());
-		vkminus1.setSize(point.getSize());
+	public ConjugateGradientMethod(GVector coords3d) {
+		vk.setSize(coords3d.getSize());
+		vkminus1.setSize(coords3d.getSize());
 	}
 
 

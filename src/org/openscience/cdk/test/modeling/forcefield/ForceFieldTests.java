@@ -144,9 +144,11 @@ public class ForceFieldTests extends CDKTestCase {
 		ac.setAtomAt(1, a);
 		AtomTools at = new AtomTools();
 		at.add3DCoordinates1(ac);
+
 		ForceFieldTools ffTools = new ForceFieldTools();
 		acCoordinates.setSize(ac.getAtomCount() * 3);
 		acCoordinates.set(ffTools.getCoordinates3xNVector(ac));
+		//System.out.println("acCoordinates : " + acCoordinates);
 		
 		gm.setMMFF94Tables(ac);
 		mmff94Tables = gm.getPotentialParameterSet();
@@ -331,12 +333,11 @@ public class ForceFieldTests extends CDKTestCase {
 		//System.out.println("FORCEFIELDTESTS with Angle Bending");
 		
 		double testResult_SumEA = 2.5626995828317845E8;
-		double[] testResult_gradientSumEA = {-7072408.357412168,-7072408.357412168,-7072408.357412168,-7072408.357412168,
-						-7072408.357412168,-7072408.357412168,-7072408.357412168,-7072408.357412168,
-						-7072408.357412168,-7072408.357412168,-7072408.357412168,-7072408.357412168,
-						-7072408.357412168,-7072408.357412168,-7072408.357412168,-7072408.357412168,
-						-7072408.357412168,-7072408.357412168,-7072408.357412168,-7072408.357412168,
-						-7072408.357412168,-7072408.357412168,-7072408.357412168,-7072408.357412168};
+		double[] testResult_gradientSumEA = {-1539567.724412403,-1822734.2940216558,-1822734.2940216556,-2105900.8636309085,
+					-1822734.2940216556,-1822734.2940216563,953276.3103037458,82367.28672745387,607578.0980072184,
+					953276.3103037456,870183.5036471004,1062424.0029177289,953276.3103037458,870183.5036471011,
+					152732.1930967078,261879.88571069133,82367.28672745381,607578.0980072187,261879.88571069104,
+					870183.5036471008,152732.19309670792,261879.8857106915,870183.5036471016,1062424.0029177298};
 
 		createTestMoleculeAndSetMMFF94Parameters();
 		
@@ -346,9 +347,8 @@ public class ForceFieldTests extends CDKTestCase {
 		//System.out.println("ab.functionMMFF94SumEA(acCoordinates) = " + ab.functionMMFF94SumEA(acCoordinates));
 		assertEquals(testResult_SumEA, ab.functionMMFF94SumEA(acCoordinates), 0.00001);
 		
-		//System.out.println("ab.gradientMMFF94SumEA(acCoordinates) = " + ab.gradientMMFF94SumEA(acCoordinates));
-		
 		ab.setGradientMMFF94SumEA(acCoordinates);
+		//System.out.println("ab.getGradientMMFF94SumEA() = " + ab.getGradientMMFF94SumEA());
 		for (int i = 0; i < testResult_gradientSumEA.length; i++) {
 			assertEquals(testResult_gradientSumEA[i], ab.getGradientMMFF94SumEA().getElement(i), 0.00001);
 		}

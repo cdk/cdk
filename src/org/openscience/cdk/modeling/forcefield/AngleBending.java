@@ -120,12 +120,12 @@ public class AngleBending {
 	/**
 	 *  Calculate the actual bond angles vijk and the difference with the reference angles.
 	 *
-	 *@param  point  Current molecule coordinates.
+	 *@param  coord3d  Current molecule coordinates.
 	 */
-	public void calculateDeltav(GVector point) {
+	public void calculateDeltav(GVector coord3d) {
 		
 		for (int i = 0; i < angleNumber; i++) {
-			v[i] = ffTools.angleBetweenTwoBondsFrom3xNCoordinates(point,angleAtomPosition[i][0],angleAtomPosition[i][1],angleAtomPosition[i][2]);
+			v[i] = ffTools.angleBetweenTwoBondsFrom3xNCoordinates(coord3d,angleAtomPosition[i][0],angleAtomPosition[i][1],angleAtomPosition[i][2]);
 			deltav[i] = v[i] - v0[i];
 		}
 	}
@@ -134,11 +134,11 @@ public class AngleBending {
 	/**
 	 *  Evaluate the MMFF94 angle bending term for the given atoms coordinates
 	 *
-	 *@param  point  Current molecule coordinates.
+	 *@param  coord3d  Current molecule coordinates.
 	 *@return        MMFF94 angle bending term value
 	 */
-	public double functionMMFF94SumEA(GVector point) {
-		calculateDeltav(point);
+	public double functionMMFF94SumEA(GVector coord3d) {
+		calculateDeltav(coord3d);
 		mmff94SumEA = 0;
 		for (int i = 0; i < angleNumber; i++) {
 			mmff94SumEA = mmff94SumEA + k2[i] * Math.pow(deltav[i],2) 
@@ -152,63 +152,94 @@ public class AngleBending {
 	/**
 	 *  Calculate the angle bending first derivative respect to the cartesian coordinates of the atoms.
 	 *
-	 *@param  point  Current molecule coordinates.
+	 *@param  coord3d  Current molecule coordinates.
 	 */
-	public void setAngleBendingFirstDerivative(GVector point) {
+	public void setAngleBendingFirstDerivative(GVector coord3d) {
 		
-		dDeltav = new double[point.getSize()][];
+		dDeltav = new double[coord3d.getSize()][];
 		
-		for (int i = 0; i < point.getSize(); i++) {
-			
-			dDeltav[i] = new double[angleNumber];
-			
-			for (int j = 0; j < angleNumber; j++) {
-				dDeltav[i][j] = 1;
-			}
-		}
-			
-		/*Atom[] atomsInBond = null;
 		Double forAtomNumber = null;
 		int atomNumber = 0;
 		int coordinate;
-		for (int i = 0; i < point.getSize(); i++) {
+
+		for (int m = 0; m < coord3d.getSize(); m++) {
 			
-			dDeltar[i] = new double[bonds.length];
+			dDeltav[m] = new double[angleNumber];
 			
-			forAtomNumber = new Double(i/3);
-			coordinate = i % 3;
+			forAtomNumber = new Double(m/3);
+			coordinate = m % 3;
 			//System.out.println("coordinate = " + coordinate);
 
 			atomNumber = forAtomNumber.intValue();
 			//System.out.println("atomNumber = " + atomNumber);
-			//System.out.println("atom : " + molecule.getAtomAt(atomNumber));
 
-			for (int j = 0; j < bonds.length; j++) {
+			for (int l = 0; l < angleNumber; l++) {
+				
+				if ((angleAtomPosition[l][0] == atomNumber) | (angleAtomPosition[l][1] == atomNumber) | (angleAtomPosition[l][2] == atomNumber)) {
 
-				atomsInBond = bonds[j].getAtoms();
-				//System.out.println("atomsInBond[0] : " + atomsInBond[0].toString());
-				//System.out.println("atomsInBond[1] : " + atomsInBond[1].toString());
-				if ((molecule.getAtomNumber(atomsInBond[0]) == atomNumber) | (molecule.getAtomNumber(atomsInBond[1]) == atomNumber)) {
-					switch (coordinate) {
-						case 0: dDeltar[i][j] = (atomsInBond[0].getX3d() - atomsInBond[1].getX3d())
-								/ Math.sqrt(Math.pow(atomsInBond[0].getX3d() - atomsInBond[1].getX3d(),2) + Math.pow(atomsInBond[0].getY3d() - atomsInBond[1].getY3d(),2) + Math.pow(atomsInBond[0].getZ3d() - atomsInBond[1].getZ3d(),2)); 
-							break;
-						case 1:	dDeltar[i][j] = (atomsInBond[0].getY3d() - atomsInBond[1].getY3d())
-								/ Math.sqrt(Math.pow(atomsInBond[0].getX3d() - atomsInBond[1].getX3d(),2) + Math.pow(atomsInBond[0].getY3d() - atomsInBond[1].getY3d(),2) + Math.pow(atomsInBond[0].getZ3d() - atomsInBond[1].getZ3d(),2)); 
-							break;
-						case 2: dDeltar[i][j] = (atomsInBond[0].getZ3d() - atomsInBond[1].getZ3d())
-								/ Math.sqrt(Math.pow(atomsInBond[0].getX3d() - atomsInBond[1].getX3d(),2) + Math.pow(atomsInBond[0].getY3d() - atomsInBond[1].getY3d(),2) + Math.pow(atomsInBond[0].getZ3d() - atomsInBond[1].getZ3d(),2)); 
-							break;
+					Point3d xi = new Point3d(coord3d.getElement(3 * angleAtomPosition[l][0]), coord3d.getElement(3 * angleAtomPosition[l][0] + 1),coord3d.getElement( 3 * angleAtomPosition[l][0] + 2));
+					//System.out.println("xi = " + xi);
+					Point3d xj = new Point3d(coord3d.getElement(3 * angleAtomPosition[l][1]), coord3d.getElement(3 * angleAtomPosition[l][1] + 1),coord3d.getElement( 3 * angleAtomPosition[l][1] + 2));
+					//System.out.println("xj = " + xj);
+					Point3d xk = new Point3d(coord3d.getElement(3 * angleAtomPosition[l][2]), coord3d.getElement(3 * angleAtomPosition[l][2] + 1),coord3d.getElement( 3 * angleAtomPosition[l][2] + 2));
+					//System.out.println("xk = " + xk);
+				
+					Vector3d xij = new Vector3d();
+					xij.sub(xi,xj);
+					//System.out.println("xij = " + xij);
+					Vector3d xkj = new Vector3d();
+					xkj.sub(xk,xj);
+					//System.out.println("xkj = " + xkj);
+					
+					double rij = xi.distance(xj);
+					//System.out.println("rij = " + rij);
+					double rkj = xk.distance(xj);
+					//System.out.println("rkj = " + rkj);
+
+					dDeltav[m][l] = (-1/Math.sqrt(1-Math.pow(xij.dot(xkj)/(rij * rkj),2))) * (1/(Math.pow(rij,2) * Math.pow(rkj,2))); 
+
+					if (angleAtomPosition[l][0] == atomNumber) {
+
+						switch (coordinate) {
+							case 0: dDeltav[m][l] = dDeltav[m][l] * ((xk.x-xj.x) * rij * rkj - (xij.dot(xkj)) * rkj * (1/rij));
+								break;
+							case 1:	dDeltav[m][l] = dDeltav[m][l] * ((xk.y-xj.y) * rij * rkj - (xij.dot(xkj)) * rkj * (1/rij));
+								break;
+							case 2: dDeltav[m][l] = dDeltav[m][l] * ((xk.z-xj.z) * rij * rkj - (xij.dot(xkj)) * rkj * (1/rij));
+								break;
+						}
 					}
-					if (molecule.getAtomNumber(atomsInBond[1]) == atomNumber) {
-						dDeltar[i][j] = (-1) * dDeltar[i][j];
+					if (angleAtomPosition[l][1] == atomNumber) {
+
+						switch (coordinate) {
+							case 0: dDeltav[m][l] = dDeltav[m][l] * ((2 * xj.x - xk.x - xi.x) * rij * rkj - (xij.dot(xkj)) * ((-1/rij) * rkj + (-1/rkj) * rij));
+								break;
+							case 1:	dDeltav[m][l] = dDeltav[m][l] * ((2 * xj.y - xk.y - xi.y) * rij * rkj - (xij.dot(xkj)) * ((-1/rij) * rkj + (-1/rkj) * rij));
+								break;
+							case 2: dDeltav[m][l] = dDeltav[m][l] * ((2 * xj.z - xk.z - xi.z) * rij * rkj - (xij.dot(xkj)) * ((-1/rij) * rkj + (-1/rkj) * rij));
+								break;
+						}
 					}
-				} else {
-					dDeltar[i][j] = 0;
+					if (angleAtomPosition[l][2] == atomNumber) {
+
+						switch (coordinate) {
+							case 0: dDeltav[m][l] = dDeltav[m][l] * ((xi.x-xj.x) * rij * rkj - (xij.dot(xkj)) * rij * (1/rkj));
+								break;
+							case 1:	dDeltav[m][l] = dDeltav[m][l] * ((xi.y-xj.y) * rij * rkj - (xij.dot(xkj)) * rij * (1/rkj));
+								break;
+							case 2: dDeltav[m][l] = dDeltav[m][l] * ((xi.z-xj.z) * rij * rkj - (xij.dot(xkj)) * rij * (1/rkj));
+								break;
+						}
+					}
+
 				}
-				//System.out.println("angle " + j + " : " + "dDeltar[" + i + "][" + j + "] = " + dDeltar[i][j]);
+				else {
+					dDeltav[m][l] = 0;
+				}
+				//System.out.println("dDeltav[" + m + "][" + l + "] = " + dDeltav[m][l]);
 			}
-		}*/
+		}
+		
 	}
 
 
@@ -226,23 +257,23 @@ public class AngleBending {
 	 *  Evaluate the gradient of the angle bending term for a given atoms
 	 *  coordinates
 	 *
-	 *@param  point  Current molecule coordinates.
+	 *@param  coord3d  Current molecule coordinates.
 	 */
-	public void setGradientMMFF94SumEA(GVector point) {
-		gradientMMFF94SumEA.setSize(point.getSize());
+	public void setGradientMMFF94SumEA(GVector coord3d) {
+		gradientMMFF94SumEA.setSize(coord3d.getSize());
 		
-		setAngleBendingFirstDerivative(point);
+		setAngleBendingFirstDerivative(coord3d);
 		
 		double sumGradientEA;
-		for (int i = 0; i < gradientMMFF94SumEA.getSize(); i++) {
+		for (int m = 0; m < gradientMMFF94SumEA.getSize(); m++) {
 
 			sumGradientEA = 0;
-			for (int j = 0; j < angleNumber; j++) {
+			for (int l = 0; l < angleNumber; l++) {
 
-				sumGradientEA = sumGradientEA + (k2[j] * 2 * deltav[j] + k3[j] * 3 * Math.pow(deltav[j],2)) * dDeltav[i][j];
+				sumGradientEA = sumGradientEA + (k2[l] * 2 * deltav[l] + k3[l] * 3 * Math.pow(deltav[l],2)) * dDeltav[m][l];
 			}
 			
-			gradientMMFF94SumEA.setElement(i, sumGradientEA);
+			gradientMMFF94SumEA.setElement(m, sumGradientEA);
 		}
 
 		//System.out.println("gradientMMFF94SumEA : " + gradientMMFF94SumEA);
@@ -263,29 +294,29 @@ public class AngleBending {
 	/**
 	 *  Evaluate the hessian for the angle bending.
 	 *
-	 *@param  point  Current molecule coordinates.
+	 *@param  coord3d  Current molecule coordinates.
 	 */
-	public void setHessianMMFF94SumEA(GVector point) {
+	public void setHessianMMFF94SumEA(GVector coord3d) {
 
-		double[] forHessian = new double[point.getSize() * point.getSize()];
+		double[] forHessian = new double[coord3d.getSize() * coord3d.getSize()];
 		double sumHessianEA = 0;
 
-		GMatrix ddDeltar = new GMatrix(point.getSize(),point.getSize());
+		GMatrix ddDeltar = new GMatrix(coord3d.getSize(),coord3d.getSize());
 		ddDeltar.setZero();
 
 		int forHessianIndex;
-		for (int i = 0; i < point.getSize(); i++) {
-			for (int j = 0; j < point.getSize(); j++) {
+		for (int i = 0; i < coord3d.getSize(); i++) {
+			for (int j = 0; j < coord3d.getSize(); j++) {
 				for (int k = 0; k < angleNumber; k++) {
 					sumHessianEA = sumHessianEA + (2 * k2[k] + 6 * k3[k] * deltav[k]) * dDeltav[i][k] * dDeltav[j][k]
 							+ (k2[k] * 2 * deltav[k] + k3[k] * 3 * Math.pow(deltav[k],2)) * ddDeltar.getElement(0,0);
 				}
-				forHessianIndex = i*point.getSize()+j;
+				forHessianIndex = i*coord3d.getSize()+j;
 				forHessian[forHessianIndex] = sumHessianEA;
 			}
 		}
 
-		hessianMMFF94SumEA.setSize(point.getSize(), point.getSize());
+		hessianMMFF94SumEA.setSize(coord3d.getSize(), coord3d.getSize());
 		hessianMMFF94SumEA.set(forHessian); 
 		//System.out.println("hessianMMFF94SumEA : " + hessianMMFF94SumEA);
 	}
