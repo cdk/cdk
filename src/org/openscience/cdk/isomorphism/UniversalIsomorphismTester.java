@@ -138,7 +138,7 @@ public class UniversalIsomorphismTester {
     List result = null;
 
     List rMapsList = search(g1, g2, getBitSet(g1),
-        getBitSet(g1), false, false);
+        getBitSet(g2), false, false);
 
     if (!rMapsList.isEmpty()) {
       result = (List) rMapsList.get(0);
@@ -170,7 +170,7 @@ public class UniversalIsomorphismTester {
    */
   public static List getIsomorphMaps(AtomContainer g1, AtomContainer g2) {
     return search(g1, g2, getBitSet(g1),
-        getBitSet(g1), true, true);
+        getBitSet(g2), true, true);
   }
 
 
