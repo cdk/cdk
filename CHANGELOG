@@ -11,6 +11,8 @@ New:
   (closes #889829)
 
 Fixes:
+* Removed all static methods and, most importantly, a static molecule(!) variable 
+  from AtomPlacer, which is likely to have caused the problems with hanging layout threads.
 * Fixed calculation of cartesian atomic coordinates from fractional coordinates
   in CrystalGeometry
 * Cleaned up import statements
