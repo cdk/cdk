@@ -71,6 +71,7 @@ import org.openscience.cdk.test.qsar.*;
 	suite.addTest(RuleOfFiveDescriptorTest.suite());
 	suite.addTest(RDFProtonDescriptorTest.suite());
 	suite.addTest(MomentOfInertiaDescriptorTest.suite());
+	suite.addTest(VdWRadiusDescriptorTest.suite());
 	return suite;
     }
     
