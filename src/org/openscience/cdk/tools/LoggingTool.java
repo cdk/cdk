@@ -181,6 +181,18 @@ public class LoggingTool {
         }
     }
     
+    public void debug(Object object, int number) {
+        if (debug) {
+            debugString(object.toString() + number);
+        }
+    }
+    
+    public void debug(Object object, double number) {
+        if (debug) {
+            debugString(object.toString() + number);
+        }
+    }
+    
     public void debug(Object obj, Object obj2, Object obj3) {
         if (debug) {
             debugString(obj.toString() + obj2.toString() + obj3.toString());
@@ -231,6 +243,18 @@ public class LoggingTool {
         }
     }
 
+    public void error(Object object, int number) {
+        if (debug) {
+            errorString(object.toString() + number);
+        }
+    }
+    
+    public void error(Object object, double number) {
+        if (debug) {
+            errorString(object.toString() + number);
+        }
+    }
+    
     private void errorString(String string) {
         if (tostdout) {
             toSTDOUT("ERROR", string);
@@ -281,6 +305,18 @@ public class LoggingTool {
         }
     }
 
+    public void info(Object object, int number) {
+        if (debug) {
+            infoString(object.toString() + number);
+        }
+    }
+    
+    public void info(Object object, double number) {
+        if (debug) {
+            infoString(object.toString() + number);
+        }
+    }
+    
     private void infoString(String string) {
         if (tostdout) {
             toSTDOUT("INFO", string);
@@ -325,6 +361,18 @@ public class LoggingTool {
             toSTDOUT("WARN", string);
         } else {
             ((org.apache.log4j.Category)logger).warn(string);
+        }
+    }
+    
+    public void warn(Object object, int number) {
+        if (debug) {
+            warnString(object.toString() + number);
+        }
+    }
+    
+    public void warn(Object object, double number) {
+        if (debug) {
+            warnString(object.toString() + number);
         }
     }
     
