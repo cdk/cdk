@@ -101,7 +101,8 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
             if (mol.getID() != null && mol.getID().length() > 0) {
                 writer.write("%chk=" + mol.getID() + ".chk");
             } else {
-                writer.write("%chk=job.chk");
+                // force different file names
+                writer.write("%chk=" + System.currentTimeMillis() + ".chk");
             }
             writer.newLine();
         }
