@@ -42,7 +42,7 @@ import org.openscience.cdk.exception.*;
  *
  * @see org.openscience.cdk.AtomContainer.removeAtomAndConnectedElectronContainers(Atom)
  */
-public class ChemObjectManipulator {
+public class ChemModelManipulator {
     
     public static void removeAtomAndConnectedElectronContainers(ChemModel chemModel, Atom atom) {
         Crystal crystal = chemModel.getCrystal();
