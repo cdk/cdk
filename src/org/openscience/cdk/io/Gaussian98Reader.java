@@ -66,12 +66,9 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
     /** Customizable setting */
     private BooleanIOSetting readOptimizedStructureOnly;
     
-    /**
-     * Create an Gaussian98 output reader.
-     *
-     * @param input source of Gaussian98 data
-     */
-    public Gaussian98Reader(Reader input) {
+    public Gaussian98Reader() {
+        this.input = new BufferedReader(new StringReader(""));
+
         logger = new LoggingTool(this.getClass().getName());
         try {
             isotopeFactory = IsotopeFactory.getInstance();
@@ -82,12 +79,21 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
             logger.error("Could not instantiate IsotopeFactory");
             logger.debug(exception);
         }
+        initIOSettings();
+    }
+    
+    /**
+     * Create an Gaussian98 output reader.
+     *
+     * @param input source of Gaussian98 data
+     */
+    public Gaussian98Reader(Reader input) {
+        this();
         if (input instanceof BufferedReader) {
             this.input = (BufferedReader)input;
         } else {
             this.input = new BufferedReader(input);
         }
-        initIOSettings();
     }
 
     public boolean accepts(ChemObject object) {

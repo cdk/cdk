@@ -27,6 +27,7 @@ import org.openscience.cdk.*;
 import org.openscience.cdk.io.*;
 import org.openscience.cdk.io.program.*;
 import org.openscience.cdk.io.listener.*;
+import org.openscience.cdk.io.setting.*;
 import org.openscience.cdk.exception.*;
 import org.openscience.cdk.layout.*;
 import org.openscience.cdk.tools.LoggingTool;
@@ -166,10 +167,10 @@ public class FileConvertor {
         ChemObjectReader reader = new ReaderFactory().createReader(fileReader);
         if (reader != null) {
             if (settingListener != null) {
-                reader.addReaderListener(settingListener);
+                reader.addChemObjectIOListener(settingListener);
             }
             if (propsListener != null) {
-                reader.addReaderListener(propsListener);
+                reader.addChemObjectIOListener(propsListener);
             }
         }
         return reader;
@@ -197,10 +198,10 @@ public class FileConvertor {
         if (writer != null) {
             logger.debug(format + " -> " + writer.getClass().getName());
             if (settingListener != null) {
-                writer.addWriterListener(settingListener);
+                writer.addChemObjectIOListener(settingListener);
             }
             if (propsListener != null) {
-                writer.addWriterListener(propsListener);
+                writer.addChemObjectIOListener(propsListener);
             }
         } else {
             logger.debug(format + " -> null");
@@ -273,7 +274,7 @@ public class FileConvertor {
                 this.oformat = option.substring(15);
             } else if (option.startsWith("--listoptions:") && option.length() > 14) {
                 String format = option.substring(14);
-                listOptionsForFormat(format);
+                listOptionsForIOClass(format);
                 System.exit(0);
             } else if (option.startsWith("--properties:") && option.length() > 13) {
                 String filename = option.substring(13);
@@ -333,30 +334,49 @@ public class FileConvertor {
         System.out.println("  xyz    XYZ");
     }
 
-    /**
-     * Convert the file <code>ifilename</code>.
-     *
-     * @param ifilename name of input file
-     */
-    public void listOptionsForFormat(String format) {
-        logger.debug("listing writer options");
-        settingListener.setLevel(4); // ask all questions
-        settingListener.setInputReader(null); // but don't really ask them
-        Molecule dummy = new Molecule();
-        dummy.addAtom(new Atom("C"));
-
-        StringWriter writer = new StringWriter();
-        cow = getChemObjectWriter(format, writer);
-        if (cow == null) {
-            logger.warn("Format " + oformat + " is an unsupported output format.");
-            System.err.println("Unsupported output format!");
-        }
+    public void listOptionsForIOClass(String ioClassName) {
+        logger.debug("listing IOSetting options");
+        
+        String className = "org.openscience.cdk.io." + ioClassName;
         try {
-            cow.write(dummy);
-        } catch (CDKException e) {
-            logger.error("Could not write ChemFile. FIXME: I should recurse!");
+            Object readerOrWriter = this.getClass().getClassLoader().
+                loadClass(className).newInstance();
+            IOSetting[] settings = new IOSetting[0];
+            if (readerOrWriter instanceof ChemObjectIO) {
+                ChemObjectIO ioClass = (ChemObjectIO)readerOrWriter;
+                settings = ioClass.getIOSettings();
+            } else {
+                String message = "This class is not a CDK ChemObjectIO class";
+                System.out.println(message);
+                logger.error(message);
+                return;
+            }
+            TextGUIListener listener = new TextGUIListener(4); // ask all questions
+            listener.setInputReader(null); // but don't really ask them
+            for (int i=0; i<settings.length; i++) {
+                IOSetting setting = settings[i];
+                if (setting != null) {
+                    listener.processIOSettingQuestion(setting);
+                } else {
+                    String message = "This IOSetting is null";
+                    System.out.println(message);
+                    logger.warn(message);
+                }
+            }
+        } catch (ClassNotFoundException exception) {
+            String message = "This Reader/Writer does not exist: " + className;
+            System.out.println(message);
+            logger.error(message);
+            logger.debug(exception);
+        } catch (InstantiationException exception) {
+            String message = "Could not instantiate the class: " + className;
+            System.out.println(message);
+            logger.error(message);
+            logger.debug(exception);
+        } catch (Exception exception) {
+            System.out.println("An unknown exception occured: " + exception.toString());
+            logger.debug(exception);
         }
-        settingListener.setLevel(this.level);
     }
 
     /**

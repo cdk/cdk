@@ -115,7 +115,11 @@ public class CMLWriter extends DefaultChemObjectWriter {
      * @param fragment  Boolean denoting that the content is not
      */
     public CMLWriter(Writer w, boolean fragment) {
+        this(fragment);
         output = w;
+    }
+
+    public CMLWriter(boolean fragment) {
         logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
         this.fragment = fragment;
         this.done = false;

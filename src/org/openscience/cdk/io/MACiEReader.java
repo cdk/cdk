@@ -89,8 +89,12 @@ public class MACiEReader extends DefaultChemObjectReader {
      * @param  in  The Reader to read from
      */
     public MACiEReader(Reader in) {
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        this();
         input = new LineNumberReader(in);
+    }
+
+    public MACiEReader() {
+        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
         
         /* compile patterns */
         topLevelDatum = Pattern.compile("(.+):(.+)");
