@@ -30,6 +30,7 @@ package org.openscience.cdk.io;
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.exception.*;
+import org.openscience.cdk.tools.ChemModelManipulator;
 import java.util.*;
 import java.util.regex.*;
 import java.io.*;
@@ -179,7 +180,7 @@ public class PMPReader implements ChemObjectReader {
                         if (line.startsWith("%%Start Frame")) {
                             chemModel = new ChemModel();
                             crystal = new Crystal();
-                            AtomContainer atomC = modelModel.getAllInOneContainer();
+                            AtomContainer atomC = ChemModelManipulator.getAllInOneContainer(modelModel);
                             while (input.ready() && line != null && !(line.startsWith("%%End Frame"))) {
                                 // process frame data
                                 if (line.startsWith("%%Atom Coords")) {
