@@ -26,9 +26,12 @@
 package org.openscience.cdk;
 
 /**
- * An interface providing predefined values for a number of 
- * parameters used throughout the CDK. Classes using these Constants should
- * implement this interface.
+ * An interface providing predefined values for a number of
+ * constants used throughout the CDK. Classes using these constants should
+ * <b>not</b> implement this interface, but use it like:
+ * <pre>
+ *   double singleBondOrder = CDKConstants.BONDORDER_SINGLE;
+ * </pre>
  *
  * @keyword bond order
  * @keyword stereochemistry
