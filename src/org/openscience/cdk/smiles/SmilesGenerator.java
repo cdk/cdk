@@ -145,7 +145,7 @@ public class SmilesGenerator {
   private boolean isEndOfDoubleBond(AtomContainer container, Atom atom, Atom parent){
     int lengthAtom=container.getConnectedAtoms(atom).length+atom.getHydrogenCount();
     int lengthParent=container.getConnectedAtoms(parent).length+parent.getHydrogenCount();
-    if(container.getBond(atom,parent)!=null){//!=null müßte nicht notwendig sein
+    if(container.getBond(atom, parent)!=null){
       if(container.getBond(atom,parent).getOrder()==CDKConstants.BONDORDER_DOUBLE&&lengthAtom==3&&lengthParent==3){
         Atom[] atoms=container.getConnectedAtoms(atom);
         Atom one=null;;
@@ -362,7 +362,6 @@ public class SmilesGenerator {
             else
               onlyRelevantIfTwo[1]++;
           }
-          System.err.println("CCCCC "+onlyRelevantIfTwo[0]+ "   "+onlyRelevantIfTwo[1]+"  "+differentAtoms);
         }
         boolean[] symbolsWithDifferentMorganNumbers=new boolean[differentSymbols.size()];
         Vector[] symbolsMorganNumbers=new Vector[differentSymbols.size()];
@@ -379,11 +378,10 @@ public class SmilesGenerator {
         }
         int numberOfSymbolsWithDifferentMorganNumbers=0;
         for(int i=0;i<symbolsWithDifferentMorganNumbers.length;i++){
-          if(symbolsWithDifferentMorganNumbers[i]==true && symbolsMorganNumbers[i].size()>1)
+          if(symbolsWithDifferentMorganNumbers[i]==true)
             numberOfSymbolsWithDifferentMorganNumbers++;
         }
         if(numberOfSymbolsWithDifferentMorganNumbers!=differentSymbols.size()){
-          //Check if it's a cis/trans ring fusion
           if(stereo==1&&atoms.length==4){
             for(int i=0;i<atoms.length;i++){
               RingSet rs=new SSSRFinder().findSSSR((Molecule)container);
@@ -394,7 +392,6 @@ public class SmilesGenerator {
               }
             }
           }
-          System.err.println(atoms.length + "BBBBBBBBBB "+(differentAtoms==2 && onlyRelevantIfTwo[0]>1 && onlyRelevantIfTwo[1]>1)+"  "+(numberOfSymbolsWithDifferentMorganNumbers+differentAtoms>2 || (differentAtoms==2 && onlyRelevantIfTwo[0]>1 && onlyRelevantIfTwo[1]>1)));
           if((atoms.length==5 || atoms.length==6) && (numberOfSymbolsWithDifferentMorganNumbers+differentAtoms>2 || (differentAtoms==2 && onlyRelevantIfTwo[0]>1 && onlyRelevantIfTwo[1]>1)))
             return(true);
           if(isSquarePlanar(container,a) && (numberOfSymbolsWithDifferentMorganNumbers+differentAtoms>2 || (differentAtoms==2 && onlyRelevantIfTwo[0]>1 && onlyRelevantIfTwo[1]>1)))
@@ -812,95 +809,48 @@ public class SmilesGenerator {
               }
             }
           }
-          int numberOfAtoms=3;
-          if(isTrigonalBipyramidalOrOctahedral(container, atom))
-            numberOfAtoms=container.getConnectedAtoms(atom).length-1;
-          Object[] omy=new Object[numberOfAtoms];
-          Object[] onew=new Object[numberOfAtoms];
-          for(int k=getRingOpenings(atom).size();k<numberOfAtoms;k++){
-            omy[k]=v.get(positionInVector+1+k-getRingOpenings(atom).size());
-          }
-          for(int k=0;k<sorted.length;k++){
-            if(sorted[k]!=null){
-              for(int m=0;m<omy.length;m++){
-                if(omy[m] instanceof Atom){
-                  if(omy[m]==sorted[k]){
-                    onew[k]=omy[m];
-                  }
-                }
-                else
-                {
-                  if(omy[m]==null){
-                    onew[k]=null;
+          if(sorted!=null){
+            int numberOfAtoms=3;
+            if(isTrigonalBipyramidalOrOctahedral(container, atom))
+              numberOfAtoms=container.getConnectedAtoms(atom).length-1;
+            Object[] omy=new Object[numberOfAtoms];
+            Object[] onew=new Object[numberOfAtoms];
+            for(int k=getRingOpenings(atom).size();k<numberOfAtoms;k++){
+              omy[k]=v.get(positionInVector+1+k-getRingOpenings(atom).size());
+            }
+            for(int k=0;k<sorted.length;k++){
+              if(sorted[k]!=null){
+                for(int m=0;m<omy.length;m++){
+                  if(omy[m] instanceof Atom){
+                    if(omy[m]==sorted[k]){
+                      onew[k]=omy[m];
+                    }
                   }
                   else
                   {
-                    if(((Vector)omy[m]).get(0)==sorted[k]){
-                      onew[k]=omy[m];
+                    if(omy[m]==null){
+                      onew[k]=null;
+                    }
+                    else
+                    {
+                      if(((Vector)omy[m]).get(0)==sorted[k]){
+                        onew[k]=omy[m];
+                      }
                     }
                   }
                 }
               }
-            }
-            else
-            {
-              onew[k]=null;
-            }
-          }
-          if(!isSquarePlanar(container,atom)&& !isTrigonalBipyramidalOrOctahedral(container, atom)){
-            int k=0;
-            while(!(onew[numberOfAtoms-1] instanceof Atom)){
-              Object dummy=onew[numberOfAtoms-1];
-              for(int m=numberOfAtoms-1;m>0;m--){
-                onew[m]=onew[m-1];
-              }
-              onew[0]=dummy;
-              k++;
-              if(k>numberOfAtoms)
-                break;
-            }
-            if(isRingOpening(parent)){
-              k=0;
-              while(onew[0]!=null){
-                Object dummy=onew[numberOfAtoms-1];
-                for(int m=numberOfAtoms-1;m>0;m--){
-                  onew[m]=onew[m-1];
-                }
-                onew[0]=dummy;
-                k++;
-                if(k>numberOfAtoms)
-                  break;
+              else
+              {
+                onew[k]=null;
               }
             }
-            if(!(onew[numberOfAtoms-1] instanceof Atom)){
-              Vector vneigh=getCanNeigh(atom, container);
-              for(int i=0;i<vneigh.size();i++){
-                if(isBondBroken(atom,((Atom)vneigh.get(i)))){
-                  vneigh.remove(i);
-                }
-                else{
-                  if(vneigh.get(i)==parent)
-                    vneigh.remove(i);
-                }
-              }
-            }
-            k=0;
-            for(int m=0;m<onew.length;m++){
-              if(onew[m]!=null){
-                v.set(positionInVector+1+k,onew[m]);
-                k++;
-              }
-            }
-          }
-          else
-          {
-            if(onew[numberOfAtoms-1] instanceof Vector){//caveat
+            if(onew[numberOfAtoms-1] instanceof Vector){
               for(int i=0;i<numberOfAtoms;i++){
                 if(onew[i] instanceof Atom){
                   Vector vtemp=new Vector();
                   vtemp.add(onew[i]);
                   for(int k=positionInVector+1+numberOfAtoms;k<v.size();k++){
-                    if(v.get(k) instanceof Atom)
                       vtemp.add(v.get(k));
                   }
                   Vector vtemp2=new Vector();
@@ -922,8 +872,17 @@ public class SmilesGenerator {
                   for(int k=0;k<((Vector)onew[numberOfAtoms-1]).size();k++){
                     vtemp2.add(((Vector)onew[numberOfAtoms-1]).get(k));
                   }
-                  v=vtemp2;
                   break;
+                }
+              }
+            }
+            else
+            {
+              int k=0;
+              for(int m=0;m<onew.length;m++){
+                if(onew[m]!=null){
+                  v.set(positionInVector+1+k,onew[m]);
+                  k++;
                 }
               }
             }
@@ -1096,8 +1055,9 @@ public class SmilesGenerator {
     if(isAromatic(a1) && isAromatic(a2)) {
       return;
     }
+    if(atomContainer.getBond(a1, a2)==null)
+      return;
     int type=0;
-    if(atomContainer.getBond(a1, a2)!=null) //!=null müsste nicht notwendig sein
       type = (int)atomContainer.getBond(a1, a2).getOrder();
     if (type == 1) {
     } else if (type == 2) {
