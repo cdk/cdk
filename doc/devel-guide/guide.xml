@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE
      book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
-                 "../lib/dtd/docbookx.dtd" [
+                 "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
   <!ENTITY packages SYSTEM "packages.xml">
   <!ENTITY preface SYSTEM "preface.xml">
   <!ENTITY docs SYSTEM "docs.xml">

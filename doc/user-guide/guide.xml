@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE
+  book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+              "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+  <!ENTITY intro SYSTEM "intro.xml">
+  <!ENTITY core SYSTEM "coreclasses.xml">
+  <!ENTITY extra SYSTEM "extraclasses.xml">
+  <!ENTITY % classes SYSTEM "classes.mod">
+%classes;
+]>
+<book id="user-guide">
+  <title>CDK User's Guide</title>
+
+  <bookinfo>
+    <authorgroup>
+      <author>
+        <firstname>Egon</firstname>
+        <othername role="mi">L.</othername>
+        <surname>Willighagen</surname>
+      </author>
+      <author>
+        <firstname>Christoph</firstname>
+        <surname>Steinbeck</surname>
+      </author>
+    </authorgroup>
+
+    <revhistory>
+      <revision>
+        <revnumber>$Version:$</revnumber>
+        <date>$Date$</date>
+        <revremark>
+          $Id$
+        </revremark>
+      </revision>
+    </revhistory>
+  </bookinfo>
+
+  <part id="user-ref">
+    <title>CDK Tutorial</title>
+    &intro;
+    &core;
+    &extra;
+  </part>
+
+</book>

@@ -1,7 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.0b1//EN" "dtd/website.dtd" [
-<!ENTITY content SYSTEM "projectref.xml">
-<!ENTITY % classes SYSTEM "classes.mod">
+  <!ENTITY intro SYSTEM "../../user-guide/intro.xml">
+  <!ENTITY core SYSTEM "../../user-guide/coreclasses.xml">
+  <!ENTITY extra SYSTEM "../../user-guide/extraclasses.xml">
+  <!ENTITY % classes SYSTEM "../../user-guide/classes.mod">
 %classes;
 ]>
 <webpage id="reference">
@@ -12,9 +14,11 @@
     <title>The Programming Reference</title>
     <titleabbrev>Programming Reference</titleabbrev>
     <summary>This section tells you how to use the classes in your own
-	   software program.</summary>
+       software program.</summary>
   </head>
 
-  &content;
+  &intro;
+  &core;
+  &extra;
 
 </webpage>

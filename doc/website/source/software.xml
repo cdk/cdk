@@ -28,6 +28,10 @@
         and is complete build upon CDK.
       </para>
     </section>
+    <para>
+      If your CDK using software is missing from this list, please send
+      an email to <ulink="mailto:cdk-devel@lists.sf.net">cdk-devel@lists.sf.net</ulink>.
+    </para>
   </section>
 
 </webpage>

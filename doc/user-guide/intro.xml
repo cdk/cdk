@@ -1,0 +1,67 @@
+<chapter>
+    <title>Introduction</title>
+    <para>
+    This chapter provides an overview about how to use the Chemistry
+    Develoment Kit (CDK) as a programmer in order to solve problems in
+    chemoinformatics. The single most important advantage of using the programming
+    language Java is probably its clear object orientation. It allows the
+    programmer to directly transfer and apply ideas originating in the real world
+    to the world of computer programming. We felt a strong dedication to this
+    concept when creating the CDK. Another concept we concisely followed is the
+    Model/View/Controller paradigm. Any computer program can be separated into a
+    controller, a model and a view. The model holds the pure data on which the
+    program in operates in the form best suited to achieve the desired computation
+    most efficiently. The view is an external representation of this data, such
+    that is can be most efficiently percepted by the user. The controller is the
+    part that allows the user to interact with the program, in the broadest sense
+    to customize the view. Even a command line driven utility like "grep" consists
+    of these three parts. One can achieve a particularly good program design by
+    clearly separating the parts of a program responsible for the controlling part,
+    the viewing part and the data storage part. If the interfaces of each of the
+    three parts are clearly defined, it allows the programmer to plug-in a
+    different controller or a different view independently without having to change
+    any of the other two parts.
+    </para>
+    <para> 
+        In our context of chemistry the model
+        would be an internal representation of a molecule, a chemical reaction, an
+        ensemble of molcecules, etc.
+    </para>
+    <para>
+        There can be multiple VIEWs of the same model
+        <itemizedlist>
+            <listitem>
+                <para>
+                    a 2D representation like the one in JChemPaint, consisting mainly of
+                    lines, representing bonds and some Elementsymbols, or
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    a 3D representation, rotatable, nicely shaded with perspective scaling.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    a textual representation for manual inspection and editing of properties
+                    of primary CDK elements. Most common form are table representing such data.
+                    High level tables can also be used as a GUI for databases.
+                </para>
+            </listitem>
+        </itemizedlist>
+    </para>
+    <para>
+        The CONTROLER gives the user means of manipulating how the VIEW of the
+        MODEL is supposed to look like, e.g. for rotating a molecule in the 3D
+        view. But is also may provide a way of manipulating the model, so that a
+        user of JChemPaint can, for example, remove a bond from a molecule, etc.
+    </para>
+    <para>
+        Cleanly separating these parts, using well-defined interfaces between
+        them, gives you great flexibility. Making an applet out of JChemPaint,
+        i.e. plugin a Java 1.1.8 GUI where there is now a Browser-incompatible
+        Java 2 interface, would be much easier if JCP was nicely designed using
+        the MVC paradigm.
+    </para>
+
+</chapter>

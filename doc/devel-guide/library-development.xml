@@ -10,8 +10,8 @@
     <chapter id="sect:classcategories">
       <title>Class categories</title>
       <para>
-        All CDK classes are categorized into four classes:
-        core, standard, extra, and project.
+        All CDK classes are categorized into classes. Currently, these classes
+        are defined: core, extra, and libio.
       </para>
       <section>
         <title>Core classes</title>
@@ -22,7 +22,22 @@
         </para>
       </section>
       <section>
+        <title>LibIO classes</title>
+        <para>
+          These classes interface to other (Java) libraries, like JOELib and CMLDOM.
+        </para>
+      </section>
+      <section>
+        <title>Extra classes</title>
+        <para>
+          These are classes that do not belong to either of the other two categories.
+        </para>
+      </section>
+
+      <!-- The next part has not been proposed yet.
+        section>
         <title>Standard classes</title>
+
         <para>
           Standard classes are all classes that do not represent some entity,
           but are common to many applications dealing with chemical problems.
@@ -46,12 +61,6 @@
         </para>
       </section>
       <section>
-        <title>Extra classes</title>
-        <para>
-          Classes that are too specific for general use belong to the class Extra.
-        </para>
-      </section>
-      <section>
         <title>Project classes</title>
         <para>
           Java classes and packages in this category are not really
@@ -59,7 +68,7 @@
           project, by ways of testing and generating documentation and
           project statistics.
         </para>
-      </section>
+      </section -->
     </chapter>
 
   <chapter id="sect:compiling">

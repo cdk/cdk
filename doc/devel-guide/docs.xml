@@ -28,7 +28,8 @@ cdk/$ ant -buildfile javadoc.xml html
           <title>Tagging classes</title>
           <para>
             Java classes should have the JavaDoc tags
-            @copyright and @author.
+            @copyright and @author. In addition, they may have
+            @keyword tags.
           </para>
         </section>
 
@@ -42,7 +43,8 @@ cdk/$ ant -buildfile javadoc.xml html
           <para>
             If the procedure performs a method found in literature, it should
             mention the reference. No format for the reference has been determined,
-            but the BibTex format should do fine.
+            but the BibTex format, or a link to
+            http://cdk.sf.net/biblio.html#ARTID should do fine.
           </para>
         </section>
       </section>
