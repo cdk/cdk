@@ -18,7 +18,7 @@ public class MakeClassesDotModDoclet {
 
     private void processPackages(PackageDoc[] pkgs) throws IOException {
         for (int i=0; i < pkgs.length; i++) {
-            out.println("<-- package: " + pkgs[i] + " -->");
+            out.println("<!-- package: " + pkgs[i] + " -->");
             processClasses(pkgs[i].ordinaryClasses());
             out.println();
         }
