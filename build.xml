@@ -80,6 +80,12 @@
                         <exclude
                         name="org/openscience/cdk/test/OrbitalsRenderer3DTest.java" />
 
+                        <exclude
+                        name="org/openscience/cdk/test/VisualGaussiansCalculationTest.java" />
+
+                        <exclude
+                        name="org/openscience/cdk/test/ZMatrixReaderTest.java" />
+
                         <classpath refid="project.class.path" />
                 </javac>
 
@@ -143,6 +149,10 @@
                         <fileset dir="." includes="**/*java" />
 
                         <fileset dir="." includes="build.xml" />
+                </copy>
+                <copy todir="${sourcedist}/org/openscience/cdk/config/isotopes.xml">
+                        <fileset dir="org/openscience/cdk/config/"
+                                 includes="*" />
                 </copy>
 
                 <copy todir="${sourcedist}/jar">
