@@ -178,7 +178,7 @@ public class MDLWriter implements ChemObjectWriter {
 			}
 		    line += formatMDLInt(molecule.getAtomCount(), 3);
 		    line += formatMDLInt(molecule.getBondCount(), 3);
-		    line += "  0  0  0  0  0  0  0  0  1 V2000";
+		    line += "  0  0  0  0  0  0  0  0999 V2000";
 			writer.write(line);
 			writer.newLine();
             // write Atom block
