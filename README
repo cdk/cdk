@@ -54,3 +54,5 @@ target in the build.xml file to look like this:
 	</target>
 
 Then, a "ant run" should give you a window where you can add bonds to a given structure.
+
+Currently, there are about 250 test, of which a large part tests the core classes.
