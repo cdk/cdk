@@ -395,9 +395,9 @@ public class SaturationChecker
     }
 
     public void saturate(AtomContainer atomContainer) throws CDKException {
-        newSaturate(atomContainer);
+        /* newSaturate(atomContainer);
     }
-    public void oldSaturate(AtomContainer atomContainer) throws CDKException {
+    public void oldSaturate(AtomContainer atomContainer) throws CDKException { */
 		Atom partner = null;
 		Atom atom = null;
 		Atom[] partners = null;
