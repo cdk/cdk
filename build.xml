@@ -690,7 +690,9 @@
                 <zip zipfile="${package}.zip" basedir="${sourcedist}/" includes="${package}/**" />
         </target>
 
-        <target id="test-all" name="test-all" depends="test, noJunit"
+        <target id="test-all" name="test-all" depends="test, test-experimental"/>
+        
+        <target id="test-experimental" name="test-experimental" depends="noJunit"
                 description="Performs a full JUnit test for the CDK, including experimental classes.">
                 <junit printsummary="yes" haltonfailure="yes" fork="yes">
                     <classpath>
