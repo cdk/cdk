@@ -24,6 +24,7 @@
  */
 package org.openscience.cdk.io;
 
+import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.io.setting.*;
 import org.openscience.cdk.io.listener.*;
 import java.util.Vector;
@@ -52,6 +53,11 @@ public abstract class DefaultChemObjectReader implements ChemObjectReader {
         listenerList.removeElement(listener);
     }
 
+    public boolean accepts(ChemObject object) {
+        // leave it up the read(ChemObject) to decide by default
+        return true;
+    }
+    
     /* Extra convenience methods */
     
     /**
@@ -71,7 +77,7 @@ public abstract class DefaultChemObjectReader implements ChemObjectReader {
 
     protected void fireReaderSettingQuestion(IOSetting setting) {
         for (int i = 0; i < listenerList.size(); ++i) {
-            ReaderListener listener = (ReaderListener) listenerList.elementAt(i);            
+            ReaderListener listener = (ReaderListener) listenerList.elementAt(i);
             listener.processReaderSettingQuestion(setting);
         }
     }

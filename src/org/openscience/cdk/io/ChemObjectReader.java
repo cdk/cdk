@@ -65,6 +65,11 @@ public interface ChemObjectReader {
     public ChemObject read(ChemObject object) throws CDKException;
 
     /**
+     * Returns whether the given ChemObject can be read or not.
+     */
+    public boolean accepts(ChemObject object);
+    
+    /**
      * Adds a ReaderListener to this ChemObjectReader.
      *
      * @param listener the reader listener to add.

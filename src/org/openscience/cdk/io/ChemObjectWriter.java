@@ -67,6 +67,11 @@ public interface ChemObjectWriter {
      */
     public ChemObject highestSupportedChemObject();
 
+    /**
+     * Returns whether the given ChemObject can be written or not.
+     */
+    public boolean accepts(ChemObject object);
+    
     /*
      * Closes the writer's resources.
      */

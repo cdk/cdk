@@ -24,6 +24,7 @@
  */
 package org.openscience.cdk.io;
 
+import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.io.setting.*;
 import org.openscience.cdk.io.listener.*;
 import java.util.Vector;
@@ -47,6 +48,11 @@ public abstract class DefaultChemObjectWriter implements ChemObjectWriter {
         listenerList.removeElement(listener);
     }
 
+    public boolean accepts(ChemObject object) {
+        // leave it up the write(ChemObject) to decide by default
+        return true;
+    }
+    
     protected void fireWriterSettingQuestion(IOSetting setting) {
         for (int i = 0; i < listenerList.size(); ++i) {
             WriterListener listener = (WriterListener) listenerList.elementAt(i);            
