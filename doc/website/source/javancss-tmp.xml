@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
 <javancss>
-  <date>2002-08-17</date>
-  <time>21:55:54</time>
+  <date>2002-08-20</date>
+  <time>10:09:30</time>
   <packages>
     <package>
       <name>org.openscience.cdk</name>
       <classes>23</classes>
       <functions>226</functions>
       <ncss>1079</ncss>
-      <javadocs>248</javadocs>
-      <javadoc_lines>1626</javadoc_lines>
+      <javadocs>249</javadocs>
+      <javadoc_lines>1642</javadoc_lines>
       <single_comment_lines>12</single_comment_lines>
       <multi_comment_lines>642</multi_comment_lines>
     </package>
@@ -387,16 +387,16 @@
       <classes>201</classes>
       <functions>1449</functions>
       <ncss>15955</ncss>
-      <javadocs>1090</javadocs>
-      <javadoc_lines>6128</javadoc_lines>
+      <javadocs>1091</javadocs>
+      <javadoc_lines>6144</javadoc_lines>
       <single_comment_lines>1235</single_comment_lines>
       <multi_comment_lines>5630</multi_comment_lines>
     </total>
     <table>
       <tr><td>Packages</td><td>Classes</td><td>Functions</td><td>NCSS</td><td>Javadocs</td><td>per</td></tr>
-      <tr><td>38.00</td><td>201.00</td><td>1,449.00</td><td>15,955.00</td><td>1,090.00</td><td>Project</td></tr>
-      <tr><td></td><td>5.29</td><td>38.13</td><td>419.87</td><td>28.68</td><td>Package</td></tr>
-      <tr><td></td><td></td><td>7.21</td><td>79.38</td><td>5.42</td><td>Class</td></tr>
+      <tr><td>38.00</td><td>201.00</td><td>1,449.00</td><td>15,955.00</td><td>1,091.00</td><td>Project</td></tr>
+      <tr><td></td><td>5.29</td><td>38.13</td><td>419.87</td><td>28.71</td><td>Package</td></tr>
+      <tr><td></td><td></td><td>7.21</td><td>79.38</td><td>5.43</td><td>Class</td></tr>
       <tr><td></td><td></td><td></td><td>11.01</td><td>11.01</td><td>Function</td></tr>
     </table>
   </packages>
