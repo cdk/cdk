@@ -118,9 +118,12 @@ org/openscience/cdk/renderer/color/PartialAtomicChargeColors.java
 org/openscience/cdk/tools/MFAnalyser.java
 org/openscience/cdk/tools/LoggingTool.java
 org/openscience/cdk/tools/TXTBasedAtomTypeConfigurator.java
-org/openscience/cdk/tools/manipulator/ChemFileManipulator.java
-org/openscience/cdk/tools/manipulator/ChemModelManipulator.java
+org/openscience/cdk/tools/manipulator/ReactionManipulator.java
+org/openscience/cdk/tools/manipulator/AtomContainerManipulator.java
 org/openscience/cdk/tools/manipulator/ChemSequenceManipulator.java
+org/openscience/cdk/tools/manipulator/ChemModelManipulator.java
+org/openscience/cdk/tools/manipulator/SetOfReactionsManipulator.java
+org/openscience/cdk/tools/manipulator/ChemFileManipulator.java
 org/openscience/cdk/tools/manipulator/SetOfAtomContainersManipulator.java
 org/openscience/cdk/tools/manipulator/SetOfMoleculesManipulator.java
 
