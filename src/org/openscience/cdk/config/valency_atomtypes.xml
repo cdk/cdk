@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<java.util.Vector>
+    <org.openscience.cdk.AtomType symbol="H" id="valency.H" maxBondOrder="1.0" bondOrderSum="1.0" formalCharge="0"/>
+    <org.openscience.cdk.AtomType symbol="H" id="valency.H+" maxBondOrder="0.0" bondOrderSum="0.0" formalCharge="+1"/>
+    <org.openscience.cdk.AtomType symbol="H" id="valency.H-" maxBondOrder="0.0" bondOrderSum="0.0" formalCharge="-1"/>
+    <org.openscience.cdk.AtomType symbol="C" id="valency.C" maxBondOrder="3.0" bondOrderSum="4.0" formalCharge="0"/>
+    <org.openscience.cdk.AtomType symbol="C" id="valency.C+" maxBondOrder="3.0" bondOrderSum="3.0" formalCharge="+1"/>
+    <org.openscience.cdk.AtomType symbol="N" id="valency.N" maxBondOrder="2.0" bondOrderSum="3.0" formalCharge="0"/>
+    <org.openscience.cdk.AtomType symbol="N" id="valency.N+" maxBondOrder="2.0" bondOrderSum="4.0" formalCharge="+1"/>
+    <org.openscience.cdk.AtomType symbol="O" id="valency.O" maxBondOrder="2.0" bondOrderSum="2.0" formalCharge="0"/>
+    <org.openscience.cdk.AtomType symbol="O" id="valency.O+" maxBondOrder="2.0" bondOrderSum="3.0" formalCharge="+1"/>
+    <org.openscience.cdk.AtomType symbol="P" id="valency.P3" maxBondOrder="3.0" bondOrderSum="3.0" formalCharge="0"/>
+    <org.openscience.cdk.AtomType symbol="P" id="valency.P4" maxBondOrder="3.0" bondOrderSum="5.0" formalCharge="0"/>
+    <org.openscience.cdk.AtomType symbol="S" id="valency.S2" maxBondOrder="2.0" bondOrderSum="2.0" formalCharge="0"/>
+    <org.openscience.cdk.AtomType symbol="S" id="valency.S4" maxBondOrder="2.0" bondOrderSum="6.0" formalCharge="0"/>
+    <org.openscience.cdk.AtomType symbol="F" id="valency.F" maxBondOrder="1.0" bondOrderSum="1.0" formalCharge="0"/>
+    <org.openscience.cdk.AtomType symbol="Cl" id="valency.Cl" maxBondOrder="1.0" bondOrderSum="1.0" formalCharge="0"/>
+    <org.openscience.cdk.AtomType symbol="Br" id="valency.Br" maxBondOrder="1.0" bondOrderSum="1.0" formalCharge="0"/>
+    <org.openscience.cdk.AtomType symbol="I" id="valency.I" maxBondOrder="1.0" bondOrderSum="1.0" formalCharge="0"/>
+</java.util.Vector>
