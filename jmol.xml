@@ -34,32 +34,12 @@
     
   <target name="initAgain">
     <copy file="dist/jar/jmolappletcdk.jar" tofile="./jmolappletcdk.jar"/>
-    <copy file="dist/jar/jmol2appletcdk.jar" tofile="./jmol2appletcdk.jar"/>
     <ant antfile="build.xml" target="clean"/>
     <ant antfile="build.xml" target="init"/>
     <move file="./jmolappletcdk.jar" tofile="dist/jar/jmolappletcdk.jar"/>
-    <move file="./jmol2appletcdk.jar" tofile="dist/jar/jmol2appletcdk.jar"/>
   </target>  
     
   <target name="compile-applet">
-  <javac srcdir="${src}" destdir="${build}" optimize="${optimization}" 
-           debug="${debug}" deprecation="${deprecation}" target="1.1"
-           includesfile="${src}/jmol-applet-b6.javafiles">
-      <classpath refid="project.class.path" />
-    </javac>
-    <!-- some classes need to be overwritten with patches files -->
-    <delete>
-        <fileset dir="${build}" includes="org/openscience/cdk/tools/LoggingTool.java" />
-        <fileset dir="${build}" includes="org/openscience/cdk/tools/AtomTypeFactory.java" />
-    </delete>
-    <javac srcdir="${src}" destdir="${build}" optimize="${optimization}" 
-           debug="${debug}" deprecation="${deprecation}" target="1.1"
-           includes="jmol-applet/**/*.java">
-        <classpath refid="project.class.path" />
-    </javac>
-  </target>
-
-  <target name="compile-applet-jmol2">
     <javac srcdir="${src}" destdir="${build}" optimize="${optimization}" 
            debug="${debug}" deprecation="${deprecation}" target="1.1"
            includesfile="${src}/jmol-applet.javafiles">
@@ -78,14 +58,6 @@
   </target>
 
   <target name="compile">
-    <javac srcdir="${src}" destdir="${build}" optimize="${optimization}"
-           debug="${debug}" deprecation="${deprecation}" target="1.1"
-           includesfile="${src}/jmol-b6.javafiles">
-      <classpath refid="project.class.path" />
-    </javac>
-  </target>
-
-  <target name="compile-jmol2">
     <javac srcdir="${src}" destdir="${build}" optimize="${optimization}" 
            debug="${debug}" deprecation="${deprecation}" target="1.1"
            includesfile="${src}/jmol.javafiles">
@@ -93,56 +65,13 @@
     </javac>
   </target>
 
-  <target name="dist" depends="compile">
-    <ant antfile="build.xml" target="dist.init"/>
-    
-    <copy file="${src}/jmol-b6.javafiles" tofile="${src}/jmol-b6.classes"/>
-    <replace file="${src}/jmol-b6.classes" token=".java" value="*.class"/>
-
-    <jar jarfile="${dist}/jar/jmolcdk.jar">
-      <fileset dir="${build}">
-        <!-- Put only required class files in the jar -->
-        <includesfile name="${src}/jmol-b6.classes" />
-      </fileset>
-      <fileset dir="${src}">
-        <!-- These config and data files are also needed -->
-        <include name="**/jmol_atomtypes.txt" />
-        <include name="**/mol2_atomtypes.txt" />
-        <include name="org/openscience/cdk/io/cml/data/**" />
-        <include name="org/openscience/cdk/config/log4j.properties" />
-        <include name="org/openscience/cdk/config/isotopes.xml" />
-      </fileset>
-    </jar>
-  </target>
-
   <target name="dist-applet" depends="compile-applet">
-    <ant antfile="build.xml" target="dist.init"/>
-    
-    <copy file="${src}/jmol-applet-b6.javafiles" tofile="${src}/jmol-applet-b6.classes"/>
-    <replace file="${src}/jmol-applet-b6.classes" token=".java" value="*.class"/>
-
-    <jar jarfile="${dist}/jar/jmolappletcdk.jar">
-      <fileset dir="${build}">
-        <!-- Put only required class files in the jar -->
-        <includesfile name="${src}/jmol-applet-b6.classes" />
-      </fileset>
-      <fileset dir="${src}">
-        <!-- These config and data files are also needed -->
-        <include name="**/jmol_atomtypes.txt" />
-        <include name="org/openscience/cdk/io/cml/data/**" />
-        <include name="org/openscience/cdk/config/log4j.properties" />
-        <include name="org/openscience/cdk/config/isotopes.xml" />
-      </fileset>
-    </jar>
-  </target>
-  
-  <target name="dist-applet-jmol2" depends="compile-applet-jmol2">
     <ant antfile="build.xml" target="dist.init"/>
     
     <copy file="${src}/jmol-applet.javafiles" tofile="${src}/jmol-applet.classes"/>
     <replace file="${src}/jmol-applet.classes" token=".java" value="*.class"/>
 
-    <jar jarfile="${dist}/jar/jmol2appletcdk.jar">
+    <jar jarfile="${dist}/jar/jmolappletcdk.jar">
       <fileset dir="${build}">
         <!-- Put only required class files in the jar -->
         <includesfile name="${src}/jmol-applet.classes" />
@@ -157,13 +86,13 @@
     </jar>
   </target>
   
-  <target name="dist-jmol2" depends="compile-jmol2">
+  <target name="dist" depends="compile">
     <ant antfile="build.xml" target="dist.init"/>
     
     <copy file="${src}/jmol.javafiles" tofile="${src}/jmol.classes"/>
     <replace file="${src}/jmol.classes" token=".java" value="*.class"/>
 
-    <jar jarfile="${dist}/jar/jmol2cdk.jar">
+    <jar jarfile="${dist}/jar/jmolcdk.jar">
       <fileset dir="${build}">
         <!-- Put only required class files in the jar -->
         <includesfile name="${src}/jmol.classes" />
@@ -178,6 +107,6 @@
     </jar>
   </target>
   
-  <target name="dist-all" depends="init, dist-applet, dist-applet-jmol2, initAgain, dist, dist-jmol2"/>
+  <target name="dist-all" depends="init, dist-applet, initAgain, dist"/>
   
 </project>
