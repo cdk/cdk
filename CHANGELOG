@@ -3,6 +3,10 @@ CHANGELOG $Date$
 
 Changes in CVS
 ------------------------------------
+
+
+20030702 Release
+------------------------------------
 New:
 * Method to determine if two atoms should be bonded (cdk.geometry.BondTools)
 * Added a method debug(Exception) to LoggingTool
