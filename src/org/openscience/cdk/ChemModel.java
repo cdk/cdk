@@ -30,7 +30,8 @@ import java.util.*;
   * the other lower level concepts like rings, sequences, 
   * fragments, etc.
   */
-public class ChemModel extends ChemObject {
+public class ChemModel extends ChemObject implements java.io.Serializable, Cloneable
+{
 
 	/**
 	 *  A SetOfMolecules.

@@ -36,7 +36,8 @@ import java.util.Vector;
   *
   * @keyword    ring
   */
-public class Ring extends AtomContainer {
+public class Ring extends AtomContainer implements java.io.Serializable, Cloneable
+{
 
 	/**
 	 * constructs an empty ring.

@@ -34,7 +34,8 @@ package org.openscience.cdk;
  * @keyword    fragment
  * @keyword    free valence
  */
-public class Fragment extends AtomContainer {
+public class Fragment extends AtomContainer implements java.io.Serializable, Cloneable  
+{
 
     private String title;
     

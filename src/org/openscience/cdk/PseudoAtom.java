@@ -36,7 +36,8 @@ package org.openscience.cdk;
  *
  * @see  Atom
  */
-public class PseudoAtom extends Atom implements Cloneable {
+public class PseudoAtom extends Atom implements java.io.Serializable, Cloneable 
+{
 
     private String label;
     

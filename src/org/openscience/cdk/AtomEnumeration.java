@@ -45,7 +45,7 @@ import javax.vecmath.*;
  * @author     steinbeck
  * @created    October 2, 2000
  */
-public class AtomEnumeration implements Enumeration {
+public class AtomEnumeration implements java.io.Serializable, Cloneable, Enumeration {
 
     /** Counts the current element. */
     protected int atomEnumerationCounter = 0;

@@ -38,7 +38,8 @@ import javax.vecmath.Point3d;
  *
  * @keyword crystal
  */
-public class Crystal extends AtomContainer {
+public class Crystal extends AtomContainer implements java.io.Serializable, Cloneable
+{
 
     /** x,y,z components of a axis */
     private double ax,ay,az;

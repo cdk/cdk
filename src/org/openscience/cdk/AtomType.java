@@ -39,7 +39,7 @@ package org.openscience.cdk;
  *
  * @keyword     atom, type
  */
-public class AtomType extends Isotope
+public class AtomType extends Isotope implements java.io.Serializable, Cloneable
 {
 	/**
 	 *  An id for this atom type, like C3 for sp3 carbon.

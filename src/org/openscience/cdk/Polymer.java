@@ -36,7 +36,8 @@ import java.util.*;
  * @keyword    polymer
  *
  */
-public class Polymer extends Molecule {
+public class Polymer extends Molecule implements java.io.Serializable, Cloneable
+{
 	private Hashtable _hContains;	// the list of all the contained Monomers. 
 
 	/**

@@ -38,7 +38,7 @@ import javax.vecmath.*;
  * @created    2003-02-13
  * @keyword    reaction
  */
-public class Reaction extends ChemObject implements Cloneable {
+public class Reaction extends ChemObject implements java.io.Serializable, Cloneable {
 
 	protected int growArraySize = 2;
 

@@ -34,7 +34,8 @@ import javax.vecmath.*;
  *
  * @keyword     ring, set of
  */
-public class RingSet extends Vector{
+public class RingSet extends Vector implements java.io.Serializable, Cloneable
+{
 
     /** Flag to denote that the set is order with the largest ring first? */
 	public final static int LARGE_FIRST = 1;

@@ -48,7 +48,7 @@ package org.openscience.cdk;
  * @keyword reaction
  * @keyword molecule
  */
-public class SetOfMolecules extends ChemObject
+public class SetOfMolecules extends ChemObject implements java.io.Serializable, Cloneable
 {
 
 	/**

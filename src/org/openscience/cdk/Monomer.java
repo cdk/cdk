@@ -41,7 +41,8 @@ import org.openscience.cdk.*;
  * @keyword    monomer
  *
  */
-public class Monomer extends AtomContainer {
+public class Monomer extends AtomContainer implements java.io.Serializable, Cloneable
+{
 
     /** The name of this monomer (e.g. Trp42). */
     protected String _cMonomerName;

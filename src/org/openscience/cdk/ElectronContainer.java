@@ -32,7 +32,7 @@ package org.openscience.cdk;
  * @keyword lone-pair
  * @keyword bond
  */
-public class ElectronContainer extends ChemObject
+public class ElectronContainer extends ChemObject implements java.io.Serializable, Cloneable 
 {
 	/** Number of electrons in the ElectronContainer. */
 	protected int electronCount;

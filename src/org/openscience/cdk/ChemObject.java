@@ -38,7 +38,7 @@ import java.util.*;
  * a hash table for administration of physical or chemical properties
  */
 
-public class ChemObject implements Cloneable
+public class ChemObject implements java.io.Serializable, Cloneable
 {
 	/** Vector for listener administration. */
 	protected Vector chemObjects = new Vector();

@@ -44,7 +44,8 @@ package org.openscience.cdk;
  * @keyword     isotope
  */
 
-public class Isotope extends Element implements Cloneable {
+public class Isotope extends Element implements java.io.Serializable, Cloneable 
+{
 
     /** Exact mass of this isotope. */
     public double exactMass = (double) -1;

@@ -34,7 +34,8 @@ import java.util.Vector;
  *
  * @keyword    molecule
  */
-public class Molecule extends AtomContainer {
+public class Molecule extends AtomContainer implements java.io.Serializable, Cloneable
+{
 
 	/**
 	 *  Creates an Molecule without Atoms and Bonds.

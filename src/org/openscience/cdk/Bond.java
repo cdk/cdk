@@ -36,7 +36,7 @@ import javax.vecmath.*;
  * @keyword atom
  * @keyword electron
  */
-public class Bond extends ElectronContainer implements Cloneable
+public class Bond extends ElectronContainer implements java.io.Serializable, Cloneable
 {
 	/** The bond order of this bond. */
 	protected double order;

@@ -40,8 +40,8 @@ package org.openscience.cdk;
  *
  * @see tools.IsotopeFactory
  */
-public class Element
-    extends ChemObject {
+public class Element extends ChemObject implements java.io.Serializable, Cloneable
+{
 
     /** The element symbol for this element as listed in the periodic table. */
     protected String symbol;

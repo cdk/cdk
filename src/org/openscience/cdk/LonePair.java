@@ -32,7 +32,8 @@ package org.openscience.cdk;
  * @keyword lone-pair
  * @keyword bond
  */
-public class LonePair extends ElectronContainer {
+public class LonePair extends ElectronContainer implements java.io.Serializable, Cloneable
+{
 
     /** Number of electrons in the lone pair. */
     protected final int electronCount = 2;

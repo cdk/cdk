@@ -48,7 +48,8 @@ package org.openscience.cdk;
  * @keyword reaction
  * @keyword reaction
  */
-public class SetOfReactions extends ChemObject {
+public class SetOfReactions extends ChemObject implements java.io.Serializable, Cloneable
+{
 
 	/**
 	 *  Array of Reactions.

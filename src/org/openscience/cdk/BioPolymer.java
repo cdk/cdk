@@ -39,7 +39,8 @@ package org.openscience.cdk;
  * @keyword    polymer
  * @keyword    biopolymer
  */
-public class BioPolymer extends Polymer {
+public class BioPolymer extends Polymer implements java.io.Serializable, Cloneable
+{
 
 	/**
 	 *
