@@ -56,7 +56,9 @@ public class AtomPlacer3D {
 	private final static double DIHEDRAL_EXTENDED_CHAIN = (180.0 / 180) * Math.PI;
 	private final static double DIHEDRAL_BRANCHED_CHAIN = 0.0;
 	private final static double DEFAULT_BOND_LENGTH = 1.5;
-	private final static double DEFAULT_ANGLE = 109.471;
+	private final static double DEFAULT_SP3_ANGLE = 109.471;
+	private final static double DEFAULT_SP2_ANGLE = 120.000;
+	private final static double DEFAULT_SP_ANGLE = 180.000;
 	
 	AtomPlacer3D(){}
 	
@@ -128,7 +130,7 @@ public class AtomPlacer3D {
 		third_atoms = new int[first[1]];
 		first_atoms[0] = first[0];
 		molecule.getAtomAt(first_atoms[0]).setFlag(CDKConstants.VISITED, true);
-
+		int hybridisation = 0;
 		for (int i = 0; i < chain.getAtomCount(); i++) {
 			if (!(chain.getAtomAt(i).getSymbol()).equals("H") &
 					!chain.getAtomAt(i).getFlag(CDKConstants.VISITED)) {
@@ -142,7 +144,18 @@ public class AtomPlacer3D {
 				second_atoms[counter] = first_atoms[counter - 1];
 				if (counter > 1) {
 					ID3 = molecule.getAtomAt(first_atoms[counter - 2]).getID();
+					hybridisation = getHybridisationState(molecule.getAtomAt(first_atoms[counter - 1]));
 					angles[counter] = getAngleValue(ID1, ID2, ID3);
+					//Check if sp,sp2
+					if (angles[counter] == -1) {
+						if (hybridisation == 3) {
+							angles[counter] = DEFAULT_SP3_ANGLE;
+						} else if (hybridisation == 2) {
+							angles[counter] = DEFAULT_SP2_ANGLE;
+						} else if (hybridisation == 1) {
+							angles[counter] = DEFAULT_SP_ANGLE;
+						}
+					}
 					third_atoms[counter] = first_atoms[counter - 2];
 					//System.out.println(" Angle:" + angles[counter]);
 				} else {
@@ -236,7 +249,40 @@ public class AtomPlacer3D {
 	}
 
 
+	/**
+	 *  Gets the hybridisationState of an atom
+	 *
+	 *@param  atom1  atom
+	 *@return        The hybridisationState value (sp=1;sp2=2;sp3=3)
+	 */
+	private int getHybridisationState(Atom atom1) {
+
+		if (atom1.getFormalNeighbourCount() == 1 || atom1.getMaxBondOrder() > 4) {
+		} else if (atom1.getFormalNeighbourCount() == 2 || atom1.getMaxBondOrder() == 3) {
+			//sp
+			return 1;
+		} else if (atom1.getFormalNeighbourCount() == 3 || (atom1.getMaxBondOrder() > 1 && atom1.getMaxBondOrder() < 3)) {
+			//sp2
+			return 2;
+		} else {
+			//sp3
+			return 3;
+		}
+		return -1;
+	}
 	
+	
+	/**
+	 *  Gets the doubleBondConfiguration2D attribute of the AtomPlacer3D object
+	 *
+	 *@param  bond           the double bond
+	 *@param  a              coordinates (Point2d) of atom1 connected to bond
+	 *@param  b              coordinates (Point2d) of atom2 connected to bond
+	 *@param  c              coordinates (Point2d) of atom3 connected to bond
+	 *@param  d              Dcoordinates (Point2d) of ato4 connected to bond
+	 *@return                The doubleBondConfiguration2D value
+	 *@exception  Exception  Description of the Exception
+	 */
 	private int getDoubleBondConfiguration2D(Bond bond,Point2d a, Point2d b,Point2d c,Point2d d) throws Exception{
 		if (bond.getOrder()<1.5 || bond.getOrder()>2){
 			return 0;
@@ -295,8 +341,8 @@ public class AtomPlacer3D {
 		} else if (pSet.containsKey(("angle" + id2 + ";" + id3 + ";" + id1))) {
 			akey = "angle" + id2 + ";" + id3 + ";" + id1;
 		} else {
-			System.out.println("KEYErrorAngle:Unknown angle key in pSet: " +id2 + " ; " + id3 + " ; " + id1+" take default angle:"+DEFAULT_ANGLE);
-			return DEFAULT_ANGLE;
+			//System.out.println("KEYErrorAngle:Unknown angle key in pSet: " +id2 + " ; " + id3 + " ; " + id1+" take default angle:"+DEFAULT_ANGLE);
+			return -1;
 		}
 		return ((Double) (((Vector) pSet.get(akey)).get(0))).doubleValue();
 	}

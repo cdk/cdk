@@ -115,5 +115,34 @@ public class ModelBuilder3dTest extends TestCase {
 			}
 			fail(exc.toString());
 		}
+		String smile="CccccC";
+		try{
+			SmilesParser sp = new SmilesParser();
+			Molecule mol = sp.parseSmiles(smile);
+			hAdder.addExplicitHydrogensToSatisfyValency(mol);
+			//mb3d.setTemplateHandler();
+			mb3d.setForceField("mm2");
+			mb3d.setMolecule(mol,false);
+			mb3d.generate3DCoordinates();
+			mol = mb3d.getMolecule();
+			for (int i=0;i<mol.getAtomCount();i++){
+				if (mol.getAtomAt(i).getPoint3d()!=null){
+					assertTrue(true);
+				}else{
+					assertTrue(false);
+				}
+				
+			}
+			System.out.println("Layout molecule with SMILE:"+smile);	
+		} catch (Exception exc)
+		{
+			System.out.println("Cannot layout molecule with SMILE:"+smile);
+			if (standAlone)
+			{
+				exc.printStackTrace();
+			}
+			fail(exc.toString());
+		}
+		
 	}
 }

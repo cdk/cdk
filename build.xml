@@ -1035,6 +1035,7 @@
                         <pathelement location="${dist}/jar/cdk-libio.jar" />
                         <pathelement location="${dist}/jar/cdk-qsar.jar" />
                         <pathelement location="${dist}/jar/cdk-experimental.jar" />
+			<pathelement location="${dist}/jar/cdk-builder3d.jar" />
                         <fileset dir="${lib}">
                                 <include name="*.jar" />
                         </fileset>

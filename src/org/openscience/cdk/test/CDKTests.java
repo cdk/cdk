@@ -54,6 +54,7 @@ import org.openscience.cdk.test.tools.ToolsTests;
 import org.openscience.cdk.test.charges.GasteigerMarsiliPartialChargesTest;
 import org.openscience.cdk.test.qsar.*;
 import org.openscience.cdk.test.qsar.model.*;
+import org.openscience.cdk.test.modeling.builder3d.ModelBuilder3dTest;
 /**
  * TestSuite that runs all the sample tests
  *
@@ -85,6 +86,8 @@ public class CDKTests
         suite.addTest(HueckelAromaticityDetectorTest.suite());
         // from cdk.test.charges
         suite.addTest(GasteigerMarsiliPartialChargesTest.suite());
+	// from cdk.test.modeling
+        suite.addTest(ModelBuilder3dTest.suite());
         // from cdk.test.fingerprint
         suite.addTest(FingerprinterTest.suite());
         // from cdk.test.geometry

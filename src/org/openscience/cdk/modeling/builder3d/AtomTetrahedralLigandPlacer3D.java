@@ -473,7 +473,7 @@ public class AtomTetrahedralLigandPlacer3D {
 	public Point3d[] calculate3DCoordinates2(
 			Point3d aPoint, Point3d bPoint, Point3d cPoint,
 			int nwanted, double length, double angle) {
-		System.out.println("3DCoordinates2");
+		//System.out.println("3DCoordinates2");
 		Point3d newPoints[] = new Point3d[0];
 		double ang2 = angle / 2.0;
 
@@ -531,7 +531,7 @@ public class AtomTetrahedralLigandPlacer3D {
 	public Point3d calculate3DCoordinates3(
 			Point3d aPoint, Point3d bPoint, Point3d cPoint, Point3d dPoint,
 			double length) {
-		System.out.println("3DCoordinates3");
+		//System.out.println("3DCoordinates3");
 		Vector3d bc = new Vector3d(bPoint);
 		bc.sub(cPoint);
 		Vector3d dc = new Vector3d(dPoint);
@@ -590,7 +590,7 @@ public class AtomTetrahedralLigandPlacer3D {
 	 */
 	public Point3d calculate3DCoordinatesSP2_1(Point3d aPoint, Point3d bPoint, Point3d cPoint,
 			double length, double angle) {
-		System.out.println("3DCoordinatesSP2_1");
+		//System.out.println("3DCoordinatesSP2_1");
 		Vector3d ba = new Vector3d(bPoint);
 		ba.sub(aPoint);
 		Vector3d ca = new Vector3d(cPoint);
@@ -626,7 +626,7 @@ public class AtomTetrahedralLigandPlacer3D {
 	 *@return         new Points (Point3d [])
 	 */
 	public Point3d[] calculate3DCoordinatesSP2_2(Point3d aPoint, Point3d bPoint, Point3d cPoint, double length, double angle) {
-		System.out.println("3DCoordinatesSP_2");
+		//System.out.println("3DCoordinatesSP_2");
 		Vector3d ca = new Vector3d();
 		Point3d newPoints[] = new Point3d[2];
 		Vector3d ba = new Vector3d(bPoint);
