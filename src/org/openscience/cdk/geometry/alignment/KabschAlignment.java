@@ -118,6 +118,17 @@ public class KabschAlignment {
         return( new Point3d(x/(double)p.length, y/(double)p.length, z/(double)p.length) );
     }
 
+    private void dump(double[][] m, int nrow, int ncol, String msg) {
+        System.out.println(msg);
+        for (int i = 0; i < nrow; i++) {
+            for (int j = 0; j < ncol; j++) {
+                System.out.print(m[i][j]+ " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+
 
     /**
      * Sets up variables for the alignment algorithm.
@@ -250,38 +261,40 @@ public class KabschAlignment {
         }
         
         // get the R matrix 
-        double[][] R = new double[3][3];
+        double[][] tR = new double[3][3];
         for (int i = 0; i < this.npoint; i++) {
             wts[i] = 1.0;
         }
         for (int i = 0; i < this.npoint; i++) {
-            R[0][0] += p1[i].x * p2[i].x * wts[i];
-            R[0][1] += p1[i].x * p2[i].y * wts[i];
-            R[0][2] += p1[i].x * p2[i].z * wts[i];
+            tR[0][0] += p1[i].x * p2[i].x * wts[i];
+            tR[0][1] += p1[i].x * p2[i].y * wts[i];
+            tR[0][2] += p1[i].x * p2[i].z * wts[i];
 
-            R[1][0] += p1[i].y * p2[i].x * wts[i];
-            R[1][1] += p1[i].y * p2[i].y * wts[i];
-            R[1][2] += p1[i].y * p2[i].z * wts[i];
+            tR[1][0] += p1[i].y * p2[i].x * wts[i];
+            tR[1][1] += p1[i].y * p2[i].y * wts[i];
+            tR[1][2] += p1[i].y * p2[i].z * wts[i];
 
-            R[2][0] += p1[i].z * p2[i].x * wts[i];
-            R[2][1] += p1[i].z * p2[i].y * wts[i];
-            R[2][2] += p1[i].z * p2[i].z * wts[i];
+            tR[2][0] += p1[i].z * p2[i].x * wts[i];
+            tR[2][1] += p1[i].z * p2[i].y * wts[i];
+            tR[2][2] += p1[i].z * p2[i].z * wts[i];
         }
+        double[][] R = new double[3][3];
+        tmp = new Matrix(tR);
+        R = tmp.transpose().getArray();
 
 
         // now get the RtR (=R'R) matrix 
         double[][] RtR = new double[3][3];
         Matrix jamaR = new Matrix(R);
-        //System.out.println("det(R) = "+jamaR.det());
-        tmp = jamaR.transpose().times( jamaR );
+        tmp = tmp.times(jamaR);
         RtR = tmp.getArray();
 
-  
-        // get eigenvalues of RtR (a's)
+        // get eigenvalues of RRt (a's)
         Matrix jamaRtR = new Matrix(RtR);
         EigenvalueDecomposition ed = jamaRtR.eig();
         double[] mu = ed.getRealEigenvalues();
         double[][] a = ed.getV().getArray();
+
 
  
         // Jama returns the eigenvalues in increasing order so
@@ -290,11 +303,10 @@ public class KabschAlignment {
         mu[2] = mu[0];
         mu[0] = tmp2;
         for (int i = 0; i < 3; i++) {
-            double tmp3 = a[i][2];
+            tmp2 = a[i][2];
             a[i][2] = a[i][0];
-            a[i][0] = tmp3;
+            a[i][0] = tmp2;
         }
-
 
         // make sure that the a3 = a1 x a2
         double[] tmpa = new double[3];
@@ -305,25 +317,25 @@ public class KabschAlignment {
         a[1][2] = tmpa[1];
         a[2][2] = tmpa[2];
 
-
         // lets work out the b vectors
         double[][] b = new double[3][3];
 
-        /*
         for(int i = 0; i < 3; i++){
             b[0][i] = (R[0][0] * a[0][i]+R[0][1] * a[1][i]+R[0][2] * a[2][i]) / Math.sqrt(mu[i]);
             b[1][i] = (R[1][0] * a[0][i]+R[1][1] * a[1][i]+R[1][2] * a[2][i]) / Math.sqrt(mu[i]);
             b[2][i] = (R[2][0] * a[0][i]+R[2][1] * a[1][i]+R[2][2] * a[2][i]) / Math.sqrt(mu[i]);
         }
-        */
 
+        /*
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 for (int k = 0; k < 3; k++) {
-                    b[i][j] += R[i][k] * a[k][j];
+                    b[i][j] += R[i][k] * a[j][k];
                 }
+                b[i][j] = b[i][j] / Math.sqrt(mu[i]);
             }
         }
+        */
         
         // normalize and set b3 = b1 x b2
         double norm1 = 0.;
@@ -335,8 +347,8 @@ public class KabschAlignment {
         norm1 = Math.sqrt(norm1);
         norm2 = Math.sqrt(norm2);
         for (int i = 0; i < 3; i++) {
-            b[i][0] /= norm1;
-            b[i][1] /= norm2;
+            b[i][0] = b[i][0] / norm1;
+            b[i][1] = b[i][1] / norm2;
         }
         b[0][2] = (b[1][0]*b[2][1]) - (b[1][1]*b[2][0]);
         b[1][2] = (b[0][1]*b[2][0]) - (b[0][0]*b[2][1]);
@@ -359,7 +371,6 @@ public class KabschAlignment {
                 U[i][j] = tU[j][i];
             }
         }
-
 
         // now eval the RMS error
         // first, rotate the second set of points and ...
