@@ -311,7 +311,7 @@
                 </javac>
         </target>
 
-        <target id="compile-io" name="compile-io" depends="init, dist-core, dist-standard">
+        <target id="compile-io" name="compile-io" depends="init, dist-core, dist-standard, dist-extra">
                 <echo message="Compiling classes for cdk-io module." />
 
                 <javac srcdir="${build.src}" destdir="${build}" optimize="${optimization}" 
@@ -391,6 +391,7 @@
                 </classpath>
 
                 <excludesfile name="${src}/java3d.javafiles" />
+                <excludesfile name="${src}/io.javafiles" />
                 <exclude name="org/openscience/cdk/libio/**/*.java" />
                 <exclude name="org/openscience/cdk/test/**/*.java" />
             </javac>
