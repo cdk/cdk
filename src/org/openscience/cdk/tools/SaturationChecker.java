@@ -219,6 +219,24 @@ public class SaturationChecker
 				//System.out.println(atomTypes1[0]);
 				if (atomContainer.getBondCount(atom) == i)
 				{
+          if (atom.getFlag(CDKConstants.ISAROMATIC) && atomContainer.getBondOrderSum(atom) < atomTypes1[0].getMaxBondOrderSum() - atom.getHydrogenCount()){
+						partners = atomContainer.getConnectedAtoms(atom);
+						for (int g = 0; g < partners.length; g++)
+						{
+							partner = partners[g];
+							//System.out.println("Atom has " + partners.length + " partners");
+							atomTypes2 = atf.getAtomTypes(partner.getSymbol(), atf.ATOMTYPE_ID_STRUCTGEN);
+							if (partner.getFlag(CDKConstants.ISAROMATIC) && atomContainer.getBondOrderSum(partner) < atomTypes2[0].getMaxBondOrderSum() - partner.getHydrogenCount())
+							{
+								//System.out.println("Partner has " + atomContainer.getBondOrderSum(partner) + ", may have: " + atomTypes2[0].getMaxBondOrderSum());
+								bond = atomContainer.getBond(atom, partner);
+								//System.out.println("Bond order was " + bond.getOrder());
+								bond.setOrder(bond.getOrder() + 1);
+								//System.out.println("Bond order now " + bond.getOrder());
+								break;
+							}
+						}
+					}
 					if (atomContainer.getBondOrderSum(atom) < atomTypes1[0].getMaxBondOrderSum() - atom.getHydrogenCount())
 					{
 						//System.out.println("Atom has " + atomContainer.getBondOrderSum(atom) + ", may have: " + atomTypes1[0].getMaxBondOrderSum());
