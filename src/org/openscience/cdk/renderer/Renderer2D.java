@@ -365,6 +365,14 @@ public class Renderer2D   {
      * background color, slightly larger than the space that the symbol occupies.
      * The atom symbol is then printed into the empty space.
      *
+     * <p>The algorithm uses four steps:
+     * <ol>
+     *   <li>it calculates the widths and heights of all label parts
+     *   <li>it calculates the x's and y's of all label parts
+     *   <li>it creates empty backgrounds for all label parts
+     *   <li>it draws all label parts
+     * </ol>
+     *
      * @param  atom       The atom to be drawn
      * @param  backColor  Description of the Parameter
      * @param  graphics   Graphics to draw too
@@ -392,6 +400,8 @@ public class Renderer2D   {
         Font subscriptScreenFont = normalScreenFont.deriveFont(
             normalScreenFontSize*subscriptFraction);
         
+        // STEP 1: calculate widths and heights for all parts in the label
+        
         // calculate SYMBOL width, height
         String atomSymbol = atom.getSymbol();
         if (r2dm.drawNumbers() && atomNumber != 0) {
@@ -408,11 +418,13 @@ public class Renderer2D   {
         // calculate IMPLICIT H width, height
         int implicitHydrogenCount = atom.getHydrogenCount();
         int hSymbolW = 0; // unless next condition, this is the default
+        int hSymbolH = 0; // unless next condition, this is the default
         String hSymbol = "H";
         String hMultiplierString = new Integer(implicitHydrogenCount).toString();
         if (implicitHydrogenCount > 0) {
             // fm is identical, don't change
             hSymbolW = (new Integer(fm.stringWidth(hSymbol))).intValue();
+            hSymbolH = atomSymbolH;
         }
         graphics.setFont(subscriptFont);
         fm = graphics.getFontMetrics();
@@ -463,48 +475,88 @@ public class Renderer2D   {
             }
         }
 
+        // STEP 2: calculate x's and y's for all parts in the label
+
         int labelX = 0;
         int labelY = 0;
-        int labelW = 0;
-        int labelH = 0;
         
         if (alignment == 1) { // left alignment
             labelX = (int)(atom.getPoint2D().x - (atomSymbolXOffset + isotopeW));
-            labelW = isotopeW + atomSymbolW + hSymbolW + 
-                     Math.max(hMultiplierW, formalChargeW);
         } else { // right alignment
             labelX = (int)(atom.getPoint2D().x - 
                      (atomSymbolXOffset + Math.max(isotopeW,hMultiplierW) + hSymbolW));
-            labelW = hSymbolW + Math.max(isotopeW, hMultiplierW) +
-                     atomSymbolW + formalChargeW;
         }
         // labelY and labelH are the same for both left/right aligned
         labelY = (int)(atom.getPoint2D().y - (atomSymbolYOffset + isotopeH));
-        labelH = Math.max(isotopeH, formalChargeH) + 
-                atomSymbolH + hMultiplierH; 
-
-        // make empty space
-        {
-            int border = 2; // number of pixels
-            graphics.setColor(backColor);
-            int[] coords = {labelX - border, labelY - border, 
-                            labelW + 2*border, labelH + 2*border};
-            int[] screenCoords = getScreenCoordinates(coords);
-            graphics.fillRect(screenCoords[0], screenCoords[1], 
-                              screenCoords[2], screenCoords[3]);
+        
+        // xy for atom symbol
+        int[] atomSymbolCoords = new int[2];
+        if (alignment == 1) { // left alignment
+            atomSymbolCoords[0] = labelX + isotopeW;
+        } else { // right alignment
+            atomSymbolCoords[0] = labelX + hSymbolW + Math.max(isotopeW, hMultiplierW);
         }
+        atomSymbolCoords[1] = labelY + isotopeH + atomSymbolH;
+
+        // xy for implicit hydrogens
+        int[] hSymbolCoords = new int[2];
+        if (alignment == 1) { // left alignment
+            hSymbolCoords[0] = labelX + isotopeW + atomSymbolW;
+        } else { // right alignment
+            hSymbolCoords[0] = labelX;
+        }
+        hSymbolCoords[1] = labelY + isotopeH + atomSymbolH;
+        // xy for implicit hydrogens multiplier
+        int[] hMultiplierCoords = new int[2];
+        if (alignment == 1) { // left alignment
+            hMultiplierCoords[0] = labelX + isotopeW + atomSymbolW +hSymbolW;
+        } else { // right alignment
+            hMultiplierCoords[0] = labelX + hSymbolW;
+        }
+        hMultiplierCoords[1] = labelY + isotopeH + atomSymbolH + hMultiplierH/2;
+        
+        // xy for charge
+        int[] chargeCoords = new int[2];
+        if (alignment == 1) { // left alignment
+            chargeCoords[0] = labelX + isotopeW + atomSymbolW + hSymbolW;
+        } else { // right alignment
+            chargeCoords[0] = labelX + hSymbolW + Math.max(isotopeW, hMultiplierW) +
+                        atomSymbolW;
+        }
+        chargeCoords[1] = labelY + isotopeH;
+        
+        //xy for isotope
+        int[] isotopeCoords = new int[2];
+        if (alignment == 1) { // left alignment
+            isotopeCoords[0] = labelX;
+        } else { // right alignment
+            isotopeCoords[0] = labelX + hSymbolW;
+        }
+        isotopeCoords[1] = labelY + isotopeH;
+        
+        // STEP 3: draw empty backgrounds for all parts in the label
+
+        int border = 2; // border for clearing background in pixels
+
+        paintEmptySpace(atomSymbolCoords[0], atomSymbolCoords[1] - atomSymbolH,
+                        atomSymbolW, atomSymbolH, border, backColor, graphics);
+        paintEmptySpace(hSymbolCoords[0], hSymbolCoords[1] - hSymbolH,
+                        hSymbolW, hSymbolH, border, backColor, graphics);
+        paintEmptySpace(hMultiplierCoords[0], hMultiplierCoords[1] - hMultiplierH,
+                        hMultiplierW, hMultiplierH, border, backColor, graphics);
+        paintEmptySpace(chargeCoords[0], chargeCoords[1] - formalChargeH,
+                        formalChargeW, formalChargeH, border, backColor, graphics);
+        paintEmptySpace(isotopeCoords[0], isotopeCoords[1] - isotopeH,
+                        isotopeW, isotopeH, border, backColor, graphics);
+
+        // STEP 4: draw all parts in the label
+
+        Color atomColor = r2dm.getAtomColor(atom);
         
         // draw SYMBOL
         {
-            int[] coords = new int[2];
-            if (alignment == 1) { // left alignment
-                coords[0] = labelX + isotopeW;
-            } else { // right alignment
-                coords[0] = labelX + hSymbolW + Math.max(isotopeW, hMultiplierW);
-            }
-            coords[1] = labelY + isotopeH + atomSymbolH;
-            int[] screenCoords = getScreenCoordinates(coords);
-            graphics.setColor(r2dm.getAtomColor(atom));
+            int[] screenCoords = getScreenCoordinates(atomSymbolCoords);
+            graphics.setColor(atomColor);
             graphics.setFont(normalScreenFont);
             graphics.drawString(atomSymbol, screenCoords[0], screenCoords[1]);
 
@@ -525,10 +577,10 @@ public class Renderer2D   {
                 for (int i=-symbolLength; i<=symbolLength; i++) {
                     int[] lineCoords = new int[6];
                     int halfspacing = spacing/2;
-                    lineCoords[0]=coords[0] + (atomSymbolW/2) + (i*spacing) - halfspacing;
-                    lineCoords[1]=coords[1] + 1*width;
+                    lineCoords[0]=atomSymbolCoords[0] + (atomSymbolW/2) + (i*spacing) - halfspacing;
+                    lineCoords[1]=atomSymbolCoords[1] + 1*width;
                     lineCoords[2]=lineCoords[0]+halfspacing;
-                    lineCoords[3]=coords[1] + 2*width;
+                    lineCoords[3]=atomSymbolCoords[1] + 2*width;
                     lineCoords[4]=lineCoords[2]+halfspacing;
                     lineCoords[5]=lineCoords[1];
                     int[] lineScreenCoords = getScreenCoordinates(lineCoords);
@@ -542,28 +594,14 @@ public class Renderer2D   {
         
         // draw IMPLICIT H's
         if (implicitHydrogenCount > 0 && r2dm.getShowImplicitHydrogens()) {
-            int[] coords = new int[2];
-            if (alignment == 1) { // left alignment
-                coords[0] = labelX + isotopeW + atomSymbolW;
-            } else { // right alignment
-                coords[0] = labelX;
-            }
-            coords[1] = labelY + isotopeH + atomSymbolH;
-            int[] screenCoords = getScreenCoordinates(coords);
-            graphics.setColor(r2dm.getForeColor());
+            int[] screenCoords = getScreenCoordinates(hSymbolCoords);
+            graphics.setColor(atomColor);
             graphics.setFont(normalScreenFont);
             graphics.drawString(hSymbol, screenCoords[0], screenCoords[1]);
             if (implicitHydrogenCount > 1) {
                 // draw number of hydrogens
-                coords = new int[2];
-                if (alignment == 1) { // left alignment
-                    coords[0] = labelX + isotopeW + atomSymbolW +hSymbolW;
-                } else { // right alignment
-                    coords[0] = labelX + hSymbolW;
-                }
-                coords[1] = labelY + isotopeH + atomSymbolH + hMultiplierH/2;
-                screenCoords = getScreenCoordinates(coords);
-                graphics.setColor(r2dm.getForeColor());
+                screenCoords = getScreenCoordinates(hMultiplierCoords);
+                graphics.setColor(atomColor);
                 graphics.setFont(subscriptScreenFont);
                 graphics.drawString(hMultiplierString, screenCoords[0], screenCoords[1]);
             }
@@ -571,31 +609,16 @@ public class Renderer2D   {
         
         // draw CHARGE
         if (formalCharge != 0) {
-            int[] coords = new int[2];
-            if (alignment == 1) { // left alignment
-                coords[0] = labelX + isotopeW + atomSymbolW + hSymbolW;
-            } else { // right alignment
-                coords[0] = labelX + hSymbolW + Math.max(isotopeW, hMultiplierW) +
-                            atomSymbolW;
-            }
-            coords[1] = labelY + isotopeH;
-            int[] screenCoords = getScreenCoordinates(coords);
-            graphics.setColor(r2dm.getForeColor());
-            graphics.setFont(subscriptScreenFont);
+            int[] screenCoords = getScreenCoordinates(chargeCoords);
+            graphics.setColor(atomColor);
+            graphics.setFont(normalScreenFont);
             graphics.drawString(formalChargeString, screenCoords[0], screenCoords[1]);
         }
         
         // draw ISOTOPE
         if (isotopeString.length() > 0) {
-            int[] coords = new int[2];
-            if (alignment == 1) { // left alignment
-                coords[0] = labelX;
-            } else { // right alignment
-                coords[0] = labelX + hSymbolW;
-            }
-            coords[1] = labelY + isotopeH;
-            int[] screenCoords = getScreenCoordinates(coords);
-            graphics.setColor(r2dm.getForeColor());
+            int[] screenCoords = getScreenCoordinates(isotopeCoords);
+            graphics.setColor(atomColor);
             graphics.setFont(subscriptScreenFont);
             graphics.drawString(isotopeString, screenCoords[0], screenCoords[1]);
         }
@@ -603,6 +626,21 @@ public class Renderer2D   {
         // reset old font & color
         graphics.setFont(normalFont);
         graphics.setColor(r2dm.getForeColor());
+    }
+    
+    /**
+     * Makes a clear empty space using the background color.
+     */
+    public void paintEmptySpace(int x, int y, int w, int h, int border, 
+                                Color backColor, Graphics graphics) {
+        Color saveColor = graphics.getColor();
+        graphics.setColor(backColor);
+        int[] coords = {x - border, y - border, 
+                        w + 2*border, h + 2*border};
+        int[] screenCoords = getScreenCoordinates(coords);
+        graphics.fillRect(screenCoords[0], screenCoords[1], 
+                          screenCoords[2], screenCoords[3]);
+        graphics.setColor(saveColor);
     }
     
     /**

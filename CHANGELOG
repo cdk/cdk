@@ -26,6 +26,9 @@ Fixes:
   configuration by doing new LoggingTool(classNameString, true) (closes #816643)
 * Fixed serious problem in reading isotope and charge info from atom block in 
   MDL files
+* Fixed coloring problem of implicit hydrogens and charges in Renderer2D 
+  (closes #815202)
+* Fixed clearing background in Renderer2D (closes #815265)
 
 API changes:
 * Added getIOSettings() to ChemObject[Reader|Writer]

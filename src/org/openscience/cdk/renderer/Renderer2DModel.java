@@ -52,7 +52,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 
 	private double bondDistance = 6.0;
 
-	private double bondLength = 30.0;
+	private double bondLength = 36.0;
 
 	private Color backColor = Color.white;
 
