@@ -90,6 +90,16 @@ public class CrystalGeometryTools {
          return fractCoords;
     };
 
+    public static Point3d cartesianToFractional(double[] a, double[] b, double[] c,
+                                                 Point3d cartPoint) {
+        double[] cart = new double[3];
+        cart[0] = cartPoint.x;
+        cart[1] = cartPoint.y;
+        cart[2] = cartPoint.z;
+        double[] frac = cartesianToFractional(a,b,c, cart);
+        return new Point3d(frac[0], frac[1], frac[2]);
+    }
+
     /**
      * Method that transforms fractional coordinates into cartesian coordinates.
      *
@@ -114,6 +124,16 @@ public class CrystalGeometryTools {
         return cart;
     }
     
+    public static Point3d fractionalToCartesian(double[] a, double[] b, double[] c,
+                                                 Point3d fracPoint) {
+        double[] frac = new double[3];
+        frac[0] = fracPoint.x;
+        frac[1] = fracPoint.y;
+        frac[2] = fracPoint.z;
+        double[] cart = fractionalToCartesian(a,b,c, frac);
+        return new Point3d(cart[0], cart[1], cart[2]);
+    }
+
     /**
      * Calculates cartesian vectors for unit cell axes from axes lengths and angles
      * between axes.
@@ -289,7 +309,7 @@ public class CrystalGeometryTools {
             (calcAxisLength(a)*calcAxisLength(b))));
     };
 
-	/** 
+	/**
      * Determines if this model contains fractional (crystal) coordinates.
 	 *
 	 * @return  boolean indication that 3D coordinates are available 
@@ -302,6 +322,24 @@ public class CrystalGeometryTools {
             }
         }
         return true;
+    }
+
+	/**
+     * Creates cartesian coordinates for all Atoms in the Crystal
+	 *
+	 * @return  boolean indication that 3D coordinates are available 
+	 */
+    public static void fractionalToCartesian(Crystal crystal) {
+        Atom[] atoms = crystal.getAtoms();
+        double[] a = crystal.getA();
+        double[] b = crystal.getB();
+        double[] c = crystal.getC();
+        for (int i=0; i < atoms.length; i++) {
+            Point3d fracPoint = atoms[i].getFractionalPoint3D();
+            if (fracPoint != null) {
+                atoms[i].setPoint3D(fractionalToCartesian(a,b,c, fracPoint));
+            }
+        }
     }
 }
 
