@@ -1,0 +1,5798 @@
+<!DOCTYPE ensemble SYSTEM="CML-1999-05-15.dtd">
+<h:html xmlns:h="http://www.w3.org/TR/html20">
+<META NAME="DC:title" CONTENT="NCI NSC 2632">
+<META NAME="DC:creator" CONTENT="Apache">
+<META NAME="DC:date" CONTENT="2003-03-06T06:32">
+<META NAME="DC:publisher" CONTENT="National Cancer Institute">
+<META NAME="DC:rights" CONTENT="Public Domain">
+<META NAME="DC:source" CONTENT="NCI database record NSC2632">
+<META NAME="DC:creator" CONTENT="http://129.43.27.140/tmp/detaiiY8agq.html">
+</h:html>
+<ensemble ID="NCI NSC 2632" title="NSC2632 Ooporphyrin" convention="CACTVS">
+	<molecule ID="???" xmlns="http://www.xml-cml.org">
+		<atom>
+			<int builtin=atomId>
+			1 
+			</int>
+			<string builtin=elementType>
+			O 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 6.9585  4.1077 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			0 0 0 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			4 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			0.000000 0.000000 0.000000 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			1 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			O 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			2 
+			</int>
+			<string builtin=elementType>
+			C 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 7.9524  4.2184 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-1.18 -0.3 0.08 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-1.180000 -0.300000 0.080000 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			3 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			C 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			3 
+			</int>
+			<string builtin=elementType>
+			C 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 8.5451  3.413 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-1.92 -0.84 -1.1 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			2 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-1.920000 -0.840000 -1.100000 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			4 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			C 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			4 
+			</int>
+			<string builtin=elementType>
+			C 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 8.144  2.4969 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-1.96 0.14 -2.28 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			2 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-1.960000 0.140000 -2.280000 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			4 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			C 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			5 
+			</int>
+			<string builtin=elementType>
+			C 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 8.7368  1.6916 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-2.78 -0.4 -3.44 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			1 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-2.780000 -0.400000 -3.440000 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			3 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			1 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			C 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			6 
+			</int>
+			<string builtin=elementType>
+			C 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 8.4354  0.7239 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-2.3 -0.96 -4.62 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			1 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-2.300000 -0.960000 -4.620000 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			3 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			1 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			C 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			7 
+			</int>
+			<string builtin=elementType>
+			C 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 7.4677  0.456 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-1.02 -0.8 -5.18 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			1 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-1.020000 -0.800000 -5.180000 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			3 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			C 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			8 
+			</int>
+			<string builtin=elementType>
+			C 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 7.1999 -0.5117 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-0.5 0.5 -5.3 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-0.500000 0.500000 -5.300000 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			3 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			C 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			9 
+			</int>
+			<string builtin=elementType>
+			C 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 6.2322 -0.7796 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			0.88 0.88 -5.7 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			0.880000 0.880000 -5.700000 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			3 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			C 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			10 
+			</int>
+			<string builtin=elementType>
+			C 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 5.4363 -0.1741 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			2.02 -0.04 -6 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			2 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			2.020000 -0.040000 -6.000000 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			4 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			C 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			11 
+			</int>
+			<string builtin=elementType>
+			C 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 4.514 -0.5606 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			2.3 -0.16 -7.5 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			2 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			2.300000 -0.160000 -7.500000 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			4 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			C 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			12 
+			</int>
+			<string builtin=elementType>
+			C 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 3.7182  0.0449 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			1.08 -0.56 -8.28 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			1.080000 -0.560000 -8.280000 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			3 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			C 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			13 
+			</int>
+			<string builtin=elementType>
+			O 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 3.8446  1.0369 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			0.54 -1.62 -8.12 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			4 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			0.540000 -1.620000 -8.120000 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			1 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			O 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			14 
+			</int>
+			<string builtin=elementType>
+			O 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 2.7959 -0.3416 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			0.66 0.36 -9.16 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			4 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			1 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			0.660000 0.360000 -9.160000 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			2 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			O 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			15 
+			</int>
+			<string builtin=elementType>
+			C 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 5.3662 -2.2807 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			2.06 3.08 -6.12 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			3 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			2.060000 3.080000 -6.120000 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			4 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			C 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			16 
+			</int>
+			<string builtin=elementType>
+			C 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 6.2322 -1.7807 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			0.88 2.22 -5.76 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			0.880000 2.220000 -5.760000 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			3 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			C 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			17 
+			</int>
+			<string builtin=elementType>
+			C 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 10.3642 -5.0237 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-5 6.92 -5.3 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			1 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-5.000000 6.920000 -5.300000 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			3 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			C 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			18 
+			</int>
+			<string builtin=elementType>
+			C 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 9.7714 -4.2184 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-4.14 5.76 -5.4 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-4.140000 5.760000 -5.400000 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			3 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			C 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			19 
+			</int>
+			<string builtin=elementType>
+			C 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 8.7703 -4.2184 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-2.74 5.78 -5.3 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-2.740000 5.780000 -5.300000 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			3 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			C 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			20 
+			</int>
+			<string builtin=elementType>
+			C 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 8.4689 -3.2842 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-2.28 4.46 -5.46 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-2.280000 4.460000 -5.460000 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			3 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			C 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			21 
+			</int>
+			<string builtin=elementType>
+			C 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 7.5012 -2.9828 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-0.94 4 -5.44 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			1 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-0.940000 4.000000 -5.440000 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			3 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			C 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			22 
+			</int>
+			<string builtin=elementType>
+			C 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 7.1999 -2.0486 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-0.48 2.66 -5.42 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-0.480000 2.660000 -5.420000 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			3 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			C 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			23 
+			</int>
+			<string builtin=elementType>
+			C 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 9.9631 -5.9398 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-6.2 6.82 -4.7 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			2 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-6.200000 6.820000 -4.700000 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			3 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			C 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			24 
+			</int>
+			<string builtin=elementType>
+			C 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 10.3135  2.5093 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-5.12 0.1 -2.48 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			3 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-5.120000 0.100000 -2.480000 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			4 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			C 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			25 
+			</int>
+			<string builtin=elementType>
+			C 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 9.738  1.6916 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-4.16 -0.42 -3.52 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			1 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-4.160000 -0.420000 -3.520000 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			3 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			1 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			C 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			26 
+			</int>
+			<string builtin=elementType>
+			C 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 10.0728  0.7574 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-4.46 -0.98 -4.78 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			1 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-4.460000 -0.980000 -4.780000 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			3 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			1 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			C 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			27 
+			</int>
+			<string builtin=elementType>
+			C 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 11.0405  0.456 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-5.66 -0.86 -5.48 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			1 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-5.660000 -0.860000 -5.480000 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			3 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			C 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			28 
+			</int>
+			<string builtin=elementType>
+			C 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 11.3402 -0.4782 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-6.22 0.42 -5.66 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-6.220000 0.420000 -5.660000 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			3 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			C 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			29 
+			</int>
+			<string builtin=elementType>
+			N 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 10.7726 -1.2801 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-5.5 1.56 -5.34 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			2 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-5.500000 1.560000 -5.340000 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			2 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			N 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			30 
+			</int>
+			<string builtin=elementType>
+			C 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 11.3736 -2.0151 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-6.28 2.58 -5.78 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-6.280000 2.580000 -5.780000 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			3 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			C 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			31 
+			</int>
+			<string builtin=elementType>
+			C 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 11.074 -2.9828 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-5.86 3.94 -5.76 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			1 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-5.860000 3.940000 -5.760000 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			3 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			C 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			32 
+			</int>
+			<string builtin=elementType>
+			C 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 10.0728 -3.2507 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-4.54 4.42 -5.58 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-4.540000 4.420000 -5.580000 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			3 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			C 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			33 
+			</int>
+			<string builtin=elementType>
+			N 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 9.2374  0.0894 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-3.34 -1.6 -5.24 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			2 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			1 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			1 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-3.340000 -1.600000 -5.240000 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			3 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			1 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			N 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			34 
+			</int>
+			<string builtin=elementType>
+			C 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 12.3095 -0.7461 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-7.54 0.76 -6.24 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-7.540000 0.760000 -6.240000 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			3 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			C 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			35 
+			</int>
+			<string builtin=elementType>
+			C 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 13.1052 -0.1404 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-8.58 -0.18 -6.66 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			1 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-8.580000 -0.180000 -6.660000 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			3 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			C 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			36 
+			</int>
+			<string builtin=elementType>
+			C 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 14.0276 -0.5267 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-9.22 -0.96 -5.76 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			2 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-9.220000 -0.960000 -5.760000 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			3 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			C 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			37 
+			</int>
+			<string builtin=elementType>
+			C 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 12.3095 -1.7472 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-7.58 2.1 -6.3 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-7.580000 2.100000 -6.300000 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			3 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			C 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			38 
+			</int>
+			<string builtin=elementType>
+			C 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 13.108 -2.3492 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-8.72 2.94 -6.8 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			3 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-8.720000 2.940000 -6.800000 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			4 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			C 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			39 
+			</int>
+			<string builtin=elementType>
+			N 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 9.2709 -2.6496 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-3.4 3.66 -5.64 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			2 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			1 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-3.400000 3.660000 -5.640000 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			3 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			N 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			40 
+			</int>
+			<string builtin=elementType>
+			C 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 8.0995 -4.9601 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-1.88 7 -5.1 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			3 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-1.880000 7.000000 -5.100000 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			4 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			C 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			41 
+			</int>
+			<string builtin=elementType>
+			N 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 7.7674 -1.2801 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-1.28 1.62 -5.08 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			2 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-1.280000 1.620000 -5.080000 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			2 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			N 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			42 
+			</int>
+			<string builtin=elementType>
+			O 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 8.3535  5.1344 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-1.9 -0.16 1.18 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			4 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			1 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-1.900000 -0.160000 1.180000 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			2 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			O 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			43 
+			</int>
+			<string builtin=elementType>
+			H 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 9.0613  3.0695 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-2.9302 -1.014 -0.7931 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-2.930200 -1.014000 -0.793100 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			1 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			H 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			44 
+			</int>
+			<string builtin=elementType>
+			H 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 8.9731  3.8616 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-1.4402 -1.741 -1.4207 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-1.440200 -1.741000 -1.420700 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			1 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			H 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			45 
+			</int>
+			<string builtin=elementType>
+			H 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 7.6279  2.8405 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-0.9571 0.2855 -2.6233 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-0.957100 0.285500 -2.623300 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			1 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			H 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			46 
+			</int>
+			<string builtin=elementType>
+			H 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 7.7161  2.0483 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-2.3931 1.061 -1.9498 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-2.393100 1.061000 -1.949800 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			1 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			H 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			47 
+			</int>
+			<string builtin=elementType>
+			H 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 7.0293  0.8944 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-0.4554 -1.648 -5.507 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-0.455400 -1.648000 -5.507000 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			1 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			H 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			48 
+			</int>
+			<string builtin=elementType>
+			H 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 5.8917  0.2467 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			1.755 -1.0125 -5.6408 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			1.755000 -1.012500 -5.640800 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			1 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			H 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			49 
+			</int>
+			<string builtin=elementType>
+			H 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 5.101  0.3474 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			2.8983 0.3334 -5.5161 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			2.898300 0.333400 -5.516100 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			1 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			H 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			50 
+			</int>
+			<string builtin=elementType>
+			H 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 4.0586 -0.9813 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			3.0378 -0.9233 -7.6342 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			3.037800 -0.923300 -7.634200 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			1 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			H 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			51 
+			</int>
+			<string builtin=elementType>
+			H 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 4.8493 -1.0821 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			2.6444 0.7861 -7.8621 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			2.644400 0.786100 -7.862100 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			1 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			H 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			52 
+			</int>
+			<string builtin=elementType>
+			H 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 2.3024  0.0338 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-0.1118 0.1868 -9.7039 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-0.111800 0.186800 -9.703900 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			1 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			H 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			53 
+			</int>
+			<string builtin=elementType>
+			H 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 5.0561 -1.7438 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			2.963 2.59 -5.8208 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			2.963000 2.590000 -5.820800 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			1 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			H 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			54 
+			</int>
+			<string builtin=elementType>
+			H 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 4.8292 -2.5908 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			1.9817 4.0215 -5.6175 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			1.981700 4.021500 -5.617500 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			1 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			H 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			55 
+			</int>
+			<string builtin=elementType>
+			H 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 5.6762 -2.8177 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			2.0749 3.2404 -7.1778 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			2.074900 3.240400 -7.177800 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			1 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			H 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			56 
+			</int>
+			<string builtin=elementType>
+			H 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 10.9804 -4.9552 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-4.681 7.8581 -5.7038 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-4.681000 7.858100 -5.703800 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			1 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			H 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			57 
+			</int>
+			<string builtin=elementType>
+			H 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 7.065 -3.4234 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-0.1834 4.7566 -5.44 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-0.183400 4.756600 -5.440000 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			1 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			H 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			58 
+			</int>
+			<string builtin=elementType>
+			H 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 9.3469 -6.0084 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-6.5197 5.8822 -4.296 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-6.519700 5.882200 -4.296000 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			1 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			H 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			59 
+			</int>
+			<string builtin=elementType>
+			H 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 10.3306 -6.4391 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-6.8347 7.6783 -4.6268 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-6.834700 7.678300 -4.626800 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			1 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			H 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			60 
+			</int>
+			<string builtin=elementType>
+			H 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 10.8205  2.1524 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-4.969 -0.4259 -1.5605 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-4.969000 -0.425900 -1.560500 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			1 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			H 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			61 
+			</int>
+			<string builtin=elementType>
+			H 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 10.6704  3.0163 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-4.9473 1.1447 -2.3258 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-4.947300 1.144700 -2.325800 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			1 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			H 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			62 
+			</int>
+			<string builtin=elementType>
+			H 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 9.8065  2.8662 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-6.1249 -0.0497 -2.8156 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-6.124900 -0.049700 -2.815600 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			1 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			H 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			63 
+			</int>
+			<string builtin=elementType>
+			H 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 11.477  0.8963 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-6.1479 -1.7268 -5.8743 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-6.147900 -1.726800 -5.874300 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			1 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			H 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			64 
+			</int>
+			<string builtin=elementType>
+			H 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 11.5038 -3.4297 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-6.6228 4.678 -5.8954 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-6.622800 4.678000 -5.895400 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			1 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			H 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			65 
+			</int>
+			<string builtin=elementType>
+			H 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 9.2389 -0.5306 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-3.2875 -2.3584 -5.8897 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-3.287500 -2.358400 -5.889700 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			1 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			H 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			66 
+			</int>
+			<string builtin=elementType>
+			H 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 13.0267  0.4746 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-8.8381 -0.2511 -7.696 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-8.838100 -0.251100 -7.696000 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			1 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			H 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			67 
+			</int>
+			<string builtin=elementType>
+			H 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 14.1062 -1.1417 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-8.9687 -0.8958 -4.7219 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-8.968700 -0.895800 -4.721900 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			1 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			H 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			68 
+			</int>
+			<string builtin=elementType>
+			H 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 14.521 -0.1512 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-9.9778 -1.6415 -6.0858 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-9.977800 -1.641500 -6.085800 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			1 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			H 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			69 
+			</int>
+			<string builtin=elementType>
+			H 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 12.7348 -2.8443 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-9.6438 2.4308 -6.6204 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-9.643800 2.430800 -6.620400 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			1 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			H 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			70 
+			</int>
+			<string builtin=elementType>
+			H 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 13.6031 -2.7225 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-8.6045 3.1093 -7.8502 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-8.604500 3.109300 -7.850200 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			1 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			H 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			71 
+			</int>
+			<string builtin=elementType>
+			H 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 13.4813 -1.8542 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-8.724 3.8783 -6.2858 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-8.724000 3.878300 -6.285800 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			1 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			H 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			72 
+			</int>
+			<string builtin=elementType>
+			H 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 9.2627 -2.0297 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-3.3787 2.6718 -5.7916 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-3.378700 2.671800 -5.791600 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			1 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			H 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			73 
+			</int>
+			<string builtin=elementType>
+			H 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 7.6397 -4.5442 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-0.9802 6.7227 -4.5916 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-0.980200 6.722700 -4.591600 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			1 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			H 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			74 
+			</int>
+			<string builtin=elementType>
+			H 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 7.6837 -5.4199 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-2.4129 7.72 -4.5148 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-2.412900 7.720000 -4.514800 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			1 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			H 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			75 
+			</int>
+			<string builtin=elementType>
+			H 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 8.5594 -5.3759 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-1.6358 7.4241 -6.0515 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-1.635800 7.424100 -6.051500 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			1 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			H 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<atom>
+			<int builtin=atomId>
+			76 
+			</int>
+			<string builtin=elementType>
+			H 
+			</string>
+			<int builtin=formalCharge>
+			0 
+			</int>
+			<coordinate2 builtin=xy2>
+			 7.986  5.6337 
+			</coordinate2>
+			<coordinate3 builtin=xyz3>
+			-1.4969 0.1954 1.9755 
+			</coordinate3>
+			<enumeration convention="CACTVS" title="A_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="A_FREE_ELECTRONS">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_ARORING_COUNT">
+			0 
+			</integer>
+			<integer convention="CACTVS" title="A_HCOUNT">
+			0 
+			</integer>
+			<floatArrayArray convention="CACTVS" title="A_XYZ" units="A">
+			-1.496900 0.195400 1.975500 
+			</floatArrayArray>
+			<integer convention="CACTVS" title="A_NEIGHBORS">
+			1 
+			</integer>
+			<boolean convention="CACTVS" title="A_ISAROMATIC">
+			0 
+			</boolean>
+			<string convention="CACTVS" title="A_XSYMBOL">
+			H 
+			</string>
+			<enumeration convention="CACTVS" title="A_RADICAL">
+			no 
+			</enumeration>
+		</atom>
+		<bond>
+			<string builtin="atomRefs">
+			1 2 
+			</string>
+			<int builtin=order>
+			2 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			1 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			2 3 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			2 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			3 4 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			3 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			4 5 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			4 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			5 6 
+			</string>
+			<int builtin=order>
+			2 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			5 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			1 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			4096 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			1 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			6 7 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			6 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			7 8 
+			</string>
+			<int builtin=order>
+			2 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			7 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			4096 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			P 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			8 9 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			8 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			9 10 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			9 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			10 11 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			10 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			11 12 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			11 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			12 13 
+			</string>
+			<int builtin=order>
+			2 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			12 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			12 14 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			13 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			15 16 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			14 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			9 16 
+			</string>
+			<int builtin=order>
+			2 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			15 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			4096 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			17 18 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			16 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			18 19 
+			</string>
+			<int builtin=order>
+			2 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			17 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			2048 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			19 20 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			18 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			20 21 
+			</string>
+			<int builtin=order>
+			2 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			19 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			2048 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			P 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			21 22 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			20 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			16 22 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			21 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			17 23 
+			</string>
+			<int builtin=order>
+			2 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			22 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			24 25 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			23 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			25 26 
+			</string>
+			<int builtin=order>
+			2 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			24 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			1 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			2048 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			1 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			26 27 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			25 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			27 28 
+			</string>
+			<int builtin=order>
+			2 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			26 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			2048 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			M 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			28 29 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			27 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			29 30 
+			</string>
+			<int builtin=order>
+			2 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			28 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			4096 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			30 31 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			29 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			31 32 
+			</string>
+			<int builtin=order>
+			2 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			30 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			2048 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			P 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			18 32 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			31 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			5 25 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			32 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			1 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			1 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			26 33 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			33 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			1 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			1 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			6 33 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			34 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			1 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			1 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			28 34 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			35 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			34 35 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			36 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			35 36 
+			</string>
+			<int builtin=order>
+			2 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			37 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			30 37 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			38 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			34 37 
+			</string>
+			<int builtin=order>
+			2 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			39 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			2048 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			37 38 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			40 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			32 39 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			41 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			20 39 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			42 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			19 40 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			43 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			22 41 
+			</string>
+			<int builtin=order>
+			2 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			44 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			4096 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			8 41 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			45 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			2 42 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			46 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			3 43 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			47 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			3 44 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			48 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			4 45 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			49 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			4 46 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			50 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			7 47 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			51 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			10 48 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			52 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			10 49 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			53 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			11 50 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			54 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			11 51 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			55 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			14 52 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			56 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			15 53 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			57 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			15 54 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			58 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			15 55 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			59 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			17 56 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			60 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			21 57 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			61 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			23 58 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			62 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			23 59 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			63 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			24 60 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			64 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			24 61 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			65 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			24 62 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			66 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			27 63 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			67 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			31 64 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			68 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			33 65 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			69 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			35 66 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			70 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			36 67 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			71 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			36 68 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			72 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			38 69 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			73 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			38 70 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			74 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			38 71 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			75 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			39 72 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			76 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			40 73 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			77 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			40 74 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			78 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			40 75 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			79 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<bond>
+			<string builtin="atomRefs">
+			42 76 
+			</string>
+			<int builtin=order>
+			1 
+			</int>
+			<string builtin="stereo">
+			0 
+			</string>
+			<enumeration convention="CACTVS" title="B_TYPE">
+			normal 
+			</enumeration>
+			<integer convention="CACTVS" title="B_LABEL">
+			80 
+			</integer>
+			<integer convention="CACTVS" title="B_ARORING_COUNT">
+			0 
+			</integer>
+			<enumeration convention="CACTVS" title="B_FLAGS">
+			0 
+			</enumeration>
+			<boolean convention="CACTVS" title="B_ISAROMATIC">
+			0 
+			</boolean>
+			<enumeration convention="CACTVS" title="B_LABEL_STEREO">
+			undef 
+			</enumeration>
+		</bond>
+		<floatArrayArray convention="CACTVS" title="M_RADIALCODE">
+		0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000089 0.018415 0.514611 1.952459 1.497297 6.483034 18.762629 20.182037 12.192811 13.361145 6.017218 0.542201 0.008567 0.000022 0.000000 0.000000 0.000000 0.000000 0.000000 0.000002 0.001066 0.109974 1.953128 9.738745 18.272762 8.830667 2.991465 6.831570 20.989370 19.382046 14.573656 11.049117 6.983546 2.231590 0.134303 0.098204 1.684409 4.510087 6.145293 7.728453 6.492180 8.544919 8.865105 4.702796 0.855558 0.766812 2.613986 2.205572 1.334760 2.647886 10.641570 12.910835 9.439919 18.425657 20.041975 11.024384 3.404840 0.265623 0.255609 0.970758 0.552950 1.014055 4.136881 7.652790 10.888408 9.596550 8.346430 8.914932 12.248272 9.132558 3.950622 2.827877 6.780453 10.358746 4.636517 3.557863 5.682963 8.920875 15.476936 21.414839 20.340435 11.308272 8.352125 3.897460 0.795524 0.443745 5.648424 15.212700 17.072975 12.603749 8.685459 8.542323 8.258453 8.897254 9.656068 8.630508 7.234364 6.950440 5.143830 8.457960 10.745743 10.741283 14.087372 11.621177 4.233752 12.455231 21.924910 17.920076 
+		</floatArrayArray>
+	</molecule>
+	<Array convention="CACTVS" title="E_HISTORY">
+	<<PROGRAM>>	{ tclserve} <<VERSION>>	{ NULL} <<PATCHLEVEL>>	{ NULL} <<PGMDATE>>	{ 0} <<USER>>	{ RO} <<DATE>>	{ -1} <<MACHINE>>	{ NULL}  
+	</Array>
+	<string convention="CACTVS" title="E_NAME">
+	NSC2632 Ooporphyrin 
+	</string>
+	<string convention="CACTVS" title="E_IDENT">
+	NCI NSC 2632 
+	</string>
+	<string convention="CACTVS" title="E_CAS">
+	553-12-8 
+	</string>
+	< convention="CACTVS" title="E_HASH">
+	7C7B71326535F069 
+	</>
+	<float convention="CACTVS" title="E_STDBLE">
+	1.000000 
+	</float>
+	<integer convention="CACTVS" title="E_NSC">
+	2632 
+	</integer>
+	<integer convention="CACTVS" title="E_NCONFORMER">
+	18 
+	</integer>
+	<integer convention="CACTVS" title="E_NHACCEPTORS">
+	8 
+	</integer>
+	<integer convention="CACTVS" title="E_NHDONORS">
+	4 
+	</integer>
+	<stringArrayArray convention="CACTVS" title="E_NAMESET">
+	Ooporphyrin Protoporphyrin Protoporphyrin IX (VAN) PROTOPORPHYRIN 2,18-Porphinedipropionic acid, 3,8,13, 17-tetramethyl-7,12-divinyl- 21H,23H-Porphine-2, 18-dipropanoic acid, 7,12-diethenyl-3,8,13,17-tetramethyl- 
+	</stringArrayArray>
+	<Array convention="CACTVS" title="E_YEAST_SCREEN" units="umol">
+	<<concentration>>	50.000000 <<strain>>	rad50 <<diff_inhibit>>	0.062000 <<avg_inhibit>>	0.130000  
+	</Array>
+	<Array convention="CACTVS" title="E_YEAST_SCREEN/2" units="umol">
+	<<concentration>>	50.000000 <<strain>>	mec2-1 <<diff_inhibit>>	0.161000 <<avg_inhibit>>	-0.133500  
+	</Array>
+	<Array convention="CACTVS" title="E_YEAST_SCREEN/3" units="umol">
+	<<concentration>>	50.000000 <<strain>>	sgs1 mgt1 <<diff_inhibit>>	0.254000 <<avg_inhibit>>	0.127000  
+	</Array>
+	<Array convention="CACTVS" title="E_YEAST_SCREEN/4" units="umol">
+	<<concentration>>	50.000000 <<strain>>	cln2 rad14 <<diff_inhibit>>	0.024000 <<avg_inhibit>>	0.105000  
+	</Array>
+	<Array convention="CACTVS" title="E_YEAST_SCREEN/5" units="umol">
+	<<concentration>>	50.000000 <<strain>>	bub3 <<diff_inhibit>>	0.610000 <<avg_inhibit>>	-0.001000  
+	</Array>
+	<Array convention="CACTVS" title="E_YEAST_SCREEN/6" units="umol">
+	<<concentration>>	50.000000 <<strain>>	mlh1 rad18 <<diff_inhibit>>	0.115000 <<avg_inhibit>>	0.270500  
+	</Array>
+	<enumeration convention="CACTVS" title="E_DRUGLIKENESS">
+	D 
+	</enumeration>
+	<enumeration convention="CACTVS" title="E_DRUGLIKENESS/2">
+	D 
+	</enumeration>
+	<coordinate2 convention="CACTVS" title="E_LOGP">
+	6.800000 0.000000 
+	</coordinate2>
+	<float convention="CACTVS" title="E_COMPLEXITY">
+	1452.918945 
+	</float>
+	<float convention="CACTVS" title="E_WEIGHT">
+	562.666992 
+	</float>
+	<boolean convention="CACTVS" title="E_HAS_LC50">
+	0 
+	</boolean>
+	<boolean convention="CACTVS" title="E_HAS_GI50">
+	0 
+	</boolean>
+	<boolean convention="CACTVS" title="E_HAS_TGI">
+	0 
+	</boolean>
+	<boolean convention="CACTVS" title="E_HAS_EC50">
+	0 
+	</boolean>
+	<boolean convention="CACTVS" title="E_HAS_IC50">
+	0 
+	</boolean>
+	<boolean convention="CACTVS" title="E_PLATED">
+	1 
+	</boolean>
+	<integer convention="CACTVS" title="E_YEAST_SCREENING_LEVEL">
+	1 
+	</integer>
+	<floatArrayArray convention="CACTVS" title="E_PASS_DATA_PA">
+	-1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.363000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.262000 -1.000000 -1.000000 -1.000000 0.426000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.303000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.241000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.509000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.475000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.320000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.127000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.207000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.306000 -1.000000 -1.000000 0.172000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.300000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.887000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.143000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.230000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.596000 -1.000000 -1.000000 -1.000000 0.301000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.105000 0.297000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.696000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.179000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.090000 -1.000000 -1.000000 -1.000000 0.604000 -1.000000 -1.000000 -1.000000 -1.000000 0.292000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.129000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.173000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.487000 -1.000000 -1.000000 -1.000000 -1.000000 0.669000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.336000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.197000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.240000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.757000 0.100000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.345000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.253000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.270000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.410000 -1.000000 -1.000000 -1.000000 -1.000000 0.289000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.162000 -1.000000 -1.000000 -1.000000 -1.000000 0.116000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.244000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.832000 0.663000 -1.000000 -1.000000 -1.000000 -1.000000 
+	</floatArrayArray>
+	<floatArrayArray convention="CACTVS" title="E_PASS_DATA_PI">
+	-1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.061000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.252000 -1.000000 -1.000000 -1.000000 0.060000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.062000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.190000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.024000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.065000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.232000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.027000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.100000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.057000 -1.000000 -1.000000 0.063000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.230000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.100000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.172000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.042000 -1.000000 -1.000000 -1.000000 0.287000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.091000 0.160000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.045000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.032000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.021000 -1.000000 -1.000000 -1.000000 0.004000 -1.000000 -1.000000 -1.000000 -1.000000 0.203000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.085000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.130000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.043000 -1.000000 -1.000000 -1.000000 -1.000000 0.007000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.125000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.069000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.140000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.005000 0.081000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.038000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.127000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.087000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.138000 -1.000000 -1.000000 -1.000000 -1.000000 0.246000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.033000 -1.000000 -1.000000 -1.000000 -1.000000 0.094000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.154000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 -1.000000 0.007000 0.026000 -1.000000 -1.000000 -1.000000 -1.000000 
+	</floatArrayArray>
+	<enumeration convention="CACTVS" title="E_VENDOR_IDS">
+	22 
+	</enumeration>
+	<boolean convention="CACTVS" title="E_STEREO_POTENTIAL">
+	1 
+	</boolean>
+	<integer convention="CACTVS" title="E_ATOM_STEREOCENTER_COUNT">
+	0 
+	</integer>
+	<integer convention="CACTVS" title="E_BOND_STEREOCENTER_COUNT">
+	4 
+	</integer>
+	<Array convention="CACTVS" title="E_FILE">
+	<<NAME>>	/db/FINAL/nci2000_Feb20.cbs <<FREC>>	2615 <<LREC>>	2615 <<LINE>>	2615 <<FORMAT>>	CACTVS_SCAN  
+	</Array>
+	<string convention="CACTVS" title="E_AUTHOR">
+	National Cancer Institute 
+	</string>
+	< convention="CACTVS" title="E_METADATA">
+	publisher National Cancer Institute rights Public Domain source NCI database record NSC2632 creator http://129.43.27.140/tmp/detaiiY8agq.html 
+	</>
+	<string convention="CACTVS" title="E_SMILES">
+	CC1=C/2[NH]C(=C1CCC(O)=O)/C=C/3N=C(/C=C/4NC(=C/C5=N\C(=C/2)C(=C5C)C=C)/C(=C/4C)C=C)C(=C/3CCC(O)=O)C 
+	</string>
+</ensemble>
