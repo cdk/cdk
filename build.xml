@@ -139,7 +139,7 @@
                 <echo message="Compiling classes for cdk-standard module." />
 
                 <javac srcdir="${src}" destdir="${build}"
-                       optimize="on" debug="off" deprecation="off"
+                       optimize="on" debug="on" deprecation="off"
                        includesfile="${src}/standard.classes">
                     <classpath>
                         <fileset dir="${lib}">
@@ -327,6 +327,7 @@
                         <!-- Exclude classes in cdk-standard module-->
                         <exclude name="org/openscience/cdk/tools/LoggingTool" />
                         <exclude name="org/openscience/cdk/tools/IsotopeFactory" />
+                        <exclude name="org/openscience/cdk/config/**" />
                    </fileset>
                 </jar>
         </target>
@@ -387,6 +388,7 @@
                     <fileset dir="${build}">
                         <include name="org/openscience/cdk/tools/LoggingTool.class" />
                         <include name="org/openscience/cdk/tools/IsotopeFactory.class" />
+                        <include name="org/openscience/cdk/config/**" />
                     </fileset>
                 </jar>
         </target>
