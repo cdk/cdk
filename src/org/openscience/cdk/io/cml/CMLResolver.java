@@ -97,8 +97,8 @@ public class CMLResolver implements EntityResolver {
      */
     private InputSource getCMLType( String type ) {
         try {
-            URL url = ClassLoader.getSystemResource("org/openscience/cdk/io/cml/data/" + type);
-            return new InputSource(new BufferedReader(new InputStreamReader(url.openStream())));
+            InputStream ins = this.getClass().getClassLoader().getResourceAsStream("org/openscience/cdk/io/cml/data/" + type);
+            return new InputSource(new BufferedReader(new InputStreamReader(ins)));
         } catch (Exception e) {
             logger.error("Error while trying to read CML DTD (" + type + "): " + e.toString());
             return null;
