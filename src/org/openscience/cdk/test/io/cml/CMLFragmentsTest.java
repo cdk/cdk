@@ -251,15 +251,15 @@ public class CMLFragmentsTest extends TestCase {
         Crystal crystal = checkForCrystalFile(chemFile);
         assertEquals(4, crystal.getZ());
         assertEquals(2, crystal.getAtomCount());
-        double[] aaxis = crysal.getA();
+        double[] aaxis = crystal.getA();
         assertEquals(4.5, aaxis[0], 0.1);
         assertEquals(0.0, aaxis[1], 0.1);
         assertEquals(0.0, aaxis[2], 0.1);
-        double[] baxis = crysal.getB();
+        double[] baxis = crystal.getB();
         assertEquals(0.0, baxis[0], 0.1);
         assertEquals(4.5, baxis[1], 0.1);
         assertEquals(0.0, baxis[2], 0.1);
-        double[] caxis = crysal.getC();
+        double[] caxis = crystal.getC();
         assertEquals(0.0, caxis[0], 0.1);
         assertEquals(0.0, caxis[1], 0.1);
         assertEquals(4.5, caxis[2], 0.1);
