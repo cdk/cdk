@@ -2,6 +2,7 @@
 =================
 * fixed PATHTORTJAR bug
 * added cdk-view
+* better detection of Java3D (--with-java3ddir option)
 
 20020101.1
 =================

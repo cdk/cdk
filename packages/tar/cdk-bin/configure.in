@@ -27,15 +27,40 @@ then
         AC_PATH_PROG(PATHTOJAVA, java, no)
 fi
 
+AC_ARG_WITH(java3ddir,
+      [  --with-java3ddir=DIR    path to the Java 3D installation directory 
+        ],
+      [  if test -n "$withval"
+         then
+          JAVA3DDIR="$withval"
+         fi
+        ])
+
 AC_MSG_CHECKING(for Java3D lib)
-for d in "/usr/lib/j2re1.3/lib/ext"
-do
-    if test -f "$d/j3dcore.jar"
+if test -f "$JAVA3DDIR/lib/ext/j3dcore.jar"
+    AC_MSG_RESULT("$JAVA3DDIR/lib/ext/j3dcore.jar")
+    PATHTO3DJAR="$JAVA3DDIR/lib/ext/j3dcore.jar"
+then
+    if test "x$prefix" = xNONE
     then
-        AC_MSG_RESULT("$d/j3dcore.jar")
-        PATHTO3DJAR="$d/j3dcore.jar"
+        # order these with prefered one at the end
+        try_dirs="$ac_default_prefix"
+    else
+        try_dirs="$prefix"
     fi
-done
+
+    # Debian GNU/Linux Blackdown path
+    try_dirs="$try_dirs /usr/lib/j2re1.3"
+
+    for d in $try_dirs
+    do
+        if test -f "$d/j3dcore.jar"
+        then 
+            AC_MSG_RESULT("$d/j3dcore.jar")
+            PATHTO3DJAR="$d/j3dcore.jar"
+        fi
+    done
+fi
 AC_SUBST(PATHTO3DJAR)
 
 AC_MSG_CHECKING(for rt.jar lib)
