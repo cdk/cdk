@@ -134,35 +134,41 @@ public class TextGUIListener implements ReaderListener, WriterListener {
             this.out.println();
             this.out.flush();
         
-            // get the answer
-            boolean gotAnswer = false;
-            while (!gotAnswer) {
-                try {
-                    this.out.print("> "); this.out.flush();
-                    String answer = in.readLine();
-                    if (answer.length() == 0) {
-                        // pressed ENTER -> take default
-                    } else if (setting instanceof OptionIOSetting) {
-                        ((OptionIOSetting)setting).setSetting(Integer.parseInt(answer));
-                    } else if (setting instanceof BooleanIOSetting) {
-                        if (answer.equalsIgnoreCase("n") || answer.equalsIgnoreCase("no")) {
-                            answer = "false";
+            // get the answer, only if input != null
+            if (this.in == null) {
+                // don't really ask questions. This is intentional behaviour to 
+                // allow for listing all questions. The settings is now defaulted,
+                // which is the intention too.
+            } else {
+                boolean gotAnswer = false;
+                while (!gotAnswer) {
+                    try {
+                        this.out.print("> "); this.out.flush();
+                        String answer = in.readLine();
+                        if (answer.length() == 0) {
+                            // pressed ENTER -> take default
+                        } else if (setting instanceof OptionIOSetting) {
+                            ((OptionIOSetting)setting).setSetting(Integer.parseInt(answer));
+                        } else if (setting instanceof BooleanIOSetting) {
+                            if (answer.equalsIgnoreCase("n") || answer.equalsIgnoreCase("no")) {
+                                answer = "false";
+                            }
+                            if (answer.equalsIgnoreCase("y") || answer.equalsIgnoreCase("yes")) {
+                                answer = "true";
+                            }
+                            setting.setSetting(answer);
+                        } else {
+                            setting.setSetting(answer);
                         }
-                        if (answer.equalsIgnoreCase("y") || answer.equalsIgnoreCase("yes")) {
-                            answer = "true";
-                        }
-                        setting.setSetting(answer);
-                    } else {
-                        setting.setSetting(answer);
+                        gotAnswer = true;
+                    } catch (IOException exception) {
+                        this.out.println("Cannot read from STDIN. Skipping question.");
+                    } catch (NumberFormatException exception) {
+                        this.out.println("Answer is not a number.");
+                    } catch (CDKException exception) {
+                        this.out.println();
+                        this.out.println(exception.toString());
                     }
-                    gotAnswer = true;
-                } catch (IOException exception) {
-                    this.out.println("Cannot read from STDIN. Skipping question.");
-                } catch (NumberFormatException exception) {
-                    this.out.println("Answer is not a number.");
-                } catch (CDKException exception) {
-                    this.out.println();
-                    this.out.println(exception.toString());
                 }
             }
         }
