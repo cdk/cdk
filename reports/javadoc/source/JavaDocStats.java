@@ -1,7 +1,17 @@
 import com.sun.javadoc.*;
+import java.util.*;
 import java.io.*;
 
 public class JavaDocStats {
+
+    private int publicObjects = 0;
+    private int privateObjects = 0;
+    private int protectedObjects = 0;
+
+    private int interfaces = 0;
+    private int classes = 0;
+
+    private Hashtable authors;
 
     private PrintWriter out;
 
@@ -15,39 +25,60 @@ public class JavaDocStats {
 
     private void processPackages(PackageDoc[] pkgs) throws IOException {
         for (int i=0; i < pkgs.length; i++) {
+            // do per package statistics
+            publicObjects = 0;
+            privateObjects = 0;
+            protectedObjects = 0;
+            interfaces = 0;
+            classes = 0;
+            authors = new Hashtable();
+
+            // generate statistics
             processClasses(pkgs[i].ordinaryClasses());
+
+            // output statistics
+            out.println("Package " + pkgs[i].name());
+            out.println("  Object types");
+            out.println("    classes   : " + classes);
+            out.println("    interfaces: " + interfaces);
+            out.println("  Object accessibility");
+            out.println("    public    : " + publicObjects);
+            out.println("    private   : " + privateObjects);
+            out.println("    protected : " + protectedObjects);
+            out.println("  Object authors stats");
+            Enumeration authorNames = authors.keys();
+            while (authorNames.hasMoreElements()) {
+                String author = (String)authorNames.nextElement();
+                out.println("    " + author + " : " + authors.get(author));
+            }
         }
     }
 
     private void processClasses(ClassDoc[] classes) throws IOException {
         for (int i=0; i<classes.length; i++) {
-            // System.out.println("Processing: " + classes[i].qualifiedName());
-
-            // first field
-            out.print(classes[i].qualifiedName() + " ");
-
-            // second field
+            // process basic Java stuff
             if ( classes[i].isInterface() )
-                out.print("interface ");
+                this.interfaces++;
             else
-                out.print("class ");
-
-            // third field
+                this.classes++;
             if ( classes[i].isPublic() )
-                out.print("public ");
+                this.publicObjects++;
             if ( classes[i].isProtected() )
-                out.print("protected ");
+                this.protectedObjects++;
             if ( classes[i].isPrivate() )
-                out.print("private ");
+                this.privateObjects++;
 
-            // 4th field: extends
-            out.print(classes[i].superclass() + " ");
-
-
-            // 5th field: to which package does this class belong
-            out.print(classes[i].containingPackage().toString() + " ");
-
-            out.println();
+            // process tags
+            Tag[] tags = classes[i].tags("author");
+            for (int j=0; j<tags.length; j++) {
+                String author = tags[j].text();
+                if (this.authors.containsKey(author)) {
+                    this.authors.put(author,
+                                new Integer(((Integer)authors.get(author)).intValue()+1));
+                } else {
+                    this.authors.put(author, new Integer(1));
+                }
+            }
         }
     }
 

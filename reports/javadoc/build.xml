@@ -21,7 +21,7 @@
 
             <doclet name="JavaDocStats" path="."/>
 
-            <package name="org.openscience.cdk"/>
+            <package name="org.openscience.cdk.*"/>
 
             <sourcepath>
                 <pathelement path="../.."/>
