@@ -336,7 +336,6 @@ public class SmilesParser {
             logger.debug("after adding missing bond orders: ", molecule);
         } catch (Exception exception) {
             logger.error("Error while calculation Hcount for SMILES atom: ", exception.getMessage());
-            throw new InvalidSmilesException(exception.getMessage());
         }
         
         // conceive aromatic perception
