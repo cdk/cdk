@@ -33,6 +33,7 @@ import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.*;
 import org.xml.sax.*;
 import org.xml.sax.helpers.*;
+import java.util.regex.*;
 
 /**
  * SAX2 implementation for IChI XML fragment parsing.
@@ -189,6 +190,11 @@ public class IChIHandler extends DefaultHandler {
                         logger.info("Skipping tautomers.");
                         tautomer = null;
                     }
+                } else if (atts.getQName(i).equals("version")) {
+                    if (!atts.getValue(i).equals("0.932Beta")) {
+                        logger.warn("The IChIReader only supports verion 0.932Beta. " +
+                            "The outcome of the reading is undefined");
+                    }
                 }
             }
         } else {
@@ -230,81 +236,94 @@ public class IChIHandler extends DefaultHandler {
             StringTokenizer st2 = new StringTokenizer(bondsEncodings, " ");
             while (st2.hasMoreTokens()) {
                 String bondsEncoding = st2.nextToken();
-                analyseBondsEncoding(bondsEncoding);
+                analyseBondsEncoding(bondsEncoding, -1);
             }
         } else {
             logger.warn("Expected bond data missing!");
         }
     }
 
-    private void analyseAtomsEncoding(String atomsEncoding){
+    private void analyseAtomsEncoding(String atomsEncoding) {
         logger.debug("Parsing atom data: " + atomsEncoding);
 
-        char thisChar; /* Buffer for */
-        String symbol = new String();
-
         Atom atomToAdd = null;
-        for (int f = 0; f < atomsEncoding.length(); f++) {
-            thisChar = atomsEncoding.charAt(f);
-            if (thisChar >= 'A' && thisChar <= 'Z'){
-                /* New Element begins */
-                symbol = String.valueOf(thisChar);
-                if ((f < (atomsEncoding.length()-1))) {
-                    // Check for two-letter symbol
-                    char nextChar = atomsEncoding.charAt(f+1);
-                    if ((nextChar >= 'a' && nextChar<= 'z')) {
-                        /* Two-letter Element */
-                        symbol += nextChar;
-                        f++;
+        Pattern pattern = Pattern.compile("([A-Z][a-z]?)(\\d+)?(.*)");
+        String remainder = atomsEncoding;
+        while (remainder.length() > 0) {
+            logger.debug("Remaining: " + remainder);
+            Matcher matcher = pattern.matcher(remainder);
+            if (matcher.matches()) {
+                String symbol = matcher.group(1);
+                logger.debug("Atom symbol: " + symbol);
+                if (symbol.equals("H")) {
+                    // don't add explicit hydrogens
+                } else {
+                    String occurenceStr = matcher.group(2);
+                    int occurence = 1;
+                    if (occurenceStr != null) {
+                        occurence = Integer.parseInt(occurenceStr);
+                    }
+                    logger.debug("  occurence: " + occurence);
+                    for (int i=1; i<=occurence; i++) {
+                        tautomer.addAtom(new Atom(symbol));
                     }
                 }
-                logger.debug("Atom symbol: " + symbol);
-                // add previous atom?
-                if (atomToAdd != null) tautomer.addAtom(atomToAdd);
-                atomToAdd = new Atom(symbol);
-            } else if (thisChar >= '0' && thisChar<= '9') {
-                /* Hydrogen count */
-                atomToAdd.setHydrogenCount(Integer.parseInt(String.valueOf(thisChar)));
-            } else if (thisChar == '*' && (f < (atomsEncoding.length()-1))) {
-                /* atom occurence */
-                char nextChar = atomsEncoding.charAt(++f);
-                int occurence = Integer.parseInt(String.valueOf(nextChar));
-                logger.debug("Adding copies: " + occurence);
-                for (int i=1; i<=occurence; i++) {
-                    Atom copy = (Atom)atomToAdd.clone();
-                    tautomer.addAtom(copy);
-                }
-                // all atoms are added, thus:
-                atomToAdd = null;
+                remainder = matcher.group(3);
+                if (remainder == null) remainder = "";
+                logger.debug("  Remaining: " + remainder);
             } else {
-                logger.error("Cannot parse atoms encoding: " + atomsEncoding);
-                return;
+                logger.error("No match found!");
+                remainder = "";
             }
+            logger.debug("NO atoms: " + tautomer.getAtomCount());
         }
-        if (atomToAdd != null) tautomer.addAtom(atomToAdd);
-        logger.debug("NO atoms: " + tautomer.getAtomCount());
         return;
     }
 
-    private void analyseBondsEncoding(String bondsEncoding){
+    /**
+     * @param source the atom to build the path upon. If -1, then start new path
+     */
+    private void analyseBondsEncoding(String bondsEncoding, int source){
         logger.debug("Parsing bond data: " + bondsEncoding);
 
         int atoms = tautomer.getAtomCount();
 
         Bond bondToAdd = null;
-        StringTokenizer st = new StringTokenizer(bondsEncoding, "-");
-        if (!st.hasMoreTokens()) {
-            logger.error("Cannot parse bonds encoding: " + bondsEncoding);
-            return;
-        }
-        int source = Integer.parseInt(st.nextToken()); // at least one token
-        while (st.hasMoreTokens()) {
-            int target = Integer.parseInt(st.nextToken());
-            // should better check if atom exists!
-            Atom sourceAtom = tautomer.getAtomAt(source-1);
-            Atom targetAtom = tautomer.getAtomAt(target-1);
-            bondToAdd = new Bond(sourceAtom, targetAtom, 1.0);
-            tautomer.addBond(bondToAdd);
+        Pattern pattern = Pattern.compile("^(\\d+)(H?)(\\d?)(\\([^)]*\\))?-?(.*)");
+        String remainder = bondsEncoding;
+        while (remainder.length() > 0) {
+            logger.debug("Bond part: " + remainder);
+            Matcher matcher = pattern.matcher(remainder);
+            if (matcher.matches()) {
+                String targetStr = matcher.group(1);
+                int target = Integer.parseInt(targetStr);
+                logger.debug("Target atom: " + targetStr);
+                Atom targetAtom = tautomer.getAtomAt(target-1);
+                String hStr = matcher.group(2);
+                logger.debug(" hStr: " + hStr);
+                String hCountStr = matcher.group(3);
+                if (hStr != null) {
+                    int hCount = 1;
+                    if (hCountStr != null && hCountStr.length() > 0) {
+                        hCount = Integer.parseInt(hCountStr);
+                    }
+                    targetAtom.setHydrogenCount(hCount);
+                }
+                if (source != -1) {
+                    Atom sourceAtom = tautomer.getAtomAt(source-1);
+                    bondToAdd = new Bond(sourceAtom, targetAtom, 1.0);
+                    tautomer.addBond(bondToAdd);
+                }
+                String branch = matcher.group(4);
+                if (branch != null) {
+                    analyseBondsEncoding(branch.substring(1,branch.length()-1), target); // make branch from target
+                }
+                source = target;
+                remainder = matcher.group(5);
+            } else {
+                logger.error("Could not get next bond info part");
+                return;
+            }
         }
         return;
     }

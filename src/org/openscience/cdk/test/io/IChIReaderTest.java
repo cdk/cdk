@@ -84,4 +84,39 @@ public class IChIReaderTest extends TestCase {
             fail(e.toString());
         }
     }
+    
+    /**
+     * Test a IChI 0.9Beta file containing the two tautomers
+     * of guanine.
+     */
+    public void testMultiRingSystem() {
+        String filename = "data/ichi/random.ichi";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        try {
+            IChIReader reader = new IChIReader(new InputStreamReader(ins));
+            ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+            
+            assertNotNull(chemFile);
+            assertEquals(1, chemFile.getChemSequenceCount());
+            ChemSequence seq = chemFile.getChemSequence(0);
+            assertNotNull(seq);
+            assertEquals(1, seq.getChemModelCount());
+            ChemModel model = seq.getChemModel(0);
+            assertNotNull(model);
+            SetOfMolecules moleculeSet = model.getSetOfMolecules();
+            assertNotNull(moleculeSet);
+            Molecule molecule = moleculeSet.getMolecule(0);
+            assertNotNull(molecule);
+            
+            assertEquals(11, molecule.getAtomCount());
+            assertEquals(13, molecule.getBondCount());
+            
+            assertEquals(3, molecule.getBondCount()-molecule.getAtomCount()+1); // count rings
+
+        } catch (Exception e) {
+            fail(e.toString());
+        }
+    }
+    
 }

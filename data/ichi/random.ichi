@@ -1,0 +1,20 @@
+<IChI version="0.932Beta">
+
+ <structure number="1" id.name="" id.value="">
+
+  <identifier version="0.932Beta" tautomeric="0">
+   <basic>C10H17N,1H2-2H2-6H2-11-8H2-10(4H2-5H2-10)7H2-9H(11)3H2-1</basic>
+   <charge></charge>
+   <stereo>
+    <dbond></dbond>
+    <sp3>9?</sp3>
+   </stereo>
+  </identifier>
+
+  <identifier.auxiliary-info version="0.932Beta" tautomeric="0">
+   <!-- Auxiliary info is not a part of the identifier, it is not unique -->
+   <atom.orig-nbr>4,2,7,10,11,1,8,6,5,9,3</atom.orig-nbr>
+   <atom.equivalence>(4,5)</atom.equivalence>
+  </identifier.auxiliary-info>
+ </structure>
+</IChI>
