@@ -53,6 +53,7 @@ public class RSSHandler extends DefaultHandler {
     
     private String cmlString;
     private String cData;
+    private String whiteSpace;
     private boolean readdedNamespace;
     
     private String objectTitle;
@@ -82,12 +83,21 @@ public class RSSHandler extends DefaultHandler {
         cData += new String(ch, start, length);
     }
 
+    public void ignorableWhitespace(char ch[], int start, int length) {
+        logger.debug("Ignorable whitespace found of length: ", length);
+        if (whiteSpace == null) {
+            whiteSpace = new String();
+        }
+        whiteSpace += new String(ch, start, length);
+    }
+
     public void doctypeDecl(String name, String publicId, String systemId) throws Exception {
     }
 
     public void startDocument() {
         channelSequence = new ChemSequence();
         cmlString = "";
+        whiteSpace = null;
         readdedNamespace = false;
         resetStrings();
     }
@@ -167,12 +177,21 @@ public class RSSHandler extends DefaultHandler {
             logger.debug("Unparsed element: " + local);
             logger.debug("  uri: " + uri);
         }
-        cData = "";
+        cData = null;
+        whiteSpace = null;
     }
 
     public void startElement(String uri, String local, String raw, Attributes atts) {
         logger.debug("<" + raw + ">");
         if (uri.equals("http://www.xml-cml.org/schema/cml2/core")) {
+            if (whiteSpace != null) {
+                // add whitespace again to solve issues with format detection
+                cmlString += whiteSpace;
+            }
+            if (cData != null) {
+                // add whitespace again to solve issues with format detection
+                cmlString += cData;
+            }
             if (readdedNamespace) {
                 cmlString += toStartTag(raw, atts);
             } else {
@@ -181,7 +200,8 @@ public class RSSHandler extends DefaultHandler {
         } else if (local.equals("item") || local.equals("channel")) {
             resetStrings();
         }
-        cData = "";
+        cData = null;
+        whiteSpace = null;
     }
     
     private void resetStrings() {

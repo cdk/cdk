@@ -23,7 +23,7 @@ Fixes:
   element, while the second implements the common element toggling
 * Fixed creation of IDs for SetOfMolecules (closes #JCP 1000637)
 * Fixed creation of IDs for Bond's
-
+* CMLRSSHandler now propagates whitespace from CML fragments
 
 API changes:
 * Moved AtomContainer.getAdjacencyMatrix to cdk.graph.matrix.AdjecencyMatrix
