@@ -496,8 +496,9 @@ public class Renderer2D   {
             graphics.drawString(isotopeString, screenCoords[0], screenCoords[1]);
         }
         
-        // reset old font
+        // reset old font & color
         graphics.setFont(unscaledFont);
+        graphics.setColor(r2dm.getForeColor());
     }
     
     /**
