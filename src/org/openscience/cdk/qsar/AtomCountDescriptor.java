@@ -96,19 +96,29 @@ public class AtomCountDescriptor implements Descriptor {
 		int atomCount = 0;
 		Atom[] atoms = container.getAtoms();
 		if (elementName == "*") {
-			atomcount += container.getHydrogenCount();
-			atomcount += atoms.length;
-		} else {
+			for (int i = 0; i < atoms.length; i++) {
+				atomCount += container.getAtomAt(i).getHydrogenCount();
+			}			
+			atomCount += atoms.length;
+		} 
+		else if (elementName == "H") {
 			for (int i = 0; i < atoms.length; i++) {
 				if (container.getAtomAt(i).getSymbol().equals(elementName)) {
 					atomCount += 1;
 				}
+				else {
+					atomCount += container.getAtomAt(i).getHydrogenCount();
+				}
 			}
-			if (elementName == "H") {
-				atomcount += container.getHydrogenCount();
-			}
-			return new Integer(atomCount);
 		}
+		else {
+			for (int i = 0; i < atoms.length; i++) {
+				if (container.getAtomAt(i).getSymbol().equals(elementName)) {
+					atomCount += 1;
+				}
+			}			
+		}
+		return new Integer(atomCount);
 	}
 
 

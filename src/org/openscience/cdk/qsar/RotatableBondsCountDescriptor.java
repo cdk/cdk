@@ -32,7 +32,12 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
-
+import org.openscience.cdk.exception.NoSuchAtomException;
+import org.openscience.cdk.Ring;
+import org.openscience.cdk.RingSet;
+import org.openscience.cdk.ringsearch.AllRingsFinder;
+import org.openscience.cdk.ringsearch.SSSRFinder;
+import java.util.Vector;
 
 public class RotatableBondsCountDescriptor implements Descriptor {
 
@@ -63,12 +68,12 @@ public class RotatableBondsCountDescriptor implements Descriptor {
 		return params;
 	}
 
-	public Object calculate(AtomContainer ac, RingSet ringSet, boolean includeTerminals) throws NoSuchAtomException {
+	public Object calculate(AtomContainer ac) {
 		int rotatableBondsCount = 0;
 		Bond[] bonds = ac.getBonds();
-		Vector ringsWithThisBond = null;
-		int degree0 = null;
-		int degree1 = null;
+		Vector ringsWithThisBond = new Vector();
+		int degree0 = 0;
+		int degree1 = 0;
 
 		for (int f = 0; f < bonds.length; f++) {
 			ringsWithThisBond = ringSet.getRings(bonds[f]);
@@ -78,46 +83,6 @@ public class RotatableBondsCountDescriptor implements Descriptor {
 		}
 		for (int i = 0; i < bonds.length; i++) {
 
-			Atom[] atoms = ac.getBondAt(i).getAtoms();
-			if (bonds[i].getOrder() == CDKConstants.BONDORDER_SINGLE) {
-				if ((ac.getMaximumBondOrder(atoms[0]) < 3.0) && (ac.getMaximumBondOrder(atoms[1]) < 3.0)) {
-					if (bonds[i].getFlag(CDKConstants.ISINRING) == false) {
-						int degree0 = ac.getBondCount(atoms[0]);
-						int degree1 = ac.getBondCount(atoms[1]);
-						if ((degree0 == 1) || (degree1 == 1)) {
-							if (includeTerminals == true) {
-								rotatableBondsCount += 1;
-							}
-							if (includeTerminals == false) {
-								rotatableBondsCount += 0;
-							}
-						} else {
-							rotatableBondsCount += 1;
-						}
-					}
-				}
-			}
-		}
-		return rotatableBondsCount;
-	}
-
-	public Object calculate(AtomContainer ac, boolean includeTerminals) throws NoSuchAtomException {
-		int rotatableBondsCount = 0;
-		Bond[] bonds = ac.getBonds();
-		Vector ringsWithThisBond = null;
-		int degree0 = null;
-		int degree1 = null;
-		RingSet ringSet = null;
-		AllRingsFinder arf = new AllRingsFinder();
-		ringSet = arf.findAllRings(ac);
-		Bond[] bonds = ac.getBonds();
-		for (int f = 0; f < bonds.length; f++) {
-			Vector ringsWithThisBond = ringSet.getRings(bonds[f]);
-			if (ringsWithThisBond.size() > 0) {
-				bonds[f].setFlag(CDKConstants.ISINRING, true);
-			}
-		}
-		for (int i = 0; i < bonds.length; i++) {
 			Atom[] atoms = ac.getBondAt(i).getAtoms();
 			if (bonds[i].getOrder() == CDKConstants.BONDORDER_SINGLE) {
 				if ((ac.getMaximumBondOrder(atoms[0]) < 3.0) && (ac.getMaximumBondOrder(atoms[1]) < 3.0)) {
