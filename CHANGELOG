@@ -8,6 +8,8 @@ New:
 * Added ReaderFactory that guesses the file format based
   on the contents of the file (from the Jmol project)
 * XYZWriter (from the Jmol project)
+* MDLReader now also reads CHG and ISO fields in the
+  property block
 
 Changes:
 * Added one-click (not-patented ;) deselect of atoms in lasso mode
@@ -21,6 +23,8 @@ Fixes:
 * New spiro rings are now using the bond length specified in
   the renderer model
 * Removed obsolote cdk-cml module and tasks
+* MDLWriter now writes numbers with Locale.ENGLISH
+  (fixes #692410)
 
 API chages:
 * Implemented RFC #11 as a patch (which is applied by default)
