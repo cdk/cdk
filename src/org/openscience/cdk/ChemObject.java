@@ -287,6 +287,17 @@ public class ChemObject implements java.io.Serializable, Cloneable {
         return pointers[pointer_type];
     }
     
+	/**
+	 * Sets the properties of this object.
+	 */
+	public void setProperties(Hashtable properties) {
+        Enumeration keys = properties.keys();
+        while (keys.hasMoreElements()) {
+            Object key = keys.nextElement();
+            this.properties.put(key, properties.get(key));
+        }
+	}
+
 }
 
 
