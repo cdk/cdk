@@ -22,6 +22,8 @@ API changes:
   (see AtomContainer and MinMax for same functionality)
 * Removed redundant constructor Molecule(Molecule)
 * Removed redundant method Monomer.addAtom(Atom)
+* Moved generateElementFormula(Molecule, String[]) from
+  SwissArmyKnife to MFAnalyser
 
 20020920 Release
 ------------------------------------

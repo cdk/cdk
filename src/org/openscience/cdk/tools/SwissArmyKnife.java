@@ -112,32 +112,5 @@ public class SwissArmyKnife {
 		return 1;
 	}
 
-
-	/**
-	 *  Gets a Molecule and an array of element symbols. Counts how many of each of these elements 
-     *  the molecule contains. Then it returns the elements followed by their number as a string,
-     *  i.e. C15H8N3.
-	 *
-	 * @param  mol       The Molecule to be searched
-	 * @return           The element formula as a string
-	 */
-	public static String generateElementFormula(Molecule mol, String[] elements) {
-		int num = elements.length;
-		StringBuffer formula = new StringBuffer();
-		int[] elementCount = new int[num];
-		for (int i = 0; i < mol.getAtomCount(); i++) {
-			String symbol = mol.getAtomAt(i).getSymbol();
-			for (int j = 0; j < num; j++) {
-				if (elements[j].equals(mol.getAtomAt(i).getSymbol())) {
-					elementCount[j]++;
-				}
-			}
-		}
-		for (int i = 0; i < num; i++) {
-			formula.append(elements[i] + elementCount[i]);
-		}
-		return formula.toString();
-	}
-
 }
 

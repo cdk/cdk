@@ -70,9 +70,6 @@ public class CanonicalLabeler {
 
   /**
    * @param v the invariance pair vector
-   * @return v the invariance pair vectoroid
-   * @exception
-   * @roseuid 3A39C899019A
    */
   private void step2(Vector v, AtomContainer atoms) {
     primeProduct(v, atoms);
@@ -81,9 +78,6 @@ public class CanonicalLabeler {
 
   /**
    * @param v the invariance pair vector
-   * @return void
-   * @exception
-   * @roseuid 3A39C89A0051
    */
   private void step3(Vector v, AtomContainer atoms) {
     sortVector(v);
@@ -92,9 +86,6 @@ public class CanonicalLabeler {
 
   /**
    * @param v the invariance pair vector
-   * @return void
-   * @exception
-   * @roseuid 3A39C89A02E6
    */
   private void step4(Vector v, AtomContainer atoms) {
     rankVector(v);
@@ -103,9 +94,6 @@ public class CanonicalLabeler {
 
   /**
    * @param v the invariance pair vector
-   * @return void
-   * @exception
-   * @roseuid 3A39C89B0189
    */
   private void step5(Vector v, AtomContainer atoms) {
     if (!isInvPart(v))
@@ -116,9 +104,6 @@ public class CanonicalLabeler {
 
   /**
    * @param v the invariance pair vector
-   * @return void
-   * @exception
-   * @roseuid 3A39C89C0040
    */
   private void step6(Vector v, AtomContainer atoms) {
     //On first pass save, partitioning as symmetry classes.
@@ -127,9 +112,6 @@ public class CanonicalLabeler {
 
   /**
    * @param v the invariance pair vector
-   * @return void
-   * @exception
-   * @roseuid 3A39C89C02D5
    */
   private void step7(Vector v, AtomContainer atoms) {
     if (((InvPair) v.lastElement()).getCurr() < v.size()) {
@@ -199,7 +181,7 @@ public class CanonicalLabeler {
    * Sorts the vector according to the current invariance, corresponds to step 3
    *
    * @param v the invariance pair vector
-   * @todo can this be done in one loop?
+   * @todo    can this be done in one loop?
    */
   private void sortVector(Vector v) {
     Collections.sort(v, new Comparator() {
