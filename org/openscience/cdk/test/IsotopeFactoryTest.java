@@ -44,7 +44,8 @@ public class IsotopeFactoryTest extends TestCase
 
 	}
 	
-	public static Test suite() {
+	public static Test suite() 
+	{
 		return new TestSuite(IsotopeFactoryTest.class);
 	}
 

@@ -342,6 +342,14 @@ public class MoleculeFactory
 		mol.addBond(12, 16, 1); // 12		
 		mol.addBond(16, 17, 1); // 12
 		mol.addBond(17, 18, 1); // 12		
+		try
+		{
+			new ElementFactory().configureAtoms(mol);
+		}
+		catch(Exception exc)
+		{
+			exc.printStackTrace();
+		}
 		return mol;
 	}
 

@@ -24,7 +24,7 @@ package org.openscience.cdk.test;
 
 
 import org.openscience.cdk.*;
-import org.openscience.cdk.ringsearch.*;
+import org.openscience.cdk.smiles.*;
 import org.openscience.cdk.io.*;
 import org.openscience.cdk.tools.*;
 import org.openscience.cdk.renderer.*;
@@ -37,17 +37,18 @@ import java.io.*;
 import java.net.URL;
 import junit.framework.*;
 
-public class AllRingsFinderTest extends TestCase
+public class SmilesGeneratorTest extends TestCase
 {
 	boolean standAlone = false;
 	
-	public AllRingsFinderTest(String name)
+	public SmilesGeneratorTest(String name)
 	{
 		super(name);
 	}
 
-	public static Test suite() {
-		return new TestSuite(AllRingsFinderTest.class);
+	public static Test suite()
+	{
+		return new TestSuite(SmilesGeneratorTest.class);
 	}
 
 	public void setStandAlone(boolean standAlone)
@@ -55,25 +56,40 @@ public class AllRingsFinderTest extends TestCase
 		this.standAlone = standAlone;
 	}
 	
-	public void testAllRingsFinder()
+	public void testSmilesGenerator()
 	{
-		RingSet ringSet = null;
-		AllRingsFinder arf = new AllRingsFinder();
-		if (standAlone) arf.debug = true;
+		SmilesGenerator sg = new SmilesGenerator();
 		Molecule molecule = MoleculeFactory.makeEthylPropylPhenantren();
-		//display(molecule);
+		int bondCount = 0;
+		Atom atom;
+		/* the following line are just a quick fix for this
+		   particluar carbon-only molecule until we have a proper 
+		   hydrogen count configurator
+		 */
+		for (int f = 0; f < molecule.getAtomCount(); f++)
+		{
+			atom = molecule.getAtomAt(f);
+			bondCount =  molecule.getBondOrderSum(atom);
+			atom.setHydrogenCount(4 - bondCount - (int)atom.getCharge());
+			if (standAlone) System.out.println("Hydrogen count for atom " + f + ": " + atom.getHydrogenCount());
+		}
+		String smiles = null;
+		display(molecule);
 		try
 		{
-			ringSet = arf.findAllRings(molecule);
+			smiles = sg.createSMILES(molecule);
 		}
 		catch(Exception exc)
 		{
 			System.out.println(exc);	
 		}
-
-		assert(ringSet.size() == 6); 
+		if (standAlone)  System.out.println("SMILES: " + smiles);
+		assert(smiles.equals("c2cc(c3ccc1c(ccc(c1)CCC)c3c2)CC"));
+		
+		                  
 	}
 	
+
 	private void display(Molecule molecule)
 	{	
 		StructureDiagramGenerator sdg = new StructureDiagramGenerator();
@@ -94,13 +110,13 @@ public class AllRingsFinderTest extends TestCase
 			exc.printStackTrace();
 		}
 	}
-	
+
 	
 	public static void main(String[] args)
 	{
-		AllRingsFinderTest arft = new AllRingsFinderTest("AllRingsFinderTest");
-		arft.setStandAlone(true);
-		arft.testAllRingsFinder();
+		SmilesGeneratorTest sgt = new SmilesGeneratorTest("AllRingsFinderTest");
+		sgt.setStandAlone(true);
+		sgt.testSmilesGenerator();
 	}	
 }
 

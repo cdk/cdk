@@ -57,6 +57,7 @@ public class CDKTests {
 		suite.addTest(FingerprinterTest.suite());
 		suite.addTest(AtomTypeFactoryTest.suite());
 		suite.addTest(CMLIOTests.suite());
+		suite.addTest(SmilesGeneratorTest.suite());
 
 	    return suite;
 	}

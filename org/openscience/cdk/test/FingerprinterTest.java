@@ -49,7 +49,7 @@ public class FingerprinterTest extends TestCase
 		return new TestSuite(FingerprinterTest.class);
 	}
 
-	public  void test()
+	public  void testFingerprinter()
 	{
 		Molecule mol = MoleculeFactory.makeAlphaPinene();
 		BitSet bs = Fingerprinter.getFingerprint(mol);
@@ -129,6 +129,6 @@ public class FingerprinterTest extends TestCase
 	public static void main(String[] args)
 	{
 		FingerprinterTest fpt = new FingerprinterTest("FingerprinterTest");
-		fpt.test();
+		fpt.testFingerprinter();
 	}
 }

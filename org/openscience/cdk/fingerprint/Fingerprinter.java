@@ -46,7 +46,7 @@ public class Fingerprinter implements CDKConstants
 	static int defaultSize = 1024;
 	static int searchDepth = 7;
 	static Hashtable pathes;
-	static boolean debug = true;
+	static boolean debug = false;
 	static int debugCounter = 0;
 
 
@@ -154,7 +154,7 @@ public class Fingerprinter implements CDKConstants
 					if (debug)
 					{
 						debugCounter++;
-						System.out.println("Path no. " + debugCounter + ": " + newPath + ", Hash: " + newPath.hashCode());
+						if (debug) System.out.println("Path no. " + debugCounter + ": " + newPath + ", Hash: " + newPath.hashCode());
 					}
 				}
 				if (currentDepth == searchDepth)
