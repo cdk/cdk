@@ -330,19 +330,44 @@ public class UniversalIsomorphismTester {
    * @param  findAllStructure  if false stop at the first structure found
    * @param  findAllMap        if true search all the 'mappings' for one same
    *                           structure
-   * @return                   a list of rMapList that represent the serach solutions
+   * @return                   a list of rMapList that represent the search solutions
    */
   public static List search(AtomContainer g1, AtomContainer g2, BitSet c1,
       BitSet c2, boolean findAllStructure, boolean findAllMap) {
         
     //Test for single atom cases
-    if(g2.getAtomCount()==1){
-      List arrayList=new ArrayList();
-      for(int i=0;i<g1.getAtomCount();i++){
-        if(g1.getAtomAt(i).getSymbol().equals(g2.getAtomAt(0).getSymbol()))
-          arrayList.add(new RMap(i,0));
-      }
-      return arrayList;
+    if(g2.getAtomCount() == 1) {
+	List arrayList = new ArrayList();
+        if (g2 instanceof QueryAtomContainer) {
+            QueryAtom atom = (QueryAtom)g2.getAtomAt(0);
+            for(int i=0;i<g1.getAtomCount();i++){
+                if(atom.matches(g1.getAtomAt(i)))
+                    arrayList.add(new RMap(i,0));
+            }
+  	} else {
+	    String atomSymbol = g2.getAtomAt(0).getSymbol();
+            for(int i=0;i<g1.getAtomCount();i++){
+                if(g1.getAtomAt(i).getSymbol().equals(atomSymbol))
+                    arrayList.add(new RMap(i,0));
+            }
+        }
+        return arrayList;
+    } else if (g1.getAtomCount() == 1) {
+	List arrayList = new ArrayList();
+        if (g2 instanceof QueryAtomContainer) {
+            Atom atom = g1.getAtomAt(0);
+            for(int i=0;i<g2.getAtomCount();i++){
+                if(((QueryAtom)g2.getAtomAt(i)).matches(atom))
+                    arrayList.add(new RMap(0,i));
+            }
+  	} else {
+	    String atomSymbol = g1.getAtomAt(0).getSymbol();
+            for(int i=0;i<g2.getAtomCount();i++){
+                if(g2.getAtomAt(i).getSymbol().equals(atomSymbol))
+                    arrayList.add(new RMap(0,i));
+            }
+        }
+        return arrayList;
     }
 
     // reset result
@@ -363,8 +388,7 @@ public class UniversalIsomorphismTester {
 
     return rMapsList;
   }
-
-
+  
   //////////////////////////////////////
   //    Manipulation tools
 
