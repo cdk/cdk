@@ -9,7 +9,8 @@ Changes in CVS
 * Moved more test classes to subpackages of cdk.test
 * Added cdk-download program (fixes wishlist #595031)
 * More JavaDoc documentation
-* Added int[][] AtomContainer.getAdjecencyMatrix() method
+* Added int[][] AtomContainer.getAdjacencyMatrix() method
+* Fixed bug in cdk-view (#588043)
 
 20020805 Release
 ------------------------------------
