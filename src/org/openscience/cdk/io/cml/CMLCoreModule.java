@@ -1048,7 +1048,7 @@ public class CMLCoreModule implements ModuleInterface {
         StringTokenizer tokenizer = new StringTokenizer(array);
         int i = 0;
         while (tokenizer.hasMoreElements()) {
-            toAddto.add(tokenizer.nextToken());
+            toAddto.addElement(tokenizer.nextToken());
             i++;
         }
         return i;

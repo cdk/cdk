@@ -77,10 +77,10 @@ public class JMOLANIMATIONConvention extends CMLCoreModule {
             super.startElement(xpath, uri, local, raw, atts);
         } else if (name.equals("float")) {
             boolean isEnergy = false;
-            System.err.println("FLOAT found!");
+            //System.err.println("FLOAT found!");
             for (int i = 0; i < atts.getLength(); i++) {
-                System.err.println(" att: " + atts.getQName(i) + " -> "
-                    + atts.getValue(i));
+              //System.err.println(" att: " + atts.getQName(i) + " -> "
+              //      + atts.getValue(i));
                 if (atts.getQName(i).equals("title")
                         && atts.getValue(i).equals("FRAME_ENERGY")) {
                     isEnergy = true;
