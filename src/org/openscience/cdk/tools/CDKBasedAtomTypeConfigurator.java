@@ -49,8 +49,6 @@ public class CDKBasedAtomTypeConfigurator implements AtomTypeConfigurator {
     };
     
     /**
-     * Read AtomType's from a JSX based configuration file
-     *
      * @return Returns a Vector of AtomType's.
      */
     public Vector readAtomTypes() throws Exception {

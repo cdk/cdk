@@ -48,7 +48,6 @@
                         <include name="baysmith-io.jar" />
                         <include name="dadml.jar" />
                         <include name="gnujaxp.jar" />
-                        <include name="JSX1.0.7.4.jar" />
                         <include name="junit.jar" />
                         <include name="log4j-core.jar" />
                         <include name="log4j.jar" />
@@ -226,7 +225,6 @@
                        includesfile="${src}/standard.javafiles">
                     <classpath>
                         <fileset dir="${lib}">
-                            <include name="JSX1.0.7.4.jar" />
                             <include name="vecmath1.2-1.14.jar" />
                             <include name="log4j-core.jar" />
                             <include name="log4j.jar" />

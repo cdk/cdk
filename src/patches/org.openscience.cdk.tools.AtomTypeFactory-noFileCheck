@@ -27,15 +27,3 @@
              
  			if (ins == null)
  			{
-@@ -158,11 +145,6 @@
- 				atc = (AtomTypeConfigurator) this.getClass().getClassLoader().
- 						loadClass("org.openscience.cdk.tools.TXTBasedAtomTypeConfigurator").
- 						newInstance();
--			} else if (configFile.endsWith("xml"))
--			{
--				atc = (AtomTypeConfigurator) this.getClass().getClassLoader().
--						loadClass("org.openscience.cdk.tools.JSXBasedAtomTypeConfigurator").
--						newInstance();
- 			}
- 			logger.debug("Instantiated a AtomTypeConfigurator of class: " +
- 					atc.getClass().getName());

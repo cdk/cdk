@@ -43,19 +43,6 @@ exit 0;
 
 # the rest fails
 
-echo -n "Compiling jsx... "
-if test -r libjsx.so
-then
-    echo "skipped"
-else
-    if ${GCJ} -shared -o libjsx.so ../jar/JSX1.0.1.1.jar
-    then
-        echo "done"
-    else
-        echo "failed"
-    fi
-fi
-
 echo -n "Compiling log4j... "
 if test -r liblogjcore.so
 then

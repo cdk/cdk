@@ -1,5 +1,4 @@
-/*
- *  $RCSfile$
+/*  $RCSfile$
  *  $Author$
  *  $Date$
  *  $Revision$
@@ -149,17 +148,11 @@ public class AtomTypeFactory {
 
 		try
 		{
-			/*
-			 *  This class loading mechanism is used to not depend on JSX,
-			 *  which is needed for old JVM's like in older browsers.
-			 */
-			if (configFile.endsWith("txt"))
-			{
+			if (configFile.endsWith("txt")) {
 				atc = (AtomTypeConfigurator) this.getClass().getClassLoader().
 						loadClass("org.openscience.cdk.tools.TXTBasedAtomTypeConfigurator").
 						newInstance();
-			} else if (configFile.endsWith("xml"))
-			{
+			} else if (configFile.endsWith("xml")) {
 				atc = (AtomTypeConfigurator) this.getClass().getClassLoader().
 						loadClass("org.openscience.cdk.tools.CDKBasedAtomTypeConfigurator").
 						newInstance();

@@ -6,7 +6,6 @@ org/openscience/cdk/tools/AtomTypeFactory.java
 org/openscience/cdk/tools/AtomTypeConfigurator.java
 org/openscience/cdk/tools/atomtypes/AtomTypeReader.java
 org/openscience/cdk/tools/atomtypes/AtomTypeHandler.java
-org/openscience/cdk/tools/JSXBasedAtomTypeConfigurator.java
 org/openscience/cdk/tools/CDKBasedAtomTypeConfigurator.java
 org/openscience/cdk/tools/TXTBasedAtomTypeConfigurator.java
 org/openscience/cdk/geometry/GeometryTools.java
