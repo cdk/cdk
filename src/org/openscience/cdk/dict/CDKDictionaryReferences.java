@@ -33,25 +33,35 @@ import org.openscience.cdk.*;
  * This class transforms implicit references to dictionary of CDK
  * objects into explicit references.
  *
+ * <p>The syntax of the property names used is as follows:
+ * org.openscience.cdk.dict:self or
+ * org.openscience.cdk.dict:field:'fieldname', where fieldname
+ * indicates a field for this object. The name may be appended
+ * by :'number' to allow for more than one reference.
+ *
  * @author     Egon Willighagen <egonw@sci.kun.nl>
  * @created    2003-08-06
  * @keyword    dictionary, implicit CDK references
  */
 public class CDKDictionaryReferences {
 
+    private static String prefix = DictionaryDatabase.DICTREFPROPERTYNAME;
+    
     public static void makeReferencesExplicit(ChemObject object) {
         if (object instanceof Atom) {
             makeReferencesExplicitForAtom((Atom)object);
-        } else if (object instanceof Element) {
-            makeReferencesExplicitForElement((Element)object);
         } else if (object instanceof Bond) {
             makeReferencesExplicitForBond((Bond)object);
+        } else if (object instanceof ChemModel) {
+            makeReferencesExplicitForChemModel((ChemModel)object);
+        } else if (object instanceof Element) {
+            makeReferencesExplicitForElement((Element)object);
+        } else if (object instanceof Isotope) {
+            makeReferencesExplicitForIsotope((Isotope)object);
         } else if (object instanceof Molecule) {
             makeReferencesExplicitForMolecule((Molecule)object);
         } else if (object instanceof Reaction) {
             makeReferencesExplicitForReaction((Reaction)object);
-        } else if (object instanceof ChemModel) {
-            makeReferencesExplicitForChemModel((ChemModel)object);
         } else {
             // don't do anything yet
         }
@@ -59,38 +69,41 @@ public class CDKDictionaryReferences {
     
     private static void makeReferencesExplicitForAtom(Atom atom) {
         int selfCounter = 0;
-        // dictref: Atom:self = chemical:atom
-        atom.setProperty(DictionaryDatabase.DICTREFPROPERTYNAME +
-            ":self:" + selfCounter, "chemical:atom");
+        atom.setProperty(prefix + ":self:" + selfCounter++, "chemical:atom");
         
         makeReferencesExplicitForElement((Element)atom);
     }
     
-    private static void makeReferencesExplicitForElement(Element element) {
-        int selfCounter = 0;
-        // dictref: Element:field:symbol = chemical:atomSymbol
-        element.setProperty(DictionaryDatabase.DICTREFPROPERTYNAME +
-            ":field:symbol", "chemical:atomSymbol");
-    }
-
     private static void makeReferencesExplicitForBond(Bond bond) {
         int selfCounter = 0;
-        // dictref: Bond:self = chemical:bond
-        bond.setProperty(DictionaryDatabase.DICTREFPROPERTYNAME +
-            ":field:order", "chemical:bondOrder");
+        bond.setProperty(prefix + ":self:" + selfCounter++, "chemical:bond");
+        bond.setProperty(prefix + ":field:order", "chemical:bondOrder");
+    }
+
+    private static void makeReferencesExplicitForChemModel(ChemModel model) {
+    }
+
+    private static void makeReferencesExplicitForElement(Element element) {
+        int selfCounter = 0;
+        element.setProperty(prefix + ":field:symbol", "chemical:atomSymbol");
+        element.setProperty(prefix + ":field:atomicNumber", "chemical:atomicNumber");
+    }
+
+    private static void makeReferencesExplicitForIsotope(Isotope isotope) {
+        int selfCounter = 0;
+        isotope.setProperty(prefix + ":self:" + selfCounter++, "chemical:isotope");
     }
 
     private static void makeReferencesExplicitForMolecule(Molecule molecule) {
+        int selfCounter = 0;
+        molecule.setProperty(prefix + ":self:" + selfCounter++, "chemical:molecularEntity");
+        /* remark: this is not strictly true... the Compendium includes the
+                   ion pair, which normally would not considered a CDK molecule */
     }
 
     private static void makeReferencesExplicitForReaction(Reaction reaction) {
         int selfCounter = 0;
-        // dictref: Reaction:self = reaction:reactionStep
-        reaction.setProperty(DictionaryDatabase.DICTREFPROPERTYNAME +
-            ":self:" + selfCounter, "reaction:reactionStep");
-    }
-
-    private static void makeReferencesExplicitForChemModel(ChemModel model) {
+        reaction.setProperty(prefix + ":self:" + selfCounter++, "reaction:reactionStep");
     }
 
 }
