@@ -47,9 +47,16 @@ public class MoleculeValidator {
               new ValidationWarning(molecule, "Molecule does not contain any atom")
             );
         }
+        boolean foundMassCalcProblem = false;
         for (int i=0; i<atoms.length; i++) {
+            if (atoms[i] instanceof PseudoAtom) {
+                
+            }
             errors.addAll(validateAtomValency(atoms[i], molecule));
         }
+        errors.add(
+            new ValidationWarning(molecule, "Molecule contains PseudoAtom's. Won't be able to calculate some properties, like molecular mass.")
+        );
         return errors;
     }
     

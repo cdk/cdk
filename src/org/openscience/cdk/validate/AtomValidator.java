@@ -44,6 +44,7 @@ public class AtomValidator {
     public static Vector validate(Atom atom) {
         Vector errors = new Vector();
         errors.addAll(validateCharge(atom));
+        errors.addAll(validateHydrogenCount(atom));
         errors.addAll(validatePseudoAtom(atom));
         return errors;
     }
@@ -58,6 +59,16 @@ public class AtomValidator {
             if (atom.getFormalCharge() > 1) {
                 errors.add(new ValidationWarning(atom, "Atom has an unlikely large positive charge"));
             }
+        }
+        return errors;
+    }
+
+    private static Vector validateHydrogenCount(Atom atom) {
+        Vector errors = new Vector();
+        if (atom.getHydrogenCount() < -1 ) {
+            errors.add(new SeriousValidationError(atom, 
+	      "An Atom cannot have a negative number of hydrogens attached.")
+	    );
         }
         return errors;
     }
