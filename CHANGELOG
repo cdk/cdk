@@ -13,12 +13,17 @@ New:
 * Added hierarchical compare() methods for core classes
 * Added hook for progress reports on, and hooks for user configurability of 
   file reading
-* More jUnit tests (total now: 217, of which 102 for core classes)
+* More jUnit tests
 * Added MFAnalyser.removeHydrogens()
 * CMLReader can now use J2SE 1.4 JAXP XML reader
 * FileConvertor now takes multiple files as input and dynamically
   recognizes format (implements feature #707425)
+* FileConvertor can take a Java property file for IOSetting question
+  answering automization
 
+Changes:
+* CML output now by defaults uses CML ids for atoms and bonds
+  
 Fixes:
 * Fixed reading/writing of isotopes from/to MDL molfiles
 * Fixed toString() of AtomType.
@@ -31,6 +36,8 @@ Fixes:
 * Fixed Bond.toString() and Bond.getAtoms
 * Fixed a number of bugs in SmilesGenerator
 * Fixed CMLResolver to use EntityResolver
+* Fixed detection of MDL molfiles
+* Fixed reading of lists of CML molecules
 
 API changes:
 * ChemObject now has protected flags/pointers (implements RFC #13)
