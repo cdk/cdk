@@ -32,13 +32,18 @@ Fixes:
 * Fixed rendering of non-ring bonds marked as aromatic (closes #927342)
 * Fixed the SMILES parser which now percieves aromaticity at the end of
   the parsing (closes #927341)
+* Fixed checking of CAS numbers
+* Make sure to also draw proposed bonds when there is nothing else to be 
+  drawn (closes JCP #886944)"
 
 API changes:
 * Moved *Manipulator from cdk.tools into cdk.tools.manipulator
 * PopupController2D.getPopupMenu() now also checks for popup menu's of super
   classes
 * Moved Primes from cdk.smiles to cdk.math
-* Moved RandomNumbersTool and <athTools from cdk.tools to cdk.math
+* Moved RandomNumbersTool and PathTools from cdk.tools to cdk.math
+* Moved ConnectivityChecker from cdk.tools to cdk.graph
+* Moved cdk.tools.Projector to cdk.geometry
 
 20040324 Release
 ------------------------------------
