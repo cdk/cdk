@@ -186,6 +186,133 @@ $ cdk-test org.openscience.cdk.test.CDKTests
         can add bonds to a given structure.
       </para>
     </section>
+
+    <section>
+    <title>Writing Unit Testing</title>
+    <para>
+    A word about testing in the CDK: 
+    I have already mentioned that I have introduced unit testing with JUnit. 
+    The class org.openscience.cdk.tests.CDKTests is supposed to run all the tests at once. 
+    JUnit makes writing an running tests quite easy and it is integrated with Ant, 
+    so Ant can run automatic unit tests with JUnit. 
+    So, in contrast to what is written in the CDK readme :-), the CDKTests class is supposed to 
+    run _all_ the tests and not just the graphical ones. 
+
+    Just an example: If you want to test a particular class, say "RingFinder", or another part of the 
+    CDK, then you write a test class which extends junit.framework.TestCase. 
+
+            <example>
+            <title>Extending TestCase</title>
+            <programlisting>
+
+    public class RingSearchTest extends TestCase
+    {
+    // ...
+    }
+
+            </programlisting>
+            </example>
+
+
+
+    TestCase provides a method "setUp()" which is called before any of the tests is run and a number 
+    of other methods which are less interesting (read the docs at 
+    <ulink url="http://junit.org">http://junit.org</ulink>). 
+    One of the small little things that makes your life easier now, is that you can 
+    make a junit.framework.TestSuite out of your puny little test class by filling the method "suite()" 
+    with a line of code.
+            <example>
+            <title>Making a TestSuite</title>
+            <programlisting>
+
+        public static Test suite() 
+        {
+            return new TestSuite(RingSearchTest.class);
+        }
+            </programlisting>
+            </example>			
+
+
+    The nicest thing now is that JUnit automatically finds, by introspection, all methods in your 
+    RingSearchTest class whose method name starts with "test..." and runs them. A test is successfull 
+    if the assert() method in it returns a boolean "true". In the RingSearchTest, e.g., I run an sssr 
+    search on a-pinene. I know that the correct size of the Smallest Set of Smallest Rings is "two", 
+    so my test methods reads:
+            <example>
+            <title>The Actual Test</title>
+            <programlisting>
+
+        public void testAlphaPinene()
+        {
+            ringSet = sssrf.findSSSR(MoleculeFactory.getAlphaPinene());
+            assert(ringSet.size() == 2);
+        }
+            </programlisting>
+            </example>			
+
+    Interestingly, the method testAlphaPinene() does not return anything. Somehow they do the evaluation
+    of the assert method in a different way, also by introspection, supposedly. 
+
+    Anyway, it is of course not alway that easy to evaluate the successful completion of a test. 
+    Especially in cases of graphical output. In the case of the StructureDiagramGenerator I return 
+    "true" to the assert method if no exception has occured during the layout and all the structures 
+    are drawn for visual inspection by the human who runs the tests for doing the final visual inspection.
+
+    In other cases if might be useful to overwrite the "equals()" method in java.lang.Object in order 
+    to provide a sophisticated method for testing. If there were a rigorous isomorphism checker in the 
+    CDK, the equals() method for Molecule could check the ismorphism between this Molecule and a given 
+    other object which is instanceOf(org.openscience.Molecule).
+    We could then perform tests for the i/o tasks that relies on this:
+            <example>
+            <title>Potential Testing of Successful I/O</title>
+            <programlisting>
+
+        public void testMDLReader()
+        {
+            Molecule reference = MoleculeFactory.getAlphaPinene();
+            Molecule testMol = (new MDLReader(data/a-pinene.mol)).read(new Molecule());
+            // assert(reference.equals(testMol));
+            // or 
+            assert(IsomorphismChecker.areIsomorphic(reference, testMol));
+        }
+            </programlisting>
+            </example>			
+
+    Finally, the CDKTests class is supposed to be a host for all the single TestCases that we write:
+            <example>
+            <title>Doing it all together</title>
+            <programlisting>
+
+    public class CDKTests {
+
+        static MoleculeListViewer moleculeListViewer = null;
+
+        public static void main (String[] args) 
+        {
+            moleculeListViewer = new MoleculeListViewer();
+            junit.textui.TestRunner.run (suite());
+        }
+
+        public static Test suite ( ) 
+        {
+            TestSuite suite= new TestSuite("All CDK Tests");
+            suite.addTest(RingSearchTest.suite());
+            suite.addTest(ConnectivityCheckerTest.suite());
+            suite.addTest(StructureDiagramGeneratorTest.suite());
+            suite.addTest(RandomStructureGeneratorTest.suite());
+                return suite;
+        }
+    }
+            </programlisting>
+            </example>			
+
+    It makes a TestSuite and then adds all the single tests and runs them, evaluating the result and 
+    printing a small summary. 
+    It is the goal to move all the tests to this framework so that one only has to run the CDKTests class.
+    </para>
+    </section>
+    
+    
   </chapter>
   
   <chapter id="sect:releasing">
