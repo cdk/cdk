@@ -58,5 +58,16 @@ import java.io.*;
 		assertEquals(testResult[0], retval.get(0), 0.0001);
 		// THIS IS OK: assertEquals(testResult[1], ((Double)retval.get(1)).doubleValue(), 0.0001);
 	}
+	
+	public void test2ConnectivityOrderZeroDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+		double [] testResult={2.7071};
+		Descriptor descriptor = new ConnectivityOrderZeroDescriptor();
+		SmilesParser sp = new SmilesParser();
+		AtomContainer mol = sp.parseSmiles("FCF");
+		DoubleArrayResult retval = (DoubleArrayResult)descriptor.calculate(mol);
+		// position 0 =  chi0
+		// positions 1 = chi0_C
+		assertEquals(testResult[0], retval.get(0), 0.0001);
+	}
 }
 
