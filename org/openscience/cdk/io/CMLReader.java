@@ -1,4 +1,4 @@
-/* 
+/*
  * $RCSfile$
  * $Author$
  * $Date$
@@ -86,37 +86,29 @@ public class CMLReader implements CDKConstants, ChemObjectReader {
 
     // private functions
 
-    private ChemFile readChemFile() 
+    private ChemFile readChemFile()
 	{
 		ChemFileCDO cdo = new ChemFileCDO();
 		handler = new CMLHandler((CDOInterface)cdo);
-		try 
-		{
-		    parser.setFeature("http://xml.org/sax/features/validation", true);
-		} 
-		catch (SAXException e) 
-		{
-		    System.err.println("Cannot activate validation."); 
+		try {
+		    parser.setFeature("http://xml.org/sax/features/validation", false);
+		} catch (SAXException e) {
+		    System.err.println("Cannot activate validation.");
 		    return cdo;
 		}
 		resolver = new CMLResolver();
 		parser.setContentHandler(handler);
 		parser.setEntityResolver(resolver);
-		try 
-		{
+		try {
 		    parser.parse(new InputSource(input));
-		} 
-		catch (IOException e) 
-		{
+		} catch (IOException e) {
 		    System.out.println("CMLReader (IOException): " + e.toString());
-		} 
-		catch (SAXException e) 
-		{
-		    System.out.println("CMLReader (SAXException): " + e.toString());
-		    e.printStackTrace();
+		} catch (SAXException saxe) {
+		    System.out.println("CMLReader (SAXException): " + saxe.toString());
+		    // e.printStackTrace();
 		}
 		return cdo;
     }
-	
+
 }
 

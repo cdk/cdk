@@ -87,7 +87,7 @@ public class Convention implements ConventionInterface {
 
     public Convention(CDOInterface cdo) {
 	this.cdo = cdo;
-	this.debug = 0;
+	this.debug = 1;
     };
   
     public Convention(Convention conv) {

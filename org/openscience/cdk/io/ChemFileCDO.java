@@ -50,7 +50,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
     private int bond_order;
     private int bond_stereo;
 
-    private boolean debug = false;
+    private boolean debug = true;
     
     /**
      * Basic contructor
