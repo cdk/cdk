@@ -30,3 +30,5 @@ org/openscience/cdk/io/cml/PDBConvention.java
 org/openscience/cdk/io/cml/PMPConvention.java
 org/openscience/cdk/io/cml/XMLHandler.java
 org/openscience/cdk/ChemFile.java
+org/openscience/cdk/tools/AtomTypeFactory.java
+org/openscience/cdk/tools/TXTBasedAtomTypeConfigurator.java
