@@ -29,37 +29,95 @@
 
 package org.openscience.cdk.database;
 
-
 import java.sql.*;
 import java.io.*;
 import org.openscience.cdk.*;
 import org.openscience.cdk.io.*;
 import org.openscience.cdk.exception.*;
 
+//The next for Xindice
+import org.xmldb.api.DatabaseManager;
+import org.xmldb.api.base.Collection;
+import org.xmldb.api.base.Database;
+import org.xmldb.api.base.Resource;
+import org.xmldb.api.base.ResourceIterator;
+import org.xmldb.api.base.ResourceSet;
+import org.xmldb.api.base.XMLDBException;
+import org.xmldb.api.modules.XMLResource;
+import org.xmldb.api.modules.XPathQueryService;
+
 /**
  * @author Yong Zhang <yz237@cam.ac.uk>
  */
 public class XindiceReader implements ChemObjectReader {
-    
+
     private String collection;
+    private String xpath = null;
     
     public XindiceReader(String collection) {
         this.collection = collection;
     }
 
+    public void setQuery(String xpath) {
+        this.xpath = xpath;
+    }
+
     public ChemObject read(ChemObject object) throws CDKException {
-        if (object instanceof Molecule) {
-            return (ChemObject)readMolecule();
+        if (object instanceof SetOfMolecules) {
+            return (ChemObject)readSetOfMolecules();
         } else {
             throw new CDKException("Only supported Molecule.");
         }
     }
     
-    private Molecule readMolecule() throws CDKException{
-        return new Molecule();
-    }
+    private SetOfMolecules readSetOfMolecules() throws CDKException{
+        SetOfMolecules mols = null;
+        CMLReader cmlr;
+        StringReader reader;
+        Collection col = null;
 
-    public void setQuery(String xpath) {
+        try {
+            String driver = "org.apache.xindice.client.xmldb.DatabaseImpl";
+            Class c = Class.forName(driver);
+            Database database = (Database)c.newInstance();
+            DatabaseManager.registerDatabase(database);
+
+            String dbname = database.getName();
+            col = DatabaseManager.getCollection("xmldb:xindice:///db/" + this.collection);
+            
+            XPathQueryService service = (XPathQueryService)col.getService("XPathQueryService", "1.0");
+            ResourceSet resultSet = service.query(xpath);
+            ResourceIterator results = resultSet.getIterator();
+
+            while (results.hasMoreResources()) {
+                Resource resource = results.nextResource();
+                String CMLString = new String((String)resource.getContent());
+                reader = new StringReader(CMLString);
+                cmlr = new CMLReader(reader);
+                mols.addMolecule(getMolecule((ChemFile)cmlr.read(new ChemFile())));
+            }
+        } catch (XMLDBException eXML) {
+            System.err.println(
+                "In getResult(); XML:DB Exception occured " + eXML.errorCode + " " + 
+                eXML.getMessage());
+        } catch (Exception e) {
+            System.err.println("Other Exception occured " + e.getMessage());
+        } finally {
+            if (col != null) {
+                try {
+                  col.close();
+                } catch (Exception eCol) {
+                  System.err.println("XML:DB Exception occured " + eCol.getMessage());
+                }
+            }
+        }
+        return mols;
     }
-    
+        
+    private Molecule getMolecule(ChemFile cf) {
+        ChemSequence cs = cf.getChemSequence(0);
+        ChemModel cm = cs.getChemModel(0);
+        SetOfMolecules som = cm.getSetOfMolecules();
+        return som.getMolecule(0);
+    }
 }
