@@ -24,27 +24,32 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *  */
-package org.openscience.cdk;
+package org.openscience.cdk.renderer;
 
 
 import java.awt.*;
 import java.util.Vector;
 import org.openscience.cdk.ringsearch.*;
+import org.openscience.cdk.*;
 
 
-public class Renderer2D implements Renderer2DSettings
+
+public class Renderer2D 
 {
-	Graphics g;
+//	Graphics g;
 	SSSRFinder sssrf = new SSSRFinder();
+	Renderer2DModel r2dm = new Renderer2DModel();
+	double bondWidth, bondDistance, scaleFactor;
+	Graphics g;
+	
 
 	/**
 	 * Constructs a Renderer2D with a graphics object.
 	 *
 	 * @param   graphics    The graphics object 
 	 */
-	public Renderer2D(Graphics graphics)
+	public Renderer2D()
 	{
-		this.g = graphics;
 	}
 
 
@@ -53,17 +58,26 @@ public class Renderer2D implements Renderer2DSettings
 	 * 
 	 * @param   mol  The Molecule to be drawn
 	 */
-	public void paintMolecule(Molecule mol)
+	public void paintMolecule(Molecule molecule, Graphics g)
 	{
-		Molecule molecule = (Molecule)mol.clone();
+		System.out.println("molecule"+ molecule.toString());
+		this.g = g;
+		getSettings();
+//		Molecule molecule = (Molecule)mol.clone();
 		molecule = scaleMolecule(molecule);
 	    molecule = translateAllPositive(molecule);
 		molecule = translate(molecule,20,20);
-		RingSet ringSet = sssrf.findSSSR(mol);
+		RingSet ringSet = sssrf.findSSSR(molecule);
 		paintBonds(molecule.getBonds(), molecule.getBondCount(), ringSet);
 		paintAtoms(molecule.getAtoms(), molecule.getAtomCount());
 	}
 	
+	public void getSettings()
+	{
+		bondWidth = r2dm.getBondWidth();
+		bondDistance = r2dm.getBondDistance();
+		scaleFactor = r2dm.getScaleFactor();
+	}
 
 	/**
 	 * Searches through all the atoms in the given array of atoms and triggers
@@ -322,13 +336,13 @@ public class Renderer2D implements Renderer2DSettings
 		double transX = 0,transY = 0;
 		for (int i = 0; i < molecule.getAtomCount(); i++)
 		{
-			if (molecule.getAtomAt(i).getPoint3D().x < transX)
+			if (molecule.getAtom(i).getPoint3D().x < transX)
 			{
-				transX = molecule.getAtomAt(i).getPoint3D().x;
+				transX = molecule.getAtom(i).getPoint3D().x;
 			}
-			if (molecule.getAtomAt(i).getPoint3D().y < transY)
+			if (molecule.getAtom(i).getPoint3D().y < transY)
 			{
-				transY = molecule.getAtomAt(i).getPoint3D().y;
+				transY = molecule.getAtom(i).getPoint3D().y;
 			}
 		}
 		molecule = translate(molecule,transX * -1,transY * -1);
@@ -348,8 +362,8 @@ public class Renderer2D implements Renderer2DSettings
 	{
 		for (int i = 0; i < molecule.getAtomCount(); i++)
 		{
-			molecule.getAtomAt(i).getPoint3D().x += transX;
-			molecule.getAtomAt(i).getPoint3D().y += transY;
+			molecule.getAtom(i).getPoint3D().x += transX;
+			molecule.getAtom(i).getPoint3D().y += transY;
 		}
 		return molecule;
 	}
@@ -365,8 +379,8 @@ public class Renderer2D implements Renderer2DSettings
 	{
 		for (int i = 0; i < molecule.getAtomCount(); i++)
 		{
-			molecule.getAtomAt(i).getPoint3D().x *= scaleFactor;
-			molecule.getAtomAt(i).getPoint3D().y *= scaleFactor;
+			molecule.getAtom(i).getPoint3D().x *= scaleFactor;
+			molecule.getAtom(i).getPoint3D().y *= scaleFactor;
 		}
 		return molecule;
 	}

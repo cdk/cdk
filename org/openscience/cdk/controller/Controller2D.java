@@ -1,4 +1,4 @@
-/* Renderer2DSettings.java
+/* Controller2D.java
  * 
  * $RCSfile$    $Author$    $Date$    $Revision$
  * 
@@ -24,15 +24,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *  */
-package org.openscience.cdk;
+package org.openscience.cdk.controller;
 
 
 
-public interface Renderer2DSettings
+
+
+public class Controller2D 
 {
-	double scaleFactor = 60;
-	
-	double bondWidth = 2;
-	
-	double bondDistance = 6;
+
+
 }
