@@ -36,8 +36,9 @@ import org.openscience.cdk.smiles.*;
  * of Molodtsov structure generator with other ideas.
  * details see the following papers
  * Sergey G. Molodtsov, Computer-Aided Generation of Molecular Graphs, Match, 30(213),1994
+ * Molchanova, Computer Generation of Molecular Structures by the SMOG Program, J.Chem.Inf.Comput.Sci., 36(889),1996
  * Chang-Yu Hu, Lu Xu, Algorithm for computer perception of topological symmetry, Analytical Chimica Acta,295(127),1994
- * Chang-Yu Hu, Lu Xu, A New Scheme for Assignment of a Canonical Connection Table, J.Chem.Inf.Sci.,34(840),1994
+ * Chang-Yu Hu, Lu Xu, A New Scheme for Assignment of a Canonical Connection Table, J.Chem.Inf.Comput.Sci.,34(840),1994
  * Hu CY, Computer perception of topological symmetry by all-paths algorithm, Chemom. Intell. Lab. Syst. 45(318),1999
  *
  * @author     Junfeng Hao
@@ -244,8 +245,8 @@ public class GENMDeterministicGenerator
 			logger.debug("Input molecular formula error!");
 	 	 }
 		 
-		 for(i=1;i<=11;i++)
-			logger.debug("molecularFormula["+i+"]="+molecularFormula[i]);
+		// for(i=1;i<=11;i++)
+		//	logger.debug("molecularFormula["+i+"]="+molecularFormula[i]);
 		 	
 		 
 		 return;
