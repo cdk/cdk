@@ -78,6 +78,7 @@ import org.openscience.cdk.test.qsar.*;
         suite.addTest(AtomValenceDescriptorTest.suite());
         suite.addTest(PiContactDetectionDescriptorTest.suite());
         suite.addTest(PeriodicTablePositionDescriptorTest.suite());
+	suite.addTest(AtomHybridizationDescriptorTest.suite());
         return suite;
     }
     
