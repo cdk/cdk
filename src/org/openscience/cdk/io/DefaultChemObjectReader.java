@@ -73,13 +73,14 @@ public abstract class DefaultChemObjectReader implements ChemObjectReader {
      */
     protected void fireFrameRead() {
         for (int i = 0; i < listenerList.size(); ++i) {
-            ReaderListener listener = (ReaderListener) listenerList.elementAt(i);
-            
-            // Lazily create the event:
-            if (frameReadEvent == null) {
-                frameReadEvent = new ReaderEvent(this);
+            ChemObjectIOListener listener = (ChemObjectIOListener)listenerList.elementAt(i);
+            if (listener instanceof ReaderListener) {
+                // Lazily create the event:
+                if (frameReadEvent == null) {
+                    frameReadEvent = new ReaderEvent(this);
+                }
+                ((ReaderListener)listener).frameRead(frameReadEvent);
             }
-            listener.frameRead(frameReadEvent);
         }
     }
 
