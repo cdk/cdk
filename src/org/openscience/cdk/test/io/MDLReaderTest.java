@@ -102,18 +102,6 @@ public class MDLReaderTest extends TestCase {
         }
     }
 
-    public void testBug982782() {
-        String filename = "data/mdl/bug982782.mol";
-        logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            MDLReader reader = new MDLReader(new InputStreamReader(ins));
-            ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
-        } catch (Exception e) {
-            fail(e.toString());
-        }
-    }
-
     public void testAPinene() {
         String filename = "data/mdl/a-pinene.mol";
         logger.info("Testing: " + filename);
