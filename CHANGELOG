@@ -42,6 +42,8 @@ Fixes:
   are not given (closes #754811)
 * Fixed detection of MDL molfiles
 * Fixed reading of lists of CML molecules
+* Cleaned up Javadoc
+* Used YYYY-MM-DD standard for class creation date
 
 API changes:
 * ChemObject now has protected flags/pointers (implements RFC #13)
