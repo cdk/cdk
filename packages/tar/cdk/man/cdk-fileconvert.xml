@@ -7,14 +7,14 @@
 
   <refnamediv>
     <refname>cdk-fileconvert</refname>
-    <refpurpose>converts one file format to another</refpurpose>
+    <refpurpose>converts one or more files to another format</refpurpose>
   </refnamediv>
 
   <refsynopsisdiv>
     <cmdsynopsis>
       <command>cdk-fileconvert</command>
-      <arg>-i[format]</arg>
-      <arg>-o[format]</arg>
+      <arg>OPTIONS</arg>
+      <arg>input files</arg>
     </cmdsynopsis>
   </refsynopsisdiv>
 
@@ -22,15 +22,35 @@
     <title>OPTIONS</title>
     <variablelist>
       <varlistentry>
-        <term>-i</term>
+        <term>-h/--help</term>
         <listitem>
-          <para>input format</para>
+          <para>Print the help</para>
         </listitem>
       </varlistentry>
       <varlistentry>
-        <term>-o</term>
+        <term>-o[format]/--outputformat:[format]</term>
         <listitem>
-          <para>output format</para>
+          <para>Defines the output format to use. (See below for a list of
+            possible formats)</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>--quesion:[none|fewest|some|all]</term>
+        <listitem>
+          <para>Defines the level of customization of the file IO.</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>--listoptions:[format]</term>
+        <listitem>
+          <para>Lists the options of customization of the given file format.</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>--properties:[format]</term>
+        <listitem>
+          <para>Use a Java properties file to define the file IO option
+            values.</para>
         </listitem>
       </varlistentry>
     </variablelist>
@@ -43,18 +63,15 @@
       it to a new file with an other format.
       Supported input formats are
       <acronym>CML</acronym>,
-      <acronym>IChI</acronym>,
       <acronym>MDL Molfile</acronym>,
       <acronym>PDB</acronym>,
       <acronym>PMP</acronym>,
       <acronym>SHELX</acronym> and
-      <acronym>XYZ</acronym>.
-      Supported output formats are
-      <acronym>CML</acronym>,
-      <acronym>MDL Molfile</acronym>,
-      <acronym>SHELX</acronym>,
-      <acronym>SMILES</acronym> and
-      <acronym>SVG</acronym>.
+      <acronym>XYZ</acronym>. The input format is automatically detected.
+    </para>
+    <para>
+      Supported output formats are: cml, gin, mol, pdb, shelx, smi, svg and
+      xyz.
     </para>
   </refsect1>
 
@@ -68,7 +85,7 @@
   <refsect1>
     <title>COPYRIGHT</title>
     <para>
-      Copyright (C) 2001-2002 The CDK Project
+      Copyright (C) 2001-2003 The CDK Project
     </para>
     <para>
 This program is free software; you can redistribute it and/or modify
