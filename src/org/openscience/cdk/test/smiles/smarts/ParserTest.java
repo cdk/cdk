@@ -28,7 +28,7 @@ import junit.framework.*;
 import org.openscience.cdk.*;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
-import org.openscience.cdk.isomorphism.matchers.SMARTSAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom;
 import org.openscience.cdk.smiles.smarts.*;
 
 /**
@@ -53,6 +53,61 @@ public class ParserTest extends TestCase {
     public void testQueryAtomCreation() throws ParseException {
         try {
             QueryAtomContainer container = SMARTSParser.parse("*");
+            assertEquals(1, container.getAtomCount());
+            Atom atom = container.getAtomAt(0);
+            assertTrue(atom instanceof SMARTSAtom);
+        } catch (CDKException exception) {
+            fail(exception.getMessage());
+        }
+    }
+
+    public void testAliphaticAtom() throws ParseException {
+        try {
+            QueryAtomContainer container = SMARTSParser.parse("A");
+            assertEquals(1, container.getAtomCount());
+            Atom atom = container.getAtomAt(0);
+            assertTrue(atom instanceof SMARTSAtom);
+        } catch (CDKException exception) {
+            fail(exception.getMessage());
+        }
+    }
+
+    public void testAromaticAtom() throws ParseException {
+        try {
+            QueryAtomContainer container = SMARTSParser.parse("a");
+            assertEquals(1, container.getAtomCount());
+            Atom atom = container.getAtomAt(0);
+            assertTrue(atom instanceof SMARTSAtom);
+        } catch (CDKException exception) {
+            fail(exception.getMessage());
+        }
+    }
+    
+    public void testDegree() throws ParseException {
+        try {
+            QueryAtomContainer container = SMARTSParser.parse("[D2]");
+            assertEquals(1, container.getAtomCount());
+            Atom atom = container.getAtomAt(0);
+            assertTrue(atom instanceof SMARTSAtom);
+        } catch (CDKException exception) {
+            fail(exception.getMessage());
+        }
+    }
+    
+    public void testImplicitHCount() throws ParseException {
+        try {
+            QueryAtomContainer container = SMARTSParser.parse("[h3]");
+            assertEquals(1, container.getAtomCount());
+            Atom atom = container.getAtomAt(0);
+            assertTrue(atom instanceof SMARTSAtom);
+        } catch (CDKException exception) {
+            fail(exception.getMessage());
+        }
+    }
+    
+    public void testTotalHCount() throws ParseException {
+        try {
+            QueryAtomContainer container = SMARTSParser.parse("[H2]");
             assertEquals(1, container.getAtomCount());
             Atom atom = container.getAtomAt(0);
             assertTrue(atom instanceof SMARTSAtom);

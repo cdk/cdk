@@ -29,10 +29,30 @@ import java.io.StringReader;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.isomorphism.matchers.*;
+import org.openscience.cdk.isomorphism.matchers.QueryAtom;
+import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
+import org.openscience.cdk.isomorphism.matchers.SymbolQueryAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.DegreeAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.FormalChargeAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.ImplicitHCountAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.TotalHCountAtom;
 
 /**
- * @author Egon Willighagen
+ * This parser implements a subset of the SMARTS syntax as defined on
+ * <a href="http://www.daylight.com/dayhtml/doc/theory/theory.smarts.html">the
+ * Daylight website</a>. But note that not all parsed strings are yet converted
+ * in the corresponding queries. Not all concepts can yet be represented in
+ * SMARTSAtom.
+ *
+ * <p>See the cdk.test.smiles.smarts.ParserTest for examples of the implemented
+ * subset.
+ *
+ * @see org.openscience.cdk.isomorphism.matcher.smarts.SMARTSAtom
+ * @see org.openscience.cdk.smiles.smarts.ParserTest
+ *
+ * @author  Egon Willighagen
+ * @created 2004-03-29
  *
  * @cdk.module experimental
  */
@@ -76,6 +96,42 @@ void AddNewElementAtom() {
     previousAtom = atom;
 }
 
+JAVACODE
+void AddNewDegreeAtom() {
+    Token tok = getToken(-1);
+    System.out.println("Adding SMARTS degree atom: " + tok.image);
+    DegreeAtom atom = new DegreeAtom(Integer.parseInt(tok.image));
+    container.addAtom(atom);
+    previousAtom = atom;
+}
+
+JAVACODE
+void AddNewFormalChargeAtom() {
+    Token tok = getToken(-1);
+    System.out.println("Adding SMARTS formal charge atom: " + tok.image);
+    FormalChargeAtom atom = new FormalChargeAtom(Integer.parseInt(tok.image));
+    container.addAtom(atom);
+    previousAtom = atom;
+}
+
+JAVACODE
+void AddNewImplicitHCountAtom() {
+    Token tok = getToken(-1);
+    System.out.println("Adding SMARTS implicit Hcount atom: " + tok.image);
+    ImplicitHCountAtom atom = new ImplicitHCountAtom(Integer.parseInt(tok.image));
+    container.addAtom(atom);
+    previousAtom = atom;
+}
+
+JAVACODE
+void AddNewTotalHCountAtom() {
+    Token tok = getToken(-1);
+    System.out.println("Adding SMARTS total Hcount atom: " + tok.image);
+    TotalHCountAtom atom = new TotalHCountAtom(Integer.parseInt(tok.image));
+    container.addAtom(atom);
+    previousAtom = atom;
+}
+
 QueryAtomContainer Parse() :
 {}
 {
@@ -84,7 +140,7 @@ QueryAtomContainer Parse() :
         previousAtom = null;
     }
     
-    (SMARTS())* <EOF>
+    (SMARTS())+ <EOF>
     
     { return container; }
 }
@@ -104,8 +160,34 @@ void AtomExpression() :
 void SMARTSAtomExpression() :
 {}
 {
-    (<ANYATOM> | <ANYALIPHATIC> | <ANYAROMATIC>)
-    AddNewSMARTSAtom()
+    (("*" | "A" | "a") AddNewSMARTSAtom()) 
+|   (InBracketsSMARTSAtom()) 
+}
+
+void InBracketsSMARTSAtom() :
+{}
+{
+    "[" 
+    (Degree() | TotalHCount() | ImplicitHCount())
+    "]"
+}
+
+void TotalHCount() :
+{}
+{
+	<H> <DIGIT> AddNewTotalHCountAtom()
+}
+
+void ImplicitHCount() :
+{}
+{
+	"h" <DIGIT> AddNewImplicitHCountAtom()
+}
+
+void Degree() :
+{}
+{
+	"D" <DIGIT> AddNewDegreeAtom()
 }
 
 void Element() :
@@ -118,7 +200,7 @@ void Element() :
 void BondExpression() :
 {}
 {
-    "-" | "=" | <ANYBOND>
+    "-" | "=" | "~"
 }
 
 void TwoCharElement() :
@@ -134,12 +216,9 @@ void OneCharElement() :
 }
 
 
-TOKEN : /* SPECIAL ENCODINGS */
+TOKEN :
 {
-	< ANYATOM: "*" >
-|   < ANYALIPHATIC: "A" >
-|   < ANYAROMATIC: "a" >
-|   < ANYBOND: "~" >
+    < DIGIT: ["0"-"9"] >
 }
 
 TOKEN : /* ELEMENTS */
