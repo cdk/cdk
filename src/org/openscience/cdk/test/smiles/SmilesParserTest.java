@@ -3,7 +3,7 @@
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 1997-2004  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -462,6 +462,20 @@ public class SmilesParserTest extends TestCase
 		}
 	}
 
+	/**
+	 * See SF bug #873783.
+	 */
+	public void testProton() {
+		try {
+			String smiles = "[H+]";
+			SmilesParser sp = new SmilesParser();
+			Molecule mol = sp.parseSmiles(smiles);
+			assertEquals(1, mol.getAtomCount());
+			assertEquals(1, mol.getAtomAt(0).getFormalCharge());
+		} catch (Exception e) {
+			fail(e.toString());
+		}
+	}
 
 	/**
 	 *  The main program for the SmilesParserTest class
