@@ -40,6 +40,9 @@ import java.util.Enumeration;
 import javax.vecmath.*;
 
 /**
+ * Reader for the World Wide Molecular Matrix, a project that can be found at
+ * http://wwmm.ch.cam.ac.uk/.
+ *
  * @author Yong Zhang <yz237@cam.ac.uk>        // Xindice part
  * @author Egon Willighagen <elw38@cam.ac.uk>
  */
