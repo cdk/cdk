@@ -111,5 +111,8 @@ public class SetOfMoleculesTest extends TestCase {
 
         mols = som.getMolecules();
         assertEquals(3, mols.length);
+        assertNotNull(mols[0]);
+        assertNotNull(mols[1]);
+        assertNotNull(mols[2]);
     }
 }
