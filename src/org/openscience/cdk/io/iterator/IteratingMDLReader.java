@@ -53,7 +53,7 @@ import javax.vecmath.*;
  */
 public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
 
-    BufferedReader input = null;
+    private BufferedReader input = null;
     private org.openscience.cdk.tools.LoggingTool logger = null;
     
     /**
