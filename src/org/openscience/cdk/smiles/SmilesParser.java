@@ -39,7 +39,7 @@ import org.openscience.cdk.*;
  *  <pre>
  *  try {
  *    SmilesParser sp = new SmilesParser();
- *    Molecule m = sp.parseSMILES("c1ccccc1");
+ *    Molecule m = sp.parseSmiles("c1ccccc1");
  *  } catch (InvalidSmilesException ise) {
  *  }
  *  </pre> 
