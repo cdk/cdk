@@ -67,12 +67,12 @@ public class OptionIOSetting extends IOSetting {
     /**
      * Sets the setting for a certain question. It will throw
      * a CDKException when the setting is not valid. The first setting is
-     * setting 0.
+     * setting 1.
      *
      */
     public void setSetting(int setting) throws CDKException {
-        if (setting < settings.size()) {
-            this.setting = (String)settings.elementAt(setting);
+        if (setting < settings.size() + 1 && setting > 0) {
+            this.setting = (String)settings.elementAt(setting-1);
         } else {
             throw new CDKException("Setting " + setting + " does not exist.");
         }
