@@ -1,0 +1,48 @@
+<project name="CDK" default="docbook" basedir=".">
+
+    <property name="javadoc.dir" value="javadoc" />
+    <property name="pathtojava3d" value="" />
+
+    <path id="project.class.path">
+        <pathelement location="/usr/local/j2sdk1.4.0/lib/rt.jar" />
+
+        <pathelement location="." />
+        <fileset dir="jar">
+            <include name="*.jar" />
+        </fileset>
+        <fileset dir="${pathtojava3d}">
+            <include name="*.jar" />
+        </fileset>
+    </path>
+
+    <target name="html">
+        <mkdir dir="${javadoc.dir}" />
+
+        <javadoc packagenames="org.openscience.cdk.*"
+                 sourcepath="." destdir="${javadoc.dir}"
+                 public="true">
+            <classpath refid="project.class.path" />
+        </javadoc>
+    </target>
+
+    <target name="docbook">
+        <javadoc private="false" public="true">
+            <classpath refid="project.class.path" />
+
+            <doclet name="com.mf.doclet.docbook.DocBookDoclet"
+                    path="jar/dbdoclet.jar">
+                <param name="-properties" value="jar/dbdoclet.properties"/>
+            </doclet>
+
+            <package name="org.openscience.cdk.*"/>
+
+            <sourcepath>
+                <pathelement path="."/>
+            </sourcepath>
+
+        </javadoc>
+    </target>
+</project>
+
+
+

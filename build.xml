@@ -9,7 +9,6 @@
                           value="org/openscience/cdk/test" />
 
         <property name="reports.tests" value="reports" />
-        <property name="javadoc.dir" value="javadoc" />
 
         <property name="pathtojava3d" value="" />
 
@@ -128,7 +127,7 @@
         <target name="compile-with-java3d" depends="init">
                 <mkdir dir="${build}" />
 
-                <javac destdir="${build}" optimize="on" deprecation="off">
+                <javac destdir="${build}" optimize="on" deprecation="off" debug="on">
                         <src path="." />
 
                         <exclude name="${sourcedist}/**" />
@@ -308,15 +307,6 @@
                 </java>
         </target>
 
-        <target name="javadoc">
-                <mkdir dir="${javadoc.dir}" />
-
-                <javadoc packagenames="org.openscience.cdk.*"
-                sourcepath="." destdir="${javadoc.dir}"
-                public="true">
-                        <classpath refid="project.class.path" />
-                </javadoc>
-        </target>
 </project>
 
 
