@@ -239,7 +239,7 @@ public class GeometryTools
 
         double totalmass = 0.0;
 
-        AtomEnumeration atoms = ac.atoms();
+        AtomEnumeration atoms = (AtomEnumeration)ac.atoms();
         while (atoms.hasMoreElements()) {
             Atom a = (Atom)atoms.nextElement();
             double mass = a.getExactMass();
@@ -266,7 +266,7 @@ public class GeometryTools
 
         double totalmass = 0.0;
 
-        AtomEnumeration atoms = ac.atoms();
+        AtomEnumeration atoms = (AtomEnumeration)ac.atoms();
         while (atoms.hasMoreElements()) {
             Atom a = (Atom)atoms.nextElement();
             double mass = a.getExactMass();

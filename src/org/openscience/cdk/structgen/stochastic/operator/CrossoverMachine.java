@@ -1,4 +1,4 @@
-/* 
+/*
  * CrossoverMachine.java
  * 
  * Copyright (C) 2000-2002  The Chemistry Development Kit (CDK) project
@@ -27,6 +27,7 @@ package org.openscience.cdk.structgen.stochastic.operator;
 import org.openscience.cdk.*;
 import org.openscience.cdk.structgen.*;
 import org.openscience.cdk.tools.*;
+import org.openscience.cdk.structgen.stochastic.*;
 import java.util.Vector;
 
 /**
