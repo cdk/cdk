@@ -115,7 +115,7 @@ public class RSSHandler extends DefaultHandler {
                 ChemModel model = null;
                 if (cmlString.length() > 0) {
                     StringReader reader = new StringReader(cmlString);
-                    logger.debug("Parsing CML String: " + cmlString);
+                    logger.debug("Parsing CML String: ", cmlString);
                     CMLReader cmlReader = new CMLReader(reader);
                     try {
                         ChemFile file = (ChemFile)cmlReader.read(new ChemFile());
@@ -133,6 +133,7 @@ public class RSSHandler extends DefaultHandler {
                         logger.error("Error while parsing CML");
                         logger.debug(exception);
                     }
+                    model.setProperty(ChemicalRSSReader.RSS_ITEM_SOURCE, cmlString);
                 } else {
                     logger.warn("No CML content found");
                 }
