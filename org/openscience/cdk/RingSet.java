@@ -104,6 +104,14 @@ public class RingSet extends Vector{
 	}
 	
 	
+
+	/**
+	 * We define the heaviest ring as the one with the highest number of double bonds.
+	 * Needed for example for the placement of in-ring double bonds.
+	 *
+	 * @param   bond   
+	 * @return     
+	 */
 	public Ring getHeaviestRing(Bond bond)
 	{
 		Vector rings = getRings(bond);
@@ -120,28 +128,48 @@ public class RingSet extends Vector{
 		return ring;
 	}
 
+	
 
-//	/**
-//	 * Returns a vector that contains all bonds participating
-//	 * in one of the rings in this ringset.
-//	 *
-//	 * @return   The Vector that contains all the bonds
-//	 */
-//	public Vector getBonds()
-//	{
-//		Vector bonds = new Vector();
-//		Ring ring;
-//		for (int i = 0; i < this.size(); i++)
-//		{
-//			ring = (Ring)elementAt(i);
-//			for (int f = 0; f < ring.getRingSize(); f++)
-//			{
-//				if (!bonds.contains(ring.getBond(f)))
-//				{
-//					bonds.addElement(ring.getBond(f));
-//				}
-//			} 
-//		}	
-//		return bonds;
-//	}
+	/**
+	 * Returns the ring with the highest numbers of other rings attached to it.
+	 *
+	 * @return the ring with the highest numbers of other rings attached to it.    
+	 */
+	public Ring getMostComplexRing()
+	{
+		int[] neighbors = new int[size()];
+		Ring ring;
+		Bond bond1, bond2;
+		int mostComplex = 0, mostComplexPosition = 0;
+		for (int i = 0; i < size(); i++)
+		{
+			ring = (Ring)elementAt(i);
+			for (int j = 0; j < ring.getBondCount(); j++)
+			{
+				bond1 = ring.getBondAt(j);
+				for (int k = i + 1; k < size(); k++)
+				{
+					ring = (Ring)elementAt(k);
+					for (int l = 0; l < ring.getBondCount(); l++)
+					{
+						bond2 = ring.getBondAt(l);
+						if (bond1 == bond2)
+						{
+							neighbors[i]++;								
+							neighbors[k]++;
+						}
+					}
+				}
+			}
+		}
+		for (int i = 0; i < neighbors.length; i++)
+		{
+			if (neighbors[i] > mostComplex)
+			{
+				mostComplex = neighbors[i];
+				mostComplexPosition = i;
+			}
+		}
+		return (Ring) elementAt(mostComplexPosition);
+	}
 }

@@ -86,8 +86,6 @@ public class Ring extends AtomContainer
 		return false;
 	}
 	
-	
-	
 	public int getOrderSum()
 	{
 		int orderSum = 0;
@@ -97,24 +95,5 @@ public class Ring extends AtomContainer
 		}
 		return orderSum;
 	}
-	
-//	public Bond getNextBond(Bond bond) throws Exception
-//	{
-//		for (int i = 0; i < bondCount; i++)
-//		{
-//			if (bond == bonds[i])
-//			{
-//				if (i == 0)
-//				{
-//					return bonds[bondCount - 1];
-//				}
-//				else
-//				{
-//					return bonds[i - 1];
-//				}
-//			}
-//		}
-//		throw new Exception("bond not in this Ring");	
-//	}
 	
 }

@@ -336,13 +336,13 @@ public class Renderer2D
 		double transX = 0,transY = 0;
 		for (int i = 0; i < molecule.getAtomCount(); i++)
 		{
-			if (molecule.getAtom(i).getPoint3D().x < transX)
+			if (molecule.getAtomAt(i).getPoint3D().x < transX)
 			{
-				transX = molecule.getAtom(i).getPoint3D().x;
+				transX = molecule.getAtomAt(i).getPoint3D().x;
 			}
-			if (molecule.getAtom(i).getPoint3D().y < transY)
+			if (molecule.getAtomAt(i).getPoint3D().y < transY)
 			{
-				transY = molecule.getAtom(i).getPoint3D().y;
+				transY = molecule.getAtomAt(i).getPoint3D().y;
 			}
 		}
 		molecule = translate(molecule,transX * -1,transY * -1);
@@ -362,8 +362,8 @@ public class Renderer2D
 	{
 		for (int i = 0; i < molecule.getAtomCount(); i++)
 		{
-			molecule.getAtom(i).getPoint3D().x += transX;
-			molecule.getAtom(i).getPoint3D().y += transY;
+			molecule.getAtomAt(i).getPoint3D().x += transX;
+			molecule.getAtomAt(i).getPoint3D().y += transY;
 		}
 		return molecule;
 	}
@@ -379,8 +379,8 @@ public class Renderer2D
 	{
 		for (int i = 0; i < molecule.getAtomCount(); i++)
 		{
-			molecule.getAtom(i).getPoint3D().x *= scaleFactor;
-			molecule.getAtom(i).getPoint3D().y *= scaleFactor;
+			molecule.getAtomAt(i).getPoint3D().x *= scaleFactor;
+			molecule.getAtomAt(i).getPoint3D().y *= scaleFactor;
 		}
 		return molecule;
 	}
