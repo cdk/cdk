@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2003 The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2002-2003 The Chemistry Development Kit (CDK) project
  *
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  *
@@ -34,6 +34,8 @@ import org.openscience.cdk.io.cml.cdopi.*;
 
 /**
  * This is an implementation for the CDK convention.
+ * 
+ * @author egonw
  */
 public class CDKConvention extends CMLCoreModule {
 
@@ -59,7 +61,6 @@ public class CDKConvention extends CMLCoreModule {
     public void endDocument() {
         super.endDocument();
     };
-
 
     public void startElement(String uri, String local, String raw, Attributes atts) {
         String name = raw;

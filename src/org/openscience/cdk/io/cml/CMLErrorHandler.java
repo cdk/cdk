@@ -60,9 +60,15 @@ public class CMLErrorHandler implements ErrorHandler {
      * @param SAXParseException   Exception to output
      */
     private void print (String label, SAXParseException e) {
-        logger.error("** " + label + ": " + e.getMessage ());
-        logger.error("   URI  = " + e.getSystemId ());
-        logger.error("   line = " + e.getLineNumber ());
+        if (label.equals("warning")) {
+            logger.warn("** " + label + ": " + e.getMessage ());
+            logger.warn("   URI  = " + e.getSystemId ());
+            logger.warn("   line = " + e.getLineNumber ());
+        } else {
+            logger.error("** " + label + ": " + e.getMessage ());
+            logger.error("   URI  = " + e.getSystemId ());
+            logger.error("   line = " + e.getLineNumber ());
+        }
     }
 
     // for recoverable errors, like validity problems

@@ -90,7 +90,9 @@ public class CMLReader implements ChemObjectReader {
         // Aelfred is prefered.
         if (!success) {
             try {
-                parser = new gnu.xml.aelfred2.XmlReader();
+                parser = (XMLReader)this.getClass().getClassLoader().
+                        loadClass("gnu.xml.aelfred2.XmlReader").
+                        newInstance();
                 logger.info("Using Aelfred2 XML parser.");
                 success = true;
             } catch (Exception e) {
@@ -100,7 +102,9 @@ public class CMLReader implements ChemObjectReader {
         // If Aelfred is not available try Xerces
         if (!success) {
             try {
-                parser = new org.apache.xerces.parsers.SAXParser();
+                parser = (XMLReader)this.getClass().getClassLoader().
+                        loadClass("org.apache.xerces.parsers.SAXParser").
+                        newInstance();
                 logger.info("Using Xerces XML parser.");
                 success = true;
             } catch (Exception e) {
@@ -127,7 +131,7 @@ public class CMLReader implements ChemObjectReader {
 
     // private functions
 
-    private ChemFile readChemFile() {
+    private ChemFile readChemFile() throws CDKException {
         ChemFileCDO cdo = new ChemFileCDO();
         try {
             parser.setFeature("http://xml.org/sax/features/validation", false);
@@ -137,7 +141,9 @@ public class CMLReader implements ChemObjectReader {
             return cdo;
         }
         parser.setContentHandler(new CMLHandler((CDOInterface)cdo));
-        parser.setEntityResolver(new CMLResolver());
+        if (!parser.getClass().getName().equals("org.apache.xerces.parsers.SAXParser")) {
+            parser.setEntityResolver(new CMLResolver());
+        }
         parser.setErrorHandler(new CMLErrorHandler());
         try {
             if (input == null) {
@@ -146,11 +152,18 @@ public class CMLReader implements ChemObjectReader {
                 parser.parse(new InputSource(input));
             }
         } catch (IOException e) {
-            logger.warn("IOException: " + e.toString());
+            String error = "Error while reading file: " + e.toString();
+            logger.error(error);
+            throw new CDKException(error);
+        } catch (SAXParseException saxe) {
+            SAXParseException spe = (SAXParseException)saxe;
+            String error = "Found well-formedness error in line " + spe.getLineNumber();
+            logger.error(error);
+            throw new CDKException(error);
         } catch (SAXException saxe) {
-            logger.warn("SAXException: " + saxe.getClass().getName());
-            logger.warn(saxe.toString());
-            // e.printStackTrace();
+            String error = "Error while parsing XML: " + saxe.toString();
+            logger.error(error);
+            throw new CDKException(error);
         }
         return cdo;
     }
