@@ -267,6 +267,7 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
         sb.append("MBO:" + getMaxBondOrder() + ", ");
         sb.append("BOS:" + getBondOrderSum() + ", ");
         sb.append("FC:" + getFormalCharge() + ", ");
+        sb.append("H:" + getHybridization() + ", ");
         sb.append(super.toString());
         sb.append(")");
         return sb.toString(); 
