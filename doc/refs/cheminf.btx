@@ -3,6 +3,8 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
   xsi:schemaLocation="http://bibtexml.sf.net/ bibtexml.xsd">
 
+  <!-- This file is preferable edited in jEdit with the XML plugin installed -->
+  
   <bibtex:entry id="BLE91">
     <bibtex:article>
       <bibtex:author>Bley, K. and Brandt, J. and Dengler, A. and
