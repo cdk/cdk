@@ -286,23 +286,23 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
 	/**
      * Sets the coefficients of the reactants.
      *
-     * @param   coefficient An array of double's containing the coefficients of the reactants
+     * @param   coefficients An array of double's containing the coefficients of the reactants
      * @return  true if coefficients have been set.
      * @see     #getReactantCoefficients
      */
-    public boolean setReactantCoefficients(double[] coefficient) {
-        return reactants.setMultipliers(reactantCoefficients);
+    public boolean setReactantCoefficients(double[] coefficients) {
+        return reactants.setMultipliers(coefficients);
     }
 	
 	/**
      * Sets the coefficient of the products.
      *
-     * @param   coefficient An array of double's containing the coefficients of the products
+     * @param   coefficients An array of double's containing the coefficients of the products
      * @return  true if coefficients have been set.
      * @see     #getProductCoefficients
      */
-    public boolean setProductCoefficients(double[] coefficient) {
-        return products.setMultipliers(productCoefficients);
+    public boolean setProductCoefficients(double[] coefficients) {
+        return products.setMultipliers(coefficients);
     }
 	
     /**
