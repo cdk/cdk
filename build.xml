@@ -108,9 +108,8 @@
                      compile-render, compile-render-with-java3d, compile-libio">
         </target>
 
-        <target name="compile-libio" depends="dist-standard, dont-compile-libio-joelib, compile-libio-joelib,
-                                              dont-compile-libio-jmol, compile-libio-jmol">
-        </target>
+        <target name="compile-libio" depends="dist-standard, dont-compile-libio-joelib, 
+                                              compile-libio-joelib" />
         
         <target name="dont-compile-libio-joelib" unless="joelib.present">
             <echo message="Not compiling libio for JOELib, jar/libio/joelib.jar is not present" /> 
@@ -134,32 +133,14 @@
             </javac>
         </target>
 
-        <target name="dont-compile-libio-jmol" unless="jmol.present">
-            <echo message="Not compiling libio for Jmol, jar/libio/jmol.jar is not present" /> 
+        <target name="patch-viewer-for-no-jmol" unless="jmol.present">
+                <!-- remove Jmol compile dependency from Viewer.java -->
+                <patch dir="${build.src}" strip="1"
+                       patchfile="${src}/patches/org.openscience.cdk.applications.Viewer-NoJmol"/>
         </target>
         
-        <target name="compile-libio-jmol" if="jmol.present">
-            <!-- Task to build the libio classes for Jmol. -->
-            <echo message="Compiling libio for Jmol v5" /> 
-
-            <javac destdir="${build}" optimize="${optimization}" 
-                   debug="${debug}" deprecation="${deprecation}">
-                <src path="${build.src}/org/openscience/cdk/libio/jmol" />
-                <src path="${build.src}/org/openscience/cdk/test/libio/jmol" />
-                
-                <classpath refid="project.class.path" />
-                <classpath>
-                    <fileset dir="${lib}/libio">
-                        <include name="*.jar" />
-                    </fileset>
-                </classpath>
-            </javac>
-        </target>
-
-        <target name="compile-apps" depends="dist-extra, dist-libio">
-                <fail message="Jmol is required for building the CDK applications." unless="jmol.present"/>
-                <fail message="Java3D is required for building the CDK applications." unless="java3d.present"/>
-        
+        <target name="compile-apps" depends="dist-extra, dist-libio, dist-render, 
+                      dist-render-with-java3d, patch-viewer-for-no-jmol">        
                 <!-- Task to build the applications classes. Some require extra
                      jars, like those in ${lib}/libio -->
                 <echo message="Compiling classes defined in ${src}/applications.javafiles." />
@@ -167,13 +148,7 @@
                 <javac srcdir="${build.src}" destdir="${build}" optimize="${optimization}" 
                        debug="${debug}" deprecation="${deprecation}"
                        includesfile="${src}/applications.javafiles">
-
                         <classpath refid="project.class.path" />
-                        <classpath>
-                               <fileset dir="${lib}/libio">
-                                       <include name="*.jar" />
-                               </fileset>
-                        </classpath>
                 </javac>
         </target>
 
@@ -281,6 +256,10 @@
         <target name="dont-compile-render-with-java3d" depends="compile-render"
                 unless="java3D.present">
                 <echo message="Cannot compile Java3D based viewer classes. Java3D is not present" />
+                
+                <!-- remove Java3D compile dependency from Viewer.java -->
+                <patch dir="${build.src}" strip="1"
+                       patchfile="${src}/patches/org.openscience.cdk.applications.Viewer-NoJava3D"/>
         </target>
         
         <target name="do-compile-render-with-java3d" depends="compile-render"

@@ -1,10 +1,9 @@
-/*
- *  $RCSfile$
+/*  $RCSfile$
  *  $Author$
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 2002  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2002-2003  The Chemistry Development Kit (CDK) project
  *
  *  Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  *
@@ -154,8 +153,10 @@ public class Viewer
 					try
 					{
 						frame.getContentPane().setLayout(new BorderLayout());
-						org.openscience.jmol.PublicJmol jmol = org.openscience.jmol.PublicJmol.getJmol(frame);
-						jmol.showChemFrame(Convertor.convert(m));
+                        Object jmol = this.getClass().getClassLoader().
+                            loadClass("org.openscience.jmol.app.Jmol").getInstance();
+                        // org.openscience.jmol.app.Jmol jmol = org.openscience.jmol.app.Jmol.getJmol(frame);
+                        jmol.showChemFrame(Convertor.convert(m));
 
 						frame.getContentPane().add(jmol, BorderLayout.CENTER);
 						logger.debug(".. done");
@@ -174,9 +175,9 @@ public class Viewer
 					logger.debug(".. trying Java3D viewer");
 					try
 					{
-						//AcceleratedRenderer3D renderer = new AcceleratedRenderer3D(new AcceleratedRenderer3DModel(m));
+						AcceleratedRenderer3D renderer = new AcceleratedRenderer3D(new AcceleratedRenderer3DModel(m));
 
-						//frame.getContentPane().add(renderer, BorderLayout.CENTER);
+						frame.getContentPane().add(renderer, BorderLayout.CENTER);
 						logger.debug(".. done");
 
 						viewed = true;
@@ -188,14 +189,15 @@ public class Viewer
 					}
 				}
 
+				/* This is not uses as it does not work at all
 				// try to view it without Java3D
-				if (!viewed)
+                if (!viewed)
 				{
 					logger.debug(".. trying non-Java3D viewer");
 					MoleculeViewer3D mv = new MoleculeViewer3D(m);
 					frame.getContentPane().add(mv, BorderLayout.CENTER);
 					logger.debug(".. done");
-				}
+				} */
 			} else if (GeometryTools.has2DCoordinates(m))
 			{
 				logger.info("Viewing with 2D viewer");

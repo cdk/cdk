@@ -1,0 +1,14 @@
+--- src/org/openscience/cdk/applications/Viewer.java	Sun Mar  2 12:47:33 2003
++++ src-non3D/org/openscience/cdk/applications/Viewer.java	Sun Mar  2 12:46:26 2003
+@@ -173,9 +173,9 @@
+ 					logger.debug(".. trying Java3D viewer");
+ 					try
+ 					{
+-						AcceleratedRenderer3D renderer = new AcceleratedRenderer3D(new AcceleratedRenderer3DModel(m));
++						//AcceleratedRenderer3D renderer = new AcceleratedRenderer3D(new AcceleratedRenderer3DModel(m));
+ 
+-						frame.getContentPane().add(renderer, BorderLayout.CENTER);
++						//frame.getContentPane().add(renderer, BorderLayout.CENTER);
+ 						logger.debug(".. done");
+ 
+ 						viewed = true;

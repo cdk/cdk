@@ -198,7 +198,11 @@ public class FileConvertor {
     private void write(ChemFile cf) throws IOException {
         if (compare(new ChemFile(), cow.highestSupportedChemObject()) >= 0) {
             // Can write ChemFile, do so
-            cow.write(cf);
+            try {
+                cow.write(cf);
+            } catch (CDKException e) {
+                logger.error("Could not write ChemFile. FIXME: I should recurse!");
+            }
         } else {
             logger.info("Cannot write ChemFile, recursing into ChemSequence's.");
             int count = cf.getChemSequenceCount();
