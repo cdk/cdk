@@ -52,6 +52,8 @@ Fixes:
 * Fixed the 'organic subset' idea, and requirement for []'s
   (fixed #784433)
 * Fixed reading of dictionaries, and added dictionaries to jar
+* The ReaderFactory can now again return ChemObjectReaders (much
+  thanx to Miguel!)
 
 API changes:
 * ConnectivityChecker.partitionIntoMolecules() now returns a 
