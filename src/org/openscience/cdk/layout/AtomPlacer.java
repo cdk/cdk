@@ -1,4 +1,5 @@
-/*  $RCSfile$
+/*
+ *  $RCSfile$
  *  $Author$
  *  $Date$
  *  $Revision$
@@ -58,20 +59,27 @@ public class AtomPlacer
 	 *  The molecule to be laid out. To be assigned from outside
 	 */
 	static Molecule molecule = null;
-	
-	static final Comparator ATOM_ORDER = new Comparator() 
-	{
-	    public int compare(Object o1, Object o2) 
-	    {
-		Atom a1 = (Atom) o1;
-		Atom a2 = (Atom) o2;
-		int i1 = ((Integer)a1.getProperty("Weight")).intValue();
-		int i2 = ((Integer)a2.getProperty("Weight")).intValue();
-		if (i1 < i2) return -1;
-		if (i1 == i2) return 0;
-		return 1;
-	    }
-	};
+
+	final static Comparator ATOM_ORDER =
+		new Comparator()
+		{
+			public int compare(Object o1, Object o2)
+			{
+				Atom a1 = (Atom) o1;
+				Atom a2 = (Atom) o2;
+				int i1 = ((Integer) a1.getProperty("Weight")).intValue();
+				int i2 = ((Integer) a2.getProperty("Weight")).intValue();
+				if (i1 < i2)
+				{
+					return -1;
+				}
+				if (i1 == i2)
+				{
+					return 0;
+				}
+				return 1;
+			}
+		};
 
 
 	/**
@@ -107,17 +115,18 @@ public class AtomPlacer
 
 
 	/**
-	 * Distribute the bonded atoms (neighbours) of an atom such that they fill the
-	 * remaining space around an atom in a geometrically nice way.
+	 *  Distribute the bonded atoms (neighbours) of an atom such that they fill the
+	 *  remaining space around an atom in a geometrically nice way.
 	 *
-	 * @param  atom               The atom whose partners are to be placed
-	 * @param  placedNeighbours   The atoms which are already placed
-	 * @param  unplacedNeighbours The partners to be placed
-	 * @param  bondLength         The standared bond length for the newly placed Atoms
-	 * @param  sharedAtomsCenter  The 2D centre of the placed Atoms
+	 *@param  atom                The atom whose partners are to be placed
+	 *@param  placedNeighbours    The atoms which are already placed
+	 *@param  unplacedNeighbours  The partners to be placed
+	 *@param  bondLength          The standared bond length for the newly placed
+	 *      Atoms
+	 *@param  sharedAtomsCenter   The 2D centre of the placed Atoms
 	 */
 	public void distributePartners(Atom atom, AtomContainer placedNeighbours, Point2d sharedAtomsCenter,
-                                   AtomContainer unplacedNeighbours, double bondLength)
+			AtomContainer unplacedNeighbours, double bondLength)
 	{
 		double occupiedAngle = 0;
 		double smallestDistance = Double.MAX_VALUE;
@@ -138,10 +147,10 @@ public class AtomPlacer
 		occupiedDirection.sub(newDirection);
 		Vector atomsToDraw = new Vector();
 
-        logger.debug("Number of shared atoms: " + placedNeighbours.getAtomCount());
+		logger.debug("Number of shared atoms: " + placedNeighbours.getAtomCount());
 		if (placedNeighbours.getAtomCount() == 1)
 		{
-            logger.debug("Only one neighbour...");
+			logger.debug("Only one neighbour...");
 			for (int f = 0; f < unplacedNeighbours.getAtomCount(); f++)
 			{
 				atomsToDraw.addElement(unplacedNeighbours.getAtomAt(f));
@@ -159,11 +168,11 @@ public class AtomPlacer
 			double xDiff = placedAtom.getX2D() - atom.getX2D();
 			double yDiff = placedAtom.getY2D() - atom.getY2D();
 
-            logger.debug("distributePartners->xdiff: " + Math.toDegrees(xDiff));
-            logger.debug("distributePartners->ydiff: " + Math.toDegrees(yDiff));
+			logger.debug("distributePartners->xdiff: " + Math.toDegrees(xDiff));
+			logger.debug("distributePartners->ydiff: " + Math.toDegrees(yDiff));
 			startAngle = GeometryTools.getAngle(xDiff, yDiff);
 			//- (Math.PI / 2.0);
-            logger.debug("distributePartners->angle: " + Math.toDegrees(startAngle));
+			logger.debug("distributePartners->angle: " + Math.toDegrees(startAngle));
 
 			populatePolygonCorners(atomsToDraw, new Point2d(atom.getPoint2D()), startAngle, addAngle, bondLength);
 			return;
@@ -171,7 +180,7 @@ public class AtomPlacer
 
 		if (placedNeighbours.getAtomCount() == 0)
 		{
-            logger.debug("First atom...");
+			logger.debug("First atom...");
 			for (int f = 0; f < unplacedNeighbours.getAtomCount(); f++)
 			{
 				atomsToDraw.addElement(unplacedNeighbours.getAtomAt(f));
@@ -183,7 +192,6 @@ public class AtomPlacer
 			 *  start angle.
 			 *  Not done yet.
 			 */
-			
 			startAngle = 0;
 			//- (Math.PI / 2.0);
 			populatePolygonCorners(atomsToDraw, new Point2d(atom.getPoint2D()), startAngle, addAngle, bondLength);
@@ -227,7 +235,7 @@ public class AtomPlacer
 				logger.debug("distributePartners->angle2: " + Math.toDegrees(angle2));
 			} catch (Exception exc)
 			{
-                logger.debug(exc);
+				logger.debug(exc);
 				exc.printStackTrace();
 			}
 		}
@@ -267,7 +275,7 @@ public class AtomPlacer
 				logger.debug("distributePartners-> partners.getAtomCount(): " + unplacedNeighbours.getAtomCount());
 			} catch (Exception exc)
 			{
-                logger.debug(exc);
+				logger.debug(exc);
 				exc.printStackTrace();
 			}
 
@@ -336,6 +344,8 @@ public class AtomPlacer
 	 */
 	protected Vector2d getNextBondVector(Atom atom, Atom previousAtom, Point2d distanceMeasure)
 	{
+		logger.debug("Entering AtomPlacer.getNextBondVector()");
+		logger.debug("Arguments are atom: " + atom + ", previousAtom: " + previousAtom + ", distanceMeasure: " + distanceMeasure);
 		double angle = GeometryTools.getAngle(previousAtom.getX2D() - atom.getX2D(), previousAtom.getY2D() - atom.getY2D());
 		double addAngle = Math.toRadians(120);
 		angle += addAngle;
@@ -350,8 +360,10 @@ public class AtomPlacer
 		double distance2 = point2.distance(distanceMeasure);
 		if (distance2 > distance1)
 		{
+			logger.debug("Exiting AtomPlacer.getNextBondVector()");
 			return vec2;
 		}
+		logger.debug("Exiting AtomPlacer.getNextBondVector()");
 		return vec1;
 	}
 
@@ -385,7 +397,7 @@ public class AtomPlacer
 		logger.debug("populatePolygonCorners->startAngle: " + Math.toDegrees(angle));
 		Vector points = new Vector();
 		Atom atom = null;
-		
+
 		for (int i = 0; i < atomsToDraw.size(); i++)
 		{
 			angle = angle + addAngle;
@@ -411,7 +423,7 @@ public class AtomPlacer
 		for (int i = 0; i < atomsToDraw.size(); i++)
 		{
 			connectAtom = (Atom) atomsToDraw.elementAt(i);
-			connectAtom.setPoint2D((Point2d)points.elementAt(i));
+			connectAtom.setPoint2D((Point2d) points.elementAt(i));
 			connectAtom.setFlag(CDKConstants.ISPLACED, true);
 		}
 
@@ -456,9 +468,11 @@ public class AtomPlacer
 	 *@exception  org.openscience.cdk.exception.NoSuchAtomException  Description of
 	 *      the Exception
 	 */
-	public AtomContainer getInitialLongestChain(Molecule molecule) throws org.openscience.cdk.exception.NoSuchAtomException
+	public AtomContainer getInitialLongestChain(Molecule molecule) throws org.openscience.cdk.exception.CDKException
 	{
+		logger.debug("Start of getInitialLongestChain()");
 		double[][] conMat = molecule.getConnectionMatrix();
+		logger.debug("Computing all-pairs-shortest-pathes");
 		int[][] apsp = PathTools.computeFloydAPSP(conMat);
 		int maxPathLength = 0;
 		int bestStartAtom = -1;
@@ -482,11 +496,15 @@ public class AtomPlacer
 				}
 			}
 		}
+		logger.debug("Longest chaing in molecule is of length " + maxPathLength + " between atoms " + (bestStartAtom+1) +  " and " + (bestEndAtom+1) );
+		
 		startAtom = molecule.getAtomAt(bestStartAtom);
 		endAtom = molecule.getAtomAt(bestEndAtom);
 		AtomContainer path = new AtomContainer();
 		path.addAtom(startAtom);
-		PathTools.depthFirstTargetSearch(molecule, startAtom, endAtom, path);
+		path = getLongestUnplacedChain(molecule, startAtom);
+		//PathTools.depthFirstTargetSearch(molecule, startAtom, endAtom, path);
+		logger.debug("End of getInitialLongestChain()");
 		return path;
 	}
 
@@ -532,7 +550,7 @@ public class AtomPlacer
 				longestPathLength = pathes[f].getAtomCount();
 			}
 		}
-		logger.debug("Start of getLongestUnplacedChain.");
+		logger.debug("End of getLongestUnplacedChain.");
 		return pathes[longest];
 	}
 
@@ -750,7 +768,7 @@ public class AtomPlacer
 
 
 	/**
-	 *  Calculates weights for unplaced atoms. 
+	 *  Calculates weights for unplaced atoms.
 	 *
 	 *@param  ac  The atomcontainer for which weights are to be calculated
 	 */
@@ -759,7 +777,7 @@ public class AtomPlacer
 		int[] weights = getWeightNumbers(ac);
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
-			ac.getAtomAt(f).setProperty("Weight", new Integer(weights[f]));	
+			ac.getAtomAt(f).setProperty("Weight", new Integer(weights[f]));
 		}
 	}
 

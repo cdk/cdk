@@ -158,11 +158,11 @@ public class StructureDiagramGeneratorTest extends TestCase
 		try
 		{
 			StructureDiagramGeneratorTest sdg = new StructureDiagramGeneratorTest("StructureDiagramGeneratorTest");
-			//sdg.runVisualTests();
+			sdg.runVisualTests();
 			//sdg.bug736137();
 			//sdg.testSpiroRings();
 			//sdg.visualBugPMR();
-			sdg.testBranchedAliphatic();
+			//sdg.testBranchedAliphatic();
 		} catch (Exception exc)
 		{
 			exc.printStackTrace();
