@@ -376,15 +376,14 @@ public class AtomTypeFactory {
             } else {
                 logger.debug("Did not configure mass: AT.mass=" + at.getAtomicNumber());
             }
-        } catch (Exception exception)
-        {
-			logger.warn("Could not configure atom with unknown ID: " +
-					atom.toString() + " + (id=" + atom.getAtomTypeName() + ")");
+        } catch (Exception exception) {
+            logger.warn("Could not configure atom with unknown ID: ", atom,
+                        " + (id=", atom.getAtomTypeName(), ")");
             logger.debug(exception);
             throw new CDKException(exception.toString());
-		}
-		logger.debug("Configured " + atom.toString());
-		return atom;
-	}
+        }
+        logger.debug("Configured: ", atom);
+        return atom;
+    }
 }
 

@@ -1,6 +1,6 @@
 /* $RCSfile$
- * $Author$    
- * $Date$    
+ * $Author$
+ * $Date$
  * $Revision$
  * 
  * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
@@ -247,10 +247,10 @@ public class SSSRFinder {
 							// we have found a valid ring closure
 							// now let's prepare the path to
 							// return in tempAtomSet
-							logger.debug("path1  "+node.getPointer(PATH).toString());
-							logger.debug("path2  "+mAtom.getPointer(PATH).toString());
-							logger.debug("rootNode  "+rootNode);
-							logger.debug("ring   "+ ring.toString());
+							logger.debug("path1  ", node.getPointer(PATH));
+							logger.debug("path2  ", mAtom.getPointer(PATH));
+							logger.debug("rootNode  ", rootNode);
+							logger.debug("ring   ", ring);
 							ring = getUnion(node.getPointer(PATH), mAtom.getPointer(PATH));
 							return prepareRing(ring,molecule);
 						}
@@ -419,7 +419,6 @@ public class SSSRFinder {
      *
 	 * @param   ring  
 	 * @param   mol  
-	 * @return     
 	 */
 	private Bond checkEdges(Ring ring, Molecule molecule)
 	{
@@ -428,7 +427,7 @@ public class SSSRFinder {
 		Bond bond;
 		int minMaxSize = Integer.MAX_VALUE;
 		int minMax = 0;
-		logger.debug(molecule.toString());
+		logger.debug("Molecule: " + molecule);
         Bond[] bonds = ring.getBonds();
 		for (int i = 0; i < bonds.length; i++)
 		{

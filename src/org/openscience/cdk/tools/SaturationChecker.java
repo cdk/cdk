@@ -600,7 +600,7 @@ public class SaturationChecker implements ValencyCheckerInterface {
             logger.debug("Found atomtypes: " + atomTypes.length);
             if (atomTypes.length > 0) {
                 AtomType defaultAtom = atomTypes[0];
-                logger.debug("DefAtom: " + defaultAtom.toString());
+                logger.debug("DefAtom: ", defaultAtom);
                 missingHydrogen = (int) (defaultAtom.getBondOrderSum() -
                     container.getBondOrderSum(atom) +
                     atom.getFormalCharge());
@@ -614,12 +614,12 @@ public class SaturationChecker implements ValencyCheckerInterface {
                     if(subtractOne)
                         missingHydrogen--;
                 }
-                logger.debug("Atom: " + atom.getSymbol());
+                logger.debug("Atom: ", atom.getSymbol());
                 logger.debug("  max bond order: " + defaultAtom.getBondOrderSum());
                 logger.debug("  bond order sum: " + container.getBondOrderSum(atom));
                 logger.debug("  charge        : " + atom.getFormalCharge());
             } else {
-                logger.warn("Could not find atom type for " + atom.getSymbol());
+                logger.warn("Could not find atom type for ", atom.getSymbol());
             }
         }
         return missingHydrogen;
