@@ -72,7 +72,7 @@ public class Controller2D {
     private static Hashtable popupMenus = null;
     
     // Helper classes
-    HydrogenAdder hydrogenAdder = new HydrogenAdder();
+    HydrogenAdder hydrogenAdder = new HydrogenAdder("org.openscience.cdk.tools.ValencyChecker");
     
     /**
      * Constructs a controller that performs operations on the
@@ -944,6 +944,7 @@ public class Controller2D {
         
         private void updateAtom(AtomContainer container, Atom atom) {
             if (c2dm.getAutoUpdateImplicitHydrogens()) {
+                atom.setHydrogenCount(0);
                 try {
                     hydrogenAdder.addImplicitHydrogensToSatisfyValency(container, atom);
                 } catch (Exception exception) {
