@@ -14,6 +14,7 @@ Fixes:
 * Fixed junit-test and run-test: missing cdk-data.jar
 
 API changes:
+* Moved IsotopeFactory from cdk-standard to the cdk-core module
 
 20050125 Release
 ------------------------------------

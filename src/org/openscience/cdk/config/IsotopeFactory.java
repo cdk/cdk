@@ -56,7 +56,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *   Isotope major = factory.getMajorIsotope("H");
  * </pre> 
  *
- * @cdk.module standard
+ * @cdk.module core
  *
  * @author     steinbeck
  * @cdk.created    2001-08-29
@@ -73,7 +73,7 @@ public class IsotopeFactory
     private LoggingTool logger;
 
 	/**
-	 *  Private constructor for the IsotopeFactory object
+	 * Private constructor for the IsotopeFactory object.
 	 *
 	 *@exception  IOException             A problem with reading the isotopes.xml
 	 *      file
@@ -146,8 +146,8 @@ public class IsotopeFactory
 	}
 
 	/**
-	 *  Get an array of all isotoptes known to the IsotopeFactory for the given
-	 *  element symbol
+	 * Gets an array of all isotoptes known to the IsotopeFactory for the given
+	 * element symbol.
 	 *
 	 *@param  symbol  An element symbol to search for
 	 *@return         An array of isotopes that matches the given element symbol
@@ -240,7 +240,7 @@ public class IsotopeFactory
     }
 
 	/**
-	 *  Returns an Element with a given element symbol
+	 *  Returns an Element with a given element symbol.
 	 *
 	 *@param  symbol  The element symbol for the requested element
 	 *@return         The configured element
@@ -253,7 +253,7 @@ public class IsotopeFactory
 
 
 	/**
-	 *  Returns an element according to a given atomic number
+	 *  Returns an element according to a given atomic number.
 	 *
 	 *@param  atomicNumber  The elements atomic number
 	 *@return               The Element
@@ -265,7 +265,7 @@ public class IsotopeFactory
 	}
 
     /**
-     * Returns the symbol matching the element with the given atomic number
+     * Returns the symbol matching the element with the given atomic number.
      *
      * @param  atomicNumber  The elements atomic number
      * @return               The symbol of the Element

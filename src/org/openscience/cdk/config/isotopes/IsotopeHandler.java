@@ -48,7 +48,7 @@ import org.xml.sax.helpers.DefaultHandler;
  * </isotopeList>
  * </pre> 
  *
- * @cdk.module standard
+ * @cdk.module core
  */
 public class IsotopeHandler extends DefaultHandler {
 
@@ -64,6 +64,11 @@ public class IsotopeHandler extends DefaultHandler {
         logger = new LoggingTool(this);
     }
 
+    /** 
+     * Returns the isotopes read from the XML file.
+     *
+     * @return A Vector object with all isotopes
+     */
     public Vector getIsotopes() {
         return isotopes;
     }
@@ -75,7 +80,7 @@ public class IsotopeHandler extends DefaultHandler {
     }
 
     public void endElement(String uri, String local, String raw) {
-        logger.debug("end element: " + raw);
+        logger.debug("end element: ", raw);
         if ("isotope".equals(local)) {
             if (workingIsotope != null) 
                 isotopes.addElement(workingIsotope);
@@ -113,27 +118,9 @@ public class IsotopeHandler extends DefaultHandler {
         logger.debug("local: ", local);
         logger.debug("raw: ", raw);
         if ("isotope".equals(local)) {
-            workingIsotope = new Isotope(currentElement);
-            for (int i = 0; i < atts.getLength(); i++) {
-                try {
-                    if ("id".equals(atts.getQName(i))) {
-                        workingIsotope.setID(atts.getValue(i));
-                    } else if ("isotopeNumber".equals(atts.getQName(i))) {
-                        workingIsotope.setMassNumber(Integer.parseInt(atts.getValue(i)));
-                    } else if ("elementType".equals(atts.getQName(i))) {
-                        workingIsotope.setSymbol(atts.getValue(i));
-                    }
-                } catch (NumberFormatException exception) {
-                    logger.error("Value of isotope@", atts.getQName(i), " is not as expected.");
-                    logger.debug(exception);
-                }
-            }
+            workingIsotope = createIsotopeOfElement(currentElement, atts);
         } else if ("isotopeList".equals(local)) {
-            for (int i = 0; i < atts.getLength(); i++) {
-                if ("id".equals(atts.getQName(i))) {
-                    currentElement = atts.getValue(i);
-                }
-            }
+            currentElement = getElementSymbol(atts);
         } else if ("abundance".equals(local)) {
             logger.warn("Disregarding dictRef for now...");
         } else if ("scalar".equals(local)) {
@@ -147,6 +134,34 @@ public class IsotopeHandler extends DefaultHandler {
 
     public void characters(char chars[], int start, int length) {
         currentChars += new String(chars, start, length);
+    }
+
+    private Isotope createIsotopeOfElement(String currentElement, Attributes atts) {
+        Isotope isotope = new Isotope(currentElement);
+        for (int i = 0; i < atts.getLength(); i++) {
+            try {
+                if ("id".equals(atts.getQName(i))) {
+                    isotope.setID(atts.getValue(i));
+                } else if ("isotopeNumber".equals(atts.getQName(i))) {
+                    isotope.setMassNumber(Integer.parseInt(atts.getValue(i)));
+                } else if ("elementType".equals(atts.getQName(i))) {
+                    isotope.setSymbol(atts.getValue(i));
+                }
+            } catch (NumberFormatException exception) {
+                logger.error("Value of isotope@", atts.getQName(i), " is not as expected.");
+                logger.debug(exception);
+            }
+        }
+        return isotope;
+    }
+
+    private String getElementSymbol(Attributes atts) {
+        for (int i = 0; i < atts.getLength(); i++) {
+            if ("id".equals(atts.getQName(i))) {
+                return atts.getValue(i);
+            }
+        }
+        return "";
     }
 
 }

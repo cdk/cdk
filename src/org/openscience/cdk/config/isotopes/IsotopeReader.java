@@ -37,8 +37,15 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
 /**
+ * Reader that instantiates an XML parser and customized handler to process
+ * the isotope information in the CML2 isotope data file. The Reader first
+ * tries to instantiate a JAXP XML parser available from Sun JVM 1.4.0 and
+ * later. If not found it tries the Aelfred2 parser, and as last try the
+ * Xerces parser.
  *
- * @cdk.module standard
+ * @cdk.module core
+ *
+ * @author     Egon Willighagen
  */
 public class IsotopeReader {
 
@@ -47,6 +54,11 @@ public class IsotopeReader {
 
     private LoggingTool logger;
 
+    /**
+     * Instantiates a new reader that parses the XML from the given <code>input</code>.
+     *
+     * @param input Reader with the XML source
+     */
     public IsotopeReader(Reader input) {
         this.init();
         this.input = input;
@@ -100,6 +112,12 @@ public class IsotopeReader {
         }
     }
 
+    /**
+     * Triggers the XML parsing of the data file and returns the read Isotopes. 
+     * It turns of XML validation before parsing.
+     *
+     * @return Vector Vector of Isotopes
+     */
     public Vector readIsotopes() {
         Vector isotopes = null;
         try {
