@@ -309,7 +309,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
             }
             writeCloseTag("reactantList");
         }
-        Molecule[] products = reaction.getReactants();
+        Molecule[] products = reaction.getProducts();
         if (products.length > 0) {
             writeOpenTag("productList");
             for (int i=0; i<products.length; i++) {
