@@ -60,8 +60,7 @@ public class SmilesGeneratorTest extends TestCase
 		this.standAlone = standAlone;
 	}
 	
-	public void testSmilesGenerator()
-	{
+	public void testSmilesGenerator() {
 		SmilesGenerator sg = new SmilesGenerator();
 		Molecule mol1 = MoleculeFactory.makeEthylPropylPhenantren();
 		Molecule mol2 = MoleculeFactory.makeAlphaPinene();
@@ -80,6 +79,8 @@ public class SmilesGeneratorTest extends TestCase
 		}
 		if (standAlone) System.err.println("SMILES 1: " + smiles1);
 		if (standAlone) System.err.println("SMILES 2: " + smiles2);
+        assertNotNull(smiles1);
+        assertNotNull(smiles2);
 		assertTrue(smiles1.equals("c2cc1c3ccc(cc3ccc1c(c2)CC)CCC"));
 		assertTrue(smiles2.equals("C1=C(C)C2CC(C1)C2(C)(C)"));
 	}
@@ -103,6 +104,30 @@ public class SmilesGeneratorTest extends TestCase
         }
         if (standAlone) System.err.println("SMILES: " + smiles);
         assertTrue(smiles.indexOf(".") != -1);
+    }
+    
+    public void testBug791091() {
+        SmilesGenerator sg = new SmilesGenerator();
+        String smiles = "";
+        Molecule molecule = new Molecule();
+        molecule.addAtom(new Atom("C"));
+        molecule.addAtom(new Atom("C"));
+        molecule.addAtom(new Atom("C"));
+        molecule.addAtom(new Atom("C"));
+        molecule.addAtom(new Atom("N"));
+        molecule.addBond(0,1,1.0);
+        molecule.addBond(1,2,1.0);
+        molecule.addBond(2,4,1.0);
+        molecule.addBond(4,0,1.0);
+        molecule.addBond(4,3,1.0);
+        try {
+            smiles = sg.createSMILES(molecule);
+        } catch(Exception exc) {
+            System.out.println(exc);
+            if (!standAlone) fail();
+        }
+        if (standAlone) System.err.println("SMILES: " + smiles);
+        assertEquals("CN1CCC1", smiles);
     }
     
 	private void fixCarbonHCount(Molecule mol)
