@@ -61,6 +61,17 @@
           These are classes that do not belong to either of the other two categories.
         </para>
       </section>
+      <section>
+        <title>Experimental  classes</title>
+        <para>
+          This package is for classes that provide experimental functionality. That is,
+          functions that are not fully implemented, or not for general use in any case.
+          Such classes may be used, however, in some programs to be able to be tested.
+          An example is the 'experimental' version of JChemPaint, which provides access
+          to the IUPAC name generator, which is only a proof of concept of a possible
+          design, and not really of production level quality.
+        </para>
+      </section>
 
     </chapter>
 
@@ -91,8 +102,9 @@ cdk/$ ant
     <section>
       <title>Compiling with Java3D installed</title>
       <para>
-        If Java3D is installed or available for your platform,
-        you can compile CDK with:
+        The build procedure will automatically detect a Java3D installtion.
+        If, however, Java3D is not installed in the Java SDK directory,
+        you can define the path like this:
         <programlisting>
 cdk/$ ant -Dpathtojava3d=/some/path compile-with-java3d
         </programlisting>
@@ -138,9 +150,20 @@ test:
       </para>
 
       <para>
+        Individual tests can be done with the run-test target. The command
+        <command>ant -Dtestclass=ringsearch.RingSearchTest run-test</command>,
+        for example, will run the test RingSearchTest. It will first run it
+        within the JUnit environment giving output as given above. Detailed
+        information about the run will, for the given example, be saved in 
+        cdk/reports/results.ringsearch.RingSearchTest.txt. In a second step,
+        this target will atempt to run the test using it's main() method,
+        but this will fail when no such method is provided.
+      </para>
+      
+      <para>
         The actual tests are done by
         <ulink url="http://www.junit.org/">JUnit</ulink> which you must have
-        installed. JDK 1.4 requires version 3.7, but 3.6 is good for other
+        installed. JDK 1.4 requires version 3.7, but 3.6 is good for older
         Java versions.
       </para>
 
