@@ -11,7 +11,6 @@ Changes in CVS
 20020518 Release
 ------------------------------------
 * added reading of partial charges from CML files
-  (as in <floatArray title="partialCharge"/>)
 * fixed bug if HOSECodeGenerator
 * added detection of bond order if not given in file
 * added SMILES parser (ported from JChemPaint)
