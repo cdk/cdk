@@ -56,8 +56,8 @@ public class ValencyChecker implements ValencyCheckerInterface {
 
     private final String atomTypeList = "org/openscience/cdk/config/data/valency_atomtypes.xml";
     
-	private AtomTypeFactory structgenATF;
-	private LoggingTool logger;
+	protected AtomTypeFactory structgenATF;
+	protected LoggingTool logger;
 
 	public ValencyChecker() throws IOException, ClassNotFoundException {
 		structgenATF = AtomTypeFactory.getInstance(atomTypeList);
@@ -94,10 +94,11 @@ public class ValencyChecker implements ValencyCheckerInterface {
         boolean elementPlusChargeMatches = false;
         for (int f = 0; f < atomTypes.length; f++) {
             AtomType type = atomTypes[f];
-            if (charge == type.getFormalCharge()) {
+            if (couldMatchAtomType(atom, bondOrderSum, maxBondOrder, type)) {
                 if (bondOrderSum + hcount == type.getBondOrderSum() && 
                     maxBondOrder <= type.getMaxBondOrder()) {
-                    logger.debug("We have a match! : ", type);
+                    logger.debug("We have a match: ", type);
+                    logger.debug("Atom is saturated: ", atom.getSymbol());
                     return true;
                 } else {
                     // ok, the element and charge matche, but unfulfilled

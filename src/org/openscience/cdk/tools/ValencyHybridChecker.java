@@ -54,24 +54,21 @@ import org.openscience.cdk.exception.CDKException;
  */
 public class ValencyHybridChecker extends ValencyChecker {
 
-    private final String atomTypeList = "org/openscience/cdk/config/data/hybridization_atomtypes.xml";
-	private AtomTypeFactory structgenATF;
-	private LoggingTool logger;
-    
 	public ValencyHybridChecker() throws IOException, ClassNotFoundException {
-		structgenATF = AtomTypeFactory.getInstance(atomTypeList);
-		logger = new LoggingTool(this);
+        String atomTypeList = "org/openscience/cdk/config/data/hybridization_atomtypes.xml";
         logger.info("Using configuration file: ", atomTypeList);
+		structgenATF = AtomTypeFactory.getInstance(atomTypeList);
 	}
 
     /**
      * Determines if the atom can be of type AtomType.
      */
     public boolean couldMatchAtomType(Atom atom, double bondOrderSum, double maxBondOrder, AtomType type) {
-        logger.debug("   ... matching atom ", atom.getSymbol(), " vs ", type);
+        logger.debug("   ... matching atom ", atom, " vs ", type);
         int hcount = atom.getHydrogenCount();
         int charge = atom.getFormalCharge();
-        if (charge == type.getFormalCharge()) {
+        if (charge == type.getFormalCharge() &&
+            atom.getHybridization() == type.getHybridization()) {
             if (bondOrderSum + hcount <= type.getBondOrderSum() && 
                 maxBondOrder <= type.getMaxBondOrder()) {
                 logger.debug("    We have a match!");
