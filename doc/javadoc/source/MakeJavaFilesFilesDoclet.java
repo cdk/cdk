@@ -79,7 +79,7 @@ public class MakeJavaFilesFilesDoclet {
         String restriction = null;
         tags = classDoc.tags(javaDocRequireTag);
         for (int i=0; i<tags.length; i++) {
-            String cdkRequirement = tags[0].text();
+            String cdkRequirement = tags[i].text();
             addClassToCDKPackage(className, cdkRequirement);
         }
     }
