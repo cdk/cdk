@@ -51,11 +51,17 @@ public class CMLIOTests {
         try {
             Class testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.test.io.CML2WriterTest");
             suite.addTest(new TestSuite(testClass));
-        } catch (Exception exception) {}
+        } catch (Exception exception) {
+            // ok, do without. Probably compiled not Java 1.4
+            System.out.println("Could not load the CML2Writer test: " + exception.getMessage());
+        }
         try {
             Class testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.test.io.CMLRoundTripTest");
             suite.addTest(new TestSuite(testClass));
-        } catch (Exception exception) {}
+        } catch (Exception exception) {
+            // ok, do without. Probably compiled not Java 1.4
+            System.out.println("Could not load the CML Roundtrip test: " + exception.getMessage());
+        }
         return suite;
     }
 

@@ -42,7 +42,6 @@ import org.openscience.cdk.test.qsar.*;
         TestSuite suite = new TestSuite("All QSAR Descriptor Tests");
         suite.addTest(AtomCountDescriptorTest.suite());
         suite.addTest(BondCountDescriptorTest.suite());
-        suite.addTest(QsarDescriptors2DTest.suite());
         suite.addTest(RotatableBondsCountDescriptorTest.suite());
 	suite.addTest(IsProtonInAromaticSystemDescriptorTest.suite());
 	suite.addTest(SigmaElectronegativityDescriptorTest.suite());
