@@ -32,14 +32,18 @@
 
     <target name="keyword.index">
         <javadoc private="false" public="true">
-            <classpath refid="project.class.path" />
+            <classpath refid="project.class.path">
+                <fileset dir="../../../jar/libio">
+                    <include name="*.jar" />
+                </fileset>
+            </classpath>
 
             <doclet name="MakeKeywordIndexDoclet" path="."/>
 
             <package name="org.openscience.cdk.*"/>
 
             <sourcepath>
-                <pathelement path="../.."/>
+                <pathelement path="../../src/"/>
             </sourcepath>
 
         </javadoc>
