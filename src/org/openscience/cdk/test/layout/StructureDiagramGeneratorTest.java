@@ -85,11 +85,11 @@ public class StructureDiagramGeneratorTest extends TestCase
 	public void runVisualTests()
 	{
 		moleculeListViewer = new MoleculeListViewer();
-		MoleculeViewer2D.display(MoleculeFactory.loadMolecule("data/mdl/reserpine.mol"), true);
-		showIt(MoleculeFactory.loadMolecule("data/mdl/reserpine.mol"), "Reserpine");
+		//MoleculeViewer2D.display(MoleculeFactory.loadMolecule("data/mdl/reserpine.mol"), true);
+		/*showIt(MoleculeFactory.loadMolecule("data/mdl/reserpine.mol"), "Reserpine");
 		showIt(MoleculeFactory.loadMolecule("data/mdl/four-ring-5x10.mol"), "5x10 condensed four membered rings");
 		showIt(MoleculeFactory.loadMolecule("data/mdl/six-ring-4x4.mol"), "4x4 condensed six membered rings");
-		showIt(MoleculeFactory.loadMolecule("data/mdl/polycarpol.mol"), "Polycarpol");
+		showIt(MoleculeFactory.loadMolecule("data/mdl/polycarpol.mol"), "Polycarpol");*/
 		showIt(MoleculeFactory.makeAlphaPinene(), "alpha-Pinene");
 		showIt(MoleculeFactory.makeBiphenyl(), "Biphenyl");
 		showIt(MoleculeFactory.make4x3CondensedRings(), "4x3CondensedRings");
@@ -153,9 +153,9 @@ public class StructureDiagramGeneratorTest extends TestCase
 		try
 		{
 			StructureDiagramGeneratorTest sdg = new StructureDiagramGeneratorTest("StructureDiagramGeneratorTest");
-			//sdg.runVisualTests();
+			sdg.runVisualTests();
 			//sdg.bug736137();
-			sdg.testSpiroRings();
+			//sdg.testSpiroRings();
 		} catch (Exception exc)
 		{
 			exc.printStackTrace();

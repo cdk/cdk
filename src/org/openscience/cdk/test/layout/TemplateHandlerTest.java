@@ -29,6 +29,7 @@ import org.openscience.cdk.*;
 import org.openscience.cdk.io.*;
 import org.openscience.cdk.smiles.*;
 import org.openscience.cdk.layout.*;
+import org.openscience.cdk.renderer.*;
 import org.openscience.cdk.tools.LoggingTool;
 import java.util.*;
 import java.io.*;
@@ -102,6 +103,13 @@ public class TemplateHandlerTest extends TestCase
 		Molecule mol = new SmilesParser().parseSmiles(smiles);
 		assertTrue(th.mapTemplates(mol));
 	}
+	
+	public void visualLayout() throws Exception
+	{
+		String smiles = "CC12C3(C6CC6)C4(C)C1C5(C(CC)C)C(C(CC)C)2C(C)3C45CC(C)C";
+		Molecule mol = new SmilesParser().parseSmiles(smiles);
+		MoleculeViewer2D.display(mol, true);
+	}
 
 
 	/**
@@ -117,7 +125,8 @@ public class TemplateHandlerTest extends TestCase
 			tht.setUp();
 			tht.standAlone = true;
 			//tht.testInit();
-			tht.testDetection();
+			//tht.testDetection();
+			tht.visualLayout();
 		} catch (Exception exc)
 		{
 			exc.printStackTrace();
