@@ -24,6 +24,7 @@
  */
 package org.openscience.cdk.applications.plugin;
 
+import org.openscience.cdk.applications.APIVersionTester;
 import org.openscience.cdk.event.ChemObjectChangeEvent;
 import org.openscience.cdk.tools.LoggingTool;
 import java.awt.event.ActionEvent;
@@ -141,7 +142,7 @@ public class CDKPluginManager {
             Object plugin = c.newInstance();
             if (plugin instanceof CDKPluginInterface) {
                 CDKPluginInterface cdkPlugin = (CDKPluginInterface)plugin;
-                if (Double.parseDouble(cdkPlugin.getAPIVersion()) < 1.4) {
+                if (APIVersionTester.isSmaller("1.4", cdkPlugin.getAPIVersion())) {
                     // ignore old plugins
                     logger.warn("Will not load plugins with old API: ", className);
                     logger.debug("  the plugin has API version: ", cdkPlugin.getAPIVersion());
@@ -160,7 +161,7 @@ public class CDKPluginManager {
                     }
                     if (loadPlugin) {
                         // this plugin is not loaded yet, or there is a newer version installed
-                        if (Double.parseDouble(cdkPlugin.getAPIVersion()) >= 1.5) {
+                        if (APIVersionTester.isBiggerOrEqual("1.5", cdkPlugin.getAPIVersion())) {
                             logger.debug("Setting prop dir in plugin...");
                             cdkPlugin.setPropertyDirectory(pluginConfigDirName);
                         } else {
