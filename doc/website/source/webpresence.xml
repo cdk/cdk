@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.0b1//EN" "dtd/website.dtd">
+<webpage id="webpresence">
+  <config param="last-change-by" value="$Author$"/>
+  <config param="rcsdate" value="$Date$"/>
+
+  <head>
+    <title>CDK on the Internet</title>
+    <titleabbrev>Web Precense</titleabbrev>
+    <summary>Links to websites mentioning CDK or showing information about
+             CDK, like statistics or test results.</summary>
+  </head>
+
+  <para>
+    This list shows a number of websites that have more information about
+    the CDK project.
+  </para>
+  
+  <itemizedlist>
+    <listitem><para><ulink url="http://cia.navi.cx/stats/project/cdk">CIA's CVS commit statastics</ulink></para></listitem>
+    <listitem><para><ulink url="http://freshmeat.net/projects/cdk/">Freshmeat release announcements</ulink></para></listitem>
+    <listitem><para><ulink url="http://pmd.sourceforge.net/scoreboard.html">PMD test resulst</ulink></para></listitem>
+  </itemizedlist>
+  
+</webpage>
