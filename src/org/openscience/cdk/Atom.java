@@ -28,6 +28,7 @@
  */
 package org.openscience.cdk;
 
+import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
 /**
@@ -580,25 +581,23 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
         
 
         /**
-         * Clones this atom object.
+         * Clones this atom object and its content.
          *
          * @return  The cloned object   
          */
-        public Object clone()
-        {
-                Object clone = null;
-                try
-                {
-                        clone = super.clone();
-                }
-                catch (Exception exception)
-                {
-                        exception.printStackTrace(System.err);
-                }
-                return clone;
+        public Object clone() {
+            Object clone = null;
+            try {
+                clone = super.clone();
+            } catch (Exception exception) {
+                exception.printStackTrace(System.err);
+            }
+            /* Atom atom = (Atom)clone;
+            atom.setPoint2d(new Point2d(point2d.x, point2d.y));
+            atom.setPoint3d(new Point3d(point3d.x, point3d.y, point3d.z));
+            atom.setFractionalPoint3d(new Point3d(fractionalPoint3d.x, fractionalPoint3d.y, fractionalPoint3d.z)); */
+            return clone;
         }
-
-
         
 }
 

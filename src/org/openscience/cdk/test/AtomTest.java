@@ -198,10 +198,21 @@ public class AtomTest extends TestCase {
      */
     public void testClone() {
         Atom atom = new Atom("C");
+        atom.setPoint2d(new Point2d(2, 3));
+        atom.setPoint3d(new Point3d(2, 3, 4));
+        atom.setFractionalPoint3d(new Point3d(2, 3, 4));
         Object clone = atom.clone();
         assertTrue(clone instanceof Atom);
         Atom copy = (Atom)clone;
         assertTrue(atom.compare(copy));
+        
+        // make sure the Point2d fields have been cloned too
+        atom.setX2d(5);
+        assertEquals(copy.getX2d(), 2.0, 0.001);
+        atom.setX3d(5);
+        assertEquals(copy.getX3d(), 2.0, 0.001);
+        atom.setFractX3d(5);
+        assertEquals(copy.getFractX3d(), 2.0, 0.001);
     }
     
     /**
