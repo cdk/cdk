@@ -365,5 +365,24 @@ public class StructureDiagramGeneratorTest extends TestCase
 		mol.addAtom(new Atom("C"));
 		AtomContainer ac = generateCoordinates(mol);
 	}
+	
+	
+	/**
+	 *  A unit test for JUnit
+	 *
+	 *@exception  Exception  Description of the Exception
+	 */
+	public void testBug884993() throws Exception
+	{
+		SmilesParser sp = new SmilesParser();
+		Molecule mol = sp.parseSmiles("[N+](=O)([O-])C1=C(O)C(=CC(=C1)[N+](=O)[O-])[N+](=O)[O-].C23N(CCCC2)CCCC3");
+		try{
+			AtomContainer ac = generateCoordinates(mol);
+		}
+		catch(Exception exc)
+		{
+			if (!(exc.toString().indexOf("Molecule not connected")>= 0)) fail();
+		}
+	}
 }
 
