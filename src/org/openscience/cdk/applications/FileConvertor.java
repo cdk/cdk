@@ -164,6 +164,8 @@ public class FileConvertor {
             return new PMPReader(f);
         } else if (format.equalsIgnoreCase("SHELX")) {
             return new ShelXReader(f);
+        } else if (format.equalsIgnoreCase("ICHI")) {
+            return new IChIReader(f);
         }
         return null;
     }
