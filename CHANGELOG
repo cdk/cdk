@@ -5,6 +5,7 @@ Changes in CVS
 ------------------------------------
 New:
 * Added a method debug(Exception) to LoggingTool
+* The SMILES parser now reads formal charges and mass numbers
 
 Fixes:
 * Fixed reading/writing of isotopes from/to MDL molfiles

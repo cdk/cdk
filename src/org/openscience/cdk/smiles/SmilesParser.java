@@ -5,7 +5,7 @@
  *
  *  Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  *
- *  Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ *  Contact: cdk-devel@lists.sourceforge.net
  *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public License
@@ -134,14 +134,12 @@ public class SmilesParser
 						bondStatus = CDKConstants.BONDORDER_SINGLE;
 					}
 					atom = new Atom(currentSymbol);
-					if (currentSymbol.length() == 1)
-					{
-						if (!(currentSymbol.toUpperCase()).equals(currentSymbol))
-						{
-							atom.flags[CDKConstants.ISAROMATIC] = true;
-							atom.setSymbol(currentSymbol.toUpperCase());
-						}
-					}
+                    if (currentSymbol.length() == 1) {
+                        if (!(currentSymbol.toUpperCase()).equals(currentSymbol)) {
+                            atom.flags[CDKConstants.ISAROMATIC] = true;
+                            atom.setSymbol(currentSymbol.toUpperCase());
+                        }
+                    }
 
 					molecule.addAtom(atom);
 					logger.debug("Adding atom " + atom.hashCode());
@@ -241,10 +239,9 @@ public class SmilesParser
 				}
 			} catch (InvalidSmilesException exc) {
                 throw exc;
-			} catch (Exception exc) {
+			} catch (Exception exception) {
                 logger.error("Error while parsing char: " + mychar);
-                logger.error("Exception: " + exc.toString());
-				exc.printStackTrace();
+                logger.debug(exception);
 				throw new InvalidSmilesException(message);
 			}
 		} while (position < smiles.length());
@@ -277,34 +274,68 @@ public class SmilesParser
 			String message = "Problem parsing Atom specification given in brackets.\n";
 			message += "Invalid SMILES string was: " + smiles;
             logger.error(message);
-            logger.error(exception.toString());
+            logger.debug(exception);
 			throw new InvalidSmilesException(message);
 		}
 		return atomString.toString();
 	}
 
 
-	/**
-	 *  Gets the Charge attribute of the SmilesParser object
-	 *
-	 *@param  s  Description of the Parameter
-	 *@return    The Charge value
-	 */
-	private int getCharge(String s)
-	{
-		int charge = 0;
-		int signPos = s.lastIndexOf("-");
-		if (signPos != -1)
-		{
-			signPos = s.indexOf("+");
-
-		} else
-		{
-			charge = -1;
-		}
-		return 0;
-	}
-
+    /**
+     * Gets the Charge attribute of the SmilesParser object
+     *
+     *@param  s  Description of the Parameter
+     *@return    The Charge value
+     */
+    private int getCharge(String chargeString, int position) {
+        logger.debug("Parsing charge from: " + chargeString.substring(position));
+        int charge = 0;
+        if (chargeString.charAt(position) == '+') {
+            charge = +1;
+            position++;
+        } else if (chargeString.charAt(position) == '-') {
+            charge = -1;
+            position++;
+        } else {
+            return charge;
+        }
+        StringBuffer multiplier = new StringBuffer();
+        while (position < chargeString.length() && Character.isDigit(chargeString.charAt(position))) {
+            multiplier.append(chargeString.charAt(position));
+            position++;
+        }
+        if (multiplier.length() > 0) {
+            logger.debug("Found multiplier: " + multiplier.toString());
+            try {
+                charge = charge * Integer.parseInt(multiplier.toString());
+            } catch (Exception exception) {
+                logger.error("Could not parse positive atomic charge!");
+                logger.debug(exception);
+            }
+        }
+        logger.debug("Found charge: " + charge);
+        return charge;
+    }
+    
+    private int getImplicitHydrogenCount(String s, int position) {
+        int count = 1;
+        if (s.charAt(position) == 'H') {
+            StringBuffer multiplier = new StringBuffer();
+            while (position < (s.length() -1) && Character.isDigit(s.charAt(position+1))) {
+                multiplier.append(position+1);
+                position++;
+            }
+            if (multiplier.length() > 0) {
+                try {
+                    count = count + Integer.parseInt(multiplier.toString());
+                } catch (Exception exception) {
+                    logger.error("Could not parse number of implicit hydrogens!");
+                    logger.debug(exception);
+                }
+            }
+        }
+        return count;
+    }
 
 	/**
 	 * Gets the ElementSymbol attribute of the SmilesParser object
@@ -313,15 +344,20 @@ public class SmilesParser
 	 * @param  pos  Description of the Parameter
 	 * @return      The ElementSymbol value
 	 */
-	private String getElementSymbol(String s, int pos) {
-        // FIXME: what is going on here? Are only these atoms supported ?!?
-		if (pos < s.length() - 1 && "BrCl".indexOf((s.substring(pos, pos + 2))) >= 0) {
-			return s.substring(pos, pos + 2);
-		} else if ("HBCcNnOoPSsFI".indexOf((s.charAt(pos))) >= 0) {
-			return s.substring(pos, pos + 1);
-		}
-		return null;
-	}
+     private String getElementSymbol(String s, int pos) {
+         if (pos < s.length() - 1) {
+             String possibleSymbol = s.substring(pos, pos + 2);
+             if (("HeLiBeNeNaMgAlSiClArCaScTiCrMnFeCoNiCuZnGaGeAsSe".indexOf(possibleSymbol) >= 0) ||
+                 ("BrKrRbSrZrNbMoTcRuRhPdAgCdInSnSbTeXeCsBaLuHfTaRe".indexOf(possibleSymbol) >= 0) ||
+                 ("OsIrPtAuHgTlPbBiPoAtRnFrRaLrRfDbSgBhHsMtDs".indexOf(possibleSymbol) >= 0)) {
+                 return possibleSymbol;
+             }            
+        }
+        if ("HBCcNnOoFPSsIU".indexOf((s.charAt(pos))) >= 0) {
+            return s.substring(pos, pos + 1);
+        }
+        return null;
+    }
 
 
 	/**
@@ -355,35 +391,88 @@ public class SmilesParser
 	 *@return                             Description of the Return Value
 	 *@exception  InvalidSmilesException  Description of the Exception
 	 */
-	private Atom assembleAtom(String s, int nodeCounter) throws InvalidSmilesException
-	{
+	private Atom assembleAtom(String s, int nodeCounter) throws InvalidSmilesException {
         logger.debug("Assembling atom from: " + s);
-		Atom atom = null;
-		int position = 0;
-		String currentSymbol = null;
-		char mychar;
-		do {
-			try {
-				mychar = s.charAt(position);
-				if ((mychar >= 'A' && mychar <= 'Z') || (mychar >= 'a' && mychar <= 'z')) {
-					currentSymbol = getElementSymbol(s, position);
-					position = position + currentSymbol.length();
+        Atom atom = null;
+        int position = 0;
+        String currentSymbol = null;
+        StringBuffer isotopicNumber = new StringBuffer();
+        char mychar;
+        logger.debug("Parse everythings before and including element symbol");
+        do {
+            try {
+                mychar = s.charAt(position);
+                logger.debug("Parsing char: " + mychar);
+                if ((mychar >= 'A' && mychar <= 'Z') || (mychar >= 'a' && mychar <= 'z')) {
+                    currentSymbol = getElementSymbol(s, position);
+                    logger.debug("Found element symbol: " + currentSymbol);
+                    position = position + currentSymbol.length();
                     atom = new Atom(currentSymbol);
+                    if (currentSymbol.length() == 1) {
+                        if (!(currentSymbol.toUpperCase()).equals(currentSymbol)) {
+                            atom.flags[CDKConstants.ISAROMATIC] = true;
+                            atom.setSymbol(currentSymbol.toUpperCase());
+                        }
+                    }
+                    logger.debug("Made atom: " + atom);
                     break;
-				} else if (mychar >= '0' && mychar <= '9') {
-                    logger.warn("Ignoring char in isotopic info: " + mychar);
-					position++;
-				} else {
-					throw new InvalidSmilesException("Found unexpected char: " + mychar);
-				}
-			} catch (Exception exception) {
+                } else if (mychar >= '0' && mychar <= '9') {
+                    isotopicNumber.append(mychar);
+                    position++;
+                } else {
+                    throw new InvalidSmilesException("Found unexpected char: " + mychar);
+                }
+            } catch (Exception exception) {
                 logger.error("Could not parse atom string: " + s);
-                logger.error("due to: " + exception.toString());
-				throw new InvalidSmilesException("Could not parse atom string: " + s);
-			}
-		} while (position < s.length());
-		return atom;
-	}
+                logger.debug(exception);
+                throw new InvalidSmilesException("Could not parse atom string: " + s);
+            }
+        } while (position < s.length());
+        if (isotopicNumber.toString().length() > 0) {
+            try {            
+                atom.setAtomicMass(Integer.parseInt(isotopicNumber.toString()));
+            } catch (Exception exception) {
+                logger.error("Could not set atom's atom number.");
+                logger.debug(exception);
+            }
+        }
+        logger.debug("Parsing part after element symbol (like charge): " + s.substring(position));
+        int charge = 0;
+        int implicitHydrogens = 0;
+        while (position < s.length()) {
+            try {
+                mychar = s.charAt(position);
+                logger.debug("Parsing char: " + mychar);
+                if (mychar == 'H') {
+                    // count implicit hydrogens
+                    implicitHydrogens = getImplicitHydrogenCount(s, position);
+                    position++;
+                    if (implicitHydrogens > 1) {
+                        position++;
+                    }
+                    atom.setHydrogenCount(implicitHydrogens);
+                } else if (mychar == '+' || mychar == '-') {
+                    charge = getCharge(s, position);
+                    position++;
+                    if (charge < -1 || charge > 1) position++;
+                    atom.setFormalCharge(charge);
+                } else if (mychar == '@') {
+                    if (position < s.length()-1 && s.charAt(position+1) == '@') {
+                        position++;
+                    }
+                    logger.warn("Ignoring stereo information for atom");
+                    position++;
+                } else {
+                    throw new InvalidSmilesException("Found unexpected char: " + mychar);
+                }
+            } catch (Exception exception) {
+                logger.error("Could not parse atom string: " + s);
+                logger.debug(exception);
+                throw new InvalidSmilesException("Could not parse atom string: " + s);
+            }
+        };
+        return atom;
+    }
 
 
 	/**
