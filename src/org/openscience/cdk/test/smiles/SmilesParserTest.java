@@ -921,7 +921,7 @@ public class SmilesParserTest extends TestCase
         LoggingTool logger = new LoggingTool();
 		SmilesParserTest spt = new SmilesParserTest("SmilesParserTest");
 		spt.setStandAlone(true);
-		spt.testSFBug956921();
+		spt.viewSmilesStructures();
 	}
 }
 
