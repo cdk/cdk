@@ -41,7 +41,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 /**
- * Object that maintains Jmol plugins.
+ * Manager that loads and maintains CDK plugins. In addition, it provides a JMenu 
+ * to allow access to the plugin's functionality.
  */
 public class CDKPluginManager {
 
@@ -52,6 +53,15 @@ public class CDKPluginManager {
     private String pluginConfigDirName;
     private CDKEditBus editBus;
     
+    /**
+     * Instantiate a CDKPluginManager.
+     *
+     * @param pluginDirName       directory where the plugin jars can be found
+     * @param pluginConfigDirName directory where the plugin config files can be found
+     * @param editBus             object implementing the CDKEditBus interface
+     *
+     * @see   org.openscience.cdk.applications.plugin.CDKEditBus
+     */
     public CDKPluginManager(String pluginDirName, String pluginConfigDirName,
                             CDKEditBus editBus) {
         this.logger = new LoggingTool(this.getClass().getName());
@@ -61,6 +71,9 @@ public class CDKPluginManager {
         loadPlugins();
     }
     
+    /**
+     * Returns a JMenu with submenus for each loaded plugin.
+     */
     public JMenu getMenu() {
         JMenu menu = new JMenu("Plugins");
         Enumeration pluginsEnum = cdkPlugins.elements();
@@ -100,6 +113,7 @@ public class CDKPluginManager {
         return menu;
     }
     
+    /* Loads the plugins */
     private void loadPlugins() {
         cdkPlugins = new Vector();
         File uhome = new File(System.getProperty("user.home"));
@@ -167,6 +181,10 @@ public class CDKPluginManager {
         }
     }
     
+    /**
+     * Action that creates a dialog with the content defined by the plugin for
+     * which the dialog is created.
+     */
     class PluginDialogAction extends AbstractAction {
         
         private CDKPluginInterface plugin;
