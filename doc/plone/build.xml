@@ -1,0 +1,130 @@
+<project name="CDK Plone Website Build File" default="website" basedir=".">
+
+  <property name="build.dir" value="target"/>
+  <property name="source.dir" value="source"/>
+  
+  <property name="javancsslib" value="javancss21.41"/>
+  <property name="javancsslib.dir" value="${javancsslib}"/>
+
+  <target id="clean" name="clean">
+    <!-- delete file="javancss-tmp.xml"/>
+    <delete file="keyword.index.xml"/>
+    <delete file="classes.mod"/>
+    <delete file="${source.dir}/javancss-data.xml"/>
+    <delete file="${source.dir}/javadoc-data.xml"/>
+    <delete file="${source.dir}/autolayout.xml"/>
+    <delete>
+      <fileset dir="${source.dir}" includes="*dicts.dbx"/>
+      <fileset dir="${source.dir}" includes="*atomtypes.dbx"/>
+    </delete>
+    <delete>
+      <fileset dir="${build.dir}/" includes="*.html"/>
+    </delete>
+    <delete dir="${docbook-xsl}"/>
+    <delete dir="${website-docbook-xsl}"/>
+    <delete dir="${javancsslib.dir}"/ -->
+  </target>
+  
+  <target name="info" id="info" depends="check.includes"/>
+
+  <target name="check.includes" id="check.includes">
+    <uptodate property="javancss.uptodate"
+      targetfile="${source.dir}/javancss-data.xml">
+      <srcfiles dir="../.." includes="CHANGELOG"/>
+    </uptodate>
+    <echo message="Java source stats uptodate: ${javancss.uptodate}"/>
+    <uptodate property="keywordindex.uptodate"
+      targetfile="../javadoc/keyword.index.xml">
+      <srcfiles dir="../.." includes="CHANGELOG"/>
+    </uptodate>
+    <echo message="Keyword index uptodate: ${keywordindex.uptodate}"/>
+    <uptodate property="depends.uptodate"
+      targetfile="../javadoc/depends.xml">
+      <srcfiles dir="../.." includes="CHANGELOG"/>
+    </uptodate>
+    <echo message="Dependency Overview uptodate: ${depends.uptodate}"/>
+    <uptodate property="refs.uptodate"
+      targetfile="../refs/cheminf.dbx">
+      <srcfiles dir="../refs" includes="cheminf.btx"/>
+    </uptodate>
+    <echo message="Bibliography index uptodate: ${refs.uptodate}"/>
+    <uptodate property="classesmod.uptodate"
+      targetfile="../javadoc/classes.mod">
+      <srcfiles dir="../javadoc" includes="classes.mod"/>
+    </uptodate>
+    <echo message="Classes module uptodate: ${classesmod.uptodate}"/>
+    <uptodate property="dicts.uptodate"
+      targetfile="${source.dir}/cdkdict.dbx">
+      <srcfiles dir="../../src/org/openscience/cdk/dict/data" includes="cdk.xml"/>
+    </uptodate>
+    <echo message="Dictionaries in Docbook uptodate: ${dicts.uptodate}"/>
+    <uptodate property="atlists.uptodate"
+      targetfile="${source.dir}/mol2_atomtypes.dbx">
+      <srcfiles dir="../../src/org/openscience/cdk/config/data" includes="mol2_atomtypes.xml"/>
+    </uptodate>
+    <echo message="Atom Type Lists in Docbook uptodate: ${atlists.uptodate}"/>
+  </target>
+
+  <target name="includes" id="includes" 
+      depends="check.includes,
+               javancss, keyword.index, bibliography, dicts, atlists, 
+               classes.mod, depends"/>
+  
+  <target name="check.javancss" depends="setup.buildsystem" unless="javancss.uptodate" >
+    <mkdir dir="${javancsslib.dir}" />
+    <unzip src="${javancsslib}.zip" dest="." />
+  </target>
+
+  <target name="website" id="website"/> <!-- TODO implement this target for plone -->
+
+  <target name="javancss" depends="check.buildsystem" unless="javancss.uptodate">
+    <java classname="javancss.Main" fork="yes"
+      output="javancss-tmp.xml">
+      <arg value="-package"/>
+      <arg value="-xml"/>
+      <arg value="-recursive"/>
+      <arg value="../../src"/>
+      <classpath>
+        <pathelement location="${javancsslib.dir}/lib/javancss.jar"/>
+        <pathelement location="${javancsslib.dir}/lib/ccl.jar"/>
+        <pathelement location="${javancsslib.dir}/lib/jhbasic.jar"/>
+      </classpath>
+    </java>
+    <xslt in="javancss-tmp.xml" out="${source.dir}/javancss-data.xml" style="${source.dir}/xsl/javancss2docbook.xsl"/>
+    <xslt in="javancss-tmp.xml" out="${source.dir}/javadoc-data.xml"  style="${source.dir}/xsl/javancss2docbook-javadoc.xsl"/>
+  </target>
+  
+  <target name="dicts" unless="dicts.uptodate">
+    <xslt in="../../src/org/openscience/cdk/dict/data/cdk.xml"      out="${source.dir}/cdkdict.dbx" style="${source.dir}/xsl/cmldict2docbook.xsl"/>
+    <xslt in="../../src/org/openscience/cdk/dict/data/chemical.xml" out="${source.dir}/chemicaldict.dbx" style="${source.dir}/xsl/cmldict2docbook.xsl"/>
+  </target>
+  
+  <target name="atlists" unless="atlists.uptodate">
+    <xslt in="../../src/org/openscience/cdk/config/data/hybridization_atomtypes.xml" out="${source.dir}/hybridization_atomtypes.dbx" style="${source.dir}/xsl/atomtypelist2docbook.xsl"/>
+    <xslt in="../../src/org/openscience/cdk/config/data/mol2_atomtypes.xml"          out="${source.dir}/mol2_atomtypes.dbx"          style="${source.dir}/xsl/atomtypelist2docbook.xsl"/>
+    <xslt in="../../src/org/openscience/cdk/config/data/pdb_atomtypes.xml"           out="${source.dir}/pdb_atomtypes.dbx"           style="${source.dir}/xsl/atomtypelist2docbook.xsl"/>
+    <xslt in="../../src/org/openscience/cdk/config/data/valency_atomtypes.xml"       out="${source.dir}/valency_atomtypes.dbx"       style="${source.dir}/xsl/atomtypelist2docbook.xsl"/>
+    <xslt in="../../src/org/openscience/cdk/config/data/structgen_atomtypes.xml"     out="${source.dir}/structgen_atomtypes.dbx"     style="${source.dir}/xsl/atomtypelist2docbook.xsl"/>
+  </target>
+  
+  <target id="keyword.index" name="keyword.index" unless="keywordindex.uptodate">
+    <ant dir="../javadoc/" antfile="build.xml" target="keyword.index"/>
+    <copy file="keyword.index.xml" tofile="../javadoc/keyword.index.xml"/>
+  </target>
+
+  <target id="classes.mod" name="classes.mod" unless="classesmod.uptodate">
+    <ant dir="../javadoc/" antfile="build.xml" target="classes.mod"/>
+    <copy file="classes.mod" tofile="../javadoc/classes.mod"/>
+  </target>
+  
+  <target id="depends" name="depends" unless="depends.uptodate">
+    <ant dir="../javadoc/" antfile="build.xml" target="dependencies"/>
+    <move file="builddepends.xml" tofile="../javadoc/builddepends.xml"/>
+    <move file="depends.xml" tofile="../javadoc/depends.xml"/>
+  </target>
+
+  <target id="bibliography" name="bibliography" unless="refs.uptodate">
+    <ant dir="../refs/" antfile="build.xml" target="convertToDocBook" />
+  </target>
+
+</project>
