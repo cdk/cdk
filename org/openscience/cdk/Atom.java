@@ -1,6 +1,7 @@
-/* Atom.java
- * 
- * $RCSfile$    $Author$    $Date$    $Revision$
+/* $RCSfile$
+ * $Author$
+ * $Date$
+ * $Revision$
  * 
  * Copyright (C) 1997-2001  The Chemistry Development Kit (CDK) project
  * 
@@ -106,6 +107,22 @@ public class Atom extends ChemObject implements Cloneable {
         {
                 this(element);
                 this.point2D = point2D;
+        }
+
+        /**
+         *  Sets the partial charge of this atom
+         *
+         * @param  element  The partial charge
+         */
+        public void setCharge(double charge) {
+               this.charge = charge;
+        }
+
+        /**
+         *  Returns the partial charge of this atom
+         */
+        public double getCharge() {
+               return this.charge;
         }
 
         /**
