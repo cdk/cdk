@@ -37,7 +37,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.io.SMILESReader;
 import org.openscience.cdk.test.CDKTestCase;
-
+import org.openscience.cdk.Molecule;
 /**
  * TestCase for the reading MDL mol files using one test file.
  *
@@ -59,13 +59,50 @@ public class SMILESReaderTest extends CDKTestCase {
     }
 
     public void testReading() {
-        String filename = "data/smiles.txt";
+        String filename = "data/smiles.smi";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
             SMILESReader reader = new SMILESReader(new InputStreamReader(ins));
             SetOfMolecules som = (SetOfMolecules)reader.read(new SetOfMolecules());
             assertEquals(8, som.getMoleculeCount());
+        } catch (Exception e) {
+            fail(e.toString());
+        }
+    }
+    
+    
+    public void testReadingSmiFile_1() {
+        String filename = "data/smiles.smi";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        try {
+            SMILESReader reader = new SMILESReader(new InputStreamReader(ins));
+            SetOfMolecules som = (SetOfMolecules)reader.read(new SetOfMolecules());
+            String name = null;
+	    Molecule thisMol = null;
+	    
+	    thisMol = som.getMolecule(0);
+	    name = ( (String)thisMol.getProperty("SMIdbNAME") ).toString();
+	    assertEquals("benzene", name);
+        } catch (Exception e) {
+            fail(e.toString());
+        }
+    }
+    
+    public void testReadingSmiFile_2() {
+        String filename = "data/smiles.smi";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        try {
+            SMILESReader reader = new SMILESReader(new InputStreamReader(ins));
+            SetOfMolecules som = (SetOfMolecules)reader.read(new SetOfMolecules());
+            String name = null;
+	    Molecule thisMol = null;
+	    thisMol = som.getMolecule(1);
+	    name = ( (String)thisMol.getProperty("SMIdbNAME") ).toString();
+	    if(name==" ") name = "withoutName";
+	    assertEquals(" ", name);
         } catch (Exception e) {
             fail(e.toString());
         }

@@ -55,6 +55,7 @@ public class SMILESReader extends DefaultChemObjectReader {
 
     private BufferedReader input = null;
     private SmilesParser sp = null;
+    
 
     /* 
      * construct a new reader from a Reader type object
@@ -115,14 +116,24 @@ public class SMILESReader extends DefaultChemObjectReader {
      * @return A ChemFile containing the data parsed from input.
      */
     private SetOfMolecules readSetOfMolecules() {
+	String delimiter = " ";
         SetOfMolecules som = new SetOfMolecules();
         try {
             String line = input.readLine();
             while (line != null) {
-                //System.out.println(line);
+		java.util.StringTokenizer st = new java.util.StringTokenizer(line, " ");
+		String[] tokenized = line.split("\\s");
+		
+		//System.out.println(line);
                 try {
-                    Molecule molecule = sp.parseSmiles(line);
+                    Molecule molecule = sp.parseSmiles(tokenized[0]);
                     som.addMolecule(molecule);
+		    if(tokenized.length > 1) {
+			    molecule.setProperty("SMIdbNAME", new String(tokenized[1]));
+		    }
+		    else {
+			    molecule.setProperty("SMIdbNAME", new String(" "));
+		    }
                 } catch (Exception e) {
                     // should make some noise now, but for now: just skip this line
                 }
