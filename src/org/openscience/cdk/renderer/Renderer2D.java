@@ -282,7 +282,7 @@ public class Renderer2D implements MouseMotionListener   {
 		try {
 			molecules = ConnectivityChecker.partitionIntoMolecules(atomCon).getMolecules();
 		} catch (Exception exception) {
-            logger.warn("Could not partition molecule: " + exception.toString());
+            logger.warn("Could not partition molecule: ", exception.getMessage());
 			logger.debug(exception);
             return;
 		}
@@ -889,7 +889,7 @@ public class Renderer2D implements MouseMotionListener   {
         } else if (bond.getOrder() == 3.0) {
             paintTripleBond(bond, bondColor, graphics);
         } else {
-            logger.warn("Drawing bond as single even though it has order:" + bond.getOrder()); 
+            logger.warn("Drawing bond as single even though it has order: ", bond.getOrder()); 
             paintSingleBond(bond, bondColor, graphics);
         }
     }

@@ -669,7 +669,7 @@ public class Controller2D
 				r2dm.setSelectedPart(selectedPart);
 				r2dm.setSelectedPart(getContainedAtoms(r2dm.getSelectRect()));
 				r2dm.setSelectRect(null);
-				logger.debug("selected stuff  " + selectedPart);
+				logger.debug("selected stuff  ", selectedPart);
 			}
 
 			if (c2dm.getDrawMode() == c2dm.ERASER)
@@ -680,10 +680,10 @@ public class Controller2D
 				{
 					logger.info("User asks to delete an Atom");
 					AtomContainer container = ChemModelManipulator.getAllInOneContainer(chemModel);
-					logger.debug("Atoms before delete: " + container.getAtomCount());
+					logger.debug("Atoms before delete: ", container.getAtomCount());
 					ChemModelManipulator.removeAtomAndConnectedElectronContainers(chemModel, highlightedAtom);
 					container = ChemModelManipulator.getAllInOneContainer(chemModel);
-					logger.debug("Atoms before delete: " + container.getAtomCount());
+					logger.debug("Atoms before delete: ", container.getAtomCount());
 					// update atoms
 					Atom[] atoms = container.getConnectedAtoms(highlightedAtom);
 					AtomContainer atomCon = ChemModelManipulator.getRelevantAtomContainer(chemModel, atoms[0]);
@@ -946,7 +946,7 @@ public class Controller2D
 					Vector lassoPoints = r2dm.getLassoPoints();
 					r2dm.addLassoPoint(new Point((Point) lassoPoints.elementAt(0)));
 					int number = lassoPoints.size();
-					logger.debug("# lasso points: " + number);
+					logger.debug("# lasso points: ", number);
 					int[] screenLassoCoords = new int[number * 2];
 					Point currentPoint;
 					for (int i = 0; i < number; i++)
@@ -954,23 +954,26 @@ public class Controller2D
 						currentPoint = (Point) lassoPoints.elementAt(i);
 						screenLassoCoords[i * 2] = currentPoint.x;
 						screenLassoCoords[i * 2 + 1] = currentPoint.y;
-						logger.debug("ScreenLasso(.x .y) = " + screenLassoCoords[i * 2] + ", " + screenLassoCoords[i * 2 + 1]);
+						logger.debug("ScreenLasso.x = ", screenLassoCoords[i * 2]);
+                        logger.debug("ScreenLasso.y = ", screenLassoCoords[i * 2 + 1]);
 					}
 					/*
 					 *  Convert points to world coordinates as they are
 					 *  in screen coordinates in the vector
 					 */
 					int[] worldCoords = getWorldCoordinates(screenLassoCoords);
-					logger.debug("Returned coords: " + worldCoords.length);
-					logger.debug("       # points: " + number);
+					logger.debug("Returned coords: ", worldCoords.length);
+					logger.debug("       # points: ", number);
 					int[] xPoints = new int[number];
 					int[] yPoints = new int[number];
 					for (int i = 0; i < number; i++)
 					{
 						xPoints[i] = worldCoords[i * 2];
 						yPoints[i] = worldCoords[i * 2 + 1];
-						logger.debug("WorldCoords(.x .y) = " + worldCoords[i * 2] + ", " + worldCoords[i * 2 + 1]);
-						logger.debug("Polygon(.x .y) = " + xPoints[i] + ", " + yPoints[i]);
+						logger.debug("WorldCoords.x  = ", worldCoords[i * 2]);
+                        logger.debug("WorldCoords.y  = ", worldCoords[i * 2 + 1]);
+						logger.debug("Polygon.x = ", xPoints[i]);
+                        logger.debug("Polygon.y = ", yPoints[i]);
 					}
 					Polygon polygon = new Polygon(xPoints, yPoints, number);
 					r2dm.setSelectedPart(getContainedAtoms(polygon));
@@ -1324,7 +1327,7 @@ public class Controller2D
 				highlighted.addAtom(highlightedBond.getAtomAt(i));
 			}
 		}
-		logger.debug("sharedAtoms  " + highlighted);
+		logger.debug("sharedAtoms  ", highlighted);
 		return highlighted;
 	}
 
@@ -1409,7 +1412,7 @@ public class Controller2D
 		for (int i = 0; i < atomCon.getAtomCount(); i++)
 		{
 			currentAtom = atomCon.getAtomAt(i);
-			logger.debug("Atom: " + currentAtom.toString());
+			logger.debug("Atom: ", currentAtom);
 			if (polygon.contains(new Point((int) currentAtom.getX2D(), (int) currentAtom.getY2D())))
 			{
 				selectedPart.addAtom(currentAtom);
@@ -1445,14 +1448,16 @@ public class Controller2D
 	{
 		int[] worldCoords = new int[coords.length];
 		int coordCount = coords.length / 2;
-		logger.debug("coord.length: " + coords.length);
+		logger.debug("coord.length: ", coords.length);
 		int height = (int) (r2dm.getBackgroundDimension()).getHeight();
 		for (int i = 0; i < coordCount; i++)
 		{
 			worldCoords[i * 2] = (int) ((double) coords[i * 2] / r2dm.getZoomFactor());
-			logger.debug("getWorldCoord: " + coords[i * 2] + " -> " + worldCoords[i * 2]);
 			worldCoords[i * 2 + 1] = (int) ((double) (height - coords[i * 2 + 1]) / r2dm.getZoomFactor());
-			logger.debug("getWorldCoord: " + coords[i * 2 + 1] + " -> " + worldCoords[i * 2 + 1]);
+            if (logger.isDebugEnabled()) {
+                logger.debug("getWorldCoord: " + coords[i * 2] + " -> " + worldCoords[i * 2]);
+                logger.debug("getWorldCoord: " + coords[i * 2 + 1] + " -> " + worldCoords[i * 2 + 1]);
+            }
 		}
 		return worldCoords;
 	}
@@ -1661,7 +1666,7 @@ public class Controller2D
 		if (popupMenu != null)
 		{
 			popupMenu.setSource(objectInRange);
-			logger.debug("Set popup menu source to: " + objectInRange);
+			logger.debug("Set popup menu source to: ", objectInRange);
 			popupMenu.show(event.getComponent(), event.getX(), event.getY());
 		} else
 		{
@@ -1707,7 +1712,7 @@ public class Controller2D
 					r2dm.setSelectedPart(selected);
 				}
 			}
-			logger.debug("Selected: " + selected.toString());
+			logger.debug("Selected: ", selected);
 			/*
 			 *  PRESERVE THIS. This notifies the
 			 *  the listener responsible for
