@@ -412,12 +412,14 @@ public class SSSRFinder
 		RingSet ringSet = new RingSet();
 		Bond bond;
 		int minMaxSize = 0, minMax = 0;
+		System.out.println(molecule);
 		for (int i = 0; i < ring.getBondCount(); i++)
 		{
 			bond = ring.getBondAt(i);
 			molecule.removeBond(bond);
 			r1 = getRing(bond.getAtomAt(0),molecule);
 			r2 = getRing(bond.getAtomAt(1),molecule);
+			System.out.println("checkEdges: " + bond);
 			if (r1.getAtomCount() > r2.getAtomCount())
 			{
 				ringSet.addElement(r1);

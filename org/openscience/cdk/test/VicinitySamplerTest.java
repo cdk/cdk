@@ -35,6 +35,7 @@ import org.openscience.cdk.renderer.*;
 import org.openscience.cdk.structgen.*;
 import org.openscience.cdk.*;
 import org.openscience.cdk.tools.*;
+import org.openscience.cdk.smiles.*;
 import java.io.*;
 import java.util.*;
 import junit.framework.*;
@@ -55,23 +56,63 @@ public class VicinitySamplerTest extends TestCase
 
 	public  void testVicinitySampler()
 	{
-		Molecule mol = MoleculeFactory.makeAlphaPinene();
+		Molecule mol = MoleculeFactory.makeEthylPropylPhenantren();
+		configureAtoms(mol);
+		fixCarbonHCount(mol);
+		
+		//System.out.println("Initial Molecule: \n" + mol);
 		VicinitySampler vs = new VicinitySampler();
 		vs.setMolecule(mol);
+
+		SmilesGenerator sg = null;
+		Molecule temp = null;
 		Vector structures = vs.sample((AtomContainer) mol);
-		System.out.println("There are " + structures.size() + " structures in Faulon-Distance 1 for alpha-Pinene.");
-		
-		mol = MoleculeFactory.makeEthylPropylPhenantren();
-		vs = new VicinitySampler();
-		vs.setMolecule(mol);
-		structures = vs.sample((AtomContainer) mol);
+		structures.addElement(mol);
+		for (int f = 0; f < structures.size(); f++)
+		{
+			temp = (Molecule)structures.elementAt(f);
+			sg = new SmilesGenerator();
+			System.out.println(sg.createSMILES(temp));
+		}
+
 		System.out.println("There are " + structures.size() + " structures in Faulon-Distance 1 for EthylPropylPhenantren"); 
 		display(structures);
 	}
+	private static void configureAtoms(Molecule mol)
+	{
+		try
+		{
+			new ElementFactory().configureAtoms(mol);
+		}
+		catch(Exception exc)
+		{
+			exc.printStackTrace();
+		}
+	}
+
+	
+	private void fixCarbonHCount(Molecule mol)
+	{	
+		/* the following line are just a quick fix for this
+		   particluar carbon-only molecule until we have a proper 
+		   hydrogen count configurator
+		 */
+		int bondCount = 0;
+		Atom atom;
+		 for (int f = 0; f < mol.getAtomCount(); f++)
+		{
+			atom = mol.getAtomAt(f);
+			bondCount =  mol.getBondOrderSum(atom);
+			if (bondCount > 4) System.out.println("bondCount: " + bondCount);
+			atom.setHydrogenCount(4 - bondCount - (int)atom.getCharge());
+		}
+	}
+
 	
 	private void display(Vector structures)
 	{
-		MoleculeListViewer moleculeListViewer = new MoleculeListViewer(); 
+		MoleculeListViewer moleculeListViewer = new MoleculeListViewer();
+		moleculeListViewer.setDefaultCloseOperation(moleculeListViewer.EXIT_ON_CLOSE);
 		StructureDiagramGenerator sdg = null;
 		MoleculeViewer2D mv = null;
 		Molecule mol = null;
@@ -79,6 +120,7 @@ public class VicinitySamplerTest extends TestCase
 		{
 			sdg = new StructureDiagramGenerator();
 			mv = new MoleculeViewer2D();
+			mv.getRenderer2DModel().setDrawNumbers(true);
 			mol = (Molecule)structures.elementAt(f);
 			sdg.setMolecule((Molecule)mol.clone());
 
@@ -91,7 +133,8 @@ public class VicinitySamplerTest extends TestCase
 			}
 			catch(Exception exc)
 			{
-				System.out.println("*** Exit due to an unexpected error during coordinate generation ***");
+				
+				exc.printStackTrace();
 			}
 		}
 	}
