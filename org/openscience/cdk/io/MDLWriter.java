@@ -43,8 +43,7 @@ import javax.vecmath.*;
  * Writes an array of molecules to a MDL molfile.
  */
 
-public class MDLWriter implements CDKConstants
-{
+public class MDLWriter implements CDKConstants, ChemObjectWriter {
 	static BufferedWriter writer;
 
 
