@@ -203,7 +203,8 @@ public class ChemObject implements java.io.Serializable, Cloneable {
     }
 	
 	/**
-	 * Clones this <code>ChemObject</code> by applying a deep copy.
+	 * Clones this <code>ChemObject</code> by applying a deep copy on all Objects
+     * which are clonable.
 	 *
 	 * @return  The cloned object
 	 */
