@@ -605,6 +605,8 @@ public class AtomContainer extends ChemObject implements Cloneable
 	 *  number of atoms in the AtomContainer. If the i-th and the j-th atom 
 	 *  in the atomcontainer share a bond, the element i,j in the matrix is 
 	 *  set to the bond order value. Otherwise it is zero.
+         *  References:
+         *  <a href="http://cdk.sf.net/biblio.html#TRI1992">TRI1992</a>,
 	 *
 	 * @return A connection matrix representation of this AtomContainer
 	 * @exception  org.openscience.cdk.exception.NoSuchAtomException  Description of Exception
@@ -634,6 +636,8 @@ public class AtomContainer extends ChemObject implements Cloneable
      *  number of atoms in the AtomContainer. The element i,j of the matrix is
      *  1, if the i-th and the j-th atom in the atomcontainer share a bond. Otherwise it
      *  is zero.
+     *  References:
+     *  <a href="http://cdk.sf.net/biblio.html#TRI1992">TRI1992</a>,
      *
      * @return A adjacency matrix representating this AtomContainer
      *

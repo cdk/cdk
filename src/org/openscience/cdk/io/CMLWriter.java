@@ -59,7 +59,7 @@ import javax.vecmath.Point3d;
  * </pre>
  *
  * References:
- *   <a href="http://www.sf.net/biblio.html#PMR99">PMR99</a>
+ *   <a href="http://cdk.sf.net/biblio.html#PMR99">PMR99</a>
  *
  * @see FileWriter
  * @see StringWriter

@@ -40,7 +40,7 @@ import javax.vecmath.*;
  * Reads a molecule from an MDL Molfile
  *
  * References:
- *   <a href="http://www.sf.net/biblio.html#DAL92">DAL92</a>
+ *   <a href="http://cdk.sf.net/biblio.html#DAL92">DAL92</a>
  *
  * @author     steinbeck
  * @created    October 2, 2000

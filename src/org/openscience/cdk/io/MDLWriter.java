@@ -49,7 +49,7 @@ import javax.vecmath.*;
  * </pre>
  *
  * References:
- *   <a href="http://www.sf.net/biblio.html#DAL92">DAL92</a>
+ *   <a href="http://cdk.sf.net/biblio.html#DAL92">DAL92</a>
  *
  * @keyword file format, MDL molfile
  */

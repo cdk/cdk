@@ -35,7 +35,7 @@ import org.openscience.cdk.*;
  * Generates HOSE codes.
  *
  * References:
- *   <a href="http://www.sf.net/biblio.html#BRE78">BRE78</a>
+ *   <a href="http://cdk.sf.net/biblio.html#BRE78">BRE78</a>
  *
  *@author     steinbeck
  *@created    10. Mai 2002

@@ -39,8 +39,8 @@ import java.text.NumberFormat;
  * Generates SMILES strings.
  *
  * References:
- *   <a href="http://www.sf.net/biblio.html#WEI88">WEI88</a>,
- *   <a href="http://www.sf.net/biblio.html#WEI89">WEI89</a>
+ *   <a href="http://cdk.sf.net/biblio.html#WEI88">WEI88</a>,
+ *   <a href="http://cdk.sf.net/biblio.html#WEI89">WEI89</a>
  *
  * @author Oliver Horlacher
  *

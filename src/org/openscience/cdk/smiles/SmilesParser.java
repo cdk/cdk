@@ -36,7 +36,7 @@ import org.openscience.cdk.*;
  *  should be sufficient for most organic molecules.
  *
  * References:
- *   <a href="http://www.sf.net/biblio.html#WEI88">WEI88</a>
+ *   <a href="http://cdk.sf.net/biblio.html#WEI88">WEI88</a>
  *
  *@author     steinbeck
  *@created    29. April 2002
