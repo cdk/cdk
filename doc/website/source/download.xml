@@ -26,55 +26,28 @@
       </para>
     </section>
     <section>
-      <title>Packages</title>
-        <para>To use the CDK you need to download the cdk-libs package that contains
-        required libraries that are used by CDK. A binary distribution is available in
-        cdk-bin, and the source code can be found in the cdk-source package.
-        <variablelist><title>Packages</title>
-            <varlistentry><term><filename>cdk-source</filename></term>
-            <listitem>
-                <para>Source code. To compile the source code you need cdk-libs 20020723.
-                Current version: 20020805.
-                </para>
-            </listitem>
-            </varlistentry>
-            <varlistentry><term><filename>cdk-libs</filename></term>
-            <listitem>
-                <para>Set of required and optional libraries (<ulink url="libraries.html">more info</ulink>).
-                Current version: 20020723.
-                </para>
-            </listitem>
-            </varlistentry>
-            <varlistentry><term><filename>cdk-bin</filename></term>
-            <listitem>
-                <para>Binary distribution with two executables: cdk-fileconvert and cdk-dbadmin.
-                The package is installable with <quote>configure &amp;&amp; make &amp;&amp; make install</quote>
-                on Linux/Unix/BSD like systems. To run the software you need cdk-libs 20020723
-                installed. Current version: 20020805.
-                </para>
-            </listitem>
-            </varlistentry>
-            <varlistentry><term><filename>cdk-test</filename></term>
-            <listitem>
-                <para>Binary distribution with one executable: cdk-test. It is used to run JUnit tests for CDK.
-                    The package is installable with <quote>configure &amp;&amp; make &amp;&amp; make install</quote>
-                    on Linux/Unix/BSD like systems. To run the software you need cdk-libs 20020723
-                    installed. Current version: 20020805.
-                </para>
-            </listitem>
-            </varlistentry>
-            <varlistentry><term><filename>cdk-doc</filename></term>
-            <listitem>
-                <para>
-                Contains the JavaDoc of the library. Current version: 20020805.
-                </para>
-            </listitem>
-            </varlistentry>
-        </variablelist>
+      <title>Tar Package</title>
+        <para>
+          CDK is distributed as a tar.gz source package from which it can be compiled.
+          On Linux/Solaris/BSD systems, it can be installed with the normal
+          <command>./configure &amp;&amp; make &amp;&amp; make install</command>.
         </para>
         <para>
-        Packages can be downloaded
+          On Windows systems
+          CDK cannot be installed automatically, but it can be compiled with
+          Ant: <command>ant dist-all</command>.
+        </para>
+        <para>
+        The package can be downloaded
         <ulink url="http://sourceforge.net/project/showfiles.php?group_id=20024">here</ulink>.
+        </para>
+    </section>
+    <section>
+      <title>Binary Linux Package</title>
+        <para>
+          In addition to the source package, Debian user's can also download a Debian
+          package. Keep in mind that the Debian package is uploaded to SF a few days
+          later than the source package.
         </para>
     </section>
   </section>

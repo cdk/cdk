@@ -23,6 +23,7 @@
       <listitem>
         <para>Write a non-accelerated 3D viewer, like the one in Jmol. Some work
           has been done, but it is not completed.</para>
+        <para>For now, Jmol can be used. See cdk-view's --useJmol option.</para>
       </listitem>
       <listitem>
         <para>More JUnit tests: not all methods of the core classes are tested.</para>
