@@ -66,6 +66,7 @@ public class FileConvertor {
     private boolean applyHAdding = false;
     private boolean applyHRemoval = false;
     private boolean apply2DCleanup = false;
+    private boolean apply3DRebonding = false;
 
     public FileConvertor() {
         logger = new LoggingTool(this.getClass().getName());
@@ -108,6 +109,33 @@ public class FileConvertor {
                     return false;
                 }
 
+                // apply modifications
+                if (applyHAdding) {
+                    System.out.print("Cannot add hydrogens at this moment.");
+                    System.exit(-1);
+                }
+                if (applyHRemoval) {
+                    System.out.print("Cannot remove hydrogens at this moment.");
+                    System.exit(-1);
+                }
+                if (apply2DCleanup) {
+                    System.out.print("Cannot create new 2D coordinates at this moment.");
+                    System.exit(-1);
+                }
+                if (apply3DRebonding) {
+                    System.out.print("Cannot add bonds from 3D coordinates at this moment.");
+                    System.exit(-1);
+                    /* This code is broken, it needs to original AtomContainer's
+                    AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/jmol_atomtypes.txt");
+                    AtomContainer container = ChemFileManipulator.getAllInOneContainer(content);
+                    RebondTool rebonder = new RebondTool(2.0, 0.5, 0.5);
+                    Atom[] atoms = container.getAtoms();
+                    for (int i=0; i<atoms.length; i++) {
+                        factory.configure(atoms[i]);
+                    }
+                    rebonder.rebond(container); */
+                }
+                
                 // create output file
                 String ofilename = getOutputFileName(ifilename, this.oformat);
                 FileWriter fw = new FileWriter(new File(ofilename));
@@ -297,6 +325,8 @@ public class FileConvertor {
 				this.applyHRemoval = true;
 			} else if (option.equals("--create2DCoordinates")) {
 				this.apply2DCleanup = true;
+			} else if (option.equals("--rebondFrom3DCoordinates")) {
+				this.apply3DRebonding = true;
             } else {
                 System.out.println("Unrecognized option: " + args[i]);
                 System.exit(1);
