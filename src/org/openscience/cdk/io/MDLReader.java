@@ -152,8 +152,18 @@ public class MDLReader extends DefaultChemObjectReader {
 			throw new CDKException(error);
 		}
 		chemModel.setSetOfMolecules(setOfMolecules);
+        logger.debug("Adding ChemModel to ChemSequence");
+        logger.debug("#models (array): " + chemSequence.getChemModels().length);
+        logger.debug("#models (count): " + chemSequence.getChemModelCount());
 		chemSequence.addChemModel(chemModel);
+        logger.debug("#models (array): " + chemSequence.getChemModels().length);
+        logger.debug("#models (count): " + chemSequence.getChemModelCount());
+        logger.debug("Adding ChemSequence to ChemFile");
+        logger.debug("#sequences (array): " + chemFile.getChemSequences().length);
+        logger.debug("#sequences (count): " + chemFile.getChemSequenceCount());
 		chemFile.addChemSequence(chemSequence);
+        logger.debug("#sequences (array): " + chemFile.getChemSequences().length);
+        logger.debug("#sequences (count): " + chemFile.getChemSequenceCount());
 
 		return chemFile;
 	}
@@ -166,6 +176,7 @@ public class MDLReader extends DefaultChemObjectReader {
 	 *@return    The Molecule that was read from the MDL file.
 	 */
 	private Molecule readMolecule() throws CDKException {
+        logger.debug("Reading new molecule");
         int linecount = 0;
 		int atoms = 0;
 		int bonds = 0;
