@@ -10,6 +10,7 @@ New:
 * Added missing getInstance(InputStream) method (fixes #810511)
 * Implemented the --rebondFrom3DCoordiantes and --addHydrogens options for
   applications.FileCovertor
+* Added IOWriter that generates CDK source code
 
 Fixes:
 * Removed use of JSX

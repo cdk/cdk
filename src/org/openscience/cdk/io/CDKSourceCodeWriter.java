@@ -1,0 +1,116 @@
+/* $RCSfile$
+ * $Author$ 
+ * $Date$
+ * $Revision$
+ * 
+ * Copyright (C) 2003  The Chemistry Development Kit (CDK) project
+ * 
+ * Contact: cdk-devel@lists.sourceforge.net
+ * 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ * All we ask is that proper credit is given for our work, which includes
+ * - but is not limited to - adding the above copyright notice to the beginning
+ * of your source code files, and to any copyright notice that you may distribute
+ * with programs based on this work.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+package org.openscience.cdk.io;
+
+import org.openscience.cdk.*;
+import org.openscience.cdk.exception.*;
+import org.openscience.cdk.tools.IDCreator;
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import javax.vecmath.*;
+
+/**
+ * Converts a Molecule into CDK source code that would build the same
+ * molecule. It's typical use is:
+ * <pre>
+ * StringWriter stringWriter = new StringWriter();
+ * ChemObjectWriter writer = new CDKSourceCodeWriter(stringWriter);
+ * writer.write((Molecule)molecule);
+ * writer.close();
+ * System.out.print(stringWriter.toString());
+ * </pre>
+ *
+ * @author  Egon Willighagen <egonw@sci.kun.nl>
+ * @created 2003-10-01
+ * 
+ * @keyword file format, CDK source code
+ */
+public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
+
+    private BufferedWriter writer;
+    private org.openscience.cdk.tools.LoggingTool logger;
+
+    /**
+     * Contructs a new CDKSourceCodeWriter.
+     *
+     * @param   out  The Writer to write to
+     */
+    public CDKSourceCodeWriter(Writer out) {
+        writer = new BufferedWriter(out);
+        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+    }
+
+    /**
+     * Flushes the output and closes this object.
+     */
+    public void close() throws IOException {
+        writer.close();
+    }
+
+    public void write(ChemObject object) throws CDKException {
+        if (object instanceof Molecule) {
+            try {
+                writeMolecule((Molecule)object);
+            } catch (Exception ex) {
+                logger.error(ex.getMessage());
+                logger.debug(ex);
+            }
+        } else {
+            throw new CDKException("Only supported is writing of Molecule objects.");
+        }
+    }
+    
+    public ChemObject highestSupportedChemObject() {
+        return new Molecule();
+    }
+
+    public void writeMolecule(Molecule molecule) throws Exception {
+        writer.write("{\n");
+        writer.write("  Molecule mol = new Molecule();\n");
+        IDCreator.createAtomAndBondIDs(molecule);
+        Atom[] atoms = molecule.getAtoms();
+        for (int i=0; i<atoms.length; i++) {
+            Atom atom = atoms[i];
+            writer.write("  Atom " + atom.getID() + " = new Atom(\"" + atom.getSymbol() +
+                         "\");\n");
+        }
+        Bond[] bonds = molecule.getBonds();
+        for (int i=0; i<bonds.length; i++) {
+            Bond bond = bonds[i];
+            writer.write("  Bond " + bond.getID() + " = new Bond(" + 
+                         bond.getAtomAt(0).getID() + ", " +
+                         bond.getAtomAt(1).getID() + ", " +
+                         bond.getOrder() + ");\n");
+        }
+        writer.write("}\n");
+    }
+    
+}
+
+

@@ -45,7 +45,8 @@ import javax.vecmath.*;
  * Program that converts a file from one format to a file with another format.
  * Supported formats are:
  *   input: CML, MDL MOL/SDF file, PDB, PMP, ShelX, SMILES, XYZ
- *  output: CML, MDL MOL/SDF file, PDB, ShelX, SMILES, SVG, XYZ, Gaussian Input
+ *  output: CML, MDL MOL/SDF file, PDB, ShelX, SMILES, SVG, XYZ, 
+ *          Gaussian Input, CDK source code
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  *
@@ -233,6 +234,8 @@ public class FileConvertor {
             writer = new PDBWriter(fw);
         } else if (format.equalsIgnoreCase("GIN")) {
             writer = new GaussianInputWriter(fw);
+        } else if (format.equalsIgnoreCase("CDK")) {
+            writer = new CDKSourceCodeWriter(fw);
         }
         if (writer != null) {
             logger.debug(format + " -> " + writer.getClass().getName());
