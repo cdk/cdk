@@ -132,25 +132,25 @@ public class Element extends ChemObject implements java.io.Serializable, Cloneab
          */
     public Object clone() {
 
-        Object o = null;
+        Object clone = null;
 
         try {
-            o = super.clone();
+            clone = super.clone();
         } catch (Exception e) {
             e.printStackTrace(System.err);
         }
 
-        return o;
+        return clone;
     }
     
     public String toString() {
-        StringBuffer sb = new StringBuffer();
-        sb.append("Element(");
-        sb.append(getSymbol());
-        sb.append(", ID:"); sb.append(getID());
-        sb.append(", AN:"); sb.append(getAtomicNumber());
-        sb.append(")");
-        return sb.toString();
+        StringBuffer resultString = new StringBuffer();
+        resultString.append("Element(");
+        resultString.append(getSymbol());
+        resultString.append(", ID:"); resultString.append(getID());
+        resultString.append(", AN:"); resultString.append(getAtomicNumber());
+        resultString.append(")");
+        return resultString.toString();
     }
     
     /**

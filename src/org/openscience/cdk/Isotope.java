@@ -75,10 +75,10 @@ public class Isotope extends Element implements java.io.Serializable, Cloneable
 	 * @param  elementSymbol  The element symbol, "O" for Oxygen, etc.
 	 * @param  massNumber     The atomic mass of the isotope, 16 for Oxygen, e.g.
 	 * @param  exactMass      The exact mass of the isotope, be a little more explicit here :-)
-	 * @param  nA             The natural abundance of the isotope
+	 * @param  abundance      The natural abundance of the isotope
 	 */
-	public Isotope(int atomicNumber, String elementSymbol, int massNumber, double exactMass, double nA) {
-		this(atomicNumber, elementSymbol, exactMass, nA);
+	public Isotope(int atomicNumber, String elementSymbol, int massNumber, double exactMass, double abundance) {
+		this(atomicNumber, elementSymbol, exactMass, abundance);
         this.massNumber = massNumber;
 	}
 
@@ -89,12 +89,12 @@ public class Isotope extends Element implements java.io.Serializable, Cloneable
 	 * @param  atomicNumber   The atomic number of the isotope, 8 for Oxygen
 	 * @param  elementSymbol  The element symbol, "O" for Oxygen, etc.
 	 * @param  exactMass      The exact mass of the isotope, be a little more explicit here :-)
-	 * @param  nA             The natural abundance of the isotope
+	 * @param  abundance      The natural abundance of the isotope
 	 */
-	public Isotope(int atomicNumber, String elementSymbol, double exactMass, double nA) {
+	public Isotope(int atomicNumber, String elementSymbol, double exactMass, double abundance) {
 		super(elementSymbol, atomicNumber);
 		this.exactMass = exactMass;
-		this.naturalAbundance = nA;
+		this.naturalAbundance = abundance;
 	}
 
 	/**
@@ -183,14 +183,14 @@ public class Isotope extends Element implements java.io.Serializable, Cloneable
 	 * @return    The cloned object
 	 */
 	public Object clone() {
-		Object o = null;
+		Object clone = null;
 		try {
-			o = super.clone();
+			clone = super.clone();
 		}
 		catch (Exception e) {
 			e.printStackTrace(System.err);
 		}
-		return o;
+		return clone;
 	}
 
 
@@ -200,13 +200,13 @@ public class Isotope extends Element implements java.io.Serializable, Cloneable
 	 * @return    A string representation of this isotope
 	 */
 	public String toString() {
-        StringBuffer sb = new StringBuffer();
-		sb.append("Isotope("); sb.append(massNumber);
-		sb.append(", EM:"); sb.append(exactMass);
-		sb.append(", AB:"); sb.append(naturalAbundance);
-        sb.append(", "); sb.append(super.toString());
-        sb.append(")");
-		return sb.toString();
+        StringBuffer resultString = new StringBuffer();
+		resultString.append("Isotope("); resultString.append(massNumber);
+		resultString.append(", EM:"); resultString.append(exactMass);
+		resultString.append(", AB:"); resultString.append(naturalAbundance);
+        resultString.append(", "); resultString.append(super.toString());
+        resultString.append(")");
+		return resultString.toString();
 	}
     
     /**

@@ -300,14 +300,15 @@ public class Bond extends ElectronContainer implements java.io.Serializable, Clo
 	 */
 	public Point2d get2DCenter()
 	{
-		double x = 0;
-		double y = 0;
+		double xOfCenter = 0;
+		double yOfCenter = 0;
 		for (int f = 0; f < getAtomCount(); f++)
 		{
-			x += getAtomAt(f).getX2d();
-			y += getAtomAt(f).getY2d();
+			xOfCenter += getAtomAt(f).getX2d();
+			yOfCenter += getAtomAt(f).getY2d();
 		}
-		return new Point2d(x / ((double) getAtomCount()), y / ((double) getAtomCount()));
+		return new Point2d(xOfCenter / ((double) getAtomCount()), 
+                           yOfCenter / ((double) getAtomCount()));
 	}
 
 
@@ -319,16 +320,18 @@ public class Bond extends ElectronContainer implements java.io.Serializable, Clo
 	 */
 	public Point3d get3DCenter()
 	{
-		double x = 0;
-		double y = 0;
-		double z = 0;
+		double xOfCenter = 0;
+		double yOfCenter = 0;
+		double zOfCenter = 0;
 		for (int f = 0; f < getAtomCount(); f++)
 		{
-			x += getAtomAt(f).getX3d();
-			y += getAtomAt(f).getY3d();
-			z += getAtomAt(f).getZ3d();
+			xOfCenter += getAtomAt(f).getX3d();
+			yOfCenter += getAtomAt(f).getY3d();
+			zOfCenter += getAtomAt(f).getZ3d();
 		}
-		return new Point3d(x / getAtomCount(), y / getAtomCount(), z / getAtomCount());
+		return new Point3d(xOfCenter / getAtomCount(), 
+                           yOfCenter / getAtomCount(), 
+                           zOfCenter / getAtomCount());
 	}
 
 	/**
@@ -389,15 +392,15 @@ public class Bond extends ElectronContainer implements java.io.Serializable, Clo
 	 */
 	public Object clone()
 	{
-		Bond o = null;
+		Bond clone = null;
 		try
 		{
-			o = (Bond) super.clone();
+			clone = (Bond) super.clone();
 		} catch (Exception e)
 		{
 			e.printStackTrace(System.err);
 		}
-		return o;
+		return clone;
 	}
 
 
@@ -408,25 +411,25 @@ public class Bond extends ElectronContainer implements java.io.Serializable, Clo
 	 *@return    The string representation of this Container
 	 */
 	public String toString() {
-		StringBuffer s = new StringBuffer();
-		s.append("Bond(");
-		s.append(this.hashCode());
-		s.append(", #O:" + getOrder());
-		s.append(", #S:" + getStereo());
+		StringBuffer resultString = new StringBuffer();
+		resultString.append("Bond(");
+		resultString.append(this.hashCode());
+		resultString.append(", #O:" + getOrder());
+		resultString.append(", #S:" + getStereo());
 		Atom[] atoms = getAtoms();
-		s.append(", #A:" + atoms.length);
+		resultString.append(", #A:" + atoms.length);
 		for (int i = 0; i < atoms.length; i++)
 		{
 			if (atoms[i] == null)
 			{
-				s.append(", null");
+				resultString.append(", null");
 			} else
 			{
-				s.append(", " + atoms[i].toString());
+				resultString.append(", " + atoms[i].toString());
 			}
 		}
-		s.append(")");
-		return s.toString();
+		resultString.append(")");
+		return resultString.toString();
 	}
 
 }

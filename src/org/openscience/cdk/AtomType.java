@@ -43,10 +43,6 @@ package org.openscience.cdk;
  */
 public class AtomType extends Isotope implements java.io.Serializable, Cloneable
 {
-	/**
-	 *  An id for this atom type, like C3 for sp3 carbon.
-	 */
-	String id;
 
 	/**
 	 *  The maximum bond order allowed for this atom type.
@@ -91,33 +87,32 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
 	public AtomType(String elementSymbol)
 	{
 		super(elementSymbol);
-		this.id = null;
 	}
 
 
 	/**
 	 *  Constructor for the AtomType object.
 	 *
-	 * @param  id             An id for this atom type, like C3 for sp3 carbon
+	 * @param  identifier     An id for this atom type, like C3 for sp3 carbon
 	 * @param  elementSymbol  The element symbol identifying the element to which this atom type applies
 	 */
-	public AtomType(String id, String elementSymbol)
+	public AtomType(String identifier, String elementSymbol)
 	{
 		this(elementSymbol);
-		setAtomTypeName(id);
+		setAtomTypeName(identifier);
 	}
 
 
 	/**
 	 *  Sets the if attribute of the AtomType object.
 	 *
-	 * @param  id  The new AtomTypeID value. Null if unset.
+	 * @param  identifier  The new AtomTypeID value. Null if unset.
      *
      * @see    #getAtomTypeName
 	 */
-	public void setAtomTypeName(String id)
+	public void setAtomTypeName(String identifier)
 	{
-		this.id = id;
+		setID(identifier);
 	}
 
 
@@ -156,7 +151,7 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
 	 */
 	public String getAtomTypeName()
 	{
-		return id;
+		return getID();
 	}
 
 

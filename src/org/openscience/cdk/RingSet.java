@@ -251,13 +251,13 @@ public class RingSet extends Vector implements java.io.Serializable, Cloneable
 	 *
 	 * @param   rs  the ring set to be united with this one.
 	 */
-	public void add(RingSet rs)
+	public void add(RingSet ringSet)
 	{
-		for (int f = 0; f < rs.size(); f++)
+		for (int f = 0; f < ringSet.size(); f++)
 		{
-			if (!contains(rs.elementAt(f)))
+			if (!contains(ringSet.elementAt(f)))
 			{
-				addElement(rs.elementAt(f));
+				addElement(ringSet.elementAt(f));
 			}
 		}
 	}
@@ -307,12 +307,12 @@ public class RingSet extends Vector implements java.io.Serializable, Cloneable
 	 */
 	public AtomContainer getRingSetInAtomContainer()
 	{
-		AtomContainer ac = new AtomContainer();
+		AtomContainer container = new AtomContainer();
 		for (int i = 0; i < size(); i++)
 		{
-			ac.add((Ring)elementAt(i));
+			container.add((Ring)elementAt(i));
 		}
-		return ac;
+		return container;
 	}
 
     /**
@@ -352,32 +352,32 @@ public class RingSet extends Vector implements java.io.Serializable, Cloneable
         /**
          * Constructs a new comparator to sort rings by size.
          *
-         * @param   so  Sort order: either RingSet.SMALL_FIRST or
+         * @param   order  Sort order: either RingSet.SMALL_FIRST or
          *                                 RingSet.LARGE_FIRST.
          */
-		public RingSizeComparator(int so)
+		public RingSizeComparator(int order)
 		{
-			sortOrder = so;
+			sortOrder = order;
 		}
 		
-		public int compare(Object o1, Object o2) throws ClassCastException
+		public int compare(Object object1, Object object2) throws ClassCastException
 		{
-			int s1 = ((Ring)o1).getAtomCount();
-			int s2 = ((Ring)o2).getAtomCount();
-			if (s1 == s2) return 0;
-			if (s2 > s1 && sortOrder == SMALL_FIRST)
+			int size1 = ((Ring)object1).getAtomCount();
+			int size2 = ((Ring)object2).getAtomCount();
+			if (size1 == size2) return 0;
+			if (size2 > size1 && sortOrder == SMALL_FIRST)
 			{
 				return 1;
 			}
-			if (s2 > s1 && sortOrder == LARGE_FIRST)
+			if (size2 > size1 && sortOrder == LARGE_FIRST)
 			{
 				return -1;
 			}
-			if (s2 < s1 && sortOrder == SMALL_FIRST)
+			if (size2 < size1 && sortOrder == SMALL_FIRST)
 			{
 				return -1;
 			}
-			if (s2 < s1 && sortOrder == LARGE_FIRST)
+			if (size2 < size1 && sortOrder == LARGE_FIRST)
 			{
 				return 1;
 			}

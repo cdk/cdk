@@ -21,9 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
  */
-
 package org.openscience.cdk;
-
 
 /** 
  * Class representing a ring structure in a molecule.
@@ -40,7 +38,7 @@ public class Ring extends AtomContainer implements java.io.Serializable, Cloneab
 {
 
 	/**
-	 * constructs an empty ring.
+	 * Constructs an empty ring.
 	 *
 	 */
 	public Ring() {
@@ -101,9 +99,9 @@ public class Ring extends AtomContainer implements java.io.Serializable, Cloneab
 	{
 		Bond tempBond;
 		for (int f = 0; f < getElectronContainerCount(); f++) {
-            ElectronContainer ec = getElectronContainerAt(f);
-            if (ec instanceof Bond) {
-                tempBond = (Bond)ec;
+            ElectronContainer electronContainer = getElectronContainerAt(f);
+            if (electronContainer instanceof Bond) {
+                tempBond = (Bond)electronContainer;
                 if (tempBond.contains(atom) && bond != tempBond) {
                     return tempBond;
                 }
@@ -122,9 +120,9 @@ public class Ring extends AtomContainer implements java.io.Serializable, Cloneab
 		int orderSum = 0;
 		Bond tempBond;
 		for (int i = 0; i < getElectronContainerCount(); i++) {
-            ElectronContainer ec = getElectronContainerAt(i);
-            if (ec instanceof Bond) {
-                tempBond = (Bond)ec;
+            ElectronContainer electronContainer = getElectronContainerAt(i);
+            if (electronContainer instanceof Bond) {
+                tempBond = (Bond)electronContainer;
                 orderSum += tempBond.getOrder();
             }
  		}

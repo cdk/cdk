@@ -69,7 +69,7 @@ public class ChemObject implements java.io.Serializable, Cloneable {
     /**
      * The ID is null by default.
      */
-    private String id; 
+    private String identifier; 
     
     /**
      * Constructs a new ChemObject.
@@ -79,7 +79,7 @@ public class ChemObject implements java.io.Serializable, Cloneable {
 		chemObjects = null;
         properties = null;
         pointers = null;
-        id = null;
+        identifier = null;
 	}
 	
     /*
@@ -209,21 +209,21 @@ public class ChemObject implements java.io.Serializable, Cloneable {
 	 */
 	public Object clone()
 	{
-		Object o = null;
+		Object clone = null;
 		try
 		{
-			o = super.clone();
+			clone = super.clone();
 		}
 		catch (CloneNotSupportedException e)
 		{
 			e.printStackTrace(System.err);
 		}
-		((ChemObject)o).flags = new boolean[CDKConstants.MAX_FLAG_INDEX + 1];
+		((ChemObject)clone).flags = new boolean[CDKConstants.MAX_FLAG_INDEX + 1];
 		for (int f = 0; f < flags.length; f++)
 		{
-			((ChemObject)o).flags[f] = flags[f];	
+			((ChemObject)clone).flags[f] = flags[f];	
 		}
-		return o;
+		return clone;
 	}
 
     /**
@@ -237,7 +237,7 @@ public class ChemObject implements java.io.Serializable, Cloneable {
             return false;
         }
         ChemObject chemObj = (ChemObject)object;
-        if (id == chemObj.id) {
+        if (identifier == chemObj.identifier) {
             return true;
         }
         return false;
@@ -250,7 +250,7 @@ public class ChemObject implements java.io.Serializable, Cloneable {
      * @see #setID
      */
     public String getID() {
-        return this.id;
+        return this.identifier;
     }
     
     /**
@@ -259,8 +259,8 @@ public class ChemObject implements java.io.Serializable, Cloneable {
      * @param id a String representing the ID value
      * @see #getID
      */
-    public void setID(String id) {
-        this.id = id;
+    public void setID(String identifier) {
+        this.identifier = identifier;
     }
     
     /**
