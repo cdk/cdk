@@ -563,6 +563,17 @@
       <bibtex:pages>355-380</bibtex:pages>
     </bibtex:article>
   </bibtex:entry>
+  
+  <bibtex:entry id="KAB76">
+    <bibtex:article>
+      <bibtex:author>Kabsch, W.</bibtex:author>
+      <bibtex:title>A Solution for the Best Rotation to Relate Two Sets of Vectors</bibtex:title>
+      <bibtex:journal>Acta Cryst.</bibtex:journal>
+      <bibtex:volume>A32</bibtex:volume>
+      <bibtex:year>1976</bibtex:year>
+      <bibtex:pages>922-923</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
 
 
 
