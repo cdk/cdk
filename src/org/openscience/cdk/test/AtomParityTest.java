@@ -3,7 +3,7 @@
  * $Date$    
  * $Revision$
  * 
- * Copyright (C) 1997-2004  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2004  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -20,9 +20,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
- * 
  */
-
 package org.openscience.cdk.test;
 
 import junit.framework.Test;
@@ -139,5 +137,67 @@ public class AtomParityTest extends TestCase {
             assertTrue(description.charAt(i) != '\n');
             assertTrue(description.charAt(i) != '\r');
         }
+    }
+
+	public void testClone() {
+        Atom carbon = new Atom("C");
+        carbon.setID("central");
+        Atom carbon1 = new Atom("C");
+        carbon1.setID("c1");
+        Atom carbon2 = new Atom("C");
+        carbon2.setID("c2");
+        Atom carbon3 = new Atom("C");
+        carbon3.setID("c3");
+        Atom carbon4 = new Atom("C");
+        carbon4.setID("c4");
+        int parityInt = 1;
+        AtomParity parity = new AtomParity(carbon, carbon1, carbon2, carbon3, carbon4, parityInt);
+        Object clone = parity.clone();
+        assertTrue(clone instanceof AtomParity);
+    }    
+        
+    public void testClone_SurroundingAtoms() {
+        Atom carbon = new Atom("C");
+        carbon.setID("central");
+        Atom carbon1 = new Atom("C");
+        carbon1.setID("c1");
+        Atom carbon2 = new Atom("C");
+        carbon2.setID("c2");
+        Atom carbon3 = new Atom("C");
+        carbon3.setID("c3");
+        Atom carbon4 = new Atom("C");
+        carbon4.setID("c4");
+        int parityInt = 1;
+        AtomParity parity = new AtomParity(carbon, carbon1, carbon2, carbon3, carbon4, parityInt);
+
+		AtomParity clone = (AtomParity)parity.clone();
+        Atom[] atoms = parity.getSurroundingAtoms();
+        Atom[] atomsClone = clone.getSurroundingAtoms();
+        assertEquals(atoms.length, atomsClone.length);
+		for (int f = 0; f < atoms.length; f++) {
+			for (int g = 0; g < atomsClone.length; g++) {
+				assertNotNull(atoms[f]);
+				assertNotNull(atomsClone[g]);
+				assertNotSame(atoms[f], atomsClone[g]);
+			}
+		}        
+    }
+    
+    public void testClone_Atom() {
+        Atom carbon = new Atom("C");
+        carbon.setID("central");
+        Atom carbon1 = new Atom("C");
+        carbon1.setID("c1");
+        Atom carbon2 = new Atom("C");
+        carbon2.setID("c2");
+        Atom carbon3 = new Atom("C");
+        carbon3.setID("c3");
+        Atom carbon4 = new Atom("C");
+        carbon4.setID("c4");
+        int parityInt = 1;
+        AtomParity parity = new AtomParity(carbon, carbon1, carbon2, carbon3, carbon4, parityInt);
+
+		AtomParity clone = (AtomParity)parity.clone();
+        assertNotSame(parity.getAtom(), clone.getAtom());
     }
 }

@@ -253,6 +253,16 @@ public class ChemObjectTest extends TestCase {
         
         chemObject.setID("Changed");
         assertTrue(listener.changed);
+        
+        listener.reset();
+        assertFalse(listener.changed);
+        chemObject.setProperty("Changed", "Again");
+        assertTrue(listener.changed);
+
+        listener.reset();
+        assertFalse(listener.changed);
+        chemObject.setFlag(3, true);
+        assertTrue(listener.changed);
     }
     
     public void testNotifyChanged() {

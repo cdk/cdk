@@ -48,6 +48,10 @@ public class AtomEnumerationTest extends TestCase {
 
     public void setUp() {}
     
+    public void testAtomEnumeration_AtomContainer() {
+        testHasMoreElements();
+    }
+    
     public void testHasMoreElements() {
         AtomContainer ac = new AtomContainer();
         ac.addAtom(new Atom("C"));
@@ -56,11 +60,19 @@ public class AtomEnumerationTest extends TestCase {
         AtomEnumeration enumeration = (AtomEnumeration)ac.atoms();
         assertTrue(enumeration.hasMoreElements());
         Atom a1 = (Atom)enumeration.nextElement();
+        assertNotNull(a1);
         assertTrue(enumeration.hasMoreElements());
         Atom a2 = (Atom)enumeration.nextElement();
+        assertNotNull(a2);
         assertTrue(enumeration.hasMoreElements());
         Atom a3 = (Atom)enumeration.nextElement();
+        assertNotNull(a3);
         assertFalse(enumeration.hasMoreElements());
+        assertNull(enumeration.nextElement());
+    }
+
+    public void testNextElement() {
+        testHasMoreElements();
     }
 
     public static Test suite() {
