@@ -28,14 +28,19 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.Writer;
 import org.openscience.cdk.*;
 import org.openscience.cdk.exception.*;
 import org.openscience.cdk.tools.IsotopeFactory;
 import org.openscience.cdk.tools.IDCreator;
 import org.openscience.cdk.io.setting.*;
+import org.openscience.cdk.dict.*;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
+import java.util.Iterator;
+import java.util.Hashtable;
+import java.util.Enumeration;
 
 
 /**
@@ -94,7 +99,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
      * @param out Writer to redirect the output to.
      */
     public CMLWriter(Writer out) {
-		this(out, false);
+        this(out, false);
     }
 
     /**
@@ -139,17 +144,23 @@ public class CMLWriter extends DefaultChemObjectWriter {
                 write("<?xml version=\"1.0\"?>\n");
             }
             if (object instanceof SetOfMolecules) {
-                write((SetOfMolecules)object);
+                writeSetOfMolecules((SetOfMolecules)object);
             } else if (object instanceof Molecule) {
-                write((Molecule)object);
+                writeMolecule((Molecule)object);
             } else if (object instanceof Crystal) {
-                write((Crystal)object);
+                writeCrystal((Crystal)object);
             } else if (object instanceof ChemSequence) {
-                write((ChemSequence)object);
+                writeChemSequence((ChemSequence)object);
             } else if (object instanceof ChemFile) {
-                write((ChemFile)object);
+                writeChemFile((ChemFile)object);
             } else if (object instanceof ChemModel) {
-                write((ChemModel)object);
+                writeChemModel((ChemModel)object);
+            } else if (object instanceof Atom) {
+                writeAtom((Atom)object);
+            } else if (object instanceof Bond) {
+                writeBond((Bond)object);
+            } else if (object instanceof Reaction) {
+                writeReaction((Reaction)object);
             } else {
                 logger.error("This object type is not supported.");
                 throw new CDKException("This object type is not supported.");
@@ -166,21 +177,21 @@ public class CMLWriter extends DefaultChemObjectWriter {
 
     // Private procedures
 
-    private void write(ChemFile cf) {
+    private void writeChemFile(ChemFile cf) {
         if (cf.getChemSequenceCount() > 1) {
             write("<cml title=\"sequence\">\n");
             for (int i=0; i < cf.getChemSequenceCount(); i++ ) {
-                write(cf.getChemSequence(i));
+                writeChemSequence(cf.getChemSequence(i));
             }
             write("</cml>\n");
         } else {
             for (int i=0; i < cf.getChemSequenceCount(); i++ ) {
-                write(cf.getChemSequence(i));
+                writeChemSequence(cf.getChemSequence(i));
             }
         }
     }
 
-    private void write(Crystal crystal) {
+    private void writeCrystal(Crystal crystal) {
         // FIXME: does this produce CML 2
         write("<molecule>\n");
         write("  <crystal>\n");
@@ -195,16 +206,16 @@ public class CMLWriter extends DefaultChemObjectWriter {
         write(crystal.getC());
         write("</floatArray>\n");
         write("  </crystal>\n");
-        write((AtomContainer)crystal);
+        writeAtomContainer((AtomContainer)crystal);
         write("</molecule>\n");
     }
 
-    private void write(AtomContainer ac) {
-        write(ac.getAtoms());
-        write(ac.getBonds());
+    private void writeAtomContainer(AtomContainer ac) {
+        writeAtomArray(ac.getAtoms());
+        writeBondArray(ac.getBonds());
     }
 
-    private void write(SetOfMolecules som) {
+    private void writeSetOfMolecules(SetOfMolecules som) {
         logger.debug("Writing SOM");
         int count = som.getMoleculeCount();
         logger.debug("Found " + count + " molecule(s) in set");
@@ -212,62 +223,74 @@ public class CMLWriter extends DefaultChemObjectWriter {
             write("<list>\n");
         }
         for (int i = 0; i < count; i++) {
-            this.write(som.getMolecule(i));
+            writeMolecule(som.getMolecule(i));
         }
         if (count > 1) {
             write("</list>\n");
         }
     }
 
-    private void write(ChemSequence chemseq) {
+    private void writeChemSequence(ChemSequence chemseq) {
         int count = chemseq.getChemModelCount();
         if (count > 1)
             write("<list>\n");
         for (int i = 0; i < count; i++) {
-            this.write(chemseq.getChemModel(i));
+            this.writeChemModel(chemseq.getChemModel(i));
         }
         if (count > 1)
             write("</list>\n");
     }
 
-    private void write(ChemModel model) {
+    private void writeChemModel(ChemModel model) {
         logger.debug("Writing ChemModel");
         Crystal crystal = model.getCrystal();
         SetOfMolecules som = model.getSetOfMolecules();
         SetOfReactions reactionSet = model.getSetOfReactions();
         if (crystal != null) {
-            write(crystal);
+            writeCrystal(crystal);
         }
         if (som != null) {
-            write(som);
+            writeSetOfMolecules(som);
         }
         if (reactionSet != null) {
-            write(reactionSet);
+            writeSetOfReactions(reactionSet);
         }
         if (crystal == null && som == null && reactionSet == null) {
             write("<!-- model contains no data -->\n");
         }
     }
 
-    private void write(SetOfReactions reactionSet) {
+    private void writeSetOfReactions(SetOfReactions reactionSet) {
         Reaction[] reactions = reactionSet.getReactions();
         if (reactions.length > 0) {
-            write("<reactionList>\n");
+            write("<reactionList ");
+            writeID(reactionSet);
+            writeTitle(reactionSet);
+            write(">\n");
+            // first reaction properties
+            writeProperties(reactionSet);
+            // now come the actual reactions
             for (int i=0; i < reactions.length; i++) {
-                write(reactions[i]);
+                writeReaction(reactions[i]);
             }
             write("</reactionList>\n");
         }
     }
     
-    private void write(Reaction reaction) {
-        write("<reaction>\n");
+    private void writeReaction(Reaction reaction) {
+        write("<reaction ");
+        writeID(reaction);
+        writeTitle(reaction);
+        write(">\n");
+        // first reaction properties
+        writeProperties(reaction);
+        // now come reactants and products
         Molecule[] reactants = reaction.getReactants();
         if (reactants.length > 0) {
             write("    <reactantList>\n");
             for (int i=0; i<reactants.length; i++) {
                 write("    <reactant>\n");
-                write(reactants[i]);
+                writeMolecule(reactants[i]);
                 write("    </reactant>\n");
             }
             write("    </reactantList>\n");
@@ -277,7 +300,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
             write("  <productList>\n");
             for (int i=0; i<products.length; i++) {
                 write("    <product>\n");
-                write(products[i]);
+                writeMolecule(products[i]);
                 write("    </product>\n");
             }
             write("  </productList>\n");
@@ -285,7 +308,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
         write("</reaction>\n");
     }
     
-    private void write(Molecule mol) {
+    private void writeMolecule(Molecule mol) {
         // create CML atom and bond ids
         if (cmlIds.isSet()) {
             IDCreator.createAtomAndBondIDs(mol);
@@ -296,46 +319,107 @@ public class CMLWriter extends DefaultChemObjectWriter {
             write(" id=\"" + mol.getID() + "\"");
         }
         write(">\n");
-        write((AtomContainer)mol);
+        writeAtomContainer((AtomContainer)mol);
         write("</molecule>\n");
     }
 
-    private void write(Atom atoms[]) {
-		write("  <atomArray>\n");
-		for (int i = 0; i < atoms.length; i++) {
-		    write(atoms[i]);
-		}
-		write("  </atomArray>\n");
+    private void writeAtomArray(Atom atoms[]) {
+        write("  <atomArray>\n");
+        for (int i = 0; i < atoms.length; i++) {
+            writeAtom(atoms[i]);
+        }
+        write("  </atomArray>\n");
     }
     
-    private void write(Bond bonds[]) {
+    private void writeBondArray(Bond bonds[]) {
         if (bonds.length > 0) {
             write("  <bondArray>\n");
             for (int i = 0; i < bonds.length; i++) {
-                write(bonds[i]);
+                writeBond(bonds[i]);
             }
             write("  </bondArray>\n");
         }
     }
-
-    private void writeAtomID(Atom atom) {
-        if (atom.getID() != null && atom.getID().length() != 0) {
-            write(atom.getID());
-        } else {
-            // use some unique default -> the hashcode
-            write("a" + atom.hashCode());
+    
+    private void writeProperties(ChemObject object) {
+        Hashtable props = object.getProperties();
+        Enumeration keys = props.keys();
+        while (keys.hasMoreElements()) {
+            Object key = keys.nextElement();
+            if (key instanceof DictRef) {
+                Object value = props.get(key);
+                write("  <scalar dictRef=\"" + ((DictRef)key).getType() + "\">");
+                write(value.toString());
+                write("</scalar>\n");
+            } else if (key instanceof String && !key.equals(CDKConstants.TITLE)) {
+                Object value = props.get(key);
+                
+                write("  <scalar title=\"" + key + "\">");
+                write(value.toString());
+                write("</scalar>\n");
+            } else {
+                logger.warn("Don't know what to do with this property key: " +
+                    key.getClass().getName()
+                );
+            }
         }
     }
+
+    private boolean writeID(ChemObject object) {
+        if (object.getID() == null || object.getID().length() == 0) {
+            return false;
+        } else {
+            // use some unique default -> the hashcode
+            write("id=\"" + object.getID() + "\" ");
+            return true;
+        }
+    }
+
+    private boolean writeTitle(ChemObject object) {
+        if (object.getProperty(CDKConstants.TITLE) != null) {
+            write("title=\"" + object.getProperty(CDKConstants.TITLE) + "\" ");
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Picks the first dictRef it finds. CML support only one, but CDK 
+     * tends to have more than one, i.e. also dictRefs for fields.
+     */
+    private boolean writeDictRef(ChemObject object) {
+        Hashtable properties = object.getProperties();
+        Iterator iter = properties.keySet().iterator();
+        while (iter.hasNext()) {
+            Object key = iter.next();
+            if (key instanceof String) {
+                String keyName = (String)key;
+                if (keyName.startsWith(DictionaryDatabase.DICTREFPROPERTYNAME)) {
+                    String dictRef = (String)properties.get(keyName);
+                    String details = "Dictref being anaylyzed: " + dictRef;
+                    write("dictRef=\"" + dictRef + "\" ");
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     
-    private void write(Atom atom) {
-		write("    <atom id=\"");
-        writeAtomID(atom);
-        write("\" ");
-		write("elementType=\"");
-		write(atom.getSymbol());
-		write("\" ");
-		write(atom.getPoint2D());
-		write(atom.getPoint3D());
+    private boolean writeAtomID(Atom atom) {
+        write("id=\"a" + atom.hashCode() + "\" ");
+        return true;
+    }
+    
+    private void writeAtom(Atom atom) {
+        write("    <atom ");
+        if (!writeID(atom)) writeAtomID(atom);
+        writeDictRef(atom);
+        if (atom instanceof PseudoAtom) {
+            write("title=\"" + ((PseudoAtom)atom).getLabel() + "\" ");
+        }
+        write("elementType=\"" + atom.getSymbol() + "\" ");
+        write(atom.getPoint2D());
+        write(atom.getPoint3D());
         int fCharge = atom.getFormalCharge();
         if (fCharge != 0) {
             write("formalCharge=\"" + fCharge + "\" ");
@@ -345,34 +429,42 @@ public class CMLWriter extends DefaultChemObjectWriter {
             write("hydrogenCount=\"" + hydrogenCount + "\" ");
         }
         int massNumber = atom.getAtomicMass();
-        Isotope majorIsotope = isotopeFactory.getMajorIsotope(atom.getSymbol());
-        if (majorIsotope != null) {
-            int majorMassNumber = majorIsotope.getAtomicMass();
-            if (massNumber != 0 && massNumber != majorMassNumber) {
-                write("isotope=\"" + massNumber + "\" ");
+        if (!(atom instanceof PseudoAtom)) {
+            Isotope majorIsotope = isotopeFactory.getMajorIsotope(atom.getSymbol());
+            if (majorIsotope != null) {
+                int majorMassNumber = majorIsotope.getAtomicMass();
+                if (massNumber != 0 && massNumber != majorMassNumber) {
+                    write("isotope=\"" + massNumber + "\" ");
+                }
+            } else {
+                logger.warn("Could not find major isotope for : " + atom.getSymbol());
             }
-        } else {
-            logger.warn("Could not find major isotope for : " + atom.getSymbol());
         }
-		write("/>\n");
+        Hashtable props = atom.getProperties();
+        if (props.size() > 0) {
+            write(">\n");
+            writeProperties(atom);
+            write("</atom>\n");
+        } else {
+            write("/>\n");
+        }
     }
 
-    private void write(Bond bond) {
+    private void writeBond(Bond bond) {
         StringBuffer childElements = new StringBuffer();
-		write("    <bond id=\"");
+        write("    <bond ");
         logger.debug("Bond id: " + bond.getID());
-        if (bond.getID() != null && bond.getID().length() != 0) {
-            write(bond.getID());
-        } else {
+        if (!writeID(bond)) {
             // use some unique default -> the hashcode
-            write("b" + bond.hashCode());
+            write("id=\"b" + bond.hashCode() + "\" ");
         }
-        write("\" ");
-		Atom atoms[] = bond.getAtoms();
+        Atom atoms[] = bond.getAtoms();
         if (atoms.length == 2) {
             write("atomRefs2=\"");
             for (int i = 0; i < 2; i++) {
-                writeAtomID(atoms[i]);
+                String atomID = atoms[i].getID();
+                if (atomID == null || atomID.length() == 0) 
+                    write(new Integer(atoms[i].hashCode()).toString());
                 if (i == 0) {
                     write(" ");
                 }
@@ -381,7 +473,9 @@ public class CMLWriter extends DefaultChemObjectWriter {
         } else {
             write("atomRefs=\"");
             for (int i = 0; i < atoms.length; i++) {
-                writeAtomID(atoms[i]);
+                String atomID = atoms[i].getID();
+                if (atomID == null || atomID.length() == 0) 
+                    write(new Integer(atoms[i].hashCode()).toString());
                 if (i < atoms.length-1) {
                     write(" ");
                 }
@@ -389,7 +483,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
             write("\" ");
         }
         double border = bond.getOrder();
-        if (bord.getFlag(CDKConstants.ISAROMATIC)) {
+        if (bond.getFlag(CDKConstants.ISAROMATIC)) {
             write("order=\"A\" ");
         } else if (border == CDKConstants.BONDORDER_SINGLE) {
             write("order=\"S\" ");
@@ -404,17 +498,22 @@ public class CMLWriter extends DefaultChemObjectWriter {
         }
         if (bond.getStereo() == CDKConstants.STEREO_BOND_UP &&
             bond.getStereo() == CDKConstants.STEREO_BOND_DOWN) {
-            childElements.append("      <string builtin=\"stereo\" convention=\"MDLMol\">");
+            childElements.append("      <scalar dataType=\"xsd:string\" dictRef=\"mdl:stereo\">");
 		    if (bond.getStereo() == CDKConstants.STEREO_BOND_UP) {
                 childElements.append("W");
 		    } else if (bond.getStereo() == CDKConstants.STEREO_BOND_DOWN) {
 			    childElements.append("H");
 		    }
-		    childElements.append("</string>\n");
+		    childElements.append("</scalar>\n");
 		}
-		if (childElements.length() > 0) { 
+        Hashtable props = bond.getProperties();
+        if (childElements.length() > 0) { 
             write(">\n");
             write(childElements.toString());
+            write("    </bond>\n");
+        } else if (props.size() > 0) {
+            write(">\n");
+            writeProperties(bond);
             write("    </bond>\n");
         } else {
             write("/>\n");
@@ -467,7 +566,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
     private void customizeJob() {
         cmlIds = new BooleanIOSetting("CMLIDs", IOSetting.LOW,
           "Should the output use CML identifiers?", 
-          "true");
+          "yes");
         fireWriterSettingQuestion(cmlIds);
     }
 }
