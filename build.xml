@@ -200,6 +200,10 @@
                        includesfile="${src}/core.javafiles">
                     <classpath refid="project.class.path" />
                 </javac>
+
+                <!-- apply RFC 20 -->
+                <patch dir="${build.src}" strip="1"
+                       patchfile="${src}/patches/org.openscience.cdk.ChemObject.RFC20"/>
         </target>
 
         <target id="compile-core-debug" name="compile-core-debug" depends="init-core-debug">
@@ -283,7 +287,7 @@
                 <exclude name="org/openscience/cdk/libio/**/*.java" />
                 <exclude name="org/openscience/cdk/test/**/*.java" />
                 <exclude name="org/openscience/cdk/applications/**/*.java" />
-            </javac>          
+            </javac>
         </target>
 
         <target id="compile-experimental" name="compile-experimental" depends="compile-extra">
