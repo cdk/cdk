@@ -76,6 +76,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader
 	private BufferedReader input;
 	private LoggingTool logger;
 	private int atomCount = 0;
+	private String lastRoute = "";
 
 	/**
 	 *  Customizable setting
@@ -244,7 +245,9 @@ public class Gaussian98Reader extends DefaultChemObjectReader
 		ChemSequence sequence = new ChemSequence();
 		ChemModel model = null;
 		String line = input.readLine();
-		String levelOfTheory = null;
+		String levelOfTheory = "";
+		String description = "";
+		int modelCounter = 0;
 
 		// Find first set of coordinates by skipping all before "Standard orientation"
 		while (input.ready() && (line != null))
@@ -263,10 +266,18 @@ public class Gaussian98Reader extends DefaultChemObjectReader
 		{
 
 			// Read all other data
-			line = input.readLine();
+			line = input.readLine().trim();
 			while (input.ready() && (line != null))
 			{
-				if (line.indexOf("Standard orientation:") >= 0)
+				if(line.indexOf("#") == 0)
+				{
+					// Found the route section
+					// Memorizing this for the description of the chemmodel
+					lastRoute = line;
+					modelCounter = 0;
+					
+				}
+				else if (line.indexOf("Standard orientation:") >= 0)
 				{
 
 					// Found a set of coordinates
@@ -280,6 +291,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader
 					}
 					fireFrameRead();
 					model = new ChemModel();
+					modelCounter++;
 					readCoordinates(model);
 				} else if (line.indexOf("SCF Done:") >= 0)
 				{
@@ -305,9 +317,12 @@ public class Gaussian98Reader extends DefaultChemObjectReader
 
 					// Found calculation level of theory
 					levelOfTheory = parseLevelOfTheory(line);
-				} else
+					logger.debug("Level of Theory for this model: " + levelOfTheory);
+					description = lastRoute + ", model no. " + modelCounter;
+					model.setProperty(CDKConstants.DESCRIPTION, description);
+				}else
 				{
-					logger.debug("Skipping line: " + line);
+					//logger.debug("Skipping line: " + line);
 				}
 				line = input.readLine();
 			}
@@ -600,8 +615,24 @@ public class Gaussian98Reader extends DefaultChemObjectReader
 	 */
 	private String parseLevelOfTheory(String line)
 	{
-
-		StringTokenizer st1 = new StringTokenizer(line, "\\");
+		StringBuffer summary  = new StringBuffer();
+		summary.append(line);
+		try
+		{
+				
+			do
+			{
+				line = input.readLine().trim();
+				summary.append(line);
+			}while(!(line.indexOf("@") >= 0));
+		}
+		catch(Exception exc)
+		{
+			logger.debug("syntax problem while parsing summary of g98 section: ");
+			logger.debug(exc);
+		}
+		logger.debug("parseLoT(): " + summary.toString());
+		StringTokenizer st1 = new StringTokenizer(summary.toString(), "\\");
 
 		// Must contain at least 6 tokens
 		if (st1.countTokens() < 6)
@@ -614,6 +645,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader
 		{
 			st1.nextToken();
 		}
+		
 		return st1.nextToken() + "/" + st1.nextToken();
 	}
 

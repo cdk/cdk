@@ -165,6 +165,10 @@ public class CDKConstants {
     /** A List of annotation remarks. */
     public static final String ANNOTATIONS = "Annotations";
 
+    /** A description */
+    public static final String DESCRIPTION = "Description";
+
+
     /****************************************
     * Some predefined property names for    *
     * Molecules                             *

@@ -39,6 +39,7 @@ org/openscience/cdk/io/CMLReader.java
 org/openscience/cdk/io/CMLWriter.java
 org/openscience/cdk/io/ChemObjectIO.java
 org/openscience/cdk/io/ChemObjectReader.java
+org/openscience/cdk/io/CIFReader.java
 org/openscience/cdk/io/CrystClustReader.java
 org/openscience/cdk/io/CrystClustWriter.java
 org/openscience/cdk/io/DaltonReader.java
