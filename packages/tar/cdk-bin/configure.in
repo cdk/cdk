@@ -116,7 +116,7 @@ else
 
     for d in $try_dirs
     do
-        if test -e "$d/lib/ext/j3dcore.jar"
+        if test -r "$d/lib/ext/j3dcore.jar"
         then
             PATHTO3DJAR="$d/lib/ext/j3dcore.jar:$d/lib/ext/j3dutils.jar:$d/lib/ext/vecmath.jar"
         fi
