@@ -34,10 +34,22 @@ import org.openscience.cdk.fingerprint.*;
 import org.openscience.cdk.io.*;
 import java.io.*;
 import java.util.*;
+import junit.framework.*;
 
-public class FingerprinterTest
+public class FingerprinterTest extends TestCase
 {
-	public static boolean test()
+	
+	public FingerprinterTest(String name)
+	{
+		super(name);
+	}
+
+	
+	public static Test suite() {
+		return new TestSuite(FingerprinterTest.class);
+	}
+
+	public  void test()
 	{
 		Molecule mol = MoleculeFactory.makeAlphaPinene();
 		BitSet bs = Fingerprinter.getFingerprint(mol);
@@ -47,40 +59,9 @@ public class FingerprinterTest
 		BitSet bs1 = Fingerprinter.getFingerprint(frag1);
 		BitSet bs2 = Fingerprinter.getFingerprint(frag2);
 		BitSet bs3 = Fingerprinter.getFingerprint(frag3);
-		System.out.println("Resulting BitSet looks like:");
-		System.out.println(bs);
-		System.out.println("(Numbers indicate position of '1' Bits)");
-		System.out.println(bs1);
-		System.out.println(bs2);
-		System.out.println(bs3);
-		if (Fingerprinter.isSubset(bs, bs1))
-		{
-			System.out.println("Fragment 1 could be a substructure of Alpha-Pinene");	
-		}
-		else 
-		{
-			System.out.println("Fragment 1 is not a substructure of Alpha-Pinene");
-		}
-
-		if (Fingerprinter.isSubset(bs, bs2))
-		{
-			System.out.println("Fragment 2 could be a substructure of Alpha-Pinene");	
-		}
-		else 
-		{
-			System.out.println("Fragment 2 is not a substructure of Alpha-Pinene");
-		}
-
-		if (Fingerprinter.isSubset(bs, bs3))
-		{
-			System.out.println("Fragment 3 could be a substructure of Alpha-Pinene");	
-		}
-		else 
-		{
-			System.out.println("Fragment 3 is not a substructure of Alpha-Pinene");
-		}
-
-		return false;
+		assert(Fingerprinter.isSubset(bs, bs1));
+		assert(!Fingerprinter.isSubset(bs, bs2));
+		assert(!Fingerprinter.isSubset(bs, bs3));
 	}
 
 	public static Molecule makeFragment1()
@@ -147,7 +128,7 @@ public class FingerprinterTest
 	
 	public static void main(String[] args)
 	{
-		FingerprinterTest fpt = new FingerprinterTest();
+		FingerprinterTest fpt = new FingerprinterTest("FingerprinterTest");
 		fpt.test();
 	}
 }

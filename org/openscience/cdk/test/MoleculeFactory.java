@@ -224,7 +224,6 @@ public class MoleculeFactory
 		mol.addAtom(new Atom("C")); // 6
 		mol.addAtom(new Atom("C")); // 7
 		
-		
 		mol.addBond(0, 1, 1); // 1
 		mol.addBond(1, 2, 1); // 2
 		mol.addBond(2, 3, 1); // 3
@@ -237,8 +236,6 @@ public class MoleculeFactory
 		return mol;
 	}
 
-
-	
 	static Molecule makeFusedRings()
 	{
 		Molecule mol = new Molecule();
@@ -265,8 +262,6 @@ public class MoleculeFactory
 		mol.addBond(8, 0, 1); // 10
 		mol.addBond(9, 1, 1); // 11		
 		mol.addBond(9, 8, 1); // 11		
-		
-			
 		return mol;
 	}
 
@@ -293,16 +288,67 @@ public class MoleculeFactory
 		mol.addBond(4, 5, 1); // 5
 		mol.addBond(5, 0, 1); // 6
 		mol.addBond(5, 6, 1); // 7
-		mol.addBond(6, 7, 1); // 8
+		mol.addBond(6, 7, 1); // 8RingSet
 		mol.addBond(7, 8, 1); // 9
 		mol.addBond(8, 9, 1); // 10
 		mol.addBond(9, 0, 1); // 11		
 		mol.addBond(5, 10, 1); // 12		
+		return mol;
+
+	}
+
+
+	static Molecule makeEthylPropylPhenantren()
+	{
+		Molecule mol = new Molecule();
+		mol.addAtom(new Atom("C")); // 0
+		mol.addAtom(new Atom("C")); // 1
+		mol.addAtom(new Atom("C")); // 2
+		mol.addAtom(new Atom("C")); // 3
+		mol.addAtom(new Atom("C")); // 4
+		mol.addAtom(new Atom("C")); // 5
+		mol.addAtom(new Atom("C")); // 6
+		mol.addAtom(new Atom("C")); // 7
+		mol.addAtom(new Atom("C")); // 8
+		mol.addAtom(new Atom("C")); // 9
+		mol.addAtom(new Atom("C")); // 10
+		mol.addAtom(new Atom("C")); // 11
+		mol.addAtom(new Atom("C")); // 12
+		mol.addAtom(new Atom("C")); // 13
+		mol.addAtom(new Atom("C")); // 14
+		mol.addAtom(new Atom("C")); // 15
+		mol.addAtom(new Atom("C")); // 16
+		mol.addAtom(new Atom("C")); // 17
+		mol.addAtom(new Atom("C")); // 18
 		
-			
+		mol.addBond(0, 1, 1); // 1
+		mol.addBond(1, 2, 2); // 2
+		mol.addBond(2, 3, 1); // 3
+		mol.addBond(3, 4, 2); // 4
+		mol.addBond(4, 5, 1); // 5
+		mol.addBond(5, 6, 2); // 6
+		mol.addBond(6, 7, 1); // 8
+		mol.addBond(7, 8, 2); // 9
+		mol.addBond(8, 9, 1); // 10
+		mol.addBond(9, 0, 2); // 11		
+		mol.addBond(9, 4, 1); // 12
+		mol.addBond(8, 10, 1); // 12
+		mol.addBond(10, 11, 2); // 12
+		mol.addBond(11, 12, 1); // 12
+		mol.addBond(12, 13, 2); // 12
+		mol.addBond(13, 7, 1); // 12
+		mol.addBond(3, 14, 1); // 12
+		mol.addBond(14, 15, 1); // 12
+		mol.addBond(12, 16, 1); // 12		
+		mol.addBond(16, 17, 1); // 12
+		mol.addBond(17, 18, 1); // 12		
 		return mol;
 	}
 
+	
+		
+	
+	
 	static Molecule makeSingleRing()
 	{
 		Molecule mol = new Molecule();

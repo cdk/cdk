@@ -161,7 +161,16 @@ public class MoleculeViewer2D extends JPanel implements CDKChangeListener
 		renderer = new Renderer2D(r2dm);
 	}
 
+	/**
+	 * Gets the Renderer2DModel which determins the way a molecule is displayed
+	 */
+	public Renderer2DModel getRenderer2DModel()
+	{
+		return renderer.getRenderer2DModel();
+	}
 
+	
+	
 	/**
 	 * Method to notify this CDKChangeListener if something 
 	 * has changed in another object
