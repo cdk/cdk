@@ -38,7 +38,16 @@ package org.openscience.cdk;
  * @created    2001-08-06 
  *
  * @keyword    polymer
- *
+ * @keyword    biopolymer
  */
 public class BioPolymer extends Polymer {
+
+	/**
+	 *
+	 * Contructs a new BioPolymer to store the Monomers.
+	 *
+	 */
+    public BioPolymer() {
+        super();
+    }
 }

@@ -1,4 +1,4 @@
-/* $RCSfile$    
+/* $RCSfile$
  * $Author$    
  * $Date$    
  * $Revision$
@@ -26,11 +26,14 @@ package org.openscience.cdk;
 
 
 
-/** A sequence of ChemModels, which can, for example, be used to 
+/** A sequence of ChemModels, which can, for example, be used to
   * store the course of a reaction. Each state of the reaction would be
   * stored in one ChemModel.
+  *
+  * @keyword animation
+  * @keyword reaction
   */
-public class ChemSequence extends ChemObject 
+public class ChemSequence extends ChemObject
 {
 
 	/**

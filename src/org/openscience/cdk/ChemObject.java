@@ -1,4 +1,4 @@
-/* $RCSfile$    
+/* $RCSfile$
  * $Author$    
  * $Date$    
  * $Revision$
@@ -71,6 +71,9 @@ public class ChemObject implements CDKConstants, Cloneable
 	  */
 	public Vector[] pointers;
 
+    /**
+     * Constructs a new ChemObject.
+     */
 	public ChemObject()
 	{
 		/** Vector for listener administration */

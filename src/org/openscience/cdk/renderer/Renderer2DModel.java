@@ -27,6 +27,7 @@
 package org.openscience.cdk.renderer;
 
 import java.awt.*;
+import java.awt.Polygon;
 import org.openscience.cdk.*;
 import org.openscience.cdk.event.*;
 import java.util.*;

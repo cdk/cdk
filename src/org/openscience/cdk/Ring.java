@@ -1,4 +1,4 @@
-/* $RCSfile$    
+/* $RCSfile$
  * $Author$    
  * $Date$    
  * $Revision$
@@ -32,6 +32,8 @@ import java.util.Vector;
   * N atoms interconnected to each 
   * other by bonds, such that atom i (1 < i < N) is bonded to 
   * atom i-1 and atom i + 1 and atom 1 is bonded to atom N and atom 2.
+  *
+  * @keyword    ring
   */
 public class Ring extends AtomContainer
 {

@@ -36,6 +36,8 @@ package org.openscience.cdk;
  *
  * @author     steinbeck
  * @created    8. August 2001
+ *
+ * @keyword     atom, type
  */
 public class AtomType extends Isotope
 {

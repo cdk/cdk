@@ -35,6 +35,8 @@ package org.openscience.cdk;
  *
  * @author     steinbeck
  * @created    August 21, 2001
+ *
+ * @keyword     isotope
  */
 
 public class Isotope extends Element implements Cloneable {

@@ -33,6 +33,8 @@ import javax.vecmath.*;
 /**
  *  Implementation of a set of Rings.
  *  Maintains a Vector "rings" to store "ring" objects
+ *
+ * @keyword     ring, set of
  */
 public class RingSet extends Vector{
 	
@@ -190,7 +192,7 @@ public class RingSet extends Vector{
 		}
 		return connectedRings;
 	}
-	
+
 	/**
 	 * Returns the ring with the highest numbers of other rings attached to it.
 	 *
@@ -311,6 +313,10 @@ public class RingSet extends Vector{
 		return ac;
 	}
 
+    /**
+     * Sorts the rings in the set by size. The largest ring comes
+     * first.
+     */
 	public void sort()
 	{
 		Collections.sort(this, new RingSizeComparator(LARGE_FIRST));	
