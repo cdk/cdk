@@ -86,11 +86,13 @@ public class CMLHandler extends DefaultHandler {
                     logger.debug("Doing nothing");
                 } else if (atts.getValue(i).equals("PDB")) {
                     conv = new PDBConvention(conv);
-		} else if (atts.getValue(i).equals("PMP")) {
+                } else if (atts.getValue(i).equals("PMP")) {
                     conv = new PMPConvention(conv);
-		} else if (atts.getValue(i).equals("MDLMol")) {
-		    logger.debug("MDLMolConvetion instantiated...");
+                } else if (atts.getValue(i).equals("MDLMol")) {
+                    logger.debug("MDLMolConvetion instantiated...");
                     conv = new MDLMolConvention(conv);
+                } else if (atts.getValue(i).equals("JMOL-ANIMATION")) {
+                    conv = new JMOLANIMATIONConvention(conv);
                 } else {
                     //unknown convention. userConvention?
                     if (userConventions.containsKey(atts.getValue(i))) {

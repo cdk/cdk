@@ -42,8 +42,11 @@ import java.util.Iterator;
  */
 public class JmolTest extends TestCase {
 
+    private org.openscience.cdk.tools.LoggingTool logger;
+
     public JmolTest(String name) {
         super(name);
+        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
     }
 
     public static Test suite() {
@@ -65,22 +68,24 @@ public class JmolTest extends TestCase {
      */
     public void testEstron() {
         String filename = "data/cmltest/estron.cml";
+        logger.info("Testing: " + filename);
         try {
             File f = new File(filename);
             if (f.canRead()) {
                 // read the file
-                CMLReader reader = new CMLReader(new FileReader(f));
+                String url = "file:" + System.getProperty("user.dir") + "/" + filename;
+                CMLReader reader = new CMLReader(url);
                 ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
 
                 // test the resulting ChemFile content
                 assertNotNull(chemFile);
-                assertEquals(chemFile.getChemSequenceCount(), 1);
+                assertEquals(1, chemFile.getChemSequenceCount());
                 ChemSequence seq = chemFile.getChemSequence(0);
                 assertNotNull(seq);
-                assertEquals(seq.getChemModelCount(), 1);
+                assertEquals(1, seq.getChemModelCount());
                 ChemModel model = seq.getChemModel(0);
                 assertNotNull(model);
-                assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
+                assertEquals(1, model.getSetOfMolecules().getMoleculeCount());
 
                 // test the molecule
                 Molecule mol = model.getSetOfMolecules().getMolecule(0);
@@ -104,30 +109,32 @@ public class JmolTest extends TestCase {
      */
     public void testAnimation() {
         String filename = "data/cmltest/SN1_reaction.cml";
+        logger.info("Testing: " + filename);
         try {
             File f = new File(filename);
             if (f.canRead()) {
                 // read the file
-                CMLReader reader = new CMLReader(new FileReader(f));
+                String url = "file:" + System.getProperty("user.dir") + "/" + filename;
+                CMLReader reader = new CMLReader(url);
                 ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
 
                 // test the resulting ChemFile content
                 assertNotNull(chemFile);
-                assertTrue(chemFile.getChemSequenceCount()>0);
+                assertEquals(1, chemFile.getChemSequenceCount());
                 System.out.println("NO sequences: " + chemFile.getChemSequenceCount());
                 ChemSequence seq = chemFile.getChemSequence(0);
                 assertNotNull(seq);
-                assertEquals(seq.getChemModelCount(), 1);
+                assertEquals(34, seq.getChemModelCount());
                 System.out.println("NO models: " + seq.getChemModelCount());
                 ChemModel model = seq.getChemModel(0);
                 assertNotNull(model);
-                assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
+                assertEquals(1, model.getSetOfMolecules().getMoleculeCount());
 
                 // test the molecule
                 Molecule mol = model.getSetOfMolecules().getMolecule(0);
                 assertNotNull(mol);
                 assertEquals(mol.getAtomCount(), 25);
-                assertTrue(!GeometryTools.has3DCoordinates(mol));
+                assertTrue(GeometryTools.has3DCoordinates(mol));
             } else {
                 System.out.println("The CMLReader was not tested with a CML file.");
                 System.out.println("Due to missing file: " + filename);

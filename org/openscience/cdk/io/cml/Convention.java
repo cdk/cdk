@@ -247,10 +247,6 @@ public class Convention implements ConventionInterface {
 	    z3 = new Vector();
 	    BUILTIN = "";
 	    cdo.startObject("Molecule");
-	    cdo.startObject("Frame");
-	    for (int i = 0; i < atts.getLength(); i++) {
-		if (atts.getQName(i).equals("id")) cdo.setObjectProperty("Frame", "title", atts.getValue(i));
-	    }
 	    break;
 	case CRYSTAL:
 	    cdo.startObject("Crystal");
@@ -269,7 +265,6 @@ public class Convention implements ConventionInterface {
 	        break;
 	    case MOLECULE :
 	        storeData();
-	        cdo.endObject("Frame");
 	        cdo.endObject("Molecule");
 	        break;
             case COORDINATE3:

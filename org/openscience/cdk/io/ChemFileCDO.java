@@ -83,7 +83,12 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
      * supposed to be called by the JCFL library
      */
     public void endDocument() {
-      logger.info("End CDO Object");
+        if (getChemSequenceCount() == 0) {
+            // assume there is one non-animation ChemSequence
+            addChemSequence(currentChemSequence);
+            logger.info("This file has " + getChemSequenceCount() + " sequence(s).");
+        }
+        logger.info("End CDO Object");
     };
 
     /**
@@ -99,12 +104,17 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
     public void startObject(String objectType) {
       logger.debug("START:" + objectType);
       if (objectType.equals("Molecule")) {
+        currentChemModel = new ChemModel();
+        currentSetOfMolecules = new SetOfMolecules();
         currentMolecule = new Molecule();
       } else if (objectType.equals("Atom")) {
         currentAtom = new Atom("H");
         logger.debug("Atom # " + numberOfAtoms);
         numberOfAtoms++;
       } else if (objectType.equals("Bond")) {
+      } else if (objectType.equals("Animation")) {
+        currentChemSequence = new ChemSequence();
+      } else if (objectType.equals("Frame")) {
       }
     };
 
@@ -118,9 +128,10 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
         currentSetOfMolecules.addMolecule(currentMolecule);
         currentChemModel.setSetOfMolecules(currentSetOfMolecules);
         currentChemSequence.addChemModel(currentChemModel);
+      } else if (objectType.equals("Frame")) {
+      } else if (objectType.equals("Animation")) {
         addChemSequence(currentChemSequence);
         logger.info("This file has " + getChemSequenceCount() + " sequence(s).");
-        // logger.info("Molecule added: \n" + currentMolecule.toString());
       } else if (objectType.equals("Atom")) {
         currentMolecule.addAtom(currentAtom);
       } else if (objectType.equals("Bond")) {
@@ -177,6 +188,8 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
       objects.add("Fragment");
       objects.add("Atom");
       objects.add("Bond");
+      objects.add("Animation");
+      objects.add("Frame");
       return objects;
     };
 }
