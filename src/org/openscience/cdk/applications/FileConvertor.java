@@ -113,29 +113,29 @@ public class FileConvertor {
                 }
 
                 // apply modifications
-                if (applyHAdding) {
-                    System.out.print("Cannot add hydrogens at this moment.");
-                    System.exit(-1);
-                }
-                if (applyHRemoval) {
-                    System.out.print("Cannot remove hydrogens at this moment.");
-                    System.exit(-1);
-                }
-                if (apply2DCleanup) {
-                    System.out.print("Cannot create new 2D coordinates at this moment.");
-                    System.exit(-1);
-                }
-                if (apply3DRebonding) {
-                    logger.info("Creating bonds from 3D coordinates");
-                    AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/jmol_atomtypes.txt");
-                    AtomContainer[] containers = ChemFileManipulator.getAllAtomContainers(content);
-                    for (int i=0; i<containers.length; i++) {
-                        AtomContainer container = containers[i];
+                AtomContainer[] containers = ChemFileManipulator.getAllAtomContainers(content);
+                AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/jmol_atomtypes.txt");
+                for (int i=0; i<containers.length; i++) {
+                    AtomContainer container = containers[i];
+                    Atom[] atoms = container.getAtoms();
+                    for (int j=0; j<atoms.length; j++) {
+                        factory.configure(atoms[j]);
+                    }
+                    if (applyHAdding) {
+                        System.out.print("Cannot add hydrogens at this moment.");
+                        System.exit(-1);
+                    }
+                    if (applyHRemoval) {
+                        System.out.print("Cannot remove hydrogens at this moment.");
+                        System.exit(-1);
+                    }
+                    if (apply2DCleanup) {
+                        System.out.print("Cannot create new 2D coordinates at this moment.");
+                        System.exit(-1);
+                    }
+                    if (apply3DRebonding) {
+                        logger.info("Creating bonds from 3D coordinates");
                         RebondTool rebonder = new RebondTool(2.0, 0.5, 0.5);
-                        Atom[] atoms = container.getAtoms();
-                        for (int j=0; j<atoms.length; j++) {
-                            factory.configure(atoms[j]);
-                        }
                         rebonder.rebond(container);
                     }
                 }
