@@ -41,7 +41,6 @@ public class ToolsTests {
         suite.addTest(MFAnalyserTest.suite());
         suite.addTest(ReactionManipulatorTest.suite());
         suite.addTest(SaturationCheckerTest.suite());
-        suite.addTest(ValencyCheckerTest.suite());
         return suite;
     }
 

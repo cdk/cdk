@@ -73,7 +73,6 @@ public class HydrogenAdderTest extends TestCase {
      */
     public static Test suite() {
         TestSuite suite = new TestSuite(HydrogenAdderTest.class);
-        suite.addTest(HydrogenAdder2Test.suite());
         return suite;
     }
 
