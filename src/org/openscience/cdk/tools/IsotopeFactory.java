@@ -86,7 +86,9 @@ public class IsotopeFactory
         String errorMessage = "There was a problem getting org.openscience.cdk." +
                               "config.isotopes.xml as a stream";
 		try {
-			ins = this.getClass().getClassLoader().getResourceAsStream("org/openscience/cdk/config/isotopes.xml");
+            String configFile = "org/openscience/cdk/config/isotopes.xml";
+            logger.debug("Getting stream for " + configFile);
+            ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
 		} catch (Exception exc) {
             logger.error(errorMessage);
 			throw new IOException(errorMessage);
@@ -97,9 +99,10 @@ public class IsotopeFactory
 		}
 		in = new ObjIn(ins, new Config().aliasID(false));
 		isotopes = (Vector) in.readObject();
+        logger.debug("Found #isotopes in file: " + isotopes.size());
 		for (int f = 0; f < isotopes.size(); f++) {
             Isotope isotope = (Isotope)isotopes.elementAt(f);
-            // logger.debug("Setting up: " + isotope);
+            logger.debug("Setting up: " + isotope);
 			setup(isotope);
 		}
         
@@ -245,7 +248,6 @@ public class IsotopeFactory
 		Isotope i = getMajorIsotope(atomicNumber);
 		return (org.openscience.cdk.Element) i;
 	}
-
 
 	/**
 	 *  Configures an atom. Finds the correct element type
