@@ -46,7 +46,8 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 
 /**
- * Generate IChI for a Molecule.
+ * Generates and IChI for a Molecule. Requires the ichi.exe program
+ * to be installed.
  *
  * @author  Yong Zhang <yz237@cam.ac.uk>
  * @created  2003-06-13
@@ -64,6 +65,10 @@ public class IChIGenerator {
         logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
     }
 
+    public void setIChIPath(String path) {
+        ichiProgram = path;
+    }
+    
     /**
      * Generate IChI from the <code>Molecule</code>.
      *
