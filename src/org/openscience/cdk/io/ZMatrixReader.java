@@ -48,6 +48,7 @@ import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.geometry.ZMatrixTools;
 
 /**
  * This class is experimental.
@@ -162,7 +163,6 @@ public class ZMatrixReader extends DefaultChemObjectReader {
             else if (i==0)
             {
               types[i] = tokenizer.nextToken();
-              m.addAtom(new Atom(types[i], calcPos(i, pos, d, d_atom, a, a_atom, da, da_atom)));
               i++;
             }
             else if (i==1)
@@ -170,7 +170,6 @@ public class ZMatrixReader extends DefaultChemObjectReader {
               types[i] = tokenizer.nextToken();
               d_atom[i] = (new Integer(tokenizer.nextToken())).intValue()-1;
               d[i] = (new Double(tokenizer.nextToken())).doubleValue();
-              m.addAtom(new Atom(types[i], calcPos(i, pos, d, d_atom, a, a_atom, da, da_atom)));
               i++;
             }
             else if (i==2)
@@ -180,7 +179,6 @@ public class ZMatrixReader extends DefaultChemObjectReader {
               d[i] = (new Double(tokenizer.nextToken())).doubleValue();
               a_atom[i] = (new Integer(tokenizer.nextToken())).intValue()-1;
               a[i] = (new Double(tokenizer.nextToken())).doubleValue();
-              m.addAtom(new Atom(types[i], calcPos(i, pos, d, d_atom, a, a_atom, da, da_atom)));
               i++;
             }
             else
@@ -192,10 +190,16 @@ public class ZMatrixReader extends DefaultChemObjectReader {
               a[i] = (new Double(tokenizer.nextToken())).doubleValue();
               da_atom[i] = (new Integer(tokenizer.nextToken())).intValue()-1;
               da[i] = (new Double(tokenizer.nextToken())).doubleValue();
-              m.addAtom(new Atom(types[i], calcPos(i, pos, d, d_atom, a, a_atom, da, da_atom)));
               i++;
             }
           }
+        }
+        
+        // calculate cartesian coordinates
+        Point3d[] cartCoords = ZMatrixTools.zmatrixToCartesian(d, d_atom, a, a_atom, da, da_atom);
+        
+        for (i=0; i<number_of_atoms; i++) {
+              m.addAtom(new Atom(types[i], cartCoords[i]));
         }
 
         System.out.println("molecule:\n"+m);
@@ -204,74 +208,13 @@ public class ZMatrixReader extends DefaultChemObjectReader {
         chemModel.setSetOfMolecules(setOfMolecules);
         chemSequence.addChemModel(chemModel);
         line = input.readLine();
-      /*}*/
-      file.addChemSequence(chemSequence);
+        file.addChemSequence(chemSequence);
     } catch (IOException e) 
     {
       // should make some noise now
       file = null;
     }
     return file;
-  }
-
-  private Point3d calcPos(int index, Point3d[] pos, double[] d, int[] d_atom,
-                                                    double[] a, int[] a_atom,
-                                                    double[] da, int[] da_atom)
-  { 
-    if (index==0)
-    {
-      pos[index] = new Point3d(0d,0d,0d);
-      return pos[index];
-    }
-    else if (index==1)
-    {
-      pos[index] = new Point3d(d[1],0d,0d);
-      return pos[index];
-    }
-    else if (index==2)
-    { 
-      pos[index] = new Point3d(-Math.cos((a[2]/180)*Math.PI)*d[2]+d[1],
-                                Math.sin((a[2]/180)*Math.PI)*d[2],
-                                0d);
-      return pos[index];
-    }
-    else 
-    { 
-      Vector3d cd = new Vector3d();
-      cd.sub(pos[da_atom[index]],
-             pos[a_atom[index]]);
-
-      Vector3d bc = new Vector3d();
-      bc.sub(pos[a_atom[index]],
-             pos[d_atom[index]]);
-
-      Vector3d n1 = new Vector3d();
-      n1.cross(cd, bc);
-      n1.normalize();
-
-      Vector3d n2 = rotate(n1,bc,da[index]);
-      n2.normalize();
-      Vector3d ba = rotate(bc,n2,-a[index]);
-
-      ba.normalize();
-
-      Vector3d ban = new Vector3d(ba);
-      ban.scale(d[index]);
-
-      Point3d result = new Point3d();
-      result.add(pos[d_atom[index]], ba);
-      pos[index] = result;
-      return result;
-    }
-  }
-
-  private Vector3d rotate(Vector3d vector, Vector3d axis, double angle)
-  {
-    Matrix3d rotate = new Matrix3d();
-    rotate.set(new AxisAngle4d(axis.x, axis.y, axis.z, (angle/180)*Math.PI));
-    Vector3d result = new Vector3d();
-    rotate.transform(vector, result);
-    return result;
   }
 
     public void close() throws IOException {

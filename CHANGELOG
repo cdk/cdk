@@ -9,6 +9,7 @@ New:
   Instance Location attribute
 * A Renderer2D subclass that uses masks for making backgrounds empty
   (closes #889829)
+* Added a ZMatrixTools.zmatrixToCartesian() method
 
 Fixes:
 * Removed all static methods and, most importantly, a static molecule(!) variable 
@@ -17,6 +18,7 @@ Fixes:
   in CrystalGeometry
 * Cleaned up import statements
 * Fixed writing of MDL mol with PseudoAtom's (closes #890456)
+* ZMatrixReader no longer includes generic code (closes #871699)
 
 API changes:
 * Renderer2D.getScreenSize() and .getScreenCoordinates() are now protected

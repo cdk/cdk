@@ -36,6 +36,7 @@ import javax.vecmath.Vector3d;
  * A set of static utility classes for dealing with Z matrices.
  *
  * @cdkPackage standard
+ * @keyword    Z Matrix
  *
  * @created 2004-02-09
  */
@@ -54,7 +55,7 @@ public class ZMatrixTools {
      * @param second_atoms  Array of atom ids of the second involed atom in angle and dihedral
      * @param third_atoms   Array of atom ids of the third involed atom in dihedral
      */
-    public Point3d[] zmatrixToCartesian(double[] distances, int[] first_atoms,
+    public static Point3d[] zmatrixToCartesian(double[] distances, int[] first_atoms,
                                         double[] angles,    int[] second_atoms,
                                         double[] dihedrals, int[] third_atoms) {
         Point3d[] cartesianCoords = new Point3d[distances.length];
@@ -95,7 +96,7 @@ public class ZMatrixTools {
         return cartesianCoords;
     }
     
-    private Vector3d rotate(Vector3d vector, Vector3d axis, double angle) {
+    private static Vector3d rotate(Vector3d vector, Vector3d axis, double angle) {
         Matrix3d rotate = new Matrix3d();
         rotate.set(new AxisAngle4d(axis.x, axis.y, axis.z, (angle/180)*Math.PI));
         Vector3d result = new Vector3d();
