@@ -8,7 +8,7 @@ find ../../.. -name "*~" | xargs rm -f
 rsync -vargopt ../../../data .
 rsync -vargopt ../../../src .
 rsync -vargopt ../../../jar .
-cp ../../../doc/javadoc/source/makeJavaFilesFilesDoclet.java doc/javadoc/source/.
+cp ../../../doc/javadoc/source/MakeJavaFilesFilesDoclet.java doc/javadoc/source/.
 find . -name "cdk-*.jar" | xargs rm -f
 find data -name "CVS" | xargs rm -R
 find src -name "CVS" | xargs rm -R
