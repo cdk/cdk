@@ -461,7 +461,7 @@
                 <javac srcdir="${build.src}"
                        destdir="${build}" optimize="${optimization}" 
                        debug="${debug}" deprecation="${deprecation}"
-                       includesfile="${src}/java3d.javafiles">
+                       includesfile="${src}/render-java3d.javafiles">
 
                         <classpath refid="project.class.path" />
                 </javac>
@@ -513,11 +513,6 @@
                 <copy 
                 file="${src}/org/openscience/cdk/dict/data/elements.xml"
                 tofile="${build}/org/openscience/cdk/dict/data/elements.xml" />
-
-                <!-- generate lists of class files that should end up in
-                     the jars for the modules -->
-                <copy file="${src}/java3d.javafiles" tofile="${src}/java3d.classes"/>
-                <replace file="${src}/java3d.classes" token=".java" value=".class"/>
         </target>
 
         <target id="dist-core" name="dist-core" depends="compile-core, dist.init">
@@ -603,7 +598,7 @@
                 <jar jarfile="${dist}/jar/cdk-render.jar">
                     <fileset dir="${build}">
                         <includesfile name="${src}/render.classes" />
-                        <includesfile name="${src}/java3d.classes" />
+                        <includesfile name="${src}/render-java3d.classes" />
                     </fileset>
                 </jar>
         </target>
