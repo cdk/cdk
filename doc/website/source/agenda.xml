@@ -66,6 +66,12 @@
         <para>A IChIReader that parses IChI identifiers (v. 0.9).
           (See <ulink url="http://www.nist.gov/public_affairs/update/upd20020610.htm#International">this press release</ulink>).</para>
       </listitem>
+      <listitem>
+        <para>
+          Code that can generate 3D structures, based on common angles and distances
+          between bonds. Babel is able to do this, so only the code has to be ported.
+        </para>
+      </listitem>
     </itemizedlist>
 
   <para>
