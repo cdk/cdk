@@ -53,7 +53,7 @@ public class AtomTypeFactoryTest extends TestCase {
 		} catch(Exception exc) {
             System.out.println("AtomTypeFactoryTest.setup: ");
             exc.printStackTrace();
-			fail("Problem instantiating AtomTypeFactory: " +  exc.toString());
+			fail("Problem instantiating AtomTypeFactory: " +  exc.getMessage());
 		}
     }
 	
@@ -93,9 +93,29 @@ public class AtomTypeFactoryTest extends TestCase {
 		try {
 			atomType = atf.getAtomType("C4");
 		} catch(Exception exc) {
-			fail("Problem getting AtomType for 'structgen.C4' from AtomTypeFactory: "  +  exc.toString());
+			fail("Problem getting AtomType for 'structgen.C4' from AtomTypeFactory: "  +  exc.getMessage());
 		}
 		
-		assertTrue(atomType.getBondOrderSum() == 4.0);
+		
+        assertEquals("C", atomType.getSymbol());
+        assertEquals("C4", atomType.getAtomTypeName());
+		assertEquals(4.0, atomType.getBondOrderSum(), 0.001);
+		assertEquals(3.0, atomType.getMaxBondOrder(), 0.0001);
+	}
+
+    public void testGetAtomTypeFromValency() {
+		AtomType atomType = null;
+		try {
+            AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/valency_atomtypes.xml");
+			atomType = factory.getAtomType("Oplus");
+		} catch(Exception exc) {
+			fail("Problem getting AtomType for 'valency:O+' from AtomTypeFactory: "  +  exc.getMessage());
+		}
+		
+        assertEquals("O", atomType.getSymbol());
+        assertEquals("Oplus", atomType.getAtomTypeName());
+		assertEquals(1, atomType.getFormalCharge());
+		assertEquals(3.0, atomType.getBondOrderSum(), 0.0001);
+		assertEquals(2.0, atomType.getMaxBondOrder(), 0.0001);
 	}
 }
