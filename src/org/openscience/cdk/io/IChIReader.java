@@ -76,11 +76,49 @@ public class IChIReader extends DefaultChemObjectReader {
      */
     private void init() {
         logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
-        try {
-            parser = new gnu.xml.aelfred2.XmlReader();
-            logger.info("Using Aelfred2 XML parser.");
-        } catch (Exception e) {
-            logger.error("Could not instantiate Aelfred2 XML reader!");
+        boolean success = false;
+        // If JAXP is prefered (comes with Sun JVM 1.4.0 and higher)
+        if (!success) {
+            try {
+                javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
+                spf.setNamespaceAware(true);
+                javax.xml.parsers.SAXParser saxParser = spf.newSAXParser();
+                parser = saxParser.getXMLReader();
+                logger.info("Using JAXP/SAX XML parser.");
+                success = true;
+            } catch (Exception e) {
+                logger.warn("Could not instantiate JAXP/SAX XML reader!");
+                logger.debug(e);
+            }
+        }
+        // Aelfred is first alternative.
+        if (!success) {
+            try {
+                parser = (XMLReader)this.getClass().getClassLoader().
+                        loadClass("gnu.xml.aelfred2.XmlReader").
+                        newInstance();
+                logger.info("Using Aelfred2 XML parser.");
+                success = true;
+            } catch (Exception e) {
+                logger.warn("Could not instantiate Aelfred2 XML reader!");
+                logger.debug(e);
+            }
+        }
+        // Xerces is second alternative
+        if (!success) {
+            try {
+                parser = (XMLReader)this.getClass().getClassLoader().
+                        loadClass("org.apache.xerces.parsers.SAXParser").
+                        newInstance();
+                logger.info("Using Xerces XML parser.");
+                success = true;
+            } catch (Exception e) {
+                logger.warn("Could not instantiate Xerces XML reader!");
+                logger.debug(e);
+            }
+        }
+        if (!success) {
+            logger.error("Could not instantiate any XML parser!");
         }
     }
 

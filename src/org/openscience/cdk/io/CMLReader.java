@@ -87,7 +87,21 @@ public class CMLReader extends DefaultChemObjectReader {
         url = ""; // make sure it is not null
 
         boolean success = false;
-        // Aelfred is prefered.
+        // If JAXP is prefered (comes with Sun JVM 1.4.0 and higher)
+        if (!success) {
+            try {
+                javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
+                spf.setNamespaceAware(true);
+                javax.xml.parsers.SAXParser saxParser = spf.newSAXParser();
+                parser = saxParser.getXMLReader();
+                logger.info("Using JAXP/SAX XML parser.");
+                success = true;
+            } catch (Exception e) {
+                logger.warn("Could not instantiate JAXP/SAX XML reader!");
+                logger.debug(e);
+            }
+        }
+        // Aelfred is first alternative.
         if (!success) {
             try {
                 parser = (XMLReader)this.getClass().getClassLoader().
@@ -100,7 +114,7 @@ public class CMLReader extends DefaultChemObjectReader {
                 logger.debug(e);
             }
         }
-        // If Aelfred is not available try Xerces
+        // Xerces is second alternative
         if (!success) {
             try {
                 parser = (XMLReader)this.getClass().getClassLoader().
@@ -110,20 +124,6 @@ public class CMLReader extends DefaultChemObjectReader {
                 success = true;
             } catch (Exception e) {
                 logger.warn("Could not instantiate Xerces XML reader!");
-                logger.debug(e);
-            }
-        }
-        // If Xerces is not available try JAXP
-        if (!success) {
-            try {
-                javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
-                spf.setNamespaceAware(true);
-                javax.xml.parsers.SAXParser saxParser = spf.newSAXParser();
-                parser = saxParser.getXMLReader();
-                logger.info("Using JAXP/SAX XML parser.");
-                success = true;
-            } catch (Exception e) {
-                logger.warn("Could not instantiate JAXP/SAX XML reader!");
                 logger.debug(e);
             }
         }
