@@ -24,6 +24,9 @@
  */
 package org.openscience.cdk.io.formats;
 
+import java.util.StringTokenizer;
+import org.openscience.cdk.math.MathTools;
+
 /**
  * @cdk.module io
  */
@@ -43,13 +46,14 @@ public class HINFormat implements ChemFormatMatcher {
     };
 
     public boolean matches(int lineNumber, String line) {
-        if (line.indexOf(";") == 0 ||
-            line.startsWith("forcefield") ||
-            line.startsWith("sys") ||
-            line.startsWith("view") ||
-            line.startsWith("mol") ||
-            line.startsWith("endmol")) {
-            return true;
+        if (line.startsWith("atom ") &&
+            (line.endsWith(" s") || line.endsWith(" d") ||
+             line.endsWith(" t") || line.endsWith(" a")
+            )) {
+            StringTokenizer tokenizer = new StringTokenizer(line, " ");
+            if (MathTools.isOdd(tokenizer.countTokens())) {
+                return true;
+            }
         }
         return false;
     }
