@@ -71,6 +71,11 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
         } catch (Exception exception) {
             // should not happen
         }
+        if (input instanceof BufferedReader) {
+            this.input = (BufferedReader)input;
+        } else {
+            this.input = new BufferedReader(input);
+        }
     }
 
     public boolean accepts(ChemObject object) {
