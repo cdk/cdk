@@ -70,6 +70,8 @@ import org.openscience.cdk.geometry.GeometryTools;
  * @aythor      steinbeck
  * @cdk.created 2004-09-07
  * @cdk.module  builder3d
+ * @cdk.keyword 3D coordinates
+ * @cdk.keyword coordinate generation, 3D
  */
 public class ModelBuilder3D {
 
