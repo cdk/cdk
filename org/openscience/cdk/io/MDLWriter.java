@@ -65,14 +65,6 @@ public class MDLWriter implements CDKConstants
 	}
 	
 	
-	/**
-	 * Takes an object subclassed from ChemObject, e.g.Molecule and tries to 
-	 * save it. If the specific implementation does not support a specific 
-	 * ChemObject it will throw an Exception.
-	 *
-	 * @param   object  The object subclssed from ChemObject
-	 * @exception   UnsupportedChemObjectException  
-	 */
 	public void write(ChemObject object) throws UnsupportedChemObjectException 
 	{
 		if (object instanceof SetOfMolecules)
@@ -162,7 +154,7 @@ public class MDLWriter implements CDKConstants
 		        line = "";
 		        line += formatMDLFloat((float) atom.getX2D());
 		        line += formatMDLFloat((float) atom.getY2D());
-				line += " 0 ";                 // z coordinate handeled here
+				line += " 0 ";
 		        line += formatMDLString(molecule.getAtomAt(f).getElement().getSymbol(), 3);
 		        line += " 0  0  0  0  0  0  0  0  0  0  0  0";
 			    writer.write(line);
