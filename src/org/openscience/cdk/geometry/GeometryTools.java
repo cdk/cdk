@@ -144,30 +144,49 @@ public class GeometryTools {
 	 * @param   molecule of which the dimension should be returned
 	 * @return The java.awt.Dimension of this molecule
 	 */
-	public static Dimension get2DDimension(AtomContainer atomCon)
-	{
-		double xOffset = 0, yOffset = 0;
-		double maxX = Double.MIN_VALUE, maxY = Double.MIN_VALUE, minX = Double.MAX_VALUE, minY = Double.MAX_VALUE;
-		for (int i = 0; i < atomCon.getAtomCount(); i++)
-		{
-			if (atomCon.getAtomAt(i).getPoint2D() != null)
-			{
-		
-				if (atomCon.getAtomAt(i).getX2D() > maxX)
-					maxX = atomCon.getAtomAt(i).getX2D();
-				if (atomCon.getAtomAt(i).getY2D() > maxY)
-					maxY = atomCon.getAtomAt(i).getY2D();
-				if (atomCon.getAtomAt(i).getX2D() < minX)
-					minX = atomCon.getAtomAt(i).getX2D();
-				if (atomCon.getAtomAt(i).getY2D() < minY)
-					minY = atomCon.getAtomAt(i).getY2D();
-			}	
-		}
-		return new Dimension((int)(maxX - minX + 1),
-			(int)(maxY - minY + 1));
+	public static Dimension get2DDimension(AtomContainer atomCon) {
+        double[] minmax = getMinMax(atomCon);
+		double maxX = minmax[2],
+               maxY = minmax[3], 
+               minX = minmax[0], 
+               minY = minmax[1];
+		return new Dimension((int)(maxX - minX + 1), (int)(maxY - minY + 1));
 	}
 
-
+    /**
+     * Returns the minimum and maximum X and Y coordinates of the
+     * atoms in the AtomContainer as:
+     * <pre>
+     *   minmax[0] = minX;
+     *   minmax[1] = minY;
+     *   minmax[2] = maxX;
+     *   minmax[3] = maxY;
+     * </pre>
+     *
+     * @return An four int array as defined above.
+     */
+    public static double[] getMinMax(AtomContainer container) {
+		double maxX = Double.MIN_VALUE, 
+               maxY = Double.MIN_VALUE, 
+               minX = Double.MAX_VALUE, 
+               minY = Double.MAX_VALUE;
+		for (int i = 0; i < container.getAtomCount(); i++) {
+            Atom atom = container.getAtomAt(i);
+			if (atom.getPoint2D() != null) {
+				if (atom.getX2D() > maxX) maxX = atom.getX2D();
+				if (atom.getX2D() < minX) minX = atom.getX2D();
+				if (atom.getY2D() > maxY) maxY = atom.getY2D();
+				if (atom.getY2D() < minY) minY = atom.getY2D();
+			}	
+		}
+        double[] minmax = new double[4];
+        minmax[0] = minX;
+        minmax[1] = minY;
+        minmax[2] = maxX;
+        minmax[3] = maxY;
+        return minmax;
+    }
+    
 	/**
 	 * Translates a molecule from the origin to a new point denoted by a vector.
 	 *

@@ -59,7 +59,7 @@ public class Renderer2D   {
 	/**
 	 *  Description of the Field
 	 */
-	public Renderer2DModel r2dm;
+	private Renderer2DModel r2dm;
 
 	/**
 	 * Constructs a Renderer2D with a default settings model.
@@ -79,7 +79,65 @@ public class Renderer2D   {
         logger = new LoggingTool(this.getClass().getName());
 	}
 
+    public void paintChemModel(ChemModel model, Graphics graphics) {
+        if (model.getSetOfReactions() != null) {
+            paintSetOfReactions(model.getSetOfReactions(), graphics);
+        } else {
+            paintMolecule(ChemModelManipulator.getAllInOneContainer(model), graphics);
+        }
+    }
+    
+    public void paintSetOfReactions(SetOfReactions reactionSet, Graphics graphics) {
+        Reaction[] reactions = reactionSet.getReactions();
+        for (int i=0; i<reactions.length; i++) {
+            paintReaction(reactions[i], graphics);
+        }
+    }
+    
+    public void paintReaction(Reaction reaction, Graphics graphics) {
+        paintBoundingBox(ReactionManipulator.getAllInOneContainer(reaction),
+                         reaction.getID(), 20, graphics);
+        
+        // paint reactants content
+        AtomContainer reactantContainer = new AtomContainer();
+        Molecule[] reactants = reaction.getReactants();
+        for (int i=0; i<reactants.length; i++) {
+            reactantContainer.add(reactants[i]);
+        }
+        paintBoundingBox(reactantContainer, "Reactants", 10, graphics);
+        paintMolecule(reactantContainer, graphics);
 
+        // paint products content
+        AtomContainer productContainer = new AtomContainer();
+        Molecule[] products = reaction.getProducts();
+        for (int i=0; i<products.length; i++) {
+            productContainer.add(products[i]);
+        }
+        paintBoundingBox(productContainer, "Products", 10, graphics);
+        paintMolecule(productContainer, graphics);
+    }
+    
+    private void paintBoundingBox(AtomContainer container, String caption, 
+                                  int side, Graphics graphics) {
+        double[] minmax = GeometryTools.getMinMax(container);
+        int[] ints = new int[4];
+        ints[0] = (int)minmax[0] -side;
+        ints[1] = (int)minmax[1] -side;
+        ints[2] = (int)minmax[2] +side;
+        ints[3] = (int)minmax[3] +side;
+        int[] screenCoords = getScreenCoordinates(ints);
+        int heigth = screenCoords[3] - screenCoords[1]; 
+        int width = screenCoords[2] - screenCoords[0]; 
+        graphics.drawRect((int)screenCoords[0], (int)screenCoords[1], width, heigth);
+
+        // draw reaction ID
+        Font unscaledFont = graphics.getFont();
+        int fontSize = getScreenSize(unscaledFont.getSize());
+        graphics.setFont(unscaledFont.deriveFont((float)fontSize));
+        graphics.drawString(caption, (int)screenCoords[0], (int)screenCoords[1]);
+        graphics.setFont(unscaledFont);
+    }
+    
 	/**
 	 *  triggers the methods to make the molecule fit into the frame and to paint
 	 *  it.
@@ -712,7 +770,7 @@ public class Renderer2D   {
 		this.r2dm = r2dm;
 	}
 
-    public Point getScreenCoordinates(Point p) {
+    private Point getScreenCoordinates(Point p) {
         Point screenCoordinate = new Point();
         double zoomFactor = r2dm.getZoomFactor();
         screenCoordinate.x = (int)((double)p.x * zoomFactor);
@@ -720,7 +778,7 @@ public class Renderer2D   {
         return screenCoordinate;
     }
 
-    public int[] getScreenCoordinates(int[] coords) {
+    private int[] getScreenCoordinates(int[] coords) {
         int[] screenCoordinates = new int[coords.length];
         double zoomFactor = r2dm.getZoomFactor();
         for (int i=0; i<coords.length; i++) {
@@ -729,7 +787,7 @@ public class Renderer2D   {
         return screenCoordinates;
     }
     
-    public int getScreenSize(int size) {
+    private int getScreenSize(int size) {
         return (int)((double)size * r2dm.getZoomFactor());
     }
 }
