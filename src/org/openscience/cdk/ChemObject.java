@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  * 
- * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2004  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -62,15 +62,17 @@ public class ChemObject implements java.io.Serializable, Cloneable {
 	  */
     private Vector[] pointers;
 
-    private String id = ""; 
+    private String id; 
     
     /**
      * Constructs a new ChemObject.
      */
-	public ChemObject()
-	{
-		super();
-		init();
+	public ChemObject() {
+		flags = new boolean[CDKConstants.MAX_FLAG_INDEX + 1];
+		chemObjects = null;
+        properties = null;
+        pointers = null;
+        id = "";
 	}
 	
     /*
@@ -196,32 +198,6 @@ public class ChemObject implements java.io.Serializable, Cloneable {
     public Hashtable getProperties() {
         return lazyProperties();
     }
-
-	/**
-	 * Initializes all the service fields, vectors, hashtables, etc..
-	 *
-	 */
-	public void init()
-	{
-		/** Vector for listener administration */
-	    chemObjects = null;
-		/** 
-		  * A hashtable for the storage of any kind of properties 
-		  * of this ChemObject. 
-		  */
-	    properties = null;
-		/** You will frequently have to use some flags on a ChemObject
-		 * for example if you want to draw a molecule and see
-		 * if you've already drawn an atom, or in a ring search to 
-		 * check whether a vertex has been visited in a graph traversal.
-		 * Use these flags while addressing particular positions in the
-		 * flag array with self-defined constants (flags[VISITED] = true).
-		 * 10 flags per object should be more than enough.
-		 */
-	    flags = new boolean[CDKConstants.MAX_FLAG_INDEX + 1];
-        
-	    pointers = null;
-	}
 	
 	/**
 	 * Clones this object.

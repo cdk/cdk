@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2003-2004  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -74,9 +74,7 @@ public class CDKBasedAtomTypeConfigurator implements AtomTypeConfigurator {
         atomTypes = reader.readAtomTypes();
         for (int f = 0; f < atomTypes.size(); f++) {
             Object o = atomTypes.elementAt(f);
-            if (o instanceof org.openscience.cdk.AtomType) {
-                ((AtomType)o).init();
-            } else {
+            if (!(o instanceof org.openscience.cdk.AtomType)) {
                 System.out.println("Expecting cdk.AtomType class, but got: " + o.getClass().getName());
             }
         }

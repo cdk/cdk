@@ -3,7 +3,7 @@
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 1997-2004  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -104,8 +104,6 @@ public class IsotopeFactory
         if (debug) logger.debug("Found #isotopes in file: " + isotopes.size());
 		for (int f = 0; f < isotopes.size(); f++) {
             Isotope isotope = (Isotope)isotopes.elementAt(f);
-            if (debug) logger.debug("Setting up: " + isotope);
-			setup(isotope);
 		}
         
         majorIsotopes = new Hashtable();
@@ -318,14 +316,5 @@ public class IsotopeFactory
 		}
 	}
 
-
-	/**
-	 *  Fixes all the stuff that is not correctly deserialized from the 
-	 *  XML configuration file
-	 */
-	void setup(Isotope isotope)
-	{
-		isotope.init();
-	}
 }
 
