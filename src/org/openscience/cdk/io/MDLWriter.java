@@ -167,6 +167,9 @@ public class MDLWriter implements CDKConstants, ChemObjectWriter {
 		        line = "";
 		        line += formatMDLFloat((float) atom.getX2D());
 		        line += formatMDLFloat((float) atom.getY2D());
+			if(atom.getZ3D()!=0)
+				line += formatMDLFloat((float) atom.getZ3D())+" ";
+			else
 				line += "    0.0000 ";
 		        line += formatMDLString(molecule.getAtomAt(f).getSymbol(), 3);
 		        line += " 0  0  0  0  0  0  0  0  0  0  0  0";
@@ -279,4 +282,5 @@ public class MDLWriter implements CDKConstants, ChemObjectWriter {
     }
 
 }
+
 
