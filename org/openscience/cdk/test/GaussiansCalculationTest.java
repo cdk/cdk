@@ -77,7 +77,7 @@ public class GaussiansCalculationTest
         count_electrons += atoms[i].getAtomicNumber();
       orbitals.setCountElectrons(count_electrons);
       
-      Job job = new Job(orbitals);
+      ClosedShellJob job = new ClosedShellJob(orbitals);
       orbitals = job.calculate();
     } catch(Exception exc)
     { 

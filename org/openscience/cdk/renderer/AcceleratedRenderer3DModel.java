@@ -72,7 +72,7 @@ public class AcceleratedRenderer3DModel
 		for(i=0; i<atoms.length; i++)
 		{
 			//System.out.println("OZ["+i+"]="+atoms[i].getElement().getAtomicNumber());
-			sphere = getAtomObject(0.2, atomcolors[atoms[i].getElement().getAtomicNumber()]);
+			sphere = getAtomObject(0.2, atomcolors[atoms[i].getAtomicNumber()]);
 			atomObjects.addElement(sphere);
 
 			transformgroup = new TransformGroup(getShiftTransformation(atoms[i].getPoint3D()));

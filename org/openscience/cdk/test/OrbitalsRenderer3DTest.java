@@ -86,7 +86,7 @@ public class OrbitalsRenderer3DTest {
 
 			int count_electrons = 0;
 			for (int i = 0; i < atoms.length; i++) {
-				count_electrons += atoms[i].getElement().getAtomicNumber();
+				count_electrons += atoms[i].getAtomicNumber();
 			}
 			orbitals.setCountElectrons(count_electrons);
 			System.out.println("Running Gaussian calculation ...");
