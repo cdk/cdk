@@ -38,4 +38,11 @@ public class ABINITReader extends DummyReader {
         return "ABINIT (not implemented, post a feature request if you need it)";
     }
 
+    public boolean matches(int lineNumber, String line) {
+        if (line.indexOf("natom") >= 0 ||
+            line.indexOf("ABINIT") >= 0) {
+            return true;
+        }
+        return false;
+    }
 }

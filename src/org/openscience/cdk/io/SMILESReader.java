@@ -76,6 +76,10 @@ public class SMILESReader extends DefaultChemObjectReader {
         }
     }
 
+    public boolean matches(int lineNumber, String line) {
+        return false; // IMPORTANT: this should never match
+    }
+
     /**
      * reads the content from a XYZ input. It can only return a
      * ChemObject of type ChemFile

@@ -37,4 +37,11 @@ public class JaguarReader extends DummyReader {
     public String getFormatName() {
         return "Jaguar (not implemented, post a feature request if you need it)";
     }
+
+    public boolean matches(int lineNumber, String line) {
+        if (line.indexOf("Jaguar") >= 0) {
+            return true;
+        }
+        return false;
+    }
 }

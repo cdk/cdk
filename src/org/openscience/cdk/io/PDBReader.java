@@ -102,6 +102,15 @@ public class PDBReader extends DefaultChemObjectReader {
             this._oInput = new BufferedReader(input);
         }
     }
+
+    public boolean matches(int lineNumber, String line) {
+        if (line.startsWith("HEADER") ||
+            line.startsWith("HETATM ") ||
+            line.startsWith("ATOM  ")) {
+            return true;
+        }
+        return false;
+    }
     
   /**
    *

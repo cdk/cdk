@@ -92,6 +92,17 @@ public class CMLReader extends DefaultChemObjectReader {
         this.input = input;
     }
 
+    public boolean matches(int lineNumber, String line) {
+        if ((line.indexOf("<atom") != -1) ||
+            (line.indexOf("<molecule") != -1) ||
+            (line.indexOf("<reaction") != -1) ||
+            (line.indexOf("<cml") != -1) ||
+            (line.indexOf("<bond") != -1)) {
+            return true;
+        }
+        return false;
+    }
+    
     /**
      * Define this CMLReader to take the input from a java.io.Reader
      * class. Possible readers are (among others) StringReader and FileReader.

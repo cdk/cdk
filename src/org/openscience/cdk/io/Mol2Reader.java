@@ -81,6 +81,13 @@ public class Mol2Reader extends DefaultChemObjectReader {
         }
     }
 
+    public boolean matches(int lineNumber, String line) {
+        if (line.indexOf("<TRIPOS>") >= 0) {
+            return true;
+        }
+        return false;
+    }
+
     /**
      * Takes an object which subclasses ChemObject, e.g.Molecule, and will read
      * this (from file, database, internet etc). If the specific implementation

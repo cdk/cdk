@@ -88,6 +88,13 @@ public class ZMatrixReader extends DefaultChemObjectReader {
         }
     }
 
+    public boolean matches(int lineNumber, String line) {
+        if (lineNumber == 4 && line.indexOf("Z Matrix") != -1) {
+            return true;
+        }
+        return false;
+    }
+
   /**
    *  Returns a ChemObject of type object bye reading from
    *  the input. 

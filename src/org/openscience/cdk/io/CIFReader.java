@@ -94,6 +94,15 @@ public class CIFReader extends DefaultChemObjectReader {
         this.input = input;
     }
 
+    public boolean matches(int lineNumber, String line) {
+        if (line.startsWith("_cell_length_a") ||
+            line.startsWith("_audit_creation_date") ||
+            line.startsWith("loop_")) {
+            return true;
+        }
+        return false;
+    }
+
     /**
      * Read a ChemFile from input
      *

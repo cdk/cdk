@@ -87,6 +87,13 @@ public class IChIReader extends DefaultChemObjectReader {
         this.input = input;
     }
 
+    public boolean matches(int lineNumber, String line) {
+        if (line.indexOf("<identifier") != -1) {
+            return true;
+        }
+        return false;
+    }
+
     /**
      * Initializes this reader.
      */

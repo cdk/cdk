@@ -37,4 +37,11 @@ public class MOPAC7Reader extends DummyReader {
     public String getFormatName() {
         return "MOPAC7 (not implemented, post a feature request if you need it)";
     }
+
+    public boolean matches(int lineNumber, String line) {
+        if (line.indexOf("MOPAC:  VERSION  7.00") >= 0) {
+            return true;
+        }
+        return false;
+    }
 }

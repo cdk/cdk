@@ -37,4 +37,11 @@ public class Gaussian90Reader extends DummyReader {
     public String getFormatName() {
         return "Gaussian90 (not implemented, post a feature request if you need it)";
     }
+
+    public boolean matches(int lineNumber, String line) {
+        if (line.indexOf("Gaussian G90") >= 0) {
+            return true;
+        }
+        return false;
+    }
 }

@@ -85,6 +85,13 @@ public class MDLRXNReader extends DefaultChemObjectReader {
         }
     }
 
+    public boolean matches(int lineNumber, String line) {
+        if (line.startsWith("$RXN")) {
+            return true;
+        }
+        return false;
+    }
+    
     /**
      * Takes an object which subclasses ChemObject, e.g.Molecule, and will read
      * this (from file, database, internet etc). If the specific implementation

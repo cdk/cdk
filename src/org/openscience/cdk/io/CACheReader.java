@@ -37,4 +37,11 @@ public class CACheReader extends DummyReader {
     public String getFormatName() {
         return "CAChe (not implemented, post a feature request if you need it)";
     }
+
+    public boolean matches(int lineNumber, String line) {
+        if (line.startsWith("molstruct")) {
+            return true;
+        }
+        return false;
+    }
 }

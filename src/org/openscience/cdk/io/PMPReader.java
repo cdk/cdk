@@ -108,6 +108,13 @@ public class PMPReader extends DefaultChemObjectReader {
         }
     }
 
+    public boolean matches(int lineNumber, String line) {
+        if (line.startsWith("%%Header Start")) {
+            return true;
+        }
+        return false;
+    }
+
     /**
      * reads the content from a PMP input. It can only return a
      * ChemObject of type ChemFile

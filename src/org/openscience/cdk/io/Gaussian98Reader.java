@@ -126,6 +126,14 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
         }
     }
     
+    public boolean matches(int lineNumber, String line) {
+        if (line.indexOf("Gaussian(R) 98") >= 0 ||
+            line.indexOf("Gaussian 98") >= 0) {
+            return true;
+        }
+        return false;
+    }
+
     public ChemObject read(ChemObject object) throws CDKException {
         customizeJob();
          

@@ -105,6 +105,13 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
         }
     }
     
+    public boolean matches(int lineNumber, String line) {
+        if (line.indexOf("Gaussian(R) 03") >= 0) {
+            return true;
+        }
+        return false;
+    }
+
     public ChemObject read(ChemObject object) throws CDKException {
         if (object instanceof ChemSequence) {
             return readChemSequence();

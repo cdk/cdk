@@ -37,4 +37,12 @@ public class ADFReader extends DummyReader {
     public String getFormatName() {
         return "ABINIT (not implemented, post a feature request if you need it)";
     }
+
+    public boolean matches(int lineNumber, String line) {
+        if (line.indexOf("Amsterdam Density Functional") >= 0) {
+            return true;
+        }
+        return false;
+    }
+
 }

@@ -37,4 +37,12 @@ public class Aces2Reader extends DummyReader {
     public String getFormatName() {
         return "Aces2 (not implemented, post a feature request if you need it)";
     }
+
+    public boolean matches(int lineNumber, String line) {
+        if (line.indexOf("ACES2") >= 0) {
+            return true;
+        }
+        return false;
+    }
+    
 }
