@@ -54,9 +54,15 @@ public class QueryAtomContainerCreator {
         for (int i = 0; i < bonds.length; i++) {
             int index1 = container.getAtomNumber(bonds[i].getAtomAt(0));
             int index2 = container.getAtomNumber(bonds[i].getAtomAt(1));
-            queryContainer.addBond(new OrderQueryBond((QueryAtom) queryContainer.getAtomAt(index1),
-                    (QueryAtom) queryContainer.getAtomAt(index2),
-                    bonds[i].getOrder()));
+            if (bonds[i].getFlag(CDKConstants.ISAROMATIC)) {
+                queryContainer.addBond(new AromaticQueryBond((QueryAtom) queryContainer.getAtomAt(index1),
+                                      (QueryAtom) queryContainer.getAtomAt(index2),
+                                      1.5));
+            } else {
+                queryContainer.addBond(new OrderQueryBond((QueryAtom) queryContainer.getAtomAt(index1),
+                                      (QueryAtom) queryContainer.getAtomAt(index2),
+                                      bonds[i].getOrder()));
+            }
         }
         return queryContainer;
     }
