@@ -391,6 +391,34 @@ public class HueckelAromaticityDetectorTest extends TestCase
 
 	}
 
+	/**
+	 *  A unit test for JUnit
+	 */
+	public void testBenzene()
+	{
+		Molecule molecule = MoleculeFactory.makeBenzene();
+		boolean isAromatic = false;
+		boolean[] testResults = {true,true,true,true,true,true};
+		try
+		{
+			isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
+			for (int f = 0; f < molecule.getAtomCount(); f++)
+			{
+				assertTrue(molecule.getAtomAt(f).getFlag(CDKConstants.ISAROMATIC) == testResults[f]);
+			}
+
+		} catch (Exception exc)
+		{
+			if (standAlone)
+			{
+				exc.printStackTrace();
+			}
+			fail(exc.toString());
+		}
+		
+		if (standAlone) MoleculeViewer2D.display(molecule, true);
+
+	}
 	
 	
 
@@ -403,13 +431,14 @@ public class HueckelAromaticityDetectorTest extends TestCase
 	{
 		HueckelAromaticityDetectorTest hadt = new HueckelAromaticityDetectorTest("HueckelAromaticityDetectorTest");
 		hadt.setStandAlone(true);
-		hadt.testAzulene();
-		hadt.testTetraDehydroDecaline();
-		hadt.testIndole();
-		hadt.testThiazole();
-		hadt.testBug698152();
-		hadt.testPorphyrine();
-		hadt.testQuinone();
+		//hadt.testAzulene();
+		//hadt.testTetraDehydroDecaline();
+		//hadt.testIndole();
+		//hadt.testThiazole();
+		//hadt.testBug698152();
+		//hadt.testPorphyrine();
+		//hadt.testQuinone();
+		hadt.testBenzene();
 	}
 }
 
