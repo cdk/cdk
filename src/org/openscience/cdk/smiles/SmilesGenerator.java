@@ -1319,11 +1319,12 @@ public class SmilesGenerator {
       boolean afterThisAtom = false;
       Atom viewTo = null;
       for (int i = 0; i < currentChain.size(); i++) {
-        if (a == currentChain.get(i)) {
-          afterThisAtom = true;
-        }
         if (afterThisAtom && currentChain.get(i) instanceof Atom) {
           viewTo = (Atom) currentChain.get(i);
+          break;
+        }
+        if (a == currentChain.get(i)) {
+          afterThisAtom = true;
         }
       }
       boolean firstDirection = isLeft(viewFrom, a, parent);
