@@ -63,6 +63,7 @@ public class CDKConstants {
 
         public final static int STEREO_ATOM_PARITY_PLUS = 1;
         public final static int STEREO_ATOM_PARITY_MINUS = -1;
+        public final static int STEREO_ATOM_PARITY_UNDEFINED = 0;
 
         /** 
          * Carbon NMR shift contant for use as a key in the
