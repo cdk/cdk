@@ -83,4 +83,30 @@ public class ReactionManipulator {
         }
         return container;
     }
+    
+    /**
+     * Returns a new Reaction object which is the reverse of the given
+     * Reaction.
+     */
+    public static Reaction reverse(Reaction reaction) {
+        Reaction reversedReaction = new Reaction();
+        if (reaction.getDirection() == Reaction.BIDIRECTIONAL) {
+            reversedReaction.setDirection(Reaction.BIDIRECTIONAL);
+        } else if (reaction.getDirection() == Reaction.FORWARD) {
+            reversedReaction.setDirection(Reaction.BACKWARD);
+        } else if (reaction.getDirection() == Reaction.BACKWARD) {
+            reversedReaction.setDirection(Reaction.FORWARD);
+        }
+        Molecule[] reactants = reaction.getReactants();
+        for (int i=0; i<reactants.length; i++) {
+            int coefficient = reaction.getReactantCoefficient(reactants[i]);
+            reversedReaction.addProduct(reactants[i], coefficient);
+        }
+        Molecule[] products = reaction.getProducts();
+        for (int i=0; i<products.length; i++) {
+            int coefficient = reaction.getProductCoefficient(products[i]);
+            reversedReaction.addReactant(products[i], coefficient);
+        }
+        return reversedReaction;
+    }
 }
