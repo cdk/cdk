@@ -109,4 +109,76 @@
     </bibtex:article>
   </bibtex:entry>
   
+  <bibtex:entry id="cdknews.art10">
+    <bibtex:article>
+      <bibtex:author>Willighagen, E.L.</bibtex:author>
+      <bibtex:title>Communication: ChemNomParse</bibtex:title>
+      <bibtex:journal>CDK News</bibtex:journal>
+      <bibtex:year>2005</bibtex:year>
+      <bibtex:volume>2</bibtex:volume>
+      <bibtex:number>1</bibtex:number>
+      <bibtex:pages>24</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+  
+  <bibtex:entry id="cdknews.art11">
+    <bibtex:article>
+      <bibtex:author>Guha, R.</bibtex:author>
+      <bibtex:title>Using the CDK as a backend to R</bibtex:title>
+      <bibtex:journal>CDK News</bibtex:journal>
+      <bibtex:year>2005</bibtex:year>
+      <bibtex:volume>2</bibtex:volume>
+      <bibtex:number>1</bibtex:number>
+      <bibtex:pages>2--6</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+  
+  <bibtex:entry id="cdknews.art12">
+    <bibtex:article>
+      <bibtex:author>Guha, R.</bibtex:author>
+      <bibtex:title>Using R to provide statistical functionality for QSAR modeling in CDK</bibtex:title>
+      <bibtex:journal>CDK News</bibtex:journal>
+      <bibtex:year>2005</bibtex:year>
+      <bibtex:volume>2</bibtex:volume>
+      <bibtex:number>1</bibtex:number>
+      <bibtex:pages>7--13</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+  
+  <bibtex:entry id="cdknews.art13">
+    <bibtex:article>
+      <bibtex:author>Willighagen, E.L. and Howard, M.</bibtex:author>
+      <bibtex:title>Jmol as 3D viewer for CDK</bibtex:title>
+      <bibtex:journal>CDK News</bibtex:journal>
+      <bibtex:year>2005</bibtex:year>
+      <bibtex:volume>2</bibtex:volume>
+      <bibtex:number>1</bibtex:number>
+      <bibtex:pages>17--20</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+  
+  <bibtex:entry id="cdknews.art15">
+    <bibtex:article>
+      <bibtex:author>Kuhn, S.</bibtex:author>
+      <bibtex:title>Extending www.chemistry-development-kit.org</bibtex:title>
+      <bibtex:journal>CDK News</bibtex:journal>
+      <bibtex:year>2005</bibtex:year>
+      <bibtex:volume>2</bibtex:volume>
+      <bibtex:number>1</bibtex:number>
+      <bibtex:pages>14--16</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+  
+  <bibtex:entry id="cdknews.art16">
+    <bibtex:article>
+      <bibtex:author>Bender, A.</bibtex:author>
+      <bibtex:title>Representation and use of chemistry in the global eletronic age</bibtex:title>
+      <bibtex:journal>CDK News</bibtex:journal>
+      <bibtex:year>2005</bibtex:year>
+      <bibtex:volume>2</bibtex:volume>
+      <bibtex:number>1</bibtex:number>
+      <bibtex:pages>16--17</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+  
 </bibtex:file>
