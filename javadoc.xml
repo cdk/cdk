@@ -4,10 +4,14 @@
 
     <!-- $Id$ -->
 
+    <property name="vecmath.src" value="gcj/vecmath" />
+    <property name="vecmath.javadoc.dir" value="doc/vecmath/api" />
+
+    <property name="src" value="src" />
     <property name="javadoc.dir" value="doc/api" />
+
     <property name="pathtojava3d" value="" />
     <property name="build" value="build" />
-    <property name="src" value="src" />
 
     <path id="project.class.path">
         <pathelement location="." />
@@ -47,6 +51,20 @@
             <packageset dir="${src}" defaultexcludes="yes">
                 <include name="org/openscience/cdk/**" />
                 <exclude name="org/openscience/cdk/test/**"/>
+            </packageset>
+        </javadoc>
+    </target>
+
+    <target name="vecmath.html">
+        <mkdir dir="${vecmath.javadoc.dir}" />
+
+        <javadoc destdir="${vecmath.javadoc.dir}"
+                 author="true" version="true" use="true"
+                 public="true"
+                 windowtitle="VecMath API">
+            <classpath refid="project.class.path" />
+            <packageset dir="${vecmath.src}" defaultexcludes="yes">
+                <include name="javax/vecmath/**" />
             </packageset>
         </javadoc>
     </target>
