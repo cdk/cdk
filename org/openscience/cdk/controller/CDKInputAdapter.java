@@ -37,10 +37,6 @@ import java.awt.*;
 
 public class CDKInputAdapter extends JCPController2D implements MouseMotionListener, MouseListener, KeyListener
 {
-//	public CDKInputAdapter(SetOfMolecules setOfMolecules, Renderer2DModel r2dm)
-//	{
-//		super(setOfMolecules, r2dm);
-//	}
 	
 	public CDKInputAdapter(AtomContainer atomCon, Renderer2DModel r2dm)
 	{

@@ -24,6 +24,10 @@
 package org.openscience.cdk;
 
 
+import java.util.*;
+import org.openscience.cdk.tools.*;
+
+
 /** An object containig multiple SetOfMolecules and 
   * the other lower level concepts like rings, sequences, 
   * fragments, etc.
@@ -32,21 +36,11 @@ public class ChemModel
 {
 
 	/**
-	 *  Array of SetOfMolecules 
+	 *  SetOfMolecules 
 	 */
-	protected SetOfMolecules[] setsOfMolecules;
+	protected SetOfMolecules setOfMolecules;
 	
-	/**
-	 *  Number of SetOfMolecules contained by this container 
-	 */
-	protected int setOfMoleculesCount;
-
-	/**
-	 *  Amount by which the setsOfMolecules array grows when elements are added and
-	 *  the array is not large enough for that. 
-	 */
-	protected int growArraySize = 5;
-
+	protected RingSet ringSet;
 
 
 	/**
@@ -54,79 +48,91 @@ public class ChemModel
 	 */
 	public ChemModel()   
 	{
-		setOfMoleculesCount = 0;
-		setsOfMolecules = new SetOfMolecules[growArraySize];
+		setOfMolecules = new SetOfMolecules();
 	}
 
 
-	
+
 	/**
-	 *  Adds an molecule to this container 
+	 * Puts all the Molecules of this container together in one AtomCcntainer.
 	 *
-	 * @param  molecule  The molecule to be added to this container 
+	 * @return  The AtomContainer with all the Molecules of this container   
 	 */
-	public void addSetOfMolecules(SetOfMolecules setOfMolecules)
+	public AtomContainer getAllInOneAtomContainer()
 	{
-		if (setOfMoleculesCount + 1 >= setsOfMolecules.length)
+		AtomContainer ac;
+		ac = new AtomContainer();
+		for (int i = 0; i < setOfMolecules.getMoleculeCount(); i++)
 		{
-			growSetOfMoleculesArray();
+			ac.add(setOfMolecules.getMolecule(i));
 		}
-		setsOfMolecules[setOfMoleculesCount] = setOfMolecules;
-		setOfMoleculesCount++;
-	}
-
-
-	
-	/**
-	 *  Returns the array of SetOfMolecules of this container 
-	 *
-	 * @return    The array of SetOfMolecules of this container 
-	 */
-	public SetOfMolecules[] getSetsOfMolecules()
-	{
-		return setsOfMolecules;
+		return ac;
 	}
 	
 	
-	/**
-	 *  
-	 * Returns the SetOfMolecule at position <code>number</code> in the
-	 * container
-	 *
-	 * @param  number  The position of the SetOfMolecule to be returned. 
-	 * @return         The SetOfMolecule at position <code>number</code> . 
-	 */
-	public SetOfMolecules getSetOfMolecules(int number)
-	{
-		return setsOfMolecules[number];
-	}
-	
 
-	
 	/**
-	 *  Grows the molecule array by a given size 
+	 * Partitions a given AtomContainer into Molecules that are not connected
+	 * to each other and stores each of them as a Molecule in the SetOfMolecules
+	 * of this container. 
 	 *
-	 * @see    org.openscience.cdk.AtomContainer#growArraySize growArraySize 
+	 * @param   ac   The AtomContainer to be partitioned
+	 * @exception   Exception  
 	 */
-	protected void growSetOfMoleculesArray()
+	public void PartitionIntoMolecules(AtomContainer ac) throws Exception
 	{
-		growArraySize = setsOfMolecules.length;
-		SetOfMolecules[] newsetsOfMolecules = new SetOfMolecules[setsOfMolecules.length + growArraySize];
-		System.arraycopy(setsOfMolecules, 0, newsetsOfMolecules, 0, setsOfMolecules.length);
-		setsOfMolecules = newsetsOfMolecules;
+		SetOfMolecules newSet = new SetOfMolecules();
+		Vector molecules = ConnectivityChecker.partitionIntoMolecules(ac);
+		for (int i = 0; i < molecules.size(); i++)
+		{
+			newSet.addMolecule((Molecule)molecules.elementAt(i));
+		}	
+		setSetOfMolecules(newSet);
 	}
 	
 
 	/**
-	 * Returns the number of Molecules in this Container
+	 * Returns the SetOfMolecules of this ChemModel
 	 *
-	 * @return    The number of Molecules in this Container
+	 * @return   The SetOfMolecules of this ChemModel 
 	 */
-	public int getSetOfMoleculeCount()
+	public SetOfMolecules getSetOfMolecules()
 	{
-		return this.setOfMoleculesCount;
+		return this.setOfMolecules;
 	}
 
 
+	/**
+	 * Sets the SetOfMolecules of this ChemModel
+	 *
+	 * @param   setOfMolecules  
+	 */
+	public void setSetOfMolecules(SetOfMolecules setOfMolecules)
+	{
+		this.setOfMolecules = setOfMolecules;
+	}
+
+	
+
+	/**
+	 * Returns the RingSet of this ChemModel
+	 *
+	 * @return     
+	 */
+	public RingSet getRingSet()
+	{
+		return this.ringSet;
+	}
+
+
+	/**
+	 * Sets the RingSet of this ChemModel
+	 *
+	 * @param   ringSet  
+	 */
+	public void setRingSet(RingSet ringSet)
+	{
+		this.ringSet = ringSet;
+	}
 }
 	

@@ -47,6 +47,13 @@ public class JCPController2D
 	boolean wasDragged = false;
 	
 	
+	public JCPController2D(AtomContainer atomCon, Renderer2DModel r2dm, JCPController2DModel c2dm)
+	{
+		this.atomCon = atomCon;
+		this.r2dm = r2dm;
+		this.c2dm = c2dm;
+		
+	}
 	
 
 	public JCPController2D(AtomContainer atomCon, Renderer2DModel r2dm)
