@@ -35,7 +35,7 @@ import org.openscience.cdk.Atom;
 /**
  * @cdk.module dontcompile
  */
-public abstract class QueryAtom extends Atom {
-        public boolean matches(Atom atom) {};
+public abstract class QueryAtom extends Atom{
+	public boolean matches(Atom atom) {};
 }
 
