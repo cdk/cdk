@@ -96,13 +96,23 @@ public class Validator {
         return ChemFileValidator.validate(content);
     }
     
-    public void outputErrors(Vector chemObjectErrors) {
+    public void outputErrors(String filename, Vector chemObjectErrors) {
         Enumeration errors = chemObjectErrors.elements();
         
         // output the errors
         while (errors.hasMoreElements()) {
             ValidationError error = (ValidationError)errors.nextElement();
-            System.out.println("ERROR: " + error.getError());
+            System.out.print(filename + ": ");
+            if (error instanceof SeriousValidationError) {
+                System.out.print("<ERROR> ");
+            } else if (error instanceof ValidationWarning) {
+                System.out.print("<WARNING> ");
+            } else if (error instanceof CDKError) {
+                System.out.print("<CDK ERROR> ");
+            } else {
+                System.out.print("<PROBLEM> ");
+            }
+            System.out.println(error.getError());
         }
     }
     
@@ -124,7 +134,7 @@ public class Validator {
                 File input = new File(ifilename);
                 if (!input.isDirectory()) {
                     Vector errors = validator.validate(input);
-                    validator.outputErrors(errors);
+                    validator.outputErrors(ifilename, errors);
                 } else {
                     System.out.println("Skipping directory: " + ifilename);
                 }
