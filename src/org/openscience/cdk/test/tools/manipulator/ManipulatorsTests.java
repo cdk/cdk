@@ -37,7 +37,8 @@ public class ManipulatorsTests {
     public static Test suite () {
         TestSuite suite= new TestSuite("The cdk.tools.manipulator Tests");
         suite.addTest(ReactionManipulatorTest.suite());
-		suite.addTest(SetOfMoleculesManipulatorTest.suite());
+        suite.addTest(SetOfMoleculesManipulatorTest.suite());
+        suite.addTest(AtomContainerManipulatorTest.suite());
         return suite;
     }
 
