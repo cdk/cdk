@@ -314,9 +314,9 @@
 
                 <excludesfile name="${src}/java3d.javafiles" />
                 <excludesfile name="${src}/experimental.javafiles" />
+                <excludesfile name="${src}/applications.javafiles" />
                 <exclude name="org/openscience/cdk/libio/**/*.java" />
                 <exclude name="org/openscience/cdk/test/**/*.java" />
-                <exclude name="org/openscience/cdk/applications/**/*.java" />
             </javac>
         </target>
 
