@@ -713,6 +713,7 @@
                         <excludesfile name="${src}/java1.4+.classes" if="isJava13"/>
                         <excludesfile name="${src}/java1.4.classes" unless="isJava14"/>
                         <excludesfile name="${src}/ant1.6.classes" unless="hasAnt16"/>
+                        <excludesfile name="${src}/r-project.classes" unless="rispresent"/>
                     </fileset>
                     <fileset dir=".">
                         <include name="data/**" />
@@ -789,6 +790,7 @@
                         <excludesfile name="${src}/java1.4+.classes" if="isJava13"/>
                         <excludesfile name="${src}/java1.4.classes" unless="isJava14"/>
                         <excludesfile name="${src}/ant1.6.classes" unless="hasAnt16"/>
+                        <excludesfile name="${src}/r-project.classes" unless="rispresent"/>
                     </fileset>
                     <fileset dir="${build}">
                         <include name="org/openscience/cdk/qsar/model/data/*.R" if="rispresent"/>
