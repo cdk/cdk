@@ -24,6 +24,7 @@
 package org.openscience.cdk;
 
 import javax.vecmath.*;
+import java.util.Vector;
 
 public class Ring extends AtomContainer
 {
@@ -91,9 +92,27 @@ public class Ring extends AtomContainer
 	 */
 	public boolean contains(Bond bond)
 	{
-		for (int i = 0; i < bondCount; i++)
+		for (int i = 0; i < getBondCount(); i++)
 		{
 			if (bond == bonds[i])
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * True, if the ring contains the given atom object
+	 *
+	 * @param   atom  the atom this ring is searched for
+	 * @return  True, if the ring contains the given atom object   
+	 */
+	public boolean contains(Atom atom)
+	{
+		for (int i = 0; i < getAtomCount(); i++)
+		{
+			if (atom == atoms[i])
 			{
 				return true;
 			}
@@ -125,24 +144,47 @@ public class Ring extends AtomContainer
 		return null;
 	}
 	
-
+	
+	
 
 	/**
-	 * Returns the bond that is shared by this ring and a given other ring.
+	 * Returns the atoms that are shared by this ring and a given other ring.
 	 *
-	 * @param   ring  A ring which is supposed to share a bond with this ring
-	 * @return  The bond that is shared by this ring and a given other ring.  
+	 * @param   ring  A ring which is supposed to share atoms with this ring
+	 * @return  The Vector of atoms that are shared by this ring and a given other ring.  
 	 */
-	public Bond getFusionBond(Ring ring)
+	public Vector getSharedAtoms(Ring ring)
 	{
+		Vector sharedAtoms = new Vector();
+		for (int i = 0; i < getAtomCount(); i++)
+		{
+			if (ring.contains(getAtomAt(i)))
+			{
+				 sharedAtoms.addElement(getAtomAt(i));
+			}
+		}
+		return sharedAtoms;
+	}
+	
+	
+
+	/**
+	 * Returns the bonds that are shared by this ring and a given other ring.
+	 *
+	 * @param   ring  A ring which is supposed to share bonds with this ring
+	 * @return  The Vector containing the bonds that are shared by this ring and a given other ring.  
+	 */
+	public Vector getSharedBonds(Ring ring)
+	{
+		Vector sharedBonds = new Vector();
 		for (int i = 0; i < getBondCount(); i++)
 		{
 			if (ring.contains(getBondAt(i)))
 			{
-				return getBondAt(i);
+				 sharedBonds.addElement(getBondAt(i));
 			}
 		}
-		return null;
+		return sharedBonds;
 	}
 
 	/**

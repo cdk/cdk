@@ -140,16 +140,18 @@ public class StructureDiagramGenerator
 	{
 		Vector connectedRings = rs.getConnectedRings(ring);
 		Ring connectedRing;
-		Bond bond;
+		Vector fusionBonds;
 		Point2d oldRingCenter, newRingCenter, bondCenter;
 		Vector2d tempVector;
+		Bond bond;
 		 
 		for (int i = 0; i < connectedRings.size(); i++)
 		{
 			connectedRing = (Ring)connectedRings.elementAt(i);
 			if (!connectedRing.flags[RingPlacer.ISPLACED])
 			{
-				bond = ring.getFusionBond(connectedRing);
+				bond = (Bond)ring.getSharedBonds(connectedRing).elementAt(0);
+				
 				if (bond != null)
 				{
 					bondCenter = bond.get2DCenter();
