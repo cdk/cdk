@@ -170,7 +170,9 @@ public class ReaderFactory {
                        line.indexOf("ABINIT") >= 0) {
                 logger.info("ABINIT format detected");
                 return new org.openscience.cdk.io.ABINITReader(originalBuffer);
-            } else if (line.startsWith("HEADER") || line.startsWith("ATOM  ")) {
+            } else if (line.startsWith("HEADER") ||
+                       line.startsWith("HETATM ") ||
+                       line.startsWith("ATOM  ")) {
                 logger.info("PDB format detected");
                 return new org.openscience.cdk.io.PDBReader(originalBuffer);
             } else if ((line.indexOf("<atom") != -1) ||
