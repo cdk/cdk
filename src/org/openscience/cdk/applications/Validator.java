@@ -47,7 +47,7 @@ public class Validator {
         logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
     }
 
-    public Vector validate(File input) throws IOException {
+    public ValidationReport validate(File input) throws IOException {
         ReaderFactory factory = new ReaderFactory();
         Reader fileReader = new FileReader(input);
         String format = factory.guessFormat(fileReader);
@@ -76,7 +76,7 @@ public class Validator {
         }
         if (reader == null) {
             System.out.println("Cannot parse file of type: " + format);
-            return new Vector();
+            return new ValidationReport();
         }
         
         // read contents from file
@@ -85,34 +85,35 @@ public class Validator {
             content = (ChemFile)reader.read((ChemObject)new ChemFile());
         } catch (CDKException exception) {
             System.out.println("Error while reading file: " + exception.toString());
-            return new Vector();
+            return new ValidationReport();
         }
         if (content == null) {
             System.out.println("Cannot read contents from file.");
-            return new Vector();
+            return new ValidationReport();
         }
         
         // validate contents
-        return ChemFileValidator.validate(content);
+        ValidatorEngine engine = new ValidatorEngine();
+        engine.addValidator(new CDKValidator());
+        engine.addValidator(new BasicValidator());
+        return engine.validateChemFile(content);
     }
     
-    public void outputErrors(String filename, Vector chemObjectErrors) {
-        Enumeration errors = chemObjectErrors.elements();
-        
-        // output the errors
+    public void outputErrors(String filename, ValidationReport report) {
+        Enumeration errors = report.getErrors().elements();
         while (errors.hasMoreElements()) {
-            ValidationError error = (ValidationError)errors.nextElement();
-            System.out.print(filename + ": ");
-            if (error instanceof SeriousValidationError) {
-                System.out.print("<ERROR> ");
-            } else if (error instanceof ValidationWarning) {
-                System.out.print("<WARNING> ");
-            } else if (error instanceof CDKError) {
-                System.out.print("<CDK ERROR> ");
-            } else {
-                System.out.print("<PROBLEM> ");
-            }
-            System.out.println(error.getError());
+            System.out.print(filename + ": <ERROR> " +
+                ((ValidationTest)errors.nextElement()).getError());
+        }
+        errors = report.getWarnings().elements();
+        while (errors.hasMoreElements()) {
+            System.out.print(filename + ": <WARNING> " +
+                ((ValidationTest)errors.nextElement()).getError());
+        }
+        errors = report.getCDKErrors().elements();
+        while (errors.hasMoreElements()) {
+            System.out.print(filename + ": <CDK ERROR> " +
+                ((ValidationTest)errors.nextElement()).getError());
         }
     }
     
@@ -133,8 +134,8 @@ public class Validator {
             try {
                 File input = new File(ifilename);
                 if (!input.isDirectory()) {
-                    Vector errors = validator.validate(input);
-                    validator.outputErrors(ifilename, errors);
+                    ValidationReport report = validator.validate(input);
+                    validator.outputErrors(ifilename, report);
                 } else {
                     System.out.println("Skipping directory: " + ifilename);
                 }
