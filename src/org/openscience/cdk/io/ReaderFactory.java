@@ -33,6 +33,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.StringTokenizer;
+import java.util.Vector;
 import java.util.zip.GZIPInputStream;
 
 import org.openscience.cdk.Molecule;
@@ -61,7 +62,7 @@ public class ReaderFactory {
     private int headerLength;
     private LoggingTool logger;
 
-    private static List readers;
+    private static Vector readers;
 
     /**
      * Constructs a ReaderFactory which tries to detect the format in the
@@ -131,7 +132,7 @@ public class ReaderFactory {
             "org.openscience.cdk.io.VASPReader.java",
             "org.openscience.cdk.io.XYZReader.java",
             "org.openscience.cdk.io.ZMatrixReader.java"
-        }
+        };
     }
 
     /**

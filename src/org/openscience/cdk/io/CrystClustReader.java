@@ -64,6 +64,10 @@ public class CrystClustReader extends DefaultChemObjectReader {
         return "CrystClust";
     }
     
+    public void setReader(Reader reader) throws CDKException {
+        this.input = input;
+    }
+
     public ChemObject read(ChemObject object) throws CDKException {
         if (object instanceof ChemFile) {
             ChemFile cf = readChemFile();

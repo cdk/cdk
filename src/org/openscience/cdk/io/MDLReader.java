@@ -102,6 +102,14 @@ public class MDLReader extends DefaultChemObjectReader {
         return "MDL Mol/SDF";
     }
 
+    public void setReader(Reader input) throws CDKException {
+        if (input instanceof BufferedReader) {
+            this.input = (BufferedReader)input;
+        } else {
+            this.input = new BufferedReader(input);
+        }
+    }
+
 	/**
 	 *  Contructs a new MDLReader that can read Molecule from a given Reader.
 	 *

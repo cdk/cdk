@@ -30,6 +30,7 @@ package org.openscience.cdk.internet;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.io.PrintWriter;
 import java.net.URL;
 import java.net.URLConnection;
@@ -48,6 +49,7 @@ import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.exception.UnsupportedChemObjectException;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.DefaultChemObjectReader;
@@ -93,6 +95,10 @@ public class WWMMatrixReader extends DefaultChemObjectReader {
         return "World Wide Molecular Matrix";
     }
     
+    public void setReader(Reader input) throws CDKException {
+        throw new CDKException("This Reader does not read from a Reader but from the WWMM");
+    }
+
     /**
      * Sets the query.
      *

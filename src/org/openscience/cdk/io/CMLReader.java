@@ -87,6 +87,11 @@ public class CMLReader extends DefaultChemObjectReader {
     public String getFormatName() {
         return "Chemical Markup Language";
     }
+
+    public void setReader(Reader reader) throws CDKException {
+        this.input = input;
+    }
+
     /**
      * Define this CMLReader to take the input from a java.io.Reader
      * class. Possible readers are (among others) StringReader and FileReader.

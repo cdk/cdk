@@ -25,6 +25,7 @@
 package org.openscience.cdk.io;
 
 import java.io.IOException;
+import java.io.Reader;
 
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.exception.CDKException;
@@ -49,7 +50,11 @@ public class DummyReader extends DefaultChemObjectReader {
     }
 
     public boolean matches(int lineNumber, String line) {
-	return false;
+        return false;
     }
     
+    public void setReader(Reader reader) throws CDKException {
+        throw new CDKException("This Reader has not been implemented yet. Don't use it.");
+    };
+
 }

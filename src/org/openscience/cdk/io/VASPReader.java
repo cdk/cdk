@@ -98,6 +98,14 @@ public class VASPReader extends DefaultChemObjectReader {
         return "VASP";
     }
     
+    public void setReader(Reader input) throws CDKException {
+        if (input instanceof BufferedReader) {
+            this.inputBuffer = (BufferedReader)input;
+        } else {
+            this.inputBuffer = new BufferedReader(input);
+        }
+    }
+
     public ChemObject read(ChemObject object) throws CDKException {
         if (object instanceof ChemFile) {
             ChemFile cf = null;

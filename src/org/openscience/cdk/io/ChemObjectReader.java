@@ -28,6 +28,8 @@
  */
 package org.openscience.cdk.io;
 
+import java.io.Reader;
+
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.exception.CDKException;
 
@@ -66,7 +68,7 @@ public interface ChemObjectReader extends ChemObjectIO {
      *            the type of information is not available from 
      *            the input
      **/
-    public ChemObject read(ChemObject object) throws CDKException, IOException;
+    public ChemObject read(ChemObject object) throws CDKException;
 
     /**
      * Method that checks wether the given line is part of the format
@@ -83,6 +85,6 @@ public interface ChemObjectReader extends ChemObjectIO {
      * Sets the Reader from which this ChemObjectReader should read
      * the contents.
      */
-    public void setReader(ChemObjectReader reader) throws CDKException;
+    public void setReader(Reader reader) throws CDKException;
 }
 

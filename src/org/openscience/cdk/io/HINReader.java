@@ -74,6 +74,14 @@ public class HINReader extends DefaultChemObjectReader {
         input.close();
     }
 
+    public void setReader(Reader input) throws CDKException {
+        if (input instanceof BufferedReader) {
+            this.input = (BufferedReader)input;
+        } else {
+            this.input = new BufferedReader(input);
+        }
+    }
+
     /**
      * Reads the content from a HIN input. It can only return a
      * ChemObject of type ChemFile

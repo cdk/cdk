@@ -90,6 +90,10 @@ public class CIFReader extends DefaultChemObjectReader {
         return "CIF-like (not CIF)";
     }
 
+    public void setReader(Reader reader) throws CDKException {
+        this.input = input;
+    }
+
     /**
      * Read a ChemFile from input
      *

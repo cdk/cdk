@@ -80,6 +80,14 @@ public class ZMatrixReader extends DefaultChemObjectReader {
         return "ZMatrix";
     }
 
+    public void setReader(Reader input) throws CDKException {
+        if (input instanceof BufferedReader) {
+            this.input = (BufferedReader)input;
+        } else {
+            this.input = new BufferedReader(input);
+        }
+    }
+
   /**
    *  Returns a ChemObject of type object bye reading from
    *  the input. 

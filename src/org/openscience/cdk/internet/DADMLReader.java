@@ -32,6 +32,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -45,6 +46,7 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.UnsupportedChemObjectException;
 import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.DefaultChemObjectReader;
@@ -96,6 +98,10 @@ public class DADMLReader extends DefaultChemObjectReader {
         return "DADML network";
     }
     
+    public void setReader(Reader input) throws CDKException {
+        throw new CDKException("This Reader does not read from a Reader but from internet nodes");
+    }
+
     /**
      * Sets the query.
      *

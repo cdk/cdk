@@ -73,6 +73,14 @@ public class Mol2Reader extends DefaultChemObjectReader {
         return "Mol2 (Sybyl)";
     }
 
+    public void setReader(Reader input) throws CDKException {
+        if (input instanceof BufferedReader) {
+            this.input = (BufferedReader)input;
+        } else {
+            this.input = new BufferedReader(input);
+        }
+    }
+
     /**
      * Takes an object which subclasses ChemObject, e.g.Molecule, and will read
      * this (from file, database, internet etc). If the specific implementation

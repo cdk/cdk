@@ -81,6 +81,14 @@ public class ShelXReader extends DefaultChemObjectReader {
         return "ShelXL";
     }
 
+    public void setReader(Reader input) throws CDKException {
+        if (input instanceof BufferedReader) {
+            this.input = (BufferedReader)input;
+        } else {
+            this.input = new BufferedReader(input);
+        }
+    }
+
     /**
      * Read a ChemFile from input
      *

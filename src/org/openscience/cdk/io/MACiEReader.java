@@ -115,7 +115,7 @@ public class MACiEReader extends DefaultChemObjectReader {
      */
     public MACiEReader(Reader in) {
         this();
-        input = new LineNumberReader(in);
+        this.input = new LineNumberReader(input);
     }
 
     public MACiEReader() {
@@ -132,6 +132,14 @@ public class MACiEReader extends DefaultChemObjectReader {
 
     public String getFormatName() {
         return "MACiE";
+    }
+
+    public void setReader(Reader input) throws CDKException {
+        if (input instanceof LineNumberReader) {
+            this.input = (LineNumberReader)input;
+        } else {
+            this.input = new LineNumberReader(input);
+        }
     }
 
     /**

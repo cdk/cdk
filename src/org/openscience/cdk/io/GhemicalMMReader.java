@@ -72,6 +72,14 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
         }
     }
     
+    public void setReader(Reader input) throws CDKException {
+        if (input instanceof BufferedReader) {
+            this.input = (BufferedReader)input;
+        } else {
+            this.input = new BufferedReader(input);
+        }
+    }
+
     public void close() {
     }
     

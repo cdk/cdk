@@ -30,6 +30,7 @@ package org.openscience.cdk.database;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.io.Reader;
 
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
@@ -79,6 +80,10 @@ public class XindiceReader extends DefaultChemObjectReader {
         return "Xindice database";
     }
     
+    public void setReader(Reader input) throws CDKException {
+        throw new CDKException("This Reader does not read from a Reader but from a XIndice database");
+    }
+
     public void setQuery(String xpath) {
         logger.info("Xindice query set to " + xpath);
         this.xpath = xpath;

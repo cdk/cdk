@@ -69,6 +69,14 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
         return "MDL RXN V3000";
     }
 
+    public void setReader(Reader input) throws CDKException {
+        if (input instanceof BufferedReader) {
+            this.input = (BufferedReader)input;
+        } else {
+            this.input = new BufferedReader(input);
+        }
+    }
+
     public ChemObject read(ChemObject object) throws CDKException {
          if (object instanceof Reaction) {
              return (ChemObject) readReaction();

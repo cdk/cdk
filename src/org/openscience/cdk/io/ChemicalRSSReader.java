@@ -87,6 +87,10 @@ public class ChemicalRSSReader extends DefaultChemObjectReader {
         return "CMLRSS";
     }
     
+    public void setReader(Reader reader) throws CDKException {
+        this.input = input;
+    }
+
     private void init() {
         logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
 

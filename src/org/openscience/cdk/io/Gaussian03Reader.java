@@ -91,6 +91,10 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
         return "Gaussian 2003";
     }
     
+    public void setReader(Reader reader) throws CDKException {
+        this.input = input;
+    }
+
     public boolean accepts(ChemObject object) {
         if (object instanceof ChemSequence) {
             return true;

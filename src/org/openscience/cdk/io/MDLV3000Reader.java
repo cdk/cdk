@@ -96,6 +96,14 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         return "MDL Mol/SDF V3000";
     }
 
+    public void setReader(Reader input) throws CDKException {
+        if (input instanceof BufferedReader) {
+            this.input = (BufferedReader)input;
+        } else {
+            this.input = new BufferedReader(input);
+        }
+    }
+
     public ChemObject read(ChemObject object) throws CDKException {
         if (object instanceof Molecule) {
             return readMolecule();

@@ -30,6 +30,7 @@ package org.openscience.cdk.database;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.io.Reader;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -65,6 +66,10 @@ public class DBReader extends DefaultChemObjectReader {
         return "JDBC database";
     }
     
+    public void setReader(Reader input) throws CDKException {
+        throw new CDKException("This Reader does not read from a Reader but from a JDBC database");
+    }
+
     public ChemObject read(ChemObject object) throws CDKException {
 	    if (object instanceof Molecule) {
 	        return (ChemObject)readMolecule();

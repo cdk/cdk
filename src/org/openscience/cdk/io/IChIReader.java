@@ -83,6 +83,10 @@ public class IChIReader extends DefaultChemObjectReader {
         return "IUPAC Chemical Identifier";
     }
     
+    public void setReader(Reader input) throws CDKException {
+        this.input = input;
+    }
+
     /**
      * Initializes this reader.
      */

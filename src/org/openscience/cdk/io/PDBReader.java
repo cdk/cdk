@@ -94,6 +94,15 @@ public class PDBReader extends DefaultChemObjectReader {
     public String getFormatName() {
         return "Protein Brookhave Database (PDB)";
     }
+
+    public void setReader(Reader input) throws CDKException {
+        if (input instanceof BufferedReader) {
+            this._oInput = (BufferedReader)input;
+        } else {
+            this._oInput = new BufferedReader(input);
+        }
+    }
+    
   /**
    *
    * Takes an object which subclasses ChemObject, e.g. Molecule, and will

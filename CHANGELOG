@@ -35,6 +35,8 @@ API changes:
 * LoggingTool methods now accept Objects and convert them toString internally
 * CDKPluginInterface.setPropertyDirectory() was added
 * Reaction.getReactants() and .getProducts() now return a SetOfMolecules
+* Added setReader(Reader) method to ChemObjectReader so that it can allow instantiating
+  a usefull class first by ClassLoader.loadClass().getInstance() and then set the Reader
 
 20040202 Release
 ------------------------------------
