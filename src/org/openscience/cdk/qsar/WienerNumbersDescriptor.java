@@ -113,8 +113,8 @@ public class WienerNumbersDescriptor implements Descriptor {
 		int[][] distances = pathTools.computeFloydAPSP(matr);
 		
 		int partial = 0;
+		wienerPolarityNumber = 0;
 		for (int i = 0; i < distances.length; i++) {
-			wienerPolarityNumber = 0;
 			for (int j = 0; j < distances.length; j++) {
 				partial = distances[i][j];
 				wienerPathNumber += partial;
@@ -124,6 +124,7 @@ public class WienerNumbersDescriptor implements Descriptor {
 			}
 		}
 		wienerPathNumber = wienerPathNumber / 2;
+		wienerPolarityNumber = wienerPolarityNumber / 2;
 
 		wienerNumbers.add(wienerPathNumber);
 		wienerNumbers.add(wienerPolarityNumber);
