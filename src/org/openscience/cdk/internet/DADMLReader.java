@@ -51,6 +51,7 @@ import org.openscience.dadml.tools.*;
  *
  * @keyword    internet
  * @keyword    database
+ * @build-depends dadml.jar
  */
 public class DADMLReader extends DefaultChemObjectReader {
 

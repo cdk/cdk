@@ -1,8 +1,9 @@
-/* DBAdmin.java
- *
- * $RCSfile$    $Author$    $Date$    $Revision$
+/* $RCSfile$    
+ * $Author$
+ * $Date$
+ * $Revision$
  * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -23,9 +24,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- *
  */
-
 package org.openscience.cdk.database;
 
 import java.util.*;
@@ -41,6 +40,8 @@ import org.openscience.cdk.io.*;
   * @author egonw
   *
   * @keyword MySQL
+  * @depends postgresql7.0-1.2.jar
+  * @depends mysql-2.0.4.jar
   */
 public class DBAdmin {
 

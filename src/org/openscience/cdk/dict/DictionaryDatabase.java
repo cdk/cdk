@@ -40,6 +40,8 @@ import java.util.Enumeration;
  * @author     Egon Willighagen
  * @created    2003-04-06
  * @keyword    dictionary
+ * @depends    stmml.jar
+ * @depends    castor.jar
  */
 public class DictionaryDatabase {
 
