@@ -15,6 +15,13 @@
         </fileset>
     </path>
 
+    <target name="compileRenderer" id="compileRenderer">
+        <javac srcdir="pmd" destdir="${build}"
+               includes="net/sourceforge/pmd/renderers/SummaryVBHTMLRenderer.java">
+            <classpath refid="pmd.classpath" />
+        </javac>
+    </target>
+
     <taskdef name="pmd" id="pmd" classname="net.sourceforge.pmd.ant.PMDTask" 
                         classpathref="pmd.classpath"/>
 
@@ -22,120 +29,120 @@
         pmd-extra, pmd-render, pmd-applications, pmd-libio, pmd-experimental,
         pmd-builder3d, pmd-test"/>
     
-    <target name="pmd-data" id="pmd-data">
+    <target name="pmd-data" id="pmd-data" depends="compileRenderer">
         <mkdir dir="${reports.tests}/pmd"/>
         <pmd shortFilenames="true" rulesetfiles="pmd/custom-data.xml">
-            <formatter type="summaryhtml" toFile="${reports.tests}/pmd/data.html"/>
+            <formatter type="net.sourceforge.pmd.renderers.SummaryVBHTMLRenderer" toFile="${reports.tests}/pmd/data.html"/>
             <fileset dir="${src}">
                 <includesfile name="${src}/data.javafiles"/>
             </fileset>
         </pmd>
     </target>
 
-    <target name="pmd-core" id="pmd-core">
+    <target name="pmd-core" id="pmd-core" depends="compileRenderer">
         <mkdir dir="${reports.tests}/pmd"/>
         <pmd shortFilenames="true" rulesetfiles="pmd/custom.xml">
-            <formatter type="summaryhtml" toFile="${reports.tests}/pmd/core.html"/>
+            <formatter type="net.sourceforge.pmd.renderers.SummaryVBHTMLRenderer" toFile="${reports.tests}/pmd/core.html"/>
             <fileset dir="${src}">
                 <includesfile name="${src}/core.javafiles"/>
             </fileset>
         </pmd>
     </target>
 
-    <target name="pmd-standard" id="pmd-standard">
+    <target name="pmd-standard" id="pmd-standard" depends="compileRenderer">
         <mkdir dir="${reports.tests}/pmd"/>
         <pmd shortFilenames="true" rulesetfiles="pmd/custom.xml">
-            <formatter type="summaryhtml" toFile="${reports.tests}/pmd/standard.html"/>
+            <formatter type="net.sourceforge.pmd.renderers.SummaryVBHTMLRenderer" toFile="${reports.tests}/pmd/standard.html"/>
             <fileset dir="${src}">
                 <includesfile name="${src}/standard.javafiles"/>
             </fileset>
         </pmd>
     </target>
 
-    <target name="pmd-io" id="pmd-io">
+    <target name="pmd-io" id="pmd-io" depends="compileRenderer">
         <mkdir dir="${reports.tests}/pmd"/>
         <pmd shortFilenames="true" rulesetfiles="pmd/custom.xml">
-            <formatter type="summaryhtml" toFile="${reports.tests}/pmd/io.html"/>
+            <formatter type="net.sourceforge.pmd.renderers.SummaryVBHTMLRenderer" toFile="${reports.tests}/pmd/io.html"/>
             <fileset dir="${src}">
                 <includesfile name="${src}/io.javafiles"/>
             </fileset>
         </pmd>
     </target>
 
-    <target name="pmd-render" id="pmd-render">
+    <target name="pmd-render" id="pmd-render" depends="compileRenderer">
         <mkdir dir="${reports.tests}/pmd"/>
         <pmd shortFilenames="true" rulesetfiles="pmd/custom.xml">
-            <formatter type="summaryhtml" toFile="${reports.tests}/pmd/render.html"/>
+            <formatter type="net.sourceforge.pmd.renderers.SummaryVBHTMLRenderer" toFile="${reports.tests}/pmd/render.html"/>
             <fileset dir="${src}">
                 <includesfile name="${src}/render.javafiles"/>
             </fileset>
         </pmd>
     </target>
 
-    <target name="pmd-extra" id="pmd-extra">
+    <target name="pmd-extra" id="pmd-extra" depends="compileRenderer">
         <mkdir dir="${reports.tests}/pmd"/>
         <pmd shortFilenames="true" rulesetfiles="pmd/custom.xml">
-            <formatter type="summaryhtml" toFile="${reports.tests}/pmd/extra.html"/>
+            <formatter type="net.sourceforge.pmd.renderers.SummaryVBHTMLRenderer" toFile="${reports.tests}/pmd/extra.html"/>
              <fileset dir="${src}">
                 <includesfile name="${src}/extra.javafiles"/>
             </fileset>
         </pmd>
     </target>
 
-    <target name="pmd-applications" id="pmd-applications">
+    <target name="pmd-applications" id="pmd-applications" depends="compileRenderer">
         <mkdir dir="${reports.tests}/pmd"/>
         <pmd shortFilenames="true" rulesetfiles="pmd/custom.xml">
-            <formatter type="summaryhtml" toFile="${reports.tests}/pmd/applications.html"/>
+            <formatter type="net.sourceforge.pmd.renderers.SummaryVBHTMLRenderer" toFile="${reports.tests}/pmd/applications.html"/>
             <fileset dir="${src}">
                 <includesfile name="${src}/applications.javafiles"/>
             </fileset>
         </pmd>
     </target>
 
-    <target name="pmd-libio" id="pmd-libio">
+    <target name="pmd-libio" id="pmd-libio" depends="compileRenderer">
         <mkdir dir="${reports.tests}/pmd"/>
         <pmd shortFilenames="true" rulesetfiles="pmd/custom.xml">
-            <formatter type="summaryhtml" toFile="${reports.tests}/pmd/libio.html"/>
+            <formatter type="net.sourceforge.pmd.renderers.SummaryVBHTMLRenderer" toFile="${reports.tests}/pmd/libio.html"/>
             <fileset dir="${src}">
                 <includesfile name="${src}/libio.javafiles"/>
             </fileset>
         </pmd>
     </target>
 
-    <target name="pmd-experimental" id="pmd-experimental">
+    <target name="pmd-experimental" id="pmd-experimental" depends="compileRenderer">
         <mkdir dir="${reports.tests}/pmd"/>
         <pmd shortFilenames="true" rulesetfiles="pmd/custom.xml">
-            <formatter type="summaryhtml" toFile="${reports.tests}/pmd/experimental.html"/>
+            <formatter type="net.sourceforge.pmd.renderers.SummaryVBHTMLRenderer" toFile="${reports.tests}/pmd/experimental.html"/>
             <fileset dir="${src}">
                 <includesfile name="${src}/experimental.javafiles"/>
             </fileset>
         </pmd>
     </target>
 
-    <target name="pmd-qsar" id="pmd-qsar">
+    <target name="pmd-qsar" id="pmd-qsar" depends="compileRenderer">
         <mkdir dir="${reports.tests}/pmd"/>
         <pmd shortFilenames="true" rulesetfiles="pmd/custom.xml">
-            <formatter type="summaryhtml" toFile="${reports.tests}/pmd/qsar.html"/>
+            <formatter type="net.sourceforge.pmd.renderers.SummaryVBHTMLRenderer" toFile="${reports.tests}/pmd/qsar.html"/>
             <fileset dir="${src}">
                 <includesfile name="${src}/qsar.javafiles"/>
             </fileset>
         </pmd>
     </target>
 
-    <target name="pmd-builder3d" id="pmd-builder3d">
+    <target name="pmd-builder3d" id="pmd-builder3d" depends="compileRenderer">
         <mkdir dir="${reports.tests}/pmd"/>
         <pmd shortFilenames="true" rulesetfiles="pmd/custom.xml">
-            <formatter type="summaryhtml" toFile="${reports.tests}/pmd/builder3d.html"/>
+            <formatter type="net.sourceforge.pmd.renderers.SummaryVBHTMLRenderer" toFile="${reports.tests}/pmd/builder3d.html"/>
             <fileset dir="${src}">
                 <includesfile name="${src}/builder3d.javafiles"/>
             </fileset>
         </pmd>
     </target>
 
-    <target name="pmd-test" id="pmd-test">
+    <target name="pmd-test" id="pmd-test" depends="compileRenderer">
         <mkdir dir="${reports.tests}/pmd"/>
         <pmd shortFilenames="true" rulesetfiles="pmd/custom-test.xml">
-            <formatter type="summaryhtml" toFile="${reports.tests}/pmd/test.html"/>
+            <formatter type="net.sourceforge.pmd.renderers.SummaryVBHTMLRenderer" toFile="${reports.tests}/pmd/test.html"/>
             <fileset dir="${src}">
                 <includesfile name="${src}/test.javafiles"/>
             </fileset>
