@@ -37,7 +37,6 @@ import org.openscience.cdk.test.graph.rebond.RebondToolTest;
 import org.openscience.cdk.test.io.IOTests;
 import org.openscience.cdk.test.isomorphism.IsomorphismTesterTest;
 import org.openscience.cdk.test.isomorphism.UniversalIsomorphismTesterTest;
-import org.openscience.cdk.test.iupac.ParserTest;
 import org.openscience.cdk.test.layout.HydrogenPlacerTest;
 import org.openscience.cdk.test.layout.StructureDiagramGeneratorTest;
 import org.openscience.cdk.test.layout.OverlapResolverTest;
@@ -105,7 +104,10 @@ public class CDKTests
         // from cdk.test.structgen
         suite.addTest(RandomStructureGeneratorTest.suite());
         // from cdk.test.iupac
-        suite.addTest(ParserTest.suite());
+        try {
+            Class testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.test.iupac.ParserTest");
+            suite.addTest(new TestSuite(testClass));
+        } catch (Exception exception) {} //ok, do without. Probably compiled with Ant < 1.6
         return suite;
     }
     

@@ -31,6 +31,7 @@ import org.openscience.cdk.iupac.parser.Token;
  * Holds data on a specific functional group or substituent.
  *
  * @author  Stephen Tomkinson
+ * @cdk.require ant1.6
  */
 public class AttachedGroup {
     /** The name of the group */

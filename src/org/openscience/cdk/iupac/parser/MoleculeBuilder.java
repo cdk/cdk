@@ -42,6 +42,8 @@ import org.openscience.cdk.iupac.parser.Token;
  * @author David Robinson
  * @author Bhupinder Sandhu
  * @author Stephen Tomkinson
+ *
+ * @cdk.require ant1.6
  */
 public class MoleculeBuilder
 {
