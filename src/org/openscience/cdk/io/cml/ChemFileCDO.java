@@ -337,7 +337,8 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
           currentAtom.setFractZ3d(new Double(propertyValue).doubleValue());
         } else if (propertyType.equals("formalCharge")) {
           currentAtom.setFormalCharge(new Integer(propertyValue).intValue());
-        } else if (propertyType.equals("charge")) {
+        } else if (propertyType.equals("charge") ||
+                   propertyType.equals("partialCharge")) {
           currentAtom.setCharge(new Double(propertyValue).doubleValue());
         } else if (propertyType.equals("hydrogenCount")) {
           currentAtom.setHydrogenCount(new Integer(propertyValue).intValue());

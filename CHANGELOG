@@ -6,6 +6,9 @@ Changes in CVS
 New:
 
 Fixes:
+* fixed build.xml for not copying the configuration files (closes #978724
+  and #978734)
+* fixed reading and writing of partial atomic charges (closes #969710)
 
 API changes:
 

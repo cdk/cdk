@@ -457,11 +457,12 @@ public class Convertor {
                 logger.warn("Could not find major isotope for : " + atom.getSymbol());
             }
         }
-        if (atom.getFlag(CDKConstants.ISAROMATIC)) {
-            CMLAtomType atomType = new AtomTypeImpl(doc);
-            atomType.setId("aromatic");
-            atomType.setDictRef("cdk:aromaticAtom");
-            atomimpl.appendAtomType(atomType);
+        if (atom.getCharge() != 0.0) {
+            CMLScalar scalar = new ScalarImpl(doc);
+            scalar.setDataType("xsd:float");
+            scalar.setDictRef("cdk:partialCharge");
+            scalar.appendChild(doc.createTextNode("" + atom.getCharge()));
+            atomimpl.appendScalar(scalar);
         }
         writeProperties(atom, atomimpl);
     }

@@ -147,7 +147,7 @@
   <!-- Not tested yet -->
   <molecule id='m1'><atomArray>
     <atom id='a1' elementType="C">
-      <scalar dataType="xsd:boolean" dictRef="cdk:aromaticAtom" title="isAromatic">yes</scalar>
+      <scalar dataType="xsd:float" dictRef="cdk:partialCharge">-0.234</scalar>
     </atom>
   </atomArray></molecule>
 </cml>

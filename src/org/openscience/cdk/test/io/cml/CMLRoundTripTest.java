@@ -287,4 +287,19 @@ public class CMLRoundTripTest extends TestCase {
         
         return roundTrippedMol;
     }
+    
+    public void testPartialCharge() {
+        Molecule mol = new Molecule();
+        Atom atom = new Atom("C");
+        mol.addAtom(atom);
+        double charge = -0.267;
+        atom.setCharge(charge);
+        
+        Molecule roundTrippedMol = roundTripMolecule(mol);
+        
+        assertEquals(1, roundTrippedMol.getAtomCount());
+        Atom roundTrippedAtom = roundTrippedMol.getAtomAt(0);
+        assertEquals(charge, roundTrippedAtom.getCharge(), 0.0001);
+    }
+
 }

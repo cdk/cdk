@@ -748,6 +748,10 @@ public class CMLCoreModule implements ModuleInterface {
                 if (DICTREF.equals("mdl:stereo")) {
                     bondStereo.addElement(cData.trim());
                 }
+            } else if (xpath.toString().endsWith("atom/scalar/")) {
+                if (DICTREF.equals("cdk:partialCharge")) {
+                    partialCharges.addElement(cData.trim());
+                }
             } else {
                 logger.warn("Ignoring scaler: " + xpath);
             }
