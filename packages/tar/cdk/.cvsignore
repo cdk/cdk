@@ -15,3 +15,5 @@ build.xml
 javadoc.xml
 cdk*jar
 autom4te.cache
+VERSION
+

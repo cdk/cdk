@@ -13,5 +13,6 @@ find . -name "cdk-*.jar" | xargs rm -f
 find data -name "CVS" | xargs rm -R
 find src -name "CVS" | xargs rm -R
 find src -name ".cvsignore" | xargs rm -f
+cut -d'=' -f2 ../../../build.props > VERSION
 
 aclocal && automake --gnu && autoconf
