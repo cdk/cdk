@@ -126,12 +126,7 @@ public class ModelBuilder3dTest extends TestCase {
 			mb3d.generate3DCoordinates();
 			mol = mb3d.getMolecule();
 			for (int i=0;i<mol.getAtomCount();i++){
-				if (mol.getAtomAt(i).getPoint3d()!=null){
-					assertTrue(true);
-				}else{
-					assertTrue(false);
-				}
-				
+				assertNotNull(mol.getAtomAt(i).getPoint3d());
 			}
 			System.out.println("Layout molecule with SMILE:"+smile);	
 		} catch (Exception exc)
