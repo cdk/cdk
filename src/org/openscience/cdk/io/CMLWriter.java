@@ -248,9 +248,10 @@ public class CMLWriter extends DefaultChemObjectWriter {
             StreamResult result = new StreamResult(output);
             transformer.transform(source, result);
         } catch (javax.xml.transform.TransformerException ex) {
-            logger.error("Error while transforming XML string: ", ex.getMessage());
+            String error = "Error while transforming XML string: " + ex.getMessage();
+            logger.error(error);
             logger.debug(ex);
-            throw new CDKException(ex.getMessage());
+            throw new CDKException(error);
         }
     };
 
