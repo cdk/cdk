@@ -5,7 +5,13 @@ Changes in CVS
 ------------------------------------
 New:
 * File format detection for Spartan, Q-Chem, NWChem and Ghemical SPM files
-* Added WHIM and BCUT descriptor
+* Added WHIM and BCUT descriptors
+* Added new QSAR classes: DescriptorSpecification and DescriptorValue
+* Added a DescriptorEngine to apply a set of descriptors to a Molecule
+* Made the CML2 Convertor QSAR aware: added serialization of DescriptorValue
+  properties
+* Added a command line util to calculate descriptors for a SDF file and that
+  saves it as CML2
 
 Fixes:
 * Fixed format detection for Jaguar, Gamess and the HIN format: they were
@@ -13,6 +19,7 @@ Fixes:
 
 API changes:
 * Moved SingleElectron to the core module
+* Descriptor.getSpecification() now returns a DescriptorSpecification object
 
 20041201 Release
 ------------------------------------
