@@ -123,10 +123,10 @@ public abstract class RModel implements Model {
     }
 
     /**
-     * Initializes SJava with the <i>--vanilla, -q</i> flags.
+     * Initializes SJava with the <i>--vanilla, -q, --slave</i> flags.
      */
     public RModel() {
-        String[] args = {"--vanilla","-q"};
+        String[] args = {"--vanilla","-q", "--slave"};
         logger = new LoggingTool(this);
         if (!doneInit) {
             this.interp = new ROmegahatInterpreter(ROmegahatInterpreter.fixArgs(args), false);

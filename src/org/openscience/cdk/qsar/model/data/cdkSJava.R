@@ -74,10 +74,12 @@
 
 require(SJava)
 if (!isJavaInitialized()) {
-    print('Starting JVM')
     .JavaInit()
 }
 
+#############################################
+# Linear regression fit/predict converters
+#############################################
 lmFitConverter <-
 function(obj,...)
 {
@@ -90,11 +92,42 @@ lmPredictConverter <- function(preds,...) {
     preds$fit[,1], preds$se.fit, preds$fit[,2], preds$fit[,3],
     preds$df, preds$residual.scale)
 }
+
+#############################################
+# CNN regression fit/predict converters
+#############################################
+cnnFitConverter <-
+function(obj,...) 
+{
+    noutput <- ncol(obj$fitted)
+    nobs <- nrow(obj$fitted)
+    if ("Hessian" %in% names(obj)) {
+        .JNew("org.openscience.cdk.qsar.model.R.CNNRegressionModelFit",
+        noutput,nobs, obj$wts, obj$fitted, obj$residuals, obj$value, obj$Hessian)
+    } else {
+        .JNew("org.openscience.cdk.qsar.model.R.CNNRegressionModelFit",
+        noutput, nobs,obj$wts, obj$fitted, obj$residuals, obj$value)
+    }
+}
+cnnPredictConverter <- function(preds,...) {
+    .JNew("org.openscience.cdk.qsar.model.R.CNNRegressionModelPredict",
+    ncol(preds), preds)
+}
+    
+#############################################
+# Register the fit/predict converter funcs
+#############################################
 setJavaFunctionConverter(lmFitConverter, function(x,...){inherits(x,"lm")},
                           description="lm fit object to Java",
                           fromJava=F)
 setJavaFunctionConverter(lmPredictConverter, function(x,...){inherits(x,"lmprediction")},
                           description="lm predict object to Java",
+                          fromJava=F)
+setJavaFunctionConverter(cnnFitConverter, function(x,...){inherits(x,"nnet")},
+                          description="cnn (nnet) fit object to Java",
+                          fromJava=F)
+setJavaFunctionConverter(cnnPredictConverter, function(x,...){inherits(x,"cnnprediction")},
+                          description="cnn (nnet) predict object to Java",
                           fromJava=F)
                           
 hashmap.to.list <- function(params) {
@@ -140,4 +173,38 @@ predictLM <- function( modelname, params) {
     detach(paramlist)
     preds
 }
+
+buildCNN <-  function(modelname, params) {
+    library(nnet)
+    paramlist <- hashmap.to.list(params)
+    attach(paramlist)
+
+    x <- matrix(unlist(x), nrow=length(x), byrow=TRUE)
+    y <- matrix(unlist(y), nrow=length(y), byrow=TRUE)
+    if (nrow(x) != nrow(y)) { stop("The number of observations in x & y don't match") }
+
+    ninput <- ncol(x)
+    nhidden <- size
+    noutput <- ncol(y)
+    nwt <- (ninput*nhidden) + (nhidden*noutput) + nhidden + noutput
+    
+    if (!weights) weights <- rep(1, nrow(y))
+    if (!subset) subset <- 1:nrow(y)
+    if (!Wts) { Wts <- rep(1,nwt) }
+    if (!mask) { mask <- rep(TRUE, nwt) }
+
+    assign(modelname, 
+    nnet(x,y,weights=weights,size=size,Wts=Wts,mask=mask,linout=linout,
+    entropy=entropy,softmax=softmax,censored=censored,skip=skip,rang=rang,
+    decay=decay,maxit=maxit,Hess=Hess,trace=trace,MaxNWts=MaxNWts,
+    abstol=abstol,reltol=reltol), pos=1)
+
+    tmp <- get(modelname)
+    save(x,y,Wts, file='myrun')
+    detach(paramlist)
+    get(modelname)
+}
+    
+
+    
 

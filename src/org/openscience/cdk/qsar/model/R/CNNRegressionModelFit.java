@@ -43,18 +43,46 @@ public class CNNRegressionModelFit {
     private double value;
     private double[][] hessian = null;
 
+    private double[][] vectorToMatrix(double[] v, int nrow, int ncol) {
+        double[][] m = new double[nrow][ncol];
+        for (int i = 0; i < ncol; i++) {
+            for (int j = 0; j < nrow; j++) {
+                m[j][i] = v[j + i*nrow];
+            }
+        }
+        return(m);
+    }
+    
     public CNNRegressionModelFit(
             int noutput, 
+            int nobs,
             double[] weights, 
-            double[][] fitted, double[][] residual, 
+            double[] fitted, double[] residual, 
             double value,
-            double[][] hessian) {
+            double[] hessian) {
+
+        // dimensions of hessian = nwt x nwt
+        // dimensions of fitted, residual = nobs x noutput
+        // also note that matrices come in as columnwise 1D arrays
+
         this.noutput = noutput;
         setWeights(weights);
-        setResiduals(residual);
-        setFitted(fitted);
+        setResiduals(vectorToMatrix(residual, nobs,noutput));
+        setFitted(vectorToMatrix(fitted, nobs,noutput));
         setValue(value);
-        setHessian(hessian);
+        setHessian(vectorToMatrix(hessian,weights.length,weights.length));
+    }
+    public CNNRegressionModelFit(
+            int noutput, 
+            int nobs,
+            double[] weights, 
+            double[] fitted, double[] residual, 
+            double value) {
+        this.noutput = noutput;
+        setWeights(weights);
+        setResiduals(vectorToMatrix(residual, nobs,noutput));
+        setFitted(vectorToMatrix(fitted, nobs,noutput));
+        setValue(value);
     }
 
     public double getValue() {
@@ -65,12 +93,12 @@ public class CNNRegressionModelFit {
     }
 
     public double[][] getHessian() { return(this.hessian); }
-    public void setHessian(double[][] hessian) { 
-        if (hessian == null) return;
-        this.hessian = new double[hessian.length][this.noutput];
-        for (int i = 0; i < hessian.length; i++) {
+    public void setHessian(double[][] theHessian) { 
+        if (theHessian == null) return;
+        this.hessian = new double[theHessian.length][this.noutput];
+        for (int i = 0; i < theHessian.length; i++) {
             for (int j = 0; j < this.noutput; j++) {
-                this.hessian[i][j] = hessian[i][j];
+                this.hessian[i][j] = theHessian[i][j];
             }
         }
     }

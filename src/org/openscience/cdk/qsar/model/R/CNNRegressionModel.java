@@ -52,9 +52,14 @@ public class CNNRegressionModel extends RModel {
     private void setDefaults() {
         // lets set the default values of the arguments that are specified
         // to have default values in ?nnet
-        this.params.put("subset", new Integer(0));
+
+        // these params are vectors that depend on user defined stuff
+        // so as a default we set them to FALSE so R can check if these
+        // were not set
+        this.params.put("subset", new Boolean(false));
         this.params.put("mask", new Boolean(false) );
-        this.params.put("Wts", new Double(0));
+        this.params.put("Wts", new Boolean(false));
+        this.params.put("weights", new Boolean(false));
 
         this.params.put("linout", new Boolean(true)); // we want only regression
         this.params.put("entropy", new Boolean(false));
@@ -117,7 +122,7 @@ public class CNNRegressionModel extends RModel {
         Double[][] yy = new Double[nrow][1];
 
         for (int i = 0; i < nrow; i++) {
-            yy[i][1] = new Double(y[i]);
+            yy[i][0] = new Double(y[i]);
             for (int j = 0; j < ncol; j++) {
                 xx[i][j] = new Double(x[i][j]);
             }
@@ -312,4 +317,23 @@ public class CNNRegressionModel extends RModel {
      * interval type.
      */
     public void predict() throws QSARModelException {};
+
+
+    public double getFitValue() {
+        return(this.modelfit.getValue());
+    }
+    public double[] getFitWeights() {
+        return(this.modelfit.getWeights());
+    }
+    public double[][] getFitFitted() {
+        return(this.modelfit.getFitted());
+    }
+    public double[][] getFitResiduals() {
+        return(this.modelfit.getResiduals());
+    }
+    public double[][] getFitHessian() {
+        return(this.modelfit.getHessian());
+    }
+
+
 }
