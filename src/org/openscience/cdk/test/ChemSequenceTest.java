@@ -46,4 +46,16 @@ public class ChemSequenceTest extends TestCase {
     public static Test suite() {
         return new TestSuite(ChemSequenceTest.class);
     }
+    
+    public void testAddChemModel() {
+        ChemSequence cs = new ChemSequence();
+        cs.addChemModel(new ChemModel());
+        cs.addChemModel(new ChemModel());
+        cs.addChemModel(new ChemModel());
+        assertEquals(3, cs.getChemModelCount());
+        cs.addChemModel(new ChemModel());
+        cs.addChemModel(new ChemModel());
+        cs.addChemModel(new ChemModel()); // this one should enfore array grow
+        assertEquals(6, cs.getChemModelCount());
+    }
 }

@@ -46,4 +46,11 @@ public class MoleculeTest extends TestCase {
     public static Test suite() {
         return new TestSuite(MoleculeTest.class);
     }
+    
+    // test constructors
+    
+    public void testMolecule() {
+        Molecule m = new Molecule();
+        assertTrue(m != null);
+    }
 }

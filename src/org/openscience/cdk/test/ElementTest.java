@@ -46,4 +46,38 @@ public class ElementTest extends TestCase {
     public static Test suite() {
         return new TestSuite(ElementTest.class);
     }
+    
+    // test constructors
+    
+    public void testElement1() {
+        Element e = new Element("C");
+        assertEquals("C", e.getSymbol());
+    }
+    
+    public void testElement2() {
+        Element e = new Element("H", 1, 1);
+        assertEquals("C", e.getSymbol());
+        assertEquals(1, e.getAtomicNumber());
+        assertEquals(1, e.getAtomicMass());
+    }
+    
+    // test methods
+    
+    public void testSetSymbol() {
+        Element e = new Element();
+        e.setSymbol("C");
+        assertEquals("C", e.getSymbol());
+    }
+        
+    public void testSetAtomicNumber() {
+        Element e = new Element("H");
+        e.setAtomicMass(1);
+        assertEquals(1, e.getAtomicMass());
+    }
+
+    public void testSetAtomicMass() {
+        Element e = new Element("D");
+        e.setAtomicMass(2);
+        assertEquals(2, e.getAtomicMass());
+    }
 }

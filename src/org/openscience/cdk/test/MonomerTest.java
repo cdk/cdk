@@ -1,10 +1,9 @@
-/* MonomerTest.java
+/* $RCSfile$
+ * $Author$    
+ * $Date$    
+ * $Revision$
  * 
- * $ author: 	Edgar Luttmann 			$ 
- * $ contact: 	edgar@uni-paderborn.de 	$
- * $ date: 		2001-08-09 				$
- * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  * 
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  * 
@@ -32,9 +31,10 @@ import junit.framework.*;
 import org.openscience.cdk.*;
 
 /**
- *
  * TestCase for the Monomer class.
  *
+ * @author  Edgar Luttman <edgar@uni-paderborn.de>
+ * @created 2001-08-09
  */
 public class MonomerTest extends TestCase {
 
@@ -52,16 +52,18 @@ public class MonomerTest extends TestCase {
 
 	public void testMonomer() {
 		Monomer oMonomer = new Monomer();
-		oMonomer.setMonomerName(new String("TRP279"));
-		assertEquals(new String("TRP279"), oMonomer.getMonomerName());
-		oMonomer.setMonomerType(new String("TRP"));
-		assertEquals(new String("TRP"), oMonomer.getMonomerType());
-		Atom oAtom = new Atom("C");
-		oMonomer.addAtom(oAtom);
-		oMonomer.addAtom(oAtom);
-		oMonomer.addAtom(new Atom("N"));
-		oMonomer.addAtom(new Atom("O"));
-		assertEquals(oMonomer.getAtomCount(), 3);
-		assertEquals(oAtom, oMonomer.getAtomAt(0));
+                assertTrue(oMonomer != null);
 	}
+	
+	public void testSetMonomerName() {
+            Monomer m = new Monomer();
+            m.setMonomerName(new String("TRP279"));
+            assertEquals(new String("TRP279"), m.getMonomerName());
+	}
+
+    public void testSetMonomerType() {
+        Monomer oMonomer = new Monomer();
+        oMonomer.setMonomerType(new String("TRP"));
+        assertEquals(new String("TRP"), oMonomer.getMonomerType());
+    }
 }

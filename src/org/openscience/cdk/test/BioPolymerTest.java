@@ -31,7 +31,7 @@ import junit.framework.*;
 import javax.vecmath.*;
 
 /**
- * Checks the funcitonality of the BioPolymer class.
+ * Checks the functionality of the BioPolymer class.
  *
  * @see org.openscience.cdk.BioPolymer
  */
@@ -46,4 +46,10 @@ public class BioPolymerTest extends TestCase {
     public static Test suite() {
         return new TestSuite(BioPolymerTest.class);
     }
+    
+    public void testBioPolymer() {
+        BioPolymer bp = new BioPolymer();
+        assertTrue(bp != null);
+    }
+    
 }
