@@ -51,6 +51,8 @@ public class SingleElectron extends ElectronContainer implements java.io.Seriali
 
     /**
      * Constructs an single electron orbital on an Atom.
+     *
+     * @param atom The atom to which the single electron belongs.
      */
     public SingleElectron(Atom atom) {
         this.atom = atom;

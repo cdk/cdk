@@ -222,19 +222,33 @@ public class CDKConstants {
       */
     public static final String ISOTROPIC_SHIELDING = "IsotropicShielding";
 
-    /** Records for PDB information **/
+    /* The next statics are used to store PDB information as Atom properties. */
+    
+    /** Full record from PDB file. **/
     public static final String PDB_RECORD     = "pdb.record";
+    /** PDB field for serial number?. **/
     public static final String PDB_SERIAL     = "pdb.serial";
+    /** PDB field for the name of what?. **/
     public static final String PDB_NAME       = "pdb.name";
+    /** PDB field for alternative location. **/
     public static final String PDB_ALTLOC     = "pdb.altLoc";
+    /** PDB field for the residue name of the atom. **/
     public static final String PDB_RESNAME    = "pdb.resName";
+    /** PDB field for the chain ID. **/
     public static final String PDB_CHAINID    = "pdb.chainID";
+    /** PDB field for the residue sequence number. **/
     public static final String PDB_RESSEQ     = "pdb.resSeq";
+    /** PDB field for the insertion code. **/
     public static final String PDB_ICODE      = "pdb.iCode";
+    /** PDB field for the atomic occupancy. **/
     public static final String PDB_OCCOPANCY  = "pdb.occupancy";
+    /** PDB field for the atomic temperature factor. **/
     public static final String PDB_TEMPFACTOR = "pdb.tempFactor";
+    /** PDB field for the segment ID. **/
     public static final String PDB_SEGID      = "pdb.segID";
+    /** PDB field for the element symbol?. **/
     public static final String PDB_ELEMENT    = "pdb.element";
+    /** PDB field for the atomic partial? charge. **/
     public static final String PDB_CHARGE     = "pdb.charge";
 }
 

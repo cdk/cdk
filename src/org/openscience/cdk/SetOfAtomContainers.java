@@ -273,7 +273,7 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
     
 	/**
 	 *  Called by objects to which this object has
-	 *  registered as a listener
+	 *  registered as a listener.
 	 *
 	 *@param  event  A change event pointing to the source of the change
 	 */

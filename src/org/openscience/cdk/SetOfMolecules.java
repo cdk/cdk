@@ -125,7 +125,7 @@ public class SetOfMolecules extends SetOfAtomContainers {
     
     	/**
 	 *  Called by objects to which this object has
-	 *  registered as a listener
+	 *  registered as a listener.
 	 *
 	 *@param  event  A change event pointing to the source of the change
 	 */
