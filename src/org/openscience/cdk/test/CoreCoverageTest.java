@@ -129,7 +129,7 @@ public class CoreCoverageTest extends TestCase {
                     testMethod = testMethod + "_" + removePackage(paramTypes[j].getName());
                 }
                 if (!testMethodNames.contains(testMethod)) {
-                    System.out.println(removePackage(coreClass.getName()) + ": missing the expection test method: " + testMethod);
+                    System.out.println(removePackage(coreClass.getName()) + ": missing the expected test method: " + testMethod);
                     missingTestsCount++;
                 }
             }
@@ -143,7 +143,7 @@ public class CoreCoverageTest extends TestCase {
                     testMethod = testMethod + "_" + removePackage(paramTypes[j].getName());
                 }
                 if (!testMethodNames.contains(testMethod)) {
-                    System.out.println(removePackage(coreClass.getName()) + ": missing the expection test method: " + testMethod);
+                    System.out.println(removePackage(coreClass.getName()) + ": missing the expected test method: " + testMethod);
                     missingTestsCount++;
                 }
             }
