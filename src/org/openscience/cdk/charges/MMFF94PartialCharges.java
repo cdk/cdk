@@ -104,16 +104,13 @@ public class MMFF94PartialCharges {
 			for(int n = 0; n < neighboors.length; n++) {
 				if (parameterSet.containsKey("bond"+thisAtom.getID()+";"+neighboors[n].getID())) {
 					bondData = (Vector) parameterSet.get("bond"+thisAtom.getID()+";"+neighboors[n].getID());
-					bondIncrement = ((Double) bondData.get(4)).doubleValue();
+					sumOfBondIncrements += ((Double) bondData.get(4)).doubleValue();
 				}
 				if (parameterSet.containsKey("bond"+neighboors[n].getID()+";"+thisAtom.getID())) {
 					bondData = (Vector) parameterSet.get("bond"+neighboors[n].getID()+";"+thisAtom.getID());
-					bondIncrement = ((Double) bondData.get(4)).doubleValue();
-					bondIncrement = (-1) * bondIncrement;
+					sumOfBondIncrements -= ((Double) bondData.get(4)).doubleValue();
 				}
 				//System.out.println( "BOND VALUE "+n+" : " + ((Double) bondData.get(4)).doubleValue() );
-				//bondIncrement = ((Double) bondData.get(4)).doubleValue();
-				sumOfBondIncrements += bondIncrement;
 				dataNeigh = (Vector) parameterSet.get("data"+neighboors[n].getID());
 				formalChargeNeigh = ((Double) dataNeigh.get(3)).doubleValue();
 				sumOfFormalCharges += formalChargeNeigh;
