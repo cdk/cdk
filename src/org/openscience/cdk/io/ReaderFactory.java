@@ -131,6 +131,7 @@ public class ReaderFactory {
                 "org.openscience.cdk.io.formats.MOPAC93Format",
                 "org.openscience.cdk.io.formats.MOPAC97Format",
                 "org.openscience.cdk.io.formats.MOPAC2002Format",
+                "org.openscience.cdk.io.formats.NWChemFormat",
                 "org.openscience.cdk.io.formats.PDBFormat",
                 "org.openscience.cdk.io.formats.PMPFormat",
                 "org.openscience.cdk.io.formats.QChemFormat",
