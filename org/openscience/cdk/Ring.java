@@ -48,4 +48,14 @@ public class Ring extends AtomContainer
 		super(ringSize, ringSize);
 	}
 	
+
+	/**
+	 * Returns the number of atoms\edges in this ring.
+	 *
+	 * @return   The number of atoms\edges in this ring   
+	 */
+	public int getRingSize()
+	{
+		return this.atomCount;
+	}
 }

@@ -32,7 +32,7 @@ public interface Renderer2DSettings
 {
 	double scaleFactor = 60;
 	
-	double bondWidth = 1;
+	double bondWidth = 2;
 	
 	double bondDistance = 6;
 

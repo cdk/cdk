@@ -75,7 +75,7 @@ public class MDLReader implements CDKConstants
 				{
 					str = new String(input.readLine());
 				}
-				while (!str.equals("$$$$") || input.ready());
+				while (!str.equals("$$$$") || !input.ready());
 				setOfMolecules.addMolecule(readMolecule());
 			}
 			while (str != null);

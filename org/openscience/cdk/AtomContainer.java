@@ -351,7 +351,6 @@ public class AtomContainer extends ChemObject implements Cloneable{
 		}
 		bonds[bondCount] = null;
 		bondCount--;		
-		System.out.println("remove bond used");
 	}
 	
 	

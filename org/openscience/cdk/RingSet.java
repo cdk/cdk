@@ -53,30 +53,62 @@ public class RingSet extends Vector{
 	{
 		Ring ring;
 		Bond[] bonds;
-		int equalCount = 0;
+		Bond bond;
+		int equalCount;
+		boolean equals;
 		for (int f = 0; f < this.size(); f++)
 		{
+			equals = false;
+			equalCount = 0;
 			ring = (Ring)this.elementAt(f);
 			bonds = ring.getBonds();
 			if (bonds.length == newRing.getBonds().length)
 			{
 				for (int i = 0; i < bonds.length; i++)
 				{
+					bond = newRing.getBond(i);
 					for (int n = 0; n < bonds.length; n++)
 					{
-						if (bonds[i].equals(newRing.getBond(n)))
+						if (bond.equals(bonds[n]))
 						{
+							equals = true;
 							equalCount++;
 							break;
 						}
 					}
+					if (!equals) break;
 				}
-				if (equalCount == bonds.length)
-				{
-					return true;
-				}
+			}
+			if (equalCount == bonds.length)
+			{
+				return true;
 			}
 		}
 		return false;	
+	}
+	
+
+	/**
+	 * Returns a vector that contains all bonds participating
+	 * in one of the rings in this ringset.
+	 *
+	 * @return   The Vector that contains all the bonds
+	 */
+	public Vector getBonds()
+	{
+		Vector bonds = new Vector();
+		Ring ring;
+		for (int i = 0; i < this.size(); i++)
+		{
+			ring = (Ring)elementAt(i);
+			for (int f = 0; f < ring.getRingSize(); f++)
+			{
+				if (!bonds.contains(ring.getBond(f)))
+				{
+					bonds.addElement(ring.getBond(f));
+				}
+			} 
+		}	
+		return bonds;
 	}
 }

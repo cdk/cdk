@@ -35,13 +35,7 @@ import org.openscience.cdk.*;
 public class SSSRFinder
 {
 
-//	 public boolean debug = false; // minimum details
-//	 public boolean debug1 = false;  // more details
-//	 public boolean debug2 = false; // too many details
-//	 public boolean debug3 = false; // hillarious details
-//	
-//	 public int ringCounter = 0;
-//	 public boolean storeRings = true;
+	 public boolean debug = false; // minimum details
 
 	private static final int PATH = 0;
 
@@ -124,7 +118,7 @@ public class SSSRFinder
 				for (int f = 0; f < nodesN2.size(); f++)
 				{
 					ring = getRing((Atom)nodesN2.elementAt(f), molecule);
-					if (ring.getSize() > 0)
+					if (ring.getRingSize() > 0)
 					{
 						// check, if this ring already is in SSSR
 						if (!sssr.ringAlreadyInSet(ring))
@@ -148,7 +142,7 @@ public class SSSRFinder
 			else if (smallestDegree == 3)
 			{
 				ring = getRing(smallest, molecule);
-				if (ring.getSize() > 0)
+				if (ring.getRingSize() > 0)
 				{
 					// check, if this ring already is in SSSR
 					if (!sssr.ringAlreadyInSet(ring))
@@ -175,9 +169,7 @@ public class SSSRFinder
 	 */
 	private Ring getRing(Atom rootNode, Molecule molecule)
 	{
-//		Atom[] conAtoms;
 		Atom node, neighbor, mAtom; 
-//		int source, mNumber, frontNode, neighborNumber; 
 		/** OKatoms is Figueras nomenclature, giving the number of 
 		    atoms in the structure */
 		int OKatoms = molecule.getAtomCount();
@@ -194,38 +186,26 @@ public class SSSRFinder
 		initPath(molecule);
 
 		for (int f = 0; f < OKatoms; f++){
-//			path[f] = new Vector();		
+			path[f] = new Vector();		
 			molecule.getAtom(f).pointers[PATH].removeAllElements();
 		}
 		try
 		{
 			// Initialize the queue with nodes attached to rootNode
 			for (int f = 0; f < rootNode.getDegree(); f++){
-				/* if the degree of the f-st neighbor of rootNode is greater 
-				 than zero (i.e., it has not yet been deleted from the list)
-				*/
+				//if the degree of the f-st neighbor of rootNode is greater 
+				//than zero (i.e., it has not yet been deleted from the list)
 				neighbor = molecule.getConnectedAtoms(rootNode)[f];
-//				System.out.println("neighbor   "+ neighbor.toString());
-//				if (neighbor.getDegree() > 0){
-					// push the f-st node onto our FIFO queue	
-					// after assigning rootNode as its source
-//					neighbor.setSource(molecule.getAtomNumber(rootNode));
-					queue.push(neighbor);
-//					neighborNumber = molecule.getAtomNumber(neighbor);
-					neighbor.pointers[PATH].addElement(rootNode);
-					neighbor.pointers[PATH].addElement(neighbor);
-//					path[neighborNumber].addElement(neighbor);
-//					path[neighborNumber].addElement(rootNode);
-//				}
+				// push the f-st node onto our FIFO queue	
+				// after assigning rootNode as its source
+				queue.push(neighbor);
+				neighbor.pointers[PATH].addElement(rootNode);
+				neighbor.pointers[PATH].addElement(neighbor);
 			}
 			while (queue.size() > 0){	
-//			System.out.println("queue   "+ queue.toString());	
 				node = (Atom)queue.pop();
-//				frontNode = molecule.getAtomNumber(node);
-//				source = node.getSource();				  
 				for (int f = 0; f < node.getDegree(); f++){
 					mAtom = molecule.getConnectedAtoms(node)[f];
-//					mNumber = molecule.getAtomNumber(mAtom);
 					if (mAtom != node.pointers[PATH].elementAt(node.pointers[PATH].size() - 2)){
 						if (mAtom.pointers[PATH].size() > 0){
 							intersection = getIntersection(node.pointers[PATH], mAtom.pointers[PATH]);
@@ -233,30 +213,26 @@ public class SSSRFinder
 								// we have found a valid ring closure
 								// now let's prepare the path to
 								// return in tempAtomSet
-//								if (debug){
-//									System.out.println("Ring closure found at: " + mNumber);
-//									System.out.println("Path of frontnode: " + path[frontNode].toString());
-//									System.out.println("Path of m: " + path[mNumber].toString());
-//								}
+								if (debug){
+									System.out.println("path1  "+node.pointers[PATH].toString());
+									System.out.println("path2  "+mAtom.pointers[PATH].toString());
+									System.out.println("rootNode  "+rootNode);
+									System.out.println("ring   "+ ring.toString());
+								}
 								ring = getUnion(node.pointers[PATH], mAtom.pointers[PATH]);
-//								System.out.println("path1  "+node.pointers[PATH].toString());
-//								System.out.println("path2  "+mAtom.pointers[PATH].toString());
-								System.out.println("rootNode  "+rootNode);
-								System.out.println("ring   "+ ring.toString());
 								return prepareRing(ring,molecule);
-//								return prepareRing(ring, tempAtomSet);
 							}
 						}
-						else { // if path[mNumber] is null
-								   // update the path[mNumber]							
-//								path[mNumber] = merge(path[mNumber], path[frontNode]);
-								pfad2 = node.pointers[PATH];
-								mAtom.pointers[PATH] = (Vector)node.pointers[PATH].clone();
-								mAtom.pointers[PATH].addElement(mAtom);
-								pfad1 = mAtom.pointers[PATH];
-								// now push the node m onto the queue
-//								mAtom.setSource(frontNode);
-								queue.push(mAtom);	
+						else 
+						{   
+							// if path[mNumber] is null
+						    // update the path[mNumber]							
+							pfad2 = node.pointers[PATH];
+							mAtom.pointers[PATH] = (Vector)node.pointers[PATH].clone();
+							mAtom.pointers[PATH].addElement(mAtom);
+							pfad1 = mAtom.pointers[PATH];
+							// now push the node m onto the queue
+							queue.push(mAtom);	
 						}
 					}
 				}
@@ -291,7 +267,6 @@ public class SSSRFinder
 		{
 			for (int i = 0; i < atomCount - 1; i++)
 			{
-				System.out.println("wie oft   "+i);
 				ring.setBond(i,mol.getBond(atoms[i], atoms[i + 1]));
 			}
 			ring.setBond(atomCount - 1,mol.getBond(atoms[0], atoms[atomCount - 1]));

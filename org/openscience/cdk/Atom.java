@@ -248,6 +248,7 @@ public class Atom extends ChemObject implements Cloneable {
 		{
 			e.printStackTrace(System.err);
 		}
+		o.degree = this.degree;
 		o.point2D = this.point2D;
 		o.point3D = this.point3D;
 		return o;

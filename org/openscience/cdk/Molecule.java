@@ -51,6 +51,12 @@ public class Molecule extends AtomContainer
 		chemNames = new Vector();
 	}
 	
+	public Molecule(int atomCount, int bondCount)
+	{
+		super(atomCount, bondCount);
+		chemNames = new Vector();
+	}
+	
 
 	/**
 	 * Returns the AutonomName for this molecule. Autonom is a program that 
