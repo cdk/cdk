@@ -9,15 +9,13 @@ import org.openscience.cdk.*;
 /**
  *  Interface for a potential energy function to optimise in cdk/modeling/ForceField
  *
- *@author     labarta
- *@created    December 9, 2004
+ * @author     vlabarta
+ * 
  */
 
 public interface PotentialFunction {
 	double functionInWishedPoint = 0;	//	Function value in a point 
 	GVector gradientInWishedPoint = new GVector(3);	//	Gradient value in a point
-	double slopeInWishedPoint=1;	// Slope value in a point. The slope is from a line that intercept this point 
-					//and have direction equal to the gradient of this point
 
 //	GVector getGradientInWishedPoint();
 
@@ -26,27 +24,21 @@ public interface PotentialFunction {
 //	double slopeInWishedPoint();
 	
 	/**
-	 *  Description of the Method
+	 *  Evaluate the potential energy function in a given point
 	 *
-	 *@return    Function value in a wished point
+	 * @return    Function value in the wished point
 	 */
 	double functionInPoint(GVector point);
 
 
 	/**
-	 *  Description of the Method
+	 *  Evaluate the gradient of the potential energy function in a given point
 	 *
-	 *@return    Gradient value in a wished point
+	 * @return    Gradient value in the wished point
 	 */
 	GVector gradientInPoint(GVector point);
 
 
-	/**
-	 *  Description of the Method
-	 *
-	 *@return    Slope of the line, that intercept a wished point and have slope equal to the gradient in this point
-	 */
-	double slopeInPoint(GVector point);
 }
 
 
