@@ -116,11 +116,11 @@ public class JmolTest extends TestCase {
             // test the resulting ChemFile content
             assertNotNull(chemFile);
             assertEquals(1, chemFile.getChemSequenceCount());
-            System.out.println("NO sequences: " + chemFile.getChemSequenceCount());
+            //System.out.println("NO sequences: " + chemFile.getChemSequenceCount());
             ChemSequence seq = chemFile.getChemSequence(0);
             assertNotNull(seq);
             assertEquals(34, seq.getChemModelCount());
-            System.out.println("NO models: " + seq.getChemModelCount());
+            //System.out.println("NO models: " + seq.getChemModelCount());
             ChemModel model = seq.getChemModel(0);
             assertNotNull(model);
             assertEquals(1, model.getSetOfMolecules().getMoleculeCount());
@@ -150,11 +150,11 @@ public class JmolTest extends TestCase {
             // test the resulting ChemFile content
             assertNotNull(chemFile);
             assertEquals(1, chemFile.getChemSequenceCount());
-            System.out.println("NO sequences: " + chemFile.getChemSequenceCount());
+            //System.out.println("NO sequences: " + chemFile.getChemSequenceCount());
             ChemSequence seq = chemFile.getChemSequence(0);
             assertNotNull(seq);
             assertEquals(1, seq.getChemModelCount());
-            System.out.println("NO models: " + seq.getChemModelCount());
+            //System.out.println("NO models: " + seq.getChemModelCount());
             ChemModel model = seq.getChemModel(0);
             assertNotNull(model);
             assertEquals(1, model.getSetOfMolecules().getMoleculeCount());
@@ -183,11 +183,11 @@ public class JmolTest extends TestCase {
             // test the resulting ChemFile content
             assertNotNull(chemFile);
             assertEquals(1, chemFile.getChemSequenceCount());
-            System.out.println("NO sequences: " + chemFile.getChemSequenceCount());
+            //System.out.println("NO sequences: " + chemFile.getChemSequenceCount());
             ChemSequence seq = chemFile.getChemSequence(0);
             assertNotNull(seq);
             assertEquals(1, seq.getChemModelCount());
-            System.out.println("NO models: " + seq.getChemModelCount());
+            //System.out.println("NO models: " + seq.getChemModelCount());
             ChemModel model = seq.getChemModel(0);
             assertNotNull(model);
             assertEquals(1, model.getSetOfMolecules().getMoleculeCount());

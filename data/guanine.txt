@@ -1,7 +1,5 @@
 <IChI version="0.9Beta">
-
  <structure number="1" id.name="" id.value="">
-
   <identifier version="0.9Beta" tautomeric="0">
    <basic>N2OC1NNN1N1C*4, 4-3 6-3 8-1-5-7 9-2-7 10-4-5 11-6-9-10</basic>
    <charge></charge>
@@ -10,13 +8,11 @@
     <sp3></sp3>
    </stereo>
   </identifier>
-
   <identifier.auxiliary-info version="0.9Beta" tautomeric="0">
    <!-- Auxiliary info is not a part of the identifier, it is not unique -->
    <atom.orig-nbr>4 7 11 10 3 9 2 1 5 8 6</atom.orig-nbr>
    <atom.equivalence></atom.equivalence>
   </identifier.auxiliary-info>
-
   <identifier version="0.9Beta" tautomeric="1">
    <basic>NOC1N*4C*4, 4-3 5-3 8-1-6-7 9-2-6 10-4-7 11-5-9-10, (H4 1 2 4 5 6 7)</basic>
    <charge></charge>
@@ -25,7 +21,6 @@
     <sp3></sp3>
    </stereo>
   </identifier>
-
   <identifier.auxiliary-info version="0.9Beta" tautomeric="1">
    <!-- Auxiliary info is not a part of the identifier, it is not unique -->
    <atom.orig-nbr>4 7 11 10 9 2 3 1 5 8 6</atom.orig-nbr>
@@ -34,3 +29,4 @@
   </identifier.auxiliary-info>
  </structure>
 </IChI>
+
