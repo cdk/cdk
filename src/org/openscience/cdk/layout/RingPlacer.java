@@ -134,11 +134,6 @@ public class RingPlacer
 				if (unplacedPartners.getAtomCount() > 0)
 				{
 					atomPlacer.distributePartners(atom, sharedAtoms, centerOfRingGravity, unplacedPartners, bondLength);
-					try
-					{
-						System.out.println(molecule.getAtomNumber(atom));
-					}catch(Exception exc){}
-					
 				}
 			}
 		}

@@ -1,32 +1,33 @@
-/* $RCSfile$    
- * $Author$    
- * $Date$    
- * $Revision$
- * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
- * 
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
- * 
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public License
- * as published by the Free Software Foundation; either version 2.1
- * of the License, or (at your option) any later version.
- * All we ask is that proper credit is given for our work, which includes
- * - but is not limited to - adding the above copyright notice to the beginning
- * of your source code files, and to any copyright notice that you may distribute
- * with programs based on this work.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- *  */
+/*
+ *  $RCSfile$
+ *  $Author$
+ *  $Date$
+ *  $Revision$
+ *
+ *  Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ *
+ *  Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ *
+ *  This program is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public License
+ *  as published by the Free Software Foundation; either version 2.1
+ *  of the License, or (at your option) any later version.
+ *  All we ask is that proper credit is given for our work, which includes
+ *  - but is not limited to - adding the above copyright notice to the beginning
+ *  of your source code files, and to any copyright notice that you may distribute
+ *  with programs based on this work.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ *
+ */
 package org.openscience.cdk.renderer;
-
 
 import java.awt.*;
 import javax.vecmath.*;
@@ -36,25 +37,27 @@ import org.openscience.cdk.geometry.*;
 import org.openscience.cdk.*;
 import org.openscience.cdk.tools.*;
 
-
 /**
- * A Renderer class which draws 2D representations of molecules onto 
- * a given graphics objects using information from a Renderer2DModel
- * 
- * @keyword viewer, 2D-viewer
+ *  A Renderer class which draws 2D representations of molecules onto a given
+ *  graphics objects using information from a Renderer2DModel
+ *
+ *@author     steinbeck
+ *@created    October 3, 2002
+ *@keyword    viewer, 2D-viewer
  */
-public class Renderer2D 
+public class Renderer2D
 {
 	SSSRFinder sssrf = new SSSRFinder();
+	/**
+	 *  Description of the Field
+	 */
 	public Renderer2DModel r2dm;
 	Graphics g;
 	AtomContainer atomCon;
-		
+
 
 	/**
-	 * Constructs a Renderer2D
-	 *
-	 * @param   graphics    The graphics object 
+	 *  Constructs a Renderer2D
 	 */
 	public Renderer2D()
 	{
@@ -63,9 +66,9 @@ public class Renderer2D
 
 
 	/**
-	 * Constructs a Renderer2D
+	 *  Constructs a Renderer2D
 	 *
-	 * @param   graphics    The graphics object 
+	 *@param  r2dm  Description of the Parameter
 	 */
 	public Renderer2D(Renderer2DModel r2dm)
 	{
@@ -74,9 +77,11 @@ public class Renderer2D
 
 
 	/**
-	 * triggers the methods to make the molecule fit into the frame and to paint it.
-	 * 
-	 * @param   mol  The Molecule to be drawn
+	 *  triggers the methods to make the molecule fit into the frame and to paint
+	 *  it.
+	 *
+	 *@param  atomCon  Description of the Parameter
+	 *@param  g        Description of the Parameter
 	 */
 	public void paintMolecule(AtomContainer atomCon, Graphics g)
 	{
@@ -87,22 +92,21 @@ public class Renderer2D
 		try
 		{
 			molecules = ConnectivityChecker.partitionIntoMolecules(atomCon);
-		}
-		catch (Exception exc)
+		} catch (Exception exc)
 		{
 			exc.printStackTrace();
 		}
 		for (int i = 0; i < molecules.size(); i++)
 		{
-			ringSet.add(sssrf.findSSSR((Molecule)molecules.elementAt(i)));
+			ringSet.add(sssrf.findSSSR((Molecule) molecules.elementAt(i)));
 		}
-		if (r2dm.getPointerVectorStart() != null && r2dm.getPointerVectorEnd() != null) 
-		{ 
+		if (r2dm.getPointerVectorStart() != null && r2dm.getPointerVectorEnd() != null)
+		{
 			paintPointerVector();
 		}
 		paintBonds(atomCon, ringSet);
 		paintAtoms(atomCon);
-		if (r2dm.drawNumbers()) 
+		if (r2dm.drawNumbers())
 		{
 			paintNumbers(atomCon.getAtoms(), atomCon.getAtomCount());
 		}
@@ -113,99 +117,116 @@ public class Renderer2D
 		}
 		paintLassoLines();
 	}
-	
-	
+
+
+	/**
+	 *  Description of the Method
+	 */
 	private void paintLassoLines()
 	{
 		Vector points = r2dm.getLassoPoints();
 		if (points.size() > 1)
 		{
-			Point point1 = (Point)points.elementAt(0), point2;
+			Point point1 = (Point) points.elementAt(0);
+			Point point2;
 			for (int i = 1; i < points.size(); i++)
 			{
-				point2 = (Point)points.elementAt(i);
+				point2 = (Point) points.elementAt(i);
 				g.drawLine(point1.x, point1.y, point2.x, point2.y);
 				point1 = point2;
 			}
 		}
 	}
-	
+
+
 	/**
-	 * Draw all numbers of all atoms in the molecule
+	 *  Draw all numbers of all atoms in the molecule
 	 *
-	 * @param   atoms     The array of atoms
-	 * @param   number    The number of atoms in this array
+	 *@param  atoms   The array of atoms
+	 *@param  number  The number of atoms in this array
 	 */
 	private void paintNumbers(Atom[] atoms, int number)
 	{
 		for (int i = 0; i < number; i++)
 		{
-				paintNumber(atoms[i]);
+			paintNumber(atoms[i]);
 		}
 	}
 
 
-   /*
-	* Paints the numbers 
-	*
-	* @param   atom    The atom to be drawn
-	*/
+	/*
+	 *  Paints the numbers
+	 *
+	 *  @param   atom    The atom to be drawn
+	 */
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  atom  Description of the Parameter
+	 */
 	private void paintNumber(Atom atom)
 	{
-		if (atom.getPoint2D() == null) return;
+		if (atom.getPoint2D() == null)
+		{
+			return;
+		}
 		FontMetrics fm = g.getFontMetrics();
 		int fontSize = g.getFont().getSize();
-		int xSymbOffset = (new Integer(fm.stringWidth(atom.getSymbol())/2)).intValue();
-		int ySymbOffset = (new Integer(fm.getAscent()/2)).intValue();
+		int xSymbOffset = (new Integer(fm.stringWidth(atom.getSymbol()) / 2)).intValue();
+		int ySymbOffset = (new Integer(fm.getAscent() / 2)).intValue();
 
 		try
 		{
 			int i = atomCon.getAtomNumber(atom);
 //			g.setColor(r2dm.getBackColor());
-//			g.fillRect((int)(atom.getPoint2D().x - (xSymbOffset * 1.8)),(int)(atom.getPoint2D().y - (ySymbOffset * 0.8)),(int)fontSize,(int)fontSize); 
+//			g.fillRect((int)(atom.getPoint2D().x - (xSymbOffset * 1.8)),(int)(atom.getPoint2D().y - (ySymbOffset * 0.8)),(int)fontSize,(int)fontSize);
 			g.setColor(r2dm.getForeColor());
-			g.drawString(new Integer(i+1).toString(),(int)(atom.getPoint2D().x + (xSymbOffset)),(int)(atom.getPoint2D().y - (ySymbOffset)));
+			g.drawString(new Integer(i + 1).toString(), (int) (atom.getPoint2D().x + (xSymbOffset)), (int) (atom.getPoint2D().y - (ySymbOffset)));
 			g.setColor(r2dm.getBackColor());
-			g.drawLine((int)atom.getPoint2D().x,(int)atom.getPoint2D().y,(int)atom.getPoint2D().x,(int)atom.getPoint2D().y);
-		}
-		catch(Exception exc)
+			g.drawLine((int) atom.getPoint2D().x, (int) atom.getPoint2D().y, (int) atom.getPoint2D().x, (int) atom.getPoint2D().y);
+		} catch (Exception exc)
 		{
-		
+
 		}
 	}
 
+
 	/**
-	 * Searches through all the atoms in the given array of atoms, triggers the
-	 * paintColouredAtoms method if the atom has got a certain color and triggers
-	 * the paintAtomSymbol method if the symbol of the atom is not C.
+	 *  Searches through all the atoms in the given array of atoms, triggers the
+	 *  paintColouredAtoms method if the atom has got a certain color and triggers
+	 *  the paintAtomSymbol method if the symbol of the atom is not C.
 	 *
-	 * @param   atoms     The array of atoms
-	 * @param   number    The number of atoms in this array
+	 *@param  atomCon  Description of the Parameter
 	 */
 	private void paintAtoms(AtomContainer atomCon)
 	{
-		Color atomColor; 
+		Color atomColor;
 		Atom atom;
 		for (int i = 0; i < atomCon.getAtomCount(); i++)
 		{
 			atom = atomCon.getAtomAt(i);
-			atomColor = (Color)r2dm.getColorHash().get(atom);
-			if (atom == r2dm.getHighlightedAtom()) 
-              atomColor = r2dm.getHighlightColor();
+			atomColor = (Color) r2dm.getColorHash().get(atom);
+			if (atom == r2dm.getHighlightedAtom())
+			{
+				atomColor = r2dm.getHighlightColor();
+			}
 			if (atomColor != null)
 			{
 				paintColouredAtom(atom, atomColor);
-			}
-			else {
+			} else
+			{
 				atomColor = r2dm.getBackColor();
 			}
 			if (!atom.getSymbol().equals("C"))
 			{
-                /* only show element for non-carbon atoms,
-                   unless (see below)... */
+				/*
+				 *  only show element for non-carbon atoms,
+				 *  unless (see below)...
+				 */
 				paintAtomSymbol(atom, atomColor);
-			} else if (atomCon.getBondCount(atom) == 0) {
-                // if atom has no bond always show element
+			} else if (atomCon.getBondCount(atom) == 0)
+			{
+				// if atom has no bond always show element
 				paintAtomSymbol(atom, atomColor);
 			}
 		}
@@ -213,66 +234,72 @@ public class Renderer2D
 
 
 	/**
-	 * Paints a rectangle of the given color at the position of the given atom.
-	 * For example when the atom is highlighted.
+	 *  Paints a rectangle of the given color at the position of the given atom.
+	 *  For example when the atom is highlighted.
 	 *
-	 * @param   atom  The atom to be drawn
-	 * @param   color  The color of the atom to be drawn
+	 *@param  atom   The atom to be drawn
+	 *@param  color  The color of the atom to be drawn
 	 */
 	private void paintColouredAtom(Atom atom, Color color)
 	{
 		int atomRadius = r2dm.getAtomRadius();
 		g.setColor(color);
-		g.fillRect((int)atom.getX2D() - (atomRadius / 2), (int)atom.getY2D() - (atomRadius / 2), atomRadius, atomRadius);
+		g.fillRect((int) atom.getX2D() - (atomRadius / 2), (int) atom.getY2D() - (atomRadius / 2), atomRadius, atomRadius);
 	}
 
+
 	/**
-	 * Paints the given atom symbol.
-	 * It first outputs some empty space using the background color, 
-     * slightly larger than the space that the symbol occupies. 
-	 * The atom symbol is then printed into the empty space.
+	 *  Paints the given atom symbol. It first outputs some empty space using the
+	 *  background color, slightly larger than the space that the symbol occupies.
+	 *  The atom symbol is then printed into the empty space.
 	 *
-	 * @param   atom    The atom to be drawn
+	 *@param  atom       The atom to be drawn
+	 *@param  backColor  Description of the Parameter
 	 */
-	private void paintAtomSymbol(Atom atom, Color backColor) {
-		if (atom.getPoint2D() == null) return;
+	private void paintAtomSymbol(Atom atom, Color backColor)
+	{
+		if (atom.getPoint2D() == null)
+		{
+			return;
+		}
 		FontMetrics fm = g.getFontMetrics();
 		int fontSize = g.getFont().getSize();
-		int xSymbOffset = (new Integer(fm.stringWidth(atom.getSymbol())/2)).intValue();
-		int ySymbOffset = (new Integer(fm.getAscent()/2)).intValue();
-        // make empty space
+		int xSymbOffset = (new Integer(fm.stringWidth(atom.getSymbol()) / 2)).intValue();
+		int ySymbOffset = (new Integer(fm.getAscent() / 2)).intValue();
+		// make empty space
 		g.setColor(backColor);
-		g.fillRect((int)(atom.getPoint2D().x - (xSymbOffset * 1.8)),
-                   (int)(atom.getPoint2D().y - (ySymbOffset * 0.8)),
-                   (int)fontSize,
-                   (int)fontSize);
-        // draw symbol
+		g.fillRect((int) (atom.getPoint2D().x - (xSymbOffset * 1.8)),
+				(int) (atom.getPoint2D().y - (ySymbOffset * 0.8)),
+				(int) fontSize,
+				(int) fontSize);
+		// draw symbol
 		g.setColor(r2dm.getForeColor());
-        // but first determine symbol
-        String symbol = atom.getSymbol();
-        // if there are implicit hydrogens, draw them
-        int implicitHydrogen = atom.getHydrogenCount();
-        if (implicitHydrogen > 0) {
-            symbol = symbol + "H";
-            if (implicitHydrogen > 1) {
-                symbol = symbol + implicitHydrogen;
-            }
-        }
+		// but first determine symbol
+		String symbol = atom.getSymbol();
+		// if there are implicit hydrogens, draw them
+		int implicitHydrogen = atom.getHydrogenCount();
+		if (implicitHydrogen > 0)
+		{
+			symbol = symbol + "H";
+			if (implicitHydrogen > 1)
+			{
+				symbol = symbol + implicitHydrogen;
+			}
+		}
 		g.drawString(symbol,
-                     (int)(atom.getPoint2D().x - xSymbOffset),
-                     (int)(atom.getPoint2D().y + ySymbOffset));
+				(int) (atom.getPoint2D().x - xSymbOffset),
+				(int) (atom.getPoint2D().y + ySymbOffset));
 //		g.setColor(r2dm.getBackColor());
 //		g.drawLine((int)atom.getPoint2D().x,(int)atom.getPoint2D().y,(int)atom.getPoint2D().x,(int)atom.getPoint2D().y);
 	}
 
 
 	/**
-	 * Triggers the suitable method to paint each of the given bonds and selects 
-	 * the right color.
+	 *  Triggers the suitable method to paint each of the given bonds and selects
+	 *  the right color.
 	 *
-	 * @param   bonds   The bonds to be drawn
-	 * @param   number  The number of bonds to be drawn
-	 * @param   ringSet  The set of rings the molecule contains
+	 *@param  ringSet  The set of rings the molecule contains
+	 *@param  atomCon  Description of the Parameter
 	 */
 	private void paintBonds(AtomContainer atomCon, RingSet ringSet)
 	{
@@ -282,212 +309,223 @@ public class Renderer2D
 		for (int i = 0; i < atomCon.getBondCount(); i++)
 		{
 			bond = atomCon.getBondAt(i);
-			bondColor = (Color)r2dm.getColorHash().get(bond);
-			if (bondColor == null) bondColor = r2dm.getForeColor();
+			bondColor = (Color) r2dm.getColorHash().get(bond);
+			if (bondColor == null)
+			{
+				bondColor = r2dm.getForeColor();
+			}
 			if (bond == r2dm.getHighlightedBond())
 			{
 				bondColor = r2dm.getHighlightColor();
 				for (int j = 0; j < bond.getAtomCount(); j++)
 				{
-					paintColouredAtom(bond.getAtomAt(j),bondColor);
+					paintColouredAtom(bond.getAtomAt(j), bondColor);
 				}
 			}
 			ring = ringSet.getHeaviestRing(bond);
 			if (ring != null)
 			{
-					paintRingBond(bond, ring, bondColor);
+				paintRingBond(bond, ring, bondColor);
 
-			}
-			else
+			} else
 			{
 				paintBond(bond, bondColor);
 			}
 		}
 	}
-	
+
 
 	/**
-	 * Triggers the paint method suitable to the bondorder of the given bond.
+	 *  Triggers the paint method suitable to the bondorder of the given bond.
 	 *
-	 * @param   bond    The Bond to be drawn.
+	 *@param  bond       The Bond to be drawn.
+	 *@param  bondColor  Description of the Parameter
 	 */
 	private void paintBond(Bond bond, Color bondColor)
 	{
 //		System.out.println("Renderer2D: bondorder: " + bond.getOrder());
 
-		if (bond.getAtomAt(0).getPoint2D() == null || bond.getAtomAt(1).getPoint2D() == null) return;
-		
+		if (bond.getAtomAt(0).getPoint2D() == null || bond.getAtomAt(1).getPoint2D() == null)
+		{
+			return;
+		}
+
 		if (bond.getOrder() == 1)
 		{
 			paintSingleBond(bond, bondColor);
-		}
-		else if (bond.getOrder() == 2)
+		} else if (bond.getOrder() == 2)
 		{
 			paintDoubleBond(bond, bondColor);
-		}
-		else if (bond.getOrder() == 3)
+		} else if (bond.getOrder() == 3)
 		{
 			paintTripleBond(bond, bondColor);
 		}
 	}
-	
-	
+
+
 	/**
-	 * Triggers the paint method suitable to the bondorder of the given bond
-	 * that is part of a ring.
+	 *  Triggers the paint method suitable to the bondorder of the given bond that
+	 *  is part of a ring.
 	 *
-	 * @param   bond    The Bond to be drawn.
+	 *@param  bond       The Bond to be drawn.
+	 *@param  ring       Description of the Parameter
+	 *@param  bondColor  Description of the Parameter
 	 */
 	private void paintRingBond(Bond bond, Ring ring, Color bondColor)
 	{
 		if (bond.getOrder() == 1)
 		{
 			paintSingleBond(bond, bondColor);
-		}
-		else if (bond.getOrder() == 2)
+		} else if (bond.getOrder() == 2)
 		{
 			paintSingleBond(bond, bondColor);
-			paintInnerBond(bond,ring, bondColor);
-		}
-		else if (bond.getOrder() == 1.5 || bond.flags[CDKConstants.ISAROMATIC])
+			paintInnerBond(bond, ring, bondColor);
+		} else if (bond.getOrder() == 1.5 || bond.flags[CDKConstants.ISAROMATIC])
 		{
 			paintSingleBond(bond, bondColor);
-			paintInnerBond(bond,ring, Color.lightGray);
-		}
-		else if (bond.getOrder() == 3)
+			paintInnerBond(bond, ring, Color.lightGray);
+		} else if (bond.getOrder() == 3)
 		{
 			paintTripleBond(bond, bondColor);
 		}
 	}
 
+
 	/**
-	 * Paints the given singlebond.
+	 *  Paints the given singlebond.
 	 *
-	 * @param   bond  The singlebond to be drawn
+	 *@param  bond       The singlebond to be drawn
+	 *@param  bondColor  Description of the Parameter
 	 */
 	private void paintSingleBond(Bond bond, Color bondColor)
 	{
 		paintOneBond(GeometryTools.getBondCoordinates(bond), bondColor);
-		
+
 	}
-	
+
 
 	/**
-	 * Paints The given doublebond.
+	 *  Paints The given doublebond.
 	 *
-	 * @param   bond  The doublebond to be drawn
+	 *@param  bond       The doublebond to be drawn
+	 *@param  bondColor  Description of the Parameter
 	 */
 	private void paintDoubleBond(Bond bond, Color bondColor)
 	{
-		int[] coords = GeometryTools.distanceCalculator(GeometryTools.getBondCoordinates(bond),r2dm.getBondDistance()/2);
-		
-		int[] newCoords1 = {coords[0],coords[1],coords[6],coords[7]};
+		int[] coords = GeometryTools.distanceCalculator(GeometryTools.getBondCoordinates(bond), r2dm.getBondDistance() / 2);
+
+		int[] newCoords1 = {coords[0], coords[1], coords[6], coords[7]};
 		paintOneBond(newCoords1, bondColor);
-		
-		int[] newCoords2 = {coords[2],coords[3],coords[4],coords[5]};
+
+		int[] newCoords2 = {coords[2], coords[3], coords[4], coords[5]};
 		paintOneBond(newCoords2, bondColor);
-				
+
 	}
-	
+
+
 	/**
-	 * Paints the given triplebond.
+	 *  Paints the given triplebond.
 	 *
-	 * @param   bond  The triplebond to be drawn
+	 *@param  bond       The triplebond to be drawn
+	 *@param  bondColor  Description of the Parameter
 	 */
 	private void paintTripleBond(Bond bond, Color bondColor)
 	{
 		paintSingleBond(bond, bondColor);
 
-		int[] coords = GeometryTools.distanceCalculator(GeometryTools.getBondCoordinates(bond),(r2dm.getBondWidth()/2 + r2dm.getBondDistance()));
-		
-		int[] newCoords1 = {coords[0],coords[1],coords[6],coords[7]};
+		int[] coords = GeometryTools.distanceCalculator(GeometryTools.getBondCoordinates(bond), (r2dm.getBondWidth() / 2 + r2dm.getBondDistance()));
+
+		int[] newCoords1 = {coords[0], coords[1], coords[6], coords[7]};
 		paintOneBond(newCoords1, bondColor);
-		
-		int[] newCoords2 = {coords[2],coords[3],coords[4],coords[5]};
+
+		int[] newCoords2 = {coords[2], coords[3], coords[4], coords[5]};
 		paintOneBond(newCoords2, bondColor);
 	}
-	
+
+
 	/**
-	 * Paints the inner bond of a doublebond that is part of a ring.
+	 *  Paints the inner bond of a doublebond that is part of a ring.
 	 *
-	 * @param   bond  The bond to be drawn
-	 * @param   ring  The ring the bond is part of
+	 *@param  bond       The bond to be drawn
+	 *@param  ring       The ring the bond is part of
+	 *@param  bondColor  Description of the Parameter
 	 */
 	private void paintInnerBond(Bond bond, Ring ring, Color bondColor)
 	{
 		Point2d center = ring.get2DCenter();
 
-		int[] coords = GeometryTools.distanceCalculator(GeometryTools.getBondCoordinates(bond),(r2dm.getBondWidth()/2 + r2dm.getBondDistance()));
-		double dist1 = Math.sqrt(Math.pow((coords[0] - center.x),2) + Math.pow((coords[1] - center.y),2));
-		double dist2 = Math.sqrt(Math.pow((coords[2] - center.x),2) + Math.pow((coords[3] - center.y),2));
-		if (dist1 < dist2)	
+		int[] coords = GeometryTools.distanceCalculator(GeometryTools.getBondCoordinates(bond), (r2dm.getBondWidth() / 2 + r2dm.getBondDistance()));
+		double dist1 = Math.sqrt(Math.pow((coords[0] - center.x), 2) + Math.pow((coords[1] - center.y), 2));
+		double dist2 = Math.sqrt(Math.pow((coords[2] - center.x), 2) + Math.pow((coords[3] - center.y), 2));
+		if (dist1 < dist2)
 		{
-			int[] newCoords1 = {coords[0],coords[1],coords[6],coords[7]};
+			int[] newCoords1 = {coords[0], coords[1], coords[6], coords[7]};
 			paintOneBond(shortenBond(newCoords1, ring.getRingSize()), bondColor);
-		}
-		else
+		} else
 		{
-			int[] newCoords2 = {coords[2],coords[3],coords[4],coords[5]};
+			int[] newCoords2 = {coords[2], coords[3], coords[4], coords[5]};
 			paintOneBond(shortenBond(newCoords2, ring.getRingSize()), bondColor);
-		}	
+		}
 	}
-	
+
 
 	/**
-	 * Calculates the coordinates for the inner bond of a doublebond that is part of 
-	 * a ring. It is drawn shorter than a normal bond.
+	 *  Calculates the coordinates for the inner bond of a doublebond that is part
+	 *  of a ring. It is drawn shorter than a normal bond.
 	 *
-	 * @param   coords  The original coordinates of the bond   
-	 * @param   edges  Number of edges of the ring it is part of
-	 * @return    The calculated coordinates of the now shorter bond 
+	 *@param  coords  The original coordinates of the bond
+	 *@param  edges   Number of edges of the ring it is part of
+	 *@return         The calculated coordinates of the now shorter bond
 	 */
 	private int[] shortenBond(int[] coords, int edges)
 	{
 		int xDiff = (coords[0] - coords[2]) / (edges * 2);
 		int yDiff = (coords[1] - coords[3]) / (edges * 2);
-		int[] newCoords = {coords[0] - xDiff,coords[1] - yDiff,coords[2] + xDiff,coords[3] + yDiff};
+		int[] newCoords = {coords[0] - xDiff, coords[1] - yDiff, coords[2] + xDiff, coords[3] + yDiff};
 		return newCoords;
 	}
 
+
 	/**
-	 * Really paints the bond. It is triggered by all the other paintbond methods
-	 * to draw a polygon as wide as bondwidth.  
+	 *  Really paints the bond. It is triggered by all the other paintbond methods
+	 *  to draw a polygon as wide as bondwidth.
 	 *
-	 * @param   coords  
+	 *@param  coords
+	 *@param  bondColor  Description of the Parameter
 	 */
 	private void paintOneBond(int[] coords, Color bondColor)
 	{
 		g.setColor(bondColor);
-		int[] newCoords = GeometryTools.distanceCalculator(coords, r2dm.getBondWidth()/2);
-		int[] xCoords = {newCoords[0],newCoords[2],newCoords[4],newCoords[6]};
-		int[] yCoords = {newCoords[1],newCoords[3],newCoords[5],newCoords[7]};
-		g.fillPolygon(xCoords,yCoords,4);
+		int[] newCoords = GeometryTools.distanceCalculator(coords, r2dm.getBondWidth() / 2);
+		int[] xCoords = {newCoords[0], newCoords[2], newCoords[4], newCoords[6]};
+		int[] yCoords = {newCoords[1], newCoords[3], newCoords[5], newCoords[7]};
+		g.fillPolygon(xCoords, yCoords, 4);
 	}
 
 
 
 	/**
-	 * Paints a line between the startpoint and endpoint of the pointervector
-	 * that is stored in the Renderer2DModel.
+	 *  Paints a line between the startpoint and endpoint of the pointervector that
+	 *  is stored in the Renderer2DModel.
 	 */
 	private void paintPointerVector()
 	{
 		Point startPoint = r2dm.getPointerVectorStart();
 		Point endPoint = r2dm.getPointerVectorEnd();
 		int[] points = {startPoint.x, startPoint.y, endPoint.x, endPoint.y};
-		int[] newCoords = GeometryTools.distanceCalculator(points,r2dm.getBondWidth() / 2);
-		int[] xCoords = {newCoords[0],newCoords[2],newCoords[4],newCoords[6]};
-		int[] yCoords = {newCoords[1],newCoords[3],newCoords[5],newCoords[7]};
+		int[] newCoords = GeometryTools.distanceCalculator(points, r2dm.getBondWidth() / 2);
+		int[] xCoords = {newCoords[0], newCoords[2], newCoords[4], newCoords[6]};
+		int[] yCoords = {newCoords[1], newCoords[3], newCoords[5], newCoords[7]};
 		g.setColor(r2dm.getForeColor());
-		g.fillPolygon(xCoords,yCoords,4);
+		g.fillPolygon(xCoords, yCoords, 4);
 	}
-	
-	
+
+
 
 	/**
-	 * Returns the Renderer2DModel of this Renderer
+	 *  Returns the Renderer2DModel of this Renderer
 	 *
-	 * @return     the Renderer2DModel of this Renderer
+	 *@return    the Renderer2DModel of this Renderer
 	 */
 	public Renderer2DModel getRenderer2DModel()
 	{
@@ -497,9 +535,9 @@ public class Renderer2D
 
 
 	/**
-	 * Sets the Renderer2DModel of this Renderer
+	 *  Sets the Renderer2DModel of this Renderer
 	 *
-	 * @param   r2dm  the new Renderer2DModel for this Renderer
+	 *@param  r2dm  the new Renderer2DModel for this Renderer
 	 */
 	public void setRenderer2DModel(Renderer2DModel r2dm)
 	{
