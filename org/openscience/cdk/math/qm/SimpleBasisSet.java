@@ -31,7 +31,10 @@ package org.openscience.cdk.math.qm;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.math.Vector;
- 
+
+/**
+ * This class will generate a simple base set for a atom container
+ */ 
 public class SimpleBasisSet extends GaussiansBasis
 {
   private final static double f1 = 0.1;
@@ -39,6 +42,9 @@ public class SimpleBasisSet extends GaussiansBasis
   private final static double f3 = 0.9;
   private final static double f4 = 2.7;
 
+  /**
+   * Create a base set
+   */
   public SimpleBasisSet(Atom[] atoms)
   {
     int i, j;

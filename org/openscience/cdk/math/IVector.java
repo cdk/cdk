@@ -31,115 +31,115 @@ package org.openscience.cdk.math;
 
 public class IVector
 {
-	// Attention! The variables are unprotected
-	/** Content of this vector */
-	public double[] realvector;
-	public double[] imagvector;
-	/** Size of this vector */
-	public int size;
+  // Attention! The variables are unprotected
+  /** Content of this vector */
+  public double[] realvector;
+  public double[] imagvector;
+  /** Size of this vector */
+  public int size;
 
-	/**
-	 * Constructs a vector with "size"-elements
-	 */
-	public IVector(int size)
-	{
-		realvector = new double[size];
-		imagvector = new double[size];
-		this.size = size;
-	}
+  /**
+   * Constructs a vector with "size"-elements
+   */
+  public IVector(int size)
+  {
+    realvector = new double[size];
+    imagvector = new double[size];
+    this.size = size;
+  }
 
-	/**
-	 * Return the size from this vector
-	 */
-	public int getSize()
-	{
-		return size;
-	}
+  /**
+   * Return the size from this vector
+   */
+  public int getSize()
+  {
+    return size;
+  }
 
   /**
    *  Addition from two vectors
    */
   public IVector add(IVector b)
-	{
-		IVector result = new IVector(size);
-		add(b, result);
-		return result;
-	}
+  {
+    IVector result = new IVector(size);
+    add(b, result);
+    return result;
+  }
 
-	/**
+  /**
    *  Addition from two vectors
    */
-	public void add(IVector b, IVector result)
+  public void add(IVector b, IVector result)
   {
     if ((b==null) ||
-			 	(size!=b.size))
+         (size!=b.size))
       return;
       
-		if (result.size!=size)
-    	result.reshape(size);
+    if (result.size!=size)
+      result.reshape(size);
 
-		int i, j;
+    int i, j;
     for(i=0; i<size; i++)
-		{
+    {
       result.realvector[i] = realvector[i]+b.realvector[i];
-			result.imagvector[i] = imagvector[i]+b.imagvector[i];
-		}
+      result.imagvector[i] = imagvector[i]+b.imagvector[i];
+    }
   }
 
   /**
    *  Subtraction from two vectors
    */
   public IVector sub(IVector b)
-	{
+  {
     IVector result = new IVector(size);
     sub(b, result); 
     return result;
   } 
   
-	/**
+  /**
    *  Subtraction from two vectors
    */
   public void sub(IVector b, IVector result)
   {
-		if ((b==null) ||
+    if ((b==null) ||
         (size!=b.size))
       return;
       
-		if (result.size!=size)
+    if (result.size!=size)
       result.reshape(size);
 
-		int i, j;
+    int i, j;
     for(i=0; i<size; i++)
-		{
+    {
       result.realvector[i] = realvector[i]-b.realvector[i];
-			result.imagvector[i] = imagvector[i]-b.imagvector[i];
-		}
+      result.imagvector[i] = imagvector[i]-b.imagvector[i];
+    }
   }
   
   /**
    *  Multiplication from a vectors with an double
    */
   public IVector mul(double b)
-	{
+  {
     IVector result = new IVector(size);
     mul(b, result); 
     return result;
   } 
   
-	/**
+  /**
    *  Multiplication from a vectors with an double
    */
   public void mul(double b, IVector result)
   {
-		if (result.size!=size)
+    if (result.size!=size)
       result.reshape(size);
 
     int i;
     for(i=0; i<size; i++)
-		{
+    {
       result.realvector[i] = realvector[i]*b;
-			result.imagvector[i] = imagvector[i]*b;
-		}
+      result.imagvector[i] = imagvector[i]*b;
+    }
   }
 
   /**
@@ -148,43 +148,43 @@ public class IVector
   public Complex dot(IVector b)
   {
     if ((b==null) ||
-				(size!=b.size))
+        (size!=b.size))
       return new Complex(Double.NaN,Double.NaN);
 
     Complex result = new Complex(0d,0d);
     int i,j;
     for(i=0; i<size; i++)
-		{
+    {
       result.real += realvector[i]*b.realvector[i]-imagvector[i]*b.imagvector[i];
-			result.imag += realvector[i]*b.imagvector[i]+imagvector[i]*b.realvector[i];
-		}
+      result.imag += realvector[i]*b.imagvector[i]+imagvector[i]*b.realvector[i];
+    }
     return result;
   }
 
-	/**
+  /**
    *  Copy a vector
    */
   public IVector duplicate()
-	{
+  {
     IVector result = new IVector(size);
     duplicate(result); 
     return result;
   } 
   
-	/**
+  /**
    *  Copy a vector
    */
   public void duplicate(IVector result)
   { 
-		if (result.size!=size)
+    if (result.size!=size)
       result.reshape(size);
 
     int i; 
     for(i=0; i<size; i++)
-		{
-    	result.realvector[i] = realvector[i];
-			result.imagvector[i] = imagvector[i];
-		}
+    {
+      result.realvector[i] = realvector[i];
+      result.imagvector[i] = imagvector[i];
+    }
   }
   
   /**
@@ -201,31 +201,31 @@ public class IVector
     return str.toString();
   }
 
-	/**
+  /**
    * Resize this vector
    */
-	public void reshape(int newsize)
-	{
-		if ((newsize==size) || (newsize<=0))
-			return;
+  public void reshape(int newsize)
+  {
+    if ((newsize==size) || (newsize<=0))
+      return;
 
-		double[] newrealvector = new double[newsize];
-		double[] newimagvector = new double[newsize];
-		int min = Math.min(size,newsize);
-		int i;
-		for(i=0; i<min; i++)
-		{
-			newrealvector[i] = realvector[i];
-			newimagvector[i] = imagvector[i];
-		}
-		for(i=min; i<newsize; i++)	
-		{
+    double[] newrealvector = new double[newsize];
+    double[] newimagvector = new double[newsize];
+    int min = Math.min(size,newsize);
+    int i;
+    for(i=0; i<min; i++)
+    {
+      newrealvector[i] = realvector[i];
+      newimagvector[i] = imagvector[i];
+    }
+    for(i=min; i<newsize; i++)  
+    {
       newrealvector[i] = 0d;
-			newimagvector[i] = 0d;
-		}
+      newimagvector[i] = 0d;
+    }
 
-		realvector = newrealvector;
-		imagvector = newimagvector;
-		size = newsize;
-	}
+    realvector = newrealvector;
+    imagvector = newimagvector;
+    size = newsize;
+  }
 }

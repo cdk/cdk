@@ -400,7 +400,7 @@ public class GaussiansBasis implements Basis
   }
 
   /**
-   * Berechnet den Impuls 
+   * calculates the impulse
    * J = -<d/dr chi_i | d/dr chi_j>
    */
   public double calcJ(int i, int j)
@@ -644,11 +644,13 @@ public class GaussiansBasis implements Basis
   }
 
   /**
-   * Calculates a four center integral
+   * Calculates a two eletron fout center integral
+   * I = <chi_i chi_j | 1/r12 | chi_k chi_l >
+   *
    * @param i Index of the first base
    * @param j Index of the second base
    * @param k Index of the third base
-   * @param l Index of the fourth base 
+   * @param l Index of the fourth base
    */
   public double calcI(int i, int j, int k, int l)
   {

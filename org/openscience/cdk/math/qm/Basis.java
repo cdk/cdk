@@ -30,26 +30,94 @@
 package org.openscience.cdk.math.qm;
 
 import org.openscience.cdk.math.*;
- 
+
+/**
+ * A base must implement this class
+ */ 
 public interface Basis
 {
+  /**
+   * Get the count of base vectors
+   */
   public int getSize();
 
+  /**
+   * Get the dimension of the volume, which descripes the base
+   */
   public double getMinX();
+
+  /**
+   * Get the dimension of the volume, which descripes the base
+   */
   public double getMaxX();
+
+  /**
+   * Get the dimension of the volume, which descripes the base
+   */
   public double getMinY();
+
+  /**
+   * Get the dimension of the volume, which descripes the base
+   */
   public double getMaxY();
+
+  /**
+   * Get the dimension of the volume, which descripes the base
+   */
   public double getMinZ();
+
+  /**
+   * Get the dimension of the volume, which descripes the base
+   */
   public double getMaxZ();
 
+  /**
+   * Calculates the function value an (x,y,z)
+   * @param index The number of the base 
+   */
   public double getValue(int index, double x, double y, double z);
+
+  /**
+   * Calculates the function values
+   * @param index The number of the base 
+   */
   public Vector getValues(int index, Matrix x);
 
+  /**
+   * Calculate the "Überlappungsintegrale"
+   * S = <phi_i|phi_j>
+   *
+   * @param i Index of the first base
+   * @param j Index of the second base
+   */
   public double calcS(int i, int j);
 
+  /**
+   * Calculates the impulse
+   * J = -<d/dr chi_i | d/dr chi_j>
+   *
+   * @param i Index of the first base
+   * @param j Index of the second base
+   */
   public double calcJ(int i, int j);
 
+  /**
+   * Calculates the potential
+   * V = <chi_i | 1/r | chi_j>
+   *
+   * @param i Index of the first base
+   * @param j Index of the second base
+   */
   public double calcV(int i, int j);
 
+  /**
+   * Calculates a two eletron fout center integral
+   * I = <chi_i chi_j | 1/r12 | chi_k chi_l >
+   *
+   * @param i Index of the first base
+   * @param j Index of the second base
+   * @param k Index of the third base
+   * @param l Index of the fourth base
+   */
   public double calcI(int i, int j, int k, int l);
 }

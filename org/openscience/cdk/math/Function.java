@@ -30,16 +30,18 @@
 package org.openscience.cdk.math;
  
 /**
- * Wenn die Klasse ein Funktionwert besitzt
+ * A class, which has a function value should implement this interface
  */
 public interface Function  
 {
   /**
-   * Liefert den Funktionswert an der Stelle (x,y,z)
+   * Return the function value at (x,y,z)
    */
   public double getValue(double x, double y, double z);
 
   /**
+   * Return the function value
+   *
    * The rows of the matrix x are the Parameters like x,y,z
    * and the columns are the values which must calculated.
    */
