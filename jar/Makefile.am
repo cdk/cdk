@@ -3,6 +3,7 @@
 
 PREFIX=@prefix@
 JARLIBDIR=${PREFIX}/lib/cdk
+JARLIBDIR=@CDKLIBDIR@
 JARLIBS=vecmath1.2-1.14.jar \
   postgresql7.0-1.2.jar \
   mysql-2.0.4.jar \

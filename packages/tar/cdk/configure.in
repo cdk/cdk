@@ -35,7 +35,7 @@ PACKAGE=cdk
 AC_SUBST(PACKAGE)
 CDKJARDIR=$prefix/share/java
 AC_SUBST(CDKJARDIR)
-CDKLIBDIR=$prefix/lib/cdk
+CDKLIBDIR=$prefix/share/cdk/lib
 AC_SUBST(CDKLIBDIR)
 
 AC_CHECK_PROG(HASJIKES, jikes, yes, no)

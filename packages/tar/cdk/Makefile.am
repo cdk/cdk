@@ -39,7 +39,7 @@ CLEANFILES= cdk-core.jar cdk-extra.jar \
         dist/jar/cdk-render.jar dist/jar/cdk-standard.jar
 
 dist/jar/cdk-core.jar:
-	ant ${JAVAC} dist-core
+	ant ${JAVAC} info dist-core
 
 cdk-test.jar: dist/jar/cdk-test.jar
 	cp dist/jar/cdk-test.jar .
