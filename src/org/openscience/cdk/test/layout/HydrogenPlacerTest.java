@@ -31,6 +31,7 @@ import org.openscience.cdk.renderer.*;
 import org.openscience.cdk.smiles.*;
 import org.openscience.cdk.templates.*;
 import org.openscience.cdk.tools.*;
+import org.openscience.cdk.geometry.*;
 import java.util.*;
 import java.io.*;
 import java.net.URL;
@@ -41,12 +42,16 @@ import junit.framework.*;
 public class HydrogenPlacerTest extends TestCase {
     
     public boolean standAlone = false;
+    private LoggingTool logger = null;
     
     public HydrogenPlacerTest(String name) {
         super(name);
     }
 
-    public void setUp() {}
+    public void setUp() 
+    {
+	logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+    }
 
     public static Test suite() {
         return new TestSuite(HydrogenPlacerTest.class);
@@ -110,9 +115,13 @@ public class HydrogenPlacerTest extends TestCase {
 		    ChemSequence seq = chemFile.getChemSequence(0);
 		    ChemModel model = seq.getChemModel(0);
 		    Molecule mol = model.getSetOfMolecules().getMolecule(0);
+		    double bondLength = GeometryTools.getBondLengthAverage(mol);
 		    HydrogenAdder ha = new HydrogenAdder();
+		    logger.debug("Read Reserpine");
+		    logger.debug("Starting addition of H's");
 		    ha.addExplicitHydrogensToSatisfyValency(mol);
-		    HydrogenPlacer.placeHydrogens2D(mol, 1.0);
+		    logger.debug("ended addition of H's");
+		    HydrogenPlacer.placeHydrogens2D(mol, bondLength);
             if (standAlone) {
                 MoleculeViewer2D.display(mol, false);
             }
@@ -126,6 +135,7 @@ public class HydrogenPlacerTest extends TestCase {
 	{
 		try{
 			HydrogenPlacerTest hpt = new HydrogenPlacerTest("HydrogenPlacerTest");
+			hpt.setUp();
 			hpt.standAlone = true;
 			//hpt.testPlaceHydrogens2D();
 			hpt.visualFullMolecule2DEvaluation();			

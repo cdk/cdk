@@ -153,8 +153,9 @@ public class StructureDiagramGeneratorTest extends TestCase
 		try
 		{
 			StructureDiagramGeneratorTest sdg = new StructureDiagramGeneratorTest("StructureDiagramGeneratorTest");
-			sdg.runVisualTests();
+			//sdg.runVisualTests();
 			//sdg.bug736137();
+			sdg.testSpiroRings();
 		} catch (Exception exc)
 		{
 			exc.printStackTrace();
@@ -242,6 +243,7 @@ public class StructureDiagramGeneratorTest extends TestCase
 	{
 		Molecule m = MoleculeFactory.makeSpiroRings();
 		AtomContainer ac = generateCoordinates(m);
+		MoleculeViewer2D.display(new Molecule(ac), false);
 	}
 
 
