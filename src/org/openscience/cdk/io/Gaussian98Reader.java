@@ -28,6 +28,7 @@ package org.openscience.cdk.io;
 import org.openscience.cdk.*;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.IsotopeFactory;
+import org.openscience.cdk.tools.LoggingTool;
 import java.io.Reader;
 import java.io.BufferedReader;
 import java.io.StringReader;
@@ -59,6 +60,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
 
     private IsotopeFactory isotopeFactory;
     private BufferedReader input;
+    private LoggingTool logger;
 
     /**
      * Create an Gaussian98 output reader.
@@ -66,10 +68,15 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
      * @param input source of Gaussian98 data
      */
     public Gaussian98Reader(Reader input) {
+        logger = new LoggingTool(this.getClass().getName());
         try {
             isotopeFactory = IsotopeFactory.getInstance();
+            logger.info("IsotopeFactory instantiated: " + isotopeFactory);
+            logger.info(" #isotopes defined: " + isotopeFactory.getSize());
         } catch (Exception exception) {
             // should not happen
+            logger.error("Could not instantiate IsotopeFactory");
+            logger.debug(exception);
         }
         if (input instanceof BufferedReader) {
             this.input = (BufferedReader)input;
