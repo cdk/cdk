@@ -3,9 +3,9 @@
  * $Date$    
  * $Revision$
  * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2003  The Chemistry Development Kit (CDK) project
  * 
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -41,16 +41,18 @@ import java.awt.*;
 /**
  * This is a wrapper class for some existing methods in AtomPlacer. It helps
  * you to layout 2D and 3D coordinates for hydrogen atoms added to a molecule
- * which already has coordinates for the rest of the atoms  
- **/
-
-public class HydrogenPlacer
-{
+ * which already has coordinates for the rest of the atoms.
+ *
+ * @author   Christop Steinbeck
+ * @created  2003-08-06
+ */
+public class HydrogenPlacer {
 	public static boolean debug = false;
 	public static boolean debug1 = false;
 	
 	public static void placeHydrogens2D(AtomContainer atomContainer)
 	{
+        LoggingTool logger = new LoggingTool("org.openscience.cdk.layout.HydrogenPlacer");
 		Atom atom = null; 
 		for (int f = 0; f < atomContainer.getAtomCount();f++)
 		{
@@ -58,6 +60,7 @@ public class HydrogenPlacer
 			if (!atom.getSymbol().equals("H"))
 			{
 				if (debug1) System.out.println("Now placing hydrogens at atom " + f);
+                logger.debug("Now placing hydrogens at atom " + f);
 				placeHydrogens2D(atomContainer, atom);
 			}
 		}
@@ -65,6 +68,7 @@ public class HydrogenPlacer
 	
 	public static void placeHydrogens2D(AtomContainer atomContainer, Atom atom)
 	{
+        LoggingTool logger = new LoggingTool("org.openscience.cdk.layout.HydrogenPlacer");
 		double bondLength = GeometryTools.getScaleFactor(atomContainer, 1.0);
 		double startAngle = 0.0;
 		double addAngle = 0.0; 
@@ -72,6 +76,7 @@ public class HydrogenPlacer
 		atomPlacer.setMolecule((Molecule)atomContainer);
 		Vector atomVector = new Vector();
 		if (debug) System.out.println("bondLength" + bondLength);
+        logger.debug("bondLength" + bondLength);
 		Atom[] connectedAtoms = atomContainer.getConnectedAtoms(atom);
 		AtomContainer placedAtoms = new AtomContainer();
 		AtomContainer unplacedAtoms = new AtomContainer();
@@ -105,9 +110,11 @@ public class HydrogenPlacer
 			   */
 			atomPlacer.populatePolygonCorners(atomVector, new Point2d(atom.getPoint2D()), startAngle, addAngle, bondLength);	
 		}
-			
+		
 		if (debug) System.out.println("unplacedAtoms: " + unplacedAtoms);
 		if (debug) System.out.println("placedAtoms: " + placedAtoms);
+        logger.debug("unplacedAtoms: " + unplacedAtoms);
+        logger.debug("placedAtoms: " + placedAtoms);
 				
 	}
 }
