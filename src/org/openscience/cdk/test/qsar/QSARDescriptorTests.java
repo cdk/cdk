@@ -73,6 +73,7 @@ import org.openscience.cdk.test.qsar.*;
 	suite.addTest(MomentOfInertiaDescriptorTest.suite());
 	suite.addTest(VdWRadiusDescriptorTest.suite());
 	suite.addTest(BondsToAtomDescriptorTest.suite());
+	suite.addTest(DistanceToAtomDescriptorTest.suite());
 	return suite;
     }
     
