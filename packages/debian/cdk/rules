@@ -6,13 +6,12 @@ package=cdk
 
 build:
 	$(checkdir)
-	./configure --prefix=/usr
 	$(MAKE) -f Makefile
 	touch build
 
 clean:
 	$(checkdir)
-	-rm -f build
+	-rm -R -f build
 	./configure --prefix=/usr
 	-$(MAKE) -f Makefile clean
 	-rm -f `find . -name "*~"`

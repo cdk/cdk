@@ -43,14 +43,18 @@ setup: clean
 	cd /tmp/cdk-${VERSION}/jar; cat Makefile.am | grep -v xerces-2.5.0.jar | grep -v junit.jar > Makefile.am2 && mv Makefile.am2 Makefile.am
 	cd /tmp/cdk-${VERSION}/jar; cat Makefile.am | perl -n -e "s/xerces-2.5.0.jar//; print;" > Makefile.am2 && mv Makefile.am2 Makefile.am
 	cd /tmp/cdk-${VERSION}/jar; cat Makefile.am | perl -n -e "s/junit.jar//; print;" > Makefile.am2 && mv Makefile.am2 Makefile.am
-	cd /tmp/cdk-${VERSION}; cat Makefile.am | perl -n -e "s#ant#JAVA_HOME=/usr/lib/j2se/1.4 ant#; print;" > Makefile.am2 && mv Makefile.am2 Makefile.am
+	cd /tmp/cdk-${VERSION}; cat Makefile.am | perl -n -e "s#ant#ant -Dbuild.compiler=gcj#; print;" > Makefile.am2 && mv Makefile.am2 Makefile.am
 	@echo " ... adapt build.xml for debian needs"
 	cd /tmp/cdk-${VERSION}; patch < debian/patches/patch.build.xml
+	@echo " ... fixing the CDKLIBDIR install paths"
+	cd /tmp/cdk-${VERSION}; cat configure | perl -n -e "s#prefix/lib/cdk#prefix/share/cdk/lib#; print;" > configure2 && mv configure2 configure && chmod 755 ./configure
+	cd /tmp/cdk-${VERSION}; cat configure.in | perl -n -e "s#prefix/lib/cdk#prefix/share/cdk/lib#; print;" > configure2 && mv configure2 configure.in && chmod 755 ./configure.in
+	cd /tmp/cdk-${VERSION}/jar; cat Makefile.am | perl -n -e "s/^JARLIBDIR=.*/JARLIBDIR=\@CDKLIBDIR\@/; print;" > Makefile.am2 && mv Makefile.am2 Makefile.am
 	@echo " ... fixing some file permissions and other stuff"
 	cd /tmp/cdk-${VERSION}; chmod 644 ${READONLYFILES}
 	cd /tmp/cdk-${VERSION}; rm -R -f sourcedist reports
 	@echo " ... renaming ChangeLog to changelog"
-	cd /tmp/cdk-${VERSION}; mv ChangeLog changelog
+	cd /tmp/cdk-${VERSION}; cp ChangeLog changelog
 	cd /tmp/cdk-${VERSION}; cat Makefile.am | perl -n -e "s/ChangeLog/changelog/; print;" > Makefile.am2 && mv Makefile.am2 Makefile.am
     
 deb: setup
