@@ -40,10 +40,21 @@ public class LoggingTool {
     public LoggingTool(String classname) {
         try {
             logger = org.apache.log4j.Category.getInstance( classname );
-
+            /****************************************************************
+             * believe it or not this code has a purpose
+             * The MSFT jvm throws a ClassNotFoundException instead of
+             * a NoClassDefFoundError. But the compiler will not allow the
+             * catch of ClassNotFoundException because it doesn't think
+             * that anybody is going to throw it. So, we will put in this
+             * little trick ...
+             ****************************************************************/
+            if (false)
+              throw new ClassNotFoundException();
             // configure Log4J
-            URL url = getClass().getClassLoader().getResource("org/openscience/cdk/config/log4j.properties");
+            URL url = getClass().getClassLoader().getResource("/org/openscience/cdk/config/log4j.properties");
             org.apache.log4j.PropertyConfigurator.configure(url);
+        } catch (ClassNotFoundException e) {
+            tostdout = true;
         } catch (NoClassDefFoundError e) {
             tostdout = true;
         } catch (NullPointerException e) {
@@ -52,17 +63,25 @@ public class LoggingTool {
         } catch (Exception e) {
             tostdout = true;
         }
-        // Use a try {} to catch SecurityExceptions when used in applets
-        try {
+        /****************************************************************
+         * but some JVMs (i.e. MSFT) won't pass the SecurityException to
+         * this exception handler. So we are going to check the JVM
+         * version first
+         ****************************************************************/
+        debug = false;
+        String strJvmVersion = System.getProperty("java.version");
+        if (strJvmVersion.compareTo("1.2") >= 0) {
+          // Use a try {} to catch SecurityExceptions when used in applets
+          try {
             // by default debugging is set off, but it can be turned on
             // with starting java like "java -Dcdk.debugging=true"
             if (System.getProperty("cdk.debugging", "false").equals("true")) {
-                debug = true;
+              debug = true;
             }
-        } catch (Exception e) {
+          } catch (Exception e) {
             // guess what happens: security exception from applet runner
             // do not debug in those cases
-            debug = false;
+          }
         }
     }
 
