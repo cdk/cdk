@@ -340,7 +340,7 @@
                 </jar>
         </target>
 
-        <target name="dist-test" depends="compile-test">
+        <target name="dist-test" depends="dist-core, dist-standard, dist-io, compile-test, dist.init">
                 <jar jarfile="${dist}/jar/cdk-test.jar">
                     <fileset dir="${build}">
                         <include name="org/openscience/cdk/test/**" />
