@@ -56,6 +56,27 @@ public class JmolLibIOTest extends TestCase {
         assertTrue(a.getZ3D() == reverted.getZ3D());
     }
 
+    public void testMolecule() {
+        Molecule mol = new Molecule();
+        mol.addAtom(new Atom("C", new javax.vecmath.Point3d(0.0, 0.0, 0.0)));
+        mol.addAtom(new Atom("O", new javax.vecmath.Point3d(1.0, 2.0, 3.0)));
+        mol.addAtom(new Atom("N", new javax.vecmath.Point3d(2.0, 1.0, 1.5)));
+
+        org.openscience.jmol.ChemFrame converted = Convertor.convert(mol);
+        Molecule reverted = Convertor.convert(converted);
+
+        assertEquals(mol.getAtomCount(), reverted.getAtomCount());
+        int NOatoms = mol.getAtomCount();
+        for (int i=0; i<NOatoms; i++) {
+            System.out.println("i: " + i);
+            Atom a = mol.getAtomAt(i);
+            Atom b = reverted.getAtomAt(i);
+            assertTrue(a.getX3D() == b.getX3D());
+            assertTrue(a.getY3D() == b.getY3D());
+            assertTrue(a.getZ3D() == b.getZ3D());
+        }
+    }
+    
     public static void main(String[] args) {
         junit.textui.TestRunner.run(new TestSuite(JmolLibIOTest.class));
     }

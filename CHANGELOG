@@ -14,7 +14,8 @@ Changes in CVS
 * Added -t option to cdk-test for textual JUnit output
 * Fixes in MDLReader and FileConvertor (fixes bugs 
   #599536 and #599539)
-* Added convertor procedures for CDK from/to jmol.Atom
+* Added convertor procedures for CDK from/to jmol.Atom,
+  jmol.ChemFrame
 
 20020805 Release
 ------------------------------------

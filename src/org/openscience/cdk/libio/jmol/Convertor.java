@@ -31,6 +31,8 @@ package org.openscience.cdk.libio.jmol;
 
 import org.openscience.jmol.Atom;
 import org.openscience.jmol.BaseAtomType;
+import org.openscience.jmol.ChemFrame;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.NoSuchAtomException;
 
 /**
@@ -76,7 +78,7 @@ public class Convertor {
                     );
                 convertedAtom.setPosition(xyz);
             } else {
-                javax.vecmath.Point3f xyz = 
+                javax.vecmath.Point3f xyz =
                     new javax.vecmath.Point3f((float)0.0, (float)0.0, (float)0.0);
                 convertedAtom.setPosition(xyz);
             }
@@ -119,4 +121,67 @@ public class Convertor {
         }
     }
 
+    /**
+     * Converts an org.openscience.cdk.Molecule class into a
+     * org.openscience.cdk.ChemFrame class.
+     *
+     * Conversion includes:
+     *   - atoms
+     *
+     * @param   atom    class to be converted
+     * @return          converted class in Jmol
+     **/
+    public static ChemFrame convert(Molecule mol) {
+        if (mol != null) {
+            int NOatoms = mol.getAtomCount();
+            ChemFrame converted = new ChemFrame(NOatoms);
+            for (int i=0; i<NOatoms; i++) {
+                org.openscience.cdk.Atom atom = mol.getAtomAt(i);
+                javax.vecmath.Point3d xyz = atom.getPoint3D();
+                if (atom.getPoint3D() != null) {
+                } else if (atom.getPoint2D() != null) {
+                    xyz =
+                        new javax.vecmath.Point3d(
+                            atom.getX2D(),
+                            atom.getY2D(),
+                            0.0
+                        );
+                } else {
+                    xyz = new javax.vecmath.Point3d(0.0, 0.0, 0.0);
+                }
+                converted.addAtom(
+                    atom.getSymbol(),
+                    (float)xyz.x,
+                    (float)xyz.y,
+                    (float)xyz.z
+                );
+            }
+            return converted;
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Converts an org.openscience.jmol.ChemFrame class into a
+     * org.openscience.cdk.Molecule class.
+     *
+     * Conversion includes:
+     *   - atoms
+     *
+     * @param   atom    class to be converted
+     * @return          converted class in CDK
+     **/
+    public static Molecule convert(org.openscience.jmol.ChemFrame mol) {
+        if (mol != null) {
+            Molecule converted = new Molecule();
+            int NOatoms = mol.getNumberOfAtoms();
+            for (int i=0; i<NOatoms; i++) {
+                converted.addAtom(convert(mol.getAtomAt(i)));
+            }
+            return converted;
+        } else {
+            return null;
+        }
+    }
 }
