@@ -5,7 +5,7 @@
  *
  * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  *
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -71,6 +71,7 @@ public class CMLCoreModule implements ModuleInterface {
     protected Vector elid;
     protected Vector formalCharges;
     protected Vector partialCharges;
+    protected Vector isotope;
     protected Vector x3;
     protected Vector y3;
     protected Vector z3;
@@ -111,6 +112,7 @@ public class CMLCoreModule implements ModuleInterface {
             this.elid = conv.elid;
             this.formalCharges = conv.formalCharges;
             this.partialCharges = conv.partialCharges;
+            this.isotope = conv.isotope;
             this.x3 = conv.x3;
             this.y3 = conv.y3;
             this.z3 = conv.z3;
@@ -138,6 +140,7 @@ public class CMLCoreModule implements ModuleInterface {
         elid = new Vector();
         formalCharges = new Vector();
         partialCharges = new Vector();
+        isotope = new Vector();
         x3 = new Vector();
         y3 = new Vector();
         z3 = new Vector();
@@ -209,6 +212,9 @@ public class CMLCoreModule implements ModuleInterface {
                     } // this is supported in CML 2.0 
                     else if (att.equals("hydrogenCount")) {
                         hCounts.addElement(value);
+                    }
+                    else if (att.equals("isotope")) {
+                        isotope.addElement(value);
                     }
                     else if (att.equals("dictRef")) {
                         atomDictRefs.addElement(value);
@@ -407,6 +413,9 @@ public class CMLCoreModule implements ModuleInterface {
                 }
                 if (elsym.size() > atomDictRefs.size()) {
                     atomDictRefs.addElement(null);
+                }
+                if (elsym.size() > isotope.size()) {
+                    isotope.addElement(null);
                 }
                 /* It may happen that not all atoms have
                    associated 2D coordinates. accept that */
@@ -881,6 +890,9 @@ public class CMLCoreModule implements ModuleInterface {
             
             if (atomDictRefs.elementAt(i) != null)
                 cdo.setObjectProperty("Atom", "dictRef", (String)atomDictRefs.elementAt(i));
+
+            if (isotope.elementAt(i) != null)
+                cdo.setObjectProperty("Atom", "atomicNumber", (String)isotope.elementAt(i));
 
             cdo.endObject("Atom");
         }
