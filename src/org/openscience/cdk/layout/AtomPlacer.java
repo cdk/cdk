@@ -217,13 +217,6 @@ public class AtomPlacer
 			atomPoint.add(bondVector);
 			nextAtom.setPoint2D(atomPoint);		
 			nextAtom.flags[CDKConstants.ISPLACED] = true;
-			try
-			{
-				System.out.println(nextAtom.getSymbol());
-				System.out.println(molecule.getAtomNumber(nextAtom));
-			}
-			catch(Exception exc){}
-			
 			bondVector = getNextBondVector(nextAtom, atom, molecule.get2DCenter());
 		}
 	}

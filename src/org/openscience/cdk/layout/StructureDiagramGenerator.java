@@ -340,7 +340,6 @@ public class StructureDiagramGenerator
 					{
 						longestUnplacedChain.getAtomAt(f).flags[CDKConstants.ISPLACED] = false;
 					}
-					System.out.println("longestUnplacedChain has : " + longestUnplacedChain.getAtomCount() +  " atoms.");
 					atomPlacer.placeLinearChain(longestUnplacedChain, direction, bondLength);
 					
 				}
@@ -585,7 +584,6 @@ public class StructureDiagramGenerator
 			atom = molecule.getAtomAt(f);
 			if (atom.getPoint2D() == null)
 			{
-				System.out.println("not placed: " + atom.getSymbol());
 				atom.setPoint2D(new Point2d(0,0));
 			}
 		}
