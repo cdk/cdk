@@ -20,6 +20,9 @@ Fixes:
 * Fixed writing of MDL mol with PseudoAtom's (closes #890456)
 * ZMatrixReader no longer includes generic code (closes #871699)
 * CDK only JavaDoc tags now use the format @cdk.X, so that JavaDoc no longer complains
+* Fixed IteratingMDLReader: added missing readLine() statement and added missing newlines
+  to the buffer send to MDLReader. Also fixed throwing of an exception as the interface
+  describes (closes #895973)
 
 API changes:
 * Renderer2D.getScreenSize() and .getScreenCoordinates() are now protected

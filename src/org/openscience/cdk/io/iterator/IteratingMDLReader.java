@@ -31,6 +31,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.NoSuchElementException;
 
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
@@ -92,6 +93,8 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
             while (currentLine != null && !currentLine.equals("$$$$")) {
                 // still in a molecule
                 buffer.append(currentLine);
+                buffer.append("\n");
+                currentLine = input.readLine();
             }
             MDLReader reader = new MDLReader(new StringReader(buffer.toString()));
             molecule = (Molecule)reader.read(new Molecule());
@@ -99,12 +102,12 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
             logger.error("CDK exception while reading next molecule: " +
                 exception.getMessage());
             logger.debug(exception);
-            return null;
+            throw new NoSuchElementException();
         } catch (Exception exception) {
             logger.error("Error while reading next molecule: " +
                 exception.getMessage());
             logger.debug(exception);
-            return null;
+            throw new NoSuchElementException();
         }
         return molecule;
     }
