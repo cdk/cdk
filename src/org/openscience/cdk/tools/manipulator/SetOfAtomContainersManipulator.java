@@ -27,6 +27,8 @@
  *  */
 package org.openscience.cdk.tools.manipulator;
 
+import java.util.Vector;
+
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ElectronContainer;
@@ -122,5 +124,16 @@ public class SetOfAtomContainersManipulator {
 		return hCount;
 	}
 	
+    public static Vector getAllIDs(SetOfAtomContainers set) {
+        Vector IDlist = new Vector();
+        if (set != null) {
+            if (set.getID() != null) IDlist.addElement(set.getID());
+            for (int i = 0; i < set.getAtomContainerCount(); i++) {
+                AtomContainer ac = set.getAtomContainer(i);
+                IDlist.add(AtomContainerManipulator.getAllIDs(ac));
+            }
+        }
+        return IDlist;
+    }
 }
 

@@ -27,6 +27,8 @@
  *  */
 package org.openscience.cdk.tools.manipulator;
 
+import java.util.Vector;
+
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ElectronContainer;
@@ -86,5 +88,8 @@ public class SetOfMoleculesManipulator {
 		return SetOfAtomContainersManipulator.getTotalHydrogenCount(set);
 	}
 	
+    public static Vector getAllIDs(SetOfMolecules set) {
+		return SetOfAtomContainersManipulator.getAllIDs(set);
+	}
 }
 
