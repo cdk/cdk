@@ -4,7 +4,7 @@
  * $Date$   
  * $Revision$
  * 
- * Copyright (C) 1997-2001  The CDK project
+ * Copyright (C) 2001  The CDK project
  * 
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  * 
@@ -28,6 +28,7 @@ package org.openscience.cdk.test;
 import org.openscience.cdk.*;
 import org.openscience.cdk.io.*;
 import org.openscience.cdk.renderer.*;
+import org.openscience.cdk.tools.*;
 import java.util.*;
 import java.io.*;
 
@@ -37,7 +38,10 @@ public class FileReaderTest {
       try {        
         ChemObjectReader reader;
         System.out.println("Loading: " + inFile);
-        if (inFile.endsWith(".cml")) {
+        if (inFile.endsWith(".xyz")) {
+  	      reader = new XYZReader(new FileReader(inFile));
+          System.out.println("Expecting XYZ format...");
+        } else if (inFile.endsWith(".cml")) {
   	      reader = new CMLReader(new FileReader(inFile));
           System.out.println("Expecting CML format...");
         } else {
@@ -60,8 +64,13 @@ public class FileReaderTest {
             System.out.println("  number of molecules in model " + model + ": " + 
                                setOfMolecules.getMoleculeCount());
 	          for (int i = 0; i < setOfMolecules.getMoleculeCount(); i++) {
-              MoleculeViewer2D mv = new MoleculeViewer2D(setOfMolecules.getMolecule(i));
+              Molecule m = setOfMolecules.getMolecule(i);
+              // since there is no Renderer3D yet, project in XY plane
+              if (!HasInformation.has2DCoordinates(m)) Projector.project2D(m);
+              MoleculeViewer2D mv = new MoleculeViewer2D(m);
               mv.display();
+              AtomicTable at = new AtomicTable(m);
+              at.display();
             }
           }
 	      }

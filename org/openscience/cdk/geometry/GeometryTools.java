@@ -406,7 +406,7 @@ public class GeometryTools
 		for (int f = 0; f < ac.getBondCount(); f++)
 		{
 			bond = ac.getBondAt(f);
-			bondLengthSum += bond.getLength();
+			bondLengthSum += 1.0;
 		}
 		return bondLength/(bondLengthSum/ac.getBondCount());
 

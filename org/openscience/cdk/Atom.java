@@ -60,6 +60,10 @@ public class Atom extends ChemObject implements Cloneable {
          *  A stereo parity descriptor for the stereochemistry of this atom 
          */
         protected int stereoParity;
+        /**
+         *  The partial charge of the atom 
+         */
+        protected double charge;
         
 
         /**
