@@ -27,12 +27,12 @@ package org.openscience.cdk.io.formats;
 /**
  * @cdk.module io
  */
-public class GhemicalMMFormat implements ChemFormatMatcher {
+public class GhemicalSPMFormat implements ChemFormatMatcher {
 
-    public GhemicalMMFormat() {}
+    public GhemicalSPMFormat() {}
     
     public String getFormatName() {
-        return "Ghemical Quantum/Molecular Mechanics Model";
+        return "Ghemical Simplified Protein Model";
     }
 
     public String getReaderClassName() { 
@@ -41,7 +41,7 @@ public class GhemicalMMFormat implements ChemFormatMatcher {
     public String getWriterClassName() { return null; };
 
     public boolean matches(int lineNumber, String line) {
-        if (line.startsWith("!Header gpr")) {
+        if (line.startsWith("!Header mm1gp")) {
             return true;
         }
         return false;

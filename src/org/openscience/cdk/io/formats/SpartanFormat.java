@@ -27,21 +27,20 @@ package org.openscience.cdk.io.formats;
 /**
  * @cdk.module io
  */
-public class GhemicalMMFormat implements ChemFormatMatcher {
+public class SpartanFormat implements ChemFormatMatcher {
 
-    public GhemicalMMFormat() {}
+    public SpartanFormat() {}
     
     public String getFormatName() {
-        return "Ghemical Quantum/Molecular Mechanics Model";
+        return "Spartan Quantum Mechanics Program";
     }
 
-    public String getReaderClassName() { 
-        return "org.openscience.cdk.io.GhemicalMMReader"; 
-    };
+    public String getReaderClassName() { return null; };
     public String getWriterClassName() { return null; };
 
     public boolean matches(int lineNumber, String line) {
-        if (line.startsWith("!Header gpr")) {
+        if (line.indexOf("Spartan") != -1 &&
+            line.indexOf("Quantum Mechanics Program") != -1) {
             return true;
         }
         return false;
