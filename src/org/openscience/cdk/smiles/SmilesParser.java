@@ -134,7 +134,8 @@ public class SmilesParser
 					{
 						if (!(currentSymbol.toUpperCase()).equals(currentSymbol))
 						{
-							atom.flags[CDKConstants.ISAROMATIC] = true;	
+							atom.flags[CDKConstants.ISAROMATIC] = true;
+							atom.setSymbol(currentSymbol.toUpperCase());
 						}
 					}
 
