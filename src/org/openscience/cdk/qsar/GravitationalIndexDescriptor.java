@@ -55,7 +55,7 @@ import java.util.ArrayList;
  * <li>gravh3 -  cube root of hydrogen-included gravitational index
  * <li>grav4 -  grav1 for all pairs of atoms (not just bonded pairs)
  * <li>grav5 -  grav2 for all pairs of atoms (not just bonded pairs)
- * <li>grav6 -  grav2 for all pairs of atoms (not just bonded pairs)
+ * <li>grav6 -  grav3 for all pairs of atoms (not just bonded pairs)
  * </ul>
  *
  * @author      Rajarshi Guha
@@ -114,10 +114,10 @@ public class GravitationalIndexDescriptor implements Descriptor {
     }
 
     /**
-     *  Calculates the 6 gravitational indices
+     *  Calculates the 9 gravitational indices
      *
      *@param  container  Parameter is the atom container.
-     *@return            An ArrayList containing 6 elements in the order described above
+     *@return            An ArrayList containing 9 elements in the order described above
      */
 
     public Object calculate(AtomContainer container) {
