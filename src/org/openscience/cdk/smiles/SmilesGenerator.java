@@ -1199,6 +1199,21 @@ public class SmilesGenerator {
                 }
               }
             }
+            //This cares about ring openings. Here the ring closure (represendted by a figure) must be the first atom. In onew the closure is null.
+            if(getRingOpenings(atom).size()>0){
+              int l = 0;
+              while (onew[0] != null) {
+                Object placeholder = onew[0];
+                for (int k = 1; k < onew.length; k++) {
+                  onew[k-1] = onew[k];
+                }
+                onew[onew.length-1] = placeholder;
+                l++;
+                if (l > onew.length) {
+                  break;
+                }
+              }              
+            }
             //The last in onew is a vector: This means we need to exchange the rest of the original smiles with the rest of this vector.
             if (onew[numberOfAtoms - 1] instanceof Vector) {
               for (int i = 0; i < numberOfAtoms; i++) {
