@@ -27,22 +27,43 @@ import org.openscience.cdk.*;
 import org.openscience.cdk.io.*;
 import java.util.*;
 import java.io.*;
+import java.net.URL;
 
 public class MDLReaderTest
 {
 
 	MDLReader mr;
-	Molecule molecule;
+	MDLWriter mw;
+	ChemFile chemFile;
+	ChemSequence chemSequence;
+	ChemModel chemModel;
+	SetOfMolecules setOfMolecules;
+	Molecule[] molecules;
 	
-	public MDLReaderTest(String file)
+	public MDLReaderTest(String inFile, String outFile)
 	{
 		try
 		{
-
-			FileInputStream fis = new FileInputStream(file);
+			FileInputStream fis = new FileInputStream(inFile);
 			mr = new MDLReader(fis);
-			molecule = mr.read();
-			System.out.println(molecule);
+			chemFile = mr.readChemFile();
+			fis.close();
+			
+			
+			chemSequence = chemFile.getChemSequence(0);
+			chemModel = chemSequence.getChemModel(0);
+			setOfMolecules = chemModel.getSetOfMolecules(0);
+			molecules = new Molecule[setOfMolecules.getMoleculeCount()];
+			for (int i = 0; i < setOfMolecules.getMoleculeCount(); i++)
+			{
+				molecules[i] = setOfMolecules.getMolecule(i);
+			}
+			FileOutputStream fos = new FileOutputStream(outFile);
+			mw = new MDLWriter(fos);
+			mw.writeMolecules(molecules);
+			System.out.println(fos.toString());
+			fos.flush();
+			fos.close();
 		}
 		catch(Exception exc)
 		{
@@ -52,7 +73,7 @@ public class MDLReaderTest
 
 	public static void main(String[] args)
 	{
-		new MDLReaderTest(args[0]);
+		new MDLReaderTest(args[0],args[1]);
 	}
 }
 

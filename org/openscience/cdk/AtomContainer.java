@@ -183,22 +183,6 @@ public class AtomContainer extends ChemObject {
 		return bonds[number];
 	}
 	
-	/**
-	 *  Gets the ConnectionTable attribute of the AtomContainer object 
-	 *
-	 * @return    The ConnectionTable value 
-	 */
-	public int[][] getConnectionTable()
-	{
-		Atom[] bondatoms;
-		int[][] ct = new int[atoms.length][atoms.length];
-		for (int f = 0; f < bonds.length; f++)
-		{
-			bondatoms = bonds[f].getAtoms();
-			wireAtoms(ct, atoms, 0, 1);
-		}
-		return ct;
-	}
 	
 	/**
 	 *  Adds an atom to this container 
@@ -214,6 +198,7 @@ public class AtomContainer extends ChemObject {
 		atoms[atomCount] = atom;
 		atomCount++;
 	}
+	
 	
 	/**
 	 *  Adds a bond to this container 
@@ -263,6 +248,7 @@ public class AtomContainer extends ChemObject {
 	 */
 	protected void growBondArray()
 	{
+		growArraySize = bonds.length;
 		Bond[] newbonds = new Bond[bonds.length + growArraySize];
 		System.arraycopy(bonds, 0, newbonds, 0, bonds.length);
 		bonds = newbonds;
@@ -274,26 +260,10 @@ public class AtomContainer extends ChemObject {
 	 */
 	protected void growAtomArray()
 	{
+		growArraySize = atoms.length;
 		Atom[] newatoms = new Atom[atoms.length + growArraySize];
 		System.arraycopy(atoms, 0, newatoms, 0, atoms.length);
 		atoms = newatoms;
-	}
-	/**
-	 *  Description of the Method 
-	 *
-	 * @param  ct     Description of Parameter 
-	 * @param  atoms  Description of Parameter 
-	 * @param  pos1   Description of Parameter 
-	 * @param  pos2   Description of Parameter 
-	 */
-	protected void wireAtoms(int[][] ct, Atom[] atoms, int pos1, int pos2)
-	{
-		if (pos1 < atoms.length)
-		{
-			if (pos2 < atoms.length)
-			{
-			}
-		}
 	}
 
 

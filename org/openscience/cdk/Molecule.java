@@ -38,7 +38,7 @@ public class Molecule extends AtomContainer
     private String autonomName = "";
     private String casRN = "";
     private String beilsteinRN = "";
-	public String title,someInfo,comment;
+	public String title;
 
 
 	/**

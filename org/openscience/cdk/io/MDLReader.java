@@ -63,26 +63,35 @@ public class MDLReader implements CDKConstants
 	{
 		ChemFile chemFile = new ChemFile();
 		ChemSequence chemSequence = new ChemSequence();
-		SetOfMolecules som = new SetOfMolecules();
-		som.addMolecule(readMolecule());
-		StringBuffer strBuff;
+		ChemModel chemModel = new ChemModel();
+		SetOfMolecules setOfMolecules = new SetOfMolecules();
+		setOfMolecules.addMolecule(readMolecule());
+		String str;
 		try
 		{
 			do
 			{
 				do
 				{
-					strBuff = new StringBuffer(input.readLine());
+					str = new String(input.readLine());
 				}
-				while (!strBuff.toString().equals("$$$$"));
-				som.addMolecule(readMolecule());
+				while (!str.equals("$$$$"));
+				setOfMolecules.addMolecule(readMolecule());
 			}
-			while (strBuff != null);
+			while (str != null);
+		}
+		catch (Exception exc)
+		{
+			System.out.println(exc.toString());
+		}
+		try
+		{
+			input.close();
 		}
 		catch (Exception exc)
 		{
 		}
-		ChemModel chemModel = new ChemModel(som);
+		chemModel.addSetOfMolecules(setOfMolecules);
 		chemSequence.addChemModel(chemModel);
 		chemFile.addChemSequence(chemSequence);
 		
@@ -106,13 +115,9 @@ public class MDLReader implements CDKConstants
 		Bond bond;
 	    try
 	    {
+	        String title = new String(input.readLine()+"\n"+input.readLine()+"\n"+input.readLine());
+			molecule.title = title;
 	        StringBuffer strBuff = new StringBuffer(input.readLine());
-			molecule.title = strBuff.toString();
-	        strBuff = new StringBuffer(input.readLine());
-	        molecule.someInfo = strBuff.toString();
-	        strBuff = new StringBuffer(input.readLine());
-	        molecule.comment = strBuff.toString();
-	        strBuff = new StringBuffer(input.readLine());
 	        strBuff.insert(3, " ");
 	        StringTokenizer strTok = new StringTokenizer(strBuff.toString());
 	        atoms = java.lang.Integer.valueOf(strTok.nextToken()).intValue();
@@ -154,7 +159,6 @@ public class MDLReader implements CDKConstants
 	            }            
 				molecule.addBond(atom1 - 1, atom2 - 1, order, stereo);
 	        }
-	        input.close();
 	    }
 	    catch (Exception e)
 	    {
@@ -164,6 +168,5 @@ public class MDLReader implements CDKConstants
 	    }
 		return molecule;
 	}
-	
 }
 
