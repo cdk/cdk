@@ -1,5 +1,4 @@
-/*
- *  $RCSfile$
+/*  $RCSfile$
  *  $Author$
  *  $Date$
  *  $Revision$
@@ -31,7 +30,6 @@ import org.openscience.cdk.tools.*;
 import org.openscience.cdk.renderer.*;
 import org.openscience.cdk.layout.*;
 import org.openscience.cdk.isomorphism.*;
-import org.openscience.cdk.templates.*;
 import javax.vecmath.*;
 import java.util.*;
 import java.awt.Dimension;
@@ -237,9 +235,33 @@ public class SmilesParserTest extends TestCase
 		try
 		{
 			String smiles = "CC1=CCC2CC1C(C)2C";
-			Molecule apinene = MoleculeFactory.makeAlphaPinene();
 			SmilesParser sp = new SmilesParser();
 			Molecule mol = sp.parseSmiles(smiles);
+
+            Molecule apinene = new Molecule();
+            apinene.addAtom(new Atom("C")); // 1
+            apinene.addAtom(new Atom("C")); // 2
+            apinene.addAtom(new Atom("C")); // 3
+            apinene.addAtom(new Atom("C")); // 4
+            apinene.addAtom(new Atom("C")); // 5
+            apinene.addAtom(new Atom("C")); // 6
+            apinene.addAtom(new Atom("C")); // 7
+            apinene.addAtom(new Atom("C")); // 8
+            apinene.addAtom(new Atom("C")); // 9
+            apinene.addAtom(new Atom("C")); // 10
+            
+            apinene.addBond(0, 1, 2.0); // 1
+            apinene.addBond(1, 2, 1.0); // 2
+            apinene.addBond(2, 3, 1.0); // 3
+            apinene.addBond(3, 4, 1.0); // 4
+            apinene.addBond(4, 5, 1.0); // 5
+            apinene.addBond(5, 0, 1.0); // 6
+            apinene.addBond(0, 6, 1.0); // 7
+            apinene.addBond(3, 7, 1.0); // 8
+            apinene.addBond(5, 7, 1.0); // 9
+            apinene.addBond(7, 8, 1.0); // 10
+            apinene.addBond(7, 9, 1.0); // 11
+
 			IsomorphismTester it = new IsomorphismTester(apinene);
 			assertTrue(it.isIsomorphic(mol));
 		} catch (Exception e)
