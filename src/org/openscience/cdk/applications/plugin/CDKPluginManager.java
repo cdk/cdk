@@ -238,12 +238,9 @@ public class CDKPluginManager {
                                 logger.info("Plugin class found: " + pluginName);
 
                                 // FIXME: use a classloader that loads the whole jar
-                                URL urlList[] = {
-                                    plugins[i].toURL()
-                                };
                                 logger.debug("Plugin URL: " + plugins[i].toURL());
                                 URL u = new URL("jar", "", plugins[i].toURL() + "!/");
-                                ClassLoader loader = new URLClassLoader(urlList);
+                                ClassLoader loader = new PluginClassLoader(u);
                                 loadPlugin(loader, pluginName);
                                 logger.info("  loaded.");
                                 break;
