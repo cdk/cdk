@@ -31,6 +31,7 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.MFAnalyser;
+import org.openscience.cdk.tools.ValencyHybridChecker;
 
 /**
  * Tests CDK's hydrogen adding capabilities in terms of
@@ -38,12 +39,12 @@ import org.openscience.cdk.tools.MFAnalyser;
  *
  * @cdk.module test
  *
- * @author     egonw
- * @cdk.created    2003-06-18
+ * @author      Egon Willighagen <egonw@sci.kun.nl>
+ * @cdk.created 2004-06-13
  */
-public class HydrogenAdder2Test extends HydrogenAdderTest {
+public class HydrogenAdder3Test extends HydrogenAdderTest {
 
-    public HydrogenAdder2Test(String name) {
+    public HydrogenAdder3Test(String name) {
         super(name);
     }
 
@@ -51,7 +52,12 @@ public class HydrogenAdder2Test extends HydrogenAdderTest {
      * The JUnit setup method
      */
     public void setUp() {
-        adder = new HydrogenAdder("org.openscience.cdk.tools.ValencyChecker");
+        try {
+            ValencyHybridChecker checker = new ValencyHybridChecker();
+            adder = new HydrogenAdder(checker);
+        } catch (Exception exception) {
+            fail("Could not setup HydrogenAdder3Test: " + exception.getMessage());
+        }
     }
 
     /**
@@ -60,7 +66,7 @@ public class HydrogenAdder2Test extends HydrogenAdderTest {
      * @return    The test suite
      */
     public static Test suite() {
-        TestSuite suite = new TestSuite(HydrogenAdder2Test.class);
+        TestSuite suite = new TestSuite(HydrogenAdder3Test.class);
         return suite;
     }
 
@@ -86,13 +92,5 @@ public class HydrogenAdder2Test extends HydrogenAdderTest {
         assertEquals(0, mol.getBondCount(cl));
         assertEquals(0, mol.getBondCount(na));
     }
-
-    /**
-     * I don't think aromaticity should be taking into account as done in
-     * the SaturationChecker.
-     *
-     * @see org.openscience.cdk.test.tools.HydrogenAdderTest#testAromaticSaturation
-     */
-    public void testAromaticSaturation() {}
 }
 
