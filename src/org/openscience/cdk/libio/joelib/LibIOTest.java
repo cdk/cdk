@@ -27,6 +27,7 @@ package org.openscience.cdk.libio.joelib;
 import org.openscience.cdk.*;
 import org.openscience.cdk.test.*;
 import joelib.molecule.JOEMol;
+import joelib.desc.types.KierShape1;
 
 public class LibIOTest {
 
@@ -51,7 +52,13 @@ public class LibIOTest {
 		mol.addBond(3, 4, 2); // 4
 		mol.addBond(4, 5, 1); // 5
 		mol.addBond(5, 0, 2); // 6
+        System.out.println("About to convert:");
+        System.out.println(mol.toString());
         JOEMol converted = Convertor.convert(mol);
-        System.out.println(converted.toString());
+        // this is not working:
+        // System.out.println(converted.toString());
+        KierShape1 ks = new KierShape1();
+        System.out.print("KierShape1 : ");
+        System.out.print(ks.getDoubleValue(converted));
     }
 }

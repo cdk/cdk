@@ -62,22 +62,28 @@ public class Convertor {
      * @returns         converted class in JOELib
      **/
     public static JOEAtom convert(Atom atom) {
-        JOEAtom convertedAtom = new JOEAtom();
-        if (atom.getPoint3D() != null) {
-            convertedAtom.setVector(
-                atom.getX3D(),
-                atom.getY3D(),
-                atom.getZ3D()
-            );
+        if (atom != null) {
+            JOEAtom convertedAtom = new JOEAtom();
+            if (atom.getPoint3D() != null) {
+                convertedAtom.setVector(
+                    atom.getX3D(),
+                    atom.getY3D(),
+                    atom.getZ3D()
+                );
+            } else if (atom.getPoint2D() != null) {
+                convertedAtom.setVector(
+                    atom.getX2D(),
+                    atom.getY2D(),
+                    0.0
+                );
+            } else {
+                convertedAtom.setVector(0.0, 0.0, 0.0);
+            }
+            convertedAtom.setAtomicNum(atom.getAtomicNumber());
+            return convertedAtom;
         } else {
-            convertedAtom.setVector(
-                atom.getX2D(),
-                atom.getY2D(),
-                0.0
-            );
+            return null;
         }
-        convertedAtom.setAtomicNum(atom.getAtomicNumber());
-        return convertedAtom;
     }
 
     /**
@@ -92,20 +98,24 @@ public class Convertor {
      * @returns         converted class in CDK
      **/
     public static Atom convert(JOEAtom atom) {
-        Atom convertedAtom = new Atom("C");
-        try {
-            // try to give the atom the correct symbol
-            org.openscience.cdk.tools.ElementFactory ef = new
-                org.openscience.cdk.tools.ElementFactory();
-            org.openscience.cdk.Element e = ef.getElement(atom.getAtomicNum());
-            convertedAtom = new Atom(e.getSymbol());
-        } catch (java.lang.Exception e) {
+        if (atom != null) {
+            Atom convertedAtom = new Atom("C");
+            try {
+                // try to give the atom the correct symbol
+                org.openscience.cdk.tools.ElementFactory ef = new
+                    org.openscience.cdk.tools.ElementFactory();
+                org.openscience.cdk.Element e = ef.getElement(atom.getAtomicNum());
+                convertedAtom = new Atom(e.getSymbol());
+            } catch (java.lang.Exception e) {
+            }
+            convertedAtom.setX3D(atom.x());
+            convertedAtom.setY3D(atom.y());
+            convertedAtom.setZ3D(atom.z());
+            convertedAtom.setAtomicNumber(atom.getAtomicNum());
+            return convertedAtom;
+        } else {
+            return null;
         }
-        convertedAtom.setX3D(atom.x());
-        convertedAtom.setY3D(atom.y());
-        convertedAtom.setZ3D(atom.z());
-        convertedAtom.setAtomicNumber(atom.getAtomicNum());
-        return convertedAtom;
     }
 
     /**
@@ -120,11 +130,15 @@ public class Convertor {
      * @returns         converted class in JOELib
      **/
     public static JOEBond convert(Bond bond) {
-        JOEBond convertedBond = new JOEBond();
-        convertedBond.setBegin(convert(bond.getAtomAt(0)));
-        convertedBond.setEnd(convert(bond.getAtomAt(1)));
-        convertedBond.setBO((int)bond.getOrder());
-        return convertedBond;
+        if (bond != null) {
+            JOEBond convertedBond = new JOEBond();
+            convertedBond.setBegin(convert(bond.getAtomAt(0)));
+            convertedBond.setEnd(convert(bond.getAtomAt(1)));
+            convertedBond.setBO((int)bond.getOrder());
+            return convertedBond;
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -139,11 +153,15 @@ public class Convertor {
      * @returns         converted class in CDK
      **/
     public static Bond convert(JOEBond bond) {
-        Bond convertedBond = new Bond(
+        if (bond != null) {
+            Bond convertedBond = new Bond(
                                     convert(bond.getBeginAtom()),
                                     convert(bond.getEndAtom()),
                                     (double)bond.getBondOrder());
-        return convertedBond;
+            return convertedBond;
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -158,16 +176,20 @@ public class Convertor {
      * @returns         converted class in JOELib
      **/
     public static JOEMol convert(Molecule mol) {
-        JOEMol converted = new JOEMol();
-        int NOatoms = mol.getAtomCount();
-        for (int i=1; i<=NOatoms; i++) {
-            converted.addAtom(convert(mol.getAtomAt(i)));
+        if (mol != null) {
+            JOEMol converted = new JOEMol();
+            int NOatoms = mol.getAtomCount();
+            for (int i=0; i<NOatoms; i++) {
+                converted.addAtom(convert(mol.getAtomAt(i)));
+            }
+            int NObonds = mol.getBondCount();
+            for (int i=0; i<NObonds; i++) {
+                converted.addBond(convert(mol.getBondAt(i)));
+            }
+            return converted;
+        } else {
+            return null;
         }
-        int NObonds = mol.getBondCount();
-        for (int i=1; i<=NObonds; i++) {
-            converted.addBond(convert(mol.getBondAt(i)));
-        }
-        return converted;
     }
 
     /**
@@ -182,16 +204,20 @@ public class Convertor {
      * @returns         converted class in CDK
      **/
     public static Molecule convert(JOEMol mol) {
-        Molecule converted = new Molecule();
-        int NOatoms = mol.numAtoms();
-        for (int i=1; i<=NOatoms; i++) {
-            converted.addAtom(convert(mol.getAtom(i)));
+        if (mol != null) {
+            Molecule converted = new Molecule();
+            int NOatoms = mol.numAtoms();
+            for (int i=1; i<=NOatoms; i++) {
+                converted.addAtom(convert(mol.getAtom(i)));
+            }
+            int NObonds = mol.numBonds();
+            for (int i=1; i<=NObonds; i++) {
+                converted.addBond(convert(mol.getBond(i)));
+            }
+            return converted;
+        } else {
+            return null;
         }
-        int NObonds = mol.numBonds();
-        for (int i=1; i<=NObonds; i++) {
-            converted.addBond(convert(mol.getBond(i)));
-        }
-        return converted;
     }
 
 }
