@@ -105,7 +105,8 @@
 
         <target name="compile-all" 
             depends="init, info, compile-core, compile-standard, compile-extra, compile-io, 
-                     compile-render, compile-render-with-java3d, compile-libio">
+                     compile-render, compile-render-with-java3d, compile-libio,
+                     compile-apps">
         </target>
 
         <target name="compile-libio" depends="dist-standard, dont-compile-libio-joelib, 
@@ -428,9 +429,11 @@
         <target name="dist-all" depends="dist-core, dist-standard, 
                                          dist-io, dist-render, 
                                          dist-extra, dist-libio,
-                                         dist-render-with-java3d" />
+                                         dist-render-with-java3d,
+                                         dist-apps" />
 
-        <target name="dist" depends="dist-all" description="Builds jar file for all parts of the CDK"/>
+        <target name="dist" depends="dist-all" 
+                description="Builds the jar files for all parts of the CDK."/>
 
         <target name="sourcedist" depends="init">
                 <property name="package" value="cdk-source-${DSTAMP}"/>
