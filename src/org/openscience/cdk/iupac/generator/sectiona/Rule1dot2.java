@@ -30,9 +30,10 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Fragment;
 import org.openscience.cdk.isomorphism.IsomorphismTester;
+import org.openscience.cdk.templates.*;
 
 /**
- *  This class implements IUPAC rule 1.1 in Section A.
+ *  This class implements IUPAC rule 1.2 in Section A: Alkyls.
  *
  * @author Egon Willighagen
  */
@@ -57,14 +58,13 @@ public class Rule1dot2 extends NamingRule {
                 try {
                     IsomorphismTester it = new IsomorphismTester(new Molecule(m));
                     int length = ((Integer)m.getProperty(CARBON_COUNT)).intValue();
-                    Molecule nalkane = generateAlkane(length);
+                    Molecule nalkane = MoleculeFactory.makeAlkane(length);
                     if (it.isIsomorphic(nalkane)) {
                         // final requirements is that this rule can name
                         // this n-alkyl compound
                         String name = CarbonChainNames.getName(length);
                         if (name != null) {
-                            inp = new IUPACNamePart(name + localize("yl"),
-                                                  this);
+                            inp = new IUPACNamePart(name + localize("yl"), this);
                             m.setProperty(COMPLETED_FLAG, "yes");
                             for (int i = 0; i < m.getAtomCount(); i++) {
                                 m.getAtomAt(i).setProperty(ATOM_NAMED_FLAG, "yes");
@@ -80,14 +80,5 @@ public class Rule1dot2 extends NamingRule {
             }
         }
         return inp;
-    };
-
-    private Molecule generateAlkane(int length) {
-        Molecule mol = new Molecule();
-        for (int i=1; i<=length; i++) {
-          mol.addAtom(new Atom("C"));
-          if (i > 1) mol.addBond(i-2, i-1, 1);
-        }
-        return mol;
     }
 }

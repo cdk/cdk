@@ -29,9 +29,10 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.isomorphism.IsomorphismTester;
+import org.openscience.cdk.templates.*;
 
 /**
- *  This class implements IUPAC rule 1.1 in Section A.
+ *  This class implements IUPAC rule 1.1 in Section A: Alkanes.
  *
  * @author Egon Willighagen
  */
@@ -56,7 +57,7 @@ public class Rule1dot1 extends NamingRule {
                 try {
                     IsomorphismTester it = new IsomorphismTester(new Molecule(m));
                     int length = ((Integer)m.getProperty(CARBON_COUNT)).intValue();
-                    Molecule nalkane = generateAlkane(length);
+                    Molecule nalkane = MoleculeFactory.makeAlkane(length);
                     if (it.isIsomorphic(nalkane)) {
                         // final requirements is that this rule can name
                         // this n-alkane compound
@@ -78,14 +79,5 @@ public class Rule1dot1 extends NamingRule {
             }
         }
         return inp;
-    };
-
-    private Molecule generateAlkane(int length) {
-        Molecule mol = new Molecule();
-        for (int i=1; i<=length; i++) {
-          mol.addAtom(new Atom("C"));
-          if (i > 1) mol.addBond(i-2, i-1, 1);
-        }
-        return mol;
     }
 }
