@@ -36,9 +36,9 @@ public class LoggingTool {
     private String classname;
     
     /** Default number of StackTraceElements to be printed by debug(Exception) */
-     private final int DEFAULT_STACK_LENGTH = 5;
+    private final int DEFAULT_STACK_LENGTH = 5;
      
-     private int stackLength = DEFAULT_STACK_LENGTH;
+    private int stackLength = DEFAULT_STACK_LENGTH;
 
     public LoggingTool() {
         this( LoggingTool.class.getName() );
