@@ -382,7 +382,7 @@
                 </javac>
         </target>
 
-        <target id="compile-test" name="compile-test" depends="compile">
+        <target id="compile-test" name="compile-test" depends="dist-all">
                 <!-- Task to build the test classes. -->
                 <javac srcdir="${build.src}/org/openscience/cdk/test"
                        destdir="${build}" optimize="${optimization}" 
@@ -548,7 +548,7 @@
                 </jar>
         </target>
 
-        <target id="dist-test" name="dist-test" depends="dist-all, compile-test">
+        <target id="dist-test" name="dist-test" depends="compile-test">
                 <jar jarfile="${dist}/jar/cdk-test.jar">
                     <fileset dir="${build}">
                         <include name="org/openscience/cdk/test/**" />
@@ -744,7 +744,8 @@
             </junit>
         </target>
 
-        <target id="test" name="test" depends="dist-all, dist-test" description="Performs a full JUnit test for the CDK">
+        <target id="test" name="test" depends="dist-test"
+                description="Performs a full JUnit test for the CDK">
                 <junit printsummary="yes" haltonfailure="yes" fork="yes">
                     <classpath>
                         <pathelement location="${dist}/jar/cdk-core.jar" />
