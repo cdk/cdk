@@ -34,6 +34,8 @@ import java.io.*;
 import junit.framework.*;
 import com.baysmith.io.FileUtilities;
 import java.util.Iterator;
+import java.util.Vector;
+import java.util.Enumeration;
 
 /**
  * TestCase for the reading CML files using a few test files
@@ -82,6 +84,7 @@ public class JChemPaintTest extends TestCase {
             assertEquals(4, mol.getAtomCount());
             assertTrue(GeometryTools.has3DCoordinates(mol));
         } catch (Exception e) {
+            e.printStackTrace();
             fail(e.toString());
         }
     }
@@ -115,6 +118,7 @@ public class JChemPaintTest extends TestCase {
             assertEquals(2, mol.getAtomCount());
             assertTrue(GeometryTools.has3DCoordinates(mol));
         } catch (Exception exception) {
+            exception.printStackTrace();
             fail(exception.toString());
         }
     }

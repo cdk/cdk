@@ -40,6 +40,9 @@ import java.util.Vector;
  * A factory for creating ChemObjectReaders. The type of reader 
  * created is determined from the content of the input.
  *
+ * <p>The ReaderFactory does not properly rewind (please fix this!),
+ * so the resulting ChemObject reader <b>cannot</b> be used.
+ *
  * @author  Egon Willighagen <egonw@sci.kun.nl>
  * @author  Bradley A. Smith <bradley@baysmith.com>
  */
@@ -48,27 +51,10 @@ public class ReaderFactory {
     private Vector headerBuffer = null;
     private int currentLine = 0;
     private BufferedReader buffer = null;
-
+    
     public ReaderFactory() {
         headerBuffer = new Vector();
         currentLine = 0;
-    }
-    
-    private void reset() {
-        currentLine = 0;
-    }
-    
-    private String readLine() throws IOException {
-        currentLine++;
-        if (currentLine > headerBuffer.size()) {
-            headerBuffer.addElement(buffer.readLine());
-        }
-        return (String)headerBuffer.elementAt(currentLine);
-    }
-    
-    private boolean ready() throws IOException {
-        return (currentLine < headerBuffer.size() ||
-                buffer.ready());
     }
     
     public String guessFormat(Reader input) throws IOException {
@@ -92,9 +78,7 @@ public class ReaderFactory {
      * @throws IOException  if an I/O error occurs
      * @throws IllegalArgumentException if the input is null
      */
-    public ChemObjectReader createReader(Reader input)
-                                         throws IOException
-    {
+    public ChemObjectReader createReader(Reader input) throws IOException {
         org.openscience.cdk.tools.LoggingTool logger = 
             new org.openscience.cdk.tools.LoggingTool(
                 "org.openscience.cdk.io.ReaderFactory"
@@ -106,6 +90,48 @@ public class ReaderFactory {
 
         buffer = new BufferedReader(input);
         
+        if (!buffer.markSupported()) {
+            logger.error("Mark not supported");
+            throw new IllegalArgumentException("input must support mark");
+        }
+        buffer.mark(1 << 16); /* at least 10 lines */
+        
+        /* Search file for a line containing an identifying keyword */
+        String line = buffer.readLine();
+        int lineNumber = 0;
+        while (buffer.ready() && (line != null) && lineNumber < 25) {
+            logger.debug(line);
+            if (line.startsWith("HEADER") || line.startsWith("ATOM  ")) {
+                logger.info("PDB format detected");
+                buffer.reset();
+                return new PDBReader(input);
+            } else if ((line.indexOf("<atom") != -1) ||
+                       (line.indexOf("<molecule") != -1) ||
+                       (line.indexOf("<reaction") != -1) ||
+                       (line.indexOf("<cml") != -1) ||
+                       (line.indexOf("<bond") != -1)) {
+                logger.info("CML format detected");
+                buffer.reset();
+                return new CMLReader(buffer);
+            } else if (line.indexOf("<identifier") != -1) {
+                logger.info("IChI format detected");
+                buffer.reset();
+                return new IChIReader(buffer);
+            } else if (line.startsWith("%%Header Start")) {
+                logger.info("PolyMorph Predictor format detected");
+                buffer.reset();
+                return new PMPReader(buffer);
+            } else if (line.startsWith("ZERR ") ||
+                       line.startsWith("TITL ")) {
+                logger.info("ShelX format detected");
+                buffer.reset();
+                return new ShelXReader(buffer);
+            }
+            line = buffer.readLine();
+            lineNumber++;
+        }
+        buffer.reset();
+
         if (isMDLMolfile(buffer)) {
             logger.info("MDL Molfile format detected");
             return new MDLReader(buffer);
@@ -115,40 +141,7 @@ public class ReaderFactory {
             logger.info("XYZ format detected");
             return new XYZReader(buffer);
         }
-
-        /* Search file for a line containing an identifying keyword */
-        String line = readLine();
-        while (ready() && (line != null)) {
-            logger.debug(line);
-            if (line.startsWith("HEADER") || line.startsWith("ATOM  ")) {
-                logger.info("PDB format detected");
-                reset();
-                return new PDBReader(input);
-            } else if ((line.indexOf("<atom") != -1) ||
-                       (line.indexOf("<molecule") != -1) ||
-                       (line.indexOf("<reaction") != -1) ||
-                       (line.indexOf("<cml") != -1) ||
-                       (line.indexOf("<bond") != -1)) {
-                logger.info("CML format detected");
-                reset();
-                return new CMLReader(buffer);
-            } else if (line.indexOf("<identifier") != -1) {
-                logger.info("IChI format detected");
-                reset();
-                return new IChIReader(buffer);
-            } else if (line.startsWith("%%Header Start")) {
-                logger.info("PolyMorph Predictor format detected");
-                reset();
-                return new PMPReader(buffer);
-            } else if (line.startsWith("ZERR ") ||
-                       line.startsWith("TITL ")) {
-                logger.info("ShelX format detected");
-                reset();
-                return new ShelXReader(buffer);
-            }
-            line = readLine();
-        }
-
+        
         if (isSMILESfile(buffer)) {
             logger.info("SMILES format detected");
             return new SMILESReader(buffer);
@@ -162,12 +155,12 @@ public class ReaderFactory {
     private boolean isMDLMolfile(BufferedReader buffer)
                                          throws IOException
     {
-        reset();
-        readLine();
-        readLine();
-        readLine();
-        String line4 = readLine();
-        reset();
+        buffer.reset();
+        buffer.readLine();
+        buffer.readLine();
+        buffer.readLine();
+        String line4 = buffer.readLine();
+        buffer.reset();
         
         // If the fourth line contains the MDL Ctab version tag or
         // contains two integers in the first 6 characters and the
@@ -206,8 +199,8 @@ public class ReaderFactory {
                                          throws IOException
     {
         // An integer on the first line is a special test for XYZ files
-        reset();
-        String line = readLine();
+        buffer.reset();
+        String line = buffer.readLine();
         boolean xyzFile = false;
         if (line != null) {
             StringTokenizer tokenizer = new StringTokenizer(line.trim());
@@ -227,7 +220,7 @@ public class ReaderFactory {
                 xyzFile = false;
             }
         }
-        reset();
+        buffer.reset();
         return xyzFile;
     }
 
@@ -236,16 +229,16 @@ public class ReaderFactory {
     {
         // If the first line is a parsable SMILES string then the file
         // is a SMILES file
-        reset();
-        String line = readLine();
+        buffer.reset();
+        String line = buffer.readLine();
         boolean smilesFile = false;
         try {
             SmilesParser sp = new SmilesParser();
-            Molecule m = sp.parseSmiles("c1ccccc1");
+            Molecule m = sp.parseSmiles(line);
             smilesFile = true;
         } catch (InvalidSmilesException ise) {
         }
-        reset();
+        buffer.reset();
         return smilesFile;
     }
 }

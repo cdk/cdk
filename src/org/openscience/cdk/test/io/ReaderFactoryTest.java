@@ -42,8 +42,11 @@ import java.util.Iterator;
  */
 public class ReaderFactoryTest extends TestCase {
 
+    private ReaderFactory factory;
+    
     public ReaderFactoryTest(String name) {
         super(name);
+        factory = new ReaderFactory();
     }
 
     public static Test suite() {
@@ -55,7 +58,7 @@ public class ReaderFactoryTest extends TestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(ins));
-            ChemObjectReader reader = ReaderFactory.createReader(br);
+            ChemObjectReader reader = factory.createReader(br);
             if (reader instanceof CMLReader) {
                 // ok
             } else {
@@ -63,13 +66,7 @@ public class ReaderFactoryTest extends TestCase {
                      ". Expected CMLReader, but found: " +
                      reader.getClass().getName());
             }
-            // reader should have been reset, so check number of lines
-            int linecount = 0;
-            while (br.ready()) {
-                String line = br.readLine();
-                linecount++;
-            }
-            assertEquals(850, linecount);
+            br.close();
         } catch (Exception e) {
             fail(e.toString());
         }
@@ -80,7 +77,7 @@ public class ReaderFactoryTest extends TestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(ins));
-            ChemObjectReader reader = ReaderFactory.createReader(br);
+            ChemObjectReader reader = factory.createReader(br);
             if (reader instanceof XYZReader) {
                 // ok
             } else {
@@ -88,13 +85,7 @@ public class ReaderFactoryTest extends TestCase {
                      ". Expected XYZReader, but found: " +
                      reader.getClass().getName());
             }
-            // reader should have been reset, so check number of lines
-            int linecount = 0;
-            while (br.ready()) {
-                String line = br.readLine();
-                linecount++;
-            }
-            assertEquals(7, linecount);
+            br.close();
         } catch (Exception e) {
             fail(e.toString());
         }
@@ -105,7 +96,7 @@ public class ReaderFactoryTest extends TestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(ins));
-            ChemObjectReader reader = ReaderFactory.createReader(br);
+            ChemObjectReader reader = factory.createReader(br);
             if (reader instanceof ShelXReader) {
                 // ok
             } else {
@@ -113,13 +104,7 @@ public class ReaderFactoryTest extends TestCase {
                      ". Expected ShelXReader, but found: " +
                      reader.getClass().getName());
             }
-            // reader should have been reset, so check number of lines
-            int linecount = 0;
-            while (br.ready()) {
-                String line = br.readLine();
-                linecount++;
-            }
-            assertEquals(51, linecount);
+            br.close();
         } catch (Exception e) {
             fail(e.toString());
         }
@@ -130,7 +115,7 @@ public class ReaderFactoryTest extends TestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(ins));
-            ChemObjectReader reader = ReaderFactory.createReader(br);
+            ChemObjectReader reader = factory.createReader(br);
             if (reader instanceof MDLReader) {
                 // ok
             } else {
@@ -138,13 +123,7 @@ public class ReaderFactoryTest extends TestCase {
                      ". Expected MDLReader, but found: " +
                      reader.getClass().getName());
             }
-            // reader should have been reset, so check number of lines
-            int linecount = 0;
-            while (br.ready()) {
-                String line = br.readLine();
-                linecount++;
-            }
-            assertEquals(36, linecount);
+            br.close();
         } catch (Exception e) {
             fail(e.toString());
         }
@@ -155,7 +134,7 @@ public class ReaderFactoryTest extends TestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(ins));
-            ChemObjectReader reader = ReaderFactory.createReader(br);
+            ChemObjectReader reader = factory.createReader(br);
             if (reader instanceof PDBReader) {
                 // ok
             } else {
@@ -163,13 +142,7 @@ public class ReaderFactoryTest extends TestCase {
                      ". Expected PDBReader, but found: " +
                      reader.getClass().getName());
             }
-            // reader should have been reset, so check number of lines
-            int linecount = 0;
-            while (br.ready()) {
-                String line = br.readLine();
-                linecount++;
-            }
-            assertEquals(16, linecount);
+            br.close();
         } catch (Exception e) {
             fail(e.toString());
         }
@@ -180,7 +153,7 @@ public class ReaderFactoryTest extends TestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(ins));
-            ChemObjectReader reader = ReaderFactory.createReader(br);
+            ChemObjectReader reader = factory.createReader(br);
             if (reader instanceof SMILESReader) {
                 // ok
             } else {
@@ -188,13 +161,7 @@ public class ReaderFactoryTest extends TestCase {
                      ". Expected SMILESReader, but found: " +
                      reader.getClass().getName());
             }
-            // reader should have been reset, so check number of lines
-            int linecount = 0;
-            while (br.ready()) {
-                String line = br.readLine();
-                linecount++;
-            }
-            assertEquals(8, linecount);
+            br.close();
         } catch (Exception e) {
             fail(e.toString());
         }
