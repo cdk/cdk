@@ -173,6 +173,28 @@ public class UniversalIsomorphismTesterTest extends TestCase
         
     }
     
+    public void testSFBug1110537() {
+        String file1 = "data/mdl/5SD.mol";
+        String file2 = "data/mdl/ADN.mol";
+        Molecule mol1 = new Molecule();
+        Molecule mol2 = new Molecule();
+        
+        try {
+            new MDLReader(new FileReader(file1)).read(mol1);
+            new MDLReader(new FileReader(file2)).read(mol2);
+        } catch (Exception ex) {
+            System.err.println("testQueryAtomContainer: " + ex.getMessage());
+            fail(ex.getMessage());
+        }
+        
+        List list = UniversalIsomorphismTester.getOverlaps(mol1, mol2);
+        assertEquals(1, list.size());
+        assertEquals(11, ((AtomContainer)list.get(0)).getAtomCount());
+        
+        list = UniversalIsomorphismTester.getOverlaps(mol2, mol1);
+        assertEquals(1, list.size());
+        assertEquals(11, ((AtomContainer)list.get(0)).getAtomCount());
+    }
     
 	public static void main(String[] args)
 	{
