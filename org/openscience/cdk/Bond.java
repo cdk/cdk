@@ -29,7 +29,7 @@ package org.openscience.cdk;
  * a number of atoms.
  */
 
-public class Bond extends ElectronContainer
+public class Bond extends ElectronContainer implements Cloneable
 {
 	/** The bond order of this bond */
 	protected int order;
@@ -209,6 +209,28 @@ public class Bond extends ElectronContainer
 	{
 		this.stereo = stereo;
 	}
+	
+
+	/**
+	 * Clones this bond object.
+	 *
+	 * @return  The cloned object   
+	 */
+	public Object clone()
+	{
+		Bond o = null;
+		try
+		{
+			o = (Bond)super.clone();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace(System.err);
+		}
+		o.atoms = (Atom[])o.atoms.clone();
+		return o;
+	}
+	
 }
 
 

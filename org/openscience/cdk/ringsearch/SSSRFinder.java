@@ -55,11 +55,10 @@ public class SSSRFinder
 	 * @param   molecule  
 	 * @return     
 	 */
-	public  RingSet findSSSR(Molecule molecule)
+	public  RingSet findSSSR(Molecule mol)
 	{
 		RingSet sssr = new RingSet();
-		
-		
+		Molecule molecule = (Molecule)mol.clone();
 		Atom smallest;
 		int smallestDegree, nodesToBreakCounter;
 		Atom[] rememberNodes;
@@ -124,7 +123,7 @@ public class SSSRFinder
 				nodesToBreakCounter = 0;
 				for (int f = 0; f < nodesN2.size(); f++)
 				{
-					ring = findSRing((Atom)nodesN2.elementAt(f), molecule);
+					ring = getRing((Atom)nodesN2.elementAt(f), molecule);
 					if (ring.getSize() > 0)
 					{
 						// check, if this ring already is in SSSR
@@ -136,20 +135,31 @@ public class SSSRFinder
 						}
 					}
 				}
-				if (nodesToBreakCounter == 0){
+				if (nodesToBreakCounter == 0)
+				{
 					nodesToBreakCounter = 1;
 					rememberNodes[0] = (Atom)nodesN2.elementAt(0);
 				}
 				for (int f = 0; f < nodesToBreakCounter; f++){
-//					breakBond(rememberNodes[f], molecule);
+					breakBond(rememberNodes[f], molecule);
 				}
 			}
 			// if there are nodes of degree 3
 			else if (smallestDegree == 3)
 			{
+				ring = getRing(smallest, molecule);
+				if (ring.getSize() > 0)
+				{
+					// check, if this ring already is in SSSR
+					if (!sssr.ringAlreadyInSet(ring))
+					{
+						sssr.addElement(ring);
+					}
+				}
+				molecule.removeBond(checkEdges(ring, molecule));
 			}
-			
-		}while(trimSet.size() < fullSet.size());
+		}
+		while(trimSet.size() < fullSet.size());
 	return sssr;	  
 	}
 
@@ -163,9 +173,9 @@ public class SSSRFinder
 	 * @param   molecule  The molecule that contains the rootNode
 	 * @return     The smallest Ring rootnode is part of
 	 */
-	private Ring findSRing(Atom rootNode, Molecule molecule)
+	private Ring getRing(Atom rootNode, Molecule molecule)
 	{
-		Atom[] conAtoms;
+//		Atom[] conAtoms;
 		Atom node, neighbor, mAtom; 
 //		int source, mNumber, frontNode, neighborNumber; 
 		/** OKatoms is Figueras nomenclature, giving the number of 
@@ -177,6 +187,7 @@ public class SSSRFinder
 //		Ring ringset = new Ring();
 		/* Initialize a path Vector for each node
 		*/
+		Vector pfad1,pfad2,pfad3,pfad4,pfad5;
 		Vector path[] = new Vector[OKatoms];
 		Vector intersection = new Vector();
 		Vector ring = new Vector();
@@ -192,10 +203,10 @@ public class SSSRFinder
 			for (int f = 0; f < rootNode.getDegree(); f++){
 				/* if the degree of the f-st neighbor of rootNode is greater 
 				 than zero (i.e., it has not yet been deleted from the list)
-				*/	
-				conAtoms = molecule.getConnectedAtoms(rootNode);
-				neighbor = conAtoms[f];
-				if (neighbor.getDegree() > 0){
+				*/
+				neighbor = molecule.getConnectedAtoms(rootNode)[f];
+//				System.out.println("neighbor   "+ neighbor.toString());
+//				if (neighbor.getDegree() > 0){
 					// push the f-st node onto our FIFO queue	
 					// after assigning rootNode as its source
 //					neighbor.setSource(molecule.getAtomNumber(rootNode));
@@ -205,15 +216,15 @@ public class SSSRFinder
 					neighbor.pointers[PATH].addElement(neighbor);
 //					path[neighborNumber].addElement(neighbor);
 //					path[neighborNumber].addElement(rootNode);
-				}
+//				}
 			}
-			while (true && queue.size() > 0){	
+			while (queue.size() > 0){	
+//			System.out.println("queue   "+ queue.toString());	
 				node = (Atom)queue.pop();
 //				frontNode = molecule.getAtomNumber(node);
 //				source = node.getSource();				  
 				for (int f = 0; f < node.getDegree(); f++){
-					conAtoms = molecule.getConnectedAtoms(node);
-					mAtom = conAtoms[f];
+					mAtom = molecule.getConnectedAtoms(node)[f];
 //					mNumber = molecule.getAtomNumber(mAtom);
 					if (mAtom != node.pointers[PATH].elementAt(node.pointers[PATH].size() - 2)){
 						if (mAtom.pointers[PATH].size() > 0){
@@ -228,6 +239,10 @@ public class SSSRFinder
 //									System.out.println("Path of m: " + path[mNumber].toString());
 //								}
 								ring = getUnion(node.pointers[PATH], mAtom.pointers[PATH]);
+//								System.out.println("path1  "+node.pointers[PATH].toString());
+//								System.out.println("path2  "+mAtom.pointers[PATH].toString());
+								System.out.println("rootNode  "+rootNode);
+								System.out.println("ring   "+ ring.toString());
 								return prepareRing(ring,molecule);
 //								return prepareRing(ring, tempAtomSet);
 							}
@@ -235,8 +250,10 @@ public class SSSRFinder
 						else { // if path[mNumber] is null
 								   // update the path[mNumber]							
 //								path[mNumber] = merge(path[mNumber], path[frontNode]);
-								mAtom.pointers[PATH] = node.pointers[PATH];
+								pfad2 = node.pointers[PATH];
+								mAtom.pointers[PATH] = (Vector)node.pointers[PATH].clone();
 								mAtom.pointers[PATH].addElement(mAtom);
+								pfad1 = mAtom.pointers[PATH];
 								// now push the node m onto the queue
 //								mAtom.setSource(frontNode);
 								queue.push(mAtom);	
@@ -247,7 +264,7 @@ public class SSSRFinder
 		}
 		catch (Exception exc)
 		{
-			System.out.println(exc.toString());
+			exc.printStackTrace();
 		}
 		return new Ring();
 	}
@@ -265,8 +282,8 @@ public class SSSRFinder
 	 */
 	private Ring prepareRing(Vector vec, Molecule mol)
 	{
-		Ring ring = new Ring();
 		int atomCount = vec.size();
+		Ring ring = new Ring(atomCount);
 		Atom[] atoms = new Atom[atomCount];
 		vec.copyInto(atoms);
 		ring.setAtoms(atoms);
@@ -274,13 +291,14 @@ public class SSSRFinder
 		{
 			for (int i = 0; i < atomCount - 1; i++)
 			{
+				System.out.println("wie oft   "+i);
 				ring.setBond(i,mol.getBond(atoms[i], atoms[i + 1]));
 			}
-			ring.setBond(atomCount - 1, mol.getBond(atoms[0], atoms[atomCount]));
+			ring.setBond(atomCount - 1,mol.getBond(atoms[0], atoms[atomCount - 1]));
 		}
 		catch (Exception exc)
 		{
-			System.out.println(exc.toString());
+			exc.printStackTrace();
 		}
 		return ring;
 	}
@@ -327,10 +345,10 @@ public class SSSRFinder
 	 * @param   vec2   The second vector
 	 * @return     
 	 */
-	public  Vector getIntersection(Vector vec1, Vector vec2){
+	private  Vector getIntersection(Vector vec1, Vector vec2){
 		Vector is = new Vector();		
 		for (int f = 0; f < vec1.size(); f++){
-			if (vec2.contains((Integer)vec1.elementAt(f))) is.addElement((Integer)vec1.elementAt(f));	
+			if (vec2.contains((Atom)vec1.elementAt(f))) is.addElement((Atom)vec1.elementAt(f));	
 		}	
 		return is;
 	}	
@@ -342,10 +360,10 @@ public class SSSRFinder
 	 * @param   vec2  The second vector
 	 * @return     
 	 */
-	public  Vector getUnion(Vector vec1, Vector vec2){
+	private  Vector getUnion(Vector vec1, Vector vec2){
 		Vector is = (Vector)vec1.clone();
 		for (int f = vec2.size()- 1; f > -1; f--){
-			if (!vec1.contains((Integer)vec2.elementAt(f))) is.addElement((Integer)vec2.elementAt(f));	
+			if (!vec1.contains((Atom)vec2.elementAt(f))) is.addElement((Atom)vec2.elementAt(f));	
 		}	
 		return is;
 	}	
@@ -357,82 +375,82 @@ public class SSSRFinder
 	 * @param   vec2  The second vector
 	 * @return     
 	 */
-	public  Vector merge(Vector vec1, Vector vec2){
+	private  Vector merge(Vector vec1, Vector vec2){
 		Vector result = (Vector)vec1.clone();
 		for (int f = 0; f < vec2.size(); f++){
-			result.addElement((Integer)vec2.elementAt(f))	;	
+			result.addElement((Atom)vec2.elementAt(f))	;	
 		}	
 		return result;
 
 	}
 	
-	
-	
-	
-	
-	public void breakBond(Atom atom, Molecule molecule)
+	/**
+	 * Eliminates one bond of this atom from the molecule
+	 *
+	 * @param   atom  The atom one bond is eliminated of
+	 * @param   molecule  The molecule that contains the atom
+	 */
+	private void breakBond(Atom atom, Molecule molecule)
 	{
-		
+		for (int i = 0; i < molecule.getBondCount(); i++)
+		{
+			if (molecule.getBond(i).contains(atom))
+			{
+				molecule.removeBond(i);
+				break;
+			}
+		}
+	}
+
+
+	/**
+	 * Selects an optimum edge for elimination in structures without N2 nodes.
+	 *
+	 * @param   ring  
+	 * @param   mol  
+	 * @return     
+	 */
+	private Bond checkEdges(Ring ring, Molecule mol)
+	{
+		Ring r1, r2;
+		RingSet ringSet = new RingSet();
+		Bond bond;
+		int minMaxSize = 0, minMax = 0;
+		Molecule molecule = (Molecule)mol.clone();
+		for (int i = 0; i < ring.getBondCount(); i++)
+		{
+			bond = ring.getBond(i);
+			molecule.removeBond(bond);
+			r1 = getRing(bond.getAtomAt(0),molecule);
+			r2 = getRing(bond.getAtomAt(1),molecule);
+			if (r1.getAtomCount() > r2.getAtomCount())
+			{
+				ringSet.addElement(r1);
+			}
+			else
+			{
+				ringSet.addElement(r2);
+			}
+			molecule.addBond(bond);
+		}
+		for (int i = 0; i < ringSet.size(); i++)
+		{
+			if (((Ring)ringSet.elementAt(i)).getBondCount() < minMaxSize)
+			{
+				minMaxSize = ((Ring)ringSet.elementAt(i)).getBondCount();
+				minMax = i;
+			}
+		}
+		return ring.getBond(minMax);
 	}
 	
 	
-	
-	
-	
-//	
-//	
-//	/** Eliminates the last bond of this node from the connectiontable*/
-//	public  void breakBond(int thisNode, Atom[] tempAtomSet){
-//		int degree = tempAtomSet[thisNode].degree;
-//		// remember the bond partner of the last bond 
-//		int partner = tempAtomSet[thisNode].nodeTable[degree - 1];
-//		// now delete the bond
-//		tempAtomSet[thisNode].nodeTable[degree - 1] = 0;
-//		tempAtomSet[thisNode].degree --;
-//		// find the same bond for 'partner' and delete it
-//		for (int f = 0; f < tempAtomSet[partner].degree; f++){
-//			if (tempAtomSet[partner].nodeTable[f] == thisNode){
-//				tempAtomSet[partner].nodeTable[f] = 0;
-//				for (int g = f; g < tempAtomSet[partner].degree - 1; g++){
-//					tempAtomSet[partner].nodeTable[g] = tempAtomSet[partner].nodeTable[g+1];
-// 				}
-// 				tempAtomSet[partner].nodeTable[tempAtomSet[partner].degree - 1] = 0;
-// 				tempAtomSet[partner].degree --;
-// 				break;	
-//			}	
-//		}		
-//	}
-//	
-//	/** Eliminate the last bond of this node from the connectiontable*/
-//	public  void breakBond(int from, int to,  Atom[] tempAtomSet){
-//		int degree;
-//		for (int f = 0; f < tempAtomSet[from].degree; f++){
-//			if (tempAtomSet[from].nodeTable[f] == to){
-//				degree = tempAtomSet[from].degree;
-//				for (int g = f; g < tempAtomSet[from].degree - 1; g++){
-//					tempAtomSet[from].nodeTable[g] = tempAtomSet[from].nodeTable[g+1];
-// 				}
-// 				tempAtomSet[from].nodeTable[tempAtomSet[from].degree - 1] = 0;
-// 				tempAtomSet[from].degree --;
-// 				break;	
-//			}	
-//		}		
-//		for (int f = 0; f < tempAtomSet[to].degree; f++){
-//			if (tempAtomSet[to].nodeTable[f] == from){
-//				for (int g = f; g < tempAtomSet[to].degree - 1; g++){
-//					tempAtomSet[to].nodeTable[g] = tempAtomSet[to].nodeTable[g+1];
-// 				}
-// 				tempAtomSet[to].nodeTable[tempAtomSet[to].degree - 1] = 0;
-// 				tempAtomSet[to].degree --;
-// 				break;	
-//			}	
-//		}		
-//	}
-//	
-//	
-//	
-//	
-	
-	
-	
 }
+
+
+
+
+
+
+
+

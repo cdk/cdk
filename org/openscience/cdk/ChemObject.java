@@ -37,7 +37,7 @@ import java.util.*;
  * a hash table for administration of physical or chemical properties
  */
 
-public class ChemObject implements CDKConstants
+public class ChemObject implements CDKConstants, Cloneable
 {
 	/** Vector for listener administration */
 	protected Vector chemObjects = new Vector();
@@ -125,6 +125,25 @@ public class ChemObject implements CDKConstants
 	public void setSize(int size)
 	{
 		this.size = size;
+	}
+	
+	/**
+	 * Clones this object.
+	 *
+	 * @return  The cloned object   
+	 */
+	public Object clone()
+	{
+		Object o = null;
+		try
+		{
+			o = super.clone();
+		}
+		catch (CloneNotSupportedException e)
+		{
+			e.printStackTrace(System.err);
+		}
+		return o;
 	}
 	
 }

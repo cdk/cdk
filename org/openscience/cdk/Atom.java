@@ -32,7 +32,7 @@ import javax.vecmath.*;
  * @author     steinbeck 
  * @created    October 2, 2000 
  */
-public class Atom extends ChemObject {
+public class Atom extends ChemObject implements Cloneable {
 	/**
 	 *  The element type of this atom 
 	 */
@@ -62,11 +62,6 @@ public class Atom extends ChemObject {
 	 *  A stereo parity descriptor for the stereochemistry of this atom 
 	 */
 	protected int stereoParity;
-	/**
-	 * source is needed for Figueras' (SSSR) ring perception algorithm
-	 * and denotes the  
-	 */
-	protected int source; 
 	
 
 
@@ -136,17 +131,6 @@ public class Atom extends ChemObject {
 	public void setStereoParity(int stereoParity) {
 		this.stereoParity = stereoParity;
 	}
-
-	/**
-	 * Sets the source of this atom needed for Figueras' 
-	 * (SSSR) ring perception algorithm
-	 *
-	 * @param   source   The source
-	 */
-	public void setSource(int source)
-	{
-		this.source = source;
-	}
 	/**
 	 *  
 	 * Returns the degree of this atom, i.e. the number of other atoms
@@ -203,17 +187,6 @@ public class Atom extends ChemObject {
 	public int getStereoParity() {
 		return this.stereoParity;
 	}
-
-	/**
-	 * Returns the source of this atom needed for Figueras' 
-	 * (SSSR) ring perception algorithm
-	 *
-	 * @return  The source of this atom   
-	 */
-	public int getSource()
-	{
-		return this.source;
-	}
 	/**
 	 *  
 	 * Internal method to set the degree of this atom, i.e. the number of other atoms
@@ -249,6 +222,7 @@ public class Atom extends ChemObject {
 	{
 		StringBuffer s = new StringBuffer();
 		s.append("Atom " + getElement().getSymbol() + "\n");
+		s.append("Degree: " + getDegree() + "\n");
 		s.append("Hydrogen count: " + getHydrogenCount() + "\n");
 		s.append("Stereo Parity: " + getStereoParity() + "\n");
 		s.append("2D coordinates: " + getPoint2D() + "\n");
@@ -256,5 +230,30 @@ public class Atom extends ChemObject {
 				
 		return s.toString();
 	}
+	
+
+	/**
+	 * Clones this atom object.
+	 *
+	 * @return  The cloned object   
+	 */
+	public Object clone()
+	{
+		Atom o = null;
+		try
+		{
+			o = (Atom)super.clone();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace(System.err);
+		}
+		o.point2D = this.point2D;
+		o.point3D = this.point3D;
+		return o;
+	}
+
+
+	
 }
 

@@ -33,7 +33,7 @@ import java.util.*;
  * @author     steinbeck 
  * @created    October 2, 2000 
  */
-public class AtomContainer extends ChemObject {
+public class AtomContainer extends ChemObject implements Cloneable{
 
 	/**
 	 *  Number of atoms contained by this object 
@@ -72,7 +72,22 @@ public class AtomContainer extends ChemObject {
 		atoms = new Atom[growArraySize];
 		bonds = new Bond[growArraySize];
 	}
-
+	
+	/**
+	 * Constructs an empty AtomContainer that will contain a certain
+	 * number of atoms and bonds.
+	 *
+	 * @param   atomCount  Number of atoms to be in this container
+	 * @param   bondCount  Number of bonds to be in this container
+	 */
+	public AtomContainer(int atomCount, int bondCount)
+	{
+		this.atomCount = atomCount;
+		this.bondCount = bondCount;
+		atoms = new Atom[atomCount];
+		bonds = new Bond[bondCount];
+	}
+	
 	/**
 	 *  Sets the array of atoms of this AtomContainer 
 	 *
@@ -211,6 +226,7 @@ public class AtomContainer extends ChemObject {
 				}
 			}
 		}
+		System.out.println("atom1  "+a1.toString()+"atom2  "+a2.toString());
 		throw new Exception("atoms not connected");
 	}
 
@@ -244,11 +260,42 @@ public class AtomContainer extends ChemObject {
 		}
 		if (atom.getDegree() != conAtomCount)
 		{
+			System.out.println("degree:  "+ atom.getDegree()+"  atomcount  "+ conAtomCount);
+			System.out.println("atom  "+ atom.toString());
 			throw new Exception("wrong number of connected Atoms");
 		}
 		return conAtoms;
 	}
 	
+	
+
+	/**
+	 * Returns an array of all bonds connected to the given atom
+	 *
+	 * @param   atom  The atom the connected bonds are searched of
+	 * @return     The array with the size of connected atoms
+	 * @exception   Exception  
+	 */
+	public Bond[] getConnectedBonds(Atom atom) throws Exception
+	{
+		Bond[] bonds = new Bond[atom.getDegree()];
+		Bond bond;
+		int conBondCount = 0;
+		for (int i = 0; i < bondCount; i++)
+		{
+			bond = bonds[i];
+			if (bond.contains(atom))
+			{
+				bonds[conBondCount] = bond;
+				conBondCount++;
+			}
+		}
+		if (atom.getDegree() != conBondCount)
+		{
+			throw new Exception("wrong number of connected Bonds");
+		}
+		return bonds;
+	}
 	
 	/**
 	 *  Adds an atom to this container 
@@ -304,9 +351,26 @@ public class AtomContainer extends ChemObject {
 		}
 		bonds[bondCount] = null;
 		bondCount--;		
+		System.out.println("remove bond used");
 	}
 	
-
+	
+	/**
+	 * removes this bond from this container
+	 *
+	 * @param   bond  The bond to be removed
+	 */
+	public void removeBond(Bond bond)
+	{
+		for (int i = 0; i < bondCount; i++)
+		{
+			if (bonds[i].equals(bond))
+			{
+				removeBond(i);
+			}
+		}
+	}
+	
 
 	/**
 	 *  Adds a bond to this container
@@ -382,6 +446,15 @@ public class AtomContainer extends ChemObject {
 		return this.atomCount;
 	}
 
+	/**
+	 * Sets the number of atoms in this container
+	 *
+	 * @param   atomCount  The number of atoms in this container
+	 */
+	public void setAtomCount(int atomCount)
+	{
+		this.atomCount = atomCount;
+	}	
 
 	/**
 	 * Returns the number of Bonds in this Container
@@ -431,6 +504,26 @@ public class AtomContainer extends ChemObject {
 		return s.toString();
 	}
 
+	/**
+	 * Clones this atomContainer object.
+	 *
+	 * @return  The cloned object   
+	 */
+	public Object clone()
+	{
+		AtomContainer o = null;
+		try
+		{
+			o = (AtomContainer)super.clone();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace(System.err);
+		}
+		o.atoms = (Atom[])o.atoms.clone();
+		o.bonds = (Bond[])o.bonds.clone();
+		return o;
+	}
 
 }
 

@@ -28,22 +28,24 @@ public class Ring extends AtomContainer
 {
 
 	/**
-	 * The constructor
+	 * constructs an empty ring.
 	 *
 	 */
 	public Ring()
 	{
 		super();
+		
 	}
 	
 
 	/**
-	 * Returns the number of atoms participating in this ring
+	 * constructs a ring that will have a certain size
 	 *
-	 * @return    The number of atoms in this ring 
+	 * @param   ringSize  The size (number of atoms) the ring will have
 	 */
-	public int getSize()
+	public Ring(int ringSize)
 	{
-		return atoms.length;
+		super(ringSize, ringSize);
 	}
+	
 }

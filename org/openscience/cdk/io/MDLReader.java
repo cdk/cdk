@@ -39,7 +39,7 @@ import javax.vecmath.*;
  */
 public class MDLReader implements CDKConstants
 {
-	boolean debug = true;
+	boolean debug = false;
 	BufferedReader input;
 
 	/**
@@ -75,7 +75,7 @@ public class MDLReader implements CDKConstants
 				{
 					str = new String(input.readLine());
 				}
-				while (!str.equals("$$$$"));
+				while (!str.equals("$$$$") || input.ready());
 				setOfMolecules.addMolecule(readMolecule());
 			}
 			while (str != null);
@@ -131,7 +131,7 @@ public class MDLReader implements CDKConstants
 	            x = new Double(strTok.nextToken()).doubleValue();
 	            y = new Double(strTok.nextToken()).doubleValue();
 	            z = new Double(strTok.nextToken()).doubleValue();
-				System.out.println("Coordinates: " + x + "; " + y + "; " + z);
+				if (debug) System.out.println("Coordinates: " + x + "; " + y + "; " + z);
 	            molecule.addAtom(new Atom(new Element(strTok.nextToken()), new Point3d(x, y, z)));
 	        }
 	        for (int f = 0; f < bonds; f++)
