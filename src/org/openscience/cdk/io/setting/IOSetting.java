@@ -22,7 +22,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
  *  02111-1307  USA.
  */
-package org.openscience.cdk.io;
+package org.openscience.cdk.io.setting;
 
 import org.openscience.cdk.exception.*;
 
@@ -35,18 +35,18 @@ import org.openscience.cdk.exception.*;
 public abstract class IOSetting {
 
     /** The levels available:
-     *    NONE         no questions asked
-     *    INTERMEDIATE some (important) questions asked
-     *    ALL          all questions askes
+     *    HIGH         important question
+     *    MEDIUM
+     *    LOW          unimportant question
      */
-    static final int NONE         = 0;
-    static final int INTERMEDIATE = 1;
-    static final int ALL          = 2;
+    public static final int HIGH   = 0;
+    public static final int MEDIUM = 1;
+    public static final int LOW    = 2;
     
-    private int    level;
-    private String name;
-    private String question;
-    private String setting;
+    protected int    level;
+    protected String name;
+    protected String question;
+    protected String setting;
     
     /**
      * The default constructor that sets this field. All textual 
@@ -99,7 +99,7 @@ public abstract class IOSetting {
      * a CDKException when the setting is not valid.    
      *
      */
-    public String getSetting() throws CDKException {
+    public String getSetting() {
         // by default, except all input, so no setting checking                     
         return this.setting;
     }

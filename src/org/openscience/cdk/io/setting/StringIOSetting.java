@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2002-2003  The Jmol Development Team
+ * Copyright (C) 2003  The CDK Development Team
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -22,26 +22,29 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
  *  02111-1307  USA.
  */
-package org.openscience.cdk.io;
+package org.openscience.cdk.io.setting;
 
-import org.openscience.cdk.io.setting.*;
-import java.util.EventListener;
+import org.openscience.cdk.exception.*;
 
 /**
- * Allows monitoring of progress of writing activities.
+ * An class for a reader setting which must be of type String.
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  */
-public interface WriterListener extends EventListener {
-  
-  /**
-   * Method triggered if the Reader needs information for
-   * parsing the file.
-   *
-   * @param event information about the event.
-   */
-  public void processWriterSettingQuestion(IOSetting setting);
+public class StringIOSetting extends IOSetting {
+
+    public StringIOSetting(String name, int level, 
+                         String question, String defaultSetting) {
+        super(name, level, question, defaultSetting);
+    }
+    
+    /**
+     * Sets the setting for a certain question. The setting
+     * is of type String, and any string is accepted.
+     */
+    public void setSetting(String setting) throws CDKException {
+        // anything is accepted
+        super.setSetting(setting);
+    }
+
 }
-
-
-

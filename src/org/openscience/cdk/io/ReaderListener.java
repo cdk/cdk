@@ -24,6 +24,7 @@
  */
 package org.openscience.cdk.io;
 
+import org.openscience.cdk.io.setting.*;
 import java.util.EventListener;
 
 /**
@@ -40,6 +41,14 @@ public interface ReaderListener extends EventListener {
    */
   public void frameRead(ReaderEvent event);
 
+  /**
+   * Prompted when the IO filter needs information to process the
+   * file. The ReaderListener may redirect this question to the
+   * user, disregard it (and let the Reader take the default),
+   * or answer it itself.
+   */
+  public void processReaderSettingQuestion(IOSetting setting);
+  
 }
 
 
