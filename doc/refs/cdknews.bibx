@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bibtex:file xmlns:bibtex="http://bibtexml.sf.net/"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://bibtexml.sf.net/ bibtexml.xsd">
+
+  <!-- This file is preferable edited in jEdit with the XML plugin installed -->
+  
+  <!-- Copied from CDK News CVS at CUBIC (almost machine) : 1.2 -->
+  
+  <!-- $RCSfile$
+       $Revision$
+       $Date$
+       $Author$
+    -->
+
+  <bibtex:entry id="cdknews.art1">
+    <bibtex:article>
+      <bibtex:author>Willighagen, E.</bibtex:author>
+      <bibtex:title>What's 2004 going to bring?</bibtex:title>
+      <bibtex:journal>CDK News</bibtex:journal>
+      <bibtex:year>2004</bibtex:year>
+      <bibtex:volume>1</bibtex:volume>
+      <bibtex:number>1</bibtex:number>
+      <bibtex:pages>3-4</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+
+  <bibtex:entry id="cdknews.art2">
+    <bibtex:article>
+      <bibtex:author>Willighagen, E.</bibtex:author>
+      <bibtex:title>Submitting articles to CDK News</bibtex:title>
+      <bibtex:journal>CDK News</bibtex:journal>
+      <bibtex:year>2004</bibtex:year>
+      <bibtex:volume>1</bibtex:volume>
+      <bibtex:number>1</bibtex:number>
+      <bibtex:pages>6-7</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+
+  <bibtex:entry id="cdknews.art3">
+    <bibtex:article>
+      <bibtex:author>Willighagen, E.</bibtex:author>
+      <bibtex:title>Customizing file IO</bibtex:title>
+      <bibtex:journal>CDK News</bibtex:journal>
+      <bibtex:year>2004</bibtex:year>
+      <bibtex:volume>1</bibtex:volume>
+      <bibtex:number>2</bibtex:number>
+      <bibtex:pages>2-4</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+
+  <bibtex:entry id="cdknews.art4">
+    <bibtex:article>
+      <bibtex:author>Steinbeck, C.</bibtex:author>
+      <bibtex:title>NMRShiftDB</bibtex:title>
+      <bibtex:journal>CDK News</bibtex:journal>
+      <bibtex:year>2004</bibtex:year>
+      <bibtex:volume>1</bibtex:volume>
+      <bibtex:number>1</bibtex:number>
+      <bibtex:pages>2-3</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+
+  <bibtex:entry id="cdknews.art5">
+    <bibtex:article>
+      <bibtex:author>Kunh, S.</bibtex:author>
+      <bibtex:title>Predictor</bibtex:title>
+      <bibtex:journal>CDK News</bibtex:journal>
+      <bibtex:year>2004</bibtex:year>
+      <bibtex:volume>1</bibtex:volume>
+      <bibtex:number>2</bibtex:number>
+      <bibtex:pages>7-8</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+
+  <bibtex:entry id="cdknews.art6">
+    <bibtex:article>
+      <bibtex:author>Hoppe, C.</bibtex:author>
+      <bibtex:title>First steps in the implementation of a force field for the CDK package</bibtex:title>
+      <bibtex:journal>CDK News</bibtex:journal>
+      <bibtex:year>2004</bibtex:year>
+      <bibtex:volume>1</bibtex:volume>
+      <bibtex:number>2</bibtex:number>
+      <bibtex:pages>4-5</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+
+  <bibtex:entry id="cdknews.art8">
+    <bibtex:article>
+      <bibtex:author>Helmus, T.</bibtex:author>
+      <bibtex:title>Spok - The Spectrum Organisation Kit</bibtex:title>
+      <bibtex:journal>CDK News</bibtex:journal>
+      <bibtex:year>2004</bibtex:year>
+      <bibtex:volume>1</bibtex:volume>
+      <bibtex:number>2</bibtex:number>
+      <bibtex:pages>5-6</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+
+  <bibtex:entry id="cdknews.art9">
+    <bibtex:article>
+      <bibtex:author>Willighagen, E.</bibtex:author>
+      <bibtex:title>Konqueror web shortcuts to the CDK API</bibtex:title>
+      <bibtex:journal>CDK News</bibtex:journal>
+      <bibtex:year>2004</bibtex:year>
+      <bibtex:volume>1</bibtex:volume>
+      <bibtex:number>2</bibtex:number>
+      <bibtex:pages>8-9</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+  
+</bibtex:file>
