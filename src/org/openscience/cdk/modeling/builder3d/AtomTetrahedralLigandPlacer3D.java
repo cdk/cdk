@@ -1,8 +1,6 @@
-/*
- *  $RCSfile$
- *  $Author: egonw
+/*  $RCSfile$
+ *  $Author$
  *  $Date$
- *  $ (chhoppe) add force field parameters and some methods
  *  $Revision$
  *
  *  Copyright (C) 2003-2004  The Chemistry Development Kit (CDK) project
@@ -48,7 +46,7 @@ import org.openscience.cdk.CDKConstants;
  *  A set of static utility classes for geometric calculations on Atoms.
  *
  *@author         Peter Murray-Rust,chhoppe,egonw
- *@cdk.created    2004-09-07
+ *@cdk.created    2003-??-??
  */
 public class AtomTetrahedralLigandPlacer3D {
 

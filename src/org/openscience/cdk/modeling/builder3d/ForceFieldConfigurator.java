@@ -1,8 +1,9 @@
-/*
- *  $RCSfile$
- *  $Author: chhoppe
+/*  $RCSfile$
+ *  $Author$
  *  $Date$
- *  Copyright (C) 2003-2004  The Chemistry Development Kit (CDK) project
+ *  $Revision$
+ *
+ *  Copyright (C) 2004  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *

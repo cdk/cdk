@@ -1,9 +1,9 @@
-/*
- *  $RCSfile$
- *  $Author: chhoppe, christoph steinbeck
+/*  $RCSfile$
+ *  $Author$
  *  $Date$
+ *  $Revision$
  *
- *  Copyright (C) 2003-2004  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2004  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -58,7 +58,7 @@ import org.openscience.cdk.ringsearch.RingPartitioner;
  *  condensed ring systems which are unknown for the template class - vdWaals
  *  clashes - stereochemistry - chains running through ring systems
  *
- *@author         cho
+ *@author         cho, steinbeck
  *@cdk.created    2004-09-07
  */
 public class ModelBuilder3D {
