@@ -38,7 +38,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * Command line utility that matches the given SMARTS against the given set of 
  * files.
  *
- * @cdk.module applications
+ * @cdk.module  experimental
  *
  * @author      Egon Willighagen
  * @cdk.created 2003-08-14
