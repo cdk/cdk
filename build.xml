@@ -108,9 +108,13 @@
           <condition property="isJava13">
             <contains string="${java.version}" substring="1.3"/>
           </condition>
-          <uptodate property="dotjavafiles.uptodate" 
-              targetfile="${src}/*.javafiles">
+          <uptodate property="dotjavafiles.uptodate"
+              targetfile="${src}/core.javafiles">
               <srcfiles dir="${src}" includes="**/*.java" />
+          </uptodate>
+          <uptodate property="dotjjfiles.uptodate" 
+              targetfile="${build.src}/org/openscience/cdk/iupac/parser/NomParser.java">
+              <srcfiles dir="${src}" includes="org/openscience/cdk/iupac/parser/NomParser.jj" />
           </uptodate>
         </target>
 
@@ -371,7 +375,7 @@
         
 	      <!-- Convert the JavaCC .jj file to the correct .java files for the IUPAC parser -->
         <target id="javacc" name="javacc" depends="nojavacc, dojavacc"/>
-        <target name="dojavacc" depends="init" if="hasAnt16">
+        <target name="dojavacc" depends="init, check" unless="dotjjfiles.uptodate">
           <delete>
               <fileset id="javacc-generated" 
               dir="${build.src}/org/openscience/cdk/iupac/parser/" 
