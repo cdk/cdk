@@ -25,6 +25,7 @@ package org.openscience.cdk.isomorphism.matchers;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKConstants;
 
 /**
  * @cdk.module extra
@@ -39,7 +40,13 @@ public class OrderQueryBond extends Bond implements QueryBond {
     }
     
 	public boolean matches(Bond bond) {
-        throw new AbstractMethodError("The QueryBond class did not implement this method");
+        if (this.getOrder() == bond.getOrder()) {
+            // bond orders match
+            return true;
+        } else if (this.getFlag(CDKConstants.ISAROMATIC) && bond.getFlag(CDKConstants.ISAROMATIC)) {
+            // or both are aromatic
+        } // else
+        return false;
     };
 
     public void setAtoms(Atom[] atoms) {

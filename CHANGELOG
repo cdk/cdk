@@ -18,6 +18,8 @@ New:
 * Added field to Reaction for agents, like catalysts
 * Added generation of reaction SMILES
 * Added creation of atom-atom mappings in reactions
+* The UniversalIsomorphism is a bit more generalized to allow for more flexible
+  Atom and Bond matching.
 
 Removed:
 * Viewer application. Use JChemPaint (jchempaint.sf.net) or Jmol (jmol.sf.net) instead

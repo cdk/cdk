@@ -50,6 +50,9 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.isomorphism.matchers.QueryAtom;
+import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
+import org.openscience.cdk.isomorphism.matchers.QueryBond;
 import org.openscience.cdk.isomorphism.mcss.RGraph;
 import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.isomorphism.mcss.RNode;
@@ -561,17 +564,31 @@ public class UniversalIsomorphismTester {
     // compares each bond of G1 to each bond of G2
     for (int i = 0; i < bondsA1.length; i++) {
       for (int j = 0; j < bondsA2.length; j++) {
-        // if both bonds are compatible then create an association node
-        // in the resolution graph
-        if ((bondsA1[i].getOrder() == bondsA2[j].getOrder() || (bondsA1[i].getFlag(CDKConstants.ISAROMATIC) && bondsA2[j].getFlag(CDKConstants.ISAROMATIC)))
-             && ((bondsA1[i].getAtomAt(0).getSymbol().equals(bondsA2[j].getAtomAt(0).getSymbol())
-             && bondsA1[i].getAtomAt(1).getSymbol().equals(bondsA2[j].getAtomAt(1).getSymbol()))
-             || (bondsA1[i].getAtomAt(0).getSymbol().equals(bondsA2[j].getAtomAt(1).getSymbol())
-             && bondsA1[i].getAtomAt(1).getSymbol().equals(bondsA2[j].getAtomAt(0).getSymbol()))
-            )
-            ) {
-          gr.addNode(new RNode(i, j));
-        }
+          if (ac2 instanceof QueryAtomContainer) {
+              QueryBond queryBond = (QueryBond)bondsA2[j];
+              QueryAtom atom1 = (QueryAtom)(bondsA2[j].getAtomAt(0));
+              QueryAtom atom2 = (QueryAtom)(bondsA2[j].getAtomAt(1));
+              Bond bond = bondsA1[i];
+              if (queryBond.matches(bond)) {
+                  // ok, bonds match
+                  if (atom1.matches(bond.getAtomAt(0)) && atom2.matches(bond.getAtomAt(1)) ||
+                      atom1.matches(bond.getAtomAt(1)) && atom2.matches(bond.getAtomAt(0))) {
+                      // ok, atoms match in either order
+                      gr.addNode(new RNode(i,j));
+                  }
+              }
+          } else {
+              // if both bonds are compatible then create an association node
+              // in the resolution graph
+              if ((bondsA1[i].getOrder() == bondsA2[j].getOrder() || 
+                   (bondsA1[i].getFlag(CDKConstants.ISAROMATIC) && bondsA2[j].getFlag(CDKConstants.ISAROMATIC)))
+                  && ((bondsA1[i].getAtomAt(0).getSymbol().equals(bondsA2[j].getAtomAt(0).getSymbol())
+                       && bondsA1[i].getAtomAt(1).getSymbol().equals(bondsA2[j].getAtomAt(1).getSymbol()))
+                       || (bondsA1[i].getAtomAt(0).getSymbol().equals(bondsA2[j].getAtomAt(1).getSymbol())
+                       && bondsA1[i].getAtomAt(1).getSymbol().equals(bondsA2[j].getAtomAt(0).getSymbol())))) {
+                  gr.addNode(new RNode(i, j));
+              }
+          }
       }
     }
   }
