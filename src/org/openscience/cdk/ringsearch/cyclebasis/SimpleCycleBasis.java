@@ -66,16 +66,19 @@ import org.openscience.cdk.graph.MinimalPathIterator;
 
 public class SimpleCycleBasis {
 	
-	List edgeList;
-	List cycles;
-	UndirectedGraph graph;
+	private List edgeList;
+	private List cycles;
+	private UndirectedGraph graph;
 	
 	private boolean isMinimized = false;
+	private HashMap edgeIndexMap;
 	
 	public SimpleCycleBasis (List cycles, List edgeList, UndirectedGraph graph) {
 		this.edgeList = edgeList;
 		this.cycles = cycles;
 		this.graph = graph;
+		
+		edgeIndexMap = createEdgeIndexMap(edgeList);
 	}
 	
 	
@@ -85,129 +88,7 @@ public class SimpleCycleBasis {
 		this.graph = graph;
 		
 		createMinimumCycleBasis();
-		
-	}
-	
-	
-	private void createFundamentalTreeBase() {
-		
-		// To build a cycle base from a graph, we perform a breadth first traversal
-		// and build a fundamental tree base ("Kirchhoff base")
-		
-		
-		Object currentVertex = graph.vertexSet().iterator().next();
-		
-		// We build a spanning tree as a directed graph to easily find the parent of a
-		// vertex in the tree. This means however that we have to create new Edge objects
-		// for the tree and can't just use the Edge objects of the graph, since the
-		// the edge in the graph might have a wrong direction.
-		
-		DirectedGraph spanningTree = new SimpleDirectedGraph();
-		
-		// We need to remember the non-tree edges because we create one cycle for each
-		Set visitedEdges = new HashSet();
-		
-		// FIFO for the BFS
-		LinkedList vertexQueue = new LinkedList();
-		
-		// currentVertex is the root of the spanning tree
-		spanningTree.addVertex(currentVertex);
-		
-		vertexQueue.addLast(currentVertex);
-		
-		List treeEdges = new Vector();
-		
-		while (!vertexQueue.isEmpty()) {
-			currentVertex = vertexQueue.removeFirst();
-			
-			Iterator edges = graph.edgesOf(currentVertex).iterator();
-			while (edges.hasNext()) {
-				// find a neighbour vertex of the current vertex 
-				Edge edge = (Edge)edges.next();
-				
-				if (!visitedEdges.contains(edge)) {
-					
-					// mark edge as visited
-					visitedEdges.add(edge);
-					
-					Object nextVertex = edge.oppositeVertex(currentVertex);
-					
-					if (!spanningTree.containsVertex(nextVertex)) {
-						// tree edge
-						
-						treeEdges.add(edge);
-						
-						spanningTree.addVertex(nextVertex);
-						
-						// create a new (directed) Edge object (as explained above)
-						spanningTree.addEdge(currentVertex, nextVertex);
-						
-						// add the next vertex to the BFS-FIFO
-						vertexQueue.addLast(nextVertex);
-					} else {
-						// non-tree edge
-						
-						// This edge defines a cycle together with the edges of the spanning tree
-						// along the path to the root of the tree. We create a new cycle containing 
-						// these edges (not the tree edges, but the corresponding edges in the graph)
-						
-						List edgesOfCycle = new Vector();
-						
-						// follow the path to the root of the tree
-						
-						Object vertex = currentVertex;
-						
-						// get parent of vertex
-						List incomingEdgesOfVertex = spanningTree.incomingEdgesOf(vertex);
-						Object parent = incomingEdgesOfVertex.isEmpty() ? null : ((Edge)incomingEdgesOfVertex.get(0)).oppositeVertex(vertex);	
-						
-						while (parent != null) {
-							// add the corresponding edge to the cycle
-							edgesOfCycle.add(graph.getEdge(vertex, parent));
-							
-							// go up the tree
-							vertex = parent;
-							
-							// get parent of vertex
-							incomingEdgesOfVertex = spanningTree.incomingEdgesOf(vertex);
-							parent = incomingEdgesOfVertex.isEmpty() ? null : ((Edge)incomingEdgesOfVertex.get(0)).oppositeVertex(vertex);	
-						}
-						
-						// do the same thing for nextVertex
-						vertex = nextVertex;
-						
-						// get parent of vertex
-						incomingEdgesOfVertex = spanningTree.incomingEdgesOf(vertex);
-						parent = incomingEdgesOfVertex.isEmpty() ? null : ((Edge)incomingEdgesOfVertex.get(0)).oppositeVertex(vertex);
-						
-						while (parent != null) {
-							edgesOfCycle.add(graph.getEdge(vertex, parent));
-							vertex = parent;
-							
-							// get parent of vertex
-							incomingEdgesOfVertex = spanningTree.incomingEdgesOf(vertex);
-							parent = incomingEdgesOfVertex.isEmpty() ? null : ((Edge)incomingEdgesOfVertex.get(0)).oppositeVertex(vertex);	
-						}
-						
-						// finally, add the non-tree edge to the cycle
-						edgesOfCycle.add(edge);
-						
-						// add the edge to the index list for the incidence matrix
-						edgeList.add(edge);
-						
-						SimpleCycle newCycle = new SimpleCycle(graph, edgesOfCycle);
-						
-						cycles.add(newCycle);
-						
-					}
-				}
-			}
-			
-		}
-		
-		edgeList.addAll(treeEdges);
-		
-	}
+	}	
 	
 	private void createMinimumCycleBasis() {
 		
@@ -359,6 +240,8 @@ public class SimpleCycleBasis {
 		// Add all the tree edges to the index list for the incidence matrix
 		edgeList.addAll(treeEdges);
 		
+		edgeIndexMap = createEdgeIndexMap(edgeList);
+		
 		// Now the index list is ordered: first the non-tree edges, then the tree edge.
 		// Moreover, since the cycles and the corresponding non-tree edge have been added
 		// to their lists in the same order, the incidence matrix is in upper triangular form.
@@ -417,20 +300,6 @@ public class SimpleCycleBasis {
 		
 		boolean[][] a = getCycleEdgeIncidenceMatrix();
 		
-		/*
-		// perform gaussian elimination on the incidence matrix
-		// to bring it to upper triangular form
-		for (int i=0; i<startIndex; i++) {
-			for (int j=0; j<i; j++) {
-				if (a[i][j]) {
-					for (int k=0; k<edgeList.size(); k++) {
-						a[i][k] = (a[i][k]!=a[j][k]);
-					}
-				}
-			}
-		}
-		*/
-		
 		for (int i=startIndex; i<cycles.size(); i++) {
 			// "Subroutine 2"
 			
@@ -472,17 +341,10 @@ public class SimpleCycleBasis {
 					
 					List edgesOfNewCycle = new Vector();
 					
-					// Save all vertices on the path in a HashMap
-					// to check if there is a shorter x-x' path in the path
-					
-					Set verticesOnPath = new HashSet();
-					
 					Object v = vertex;
 					
-					boolean pathIsCycle = true;
-					
 					edgeIterator = auxPath.iterator();
-					while (edgeIterator.hasNext() && pathIsCycle) {
+					while (edgeIterator.hasNext()) {
 						Edge auxEdge = (Edge) edgeIterator.next();
 						
 						// Get the edge corresponding to the aux. edge
@@ -493,26 +355,12 @@ public class SimpleCycleBasis {
 						// Get next vertex on path
 						v = e.oppositeVertex(v);
 						
-						// if we have already seen this edge, the path is not a cycle
-						
-						if (verticesOnPath.contains(v)) {
-							pathIsCycle = false;
-						} else {
-							verticesOnPath.add(v);
-						}
-						
-						
 					}
 					
+					SimpleCycle newCycle = new SimpleCycle(graph, edgesOfNewCycle);
 					
-					if (pathIsCycle) {
-						
-						SimpleCycle newCycle = new SimpleCycle(graph, edgesOfNewCycle);
-						
-						if (newCycle.weight() < shortestCycle.weight()) {
-							shortestCycle = newCycle;
-						}
-						
+					if (newCycle.weight() < shortestCycle.weight()) {
+						shortestCycle = newCycle;
 					}
 					
 				}
@@ -540,9 +388,9 @@ public class SimpleCycleBasis {
 		
 	}
 	
-	static boolean[] constructKernelVector(int m, boolean[][] a, int i) {
+	static boolean[] constructKernelVector(int size, boolean[][] a, int i) {
 		// Construct kernel vector u by setting u[i] = true ...
-		boolean[] u = new boolean[m];
+		boolean[] u = new boolean[size];
 		u[i] = true;
 		
 		// ... u[j] = 0 (false) for j > i (by initialization)...
@@ -597,11 +445,11 @@ public class SimpleCycleBasis {
 		return result;
 	}
 	
-	public Collection edges() {
+	public List edges() {
 		return edgeList;
 	}
 	
-	public Collection cycles() {
+	public List cycles() {
 		return cycles;
 	}
 	
@@ -648,17 +496,7 @@ public class SimpleCycleBasis {
 	}
 	
 	public Collection essentialCycles() {
-		//System.out.println("essentialCycles");
 		Collection result = new HashSet();
-		minimize();
-		
-		Map edgeMap = new HashMap();
-		
-		for (int i=0; i<edgeList.size(); i++) {
-			Edge edge = (Edge) edgeList.get(i);
-			
-			edgeMap.put(edge, new Integer(i));
-		}
 		
 		boolean[][] a = getCycleEdgeIncidenceMatrix();
 		
@@ -687,8 +525,8 @@ public class SimpleCycleBasis {
 				boolean shouldSearchCycle = false;
 				
 				for (Iterator it = incidentEdges.iterator(); it.hasNext();) {
-					Object edge = it.next();
-					int index = ((Integer) edgeMap.get(edge)).intValue();
+					Edge edge = (Edge) it.next();
+					int index = getEdgeIndex(edge);
 					if (u[index]) {
 						shouldSearchCycle = true;
 						break;
@@ -716,9 +554,7 @@ public class SimpleCycleBasis {
 							
 						}
 						
-						
 						SimpleCycle cycle = new SimpleCycle(graph, edgesOfNewCycle);
-						
 						
 						if (cycle.weight() > ((SimpleCycle)cycles.get(i)).weight()) {
 							break;
@@ -747,15 +583,6 @@ public class SimpleCycleBasis {
 	
 	public Map relevantCycles() {
 		Map result = new HashMap();
-		minimize();
-		
-		Map edgeMap = new HashMap();
-		
-		for (int i=0; i<edgeList.size(); i++) {
-			Edge edge = (Edge) edgeList.get(i);
-			
-			edgeMap.put(edge, new Integer(i));
-		}
 		
 		boolean[][] a = getCycleEdgeIncidenceMatrix();
 		
@@ -782,8 +609,8 @@ public class SimpleCycleBasis {
 				boolean shouldSearchCycle = false;
 				
 				for (Iterator it = incidentEdges.iterator(); it.hasNext();) {
-					Object edge = it.next();
-					int index = ((Integer) edgeMap.get(edge)).intValue();
+					Edge edge = (Edge) it.next();
+					int index = getEdgeIndex(edge);
 					if (u[index]) {
 						shouldSearchCycle = true;
 						break;
@@ -868,6 +695,10 @@ public class SimpleCycleBasis {
 			
 			// cyclesArray[left] to cyclesArray[right] have same weight
 			
+			// First test (compute pre-classes):
+			// Check if there is a cycle that can replace a[i] as well as a[j] in a basis
+			// This is done by finding a cycle C with <C,u[i]>=1 and <C,u[j]>=1
+			
 			for (int i=left; i<=right; i++) {
 				if (essentialCycles.contains((SimpleCycle) cyclesArray[i]))
 					continue;
@@ -881,14 +712,14 @@ public class SimpleCycleBasis {
 						continue;
 					
 					boolean sameClass = false;
-										
+					
 					AuxiliaryGraph2 auxGraph = new AuxiliaryGraph2(graph, edgeList, u[i], u[j]);
 					
 					for (Iterator it = graph.vertexSet().iterator(); it.hasNext();) {
 						Object vertex = it.next();
 						
-						Object auxVertex00 = auxGraph.vertexMap00.get(vertex);
-						Object auxVertex11 = auxGraph.vertexMap11.get(vertex);
+						Object auxVertex00 = auxGraph.auxVertex00(vertex);
+						Object auxVertex11 = auxGraph.auxVertex11(vertex);
 						
 						List auxPath = DijkstraShortestPath.findPathBetween(auxGraph, auxVertex00, auxVertex11);
 						
@@ -906,6 +737,11 @@ public class SimpleCycleBasis {
 				}			
 			}
 			
+			// Second test (compute equivalence classes):
+			// Check if there are two cycle Ci, Cj that can replace a[i], a[j]
+			// and have a common cycle a[k] in their basis representation
+			// This is done by finding a cycle a[k] with <u[k],u[i]>=1 and <u[k],u[j]>=1
+			
 			for (int i=left; i<=right; i++) {
 				if (essentialCycles.contains((SimpleCycle) cyclesArray[i]))
 					continue;
@@ -919,7 +755,7 @@ public class SimpleCycleBasis {
 						continue;
 					
 					boolean sameClass = false;
-
+					
 					for (int k=0; ((SimpleCycle)cyclesArray[k]).weight() < weight[left]; k++) {
 						
 						AuxiliaryGraph2 auxGraph = new AuxiliaryGraph2(graph, edgeList, u[i], u[k]);
@@ -928,8 +764,8 @@ public class SimpleCycleBasis {
 						for (Iterator it = graph.vertexSet().iterator(); it.hasNext();) {
 							Object vertex = it.next();
 							
-							Object auxVertex00 = auxGraph.vertexMap00.get(vertex);
-							Object auxVertex11 = auxGraph.vertexMap11.get(vertex);
+							Object auxVertex00 = auxGraph.auxVertex00(vertex);
+							Object auxVertex11 = auxGraph.auxVertex11(vertex);
 							
 							List auxPath = DijkstraShortestPath.findPathBetween(auxGraph, auxVertex00, auxVertex11);
 							
@@ -949,8 +785,8 @@ public class SimpleCycleBasis {
 						for (Iterator it = graph.vertexSet().iterator(); it.hasNext();) {
 							Object vertex = it.next();
 							
-							Object auxVertex00 = auxGraph.vertexMap00.get(vertex);
-							Object auxVertex11 = auxGraph.vertexMap11.get(vertex);
+							Object auxVertex00 = auxGraph.auxVertex00(vertex);
+							Object auxVertex11 = auxGraph.auxVertex11(vertex);
 							
 							List auxPath = DijkstraShortestPath.findPathBetween(auxGraph, auxVertex00, auxVertex11);
 							
@@ -972,12 +808,22 @@ public class SimpleCycleBasis {
 				}
 			}
 			
-
-			
 			left=right+1;
 		}
 		
 		return connectivityInspector.connectedSets();
+	}
+	
+	private HashMap createEdgeIndexMap(List edgeList) {
+		HashMap map = new HashMap();
+		for (int i=0; i<edgeList.size(); i++) {
+			map.put(edgeList.get(i), new Integer(i));
+		}
+		return map;
+	}
+	
+	private int getEdgeIndex(Edge edge) {
+		return ((Integer) edgeIndexMap.get(edge)).intValue();
 	}
 	
 	private class AuxiliaryGraph extends SimpleGraph {
@@ -986,65 +832,76 @@ public class SimpleCycleBasis {
 		HashMap vertexMap0 = new HashMap();
 		HashMap vertexMap1 = new HashMap();
 		
+		HashMap auxVertexMap = new HashMap();
+		
 		// aux. edge to edge
 		Map auxEdgeMap = new HashMap();
 		
+		Graph g;
+		boolean[] u;
+		
 		AuxiliaryGraph(Graph graph, List edgeList, boolean[] u) {
-			Iterator vertexIterator = graph.vertexSet().iterator();
+			g = graph;
+			this.u = u;
+		}
+		
+		public List edgesOf( Object auxVertex ) {
 			
-			for (int k = 1; vertexIterator.hasNext(); k++) {
-				Object vertex = vertexIterator.next();
-				
-				//vertexArray[j] = vertex;
-				//vertexArray[j + graph.vertexSet().size()] = vertex;
-				
-				Object newVertex0 = vertex + "-0";
-				vertexMap0.put(vertex, newVertex0);
-				addVertex(newVertex0);
-				
-				Object newVertex1 = vertex + "-1";
-				vertexMap1.put(vertex, newVertex1);
-				addVertex(newVertex1);
-			}
+			Object vertex = auxVertexMap.get(auxVertex);
 			
-			
-			for (int j = 0; j < edgeList.size(); j++) {
-				Edge edge = (Edge)edgeList.get(j);
+			for (Iterator edgeIterator = g.edgesOf(vertex).iterator(); edgeIterator.hasNext();) {
+				Edge edge = (Edge) edgeIterator.next();
+				int j = getEdgeIndex(edge);
 				
 				Object vertex1 = edge.getSource();
 				Object vertex2 = edge.getTarget();
 				
-				
 				if (u[j]) {
-					Object vertex1u = vertexMap0.get(vertex1);
-					Object vertex2u = vertexMap1.get(vertex2);
+					Object vertex1u = auxVertex0(vertex1);
+					Object vertex2u = auxVertex1(vertex2);
 					Edge auxEdge = addEdge(vertex1u, vertex2u);
 					auxEdgeMap.put(auxEdge, edge);
 					
-					vertex1u = vertexMap1.get(vertex1);
-					vertex2u = vertexMap0.get(vertex2);
+					vertex1u = auxVertex1(vertex1);
+					vertex2u = auxVertex0(vertex2);
 					auxEdge = addEdge(vertex1u, vertex2u);
 					auxEdgeMap.put(auxEdge, edge);
 				} else {
-					Object vertex1u = vertexMap0.get(vertex1);
-					Object vertex2u = vertexMap0.get(vertex2);
+					Object vertex1u = auxVertex0(vertex1);
+					Object vertex2u = auxVertex0(vertex2);
 					Edge auxEdge = addEdge(vertex1u, vertex2u);
 					auxEdgeMap.put(auxEdge, edge);
 					
-					vertex1u = vertexMap1.get(vertex1);
-					vertex2u = vertexMap1.get(vertex2);
+					vertex1u = auxVertex1(vertex1);
+					vertex2u = auxVertex1(vertex2);
 					auxEdge = addEdge(vertex1u, vertex2u);
 					auxEdgeMap.put(auxEdge, edge);
 				}
 				
 			}
+			
+			return super.edgesOf(auxVertex);
 		}
 		
 		Object auxVertex0(Object vertex) {
+			if (vertexMap0.get(vertex) == null) {
+				Object newVertex0 = vertex + "-0";
+				vertexMap0.put(vertex, newVertex0);
+				addVertex(newVertex0);
+				auxVertexMap.put(newVertex0, vertex);
+				return newVertex0;
+			}
 			return vertexMap0.get(vertex);
 		}
 		
 		Object auxVertex1(Object vertex) {
+			if (vertexMap1.get(vertex) == null) {
+				Object newVertex1 = vertex + "-1";
+				vertexMap1.put(vertex, newVertex1);
+				addVertex(newVertex1);
+				auxVertexMap.put(newVertex1, vertex);
+				return newVertex1;
+			}
 			return vertexMap1.get(vertex);
 		}
 		
@@ -1056,130 +913,164 @@ public class SimpleCycleBasis {
 	private class AuxiliaryGraph2 extends SimpleGraph {
 		
 		// graph to aux. graph
-		HashMap vertexMap00 = new HashMap();
-		HashMap vertexMap01 = new HashMap();
-		HashMap vertexMap10 = new HashMap();
-		HashMap vertexMap11 = new HashMap();
+		private HashMap vertexMap00 = new HashMap();
+		private HashMap vertexMap01 = new HashMap();
+		private HashMap vertexMap10 = new HashMap();
+		private HashMap vertexMap11 = new HashMap();
+		
+		private HashMap auxVertexMap = new HashMap();
 		
 		// aux. edge to edge
-		Map auxEdgeMap = new HashMap();
+		private Map auxEdgeMap = new HashMap();
+		
+		private Graph g;
+		private boolean[] ui;
+		private boolean[] uj;
 		
 		AuxiliaryGraph2(Graph graph, List edgeList, boolean[] ui, boolean[] uj) {
-			Iterator vertexIterator = graph.vertexSet().iterator();
-			
-			for (int k = 1; vertexIterator.hasNext(); k++) {
-				Object vertex = vertexIterator.next();
-				
-				//vertexArray[j] = vertex;
-				//vertexArray[j + graph.vertexSet().size()] = vertex;
-				
-				Object newVertex00 = vertex + "-00";
-				vertexMap00.put(vertex, newVertex00);
-				addVertex(newVertex00);
-				
-				Object newVertex01 = vertex + "-01";
-				vertexMap01.put(vertex, newVertex01);
-				addVertex(newVertex01);
-				
-				Object newVertex10 = vertex + "-10";
-				vertexMap10.put(vertex, newVertex10);
-				addVertex(newVertex10);
-				
-				Object newVertex11 = vertex + "-11";
-				vertexMap11.put(vertex, newVertex11);
-				addVertex(newVertex11);
+			g = graph;
+			this.ui = ui;
+			this.uj = uj;
+		}
+		
+		Object auxVertex00(Object vertex) {
+			if (vertexMap00.get(vertex) == null) {
+				Object newVertex = vertex + "-00";
+				vertexMap00.put(vertex, newVertex);
+				addVertex(newVertex);
+				auxVertexMap.put(newVertex, vertex);
+				return newVertex;
 			}
+			return vertexMap00.get(vertex);
+		}
+		
+		Object auxVertex01(Object vertex) {
+			if (vertexMap01.get(vertex) == null) {
+				Object newVertex = vertex + "-01";
+				vertexMap01.put(vertex, newVertex);
+				addVertex(newVertex);
+				auxVertexMap.put(newVertex, vertex);
+				return newVertex;
+			}
+			return vertexMap01.get(vertex);
+		}
+		
+		Object auxVertex10(Object vertex) {
+			if (vertexMap10.get(vertex) == null) {
+				Object newVertex = vertex + "-10";
+				vertexMap10.put(vertex, newVertex);
+				addVertex(newVertex);
+				auxVertexMap.put(newVertex, vertex);
+				return newVertex;
+			}
+			return vertexMap10.get(vertex);
+		}
+		
+		Object auxVertex11(Object vertex) {
+			if (vertexMap11.get(vertex) == null) {
+				Object newVertex = vertex + "-11";
+				vertexMap11.put(vertex, newVertex);
+				addVertex(newVertex);
+				auxVertexMap.put(newVertex, vertex);
+				return newVertex;
+			}
+			return vertexMap11.get(vertex);
+		}
+		
+		public List edgesOf( Object auxVertex ) {
 			
+			Object vertex = auxVertexMap.get(auxVertex);
 			
-			for (int k = 0; k < edgeList.size(); k++) {
-				Edge edge = (Edge)edgeList.get(k);
+			for (Iterator edgeIterator = g.edgesOf(vertex).iterator(); edgeIterator.hasNext();) {
+				Edge edge = (Edge) edgeIterator.next();
+				int k = getEdgeIndex(edge);
 				
 				Object vertex1 = edge.getSource();
-				Object vertex2 = edge.getTarget();
-				
+				Object vertex2 = edge.getTarget();				
 				
 				if (!ui[k] && !uj[k]) {
-					Object vertex1u = vertexMap00.get(vertex1);
-					Object vertex2u = vertexMap00.get(vertex2);
+					Object vertex1u = auxVertex00(vertex1);
+					Object vertex2u = auxVertex00(vertex2);
 					Edge auxEdge = addEdge(vertex1u, vertex2u);
 					auxEdgeMap.put(auxEdge, edge);
 					
-					vertex1u = vertexMap01.get(vertex1);
-					vertex2u = vertexMap01.get(vertex2);
+					vertex1u = auxVertex01(vertex1);
+					vertex2u = auxVertex01(vertex2);
 					auxEdge = addEdge(vertex1u, vertex2u);
 					auxEdgeMap.put(auxEdge, edge);
 					
-					vertex1u = vertexMap10.get(vertex1);
-					vertex2u = vertexMap10.get(vertex2);
+					vertex1u = auxVertex10(vertex1);
+					vertex2u = auxVertex10(vertex2);
 					auxEdge = addEdge(vertex1u, vertex2u);
 					auxEdgeMap.put(auxEdge, edge);
 					
-					vertex1u = vertexMap11.get(vertex1);
-					vertex2u = vertexMap11.get(vertex2);
+					vertex1u = auxVertex11(vertex1);
+					vertex2u = auxVertex11(vertex2);
 					auxEdge = addEdge(vertex1u, vertex2u);
 					auxEdgeMap.put(auxEdge, edge);
 				} else if (ui[k] && !uj[k]) {
-					Object vertex1u = vertexMap00.get(vertex1);
-					Object vertex2u = vertexMap10.get(vertex2);
+					Object vertex1u = auxVertex00(vertex1);
+					Object vertex2u = auxVertex10(vertex2);
 					Edge auxEdge = addEdge(vertex1u, vertex2u);
 					auxEdgeMap.put(auxEdge, edge);
 					
-					vertex1u = vertexMap01.get(vertex1);
-					vertex2u = vertexMap11.get(vertex2);
+					vertex1u = auxVertex01(vertex1);
+					vertex2u = auxVertex11(vertex2);
 					auxEdge = addEdge(vertex1u, vertex2u);
 					auxEdgeMap.put(auxEdge, edge);
 					
-					vertex1u = vertexMap10.get(vertex1);
-					vertex2u = vertexMap00.get(vertex2);
+					vertex1u = auxVertex10(vertex1);
+					vertex2u = auxVertex00(vertex2);
 					auxEdge = addEdge(vertex1u, vertex2u);
 					auxEdgeMap.put(auxEdge, edge);
 					
-					vertex1u = vertexMap11.get(vertex1);
-					vertex2u = vertexMap01.get(vertex2);
+					vertex1u = auxVertex11(vertex1);
+					vertex2u = auxVertex01(vertex2);
 					auxEdge = addEdge(vertex1u, vertex2u);
 					auxEdgeMap.put(auxEdge, edge);
 				} else if (!ui[k] && uj[k]) {
-					Object vertex1u = vertexMap00.get(vertex1);
-					Object vertex2u = vertexMap01.get(vertex2);
+					Object vertex1u = auxVertex00(vertex1);
+					Object vertex2u = auxVertex01(vertex2);
 					Edge auxEdge = addEdge(vertex1u, vertex2u);
 					auxEdgeMap.put(auxEdge, edge);
 					
-					vertex1u = vertexMap01.get(vertex1);
-					vertex2u = vertexMap00.get(vertex2);
+					vertex1u = auxVertex01(vertex1);
+					vertex2u = auxVertex00(vertex2);
 					auxEdge = addEdge(vertex1u, vertex2u);
 					auxEdgeMap.put(auxEdge, edge);
 					
-					vertex1u = vertexMap10.get(vertex1);
-					vertex2u = vertexMap11.get(vertex2);
+					vertex1u = auxVertex10(vertex1);
+					vertex2u = auxVertex11(vertex2);
 					auxEdge = addEdge(vertex1u, vertex2u);
 					auxEdgeMap.put(auxEdge, edge);
 					
-					vertex1u = vertexMap11.get(vertex1);
-					vertex2u = vertexMap10.get(vertex2);
+					vertex1u = auxVertex11(vertex1);
+					vertex2u = auxVertex10(vertex2);
 					auxEdge = addEdge(vertex1u, vertex2u);
 					auxEdgeMap.put(auxEdge, edge);
 				} else if (ui[k] && uj[k]) {
-					Object vertex1u = vertexMap00.get(vertex1);
-					Object vertex2u = vertexMap11.get(vertex2);
+					Object vertex1u = auxVertex00(vertex1);
+					Object vertex2u = auxVertex11(vertex2);
 					Edge auxEdge = addEdge(vertex1u, vertex2u);
 					auxEdgeMap.put(auxEdge, edge);
 					
-					vertex1u = vertexMap01.get(vertex1);
-					vertex2u = vertexMap10.get(vertex2);
+					vertex1u = auxVertex01(vertex1);
+					vertex2u = auxVertex10(vertex2);
 					auxEdge = addEdge(vertex1u, vertex2u);
 					auxEdgeMap.put(auxEdge, edge);
 					
-					vertex1u = vertexMap10.get(vertex1);
-					vertex2u = vertexMap01.get(vertex2);
+					vertex1u = auxVertex10(vertex1);
+					vertex2u = auxVertex01(vertex2);
 					auxEdge = addEdge(vertex1u, vertex2u);
 					auxEdgeMap.put(auxEdge, edge);
 					
-					vertex1u = vertexMap11.get(vertex1);
-					vertex2u = vertexMap00.get(vertex2);
+					vertex1u = auxVertex11(vertex1);
+					vertex2u = auxVertex00(vertex2);
 					auxEdge = addEdge(vertex1u, vertex2u);
 					auxEdgeMap.put(auxEdge, edge);
 				}
 			}
+			return super.edgesOf(auxVertex);
 		}
 	}
 }

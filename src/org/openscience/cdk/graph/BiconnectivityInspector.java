@@ -41,6 +41,8 @@ import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.Graph;
 import org._3pq.jgrapht.UndirectedGraph;
 import org._3pq.jgrapht.alg.ConnectivityInspector;
+import org._3pq.jgrapht.event.GraphEdgeChangeEvent;
+import org._3pq.jgrapht.event.GraphVertexChangeEvent;
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org._3pq.jgrapht.graph.Subgraph;
 
@@ -59,8 +61,7 @@ import org._3pq.jgrapht.graph.Subgraph;
  * @cdk.depends jgrapht-0.5.3.jar
  */
 public class BiconnectivityInspector {
-	List          m_biconnectedSets;
-	Map           m_vertexToConnectedSet;
+	private List          biconnectedSets;
 	private UndirectedGraph graph;
 	
 	/**
@@ -69,14 +70,13 @@ public class BiconnectivityInspector {
 	 */
 	
 	public BiconnectivityInspector(UndirectedGraph g) {
-		
 		graph = g;
 	}
 	
 	private List lazyFindBiconnectedSets(  ) {
 		
-		if( m_biconnectedSets == null ) {
-			m_biconnectedSets = new ArrayList();
+		if( biconnectedSets == null ) {
+			biconnectedSets = new ArrayList();
 			
 			Iterator connectedSets = 
 				new ConnectivityInspector(graph).connectedSets().iterator();
@@ -193,12 +193,12 @@ public class BiconnectivityInspector {
 				ConnectivityInspector connectivityInspector = 
 					new ConnectivityInspector(h);
 				
-				m_biconnectedSets.addAll(connectivityInspector.connectedSets());
+				biconnectedSets.addAll(connectivityInspector.connectedSets());
 				
 			}
 		}
 		
-		return m_biconnectedSets;
+		return biconnectedSets;
 	}
 	
 	/**
@@ -226,7 +226,45 @@ public class BiconnectivityInspector {
 		
 		
 		
-		return m_biconnectedSets;
+		return biconnectedSets;
 	}
 	*/
+	
+	
+	private void init() {
+		biconnectedSets = null;
+	}
+	
+	
+    /**
+     * @see GraphListener#edgeAdded(GraphEdgeChangeEvent)
+     */
+    public void edgeAdded( GraphEdgeChangeEvent e ) {
+        init(  ); 
+    }
+
+
+    /**
+     * @see GraphListener#edgeRemoved(GraphEdgeChangeEvent)
+     */
+    public void edgeRemoved( GraphEdgeChangeEvent e ) {
+        init(  );
+    }
+
+
+    /**
+     * @see org._3pq.jgrapht.event.VertexSetListener#vertexAdded(GraphVertexChangeEvent)
+     */
+    public void vertexAdded( GraphVertexChangeEvent e ) {
+        init(  );
+    }
+
+
+    /**
+     * @see org._3pq.jgrapht.event.VertexSetListener#vertexRemoved(GraphVertexChangeEvent)
+     */
+    public void vertexRemoved( GraphVertexChangeEvent e ) {
+        init(  );
+    }
+	
 }

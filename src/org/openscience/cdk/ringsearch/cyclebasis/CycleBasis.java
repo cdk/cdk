@@ -133,8 +133,6 @@ public class CycleBasis {
 			}
 		}
 		
-		long time = System.currentTimeMillis(  );
-		
 		List biconnectedComponents = new BiconnectivityInspector(simpleGraph).biconnectedSets();
 		
 		for (Iterator it = biconnectedComponents.iterator(); it.hasNext();) {
@@ -182,7 +180,7 @@ public class CycleBasis {
 	 */
 	public void printIncidenceMatrix() {
 		SimpleCycleBasis basis = simpleBasis();
-		List edgeList = basis.edgeList;
+		Collection edgeList = basis.edges();
 		
 		/*
 		for (int j=0; j<edgeList.size(); j++) {
@@ -210,7 +208,7 @@ public class CycleBasis {
 
 	public int[] weightVector() {
 		SimpleCycleBasis basis = simpleBasis();
-		List cycles = basis.cycles;
+		List cycles = basis.cycles();
 		
 		int[] result = new int[cycles.size()];
 		for (int i=0; i<cycles.size(); i++) {
@@ -253,7 +251,7 @@ public class CycleBasis {
 	 */
 
 	public Collection cycles() {
-		return simpleBasis().cycles;
+		return simpleBasis().cycles();
 	}
 	
 	/**

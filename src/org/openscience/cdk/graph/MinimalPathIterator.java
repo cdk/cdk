@@ -55,14 +55,14 @@ import org._3pq.jgrapht.traverse.ClosestFirstIterator;
  */
 public class MinimalPathIterator implements Iterator {
 	
-	Object sourceVertex, targetVertex;
-	Graph g;
-	DirectedGraph shortestPathGraph;
+	private Object sourceVertex, targetVertex;
+	private Graph g;
+	private DirectedGraph shortestPathGraph;
 	
-	Stack edgeIteratorStack;
-	Stack vertexStack;
+	private Stack edgeIteratorStack;
+	private Stack vertexStack;
 	
-	Object next;
+	private Object next;
 	
 	/**
 	 * Creates a minimal path iterator for the specified undirected graph.
@@ -82,7 +82,8 @@ public class MinimalPathIterator implements Iterator {
 
 	private void createShortestPathGraph() {
 		shortestPathGraph = new DefaultDirectedGraph();
-		shortestPathGraph.addAllVertices(g.vertexSet());
+		//shortestPathGraph.addAllVertices(g.vertexSet());
+		shortestPathGraph.addVertex(targetVertex);
 
 		// This map gives the distance of a vertex to the target vertex
 		Map distanceMap = new HashMap();
@@ -90,6 +91,7 @@ public class MinimalPathIterator implements Iterator {
 
 		for (ClosestFirstIterator iter = new ClosestFirstIterator(g, targetVertex); iter.hasNext(); ) {
 			Object vertex = iter.next();
+			shortestPathGraph.addVertex(vertex);
 			
 			Edge treeEdge = iter.getSpanningTreeEdge(vertex);
 			
@@ -104,6 +106,7 @@ public class MinimalPathIterator implements Iterator {
 					Object opposite = edge.oppositeVertex(vertex);
 					if (distanceMap.get(opposite) != null) {
 						if (((Integer) distanceMap.get(opposite)).intValue() + 1 == distance) {
+							shortestPathGraph.addVertex(opposite);
 							shortestPathGraph.addEdge(vertex, opposite);
 						}
 					}
