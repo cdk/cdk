@@ -30,12 +30,13 @@ import org.openscience.cdk.test.fingerprint.*;
 import org.openscience.cdk.test.graph.invariant.*;
 import org.openscience.cdk.test.isomorphism.*;
 import org.openscience.cdk.test.io.*;
-import org.openscience.cdk.test.smiles.*;
+import org.openscience.cdk.test.isomorphism.*;
+import org.openscience.cdk.test.layout.*;
 import org.openscience.cdk.test.renderer.*;
 import org.openscience.cdk.test.ringsearch.*;
+import org.openscience.cdk.test.smiles.*;
 import org.openscience.cdk.test.structgen.*;
 import org.openscience.cdk.test.tools.*;
-import org.openscience.cdk.test.isomorphism.*;
 
 /**
  * TestSuite that runs all the sample tests
@@ -66,7 +67,8 @@ public class CDKTests {
 		suite.addTest(AllRingsFinderTest.suite());
 		suite.addTest(FingerprinterTest.suite());
 		suite.addTest(AtomTypeFactoryTest.suite());
-        // from cdk.test.io.*
+        // from cdk.test.layout.*
+		suite.addTest(StructureDiagramGeneratorTest.suite());
         // from cdk.test.smiles
 		suite.addTest(SmilesGeneratorTest.suite());
 		suite.addTest(SmilesParserTest.suite());

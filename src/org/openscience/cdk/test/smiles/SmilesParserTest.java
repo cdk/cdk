@@ -1,9 +1,11 @@
-/*
- * $RCSfile$    $Author$    $Date$    $Revision$
+/* $RCSfile$    
+ * $Author$    
+ * $Date$    
+ * $Revision$
  * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  * 
- * Contact: steinbeckice.mpg.de, gezeltermaul.chem.nd.edu, egonwsci.kun.nl
+ * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -19,9 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
  */
-
 package org.openscience.cdk.test.smiles;
-
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.smiles.*;
@@ -32,9 +32,7 @@ import org.openscience.cdk.layout.*;
 import org.openscience.cdk.isomorphism.*;
 import org.openscience.cdk.templates.*;
 import javax.vecmath.*;
-
 import java.util.*;
-
 import java.awt.Dimension;
 import java.io.*;
 import java.net.URL;

@@ -1,8 +1,9 @@
-/* RingSearchTest.java
+/* $RCSfile$    
+ * $Author$    
+ * $Date$    
+ * $Revision$
  * 
- * $RCSfile$    $Author$    $Date$    $Revision$
- * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  * 
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  * 
@@ -20,13 +21,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
  */
-
 package org.openscience.cdk.test.ringsearch;
-
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.ringsearch.*;
-import org.openscience.cdk.io.*;
+import org.openscience.cdk.smiles.*;
 import org.openscience.cdk.tools.*;
 import org.openscience.cdk.templates.*;
 import java.util.*;
@@ -34,31 +33,43 @@ import java.io.*;
 import java.net.URL;
 import junit.framework.*;
 
-public class RingSearchTest extends TestCase
-{
-	Molecule molecule;
+/**
+ * This class tests the SSSRFinder class.
+ */
+public class RingSearchTest extends TestCase {
+    
 	SSSRFinder sssrf;
-	RingSet ringSet;
 	
-	public RingSearchTest(String name)
-	{
+	public RingSearchTest(String name) {
 		super(name);
 	}
 
-	public void setUp()
-	{
+	public void setUp() {
 		sssrf = new SSSRFinder();
-		molecule = MoleculeFactory.makeAlphaPinene();
 	}
 
 	public static Test suite() {
 		return new TestSuite(RingSearchTest.class);
 	}
 
-	public void testAlphaPinene()
-	{
-		ringSet = sssrf.findSSSR(molecule);
-		assertTrue(ringSet.size() == 2);
+	public void testAlphaPinene() {
+		Molecule molecule = MoleculeFactory.makeAlphaPinene();
+		RingSet ringSet = sssrf.findSSSR(molecule);
+		assertEquals(2, ringSet.size());
+	}
+
+	public void testBenzene() throws Exception {
+		SmilesParser sp = new SmilesParser();
+        Molecule molecule = sp.parseSmiles("c1ccccc1");
+        RingSet ringSet = sssrf.findSSSR(molecule);
+        assertEquals(1, ringSet.size());
+	}
+	
+	public void testBicyclicCompound() throws Exception {
+		SmilesParser sp = new SmilesParser();
+        Molecule molecule = sp.parseSmiles("C1CCC(CCCCC2)C2C1");
+        RingSet ringSet = sssrf.findSSSR(molecule);
+        assertEquals(2, ringSet.size());
 	}
 	
 }
