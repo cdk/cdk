@@ -53,6 +53,15 @@
     </section>
 
     <section>
+      <title>JOELib</title>
+      <para>
+        <ulink url="http://joelib.sf.net">JOELib</ulink> is a chemical library like
+	CDK itself and is based on the OELib library written in C++. It's licenced
+	GPL, and uses an customized versino of CDK's CML library for reading CML.
+      </para>
+    </section>
+
+    <section>
       <title>NMRShiftDB</title>
       <para>
         <ulink url="http://www.nmrshiftdb.org/">NMRShiftDB</ulink>
