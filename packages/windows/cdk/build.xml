@@ -7,7 +7,7 @@
 
     <target name="init">
         <tstamp />
-        <mkdir dir="${dist}" />
+        <mkdir dir="${dist}/jar" />
     </target>
 
     <target name="clean">
