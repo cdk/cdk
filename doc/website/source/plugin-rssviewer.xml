@@ -16,13 +16,25 @@
   <section>
     <title>RSSViewer</title>
     <para>
-        Plugin that convert Jmol/JChemPaint into a CMLRSS reader. It extract chemical
+        Plugin that converts Jmol/JChemPaint into a CMLRSS reader. It extracts chemical
         information from an RSS newsfeed and displays it in Jmol or JChemPaint.
-    </para>
-    <para>
         The source code can be found in the cdk-plugins module in CDK cvs.
         It is licensed GPL.
     </para>
+    <para>
+        The module was published in:
+        Peter Murray-Rust, Henry S. Rzepa, Mark J. Williamson, and Egon L. Willighagen,
+        &quot;Chemical Markup, XML, and the World Wide Web. 5. Applications of Chemical Metadata in RSS Aggregators&quot;,
+        <emphasis>J.Chem.Inf.Comp.Sci.</emphasis>, 2004
+    </para>
+    <figure>
+        <title>RSSViewer plugin in Jmol-HEAD</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="graphics/screenshots/plugin-rssviewer.screenshot1.png" width="640px" format="PNG"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
   </section>
 
 </webpage>
