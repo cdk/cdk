@@ -34,13 +34,12 @@ import java.util.*;
 import java.io.*;
 import javax.vecmath.*;
 
-/* 
+/*
  * Reads an object from XYZ formated input
  *
  * This class is based on Dan Gezelter's XYZReader from Jmol
  *
- * @keyword XYZ
- * @keyword file format
+ * @keyword file format, XYZ
  */
 public class XYZReader implements ChemObjectReader {
 

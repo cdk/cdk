@@ -41,7 +41,7 @@ import javax.media.j3d.*;
 import javax.vecmath.*;
  
 /**
- * @keyword 3D-viewer
+ * @keyword viewer, 3D-viewer
  */
 public class AcceleratedRenderer3D extends Canvas3D
 {

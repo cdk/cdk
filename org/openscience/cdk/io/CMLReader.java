@@ -43,8 +43,7 @@ import java.net.*;
  * @author     Egon L. Willighagen
  * @created    February 2001
  *
- * @keyword CML
- * @keyword file format
+ * @keyword file format, CML
  */
 public class CMLReader implements CDKConstants, ChemObjectReader {
 
@@ -57,6 +56,7 @@ public class CMLReader implements CDKConstants, ChemObjectReader {
     /**
      * Define this CMLReader to take the input from a java.io.Reader
      * class. Possible readers are (among others) StringReader and FileReader.
+     * FIXME: this can not be used in combination with Aelfred2 yet.
      *
      * @param input Reader type input
      */
@@ -65,6 +65,12 @@ public class CMLReader implements CDKConstants, ChemObjectReader {
         this.input = input;
     }
 
+    /**
+     * Define this CMLReader to take the input from a java.io.Reader
+     * class. Possible readers are (among others) StringReader and FileReader.
+     *
+     * @param input String url which points to the file to be read
+     */
     public CMLReader(String url) {
         this.init();
         this.url = url;

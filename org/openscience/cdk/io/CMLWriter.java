@@ -61,8 +61,7 @@ import javax.vecmath.Point3d;
  * @see FileWriter
  * @see StringWriter
  *
- * @keyword file format
- * @keyword CML
+ * @keyword file format, CML
  */
 public class CMLWriter implements ChemObjectWriter, CDKConstants {
 

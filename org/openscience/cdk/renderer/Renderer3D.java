@@ -45,7 +45,7 @@ import java.awt.event.*;
  *
  * @author Egon Willighagen
  *
- * @keyword 3D-viewer
+ * @keyword viewer, 3D-viewer
  *
  */
 public class Renderer3D extends JPanel implements Runnable {

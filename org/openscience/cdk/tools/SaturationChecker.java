@@ -40,7 +40,7 @@ import java.io.*;
  * @created    September 4, 2001
  *
  * @keyword saturation
- * @keyword valency
+ * @keyword atom, valency
  */
 public class SaturationChecker
 {

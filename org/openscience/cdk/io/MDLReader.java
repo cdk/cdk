@@ -42,8 +42,7 @@ import javax.vecmath.*;
  * @author     steinbeck
  * @created    October 2, 2000
  *
- * @keyword MDL molfile
- * @keyword file format
+ * @keyword file format, MDL molfile
  */
 public class MDLReader implements CDKConstants, ChemObjectReader {
 

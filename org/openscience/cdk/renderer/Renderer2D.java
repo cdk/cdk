@@ -40,7 +40,7 @@ import org.openscience.cdk.tools.*;
  * A Renderer class which draws 2D representations of molecules onto 
  * a given graphics objects using information from a Renderer2DModel
  * 
- * @keyword 2D-viewer
+ * @keyword viewer, 2D-viewer
  */
 public class Renderer2D 
 {

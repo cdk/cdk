@@ -43,8 +43,7 @@ import javax.vecmath.*;
  * @author     Bradley Smith (bradley@baysmith.com)
  * @created    2001-08-06 
  *
- * @keyword PDB
- * @keyword file format
+ * @keyword file format, PDB
  */
 public class PDBReader implements CDKConstants, ChemObjectReader {
 
