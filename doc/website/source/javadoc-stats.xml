@@ -15,9 +15,15 @@
 
   <section>
     <title>Project Statistics</title>
-    <para>This section shows you some statistics on the use of JavaDoc in
-    the source code. Note that the number of javadocs should equal the number of
-    classes + the number of functions.</para>
+    <para>
+      This section shows you some statistics on the use of JavaDoc in
+      the source code. Note that the number of javadocs should equal the number of
+      classes + the number of functions.
+    </para>
+    <para>
+      Besides the below statistics, JavaDoc errors are given in more detail on
+      a per module basis <ulink url="modules.html">elsewhere on this site</ulink>.
+    </para>
     &statsdata;
   </section>
 

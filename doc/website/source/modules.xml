@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.0b1//EN" 
+                         "dtd/website.dtd" [
+  <!ENTITY biblio SYSTEM "../../refs/cheminf.dbx">  
+]>
+<webpage id="modules">
+  <config param="last-change-by" value="$Author$"/>
+  <config param="rcsdate" value="$Date$"/>
+
+  <head>
+    <title>Modules</title>
+    <titleabbrev>Modules</titleabbrev>
+    <summary>The list of CDK modules.</summary>
+  </head>
+
+  <para>
+    Below is the list of CDK modules. The links point to pages with more information
+    about the modules.
+  </para>
+  
+  <itemizedlist>
+    <listitem><para><ulink url="module-core.html">core</ulink></para></listitem>
+    <listitem><para><ulink url="module-standard.html">standard</ulink></para></listitem>
+  </itemizedlist>
+
+</webpage>
