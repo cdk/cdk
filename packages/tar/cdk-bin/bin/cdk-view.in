@@ -6,9 +6,9 @@ LOGJAVA=@PATHTOLOGJAVA@
 THREEDJAR=@PATHTO3DJAR@
 RTJAR=@PATHTORTJAR@
 JAVA=@PATHTOJAVA@
+CDKLIBDIR=@CDKLIBDIR@
 
-JARLIBDIR=${PREFIX}/lib/cdk
-JARLIBS=`ls -1 ${JARLIBDIR}/*.jar | perl -ne "s/\n|\r/:/g; print;"`
+JARLIBS=`ls -1 ${CDKLIBDIR}/*.jar | perl -ne "s/\n|\r/:/g; print;"`
 CLASSPATH=${RTJAR}:${LOGJAVA}:${XERCESJAR}:${JARLIBS}:${THREEDJAR}
 
 # Collect -D options as java arguments

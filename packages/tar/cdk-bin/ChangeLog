@@ -1,3 +1,7 @@
+20020518-2
+=================
+* Also look in $prefix/share/cdk/lib for files
+
 20020518
 =================
 * removed bugs in detection of Java3D

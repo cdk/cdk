@@ -50,16 +50,23 @@ AC_PROG_LN_S
 AC_PROG_MAKE_SET
 
 AC_MSG_CHECKING(for CDK libraries)
-if test -f "$prefix/lib/cdk/dadml.jar"
+for d in $prefix/lib/cdk $prefix/share/cdk/lib
+do
+    if test -f "$d/dadml.jar"
+    then
+        CDKLIBDIR="$d"
+    fi
+done
+if test "x$CDKLIBDIR" = "x"
 then
-    CDKLIBDIR="$prefix"
-    AC_MSG_RESULT($CDKLIBDIR)
-else
     AC_MSG_RESULT(no)
     echo "The required libraries for CDK are not installed. Please download and install"
     echo "the cdk-libs distribution."
     exit 1
+else
+    AC_MSG_RESULT($CDKLIBDIR)
 fi
+AC_SUBST(CDKLIBDIR)
 
 if test -x "$JAVA_HOME/bin/java"
 then
