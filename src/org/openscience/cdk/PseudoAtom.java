@@ -60,6 +60,23 @@ public class PseudoAtom extends Atom implements java.io.Serializable, Cloneable
     }
 
     /**
+     * Constructs an Atom from a String containing an element symbol.
+     *
+     * @param   label  The String describing the PseudoAtom
+     */
+    public PseudoAtom(Atom atom) {
+        super("R");
+        this.properties = atom.properties;
+        this.point3D = atom.point3D;
+        this.point2D = atom.point2D;
+        super.setHydrogenCount(atom.getHydrogenCount());
+        super.setStereoParity(atom.getStereoParity());
+        super.setExactMass(atom.getExactMass());
+        super.setFormalCharge(atom.getFormalCharge());
+        super.setCharge(atom.getCharge());
+    }
+
+    /**
      * Constructs an Atom from an Element and a Point3D.
      *
      * @param   label  The String describing the PseudoAtom
