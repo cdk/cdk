@@ -95,6 +95,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  *                It is possible to add a special treatment for this special query.
  *                Be reminded that this algorithm matches bonds only. Hence an AtomContainer that
  *                contains no bonds is seen as isomorph to any other AtomContainer.
+ *                shk3: Single atom cases now work.
  *   </font>
  *
  *
@@ -338,6 +339,17 @@ public class UniversalIsomorphismTester {
    */
   public static List search(AtomContainer g1, AtomContainer g2, BitSet c1,
       BitSet c2, boolean findAllStructure, boolean findAllMap) {
+        
+    //Test for single atom cases
+    if(g2.getAtomCount()==1){
+      List arrayList=new ArrayList();
+      for(int i=0;i<g1.getAtomCount();i++){
+        if(g1.getAtomAt(i).getSymbol().equals(g2.getAtomAt(0).getSymbol()))
+          arrayList.add(new RMap(i,0));
+      }
+      return arrayList;
+    }
+
     // reset result
     ArrayList rMapsList = new ArrayList();
 
