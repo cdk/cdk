@@ -6,6 +6,7 @@ Changes in CVS
 New:
 * Added Reaction and SetOfReactions to CDK's core classes
 * Zoom functionality for the Renderer2D (including in editing mode)
+* Added method in GeometryTools to center a molecule around a point
 
 Changes:
 * Renamed io.cml.Convention to io.cml.CMLCoreConvention

@@ -3,7 +3,7 @@
  * $Date$    
  * $Revision$
  * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  * 
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  * 
@@ -27,18 +27,16 @@
  *  */
 package org.openscience.cdk.geometry;
 
-
 import javax.vecmath.*;
 import org.openscience.cdk.*;
 import java.awt.Dimension;
 import java.util.Vector;
 
-
 /**
- * A set of static utility classes for geometric calculations
+ * A set of static utility classes for geometric calculations and operations.
+ * This class is extensively used, for example, by JChemPaint to edit molecule.
  */
-public class GeometryTools
-{
+public class GeometryTools {
 
 	/**
 	 * Adds an automatically calculated offset to the coordinates of all atoms
@@ -183,6 +181,23 @@ public class GeometryTools
 			if (atomCon.getAtomAt(i).getPoint2D() != null)
 			{
 				atomCon.getAtomAt(i).getPoint2D().add(vector);
+			}
+		}
+	}
+	
+	/**
+	 * Translates a molecule from the origin to a new point denoted by a vector.
+	 *
+	 * @param atomCon  molecule to be translated
+	 * @param vector   dimension that represents the translation vector
+	 */
+	public static void translate2DCentreOfMassTo(AtomContainer atomCon, Point2d p) {
+        Point2d com = get2DCentreOfMass(atomCon);
+        Vector2d translation = new Vector2d(p.x-com.x, p.y-com.y);
+        Atom[] atoms = atomCon.getAtoms();
+		for (int i = 0; i < atoms.length; i++) {
+			if (atoms[i].getPoint2D() != null) {
+				atoms[i].getPoint2D().add(translation);
 			}
 		}
 	}
