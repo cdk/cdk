@@ -23,10 +23,7 @@
 
 package org.openscience.cdk;
 
-
 import java.util.*;
-import org.openscience.cdk.tools.*;
-
 
 /** An object containig multiple SetOfMolecules and 
   * the other lower level concepts like rings, sequences, 
@@ -65,27 +62,6 @@ public class ChemModel extends ChemObject
 			ac.add(setOfMolecules.getMolecule(i));
 		}
 		return ac;
-	}
-	
-	
-
-	/**
-	 * Partitions a given AtomContainer into Molecules that are not connected
-	 * to each other and stores each of them as a Molecule in the SetOfMolecules
-	 * of this container. 
-	 *
-	 * @param   ac   The AtomContainer to be partitioned
-	 * @exception   Exception  
-	 */
-	public void partitionIntoMolecules(AtomContainer ac) throws Exception
-	{
-		SetOfMolecules newSet = new SetOfMolecules();
-		Vector molecules = ConnectivityChecker.partitionIntoMolecules(ac);
-		for (int i = 0; i < molecules.size(); i++)
-		{
-			newSet.addMolecule((Molecule)molecules.elementAt(i));
-		}	
-		setSetOfMolecules(newSet);
 	}
 	
 	/**

@@ -10,6 +10,7 @@ Changes in CVS
 * Added convertor procedures for CDK <-> JOEAtom, JOEBond, JOEMol
 * Fixed output of bond orders in CML (closes bug #582823)
 * Added viewing of SMILES string to cdk-view (closes bug #564839)
+* Removed dependency on non-core classes in ChemModel (closes bug #584905)
 
 20020518 Release
 ------------------------------------
