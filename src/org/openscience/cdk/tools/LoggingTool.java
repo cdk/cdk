@@ -158,12 +158,42 @@ public class LoggingTool {
             if (object instanceof Throwable) {
                 debugThrowable((Throwable)object);
             } else {
-                if (tostdout) {
-                    toSTDOUT("DEBUG", object.toString());
-                } else {
-                    ((org.apache.log4j.Category)logger).debug(object.toString());
-                }
+                debugString(object.toString());
             }
+        }
+    }
+    
+    private void debugString(String string) {
+        if (tostdout) {
+            toSTDOUT("DEBUG", string);
+        } else {
+            ((org.apache.log4j.Category)logger).debug(string);
+        }
+    }
+    
+    public void debug(Object object, Object object2) {
+        if (debug) {
+            debugString(object.toString() + object2.toString());
+        }
+    }
+    
+    public void debug(Object obj, Object obj2, Object obj3) {
+        if (debug) {
+            debugString(obj.toString() + obj2.toString() + obj3.toString());
+        }
+    }
+    
+    public void debug(Object obj, Object obj2, Object obj3, Object obj4) {
+        if (debug) {
+            debugString(obj.toString() + obj2.toString() + obj3.toString() +
+                  obj4.toString());
+        }
+    }
+    
+    public void debug(Object obj, Object obj2, Object obj3, Object obj4, Object obj5) {
+        if (debug) {
+            debugString(obj.toString() + obj2.toString() + obj3.toString() +
+                  obj4.toString() + obj5.toString());
         }
     }
     
