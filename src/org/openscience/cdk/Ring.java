@@ -49,7 +49,6 @@ public class Ring extends AtomContainer
 		
 	}
 	
-
 	/**
 	 * Constructs a ring that will have a certain number of atoms of the given elements.
 	 *
@@ -127,12 +126,11 @@ public class Ring extends AtomContainer
 	{
 		int orderSum = 0;
 		Bond tempBond;
-		for (int i = 0; i < getBondCount(); i++) {
-            tempBond = getBondAt(i);
-            if (tempBond != null) {
-                orderSum += tempBond.getOrder();
-            } // this should not be necesarry!
-		}
+		for (int i = 0; i < getBondCount(); i++)
+		{
+			tempBond = getBondAt(i);
+			orderSum += tempBond.getOrder();
+ 		}
 		return orderSum;
 	}
 	
