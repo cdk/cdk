@@ -22,7 +22,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
  * 
  */
-
 package org.openscience.cdk.test;
 
 import org.openscience.cdk.*;
@@ -85,10 +84,8 @@ public class SetOfMoleculesTest extends TestCase {
     
     public void testGrowMoleculeArray() {
         // this test assumes that the growSize = 5 !
+        // if not, there is need for the array to grow
         SetOfMolecules som = new SetOfMolecules();
-        
-        Molecule[] mols = som.getMolecules();
-        assertEquals(5, mols.length);
         
         som.addMolecule(new Molecule());
         som.addMolecule(new Molecule());
@@ -98,7 +95,21 @@ public class SetOfMoleculesTest extends TestCase {
         som.addMolecule(new Molecule());
         som.addMolecule(new Molecule());
 
+        Molecule[] mols = som.getMolecules();
+        assertEquals(7, mols.length);
+    }
+    
+    public void testGetMolecules() {
+        SetOfMolecules som = new SetOfMolecules();
+        
+        Molecule[] mols = som.getMolecules();
+        assertEquals(0, mols.length);
+        
+        som.addMolecule(new Molecule());
+        som.addMolecule(new Molecule());
+        som.addMolecule(new Molecule());
+
         mols = som.getMolecules();
-        assertEquals(10, mols.length);
+        assertEquals(3, mols.length);
     }
 }

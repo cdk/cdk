@@ -1,10 +1,9 @@
-/*
- * $RCSfile$    
+/* $RCSfile$    
  * $Author$    
  * $Date$    
  * $Revision$
  * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  * 
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  * 
@@ -87,8 +86,7 @@ public class SetOfMolecules extends ChemObject
 	 */
 	public void addMolecule(Molecule molecule)
 	{
-		if (moleculeCount + 1 >= molecules.length)
-		{
+		if (moleculeCount + 1 >= molecules.length) {
 			growMoleculeArray();
 		}
 		molecules[moleculeCount] = molecule;
@@ -101,9 +99,12 @@ public class SetOfMolecules extends ChemObject
 	 *
 	 * @return    The array of Molecules of this container 
 	 */
-	public Molecule[] getMolecules()
-	{
-		return molecules;
+	public Molecule[] getMolecules() {
+        Molecule[] result = new Molecule[moleculeCount];
+        for (int i=0; i < moleculeCount; i++) {
+            result[i] = molecules[i];
+        }
+		return result;
 	}
 	
 	
