@@ -480,28 +480,43 @@ public class GeometryTools {
 	}
 	
 	/** Determines the scale factor for displaying a structure loaded from disk in a frame.
-	  * An average of all bond length values is produced and the structure is scaled
-	  * such that the resulting bond length divided by the
-	  * character size equals the current Chemistry Development Kit (CKD)Models bondlengthToCharactersizeRatio
-	  * setting.
+	  * An average of all bond length values is produced and a scale factor 
+	  * is determined which would scale the given molecule such that its 
 	  *
 	  * @param   ac The AtomContainer for which the ScaleFactor is to be calculated
-	  * @return  The ScaleFactor with which the AtomContainer must be scaled 
+	  * @param   bondLength The target bond length
+	  * @return  The ScaleFactor with which the AtomContainer must be scaled to have the target bond length
 	 */
 
 	public static double getScaleFactor(AtomContainer ac, double bondLength)
 	{
-		double bondLengthSum = 0;
-		Bond bond = null; 
-		Atom a1 = null, a2 = null; 
-        Bond[] bonds = ac.getBonds();
-		for (int f = 0; f < bonds.length; f++) {
-			bond = bonds[f];
-			bondLengthSum += 1.0;
-		}
-		return bondLength/(bondLengthSum/ac.getBondCount());
+		double currentAverageBondLength = getBondLengthAverage(ac);
+		return bondLength/currentAverageBondLength;
 
 	}
+	
+	/** 
+	  * An average of all bond length values is produced 
+	  *
+	  * @param   ac The AtomContainer for which the average bond length is to be calculated
+	  * @return  the average bond length 
+	 */
+
+	public static double getBondLengthAverage(AtomContainer ac)
+	{
+		double bondLengthSum = 0;
+		Bond bond = null; 
+		Bond[] bonds = ac.getBonds();
+		for (int f = 0; f < bonds.length; f++) {
+			bond = bonds[f];
+			bondLengthSum += bond.getLength();
+		}
+		return bondLengthSum/ac.getBondCount();
+
+	}
+	
+	
+	
 	
 	/** Determines if this AtomContainer contains 2D coordinates.
 	  *

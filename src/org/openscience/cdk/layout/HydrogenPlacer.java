@@ -50,9 +50,10 @@ public class HydrogenPlacer {
 	public static boolean debug = false;
 	public static boolean debug1 = false;
 	
-	public static void placeHydrogens2D(AtomContainer atomContainer)
+	public static void placeHydrogens2D(AtomContainer atomContainer, double bondLength)
 	{
-        LoggingTool logger = new LoggingTool("org.openscience.cdk.layout.HydrogenPlacer");
+		LoggingTool logger = new LoggingTool("org.openscience.cdk.layout.HydrogenPlacer");
+		logger.debug("Entering Hydrogen Placement...");
 		Atom atom = null; 
 		for (int f = 0; f < atomContainer.getAtomCount();f++)
 		{
@@ -60,26 +61,37 @@ public class HydrogenPlacer {
 			if (!atom.getSymbol().equals("H"))
 			{
 				if (debug1) System.out.println("Now placing hydrogens at atom " + f);
-                logger.debug("Now placing hydrogens at atom " + f);
-				placeHydrogens2D(atomContainer, atom);
+				logger.debug("Now placing hydrogens at atom " + f);
+				placeHydrogens2D(atomContainer, atom, bondLength);
 			}
 		}
+		logger.debug("Hydrogen Placement finished");
 	}
+	
 	
 	public static void placeHydrogens2D(AtomContainer atomContainer, Atom atom)
 	{
-        LoggingTool logger = new LoggingTool("org.openscience.cdk.layout.HydrogenPlacer");
-		double bondLength = GeometryTools.getScaleFactor(atomContainer, 1.0);
+		double bondLength = GeometryTools.getBondLengthAverage(atomContainer);
+		placeHydrogens2D(atomContainer, atom, bondLength);
+		
+	
+	}
+	
+	public static void placeHydrogens2D(AtomContainer atomContainer, Atom atom, double bondLength)
+	{
+		LoggingTool logger = new LoggingTool("org.openscience.cdk.layout.HydrogenPlacer");
+		
 		double startAngle = 0.0;
 		double addAngle = 0.0; 
 		AtomPlacer atomPlacer = new AtomPlacer();
 		atomPlacer.setMolecule((Molecule)atomContainer);
 		Vector atomVector = new Vector();
 		if (debug) System.out.println("bondLength" + bondLength);
-        logger.debug("bondLength" + bondLength);
+		logger.debug("bondLength" + bondLength);
 		Atom[] connectedAtoms = atomContainer.getConnectedAtoms(atom);
 		AtomContainer placedAtoms = new AtomContainer();
 		AtomContainer unplacedAtoms = new AtomContainer();
+		
 		for (int f = 0; f < connectedAtoms.length; f++)
 		{
 			if (connectedAtoms[f].getSymbol().equals("H"))
@@ -91,7 +103,12 @@ public class HydrogenPlacer {
 				placedAtoms.addAtom(connectedAtoms[f]);
 			}
 		}
-
+		logger.debug("Atom placement before procedure:");
+		logger.debug("Center atom " + atom.getSymbol() + ": " + atom.getPoint2D());
+		for (int f = 0; f < unplacedAtoms.getAtomCount(); f++)
+		{
+			logger.debug("H-" + f + ": " + unplacedAtoms.getAtomAt(f).getPoint2D());
+		}
 		if (placedAtoms.getAtomCount() > 1)
 		{
 			atomPlacer.distributePartners(atom, placedAtoms, placedAtoms.get2DCenter(), unplacedAtoms, bondLength);
@@ -108,13 +125,33 @@ public class HydrogenPlacer {
 			   start angle. 
 			   Not done yet.
 			   */
-			atomPlacer.populatePolygonCorners(atomVector, new Point2d(atom.getPoint2D()), startAngle, addAngle, bondLength);	
+			Atom placedAtom = placedAtoms.getAtomAt(0);
+//			double xDiff = atom.getX2D() - placedAtom.getX2D();
+//			double yDiff = atom.getY2D() - placedAtom.getY2D();
+			double xDiff = placedAtom.getX2D() - atom.getX2D();
+			double yDiff = placedAtom.getY2D() - atom.getY2D();
+
+			startAngle = GeometryTools.getAngle(xDiff, yDiff); //- (Math.PI / 2.0);
+			//System.out.println("startAngle = " + startAngle);
+			logger.debug("startAngle = " + startAngle);
+			startAngle += addAngle;
+
+			   atomPlacer.populatePolygonCorners(atomVector, new Point2d(atom.getPoint2D()), startAngle, addAngle, bondLength);	
 		}
+		
 		
 		if (debug) System.out.println("unplacedAtoms: " + unplacedAtoms);
 		if (debug) System.out.println("placedAtoms: " + placedAtoms);
-        logger.debug("unplacedAtoms: " + unplacedAtoms);
-        logger.debug("placedAtoms: " + placedAtoms);
-				
+
+		if (placedAtoms.getAtomCount() > 1)
+		{
+			atomPlacer.distributePartners(atom, placedAtoms, placedAtoms.get2DCenter(), unplacedAtoms, bondLength);
+		}
+		logger.debug("Atom placement after procedure:");
+		logger.debug("Center atom " + atom.getSymbol() + ": " + atom.getPoint2D());
+		for (int f = 0; f < unplacedAtoms.getAtomCount(); f++)
+		{
+			logger.debug("H-" + f + ": " + unplacedAtoms.getAtomAt(f).getPoint2D());
+		}				
 	}
 }
