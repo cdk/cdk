@@ -211,9 +211,9 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	 *@param  ec      The ElectronContainer to be stored at position <code>number</code>
 	 *@see            #getElectronContainerAt
 	 */
-	public void setElectronContainerAt(int number, ElectronContainer ec)
+	public void setElectronContainerAt(int number, ElectronContainer electronContainer)
 	{
-		electronContainers[number] = ec;
+		electronContainers[number] = electronContainer;
 	}
 
 
@@ -295,10 +295,10 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 		int bondCounter = 0;
 		for (int i = 0; i < getElectronContainerCount(); i++)
 		{
-			ElectronContainer ec = getElectronContainerAt(i);
-			if (ec instanceof Bond)
+			ElectronContainer electronContainer = getElectronContainerAt(i);
+			if (electronContainer instanceof Bond)
 			{
-				result[bondCounter] = (Bond) ec;
+				result[bondCounter] = (Bond) electronContainer;
 				bondCounter++;
 			}
 		}
@@ -320,10 +320,10 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 		int counter = 0;
 		for (int i = 0; i < getElectronContainerCount(); i++)
 		{
-			ElectronContainer ec = getElectronContainerAt(i);
-			if (ec instanceof LonePair)
+			ElectronContainer electronContainer = getElectronContainerAt(i);
+			if (electronContainer instanceof LonePair)
 			{
-				result[counter] = (LonePair) ec;
+				result[counter] = (LonePair) electronContainer;
 				counter++;
 			}
 		}
@@ -344,10 +344,10 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 		Vector lps = new Vector();
 		for (int i = 0; i < getElectronContainerCount(); i++)
 		{
-			ElectronContainer ec = getElectronContainerAt(i);
-			if ((ec instanceof LonePair) && (((LonePair) ec).contains(atom)))
+			ElectronContainer electronContainer = getElectronContainerAt(i);
+			if ((electronContainer instanceof LonePair) && (((LonePair) electronContainer).contains(atom)))
 			{
-				lps.add(ec);
+				lps.add(electronContainer);
 			}
 		}
 		LonePair[] result = new LonePair[lps.size()];
@@ -497,13 +497,13 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	public Vector getConnectedAtomsVector(Atom atom)
 	{
 		Vector atomsVec = new Vector();
-		ElectronContainer ec;
+		ElectronContainer electronContainer;
 		for (int i = 0; i < electronContainerCount; i++)
 		{
-			ec = electronContainers[i];
-			if (ec instanceof Bond && ((Bond) ec).contains(atom))
+			electronContainer = electronContainers[i];
+			if (electronContainer instanceof Bond && ((Bond) electronContainer).contains(atom))
 			{
-				atomsVec.addElement(((Bond) ec).getConnectedAtom(atom));
+				atomsVec.addElement(((Bond) electronContainer).getConnectedAtom(atom));
 			}
 		}
 		return atomsVec;
@@ -774,20 +774,20 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	 *      AtomContainer and another given one
 	 */
 
-	public AtomContainer getIntersection(AtomContainer ac)
+	public AtomContainer getIntersection(AtomContainer container)
 	{
 		AtomContainer intersection = new AtomContainer();
 
 		for (int i = 0; i < getAtomCount(); i++)
 		{
-			if (ac.contains(getAtomAt(i)))
+			if (container.contains(getAtomAt(i)))
 			{
 				intersection.addAtom(getAtomAt(i));
 			}
 		}
 		for (int i = 0; i < getElectronContainerCount(); i++)
 		{
-			if (ac.contains(getElectronContainerAt(i)))
+			if (container.contains(getElectronContainerAt(i)))
 			{
 				intersection.addElectronContainer(getElectronContainerAt(i));
 			}
@@ -1014,7 +1014,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	 *
 	 *@param  ec  The ElectronContainer to added to this container
 	 */
-	public void addElectronContainer(ElectronContainer ec)
+	public void addElectronContainer(ElectronContainer electronContainer)
 	{
 		if (electronContainerCount + 1 >= electronContainers.length)
 		{
@@ -1023,7 +1023,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 		// are we supposed to check if the atoms forming this bond are
 		// already in here and add them if neccessary? No, core classes
 		// must not check parameter input.
-		electronContainers[electronContainerCount] = ec;
+		electronContainers[electronContainerCount] = electronContainer;
 		electronContainerCount++;
 	}
 
@@ -1072,11 +1072,11 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	 *@param  ec    Description of the Parameter
 	 *@return       Bond that was removed
 	 */
-	public ElectronContainer removeElectronContainer(ElectronContainer ec)
+	public ElectronContainer removeElectronContainer(ElectronContainer electronContainer)
 	{
 		for (int i = getElectronContainerCount() - 1; i >= 0; i--)
 		{
-			if (electronContainers[i].equals(ec))
+			if (electronContainers[i].equals(electronContainer))
 			{
 				return removeElectronContainer(i);
 			}
@@ -1258,11 +1258,11 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	 *@param  ec    Description of the Parameter
 	 *@return       True, if the AtomContainer contains the given bond object
 	 */
-	public boolean contains(ElectronContainer ec)
+	public boolean contains(ElectronContainer electronContainer)
 	{
 		for (int i = 0; i < getElectronContainerCount(); i++)
 		{
-			if (ec == electronContainers[i])
+			if (electronContainer == electronContainers[i])
 			{
 				return true;
 			}
@@ -1298,33 +1298,33 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	 */
 	public String toString()
 	{
-		ElectronContainer ec;
-		StringBuffer s = new StringBuffer();
-		s.append("AtomContainer(");
-		s.append(this.hashCode() + ", ");
-		s.append("#A:" + getAtomCount() + ", ");
-		s.append("#EC:" + getElectronContainerCount() + ", ");
+		ElectronContainer electronContainer;
+		StringBuffer stringContent = new StringBuffer();
+		stringContent.append("AtomContainer(");
+		stringContent.append(this.hashCode() + ", ");
+		stringContent.append("#A:" + getAtomCount() + ", ");
+		stringContent.append("#EC:" + getElectronContainerCount() + ", ");
 		for (int i = 0; i < getAtomCount(); i++)
 		{
-			s.append(getAtomAt(i).toString() + ", ");
+			stringContent.append(getAtomAt(i).toString() + ", ");
 		}
 		for (int i = 0; i < getElectronContainerCount(); i++)
 		{
-			ec = getElectronContainerAt(i);
+			electronContainer = getElectronContainerAt(i);
 			// this check should be removed!
-			if (ec != null)
+			if (electronContainer != null)
 			{
-				s.append(ec.toString() + ", ");
+				stringContent.append(electronContainer.toString() + ", ");
 			}
 		}
-        s.append(", AP:[#" + atomParities.size() + ", ");
+        stringContent.append(", AP:[#" + atomParities.size() + ", ");
         Enumeration parities = atomParities.elements();
         while (parities.hasMoreElements()) {
-			s.append(((AtomParity)parities.nextElement()).toString());
-            if (parities.hasMoreElements()) s.append(", ");
+			stringContent.append(((AtomParity)parities.nextElement()).toString());
+            if (parities.hasMoreElements()) stringContent.append(", ");
 		}
-		s.append("])");
-		return s.toString();
+		stringContent.append("])");
+		return stringContent.toString();
 	}
 
 

@@ -357,11 +357,11 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
          *
          * @see    #getFractX3d
          */
-        public void setFractX3d(double x) {
+        public void setFractX3d(double xFract) {
             if (fractionalPoint3d == null) {
                 fractionalPoint3d = new Point3d();
             }
-            fractionalPoint3d.x = x;
+            fractionalPoint3d.x = xFract;
         }
         /**
          * Sets the y coordinate for of the fractional coordinate of this atom.
@@ -370,11 +370,11 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
          *
          * @see    #getFractY3d
          */
-        public void setFractY3d(double y) {
+        public void setFractY3d(double yFract) {
             if (fractionalPoint3d == null) {
                 fractionalPoint3d = new Point3d();
             }
-            fractionalPoint3d.y = y;
+            fractionalPoint3d.y = yFract;
         }
         /**
          * Sets the z coordinate for of the fractional coordinate of this atom.
@@ -383,11 +383,11 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
          *
          * @see    #getFractZ3d
          */
-        public void setFractZ3d(double z) {
+        public void setFractZ3d(double zFract) {
             if (fractionalPoint3d == null) {
                 fractionalPoint3d = new Point3d();
             }
-            fractionalPoint3d.z = z;
+            fractionalPoint3d.z = zFract;
         }
         /**
          * Returns the x coordinate for of the fractional coordinate of this atom.
@@ -441,11 +441,11 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
          *
          * @see     #getX2d
          */
-        public void setX2d(double x) {
+        public void setX2d(double xCoord) {
             if (point2d == null) {
                 point2d = new javax.vecmath.Point2d();
             }
-            point2d.x = x;
+            point2d.x = xCoord;
         }
 
 
@@ -458,11 +458,11 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
          *
          * @see     #getY2d
          */
-        public void setY2d(double y) {
+        public void setY2d(double yCoord) {
             if (point2d == null) {
                 point2d = new javax.vecmath.Point2d();
             }
-            point2d.y = y;
+            point2d.y = yCoord;
         }
 
 
@@ -475,11 +475,11 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
          *
          * @see     #getX3d
          */
-        public void setX3d(double x) {
+        public void setX3d(double xCoord) {
             if (point3d == null) {
                 point3d = new javax.vecmath.Point3d();
             }
-            point3d.x = x;
+            point3d.x = xCoord;
         }
 
 
@@ -492,11 +492,11 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
          *
          * @see     #getY3d
          */
-        public void setY3d(double y) {
+        public void setY3d(double yCoord) {
             if (point3d == null) {
                 point3d = new javax.vecmath.Point3d();
             }
-            point3d.y = y;
+            point3d.y = yCoord;
         }
 
 
@@ -509,11 +509,11 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
          *
          * @see     #getZ3d
          */
-        public void setZ3d(double z) {
+        public void setZ3d(double zCoord) {
             if (point3d == null) {
                 point3d = new javax.vecmath.Point3d();
             }
-            point3d.z = z;
+            point3d.z = zCoord;
         }
 
 
@@ -562,20 +562,20 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
          * @return  The string representation of this Atom
          */
         public String toString() {
-                StringBuffer s = new StringBuffer();
-                s.append("Atom(");
-                s.append(this.hashCode() + ", ");
-                s.append(getSymbol() + ", ");
-                s.append("H:" + getHydrogenCount() + ", ");
-                s.append("SP:" + getStereoParity() + ", ");
-                s.append("2D:[" + getPoint2d() + "], ");
-                s.append("3D:[" + getPoint3d() + "], ");
-                s.append("Fract3D:[" + getFractionalPoint3d() + "], ");
-                s.append("C:" + getCharge() + ", ");
-                s.append("FC:" + getFormalCharge());
-                s.append(", " + super.toString());
-                s.append(")");
-                return s.toString();
+                StringBuffer stringContent = new StringBuffer();
+                stringContent.append("Atom(");
+                stringContent.append(this.hashCode() + ", ");
+                stringContent.append(getSymbol() + ", ");
+                stringContent.append("H:" + getHydrogenCount() + ", ");
+                stringContent.append("SP:" + getStereoParity() + ", ");
+                stringContent.append("2D:[" + getPoint2d() + "], ");
+                stringContent.append("3D:[" + getPoint3d() + "], ");
+                stringContent.append("Fract3D:[" + getFractionalPoint3d() + "], ");
+                stringContent.append("C:" + getCharge() + ", ");
+                stringContent.append("FC:" + getFormalCharge());
+                stringContent.append(", " + super.toString());
+                stringContent.append(")");
+                return stringContent.toString();
         }
         
 
@@ -586,16 +586,16 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
          */
         public Object clone()
         {
-                Object o = null;
+                Object clone = null;
                 try
                 {
-                        o = super.clone();
+                        clone = super.clone();
                 }
-                catch (Exception e)
+                catch (Exception exception)
                 {
-                        e.printStackTrace(System.err);
+                        exception.printStackTrace(System.err);
                 }
-                return o;
+                return clone;
         }
 
 

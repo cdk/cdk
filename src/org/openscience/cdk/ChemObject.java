@@ -98,8 +98,7 @@ public class ChemObject implements java.io.Serializable, Cloneable {
 	 * Use this to add yourself to this ChemObject as a listener. 
 	 * In order to do so, you must implement the ChemObjectListener Interface.
 	 *
-	 * @param   col  You, the ChemObjectListener
-     *
+	 * @param   col  the ChemObjectListener
      * @see     #removeListener
 	 */
 	public void addListener(ChemObjectListener col)
@@ -121,7 +120,6 @@ public class ChemObject implements java.io.Serializable, Cloneable {
 	 * of change in this object anymore.
 	 *
 	 * @param   col  The ChemObjectListener to be removed
-     *
      * @see     #addListener
 	 */
 	public void removeListener(ChemObjectListener col)
@@ -164,7 +162,6 @@ public class ChemObject implements java.io.Serializable, Cloneable {
 	 *
 	 * @param   description  An object description of the property (most likely a unique string)
 	 * @param   property  An object with the property itself
-     *
      * @see     #getProperty
      * @see     #removeProperty
 	 */
@@ -176,7 +173,6 @@ public class ChemObject implements java.io.Serializable, Cloneable {
 	 * Removes a property for a ChemObject.
 	 *
 	 * @param   description  The object description of the property (most likely a unique string)
-     *
      * @see     #setProperty
      * @see     #getProperty
 	 */
@@ -189,7 +185,6 @@ public class ChemObject implements java.io.Serializable, Cloneable {
 	 *
 	 * @param   description  An object description of the property (most likely a unique string)
 	 * @return  The object containing the property. Returns null if propert is not set.
-     *
      * @see     #setProperty
      * @see     #removeProperty
 	 */
@@ -200,7 +195,8 @@ public class ChemObject implements java.io.Serializable, Cloneable {
     /**
      * Returns a Map with the ChemObject's properties.
      *
-     * @return  The object's properties
+     * @return  The object's properties as an Hashtable
+     * @see     #setProperties
      */
     public Hashtable getProperties() {
         return lazyProperties();
@@ -250,6 +246,7 @@ public class ChemObject implements java.io.Serializable, Cloneable {
     /**
      * Returns the identifier (ID) of this object.
      *
+     * @return a String representing the ID value
      * @see #setID
      */
     public String getID() {
@@ -259,6 +256,7 @@ public class ChemObject implements java.io.Serializable, Cloneable {
     /**
      * Sets the identifier (ID) of this object.
      *
+     * @param id a String representing the ID value
      * @see #getID
      */
     public void setID(String id) {
@@ -270,6 +268,7 @@ public class ChemObject implements java.io.Serializable, Cloneable {
      * 
      * @param  flag_type  Flag to set
      * @param  flag_value Value to assign to flag
+     * @see    #getFlag
      */
     public void setFlag(int flag_type, boolean flag_value) {
         flags[flag_type] = flag_value;
@@ -279,6 +278,8 @@ public class ChemObject implements java.io.Serializable, Cloneable {
      * Returns the value of some flag.
      *
      * @param  flag_type  Flag to retrieve the value of
+     * @return true if the flag <code>flag_type</code> is set
+     * @see    #setFlag
      */
     public boolean getFlag(int flag_type) {
         return flags[flag_type];
@@ -301,6 +302,7 @@ public class ChemObject implements java.io.Serializable, Cloneable {
      * 
      * @param  pointer_type  Pointer to set
      * @param  pointer_value Value to assign to pointer
+     * @see    #getPointer
      */
     public void setPointer(int pointer_type, Vector pointer_value) {
         lazyPointers()[pointer_type] = pointer_value;
@@ -310,6 +312,8 @@ public class ChemObject implements java.io.Serializable, Cloneable {
      * Returns the value of some pointer.
      *
      * @param  pointer_type  Pointer to retrieve the value of
+     * @return a Vector with pointers for the given type
+     * @see    #setPointer
      */
     public Vector getPointer(int pointer_type) {
         return lazyPointers()[pointer_type];
@@ -317,6 +321,9 @@ public class ChemObject implements java.io.Serializable, Cloneable {
     
 	/**
 	 * Sets the properties of this object.
+     *
+     * @param properties  a Hashtable specifying the property values
+     * @see #getProperties
 	 */
 	public void setProperties(Hashtable properties) {
         Enumeration keys = properties.keys();
