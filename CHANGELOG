@@ -11,6 +11,8 @@ New:
 Fixes:
 * Fixed reading/writing of isotopes from/to MDL molfiles
 * Fixed toString() of AtomType.
+* Fixed bug in AtomContainer constructor
+* Some compatibility issues with Java1.1 (for applet usage)
 
 20030412 Release
 ------------------------------------
