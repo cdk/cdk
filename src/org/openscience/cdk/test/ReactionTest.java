@@ -51,6 +51,7 @@ public class ReactionTest extends TestCase {
         assertNotNull(reaction);
         assertEquals(0, reaction.getReactantCount());
         assertEquals(0, reaction.getProductCount());
+        assertEquals(Reaction.FORWARD, reaction.getDirection());
     }
     
     public void testAddReactant() {
@@ -147,5 +148,12 @@ public class ReactionTest extends TestCase {
         reaction.addProduct(aceticAcid);
         reaction.addProduct(water);
         assertEquals(3, reaction.getProducts().length);
+    }
+    
+    public void testSetDirection() {
+        Reaction reaction = new Reaction();
+        int direction = Reaction.BIDIRECTIONAL;
+        reaction.setDirection(direction);
+        assertEquals(direction, reaction.getDirection());
     }
 }

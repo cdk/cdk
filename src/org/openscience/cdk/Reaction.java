@@ -44,6 +44,10 @@ import javax.vecmath.*;
  */
 public class Reaction extends ChemObject implements java.io.Serializable, Cloneable {
 
+    public static final int FORWARD        = 1;
+    public static final int BACKWARD       = 2;
+    public static final int BIDIRECTIONAL = 3;
+    
 	protected int growArraySize = 3;
 
     protected Molecule[] reactants;
@@ -54,8 +58,10 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
     protected int[] productStoichiometry;
     protected int productCount;
     
+    private int reactionDirection;
+    
     /**
-     * Constructs an empty reaction;
+     * Constructs an empty, forward reaction.
      */
     public Reaction() {
         this.reactants = new Molecule[growArraySize];
@@ -64,6 +70,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
         this.products = new Molecule[growArraySize];
         this.productStoichiometry = new int[growArraySize];
         productCount = 0;
+        reactionDirection = FORWARD;
     }
     
     /**
@@ -170,6 +177,20 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
             }
         }
         return -1;
+    }
+    
+    /**
+     * Sets the direction of the reaction.
+     */
+    public void setDirection(int direction) {
+        reactionDirection = direction;
+    }
+    
+    /**
+     * Returns the direction of the reaction.
+     */
+    public int getDirection() {
+        return reactionDirection;
     }
     
     protected void growReactantArray() {
