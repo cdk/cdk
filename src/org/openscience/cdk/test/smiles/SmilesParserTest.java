@@ -620,6 +620,9 @@ public class SmilesParserTest extends TestCase
             Reaction reaction = parser.parseReactionSmiles(reactionSmiles);
             assertEquals(2, reaction.getReactantCount());
             assertEquals(2, reaction.getProductCount());
+            assertEquals(1, reaction.getAgents().getMoleculeCount());
+            
+            assertEquals(1, reaction.getAgents().getMolecule(0).getAtomCount());
         } catch (Exception e) {
             e.printStackTrace();
             fail(e.toString());

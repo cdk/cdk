@@ -112,6 +112,16 @@ public class SmilesParser
             reaction.addReactant(reactants[i]);
         }
 
+        // add reactants
+        if (agentSmiles.length() > 0) {
+            Molecule agentContainer = parseSmiles(agentSmiles);
+            SetOfMolecules agentSet = connChecker.partitionIntoMolecules(agentContainer);
+            Molecule[] agents = agentSet.getMolecules();
+            for (int i=0; i<agents.length; i++) {
+                reaction.addAgent(agents[i]);
+            }
+        }
+
         // add products
         Molecule productContainer = parseSmiles(productSmiles);
         SetOfMolecules productSet = connChecker.partitionIntoMolecules(productContainer);
