@@ -197,11 +197,12 @@
 
         <target name="compile-extra" depends="dist-standard">
             <javac srcdir="${build.src}" destdir="${build}" optimize="${optimization}" 
-                   debug="${debug}" deprecation="${deprecation}"
-                   excludesfile="${src}/java3d.classes">
+                   debug="${debug}" deprecation="${deprecation}">
                 <classpath refid="project.class.path" />
 
+		<excludesfile name="${src}/java3d.classes" />
                 <exclude name="org/openscience/cdk/libio/**/*.java" />
+                <exclude name="org/openscience/cdk/test/**/*.java" />
                 <exclude name="org/openscience/cdk/applications/**/*.java" />
             </javac>          
         </target>
@@ -448,8 +449,7 @@
 
         <target name="dist-all" depends="dist-core, dist-standard, 
                                          dist-io, dist-render, 
-                                         dist-extra, dist-libio,
-                                         dist-apps, dist-test" />
+                                         dist-extra" />
 
         <target name="dist" depends="dist-all" />
 
