@@ -59,9 +59,13 @@ public class MACiEReader extends DefaultChemObjectReader {
 
     private Pattern topLevelDatum;
     private Pattern subLevelDatum;
+    private Pattern annotationTuple;
     
     private ChemModel currentEntry;
+    private Reaction currentReaction;
     private SetOfReactions currentReactionStepSet;
+    
+    private String reactionStepAnnotation;
     
     /**
      * Contructs a new MDLReader that can read Molecule from a given Reader.
@@ -75,6 +79,7 @@ public class MACiEReader extends DefaultChemObjectReader {
         /* compile patterns */
         topLevelDatum = Pattern.compile("(.+):(.+)");
         subLevelDatum = Pattern.compile("(.+):(.+)\\((.+)\\):(.+)");
+        annotationTuple = Pattern.compile("(\\w+)=\\((.+?)\\);(.*)");
     }
 
 
@@ -197,7 +202,6 @@ public class MACiEReader extends DefaultChemObjectReader {
         String type = dTypeLine.substring(7);
         String datum = datumLine.substring(7);
         logger.debug("Tuple TYPE: " + type);
-        logger.debug("     DATUM: " + datum);
         String line = datum;
         if (datum.endsWith("$MFMT")) {
             // deal with MDL mol content
@@ -210,14 +214,14 @@ public class MACiEReader extends DefaultChemObjectReader {
         } else if (datum.endsWith("+") && (datum.length() >= 74)) {
             // deal with multiline fields
             StringBuffer fullDatum = new StringBuffer();
-            fullDatum.append(datum.substring(0,datum.length()));
+            fullDatum.append(datum.substring(0,datum.length()-1));
             do {
                 line = input.readLine();
-                fullDatum.append(line.substring(0,line.length()));
+                fullDatum.append(line.substring(0,line.length()-1));
             } while (line.endsWith("+"));
             datum = fullDatum.toString();
         }
-        logger.debug("     last processed line: " + line);
+        logger.debug("     DATUM: " + datum);
         String[] tuple = new String[2];
         tuple[0] = type;
         tuple[1] = datum;
@@ -253,22 +257,32 @@ public class MACiEReader extends DefaultChemObjectReader {
                         logger.info("Reading overall reaction from: " + filename);
                         FileReader reader = new FileReader(file);
                         MDLRXNReader rxnReader = new MDLRXNReader(reader);
-                        Reaction reaction = (Reaction)rxnReader.read(new Reaction());
-                        reaction.setID("Overall Reaction");
-                        currentReactionStepSet.addReaction(reaction);
+                        currentReaction = (Reaction)rxnReader.read(new Reaction());
+                        currentReaction.setID("Overall Reaction");
+                        // don't add it now, wait until annotation is parsed
                     } else {
                         logger.error("Cannot find secondary file: " + filename);
                     }
                 }
+            } else if (subfield.equals("OVERALL REACTION ANNOTATION")) {
+                parseReactionAnnotation(datum, currentReaction);
+                currentReactionStepSet.addReaction(currentReaction);
             }
         } else if (field.equals("REACTION STAGES")) {
-            if (subfield.equals("STEP_ID")) {
+            if (subfield.equals("REACTION STAGES")) {
+                // new reaction step
+                // cannot create one, because CDK io does not
+                // allow that (yet)
+                reactionStepAnnotation = null;
+            } else if (subfield.equals("ANNOTATION")) {
+                reactionStepAnnotation = datum;
+            } else if (subfield.equals("STEP_ID")) {
                 if (readSecondaryFiles.isSet()) {
                     // parse referenced file
                     String filename = readSecondaryDir.getSetting() + datum + ".rxn";
                     File file = new File(filename);
                     if (file.exists()) {
-                        logger.info("Reading overall reaction from: " + filename);
+                        logger.info("Reading reaction step from: " + filename);
                         FileReader reader = new FileReader(file);
                         MDLRXNReader rxnReader = new MDLRXNReader(reader);
                         Reaction reaction = (Reaction)rxnReader.read(new Reaction());
@@ -278,11 +292,37 @@ public class MACiEReader extends DefaultChemObjectReader {
                         logger.error("Cannot find secondary file: " + filename);
                     }
                 }
+                // now parse annotation
+                if (reactionStepAnnotation != null) {
+                    parseReactionAnnotation(reactionStepAnnotation, currentReaction);
+                }
+                // now, I'm ready to add reaction
+                currentReactionStepSet.addReaction(currentReaction);
             }
         } else {
             logger.warn("Unrecognized sub level field " + field + 
                 " around line " + input.getLineNumber());
         }
+    }
+    
+    private void parseReactionAnnotation(String annotation, Reaction reaction) {
+        logger.debug("Parsing annotation...");
+        Matcher annotationTupleMatcher =
+            annotationTuple.matcher(annotation);
+        while (annotationTupleMatcher.matches()) {
+            String field = annotationTupleMatcher.group(1);
+            String value = annotationTupleMatcher.group(2);
+            processAnnotation(field, value, reaction);
+            // eat next part of annotation
+            String remainder = annotationTupleMatcher.group(3);
+            annotationTupleMatcher =
+                annotationTuple.matcher(remainder);
+        }
+    }
+
+    private void processAnnotation(String field, String value, Reaction reaction) {
+        logger.debug("Annote: " + field + "=" + value);
+        
     }
     
     public void close() throws IOException {
