@@ -74,6 +74,7 @@ public class Renderer2DTest extends JPanel
 			setOfMolecules = chemModel.getSetOfMolecules();
 			molecule = setOfMolecules.getMolecule(0);
 			ht = r2dm.getColorHash();
+      r2dm.setDrawNumbers(true);
 			ht.put(molecule.getAtomAt(2), Color.red);
 			ht.put(molecule.getAtomAt(4), Color.red);
 			GeometryTools.translateAllPositive(molecule);
