@@ -1,5 +1,4 @@
-/*
- *  $RCSfile$
+/*  $RCSfile$
  *  $Author$
  *  $Date$
  *  $Revision$
@@ -37,8 +36,10 @@ import java.util.Hashtable;
 import org.openscience.cdk.tools.HydrogenAdder;
 
 /**
- * This Class contains a method that returns the number failures of the Lipinski's Rule Of 5..
- * See http://www.lifechemicals.com/eng/services/HTS/five/.
+ * This Class contains a method that returns the number failures of the
+ * Lipinski's Rule Of 5.
+ * See <a href="http://www.lifechemicals.com/eng/services/HTS/five/">http://www.lifechemicals.com/eng/services/HTS/five/</a>.
+ *
  * @author      mfe4
  * @cdk.created 2004-11-03
  * @cdk.module  qsar

@@ -1,4 +1,8 @@
-/*
+/*  $RCSfile$
+ *  $Author$
+ *  $Date$
+ *  $Revision$
+ *
  *  Copyright (C) 2004-2005  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
@@ -45,7 +49,7 @@ import Jama.EigenvalueDecomposition;
  * Eigenvalue based descriptor noted for its utility in chemical diversity.
  * Described by Pearlman et al. {@cdk.cite PEA99}.
  * 
- * The descriptor is based on a weighted version of the Burden matrix {@cdk.cite BUR89, BUR97}
+ * <p>The descriptor is based on a weighted version of the Burden matrix {@cdk.cite BUR89, BUR97}
  * which takes into account both the connectivity as well as atomic
  * properties of a molecule. The weights are a variety of atom properties placed along the 
  * diagonal of the Burden matrix. Currently three weighting schemes are employed
@@ -54,12 +58,12 @@ import Jama.EigenvalueDecomposition;
  * <li>partial charge (Gasteiger Marsilli)
  * <li>polarizability {@cdk.cite KJ81}
  * </ul>
- * By default, the descriptor will return the 2 highest and lowest eigenvalues for the three
+ * <p>By default, the descriptor will return the 2 highest and lowest eigenvalues for the three
  * classes of descriptor in a single ArrayList (in the order shown above). However it is also
  * possible to supply a parameter list indicating how many of the highest and lowest eigenvalues
  * (for each class of descriptor) are required.
- * <p>
- * The descriptor works with the hydrogen depleted molecule and thus the maximum number
+ * 
+ * <p>The descriptor works with the hydrogen depleted molecule and thus the maximum number
  * of eigenvalues calculated for any class of BCUT descriptor is equal to the number
  * of heavy atoms present.
  * 

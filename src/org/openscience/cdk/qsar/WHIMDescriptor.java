@@ -1,4 +1,8 @@
-/*
+/*  $RCSfile$
+ *  $Author$
+ *  $Date$
+ *  $Revision$
+ *
  *  Copyright (C) 2004-2005  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
@@ -45,7 +49,7 @@ import Jama.EigenvalueDecomposition;
 
 
 /**
- * Holistic descriptors described by Todeschini et al ({@cdk.cite TOD98}). 
+ * Holistic descriptors described by Todeschini et al {@cdk.cite TOD98}. 
  * The descriptors are based on a number of atom weightings. There are 6 different
  * possible weightings:
  * <ol>

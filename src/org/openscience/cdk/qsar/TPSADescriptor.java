@@ -1,5 +1,4 @@
-/*
- *  $RCSfile$
+/*  $RCSfile$
  *  $Author$
  *  $Date$
  *  $Revision$
@@ -40,9 +39,8 @@ import org.openscience.cdk.qsar.result.*;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
- *  Calculation of polar surface area based on fragment contributions (TPSA),
- *  For description of the methodology see : 
- *  http://pubs.acs.org/cgi-bin/article.cgi/jmcmar/2000/43/i20/html/jm000942e.html
+ * Calculation of topological polar surface area based on fragment 
+ * contributions (TPSA) {@cdk.cite ERTL2000}.
  *
  * @author      mfe4
  * @cdk.created 2004-11-03

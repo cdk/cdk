@@ -1,5 +1,4 @@
-/*
- *  $RCSfile$
+/*  $RCSfile$
  *  $Author$
  *  $Date$
  *  $Revision$
@@ -42,12 +41,11 @@ import org.openscience.cdk.smiles.SmilesParser;
 
 /**
  *  Prediction of logP based on the atom-type method called XLogP. For
- *  description of the methodology see : J.Chem.Inf.Comput.Sci., 1997, 37, 615
- *  or http://www.chem.ac.ru/Chemistry/Soft/XLOGP.en.html . Actually 1
- *  molecular factor is missing (presence of para Hs donor pair).
+ *  description of the methodology see Ref. @cdk.cite{WANG97}
+ *  or <a href="http://www.chem.ac.ru/Chemistry/Soft/XLOGP.en.html">http://www.chem.ac.ru/Chemistry/Soft/XLOGP.en.html</a>. 
+ *  Actually one molecular factor is missing (presence of para Hs donor pair).
  *
  *@author         mfe4
- *@cdk.created        December 14, 2004
  *@cdk.created    2004-11-03
  *@cdk.module     qsar
  *@cdk.set        qsar-descriptors
