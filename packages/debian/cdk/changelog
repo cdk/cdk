@@ -1,3 +1,10 @@
+cdk (20040202-1) unstable; urgency=low
+
+  * New upstream release
+  * Now depends on a lot more Debian packages (control)
+
+ -- E.L. Willighagen (Egon) <egonw@sci.kun.nl>  Tue, 03 Feb 2004 11:47:00 +0100
+
 cdk (20040120-2) unstable; urgency=low
 
   * Now build depends on gcj instead of j2sdk1.4

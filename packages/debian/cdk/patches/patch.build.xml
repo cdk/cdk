@@ -1,32 +1,67 @@
---- build.xml	2003-10-17 10:21:30.649292000 +0200
-+++ build.xml.debian	2003-10-17 11:37:35.869446000 +0200
-@@ -41,7 +41,10 @@
+--- build.xml	2004-02-03 11:50:23.687221000 +0100
++++ build.xml.debian	2004-02-03 12:00:43.686259000 +0100
+@@ -40,23 +40,22 @@
          <path id="project.class.path">
-                 <pathelement
-                 location="/usr/lib/j2sdk1.3/jre/lib/rt.jar" />
--
-+                <pathelement location="/usr/share/java/junit.jar" />
-+                <pathelement location="/usr/share/java/xercesImpl.jar" />
-+                <pathelement location="/usr/share/java/xmlParserAPIs.jar" />
-+                
-                 <pathelement location="." />
+                 <pathelement location="${java.ext.dirs}/rt.jar" />
+ 
++                <fileset dir="/usr/share/java">
++                    <include name="junit.jar" />
++                    <include name="xercesImpl.jar" />
++                    <include name="xmlParserAPIs.jar" />
++                    <include name="gnujaxp.jar" />
++                    <include name="batik*.jar" />
++                    <include name="log4j-1.2.jar" />
++                    <include name="postgresql.jar" />
++                    <include name="mysql.jar" />
++                </fileset>
++
                  <fileset dir="${lib}">
-                         <include name="batik-awt-util.jar" />
-@@ -59,7 +62,6 @@
-                         <include name="postgresql7.0-1.2.jar" />
+-                        <include name="batik-awt-util.jar" />
+-                        <include name="batik-dom.jar" />
+-                        <include name="batik-svggen.jar" />
+-                        <include name="batik-util.jar" />
+-                        <include name="batik-xml.jar" />
+                         <include name="baysmith-io.jar" />
+                         <include name="dadml.jar" />
+-                        <include name="gnujaxp.jar" />
+-                        <include name="junit.jar" />
+-                        <include name="log4j-core.jar" />
+-                        <include name="log4j.jar" />
+-                        <include name="mysql-2.0.4.jar" />
+-                        <include name="postgresql7.0-1.2.jar" />
                          <include name="printf.jar" />
                          <include name="vecmath1.2-1.14.jar" />
 -                        <include name="xerces-2.5.0.jar" />
                          <include name="xindice.jar" />
                          <include name="xmldb.jar" />
                          <include name="stmml.jar" />
-@@ -285,7 +287,8 @@
-                             <include name="log4j-core.jar" />
-                             <include name="log4j.jar" />
+@@ -196,11 +195,8 @@
+             <javac srcdir="doc/javadoc/source" destdir="doc/javadoc" 
+                    includes="MakeJavaFilesFilesDoclet.java">
+                 <classpath>
+-                    <fileset dir="${java.ext.dirs}">
+-                        <include name="tools.jar" />
+-                    </fileset>
+-                    <fileset dir="${java.ext.dirs}/../../../lib">
+-                        <include name="tools.jar" />
++                    <fileset dir="/usr/share/java">
++                        <include name="gjdoc.jar" />
+                     </fileset>
+                 </classpath>
+             </javac>
+@@ -327,10 +323,12 @@
+                     <classpath>
+                         <fileset dir="${lib}">
+                             <include name="vecmath1.2-1.14.jar" />
+-                            <include name="log4j-core.jar" />
+-                            <include name="log4j.jar" />
++                        </fileset>
++                        <fileset dir="/usr/share/java">
++                            <include name="xercesImpl.jar" />
++                            <include name="xmlParserAPIs.jar" />
                              <include name="gnujaxp.jar" />
 -                            <include name="xerces-2.5.0.jar" />
-+                            <include name="/usr/share/java/xercesImpl.jar" />
-+                            <include name="/usr/share/java/xmlParserAPIs.jar" />
++                            <include name="log4j-1.2.jar" />
                          </fileset>
                          <fileset dir="${dist}/jar">
                              <include name="cdk-core.jar" />

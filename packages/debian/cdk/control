@@ -1,5 +1,5 @@
 Source: cdk
-Build-Depends: gcj (>=3.3.2), libxerces2-java, junit, ant (>= 1.5), jikes, xsltproc
+Build-Depends: gcj (>=3.3.2), junit, ant (>= 1.5), gjdoc, jikes, xsltproc, libxerces2-java, libbatik-java, libgnujaxp-java, liblog4j1.2-java, libpgjava, libmysql-java
 Section: contrib/science
 Priority: optional
 Maintainer: Egon Willighagen <egonw@sci.kun.nl>
@@ -7,7 +7,7 @@ Standards-Version: 3.5.9
 
 Package: cdk
 Architecture: all
-Depends: kaffe | gij | java-virtual-machine | java2-runtime
+Depends: kaffe | gij | java-virtual-machine | java2-runtime, libxerces2-java, libbatik-java, libgnujaxp-java, liblog4j1.2-java, libpgjava, libmysql-java
 Description: The Chemistry Development Kit (CDK)
  The CDK is a library of Java classes used in computational and 
  information chemistry and in bioinformatics. It includes renderers, 
