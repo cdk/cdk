@@ -25,6 +25,9 @@
 package org.openscience.cdk.test;
 
 import junit.framework.*;
+import org.openscience.cdk.test.geometry.*;
+import org.openscience.cdk.test.isomorphism.*;
+import org.openscience.cdk.test.smiles.*;
 import org.openscience.cdk.test.tools.*;
 
 /**
@@ -35,7 +38,12 @@ public class StandardClassesTests {
 
     public static Test suite () {
         TestSuite suite= new TestSuite("The cdk.standard Tests");
+        suite.addTest(AtomTypeFactoryTest.suite());
         suite.addTest(IsotopeFactoryTest.suite());
+        suite.addTest(CrystalGeometryToolsTest.suite());
+        suite.addTest(SmilesParserTest.suite());
+        suite.addTest(ReactionManipulatorTest.suite());
+        suite.addTest(IsomorphismTesterTest.suite());
         return suite;
     }
 
