@@ -8,6 +8,7 @@ New:
 
 Fixes:
 * Added missing get() methods to cdk.applications.plugin.EditBus interface
+* Added use of LoggingTool in a few classes (closes #827341 and #826991)
 
 API changes:
 

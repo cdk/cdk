@@ -31,24 +31,30 @@ package org.openscience.cdk.ringsearch;
 
 import java.util.*;
 import org.openscience.cdk.*;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Finds the Smallest Set of Smallest Rings. 
  * This is an implementation of the algorithm published in
  * FIG96.
  *
- * References:
+ * <p>References:
  *   <a href="http://cdk.sf.net/biblio.html#FIG96">FIG96</a>
  *
  * @keyword smallest-set-of-rings
+ * @keyword ring search
  */
-public class SSSRFinder
-{
+public class SSSRFinder {
 
-	public boolean debug = false; // minimum details
+    private LoggingTool logger;
+    
 	int trimCounter = 0;
 	private static final int PATH = 0;
 
+    public SSSRFinder() {
+        logger = new LoggingTool(this.getClass().getName());
+    }
+    
 	/**
 	 * Finds the Smallest Set of Smallest Rings.
 	 *
@@ -75,13 +81,13 @@ public class SSSRFinder
 		Vector nodesN2 = new Vector();
 		
 		initPath(molecule);
-		if (debug) System.out.println("molecule.getAtomCount(): " + molecule.getAtomCount());				
+		logger.debug("molecule.getAtomCount(): " + molecule.getAtomCount());				
 		// load fullSet with the numbers of our atoms
 		for (int f = 0; f < molecule.getAtomCount(); f++)
 		{
 			fullSet.addElement(molecule.getAtomAt(f));
 		}
-		if (debug) System.out.println("fullSet.size(): " + fullSet.size());						
+		logger.debug("fullSet.size(): " + fullSet.size());						
 		
 		do{
 			//Add nodes of degree zero to trimset.
@@ -99,7 +105,7 @@ public class SSSRFinder
 				{
 					if (!trimSet.contains(atom))
 					{
-						if (debug) System.out.println("Atom of degree 0");
+						logger.debug("Atom of degree 0");
 						trimSet.addElement(atom);
 					}
 				}
@@ -175,12 +181,9 @@ public class SSSRFinder
 			}
 		}
 		while(trimSet.size() < fullSet.size());
-		if (debug)
-		{
-			System.out.println("fullSet.size(): " + fullSet.size());				
-			System.out.println("trimSet.size(): " + trimSet.size());		
-			System.out.println("trimCounter: " + trimCounter);
-		}
+		logger.debug("fullSet.size(): " + fullSet.size());				
+		logger.debug("trimSet.size(): " + trimSet.size());		
+		logger.debug("trimCounter: " + trimCounter);
 	return sssr;	  
 	}
 
@@ -238,12 +241,10 @@ public class SSSRFinder
 							// we have found a valid ring closure
 							// now let's prepare the path to
 							// return in tempAtomSet
-							if (debug){
-								System.out.println("path1  "+node.getPointer(PATH).toString());
-								System.out.println("path2  "+mAtom.getPointer(PATH).toString());
-								System.out.println("rootNode  "+rootNode);
-								System.out.println("ring   "+ ring.toString());
-							}
+							logger.debug("path1  "+node.getPointer(PATH).toString());
+							logger.debug("path2  "+mAtom.getPointer(PATH).toString());
+							logger.debug("rootNode  "+rootNode);
+							logger.debug("ring   "+ ring.toString());
 							ring = getUnion(node.getPointer(PATH), mAtom.getPointer(PATH));
 							return prepareRing(ring,molecule);
 						}
@@ -292,21 +293,21 @@ public class SSSRFinder
 				if (b != null) {
 				    ring.addBond(b);
 				} else {
-				    System.out.println("This should not happen.");
+				    logger.error("This should not happen.");
 				} 
 			}
 			b = mol.getBond(atoms[0], atoms[atomCount - 1]);
 			if (b != null) {
 				ring.addBond(b);
 			} else {
-				System.out.println("This should not happen either.");
+				logger.error("This should not happen either.");
 			} 
 		}
 		catch (Exception exc)
 		{
 			exc.printStackTrace();
 		}
-//		System.out.println("found Ring  "+ ring);
+		logger.debug("found Ring  "+ ring);
 		return ring;
 	}
 		
@@ -421,7 +422,7 @@ public class SSSRFinder
 		Bond bond;
 		int minMaxSize = Integer.MAX_VALUE;
 		int minMax = 0;
-		System.out.println(molecule);
+		logger.debug(molecule.toString());
         Bond[] bonds = ring.getBonds();
 		for (int i = 0; i < bonds.length; i++)
 		{
@@ -429,7 +430,7 @@ public class SSSRFinder
 			molecule.removeElectronContainer(bond);
 			r1 = getRing(bond.getAtomAt(0),molecule);
 			r2 = getRing(bond.getAtomAt(1),molecule);
-			System.out.println("checkEdges: " + bond);
+			logger.debug("checkEdges: " + bond);
 			if (r1.getAtomCount() > r2.getAtomCount())
 			{
 				ringSet.addElement(r1);
