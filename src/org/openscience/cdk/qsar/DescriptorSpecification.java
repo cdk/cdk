@@ -40,6 +40,22 @@ public class DescriptorSpecification {
     private String implementation_identifier;
     private String implementation_vendor;
     
+    /**
+     * Container for specifying the type of descriptor.
+     *
+     * @param specification_reference Reference to a formal definition in a
+     *          dictionary (e.g. in STMML format) of the descriptor, preferably 
+     *          refering to the original article. The format of the content is
+     *          expected to be &lt;dictionaryNameSpace>:&lt;entryID>.
+     * @param implementation_title Title for the implementation of the descriptor
+     *          for which the algorithm is given by the specification.
+     * @param implementation_identifier Unique identifier for the actual
+     *          implementation, preferably including the exact version number of
+     *          the source code. E.g. $Id$ can be used when the source code is
+     *          in a CVS repository.
+     * @param implementation_vendor Name of the organisation/person/program/whatever 
+     *          who wrote/packaged the implementation.
+     */
     public DescriptorSpecification(
         String specification_reference,
         String implementation_title,
