@@ -120,7 +120,7 @@ public class MDLReader implements ChemObjectReader
                 // reading mol files
                 do {
                     str = new String(input.readLine());
-                    if (str.equals("$$$$")) {
+                    if (str.equals("$$$$") && input.ready()) {
                         m = readMolecule();
 
                         if (m != null) {
@@ -214,7 +214,6 @@ public class MDLReader implements ChemObjectReader
                 logger.debug("Atom type: " + element);
 				atom = new Atom(element, new Point3d(x, y, z));
 				atom.setPoint2D(new Point2d(x, y));
-				// elemfact.configure(atom);
 
                 // parse further fields
                 String dummy = strTok.nextToken();
