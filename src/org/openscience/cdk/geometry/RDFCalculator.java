@@ -81,7 +81,7 @@ public class RDFCalculator {
      * of the atoms in the <code>AtomContainer</code>.
      */
     public double[] calculate(AtomContainer container, Atom atom) {
-        int length = (int)((cutoff-startCutoff)/binsize) + 1;
+        int length = (int)((cutoff-startCutoff)/resolution) + 1;
         logger.debug("Creating RDF of length ", length);
 
         // the next we need for Gaussian smoothing
@@ -89,7 +89,7 @@ public class RDFCalculator {
         double sigmaSquare = Math.pow(peakWidth, 2.0);
         double[] factors = new double[binsToFillOnEachSide];
         for (int binCounter=0; binCounter<binsToFillOnEachSide; binCounter++) {
-            factors[binCounter] = exp(-1.0*(Math.pow(((double)binCounter)*binsize, 2.0))/sigmaSquare);
+            factors[binCounter] = Math.exp(-1.0*(Math.pow(((double)binCounter)*resolution, 2.0))/sigmaSquare);
         }
         
         // this we need always
@@ -97,7 +97,7 @@ public class RDFCalculator {
         double distance = 0.0;
         int index = 0;
         
-        Point3d atomPoint.getPoint3d();
+        Point3d atomPoint = atom.getPoint3d();
         Atom[] atomsInContainer = container.getAtoms();
         for (int i=0; i<atomsInContainer.length; i++) {
             distance = atomPoint.distance(atomsInContainer[i].getPoint3d());
@@ -106,15 +106,16 @@ public class RDFCalculator {
             if (this.peakWidth > 0.0) {
                 // apply Gaussian smoothing
                 for (int binCounter=1; binCounter<=binsToFillOnEachSide; binCounter++) {
-                    if (index - binCounter >= 0) {
-                        rdf[index - bin] += factors[binCounter];
+                    if ((index - binCounter) >= 0) {
+                        rdf[index - binCounter] += factors[binCounter];
                     }
-                    if (index + binCouter < length) {
-                        rdf[index + bin] += factors[binCounter];
+                    if ((index + binCounter) < length) {
+                        rdf[index + binCounter] += factors[binCounter];
                     }
                 }
             }
         }
+        return rdf;
     }
     
 }
