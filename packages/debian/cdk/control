@@ -1,5 +1,5 @@
 Source: cdk
-Build-Depends: libxerces-java, junit, lib-sax-java, ant (>= 1.4), jikes
+Build-Depends: j2sdk1.4, libxerces2-java, junit, ant (>= 1.5), jikes
 Section: misc
 Priority: optional
 Maintainer: Egon Willighagen <egonw@sci.kun.nl>
