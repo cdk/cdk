@@ -161,40 +161,42 @@ public class Renderer2D implements MouseMotionListener   {
         double[] minmaxProducts = GeometryTools.getMinMax(productContainer);
 
         // paint atom atom mappings
-        if (r2dm.getShowAtomAtomMapping()) {
+        Atom highlighted = r2dm.getHighlightedAtom();
+        if (r2dm.getShowAtomAtomMapping() && highlighted != null) {
+            logger.debug("Showing atom-atom mapping");
             Mapping[] mappings = reaction.getMappings();
-            logger.debug("Showing atom-atom mapping: #", mappings.length);
+            logger.debug(" #mappings: ", mappings.length);
             for (int i=0; i<mappings.length; i++) {
                 ChemObject[] objects = mappings[i].getRelatedChemObjects();
-                Atom highlighted = r2dm.getHighlightedAtom();
-                if (highlighted != null) {
-                    // only draw mapping when one of the mapped atoms
-                    // is highlighted
-                    if (objects[0] instanceof Atom &&
-                        objects[1] instanceof Atom) {
-                        if (highlighted.equals(objects[0]) ||
-                            highlighted.equals(objects[1])) {
-                            Atom atom1 = (Atom)objects[0];
-                            Atom atom2 = (Atom)objects[1];
-                            int[] ints = new int[4];
-                            ints[0] = (int)(atom1.getPoint2D().x);
-                            ints[1] = (int)(atom1.getPoint2D().y);
-                            ints[2] = (int)(atom2.getPoint2D().x);
-                            ints[3] = (int)(atom2.getPoint2D().y);
-                            int[] screenCoords = getScreenCoordinates(ints);
-                            graphics.setColor(r2dm.getAtomAtomMappingLineColor());
-                            logger.debug("Mapping line color", r2dm.getAtomAtomMappingLineColor());
-                            logger.debug("Mapping line coords atom1.x: ", screenCoords[0]);
-                            logger.debug("Mapping line coords atom1.y: ", screenCoords[1]);
-                            logger.debug("Mapping line coords atom2.x: ", screenCoords[2]);
-                            logger.debug("Mapping line coords atom2.y: ", screenCoords[3]);
-                            graphics.drawLine(screenCoords[0], screenCoords[1],
-                                              screenCoords[2], screenCoords[3]);
-                            graphics.setColor(r2dm.getForeColor());
-                        }
+                // only draw mapping when one of the mapped atoms
+                // is highlighted
+                if (objects[0] instanceof Atom && objects[1] instanceof Atom) {
+                    logger.debug("    atom1: ", objects[0]);
+                    logger.debug("    atom1: ", objects[1]);
+                    logger.debug("    highlighted: ", highlighted);
+                    if (highlighted == objects[0] || highlighted == objects[1]) {
+                        Atom atom1 = (Atom)objects[0];
+                        Atom atom2 = (Atom)objects[1];
+                        int[] ints = new int[4];
+                        ints[0] = (int)(atom1.getPoint2D().x);
+                        ints[1] = (int)(atom1.getPoint2D().y);
+                        ints[2] = (int)(atom2.getPoint2D().x);
+                        ints[3] = (int)(atom2.getPoint2D().y);
+                        int[] screenCoords = getScreenCoordinates(ints);
+                        graphics.setColor(r2dm.getAtomAtomMappingLineColor());
+                        logger.debug("Mapping line color", r2dm.getAtomAtomMappingLineColor());
+                        logger.debug("Mapping line coords atom1.x: ", screenCoords[0]);
+                        logger.debug("Mapping line coords atom1.y: ", screenCoords[1]);
+                        logger.debug("Mapping line coords atom2.x: ", screenCoords[2]);
+                        logger.debug("Mapping line coords atom2.y: ", screenCoords[3]);
+                        graphics.drawLine(screenCoords[0], screenCoords[1],
+                        screenCoords[2], screenCoords[3]);
+                        graphics.setColor(r2dm.getForeColor());
                     } else {
-                        logger.debug("Not showing a non atom-atom mapping");
+                        logger.debug("  skipping this mapping. Not of hightlighted atom");
                     }
+                } else {
+                    logger.debug("Not showing a non atom-atom mapping");
                 }
             }
         } else {
