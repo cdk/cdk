@@ -61,6 +61,31 @@ public class PseudoAtomTest extends TestCase {
         assertNull(a.getFractionalPoint3d());
     }
 
+    public void testGetLabel() {
+        String label = "Arg255";
+        PseudoAtom a = new PseudoAtom(label);
+        assertEquals(label, a.getLabel());
+    }
+
+    public void testSetLabel_String() {
+        String label = "Arg255";
+        PseudoAtom atom = new PseudoAtom(label);
+        String label2 = "His66";
+        atom.setLabel(label2);
+        assertEquals(label2, atom.getLabel());
+    }
+
+    public void testGetFormalCharge() {
+        PseudoAtom atom = new PseudoAtom("Whatever");
+        assertEquals(0, atom.getFormalCharge());
+    }
+
+    public void testSetFormalCharge_int() {
+        PseudoAtom atom = new PseudoAtom("Whatever");
+        atom.setFormalCharge(+5);
+        assertEquals(0, atom.getFormalCharge());
+    }
+
     public void testPseudoAtom_Atom() {
         Atom atom = new Atom("C");
         Point3d fract = new Point3d(0.5, 0.5, 0.5);

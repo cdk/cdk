@@ -233,4 +233,17 @@ public class ReactionTest extends TestCase {
         reaction.setDirection(direction);
         assertEquals(direction, reaction.getDirection());
     }
+
+    /**
+     * Method to test wether the class complies with RFC #9.
+     */
+    public void testToString() {
+        Reaction reaction = new Reaction();
+        String description = reaction.toString();
+        for (int i=0; i< description.length(); i++) {
+            assertTrue(description.charAt(i) != '\n');
+            assertTrue(description.charAt(i) != '\r');
+        }
+    }
+
 }

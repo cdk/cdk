@@ -50,9 +50,18 @@ public class ChemModelTest extends TestCase {
         return new TestSuite(ChemModelTest.class);
     }
     
-    public void testConstructor()
-    {
+    public void testChemModel() {
 	    ChemModel chemModel = new ChemModel();
-	    assertTrue(chemModel != null);
+	    assertNotNull(chemModel);
     }
+
+    public void testToString() {
+        ChemModel model = new ChemModel();
+        String description = model.toString();
+        for (int i=0; i< description.length(); i++) {
+            assertTrue(description.charAt(i) != '\n');
+            assertTrue(description.charAt(i) != '\r');
+        }
+    }
+
 }

@@ -66,11 +66,17 @@ public class SingleElectronTest extends TestCase {
         SingleElectron radical = new SingleElectron();
         assertEquals(1, radical.getElectronCount());
     }
+
+    public void testContains_Atom() {
+        Atom atom = new Atom("N");
+        SingleElectron radical = new SingleElectron(atom);
+        assertTrue(radical.contains(atom));
+    }
     
     public void testSetAtom_Atom() {
         Atom atom = new Atom("N");
         SingleElectron radical = new SingleElectron();
-        assertTrue(radical.getAtom() == null);
+        assertNull(radical.getAtom());
         radical.setAtom(atom);
         assertTrue(radical.getAtom().compare(atom));
     }
@@ -84,6 +90,7 @@ public class SingleElectronTest extends TestCase {
     public void testClone() {
         SingleElectron radical = new SingleElectron();
         Object clone = radical.clone();
+        assertNotNull(clone);
         assertTrue(clone instanceof SingleElectron);
     }
     

@@ -62,6 +62,13 @@ public class RingTest extends TestCase {
         assertEquals(0, r.getBondCount());
     }
     
+    public void testRing() {
+        Ring ring = new Ring();
+        assertNotNull(ring);
+        assertEquals(0, ring.getAtomCount());
+        assertEquals(0, ring.getBondCount());
+    }
+
     public void testGetOrderSum() {
         Ring r = new Ring(5, "C");
         assertEquals(5, r.getOrderSum());
