@@ -34,6 +34,8 @@ import java.util.HashMap;
  *
  * @cdk.module render
  * @see http://www.openrasmol.org/doc/rasmol.html#cpkcolours
+ *
+ * @cdk.keyword atom coloring, CPK
  */
 public class CPKAtomColors implements AtomColorer, java.io.Serializable
 {
