@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<DBDEF URL="http://www.sci.kun.nl/woc/">
+  <FIELD TYPE="2DSTRUCTURE" MIMETYPE="chemical/x-cml">
+    <NAME>CML 2D Molecular Structure</NAME>
+    <INDEX TYPE="CAS-NUMBER">
+      <ACCESS PREFIX="data/dadml/2d/cml/" SUFFIX=".cml" TYPE="COPYRIGHT"/>
+    </INDEX>
+  </FIELD>
+</DBDEF>
