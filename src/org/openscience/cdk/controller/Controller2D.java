@@ -199,6 +199,7 @@ public class Controller2D
 	 */
 	public void mouseDragged(MouseEvent event)
 	{
+		isUndoableChange = false;
 		logger.debug("MouseDragged Event Props: mode=" + c2dm.getDrawModeString() +
 				", trigger=" + event.isPopupTrigger() +
 				", Button number: " + event.getButton() +
@@ -288,7 +289,7 @@ public class Controller2D
 	 */
 	public void mousePressed(MouseEvent event)
 	{
-
+		isUndoableChange = false;
 		int[] screenCoords = {event.getX(), event.getY()};
 		int[] mouseCoords = getWorldCoordinates(screenCoords);
 		int mouseX = mouseCoords[0];
@@ -336,7 +337,7 @@ public class Controller2D
 	 */
 	public void mouseReleased(MouseEvent event)
 	{
-
+		isUndoableChange = false;
 		logger.debug("MouseReleased Event Props: mode=" + c2dm.getDrawModeString() +
 				", trigger=" + event.isPopupTrigger() +
 				", Button number: " + event.getButton() +
