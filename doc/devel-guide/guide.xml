@@ -1,0 +1,146 @@
+<?xml version="1.0"?>
+<!DOCTYPE 
+     book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+                 "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+]>
+<book id="devel-guide">
+  <title>CDK Developer's Guide</title>
+
+  <bookinfo>
+    <authorgroup>
+      <author>
+        <firstname>Egon</firstname>
+        <othername role="mi">L.</othername>
+        <surname>Willighagen</surname>
+      </author>
+    </authorgroup>
+
+    <revhistory>
+      <revision>
+        <revnumber>&lire-version;</revnumber>
+        <date>$Date$</date>
+        <revremark>
+          $Id$
+        </revremark>
+      </revision>
+    </revhistory>
+  </bookinfo>
+
+  <preface>
+    <title>Preface</title>
+
+    <para>This guide gives information on how the CDK library is being
+      developed. It contains links to software that is needed to 
+      compile the software, or to create packages.
+    </para>
+
+    <para>It also includes
+      guide lines on how to write documentation about the software
+      and as JavaDoc in the software. None of this is currently
+      enforced or required.
+    </para>
+  </preface>
+
+  <part id="part:documentation">
+
+    <section id="sect:javadoc">
+      <title>JavaDoc</title>
+   
+      <para>
+        Most of the documentation about the CDK classes is done in the
+        java source files itself. The format used for this is the JavaDoc
+        format. An overview/introduction can be found <ulink
+        url="http://java.sun.com/j2se/javadoc/writingdoccomments/">here</ulink>.
+      </para>
+
+      <section id="sect:docbookdoclet">
+        <title>DocbookDoclet</title>
+
+        <para>
+          The JavaDoc documentation can be converted into DocBook code
+          with the <ulink 
+          url="http://freshmeat.net/projects/dbdoclet/">DocBookDoclet</ulink>.
+        </para>
+      </section>
+    </section>
+
+    <section id="sect:cdk-tutorial">
+      <title>CDK Programming Tutorial</title>
+
+      <para>There is a sort of CDK Programming Tutorial online. It is
+        written in DocBook XML 4.1.2 (like most of our documentation).</para>
+    </section>
+
+  </part>
+
+  <part id="part:cdk-library">
+
+  <section id="part:compiling">
+    <title>Compiling the CDK source</title>
+
+    <para>
+      Compiling and jar-ing the software is done with <ulink
+      url="http://jakarta.apache.org/ant/">Jakarta's Ant</ulink>.
+      <programlisting>
+cdk/$ ls build.xml
+build.xml
+cdk/$ ant
+      </programlisting>
+    </para>
+
+  </section>
+
+  <section id="part:testing">
+    <title>Testing CDK classes</title>
+
+    <para>
+      After you compiled the code, you can do <command>ant test</command>
+      to run the test suite of non-interactive, automated
+      tests. You should see something like:
+    </para>
+
+    <para>
+      There are also run interactive tests, like the Controller2DTest. 
+      In order to try them, you can edit the "run"
+      target in the build.xml file to look like this:
+      <programlisting><![CDATA[
+        <target name="run" depends="dist">
+                <java classname="org.openscience.cdk.test.ControllerTest" fork="yes">
+                        <arg value=""/>
+                        <classpath>
+                                <pathelement location="${dist}/jar/cdk.jar"/>
+                                <pathelement path="${java.class.path}"/>
+                                <pathelement location="."/>
+                                <fileset dir="jar">
+                                <include name="*.jar"/>
+                                </fileset>
+                        </classpath>
+                </java>  
+        </target>
+]]></programlisting>
+      Then, a <command>ant run</command> should give you a window where you
+      can add bonds to a given structure.
+    </para>
+  </section>
+
+  </part>
+
+  <part id="part:website">
+    <title>The CDK Website</title>
+
+    <para>
+      The website is written as DocBook XML 4.1.2 fragments and
+      compiled into HTML with the Website DTD 2.0.
+    </para>
+  </part>
+
+  <part id="part:packages">
+    <title>Binary Packages</title>
+  
+    <para>
+      Currently only tar.gz packages are available.
+    </para>
+  
+  </part>
+
+</book>
