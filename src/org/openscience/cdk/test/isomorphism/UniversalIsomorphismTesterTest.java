@@ -28,6 +28,8 @@
  */
 package org.openscience.cdk.test.isomorphism;
 
+import java.util.Vector;
+import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -38,6 +40,7 @@ import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
+import org.openscience.cdk.isomorphism.mcss.*;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 
@@ -110,6 +113,24 @@ public class UniversalIsomorphismTesterTest extends TestCase
         
         assertTrue(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
     }
+	
+	public void testGetSubgraphAtomsMaps() throws java.lang.Exception
+	{
+		int[] result1 = {6, 5, 7, 8, 0};
+		int[] result2 = {3, 4, 2, 1, 0};
+		
+		AtomContainer mol = MoleculeFactory.makeIndole();
+		AtomContainer frag1 = MoleculeFactory.makePyrrole(); 
+		HueckelAromaticityDetector.detectAromaticity(mol);
+		HueckelAromaticityDetector.detectAromaticity(frag1);
+		List list = UniversalIsomorphismTester.getSubgraphAtomsMaps(mol, frag1);
+		List first = (List)list.get(0);
+		for (int i = 0; i < first.size(); i++) {
+			RMap rmap = (RMap)first.get(i);
+			assertEquals(rmap.getId1(), result1[i]);
+			assertEquals(rmap.getId2(), result2[i]);
+		}
+	}
 	
 	public static void main(String[] args)
 	{

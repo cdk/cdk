@@ -168,7 +168,6 @@ public class UniversalIsomorphismTester {
    *  Returns all the isomorph 'mappings' found between two
    *  atom containers.
    *
-   * @deprecated Two AtomContainers are isomporph if all Bonds can be mapped. There is only one mapping then. Use getIsomorphMap instead.
    * @param  g1  first molecule
    * @param  g2  second molecule
    * @return     the list of all the 'mappings'
@@ -183,12 +182,13 @@ public class UniversalIsomorphismTester {
   // Subgraph search
 
   /**
-   *  Returns all the subgraph 'bond mappings' found for g2 in g1
+   *  Returns all the subgraph 'bond mappings' found for g2 in g1.
+   *  This is an ArrayList of ArrayLists of RMap objects.
    *
    * @param  g1  first molecule
    * @param  g2  second molecule
    * @return     the list of all the 'mappings' found projected of g1
-   *             (list of AtomContainer )
+   *
    */
   public static List getSubgraphMaps(AtomContainer g1, AtomContainer g2) {
     return search(g1, g2, new BitSet(), getBitSet(g2), true, true);
@@ -225,7 +225,7 @@ public class UniversalIsomorphismTester {
    * @return     all subgraph atom mappings found projected on g1. This is a List of RMap objects containing Ids of matching atoms.
    */
   public static List getSubgraphAtomsMaps(AtomContainer g1, AtomContainer g2) {
-    return (makeAtomsMapOfBondsMap(UniversalIsomorphismTester.getSubgraphMaps(g1, g2), g1, g2));
+    return (makeAtomsMapsOfBondsMaps(UniversalIsomorphismTester.getSubgraphMaps(g1, g2), g1, g2));
   }
   
   /**
@@ -501,9 +501,30 @@ public class UniversalIsomorphismTester {
     return reducedGraphList;
   }
 
-
   /**
-   *  This makes a map of matching atoms out of a map of matching bonds as produced by the get(Subgraph|Ismorphism)Map(s) methods.
+   *  This makes maps of matching atoms out of a maps of matching bonds as produced by the get(Subgraph|Ismorphism)Maps methods.
+   *
+   * @param  l   The list produced by the getMap method.
+   * @param  g1  The first atom container.
+   * @param  g2  The second one (first and second as in getMap)
+   * @return     A Vector of Vectors of RMap objects of matching Atoms.
+   */
+   public static List makeAtomsMapsOfBondsMaps(List l, AtomContainer g1, AtomContainer g2) {
+	   if(l==null) {
+		   return l;
+	   }
+	   Vector result = new Vector();
+	   for (int i = 0; i < l.size(); i++) {
+		   ArrayList l2 = (ArrayList)l.get(i);
+		   if (l!=null) {
+			   result.add((Vector)makeAtomsMapOfBondsMap(l2, g1, g2));
+		   }
+	   }
+	   return result;
+   }
+  
+  /**
+   *  This makes a map of matching atoms out of a map of matching bonds as produced by the get(Subgraph|Ismorphism)Map methods.
    *
    * @param  l   The list produced by the getMap method.
    * @param  g1  The first atom container.
