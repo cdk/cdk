@@ -282,22 +282,6 @@ public class RingSet extends Vector implements java.io.Serializable, Cloneable
 		return false;
 	}
 
-	/**
-	 * Returns all the atoms and bonds from all the rings in the molecule 
-	 * in one AtomContainer.
-	 *
-	 * @return true, if the ringset contains the atom
-	 */
-	public AtomContainer getRingSetInAtomContainer()
-	{
-		AtomContainer container = new AtomContainer();
-		for (int i = 0; i < size(); i++)
-		{
-			container.add((Ring)elementAt(i));
-		}
-		return container;
-	}
-
     /**
      * Sorts the rings in the set by size. The largest ring comes
      * first.

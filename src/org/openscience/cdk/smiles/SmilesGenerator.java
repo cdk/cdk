@@ -54,6 +54,7 @@ import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
  * Generates SMILES strings {@cdk.cite WEI88, WEI89}. 
@@ -282,7 +283,7 @@ public class SmilesGenerator {
       Vector v=RingPartitioner.partitionRings(rings);
       for(int i=0;i<v.size();i++){
         int counter=0;
-        AtomContainer allrings=((RingSet)v.get(i)).getRingSetInAtomContainer();
+        AtomContainer allrings = RingSetManipulator.getAllInOneContainer((RingSet)v.get(i));
         for(int k=0;k<allrings.getAtomCount();k++){
           if(!isStereo(molecule,allrings.getAtomAt(k)) && hasWedges(molecule,allrings.getAtomAt(k))!=null){
             Bond bond=molecule.getBond(allrings.getAtomAt(k),hasWedges(molecule,allrings.getAtomAt(k)));

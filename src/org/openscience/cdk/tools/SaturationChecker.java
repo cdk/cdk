@@ -43,6 +43,7 @@ import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.ringsearch.SSSRFinder;
+import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
  * Provides methods for checking whether an atoms valences are saturated with
@@ -491,7 +492,7 @@ public class SaturationChecker implements ValencyCheckerInterface {
 		for (int f = 0; f < ringSets.size(); f++)
 		{
 			rs = (RingSet)ringSets.elementAt(f);
-			ac = rs.getRingSetInAtomContainer();
+			ac = RingSetManipulator.getAllInOneContainer(rs);
 			temp = new int[ac.getAtomCount()];
 			for (int g = 0; g < ac.getAtomCount(); g++)
 			{

@@ -47,6 +47,7 @@ import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.ringsearch.SSSRFinder;
+import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
  * Generates 2D coordinates for a molecule for which only connectivity is known
@@ -633,7 +634,7 @@ public class StructureDiagramGenerator
 			angle1 = GeometryTools.getAngle(oldPoint2.x - oldPoint1.x, oldPoint2.y - oldPoint1.y);
 			nextRingSystem = getRingSystemOfAtom(ringSystems, vectorAtom2);
 			ringSystem = new AtomContainer();
-			ringSystem.add(nextRingSystem.getRingSetInAtomContainer());
+			ringSystem.add(RingSetManipulator.getAllInOneContainer(nextRingSystem));
 
 			/*
 			 *  Do the layout of the next ring system

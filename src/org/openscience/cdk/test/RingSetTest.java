@@ -73,20 +73,6 @@ public class RingSetTest extends TestCase {
         assertTrue(rs.ringAlreadyInSet(r2));
     }
     
-    public void testGetRingSetInAtomContainer() {
-        Ring r1 = new Ring(5, "C");
-        Ring r2 = new Ring(3, "C");
-        
-        RingSet rs = new RingSet();
-        rs.add(r1);
-        rs.add(r2);
-        
-        AtomContainer ac = rs.getRingSetInAtomContainer();
-        assertTrue(ac != null);
-        assertEquals(8, ac.getAtomCount());
-        assertEquals(8, ac.getBondCount());
-    }
-    
     public void testAdd_RingSet() {
         Ring r1 = new Ring(5, "C");
         Ring r2 = new Ring(3, "C");
