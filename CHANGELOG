@@ -7,12 +7,26 @@ New:
 * Method to determine if two atoms should be bonded (cdk.geometry.BondTools)
 * Added a method debug(Exception) to LoggingTool
 * The SMILES parser now reads formal charges and mass numbers
+* Methods for getting subgraph/isomorphism atom mapping
+* Added a getConnectedBondsVector() method to AtomContainer
+* Added guessFileFormat application, using the new ReaderFactory
+* Added hierarchical compare() methods for core classes
+* Added hook for progress reports on, and hooks for user configurability of 
+  file reading
+* More jUnit tests (total now: 217, of which 102 for core classes)
+* Added MFAnalyser.removeHydrogens()
 
 Fixes:
 * Fixed reading/writing of isotopes from/to MDL molfiles
 * Fixed toString() of AtomType.
 * Fixed bug in AtomContainer constructor
 * Some compatibility issues with Java1.1 (for applet usage)
+* Fixed bug #746067
+* Fixed aromaticity flagging of bonds in SmilesParser
+* Fixed possible memory overflow in RandomStructureGenerator
+* Fixed bug in Crystal.getP1() method
+* Fixed Bond.toString() and Bond.getAtoms
+* Fixed a number of bugs in SmilesGenerator
 
 20030412 Release
 ------------------------------------
