@@ -1,10 +1,9 @@
-/*
- * $RCSfile$ 
+/* $RCSfile$ 
  * $Author$ 
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2001-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2001-2003  The Chemistry Development Kit (CDK) project
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -35,9 +34,8 @@ import javax.vecmath.Point3d;
 
 
 /**
- * <p>Serializes a SetOfMolecules or a Molecule object to CML code.
- *
- * <p>Output can be redirected to other Writer objects like StringWriter
+ * <p>Serializes a SetOfMolecules or a Molecule object to CML 2 code.
+ * Output can be redirected to other Writer objects like StringWriter
  * and FileWriter. An example:
  *
  * <pre>
@@ -58,7 +56,10 @@ import javax.vecmath.Point3d;
  *   cmlwriter.close();
  * </pre>
  *
- * References:
+ * <p>For atoms it outputs: coordinates, element type and formal charge.
+ * For bonds it outputs: order, atoms (2, or more) and wedges.
+ * 
+ * <p>References:
  *   <a href="http://cdk.sf.net/biblio.html#PMR99">PMR99</a>
  *
  * @see FileWriter
@@ -150,14 +151,15 @@ public class CMLWriter implements ChemObjectWriter {
     // Private procedures
 
     private void write(ChemFile cf) {
-        write("<list title=\"sequence\">\n");
+        write("<cml title=\"sequence\">\n");
         for (int i=0; i < cf.getChemSequenceCount(); i++ ) {
             write(cf.getChemSequence(i));
         }
-        write("</list>\n");
+        write("</cml>\n");
     }
 
     private void write(Crystal crystal) {
+        // FIXME: does this produce CML 2
         write("<molecule>\n");
         write("  <crystal>\n");
         write("    <string builtin=\"spacegroup\">" + crystal.getSpaceGroup() + "</string>");
@@ -226,90 +228,105 @@ public class CMLWriter implements ChemObjectWriter {
     }
 
     private void write(Atom atoms[]) {
-		write("<atomArray>\n");
+		write("  <atomArray>\n");
 		for (int i = 0; i < atoms.length; i++) {
 		    write(atoms[i]);
 		}
-		write("</atomArray>\n");
+		write("  </atomArray>\n");
     }
     
     private void write(Bond bonds[]) {
-		write("<bondArray>\n");
+		write("  <bondArray>\n");
 		for (int i = 0; i < bonds.length; i++) {
 		    write(bonds[i]);
 		}
-		write("</bondArray>\n");
+		write("  </bondArray>\n");
     }
 
     private void write(Atom atom) {
-		write("<atom id=\"a" + atom.hashCode() + "\">\n");
-		write("<string builtin=\"elementType\">");
+		write("    <atom id=\"a" + atom.hashCode() + "\" ");
+		write("elementType=\"");
 		write(atom.getSymbol());
-		write("</string>\n");
+		write("\" ");
 		write(atom.getPoint2D());
 		write(atom.getPoint3D());
         int fCharge = atom.getFormalCharge();
         if (fCharge != 0) {
-            write("<integer builtin=\"formalCharge\">" + fCharge + "</integer>\n");
+            write("formalCharge=\"" + fCharge + "\" ");
         }
-		write("</atom>\n");
+		write("/>\n");
     }
 
     private void write(Bond bond) {
-		write("<bond id=\"b" + bond.hashCode() + "\">\n");
+        StringBuffer childElements = new StringBuffer();
+		write("    <bond id=\"b" + bond.hashCode() + "\" ");
 		Atom atoms[] = bond.getAtoms();
-		for (int i = 0; i < atoms.length; i++) {
-		    write("<string builtin=\"atomRef\">a" +
-			  atoms[i].hashCode() + 
-			  "</string>\n");
-		}
+        if (atoms.length == 2) {
+            write("atomRefs2=\"");
+            for (int i = 0; i < 2; i++) {
+                write("a" + atoms[i].hashCode() + " ");
+            }
+            write("\" ");
+        } else {
+            write("atomRefs2=\"");
+            for (int i = 0; i < atoms.length; i++) {
+                write("a" + atoms[i].hashCode() + " ");
+            }
+            write("\" ");
+        }
         double border = bond.getOrder();
         if (border == CDKConstants.BONDORDER_SINGLE) {
-            write("<string builtin=\"order\">S</string>\n");
+            write("order=\"S\" ");
         } else if (border == CDKConstants.BONDORDER_DOUBLE) {
-            write("<string builtin=\"order\">D</string>\n");
+            write("order=\"D\" ");
         } else if (border == CDKConstants.BONDORDER_TRIPLE) {
-            write("<string builtin=\"order\">T</string>\n");
+            write("order=\"T\" ");
         } else if (border == CDKConstants.BONDORDER_AROMATIC) {
-            write("<string builtin=\"order\">A</string>\n");
+            write("order=\"A\" ");
         } else {
-            write("<string builtin=\"order\" convention=\"CDK\">" + 
-                  bond.getOrder() + "</string>\n");
+            logger.warn("Outputing bond order in non CML2 default way.");
+            childElements.append("      <string convention=\"CDK\" builtin=\"order\"" + 
+                                 bond.getOrder() + "\"/>\n");
         }
 		if (bond.getStereo() != CDKConstants.STEREO_BOND_UNDEFINED) {
-		    write("<string builtin=\"stereo\" convention=\"MDLMol\">");
+		    childElements.append("      <string builtin=\"stereo\" convention=\"MDLMol\">");
 		    if (bond.getStereo() == CDKConstants.STEREO_BOND_UP) {
-			write("W");
+                childElements.append("W");
 		    } else if (bond.getStereo() == CDKConstants.STEREO_BOND_DOWN) {
-			write("H");
+			    childElements.append("H");
 		    }
-		    write("</string>\n");
+		    childElements.append("</string>\n");
 		}
-		write("</bond>\n");
+		if (childElements.length() > 0) { 
+            write(childElements.toString());
+            write("    </bond>\n");
+        } else {
+            write("/>\n");
+        }
     }
 
     private void write(Point2d p) {
 		if (p != null) {
-		    write("<float builtin=\"x2\">");
+		    write("x2=\"");
 		    write(new Float(p.x).toString());
-		    write("</float>\n");
-		    write("<float builtin=\"y2\">");
+		    write("\" ");
+		    write("y2=\"");
 		    write(new Float(p.y).toString());
-		    write("</float>\n");
+		    write("\" ");
 		}
     }
 
     private void write(Point3d p) {
 		if (p != null) {
-		    write("<float builtin=\"x3\">");
+		    write("x3=\"");
 		    write(new Float(p.x).toString());
-		    write("</float>\n");
-		    write("<float builtin=\"y3\">");
+		    write("\" ");
+		    write("y3=\"");
 		    write(new Float(p.y).toString());
-		    write("</float>\n");
-		    write("<float builtin=\"z3\">");
+		    write("\" ");
+		    write("z3=\"");
 		    write(new Float(p.z).toString());
-		    write("</float>\n");
+		    write("\" ");
 		}
     }
 
