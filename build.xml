@@ -136,8 +136,12 @@
         <target name="compile-io" depends="init, dist-core">
                 <echo message="Compiling classes defined in ${src}/io.classes." />
 
-                <javac srcdir="${src}/org/openscience/cdk/io" destdir="${build}"
+                <javac srcdir="${src}" destdir="${build}"
                        optimize="off" debug="on" deprecation="off">
+                    <include name="org/openscience/cdk/io/**/*"/>
+                    <include name="org/openscience/cdk/ChemFile.java"/>
+                    <include name="org/openscience/cdk/exception/UnsupportedChemObjectException.java"/>
+
                     <classpath refid="project.class.path" />
                     <classpath>
                         <fileset dir="${dist}/jar">
@@ -255,6 +259,8 @@
                         <include name="org/openscience/cdk/Ring.class" />
                         <include name="org/openscience/cdk/RingSet.class" />
                         <include name="org/openscience/cdk/SetOfMolecules.class" />
+                        <!-- Added after CDK-RFC 2 -->
+                        <include name="org/openscience/cdk/Crystal.class" />
                    </fileset>
                 </jar>
         </target>
