@@ -21,6 +21,7 @@ New:
 * Added ValencyCheckerInterface that provides a general API to SaturationChecker
   and the alternative (experimental) ValencyChecker
 * HydrogenAdder can use the new alternative (experimental) ValencyChecker
+* Added LoggingTool(Object) constructor, which allows new LoggingTool(this)
 
 Fixes:
 * Added missing get() methods to cdk.applications.plugin.EditBus interface
