@@ -275,6 +275,9 @@ public class JCPController2D {
             int mouseX = getWorldCoordinate(event.getX());
             int mouseY = getWorldCoordinate(event.getY());
 
+            logger.debug("Is popup trigger: " + event.isPopupTrigger());
+            logger.debug("Button number: " + event.getButton());
+            
             if (event.isPopupTrigger()) {
                 logger.info("Popup menu triggered...");
                 
