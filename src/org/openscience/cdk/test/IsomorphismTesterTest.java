@@ -25,6 +25,7 @@ package org.openscience.cdk.test;
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.tools.*;
+import org.openscience.cdk.isomorphism.*;
 import java.util.*;
 import junit.framework.*;
 

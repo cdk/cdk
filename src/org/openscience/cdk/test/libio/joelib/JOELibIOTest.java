@@ -32,7 +32,7 @@ import joelib.molecule.JOEMol;
 import joelib.molecule.JOEAtom;
 import joelib.molecule.JOEBond;
 import junit.framework.*;
-import org.openscience.cdk.tools.IsomorphismTester;
+import org.openscience.cdk.isomorphism.IsomorphismTester;
 
 public class JOELibIOTest extends TestCase {
 
