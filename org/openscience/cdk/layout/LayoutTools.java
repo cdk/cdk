@@ -157,7 +157,6 @@ public class LayoutTools
 		translate2D(molecule, new Vector2d(transX, transY));
 	}
 	
-
 }
 
 

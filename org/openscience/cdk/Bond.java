@@ -25,6 +25,7 @@
 package org.openscience.cdk;
 
 import java.util.Vector;
+import javax.vecmath.*;
 
 /**
  * Implements the concept of a bond, i.e. a number of electrons connecting 
@@ -230,6 +231,31 @@ public class Bond extends ElectronContainer implements Cloneable
 		this.stereo = stereo;
 	}
 	
+	public Point2d get2DCenter()
+	{
+		double x = 0, y = 0;
+		for (int f = 0; f < getAtomCount(); f++)
+		{
+			x += getAtomAt(f).getX2D();
+			y += getAtomAt(f).getY2D();
+		}
+		return new Point2d(x / getAtomCount(), y / getAtomCount());
+	}
+	
+
+	public Point3d get3DCenter()
+	{
+		double x = 0, y = 0, z = 0;
+		for (int f = 0; f < getAtomCount(); f++)
+		{
+			x += getAtomAt(f).getX3D();
+			y += getAtomAt(f).getY3D();
+			z += getAtomAt(f).getZ3D();
+		}
+		return new Point3d(x / getAtomCount(), y / getAtomCount(), z / getAtomCount());
+		
+	}
+
 
 	/**
 	 * Clones this bond object.

@@ -44,18 +44,24 @@ import java.awt.*;
 
 public class RingPlacer 
 {
-	public static void placeRing(Ring ring, Bond bond, Vector2d vector, double bondLength)
+	static boolean debug = true;
+
+	public static void placeRing(Ring ring, Bond bond, Vector2d ringCenterVector, double bondLength)
 	{
-		Atom atom; 
-		Point2d point = new Point2d(0, 0);
-		atom = bond.getAtomAt(0);
-		atom.setPoint2D(point);
-		point = new Point2d(0, 0);
-		atom = bond.getAtomAt(1);
-		vector.scale(bondLength);
-		point.add(vector);
-		atom.setPoint2D(point);
+		Point2d ringCenter = bond.get2DCenter();
+		ringCenter.add(ringCenterVector);
+		double ringRadius = Math.sqrt(Math.pow(ringCenterVector.length(), 2) + Math.pow(bondLength / 2, 2));
+		if (debug) System.out.println("ringRadius: " + ringRadius);
+		double occupiedAngle = 2 * Math.asin((bondLength / 2) / ringRadius);
+		if (debug) System.out.println("occupiedAngle: " + occupiedAngle + " (" + occupiedAngle / Math.PI * 180 + ")");
+		double remainingAngle = (2 * Math.PI) - occupiedAngle;
+		if (debug) System.out.println("remainingAngle: " + remainingAngle + " (" + remainingAngle / Math.PI * 180 + ")");
+							
 	}
+	
+	
+	
+	
 
 
 

@@ -88,12 +88,38 @@ public class StructureDiagramGenerator
 	    given set of Nodes */
 	
 	public void generateCoordinates(){
+	
 		sssr = sssrf.findSSSR(molecule);
-		if (debug) System.out.println(sssr.size() + " rings found");
+		if (debug) System.out.println("\n\n" + sssr.size() + " rings found:\n\n");
 		Ring ring = sssr.getMostComplexRing();
-		if (debug) System.out.println("Most complex ring is " + ring);
+		if (debug) System.out.println("\n\nMost complex ring is:\n " + ring);
+		/* Place the most complex ring at th */
+		placeFirstBondOfFirstRing(ring, new Vector2d(0, 1));
+		RingPlacer.placeRing(ring, ring.getBondAt(0), getRingCenterOfFirstRing(ring), bondLength);
+		if (debug) System.out.println("\n\nFirst ring placed:\n " + ring);
+		
 	}
 	
-
+	private void placeFirstBondOfFirstRing(Ring ring, Vector2d bondVector)
+	{
+		Atom atom;
+		Bond bond = ring.getBondAt(0);
+		Point2d point = new Point2d(0, 0);
+		atom = bond.getAtomAt(0);
+		atom.setPoint2D(point);
+		point = new Point2d(0, 0);
+		atom = bond.getAtomAt(1);
+		bondVector.scale(bondLength);
+		point.add(bondVector);
+		atom.setPoint2D(point);
+	}
+	
+	private Vector2d getRingCenterOfFirstRing(Ring ring)
+	{
+		int size = ring.getAtomCount();
+		double angle = ((size - 2) * Math.PI / size);
+		double ringCenterVectorSize = bondLength / 2 * Math.tan(angle/2);
+		return new Vector2d(ringCenterVectorSize, 0);
+	}
 
 }
