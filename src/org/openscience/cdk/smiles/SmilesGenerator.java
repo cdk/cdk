@@ -905,8 +905,9 @@ public class SmilesGenerator {
           int position=-1;
           if(v.get(positionInVector+1) instanceof Vector){
             if(positionInVector>0){
-              if(v.get(positionInVector-1) instanceof Vector)
+              if(v.get(positionInVector-1) instanceof Vector){
                 endOfDoubleBondConfiguration.push(((Vector)v.get(positionInVector-1)).get(0));
+              }
               else
                 endOfDoubleBondConfiguration.push((Atom)v.get(positionInVector-2));
               endOfDoubleBondConfiguration.push(new Integer(positionInVector+1));
@@ -915,7 +916,10 @@ public class SmilesGenerator {
                 if(vectorBefore.get(i) instanceof Atom && ((Atom)vectorBefore.get(i)).getPoint2D().equals(parent.getPoint2D()))
                   position=i;
               }
-              endOfDoubleBondConfiguration.push(vectorBefore.get(position-1));
+              if(vectorBefore.get(position-1) instanceof Atom)
+                endOfDoubleBondConfiguration.push(vectorBefore.get(position-1));
+              else
+                endOfDoubleBondConfiguration.push((((Vector)vectorBefore.get(position-1)).get(0)));
               endOfDoubleBondConfiguration.push(new Integer(positionInVector+1));
             }
           }
