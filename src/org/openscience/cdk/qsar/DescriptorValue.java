@@ -27,6 +27,7 @@ import java.util.Map;
 
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.qsar.result.DescriptorResult;
 
 /**
  * Class that is used to store descriptor values as ChemObject properties.
@@ -37,11 +38,11 @@ public class DescriptorValue {
 
     private DescriptorSpecification specification;
     private Object[] parameterSettings;
-    private Object value;
+    private DescriptorResult value;
     
     public DescriptorValue(DescriptorSpecification specification, 
                            Object[] parameterSettings,
-                           Object value) {
+                           DescriptorResult value) {
         this.specification = specification;
         this.parameterSettings = parameterSettings;
         this.value = value;
@@ -55,7 +56,7 @@ public class DescriptorValue {
         return this.parameterSettings;
     };
     
-    public Object getValue() {
+    public DescriptorResult getValue() {
         return this.value;
     }
     
