@@ -746,6 +746,35 @@
             </junit>
         </target>
 
+        <target id="test-all" name="test-all" depends="test"
+                description="Performs a full JUnit test for the CDK experimental">
+                <junit printsummary="yes" haltonfailure="yes" fork="yes">
+                    <classpath>
+                        <pathelement location="${dist}/jar/cdk-core.jar" />
+                        <pathelement location="${dist}/jar/cdk-standard.jar" />
+                        <pathelement location="${dist}/jar/cdk-io.jar" />
+                        <pathelement location="${dist}/jar/cdk-render.jar" />
+                        <pathelement location="${dist}/jar/cdk-extra.jar" />
+                        <pathelement location="${dist}/jar/cdk-apps.jar" />
+                        <pathelement location="${dist}/jar/cdk-test.jar" />
+                        <pathelement location="${dist}/jar/cdk-libio.jar" />
+                        <pathelement location="${dist}/jar/cdk-experimental.jar" />
+                        <fileset dir="${lib}">
+                                <include name="*.jar" />
+                        </fileset>
+                        <fileset dir="${lib}/libio">
+                                <include name="*.jar" />
+                        </fileset>
+                    </classpath>
+                        <test name="org.openscience.cdk.test.ExperimentalClassesTests"
+                        haltonfailure="no"
+                        todir="${reports.tests}"
+                        outfile="experimental">
+                                <formatter type="brief" />
+                        </test>
+                </junit>
+        </target>
+
         <target id="test" name="test" depends="dist-test"
                 description="Performs a full JUnit test for the CDK">
                 <junit printsummary="yes" haltonfailure="yes" fork="yes">
@@ -758,7 +787,6 @@
                         <pathelement location="${dist}/jar/cdk-apps.jar" />
                         <pathelement location="${dist}/jar/cdk-test.jar" />
                         <pathelement location="${dist}/jar/cdk-libio.jar" />
-                        <pathelement location="${dist}/jar/cdk-experimental.jar" />
                         <fileset dir="${lib}">
                                 <include name="*.jar" />
                         </fileset>

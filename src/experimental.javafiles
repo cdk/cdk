@@ -18,3 +18,7 @@ org/openscience/cdk/iupac/generator/tools/AdjacencyMatrixTools.java
 org/openscience/cdk/graph/invariant/IChIGenerator.java
 org/openscience/cdk/io/IChIReader.java
 org/openscience/cdk/tools/ValencyChecker.java
+org/openscience/cdk/SingleElectron.java
+org/openscience/cdk/Association.java
+org/openscience/cdk/Mapping.java
+
