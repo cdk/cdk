@@ -3,7 +3,9 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2002-2003
+ * Copyright (C) 2002-2003  The Chemistry Development Kit (CDK) Project
+ *
+ * Contact: cdk-devel@lists.sourceforge.net
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -22,7 +24,8 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- *  */
+ *  
+ */
 package org.openscience.cdk.smiles;
 
 import org.openscience.cdk.*;
@@ -41,7 +44,9 @@ import java.text.NumberFormat;
 import javax.vecmath.Vector2d;
 
 /**
- * Generates SMILES strings.
+ * Generates SMILES strings. It takes into account the isotope and formal charge
+ * information of the atoms. In addition to this it takes stereochemistry in account
+ * for both Bond's and Atom's.
  *
  * <p>References:
  *   <a href="http://cdk.sf.net/biblio.html#WEI88">WEI88</a>,
