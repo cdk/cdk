@@ -75,7 +75,7 @@ public class ForceFieldConfigurator {
 	/**
 	 *Constructor for the ForceFieldConfigurator object
 	 */
-	ForceFieldConfigurator() { }
+	public ForceFieldConfigurator() { }
 
 	/**
 	 *  Sets the inputStream attribute of the ForceFieldConfigurator object
