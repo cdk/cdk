@@ -52,11 +52,52 @@ import java.util.Hashtable;
 public class ValenceConnectivityOrderZeroDescriptor implements Descriptor {
 
     private LoggingTool logger;
+    private static Hashtable valences;
 	/**
 	 *  Constructor for the ValenceConnectivityOrderZeroDescriptor object
 	 */
 	public ValenceConnectivityOrderZeroDescriptor() { 
             logger = new LoggingTool(this);
+	    if (valences == null) { 
+		valences = new Hashtable();
+		valences.put("Li", new Integer(1));
+		valences.put("Be", new Integer(2));
+		valences.put("B", new Integer(3));
+		valences.put("C", new Integer(4));
+		valences.put("N", new Integer(5));
+		valences.put("O", new Integer(6));
+		valences.put("F", new Integer(7));
+		valences.put("Na", new Integer(1));
+		valences.put("Mg", new Integer(2));
+		valences.put("Al", new Integer(3));
+		valences.put("Si", new Integer(4));
+		valences.put("P", new Integer(5));
+		valences.put("S", new Integer(6));
+		valences.put("Cl", new Integer(7));
+		valences.put("K", new Integer(1));
+		valences.put("Ca", new Integer(2));
+		valences.put("Ga", new Integer(3));
+		valences.put("Ge", new Integer(4));
+		valences.put("As", new Integer(5));
+		valences.put("Se", new Integer(6));
+		valences.put("Br", new Integer(7));
+		valences.put("Rb", new Integer(1));
+		valences.put("Sr", new Integer(2));
+		valences.put("In", new Integer(3));
+		valences.put("Sn", new Integer(4));
+		valences.put("Sb", new Integer(5));
+		valences.put("Te", new Integer(6));
+		valences.put("I", new Integer(7));
+		valences.put("Cs", new Integer(1));
+		valences.put("Ba", new Integer(2));
+		valences.put("Tl", new Integer(3));
+		valences.put("Pb", new Integer(4));
+		valences.put("Bi", new Integer(5));
+		valences.put("Po", new Integer(6));
+		valences.put("At", new Integer(7));
+		valences.put("Fr", new Integer(1));
+		valences.put("Ra", new Integer(2));	    
+	    }
         }
 
 
@@ -107,45 +148,6 @@ public class ValenceConnectivityOrderZeroDescriptor implements Descriptor {
 	 *@exception  CDKException  Possible Exceptions
 	 */
 	public DescriptorValue calculate(AtomContainer atomContainer) throws CDKException {
-		Hashtable valences = new Hashtable();
-		valences.put("Li", new Integer(1));
-		valences.put("Be", new Integer(2));
-		valences.put("B", new Integer(3));
-		valences.put("C", new Integer(4));
-		valences.put("N", new Integer(5));
-		valences.put("O", new Integer(6));
-		valences.put("F", new Integer(7));
-		valences.put("Na", new Integer(1));
-		valences.put("Mg", new Integer(2));
-		valences.put("Al", new Integer(3));
-		valences.put("Si", new Integer(4));
-		valences.put("P", new Integer(5));
-		valences.put("S", new Integer(6));
-		valences.put("Cl", new Integer(7));
-		valences.put("K", new Integer(1));
-		valences.put("Ca", new Integer(2));
-		valences.put("Ga", new Integer(3));
-		valences.put("Ge", new Integer(4));
-		valences.put("As", new Integer(5));
-		valences.put("Se", new Integer(6));
-		valences.put("Br", new Integer(7));
-		valences.put("Rb", new Integer(1));
-		valences.put("Sr", new Integer(2));
-		valences.put("In", new Integer(3));
-		valences.put("Sn", new Integer(4));
-		valences.put("Sb", new Integer(5));
-		valences.put("Te", new Integer(6));
-		valences.put("I", new Integer(7));
-		valences.put("Cs", new Integer(1));
-		valences.put("Ba", new Integer(2));
-		valences.put("Tl", new Integer(3));
-		valences.put("Pb", new Integer(4));
-		valences.put("Bi", new Integer(5));
-		valences.put("Po", new Integer(6));
-		valences.put("At", new Integer(7));
-		valences.put("Fr", new Integer(1));
-		valences.put("Ra", new Integer(2));
-		
 		int valence = 0;
 		int atomicNumber = 0;
 		int hcount = 0;
