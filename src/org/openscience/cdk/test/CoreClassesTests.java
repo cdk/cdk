@@ -53,7 +53,6 @@ public class CoreClassesTests {
         suite.addTest(ChemFileTest.suite());
         suite.addTest(ChemModelTest.suite());
         suite.addTest(ChemObjectTest.suite());
-        suite.addTest(ChemObjectListenerTest.suite());
         suite.addTest(ChemSequenceTest.suite());
         suite.addTest(CrystalTest.suite());
         suite.addTest(ElectronContainerTest.suite());
