@@ -23,6 +23,7 @@
 import com.sun.tools.doclets.Taglet;
 import com.sun.javadoc.*;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 /**
  * Taglet that expands inline cdk.cite tags into a weblink to the CDK
@@ -85,7 +86,7 @@ public class CDKCiteTaglet implements Taglet {
     }
 
     public String toString(Tag tag) {
-        return "[" + expandCitation(tag.text() + "]";
+        return "[" + expandCitation(tag.text()) + "]";
     }
     
     public String toString(Tag[] tags) {
@@ -93,7 +94,7 @@ public class CDKCiteTaglet implements Taglet {
         if (tags.length > 0) {
             result = "[";
             for (int i=0; i<tags.length; i++) {
-                result += expandCitation(tags[i]);
+                result += expandCitation(tags[i].text());
                 if ((i+1)<tags.length) result += ", ";
             }
             result += "]";
@@ -106,12 +107,14 @@ public class CDKCiteTaglet implements Taglet {
      */
     private String expandCitation(String citation) {
         String result = "";
-        if (citation.indexOf(",") != -1) {
-            StringTokenizer tokenizer = new StringTokenizer(citation);
+        final String separator = ",";
+        result += "<!-- indexOf" + citation.indexOf(separator) + " -->";
+        if (citation.indexOf(separator) != -1) {
+            StringTokenizer tokenizer = new StringTokenizer(citation, separator);
             while (tokenizer.hasMoreTokens()) {
                 String token = tokenizer.nextToken().trim();
                 result += "<a href=\"http://cdk.sf.net/biblio.html#"
-                       + citation + "\">" + citation + "</a>";
+                       + token + "\">" + token + "</a>";
                 if (tokenizer.hasMoreTokens()) {
                     result += ", ";
                 }
