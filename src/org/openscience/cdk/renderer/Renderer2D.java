@@ -405,13 +405,13 @@ public class Renderer2D   {
         
         // calculate SYMBOL width, height
         String atomSymbol = atom.getSymbol();
-        if(atomSymbol.equals("C"))
-          atomSymbol="";
-        if (r2dm.drawNumbers() && atomNumber != 0 && !atomSymbol.equals("")) {
-            atomSymbol += "-" + atomNumber;
+        if (r2dm.drawNumbers()) {
+            if (atomSymbol.equals("C")) {
+                atomSymbol = "" + atomNumber;
+            } else if (atomNumber != 0 && !atomSymbol.equals("")) {
+                atomSymbol += "-" + atomNumber;
+            }
         }
-        if(r2dm.drawNumbers() && atomSymbol.equals(""))
-          atomSymbol += atomNumber;
         graphics.setFont(normalFont);
         FontMetrics fm = graphics.getFontMetrics();
         int atomSymbolW = (new Integer(fm.stringWidth(atomSymbol))).intValue();
