@@ -53,6 +53,7 @@ public class JCPController2D {
     AtomContainer atomCon;
     JCPController2DModel c2dm;
     boolean wasDragged = false;
+    boolean isUndoableChange = false;
     
     private Vector listeners = new Vector();
 
@@ -89,6 +90,11 @@ public class JCPController2D {
 
     public JCPController2DModel getController2DModel() {
         return c2dm;
+    }
+    
+    public boolean isUndoableChange()
+    {
+	    return isUndoableChange;
     }
     
     public void setController2DModel(JCPController2DModel model) {
@@ -236,6 +242,13 @@ public class JCPController2D {
                             atom.setY2D(atom.getY2D()+deltaY);
                         }
                     }
+		    /* PRESERVE THIS. This notifies the 
+		     * the listener responsible for 
+		     * undo and redo storage that it
+		     * should not store this change
+		     */
+		    isUndoableChange = false;
+		    /* --- */
                     fireChange();
                 }
                 
@@ -313,6 +326,13 @@ public class JCPController2D {
                             }
                         }
                         logger.debug("Selected: " + selected.toString());
+		    /* PRESERVE THIS. This notifies the 
+		     * the listener responsible for 
+		     * undo and redo storage that it
+		     * should not store this change
+		     */
+		    isUndoableChange = false;
+		    /* --- */
                         fireChange();
                     }
                 }
@@ -347,7 +367,14 @@ public class JCPController2D {
                             index = 0;
                         }
                         atomInRange.setSymbol((String)commonElements.get(index));
-                        r2dm.fireChange();
+		    /* PRESERVE THIS. This notifies the 
+		     * the listener responsible for 
+		     * undo and redo storage that it
+		     * should store this change of an atom symbol
+		     */
+		    isUndoableChange = true;
+		    /* --- */
+			r2dm.fireChange();
 			fireChange();
                     }
                 }
@@ -359,13 +386,28 @@ public class JCPController2D {
                     Atom atomInRange = r2dm.getHighlightedAtom();
                     if (atomInRange != null) {
                         atomInRange.setFormalCharge(atomInRange.getFormalCharge() + 1);
+		    /* PRESERVE THIS. This notifies the 
+		     * the listener responsible for 
+		     * undo and redo storage that it
+		     * should store this change of an atom charge
+		     */
+		    isUndoableChange = true;
+		    /* --- */
                         r2dm.fireChange();
+			fireChange();
                     }
                 }
                 if (c2dm.getDrawMode() == c2dm.DECCHARGE) {
                     Atom atomInRange = r2dm.getHighlightedAtom();
                     if (atomInRange != null) {
                         atomInRange.setFormalCharge(atomInRange.getFormalCharge() - 1);
+		/* PRESERVE THIS. This notifies the 
+		     * the listener responsible for 
+		     * undo and redo storage that it
+		     * should store this change of an atom symbol
+		     */
+		    isUndoableChange = true;
+		    /* --- */
                         r2dm.fireChange();
 			fireChange();
                     }
@@ -393,12 +435,26 @@ public class JCPController2D {
                                 // this is tricky as it depends on the fact that the 
                                 // constants are unidistant, i.e. {1.0, 2.0, 3.0}.
                             };
+		    /* PRESERVE THIS. This notifies the 
+		     * the listener responsible for 
+		     * undo and redo storage that it
+		     * should store this change of an atom symbol
+		     */
+		    isUndoableChange = true;
+		    /* --- */
                         } else {
                             if (atomInRange != null) {
                                 newAtom1 = atomInRange;
                             } else {
                                 newAtom1 = new Atom(c2dm.getDefaultElementSymbol(), new Point2d(startX,startY));
                                 atomCon.addAtom(newAtom1);
+		    /* PRESERVE THIS. This notifies the 
+		     * the listener responsible for 
+		     * undo and redo storage that it
+		     * should store this change of an atom symbol
+		     */
+		    isUndoableChange = true;
+		    /* --- */
                             }
 
                             if (wasDragged) {
@@ -416,6 +472,13 @@ public class JCPController2D {
                                 }
                                 newBond = new Bond(newAtom1, newAtom2, 1);
                                 atomCon.addBond(newBond);
+		    /* PRESERVE THIS. This notifies the 
+		     * the listener responsible for 
+		     * undo and redo storage that it
+		     * should store this change of an atom symbol
+		     */
+		    isUndoableChange = true;
+		    /* --- */
                             }
                         }
                         r2dm.fireChange();
@@ -439,6 +502,13 @@ public class JCPController2D {
                             } else {
                                 bondInRange.setStereo(CDKConstants.STEREO_BOND_UP);
                             };
+		/* PRESERVE THIS. This notifies the 
+		     * the listener responsible for 
+		     * undo and redo storage that it
+		     * should store this change of an atom symbol
+		     */
+		    isUndoableChange = true;
+		    /* --- */
                         } else {
                             logger.warn("No bond in range!");
                         }
@@ -463,6 +533,13 @@ public class JCPController2D {
                             } else {
                                 bondInRange.setStereo(CDKConstants.STEREO_BOND_DOWN);
                             };
+		    /* PRESERVE THIS. This notifies the 
+		     * the listener responsible for 
+		     * undo and redo storage that it
+		     * should store this change of an atom symbol
+		     */
+		    isUndoableChange = true;
+		    /* --- */
                         } else {
                             logger.warn("No bond in range!");
                         }
@@ -494,6 +571,13 @@ public class JCPController2D {
                     } else if (highlightedBond != null) {
                         atomCon.removeElectronContainer(highlightedBond);
                     }
+		    /* PRESERVE THIS. This notifies the 
+		     * the listener responsible for 
+		     * undo and redo storage that it
+		     * should store this change of an atom symbol
+		     */
+		    isUndoableChange = true;
+		    /* --- */
                     r2dm.fireChange();
                     fireChange();
                 }
@@ -533,6 +617,13 @@ public class JCPController2D {
                                 ringCenterVector.sub(sharedAtomsCenter);
                                 ringPlacer.placeSpiroRing(newRing, sharedAtoms, sharedAtomsCenter, ringCenterVector, bondLength);
                                 atomCon.add(newRing);
+		    /* PRESERVE THIS. This notifies the 
+		     * the listener responsible for 
+		     * undo and redo storage that it
+		     * should store this change of an atom symbol
+		     */
+		    isUndoableChange = true;
+		    /* --- */
                         }
                         
                         /*********************** SPIRO *****************************************/
@@ -564,6 +655,13 @@ public class JCPController2D {
                                         exc.printStackTrace();
                                 }
                                 atomCon.add(newRing);
+		    /* PRESERVE THIS. This notifies the 
+		     * the listener responsible for 
+		     * undo and redo storage that it
+		     * should store this change of an atom symbol
+		     */
+		    isUndoableChange = true;
+		    /* --- */
                         }
                         
                         /*********************** FUSED *****************************************/
@@ -636,6 +734,13 @@ public class JCPController2D {
                                         }
                                         atomCon.add(newRing);
                                 }
+		    /* PRESERVE THIS. This notifies the 
+		     * the listener responsible for 
+		     * undo and redo storage that it
+		     * should store this change of an atom symbol
+		     */
+		    isUndoableChange = true;
+		    /* --- */
                         }
                         r2dm.fireChange();
                         fireChange();
@@ -681,6 +786,7 @@ public class JCPController2D {
                         draggingSelected = true;
                         r2dm.setSelectedPart(new AtomContainer());
                     }
+
                 }
                 
                 if (wasDragged) {
