@@ -38,6 +38,7 @@ New:
 * MDL reader now read atom-atom mapping from RXN files
 * Added MFAnalyser.getHTMLMFString() that outputs HTML
   (thanx to Stephen Tomkinson)
+* Added a Mol2 reader
 
 Fixes:
 * Added missing LGPL license to distributions.
@@ -54,6 +55,8 @@ Fixes:
 * Fixed reading of dictionaries, and added dictionaries to jar
 * The ReaderFactory can now again return ChemObjectReaders (much
   thanx to Miguel!)
+* Fixed aromaticity detection
+* Fixes in the SMILES generator (fixes #791091)
 
 API changes:
 * ConnectivityChecker.partitionIntoMolecules() now returns a 
