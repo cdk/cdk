@@ -92,6 +92,7 @@ public class OverlapResolverTest extends TestCase
 	public void testResolveOverlap1() throws Exception
 	{
 		Molecule molecule = null;
+		logger.debug("Test case with atom clash");
 		try
 		{
 			String filename = "data/overlaptest.cml";
@@ -103,12 +104,13 @@ public class OverlapResolverTest extends TestCase
 			AtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModels[0]);
 			//MoleculeViewer2D.display(new Molecule(atomContainer), false);
 			//OverlapResolver.resolveOverlap(atomContainer, null);
-			double score = new OverlapResolver().getOverlapScore(atomContainer, new Vector(), new Vector());
+			double score = new OverlapResolver().getAtomOverlapScore(atomContainer, new Vector());
 			assertTrue(score > 0);
 		} catch (Exception exc)
 		{
 			fail(exc.toString());
 		}
+		logger.debug("End of test case with atom clash");
 
 	}
 
@@ -120,6 +122,7 @@ public class OverlapResolverTest extends TestCase
 	public void testResolveOverlap2() throws Exception
 	{
 		Molecule molecule = null;
+		logger.debug("Test case with neither bond nor atom overlap");
 		try
 		{
 			String filename = "data/overlaptest2.cml";
@@ -136,8 +139,73 @@ public class OverlapResolverTest extends TestCase
 		{
 			fail(exc.toString());
 		}
+		logger.debug("End of test case with neither bond nor atom overlap");
 
 	}
+
+	/**
+	 *  A unit test for JUnit
+	 *
+	 *@exception  Exception  Description of the Exception
+	 */
+	public void testResolveOverlap3() throws Exception
+	{
+		Molecule molecule = null;
+		logger.debug("Test case with bond overlap");
+		try
+		{
+			String filename = "data/overlaptest3.cml";
+			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+			CMLReader reader = new CMLReader(new InputStreamReader(ins));
+			ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
+			ChemSequence[] chemSequence = chemFile.getChemSequences();
+			ChemModel[] chemModels = chemSequence[0].getChemModels();
+			AtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModels[0]);
+			//MoleculeViewer2D.display(new Molecule(atomContainer), false);
+			double score = new OverlapResolver().getBondOverlapScore(atomContainer, new Vector());
+			assertTrue(score > 0);
+		} catch (Exception exc)
+		{
+			fail(exc.toString());
+		}
+		logger.debug("End of test case with bond overlap");
+
+	}
+
+	/**
+	 *  A unit test for JUnit
+	 *
+	 *@exception  Exception  Description of the Exception
+	 */
+	public void testResolveOverlap4() throws Exception
+	{
+		Molecule molecule = null;
+		double overlapScore = 0;
+		logger.debug("Test case with atom clash");
+		try
+		{
+			String filename = "data/overlaptest.cml";
+			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+			CMLReader reader = new CMLReader(new InputStreamReader(ins));
+			ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
+			ChemSequence[] chemSequence = chemFile.getChemSequences();
+			ChemModel[] chemModels = chemSequence[0].getChemModels();
+			AtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModels[0]);
+			//MoleculeViewer2D.display(new Molecule(atomContainer), false);
+			//OverlapResolver.resolveOverlap(atomContainer, null);
+			OverlapResolver or = new OverlapResolver(); 
+			overlapScore = or.resolveOverlap(atomContainer, null);
+			MoleculeViewer2D.display(new Molecule(atomContainer), false);
+			assertTrue(overlapScore == 0);
+		} catch (Exception exc)
+		{
+			exc.printStackTrace();
+			fail(exc.toString());
+		}
+		logger.debug("End of test case with atom clash");
+
+	}
+
 
 	/**
 	 *  The main program for the OverlapResolverTest class
@@ -151,8 +219,10 @@ public class OverlapResolverTest extends TestCase
 			OverlapResolverTest ort = new OverlapResolverTest("OverlapResolverTest");
 			ort.setUp();
 			ort.standAlone = true;
-			ort.testResolveOverlap1();
-			ort.testResolveOverlap2();
+			//ort.testResolveOverlap1();
+			//ort.testResolveOverlap2();
+			//ort.testResolveOverlap3();
+			ort.testResolveOverlap4();
 		} catch (Exception exc)
 		{
 			exc.printStackTrace();

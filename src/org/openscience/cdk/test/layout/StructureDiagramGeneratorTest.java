@@ -155,7 +155,7 @@ public class StructureDiagramGeneratorTest extends TestCase
 		try
 		{
 			StructureDiagramGeneratorTest sdg = new StructureDiagramGeneratorTest("StructureDiagramGeneratorTest");
-			sdg.runVisualTests();
+			//sdg.runVisualTests();
 			//sdg.bug736137();
 			//sdg.testSpiroRings();
 			sdg.visualBugPMR();
@@ -206,7 +206,7 @@ public class StructureDiagramGeneratorTest extends TestCase
 		    ChemSequence seq = chemFile.getChemSequence(0);
 		    ChemModel model = seq.getChemModel(0);
 		    Molecule mol = model.getSetOfMolecules().getMolecule(0);
-		    //MoleculeViewer2D.display(mol, true, true);
+		    MoleculeViewer2D.display(mol, true);
 		    //System.out.println(new SmilesGenerator().createSMILES(mol));
 		} catch (Exception e) 
 		{
