@@ -26,6 +26,7 @@
         <property name="src.tests" value="${src}/org/openscience/cdk/test" />
         <property name="reports.tests" value="reports" />
         <property name="appjars.dir" value="${dist}/appjars" />
+	<property name="javadoc.dir" value="javadoc" />
  
         <!-- class to run for testing-->
         <property name="testclass" value="CDKTests" />
@@ -38,7 +39,9 @@
         <!-- CLASSPATH -->
         <path id="project.class.path">
                 <pathelement location="${java.ext.dirs}/rt.jar" />
-
+		<fileset dir="${pathtojoelib}">
+			<include name="joelib.jar" />
+		</fileset>
                 <fileset dir="${deb}">
 			<include name="batik.jar" />
 			<include name="gnujaxp.jar" />
@@ -129,7 +132,19 @@
             </and>
           </condition>
         </target>
+	
+        <uptodate property="javadoc.uptodate" targetfile="${javadoc.dir}/index.html">
+          <srcfiles dir="${src}" includes="**/*.java" />
+        </uptodate>
 
+        <target name="javadoc" unless="javadoc.uptodate">
+	  <mkdir dir="${javadoc.dir}"/>
+	  <javadoc destdir="${javadoc.dir}" sourcepath="${src}" private="true" packagenames="org.openscience.*">
+	    <classpath refid="project.class.path" />
+	  </javadoc>
+	</target>
+														    
+	
         <target id="init" name="init" depends="check, setupBuildDir"/>
         <target id="customize" name="customize" depends="javacc"/>
         
@@ -149,7 +164,7 @@
 		    <fileset dir="./doc/javadoc" includes="*.class" />
 		    <fileset dir="${src}" includes="*.classes" />
                 </delete>
-
+		<delete dir="${javadoc.dir}" />
                 <delete dir="${build}" />
                 <delete dir="${sourcedist}" />
                 <delete dir="${dist}" />

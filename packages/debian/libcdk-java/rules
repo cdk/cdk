@@ -6,8 +6,7 @@
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 PACKAGE=libcdk-java
-PACKAGECOMMON=libcdk-java-common
-LIBS=usr/share/$(PACKAGE)/lib
+PACKAGEDOC=libcdk-java-doc
 
 INSTALL=/usr/bin/install
 
@@ -16,7 +15,8 @@ build: build-stamp
 build-stamp: 
 	dh_testdir
 	test !Makefile && cp -f debian/Makefile .
-		
+	-test CHANGELOG && mv CHANGELOG changelog
+
 	# Add here commands to compile the package.
 	$(MAKE) joelib
 	$(MAKE)
@@ -38,7 +38,7 @@ clean:
 	cp ./src/*.javafiles ./debian/javafiles/
 	-$(MAKE) clean
 	-test Makefile && rm -f Makefile
-	
+	-test changelog && mv changelog CHANGELOG
 	dh_clean 
 
 install: build
@@ -47,14 +47,16 @@ install: build
 	dh_clean -k 
 	dh_installdirs
 
-	# Add here commands to install the package into debian/jmol.
-	$(MAKE) install DESTDIR=$(CURDIR)/debian/$(PACKAGE)
-	$(MAKE) common DESTDIR=$(CURDIR)/debian/$(PACKAGECOMMON)
-
-	# mv $(CURDIR)/debian/$(PACKAGE)
+	# Add here commands to install the package into debian/$(PACKAGE).
+	$(MAKE) javadocs DESTDIR=$(CURDIR)/debian/$(PACKAGEDOC)
 
 	cp ./debian/javafiles/* ./src/
 	rm -r ./debian/javafiles/
+	
+	# Until the gjdoc-error appears, we can't use the next line. If the bug in gjdoc will be
+	# patched, we can also use the line under binary-arch.
+	# 
+	#-dh_javadoc -plibcdk-java-doc --sourcedir=src/ `cat debian/libcdk-java-doc.javadocs` -d javadoc
 
 # Build architecture-independent files here.
 binary-indep: build install
@@ -65,15 +67,19 @@ binary-indep: build install
 binary-arch: build install
 	dh_testdir
 	dh_testroot
-	dh_installchangelogs 
+	dh_install
+	dh_installchangelogs
+	# -dh_javadoc -plibcdk-java-doc --sourcedir=src/ `cat debian/libcdk-java-doc.javadocs` -d javadoc
 	dh_installdocs
 	dh_installexamples
 	dh_installmime
+	dh_installman
 	dh_link
 	dh_strip
 	dh_compress
 	dh_fixperms
 	dh_installdeb
+	dh_perl
 	dh_shlibdeps
 	dh_gencontrol
 	dh_md5sums

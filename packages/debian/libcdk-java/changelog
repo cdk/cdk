@@ -1,3 +1,19 @@
+libcdk-java (20040626-2+3) unstable; urgency=low
+
+  * [NEWS] package-split.
+  * Added package cdk, which contains the shell wrappers (+ manpages).
+  * Added control-files for reportbug.
+  * Clean-up Makefile and rules, some changes in debian.
+
+ -- Daniel Leidert (dale) <daniel.leidert@wgdd.de>  Fri, 20 Aug 2004 23:13:38 +0200
+
+libcdk-java (20040626-2+2) unstable; urgency=low
+
+  * Added a JavaDoc-package for the CDK-API (libcdk-java-doc).
+  * Adjusted debian/control.
+
+ -- Daniel Leidert (dale) <daniel.leidert@wgdd.de>  Fri, 20 Aug 2004 12:22:51 +0200
+
 libcdk-java (20040626-2+1) unstable; urgency=low
 
   * Build with Java3D and JOElib.

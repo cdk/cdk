@@ -1,20 +1,22 @@
 # Makefile for making Debian GNU/Linux packages
 #
 DESTDIR     =
-CURRDIR     = .
 JOELIBDIR   = ../libjoelib-java/ant
 JOELIBLIB   = ../libjoelib-java/lib
 JOELIBJAR   = ../libjoelib-java/dist/bin-dist/JOELib/lib
-LIBS        = ${DESTDIR}/usr/share/java
-EXTRA       = ${DESTDIR}/usr/share/libcdk-java/lib
-DEBJAVA     = /usr/share/java
+APIDOC      = ${DESTDIR}/usr/share/doc/libcdk-java/apidoc
 DOCBOOKDIR  = /usr/share/xml/docbook/stylesheet/nwalsh
 
 
 all:
 	@echo INFO: Build cdk-dist-all with joelib.jar
 	@ant clean && ant clearstamp
-	@ant -l builddeb.log -Ddocbook.dir=${DOCBOOKDIR} dist-all
+	@ant -l builddeb.log -Ddocbook.dir=${DOCBOOKDIR} dist-all javadoc
+	# Make manpages.
+	@cd debian/cdk-manpages && for mxml in "*.xml"; \
+	do \
+		xsltproc /usr/share/xml/docbook/stylesheet/nwalsh/manpages/docbook.xsl $$mxml; \
+	done
 
 joelib:
 	@echo INFO: Build joelib.jar without cdk*.jar
@@ -26,7 +28,7 @@ joelib:
 	@cp ${JOELIBJAR}/joelib.jar ./jar/libio/
 	@echo INFO: Build cdk-dist
 	@ant clean && ant clearstamp
-	@ant -l builddist2.log -Ddocbook.dir=${DOCBOOKDIR} dist
+	@ant -l builddist.log -Ddocbook.dir=${DOCBOOKDIR} dist
 	@echo INFO: Copy cdk-dist to joelib-dir
 	@cp dist/jar/* ${JOELIBLIB}
 	@echo INFO: Build joelib.jar with cdk*.jar
@@ -37,26 +39,9 @@ clean:
 	@ant clean
 	@rm -f ./jar/libio/joelib.jar
 	@rm -f build*.log
+	@rm debian/cdk-manpages/cdk-*.1
 
-install:
-	@echo INFO: Install cdk*.jar
-	@install ./dist/jar/*.jar ${LIBS}
-
-common:
-	@echo INFO: Install common jars
-	@install ./jar/baysmith-io.jar ${EXTRA}
-	@install ./jar/dadml.jar ${EXTRA}
-	@install ./jar/printf.jar ${EXTRA}
-	@install ./jar/vecmath1.2-1.14.jar ${EXTRA}
-	@install ./jar/xindice.jar ${EXTRA}
-	@install ./jar/xmldb.jar ${EXTRA}
-	@install ./jar/stmml.jar ${EXTRA}
-	@install ./jar/castor-0.9.5-xml.jar ${EXTRA}
-	@install ./jar/cmlAll.jar ${EXTRA}
-	@install ./jar/base.jar ${EXTRA}
-	@install ./jar/pmrlib.jar ${EXTRA}
-	@install ./jar/jmolApis.jar ${EXTRA}
-	@install ./jar/jmolIO.jar ${EXTRA}
-	@install ./jar/jfontchooser.jar ${EXTRA}
-	# @install ./jar/libio/joelib.jar ${EXTRA}
+javadocs:
+	@echo INFO: Install API-Doc
+	@cp -r ./javadoc/* ${APIDOC}
 

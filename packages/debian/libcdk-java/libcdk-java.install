@@ -1,0 +1,3 @@
+debian/reportbug/* usr/share/bug/libcdk-java
+
+dist/jar/*.jar usr/share/java
