@@ -29,6 +29,23 @@ package org.openscience.cdk;
 /** 
  * A set of molecules, for example those taking part in a reaction.
  *
+ * To retrieve the molecules from the set, there are two options:
+ *
+ * <pre>
+ * Molecule[] mols = setOfMolecules.getMolecules();
+ * for (int i=0; i < mols.length; i++) {
+ *     Molecule mol = mols[i];
+ * }
+ * </pre>
+ *
+ * and
+ *
+ * <pre>
+ * for (int i=0; i < setOfMolecules.getMoleculeCount(); i++) {
+ *    Molecule mol = setOfMolecules.getMolecule(i);
+ * }
+ * </pre>
+ *
  * @keyword reaction
  * @keyword molecule
  */

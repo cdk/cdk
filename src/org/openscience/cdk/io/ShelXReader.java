@@ -304,11 +304,15 @@ public class ShelXReader implements ChemObjectReader {
                 double fa = FortranFormat.atof(sa); // fractional coordinates
                 double fb = FortranFormat.atof(sb);
                 double fc = FortranFormat.atof(sc);
+                logger.debug("fa,fb,fc: " + fa + ", " + fb + ", " + fc);
                 /* convert these fractional coordinates to real
                    coordinates */
                 double[] a = crystal.getA();
                 double[] b = crystal.getB();
                 double[] c = crystal.getC();
+                logger.debug("A: " + a[0] + ", " + a[1] + ", " + a[2]);
+                logger.debug("B: " + b[0] + ", " + b[1] + ", " + b[2]);
+                logger.debug("C: " + c[0] + ", " + c[1] + ", " + c[2]);
                 double x = fa*a[0] + fb*a[1] + fc*a[2];
                 double y = fa*b[0] + fb*b[1] + fc*b[2];
                 double z = fa*c[0] + fb*c[1] + fc*c[2];
@@ -316,12 +320,15 @@ public class ShelXReader implements ChemObjectReader {
                 if (atype.equalsIgnoreCase("Q")) {
                     // ingore atoms named Q
                 } else {
-                    logger.info("Adding atom: " + atype);
+                    logger.info("Adding atom: " + atype + ", " + x
+                                                        + ", " + y
+                                                        + ", " + z);
                     Atom atom = new Atom(atype);
                     atom.setX3D(x);
                     atom.setY3D(y);
-                    atom.setX3D(z);
+                    atom.setZ3D(z);
                     crystal.addAtom(atom);
+                    logger.debug(atom.toString());
                 }
             }
             line = input.readLine();

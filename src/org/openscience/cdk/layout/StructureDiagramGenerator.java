@@ -1,7 +1,8 @@
-/* StructureDiagramGenerator.java
- * 
- * $RCSfile$    $Author$    $Date$    $Revision$
- * 
+/* $RCSfile$    
+ * $Author$    
+ * $Date$    
+ * $Revision$
+ *
  * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
  * 
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
@@ -41,14 +42,16 @@ import java.awt.*;
 /* 
  * Generates 2D coordinates for a molecule for which only connectivity is known
  * or the coordinates have been discarded for some reason.
- * Usage: Create an instance of this class, thereby assigning a molecule, 
+ * Usage: Create an instance of this class, thereby assigning a molecule,
  * call generateCoordinates() and get your molecule back.
  *
  * @keyword layout
  * @keyword 2D-coordinates
  */
-public class StructureDiagramGenerator 
+public class StructureDiagramGenerator
 {
+
+    private org.openscience.cdk.tools.LoggingTool logger;
 
 	Molecule molecule;
 	RingSet sssr;
@@ -58,18 +61,17 @@ public class StructureDiagramGenerator
 	RingPlacer ringPlacer = new RingPlacer();
 	AtomPlacer atomPlacer = new AtomPlacer();	
 	Vector ringSystems = null;
-	public static boolean debug = false;
 
 	/**
-	 * The empty constructor
+	 * The empty constructor.
 	 */
-	public StructureDiagramGenerator()
-	{
-
+	public StructureDiagramGenerator() {
+        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
 	}
 
 	/**
-	 * Creates an instance of this class while assigning a molecule to be layed out
+	 * Creates an instance of this class while assigning a molecule to
+     * be layed out.
 	 *
 	 * @param   molecule  The molecule to be layed out.
 	 */
@@ -182,7 +184,7 @@ public class StructureDiagramGenerator
 			ringSystems = RingPartitioner.partitionRings(sssr);
 			
 			/* Do the layout for the first connected ring system ... */
-			int largest = 0; 
+			int largest = 0;
 			int largestSize = ((RingSet)ringSystems.elementAt(0)).size();
 			//System.out.println("We have " + ringSystems.size() + " ring systems.");
 			for (int f = 0; f < ringSystems.size(); f++)
@@ -534,18 +536,18 @@ public class StructureDiagramGenerator
 		try
 		{
 			bondVector.normalize();
-			if (debug) System.out.println("placeFirstBondOfFirstRing->bondVector.length():" +  bondVector.length());
+			logger.debug("placeFirstBondOfFirstRing->bondVector.length():" +  bondVector.length());
 			bondVector.scale(bondLength);
-			if (debug) System.out.println("placeFirstBondOfFirstRing->bondVector.length() after scaling:" +  bondVector.length());
+			logger.debug("placeFirstBondOfFirstRing->bondVector.length() after scaling:" +  bondVector.length());
 			Atom atom;
 			Point2d point = new Point2d(0, 0);
 			atom = bond.getAtomAt(0);
-			if (debug) System.out.println("Atom 1 of first Bond: " + molecule.getAtomNumber(atom));
+			logger.debug("Atom 1 of first Bond: " + molecule.getAtomNumber(atom));
 			atom.setPoint2D(point);
 			atom.flags[CDKConstants.ISPLACED] = true;
 			point = new Point2d(0, 0);
 			atom = bond.getAtomAt(1);
-			if (debug) System.out.println("Atom 2 of first Bond: " + molecule.getAtomNumber(atom));		
+			logger.debug("Atom 2 of first Bond: " + molecule.getAtomNumber(atom));
 			point.add(bondVector);
 			atom.setPoint2D(point);
 			atom.flags[CDKConstants.ISPLACED] = true;
@@ -614,7 +616,7 @@ public class StructureDiagramGenerator
 		{
 			if (!((Ring)rings.elementAt(f)).flags[CDKConstants.ISPLACED])
 			{
-				if (debug) System.out.println("allPlaced->Ring " + f + " not placed");			
+				logger.debug("allPlaced->Ring " + f + " not placed");			
 				return false;
 			}				
 		}
@@ -701,7 +703,7 @@ public class StructureDiagramGenerator
 				}
 			}
 		}
-		if (debug) System.out.println("There are " + unplacedCounter + " Rings.");
+		logger.debug("There are " + unplacedCounter + " Rings.");
 	}
 
 

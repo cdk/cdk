@@ -4,8 +4,11 @@ CHANGELOG $Date$
 Changes in CVS
 ------------------------------------
 New:
+* A Crystal convertor to Jmol is being added.
+* StructureDiagramGenerator now uses LoggingTool.
 
 Fixes:
+* Reading of 3D coordinates from ShelX files
 * Fixed "M  END" line in MDL output (fixes bug #624656)
 
 API changes:

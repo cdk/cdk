@@ -50,7 +50,8 @@ public class ChemModel extends ChemObject
      protected Crystal crystal = null;
 
 	/**
-	 *  Constructs an empty SetOfMolecules.
+	 *  Constructs an new ChemModel with a non-null, but 
+     *  empty setOfMolecules.
 	 */
 	public ChemModel()   
 	{
@@ -60,7 +61,8 @@ public class ChemModel extends ChemObject
 
 
 	/**
-	 * Puts all the Molecules of this container together in one AtomCcntainer.
+	 * Puts all the Molecules of this container together in one 
+     * AtomCcntainer.
 	 *
 	 * @return  The AtomContainer with all the Molecules of this container   
 	 */

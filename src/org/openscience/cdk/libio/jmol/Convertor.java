@@ -32,7 +32,11 @@ package org.openscience.cdk.libio.jmol;
 import org.openscience.jmol.Atom;
 import org.openscience.jmol.BaseAtomType;
 import org.openscience.jmol.ChemFrame;
+import org.openscience.jmol.UnitCellBox;
+import org.openscience.jmol.CrystalFile;
+import org.openscience.jmol.CrystalBox;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Crystal;
 import org.openscience.cdk.exception.NoSuchAtomException;
 
 /**
@@ -68,8 +72,10 @@ public class Convertor {
                     BaseAtomType.get(atom.getSymbol()),
                     atom.getAtomicNumber());
             if (atom.getPoint3D() != null) {
+                System.out.println("Atom got 3D coordinates!");
                 convertedAtom.setPosition(new javax.vecmath.Point3f(atom.getPoint3D()));
             } else if (atom.getPoint2D() != null) {
+                System.out.println("Atom got 2D coordinates!");
                 javax.vecmath.Point3f xyz =
                     new javax.vecmath.Point3f(
                         (float)atom.getX2D(),
@@ -78,6 +84,7 @@ public class Convertor {
                     );
                 convertedAtom.setPosition(xyz);
             } else {
+                System.out.println("Atom got no coordinates!");
                 javax.vecmath.Point3f xyz =
                     new javax.vecmath.Point3f((float)0.0, (float)0.0, (float)0.0);
                 convertedAtom.setPosition(xyz);
@@ -184,4 +191,52 @@ public class Convertor {
             return null;
         }
     }
+
+    /**
+     * Converts an org.openscience.cdk.Crystal class into a
+     * org.openscience.cdk.ChemFile class.
+     *
+     * Conversion includes:
+     *   - atoms
+     *   - unit cell axes
+     *
+     * @param   crystal class to be converted
+     * @return          converted class in Jmol
+     **/
+    public static org.openscience.jmol.CrystalFile convertCrystal(Crystal crystal) {
+        if (crystal != null) {
+            // first convert content
+            org.openscience.jmol.ChemFile file = new org.openscience.jmol.ChemFile();
+            file.addFrame(
+                convert((AtomContainer)crystal));
+            CrystalFile converted = new CrystalFile(file);
+            // now add unit cell info
+            UnitCellBox unitCellBox = new UnitCellBox();
+            float[][] rprim = new float[3][3];
+            float[] acell = new float[3];
+            double[] a = crystal.getA();
+            for (int i=0; i<3; i++) {
+                rprim[0][i] = (float)a[i];
+            }
+            double[] b = crystal.getB();
+            for (int i=0; i<3; i++) {
+                rprim[0][i] = (float)b[i];
+            }
+            double[] c = crystal.getC();
+            for (int i=0; i<3; i++) {
+                rprim[0][i] = (float)c[i];
+            }
+            for (int i=0; i<3; i++) {
+                acell[i] = (float)1.0;
+            }
+            unitCellBox.setPrimVectorsCartesian(rprim, acell);
+            converted.setUnitCellBox(unitCellBox);
+            converted.setCrystalBox(new CrystalBox());
+            // converted.generateCrystalFrame();
+            return converted;
+        } else {
+            return null;
+        }
+    }
+
 }
