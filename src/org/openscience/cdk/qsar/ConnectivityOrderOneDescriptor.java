@@ -57,14 +57,12 @@ public class ConnectivityOrderOneDescriptor implements Descriptor {
 	 *
 	 *@return    The specification value
 	 */
-	public Map getSpecification() {
-		Hashtable specs = new Hashtable();
-		specs.put("Specification-Reference", "http://qsar.sourceforge.net/dicts/qsar-descriptors:chiValuesCOO");
-		specs.put("Implementation-Title", this.getClass().getName());
-		specs.put("Implementation-Identifier", "$Id$");
-		// added by CVS
-		specs.put("Implementation-Vendor", "The Chemistry Development Kit");
-		return specs;
+	public DescriptorSpecification getSpecification() {
+        return new DescriptorSpecification(
+            "http://qsar.sourceforge.net/dicts/qsar-descriptors:chiValuesCOO",
+		    this.getClass().getName(),
+		    "$Id$",
+            "The Chemistry Development Kit");
 	}
 
 

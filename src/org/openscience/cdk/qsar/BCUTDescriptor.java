@@ -84,13 +84,12 @@ public class BCUTDescriptor implements Descriptor {
         this.nlow = 0;
     }
 
-    public Map getSpecification() {
-        Hashtable specs = new Hashtable();
-        specs.put("Specification-Reference", "http://qsar.sourceforge.net/dicts/qsar-descriptors:BCUT");
-        specs.put("Implementation-Title", this.getClass().getName());
-        specs.put("Implementation-Identifier", "$Id$"); // added by CVS
-        specs.put("Implementation-Vendor", "The Chemistry Development Kit");
-        return specs;
+	public DescriptorSpecification getSpecification() {
+        return new DescriptorSpecification(
+            "http://qsar.sourceforge.net/dicts/qsar-descriptors:BCUT",
+		    this.getClass().getName(),
+		    "$Id$",
+            "The Chemistry Development Kit");
     };
 
     /**

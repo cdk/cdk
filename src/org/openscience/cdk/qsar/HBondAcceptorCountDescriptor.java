@@ -34,7 +34,7 @@ import java.util.Map;
 import java.util.Hashtable;
 
 /**
- *  The number of hydrogen bond acceptors is defined by Daylight:
+ *  The number of hydrogen bond acceptors. It is defined by Daylight:
  *  (http://www.daylight.com/dayhtml_tutorials/languages/smarts/smarts_examples.html)
  *  "A H-bond acceptor is a heteroatom with no positive charge, note that negatively 
  *  charged oxygen or sulphur are included. Excluded are halogens, including F, 
@@ -62,14 +62,12 @@ public class HBondAcceptorCountDescriptor implements Descriptor {
 	 *
 	 *@return    The specification value
 	 */
-	public Map getSpecification() {
-		Hashtable specs = new Hashtable();
-		specs.put("Specification-Reference", "http://qsar.sourceforge.net/dicts/qsar-descriptors:hBondacceptors");
-		specs.put("Implementation-Title", this.getClass().getName());
-		specs.put("Implementation-Identifier", "$Id$");
-		// added by CVS
-		specs.put("Implementation-Vendor", "The Chemistry Development Kit");
-		return specs;
+	public DescriptorSpecification getSpecification() {
+        return new DescriptorSpecification(
+            "http://qsar.sourceforge.net/dicts/qsar-descriptors:hBondacceptors",
+		    this.getClass().getName(),
+		    "$Id$",
+            "The Chemistry Development Kit");
 	}
 
 

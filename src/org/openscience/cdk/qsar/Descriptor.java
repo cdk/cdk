@@ -45,7 +45,7 @@ public interface Descriptor {
    * <li>Implementation-Vendor: CDK, JOELib, or anything else
    * </ul>
    */
-    public Map getSpecification();
+    public DescriptorSpecification getSpecification();
     
     /** Returns the names of the parameters for this descriptor. */
     public String[] getParameterNames();
