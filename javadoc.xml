@@ -1,6 +1,6 @@
 <project name="CDK" default="docbook" basedir=".">
 
-    <property name="javadoc.dir" value="javadoc" />
+    <property name="javadoc.dir" value="doc.api" />
     <property name="pathtojava3d" value="" />
 
     <path id="project.class.path">
