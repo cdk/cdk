@@ -271,7 +271,7 @@
 
                 <javadoc packagenames="org.openscience.cdk.*"
                 sourcepath="." destdir="${javadoc.dir}"
-                private="true">
+                public="true">
                         <classpath refid="project.class.path" />
                 </javadoc>
         </target>
