@@ -4,6 +4,7 @@ import java.io.*;
 import java.lang.*;
 import java.util.*;
 import javax.vecmath.*;
+import Jama.*;
 import org.openscience.cdk.*;
 import org.openscience.cdk.modeling.forcefield.*;
 
@@ -23,22 +24,9 @@ public class TestPotentialFunction implements PotentialFunction {
 	/**
 	 *  Constructor for the TestPotentialFunction object
 	 *
-	 */
-
-	public TestPotentialFunction() { }
-
-
-	/**
-	 *  Constructor for the TestPotentialFunction object
-	 *
 	 *@param  point  Coordinates from current point
 	 */
-	public TestPotentialFunction(GVector point) {
-		System.out.println("function shape : " + functionShape);
-		System.out.println("gradient shape : " + gradientShape);
-		gradientInWishedPoint.setSize(point.getSize());
-		//System.out.println("gradientInWishedPoint.getSize() : " + gradientInWishedPoint.getSize());
-	}
+	public TestPotentialFunction() {}
 
 
 	/**
@@ -53,8 +41,6 @@ public class TestPotentialFunction implements PotentialFunction {
 	}
 
 
-//	public getFunctionInWishedPoint
-
 	/**
 	 *  Evaluate the gradient for the potential energy function in a given point
 	 *
@@ -62,17 +48,22 @@ public class TestPotentialFunction implements PotentialFunction {
 	 *@return        Gradient value
 	 */
 	public GVector gradientInPoint(GVector point) {
-	//	System.out.println("Evaluation of the gradient in point: " + point);
 		gradientInWishedPoint.setElement(0, 2 * (point.getElement(0)));
 		gradientInWishedPoint.setElement(1, 4 * (point.getElement(1)));
-
-		/*
-		 *  firstDerivativeInWichedPoint.setElementAt(Point.elementAt(0), 0);
-		 *  firstDerivativeInWichedPoint.setElementAt(Point.elementAt(1), 1);
-		 *  System.out.println("First Derivative at point " + Point + "is " + firstDerivativeInWichedPoint);
-		 */
 		return gradientInWishedPoint;
 	}
 
-}
 
+	/**
+	 *  Evaluate the hessian for the potential energy function in a given point
+	 *
+	 *@param  point  Coordinates from current point
+	 *@return        Hessian value
+	 */
+	public GMatrix hessianInPoint(GVector point) {
+		double[] forHessian = {2,0,0,0,4,0,0,0,1};
+		GMatrix hessianInWishedPoint = new GMatrix(3, 3, forHessian);
+		return hessianInWishedPoint;
+	}
+
+}

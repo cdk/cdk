@@ -13,7 +13,7 @@ import org.openscience.cdk.*;
  *
  */
 public class ConjugateGradientMethod {
-	double 탃 = 0;
+	double uk = 0;
 	GVector vk = new GVector(3);
 	GVector vkminus1 = new GVector(3);
 
@@ -33,17 +33,17 @@ public class ConjugateGradientMethod {
 	 *  uk = gk gk / gk-1 gk-1
 	 *
 	 */
-	public void set탃(GVector xkminus1, GVector xk,  PotentialFunction forceFieldFunction) {
+	public void setuk(GVector xkminus1, GVector xk,  PotentialFunction forceFieldFunction) {
 		GVector temporalVector = new GVector(forceFieldFunction.gradientInPoint(xk));
-		탃 = temporalVector.dot(temporalVector);
+		uk = temporalVector.dot(temporalVector);
 		temporalVector.set(forceFieldFunction.gradientInPoint(xkminus1));
-		탃 = 탃 / temporalVector.dot(temporalVector);
-		//System.out.println("탃 = " + 탃);
+		uk = uk / temporalVector.dot(temporalVector);
+		//System.out.println("uk = " + uk);
 		return;
 	}
 
 	/**
-	 *  vk=-gk + 탃 vk-1
+	 *  vk=-gk + uk vk-1
 	 *
 	 * @param  gk  Gradient at coordinates Xk
 	 * @param  iterNumber  Iteration number
@@ -54,7 +54,7 @@ public class ConjugateGradientMethod {
 			vkminus1.set(vk);
 			vk.set(gk);
 			vk.scale(-1);
-			vkminus1.scale(탃);
+			vkminus1.scale(uk);
 			vk.add(vkminus1);
 			//System.out.println("vector vk : " + vk);
 		}

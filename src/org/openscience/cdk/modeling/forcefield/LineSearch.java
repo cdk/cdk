@@ -146,9 +146,9 @@ public class LineSearch {
 			}
 		}
 		arbitraryStepSize = lambdab;
-		System.out.println("");
-		System.out.println("ArbitraryStep: ");
-		System.out.println("arbitraryStepSize = " + arbitraryStepSize);
+		//System.out.println("");
+		//System.out.println("ArbitraryStep: ");
+		//System.out.println("arbitraryStepSize = " + arbitraryStepSize);
 		return;
 	}
 
@@ -157,7 +157,7 @@ public class LineSearch {
 		parabolMinimumLambda = fxa * (Math.pow(lambdac,2) - Math.pow(lambdab,2)) + fxb * (Math.pow(lambdaa,2) - Math.pow(lambdac,2)) + fxc * (Math.pow(lambdab,2) - Math.pow(lambdaa,2));
 		parabolMinimumLambda = parabolMinimumLambda / (fxa * (lambdac-lambdab) + fxb * (lambdaa-lambdac) + fxc * (lambdab-lambdaa));
 		parabolMinimumLambda = 0.5 * parabolMinimumLambda;
-		System.out.println("parabolMinimumLambda = " + parabolMinimumLambda);
+		//System.out.println("parabolMinimumLambda = " + parabolMinimumLambda);
 		return parabolMinimumLambda;
 	}
 

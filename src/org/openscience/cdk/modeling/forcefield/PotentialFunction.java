@@ -4,6 +4,7 @@ import java.io.*;
 import java.lang.*;
 import java.util.*;
 import javax.vecmath.*;
+import Jama.*;
 import org.openscience.cdk.*;
 
 /**
@@ -14,8 +15,8 @@ import org.openscience.cdk.*;
  */
 
 public interface PotentialFunction {
-	double functionInWishedPoint = 0;	//	Function value in a point 
-	GVector gradientInWishedPoint = new GVector(3);	//	Gradient value in a point
+	double functionInWishedPoint = 0;			//Function value in a point
+	GVector gradientInWishedPoint = new GVector(3);		//Gradient value in a point
 
 //	GVector getGradientInWishedPoint();
 
@@ -39,6 +40,11 @@ public interface PotentialFunction {
 	GVector gradientInPoint(GVector point);
 
 
+	/**
+	 *  Evaluate the hessian of the potential energy function in a given point
+	 *
+	 * @return    Hessian value in the wished point
+	 */
+	GMatrix hessianInPoint(GVector point);
+
 }
-
-
