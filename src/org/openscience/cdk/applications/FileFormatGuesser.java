@@ -54,6 +54,8 @@ public class FileFormatGuesser {
                 if (!input.isDirectory()) {
                     String format = factory.guessFormat(new FileReader(input));
                     System.out.println(ifilename + ": format=" + format);
+                } else {
+                    System.out.println("Skipping directory: " + ifilename);
                 }
             } catch (Exception exception) {
                 System.err.println(ifilename + ": error=");
