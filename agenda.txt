@@ -4,3 +4,5 @@ using java.awt.Point2D.
 
 2. In AtomContainer.addBond(Bond bond) are we supposed to check if the atoms forming
 this bond are already in there and add them if neccessary?
+
+3. We need CML i/o

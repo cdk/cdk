@@ -148,6 +148,15 @@ public class AtomContainer extends ChemObject {
 		return atoms[number];
 	}
 
+
+	/**
+	 *  
+	 * Returns the position of a given atom in the atoms array 
+	 *
+	 * @param  atom    The atom to be sought
+	 * @return         The Position of the atom in the atoms array. 
+	 */
+
 	public int getAtomNumber(Atom atom) throws Exception
 	{
 		for (int f = 0; f < getAtomCount(); f++)
@@ -343,4 +352,6 @@ public class AtomContainer extends ChemObject {
 
 
 }
+
+
 

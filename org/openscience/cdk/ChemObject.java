@@ -42,6 +42,15 @@ public class ChemObject implements CDKConstants
 	protected Vector chemObjects = new Vector();
 	protected int size;
 	protected Hashtable physicalProperties = new Hashtable();
+	/* You will frequently have to use some flags on a ChemObject
+	 * for example if you want to draw a molecule and see
+	 * if you've already drawn an atom, or in a ring search to 
+	 * check whether a vertex has been visited in a graph traversal.
+	 * Use these flags while addressing particular positions in the
+	 * flag array with self-defined constants (flags[VISITED] = true).
+	 * 10 flags per object should be more than enough.
+	 */
+	protected boolean[] flags = new boolean[10];
 
 	/**
 	 * Use this to add yourself to this ChemObject as a listener. 

@@ -1,108 +1,71 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<html><head><title>The Chemistry Development Kit (CDK)</title><meta content="DocBook XSL Stylesheets V1.19" name="generator"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div id="N3" class="book"><div class="titlepage"><h1 class="title"><a name="N3">The Chemistry Development Kit (CDK)</a></h1><h2 class="subtitle">A Java library for Computational Chemistry and Chemoinformatics</h2><h3 class="author">Dan Gezelter</h3><h3 class="author">Christoph Steinbeck</h3><h3 class="author">Egon Willighagen</h3><p class="copyright">Copyright © 2000 by The CDK project</p><hr/></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt>1. <a href="#N117">About CDK</a></dt><dd><dl><dt> <a href="#N122">What is the CDK?</a></dt><dt> <a href="#N205">Who develops the CDK?</a></dt><dt> <a href="#N219">How is the CDK developed</a></dt><dt> <a href="#N238">How can I participate?</a></dt></dl></dd><dt>2. <a href="#N253">CDK's Requirement Specification</a></dt><dd><dl><dt> <a href="#N258">What en Why?</a></dt><dt> <a href="#N270">Requirement 1: Storage of Chemical Data</a></dt><dd><dl><dt> <a href="#N275">Basic chemical 'things'</a></dt><dt> <a href="#N302">More complex basic chemical 'things'</a></dt><dt> <a href="#N326">Other chemical 'things'</a></dt><dt> <a href="#N349">Time dependant chemical 'things'</a></dt></dl></dd></dl></dd><dt>3. <a href="#N374">CDK's UML Design</a></dt><dd><dl><dt> <a href="#N379">Unified Modeling Language</a></dt><dt> <a href="#N393">Design of CDK</a></dt></dl></dd><dt>4. <a href="#N427">Software using CDK</a></dt></dl></div><div class="chapter" id="N117"><h2 class="title"><a name="N117">1. About CDK</a></h2><div class="toc"><p><b>Table of Contents</b></p><dl><dt> <a href="#N122">What is the CDK?</a></dt><dt> <a href="#N205">Who develops the CDK?</a></dt><dt> <a href="#N219">How is the CDK developed</a></dt><dt> <a href="#N238">How can I participate?</a></dt></dl></div><div class="section" id="N122"><h2 class="title" style="clear: all"><a name="N122"><b>What is the CDK?</b></a></h2><p>
-The CDK classes are Java utitility classes for ChemoInformatics and Computational chemistry, written in Java. They are developed constantly developed parallel
-to other projects that make use of them.
-They are a complete re-write of the CompChem classes that were the basis of <a href="http://www.sourceforge.net/projects/JChemPaint">JChemPaint</a>, a Java Editor 
-for 2D chemical structures, and of <a href="http://www.sourceforge.net/projects/JMDraw">JMDraw</a>, a Java package for the graphical layout of 2D chemical structures 
-	</p><p>
-A re-write was needed to in order to assure the widest possible usability. It is also intended to port
-<a href="http://www.openscience.org/jmol">JMol</a>, a 3D molecular visualization tool, to the CDK.	
-	</p><p>		
-		The CDK classes support (or will support, as soon as ported from the old CompChem library): 
-		<div class="itemizedlist"><ul><li><a name="N152"/><p>
-					Classes for Atoms, Molecules and other chemical concepts.
-				</p></li><li><a name="N158"/><p>
-					Utilities for importing and exporting chemical structures (Molecules or arrays of Atoms) using standard chemical files format.
-				</p></li><li><a name="N164"/><p>
-					Utility classes for handling chemical elements and isotopes.
-				</p></li><li><a name="N170"/><p>
-					A class that parses a molecular formula (a String of characters) and returns an array of Nodes.
-				</p></li><li><a name="N176"/><p>
-					An isomorphisms tester that compares to structures and returns if they are isomorph. I'm almost sure, that the implementation is not strictly valid, but it 
-					seems to work
-				</p></li><li><a name="N182"/><p>
-					A SMILES parser (hidden as a static method in compchem.ChemFileUtils), which so far only implements the SSMILES standard.
-				</p></li><li><a name="N188"/><p>
-					An implementation of John Figueras, "Ring Perception Using Breadth-First Search", J. Chem. Inf. Comput Sci. 1996, 36, 986-991.
-				</p></li></ul></div>
-	</p><p>
-	Please <a href="api/index.html">check the existing API documentation</a> for information on which classes are already implemented.
-	</p></div><div class="section" id="N205"><h2 class="title" style="clear: all"><a name="N205"><b>Who develops the CDK?</b></a></h2><p>
-	  	The CDK is a joint venture of the JMol and JChemPaint developers who would like to see a general-purpose open-source library for 
-		computational chemistry and chemoinformatics. Check the developers list on the <a href="http://www.sourceforge.net/projects/CompChem">CDK pages.</a>
-	</p></div><div class="section" id="N219"><h2 class="title" style="clear: all"><a name="N219"><b>How is the CDK developed</b></a></h2><p>
-	 	The CDK is mantained as a <a href="http://www.sourceforge.net">SourceForge</a> project under
-		<a href="http://www.sourceforge.net/projects/CompChem">http://www.sourceforge.net/projects/CompChem</a>. 
-		Please check the SourceForge site documentation for more.
-		SourceForge gives us bugtracking, mailing lists, support manager and last not least CVS access.
-	</p></div><div class="section" id="N238"><h2 class="title" style="clear: all"><a name="N238"><b>How can I participate?</b></a></h2><p>
-		Check the <a href="http://www.sourceforge.net">SourceForge</a> site documentation on how to access the CVS.
-		If you actively want to contribute, please get a SourceForge accoutn, contact the project admin so that he can
-		add you to the developers list
-	</p></div></div><div class="chapter" id="N253"><h2 class="title"><a name="N253">2. CDK's Requirement Specification</a></h2><div class="toc"><p><b>Table of Contents</b></p><dl><dt> <a href="#N258">What en Why?</a></dt><dt> <a href="#N270">Requirement 1: Storage of Chemical Data</a></dt><dd><dl><dt> <a href="#N275">Basic chemical 'things'</a></dt><dt> <a href="#N302">More complex basic chemical 'things'</a></dt><dt> <a href="#N326">Other chemical 'things'</a></dt><dt> <a href="#N349">Time dependant chemical 'things'</a></dt></dl></dd></dl></div><div class="section" id="N258"><h2 class="title" style="clear: all"><a name="N258"><b>What en Why?</b></a></h2><p>
-        This chapter explains what CDK is supposed to do, or,
-        what it should be able to do. Since the CDK is a container
-        for chemical data, the main requirements consists of the
-        long list of chemical data it must be able to store.
-        The long list is given below, in some generic hierarchy.
-      </p><p>
-        Since this requirement is not finished, do not expect it to be
-        complete. Any additional requirements are welcomed. In fact,
-        in important reason to write a requirement is to find out what
-        the requirements really are.
-      </p></div><div class="section" id="N270"><h2 class="title" style="clear: all"><a name="N270"><b>Requirement 1: Storage of Chemical Data</b></a></h2><div class="section" id="N275"><h3 class="title"><a name="N275"><b>Basic chemical 'things'</b></a></h3><p>
-          Basic chemical 'things' refer to chemical objects that every
-          chemist uses, and which is not depending on the 'nature' of
-          the chemist; wether he is a computational chemist, NMR specialist,
-          an author, etc.
-        </p><p>
-          Required basic chemical objects are:
-          <div class="itemizedlist"><ul><li><a name="N287"/><p>atoms (isotopes/elements)</p></li><li><a name="N291"/><p>bonds (aromatic/stereo)</p></li><li><a name="N295"/><p>orbitals (e.g. lone pairs)</p></li></ul></div>
-        </p></div><div class="section" id="N302"><h3 class="title"><a name="N302"><b>More complex basic chemical 'things'</b></a></h3><p>
-          These objects are containers of other chemical objects:
-          <div class="itemizedlist"><ul><li><a name="N311"/><p>molecules</p></li><li><a name="N315"/><p>salts</p></li><li><a name="N319"/><p>supramolecular structures</p></li></ul></div>
-        </p></div><div class="section" id="N326"><h3 class="title"><a name="N326"><b>Other chemical 'things'</b></a></h3><p>
-          Other chemical 'things' refer to chemical objects that not every
-          chemist uses. I.e., these objects are specialized.
-        </p><p>
-          Required basic chemical objects are:
-           <div class="itemizedlist"><ul><li><a name="N338"/><p>magnetic shielding</p></li><li><a name="N342"/><p>molecular surfaces</p></li></ul></div>
-        </p></div><div class="section" id="N349"><h3 class="title"><a name="N349"><b>Time dependant chemical 'things'</b></a></h3><p>
-          These objects are sequences of other chemical objects.
-          A sequence might consist of a set of molecules, and depicting
-          a vibration.
-        </p><p>
-          The time dependant chemical objects are:
-          <div class="itemizedlist"><ul><li><a name="N361"/><p>animations</p></li><li><a name="N365"/><p>reactions</p></li></ul></div>
-        </p></div></div></div><div class="chapter" id="N374"><h2 class="title"><a name="N374">3. CDK's UML Design</a></h2><div class="toc"><p><b>Table of Contents</b></p><dl><dt> <a href="#N379">Unified Modeling Language</a></dt><dt> <a href="#N393">Design of CDK</a></dt></dl></div><div class="section" id="N379"><h2 class="title" style="clear: all"><a name="N379"><b>Unified Modeling Language</b></a></h2><p>
-        The Unified Modeling Language (UML) is a specification
-        by which design can be made in a specified and unique
-        manner. In this project UML diagrams are made with
-        <a href="http://www.argouml.org/">ArgoUML</a>.
-      </p></div><div class="section" id="N393"><h2 class="title" style="clear: all"><a name="N393"><b>Design of CDK</b></a></h2><p>
-        The current design is downloadable from the CVS at SourceForge
-        and looks like:
-        <div class="mediaobject"><img src="images/ChemObjects.gif" alt="UML Class diagram of CDK"/><div class="caption"><p>
-	    </p></div></div>
-      </p></div></div><div class="chapter" id="N427"><h2 class="title"><a name="N427">4. Software using CDK</a></h2><p>
-      At this moment no real software applications use CDK, but
-      a all-round chemical editor is being developed: Lavoisier.
-      This program will be an chemical information manager (CIM)
-      able to show 2D/3D information as well as many other 
-      information as spectra, physical properties and XHTML articles.
-    </p><p>
-      Since Lavoisier is the first implementation making use of
-      CDK, it's design is included in this documentation, and makes
-      the CDK requirements more clear:
-      <div class="mediaobject"><img src="images/UsingLavosier.gif" alt="UML Use diagram of Lavoisier"/><div class="caption"><p>
-	  </p></div></div>
-      In more detail, this looks like:
-      <div class="mediaobject"><img src="images/Lavoisier.gif" alt="UML Class diagram of Lavoisier"/><div class="caption"><p>
-	  </p></div></div>
-    </p><p>
-      An other important aspect of Lavoisier is the way it stores
-      information in files. And this in turn, reflects the information
-      stored with the CDK library:
-      <div class="mediaobject"><img src="images/ChemWriterClassHierarchy.gif" alt="UML Class diagram of Lavoisier"/><div class="caption"><p>
-	  </p></div></div>
-    </p></div></div></body></html>
+<html xmlns:lxslt="http://xml.apache.org/xslt">
+   <head>
+      <title>The Chemistry Development Kit (CDK)</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.18">
+      <link rel="home" href="index.html" title="The Chemistry Development Kit (CDK)">
+      <link rel="next" href="ch01.html" title="1. Introduction?">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div class="navheader">
+         <table width="100%">
+            <tr>
+               <th colspan="3" align="center">The Chemistry Development Kit (CDK)</th>
+            </tr>
+            <tr>
+               <td width="20%" align="left">&nbsp;</td>
+               <th width="60%" align="center">&nbsp;</th>
+               <td widht="20%" align="right">&nbsp;<a href="ch01.html">Next</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="book" id="c37a">
+         <div class="titlepage">
+            <h1 class="title"><a name="c37a">The Chemistry Development Kit (CDK)</a></h1>
+            <h2 class="subtitle">A Java library for Computational Chemistry and Chemoinformatics</h2>
+            <h3 class="author">Dan Gezelter</h3>
+            <h3 class="author">Christoph Steinbeck</h3>
+            <h3 class="author">Egon Willighagen</h3>
+            <p class="copyright">Copyright &copy; 2000 by The CDK project</p>
+            <hr>
+         </div>
+         <div class="toc">
+            <p><b>Table of Contents</b></p>
+            <dl>
+               <dt>1. <a href="ch01.html">Introduction?</a></dt>
+               <dd>
+                  <dl>
+                     <dt> <a href="ch01.html#c37ab1b1">What is the CDK?</a></dt>
+                     <dt> <a href="ch01s02.html">News</a></dt>
+                     <dt> <a href="ch01s03.html">Who develops the CDK?</a></dt>
+                     <dt> <a href="ch01s04.html">How is the CDK developed</a></dt>
+                     <dt> <a href="ch01s05.html">How can I participate?</a></dt>
+                  </dl>
+               </dd>
+               <dt>2. <a href="ch02.html">Project Reference</a></dt>
+               <dd>
+                  <dl>
+                     <dt> <a href="ch02.html#c37ab2b1">Introduction</a></dt>
+                     <dt> <a href="ch02s02.html">Design Considerations</a></dt>
+                  </dl>
+               </dd>
+            </dl>
+         </div>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%">
+            <tr>
+               <td width="40%" align="left">&nbsp;</td>
+               <td width="20%" align="center">&nbsp;</td>
+               <td widht="40%" align="right">&nbsp;<a href="ch01.html">Next</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left">&nbsp;</td>
+               <td width="20%" align="center">&nbsp;</td>
+               <td widht="40%" align="right">&nbsp;1. Introduction?</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

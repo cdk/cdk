@@ -63,7 +63,7 @@ public class Atom extends ChemObject {
 	 */
 	protected int stereoParity;
 	
-	
+
 	public Atom(Element element)
 	{
 		this.element = element;
