@@ -8,43 +8,62 @@ import Jama.*;
 import org.openscience.cdk.*;
 
 /**
- *  Interface for a potential energy function to optimise in cdk/modeling/ForceField
+ *  Interface for a potential energy function to optimise in cdk/modeling/forcefield
  *
  * @author     vlabarta
  * 
  */
 
 public interface PotentialFunction {
-	double functionInWishedPoint = 0;			//Function value in a point
-	GVector gradientInWishedPoint = new GVector(3);		//Gradient value in a point
+	double energyFunction = 0;			//Energy function in a 3xN point
+	GVector energyGradient = new GVector(3);		//Gradient of the energy function in a 3xN point.
+	GMatrix energyHessian = null;
 
-//	GVector getGradientInWishedPoint();
-
-//	double getFunctionInWishedPoint();
-
-//	double slopeInWishedPoint();
-	
 	/**
 	 *  Evaluate the potential energy function in a given point
 	 *
-	 * @return    Function value in the wished point
+	 *@param  coords3d  Current molecule 3xN coordinates.
 	 */
-	double functionInPoint(GVector point);
+	void setEnergyFunction(GVector coords3d);
 
 
 	/**
-	 *  Evaluate the gradient of the potential energy function in a given point
+	 *  Get the potential energy function in a given 3xN point.
 	 *
-	 * @return    Gradient value in the wished point
+	 * @return    Energy function value in the wished 3xN point.
 	 */
-	GVector gradientInPoint(GVector point);
+	double getEnergyFunction();
 
 
 	/**
-	 *  Evaluate the hessian of the potential energy function in a given point
+	 *  Evaluate the gradient of the potential energy function in a given point.
 	 *
-	 * @return    Hessian value in the wished point
+	 *@param  coords3d  Current molecule 3xN coordinates.
 	 */
-	GMatrix hessianInPoint(GVector point);
+	void setEnergyGradient(GVector coords3d);
+
+
+	/**
+	 *  Get the gradient of the potential energy function in a given point.
+	 *
+	 * @return    Gradient energy value in the wished point.
+	 */
+	GVector getEnergyGradient();
+
+
+	/**
+	 *  Evaluate the hessian of the potential energy function in a given point.
+	 *
+	 *@param  coords3d  Current molecule 3xN coordinates.
+	 */
+	void setEnergyHessian(GVector coords3d);
+
+
+	/**
+	 *  Get the hessian of the potential energy function in a given point.
+	 *
+	 * @return    Hessian energy value in the wished point.
+	 */
+	GMatrix getEnergyHessian();
 
 }

@@ -20,13 +20,14 @@ public class AngleBending {
 
 	String functionShape = " Angle bending ";
 
-	double mmff94SumEA_InWishedCoordinates = 0;
-	GVector gradientMMFF94SumEA_InWishedCoordinates = new GVector(3);
-	GMatrix hessianMMFF94SumEA_InWishedCoordinates = new GMatrix(3,3);
+	ForceFieldTools ffTools = new ForceFieldTools();
 
-	GVector dDeltav = new GVector(3);
+	double mmff94SumEA = 0;
+	GVector gradientMMFF94SumEA = new GVector(3);
+	GMatrix hessianMMFF94SumEA = new GMatrix(3,3);
 
 	int angleNumber = 0;
+	int[][] angleAtomPosition = null;
 
 	double[] v0 = null;
 	double[] k2 = null;
@@ -35,6 +36,9 @@ public class AngleBending {
 	double cb = -0.007;
 	double[] v = null;
 	double[] deltav = null;
+
+	double[][] dDeltav = null;
+	double[][][] ddDeltav = null;
 
 
 	/**
@@ -75,6 +79,8 @@ public class AngleBending {
 		k2 = new double[angleNumber];
 		k3 = new double[angleNumber];
 		k4 = new double[angleNumber];
+		
+		angleAtomPosition = new int[angleNumber][];
 
 		int l = -1;
 		for (int i = 0; i < molecule.getAtomCount(); i++) {
@@ -94,10 +100,19 @@ public class AngleBending {
 						//System.out.println("k2[" + l + "] = " + k2[l]);
 						//System.out.println("k3[" + l + "] = " + k3[l]);
 						//System.out.println("k4[" + l + "] = " + k4[l]);
+						
+						angleAtomPosition[l] = new int[3];
+						angleAtomPosition[l][0] = molecule.getAtomNumber(atomConnected[j]);
+						angleAtomPosition[l][1] = i;
+						angleAtomPosition[l][2] = molecule.getAtomNumber(atomConnected[k]);
+
 					}
 				}
 			}
 		}
+		v = new double[angleNumber];
+		deltav = new double[angleNumber];
+
 
 	}
 
@@ -105,31 +120,13 @@ public class AngleBending {
 	/**
 	 *  Calculate the actual bond angles vijk and the difference with the reference angles.
 	 *
-	 *@param  molecule  The molecule like an AtomContainer object.
+	 *@param  point  Current molecule coordinates.
 	 */
-	public void calculateDeltav(AtomContainer molecule) {
-
-		v = new double[angleNumber];
-		deltav = new double[angleNumber];
+	public void calculateDeltav(GVector point) {
 		
-		Atom[] atomConnected = null;
-		RDFProtonDescriptor rdfpdo = new RDFProtonDescriptor();
-		int l=-1;
-		
-		for (int i = 0; i < molecule.getAtomCount(); i++) {
-			atomConnected = molecule.getConnectedAtoms(molecule.getAtomAt(i));
-			if (atomConnected.length > 1) {
-				for (int j = 0; j < atomConnected.length; j++) {
-					for (int k = j+1; k < atomConnected.length; k++) {
-						l += 1;
-						Vector3d va = new Vector3d((Tuple3d) atomConnected[j].getPoint3d());
-						Vector3d vb = new Vector3d((Tuple3d) molecule.getAtomAt(i).getPoint3d());
-						Vector3d vc = new Vector3d((Tuple3d) atomConnected[k].getPoint3d());
-						v[l] = rdfpdo.calculateAngleBetweenTwoLines(vb, vb, vc, vb);
-						deltav[l] = v[l] - v0[l];
-					}
-				}
-			}
+		for (int i = 0; i < angleNumber; i++) {
+			v[i] = ffTools.calculateAngleBetweenTwoBondsFrom3xNCoordinates(point,angleAtomPosition[i][0],angleAtomPosition[i][1],angleAtomPosition[i][2]);
+			deltav[i] = v[i] - v0[i];
 		}
 	}
 
@@ -137,18 +134,91 @@ public class AngleBending {
 	/**
 	 *  Evaluate the MMFF94 angle bending term for the given atoms coordinates
 	 *
-	 *@param  molecule  The molecule like an AtomContainer object.
+	 *@param  point  Current molecule coordinates.
 	 *@return        MMFF94 angle bending term value
 	 */
-	public double functionMMFF94SumEA_InPoint(AtomContainer molecule) {
-		calculateDeltav(molecule);
-		mmff94SumEA_InWishedCoordinates = 0;
+	public double functionMMFF94SumEA(GVector point) {
+		calculateDeltav(point);
+		mmff94SumEA = 0;
 		for (int i = 0; i < angleNumber; i++) {
-			mmff94SumEA_InWishedCoordinates = mmff94SumEA_InWishedCoordinates + k2[i] * Math.pow(deltav[i],2) 
+			mmff94SumEA = mmff94SumEA + k2[i] * Math.pow(deltav[i],2) 
 											+ k3[i] * Math.pow(deltav[i],3);
 		}
-		//System.out.println("mmff94SumEA_InWishedCoordinates = " + mmff94SumEA_InWishedCoordinates);
-		return mmff94SumEA_InWishedCoordinates;
+		//System.out.println("mmff94SumEA = " + mmff94SumEA);
+		return mmff94SumEA;
+	}
+
+
+	/**
+	 *  Calculate the angle bending first derivative respect to the cartesian coordinates of the atoms.
+	 *
+	 *@param  point  Current molecule coordinates.
+	 */
+	public void setAngleBendingFirstDerivative(GVector point) {
+		
+		dDeltav = new double[point.getSize()][];
+		
+		for (int i = 0; i < point.getSize(); i++) {
+			
+			dDeltav[i] = new double[angleNumber];
+			
+			for (int j = 0; j < angleNumber; j++) {
+				dDeltav[i][j] = 1;
+			}
+		}
+			
+		/*Atom[] atomsInBond = null;
+		Double forAtomNumber = null;
+		int atomNumber = 0;
+		int coordinate;
+		for (int i = 0; i < point.getSize(); i++) {
+			
+			dDeltar[i] = new double[bonds.length];
+			
+			forAtomNumber = new Double(i/3);
+			coordinate = i % 3;
+			//System.out.println("coordinate = " + coordinate);
+
+			atomNumber = forAtomNumber.intValue();
+			//System.out.println("atomNumber = " + atomNumber);
+			//System.out.println("atom : " + molecule.getAtomAt(atomNumber));
+
+			for (int j = 0; j < bonds.length; j++) {
+
+				atomsInBond = bonds[j].getAtoms();
+				//System.out.println("atomsInBond[0] : " + atomsInBond[0].toString());
+				//System.out.println("atomsInBond[1] : " + atomsInBond[1].toString());
+				if ((molecule.getAtomNumber(atomsInBond[0]) == atomNumber) | (molecule.getAtomNumber(atomsInBond[1]) == atomNumber)) {
+					switch (coordinate) {
+						case 0: dDeltar[i][j] = (atomsInBond[0].getX3d() - atomsInBond[1].getX3d())
+								/ Math.sqrt(Math.pow(atomsInBond[0].getX3d() - atomsInBond[1].getX3d(),2) + Math.pow(atomsInBond[0].getY3d() - atomsInBond[1].getY3d(),2) + Math.pow(atomsInBond[0].getZ3d() - atomsInBond[1].getZ3d(),2)); 
+							break;
+						case 1:	dDeltar[i][j] = (atomsInBond[0].getY3d() - atomsInBond[1].getY3d())
+								/ Math.sqrt(Math.pow(atomsInBond[0].getX3d() - atomsInBond[1].getX3d(),2) + Math.pow(atomsInBond[0].getY3d() - atomsInBond[1].getY3d(),2) + Math.pow(atomsInBond[0].getZ3d() - atomsInBond[1].getZ3d(),2)); 
+							break;
+						case 2: dDeltar[i][j] = (atomsInBond[0].getZ3d() - atomsInBond[1].getZ3d())
+								/ Math.sqrt(Math.pow(atomsInBond[0].getX3d() - atomsInBond[1].getX3d(),2) + Math.pow(atomsInBond[0].getY3d() - atomsInBond[1].getY3d(),2) + Math.pow(atomsInBond[0].getZ3d() - atomsInBond[1].getZ3d(),2)); 
+							break;
+					}
+					if (molecule.getAtomNumber(atomsInBond[1]) == atomNumber) {
+						dDeltar[i][j] = (-1) * dDeltar[i][j];
+					}
+				} else {
+					dDeltar[i][j] = 0;
+				}
+				//System.out.println("angle " + j + " : " + "dDeltar[" + i + "][" + j + "] = " + dDeltar[i][j]);
+			}
+		}*/
+	}
+
+
+	/**
+	 *  Get the bond lengths derivative respect to the cartesian coordinates of the atoms.
+	 *
+	 *@return        Delta angle bending first derivative value [dimension(3xN)] [angles Number]
+	 */
+	public double[][] getAngleBendingFirstDerivative() {
+		return dDeltav;
 	}
 
 
@@ -156,41 +226,46 @@ public class AngleBending {
 	 *  Evaluate the gradient of the angle bending term for a given atoms
 	 *  coordinates
 	 *
-	 *@param  molecule  The molecule like an AtomContainer object.
-	 *@return           Angle bending gradient value
+	 *@param  point  Current molecule coordinates.
 	 */
-	public GVector gradientMMFF94SumEA_InPoint(AtomContainer molecule) {
-
-		gradientMMFF94SumEA_InWishedCoordinates.setSize(molecule.getAtomCount() * 3);
-		dDeltav.setSize(molecule.getAtomCount() * 3);
-		double fordDeltav = 1;
-
+	public void setGradientMMFF94SumEA(GVector point) {
+		gradientMMFF94SumEA.setSize(point.getSize());
+		
+		setAngleBendingFirstDerivative(point);
+		
 		double sumGradientEA;
-		for (int i = 0; i < gradientMMFF94SumEA_InWishedCoordinates.getSize(); i++) {
+		for (int i = 0; i < gradientMMFF94SumEA.getSize(); i++) {
 
-			dDeltav.setElement(i,1);                 // dDeltav : partial derivative of deltav. To change in the future
 			sumGradientEA = 0;
-
 			for (int j = 0; j < angleNumber; j++) {
 
-				sumGradientEA = sumGradientEA + (k2[j] * 2 * deltav[j] + k3[j] * 3 * Math.pow(deltav[j],2)) * dDeltav.getElement(i);
+				sumGradientEA = sumGradientEA + (k2[j] * 2 * deltav[j] + k3[j] * 3 * Math.pow(deltav[j],2)) * dDeltav[i][j];
 			}
 			
-			gradientMMFF94SumEA_InWishedCoordinates.setElement(i, sumGradientEA);
+			gradientMMFF94SumEA.setElement(i, sumGradientEA);
 		}
 
-		//System.out.println("gradientMMFF94SumEA_InWishedCoordinates : " + gradientMMFF94SumEA_InWishedCoordinates);
-		return gradientMMFF94SumEA_InWishedCoordinates;
+		//System.out.println("gradientMMFF94SumEA : " + gradientMMFF94SumEA);
+	}
+
+
+	/**
+	 *  Get the gradient of the angle bending term.
+	 *
+	 *
+	 *@return           Angle bending gradient value
+	 */
+	public GVector getGradientMMFF94SumEA() {
+		return gradientMMFF94SumEA;
 	}
 
 
 	/**
 	 *  Evaluate the hessian for the angle bending.
 	 *
-	 *@param  point  Current coordinates
-	 *@return        Hessian value of the angle bending term.
+	 *@param  point  Current molecule coordinates.
 	 */
-	public GMatrix hessianInPoint(GVector point) {
+	public void setHessianMMFF94SumEA(GVector point) {
 
 		double[] forHessian = new double[point.getSize() * point.getSize()];
 		double sumHessianEA = 0;
@@ -198,18 +273,31 @@ public class AngleBending {
 		GMatrix ddDeltar = new GMatrix(point.getSize(),point.getSize());
 		ddDeltar.setZero();
 
-		for (int i = 0; i < forHessian.length; i++) {
-			for (int j = 0; j < angleNumber; j++) {
-				sumHessianEA = sumHessianEA + (2 * k2[j] + 6 * k3[j] * deltav[j]) * dDeltav.getElement(j) * dDeltav.getElement(0)
-							+ (k2[j] * 2 * deltav[j] + k3[j] * 3 * Math.pow(deltav[j],2)) * ddDeltar.getElement(0,0);
+		int forHessianIndex;
+		for (int i = 0; i < point.getSize(); i++) {
+			for (int j = 0; j < point.getSize(); j++) {
+				for (int k = 0; k < angleNumber; k++) {
+					sumHessianEA = sumHessianEA + (2 * k2[k] + 6 * k3[k] * deltav[k]) * dDeltav[i][k] * dDeltav[j][k]
+							+ (k2[k] * 2 * deltav[k] + k3[k] * 3 * Math.pow(deltav[k],2)) * ddDeltar.getElement(0,0);
+				}
+				forHessianIndex = i*point.getSize()+j;
+				forHessian[forHessianIndex] = sumHessianEA;
 			}
-			forHessian[i] = sumHessianEA;
 		}
 
-		hessianMMFF94SumEA_InWishedCoordinates.setSize(point.getSize(), point.getSize());
-		hessianMMFF94SumEA_InWishedCoordinates.set(forHessian); 
-		//System.out.println("hessianMMFF94SumEA_InWishedCoordinates : " + hessianMMFF94SumEA_InWishedCoordinates);
-		return hessianMMFF94SumEA_InWishedCoordinates;
+		hessianMMFF94SumEA.setSize(point.getSize(), point.getSize());
+		hessianMMFF94SumEA.set(forHessian); 
+		//System.out.println("hessianMMFF94SumEA : " + hessianMMFF94SumEA);
+	}
+
+
+	/**
+	 *  Get the hessian for the angle bending.
+	 *
+	 *@return        Hessian value of the angle bending term.
+	 */
+	public GMatrix getHessianMMFF94SumEA() {
+		return hessianMMFF94SumEA;
 	}
 
 }

@@ -34,9 +34,11 @@ public class ConjugateGradientMethod {
 	 *
 	 */
 	public void setuk(GVector xkminus1, GVector xk,  PotentialFunction forceFieldFunction) {
-		GVector temporalVector = new GVector(forceFieldFunction.gradientInPoint(xk));
+		forceFieldFunction.setEnergyGradient(xk);
+		GVector temporalVector = new GVector(forceFieldFunction.getEnergyGradient());
 		uk = temporalVector.dot(temporalVector);
-		temporalVector.set(forceFieldFunction.gradientInPoint(xkminus1));
+		forceFieldFunction.setEnergyGradient(xkminus1);
+		temporalVector.set(forceFieldFunction.getEnergyGradient());
 		uk = uk / temporalVector.dot(temporalVector);
 		//System.out.println("uk = " + uk);
 		return;

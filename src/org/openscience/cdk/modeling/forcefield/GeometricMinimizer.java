@@ -171,7 +171,9 @@ public class GeometricMinimizer {
 	public void steepestDescentsMinimization(GVector initialCoordinates, PotentialFunction forceField) {
 		
 		initializeMinimizationParameters(initialCoordinates);
-		gradient.set(forceField.gradientInPoint(kCoordinates));
+
+		forceField.setEnergyGradient(kCoordinates);
+		gradient.set(forceField.getEnergyGradient());
 		//System.out.println("gradient at iteration 1 : g1 = " + gradient);
 
 		steepestDescentsMinimum.setSize(kCoordinates.getSize());
@@ -210,7 +212,8 @@ public class GeometricMinimizer {
 			//System.out.print("x" + iterationNumber + " = " + kplus1Coordinates + "	");
 			//System.out.println("f(x" + iterationNumber + ") = " + forceField.functionInPoint(kplus1Coordinates));
 
-			gradient.set(forceField.gradientInPoint(kplus1Coordinates));
+			forceField.setEnergyGradient(kplus1Coordinates);
+			gradient.set(forceField.getEnergyGradient());
 
 			checkConvergence(SDconvergenceCriterion);
 			//System.out.println("convergence: " + convergence);
@@ -257,7 +260,9 @@ public class GeometricMinimizer {
 	public void conjugateGradientMinimization(GVector initialCoordinates,  PotentialFunction forceField) {
 		
 		initializeMinimizationParameters(initialCoordinates);
-		gradient.set(forceField.gradientInPoint(kCoordinates));
+		
+		forceField.setEnergyGradient(kCoordinates);
+		gradient.set(forceField.getEnergyGradient());
 		//System.out.println("gradient at iteration 1 : g1 = " + gradient);
 
 		conjugateGradientMinimum.setSize(kCoordinates.getSize());
@@ -297,7 +302,8 @@ public class GeometricMinimizer {
 			//System.out.print("x" + iterationNumber + " = " + kplus1Coordinates + "	");
 			//System.out.println("f(x" + iterationNumber + ") = " + forceField.functionInPoint(kplus1Coordinates));
 			
-			gradient.set(forceField.gradientInPoint(kplus1Coordinates));
+			forceField.setEnergyGradient(kplus1Coordinates);
+			gradient.set(forceField.getEnergyGradient());
 
 			checkConvergence(CGconvergenceCriterion);
 			//System.out.println("convergence: " + convergence);
@@ -345,7 +351,9 @@ public class GeometricMinimizer {
 	public void newtonRaphsonMinimization(GVector initialCoordinates, PotentialFunction forceField) {
 		
 		initializeMinimizationParameters(initialCoordinates);
-		gradient.set(forceField.gradientInPoint(kCoordinates));
+
+		forceField.setEnergyGradient(kCoordinates);
+		gradient.set(forceField.getEnergyGradient());
 		//System.out.println("gradient at iteration 1 : g1 = " + gradient);
 
 		newtonRaphsonMinimum.setSize(kCoordinates.getSize());
@@ -367,7 +375,8 @@ public class GeometricMinimizer {
 			if (iterationNumber != 1) {
 				kCoordinates.set(kplus1Coordinates);
 			}
- 			hessian.set(forceField.hessianInPoint(kCoordinates));
+ 			forceField.setEnergyHessian(kCoordinates);
+			hessian.set(forceField.getEnergyHessian());
 			//System.out.println("hessian = " + hessian);
 			nrm.gradientPerInverseHessian(gradient,hessian);
 			//System.out.println("GradientPerInverseHessian = " + nrm.getGradientPerInverseHessian());
@@ -376,8 +385,8 @@ public class GeometricMinimizer {
 			//System.out.print("x" + iterationNumber + " = " + kplus1Coordinates + "	");
 			//System.out.println("f(x" + iterationNumber + ") = " + forceField.functionInPoint(kplus1Coordinates));
 
-
-			gradient.set(forceField.gradientInPoint(kplus1Coordinates));
+			forceField.setEnergyGradient(kplus1Coordinates);
+			gradient.set(forceField.getEnergyGradient());
 
 			checkConvergence(NRconvergenceCriterion);
 			//System.out.println("convergence: " + convergence);

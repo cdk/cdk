@@ -20,15 +20,16 @@ public class StretchBendInteractions {
 
 	String functionShape = " Stretch-BendInteractions ";
 
-	double mmff94SumEBA_InWishedCoordinates = 0;
-	GVector gradientMMFF94SumEBA_InWishedCoordinates = new GVector(3);
-	GMatrix hessianMMFF94SumEBA_InWishedCoordinates = new GMatrix(3,3);
+	double mmff94SumEBA = 0;
+	GVector gradientMMFF94SumEBA = new GVector(3);
+	GMatrix hessianMMFF94SumEBA = new GMatrix(3,3);
 
 	GVector dDeltav = new GVector(3);
 	GVector dDeltarij = new GVector(3);
 	GVector dDeltarkj = new GVector(3);
 	
 	int angleNumber = 0;
+	int[][] angleAtomPosition = null;
 
 	double[] v0 = null;
 	double[] r0IJ = null;
@@ -74,18 +75,20 @@ public class StretchBendInteractions {
 		}
 		//System.out.println("angleNumber = " + angleNumber);
 
-		v0 = new double[angleNumber];
-		r0IJ = new double[angleNumber];
-		r0KJ = new double[angleNumber];
-		kbaIJK = new double[angleNumber];
-		kbaKJI = new double[angleNumber];
-
 		Vector stretchBendInteractionsData = null;
 		Vector bondData = null;
 		Vector angleData = null;
 		MMFF94ParametersCall pc = new MMFF94ParametersCall();
 		pc.initilize(parameterSet);
 		
+		v0 = new double[angleNumber];
+		r0IJ = new double[angleNumber];
+		r0KJ = new double[angleNumber];
+		kbaIJK = new double[angleNumber];
+		kbaKJI = new double[angleNumber];
+
+		angleAtomPosition = new int[angleNumber][];
+
 		int l = -1;
 		for (int j = 0; j < molecule.getAtomCount(); j++) {
 			atomConnected = molecule.getConnectedAtoms(molecule.getAtomAt(j));
@@ -109,11 +112,22 @@ public class StretchBendInteractions {
 						bondData = pc.getBondData(atomConnected[k].getID(), molecule.getAtomAt(j).getID());
 						r0KJ[l] = ((Double) bondData.get(0)).doubleValue();
 						
+						angleAtomPosition[l] = new int[3];
+						angleAtomPosition[l][0] = molecule.getAtomNumber(atomConnected[j]);
+						angleAtomPosition[l][1] = i;
+						angleAtomPosition[l][2] = molecule.getAtomNumber(atomConnected[k]);
 
 					}
 				}
 			}
 		}
+		v = new double[angleNumber];
+		deltav = new double[angleNumber];
+		rij = new double[angleNumber];
+		rkj = new double[angleNumber];
+		deltarij = new double[angleNumber];
+		deltarkj = new double[angleNumber];
+
 
 	}
 
@@ -121,41 +135,19 @@ public class StretchBendInteractions {
 	/**
 	 *  Calculate the actual bond angles vijk, bond distances rij and rkj, and the difference with the reference angles and bonds
 	 *
-	 *@param  molecule  The molecule like an AtomContainer object.
+	 *@param  point  Current molecule coordinates.
 	 */
-	public void calculateDeltarAndv(AtomContainer molecule) {
+	public void calculateDeltarAndv(GVector point) {
 
-		v = new double[angleNumber];
-		deltav = new double[angleNumber];
-		rij = new double[angleNumber];
-		rkj = new double[angleNumber];
-		deltarij = new double[angleNumber];
-		deltarkj = new double[angleNumber];
-		
-		Atom[] atomConnected = null;
-		RDFProtonDescriptor rdfpdo = new RDFProtonDescriptor();
-		int l=-1;
-		
-		for (int j = 0; j < molecule.getAtomCount(); j++) {
-			atomConnected = molecule.getConnectedAtoms(molecule.getAtomAt(j));
-			if (atomConnected.length > 1) {
-				for (int i = 0; i < atomConnected.length; i++) {
-					for (int k = i+1; k < atomConnected.length; k++) {
-						l += 1;
-						Vector3d va = new Vector3d((Tuple3d) atomConnected[i].getPoint3d());
-						Vector3d vb = new Vector3d((Tuple3d) molecule.getAtomAt(j).getPoint3d());
-						Vector3d vc = new Vector3d((Tuple3d) atomConnected[k].getPoint3d());
-						v[l] = rdfpdo.calculateAngleBetweenTwoLines(vb, vb, vc, vb);
-						deltav[l] = v[l] - v0[l];
+		for (int i = 0; i < angleNumber; i++) {
+			v[i] = ffTools.calculateAngleBetweenTwoBondsFrom3xNCoordinates(point,angleAtomPosition[i][0],angleAtomPosition[i][1],angleAtomPosition[i][2]);
+			deltav[i] = v[i] - v0[i];
 
-						rij[l] = ffTools.distanceBetweenTwoAtoms(atomConnected[i], molecule.getAtomAt(j));
-						deltarij[l] = rij[l] - r0IJ[l];
+			rij[i] = ffTools.calculate3dDistanceBetweenTwoAtomFrom3xNCoordinates(point, angleAtomPosition[i][0], angleAtomPosition[i][1]);
+			deltarij[i] = rij[i] - r0IJ[i];
 
-						rkj[l] = ffTools.distanceBetweenTwoAtoms(atomConnected[k], molecule.getAtomAt(j));
-						deltarkj[l] = rkj[l] - r0KJ[l];
-					}
-				}
-			}
+			rkj[i] = ffTools.calculate3dDistanceBetweenTwoAtomFrom3xNCoordinates(point, angleAtomPosition[i][2], angleAtomPosition[i][1]);
+			deltarkj[i] = rkj[i] - r0KJ[i];
 		}
 	}
 
@@ -163,17 +155,17 @@ public class StretchBendInteractions {
 	/**
 	 *  Evaluate the MMFF94 stretch-bend interaction term.
 	 *
-	 *@param  molecule  The molecule like an AtomContainer object.
+	 *@param  point  Current molecule coordinates.
 	 *@return        MMFF94 stretch-bend interaction term value.
 	 */
-	public double functionMMFF94SumEBA_InPoint(AtomContainer molecule) {
-		calculateDeltarAndv(molecule);
-		mmff94SumEBA_InWishedCoordinates = 0;
+	public double functionMMFF94SumEBA(GVector point) {
+		calculateDeltarAndv(point);
+		mmff94SumEBA = 0;
 		for (int j = 0; j < angleNumber; j++) {
-			mmff94SumEBA_InWishedCoordinates = mmff94SumEBA_InWishedCoordinates + 2.51210 * (kbaIJK[j] * deltarij[j] + kbaKJI[j] * deltarkj[j]) * deltav[j];
+			mmff94SumEBA = mmff94SumEBA + 2.51210 * (kbaIJK[j] * deltarij[j] + kbaKJI[j] * deltarkj[j]) * deltav[j];
 		}
-		//System.out.println("mmff94SumEBA_InWishedCoordinates = " + mmff94SumEBA_InWishedCoordinates);
-		return mmff94SumEBA_InWishedCoordinates;
+		//System.out.println("mmff94SumEBA = " + mmff94SumEBA);
+		return mmff94SumEBA;
 	}
 
 
@@ -181,18 +173,17 @@ public class StretchBendInteractions {
 	 *  Evaluate the gradient of the stretch-bend interaction term. 
 	 *  
 	 *
-	 *@param  molecule  The molecule like an AtomContainer object.
-	 *@return           stretch-bend interaction gradient value.
+	 *@param  point  Current molecule coordinates.
 	 */
-	public GVector gradientMMFF94SumEBA_InPoint(AtomContainer molecule) {
+	public void setGradientMMFF94SumEBA(GVector point) {
 
-		gradientMMFF94SumEBA_InWishedCoordinates.setSize(molecule.getAtomCount() * 3);
-		dDeltav.setSize(molecule.getAtomCount() * 3);
-		dDeltarij.setSize(molecule.getAtomCount() * 3);
-		dDeltarkj.setSize(molecule.getAtomCount() * 3);
+		gradientMMFF94SumEBA.setSize(point.getSize());
+		dDeltav.setSize(point.getSize());
+		dDeltarij.setSize(point.getSize());
+		dDeltarkj.setSize(point.getSize());
 
 		double sumGradientEBA;
-		for (int i = 0; i < gradientMMFF94SumEBA_InWishedCoordinates.getSize(); i++) {
+		for (int i = 0; i < gradientMMFF94SumEBA.getSize(); i++) {
 
 			sumGradientEBA = 0;
 			dDeltav.setElement(i,1);                 // dDeltav : partial derivative of deltav. To change in the future
@@ -206,20 +197,29 @@ public class StretchBendInteractions {
 			}
 			sumGradientEBA = sumGradientEBA * 2.51210;
 			
-			gradientMMFF94SumEBA_InWishedCoordinates.setElement(i, sumGradientEBA);
+			gradientMMFF94SumEBA.setElement(i, sumGradientEBA);
 		}
-		//System.out.println("gradientMMFF94SumEBA_InWishedCoordinates = " + gradientMMFF94SumEBA_InWishedCoordinates);
-		return gradientMMFF94SumEBA_InWishedCoordinates;
+		//System.out.println("gradientMMFF94SumEBA = " + gradientMMFF94SumEBA);
+	}
+
+
+	/**
+	 *  Get the gradient of the stretch-bend interaction term. 
+	 *  
+	 *
+	 *@return           stretch-bend interaction gradient value.
+	 */
+	public GVector getGradientMMFF94SumEBA() {
+		return gradientMMFF94SumEBA;
 	}
 
 
 	/**
 	 *  Evaluate the hessian of the stretch-bend interaction.
 	 *
-	 *@param  point  Current coordinates.
-	 *@return        Hessian value of the stretch-bend interaction term.
+	 *@param  point  Current molecule coordinates.
 	 */
-	public GMatrix hessianInPoint(GVector point) {
+	public void setHessianMMFF94SumEBA(GVector point) {
 
 		double[] forHessian = new double[point.getSize() * point.getSize()];
 		double sumHessianEBA = 0;
@@ -241,10 +241,19 @@ public class StretchBendInteractions {
 			forHessian[i] = sumHessianEBA;
 		}
 
-		hessianMMFF94SumEBA_InWishedCoordinates.setSize(point.getSize(), point.getSize());
-		hessianMMFF94SumEBA_InWishedCoordinates.set(forHessian); 
-		//System.out.println("hessianMMFF94SumEBA_InWishedCoordinates : " + hessianMMFF94SumEBA_InWishedCoordinates);
-		return hessianMMFF94SumEBA_InWishedCoordinates;
+		hessianMMFF94SumEBA.setSize(point.getSize(), point.getSize());
+		hessianMMFF94SumEBA.set(forHessian); 
+		//System.out.println("hessianMMFF94SumEBA : " + hessianMMFF94SumEBA);
+	}
+
+
+	/**
+	 *  Get the hessian of the stretch-bend interaction.
+	 *
+	 *@return        Hessian value of the stretch-bend interaction term.
+	 */
+	public GMatrix getHessianMMFF94SumEBA() {
+		return hessianMMFF94SumEBA;
 	}
 
 }

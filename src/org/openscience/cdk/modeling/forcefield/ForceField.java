@@ -26,6 +26,7 @@ public class ForceField extends GeometricMinimizer{
 	private Molecule molecule;
 	private String potentialFunction="mmff94";
 	ForceFieldTools ffTools = new ForceFieldTools();
+	
 	/**
 	 *  Constructor for the ForceField object
 	 */

@@ -19,13 +19,14 @@ public class Torsions {
 
 	String functionShape = " Torsions ";
 
-	double mmff94SumET_InWishedCoordinates = 0;
-	GVector gradientMMFF94SumET_InWishedCoordinates = new GVector(3);
-	GMatrix hessianMMFF94SumET_InWishedCoordinates = new GMatrix(3,3);
+	double mmff94SumET = 0;
+	GVector gradientMMFF94SumET = new GVector(3);
+	GMatrix hessianMMFF94SumET = new GMatrix(3,3);
 
 	GVector dPhi = new GVector(3);
 	
 	int torsionNumber = 0;
+	int[][] torsionAtomPosition = null;
 
 	double[] v1 = null;
 	double[] v2 = null;
@@ -83,14 +84,16 @@ public class Torsions {
 		}
 		//System.out.println("torsionNumber = " + torsionNumber);
 
-		v1 = new double[torsionNumber];
-		v2 = new double[torsionNumber];
-		v3 = new double[torsionNumber];
-
 		Vector torsionsData = null;
 		MMFF94ParametersCall pc = new MMFF94ParametersCall();
 		pc.initilize(parameterSet);
 		
+		v1 = new double[torsionNumber];
+		v2 = new double[torsionNumber];
+		v3 = new double[torsionNumber];
+
+		torsionAtomPosition = new int[torsionNumber][];
+
 		int m = -1;
 		for (int b=0; b<bonds.length; b++) {
 			atomsInBond = bonds[b].getAtoms();
@@ -113,6 +116,12 @@ public class Torsions {
 									v1[m] = ((Double) torsionsData.get(0)).doubleValue();
 									v2[m] = ((Double) torsionsData.get(1)).doubleValue();
 									v3[m] = ((Double) torsionsData.get(2)).doubleValue();
+
+									torsionAtomPosition[m] = new int[4];
+									torsionAtomPosition[m][0] = molecule.getAtomNumber(bondsConnectedBefore[bb].getConnectedAtom(atomsInBond[0]));
+									torsionAtomPosition[m][1] = molecule.getAtomNumber(atomsInBond[0]);
+									torsionAtomPosition[m][2] = molecule.getAtomNumber(atomsInBond[1]);
+									torsionAtomPosition[m][3] = molecule.getAtomNumber(bondsConnectedAfter[ba].getConnectedAtom(atomsInBond[1]));
 								}
 							}
 						}
@@ -127,35 +136,17 @@ public class Torsions {
 	/**
 	 *  Calculate the actual phi
 	 *
-	 *@param  molecule  The molecule like an AtomContainer object.
+	 *@param  point  Current molecule coordinates.
 	 */
-	public void setPhi(AtomContainer molecule) {
+	public void setPhi(GVector point) {
 
 		phi = new double[torsionNumber];
 		
-		int m=-1;
-		for (int b=0; b<bonds.length; b++) {
-			atomsInBond = bonds[b].getAtoms();
-			bondsConnectedBefore = molecule.getConnectedBonds(atomsInBond[0]);
-			if (bondsConnectedBefore.length > 1) {
-				bondsConnectedAfter = molecule.getConnectedBonds(atomsInBond[1]);
-				if (bondsConnectedAfter.length > 1) {
-					for (int bb=0; bb<bondsConnectedBefore.length; bb++) {
-						if (bondsConnectedBefore[bb].compare(bonds[b])) {}
-						else {
-							for (int ba=0; ba<bondsConnectedAfter.length; ba++) {
-								if (bondsConnectedAfter[ba].compare(bonds[b])) {}
-								else {
-									m += 1;
-									phi[m] = ffTools.torsionAngle(bondsConnectedBefore[bb].getConnectedAtom(atomsInBond[0]), 
-											atomsInBond[0], atomsInBond[1], bondsConnectedAfter[ba].getConnectedAtom(atomsInBond[1]));
-									//System.out.println("phi : " + phi[m]);	
-								}
-							}
-						}
-					}
-				}
-			}
+		for (int m = 0; m < torsionNumber; m++) {
+			
+			phi[m] = ffTools.torsionAngleFrom3xNCoordinates(point, torsionAtomPosition[m][0], torsionAtomPosition[m][1], 
+						torsionAtomPosition[m][2], torsionAtomPosition[m][3]);
+			//System.out.println("phi : " + phi[m]);	
 		}
 	}
 
@@ -163,34 +154,33 @@ public class Torsions {
 	/**
 	 *  Evaluate the MMFF94 torsions term.
 	 *
-	 *@param  molecule  The molecule like an AtomContainer object.
+	 *@param  point  Current molecule coordinates.
 	 *@return        MMFF94 torsions term value.
 	 */
-	public double functionMMFF94SumET_InPoint(AtomContainer molecule) {
-		setPhi(molecule);
-		mmff94SumET_InWishedCoordinates = 0;
+	public double functionMMFF94SumET(GVector point) {
+		setPhi(point);
+		mmff94SumET = 0;
 		for (int m = 0; m < torsionNumber; m++) {
-			mmff94SumET_InWishedCoordinates = mmff94SumET_InWishedCoordinates + 0.5 * (v1[m] * (1 + Math.cos(phi[m])) + v2[m] * (1 - Math.cos(2 * phi[m])) + v3[m] * (1 + Math.cos(3 * phi[m])));
+			mmff94SumET = mmff94SumET + 0.5 * (v1[m] * (1 + Math.cos(phi[m])) + v2[m] * (1 - Math.cos(2 * phi[m])) + v3[m] * (1 + Math.cos(3 * phi[m])));
 		}
-		//System.out.println("mmff94SumET_InWishedCoordinates = " + mmff94SumET_InWishedCoordinates);
-		return mmff94SumET_InWishedCoordinates;
+		//System.out.println("mmff94SumET = " + mmff94SumET);
+		return mmff94SumET;
 	}
 
 
 	/**
-	 *  Evaluate the gradient of the torsions term. 
+	 *  Evaluate the gradient of the torsions term.
 	 *  
 	 *
-	 *@param  molecule  The molecule like an AtomContainer object.
-	 *@return           torsions gradient value.
+	 *@param  point  Current molecule coordinates.
 	 */
-	public GVector gradientMMFF94SumET_InPoint(AtomContainer molecule) {
+	public void setGradientMMFF94SumET(GVector point) {
 
-		gradientMMFF94SumET_InWishedCoordinates.setSize(molecule.getAtomCount() * 3);
-		dPhi.setSize(molecule.getAtomCount() * 3);
+		gradientMMFF94SumET.setSize(point.getSize());
+		dPhi.setSize(point.getSize());
 
 		double sumGradientET;
-		for (int i = 0; i < gradientMMFF94SumET_InWishedCoordinates.getSize(); i++) {
+		for (int i = 0; i < gradientMMFF94SumET.getSize(); i++) {
 
 			sumGradientET = 0;
 			dPhi.setElement(i,1);                 // dPhi : partial derivative of phi. To change in the future
@@ -203,20 +193,29 @@ public class Torsions {
 			}
 			sumGradientET = sumGradientET * 0.5;
 			
-			gradientMMFF94SumET_InWishedCoordinates.setElement(i, sumGradientET);
+			gradientMMFF94SumET.setElement(i, sumGradientET);
 		}
-		//System.out.println("gradientMMFF94SumET_InWishedCoordinates = " + gradientMMFF94SumET_InWishedCoordinates);
-		return gradientMMFF94SumET_InWishedCoordinates;
+		//System.out.println("gradientMMFF94SumET = " + gradientMMFF94SumET);
+	}
+
+
+	/**
+	 *  Get the gradient of the torsions term. 
+	 *  
+	 *
+	 *@return           torsions gradient value.
+	 */
+	public GVector getGradientMMFF94SumET() {
+		return gradientMMFF94SumET;
 	}
 
 
 	/**
 	 *  Evaluate the hessian of the torsions.
 	 *
-	 *@param  point  Current coordinates.
-	 *@return        Hessian value of the torsions term.
+	 *@param  point  Current molecule coordinates.
 	 */
-	public GMatrix hessianInPoint(GVector point) {
+	public void setHessianMMFF94SumET(GVector point) {
 
 		double[] forHessian = new double[point.getSize() * point.getSize()];
 		double[] ddPhi = new double[point.getSize() * point.getSize()];
@@ -234,10 +233,19 @@ public class Torsions {
 			forHessian[i] = 0.5 * sumHessianET;
 		}
 
-		hessianMMFF94SumET_InWishedCoordinates.setSize(point.getSize(), point.getSize());
-		hessianMMFF94SumET_InWishedCoordinates.set(forHessian); 
-		//System.out.println("hessianMMFF94SumET_InWishedCoordinates : " + hessianMMFF94SumET_InWishedCoordinates);
-		return hessianMMFF94SumET_InWishedCoordinates;
+		hessianMMFF94SumET.setSize(point.getSize(), point.getSize());
+		hessianMMFF94SumET.set(forHessian); 
+		//System.out.println("hessianMMFF94SumET : " + hessianMMFF94SumET);
+	}
+
+
+	/**
+	 *  Get the hessian of the torsions.
+	 *
+	 *@return        Hessian value of the torsions term.
+	 */
+	public GMatrix getHessianMMFF94SumET() {
+		return hessianMMFF94SumET;
 	}
 
 }

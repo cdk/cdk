@@ -32,8 +32,8 @@ public class ForceFieldTools {
 
 		//System.out.println("molecule: " + molecule.toString());
 		//System.out.println("Atoms number = " + molecule.getAtomCount());
-		GVector point0 = new GVector(3 * (molecule.getAtomCount()));
-		//System.out.println("point0 = " + point0);
+		GVector coords3d_0 = new GVector(3 * (molecule.getAtomCount()));
+		//System.out.println("coords3d_0 = " + coords3d_0);
 
 		Atom thisAtom = new Atom();
 		int j = 0;
@@ -44,14 +44,14 @@ public class ForceFieldTools {
 			//System.out.println("thisAtom.getPoint3d() = " + thisAtom.getPoint3d());
 
 			j = 3 * i;
-			point0.setElement(j, thisAtom.getX3d());
-			point0.setElement(j + 1, thisAtom.getY3d());
-			point0.setElement(j + 2, thisAtom.getZ3d());
+			coords3d_0.setElement(j, thisAtom.getX3d());
+			coords3d_0.setElement(j + 1, thisAtom.getY3d());
+			coords3d_0.setElement(j + 2, thisAtom.getZ3d());
 		}
 
-		//System.out.println("Atoms coordinates vector: " + point0);
+		//System.out.println("Atoms coordinates vector: " + coords3d_0);
 
-		return point0;
+		return coords3d_0;
 	}
 
 
@@ -176,9 +176,8 @@ public class ForceFieldTools {
 	 *  coordinate vector.
 	 *
 	 *@param  atomsCoordinatesVector  Molecule 3xN coordinates.
-	 *@param  atomNum1                Atom position in the 3xN coordinates vector
-	 *      (from 0 to 3x(N-1)) for the first atom.
-	 *@param  atomNum2                Description of the Parameter
+	 *@param  atomNum1                Atom position in the molecule (from 0 to N-1) for the first atom.
+	 *@param  atomNum2                Atom position in the molecule (from 0 to N-1) for the second atom.
 	 *@return                         3d distance between the two atoms.
 	 */
 	public double calculate3dDistanceBetweenTwoAtomFrom3xNCoordinates(GVector atomsCoordinatesVector, int atomNum1, int atomNum2) {
@@ -196,6 +195,53 @@ public class ForceFieldTools {
 	}
 
 
+	/**
+	 *  calculates the angle between two bonds, i-j and j-k, given the atoms i,j and k.
+	 *
+	 *@param  atomi  Atom i.
+	 *@param  atomj  Atom j.
+	 *@param  atomk  Atom k.
+	 *@return        Angle value.
+	 */
+	public double calculateAngleBetweenTwoBonds(Atom atomi, Atom atomj, Atom atomk) {
+
+		Vector3d bondij = new Vector3d();
+		bondij.sub((Tuple3d)atomi.getPoint3d(), (Tuple3d)atomj.getPoint3d());
+
+		Vector3d bondjk = new Vector3d();
+		bondjk.sub((Tuple3d)atomk.getPoint3d(), (Tuple3d)atomj.getPoint3d());
+
+		double angleBetweenTwoBonds = bondij.angle(bondjk);
+		return angleBetweenTwoBonds;
+	}
+	
+	/**
+	 *  calculates the angle between two bonds, i-j and j-k, given the 3xN atoms coordinates and the atom i,j and k positions.
+	 *
+	 *@param  coords3d  3xN atoms coordinates.
+	 *@param  atomiPosition  Atom i position.
+	 *@param  atomjPosition  Atom j position.
+	 *@param  atomkPosition  Atom k position.
+	 *@return        Angle value.
+	 */
+	public double calculateAngleBetweenTwoBondsFrom3xNCoordinates(GVector coords3d,int atomiPosition,int atomjPosition,int atomkPosition) {
+
+		Point3d atomiCoordinates = new Point3d(coords3d.getElement(3 * atomiPosition), coords3d.getElement(3 * atomiPosition + 1), coords3d.getElement(3 * atomiPosition + 2));
+		Point3d atomjCoordinates = new Point3d(coords3d.getElement(3 * atomjPosition), coords3d.getElement(3 * atomjPosition + 1), coords3d.getElement(3 * atomjPosition + 2));
+		Point3d atomkCoordinates = new Point3d(coords3d.getElement(3 * atomkPosition), coords3d.getElement(3 * atomkPosition + 1), coords3d.getElement(3 * atomkPosition + 2));
+		
+		Vector3d bondij = new Vector3d();
+		bondij.sub((Tuple3d)atomiCoordinates, (Tuple3d)atomjCoordinates);
+
+		Vector3d bondjk = new Vector3d();
+		bondjk.sub((Tuple3d)atomkCoordinates, (Tuple3d)atomjCoordinates);
+
+		double angleBetweenTwoBonds = bondij.angle(bondjk);
+		return angleBetweenTwoBonds;
+	}
+
+	
+	
 	/**
 	 *  Calculate the torsion angle from 4 atoms i,j,k and l, where i-j, j-k, and
 	 *  k-l are bonded pairs.
@@ -230,5 +276,46 @@ public class ForceFieldTools {
 
 		return torsion;
 	}
+
+
+	/**
+	 *  Calculate the torsion angle from 4 atoms i,j,k and l positions, where i-j, j-k, and k-l are bonded pairs.
+	 *
+	 *@param  coords3d  3xN atoms coordinates.
+	 *@param  atomiPosition  Atom i position.
+	 *@param  atomjPosition  Atom j position.
+	 *@param  atomkPosition  Atom k position.
+	 *@param  atomlPosition  Atom l position.
+	 *@return        Torsion angle value.
+	 */
+	public double torsionAngleFrom3xNCoordinates(GVector coords3d, int atomiPosition, int atomjPosition, int atomkPosition, int atomlPosition) {
+
+		Point3d atomiCoordinates = new Point3d(coords3d.getElement(3 * atomiPosition), coords3d.getElement(3 * atomiPosition + 1), coords3d.getElement(3 * atomiPosition + 2));
+		Point3d atomjCoordinates = new Point3d(coords3d.getElement(3 * atomjPosition), coords3d.getElement(3 * atomjPosition + 1), coords3d.getElement(3 * atomjPosition + 2));
+		Point3d atomkCoordinates = new Point3d(coords3d.getElement(3 * atomkPosition), coords3d.getElement(3 * atomkPosition + 1), coords3d.getElement(3 * atomkPosition + 2));
+		Point3d atomlCoordinates = new Point3d(coords3d.getElement(3 * atomlPosition), coords3d.getElement(3 * atomlPosition + 1), coords3d.getElement(3 * atomlPosition + 2));
+		
+		Vector3d xji = new Vector3d((Tuple3d)atomiCoordinates);
+		xji.sub(atomjCoordinates);
+		Vector3d xjk = new Vector3d((Tuple3d)atomkCoordinates);
+		xjk.sub(atomjCoordinates);
+		Vector3d xlk = new Vector3d((Tuple3d)atomkCoordinates);
+		xlk.sub(atomlCoordinates);
+		
+		Vector3d v1 = new Vector3d();	// v1 = xji x xjk / |xji x xjk|
+		v1.cross(xji, xjk);
+		v1.normalize();
+		
+		Vector3d v2 = new Vector3d();	// v2 = xjk x xlk / |xjk x xlk|
+		v2.cross(xjk, xlk);
+		v2.normalize();
+
+		double torsion = Math.toDegrees(v1.angle(v2));
+		//System.out.println("torsion" + torsion);
+
+		return torsion;
+	}
+
+
 }
 

@@ -292,7 +292,6 @@ public class ForceFieldTests extends CDKTestCase {
 					84.17045040896397,84.17045040896397,84.17045040896397,84.17045040896397,84.17045040896397,
 					84.17045040896397,84.17045040896397,84.17045040896397,84.17045040896397,84.17045040896411,
 					84.17045040896411,84.17045040896411,-383.4228028658292,364.7080782763345,693.309967700736};
-		//GMatrix testResult_hessianSumEB = new GMatrix(24, 24, forTestResult_hessianSumEB);
 
 
 		createTestMoleculeAndSetMMFF94Parameters();
@@ -300,20 +299,20 @@ public class ForceFieldTests extends CDKTestCase {
 		BondStretching bs = new BondStretching();
 		bs.setMMFF94BondStretchingParameters(ac, mmff94Tables);
 
-		//System.out.println("bs.functionMMFF94SumEB_InPoint(ac) = " + bs.functionMMFF94SumEB_InPoint(ac));
-		assertEquals(testResult_SumEB, bs.functionMMFF94SumEB_InPoint(ac), 0.00001);
+		//System.out.println("bs.functionMMFF94SumEB(acCoordinates) = " + bs.functionMMFF94SumEB(acCoordinates));
+		assertEquals(testResult_SumEB, bs.functionMMFF94SumEB(acCoordinates), 0.00001);
 		
-		bs.setGradientMMFF94SumEB_InPoint(ac);
-		//System.out.println("gradientMMFF94SumEB_InPoint = " + bs.getGradientMMFF94SumEB_InWishedCoordinates());
+		bs.setGradientMMFF94SumEB(acCoordinates);
+		//System.out.println("gradientMMFF94SumEB = " + bs.getGradientMMFF94SumEB());
 		for (int i = 0; i < testResult_gradientSumEB.length; i++) {
-			assertEquals(testResult_gradientSumEB[i], bs.getGradientMMFF94SumEB_InWishedCoordinates().getElement(i), 0.00001);
+			assertEquals(testResult_gradientSumEB[i], bs.getGradientMMFF94SumEB().getElement(i), 0.00001);
 		}
 		
-		bs.setHessianInPoint(ac);
-		//System.out.println("hessian = " + bs.hessianInPoint(ac));
+		bs.setHessianMMFF94SumEB(acCoordinates);
+		//System.out.println("HessianMMFF94SumEB = " + bs.HessianMMFF94SumEB(acCoordinates));
 		for (int i = 0; i < 24; i++) {
 			for (int j = 0; j < 24; j++) {
-				assertEquals(testResult_hessianSumEB[i*24+j], bs.getHessianInPoint().getElement(i,j), 0.00001);
+				assertEquals(testResult_hessianSumEB[i*24+j], bs.getHessianMMFF94SumEB().getElement(i,j), 0.00001);
 			}
 		}
 	
@@ -331,30 +330,30 @@ public class ForceFieldTests extends CDKTestCase {
 		//System.out.println("");
 		//System.out.println("FORCEFIELDTESTS with Angle Bending");
 		
-		double testResult_SumEA = 2.6627825055933344E8;
-		double[] testResult_gradientSumEA = {-7254575.574502064,-7254575.574502064,-7254575.574502064,-7254575.574502064,
-						-7254575.574502064,-7254575.574502064,-7254575.574502064,-7254575.574502064,
-						-7254575.574502064,-7254575.574502064,-7254575.574502064,-7254575.574502064,
-						-7254575.574502064,-7254575.574502064,-7254575.574502064,-7254575.574502064,
-						-7254575.574502064,-7254575.574502064,-7254575.574502064,-7254575.574502064,
-						-7254575.574502064,-7254575.574502064,-7254575.574502064,-7254575.574502064};
+		double testResult_SumEA = 2.5626995828317845E8;
+		double[] testResult_gradientSumEA = {-7072408.357412168,-7072408.357412168,-7072408.357412168,-7072408.357412168,
+						-7072408.357412168,-7072408.357412168,-7072408.357412168,-7072408.357412168,
+						-7072408.357412168,-7072408.357412168,-7072408.357412168,-7072408.357412168,
+						-7072408.357412168,-7072408.357412168,-7072408.357412168,-7072408.357412168,
+						-7072408.357412168,-7072408.357412168,-7072408.357412168,-7072408.357412168,
+						-7072408.357412168,-7072408.357412168,-7072408.357412168,-7072408.357412168};
 
 		createTestMoleculeAndSetMMFF94Parameters();
 		
 		AngleBending ab = new AngleBending();
 		ab.setMMFF94AngleBendingParameters(ac, mmff94Tables);
 
-		//System.out.println("ab.functionMMFF94SumEA_InPoint(ac) = " + ab.functionMMFF94SumEA_InPoint(ac));
-		assertEquals(testResult_SumEA, ab.functionMMFF94SumEA_InPoint(ac), 0.00001);
+		//System.out.println("ab.functionMMFF94SumEA(acCoordinates) = " + ab.functionMMFF94SumEA(acCoordinates));
+		assertEquals(testResult_SumEA, ab.functionMMFF94SumEA(acCoordinates), 0.00001);
 		
-		//System.out.println("ab.gradientMMFF94SumEA_InPoint(ac) = " + ab.gradientMMFF94SumEA_InPoint(ac));
+		//System.out.println("ab.gradientMMFF94SumEA(acCoordinates) = " + ab.gradientMMFF94SumEA(acCoordinates));
 		
-		GVector gradientSumEA = new GVector(ab.gradientMMFF94SumEA_InPoint(ac));
+		ab.setGradientMMFF94SumEA(acCoordinates);
 		for (int i = 0; i < testResult_gradientSumEA.length; i++) {
-			assertEquals(testResult_gradientSumEA[i], gradientSumEA.getElement(i), 0.00001);
+			assertEquals(testResult_gradientSumEA[i], ab.getGradientMMFF94SumEA().getElement(i), 0.00001);
 		}
 		
-		//System.out.println("hessian = " + ab.hessianInPoint(acCoordinates));
+		//System.out.println("HessianMMFF94SumEA = " + ab.HessianMMFF94SumEA(acCoordinates));
 	}
 
 
@@ -370,30 +369,29 @@ public class ForceFieldTests extends CDKTestCase {
 		//System.out.println("");
 		//System.out.println("FORCEFIELDTESTS with StretchBendInteraction");
 		
-		double testResult_SumEBA = 17052.61896814143;
-		double[] testResult_gradientSumEBA = {-62623.72567235314,-62623.72567235314,-62623.72567235314,-62623.72567235314,
-						-62623.72567235314,-62623.72567235314,-62623.72567235314,-62623.72567235314,
-						-62623.72567235314,-62623.72567235314,-62623.72567235314,-62623.72567235314,
-						-62623.72567235314,-62623.72567235314,-62623.72567235314,-62623.72567235314,
-						-62623.72567235314,-62623.72567235314,-62623.72567235314,-62623.72567235314,
-						-62623.72567235314,-62623.72567235314,-62623.72567235314,-62623.72567235314};
+		double testResult_SumEBA = 384.0621424329229;
+		double[] testResult_gradientSumEBA = {-61985.71873683456,-61985.71873683456,-61985.71873683456,-61985.71873683456,
+						-61985.71873683456,-61985.71873683456,-61985.71873683456,-61985.71873683456,
+						-61985.71873683456,-61985.71873683456,-61985.71873683456,-61985.71873683456,
+						-61985.71873683456,-61985.71873683456,-61985.71873683456,-61985.71873683456,
+						-61985.71873683456,-61985.71873683456,-61985.71873683456,-61985.71873683456,
+						-61985.71873683456,-61985.71873683456,-61985.71873683456,-61985.71873683456};
 
 		createTestMoleculeAndSetMMFF94Parameters();
 		
 		StretchBendInteractions sbi = new StretchBendInteractions();
 		sbi.setMMFF94StretchBendParameters(ac, mmff94Tables);
 
-		//System.out.println("sbi.functionMMFF94SumEBA_InPoint(ac) = " + sbi.functionMMFF94SumEBA_InPoint(ac));
-		assertEquals(testResult_SumEBA, sbi.functionMMFF94SumEBA_InPoint(ac), 0.00001);
+		//System.out.println("sbi.functionMMFF94SumEBA(acCoordinates) = " + sbi.functionMMFF94SumEBA(acCoordinates));
+		assertEquals(testResult_SumEBA, sbi.functionMMFF94SumEBA(acCoordinates), 0.00001);
 		
-		//System.out.println("sbi.gradientMMFF94SumEBA_InPoint(ac) = " + sbi.gradientMMFF94SumEBA_InPoint(ac));
-		
-		GVector gradientSumEBA = new GVector(sbi.gradientMMFF94SumEBA_InPoint(ac));
+		sbi.setGradientMMFF94SumEBA(acCoordinates);
+		//System.out.println("sbi.getGradientMMFF94SumEBA(acCoordinates) = " + sbi.getGradientMMFF94SumEBA(acCoordinates));
 		for (int i = 0; i < testResult_gradientSumEBA.length; i++) {
-			assertEquals(testResult_gradientSumEBA[i], gradientSumEBA.getElement(i), 0.00001);
+			assertEquals(testResult_gradientSumEBA[i], sbi.getGradientMMFF94SumEBA().getElement(i), 0.00001);
 		}
 		
-		//System.out.println("hessian = " + sbi.hessianInPoint(acCoordinates));
+		//System.out.println("HessianMMFF94SumEBA = " + sbi.HessianMMFF94SumEBA(acCoordinates));
 	}
 	
 	public AtomContainer coordinateScrambler(AtomContainer molecule, int min, double positiveShift, double negativeShift){
@@ -513,18 +511,17 @@ public class ForceFieldTests extends CDKTestCase {
 		Torsions t = new Torsions();
 		t.setMMFF94TorsionsParameters(ac, mmff94Tables);
 		
-		//System.out.println("functionMMFF94SumET_InPoint = " + t.functionMMFF94SumET_InPoint(ac));
+		//System.out.println("functionMMFF94SumET = " + t.functionMMFF94SumET(acCoordinates));
 		
-		assertEquals(testResult_MMFF94SumET, t.functionMMFF94SumET_InPoint(ac), 0.00001);
+		assertEquals(testResult_MMFF94SumET, t.functionMMFF94SumET(acCoordinates), 0.00001);
 		
-		//System.out.println("t.gradientMMFF94SumET_InPoint(ac) = " + t.gradientMMFF94SumET_InPoint(ac));
-		
-		GVector gradientSumET = new GVector(t.gradientMMFF94SumET_InPoint(ac));
+		t.setGradientMMFF94SumET(acCoordinates);
+		//System.out.println("t.getGradientMMFF94SumET(acCoordinates) = " + t.getGradientMMFF94SumET(acCoordinates));
 		for (int i = 0; i < testResult_gradientSumET.length; i++) {
-			assertEquals(testResult_gradientSumET[i], gradientSumET.getElement(i), 0.00001);
+			assertEquals(testResult_gradientSumET[i], t.getGradientMMFF94SumET().getElement(i), 0.00001);
 		}
 		
-		//System.out.println("hessian = " + t.hessianInPoint(acCoordinates));
+		//System.out.println("HessianMMFF94SumET = " + t.HessianMMFF94SumET(acCoordinates));
 	}
 
 	/**
@@ -554,27 +551,26 @@ public class ForceFieldTests extends CDKTestCase {
 		
 		VanDerWaalsInteractions vdwi = new VanDerWaalsInteractions();
 		vdwi.setMMFF94VanDerWaalsParameters(ac, mmff94Tables);
-		vdwi.setAtomDistance(ac);
+		vdwi.setAtomDistance(acCoordinates);
 		
 		SmoothingFunctions sf = new SmoothingFunctions();
 		sf.setSmoothingFunction(vdwi.getAtomDistance());
 		
-		//System.out.println("functionMMFF94SumEvdW_InPoint = " + vdwi.functionMMFF94SumEvdW_InPoint(ac));
-		//System.out.println("functionCCGSumEvdWSK_InPoint = " + vdwi.functionCCGSumEvdWSK_InPoint(ac,sf.getSmoothingFunction()));
-		//System.out.println("functionCCGSumEvdWAv_InPoint = " + vdwi.functionCCGSumEvdWAv_InPoint(ac,sf.getSmoothingFunction()));
+		//System.out.println("functionMMFF94SumEvdW = " + vdwi.functionMMFF94SumEvdW(acCoordinates));
+		//System.out.println("functionCCGSumEvdWSK = " + vdwi.functionCCGSumEvdWSK(ac,sf.getSmoothingFunction()));
+		//System.out.println("functionCCGSumEvdWAv = " + vdwi.functionCCGSumEvdWAv(ac,sf.getSmoothingFunction()));
 		
-		assertEquals(testResult_MMFF94SumEvdW, vdwi.functionMMFF94SumEvdW_InPoint(ac), 0.00001);
-		assertEquals(testResult_CCGSumEvdWSK, vdwi.functionCCGSumEvdWSK_InPoint(ac,sf.getSmoothingFunction()), 0.00001);
-		assertEquals(testResult_CCGSumEvdWAv, vdwi.functionCCGSumEvdWAv_InPoint(ac,sf.getSmoothingFunction()), 0.00001);
+		assertEquals(testResult_MMFF94SumEvdW, vdwi.functionMMFF94SumEvdW(acCoordinates), 0.00001);
+		assertEquals(testResult_CCGSumEvdWSK, vdwi.functionCCGSumEvdWSK(acCoordinates,sf.getSmoothingFunction()), 0.00001);
+		assertEquals(testResult_CCGSumEvdWAv, vdwi.functionCCGSumEvdWAv(acCoordinates,sf.getSmoothingFunction()), 0.00001);
 		
-		//System.out.println("vdwi.gradientMMFF94SumEvdW_InPoint(ac) = " + vdwi.gradientMMFF94SumEvdW_InPoint(ac));
-
-		vdwi.setGradientMMFF94SumEvdW_InPoint(ac);
+		vdwi.setGradientMMFF94SumEvdW(acCoordinates);
+		//System.out.println("vdwi.gradientMMFF94SumEvdW(acCoordinates) = " + vdwi.gradientMMFF94SumEvdW(acCoordinates));
 		for (int i = 0; i < testResult_gradientSumEwdW.length; i++) {
-			assertEquals(testResult_gradientSumEwdW[i], vdwi.getGradientMMFF94SumEvdW_InWishedCoordinates().getElement(i), 0.00001);
+			assertEquals(testResult_gradientSumEwdW[i], vdwi.getGradientMMFF94SumEvdW().getElement(i), 0.00001);
 		}
 		
-		//System.out.println("hessian = " + vdwi.hessianInPoint(acCoordinates));
+		//System.out.println("HessianMMFF94SumEvdW = " + vdwi.HessianMMFF94SumEvdW(acCoordinates));
 	}
 
 }
