@@ -110,9 +110,57 @@ public class NaiveSubgraphIsomorphismChecker implements CDKConstants
 	
 	protected boolean mapNeigbors(Atom qAtom)
 	{
-		Atom[] qNeighbors = query.getConnectedAtoms(qAtom);
+		Vector qNeighbors = query.getConnectedAtomsVector(qAtom);
 		Atom tAtom = (Atom)mappedAtoms.get(qAtom);
-		Atom[] tNeighbors = target.getConnectedAtoms(tAtom);
+		Vector tNeighbors = target.getConnectedAtomsVector(tAtom);
+		Hashtable mapTable = new Hashtable();
+		Atom qTempAtom = null;
+		Atom tTempAtom = null;
+		boolean qMapped = false;
+		boolean tMapped = false;
+		for (int f = 0; f < qNeighbors.size(); f++)
+		{
+			qTempAtom = (Atom)qNeighbors.elementAt(f);
+			if (!qAtom.flags[MAPPED])
+			{
+				tMapped = false;
+				for (int g = 0; g < tNeighbors.size(); g++)
+				{
+					qTempAtom = (Atom)qNeighbors.elementAt(f);
+					if (areMappableAtoms(qAtom, tAtom, qTempAtom, tTempAtom)) 
+					{
+						tMapped = true;
+						mapTable.put(qTempAtom, tTempAtom);
+					}
+				}
+			}
+			if (!tMapped) mapTable.clear();
+		}
+		if (mapTable.size() == qNeighbors.size())
+		{
+			
+		}
+		return false;
+	}
+	
+	protected boolean areMappableAtoms(Atom qRoot, Atom tRoot, Atom qAtom, Atom tAtom)
+	{
+		Bond qBond = null;
+		Bond tBond = null;
+		if (!tAtom.flags[MAPPED])
+		{
+			if (qAtom.getSymbol().equals(tAtom.getSymbol()))
+			{
+				qBond = query.getBond(qRoot, qAtom);
+				tBond = target.getBond(tRoot, tAtom);
+				if (qBond.getOrder() == tBond.getOrder() || (qBond.flags[ISAROMATIC] && tBond.flags[ISAROMATIC]))
+				{
+					return true;
+				}
+				else return false;
+			}
+			else return false;
+		}
 		return false;
 	}
 
