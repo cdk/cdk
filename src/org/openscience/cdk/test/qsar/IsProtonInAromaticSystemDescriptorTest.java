@@ -33,6 +33,12 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.HydrogenAdder;
 
+/**
+ * TestSuite that runs all QSAR tests.
+ *
+ * @cdk.module test
+ */
+ 
 public class IsProtonInAromaticSystemDescriptorTest extends TestCase {
 	
 	public  IsProtonInAromaticSystemDescriptorTest() {}

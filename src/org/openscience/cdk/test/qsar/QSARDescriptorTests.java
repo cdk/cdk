@@ -33,13 +33,13 @@ import org.openscience.cdk.test.qsar.*;
  *
  * @cdk.module test
  */
+ 
  public class QSARDescriptorTests {
     
     static MoleculeListViewer moleculeListViewer = null;
     
     public static Test suite() {
         TestSuite suite = new TestSuite("All QSAR Descriptor Tests");
-        
         suite.addTest(AtomCountDescriptorTest.suite());
         suite.addTest(BondCountDescriptorTest.suite());
         suite.addTest(QsarDescriptors2DTest.suite());
@@ -52,6 +52,8 @@ import org.openscience.cdk.test.qsar.*;
 	suite.addTest(EffectivePolarizabilityDescriptorTest.suite());
 	suite.addTest(HBondAcceptorCountDescriptorTest.suite());
 	suite.addTest(HBondDonorCountDescriptorTest.suite());
+	suite.addTest(ValenceConnectivityOrderZeroDescriptorTest.suite());
+	suite.addTest(ValenceConnectivityOrderOneDescriptorTest.suite());
         return suite;
     }
     

@@ -33,6 +33,12 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.exception.CDKException;
 
+/**
+ * TestSuite that runs all QSAR tests.
+ *
+ * @cdk.module test
+ */
+ 
 public class SigmaElectronegativityDescriptorTest extends TestCase {
 	
 	public  SigmaElectronegativityDescriptorTest() {}

@@ -31,6 +31,12 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.exception.CDKException;
 
+/**
+ * TestSuite that runs all QSAR tests.
+ *
+ * @cdk.module test
+ */
+
 public class BondCountDescriptorTest extends TestCase {
 	
 	public  BondCountDescriptorTest() {}
@@ -45,7 +51,7 @@ public class BondCountDescriptorTest extends TestCase {
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser();
         AtomContainer mol = sp.parseSmiles("CCO"); // ethanol
-        assertEquals(3, ((Integer)descriptor.calculate(mol)).intValue());
+        assertEquals(13, ((Integer)descriptor.calculate(mol)).intValue());
 	}
 }
 

@@ -33,6 +33,11 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.Molecule;
 
+/**
+ * TestSuite that runs all QSAR tests.
+ *
+ * @cdk.module test
+ */
 
 import java.util.ArrayList;
 import java.io.*;
