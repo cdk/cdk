@@ -162,9 +162,14 @@ public class CDKConstants {
     public final static int MAX_FLAG_INDEX = 5;
 
     /**
+     * Flag used for JUnit testing the pointer functionality.
+     */
+    public final static int DUMMY_POINTER = 1;
+
+    /**
      * Maximum pointers array index.
      */
-    public final static int MAX_POINTER_INDEX = 0;
+    public final static int MAX_POINTER_INDEX = 1;
     
     /****************************************
     * Some predefined property names for    *
