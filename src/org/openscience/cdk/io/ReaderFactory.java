@@ -317,7 +317,7 @@ public class ReaderFactory {
             SmilesParser sp = new SmilesParser();
             Molecule m = sp.parseSmiles(line);
             return new org.openscience.cdk.io.SMILESReader(originalBuffer);
-        } catch (InvalidSmilesException ise) {
+        } catch (Exception ise) {
             // no, it is not
             logger.info("No, it's not a SMILES file");
         }
