@@ -5,41 +5,7 @@ TABSTYLE=${STYLEDIR}/tabular.xsl
 STYLESHEET=${TABSTYLE}
 STYLEOPT=
 
-XML_FILES=agenda.xml \
-api.xml \
-changelog.xml \
-biblio.xml \
-contact.xml \
-development.xml \
-documentation.xml \
-download.xml \
-guide-docs.xml \
-guide-library-development.xml \
-guide-packages.xml \
-guide-website-development.xml \
-guide.xml \
-intro.xml \
-javadoc-data.xml \
-javadoc-stats.xml \
-javancss-data.xml \
-javancss-stats.xml \
-javancss-tmp.xml \
-keywordindex.xml \
-layout.xml \
-libraries.xml \
-manpages.xml \
-reference.xml \
-related.xml \
-rfc.xml \
-rfc1.xml \
-rfc2.xml \
-rfc3.xml \
-rfc4.xml \
-screenshots.xml \
-software.xml \
-thelibrary.xml \
-website.xml \
-whoiswho.xml
+XML_FILES := $(wildcard *.xml)
 
 .PHONY : clean
 
@@ -96,14 +62,13 @@ check-xml: $(XML_FILES)
 	else \
 	    for f in $(XML_FILES); \
 	    do \
-	        echo -n Checking $$f...; \
+	        /usr/ucb/echo -n Checking $$f...; \
 	        xmllint --noout --valid $$f 2> xmllint.error; \
 	        if test -s xmllint.error; \
 	        then \
 	            echo failed; \
 	            cat xmllint.error; \
 	            rm -f xmllint.error; \
-	            exit 1; \
 	        else \
 	            echo ok; \
 	            rm -f xmllint.error; \

@@ -336,23 +336,6 @@
                 basedir="${sourcedist}" includes="**" />
         </target>
 
-        <target name="website">
-                <java classname="org.apache.xalan.xslt.Process"
-                args="-IN ../website.xml -XSL ../lib/cdkwebsite.xsl"
-                 dir="doc/source/bin" fork="yes">
-                        <classpath>
-                                <pathelement
-                                location="jar/xerces-1.3.0.jar" />
-
-                                <pathelement
-                                location="jar/xalan-2.0.1.jar" />
-
-                                <pathelement
-                                location="jar/bsf-2.0.1.jar" />
-                        </classpath>
-                </java>
-        </target>
-
         <target name="test" depends="dist-core, dist-extra, dist-test">
                 <junit printsummary="yes" haltonfailure="yes">
                         <classpath>

@@ -2,6 +2,20 @@
       <title>HTML Generation</title>
       <para>
         The website is written as DocBook XML 4.1.2 fragments and
-        compiled into HTML with the Website DTD 2.0.
+        compiled into HTML with the Website DTD 2.0. The website
+        task for Ant does not work anymore.
+      </para>
+      <para>
+        The website compilation has changed with Website DTD 2.0.
+        On Unix-like operating systems, the website can be compiled
+        by running <command>make</command> in the
+        <filename class="directory">cdk/doc/website/source</filename>
+        directory.
+      </para>
+      <para>
+        Developers without a GNU make system should look in the 
+        <filename>Makefile</filename> on how to generate the website
+        manually with xsltproc, or any other XSLT processor, until
+        this guide explains it step by step.
       </para>
     </chapter>
