@@ -1152,16 +1152,32 @@ public class Renderer2D implements MouseMotionListener   {
      * @param  graphics  The current graphics object.
      */
     public void paintToolTip(Atom atom, Graphics graphics) {
+      System.err.println("opiopi");
       String text = r2dm.getToolTipText(r2dm.getHighlightedAtom());
-      Font normalFont = graphics.getFont();
-      graphics.setFont(normalFont);
-      FontMetrics fm = graphics.getFontMetrics();
-      int atomSymbolW = (new Integer(fm.stringWidth(text))).intValue();
-      int atomSymbolH = (new Integer(fm.getAscent())).intValue();
-      graphics.setColor(Color.YELLOW);
-      graphics.fillRect((int) atom.getX2D(), (int) atom.getY2D(), atomSymbolW + 4, atomSymbolH + 4);
-      graphics.setColor(Color.BLACK);
-      graphics.drawString(text, ((int) atom.getX2D()) + 2, ((int) atom.getY2D()) + atomSymbolH + 2);
+      String[] result = text.split("\\n");
+      int widestline=0;
+      for(int i=0;i<result.length;i++){
+        String text2=result[i];
+        System.err.println(text2);
+        Font normalFont = graphics.getFont();
+        graphics.setFont(normalFont);
+        FontMetrics fm = graphics.getFontMetrics();
+        int atomSymbolW = (new Integer(fm.stringWidth(text2))).intValue();
+        if(atomSymbolW>widestline)
+          widestline=atomSymbolW;
+      }
+      for(int i=0;i<result.length;i++){
+        String text2=result[i];
+        System.err.println(text2);
+        Font normalFont = graphics.getFont();
+        graphics.setFont(normalFont);
+        FontMetrics fm = graphics.getFontMetrics();
+        int atomSymbolH = (new Integer(fm.getAscent())).intValue();
+        graphics.setColor(Color.YELLOW);
+        graphics.fillRect((int) atom.getX2D(), (int) atom.getY2D()+((atomSymbolH + 4) *i), widestline + 4, atomSymbolH + 4);
+        graphics.setColor(Color.BLACK);
+        graphics.drawString(text2, ((int) atom.getX2D()) + 2, ((int) atom.getY2D()) + atomSymbolH + 2+((atomSymbolH + 4) *i));
+      }
     }
   
   

@@ -777,10 +777,19 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
   /**
    *  Sets the toolTipTextMap.
    *
-   * @param  map  A map containing Atoms of the current molecule as keys and Strings to display as values.  
+   * @param  map  A map containing Atoms of the current molecule as keys and Strings to display as values. A line break will be inserted where a \n is in the string.  
    */
   public void setToolTipTextMap(HashMap map){
     toolTipTextMap=map;
   }
 
+
+  /**
+   *  Gets the toolTipTextMap.
+   *
+   * @return  The toolTipTextValue.  
+   */
+  public HashMap getToolTipTextMap(){
+    return toolTipTextMap;
+  }
 }
