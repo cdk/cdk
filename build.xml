@@ -534,7 +534,7 @@
                     </fileset>
                 </classpath>
 
-                <test name="org.openscience.cdk.test.io.cml.IOTests"
+                <test name="org.openscience.cdk.test.io.IOTests"
                       haltonfailure="no" todir="${reports.tests}"
                       outfile="result.io">
                     <formatter type="brief" />
