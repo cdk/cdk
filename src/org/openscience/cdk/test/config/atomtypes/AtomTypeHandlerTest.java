@@ -63,8 +63,7 @@ public class AtomTypeHandlerTest extends CDKTestCase {
     public void testStartDocument() {
         AtomTypeHandler handler = new AtomTypeHandler();
         // nothing is read, but Vector is initialized
-        assertNotNull(handler.getAtomTypes());
-        assertEquals(0, handler.getAtomTypes().size());
+        assertNull(handler.getAtomTypes());
     }
     
     public void testCharacters_arraychar_int_int() {

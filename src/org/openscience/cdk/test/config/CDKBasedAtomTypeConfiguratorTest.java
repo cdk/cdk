@@ -24,8 +24,7 @@
  */
 package org.openscience.cdk.test.config;
 
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.InputStream;
 
 import junit.framework.AssertionFailedError;
 import junit.framework.Test;
@@ -61,12 +60,17 @@ public class CDKBasedAtomTypeConfiguratorTest extends CDKTestCase
     
     public void testReadAtomTypes() throws Exception {
         CDKBasedAtomTypeConfigurator configurator = new CDKBasedAtomTypeConfigurator();
+        String configFile = "org/openscience/cdk/config/data/structgen_atomtypes.xml";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
+        configurator.setInputStream(ins);
         assertNotSame(new Integer(0), new Integer(configurator.readAtomTypes().size()));
     }
     
     public void testSetInputStream_InputStream() throws Exception {
+        String configFile = "org/openscience/cdk/config/data/structgen_atomtypes.xml";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
         CDKBasedAtomTypeConfigurator configurator = new CDKBasedAtomTypeConfigurator();
-        configurator.setInputStream(new FileInputStream(new File("")));
+        configurator.setInputStream(ins);
     }
     
 }

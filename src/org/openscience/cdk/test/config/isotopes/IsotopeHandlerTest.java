@@ -63,8 +63,7 @@ public class IsotopeHandlerTest extends CDKTestCase {
     public void testStartDocument() {
         IsotopeHandler handler = new IsotopeHandler();
         // nothing is read, but Vector is initialized
-        assertNotNull(handler.getIsotopes());
-        assertEquals(0, handler.getIsotopes().size());
+        assertNull(handler.getIsotopes());
     }
     
     public void testCharacters_arraychar_int_int() {
