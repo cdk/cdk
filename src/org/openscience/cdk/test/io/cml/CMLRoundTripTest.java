@@ -97,11 +97,13 @@ public class CMLRoundTripTest extends TestCase {
         Molecule mol = new Molecule();
         PseudoAtom atom = new PseudoAtom("N");
         atom.setLabel("Glu55");
+        mol.addAtom(atom);
         
         Molecule roundTrippedMol = roundTripMolecule(mol);
         
         assertEquals(1, roundTrippedMol.getAtomCount());
         Atom roundTrippedAtom = roundTrippedMol.getAtomAt(0);
+        assertNotNull(roundTrippedAtom);
         assertTrue(roundTrippedAtom instanceof PseudoAtom);
         assertEquals("Glu55", ((PseudoAtom)roundTrippedAtom).getLabel());
     }
@@ -121,10 +123,12 @@ public class CMLRoundTripTest extends TestCase {
     }
     
     public void testAtomPartialCharge() {
+        fail("Have to figure out how to store partial charges in CML2");
         Molecule mol = new Molecule();
         Atom atom = new Atom("N");
         double partialCharge = 0.5;
         atom.setCharge(partialCharge);
+        mol.addAtom(atom);
         
         Molecule roundTrippedMol = roundTripMolecule(mol);
         
@@ -134,7 +138,18 @@ public class CMLRoundTripTest extends TestCase {
     }
     
     public void testAtomStereoParity() {
-        fail();
+        fail("Have to figure out how to store atom parity in CML2");
+        Molecule mol = new Molecule();
+        Atom atom = new Atom("C");
+        int stereo = CDKConstants.STEREO_ATOM_PARITY_PLUS;
+        atom.setStereoParity(stereo);
+        mol.addAtom(atom);
+        
+        Molecule roundTrippedMol = roundTripMolecule(mol);
+        
+        assertEquals(1, roundTrippedMol.getAtomCount());
+        Atom roundTrippedAtom = roundTrippedMol.getAtomAt(0);
+        assertEquals(atom.getStereoParity(), roundTrippedAtom.getStereoParity());
     }
     
     public void testBond() {
@@ -144,20 +159,36 @@ public class CMLRoundTripTest extends TestCase {
         mol.addAtom(atom);
         mol.addAtom(atom2);
         Bond bond = new Bond(atom, atom2, 1.0);
+        mol.addBond(bond);
         
         Molecule roundTrippedMol = roundTripMolecule(mol);
         
         assertEquals(2, roundTrippedMol.getAtomCount());
         assertEquals(1, roundTrippedMol.getBondCount());
         Bond roundTrippedBond = roundTrippedMol.getBondAt(0);
-        assertEquals(2, bond.getAtomCount());
-        assertEquals("C", bond.getAtomAt(0)); // preserved direction?
-        assertEquals("O", bond.getAtomAt(1));
-        assertEquals(1.0, bond.getOrder(), 0.0001);
+        assertEquals(2, roundTrippedBond.getAtomCount());
+        assertEquals("C", roundTrippedBond.getAtomAt(0).getSymbol()); // preserved direction?
+        assertEquals("O", roundTrippedBond.getAtomAt(1).getSymbol());
+        assertEquals(bond.getOrder(), roundTrippedBond.getOrder(), 0.0001);
     }
     
     public void testBondStereo() {
-        fail();
+        Molecule mol = new Molecule();
+        Atom atom = new Atom("C");
+        Atom atom2 = new Atom("O");
+        mol.addAtom(atom);
+        mol.addAtom(atom2);
+        Bond bond = new Bond(atom, atom2, 1.0);
+        int stereo = CDKConstants.STEREO_BOND_DOWN;
+        bond.setStereo(stereo);
+        mol.addBond(bond);
+        
+        Molecule roundTrippedMol = roundTripMolecule(mol);
+        
+        assertEquals(2, roundTrippedMol.getAtomCount());
+        assertEquals(1, roundTrippedMol.getBondCount());
+        Bond roundTrippedBond = roundTrippedMol.getBondAt(0);
+        assertEquals(bond.getStereo(), roundTrippedBond.getStereo());
     }
     
     /**
@@ -179,11 +210,10 @@ public class CMLRoundTripTest extends TestCase {
             fail(message);
         }
         
-        logger.debug("CML string: " + stringWriter.toString());
-
         Molecule roundTrippedMol = null;
         try {
             String cmlString = stringWriter.toString();
+            logger.debug("CML string: " + cmlString);
             CMLReader reader = new CMLReader(new StringReader(cmlString));
             
             ChemFile file = (ChemFile)reader.read(new ChemFile());

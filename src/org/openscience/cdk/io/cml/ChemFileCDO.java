@@ -144,6 +144,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
         numberOfAtoms++;
       } else if (objectType.equals("Bond")) {
           bond_id = null;
+          bond_stereo = -99;
       } else if (objectType.equals("Animation")) {
         currentChemSequence = new ChemSequence();
       } else if (objectType.equals("Frame")) {
@@ -210,6 +211,9 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
                 Atom a2 = currentMolecule.getAtomAt(bond_a2);
                 Bond b = new Bond(a1, a2, bond_order);
                 if (bond_id != null) b.setID(bond_id);
+                if (bond_stereo != -99) {
+                    b.setStereo(bond_stereo);
+                }
                 currentMolecule.addBond(b);
             }
         } else if (objectType.equals("a-axis")) {
@@ -283,9 +287,19 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
         if (propertyType.equals("id")) {
           currentMolecule.setID(propertyValue);
         }
+      } else if (objectType.equals("PseudoAtom")) {
+        if (propertyType.equals("label")) {
+            if (!(currentAtom instanceof PseudoAtom)) {
+                currentAtom = new PseudoAtom(currentAtom);
+            }
+            ((PseudoAtom)currentAtom).setLabel(propertyValue);
+        }
       } else if (objectType.equals("Atom")) {
         if (propertyType.equals("type")) {
-          currentAtom.setSymbol(propertyValue);
+            if (propertyValue.equals("R") && !(currentAtom instanceof PseudoAtom)) {
+                currentAtom = new PseudoAtom(currentAtom);
+            }
+            currentAtom.setSymbol(propertyValue);
         } else if (propertyType.equals("x2")) {
           currentAtom.setX2D(new Double(propertyValue).doubleValue());
         } else if (propertyType.equals("y2")) {
@@ -328,6 +342,12 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
             logger.error("Cannot convert to double: " + propertyValue);
             bond_order = 1.0;
           }
+        } else if (propertyType.equals("stereo")) {
+            if (propertyValue.equals("H")) {
+                bond_stereo = CDKConstants.STEREO_BOND_DOWN;
+            } else if (propertyValue.equals("W")) {
+                bond_stereo = CDKConstants.STEREO_BOND_UP;
+            }
         }
       } else if (objectType.equals("Reaction")) {
         if (propertyType.equals("id")) {

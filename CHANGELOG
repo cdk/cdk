@@ -39,6 +39,7 @@ New:
 * Added MFAnalyser.getHTMLMFString() that outputs HTML
   (thanx to Stephen Tomkinson)
 * Added a Mol2 reader
+* Partly ported the Gaussian03 from Jmol to CDK
 
 Fixes:
 * An angle error in the StructureDiagramGenerator has been

@@ -418,7 +418,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
     }
     
     private boolean addAtomID(Hashtable atts, Atom atom) {
-        atts.put("id", new Integer(atom.hashCode()));
+        atts.put("id", "a" + new Integer(atom.hashCode()).toString());
         return true;
     }
     
@@ -428,8 +428,10 @@ public class CMLWriter extends DefaultChemObjectWriter {
         addDictRef(atomAtts, atom);
         if (atom instanceof PseudoAtom) {
             atomAtts.put("title", ((PseudoAtom)atom).getLabel());
+            atomAtts.put("elementType", "Du");
+        } else {
+            atomAtts.put("elementType", atom.getSymbol());
         }
-        atomAtts.put("elementType", atom.getSymbol());
         add(atomAtts, atom.getPoint2D());
         add(atomAtts, atom.getPoint3D());
         int fCharge = atom.getFormalCharge();
@@ -475,10 +477,12 @@ public class CMLWriter extends DefaultChemObjectWriter {
         for (int i = 0; i < atoms.length; i++) {
             String atomID = atoms[i].getID();
             if (atomID == null || atomID.length() == 0) {
-                atomRefs.append(new Integer(atoms[i].hashCode()).toString());
-                if (i == atoms.length-1) {
-                    atomRefs.append(" ");
-                }
+                atomRefs.append("a" + new Integer(atoms[i].hashCode()).toString());
+            } else {
+                atomRefs.append(atomID);
+            }
+            if (i < atoms.length-1) {
+                atomRefs.append(" ");
             }
         }
         if (atoms.length == 2) {
@@ -512,7 +516,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
 		}
         Hashtable props = bond.getProperties();
         if (childElements.length() > 0 || props.size() > 0) {
-            writeOpenTag("bond");
+            writeOpenTag("bond", bondAtts);
             if (childElements.length() > 0) write(childElements.toString());
             if (props.size() > 0) writeProperties(bond);
             writeCloseTag("bond");
@@ -523,16 +527,16 @@ public class CMLWriter extends DefaultChemObjectWriter {
 
     private void add(Hashtable atts, Point2d p) {
         if (p != null) {
-            atts.put("x2=", new Float(p.x).toString());
-            atts.put("y2=", new Float(p.y).toString());
+            atts.put("x2", new Float(p.x).toString());
+            atts.put("y2", new Float(p.y).toString());
         }
     }
 
     private void add(Hashtable atts, Point3d p) {
         if (p != null) {
-            atts.put("x3=", new Float(p.x).toString());
-            atts.put("y3=", new Float(p.y).toString());
-            atts.put("z3=", new Float(p.z).toString());
+            atts.put("x3", new Float(p.x).toString());
+            atts.put("y3", new Float(p.y).toString());
+            atts.put("z3", new Float(p.z).toString());
         }
     }
 
@@ -550,27 +554,26 @@ public class CMLWriter extends DefaultChemObjectWriter {
     private void writeOpenTag(String name, Hashtable atts) {
         write("<");
         writeElementName(name);
-        if (atts != null) {
-            Enumeration keys = atts.keys();
-            while (keys.hasMoreElements()) {
-                write(" ");
-                write(atts.get(keys.nextElement()).toString());
-            }
-        }
+        writeOpenTagAtts(atts);
         write(">\n");
     }
-    
+
     private void writeEmptyElement(String name, Hashtable atts) {
         write("<");
         writeElementName(name);
+        writeOpenTagAtts(atts);
+        write("/>\n");
+    }
+    private void writeOpenTagAtts(Hashtable atts) {
         if (atts != null) {
             Enumeration keys = atts.keys();
             while (keys.hasMoreElements()) {
-                write(" ");
-                write(atts.get(keys.nextElement()).toString());
+                String key = (String)keys.nextElement();
+                write(" " + key + "=\"");
+                write(atts.get(key).toString());
+                write("\"");
             }
         }
-        write("/>\n");
     }
     
     private void writeCloseTag(String name) {

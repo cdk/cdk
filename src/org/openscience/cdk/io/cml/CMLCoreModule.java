@@ -50,6 +50,7 @@ public class CMLCoreModule implements ModuleInterface {
     
     protected int atomCounter;
     protected Vector elsym;
+    protected Vector eltitles;
     protected Vector elid;
     protected Vector formalCharges;
     protected Vector partialCharges;
@@ -107,6 +108,7 @@ public class CMLCoreModule implements ModuleInterface {
             this.BUILTIN = conv.BUILTIN;
             this.atomCounter = conv.atomCounter;
             this.elsym = conv.elsym;
+            this.eltitles = conv.eltitles;
             this.elid = conv.elid;
             this.formalCharges = conv.formalCharges;
             this.partialCharges = conv.partialCharges;
@@ -156,6 +158,7 @@ public class CMLCoreModule implements ModuleInterface {
         atomCounter = 0;
         elsym = new Vector();
         elid = new Vector();
+        eltitles = new Vector();
         formalCharges = new Vector();
         partialCharges = new Vector();
         isotope = new Vector();
@@ -249,6 +252,9 @@ public class CMLCoreModule implements ModuleInterface {
                 } // this is supported in CML 2.0 
                 else if (att.equals("elementType")) {
                     elsym.addElement(value);
+                } // this is supported in CML 2.0 
+                else if (att.equals("title")) {
+                    eltitles.addElement(value);
                 } // this is supported in CML 2.0 
                 else if (att.equals("x2")) {
                     x2.addElement(value);
@@ -423,10 +429,8 @@ public class CMLCoreModule implements ModuleInterface {
             if (bondStereo.size() > bondDictRefs.size())
                 bondDictRefs.addElement(null);
         } else if ("atom".equals(name)) {
-            if (atomCounter > formalCharges.size()) {
-                /* while strictly undefined, assume zero 
-                charge when no number is given */
-                formalCharges.addElement("0");
+            if (atomCounter > eltitles.size()) {
+                eltitles.addElement(null);
             }
             if (atomCounter > hCounts.size()) {
                 /* while strictly undefined, assume zero 
@@ -438,6 +442,11 @@ public class CMLCoreModule implements ModuleInterface {
             }
             if (atomCounter > isotope.size()) {
                 isotope.addElement(null);
+            }
+            if (atomCounter > formalCharges.size()) {
+                /* while strictly undefined, assume zero 
+                implicit hydrogens when no number is given */
+                formalCharges.addElement("0");
             }
             /* It may happen that not all atoms have
             associated 2D or 3D coordinates. accept that */
@@ -680,6 +689,10 @@ public class CMLCoreModule implements ModuleInterface {
                 } catch (NumberFormatException exception) {
                     logger.error("Content must a float: " + cData);
                 }
+            } else if (xpath.toString().endsWith("bond/scalar/")) {
+                if (DICTREF.equals("mdl:stereo")) {
+                    bondStereo.addElement(cData.trim());
+                }
             } else {
                 logger.warn("Ignoring scaler: " + xpath);
             }
@@ -795,6 +808,7 @@ public class CMLCoreModule implements ModuleInterface {
         boolean hasPartialCharge = false;
         boolean hasHCounts = false;
         boolean hasSymbols = false;
+        boolean hasTitles = false;
         boolean hasIsotopes = false;
         boolean hasDictRefs = false;
 
@@ -810,6 +824,13 @@ public class CMLCoreModule implements ModuleInterface {
         } else {
             logger.debug(
                     "No atom symbols: " + elsym.size() + " != " + atomCounter);
+        }
+
+        if (eltitles.size() == atomCounter) {
+            hasTitles = true;
+        } else {
+            logger.debug(
+                    "No atom titles: " + eltitles.size() + " != " + atomCounter);
         }
 
         if ((x3.size() == atomCounter) && (y3.size() == atomCounter) && 
@@ -884,11 +905,26 @@ public class CMLCoreModule implements ModuleInterface {
             if (hasID) {
                 cdo.setObjectProperty("Atom", "id", (String)elid.elementAt(i));
             }
+            if (hasTitles) {
+                if (hasSymbols) {
+                    String symbol = (String)elsym.elementAt(i);
+                    if (symbol.equals("Du") || symbol.equals("Dummy")) {
+                        cdo.setObjectProperty("PseudoAtom", "label", (String)eltitles.elementAt(i));
+                    } else {
+                        cdo.setObjectProperty("Atom", "title", (String)eltitles.elementAt(i));
+                    }
+                } else {
+                    cdo.setObjectProperty("Atom", "title", (String)eltitles.elementAt(i));
+                }
+            }
 
             // store optional atom properties
             if (hasSymbols) {
-                cdo.setObjectProperty("Atom", "type", 
-                                      (String)elsym.elementAt(i));
+                String symbol = (String)elsym.elementAt(i);
+                if (symbol.equals("Du") || symbol.equals("Dummy")) {
+                    symbol = "R";
+                }
+                cdo.setObjectProperty("Atom", "type", symbol);
             }
 
             if (has3D) {
