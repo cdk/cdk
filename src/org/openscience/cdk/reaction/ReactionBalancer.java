@@ -75,7 +75,7 @@ public class ReactionBalancer {
 		SetOfMolecules pr = (SetOfMolecules) (r.getProducts().clone());
 		reaction.setReactants(ed);
 		reaction.setProducts(pr);
-		makeDiffHashtable(diff);
+		makeDiffHashtable();
 		if (water.getAtomCount() == 0) {
 			init();
 		}
@@ -187,9 +187,8 @@ public class ReactionBalancer {
 	/**
 	 *  Construct the Hashtable diff for this Reaction
 	 *
-	 *@param  hash  Description of the Parameter
 	 */
-	protected void makeDiffHashtable(Hashtable hash) {
+	protected void makeDiffHashtable() {
 
 		addMoleculeHashs(reaction.getReactants(), -1, diff);
 		addMoleculeHashs(reaction.getProducts(), 1, diff);
@@ -260,10 +259,10 @@ public class ReactionBalancer {
 
 
 	/**
-	 *  Checks whether the diff Hashtable contains other Atoms than oxygen and
+	 *  Checks whether the Hashtable hash contains other Atoms than oxygen and
 	 *  hydrogen.
 	 *
-	 *@param  hash  Description of the Parameter
+	 *@param  hash  The hashtable to be tested
 	 *@return       true if the diff Hashtable contains the elements oxygen and
 	 *      hydrogen only.
 	 */
@@ -366,6 +365,7 @@ public class ReactionBalancer {
 	 *@param  som           The SetOfMolecules that the Molecules are to be added
 	 *@param  elementCount  The number of Molecules to be added
 	 *@param  mol           The Molecule to be added
+	 *@param  molPosition   The position of Molecule mol in SetOfMolecules som
 	 */
 	public void balanceSetOfMolecules(SetOfMolecules som, double elementCount, Molecule mol, int molPosition) {
 		
@@ -450,8 +450,8 @@ public class ReactionBalancer {
 	/**
 	 *  Permutate the stoichiometry
 	 *
-	 *@param  max  Description of the Parameter
-	 *@return      Description of the Return Value
+	 *@param  max  The maximal value of stoichiometric coefficients
+	 *@return      true if reaction could be balanced with respect to non-O and non-H Atoms
 	 */
 	public boolean permutateStoichiometries(double max) {
 
@@ -486,7 +486,7 @@ public class ReactionBalancer {
 				reaction.setProductCoefficients(productCoefficients);
 				reaction.setReactantCoefficients(eductCoefficients);
 				diff = new Hashtable();
-				makeDiffHashtable(diff);
+				makeDiffHashtable();
 				if (containsOnlyOH(diff)) {
 					return true;
 				}
