@@ -8,6 +8,7 @@ New:
 Fixes:
 * Fixed detection of class binaries of Doclets required to compile the CDK
 * Added missing radius field info for AtomType.toString()
+* Fixed syntax error in Accelerated3DRenderer
 
 API changes:
 * Removed deprecated methods from LoggingTool

@@ -45,6 +45,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.graph.matrix.ConnectionMatrix;
+import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.math.qm.Orbitals;
 
 import com.sun.j3d.utils.geometry.Cylinder;
@@ -121,7 +122,7 @@ public class AcceleratedRenderer3DModel {
 			e.printStackTrace();
 		}
 
-		center = container.get3DCenter();
+		center = GeometryTools.get3DCenter(container);
 		center.negate();
 		setTransformation(center, 1, 0, 0);
 	}
