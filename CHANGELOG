@@ -14,6 +14,7 @@ New:
   saves it as CML2
 * The build.xml system now defines the @cdk.set JavaDoc tag to group a set
   of CDK classes, e.g. Descriptor's or ChemFormat's
+* Added a IteratingSMILESParser
 
 Fixes:
 * Fixed format detection for Jaguar, Gamess and the HIN format: they were
