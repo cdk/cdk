@@ -1,3 +1,3 @@
-src/org/openscience/cdk/applications/FileConvertor.java
-src/org/openscience/cdk/applications/Viewer.java
-src/org/openscience/cdk/applications/PublicJmol.java
+org/openscience/cdk/applications/FileConvertor.java
+org/openscience/cdk/applications/Viewer.java
+org/openscience/cdk/applications/PublicJmol.java
