@@ -379,9 +379,12 @@ public class Convention implements ConventionInterface {
                 break;
 
             case ATOM:
-
-                if (x3.size() > formalCharges.size()) {
+           
+                if (elsym.size() > formalCharges.size()) {
                     formalCharges.addElement("0");
+                }
+                if (elsym.size() > hCounts.size()) {
+                    hCounts.addElement("0");
                 }
 
                 break;
