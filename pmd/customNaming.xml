@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<ruleset name="customNaming">
+
+  <description>
+    This ruleset checks the CDK sources for bad code.
+  </description>
+
+  <rule ref="rulesets/naming.xml">
+    <exclude name="LongVariable"/>
+  </rule>
+
+  <rule name="CustomLongVariable"
+        message="Avoid excessively long variable names like ${0}"
+        class="net.sourceforge.pmd.rules.XPathRule">
+    <description>
+      Detects when a field, formal or local variable is declared with a long name.
+      This rule customized the default LongVariable rule by allowing names of a
+      length upto 20.
+    </description>
+    <priority>3</priority>
+    <properties>
+      <property name="xpath" pluginname="true">
+        <value>
+          <![CDATA[
+//VariableDeclaratorId[string-length(@Image) > 20]
+          ]]>
+        </value>
+        </property>
+    </properties>
+  </rule>
+
+</ruleset>
