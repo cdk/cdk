@@ -162,9 +162,8 @@ public class BCUTDescriptor implements Descriptor {
 
 
     static private class BurdenMatrix {
-        void BurdenMatrix() {};
         
-        static double[][] evalBurdenMatrix(AtomContainer ac, double[] vsd) {
+        static double[][] evalMatrix(AtomContainer ac, double[] vsd) {
             AtomContainer local = AtomContainerManipulator.removeHydrogens(ac);
 
             int natom = local.getAtomCount();
@@ -251,7 +250,7 @@ public class BCUTDescriptor implements Descriptor {
         } catch (Exception e) {
             System.out.println(e.toString());
         }
-        double[][]  bm = BurdenMatrix.evalBurdenMatrix(ac, diagvalue);
+        double[][]  bm = BurdenMatrix.evalMatrix(ac, diagvalue);
         Matrix m = new Matrix(bm);
         EigenvalueDecomposition ed = new EigenvalueDecomposition(m);
         double[] eval1 = ed.getRealEigenvalues();
@@ -271,7 +270,7 @@ public class BCUTDescriptor implements Descriptor {
             diagvalue[j] = ac.getAtomAt(i).getCharge();
             j++;
         }
-        bm = BurdenMatrix.evalBurdenMatrix(ac, diagvalue);
+        bm = BurdenMatrix.evalMatrix(ac, diagvalue);
         m = new Matrix(bm);
         ed = new EigenvalueDecomposition(m);
         double[] eval2 = ed.getRealEigenvalues();
@@ -284,7 +283,7 @@ public class BCUTDescriptor implements Descriptor {
             diagvalue[j] = pol.calculateGHEffectiveAtomPolarizability(ac, ac.getAtomAt(i), 1000);
             j++;
         }
-        bm = BurdenMatrix.evalBurdenMatrix(ac, diagvalue);
+        bm = BurdenMatrix.evalMatrix(ac, diagvalue);
         m = new Matrix(bm);
         ed = new EigenvalueDecomposition(m);
         double[] eval3 = ed.getRealEigenvalues();

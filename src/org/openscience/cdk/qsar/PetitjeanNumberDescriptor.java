@@ -92,22 +92,20 @@ public class PetitjeanNumberDescriptor implements Descriptor {
 	/**
 	 *  Description of the Method
 	 *
-	 *@param  ac                AtomContainer
+	 *@param  atomContainer                AtomContainer
 	 *@return                   petitjean number
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public DescriptorResult calculate(AtomContainer ac) throws CDKException {
+	public DescriptorResult calculate(AtomContainer atomContainer) throws CDKException {
 		double petitjeanNumber = 0; //weinerPath
 		double diameter = 0;
 		double partialDiameter = 0;
 		double radius = 0;
-		double partialRadius = 0;
 		double rowMax = 0;
-		ConnectionMatrix cm = new ConnectionMatrix();
-		double[][] matr = cm.getMatrix(ac);
-		DoubleArrayResult wienerNumbers = new DoubleArrayResult(2);
-		PathTools pt = new PathTools();
-		int[][] distances = pt.computeFloydAPSP(matr);
+		ConnectionMatrix connectionMatrix = new ConnectionMatrix();
+		double[][] matr = connectionMatrix.getMatrix(atomContainer);
+		PathTools pathTools = new PathTools();
+		int[][] distances = pathTools.computeFloydAPSP(matr);
 		for (int i = 0; i < distances.length; i++) {
 			rowMax = 0;
 			for (int j = 0; j < distances.length; j++) {

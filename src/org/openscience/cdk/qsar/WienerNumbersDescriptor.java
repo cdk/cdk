@@ -90,18 +90,18 @@ public class WienerNumbersDescriptor implements Descriptor {
 	/**
 	 *  Description of the Method
 	 *
-	 *@param  ac                AtomContainer
+	 *@param  atomContainer                AtomContainer
 	 *@return                   wiener numbers as array of 2 doubles
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public DescriptorResult calculate(AtomContainer ac) throws CDKException {
+	public DescriptorResult calculate(AtomContainer atomContainer) throws CDKException {
 		double wienerPathNumber = 0; //weinerPath
 		double wienerPolarityNumber = 0; //weinerPol
-		ConnectionMatrix cm = new ConnectionMatrix();
-		double[][] matr = cm.getMatrix(ac);
+		ConnectionMatrix connectionMatrix = new ConnectionMatrix();
+		double[][] matr = connectionMatrix.getMatrix(atomContainer);
 		DoubleArrayResult wienerNumbers = new DoubleArrayResult(2);
-		PathTools pt = new PathTools();
-		int[][] distances = pt.computeFloydAPSP(matr);
+		PathTools pathTools = new PathTools();
+		int[][] distances = pathTools.computeFloydAPSP(matr);
 		int partial = 0;
 		for (int i = 0; i < distances.length; i++) {
 			wienerPolarityNumber = 0;

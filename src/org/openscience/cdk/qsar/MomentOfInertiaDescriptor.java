@@ -19,23 +19,15 @@
  */
 package org.openscience.cdk.qsar;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.Element;
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.config.IsotopeFactory;
-import org.openscience.cdk.AtomEnumeration;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.tools.MFAnalyser;
 import org.openscience.cdk.qsar.result.*;
+import org.openscience.cdk.tools.LoggingTool;
 import javax.vecmath.*;
 import java.lang.Math;
-import java.util.Vector;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Hashtable;
 
 
 import Jama.Matrix;
@@ -73,7 +65,11 @@ import Jama.EigenvalueDecomposition;
  */
 public class MomentOfInertiaDescriptor implements Descriptor {
     
-    public MomentOfInertiaDescriptor() {}
+    private LoggingTool logger;
+    
+    public MomentOfInertiaDescriptor() {
+        logger = new LoggingTool(this);
+    }
 
 	public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
@@ -132,12 +128,10 @@ public class MomentOfInertiaDescriptor implements Descriptor {
 
     public DescriptorResult calculate(AtomContainer container) {
         IsotopeFactory factory = null;
-        double m1 = 0;
-        double m2 = 0;
         try {
             factory = IsotopeFactory.getInstance();
         } catch (Exception e) {
-            System.out.println(e);
+            logger.debug(e);
         }
 
         DoubleArrayResult retval = new DoubleArrayResult(7);
@@ -146,7 +140,7 @@ public class MomentOfInertiaDescriptor implements Descriptor {
         double eps = 1e-5;
 
         double[][] imat = new double[3][3];
-        Point3d cm = GeometryTools.get3DCentreOfMass(container);
+        Point3d centerOfMass = GeometryTools.get3DCentreOfMass(container);
 
         // make the MI tensor
         for (int i = 0; i < 3; i++) {
@@ -158,16 +152,16 @@ public class MomentOfInertiaDescriptor implements Descriptor {
                 for (int k = 0; k < container.getAtomCount(); k++) {
                     double[] xyz = new double[3];
                     double mass = 0.0;
-                    double r = 0.0;
+                    double radius = 0.0;
 
                     mass = factory.getMajorIsotope( container.getAtomAt(k).getSymbol() ).getMassNumber();
-                    r = cm.distance( container.getAtomAt(k).getPoint3d() );
+                    radius = centerOfMass.distance( container.getAtomAt(k).getPoint3d() );
 
-                    xyz[0] = container.getAtomAt(k).getPoint3d().x - cm.x;
-                    xyz[1] = container.getAtomAt(k).getPoint3d().y - cm.y;
-                    xyz[2] = container.getAtomAt(k).getPoint3d().z - cm.z;
+                    xyz[0] = container.getAtomAt(k).getPoint3d().x - centerOfMass.x;
+                    xyz[1] = container.getAtomAt(k).getPoint3d().y - centerOfMass.y;
+                    xyz[2] = container.getAtomAt(k).getPoint3d().z - centerOfMass.z;
 
-                    sum = sum + mass * (r*r*delta - xyz[i]*xyz[j]);
+                    sum = sum + mass * (radius*radius*delta - xyz[i]*xyz[j]);
                 }
                 imat[i][j] = sum;
             }
@@ -175,8 +169,8 @@ public class MomentOfInertiaDescriptor implements Descriptor {
 
         // diagonalize the MI tensor
         Matrix tmp = new Matrix(imat);
-        EigenvalueDecomposition ed = tmp.eig();
-        double[] eval = ed.getRealEigenvalues();
+        EigenvalueDecomposition eigenDecomp = tmp.eig();
+        double[] eval = eigenDecomp.getRealEigenvalues();
 
         retval.add( eval[0] );
         retval.add( eval[1] );

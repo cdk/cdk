@@ -26,7 +26,6 @@ package org.openscience.cdk.qsar;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.*;
-import java.util.Map;
 
 /**
  * Classes that implement this interface are QSAR descriptor calculators.

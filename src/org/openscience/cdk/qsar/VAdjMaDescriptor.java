@@ -29,8 +29,6 @@ import org.openscience.cdk.tools.*;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.*;
 import java.lang.Math;
-import java.util.Map;
-import java.util.Hashtable;
 
 /**
  *   Vertex adjacency information (magnitude): 
@@ -89,12 +87,12 @@ public class VAdjMaDescriptor implements Descriptor {
 	/**
 	 *  calculates the VAdjMa descriptor for an atom container
 	 *
-	 *@param  ac                AtomContainer
+	 *@param  atomContainer                AtomContainer
 	 *@return                   VAdjMa
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public DescriptorResult calculate(AtomContainer ac) throws CDKException {
-		MFAnalyser formula = new MFAnalyser(ac);
+	public DescriptorResult calculate(AtomContainer atomContainer) throws CDKException {
+		MFAnalyser formula = new MFAnalyser(atomContainer);
 		int magnitude = formula.getHeavyAtoms().size();
 		double vadjMa = 0;
 		if (magnitude > 0) {

@@ -28,12 +28,11 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.Element;
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.tools.*;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.qsar.result.*;
+import org.openscience.cdk.tools.LoggingTool;
 import junit.framework.AssertionFailedError;
-import java.util.Map;
 import java.util.Hashtable;
 import java.util.ArrayList;
 
@@ -44,7 +43,7 @@ import java.util.ArrayList;
  *  http://www.chemcomp.com/Journal_of_CCG/Features/descr.htm#KH
  *  returned values are:
  *  chi1v is the Atomic valence connectivity index (order 1),
- *  chi1_C is the Carbon valence connectivity index (order 1);
+ *  chi1vC is the Carbon valence connectivity index (order 1);
  *  valence is the number of s and p valence electrons of atom.
  *
  * @author      mfe4
@@ -54,10 +53,13 @@ import java.util.ArrayList;
  */
 public class ValenceConnectivityOrderOneDescriptor implements Descriptor {
 
+    private LoggingTool logger;
 	/**
 	 *  Constructor for the ValenceConnectivityOrderOneDescriptor object
 	 */
-	public ValenceConnectivityOrderOneDescriptor() { }
+	public ValenceConnectivityOrderOneDescriptor() { 
+            logger = new LoggingTool(this);
+        }
 
 
 	/**
@@ -100,13 +102,13 @@ public class ValenceConnectivityOrderOneDescriptor implements Descriptor {
 
 
 	/**
-	 *  calculates the chi1v and chi1v_C descriptors for an atom container
+	 *  calculates the chi1v and chi1vC descriptors for an atom container
 	 *
-	 *@param  ac                AtomContainer
-	 *@return                   chi1v and chi1_C returned as arrayList
+	 *@param  atomContainer                AtomContainer
+	 *@return                   chi1v and chi1C returned as arrayList
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public DescriptorResult calculate(AtomContainer ac) throws CDKException {
+	public DescriptorResult calculate(AtomContainer atomContainer) throws CDKException {
 		Hashtable valences = new Hashtable();
 		valences.put("Li", new Integer(1));
 		valences.put("Be", new Integer(2));
@@ -156,13 +158,13 @@ public class ValenceConnectivityOrderOneDescriptor implements Descriptor {
 		ArrayList chiAtom = new ArrayList(2);
 		ArrayList chiCarbon = new ArrayList(2);
 		double chi1v = 0;
-		double chi1v_C = 0;
+		double chi1vC = 0;
 		Atom[] atoms = null;
 		Atom[] neighatoms = null;
 		Element element = null;
 		IsotopeFactory elfac = null;
 		String symbol = null;
-		Bond[] bonds = ac.getBonds();
+		Bond[] bonds = atomContainer.getBonds();
 		for (int b = 0; b < bonds.length; b++) {
 			atoms = bonds[b].getAtoms();
 			if ((!atoms[0].getSymbol().equals("H")) && (!atoms[1].getSymbol().equals("H"))) {
@@ -175,18 +177,20 @@ public class ValenceConnectivityOrderOneDescriptor implements Descriptor {
 					try {
 						elfac = IsotopeFactory.getInstance();
 					} catch (Exception exc) {
+                                            logger.debug(exc);
 						throw new AssertionFailedError("Problem instantiating IsotopeFactory: " + exc.toString());
 					}
 					try {
 						element = elfac.getElement(symbol);
 					} catch (Exception exc) {
+                                            logger.debug(exc);
 						throw new AssertionFailedError("Problem getting isotope " + symbol + " from ElementFactory: " + exc.toString());
 					}
 					atomicNumber = element.getAtomicNumber();
 					valence = ((Integer)valences.get(symbol)).intValue();
 					hcount = 0;
 					atomValue = 0;
-					neighatoms = ac.getConnectedAtoms(atoms[a]);
+					neighatoms = atomContainer.getConnectedAtoms(atoms[a]);
 					for (int n = 0; n < neighatoms.length; n++) {
 						if (neighatoms[n].getSymbol().equals("H")) {
 							hcount += 1;
@@ -203,7 +207,7 @@ public class ValenceConnectivityOrderOneDescriptor implements Descriptor {
 				val1 = ( (Double)chiAtom.get(1) ).doubleValue();
 				if(val0 > 0 && val1 >0) {
 					if((atoms[0].getSymbol().equals("C")) && (atoms[1].getSymbol().equals("C"))) {
-						chi1v_C += 1/(Math.sqrt(val0 * val1));
+						chi1vC += 1/(Math.sqrt(val0 * val1));
 					}
 					chi1v += 1/(Math.sqrt(val0 * val1));
 				}
@@ -211,7 +215,7 @@ public class ValenceConnectivityOrderOneDescriptor implements Descriptor {
 			}
 		}
 		chiValuesVCOO.add(chi1v);
-		chiValuesVCOO.add(chi1v_C);		
+		chiValuesVCOO.add(chi1vC);		
 		return chiValuesVCOO;
 	}
 

@@ -29,15 +29,8 @@ import java.io.InputStreamReader;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
-import java.util.StringTokenizer;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomType;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.dict.Entry;
 import org.openscience.cdk.exception.CDKException;
@@ -237,8 +230,7 @@ public class DescriptorEngine {
                         );
                 molecule.setProperty((DescriptorSpecification)speclist.get(i), value);
             } catch (CDKException exception) {
-                logger.error("Could not calculate descriptor value for: ",
-                        descriptor.getClass().getName());
+                logger.error("Could not calculate descriptor value for: ", descriptor.getClass().getName());
             }
         }
     }

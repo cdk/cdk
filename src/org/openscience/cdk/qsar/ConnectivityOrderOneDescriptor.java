@@ -29,8 +29,6 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.*;
-import java.util.Map;
-import java.util.Hashtable;
 import java.util.ArrayList;
 
 /**
@@ -39,7 +37,7 @@ import java.util.ArrayList;
  *  http://www.chemcomp.com/Journal_of_CCG/Features/descr.htm#KH
  *  returned values are:
  *  chi1 is the Atomic connectivity index (order 1),
- *  chi1_C is the Carbon connectivity index (order 1);
+ *  chi1C is the Carbon connectivity index (order 1);
  *
  * @author      mfe4
  * @cdk.created 2004-11-03
@@ -93,19 +91,19 @@ public class ConnectivityOrderOneDescriptor implements Descriptor {
 	/**
 	 *  Description of the Method
 	 *
-	 *@param  ac                AtomContainer
-	 *@return                   chiValuesCOO is an arrayList that contains chi1 and chi1_C
+	 *@param  atomContainer                AtomContainer
+	 *@return                   chiValuesCOO is an arrayList that contains chi1 and chi1C
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public DescriptorResult calculate(AtomContainer ac) throws CDKException {
+	public DescriptorResult calculate(AtomContainer atomContainer) throws CDKException {
 		DoubleArrayResult chiValuesCOO = new DoubleArrayResult(2);
 		ArrayList degrees = new ArrayList(2);
 		double chi1 = 0;
-		double chi1_C = 0;
+		double chi1C = 0;
 		double val0 = 0;
 		double val1 = 0;
 		int atomDegree = 0;
-		Bond[] bonds = ac.getBonds();
+		Bond[] bonds = atomContainer.getBonds();
 		Atom[] atoms = null;
 		for (int b = 0; b < bonds.length; b++) {
 			atoms = bonds[b].getAtoms();
@@ -113,7 +111,7 @@ public class ConnectivityOrderOneDescriptor implements Descriptor {
 				degrees.clear();
 				for (int a = 0; a < atoms.length; a++) {
 					atomDegree = 0;
-					Atom[] neighboors = ac.getConnectedAtoms(atoms[a]);
+					Atom[] neighboors = atomContainer.getConnectedAtoms(atoms[a]);
 					for (int n = 0; n < neighboors.length; n++) {
 						if (!neighboors[n].getSymbol().equals("H")) {
 							atomDegree += 1;
@@ -126,13 +124,13 @@ public class ConnectivityOrderOneDescriptor implements Descriptor {
 				val0 = ( (Double)degrees.get(0) ).doubleValue();
 				val1 = ( (Double)degrees.get(1) ).doubleValue();
 				if((atoms[0].getSymbol().equals("C")) && (atoms[1].getSymbol().equals("C"))) {
-					chi1_C += 1/(Math.sqrt(val0 * val1));
+					chi1C += 1/(Math.sqrt(val0 * val1));
 				}
 				chi1 += 1/(Math.sqrt(val0 * val1));
 			}
 		}
 		chiValuesCOO.add(chi1);
-		chiValuesCOO.add(chi1_C);		
+		chiValuesCOO.add(chi1C);		
 		return chiValuesCOO;
 	}
 

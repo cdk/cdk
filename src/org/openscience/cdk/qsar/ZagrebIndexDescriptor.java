@@ -28,8 +28,6 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.*;
-import java.util.Map;
-import java.util.Hashtable;
 
 /**
  *   Zagreb index: the sum of the squares of atom degree over all heavy atoms i.
@@ -86,16 +84,16 @@ public class ZagrebIndexDescriptor implements Descriptor {
 	/**
 	 *  Description of the Method
 	 *
-	 *@param  ac                AtomContainer
+	 *@param  atomContainer                AtomContainer
 	 *@return                   zagreb index
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public DescriptorResult calculate(AtomContainer ac) throws CDKException {
+	public DescriptorResult calculate(AtomContainer atomContainer) throws CDKException {
 		double zagreb = 0;
-		Atom[] atoms = ac.getAtoms();
+		Atom[] atoms = atomContainer.getAtoms();
 		for (int i = 0; i < atoms.length; i++) {
 			int atomDegree = 0;
-			Atom[] neighboors = ac.getConnectedAtoms(atoms[i]);
+			Atom[] neighboors = atomContainer.getConnectedAtoms(atoms[i]);
 			for (int a = 0; a < neighboors.length; a++) {
 				if (!neighboors[a].getSymbol().equals("H")) {
 					atomDegree += 1;

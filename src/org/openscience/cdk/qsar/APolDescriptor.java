@@ -30,6 +30,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.*;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Sum of the atomic polarizabilities (including implicit hydrogens) with polarizabilities taken from 
@@ -43,10 +44,13 @@ import org.openscience.cdk.config.IsotopeFactory;
  */
 public class APolDescriptor implements Descriptor {
 
-	/**
-	 *  Constructor for the APolDescriptor object
-	 */
-	public APolDescriptor() { }
+    private LoggingTool logger;
+    /**
+     *  Constructor for the APolDescriptor object
+     */
+    public APolDescriptor() {
+        logger = new LoggingTool(this);
+    }
 
 	public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
@@ -113,6 +117,7 @@ public class APolDescriptor implements Descriptor {
 			}
 			return new DoubleResult(apol);
 		} catch (Exception ex1) {
+                    logger.debug(ex1);
 			throw new CDKException("Problems with IsotopeFactory due to " + ex1.toString());
 		}
 	}

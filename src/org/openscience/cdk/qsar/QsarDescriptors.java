@@ -26,12 +26,8 @@
 package org.openscience.cdk.qsar;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomType;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.CDKConstants;
 
 /**
  *  Description of the mfe4
@@ -51,15 +47,15 @@ public class QsarDescriptors {
 	/**
 	 *  Gets the atomCount attribute of the QsarDescriptors object
 	 *
-	 *@param  ac      Description of the Parameter
+	 *@param  atomContainer      Description of the Parameter
 	 *@param  symbol  Description of the Parameter
 	 *@return         The atomCount value
 	 */
-	public int getAtomCount(AtomContainer ac, String symbol) {
+	public int getAtomCount(AtomContainer atomContainer, String symbol) {
 		int atomCount = 0;
-		Atom[] atoms = ac.getAtoms();
+		Atom[] atoms = atomContainer.getAtoms();
 		for (int i = 0; i < atoms.length; i++) {
-			if (ac.getAtomAt(i).getSymbol().equals(symbol)) {
+			if (atomContainer.getAtomAt(i).getSymbol().equals(symbol)) {
 				atomCount += 1;
 			}
 		}
@@ -70,15 +66,15 @@ public class QsarDescriptors {
 	/**
 	 *  Gets the bondCount attribute of the QsarDescriptors object
 	 *
-	 *@param  ac         Description of the Parameter
+	 *@param  atomContainer         Description of the Parameter
 	 *@param  bondOrder  Description of the Parameter
 	 *@return            The bondCount value
 	 */
-	public int getBondCount(AtomContainer ac, double bondOrder) {
+	public int getBondCount(AtomContainer atomContainer, double bondOrder) {
 		int bondCount = 0;
-		Bond[] bonds = ac.getBonds();
+		Bond[] bonds = atomContainer.getBonds();
 		for (int i = 0; i < bonds.length; i++) {
-			if (ac.getBondAt(i).getOrder() == bondOrder) {
+			if (atomContainer.getBondAt(i).getOrder() == bondOrder) {
 				bondCount += 1;
 			}
 		}

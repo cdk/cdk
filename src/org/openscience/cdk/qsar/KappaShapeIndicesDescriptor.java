@@ -29,8 +29,6 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.tools.*;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.*;
-import java.util.Map;
-import java.util.Hashtable;
 import java.util.ArrayList;
 
 /**
@@ -98,13 +96,13 @@ public class KappaShapeIndicesDescriptor implements Descriptor {
 	/**
 	 *  calculates the kier shape indices for an atom container
 	 *
-	 *@param  ac                AtomContainer
+	 *@param  atomContainer                AtomContainer
 	 *@return                   kier1, kier2 and kier3 are returned as arrayList of doubles
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public DescriptorResult calculate(AtomContainer ac) throws CDKException {
+	public DescriptorResult calculate(AtomContainer atomContainer) throws CDKException {
 
-		Atom[] atoms = ac.getAtoms();
+		Atom[] atoms = atomContainer.getAtoms();
 		Atom[] firstAtomNeighboors = null;
 		Atom[] secondAtomNeighboors = null;
 		Atom[] thirdAtomNeighboors = null;
@@ -126,16 +124,16 @@ public class KappaShapeIndicesDescriptor implements Descriptor {
 		
 		for (int a1 = 0; a1 < atoms.length; a1 ++) {
 			bond1 = 0;
-			firstAtomNeighboors = ac.getConnectedAtoms(atoms[a1]);
+			firstAtomNeighboors = atomContainer.getConnectedAtoms(atoms[a1]);
 			for (int a2 = 0; a2 < firstAtomNeighboors.length; a2 ++) {
-				bond1 = ac.getBondNumber( atoms[a1], firstAtomNeighboors[a2] );
+				bond1 = atomContainer.getBondNumber( atoms[a1], firstAtomNeighboors[a2] );
 				if(!singlePaths.contains(new Double(bond1))) {
 					singlePaths.add(new Double(bond1));
 					java.util.Collections.sort(singlePaths);
 				}
-				secondAtomNeighboors = ac.getConnectedAtoms(firstAtomNeighboors[a2]);
+				secondAtomNeighboors = atomContainer.getConnectedAtoms(firstAtomNeighboors[a2]);
 				for (int a3 = 0; a3 < secondAtomNeighboors.length; a3 ++) {
-					bond2 = ac.getBondNumber( firstAtomNeighboors[a2], secondAtomNeighboors[a3] );
+					bond2 = atomContainer.getBondNumber( firstAtomNeighboors[a2], secondAtomNeighboors[a3] );
 					if(!singlePaths.contains(new Double(bond2))) {
 						singlePaths.add(new Double(bond2));
 					}
@@ -148,9 +146,9 @@ public class KappaShapeIndicesDescriptor implements Descriptor {
 					if(!doublePaths.contains(new String(tmpbond2)) && (bond1 != bond2)) {
 						doublePaths.add(new String(tmpbond2));
 					}
-					thirdAtomNeighboors = ac.getConnectedAtoms(secondAtomNeighboors[a3]);
+					thirdAtomNeighboors = atomContainer.getConnectedAtoms(secondAtomNeighboors[a3]);
 					for (int a4 = 0; a4 < thirdAtomNeighboors.length; a4 ++) {
-						bond3 = ac.getBondNumber( secondAtomNeighboors[a3], thirdAtomNeighboors[a4] );
+						bond3 = atomContainer.getBondNumber( secondAtomNeighboors[a3], thirdAtomNeighboors[a4] );
 						if(!singlePaths.contains(new Double(bond3))) {
 							singlePaths.add(new Double(bond3));
 						}

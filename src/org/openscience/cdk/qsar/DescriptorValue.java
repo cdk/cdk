@@ -23,10 +23,7 @@
  */
 package org.openscience.cdk.qsar;
 
-import java.util.Map;
 
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.DescriptorResult;
 
 /**

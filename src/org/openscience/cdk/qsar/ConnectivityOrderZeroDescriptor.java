@@ -28,9 +28,6 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.*;
-import java.util.Map;
-import java.util.Hashtable;
-import java.util.ArrayList;
 
 /**
  *  Connectivity index (order 0):
@@ -38,7 +35,7 @@ import java.util.ArrayList;
  *  http://www.chemcomp.com/Journal_of_CCG/Features/descr.htm#KH
  *  returned values are:
  *  chi0 is the Atomic connectivity index (order 0),
- *  chi0_C is the Carbon connectivity index (order 0);
+ *  chi0C is the Carbon connectivity index (order 0);
  *
  * @author      mfe4
  * @cdk.created 2004-11-03
@@ -92,18 +89,18 @@ public class ConnectivityOrderZeroDescriptor implements Descriptor {
 	/**
 	 *  Description of the Method
 	 *
-	 *@param  ac                AtomContainer
-	 *@return                   chiValuesCOZ is an arrayList that contains chi0 and chi0_C
+	 *@param  atomContainer                AtomContainer
+	 *@return                   chiValuesCOZ is an arrayList that contains chi0 and chi0C
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public DescriptorResult calculate(AtomContainer ac) throws CDKException {
+	public DescriptorResult calculate(AtomContainer atomContainer) throws CDKException {
 		DoubleArrayResult chiValuesCOZ = new DoubleArrayResult(2);
 		double chi0 = 0;
-		double chi0_C = 0;
-		Atom[] atoms = ac.getAtoms();
+		double chi0C = 0;
+		Atom[] atoms = atomContainer.getAtoms();
 		for (int i = 0; i < atoms.length; i++) {
 			int atomDegree = 0;
-			Atom[] neighboors = ac.getConnectedAtoms(atoms[i]);
+			Atom[] neighboors = atomContainer.getConnectedAtoms(atoms[i]);
 			for (int a = 0; a < neighboors.length; a++) {
 				if (!neighboors[a].getSymbol().equals("H")) {
 					atomDegree += 1;
@@ -111,13 +108,13 @@ public class ConnectivityOrderZeroDescriptor implements Descriptor {
 			}
 			if(atomDegree > 0) {
 				if(atoms[i].getSymbol().equals("C")) {
-					chi0_C += 1/(Math.sqrt(atomDegree));
+					chi0C += 1/(Math.sqrt(atomDegree));
 				}
 				chi0 += 1/(Math.sqrt(atomDegree));
 			}
 		}
 		chiValuesCOZ.add(chi0);
-		chiValuesCOZ.add(chi0_C);		
+		chiValuesCOZ.add(chi0C);		
 		return chiValuesCOZ;
 	}
 

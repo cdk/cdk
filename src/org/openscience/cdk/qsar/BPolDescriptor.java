@@ -31,6 +31,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.*;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Sum of the absolute value of the difference between atomic polarizabilities 
@@ -44,11 +45,13 @@ import org.openscience.cdk.config.IsotopeFactory;
  * @cdk.set     qsar-descriptors
  */
 public class BPolDescriptor implements Descriptor {
-
-	/**
-	 *  Constructor for the BPolDescriptor object
-	 */
-	public BPolDescriptor() { }
+    private LoggingTool logger;
+    /**
+     *  Constructor for the APolDescriptor object
+     */
+    public BPolDescriptor() {
+        logger = new LoggingTool(this);
+    }
 
 	public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
@@ -126,6 +129,7 @@ public class BPolDescriptor implements Descriptor {
 			}
 			return new DoubleResult(bpol);
 		} catch (Exception ex1) {
+                    logger.debug(ex1);
 			throw new CDKException("Problems with IsotopeFactory due to " + ex1.toString());
 		}
 	}

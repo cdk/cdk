@@ -27,14 +27,12 @@ package org.openscience.cdk.qsar;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Element;
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.tools.*;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.qsar.result.*;
+import org.openscience.cdk.tools.LoggingTool;
 import junit.framework.AssertionFailedError;
-import java.util.Map;
 import java.util.Hashtable;
-import java.util.ArrayList;
 
 
 /**
@@ -43,7 +41,7 @@ import java.util.ArrayList;
  *  http://www.chemcomp.com/Journal_of_CCG/Features/descr.htm#KH
  *  returned values are:
  *  chi0v is the Atomic valence connectivity index (order 0),
- *  chi0_C is the Carbon valence connectivity index (order 0);
+ *  chi0vC is the Carbon valence connectivity index (order 0);
  *  valence is the number of s and p valence electrons of atom.
  *
  * @author      mfe4
@@ -53,10 +51,13 @@ import java.util.ArrayList;
  */
 public class ValenceConnectivityOrderZeroDescriptor implements Descriptor {
 
+    private LoggingTool logger;
 	/**
 	 *  Constructor for the ValenceConnectivityOrderZeroDescriptor object
 	 */
-	public ValenceConnectivityOrderZeroDescriptor() { }
+	public ValenceConnectivityOrderZeroDescriptor() { 
+            logger = new LoggingTool(this);
+        }
 
 
 	/**
@@ -101,11 +102,11 @@ public class ValenceConnectivityOrderZeroDescriptor implements Descriptor {
 	/**
 	 *  calculates the chiOv and chiOv_C descriptors for an atom container
 	 *
-	 *@param  ac                AtomContainer
-	 *@return                   chi0v and chi0_C returned as arrayList
+	 *@param  atomContainer                AtomContainer
+	 *@return                   chi0v and chi0C returned as arrayList
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public DescriptorResult calculate(AtomContainer ac) throws CDKException {
+	public DescriptorResult calculate(AtomContainer atomContainer) throws CDKException {
 		Hashtable valences = new Hashtable();
 		valences.put("Li", new Integer(1));
 		valences.put("Be", new Integer(2));
@@ -151,49 +152,51 @@ public class ValenceConnectivityOrderZeroDescriptor implements Descriptor {
 		int atomValue = 0;
 		DoubleArrayResult chiValuesVCOZ = new DoubleArrayResult(2);
 		double chi0v = 0;
-		double chi0v_C = 0;
-		Atom[] atoms = ac.getAtoms();
+		double chi0vC = 0;
+		Atom[] atoms = atomContainer.getAtoms();
 		Atom[] neighatoms = null;
 		Element element = null;
 		IsotopeFactory elfac = null;
 		String symbol = null;
-		for (int i = 0; i < atoms.length; i++) {
-			symbol = atoms[i].getSymbol();
-			if(!symbol.equals("H")) {
-			try {
-				elfac = IsotopeFactory.getInstance();
-			} catch (Exception exc) {
-				throw new AssertionFailedError("Problem instantiating IsotopeFactory: " + exc.toString());
-			}
-			try {
-				element = elfac.getElement(symbol);
-			} catch (Exception exc) {
-				throw new AssertionFailedError("Problem getting isotope " + symbol + " from ElementFactory: " + exc.toString());
-			}
-			atomicNumber = element.getAtomicNumber();
-			valence = ((Integer)valences.get(symbol)).intValue();
-			hcount = 0;
-			atomValue = 0;
-			neighatoms = ac.getConnectedAtoms(atoms[i]);
-			for (int a = 0; a < neighatoms.length; a++) {
-				if (neighatoms[a].getSymbol().equals("H")) {
-					hcount += 1;
-				}
-			}
-			hcount += ac.getAtomAt(i).getHydrogenCount();
-			atomValue = (valence - hcount) / (atomicNumber - valence - 1);
-			if (atomValue > 0) {
-				if(symbol.equals("C")) {
-					chi0v_C  += (1/(Math.sqrt(atomValue))); // chi0v_C
-				}
-				chi0v += (1/(Math.sqrt(atomValue))); // chi0v
-			}
-			}
-		}
-		chiValuesVCOZ.add(chi0v);
-		chiValuesVCOZ.add(chi0v_C);
-		return chiValuesVCOZ;
-	}
+                for (int i = 0; i < atoms.length; i++) {
+                    symbol = atoms[i].getSymbol();
+                    if(!symbol.equals("H")) {
+                        try {
+                            elfac = IsotopeFactory.getInstance();
+                        } catch (Exception exc) {
+                            logger.debug(exc);
+                            throw new AssertionFailedError("Problem instantiating IsotopeFactory: " + exc.toString());
+                        }
+                        try {
+                            element = elfac.getElement(symbol);
+                        } catch (Exception exc) {
+                            logger.debug(exc);
+                            throw new AssertionFailedError("Problem getting isotope " + symbol + " from ElementFactory: " + exc.toString());
+                        }
+                        atomicNumber = element.getAtomicNumber();
+                        valence = ((Integer)valences.get(symbol)).intValue();
+                        hcount = 0;
+                        atomValue = 0;
+                        neighatoms = atomContainer.getConnectedAtoms(atoms[i]);
+                        for (int a = 0; a < neighatoms.length; a++) {
+                            if (neighatoms[a].getSymbol().equals("H")) {
+                                hcount += 1;
+                            }
+                        }
+                        hcount += atomContainer.getAtomAt(i).getHydrogenCount();
+                        atomValue = (valence - hcount) / (atomicNumber - valence - 1);
+                        if (atomValue > 0) {
+                            if(symbol.equals("C")) {
+                                chi0vC  += (1/(Math.sqrt(atomValue))); // chi0vC
+                            }
+                            chi0v += (1/(Math.sqrt(atomValue))); // chi0v
+                        }
+                    }
+                }
+                chiValuesVCOZ.add(chi0v);
+                chiValuesVCOZ.add(chi0vC);
+                return chiValuesVCOZ;
+        }
 
 
 	/**

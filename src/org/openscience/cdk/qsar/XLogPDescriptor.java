@@ -646,8 +646,8 @@ public class XLogPDescriptor implements Descriptor {
 		SmilesParser sp = new SmilesParser();
 		AtomContainer paba = sp.parseSmiles("CS(=O)(=O)c1ccc(N)cc1");
 		// p-amino sulphonic acid
-		QueryAtomContainer PABAquery = QueryAtomContainerCreator.createBasicQueryContainer(paba);
-		if (UniversalIsomorphismTester.isSubgraph(ac, PABAquery)) {
+		QueryAtomContainer pabaQuery = QueryAtomContainerCreator.createBasicQueryContainer(paba);
+		if (UniversalIsomorphismTester.isSubgraph(ac, pabaQuery)) {
 			xlogP -= 0.501;
 		}
 

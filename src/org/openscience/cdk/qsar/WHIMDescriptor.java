@@ -36,6 +36,7 @@ import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.charges.Polarizability;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.qsar.result.*;
+import org.openscience.cdk.tools.LoggingTool;
 
 import java.lang.Math;
 import java.util.Vector;
@@ -83,10 +84,12 @@ import Jama.EigenvalueDecomposition;
  */
 public class WHIMDescriptor implements Descriptor {
 
+    LoggingTool logger;
     String type = "";
     Hashtable hashatwt,hashvdw,hasheneg,hashpol;
     
     public WHIMDescriptor() {
+        logger = new LoggingTool(this);
         this.type = "unity"; // default weighting scheme
 
         // set up the values from TOD98
@@ -293,6 +296,7 @@ public class WHIMDescriptor implements Descriptor {
         try {
             pcaobject = new PCA(cmat,wt);
         } catch (CDKException cdke) {
+            logger.debug(cdke);
         }
 
         // directional WHIM's
@@ -336,18 +340,18 @@ public class WHIMDescriptor implements Descriptor {
                 
                 
         // non directional WHIMS's
-        double T = lambda[0] + lambda[1] + lambda[2];
-        double A = lambda[0]*lambda[1] + lambda[0]*lambda[2] + lambda[1]*lambda[2];
-        double V = T + A + lambda[0]*lambda[1]*lambda[2];
+        double t = lambda[0] + lambda[1] + lambda[2];
+        double a = lambda[0]*lambda[1] + lambda[0]*lambda[2] + lambda[1]*lambda[2];
+        double v = t + a + lambda[0]*lambda[1]*lambda[2];
 
-        double K = 0.0;
+        double k = 0.0;
         sum = 0.0;
         for (int i = 0; i < 3; i++) sum += lambda[i];
-        for (int i = 0; i < 3; i++) K = (lambda[i] / sum) - (1.0/3.0);
-        K = K / (4.0/3.0);
+        for (int i = 0; i < 3; i++) k = (lambda[i] / sum) - (1.0/3.0);
+        k = k / (4.0/3.0);
 
-        double G = Math.pow( gamma[0]*gamma[1]*gamma[2], 1.0/3.0);
-        double D = eta[0] + eta[1] + eta[2];
+        double g = Math.pow( gamma[0]*gamma[1]*gamma[2], 1.0/3.0);
+        double d = eta[0] + eta[1] + eta[2];
 
         // return all the stuff we calculated
         DoubleArrayResult retval = new DoubleArrayResult(11+6);
@@ -366,12 +370,12 @@ public class WHIMDescriptor implements Descriptor {
         retval.add( eta[1] );
         retval.add( eta[2] );
                     
-        retval.add( T );
-        retval.add( A );
-        retval.add( V );
-        retval.add( K );
-        retval.add( G );
-        retval.add( D );
+        retval.add( t );
+        retval.add( a );
+        retval.add( v );
+        retval.add( k );
+        retval.add( g );
+        retval.add( d );
         
         return retval;
     }
