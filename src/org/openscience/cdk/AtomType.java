@@ -72,6 +72,7 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
 	public AtomType(String elementSymbol)
 	{
 		super(elementSymbol);
+		this.id = null;
 	}
 
 
