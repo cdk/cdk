@@ -1,0 +1,119 @@
+/* Bond.java
+ *
+ * $RCSfile$    $Author$    $Date$    $Revision$
+ * 
+ * Copyright (C) 1997-2000  The CompChem project
+ * 
+ * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
+ * 
+ */
+
+package org.openscience.cdk;
+
+/**
+ * Implements the concept of a bond, i.e. a number of electrons connecting 
+ * a number of atoms.
+ */
+
+public class Bond extends ElectronContainer
+{
+	/** The bond order of this bond */
+	protected int order;
+
+	/** A list of atoms participating in this bond */
+	protected Atom[] atoms;
+
+	/** A descriptor the stereochemical orientation of this bond. 
+	  * @see org.openscience.cdk.CDKConstants org.openscience.cdk.CDKConstants for predefined values. 
+	  * to be used here.
+	  */
+	protected int stereo; 
+
+	/**
+	 * Returns the array of atoms making up this bond
+	 *
+	 * @return An array of atoms participating in this bond
+	 */
+	public Atom[] getAtoms()
+	{
+		return this.atoms;
+	}
+
+
+	/**
+	 * Sets the array of atoms making up this bond
+	 *
+	 * @param   atoms An array of atoms that forms this bond
+	 */
+	public void setAtoms(Atom[] atoms)
+	{
+		this.atoms = atoms;
+	}
+
+
+
+	/**
+	 * Returns the bond order of this bond
+	 * @see org.openscience.cdk.CDKConstants org.openscience.cdk.CDKConstants for predefined values.
+	 *
+	 * @return The bond order of this bond
+	 */
+	public int getOrder()
+	{
+		return this.order;
+	}
+
+
+	/**
+	 * Sets the bond order of this bond
+	 * @see org.openscience.cdk.CDKConstants org.openscience.cdk.CDKConstants for predefined values.
+	 *
+	 * @param   order The bond order to be assigned to this bond
+	 */
+	public void setOrder(int order)
+	{
+		this.order = order;
+	}
+
+
+
+	/**
+	 * Returns the stereo descriptor for this bond. 
+	 * @see org.openscience.cdk.CDKConstants org.openscience.cdk.CDKConstants for predefined values.
+	 *
+	 * @return The stereo descriptor for this bond
+	 */
+	public int getStereo()
+	{
+		return this.stereo;
+	}
+
+
+	/**
+	 * Sets the stereo descriptor for this bond.
+	 * @see org.openscience.cdk.CDKConstants org.openscience.cdk.CDKConstants for predefined values.
+	 *
+	 * @param   stereo The stereo descriptor to be assigned to this bond.
+	 */
+	public void setStereo(int stereo)
+	{
+		this.stereo = stereo;
+	}
+}
+
+
+

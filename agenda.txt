@@ -1,0 +1,6 @@
+1.
+Which kind of Point2D/Point3D do we implement in Atom? I don't like the idea of 
+using java.awt.Point2D.
+
+2. In AtomContainer.addBond(Bond bond) are we supposed to check if the atoms forming
+this bond are already in there and add them if neccessary?

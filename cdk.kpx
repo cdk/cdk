@@ -1,0 +1,284 @@
+<?xml version='1.0'?>
+<kawaproject>
+<versioninfo>
+<documentversion>
+<major>"0"</major>
+<minor>"1"</minor>
+</documentversion>
+<productversion>
+<value>"121"</value>
+</productversion>
+</versioninfo>
+<path>"C:\home\develop\cdk\"</path>
+<classpaths>
+<classpath enabled="1">
+<value>"C:\home\develop\cdk\jar\vecmath1.1-1.12.jar"</value>
+</classpath>
+</classpaths>
+<profile>
+<name>"jdk1.3"</name>
+</profile>
+<runfile>
+</runfile>
+<items>
+<folder>
+<name>"cdk"</name>
+<relativepath>"cdk\cdk.kpx"</relativepath>
+<scmstatus id="0">
+<userstring>""</userstring>
+<userinteger>"0"</userinteger>
+</scmstatus>
+<file>
+<dirty>"1"</dirty>
+<relativepath>"agenda.txt"</relativepath>
+<editor open="1">
+<selection start="0" end="0">
+</selection>
+<window x="0" y="154400608" width="0" height="0">
+</window>
+</editor>
+<scmstatus id="0">
+<userstring>""</userstring>
+<userinteger>"0"</userinteger>
+</scmstatus>
+</file>
+<virtualfolder>
+<name>"org"</name>
+<virtualfolder>
+<name>"openscience"</name>
+<virtualfolder>
+<name>"cdk"</name>
+<file>
+<dirty>"0"</dirty>
+<relativepath>"org\openscience\cdk\Atom.java"</relativepath>
+<editor open="1">
+<selection start="0" end="0">
+</selection>
+<window x="7303681" y="0" width="0" height="48">
+</window>
+</editor>
+<scmstatus id="2">
+<userstring>""</userstring>
+<userinteger>"0"</userinteger>
+</scmstatus>
+</file>
+<file>
+<dirty>"0"</dirty>
+<relativepath>"org\openscience\cdk\AtomContainer.java"</relativepath>
+<editor open="1">
+<selection start="0" end="0">
+</selection>
+<window x="0" y="0" width="0" height="0">
+</window>
+</editor>
+<scmstatus id="0">
+<userstring>""</userstring>
+<userinteger>"0"</userinteger>
+</scmstatus>
+</file>
+<file>
+<dirty>"0"</dirty>
+<relativepath>"org\openscience\cdk\Bond.java"</relativepath>
+<editor open="1">
+<selection start="0" end="0">
+</selection>
+<window x="14" y="33013" width="2672" height="145">
+</window>
+</editor>
+<scmstatus id="0">
+<userstring>""</userstring>
+<userinteger>"0"</userinteger>
+</scmstatus>
+</file>
+<file>
+<dirty>"0"</dirty>
+<relativepath>"org\openscience\cdk\CDKConstants.java"</relativepath>
+<editor open="1">
+<selection start="0" end="0">
+</selection>
+<window x="33017" y="4" width="1488" height="145">
+</window>
+</editor>
+<scmstatus id="0">
+<userstring>""</userstring>
+<userinteger>"0"</userinteger>
+</scmstatus>
+</file>
+<file>
+<dirty>"0"</dirty>
+<relativepath>"org\openscience\cdk\ChemObject.java"</relativepath>
+<editor open="1">
+<selection start="0" end="0">
+</selection>
+<window x="32" y="3014656" width="106577632" height="106555856">
+</window>
+</editor>
+<scmstatus id="0">
+<userstring>""</userstring>
+<userinteger>"0"</userinteger>
+</scmstatus>
+</file>
+<file>
+<dirty>"0"</dirty>
+<relativepath>"org\openscience\cdk\ChemObjectListener.java"</relativepath>
+<editor open="1">
+<selection start="0" end="0">
+</selection>
+<window x="-2" y="106553360" width="106541072" height="64">
+</window>
+</editor>
+<scmstatus id="0">
+<userstring>""</userstring>
+<userinteger>"0"</userinteger>
+</scmstatus>
+</file>
+<file>
+<dirty>"0"</dirty>
+<relativepath>"org\openscience\cdk\ElectronContainer.java"</relativepath>
+<editor open="1">
+<selection start="0" end="0">
+</selection>
+<window x="18721740" y="18721340" width="0" height="0">
+</window>
+</editor>
+<scmstatus id="0">
+<userstring>""</userstring>
+<userinteger>"0"</userinteger>
+</scmstatus>
+</file>
+<file>
+<dirty>"0"</dirty>
+<relativepath>"org\openscience\cdk\Element.java"</relativepath>
+<editor open="1">
+<selection start="0" end="0">
+</selection>
+<window x="0" y="106591264" width="1" height="6946927">
+</window>
+</editor>
+<scmstatus id="0">
+<userstring>""</userstring>
+<userinteger>"0"</userinteger>
+</scmstatus>
+</file>
+<virtualfolder>
+<name>"event"</name>
+<file>
+<dirty>"0"</dirty>
+<relativepath>"org\openscience\cdk\event\ChemObjectChangeEvent.java"</relativepath>
+<editor open="0">
+<selection start="0" end="0">
+</selection>
+<window x="60" y="2" width="32" height="49">
+</window>
+</editor>
+<scmstatus id="0">
+<userstring>""</userstring>
+<userinteger>"0"</userinteger>
+</scmstatus>
+</file>
+</virtualfolder>
+</virtualfolder>
+</virtualfolder>
+</virtualfolder>
+</folder>
+</items>
+<compileroptions debug="0" nowarning="0" optimize="0" verbose="0" deprecated="0" usefilelist="0">
+<outputdirvalues checked="0">
+</outputdirvalues>
+<customoptions checked="0">
+</customoptions>
+</compileroptions>
+<interpreteroptions debug="0" nogc="0" verbosegc="0" verbose="0" checksrc="0" verifieroff="0" verifieron="0" verifierremote="0" classic="0">
+<commandlineargs checked="0">
+</commandlineargs>
+<runclassnames checked="0">
+<runclassname selected="0">
+<value>""</value>
+</runclassname>
+</runclassnames>
+<executedirs checked="0">
+<executedir selected="0">
+<value>""</value>
+</executedir>
+</executedirs>
+<customoptions checked="0">
+<customoption selected="0">
+<value>""</value>
+</customoption>
+</customoptions>
+<maxmemory checked="0">
+<value>""</value>
+</maxmemory>
+<startmemory checked="0">
+<value>""</value>
+</startmemory>
+<javacodestack checked="0">
+<value>""</value>
+</javacodestack>
+<ccodestack checked="0">
+<value>""</value>
+</ccodestack>
+<propertyvalues checked="0">
+<propertyvalue selected="0">
+<value>""</value>
+</propertyvalue>
+</propertyvalues>
+<debugger>
+<remote checked="0">
+<host checked="0">
+<value>""</value>
+</host>
+<password checked="0">
+<value>""</value>
+</password>
+<port checked="0">
+<value>""</value>
+</port>
+<connector checked="0">
+<value>""</value>
+</connector>
+</remote>
+</debugger>
+</interpreteroptions>
+<javadocoptions version="1" type="1" author="1" noindex="0" notree="0" nodeprecated="0">
+<outputdirvalues checked="1">
+<outputdirvalue selected="1">
+<value>"C:\home\develop\cdk\doc"</value>
+</outputdirvalue>
+</outputdirvalues>
+<customoptions checked="0">
+<customoption selected="0">
+<value>""</value>
+</customoption>
+</customoptions>
+</javadocoptions>
+<rmioptions useprojectclasspath="0" debugtables="0" depend="0" debug="0" optimize="0" nowarn="0" verbose="0" nowrite="0" keepgenerated="0" show="0">
+<outputdirs checked="0">
+<outputdir selected="0">
+<value>""</value>
+</outputdir>
+</outputdirs>
+<stubdirs checked="0">
+<stubdir selected="0">
+<value>""</value>
+</stubdir>
+</stubdirs>
+<skeldirs checked="0">
+<skeldir selected="0">
+<value>""</value>
+</skeldir>
+</skeldirs>
+<customoptions checked="0">
+<customoption selected="0">
+<value>""</value>
+</customoption>
+</customoptions>
+<files>
+</files>
+</rmioptions>
+<kawajar>
+<value>""</value>
+</kawajar>
+<breakpoints>
+</breakpoints>
+</kawaproject>
