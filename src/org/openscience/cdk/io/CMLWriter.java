@@ -326,12 +326,12 @@ public class CMLWriter implements ChemObjectWriter {
         if (hydrogenCount != 0) {
             write("hydrogenCount=\"" + hydrogenCount + "\" ");
         }
-        int atomicNumber = atom.getAtomicNumber();
+        int massNumber = atom.getAtomicMass();
         Isotope majorIsotope = isotopeFactory.getMajorIsotope(atom.getSymbol());
         if (majorIsotope != null) {
-            int majorNumber = majorIsotope.getAtomicNumber();
-            if (atomicNumber != 0 && atomicNumber != majorNumber) {
-                write("isotope=\"" + atomicNumber + "\" ");
+            int majorMassNumber = majorIsotope.getAtomicMass();
+            if (massNumber != 0 && massNumber != majorMassNumber) {
+                write("isotope=\"" + massNumber + "\" ");
             }
         } else {
             logger.warn("Could not find major isotope for : " + atom.getSymbol());
