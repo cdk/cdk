@@ -507,7 +507,7 @@ public class MDLReader extends DefaultChemObjectReader {
 		} catch (CDKException exception) {
             throw exception;
 		} catch (Exception exception) {
-            String error = "Error while parsing line " + linecount + ": " + line + " in property block.";
+            String error = "Error while parsing line " + linecount + ": " + line + " in property block: " + exception.getMessage();
             logger.error(error);
             logger.debug(exception);
             throw new CDKException(error);
