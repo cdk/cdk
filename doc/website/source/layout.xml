@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
-<!DOCTYPE layout PUBLIC "-//Norman Walsh//DTD Website Layout V1.0//EN" "dtd/layout.dtd">
+<!DOCTYPE layout PUBLIC "-//Norman Walsh//DTD Website V2.5.0//EN" 
+                         "../website-2.5.0/schema/dtd/layout.dtd">
 <layout>
   <config param="text-prefix" value="txt"/>
 

@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
-<!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.0b1//EN" "dtd/website.dtd" [
+<!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.5.0//EN" 
+                         "../website-2.5.0/schema/dtd/website.dtd" [
   <!ENTITY manpage SYSTEM "../../../packages/tar/cdk/man/cdk-fileconvert.xml">
 ]>
 <webpage id="man-fileconvert">

@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
-<!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.0b1//EN" 
-                         "dtd/website.dtd" [
+<!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.5.0//EN" 
+                         "../website-2.5.0/schema/dtd/website.dtd" [
   <!ENTITY biblio SYSTEM "../../refs/cheminf.dbx">  
 ]>
 <webpage id="bibliography">
   <config param="last-change-by" value="$Author: egonw $"/>
-  <config param="rcsdate" value="$Date: 2002/09/02 12:04:29 $"/>
+  <config param="rcsdate" value="$Date: 2003/08/18 08:26:54 $"/>
 
   <head>
     <title>CDK Bibliography</title>
