@@ -289,7 +289,7 @@ public class Convention implements ConventionInterface {
                 break;
             case ATOM :
                 if (x3.size() > formalCharges.size()) {
-                  formalCharges.add("0");
+                  formalCharges.addElement("0");
                 }
                 break;
             case MOLECULE :
