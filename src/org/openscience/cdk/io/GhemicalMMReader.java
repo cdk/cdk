@@ -43,7 +43,7 @@ import javax.vecmath.Point3d;
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  */
-public class GhemicalMMReader extends DummyReader {
+public class GhemicalMMReader extends DefaultChemObjectReader {
 
     private LoggingTool logger = null;
     private BufferedReader input = null;
@@ -63,6 +63,9 @@ public class GhemicalMMReader extends DummyReader {
         } else {
             return false;
         }
+    }
+    
+    public void close() {
     }
     
     public ChemObject read(ChemObject object) throws CDKException {
