@@ -103,12 +103,17 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
                 if (input.ready()) {
                     currentLine = input.readLine();
                     StringBuffer buffer = new StringBuffer();
-                    while (input.ready() && currentLine != null && !currentLine.equals("$$$$")) {
+                    while (currentLine != null && !currentLine.equals("$$$$")) {
                         // still in a molecule
                         buffer.append(currentLine);
                         buffer.append("\n");
-                        currentLine = input.readLine();
+                        if (input.ready()) {
+                            currentLine = input.readLine();
+                        } else {
+                            currentLine = null;
+                        }
                     }
+                    logger.debug("MDL file part read: ", buffer);
                     MDLReader reader = new MDLReader(new StringReader(buffer.toString()));
                     nextMolecule = (Molecule)reader.read(new Molecule());
                     if (nextMolecule.getAtomCount() > 0) {
