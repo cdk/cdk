@@ -1,5 +1,10 @@
 <java.util.Vector>
   <org.openscience.cdk.AtomType
+   symbol="Na"
+   id="structgen.Na1"
+   maxBondOrder="1.0"
+   maxBondOrderSum="1.0"/>
+  <org.openscience.cdk.AtomType
    symbol="H"
    id="structgen.H1"
    maxBondOrder="1.0"
@@ -7,6 +12,11 @@
   <org.openscience.cdk.AtomType
    symbol="C"
    id="structgen.C4"
+   maxBondOrder="3.0"
+   maxBondOrderSum="4.0"/>
+  <org.openscience.cdk.AtomType
+   symbol="Si"
+   id="structgen.Si4"
    maxBondOrder="3.0"
    maxBondOrderSum="4.0"/>
   <org.openscience.cdk.AtomType
