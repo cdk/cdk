@@ -20,6 +20,7 @@
 package org.openscience.cdk.test.qsar;
 
 import org.openscience.cdk.qsar.*;
+import org.openscience.cdk.qsar.result.*;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -65,7 +66,7 @@ public class BCUTDescriptorTest extends TestCase {
             params[0] = new Integer(2);
             params[1] = new Integer(2);
             descriptor.setParameters(params);
-            ArrayList retval = (ArrayList)descriptor.calculate(ac);
+            DoubleArrayResult retval = (DoubleArrayResult)descriptor.calculate(ac);
             /*
             System.out.println("Num ret = "+retval.size());
             for (int i = 0; i < retval.size(); i++) {

@@ -31,6 +31,7 @@ import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.charges.Polarizability;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.qsar.result.DoubleArrayResult;
 
 import java.util.Vector;
 import java.util.ArrayList;
@@ -284,23 +285,23 @@ public class BCUTDescriptor implements Descriptor {
         ed = new EigenvalueDecomposition(m);
         double[] eval3 = ed.getRealEigenvalues();
 
-        ArrayList retval = new ArrayList( eval1.length + eval2.length + eval3.length );
+        DoubleArrayResult retval = new DoubleArrayResult( eval1.length + eval2.length + eval3.length );
 
         if (nhigh == 0 || nlow == 0) {
             // return all calculated eigenvalues
-            for (int i = 0; i < eval1.length; i++) retval.add( new Double(eval1[i]) );
-            for (int i = 0; i < eval2.length; i++) retval.add( new Double(eval2[i]) );
-            for (int i = 0; i < eval3.length; i++) retval.add( new Double(eval3[i]) );
+            for (int i = 0; i < eval1.length; i++) retval.add( eval1[i] );
+            for (int i = 0; i < eval2.length; i++) retval.add( eval2[i] );
+            for (int i = 0; i < eval3.length; i++) retval.add( eval3[i] );
         } else {
             // return only the n highest & lowest eigenvalues
-            for (int i = 0; i < nlow; i++) retval.add( new Double(eval1[i]) );
-            for (int i = 0; i < nhigh; i++) retval.add( new Double(eval1[ eval1.length-i-1 ]) );
+            for (int i = 0; i < nlow; i++) retval.add( eval1[i] );
+            for (int i = 0; i < nhigh; i++) retval.add( eval1[ eval1.length-i-1 ] );
         
-            for (int i = 0; i < nlow; i++) retval.add( new Double(eval2[i]) );
-            for (int i = 0; i < nhigh; i++) retval.add( new Double(eval2[ eval2.length-i-1 ]) );
+            for (int i = 0; i < nlow; i++) retval.add( eval2[i] );
+            for (int i = 0; i < nhigh; i++) retval.add( eval2[ eval2.length-i-1 ] );
         
-            for (int i = 0; i < nlow; i++) retval.add( new Double(eval3[i]) );
-            for (int i = 0; i < nhigh; i++) retval.add( new Double(eval3[ eval3.length-i-1 ]) );
+            for (int i = 0; i < nlow; i++) retval.add( eval3[i] );
+            for (int i = 0; i < nhigh; i++) retval.add( eval3[ eval3.length-i-1 ] );
         }
         return(retval);
     }

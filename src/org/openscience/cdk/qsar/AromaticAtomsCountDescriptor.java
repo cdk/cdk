@@ -31,6 +31,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.RingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.qsar.result.IntegerResult;
 import java.util.Map;
 import java.util.Hashtable;
 
@@ -119,7 +120,7 @@ public class AromaticAtomsCountDescriptor implements Descriptor {
 				aromaticAtomsCount += 1;
 			}
 		}
-		return new Integer(aromaticAtomsCount);
+		return new IntegerResult(aromaticAtomsCount);
 	}
 
 

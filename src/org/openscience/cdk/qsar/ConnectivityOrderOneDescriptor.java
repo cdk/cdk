@@ -28,6 +28,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import java.util.Map;
 import java.util.Hashtable;
 import java.util.ArrayList;
@@ -97,7 +98,7 @@ public class ConnectivityOrderOneDescriptor implements Descriptor {
 	 *@exception  CDKException  Possible Exceptions
 	 */
 	public Object calculate(AtomContainer ac) throws CDKException {
-		ArrayList chiValuesCOO = new ArrayList(2);
+		DoubleArrayResult chiValuesCOO = new DoubleArrayResult(2);
 		ArrayList degrees = new ArrayList(2);
 		double chi1 = 0;
 		double chi1_C = 0;
@@ -130,9 +131,9 @@ public class ConnectivityOrderOneDescriptor implements Descriptor {
 				chi1 += 1/(Math.sqrt(val0 * val1));
 			}
 		}
-		chiValuesCOO.add(new Double(chi1));
-		chiValuesCOO.add(new Double(chi1_C));		
-		return new ArrayList(chiValuesCOO);
+		chiValuesCOO.add(chi1);
+		chiValuesCOO.add(chi1_C);		
+		return chiValuesCOO;
 	}
 
 

@@ -32,6 +32,7 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.qsar.result.IntegerResult;
 import java.util.Map;
 import java.util.Hashtable;
 
@@ -129,7 +130,7 @@ public class AtomCountDescriptor implements Descriptor {
 				}
 			}			
 		}
-		return new Integer(atomCount);
+		return new IntegerResult(atomCount);
 	}
 
 
