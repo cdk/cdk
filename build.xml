@@ -364,7 +364,7 @@
             </javac>
         </target>
 
-        <target name="compile-libio-cml" if="cmllibs.present" depends="dont-compile-libio-cml">
+        <target name="compile-libio-cml" if="cmllibs.present" depends="dont-compile-libio-cml, dist-extra">
             <!-- Task to build the libio classes for CMLDOM. -->
             <echo message="Compiling libio for CMLDOM" /> 
 
