@@ -257,13 +257,14 @@
   </bibtex:entry>
 
   <bibtex:entry id="STE2002">
-    <bibtex:unpublished>
+    <bibtex:article>
       <bibtex:author>Steinbeck, C. and Kuhn, S. and Krause, S.</bibtex:author>
-      <bibtex:title>NMRShiftDB - An open-source, open-content web database for organic
-          molecular structures and their NMR data.</bibtex:title>
-      <bibtex:note>In preperation.</bibtex:note>
+      <bibtex:title>NMRShiftDB - NMRShiftDB - Constructing a Chemical Information System with Open Source Components</bibtex:title>
+      <bibtex:journal>Journal of Chemical Information and Computer Sciences</bibtex:journal>
       <bibtex:year>2002</bibtex:year>
-    </bibtex:unpublished>
+      <bibtex:volume>43</bibtex:volume>
+      <bibtex:number>6</bibtex:number>
+    </bibtex:article>
   </bibtex:entry>
 
   <bibtex:entry id="STE2003">
