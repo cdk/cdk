@@ -9,6 +9,7 @@ New:
 * Added infrastructure for a SMARTS parse
 * Added tools.ValencyCheckerInterface.calculateMissingHydrogen(Atom) method
 * Added tools.ValencyChecker.saturate() to fix bond orders
+* AtomType definitions in XML are now in CML2 format
 
 Removed:
 * Removed CDKInputAdapter. Use (Popup)Controller2D directly
@@ -55,6 +56,7 @@ API changes:
 * Renamed cdk.graph.invariant.exception.MatrixIndexOutOfBoundsException to
   IndexOutOfBoundsException so that Debian tar won't mess up the file name in the
   package/tar/cdk tar.gz package
+* Atom type names in XML based format are changed to match CML2 restrictions
 
 20040324 Release
 ------------------------------------

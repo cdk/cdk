@@ -10,7 +10,13 @@
   
   <entry term="maxBondOrder">
     <definition>
-      The maximal bond order this atom type can have. 
+      The maximal bond order that this atom type can have. 
+    </definition>
+  </entry>
+  
+  <entry term="bondOrderSum">
+    <definition>
+      The exact sum of bond orders that this atom type can have.
     </definition>
   </entry>
   

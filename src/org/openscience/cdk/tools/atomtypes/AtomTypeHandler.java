@@ -37,9 +37,15 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public class AtomTypeHandler extends DefaultHandler {
 
+    private final int SCALAR_UNSET = 0;
+    private final int SCALAR_MAXBONDORDER = 1; 
+    private final int SCALAR_BONDORDERSUM = 2;
+    
     private LoggingTool logger;
     private String currentChars;
     private Vector atomTypes;
+    private int scalarType;
+    private AtomType atomType;
 
     public AtomTypeHandler() {
         logger = new LoggingTool(this);
@@ -60,45 +66,75 @@ public class AtomTypeHandler extends DefaultHandler {
 
     public void startDocument() {
         atomTypes = new Vector();
+        scalarType = SCALAR_UNSET;
+        atomType = null;
     }
 
     public void endDocument() {
     }
 
     public void endElement(String uri, String local, String raw) {
-        logger.debug("end element: " + raw);
+        logger.debug("END Element: ", raw);
+        logger.debug("  uri: ", uri);
+        logger.debug("  local: ", local);
+        logger.debug("  raw: ", raw);
+        logger.debug("  chars: ", currentChars.trim());
+        if ("atomType".equals(local)) {
+            atomTypes.addElement(atomType);
+        } else if ("scalar".equals(local)) {
+            try {
+                double value = Double.parseDouble(currentChars.trim());
+                if (scalarType == SCALAR_BONDORDERSUM) {
+                    atomType.setBondOrderSum(value);
+                } else if (scalarType == SCALAR_MAXBONDORDER) {
+                    atomType.setMaxBondOrder(value);
+                }
+            } catch (NumberFormatException exception) {
+                logger.error("Value is not the expected double: ", currentChars);
+                logger.debug(exception);
+            }
+            scalarType = SCALAR_UNSET;
+        }
+        currentChars = "";
     }
 
     public void startElement(String uri, String local, 
                              String raw, Attributes atts) {
         currentChars = "";
-        logger.debug("startElement: " + raw);
-        logger.debug("uri: " + uri);
-        logger.debug("local: " + local);
-        logger.debug("raw: " + raw);
-        if ("org.openscience.cdk.AtomType".equals(local)) {
-            // check version
-            AtomType atomType = new AtomType("R");
+        logger.debug("START Element: ", raw);
+        logger.debug("  uri: ", uri);
+        logger.debug("  local: ", local);
+        logger.debug("  raw: ", raw);
+        if ("atomType".equals(local)) {
+            atomType = new AtomType("R");
             for (int i = 0; i < atts.getLength(); i++) {
-                try {
-                    if ("symbol".equals(atts.getQName(i))) {
-                        atomType.setSymbol(atts.getValue(i));
-                    } else if ("id".equals(atts.getQName(i))) {
-                        atomType.setAtomTypeName(atts.getValue(i));
-                    } else if ("maxBondOrder".equals(atts.getQName(i))) {
-                        atomType.setMaxBondOrder(Double.parseDouble(atts.getValue(i)));
-                    } else if ("bondOrderSum".equals(atts.getQName(i))) {
-                        atomType.setBondOrderSum(Double.parseDouble(atts.getValue(i)));
-                    } else if ("formalCharge".equals(atts.getQName(i))) {
-                        atomType.setFormalCharge(Integer.parseInt(atts.getValue(i)));
-                    }
-                } catch (NumberFormatException exception) {
-                    logger.error("Value of AtomType@" + atts.getQName(i) +
-                        " is not as expected.");
-                    logger.debug(exception);
+                if ("id".equals(atts.getQName(i))) {
+                    atomType.setAtomTypeName(atts.getValue(i));
                 }
             }
-            atomTypes.addElement(atomType);
+        } else if ("atom".equals(local)) {
+            for (int i = 0; i < atts.getLength(); i++) {
+                if ("elementType".equals(atts.getQName(i))) {
+                    atomType.setSymbol(atts.getValue(i));
+                } else if ("formalCharge".equals(atts.getQName(i))) {
+                    try {
+                        atomType.setFormalCharge(Integer.parseInt(atts.getValue(i)));
+                    } catch (NumberFormatException exception) {
+                        logger.error("Value of <atom> @", atts.getQName(i), " is not an integer: ", atts.getValue(i));
+                        logger.debug(exception);
+                    }
+                }
+            }
+        } else if ("scalar".equals(local)) {
+            for (int i = 0; i < atts.getLength(); i++) {
+                if ("dictRef".equals(atts.getQName(i))) {
+                    if ("cdk:maxBondOrder".equals(atts.getValue(i))) {
+                        scalarType = SCALAR_MAXBONDORDER;
+                    } else if ("cdk:bondOrderSum".equals(atts.getValue(i))) {
+                        scalarType = SCALAR_BONDORDERSUM;
+                    }
+                }
+            }
         }
     }
 
@@ -106,7 +142,5 @@ public class AtomTypeHandler extends DefaultHandler {
         logger.debug("character data");
         currentChars += new String(ch, start, length);
     }
-
-    // private methods
 
 }

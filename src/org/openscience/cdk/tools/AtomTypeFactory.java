@@ -219,7 +219,8 @@ public class AtomTypeFactory {
                  newInstance();
             }
 		} catch (Exception exc) {
-			logger.error("Could not get instance of AtomTypeConfigurator for format " + format);
+			logger.error("Could not get instance of AtomTypeConfigurator for format ", format);
+            logger.debug(exc);
 		}
         return null;
     }
@@ -233,7 +234,8 @@ public class AtomTypeFactory {
 				atomTypes = atc.readAtomTypes();
 			} catch (Exception exc)
 			{
-				logger.error("Could not read AtomType's from file due to: " + exc.toString());
+				logger.error("Could not read AtomType's from file due to: ", exc.getMessage());
+                logger.debug(exc);
 			}
 		} else
 		{
