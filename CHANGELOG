@@ -15,6 +15,9 @@ New:
   psepanel.getSelectedElement().
 * Implemented GamessReader
 
+Removed:
+* Viewer application. Use JChemPaint (jchempaint.sf.net) or Jmol (jmol.sf.net) instead
+
 Fixes:
 * A nasty threading bug in StructureDiagramGenerator has been fixed, preventing 
   users from running multiple instances of SDG in seperate threads (closes # 837827).
