@@ -1,3 +1,9 @@
+2001-12-13  egonw
+* dbdoclet.jar
+        Uploaded dbdoclet 0.4 for converting JavaDoc to DocBook XML 4.1.2
+* gnujaxp
+        Uploaded GNU's JAXP library 1.0-beta1, which includes a small SAX2 parser, called Aelfred2s
+
 2001-05-09  egonw
 	* cml-2.0.jar:
 		Uploaded JCFL 2.0.4 which removes a lot of debug info and finalized tests
