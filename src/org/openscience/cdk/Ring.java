@@ -117,18 +117,21 @@ public class Ring extends AtomContainer
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Returns the sum of all bond orders in the ring.
 	 *
-	 * @return the sum of all bond orders in the ring    
+	 * @return the sum of all bond orders in the ring
 	 */
 	public int getOrderSum()
 	{
 		int orderSum = 0;
-		for (int i = 0; i < bondCount; i++)
-		{
-			orderSum += bonds[i].getOrder();
+		Bond tempBond;
+		for (int i = 0; i < getBondCount(); i++) {
+            tempBond = getBondAt(i);
+            if (tempBond != null) {
+                orderSum += tempBond.getOrder();
+            } // this should not be necesarry!
 		}
 		return orderSum;
 	}
