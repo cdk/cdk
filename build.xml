@@ -718,7 +718,7 @@
 
         <target id="dist-large" name="dist-large" depends="compile-all, dist.init, libjars"
             description="Builds on big jar file for the CDK, including experimental classes.">
-                <jar jarfile="${dist}/jar/cdk-all.jar">
+                <jar jarfile="${dist}/jar/cdk-${version}.jar">
                     <manifest>
                         <attribute name="Main-Class" value="org.openscience.cdk.applications.DistLargeInfo"/>
                         <section name="org.openscience.cdk">
