@@ -27,7 +27,7 @@ import java.util.Vector;
 
 /**
  * Represents the concept of a chemical molecule, an object composed of 
- * atoms connected by bonds
+ * atoms connected by bonds.
  *
  * @author     steinbeck
  * @created    October 2, 2000
@@ -43,7 +43,7 @@ public class Molecule extends AtomContainer
 	private String beilsteinRN = "";
 
 	/**
-	 *  Creates an Molecule without Atoms and Bonds
+	 *  Creates an Molecule without Atoms and Bonds.
 	 */
 	public Molecule()
 	{
@@ -67,11 +67,12 @@ public class Molecule extends AtomContainer
 
 
 	/**
-	 *  Constructs a Molecule with a copy of the atoms and bonds of 
-     *  another Molecule (A shallow copy, i.e., with the same objects 
-     *  as in the original AtomContainer)
+	 *  Constructs a Molecule with a shallow copy of the atoms and bonds of
+     *  another Molecule.
 	 *
-	 * @param  ac  An Molecule to copy the atoms and bonds from
+	 * @param  mol  the Molecule from which the atoms and bonds are copied
+     *
+     * @see #shallowCopy
 	 */
 	public Molecule(Molecule mol)
 	{
@@ -80,8 +81,7 @@ public class Molecule extends AtomContainer
 
 	/**
 	 * Constructs a Molecule with 
-	 * a copy of the atoms and bonds of another Molecule
-	 * (A shallow copy, i.e., with the same objects as in the original AtomContainer)
+	 * a shallow copy of the atoms and bonds of an AtomContainer.
 	 *
 	 * @param   ac  An Molecule to copy the atoms and bonds from 
 	 */
@@ -96,6 +96,8 @@ public class Molecule extends AtomContainer
      *  by Beilstein, which uniquely names a chemical structure
 	 *
 	 * @param  autonomName  The Autonom name to be assigned to this structure
+     *
+     * @see    #getAutonomName
 	 */
 	public void setAutonomName(String autonomName)
 	{
@@ -104,9 +106,11 @@ public class Molecule extends AtomContainer
 
 
 	/**
-	 *  Assigns a Beilstein Registry Number to this Molecule
+	 *  Assigns a Beilstein Registry Number to this Molecule.
 	 *
 	 * @param  beilsteinRN  The Beilstein Registry Number to be assigned to this molecule
+     *
+     * @see    #getBeilsteinRN
 	 */
 	public void setBeilsteinRN(String beilsteinRN)
 	{
@@ -115,9 +119,11 @@ public class Molecule extends AtomContainer
 
 
 	/**
-	 *  Assigns a CAS Registry Number to this Molecule
+	 *  Assigns a CAS Registry Number to this Molecule.
 	 *
 	 * @param  casRN  The CAS Registry Number to be assinged to this Molecule
+     *
+     * @see    #getCasRN
 	 */
 	public void setCasRN(String casRN)
 	{
@@ -126,9 +132,12 @@ public class Molecule extends AtomContainer
 
 
 	/**
-	 *  Bulk method for assigning a bunch of chemical names to this molecule by overwriting the chemical names vector as a whole.
+	 *  Bulk method for assigning a bunch of chemical names to this molecule by 
+     * overwriting the chemical names vector as a whole.
 	 *
 	 * @param  chemNames  A vector containing a bunch of chemical names to be assigned to this Molecule
+     *
+     * @see    #getChemNames
 	 */
 	public void setChemNames(Vector chemNames)
 	{
@@ -137,9 +146,11 @@ public class Molecule extends AtomContainer
 
 
 	/**
-	 *  Assigns a title to this Molecule
+	 *  Assigns a title to this Molecule.
 	 *
 	 * @param  title  The title to be assigned to this Molecule
+     *
+     * @see       #getTitle
 	 */
 	public void setTitle(String title)
 	{
@@ -148,9 +159,12 @@ public class Molecule extends AtomContainer
 
 
 	/**
-	 *  Returns the AutonomName for this molecule. Autonom is a program that published by Beilstein, which uniquely names a chemical structure
+	 *  Returns the AutonomName for this molecule. Autonom is a program that 
+     * published by Beilstein, which uniquely names a chemical structure.
 	 *
 	 * @return    The autoname name of this structure
+     *
+     * @see    #setAutonomName
 	 */
 	public String getAutonomName()
 	{
@@ -160,9 +174,11 @@ public class Molecule extends AtomContainer
 
 
 	/**
-	 *  Returns the Beilstein Registry Number of this Molecule
+	 *  Returns the Beilstein Registry Number of this Molecule.
 	 *
 	 * @return    The Beilstein Registry Number of this Molecule
+     *
+     * @see    #setBeilsteinRN
 	 */
 	public String getBeilsteinRN()
 	{
@@ -172,9 +188,11 @@ public class Molecule extends AtomContainer
 
 
 	/**
-	 *  Returns the CAS Registry Number of this Molecule
+	 *  Returns the CAS Registry Number of this Molecule.
 	 *
 	 * @return    The CAS Registry Number of this Molecule
+     *
+     * @see    #setCasRN
 	 */
 	public String getCasRN()
 	{
@@ -183,7 +201,7 @@ public class Molecule extends AtomContainer
 
 
 	/**
-	 *  Returns the number of chemcial names stored for this Molecule
+	 *  Returns the number of chemcial names stored for this Molecule.
 	 *
 	 * @return    The number of chemical names stored for this Molecule
 	 */
@@ -194,9 +212,11 @@ public class Molecule extends AtomContainer
 
 
 	/**
-	 *  Returns the Vector contains all the chemical names stored for this Molecule
+	 *  Returns the Vector contains all the chemical names stored for this Molecule.
 	 *
 	 * @return    The Vector contains all the chemical names stored for this Molecule
+     *
+     * @see    #setChemNames
 	 */
 	public Vector getChemNames()
 	{
@@ -208,7 +228,10 @@ public class Molecule extends AtomContainer
 	 *  Return one of the chemical names of this molecule.
 	 *
 	 * @param  number  The position of the chemcial name to be returned
-	 * @return         The chemical name of this molecule whose position in the chemical names vector is indicated by number
+	 * @return         The chemical name of this molecule whose position in the chemical names 
+     *                 vector is indicated by number
+     *
+     * @see    #setChemNames
 	 */
 	public String getChemName(int number)
 	{
@@ -217,9 +240,11 @@ public class Molecule extends AtomContainer
 
 
 	/**
-	 *  Returns the title of this Molecule
+	 *  Returns the title of this Molecule.
 	 *
 	 * @return    The title of this Molecule
+     *
+     * @see       #setTitle
 	 */
 	public String getTitle()
 	{
@@ -228,7 +253,7 @@ public class Molecule extends AtomContainer
 
 
 	/**
-	 *  Add a new chemcial name to the collection of chemical names in this molecule
+	 *  Add a new chemcial name to the collection of chemical names in this molecule.
 	 *
 	 * @param  chemName  The new chemical name to added to the collection of chemical names of this molecule
 	 */
@@ -237,7 +262,7 @@ public class Molecule extends AtomContainer
 		this.chemNames.addElement(chemName);
 	}
 	
-	       /**
+       /**
          * Clones this molecule object.
          *
          * @return  The cloned molecule object   

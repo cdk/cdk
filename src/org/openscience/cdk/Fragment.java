@@ -38,43 +38,55 @@ public class Fragment extends AtomContainer {
 
     private String title;
     
-    // number of bonds this fragment can still make
+    /** number of bonds this fragment can still make. */
     private int free_valences;
 
     /**
-     *  Creates an empty Fragment
+     *  Creates an empty Fragment.
      */
     public Fragment() {
         super();
     }
 
     /**
-     * Returns the title of this Fragment
+     * Returns the title of this Fragment.
      *
      * @return    The title of this Fragment
+     *
+     * @see    #setTitle
      */
     public String getTitle() {
         return this.title;
     }
 
     /**
-     * Returns the title of this Molecule
+     * Sets the title of this Fragment.
+     *
+     * @param title     title of this fragment
+     *
+     * @see    #getTitle
      */
     public void setTitle(String title) {
         this.title = title;
     }
 
     /**
-     * Returns the title of this Fragment
+     * Returns the number of free valences of this Fragment.
      *
      * @return    The title of this Fragment
+     *
+     * @see    #setFreeValences
      */
     public int getFreeValences() {
         return this.free_valences;
     }
 
     /**
-     * Returns the title of this Molecule
+     * Sets the number of free valences of this Fragment.
+     * 
+     * @param count the number of free valences of this fragment
+     *
+     * @see    #getFreeValences
      */
     public void setFreeValences(int count) {
         this.free_valences = count;

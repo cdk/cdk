@@ -40,7 +40,7 @@ import java.util.*;
 
 public class ChemObject implements Cloneable
 {
-	/** Vector for listener administration */
+	/** Vector for listener administration. */
 	protected Vector chemObjects = new Vector();
 	/** 
 	  * A hashtable for the storage of physical properties 
@@ -56,18 +56,18 @@ public class ChemObject implements Cloneable
 	  * A hashtable for the storage of the remarks.
 	  */
 	protected Hashtable remarks = new Hashtable();
-	/** You will frequently have to use some flags on a ChemObject
-	 * for example if you want to draw a molecule and see
+	/** You will frequently have to use some flags on a ChemObject.
+	 * For example, if you want to draw a molecule and see
 	 * if you've already drawn an atom, or in a ring search to 
 	 * check whether a vertex has been visited in a graph traversal.
 	 * Use these flags while addressing particular positions in the
 	 * flag array with self-defined constants (flags[VISITED] = true).
-	 * 10 flags per object should be more than enough.
+	 * 100 flags per object should be more than enough.
 	 */
 	public boolean[] flags = new boolean[100];
 
 	/** Array of multipurpose vectors. Handle like described for the
-	  * flags above 
+	  * flags above.
 	  */
 	public Vector[] pointers;
 
@@ -105,9 +105,11 @@ public class ChemObject implements Cloneable
 	
 	/**
 	 * Use this to add yourself to this ChemObject as a listener. 
-	 * In order to do so, you must implement the ChemObjectListener Interface
+	 * In order to do so, you must implement the ChemObjectListener Interface.
 	 *
 	 * @param   col  You, the ChemObjectListener
+     *
+     * @see     #removeListener
 	 */
 	public void addListener(ChemObjectListener col)
 	{
@@ -121,11 +123,13 @@ public class ChemObject implements Cloneable
 
 
 	/**
-	 * Use this to remove a ChemObjectListener from the 
+	 * Use this to remove a ChemObjectListener from the
 	 * ListenerList of this ChemObject. It will then not be notified
-	 * of change in this object anymore
+	 * of change in this object anymore.
 	 *
 	 * @param   col  The ChemObjectListener to be removed
+     *
+     * @see     #addListener
 	 */
 	public void removeListener(ChemObjectListener col)
 	{
@@ -150,23 +154,27 @@ public class ChemObject implements Cloneable
 
 
 	/**
-	 * Set a physical property for a ChemObject
+	 * Sets a physical property for a ChemObject.
 	 *
 	 * @param   description  An object description of the property (most likely a unique string)
 	 * @param   property  An object with the property itself
+     *
+     * @see     #getPhysicalProperty
 	 */
 	public void setPhysicalProperty(Object description, Object property)
 	{
 		physicalProperties.put(description, property);
-	
+
 	}
-	
+
 
 	/**
-	 * Returns a physical property for the ChemObject
+	 * Returns a physical property for the ChemObject.
 	 *
 	 * @param   description  An object description of the property (most likely a unique string)
-	 * @return  The object containing the property   
+	 * @return  The object containing the property
+     *
+     * @see     #setPhysicalProperty
 	 */
 	public Object getPhysicalProperty(Object description)
 	{
@@ -175,49 +183,57 @@ public class ChemObject implements Cloneable
 	}
 
 	/**
-	 * Set a property for a ChemObject
+	 * Sets a property for a ChemObject.
 	 *
 	 * @param   description  An object description of the property (most likely a unique string)
 	 * @param   property  An object with the property itself
+     *
+     * @see     #getProperty
 	 */
 	public void setProperty(Object description, Object property) {
 		properties.put(description, property);
 	}
 
 	/**
-	 * Returns a property for the ChemObject
+	 * Returns a property for the ChemObject.
 	 *
 	 * @param   description  An object description of the property (most likely a unique string)
-	 * @return  The object containing the property   
+	 * @return  The object containing the property
+     *
+     * @see     #setProperty
 	 */
 	public Object getProperty(Object description) {
 		return properties.get(description);
 	}
 
 	/**
-	 * Set a remark for this ChemObject
+	 * Sets a remark for this ChemObject.
 	 *
 	 * @param   description  An object description of the remark (most likely an Integer or an unique ID string)
 	 * @param   remark  An object with the remark (most likely a String)
+     *
+     * @see     #getRemark
 	 */
 	public void setRemark(Object description, Object remark) {
 		remarks.put(description, remark);
 	}
 
 	/**
-	 * Returns a remark for this ChemObject
+	 * Returns a remark for this ChemObject.
 	 *
 	 * @param   description  An object description of the remark (most likely an Integer or an unique ID string)
 	 * @return  The object containing the remark
+     *
+     * @see     #setRemark
 	 */
 	public Object getRemark(Object description) {
-		return remarks.get(description);	
+		return remarks.get(description);
 	}
 
 	/**
 	 * Clones this object.
 	 *
-	 * @return  The cloned object   
+	 * @return  The cloned object
 	 */
 	public Object clone()
 	{
@@ -232,7 +248,7 @@ public class ChemObject implements Cloneable
 		}
 		return o;
 	}
-	
+
 }
 
 

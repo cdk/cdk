@@ -43,7 +43,6 @@ public class Ring extends AtomContainer
 	 * constructs an empty ring.
 	 *
 	 */
-
 	public Ring()
 	{
 		super();
@@ -52,7 +51,7 @@ public class Ring extends AtomContainer
 	
 
 	/**
-	 * Constructs a ring that will have a certain number of atoms of the given elements
+	 * Constructs a ring that will have a certain number of atoms of the given elements.
 	 *
 	 * @param   ringSize   The number of atoms and bonds the ring will have
 	 * @param   elementSymbol   The element of the atoms the ring will have
@@ -73,7 +72,7 @@ public class Ring extends AtomContainer
 	
 		
 	/**
-	 * constructs a ring that will have a certain size
+	 * constructs a ring that will have a certain size.
 	 *
 	 * @param   ringSize  The size (number of atoms) the ring will have
 	 */
@@ -120,7 +119,7 @@ public class Ring extends AtomContainer
 	}
 	
 	/**
-	 * Returns the sum of all bond orders in the ring
+	 * Returns the sum of all bond orders in the ring.
 	 *
 	 * @return the sum of all bond orders in the ring    
 	 */
@@ -139,7 +138,9 @@ public class Ring extends AtomContainer
 	  * Convenience method for giving a string representation 
 	  * of this ring based on the number of the atom in a given 
 	  * molecule.
-	  * @param molecule A molecule to determine an atom number for each ring atom
+      *
+	  * @param molecule  A molecule to determine an atom number for each ring atom
+      * @return          string representation of this ring
 	  */
 	public String toString(Molecule molecule)
 	{

@@ -52,6 +52,9 @@ public class Viewer {
     private boolean use3D;
     private boolean useJmol;
 
+    /**
+     * Constructs a CDK structure viewer.
+     */
     public Viewer() {
         logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
         logger.dumpSystemProperties();
@@ -61,18 +64,38 @@ public class Viewer {
         use3D = true;
     }
 
+    /**
+     * Sets a flag value for viewing 3D if available.
+     *
+     * @param b     value for use3D flag
+     */
     public void setUse3D(boolean b) {
         this.use3D = b;
     }
 
+    /**
+     * Sets a flag value for using Jmol for viewing 3D.
+     *
+     * @param b     value for using Jmol
+     */
     public void setUseJmol(boolean b) {
         this.useJmol = b;
     }
 
+    /**
+     * Sets a flag value for using Java3D for viewing 3D.
+     *
+     * @param b     value for using Java3D
+     */
     public void setUseJava3D(boolean b) {
         this.useJava3D = b;
     }
 
+    /**
+     * Views the contents of an <code>AtomContainer</code>.
+     *
+     * @param m     AtomContainer to view
+     */
     private void view(AtomContainer m) {
         JFrame frame = new JFrame("CDK Molecule Viewer");
         frame.getContentPane().setLayout(new BorderLayout());
@@ -145,7 +168,11 @@ public class Viewer {
         frame.addWindowListener(new AppCloser());
     }
 
-    // view a SMILES string
+    /**
+     * Views the structures represented by the SMILES string in 2D.
+     *
+     * @param SMILES    SMILES string representing the molecule to view
+     */
     public void viewSMILES(String SMILES) {
         SmilesParser sp = new SmilesParser();
         Molecule mol = null;
@@ -167,7 +194,11 @@ public class Viewer {
         }
     }
 
-    // view a file
+    /**
+     * Shows the structures in the file.
+     *
+     * @param inFile    name of the file to show
+     */
     public void viewFile(String inFile) {
         ChemFile chemFile = new ChemFile();
         try {
@@ -227,6 +258,11 @@ public class Viewer {
         }
     }
     
+    /**
+     * Runs the program from the command line.
+     *
+     * @param args      command line arguments.
+     */
     public static void main(String[] args) {
 
         boolean showSmiles = false;
@@ -278,7 +314,9 @@ public class Viewer {
         }
     }
 
-    // Class to close program
+    /**
+     * Class used to end the program when the viewing window is closed.
+     */
     protected static final class AppCloser extends WindowAdapter {
         public void windowClosing(WindowEvent e) {
             System.exit(0);

@@ -13,7 +13,8 @@ import org.openscience.cdk.graphinvariant.exception.*;
  *
  * @see tatien.toolbox.#double
  * @author Jean-Sebastien Senecal
- * @version 1.0, 20/05/99
+ * @version 1.0
+ * @created 20/05/99
  *
  * modified 10/06/02
  * adds method - add(Matrix matrix), matrix
@@ -47,8 +48,9 @@ public class GIMatrix {
 
     /**
      * Class constructor. Uses an array of doubles to create a new Matrix object. The given array should
-     * be properly instantiated as a matrix i.e. it must contain a fixed number of lines and columns, 
+     * be properly instantiated as a matrix i.e. it must contain a fixed number of lines and columns,
      * otherwise an exception will be thrown. Array must be at leat 1x1.
+     *
      * @param array an array of double objects (first index is the line, second is the column)
      * @exception BadMatrixFormatException in case the given array is unproper to construct a matrix
      */
@@ -68,6 +70,7 @@ public class GIMatrix {
     /**
      * Class constructor. Creates a new Matrix object with fixed dimensions. The matrix is
      * initialised to the "zero" matrix.
+     *
      * @param m number of columns
      * @param n number of lines
      */

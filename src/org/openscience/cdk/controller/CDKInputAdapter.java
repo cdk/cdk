@@ -1,4 +1,4 @@
-/* $RCSfile$    
+/* $RCSfile$
  * $Author$    
  * $Date$    
  * $Revision$
@@ -34,11 +34,20 @@ import org.openscience.cdk.renderer.*;
 import org.openscience.cdk.*;
 import java.awt.*;
 
-public class CDKInputAdapter extends JCPController2D implements MouseMotionListener, MouseListener, KeyListener
-{
+/**
+ * Class that acts on MouseEvents.
+ */
+public class CDKInputAdapter extends JCPController2D 
+    implements MouseMotionListener, MouseListener, KeyListener {
 
-	public CDKInputAdapter(AtomContainer atomCon, Renderer2DModel r2dm, JCPController2DModel c2dm)
-	{
+    /**
+     * Constructs a <code>CDKInputAdapter</code> that acts on the
+     * specified AtomContainer.
+     *
+     * @param atomCon   AtomContainer to act on
+     */
+	public CDKInputAdapter(AtomContainer atomCon, Renderer2DModel r2dm,
+                           JCPController2DModel c2dm) {
 		super(atomCon, r2dm, c2dm);
 	}
 

@@ -47,9 +47,9 @@ import javax.vecmath.*;
  */
 public class AtomEnumeration implements Enumeration {
 
-    /** counter to keep track of current element */
+    /** Counts the current element. */
     protected int atomEnumerationCounter = 0;
-    /** container to enumerate atoms from */
+    /** Contains the atoms to enumerate. */
     protected AtomContainer ac;
 
     /**

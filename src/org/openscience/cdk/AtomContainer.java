@@ -28,7 +28,7 @@ import java.util.*;
 import javax.vecmath.*;
 
 /**
- *  Base class for all chemical objects that maintain a list of Atoms and Bonds
+ *  Base class for all chemical objects that maintain a list of Atoms and Bonds.
  *
  * @author     steinbeck
  * @created    October 2, 2000
@@ -37,12 +37,12 @@ public class AtomContainer extends ChemObject implements Cloneable
 {
 
 	/**
-	 *  Number of atoms contained by this object
+	 *  Number of atoms contained by this object.
 	 */
 	protected int atomCount;
 
 	/**
-	 *  Number of bonds contained by this object
+	 *  Number of bonds contained by this object.
 	 */
 	protected int bondCount;
 
@@ -53,17 +53,17 @@ public class AtomContainer extends ChemObject implements Cloneable
 	protected int growArraySize = 10;
 
 	/**
-	 *  Internal array of atoms
+	 *  Internal array of atoms.
 	 */
 	protected Atom[] atoms;
 
 	/**
-	 *  Internal array of bond
+	 *  Internal array of bond.
 	 */
 	protected Bond[] bonds;
 
 	/**
-	 *  Constructs an empty AtomContainer
+	 *  Constructs an empty AtomContainer.
 	 */
 	public AtomContainer()
 	{
@@ -77,7 +77,7 @@ public class AtomContainer extends ChemObject implements Cloneable
 	/**
 	 *  Constructs an AtomContainer with a copy of the atoms and bonds of another
      *  AtomContainer (A shallow copy, i.e., with the same objects as in the original
-     *  AtomContainer)
+     *  AtomContainer).
 	 *
 	 * @param  ac  An AtomContainer to copy the atoms and bonds from
 	 */
@@ -104,9 +104,11 @@ public class AtomContainer extends ChemObject implements Cloneable
 	}
 
 	/**
-	 *  Sets the array of atoms of this AtomContainer
+	 *  Sets the array of atoms of this AtomContainer.
 	 *
 	 * @param  atoms  The array of atoms to be assigned to this AtomContainer
+     *
+     * @see           #getAtoms
 	 */
 	public void setAtoms(Atom[] atoms)
 	{
@@ -115,9 +117,11 @@ public class AtomContainer extends ChemObject implements Cloneable
 
 
 	/**
-	 *  Sets the array of bonds of this AtomContainer
+	 *  Sets the array of bonds of this AtomContainer.
 	 *
 	 * @param  bonds  The array of Bonds to be assigned to this AtomContainer
+     *
+     * @see           #getBonds
 	 */
 	public void setBonds(Bond[] bonds)
 	{
@@ -126,10 +130,12 @@ public class AtomContainer extends ChemObject implements Cloneable
 
 
 	/**
-	 *  Set the atom at position <code>number</code> .
+	 *  Set the atom at position <code>number</code>.
 	 *
 	 * @param  number  The position of the atom to be set.
 	 * @param  atom    The atom to be stored at position <code>number</code>
+     *
+     * @see    #getAtomAt
 	 */
 	public void setAtomAt(int number, Atom atom)
 	{
@@ -138,10 +144,12 @@ public class AtomContainer extends ChemObject implements Cloneable
 
 
 	/**
-	 *  Sets the bond at position <code>number</code> .
+	 *  Sets the bond at position <code>number</code>.
 	 *
 	 * @param  number  The position of the bond to be set.
 	 * @param  bond    The bond to be stored at position <code>number</code>
+     *
+     * @see    #getBondAt
 	 */
 	public void setBondAt(int number, Bond bond)
 	{
@@ -150,9 +158,11 @@ public class AtomContainer extends ChemObject implements Cloneable
 
 
 	/**
-	 *  Sets the number of atoms in this container
+	 *  Sets the number of atoms in this container.
 	 *
 	 * @param  atomCount  The number of atoms in this container
+     *
+     * @see    #getAtomCount
 	 */
 	public void setAtomCount(int atomCount)
 	{
@@ -161,9 +171,11 @@ public class AtomContainer extends ChemObject implements Cloneable
 
 
 	/**
-	 *  Returns the array of atoms of this AtomContainer
+	 *  Returns the array of atoms of this AtomContainer.
 	 *
 	 * @return    The array of atoms of this AtomContainer
+     *
+     * @see       #setAtoms
 	 */
 	public Atom[] getAtoms()
 	{
@@ -178,6 +190,8 @@ public class AtomContainer extends ChemObject implements Cloneable
      *  in this container.
      *
      * @return   An AtomEnumeration with the atoms in this container
+     *
+     * @see      #getAtoms
      */
 	public Enumeration atoms()
 	{
@@ -185,9 +199,11 @@ public class AtomContainer extends ChemObject implements Cloneable
 	}
 
 	/**
-	 *  Returns the array of bonds of this AtomContainer
+	 *  Returns the array of bonds of this AtomContainer.
 	 *
 	 * @return    The array of bonds of this AtomContainer
+     *
+     * @see       #setBonds
 	 */
 	public Bond[] getBonds()
 	{
@@ -203,7 +219,9 @@ public class AtomContainer extends ChemObject implements Cloneable
      * (getAtomCount() - 1).
 	 *
 	 * @param  number  The position of the atom to be returned.
-	 * @return         The atom at position <code>number</code> .
+	 * @return         The atom at position <code>number</code>.
+     *
+     * @see            #setAtomAt
 	 */
 	public Atom getAtomAt(int number)
 	{
@@ -212,7 +230,7 @@ public class AtomContainer extends ChemObject implements Cloneable
 
 
 	/**
-	 *  Returns the atom at position 0 in the container
+	 *  Returns the atom at position 0 in the container.
 	 *
 	 * @return    The atom at position 0 .
 	 */
@@ -223,7 +241,7 @@ public class AtomContainer extends ChemObject implements Cloneable
 
 
 	/**
-	 *  Returns the atom at the last position in the container
+	 *  Returns the atom at the last position in the container.
 	 *
 	 * @return    The atom at the last position
 	 */
@@ -240,7 +258,6 @@ public class AtomContainer extends ChemObject implements Cloneable
 	 * @param  atom  The atom to be sought
 	 * @return       The Position of the atom in the atoms array.
 	 */
-
 	public int getAtomNumber(Atom atom) {
 		for (int f = 0; f < getAtomCount(); f++) {
 			if (getAtomAt(f) == atom) {
@@ -252,10 +269,12 @@ public class AtomContainer extends ChemObject implements Cloneable
 
 
 	/**
-	 *  Returns the bond at position <code>number</code> in the container
+	 *  Returns the bond at position <code>number</code> in the container.
 	 *
 	 * @param  number  The position of the bond to be returned.
-	 * @return         The bond at position <code>number</code> .
+	 * @return         The bond at position <code>number</code>.
+     *
+     * @see            #setBondAt
 	 */
 	public Bond getBondAt(int number)
 	{
@@ -290,7 +309,7 @@ public class AtomContainer extends ChemObject implements Cloneable
 	 *  Returns an array of all atoms connected to the given atom.
 	 *
 	 * @param  atom  The atom the bond partners are searched of.
-	 * @return       The array with the size of connected atoms
+	 * @return       The array of <code>Atom</code>s with the size of connected atoms
 	 */
 	public Atom[] getConnectedAtoms(Atom atom)
 	{
@@ -323,7 +342,7 @@ public class AtomContainer extends ChemObject implements Cloneable
 
 	
 	/**
-	 *  Returns an array of all bonds connected to the given atom
+	 *  Returns an array of all bonds connected to the given atom.
 	 *
 	 * @param  atom  The atom the connected bonds are searched of
 	 * @return       The array with the size of connected atoms
@@ -346,7 +365,7 @@ public class AtomContainer extends ChemObject implements Cloneable
 
 
 	/**
-	 *  Returns the number of connected atoms (degree) to the given atom
+	 *  Returns the number of connected atoms (degree) to the given atom.
 	 *
 	 * @param  atomnumber  The atomnumber the degree is searched for
 	 * @return             The number of connected atoms (degree)
@@ -358,9 +377,11 @@ public class AtomContainer extends ChemObject implements Cloneable
 
 
     /**
-	 *  Returns the number of Atoms in this Container
+	 *  Returns the number of Atoms in this Container.
 	 *
 	 * @return    The number of Atoms in this Container
+     *
+     * @see       #setAtomCount
 	 */
 	public int getAtomCount()
 	{
@@ -369,7 +390,7 @@ public class AtomContainer extends ChemObject implements Cloneable
 
 
 	/**
-	 *  Returns the number of Bonds in this Container
+	 *  Returns the number of Bonds in this Container.
 	 *
 	 * @return    The number of Bonds in this Container
 	 */
@@ -380,7 +401,7 @@ public class AtomContainer extends ChemObject implements Cloneable
 
 
 	/**
-	 *  Returns the number of bonds for a given Atom
+	 *  Returns the number of bonds for a given Atom.
 	 *
 	 * @param  atom  The atom
 	 * @return       The number of bonds for this atom
@@ -400,7 +421,7 @@ public class AtomContainer extends ChemObject implements Cloneable
 
 
 	/**
-	 *  Returns the sum of the bondorders for a given Atom
+	 *  Returns the sum of the bondorders for a given Atom.
 	 *
 	 * @param  atom  The atom
 	 * @return       The number of bondorders for this atom
@@ -420,7 +441,7 @@ public class AtomContainer extends ChemObject implements Cloneable
 
 	/**
 	 *  Returns the maximum bond order that this atom currently has
-	 *  in the context of this AtomContainer
+	 *  in the context of this AtomContainer.
 	 *
 	 * @param  atom  The atom
 	 * @return       The maximum bond order that this atom currently has
@@ -440,7 +461,7 @@ public class AtomContainer extends ChemObject implements Cloneable
 
 	/**
 	 *  Returns the minimum bond order that this atom currently has
-	 *  in the context of this AtomContainer
+	 *  in the context of this AtomContainer.
 	 *
 	 * @param  atom  The atom
 	 * @return       The minimim bond order that this atom currently has
@@ -496,7 +517,7 @@ public class AtomContainer extends ChemObject implements Cloneable
 
 
 	/**
-	 *  Returns the geometric center of all the atoms in this atomContainer
+	 *  Returns the geometric center of all the atoms in this atomContainer.
 	 *
 	 * @return    the geometric center of the atoms in this atomContainer
 	 */
@@ -520,7 +541,7 @@ public class AtomContainer extends ChemObject implements Cloneable
 
 
 	/**
-	 *  Returns the geometric center of all the atoms in this atomContainer
+	 *  Returns the geometric center of all the atoms in this atomContainer.
 	 *
 	 * @return    the geometric center of the atoms in this atomContainer
 	 */
@@ -605,7 +626,7 @@ public class AtomContainer extends ChemObject implements Cloneable
     }
 
 	/**
-	 *  Add bonds to a set of atoms (Experimental!)
+	 *  Add bonds to a set of atoms (Experimental!).
 	 *
 	 * @param  maxbondlength  The feature to be added to the Bonds attribute
 	 */
@@ -641,7 +662,7 @@ public class AtomContainer extends ChemObject implements Cloneable
 	}
 
 	/**
-	 *  Adds all atoms and bonds of a given atomcontainer to this container
+	 *  Adds all atoms and bonds of a given atomcontainer to this container.
 	 *
 	 * @param  atomContainer  The atomcontainer to be added
 	 */
@@ -664,7 +685,7 @@ public class AtomContainer extends ChemObject implements Cloneable
 	}
 
 	/**
-	 *  Adds an atom to this container
+	 *  Adds an atom to this container.
 	 *
 	 * @param  atom  The atom to be added to this container
 	 */
@@ -686,7 +707,7 @@ public class AtomContainer extends ChemObject implements Cloneable
 
 
 	/**
-	 *  Adds a bond to this container
+	 *  Adds a bond to this container.
 	 *
 	 * @param  bond  The bond to added to this container
 	 */
@@ -704,7 +725,7 @@ public class AtomContainer extends ChemObject implements Cloneable
 
 
 	/**
-	 *  Removes all atoms and bonds of a given atomcontainer from this container
+	 *  Removes all atoms and bonds of a given atomcontainer from this container.
 	 *
 	 * @param  atomContainer  The atomcontainer to be removed
 	 */
@@ -721,7 +742,7 @@ public class AtomContainer extends ChemObject implements Cloneable
 
 
 	/**
-	 *  removes the bond at the given position from this container
+	 *  Removes the bond at the given position from this container.
 	 *
 	 * @param  position  The position of the bond in the bonds array
      * @return           Bond that was removed
@@ -740,7 +761,7 @@ public class AtomContainer extends ChemObject implements Cloneable
 
 
 	/**
-	 *  removes this bond from this container
+	 *  Removes this bond from this container.
 	 *
 	 * @param  bond  The bond to be removed
      * @return           Bond that was removed
@@ -802,7 +823,7 @@ public class AtomContainer extends ChemObject implements Cloneable
 
 
 	/**
-	 *  Removes the given atom and all connected bonds from the AtomContainer 
+	 *  Removes the given atom and all connected bonds from the AtomContainer.
 	 *
 	 * @param  atom  The atom to be removed
 	 */
@@ -819,7 +840,7 @@ public class AtomContainer extends ChemObject implements Cloneable
 
 
 	/**
-	 *  Removes the given atom from the AtomContainer
+	 *  Removes the given atom from the AtomContainer.
      *  Note that the bonds are unaffected: you also have to take care of removeing all
      * bonds to this atom from the container.
 	 *
@@ -846,7 +867,7 @@ public class AtomContainer extends ChemObject implements Cloneable
 
 
 	/**
-	 *  removes bonds from this container
+	 *  Removes bonds from this container.
 	 */
 	public void removeAllBonds()
 	{
@@ -857,7 +878,7 @@ public class AtomContainer extends ChemObject implements Cloneable
 
 
 	/**
-	 *  Adds a bond to this container
+	 *  Adds a bond to this container.
 	 *
 	 * @param  atom1   Id of the first atom of the Bond
 	 * @param  atom2   Id of the second atom of the Bond
@@ -882,7 +903,7 @@ public class AtomContainer extends ChemObject implements Cloneable
 
 
 	/**
-	 *  Adds a bond to this container
+	 *  Adds a bond to this container.
 	 *
 	 * @param  atom1  Id of the first atom of the Bond
 	 * @param  atom2  Id of the second atom of the Bond
@@ -901,7 +922,7 @@ public class AtomContainer extends ChemObject implements Cloneable
 
 
 	/**
-	 *  True, if the AtomContainer contains the given bond object
+	 *  True, if the AtomContainer contains the given bond object.
 	 *
 	 * @param  bond  the bond this AtomContainer is searched for
 	 * @return       True, if the AtomContainer contains the given bond object
@@ -920,7 +941,7 @@ public class AtomContainer extends ChemObject implements Cloneable
 
 
 	/**
-	 *  True, if the AtomContainer contains the given atom object
+	 *  True, if the AtomContainer contains the given atom object.
 	 *
 	 * @param  atom  the atom this AtomContainer is searched for
 	 * @return       True, if the AtomContainer contains the given atom object
@@ -978,6 +999,8 @@ public class AtomContainer extends ChemObject implements Cloneable
 	 *  Clones this atomContainer object.
 	 *
 	 * @return    The cloned object
+     *
+     * @see       #shallowCopy
 	 */
 	public Object clone()
 	{
@@ -1026,9 +1049,12 @@ public class AtomContainer extends ChemObject implements Cloneable
 
 
 	/**
-	 *  Clones this atomContainer object but leaves references to all atoms and bonds the same.
+	 *  Clones this atomContainer object but leaves references to all atoms and bonds 
+     *  the same.
 	 *
 	 * @return    The shallow copied object
+     *
+     * @see       #clone
 	 */
 	public Object shallowCopy()
 	{
@@ -1047,9 +1073,9 @@ public class AtomContainer extends ChemObject implements Cloneable
 
 
 	/**
-	 *  Grows the bond array by a given size
+	 *  Grows the bond array by a given size.
 	 *
-	 * @see      org.openscience.cdk.AtomContainer#growArraySize growArraySize
+	 * @see      #growArraySize
 	 */
 	protected void growBondArray()
 	{
@@ -1061,9 +1087,9 @@ public class AtomContainer extends ChemObject implements Cloneable
 
 
 	/**
-	 *  Grows the atom array by a given size
+	 *  Grows the atom array by a given size.
 	 *
-	 * @see      org.openscience.cdk.AtomContainer#growArraySize growArraySize
+	 * @see      #growArraySize
 	 */
 	protected void growAtomArray()
 	{

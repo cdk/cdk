@@ -43,12 +43,12 @@ public class Isotope extends Element implements Cloneable {
 
     /** Exact mass of this isotope. */
     public double exactMass = (double) -1;
-    /** Natural abundance of this isotope */
+    /** Natural abundance of this isotope. */
     public double naturalAbundance = (double) -1;
 
 
 	/**
-	 *  Constructor for the Isotope object
+	 *  Constructor for the Isotope object.
 	 *
 	 * @param  elementSymbol  The element symbol, "O" for Oxygen, etc.
 	 */
@@ -57,7 +57,7 @@ public class Isotope extends Element implements Cloneable {
 	}
 	
 	/**
-	 *  Constructor for the Isotope object
+	 *  Constructor for the Isotope object.
 	 *
 	 * @param  atomicNumber   The atomic number of the isotope
 	 * @param  elementSymbol  The element symbol, "O" for Oxygen, etc.
@@ -73,9 +73,9 @@ public class Isotope extends Element implements Cloneable {
 
 
 	/**
-	 *  Constructor for the Isotope object
+	 *  Constructor for the Isotope object.
 	 *
-	 * @param  atomicNumber   The atomic number of the isotope
+	 * @param  atomicMass     The atomic number of the isotope
 	 * @param  elementSymbol  The element symbol, "O" for Oxygen, etc.
 	 * @param  exactMass      The exact mass of the isotope, be a little more explicit here :-)
 	 * @param  nA             The natural abundance of the isotope
@@ -86,9 +86,11 @@ public class Isotope extends Element implements Cloneable {
 
 
 	/**
-	 *  Sets the NaturalAbundance attribute of the Isotope object
+	 *  Sets the NaturalAbundance attribute of the Isotope object.
 	 *
 	 * @param  naturalAbundance  The new NaturalAbundance value
+     *
+     * @see       #getNaturalAbundance
 	 */
 	public void setNaturalAbundance(double naturalAbundance) {
 		this.naturalAbundance = naturalAbundance;
@@ -96,9 +98,11 @@ public class Isotope extends Element implements Cloneable {
 
 
 	/**
-	 *  Sets the ExactMass attribute of the Isotope object
+	 *  Sets the ExactMass attribute of the Isotope object.
 	 *
 	 * @param  exactMass  The new ExactMass value
+     *
+     * @see       #getExactMass
 	 */
 	public void setExactMass(double exactMass) {
 		this.exactMass = exactMass;
@@ -106,9 +110,11 @@ public class Isotope extends Element implements Cloneable {
 
 
 	/**
-	 *  Gets the NaturalAbundance attribute of the Isotope object
+	 *  Gets the NaturalAbundance attribute of the Isotope object.
 	 *
 	 * @return    The NaturalAbundance value
+     *
+     * @see       #setNaturalAbundance
 	 */
 	public double getNaturalAbundance() {
 		return this.naturalAbundance;
@@ -116,9 +122,11 @@ public class Isotope extends Element implements Cloneable {
 
 
 	/**
-	 *  Gets the ExactMass attribute of the Isotope object
+	 *  Gets the ExactMass attribute of the Isotope object.
 	 *
 	 * @return    The ExactMass value
+     *
+     * @see       #setExactMass
 	 */
 	public double getExactMass() {
 		return this.exactMass;
@@ -143,7 +151,7 @@ public class Isotope extends Element implements Cloneable {
 
 
 	/**
-	 *  A string representation of this isotope
+	 *  A string representation of this isotope.
 	 *
 	 * @return    A string representation of this isotope
 	 */

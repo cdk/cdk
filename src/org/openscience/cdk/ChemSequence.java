@@ -37,12 +37,12 @@ public class ChemSequence extends ChemObject
 {
 
 	/**
-	 *  Array of ChemModels 
+	 *  Array of ChemModels.
 	 */
 	protected ChemModel[] chemModels;
 	
 	/**
-	 *  Number of ChemModels contained by this container 
+	 *  Number of ChemModels contained by this container.
 	 */
 	protected int chemModelCount;
 	
@@ -55,7 +55,7 @@ public class ChemSequence extends ChemObject
 
 
 	/**
-	 *  Constructs an empty ChemSequence
+	 *  Constructs an empty ChemSequence.
 	 */
 	public ChemSequence()   
 	{
@@ -66,9 +66,11 @@ public class ChemSequence extends ChemObject
 
 	
 	/**
-	 *  Adds an chemModel to this container 
+	 *  Adds an chemModel to this container.
 	 *
-	 * @param  chemModel  The chemModel to be added to this container 
+	 * @param  chemModel  The chemModel to be added to this container
+     *
+     * @see            #getChemModel
 	 */
 	public void addChemModel(ChemModel chemModel)
 	{
@@ -80,25 +82,29 @@ public class ChemSequence extends ChemObject
 		chemModelCount++;
 	}
 
-	
+
 	/**
-	 *  Returns the array of ChemModels of this container 
+	 *  Returns the array of ChemModels of this container.
 	 *
-	 * @return    The array of ChemModels of this container 
+	 * @return    The array of ChemModels of this container
+     *
+     * @see            #addChemModel
 	 */
 	public ChemModel[] getChemModels()
 	{
 		return chemModels;
 	}
-	
-	
+
+
 	/**
-	 *  
-	 * Returns the ChemModel at position <code>number</code> in the
-	 * container
 	 *
-	 * @param  number  The position of the ChemModel to be returned. 
-	 * @return         The ChemModel at position <code>number</code> . 
+	 * Returns the ChemModel at position <code>number</code> in the
+	 * container.
+	 *
+	 * @param  number  The position of the ChemModel to be returned.
+	 * @return         The ChemModel at position <code>number</code>.
+     *
+     * @see            #addChemModel
 	 */
 	public ChemModel getChemModel(int number)
 	{
@@ -106,9 +112,9 @@ public class ChemSequence extends ChemObject
 	}
 	
 	/**
-	 *  Grows the chemModel array by a given size 
+	 *  Grows the chemModel array by a given size.
 	 *
-	 * @see    org.openscience.cdk.AtomContainer#growArraySize growArraySize 
+	 * @see    growArraySize
 	 */
 	protected void growChemModelArray()
 	{
@@ -120,7 +126,7 @@ public class ChemSequence extends ChemObject
 	
 
 	/**
-	 * Returns the number of ChemModels in this Container
+	 * Returns the number of ChemModels in this Container.
 	 *
 	 * @return    The number of ChemModels in this Container
 	 */

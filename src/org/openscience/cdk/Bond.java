@@ -20,9 +20,8 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
- * 
+ *
  */
-
 package org.openscience.cdk;
 
 import java.util.Vector;
@@ -37,19 +36,20 @@ import javax.vecmath.*;
  * @keyword atom
  * @keyword electron
  */
-
 public class Bond extends ElectronContainer implements Cloneable
 {
-	/** The bond order of this bond */
+	/** The bond order of this bond. */
 	protected double order;
 
-	/** A list of atoms participating in this bond */
+	/** A list of atoms participating in this bond. */
 	protected Atom[] atoms;
 
-	/** A descriptor the stereochemical orientation of this bond.
-	  * @see org.openscience.cdk.CDKConstants org.openscience.cdk.CDKConstants for predefined values. 
-	  * to be used here.
-	  */
+	/** 
+     * A descriptor the stereochemical orientation of this bond.
+     *
+	 * @see org.openscience.cdk.CDKConstants for predefined values
+	 *      to be used here.
+	 */
 	protected int stereo; 
 	
 	/**
@@ -81,7 +81,7 @@ public class Bond extends ElectronContainer implements Cloneable
      * @param atom1  the first Atom in the bond
      * @param atom2  the second Atom in the bond
      * @param order  the bond order
-     * @param int    a descriptor the stereochemical orientation of this bond
+     * @param stereo a descriptor the stereochemical orientation of this bond
 	 */
 	public Bond(Atom atom1, Atom atom2, double order, int stereo) {
         this(atom1, atom2, order);
@@ -93,6 +93,8 @@ public class Bond extends ElectronContainer implements Cloneable
 	 * Returns the array of atoms making up this bond.
 	 *
 	 * @return An array of atoms participating in this bond
+     *
+     * @see    #setAtoms
 	 */
 	public Atom[] getAtoms()
 	{
@@ -101,7 +103,7 @@ public class Bond extends ElectronContainer implements Cloneable
 	
 	/**
 	 * Prepares and returns a Vector containing all the 
-	 * Atom objects in this bond
+	 * Atom objects in this bond.
 	 *
 	 * @return A Vector containing all the Atom objects in this AtomContainer    
 	 */
@@ -117,9 +119,11 @@ public class Bond extends ElectronContainer implements Cloneable
 	
 	
 	/**
-	 * Sets the array of atoms making up this bond
+	 * Sets the array of atoms making up this bond.
 	 *
 	 * @param   atoms An array of atoms that forms this bond
+     *
+     * @see    #getAtoms
 	 */
 	public void setAtoms(Atom[] atoms)
 	{
@@ -128,7 +132,7 @@ public class Bond extends ElectronContainer implements Cloneable
 
 
 	/**
-	 * Returns the number of Atoms in this Bond
+	 * Returns the number of Atoms in this Bond.
 	 *
 	 * @return The number of Atoms in this Bond    
 	 */
@@ -142,6 +146,8 @@ public class Bond extends ElectronContainer implements Cloneable
 	 *
 	 * @param   position  The position in this bond where the atom is
      * @return            The atom at the specified position
+     *
+     * @see     #setAtomAt
 	 */
 	public Atom getAtomAt(int position)
 	{
@@ -195,6 +201,8 @@ public class Bond extends ElectronContainer implements Cloneable
 	 *
 	 * @param   atom  The atom to be set
 	 * @param   position  The position in this bond where the atom is to be inserted
+     *
+     * @see     #getAtomAt
 	 */
 	public void setAtomAt(Atom atom, int position)
 	{
@@ -202,10 +210,12 @@ public class Bond extends ElectronContainer implements Cloneable
 	}
 
 	/**
-	 * Returns the bond order of this bond
+	 * Returns the bond order of this bond.
 	 * @see org.openscience.cdk.CDKConstants org.openscience.cdk.CDKConstants for predefined values.
 	 *
 	 * @return The bond order of this bond
+     *
+     * @see     #setOrder
 	 */
 	public double getOrder()
 	{
@@ -214,10 +224,12 @@ public class Bond extends ElectronContainer implements Cloneable
 
 
 	/**
-	 * Sets the bond order of this bond
+	 * Sets the bond order of this bond.
 	 * @see org.openscience.cdk.CDKConstants org.openscience.cdk.CDKConstants for predefined values.
 	 *
 	 * @param   order The bond order to be assigned to this bond
+     *
+     * @see     #getOrder
 	 */
 	public void setOrder(double order)
 	{
@@ -228,9 +240,11 @@ public class Bond extends ElectronContainer implements Cloneable
 
 	/**
 	 * Returns the stereo descriptor for this bond. 
-	 * @see org.openscience.cdk.CDKConstants org.openscience.cdk.CDKConstants for predefined values.
 	 *
 	 * @return The stereo descriptor for this bond
+     *
+     * @see     #setStereo
+	 * @see     org.openscience.cdk.CDKConstants for predefined values.
 	 */
 	public int getStereo()
 	{
@@ -240,9 +254,11 @@ public class Bond extends ElectronContainer implements Cloneable
 
 	/**
 	 * Sets the stereo descriptor for this bond.
-	 * @see org.openscience.cdk.CDKConstants org.openscience.cdk.CDKConstants for predefined values.
 	 *
 	 * @param   stereo The stereo descriptor to be assigned to this bond.
+     *
+     * @see     #getStereo
+	 * @see     org.openscience.cdk.CDKConstants for predefined values.
 	 */
 	public void setStereo(int stereo)
 	{
@@ -251,7 +267,7 @@ public class Bond extends ElectronContainer implements Cloneable
 	
 
 	/**
-	 * Returns the geometric 2D center of the bond
+	 * Returns the geometric 2D center of the bond.
 	 *
 	 * @return The geometric 2D center of the bond
 	 */
@@ -269,7 +285,7 @@ public class Bond extends ElectronContainer implements Cloneable
 
 
 	/**
-	 * Returns the geometric 3D center of the bond
+	 * Returns the geometric 3D center of the bond.
 	 *
 	 * @return The geometric 3D center of the bond    
 	 */
@@ -289,7 +305,7 @@ public class Bond extends ElectronContainer implements Cloneable
 	
 
 	/**
-	 * Returns the geometric length of this bond
+	 * Returns the geometric length of this bond.
 	 *
 	 * @return The geometric length of this bond
 	 */

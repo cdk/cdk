@@ -50,6 +50,10 @@ public class JCPController2D {
 
     private LoggingTool logger;
 
+    /**
+     * Constructs a controller that performs operations on the
+     * AtomContainer when actions are detected from the MouseEvents.
+     */
     public JCPController2D(AtomContainer atomCon, Renderer2DModel r2dm, JCPController2DModel c2dm) {
         this.atomCon = atomCon;
         this.r2dm = r2dm;

@@ -52,7 +52,7 @@ public class RingSet extends Vector{
 
 	/**
 	 * Checks - and returns 'true' - if a certain ring is already
-	 * stored in this setOfRings
+	 * stored in this setOfRings.
 	 *
 	 * @param   newRing  The ring to be tested if it is already stored here
 	 * @return     true if it is already stored
@@ -246,7 +246,7 @@ public class RingSet extends Vector{
 	
 
 	/**
-	 * Adds all rings of another RingSet if they are not allready part of this ring set
+	 * Adds all rings of another RingSet if they are not allready part of this ring set.
 	 *
 	 * @param   rs  the ring set to be united with this one.
 	 */
@@ -262,7 +262,7 @@ public class RingSet extends Vector{
 	}
 
 	/**
-	 * Returns the geometric center of all the rings in this ringset
+	 * Returns the geometric center of all the rings in this ringset.
 	 *
 	 * @return the geometric center of the rings in this ringset
 	 */
@@ -281,9 +281,10 @@ public class RingSet extends Vector{
 
 	/**
 	 * True, if at least one of the rings in the ringset cotains
-	 * the given atom
+	 * the given atom.
 	 *
-	 * @return true, if the ringset contains the atom
+     * @param  atom Atom to check
+	 * @return      true, if the ringset contains the atom
 	 */
 	public boolean contains(Atom atom)
 	{
@@ -299,7 +300,7 @@ public class RingSet extends Vector{
 
 	/**
 	 * Returns all the atoms and bonds from all the rings in the molecule 
-	 * in one AtomContainer
+	 * in one AtomContainer.
 	 *
 	 * @return true, if the ringset contains the atom
 	 */
@@ -324,7 +325,7 @@ public class RingSet extends Vector{
 	
 	/**
 	 * Returns a sequence of string representations for all rings in the 
-	 * RingSet
+	 * RingSet.
 	 *
 	 * @param   molecule  Used to assign numbers to each atom in the rings
 	 * @return  A sequence of string representations for all rings in the RingSet   

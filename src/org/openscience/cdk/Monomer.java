@@ -64,6 +64,7 @@ public class Monomer extends AtomContainer {
 	 *
 	 * @return The name of the Monomer object
 	 *
+     * @see    #setMonomerName
 	 */
 	public String getMonomerName() {
 		return _cMonomerName;
@@ -75,6 +76,7 @@ public class Monomer extends AtomContainer {
 	 *
 	 * @return The type of the Monomer object
 	 *
+     * @see    #setMonomerType
 	 */
 	public String getMonomerType() {
 		return _cMonomerType;
@@ -86,6 +88,7 @@ public class Monomer extends AtomContainer {
 	 *
 	 * @param cMonomerName  The new name for this monomer
 	 *
+     * @see    #getMonomerName
 	 */
 	public void setMonomerName(String cMonomerName) {
 		_cMonomerName = cMonomerName;
@@ -97,6 +100,7 @@ public class Monomer extends AtomContainer {
 	 *
 	 * @param cMonomerType  The new type for this monomer
 	 *
+     * @see    #getMonomerType
 	 */
 	public void setMonomerType(String cMonomerType) {
 		_cMonomerType = cMonomerType;
@@ -107,7 +111,6 @@ public class Monomer extends AtomContainer {
 	 * Add an Atom object to this monomer.
 	 *
 	 * @param oAtom  The Atom to be added.
-	 *
 	 */
 	public void addAtom(Atom oAtom) {
 		if (! contains(oAtom)) {

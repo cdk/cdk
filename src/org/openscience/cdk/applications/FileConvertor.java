@@ -55,13 +55,20 @@ public class FileConvertor {
 
     private Vector chemObjectNames = new Vector();
 
+    /**
+     * Constructs a convertor for the file formats <code>iformat</code>
+     * and <code>oformat</code>.
+     *
+     * @param iformat   format of the input
+     * @param oformat   format of the output
+     */
     public FileConvertor(String iformat, String oformat) {
         logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
         logger.dumpSystemProperties();
 
         this.iformat = iformat;
         this.oformat = oformat;
-        
+
         chemObjectNames.add("org.openscience.cdk.Molecule");
         chemObjectNames.add("org.openscience.cdk.SetOfMolecules");
         chemObjectNames.add("org.openscience.cdk.Crystal");
@@ -70,6 +77,12 @@ public class FileConvertor {
         chemObjectNames.add("org.openscience.cdk.ChemFile");
     }
 
+    /**
+     * Convert file <code>ifilename</code> into a file <code>ofilename</code>.
+     *
+     * @param ifilename name of input file
+     * @param ofilename name of output file
+     */
     public boolean convert(String ifilename, String ofilename) {
         boolean success = true;
         this.ifilename = ifilename;

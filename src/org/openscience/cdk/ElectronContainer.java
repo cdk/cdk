@@ -1,4 +1,4 @@
-/* $RCSfile$    
+/* $RCSfile$
  * $Author$    
  * $Date$    
  * $Revision$
@@ -34,13 +34,15 @@ package org.openscience.cdk;
  */
 public class ElectronContainer extends ChemObject
 {
-	/** Number of electrons in the ElectronContainer */
+	/** Number of electrons in the ElectronContainer. */
 	protected int electronCount;
 
 	/**
-	 * Returns the number of electrons in this electron container
+	 * Returns the number of electrons in this electron container.
 	 *
 	 * @return The number of electrons in this electron container.
+     *
+     * @see     #setElectronCount
 	 */
 	public int getElectronCount()
 	{
@@ -49,9 +51,11 @@ public class ElectronContainer extends ChemObject
 
 
 	/**
-	 * Sets the number of electorn in this electron container
+	 * Sets the number of electorn in this electron container.
 	 *
 	 * @param   electronCount The number of electrons in this electron container.
+     *
+     * @see     #getElectronCount
 	 */
 	public void setElectronCount(int electronCount)
 	{

@@ -31,7 +31,8 @@ package org.openscience.cdk;
 
 /**
  *  The base class for atom types. Atom types are typically used to describe the
- *  behaviour of an atom of a particular element in different environment like sp3 
+ *  behaviour of an atom of a particular element in different environment like 
+ *  sp<sup>3</sup>
  *  hybridized carbon C3, etc., in some molecular modelling applications.
  *
  * @author     steinbeck
@@ -42,22 +43,22 @@ package org.openscience.cdk;
 public class AtomType extends Isotope
 {
 	/**
-	 *  An id for this atom type, like C3 for sp3 carbon
+	 *  An id for this atom type, like C3 for sp3 carbon.
 	 */
 	String id;
 
 	/**
-	 *  The maximum bond order allowed for this atom type
+	 *  The maximum bond order allowed for this atom type.
 	 */
 	double maxBondOrder;
 	/**
-	 *  The maximum sum of all bondorders allowed for this atom type
+	 *  The maximum sum of all bondorders allowed for this atom type.
 	 */
 	double maxBondOrderSum;
 
 
 	/**
-	 *  Constructor for the AtomType object
+	 *  Constructor for the AtomType object.
      *
      * @param elementSymbol  Symbol of the atom
 	 */
@@ -68,7 +69,7 @@ public class AtomType extends Isotope
 
 
 	/**
-	 *  Constructor for the AtomType object
+	 *  Constructor for the AtomType object.
 	 *
 	 * @param  id             An id for this atom type, like C3 for sp3 carbon
 	 * @param  elementSymbol  The element symbol identifying the element to which this atom type applies
@@ -81,9 +82,11 @@ public class AtomType extends Isotope
 
 
 	/**
-	 *  Sets the if attribute of the AtomType object
+	 *  Sets the if attribute of the AtomType object.
 	 *
 	 * @param  id  The new AtomTypeID value
+     *
+     * @see    #getID
 	 */
 	public void setID(String id)
 	{
@@ -92,9 +95,11 @@ public class AtomType extends Isotope
 
 
 	/**
-	 *  Sets the MaxBondOrder attribute of the AtomType object
+	 *  Sets the MaxBondOrder attribute of the AtomType object.
 	 *
 	 * @param  maxBondOrder  The new MaxBondOrder value
+     *
+     * @see       #getMaxBondOrder
 	 */
 	public void setMaxBondOrder(double maxBondOrder)
 	{
@@ -103,9 +108,11 @@ public class AtomType extends Isotope
 
 
 	/**
-	 *  Sets the MaxBondCount attribute of the AtomType object
+	 *  Sets the MaxBondCount attribute of the AtomType object.
 	 *
 	 * @param  maxBondOrderSum  The new MaxBondOrderSum value
+     *
+     * @see       #getMaxBondOrderSum
 	 */
 	public void setMaxBondOrderSum(double maxBondOrderSum)
 	{
@@ -114,9 +121,11 @@ public class AtomType extends Isotope
 
 
 	/**
-	 *  Gets the id attribute of the AtomType object
+	 *  Gets the id attribute of the AtomType object.
 	 *
 	 * @return    The id value
+     *
+     * @see       #setID
 	 */
 	public String getID()
 	{
@@ -125,9 +134,11 @@ public class AtomType extends Isotope
 
 
 	/**
-	 *  Gets the MaxBondOrder attribute of the AtomType object
+	 *  Gets the MaxBondOrder attribute of the AtomType object.
 	 *
 	 * @return    The MaxBondOrder value
+     *
+     * @see       #setMaxBondOrder
 	 */
 	public double getMaxBondOrder()
 	{
@@ -136,9 +147,11 @@ public class AtomType extends Isotope
 
 
 	/**
-	 *  Gets the MaxBondCount attribute of the AtomType object
+	 *  Gets the MaxBondCount attribute of the AtomType object.
 	 *
 	 * @return    The MaxBondCount value
+     *
+     * @see       #setMaxBondOrderSum
 	 */
 	public double getMaxBondOrderSum()
 	{
@@ -146,7 +159,7 @@ public class AtomType extends Isotope
 	}
 
   /**
-   * Compare a atom type with this atom type
+   * Compare a atom type with this atom type.
    *
    * @param  object Object of type AtomType
    * @return        Return true, if the atomtypes are equal

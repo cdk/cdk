@@ -40,32 +40,33 @@ public class Atom extends AtomType implements Cloneable {
         /* Let's keep this exact specification
          * of what kind of point2d we're talking of here,
          * sinces there are so many around in the java standard api */
+
         /**
          *  A 2D point specifying the location of this atom in a 2D coordinate 
-         *  space 
+         *  space.
          */
         protected javax.vecmath.Point2d point2D;
         /**
          *  A 3 point specifying the location of this atom in a 3D coordinate 
-         *  space 
+         *  space.
          */
         protected javax.vecmath.Point3d point3D;
         /**
-         *  The number of implicitly bound hydrogen atoms for this atom 
+         *  The number of implicitly bound hydrogen atoms for this atom.
          */
         protected int hydrogenCount;
         /**
-         *  A stereo parity descriptor for the stereochemistry of this atom 
+         *  A stereo parity descriptor for the stereochemistry of this atom.
          */
         protected int stereoParity;
         /**
-         *  The partial charge of the atom 
+         *  The partial charge of the atom.
          */
         protected double charge;
         
 
         /**
-         * Constructs an Atom from a String containing an element symbol
+         * Constructs an Atom from a String containing an element symbol.
          *
          * @param   elementSymbol  The String describing the element for the Atom
          */
@@ -77,7 +78,7 @@ public class Atom extends AtomType implements Cloneable {
         }
 
         /**
-         * Constructs an Atom from an Element and a Point3D
+         * Constructs an Atom from an Element and a Point3D.
          *
          * @param   elementSymbol   The symbol of the atom
          * @param   point3D         The 3D coordinates of the atom
@@ -89,7 +90,7 @@ public class Atom extends AtomType implements Cloneable {
         }
 
         /**
-         * Constructs an Atom from an Element and a Point2D
+         * Constructs an Atom from an Element and a Point2D.
          *
          * @param   elementSymbol   The Element
          * @param   point2D         The Point
@@ -101,18 +102,22 @@ public class Atom extends AtomType implements Cloneable {
         }
 
         /**
-         *  Sets the partial charge of this atom
+         *  Sets the partial charge of this atom.
          *
          * @param  charge  The partial charge
+         *
+         * @see    #getCharge
          */
         public void setCharge(double charge) {
                this.charge = charge;
         }
 
         /**
-         *  Returns the partial charge of this atom
+         *  Returns the partial charge of this atom.
          *
          * @return the charge of this atom
+         *
+         * @see    #setCharge
          */
         public double getCharge() {
                return this.charge;
@@ -122,16 +127,32 @@ public class Atom extends AtomType implements Cloneable {
          *  Sets the hydrogen count of this atom.
          *
          * @param  hydrogenCount  The number of hydrogen atoms bonded to this atom.
+         *
+         * @see    #getHydrogenCount
          */
         public void setHydrogenCount(int hydrogenCount) {
                 this.hydrogenCount = hydrogenCount;
         }
+
+        /**
+         *  Returns the hydrogen count of this atom.
+         *
+         * @return    The hydrogen count of this atom.
+         *
+         * @see       #setHydrogenCount
+         */
+        public int getHydrogenCount() {
+                return this.hydrogenCount;
+        }
+
         /**
          *
          * Sets a point specifying the location of this
-         * atom in a 2D space
+         * atom in a 2D space.
          *
          * @param  point2D  A point in a 2D plane
+         *
+         * @see    #getPoint2D
          */
         public void setPoint2D(javax.vecmath.Point2d point2D) {
                 this.point2D = point2D;
@@ -139,47 +160,46 @@ public class Atom extends AtomType implements Cloneable {
         /**
          *
          * Sets a point specifying the location of this
-         * atom in 3D space
+         * atom in 3D space.
          *
          * @param  point3D  A point in a 3-dimensional space
+         *
+         * @see    #getPoint3D
          */
         public void setPoint3D(javax.vecmath.Point3d point3D) {
                 this.point3D = point3D;
         }
         /**
-         *  Sets the stereo parity for this atom
+         *  Sets the stereo parity for this atom.
          *
          * @param  stereoParity  The stereo parity for this atom
+         *
          * @see                  org.openscience.cdk.CDKConstants
-         *      org.openscience.cdk.CDKConstants for predefined values.
+         *                       for predefined values.
+         * @see    #getStereoParity
          */
         public void setStereoParity(int stereoParity) {
                 this.stereoParity = stereoParity;
         }
 
-
-        /**
-         *  Returns the hydrogen count of this atom
-         *
-         * @return    The hydrogen count of this atom.
-         */
-        public int getHydrogenCount() {
-                return this.hydrogenCount;
-        }
         /**
          * Returns a point specifying the location of this
-         * atom in a 2D space
+         * atom in a 2D space.
          *
          * @return    A point in a 2D plane
+         *
+         * @see       #setPoint2D
          */
         public javax.vecmath.Point2d getPoint2D() {
                 return this.point2D;
         }
         /**
          * Returns a point specifying the location of this
-         * atom in a 3D space
+         * atom in a 3D space.
          *
          * @return    A point in 3-dimensional space
+         *
+         * @see       #setPoint3D
          */
         public javax.vecmath.Point3d getPoint3D() {
                 return this.point3D;
@@ -192,6 +212,8 @@ public class Atom extends AtomType implements Cloneable {
          * contain consistent information. Both are handled independently.
          *
          * @return the x coordinate for of the 2D location of this atom
+         *
+         * @see    #setX2D
          */
         public double getX2D() {
             if (point2D == null) {
@@ -208,6 +230,8 @@ public class Atom extends AtomType implements Cloneable {
          * contain consistent information. Both are handled independently.
          *
          * @return the y coordinate for of the 2D location of this atom
+         *
+         * @see    #setY2D
          */
         public double getY2D() {
             if (point2D == null) {
@@ -224,6 +248,8 @@ public class Atom extends AtomType implements Cloneable {
          * contain consistent information. Both are handled independently.
          *
          * @return the x coordinate for of the 3D location of this atom
+         *
+         * @see    #setX3D
          */
         public double getX3D() {
             if (point3D == null) {
@@ -240,6 +266,8 @@ public class Atom extends AtomType implements Cloneable {
          * contain consistent information. Both are handled independently.
          *
          * @return the y coordinate for of the 3D location of this atom
+         *
+         * @see    #setY3D
          */
         public double getY3D() {
             if (point3D == null) {
@@ -255,8 +283,9 @@ public class Atom extends AtomType implements Cloneable {
          * contain consistent information. Both are handled independently.
          *
          * @return the z coordinate for of the 3D location of this atom
+         *
+         * @see    #setZ3D
          */
-
         public double getZ3D() {
             if (point3D == null) {
                 return 0.0;
@@ -270,8 +299,10 @@ public class Atom extends AtomType implements Cloneable {
          * Sets the x coordinate for of the 2D location of this atom.
          * You should know your context here. There is no guarantee that point2D and point3D
          * contain consistent information. Both are handled independently.
-     *
+         *
          * @param   x  the new x coordinate for of the 2D location of this atom
+         *
+         * @see     #getX2D
          */
         public void setX2D(double x) {
             if (point2D == null) {
@@ -287,6 +318,8 @@ public class Atom extends AtomType implements Cloneable {
          * contain consistent information. Both are handled independently.
          *
          * @param   y  the new y coordinate for of the 2D location of this atom
+         *
+         * @see     #getY2D
          */
         public void setY2D(double y) {
             if (point2D == null) {
@@ -302,6 +335,8 @@ public class Atom extends AtomType implements Cloneable {
          * contain consistent information. Both are handled independently.
          *
          * @param   x  the new x coordinate for of the 3D location of this atom
+         *
+         * @see     #getX3D
          */
         public void setX3D(double x) {
             if (point3D == null) {
@@ -317,6 +352,8 @@ public class Atom extends AtomType implements Cloneable {
          * contain consistent information. Both are handled independently.
          *
          * @param   y  the new y coordinate for of the 3D location of this atom
+         *
+         * @see     #getY3D
          */
         public void setY3D(double y) {
             if (point3D == null) {
@@ -332,6 +369,8 @@ public class Atom extends AtomType implements Cloneable {
          * contain consistent information. Both are handled independently.
          *
          * @param   z  the new z coordinate for of the 3D location of this atom
+         *
+         * @see     #getZ3D
          */
         public void setZ3D(double z) {
             if (point3D == null) {
@@ -346,14 +385,16 @@ public class Atom extends AtomType implements Cloneable {
          *  found in CDKConstants.
          *
          * @return    The stereo parity for this atom
+         *
          * @see       org.openscience.cdk.CDKConstants
+         * @see       #setStereoParity
          */
         public int getStereoParity() {
                 return this.stereoParity;
         }
 
         /**
-         * Compares a atom with this atom
+         * Compares a atom with this atom.
          *
          * @param     object of type Atom
          * @return    return true, if the atoms are equal

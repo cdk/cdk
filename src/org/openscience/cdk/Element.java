@@ -33,17 +33,17 @@ package org.openscience.cdk;
  */
 public class Element extends ChemObject
 {
-	/** The element symbol for this element as listed in the periodic table */
+	/** The element symbol for this element as listed in the periodic table. */
 	protected String symbol;
 	
-	/** The atomic number for this element giving their position in the periodic table */
+	/** The atomic number for this element giving their position in the periodic table. */
 	protected int atomicNumber = 0;
 	
-	/** The atomic mass of this element */
+	/** The atomic mass of this element. */
 	protected int atomicMass;	
 
 	/**
-	 * Constructs an empty Element
+	 * Constructs an empty Element.
 	 *
 	 */
 	public Element()
@@ -78,9 +78,11 @@ public class Element extends ChemObject
 	}
 
 	/**
-	 * Returns the atomic mass of this element
+	 * Returns the atomic mass of this element.
 	 *
 	 * @return The atomic mass of this element
+     *
+     * @see    #setAtomicMass
 	 */
 		public int getAtomicMass()
 	{
@@ -88,9 +90,11 @@ public class Element extends ChemObject
 	}
 
 	/**
-	 *	Sets the atomic mass of this element
+	 * Sets the atomic mass of this element.
 	 *
 	 * @param   atomicMass The atomic mass to be assigned to this element
+     *
+     * @see    #getAtomicMass
 	 */
 	public void setAtomicMass(int atomicMass)
 	{
@@ -98,9 +102,11 @@ public class Element extends ChemObject
 	}
 
 	/**
-	 * Returns the atomic number of this element
+	 * Returns the atomic number of this element.
 	 *
 	 * @return The atomic number of this element    
+     *
+     * @see    #setAtomicNumber
 	 */
 	public int getAtomicNumber()
 	{
@@ -110,14 +116,16 @@ public class Element extends ChemObject
 			isotope	= new org.openscience.cdk.tools.StandardIsotopes().getMajorIsotope(getSymbol());
 			this.atomicNumber = (int)(isotope.atomicMass / 2);
 		}
- */		
+ */
  		return this.atomicNumber;
 	}
 
 	/**
-	 * Set the atomic number of this element
+	 * Sets the atomic number of this element.
 	 *
-	 * @param   atomicNumber The atomic mass to be assigned to this element  
+	 * @param   atomicNumber The atomic mass to be assigned to this element
+     *
+     * @see    #getAtomicNumber
 	 */
 	public void setAtomicNumber(int atomicNumber)
 	{
@@ -125,9 +133,11 @@ public class Element extends ChemObject
 	}
 
 	/**
-	 * Returns the element symbol of this element
+	 * Returns the element symbol of this element.
 	 *
 	 * @return The element symbol of this element
+     *
+     * @see    #setSymbol
 	 */
 	public String getSymbol()
 	{
@@ -135,16 +145,18 @@ public class Element extends ChemObject
 	}
 
 	/**
-	 * Sets the element symbol of this element
+	 * Sets the element symbol of this element.
 	 *
 	 * @param symbol The element symbol to be assigned to this atom
+     *
+     * @see    #getSymbol
 	 */
 	public void setSymbol(String symbol)
 	{
 		this.symbol = symbol;
 	}
-	
-	        /**
+
+        /**
          * Clones this atom object.
          *
          * @return  The cloned object   

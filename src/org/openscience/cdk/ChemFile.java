@@ -35,12 +35,12 @@ public class ChemFile extends ChemObject {
 
 
 	/**
-	 *  Array of ChemSquences 
+	 *  Array of ChemSquences.
 	 */
 	protected ChemSequence[] chemSequences;
 	
 	/**
-	 *  Number of ChemSequences contained by this container 
+	 *  Number of ChemSequences contained by this container.
 	 */
 	protected int chemSequenceCount;
 
@@ -51,7 +51,7 @@ public class ChemFile extends ChemObject {
 	protected int growArraySize = 5;
 
 	/**
-	 *  Constructs an empty SetOfChemSequences
+	 *  Constructs an empty SetOfChemSequences.
 	 */
 	public ChemFile()   
 	{
@@ -60,9 +60,11 @@ public class ChemFile extends ChemObject {
 	}
 
 	/**
-	 *  Adds an chemSequence to this container 
+	 *  Adds an chemSequence to this container.
 	 *
 	 * @param  chemSequence  The chemSequence to be added to this container 
+     *
+     * @see       #getChemSequences
 	 */
 	public void addChemSequence(ChemSequence chemSequence)
 	{
@@ -73,13 +75,15 @@ public class ChemFile extends ChemObject {
 		chemSequences[chemSequenceCount] = chemSequence;
 		chemSequenceCount++;
 	}
-	
-	
+
+
 
 	/**
-	 *  Returns the array of ChemSequences of this container 
+	 *  Returns the array of ChemSequences of this container.
 	 *
-	 * @return    The array of ChemSequences of this container 
+	 * @return    The array of ChemSequences of this container
+     *
+     * @see       #addChemSequence
 	 */
 	public ChemSequence[] getChemSequences()
 	{
@@ -90,10 +94,12 @@ public class ChemFile extends ChemObject {
 	/**
 	 *  
 	 * Returns the ChemSequence at position <code>number</code> in the
-	 * container
+	 * container.
 	 *
 	 * @param  number  The position of the ChemSequence to be returned. 
-	 * @return         The ChemSequence at position <code>number</code> . 
+	 * @return         The ChemSequence at position <code>number</code>. 
+     *
+     * @see    #addChemSequence
 	 */
 	public ChemSequence getChemSequence(int number)
 	{
@@ -102,9 +108,9 @@ public class ChemFile extends ChemObject {
 	
 	
 	/**
-	 *  Grows the chemSequence array by a given size 
+	 *  Grows the chemSequence array by a given size.
 	 *
-	 * @see    org.openscience.cdk.AtomContainer#growArraySize growArraySize 
+	 * @see    #growArraySize
 	 */
 	protected void growChemSequenceArray()
 	{
@@ -116,7 +122,7 @@ public class ChemFile extends ChemObject {
 	
 
 	/**
-	 * Returns the number of ChemSequences in this Container
+	 * Returns the number of ChemSequences in this Container.
 	 *
 	 * @return   The number of ChemSequences in this Container   
 	 */

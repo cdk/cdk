@@ -82,6 +82,8 @@ public class Crystal extends AtomContainer {
      * @param     x     the x coordinate of the vector
      * @param     y     the y coordinate of the vector
      * @param     z     the z coordinate of the vector
+     *
+     * @see       #getA
      */
     public void setA(double x, double y, double z) {
         ax = x; ay = y; az = z;
@@ -90,6 +92,10 @@ public class Crystal extends AtomContainer {
     /**
      * Gets the A unit cell axes in carthesian coordinates
      * as a three element double array.
+     *
+     * @return a 3-item double array with the x,y and z coordinate
+     *
+     * @see       #setA
      */
     public double[] getA() {
         double[] result = new double[3];
@@ -109,8 +115,6 @@ public class Crystal extends AtomContainer {
     /**
      * Adds the atom to the crystal. Symmetry related atoms should
      * not be added unless P1 space group is used.
-     *
-     * @return a 3-item double array with the x,y and z coordinate
      */
     public void addAtom(Atom a) {
         super.addAtom(a);
@@ -122,6 +126,8 @@ public class Crystal extends AtomContainer {
      * @param     x     the x coordinate of the vector
      * @param     y     the y coordinate of the vector
      * @param     z     the z coordinate of the vector
+     *
+     * @see       #getB
      */
     public void setB(double x, double y, double z) {
         bx = x; by = y; bz = z;
@@ -132,6 +138,8 @@ public class Crystal extends AtomContainer {
      * as a three element double array.
      *
      * @return a 3-item double array with the x,y and z coordinate
+     *
+     * @see       #setB
      */
     public double[] getB() {
         double[] result = new double[3];
@@ -147,6 +155,8 @@ public class Crystal extends AtomContainer {
      * @param     x     the x coordinate of the vector
      * @param     y     the y coordinate of the vector
      * @param     z     the z coordinate of the vector
+     *
+     * @see       #getC
      */
     public void setC(double x, double y, double z) {
         cx = x; cy = y; cz = z;
@@ -157,6 +167,8 @@ public class Crystal extends AtomContainer {
      * as a three element double array.
      *
      * @return a 3-item double array with the x,y and z coordinate
+     *
+     * @see       #setC
      */
     public double[] getC() {
         double[] result = new double[3];
@@ -170,6 +182,8 @@ public class Crystal extends AtomContainer {
      * Gets the space group of this crystal.
      *
      * @return the space group of this crystal structure
+     *
+     * @see       #setSpaceGroup
      */
     public String getSpaceGroup() {
         return spaceGroup;
@@ -184,6 +198,8 @@ public class Crystal extends AtomContainer {
      *   "P 2_1 2_1 2_1"
      *
      * @param   group  the space group of this crystal structure
+     *
+     * @see       #getSpaceGroup
      */
     public void setSpaceGroup(String group) {
         if ("P1".equals(group)) {

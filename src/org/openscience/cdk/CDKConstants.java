@@ -35,65 +35,66 @@ package org.openscience.cdk;
  */
 public class CDKConstants {
 
-        /** A bond of degree 1 */
+        /** A bond of degree 1.0. */
         public static double BONDORDER_SINGLE = 1;
 
-        /** A bond of degree 1.5 */
+        /** A bond of degree 1.5. */
         public static double BONDORDER_AROMATIC = 1.5;
 
-        /** A bond of degree 2 */
+        /** A bond of degree 2.0. */
         public static double BONDORDER_DOUBLE = 2;
 
-        /** A bond of degree 3 */
+        /** A bond of degree 3.0. */
         public static double BONDORDER_TRIPLE = 3;
 
-        /** A bonds which end is above the drawing plane */
+        /** A bonds which end is above the drawing plane. */
         public static int STEREO_BOND_UP = 1;
 
-        /** A bonds for which the stereochemistry is undefined */
+        /** A bonds for which the stereochemistry is undefined. */
         public static int STEREO_BOND_UNDEFINED = 0;
 
-        /** A bonds which end is below the drawing plane */
+        /** A bonds which end is below the drawing plane. */
         public static int STEREO_BOND_DOWN = -1;
 
-        /** A bonds which end is above the drawing plane */
+        /** A bonds which end is above the drawing plane. */
         public static int STEREO_ATOM_PARITY_PLUS = 1;
 
-        /** A bonds which end is above the drawing plane */
+        /** A bonds which end is above the drawing plane. */
         public static int STEREO_ATOM_PARITY_MINUS = -1;
 
-        /** Carbon NMR shift contant for use as a key in the
-          * ChemObject.physicalProperties hashtable
-          * @see org.openscience.cdk.ChemObject
-          */
+        /** 
+         * Carbon NMR shift contant for use as a key in the
+         * ChemObject.physicalProperties hashtable.
+         * @see org.openscience.cdk.ChemObject
+         */
         public static String NMRSHIFT_CARBON = "carbon nmr shift";
 
         /** Hydrogen NMR shift contant for use as a key in the
-          * ChemObject.physicalProperties hashtable
+          * ChemObject.physicalProperties hashtable.
           * @see org.openscience.cdk.ChemObject
           */
         public static String NMRSHIFT_HYDROGEN = "hydrogen nmr shift";
 
         /** Nitrogen NMR shift contant for use as a key in the
-          * ChemObject.physicalProperties hashtable
+          * ChemObject.physicalProperties hashtable.
           * @see org.openscience.cdk.ChemObject
           */
         public static String NMRSHIFT_NITROGEN = "nitrogen nmr shift";
 
         /** Phosphorus NMR shift contant for use as a key in the
-          * ChemObject.physicalProperties hashtable
+          * ChemObject.physicalProperties hashtable.
           * @see org.openscience.cdk.ChemObject
           */
         public static String NMRSHIFT_PHOSPORUS = "phosphorus nmr shift";
 
         /** Fluorine NMR shift contant for use as a key in the
-          * ChemObject.physicalProperties hashtable
+          * ChemObject.physicalProperties hashtable.
           * @see org.openscience.cdk.ChemObject
           */
         public static String NMRSHIFT_FLUORINE = "fluorine nmr shift";
 
         /** Deuterium NMR shift contant for use as a key in the
-          * ChemObject.physicalProperties hashtable
+          * ChemObject.physicalProperties hashtable.
           * @see org.openscience.cdk.ChemObject
           */
         static String NMRSHIFT_DEUTERIUM = "deuterium nmr shift";
@@ -120,7 +121,7 @@ public class CDKConstants {
         /** Flag is set if chemobject is part of an aromatic system. */
         public static int ISAROMATIC = 54;
         /** Flag is set if a chemobject is mapped to another chemobject.
-         *  It is used for example in subgraph isomorphism search
+         *  It is used for example in subgraph isomorphism search.
          */
         public static int MAPPED = 55;
 

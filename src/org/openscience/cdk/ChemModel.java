@@ -35,22 +35,22 @@ public class ChemModel extends ChemObject
 {
 
 	/**
-	 *  A SetOfMolecules
+	 *  A SetOfMolecules.
 	 */
 	protected SetOfMolecules setOfMolecules = null;
 
 	/**
-	 *  A RingSet
+	 *  A RingSet.
 	 */
 	protected RingSet ringSet = null;
 	
     /**
-	 *  A Crystal
+	 *  A Crystal.
 	 */
      protected Crystal crystal = null;
 
 	/**
-	 *  Constructs an empty SetOfMolecules
+	 *  Constructs an empty SetOfMolecules.
 	 */
 	public ChemModel()   
 	{
@@ -77,7 +77,9 @@ public class ChemModel extends ChemObject
 	/**
 	 * Returns the SetOfMolecules of this ChemModel.
 	 *
-	 * @return   The SetOfMolecules of this ChemModel 
+	 * @return   The SetOfMolecules of this ChemModel
+     *
+     * @see      #setSetOfMolecules
 	 */
 	public SetOfMolecules getSetOfMolecules()
 	{
@@ -89,6 +91,8 @@ public class ChemModel extends ChemObject
 	 * Sets the SetOfMolecules of this ChemModel.
 	 *
 	 * @param   setOfMolecules  the content of this model
+     *
+     * @see      #getSetOfMolecules
 	 */
 	public void setSetOfMolecules(SetOfMolecules setOfMolecules)
 	{
@@ -101,6 +105,8 @@ public class ChemModel extends ChemObject
 	 * Returns the RingSet of this ChemModel.
 	 *
 	 * @return the ringset of this model
+     *
+     * @see      #setRingSet
 	 */
 	public RingSet getRingSet() {
 		return this.ringSet;
@@ -111,6 +117,8 @@ public class ChemModel extends ChemObject
 	 * Sets the RingSet of this ChemModel.
 	 *
 	 * @param   ringSet         the content of this model
+     *
+     * @see      #getRingSet
 	 */
 	public void setRingSet(RingSet ringSet)
 	{
@@ -121,15 +129,19 @@ public class ChemModel extends ChemObject
      * Gets the Crystal contained in this ChemModel.
      *
      * @return The crystal in this model
+     *
+     * @see      #setCrystal
      */
     public Crystal getCrystal() {
         return this.crystal;
     }
 
     /**
-     * Sets the Crystal contained in this ChemModel
+     * Sets the Crystal contained in this ChemModel.
      *
      * @param   c     the Crystal to store in this model
+     *
+     * @see      #getCrystal
      */
     public void setCrystal(Crystal c) {
         this.crystal = c;

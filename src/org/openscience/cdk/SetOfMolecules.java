@@ -27,7 +27,7 @@ package org.openscience.cdk;
 
 
 /** 
- * A set of molecules, for example those taking part in a reaction
+ * A set of molecules, for example those taking part in a reaction.
  *
  * @keyword reaction
  * @keyword molecule
@@ -36,12 +36,12 @@ public class SetOfMolecules extends ChemObject
 {
 
 	/**
-	 *  Array of Molecules 
+	 *  Array of Molecules.
 	 */
 	protected Molecule[] molecules;
 	
 	/**
-	 *  Number of Molecules contained by this container 
+	 *  Number of Molecules contained by this container.
 	 */
 	protected int moleculeCount;
 
@@ -53,7 +53,7 @@ public class SetOfMolecules extends ChemObject
 
 
 	/**
-	 *  Constructs an empty SetOfMolecules
+	 *  Constructs an empty SetOfMolecules.
 	 */
 	public SetOfMolecules()   
 	{
@@ -64,7 +64,7 @@ public class SetOfMolecules extends ChemObject
 
 	
 	/**
-	 *  Adds an molecule to this container 
+	 *  Adds an molecule to this container.
 	 *
 	 * @param  molecule  The molecule to be added to this container 
 	 */
@@ -80,7 +80,7 @@ public class SetOfMolecules extends ChemObject
 
 
 	/**
-	 *  Returns the array of Molecules of this container 
+	 *  Returns the array of Molecules of this container.
 	 *
 	 * @return    The array of Molecules of this container 
 	 */
@@ -93,7 +93,7 @@ public class SetOfMolecules extends ChemObject
 	/**
 	 *  
 	 * Returns the Molecule at position <code>number</code> in the
-	 * container
+	 * container.
 	 *
 	 * @param  number  The position of the Molecule to be returned. 
 	 * @return         The Molecule at position <code>number</code> . 
@@ -105,9 +105,9 @@ public class SetOfMolecules extends ChemObject
 	
 	
 	/**
-	 *  Grows the molecule array by a given size 
+	 *  Grows the molecule array by a given size.
 	 *
-	 * @see    org.openscience.cdk.AtomContainer#growArraySize growArraySize 
+	 * @see    growArraySize
 	 */
 	protected void growMoleculeArray()
 	{
@@ -119,7 +119,7 @@ public class SetOfMolecules extends ChemObject
 	
 
 	/**
-	 * Returns the number of Molecules in this Container
+	 * Returns the number of Molecules in this Container.
 	 *
 	 * @return     The number of Molecules in this Container
 	 */
