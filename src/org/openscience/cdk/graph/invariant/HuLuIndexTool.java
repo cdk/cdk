@@ -26,6 +26,7 @@ package org.openscience.cdk.graph.invariant;
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.tools.*;
+import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.invariant.exception.*;
 import org.openscience.cdk.exception.*;
 import java.util.*;

@@ -1,11 +1,11 @@
-/*
- * PathTools.java
+/* $RCSfile$    
+ * $Author$    
+ * $Date$    
+ * $Revision$
  *
- * $RCSfile$    $Author$    $Date$    $Revision$
+ * Copyright (C) 2001-2002  The Chemistry Development Kit (CDK) project
  *
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CKD) project
- *
- * Contact: steinbeck@ice.mpg.de
+ * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -26,8 +26,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *
  */
-
-package org.openscience.cdk.tools;
+package org.openscience.cdk.graph;
 
 import org.openscience.cdk.*;
 import java.util.*;

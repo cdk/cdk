@@ -32,6 +32,7 @@ import org.openscience.cdk.*;
 import org.openscience.cdk.ringsearch.*;
 import org.openscience.cdk.geometry.*;
 import org.openscience.cdk.tools.*;
+import org.openscience.cdk.graph.PathTools;
 import javax.vecmath.*;
 import java.util.Vector;
 import java.lang.Math;

@@ -26,6 +26,7 @@ package org.openscience.cdk.test;
 import org.openscience.cdk.*;
 import org.openscience.cdk.tools.*;
 import org.openscience.cdk.templates.*;
+import org.openscience.cdk.graph.PathTools;
 import java.util.*;
 import java.io.*;
 import java.net.URL;
