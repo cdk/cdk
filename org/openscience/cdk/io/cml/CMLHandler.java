@@ -32,12 +32,12 @@ import org.xml.sax.helpers.*;
 
 public class CMLHandler extends DefaultHandler {
     private Convention conv;
-    private int debug;
+    private org.openscience.cdk.tools.LoggingTool logger;
 
     private Hashtable userConventions;
 
     public CMLHandler(CDOInterface cdo) {
-        debug = 0;
+        logger = new org.openscience.cdk.tools.LoggingTool();
         conv = new Convention(cdo);
         userConventions = new Hashtable();
     }
@@ -46,12 +46,8 @@ public class CMLHandler extends DefaultHandler {
       userConventions.put(convention, conv);
     }
 
-    public void setDebug() {
-      this.debug = 1;
-    }
-
     public void characters(char ch[], int start, int length) {
-       println("CMLHandler: character data"); 
+       logger.debug("CMLHandler: character data");
        conv.characterData(ch, start, length);
     }
 
@@ -62,7 +58,7 @@ public class CMLHandler extends DefaultHandler {
     }
 
     public void endElement(String uri, String local, String raw) {
-       println("CMLHandler: end element"); 
+       logger.debug("CMLHandler: end element");
        conv.endElement(uri, local, raw);
     }
 
@@ -75,43 +71,36 @@ public class CMLHandler extends DefaultHandler {
     }
 
     public void startElement(String uri, String local, String raw, Attributes atts) {
-      println("CMLHandler.startElement:");
-        println("uri: " + uri); 
-        println("local: " + local); 
-        println("raw: " + raw); 
+      logger.debug("CMLHandler.startElement:");
+        logger.debug("uri: " + uri);
+        logger.debug("local: " + local);
+        logger.debug("raw: " + raw);
         String name = raw;
         for (int i = 0; i < atts.getLength(); i++)
         {
             if (atts.getQName(i).equals("convention"))
             {
-                println(new StringBuffer("New Convention: ").append(atts.getValue(i)).toString());
+                logger.debug(new StringBuffer("New Convention: ").append(atts.getValue(i)).toString());
                 if (atts.getValue(i).equals("CML")) {
-                    println("Doing nothing");
+                    logger.debug("Doing nothing");
                 } else if (atts.getValue(i).equals("PDB")) {
                     conv = new PDBConvention(conv);
-		    if (debug == 1) conv.setDebug();
 		} else if (atts.getValue(i).equals("PMP")) {
                     conv = new PMPConvention(conv);
-		    if (debug == 1) conv.setDebug();
 		} else if (atts.getValue(i).equals("MDLMol")) {
-		    println("MDLMolConvetion instantiated...");
+		    logger.debug("MDLMolConvetion instantiated...");
                     conv = new MDLMolConvention(conv);
-		    if (debug == 1) conv.setDebug();
                 } else {
                     //unknown convention. userConvention?
                     if (userConventions.containsKey(atts.getValue(i))) {
                       Convention newconv = (Convention)userConventions.get(atts.getValue(i));
                       newconv.inherit(conv);
                       conv = newconv;
-	  	      if (debug == 1) conv.setDebug();
                     }
-                }                 
+                }
             }
         }
         conv.startElement(uri, local, raw, atts);
     }
 
-    private void println(String s) {
-      if (this.debug == 1) System.out.println(s);
-    }
 }

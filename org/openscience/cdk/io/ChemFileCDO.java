@@ -50,12 +50,13 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
     private int bond_order;
     private int bond_stereo;
 
-    private boolean debug = true;
-    
+     protected org.openscience.cdk.tools.LoggingTool logger;
+
     /**
      * Basic contructor
      */
     public ChemFileCDO() {
+      logger = new org.openscience.cdk.tools.LoggingTool();
       currentChemSequence = new ChemSequence();
       currentChemModel = new ChemModel();
       currentSetOfMolecules = new SetOfMolecules();
@@ -69,7 +70,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
      * supposed to be called by the JCFL library
      */
     public void startDocument() {
-      if (debug) System.out.println("New Document");
+      logger.debug("New Document");
       currentChemSequence = new ChemSequence();
       currentChemModel = new ChemModel();
       currentSetOfMolecules = new SetOfMolecules();
@@ -81,11 +82,11 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
      * supposed to be called by the JCFL library
      */
     public void endDocument() {
-	    currentSetOfMolecules.addMolecule(currentMolecule);	    
+	    currentSetOfMolecules.addMolecule(currentMolecule);
 	    currentChemModel.setSetOfMolecules(currentSetOfMolecules);
 	    currentChemSequence.addChemModel(currentChemModel);
 	    this.addChemSequence(currentChemSequence);
-	    if (debug) System.out.println("Molecule added");
+	    logger.debug("Molecule added");
     };
 
     /**
@@ -99,13 +100,13 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
      * supposed to be called by the JCFL library
      */
     public void startObject(String objectType) {
-      if (debug) System.out.println("START:" + objectType);
+      logger.debug("START:" + objectType);
       if (objectType.equals("Molecule")) {
         currentMolecule = new Molecule();
       } else if (objectType.equals("Atom")) {
         currentAtom = new Atom("H");
-        if (debug) System.out.println("Atom # " + numberOfAtoms);
-        numberOfAtoms++;      
+        logger.debug("Atom # " + numberOfAtoms);
+        numberOfAtoms++;
       } else if (objectType.equals("Bond")) {
       }
     };
@@ -115,18 +116,18 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
      * supposed to be called by the JCFL library
      */
     public void endObject(String objectType) {
-      if (debug) System.out.println("END: " + objectType);
+      logger.debug("END: " + objectType);
       if (objectType.equals("Molecule")) {
         currentSetOfMolecules.addMolecule(currentMolecule);
         currentChemModel.setSetOfMolecules(currentSetOfMolecules);
         currentChemSequence.addChemModel(currentChemModel);
         addChemSequence(currentChemSequence);
-        if (debug) System.out.println("This file has " + getChemSequenceCount() + " sequences.");
-        if (debug) System.out.println("Molecule added: \n" + currentMolecule.toString());
+        logger.debug("This file has " + getChemSequenceCount() + " sequences.");
+        logger.debug("Molecule added: \n" + currentMolecule.toString());
       } else if (objectType.equals("Atom")) {
         currentMolecule.addAtom(currentAtom);
       } else if (objectType.equals("Bond")) {
-        if (debug) System.out.println("Bond: " + bond_a1 + ", " + bond_a2 + ", " + bond_order);
+        logger.debug("Bond: " + bond_a1 + ", " + bond_a2 + ", " + bond_order);
         currentMolecule.addBond(bond_a1, bond_a2, bond_order);
       }
     };  
@@ -137,9 +138,9 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
      */
     public void setObjectProperty(String objectType, String propertyType,
 		    String propertyValue) {
-      if (debug) System.out.println("objectType: " + objectType);
-      if (debug) System.out.println("propType: " + propertyType);
-      if (debug) System.out.println("property: " + propertyValue);
+      logger.debug("objectType: " + objectType);
+      logger.debug("propType: " + propertyType);
+      logger.debug("property: " + propertyValue);
       if (objectType.equals("Atom")) {
         if (propertyType.equals("type")) {
           currentAtom.setSymbol(propertyValue);
@@ -154,7 +155,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
         } else if (propertyType.equals("z3")) {
           currentAtom.setZ3D(new Double(propertyValue).doubleValue());
         } else if (propertyType.equals("id")) {
-          if (debug) System.out.println("id" + propertyValue);
+          logger.debug("id" + propertyValue);
           atomEnumeration.put(propertyValue, new Integer(numberOfAtoms));
         }
       } else if (objectType.equals("Bond")) {
@@ -166,7 +167,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
           bond_order = new Integer(propertyValue).intValue();
         }
       }
-      if (debug) System.out.println("Set...");
+      logger.debug("Set...");
     };
     
     /**

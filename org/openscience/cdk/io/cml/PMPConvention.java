@@ -42,7 +42,7 @@ public class PMPConvention extends Convention {
   
     public PMPConvention(Convention conv) {
 	super(conv);
-	warn("New PMP Convention!");
+	logger.debug("New PMP Convention!");
     }
     
     public CDOInterface returnCDO() {
@@ -61,7 +61,7 @@ public class PMPConvention extends Convention {
     
     
     public void startElement (String uri, String local, String raw, Attributes atts) {
-        warn("PMP element: name");
+        logger.debug("PMP element: name");
 	super.startElement(uri, local, raw, atts);
     };
 
@@ -71,8 +71,8 @@ public class PMPConvention extends Convention {
 
     public void characterData (char ch[], int start, int length) {
 	String s = toString(ch, start, length).trim();
-	System.out.println("Start PMP chardata (" + CurrentElement + ") :" + s);
-	System.out.println(" ElTitle: " + elementTitle);
+	logger.debug("Start PMP chardata (" + CurrentElement + ") :" + s);
+	logger.debug(" ElTitle: " + elementTitle);
 	if (CurrentElement == STRING && BUILTIN.equals("spacegroup")) {
 	    cdo.setObjectProperty("Crystal", "spacegroup", s);
 	} else if (CurrentElement == FLOATARRAY && 
@@ -83,27 +83,27 @@ public class PMPConvention extends Convention {
 	    cdo.startObject(axis);
 	    try {	  
 		StringTokenizer st = new StringTokenizer(s);
-		System.out.println("Tokens: " + st.countTokens());
+		logger.debug("Tokens: " + st.countTokens());
 		if (st.countTokens() > 2) {
 		    String token = st.nextToken();
-		    warn("FloatArray (Token): " + token);
+		    logger.debug("FloatArray (Token): " + token);
 		    cdo.setObjectProperty(axis, "x", token);
 		    token = st.nextToken();
-		    warn("FloatArray (Token): " + token);
+		    logger.debug("FloatArray (Token): " + token);
 		    cdo.setObjectProperty(axis, "y", token);
 		    token = st.nextToken();
-		    warn("FloatArray (Token): " + token);
+		    logger.debug("FloatArray (Token): " + token);
 		    cdo.setObjectProperty(axis, "z", token);
 		} else {
-		    warn("PMP Convention error: incorrect number of cell axis fractions!\n");
+		    logger.debug("PMP Convention error: incorrect number of cell axis fractions!\n");
 		}
 	    } catch (Exception e) {
-		warn("PMP Convention error: " + e.toString());
+		logger.debug("PMP Convention error: " + e.toString());
 	    }	    
 	    cdo.endObject(axis);
 	} else {           
 	    super.characterData(ch, start, length);
 	}
-	System.out.println("End PMP chardata");
+	logger.debug("End PMP chardata");
     }
 }

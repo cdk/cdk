@@ -91,10 +91,10 @@ public class PDBConvention extends Convention {
 		} else if (atts.getQName(i).equals("title") && 
                            atts.getValue(i).equals("connections")) {
                     connectionTable = true;
-		    System.out.println("Start Connection Table");
+		    logger.debug("Start Connection Table");
 		} else if (atts.getQName(i).equals("title") && 
                            atts.getValue(i).equals("connect")) {
-		    System.out.println("New connection");
+		    logger.debug("New connection");
                     isBond = true;
 		} else if (atts.getQName(i).equals("id") && isBond) {
                     connect_root = atts.getValue(i);
@@ -109,7 +109,7 @@ public class PDBConvention extends Convention {
     public void endElement (String uri, String local, String raw) {
 	String name = raw;
 	if (name.equals("list") && connectionTable && !isBond) {
-	    System.out.println("End Connection Table");
+	    logger.debug("End Connection Table");
 	    connectionTable = false;
 	}
 	isELSYM = false;
@@ -122,13 +122,13 @@ public class PDBConvention extends Convention {
 	if (isELSYM) {
 	    elsym.addElement(s);
 	} else if (isBond) {
-	    warn("CD (bond): " + s);
+	    logger.debug("CD (bond): " + s);
             if (connect_root.length() > 0) {
 		StringTokenizer st = new StringTokenizer(s);
 		while (st.hasMoreElements()) {
 		    String atom = (String)st.nextElement();
 		    if (!atom.equals("0")) {
-			warn("new bond: " + connect_root + "-" + atom);
+			logger.debug("new bond: " + connect_root + "-" + atom);
 			cdo.startObject("Bond");
                         int atom1 = Integer.parseInt(connect_root) - 1;
                         int atom2 = Integer.parseInt(atom) - 1;

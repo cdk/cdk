@@ -56,7 +56,7 @@ public class MDLMolConvention extends Convention {
     };   
     
     public void startElement (String uri, String local, String raw, Attributes atts) {
-        warn("MDLMol element: name");	
+        logger.debug("MDLMol element: name");	
 	super.startElement(uri, local, raw, atts);
     };
 
@@ -69,10 +69,10 @@ public class MDLMolConvention extends Convention {
 	if (CurrentElement == STRING && BUILTIN.equals("stereo")) {
 	    stereoGiven = true;
 	    if (s.trim().equals("W")) {
-		warn("CML W stereo found");
+		logger.debug("CML W stereo found");
 		bondStereo.addElement("1");
 	    } else if (s.trim().equals("H")) {
-		warn("CML H stereo found");
+		logger.debug("CML H stereo found");
 		bondStereo.addElement("6");
 	    }
 	} else {           

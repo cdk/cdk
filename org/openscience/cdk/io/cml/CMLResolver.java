@@ -39,8 +39,8 @@ public class CMLResolver implements EntityResolver {
 	} else {
 	    return null;
 	}
-    }    
-    
+    }
+
     private InputSource getCMLType( String type ) {
 	try {
 	    URL url = ClassLoader.getSystemResource(type);
