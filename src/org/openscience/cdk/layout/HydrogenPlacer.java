@@ -46,7 +46,7 @@ import java.awt.*;
 
 public class HydrogenPlacer
 {
-	public static boolean debug = false;
+	public static boolean debug = true;
 	
 	public static void placeHydrogens2D(AtomContainer atomContainer, Atom atom)
 	{

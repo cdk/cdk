@@ -39,6 +39,8 @@ import junit.framework.*;
 
 public class HydrogenPlacerTest extends TestCase {
     
+    public boolean standAlone = true;
+    
     public HydrogenPlacerTest(String name) {
         super(name);
     }
@@ -86,5 +88,16 @@ public class HydrogenPlacerTest extends TestCase {
         assertEquals(p1.y, p2.y, error);
     }
     
+    	public static void main(String[] args)
+	{
+		try{
+			HydrogenPlacerTest hpt = new HydrogenPlacerTest("HydrogenPlacerTest");
+			hpt.standAlone = true;
+			hpt.testplaceHydrogens2D();			
+		}
+		catch(Exception exc)
+		{
+			exc.printStackTrace();
+		}
+	}
 }
-
