@@ -91,7 +91,6 @@ public class SmilesParser {
 		char mychar;
 		char[] chars = new char[1];
 		Atom lastNode = null;
-		Atom baseNode = null;
 		Atom thisNode = null;
 		Stack atomStack = new Stack();
 		Stack bondStack = new Stack();
@@ -105,7 +104,6 @@ public class SmilesParser {
                 logger.debug("");
                 logger.debug("Processing: " + mychar);
                 if (lastNode != null) logger.debug("Lastnode: " + lastNode.hashCode());
-                if (baseNode != null) logger.debug("Basenode: " + baseNode.hashCode());
 				if ((mychar >= 'A' && mychar <= 'Z') || (mychar >= 'a' && mychar <= 'z'))
 				{
 					currentSymbol = getElementSymbol(smiles, position);
@@ -141,18 +139,27 @@ public class SmilesParser {
 				}
 				else if (mychar == '(')
 				{
-                    /* a baseNode is used instead of atomStack to
-                     * fix bug #593648 */
-                    baseNode = lastNode;
-                    // atomStack.push(lastNode);
+                    atomStack.push(lastNode);
+                    logger.debug("Stack:");
+                    Enumeration ses = atomStack.elements();
+                    while (ses.hasMoreElements()) {
+                        Atom a = (Atom)ses.nextElement();
+                        logger.debug("" + a.hashCode());
+                    }
+                    logger.debug("------");
 					bondStack.push(new Double(bondStatus));
 					position++;
 				}
 				else if (mychar == ')')
 				{
-                    //lastNode = (Atom) atomStack.pop();
-                    lastNode = baseNode;
-                    baseNode = null;
+                    lastNode = (Atom) atomStack.pop();
+                    logger.debug("Stack:");
+                    Enumeration ses = atomStack.elements();
+                    while (ses.hasMoreElements()) {
+                        Atom a = (Atom)ses.nextElement();
+                        logger.debug("" + a.hashCode());
+                    }
+                    logger.debug("------");
 					bondStatus = ((Double) bondStack.pop()).doubleValue();
 					position++;
 				}
