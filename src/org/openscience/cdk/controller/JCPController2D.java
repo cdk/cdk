@@ -616,6 +616,9 @@ public class JCPController2D {
             *                          LASSOMODE                                     *
             *************************************************************************/
                 if (c2dm.getDrawMode() == c2dm.LASSO) {
+                    // first deselect all atoms
+                    r2dm.setSelectedPart(new AtomContainer());
+                    // now select new atoms
                     if (wasDragged) {
                         Vector lassoPoints = r2dm.getLassoPoints();
                         r2dm.addLassoPoint(new Point((Point)lassoPoints.elementAt(0)));
@@ -636,8 +639,8 @@ public class JCPController2D {
                         r2dm.setSelectedPart(getContainedAtoms(polygon));
                         r2dm.getLassoPoints().removeAllElements();
                         r2dm.fireChange();
-                        fireChange();
                     }
+                    fireChange();
                 }
 
                 /*************************************************************************

@@ -6,6 +6,9 @@ Changes in CVS
 New:
 * Added move operation to JCPController2D
 
+Changes:
+* Added one-click (not-patented ;) deselect on lasso mode
+
 Fixes:
 * Fixed reading of AtomType's with JSX
 * Fixed zooming of atomic charges in Renderer2D
@@ -34,8 +37,8 @@ none
 New:
 * A Crystal convertor to Jmol v5 is added.
 * StructureDiagramGenerator now uses LoggingTool.
-* It is now possible to say if the double bond 
-  configurations should be evaluated for every 
+* It is now possible to say if the double bond
+  configurations should be evaluated for every
   single double bond in the SmilesGenerator.
 * The Atom class has now a container field for its
   formal charge. (RFC #6)
@@ -47,7 +50,7 @@ New:
 * A LonePair class is implemented (RFC #5)
 * More JUnit Tests.
 * Added rendering of wedge bonds (up/down) in Renderer2D
-* Added ChemObjectTree for for showing the content of a 
+* Added ChemObjectTree for for showing the content of a
   ChemObject as a tree, see cdk-view
 * Added 2D rendering and editing of formal charges
 * Added AtomType configuration from Jmol
@@ -62,7 +65,7 @@ Fixes:
 * HOSECodeGenerator now generates correctly ranked n-sphere codes.
 * Reading of 3D coordinates from ShelX files
 * Fixed "M  END" line in MDL output (fixes bug #624656)
-* Fixed conversion of coordinates in libio/joelib/Convertor 
+* Fixed conversion of coordinates in libio/joelib/Convertor
   (thanks to Joerg for patch)
 * Fixed reading of multifragment IChI tautomers
   (fixed bug #642429)
@@ -75,7 +78,7 @@ Fixes:
 * Fix for SetOfMolecule.getMolecules(). The array length is now
   equals to the number of molecules in the set.
 * Rewrote AtomTypeFactory to not require JSX in special cases
-  
+
 API changes:
 * Two getBondNumber() methods are added to AtomContainer.
 * The method tools.SaturationChecker.saturateWithHydrogen() got
@@ -90,10 +93,10 @@ New:
 * Added the long awaited UniversalIsomophismTester.
   This class provides methods for Isomophism-, Subgraph-
   isomorphism- and Maximum Common Subgraph Isomorphism
-  testing. 
+  testing.
 * Added MFAnalyser.getElementCount()
 * Added SaturationChecker.saturateWithHydrogen(Molecule)
-* Added cdk.math.MinMax class (methods formerly in 
+* Added cdk.math.MinMax class (methods formerly in
   cdk.structgen.stoichastic.ConvertTools)
 * Added a IChI reader
 * Added a class for constant physical property values
@@ -102,24 +105,24 @@ New:
 * cdk-fileconvert can generate SVG
 
 Fixes:
-* IsotopeFactory does now return Isotopes with 
+* IsotopeFactory does now return Isotopes with
   correctly initialized flags and pointers.
 * flags[] array is now correctly cloned and copied
-  inside the ChemObject.clone() method. 
+  inside the ChemObject.clone() method.
   (fixes bug #617120)
 * JCPController2D now edits a bond order when in
   bond mode
 * Removed NoSuchAtomException's from core classes
   (see RFC #4, fixes bugs #590570 and #590576)
 * Lots of updated JavaDoc's (checked with Sun's DocCheck doclet)
-* Fixed bug in reading SDF files with patch by Chris Pudney 
+* Fixed bug in reading SDF files with patch by Chris Pudney
   (fixes bug #619183).
 * Fixed CMLWriter to not produce invalid CML code, and patched
   CMLReader to be able to read older CMLReader output
   (fixes bug #620121).
 * Fixed bond order problem in ChemFileCDO (fixes bug #620229)
-* Fixed reading of aromatic bond from MDL molfiles 
-  (fixes bug #620731, thanks to Hans Vanderzijl for patch 
+* Fixed reading of aromatic bond from MDL molfiles
+  (fixes bug #620731, thanks to Hans Vanderzijl for patch
   suggestion)
 
 API changes:
@@ -146,7 +149,7 @@ New:
 * Added a class for reading ShelX files
 * The SMILES generator now also supports chirality
 * cdk-fileconvert supports one-to-many conversion
-  (e.g. PMP contains many crystals, while ShelX 
+  (e.g. PMP contains many crystals, while ShelX
    can contain only one crystal. Thus, when converting
    PMP to ShelX more than one file is created.)
 * Added a method MFAnalyser.getElement() which returns
@@ -164,13 +167,13 @@ Fixes:
 * Removed non-informative template JavaDoc
 
 API changes:
-* cdk.libio.jmol.Convertor now converts 
+* cdk.libio.jmol.Convertor now converts
   AtomContainer from/to ChemFrame, instead of
   Molecule from/to ChemFrame
 * FortranFormat moved to org.openscience.cdk.math
 * GeomertryTools.hasXDCoordinates() now accepts
   AtomContainer instead of Molecule
-* ChemObjectWriters must now also implement the 
+* ChemObjectWriters must now also implement the
   method highestSupportedChemObject()
 
 20020902 Release
@@ -191,7 +194,7 @@ New:
 Fixes:
 * More JavaDoc documentation
 * Fixed bug in cdk-view (#588043)
-* Fixes in MDLReader and FileConvertor (fixes bugs 
+* Fixes in MDLReader and FileConvertor (fixes bugs
   #599536 and #599539)
 
 API changes:
@@ -199,7 +202,7 @@ API changes:
 * Merged IsotopeFactory and ElementFactory
 * Made IsotopeFactory a singleton class
 * Added int[][] AtomContainer.getAdjacencyMatrix() method
-* CDKConstants is now a class and no longer an interface  
+* CDKConstants is now a class and no longer an interface
 
 20020805 Release
 ------------------------------------
@@ -236,7 +239,7 @@ API changes:
   (lists OS version/arch and Java version/vendor)
 * adding Rendered3D which does not use Java3D (not yet operational)
 * fixed Atom.point2D == null problem
-* fixed reading of CML files with DTD for Aelfred2 
+* fixed reading of CML files with DTD for Aelfred2
   (closes bug #493605)
 
 20020101.1 Release
