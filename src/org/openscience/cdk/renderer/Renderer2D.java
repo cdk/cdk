@@ -428,17 +428,17 @@ public class Renderer2D   {
         int formalChargeW = 0; // unless next condition, this is the default
         int formalChargeH = 0;
         String formalChargeString = ""; // if charge == 0, then don't print anything
-        if (formalCharge > 1) {
-            formalChargeString = new Integer(formalCharge).toString() + "+";
-        } else if (formalCharge > 0) {
-            formalChargeString = "+";
-        } else if (formalCharge < -1) {
-            formalChargeString = new Integer(formalCharge*-1).toString() + "-";
-        } else if (formalCharge < 0) {
-            formalChargeString = "-";
-        }
         if (formalCharge != 0) {
-            graphics.setFont(normalFont);
+            if (formalCharge > 1) {
+                formalChargeString = new Integer(formalCharge).toString() + "+";
+            } else if (formalCharge > 0) {
+                formalChargeString = "+";
+            } else if (formalCharge < -1) {
+                formalChargeString = new Integer(formalCharge*-1).toString() + "-";
+            } else if (formalCharge < 0) {
+                formalChargeString = "-";
+            }
+            graphics.setFont(subscriptFont);
             fm = graphics.getFontMetrics();
             formalChargeW = (new Integer(fm.stringWidth(formalChargeString))).intValue();
             formalChargeH = (new Integer(fm.getAscent())).intValue();
