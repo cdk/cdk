@@ -186,10 +186,13 @@ public class MFAnalyser{
 				symbols.put(symbol,new Integer(1));
 		}
 		mf = addSymbolToFormula(symbols, "C", mf);
-		mf = addSymbolToFormula(symbols, "H", mf);
-		if (HCount > 0){
-			mf += "H";
-			if (HCount > 1) mf += new Integer(HCount).toString();
+    if(symbols.get("H")!=null){
+      mf = addSymbolToFormula(symbols, "H", mf);
+    }else{
+      if (HCount > 0){
+        mf += "H";
+        if (HCount > 1) mf += new Integer(HCount).toString();
+      }
 		}
 		mf = addSymbolToFormula(symbols, "N", mf);
 		mf = addSymbolToFormula(symbols, "O", mf);
