@@ -46,6 +46,7 @@ public class CMLIOTests {
         suite.addTest(JChemPaintTest.suite());
         suite.addTest(CML2Test.suite());
         suite.addTest(CMLFragmentsTest.suite());
+        suite.addTest(Jumbo46CMLFragmentsTest.suite());
         
         // the following classes require Java 1.4
         try {

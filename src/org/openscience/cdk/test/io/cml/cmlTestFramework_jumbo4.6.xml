@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<cml title="Regression tests for valid XML Schema documents for CML 2.0"
+
+  xmlns="http://www.xml-cml.org/schema/cml2/core"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://www.xml-cml.org/schema/cml2/core ../../../io/cml/data/cmlAll.xsd">
+  
+  <!-- JFragmentsTest.testAtomId() -->
+  <molecule id='m1'><atomArray><atom id='a1'/></atomArray></molecule>
+  
+  <!-- JFragmentsTest.testAtomId3() -->
+  <molecule id='m1'>
+    <atomArray atomID='a1 a2 a3'/>
+  </molecule>
+
+  <!-- JFragmentsTest.testAtomElementType3() -->
+  <molecule id='m1'><atomArray atomID='a1' elementType='C'/></molecule>
+  
+  <!-- JFragmentsTest.testBond() -->
+  <molecule id='m1'>
+    <atomArray><atom id='a1'/><atom id='a2'/></atomArray>
+    <bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray>
+  </molecule>
+  
+  <!-- JFragmentsTest.testBond4() -->
+  <molecule id='m1'>
+    <atomArray atomID='a1 a2 a3'/>
+    <bondArray atomRef1='a1 a1' atomRef2='a2 a3' bondID='b1 b2'/>
+  </molecule>
+
+  <!-- JFragmentsTest.testBond5() -->
+  <molecule id='m1'>
+    <atomArray atomID='a1 a2 a3'/>
+    <bondArray atomRef1='a1 a1' atomRef2='a2 a3' order='1 1'/>
+  </molecule>
+
+  <!-- JFragmentsTest.testBondAromatic() -->
+  <molecule id='m1'>
+    <atomArray atomID='a1 a2'/>
+    <bondArray atomRef1='a1' atomRef2='a2' order='A'/>
+  </molecule>
+
+  <!-- JFragmentsTest.testBondId() -->
+  <molecule id='m1'>
+    <atomArray><atom id='a1'/><atom id='a2'/></atomArray>
+    <bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray>
+  </molecule>
+  
+  <!-- JFragmentsTest.testList() -->
+  <list> 
+    <molecule id='m1'><atomArray><atom id='a1'/><atom id='a2'/></atomArray><bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray></molecule>
+    <molecule id='m2'><atomArray><atom id='a1'/><atom id='a2'/></atomArray><bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray></molecule>
+  </list>
+  
+  <!-- JFragmentsTest.testCoordinates2D() -->
+  <molecule id='m1'>
+    <atomArray atomID='a1 a2' x2='0.0 0.1' y2='1.2 1.3'/>
+  </molecule>
+  
+  <!-- JFragmentsTest.testCoordinates3D() -->
+  <molecule id='m1'>
+    <atomArray atomID='a1 a2' x3='0.0 0.1' y3='1.2 1.3' z3='2.1 2.5'/>
+  </molecule>
+  
+  <!-- JFragmentsTest.testFractional3D() -->
+  <molecule id='m1'>
+    <atomArray atomID='a1 a2' xFract='0.0 0.1' yFract='1.2 1.3' zFract='2.1 2.5'/>
+  </molecule>
+  
+  <!-- JFragmentsTest.testMissing2DCoordinates() -->
+  <molecule id='m1'>
+    <atomArray>
+      <atom id='a1' x2='0.0' y2='0.1'/>
+      <atom id='a2'/>
+      <atom id='a3' x2='0.1' y2='0.0'/>
+    </atomArray>
+  </molecule>
+  
+  <!-- JFragmentsTest.testMissing3DCoordinates() -->
+  <molecule id='m1'>
+    <atomArray>
+      <atom id='a1' x3='0.0' y3='0.1' z3='0.2'/>
+      <atom id='a2'/>
+      <atom id='a3' x3='0.1' y3='0.0' z3='0.2'/>
+    </atomArray>
+  </molecule>
+  
+  <!-- JFragmentsTests.testCrystal() -->
+  <molecule id="m1">
+    <crystal z="4">
+      <scalar id="sc1" title="a" errorValue="0.001" units="units:angstrom">4.500</scalar>
+      <scalar id="sc2" title="b" errorValue="0.001" units="units:angstrom">4.500</scalar>
+      <scalar id="sc3" title="c" errorValue="0.001" units="units:angstrom">4.500</scalar>
+      <scalar id="sc4" title="alpha" units="units:degrees">90</scalar>
+      <scalar id="sc5" title="beta" units="units:degrees">90</scalar>
+      <scalar id="sc6" title="gamma" units="units:degrees">90</scalar>
+      <symmetry id="s1" spaceGroup="Fm3m"/>
+    </crystal>
+    <atomArray>
+      <atom id="a1" elementType="Na" formalCharge="1"
+        xFract="0.0" yFract="0.0" zFract="0.0"
+        x2="+23.1" y2="-21.0"></atom>
+      <atom id="a2" elementType="Cl" formalCharge="-1" 
+        xFract="0.5" yFract="0.0" zFract="0.0"></atom>
+    </atomArray>
+  </molecule>
+
+  <!-- JFragmentsTest.testMoleculeId() -->
+  <molecule id='m1'><atomArray><atom id='a1'/></atomArray></molecule>
+
+  <!-- Not tested yet -->
+  <molecule id='m1'><atomArray>
+    <atom id='a1' elementType="C">
+      <scalar dataType="xsd:float" dictRef="cdk:partialCharge">-0.234</scalar>
+    </atom>
+  </atomArray></molecule>
+</cml>

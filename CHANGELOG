@@ -17,6 +17,7 @@ New:
   (closes RFE #949751)
 * Added the new method CDKPluginInterface.getPluginLicense()
 * Added the new method CDKEditBus.runScript()
+* CML2 from Jumbo 4.6 was uploaded
 
 Fixes:
 * Fixed KabschAlignment so that the rotation matrixi, U, is  returned properly
