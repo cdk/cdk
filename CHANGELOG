@@ -1,10 +1,13 @@
 CHANGELOG
 ---------
 
-changes since "cdk preview 20010511"
+changes since "cdk preview 20010807"
 ------------------------------------
 * Added TestCases for PDBReader, Monomer, Polymer and ChemObject.
 * Added get/setProperty and get/setRemark to ChemObject.
+
+changes since "cdk preview 20010511"
+------------------------------------
 * Added AtomicTable.java: a list of atomic properties.
 * Added Atom.charge (private)
 * Added XYZReader.java
