@@ -144,7 +144,7 @@ public class MDLReader implements CDKConstants, ChemObjectReader {
 	    try
 	    {
 	        String title = new String(input.readLine()+"\n"+input.readLine()+"\n"+input.readLine());
-			molecule.title = title;
+		molecule.setTitle(title);
 	        StringBuffer strBuff = new StringBuffer(input.readLine());
 	        strBuff.insert(3, " ");
 	        StringTokenizer strTok = new StringTokenizer(strBuff.toString());
