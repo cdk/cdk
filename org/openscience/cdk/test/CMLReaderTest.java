@@ -46,14 +46,22 @@ public class CMLReaderTest {
 	    reader = new CMLReader(new FileReader(inFile));
 	    chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
 
+	    System.out.println("test1");
 	    chemSequence = chemFile.getChemSequence(0);
+	    System.out.println("test2");
 	    chemModel = chemSequence.getChemModel(0);
+	    System.out.println("test3");
 	    setOfMolecules = chemModel.getSetOfMolecules();
+	    System.out.println("test4");
 	    molecules = new Molecule[setOfMolecules.getMoleculeCount()];
+	    System.out.println("test5");
 	    for (int i = 0; i < setOfMolecules.getMoleculeCount(); i++) {
+		System.out.println("New molecule...");
 		molecules[i] = setOfMolecules.getMolecule(i);
 	    }
+	    System.out.println("test6");
 	    new MoleculeViewer2D(molecules[0]);
+	    System.out.println("test7");
 	} catch(Exception exc) {
 	    exc.printStackTrace();
 	}

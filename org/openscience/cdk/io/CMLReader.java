@@ -85,7 +85,10 @@ public class CMLReader implements CDKConstants, ChemObjectReader {
 	try {
 	    parser.parse(new InputSource(input));
 	} catch (IOException e) {
+	    System.out.println("CMLReader (IOException): " + e.toString());
 	} catch (SAXException e) {
+	    System.out.println("CMLReader (SAXException): " + e.toString());
+	    e.printStackTrace();
 	}
 	return cdo;
     }
