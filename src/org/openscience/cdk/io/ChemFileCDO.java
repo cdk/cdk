@@ -266,7 +266,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
           bond_a2 = new Integer(propertyValue).intValue();
         } else if (propertyType.equals("id")) {
           logger.debug("id" + propertyValue);
-          bond_id = propertyValue;
+          // bond_id = propertyValue;
         } else if (propertyType.equals("order")) {
           try {
             bond_order = Double.parseDouble(propertyValue);
