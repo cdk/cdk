@@ -208,6 +208,69 @@
       as a separately distinguishable entity.
     </definition -->
   </entry>
+  
+  <entry id="atomicMass" term="Atomic Mass">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="Egon Willighagen"/>
+        <metadata name="dc:date" content="2003-08-15"/>
+      </documentation>
+    </annotation>
+    <definition>
+      Mass of the atom.
+    </definition>
+  </entry>
+
+  <entry id="naturalAbundance" term="Natural Abundance">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="Egon Willighagen"/>
+        <metadata name="dc:date" content="2003-08-15"/>
+      </documentation>
+    </annotation>
+    <definition>
+      The relative or percentual concentration of the isotope
+      in a random, natural sample of the element.
+    </definition>
+  </entry>
+
+  <entry id="relativeConcentration" term="Relative Concentration">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="Egon Willighagen"/>
+        <metadata name="dc:date" content="2003-08-15"/>
+      </documentation>
+    </annotation>
+    <definition>
+      The concentration of the subject in a sample quantified by
+      a number that indicates the relative amounts as compared with
+      the other species in the sample.
+    </definition>
+    <description>
+      If a sample contains three species, and their relative
+      concentrations are 100, 60, 40, then their percentual
+      concentrations are 50, 30, 20.
+    </description>
+  </entry>
+
+  <entry id="percentualConcentration" term="Percentuel Concentration">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="Egon Willighagen"/>
+        <metadata name="dc:date" content="2003-08-15"/>
+      </documentation>
+    </annotation>
+    <definition>
+      The concentration of the subject in a sample quantified by
+      a percentage. The sum of the percentages of all specied in the
+      sample sum up to 100%.
+    </definition>
+    <description>
+      If a sample contains three species, and their relative
+      concentrations are 100, 60, 40, then their percentual
+      concentrations are 50, 30, 20.
+    </description>
+  </entry>
 
 </dictionary>
 
