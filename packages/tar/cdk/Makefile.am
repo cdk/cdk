@@ -15,9 +15,10 @@ alljar_DATA = ${JARLIBS}
 
 EXTRA_DIST=VERSION ChangeLog build.xml javadoc.xml src
 
-CLEANFILES=doc dist sourcedist reports \
-        cdk-core.jar cdk-extra.jar \
-        cdk-libio.jar cdk-apps.jar
+CLEANFILES=cdk-core.jar cdk-extra.jar \
+        cdk-libio.jar cdk-apps.jar \
+        dist/jar/cdk-core.jar dist/jar/cdk-apps.jar \
+        dist/jar/cdk-libio.jar dist/jar/cdk-extra-with-java3d.jar
 
 dist/jar/cdk-core.jar:
 	ant dist-core
