@@ -1,0 +1,10 @@
+<para>Libraries that the CDK uses:
+  <itemizedlist> 
+    <listitem> 
+      <para><ulink url="http://java.sun.com/products/java-media/3D/index.html">javax.vecmath</ulink></para>
+      <para>Version: ??</para>
+      <para>License: ??</para>
+      <para>Sun's java library for vector algebra from the Java3D package.</para>
+    </listitem>
+  </itemizedlist>
+</para>

@@ -1,0 +1,20 @@
+<para>We need
+  <itemizedlist> 
+	 <listitem> 
+		<para>a SMILES parser/producer</para> 
+	 </listitem>
+	 <listitem>
+		<para>i/o of molecules to and fromCML</para>
+	 </listitem>
+	 <listitem>
+		<para>A substructure search</para>
+	 </listitem>
+	 <listitem>
+		<para>A database interface of the CDK to a relational database for storing and 
+		retrieving molecule from a database</para>
+	 </listitem>
+	 <listitem>
+		<para>A 3D renderer and a 3D controler (a CDK based JMol)</para>
+	 </listitem>
+</itemizedlist>
+</para> 

@@ -1,0 +1,250 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <meta content="Website XSL Stylesheet V1.7" name="generator">
+        <title>Project Reference</title>
+        <link href="example.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <div class="webpage" id="Nbcc">
+            <a name="Nbcc"></a>
+            <table border="0" cellpadding="10" cellspacing="0" width="100%">
+                <tr>
+                    <td align="left" bgcolor="#FCF0DA" valign="top" width="150">
+                        <p class="navtoc">
+                            <a href="index.html"><img align="left" alt="Banner" border="0" src="images/cdklogo.gif"></a>
+                            <br clear="all">
+                            <br>&nbsp;&nbsp;&nbsp;<span><span class="navtoc">&nbsp;&nbsp;&nbsp;<a href="cdk_intro.html">Introduction</a></span>
+                                <br>
+                            </span>&nbsp;&nbsp;&nbsp;<span><span class="xnavtoc">&gt;Project Reference</span>
+                                <br>
+                            </span>&nbsp;&nbsp;&nbsp;<span><span class="navtoc">&nbsp;&nbsp;&nbsp;<a href="changelog.html">Changelog</a></span>
+                                <br>
+                            </span>&nbsp;&nbsp;&nbsp;<span><span class="navtoc">&nbsp;&nbsp;&nbsp;<a href="agenda.html">Agenda</a></span>
+                                <br>
+                            </span>&nbsp;&nbsp;&nbsp;<span><span class="navtoc">&nbsp;&nbsp;&nbsp;<a href="libraries.html">Libraries</a></span>
+                                <br>
+                            </span>&nbsp;&nbsp;&nbsp;<span><span class="navtoc">&nbsp;&nbsp;&nbsp;<a href="JCP_Bib.html">Bibliography</a></span>
+                                <br>
+                            </span>
+                            <br>
+                        </p>
+                    </td><td bgcolor="white">&nbsp;</td><td align="left" bgcolor="white" valign="top">
+                        <h1>Project Reference</h1>
+                        <div class="chapter" id="Nbec">
+                            <div class="titlepage">
+                                <h2 class="title">
+                                    <a name="Nbec">2. Project Reference</a>
+                                </h2>
+                            </div>
+                            <div class="toc">
+                                <p>
+                                    <b>Table of Contents</b>
+                                </p>
+                                <dl>
+                                    <dt> <a href="cdk_Ref.html#Nbf1">Introduction</a>
+                                    </dt>
+                                    <dt> <a href="cdk_Ref.html#Nbfa">Design Considerations</a>
+                                    </dt>
+                                </dl>
+                            </div>
+                            <div class="section" id="Nbf1">
+                                <div class="titlepage">
+                                    <h2 class="title" style="clear: all">
+                                        <a name="Nbf1"></a><span class="title">Introduction</span>
+                                    </h2>
+                                </div>
+                                <p>
+			The project reference is supposed to be a compendium for all kind of information related to the 
+			CDK project, as there are questions regarding the program design, how to document things or
+			what to do in order to update the web pages.
+		</p>
+                            </div>
+                            <div class="section" id="Nbfa">
+                                <div class="titlepage">
+                                    <h2 class="title" style="clear: all">
+                                        <a name="Nbfa"></a><span class="title">Design Considerations</span>
+                                    </h2>
+                                </div>
+                                <p>
+			The most important aspect in the design of the CDK is the clean separation of function. 
+			We decided to use the meanwhile classical model-view-controler design pattern.
+			(see for example <a href="http://compsci.about.com/science/compsci/library/weekly/aa030600a.htm" target="_top">
+			this article on CompSci and the references therein</a> for more).
+			The basic concept is that there is a single MODEL that contains the data. 
+			In our case the data would be an internal representation of a molecule, a chemical reaction, an
+			ensemble of molcecules, etc.
+		</p>
+                                <p>
+			There can be multiple VIEWs of the same model
+			<div class="itemizedlist">
+                                        <ul>
+                                            <li>
+                                                <a name="Nc0b"></a>
+                                                <p>
+						a 2D representation like the one in JChemPaint, consisting mainly of
+						lines, representing bonds and some Elementsymbols, or
+					</p>
+                                            </li>
+                                            <li>
+                                                <a name="Nc11"></a>
+                                                <p>
+						a 3D representation, rotatable, nicely shaded with perspective scaling.
+					</p>
+                                            </li>
+                                        </ul>
+                                    </div>
+		</p>
+                                <p>
+			The CONTROLER gives the user means of manipulating how the VIEW of the
+			MODEL is supposed to look like, e.g. for rotating a molecule in the 3D
+			view. But is also may provide a way of manipulating the model, so that a
+			user of JChemPaint can, for example, remove a bond from a molecule, etc.
+		</p>
+                                <p>
+			Cleanly separating these parts, using well-defined interfaces between
+			them, gives you great flexibility. Making an applet out of JChemPaint,
+			i.e. plugin a Java 1.1.8 GUI where there is now a Browser-incompatible
+			Java 2 interface, would be much easier if JCP was nicely designed using
+			the MVC paradigm.
+		</p>
+                                <p>
+			The MODEL in the CDK consists of
+			<div class="itemizedlist">
+                                        <ul>
+                                            <li>
+                                                <a name="Nc23"></a>
+                                                <p>
+						Java classes for chemical/physical concepts, like:
+						<div class="itemizedlist">
+                                                        <ul>
+                                                            <li>
+                                                                <a name="Nc29"></a>
+                                                                <p>
+									Element
+								</p>
+                                                            </li>
+                                                            <li>
+                                                                <a name="Nc2f"></a>
+                                                                <p>
+									Isotope
+								</p>
+                                                            </li>
+                                                            <li>
+                                                                <a name="Nc35"></a>
+                                                                <p>
+									Atom
+								</p>
+                                                            </li>
+                                                            <li>
+                                                                <a name="Nc3b"></a>
+                                                                <p>
+									Bond
+								</p>
+                                                            </li>
+                                                            <li>
+                                                                <a name="Nc41"></a>
+                                                                <p>
+									Molecule
+								</p>
+                                                            </li>
+                                                            <li>
+                                                                <a name="Nc47"></a>
+                                                                <p>
+									Ring
+								</p>
+                                                            </li>
+                                                            <li>
+                                                                <a name="Nc4d"></a>
+                                                                <p>
+									etc.
+								</p>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+					</p>
+                                            </li>
+                                            <li>
+                                                <a name="Nc56"></a>
+                                                <p>
+						Java classes that allow for the administration of the above:
+						<div class="itemizedlist">
+                                                        <ul>
+                                                            <li>
+                                                                <a name="Nc5c"></a>
+                                                                <p>
+									ChemModel (may contain all of the above)
+								</p>
+                                                            </li>
+                                                            <li>
+                                                                <a name="Nc62"></a>
+                                                                <p>
+									ChemSequence (contains a sequence of ChemModels, e.g. to represent
+									the course of a reaction, where reactants, intermediates and products
+									are stored in separated ChemModels)
+								</p>
+                                                            </li>
+                                                            <li>
+                                                                <a name="Nc68"></a>
+                                                                <p>
+									ChemFile (a collection of ChemModels and/or ChemSequences)
+								</p>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+						
+					</p>
+                                            </li>
+                                            <li>
+                                                <a name="Nc71"></a>
+                                                <p>
+						Java finder classes for the production of value-added representations from concepts in a ChemModel
+						<div class="itemizedlist">
+                                                        <ul>
+                                                            <li>
+                                                                <a name="Nc77"></a>
+                                                                <p>
+									RingFinder, for example, would produce a SetOfRings, when given a molecule.
+								</p>
+                                                            </li>
+                                                            <li>
+                                                                <a name="Nc7d"></a>
+                                                                <p>
+									BendFinder would produce a list of Bends (a Bend is an ensemble of
+									three atoms from a molecule that make up an angle)
+								</p>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+					</p>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+			The full concept can be found on the photograph that I send you in the
+			first mail and in Egons UML diagrams. The VIEW and the CONTROLER are now in the responsibility of the
+			particular programming team, in our case the JChemPaint team. 
+			The JChemPaint team, for example,  would produce a 2DRenderer.class which creates the regular 2D drawing program look
+			from the underlying model. 
+			The JCP controller would add mouse control for drawing and deleting
+			bonds, rotating molecules, etc. 
+		</p>
+                            </div>
+                        </div>
+                        <br>
+                    </td>
+                </tr>
+            </table>
+            <div class="navfoot">
+                <table border="0" summary="Footer navigation" width="100%">
+                    <tr>
+                        <td align="left" width="33%"><span class="footdate">$Date$</span></td><td align="center" width="34%"><span class="foothome"><a href="index.html">Home</a></span></td><td align="right" width="33%"><span class="footfeed"></span></td>
+                    </tr>
+                    <tr>
+                        <td align="right" colspan="3"><span class="footcopy"><span class="copyright">Copyright &copy; 1999, 2000 <a href="http://compchem.sourceforge.net/">The CDK Project</a>. </span></span></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

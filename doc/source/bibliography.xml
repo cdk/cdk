@@ -1,0 +1,266 @@
+  <bibliography> 
+	 <biblioentry id="BLE91"> 
+		<abbrev>BLE91</abbrev> 
+		<biblioset relation="article"> 
+		  <authorgroup> 
+			 <author><surname>Bley, K.</surname></author> 
+			 <author><surname>Brandt, J.</surname></author> 
+			 <author><surname>Dengler, A.</surname></author> 
+			 <author><surname>Frank, R.</surname></author> 
+			 <author><surname>Ugi, I.</surname></author> 
+		  </authorgroup> 
+		  <title>Constitutional Formulae generated from Connectivity Information:
+			 the Program MDRAW</title> 
+		  <pubdate>1991</pubdate> 
+		  <pagenums>2601-2689</pagenums> 
+		</biblioset> 
+		<biblioset relation="journal"> 
+		  <title>Journal of Chemical Research (M)</title> 
+		</biblioset> 
+	 </biblioentry> 
+ <biblioentry id="BRE78"> 
+<abbrev>BRE78</abbrev> 
+<biblioset relation="article"> 
+<authorgroup>
+<author>
+<surname>
+Bremser, W.
+</surname>
+</author>
+</authorgroup>
+<title>HOSE - A Novel Substructure Code</title>
+<volumenum></volumenum>
+<issuenum></issuenum>
+<pagenums>355-365</pagenums><pubdate>1978</pubdate> 
+</biblioset>
+<biblioset relation="Journal">
+<title>Analytica Chimica Acta</title> 
+</biblioset>
+<bibliomisc> 
+</bibliomisc>
+</biblioentry> 
+
+ <biblioentry id="BRE85"> 
+<abbrev>BRE85</abbrev> 
+<biblioset relation="article"> 
+<authorgroup>
+<author>
+<surname>
+Bremser, W.
+</surname>
+</author>
+</authorgroup>
+<title>Exspectation Ranges of 13-C NMR Chemical Shifts</title>
+<volumenum></volumenum>
+<issuenum></issuenum>
+<pagenums>271-275</pagenums><pubdate>1985</pubdate> 
+</biblioset>
+<biblioset relation="Journal">
+<title>Magnetic Resonance in Chemistry</title> 
+</biblioset>
+<bibliomisc> 
+</bibliomisc>
+</biblioentry> 
+
+
+	 <biblioentry id="DAL92"> 
+		<abbrev>DAL92</abbrev> 
+		<biblioset relation="article"> 
+		  <authorgroup> 
+			 <author> 
+				<firstname>A.</firstname> 
+				<surname>Dalby</surname> 
+			 </author> 
+			 <author> 
+				<firstname>J. G.</firstname> 
+				<surname>Nourse</surname> 
+			 </author> 
+			 <author> 
+				<firstname>W. D.</firstname> 
+				<surname>Hounshell</surname> 
+			 </author> 
+			 <author> 
+				<firstname>A. K.</firstname> 
+				<surname>Gushurst</surname> 
+			 </author> 
+			 <author> 
+				<firstname>D. L.</firstname> 
+				<surname>Grier</surname> 
+			 </author> 
+			 <author> 
+				<firstname>B. A.</firstname> 
+				<surname>Leland</surname> 
+			 </author> 
+			 <author> 
+				<firstname>J.</firstname> 
+				<surname>Laufer</surname> 
+			 </author> 
+		  </authorgroup> 
+		  <title>Description of Several Chemical Structure File Formats Used by
+			 Computer Programs Developed at Molecular Design Limited</title> 
+		  <pagenums>244</pagenums> 
+		  <pubdate>1992</pubdate> 
+		</biblioset> 
+		<biblioset relation="journal"> 
+		  <title>Journal of Chemical Information and Computer Sciences</title> 
+		</biblioset> 
+		<bibliomisc> 
+		  <phrase>An updated online version of this document can be found on 
+			 <ulink
+			 url="http://www.mdli.com/downloads/literature/ctfile.pdf">http://www.mdli.com/downloads/literature/ctfile.pdf</ulink>.</phrase></bibliomisc>
+		
+	 </biblioentry> 
+
+	 <biblioentry id="HEL99"> 
+		<abbrev>HEL99</abbrev> 
+		<biblioset relation="article"> 
+		  <authorgroup> 
+			 <author> 
+				<firstname>H. E.</firstname> 
+				<surname>Helson</surname> 
+			 </author> 
+		  </authorgroup> 
+		  <title>Structure Diagram Generation</title> 
+		  <pagenums>313-398</pagenums> 
+		  <pubdate>1999</pubdate> 
+		</biblioset> 
+		<biblioset relation="journal"> 
+		  <title>Reviews in Computational Chemistry</title> 
+		  <editor> 
+			 <firstname>K. B.</firstname> 
+			 <surname>Lipkowitz</surname> 
+		  </editor> 
+		  <editor> 
+			 <firstname>D. B.</firstname> 
+			 <surname>Boyd</surname> 
+		  </editor> 
+		  <publisher> 
+			 <publishername>Wiley-VCH</publishername> 
+			 <address><city>New-York</city></address> 
+		  </publisher> 
+		</biblioset> 
+	 </biblioentry> 
+
+	 	 <biblioentry id="KRA00">
+	 	<abbrev>KRA00</abbrev>
+	 	<biblioset relation="article">
+		<authorgroup>
+			<author><surname>Krause, Stefan</surname></author>
+			<author><surname>Willighagen, Egon</surname></author>
+			<author><surname>Steinbeck, Christoph</surname></author>
+			</authorgroup>
+		<title>JChemPaint - Using the Collaborative Forces of the Internet to Develop a Free Editor for 2D Chemical Structures</title>
+		<pubdate>2000</pubdate>
+		<pagenums>93-98</pagenums>
+		<volumenum>5</volumenum>
+	</biblioset>
+	<biblioset relation="Journal">
+		<title>Molecules</title>
+	</biblioset>
+	</biblioentry>
+
+	 
+	 <biblioentry id="OS"> 
+		<abbrev>OS</abbrev> 
+		<bibliomisc> 
+		  <phrase>Several articles (for example "The Cathedral and the Bazaar",
+			 "Homesteading the Noosphere") on the foundations of the open-source idea, that
+			 are highly recommended reading, were written by Eric S: Raymond and can be
+			 found on
+			 <ulink
+			 url="http://www.tuxedo.org">http://www.tuxedo.org</ulink>.
+			 Further, 
+			 <ulink
+			 url="http://www.opensource.org">http://www.opensource.org</ulink>
+			 is a web site completely dedicated to evangelizing the open-source
+			 idea.</phrase> </bibliomisc> 
+	 </biblioentry>
+	 
+	 <biblioentry id="PMR99"> 
+		<abbrev>PMR99</abbrev> 
+		<biblioset relation="article"> 
+		  <authorgroup> 
+			 <author> 
+				<firstname>P.</firstname> 
+				<surname>Murray-Rust</surname> 
+			 </author> 
+			 <author> 
+				<firstname>H. S.</firstname> 
+				<surname>Rzepa</surname> 
+			 </author> 
+		  </authorgroup> 
+		  <title>Chemical Markup, XML, and the Worldwide Web. 1. Basic
+			 Principles</title> 
+		  <pagenums>928-942</pagenums> 
+		  <pubdate>1999</pubdate> 
+		</biblioset> 
+		<biblioset relation="journal"> 
+		  <title>Journal of Chemical Information and Computer Sciences</title> 
+		</biblioset> 
+		<bibliomisc> 
+		  <phrase>For constantly updated documentation of Chemical Markup
+			 Language (CML) please see 
+			 <ulink
+			 url="http://www.xml-cml.org/">http://www.xml-cml.org/</ulink>.</phrase></bibliomisc>
+		
+	 </biblioentry> 
+
+	 <biblioentry id="XML"> 
+		<abbrev>XML</abbrev> 
+		<bibliomisc> 
+		  <phrase>XML is a recommendation written by the World Wide Web
+			 Consortium (W3C). Info on this standard can be found at 
+			 <ulink
+			 url="http://www.w3.org/TR/1998/REC-xml-19980210">http://www.w3.org/TR/1998/REC-xml-19980210</ulink>.
+			 </phrase> </bibliomisc> 
+	 </biblioentry> 
+
+<biblioentry id="WEI88"> 
+<abbrev>WEI88</abbrev> 
+<biblioset relation="article"> 
+<authorgroup>
+<author>
+<surname>
+Weininger, David
+</surname>
+</author>
+</authorgroup>
+<title>SMILES, a Chemical Language and Information System. 1. Introduction to Methodology and Encoding Rules</title>
+<volumenum></volumenum>
+<issuenum></issuenum>
+<pagenums>31-36</pagenums><pubdate>1988</pubdate> 
+</biblioset>
+<biblioset relation="journal">
+<title>Journal of Chemical Information and Computer Sciences</title> 
+</biblioset>
+<bibliomisc> 
+</bibliomisc>
+</biblioentry> 
+
+
+ <biblioentry id="WEI89"> 
+<abbrev>WEI89</abbrev> 
+<biblioset relation="article"> 
+<authorgroup>
+<author>
+<surname>
+Weininger, David</surname></author><author><surname>Weininger, Arthur</surname></author><author><surname>Weininger, Joseph L.
+</surname>
+</author>
+</authorgroup>
+<title>SMILES 2. Algorithm for Generation of Unique SMILES Notation</title>
+<volumenum></volumenum>
+<issuenum></issuenum>
+<pagenums>97-101</pagenums><pubdate>1989</pubdate> 
+</biblioset>
+<biblioset relation="journal">
+<title>Journal of Chemical Information and Computer Sciences</title> 
+</biblioset>
+<bibliomisc> 
+</bibliomisc>
+</biblioentry> 
+
+
+
+  </bibliography>
+

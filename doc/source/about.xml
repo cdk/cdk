@@ -1,0 +1,9 @@
+		<para>These web pages are dedicated to the documentation, developement and discussions on the CDK, 
+		an API for writing java program for chemistry. They have been produced based on a 
+		  <ulink url="http://www.docbook.org">Docbook</ulink>
+		  <ulink url="http://www.xml.org">XML</ulink> source and have been converted to this website 
+		  using <ulink url="http://www.nwalsh.com">Norman Walsh</ulink>'s XSLT website stylesheets.
+		  We are also producing a PDF manual using the same XML source and the Norm's docbook XSLT transformation sheets
+		  </para>
+
+

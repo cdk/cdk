@@ -1,0 +1,110 @@
+<!DOCTYPE website SYSTEM "/home/documents/config/xml/website/website.dtd" [
+<!ENTITY about SYSTEM "about.xml">
+<!ENTITY news SYSTEM "news.xml">
+<!ENTITY introduction SYSTEM "intro.xml">
+<!ENTITY projectref SYSTEM "projectref.xml">
+<!ENTITY changelog SYSTEM "changelog.xml">
+<!ENTITY agenda SYSTEM "agenda.xml">
+<!ENTITY bibliography SYSTEM "bibliography.xml">
+<!ENTITY libraries SYSTEM "libraries.xml">
+]>
+<!--SYSTEM "/usr/lib/sgml/dtd/docbook-website/1.8/website.dtd"-->
+<website>
+<homepage>
+<config param="desc" value="The Chemistry Development Kit Homepage"/>
+<config param="filename" value="index.html"/>
+<config param="rcsdate" value="$Date$"/>
+<config param="footer" value="about.html" altval="About..."/>
+<config param="homebanner" value="images/cdklogo.gif"
+                           altval="Home Banner"/>
+<config param="banner"     value="images/cdklogo.gif"
+                           altval="Banner"/>
+
+			   
+<head>
+<title>The Chemistry Development Kit Homepage</title>
+<summary>These pages are dedicated to the development and documentation of the 
+Chemistry Development Kit, an open-source java library for computational chemistry and chemoinformatics</summary>
+<keywords>Chemistry Development Kit, open-source, OpenScience, molecules, chemical structures, structure editor,
+structure diagram generation, Java, chemoinformatics, cheminformatics, computational chemistry</keywords>
+<copyright><year>1999</year><year>2000</year>
+<holder role="http://compchem.sourceforge.net/">The CDK Project</holder></copyright>
+<style src="example.css" class="global"></style>
+</head>
+	 &news;
+	 <section>
+		<title>Quickstart</title>
+		<para>
+		  <ulink
+			url="http://sourceforge.net/projects/compchem"><emphasis>Shortcut to the
+			 CDK's SourceForge project page with download
+			 option</emphasis></ulink></para>
+	 </section>
+	 <webpage id="about">
+		<config param="rcsdate" value="$Date$"/>
+		<config param="filename" value="about.html"/><head>
+		<title>About the CDK Homepages</title>
+		<summary>About the CDK Homepages</summary>
+		</head>
+	 	<!--&about;-->
+	 </webpage>
+</homepage>
+
+<webpage>
+<config param="rcsdate" value="$Date$"/>
+<config param="filename" value="cdk_intro.html"/>
+<config param="homebanner" value="images/cdklogo.gif"/>
+<head>
+<title>Introduction</title>
+</head>
+&introduction;
+</webpage>
+
+<webpage>
+<config param="rcsdate" value="$Date$"/>
+<config param="filename" value="cdk_Ref.html"/>
+<config param="homebanner" value="images/cdklogo.gif"/>
+<head><title>Project Reference</title></head>
+&projectref;
+</webpage>
+
+<webpage>
+<config param="rcsdate" value="$Date$"/>
+<config param="filename" value="changelog.html"/>
+<config param="homebanner" value="images/cdklogo.gif"/>
+<head><title>Changelog</title></head>
+&changelog;
+</webpage>
+
+<webpage>
+<config param="rcsdate" value="$Date$"/>
+<config param="filename" value="agenda.html"/>
+<config param="homebanner" value="images/cdklogo.gif"/>
+<head><title>Agenda</title></head>
+&agenda;
+</webpage>
+
+<webpage>
+<config param="rcsdate" value="$Date$"/>
+<config param="filename" value="libraries.html"/>
+<config param="homebanner" value="images/cdklogo.gif"/>
+<head><title>Libraries</title></head>
+&libraries;
+</webpage>
+
+<webpage>
+<config param="rcsdate" value="$Date$"/>
+<config param="filename" value="JCP_Bib.html"/>
+<config param="homebanner" value="images/cdklogo.gif"/>
+<head><title>Bibliography</title></head>
+&bibliography;
+</webpage>
+
+
+</website>
+
+<!--
+Local variables:
+mode: docbook
+End:
+-->
