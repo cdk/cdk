@@ -75,6 +75,8 @@ public class CMLWriter implements ChemObjectWriter {
     private boolean done;
     private boolean fragment;
 
+    private org.openscience.cdk.tools.LoggingTool logger;
+
     /**
      * Constructs a new CMLWriter class. Output will be stored in the Writer
      * class given as parameter. The CML code will be valid CML code with a
@@ -96,6 +98,7 @@ public class CMLWriter implements ChemObjectWriter {
      */
     public CMLWriter(Writer w, boolean fragment) {
         output = w;
+        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
         this.fragment = fragment;
         this.done = false;
     }
@@ -113,6 +116,7 @@ public class CMLWriter implements ChemObjectWriter {
      * @param object A Molecule of SetOfMolecules object
      */
     public void write(ChemObject object) throws UnsupportedChemObjectException {
+        logger.debug("Writing object in CML of type: " + object.getClass().getName());
         if (!done) {
             if (!fragment) {
                 write("<?xml version=\"1.0\"?>\n");
@@ -127,7 +131,10 @@ public class CMLWriter implements ChemObjectWriter {
                 write((ChemSequence)object);
             } else if (object instanceof ChemFile) {
                 write((ChemFile)object);
+            } else if (object instanceof ChemModel) {
+                write((ChemModel)object);
             } else {
+                logger.error("This object type is not supported.");
                 throw new UnsupportedChemObjectException("This object type is not supported.");
             }    
             if (!fragment) {           
@@ -174,14 +181,18 @@ public class CMLWriter implements ChemObjectWriter {
     }
 
     private void write(SetOfMolecules som) {
+        logger.debug("Writing SOM");        
         int count = som.getMoleculeCount();
-        if (count > 1)
+        logger.debug("Found " + count + " molecule(s) in set");
+        if (count > 1) {
             write("<list>\n");
+        }
         for (int i = 0; i < count; i++) {
             this.write(som.getMolecule(i));
         }
-        if (count > 1)
+        if (count > 1) {
             write("</list>\n");
+        }
     }
 
     private void write(ChemSequence chemseq) {
@@ -196,6 +207,7 @@ public class CMLWriter implements ChemObjectWriter {
     }
 
     private void write(ChemModel model) {
+        logger.debug("Writing ChemModel");
         Crystal crystal = model.getCrystal();
         SetOfMolecules som = model.getSetOfMolecules();
         if (crystal != null) {
@@ -236,6 +248,10 @@ public class CMLWriter implements ChemObjectWriter {
 		write("</string>\n");
 		write(atom.getPoint2D());
 		write(atom.getPoint3D());
+        int fCharge = atom.getFormalCharge();
+        if (fCharge != 0) {
+            write("<integer builtin=\"formalCharge\">" + fCharge + "</integer>\n");
+        }
 		write("</atom>\n");
     }
 
@@ -310,7 +326,7 @@ public class CMLWriter implements ChemObjectWriter {
 		try {
 		    output.write(s);
 		} catch (IOException e) {
-		    System.err.println("CMLWriter IOException while printing \"" + 
+		    logger.error("CMLWriter IOException while printing \"" + 
 	                s + "\":\n" + e.toString());
 		}
     }
