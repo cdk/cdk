@@ -95,6 +95,15 @@
             <echo message="Patches to apply" />
         </target>
 
+        <target id="checkPlatforms" name="check">
+            <condition property="isMacOsX">
+                <and>
+                    <os family="mac"/>
+                    <os family="unix"/>
+                </and>
+            </condition>
+        </target>
+        
         <target id="check" name="check">
             <!-- Checks which parts of CDK can be build. -->
           <available classname="joelib.molecule.JOEAtom" 
@@ -164,11 +173,9 @@
             <javac srcdir="doc/javadoc/source" destdir="doc/javadoc" 
                    includes="MakeJavaFilesFilesDoclet.java">
                 <classpath>
-                    <fileset dir="${java.ext.dirs}">
-                        <include name="tools.jar" />
-                    </fileset>
-                    <fileset dir="${java.ext.dirs}/../../../lib">
-                        <include name="tools.jar" />
+                    <fileset>
+                        <include unless="isMacOsX" name="${java.ext.dirs}/tools.jar" />
+                        <include unless="isMacOsX" name="${java.ext.dirs}/../../../lib/tools.jar" />
                     </fileset>
                 </classpath>
             </javac>

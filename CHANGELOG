@@ -29,6 +29,7 @@ Fixes:
 * CMLRSSHandler now propagates whitespace from CML fragments
 * Fixed output or aromatic bonds in MDLWriter
 * Fixed a NullPointerException problem in ChemObject.setProperties()
+* Fixed build.xml to allow compile of doclets on MacOS/X (closes #1001497)
 
 API changes:
 * Moved AtomContainer.getAdjacencyMatrix to cdk.graph.matrix.AdjecencyMatrix
@@ -37,6 +38,7 @@ API changes:
 * Made a few class fields private in core classes which were protected sofar
 * Deprecated old usage of SSSRFinder
 * Added a method ChemObject.shallowCopy()
+* ChemObject.clone() for all core classes now does a deep clone
 
 20040626 Release
 ------------------------------------
