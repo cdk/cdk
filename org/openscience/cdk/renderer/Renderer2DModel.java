@@ -52,7 +52,7 @@ public class Renderer2DModel
 	
 	private int atomRadius = 8;
 	
-	private String defaultElementSymbol = "H";
+	private String defaultElementSymbol = "C";
 	
 	private Atom highlightedAtom = null;
 	
@@ -61,8 +61,6 @@ public class Renderer2DModel
 	private Hashtable colorHash = new Hashtable();
 	
 	private Vector listeners = new Vector();
-	
-	private Bond newBond = null;
 	
 	private Point pointerVectorStart = null;
 	
@@ -185,11 +183,23 @@ public class Renderer2DModel
 	}
 
 	
+
+	/**
+	 *
+	 *
+	 * @return     
+	 */
 	public boolean drawNumbers()
 	{
 		return this.drawNumbers;
 	}
 
+
+	/**
+	 *
+	 *
+	 * @param   drawNumbers  
+	 */
 	public void setDrawNumbers(boolean drawNumbers)
 	{
 		this.drawNumbers = drawNumbers;
@@ -354,31 +364,6 @@ public class Renderer2DModel
 		this.defaultElementSymbol = defaultElementSymbol;
 	}
 
-	
-
-	/**
-	 *
-	 *
-	 * @return     
-	 */
-	public Bond getNewBond()
-	{
-		return this.newBond;
-	}
-
-
-	/**
-	 *
-	 *
-	 * @param   newBond  
-	 */
-	public void setNewBond(Bond newBond)
-	{
-		this.newBond = newBond;
-		fireChange();
-	}
-
-	
 
 	/**
 	 *

@@ -202,6 +202,16 @@ public class RingPlacer implements CDKConstants
 		drawPolygon(atomsToDraw, ringCenter, startAngle, addAngle, radius);
 	}
 	
+
+	/**
+	 *
+	 *
+	 * @param   ring  
+	 * @param   sharedAtoms  
+	 * @param   sharedAtomsCenter  
+	 * @param   ringCenterVector  
+	 * @param   bondLength  
+	 */
 	private void placeSpiroRing(Ring ring, AtomContainer sharedAtoms, Point2d sharedAtomsCenter, Vector2d ringCenterVector, double bondLength)
 	{
 

@@ -26,6 +26,7 @@ package org.openscience.cdk;
 import javax.vecmath.*;
 import java.util.Vector;
 
+
 public class Ring extends AtomContainer
 {
 
@@ -41,6 +42,27 @@ public class Ring extends AtomContainer
 	}
 	
 
+	/**
+	 * Constructs a ring that will have a certain size and of the given elements
+	 *
+	 * @param   ringSize   The number of atoms and bonds the ring will have
+	 * @param   elementSymbol   The element of the atoms the ring will have
+	 */
+	public Ring(int ringSize, String elementSymbol)
+	{
+		super(ringSize, ringSize);
+		Atom[] atoms = new Atom[ringSize];
+		atoms[0] = new Atom(elementSymbol);
+		for (int i = 1; i < ringSize; i++)
+		{
+			atoms[i] = new Atom(elementSymbol);
+			super.bonds[i] = new Bond(atoms[i - 1], atoms[i], 1);
+		}
+		super.bonds[0] = new Bond(atoms[ringSize], atoms[0], 1);
+		super.atoms = atoms;
+	}
+	
+		
 	/**
 	 * constructs a ring that will have a certain size
 	 *

@@ -90,13 +90,16 @@ public class Renderer2D
 		{
 			ringSet.add(sssrf.findSSSR((Molecule)molecules.elementAt(i)));
 		}
-		paintAtoms(atomCon.getAtoms(), atomCon.getAtomCount());
-		paintBonds(atomCon.getBonds(), atomCon.getBondCount(), ringSet);
-		if (r2dm.drawNumbers()) paintNumbers(atomCon.getAtoms(), atomCon.getAtomCount());
 		if (r2dm.getPointerVectorStart() != null && r2dm.getPointerVectorEnd() != null) 
 		{ 
 			paintPointerVector();
-		System.out.println("repaint");
+			System.out.println("repaint");
+		}
+		paintBonds(atomCon, ringSet);
+		paintAtoms(atomCon);
+		if (r2dm.drawNumbers()) 
+		{
+			paintNumbers(atomCon.getAtoms(), atomCon.getAtomCount());
 		}
 	}
 	
@@ -153,13 +156,13 @@ public class Renderer2D
 	 * @param   atoms     The array of atoms
 	 * @param   number    The number of atoms in this array
 	 */
-	private void paintAtoms(Atom[] atoms, int number)
+	private void paintAtoms(AtomContainer atomCon)
 	{
 		Color atomColor; 
 		Atom atom;
-		for (int i = 0; i < number; i++)
+		for (int i = 0; i < atomCon.getAtomCount(); i++)
 		{
-			atom = atoms[i];
+			atom = atomCon.getAtomAt(i);
 			atomColor = (Color)r2dm.getColorHash().get(atom);
 			if (atom == r2dm.getHighlightedAtom()) atomColor = r2dm.getHighlightColor();
 			if (atomColor != null)
@@ -171,6 +174,10 @@ public class Renderer2D
 				atomColor = r2dm.getBackColor();
 			}			
 			if (!atom.getElement().getSymbol().equals("C"))
+			{
+				paintAtomSymbol(atom, atomColor);
+			}
+			else if (atomCon.getDegree(atom) == 0)
 			{
 				paintAtomSymbol(atom, atomColor);
 			}
@@ -224,14 +231,15 @@ public class Renderer2D
 	 * @param   number  The number of bonds to be drawn
 	 * @param   ringSet  The set of rings the molecule contains
 	 */
-	private void paintBonds(Bond[] bonds, int number, RingSet ringSet)
+	private void paintBonds(AtomContainer atomCon, RingSet ringSet)
 	{
+		System.out.println("number of bonds  "+ atomCon.getBondCount());
 		Color bondColor;
 		Ring ring;
 		Bond bond;
-		for (int i = 0; i < number; i++)
+		for (int i = 0; i < atomCon.getBondCount(); i++)
 		{
-			bond = bonds[i];
+			bond = atomCon.getBondAt(i);
 			bondColor = (Color)r2dm.getColorHash().get(bond);
 			if (bondColor == null) bondColor = r2dm.getForeColor();
 			if (bond == r2dm.getHighlightedBond())
@@ -243,6 +251,7 @@ public class Renderer2D
 				}
 			}
 			ring = ringSet.getHeaviestRing(bond);
+			System.out.println("heaviestring  "+ ring);
 			if (ring != null)
 			{
 					paintRingBond(bond, ring, bondColor);
@@ -252,10 +261,6 @@ public class Renderer2D
 			{
 				paintBond(bond, bondColor);
 			}
-		}
-		if (r2dm.getNewBond() != null)
-		{
-			paintBond(r2dm.getNewBond(), r2dm.getForeColor());
 		}
 	}
 	

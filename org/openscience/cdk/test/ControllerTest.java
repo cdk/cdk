@@ -72,7 +72,7 @@ public class ControllerTest
 
 		Renderer2DModel r2dm = new Renderer2DModel();
 		MoleculeViewer2D mv = new MoleculeViewer2D(molecule, r2dm);
-		r2dm.setDrawNumbers(true);
+//		r2dm.setDrawNumbers(true);
 		mv.display();
 		inputAdapter = new CDKInputAdapter(molecule, r2dm);
 		mv.addMouseMotionListener(inputAdapter);

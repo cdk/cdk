@@ -88,6 +88,13 @@ public class RingSet extends Vector{
 	}
 	
 	
+
+	/**
+	 * Returns a vector of all rings that this bond is part of.
+	 *
+	 * @param   bond  The bond to be checked
+	 * @return   A vector of all rings that this bond is part of  
+	 */
 	public Vector getRings(Bond bond)
 	{
 		Vector rings = new Vector();
@@ -128,6 +135,13 @@ public class RingSet extends Vector{
 		return ring;
 	}
 
+
+	/**
+	 * Returns a vector of all rings that are connected to one given ring.
+	 *
+	 * @param   ring  The ring the connected partners are searched of
+	 * @return    A vector of all rings that are connected to one given ring 
+	 */
 	public Vector getConnectedRings(Ring ring)
 	{
 		Vector connectedRings = new Vector();

@@ -40,14 +40,12 @@ import java.awt.event.*;
 
 public class MoleculeViewer2D extends JPanel implements CDKChangeListener
 {
-//	static Molecule molecule;
 	static AtomContainer atomCon;
 	public Renderer2DModel r2dm;
 	public Renderer2D renderer;
 
 	public MoleculeViewer2D(AtomContainer atomCon,Renderer2DModel r2dm)
 	{
-//		this.molecule = molecule;
 		this.atomCon = atomCon;
 		this.r2dm = r2dm;
 		r2dm.addCDKChangeListener(this);
@@ -57,7 +55,6 @@ public class MoleculeViewer2D extends JPanel implements CDKChangeListener
 	public MoleculeViewer2D(AtomContainer atomCon)
 	{
 		this.atomCon = atomCon;
-//		this.molecule = molecule;
 		r2dm = new Renderer2DModel();
 		r2dm.addCDKChangeListener(this);
 		renderer = new Renderer2D(r2dm);
