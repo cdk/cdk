@@ -131,11 +131,7 @@ public class StructureDiagramGenerator {
 
     /**
      * This method uses generateCoordinates, but it removes the hydrogens first,
-     * lays out the structuren and then adds them again. Note that it will add hydrogens
-     * based on CDK's idea on how many hydrogens should be attached, and not as many
-     * as were removed.
-     *
-     * <p>The method is rather experimental.
+     * lays out the structuren and then adds them again.
      *
      * @see @generateCoordinates
      */
@@ -144,22 +140,41 @@ public class StructureDiagramGenerator {
     }
 
     public void generateExperimentalCoordinates(Vector2d firstBondVector) throws java.lang.Exception {
-        // delete atoms
+        String hCountMarker = "org.openscience.cdk.layout.StructureDiagramGenerator.hCount";
+        // first mark how many hydrogens each non-hydrogen has
         Atom[] atoms = molecule.getAtoms();
-        for (int j=0; j<atoms.length; j++) {
-            logger.debug("Checking atom: " + j);
-            if (atoms[j].getSymbol().equals("H")) {
+        for (int i=0; i<atoms.length; i++) {
+            if (!atoms[i].getSymbol().equals("H")) {
+                Atom[] neighbours = molecule.getConnectedAtoms(atoms[i]);
+                int hCount = 0;
+                for (int j=0; j<neighbours.length; j++) {
+                    if (neighbours[j].getSymbol().equals("H")) {
+                        hCount++;
+                    }
+                }
+                atoms[i].setProperty(hCountMarker, new Integer(hCount));
+            }
+        }
+        atoms = molecule.getAtoms();
+        for (int i=0; i<atoms.length; i++) {
+            if (atoms[i].getSymbol().equals("H")) {
                 logger.debug("Atom is a hydrogen");
-                molecule.removeAtomAndConnectedElectronContainers(atoms[j]);
+                molecule.removeAtomAndConnectedElectronContainers(atoms[i]);
             }
         }
         // do layout
         generateCoordinates(firstBondVector);
-        // add hydrogens
-        new HydrogenAdder().addExplicitHydrogensToSatisfyValency(molecule);
-        // create coordinates for new hydrogens
-        double bondLength = GeometryTools.getBondLengthAverage(molecule);
-        HydrogenPlacer.placeHydrogens2D(molecule, bondLength);
+        // add hydrogens, which automatically creates 2D coordinates too if needed
+        atoms = molecule.getAtoms();
+        for (int i=0; i<atoms.length; i++) {
+            int hydrogensToAdd = ((Integer)atoms[i].getProperty(hCountMarker)).intValue();
+            if (hydrogensToAdd > 0) {
+                // FIXME: almost correct.
+                new HydrogenAdder().addExplicitHydrogensToSatisfyValency(
+                    molecule, atoms[i], hydrogensToAdd
+                );
+            }
+        }
     }
     
 	/**
