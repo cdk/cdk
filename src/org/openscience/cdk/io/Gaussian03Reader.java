@@ -3,6 +3,7 @@
  * $Date$
  * $Revision$
  *
+ * Copyright (C) 2002-2003  The Jmol Development Team
  * Copyright (C) 2003  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
@@ -24,11 +25,339 @@
  */
 package org.openscience.cdk.io;
 
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.ChemSequence;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.tools.IsotopeFactory;
 import java.io.Reader;
+import java.io.BufferedReader;
+import java.io.StringReader;
+import java.io.IOException;
+import java.io.StreamTokenizer;
+import java.util.StringTokenizer;
+import javax.vecmath.Point3d;
 
+/**
+ * A reader for Gaussian03 output.
+ * Gaussian 03 is a quantum chemistry program
+ * by Gaussian, Inc. (http://www.gaussian.com/).
+ *
+ * <p>Molecular coordinates, energies, and normal coordinates of
+ * vibrations are read. Each set of coordinates is added to the
+ * ChemFile in the order they are found. Energies and vibrations
+ * are associated with the previously read set of coordinates.
+ *
+ * <p>This reader was developed from a small set of
+ * example output files, and therefore, is not guaranteed to
+ * properly read all Gaussian03 output. If you have problems,
+ * please contact the author of this code, not the developers
+ * of Gaussian03.
+ *
+ * <p>This code was adaptated by Jonathan from Gaussian98Reader written by
+ * Bradley, and ported to CDK by Egon.
+ *
+ * @author Jonathan C. Rienstra-Kiracofe <jrienst@emory.edu>
+ * @author Bradley A. Smith <yeldar@home.com>
+ * @authro Egon Willighagen
+ */
 public class Gaussian03Reader extends DummyReader {
 
-    public Gaussian03Reader(Reader input) {
+    private IsotopeFactory isotopeFactory;
+    private BufferedReader input;
+    
+    public Gaussian03Reader(Reader reader) {
+        input = new BufferedReader(reader);
+        try {
+            isotopeFactory = IsotopeFactory.getInstance();
+        } catch (Exception exception) {
+            // should not happen
+        }
     }
 
+    public boolean accepts(ChemObject object) {
+        if (object instanceof ChemSequence) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public ChemObject readChemObject(ChemObject object) throws CDKException {
+        if (object instanceof ChemSequence) {
+            return readChemSequence();
+        } else {
+            throw new CDKException("Object " + object.getClass().getName() + " is not supported");
+        }
+    }
+    
+    private ChemSequence readChemSequence() throws CDKException {
+        ChemSequence sequence = new ChemSequence();
+        ChemModel model = null;
+        
+        try {
+            String line = input.readLine();
+            String levelOfTheory = null;
+            
+            // Find first set of coordinates
+            while (input.ready() && (line != null)) {
+                if (line.indexOf("Standard orientation:") >= 0) {
+                    
+                    // Found a set of coordinates
+                    model = new ChemModel();
+                    try {
+                        readCoordinates(model);
+                    } catch (IOException exception) {
+                        throw new CDKException("Error while reading coordinates: " + exception.toString());
+                    }
+                    break;
+                }
+                line = input.readLine();
+            }
+            if (model != null) {
+                // Read all other data
+                line = input.readLine();
+                while (input.ready() && (line != null)) {
+                    if (line.indexOf("Standard orientation:") >= 0) {
+                        // Found a set of coordinates
+                        // Add current frame to file and create a new one.
+                        sequence.addChemModel(model);
+                        fireFrameRead();
+                        model = new ChemModel();
+                        readCoordinates(model);
+                    } else if (line.indexOf("SCF Done:") >= 0) {
+                        // Found an energy
+                        model.setProperty("org.openscience.cdk.io.Gaussian03Reaer:SCF Done", line.trim());
+                    } else if (line.indexOf("Harmonic frequencies") >= 0) {
+                        // Found a set of vibrations
+                        try {
+                            readFrequencies(model);
+                        } catch (IOException exception) {
+                            throw new CDKException("Error while reading frequencies: " + exception.toString());
+                        }
+                    } else if (line.indexOf("Magnetic shielding") >= 0) {
+                        // Found NMR data
+                        try {
+                            readNMRData(model, line);
+                        } catch (IOException exception) {
+                            throw new CDKException("Error while reading NMR data: " + exception.toString());
+                        }
+                    } else if (line.indexOf("GINC") >= 0) {
+                        // Found calculation level of theory
+                        levelOfTheory = parseLevelOfTheory(line);
+                        // FIXME: is doing anything with it?
+                    }
+                    line = input.readLine();
+                }
+                
+                // Add current frame to file
+                sequence.addChemModel(model);
+                fireFrameRead();
+            }
+        } catch (IOException exception) {
+            throw new CDKException("Error while reading general structure: " + exception.toString());
+        }
+        return sequence;
+    }
+    
+    /**
+     * Reads a set of coordinates into ChemModel.
+     *
+     * @param     model        the destination ChemModel
+     * @exception IOException  if an I/O error occurs
+     */
+    private void readCoordinates(ChemModel model) throws CDKException, IOException {
+        AtomContainer container = new AtomContainer();
+        String line = input.readLine();
+        line = input.readLine();
+        line = input.readLine();
+        line = input.readLine();
+        while (input.ready()) {
+            line = input.readLine();
+            if ((line == null) || (line.indexOf("-----") >= 0)) {
+                break;
+            }
+            int atomicNumber = 0;
+            StringReader sr = new StringReader(line);
+            StreamTokenizer token = new StreamTokenizer(sr);
+            token.nextToken();
+            
+            // ignore first token
+            if (token.nextToken() == StreamTokenizer.TT_NUMBER) {
+                atomicNumber = (int) token.nval;
+                if (atomicNumber == 0) {
+                    
+                    // Skip dummy atoms. Dummy atoms must be skipped
+                    // if frequencies are to be read because Gaussian
+                    // does not report dummy atoms in frequencies, and
+                    // the number of atoms is used for reading frequencies.
+                    continue;
+                }
+            } else {
+                throw new IOException("Error reading coordinates");
+            }
+            token.nextToken();
+            
+            // ignore third token
+            double x = 0.0;
+            double y = 0.0;
+            double z = 0.0;
+            if (token.nextToken() == StreamTokenizer.TT_NUMBER) {
+                x = token.nval;
+            } else {
+                throw new IOException("Error reading coordinates");
+            }
+            if (token.nextToken() == StreamTokenizer.TT_NUMBER) {
+                y = token.nval;
+            } else {
+                throw new IOException("Error reading coordinates");
+            }
+            if (token.nextToken() == StreamTokenizer.TT_NUMBER) {
+                z = token.nval;
+            } else {
+                throw new IOException("Error reading coordinates");
+            }
+            Atom atom = new Atom(isotopeFactory.getElementSymbol(atomicNumber));
+            atom.setPoint3D(new Point3d(x, y, z));
+            container.addAtom(atom);
+        }
+        SetOfMolecules moleculeSet = new SetOfMolecules();
+        moleculeSet.addMolecule(new Molecule(container));
+        model.setSetOfMolecules(moleculeSet);
+    }
+
+    /**
+     * Reads a set of vibrations into ChemModel.
+     *
+     * @param frame  the destination ChemModel
+     * @exception IOException  if an I/O error occurs
+     */
+    private void readFrequencies(ChemModel model) throws IOException {
+        /* This is yet to be ported. Vibrations don't exist yet in CDK.
+        String line = input.readLine();
+        line = input.readLine();
+        line = input.readLine();
+        line = input.readLine();
+        line = input.readLine();
+        while ((line != null) && line.startsWith(" Frequencies --")) {
+            Vector currentVibs = new Vector();
+            StringReader vibValRead = new StringReader(line.substring(15));
+            StreamTokenizer token = new StreamTokenizer(vibValRead);
+            while (token.nextToken() != StreamTokenizer.TT_EOF) {
+                Vibration vib = new Vibration(Double.toString(token.nval));
+                currentVibs.addElement(vib);
+            }
+            line = input.readLine();
+            line = input.readLine();
+            line = input.readLine();
+            line = input.readLine();
+            line = input.readLine();
+            line = input.readLine();
+            for (int i = 0; i < frame.getAtomCount(); ++i) {
+                line = input.readLine();
+                StringReader vectorRead = new StringReader(line);
+                token = new StreamTokenizer(vectorRead);
+                token.nextToken();
+                
+                // ignore first token
+                token.nextToken();
+                
+                // ignore second token
+                for (int j = 0; j < currentVibs.size(); ++j) {
+                    double[] v = new double[3];
+                    if (token.nextToken() == StreamTokenizer.TT_NUMBER) {
+                        v[0] = token.nval;
+                    } else {
+                        throw new IOException("Error reading frequency");
+                    }
+                    if (token.nextToken() == StreamTokenizer.TT_NUMBER) {
+                        v[1] = token.nval;
+                    } else {
+                        throw new IOException("Error reading frequency");
+                    }
+                    if (token.nextToken() == StreamTokenizer.TT_NUMBER) {
+                        v[2] = token.nval;
+                    } else {
+                        throw new IOException("Error reading frequency");
+                    }
+                    ((Vibration) currentVibs.elementAt(j)).addAtomVector(v);
+                }
+            }
+            for (int i = 0; i < currentVibs.size(); ++i) {
+                frame.addVibration((Vibration) currentVibs.elementAt(i));
+            }
+            line = input.readLine();
+            line = input.readLine();
+            line = input.readLine();
+        } */
+    }
+
+    /**
+     * Reads NMR nuclear shieldings.
+     */
+    private void readNMRData(ChemModel model, String labelLine) throws IOException {
+        /* FIXME: this is yet to be ported. CDK does not have shielding stuff.
+        // Determine label for properties
+        String label;
+        if (labelLine.indexOf("Diamagnetic") >= 0) {
+            label = "Diamagnetic Magnetic shielding (Isotropic)";
+        } else if (labelLine.indexOf("Paramagnetic") >= 0) {
+            label = "Paramagnetic Magnetic shielding (Isotropic)";
+        } else {
+            label = "Magnetic shielding (Isotropic)";
+        }
+        int atomIndex = 0;
+        for (int i = 0; i < frame.getAtomCount(); ++i) {
+            String line = input.readLine().trim();
+            while (line.indexOf("Isotropic") < 0) {
+                if (line == null) {
+                    return;
+                }
+                line = input.readLine().trim();
+            }
+            StringTokenizer st1 = new StringTokenizer(line);
+            
+            // Find Isotropic label
+            while (st1.hasMoreTokens()) {
+                if (st1.nextToken().equals("Isotropic")) {
+                    break;
+                }
+            }
+            
+            // Find Isotropic value
+            while (st1.hasMoreTokens()) {
+                if (st1.nextToken().equals("=")) {
+                    break;
+                }
+            }
+            double shielding = Double.valueOf(st1.nextToken()).doubleValue();
+            NMRShielding ns1 = new NMRShielding(label, shielding);
+            ((org.openscience.jmol.Atom)frame.getAtomAt(atomIndex)).addProperty(ns1);
+            ++atomIndex;
+        } */
+    }
+    
+    /**
+     * Select the theory and basis set from the first archive line.
+     */
+    private String parseLevelOfTheory(String line) {
+        
+        StringTokenizer st1 = new StringTokenizer(line, "\\");
+        
+        // Must contain at least 6 tokens
+        if (st1.countTokens() < 6) {
+            return null;
+        }
+        
+        // Skip first four tokens
+        for (int i = 0; i < 4; ++i) {
+            st1.nextToken();
+        }
+        return st1.nextToken() + "/" + st1.nextToken();
+    }
+    
 }
