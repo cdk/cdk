@@ -35,10 +35,9 @@ import org.openscience.cdk.isomorphism.*;
 import org.openscience.cdk.reaction.ReactionBalancer;
 
 /**
- * @cdkPackage test
- *
- * @author     Kai Hartmann
- * @cdk.created    2004-02-20
+ * @author      Kai Hartmann
+ * @cdk.created 2004-02-20
+ * @cdk.module  test
  */
 public class ReactionBalancerTest extends TestCase {
 

@@ -125,6 +125,9 @@ public class SingleStructureRandomGeneratorTest
 		
 	}
 	
+    /**
+     * @cdk.module test
+     */
 	public class TestViewer extends MoleculeListViewer
 	{
 		JButton more;

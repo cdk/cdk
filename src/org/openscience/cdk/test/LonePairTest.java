@@ -35,6 +35,8 @@ import org.openscience.cdk.LonePair;
  * Checks the funcitonality of the LonePair class.
  *
  * @see org.openscience.cdk.LonePair
+ *
+ * @cdk.module test
  */
 public class LonePairTest extends TestCase {
 

@@ -9,10 +9,11 @@ import org.openscience.cdk.*;
 import org.openscience.cdk.modeling.forcefield.*;
 
 /**
- *  Potential function for testing forcefield classes
+ * Potential function for testing forcefield classes.
  *
- *@author     vlabarta
+ * @author     vlabarta
  *
+ * @cdk.module test
  */
 public class TestPotentialFunction implements PotentialFunction {
 	String functionShape = " f(X,Y) = X2 + 2 Y2 ";

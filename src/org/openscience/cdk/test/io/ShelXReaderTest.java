@@ -40,6 +40,9 @@ import org.openscience.cdk.io.ShelXReader;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
 
+/**
+ * @cdk.module test
+ */
 public class ShelXReaderTest extends CDKTestCase {
 
     private LoggingTool logger;

@@ -35,6 +35,8 @@ import org.openscience.cdk.SingleElectron;
  * Checks the funcitonality of the SingleElectron class.
  *
  * @see org.openscience.cdk.SingleElectron
+ *
+ * @cdk.module test
  */
 public class SingleElectronTest extends TestCase {
 
