@@ -84,7 +84,7 @@
                         <fileset dir="${src}" includes="**/Test-*" />
                 </copy>
         </target>
-        
+
         <target name="compile-libio" depends="init">
                 <!-- Task to build to libio classes. Clearly, this requires extra
                      extra jars, and these should be located in ${lib}/libio -->
@@ -107,7 +107,9 @@
                 <javac destdir="${build}" optimize="on" deprecation="off" debug="on">
                         <src path="${src}" />
 
-                        <exclude name="${sourcedist}/**" />
+                        <!-- exclude libio classes that require additional
+                             libraries, and are compiled elsewhere -->
+                        <exclude name="org/openscience/cdk/libio/**" />
 
                         <classpath refid="project.class.path" />
                 </javac>
@@ -189,7 +191,17 @@
                         <exclude name="org/openscience/cdk/Ring.class" />
                         <exclude name="org/openscience/cdk/RingSet.class" />
                         <exclude name="org/openscience/cdk/SetOfMolecules.class" />
+                        <!-- Exclude libio classes -->
+                        <exclude name="org/openscience/cdk/libio/**" />
                    </fileset>
+                </jar>
+        </target>
+
+        <target name="dist-libio" depends="compile-libio">
+                <jar jarfile="${dist}/jar/cdk-libio.jar">
+                    <fileset dir="${build}">
+                        <include name="org/openscience/cdk/libio/**" />
+                    </fileset>
                 </jar>
         </target>
 
@@ -229,6 +241,8 @@
                         <exclude name="org/openscience/cdk/Ring.class" />
                         <exclude name="org/openscience/cdk/RingSet.class" />
                         <exclude name="org/openscience/cdk/SetOfMolecules.class" />
+                        <!-- Exclude libio classes -->
+                        <exclude name="org/openscience/cdk/libio/**" />
                    </fileset>
                 </jar>
         </target>
@@ -329,7 +343,25 @@
                 </java>
         </target>
 
-	<target name="javadoc" depends="init">
+        <target name="runLibIOTest" depends="dist">
+                <java classname="org.openscience.cdk.libio.joelib.LibIOTest" fork="yes">
+                        <classpath>
+                                <pathelement location="${dist}/jar/cdk-core.jar" />
+                                <pathelement location="${dist}/jar/cdk-extra.jar" />
+                                <pathelement location="${dist}/jar/cdk-libio.jar" />
+                                <pathelement path="${java.class.path}" />
+                                <pathelement location="." />
+                                <fileset dir="${lib}">
+                                        <include name="*.jar" />
+                                </fileset>
+                                <fileset dir="${lib}/libio">
+                                        <include name="*.jar" />
+                                </fileset>
+                        </classpath>
+                </java>
+        </target>
+
+    <target name="javadoc" depends="init">
 		<javadoc packagenames="org.openscience.cdk.*"
 			sourcepath="${src}"
 			defaultexcludes="yes"

@@ -1,10 +1,12 @@
-/* Molecule.java
+/*
+ * $RCSfile$
+ * $Author$
+ * $Date$
+ * $Revision$
+ *
+ * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
  * 
- * $RCSfile$    $Author$    $Date$    $Revision$
- * 
- * Copyright (C) 1997-2001  The Chemistry Development Kit (CDK) project
- * 
- * Contact: steinbeck@ice.mpg.de, geelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -25,7 +27,8 @@ package org.openscience.cdk;
 import java.util.Vector;
 
 /**
- *  Represents the concept of a chemical molecule, an object composed of atoms connected by bonds
+ * Represents the concept of a chemical molecule, an object composed of 
+ * atoms connected by bonds
  *
  * @author     steinbeck
  * @created    October 2, 2000

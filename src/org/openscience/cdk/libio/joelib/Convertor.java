@@ -31,6 +31,10 @@ package org.openscience.cdk.libio.joelib;
 
 import org.openscience.cdk.Atom;
 import joelib.molecule.JOEAtom;
+import org.openscience.cdk.Bond;
+import joelib.molecule.JOEBond;
+import org.openscience.cdk.Molecule;
+import joelib.molecule.JOEMol;
 
 /**
  * Abstract class that provides convertor procedures to
@@ -85,14 +89,109 @@ public class Convertor {
      *   - coordinates
      *
      * @param   atom    class to be converted
-     * @returns         converted class in JOELib
+     * @returns         converted class in CDK
      **/
     public static Atom convert(JOEAtom atom) {
-        Atom convertedAtom = new Atom();
+        Atom convertedAtom = new Atom("C");
+        try {
+            // try to give the atom the correct symbol
+            org.openscience.cdk.tools.ElementFactory ef = new
+                org.openscience.cdk.tools.ElementFactory();
+            org.openscience.cdk.Element e = ef.getElement(atom.getAtomicNum());
+            convertedAtom = new Atom(e.getSymbol());
+        } catch (java.lang.Exception e) {
+        }
         convertedAtom.setX3D(atom.x());
         convertedAtom.setY3D(atom.y());
         convertedAtom.setZ3D(atom.z());
         convertedAtom.setAtomicNumber(atom.getAtomicNum());
         return convertedAtom;
     }
+
+    /**
+     * Converts an org.openscience.cdk.Bond class into a
+     * joelib.molecule.JOEBond class.
+     *
+     * Conversion includes:
+     *   - atoms which it conects
+     *   - bond order
+     *
+     * @param   atom    class to be converted
+     * @returns         converted class in JOELib
+     **/
+    public static JOEBond convert(Bond bond) {
+        JOEBond convertedBond = new JOEBond();
+        convertedBond.setBegin(convert(bond.getAtomAt(0)));
+        convertedBond.setEnd(convert(bond.getAtomAt(1)));
+        convertedBond.setBO((int)bond.getOrder());
+        return convertedBond;
+    }
+
+    /**
+     * Converts an joelib.molecule.JOEBond class into a
+     * org.openscience.cdk.Bond class.
+     *
+     * Conversion includes:
+     *   - atoms which it conects
+     *   - bond order
+     *
+     * @param   atom    class to be converted
+     * @returns         converted class in CDK
+     **/
+    public static Bond convert(JOEBond bond) {
+        Bond convertedBond = new Bond(
+                                    convert(bond.getBeginAtom()),
+                                    convert(bond.getEndAtom()),
+                                    (double)bond.getBondOrder());
+        return convertedBond;
+    }
+
+    /**
+     * Converts an org.openscience.cdk.Molecule class into a
+     * joelib.molecule.JOEMol class.
+     *
+     * Conversion includes:
+     *   - atoms
+     *   - bonds
+     *
+     * @param   atom    class to be converted
+     * @returns         converted class in JOELib
+     **/
+    public static JOEMol convert(Molecule mol) {
+        JOEMol converted = new JOEMol();
+        int NOatoms = mol.getAtomCount();
+        for (int i=1; i<=NOatoms; i++) {
+            converted.addAtom(convert(mol.getAtomAt(i)));
+        }
+        int NObonds = mol.getBondCount();
+        for (int i=1; i<=NObonds; i++) {
+            converted.addBond(convert(mol.getBondAt(i)));
+        }
+        return converted;
+    }
+
+    /**
+     * Converts an joelib.molecule.JOEMol class into a
+     * org.openscience.cdk.Molecule class.
+     *
+     * Conversion includes:
+     *   - atoms
+     *   - bonds
+     *
+     * @param   atom    class to be converted
+     * @returns         converted class in CDK
+     **/
+    public static Molecule convert(JOEMol mol) {
+        Molecule converted = new Molecule();
+        int NOatoms = mol.numAtoms();
+        for (int i=1; i<=NOatoms; i++) {
+            converted.addAtom(convert(mol.getAtom(i)));
+        }
+        int NObonds = mol.numBonds();
+        for (int i=1; i<=NObonds; i++) {
+            converted.addBond(convert(mol.getBond(i)));
+        }
+        return converted;
+    }
+
 }

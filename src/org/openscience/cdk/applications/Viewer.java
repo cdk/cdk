@@ -37,7 +37,7 @@ import java.awt.*;
 /**
  * Command line utility for viewing chemical information from files.
  *
- *  @keyword command line util
+ * @keyword command line util
  */
 public class Viewer {
 

@@ -7,7 +7,7 @@ Changes in CVS
 * Do not fail if bond order != integer, assume order=1
 * Classes are now separated into two jar files: cdk-core and cdk-extra.
 * Several yet unnamed bugfixes
-* Added joelib.molecule.Atom <-> cdk.Atom convertor procedure
+* Added convertor procedures for CDK <-> JOEAtom, JOEBond, JOEMol
 * Fixed output of bond orders in CML (closes bug #582823)
 
 20020518 Release

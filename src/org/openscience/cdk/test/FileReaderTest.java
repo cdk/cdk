@@ -1,12 +1,12 @@
 /* $RCSfile$
- * $Author$   
+ * $Author$
  * $Date$   
  * $Revision$
  * 
- * Copyright (C) 2001  The CDK project
+ * Copyright (C) 2002  The CDK project
  * 
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -19,7 +19,7 @@
  * 
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
 package org.openscience.cdk.test;
@@ -60,12 +60,12 @@ public class FileReaderTest {
         System.out.println("  number of sequences: " + chemFile.getChemSequenceCount());
 	      for (int sequence = 0; sequence < chemFile.getChemSequenceCount(); sequence++) {
           chemSequence = chemFile.getChemSequence(sequence);
-          System.out.println("  number of models in sequence " + sequence + ": " + 
+          System.out.println("  number of models in sequence " + sequence + ": " +
                              chemSequence.getChemModelCount());
           for (int model = 0; model < chemSequence.getChemModelCount(); model++) {
             chemModel = chemSequence.getChemModel(model);
             setOfMolecules = chemModel.getSetOfMolecules();
-            System.out.println("  number of molecules in model " + model + ": " + 
+            System.out.println("  number of molecules in model " + model + ": " +
                                setOfMolecules.getMoleculeCount());
 	          for (int i = 0; i < setOfMolecules.getMoleculeCount(); i++) {
               Molecule m = setOfMolecules.getMolecule(i);
@@ -82,7 +82,7 @@ public class FileReaderTest {
 	      exc.printStackTrace();
       }
     }
-    
+
     public static void main(String[] args) {
       if (args.length == 1) {
         String filename = args[0];
