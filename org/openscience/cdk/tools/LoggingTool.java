@@ -45,6 +45,18 @@ public class LoggingTool {
         }
     }
 
+    public void dumpSystemProperties() {
+        debug("os.name        : " + System.getProperty("os.name"));
+        debug("os.version     : " + System.getProperty("os.version"));
+        debug("os.arch        : " + System.getProperty("os.arch"));
+        debug("java.version   : " + System.getProperty("java.version"));
+        debug("java.vendor    : " + System.getProperty("java.vendor"));
+    }
+
+    public void dumpClasspath() {
+        debug("java.class.path: " + System.getProperty("java.class.path"));
+    }
+
     public void debug(String s) {
         if (tostdout) {
             System.out.print("DEBUG: ");
