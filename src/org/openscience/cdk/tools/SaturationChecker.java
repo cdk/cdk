@@ -42,18 +42,18 @@ import java.io.*;
  * @keyword saturation
  * @keyword atom, valency
  */
-public class SaturationChecker
-{
+public class SaturationChecker {
+    
 	AtomTypeFactory atf;
-	static boolean debug = false;
 
+    private org.openscience.cdk.tools.LoggingTool logger;
 
 	/**
 	 *  Constructor for the SaturationChecker object
 	 */
-	public SaturationChecker() throws java.lang.Exception
-	{
+	public SaturationChecker() throws java.lang.Exception {
 		atf = new AtomTypeFactory();
+        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
 	}
 
 	public boolean hasPerfectConfiguration(Atom atom, AtomContainer ac)
@@ -62,54 +62,24 @@ public class SaturationChecker
 		double bondOrderSum = ac.getBondOrderSum(atom);
 		double maxBondOrder = ac.getHighestCurrentBondOrder(atom);
 		AtomType[] atomTypes = atf.getAtomTypes(atom.getSymbol(), atf.ATOMTYPE_ID_STRUCTGEN);
-		if (debug)
-		{
-			System.out.println("*** Checking for perfect configuration ***");
-			try
-			{
-				System.out.println("Checking configuration of atom " + ac.getAtomNumber(atom));
-				System.out.println("Atom has bondOrderSum = " + bondOrderSum);
-				System.out.println("Atom has max = " + bondOrderSum);
-			}
-			catch (Exception exc)
-			{
-
-			}
-
-		}
-		for (int f = 0; f < atomTypes.length; f++)
-		{
-			if (debug)
-			{
-
-			}
+        logger.debug("*** Checking for perfect configuration ***");
+        try {
+            logger.debug("Checking configuration of atom " + ac.getAtomNumber(atom));
+            logger.debug("Atom has bondOrderSum = " + bondOrderSum);
+            logger.debug("Atom has max = " + bondOrderSum);
+        } catch (Exception exc)	{}
+		for (int f = 0; f < atomTypes.length; f++) {
 			if (bondOrderSum == atomTypes[f].getMaxBondOrderSum() && maxBondOrder == atomTypes[f].getMaxBondOrder())
 			{
-				if (debug)
-				{
-					try
-					{
-						System.out.println("Atom " + ac.getAtomNumber(atom) + " has perfect configuration");
-					}
-					catch (Exception exc)
-					{
-
-					}
-				}
+                try	{
+					logger.debug("Atom " + ac.getAtomNumber(atom) + " has perfect configuration");
+				} catch (Exception exc) {}
 				return true;
 			}
 		}
-		if (debug)
-		{
-			try
-			{
-				System.out.println("*** Atom " + ac.getAtomNumber(atom) + " has imperfect configuration ***");
-			}
-			catch (Exception exc)
-			{
-
-			}
-		}
+		try {
+			logger.debug("*** Atom " + ac.getAtomNumber(atom) + " has imperfect configuration ***");
+		} catch (Exception exc) {}
 		return false;
 	}
 
@@ -131,39 +101,26 @@ public class SaturationChecker
 		double bondOrderSum = ac.getBondOrderSum(atom);
 		double maxBondOrder = ac.getHighestCurrentBondOrder(atom);
 		int hcount = atom.getHydrogenCount();
-		if (debug)
-		{
-			try
-			{
-				System.out.println("*** Checking saturation of atom " + ac.getAtomNumber(atom) + " ***");
-				System.out.println("bondOrderSum: " + bondOrderSum);
-				System.out.println("maxBondOrder: " + maxBondOrder);
-				System.out.println("hcount: " + hcount);
-			}
-			catch(Exception exc)
-			{
-			}
-		}
+        try {
+            logger.debug("*** Checking saturation of atom " + ac.getAtomNumber(atom) + " ***");
+            logger.debug("bondOrderSum: " + bondOrderSum);
+            logger.debug("maxBondOrder: " + maxBondOrder);
+            logger.debug("hcount: " + hcount);
+        } catch(Exception exc) {}
 		for (int f = 0; f < atomTypes.length; f++)
 		{
 			if (bondOrderSum >= atomTypes[f].getMaxBondOrderSum() - hcount && maxBondOrder <= atomTypes[f].getMaxBondOrder())
 			{
-				if (debug)
-				{
-					System.out.println("*** Good ! ***");
-				}
+                logger.debug("*** Good ! ***");
 				return true;
 			}
 		}
-		if (debug)
-		{
-			System.out.println("*** Bad ! ***");
-		}
+        logger.debug("*** Bad ! ***");
 		return false;
 	}
 	
 
-	/**
+    /**
 	 *  Returns the currently maximum formable bond order for this atom
 	 *
 	 * @param  atom  The atom to be checked
@@ -231,6 +188,31 @@ public class SaturationChecker
 		}
 	}
 
+    /** 
+     * Calculate the number of missing hydrogens by substracting the number of bonds
+     * for the atom from the expected number of bonds. Charges are included in the
+     * calculation. The number of expected bonds is defined by the AtomType generated
+     * with the AtomTypeFactory.
+     *
+     * @see AtomTypeFactory
+     */
+    private int calculateMissingHydrogen(Atom atom, Molecule molecule) {
+        logger.info("Calculating number of missing hydrogen atoms");
+        // get default atom
+        AtomType[] atomTypes = atf.getAtomTypes(atom.getSymbol(), atf.ATOMTYPE_ID_STRUCTGEN);
+        logger.debug("Found atomtypes: " + atomTypes.length);
+        AtomType defaultAtom = atomTypes[0];
+        logger.debug("DefAtom: " + defaultAtom.toString());
+        int missingHydrogen = (int)(defaultAtom.getMaxBondOrderSum() -
+                                    molecule.getBondOrderSum(atom) +
+                                    atom.getFormalCharge());
+        logger.debug("Atom: " + atom.getSymbol());
+        logger.debug("  max bond order: " + defaultAtom.getMaxBondOrderSum());
+        logger.debug("  bond order sum: " + molecule.getBondOrderSum(atom));
+        logger.debug("  charge        : " + atom.getFormalCharge());
+        return missingHydrogen;
+    }
+
     /**
      * Method that saturates a molecule by adding explicit hydrogens.
      *
@@ -240,22 +222,13 @@ public class SaturationChecker
      * @keyword explicit hydrogen
      */
     public void addHydrogensToSatisfyValency(Molecule molecule) {
-        Atom partner = null;
-        Atom atom = null;
-        Atom[] partners = null;
-        AtomType[] atomTypes = null;
-        Bond bond = null;
-        for (int f = 0; f < molecule.getAtomCount(); f ++) {
-            atom = molecule.getAtomAt(f);
-            // set number of implicit hydrogens to zero
-            atom.setHydrogenCount(0);
-            // get default atom
-            atomTypes = atf.getAtomTypes(atom.getSymbol(), atf.ATOMTYPE_ID_STRUCTGEN);
-            AtomType defaultAtom = atomTypes[0];
+        Atom[] atoms = molecule.getAtoms();
+        for (int f = 0; f < atoms.length; f ++) {
+            Atom atom = atoms[f];
+            atom.setHydrogenCount(0); // set number of implicit hydrogens to zero
             // add explicit hydrogens
-            int missingHydrogen = (int)(defaultAtom.getMaxBondOrder() -
-                                        molecule.getBondOrderSum(atom));
-            for (int i = 1; i <= missingHydrogen; i++ ) {
+            int missingHydrogens = calculateMissingHydrogen(atom, molecule);
+            for (int i = 1; i <= missingHydrogens; i++ ) {
                 Atom hydrogen = new Atom("H");
                 molecule.addAtom(hydrogen);
                 Bond newBond = new Bond(atom, hydrogen, 1.0);
@@ -273,22 +246,12 @@ public class SaturationChecker
      * @keyword implicit hydrogen
      */
     public void addImplicitHydrogensToSatisfyValency(Molecule molecule) {
-        Atom partner = null;
-        Atom atom = null;
-        Atom[] partners = null;
-        AtomType[] atomTypes = null;
-        Bond bond = null;
-        for (int f = 0; f < molecule.getAtomCount(); f ++) {
-            atom = molecule.getAtomAt(f);
-            // set number of implicit hydrogens to zero
-            atom.setHydrogenCount(0);
-            // get default atom
-            atomTypes = atf.getAtomTypes(atom.getSymbol(), atf.ATOMTYPE_ID_STRUCTGEN);
-            AtomType defaultAtom = atomTypes[0];
-            // add explicit hydrogens
-            int missingHydrogen = (int)(defaultAtom.getMaxBondOrder() -
-                                        molecule.getBondOrderSum(atom));
-            atom.setHydrogenCount(missingHydrogen);
+        Atom[] atoms = molecule.getAtoms();
+        for (int f = 0; f < atoms.length; f ++) {
+            Atom atom = atoms[f];
+            // add implicit hydrogens
+            int missingHydrogens = calculateMissingHydrogen(atom, molecule);
+            atom.setHydrogenCount(missingHydrogens);
         }
     }
 
