@@ -39,7 +39,6 @@ import javax.vecmath.*;
  */
 public class MDLReader implements CDKConstants
 {
-	
 	boolean debug = true;
 	BufferedReader input;
 
@@ -53,13 +52,51 @@ public class MDLReader implements CDKConstants
 		input = new BufferedReader(new InputStreamReader(in));
 	}
 	
+	
+	
+	/**
+	 * Read a ChemFile from a file in MDL sd format
+	 *
+	 * @return The ChemFile that was read from the MDL file.    
+	 */
+	public ChemFile readChemFile()
+	{
+		ChemFile chemFile = new ChemFile();
+		ChemSequence chemSequence = new ChemSequence();
+		SetOfMolecules som = new SetOfMolecules();
+		som.addMolecule(readMolecule());
+		StringBuffer strBuff;
+		try
+		{
+			do
+			{
+				do
+				{
+					strBuff = new StringBuffer(input.readLine());
+				}
+				while (!strBuff.toString().equals("$$$$"));
+				som.addMolecule(readMolecule());
+			}
+			while (strBuff != null);
+		}
+		catch (Exception exc)
+		{
+		}
+		ChemModel chemModel = new ChemModel(som);
+		chemSequence.addChemModel(chemModel);
+		chemFile.addChemSequence(chemSequence);
+		
+		return chemFile;
+	}
 
+
+	
 	/**
 	 * Read a Molecule from a file in MDL sd format
 	 *
 	 * @return The Molecule that was read from the MDL file.    
 	 */
-	public Molecule read()
+	public Molecule readMolecule()
 	{
 	    int atoms = 0, bonds = 0, atom1 = 0, atom2 = 0, order = 0, stereo = 0;
 	    double x=0, y=0, z=0;
@@ -69,10 +106,13 @@ public class MDLReader implements CDKConstants
 		Bond bond;
 	    try
 	    {
-			input.readLine();
-	        input.readLine();
-	        input.readLine();
 	        StringBuffer strBuff = new StringBuffer(input.readLine());
+			molecule.title = strBuff.toString();
+	        strBuff = new StringBuffer(input.readLine());
+	        molecule.someInfo = strBuff.toString();
+	        strBuff = new StringBuffer(input.readLine());
+	        molecule.comment = strBuff.toString();
+	        strBuff = new StringBuffer(input.readLine());
 	        strBuff.insert(3, " ");
 	        StringTokenizer strTok = new StringTokenizer(strBuff.toString());
 	        atoms = java.lang.Integer.valueOf(strTok.nextToken()).intValue();

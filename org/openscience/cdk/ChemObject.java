@@ -80,7 +80,7 @@ public class ChemObject implements CDKConstants
 	{
 		if (chemObjects.contains(col))
 		{
-			chemObjects.remove(col);
+			chemObjects.removeElement(col);
 		}
 	}
 
