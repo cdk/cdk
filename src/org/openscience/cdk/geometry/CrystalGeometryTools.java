@@ -52,26 +52,23 @@ public class CrystalGeometryTools {
      * @return         a 3x3 matrix with the three cartesian vectors representing
      *                 the unit cell axes. The a axis is the first row.
      */
-    public static double[][] calcInvertedAxes(Vector3d a, Vector3d b, Vector3d c) {
-         double det = a.x*b.y*c.z -
-                      a.x*b.z*c.y -
-                      a.y*b.x*c.z +
-                      a.y*b.z*c.x +
-                      a.z*b.x*c.y -
-                      a.z*b.y*c.x;
-         double invaxis[][] = new double[3][3];
-         invaxis[0][0] = (b.y*c.z - b.z*c.y)/det;
-         invaxis[0][1] = (b.z*c.x - b.x*c.z)/det;
-         invaxis[0][2] = (b.x*c.y - b.y*c.x)/det;
+    public static Vector3d[] calcInvertedAxes(Vector3d a, Vector3d b, Vector3d c) {
+         double det = a.x*b.y*c.z - a.x*b.z*c.y -
+                      a.y*b.x*c.z + a.y*b.z*c.x +
+                      a.z*b.x*c.y - a.z*b.y*c.x;
+         Vector3d[] invaxes = new Vector3d[3];
+         invaxes[0].x = (b.y*c.z - b.z*c.y)/det;
+         invaxes[0].y = (b.z*c.x - b.x*c.z)/det;
+         invaxes[0].z = (b.x*c.y - b.y*c.x)/det;
 
-         invaxis[1][0] = (a.z*c.y - a.y*c.z)/det;
-         invaxis[1][1] = (a.x*c.z - a.z*c.x)/det;
-         invaxis[1][2] = (a.y*c.x - a.x*c.y)/det;
+         invaxes[1].x = (a.z*c.y - a.y*c.z)/det;
+         invaxes[1].y = (a.x*c.z - a.z*c.x)/det;
+         invaxes[1].z = (a.y*c.x - a.x*c.y)/det;
 
-         invaxis[2][0] = (a.y*b.z - a.z*b.y)/det;
-         invaxis[2][1] = (a.z*b.x - a.x*b.z)/det;
-         invaxis[2][2] = (a.x*b.y - a.y*b.x)/det;
-         return invaxis;
+         invaxes[2].x = (a.y*b.z - a.z*b.y)/det;
+         invaxes[2].y = (a.z*b.x - a.x*b.z)/det;
+         invaxes[2].z = (a.x*b.y - a.y*b.x)/det;
+         return invaxes;
     }
 
     /**
@@ -95,15 +92,15 @@ public class CrystalGeometryTools {
 
     public static Point3d cartesianToFractional(Vector3d a, Vector3d b, Vector3d c,
                                                  Point3d cartPoint) {
-        double[][] invaxis = calcInvertedAxes(a,b,c);
-        double[] frac = new double[3];
-        frac[0] = invaxis[0][0]*cartPoint.x + invaxis[0][1]*cartPoint.y +
-                  invaxis[0][2]*cartPoint.z;
-        frac[1] = invaxis[1][0]*cartPoint.x + invaxis[1][1]*cartPoint.y +
-                  invaxis[1][2]*cartPoint.z;
-        frac[2] = invaxis[2][0]*cartPoint.x + invaxis[2][1]*cartPoint.y +
-                  invaxis[2][2]*cartPoint.z;
-        return new Point3d(frac[0], frac[1], frac[2]);
+        Vector3d[] invaxis = calcInvertedAxes(a,b,c);
+        Point3d frac = new Point3d();
+        frac.x = invaxis[0].x*cartPoint.x + invaxis[0].y*cartPoint.y +
+                 invaxis[0].z*cartPoint.z;
+        frac.y = invaxis[1].x*cartPoint.x + invaxis[1].y*cartPoint.y +
+                 invaxis[1].z*cartPoint.z;
+        frac.z = invaxis[2].x*cartPoint.x + invaxis[2].y*cartPoint.y +
+                 invaxis[2].z*cartPoint.z;
+        return frac;
     }
 
     /**
