@@ -476,6 +476,20 @@ public class SmilesParserTest extends TestCase
 			fail(e.toString());
 		}
 	}
+    
+	/**
+	 * See SF bug #881330.
+	 */
+	public void testSMILESFromXYZ() {
+		try {
+			String smiles = "C.C.N.C.C.C.[H].[H].[H].[H].[H].C.C.[H].[H].[H].[H].[H]";
+			SmilesParser sp = new SmilesParser();
+			Molecule mol = sp.parseSmiles(smiles);
+			assertEquals(18, mol.getAtomCount());
+		} catch (Exception e) {
+			fail(e.toString());
+		}
+	}
 
 	/**
 	 *  The main program for the SmilesParserTest class
