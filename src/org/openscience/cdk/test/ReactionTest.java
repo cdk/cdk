@@ -134,6 +134,30 @@ public class ReactionTest extends TestCase {
         assertEquals(-1.0, reaction.getProductCoefficient(new Molecule()), 0.00001);
     }
     
+	public void testGetReactantCoefficients() {
+        Reaction reaction = new Reaction();
+		Molecule ed1 = new Molecule();
+		Molecule ed2 = new Molecule();
+		reaction.addReactant(ed1, 2);
+		reaction.addReactant(ed2, 3);
+		double[] ec = reaction.getReactantCoefficients();
+		assertEquals(2.0, ec.length, 0.00001);
+		assertEquals(reaction.getReactantCoefficient(ed1), ec[0], 0.00001);
+		assertEquals(3.0, ec[1], 0.00001);
+    }
+	
+	public void testGetProductCoefficients() {
+        Reaction reaction = new Reaction();
+		Molecule pr1 = new Molecule();
+		Molecule pr2 = new Molecule();
+		reaction.addProduct(pr1, 1);
+		reaction.addProduct(pr2, 2);
+		double[] pc = reaction.getProductCoefficients();
+		assertEquals(2.0, pc.length, 0.00001);
+		assertEquals(reaction.getProductCoefficient(pr1), pc[0], 0.00001);
+		assertEquals(2.0, pc[1], 0.00001);
+    }
+	
     public void testGetReactants() {
         Reaction reaction = new Reaction();
         Molecule sodiumhydroxide = new Molecule();

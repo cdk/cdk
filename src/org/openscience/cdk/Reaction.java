@@ -195,6 +195,26 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
         return -1.0;
     }
     
+	/**
+     * Returns an array of double with the stoichiometric coefficients
+	 * of the reactants.
+     */
+    public double[] getReactantCoefficients() {
+        double[] returnCoeff = new double[this.reactantCount];
+        System.arraycopy(this.reactantStoichiometry, 0, returnCoeff, 0, this.reactantCount);
+        return returnCoeff;
+    }
+	
+	/**
+     * Returns an array of double with the stoichiometric coefficients
+	 * of the products.
+     */
+    public double[] getProductCoefficients() {
+        double[] returnCoeff = new double[this.productCount];
+        System.arraycopy(this.productStoichiometry, 0, returnCoeff, 0, this.productCount);
+        return returnCoeff;
+    }
+	
     /**
      * Sets the direction of the reaction.
      */
