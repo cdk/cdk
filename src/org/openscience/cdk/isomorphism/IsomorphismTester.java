@@ -30,12 +30,17 @@ import org.openscience.cdk.exception.*;
 import java.util.*;
 
 /**
- *  A too simplistic implementation of an isomorphism test for chemical graphs.
+ * A too simplistic implementation of an isomorphism test for chemical graphs.
+ *
+ * <p><b>Important:</b> as it uses the MorganNumbersTools it does not take bond
+ * order into account.
  *
  * @author     steinbeck
  * @created    September 10, 2001
  *
- * @keyword isomorphism
+ * @keyword    isomorphism
+ *
+ * @see        org.openscience.cdk.graphinvariant.MorganNumbersTools
  */
 public class IsomorphismTester implements java.io.Serializable
 {
