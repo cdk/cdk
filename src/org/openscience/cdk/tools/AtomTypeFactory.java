@@ -36,23 +36,26 @@ import org.w3c.dom.*;
 import JSX.*;
 
 /**
- * Used to store and return data of a particular AtomType. The data is
- * stored in an XML file which is read with the JSX library. The file
- * can be found in org.openscience.cdk.config.structgen_atomtypes.xml.
+ * General class for defining AtomTypes. This class itself does not define
+ * the items types; for this classes implementing the AtomTypeConfiguration
+ * interface are used.
+ *
+ * <p>To see which AtomTypeConfigurator's CDK provides, one should check
+ * the AtomTypeConfigurator API.
  *
  * @author     steinbeck
  * @created    August 29, 2001
  *
  * @keyword    atom, type
+ *
+ * @see        AtomTypeConfigurator
  */
 
-public class AtomTypeFactory
-{
+public class AtomTypeFactory {
+    
 	private Vector atomTypes = null;
 
-	public static String ATOMTYPE_ID_STRUCTGEN = "structgen";
-	// Just an example. We might want to be more explicit here, like "modelling.mm.charm" for the charm forcefield, or so. 
-	public static String ATOMTYPE_ID_MODELLING = "modelling"; 
+    private org.openscience.cdk.tools.LoggingTool logger;
 
 	public AtomTypeFactory() throws IOException, OptionalDataException, ClassNotFoundException
 	{
@@ -67,30 +70,40 @@ public class AtomTypeFactory
 	 * @exception  OptionalDataException   Unexpected data appeared in the atomtype ObjectInputStream
 	 * @exception  ClassNotFoundException  A problem instantiating the atomtypes
 	 */
-	public AtomTypeFactory(String configFile) throws IOException, OptionalDataException, ClassNotFoundException
-	{
-		InputStream ins = null;
-		ObjIn in = null;
-		try
-		{
-			ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
-		}
-		catch(Exception exc)
-		{
-			throw new IOException("There was a problem getting org.openscience.cdk.config.atomtypes.xml as a stream");
-		}
-		if (ins == null) throw new IOException("There was a problem getting org/openscience/cdk/config/atomtypes.xml as a stream");
-		in = new ObjIn(ins, new Config().aliasID(false));
-		atomTypes = (Vector) in.readObject();
-    for (int f = 0; f < atomTypes.size(); f++)
+	public AtomTypeFactory(String configFile) 
+        throws IOException, OptionalDataException, ClassNotFoundException
     {
-      ((AtomType)atomTypes.elementAt(f)).init();
-    }
+        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        AtomTypeConfigurator atc = null;
+        try {
+            /* This class loading mechanism is used to not depend on JSX,
+            * which is needed for old JVM's like in older browsers.
+            */
+            if (configFile.endsWith("txt")) {
+                atc = (AtomTypeConfigurator)this.getClass().getClassLoader().
+                loadClass("org.openscience.cdk.tools.TXTBasedAtomTypeConfigurator").
+                newInstance();                
+            } else if (configFile.endsWith("xml")) {
+                atc = (AtomTypeConfigurator)this.getClass().getClassLoader().
+                loadClass("org.openscience.cdk.tools.JSXBasedAtomTypeConfigurator").
+                newInstance();
+            }
+        } catch (Exception exc) {
+            logger.error("Could not get instance of AtomTypeConfigurator for " + configFile); 
+        }
+        if (atc != null) {
+            atc.setConfigFile(configFile);
+            try {
+                atomTypes = atc.readAtomTypes();
+            } catch (Exception exc) {
+                logger.error("Could not read AtomType's from file due to: " + exc.toString());
+            }
+        } else {
+            atomTypes = new Vector();
+        }
 	}
 	
-
-	public int getSize()
-	{
+	public int getSize() {
 		return atomTypes.size();
 	}
 
@@ -100,14 +113,11 @@ public class AtomTypeFactory
 	 * @param  symbol  An id to search for
 	 * @return         The AtomType for this id
 	 */
-	public AtomType getAtomType(String id) throws NoSuchAtomTypeException
-	{
+	public AtomType getAtomType(String id) throws NoSuchAtomTypeException {
 		AtomType atomType = null;
-		for (int f = 0; f < atomTypes.size(); f++)
-		{
+		for (int f = 0; f < atomTypes.size(); f++) {
 			atomType = (AtomType) atomTypes.elementAt(f); 
-			if (atomType.getID().equals(id))
-			{
+			if (atomType.getID().equals(id)) {
 				return atomType;
 			}
 		}
@@ -120,12 +130,10 @@ public class AtomTypeFactory
 	 * @param  symbol  An element symbol to search for
 	 * @return         An array of atomtypes that matches the given element symbol and atomtype class
 	 */
-	public AtomType[] getAtomTypes(String symbol, String id)
-	{
+	public AtomType[] getAtomTypes(String symbol, String id) {
 		ArrayList al = new ArrayList();
 		AtomType atomType = null;
-		for (int f = 0; f < atomTypes.size(); f++)
-		{
+		for (int f = 0; f < atomTypes.size(); f++){
 			if (((AtomType) atomTypes.elementAt(f)).getSymbol().equals(symbol) && ((AtomType) atomTypes.elementAt(f)).getID().indexOf(id) > -1)
 			{
 				al.add((AtomType) ((AtomType) atomTypes.elementAt(f)).clone());
@@ -134,5 +142,23 @@ public class AtomTypeFactory
 		AtomType[] atomTypes = new AtomType[al.size()];
 		al.toArray(atomTypes);
 		return atomTypes;
+	}
+
+	/**
+	 *  Configures an atom. Finds the correct element type
+	 *  by looking at the atoms atom type id (atom.getID()).
+	 *
+	 * @param  atom  The atom to be configured
+	 * @return       The configured atom
+	 */
+	public Atom configure(Atom atom) {
+        try {
+            AtomType at = getAtomType(atom.getID());
+            atom.setMaxBondOrder(at.getMaxBondOrder());
+            atom.setMaxBondOrderSum(at.getMaxBondOrderSum());
+        } catch (Exception exc) {
+            logger.warn("Could not configure atom without unknown ID: " + atom.toString());
+        }
+		return atom;
 	}
 }

@@ -1,7 +1,9 @@
-/*
-  * $RCSfile$    $Author$    $Date$    $Revision$
+/* $RCSfile$    
+ * $Author$    
+ * $Date$    
+ * $Revision$
  * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  * 
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  * 
@@ -20,8 +22,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
  * 
  */
-
-package org.openscience.cdk.test;
+package org.openscience.cdk.test.tools;
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.tools.*;
@@ -31,45 +32,39 @@ import junit.framework.*;
 /**
  * Checks the funcitonality of the AtomTypeFactory
  */
- 
-public class AtomTypeFactoryTest extends TestCase
-{
-	public AtomTypeFactoryTest(String name)
-	{
+public class AtomTypeFactoryTest extends TestCase {
+
+    AtomTypeFactory atf = null;
+    
+	public AtomTypeFactoryTest(String name) {
 		super(name);
 	}
 	
-	public void setUp()
-	{
-
-	}
+	public void setUp() {
+		try {
+			atf = new AtomTypeFactory();
+		} catch(Exception exc) {
+            System.out.println("AtomTypeFactoryTest.setup: ");
+            exc.printStackTrace();
+			fail("Problem instantiating AtomTypeFactory: " +  exc.toString());
+		}
+    }
 	
 	public static Test suite() {
 		return new TestSuite(AtomTypeFactoryTest.class);
 	}
 
-	public void testAtomTypeFactory()
-	{
-		AtomType atomType = null;
-		AtomTypeFactory atfac = null;
-		try
-		{
-			atfac = new AtomTypeFactory();
-		}
-		catch(Exception exc)
-		{
-			throw new AssertionFailedError("Problem instantiating AtomTypeFactory: " +  exc.toString());
-		}
-		
-		assertTrue(atfac.getSize() > 0);
-		
-		try
-		{
-			atomType = atfac.getAtomType("structgen.C4");
-		}
-		catch(Exception exc)
-		{
-			throw new AssertionFailedError("Problem getting AtomType for 'structgen.C4' from AtomTypeFactory: "  +  exc.toString());
+	public void testAtomTypeFactory() {
+        assertTrue(atf != null);
+		assertTrue(atf.getSize() > 0);
+    }
+    
+    public void testGetAtomType() {
+		AtomType atomType = null;        
+		try {
+			atomType = atf.getAtomType("structgen.C4");
+		} catch(Exception exc) {
+			fail("Problem getting AtomType for 'structgen.C4' from AtomTypeFactory: "  +  exc.toString());
 		}
 		
 		assertTrue(atomType.getMaxBondOrderSum() == 4.0);

@@ -2,43 +2,39 @@
  * $Author$    
  * $Date$    
  * $Revision$
- * 
+ *
  * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package org.openscience.cdk.test.tools;
+package org.openscience.cdk.tools;
 
-import junit.framework.*;
+import java.util.Vector;
 
-/**
- * TestSuite that runs all the sample tests
- *
- */
-public class ToolsTests {
+public interface AtomTypeConfigurator {
 
-    public static Test suite () {
-        TestSuite suite= new TestSuite("The cdk.tools Tests");
-        suite.addTest(ConnectivityCheckerTest.suite());
-        suite.addTest(IsotopeFactoryTest.suite());
-        suite.addTest(MFAnalyserTest.suite());
-        suite.addTest(SaturationCheckerTest.suite());
-        suite.addTest(AtomTypeFactoryTest.suite());
-        return suite;
-    }
+    /**
+     * Sets the file containing the config data
+     */
+    public void setConfigFile(String configFile);
+    
+    /**
+     * Reads a set of configuref AtomType's into a Vector
+     */
+    public Vector readAtomTypes() throws Exception;
 
 }
