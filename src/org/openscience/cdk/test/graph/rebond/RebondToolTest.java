@@ -26,6 +26,7 @@ package org.openscience.cdk.test.graph.rebond;
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.graph.rebond.RebondTool;
+import org.openscience.cdk.tools.AtomTypeFactory;
 import junit.framework.*;
 import javax.vecmath.Point3d;
 
@@ -53,7 +54,19 @@ public class RebondToolTest extends TestCase {
         methane.addAtom(new Atom("H", new Point3d(1.0, -1.0, -1.0)));
         methane.addAtom(new Atom("H", new Point3d(-1.0, 1.0, -1.0)));
         
-        rebonder.rebond(methane);
+        try {
+            // configure atoms
+            AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/jmol_atomtypes.txt");
+            Atom[] atoms = methane.getAtoms();
+            for (int i=0; i<atoms.length; i++) {
+                factory.configure(atoms[i]);
+            }
+            // rebond
+            rebonder.rebond(methane);
+        } catch (Exception exception) {
+            fail();
+        }
+        
         assertEquals(5, methane.getAtomCount());
         assertEquals(4, methane.getBondCount());
     }

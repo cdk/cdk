@@ -31,11 +31,14 @@ package org.openscience.cdk.graph.rebond;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
+import org.openscience.cdk.exception.CDKException;
 
 /**
  * Provides tools to rebond a molecule from 3D coordinates only.
  * The algorithm uses an efficient algorithm using a
- * Binary Space Partitioning Tree (Bspt).
+ * Binary Space Partitioning Tree (Bspt). It requires that the 
+ * atom types are configured such that the covalent bond radii
+ * for all atoms are set. The AtomTypeFactory can be used for this.
  *
  * @keyword    rebonding
  * @keyword    bond, recalculation
@@ -65,7 +68,7 @@ public class RebondTool {
    * @author  Miguel Howard
    * @created 2003-05-23
    */
-  public void rebond(AtomContainer container) {
+  public void rebond(AtomContainer container) throws CDKException {
     container.removeAllBonds();
     maxCovalentRadius = 0.0;
     // construct a new binary space partition tree
@@ -74,6 +77,9 @@ public class RebondTool {
     for (int i = atoms.length; --i >= 0; ) {
       Atom atom = atoms[i];
       double myCovalentRadius = atom.getCovalentRadius();
+      if (myCovalentRadius == 0.0) {
+          throw new CDKException("Atom(s) does not have covalentRadius defined.");
+      }
       if (myCovalentRadius > maxCovalentRadius)
         maxCovalentRadius = myCovalentRadius;
       TupleAtom tupleAtom = new TupleAtom(atom);
