@@ -51,6 +51,9 @@ public class EnzymeResidueLocator extends PseudoAtom {
      */
     public EnzymeResidueLocator(Atom atom) {
         super(atom);
+        if (atom instanceof PseudoAtom) {
+            this.setLabel(((PseudoAtom)atom).getLabel());
+        }
     }
 }
 
