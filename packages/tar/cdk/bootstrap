@@ -4,7 +4,7 @@
 cp ../../../CHANGELOG ChangeLog
 cp ../../../build.xml .
 cp ../../../javadoc.xml .
-cp -R ../../../src .
+rsync -vargopt ../../../src .
 find src -name "CVS" | xargs rm -R
 find src -name ".cvsignore" | xargs rm
 
