@@ -27,6 +27,17 @@ then
         AC_PATH_PROG(PATHTOJAVA, java, no)
 fi
 
+AC_MSG_CHECKING(for Java3D lib)
+for d in "/usr/lib/j2re1.3/lib/ext"
+do
+    if test -f "$d/j3dcore.jar"
+    then
+        AC_MSG_RESULT("$d/j3dcore.jar")
+        PATHTO3DJAR="$d/j3dcore.jar"
+    fi
+done
+AC_SUBST(PATHTO3DJAR)
+
 AC_MSG_CHECKING(for rt.jar lib)
 for d in "/usr/lib/j2re1.3/lib"
 do
