@@ -29,6 +29,7 @@ package org.openscience.cdk.editor;
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.dict.*;
+import org.openscience.cdk.tools.LoggingTool;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.event.*;
@@ -36,12 +37,16 @@ import javax.swing.table.*;
 
 public class DictRefEditorTableModel extends AbstractTableModel {
     
+    private LoggingTool logger;
+    
     private String[] columnNames;
     private Vector fields = new Vector();
     private Vector dicts = new Vector();
     private Vector entries = new Vector();
     
     public DictRefEditorTableModel() {
+        logger = new LoggingTool(this.getClass().getName());
+        
         columnNames = new String[3];
         columnNames[0] = "Field";
         columnNames[1] = "Dictionary";
@@ -118,13 +123,16 @@ public class DictRefEditorTableModel extends AbstractTableModel {
      */
     public void setChemObject(ChemObject object) {
         cleanTable();
+        logger.debug("Filling dict ref table for " + object.toString());
         Map properties = object.getProperties();
         Iterator iter = properties.keySet().iterator();
         while (iter.hasNext()) {
             Object key = iter.next();
+            logger.debug("Found property: " + key);
             if (key instanceof String) {
                 String keyName = (String)key;
                 if (keyName.startsWith(DictionaryDatabase.DICTREFPROPERTYNAME)) {
+                    logger.debug("About to add this ref: " + keyName);
                     if (keyName.length() > DictionaryDatabase.DICTREFPROPERTYNAME.length()) {
                         String fieldName = keyName.substring(DictionaryDatabase.DICTREFPROPERTYNAME.length()+1);
                         fields.addElement(fieldName);
