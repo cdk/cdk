@@ -112,19 +112,17 @@ public class VASPReader extends DefaultChemObjectReader {
         }
     }
     
-    public ChemFile readChemFile() throws CDKException, IOException {
+    private ChemFile readChemFile() throws CDKException, IOException {
         ChemFile file = new ChemFile();
-        ChemSequence seq = new ChemSequence();
-        ChemModel model = new ChemModel();
-        Crystal crystal = readCrystal();
-        model.setCrystal(crystal);
-        seq.addChemModel(model);
+        ChemSequence seq = readChemSequence();
         file.addChemSequence(seq);
         return file;
     }
     
-    public Crystal readCrystal() throws CDKException, IOException {
-        Crystal crystal = new Crystal();
+    private ChemSequence readChemSequence() throws CDKException, IOException {
+        ChemSequence sequence = new ChemSequence();
+        ChemModel chemModel = new ChemModel();
+        Crystal crystal = null;
         
         // Get the info line (first token of the first line)
         inputBuffer.mark(255);
@@ -168,6 +166,11 @@ public class VASPReader extends DefaultChemObjectReader {
         }
         
         while(nextVASPToken(false) != null) {
+            
+            logger.debug("New crystal started...");
+            
+            crystal = new Crystal();
+            chemModel = new ChemModel();
             
             // Get acell
             for(int i=0; i<3; i++) {
@@ -228,12 +231,15 @@ public class VASPReader extends DefaultChemObjectReader {
                 crystal.addAtom(atom);
             }
             crystal.setProperty(CDKConstants.REMARK, info);
+            chemModel.setCrystal(crystal);
             
             logger.info("New Frame set!");
             
+            sequence.addChemModel(chemModel);
+            
         } //end while
         
-        return crystal;
+        return sequence;
     }
     
     
