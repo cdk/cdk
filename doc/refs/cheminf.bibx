@@ -554,6 +554,16 @@
     </bibtex:article>
   </bibtex:entry>
 
+  <bibtex:entry id="TOD98">
+    <bibtex:article>
+      <bibtex:author>Todeschini, R. and Gramatica, P.</bibtex:author>
+      <bibtex:title>New 3D Molecular Descriptors: The WHIM theory and QAR Applications</bibtex:title>
+      <bibtex:journal>Persepectives in Drug Discovery and Design</bibtex:journal>
+      <bibtex:year>1998</bibtex:year>
+      <bibtex:pages>355-380</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+
 
 
 </bibtex:file>
