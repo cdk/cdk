@@ -789,9 +789,6 @@ public class SmilesGenerator {
     if (angle2 < 0 && angle1 > 0 && angle2 < -(Math.PI / 2)) {
       angle = Math.PI + angle2 + Math.PI - angle1;
     }
-    if (angle2 > 0 && angle1 < 0 && angle2 > (Math.PI / 2)) {
-      angle=angle1+angle2;
-    }
     if (angle2 > 0 && angle1 < 0 && angle1 < -(Math.PI / 2)) {
       angle = -Math.PI + angle2 - Math.PI - angle1;
     }
