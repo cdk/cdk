@@ -75,7 +75,7 @@ public class Renderer3D extends JPanel implements Runnable {
      * @param drawing_properties     drawing properties to be used
      */
     public Renderer3D(Renderer3DModel drawing_properties) {
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        logger = new org.openscience.cdk.tools.LoggingTool(this);
         this.drawing_properties = drawing_properties;
 
         // initialize stuff

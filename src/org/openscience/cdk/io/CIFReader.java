@@ -46,11 +46,12 @@ import org.openscience.cdk.Crystal;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.*;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
-
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * This is not a reader for the CIF and mmCIF crystallographic formats.
- * It is able, however, to extract some content from it. It's very ad hoc, not written
+ * It is able, however, to extract some content from such files. 
+ * It's very ad hoc, not written
  * using any dictionary. So please complain if something is not working.
  * In addition, the things it does read are considered experimental.
  *
@@ -68,7 +69,7 @@ import org.openscience.cdk.geometry.CrystalGeometryTools;
 public class CIFReader extends DefaultChemObjectReader {
 
     private BufferedReader input;
-    private org.openscience.cdk.tools.LoggingTool logger;
+    private LoggingTool logger;
 
     private Crystal crystal = null;
     // cell parameters
@@ -86,7 +87,7 @@ public class CIFReader extends DefaultChemObjectReader {
      */
     public CIFReader(Reader input) {
         this.input = new BufferedReader(input);
-        this.logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        this.logger = new LoggingTool(this);
     }
     
     public CIFReader() {

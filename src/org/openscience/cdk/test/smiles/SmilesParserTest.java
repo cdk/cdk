@@ -929,7 +929,7 @@ public class SmilesParserTest extends TestCase
 	 *@param  args  The command line arguments
 	 */
 	public static void main(String[] args) {
-        LoggingTool logger = new LoggingTool();
+        LoggingTool logger = new LoggingTool(SmilesParserTest.class);
 		SmilesParserTest spt = new SmilesParserTest("SmilesParserTest");
 		spt.setStandAlone(true);
 		spt.viewSmilesStructures();

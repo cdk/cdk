@@ -48,7 +48,7 @@ public class IUPACNameLocalizer {
             "org/openscience/cdk/iupac/generator/data/IUPACNames", l);
 
         // instantiate logger
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        logger = new org.openscience.cdk.tools.LoggingTool(this);
     }
 
     public static IUPACNameLocalizer getInstance(Locale l) {

@@ -56,7 +56,7 @@ public class DBWriter extends DefaultChemObjectWriter {
 	private CMLWriter cmlw;
 
 	public DBWriter(Connection con) {
-		this.logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+		this.logger = new org.openscience.cdk.tools.LoggingTool(this);
 		this.con = con;
 	}
 

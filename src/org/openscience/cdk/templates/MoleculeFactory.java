@@ -46,7 +46,7 @@ public class MoleculeFactory {
     private static LoggingTool logger = null;
     
     static {
-        logger = new LoggingTool("org.openscience.cdk.templates.MoleculeFactory");
+        logger = new LoggingTool(MoleculeFactory.class);
     }
     
 	public static Molecule makeAlphaPinene() {

@@ -61,7 +61,7 @@ public class OverlapResolver
 	
 	public OverlapResolver()
 	{
-		logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());	
+		logger = new org.openscience.cdk.tools.LoggingTool(this);	
 	}
 	
 	

@@ -37,6 +37,7 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.*;
 import org.openscience.cdk.io.inchi.INChIHandler;
+import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
@@ -65,7 +66,7 @@ public class INChIReader extends DefaultChemObjectReader {
     private XMLReader parser;
     private Reader input;
 
-    private org.openscience.cdk.tools.LoggingTool logger;
+    private LoggingTool logger;
 
     /**
      * Construct a INChI reader from a Reader object.
@@ -94,7 +95,7 @@ public class INChIReader extends DefaultChemObjectReader {
      * Initializes this reader.
      */
     private void init() {
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        logger = new LoggingTool(this);
         boolean success = false;
         // If JAXP is prefered (comes with Sun JVM 1.4.0 and higher)
         if (!success) {

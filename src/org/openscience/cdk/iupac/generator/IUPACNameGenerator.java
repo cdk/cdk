@@ -70,7 +70,7 @@ public class IUPACNameGenerator {
         this.name = new IUPACName();
 
         // instantiate logger
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        logger = new org.openscience.cdk.tools.LoggingTool(this);
 
         // instantiate the saturation checker
         try {

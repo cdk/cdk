@@ -60,7 +60,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
     private LoggingTool logger = null;
 
     public MDLRXNV3000Reader(Reader in) {
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        logger = new LoggingTool(this);
         input = new BufferedReader(in);
         initIOSettings();
     }

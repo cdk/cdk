@@ -35,6 +35,7 @@ import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.io.cml.cdopi.CDOInterface;
+import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.Attributes;
 
 /**
@@ -98,7 +99,7 @@ public class CMLCoreModule implements ModuleInterface {
     boolean cartesianAxesSet = false;
     
     public CMLCoreModule(CDOInterface cdo) {
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        logger = new LoggingTool(this);
         this.cdo = cdo;
     }
     

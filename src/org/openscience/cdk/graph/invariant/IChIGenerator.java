@@ -40,6 +40,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.ChemObjectWriter;
 import org.openscience.cdk.io.MDLWriter;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Generates and IChI for a Molecule. Requires the ichi.exe program
@@ -56,11 +57,11 @@ public class IChIGenerator {
 
     // FIX: make this configuarable
     private static String ichiProgram = "ichi.exe";
-    private static org.openscience.cdk.tools.LoggingTool logger;
+    private static LoggingTool logger;
     private static Process process = null;
 
     public IChIGenerator() {
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        logger = new LoggingTool(this);
     }
 
     public void setIChIPath(String path) {
@@ -126,7 +127,7 @@ public class IChIGenerator {
      * and the filename of the output file (-OUT filename).
      */
     public static void main(String args[]) {
-        logger = new org.openscience.cdk.tools.LoggingTool(IChIGenerator.class.getName());
+        logger = new LoggingTool(IChIGenerator.class);
 
         if (args.length == 0) {
             System.out.println("Usage: org.openscience.cdk.graph.invariant.IChIGenerator -IN file -OUT file");

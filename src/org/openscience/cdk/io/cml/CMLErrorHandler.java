@@ -32,6 +32,8 @@ import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
+import org.openscience.cdk.tools.LoggingTool;
+
 /**
  * CDK's SAX2 ErrorHandler for giving feedback on XML errors in the CML document.
  * Output is redirected to org.openscience.cdk.tools.LoggingTool.
@@ -42,7 +44,7 @@ import org.xml.sax.SAXParseException;
  **/
 public class CMLErrorHandler implements ErrorHandler {
 
-    private org.openscience.cdk.tools.LoggingTool logger;
+    private LoggingTool logger;
 
     public boolean reportErrors = true;
     public boolean abortOnErrors = false;
@@ -52,7 +54,7 @@ public class CMLErrorHandler implements ErrorHandler {
      * class to output errors and warnings to.
      **/
     public CMLErrorHandler() {
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        logger = new LoggingTool(this);
         logger.info("instantiated");
     }
 

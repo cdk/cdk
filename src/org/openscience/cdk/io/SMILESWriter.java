@@ -40,6 +40,7 @@ import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.*;
 import org.openscience.cdk.smiles.SmilesGenerator;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Writes the SMILES strings to a plain text file.
@@ -50,7 +51,7 @@ import org.openscience.cdk.smiles.SmilesGenerator;
  */
 public class SMILESWriter extends DefaultChemObjectWriter {
 
-    private org.openscience.cdk.tools.LoggingTool logger;
+    private LoggingTool logger;
     static BufferedWriter writer;
 
     /**
@@ -59,7 +60,7 @@ public class SMILESWriter extends DefaultChemObjectWriter {
      * @param   out  The Writer to write to
      */
     public SMILESWriter(Writer out) {
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        logger = new LoggingTool(this);
         try {
             writer = new BufferedWriter(out);
         } catch (Exception exc) {

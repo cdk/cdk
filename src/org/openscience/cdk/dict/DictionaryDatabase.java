@@ -56,7 +56,7 @@ public class DictionaryDatabase {
     private Hashtable dictionaries;
 
     public DictionaryDatabase() {
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        logger = new org.openscience.cdk.tools.LoggingTool(this);
         
         // read dictionaries distributed with CDK
         dictionaries = new Hashtable();

@@ -84,7 +84,7 @@ public class WWMMatrixReader extends DefaultChemObjectReader {
     private final String UTF8 = "UTF-8";
 
     public WWMMatrixReader() {
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        logger = new org.openscience.cdk.tools.LoggingTool(this);
     }
 
     public WWMMatrixReader(String server) {

@@ -79,7 +79,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     private Pattern keyValueTuple2;
     
     public MDLV3000Reader(Reader in) {
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        logger = new LoggingTool(this);
         input = new BufferedReader(in);
         initIOSettings();
         try {

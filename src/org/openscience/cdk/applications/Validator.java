@@ -40,6 +40,7 @@ import org.openscience.cdk.validate.CDKValidator;
 import org.openscience.cdk.validate.ValidationReport;
 import org.openscience.cdk.validate.ValidationTest;
 import org.openscience.cdk.validate.ValidatorEngine;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Command line utility for checking the chemical information from files.
@@ -62,10 +63,8 @@ public class Validator {
 	 */
     
     public Validator() {
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName(), true);
+        logger = new LoggingTool(this);
     }
-
-    
     
     public ValidationReport validate(File input) throws IOException {
         Reader fileReader = new FileReader(input);

@@ -90,7 +90,7 @@ public class MACiEReader extends DefaultChemObjectReader {
     public final static String EnzymeName = "org.openscience.cdk.io.MACiE.EnzymeName";
     
     private LineNumberReader input = null;
-    private org.openscience.cdk.tools.LoggingTool logger = null;
+    private LoggingTool logger = null;
 
     private IntegerIOSetting selectedEntry;
     private BooleanIOSetting readSecondaryFiles;

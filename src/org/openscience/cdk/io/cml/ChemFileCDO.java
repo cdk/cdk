@@ -82,8 +82,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
      * Basic contructor
      */
     public ChemFileCDO() {
-      logger = new org.openscience.cdk.tools.LoggingTool(
-                     this.getClass().getName() );
+      logger = new LoggingTool(this);
       currentChemSequence = new ChemSequence();
       currentChemModel = new ChemModel();
       currentSetOfMolecules = new SetOfMolecules();

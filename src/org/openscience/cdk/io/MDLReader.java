@@ -80,7 +80,7 @@ import org.openscience.cdk.tools.LoggingTool;
 public class MDLReader extends DefaultChemObjectReader {
 
     BufferedReader input = null;
-    private org.openscience.cdk.tools.LoggingTool logger = null;
+    private LoggingTool logger = null;
     private IsotopeFactory isotopeFactory = null;
 
     private BooleanIOSetting forceReadAs3DCoords;

@@ -52,6 +52,7 @@ import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.*;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Reads an frames from a PMP formated input.
@@ -68,7 +69,7 @@ public class PMPReader extends DefaultChemObjectReader {
 
     private BufferedReader input;
 
-    private org.openscience.cdk.tools.LoggingTool logger;
+    private LoggingTool logger;
 
     /* Keep a copy of the PMP model */
     private SetOfMolecules som;
@@ -91,7 +92,7 @@ public class PMPReader extends DefaultChemObjectReader {
      */
     public PMPReader(Reader input) {
         this.input = new BufferedReader(input);
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        logger = new LoggingTool(this);
     
         /* compile patterns */
         objHeader = Pattern.compile(".*\\((\\d+)\\s(\\w+)$");

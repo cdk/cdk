@@ -78,9 +78,7 @@ public class Fingerprinter
 	static boolean debug = true;
 	static int debugCounter = 0;
 	
-	
-	private static LoggingTool logger = new LoggingTool(Fingerprinter.class.getName(), true);
-
+	private static LoggingTool logger = new LoggingTool(Fingerprinter.class);
 
 	/**
 	 *  Generates a fingerprint of the default size for the given AtomContainer

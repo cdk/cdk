@@ -59,7 +59,7 @@ public class ValencyValidator extends AbstractValidator {
     private static LoggingTool logger;
     
     static {
-        logger = new LoggingTool("org.openscience.cdk.validate.ValencyValidator");
+        logger = new LoggingTool(ValencyValidator.class);
     }
     
     public ValencyValidator() {

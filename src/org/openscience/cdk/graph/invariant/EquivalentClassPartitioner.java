@@ -71,7 +71,7 @@ import org.openscience.cdk.graph.matrix.ConnectionMatrix;
 		nodeMatrix=new double[nodeNumber][layerNumber+1];
 		bondMatrix=new double[nodeNumber][layerNumber];
 		weight=new double[nodeNumber+1];
-		logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+		logger = new org.openscience.cdk.tools.LoggingTool(this);
 	}
 
 

@@ -67,7 +67,7 @@ public class PDBValidator extends AbstractValidator {
     private static LoggingTool logger;
     
     static {
-        logger = new LoggingTool("org.openscience.cdk.validate.PDBValidator");
+        logger = new LoggingTool(PDBValidator.class);
     }
 
     private static String prefix = "http://www.rcsb.org/pdb/cgi/export.cgi/?format=PDB&pdbId=";

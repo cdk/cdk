@@ -21,6 +21,7 @@ New:
 * Added *Manipulator.addAtomProperties()
 * The core module classes are now checked for coverage of JUnit testing
 * Added a radial distribution function (RDF) calculator
+* Added a new LoggingTool(Class) contructor for easier use in static classes
 
 Fixes:
 * Fixed format detection for Jaguar, Gamess and the HIN format: they were

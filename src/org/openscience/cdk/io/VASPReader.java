@@ -83,7 +83,7 @@ public class VASPReader extends DefaultChemObjectReader {
      * @param input a <code>Reader</code> value
      */
     public VASPReader(Reader input) {
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        logger = new LoggingTool(this);
         try {
             isotopeFac = IsotopeFactory.getInstance();
         } catch (Exception exception) {

@@ -47,6 +47,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.*;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.math.FortranFormat;
+import org.openscience.cdk.tools.LoggingTool;
 
 
 /**
@@ -68,7 +69,7 @@ import org.openscience.cdk.math.FortranFormat;
 public class ShelXReader extends DefaultChemObjectReader {
 
     private BufferedReader input;
-    private org.openscience.cdk.tools.LoggingTool logger;
+    private LoggingTool logger;
 
     /**
      * Create an ShelX file reader.
@@ -77,7 +78,7 @@ public class ShelXReader extends DefaultChemObjectReader {
      */
     public ShelXReader(Reader input) {
         this.input = new BufferedReader(input);
-        this.logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        this.logger = new LoggingTool(this);
     }
 
     public ShelXReader() {

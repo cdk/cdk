@@ -48,6 +48,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.*;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.renderer.Renderer2D;
+import org.openscience.cdk.tools.LoggingTool;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 
@@ -74,7 +75,7 @@ import org.w3c.dom.Document;
  */
 public class SVGWriter extends DefaultChemObjectWriter {
 
-    private org.openscience.cdk.tools.LoggingTool logger;
+    private LoggingTool logger;
     static BufferedWriter writer;
 
     /**
@@ -83,7 +84,7 @@ public class SVGWriter extends DefaultChemObjectWriter {
      * @param   out  The Writer to write to
      */
     public SVGWriter(Writer out) {
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        logger = new LoggingTool(this);
         try {
             writer = new BufferedWriter(out);
         } catch (Exception exc) {

@@ -48,6 +48,7 @@ import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Generates 2D coordinates for a molecule for which only connectivity is known
@@ -73,10 +74,9 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 public class StructureDiagramGenerator
 {
 
-	private org.openscience.cdk.tools.LoggingTool logger =
-    new org.openscience.cdk.tools.LoggingTool(StructureDiagramGenerator.class.getName());
+    private LoggingTool logger = new LoggingTool(StructureDiagramGenerator.class);
 
-  private static TemplateHandler DEFAULT_TEMPLATE_HANDLER = new TemplateHandler();
+    private static TemplateHandler DEFAULT_TEMPLATE_HANDLER = new TemplateHandler();
 
 	Molecule molecule;
 	RingSet sssr;

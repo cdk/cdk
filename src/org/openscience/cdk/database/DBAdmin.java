@@ -144,7 +144,7 @@ public class DBAdmin {
      *
      **/
     DBAdmin(String args[]) {
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        logger = new org.openscience.cdk.tools.LoggingTool(this);
 
 	String option = null;
         usage = "Usage: java DBAdmin options\n";

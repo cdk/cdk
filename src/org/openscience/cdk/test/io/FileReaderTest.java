@@ -42,20 +42,21 @@ import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.XYZReader;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * @cdk.module test
  */
 public class FileReaderTest {
 
-    private org.openscience.cdk.tools.LoggingTool logger;
+    private LoggingTool logger;
 
     public FileReaderTest(String inFile) {
-      logger = new org.openscience.cdk.tools.LoggingTool();
+      logger = new LoggingTool(this);
 
       try {
         ChemObjectReader reader;
-        logger.info("Loading: " + inFile);
+        logger.info("Loading: ", inFile);
         if (inFile.endsWith(".xyz")) {
   	      reader = new XYZReader(new FileReader(inFile));
           logger.info("Expecting XYZ format...");

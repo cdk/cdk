@@ -30,22 +30,23 @@ import org.openscience.cdk.applications.swing.AtomicTable;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.internet.DADMLReader;
 import org.openscience.cdk.io.ChemObjectReader;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * @cdk.module test
  */
 public class DADMLTest {
 
-    private org.openscience.cdk.tools.LoggingTool logger;
+    private LoggingTool logger;
 
     public DADMLTest(String superdb, String type, String index) {
-      logger = new org.openscience.cdk.tools.LoggingTool();
+      logger = new LoggingTool(this);
 
       try {
         ChemObjectReader reader;
-        logger.info("SuperDB: " + superdb);
-        logger.info("index type: " + type);
-        logger.info("index: " + index);
+        logger.info("SuperDB: ", superdb);
+        logger.info("index type: ", type);
+        logger.info("index: ", index);
 		reader = new DADMLReader(superdb);
 		((DADMLReader)reader).setQuery(type, index);
         Molecule m = (Molecule)reader.read((ChemObject)new Molecule());

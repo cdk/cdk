@@ -147,7 +147,18 @@ public class LoggingTool {
      * @param object Object from which the message originates
      */
     public LoggingTool(Object object) {
-        this(object.getClass().getName(), true);
+        this(object.getClass());
+    }
+    
+    /**
+     * Constructs a LoggingTool which produces log lines indicating them to be
+     * for the given Class. The Log4J engine is configurated
+     * with CDK customized properties.
+     *
+     * @param object Object from which the message originates
+     */
+    public LoggingTool(Class classInst) {
+        this(classInst.getName(), true);
     }
     
     /**

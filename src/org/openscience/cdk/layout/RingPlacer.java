@@ -67,7 +67,7 @@ public class RingPlacer
 	 */
 	public RingPlacer() 
 	{
-		logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+		logger = new org.openscience.cdk.tools.LoggingTool(this);
 	}
 
 

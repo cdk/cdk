@@ -33,6 +33,7 @@ import java.io.InputStreamReader;
 
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * This class resolves DOCTYPE declaration for Chemical Markup Language (CML)
@@ -45,10 +46,10 @@ import org.xml.sax.InputSource;
  **/
 public class CMLResolver implements EntityResolver {
 
-    private org.openscience.cdk.tools.LoggingTool logger;
+    private LoggingTool logger;
 
     public CMLResolver() {
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        logger = new LoggingTool(this);
     }
 
     /**

@@ -46,6 +46,7 @@ import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.*;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.tools.LoggingTool;
 
 
 
@@ -67,7 +68,7 @@ import org.openscience.cdk.config.IsotopeFactory;
 public class MDLWriter extends DefaultChemObjectWriter {
 
     private BufferedWriter writer;
-    private org.openscience.cdk.tools.LoggingTool logger;
+    private LoggingTool logger;
     private IsotopeFactory isotopeFactory = null;
 
     /**
@@ -92,7 +93,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
      */
     public MDLWriter(Writer out) {
         writer = new BufferedWriter(out);
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        logger = new LoggingTool(this);
         try {
             isotopeFactory = IsotopeFactory.getInstance();
         } catch (Exception exception) {

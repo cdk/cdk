@@ -50,7 +50,7 @@ public class SMILESReaderTest extends TestCase {
 
     public SMILESReaderTest(String name) {
         super(name);
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        logger = new org.openscience.cdk.tools.LoggingTool(this);
     }
 
     public static Test suite() {

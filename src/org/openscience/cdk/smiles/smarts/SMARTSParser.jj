@@ -86,7 +86,7 @@ public class SMARTSParser {
     private SMARTSBond currentBond = null;
     private QueryAtomContainer container = null;
     
-    private final static LoggingTool logger = new LoggingTool("org.openscience.cdk.smiles.smarts.SMARTSParser");
+    private final static LoggingTool logger = new LoggingTool(SMARTSParser.class);
     
     public static QueryAtomContainer parse(String stringToParse) throws CDKException {
         QueryAtomContainer container = null;

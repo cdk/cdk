@@ -49,7 +49,7 @@ public class ConjugatedPiSystemsDetectorTest extends TestCase
 	public ConjugatedPiSystemsDetectorTest(String name)
 	{
 		super(name);
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        logger = new org.openscience.cdk.tools.LoggingTool(this);
 	}
 	
 	public void setUp() {}

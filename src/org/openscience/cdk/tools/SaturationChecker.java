@@ -44,6 +44,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Provides methods for checking whether an atoms valences are saturated with
@@ -65,7 +66,7 @@ public class SaturationChecker implements ValencyCheckerInterface {
 	public SaturationChecker() throws IOException, ClassNotFoundException
 	{
 		structgenATF = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/structgen_atomtypes.xml");
-		logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+		logger = new LoggingTool(this);
 	}
 
 

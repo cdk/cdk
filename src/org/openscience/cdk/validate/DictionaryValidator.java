@@ -57,7 +57,7 @@ public class DictionaryValidator extends AbstractValidator {
     private static LoggingTool logger;
     
     static {
-        logger = new LoggingTool("org.openscience.cdk.validate.DictionaryValidator");
+        logger = new LoggingTool(DictionaryValidator.class);
     }
     
     private DictionaryDatabase db;

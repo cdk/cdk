@@ -69,7 +69,7 @@ public class XindiceReader extends DefaultChemObjectReader {
     private org.openscience.cdk.tools.LoggingTool logger;
 
     public XindiceReader(String collection) {
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        logger = new org.openscience.cdk.tools.LoggingTool(this);
         
         while (collection.startsWith("/")) {
             collection = collection.substring(1);

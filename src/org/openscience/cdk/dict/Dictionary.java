@@ -63,7 +63,7 @@ public class Dictionary {
     }
     
     public static Dictionary unmarshal(Reader reader) {
-        LoggingTool logger = new LoggingTool("org.openscience.cdk.dict.Dictionary");
+        LoggingTool logger = new LoggingTool(Dictionary.class);
         DictionaryHandler handler = new DictionaryHandler();
         XMLReader parser = null;
         try {

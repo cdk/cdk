@@ -55,7 +55,7 @@ public class JumboTest extends TestCase {
 
     public JumboTest(String name) {
         super(name);
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        logger = new org.openscience.cdk.tools.LoggingTool(this);
     }
 
     public static Test suite() {

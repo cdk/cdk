@@ -45,11 +45,7 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class GeometryTools {
 
-    private static LoggingTool logger = null;
-    
-    static {
-        if (logger == null) logger = new LoggingTool("org.openscience.cdk.geometry.GeometryTools");
-    }
+    private static LoggingTool logger = new LoggingTool(GeometryTools.class);
     
 	/**
 	 * Adds an automatically calculated offset to the coordinates of all atoms

@@ -81,7 +81,7 @@ public class OverlapResolverTest extends TestCase
 	 */
 	public void setUp()
 	{
-		logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName(), true);
+		logger = new LoggingTool(this);
 		StructureDiagramGenerator sdg = new StructureDiagramGenerator();
 	}
 

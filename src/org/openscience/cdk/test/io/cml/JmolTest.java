@@ -58,7 +58,7 @@ public class JmolTest extends TestCase {
 
     public JmolTest(String name) {
         super(name);
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        logger = new org.openscience.cdk.tools.LoggingTool(this);
     }
 
     public static Test suite() {

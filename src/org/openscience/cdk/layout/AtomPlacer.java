@@ -42,6 +42,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.matrix.ConnectionMatrix;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  *  Methods for generating coordinates for atoms in various situations. They can
@@ -53,12 +54,9 @@ import org.openscience.cdk.graph.matrix.ConnectionMatrix;
  */
 public class AtomPlacer
 {
-	/**
-	 *  Description of the Field
-	 */
+
 	public static boolean debug = true;
-	private static org.openscience.cdk.tools.LoggingTool logger =
-  new org.openscience.cdk.tools.LoggingTool(AtomPlacer.class.getName());
+	private static LoggingTool logger = new LoggingTool(AtomPlacer.class);
 
 	/**
 	 *  The molecule to be laid out. To be assigned from outside

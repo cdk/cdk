@@ -57,7 +57,7 @@ public class BasicValidator extends AbstractValidator {
     private static LoggingTool logger;
     
     static {
-        logger = new LoggingTool("org.openscience.cdk.validate.BasicValidator");
+        logger = new LoggingTool(BasicValidator.class);
     }
     
     public BasicValidator() {

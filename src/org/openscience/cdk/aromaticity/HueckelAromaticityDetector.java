@@ -53,9 +53,8 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  */
 public class HueckelAromaticityDetector {
     
-	static LoggingTool logger = new LoggingTool("org.openscience.cdk.aromaticity.HueckelAromaticityDetector");
-	
-	
+	static LoggingTool logger = new LoggingTool(HueckelAromaticityDetector.class);
+    
 	/**
 	 * Retrieves the set of all rings and performs an aromaticity detection
 	 * based on Hueckels 4n + 2 rule.

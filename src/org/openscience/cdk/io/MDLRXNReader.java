@@ -45,6 +45,7 @@ import org.openscience.cdk.Reaction;
 import org.openscience.cdk.SetOfReactions;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.*;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Reads a molecule from an MDL RXN file {@cdk.cite DAL92}.
@@ -59,7 +60,7 @@ import org.openscience.cdk.io.formats.*;
 public class MDLRXNReader extends DefaultChemObjectReader {
 
     BufferedReader input = null;
-    private org.openscience.cdk.tools.LoggingTool logger = null;
+    private LoggingTool logger = null;
 
     /**
      * Contructs a new MDLReader that can read Molecule from a given Reader.
@@ -67,7 +68,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
      * @param  in  The Reader to read from
      */
     public MDLRXNReader(Reader in) {
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        logger = new LoggingTool(this);
         input = new BufferedReader(in);
     }
 

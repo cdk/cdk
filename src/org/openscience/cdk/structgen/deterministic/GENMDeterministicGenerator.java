@@ -84,7 +84,7 @@ public class GENMDeterministicGenerator
 		structures=new Vector();
 		smiles=new Vector();
 		
-		logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+		logger = new org.openscience.cdk.tools.LoggingTool(this);
 		
 		structureout=new PrintWriter(new FileWriter("structuredata.txt"),true);
 		
@@ -111,7 +111,7 @@ public class GENMDeterministicGenerator
 		basicFragment=new Vector();
 		structures=new Vector();
 		
-		logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+		logger = new org.openscience.cdk.tools.LoggingTool(this);
 		
 		structureout=new PrintWriter(new FileWriter("structuredata.txt"),true);
 		

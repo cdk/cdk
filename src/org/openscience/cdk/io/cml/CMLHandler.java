@@ -64,7 +64,7 @@ public class CMLHandler extends DefaultHandler {
      * @param cdo The Chemical Document Object in which data is stored
      **/
     public CMLHandler(CDOInterface cdo) {
-        logger = new org.openscience.cdk.tools.LoggingTool(this);
+        logger = new LoggingTool(this);
         conv = new CMLCoreModule(cdo);
         userConventions = new Hashtable();
         xpath = new CMLStack();

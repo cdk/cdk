@@ -66,7 +66,7 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class PDBReader extends DefaultChemObjectReader {
 
-  private org.openscience.cdk.tools.LoggingTool logger;
+  private LoggingTool logger;
   private BufferedReader _oInput; // The internal used BufferedReader
 
   /**
@@ -90,7 +90,7 @@ public class PDBReader extends DefaultChemObjectReader {
    *
    */
   public PDBReader(Reader oIn) {
-    logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+    logger = new LoggingTool(this);
     _oInput = new BufferedReader(oIn);
   }
 
