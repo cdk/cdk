@@ -55,6 +55,7 @@ import org.openscience.cdk.test.charges.GasteigerMarsiliPartialChargesTest;
 import org.openscience.cdk.test.qsar.*;
 import org.openscience.cdk.test.qsar.model.*;
 import org.openscience.cdk.test.modeling.builder3d.ModelBuilder3dTest;
+import org.openscience.cdk.test.modeling.forcefield.ForceFieldTests;
 /**
  * TestSuite that runs all the sample tests
  *
@@ -112,7 +113,6 @@ public class CDKTests
         suite.addTest(MathToolsTest.suite());
         // from cdk.test.qsar
         suite.addTest(QSARDescriptorTests.suite());
-        
         // from cdk.test.reaction
         suite.addTest(ReactionBalancerTest.suite());
         // from cdk.test.ringsearch
@@ -123,6 +123,9 @@ public class CDKTests
         suite.addTest(SmilesParserTest.suite());
         // from cdk.test.structgen
         suite.addTest(RandomStructureGeneratorTest.suite());
+        // from cdk.test.modeling.forcefield
+        suite.addTest(ForceFieldTests.suite());
+
 
         // Below are the tests that are not always possible to execute, because
         // the class might not be compiled (depeding on Ant and Java VM versions).
@@ -145,6 +148,7 @@ public class CDKTests
         } catch (Exception exception) {
             System.out.println("Could not load QSAR R based model tests:" + exception.getMessage());
         }
+
         return suite;
     }
     
