@@ -30,6 +30,7 @@ package org.openscience.cdk.io;
 import org.openscience.cdk.exception.*;
 import org.openscience.cdk.tools.*;
 import org.openscience.cdk.*;
+import org.openscience.cdk.io.setting.*;
 import java.io.*;
 import java.util.*;
 import javax.vecmath.*;
@@ -124,7 +125,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
             reactantCount = Integer.valueOf(tokenizer.nextToken()).intValue();
             logger.info("Expecting " + reactantCount + " reactants in file");
             productCount = Integer.valueOf(tokenizer.nextToken()).intValue();
-            logger.info("Expecting " + productCount + " products in file");            
+            logger.info("Expecting " + productCount + " products in file");
         } catch (Exception exception) {
             logger.debug(exception);
             throw new CDKException("Error while counts line of RXN file");
@@ -187,6 +188,38 @@ public class MDLRXNReader extends DefaultChemObjectReader {
             logger.debug(exception);
             throw new CDKException("Error while reading products");
         }
+        
+        // now try to map things, if wanted
+        logger.info("Reading atom-atom mapping from file");
+        // distribute all atoms over two AtomContainer's
+        AtomContainer reactingSide = new AtomContainer();
+        Molecule[] molecules = reaction.getReactants();
+        for (int i=0; i<molecules.length; i++) {
+            reactingSide.add(molecules[i]);
+        }
+        AtomContainer producedSide = new AtomContainer();
+        molecules = reaction.getProducts();
+        for (int i=0; i<molecules.length; i++) {
+            producedSide.add(molecules[i]);
+        }
+        
+        // map the atoms
+        int mappingCount = 0;
+        Atom[] reactantAtoms = reactingSide.getAtoms();
+        Atom[] producedAtoms = producedSide.getAtoms();
+        for (int i=0; i<reactantAtoms.length; i++) {
+            for (int j=0; j<producedAtoms.length; j++) {
+                if (reactantAtoms[i].getID().length() > 0 &&
+                    reactantAtoms[i].getID().equals(producedAtoms[j].getID())) {
+                    reaction.addMapping(
+                        new Mapping(reactantAtoms[i], producedAtoms[j])
+                    );
+                    mappingCount++;
+                    break;
+                }
+            }
+        }
+        logger.info("Mapped atoms: " + mappingCount);
         
         return reaction;
     }

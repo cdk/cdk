@@ -265,38 +265,43 @@ public class MDLReader extends DefaultChemObjectReader {
                 String chargeCodeString = strTok.nextToken();
                 logger.debug("Atom charge code: " + chargeCodeString);
                 int chargeCode = Integer.parseInt(chargeCodeString);
-                switch (chargeCode) {
-                    case 0: 
-                        // uncharged specied
-                        break;
-                    case 1:
-                        // +3 charge
-                        atom.setFormalCharge(+3);
-                        break;
-                    case 2:
-                        // +2 charge
+                if (chargeCode == 0) {
+                    // uncharged species
+                } else if (chargeCode == 1) {
+                    atom.setFormalCharge(+3);
+                } else if (chargeCode == 2) {
                         atom.setFormalCharge(+2);
-                        break;
-                    case 3:
-                        // +1 charge
+                } else if (chargeCode == 3) {
                         atom.setFormalCharge(+1);
-                        break;
-                    case 4:
-                        // double radical
-                        break;
-                    case 5:
-                        // -1 charge
+                } else if (chargeCode == 4) {
+                } else if (chargeCode == 5) {
                         atom.setFormalCharge(-1);
-                        break;
-                    case 6:
-                        // -2 charge
+                } else if (chargeCode == 6) {
                         atom.setFormalCharge(-2);
-                        break;
-                    case 7:
-                        // -3 charge
+                } else if (chargeCode == 7) {
                         atom.setFormalCharge(-3);
-                        break;
                 }
+                
+                String stereoParity = strTok.nextToken();
+                String hCount = strTok.nextToken();
+                String stereoCare = strTok.nextToken();
+                String valence = strTok.nextToken();
+                String H0designator = strTok.nextToken();
+                String unused1 = strTok.nextToken();
+                String unused2 = strTok.nextToken();
+                
+                String reactionAtomIDString = strTok.nextToken().trim();
+                logger.debug("Parsing mapping id: " + reactionAtomIDString);
+                try {
+                    int reactionAtomID = Integer.parseInt(reactionAtomIDString);
+                    if (reactionAtomID != 0) {
+                        atom.setID(reactionAtomIDString);
+                    }
+                } catch (Exception exception) {
+                    logger.error("Mapping number " + reactionAtomIDString + " is not an integer.");
+                    logger.debug(exception);
+                }
+                
 				molecule.addAtom(atom);
 			}
             
