@@ -741,7 +741,6 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	public int getSingleElectronSum(Atom atom)
 	{
 		int count = 0;
-		Vector lps = new Vector();
 		for (int i = 0; i <  getElectronContainerCount(); i++)
 		{if ((electronContainers[i] instanceof SingleElectron) && (((SingleElectron) electronContainers[i]).contains(atom)))
 			{

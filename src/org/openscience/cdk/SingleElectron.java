@@ -52,8 +52,8 @@ public class SingleElectron extends ElectronContainer implements java.io.Seriali
     /**
      * Constructs an single electron orbital on an Atom.
      */
-    public SingleElectron(Atom a) {
-        this.atom = a;
+    public SingleElectron(Atom atom) {
+        this.atom = atom;
     }
 
     /**
@@ -111,15 +111,15 @@ public class SingleElectron extends ElectronContainer implements java.io.Seriali
      * @return    The string representation of this SingleElectron
      */
     public String toString() {
-        StringBuffer s = new StringBuffer();
-        s.append("SingleElectron(");
-        s.append(this.hashCode());
+        StringBuffer stringContent = new StringBuffer();
+        stringContent.append("SingleElectron(");
+        stringContent.append(this.hashCode());
         if (atom != null) {
-            s.append(", ");
-            s.append(atom.toString());
+            stringContent.append(", ");
+            stringContent.append(atom.toString());
         }
-        s.append(")");
-        return s.toString();
+        stringContent.append(")");
+        return stringContent.toString();
     }
 
 	/**

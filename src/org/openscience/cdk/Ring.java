@@ -149,7 +149,7 @@ public class Ring extends AtomContainer implements java.io.Serializable, Cloneab
 			}
 			catch(Exception exc)
 			{
-			
+			    System.err.println("Could not create string representation of Ring: " + exc.getMessage());
 			}
 		}
 		return str;
