@@ -138,7 +138,12 @@ public class MFAnalyser{
     {
         float mass = 0;
         Isotope i;
-        StandardIsotopes si = new StandardIsotopes();
+        IsotopeFactory si = null;
+        try {
+            si = IsotopeFactory.getInstance();
+        } catch (Exception exception) {
+            System.err.println("Could not instantiate the IsotopeFactory: " + exception.getMessage());
+        }
         AtomContainer ac = getAtomContainer();
         Isotope h= si.getMajorIsotope("H");
         for(int f = 0; f < ac.getAtomCount();f++)

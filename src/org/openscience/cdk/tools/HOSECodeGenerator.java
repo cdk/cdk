@@ -533,8 +533,14 @@ public class HOSECodeGenerator implements java.io.Serializable
 				return symbolRankings[f];
 			}
 		}
-		Isotope isotope = (new StandardIsotopes()).getMajorIsotope(symbol);
-		return ((double) 800000 - isotope.getMassNumber());
+        try {
+            Isotope isotope = IsotopeFactory.getInstance().getMajorIsotope(symbol);
+            return ((double) 800000 - isotope.getMassNumber());
+        } catch (Exception exception) {
+            System.err.println("Could not find major isotope for this element!!! : " + symbol);
+            System.err.println("Because of this error: " + exception.getMessage());
+        }
+        return (double)800000;
 	}
 
 	/**
