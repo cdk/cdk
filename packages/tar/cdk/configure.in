@@ -252,7 +252,6 @@ AC_OUTPUT([
    bin/cdk-substructure
    bin/cdk-test
    bin/cdk-validate
-   bin/cdk-view
    man/Makefile
    man/xsl/Makefile
    man/xsl/db2man.xsl
