@@ -36,15 +36,12 @@ import java.io.*;
 /**
  *  Tools class with methods for handling molecular graphs
  *
- *@author     steinbeck
- *@created    17. Juni 2001
+ * @author     steinbeck
+ * @created    17. Juni 2001
  */
 public class PathTools  {
-	/**
-	 *  Description of the Field
-	 */
-	public static boolean debug = false;
-
+	
+    public static boolean debug = false;
 
 	/**
 	 *  Sums up the columns in a 2D int matrix
@@ -70,9 +67,6 @@ public class PathTools  {
 	 *  All-Pairs-Shortest-Path computation based on Floyds algorithm Takes an nxn
 	 *  matrix C of edge costs and produces an nxn matrix A of lengths of shortest
 	 *  paths.
-	 *
-	 *@param  C  Description of Parameter
-	 *@return    Description of the Returned Value
 	 */
 	public static int[][] computeFloydAPSP(int C[][]) {
 		int i;
@@ -112,9 +106,6 @@ public class PathTools  {
 	 *  All-Pairs-Shortest-Path computation based on Floyds algorithm Takes an nxn
 	 *  matrix C of edge costs and produces an nxn matrix A of lengths of shortest
 	 *  paths.
-	 *
-	 *@param  C  Description of Parameter
-	 *@return    Description of the Returned Value
 	 */
 	public static int[][] computeFloydAPSP(double C[][]) {
 		int i;
@@ -151,8 +142,6 @@ public class PathTools  {
 	 *      AtomContainer to be filled with the path
 	 *@return                                                        true if the
 	 *      target atom was found during this function call
-	 *@exception  org.openscience.cdk.exception.NoSuchAtomException  Description of
-	 *      Exception
 	 */
 	public static boolean depthFirstTargetSearch(AtomContainer molecule, Atom root, Atom target, AtomContainer path) throws org.openscience.cdk.exception.NoSuchAtomException {
 		Bond[] bonds = molecule.getConnectedBonds(root);

@@ -36,9 +36,6 @@ import org.openscience.cdk.*;
  */
 public class SwissArmyKnife {
 
-	/**
-	 *  Description of the Field
-	 */
 	public static boolean debug = false;
 	// minimum details
 
@@ -88,7 +85,6 @@ public class SwissArmyKnife {
 	 *  Returns a string representation of a 2D int matrix for printing or listing to the console
 	 *
 	 * @param  contab  The 2D int matrix for which a string representation is to be generatred
-	 * @return         Description of the Returned Value
 	 */
 	public static String printInt2D(int[][] contab) {
 		String line = "";
@@ -118,10 +114,11 @@ public class SwissArmyKnife {
 
 
 	/**
-	 *  Gets a Molecule and an array of element symbols. Counts how many of each of these elements the molecule contains. Than it returns the elements followed by their number as a string, i.e. C15H8N3.
+	 *  Gets a Molecule and an array of element symbols. Counts how many of each of these elements 
+     *  the molecule contains. Then it returns the elements followed by their number as a string,
+     *  i.e. C15H8N3.
 	 *
 	 * @param  mol       The Molecule to be searched
-	 * @param  elements  Description of Parameter
 	 * @return           The element formula as a string
 	 */
 	public static String generateElementFormula(Molecule mol, String[] elements) {
@@ -141,8 +138,6 @@ public class SwissArmyKnife {
 		}
 		return formula.toString();
 	}
-
-
 
 }
 

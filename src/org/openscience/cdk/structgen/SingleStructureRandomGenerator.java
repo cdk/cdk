@@ -1,7 +1,7 @@
-/*
- *  SingleStructureRandomGenerator.java
- *
- *  $RCSfile$    $Author$    $Date$    $Revision$
+/*  $RCSfile$
+ *  $Author$
+ *  $Date$
+ *  $Revision$
  *
  *  Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
  *
@@ -35,7 +35,7 @@ import java.io.*;
 
 /**
  * Randomly generates a single, connected, correctly bonded structure for 
- * a given molecular formula
+ * a given molecular formula.
  * To see it working run the graphical 
  * test org.openscience.cdk.test.SingleStructureRandomGeneratorTest
  * and add more structures to the panel using the "More" button. 
@@ -65,8 +65,6 @@ public class SingleStructureRandomGenerator
 	/**
 	 *  Constructor for the SingleStructureRandomGenerator object
 	 *
-	 * @exception  java.lang.Exception  Description of Exception
-	 * @since
 	 */
 	public SingleStructureRandomGenerator(long seed) throws java.lang.Exception
 	{
@@ -76,9 +74,6 @@ public class SingleStructureRandomGenerator
 
 	/**
 	 *  Constructor for the SingleStructureRandomGenerator object
-	 *
-	 * @exception  java.lang.Exception  Description of Exception
-	 * @since
 	 */
 	public SingleStructureRandomGenerator() throws java.lang.Exception
 	{
@@ -97,12 +92,6 @@ public class SingleStructureRandomGenerator
 		this.atomContainer = ac;
 	}
 
-	/**
-	 *  Description of the Method
-	 *
-	 * @return    Description of the Returned Value
-	 * @since
-	 */
 	public Molecule generate()
 	{
 		boolean structureFound = false;
@@ -155,7 +144,6 @@ public class SingleStructureRandomGenerator
 	/**
 	 *  Gets the AnotherUnsaturatedNode attribute of the SingleStructureRandomGenerator object
 	 *
-	 * @param  exclusionAtom  Description of Parameter
 	 * @return                The AnotherUnsaturatedNode value
 	 * @since
 	 */
@@ -182,13 +170,7 @@ public class SingleStructureRandomGenerator
 		}
 		return null;
 	}
-	
-	/**
-	 *  Description of the Method
-	 *
-	 * @return    Description of the Returned Value
-	 * @since
-	 */
+
 	public Object clone()
 	{
 		Object o = null;

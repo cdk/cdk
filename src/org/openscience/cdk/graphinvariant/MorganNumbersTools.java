@@ -1,6 +1,7 @@
-/* 
- *
- * $RCSfile$    $Author$    $Date$    $Revision$
+/* $RCSfile$
+ * $Author$    
+ * $Date$    
+ * $Revision$
  * 
  * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
  * 
@@ -29,13 +30,12 @@ import org.openscience.cdk.exception.*;
 import java.util.*;
 
 /**
- * Tool for calculating Morgan Numbers:
- * Morgan, H. L. 
- * The Generation of a Unique Machine Description for Chemical Structures - 
- * A Technique Developed at Chemical Abstracts Service. 
- * J. Chem. Doc. 1965, 5, 107-113. 
+ * Tool for calculating Morgan Numbers.
+ *
+ * References:
+ *   <a href="http://cdk.sf.net/biblio.html#MOR65">MOR65</a>
  */
- 
+
 public class MorganNumbersTools 
 {
 	

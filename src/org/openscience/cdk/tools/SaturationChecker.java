@@ -49,24 +49,12 @@ public class SaturationChecker
 
 	/**
 	 *  Constructor for the SaturationChecker object
-	 *
-	 * @exception  java.lang.Exception  Description of Exception
-	 * @since
 	 */
 	public SaturationChecker() throws java.lang.Exception
 	{
 		atf = new AtomTypeFactory();
 	}
 
-	
-	/**
-	 *  Description of the Method
-	 *
-	 * @param  atom  Description of Parameter
-	 * @param  ac    Description of Parameter
-	 * @return       Description of the Returned Value
-	 * @since
-	 */
 	public boolean hasPerfectConfiguration(Atom atom, AtomContainer ac)
 	{
 		
@@ -124,13 +112,6 @@ public class SaturationChecker
 		return false;
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 * @return    Description of the Returned Value
-	 * @since
-	 */
 	public boolean allSaturated(AtomContainer ac)
 	{
 		for (int f = 0; f < ac.getAtomCount(); f++)
@@ -143,16 +124,6 @@ public class SaturationChecker
 		return true;
 	}
 
-
-
-	/**
-	 *  Description of the Method
-	 *
-	 * @param  atom  Description of Parameter
-	 * @param  ac    Description of Parameter
-	 * @return       Description of the Returned Value
-	 * @since
-	 */
 	public boolean isSaturated(Atom atom, AtomContainer ac)
 	{
 		AtomType[] atomTypes = atf.getAtomTypes(atom.getSymbol(), atf.ATOMTYPE_ID_STRUCTGEN);
@@ -217,8 +188,13 @@ public class SaturationChecker
 		}
 		return max;
 	}
-	
-	
+
+
+    /**
+     * Saturates a molecule by setting appropriate bond orders.
+     *
+     * @keyword bond order, calculation
+     */
 	public void saturate(Molecule molecule)
 	{
 		Atom partner = null;

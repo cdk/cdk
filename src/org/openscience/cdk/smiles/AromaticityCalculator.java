@@ -1,11 +1,11 @@
-/*
- *  AromaticityCalculator.java
- *
- *  $ author: 	Oliver Horlacher		$
- *  $ contact: 	oliver.horlacher@therastrat.com 	$
- *  $ date: 		Mar 14, 2002			$
+/* $RCSfile$
+ * $Author$
+ * $Date$
+ * $Revision$
  *
  *  Copyright (C) 2001-2002
+ *
+ *  Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public License
@@ -34,10 +34,8 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 
 /**
- *  Description of the Class
- *
- * @author     steinbeck
- * @created    April 16, 2002
+ * @author     Oliver Horlacher <oliver.horlacher@therastrat.com>
+ * @created    Mar 14, 2002
  *
  * @keyword aromaticity detector
  */

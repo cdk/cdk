@@ -1,7 +1,7 @@
-/*
- *  HOSECodeGenerator.java
- *
- *  $RCSfile$    $Author$    $Date$    $Revision$
+/*  $RCSfile$
+ *  $Author$
+ *  $Date$
+ *  $Revision$
  *
  *  Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
  *
@@ -38,56 +38,26 @@ import org.openscience.cdk.*;
  *   <a href="http://cdk.sf.net/biblio.html#BRE78">BRE78</a>
  *
  *@author     steinbeck
- *@created    10. Mai 2002
+ *@created    10 May 2002
  */
 public class HOSECodeGenerator implements java.io.Serializable {
 
-	/**
-	 *  Description of the Field
-	 */
 	protected int[] ranking;
-	/**
-	 *  Description of the Field
-	 */
-	protected Vector sphereNodes = null;
-	/**
-	 *  Description of the Field
-	 */
+    protected Vector sphereNodes = null;
 	protected Vector nextSphereNodes = null;
 //	protected setOfRings sof = null;
 //	protected Atom[] setOfNodes = null;
-	/**
-	 *  Description of the Field
-	 */
 	protected int[] ringScores;
-	/**
-	 *  Description of the Field
-	 */
 	protected int sphere = 0;
-	/**
-	 *  Description of the Field
-	 */
 	protected int maxSphere = 0;
-	/**
-	 *  Description of the Field
-	 */
 	protected StringBuffer HOSECode = null;
 
-	/**
-	 *  Description of the Field
-	 */
 	protected AtomContainer atomContainer;
 
-	/**
-	 *  Description of the Field
-	 */
 	protected String[] sphereDelimiters =
 			{
 			"(", "/", "/", ")", "/", "/", "/", "/", "/", "/", "/", "/"
 			};
-	/**
-	 *  Description of the Field
-	 */
 	protected String bondSymbols[] =
 			{
 			"", "", "=", "%", "*"
@@ -165,7 +135,6 @@ public class HOSECodeGenerator implements java.io.Serializable {
 	/**
 	 *  Gets the SphereCode attribute of the HOSECodeGenerator object
 	 *
-	 *@param  sphereNodes  Description of Parameter
 	 *@return              The SphereCode value
 	 */
 	private String getSphereCode(Vector sphereNodes)
@@ -238,7 +207,6 @@ public class HOSECodeGenerator implements java.io.Serializable {
 	/**
 	 *  Gets the ElementRank attribute of the HOSECodeGenerator object
 	 *
-	 *@param  symbol  Description of Parameter
 	 *@return         The ElementRank value
 	 */
 	private double getElementRank(String symbol)
@@ -266,7 +234,6 @@ public class HOSECodeGenerator implements java.io.Serializable {
 	/**
 	 *  Gets the ElementSymbol attribute of the HOSECodeGenerator object
 	 *
-	 *@param  sym  Description of Parameter
 	 *@return      The ElementSymbol value
 	 */
 	private String getElementSymbol(String sym)
@@ -290,12 +257,6 @@ public class HOSECodeGenerator implements java.io.Serializable {
 		return sym;
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  root  Description of Parameter
-	 */
 	private void breadthFirstSearch(Atom root)
 	{
 		sphere = 0;
@@ -327,12 +288,6 @@ public class HOSECodeGenerator implements java.io.Serializable {
 		nextSphere(sphereNodes);
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  sphereNodes  Description of Parameter
-	 */
 	private void nextSphere(Vector sphereNodes)
 	{
 		sphere++;
@@ -411,12 +366,6 @@ public class HOSECodeGenerator implements java.io.Serializable {
 		nextSphere(nextSphereNodes);
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  sphereNodes  Description of Parameter
-	 */
 	private void calculateNodeScores(Vector sphereNodes)
 	{
 		TreeNode treeNode = null;
@@ -464,10 +413,6 @@ public class HOSECodeGenerator implements java.io.Serializable {
 		} while (changed);
 	}
 
-
-	/**
-	 *  Description of the Method
-	 */
 	private void fillUpSphereDelimiters()
 	{
 		for (int f = sphere; f < 5; f++)
@@ -478,8 +423,6 @@ public class HOSECodeGenerator implements java.io.Serializable {
 
 
 	/**
-	 *  Description of the Class
-	 *
 	 *@author     steinbeck
 	 *@created    10. Mai 2002
 	 */
@@ -495,11 +438,6 @@ public class HOSECodeGenerator implements java.io.Serializable {
 		/**
 		 *  Constructor for the TreeNode object
 		 *
-		 *@param  symbol    Description of Parameter
-		 *@param  source    Description of Parameter
-		 *@param  number    Description of Parameter
-		 *@param  bondType  Description of Parameter
-		 *@param  score     Description of Parameter
 		 */
 		TreeNode(String symbol, Atom source, Atom number, double bondType, long score)
 		{

@@ -41,13 +41,7 @@ package org.openscience.cdk;
 
 public class Isotope extends Element implements Cloneable {
 
-	/**
-	 *  Description of the Field
-	 */
 	public double exactMass = (double) -1;
-	/**
-	 *  Description of the Field
-	 */
 	public double naturalAbundance = (double) -1;
 
 

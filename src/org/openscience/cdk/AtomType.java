@@ -64,9 +64,6 @@ public class AtomType extends Isotope
 
 	/**
 	 *  Constructor for the AtomType object
-	 *
-	 * @param  elementSymbol  Description of Parameter
-	 * @since
 	 */
 	public AtomType(String elementSymbol)
 	{

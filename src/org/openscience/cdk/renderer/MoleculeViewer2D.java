@@ -1,7 +1,7 @@
-/*
- *  MoleculeViewer2D.java
- *
- *  $RCSfile$    $Author$    $Date$    $Revision$
+/*  $RCSfile$    
+ *  $Author$    
+ *  $Date$    
+ *  $Revision$
  *
  *  Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
  *
@@ -46,21 +46,9 @@ import java.awt.*;
  */
 public class MoleculeViewer2D extends JPanel implements CDKChangeListener
 {
-	/**
-	 *  Description of the Field
-	 */
 	public AtomContainer atomContainer;
-	/**
-	 *  Description of the Field
-	 */
 	public Renderer2DModel r2dm;
-	/**
-	 *  Description of the Field
-	 */
 	public Renderer2D renderer;
-	/**
-	 *  Description of the Field
-	 */
 	public String title = "Molecule Viewer";
 
 	private JFrame frame = null;
@@ -70,7 +58,6 @@ public class MoleculeViewer2D extends JPanel implements CDKChangeListener
 	 *  Constructs a MoleculeViewer with a molecule to display and a Renderer2DModel containing the information on how to display it.
 	 *
 	 * @param  r2dm           The rendere settings determining how the molecule is displayed
-	 * @param  atomContainer  Description of Parameter
 	 */
 	public MoleculeViewer2D(AtomContainer atomContainer, Renderer2DModel r2dm)
 	{
@@ -84,8 +71,6 @@ public class MoleculeViewer2D extends JPanel implements CDKChangeListener
 
 	/**
 	 *  Constructs a MoleculeViewer with a molecule to display
-	 *
-	 * @param  atomContainer  Description of Parameter
 	 */
 	public MoleculeViewer2D(AtomContainer atomContainer)
 	{
@@ -172,7 +157,8 @@ public class MoleculeViewer2D extends JPanel implements CDKChangeListener
 
 
 	/**
-	 *  Contructs a JFrame into which this JPanel is put and displays the frame with the molecule
+	 *  Contructs a JFrame into which this JPanel is put and displays the frame with 
+     *  the molecule.
 	 */
 	public void display()
 	{

@@ -22,6 +22,7 @@ Fixes:
 * Added initialization of atoms Array in Bond.java
   constructor
 * Fixed parsing of ChemDraw created SMILES (#593648)
+* Removed non-informative template JavaDoc
 
 API changes:
 * cdk.libio.jmol.Convertor now converts 

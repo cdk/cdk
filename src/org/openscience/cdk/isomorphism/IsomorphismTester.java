@@ -1,5 +1,7 @@
-/*
- *  $RCSfile$    $Author$    $Date$    $Revision$
+/*  $RCSfile$    
+ *  $Author$    
+ *  $Date$    
+ *  $Revision$
  *
  *  Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
  *
@@ -28,7 +30,7 @@ import org.openscience.cdk.exception.*;
 import java.util.*;
 
 /**
- *  A too simplistic implementation of an isomorphism test for chemical graphs
+ *  A too simplistic implementation of an isomorphism test for chemical graphs.
  *
  * @author     steinbeck
  * @created    September 10, 2001
@@ -54,9 +56,6 @@ public class IsomorphismTester implements java.io.Serializable
 
 	/**
 	 *  Constructor for the IsomorphismTester object
-	 *
-	 * @param  mol                      Description of Parameter
-	 * @exception  NoSuchAtomException  Description of Exception
 	 */
 	public IsomorphismTester(Molecule mol) throws NoSuchAtomException
 	{
@@ -65,13 +64,12 @@ public class IsomorphismTester implements java.io.Serializable
 
 
 	/**
-	 *  Checks whether a given molecule is isomorphic with the one 
+	 *  Checks whether a given molecule is isomorphic with the one
 	 *  that has been assigned to this IsomorphismTester at contruction time
 	 *
-	 * @param  mol1                     A first molecule to check against the second one 
+	 * @param  mol1                     A first molecule to check against the second one
 	 * @param  mol2                     A second molecule to check against the first
 	 * @return                          True, if the two molecules are isomorphic
-	 * @exception  NoSuchAtomException  Description of Exception
 	 */
 	public boolean isIsomorphic(Molecule mol1, Molecule mol2) throws NoSuchAtomException
 	{
@@ -126,10 +124,6 @@ public class IsomorphismTester implements java.io.Serializable
 		return true;
 	}
 
-
-	/**
-	 *  Description of the Method
-	 */
 	public void report()
 	{
 		String s = "";
@@ -152,7 +146,6 @@ public class IsomorphismTester implements java.io.Serializable
 	 *  Sets the BaseTable attribute of the IsomorphismTester object
 	 *
 	 * @param  mol                      The new BaseTable value
-	 * @exception  NoSuchAtomException  Description of Exception
 	 */
 	private void setBaseTable(Molecule mol) throws NoSuchAtomException
 	{
@@ -168,7 +161,6 @@ public class IsomorphismTester implements java.io.Serializable
 	 *  Sets the CompareTable attribute of the IsomorphismTester object
 	 *
 	 * @param  mol                      The new CompareTable value
-	 * @exception  NoSuchAtomException  Description of Exception
 	 */
 	private void setCompareTable(Molecule mol) throws NoSuchAtomException
 	{

@@ -59,7 +59,6 @@ public class IsotopeFactory {
      * @exception  IOException             A problem with reading the isotopes.xml file
      * @exception  OptionalDataException   Unexpected data appeared in the isotope ObjectInputStream
      * @exception  ClassNotFoundException  A problem instantiating the isotopes
-     * @since
      */
     private IsotopeFactory() throws IOException, OptionalDataException,
                                     ClassNotFoundException {
@@ -98,9 +97,7 @@ public class IsotopeFactory {
      * Returns the most abundant (major) isotope whose
      * symbol equals element.
      *
-     * @param  symbol   Description of Parameter
      * @return          The Major Isotope value
-     * @since
      */
     public Isotope getMajorIsotope(String symbol) {
         for (int f = 0; f < isotopes.size(); f++) {
@@ -136,7 +133,6 @@ public class IsotopeFactory {
      *
      * @param  atomicNumber The atomicNumber for which an isotope is to be returned
      * @return  The isotope corresponding to the given atomic number
-     * @since
      */
     public Isotope getMajorIsotope(int atomicNumber) {
         for (int f = 0; f < isotopes.size(); f++) {

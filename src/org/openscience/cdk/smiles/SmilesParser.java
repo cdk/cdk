@@ -40,8 +40,9 @@ import org.openscience.cdk.*;
  * References:
  *   <a href="http://cdk.sf.net/biblio.html#WEI88">WEI88</a>
  *
- *@author     steinbeck
- *@created    29. April 2002
+ * @author     steinbeck
+ * @created    29. April 2002
+ * @keyword    SMILES, parser
  */
 
 public class SmilesParser {
@@ -215,8 +216,6 @@ public class SmilesParser {
 	/**
 	 *  Gets the AtomString attribute of the SmilesParser object
 	 *
-	 *@param  s    Description of Parameter
-	 *@param  pos  Description of Parameter
 	 *@return      The AtomString value
 	 */
 	private String getAtomString(String s, int pos) throws InvalidSmilesException
@@ -247,7 +246,6 @@ public class SmilesParser {
 	/**
 	 *  Gets the Charge attribute of the SmilesParser object
 	 *
-	 *@param  s  Description of Parameter
 	 *@return    The Charge value
 	 */
 	private int getCharge(String s)
@@ -270,8 +268,6 @@ public class SmilesParser {
 	/**
 	 *  Gets the ElementSymbol attribute of the SmilesParser object
 	 *
-	 *@param  s    Description of Parameter
-	 *@param  pos  Description of Parameter
 	 *@return      The ElementSymbol value
 	 */
 	private String getElementSymbol(String s, int pos)
@@ -291,8 +287,6 @@ public class SmilesParser {
 	/**
 	 *  Gets the RingNumber attribute of the SmilesParser object
 	 *
-	 *@param  s    Description of Parameter
-	 *@param  pos  Description of Parameter
 	 *@return      The RingNumber value
 	 */
 	private String getRingNumber(String s, int pos)
@@ -310,19 +304,6 @@ public class SmilesParser {
 		return retString;
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  s                                               Description of
-	 *      Parameter
-	 *@param  nodeCounter                                     Description of
-	 *      Parameter
-	 *@return                                                 Description of the
-	 *      Returned Value
-	 *@exception  compchem.exceptions.InvalidSMILESException  Description of
-	 *      Exception
-	 */
 	private Atom assembleAtom(String s, int nodeCounter) throws InvalidSmilesException
 	{
 		Atom atom = null;

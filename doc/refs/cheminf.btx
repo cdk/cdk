@@ -93,6 +93,18 @@
     </bibtex:article>
   </bibtex:entry>
 
+  <bibtex:entry id="MOR65">
+    <bibtex:article>
+      <bibtex:author>Morgan, H.L.</bibtex:author>
+      <bibtex:title>The Generation of a Unique Machine Description for Chemical
+         Structures - A Technique Developed at Chemical Abstracts Service.</bibtex:title>
+      <bibtex:journal>J.Chem.Doc.</bibtex:journal>
+      <bibtex:volume>5</bibtex:volume>
+      <bibtex:pages>107-113</bibtex:pages>
+      <bibtex:year>1965</bibtex:year>
+    </bibtex:article>
+  </bibtex:entry>
+
   <bibtex:entry id="OS">
     <bibtex:misc>
       <bibtex:title>The Open Source Reader</bibtex:title>

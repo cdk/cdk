@@ -1,4 +1,4 @@
-/* $RCSfile$    
+/* $RCSfile$
  * $Author$    
  * $Date$    
  * $Revision$
@@ -27,9 +27,10 @@ package org.openscience.cdk;
 
 /**
  * Implements the idea of an element in the periodic table.
- * Use an element factory to get a ready-to-use element by name or number
+ * Use an element factory to get a ready-to-use element by name or number.
+ *
+ * @keyword element
  */
-
 public class Element extends ChemObject
 {
 	/** The element symbol for this element as listed in the periodic table */

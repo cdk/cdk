@@ -1,7 +1,7 @@
-/*
- *  PartialFilledStructureMerger.java
- *
- *  $RCSfile$    $Author$    $Date$    $Revision$
+/*  $RCSfile$  
+ *  $Author$  
+ *  $Date$  
+ *  $Revision$
  *
  *  Copyright (C) 1997-2001  The CDK project
  *
@@ -36,7 +36,7 @@ import java.io.*;
 
 /**
  * Randomly generates a single, connected, correctly bonded structure for 
- * a given molecular formula
+ * a given molecular formula.
  * To see it working run the graphical 
  * test org.openscience.cdk.test.SingleStructureRandomGeneratorTest
  * and add more structures to the panel using the "More" button. 
@@ -65,9 +65,6 @@ public class PartialFilledStructureMerger
 
 	/**
 	 *  Constructor for the PartialFilledStructureMerger object
-	 *
-	 * @exception  java.lang.Exception  Description of Exception
-	 * @since
 	 */
 	public PartialFilledStructureMerger() throws java.lang.Exception
 	{
@@ -79,24 +76,17 @@ public class PartialFilledStructureMerger
 	 *  Sets the AtomContainer attribute of the PartialFilledStructureMerger object
 	 *
 	 * @param  gc  The new AtomContainer value
-	 * @since
 	 */
 	public void setAtomContainer(AtomContainer gc)
 	{
 		this.atomContainer = gc;
 	}
-	
+
 	public AtomContainer getAtomContainer()
 	{
 		return this.atomContainer;
 	}
 
-	/**
-	 *  Description of the Method
-	 *
-	 * @return    Description of the Returned Value
-	 * @since
-	 */
 	public AtomContainer generate()
 	{
 		boolean structureFound = false;
@@ -156,9 +146,7 @@ public class PartialFilledStructureMerger
 	/**
 	 *  Gets the AnotherUnsaturatedNode attribute of the PartialFilledStructureMerger object
 	 *
-	 * @param  exclusionAtom  Description of Parameter
 	 * @return                The AnotherUnsaturatedNode value
-	 * @since
 	 */
 	private Atom getAnotherUnsaturatedNode(Atom exclusionAtom)
 	{
@@ -183,13 +171,7 @@ public class PartialFilledStructureMerger
 		}
 		return null;
 	}
-	
-	/**
-	 *  Description of the Method
-	 *
-	 * @return    Description of the Returned Value
-	 * @since
-	 */
+
 	public Object clone()
 	{
 		Object o = null;

@@ -1,5 +1,4 @@
-/*
- * $RCSfile$
+/* $RCSfile$
  * $Author$
  * $Date$
  * $Revision$
@@ -37,18 +36,14 @@ import java.util.Vector;
  */
 public class Molecule extends AtomContainer
 {
-	/**
-	 *  Description of the Field
-	 */
 	public String title;
 	private Vector chemNames;
 	private String autonomName = "";
 	private String casRN = "";
 	private String beilsteinRN = "";
 
-
 	/**
-	 *  Creates an empty Molecule
+	 *  Creates an Molecule without Atoms and Bonds
 	 */
 	public Molecule()
 	{
@@ -58,10 +53,11 @@ public class Molecule extends AtomContainer
 
 
 	/**
-	 *  Constructor for the Molecule object
+	 *  Constructor for the Molecule object. The parameters define the
+     *  initial capacity of the arrays.
 	 *
-	 * @param  atomCount  Description of Parameter
-	 * @param  bondCount  Description of Parameter
+	 * @param  atomCount  init capacity of Atom array
+	 * @param  bondCount  init capacity of Bond array
 	 */
 	public Molecule(int atomCount, int bondCount)
 	{
@@ -71,7 +67,9 @@ public class Molecule extends AtomContainer
 
 
 	/**
-	 *  Constructs a Molecule with a copy of the atoms and bonds of another Molecule (A shallow copy, i.e., with the same objects as in the original AtomContainer)
+	 *  Constructs a Molecule with a copy of the atoms and bonds of 
+     *  another Molecule (A shallow copy, i.e., with the same objects 
+     *  as in the original AtomContainer)
 	 *
 	 * @param  ac  An Molecule to copy the atoms and bonds from
 	 */
@@ -94,7 +92,8 @@ public class Molecule extends AtomContainer
 
 	
 	/**
-	 *  Sets the AutonomName for this molecule. Autonom is a program that published by Beilstein, which uniquely names a chemical structure
+	 *  Sets the AutonomName for this molecule. Autonom is a program that published 
+     *  by Beilstein, which uniquely names a chemical structure
 	 *
 	 * @param  autonomName  The Autonom name to be assigned to this structure
 	 */

@@ -35,11 +35,15 @@ import org.openscience.cdk.exception.*;
 import java.util.*;
 
 /**
- *  Generates a Fingerprint for a given AtomContainer. Fingerprints are one-dimensional bit arrays, where bits are set according to a the occurence of a particular structural feature (See for example the Daylight inc. theory manual for more information) Fingerprints
- *  allow for a fast screening step to excluded candidates for a substructure search in a database. They are also a means for determining the similarity of chemical structures.
+ *  Generates a Fingerprint for a given AtomContainer. Fingerprints are one-dimensional 
+ *  bit arrays, where bits are set according to a the occurence of a particular structural 
+ *  feature (See for example the Daylight inc. theory manual for more information) Fingerprints
+ *  allow for a fast screening step to excluded candidates for a substructure search in a 
+ *  database. They are also a means for determining the similarity of chemical structures.
  *
  * @author     steinbeck
  * @created    24. Februar 2002
+ *
  * @keyword    fingerprint
  * @keyword    similarity
  */

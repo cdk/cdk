@@ -51,7 +51,8 @@ public class AtomContainer extends ChemObject implements Cloneable
 	protected int bondCount;
 
 	/**
-	 *  Amount by which the bond and arom arrays grow when elements are added and the arrays are not large enough for that.
+	 *  Amount by which the bond and arom arrays grow when elements are added and 
+     *  the arrays are not large enough for that.
 	 *
 	 * @since
 	 */
@@ -86,7 +87,9 @@ public class AtomContainer extends ChemObject implements Cloneable
 
 
 	/**
-	 *  Constructs an AtomContainer with a copy of the atoms and bonds of another AtomContainer (A shallow copy, i.e., with the same objects as in the original AtomContainer)
+	 *  Constructs an AtomContainer with a copy of the atoms and bonds of another 
+     *  AtomContainer (A shallow copy, i.e., with the same objects as in the original 
+     *  AtomContainer)
 	 *
 	 * @param  ac  An AtomContainer to copy the atoms and bonds from
 	 * @since
@@ -99,7 +102,8 @@ public class AtomContainer extends ChemObject implements Cloneable
 
 
 	/**
-	 *  Constructs an empty AtomContainer that will contain a certain number of atoms and bonds.
+	 *  Constructs an empty AtomContainer that will contain a certain number of atoms 
+     *  and bonds.
 	 *
 	 * @param  atomCount  Number of atoms to be in this container
 	 * @param  bondCount  Number of bonds to be in this container
@@ -258,8 +262,6 @@ public class AtomContainer extends ChemObject implements Cloneable
 	 *
 	 * @param  atom                                                   The atom to be sought
 	 * @return                                                        The Position of the atom in the atoms array.
-	 * @exception  org.openscience.cdk.exception.NoSuchAtomException  Description of Exception
-	 * @since
 	 */
 
 	public int getAtomNumber(Atom atom) throws org.openscience.cdk.exception.NoSuchAtomException
@@ -495,9 +497,10 @@ public class AtomContainer extends ChemObject implements Cloneable
 	
 	
 	/**
-	 *  Compares this AtomContainer with another given AtomContainer and returns the Intersection between them Important Note: This is not a maximum common substructure
+	 *  Compares this AtomContainer with another given AtomContainer and returns 
+     *  the Intersection between them Important Note: This is not a maximum common
+     *  substructure
 	 *
-	 * @param  ac  Description of Parameter
 	 * @return     An AtomContainer containing the Intersection between this AtomContainer and another given one
 	 * @since
 	 */
@@ -584,12 +587,11 @@ public class AtomContainer extends ChemObject implements Cloneable
 	 *  number of atoms in the AtomContainer. If the i-th and the j-th atom 
 	 *  in the atomcontainer share a bond, the element i,j in the matrix is 
 	 *  set to the bond order value. Otherwise it is zero.
-         *  References:
-         *  <a href="http://cdk.sf.net/biblio.html#TRI1992">TRI1992</a>,
+     *
+     *  References:
+     *  <a href="http://cdk.sf.net/biblio.html#TRI1992">TRI1992</a>,
 	 *
 	 * @return A connection matrix representation of this AtomContainer
-	 * @exception  org.openscience.cdk.exception.NoSuchAtomException  Description of Exception
-	 * @since
 	 */
 
 	public double[][] getConnectionMatrix() throws org.openscience.cdk.exception.NoSuchAtomException
@@ -744,8 +746,6 @@ public class AtomContainer extends ChemObject implements Cloneable
 	 *  Removes all atoms and bonds of a given atomcontainer from this container
 	 *
 	 * @param  atomContainer                                          The atomcontainer to be removed
-	 * @exception  org.openscience.cdk.exception.NoSuchAtomException  Description of Exception
-	 * @since
 	 */
 	public void remove(AtomContainer atomContainer) throws org.openscience.cdk.exception.NoSuchAtomException
 	{
@@ -764,7 +764,6 @@ public class AtomContainer extends ChemObject implements Cloneable
 	 *  removes the bond at the given position from this container
 	 *
 	 * @param  position  The position of the bond in the bonds array
-	 * @return           Description of the Returned Value
 	 * @since
 	 */
 	public Bond removeBond(int position)
@@ -784,7 +783,6 @@ public class AtomContainer extends ChemObject implements Cloneable
 	 *  removes this bond from this container
 	 *
 	 * @param  bond  The bond to be removed
-	 * @return       Description of the Returned Value
 	 * @since
 	 */
 	public Bond removeBond(Bond bond)
