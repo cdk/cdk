@@ -110,6 +110,7 @@ public class AtomPlacer
 		double smallestDistance = Double.MAX_VALUE;
 		Atom[] nearestAtoms = new Atom[2];
 		Atom[] sortedAtoms = null;
+		double startAngle = 0.0, addAngle = 0.0, radius = 0.0, remainingAngle = 0.0;
 		/*
 		 *  calculate the direction away from the already placed partners of atom
 		 */
@@ -120,6 +121,31 @@ public class AtomPlacer
 		Vector2d occupiedDirection = new Vector2d(sharedAtomsCenter);
 		occupiedDirection.sub(newDirection);
 		Vector atomsToDraw = new Vector();
+		
+		if (sharedAtoms.getAtomCount() == 1)
+		{
+			for (int f = 0; f < partners.getAtomCount(); f++)
+			{
+				atomsToDraw.addElement(partners.getAtomAt(f));
+			}
+
+			addAngle = Math.PI * 2 / (partners.getAtomCount() + sharedAtoms.getAtomCount());
+			/* IMPORTANT: At this point we need a calculation of the
+			   start angle. 
+			   Not done yet.
+			   */
+			Atom placedAtom = sharedAtoms.getAtomAt(0);
+//			double xDiff = atom.getX2D() - placedAtom.getX2D();
+//			double yDiff = atom.getY2D() - placedAtom.getY2D();
+			double xDiff = placedAtom.getX2D() - atom.getX2D();
+			double yDiff = placedAtom.getY2D() - atom.getY2D();
+
+			startAngle = GeometryTools.getAngle(xDiff, yDiff); //- (Math.PI / 2.0);
+			populatePolygonCorners(atomsToDraw, new Point2d(atom.getPoint2D()), startAngle, addAngle, bondLength);
+			return;
+		}
+		
+		
 		/*
 		 *  if the least hindered side of the atom is clearly defined (bondLength / 10 is an arbitrary value that seemed reasonable)
 		 */
@@ -184,8 +210,8 @@ public class AtomPlacer
 				startAtom = sortedAtoms[1];
 			}
 		}
-		double remainingAngle = (2 * Math.PI) - occupiedAngle;
-		double addAngle = remainingAngle / (partners.getAtomCount() + 1);
+		remainingAngle = (2 * Math.PI) - occupiedAngle;
+		addAngle = remainingAngle / (partners.getAtomCount() + 1);
 		if (debug)
 		{
 			try
@@ -204,8 +230,8 @@ public class AtomPlacer
 		{
 			atomsToDraw.addElement(partners.getAtomAt(f));
 		}
-		double radius = bondLength;
-		double startAngle = GeometryTools.getAngle(startAtom.getX2D() - atom.getX2D(), startAtom.getY2D() - atom.getY2D());
+		radius = bondLength;
+		startAngle = GeometryTools.getAngle(startAtom.getX2D() - atom.getX2D(), startAtom.getY2D() - atom.getY2D());
 		populatePolygonCorners(atomsToDraw, new Point2d(atom.getPoint2D()), startAngle, addAngle, radius);
 
 	}
