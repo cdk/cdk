@@ -35,6 +35,7 @@ import javax.swing.table.AbstractTableModel;
 
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.dict.DictionaryDatabase;
+import org.openscience.cdk.dict.DictRef;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -128,12 +129,12 @@ public class DictRefEditorTableModel extends AbstractTableModel {
      */
     public void setChemObject(ChemObject object) {
         cleanTable();
-        logger.debug("Filling dict ref table for " + object.toString());
+        logger.debug("Filling dict ref table for ", object);
         Map properties = object.getProperties();
         Iterator iter = properties.keySet().iterator();
         while (iter.hasNext()) {
             Object key = iter.next();
-            logger.debug("Found property: " + key);
+            logger.debug("Found property: ", key);
             if (key instanceof String) {
                 String keyName = (String)key;
                 if (keyName.startsWith(DictionaryDatabase.DICTREFPROPERTYNAME)) {
@@ -156,6 +157,22 @@ public class DictRefEditorTableModel extends AbstractTableModel {
                     }
                     fireTableDataChanged();
                 }
+            } else if (key instanceof DictRef) {
+                DictRef dictRefObj = (DictRef)key;
+                logger.debug("About to add this ref: ", dictRefObj);
+                String fieldName = dictRefObj.getType();
+                fields.addElement(fieldName);
+                String dictRef = dictRefObj.getDictRef();
+                int index = dictRef.indexOf(':');
+                if (index != -1) {
+                    dicts.addElement(dictRef.substring(0,index));
+                    entries.addElement(dictRef.substring(index+1));
+                } else {
+                    // The dictRef has no namespace
+                    dicts.addElement(dictRef);
+                    entries.addElement("");
+                }
+                fireTableDataChanged();
             }
         }
     }
