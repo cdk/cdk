@@ -60,16 +60,20 @@
                         <exclude name="${sourcedist}/**" />
                         <exclude name="org/openscience/cdk/applications/Viewer.java" />
                         <exclude name="org/openscience/cdk/renderer/AcceleratedRenderer3D.java" />
-			<exclude name="org/openscience/cdk/renderer/AcceleratedRenderer3DModel.java" />
+                        <exclude name="org/openscience/cdk/renderer/AcceleratedRenderer3DModel.java" />
                         <exclude name="org/openscience/cdk/renderer/OrbitalsRenderer3D.java" />
                         <exclude name="org/openscience/cdk/test/renderer/AcceleratedRenderer3DTest.java" />
                         <exclude name="org/openscience/cdk/test/OrbitalsRenderer3DTest.java" />
                         <exclude name="org/openscience/cdk/test/VisualGaussiansCalculationTest.java" />
                         <exclude name="org/openscience/cdk/test/io/ZMatrixReaderTest.java" />
                         <!-- exclude libio classes that require additional
-                             libraries, and are compiled elsewhere -->
+                             libraries, and which are compiled elsewhere -->
                         <exclude name="org/openscience/cdk/libio/**" />
                         <exclude name="org/openscience/cdk/test/libio/**" />
+                        <!-- exclude application classes that require additional
+                             libraries, and which are compiled elsewhere -->
+                        <exclude name="org/openscience/cdk/applications/**" />
+
                         <classpath refid="project.class.path" />
                 </javac>
 
@@ -79,12 +83,28 @@
         </target>
 
         <target name="compile-libio" depends="init">
-                <!-- Task to build to libio classes. Clearly, this requires extra
-                     extra jars, and these should be located in ${lib}/libio -->
+                <!-- Task to build the libio classes. Clearly, this requires extra
+                     jars, and these should be located in ${lib}/libio -->
 
                 <javac destdir="${build}" optimize="off" debug="on" deprecation="off">
                         <src path="${src}/org/openscience/cdk/libio" />
                         <src path="${src}/org/openscience/cdk/test/libio" />
+
+                        <classpath refid="project.class.path" />
+                        <classpath>
+                               <fileset dir="${lib}/libio">
+                                       <include name="*.jar" />
+                               </fileset>
+                        </classpath>
+                </javac>
+        </target>
+
+        <target name="compile-apps" depends="init">
+                <!-- Task to build the applications classes. Some require extra
+                     jars, like those in ${lib}/libio -->
+
+                <javac destdir="${build}" optimize="off" debug="on" deprecation="off">
+                        <src path="${src}/org/openscience/cdk/applications" />
 
                         <classpath refid="project.class.path" />
                         <classpath>
@@ -105,6 +125,9 @@
                              libraries, and are compiled elsewhere -->
                         <exclude name="org/openscience/cdk/libio/**" />
                         <exclude name="org/openscience/cdk/test/libio/**" />
+                        <!-- exclude application classes that require additional
+                             libraries, and which are compiled elsewhere -->
+                        <exclude name="org/openscience/cdk/applications/**" />
 
                         <classpath refid="project.class.path" />
                 </javac>
@@ -199,7 +222,17 @@
                         <!-- Exclude libio classes -->
                         <exclude name="org/openscience/cdk/libio/**" />
                         <exclude name="org/openscience/cdk/test/libio/**" />
+                        <!-- Exclude application classes -->
+                        <exclude name="org/openscience/cdk/applications/**" />
                    </fileset>
+                </jar>
+        </target>
+
+        <target name="dist-apps" depends="compile-apps">
+                <jar jarfile="${dist}/jar/cdk-apps.jar">
+                    <fileset dir="${build}">
+                        <include name="org/openscience/cdk/applications/**" />
+                    </fileset>
                 </jar>
         </target>
 
@@ -223,7 +256,7 @@
                 </jar>
         </target>
 
-        <target name="dist-all" depends="dist-core, dist-extra, dist-with-java3d, dist-libio, dist-cml" />
+        <target name="dist-all" depends="dist-core, dist-extra, dist-with-java3d, dist-libio, dist-cml, dist-apps" />
 
         <target name="dist" depends="dist-extra" />
 
@@ -253,7 +286,9 @@
                         <!-- Exclude libio classes -->
                         <exclude name="org/openscience/cdk/libio/**" />
                         <exclude name="org/openscience/cdk/test/libio/**" />
-                   </fileset>
+                        <!-- Exclude application classes -->
+                        <exclude name="org/openscience/cdk/applications/**" />
+                    </fileset>
                 </jar>
         </target>
 
@@ -304,7 +339,7 @@
                                         <include name="*.jar" />
                                 </fileset>
 
-			</classpath>
+                        </classpath>
                         <test name="org.openscience.cdk.test.CDKTests"
                         haltonfailure="no"
                         todir="${reports.tests}"
