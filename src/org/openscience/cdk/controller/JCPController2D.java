@@ -34,6 +34,7 @@ import org.openscience.cdk.geometry.*;
 import org.openscience.cdk.*;
 import org.openscience.cdk.event.*;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ChemModelManipulator;
 import java.awt.*;
 import java.util.*;
 import java.awt.event.*;
@@ -50,7 +51,7 @@ import javax.swing.JPopupMenu;
 public class JCPController2D {
 
     Renderer2DModel r2dm;
-    AtomContainer atomCon;
+    ChemModel chemModel;
     JCPController2DModel c2dm;
     boolean wasDragged = false;
     boolean isUndoableChange = false;
@@ -72,8 +73,8 @@ public class JCPController2D {
      * Constructs a controller that performs operations on the
      * AtomContainer when actions are detected from the MouseEvents.
      */
-    public JCPController2D(AtomContainer atomCon, Renderer2DModel r2dm, JCPController2DModel c2dm) {
-        this.atomCon = atomCon;
+    public JCPController2D(ChemModel chemModel, Renderer2DModel r2dm, JCPController2DModel c2dm) {
+        this.chemModel = chemModel;
         this.r2dm = r2dm;
         this.c2dm = c2dm;
 
@@ -86,8 +87,8 @@ public class JCPController2D {
         }
     }
 
-    public JCPController2D(AtomContainer atomCon, Renderer2DModel r2dm) {
-        this(atomCon, r2dm, new JCPController2DModel());
+    public JCPController2D(ChemModel chemModel, Renderer2DModel r2dm) {
+        this(chemModel, r2dm, new JCPController2DModel());
     }
 
 
@@ -453,6 +454,7 @@ public class JCPController2D {
                                 newAtom1 = atomInRange;
                             } else {
                                 newAtom1 = new Atom(c2dm.getDefaultElementSymbol(), new Point2d(startX,startY));
+                                AtomContainer atomCon = ChemModelManipulator.createNewMolecule(chemModel);
                                 atomCon.addAtom(newAtom1);
 		    /* PRESERVE THIS. This notifies the 
 		     * the listener responsible for 
@@ -467,13 +469,13 @@ public class JCPController2D {
                                 int endX = r2dm.getPointerVectorEnd().x;
                                 int endY = r2dm.getPointerVectorEnd().y;
                                 atomInRange = getAtomInRange(endX, endY);
-                                if (atomInRange != null)
-                                {
+                                AtomContainer atomCon = null;
+                                if (atomInRange != null) {
                                         newAtom2 = atomInRange;
-                                }
-                                else
-                                {
+                                        atomCon = ChemModelManipulator.getRelevantAtomContainer(chemModel, newAtom2);
+                                } else {
                                         newAtom2 = new Atom(c2dm.getDefaultElementSymbol(), new Point2d(endX,endY));
+                                        atomCon = ChemModelManipulator.createNewMolecule(chemModel);
                                         atomCon.addAtom(newAtom2);
                                 }
                                 newBond = new Bond(newAtom1, newAtom2, 1);
@@ -573,9 +575,9 @@ public class JCPController2D {
                     Atom highlightedAtom = r2dm.getHighlightedAtom();
                     Bond highlightedBond = r2dm.getHighlightedBond();
                     if (highlightedAtom != null) {
-                        atomCon.removeAtomAndConnectedElectronContainers(highlightedAtom);
+                        ChemModelManipulator.removeAtomAndConnectedElectronContainers(chemModel, highlightedAtom);
                     } else if (highlightedBond != null) {
-                        atomCon.removeElectronContainer(highlightedBond);
+                        ChemModelManipulator.removeElectronContainer(chemModel, highlightedBond);
                     }
 		    /* PRESERVE THIS. This notifies the 
 		     * the listener responsible for 
@@ -609,8 +611,7 @@ public class JCPController2D {
                         AtomContainer sharedAtoms = getHighlighted();
                         
                         /******************** NO ATTACHMENT ************************************/
-                        if (sharedAtoms.getAtomCount() == 0)                    
-                        {
+                        if (sharedAtoms.getAtomCount() == 0) {
                                 sharedAtoms = new AtomContainer();
                                 newRing = new Ring(ringSize, symbol);
                                 bondLength = r2dm.getBondLength();
@@ -622,6 +623,7 @@ public class JCPController2D {
                                 ringCenterVector = new Vector2d(new Point2d(mouseX, mouseY));
                                 ringCenterVector.sub(sharedAtomsCenter);
                                 ringPlacer.placeSpiroRing(newRing, sharedAtoms, sharedAtomsCenter, ringCenterVector, bondLength);
+                                AtomContainer atomCon = ChemModelManipulator.createNewMolecule(chemModel);
                                 atomCon.add(newRing);
 		    /* PRESERVE THIS. This notifies the 
 		     * the listener responsible for 
@@ -660,6 +662,7 @@ public class JCPController2D {
                                 {
                                         exc.printStackTrace();
                                 }
+                                AtomContainer atomCon = ChemModelManipulator.getRelevantAtomContainer(chemModel, spiroAtom);
                                 atomCon.add(newRing);
 		    /* PRESERVE THIS. This notifies the 
 		     * the listener responsible for 
@@ -729,7 +732,7 @@ public class JCPController2D {
                                         ringPlacer.placeFusedRing(newRing, sharedAtoms, sharedAtomsCenter, ringCenterVector, bondLength);
                                         
                                         // removes the highlighed bond and its atoms from the ring to add only
-                                        // the new placed atoms to the AtomContainer.           
+                                        // the new placed atoms to the AtomContainer.
                                         try
                                         {
                                                 newRing.remove(sharedAtoms);
@@ -738,6 +741,7 @@ public class JCPController2D {
                                         {
                                                 exc.printStackTrace();
                                         }
+                                        AtomContainer atomCon = ChemModelManipulator.getRelevantAtomContainer(chemModel, firstAtom);
                                         atomCon.add(newRing);
                                 }
 		    /* PRESERVE THIS. This notifies the 
@@ -888,9 +892,9 @@ public class JCPController2D {
          * @param   Y  The y world coordinate of the point
          * @return  An Atom if it is in a certain range of the given point
          */
-        private Atom getAtomInRange(int X, int Y)
-        {
+        private Atom getAtomInRange(int X, int Y) {
                 double highlightRadius = r2dm.getHighlightRadius();
+                AtomContainer atomCon = ChemModelManipulator.getAllInOneContainer(chemModel);
                 Atom closestAtom = GeometryTools.getClosestAtom(X, Y, atomCon);
                 if (closestAtom != null) {
                     if (!(Math.sqrt(Math.pow(closestAtom.getX2D() - X, 2) + 
@@ -915,6 +919,7 @@ public class JCPController2D {
          */
         private Bond getBondInRange(int X, int Y) {
                 double highlightRadius = r2dm.getHighlightRadius();
+                AtomContainer atomCon = ChemModelManipulator.getAllInOneContainer(chemModel);
                 Bond closestBond = GeometryTools.getClosestBond(X, Y, atomCon);
                 if (closestBond == null) return null;
                 // logger.debug("closestBond  "+ closestBond);
@@ -1003,6 +1008,7 @@ public class JCPController2D {
                 Atom currentAtom;
                 Atom[] conAtomsArray;
                 AtomContainer conAtoms = new AtomContainer();
+                AtomContainer atomCon = ChemModelManipulator.getAllInOneContainer(chemModel);
                 for (int i = 0; i < sharedAtoms.getAtomCount(); i++)
                 {
                         currentAtom = sharedAtoms.getAtomAt(i);
@@ -1030,6 +1036,7 @@ public class JCPController2D {
                 Atom currentAtom;
                 Bond currentBond;
                 AtomContainer selectedPart = new AtomContainer();
+                AtomContainer atomCon = ChemModelManipulator.getAllInOneContainer(chemModel);
                 for (int i = 0; i < atomCon.getAtomCount(); i++)
                 {
                         currentAtom = atomCon.getAtomAt(i);

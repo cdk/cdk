@@ -186,5 +186,6 @@ public class ChemModel extends ChemObject implements java.io.Serializable, Clone
         buffer.append(")");
         return buffer.toString();
     }
+
 }
 

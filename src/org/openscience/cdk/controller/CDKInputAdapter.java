@@ -47,9 +47,9 @@ public class CDKInputAdapter extends JCPController2D
      *
      * @param atomCon   AtomContainer to act on
      */
-	public CDKInputAdapter(AtomContainer atomCon, Renderer2DModel r2dm,
+	public CDKInputAdapter(ChemModel model, Renderer2DModel r2dm,
                            JCPController2DModel c2dm) {
-		super(atomCon, r2dm, c2dm);
+		super(model, r2dm, c2dm);
 	}
 
 }

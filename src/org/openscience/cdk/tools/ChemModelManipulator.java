@@ -103,5 +103,59 @@ public class ChemModelManipulator {
         return container;
     }
     
+    /**
+     * This badly named methods tries to determine which AtomContainer in the
+     * ChemModel is best suited to contain added Atom's and Bond's.
+     */
+    public static AtomContainer createNewMolecule(ChemModel chemModel) {
+        // Add a new molecule either the set of molecules
+        Molecule molecule = new Molecule();
+        if (chemModel.getSetOfMolecules() != null) {
+            SetOfMolecules moleculeSet = chemModel.getSetOfMolecules();
+            moleculeSet.addMolecule(molecule);
+        } else {
+            SetOfMolecules moleculeSet = new SetOfMolecules();
+            moleculeSet.addMolecule(molecule);
+            chemModel.setSetOfMolecules(moleculeSet);
+        }
+        return molecule;
+    }
+
+    /**
+     * This badly named methods tries to determine which AtomContainer in the
+     * ChemModel is best suited to contain added Atom's and Bond's.
+     */
+    public static AtomContainer getRelevantAtomContainer(ChemModel chemModel, Atom atom) {
+        if (chemModel.getSetOfMolecules() != null) {
+            SetOfMolecules moleculeSet = chemModel.getSetOfMolecules();
+            Molecule[] molecules = moleculeSet.getMolecules();
+            for (int i=0; i<molecules.length; i++) {
+                if (molecules[i].contains(atom)) {
+                    return molecules[i];
+                }
+            }
+        }
+        if (chemModel.getSetOfReactions() != null) {
+            SetOfReactions reactionSet = chemModel.getSetOfReactions();
+            Reaction[] reactions = reactionSet.getReactions();
+            for (int i=0; i<reactions.length; i++) {
+                Reaction reaction = reactions[i];
+                Molecule[] reactants = reaction.getReactants();
+                for (int j=0; j<reactants.length;j++) {
+                    if (reactants[j].contains(atom)) {
+                        return reactants[j];
+                    }
+                }
+                Molecule[] products = reaction.getProducts();
+                for (int j=0; j<products.length; j++) {
+                    if (products[j].contains(atom)) {
+                        return products[j];
+                    }
+                }
+            }
+        }
+        // This should never happen.
+        return createNewMolecule(chemModel);
+    }
 }
 
