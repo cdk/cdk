@@ -13,7 +13,7 @@ CLASSPATH=${RTJAR}:${JARLIBS}:${THREEDJAR}:${CDKLIBS}
 
 # Collect -D options as java arguments
 command=${JAVA}
-while [ `echo $1 | egrep '^-D' | wc -l` != 0 ]; do
+while [ `echo $1 | egrep '^-[D|X]' | wc -l` != 0  ]; do
         command="$command $1"
         shift
 done

@@ -63,3 +63,16 @@ INSTALL GUIDE
   Running CDK is done with:
 
   java -cp $CLASSPATH cdk-apps.jar org.openscience.cdk.applications.Viewer
+  
+  2.3 CHANGING SOURCE CODE
+  
+  People are encouraged to change the source code, or add new classes with new
+  functionality. The make system does not automatically recognize new source code,
+  but you can recompile CDK with your local changes by doing:
+  
+  make clean
+  make
+  make install
+  
+  The first command should force a recompile of the source code with the second
+  command.
