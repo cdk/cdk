@@ -28,10 +28,18 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.AtomContainer;
 
 /**
- *  The calculation of the Gasteiger Marsili (PEOE) partial charges is based on {@cdk.cite GM80}
+ * The calculation of the Gasteiger Marsili (PEOE) partial charges is based on 
+ * {@cdk.cite GM80}. This class only implements the original method which only
+ * applies to &sigma;-bond systems. For &pi;-bond systems, a modified
+ * H&uuml;ckel molecular orbital treatment is required {@cdk.cite GM2003} which
+ * is <i>not</i> implemented.
  *
- *@author     chhoppe
- *@cdk.created    2004-11-03
+ * @author      chhoppe
+ * @cdk.created 2004-11-03
+ * @cdk.keyword partial atomic charges
+ * @cdk.keyword charge distribution
+ * @cdk.keyword electronegativities, partial equalization of orbital
+ * @cdk.keyword PEOE
  */
 public class GasteigerMarsiliPartialCharges {
 
