@@ -40,8 +40,6 @@ import org.openscience.cdk.ChemObjectListener;
 import org.openscience.cdk.event.ChemObjectChangeEvent;
 import org.openscience.cdk.ChemObjectListener;
 
-import org.hansel.CoverageDecorator;
-
 /**
  * TestCase for the ChemObject class.
  *
@@ -58,9 +56,6 @@ public class ChemObjectTest extends TestCase {
 
 	public static Test suite() {
         TestSuite suite = new TestSuite(ChemObjectTest.class);
-        /* suite.addTest(new CoverageDecorator(ChemObjectTest.class,
-            new Class[] { ChemObject.class })
-        ); */
         return suite;
 	}
 

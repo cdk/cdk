@@ -31,6 +31,8 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.hansel.CoverageDecorator;
+
 /**
  * This test class is <b>not</b> intended to be tested directly,
  * but serve as helper class for actual coverage testers.
@@ -39,8 +41,10 @@ import junit.framework.TestSuite;
  */
 abstract public class CoverageTest extends TestCase {
 
-    private ClassLoader classLoader;
+    private final String basePackageName = "org.openscience.cdk.";
+    private final String testPackageName = "test.";
     
+    private ClassLoader classLoader;
     private Vector classesToTest;
     
     public CoverageTest(String name) {
@@ -73,7 +77,7 @@ abstract public class CoverageTest extends TestCase {
             String className = convertSlash2Dot(
                 rawClassName.substring(0, rawClassName.indexOf('.'))
             );
-            classesToTest.add(loadClass(className));
+            classesToTest.add(className);
         }
     }
 
@@ -96,15 +100,11 @@ abstract public class CoverageTest extends TestCase {
     private int checkClass(String className) {
         // System.out.println("Checking : " + className);
         
-        // the naming scheme: <package><class>Test
-        final String basePackageName = "org.openscience.cdk.";
-        final String testPackageName = "test.";
-        
         // load both classes
-        Class coreClass = loadClass(basePackageName + className);
+        Class coreClass = loadClass(getClassName(className));
 
         if (!coreClass.isInterface()) {
-            Class testClass = loadClass(basePackageName + testPackageName + className + "Test");
+            Class testClass = loadClass(getTestClassName(className));
             
             int missingTestsCount = 0;
 
@@ -165,6 +165,22 @@ abstract public class CoverageTest extends TestCase {
         }
     }
     
+    protected Test createHanselTestSuite() {
+        TestSuite suite = new TestSuite("Hansel tests for some module");
+        Enumeration classes = classesToTest.elements();
+        while (classes.hasMoreElements()) {
+            String className = (String)classes.nextElement();
+            suite.addTest(createHanselTest(className));
+        }
+        return suite;
+    }
+    
+    protected Test createHanselTest(String className) {
+        Class coreClass = loadClass(getClassName(className));
+        Class testClass = loadClass(getTestClassName(className));
+        return new CoverageDecorator(testClass, new Class[] { coreClass });
+    }
+    
     private Class loadClass(String className) {
         Class loadedClass = null;
         try {
@@ -205,4 +221,13 @@ abstract public class CoverageTest extends TestCase {
         }
         return sb.toString();
     }
+    
+    private String getTestClassName(String className) {
+        return basePackageName + testPackageName + className + "Test";
+    }
+    
+    private String getClassName(String className) {
+        return basePackageName + className;
+    }
+
 }

@@ -63,8 +63,4 @@ public class CoreCoverageTest extends CoverageTest {
         super.runCoverageTest();
     }
 
-    /* public void testHansel() {
-        super.testClassList();
-    } */
-
 }
