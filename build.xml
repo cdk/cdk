@@ -237,7 +237,7 @@
         </target>
 
         <target name="run" depends="dist">
-                <java classname="org.openscience.cdk.test.RandomStructureGeneratorTest" fork="yes">
+                <java classname="org.openscience.cdk.test.Renderer2DTest" fork="yes">
                         <classpath>
                                 <pathelement
                                 location="${dist}/jar/cdk.jar" />

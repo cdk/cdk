@@ -52,10 +52,12 @@ public class Renderer2DTest extends JPanel
 
 	public Renderer2DTest(String inFile)
 	{
+		Hashtable ht = null;
 		r2dm = new Renderer2DModel();
 		renderer = new Renderer2D(r2dm);
 		setPreferredSize(new Dimension(600, 400));
 		setBackground(r2dm.getBackColor());
+		
 	
 		try
 		{
@@ -72,6 +74,9 @@ public class Renderer2DTest extends JPanel
 			chemModel = chemSequence.getChemModel(0);
 			setOfMolecules = chemModel.getSetOfMolecules();
 			molecule = setOfMolecules.getMolecule(0);
+			ht = r2dm.getColorHash();
+			ht.put(molecule.getAtomAt(2), Color.red);
+			ht.put(molecule.getAtomAt(4), Color.red);
 			GeometryTools.translateAllPositive(molecule);
 			GeometryTools.scaleMolecule(molecule, getPreferredSize(), 0.8);			
 			GeometryTools.center(molecule, getPreferredSize());
