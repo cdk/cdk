@@ -25,6 +25,7 @@
 package org.openscience.cdk.applications.plugin;
 
 import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemModel;
 
 /**
  * Interface that applications must have an implementation for in
