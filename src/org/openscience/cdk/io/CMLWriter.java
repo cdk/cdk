@@ -351,7 +351,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
                 write("  <scalar dictRef=\"" + ((DictRef)key).getType() + "\">");
                 write(value.toString());
                 write("</scalar>\n");
-            } else if (key instanceof String && !key.equals(CDKConstants.TITLE)) {
+            } else if (key instanceof String && !((String)key).startsWith("org.openscience.cdk")) {
                 Object value = props.get(key);
                 
                 write("  <scalar title=\"" + key + "\">");
