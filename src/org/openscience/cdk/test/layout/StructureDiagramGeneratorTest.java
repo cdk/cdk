@@ -31,6 +31,7 @@ import org.openscience.cdk.layout.*;
 import org.openscience.cdk.renderer.*;
 import org.openscience.cdk.smiles.*;
 import org.openscience.cdk.templates.*;
+import org.openscience.cdk.tools.*;
 import java.util.*;
 import java.io.*;
 import java.net.URL;
@@ -84,6 +85,7 @@ public class StructureDiagramGeneratorTest extends TestCase
 	public void runVisualTests()
 	{
 		moleculeListViewer = new MoleculeListViewer();
+		MoleculeViewer2D.display(MoleculeFactory.loadMolecule("data/mdl/reserpine.mol"), true);
 		showIt(MoleculeFactory.loadMolecule("data/mdl/reserpine.mol"), "Reserpine");
 		showIt(MoleculeFactory.loadMolecule("data/mdl/four-ring-5x10.mol"), "5x10 condensed four membered rings");
 		showIt(MoleculeFactory.loadMolecule("data/mdl/six-ring-4x4.mol"), "4x4 condensed six membered rings");
@@ -97,7 +99,7 @@ public class StructureDiagramGeneratorTest extends TestCase
 		showIt(MoleculeFactory.makeBranchedAliphatic(), "Branched aliphatic");
 		showIt(MoleculeFactory.makeDiamantane(), "Diamantane - A Problem! - Solve it! :-)");
 		showIt(MoleculeFactory.makeEthylCyclohexane(), "Ethylcyclohexane");
-		showIt(MoleculeFactory.makeBicycloRings(), "Bicyclo-[2.2.2]-octane");
+		showIt(MoleculeFactory.makeBicycloRings(), "Bicyclo-[2.2.2]-octane");		
 	}
 
 
@@ -151,8 +153,8 @@ public class StructureDiagramGeneratorTest extends TestCase
 		try
 		{
 			StructureDiagramGeneratorTest sdg = new StructureDiagramGeneratorTest("StructureDiagramGeneratorTest");
-			//sdg.runVisualTests();
-			sdg.bug736137();
+			sdg.runVisualTests();
+			//sdg.bug736137();
 		} catch (Exception exc)
 		{
 			exc.printStackTrace();
@@ -165,13 +167,20 @@ public class StructureDiagramGeneratorTest extends TestCase
 	 *
 	 *@exception  java.lang.Exception  Description of the Exception
 	 */
-	public void bug736137() throws java.lang.Exception
+	public Molecule makeBug736137() throws java.lang.Exception
 	{
-		String filename = "data/mdl/bug736137.mol";
+		//String filename = "data/mdl/bug736137.mol";
+		String filename = "data/r.cml";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		MDLReader reader = new MDLReader(new InputStreamReader(ins));
-		Molecule molecule = (Molecule) reader.read((ChemObject) new Molecule());
-		MoleculeViewer2D.display(molecule, true);
+		//MDLReader reader = new MDLReader(new InputStreamReader(ins));
+		 CMLReader reader = new CMLReader(new InputStreamReader(ins));
+	 ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+	      ChemSequence[] chemSequence = chemFile.getChemSequences();
+	      ChemModel[] chemModels = chemSequence[0].getChemModels();
+	      AtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModels[0]);
+
+		Molecule molecule = new Molecule(atomContainer);
+		return molecule;
 
 	}
 
