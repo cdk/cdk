@@ -94,6 +94,7 @@ public class JumboTest extends TestCase {
             assertTrue(GeometryTools.has2DCoordinates(mol));
         } catch (Exception e) {
             fail(e.toString());
+            e.printStackTrace();
         }
     }
 

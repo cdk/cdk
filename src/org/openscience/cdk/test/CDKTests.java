@@ -79,10 +79,9 @@ public class CDKTests {
 
 	    return suite;
 	}
-	public static MoleculeListViewer getMoleculeListViewer()
-	{
-		if (moleculeListViewer == null)
-		{
+    
+	public static MoleculeListViewer getMoleculeListViewer() {
+		if (moleculeListViewer == null) {
 			moleculeListViewer = new MoleculeListViewer();
 		}
 		return moleculeListViewer;

@@ -54,7 +54,7 @@ public class RingTest extends TestCase {
     }
     
     public void testRing_int() {
-        Ring r = new Ring(5);
+        Ring r = new Ring(5); // This does not create a ring!
         assertEquals(0, r.getAtomCount());
         assertEquals(0, r.getBondCount());
     }
