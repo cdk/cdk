@@ -47,6 +47,8 @@ public class JCPController2DModel
     public static int DOWN_BOND=12;
 	public static int NORMALIZE=13;
 	public static int LASSO=14;
+	public static int INCCHARGE=15;
+	public static int DECCHARGE=16;
 	
 	private int drawMode = 6;
 	private int ringSize = 6;
