@@ -85,14 +85,8 @@ public class Viewer {
             if (useJmol) {
                 logger.debug(".. trying Jmol viewer");
                 try {
-                    StringWriter output = new StringWriter();
-                    CMLWriter cmlwriter = new CMLWriter(output, true);
-                    cmlwriter.write(m);
-                    cmlwriter.close();
-                    String cmlcode = output.toString();
-                    logger.debug(output.toString());
                     org.openscience.jmol.PublicJmol jmol = org.openscience.jmol.PublicJmol.getJmol(frame);
-                    jmol.readCML(cmlcode);
+                    jmol.showChemFrame(Convertor.convert(m));
 
                     logger.debug(".. done");
 

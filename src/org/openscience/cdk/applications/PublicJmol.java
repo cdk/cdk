@@ -215,28 +215,11 @@ public class PublicJmol extends JPanel {
     return window;
   }
 
-  // transfer molecule to Jmol as serialized XML string
-  public void readCML(String s) {
-    StringReader sr = new StringReader(s);
-    readCML(sr);
-  }
-
-  // transfer CML molecule to Jmol as string representation
-  public void readCML(StringReader sr) {
-
-    ChemFileReader reader = new CMLReader(sr);
-    try {
-      chemFile = reader.read();
-    } catch (Exception e) {
-      System.out.println("Exception: " + e);
-      return;
-    }
-
-    System.out.println("READING CML");
-    String name = "from Jumbo";
-    if (chemFile != null) {
-      display.setChemFile(chemFile);
-    }
+  // transfer molecule to Jmol as native object
+  public void showChemFrame(ChemFrame cf) {
+    ChemFile file = new ChemFile();
+    file.addFrame(cf);
+    display.setChemFile(file);
   }
 
   /**
