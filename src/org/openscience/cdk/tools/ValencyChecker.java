@@ -81,6 +81,7 @@ public class ValencyChecker implements ValencyCheckerInterface {
         logger.debug("hcount: " + hcount);
         logger.debug("charge: " + charge);
 
+        boolean elementPlusChargeMatches = false;
         for (int f = 0; f < atomTypes.length; f++) {
             AtomType type = atomTypes[f];
             if (charge == type.getFormalCharge()) {
@@ -88,12 +89,21 @@ public class ValencyChecker implements ValencyCheckerInterface {
                     maxBondOrder <= type.getMaxBondOrder()) {
                     logger.debug("We have a match!");
                     return true;
+                } else {
+                    // ok, the element and charge matche, but unfulfilled
+                    elementPlusChargeMatches = true;
                 }
             } // else: formal charges don't match
         }
         
-        logger.debug("No, atom is not saturated.");
-        return false;
+        if (elementPlusChargeMatches) {
+            logger.debug("No, atom is not saturated.");
+            return false;
+        }
+        
+        // ok, the found atom was not in the list
+        throw new CDKException("The atom with element " + atom.getSymbol() +
+                               "and charge " + charge + " is not found.");
     }
     
 	/**
