@@ -179,19 +179,31 @@ public class HOSECodeTest
 
 		try
 		{
-			String filename = "data/prediction-test.mol";
+			String filename = "data/HoseCodeTest.mol";
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 			MDLReader reader = new MDLReader(new InputStreamReader(ins));
 			molecule = (Molecule)reader.read((ChemObject)new Molecule());
     
 			boolean isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
+			for (int f = 0; f < molecule.getAtomCount(); f++)
+			{
+				System.out.println("Atom " + molecule.getAtomAt(f).getSymbol() + "-" + (f + 1) + " isAromatic? " + molecule.getAtomAt(f).flags[CDKConstants.ISAROMATIC]);
+			}
+			for (int f = 0; f < molecule.getBondCount(); f++)
+			{
+				System.out.println("Bond " + "-" + (f + 1) + " isAromatic? " + molecule.getBondAt(f).flags[CDKConstants.ISAROMATIC]);
+			}
+
 			hcg = new HOSECodeGenerator();
 			String s = null;
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
 				System.out.println("Atom " + molecule.getAtomAt(f).getSymbol() + "-" + (f + 1));
-				s = hcg.getHOSECode(molecule, molecule.getAtomAt(f), 4);
-				System.out.println(s);
+				if(molecule.getAtomAt(f).getSymbol().equals("C"))
+				{
+					s = hcg.getHOSECode(molecule, molecule.getAtomAt(f), 4);
+					System.out.println(s);
+				}
 			}
 		} catch (Exception exc)
 		{

@@ -209,7 +209,34 @@ public class HueckelAromaticityDetectorTest extends TestCase
 		assertTrue(isAromatic);
 	}
 
+	public boolean test5()
+	{
+		Molecule molecule = null;
+		HOSECodeGenerator hcg = null;
+		try
+		{
+			String filename = "data/HoseCodeTest.mol";
+			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+			MDLReader reader = new MDLReader(new InputStreamReader(ins));
+			molecule = (Molecule)reader.read((ChemObject)new Molecule());
+   
+			boolean isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
+			String s = null;
+			for (int f = 0; f < molecule.getAtomCount(); f++)
+			{
+				System.out.println("Atom " + molecule.getAtomAt(f).getSymbol() + "-" + (f + 1) + " isAromatic? " + molecule.getAtomAt(f).flags[CDKConstants.ISAROMATIC]);
+			}
+		} catch (Exception exc)
+		{
+			exc.printStackTrace();
+			return false;
+		}
+		return true;
+	}
 
+	
+	
+	
 	/**
 	 *  Description of the Method
 	 *
@@ -248,9 +275,10 @@ public class HueckelAromaticityDetectorTest extends TestCase
 		//hadt.testBenzene();
 		//hadt.testAlphaPinene();
 		//hadt.testAzulene();
-		hadt.testBenzeneFromSMILES();
-		hadt.testIndole();
-		hadt.testPyrrole();
+		//hadt.testBenzeneFromSMILES();
+		//hadt.testIndole();
+		//hadt.testPyrrole();
+		hadt.test5();
 		//hadt.testPorphyrine();
 	}
 }

@@ -879,7 +879,6 @@ public class CMLCoreModule implements ModuleInterface {
 
             while (orders.hasMoreElements()) {
                 cdo.startObject("Bond");
-                // cdo.setObjectProperty("Bond", "id", ids.nextElement());
                 cdo.setObjectProperty("Bond", "atom1", 
                                       new Integer(elid.indexOf(
                                                           (String)bar1s.nextElement())).toString());

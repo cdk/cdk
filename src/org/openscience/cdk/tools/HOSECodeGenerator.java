@@ -142,6 +142,9 @@ public class HOSECodeGenerator implements java.io.Serializable
 	/**
 	 *  Produces a HOSE code for Atom 'root' in the AtomContainer 'ac'. The HOSE
 	 *  code is produced for the number of spheres given by noOfSpheres
+	 *  IMPORTANT: if you want aromaticity to be included in the code, you need
+	 *  to run the AtomContainer ac to the HueckelAromaticityDetector prior to 
+	 *  using getHOSECode().
 	 *
 	 *@param  ac  The AtomContainer with the molecular skeleton in which the root atom resides
 	 *@param  root The root atom for which to produce the HOSE code
