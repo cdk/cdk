@@ -16,6 +16,8 @@ New:
 * Added a basic CIF and mmCIF reader
 * Added benzene ring adding feature to the Controller2D
 * Made aromaticity perception in Renderer2D optional
+* Added rendering of aromatic rings with a circle inside the ring
+  (implements #815261)
 
 Fixes:
 * Removed use of JSX
