@@ -70,6 +70,7 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.dom.*;
 import javax.xml.parsers.*;
 
@@ -204,12 +205,12 @@ public class CMLWriter extends DefaultChemObjectWriter {
         
         prefix = namespacePrefix.getSetting();
         
-        Node node=null;
+        CMLDocument cmldoc = null;
         
         if (!done) {
             
             CMLDocumentFactory docfac = DocumentFactoryImpl.newInstance();
-            CMLDocument cmldoc = (CMLDocument) docfac.createDocument();
+            cmldoc = (CMLDocument) docfac.createDocument();
             try{
               cmldoc.appendChild(new Convertor().convert(object,cmldoc,cmlIds.isSet()));
             }
@@ -217,11 +218,6 @@ public class CMLWriter extends DefaultChemObjectWriter {
               throw new CDKException(ex.getMessage());
             }
 
-            if (!fragment && xmlDecl.isSet()) {
-              node=cmldoc;
-            }else{
-              node=cmldoc.getDocumentElement();
-            }            
             if (!fragment) {
                 done = true;
             }
@@ -230,7 +226,10 @@ public class CMLWriter extends DefaultChemObjectWriter {
         try{
           TransformerFactory tFactory = TransformerFactory.newInstance();
           Transformer transformer = tFactory.newTransformer();
-          DOMSource source = new DOMSource(node);
+          if (fragment || !xmlDecl.isSet()) {
+            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+          }
+          DOMSource source = new DOMSource(cmldoc);
           StreamResult result = new StreamResult(output);
           transformer.transform(source, result);
         }catch(javax.xml.transform.TransformerException ex){
