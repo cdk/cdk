@@ -48,7 +48,7 @@ public class BremserOneSphereHOSECodePredictor implements java.io.Serializable
 	
 	public double predict(String hoseCode) throws CDKException
 	{
-		if (ht.containsKey(hoseCode))
+		if (!(hoseCode == null) && ht.containsKey(hoseCode))
 		{
 			return ((HOSECodeShiftRange)ht.get(hoseCode)).shift;
 		}
@@ -57,7 +57,7 @@ public class BremserOneSphereHOSECodePredictor implements java.io.Serializable
 
 	public String predictFull(String hoseCode) throws CDKException
 	{
-		if (ht.containsKey(hoseCode))
+		if (!(hoseCode == null) && ht.containsKey(hoseCode))
 		{
 			return ((HOSECodeShiftRange)ht.get(hoseCode)).toString();
 		}
@@ -67,7 +67,7 @@ public class BremserOneSphereHOSECodePredictor implements java.io.Serializable
 
 	public double getConfidenceLimit(String hoseCode) throws CDKException
 	{
-		if (ht.containsKey(hoseCode))
+		if (!(hoseCode == null) && ht.containsKey(hoseCode))
 		{
 			return ((HOSECodeShiftRange)ht.get(hoseCode)).confidenceLimit;
 		}
