@@ -50,4 +50,20 @@ public class SetOfReactionsTest extends TestCase {
         return new TestSuite(SetOfReactionsTest.class);
     }
     
+    public void testSetOfReactions() {
+        SetOfReactions reactionSet = new SetOfReactions();
+        assertNotNull(reactionSet);
+    }
+    
+    /**
+     * Method to test wether the class complies with RFC #9.
+     */
+    public void testToString() {
+        SetOfReactions reactionSet = new SetOfReactions();
+        String description = reactionSet.toString();
+        for (int i=0; i< description.length(); i++) {
+            assertTrue(description.charAt(i) != '\n');
+            assertTrue(description.charAt(i) != '\r');
+        }
+    }
 }

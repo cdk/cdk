@@ -28,8 +28,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.Reaction;
-import org.openscience.cdk.SetOfReactions;
+import org.openscience.cdk.exception.CDKException;
 
 /**
  * Checks the funcitonality of the CDKException class.
@@ -50,4 +49,10 @@ public class CDKExceptionTest extends TestCase {
         return new TestSuite(CDKExceptionTest.class);
     }
     
+    public void testCDKException() {
+        final String EXPLANATION = "No, CDK cannot compute the multidollar ligand you search for target X.";
+        CDKException exception = new CDKException(EXPLANATION);
+        assertNotNull(exception);
+        assertEquals(EXPLANATION, exception.getMessage());
+    }
 }

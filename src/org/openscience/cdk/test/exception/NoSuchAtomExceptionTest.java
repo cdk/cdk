@@ -28,8 +28,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.Reaction;
-import org.openscience.cdk.SetOfReactions;
+import org.openscience.cdk.exception.NoSuchAtomException;
 
 /**
  * Checks the funcitonality of the NoSuchAtomException class.
@@ -50,4 +49,10 @@ public class NoSuchAtomExceptionTest extends TestCase {
         return new TestSuite(NoSuchAtomExceptionTest.class);
     }
     
+    public void testNoSuchAtomException() {
+        final String EXPLANATION = "Buckybull is not an element!";
+        NoSuchAtomException exception = new NoSuchAtomException(EXPLANATION);
+        assertNotNull(exception);
+        assertEquals(EXPLANATION, exception.getMessage());
+    }
 }

@@ -28,8 +28,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.Reaction;
-import org.openscience.cdk.SetOfReactions;
+import org.openscience.cdk.CDKConstants;
 
 /**
  * Included so that CoreCoverageTest won't complain. The class does not have
@@ -49,6 +48,10 @@ public class CDKConstantsTest extends TestCase {
 
     public static Test suite() {
         return new TestSuite(CDKConstantsTest.class);
+    }
+    
+    public void testCDKConstants() {
+        assertFalse(CDKConstants.ISAROMATIC == -1);
     }
     
 }

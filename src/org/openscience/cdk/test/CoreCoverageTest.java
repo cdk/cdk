@@ -102,47 +102,53 @@ public class CoreCoverageTest extends TestCase {
         
         // load both classes
         Class coreClass = loadClass(basePackageName + className);
-        Class testClass = loadClass(basePackageName + testPackageName + className + "Test");
         
-        // make map of methods in the test class
-        Vector testMethodNames = new Vector();
-        Method[] testMethods = testClass.getMethods();
-        for (int i=0; i<testMethods.length; i++) {
-            testMethodNames.add(testMethods[i].getName());
+        if (!coreClass.isInterface()) {
+            Class testClass = loadClass(basePackageName + testPackageName + className + "Test");
+            
+            // make map of methods in the test class
+            Vector testMethodNames = new Vector();
+            Method[] testMethods = testClass.getMethods();
+            for (int i=0; i<testMethods.length; i++) {
+                testMethodNames.add(testMethods[i].getName());
+            }
+            
+            boolean allIsTested = true;
+            
+            // now process the methods of the class to be tested
+            // first the constructors
+            Constructor[] constructors = coreClass.getDeclaredConstructors();
+            for (int i=0; i<constructors.length; i++) {
+                String testMethod = "test" + capitalizeName(removePackage(constructors[i].getName()));
+                Class[] paramTypes = constructors[i].getParameterTypes();
+                for (int j=0; j<paramTypes.length; j++) {
+                    testMethod = testMethod + "_" + removePackage(paramTypes[j].getName());
+                }
+                if (!testMethodNames.contains(testMethod)) {
+                    System.out.println(removePackage(coreClass.getName()) + ": missing the expection test method: " + testMethod);
+                    allIsTested = false;
+                }
+            }
+            
+            // now the methods.
+            Method[] methods = coreClass.getDeclaredMethods();
+            for (int i=0; i<methods.length; i++) {
+                String testMethod = "test" + capitalizeName(removePackage(methods[i].getName()));
+                Class[] paramTypes = methods[i].getParameterTypes();
+                for (int j=0; j<paramTypes.length; j++) {
+                    testMethod = testMethod + "_" + removePackage(paramTypes[j].getName());
+                }
+                if (!testMethodNames.contains(testMethod)) {
+                    System.out.println(removePackage(coreClass.getName()) + ": missing the expection test method: " + testMethod);
+                    allIsTested = false;
+                }
+            }
+            
+            return allIsTested;
+        } else {
+            // interfaces should not be tested
+            return true;
         }
-        
-        boolean allIsTested = true;
-        
-        // now process the methods of the class to be tested
-        // first the constructors
-        Constructor[] constructors = coreClass.getDeclaredConstructors();
-        for (int i=0; i<constructors.length; i++) {
-            String testMethod = "test" + capitalizeName(removePackage(constructors[i].getName()));
-            Class[] paramTypes = constructors[i].getParameterTypes();
-            for (int j=0; j<paramTypes.length; j++) {
-                testMethod = testMethod + "_" + removePackage(paramTypes[j].getName());
-            }
-            if (!testMethodNames.contains(testMethod)) {
-                System.out.println(removePackage(coreClass.getName()) + ": missing the expection test method: " + testMethod);
-                allIsTested = false;
-            }
-        }
-        
-        // now the methods.
-        Method[] methods = coreClass.getDeclaredMethods();
-        for (int i=0; i<methods.length; i++) {
-            String testMethod = "test" + capitalizeName(removePackage(methods[i].getName()));
-            Class[] paramTypes = methods[i].getParameterTypes();
-            for (int j=0; j<paramTypes.length; j++) {
-                testMethod = testMethod + "_" + removePackage(paramTypes[j].getName());
-            }
-            if (!testMethodNames.contains(testMethod)) {
-                System.out.println(removePackage(coreClass.getName()) + ": missing the expection test method: " + testMethod);
-                allIsTested = false;
-            }
-        }
-        
-        return allIsTested;
     }
     
     private String removePackage(String className) {

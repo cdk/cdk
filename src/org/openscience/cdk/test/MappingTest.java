@@ -28,8 +28,8 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.Reaction;
-import org.openscience.cdk.SetOfReactions;
+import org.openscience.cdk.Mapping;
+import org.openscience.cdk.Atom;
 
 /**
  * Checks the funcitonality of the Mapping class.
@@ -50,4 +50,20 @@ public class MappingTest extends TestCase {
         return new TestSuite(MappingTest.class);
     }
     
+    public void testMapping() {
+        Mapping mapping = new Mapping(new Atom(), new Atom());
+        assertNotNull(mapping);
+    }
+    
+    /**
+     * Method to test wether the class complies with RFC #9.
+     */
+    public void testToString() {
+        Mapping mapping = new Mapping(new Atom(), new Atom());
+        String description = mapping.toString();
+        for (int i=0; i< description.length(); i++) {
+            assertTrue(description.charAt(i) != '\n');
+            assertTrue(description.charAt(i) != '\r');
+        }
+    }
 }
