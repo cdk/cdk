@@ -28,9 +28,8 @@
  */
 package org.openscience.cdk.dict;
 
-import net.sf.cml.stmml.Dictionary;
-import net.sf.cml.stmml.Entry;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.Hashtable;
 
 /**
@@ -60,12 +59,12 @@ public class DictionaryDatabase {
         dictionaries = new Hashtable();
         for (int i=0; i<dictionaryNames.length; i++) {
             String name = dictionaryNames[i];
-            dictionaries.put(name, readDatabase("org/openscience/cdk/dict/data/" + name + ".xml"));
+            dictionaries.put(name.toLowerCase(), readDictionary("org/openscience/cdk/dict/data/" + name + ".xml"));
             logger.info("Read dictionary: " + name);
         }
     }
 
-    private Dictionary readDatabase(String databaseLocator) {
+    private Dictionary readDictionary(String databaseLocator) {
         Dictionary dictionary = null;
         logger.info("Reading dictionary from " + databaseLocator);
         try {
@@ -78,6 +77,25 @@ public class DictionaryDatabase {
             logger.debug(exception);
         }
         return dictionary;
+    };
+
+    /**
+     * Reads a custom dictionary into the database.
+     */
+    public void readDictionary(Reader reader, String name) {
+        name = name.toLowerCase();
+        logger.info("Reading dictionary: " + name);
+        if (!dictionaries.containsKey(name)) {
+            try {
+                Dictionary dictionary = Dictionary.unmarshal(reader);
+                dictionaries.put(name, dictionary);
+            } catch (Exception exception) {
+                logger.error("Could not read dictionary: " + name);
+                logger.debug(exception);
+            }
+        } else {
+            logger.error("Dictionary already loaded: " + name);
+        }
     };
 
     /**
@@ -107,4 +125,25 @@ public class DictionaryDatabase {
             return entryNames;
         }
     }
+    
+    /**
+     * Returns true if the database contains the dictionary.
+     */
+    public boolean hasDictionary(String name) {
+        return dictionaries.containsKey(name.toLowerCase());
+    }
+    
+    /**
+     * Returns true if the given dictionary contains the given
+     * entry.
+     */
+    public boolean hasEntry(String dictName, String entryID) {
+        if (hasDictionary(dictName)) {
+            Dictionary dictionary = (Dictionary)dictionaries.get(dictName);
+            return dictionary.hasEntry(entryID.toLowerCase());
+        } else {
+            return false;
+        }
+    }
+    
 }

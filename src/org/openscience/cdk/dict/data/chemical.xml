@@ -216,9 +216,9 @@
         <metadata name="dc:date" content="2003-08-15"/>
       </documentation>
     </annotation>
-    <definition>
+    <!-- definition>
       Mass of the atom.
-    </definition>
+    </definition -->
   </entry>
 
   <entry id="naturalAbundance" term="Natural Abundance">
@@ -228,10 +228,10 @@
         <metadata name="dc:date" content="2003-08-15"/>
       </documentation>
     </annotation>
-    <definition>
+    <!-- definition>
       The relative or percentual concentration of the isotope
       in a random, natural sample of the element.
-    </definition>
+    </definition -->
   </entry>
 
   <entry id="relativeConcentration" term="Relative Concentration">
@@ -241,7 +241,7 @@
         <metadata name="dc:date" content="2003-08-15"/>
       </documentation>
     </annotation>
-    <definition>
+    <!-- definition>
       The concentration of the subject in a sample quantified by
       a number that indicates the relative amounts as compared with
       the other species in the sample.
@@ -250,7 +250,7 @@
       If a sample contains three species, and their relative
       concentrations are 100, 60, 40, then their percentual
       concentrations are 50, 30, 20.
-    </description>
+    </description -->
   </entry>
 
   <entry id="percentualConcentration" term="Percentuel Concentration">
@@ -260,7 +260,7 @@
         <metadata name="dc:date" content="2003-08-15"/>
       </documentation>
     </annotation>
-    <definition>
+    <!-- definition>
       The concentration of the subject in a sample quantified by
       a percentage. The sum of the percentages of all specied in the
       sample sum up to 100%.
@@ -269,7 +269,7 @@
       If a sample contains three species, and their relative
       concentrations are 100, 60, 40, then their percentual
       concentrations are 50, 30, 20.
-    </description>
+    </description -->
   </entry>
 
 </dictionary>
