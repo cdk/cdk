@@ -1,7 +1,1 @@
-These jars are needed to convert the bibliography from BibTeXML to Docbook XML
-and BibTex:
-
--rw-r--r--    1 egonw    egonw       38307 Aug 18 09:19 bibtexml.jar
--rw-r--r--    1 egonw    egonw     1131283 Aug 18 09:19 castor-0.9.4.3-xml.jar
--rw-r--r--    1 egonw    egonw      231445 Mar  6  2002 gnujaxp.jar
--rw-r--r--    1 egonw    egonw       44043 Dec 28 21:00 jreferences.jar
+The jabref.jar is needed to convert BibTeXML into DocBook XML and BibTeX.
