@@ -31,6 +31,7 @@ import org.openscience.cdk.*;
 import org.openscience.cdk.exception.*;
 import org.openscience.cdk.io.setting.*;
 import org.openscience.cdk.dict.DictionaryDatabase;
+import org.openscience.cdk.dict.DictRef;
 import org.openscience.cdk.tools.ReactionManipulator;
 import java.io.*;
 import java.util.*;
@@ -60,6 +61,8 @@ public class MACiEReader extends DefaultChemObjectReader {
     public final static String PDBCode = "org.openscience.cdk.io.MACiE.PDBCode";
     /** Property it will put on ChemModel */
     public final static String ECNumber = "org.openscience.cdk.io.MACiE.ECNumber";
+    /** Property it will put on ChemModel */
+    public final static String EnzymeName = "org.openscience.cdk.io.MACiE.EnzymeName";
     
     private LineNumberReader input = null;
     private org.openscience.cdk.tools.LoggingTool logger = null;
@@ -78,6 +81,7 @@ public class MACiEReader extends DefaultChemObjectReader {
     private SetOfReactions currentReactionStepSet;
     
     private String reactionStepAnnotation;
+    private String reactionStepComments;
     
     /**
      * Contructs a new MDLReader that can read Molecule from a given Reader.
@@ -161,6 +165,7 @@ public class MACiEReader extends DefaultChemObjectReader {
                 if (currentEntry != null) {
                     // store previous entry
                     currentEntry.setSetOfReactions(currentReactionStepSet);
+                    createNiceMACiETitle(currentEntry);
                     entries.addChemModel(currentEntry);
                     if (selectEntry && (entryCounter == selectedEntry.getSettingValue())) {
                         return currentEntry;
@@ -199,16 +204,25 @@ public class MACiEReader extends DefaultChemObjectReader {
         }
         
         if (currentEntry != null) {
+            createNiceMACiETitle(currentEntry);
             // store last entry
             currentEntry.setSetOfReactions(currentReactionStepSet);
             entries.addChemModel(currentEntry);
         }
         
         if (selectEntry) {
-            // FIXME: should ask which entry to select
-            return entries.getChemModel(0);
+            // apparently selected last one, other already returned
+            return currentEntry;
         }
         return entries;
+    }
+    
+    private void createNiceMACiETitle(ChemModel chemModel) {
+        chemModel.setProperty(CDKConstants.TITLE,
+            "MACIE " + currentEntry.getProperty(EnzymeName) + "= " +
+            "PDB: " + currentEntry.getProperty(PDBCode) + ", " +
+            "EC: " + currentEntry.getProperty(ECNumber)
+        );
     }
     
     private String[] readDtypeDatumTuple(String triggerLine) throws IOException {
@@ -247,11 +261,13 @@ public class MACiEReader extends DefaultChemObjectReader {
       throws IOException, CDKException {
         logger.debug("Processing top level field");
         if (field.equals("UNIQUE IDENTIFIER")) {
-            currentEntry.setID(datum);
+            currentEntry.setID("MACIE-" + datum);
         } else if (field.equals("EC NUMBER")) {
             currentEntry.setProperty(ECNumber, datum);
         } else if (field.equals("PDB CODE")) {
             currentEntry.setProperty(PDBCode, datum);
+        } else if (field.equals("ENZYME NAME")) {
+            currentEntry.setProperty(EnzymeName, datum);
         } else {
             logger.warn("Unrecognized ROOT field " + field + 
                 " around line " + input.getLineNumber());
@@ -273,7 +289,8 @@ public class MACiEReader extends DefaultChemObjectReader {
                         FileReader reader = new FileReader(file);
                         MDLRXNReader rxnReader = new MDLRXNReader(reader);
                         currentReaction = (Reaction)rxnReader.read(new Reaction());
-                        currentReaction.setID("Overall Reaction");
+                        currentReaction.setID(datum);
+                        currentReaction.setProperty(CDKConstants.TITLE, "Overall Reaction");
                         // don't add it now, wait until annotation is parsed
                     } else {
                         logger.error("Cannot find secondary file: " + filename);
@@ -289,9 +306,13 @@ public class MACiEReader extends DefaultChemObjectReader {
                 // cannot create one, because CDK io does not
                 // allow that (yet)
                 reactionStepAnnotation = null;
+                reactionStepComments = null;
             } else if (subfield.equals("ANNOTATION")) {
                 reactionStepAnnotation = datum;
+            } else if (subfield.equals("COMMENTS")) {
+                reactionStepComments = datum;
             } else if (subfield.equals("STEP_ID")) {
+                // read secondary RXN files?
                 if (readSecondaryFiles.isSet()) {
                     // parse referenced file
                     String filename = readSecondaryDir.getSetting() + datum + ".rxn";
@@ -300,9 +321,9 @@ public class MACiEReader extends DefaultChemObjectReader {
                         logger.info("Reading reaction step from: " + filename);
                         FileReader reader = new FileReader(file);
                         MDLRXNReader rxnReader = new MDLRXNReader(reader);
-                        Reaction reaction = (Reaction)rxnReader.read(new Reaction());
-                        reaction.setID("Step " + fieldNumber);
-                        currentReactionStepSet.addReaction(reaction);
+                        currentReaction = (Reaction)rxnReader.read(new Reaction());
+                        currentReaction.setID(datum);
+                        currentReaction.setProperty(CDKConstants.TITLE, "Step " + fieldNumber);
                     } else {
                         logger.error("Cannot find secondary file: " + filename);
                     }
@@ -310,6 +331,10 @@ public class MACiEReader extends DefaultChemObjectReader {
                 // now parse annotation
                 if (reactionStepAnnotation != null) {
                     parseReactionAnnotation(reactionStepAnnotation, currentReaction);
+                }
+                // and set comments
+                if (reactionStepComments != null) {
+                    currentReaction.setProperty(CDKConstants.COMMENT, reactionStepComments);
                 }
                 // now, I'm ready to add reaction
                 currentReactionStepSet.addReaction(currentReaction);
@@ -341,13 +366,26 @@ public class MACiEReader extends DefaultChemObjectReader {
 
     private void processAnnotation(String field, String value, Reaction reaction) {
         logger.debug("Annote: " + field + "=" + value);
-        if (field.equals("RxnAtts")) {
+        if (field.equals("RxnAtts") || field.equals("RxnType")) {
             // reaction attributes
-            markWithDictRefs(reaction, "Attributes", value);
+            String dictionary = "macie";
+            if (value.equals("Acid") || value.equals("Base")) {
+                dictionary = "chemical";
+            }
+            addDictRefedAnnotation(reaction, "Attributes", value);
+        } else if (field.equals("ResiduesPresent") ||
+                   field.equals("GroupTransferred") ||
+                   field.equals("BondFormed") ||
+                   field.equals("ReactiveCentres") ||
+                   field.equals("BondCleaved") ||
+                   field.equals("BondFormed") ||
+                   field.equals("Products") ||
+                   field.equals("ResiduesPresent")) {
+            reaction.setProperty(new DictRef("macie:" + field, value), value);
         } else if (field.equals("Reversible")) {
             if (value.equalsIgnoreCase("yes")) {
                 reaction.setDirection(Reaction.BIDIRECTIONAL);
-                markWithDictRefs(reaction, "ReactionType", "ReversibleReaction");
+                addDictRefedAnnotation(reaction, "ReactionType", "ReversibleReaction");
             }
         } else {
             Matcher residueLocatorMatcher =
@@ -357,41 +395,34 @@ public class MACiEReader extends DefaultChemObjectReader {
                 Atom[] atoms = ReactionManipulator.getAllInOneContainer(reaction).getAtoms();
                 boolean found = false;
                 logger.debug("Searching through #atom: " + atoms.length);
-                logger.debug("Taken from reaction " + reaction.toString());
+                // logger.debug("Taken from reaction " + reaction.toString());
                 for (int i=0; i<atoms.length; i++) {
                     if (atoms[i] instanceof PseudoAtom) {
                         // that is what we are looking for
                         PseudoAtom atom = (PseudoAtom)atoms[i];
-                        logger.debug("Found PseudoAtom: " + atom.getLabel());
+                        atom.setProperty(DictionaryDatabase.DICTREFPROPERTYNAME, "macie:ResidueLocator");
                         if (atom.getLabel().equals(field)) {
                             // we have a hit, now mark Atom with dict refs
-                            markWithDictRefs(atom, "ResidueRole", value);
+                            addDictRefedAnnotation(atom, "ResidueRole", value);
                             found = true;
-                        } else {
-                            logger.debug("Label " + atom.getLabel() +
-                                " does not match " + field);
                         }
-                    } else {
-                        logger.debug("Atom is not a PseudoAtom, so can't be a residueLocator");
-                        logger.debug("Atom.getSymbol() " + atoms[i].getSymbol());
                     }
                 }
                 if (!found) {
-                    logger.error("MACiE annotation mentions a residue that does not exist!");
+                    logger.error("MACiE annotation mentions a residue that does not exist: " + field);
                 }
+            } else {
+                logger.error("Did not parse annotation: " + field);
             }
         }
     }
     
-    private void markWithDictRefs(ChemObject object, String type, String values) {
+    private void addDictRefedAnnotation(ChemObject object, String type, String values) {
         StringTokenizer tokenizer = new StringTokenizer(values, ",");
         while (tokenizer.hasMoreTokens()) {
             String token = tokenizer.nextToken();
-            object.setProperty(
-                DictionaryDatabase.DICTREFPROPERTYNAME + "." + type,
-                "enzymeReaction:" + token
-            );
-            logger.debug("Added dict ref " + token + " to " + object.toString());
+            object.setProperty(new DictRef("macie:" + type, token), token);
+            logger.debug("Added dict ref " + token + " to " + object.getClass().getName());
         }
     }
     
