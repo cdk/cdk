@@ -247,6 +247,15 @@
     </bibtex:unpublished>
   </bibtex:entry>
 
+  <bibtex:entry id="STE2003">
+    <bibtex:article>
+      <bibtex:author>Steinbeck, C. and Han, Y. and Kuhn, S, and Horlacher, O. and Luttmann, E. and Willighagen, E.</bibtex:author>
+      <bibtex:title>The Chemistry Development Kit (CDK): An Open-Source Java Library for Chemo- and Bioinformatics</bibtex:title>
+      <bibtex:journal>Journal of Chemical Information and Computer Sciences</bibtex:journal>
+      <bibtex:year>2003</bibtex:year>
+    </bibtex:article>
+  </bibtex:entry>
+
   <bibtex:entry id="TRI92">
     <bibtex:book>
       <bibtex:author>Trinijastic, N.</bibtex:author>
