@@ -97,11 +97,24 @@ public class Fingerprinter
 	/**
 	 *  Checks whether all the positive bits in BitSet bs2 occur in BitSet
 	 *  bs1. If so, the molecular structure from which bs2 was generated is 
-	 *  a possible substructure of bs1
+	 *  a possible substructure of bs1.
+     *
+     *  Example:
+     *  <pre>
+     *  Molecule mol = MoleculeFactory.makeIndole();
+     *  BitSet bs = Fingerprinter.getFingerprint(mol);
+     *  Molecule frag1 = MoleculeFactory.makePyrrole();
+     *  BitSet bs1 = Fingerprinter.getFingerprint(frag1);
+     *  if (Fingerprinter.isSubset(bs, bs1)) {
+     *      System.out.println("Pyrrole is subset of Indole.");
+     *  }
+     *  </pre>
 	 *
 	 * @param  bs1  The reference BitSet
 	 * @param  bs2  The BitSet which is compared with bs1
 	 * @return      True, if bs2 is a subset of bs2
+     *
+     * @keyword substructure search
 	 */
 	public static boolean isSubset(BitSet bs1, BitSet bs2)
 	{
