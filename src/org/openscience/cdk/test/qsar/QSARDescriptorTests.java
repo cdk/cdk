@@ -50,6 +50,7 @@ import org.openscience.cdk.test.qsar.*;
 	suite.addTest(IsProtonInConjugatedPiSystemDescriptorTest.suite());
 	suite.addTest(ProtonTotalPartialChargeDescriptorTest.suite());
 	suite.addTest(EffectivePolarizabilityDescriptorTest.suite());
+	suite.addTest(HBondAcceptorCountDescriptorTest.suite());
         return suite;
     }
     
