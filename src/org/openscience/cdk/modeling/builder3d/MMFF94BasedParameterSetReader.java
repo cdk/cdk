@@ -58,6 +58,13 @@ public class MMFF94BasedParameterSetReader {
 	private Vector atomTypes;
 	private StringTokenizer st;
 	private String key = "";
+	private String sid;
+
+	private String configFilevdW = "data/mmffvdw.prm";
+	private InputStream insvdW = null;
+	private StringTokenizer stvdW;
+	private String sidvdW;
+
 
 	/**
 	 *Constructor for the MM2BasedParameterSetReader object
@@ -89,9 +96,10 @@ public class MMFF94BasedParameterSetReader {
 	 * @exception  Exception  Description of the Exception
 	 */
 	private void setAtomTypeData() throws Exception {
+		
+		key = "data" + sid;
 		Vector data = new Vector();
-		st.nextToken();
-		String sid = st.nextToken();
+		
 		String sradius = st.nextToken();
 		String swell = st.nextToken();
 		String sapol=st.nextToken();
@@ -102,22 +110,34 @@ public class MMFF94BasedParameterSetReader {
 		String sfcadj=st.nextToken();
 		String spbci=st.nextToken();
 		
+		stvdW.nextToken();
+		stvdW.nextToken();
+		String sA = stvdW.nextToken();
+		String sG = stvdW.nextToken();
+		
 		try {
 			double well = new Double(swell).doubleValue();
 			double apol = new Double(sapol).doubleValue();
 			double Neff = new Double(sNeff).doubleValue();
 			double fcadj = new Double(sfcadj).doubleValue();
 			double pbci = new Double(spbci).doubleValue();
+			double a = new Double(sA).doubleValue();
+			double g = new Double(sG).doubleValue();
+			
 			data.add(new Double(well));
+			data.add(new Double(apol));
 			data.add(new Double(Neff));
 			data.add(new String(sDA));
 			data.add(new Double(fcadj));
 			data.add(new Double(spbci));
+			data.add(new Double(a));
+			data.add(new Double(g));
 			
 		} catch (NumberFormatException nfe) {
 			throw new IOException("Data: Malformed Number due to:"+nfe);
 		}
-		key = "data" + sid;
+		
+		//System.out.println("data : " + data);
 		parameterSet.put(key, data);
 		
 		key="vdw"+sid;
@@ -125,11 +145,12 @@ public class MMFF94BasedParameterSetReader {
 		try{
 			double radius = new Double(sradius).doubleValue();
 			data.add(new Double(radius));
+
 		}catch (NumberFormatException nfe2) {
 			System.out.println("vdwError: Malformed Number due to:"+nfe2);
-		}
+		  }
 		parameterSet.put(key, data);
-		
+
 		key="charge"+sid;
 		data = new Vector();
 		try{
@@ -281,7 +302,7 @@ public class MMFF94BasedParameterSetReader {
 		
 		try {
 			double va1 = new Double(value1).doubleValue();
-			double va2 = new Double(value1).doubleValue();
+			double va2 = new Double(value2).doubleValue();
 			data.add(new Double(va1));
 			data.add(new Double(va2));
 			
@@ -365,7 +386,6 @@ public class MMFF94BasedParameterSetReader {
 	}
 	
 	
-	
 	/**
 	 * The main method which parses through the force field configuration file
 	 *
@@ -381,10 +401,22 @@ public class MMFF94BasedParameterSetReader {
 		if (ins == null) {
 			throw new IOException("There was a problem getting the default stream: " + configFile);
 		}
-	
+		
 		BufferedReader r = new BufferedReader(new InputStreamReader(ins), 1024);
 		String s;
 		int[] a = {0, 0, 0, 0, 0, 0, 0, 0};
+		
+		if (insvdW == null) {
+			insvdW = getClass().getClassLoader().getResourceAsStream(configFilevdW);
+		}
+		if (insvdW == null) {
+			throw new IOException("There was a problem getting the default stream: " + configFilevdW);
+		}
+		
+		BufferedReader rvdW = new BufferedReader(new InputStreamReader(insvdW), 1024);
+		String svdW;
+		int ntvdW;
+				
 		try {
 			while (true) {
 				s = r.readLine();
@@ -412,15 +444,34 @@ public class MMFF94BasedParameterSetReader {
 					setOpBend();
 					a[5]++;
 				} else if (s.startsWith("data") & nt == 11) {
-					setAtomTypeData();
-					a[6]++;
-				} else {
+					readatmmffvdw:
+						while (true) {
+							svdW = rvdW.readLine();
+							if (svdW == null) {
+								break;
+							}
+							stvdW = new StringTokenizer(svdW,"\t; ");
+							ntvdW = stvdW.countTokens();
+							//System.out.println("ntvdW : " + ntvdW);
+							if (svdW.startsWith("vdw") & ntvdW == 9) {
+								st.nextToken();
+								sid = st.nextToken();
+								stvdW.nextToken();
+								sidvdW = stvdW.nextToken();
+								if (sid.equals(sidvdW)) {
+									setAtomTypeData();
+									a[6]++;
+								}
+								break readatmmffvdw;
+							}
+						}// end while
 				}
 			}// end while
 			ins.close();
+			insvdW.close();
 		} catch (IOException e) {
 			System.err.println(e.toString());
-			throw new IOException("There was a problem parsing the mm2 forcefield");
+			throw new IOException("There was a problem parsing the mmff94 forcefield");
 		}
 	}
 }
