@@ -33,11 +33,10 @@
     </section>
 
     <section>
-      <title>JCPCDK</title>
+      <title>JChemPaint</title>
       <para>
-        JCPCDK is the next generation
-        <ulink url="http://jchempaint.sf.net/">JChemPaint</ulink>
-        and is complete build upon CDK.
+        <ulink url="http://jchempaint.sf.net/">JChemPaint</ulink> is a 2D chemical diagram
+        editor like many others and is fully based on CDK.
       </para>
     </section>
 
@@ -45,10 +44,11 @@
       <title>Jmol</title>
       <para>
         <ulink url="http://www.jmol.org/">Jmol</ulink> is a 3D chemical 
-        animator/viewer and use CDK for reading CML. As of version 6, Jmol release
-        will also use the cdk-core classes for data storage. Later, other 
-        functionality will be ported to CDK or used from CDK. More specifically,
-        Jmol's 3D renderer will be ported to CDK.
+        animator/viewer. Version 6 to and including 9 use the cdk-core classes 
+        for data storage. Later, in the 10 preseries, more efficient Java classes 
+        were implemented to allow beter rendering performance.
+        A tight integration with CDK is possible: CDK plugins and IO can be used
+        and the renderer can be used by CDK based software.
       </para>
     </section>
 
@@ -58,6 +58,15 @@
         <ulink url="http://joelib.sf.net">JOELib</ulink> is a chemical library like
 	CDK itself and is based on the OELib library written in C++. It's licenced
 	GPL, and uses an customized versino of CDK's CML library for reading CML.
+      </para>
+    </section>
+
+    <section>
+      <title>Jumbo</title>
+      <para>
+        Jumbo is software aiming at converting full chemical documents (in any format)
+        into Chemical Markup Language, applying chemical perception and conversion
+        in the process if needed.
       </para>
     </section>
 
@@ -75,7 +84,7 @@
       <title>Nomen</title>
       <para>
         <ulink url="http://chemnomparse.sf.net/">Nomen</ulink> is a IUPAC name
-        parser being developed in Manchester, UK.
+        parser being developed at the University of Manchester, UK.
       </para>
     </section>
     
