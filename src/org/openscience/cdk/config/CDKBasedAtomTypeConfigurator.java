@@ -49,16 +49,10 @@ public class CDKBasedAtomTypeConfigurator implements AtomTypeConfigurator {
         logger = new LoggingTool(this);
     }
     
-    /**
-     * Sets the file containing the config data
-     */
     public void setInputStream(InputStream ins) {
         this.ins = ins;
     };
     
-    /**
-     * @return Returns a Vector of AtomType's.
-     */
     public Vector readAtomTypes() throws IOException {
         Vector atomTypes = new Vector(0);
         if (ins == null) {

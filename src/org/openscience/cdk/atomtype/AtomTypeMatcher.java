@@ -29,7 +29,8 @@ import org.openscience.cdk.AtomType;
 import org.openscience.cdk.exception.CDKException;
 
 /**
- * Classes that implement this interface are atomtype matchers.
+ * Classes that implement this interface are atomtype matchers. They find the
+ * AtomType that matches the given Atom, given an atom type list.
  *
  * @author         mfe4
  * @cdk.created    2004-12-02
@@ -37,12 +38,15 @@ import org.openscience.cdk.exception.CDKException;
  */
 public interface AtomTypeMatcher {
 
-     /* 
-     *Method that assigns an atom type to a given atom belonging to an atom 
-     * container.
-     *
-     * @param container AtomContainer of which the <code>atom</code> is part
-     * @param atom      Atom for which a matching atom type is searched
-     */
+     /**
+      * Method that assigns an atom type to a given atom belonging to an atom 
+      * container.
+      *
+      * @param  container AtomContainer of which the <code>atom</code> is part
+      * @param  atom      Atom for which a matching atom type is searched
+      * @return           The matching AtomType
+      * @throws           CDKException when something went wrong with going through
+      *                   the AtomType's
+      */
     public AtomType findMatchingAtomType(AtomContainer container, Atom atom) throws CDKException;
 }

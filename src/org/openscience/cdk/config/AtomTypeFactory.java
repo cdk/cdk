@@ -123,10 +123,16 @@ public class AtomTypeFactory {
     }
 
     /**
-     * Method to create a default AtomTypeFactory, using the structgen atom type list.
+     * Method to create a default AtomTypeFactory, using the given InputStream.
      * An AtomType of this kind is not cached.
      *
      * @see #getInstance(String)
+     * @param  ins                    InputStream containing the data
+     * @param  format                 String representing the possible formats ('xml' and 'txt')
+     * @return                        The AtomTypeFactory for the given data file
+     * @throws IOException            when the file cannot be read
+     * @throws OptionalDataException  ???
+     * @throws ClassNotFoundException when the AtomTypeFactory cannot be found
      */
     public static AtomTypeFactory getInstance(InputStream ins, String format) throws IOException, OptionalDataException, ClassNotFoundException {
         return new AtomTypeFactory(ins, format);
@@ -136,6 +142,10 @@ public class AtomTypeFactory {
      * Method to create a default AtomTypeFactory, using the structgen atom type list.
      *
      * @see #getInstance(String)
+     * @return                        The AtomTypeFactory for the given data file
+     * @throws IOException            when the file cannot be read
+     * @throws OptionalDataException  ???
+     * @throws ClassNotFoundException when the AtomTypeFactory cannot be found
      */
     public static AtomTypeFactory getInstance() throws IOException, OptionalDataException, ClassNotFoundException {
         return getInstance("org/openscience/cdk/config/data/structgen_atomtypes.xml");
@@ -149,6 +159,12 @@ public class AtomTypeFactory {
      *  <li>org/openscience/cdk/config/data/structgen_atomtypes.xml
      *  <li>org/openscience/cdk/config/data/valency_atomtypes.xml
      * </ul>
+     *
+     * @param  configFile             String the name of the data file
+     * @return                        The AtomTypeFactory for the given data file
+     * @throws IOException            when the file cannot be read
+     * @throws OptionalDataException  ???
+     * @throws ClassNotFoundException when the AtomTypeFactory cannot be found
      */
     public static AtomTypeFactory getInstance(String configFile) throws IOException, OptionalDataException, ClassNotFoundException {
         if (tables == null) {

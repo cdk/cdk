@@ -45,7 +45,8 @@ public interface AtomTypeConfigurator {
     /**
      * Reads a set of configured AtomType's into a Vector.
      *
-     * @throws Exception when something went wrong with reading the data
+     * @return A Vector containing the AtomTypes extracted from the InputStream
+     * @throws IOException when something went wrong with reading the data
      */
     public Vector readAtomTypes() throws IOException;
 
