@@ -130,6 +130,10 @@ public class MACiEReader extends DefaultChemObjectReader {
                  return readReactions(false);
              } else if (object instanceof ChemModel) {
                  return readReactions(true);
+             } else if (object instanceof ChemFile) {
+                 ChemFile chemFile = new ChemFile();
+                 chemFile.addChemSequence((ChemSequence)readReactions(false));
+                 return chemFile;
              }
          } catch (IOException exception) {
              String message = "Error while reading file, line number: " + input.getLineNumber();
@@ -144,6 +148,8 @@ public class MACiEReader extends DefaultChemObjectReader {
          if (object instanceof ChemSequence) {
              return true;
          } else if (object instanceof ChemModel) {
+             return true;
+         } else if (object instanceof ChemFile) {
              return true;
          } else if (object == null) {
              logger.warn("MACiEReader can not read null objects.");
@@ -494,8 +500,8 @@ public class MACiEReader extends DefaultChemObjectReader {
           "true");
 
         readSecondaryDir = new StringIOSetting("ReadSecondaryDir", IOSetting.LOW,
-          "Where can the secondary files be found?", 
-          "/home/egonw/");
+          "Where can the secondary files be found?",
+          System.getProperty("user.home") + System.getProperty("file.separator"));
     }
     
     private void customizeJob() {
