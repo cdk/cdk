@@ -135,12 +135,12 @@ public class CDKPluginManager {
                             JarEntry entry = (JarEntry)entries.nextElement();
                             if (entry.getName().endsWith("Plugin.class")) {
                                 StringBuffer buffer = new StringBuffer(entry.getName());
-                                int index = buffer.indexOf("/");
-                                while (index != -1) {
-                                    buffer.setCharAt(index, '.');
-                                    index = buffer.indexOf("/");
+                                for (int charIndex=0; charIndex<buffer.length(); charIndex++) {
+                                    if (buffer.charAt(charIndex) == '/') {
+                                        buffer.setCharAt(charIndex, '.');
+                                    }
                                 }
-                                String pluginName = buffer.toString().substring(0, buffer.indexOf(".class"));
+                                String pluginName = buffer.toString().substring(0, buffer.toString().indexOf(".class"));
                                 logger.info("Plugin class found: " + pluginName);
                                 try {
                                     // FIXME: use a classloader that loads the whole jar
