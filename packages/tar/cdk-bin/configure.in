@@ -39,7 +39,7 @@ AC_ARG_WITH(java3ddir,
 AC_MSG_CHECKING(for Java3D lib)
 if test -f "$JAVA3DDIR/lib/ext/j3dcore.jar"
     AC_MSG_RESULT("$JAVA3DDIR/lib/ext/j3dcore.jar")
-    PATHTO3DJAR="$JAVA3DDIR/lib/ext/j3dcore.jar"
+    PATHTO3DJAR="$JAVA3DDIR/lib/ext/j3dcore.jar:$JAVA3DDIR/lib/ext/j3dutils.jar:$JAVA3DDIR/lib/ext/vecmath.jar"
 then
     if test "x$prefix" = xNONE
     then
@@ -57,7 +57,7 @@ then
         if test -f "$d/j3dcore.jar"
         then 
             AC_MSG_RESULT("$d/j3dcore.jar")
-            PATHTO3DJAR="$d/j3dcore.jar"
+            PATHTO3DJAR="$d/j3dcore.jar:$d/j3dutils.jar:$d/vecmath.jar"
         fi
     done
 fi
