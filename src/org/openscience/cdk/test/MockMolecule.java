@@ -26,14 +26,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *  */
-package org.openscience.cdk.grid.test;
+package org.openscience.cdk.test;
 
 import org.openscience.cdk.*;
 import javax.vecmath.*;
 
 /**
- * TestCase for the Monomer class.
- *
  * @cdkPackage test
  */
 class MockMolecule extends Molecule {
