@@ -260,7 +260,7 @@ public class UniversalIsomorphismTester {
 
     if (n != 0) {
       bs = new BitSet(n);
-      bs.set(0, n, true);
+      for (int i = 0; i <= n; i++) { bs.set(i); };
     } else {
       bs = new BitSet();
     }
