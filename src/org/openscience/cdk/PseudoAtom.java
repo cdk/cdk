@@ -89,6 +89,13 @@ public class PseudoAtom extends Atom implements java.io.Serializable, Cloneable
     }
 
     /**
+     * Sets the label of this PseudoAtom. 
+     */
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    /**
      * Dummy method: the exact mass is 0, final. 
      */
     public void setExactMass(double mass) {
