@@ -1,10 +1,9 @@
-/*
- * $RCSfile$
+/* $RCSfile$
  * $Author$
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2002 The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2003 The Chemistry Development Kit (CDK) project
  *
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  *
@@ -36,7 +35,7 @@ import org.openscience.cdk.io.cml.cdopi.*;
 /**
  * This is an implementation for the CDK convention.
  */
-public class CDKConvention extends Convention {
+public class CDKConvention extends CMLCoreConvention {
 
     private boolean isBond;
 
@@ -44,7 +43,7 @@ public class CDKConvention extends Convention {
         super(cdo);
     };
 
-    public CDKConvention(Convention conv) {
+    public CDKConvention(ConventionInterface conv) {
         super(conv);
     }
     
@@ -66,7 +65,7 @@ public class CDKConvention extends Convention {
         String name = raw;
         setCurrentElement(name);
         isBond = false;
-        if (CurrentElement == Convention.STRING) {
+        if (CurrentElement == STRING) {
             for (int i = 0; i < atts.getLength(); i++) {
                 if (atts.getQName(i).equals("buildin") &&
                     atts.getValue(i).equals("order")) {

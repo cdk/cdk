@@ -1,10 +1,9 @@
-/*
- * $RCSfile$
+/* $RCSfile$
  * $Author$
  * $Date$
  * $Revision$
  *
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  *
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  *
@@ -36,13 +35,13 @@ import org.openscience.cdk.io.cml.cdopi.*;
 /***
  *  Implementation of the MDLMol Covention for CML.
  */
-public class MDLMolConvention extends Convention {
+public class MDLMolConvention extends CMLCoreConvention {
 
     public MDLMolConvention(CDOInterface cdo) {
         super(cdo);
     };
 
-    public MDLMolConvention(Convention conv) {
+    public MDLMolConvention(ConventionInterface conv) {
         super(conv);
     }
 

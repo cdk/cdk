@@ -1,10 +1,9 @@
-/*
- * $RCSfile$
+/* $RCSfile$
  * $Author$
  * $Date$
  * $Revision$
  *
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  *
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  *
@@ -39,13 +38,13 @@ import org.openscience.cdk.io.cml.cdopi.*;
  *  PMP stands for PolyMorph Predictor and is a module
  *  of Cerius2 (tm).
  */
-public class PMPConvention extends Convention {
+public class PMPConvention extends CMLCoreConvention {
 
     public PMPConvention(CDOInterface cdo) {
         super(cdo);
     };
 
-    public PMPConvention(Convention conv) {
+    public PMPConvention(ConventionInterface conv) {
         super(conv);
         logger.debug("New PMP Convention!");
     }

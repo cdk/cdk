@@ -1,10 +1,9 @@
-/*
- * $RCSfile$
+/* $RCSfile$
  * $Author$
  * $Date$
  * $Revision$
  *
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  *
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  *
@@ -34,18 +33,18 @@ import org.openscience.cdk.io.cml.cdopi.CDOInterface;
 import org.xml.sax.AttributeList;
 import org.xml.sax.HandlerBase;
 
-public class XMLHandler extends HandlerBase
-{
-    private Convention conv;
+public class XMLHandler extends HandlerBase {
+    
+    private CMLCoreConvention conv;
 
     public XMLHandler(CDOInterface cdo) {
-        conv = new Convention(cdo);
+        conv = new CMLCoreConvention(cdo);
     }
 
     public void doctypeDecl(String name, String publicId, String systemId) throws Exception {}
 
     public void startDocument() {
-      conv.startDocument();
+        conv.startDocument();
     }
 
     public void endDocument() {

@@ -38,7 +38,7 @@ import org.xml.sax.*;
  * <p>Please file a bug report if this parser fails to parse
  * a certain element or attribute value in a valid CML document.
  **/
-public class Convention implements ConventionInterface {
+public class CMLCoreConvention implements ConventionInterface {
 
     protected org.openscience.cdk.tools.LoggingTool logger;
     public final static int UNKNOWN = -1;
@@ -90,40 +90,42 @@ public class Convention implements ConventionInterface {
     protected String elementTitle;
     protected String currentChars;
 
-    public Convention(CDOInterface cdo) {
+    public CMLCoreConvention(CDOInterface cdo) {
         logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
         this.cdo = cdo;
     }
     
-    public Convention(Convention conv) {
+    public CMLCoreConvention(ConventionInterface conv) {
         inherit(conv);
     }
 
-    public void inherit(Convention conv) {
-        this.logger = conv.logger;
-        this.cdo = conv.returnCDO();
-        this.BUILTIN = conv.BUILTIN;
-        this.elsym = conv.elsym;
-        this.elid = conv.elid;
-        this.formalCharges = conv.formalCharges;
-        this.partialCharges = conv.partialCharges;
-        this.x3 = conv.x3;
-        this.y3 = conv.y3;
-        this.z3 = conv.z3;
-        this.x2 = conv.x2;
-        this.y2 = conv.y2;
-        this.hCounts = conv.hCounts;
-        this.atomParities = conv.atomParities;
-        this.bondid = conv.bondid;
-        this.bondARef1 = conv.bondARef1;
-        this.bondARef2 = conv.bondARef2;
-        this.order = conv.order;
-        this.bondStereo = conv.bondStereo;
-        this.curRef = conv.curRef;
+    public void inherit(ConventionInterface convention) {
+        if (convention instanceof CMLCoreConvention) {
+            CMLCoreConvention conv = (CMLCoreConvention)convention;
+            this.logger = conv.logger;
+            this.cdo = conv.returnCDO();
+            this.BUILTIN = conv.BUILTIN;
+            this.elsym = conv.elsym;
+            this.elid = conv.elid;
+            this.formalCharges = conv.formalCharges;
+            this.partialCharges = conv.partialCharges;
+            this.x3 = conv.x3;
+            this.y3 = conv.y3;
+            this.z3 = conv.z3;
+            this.x2 = conv.x2;
+            this.y2 = conv.y2;
+            this.hCounts = conv.hCounts;
+            this.atomParities = conv.atomParities;
+            this.bondid = conv.bondid;
+            this.bondARef1 = conv.bondARef1;
+            this.bondARef2 = conv.bondARef2;
+            this.order = conv.order;
+            this.bondStereo = conv.bondStereo;
+            this.curRef = conv.curRef;
+        }
     }
 
     public CDOInterface returnCDO() {
-
         return (CDOInterface)this.cdo;
     }
     

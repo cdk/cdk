@@ -37,7 +37,8 @@ import org.xml.sax.helpers.*;
  * instantiating this class.
  **/
 public class CMLHandler extends DefaultHandler {
-    private Convention conv;
+    
+    private ConventionInterface conv;
     private org.openscience.cdk.tools.LoggingTool logger;
 
     private Hashtable userConventions;
@@ -50,11 +51,11 @@ public class CMLHandler extends DefaultHandler {
     public CMLHandler(CDOInterface cdo) {
         logger = new org.openscience.cdk.tools.LoggingTool(
                        this.getClass().getName());
-        conv = new Convention(cdo);
+        conv = new CMLCoreConvention(cdo);
         userConventions = new Hashtable();
     }
 
-    public void registerConvention(String convention, Convention conv) {
+    public void registerConvention(String convention, ConventionInterface conv) {
       userConventions.put(convention, conv);
     }
 
@@ -91,12 +92,12 @@ public class CMLHandler extends DefaultHandler {
     }
 
     public void startElement(String uri, String local, String raw, Attributes atts) {
-      logger.debug("startElement: " + raw);
+        logger.debug("startElement: " + raw);
         logger.debug("uri: " + uri);
         logger.debug("local: " + local);
         logger.debug("raw: " + raw);
         String name = raw;
-        for (int i = 0; i < atts.getLength(); i++)
+        for (int i = 0; i < atts.getLength(); i++) 
         {
             if (atts.getQName(i).equals("convention"))
             {
@@ -108,14 +109,14 @@ public class CMLHandler extends DefaultHandler {
                 } else if (atts.getValue(i).equals("PMP")) {
                     conv = new PMPConvention(conv);
                 } else if (atts.getValue(i).equals("MDLMol")) {
-                    logger.debug("MDLMolConvetion instantiated...");
+                    logger.debug("MDLMolConvention instantiated...");
                     conv = new MDLMolConvention(conv);
                 } else if (atts.getValue(i).equals("JMOL-ANIMATION")) {
                     conv = new JMOLANIMATIONConvention(conv);
                 } else {
                     //unknown convention. userConvention?
                     if (userConventions.containsKey(atts.getValue(i))) {
-                      Convention newconv = (Convention)userConventions.get(atts.getValue(i));
+                      ConventionInterface newconv = (ConventionInterface)userConventions.get(atts.getValue(i));
                       newconv.inherit(conv);
                       conv = newconv;
                     }

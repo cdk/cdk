@@ -1,10 +1,9 @@
-/*
- * $RCSfile$
+/* $RCSfile$
  * $Author$
  * $Date$
  * $Revision$
  *
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  *
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  *
@@ -30,8 +29,11 @@
 package org.openscience.cdk.io.cml;
 
 import java.util.*;
-import org.xml.sax.*;
+
 import org.openscience.cdk.io.cml.cdopi.*;
+
+import org.xml.sax.*;
+
 
 /***
  * This is a lousy implementation for the PDB convention:
@@ -50,102 +52,118 @@ import org.openscience.cdk.io.cml.cdopi.*;
  *   - read CML files generated with Steve Zara's PDB 2 CML converter
  *
  */
-public class PDBConvention extends Convention {
+public class PDBConvention extends CMLCoreConvention {
 
     private boolean connectionTable;
-
     private boolean isELSYM;
     private boolean isBond;
-
     private String connect_root;
 
     public PDBConvention(CDOInterface cdo) {
-	super(cdo);
-    };
-  
-    public PDBConvention(Convention conv) {
-	super(conv);
+        super(cdo);
     }
     
+    public PDBConvention(ConventionInterface conv) {
+        super(conv);
+    }
+
     public CDOInterface returnCDO() {
-	return this.cdo;
-    };
-  
+        return this.cdo;
+    }
+    
     public void startDocument() {
-	super.startDocument();
-	cdo.startObject("Frame");
-	cdo.startObject("Molecule");
-    };
-
+        super.startDocument();
+        cdo.startObject("Frame");
+        cdo.startObject("Molecule");
+    }
+    
     public void endDocument() {
-	storeData();
-	cdo.endObject("Molecule");
-	cdo.endObject("Frame");
-	super.endDocument();
-    };
+        storeData();
+        cdo.endObject("Molecule");
+        cdo.endObject("Frame");
+        super.endDocument();
+    }
     
-    
-    public void startElement(String uri, String local, String raw, Attributes atts) {
-	String name = raw;
-	isELSYM = false;
-	setCurrentElement(name);
-	if (CurrentElement == Convention.LIST) {
-	    for (int i = 0; i < atts.getLength(); i++) {
-		if (atts.getQName(i).equals("title") && 
-                    atts.getValue(i).equals("sequence")) {
-		} else if (atts.getQName(i).equals("title") && 
-                           atts.getValue(i).equals("connections")) {
-                    connectionTable = true;
-		    logger.debug("Start Connection Table");
-		} else if (atts.getQName(i).equals("title") && 
-                           atts.getValue(i).equals("connect")) {
-		    logger.debug("New connection");
-                    isBond = true;
-		} else if (atts.getQName(i).equals("id") && isBond) {
-                    connect_root = atts.getValue(i);
-		}
-		// ignore other list items at this moment
-	    }
-	} else {
-	    super.startElement(uri, local, raw, atts);
-	}
-    };
+    public void startElement(String uri, String local, String raw, 
+                              Attributes atts) {
+        String name = raw;
+        isELSYM = false;
+        setCurrentElement(name);
 
-    public void endElement (String uri, String local, String raw) {
-	String name = raw;
-	if (name.equals("list") && connectionTable && !isBond) {
-	    logger.debug("End Connection Table");
-	    connectionTable = false;
-	}
-	isELSYM = false;
+        if (CurrentElement == LIST) {
+
+            for (int i = 0; i < atts.getLength(); i++) {
+
+                if (atts.getQName(i).equals("title") && 
+                    atts.getValue(i).equals("sequence")) {
+                } else if (atts.getQName(i).equals("title") && 
+                         atts.getValue(i).equals("connections")) {
+                    connectionTable = true;
+                    logger.debug("Start Connection Table");
+                } else if (atts.getQName(i).equals("title") && 
+                         atts.getValue(i).equals("connect")) {
+                    logger.debug("New connection");
+                    isBond = true;
+                } else if (atts.getQName(i).equals("id") && isBond) {
+                    connect_root = atts.getValue(i);
+                }
+
+                // ignore other list items at this moment
+            }
+        } else {
+            super.startElement(uri, local, raw, atts);
+        }
+    }
+    
+    public void endElement(String uri, String local, String raw) {
+
+        String name = raw;
+
+        if (name.equals("list") && connectionTable && !isBond) {
+            logger.debug("End Connection Table");
+            connectionTable = false;
+        }
+
+        isELSYM = false;
         isBond = false;
-	super.endElement(uri, local, raw);
+        super.endElement(uri, local, raw);
     }
 
-    public void characterData (char ch[], int start, int length) {
-	String s = new String(ch, start, length).trim();
-	if (isELSYM) {
-	    elsym.addElement(s);
-	} else if (isBond) {
-	    logger.debug("CD (bond): " + s);
+    public void characterData(char[] ch, int start, int length) {
+
+        String s = new String(ch, start, length).trim();
+
+        if (isELSYM) {
+            elsym.addElement(s);
+        } else if (isBond) {
+            logger.debug("CD (bond): " + s);
+
             if (connect_root.length() > 0) {
-		StringTokenizer st = new StringTokenizer(s);
-		while (st.hasMoreElements()) {
-		    String atom = (String)st.nextElement();
-		    if (!atom.equals("0")) {
-			logger.debug("new bond: " + connect_root + "-" + atom);
-			cdo.startObject("Bond");
+
+                StringTokenizer st = new StringTokenizer(s);
+
+                while (st.hasMoreElements()) {
+
+                    String atom = (String)st.nextElement();
+
+                    if (!atom.equals("0")) {
+                        logger.debug("new bond: " + connect_root + "-" + 
+                                     atom);
+                        cdo.startObject("Bond");
+
                         int atom1 = Integer.parseInt(connect_root) - 1;
                         int atom2 = Integer.parseInt(atom) - 1;
-			cdo.setObjectProperty("Bond", "atom1", (new Integer(atom1)).toString());
-			cdo.setObjectProperty("Bond", "atom2", (new Integer(atom2)).toString());
-			cdo.setObjectProperty("Bond", "order", "1");
-			cdo.endObject("Bond");
-		    }
-		}
-	    }
-	} else {
-	    super.characterData(ch, start, length);
-	}
+                        cdo.setObjectProperty("Bond", "atom1", 
+                                              (new Integer(atom1)).toString());
+                        cdo.setObjectProperty("Bond", "atom2", 
+                                              (new Integer(atom2)).toString());
+                        cdo.setObjectProperty("Bond", "order", "1");
+                        cdo.endObject("Bond");
+                    }
+                }
+            }
+        } else {
+            super.characterData(ch, start, length);
+        }
     }
 }

@@ -1,10 +1,9 @@
-/*
- * $RCSfile$
+/* $RCSfile$
  * $Author$
  * $Date$
  * $Revision$
  *
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  *
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  *
@@ -33,7 +32,7 @@ import java.util.*;
 import org.openscience.cdk.io.cml.cdopi.*;
 import org.xml.sax.*;
 
-public class JMOLANIMATIONConvention extends Convention {
+public class JMOLANIMATIONConvention extends CMLCoreConvention {
 
     private final int UNKNOWN = -1;
     private final int ENERGY = 1;
@@ -47,7 +46,7 @@ public class JMOLANIMATIONConvention extends Convention {
         current = UNKNOWN;
     };
 
-    public JMOLANIMATIONConvention(Convention conv) {
+    public JMOLANIMATIONConvention(ConventionInterface conv) {
         super(conv);
     };
 
