@@ -26,7 +26,10 @@ import org.openscience.cdk.renderer.*;
 import org.openscience.cdk.test.io.*;
 import org.openscience.cdk.test.io.cml.*;
 import org.openscience.cdk.test.smiles.*;
-
+import org.openscience.cdk.test.renderer.*;
+import org.openscience.cdk.test.ringsearch.*;
+import org.openscience.cdk.test.structgen.*;
+import org.openscience.cdk.test.tools.*;
 
 /**
  * TestSuite that runs all the sample tests
