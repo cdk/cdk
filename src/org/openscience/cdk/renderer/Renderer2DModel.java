@@ -140,6 +140,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
     
     public void setFont(Font font) {
         this.customFont = font;
+        fireChange();
     }
     
     public boolean getUseAntiAliasing() {
@@ -148,6 +149,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
     
     public void setUseAntiAliasing(boolean bool) {
         this.useAntiAliasing = bool;
+        fireChange();
     }
     
     /**
@@ -175,6 +177,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
      */
     public void setBackgroundDimension(Dimension dim) {
         this.backgroundDimension = dim;
+        fireChange();
     }
     
 	/**
@@ -194,6 +197,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	 */
 	public void setBondDistance(double bondDistance) {
 		this.bondDistance = bondDistance;
+        fireChange();
 	}
 
 	
@@ -217,6 +221,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	public void setBondWidth(double bondWidth)
 	{
 		this.bondWidth = bondWidth;
+        fireChange();
 	}
 
 
@@ -239,6 +244,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	public void setBondLength(double bondLength)
 	{
 		this.bondLength = bondLength;
+        fireChange();
 	}
 	
 
@@ -261,6 +267,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	public void setScaleFactor(double scaleFactor)
 	{
 		this.scaleFactor = scaleFactor;
+        fireChange();
 	}
 
 	/**
@@ -280,6 +287,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	 */
 	public void setZoomFactor(double zoomFactor) {
 		this.zoomFactor = zoomFactor;
+        fireChange();
 	}	
 
 	/**
@@ -301,6 +309,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	public void setForeColor(Color foreColor)
 	{
 		this.foreColor = foreColor;
+        fireChange();
 	}
 
 	
@@ -324,6 +333,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	public void setBackColor(Color backColor)
 	{
 		this.backColor = backColor;
+        fireChange();
 	}
 
     /**
@@ -342,6 +352,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
      */
     public void setAtomAtomMappingLineColor(Color mappingColor) {
         this.mappingColor = mappingColor;
+        fireChange();
     }
 
 	
@@ -361,6 +372,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 
 	public void setKekuleStructure(boolean kekule) {
 		this.kekuleStructure = kekule;
+        fireChange();
 	}
 
     public boolean getColorAtomsByType() {
@@ -369,6 +381,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
     
     public void setColorAtomsByType(boolean bool) {
         this.colorAtomsByType = bool;
+        fireChange();
     }
 
     public boolean getShowEndCarbons() {
@@ -377,6 +390,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
     
     public void setShowEndCarbons(boolean showThem) {
         this.showEndCarbons = showThem;
+        fireChange();
     }
     
     public boolean getShowImplicitHydrogens() {
@@ -385,6 +399,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
     
     public void setShowImplicitHydrogens(boolean showThem) {
         this.showImplicitHydrogens = showThem;
+        fireChange();
     }
     
     public boolean getShowAromaticity() {
@@ -393,6 +408,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
     
     public void setShowAromaticity(boolean showIt) {
         this.showAromaticity = showIt;
+        fireChange();
     }
     
     public boolean getShowAromaticityInCDKStyle() {
@@ -401,6 +417,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
     
     public void setShowAromaticityInCDKStyle(boolean showIt) {
         this.showAromaticityInCDKStyle = showIt;
+        fireChange();
     }
     
 	/**
@@ -411,6 +428,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	public void setDrawNumbers(boolean drawNumbers)
 	{
 		this.drawNumbers = drawNumbers;
+        fireChange();
 	}
 
 	/**
@@ -439,6 +457,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	public void setHighlightColor(Color highlightColor)
 	{
 		this.highlightColor = highlightColor;
+        fireChange();
 	}
 
 
@@ -463,6 +482,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	public void setHighlightRadius(double highlightRadius)
 	{
 		this.highlightRadius = highlightRadius;
+        fireChange();
 	}
 
     /**
@@ -478,6 +498,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
      */
     public void setShowAtomAtomMapping(boolean value) {
         this.showAtomAtomMapping = value;
+        fireChange();
     }
 
     /**
@@ -496,6 +517,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	public void setAtomRadius(int atomRadius)
 	{
 		this.atomRadius = atomRadius;
+        fireChange();
 	}
 
 	
@@ -614,6 +636,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	public void setColorHash(Hashtable colorHash)
 	{
 		this.colorHash = colorHash;
+        fireChange();
 	}
 	
 
@@ -716,6 +739,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 		for (int i = 0; i < bonds.length; i++) {
 			getColorHash().put(bonds[i], getHighlightColor());
 		}		
+        fireChange();
 	}
 
 
@@ -813,6 +837,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
    */
   public void setShowTooltip(boolean b){
     showTooltip=b;
+        fireChange();
   }
   
   
@@ -833,6 +858,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
    */
   public void setToolTipTextMap(HashMap map){
     toolTipTextMap=map;
+        fireChange();
   }
 
 
