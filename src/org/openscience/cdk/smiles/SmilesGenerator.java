@@ -1476,7 +1476,7 @@ public class SmilesGenerator {
     } else if (type == 3) {
       line.append("#");
     } else {
-      System.out.println("Unknown bond type");
+      // System.out.println("Unknown bond type");
     }
   }
 
