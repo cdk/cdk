@@ -18,6 +18,8 @@ org/openscience/cdk/io/CMLWriter.java
 org/openscience/cdk/io/ChemObjectReader.java
 org/openscience/cdk/io/DefaultChemObjectReader.java
 org/openscience/cdk/io/ReaderFactory.java
+org/openscience/cdk/io/HINReader.java
+org/openscience/cdk/io/HINWriter.java
 org/openscience/cdk/io/ShelXReader.java
 org/openscience/cdk/io/CIFReader.java
 org/openscience/cdk/io/ChemicalRSSReader.java
