@@ -3,4 +3,4 @@ Makefile.in
 aclocal.m4
 configure
 config.*
-cdk-bin-*.tar.gz
+cdk-test-*.tar.gz

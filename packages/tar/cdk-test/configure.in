@@ -2,7 +2,7 @@ dnl
 dnl $Id$
 dnl
 AC_INIT()
-AM_INIT_AUTOMAKE(cdk-bin, `cat VERSION`)
+AM_INIT_AUTOMAKE(cdk-test, `cat VERSION`)
 
 dnl deal with options
 AC_ARG_WITH(xercesdir,
