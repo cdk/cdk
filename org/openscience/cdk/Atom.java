@@ -1,4 +1,4 @@
-/* 
+/*
  * $RCSfile$
  * $Author$
  * $Date$
@@ -71,6 +71,8 @@ public class Atom extends AtomType implements Cloneable {
         public Atom(String elementSymbol)
         {
 		super(elementSymbol);
+                this.point3D = new javax.vecmath.Point3d();
+                this.point2D = new javax.vecmath.Point2d();
         }
 
         /**
