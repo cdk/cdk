@@ -143,8 +143,8 @@ public class SmilesParser
 
 					molecule.addAtom(atom);
 					logger.debug("Adding atom " + atom.hashCode());
-					if (lastNode != null)
-					{
+                    if ((lastNode != null) && bondExists) {
+                        logger.debug("Creating bond between " + atom.getSymbol() + " and " + lastNode.getSymbol());
 						bond = new Bond(atom, lastNode, bondStatus);
 						bond.flags[CDKConstants.ISAROMATIC] = true;
 						molecule.addBond(bond);
@@ -211,8 +211,7 @@ public class SmilesParser
 					atom = assembleAtom(currentSymbol, nodeCounter);
 					molecule.addAtom(atom);
                     logger.debug("Added atom: " + atom);
-					if (lastNode != null)
-					{
+                    if (lastNode != null && bondExists) {
 						bond = new Bond(atom, lastNode, bondStatus);
 						bond.flags[CDKConstants.ISAROMATIC] = true;
 						molecule.addBond(new Bond(atom, lastNode, bondStatus));
@@ -226,6 +225,7 @@ public class SmilesParser
 					lastNode = atom;
 					nodeCounter++;
 					position = position + currentSymbol.length() + 2; // plus two for [ and ]
+                    bondExists = true;
                 } else if (mychar == '.'){
                     bondExists = false;
                     position++;
