@@ -36,7 +36,7 @@ import org.openscience.cdk.graph.*;
 import org.openscience.cdk.graph.matrix.*;
 
 /**
- *  This class return the number of bonds on the shortest path between two atoms.
+ *  This class returns the number of bonds on the shortest path between two atoms.
  *
  *@author         mfe4
  *@created        24 febbraio 2005

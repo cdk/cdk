@@ -37,7 +37,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.qsar.result.*;
 
 /**
- *  This class chechk if two atoms have pi-contact (this is true when there is
+ *  This class checks if two atoms have pi-contact (this is true when there is
  *  one and the same conjugated pi-system which contains both atoms, or directly
  *  linked neighboors of the atoms).
  *

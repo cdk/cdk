@@ -37,10 +37,9 @@ import org.openscience.cdk.graph.matrix.*;
 import java.util.Hashtable;
 
 /**
- *  This class return the valence of an atom.
+ *  This class returns the valence of an atom.
  *
  *@author         mfe4
- *@created        24 febbraio 2005
  *@cdk.created    2004-11-13
  *@cdk.module     qsar
  *@cdk.set        qsar-descriptors

@@ -37,10 +37,9 @@ import org.openscience.cdk.graph.matrix.*;
 import java.util.Hashtable;
 
 /**
- *  This class return the period in the periodic table of an atom belonging to an atom container
+ *  This class returns the period in the periodic table of an atom belonging to an atom container
  *
  *@author         mfe4
- *@created        24 febbraio 2005
  *@cdk.created    2004-11-13
  *@cdk.module     qsar
  *@cdk.set        qsar-descriptors

@@ -36,10 +36,9 @@ import org.openscience.cdk.graph.*;
 import org.openscience.cdk.graph.matrix.*;
 
 /**
- *  This class return the number of not-Hs substituents of an atom.
+ *  This class returns the number of not-Hs substituents of an atom, also defined as "atom degree".
  *
  *@author         mfe4
- *@created        24 febbraio 2005
  *@cdk.created    2004-11-13
  *@cdk.module     qsar
  *@cdk.set        qsar-descriptors
