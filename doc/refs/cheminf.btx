@@ -120,7 +120,7 @@
       <bibtex:author>Chang-Yu Hu and Lu Xu</bibtex:author>
       <bibtex:title>On Highly Discriminating Molecular Topological Index</bibtex:title>
       <bibtex:journal>J. Chem. Inf. Comput. Sci.</bibtex:journal>
-      <bibtex:volume>29</bibtex:volume>
+      <bibtex:volume>36</bibtex:volume>
       <bibtex:pages>82-90</bibtex:pages>
       <bibtex:year>1996</bibtex:year>
     </bibtex:article>
@@ -200,10 +200,10 @@
   </bibtex:entry>
 
   <bibtex:entry id="SCH84">
-    <bibtex:article>von Scholley, A., J. Chem. Inf. Comput. Sci. (1984) 24, 235-241
+    <bibtex:article>
       <bibtex:author>Von Scholley, A.</bibtex:author>
       <bibtex:journal>J. Chem. Inf. Comput. Sci.</bibtex:journal>
-      <bibtex:volume>12</bibtex:volume>
+      <bibtex:volume>24</bibtex:volume>
       <bibtex:pages>235-241</bibtex:pages>
       <bibtex:year>1984</bibtex:year>
     </bibtex:article>
