@@ -21,6 +21,8 @@ org/openscience/cdk/io/CMLWriter.java
 org/openscience/cdk/io/ChemicalRSSReader.java
 org/openscience/cdk/io/chemrss/RSSHandler.java
 org/openscience/cdk/io/ChemObjectReader.java
+org/openscience/cdk/io/CrystClustReader.java
+org/openscience/cdk/io/CrystClustWriter.java
 org/openscience/cdk/io/DaltonReader.java
 org/openscience/cdk/io/DefaultChemObjectReader.java
 org/openscience/cdk/io/DummyReader.java
@@ -32,10 +34,10 @@ org/openscience/cdk/io/Gaussian94Reader.java
 org/openscience/cdk/io/Gaussian95Reader.java
 org/openscience/cdk/io/Gaussian98Reader.java
 org/openscience/cdk/io/GhemicalMMReader.java
+org/openscience/cdk/io/HINReader.java
+org/openscience/cdk/io/HINWriter.java
 org/openscience/cdk/io/IChIReader.java
 org/openscience/cdk/io/JaguarReader.java
-org/openscience/cdk/io/MACiEReader.java
-org/openscience/cdk/io/MDLRXNReader.java
 org/openscience/cdk/io/MDLReader.java
 org/openscience/cdk/io/MOPAC7Reader.java
 org/openscience/cdk/io/MOPAC97Reader.java
