@@ -73,10 +73,7 @@ public class Bond extends ElectronContainer implements Cloneable
 	 */
 	public Bond(Atom atom1, Atom atom2, int order, int stereo)
 	{
-		atoms = new Atom[2];
-		setAtomAt(atom1, 0);
-		setAtomAt(atom2, 1);
-		setOrder(order);
+    this(atom1, atom2, order);
 		setStereo(stereo);
 	}
 
