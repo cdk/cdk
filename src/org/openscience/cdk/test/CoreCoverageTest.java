@@ -67,7 +67,8 @@ public class CoreCoverageTest extends TestCase {
     }
     
     public void testCoverage() {
-        boolean allClassesAreTested = true;
+        int missingTestsCount = 0;
+        int uncoveredClassesCount = 0;
         
         // get the src/core.javafiles file
         try {
@@ -81,19 +82,22 @@ public class CoreCoverageTest extends TestCase {
                 String className = convertSlash2Dot(
                     rawClassName.substring(0, rawClassName.indexOf('.'))
                 );
-                allClassesAreTested = checkClass(className) && allClassesAreTested;
+                int errors = checkClass(className);
+                missingTestsCount += errors;
+                if (errors > 0) uncoveredClassesCount++;
             }
         } catch (Exception exception) {
             fail("Could not load the src/core.javafiles file!");
         }
         
         
-        if (!allClassesAreTested) {
-            fail("The core module is not fully tested!");
+        if (missingTestsCount > 0) {
+            fail("The core module is not fully tested! Missing number of method tests: " + 
+                 missingTestsCount + " in number of classes: " + uncoveredClassesCount);
         }
     }
 
-    private boolean checkClass(String className) {
+    private int checkClass(String className) {
         System.out.println("Checking : " + className);
         
         // the naming scheme: <package><class>Test
@@ -102,18 +106,18 @@ public class CoreCoverageTest extends TestCase {
         
         // load both classes
         Class coreClass = loadClass(basePackageName + className);
-        
+
         if (!coreClass.isInterface()) {
             Class testClass = loadClass(basePackageName + testPackageName + className + "Test");
             
+            int missingTestsCount = 0;
+
             // make map of methods in the test class
             Vector testMethodNames = new Vector();
             Method[] testMethods = testClass.getMethods();
             for (int i=0; i<testMethods.length; i++) {
                 testMethodNames.add(testMethods[i].getName());
             }
-            
-            boolean allIsTested = true;
             
             // now process the methods of the class to be tested
             // first the constructors
@@ -126,7 +130,7 @@ public class CoreCoverageTest extends TestCase {
                 }
                 if (!testMethodNames.contains(testMethod)) {
                     System.out.println(removePackage(coreClass.getName()) + ": missing the expection test method: " + testMethod);
-                    allIsTested = false;
+                    missingTestsCount++;
                 }
             }
             
@@ -140,14 +144,14 @@ public class CoreCoverageTest extends TestCase {
                 }
                 if (!testMethodNames.contains(testMethod)) {
                     System.out.println(removePackage(coreClass.getName()) + ": missing the expection test method: " + testMethod);
-                    allIsTested = false;
+                    missingTestsCount++;
                 }
             }
             
-            return allIsTested;
+            return missingTestsCount;
         } else {
             // interfaces should not be tested
-            return true;
+            return 0;
         }
     }
     
