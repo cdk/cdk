@@ -118,10 +118,11 @@ public class PDBReader extends DefaultChemObjectReader {
     SetOfMolecules oSet = new SetOfMolecules();
 		
     // some variables needed
-    String cLine;
+    StringBuffer cLine;
     String cCol;
     Atom oAtom;
     BioPolymer oBP = new BioPolymer();
+    StringBuffer cResidue;
     Object oObj;
     Monomer oMonomer;
     String cRead;
@@ -132,58 +133,65 @@ public class PDBReader extends DefaultChemObjectReader {
         cRead = _oInput.readLine();
         logger.debug(cRead);
         if (cRead != null) {
-          cLine = cRead;
+          cLine = new StringBuffer(cRead);
+          // make sure the record name is 6 characters long
+          while (cLine.length() < 6) {
+            cLine.append(" ");
+          }
           // check the first column to decide what to do
-          if (cLine.startsWith("ATOM  ") || cLine.startsWith("HETATM")) {
+          cCol = cLine.substring(0,6).toUpperCase();
+          if (cCol.equals("ATOM  ") || cCol.equals("HETATM")) {
             // read an atom record
             oAtom = readAtom(cLine.toString());
 						
             // construct a string describing the residue
-            String resName, chainID, resSeq;
-            resName = (String)oAtom.getProperty("pdb.resName");
-            if (resName == null)
-              resName = "";
-            chainID = (String)oAtom.getProperty("pdb.chainID");
-            if (chainID == null)
-              chainID = "";
-            resSeq = (String)oAtom.getProperty("pdb.resSeq");
-            if (resSeq == null)
-              resSeq = "";
-            String cResidue = resName + chainID + resSeq;
+            cResidue = new StringBuffer(8);
+            oObj = oAtom.getProperty("pdb.resName");
+            if (oObj != null) {
+              cResidue = cResidue.append(((String)oObj).trim());
+            }
+            oObj = oAtom.getProperty("pdb.chainID");
+            if (oObj != null) {
+              cResidue = cResidue.append(((String)oObj).trim());
+            }
+            oObj = oAtom.getProperty("pdb.resSeq");
+            if (oObj != null) {
+              cResidue = cResidue.append(((String)oObj).trim());
+            }
 						
             // search for the existing monomer or create a new one
-            oMonomer = oBP.getMonomer(cResidue);
+            oMonomer = oBP.getMonomer(cResidue.toString());
             if (oMonomer == null) {
               oMonomer = new Monomer();
-              oMonomer.setMonomerName(cResidue);
+              oMonomer.setMonomerName(cResidue.toString());
               oMonomer.setMonomerType((String)oAtom.getProperty("pdb.resName"));
             }
 						
             // add the atom
             oBP.addAtom(oAtom, oMonomer);
-          } else if (cLine.startsWith("TER   ")) {
+          } else if (cCol.equals("TER   ")) {
             // finish the molecule and construct a new one
             oSet.addMolecule(oBP);
             oBP = new BioPolymer();
-          } else if (cLine.startsWith("END   ")) {
+          } else if (cCol.equals("END   ")) {
             // finish the molecule and construct a new one
             if (oBP.getAtomCount() != 0) {
               oSet.addMolecule(oBP);
             }
             oBP = new BioPolymer();					
-            //				} else if (cLine.startsWith("USER  ")) {
+            //				} else if (cCol.equals("USER  ")) {
             //						System.out.println(cLine);
-            //				} else if (cLine.startsWith("MODEL ")) {
+            //				} else if (cCol.equals("MODEL ")) {
             //					System.out.println(cLine);
-            //				} else if (cLine.startsWith("ENDMDL")) {
+            //				} else if (cCol.equals("ENDMDL")) {
             //					System.out.println(cLine);
-          } else if (cLine.startsWith("HELIX ") ||
-                     cLine.startsWith("SHEET ") ||
-                     cLine.startsWith("TURN  ")) {
+          } else if (cCol.equals("HELIX ") ||
+                     cCol.equals("SHEET ") ||
+                     cCol.equals("TURN  ")) {
             Vector t = (Vector)oModel.getProperty("pdb.structure.records");
             if (t == null)
               oModel.setProperty("pdb.structure.records", t = new Vector());
-            t.addElement(cLine);
+            t.add("" + cLine);
           }
         }
       } while (_oInput.ready());
