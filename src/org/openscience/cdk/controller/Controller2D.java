@@ -78,7 +78,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 	private int dragMode = DRAG_UNSET;
 
 	private Vector commonElements;
-    private int currentCommonElement = 0;
+    private int currentCommonElement = 1;
 
 	// Helper classes
 	HydrogenAdder hydrogenAdder = new HydrogenAdder("org.openscience.cdk.tools.ValencyChecker");
