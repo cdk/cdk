@@ -178,7 +178,7 @@ public class FileConvertor {
             return new CMLWriter(fw);
         } else if (format.equalsIgnoreCase("MOL")) {
             return new MDLWriter(fw);
-        } else if (format.equalsIgnoreCase("SMILES")) {
+        } else if (format.equalsIgnoreCase("SMI")) {
             return new SMILESWriter(fw);
         } else if (format.equalsIgnoreCase("SHELX")) {
             return new ShelXWriter(fw);
@@ -207,7 +207,8 @@ public class FileConvertor {
             logger.info("Cannot write ChemFile, recursing into ChemSequence's.");
             int count = cf.getChemSequenceCount();
             boolean needMoreFiles =
-              (compare(new ChemSequence(), cow.highestSupportedChemObject()) < 0);
+              (compare(new ChemSequence(), cow.highestSupportedChemObject()) < 0)
+							&& (count > 1);
             for (int i=0; i < count; i++) {
                 if (needMoreFiles) {
                     cow.close(); // possibly closing empty file
@@ -225,7 +226,8 @@ public class FileConvertor {
         } catch (CDKException e) {
             int count = cs.getChemModelCount();
             boolean needMoreFiles =
-              (compare(new ChemModel(), cow.highestSupportedChemObject()) < 0);
+              (compare(new ChemModel(), cow.highestSupportedChemObject()) < 0)
+							&& (count > 1);
             logger.info("Cannot write ChemSequence, recursing into ChemModel's.");
             for (int i=0; i < count; i++) {
                 if (needMoreFiles) {
