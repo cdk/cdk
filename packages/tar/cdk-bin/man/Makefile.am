@@ -21,9 +21,9 @@ docbooks = cdk-fileconvert.xml cdk-dbadmin.xml
 
 man_MANS = cdk-fileconvert.1 cdk-dbadmin.1
 
-CLEANFILES = $(man_MANS)
+CLEANFILES = 
 
-EXTRA_DIST = $(docbooks)
+EXTRA_DIST = $(docbooks) ${man_MANS}
 
 cdk-fileconvert.1: cdk-fileconvert.xml
 	$(XML2MAN_RULE)
