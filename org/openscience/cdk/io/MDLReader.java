@@ -38,8 +38,8 @@ import javax.vecmath.*;
 /**
  * Reads a molecule from an MDL Molfile
  *
- * @author     steinbeck 
- * @created    October 2, 2000 
+ * @author     steinbeck
+ * @created    October 2, 2000
  */
 public class MDLReader implements CDKConstants, ChemObjectReader {
 
@@ -55,8 +55,16 @@ public class MDLReader implements CDKConstants, ChemObjectReader {
 	{
 		input = new BufferedReader(new InputStreamReader(in));
 	}
-	
-	
+
+	/**
+	 * Contructs a new MDLReader that can read Molecule from a given InputStream
+	 *
+	 * @param   in  The Reader to read from
+	 */
+	public MDLReader(Reader in) {
+		input = new BufferedReader(in);
+	}
+
 
 	/**
 	 * Takes an object which subclasses ChemObject, e.g.Molecule, and will read this 
