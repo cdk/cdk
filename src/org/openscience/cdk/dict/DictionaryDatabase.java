@@ -31,6 +31,7 @@ package org.openscience.cdk.dict;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.Hashtable;
+import java.util.Enumeration;
 
 /**
  * Database of dictionaries listing entries with compounds, fragments
@@ -89,6 +90,7 @@ public class DictionaryDatabase {
             try {
                 Dictionary dictionary = Dictionary.unmarshal(reader);
                 dictionaries.put(name, dictionary);
+                logger.info("  ... loaded and stored");
             } catch (Exception exception) {
                 logger.error("Could not read dictionary: " + name);
                 logger.debug(exception);
@@ -131,6 +133,13 @@ public class DictionaryDatabase {
      */
     public boolean hasDictionary(String name) {
         return dictionaries.containsKey(name.toLowerCase());
+    }
+    
+    /**
+     * Returns true if the database contains the dictionary.
+     */
+    public Enumeration listDictionaries() {
+        return dictionaries.keys();
     }
     
     /**
