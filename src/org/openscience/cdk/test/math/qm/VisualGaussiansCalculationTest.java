@@ -57,7 +57,7 @@ import org.openscience.cdk.math.qm.Orbitals;
 import org.openscience.cdk.math.qm.SimpleBasisSet;
 import org.openscience.cdk.renderer.AcceleratedRenderer3D;
 import org.openscience.cdk.renderer.AcceleratedRenderer3DModel;
-import org.openscience.cdk.tools.ChemModelManipulator;
+import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  
 /**
  * Demonstration of the quantum mechanical capabilities of CDK.
