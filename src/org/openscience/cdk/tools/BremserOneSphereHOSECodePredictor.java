@@ -52,7 +52,7 @@ public class BremserOneSphereHOSECodePredictor implements java.io.Serializable
 		{
 			return ((HOSECodeShiftRange)ht.get(hoseCode)).shift;
 		}
-		throw new CDKException("No such HOSE code");
+		throw new CDKException("No prediction available for HOSE code " +  hoseCode);
 	}
 
 	public String predictFull(String hoseCode) throws CDKException
@@ -61,7 +61,7 @@ public class BremserOneSphereHOSECodePredictor implements java.io.Serializable
 		{
 			return ((HOSECodeShiftRange)ht.get(hoseCode)).toString();
 		}
-		throw new CDKException("No such HOSE code");
+		throw new CDKException("No prediction available for HOSE code " +  hoseCode);
 	}
 
 
@@ -71,7 +71,7 @@ public class BremserOneSphereHOSECodePredictor implements java.io.Serializable
 		{
 			return ((HOSECodeShiftRange)ht.get(hoseCode)).confidenceLimit;
 		}
-		throw new CDKException("No such HOSE code");
+		throw new CDKException("No confidence limit available for HOSE code " +  hoseCode);
 	}
 
 	class HOSECodeShiftRange implements java.io.Serializable
