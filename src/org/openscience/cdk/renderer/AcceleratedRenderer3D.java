@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2001-2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2001-2004  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -37,6 +37,10 @@ import javax.media.j3d.*;
 import javax.vecmath.*;
  
 /**
+ * 3D Renderer using Java3D.
+ *
+ * @cdkPackage java3d
+ * 
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
  * @created 2001-07-20
  *

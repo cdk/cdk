@@ -31,6 +31,8 @@ import org.openscience.cdk.*;
 import org.openscience.cdk.exception.*;
 
 /**
+ * @cdkPackage standard
+ *
  * @see org.openscience.cdk.tools.ChemModelManipulator
  */
 public class ReactionManipulator {

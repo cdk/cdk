@@ -41,7 +41,7 @@ import java.awt.event.*;
  * Three dimensional renderer which depicts atoms as cartoonlike
  * atoms. No shading, no other fancy stuff.
  *
- * This code is based on code from the Jmol Project.
+ * <p>This code is based on code from the Jmol Project.
  *
  * @author Egon Willighagen
  *

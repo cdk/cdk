@@ -37,8 +37,7 @@ import java.util.*;
 import javax.vecmath.*;
 
 /**
- *  Reads a molecule from an MDL MOL or SDF file. References: <a
- *  href="http://cdk.sf.net/biblio.html#DAL92">DAL92</a>.
+ * Reads a molecule from an MDL MOL or SDF file [DAL92].
  *
  * <p>From the Atom block it reads atomic coordinates, element types and
  * formal charges. From the Bond block it reads the bonds and the orders.
@@ -47,6 +46,10 @@ import javax.vecmath.*;
  *
  * <p>If all z coordinates are 0.0, then the xy coordinates are taken as
  * 2D, otherwise the coordinates are read as 3D.
+ *
+ * <p>References: <a href="http://cdk.sf.net/biblio.html#DAL92">DAL92</a>.
+ *
+ * @cdkPackage io
  *
  * @author     steinbeck
  * @author     Egon Willighagen

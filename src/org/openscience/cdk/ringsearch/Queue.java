@@ -1,8 +1,9 @@
-/* Queue.java
- *
- * $RCSfile$    $Author$    $Date$    $Revision$
+/* $RCSfile$
+ * $Author$
+ * $Date$
+ * $Revision$
  * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2004  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -29,11 +30,11 @@ package org.openscience.cdk.ringsearch;
 
 import java.util.Vector;
 
-
-
 /**
- *  Implementation of a Queue (FIFO stack)  
- **/
+ * Implementation of a Queue (FIFO stack).
+ *
+ * @cdkPackage standard
+ */
 public class Queue extends Vector
 {
 

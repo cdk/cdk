@@ -3,7 +3,7 @@
  * $Date$    
  * $Revision$
  *
- * Copyright (C) 2001-2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2001-2004  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -33,7 +33,9 @@ import java.util.*;
 import java.io.*;
 
 /**
- *  Tools class with methods for handling molecular graphs
+ * Tools class with methods for handling molecular graphs.
+ *
+ * @cdkPackage standard
  *
  * @author     steinbeck
  * @created    2001-06-17

@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2001-2003  The Chemistry Development Kit (CDK) Project
+ * Copyright (C) 2001-2004  The Chemistry Development Kit (CDK) Project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -35,8 +35,17 @@ import java.util.Vector;
 import java.util.Iterator;
 import java.util.Comparator;
 import java.util.Collections;
+
 /**
- * Canonically lables an atom container.
+ * Canonically lables an atom container implementing
+ * the algorithm published in David Weininger et.al. [WEI89].
+ * The Collections.sort() method uses a merge sort which is 
+ * stable and runs in n log(n).
+ *
+ * <p>References:
+ *   <a href="http://cdk.sf.net/biblio.html#WEI89">WEI89</a>
+ *
+ * @cdkPackage standard
  *
  * @author   Oliver Horlacher <oliver.horlacher@therastrat.com>
  * @created  2002-02-26
@@ -52,10 +61,10 @@ public class CanonicalLabeler {
    * Canonicaly label the fragment.
    * This is an implementation of the algorithm published in
    * David Weininger et.al. (see WEI89).
-   * <P>
-   * The Collections.sort() method uses a merge sort which is stable and runs in n log(n).
-   * <p>
-   * It is assumed that a chemicaly valid AtomContainer is provided: this method dose not check
+   * 
+   * <p>The Collections.sort() method uses a merge sort which is stable and runs in n log(n).
+   * 
+   * <p>It is assumed that a chemicaly valid AtomContainer is provided: this method does not check
    * the correctness of the AtomContainer.  Negative H counts will cause a NumberFormatException
    * to be thrown.
    *

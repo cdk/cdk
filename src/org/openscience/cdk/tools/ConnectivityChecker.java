@@ -3,7 +3,7 @@
  * $Date$    
  * $Revision$
  * 
- * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2004  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -29,8 +29,10 @@ import org.openscience.cdk.graph.PathTools;
 import java.util.*;
 
 /**
- * Tool class for checking whether the (sub)structure in an 
- * AtomContainer is connected
+ * Tool class for checking whether the (sub)structure in an
+ * AtomContainer is connected.
+ *
+ * @cdkPackage standard
  *
  * @keyword connectivity
  */ 

@@ -1,10 +1,9 @@
-/*
- * $RCSfile$
+/* $RCSfile$
  * $Author$
  * $Date$
  * $Revision$
  * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2004  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -34,8 +33,9 @@ import java.util.*;
 /** 
   * Compares elements based on the order commonly used in 
   * molecular formula. Order:
+  * C, H, other elements in alphabetic order.
   *
-  * C, H, other elements in alphabetic order
+  * @cdkPackage standard
   *
   * @keyword element, sorting
   */

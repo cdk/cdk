@@ -28,7 +28,6 @@
  */
 package org.openscience.cdk.ringsearch;
 
-
 import java.util.*;
 import org.openscience.cdk.*;
 import org.openscience.cdk.tools.LoggingTool;
@@ -40,6 +39,8 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * <p>References:
  *   <a href="http://cdk.sf.net/biblio.html#FIG96">FIG96</a>
+ *
+ * @cdkPackage standard
  *
  * @keyword smallest-set-of-rings
  * @keyword ring search

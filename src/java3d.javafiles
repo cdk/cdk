@@ -1,5 +1,5 @@
-org/openscience/cdk/renderer/AcceleratedRenderer3D.java
 org/openscience/cdk/renderer/AcceleratedRenderer3DModel.java
-org/openscience/cdk/renderer/MoleculeViewer3D.java
-org/openscience/cdk/renderer/Triangle3D.java
+org/openscience/cdk/renderer/AcceleratedRenderer3D.java
 org/openscience/cdk/renderer/OrbitalsRenderer3D.java
+org/openscience/cdk/renderer/Triangle3D.java
+org/openscience/cdk/applications/swing/MoleculeViewer3D.java

@@ -3,7 +3,7 @@
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 2002-2003  The Chemistry Development Kit (CDK) Project
+ *  Copyright (C) 2002-2004  The Chemistry Development Kit (CDK) Project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -35,6 +35,8 @@ import java.io.*;
 /**
  * This is used to hold the invariance numbers for the cannonical labeling of
  * AtomContainers.
+ *
+ * @cdkPackage standard
  */
 public class InvPair {
   /** The description used to set the invatiance numbers in the atom's property*/

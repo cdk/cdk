@@ -44,6 +44,8 @@ import javax.vecmath.*;
  * <p>The easiest way to implement a new ChemObjectReader is to
  * subclass the DefaultChemObjectReader.
  *
+ * @cdkPackage io
+ *
  * @see DefaultChemObjectReader
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>

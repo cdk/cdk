@@ -36,9 +36,9 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * A Swing-based implementation of Renderer3D for viewing molecules
+ * A Swing-based implementation of Renderer3D for viewing molecules.
  *
- * @cdkPackage applications
+ * @cdkPackage java3d
  */
 public class MoleculeViewer3D extends JPanel implements CDKChangeListener {
     private org.openscience.cdk.tools.LoggingTool logger;

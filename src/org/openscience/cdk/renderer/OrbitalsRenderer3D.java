@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2001-2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2001-2004  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -42,6 +42,8 @@ import org.openscience.cdk.math.qm.*;
  * following site:
  * <a href="http://www.swin.edu.au/astronomy/pbourke/modelling/polygonise/">
  * http://www.swin.edu.au/astronomy/pbourke/modelling/polygonise/</a>
+ *
+ * @cdkPackage java3d
  *
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
  * @created 2001-07-20

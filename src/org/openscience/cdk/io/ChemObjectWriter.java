@@ -27,7 +27,6 @@
  *  */
 package org.openscience.cdk.io;
 
-
 import org.openscience.cdk.*;
 import org.openscience.cdk.exception.*;
 import org.openscience.cdk.io.listener.*;
@@ -42,7 +41,7 @@ import javax.vecmath.*;
  * This class is the interface that all IO readers should implement.
  * Programs need only care about this interface for any kind of IO.
  *
- * Currently, database IO and file IO is supported. Internet IO is
+ * <p>Currently, database IO and file IO is supported. Internet IO is
  * expected.
  *
  * @version  $Date$

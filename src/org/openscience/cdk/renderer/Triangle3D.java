@@ -32,6 +32,8 @@ import java.awt.*;
 import javax.vecmath.*;
 
 /**
+ * @cdkPackage java3d
+ *
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
  * @created 2001-06-09
  */

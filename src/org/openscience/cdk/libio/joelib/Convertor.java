@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2002-2004  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -40,8 +40,10 @@ import org.openscience.cdk.exception.NoSuchAtomException;
  * Abstract class that provides convertor procedures to
  * convert CDK classes to JOELib classes and visa versa.
  *
- * JOELib is a Java implementation of the OELib classes and
+ * <p>JOELib is a Java implementation of the OELib classes and
  * can be found at: http://joelib.sourceforge.net/
+ *
+ * @cdkPackage libio
  *
  * @author     egonw
  * @author     Joerg K. Wegner <wegnerj@informatik.uni-tuebingen.de>

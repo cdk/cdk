@@ -1,10 +1,9 @@
-/*
- *  $RCSfile$
+/*  $RCSfile$
  *  $Author$
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2002-2004  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -35,11 +34,13 @@ import java.util.Vector;
 import java.io.*;
 
 /**
- *  The HuckelAromaticityDetector detects the aromaticity based on
- *  the Hueckel 4n+2 pi-electrons Rule. This is done by one of the
- *  detectAromaticity methods. They set the aromaticity flags of
- *  appropriate Atoms, Bonds and Rings. After the detection, you
- *  can use getFlag(CDKConstants.ISAROMATIC) on these ChemObjects.
+ * The HuckelAromaticityDetector detects the aromaticity based on
+ * the Hueckel 4n+2 pi-electrons Rule. This is done by one of the
+ * detectAromaticity methods. They set the aromaticity flags of
+ * appropriate Atoms, Bonds and Rings. After the detection, you
+ * can use getFlag(CDKConstants.ISAROMATIC) on these ChemObjects.
+ *
+ * @cdkPackage standard
  *
  * @author     steinbeck, kaihartmann
  * @created    2001-09-04

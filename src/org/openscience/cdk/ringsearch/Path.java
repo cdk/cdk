@@ -3,7 +3,7 @@
  *  $Date$    
  *  $Revision$
  *
- *  Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2002-2004  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -32,10 +32,12 @@ import java.util.Vector;
 import org.openscience.cdk.*;
 
 /**
- *  Implementation of a Path as needed by HAN96.
+ * Implementation of a Path as needed by HAN96.
  *
- * References:
+ * <p>References:
  *   <a href="http://cdk.sf.net/biblio.html#HAN96">HAN96</a>
+ *
+ * @cdkPackage standard
  *
  * @keyword graph, path
  *

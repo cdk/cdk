@@ -3,7 +3,7 @@
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 2002-2003  The Chemistry Development Kit (CDK) Project
+ *  Copyright (C) 2002-2004  The Chemistry Development Kit (CDK) Project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -28,6 +28,8 @@
 package org.openscience.cdk.smiles;
 
 /**
+ * @cdkPackage standard
+ *
  * @author  Oliver Horlacher <oliver.horlacher@therastrat.com>
  * @created 2002-02-26
  *
