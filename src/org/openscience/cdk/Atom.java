@@ -521,6 +521,7 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
                 s.append("SP:" + getStereoParity() + ", ");
                 s.append("2D:[" + getPoint2D() + "], ");
                 s.append("3D:[" + getPoint3D() + "], ");
+                s.append("Fract3D:[" + getFractionalPoint3D() + "], ");
                 s.append("C:" + getCharge() + ", ");
                 s.append("FC:" + getFormalCharge());
                 s.append(", " + super.toString());
