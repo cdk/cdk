@@ -44,6 +44,8 @@
   </target>
 
   <target name="compile" depends="init">
+    <echo message="Compiling only the classes which doesn't use the java3d classes"/>
+    <echo message="To compile all classes use compile-with-java3d"/>
     <mkdir dir="${build}"/>
     <javac destdir="${build}" optimize="on" deprecation="off">
       <src path="."/>

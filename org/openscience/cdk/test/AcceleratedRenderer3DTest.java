@@ -63,6 +63,7 @@ public class AcceleratedRenderer3DTest
 			ChemSequence[] chemSequence = chemFile.getChemSequences();
 			ChemModel[] chemModels = chemSequence[0].getChemModels();
 			AtomContainer atomContainer = chemModels[0].getAllInOneContainer();
+      atomContainer.addBonds(1.2); // new!!!
 
 			JFrame frame = new JFrame("AcceleratedRenderer3DTest");
 			frame.getContentPane().setLayout(new BorderLayout());

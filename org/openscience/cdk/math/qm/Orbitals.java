@@ -31,6 +31,9 @@ package org.openscience.cdk.math.qm;
 
 import org.openscience.cdk.math.*;
  
+/**
+ * This class represents a set of orbitals
+ */
 public class Orbitals
 {
   private int count_basis;
@@ -39,6 +42,9 @@ public class Orbitals
   private Basis basis;
   private int count_electrons = 1;
 
+  /**
+   * Constructs orbitals with a specified base set
+   */
   public Orbitals(Basis basis)
   { 
     this.basis = basis;
@@ -52,6 +58,9 @@ public class Orbitals
           C.matrix[i][j] = 0d;
   }
 
+  /**
+   * Constructs orbitals with a specified base set and a coefficient matrix
+   */
   public Orbitals(Basis basis, Matrix C)
   {
     this.basis = basis;
@@ -74,6 +83,9 @@ public class Orbitals
     }
   }
 
+  /**
+   * Set a coefficient matrix
+   */
   public void setCoefficients(Matrix C)
   {
     if (count_basis==C.rows)
@@ -83,11 +95,17 @@ public class Orbitals
     }
   }
 
+  /**
+   * Get the coefficient matrix
+   */
   public Matrix getCoefficients()
   {
     return C;
   }
 
+  /**
+   * Get the function value of a orbital at the position (x,y,z)
+   */
   public double getValue(int index, double x, double y, double z)
   {
     double sum = 0;
@@ -97,6 +115,9 @@ public class Orbitals
     return sum;
   }
 
+  /**
+   * Get the function value of a orbital
+   */
   public Vector getValues(int index, Matrix m)
   {
     if (m.rows!=3)
@@ -109,27 +130,42 @@ public class Orbitals
     return result;
   }
 
+  /**
+   * Returns the basis set of this orbitals
+   */
   public Basis getBasis()
   {
     return basis;
   }
 
+  /**
+   * Set the count of bases
+   */
   public int getCountBasis()
   {
     return count_basis;
   }
 
+  /**
+   * Returns the count of orbitals
+   */
   public int getCountOrbitals()
   {
     return count_orbitals;
   }
 
+  /**
+   * Sets the count of electrons, which occupies the orbitals
+   */
   public void setCountElectrons(int count)
   {
     if (count>0)
       count_electrons = count;
   }
 
+  /**
+   * Gets the count of electrons, which occupies the orbitals
+   */
   public int getCountElectrons()
   {
     return count_electrons;

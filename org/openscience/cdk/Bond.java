@@ -289,6 +289,29 @@ public class Bond extends ElectronContainer implements Cloneable
 	}
 
 
+  /**
+   * Compares a bond with this bond
+   *
+   * @return Return true, if the bond is equal to this bond
+   */
+  public boolean equals(Object object)
+  {
+    if (object instanceof Bond)
+    {
+      Bond bond = (Bond) object;
+      for(int i=0; i<atoms.length; i++)
+        if (!bond.contains(atoms[i]))
+          return false;
+
+      // not important ??!!
+      //if (order==bond.order)
+      //  return false;
+      
+      return true;
+    }
+    return false;
+  }
+
 
 	/**
 	 * Clones this bond object. Notice that the references to the 

@@ -44,13 +44,13 @@ public class XYZReader implements ChemObjectReader {
     }
     
     public ChemObject read(ChemObject object) throws UnsupportedChemObjectException {
-    		if (object instanceof ChemFile) {
+        if (object instanceof ChemFile) {
             return (ChemObject)readChemFile();
         } else {
             throw new UnsupportedChemObjectException("Only supported is ChemFile.");
         }
     }
-    
+
     private ChemFile readChemFile() {
         ChemFile file = new ChemFile();
         ChemSequence chemSequence = new ChemSequence();
@@ -102,6 +102,7 @@ public class XYZReader implements ChemObjectReader {
                         }
                     }
                 }
+
                 setOfMolecules.addMolecule(m);
                 chemModel.setSetOfMolecules(setOfMolecules);
                 chemSequence.addChemModel(chemModel);

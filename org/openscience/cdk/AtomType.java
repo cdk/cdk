@@ -152,5 +152,23 @@ public class AtomType extends Element
 		return maxBondOrderSum;
 	}
 
+  /**
+   * Compare a atom type with this atom type
+   *
+   * @return Return true, if the atomtypes are equal
+   * 
+   */
+  public boolean equals(Object object)
+  { 
+    if (object instanceof AtomType)
+    {
+      AtomType type = (AtomType) object;
+      if ((atomTypeID==type.atomTypeID) &&
+          (maxBondOrder==type.maxBondOrder) &&
+          (maxBondOrderSum==type.maxBondOrderSum))
+        return true;
+    }
+    return false;
+  }
 }
 

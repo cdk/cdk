@@ -321,6 +321,30 @@ public class Atom extends AtomType implements Cloneable {
         public int getStereoParity() {
                 return this.stereoParity;
         }
+
+        /**
+         * Compares a atom with this atom
+         *
+         * @return    return true, if the atoms are equal
+         */
+        public boolean equals(Object object) 
+        {
+          if (object instanceof Atom)
+          {
+            Atom atom = (Atom) object;
+            if ((atomTypeID==atom.atomTypeID) &&
+                (maxBondOrder==atom.maxBondOrder) &&
+                (maxBondOrderSum==atom.maxBondOrderSum) &&
+                ((point2D==atom.point2D) || ((point2D!=null) && (point2D.equals(atom.point2D)))) &&
+                ((point3D==atom.point3D) || ((point3D!=null) && (point3D.equals(atom.point3D)))) &&
+                (hydrogenCount==atom.hydrogenCount) && 
+                (stereoParity==atom.stereoParity) &&
+                (charge==atom.charge))
+              return true;
+            }
+          return false;
+        }
+
         /**
          * Returns a string representation of this Atom.
          *

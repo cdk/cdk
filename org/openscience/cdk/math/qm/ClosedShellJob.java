@@ -31,7 +31,11 @@ package org.openscience.cdk.math.qm;
 
 import org.openscience.cdk.math.*;
 import org.openscience.cdk.io.LogWriter;
- 
+
+/**
+ * Calculates the orbitals and orbitalenergies of electron systems
+ * with closed shells
+ */
 public class ClosedShellJob
 {
   private Orbitals orbitals;
@@ -57,7 +61,7 @@ public class ClosedShellJob
   }
 
   /**
-   * Sortiert die Orbitale nach ihrer Energie
+   * Sorts the orbitals by their energies
    */
   private void sort(Matrix C, Vector E)
   {
@@ -97,6 +101,11 @@ public class ClosedShellJob
     return S;
   }
 
+  /**
+   * Calculates the matrix for the kinetic energy
+   *
+   * T_i,j = (1/2) * -<d^2/dx^2 chi_i | chi_j>
+   */
   private Matrix calculateT(Basis basis)
   {
     int size = basis.getSize();
@@ -110,6 +119,11 @@ public class ClosedShellJob
     return J;
   }
 
+  /**
+   * Calculates the matrix for the potential matrix
+   *
+   * V_i,j = <chi_i | 1/r | chi_j>
+   */
   private Matrix calculateV(Basis basis)
   {
     int size = basis.getSize();
@@ -122,30 +136,14 @@ public class ClosedShellJob
     return V;
   }
 
+  /**
+   * Calculates thes values for the 2 electron interactions
+   */
   private double[][][][] calculateI(Basis basis)
   {
     int i,j,k,l;
     int p = 0;
     int size = basis.getSize();
-    //int count = 3;
-    //int size = (count*count*count*count+2*count*count*count+3*count*count+2*count)/8;
-    //log.println("size="+size);
-    /*t size = ((basis.getSize()+1)*basis.getSize())/2; 
-    log.println("size="+size);
-    size = ((size+1)*size)/2;
-    log.println("size="+size);
-    log.println("count of two electron integrals = "+size);
-    double[] result = new double[size];
-    for(i=0; i<basis.getSize(); i++)
-      for(j=0; j<=i; j++)
-        for(k=0; k<=i; k++)
-          for(l=0; (k>=l) && ((k+l)<=(i+j)); l++)
-          {
-            log.print((p+1)+". ("+(i+1)+" "+(j+1)+"|"+(k+1)+" "+(l+1)+")=");
-            result[p] = basis.calcI(i,j,k,l);
-            log.println(String.valueOf(result[p]));
-            p++;
-          } */
 
     double[][][][] result = new double[size][][][];
     for(i=0; i<size; i++)
@@ -168,6 +166,9 @@ public class ClosedShellJob
     return result;
   }
 
+  /**
+   * Calculates the density matrix
+   */
   private Matrix calculateD(Basis basis, Matrix C, int count_electrons)
   {
     int i,j,k;
@@ -177,6 +178,10 @@ public class ClosedShellJob
     int locc = count_electrons%2;
     Matrix D = new Matrix(size,size);
     log.println("D:occ="+occ+" locc="+locc);
+
+    if (locc!=0)
+      System.out.println("This class work only correct for closed shells");
+
     for(i=0; i<size; i++)
       for(j=0; j<size; j++)
       {
@@ -189,28 +194,6 @@ public class ClosedShellJob
       }
     return D;
   }
-
-  /*private Matrix calculateJ(Basis basis, Matrix D)
-  {
-    int i,j,k,l;
-    int size = basis.getSize();
-    double value;
-    Matrix J = new Matrix(size,size);
-    for(i=0; i<size; i++)
-      for(j=0; j<size; j++)
-      {
-        J.matrix[i][j] = 0;
-        for(k=0; k<size; k++)
-          for(l=0; l<size; l++)
-          {
-            value = basis.calcI(i,j,k,l);
-            //log.println("("+i+" "+j+"|"+k+" "+l+")="+value);
-            J.matrix[i][j] += D.matrix[k][l]*value;
-          }
-        J.matrix[i][j] *= 2d;
-      }
-    return J;
-  }*/
 
   private Matrix calculateJ(Basis basis, double[][][][] I, Matrix D)
   { 
@@ -244,27 +227,6 @@ public class ClosedShellJob
       }
     return J;
   }
-
-  /*private Matrix calculateK(Basis basis, Matrix D)
-  { 
-    int i,j,k,l;
-    int size = basis.getSize();
-    double value;
-    Matrix K = new Matrix(size,size);
-    for(i=0; i<size; i++)
-      for(j=0; j<size; j++)
-      { 
-        K.matrix[i][j] = 0;
-        for(k=0; k<size; k++)
-          for(l=0; l<size; l++)
-          { 
-            value = basis.calcI(i,k,l,j);
-            //log.println("("+i+" "+j+"|"+k+" "+l+")="+value);
-            K.matrix[i][j] += D.matrix[k][l]*value;
-          }
-      }
-    return K;
-  }*/
 
   private Matrix calculateK(Basis basis, double[][][][] I, Matrix D)
   { 
