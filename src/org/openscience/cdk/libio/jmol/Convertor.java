@@ -28,54 +28,67 @@
  */
 package org.openscience.cdk.libio.jmol;
 
-import org.jmol.api.ModelAdapter;
+import java.util.Hashtable;
+
+import org.jmol.adapter.smarter.SmarterModelAdapter;
+import org.jmol.api.ModelAdapter.AtomIterator;
+import org.jmol.api.ModelAdapter.BondIterator;
 
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
 
 /**
  * @author        egonw
+ * @author        Miguel Howard
  * @cdk.created   2004-04-25
  * @cdk.module    libio
  * @cdk.keyword   adapter, Jmol
  *
- * @cdk.builddepends jmolApis.jar
+ * @cdk.depends jmolApis.jar
+ * @cdk.depends jmolIO.jar
  */
 public class Convertor {
 
     public Convertor() {
     }
 
-    public ChemModel convert(ModelAdapter modelAdapter) throws CDKException {
-        ChemModel model = new ChemModel();
-        SetOfMolecules moleculeSet = new SetOfMolecules();
-        Molecule molecule = new Molecule();
-        AtomIterator atomIter = modelAdapter.getAtomIterator();
-        while (atomIter.hasNext()) {
-            Atom atom = new Atom(atomIter.getElementSymbol());
-            atom.setAtomicNumber(atomIter.getElementNumber());
-            atom.setID(atomIter.getUniqueID());
-            atom.setX3D(atomIter.getX());
-            atom.setY3D(atomIter.getY());
-            atom.setZ3D(atomIter.getZ());
-            atom.setCharge(atomIter.getAtomicCharge());
-            molecule.addAtom(atom);
+    /**
+     * Converts a Jmol <i>model</i> to a CDK AtomContainer.
+     *
+     * @param model A Jmol model as returned by the method ModelAdapter.openBufferedReader()
+     */
+    public AtomContainer convert(Object model) throws CDKException {
+        AtomContainer atomContainer = new AtomContainer();
+        SmarterModelAdapter adapter = new SmarterModelAdapter(null);
+        // use this hashtable to map the ModelAdapter Unique IDs to
+        // our CDK Atom's
+        Hashtable htMapUidsToAtoms = new Hashtable();
+        AtomIterator atomIterator = adapter.getAtomIterator(model);
+        while (atomIterator.hasNext()) {
+            Atom atom = new Atom(atomIterator.getElementSymbol());
+            atom.setX3d(atomIterator.getX());
+            atom.setY3d(atomIterator.getY());
+            atom.setZ3d(atomIterator.getZ());
+            htMapUidsToAtoms.put(atomIterator.getUniqueID(), atom);
+            atomContainer.addAtom(atom);
         }
-        BondIterator bondIter = modelAdapter.getAtomIterator();
-        while (bondIter.hasNext()) {
-            Bond bond = new Bond();
-            // not sure how to retrieve the Atom IDs...
-            bond.setOrder(bondIter.getOrder());
-            molecule.addBond(bond);
+        BondIterator bondIterator = adapter.getBondIterator(model);
+        while (bondIterator.hasNext()) {
+            Object uid1 = bondIterator.getAtomUid1();
+            Object uid2 = bondIterator.getAtomUid2();
+            int order = bondIterator.getOrder();
+            // now, look up the uids in our atom map.
+            Atom atom1 = (Atom)htMapUidsToAtoms.get(uid1);
+            Atom atom2 = (Atom)htMapUidsToAtoms.get(uid2);
+            Bond bond = new Bond(atom1, atom2, (double)order);
+            atomContainer.addBond(bond);
         }
-        return model;
+        return atomContainer;
     };
 
-    public ModelAdapter convert(ChemModel model) {
+    public Object convert(AtomContainer container) {
         // I need something like the CdkModelAdapter from Jmol here
         return null;
     }

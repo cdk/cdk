@@ -34,32 +34,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
-import java.util.StringTokenizer;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-
-import org.jmol.adapter.smarter.SmarterModelAdapter;
 import org.jmol.api.ModelAdapter;
-import org.jmol.api.ModelAdapter.AtomIterator;
-import org.jmol.api.ModelAdapter.BondIterator;
-
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemModel;
+import org.jmol.adapter.smarter.SmarterModelAdapter;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.ChemSequence;
-import org.openscience.cdk.Isotope;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.PseudoAtom;
-import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-import org.openscience.cdk.tools.IsotopeFactory;
+import org.openscience.cdk.libio.jmol.Convertor;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -68,6 +50,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module experimental
  *
  * @author           Egon Willighagen
+ * @author           Miguel Howard
  * @cdk.created      2004-05-18
  * @cdk.keyword      file format, JME
  * @cdk.builddepends jmolIO.jar
@@ -123,35 +106,16 @@ public class JMEReader extends DefaultChemObjectReader {
 	}
 
 	/**
-	 *  Read a Molecule from a file in MDL sd format
+	 *  Read a Molecule from a JME file.
 	 *
 	 *@return    The Molecule that was read from the MDL file.
 	 */
 	private Molecule readMolecule(Molecule molecule) throws CDKException {
         ModelAdapter adapter = new SmarterModelAdapter(null);
+        // note that it actually let's the adapter detect the format!
         Object model = adapter.openBufferedReader("", input);
-        AtomIterator atomIterator = adapter.getAtomIterator(model);
-        while (atomIterator.hasNext()) {
-            Atom atom = new Atom(atomIterator.getElementSymbol());
-            /* atom.setX3d(atomIterator.x);
-            atom.setY3d(atomIterator.y);
-            atom.setZ3d(atomIterator.z); */
-            molecule.addAtom(atom);
-        }
-        BondIterator bondIterator = adapter.getBondIterator(model);
-        while (bondIterator.hasNext()) {
-            Object atom1 = bondIterator.getAtomUid1();
-            Object atom2 = bondIterator.getAtomUid2();
-            /* if (atom1 instanceof org.jmol.adapter.smarter.Atom) {
-                org.jmol.adapter.smarter.Atom atomOne =
-                    (org.jmol.adapter.smarter.Atom)atom1;
-                org.jmol.adapter.smarter.Atom atomTwo =
-                    (org.jmol.adapter.smarter.Atom)atom2;
-                // now I'm stuck... no idea which atoms this bond
-                // connects... consulting Miguel
-            } */
-        }
-		return molecule;
+        AtomContainer container = new Convertor().convert(model);
+		return new Molecule(container);
 	}
     
     public void close() throws IOException {

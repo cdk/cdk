@@ -10,6 +10,7 @@ New:
 * The MDLReader will reuse the ChemObject given to read(ChemObject)
 * Added UniversalIsomorphismTester.makeAtomsMapsOfBondsMaps() method
 * Added an experimental JMEReader wrapping a Jmol v10 IO class
+* Implemented Jmolv10 to CDK Convertor
 
 Fixes:
 * No longer calculates 2D coords for hydrogens which already have 2D coords
