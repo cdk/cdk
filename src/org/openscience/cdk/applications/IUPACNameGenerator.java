@@ -1,0 +1,93 @@
+/* $RCSfile$
+ * $Author$
+ * $Date$
+ * $Revision$
+ *
+ * Copyright (C) 2002  The Chemistry Development Kit (CDK) project
+ *
+ * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+package org.openscience.cdk.applications;
+
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.smiles.*;
+import org.openscience.cdk.iupac.generator.*;
+import freeware.PrintfFormat;
+import java.util.Enumeration;
+import java.util.Locale;
+import java.util.Vector;
+
+/**
+ *  This class implements a IUPAC name generator.
+ *
+ * @author Egon Willighagen
+ *
+ * @keyword IUPAC name
+ */
+public class IUPACNameGenerator {
+
+    public static void main(String[] args) {
+
+        Locale l = new Locale("en", "US");
+        String smiles = "";
+        if (args.length == 1) {
+            smiles = args[0];
+        } else if (args.length > 1) {
+            // parse options
+            for (int i=0; i<args.length-1; i++) {
+                String opt = args[i];
+                if ("--dutch".equalsIgnoreCase(opt)) {
+                    l = new Locale("nl", "NL");
+                } else {
+                    System.err.println("Unknown option: " + opt);
+                    System.exit(1);
+                }
+            }
+
+            smiles = args[args.length -1];
+        } else {
+            System.out.println("Syntax : java org.openscience.cdk.applications.IUPACNameGenerator <SMILES>");
+            System.exit(0);
+        }
+
+        SmilesParser sp = new SmilesParser();
+        Molecule mol = null;
+        try {
+            mol = sp.parseSmiles(smiles);
+        } catch(Exception exc) {
+            System.out.println("Problem parsing SMILES: " +  exc.toString());
+            exc.printStackTrace(System.out);
+        }
+        if (mol != null) {
+            org.openscience.cdk.iupac.generator.IUPACNameGenerator gen =
+                new org.openscience.cdk.iupac.generator.IUPACNameGenerator(l);
+            int atomCount = mol.getAtomCount();
+            gen.generateName(mol);
+            IUPACName name = (IUPACName)gen.getName();
+            System.out.println("IUPAC name: " + name.getName());
+            System.out.println("Full (" + name.size() + " parts):");
+            System.out.print(name.toString());
+            int namedAtomCount = atomCount - mol.getAtomCount();
+            PrintfFormat format = new PrintfFormat("%3.1lf");
+            System.out.println("Ratio named: " +
+                format.sprintf(100.0*(double)namedAtomCount/(double)atomCount) +
+                "% (" + namedAtomCount + "/" + atomCount + ")");
+        }
+
+    }
+
+}
