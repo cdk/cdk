@@ -394,7 +394,7 @@ public class UniversalIsomorphismTester {
 
     for (Iterator i = rMapList.iterator(); i.hasNext(); ) {
       RMap rMap = (RMap) i.next();
-      if (UniversalIsomorphismTester.ID1 == 0) {
+      if (id == UniversalIsomorphismTester.ID1) {
         bond = bondList[rMap.getId1()];
       } else {
         bond = bondList[rMap.getId2()];
