@@ -60,14 +60,16 @@ public class CASNumberTest extends TestCase {
         return new TestSuite(CASNumberTest.class);
     }
 
-    public void testIsValid() {
+    public void testValidNumbers() {
 		// valid cas numbers
 		assertTrue(CASNumber.isValid("50-00-0")); // formaldehyde
 		assertTrue(CASNumber.isValid("548-00-5"));
 		assertTrue(CASNumber.isValid("2622-26-6"));
 		assertTrue(CASNumber.isValid("15299-99-7"));
 		assertTrue(CASNumber.isValid("673434-32-7"));
-		
+    }
+
+    public void testInvalidCheckDigits() {
 		// invalid R value		
 		assertFalse(CASNumber.isValid("50-00-1"));
 		assertFalse(CASNumber.isValid("50-00-2"));
@@ -78,26 +80,36 @@ public class CASNumberTest extends TestCase {
 		assertFalse(CASNumber.isValid("50-00-7"));
 		assertFalse(CASNumber.isValid("50-00-8"));
 		assertFalse(CASNumber.isValid("50-00-9"));
-        
-		// valid format 
-		assertTrue(CASNumber.isValid("3-21-4"));
-		
+    }
+    
+    public void testLargerThanFirst() {
+		// valid format, but wrong number, the first is 50-00-0 
+	assertFalse(CASNumber.isValid("3-21-4"));
+    }
+
+    public void testWrongHyphenPositions() {
 		// invalid format due to invalid hyphen positions 
 		assertFalse(CASNumber.isValid("3-21-40"));
 		assertFalse(CASNumber.isValid("3-210-4"));
 		assertFalse(CASNumber.isValid("03-1-4"));
 		assertFalse(CASNumber.isValid("03-21-"));
-		
+    }
+
+    public void testInvalidCharacters() {
 		// invalid characters
 		assertFalse(CASNumber.isValid("a-21-4"));
 		assertFalse(CASNumber.isValid("3-a1-4"));
 		assertFalse(CASNumber.isValid("3-2a-4"));
 		assertFalse(CASNumber.isValid("3-21-a"));
 		assertFalse(CASNumber.isValid("d-cb-a"));
-		
+    }
+
+    public void testSanity() {
 		// completely stupid value
 		assertFalse(CASNumber.isValid("0&z003-!0>/-0a"));
-		
+    }
+
+    public void testCharacterSet() {
 		// invalid value even with the '0' unicode character '\u0030' 
 		assertFalse(CASNumber.isValid("\u0030-21-4"));		
     }
