@@ -139,10 +139,14 @@ public class LoggingTool {
         debug("java.class.path: " + System.getProperty("java.class.path"));
     }
 
-    public void debug(Exception exception) {
-        debug("Exception: " + exception.getMessage());
+    public void debug(Throwable problem) {
+        if (problem instanceof Error) {
+            debug("Error: " + problem.getMessage());
+        } else {
+            debug("Exception: " + problem.getMessage());
+        }
         java.io.StringWriter stackTraceWriter = new java.io.StringWriter();
-        exception.printStackTrace(new PrintWriter(stackTraceWriter));
+        problem.printStackTrace(new PrintWriter(stackTraceWriter));
         String trace = stackTraceWriter.toString();
         try {
             BufferedReader reader = new BufferedReader(new StringReader(trace));
