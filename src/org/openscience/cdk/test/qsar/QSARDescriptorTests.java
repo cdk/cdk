@@ -56,6 +56,7 @@ import org.openscience.cdk.test.qsar.*;
 	//suite.addTest(ValenceConnectivityOrderOneDescriptorTest.suite());
 	suite.addTest(GravitationalIndexDescriptorTest.suite());
 	suite.addTest(BCUTDescriptorTest.suite());
+	suite.addTest(WHIMDescriptorTest.suite());
         return suite;
     }
     
