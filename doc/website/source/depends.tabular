@@ -1,4 +1,4 @@
-website: intro.html thelibrary.html libraries.html related.html development.html whoiswho.html agenda.html changelog.html documentation.html reference.html api.html core-api.html manpages.html screenshots.html maillinglists.html download.html biblio.html index.html 
+website: intro.html thelibrary.html libraries.html related.html development.html guide.html guide-library-development.html guide-docs.html guide-packages.html guide-website-development.html whoiswho.html agenda.html changelog.html documentation.html reference.html keywordindex.html api.html core-api.html manpages.html screenshots.html maillinglists.html download.html biblio.html index.html 
 
 index.html: website.xml
 intro.html: intro.xml
@@ -6,11 +6,17 @@ thelibrary.html: thelibrary.xml
 libraries.html: libraries.xml
 related.html: related.xml
 development.html: development.xml
+guide.html: guide.xml
+guide-library-development.html: guide-library-development.xml
+guide-docs.html: guide-docs.xml
+guide-packages.html: guide-packages.xml
+guide-website-development.html: guide-website-development.xml
 whoiswho.html: whoiswho.xml
 agenda.html: agenda.xml
 changelog.html: changelog.xml
 documentation.html: documentation.xml
 reference.html: reference.xml
+keywordindex.html: keywordindex.xml
 api.html: api.xml
 core-api.html: core-api.xml
 manpages.html: manpages.xml
@@ -20,5 +26,5 @@ download.html: download.xml
 biblio.html: biblio.xml
 
 clean:
-	rm -f intro.html thelibrary.html libraries.html related.html development.html whoiswho.html agenda.html changelog.html documentation.html reference.html api.html core-api.html manpages.html screenshots.html maillinglists.html download.html biblio.html index.html 
+	rm -f intro.html thelibrary.html libraries.html related.html development.html guide.html guide-library-development.html guide-docs.html guide-packages.html guide-website-development.html whoiswho.html agenda.html changelog.html documentation.html reference.html keywordindex.html api.html core-api.html manpages.html screenshots.html maillinglists.html download.html biblio.html index.html 
 

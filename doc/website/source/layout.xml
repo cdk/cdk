@@ -21,12 +21,19 @@
       <tocentry page="related.xml" filename="related.html"/>
     </tocentry>
     <tocentry page="development.xml" filename="development.html">
+      <tocentry page="guide.xml" filename="guide.html">
+        <tocentry page="guide-library-development.xml" filename="guide-library-development.html"/>
+        <tocentry page="guide-docs.xml" filename="guide-docs.html"/>
+        <tocentry page="guide-packages.xml" filename="guide-packages.html"/>
+        <tocentry page="guide-website-development.xml" filename="guide-website-development.html"/>
+      </tocentry>
       <tocentry page="whoiswho.xml" filename="whoiswho.html"/>
       <tocentry page="agenda.xml" filename="agenda.html"/>
       <tocentry page="changelog.xml" filename="changelog.html"/>
     </tocentry>
     <tocentry page="documentation.xml" filename="documentation.html">
       <tocentry page="reference.xml" filename="reference.html"/>
+      <tocentry page="keywordindex.xml" filename="keywordindex.html"/>
       <tocentry page="api.xml" filename="api.html">
         <tocentry page="core-api.xml" filename="core-api.html"/>
       </tocentry>

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.0b1//EN" "dtd/website.dtd" [
+  <!ENTITY docs SYSTEM "../../devel-guide/library-development.xml">
+]>
+<webpage id="guide-library-development">
+  <config param="last-change-by" value="$Author$"/>
+  <config param="rcsdate" value="$Date$"/>
+
+  <head>
+    <title>The Developers' Guide</title>
+    <titleabbrev>Library Development</titleabbrev>
+    <summary>Information on the CDK development process.</summary>
+  </head>
+
+  &docs;
+
+</webpage>
