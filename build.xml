@@ -640,7 +640,7 @@
         </target>
 
         <target name="run" depends="dist-core, dist-extra, dist-test, dist-standard">
-                <java classname="org.openscience.cdk.test.tools.IsotopeFactoryTest" fork="yes">
+                <java classname="org.openscience.cdk.test.tools.SaturationCheckerTest" fork="yes">
                     <classpath>
                         <pathelement location="${dist}/jar/cdk-core.jar" />
                         <pathelement location="${dist}/jar/cdk-standard.jar" />
