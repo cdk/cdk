@@ -3,7 +3,7 @@
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 1997-2004  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -330,14 +330,20 @@ public class Bond extends ElectronContainer implements java.io.Serializable, Clo
 
 
 	/**
-	 *  Returns the geometric length of this bond in 2D space.
+	 * Returns the geometric length of this bond in 2D space.
 	 *
-	 *@return    The geometric length of this bond
+	 * @return    The geometric length of this bond
 	 */
 	public double getLength()
 	{
+        if (getAtomAt(0) == null || getAtomAt(1) == null) {
+            return 0.0;
+        }
 		Point2d p1 = getAtomAt(0).getPoint2D();
 		Point2d p2 = getAtomAt(1).getPoint2D();
+        if (p1 == null || p2 == null) {
+            return 0.0;
+        }
 		return p1.distance(p2);
 	}
 
@@ -418,15 +424,13 @@ public class Bond extends ElectronContainer implements java.io.Serializable, Clo
 	 *
 	 *@return    The string representation of this Container
 	 */
-	public String toString()
-	{
-		ElectronContainer ec;
+	public String toString() {
 		StringBuffer s = new StringBuffer();
 		s.append("Bond(");
 		s.append(this.hashCode());
 		s.append(", #O:" + getOrder());
 		s.append(", #S:" + getStereo());
-		// s.append("#L:" + getLength() + ", ");
+		s.append(", #L:" + getLength());
 		Atom[] atoms = getAtoms();
 		s.append(", #A:" + atoms.length);
 		for (int i = 0; i < atoms.length; i++)
