@@ -294,7 +294,7 @@
         </target>
 
         <target name="run" depends="dist">
-                <java classname="org.openscience.cdk.test.SingleStructureRandomGeneratorTest" fork="yes">
+                <java classname="org.openscience.cdk.test.FingerprinterTest" fork="yes">
                         <classpath>
                                 <pathelement location="${dist}/jar/cdk-core.jar" />
                                 <pathelement location="${dist}/jar/cdk-extra.jar" />
