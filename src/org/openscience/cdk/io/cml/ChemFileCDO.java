@@ -219,6 +219,8 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
               current.setA(crystal_axis_x,
                            crystal_axis_y,
                            crystal_axis_z);
+          } else {
+              logger.warn("Current object is not a crystal");
           }
         } else if (objectType.equals("b-axis")) {
           if (currentMolecule instanceof Crystal) {
@@ -226,6 +228,8 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
               current.setB(crystal_axis_x,
                            crystal_axis_y,
                            crystal_axis_z);
+          } else {
+              logger.warn("Current object is not a crystal");
           }
         } else if (objectType.equals("c-axis")) {
           if (currentMolecule instanceof Crystal) {
@@ -233,6 +237,8 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
               current.setC(crystal_axis_x,
                            crystal_axis_y,
                            crystal_axis_z);
+          } else {
+              logger.warn("Current object is not a crystal");
           }
       } else if (objectType.equals("SetOfReactions")) {
           currentChemModel.setSetOfReactions(currentSetOfReactions);
@@ -245,7 +251,9 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
           currentReaction.addReactant((Molecule)currentMolecule);
       } else if (objectType.equals("Product")) {
           currentReaction.addProduct((Molecule)currentMolecule);
-        }
+      } else if (objectType.equals("Crystal")) {
+          logger.debug("Crystal: " + currentMolecule);
+      }
     };
 
     /**
@@ -342,9 +350,11 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
           if (currentMolecule instanceof Crystal) {
               Crystal current = (Crystal)currentMolecule;
               if (propertyType.equals("spacegroup")) {
+                  logger.debug("Setting crystal spacegroup to: " + propertyValue);
                   current.setSpaceGroup(propertyValue);
               } else if (propertyType.equals("z")) {
                   try {
+                      logger.debug("Setting z to: " + propertyValue);
                       current.setZ(Integer.parseInt(propertyValue));
                   } catch (NumberFormatException exception) {
                       logger.error("Error in format of Z value");
@@ -360,6 +370,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
           // set these variables
           if (currentMolecule instanceof Crystal) {
               Crystal current = (Crystal)currentMolecule;
+              logger.debug("Setting axis (" + objectType + "): " + propertyValue);
               if (propertyType.equals("x")) {
                   crystal_axis_x = Double.parseDouble(propertyValue);
               } else if (propertyType.equals("y")) {

@@ -421,14 +421,14 @@ public class CMLCoreModule implements ModuleInterface {
             case SYMMETRY:
                 for (int i = 0; i < atts.getLength(); i++) {
                     String att = atts.getQName(i);
-                    if (att.equals("spacegroup")) {
+                    if (att.equals("spaceGroup")) {
                         cdo.setObjectProperty("Crystal", "spacegroup", atts.getValue(i));
                     }
                 }
                 break;
 
             case SCALAR:
-                if (xpath.toString().endsWith("crystal/scalar"))
+                if (xpath.toString().endsWith("crystal/scalar/"))
                     crystalScalar++;
                 break;
             
@@ -520,15 +520,23 @@ public class CMLCoreModule implements ModuleInterface {
                     c[1] = axes[2][1];
                     c[2] = axes[2][2];
                     cartesianAxesSet = true;
+                    cdo.startObject("a-axis");
                     cdo.setObjectProperty("a-axis", "x", new Double(a[0]).toString());
                     cdo.setObjectProperty("a-axis", "y", new Double(a[1]).toString());
                     cdo.setObjectProperty("a-axis", "z", new Double(a[2]).toString());
+                    cdo.endObject("a-axis");
+                    cdo.startObject("b-axis");
                     cdo.setObjectProperty("b-axis", "x", new Double(b[0]).toString());
                     cdo.setObjectProperty("b-axis", "y", new Double(b[1]).toString());
                     cdo.setObjectProperty("b-axis", "z", new Double(b[2]).toString());
+                    cdo.endObject("b-axis");
+                    cdo.startObject("c-axis");
                     cdo.setObjectProperty("c-axis", "x", new Double(c[0]).toString());
                     cdo.setObjectProperty("c-axis", "y", new Double(c[1]).toString());
                     cdo.setObjectProperty("c-axis", "z", new Double(c[2]).toString());
+                    cdo.endObject("c-axis");
+                } else {
+                    logger.error("Could not find crystal unit cell parameters");
                 }
                 cdo.endObject("Crystal");
 
@@ -753,13 +761,16 @@ public class CMLCoreModule implements ModuleInterface {
                 }
             
             case SCALAR:
-                logger.debug("Going to store scalar data for dictref: " + DICTREF);
-                if (xpath.toString().endsWith("crystal/scalar")) {
+                if (xpath.toString().endsWith("crystal/scalar/")) {
+                    logger.debug("Going to set a crystal parameter: " + crystalScalar + 
+                        " to " + s);
                     try {
                         unitcellparams[crystalScalar-1] = Double.parseDouble(s);
                     } catch (NumberFormatException exception) {
                         logger.error("Content must a float: " + s);
                     }
+                } else {
+                    logger.warn("Ignoring scaler: " + xpath);
                 }
                 break;
 
