@@ -43,7 +43,7 @@ public class Renderer2DModel
 	
 	private Color highlightColor = Color.lightGray;
 	
-	private double highlightRadius = 6;
+	private double highlightRadius = 10;
 
 	private boolean drawNumbers = false;	
 	

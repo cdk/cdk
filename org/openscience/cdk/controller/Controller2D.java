@@ -35,13 +35,14 @@ import java.awt.*;
 
 public class Controller2D 
 {
-	boolean debug = false;
+	boolean debug = true;
 	Renderer2D renderer;
 	Renderer2DModel r2dm;
 	Molecule molecule;
 	Container panel;
 	
 	
+
 	public Controller2D(Container panel, Molecule molecule, Renderer2D renderer)
 	{
 		this.molecule = molecule;
@@ -50,28 +51,38 @@ public class Controller2D
 		this.r2dm = renderer.r2dm;
 	}
 	
+
+	/**
+	 * manages everything invoked when the mouse is moved
+	 *
+	 * @param   mouseX  The x position of the mouse
+	 * @param   mouseY  The y position of the mouse
+	 */
 	public void mouseMoved(int mouseX, int mouseY)
 	{
 		/** highlighting **/
-		renderer.colorHash.clear();
+		renderer.setHighlightedAtom(null);
+		renderer.setHighlightedBond(null);
 		double highlightRadius = r2dm.getHighlightRadius();
 		double atomX = 0, atomY = 0;
 		Atom closestAtom = GeometryTools.getClosestAtom(mouseX, mouseY, molecule);
 		if (debug) System.out.println("closestAtom  "+ closestAtom);
 		if (Math.sqrt(Math.pow(closestAtom.getX2D() - mouseX, 2) + Math.pow(closestAtom.getY2D() - mouseY, 2)) < highlightRadius)
 		{
-			renderer.colorHash.put(closestAtom, Color.red);
+			renderer.setHighlightedAtom(closestAtom);
 		}
-		
-		Bond closestBond = GeometryTools.getClosestBond(mouseX, mouseY, molecule);
-		if (debug) System.out.println("closestBond  "+ closestBond);
-		int[] coords = GeometryTools.distanceCalculator(GeometryTools.getBondCoordinates(closestBond),highlightRadius);
-		int[] xCoords = {coords[0],coords[2],coords[4],coords[6]};
-		int[] yCoords = {coords[1],coords[3],coords[5],coords[7]};
-		if ((new Polygon(xCoords, yCoords, 4)).contains(new Point(mouseX, mouseY)))
+		else
 		{
-			renderer.colorHash.put(closestBond, Color.green);;
-		}		
+			Bond closestBond = GeometryTools.getClosestBond(mouseX, mouseY, molecule);
+			if (debug) System.out.println("closestBond  "+ closestBond);
+			int[] coords = GeometryTools.distanceCalculator(GeometryTools.getBondCoordinates(closestBond),highlightRadius);
+			int[] xCoords = {coords[0],coords[2],coords[4],coords[6]};
+			int[] yCoords = {coords[1],coords[3],coords[5],coords[7]};
+			if ((new Polygon(xCoords, yCoords, 4)).contains(new Point(mouseX, mouseY)))
+			{
+				renderer.setHighlightedBond(closestBond);
+			}	
+		}	
 		panel.repaint();
 		
 	}

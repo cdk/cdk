@@ -50,7 +50,7 @@ public class StructureDiagramGeneratorTest
 //		molecule = buildMolecule2x3();
 //		molecule = buildMolecule2x4();
 //		molecule = buildSpiroRings();
-		molecule = loadMolecule(inFile);
+//		molecule = loadMolecule(inFile);
 //		molecule = buildRing();
 		StructureDiagramGenerator sdg = new StructureDiagramGenerator();
 		sdg.setMolecule(molecule);

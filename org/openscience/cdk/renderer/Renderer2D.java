@@ -42,7 +42,9 @@ public class Renderer2D
 	public Renderer2DModel r2dm;
 	Graphics g;
 	Molecule molecule;
-	public Hashtable colorHash = new Hashtable();
+	Hashtable colorHash = new Hashtable();
+	private Bond highlightedBond;
+	private Atom highlightedAtom;
 	
 
 	/**
@@ -77,8 +79,8 @@ public class Renderer2D
 		this.g = g;
 		this.molecule = molecule;
 		RingSet ringSet = sssrf.findSSSR(molecule);
-		paintBonds(molecule.getBonds(), molecule.getBondCount(), ringSet);
 		paintAtoms(molecule.getAtoms(), molecule.getAtomCount());
+		paintBonds(molecule.getBonds(), molecule.getBondCount(), ringSet);
 		if (r2dm.drawNumbers()) paintNumbers(molecule.getAtoms(), molecule.getAtomCount());
 	}
 	
@@ -143,7 +145,7 @@ public class Renderer2D
 		{
 			atom = atoms[i];
 			atomColor = (Color)colorHash.get(atom);
-//			System.out.println("color aus dem hash  "+ colorHash.get(atom));
+			if (atom == highlightedAtom) atomColor = r2dm.getHighlightColor();
 			if (atomColor != null)
 			{
 				paintColouredAtom(atom, atomColor);
@@ -199,29 +201,40 @@ public class Renderer2D
 
 
 	/**
+	 * Triggers the suitable method to paint each of the given bonds and selects 
+	 * the right color.
 	 *
-	 *
-	 * @param   bonds  
-	 * @param   number  
-	 * @param   ringSet  
+	 * @param   bonds   The bonds to be drawn
+	 * @param   number  The number of bonds to be drawn
+	 * @param   ringSet  The set of rings the molecule contains
 	 */
 	private void paintBonds(Bond[] bonds, int number, RingSet ringSet)
 	{
 		Color bondColor;
 		Ring ring;
+		Bond bond;
 		for (int i = 0; i < number; i++)
 		{
-			bondColor = (Color)colorHash.get(bonds[i]);
+			bond = bonds[i];
+			bondColor = (Color)colorHash.get(bond);
 			if (bondColor == null) bondColor = r2dm.getForeColor();
-			ring = ringSet.getHeaviestRing(bonds[i]);
+			if (bond == highlightedBond)
+			{
+				bondColor = r2dm.getHighlightColor();
+				for (int j = 0; j < bond.getAtomCount(); j++)
+				{
+					paintColouredAtom(bond.getAtomAt(j),bondColor);
+				}
+			}
+			ring = ringSet.getHeaviestRing(bond);
 			if (ring != null)
 			{
-					paintRingBond(bonds[i], ring, bondColor);
+					paintRingBond(bond, ring, bondColor);
 
 			}
 			else
 			{
-				paintBond(bonds[i], bondColor);
+				paintBond(bond, bondColor);
 			}
 		}
 	}
@@ -371,10 +384,55 @@ public class Renderer2D
 	private void paintOneBond(int[] coords, Color bondColor)
 	{
 		g.setColor(bondColor);
-			System.out.println("bondColor  "+ bondColor);
 		int[] newCoords = GeometryTools.distanceCalculator(coords, r2dm.getBondWidth()/2);
 		int[] xCoords = {newCoords[0],newCoords[2],newCoords[4],newCoords[6]};
 		int[] yCoords = {newCoords[1],newCoords[3],newCoords[5],newCoords[7]};
 		g.fillPolygon(xCoords,yCoords,4);
+	}
+
+	
+
+	/**
+	 * Returns the current highlighted Atom
+	 *
+	 * @return   The current highlighted Atom  
+	 */
+	public Atom getHighlightedAtom()
+	{
+		return this.highlightedAtom;
+	}
+
+
+	/**
+	 * Sets the current highlighted Atom
+	 *
+	 * @param   highlightedAtom   The Atom to be highlghted
+	 */
+	public void setHighlightedAtom(Atom highlightedAtom)
+	{
+		this.highlightedAtom = highlightedAtom;
+	}
+
+	
+
+	/**
+	 * Returns the current highlighted Bond
+	 *
+	 * @return   The current highlighted Bond  
+	 */
+	public Bond getHighlightedBond()
+	{
+		return this.highlightedBond;
+	}
+
+
+	/**
+	 * Sets the current highlighted Bond
+	 *
+	 * @param   highlightedBond   The bond to be highlighted
+	 */
+	public void setHighlightedBond(Bond highlightedBond)
+	{
+		this.highlightedBond = highlightedBond;
 	}
 }

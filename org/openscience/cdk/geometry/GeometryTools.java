@@ -310,7 +310,7 @@ public class GeometryTools
 		Point2d bondCenter;
 		Bond closestBond = null, currentBond;
 		double smallestMouseDistance = -1, mouseDistance, bondCenterX, bondCenterY;
-		for (int i = 0; i < molecule.getAtomCount(); i++)
+		for (int i = 0; i < molecule.getBondCount(); i++)
 		{
 			currentBond = molecule.getBondAt(i);
 			bondCenter = get2DCenter(currentBond.getAtomsVector());
