@@ -60,6 +60,7 @@ import org.xml.sax.helpers.DefaultHandler;
 public class INChIHandler extends DefaultHandler {
 
     private LoggingTool logger;
+    private INChIContentProcessorTool inchiTool;
 
     private ChemFile chemFile;
     private ChemSequence chemSequence;
@@ -75,6 +76,7 @@ public class INChIHandler extends DefaultHandler {
      **/
     public INChIHandler() {
         logger = new LoggingTool(this);
+        inchiTool = new INChIContentProcessorTool();
     }
 
     public void doctypeDecl(String name, String publicId, String systemId)
@@ -107,14 +109,14 @@ public class INChIHandler extends DefaultHandler {
         } else if ("formula".equals(local)) {
             if (tautomer != null) {
                 logger.info("Parsing <formula> chars: ", currentChars);
-                analyseAtomsEncoding(currentChars);
+                tautomer = new Molecule(inchiTool.processFormula(currentChars));
             } else {
                 logger.warn("Cannot set atom info for empty tautomer");
             }
         } else if ("connections".equals(local)) {
             if (tautomer != null) {
                 logger.info("Parsing <connections> chars: ", currentChars);
-                analyseBondsEncoding(currentChars, -1);
+                inchiTool.processConnections(currentChars, tautomer, -1);
             } else {
                 logger.warn("Cannot set dbond info for empty tautomer");
             }
@@ -165,117 +167,6 @@ public class INChIHandler extends DefaultHandler {
 
     public ChemFile getChemFile() {
         return chemFile;
-    }
-
-    // private methods
-
-    private void analyseAtomsEncoding(String atomsEncoding) {
-        logger.debug("Parsing atom data: ", atomsEncoding);
-
-        Atom atomToAdd = null;
-        Pattern pattern = Pattern.compile("([A-Z][a-z]?)(\\d+)?(.*)");
-        String remainder = atomsEncoding;
-        while (remainder.length() > 0) {
-            logger.debug("Remaining: ", remainder);
-            Matcher matcher = pattern.matcher(remainder);
-            if (matcher.matches()) {
-                String symbol = matcher.group(1);
-                logger.debug("Atom symbol: ", symbol);
-                if (symbol.equals("H")) {
-                    // don't add explicit hydrogens
-                } else {
-                    String occurenceStr = matcher.group(2);
-                    int occurence = 1;
-                    if (occurenceStr != null) {
-                        occurence = Integer.parseInt(occurenceStr);
-                    }
-                    logger.debug("  occurence: ", occurence);
-                    for (int i=1; i<=occurence; i++) {
-                        tautomer.addAtom(new Atom(symbol));
-                    }
-                }
-                remainder = matcher.group(3);
-                if (remainder == null) remainder = "";
-                logger.debug("  Remaining: ", remainder);
-            } else {
-                logger.error("No match found!");
-                remainder = "";
-            }
-            logger.debug("NO atoms: ", tautomer.getAtomCount());
-        }
-        return;
-    }
-
-    /**
-     * @param source the atom to build the path upon. If -1, then start new path
-     */
-    private void analyseBondsEncoding(String bondsEncoding, int source){
-        logger.debug("Parsing bond data: ", bondsEncoding);
-
-        int atoms = tautomer.getAtomCount();
-
-        Bond bondToAdd = null;
-        /* Fixme: treatment of branching is too limited! */
-        String remainder = bondsEncoding;
-        while (remainder.length() > 0) {
-            logger.debug("Bond part: ", remainder);
-            if (remainder.charAt(0) == '(') {
-                String branch = chopBranch(remainder);
-                analyseBondsEncoding(branch, source);
-                if (branch.length()+2 <= remainder.length()) {
-                    remainder = remainder.substring(branch.length()+2);
-                } else {
-                    remainder = "";
-                }
-            } else {
-                Pattern pattern = Pattern.compile("^(\\d+)-?(.*)");
-                Matcher matcher = pattern.matcher(remainder);
-                if (matcher.matches()) {
-                    String targetStr = matcher.group(1);
-                    int target = Integer.parseInt(targetStr);
-                    logger.debug("Source atom: ", source);
-                    logger.debug("Target atom: ", targetStr);
-                    Atom targetAtom = tautomer.getAtomAt(target-1);
-                    if (source != -1) {
-                        Atom sourceAtom = tautomer.getAtomAt(source-1);
-                        bondToAdd = new Bond(sourceAtom, targetAtom, 1.0);
-                        tautomer.addBond(bondToAdd);
-                    }
-                    remainder = matcher.group(2);
-                    source = target;
-                    logger.debug("  remainder: ", remainder);
-                } else {
-                    logger.error("Could not get next bond info part");
-                    return;
-                }
-            }
-        }
-        return;
-    }
-
-    /**
-     * Extracts the first full branch. It extracts everything between the first
-     * '(' and the corresponding ')' char.
-     */
-    private String chopBranch(String remainder) {
-        boolean doChop = false;
-        int branchLevel = 0;
-        StringBuffer choppedString = new StringBuffer();
-        for (int i=0; i<remainder.length(); i++) {
-            char currentChar = remainder.charAt(i);
-            if (currentChar == '(') {
-                if (doChop) choppedString.append(currentChar);
-                doChop = true;
-                branchLevel++;
-            } else if (currentChar == ')') {
-                branchLevel--;
-                if (branchLevel == 0) doChop = false;
-                if (doChop) choppedString.append(currentChar);
-            } else if (doChop) {
-                choppedString.append(currentChar);
-            }
-        }
-        return choppedString.toString();
     }
     
 }

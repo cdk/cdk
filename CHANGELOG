@@ -12,6 +12,7 @@ New:
 * Added some graph algorithms (BiconnectivityInspector, MinimalPathIterator)
 * Added the cdk.ringsearch.cyclebasis package (Cycle, CycleBasis, 
   SimpleCycleBasis) for the new SSSRFinder
+* Added INChI parser for its plain text output
 
 Fixes:
 * Partly cleaned up source code of core classes using the PMD reports

@@ -47,6 +47,8 @@ public class IOTests {
         suite.addTest(GhemicalReaderTest.suite());
         suite.addTest(HINReaderTest.suite());
         //suite.addTest(IChIReaderTest.suite());
+        suite.addTest(INChIReaderTest.suite());
+        suite.addTest(INChIPlainTextReaderTest.suite());
         suite.addTest(MDLReaderTest.suite());
         suite.addTest(MDLWriterTest.suite());
         suite.addTest(MDLRXNReaderTest.suite());

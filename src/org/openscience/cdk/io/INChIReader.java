@@ -81,7 +81,7 @@ public class INChIReader extends DefaultChemObjectReader {
     }
     
     public String getFormatName() {
-        return "IUPAC Chemical Identifier";
+        return "IUPAC Chemical Identifier (XML)";
     }
     
     public void setReader(Reader input) throws CDKException {

@@ -121,6 +121,7 @@ public class ReaderFactory {
                 "org.openscience.cdk.io.GhemicalMMReader",
                 "org.openscience.cdk.io.HINReader",
                 "org.openscience.cdk.io.IChIReader",
+                "org.openscience.cdk.io.INChIPlainTextReader",
                 "org.openscience.cdk.io.INChIReader",
                 "org.openscience.cdk.io.JaguarReader",
                 "org.openscience.cdk.io.MACiEReader",

@@ -90,8 +90,13 @@ public class ReaderFactoryTest extends TestCase {
     }
 
     public void testINChI() {
-        expectFormat("data/ichi/guanine.inchi", 
+        expectFormat("data/ichi/guanine.inchi.xml", 
                      "org.openscience.cdk.io.INChIReader");
+    }
+
+    public void testINChIPlainText() {
+        expectFormat("data/ichi/guanine.inchi", 
+                     "org.openscience.cdk.io.INChIPlainTextReader");
     }
 
     public void testVASP() {
