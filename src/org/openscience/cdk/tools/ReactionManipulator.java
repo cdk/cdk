@@ -71,6 +71,9 @@ public class ReactionManipulator {
     
     public static AtomContainer getAllInOneContainer(Reaction reaction) {
         AtomContainer container = new AtomContainer();
+        if (reaction == null) {
+            return container;
+        }
         Molecule[] reactants = reaction.getReactants();
         for (int i=0; i<reactants.length; i++) {
             Molecule molecule = reactants[i];
