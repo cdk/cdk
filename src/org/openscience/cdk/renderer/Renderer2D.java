@@ -227,14 +227,14 @@ public class Renderer2D
              *  unless (see below)...
              */
             paintAtomSymbol(atom, atomColor);
-            // paintAtomCharge(atom);
+            paintAtomCharge(atom);
         } else if (atomCon.getBondCount(atom) == 0) {
             // ... unless carbon has no bonds
             paintAtomSymbol(atom, atomColor);
         } else if (atom.getFormalCharge() != 0) {
             // ... unless carbon is charged
             paintAtomSymbol(atom, atomColor);
-            // paintAtomCharge(atom);
+            paintAtomCharge(atom);
         }
 	}
 
