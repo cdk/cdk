@@ -43,6 +43,13 @@
 						a 3D representation, rotatable, nicely shaded with perspective scaling.
 					</para>
 				</listitem>
+                                <listitem>
+                                        <para>
+                                                a textual representation for manual inspection and editing of properties
+                                                of primary CDK elements. Most common form are table representing such data.
+                                                High level tables can also be used as a GUI for databases.
+                                        </para>
+                                </listitem>
 			</itemizedlist>
 		</para>
 		<para>

@@ -36,7 +36,7 @@
 	 <author> 
 		<authorblurb> 
 		  <para> The author is a student of chemistry at the 
-			 <ulink url="http://www.ice.mpg.de/departments/ChemInf">University of Nijmegen</ulink> in the Netherlands 
+			 <ulink url="http://www.kun.nl/">University of Nijmegen</ulink> in the Netherlands.
 		  </para> 
 		</authorblurb> 
 		<firstname>Egon</firstname> 
@@ -50,7 +50,7 @@
 	 </affiliation>
 	 
 	 <copyright> 
-		<year>2000</year> 
+		<year>2000, 2001</year> 
 		<holder>The CDK project</holder> 
 	 </copyright> 
   </bookinfo>
