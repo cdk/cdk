@@ -10,12 +10,12 @@
     <summary>The CDK Homepage.</summary>
   </head>
 
-  <para>This list shows the things that needs to be done:
+  <para>This list shows the things that needs to be done:</para>
     <itemizedlist>
       <listitem>
         <para>More documentation: many methods have not yet been
           described (See
-          <ulink href="javadoc-stats.html">Javadoc Stats</ulink>).
+          <ulink url="javadoc-stats.html">Javadoc Stats</ulink>).
           Better documentation: each class can have example code on how to
           use that class.
         </para>
@@ -28,9 +28,8 @@
         <para>More JUnit tests: not all methods of the core classes are tested.</para>
       </listitem>
     </itemizedlist>
-  </para>
 
-  <para>This lists shows the things we would like to have/do:
+  <para>This lists shows the things we would like to have/do:</para>
     <itemizedlist>
       <listitem>
         <para>IUPAC name parser/producer</para>
@@ -65,10 +64,9 @@
       </listitem>
       <listitem>
         <para>A IChIReader that parses IChI identifiers (v. 0.9).
-          (See <ulink href="http://www.nist.gov/public_affairs/update/upd20020610.htm#International">this press release</ulink>).</para>
+          (See <ulink url="http://www.nist.gov/public_affairs/update/upd20020610.htm#International">this press release</ulink>).</para>
       </listitem>
     </itemizedlist>
-  </para>
 
   <para>
     Other wishes can be found and posted at 

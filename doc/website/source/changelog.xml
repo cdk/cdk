@@ -14,9 +14,9 @@
 
   <para>
     Revision History of the CDK:
-	<literallayout>
-	  &changelog;
-	</literallayout>
+    <literallayout>
+      &changelog;
+    </literallayout>
   </para>
 
 </webpage>

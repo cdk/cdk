@@ -19,12 +19,12 @@
 
   <para>Moreover, the documentation is also available as four PDF files,
      one for each CDK library: core, standard, extra and management:
-     <itemizedlist>
+  </para>
+  <itemizedlist>
        <listitem><para><ulink url="http://cdk.sf.net/download/core.pdf">core</ulink></para></listitem>
        <listitem><para>standard (soon)</para></listitem>
        <listitem><para>extra (soon)</para></listitem>
        <listitem><para>management (soon)</para></listitem>
-     </itemizedlist>
-  </para>
+  </itemizedlist>
 
 </webpage>

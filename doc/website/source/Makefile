@@ -5,6 +5,40 @@ TABSTYLE=${STYLEDIR}/tabular.xsl
 STYLESHEET=${TABSTYLE}
 STYLEOPT=
 
+XML_FILES=agenda.xml \
+api.xml \
+changelog.xml \
+biblio.xml \
+contact.xml \
+development.xml \
+documentation.xml \
+download.xml \
+guide-docs.xml \
+guide-library-development.xml \
+guide-packages.xml \
+guide-website-development.xml \
+guide.xml \
+intro.xml \
+javadoc-data.xml \
+javadoc-stats.xml \
+javancss-data.xml \
+javancss-stats.xml \
+javancss-tmp.xml \
+keywordindex.xml \
+layout.xml \
+libraries.xml \
+manpages.xml \
+reference.xml \
+related.xml \
+rfc.xml \
+rfc2.xml \
+rfc3.xml \
+screenshots.xml \
+software.xml \
+thelibrary.xml \
+website.xml \
+whoiswho.xml
+
 .PHONY : clean
 
 all: stats
@@ -42,3 +76,24 @@ javancss-data.xml: javancss-tmp.xml xsl/javancss2docbook.xsl
 javadoc-data.xml: javancss-tmp.xml xsl/javancss2docbook-javadoc.xsl
 	xsltproc xsl/javancss2docbook-javadoc.xsl javancss-tmp.xml > javadoc-data.xml
 	
+check-xml: $(XML_FILES)
+	@if test -z "$(XML_FILES)"; \
+	then \
+	    echo No XML files to validate; \
+	else \
+	    for f in $(XML_FILES); \
+	    do \
+	        echo -n Checking $$f...; \
+	        xmllint --noout --valid $$f 2> xmllint.error; \
+	        if test -s xmllint.error; \
+	        then \
+	            echo failed; \
+	            cat xmllint.error; \
+	            rm -f xmllint.error; \
+	            exit 1; \
+	        else \
+	            echo ok; \
+	            rm -f xmllint.error; \
+	        fi; \
+	    done; \
+	fi
