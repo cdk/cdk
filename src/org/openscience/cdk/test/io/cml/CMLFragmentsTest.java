@@ -250,6 +250,7 @@ public class CMLFragmentsTest extends TestCase {
         ChemFile chemFile = parseCMLString(cmlStringB.toString());
         Crystal crystal = checkForCrystalFile(chemFile);
         assertEquals(4, crystal.getZ());
+        assertEquals("Fm3m", crystal.getSpaceGroup());
         assertEquals(2, crystal.getAtomCount());
         double[] aaxis = crystal.getA();
         assertEquals(4.5, aaxis[0], 0.1);
