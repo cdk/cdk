@@ -47,9 +47,9 @@ import org.xml.sax.SAXParseException;
 import org.xml.sax.XMLReader;
 
 /**
- * Reads a molecule in CML 1.0 and 1.1 format from a Reader.
+ * Reads a molecule in CML 1.x and 2.0 format.
  * CML is an XML based application {@cdk.cite PMR99}, and this Reader
- * applies a method described in {@cdk.cite WILLIGHAGEN2001}.
+ * applies the method described in {@cdk.cite WILLIGHAGEN2001}.
  *
  * @cdk.module io
  *
