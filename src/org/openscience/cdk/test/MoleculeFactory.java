@@ -208,7 +208,7 @@ public class MoleculeFactory
 		mol.addBond(6, 7, 1); // 8
 		mol.addBond(7, 8, 1); // 9
 		mol.addBond(8, 9, 1); // 10
-		mol.addBond(9, 6, 1); // 11				
+		mol.addBond(9, 6, 1); // 11
 		return mol;
 	}
 	
@@ -224,7 +224,7 @@ public class MoleculeFactory
 		mol.addAtom(new Atom("C")); // 5
 		mol.addAtom(new Atom("C")); // 6
 		mol.addAtom(new Atom("C")); // 7
-		
+
 		mol.addBond(0, 1, 1); // 1
 		mol.addBond(1, 2, 1); // 2
 		mol.addBond(2, 3, 1); // 3
@@ -237,7 +237,7 @@ public class MoleculeFactory
 		return mol;
 	}
 
-	static Molecule makeFusedRings()
+	public static Molecule makeFusedRings()
 	{
 		Molecule mol = new Molecule();
 		mol.addAtom(new Atom("C")); // 0
@@ -250,7 +250,7 @@ public class MoleculeFactory
 		mol.addAtom(new Atom("C")); // 7
 		mol.addAtom(new Atom("C")); // 8
 		mol.addAtom(new Atom("C")); // 9
-		
+
 		mol.addBond(0, 1, 1); // 1
 		mol.addBond(1, 2, 1); // 2
 		mol.addBond(2, 3, 1); // 3
@@ -266,7 +266,7 @@ public class MoleculeFactory
 		return mol;
 	}
 
-	static Molecule makeMethylDecaline()
+	public static Molecule makeMethylDecaline()
 	{
 		Molecule mol = new Molecule();
 		mol.addAtom(new Atom("C")); // 0
@@ -292,13 +292,13 @@ public class MoleculeFactory
 		mol.addBond(6, 7, 1); // 8RingSet
 		mol.addBond(7, 8, 1); // 9
 		mol.addBond(8, 9, 1); // 10
-		mol.addBond(9, 0, 1); // 11		
+		mol.addBond(9, 0, 1); // 11
 		mol.addBond(5, 10, 1); // 12		
 		return mol;
 
 	}
 
-	static Molecule makeEthylPropylPhenantren()
+	public static Molecule makeEthylPropylPhenantren()
 	{
 		Molecule mol = new Molecule();
 		mol.addAtom(new Atom("C")); // 0
@@ -346,7 +346,7 @@ public class MoleculeFactory
 		return mol;
 	}
 
-	static Molecule makeAzulene()
+	public static Molecule makeAzulene()
 	{
 		Molecule mol = new Molecule();
 		mol.addAtom(new Atom("C")); // 0
@@ -375,7 +375,7 @@ public class MoleculeFactory
 		return mol;
 	}
 
-	static Molecule makeIndole()
+	public static Molecule makeIndole()
 	{
 		Molecule mol = new Molecule();
 		mol.addAtom(new Atom("C")); // 0
@@ -404,7 +404,7 @@ public class MoleculeFactory
 	}
 
 	
-	static Molecule makePyrrole()
+	public static Molecule makePyrrole()
 	{
 		Molecule mol = new Molecule();
 		mol.addAtom(new Atom("C")); // 0
@@ -424,7 +424,7 @@ public class MoleculeFactory
 	
 
 	
-	static Molecule makeSingleRing()
+	public static Molecule makeSingleRing()
 	{
 		Molecule mol = new Molecule();
 		mol.addAtom(new Atom("C")); // 0
@@ -455,7 +455,7 @@ public class MoleculeFactory
 	}
 	
 
-	static Molecule makeDiamantane()
+	public static Molecule makeDiamantane()
 	{
 		Molecule mol = new Molecule();
 		mol.addAtom(new Atom("C")); // 0
@@ -497,7 +497,7 @@ public class MoleculeFactory
 	}
 
 
-	static Molecule makeBranchedAliphatic()
+	public static Molecule makeBranchedAliphatic()
 	{
 		Molecule mol = new Molecule();
 		mol.addAtom(new Atom("C")); // 0
@@ -534,7 +534,7 @@ public class MoleculeFactory
 		return mol;
 	}
 
-	static Molecule makeBenzene()
+	public static Molecule makeBenzene()
 	{
 		Molecule mol = new Molecule();
 		mol.addAtom(new Atom("C")); // 0
@@ -554,7 +554,7 @@ public class MoleculeFactory
 	}
 	
 	
-	static Molecule loadMolecule(String inFile)
+	public static Molecule loadMolecule(String inFile)
 	{
 		MDLReader mr = null;
 		ChemFile chemFile = null;
@@ -589,7 +589,7 @@ public class MoleculeFactory
 	{
 		try
 		{
-			new ElementFactory().configureAtoms(mol);
+            IsotopeFactory.getInstance().configureAtoms(mol);
 		}
 		catch(Exception exc)
 		{

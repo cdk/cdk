@@ -28,6 +28,7 @@ package org.openscience.cdk.smiles;
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.tools.IsotopeFactory;
+import org.openscience.cdk.test.MoleculeFactory;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 
 import java.util.*;
@@ -57,7 +58,7 @@ public class SmilesGenerator {
    */
   public SmilesGenerator(){
     try {
-      isotopeFactory = new IsotopeFactory();
+      isotopeFactory = IsotopeFactory.getInstance();
     } catch (IOException e) {
       e.printStackTrace();
     } catch (ClassNotFoundException e) {

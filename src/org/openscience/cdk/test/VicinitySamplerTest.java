@@ -1,4 +1,4 @@
-/* 
+/*
  * $RCSfile$    $Author$    $Date$    $Revision$
  * 
  * Copyright (C) 1997-2002  The Chemistry Development Kit (CKD) project
@@ -82,7 +82,7 @@ public class VicinitySamplerTest extends TestCase
 	{
 		try
 		{
-			new ElementFactory().configureAtoms(mol);
+			IsotopeFactory.getInstance().configureAtoms(mol);
 		}
 		catch(Exception exc)
 		{

@@ -49,7 +49,7 @@ public class MDLReader implements CDKConstants, ChemObjectReader {
 	boolean debug = false;
 	BufferedReader input;
 
-    ElementFactory elemfact;
+    IsotopeFactory elemfact;
 
 	/**
 	 * Contructs a new MDLReader that can read Molecule from a given InputStream
@@ -68,7 +68,7 @@ public class MDLReader implements CDKConstants, ChemObjectReader {
 	public MDLReader(Reader in) {
 		input = new BufferedReader(in);
         try {
-            elemfact = new ElementFactory();
+            elemfact = IsotopeFactory.getInstance();
         } catch (Exception e) {
 			// cannot load ElementFactory data
         }

@@ -51,7 +51,6 @@ public class CDKTests {
 		suite.addTest(IsomorphismTesterTest.suite());
 		suite.addTest(PDBReaderTest.suite());		
 		suite.addTest(IsotopeFactoryTest.suite());
-		suite.addTest(ElementFactoryTest.suite());
 		suite.addTest(AllRingsFinderTest.suite());
 		suite.addTest(FingerprinterTest.suite());
 		suite.addTest(AtomTypeFactoryTest.suite());

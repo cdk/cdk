@@ -55,7 +55,7 @@ public class IsotopeFactoryTest extends TestCase
 		IsotopeFactory isofac = null;
 		try
 		{
-			isofac = new IsotopeFactory();
+			isofac = IsotopeFactory.getInstance();
 		}
 		catch(Exception exc)
 		{
@@ -88,4 +88,35 @@ public class IsotopeFactoryTest extends TestCase
 		
 		
 	}
+    
+	/**
+	 *  A unit test for JUnit
+	 */
+	public void testElementFactory()
+	{
+		Element element = null;
+		IsotopeFactory elfac = null;
+		String findThis = "Br";
+		try
+		{
+			elfac = IsotopeFactory.getInstance();
+		}
+		catch (Exception exc)
+		{
+			throw new AssertionFailedError("Problem instantiating IsotopeFactory: " + exc.toString());
+		}
+
+		assertTrue(elfac.getSize() > 0);
+
+		try
+		{
+			element = elfac.getElement(findThis);
+		}
+		catch (Exception exc)
+		{
+			throw new AssertionFailedError("Problem getting isotope " + findThis + " from ElementFactory: " + exc.toString());
+		}
+
+		assertTrue(element.getAtomicNumber() == 35);
+	}    
 }
