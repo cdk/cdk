@@ -77,6 +77,18 @@ public class MoleculeViewer2D extends JPanel implements CDKChangeListener
 	
 
 	/**
+	 * Constructs a MoleculeViewer with a molecule to display
+	 *
+	 */
+	public MoleculeViewer2D()
+	{
+		r2dm = new Renderer2DModel();
+		r2dm.addCDKChangeListener(this);
+		renderer = new Renderer2D(r2dm);
+	}
+
+
+	/**
 	 * Contructs a JFrame into which this JPanel is
 	 * put and displays the frame with the molecule
 	 */

@@ -1,7 +1,10 @@
 <project name="CDK" default="compile" basedir=".">
   
   <!-- comment this line out of you have not jikes installed -->
-  <property name="build.compiler" value="jikes"/>
+  <!--property name="build.compiler" value="jikes"/-->
+  
+   <property name="build" value="build"/>
+  
   
   <path id="project.class.path">
     <!-- adapt the next line to reflect you installation -->
@@ -12,8 +15,17 @@
     </fileset>
   </path>
   
-  <target name="compile">
-    <javac srcdir="." destdir="." optimize="on" deprecation="on">
+  <target name="init">
+    <!-- Create the time stamp -->
+    <tstamp/>
+    <!-- Create the build directory structure used by compile -->
+    <mkdir dir="${build}"/>
+  </target>
+
+  
+  <target name="compile" depends="init">
+    <mkdir dir="${build}"/>
+    <javac srcdir="." destdir="${build}" optimize="on" deprecation="on">
       <classpath refid="project.class.path"/>
     </javac>
   </target>
@@ -23,6 +35,14 @@
       <fileset dir="." includes="**/*~"/>
       <fileset dir="." includes="**/*.class"/>
     </delete>
+  </target>
+  
+    <target name="dist" depends="compile">
+    <!-- Create the distribution directory -->
+    <mkdir dir="${dist}/jar"/>
+
+    <!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
+    <jar jarfile="${dist}/jar/cdk-${DSTAMP}.jar" basedir="${build}"/>
   </target>
 
 </project>

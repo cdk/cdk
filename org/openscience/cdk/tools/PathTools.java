@@ -128,7 +128,7 @@ public class PathTools implements CDKConstants
 		Bond[] bonds = molecule.getConnectedBonds(root);
 		Atom nextAtom = null;
 		root.flags[VISITED] = true;
-		System.out.println("root: " + molecule.getAtomNumber(root));
+		//System.out.println("root: " + molecule.getAtomNumber(root));
 		for(int f = 0; f < bonds.length; f++)
 		{
 			nextAtom = bonds[f].getConnectedAtom(root);
@@ -136,10 +136,10 @@ public class PathTools implements CDKConstants
 			{
 				path.addAtom(nextAtom);
 				path.addBond(bonds[f]);
-				System.out.println("nextAtom: " + molecule.getAtomNumber(nextAtom));
+				//System.out.println("nextAtom: " + molecule.getAtomNumber(nextAtom));
 				if (nextAtom == target)
 				{
-					System.out.println("target found: " + molecule.getAtomNumber(nextAtom));				
+					//System.out.println("target found: " + molecule.getAtomNumber(nextAtom));				
 					return true;
 				}
 				else

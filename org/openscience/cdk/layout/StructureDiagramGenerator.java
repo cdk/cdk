@@ -154,7 +154,7 @@ public class StructureDiagramGenerator implements CDKConstants
 //			Bond[] bonds = molecule.getConnectedBonds(complexAtom);
 //			placeFirstBond(bonds[0], firstBondVector);
 		}
-		handleAliphatics();
+		//handleAliphatics();
 //		fixRest();
 	}
 
@@ -194,10 +194,10 @@ public class StructureDiagramGenerator implements CDKConstants
 				
 					aliphaticPartners.removeAllElements();
 					sharedAtoms.removeAllElements();
-					System.out.println(aliphaticPartners.getAtomCount());
+					if (debug) System.out.println(aliphaticPartners.getAtomCount());
 					atom = ring.getAtomAt(k);
 					partitionPartners(atom, aliphaticPartners, sharedAtoms);
-					System.out.println(aliphaticPartners.getAtomCount());
+					if (debug) System.out.println(aliphaticPartners.getAtomCount());
 					if (aliphaticPartners.getAtomCount() > 0)
 					{
 						atomPlacer.distributePartners(atom, sharedAtoms, aliphaticPartners, bondLength);
@@ -238,7 +238,7 @@ public class StructureDiagramGenerator implements CDKConstants
 				for (int j = 0; j < complexity[i].size(); j++)
 				{
 				    atom = (Atom)complexity[i].elementAt(j);
-					System.out.println(i + ", " + j + ", " + apspCol[molecule.getAtomNumber(atom)]);
+					if (debug) System.out.println(i + ", " + j + ", " + apspCol[molecule.getAtomNumber(atom)]);
 					/* for each atom the molecule check its apsp distance sum */
 					if (apspCol[molecule.getAtomNumber(atom)] < max)
 					{
@@ -251,7 +251,7 @@ public class StructureDiagramGenerator implements CDKConstants
 		}
 		try
 		{
-			System.out.println(molecule.getAtomNumber(mostComplexAtom));
+			if (debug) System.out.println(molecule.getAtomNumber(mostComplexAtom));
 		}
 		catch(Exception exc)
 		{
@@ -277,7 +277,7 @@ public class StructureDiagramGenerator implements CDKConstants
 		Vector unplacedAtoms = null;
 		double startAngle = 0, addAngle = 0, unoccupiedAngle = 0;
 		atomPlacer.placeLinearChain(longestChain, new Vector2d(Math.cos(angle), Math.sin(angle)), bondLength);
-		System.out.println("Longest Chain has " + longestChain.getAtomCount() + " atoms.");
+		//System.out.println("Longest Chain has " + longestChain.getAtomCount() + " atoms.");
 
 		do
 		{
@@ -643,7 +643,7 @@ public class StructureDiagramGenerator implements CDKConstants
 		startAtom = molecule.getAtomAt(bestStartAtom);
 		endAtom = molecule.getAtomAt(bestEndAtom);
 		AtomContainer path = new AtomContainer();
-		System.out.println("Longest chain with length " + maxPathLength + " is between atoms " + molecule.getAtomNumber(startAtom) + " and " + molecule.getAtomNumber(endAtom));
+		if (debug) System.out.println("Longest chain with length " + maxPathLength + " is between atoms " + molecule.getAtomNumber(startAtom) + " and " + molecule.getAtomNumber(endAtom));
 		PathTools.depthFirstTargetSearch(molecule, startAtom, endAtom, path);
 		return path;
 	}

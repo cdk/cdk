@@ -110,7 +110,7 @@ public class AtomPlacer implements CDKConstants
 			closestPoint1.sub(new Vector2d(atom.getPoint2D()));
 			closestPoint2.sub(new Vector2d(atom.getPoint2D()));			
 			occupiedAngle = closestPoint1.angle(closestPoint2);
-			System.out.println("distributePartners->occupiedAngle: " + Math.toDegrees(occupiedAngle));
+			//System.out.println("distributePartners->occupiedAngle: " + Math.toDegrees(occupiedAngle));
 		
 		}
 		else

@@ -1,6 +1,4 @@
-/* RingSearchTest.java
- * 
- * $RCSfile$    $Author$    $Date$    $Revision$
+/* $RCSfile$    $Author$    $Date$    $Revision$
  * 
  * Copyright (C) 1997-2000  The CompChem project
  * 
@@ -23,42 +21,25 @@
 
 package org.openscience.cdk.test;
 
-
-import org.openscience.cdk.*;
-import org.openscience.cdk.ringsearch.*;
-import org.openscience.cdk.io.*;
-import org.openscience.cdk.tools.*;
-import java.util.*;
-import java.io.*;
-import java.net.URL;
 import junit.framework.*;
 
-public class RingSearchTest extends TestCase
-{
-	Molecule molecule;
-	SSSRFinder sssrf;
-	RingSet ringSet;
-	
-	public RingSearchTest(String name)
-	{
-		super(name);
-	}
+/**
+ * TestSuite that runs all the sample tests
+ *
+ */
+public class CDKTests {
 
-	public void setUp()
-	{
-		sssrf = new SSSRFinder();
-		molecule = MoleculeFactory.makeAlphaPinene();
+	public static void main (String[] args) {
+		junit.textui.TestRunner.run (suite());
 	}
+	public static Test suite ( ) {
+		TestSuite suite= new TestSuite("All CDK Tests");
+		suite.addTest(RingSearchTest.suite());
+		suite.addTest(ConnectivityCheckerTest.suite());
 
-	public static Test suite() {
-		return new TestSuite(RingSearchTest.class);
+		// Let the graphical tests always be the last ones
+		suite.addTest(StructureDiagramGeneratorTest.suite());
+		
+	    return suite;
 	}
-
-	public void testAlphaPinene()
-	{
-		ringSet = sssrf.findSSSR(molecule);
-		assert(ringSet.size() == 2);
-	}
-	
 }
-

@@ -32,27 +32,55 @@ import java.util.*;
 import java.io.*;
 import java.net.URL;
 import javax.vecmath.Vector2d;
+import junit.framework.*;
 
-
-public class StructureDiagramGeneratorTest
+public class StructureDiagramGeneratorTest extends TestCase
 {
-	MDLReader mr;
-	ChemFile chemFile;
-	ChemSequence chemSequence;
-	ChemModel chemModel;
-	SetOfMolecules setOfMolecules;
-	Molecule molecule;
+	Vector molecules = new Vector();;
+	StructureDiagramGenerator sdg = null;
+	MoleculeViewer2D mv = null;
+	Renderer2DModel r2dm = null;
 	
-	public StructureDiagramGeneratorTest(String inFile)
+	public StructureDiagramGeneratorTest(String name)
 	{
-//		molecule = buildFusedRings();
-//		molecule = buildMolecule4x3();
-//		molecule = buildMolecule2x3();
-//		molecule = buildMolecule2x4();
-//		molecule = buildSpiroRings();
-		molecule = loadMolecule(inFile);
-//		molecule = buildRing();
-		StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+		super(name);
+	}
+	
+	public void setUp()
+	{
+		sdg = new StructureDiagramGenerator();
+		MoleculeViewer2D mv = new MoleculeViewer2D();
+		Renderer2DModel r2dm = new Renderer2DModel();
+		r2dm.setDrawNumbers(true);
+		mv.setRenderer2DModel(r2dm);
+		
+	}
+
+	public static Test suite() {
+		return new TestSuite(StructureDiagramGeneratorTest.class);
+	}
+
+	public void testAlphaPinene()
+	{
+		molecules.addElement(MoleculeFactory.makeAlphaPinene());
+		assert(showIt((Molecule)molecules.lastElement()));
+	}
+	
+	public void testCondensed()
+	{
+		molecules.addElement(MoleculeFactory.make4x3CondensedRings());
+		assert(showIt((Molecule)molecules.lastElement()));
+	}
+
+	public void testSpiro()
+	{
+		molecules.addElement(MoleculeFactory.makeSpiroRings());
+		assert(showIt((Molecule)molecules.lastElement()));
+	}
+
+
+	boolean showIt(Molecule molecule)
+	{
 		sdg.setMolecule(molecule);
 		try
 		{
@@ -62,206 +90,12 @@ public class StructureDiagramGeneratorTest
 		{
 			System.out.println("*** Exit due to an unexpected error during coordinate generation ***");
 			exc.printStackTrace();
-			System.exit(1);
+			return false;
 		}
-	
-		Molecule molecule = sdg.getMolecule();
-		MoleculeViewer2D mv = new MoleculeViewer2D(sdg.getMolecule());
-		Renderer2DModel r2dm = new Renderer2DModel();
-		r2dm.setDrawNumbers(true);
+		mv.setAtomContainer(sdg.getMolecule());
 		mv.display();
-
+		return true;
 	}
 
-	/**
-	 * The main method.
-	 *
-	 * @param   args    The Arguments from the commandline
-	 */
-	public static void main(String[] args)
-	{
-		new StructureDiagramGeneratorTest(args[0]);
-	}
-	
-	/* build a molecule from 4 condensed triangles */
-	
-	Molecule buildMolecule4x3()
-	{
-		Molecule mol = new Molecule();
-		mol.addAtom(new Atom("C")); // 0
-		mol.addAtom(new Atom("C")); // 1
-		mol.addAtom(new Atom("C")); // 2
-		mol.addAtom(new Atom("C")); // 3
-		mol.addAtom(new Atom("C")); // 4
-		mol.addAtom(new Atom("C")); // 4		
-		
-		mol.addBond(0, 1, 1); // 1
-		mol.addBond(1, 2, 1); // 2
-		mol.addBond(2, 0, 1); // 3
-		mol.addBond(2, 3, 1); // 4
-		mol.addBond(3, 1, 1); // 5
-		mol.addBond(3, 4, 1); // 7
-		mol.addBond(4, 2, 1); // 8
-		mol.addBond(4, 5, 1); // 9		
-		mol.addBond(5, 2, 1); // 10		
-		return mol;
-	}
-	
-	Molecule buildMolecule2x3()
-	{
-		Molecule mol = new Molecule();
-		mol.addAtom(new Atom("C")); // 0
-		mol.addAtom(new Atom("C")); // 1
-		mol.addAtom(new Atom("C")); // 2
-		mol.addAtom(new Atom("C")); // 3
-		
-		mol.addBond(0, 1, 1); // 1
-		mol.addBond(1, 2, 1); // 2
-		mol.addBond(2, 0, 1); // 3
-		mol.addBond(2, 3, 1); // 7
-		mol.addBond(1, 3, 1); // 8
-		return mol;
-	}
-	
-
-	Molecule buildMolecule2x4()
-	{
-		Molecule mol = new Molecule();
-		mol.addAtom(new Atom("C")); // 0
-		mol.addAtom(new Atom("C")); // 1
-		mol.addAtom(new Atom("C")); // 2
-		mol.addAtom(new Atom("C")); // 3
-		mol.addAtom(new Atom("C")); // 2
-		mol.addAtom(new Atom("C")); // 3
-		
-		mol.addBond(0, 1, 1); // 1
-		mol.addBond(1, 2, 1); // 2
-		mol.addBond(2, 3, 1); // 3
-		mol.addBond(3, 0, 1); // 7
-		mol.addBond(1, 4, 1); // 8
-		mol.addBond(4, 5, 1); // 7
-		mol.addBond(5, 2, 1); // 8
-		return mol;
-	}
-
-	
-	Molecule buildFusedRings()
-	{
-		Molecule mol = new Molecule();
-		mol.addAtom(new Atom("C")); // 0
-		mol.addAtom(new Atom("C")); // 1
-		mol.addAtom(new Atom("C")); // 2
-		mol.addAtom(new Atom("C")); // 3
-		mol.addAtom(new Atom("C")); // 4
-		mol.addAtom(new Atom("C")); // 5
-		mol.addAtom(new Atom("C")); // 6
-		mol.addAtom(new Atom("C")); // 7
-		mol.addAtom(new Atom("C")); // 8
-		mol.addAtom(new Atom("C")); // 9
-		
-		mol.addBond(0, 1, 1); // 1
-		mol.addBond(1, 2, 1); // 2
-		mol.addBond(2, 3, 1); // 3
-		mol.addBond(3, 4, 1); // 4
-		mol.addBond(4, 5, 1); // 5
-		mol.addBond(5, 0, 1); // 6
-		mol.addBond(5, 6, 1); // 7
-		mol.addBond(6, 7, 1); // 8
-		mol.addBond(7, 4, 1); // 9
-		mol.addBond(8, 0, 1); // 10
-		mol.addBond(9, 1, 1); // 11		
-		mol.addBond(9, 8, 1); // 11		
-		
-			
-		return mol;
-	}
-
-	Molecule buildSpiroRings()
-	{
-		Molecule mol = new Molecule();
-		mol.addAtom(new Atom("C")); // 0
-		mol.addAtom(new Atom("C")); // 1
-		mol.addAtom(new Atom("C")); // 2
-		mol.addAtom(new Atom("C")); // 3
-		mol.addAtom(new Atom("C")); // 4
-		mol.addAtom(new Atom("C")); // 5
-		mol.addAtom(new Atom("C")); // 6
-		mol.addAtom(new Atom("C")); // 7
-		mol.addAtom(new Atom("C")); // 8
-		mol.addAtom(new Atom("C")); // 9
-
-		
-		
-		mol.addBond(0, 1, 1); // 1
-		mol.addBond(1, 2, 1); // 2
-		mol.addBond(2, 3, 1); // 3
-		mol.addBond(3, 4, 1); // 4
-		mol.addBond(4, 5, 1); // 5
-		mol.addBond(5, 6, 1); // 6
-		mol.addBond(6, 0, 1); // 7
-		mol.addBond(6, 7, 1); // 8
-		mol.addBond(7, 8, 1); // 9
-		mol.addBond(8, 9, 1); // 10
-		mol.addBond(9, 6, 1); // 11				
-		return mol;
-	}
-	
-	
-	Molecule buildRing()
-	{
-		Molecule mol = new Molecule();
-		mol.addAtom(new Atom("C")); // 0
-		mol.addAtom(new Atom("C")); // 1
-		mol.addAtom(new Atom("C")); // 2
-		mol.addAtom(new Atom("C")); // 3
-		mol.addAtom(new Atom("C")); // 4
-		mol.addAtom(new Atom("C")); // 5
-//		mol.addAtom(new Atom("C")); // 6
-//		mol.addAtom(new Atom("C")); // 7
-//		mol.addAtom(new Atom("C")); // 8
-//		mol.addAtom(new Atom("C")); // 9
-		
-		mol.addBond(0, 1, 1); // 1
-		mol.addBond(1, 2, 1); // 2
-		mol.addBond(2, 3, 1); // 3
-		mol.addBond(3, 4, 1); // 4
-		mol.addBond(4, 5, 1); // 5
-		mol.addBond(5, 0, 1); // 6
-//		mol.addBond(5, 6, 1); // 7
-//		mol.addBond(6, 7, 1); // 8
-//		mol.addBond(7, 4, 1); // 9
-//		mol.addBond(8, 0, 1); // 10
-//		mol.addBond(9, 1, 1); // 11		
-		
-			
-		return mol;
-	}
-	
-
-	
-	Molecule loadMolecule(String inFile)
-	{
-		try
-		{
-			FileInputStream fis = new FileInputStream(inFile);
-			mr = new MDLReader(fis);
-			chemFile = (ChemFile)mr.read((ChemObject)new ChemFile());
-			fis.close();
-			chemSequence = chemFile.getChemSequence(0);
-			chemModel = chemSequence.getChemModel(0);
-			setOfMolecules = chemModel.getSetOfMolecules();
-			molecule = setOfMolecules.getMolecule(0);
-		}
-		catch(Exception exc)
-		{
-			exc.printStackTrace();		
-		}
-		for (int i = 0; i < molecule.getAtomCount(); i++)
-		{
-			molecule.getAtomAt(i).setPoint2D(null);
-		}
-		return molecule;
-		
-	}
 }
 

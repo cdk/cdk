@@ -48,7 +48,6 @@ public class ConnectivityChecker implements CDKConstants
 		Vector visitedAtoms = new Vector();
 		Vector bonds = new Vector();
 		boolean foundConnection = false;
-		System.out.println("Connectivity Checker");
 		for (int f = 0; f < ac.getBondCount();f ++)
 		{
 			bonds.addElement(ac.getBondAt(f));
@@ -112,7 +111,6 @@ public class ConnectivityChecker implements CDKConstants
 			atomContainer.getBondAt(f).flags[VISITED] = false;
 			ac.addBond(atomContainer.getBondAt(f));
 		}
-//		System.out.println("atomcontainer  "+ ac);
 		while(ac.getAtomCount() > 0)
 		{
 			atom = ac.getAtomAt(0);

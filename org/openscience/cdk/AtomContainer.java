@@ -679,12 +679,10 @@ public class AtomContainer extends ChemObject implements Cloneable{
 	{
 		Bond bond;
 		StringBuffer s = new StringBuffer();
-		System.out.println("Atomcount: " + getAtomCount());
 		for (int i = 0; i < getAtomCount(); i++)
 		{
 			s.append(i + ". " + getAtomAt(i));
 		}
-		System.out.println("Bondcount: " + getBondCount());
 		for (int i = 0; i < getBondCount(); i++)
 		{
 			bond = getBondAt(i);
@@ -728,6 +726,8 @@ public class AtomContainer extends ChemObject implements Cloneable{
 		return o;
 	}
 }
+
+
 
 
 
