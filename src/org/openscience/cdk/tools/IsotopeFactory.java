@@ -35,15 +35,20 @@ import org.w3c.dom.*;
 import JSX.*;
 
 /**
- *  Used to store and return data of a particular isotope. As this class is a
- *  singleton class, one gets an instance with: <pre>
+ * Used to store and return data of a particular isotope. As this class is a
+ * singleton class, one gets an instance with: <pre>
  * IsotopeFactory ifac = IsotopFactory.getInstance();
  * </pre>
  *
- *@author     steinbeck
- *@created    August 29, 2001
- *@keyword    isotope
- *@keyword    element
+ * <p>Data about the isotopes are read from the file
+ * org.openscience.cdk.config.isotopes.xml in the cdk-standard
+ * module. Part of the data in this file was collected from
+ * the website <a href="http://www.webelements.org">webelements.org</a>.
+ *
+ * @author     steinbeck
+ * @created    August 29, 2001
+ * @keyword    isotope
+ * @keyword    element
  */
 public class IsotopeFactory
 {
@@ -84,7 +89,9 @@ public class IsotopeFactory
 		in = new ObjIn(ins, new Config().aliasID(false));
 		isotopes = (Vector) in.readObject();
 		for (int f = 0; f < isotopes.size(); f++) {
-			setup((Isotope) isotopes.elementAt(f));
+            Isotope isotope = (Isotope)isotopes.elementAt(f);
+            logger.debug("Setting up: " + isotope);
+			setup(isotope);
 		}
 	}
 
