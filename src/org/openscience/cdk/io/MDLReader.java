@@ -60,7 +60,9 @@ import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
- * Reads a molecule from an MDL MOL or SDF file {@cdk.cite DAL92}.
+ * Reads a molecule from an MDL MOL or SDF file {@cdk.cite DAL92}. An SD files
+ * is read into a ChemSequence of ChemModel's. Each ChemModel will contain one
+ * Molecule.
  *
  * <p>From the Atom block it reads atomic coordinates, element types and
  * formal charges. From the Bond block it reads the bonds and the orders.
