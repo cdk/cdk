@@ -882,13 +882,19 @@ public class SmilesGenerator {
               }
             }
             //Make sure that the first atom in onew is the first one in the original smiles order. This is important to have a canonical smiles.
-            Object atomAfterCenterInOriginalSmiles=v.get(positionInVector+1);
-            while(onew[0]!=atomAfterCenterInOriginalSmiles){
-              Object placeholder=onew[onew.length-1];
-              for(int k= onew.length-2;k>-1;k--){
-                onew[k+1]=onew[k];
+            if(positionInVector+1<v.size()){
+              Object atomAfterCenterInOriginalSmiles=v.get(positionInVector+1);
+              int l=0;
+              while(onew[0]!=atomAfterCenterInOriginalSmiles){
+                Object placeholder=onew[onew.length-1];
+                for(int k= onew.length-2;k>-1;k--){
+                  onew[k+1]=onew[k];
+                }
+                onew[0]=placeholder;
+                l++;
+                if(l>onew.length)
+                  break;
               }
-              onew[0]=placeholder;
             }
             //The last in onew is a vector: This means we need to exchange the rest of the original smiles with the rest of this vector.
             if(onew[numberOfAtoms-1] instanceof Vector){
