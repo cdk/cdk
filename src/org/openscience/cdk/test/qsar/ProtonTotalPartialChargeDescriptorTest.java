@@ -28,8 +28,10 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.tools.HydrogenAdder;
 import java.util.ArrayList;
 import java.io.*;
 
@@ -48,9 +50,11 @@ public class ProtonTotalPartialChargeDescriptorTest extends TestCase {
 		Object[] params = {new Integer(0)};
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser();
-		AtomContainer mol = sp.parseSmiles("CF"); 
+		Molecule mol = sp.parseSmiles("CF"); 
+		HydrogenAdder hAdder = new HydrogenAdder();
+		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		ArrayList retval = (ArrayList)descriptor.calculate(mol);
-		assertEquals(0.07915, ((Double)retval.get(0)).doubleValue(), 0.00001);
+		assertEquals(0.05783, ((Double)retval.get(2)).doubleValue(), 0.00001);
 	}
 }
 

@@ -29,7 +29,6 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.charges.Polarizability;
-import org.openscience.cdk.tools.HydrogenAdder;
 import java.util.Map;
 import java.util.Hashtable;
 import java.util.ArrayList;
@@ -103,7 +102,8 @@ public class EffectivePolarizabilityDescriptor implements Descriptor {
 
 	/**
 	 *  The method returns effective polarizabilities assigned to an heavy atom and its
-	 *  protons by Polarizability class
+	 *  protons by Polarizability class.
+	 *  It is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
 	 *
 	 *@param  ac                AtomContainer
 	 *@return                   an array of doubles with polarizabilities of [heavy,
@@ -113,12 +113,7 @@ public class EffectivePolarizabilityDescriptor implements Descriptor {
 	public Object calculate(AtomContainer ac) throws CDKException {
 		Molecule mol = new Molecule(ac);
 		Polarizability pol = new Polarizability();
-		try {
-			HydrogenAdder hAdder = new HydrogenAdder();
-			hAdder.addExplicitHydrogensToSatisfyValency(mol);
-		} catch (Exception ex1) {
-			throw new CDKException("Problems with HydrogenAdder due to " + ex1.toString());
-		}
+		
 		Atom target = mol.getAtomAt(atomPosition);
 		Atom[] neighboors = mol.getConnectedAtoms(target);
 		ArrayList effectivePolarizability = new ArrayList(4);

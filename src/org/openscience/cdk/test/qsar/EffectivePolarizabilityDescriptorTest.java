@@ -30,6 +30,10 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.tools.HydrogenAdder;
+import org.openscience.cdk.Molecule;
+
+
 import java.util.ArrayList;
 import java.io.*;
 
@@ -44,11 +48,16 @@ public class EffectivePolarizabilityDescriptorTest extends TestCase {
 	public void testEffectivePolarizabilityDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={6.13,3.79,3.79};
 		Descriptor descriptor = new EffectivePolarizabilityDescriptor();
-		
 		Object[] params = {new Integer(1)};
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser();
-		AtomContainer mol = sp.parseSmiles("NCCN(C)(C)"); 
+		Molecule mol = sp.parseSmiles("NCCN(C)(C)"); 
+		HydrogenAdder hAdder = new HydrogenAdder();
+		try {
+			hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		} catch (Exception ex1) {
+			throw new CDKException("Problems with HydrogenAdder due to " + ex1.toString());
+		}
 		ArrayList retval = (ArrayList)descriptor.calculate(mol);
 		// position 0 =  heavy atom
 		// positions 1... = protons

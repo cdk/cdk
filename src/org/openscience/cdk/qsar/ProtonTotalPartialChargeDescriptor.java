@@ -29,7 +29,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
-import org.openscience.cdk.tools.HydrogenAdder;
+
 import java.util.Map;
 import java.util.Hashtable;
 import java.util.ArrayList;
@@ -102,6 +102,7 @@ public class ProtonTotalPartialChargeDescriptor implements Descriptor {
 
 	/**
 	 *  The method returns partial charges assigned to an heavy atom and its protons through Gasteiger Marsili
+	 *  It is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
 	 *
 	 *@param  ac                AtomContainer
 	 *@return                   an array of doubles with partial charges of [heavy, proton_1 ... proton_n]
@@ -112,11 +113,11 @@ public class ProtonTotalPartialChargeDescriptor implements Descriptor {
 		Molecule mol = new Molecule(ac);
 		try {
 			GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
-			HydrogenAdder hAdder = new HydrogenAdder();
-			hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		//	HydrogenAdder hAdder = new HydrogenAdder();
+		//	hAdder.addExplicitHydrogensToSatisfyValency(mol);
 			peoe.assignGasteigerMarsiliPartialCharges(mol, true);
 		} catch (Exception ex1) {
-			throw new CDKException("Problems with HydrogenAdder due to " + ex1.toString());
+			throw new CDKException("Problems with assignGasteigerMarsiliPartialCharges due to " + ex1.toString());
 		}
 		Atom target = mol.getAtomAt(atomPosition);
 		Atom[] neighboors = mol.getConnectedAtoms(target);

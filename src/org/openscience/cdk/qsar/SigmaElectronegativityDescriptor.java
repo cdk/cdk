@@ -28,7 +28,6 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
-import org.openscience.cdk.tools.HydrogenAdder;
 import java.util.Map;
 import java.util.Hashtable;
 
@@ -99,7 +98,8 @@ public class SigmaElectronegativityDescriptor implements Descriptor {
 
 
 	/**
-	 *  it calculates the sigma electronegativity of a given atom
+	 *  The method calculates the sigma electronegativity of a given atom
+	 *  It is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
 	 *
 	 *@param  ac                AtomContainer
 	 *@return                   return the sigma electronegativity
@@ -109,10 +109,7 @@ public class SigmaElectronegativityDescriptor implements Descriptor {
 		double sigmaElectronegativity = 0;
 		Molecule mol = new Molecule(ac);
 		GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
-		HydrogenAdder hAdder = new HydrogenAdder();
 		try {
-			hAdder.addExplicitHydrogensToSatisfyValency(mol);
-			System.out.println("AtomNr:" + mol.getAtomAt(atomPosition).getSymbol());
 			peoe.assignGasteigerMarsiliPartialCharges(mol, true);
 			double[] gasteigerFactors = peoe.assignGasteigerMarsiliFactors(mol);
 			int stepSize = peoe.getStepSize();
@@ -120,7 +117,7 @@ public class SigmaElectronegativityDescriptor implements Descriptor {
 			sigmaElectronegativity = ((gasteigerFactors[start]) + (mol.getAtomAt(atomPosition).getCharge() * gasteigerFactors[start + 1]) + (gasteigerFactors[start + 2] * ((mol.getAtomAt(atomPosition).getCharge() * mol.getAtomAt(atomPosition).getCharge()))));
 			return new Double(sigmaElectronegativity);
 		} catch (Exception ex1) {
-			throw new CDKException("Problems with HydrogenAdder due to " + ex1.toString());
+			throw new CDKException("Problems with GasteigerMarsiliPartialCharges due to " + ex1.toString());
 		}
 	}
 

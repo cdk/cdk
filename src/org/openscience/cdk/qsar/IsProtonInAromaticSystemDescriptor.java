@@ -109,42 +109,38 @@ public class IsProtonInAromaticSystemDescriptor implements Descriptor {
 
 
 	/**
-	 *  The method is a proton descriptor that evaluate if protons of a given atom are bonded to an aromatic system
+	 *  The method is a proton descriptor that evaluate if protons of a given atom are bonded to an aromatic system.
+	 *  It is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
 	 *
 	 *@param  ac                AtomContainer
 	 *@return                   true if the proton is bonded to an aromatic atom.
 	 *@exception  CDKException  Possible Exceptions
 	 */
 	public Object calculate(AtomContainer ac) throws CDKException {
-		HydrogenAdder hAdder = new HydrogenAdder();
-		try {
-			boolean isProtonInAromaticSystem = false;
-			int counter = 0;
-			Molecule mol = new Molecule(ac);
-			if (checkAromaticity) {
-				RingSet rs = (new AllRingsFinder()).findAllRings(mol);
-				HueckelAromaticityDetector.detectAromaticity(mol, rs, true);
-			}
-			if (mol.getAtomAt(atomPosition).getFlag(CDKConstants.ISAROMATIC)) {
-				Atom[] neighboors = mol.getConnectedAtoms(mol.getAtomAt(atomPosition));
-				for (int i = 0; i < neighboors.length; i++) {
-					if (neighboors[i].getSymbol().equals("H")) {
-						counter += 1;
-					} else if (mol.getAtomAt(atomPosition).getHydrogenCount() > 0) {
-						counter += mol.getAtomAt(atomPosition).getHydrogenCount();
-					} else {
-						counter += 0;
-					}
+		boolean isProtonInAromaticSystem = false;
+		int counter = 0;
+		Molecule mol = new Molecule(ac);
+		if (checkAromaticity) {
+			RingSet rs = (new AllRingsFinder()).findAllRings(mol);
+			HueckelAromaticityDetector.detectAromaticity(mol, rs, true);
+		}
+		if (mol.getAtomAt(atomPosition).getFlag(CDKConstants.ISAROMATIC)) {
+			Atom[] neighboors = mol.getConnectedAtoms(mol.getAtomAt(atomPosition));
+			for (int i = 0; i < neighboors.length; i++) {
+				if (neighboors[i].getSymbol().equals("H")) {
+					counter += 1;
+				} else if (mol.getAtomAt(atomPosition).getHydrogenCount() > 0) {
+					counter += mol.getAtomAt(atomPosition).getHydrogenCount();
+				} else {
+					counter += 0;
 				}
 			}
-
-			if (counter > 0) {
-				isProtonInAromaticSystem = true;
-			}
-			return new Boolean(isProtonInAromaticSystem);
-		} catch (Exception ex1) {
-			throw new CDKException("Problems with HydrogenAdder due to " + ex1.toString());
 		}
+		if (counter > 0) {
+			isProtonInAromaticSystem = true;
+		}
+		return new Boolean(isProtonInAromaticSystem);
+	
 	}
 
 
