@@ -1,0 +1,62 @@
+--- src/org/openscience/cdk/CDKConstants.java	2003-09-03 09:49:00.094915000 +0200
++++ /tmp/CDKConstants.java.new	2003-10-16 17:34:46.051288400 +0200
+@@ -63,7 +63,6 @@
+ 
+         public final static int STEREO_ATOM_PARITY_PLUS = 1;
+         public final static int STEREO_ATOM_PARITY_MINUS = -1;
+-        public final static int STEREO_ATOM_PARITY_UNDEFINED = 0;
+ 
+         /** 
+          * Carbon NMR shift contant for use as a key in the
+@@ -111,33 +110,42 @@
+ 
+         /** Flag that is set if the chemobject is placed (somewhere).
+          */
+-        public static int ISPLACED = 50;
++        public static int ISPLACED = 0;
+         /** Flag that is set when the chemobject is part of a ring.
+          */
+-        public static int ISINRING = 51;
++        public static int ISINRING = 1;
+         /** Flag that is set if a chemobject is part of an alipahtic chain.
+          */
+-        public static int ISALIPHATIC = 52;
++        public static int ISALIPHATIC = 2;
+         /** Flag is set if chemobject has been visited.
+          */
+-        public static int VISITED = 53; // Use in tree searches
++        public static int VISITED = 3; // Use in tree searches
+         /** Flag is set if chemobject is part of an aromatic system. */
+-        public static int ISAROMATIC = 54;
++        public static int ISAROMATIC = 4;
+         /** Flag is set if a chemobject is mapped to another chemobject.
+          *  It is used for example in subgraph isomorphism search.
+          */
+-        public static int MAPPED = 55;
+-
++        public static int MAPPED = 5;
+ 
++    /**
++     * Maximum flags array index.
++     */
++    public static int MAX_FLAG_INDEX = 5;
++
++    /**
++     * Maximum pointers array index.
++     */
++    public static int MAX_POINTER_INDEX = 0;
++    
+     /****************************************
+     * Some predefined property names for    *
+     * ChemObjects                           *
+     ****************************************/
+ 
+-    /** A String title. */
++    /** The title */
+     public static final String TITLE = "Title";
+ 
+-    /** A String remark. */
++    /** A remark */
+     public static final String REMARK = "Remark";
+ 
+     /** A String comment. */

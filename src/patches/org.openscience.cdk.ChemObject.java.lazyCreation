@@ -1,0 +1,242 @@
+--- src/org/openscience/cdk/ChemObject.java	2003-10-16 17:40:31.338960000 +0200
++++ /tmp/ChemObject.java.new	2003-10-16 17:41:07.161372000 +0200
+@@ -1,7 +1,7 @@
+ /* $RCSfile$
+  * $Author$
+- * $Date$
+- * $Revision$
++ * $Date$
++ * $Revision$
+  * 
+  * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
+  * 
+@@ -39,12 +39,12 @@
+ public class ChemObject implements java.io.Serializable, Cloneable {
+     
+ 	/** Vector for listener administration. */
+-	protected Vector chemObjects = new Vector();
++    private Vector chemObjects;
+ 	/** 
+ 	  * A hashtable for the storage of any kind of properties 
+ 	  * of this ChemObject. 
+ 	  */
+-	protected Hashtable properties = new Hashtable();
++    private Hashtable properties;
+ 	/** You will frequently have to use some flags on a ChemObject.
+ 	 * For example, if you want to draw a molecule and see
+ 	 * if you've already drawn an atom, or in a ring search to 
+@@ -53,14 +53,14 @@
+ 	 * flag array with self-defined constants (flags[VISITED] = true).
+ 	 * 100 flags per object should be more than enough.
+ 	 */
+-	protected boolean[] flags = new boolean[100];
++    private boolean[] flags = new boolean[CDKConstants.MAX_FLAG_INDEX + 1];
+ 
+ 	/** Array of multipurpose vectors. Handle like described for the
+ 	  * flags above.
+ 	  */
+-	protected Vector[] pointers = new Vector[10];
++    private Vector[] pointers;
+ 
+-    protected String id = ""; 
++    private String id = ""; 
+     
+     /**
+      * Constructs a new ChemObject.
+@@ -71,6 +71,18 @@
+ 		init();
+ 	}
+ 	
++    /*
++     * Lazy creation of chemObjects Vector.
++     */
++    private Vector lazyChemObjects()
++    {
++	if (chemObjects == null)
++	    {
++		chemObjects = new Vector();
++	    }
++	return chemObjects;
++    }
++
+ 	/**
+ 	 * Use this to add yourself to this ChemObject as a listener. 
+ 	 * In order to do so, you must implement the ChemObjectListener Interface.
+@@ -81,9 +93,11 @@
+ 	 */
+ 	public void addListener(ChemObjectListener col)
+ 	{
+-		if (!chemObjects.contains(col))
++	    Vector listeners = lazyChemObjects();
++
++		if (!listeners.contains(col))
+ 		{
+-			chemObjects.addElement(col);
++			listeners.addElement(col);
+ 		}
+ 		// Should we through an exception if col is already in here or
+ 		// just silently ignore it?
+@@ -101,9 +115,11 @@
+ 	 */
+ 	public void removeListener(ChemObjectListener col)
+ 	{
+-		if (chemObjects.contains(col))
++	    Vector listeners = lazyChemObjects();
++
++		if (listeners.contains(col))
+ 		{
+-			chemObjects.removeElement(col);
++			listeners.removeElement(col);
+ 		}
+ 	}
+ 
+@@ -114,22 +130,36 @@
+ 	 */
+ 	protected void notifyChanged()
+ 	{
+-		for (int f = 0; f < chemObjects.size(); f++)
++	    Vector listeners = lazyChemObjects();
++
++		for (int f = 0; f < listeners.size(); f++)
+ 		{
+-			((ChemObjectListener)chemObjects.elementAt(f)).stateChanged(new ChemObjectChangeEvent(this));
++			((ChemObjectListener)listeners.elementAt(f)).stateChanged(new ChemObjectChangeEvent(this));
+ 		}
+ 	}
+ 
++    /*
++     * Lazy creation of properties hash.
++     */
++    private Hashtable lazyProperties()
++    {
++	if (properties == null)
++	    {
++		properties = new Hashtable();
++	    }
++	return properties;
++    }
++
+ 	/**
+ 	 * Sets a property for a ChemObject.
+ 	 *
+ 	 * @param   description  An object description of the property (most likely a unique string)
+ 	 * @param   property  An object with the property itself
+      *
+-     * @see     #getProperty, removeProperty
++     * @see     #getProperty
+ 	 */
+ 	public void setProperty(Object description, Object property) {
+-		properties.put(description, property);
++		lazyProperties().put(description, property);
+ 	}
+ 
+ 	/**
+@@ -140,7 +170,7 @@
+      * @see     #setProperty, #getProperty
+ 	 */
+ 	public void removeProperty(Object description) {
+-		properties.remove(description);
++		lazyProperties().remove(description);
+ 	}
+ 
+ 	/**
+@@ -149,10 +179,10 @@
+ 	 * @param   description  An object description of the property (most likely a unique string)
+ 	 * @return  The object containing the property. Returns null if propert is not set.
+      *
+-     * @see     #setProperty, #removeProperty
++     * @see     #setProperty
+ 	 */
+ 	public Object getProperty(Object description) {
+-		return properties.get(description);
++		return lazyProperties().get(description);
+ 	}
+ 
+     /**
+@@ -161,9 +191,9 @@
+      * @return  The object's properties
+      */
+     public Hashtable getProperties() {
+-        return properties;
++        return lazyProperties();
+     }
+-    
++
+ 	/**
+ 	 * Initializes all the service fields, vectors, hashtables, etc..
+ 	 *
+@@ -171,12 +201,12 @@
+ 	public void init()
+ 	{
+ 		/** Vector for listener administration */
+-		chemObjects = new Vector();
++	    chemObjects = null;
+ 		/** 
+ 		  * A hashtable for the storage of any kind of properties 
+ 		  * of this ChemObject. 
+ 		  */
+-		properties = new Hashtable();
++	    properties = null;
+ 		/** You will frequently have to use some flags on a ChemObject
+ 		 * for example if you want to draw a molecule and see
+ 		 * if you've already drawn an atom, or in a ring search to 
+@@ -185,9 +215,9 @@
+ 		 * flag array with self-defined constants (flags[VISITED] = true).
+ 		 * 10 flags per object should be more than enough.
+ 		 */
+-		flags = new boolean[100];
++	    flags = new boolean[CDKConstants.MAX_FLAG_INDEX + 1];
+         
+-        pointers = new Vector[10];
++	    pointers = null;
+ 	}
+ 	
+ 	/**
+@@ -206,7 +236,7 @@
+ 		{
+ 			e.printStackTrace(System.err);
+ 		}
+-		((ChemObject)o).flags = new boolean[100];
++		((ChemObject)o).flags = new boolean[CDKConstants.MAX_FLAG_INDEX + 1];
+ 		for (int f = 0; f < flags.length; f++)
+ 		{
+ 			((ChemObject)o).flags[f] = flags[f];	
+@@ -267,7 +297,19 @@
+     public boolean getFlag(int flag_type) {
+         return flags[flag_type];
+     }
+-    
++
++    /*
++     * Lazy creation of pointers array.
++     */
++    private Vector[] lazyPointers()
++    {
++	if (pointers == null)
++	    {
++		pointers = new Vector[CDKConstants.MAX_POINTER_INDEX + 1];
++	    }
++	return pointers;
++    }
++
+     /**
+      * Sets the value of some pointer.
+      * 
+@@ -275,7 +317,7 @@
+      * @param  pointer_value Value to assign to pointer
+      */
+     public void setPointer(int pointer_type, Vector pointer_value) {
+-        pointers[pointer_type] = pointer_value;
++        lazyPointers()[pointer_type] = pointer_value;
+     }
+     
+     /**
+@@ -284,7 +326,7 @@
+      * @param  pointer_type  Pointer to retrieve the value of
+      */
+     public Vector getPointer(int pointer_type) {
+-        return pointers[pointer_type];
++        return lazyPointers()[pointer_type];
+     }
+     
+ 	/**
