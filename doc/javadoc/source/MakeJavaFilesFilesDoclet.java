@@ -50,6 +50,10 @@ public class MakeJavaFilesFilesDoclet {
         return sb.toString();
     }
 
+    private String toEntity(String className) {
+        return "<listitem>&" + className.substring(20) + ";</listitem>";
+    }
+
     public void process(RootDoc root) throws IOException {
         processPackages(root.specifiedPackages());
 
@@ -61,15 +65,18 @@ public class MakeJavaFilesFilesDoclet {
             // create one file for each cdk package = key
             PrintWriter outJava = new PrintWriter((Writer)new FileWriter(key + ".javafiles"));
             PrintWriter outClass = new PrintWriter((Writer)new FileWriter(key + ".classes"));
+            PrintWriter entList = new PrintWriter((Writer)new FileWriter(key + ".entitylist"));
             Vector packageClasses = (Vector)cdkPackages.get(key);
             Enumeration classes = packageClasses.elements();
             while (classes.hasMoreElements()) {
                 String packageClass = (String)classes.nextElement();
                 outJava.println(toAPIPath(packageClass) + ".java");
                 outClass.println(toAPIPath(packageClass) + "*.class");
+                entList.println(toEntity(packageClass));
             }
             outJava.flush(); outJava.close();
             outClass.flush(); outClass.close();
+            entList.flush(); entList.close();
         }
     }
 
