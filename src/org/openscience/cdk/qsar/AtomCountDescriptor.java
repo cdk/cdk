@@ -54,8 +54,12 @@ public class AtomCountDescriptor implements Descriptor {
         // ok, all should be fine
         elementName = (String)params[0];
     }
+    
     public Object[] getParameters() {
-        return null; // FIXME!!!
+        // return the parameters as used for the descriptor calculation
+        Object[] params = new Object[1];
+        params[0] = elementName;
+        return params;
     }
 
     public Object calculate(AtomContainer container) {
@@ -69,9 +73,15 @@ public class AtomCountDescriptor implements Descriptor {
         return new Integer(atomCount);
     }
     
-    // we should also have something like these. The order of the String[]
-    // return should match the expected order in setParameters;
-    public String[] getParameterNames() {return null; /* FIXME */ };
-    public Object getParameterType(String name) {return null; /* FIXME */ };
+    public String[] getParameterNames() {
+        String[] params = new String[1];
+        params[0] = "Element Symbol";
+        return params;
+    };
+    public Object getParameterType(String name) {
+        Object[] paramTypes = new Object[1];
+        paramTypes[0] = new String();
+        return paramTypes;
+    };
 }
 
