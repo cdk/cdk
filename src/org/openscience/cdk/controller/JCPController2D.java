@@ -368,29 +368,14 @@ public class JCPController2D {
                  *************************************************************************/
                 if (c2dm.getDrawMode() == c2dm.ERASER)
                 {
-                        Atom highlightedAtom = r2dm.getHighlightedAtom();
-                        Bond highlightedBond = r2dm.getHighlightedBond();
-                        if (highlightedAtom != null)
-                        {
-                                try
-                                {
-                                        atomCon.removeAtom(highlightedAtom);
-                                        Bond[] conBonds = atomCon.getConnectedBonds(highlightedAtom);
-                                        for (int i = 0; i < conBonds.length; i++)
-                                        {
-                                                atomCon.removeElectronContainer(conBonds[i]);
-                                        }
-                                }
-                                catch (Exception exc)
-                                {
-                                        exc.printStackTrace();
-                                }
-                        }
-                        else if (highlightedBond != null)
-                        {
-                                atomCon.removeElectronContainer(highlightedBond);
-                        }
-                        r2dm.fireChange();
+                    Atom highlightedAtom = r2dm.getHighlightedAtom();
+                    Bond highlightedBond = r2dm.getHighlightedBond();
+                    if (highlightedAtom != null) {
+                        atomCon.removeAtomAndConnectedElectronContainers(highlightedAtom);
+                    } else if (highlightedBond != null) {
+                        atomCon.removeElectronContainer(highlightedBond);
+                    }
+                    r2dm.fireChange();
                 }
                 
                 /*************************************************************************

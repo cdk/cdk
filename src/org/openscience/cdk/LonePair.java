@@ -93,9 +93,25 @@ public class LonePair extends ElectronContainer {
      * @param   atom  The atom to be tested if it participates in this bond
      * @return     true if this lone pair is associated with the atom
      */
-    public boolean contains(Atom atom)     {
-        return (atom == atom) ? true : false;
+    public boolean contains(Atom a)     {
+        return (this.atom == a) ? true : false;
     }
+
+	/**
+	 * Returns a one line string representation of this Container.
+     * This method is conform RFC #9.
+	 *
+	 * @return    The string representation of this Container
+	 */
+	public String toString() {
+		ElectronContainer ec;
+		StringBuffer s = new StringBuffer();
+        s.append("LonePair(");
+        s.append(this.hashCode() + ", ");
+        s.append(atom.hashCode());
+        s.append(")");
+		return s.toString();
+	}
 }
 
 

@@ -464,21 +464,22 @@ public class Atom extends AtomType implements Cloneable {
         }
 
         /**
-         * Returns a string representation of this Atom.
+         * Returns a one line string representation of this Atom.
+         * Methods is conform RFC #9.
          *
          * @return  The string representation of this Atom
          */
-        public String toString()
-        {
+        public String toString() {
                 StringBuffer s = new StringBuffer();
-                s.append("Atom " + getSymbol() + "\n");
-                s.append("Hydrogen count: " + getHydrogenCount() + "\n");
-                s.append("Stereo Parity: " + getStereoParity() + "\n");
-                s.append("2D coordinates: " + getPoint2D() + "\n");
-                s.append("3D coordinates: " + getPoint3D() + "\n");
-                s.append("Partial charge: " + getCharge() + "\n");
-                s.append("Formal charge: " + getFormalCharge() + "\n");
-
+                s.append("Atom(");
+                s.append(this.hashCode() + ", ");
+                s.append(getSymbol() + ", ");
+                s.append("H:" + getHydrogenCount() + ", ");
+                s.append("SP:" + getStereoParity() + ", ");
+                s.append("2D:[" + getPoint2D() + "], ");
+                s.append("3D:[" + getPoint3D() + "], ");
+                s.append("C:" + getCharge() + ", ");
+                s.append("FC:" + getFormalCharge() + ")");
                 return s.toString();
         }
         

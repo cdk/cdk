@@ -362,8 +362,28 @@ public class Bond extends ElectronContainer implements Cloneable
 		}
 		return o;
 	}
-	
+
+	/**
+	 * Returns a one line string representation of this Container.
+     * This method is conform RFC #9.
+	 *
+	 * @return    The string representation of this Container
+	 */
+	public String toString() {
+		ElectronContainer ec;
+		StringBuffer s = new StringBuffer();
+        s.append("Bond(");
+        s.append(this.hashCode() + ", ");
+        Atom[] atoms = getAtoms();
+        s.append("#A:" + atoms.length + ", ");
+        s.append("#O:" + getOrder() + ", ");
+        s.append("#S:" + getStereo() + ", ");
+        // s.append("#L:" + getLength() + ", ");
+        for (int i=0; i < atoms.length; i++) {
+            s.append(atoms[i].hashCode() + ", ");
+        }
+        s.append(")");
+		return s.toString();
+	}
+
 }
-
-
-
