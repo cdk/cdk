@@ -51,7 +51,9 @@ public class CMLHandler extends DefaultHandler {
 
     private Hashtable userConventions;
 
-    private Stack xpath;
+  // this is a problem under MSFT ie jvm
+  //private Stack xpath;
+    private CMLStack xpath;
     
     /**
      * Constructor for the CMLHandler.
