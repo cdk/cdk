@@ -92,7 +92,21 @@ public class CDKConstants {
         /** A geometry of neighboring atoms when an s orbital is hybridized
          *  with three p orbitals. */
         public final static int HYBRIDIZATION_SP3 = 3;
-
+	/** A geometry of neighboring atoms when an s orbital is hybridized
+         *  with three p orbitals with one d orbital. */
+        public final static int HYBRIDIZATION_SP3D1 = 4;
+	/** A geometry of neighboring atoms when an s orbital is hybridized
+         *  with three p orbitals with two d orbitals. */
+        public final static int HYBRIDIZATION_SP3D2 = 5;
+	/** A geometry of neighboring atoms when an s orbital is hybridized
+         *  with three p orbitals with three d orbitals. */
+        public final static int HYBRIDIZATION_SP3D3 = 6;
+	/** A geometry of neighboring atoms when an s orbital is hybridized
+         *  with three p orbitals with four d orbitals. */
+        public final static int HYBRIDIZATION_SP3D4 = 7;
+	/** A geometry of neighboring atoms when an s orbital is hybridized
+         *  with three p orbitals with five d orbitals. */
+        public final static int HYBRIDIZATION_SP3D5 = 8;
         /** 
          * Carbon NMR shift contant for use as a key in the
          * ChemObject.physicalProperties hashtable.
