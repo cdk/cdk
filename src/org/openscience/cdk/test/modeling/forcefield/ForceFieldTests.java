@@ -65,7 +65,7 @@ public class ForceFieldTests extends CDKTestCase {
 	/**
 	 *  Constructor for GeometricMinimizerTest object
 	 */
-	public ForceFieldTests() { }
+	 public ForceFieldTests() {}
 
 
 	/**
@@ -126,7 +126,7 @@ public class ForceFieldTests extends CDKTestCase {
 	}
 
 
-	public void createTestMolecule() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	public void createTestMoleculeAndSetMMFF94Parameters() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		HydrogenAdder hAdder = new HydrogenAdder();
 		SmilesParser sp = new SmilesParser();
 		ac = sp.parseSmiles("CC");
@@ -145,6 +145,10 @@ public class ForceFieldTests extends CDKTestCase {
 		ForceFieldTools ffTools = new ForceFieldTools();
 		acCoordinates.setSize(ac.getAtomCount() * 3);
 		acCoordinates.set(ffTools.getCoordinates3xNVector(ac));
+		
+		gm.setMMFF94Tables(ac);
+		mmff94Tables = gm.getMMFF94Tables();
+
 	}
 
 
@@ -156,8 +160,8 @@ public class ForceFieldTests extends CDKTestCase {
 	 *@exception  java.lang.Exception     Description of the Exception
 	 */
 	public void testBondStretching() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		System.out.println("");
-		System.out.println("FORCEFIELDTESTS with Bond Stretching");
+		//System.out.println("");
+		//System.out.println("FORCEFIELDTESTS with Bond Stretching");
 		
 		double testResult_SumEB = 228.51003288118426;
 		double[] testResult_gradientSumEB = {-1665.773538328216,-1665.773538328216,-1665.773538328216,
@@ -168,11 +172,8 @@ public class ForceFieldTests extends CDKTestCase {
 						-1665.773538328216,-1665.773538328216,-1665.773538328216,-1665.773538328216,
 						-1665.773538328216};
 
-		createTestMolecule();	
+		createTestMoleculeAndSetMMFF94Parameters();
 		
-		gm.setMMFF94Tables(ac);
-		mmff94Tables = gm.getMMFF94Tables();
-
 		BondStretching bs = new BondStretching();
 		bs.setMMFF94BondStretchingParameters(ac, mmff94Tables);
 
@@ -199,8 +200,8 @@ public class ForceFieldTests extends CDKTestCase {
 	 *@exception  java.lang.Exception     Description of the Exception
 	 */
 	public void testAngleBending() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		System.out.println("");
-		System.out.println("FORCEFIELDTESTS with Angle Bending");
+		//System.out.println("");
+		//System.out.println("FORCEFIELDTESTS with Angle Bending");
 		
 		double testResult_SumEA = 2.6627825055933344E8;
 		double[] testResult_gradientSumEA = {-7254575.574502064,-7254575.574502064,-7254575.574502064,-7254575.574502064,
@@ -210,11 +211,8 @@ public class ForceFieldTests extends CDKTestCase {
 						-7254575.574502064,-7254575.574502064,-7254575.574502064,-7254575.574502064,
 						-7254575.574502064,-7254575.574502064,-7254575.574502064,-7254575.574502064};
 
-		createTestMolecule();	
-
-		gm.setMMFF94Tables(ac);
-		mmff94Tables = gm.getMMFF94Tables();
-
+		createTestMoleculeAndSetMMFF94Parameters();
+		
 		AngleBending ab = new AngleBending();
 		ab.setMMFF94AngleBendingParameters(ac, mmff94Tables);
 
@@ -240,8 +238,8 @@ public class ForceFieldTests extends CDKTestCase {
 	 */
 	public void testStretchBendInteraction() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		
-		System.out.println("");
-		System.out.println("FORCEFIELDTESTS with StretchBendInteraction");
+		//System.out.println("");
+		//System.out.println("FORCEFIELDTESTS with StretchBendInteraction");
 		
 		double testResult_SumEBA = 17052.61896814143;
 		double[] testResult_gradientSumEBA = {-62623.72567235314,-62623.72567235314,-62623.72567235314,-62623.72567235314,
@@ -251,11 +249,8 @@ public class ForceFieldTests extends CDKTestCase {
 						-62623.72567235314,-62623.72567235314,-62623.72567235314,-62623.72567235314,
 						-62623.72567235314,-62623.72567235314,-62623.72567235314,-62623.72567235314};
 
-		createTestMolecule();
-
-		gm.setMMFF94Tables(ac);
-		mmff94Tables = gm.getMMFF94Tables();
-
+		createTestMoleculeAndSetMMFF94Parameters();
+		
 		StretchBendInteractions sbi = new StretchBendInteractions();
 		sbi.setMMFF94StretchBendParameters(ac, mmff94Tables);
 
@@ -273,6 +268,45 @@ public class ForceFieldTests extends CDKTestCase {
 
 
 	/**
+	 *  A unit test for JUnit (Torsions)
+	 *
+	 *@exception  ClassNotFoundException  Description of the Exception
+	 *@exception  CDKException            Description of the Exception
+	 *@exception  java.lang.Exception     Description of the Exception
+	 */
+	public void testTorsions() throws ClassNotFoundException, CDKException, java.lang.Exception {
+		
+		//System.out.println("");
+		//System.out.println("FORCEFIELDTESTS with Torsions");
+		
+		double testResult_MMFF94SumET = 3.4089232551466013;
+		double[] testResult_gradientSumET = {2.3288726725032127,2.3288726725032127,2.3288726725032127,
+				2.3288726725032127,2.3288726725032127,2.3288726725032127,2.3288726725032127,
+				2.3288726725032127,2.3288726725032127,2.3288726725032127,2.3288726725032127,
+				2.3288726725032127,2.3288726725032127,2.3288726725032127,2.3288726725032127,
+				2.3288726725032127,2.3288726725032127,2.3288726725032127,2.3288726725032127,
+				2.3288726725032127,2.3288726725032127,2.3288726725032127,2.3288726725032127,
+				2.3288726725032127};
+
+		createTestMoleculeAndSetMMFF94Parameters();
+		
+		Torsions t = new Torsions();
+		t.setMMFF94TorsionsParameters(ac, mmff94Tables);
+		
+		//System.out.println("functionMMFF94SumET_InPoint = " + t.functionMMFF94SumET_InPoint(ac));
+		
+		assertEquals(testResult_MMFF94SumET, t.functionMMFF94SumET_InPoint(ac), 0.00001);
+		
+		//System.out.println("t.gradientMMFF94SumET_InPoint(ac) = " + t.gradientMMFF94SumET_InPoint(ac));
+		
+		for (int i = 0; i < testResult_gradientSumET.length; i++) {
+			assertEquals(testResult_gradientSumET[i], t.gradientMMFF94SumET_InPoint(ac).getElement(i), 0.00001);
+		}
+		
+		//System.out.println("hessian = " + t.hessianInPoint(acCoordinates));
+	}
+
+	/**
 	 *  A unit test for JUnit (VanDerWaalsInteraction)
 	 *
 	 *@exception  ClassNotFoundException  Description of the Exception
@@ -281,22 +315,16 @@ public class ForceFieldTests extends CDKTestCase {
 	 */
 	public void testVanDerWaalsInteraction() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		
-		System.out.println("");
-		System.out.println("FORCEFIELDTESTS with VanDerWaalsInteraction");
+		//System.out.println("");
+		//System.out.println("FORCEFIELDTESTS with VanDerWaalsInteraction");
 		
-		double testResult_SumEvdW = 18795.199851224905;
-		double[] testResult_gradientSumEwdW = {-81376.99250979327,-81376.99250979327,-81376.99250979327,-81376.99250979327,
-						-81376.99250979327,-81376.99250979327,-81376.99250979327,-81376.99250979327,
-						-81376.99250979327,-81376.99250979327,-81376.99250979327,-81376.99250979327,
-						-81376.99250979327,-81376.99250979327,-81376.99250979327,-81376.99250979327,
-						-81376.99250979327,-81376.99250979327,-81376.99250979327,-81376.99250979327,
-						-81376.99250979327,-81376.99250979327,-81376.99250979327,-81376.99250979327};
+		double testResult_MMFF94SumEvdW = 19.781709492460102;
+		double testResult_CCGSumEvdWSK = 19.781709492460102;
+		double testResult_CCGSumEvdWAv = 20.18009568070273;
+		double[] testResult_gradientSumEwdW = null;
 
-		createTestMolecule();
-
-		gm.setMMFF94Tables(ac);
-		mmff94Tables = gm.getMMFF94Tables();
-
+		createTestMoleculeAndSetMMFF94Parameters();
+		
 		VanDerWaalsInteractions vdwi = new VanDerWaalsInteractions();
 		vdwi.setMMFF94VanDerWaalsParameters(ac, mmff94Tables);
 		vdwi.setAtomDistance(ac);
@@ -304,10 +332,13 @@ public class ForceFieldTests extends CDKTestCase {
 		SmoothingFunctions sf = new SmoothingFunctions();
 		sf.setSmoothingFunction(vdwi.getAtomDistance());
 		
-		System.out.println("functionMMFF94SumEvdW_InPoint = " + vdwi.functionMMFF94SumEvdW_InPoint(ac));
-		System.out.println("functionCCGSumEvdWSK_InPoint = " + vdwi.functionCCGSumEvdWSK_InPoint(ac,sf.getSmoothingFunction()));
-		System.out.println("functionCCGSumEvdWAv_InPoint = " + vdwi.functionCCGSumEvdWAv_InPoint(ac,sf.getSmoothingFunction()));
-		//assertEquals(testResult_SumEvdW, vdwi.functionMMFF94SumEvdW_InPoint(ac), 0.00001);
+		//System.out.println("functionMMFF94SumEvdW_InPoint = " + vdwi.functionMMFF94SumEvdW_InPoint(ac));
+		//System.out.println("functionCCGSumEvdWSK_InPoint = " + vdwi.functionCCGSumEvdWSK_InPoint(ac,sf.getSmoothingFunction()));
+		//System.out.println("functionCCGSumEvdWAv_InPoint = " + vdwi.functionCCGSumEvdWAv_InPoint(ac,sf.getSmoothingFunction()));
+		
+		assertEquals(testResult_MMFF94SumEvdW, vdwi.functionMMFF94SumEvdW_InPoint(ac), 0.00001);
+		assertEquals(testResult_CCGSumEvdWSK, vdwi.functionCCGSumEvdWSK_InPoint(ac,sf.getSmoothingFunction()), 0.00001);
+		assertEquals(testResult_CCGSumEvdWAv, vdwi.functionCCGSumEvdWAv_InPoint(ac,sf.getSmoothingFunction()), 0.00001);
 		
 		//System.out.println("vdwi.gradientMMFF94SumEvdW_InPoint(ac) = " + vdwi.gradientMMFF94SumEvdW_InPoint(ac));
 		

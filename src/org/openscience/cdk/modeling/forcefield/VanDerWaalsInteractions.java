@@ -95,7 +95,7 @@ public class VanDerWaalsInteractions {
 				}
 			}
 		}
-		System.out.println("vdwInteractionNumber : " + vdwInteractionNumber);
+		//System.out.println("vdwInteractionNumber : " + vdwInteractionNumber);
 		
 		epsilonSK = new double[vdwInteractionNumber];
 		asteriskR = new double[vdwInteractionNumber];
