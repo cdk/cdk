@@ -18,8 +18,9 @@
     the CDK. A HTML overview of each dictionary is linked.
   </para>
   
-  <orderedlist>
+  <itemizedlist>
     <listitem><para><ulink url="dict-cdk.html">CDK</ulink></para></listitem>
-  </orderedlist>
+    <listitem><para><ulink url="dict-chemical.html">Chemistry</ulink></para></listitem>
+  </itemizedlist>
 
 </webpage>

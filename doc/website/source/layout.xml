@@ -50,6 +50,7 @@
       <tocentry page="biblio.xml" filename="biblio.html"/>
       <tocentry page="dicts.xml" filename="dicts.html">
         <tocentry page="dict-cdk.xml" filename="dict-cdk.html"/>
+        <tocentry page="dict-chemical.xml" filename="dict-chemical.html"/>
       </tocentry>
     </tocentry>
     <tocentry page="development.xml" filename="development.html">
