@@ -28,7 +28,7 @@ import javax.swing.JMenu;
 import javax.swing.JPanel;
 
 /**
- * Interface that Jmol Plugins must implement. The version of this
+ * Interface that CDK Plugins must implement. The version of this
  * interface is given below.
  *
  * @cdkPackage applications
@@ -43,9 +43,16 @@ public interface CDKPluginInterface {
     public String getName();
     
     /**
-     * Should return the version of the implemented plugin API.
+     * Should return the version of the implemented plugin API. The plugin
+     * manager will only load plugins with a compatible API version.
      */
     public String getAPIVersion();
+    
+    /**
+     * Should return the version of the plugin. This can be used to see if
+     * a plugin has a newer version.
+     */
+    public String getPluginVersion();
     
     /**
      * Should return a JPanel that provides access to the functionality
