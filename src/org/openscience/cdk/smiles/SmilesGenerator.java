@@ -147,18 +147,20 @@ public class SmilesGenerator {
    * @return false=is not end of configuration, true=is 
    */
   private boolean isEndOfDoubleBond(AtomContainer container, Atom atom, Atom parent, boolean[] doubleBondConfiguration){
-    if(!doubleBondConfiguration[container.getBondNumber(atom,parent)])
+    if(container.getBondNumber(atom,parent)==-1 || !doubleBondConfiguration[container.getBondNumber(atom,parent)])
       return false;
     int lengthAtom=container.getConnectedAtoms(atom).length+atom.getHydrogenCount();
     int lengthParent=container.getConnectedAtoms(parent).length+parent.getHydrogenCount();
     if(container.getBond(atom, parent)!=null){
-      if(container.getBond(atom,parent).getOrder()==CDKConstants.BONDORDER_DOUBLE&&lengthAtom==3&&lengthParent==3){
+      if(container.getBond(atom,parent).getOrder()==CDKConstants.BONDORDER_DOUBLE&&(lengthAtom==3 || (lengthAtom==2 && atom.getSymbol().equals("N")))&&(lengthParent==3 || (lengthParent==2 && parent.getSymbol().equals("N")))){
         Atom[] atoms=container.getConnectedAtoms(atom);
         Atom one=null;;
         Atom two=null;
         for(int i=0;i<atoms.length;i++){
-          if(atoms[i]!=parent&&one==null)
+          if(atoms[i]!=parent&&one==null){
             one=atoms[i];
+            break;
+          }
           if(atoms[i]!=parent&&one!=null)
             two=atoms[i];
         }
@@ -175,14 +177,14 @@ public class SmilesGenerator {
   /**
    * Says if an atom is the start of a double bond configuration 
    *
-   * @param atom      The atom which is the start of configuration
+   * @param a         The atom which is the start of configuration
    * @param container The atomContainer the atom is in
    * @param parent    The atom we came from
    * @return false=is not start of configuration, true=is 
    */
   private boolean isBeginnOfDoubleBond(AtomContainer container, Atom a, Atom parent,boolean[] doubleBondConfiguration){
     int lengthAtom=container.getConnectedAtoms(a).length+a.getHydrogenCount();
-    if(lengthAtom!=3)
+    if(lengthAtom!=3 && (lengthAtom!=2 && a.getSymbol()!=("N")))
       return(false);
     Atom[] atoms=container.getConnectedAtoms(a);
     Atom one=null;
@@ -194,8 +196,10 @@ public class SmilesGenerator {
         doubleBond=true;
         nextAtom=atoms[i];
       }
-      if(atoms[i]!=parent&&one==null)
+      if(atoms[i]!=parent&&one==null){
         one=atoms[i];
+        break;
+      }
       if(atoms[i]!=parent&&one!=null)
         two=atoms[i];
     }
@@ -470,7 +474,7 @@ public class SmilesGenerator {
     for (int i = 0; i < all.length; i++) {
       Atom atom = all[i];
       if(chiral && atom.getPoint2D()==null)
-        throw new Coordinates2DMissingException("Atom number "+i+" has not get 2D coordinates");
+        throw new Coordinates2DMissingException("Atom number "+i+" has no 2D coordinates");
       if (atom.flags == null) atom.flags = new boolean[100];
       atom.flags[CDKConstants.VISITED] = false;
       if (((Long)atom.getProperty("CanonicalLable")).longValue() == 1) {
@@ -578,6 +582,10 @@ public class SmilesGenerator {
             parent=(Atom)((Vector)v.get(1)).get(0);
         }
         parseAtom(atom, buffer, container, chiral,doubleBondConfiguration,parent);
+        /*The principle of making chiral smiles is quite simple, although the code is
+        pretty uggly. The Atoms connected to the chiral center are put in sorted[] in the
+        order they have to appear in the smiles. Then the Vector v is rearranged according 
+        to sorted[]*/
       	if(chiral && isStereo(container,atom)){
           Atom[] sorted=null;
           Vector chiralNeighbours=container.getConnectedAtomsVector(atom);
@@ -917,7 +925,10 @@ public class SmilesGenerator {
               else
                 viewFrom=(Atom)((Vector)v.get(positionInVector-2)).get(0);
             }else{
-              viewFrom=(Atom)vectorBefore.get(position-1);
+              if(vectorBefore==null)
+                viewFrom=(Atom)v.get(positionInVector-1);
+              else
+                viewFrom=(Atom)vectorBefore.get(position-1);
             }
             boolean oldAtom=isLeft(viewFrom,atom, parent);
             boolean newAtom=isLeft((Atom)v.get(positionInVector+1),parent,atom);
