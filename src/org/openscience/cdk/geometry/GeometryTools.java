@@ -614,7 +614,7 @@ public class GeometryTools {
             Atom connectedAtom = connectedAtoms[i];
             overallDiffX = overallDiffX + (int)(connectedAtom.getX2D() - atom.getX2D());
         }
-        if (overallDiffX < 0) {
+        if (overallDiffX <= 0) {
             return 1;
         } else {
             return -1;
