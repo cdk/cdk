@@ -77,7 +77,7 @@ public class ConnectivityChecker implements CDKConstants
 
 
 	/**
-	 * Partitions the atoms in an AtomContainer into connected components, i.e. molecules
+	 * Partitions the atoms in an AtomContainer into covalently connected components.
 	 *
 	 * @param   atomContainer  The AtomContainer to be partitioned into connected components, i.e. molecules
 	 * @return  A vector of AtomContainers, each containing a connected molecule   

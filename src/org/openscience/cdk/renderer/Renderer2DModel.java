@@ -34,14 +34,14 @@ import java.util.*;
 
 
 /**
- * A model for Renderer2D, which determines how things are drawn
+ * Model for Renderer2D that contains settings for drawing objects.
  */
 public class Renderer2DModel
 {
 	private double scaleFactor = 60;
 	
 	private double bondWidth = 2;
-	
+
 	private double bondDistance = 6;
 
 	private double bondLength = 30;
@@ -101,7 +101,7 @@ public class Renderer2DModel
 	
 
 	/**
-	 * Returns the thickness of a bond line (XXX what are the dimensions? XXX)
+	 * Returns the thickness of a bond line.
 	 *
 	 * @return     the thickness of a bond line
 	 */
@@ -112,7 +112,7 @@ public class Renderer2DModel
 
 
 	/**
-	 * Sets the thickness of a bond line (XXX what are the dimensions? XXX)
+	 * Sets the thickness of a bond line.
 	 *
 	 * @param   bondWidth  the thickness of a bond line
 	 */
@@ -123,7 +123,7 @@ public class Renderer2DModel
 
 
 	/**
-	 * Returns the length of a bond line (XXX what are the dimensions? XXX)
+	 * Returns the length of a bond line.
 	 *
 	 * @return     the length of a bond line
 	 */
@@ -134,7 +134,7 @@ public class Renderer2DModel
 
 
 	/**
-	 * Sets the length of a bond line (XXX what are the dimensions? XXX)
+	 * Sets the length of a bond line.
 	 *
 	 * @param   bondLength  the length of a bond line
 	 */
@@ -145,7 +145,7 @@ public class Renderer2DModel
 	
 
 	/**
-	 * A scale factor for the drawing
+	 * A scale factor for the drawing.
 	 *
 	 * @return a scale factor for the drawing
 	 */

@@ -32,18 +32,20 @@ import java.util.*;
 import org.openscience.cdk.*;
 
 /**
- * Partitions a RingSet into RingSets of connected rings, 
- * i.e. of Rings which share an Atom, a Bond or three or more  
- * atoms with at least on other ring in the RingSet
+ * Partitions a RingSet into RingSets of connected rings.
+ * Rings which share an Atom, a Bond or three or more
+ * atoms with at least on other ring in the RingSet are
+ * considered connected.
  */
 public class RingPartitioner
 {
 	public static boolean debug = false; // minimum details
 	
 	/**
-	 * Partitions a RingSet into RingSets of connected rings, 
-	 * i.e. of Rings which share an Atom, a Bond or three or more  
-	 * Atoms with at least on other ring in the RingSet
+     * Partitions a RingSet into RingSets of connected rings.
+     * Rings which share an Atom, a Bond or three or more
+     * atoms with at least on other ring in the RingSet are
+     * considered connected.
 	 *
 	 * @param   ringSet  The RingSet to be partitioned
 	 * @return A Vector of connected RingSets    

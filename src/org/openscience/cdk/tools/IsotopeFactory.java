@@ -95,8 +95,8 @@ public class IsotopeFactory {
     }
 
     /**
-     * Returns the major isotope, i.e. the most abundant isotope whose
-     * symbol euquals element.
+     * Returns the most abundant (major) isotope whose
+     * symbol equals element.
      *
      * @param  symbol   Description of Parameter
      * @return          The Major Isotope value

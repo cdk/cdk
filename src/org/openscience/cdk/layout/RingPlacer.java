@@ -37,8 +37,8 @@ import java.lang.Math;
 import java.awt.*;
 
 /**
- * Methods for generating coordinates for ring atoms in various situations 
- * (condensation, spiro-attachment, etc.)
+ * Class providing methods for generating coordinates for ring atoms.
+ * Various situations are supported, like condensation, spiro-attachment, etc.
  * They can be used for Automated Structure Diagram Generation or in the interactive
  * buildup of ringsystems by the user. 
  **/
@@ -280,8 +280,8 @@ public class RingPlacer implements CDKConstants
 	}
 	
 	/**
-	 * Generated coordinates for a given ring, which is connected to another ring a spiro ring, 
-	 * i.e. it shares exactly one atom with another ring.
+	 * Generated coordinates for a given ring, which is connected to a spiro ring.
+	 * The rings share exactly one atom.
 	 *
 	 * @param   ring  The ring to be placed
 	 * @param   sharedAtoms  The atoms of this ring, also members of another ring, which are already placed
@@ -337,8 +337,8 @@ public class RingPlacer implements CDKConstants
 
 
 	/**
-	 * Generated coordinates for a given ring, which is connected to another ring a fused ring, 
-	 * i.e. it shares exactly on bond with another ring.
+	 * Generated coordinates for a given ring, which is fused to another ring.
+	 * The rings share exactly one bond.
 	 *
 	 * @param   ring  The ring to be placed
 	 * @param   sharedAtoms  The atoms of this ring, also members of another ring, which are already placed

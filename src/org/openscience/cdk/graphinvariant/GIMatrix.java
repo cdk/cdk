@@ -1,5 +1,6 @@
 package org.openscience.cdk.graphinvariant;
 import org.openscience.cdk.graphinvariant.exception.*;
+
 /**
  * This class is intended to provide the user an efficient way of implementing matrix of double number and
  * using normal operations (linear operations, addition, substraction, multiplication, inversion, concatenation)
@@ -9,14 +10,14 @@ import org.openscience.cdk.graphinvariant.exception.*;
  * this implies. This class also provides a way of representing matrix as arrays of String for output use.
  * <P>Please note that although in most books matrix elements' indexes take values between [1..n] I chose not
  * to disturb Java language way of calling indexes; so the indexes used here take values between [0..n-1] instead.
+ *
  * @see tatien.toolbox.#double
  * @author Jean-Sebastien Senecal
  * @version 1.0, 20/05/99
- * 
+ *
  * modified 10/06/02
  * adds method - add(Matrix matrix), matrix
  */
-
 public class GIMatrix {
 
     private double[][] array; // the matrix itself as an array of doubles

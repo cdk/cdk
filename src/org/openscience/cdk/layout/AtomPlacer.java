@@ -490,13 +490,13 @@ public class AtomPlacer implements CDKConstants
 
 	 /**
 	  * Returns a string with the numbers of all atoms in an AtomContainer
-	  * relative to a given molecule, i.e. the number the is listesd is the position
+	  * relative to a given molecule. I.e. the number the is listesd is the position
 	  * of each atom in the molecule.
 	  *
 	  * @param   ac  The AtomContainer for which the placed atoms are to be listed
 	  * @return  A string with the numbers of all placed atoms in an AtomContainer   
-	 * @exception   Exception thrown if the number cannot be determined 
-	 */
+	  * @exception   Exception thrown if the number cannot be determined
+	  */
 	public String listNumbers(Molecule mol, AtomContainer ac) throws java.lang.Exception
 	{
 		String s = "Numbers: ";
@@ -509,13 +509,13 @@ public class AtomPlacer implements CDKConstants
 
 	/**
 	 * Returns a string with the numbers of all atoms in a Vector
-	 * relative to a given molecule, i.e. the number the is listesd is the position
+	 * relative to a given molecule. I.e. the number the is listesd is the position
 	 * of each atom in the molecule.
 	 *
 	 * @param   ac  The Vector for which the placed atoms are to be listed
 	 * @return  A string with the numbers of all placed atoms in an AtomContainer   
-	* @exception   Exception thrown if the number cannot be determined 
-	*/
+	 * @exception   Exception thrown if the number cannot be determined
+	 */
 	public String listNumbers(Molecule mol, Vector ac) throws java.lang.Exception
 	{
 	String s = "Numbers: ";

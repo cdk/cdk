@@ -1,6 +1,7 @@
-/* StandardIsotopes.java
- *
- * $RCSfile$    $Author$    $Date$    $Revision$
+/* $RCSfile$    
+ * $Author$    
+ * $Date$    
+ * $Revision$
  * 
  * Copyright (C) 1997-2002  The Chemistry Development Kit (CKD) project
  *
@@ -32,8 +33,8 @@ import java.util.*;
 import java.io.*;
 import org.openscience.cdk.*;
 
-/** StandardsIsotopes.java
- *    Used to store data of a particular isotope
+/**
+ * Used to store data of a particular isotope.
  *
  * @keyword isotope
  */
@@ -57,8 +58,13 @@ public class StandardIsotopes
         return null;
     }
 
-    /** returns the major, i.e. the most abundant isotope whose symbol
-         euquals element */
+    /** 
+     *  Returns the the most abundant isotope (major isotope) given
+     *  an element symbol.
+     *
+     * @param  element      element symbol of the requested isotope
+     * @return The major isotope with element symbol element
+     */
     public Isotope getMajorIsotope(String element)
     {
         Isotope isotope = null;

@@ -170,11 +170,10 @@ public class GeometryTools
 
 
 	/**
-	 * Translates a molecule (i.e. its atom with the smallest coordinates)
-	 *  to the orgin (0,0) and the translates it by the vector given by the dimension
+	 * Translates a molecule from the origin to a new point denoted by a vector.
 	 *
-	 * @param   molecule to be translated	
-	 * @param   dimension that represents the translation vector 
+	 * @param atomCon  molecule to be translated
+	 * @param vector   dimension that represents the translation vector
 	 */
 	public static void translate2D(AtomContainer atomCon, Vector2d vector)
 	{
@@ -190,8 +189,8 @@ public class GeometryTools
 	/**
 	 * Centers the molecule in the given area
 	 *
-	 * @param   molecule to be centered
-	 * @param   areaDim in which the molecule is to be centered
+	 * @param atomCon  molecule to be centered
+	 * @param areaDim  dimension in which the molecule is to be centered
 	 */
 	public static void center(AtomContainer atomCon, Dimension areaDim)
 	{

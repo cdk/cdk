@@ -1,4 +1,4 @@
-/* $RCSfile$    
+/* $RCSfile$
  * $Author$    
  * $Date$    
  * $Revision$
@@ -29,7 +29,8 @@ import java.util.Vector;
 import javax.vecmath.*;
 
 /**
- * Implements the concept of a bond, i.e. a number of electrons connecting 
+ * Implements the concept of a bond.
+ * A bond is considered to be a number of electrons connecting 
  * a number of atoms.
  *
  * @keyword bond

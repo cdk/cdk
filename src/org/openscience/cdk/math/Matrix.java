@@ -317,9 +317,10 @@ public class Matrix
 
 
   /** 
-   * Diagonalize this matrix by Jacobi
-   * nrot Count of max. rotations
-   * return Matrix m, with m^t * this * m = diagonal
+   * Diagonalize this matrix with the Jacobi algorithm.
+   *
+   * @param nrot Count of max. rotations
+   * @return Matrix m, with m^t * this * m = diagonal
    */
   public Matrix diagonalize(int nrot)
   {

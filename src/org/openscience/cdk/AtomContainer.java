@@ -814,8 +814,10 @@ public class AtomContainer extends ChemObject implements Cloneable
 
 
 	/**
-	 *  Removes the atom at the given position from the AtomContainer !!! Note that the bonds are unaffected, 
-	 *  You also have to take care of removeing all bonds to this atom from the container.
+	 *  Removes the atom at the given position from the AtomContainer.
+     *  Note that the bonds are unaffected:
+	 *  you also have to take care of removing all bonds to this atom 
+     *  from the container manually.
 	 *
 	 * @param  position  The position of the atom to be removed.
 	 * @since
@@ -836,7 +838,6 @@ public class AtomContainer extends ChemObject implements Cloneable
 	 *
 	 * @param  atom  The atom to be removed
 	 * @exception  org.openscience.cdk.exception.NoSuchAtomException  throws if the atom is not in the container
-	 * @since
 	 */
 	public void removeAtomAndConnectedBonds(Atom atom) throws org.openscience.cdk.exception.NoSuchAtomException
 	{
@@ -851,11 +852,12 @@ public class AtomContainer extends ChemObject implements Cloneable
 
 
 	/**
-	 *  Removes the given atom from the AtomContainer !!! Note that the bonds are unaffected, You also have to take care of removeing all bonds to this atom from the container.
+	 *  Removes the given atom from the AtomContainer
+     *  Note that the bonds are unaffected: you also have to take care of removeing all 
+     * bonds to this atom from the container.
 	 *
 	 * @param  atom  The atom to be removed
 	 * @exception  org.openscience.cdk.exception.NoSuchAtomException  throws if the atom is not in the container
-	 * @since
 	 */
 	public void removeAtom(Atom atom) throws org.openscience.cdk.exception.NoSuchAtomException
 	{
@@ -865,9 +867,7 @@ public class AtomContainer extends ChemObject implements Cloneable
 
 
 	/**
-	 *  removes all atoms and bond from this container
-	 *
-	 * @since
+	 *  Removes all atoms and bond from this container.
 	 */
 	public void removeAllElements()
 	{

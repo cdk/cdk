@@ -11,6 +11,9 @@
         <fileset dir="jar">
             <include name="*.jar" />
         </fileset>
+        <fileset dir="jar/libio">
+            <include name="*.jar" />
+        </fileset>
         <fileset dir="${pathtojava3d}">
             <include name="*.jar" />
         </fileset>
@@ -29,7 +32,8 @@
                  sourcepath="${src}" destdir="${javadoc.dir}"
                  defaultexcludes="yes"
                  author="true" version="true" use="true"
-                 public="true">
+                 public="true"
+                 windowtitle="CDK API">
             <classpath refid="project.class.path" />
         </javadoc>
     </target>
@@ -46,7 +50,7 @@
             <package name="org.openscience.cdk"/>
 
             <sourcepath>
-                <pathelement path="."/>
+                <pathelement path="${src}"/>
             </sourcepath>
 
         </javadoc>
@@ -54,7 +58,8 @@
               tofile="core.dbxml" />
     </target>
 
-    <target name="core.fo" depends="core.docbook">
+    <target name="core.fo">
+        <!-- alternatively, you can use the much faster xsltproc -->
         <java classname="org.apache.xalan.xslt.Process"
               args="-IN core.dbxml -XSL doc/lib/xslt/docbook/fo/docbook.xsl -OUT core.fo"
               dir="." fork="yes">
@@ -62,7 +67,7 @@
         </java>
     </target>
 
-    <target name="core.pdf" depends="core.fo">
+    <target name="core.pdf">
         <java classname="org.apache.fop.apps.Fop"
               args="-fo core.fo -pdf core.pdf"
               dir="." fork="yes">

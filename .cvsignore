@@ -5,3 +5,6 @@ cdk-*.tar.gz
 build
 sourcedist
 dist
+*.dbxml
+*.fo
+*.pdf

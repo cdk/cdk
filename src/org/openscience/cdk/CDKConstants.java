@@ -27,7 +27,7 @@ package org.openscience.cdk;
 
 /**
  * An interface providing predefined values for a number of 
- * parameters used throughout the cdk. Classes using these Constants should 
+ * parameters used throughout the CDK. Classes using these Constants should
  * implement this interface.
  *
  * @keyword bond order
@@ -100,17 +100,23 @@ public interface CDKConstants
 	 * purposes                             *
 	 ****************************************/
 
-	/** Has a chemobject been placed (Wheresoever)? Flags for Structure Diagram Generation and other uses */
+	/** Flag that is set if the chemobject is placed (somewhere).
+     */
 	static int ISPLACED = 50;
-	/** Is a chemobject part of a ring? Flags for Structure Diagram Generation and other uses */
+	/** Flag that is set when the chemobject is part of a ring.
+     */
 	static int ISINRING = 51;
-	/** Is a chemobject part of an alipahtic chain? Flags for Structure Diagram Generation and other uses */
+	/** Flag that is set if a chemobject is part of an alipahtic chain.
+     */
 	static int ISALIPHATIC = 52;
-	/** Has a chemobject been visited during a search? Flags for Structure Diagram Generation and other uses */
+	/** Flag is set if chemobject has been visited.
+     */
 	static int VISITED = 53; // Use in tree searches
-	/** Is a chemobject (an atom, a bond, a ring ...) part of an aromatic system? */
+	/** Flag is set if chemobject is part of an aromatic system. */
 	static int ISAROMATIC = 54;
-	/** Has a chemobject (an atom, a bond, a ring ...) been mapped to another chemobject (i.e. in subgraph isomorphism search) */
+	/** Flag is set if a chemobject is mapped to another chemobject. 
+     *  It is used for example in subgraph isomorphism search
+     */
 	static int MAPPED = 55;
 
 }

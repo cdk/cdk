@@ -8,6 +8,7 @@ Changes in CVS
 * Made IsotopeFactory a singleton class
 * Moved more test classes to subpackages of cdk.test
 * Added cdk-download program (fixes wishlist #595031)
+* More JavaDoc documentation
 
 20020805 Release
 ------------------------------------
