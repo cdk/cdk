@@ -1,0 +1,18 @@
+<dictionary xmlns="http://www.xml-cml.org/schema/cml2/core"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://www.xml-cml.org/schema/cml2/core ../../io/cml/data/cmlAll.xsd"
+  title="The Chemistry Development Kit Dictionary">
+
+  <description>
+    This dictionary describes terminology used on CDK classes and configuration
+    files.
+  </description>
+  
+  <entry term="maxBondOrder">
+    <definition>
+      The maximal bond order this atom type can have. 
+    </definition>
+  </entry>
+  
+</dictionary>
+
