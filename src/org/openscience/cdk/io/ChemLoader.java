@@ -70,7 +70,7 @@ public class ChemLoader {
             } else if (inFile.endsWith(".pdb")) {
                   reader = new PDBReader(new FileReader(inFile));
             } else if (inFile.endsWith(".smi")) {
-                  reader = new SmilesReader(new FileReader(inFile));
+                  reader = new SMILESReader(new FileReader(inFile));
             } else if (inFile.endsWith(".pmp")) {
                   reader = new PMPReader(new FileReader(inFile));
             } else if (inFile.endsWith(".mol")) {
