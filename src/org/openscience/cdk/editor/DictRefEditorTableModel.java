@@ -33,48 +33,7 @@ import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.table.*;
 
-public class DictRefEditorTable extends JTable {
-    
-    public DictRefEditorTable() {
-        super(new DictRefEditorTableModel());
-        setupFieldColumn(getColumnModel().getColumn(0));
-        setupDictionaryColumn(getColumnModel().getColumn(1));
-        setupReferenceColumn(getColumnModel().getColumn(2));
-        setSelectionMode( ListSelectionModel.SINGLE_SELECTION );
-    }
-    
-    private void setupFieldColumn( TableColumn column ) {
-        JComboBox comboBox = new JComboBox();
-        comboBox.addItem("Symbol");
-        comboBox.addItem("Stereo Parity");
-        DefaultCellEditor cellEditor = new DefaultCellEditor(comboBox);
-        cellEditor.setClickCountToStart(1);
-        column.setCellEditor( cellEditor );
-        column.setPreferredWidth( 150 );
-    }
-
-    private void setupDictionaryColumn( TableColumn column ) {
-        JComboBox comboBox = new JComboBox();
-        comboBox.addItem("Biochemical Fragments");
-        comboBox.addItem("Amino Acids");
-        DefaultCellEditor cellEditor = new DefaultCellEditor(comboBox);
-        cellEditor.setClickCountToStart(1);
-        column.setCellEditor( cellEditor );
-        column.setPreferredWidth( 150 );
-    }
-
-    private void setupReferenceColumn( TableColumn column ) {
-        JComboBox comboBox = new JComboBox();
-        comboBox.addItem("His");
-        comboBox.addItem("Arg");
-        DefaultCellEditor cellEditor = new DefaultCellEditor(comboBox);
-        cellEditor.setClickCountToStart(1);
-        column.setCellEditor( cellEditor );
-        column.setPreferredWidth( 150 );
-    }
-}
-
-class DictRefEditorTableModel extends AbstractTableModel {
+public class DictRefEditorTableModel extends AbstractTableModel {
     
     private String[] columnNames;
     private Vector fields = new Vector();
@@ -126,12 +85,12 @@ class DictRefEditorTableModel extends AbstractTableModel {
         return fields.size();
     }
     
-    public String getColumnName( int col ) {
+    public String getColumnName(int col) {
         return columnNames[col];
     }
     
-    public Class getColumnClass( int c ) {
-        return "".getClass();
+    public Class getColumnClass(int col) {
+        return getColumnName(col).getClass();
     }
     
     public Object getValueAt(int row, int col) {
