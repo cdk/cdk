@@ -9,11 +9,13 @@ JARLIBDIR=@CDKJARDIR@
 JARLIBS=cdk-core.jar cdk-extra.jar cdk-libio.jar cdk-apps.jar cdk-test.jar
 
 # set the Java compiler
+if FREECOMPILER
 if WITHJIKES
 JAVAC=-Dbuild.compiler=jikes
 endif
 if WITHGCJ
 JAVAC=-Dbuild.compiler=gcj
+endif
 else
 JAVAC=
 endif
