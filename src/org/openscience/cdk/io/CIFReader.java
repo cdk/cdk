@@ -32,6 +32,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.StringTokenizer;
+import java.io.StringReader;
 
 import javax.vecmath.Point3d;
 
@@ -84,6 +85,10 @@ public class CIFReader extends DefaultChemObjectReader {
     public CIFReader(Reader input) {
         this.input = new BufferedReader(input);
         this.logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+    }
+    
+    public CIFReader() {
+        this(new StringReader(""));
     }
     
     public String getFormatName() {

@@ -156,6 +156,10 @@ public class GamessReader extends DefaultChemObjectReader {
 		this.input = new BufferedReader(inputReader);
     }
 	
+    public GamessReader() {
+        this(new StringReader(""));
+    }
+    
 	/* (non-Javadoc) (Javadoc is automaticly inherited from the link below)
 	 * @see org.openscience.cdk.io.ChemObjectIO#accepts(org.openscience.cdk.ChemObject)
 	 */

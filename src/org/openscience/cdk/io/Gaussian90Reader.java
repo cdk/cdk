@@ -25,14 +25,14 @@
 package org.openscience.cdk.io;
 
 import java.io.Reader;
+import java.io.StringReader;
 
 /**
  * @cdk.module io
  */
 public class Gaussian90Reader extends DummyReader {
 
-    public Gaussian90Reader(Reader input) {
-    }
+    public Gaussian90Reader() {}
 
     public String getFormatName() {
         return "Gaussian90 (not implemented, post a feature request if you need it)";

@@ -31,8 +31,7 @@ import java.io.Reader;
  */
 public class Gaussian94Reader extends DummyReader {
 
-    public Gaussian94Reader(Reader input) {
-    }
+    public Gaussian94Reader() {}
 
     public String getFormatName() {
         return "Gaussian94 (not implemented, post a feature request if you need it)";

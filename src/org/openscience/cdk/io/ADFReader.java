@@ -31,8 +31,7 @@ import java.io.Reader;
  */
 public class ADFReader extends DummyReader {
 
-    public ADFReader(Reader input) {
-    }
+    public ADFReader() {}
 
     public String getFormatName() {
         return "ABINIT (not implemented, post a feature request if you need it)";

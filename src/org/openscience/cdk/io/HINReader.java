@@ -27,6 +27,7 @@ package org.openscience.cdk.io;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 import java.util.Vector;
@@ -66,6 +67,10 @@ public class HINReader extends DefaultChemObjectReader {
         this.input = new BufferedReader(input);
     }
 
+    public HINReader() {
+        this(new StringReader(""));
+    }
+    
     public String getFormatName() {
         return "HIN";
     }

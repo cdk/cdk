@@ -28,6 +28,7 @@ package org.openscience.cdk.io;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.io.StringReader;
 import java.util.StringTokenizer;
 
 import javax.vecmath.Point3d;
@@ -94,6 +95,10 @@ public class VASPReader extends DefaultChemObjectReader {
         }
     }
 
+    public VASPReader() {
+        this(new StringReader(""));
+    }
+    
     public String getFormatName() {
         return "VASP";
     }

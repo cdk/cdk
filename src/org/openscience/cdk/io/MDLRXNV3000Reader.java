@@ -65,6 +65,10 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
         initIOSettings();
     }
 
+    public MDLRXNV3000Reader() {
+        this(new StringReader(""));
+    }
+    
     public String getFormatName() {
         return "MDL RXN V3000";
     }

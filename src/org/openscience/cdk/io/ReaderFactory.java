@@ -32,6 +32,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.io.StringReader;
 import java.util.Enumeration;
 import java.util.StringTokenizer;
 import java.util.Vector;
@@ -63,7 +64,7 @@ public class ReaderFactory {
     private int headerLength;
     private LoggingTool logger;
 
-    private static Vector readers;
+    private static Vector readers = null;
 
     /**
      * Constructs a ReaderFactory which tries to detect the format in the
@@ -97,57 +98,62 @@ public class ReaderFactory {
     }
 
     private void loadReaders() {
-        // IMPORTANT: the order in the next series *is* important!
-        String[] readerNames = {
-            "org.openscience.cdk.io.ABINITReader.java",
-            "org.openscience.cdk.io.Aces2Reader.java",
-            "org.openscience.cdk.io.ADFReader.java",
-            "org.openscience.cdk.io.CACheReader.java",
-            "org.openscience.cdk.io.ChemicalRSSReader.java",
-            "org.openscience.cdk.io.CIFReader.java",
-            "org.openscience.cdk.io.CMLReader.java",
-            "org.openscience.cdk.io.CrystClustReader.java",
-            "org.openscience.cdk.io.DaltonReader.java",
-            "org.openscience.cdk.io.GamessReader.java",
-            "org.openscience.cdk.io.Gaussian03Reader.java",
-            "org.openscience.cdk.io.Gaussian98Reader.java",
-            "org.openscience.cdk.io.Gaussian95Reader.java",
-            "org.openscience.cdk.io.Gaussian94Reader.java",
-            "org.openscience.cdk.io.Gaussian92Reader.java",
-            "org.openscience.cdk.io.Gaussian90Reader.java",
-            "org.openscience.cdk.io.GhemicalMMReader.java",
-            "org.openscience.cdk.io.HINReader.java",
-            "org.openscience.cdk.io.IChIReader.java",
-            "org.openscience.cdk.io.JaguarReader.java",
-            "org.openscience.cdk.io.MACiEReader.java",
-            "org.openscience.cdk.io.MDLReader.java",
-            "org.openscience.cdk.io.MDLRXNV3000Reader.java",
-            "org.openscience.cdk.io.MDLRXNReader.java",
-            "org.openscience.cdk.io.MDLV3000Reader.java",
-            "org.openscience.cdk.io.Mol2Reader.java",
-            "org.openscience.cdk.io.MOPAC7Reader.java",
-            "org.openscience.cdk.io.MOPAC97Reader.java",
-            "org.openscience.cdk.io.PDBReader.java",
-            "org.openscience.cdk.io.PMPReader.java",
-            "org.openscience.cdk.io.ShelXReader.java",
-            "org.openscience.cdk.io.SMILESReader.java",
-            "org.openscience.cdk.io.VASPReader.java",
-            "org.openscience.cdk.io.XYZReader.java",
-            "org.openscience.cdk.io.ZMatrixReader.java"
-        };
-        readers = new Vector();
-        for (int i=0; i<readerNames.length; i++) {
-            // load them one by one
-            try {
-                ChemObjectReader coReader = (ChemObjectReader)this.getClass().getClassLoader().
-                    loadClass(readerNames[i]).newInstance();
-            } catch (ClassNotFoundException exception) {
-                logger.error("Could not find this ChemObjectReader: ", readerNames[i]);
-                logger.debug(exception);
-            } catch (Exception exception) {
-                logger.error("Could not load this ChemObjectReader: ", readerNames[i]);
-                logger.debug(exception);
+        if (readers == null) {
+            logger.debug("Starting loading Readers...");
+            // IMPORTANT: the order in the next series *is* important!
+            String[] readerNames = {
+                "org.openscience.cdk.io.ABINITReader",
+                "org.openscience.cdk.io.Aces2Reader",
+                "org.openscience.cdk.io.ADFReader",
+                "org.openscience.cdk.io.CACheReader",
+                "org.openscience.cdk.io.ChemicalRSSReader",
+                "org.openscience.cdk.io.CIFReader",
+                "org.openscience.cdk.io.CMLReader",
+                "org.openscience.cdk.io.CrystClustReader",
+                "org.openscience.cdk.io.DaltonReader",
+                "org.openscience.cdk.io.GamessReader",
+                "org.openscience.cdk.io.Gaussian03Reader",
+                "org.openscience.cdk.io.Gaussian98Reader",
+                "org.openscience.cdk.io.Gaussian95Reader",
+                "org.openscience.cdk.io.Gaussian94Reader",
+                "org.openscience.cdk.io.Gaussian92Reader",
+                "org.openscience.cdk.io.Gaussian90Reader",
+                "org.openscience.cdk.io.GhemicalMMReader",
+                "org.openscience.cdk.io.HINReader",
+                "org.openscience.cdk.io.IChIReader",
+                "org.openscience.cdk.io.JaguarReader",
+                "org.openscience.cdk.io.MACiEReader",
+                "org.openscience.cdk.io.MDLReader",
+                "org.openscience.cdk.io.MDLRXNV3000Reader",
+                "org.openscience.cdk.io.MDLRXNReader",
+                "org.openscience.cdk.io.MDLV3000Reader",
+                "org.openscience.cdk.io.Mol2Reader",
+                "org.openscience.cdk.io.MOPAC7Reader",
+                "org.openscience.cdk.io.MOPAC97Reader",
+                "org.openscience.cdk.io.PDBReader",
+                "org.openscience.cdk.io.PMPReader",
+                "org.openscience.cdk.io.ShelXReader",
+                "org.openscience.cdk.io.VASPReader",
+                "org.openscience.cdk.io.ZMatrixReader"
+                // "org.openscience.cdk.io.SMILESReader", match after all others failed
+                // "org.openscience.cdk.io.XYZReader", match after all others failed
+            };
+            readers = new Vector();
+            for (int i=0; i<readerNames.length; i++) {
+                // load them one by one
+                try {
+                    ChemObjectReader coReader = (ChemObjectReader)this.getClass().getClassLoader().
+                        loadClass(readerNames[i]).newInstance();
+                    readers.addElement(coReader);
+                } catch (ClassNotFoundException exception) {
+                    logger.error("Could not find this ChemObjectReader: ", readerNames[i]);
+                    logger.debug(exception);
+                } catch (Exception exception) {
+                    logger.error("Could not load this ChemObjectReader: ", readerNames[i]);
+                    logger.debug(exception);
+                }
             }
+            logger.info("Number of loaded formats used in detection: ", readers.size());
         }
     }
 
@@ -251,17 +257,23 @@ public class ReaderFactory {
         /* Search file for a line containing an identifying keyword */
         String line = buffer.readLine();
         int lineNumber = 1;
-        while (buffer.ready() && (line != null)) {
+        boolean formatDetected = false;
+        while (buffer.ready() && (line != null) && (!formatDetected)) {
             logger.debug(lineNumber + ": ", line);
-            Enumeration readerEnum = readers.elements();
-            while (readerEnum.hasMoreElements()) {
-                ChemObjectReader coReader = (ChemObjectReader)readerEnum.nextElement();
+            for (int i=0; i<readers.size(); i++) {
+                ChemObjectReader coReader = (ChemObjectReader)readers.elementAt(i);
                 if (coReader.matches(lineNumber, line)) {
+                    formatDetected = true;
                     try {
                         // make a new instance of this class
                         ChemObjectReader returnReader = (ChemObjectReader)coReader.getClass().newInstance();
-                        returnReader.setReader(originalBuffer);
                         logger.info("Detected format: ", returnReader.getFormatName());
+                        if (!(returnReader instanceof DummyReader)) {
+                            returnReader.setReader(originalBuffer);
+                        } else {
+                            // DummyReader's will throw an error
+                            logger.warn("Have not set the Reader, because a DummyReader will throw an exception");
+                        }
                         return returnReader;
                     } catch (Exception exception) {
                         logger.error("Could not create this ChemObjectReader: ", coReader.getClass().getName());

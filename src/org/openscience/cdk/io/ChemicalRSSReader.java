@@ -30,6 +30,7 @@ package org.openscience.cdk.io;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.io.StringReader;
 
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.ChemSequence;
@@ -81,6 +82,10 @@ public class ChemicalRSSReader extends DefaultChemObjectReader {
     public ChemicalRSSReader(Reader input) {
         this.init();
         this.input = input;
+    }
+
+    public ChemicalRSSReader() {
+        this(new StringReader(""));
     }
 
     public String getFormatName() {

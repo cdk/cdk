@@ -32,6 +32,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.io.StringReader;
 import java.util.Vector;
 
 import javax.vecmath.Point3d;
@@ -91,6 +92,10 @@ public class PDBReader extends DefaultChemObjectReader {
     _oInput = new BufferedReader(oIn);
   }
 
+    public PDBReader() {
+        this(new StringReader(""));
+    }
+    
     public String getFormatName() {
         return "Protein Brookhave Database (PDB)";
     }

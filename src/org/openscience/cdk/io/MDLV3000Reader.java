@@ -27,6 +27,7 @@ package org.openscience.cdk.io;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.io.StringReader;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.StringTokenizer;
@@ -92,6 +93,10 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         keyValueTuple2 = Pattern.compile("\\s*(\\w+)=\\(([^\\)]*)\\)(.*)"); // e.g. ATOMS=(1 31)
     }
 
+    public MDLV3000Reader() {
+        this(new StringReader(""));
+    }
+    
     public String getFormatName() {
         return "MDL Mol/SDF V3000";
     }

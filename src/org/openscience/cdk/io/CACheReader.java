@@ -31,8 +31,7 @@ import java.io.Reader;
  */
 public class CACheReader extends DummyReader {
 
-    public CACheReader(Reader input) {
-    }
+    public CACheReader() {}
 
     public String getFormatName() {
         return "CAChe (not implemented, post a feature request if you need it)";

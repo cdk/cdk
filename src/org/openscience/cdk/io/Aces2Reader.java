@@ -31,8 +31,7 @@ import java.io.Reader;
  */
 public class Aces2Reader extends DummyReader {
 
-    public Aces2Reader(Reader input) {
-    }
+    public Aces2Reader() {}
 
     public String getFormatName() {
         return "Aces2 (not implemented, post a feature request if you need it)";

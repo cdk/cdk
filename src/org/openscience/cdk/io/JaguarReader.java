@@ -31,8 +31,7 @@ import java.io.Reader;
  */
 public class JaguarReader extends DummyReader {
 
-    public JaguarReader(Reader input) {
-    }
+    public JaguarReader() {}
 
     public String getFormatName() {
         return "Jaguar (not implemented, post a feature request if you need it)";

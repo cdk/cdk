@@ -73,6 +73,10 @@ public class MDLRXNReader extends DefaultChemObjectReader {
         input = new BufferedReader(in);
     }
 
+    public MDLRXNReader() {
+        this(new StringReader(""));
+    }
+    
     public String getFormatName() {
         return "MDL RXN";
     }

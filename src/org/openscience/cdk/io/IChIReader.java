@@ -30,6 +30,7 @@ package org.openscience.cdk.io;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.io.StringReader;
 
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
@@ -79,6 +80,10 @@ public class IChIReader extends DefaultChemObjectReader {
         this.input = input;
     }
 
+    public IChIReader() {
+        this(new StringReader(""));
+    }
+    
     public String getFormatName() {
         return "IUPAC Chemical Identifier";
     }

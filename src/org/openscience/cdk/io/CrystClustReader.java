@@ -27,6 +27,7 @@ package org.openscience.cdk.io;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.io.StringReader;
 import javax.vecmath.Point3d;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemFile;

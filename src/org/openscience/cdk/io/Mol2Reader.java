@@ -30,6 +30,7 @@ package org.openscience.cdk.io;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.io.StringReader;
 
 import javax.vecmath.Point3d;
 
@@ -69,6 +70,10 @@ public class Mol2Reader extends DefaultChemObjectReader {
         input = new BufferedReader(in);
     }
 
+    public Mol2Reader() {
+        this(new StringReader(""));
+    }
+    
     public String getFormatName() {
         return "Mol2 (Sybyl)";
     }

@@ -31,8 +31,7 @@ import java.io.Reader;
  */
 public class MOPAC97Reader extends DummyReader {
 
-    public MOPAC97Reader(Reader input) {
-    }
+    public MOPAC97Reader() {}
 
     public String getFormatName() {
         return "MOPAC97/2002 (not implemented, post a feature request if you need it)";

@@ -31,6 +31,7 @@ package org.openscience.cdk.io;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.io.StringReader;
 import java.util.Hashtable;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
@@ -96,6 +97,10 @@ public class PMPReader extends DefaultChemObjectReader {
         atomTypePattern = Pattern.compile("^(\\d+)\\s+(\\w+)$");
     }
 
+    public PMPReader() {
+        this(new StringReader(""));
+    }
+    
     public String getFormatName() {
         return "PolyMorph Predictor (Cerius)";
     }

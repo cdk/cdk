@@ -25,14 +25,14 @@
 package org.openscience.cdk.io;
 
 import java.io.Reader;
+import java.io.StringReader;
 
 /**
  * @cdk.module io
  */
 public class DaltonReader extends DummyReader {
 
-    public DaltonReader(Reader input) {
-    }
+    public DaltonReader() {}
 
     public String getFormatName() {
         return "Dalton (not implemented, post a feature request if you need it)";

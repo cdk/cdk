@@ -31,6 +31,7 @@ package org.openscience.cdk.io;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.io.StringReader;
 
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
@@ -64,6 +65,10 @@ public class SMILESReader extends DefaultChemObjectReader {
         sp = new SmilesParser();
     }
 
+    public SMILESReader() {
+        this(new StringReader(""));
+    }
+    
     public String getFormatName() {
         return "SMILES";
     }

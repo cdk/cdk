@@ -86,7 +86,11 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
             // should not happen
         }
     }
-
+    
+    public Gaussian03Reader() {
+        this(new StringReader(""));
+    }
+    
     public String getFormatName() {
         return "Gaussian 2003";
     }

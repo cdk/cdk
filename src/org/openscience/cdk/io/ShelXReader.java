@@ -31,6 +31,7 @@ package org.openscience.cdk.io;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.io.StringReader;
 import java.util.StringTokenizer;
 
 import javax.vecmath.Point3d;
@@ -77,6 +78,10 @@ public class ShelXReader extends DefaultChemObjectReader {
         this.logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
     }
 
+    public ShelXReader() {
+        this(new StringReader(""));
+    }
+    
     public String getFormatName() {
         return "ShelXL";
     }
