@@ -97,12 +97,12 @@
     <ant antfile="build.xml" target="dist.init"/>
     
     <copy file="${src}/jmol-b6.javafiles" tofile="${src}/jmol-b6.classes"/>
-    <replace file="${src}/jmol-b6.classes" token=".java" value=".class"/>
+    <replace file="${src}/jmol-b6.classes" token=".java" value="*.class"/>
 
     <jar jarfile="${dist}/jar/jmolcdk.jar">
       <fileset dir="${build}">
         <!-- Put only required class files in the jar -->
-        <include name="**/*.class" />
+        <includesfile name="${src}/jmol-b6.classes" />
       </fileset>
       <fileset dir="${src}">
         <!-- These config and data files are also needed -->
@@ -119,12 +119,12 @@
     <ant antfile="build.xml" target="dist.init"/>
     
     <copy file="${src}/jmol-applet-b6.javafiles" tofile="${src}/jmol-applet-b6.classes"/>
-    <replace file="${src}/jmol-applet-b6.classes" token=".java" value=".class"/>
+    <replace file="${src}/jmol-applet-b6.classes" token=".java" value="*.class"/>
 
     <jar jarfile="${dist}/jar/jmolappletcdk.jar">
       <fileset dir="${build}">
         <!-- Put only required class files in the jar -->
-        <include name="**/*.class" />
+        <includesfile name="${src}/jmol-applet-b6.classes" />
       </fileset>
       <fileset dir="${src}">
         <!-- These config and data files are also needed -->
@@ -140,7 +140,7 @@
     <ant antfile="build.xml" target="dist.init"/>
     
     <copy file="${src}/jmol-applet.javafiles" tofile="${src}/jmol-applet.classes"/>
-    <replace file="${src}/jmol-applet.classes" token=".java" value=".class"/>
+    <replace file="${src}/jmol-applet.classes" token=".java" value="*.class"/>
 
     <jar jarfile="${dist}/jar/jmol2appletcdk.jar">
       <fileset dir="${build}">
@@ -161,12 +161,12 @@
     <ant antfile="build.xml" target="dist.init"/>
     
     <copy file="${src}/jmol.javafiles" tofile="${src}/jmol.classes"/>
-    <replace file="${src}/jmol.classes" token=".java" value=".class"/>
+    <replace file="${src}/jmol.classes" token=".java" value="*.class"/>
 
     <jar jarfile="${dist}/jar/jmol2cdk.jar">
       <fileset dir="${build}">
         <!-- Put only required class files in the jar -->
-        <include name="**/*.class" />
+        <includesfile name="${src}/jmol.classes" />
       </fileset>
       <fileset dir="${src}">
         <!-- These config and data files are also needed -->
