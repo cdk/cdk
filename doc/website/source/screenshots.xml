@@ -10,14 +10,30 @@
     <summary>Some visual eye-candy.</summary>
   </head>
 
-    <para>
-        <figure>
-                <title>The GraphRenderer with a plot of a gaussian function
-                </title>
-                <screenshot>
-                        <graphic fileref="graphics/screenshots/GraphRendererTest.png"></graphic>
-                </screenshot>
-        </figure>
-    </para>
+  <para>
+    <figure>
+      <title>The 2D Renderer showing sterane skeleton</title>
+      <screenshot>
+        <graphic fileref="graphics/screenshots/Renderer2D.png"></graphic>
+      </screenshot>
+    </figure>
+  </para>
 
+  <para>
+    <figure>
+      <title>The 3D orbital Renderer</title>
+      <screenshot>
+        <graphic fileref="graphics/screenshots/OrbitalsRenderer3DTest.png"></graphic>
+      </screenshot>
+    </figure>
+  </para>
+
+  <para>
+    <figure>
+      <title>The GraphRenderer with a plot of a gaussian function</title>
+      <screenshot>
+        <graphic fileref="graphics/screenshots/GraphRendererTest.png"></graphic>
+      </screenshot>
+    </figure>
+  </para>
 </webpage>

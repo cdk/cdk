@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
 <!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.0b1//EN" "dtd/website.dtd" [
-<!ENTITY cdk-fileconvert SYSTEM "../../../packages/tar/cdk-bin/man/cdk-fileconvert.xml">
-<!ENTITY cdk-dbadmin SYSTEM "../../../packages/tar/cdk-bin/man/cdk-dbadmin.xml">
+  <!ENTITY cdk-dbadmin SYSTEM "../../../packages/tar/cdk-bin/man/cdk-dbadmin.xml">
+  <!ENTITY cdk-fileconvert SYSTEM "../../../packages/tar/cdk-bin/man/cdk-fileconvert.xml">
+  <!ENTITY cdk-view SYSTEM "../../../packages/tar/cdk-bin/man/cdk-view.xml">
 ]>
 <webpage id="manpages">
   <config param="last-change-by" value="$Author$"/>
@@ -11,13 +12,14 @@
     <title>The CDK Man Pages</title>
     <titleabbrev>Manual Pages</titleabbrev>
     <summary>This page contains the manual pages of the binaries that are
-	  included in the cdk-bin distribution.</summary>
+      included in the cdk-bin distribution.</summary>
   </head>
 
   <section>
     <title>Manual Pages</title>
-	&cdk-fileconvert;
-	&cdk-dbadmin;
+    &cdk-dbadmin;
+    &cdk-fileconvert;
+    &cdk-view;
   </section>
 
 </webpage>

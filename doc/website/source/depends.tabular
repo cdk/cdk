@@ -1,4 +1,4 @@
-website: intro.html thelibrary.html libraries.html related.html development.html whoiswho.html agenda.html changelog.html documentation.html reference.html api.html manpages.html screenshots.html maillinglists.html download.html biblio.html index.html 
+website: intro.html thelibrary.html libraries.html related.html development.html whoiswho.html agenda.html changelog.html documentation.html reference.html api.html core-api.html manpages.html screenshots.html maillinglists.html download.html biblio.html index.html 
 
 index.html: website.xml
 intro.html: intro.xml
@@ -12,6 +12,7 @@ changelog.html: changelog.xml
 documentation.html: documentation.xml
 reference.html: reference.xml
 api.html: api.xml
+core-api.html: core-api.xml
 manpages.html: manpages.xml
 screenshots.html: screenshots.xml
 maillinglists.html: maillinglists.xml
@@ -19,5 +20,5 @@ download.html: download.xml
 biblio.html: biblio.xml
 
 clean:
-	rm -f intro.html thelibrary.html libraries.html related.html development.html whoiswho.html agenda.html changelog.html documentation.html reference.html api.html manpages.html screenshots.html maillinglists.html download.html biblio.html index.html 
+	rm -f intro.html thelibrary.html libraries.html related.html development.html whoiswho.html agenda.html changelog.html documentation.html reference.html api.html core-api.html manpages.html screenshots.html maillinglists.html download.html biblio.html index.html 
 
