@@ -43,15 +43,19 @@ public class AromaticityCalculator
 {
 
 	/**
-	 *  Tests the <code>ring</code> in the <code>molecule</code> for aromaticity. Uses the Huckle rule (4n + 2) pie electrons. sp2 hybridized C contibute 1 electron non sp2 hybridized heteroatoms contribute 2 electrons (N and O should never be sp in or anything
-	 *  else in a ring and d electron elements get to complicated) sp2 hybridized heteroatoms contribute 1 electron hybridization is worked out by counting the number of bonds with order 2. Therefore sp2 hybridization is assumed if there is one bond of order
-	 *  2. Otherwise sp3 hybridization is assumed.
+	 *  Tests the <code>ring</code> in the <code>molecule</code> for aromaticity. Uses the 
+   *  H&uuml;ckle rule (4n + 2) pie electrons. sp<sup>2</sup> hybridized C contibute 1 electron non 
+   *  sp<sup>2</sup> hybridized heteroatoms contribute 2 electrons (N and O should never be sp in 
+   *  or anything else in a ring and d electron elements get to complicated) 
+   *  sp<sup>2</sup> hybridized heteroatoms contribute 1 electron hybridization is worked out by
+   *  counting the number of bonds with order 2. Therefore sp<sup>2</sup> hybridization is assumed 
+   *  if there is one bond of order 2. Otherwise sp<sup>3</sup> hybridization is assumed.
 	 *
 	 * @param  ring      the ring to test
 	 * @param  molecule  the molecule the ring is in
 	 * @return           true if the ring is aromatic false otherwise.
 	 */
-	public static boolean isArromatic(Ring ring, Molecule molecule)
+	public static boolean isAromatic(Ring ring, Molecule molecule)
 	{
 //    System.out.println("calculating aromaticity");
 		Atom[] ringAtoms = ring.getAtoms();

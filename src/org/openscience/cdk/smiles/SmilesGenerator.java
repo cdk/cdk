@@ -484,7 +484,7 @@ public class SmilesGenerator {
     Iterator it = rings.iterator();
     while (it.hasNext()) {
       Ring ring = (Ring) it.next();
-      if(AromaticityCalculator.isArromatic(ring,  molecule)){
+      if(AromaticityCalculator.isAromatic(ring,  molecule)){
         arromaticRings.add(ring);
       }
     }
