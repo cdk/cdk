@@ -1,0 +1,138 @@
+/* $RCSfile$
+ * $Author$
+ * $Date$
+ * $Revision$
+ *
+ * Copyright (C) 2002  The Chemistry Development Kit (CDK) project
+ *
+ * Contact: cdk-devel@lists.sf.net
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ * All we ask is that proper credit is given for our work, which includes
+ * - but is not limited to - adding the above copyright notice to the beginning
+ * of your source code files, and to any copyright notice that you may distribute
+ * with programs based on this work.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ *
+ */
+package org.openscience.cdk.io;
+
+import org.openscience.cdk.exception.*;
+import org.openscience.cdk.io.cml.cdopi.*;
+import org.openscience.cdk.io.cml.*;
+import org.openscience.cdk.*;
+import org.xml.sax.helpers.*;
+import org.xml.sax.*;
+import java.io.*;
+import java.net.*;
+
+/**
+ * Reads the content of a IUPAC Chemical Identifier (IChI) document. See
+ * <a href="http://www.nist.gov/public_affairs/update/upd20020610.htm#International">this
+ * press release</a>.
+ *
+ * @author     Egon Willighagen
+ * @created    25 September 2002
+ *
+ * @keyword file format, IChI
+ * @keyword chemical identifier
+ */
+public class IChIReader implements ChemObjectReader {
+
+    private XMLReader parser;
+    private Reader input;
+    private String url;
+
+    private org.openscience.cdk.tools.LoggingTool logger;
+
+    /**
+     * Construct a IChI reader from a Reader object.
+     *
+     * @param input the Reader with the content
+     */
+    public CMLReader(Reader input) {
+        this.init();
+        this.input = input;
+    }
+
+    /**
+     * Initializes this reader.
+     */
+    private void init() {
+        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+
+        url = ""; // make sure it is not null
+
+        try {
+            parser = new gnu.xml.aelfred2.XmlReader();
+            logger.info("Using Aelfred2 XML parser.");
+            success = true;
+        } catch (Exception e) {
+            logger.error("Could not instantiate Aelfred2 XML reader!");
+        }
+    }
+
+    /**
+     * Reads a ChemObject of type object from input.
+     * Supported types are: ChemFile.
+     *
+     * @param  object type of requested ChemObject
+     * @return the content in a ChemFile object
+     */
+    public ChemObject read(ChemObject object) throws UnsupportedChemObjectException {
+      if (object instanceof ChemFile) {
+        return (ChemObject)readChemFile();
+      } else {
+        throw new UnsupportedChemObjectException(
+          "Only supported is ChemFile.");
+      }
+    }
+
+    // private functions
+
+    /**
+     * Reads a ChemFile object from input.
+     *
+     * @return ChemFile with the content read from the input
+     */
+    private ChemFile readChemFile() {
+        ChemFileCDO cdo = new ChemFileCDO();
+        try {
+            parser.setFeature("http://xml.org/sax/features/validation", false);
+            logger.info("Deactivated validation");
+        } catch (SAXException e) {
+            logger.warn("Cannot deactivate validation.");
+            return cdo;
+        }
+        parser.setContentHandler(new IChIHandler((CDOInterface)cdo));
+        // parser.setEntityResolver(new CMLResolver());
+        // parser.setErrorHandler(new CMLErrorHandler());
+        try {
+            if (input == null) {
+                parser.parse(url);
+            } else {
+                parser.parse(new InputSource(input));
+            }
+        } catch (IOException e) {
+            logger.warn("IOException: " + e.toString());
+        } catch (SAXException saxe) {
+            logger.warn("SAXException: " + saxe.getClass().getName());
+            logger.warn(saxe.toString());
+            // e.printStackTrace();
+        }
+        return cdo;
+    }
+
+}
+
