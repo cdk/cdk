@@ -29,6 +29,12 @@
           <xsl:sort select="ncss" data-type="number" order="descending"/>
           <xsl:apply-templates select="self::node()[not(contains(./name, 'test'))]"/>
         </xsl:for-each>
+        <row>
+          <entry>Total</entry>
+          <entry><xsl:value-of select="sum(javancss/packages/package[not(contains(./name, 'test'))]/classes)"/></entry>
+          <entry><xsl:value-of select="sum(javancss/packages/package[not(contains(./name, 'test'))]/functions)"/></entry>
+          <entry><xsl:value-of select="sum(javancss/packages/package[not(contains(./name, 'test'))]/ncss)"/></entry>
+        </row>
     </tbody>
   </tgroup>
 </informaltable>
@@ -48,6 +54,12 @@
           <xsl:sort select="ncss" data-type="number" order="descending"/>
           <xsl:apply-templates select="self::node()[contains(./name, 'test')]"/>
         </xsl:for-each>
+        <row>
+          <entry>Total</entry>
+          <entry><xsl:value-of select="sum(javancss/packages/package[contains(./name, 'test')]/classes)"/></entry>
+          <entry><xsl:value-of select="sum(javancss/packages/package[contains(./name, 'test')]/functions)"/></entry>
+          <entry><xsl:value-of select="sum(javancss/packages/package[contains(./name, 'test')]/ncss)"/></entry>
+        </row>
     </tbody>
   </tgroup>
 </informaltable>
