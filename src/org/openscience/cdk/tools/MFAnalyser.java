@@ -63,20 +63,62 @@ public class MFAnalyser{
 	}	
 
 	/** returns the complete set of Nodes, as implied by the molecular
-	  * formula, inlcuding all the hydrogens.
-	  */
+	 * formula, including all the hydrogens.
+	 */
 	public AtomContainer getAtomContainer(){
 		return atomContainer;		
 	}
 	
-	/** returns the complete set of Nodes, as implied by the molecular
-	  * formula, inlcuding all the hydrogens.
-	  */
+	/**
+     * Returns the complete set of Nodes, as implied by the molecular
+	 * formula, including all the hydrogens.
+     *
+     * @see #getHTMLMolecularFormula()
+     */
 	public String getMolecularFormula(){
 		return MF;		
 	}
+  
+  /**
+   * Returns the string representation of the molecule formula with
+   * numbers wrapped in &lt;sub&gt;&lt;/sub&gt; tags. Useful for displaying
+   * formulae in Swing components or on the web.
+   *
+   * @return A HTML representation of the molecular formula.
+   *
+   * @author   Stephen Tomkinson
+   * @created  2003-08-14
+   */
+   public String getHTMLMolecularFormula(){
+     boolean lastCharacterWasDigit = false;
+     boolean currentCharacterIsDigit;
+     StringBuffer htmlString = new StringBuffer (MF);
+     
+     for (int characterCounter = 0; characterCounter <= htmlString.length(); characterCounter++){
+       try{
+         currentCharacterIsDigit = Character.isDigit(htmlString.charAt(characterCounter));
+       }
+       catch (StringIndexOutOfBoundsException oobe){
+         currentCharacterIsDigit = false;
+       }
+       
+       if (currentCharacterIsDigit && !lastCharacterWasDigit){
+         //Insert an opening sub and move the counter beyond it
+         htmlString.insert (characterCounter, "<sub>");
+         characterCounter += 5;
+       }
+       else if (lastCharacterWasDigit && !currentCharacterIsDigit){
+         //Insert a closing sub and move the counter beyond it
+         htmlString.insert (characterCounter, "</sub>");
+         characterCounter += 6;
+       }
+       
+       lastCharacterWasDigit = currentCharacterIsDigit;
+     }
+     
+     return htmlString.toString();
+   }
 
-	
    /**
      * returns the exact mass for a given molecular formula
      **/
