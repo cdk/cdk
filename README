@@ -1,0 +1,26 @@
+Compiling
+---------
+
+Compiling and jar-ing the software is done with Jakarta's 
+Ant (http://jakarta.apache.org/ant/):
+
+cdk/$ ls build.xml
+build.xml
+cdk/$ ant
+
+Running tests
+-------------
+
+After you compiled the code:
+
+cdk/$ cd build
+cdk/build/$ java -cp .:../jar/cml-2.0.jar:../jar/xerces-1.3.0.jar:../jar/cml-2.0.jar:../jar/junit.jar:../jar/vecmath1.1-1.12.jar \
+org.openscience.cdk.test.FileReaderTest
+
+The avaiable tests are:
+
+org.openscience.cdk.test.FileReaderTest		Reads an MDL Molfile, XYZ or CML file
+org.openscience.cdk.test.ControllerTest		Reads and edit a file
+org.openscience.cdk.test.CDKTests		Tests automatic drawing of structures
+org.openscience.cdk.test.DatabaseTest		Read a structure from a JDBC compliant database
+

@@ -1,0 +1,10 @@
+CHANGELOG
+---------
+
+changes since "cdk preview 20010511"
+------------------------------------
+* Added AtomicTable.java: a list of atomic properties.
+* Added Atom.charge (private)
+* Added XYZReader.java
+* Added HasInformation.java with has2DCoordinates() and
+  has3DCoordinates()

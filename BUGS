@@ -1,0 +1,4 @@
+Known BUGS and other issues *not* in SF's BTS
+=============================================
+
+- 2D coordinates in model get changed for rendering purposes
