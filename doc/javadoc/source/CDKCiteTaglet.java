@@ -1,7 +1,44 @@
+/* $RCSfile$
+ * $Author$
+ * $Date$
+ * $Revision$
+ *
+ * Copyright (C) 2004  The Chemistry Development Kit (CDK) project
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ *
+ */
 import com.sun.tools.doclets.Taglet;
 import com.sun.javadoc.*;
 import java.util.Map;
 
+/**
+ * Taglet that expands inline cdk.cite tags into a weblink to the CDK
+ * bibliography webpage. Like all inline tags it's used in the JavaDoc
+ * text as:
+ * <pre>
+ * This class does nothing {@cdk.cite NULL}.
+ * </pre>
+ * For this code a reference is created like this:
+ * <pre>
+ * <a href="http://cdk.sf.net/biblio.html#NULL">NULL</a>
+ * </pre>
+ *
+ * <p>Citations can be singular, like <code>{@cdk.cite BLA}</code>,
+ * and multiple, like <code>{@cdk.cite BLA,BLA2,FOO}</code>.
+ */
 public class CDKCiteTaglet implements Taglet {
     
     private static final String NAME = "cdk.cite";
@@ -48,8 +85,7 @@ public class CDKCiteTaglet implements Taglet {
     }
 
     public String toString(Tag tag) {
-        return "[<a href=\"http://cdk.sf.net/biblio.html#"
-               + tag.text() + "\">" + tag.text() + "</a>]";
+        return "[" + expandCitation(tag.text() + "]";
     }
     
     public String toString(Tag[] tags) {
@@ -57,8 +93,7 @@ public class CDKCiteTaglet implements Taglet {
         if (tags.length > 0) {
             result = "[";
             for (int i=0; i<tags.length; i++) {
-                result += "<a href=\"http://cdk.sf.net/biblio.html#"
-                + tags[i].text() + "\">" + tags[i].text() + "</a>";
+                result += expandCitation(tags[i]);
                 if ((i+1)<tags.length) result += ", ";
             }
             result += "]";
@@ -66,4 +101,27 @@ public class CDKCiteTaglet implements Taglet {
         return result;
     }
 
+    /**
+     * Expands a citation into HTML code.
+     */
+    private String expandCitation(String citation) {
+        String result = "";
+        if (citation.indexOf(",") != -1) {
+            StringTokenizer tokenizer = new StringTokenizer(citation);
+            while (tokenizer.hasMoreTokens()) {
+                String token = tokenizer.nextToken().trim();
+                result += "<a href=\"http://cdk.sf.net/biblio.html#"
+                       + citation + "\">" + citation + "</a>";
+                if (tokenizer.hasMoreTokens()) {
+                    result += ", ";
+                }
+            }
+        } else {
+            citation = citation.trim();
+            result += "<a href=\"http://cdk.sf.net/biblio.html#"
+                   + citation + "\">" + citation + "</a>";
+        }
+        return result;
+    }
+    
 }
