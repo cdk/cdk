@@ -70,4 +70,15 @@ public class PseudoAtomTest extends TestCase {
         assertEquals(twoD, a.getPoint2D());
     }
 
+    /**
+     * Method to test wether the class complies with RFC #9.
+     */
+    public void testToString() {
+        Atom atom = new PseudoAtom("R");
+        String description = atom.toString();
+        for (int i=0; i< description.length(); i++) {
+            assertTrue(description.charAt(i) != '\n');
+            assertTrue(description.charAt(i) != '\r');
+        }
+    }
 }
