@@ -152,8 +152,11 @@ public class CIFReader extends DefaultChemObjectReader {
                     line = input.readLine();
                     if (line.startsWith(";")) {
                         logger.debug("Skipping block content");
-                        line = input.readLine();
-                        while (!line.equals(";")) line = input.readLine();
+                        line = input.readLine().trim();
+                        while (!line.equals(";")) { 
+                            line = input.readLine().trim();
+                            logger.debug("Skipping block line: " + line);
+                        }
                         line = input.readLine();
                     }
                 }
@@ -209,7 +212,7 @@ public class CIFReader extends DefaultChemObjectReader {
     }
     
     private void processLoopBlock() throws IOException {
-        String line = input.readLine();
+        String line = input.readLine().trim();
         if (line.startsWith("_atom")) {
             logger.info("Found atom loop block");
             processAtomLoopBlock(line);
@@ -222,7 +225,7 @@ public class CIFReader extends DefaultChemObjectReader {
     private void skipUntilEmptyOrCommentLine(String line) throws IOException {
         // skip everything until empty line, or comment line
         while (line != null && line.length() > 0 && line.charAt(0) != '#') {
-            line = input.readLine();
+            line = input.readLine().trim();
         }
     }
     
@@ -235,12 +238,13 @@ public class CIFReader extends DefaultChemObjectReader {
         int atomRealX = -1;
         int atomRealY = -1;
         int atomRealZ = -1;
-        String line = firstLine;
+        String line = firstLine.trim();
         int headerCount = 0;
         boolean hasParsableInformation = false;
         while (line != null && line.charAt(0) == '_') {
             headerCount++;
-            if (line.equals("_atom_site_label")) {
+            if (line.equals("_atom_site_label") ||
+                line.equals("_atom_site_label_atom_id")) {
                 atomLabel = headerCount;
                 hasParsableInformation = true;
                 logger.info("label found in col: " + atomLabel);
@@ -251,38 +255,38 @@ public class CIFReader extends DefaultChemObjectReader {
             } else if (line.startsWith("_atom_site_fract_y")) {
                 atomFractY = headerCount;
                 hasParsableInformation = true;
-                logger.info("frac x found in col: " + atomFractY);
+                logger.info("frac y found in col: " + atomFractY);
             } else if (line.startsWith("_atom_site_fract_z")) {
                 atomFractZ = headerCount;
                 hasParsableInformation = true;
-                logger.info("frac x found in col: " + atomFractZ);
-            } else if (line.equals("_atom_site.Cartn_x ")) {
+                logger.info("frac z found in col: " + atomFractZ);
+            } else if (line.equals("_atom_site.Cartn_x")) {
                 atomRealX = headerCount;
                 hasParsableInformation = true;
                 logger.info("cart x found in col: " + atomRealX);
-            } else if (line.equals("_atom_site.Cartn_y ")) {
+            } else if (line.equals("_atom_site.Cartn_y")) {
                 atomRealY = headerCount;
                 hasParsableInformation = true;
                 logger.info("cart y found in col: " + atomRealY);
-            } else if (line.equals("_atom_site.Cartn_z ")) {
+            } else if (line.equals("_atom_site.Cartn_z")) {
                 atomRealZ = headerCount;
                 hasParsableInformation = true;
                 logger.info("cart z found in col: " + atomRealZ);
-            } else if (line.equals("_atom_site.type_symbol ")) {
+            } else if (line.equals("_atom_site.type_symbol")) {
                 atomSymbol = headerCount;
                 hasParsableInformation = true;
                 logger.info("type_symbol found in col: " + atomSymbol);
             } else {
                 logger.warn("Ignoring atom loop block field: " + line);
             }
-            line = input.readLine();
+            line = input.readLine().trim();
         }
         if (hasParsableInformation == false ) {
             logger.info("No parsable info found");
             skipUntilEmptyOrCommentLine(line);
         } else {
             // now that headers are parsed, read the data
-            while( line != null && line.length() > 0 && line.charAt(0) != '#') {
+            while(line != null && line.length() > 0 && line.charAt(0) != '#') {
                 logger.debug("new row");
                 StringTokenizer tokenizer = new StringTokenizer(line);
                 if (tokenizer.countTokens() < headerCount) {
@@ -302,8 +306,11 @@ public class CIFReader extends DefaultChemObjectReader {
                     String field = tokenizer.nextToken();
                     logger.debug("Parsing col,token: " + colIndex + "=" + field);
                     if (colIndex == atomLabel) {
-                        String element = extractFirstLetters(field);
-                        atom.setSymbol(element);
+                        if (atomSymbol == -1) {
+                            // no atom symbol found, use label
+                            String element = extractFirstLetters(field);
+                            atom.setSymbol(element);
+                        }
                         atom.setID(field);
                     } else if (colIndex == atomFractX) {
                         hasFractional = true;
@@ -344,7 +351,7 @@ public class CIFReader extends DefaultChemObjectReader {
                 crystal.addAtom(atom);
                 
                 // look up next row
-                line = input.readLine();
+                line = input.readLine().trim();
             }
         }
     }
