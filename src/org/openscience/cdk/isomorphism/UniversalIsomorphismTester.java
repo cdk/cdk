@@ -43,6 +43,7 @@ import org.openscience.cdk.geometry.*;
 import org.openscience.cdk.io.*;
 import org.openscience.cdk.exception.*;
 import org.openscience.cdk.isomorphism.mcss.*;
+import org.openscience.cdk.tools.ChemModelManipulator;
 
 /**
  *  This class implements a multipurpose structure comparaison tool.
@@ -613,7 +614,7 @@ public class UniversalIsomorphismTester
             System.out.println(e);
         } 
         
-        return outFile.getChemSequence(0).getChemModel(0).getAllInOneContainer();
+        return ChemModelManipulator.getAllInOneContainer(outFile.getChemSequence(0).getChemModel(0));
     }    
 }
 

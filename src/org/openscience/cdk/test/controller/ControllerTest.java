@@ -3,7 +3,7 @@
  * $Date$    
  * $Revision$
  * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  * 
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  * 
@@ -75,8 +75,12 @@ public class ControllerTest
 		MoleculeViewer2D mv = new MoleculeViewer2D(molecule, r2dm);
 //		r2dm.setDrawNumbers(true);
 		mv.display();
+        ChemModel model = new ChemModel();
+        SetOfMolecules moleculeSet = new SetOfMolecules();
+        moleculeSet.addMolecule(molecule);
+        model.setSetOfMolecules(moleculeSet);
 		JCPController2DModel c2dm = new JCPController2DModel();
-		inputAdapter = new CDKInputAdapter(molecule, r2dm, c2dm);
+		inputAdapter = new CDKInputAdapter(model, r2dm, c2dm);
 		c2dm.setDrawMode(JCPController2DModel.DRAWBOND);
 		mv.addMouseMotionListener(inputAdapter);
 		mv.addMouseListener(inputAdapter);

@@ -1,10 +1,9 @@
-/*
- * $RCSfile$
+/* $RCSfile$
  * $Author$
  * $Date$
  * $Revision$
  *
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  * 
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  * 
@@ -49,8 +48,7 @@ public class GaussiansCalculationTest
 {
 	public GaussiansCalculationTest(String inFile)
   { 
-    try      
-    {        
+    try {
       ChemObjectReader reader;
       System.out.println("Loading: " + inFile);
       if (inFile.endsWith(".xyz"))
@@ -70,7 +68,7 @@ public class GaussiansCalculationTest
 
       ChemSequence[] chemSequence = chemFile.getChemSequences();
       ChemModel[] chemModels = chemSequence[0].getChemModels();
-      AtomContainer atomContainer = chemModels[0].getAllInOneContainer();
+      AtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModels[0]);
 			Atom[] atoms = atomContainer.getAtoms();
 
 			GaussiansBasis basis = new SimpleBasisSet(atoms);
