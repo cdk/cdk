@@ -47,7 +47,7 @@ public class PseudoAtom extends Atom implements java.io.Serializable, Cloneable
      * @param   label  The String describing the PseudoAtom
      */
     public PseudoAtom(String label) {
-        super("H");
+        super("R");
         this.label = label;
         this.point3D = null;
         this.point2D = null;
@@ -79,6 +79,13 @@ public class PseudoAtom extends Atom implements java.io.Serializable, Cloneable
     public PseudoAtom(String label, javax.vecmath.Point2d point2D) {
         this(label);
         this.point2D = point2D;
+    }
+
+    /**
+     * Returns the label of this PseudoAtom. 
+     */
+    public String getLabel() {
+        return label;
     }
 
     /**
