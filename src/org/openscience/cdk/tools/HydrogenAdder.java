@@ -150,16 +150,32 @@ public class HydrogenAdder {
     public void addExplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom) 
         throws IOException, ClassNotFoundException
     {
+        // set number of implicit hydrogens to zero
+        // add explicit hydrogens
+        int missingHydrogens = satChecker.calculateMissingHydrogen(atom, container);
+        addExplicitHydrogensToSatisfyValency(container, atom, missingHydrogens);
+    }
+    
+    /**
+     * Method that saturates an atom in a molecule by adding explicit hydrogens.
+     *
+     * @param  atom      Atom to saturate
+     * @param  container AtomContainer containing the atom
+     * @param  count     Number of hydrogens to add
+     *
+     * @keyword          hydrogen, adding
+     * @keyword          explicit hydrogen
+     */
+    public void addExplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom, int count) 
+        throws IOException, ClassNotFoundException
+    {
         boolean create2DCoordinates = GeometryTools.has2DCoordinates(container);
         boolean create3DCoordinates = GeometryTools.has3DCoordinates(container);
         
         Isotope isotope = IsotopeFactory.getInstance().getMajorIsotope("H");
         atom.setHydrogenCount(0);
         
-        // set number of implicit hydrogens to zero
-        // add explicit hydrogens
-        int missingHydrogens = satChecker.calculateMissingHydrogen(atom, container);
-        for (int i = 1; i <= missingHydrogens; i++) {
+        for (int i = 1; i <= count; i++) {
             Atom hydrogen = new Atom("H");
             IsotopeFactory.getInstance().configure(hydrogen, isotope);
             container.addAtom(hydrogen);
