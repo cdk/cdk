@@ -150,28 +150,34 @@ public class BasicValidator implements ValidatorInterface {
         ValidationTest tooCharged = new ValidationTest(atom, "Atom has an unlikely large positive or negative charge");
         if (atom.getSymbol().equals("O") || atom.getSymbol().equals("N") ||
             atom.getSymbol().equals("C") || atom.getSymbol().equals("H")) {
-            if (atom.getFormalCharge() < -3) {
-                report.addError(tooCharged);
-            } else if (atom.getFormalCharge() < -1) {
-                report.addWarning(tooCharged);
-            } else if (atom.getFormalCharge() > 3) {
-                report.addError(tooCharged);
-            } else if (atom.getFormalCharge() > 1) {
-                report.addWarning(tooCharged);
-            } else {
+            if (atom.getFormalCharge() == 0) {
                 report.addOK(tooCharged);
+            } else {
+                tooCharged.setDetails("Atom " + atom.getSymbol() + " has charge " + atom.getFormalCharge() );
+                if (atom.getFormalCharge() < -3) {
+                    report.addError(tooCharged);
+                } else if (atom.getFormalCharge() < -1) {
+                    report.addWarning(tooCharged);
+                } else if (atom.getFormalCharge() > 3) {
+                    report.addError(tooCharged);
+                } else if (atom.getFormalCharge() > 1) {
+                    report.addWarning(tooCharged);
+                }
             }
         } else {
-            if (atom.getFormalCharge() < -4) {
-                report.addError(tooCharged);
-            } else if (atom.getFormalCharge() < -3) {
-                report.addWarning(tooCharged);
-            } else if (atom.getFormalCharge() > 4) {
-                report.addError(tooCharged);
-            } else if (atom.getFormalCharge() > 2) {
-                report.addWarning(tooCharged);
-            } else {
+            if (atom.getFormalCharge() == 0) {
                 report.addOK(tooCharged);
+            } else {
+                tooCharged.setDetails("Atom " + atom.getSymbol() + " has charge " + atom.getFormalCharge() );
+                if (atom.getFormalCharge() < -4) {
+                    report.addError(tooCharged);
+                } else if (atom.getFormalCharge() < -3) {
+                    report.addWarning(tooCharged);
+                } else if (atom.getFormalCharge() > 4) {
+                    report.addError(tooCharged);
+                } else if (atom.getFormalCharge() > 3) {
+                    report.addWarning(tooCharged);
+                }
             }
         }
         return report;
@@ -326,6 +332,7 @@ public class BasicValidator implements ValidatorInterface {
         try {
             SaturationChecker saturationChecker = new SaturationChecker();
             if (!saturationChecker.isSaturated(atom, molecule)) {
+                checkValency.setDetails("Atom " + atom.getSymbol() + " fails");
                 report.addError(checkValency);
             } else {
                 report.addOK(checkValency);
