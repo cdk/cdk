@@ -40,6 +40,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.LoggingTool;
 
+
 /**
  * Engine that calculates the values for a set of Descriptors and add this
  * to a Molecule. The set of descriptors is created from the Java sources of
@@ -52,26 +53,26 @@ import org.openscience.cdk.tools.LoggingTool;
 public class DescriptorEngine {
 
     private final static String QSAR_DESCRIPTOR_LIST = "qsar-descriptors.set";
-    
+
     private List descriptors;
+    private DescriptorSpecification[] specs;
     private LoggingTool logger;
 
-	public DescriptorEngine() {
+    public DescriptorEngine() {
         logger = new LoggingTool(true);
         descriptors = new Vector();
-        
+
         /* the next is stupid, we don't want to hard code this, but it seems
            we don't have a better alternative just yet */
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(
-                this.getClass().getClassLoader().getResourceAsStream(QSAR_DESCRIPTOR_LIST)
-            ));
+                        this.getClass().getClassLoader().getResourceAsStream(QSAR_DESCRIPTOR_LIST)
+                        ));
             while (reader.ready()) {
                 // load them one by one
                 String descriptorName = reader.readLine();
                 try {
-                    Descriptor descriptor = (Descriptor)this.getClass().getClassLoader().
-                    loadClass(descriptorName).newInstance();
+                    Descriptor descriptor = (Descriptor)this.getClass().getClassLoader().loadClass(descriptorName).newInstance();
                     descriptors.add(descriptor);
                     logger.info("Loaded descriptor: ", descriptorName);
                 } catch (ClassNotFoundException exception) {
@@ -86,25 +87,55 @@ public class DescriptorEngine {
             logger.error("Could not load this descriptor list: ", QSAR_DESCRIPTOR_LIST);
             logger.debug(exception);
         }
+
+        // set the DescriptorSpecification objects. We need to make a list 
+        // beforehand since these are used as key into the molecules 
+        // property list. As a result when accessing the property list
+        // the keys should be identical to those used when setting the properties.
+        specs = new DescriptorSpecification[descriptors.size()];
+        for (int i = 0; i < descriptors.size(); i++) {
+            Descriptor descriptor = (Descriptor)descriptors.get(i);
+            specs[i] = descriptor.getSpecification();
+        }
     }
 
-	public void process(Molecule molecule) {
-        Iterator iterator = descriptors.iterator();
-        while (iterator.hasNext()) {
-            Descriptor descriptor = (Descriptor)iterator.next();
+    /**
+     *  Calculates all available descriptors for a molecule
+     *
+     *  The results for a given descriptor as well as associated parameters and
+     *  specifications are used to create a <code>DescriptorValue</code>
+     *  object which is then added to the molecule as a property keyed
+     *  on the <code>DescriptorSpecification</code> object for that descriptor
+     *
+     *@param  Molecule  The molecule for which we want to calculate descriptors          
+     */
+    public void process(Molecule molecule) {
+        for (int i = 0; i < descriptors.size(); i++) {    
+            Descriptor descriptor = (Descriptor)descriptors.get(i);
             try {
                 DescriptorValue value = new DescriptorValue(
-                    descriptor.getSpecification(),
-                    descriptor.getParameters(),
-                    descriptor.calculate(molecule)
-                );
-                molecule.setProperty(value.getSpecification(), value);
+                        specs[i],
+                        descriptor.getParameters(),
+                        descriptor.calculate(molecule)
+                        );
+                molecule.setProperty(specs[i], value);
             } catch (CDKException exception) {
                 logger.error("Could not calculate descriptor value for: ",
-                    descriptor.getClass().getName());
+                        descriptor.getClass().getName());
             }
         }
-	}
+    }
+
+   /**
+     *  Returns the DescriptorSpecification object for all available descriptors
+     *
+     *@return An array of <code>DescriptorSpecification</code> objects. These are the keys
+     *        with which the <code>DescriptorValue</code> objects can be obtained from a 
+     *        molecules property list
+     */
+    public DescriptorSpecification[] getDescriptorSpecifications() {
+        return(specs);
+    }
 
 }
 
