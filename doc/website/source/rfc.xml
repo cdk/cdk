@@ -111,6 +111,27 @@
               <entry></entry>
               <entry></entry>
             </row>
+            <row>
+              <entry>12</entry>
+              <entry><ulink url="rfc12.html">common API for CDK renderers</ulink></entry>
+              <entry>2003-02-27</entry>
+              <entry></entry>
+              <entry></entry>
+            </row>
+            <row>
+              <entry>13</entry>
+              <entry><ulink url="rfc13.html">use of get/setFlag and get/setPointer in ChemObject</ulink></entry>
+              <entry>2003-02-27</entry>
+              <entry></entry>
+              <entry></entry>
+            </row>
+            <row>
+              <entry>14</entry>
+              <entry><ulink url="rfc14.html">unit tests run with CDKTests may not produce graphical output</ulink></entry>
+              <entry>2003-02-28</entry>
+              <entry></entry>
+              <entry></entry>
+            </row>
          </tbody>
         </tgroup>
       </informaltable>

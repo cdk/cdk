@@ -1,0 +1,36 @@
+<refentry id="cdk-rfc-14">
+
+  <refentryinfo>
+    <revhistory>
+      <revision>
+        <revnumber>1</revnumber>
+        <date>2002-02-27</date>
+        <authorinitials>elw</authorinitials>
+        <revremark>
+          See <ulink url="https://sourceforge.net/mailarchive/forum.php?thread_id=1760149&amp;forum_id=2178">email archive</ulink>.
+        </revremark>
+      </revision>
+    </revhistory>
+  </refentryinfo>
+
+
+  <refnamediv>
+    <refname>RFC CDK # 14</refname>
+  </refnamediv>
+
+  <refsect1>
+    <title>Proposal</title>
+    <para>I propose that all tests run by the org.openscience.cdk.test.CDKTests JUnit
+ test suite, may not produce graphical output. Those tests should be put in
+ org.openscience.cdk.test.GraphicalCDKTests instead.</para>
+  </refsect1>
+
+  <refsect1>
+    <title>Reason</title>
+    <para>To be able to do automatic regression tests on CDK on machines that do not
+ provide a X-server, e.g. <ulink url="http://www.sf.net">http://www.sf.net/</ulink>, 
+ the JUnit tests run by CDKTests should
+ not give graphical feedback.</para>
+  </refsect1>
+
+</refentry>

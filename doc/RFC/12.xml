@@ -1,0 +1,134 @@
+<refentry id="cdk-rfc-12">
+
+  <refentryinfo>
+    <revhistory>
+      <revision>
+        <revnumber>1</revnumber>
+        <date>2002-02-26</date>
+        <authorinitials>elw</authorinitials>
+        <revremark>
+          See <ulink url="https://sourceforge.net/mailarchive/forum.php?thread_id=1760147&amp;forum_id=2178">email archive</ulink>.
+        </revremark>
+      </revision>
+    </revhistory>
+  </refentryinfo>
+
+
+  <refnamediv>
+    <refname>RFC CDK # 12</refname>
+  </refnamediv>
+
+  <refsect1>
+    <title>Proposal</title>
+    <para>
+A API to be implemented by all CDK renderers and possible others, e.g.
+Jmol's 3D renderer. The API would define how the renderer can be instantiated
+and how a molecule can be passed to the viewer that should be displayes by
+the viewer.</para>
+<para>
+At this moment CDK includes two working renderers (and one that does not
+work, which is Renderer3D): AcceleratedRenderer3D and Renderer2D. Both should 
+use the same API proposed in this RFC.</para>
+
+<para>The 3D renderer uses this API at this moment:
+<programlisting><![CDATA[
+AcceleratedRenderer3D()
+AcceleratedRenderer3D(AcceleratedRenderer3DModel)
+void createSceneGraph(TransformGroup)
+void setBackGroundColor(Color)
+]]></programlisting>
+The 2D renderer uses this API:
+<programlisting><![CDATA[
+Renderer2D()
+Renderer2D(Renderer2DModel)
+void setRenderer2DModel(Renderer2DModel)
+Renderer2DModel getRenderer2DModel()
+paintMolecule(AtomContainer, Graphics)
+]]></programlisting>
+</para>
+
+<para>
+The Accelerated3DRenderer is actually subclassing Canvas3D and it's use
+this differs from the Renderer2D. Typical use is (see 
+cdk/applications/Viewer.java) for displaying Molecule m:
+<programlisting><![CDATA[
+JFrame frame = new JFrame("CDK Molecule Viewer");
+AcceleratedRenderer3D renderer = new AcceleratedRenderer3D(new AcceleratedRenderer3DModel(m));
+frame.getContentPane().add(renderer, BorderLayout.CENTER);
+frame.setVisible(true);
+]]></programlisting>
+But Renderer2D needs a wrapper class:
+<programlisting><![CDATA[
+JFrame frame = new JFrame("CDK Molecule Viewer");
+MoleculeViewer2D mv = new MoleculeViewer2D(m);
+frame.getContentPane().add(renderer, BorderLayout.CENTER);
+frame.setVisible(true);
+]]></programlisting>
+</para>
+
+<para>
+The wrapper has this API:
+<programlisting><![CDATA[
+MoleculeViewer2D()
+MoleculeViewer2D(AtomContainer)
+MoleculeViewer2D(AtomContainer, Renderer2DModel)
+void display()
+void display(Molecule, boolean)
+AtomContainer getAtomContainer()
+JFrame getFrame()
+void setFrame(JFrame)
+Renderer2DModel getRenderer2DModel()
+void setRenderer2DModel(Renderer2DModel)
+void stateChanged(EventObject)
+void paint(Graphics)
+]]></programlisting>
+The renderers thus have:
+<orderedlist>
+  <listitem><para>a Panel/Canvas for display in a JFrame.</para></listitem>
+  <listitem><para>either an implicit or explicit rendering engine</para></listitem>
+</orderedlist>
+</para>
+
+<para>
+I propose it is the Panel/Canvas that needs the common API to achieve the
+ability to switch between renderers in GUI applications. The API I think of 
+looks like:
+<orderedlist>
+  <listitem><para>The class must subclass the java.awt.Component, or one of its
+  subclasses, like Canvas3D and JPanel</para></listitem>
+  <listitem><para>The class must have a constructor that takes zero parameters.
+  This constructor should set a default RendererModel.</para></listitem>
+  <listitem><para>The class must implement the to be written CDKRenderer Interface
+  which looks like:
+<programlisting><![CDATA[
+public interface CDKRenderer {
+
+    public void setChemObject(ChemObject) throws CDKException;
+
+}
+]]></programlisting>
+this method will change the molecule and paint the new molecule.
+Note that I deliberately took ChemObject instead of Molecule or
+AtomContainer. The Renderer must be able to actually display
+other things than just AtomContainer's... think of Reaction's and
+animation's e.g. stored as ChemSequence's.</para></listitem>
+</orderedlist>
+</para>
+
+<para>
+Also note that their is no defined interface for setting the RendererModel.
+At this stage I am unsure wether that would further easy the switching
+process.
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>Reason</title>
+    <para>To be able to switch between Renderer's it is necessary to be use them in a 
+similar way, using one API. Switching between renderer is usefull when users
+need an alternative view of the chemical data (2D display of 3D reaction), or
+when a certain Renderer is not available (non accelerated 3D if Java3D is not
+installed).</para>
+  </refsect1>
+
+</refentry>

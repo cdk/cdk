@@ -36,7 +36,7 @@ include depends.tabular
 dist-clean: clean
 	rm javancss-tmp.xml
 
-autolayout.xml: layout.xml
+autolayout.xml: 
 	$(PROC) ${STYLEDIR}/autolayout.xsl layout.xml > $@
 	make depends
 

@@ -1,0 +1,56 @@
+<refentry id="cdk-rfc-13">
+
+  <refentryinfo>
+    <revhistory>
+      <revision>
+        <revnumber>1</revnumber>
+        <date>2002-02-27</date>
+        <authorinitials>elw</authorinitials>
+        <revremark>
+          See <ulink url="https://sourceforge.net/mailarchive/forum.php?thread_id=1760148&amp;forum_id=2178">email archive</ulink>.
+        </revremark>
+      </revision>
+    </revhistory>
+  </refentryinfo>
+
+
+  <refnamediv>
+    <refname>RFC CDK # 13</refname>
+  </refnamediv>
+
+  <refsect1>
+    <title>Proposal</title>
+    <para>The implementation of public get/setFlag and get/setPointer method 
+ deprecating the direct use of the of the flags[] and pointer[] arrays.</para>
+ <para>
+ The API for these methods is proposed to be:
+ <programlisting><![CDATA[
+ public void setFlag(int flag_type, boolean flag_value);
+ public boolean getFlag(int flag_type)
+ 
+ public void setPointer(int pointer_type, Vector pointer_value);
+ public boolean getPointer(int pointer_type)
+ ]]></programlisting>
+ </para>
+ <para>
+ This proposal deliberately does not propose how to implement these
+ methods, allowing alternative and parallel implementations. </para>
+  </refsect1>
+
+  <refsect1>
+    <title>Reason</title>
+    <para>At this moment it is not possible to define an interface some ChemObject
+ may need to implement (read interface Atom, see RFC #8) which includes
+ the access to the fields in ChemObject. More specifically, ChemObject
+ currently uses direct access to its flags[] field, which cannot be defined
+ in the interface, which results in the need to cast classes extending
+ ChemObject to ChemObject before the field can be accessed.
+</para>
+<para>
+ In addition to this, use of the get/set method may improve CDK performance 
+ considerably (see discussion on cdk-devel@ in 2003-02:
+<ulink url="http://sourceforge.net/mailarchive/forum.php?forum_id=2178&amp;max_rows=25&amp;style=ultimate&amp;viewmonth=200302">http://sourceforge.net/mailarchive/forum.php?forum_id=2178&amp;max_rows=25&amp;style=ultimate&amp;viewmonth=200302</ulink>).
+</para>
+  </refsect1>
+
+</refentry>

@@ -42,6 +42,9 @@
         <tocentry page="rfc9.xml" filename="rfc9.html"/>
         <tocentry page="rfc10.xml" filename="rfc10.html"/>
         <tocentry page="rfc11.xml" filename="rfc11.html"/>
+        <tocentry page="rfc12.xml" filename="rfc12.html"/>
+        <tocentry page="rfc13.xml" filename="rfc13.html"/>
+        <tocentry page="rfc14.xml" filename="rfc14.html"/>
       </tocentry>
       <tocentry page="biblio.xml" filename="biblio.html"/>
     </tocentry>

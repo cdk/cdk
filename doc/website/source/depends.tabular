@@ -1,4 +1,4 @@
-website: intro.html software.html screenshots.html documentation.html reference.html keywordindex.html api.html manpages.html man-dbadmin.html man-download.html man-fileconvert.html man-test.html man-view.html rfc.html rfc1.html rfc2.html rfc3.html rfc4.html rfc5.html rfc6.html rfc7.html rfc8.html rfc9.html rfc10.html biblio.html development.html whoiswho.html agenda.html guide.html guide-library-development.html guide-docs.html guide-packages.html guide-website-development.html javadoc-stats.html javancss-stats.html changelog.html contact.html download.html index.html 
+website: intro.html software.html screenshots.html documentation.html reference.html keywordindex.html api.html manpages.html man-dbadmin.html man-download.html man-fileconvert.html man-test.html man-view.html rfc.html rfc1.html rfc2.html rfc3.html rfc4.html rfc5.html rfc6.html rfc7.html rfc8.html rfc9.html rfc10.html rfc11.html rfc12.html rfc13.html rfc14.html biblio.html development.html whoiswho.html agenda.html guide.html guide-library-development.html guide-docs.html guide-packages.html guide-website-development.html javadoc-stats.html javancss-stats.html changelog.html contact.html download.html index.html 
 
 index.html: website.xml
 intro.html: intro.xml
@@ -25,6 +25,10 @@ rfc7.html: rfc7.xml
 rfc8.html: rfc8.xml
 rfc9.html: rfc9.xml
 rfc10.html: rfc10.xml
+rfc11.html: rfc11.xml
+rfc12.html: rfc12.xml
+rfc13.html: rfc13.xml
+rfc14.html: rfc14.xml
 biblio.html: biblio.xml
 development.html: development.xml
 whoiswho.html: whoiswho.xml
@@ -41,5 +45,5 @@ contact.html: contact.xml
 download.html: download.xml
 
 clean:
-	rm -f intro.html software.html screenshots.html documentation.html reference.html keywordindex.html api.html manpages.html man-dbadmin.html man-download.html man-fileconvert.html man-test.html man-view.html rfc.html rfc1.html rfc2.html rfc3.html rfc4.html rfc5.html rfc6.html rfc7.html rfc8.html rfc9.html rfc10.html biblio.html development.html whoiswho.html agenda.html guide.html guide-library-development.html guide-docs.html guide-packages.html guide-website-development.html javadoc-stats.html javancss-stats.html changelog.html contact.html download.html index.html 
+	rm -f intro.html software.html screenshots.html documentation.html reference.html keywordindex.html api.html manpages.html man-dbadmin.html man-download.html man-fileconvert.html man-test.html man-view.html rfc.html rfc1.html rfc2.html rfc3.html rfc4.html rfc5.html rfc6.html rfc7.html rfc8.html rfc9.html rfc10.html rfc11.html rfc12.html rfc13.html rfc14.html biblio.html development.html whoiswho.html agenda.html guide.html guide-library-development.html guide-docs.html guide-packages.html guide-website-development.html javadoc-stats.html javancss-stats.html changelog.html contact.html download.html index.html 
 
