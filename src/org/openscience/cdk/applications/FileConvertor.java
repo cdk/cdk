@@ -50,6 +50,9 @@ public class FileConvertor {
     private String oformat;
     private String ofilename;
     private ChemObjectWriter cow;
+    
+    private WriterListener writerListener;
+    private ReaderListener readerListener;
 
     private int level;
     
@@ -71,6 +74,9 @@ public class FileConvertor {
         this.iformat = iformat;
         this.oformat = oformat;
         this.level = level;
+        
+        readerListener = new TextReaderListener(level);
+        writerListener = new TextWriterListener(level);
         
         logger.debug("Input format: " + iformat);
         logger.debug("Output format: " + oformat);
@@ -179,47 +185,55 @@ public class FileConvertor {
   }
 
     private ChemObjectReader getChemObjectReader(String format, FileReader f) {
+        ChemObjectReader reader = null;
         if (format.equalsIgnoreCase("CML")) {
-            return new CMLReader(f);
+            reader = new CMLReader(f);
         } else if (format.equalsIgnoreCase("XYZ")) {
-            return new XYZReader(f);
+            reader = new XYZReader(f);
         } else if (format.equalsIgnoreCase("MOL")) {
-            return new MDLReader(f);
+            reader = new MDLReader(f);
         } else if (format.equalsIgnoreCase("PDB")) {
-            return new PDBReader(f);
+            reader = new PDBReader(f);
         } else if (format.equalsIgnoreCase("PMP")) {
-            return new PMPReader(f);
+            reader = new PMPReader(f);
         } else if (format.equalsIgnoreCase("SMI")) {
-            return new SMILESReader(f);
+            reader = new SMILESReader(f);
         } else if (format.equalsIgnoreCase("SHELX")) {
-            return new ShelXReader(f);
+            reader = new ShelXReader(f);
         } else if (format.equalsIgnoreCase("ICHI")) {
-            return new IChIReader(f);
+            reader = new IChIReader(f);
         }
-        return null;
+        if (reader != null) {
+            reader.addReaderListener(readerListener);
+        }
+        return reader;
     }
 
     private ChemObjectWriter getChemObjectWriter(String format, String ofilename) 
-        throws IOException {
+            throws IOException {
+        ChemObjectWriter writer = null;
         FileWriter fw = new FileWriter(new File(ofilename));
         if (format.equalsIgnoreCase("CML")) {
-            return new CMLWriter(fw);
+            writer = new CMLWriter(fw);
         } else if (format.equalsIgnoreCase("MOL")) {
-            return new MDLWriter(fw);
+            writer = new MDLWriter(fw);
         } else if (format.equalsIgnoreCase("SMI")) {
-            return new SMILESWriter(fw);
+            writer = new SMILESWriter(fw);
         } else if (format.equalsIgnoreCase("SHELX")) {
-            return new ShelXWriter(fw);
+            writer = new ShelXWriter(fw);
         } else if (format.equalsIgnoreCase("SVG")) {
-            return new SVGWriter(fw);
+            writer = new SVGWriter(fw);
         } else if (format.equalsIgnoreCase("XYZ")) {
-            return new XYZWriter(fw);
+            writer = new XYZWriter(fw);
         } else if (format.equalsIgnoreCase("PDB")) {
-            return new PDBWriter(fw);
+            writer = new PDBWriter(fw);
         } else if (format.equalsIgnoreCase("GIN")) {
-            return new GaussianInputWriter(fw);
+            writer = new GaussianInputWriter(fw);
         }
-        return null;
+        if (writer != null) {
+            writer.addWriterListener(writerListener);
+        }
+        return writer;
     }
 
     /**
@@ -239,8 +253,7 @@ public class FileConvertor {
             logger.info("Cannot write ChemFile, recursing into ChemSequence's.");
             int count = cf.getChemSequenceCount();
             boolean needMoreFiles =
-              (compare(new ChemSequence(), cow.highestSupportedChemObject()) < 0)
-							&& (count > 1);
+              (compare(new ChemSequence(), cow.highestSupportedChemObject()) < 0) && (count > 1);
             for (int i=0; i < count; i++) {
                 if (needMoreFiles) {
                     cow.close(); // possibly closing empty file
@@ -258,8 +271,7 @@ public class FileConvertor {
         } catch (CDKException e) {
             int count = cs.getChemModelCount();
             boolean needMoreFiles =
-              (compare(new ChemModel(), cow.highestSupportedChemObject()) < 0)
-							&& (count > 1);
+              (compare(new ChemModel(), cow.highestSupportedChemObject()) < 0) && (count > 1);
             logger.info("Cannot write ChemSequence, recursing into ChemModel's.");
             for (int i=0; i < count; i++) {
                 if (needMoreFiles) {
@@ -300,7 +312,26 @@ public class FileConvertor {
         try {
             cow.write(som);
         } catch (CDKException e) {
-            logger.error("Cannot write SetOfMolecules " + e.getMessage());
+            int count = som.getMoleculeCount();
+            boolean needMoreFiles =
+              (compare(new SetOfMolecules(), cow.highestSupportedChemObject()) < 0) && (count > 1);
+            logger.info("Cannot write SetOfMolecules, recursing into Molecules's.");
+            for (int i=0; i < count; i++) {
+                if (needMoreFiles) {
+                    cow.close(); // possibly closing empty file
+                    String fname = ofilename + "." + (i+1);
+                    cow = getChemObjectWriter(this.oformat, fname);
+                }
+                write(som.getMolecule(i));
+            }
+        }
+    }
+
+    private void write(Molecule molecule) throws IOException {
+        try {
+            cow.write(molecule);
+        } catch (CDKException e) {
+            logger.error("Cannot write Molecule: " + e.getMessage());
         }
     }
 

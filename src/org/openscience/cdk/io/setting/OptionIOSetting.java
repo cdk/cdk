@@ -64,4 +64,25 @@ public class OptionIOSetting extends IOSetting {
         }
     }
 
+    /**
+     * Sets the setting for a certain question. It will throw
+     * a CDKException when the setting is not valid. The first setting is
+     * setting 0.
+     *
+     */
+    public void setSetting(int setting) throws CDKException {
+        if (setting < settings.size()) {
+            this.setting = settings.elementAt(i);
+        } else {
+            throw new CDKException("Setting " + setting + " does not exist.");
+        }
+    }
+    
+    /**
+     * Returns a Vector of Strings containing all possible options.
+     */
+    public Vector getOptions() {
+        return settings;
+    }
+    
 }
