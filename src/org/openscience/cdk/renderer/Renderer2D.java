@@ -315,7 +315,7 @@ public class Renderer2D
             // print charge in smaller font size
             Font normal = g.getFont();
             float current_size = g.getFont().getSize2D();
-            g.setFont(normal.deriveFont((float)(current_size - 2.0)));
+            g.setFont(normal.deriveFont((float)(current_size - 1.0)));
 
             int charge = atom.getFormalCharge();
             String chargeString = (new Integer(charge)).toString();
