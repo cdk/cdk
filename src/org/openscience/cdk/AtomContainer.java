@@ -1130,6 +1130,8 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	 */
 	public void removeAllElements()
 	{
+		unregisterElectronContainerListeners();
+		unregisterAtomListeners();
 		atoms = new Atom[growArraySize];
 		electronContainers = new ElectronContainer[growArraySize];
 		atomCount = 0;
@@ -1143,6 +1145,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	 */
 	public void removeAllElectronContainers()
 	{
+		unregisterElectronContainerListeners();
 		electronContainers = new ElectronContainer[growArraySize];
 		electronContainerCount = 0;
 		notifyChanged();
@@ -1257,6 +1260,22 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 			}
 		}
 		return false;
+	}
+	
+	public void unregisterElectronContainerListeners()
+	{
+		for (int f = 0; f < getElectronContainerCount(); f++)
+		{
+			getElectronContainerAt(f).removeListener(this);	
+		}
+	}
+
+	public void unregisterAtomListeners()
+	{
+		for (int f = 0; f < getAtomCount(); f++)
+		{
+			getAtomAt(f).removeListener(this);	
+		}
 	}
 
 
