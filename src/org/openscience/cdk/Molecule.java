@@ -96,7 +96,7 @@ public class Molecule extends AtomContainer implements java.io.Serializable, Clo
     public String toString() {
         StringBuffer description = new StringBuffer();
         description.append("Molecule(");
-        description.append(getID() + ", ");
+        description.append(getID()).append(", ");
         description.append(super.toString());
         description.append(")");
         return description.toString();

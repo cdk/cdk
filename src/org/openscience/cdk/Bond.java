@@ -423,10 +423,10 @@ public class Bond extends ElectronContainer implements java.io.Serializable, Clo
 		StringBuffer resultString = new StringBuffer();
 		resultString.append("Bond(");
 		resultString.append(this.hashCode());
-		resultString.append(", #O:" + getOrder());
-		resultString.append(", #S:" + getStereo());
+		resultString.append(", #O:").append(getOrder());
+		resultString.append(", #S:").append(getStereo());
 		Atom[] atoms = getAtoms();
-		resultString.append(", #A:" + atoms.length);
+		resultString.append(", #A:").append(atoms.length);
 		for (int i = 0; i < atoms.length; i++)
 		{
 			if (atoms[i] == null)
@@ -434,7 +434,7 @@ public class Bond extends ElectronContainer implements java.io.Serializable, Clo
 				resultString.append(", null");
 			} else
 			{
-				resultString.append(", " + atoms[i].toString());
+				resultString.append(", ").append(atoms[i].toString());
 			}
 		}
 		resultString.append(")");
