@@ -35,9 +35,10 @@ import org.openscience.cdk.ElectronContainer;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.RingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
- * The HuckelAromaticityDetector detects the aromaticity based on
+ * The HueckelAromaticityDetector detects the aromaticity based on
  * the Hueckel 4n+2 pi-electrons Rule. This is done by one of the
  * detectAromaticity methods. They set the aromaticity flags of
  * appropriate Atoms, Bonds and Rings. After the detection, you
@@ -45,11 +46,13 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
  *
  * @cdk.module standard
  *
- * @author     steinbeck, kaihartmann
- * @cdk.created    2001-09-04
+ * @author      steinbeck
+ * @author      kaihartmann
+ * @cdk.created 2001-09-04
  */
 public class HueckelAromaticityDetector {
-	static boolean debug = false;
+    
+	static LoggingTool logger = new LoggingTool("org.openscience.cdk.aromaticity.HueckelAromaticityDetector");
 	
 	
 	/**
@@ -83,16 +86,10 @@ public class HueckelAromaticityDetector {
 	 * @return                         True if molecule is aromatic
 	 */
 	public static boolean detectAromaticity(AtomContainer ac, boolean removeAromatictyFlags) throws org.openscience.cdk.exception.NoSuchAtomException {
-		if (debug) {
-			System.out.println("Entered Aromaticity Detection");
-		}
-		if (debug) {
-			System.out.println("Starting AllRingsFinder");
-		}
+		logger.debug("Entered Aromaticity Detection");
+		logger.debug("Starting AllRingsFinder");
 		RingSet ringSet = new AllRingsFinder().findAllRings(ac);
-		if (debug) {
-			System.out.println("Finished AllRingsFinder");
-		}
+		logger.debug("Finished AllRingsFinder");
 		if (ringSet.size() > 0) {
 			return detectAromaticity(ac, ringSet, removeAromatictyFlags);
 		}
@@ -129,9 +126,7 @@ public class HueckelAromaticityDetector {
 		ringSet.sort();
 		for (int f = 0; f < ringSet.size(); f++) {
 			ring = (Ring) ringSet.elementAt(f);
-			if (debug) {
-				System.out.println("Testing ring no " + f + " for aromaticity:");
-			}
+			logger.debug("Testing for aromaticity in ring no ", f);
 			if (AromaticityCalculator.isAromatic(ring, ac)) {
 				ring.setFlag(CDKConstants.ISAROMATIC, true);
 				
@@ -147,13 +142,9 @@ public class HueckelAromaticityDetector {
 				}
 				
 				foundSomething = true;
-				if (debug) {
-					System.out.println("Ring no " + f + " is aromatic.");
-				}
+				logger.debug("This ring is aromatic: ", f);
 			} else {
-				if (debug) {
-					System.out.println("Ring no " + f + " is not aromatic.");
-				}
+				logger.debug("This ring is *not* aromatic: ", f);
 			}
 		}
 		return foundSomething;
