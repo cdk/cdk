@@ -205,6 +205,20 @@
     </bibtex:article>
   </bibtex:entry>
 
+  <bibtex:entry id="PMR2003">
+    <bibtex:article>
+      <bibtex:author>Murray-Rust, P. and Rzepa, H.S.</bibtex:author>
+      <bibtex:title>Chemical Markup, XML, and the World Wide Web. 4. CML Schema</bibtex:title>
+      <bibtex:journal>Journal of Chemical Information and Computer
+          Sciences</bibtex:journal>
+      <bibtex:year>2003</bibtex:year>
+      <bibtex:volume>43</bibtex:volume>
+      <bibtex:number>3</bibtex:number>
+      <bibtex:pages>757-772</bibtex:pages>
+      <bibtex:doi>http://dx.doi.org/10.1021/ci0256541</bibtex:doi>
+    </bibtex:article>
+  </bibtex:entry>
+
   <bibtex:entry id="RZEPA04">
     <bibtex:article>
       <bibtex:author>Murray-Rust, P. and Rzepa, H.S. and Williamson, M.J. and Willighagen, E.L.</bibtex:author>
@@ -214,6 +228,7 @@
       <bibtex:volume>44</bibtex:volume>
       <bibtex:number>2</bibtex:number>
       <bibtex:pages>462-469</bibtex:pages>
+      <bibtex:doi>http://dx.doi.org/10.1021/ci034244p</bibtex:doi>
     </bibtex:article>
   </bibtex:entry>
 
@@ -251,6 +266,7 @@
           heterogeneous network of almost any number and type of computers, thus allowing
           for parallel CASE computations on ordinary networks, present in almost any
           institution.[References: 23]</bibtex:abstract>
+      <bibtex:doi>http://dx.doi.org/10.1021/ci000407n</bibtex:doi>
       <bibtex:keywords>Chemical-structure,Natural-products,Spectroscopy,Molecules,Search.,
           Chemistry in Current Contents(R)/Physical, Chemical and Earth,Sciences.</bibtex:keywords>
     </bibtex:article>
@@ -259,11 +275,12 @@
   <bibtex:entry id="STE2002">
     <bibtex:article>
       <bibtex:author>Steinbeck, C. and Kuhn, S. and Krause, S.</bibtex:author>
-      <bibtex:title>NMRShiftDB - NMRShiftDB - Constructing a Chemical Information System with Open Source Components</bibtex:title>
+      <bibtex:title>NMRShiftDB - Constructing a Chemical Information System with Open Source Components</bibtex:title>
       <bibtex:journal>Journal of Chemical Information and Computer Sciences</bibtex:journal>
       <bibtex:year>2002</bibtex:year>
       <bibtex:volume>43</bibtex:volume>
       <bibtex:number>6</bibtex:number>
+      <bibtex:doi>http://dx.doi.org/10.1021/ci0341363</bibtex:doi>
     </bibtex:article>
   </bibtex:entry>
 
@@ -275,6 +292,7 @@
       <bibtex:year>2003</bibtex:year>
       <bibtex:volume>43</bibtex:volume>
       <bibtex:pages>493-500</bibtex:pages>
+      <bibtex:doi>http://dx.doi.org/10.1021/ci025584y</bibtex:doi>
     </bibtex:article>
   </bibtex:entry>
 

@@ -103,6 +103,13 @@
         </xsd:documentation>
       </xsd:annotation>
     </xsd:element>
+    <xsd:element name="doi"   type="xsd:string" minOccurs="0" >
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          Digital Object Identifier number.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:element>
     <xsd:choice>
       <xsd:element name="isbn" type="xsd:string" minOccurs="0" />
       <xsd:element name="issn" type="xsd:string" minOccurs="0" />
