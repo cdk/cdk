@@ -70,7 +70,16 @@ public class JSXBasedAtomTypeConfigurator implements AtomTypeConfigurator {
             try {
                 ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
             } catch(Exception exc) {
-                throw new IOException("There was a problem getting a stream for " + configFile);
+                throw new IOException("There was a problem getting a stream for " + configFile +
+                                      " with getClass.getClassLoader.getResourceAsStream");
+            }
+            if (ins == null) {
+                try {
+                    ins = this.getClass().getResourceAsStream(configFile);
+                } catch(Exception exc) {
+                    throw new IOException("There was a problem getting a stream for " + configFile +
+                                          " with getClass.getResourceAsStream");
+                }
             }
         }
         if (ins == null) throw new IOException("There was a problem getting an input stream");

@@ -50,7 +50,6 @@ import JSX.*;
  *
  * @see        AtomTypeConfigurator
  */
-
 public class AtomTypeFactory {
     
     public static String ATOMTYPE_ID_STRUCTGEN = "structgen";
@@ -106,7 +105,9 @@ public class AtomTypeFactory {
         {
             logger.debug("configFile must be a stream");
             // assume it is a default config file in distro
-            ins = getClass().getResourceAsStream(configFile);
+            /* this has to be this.getClass.getClassLoader.getResource,
+               getClass.getResource fails, elw */
+            ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
             if (ins == null) 
                 logger.error("There was a problem getting a stream for " +
                              configFile);            
