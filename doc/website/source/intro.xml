@@ -11,7 +11,7 @@
   </head>
 
 	<section>
-		<title>About this website</title>
+		<title>About the Chemistry Development Kit</title>
 		<para>
 			The CDK project was started in September 2000 to replace the CompChem libraries used by
 			JChemPaint, Jmol and SENECA. It no longer is in its initial stage, but is slowly getting a solid
@@ -60,4 +60,39 @@
         </para>
 	</section>
 
+	<section>
+		<title>Contributors</title>
+		<para>
+          The list of source code contributors is long (in alphabetical order, please email
+          omissions):
+Fabian Dortu,
+Rajarshi Guha,
+Dan Gzelter,
+Yonquan Han,
+Kai Hartmann,
+Oliver Horlacher,
+Miguel Howard,
+Geert Josten,
+Anatoli Krassavine,
+Stefan Kuhn,
+Edgar Luttmann,
+Nathanaël Mazuir,
+Stephan Michels,
+Peter Murray-Rust,
+Chris Pudney,
+Jonathan Rienstra-Kiracofe,
+David Robinson,
+Bhupinder Sandhu,
+Jean-Sebastien Senecal,
+Sulev Sild,
+Bradley Smith,
+Christoph Steinbeck,
+Stephan Tomkinson,
+Joerg Wegner,
+Stephane Werner,
+Egon Willighagen,
+Yong Zhang
+.
+        </para>
+    </section>
 </webpage>
