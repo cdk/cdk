@@ -36,33 +36,30 @@ package org.openscience.cdk;
 public class CDKConstants {
 
         /** A bond of degree 1.0. */
-        public static double BONDORDER_SINGLE = 1.0;
+        public final static double BONDORDER_SINGLE = 1.0;
 
         /** A bond of degree 1.5. */
-        public static double BONDORDER_AROMATIC = 1.5;
+        public final static double BONDORDER_AROMATIC = 1.5;
 
         /** A bond of degree 2.0. */
-        public static double BONDORDER_DOUBLE = 2.0;
+        public final static double BONDORDER_DOUBLE = 2.0;
 
         /** A bond of degree 3.0. */
-        public static double BONDORDER_TRIPLE = 3.0;
+        public final static double BONDORDER_TRIPLE = 3.0;
 
         /** A bonds which end is above the drawing plane. */
-        public static int STEREO_BOND_UP = 1;
-        public static int STEREO_BOND_UP_INV = 2;
+        public final static int STEREO_BOND_UP = 1;
+        public final static int STEREO_BOND_UP_INV = 2;
 
         /** A bonds for which the stereochemistry is undefined. */
-        public static int STEREO_BOND_UNDEFINED = 0;
+        public final static int STEREO_BOND_UNDEFINED = 0;
 
         /** A bonds which end is below the drawing plane. */
-        public static int STEREO_BOND_DOWN = -1;
-        public static int STEREO_BOND_DOWN_INV = -2;
+        public final static int STEREO_BOND_DOWN = -1;
+        public final static int STEREO_BOND_DOWN_INV = -2;
 
-        /** A bonds which end is above the drawing plane. */
-        public static int STEREO_ATOM_PARITY_PLUS = 1;
-
-        /** A bonds which end is above the drawing plane. */
-        public static int STEREO_ATOM_PARITY_MINUS = -1;
+        public final static int STEREO_ATOM_PARITY_PLUS = 1;
+        public final static int STEREO_ATOM_PARITY_MINUS = -1;
 
         /** 
          * Carbon NMR shift contant for use as a key in the
