@@ -37,6 +37,7 @@ import org.openscience.cdk.geometry.*;
 import org.openscience.cdk.*;
 import org.openscience.cdk.tools.*;
 import org.openscience.cdk.renderer.color.*;
+import org.openscience.cdk.validate.ProblemMarker;
 
 /**
  * A Renderer class which draws 2D representations of molecules onto a given
@@ -323,6 +324,9 @@ public class Renderer2D   {
         } else if (container.getConnectedBonds(atom).length < 1) {
             // ... unless carbon is unbonded
             paintAtomSymbol(atom, atomBackColor, graphics, alignment);
+        } else if (atom.getProperty(ProblemMarker.ERROR_MARKER) != null) {
+            // ... unless carbon is unbonded
+            paintAtomSymbol(atom, atomBackColor, graphics, alignment);
         } else if (r2dm.getShowEndCarbons() && (container.getConnectedBonds(atom).length == 1)) {
             // ... unless carbon is an methyl, and the user wants those with symbol
             paintAtomSymbol(atom, atomBackColor, graphics, alignment);
@@ -481,6 +485,23 @@ public class Renderer2D   {
             graphics.setColor(r2dm.getAtomColor(atom));
             graphics.setFont(normalFont);
             graphics.drawString(atomSymbol, screenCoords[0], screenCoords[1]);
+
+            // possibly underline SYMBOL
+            int[] lineCoords = new int[4];
+            lineCoords[0] = coords[0]; // 5 point spacing
+            lineCoords[1] = coords[1] + 5;
+            lineCoords[2] = lineCoords[0] + atomSymbolW;
+            lineCoords[3] = lineCoords[1];
+            int[] lineScreenCoords = getScreenCoordinates(lineCoords);
+            if (atom.getProperty(ProblemMarker.ERROR_MARKER) != null) {
+                graphics.setColor(Color.RED);
+                graphics.drawLine(lineScreenCoords[0], lineScreenCoords[1],
+                                  lineScreenCoords[2], lineScreenCoords[3]);
+            } else if (atom.getProperty(ProblemMarker.WARNING_MARKER) != null) {
+                graphics.setColor(Color.ORANGE);
+                graphics.drawLine(lineScreenCoords[0], lineScreenCoords[1],
+                                  lineScreenCoords[2], lineScreenCoords[3]);
+            }
         }
         
         // draw IMPLICIT H's

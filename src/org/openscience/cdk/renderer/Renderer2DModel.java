@@ -578,7 +578,6 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 		return this.selectedPart;
 	}
 
-
 	/**
 	 * Sets the selected atoms
 	 *
