@@ -27,7 +27,7 @@
 
     <target name="pmd" id="pmd" depends="pmd-data, pmd-core, pmd-standard, pmd-io, 
         pmd-extra, pmd-render, pmd-applications, pmd-libio, pmd-experimental,
-        pmd-builder3d, pmd-test"/>
+        pmd-builder3d, pmd-test, pmd-qsar"/>
     
     <target name="pmd-data" id="pmd-data" depends="compileRenderer">
         <mkdir dir="${reports.tests}/pmd"/>
