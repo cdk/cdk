@@ -158,22 +158,32 @@ public class AtomType extends Isotope
 		return maxBondOrderSum;
 	}
 
-  /**
-   * Compare a atom type with this atom type.
-   *
-   * @param  object Object of type AtomType
-   * @return        Return true, if the atomtypes are equal
-   */
-  public boolean compare(Object object)
-  {
-    if (object instanceof AtomType) {
-      AtomType type = (AtomType) object;
-      if ((getID()==type.getID()) &&
-          (maxBondOrder==type.maxBondOrder) &&
-          (maxBondOrderSum==type.maxBondOrderSum))
-        return true;
+    /**
+    * Compare a atom type with this atom type.
+    *
+    * @param  object Object of type AtomType
+    * @return        Return true, if the atomtypes are equal
+    */
+    public boolean compare(Object object)
+    {
+        if (object instanceof AtomType) {
+            AtomType type = (AtomType) object;
+            if ((getID()==type.getID()) &&
+                (maxBondOrder==type.maxBondOrder) &&
+            (maxBondOrderSum==type.maxBondOrderSum))
+            return true;
+        }
+        return false;
     }
-    return false;
-  }
+    
+    public String toString() {
+        StringBuffer sb = new StringBuffer();
+        sb.append("AtomType(");
+        sb.append(getID() + ", ");
+        sb.append("MB:" + getMaxBondOrder() + ", ");
+        sb.append("TBS:" + getMaxBondOrderSum());
+        sb.append(")");
+        return sb.toString(); 
+    }
 }
 
