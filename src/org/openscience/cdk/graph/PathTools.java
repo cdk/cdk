@@ -192,7 +192,7 @@ public class PathTools  {
 	 *      that are found during search
 	 */
 	public static void breadthFirstSearch(AtomContainer ac, Vector sphere, Molecule molecule) {
-        System.out.println("Staring partitioning with this ac: " + ac);
+        // System.out.println("Staring partitioning with this ac: " + ac);
         breadthFirstSearch(ac, sphere, molecule, -1);
     }
   
@@ -243,17 +243,17 @@ public class PathTools  {
 		Vector newSphere = new Vector();
 		for (int f = 0; f < sphere.size(); f++) {
 			atom = (Atom) sphere.elementAt(f);
- 			System.out.println("atoms  "+ atom + f);
- 			System.out.println("sphere size  "+ sphere.size());
+ 			//System.out.println("atoms  "+ atom + f);
+ 			//System.out.println("sphere size  "+ sphere.size());
 			molecule.addAtom(atom);
             // first copy LonePair's and SingleElectron's of this Atom as they need
             // to be copied too
             ElectronContainer[] eContainers = ac.getConnectedElectronContainers(atom);
-            System.out.println("found #ec's: " + eContainers.length);
+            //System.out.println("found #ec's: " + eContainers.length);
             for (int i=0; i<eContainers.length; i++) {
                 if (!(eContainers[i] instanceof Bond)) {
                     // ok, no bond, thus LonePair or SingleElectron
-                    System.out.println("adding non bond " + eContainers[i]);
+                    // System.out.println("adding non bond " + eContainers[i]);
                     molecule.addElectronContainer(eContainers[i]);
                 }
             }
