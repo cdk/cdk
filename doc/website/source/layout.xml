@@ -39,9 +39,7 @@
     <tocentry page="documentation.xml" filename="documentation.html">
       <tocentry page="reference.xml" filename="reference.html"/>
       <tocentry page="keywordindex.xml" filename="keywordindex.html"/>
-      <tocentry page="api.xml" filename="api.html">
-        <tocentry page="core-api.xml" filename="core-api.html"/>
-      </tocentry>
+      <tocentry page="api.xml" filename="api.html"/>
       <tocentry page="manpages.xml" filename="manpages.html"/>
       <tocentry page="javadoc-stats.xml" filename="javadoc-stats.html"/>
     </tocentry>
