@@ -250,7 +250,7 @@ public class PMPReader implements ChemObjectReader {
     }
 
     private void processModelCommand(String object, String command, String format, String field) {
-        System.out.println(object + "->" + command + " (" + format + "): " + field);
+        logger.debug(object + "->" + command + " (" + format + "): " + field);
         if ("Model".equals(object)) {
             logger.warn("Unkown PMP Model command: " + command);
         } else if ("Atom".equals(object)) {
