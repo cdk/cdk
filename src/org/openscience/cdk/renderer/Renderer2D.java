@@ -92,8 +92,7 @@ public class Renderer2D
 	 *@param  atomCon  Description of the Parameter
 	 *@param  g        Description of the Parameter
 	 */
-	public void paintMolecule(AtomContainer atomCon, Graphics g)
-	{
+	public void paintMolecule(AtomContainer atomCon, Graphics g) {
 		this.g = g;
 		this.atomCon = atomCon;
 		RingSet ringSet = new RingSet();
@@ -420,8 +419,7 @@ public class Renderer2D
 	 *@param  bond       The Bond to be drawn.
 	 *@param  bondColor  Description of the Parameter
 	 */
-	private void paintBond(Bond bond, Color bondColor)
-	{
+	private void paintBond(Bond bond, Color bondColor) {
 		logger.debug("bond order: " + bond.getOrder());
 		logger.debug("bond stereo: " + bond.getStereo());
 
@@ -486,10 +484,10 @@ public class Renderer2D
 	 *@param  bond       The singlebond to be drawn
 	 *@param  bondColor  Description of the Parameter
 	 */
-	private void paintSingleBond(Bond bond, Color bondColor)
-	{
-		paintOneBond(GeometryTools.getBondCoordinates(bond), bondColor);
-
+	private void paintSingleBond(Bond bond, Color bondColor) {
+        if (GeometryTools.has2DCoordinates(bond)) { 
+            paintOneBond(GeometryTools.getBondCoordinates(bond), bondColor);
+        }
 	}
 
 	/**
