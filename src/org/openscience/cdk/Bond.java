@@ -61,7 +61,20 @@ public class Bond extends ElectronContainer implements Cloneable
 	}
 
 	/**
-	 * Constructs a bond with a given order from an array of atoms.
+	 * Constructs a bond with a single bond order..
+     *
+     * @param atom1  the first Atom in the bond
+     * @param atom2  the second Atom in the bond
+	 */
+	public Bond(Atom atom1, Atom atom2) {
+		atoms = new Atom[2];
+		setAtomAt(atom1, 0);
+		setAtomAt(atom2, 1);
+		setOrder(1.0);
+	}
+	
+    /**
+	 * Constructs a bond with a given order.
      *
      * @param atom1  the first Atom in the bond
      * @param atom2  the second Atom in the bond
