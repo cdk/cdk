@@ -1,6 +1,15 @@
 CHANGELOG
 ------------------------------------
 
+Changes in CVS
+------------------------------------
+* none since 2002-01-01
+
+20020101.1 Release
+------------------------------------
+* fixes non-working cdk-fileconvert
+* added manual pages
+
 20020101 Release
 ------------------------------------
 * fixed some javadoc issues

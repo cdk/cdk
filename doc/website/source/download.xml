@@ -35,7 +35,7 @@
             <para>Binary distribution with two executables: cdk-fileconvert and cdk-dbadmin.
 			   The package is installable with <quote>configure &amp;&amp; make &amp;&amp; make install</quote>
 			   on Linux/Unix/BSD like systems. To run the software you need cdk-libs 20020101
-			   installed. Current version: 20020101.
+			   installed. Current version: 20020101.1.
 			</para>
           </listitem>
         </varlistentry>
