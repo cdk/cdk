@@ -76,6 +76,40 @@ public class AllRingsFinderTest extends TestCase
 		assertTrue(ringSet.size() == 6); 
 	}
 	
+	
+	// Bug #746067
+	public void testBondsWithinRing()
+	{
+		RingSet ringSet = null;
+		AllRingsFinder arf = new AllRingsFinder();
+		if (standAlone) arf.debug = true;
+		Molecule molecule = MoleculeFactory.makeEthylPropylPhenantren();
+		//display(molecule);
+		try
+		{
+			ringSet = arf.findAllRings(molecule);
+			for (int i = 0; i < ringSet.size(); i++) 
+			{
+				Ring ring = (Ring)ringSet.elementAt(i);
+				for (int j = 0; j < ring.getElectronContainerCount(); j++) 
+				{
+					ElectronContainer ec = ring.getElectronContainerAt(j);
+					if (ec instanceof Bond)
+					{
+						Atom atom1 = ((Bond)ec).getAtomAt(0);
+						Atom atom2 = ((Bond)ec).getAtomAt(1);
+						assertTrue(ring.contains(atom1) && ring.contains(atom2));
+					}
+				}
+			}
+		
+		}
+		catch(Exception exc)
+		{
+			System.out.println(exc);
+		}
+	}
+	
 	private void display(Molecule molecule)
 	{	
 		StructureDiagramGenerator sdg = new StructureDiagramGenerator();

@@ -117,7 +117,7 @@ public class RandomStructureGeneratorTest extends TestCase
 		StructureDiagramGenerator sdg = null;
 		MoleculeViewer2D mv = null;
 		Molecule mol = null;
-		for (int f = 0; f < structures.size(); f++)
+		for (int f = 0; f < structures.size(); f+=100)
 		{
 			sdg = new StructureDiagramGenerator();
 

@@ -146,7 +146,9 @@ public class SmilesParser
                     if ((lastNode != null) && bondExists) {
                         logger.debug("Creating bond between " + atom.getSymbol() + " and " + lastNode.getSymbol());
 						bond = new Bond(atom, lastNode, bondStatus);
-						bond.flags[CDKConstants.ISAROMATIC] = true;
+						if (bondStatus == CDKConstants.BONDORDER_AROMATIC) {
+							bond.flags[CDKConstants.ISAROMATIC] = true;
+		    				}
 						molecule.addBond(bond);
 					}
 					bondStatus = CDKConstants.BONDORDER_SINGLE;
@@ -213,7 +215,9 @@ public class SmilesParser
                     logger.debug("Added atom: " + atom);
                     if (lastNode != null && bondExists) {
 						bond = new Bond(atom, lastNode, bondStatus);
-						bond.flags[CDKConstants.ISAROMATIC] = true;
+						if (bondStatus == CDKConstants.BONDORDER_AROMATIC) {
+							bond.flags[CDKConstants.ISAROMATIC] = true;
+						}
 						molecule.addBond(new Bond(atom, lastNode, bondStatus));
                         logger.debug("Added bond: " + bond);
 					}

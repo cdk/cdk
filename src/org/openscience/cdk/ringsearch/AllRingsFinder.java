@@ -190,7 +190,7 @@ public class AllRingsFinder
 				for (int g = 0; g < bonds.length; g++)
 				{
 					bond = bonds[g];
-					if (ring.contains(bond.getAtomAt(0)) && ring.contains(bond.getAtomAt(0)))
+					if (ring.contains(bond.getAtomAt(0)) && ring.contains(bond.getAtomAt(1)))
 					{
 						ring.addBond(bond);
 					}
