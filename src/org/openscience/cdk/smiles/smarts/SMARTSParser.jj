@@ -32,6 +32,8 @@ package org.openscience.cdk.smiles.smarts;
 import java.io.StringReader;
 
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.config.IsotopeFactory;
+
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.isomorphism.matchers.QueryAtom;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
@@ -155,6 +157,21 @@ void AddNewElementAtom() {
 }
 
 JAVACODE
+void AddNewNumberAtom() {
+    Token tok = getToken(0);
+    logger.debug("Adding SMARTS atom: " + tok.image);
+    try {
+        String sym = IsotopeFactory.getInstance().getElement(Integer.parseInt(tok.image)).getSymbol();
+        SymbolQueryAtom atom = new SymbolQueryAtom(new Atom(sym));
+        container.addAtom(atom);
+        if (previousAtom != null) AddCurrentBond(previousAtom, atom);
+        previousAtom = atom;
+    } catch (Exception exp) {
+        logger.debug("Exception caught: " + exp);
+    }
+}
+
+JAVACODE
 void AddNewDegreeAtom() {
     Token tok = getToken(-1);
     logger.debug("Adding SMARTS degree atom: " + tok.image);
@@ -248,8 +265,14 @@ void InBracketsSMARTSAtom() :
 {}
 {
     "[" 
-    (Degree() | TotalHCount() | ImplicitHCount())
+    (Degree() | TotalHCount() | ImplicitHCount() | AtomicNumber() )
     "]"
+}
+
+void AtomicNumber() :
+{}
+{
+    "#" (<DIGIT> | <DIGITS>)  AddNewNumberAtom()
 }
 
 void TotalHCount() :
@@ -308,6 +331,11 @@ void OneCharElement() :
 TOKEN :
 {
     < DIGIT: ["0"-"9"] >
+}
+
+TOKEN :
+{
+    < DIGITS: (["0"-"9"])+ >
 }
 
 TOKEN : /* ELEMENTS */
