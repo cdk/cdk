@@ -42,7 +42,7 @@ import java.io.*;
  */
 public class HueckelAromaticityDetector
 {
-	static boolean debug = true;
+	static boolean debug = false;
 	
 	/**
 	 * Retrieves the set of all rings and performs an aromaticity detection
