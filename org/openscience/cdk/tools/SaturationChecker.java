@@ -69,10 +69,10 @@ public class SaturationChecker
 	 */
 	public boolean hasPerfectConfiguration(Atom atom, AtomContainer ac)
 	{
-		AtomType[] atomTypes = atf.getAtomTypes(atom.getSymbol(), atf.ATOMTYPE_ID_STRUCTGEN);
+		
 		double bondOrderSum = ac.getBondOrderSum(atom);
 		double maxBondOrder = ac.getHighestCurrentBondOrder(atom);
-
+		AtomType[] atomTypes = atf.getAtomTypes(atom.getSymbol(), atf.ATOMTYPE_ID_STRUCTGEN);
 		if (debug)
 		{
 			System.out.println("*** Checking for perfect configuration ***");
@@ -217,4 +217,42 @@ public class SaturationChecker
 		}
 		return max;
 	}
+	
+	
+	public void saturate(Molecule molecule)
+	{
+		Atom partner = null;
+		Atom atom = null;
+		Atom[] partners = null;
+		AtomType[] atomTypes = null;
+		Bond bond = null;
+		for (int i = 1; i < 4; i++)
+		{
+			// handle atoms with degree 1 first and then proceed to higher order
+			for (int f = 0; f < molecule.getAtomCount(); f ++)
+			{
+				atom = molecule.getAtomAt(f);
+				atomTypes = atf.getAtomTypes(atom.getSymbol(), atf.ATOMTYPE_ID_STRUCTGEN);
+				if (molecule.getDegree(atom) == i)
+				{
+					if (molecule.getBondOrderSum(atom) < atomTypes[0].getMaxBondOrderSum() - atom.getHydrogenCount())
+					{
+						partners = molecule.getConnectedAtoms(atom);
+						for (int g = 0; g < partners.length; g ++)
+						{
+							partner = partners[g];
+							atomTypes = atf.getAtomTypes(partner.getSymbol(), atf.ATOMTYPE_ID_STRUCTGEN);
+							if (molecule.getBondOrderSum(partner) < atomTypes[0].getMaxBondOrderSum() - partner.getHydrogenCount())
+							{
+								bond = molecule.getBond(atom, partner);
+								bond.setOrder(bond.getOrder() + 1);
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
 }
