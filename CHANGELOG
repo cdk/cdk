@@ -4,6 +4,14 @@ CHANGELOG $Date$
 Changes in CVS
 ------------------------------------
 New:
+
+Fixes:
+
+API changes:
+
+20040513 Release
+------------------------------------
+New:
 * Added AtomType.get/setHybridization() method
 * Added tools.LoggingTool.debug(Object, boolean)
 * Added infrastructure for a SMARTS parse
