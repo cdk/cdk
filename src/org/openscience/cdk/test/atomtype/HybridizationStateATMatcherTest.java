@@ -57,7 +57,13 @@ public class HybridizationStateATMatcherTest extends CDKTestCase {
         return new TestSuite(HybridizationStateATMatcherTest.class);
     }
     
-    public void testFindMatchingAtomType() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testHybridizationStateATMatcher() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	    HybridizationStateATMatcher matcher = new HybridizationStateATMatcher();
+	    assertNotNull(matcher);
+	    
+    }
+    
+    public void testFindMatchingAtomType_AtomContainer_Atom() throws ClassNotFoundException, CDKException, java.lang.Exception {
         SmilesParser sp = new SmilesParser();
 	Molecule mol = sp.parseSmiles("C#CCC=O");
 	HydrogenAdder hAdder = new HydrogenAdder();
