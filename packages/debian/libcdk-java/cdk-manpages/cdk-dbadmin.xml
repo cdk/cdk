@@ -1,123 +1,133 @@
-<refentry id="cdk-dbadmin">
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd" [
 
+  <!-- Fill in your name for FIRSTNAME and SURNAME. -->
+  <!ENTITY dhfirstname "<firstname>Daniel</firstname>">
+  <!ENTITY dhsurname   "<surname>Leidert</surname>">
+  <!-- Please adjust the date whenever revising the manpage. -->
+  <!ENTITY dhdate      "<date>21/8/2004</date>">
+  <!-- SECTION should be 1-8, maybe w/ subsection other parameters are
+       allowed: see man(7), man(1). -->
+  <!ENTITY dhsection   "<manvolnum>1</manvolnum>">
+  <!ENTITY dhemail1    "<email>egonw@users.sourceforge.net</email>">
+  <!ENTITY dhemail2    "<email>daniel.leidert@wgdd.de</email>">
+  <!ENTITY dhusername  "The CDK Development Team">
+  <!ENTITY dhusername1 "Egon Willighagen">
+  <!ENTITY dhusername2 "Daniel Leidert">
+  <!ENTITY dhucpackage "<refentrytitle>CDK-DBADMIN</refentrytitle>">
+  <!ENTITY dhpackage   "cdk-dbadmin">
+
+  <!ENTITY debian      "<productname>Debian GNU/Linux</productname>">
+  <!ENTITY gnu         "<acronym>GNU</acronym>">
+  <!ENTITY gpl         "<acronym>GPL</acronym>">
+]>
+
+<refentry>
+  <refentryinfo>
+    <address>
+      &dhemail2;
+    </address>
+    <!-- <author>
+      &dhfirstname;
+      &dhsurname;
+    </author> -->
+    <copyright>
+      <year>2001-2002</year>
+      <holder>&dhusername;</holder>
+    </copyright>
+    &dhdate;
+  </refentryinfo>
   <refmeta>
-    <refentrytitle>cdk-dbadmin</refentrytitle>
-    <manvolnum>1</manvolnum>
+    &dhucpackage;
+
+    &dhsection;
   </refmeta>
-
   <refnamediv>
-    <refname>cdk-dbadmin</refname>
-    <refpurpose>administrate chemical database</refpurpose>
-  </refnamediv>
+    <refname>&dhpackage;</refname>
 
+    <refpurpose>Download chemical information from the internet</refpurpose>
+  </refnamediv>
   <refsynopsisdiv>
     <cmdsynopsis>
-      <command>cdk-dbadmin</command>
-      <arg>--useHost [hostname]</arg>
-      <arg>--useDatabase [database name]</arg>
-      <arg>--useDriver [mysql|postgresql]</arg>
-      <arg>--username [username]</arg>
-      <arg>--passwd [pwd]</arg>
-      <arg>--createDefaultTables</arg>
-      <arg>--listTables</arg>
-      <arg>--deleteTables</arg>
+      <command>&dhpackage;</command>
+
+      <arg><option>--useHost <replaceable>hostname</replaceable></option></arg>
+
+      <arg><option>--useDatabase <replaceable>databasename</replaceable></option></arg>
+      
+      <arg><option>--useDriver <replaceable>mysql|postgresql</replaceable></option></arg>
+      
+      <arg><option>--username <replaceable>username</replaceable></option></arg>
+      
+      <arg><option>--password <replaceable>password</replaceable></option></arg>
+      
+      <arg><option>--createDefaultTables</option></arg>
+      
+      <arg><option>--listTables</option></arg>
+ 
+      <arg><option>--deleteTables</option></arg>
+
     </cmdsynopsis>
   </refsynopsisdiv>
+  <refsect1>
+    <title>DESCRIPTION</title>
 
+    <para>This manual page documents briefly the
+      <command>&dhpackage;</command> command.
+    </para>
+
+    <para><command>&dhpackage;</command> is used to prepare and delete
+      tables from a chemical database.
+    </para>
+
+  </refsect1>
   <refsect1>
     <title>OPTIONS</title>
+
     <variablelist>
       <varlistentry>
-        <term>--useHost [hostname]</term>
-        <listitem>
-          <para>sets the hostname of the machine on which the database is run</para>
-        </listitem>
+        <term><option>--useHost <replaceable>hostname</replaceable></option></term>
+        <listitem><para>Set the hostname of the machine on which the database is running.</para></listitem>
       </varlistentry>
       <varlistentry>
-        <term>--useDatabase [database name]</term>
-        <listitem>
-          <para>sets the name of the database in which the tables are stored</para>
-        </listitem>
+        <term><option>--useDatabase <replaceable>databasename</replaceable></option></term>
+        <listitem><para>Set the name of the database in which the tables are stored.</para></listitem>
       </varlistentry>
       <varlistentry>
-        <term>--useDriver [mysql|postgresql]</term>
-        <listitem>
-          <para>sets the JDBC driver used to access the database (Only MySQL is currently working.)</para>
-        </listitem>
+        <term><option>--useDriver <replaceable>mysql|postgresql</replaceable></option></term>
+        <listitem><para>Set the JDBC driver used to access the database. Only MySQL is currently working.</para></listitem>
       </varlistentry>
       <varlistentry>
-        <term>--username [username]</term>
-        <listitem>
-          <para>sets the username of the account with which the database can be accessed</para>
-        </listitem>
+        <term><option>--username <replaceable>username</replaceable></option></term>
+        <listitem><para>Set the username of the account with which the database can be accessed.</para></listitem>
       </varlistentry>
       <varlistentry>
-        <term>--passwd [pwd]</term>
-        <listitem>
-          <para>sets the password for the account with which the database can be accessed</para>
-        </listitem>
+        <term><option>--passwd <replaceable>password</replaceable></option></term>
+        <listitem><para>Set the password for the account with which the database can be accessed</para></listitem>
       </varlistentry>
       <varlistentry>
-        <term>--createDefaultTables</term>
-        <listitem>
-          <para>create the default tables in the chemical database</para>
-        </listitem>
+        <term><option>--createDefaultTables</option></term>
+        <listitem><para>Create the default tables in the chemical database.</para></listitem>
       </varlistentry>
       <varlistentry>
-        <term>--listTables</term>
-        <listitem>
-          <para>lists all information on the tables in the chemical database</para>
-        </listitem>
+        <term><option>--listTables</option></term>
+        <listitem><para>List all information on the tables in the chemical database.</para></listitem>
       </varlistentry>
       <varlistentry>
-        <term>--deleteTables</term>
-        <listitem>
-          <para>deletes all tables from the chemical database</para>
-        </listitem>
+        <term><option>--deleteTables</option></term>
+        <listitem><para>Delete all tables from the chemical database.</para></listitem>
       </varlistentry>
     </variablelist>
   </refsect1>
-
-  <refsect1>
-    <title>DESCRIPTION</title>
-    <para>
-      <command>cdk-dbadmin</command> is used to prepare and delete tables from
-	  a chemical database.
-    </para>
-  </refsect1>
-
-  <refsect1>
-    <title>VERSION</title>
-    <para>
-      $Id$
-    </para>
-  </refsect1>
-
-  <refsect1>
-    <title>COPYRIGHT</title>
-    <para>
-      Copyright (C) 2001-2002 The CDK Project
-    </para>
-    <para>
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
-    </para>
-    <para>
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-    </para>
-  </refsect1>
-
   <refsect1>
     <title>AUTHOR</title>
-    <para>
-      Egon Willighagen <email>egonw@sci.kun.nl</email>
-    </para>
-  </refsect1>
 
+    <para>This manual page was written by &dhusername1; &dhemail1; and
+      edited by &dhusername2; &dhemail2; for the Debian GNU/Linux 
+      distribution (but may be used by others).
+    </para>
+    
+  </refsect1>
 </refentry>
 

@@ -1,2 +1,3 @@
-Copy all cdk-*.xml files from source-dir/packages/tar/cdk/man/ to this
-directory.
+These files are or will be rewritten for the Debian GNU/Linux distribution.
+
+It is not necessary to copy the xml-files from the source into this directory.
