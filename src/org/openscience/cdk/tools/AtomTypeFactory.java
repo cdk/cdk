@@ -165,7 +165,7 @@ public class AtomTypeFactory {
 	 */
 	private void readConfiguration(String configFile)
 	{
-		logger.info("Reading config file from " + configFile);
+		logger.info("Reading config file from ", configFile);
 		AtomTypeConfigurator atc = null;
 
 		InputStream ins = null;
@@ -193,7 +193,7 @@ public class AtomTypeFactory {
             
 			if (ins == null)
 			{
-				logger.error("There was a problem getting a stream for " +
+				logger.error("There was a problem getting a stream for ",
 						configFile);
 			}
 		}
@@ -288,24 +288,24 @@ public class AtomTypeFactory {
 	 */
 	public AtomType[] getAtomTypes(String symbol)
 	{
-		logger.debug("Request for atomtype for symbol " + symbol);
-		Vector al = new Vector();
-		AtomType atomType = null;
-		for (int f = 0; f < atomTypes.size(); f++)
-		{
-			AtomType at = (AtomType) atomTypes.elementAt(f);
-			if (at.getSymbol().equals(symbol)) {
-				logger.debug("Atomtype for symbol " + symbol + " found.");
-				al.addElement((AtomType) at.clone());
-			}
-		}
-		AtomType[] atomTypes = new AtomType[al.size()];
-		al.copyInto(atomTypes);
-    if(atomTypes.length>0)
-      logger.debug("Atomtype for symbol " + symbol + " looks like this: " + atomTypes[0]);
-    else
-      logger.debug("No atomtype for symbol " + symbol);
-		return atomTypes;
+        logger.debug("Request for atomtype for symbol ", symbol);
+        Vector al = new Vector();
+        AtomType atomType = null;
+        for (int f = 0; f < atomTypes.size(); f++)
+        {
+            AtomType at = (AtomType) atomTypes.elementAt(f);
+            if (at.getSymbol().equals(symbol)) {
+                logger.debug("Atom type found for symbol: ", symbol);
+                al.addElement((AtomType) at.clone());
+            }
+        }
+        AtomType[] atomTypes = new AtomType[al.size()];
+        al.copyInto(atomTypes);
+        if (atomTypes.length > 0)
+            logger.debug("Atomtype for symbol ", symbol, " has this number of types: " + atomTypes.length);
+        else
+            logger.debug("No atomtype for symbol ", symbol);
+        return atomTypes;
 	}
 
 
@@ -316,7 +316,7 @@ public class AtomTypeFactory {
 	 */
 	public org.openscience.cdk.AtomType[] getAllAtomTypes()
 	{
-		logger.debug("Returning list of size: " + getSize());
+		logger.debug("Returning list of size: ", getSize());
 		Vector al = new Vector();
 		AtomType atomType = null;
 		for (int f = 0; f < atomTypes.size(); f++)
@@ -371,12 +371,12 @@ public class AtomTypeFactory {
             if (at.getAtomicNumber() != 0) {
                 atom.setAtomicNumber(at.getAtomicNumber());
             } else {
-                logger.debug("Did not configure atomic number: AT.an=" + at.getAtomicNumber());
+                logger.debug("Did not configure atomic number: AT.an=", at.getAtomicNumber());
             }
             if (at.getExactMass() > 0.0) {
                 atom.setExactMass(at.getExactMass());
             } else {
-                logger.debug("Did not configure mass: AT.mass=" + at.getAtomicNumber());
+                logger.debug("Did not configure mass: AT.mass=", at.getAtomicNumber());
             }
         } catch (Exception exception) {
             logger.warn("Could not configure atom with unknown ID: ", atom,

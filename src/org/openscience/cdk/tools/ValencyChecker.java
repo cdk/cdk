@@ -85,11 +85,11 @@ public class ValencyChecker implements ValencyCheckerInterface {
         int hcount = atom.getHydrogenCount();
         int charge = atom.getFormalCharge();
 
-        logger.debug("Checking saturation of atom " + atom.getSymbol());
-        logger.debug("bondOrderSum: " + bondOrderSum);
-        logger.debug("maxBondOrder: " + maxBondOrder);
-        logger.debug("hcount: " + hcount);
-        logger.debug("charge: " + charge);
+        logger.debug("Checking saturation of atom ", atom.getSymbol());
+        logger.debug("bondOrderSum: ", bondOrderSum);
+        logger.debug("maxBondOrder: ", maxBondOrder);
+        logger.debug("hcount: ", hcount);
+        logger.debug("charge: ", charge);
 
         boolean elementPlusChargeMatches = false;
         for (int f = 0; f < atomTypes.length; f++) {
@@ -97,7 +97,7 @@ public class ValencyChecker implements ValencyCheckerInterface {
             if (charge == type.getFormalCharge()) {
                 if (bondOrderSum + hcount == type.getBondOrderSum() && 
                     maxBondOrder <= type.getMaxBondOrder()) {
-                    logger.debug("We have a match!");
+                    logger.debug("We have a match! : ", type);
                     return true;
                 } else {
                     // ok, the element and charge matche, but unfulfilled
@@ -274,7 +274,7 @@ public class ValencyChecker implements ValencyCheckerInterface {
                 logger.debug("Cannot saturate this bond");
                 // but, still recurse (if possible)
                 if (leftBondCount > 0) {
-                    logger.debug("Recursing with saturated bond with #bonds: " + leftBondCount);
+                    logger.debug("Recursing with saturated bond with #bonds: ", leftBondCount);
                     bondsAreFullySaturated = saturate(leftBonds, atomContainer) 
                                              && !isUnsaturated(bond, atomContainer);
                 } else {
@@ -282,8 +282,8 @@ public class ValencyChecker implements ValencyCheckerInterface {
                 }
             }
         }
-        logger.debug("Is bond set fully saturated?: " + bondsAreFullySaturated);
-        logger.debug("Returning to level: " + (bonds.length + 1));
+        logger.debug("Is bond set fully saturated?: ", bondsAreFullySaturated);
+        logger.debug("Returning to level: ", (bonds.length + 1));
         return bondsAreFullySaturated;
     }
     
