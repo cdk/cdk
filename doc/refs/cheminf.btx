@@ -81,4 +81,43 @@
     </bibtex:article>
   </bibtex:entry>
 
+  <bibtex:entry id="KRA00">
+    <bibtex:article>
+      <bibtex:author>Krause, Stefan and Willighagen, Egon and Steinbeck,
+          Christoph</bibtex:author>
+      <bibtex:title>JChemPaint - Using the Collaborative Forces of the Internet to
+          Develop a Free Editor for 2D Chemical Structures</bibtex:title>
+      <bibtex:journal>Molecules</bibtex:journal>
+      <bibtex:volume>5</bibtex:volume>
+      <bibtex:pages>93-98</bibtex:pages>
+      <bibtex:year>2000</bibtex:year>
+    </bibtex:article>
+  </bibtex:entry>
+
+  <bibtex:entry id="PMR99">
+    <bibtex:article>
+      <bibtex:author>Murray-Rust, P. and Rzepa, H.S.</bibtex:author>
+      <bibtex:title>Chemical markup, XML, and the Worldwide Web. 1. Basic
+          principles</bibtex:title>
+      <bibtex:journal>Journal of Chemical Information and Computer
+          Sciences</bibtex:journal>
+      <bibtex:volume>39</bibtex:volume>
+      <bibtex:number>6</bibtex:number>
+      <bibtex:pages>928-942</bibtex:pages>
+      <bibtex:abstract>Chemical markup language (CML) is an application of XML, the
+          extensible markup language, developed for containing chemical information
+          components within documents.Its design supports interoperability with the XML
+          family of tools and protocols.It provides a base functionality for atomic,
+          molecular, and crystallographic information and allows extensibility for other
+          chemical applications.Legacy files can be imported into CML without information
+          loss and can carry any desired chemical ontology.Some applications of CML
+          (Markush structures, chemical searching) will be discussed in later articles.An
+          XML document type declaration (DTD) for CML is included as a
+          Chart.</bibtex:abstract>
+      <bibtex:keywords>information</bibtex:keywords>
+      <bibtex:year>1999</bibtex:year>
+    </bibtex:article>
+  </bibtex:entry>
+
+
 </bibtex:file>
