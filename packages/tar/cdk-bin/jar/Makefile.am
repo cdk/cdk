@@ -3,7 +3,7 @@
 
 PREFIX="@prefix@"
 JARLIBDIR="${PREFIX}/lib/cdk"
-JARLIBS=cdk.jar
+JARLIBS=cdk-core.jar cdk-extra.jar
 
 EXTRA_DIST=${JARLIBS}
 
@@ -13,5 +13,8 @@ alljardir = "${JARLIBDIR}"
 
 alljar_DATA = ${JARLIBS}
 
-cdk.jar:
-	cp ../../../../dist/jar/cdk-with-java3d.jar cdk.jar
+cdk-core.jar:
+	cp ../../../../dist/jar/cdk-core.jar cdk-core.jar
+
+cdk-extra.jar:
+	cp ../../../../dist/jar/cdk-extra-with-java3d.jar cdk-extra.jar

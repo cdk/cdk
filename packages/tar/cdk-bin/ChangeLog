@@ -1,6 +1,7 @@
 In CVS
 =================
 * Updated cdk-view man page
+* Updated for cdk -> cdk-core + cdk-extra split
 
 20020518-2
 =================
