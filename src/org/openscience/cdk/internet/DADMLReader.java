@@ -51,6 +51,7 @@ import org.openscience.cdk.exception.UnsupportedChemObjectException;
 import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.DefaultChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
+import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.dadml.DATABASE;
 import org.openscience.dadml.DBDEF;
 import org.openscience.dadml.DBLIST;
@@ -78,9 +79,7 @@ public class DADMLReader extends DefaultChemObjectReader {
 
     private String superdb;
 
-    private org.openscience.cdk.tools.LoggingTool logger;
-    private static final String sax2parser = "org.apache.xerces.parsers.SAXParser";
-
+    private LoggingTool logger;
     private URI query;
     
     /**
@@ -89,7 +88,7 @@ public class DADMLReader extends DefaultChemObjectReader {
      * @param   superdb DADML super database to look up structure from
      */
     public DADMLReader(String superdb) {
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        logger = new LoggingTool(this);
         this.superdb = superdb;
         this.query = null;
     }
@@ -162,6 +161,8 @@ public class DADMLReader extends DefaultChemObjectReader {
     }
     
     public URL resolveLink(URI dadmlRI) {
+        logger.debug("Resolving URI: ", dadmlRI);
+        
         boolean found = false; // this is true when a structure is downloaded
         boolean done = false;  // this is true when all URLS have been tested
         
@@ -172,11 +173,13 @@ public class DADMLReader extends DefaultChemObjectReader {
         DBLIST dblist = new DBLIST();
         try {
             logger.info("Downloading DADML super database: " + this.superdb);
-            // Proxy authorization has to be ported from Chemistry Development Kit (CKD)
+            // Proxy authorization has to be ported from Chemistry Development Kit (CDK)
             // for now, do without authorization
-            dblist = DBLISTFileReader.read(superdb, sax2parser);
+            DBLISTFileReader reader = new DBLISTFileReader();
+            dblist = reader.read(this.superdb);
         } catch (Exception supererror) {
-            logger.error(supererror.toString());
+            logger.error("Exception while reading super db: ", supererror.getMessage());
+            logger.debug(supererror);
         }
         Enumeration dbases = dblist.databases();
         while (!found && !done && dbases.hasMoreElements()) {
@@ -188,7 +191,8 @@ public class DADMLReader extends DefaultChemObjectReader {
             try {
                 logger.info("Downloading: " + dburl);
                 // do without authorization
-                dbdef = DBDEFFileReader.read(dburl, sax2parser);
+                DBDEFFileReader reader = new DBDEFFileReader();
+                dbdef = reader.read(dburl);
             } catch (Exception deferror) {
                 System.err.println(deferror.toString());
             }
@@ -212,6 +216,7 @@ public class DADMLReader extends DefaultChemObjectReader {
                             if (ind.getTYPE().equals(indexType)) {
                                 // here is the URL composed
                                 String url = dbdef.getURL() + ind.getACCESS_PREFIX() + index + ind.getACCESS_SUFFIX();
+                                logger.debug("Will retrieve information from: ", url);
                                 try {
                                     return new URL(url);
                                 } catch (MalformedURLException exception) {
@@ -234,6 +239,7 @@ public class DADMLReader extends DefaultChemObjectReader {
 
     private Molecule downloadURL(URL resource) {
         Molecule molecule = new Molecule();
+        logger.debug("Downloading from URL: " + resource);
         try {
             URLConnection connection = resource.openConnection();
             BufferedReader bufReader = new BufferedReader(
