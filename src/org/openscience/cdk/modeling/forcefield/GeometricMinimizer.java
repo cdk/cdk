@@ -293,7 +293,7 @@ public class GeometricMinimizer {
 			System.out.println("CG Iteration number: " + iterationNumber);
 			
 			if (iterationNumber != 1) {
-				cgm.setµk(kCoordinates, kplus1Coordinates, forceField);
+				cgm.setNONASCIICHARk(kCoordinates, kplus1Coordinates, forceField);
 				kCoordinates.set(kplus1Coordinates);
 			}
 			cgm.setvk(gradient, iterationNumber);

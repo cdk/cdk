@@ -16,7 +16,7 @@ public class ConjugateGradientMethod {
 	double arbitraryStepSize = 2;
 	double stepSize = 2;
 	GVector newCoordinates = new GVector(3);
-	double 탃 = 0;
+	double NONASCIICHARk = 0;
 	GVector vk = new GVector(3);
 	GVector vkminus1 = new GVector(3);
 
@@ -36,21 +36,21 @@ public class ConjugateGradientMethod {
 	 *  uk = gk gk / gk-1 gk-1
 	 *
 	 */
-	public void set탃(GVector xkminus1, GVector xk,  PotentialFunction forceFieldFunction) {
+	public void setNONASCIICHARk(GVector xkminus1, GVector xk,  PotentialFunction forceFieldFunction) {
 		GVector temporalVector = new GVector(forceFieldFunction.gradientInPoint(xk));
 		//System.out.println("temporalVector = " + temporalVector);
-		탃 = temporalVector.dot(temporalVector);
-		//System.out.println("탃 = " + 탃);
+		NONASCIICHARk = temporalVector.dot(temporalVector);
+		//System.out.println("NONASCIICHARk = " + NONASCIICHARk);
 		temporalVector.set(forceFieldFunction.gradientInPoint(xkminus1));
 		//System.out.println("temporalVector = " + temporalVector);
-		탃 = 탃 / temporalVector.dot(temporalVector);
+		NONASCIICHARk = NONASCIICHARk / temporalVector.dot(temporalVector);
 		//System.out.println("temporalVector = " + temporalVector);
-		System.out.println("탃 = " + 탃);
+		System.out.println("NONASCIICHARk = " + NONASCIICHARk);
 		return;
 	}
 
 	/**
-	 *  vk=-gk + 탃 vk-1
+	 *  vk=-gk + NONASCIICHARk vk-1
 	 *
 	 * @param  gk  Gradient at coordinates Xk
 	 * @param  iterNumber  Iteration number
@@ -64,8 +64,8 @@ public class ConjugateGradientMethod {
 			//System.out.println("vector vk : vk.set(gk) : " + vk);
 			vk.scale(-1);
 			//System.out.println("vector vk : vk.scale(-1) : " + vk);
-			vkminus1.scale(탃);
-			//System.out.println("vector vk : vkminus1.scale(탃) : " + vkminus1);
+			vkminus1.scale(NONASCIICHARk);
+			//System.out.println("vector vk : vkminus1.scale(占퐆) : " + vkminus1);
 			vk.add(vkminus1);
 			//System.out.println("vector vk : vk.add(vkminus1) : " + vk);
 			System.out.println("vector vk : " + vk);
