@@ -43,7 +43,7 @@
             <arg value="--output:docbook"/>
             <arg value="--dbxstyle:CDKWebsite"/>
             <arg value="--sort"/>
-            <arg value="cheminf.btx"/>
+            <arg value="cheminf.bibx"/>
         </java>
     </target>
 
@@ -55,7 +55,7 @@
             <classpath refid="project.class.path"/>
             <arg value="--input:bibtexml"/>
             <arg value="--output:bibtex"/>
-            <arg value="cheminf.btx"/>
+            <arg value="cheminf.bibx"/>
         </java>
     </target>
 
@@ -68,7 +68,7 @@
             <arg value="--input:bibtexml"/>
             <arg value="--output:docbook"/>
             <arg value="--sort"/>
-            <arg value="cheminf.btx"/>
+            <arg value="cheminf.bibx"/>
         </java>
     </target>
 
