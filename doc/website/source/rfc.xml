@@ -52,15 +52,15 @@
               <entry>3</entry>
               <entry><ulink url="rfc3.html">Tests in org.openscience.cdk.test Use Same Directory Structure as Tested Classes</ulink></entry>
               <entry>2002-07-30</entry>
-              <entry>pending</entry>
-              <entry></entry>
+              <entry>accepted</entry>
+              <entry>2002-08-18</entry>
             </row>
             <row>
               <entry>4</entry>
               <entry><ulink url="rfc4.html">Core classes must not check method parameters</ulink></entry>
               <entry>2002-08-14</entry>
-              <entry>pending</entry>
-              <entry></entry>
+              <entry>accepted</entry>
+              <entry>2002-08-18</entry>
             </row>
           </tbody>
         </tgroup>
