@@ -1,7 +1,7 @@
 CHANGELOG
 ------------------------------------
 
-Changes in CVS
+20020101 Release
 ------------------------------------
 * fixed some javadoc issues
 * added Aelfred2 SAX2 parser
@@ -9,6 +9,7 @@ Changes in CVS
 * added constructors that take Writer/Reader for several IO classes
 * added DADML reader, to read structures from internet
 * seperated indices from CML content in database
+* rewrite of database access: split of CML content and indices
 
 Preview 20011201
 ------------------------------------
