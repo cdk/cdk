@@ -1,7 +1,9 @@
-/*
- * @(#)CMLHandler.java   0.2 2000/01/06
+/* $RCSfile$
+ * $Author$
+ * $Date$
+ * $Revision$
  *
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
