@@ -12,6 +12,7 @@ Fixes:
 
 API changes:
 * ChemObjectIO.getFormatName() is replaced by ChemObjectIO.getFormat()
+* ReaderFactory.getFormat() now returns a ChemFormat object
 
 20051015 Release
 ------------------------------------

@@ -175,20 +175,93 @@ public class ReaderFactory {
      *
      * @see #guessFormat(InputStream)
      */
-    public String guessFormat(Reader input) throws IOException {
-        ChemObjectReader reader = createReader(input);
-        if (reader != null) {
-            return reader.getClass().getName();
+    public ChemFormat guessFormat(BufferedReader input) throws IOException {
+        if (input == null) {
+            throw new IllegalArgumentException("input cannot be null");
         }
-        return "Format undetermined";
+
+        // make a copy of the header
+        char[] header = new char[this.headerLength];
+        if (!input.markSupported()) {
+            logger.error("Mark not supported");
+            throw new IllegalArgumentException("input must support mark");
+        }
+        input.mark(this.headerLength);
+        input.read(header, 0, this.headerLength);
+        input.reset();
+        
+        BufferedReader buffer = new BufferedReader(new CharArrayReader(header));
+        
+        /* Search file for a line containing an identifying keyword */
+        String line = buffer.readLine();
+        int lineNumber = 1;
+        while (buffer.ready() && (line != null)) {
+            logger.debug(lineNumber + ": ", line);
+            for (int i=0; i<formats.size(); i++) {
+                ChemFormatMatcher cfMatcher = (ChemFormatMatcher)formats.elementAt(i);
+                if (cfMatcher.matches(lineNumber, line)) {
+                    logger.info("Detected format: ", cfMatcher.getFormatName());
+                    return cfMatcher;
+                }
+            }
+            line = buffer.readLine();
+            lineNumber++;
+        }
+        
+        logger.warn("Now comes the tricky and more difficult ones....");
+        buffer = new BufferedReader(new CharArrayReader(header));
+        
+        line = buffer.readLine();
+        // is it a XYZ file?
+        StringTokenizer tokenizer = new StringTokenizer(line.trim());
+        try {
+            int tokenCount = tokenizer.countTokens();
+            if (tokenCount == 1) {
+                new Integer(tokenizer.nextToken());
+                // if not failed, then it is a XYZ file
+                return new org.openscience.cdk.io.formats.XYZFormat();
+            } else if (tokenCount == 2) {
+                new Integer(tokenizer.nextToken());
+                if ("Bohr".equalsIgnoreCase(tokenizer.nextToken())) {
+                    return new org.openscience.cdk.io.formats.XYZFormat();
+                }
+            }
+        } catch (NumberFormatException exception) {
+            logger.info("No, it's not a XYZ file");
+        }
+        // is it a SMILES file?
+        try {
+            SmilesParser sp = new SmilesParser();
+            Molecule m = sp.parseSmiles(line);
+            return new org.openscience.cdk.io.formats.SMILESFormat();
+        } catch (Exception ise) {
+            // no, it is not
+            logger.info("No, it's not a SMILES file");
+        }
+
+        logger.warn("File format undetermined");
+        return null;
     }
     
-    public String guessFormat(InputStream input) throws IOException {
-        ChemObjectReader reader = createReader(input);
-        if (reader != null) {
-            return reader.getClass().getName();
+    public ChemFormat guessFormat(InputStream input) throws IOException {
+        BufferedInputStream bistream = new BufferedInputStream(input, 8192);
+        InputStream istreamToRead = bistream; // if gzip test fails, then take default
+        bistream.mark(5);
+        int countRead = 0;
+        try {
+            byte[] abMagic = new byte[4];
+            countRead = bistream.read(abMagic, 0, 4);
+            bistream.reset();
+            if (countRead == 4) {
+                if (abMagic[0] == (byte)0x1F && abMagic[1] == (byte)0x8B) {
+                    istreamToRead = new GZIPInputStream(bistream);
+                }
+            }
+        } catch (IOException exception) {
+            logger.error(exception.getMessage());
+            logger.debug(exception);
         }
-        return "Format undetermined";
+        return guessFormat(new BufferedReader(new InputStreamReader(istreamToRead)));
     }
     
     /**
@@ -234,98 +307,32 @@ public class ReaderFactory {
      * @see org.openscience.cdk.io.DummyReader
      */
     public ChemObjectReader createReader(Reader input) throws IOException {
-        if (input == null) {
-            throw new IllegalArgumentException("input cannot be null");
+        if (!(input instanceof BufferedReader)) {
+            input = new BufferedReader(input);
         }
-
-        // FIXME: this should use the new ChemObjectReader.matches() method
-
-        // make a copy of the header
-        int bufferSize = this.headerLength;
-        BufferedReader originalBuffer = new BufferedReader(input, bufferSize);
-        char[] header = new char[bufferSize];
-        if (!originalBuffer.markSupported()) {
-            logger.error("Mark not supported");
-            throw new IllegalArgumentException("input must support mark");
-        }
-        originalBuffer.mark(bufferSize);
-        originalBuffer.read(header, 0, bufferSize);
-        originalBuffer.reset();
-        
-        BufferedReader buffer = new BufferedReader(new CharArrayReader(header));
-        
-        /* Search file for a line containing an identifying keyword */
-        String line = buffer.readLine();
-        int lineNumber = 1;
-        boolean formatDetected = false;
-        while (buffer.ready() && (line != null) && (!formatDetected)) {
-            logger.debug(lineNumber + ": ", line);
-            for (int i=0; i<formats.size() && !formatDetected; i++) {
-                ChemFormatMatcher cfMatcher = (ChemFormatMatcher)formats.elementAt(i);
-                if (cfMatcher.matches(lineNumber, line)) {
-                    formatDetected = true;
-                    logger.info("Detected format: ", cfMatcher.getFormatName());
-                    String readerClassName = cfMatcher.getReaderClassName();
-                    if (readerClassName != null) {
-                        try {
-                            // make a new instance of this class
-                            ChemObjectReader coReader = (ChemObjectReader)this.getClass().getClassLoader().
-                              loadClass(readerClassName).newInstance();
-                            coReader.setReader(originalBuffer);
-                            return coReader;
-                        } catch (ClassNotFoundException exception) {
-                            logger.error("Could not find this ChemObjectReader: ", readerClassName);
-                            logger.debug(exception);
-                        } catch (Exception exception) {
-                            logger.error("Could not create this ChemObjectReader: ", readerClassName);
-                            logger.debug(exception);
-                        }
-                    } else {
-                        logger.info("Format detected, but not implemented!");
-                    }
+        ChemFormat chemFormat = guessFormat((BufferedReader)input);
+        if (chemFormat != null) {
+            String readerClassName = chemFormat.getReaderClassName();
+            if (readerClassName != null) {
+                try {
+                    // make a new instance of this class
+                    ChemObjectReader coReader = (ChemObjectReader)this.getClass().getClassLoader().
+                        loadClass(readerClassName).newInstance();
+                    coReader.setReader(input);
+                    return coReader;
+                } catch (ClassNotFoundException exception) {
+                    logger.error("Could not find this ChemObjectReader: ", readerClassName);
+                    logger.debug(exception);
+                } catch (Exception exception) {
+                    logger.error("Could not create this ChemObjectReader: ", readerClassName);
+                    logger.debug(exception);
                 }
+            } else {
+                logger.warn("ChemFormat is recognized, but no reader is available.");
             }
-            line = buffer.readLine();
-            lineNumber++;
+        } else {
+            logger.warn("ChemFormat is not recognized.");
         }
-        
-        if (formatDetected == true) {
-            logger.warn("Format was detected but it could not instantiate a Reader for that format");
-            return null;
-        }
-
-        logger.warn("Now comes the tricky and more difficult ones....");
-        buffer = new BufferedReader(new CharArrayReader(header));
-        
-        line = buffer.readLine();
-        // is it a XYZ file?
-        StringTokenizer tokenizer = new StringTokenizer(line.trim());
-        try {
-            int tokenCount = tokenizer.countTokens();
-            if (tokenCount == 1) {
-                new Integer(tokenizer.nextToken());
-                // if not failed, then it is a XYZ file
-                return new org.openscience.cdk.io.XYZReader(originalBuffer);
-            } else if (tokenCount == 2) {
-                new Integer(tokenizer.nextToken());
-                if ("Bohr".equalsIgnoreCase(tokenizer.nextToken())) {
-                    return new org.openscience.cdk.io.XYZReader(originalBuffer);
-                }
-            }
-        } catch (NumberFormatException exception) {
-            logger.info("No, it's not a XYZ file");
-        }
-        // is it a SMILES file?
-        try {
-            SmilesParser sp = new SmilesParser();
-            Molecule m = sp.parseSmiles(line);
-            return new org.openscience.cdk.io.SMILESReader(originalBuffer);
-        } catch (Exception ise) {
-            // no, it is not
-            logger.info("No, it's not a SMILES file");
-        }
-
-        logger.warn("File format undetermined");
         return null;
     }
 
