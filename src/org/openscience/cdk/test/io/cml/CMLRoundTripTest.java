@@ -53,6 +53,7 @@ public class CMLRoundTripTest extends TestCase {
     public void testAtom() {
         Molecule mol = new Molecule();
         Atom atom = new Atom("N");
+        mol.addAtom(atom);
         
         Molecule roundTrippedMol = roundTripMolecule(mol);
         
@@ -66,6 +67,7 @@ public class CMLRoundTripTest extends TestCase {
         Atom atom = new Atom("N");
         Point2d p2d = new Point2d(1.3, 1.4);
         atom.setPoint2D(p2d);
+        mol.addAtom(atom);
         
         Molecule roundTrippedMol = roundTripMolecule(mol);
         
@@ -80,6 +82,7 @@ public class CMLRoundTripTest extends TestCase {
         Atom atom = new Atom("N");
         Point3d p3d = new Point3d(1.3, 1.4, 0.9);
         atom.setPoint3D(p3d);
+        mol.addAtom(atom);
         
         Molecule roundTrippedMol = roundTripMolecule(mol);
         
@@ -95,6 +98,7 @@ public class CMLRoundTripTest extends TestCase {
         Atom atom = new Atom("N");
         int formalCharge = +1;
         atom.setFormalCharge(formalCharge);
+        mol.addAtom(atom);
         
         Molecule roundTrippedMol = roundTripMolecule(mol);
         
@@ -121,13 +125,26 @@ public class CMLRoundTripTest extends TestCase {
             logger.debug(exception);
             fail(message);
         }
+        
+        logger.debug("CML string: " + stringWriter.toString());
 
         Molecule roundTrippedMol = null;
         try {
             String cmlString = stringWriter.toString();
             CMLReader reader = new CMLReader(new StringReader(cmlString));
             
-            roundTrippedMol = (Molecule)reader.read(new Molecule());
+            ChemFile file = (ChemFile)reader.read(new ChemFile());
+            assertNotNull(file);
+            assertEquals(1, file.getChemSequenceCount());
+            ChemSequence sequence = file.getChemSequence(0);
+            assertNotNull(sequence);
+            assertEquals(1, sequence.getChemModelCount());
+            ChemModel chemModel = sequence.getChemModel(0);
+            assertNotNull(chemModel);
+            SetOfMolecules moleculeSet = chemModel.getSetOfMolecules();
+            assertNotNull(moleculeSet);
+            assertEquals(1, moleculeSet.getMoleculeCount());
+            roundTrippedMol = moleculeSet.getMolecule(0);
             
             assertNotNull(roundTrippedMol);
         } catch (Exception exception) {
