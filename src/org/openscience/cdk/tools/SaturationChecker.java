@@ -53,9 +53,10 @@ public class SaturationChecker
 	/**
 	 *  Constructor for the SaturationChecker object
 	 *
-	 *@exception  java.lang.Exception  Description of the Exception
+	 *@exception  IOException  Description of the Exception
+   *@exception  ClassNotFoundException  Description of the Exception
 	 */
-	public SaturationChecker() throws java.lang.Exception
+	public SaturationChecker() throws IOException, ClassNotFoundException
 	{
 		atf = new AtomTypeFactory();
 		logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
@@ -369,7 +370,7 @@ public class SaturationChecker
 		int missingHydrogen = (int) (defaultAtom.getMaxBondOrderSum() -
 				container.getBondOrderSum(atom) +
 				atom.getFormalCharge());
-		if (atom.flags[CDKConstants.ISAROMATIC]) missingHydrogen--;				
+		if (atom.flags[CDKConstants.ISAROMATIC]) missingHydrogen--;
 		logger.debug("Atom: " + atom.getSymbol());
 		logger.debug("  max bond order: " + defaultAtom.getMaxBondOrderSum());
 		logger.debug("  bond order sum: " + container.getBondOrderSum(atom));
@@ -438,6 +439,7 @@ public class SaturationChecker
         int missingHydrogens = calculateMissingHydrogen(atom, container);
         for (int i = 1; i <= missingHydrogens; i++) {
             Atom hydrogen = new Atom("H");
+		hydrogen.setPoint2D(atom.getPoint2D());
             IsotopeFactory.getInstance().configure(hydrogen, isotope);
             container.addAtom(hydrogen);
             Bond newBond = new Bond(atom, hydrogen, 1.0);
