@@ -63,14 +63,24 @@ public class SmilesGeneratorTest extends TestCase
 		SmilesGenerator sg = new SmilesGenerator();
 		Molecule mol1 = MoleculeFactory.makeEthylPropylPhenantren();
 		Molecule mol2 = MoleculeFactory.makeAlphaPinene();
+    Molecule mol3=null;
+    try{
+      String tillsmol="\n  Marvin  07230205422D\n\n 22 24  0  0  0  0  0  0  0  0999 V2000\n    9.1628   -4.1392    0.0000 C   0  0  2  0  0  0  0  0  0  0  0  0\n    9.0889   -4.9609    0.0000 C   0  0  1  0  0  0  0  0  0  0  0  0\n    9.8475   -5.2852    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   10.3904   -4.6639    0.0000 C   0  0  2  0  0  0  0  0  0  0  0  0\n    9.9671   -3.9556    0.0000 C   0  0  1  0  0  0  0  0  0  0  0  0\n   10.3251   -3.2122    0.0000 C   0  0  1  0  0  0  0  0  0  0  0  0\n    9.9671   -2.4690    0.0000 C   0  0  1  0  0  0  0  0  0  0  0  0\n    9.1628   -2.2854    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    8.5178   -2.7999    0.0000 C   0  0  1  0  0  0  0  0  0  0  0  0\n    8.5178   -3.6249    0.0000 C   0  0  1  0  0  0  0  0  0  0  0  0\n   10.7899   -2.5306    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   11.5096   -2.6205    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n11.1000   -1.7750    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    7.7744   -3.9827    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   11.0155   -4.6201    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   10.7492   -3.8213    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0\n   11.0868   -3.2791    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0\n   10.0900   -1.6532    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0\n    7.7819   -2.4455    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n    7.5501   -3.3171    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n    8.2711   -4.3697    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n    8.3877   -5.3798    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n  2  1  1  0  0  0  0\n  1  5  1  0  0  0  0\n  2  3  1  0  0  0  0\n  3  4  1  0  0  0  0\n  4  5  1  0  0  0  0\n  4 15  1  6  0  0  0\n  5  6  1  0  0  0  0\n  6  7  1  0  0  0  0\n  7  8  1  0  0  0  0\n  8  9  1  0  0  0  0\n  9 10  1  0  0  0  0\n 10  1  1  0  0  0  0\n 10 14  1  6  0  0  0\n 11  6  1  0  0  0  0\n 11  7  1  0  0  0  0\n 11 12  1  6  0  0  0\n 11 13  1  1  0  0  0\n  5 16  1  1  0  0  0\n  6 17  1  6  0  0  0\n  7 18  1  6  0  0  0\n  9 19  1  1  0  0  0\n 10 20  1  1  0  0  0\n  1 21  1  6  0  0  0\n  2 22  1  1  0  0  0\nM  END";
+ 			MDLReader mdlreader = new MDLReader(new StringReader(tillsmol));
+			mol3 = (Molecule) mdlreader.read(new Molecule());
+    }
+    catch(Exception ex){
+      ex.printStackTrace();
+    }
 		fixCarbonHCount(mol2);
 		fixCarbonHCount(mol1);
-		String smiles1 = null, smiles2 = null;
+		String smiles1 = null, smiles2 = null, smiles3 = null;
 		if (standAlone) display(mol2);
 		try
 		{
 			smiles1 = sg.createSMILES(mol1);
 			smiles2 = sg.createSMILES(mol2);
+      smiles3 = sg.createSMILES(mol3,true,true);
 		}
 		catch(Exception exc)
 		{
@@ -78,8 +88,10 @@ public class SmilesGeneratorTest extends TestCase
 		}
 		if (standAlone) System.err.println("SMILES 1: " + smiles1);
 		if (standAlone) System.err.println("SMILES 2: " + smiles2);
+    if (standAlone) System.err.println("SMILES 3: " + smiles3);
 		assertTrue(smiles1.equals("c2cc1c3ccc(cc3ccc1c(c2)CC)CCC"));
 		assertTrue(smiles2.equals("C1=C(C)C2CC(C1)C2(C)(C)"));
+    assertTrue(smiles3.equals("[H][C@]12(CC(O)[C@](O)(C)[C@]3(O)(C(O)CC(C)[C@]3([C@]2([C@]1(C)(C))([H]))([H])))"));
 	}
 
 	private void fixCarbonHCount(Molecule mol)
