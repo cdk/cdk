@@ -790,23 +790,20 @@ public class Renderer2D   {
 	 */
 	public void paintRingBond(Bond bond, Ring ring, Color bondColor, Graphics graphics)
 	{
-		if (bond.getAtomAt(0).getFlag(CDKConstants.ISAROMATIC) && bond.getAtomAt(1).getFlag(CDKConstants.ISAROMATIC))
-		{
-			paintSingleBond(bond, bondColor, graphics);
-			paintInnerBond(bond, ring, Color.lightGray, graphics);
-		}
-		else if (bond.getOrder() == 1)
-		{
-			paintSingleBond(bond, bondColor, graphics);
-		}else if (bond.getOrder() == 2)
-		{
-			paintSingleBond(bond, bondColor, graphics);
-			paintInnerBond(bond, ring, bondColor, graphics);
-		} else if (bond.getOrder() == 3)
-		{
-			paintTripleBond(bond, bondColor, graphics);
-		}
-	}
+        if (r2dm.getShowAromaticity() &&
+            bond.getAtomAt(0).getFlag(CDKConstants.ISAROMATIC) && 
+            bond.getAtomAt(1).getFlag(CDKConstants.ISAROMATIC)) {
+            paintSingleBond(bond, bondColor, graphics);
+            paintInnerBond(bond, ring, Color.lightGray, graphics);
+        } else if (bond.getOrder() == 1) {
+            paintSingleBond(bond, bondColor, graphics);
+        } else if (bond.getOrder() == 2) {
+            paintSingleBond(bond, bondColor, graphics);
+            paintInnerBond(bond, ring, bondColor, graphics);
+        } else if (bond.getOrder() == 3) {
+            paintTripleBond(bond, bondColor, graphics);
+        }
+    }
 
 
 	/**

@@ -105,6 +105,9 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
     /** Determines wether implicit hydrogens should be drawn. */
     private boolean showImplicitHydrogens = true;
 
+    /** Determines wether rings should be drawn with a circle if they are aromatic. */
+    private boolean showAromaticity = true;
+
     /** Determines wether atoms are colored by type. */
     private boolean colorAtomsByType = true;
 
@@ -331,6 +334,14 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
     
     public void setShowImplicitHydrogens(boolean showThem) {
         this.showImplicitHydrogens = showThem;
+    }
+    
+    public boolean getShowAromaticity() {
+        return this.showAromaticity;
+    }
+    
+    public void setShowAromaticity(boolean showIt) {
+        this.showAromaticity = showIt;
     }
     
 	/**
