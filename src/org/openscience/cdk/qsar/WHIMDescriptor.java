@@ -87,7 +87,7 @@ import Jama.EigenvalueDecomposition;
  *   </tr>
  * </table>
  *
- * @todo        Fix up the &gamm; descriptors
+ * @cdk.todo        Fix up the &gamm; descriptors
  * 
  * @author      Rajarshi Guha
  * @cdk.created     2004-12-1

@@ -210,14 +210,14 @@ public class DescriptorEngine {
     }
 
     /**
-     *  Calculates all available descriptors for a molecule.
+     * Calculates all available descriptors for a molecule.
+     * 
+     * The results for a given descriptor as well as associated parameters and
+     * specifications are used to create a <code>DescriptorValue</code>
+     * object which is then added to the molecule as a property keyed
+     * on the <code>DescriptorSpecification</code> object for that descriptor
      *
-     *  The results for a given descriptor as well as associated parameters and
-     *  specifications are used to create a <code>DescriptorValue</code>
-     *  object which is then added to the molecule as a property keyed
-     *  on the <code>DescriptorSpecification</code> object for that descriptor
-     *
-     *@param  Molecule  The molecule for which we want to calculate descriptors          
+     * @param  molecule  The molecule for which we want to calculate descriptors          
      */
     public void process(Molecule molecule) {
         for (int i = 0; i < descriptors.size(); i++) {    

@@ -49,11 +49,10 @@ import org.openscience.cdk.tools.LoggingTool;
  *   </tr>
  * </table>
  *
- *@author         mfe4
- *@created        2005-02-24
- *@cdk.created    2004-11-13
- *@cdk.module     qsar
- *@cdk.set        qsar-descriptors
+ * @author         mfe4
+ * @cdk.created    2004-11-13
+ * @cdk.module     qsar
+ * @cdk.set        qsar-descriptors
  */
 public class VdWRadiusDescriptor implements Descriptor {
 

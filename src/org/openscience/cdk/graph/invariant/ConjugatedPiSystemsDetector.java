@@ -32,7 +32,7 @@ import org.openscience.cdk.*;
  *@cdk.created   17. September 2004
  *@cdk.module    experimental
  *
- *@todo add negatively charged atoms (e.g. O-) to the pi system
+ *@cdk.todo add negatively charged atoms (e.g. O-) to the pi system
  */
 public class ConjugatedPiSystemsDetector {
 

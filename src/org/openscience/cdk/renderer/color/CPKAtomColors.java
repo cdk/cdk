@@ -30,11 +30,9 @@ import java.awt.*;
 import java.util.HashMap;
 
 /**
- * Colors atoms using CPK color scheme.
+ * Colors atoms using CPK color scheme {@cdk.cite BER2001}.
  *
- * @cdk.module render
- * @see http://www.openrasmol.org/doc/rasmol.html#cpkcolours
- *
+ * @cdk.module  render
  * @cdk.keyword atom coloring, CPK
  */
 public class CPKAtomColors implements AtomColorer, java.io.Serializable

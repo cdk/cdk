@@ -187,7 +187,7 @@ public class CanonicalLabeler {
    * Sorts the vector according to the current invariance, corresponds to step 3
    *
    * @param v the invariance pair vector
-   * @todo    can this be done in one loop?
+   * @cdk.todo    can this be done in one loop?
    */
   private void sortVector(Vector v) {
     Collections.sort(v, new Comparator() {

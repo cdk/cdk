@@ -13,8 +13,8 @@ import org.openscience.cdk.qsar.RDFProtonDescriptor;
 /**
  *  Stretch-Bend Interaction calculator for the potential energy function. Include function and derivatives.
  *
- *@author     vlabarta
- *@created    February 15, 2005
+ * @author      vlabarta
+ * @cdk.created 2005-02-15
  */
 public class StretchBendInteractions {
 

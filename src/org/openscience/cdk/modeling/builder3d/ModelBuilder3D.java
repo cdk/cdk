@@ -67,7 +67,7 @@ import org.openscience.cdk.geometry.GeometryTools;
  *  </ul>
  *
  * @author      cho
- * @aythor      steinbeck
+ * @author      steinbeck
  * @cdk.created 2004-09-07
  * @cdk.module  builder3d
  * @cdk.keyword 3D coordinates

@@ -141,9 +141,9 @@ public class AtomContainerManipulator {
      * Produces an AtomContainer without explicit Hs but with H count from one with Hs.
      * The new molecule is a deep copy.
      *
-     * @param ac The AtomContainer from which to remove the hydrogens
-     * @return The mol without Hs.
-     * @cdk.keyword hydrogen, removal
+     * @param atomContainer The AtomContainer from which to remove the hydrogens
+     * @return              The molecule without Hs.
+     * @cdk.keyword         hydrogen, removal
      */
     public static AtomContainer removeHydrogens(AtomContainer atomContainer)
     {

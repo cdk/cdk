@@ -107,7 +107,7 @@ public class MoleculeListViewer extends JFrame
 	/**
 	 *  Adds a feature to the Structure attribute of the MoleculeListViewer object
 	 *
-	 *@param  mv  The feature to be added to the Structure attribute
+	 *@param  moleculeViewer  The feature to be added to the Structure attribute
 	 */
 	public void addStructure(MoleculeViewer2D moleculeViewer)
 	{
@@ -119,7 +119,7 @@ public class MoleculeListViewer extends JFrame
 	/**
 	 *  Adds a feature to the Structure attribute of the MoleculeListViewer object
 	 *
-	 *@param  mv     The feature to be added to the Structure attribute
+	 *@param  moleculeViewer     The feature to be added to the Structure attribute
 	 *@param  title  The feature to be added to the Structure attribute
 	 */
 	public void addStructure(MoleculeViewer2D moleculeViewer, String title)

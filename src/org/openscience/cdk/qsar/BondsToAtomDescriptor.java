@@ -1,5 +1,4 @@
-/*
- *  $RCSfile$
+/*  $RCSfile$
  *  $Author$
  *  $Date$
  *  $Revision$
@@ -57,11 +56,10 @@ import org.openscience.cdk.graph.matrix.*;
  *   </tr>
  * </table>
  *
- *@author         mfe4
- *@created        24 febbraio 2005
- *@cdk.created    2004-11-13
- *@cdk.module     qsar
- *@cdk.set        qsar-descriptors
+ * @author         mfe4
+ * @cdk.created    2004-11-13
+ * @cdk.module     qsar
+ * @cdk.set        qsar-descriptors
  */
 public class BondsToAtomDescriptor implements Descriptor {
 

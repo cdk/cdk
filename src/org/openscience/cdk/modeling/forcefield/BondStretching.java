@@ -106,7 +106,7 @@ public class BondStretching {
 
 
 	/**
-	 *  Evaluate the MMFF94 bond stretching term for the given atoms coordinates
+	 *  Evaluate the MMFF94 bond stretching term for the given atoms coordinates.
 	 *
 	 *@param  molecule       The molecule like an AtomContainer object.
 	 *@return        bond stretching value
@@ -130,7 +130,6 @@ public class BondStretching {
 	 *  Calculate the bond lengths first derivative respect to the cartesian coordinates of the atoms.
 	 *
 	 *@param  molecule       The molecule like an AtomContainer object.
-	 *@return        Delta bond lengths derivative value [dimension(3xN)] [bonds Number]
 	 */
 	public void setBondLengthsFirstDerivative_InPoint(AtomContainer molecule) {
 		

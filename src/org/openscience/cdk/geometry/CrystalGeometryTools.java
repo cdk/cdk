@@ -240,8 +240,6 @@ public class CrystalGeometryTools {
 
 	/**
      * Creates cartesian coordinates for all Atoms in the Crystal.
-	 *
-	 * @return  boolean indication that 3D coordinates are available 
 	 */
     public static void fractionalToCartesian(Crystal crystal) {
         Atom[] atoms = crystal.getAtoms();

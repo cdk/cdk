@@ -503,9 +503,7 @@ public class RingPlacer
 	 * a ring as PLACED if all of its atoms have been placed.
 	 *
 	 * @param   rs  The ringset to be checked
-	 * @return  True if coordinates have been assigned to all atoms in all rings.    
 	 */
-
 	public void checkAndMarkPlaced(RingSet rs)
 	{
 		Ring ring = null;

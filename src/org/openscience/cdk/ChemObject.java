@@ -401,30 +401,30 @@ public class ChemObject implements java.io.Serializable, Cloneable
   
   
 	/**
-	 *  Sets the whole set of flags.
+	 * Sets the whole set of flags.
 	 *
-	 *@param  flagsNew    the new flags.
-	 *@see                #getFlags
+	 * @param  flagsNew    the new flags.
+	 * @see                #getFlags
 	 */
-  public void setFlags(boolean[] flagsNew){
-    flags=flagsNew;
-  }
+    public void setFlags(boolean[] flagsNew){
+        flags=flagsNew;
+    }
 
 	/**
-	 *  Returns the whole set of flags.
+	 * Returns the whole set of flags.
 	 *
 	 *@return    the flags.
-	 *@see       #setFlags.
+	 *@see       #setFlags
 	 */
-  public boolean[] getFlags(){
-    return(flags);
-  }
+    public boolean[] getFlags(){
+        return(flags);
+    }
 
 	/**
-	 *  Clones this <code>ChemObject</code>, but preserves references to <code>Object</code>s.
-         *
-	 *@return    Shallow copy of this ChemObject
-	 *@see       #clone
+     * Clones this <code>ChemObject</code>, but preserves references to <code>Object</code>s.
+     *
+	 * @return    Shallow copy of this ChemObject
+	 * @see       #clone
 	 */
 	public Object shallowCopy()
 	{

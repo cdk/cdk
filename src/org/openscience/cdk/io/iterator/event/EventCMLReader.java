@@ -146,8 +146,6 @@ public class EventCMLReader extends DefaultEventChemObjectReader {
     /**
      * Starts the reading of the CML file. Whenever a new Molecule is read,
      * a event is thrown to the ReaderListener.
-     *
-     * @return the content in a ChemFile object
      */
     public void process() throws CDKException {
         logger.debug("Started parsing from input...");

@@ -10,8 +10,8 @@ import org.openscience.cdk.*;
  *  To work with the coordinates of the molecule, like get the 3d coordinates of
  *  the atoms or calculate the distance between two atoms.
  *
- *@author     vlabarta
- *@created    March 3, 2005
+ * @author      vlabarta
+ * @cdk.created 2005-03-03
  */
 public class ForceFieldTools {
 
