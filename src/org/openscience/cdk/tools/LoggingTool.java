@@ -24,10 +24,8 @@
 package org.openscience.cdk.tools;
 
 import java.io.BufferedReader;
-import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringReader;
-import java.util.Properties;
 
 /**
  * Useful for logging messages. Often used as a class static variable instantiated like:
@@ -175,7 +173,7 @@ public class LoggingTool {
      */
     public static void configureLog4j() {
         LoggingTool localLogger = new LoggingTool(LoggingTool.class);
-        try {
+        try { // NOPMD
             org.apache.log4j.PropertyConfigurator.configure(
                     LoggingTool.class.getResource("/org/openscience/cdk/config/data/log4j.properties"));
         } catch (NullPointerException e) { // NOPMD
