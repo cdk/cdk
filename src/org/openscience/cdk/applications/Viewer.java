@@ -50,6 +50,53 @@ public class Viewer {
     private boolean useJava3D;
     private boolean use3D;
 
+    private void view(Molecule m, boolean use3D, boolean useJava3D) {
+        JFrame frame = new JFrame("CDK Molecule Viewer");
+        frame.getContentPane().setLayout(new BorderLayout());
+
+        // use Accelerated viewer if 3D coords are available
+        if (GeometryTools.has3DCoordinates(m) && use3D) {
+            logger.info("Viewing with 3D viewer");
+
+            boolean viewed = false;
+            if (useJava3D) {
+                logger.debug(".. trying Java3D viewer");
+                try {
+                    AtomContainer atomContainer = chemModel.getAllInOneContainer();
+                    AcceleratedRenderer3D renderer = new AcceleratedRenderer3D(
+                        new AcceleratedRenderer3DModel(atomContainer));
+
+                    frame.getContentPane().add(renderer, BorderLayout.CENTER);
+                    logger.debug(".. done");
+
+                    viewed = true;
+                } catch (Exception e) {
+                    logger.error("Viewing did not succeed!");
+                    logger.error(e.toString());
+                }
+            }
+
+            // try to view it without Java3D
+            if (!viewed) {
+                logger.debug(".. trying non-Java3D viewer");
+                MoleculeViewer3D mv = new MoleculeViewer3D(m);
+                frame.getContentPane().add(mv, BorderLayout.CENTER);
+                logger.debug(".. done");
+            }
+        } else if (GeometryTools.has2DCoordinates(m)) {
+            logger.info("Viewing with 2D viewer");
+            MoleculeViewer2D mv = new MoleculeViewer2D(m);
+            frame.getContentPane().add(mv, BorderLayout.CENTER);
+        } else {
+            System.out.println("Molecule has no coordinates.");
+            System.exit(1);
+        }
+        frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        frame.setSize(500,500);
+        frame.setVisible(true);
+        frame.addWindowListener(new AppCloser());       
+    }
+
     // view a SMILES string
     public Viewer(String SMILES) {
         logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
@@ -65,22 +112,16 @@ public class Viewer {
         }
         if (mol != null) {
             StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-            MoleculeViewer2D mv = new MoleculeViewer2D();
-            Renderer2DModel r2dm = mv.getRenderer2DModel();
-            r2dm.setDrawNumbers(true);
-
             try {
                 sdg.setMolecule((Molecule)mol.clone());
                 sdg.generateCoordinates(new Vector2d(0,1));
-                mv.setAtomContainer(sdg.getMolecule());
-                mv.display();
+		view(sdg.getMolecule(), false, false);
             } catch(Exception exc) {
                 System.out.println("*** Exit due to an unexpected error during coordinate generation ***");
                 exc.printStackTrace();
             }
         }
     }
-
 
     // view a file
     public Viewer(String inFile, boolean useJava3D, boolean use3D) {
@@ -131,55 +172,12 @@ public class Viewer {
             setOfMolecules = chemModel.getSetOfMolecules();
             logger.info("  number of molecules in model " + model + ": " +
                                setOfMolecules.getMoleculeCount());
-	          for (int i = 0; i < setOfMolecules.getMoleculeCount(); i++) {
-              Molecule m = setOfMolecules.getMolecule(i);
-
-			  // use Accelerated viewer if 3D coords are available
-			  if (GeometryTools.has3DCoordinates(m) && use3D) {
-			      logger.info("Viewing with 3D viewer");
-
-				  boolean viewed = false;
-				  if (useJava3D) {
-            	      logger.debug(".. trying Java3D viewer");
-                	  try {
-                          JFrame frame = new JFrame("AcceleratedRenderer3DTest");
-                          frame.getContentPane().setLayout(new BorderLayout());
-
-                          AtomContainer atomContainer = chemModel.getAllInOneContainer();
-                          AcceleratedRenderer3D renderer = new AcceleratedRenderer3D(
-                              new AcceleratedRenderer3DModel(atomContainer));
-
-                          frame.getContentPane().add(renderer, BorderLayout.CENTER);
-
-                          frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-                          frame.setSize(500,500);
-                          frame.setVisible(true);
-                          frame.addWindowListener(new AppCloser());
-                          logger.debug(".. done");
-                          viewed = true;
-                      } catch (Exception e) {
-                          logger.error("Viewing did not succeed!");
-                          logger.error(e.toString());
-                      }
-                  }
-
-                  // try to view it without Java3D
-                  if (!viewed) {
-                      logger.debug(".. trying non-Java3D viewer");
-                      MoleculeViewer3D mv = new MoleculeViewer3D(m);
-                      mv.display();
-                      logger.debug(".. done");
-                  }
-              } else if (GeometryTools.has2DCoordinates(m)) {
-                  logger.info("Viewing with 2D viewer");
-                  MoleculeViewer2D mv = new MoleculeViewer2D(m);
-                  mv.display();
-              } else {
-                  System.out.println("Molecule has no coordinates.");
-              }
+            for (int i = 0; i < setOfMolecules.getMoleculeCount(); i++) {
+                Molecule m = setOfMolecules.getMolecule(i);
+                view(m, useJava3D, use3D);
             }
           }
-      }
+        }
     }
     
     public static void main(String[] args) {
