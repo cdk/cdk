@@ -73,4 +73,13 @@ public class ChemFileTest extends TestCase {
         assertEquals(3, cs.getChemSequences().length);
     }
 
+    /** Test for RFC #9 */
+    public void testToString() {
+        ChemFile cs = new ChemFile();
+        String description = cs.toString();
+        for (int i=0; i< description.length(); i++) {
+            assertTrue(description.charAt(i) != '\n');
+            assertTrue(description.charAt(i) != '\r');
+        }
+    }
 }

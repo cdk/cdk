@@ -140,5 +140,18 @@ public class ChemSequence extends ChemObject implements java.io.Serializable, Cl
 		return this.chemModelCount;
 	}
 
+	public String toString() {
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("ChemSequence(#M=");
+        ChemModel[] models = getChemModels();
+        buffer.append(models.length);
+        buffer.append(", ");
+        for (int i=0; i<models.length; i++) {
+            ChemModel model = models[i];
+            buffer.append(model.toString());
+        }
+        buffer.append(")");
+        return buffer.toString();
+    }
 	
 }

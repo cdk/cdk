@@ -77,4 +77,13 @@ public class ChemSequenceTest extends TestCase {
         assertNotNull(models[2]);
     }
 
+    /** Test for RFC #9 */
+    public void testToString() {
+        ChemSequence cs = new ChemSequence();
+        String description = cs.toString();
+        for (int i=0; i< description.length(); i++) {
+            assertTrue(description.charAt(i) != '\n');
+            assertTrue(description.charAt(i) != '\r');
+        }
+    }
 }
