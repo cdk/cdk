@@ -158,6 +158,15 @@ public class ChemModelManipulator {
         // This should never happen.
         return null;
     }
+    
+    public static Reaction getRelevantReaction(ChemModel chemModel, Atom atom) {
+        Reaction reaction = null;
+        if (chemModel.getSetOfReactions() != null) {
+            SetOfReactions reactionSet = chemModel.getSetOfReactions();
+            reaction = SetOfReactionsManipulator.getRelevantReaction(reactionSet, atom);
+        }
+        return reaction;
+    }
 
     /**
      * Returns all the AtomContainer's of a ChemModel.

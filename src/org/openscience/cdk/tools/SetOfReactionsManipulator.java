@@ -99,4 +99,16 @@ public class SetOfReactionsManipulator {
             getAllMolecules(set)
         );
     }
+    
+    public static Reaction getRelevantReaction(SetOfReactions set, Atom atom) {
+        Reaction[] reactions = set.getReactions();
+        for (int i=0; i < reactions.length; i++) {
+            Reaction reaction = reactions[i];
+            AtomContainer container = ReactionManipulator.getRelevantAtomContainer(reaction, atom);
+            if (container != null) { // a match!
+                return reaction;
+            }
+        }
+        return null;
+    }
 }
