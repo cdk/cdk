@@ -350,24 +350,52 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
             }
         }
 
+        /**
+         * Sets the x coordinate for of the fractional coordinate of this atom.
+         *
+         * @return the x coordinate for of the fractional coordinate of this atom.
+         *
+         * @see    #getFractX3d
+         */
         public void setFractX3d(double x) {
             if (fractionalPoint3d == null) {
                 fractionalPoint3d = new Point3d();
             }
             fractionalPoint3d.x = x;
         }
+        /**
+         * Sets the y coordinate for of the fractional coordinate of this atom.
+         *
+         * @return the y coordinate for of the fractional coordinate of this atom.
+         *
+         * @see    #getFractY3d
+         */
         public void setFractY3d(double y) {
             if (fractionalPoint3d == null) {
                 fractionalPoint3d = new Point3d();
             }
             fractionalPoint3d.y = y;
         }
+        /**
+         * Sets the z coordinate for of the fractional coordinate of this atom.
+         *
+         * @return the z coordinate for of the fractional coordinate of this atom.
+         *
+         * @see    #getFractZ3d
+         */
         public void setFractZ3d(double z) {
             if (fractionalPoint3d == null) {
                 fractionalPoint3d = new Point3d();
             }
             fractionalPoint3d.z = z;
         }
+        /**
+         * Returns the x coordinate for of the fractional coordinate of this atom.
+         *
+         * @return the x coordinate for of the fractional coordinate of this atom.
+         *
+         * @see    #setFractX3d
+         */
         public double getFractX3d() {
             if (fractionalPoint3d == null) {
                 return 0.0;
@@ -375,6 +403,13 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
                 return fractionalPoint3d.x;
             }
         }
+        /**
+         * Returns the y coordinate for of the fractional coordinate of this atom.
+         *
+         * @return the y coordinate for of the fractional coordinate of this atom.
+         *
+         * @see    #setFractY3d
+         */
         public double getFractY3d() {
             if (fractionalPoint3d == null) {
                 return 0.0;
@@ -382,6 +417,13 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
                 return fractionalPoint3d.y;
             }
         }
+        /**
+         * Returns the z coordinate for of the fractional coordinate of this atom.
+         *
+         * @return the z coordinate for of the fractional coordinate of this atom.
+         *
+         * @see    #setFractZ3d
+         */
         public double getFractZ3d() {
             if (fractionalPoint3d == null) {
                 return 0.0;

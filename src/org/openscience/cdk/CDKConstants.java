@@ -64,17 +64,32 @@ public class CDKConstants {
         /** A bonds for which there is no stereochemistry. */
         public final static int STEREO_BOND_NONE = 0;
 
-        /** A bonds which end is below the drawing plane. */
+        /** A bonds which end is below the drawing plane.
+         *  The bond is draw from the first to the second bond atom.
+         */
         public final static int STEREO_BOND_DOWN = -1;
+        /** A bonds which end is below the drawing plane.
+         *  The bond is draw from the second to the first bond atom.
+         */
         public final static int STEREO_BOND_DOWN_INV = -2;
 
+        /** A positive atom parity. */
         public final static int STEREO_ATOM_PARITY_PLUS = 1;
+        /** A negative atom parity. */
         public final static int STEREO_ATOM_PARITY_MINUS = -1;
+        /** A undefined atom parity. */
         public final static int STEREO_ATOM_PARITY_UNDEFINED = 0;
 
+        /** A undefined hybridization. */
         public final static int HYBRIDIZATION_UNSET = 0;
+        /** A geometry of neighboring atoms when an s orbital is hybridized
+         *  with one p orbital. */
         public final static int HYBRIDIZATION_SP1 = 1;
+        /** A geometry of neighboring atoms when an s orbital is hybridized
+         *  with two p orbitals. */
         public final static int HYBRIDIZATION_SP2 = 2;
+        /** A geometry of neighboring atoms when an s orbital is hybridized
+         *  with three p orbitals. */
         public final static int HYBRIDIZATION_SP3 = 3;
 
         /** 
@@ -155,10 +170,10 @@ public class CDKConstants {
     * ChemObjects                           *
     ****************************************/
 
-    /** The title */
+    /** The title for a ChemObject. */
     public static final String TITLE = "Title";
 
-    /** A remark */
+    /** A remark for a ChemObject.*/
     public static final String REMARK = "Remark";
 
     /** A String comment. */
@@ -170,7 +185,7 @@ public class CDKConstants {
     /** A List of annotation remarks. */
     public static final String ANNOTATIONS = "Annotations";
 
-    /** A description */
+    /** A description for a ChemObject. */
     public static final String DESCRIPTION = "Description";
 
 
@@ -179,13 +194,13 @@ public class CDKConstants {
     * Molecules                             *
     ****************************************/
 
-    /** The IUPAC compatible name generated with AutoNom */
+    /** The IUPAC compatible name generated with AutoNom. */
     public static final String AUTONOMNAME = "AutonomName";
 
-    /** The Beilstein Registry Number */
+    /** The Beilstein Registry Number. */
     public static final String BEILSTEINRN = "BeilsteinRN";
 
-    /** The CAS Registry Number */
+    /** The CAS Registry Number. */
     public static final String CASRN = "CasRN";
 
     /****************************************
