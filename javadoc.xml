@@ -53,7 +53,7 @@
 
     <target name="core.fo" depends="core.docbook">
         <java classname="org.apache.xalan.xslt.Process"
-              args="-IN javadoc.dbxml -XSL doc/devel-guide/lib/xslt/docbook/fo/docbook.xsl -OUT core.fo"
+              args="-IN core.dbxml -XSL doc/lib/xslt/docbook/fo/docbook.xsl -OUT core.fo"
               dir="." fork="yes">
             <classpath refid="fop.class.path" />
         </java>
