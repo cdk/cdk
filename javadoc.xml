@@ -26,7 +26,7 @@
 
     <target name="doccheck-all" depends="doccheck-core, doccheck-standard, doccheck-io, doccheck-render, doccheck-extra"/>
     
-    <target name="html">        
+    <target name="html" depends="compileTaglets">
         <mkdir dir="${javadoc.dir}" />
 
         <!-- Call javacc target in build.xml to re-generate the source code -->
@@ -37,12 +37,13 @@
                  public="true"
                  windowtitle="CDK API">
             <classpath refid="project.class.path" />
-            <tag name="cdk.module" scope="all" description="Belongs to CDK module:" />
             <tag name="cdk.keyword" scope="all" description="Keywords:" />
             <tag name="cdk.created" scope="all" description="Created on:" />
             <tag name="cdk.require" scope="all" description="Requires:" />
             <tag name="cdk.depends" scope="all" description="Required library to be able to run this class:" />
             <tag name="cdk.builddepends" scope="all" description="Required library to be able to compile this class:" />
+            <taglet name="CDKModuleTaglet" path="doc/javadoc" />
+            <taglet name="CDKCiteTaglet" path="doc/javadoc" />
             <packageset dir="${src}" defaultexcludes="yes">
                 <include name="org/openscience/cdk/**" />
                 <exclude name="org/openscience/cdk/test/**"/>
@@ -205,6 +206,16 @@
         </javadoc>
     </target>
 
+    <target name="compileTaglets" id="compileTaglets">
+      <javac srcdir="doc/javadoc/source" destdir="doc/javadoc"
+             includes="*Taglet.java" debug="on" optimize="off">
+        <classpath>
+          <fileset dir="${java.ext.dirs}">
+            <include name="tools.jar" />
+          </fileset>
+        </classpath>
+      </javac>
+    </target>
 
 </project>
 
