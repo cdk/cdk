@@ -34,71 +34,71 @@ import org.openscience.cdk.math.Vector;
  
 public class SimpleBasisSet extends GaussiansBasis
 {
-	private final static double f1 = 0.1;
-	private final static double f2 = 0.3;
-	private final static double f3 = 0.9;
-	private final static double f4 = 2.7;
+  private final static double f1 = 0.1;
+  private final static double f2 = 0.3;
+  private final static double f3 = 0.9;
+  private final static double f4 = 2.7;
 
-	public SimpleBasisSet(Atom[] atoms)
-	{
-		int i, j;
-		int size = 0;
-		int atomicnumber;
-		for(i=0; i<atoms.length; i++)
-		{
-			atomicnumber = atoms[i].getAtomicNumber();
-			if (atomicnumber<=2)
-				size += 4;
-			else if (atomicnumber<=18)
-        size += 4+12;
-			else 
-        size += 4+12+12;
-		}
-
-		int[] nx = new int[size];
-		int[] ny = new int[size];
-		int[] nz = new int[size];
-		double[] alpha = new double[size];
-		Vector[] r = new Vector[size];
-
-		Vector rN;
-
-		j = 0;
-		for(i=0; i<atoms.length; i++)
-		{
-			atomicnumber = atoms[i].getAtomicNumber();
-			rN = new Vector(atoms[i].getPoint3D());
+  public SimpleBasisSet(Atom[] atoms)
+  {
+    int i, j;
+    int size = 0;
+    int atomicnumber;
+    for(i=0; i<atoms.length; i++)
+    {
+      atomicnumber = atoms[i].getAtomicNumber();
       if (atomicnumber<=2)
-			{
-        nx[j] = 0; ny[j] = 0; nz[j] = 0; alpha[j] = f1; r[j] = rN; j++;
-				nx[j] = 0; ny[j] = 0; nz[j] = 0; alpha[j] = f2; r[j] = rN; j++;
-				nx[j] = 0; ny[j] = 0; nz[j] = 0; alpha[j] = f3; r[j] = rN; j++;
-				nx[j] = 0; ny[j] = 0; nz[j] = 0; alpha[j] = f4; r[j] = rN; j++;
-			}
+        size += 4;
       else if (atomicnumber<=18)
-			{
+        size += 4+12;
+      else 
+        size += 4+12+12;
+    }
+
+    int[] nx = new int[size];
+    int[] ny = new int[size];
+    int[] nz = new int[size];
+    double[] alpha = new double[size];
+    Vector[] r = new Vector[size];
+
+    Vector rN;
+
+    j = 0;
+    for(i=0; i<atoms.length; i++)
+    {
+      atomicnumber = atoms[i].getAtomicNumber();
+      rN = new Vector(atoms[i].getPoint3D());
+      if (atomicnumber<=2)
+      {
+        nx[j] = 0; ny[j] = 0; nz[j] = 0; alpha[j] = f1; r[j] = rN; j++;
+        nx[j] = 0; ny[j] = 0; nz[j] = 0; alpha[j] = f2; r[j] = rN; j++;
+        nx[j] = 0; ny[j] = 0; nz[j] = 0; alpha[j] = f3; r[j] = rN; j++;
+        nx[j] = 0; ny[j] = 0; nz[j] = 0; alpha[j] = f4; r[j] = rN; j++;
+      }
+      else if (atomicnumber<=18)
+      {
         nx[j] = 0; ny[j] = 0; nz[j] = 0; alpha[j] = f1; r[j] = rN; j++;
         nx[j] = 0; ny[j] = 0; nz[j] = 0; alpha[j] = f2; r[j] = rN; j++;
         nx[j] = 0; ny[j] = 0; nz[j] = 0; alpha[j] = f3; r[j] = rN; j++;
         nx[j] = 0; ny[j] = 0; nz[j] = 0; alpha[j] = f4; r[j] = rN; j++;
 
-				nx[j] = 1; ny[j] = 0; nz[j] = 0; alpha[j] = f1; r[j] = rN; j++;
+        nx[j] = 1; ny[j] = 0; nz[j] = 0; alpha[j] = f1; r[j] = rN; j++;
         nx[j] = 1; ny[j] = 0; nz[j] = 0; alpha[j] = f2; r[j] = rN; j++;
         nx[j] = 1; ny[j] = 0; nz[j] = 0; alpha[j] = f3; r[j] = rN; j++;
         nx[j] = 1; ny[j] = 0; nz[j] = 0; alpha[j] = f4; r[j] = rN; j++;
 
-				nx[j] = 0; ny[j] = 1; nz[j] = 0; alpha[j] = f1; r[j] = rN; j++;
+        nx[j] = 0; ny[j] = 1; nz[j] = 0; alpha[j] = f1; r[j] = rN; j++;
         nx[j] = 0; ny[j] = 1; nz[j] = 0; alpha[j] = f2; r[j] = rN; j++;
         nx[j] = 0; ny[j] = 1; nz[j] = 0; alpha[j] = f3; r[j] = rN; j++;
         nx[j] = 0; ny[j] = 1; nz[j] = 0; alpha[j] = f4; r[j] = rN; j++;
 
-				nx[j] = 0; ny[j] = 0; nz[j] = 1; alpha[j] = f1; r[j] = rN; j++;
+        nx[j] = 0; ny[j] = 0; nz[j] = 1; alpha[j] = f1; r[j] = rN; j++;
         nx[j] = 0; ny[j] = 0; nz[j] = 1; alpha[j] = f2; r[j] = rN; j++;
         nx[j] = 0; ny[j] = 0; nz[j] = 1; alpha[j] = f3; r[j] = rN; j++;
         nx[j] = 0; ny[j] = 0; nz[j] = 1; alpha[j] = f4; r[j] = rN; j++;
-			}
+      }
       else 
-			{
+      {
         nx[j] = 0; ny[j] = 0; nz[j] = 0; alpha[j] = f1; r[j] = rN; j++;
         nx[j] = 0; ny[j] = 0; nz[j] = 0; alpha[j] = f2; r[j] = rN; j++;
         nx[j] = 0; ny[j] = 0; nz[j] = 0; alpha[j] = f3; r[j] = rN; j++;
@@ -119,7 +119,7 @@ public class SimpleBasisSet extends GaussiansBasis
         nx[j] = 0; ny[j] = 0; nz[j] = 1; alpha[j] = f3; r[j] = rN; j++;
         nx[j] = 0; ny[j] = 0; nz[j] = 1; alpha[j] = f4; r[j] = rN; j++;
 
-				nx[j] = 1; ny[j] = 1; nz[j] = 0; alpha[j] = f1; r[j] = rN; j++;
+        nx[j] = 1; ny[j] = 1; nz[j] = 0; alpha[j] = f1; r[j] = rN; j++;
         nx[j] = 1; ny[j] = 1; nz[j] = 0; alpha[j] = f2; r[j] = rN; j++;
         nx[j] = 1; ny[j] = 1; nz[j] = 0; alpha[j] = f3; r[j] = rN; j++;
         nx[j] = 1; ny[j] = 1; nz[j] = 0; alpha[j] = f4; r[j] = rN; j++;
@@ -133,10 +133,10 @@ public class SimpleBasisSet extends GaussiansBasis
         nx[j] = 1; ny[j] = 0; nz[j] = 1; alpha[j] = f2; r[j] = rN; j++;
         nx[j] = 1; ny[j] = 0; nz[j] = 1; alpha[j] = f3; r[j] = rN; j++;
         nx[j] = 1; ny[j] = 0; nz[j] = 1; alpha[j] = f4; r[j] = rN; j++;
-			}
-		}
-		System.out.println("j="+j+" size="+size);
+      }
+    }
+    System.out.println("j="+j+" size="+size);
 
-		setBasis(nx, ny, nz, alpha, r, atoms);
-	}
+    setBasis(nx, ny, nz, alpha, r, atoms);
+  }
 }

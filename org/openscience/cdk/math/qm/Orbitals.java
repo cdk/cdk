@@ -33,18 +33,18 @@ import org.openscience.cdk.math.*;
  
 public class Orbitals
 {
-	private int count_basis;
-	private int count_orbitals;
-	private Matrix C;
-	private Basis basis;
-	private int count_electrons = 1;
+  private int count_basis;
+  private int count_orbitals;
+  private Matrix C;
+  private Basis basis;
+  private int count_electrons = 1;
 
-	public Orbitals(Basis basis)
+  public Orbitals(Basis basis)
   { 
     this.basis = basis;
     count_orbitals = count_basis = basis.getSize();
     C = new Matrix(count_basis, count_basis);
-		for(int i=0; i<count_basis; i++)
+    for(int i=0; i<count_basis; i++)
       for(int j=0; j<count_basis; j++)
         if (i==j)
           C.matrix[i][j] = 1d;
@@ -52,55 +52,55 @@ public class Orbitals
           C.matrix[i][j] = 0d;
   }
 
-	public Orbitals(Basis basis, Matrix C)
-	{
-		this.basis = basis;
-		count_basis = basis.getSize();
-		if (count_basis==C.rows)
-		{
-			this.C = C;
-			count_orbitals = C.columns;
-		}
-		else
-		{
-			this.C = new Matrix(count_basis, count_basis);
-			for(int i=0; i<count_basis; i++)
-				for(int j=0; j<count_basis; j++)
-					if (i==j)
-						this.C.matrix[i][j] = 1d;
-					else
-						this.C.matrix[i][j] = 0d;
-			count_orbitals = count_basis;
-		}
-	}
-
-	public void setCoefficients(Matrix C)
-	{
-		if (count_basis==C.rows)
-		{
+  public Orbitals(Basis basis, Matrix C)
+  {
+    this.basis = basis;
+    count_basis = basis.getSize();
+    if (count_basis==C.rows)
+    {
       this.C = C;
-			count_orbitals = C.columns;
-		}
-	}
+      count_orbitals = C.columns;
+    }
+    else
+    {
+      this.C = new Matrix(count_basis, count_basis);
+      for(int i=0; i<count_basis; i++)
+        for(int j=0; j<count_basis; j++)
+          if (i==j)
+            this.C.matrix[i][j] = 1d;
+          else
+            this.C.matrix[i][j] = 0d;
+      count_orbitals = count_basis;
+    }
+  }
 
-	public Matrix getCoefficients()
+  public void setCoefficients(Matrix C)
+  {
+    if (count_basis==C.rows)
+    {
+      this.C = C;
+      count_orbitals = C.columns;
+    }
+  }
+
+  public Matrix getCoefficients()
   {
     return C;
   }
 
-	public double getValue(int index, double x, double y, double z)
-	{
-		double sum = 0;
-		for(int i=0; i<count_basis; i++)
-			if (C.matrix[i][index]!=0d)
-				sum += C.matrix[i][index]*basis.getValue(i, x, y, z);
-		return sum;
-	}
-
-	public Vector getValues(int index, Matrix m)
+  public double getValue(int index, double x, double y, double z)
   {
-		if (m.rows!=3)
-			return null;
+    double sum = 0;
+    for(int i=0; i<count_basis; i++)
+      if (C.matrix[i][index]!=0d)
+        sum += C.matrix[i][index]*basis.getValue(i, x, y, z);
+    return sum;
+  }
+
+  public Vector getValues(int index, Matrix m)
+  {
+    if (m.rows!=3)
+      return null;
 
     Vector result = basis.getValues(0, m).mul(C.matrix[0][index]);
     for(int i=1; i<count_basis; i++)
@@ -109,28 +109,28 @@ public class Orbitals
     return result;
   }
 
-	public Basis getBasis()
-	{
-		return basis;
-	}
+  public Basis getBasis()
+  {
+    return basis;
+  }
 
-	public int getCountBasis()
-	{
-		return count_basis;
-	}
+  public int getCountBasis()
+  {
+    return count_basis;
+  }
 
-	public int getCountOrbitals()
+  public int getCountOrbitals()
   {
     return count_orbitals;
   }
 
-	public void setCountElectrons(int count)
-	{
-		if (count>0)
-			count_electrons = count;
-	}
+  public void setCountElectrons(int count)
+  {
+    if (count>0)
+      count_electrons = count;
+  }
 
-	public int getCountElectrons()
+  public int getCountElectrons()
   {
     return count_electrons;
   }

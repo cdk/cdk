@@ -37,36 +37,36 @@ import org.openscience.cdk.Atom;
  
 public class GaussiansBasis implements Basis
 {
-	private int count; // Anzahl der Basis(Basen)
-	private int[] nx; // [Basis]
-	private int[] ny; // [Basis]
-	private int[] nz; // [Basis]
-	private double[] alpha; // [Basis]
-	//private int[] atoms; // [Basis] An welchem Atom die Basis hängt
-	private double[] norm;
-	private Vector[] r; // [basis] Positionen der Basisfunktionen
+  private int count; // Anzahl der Basis(Basen)
+  private int[] nx; // [Basis]
+  private int[] ny; // [Basis]
+  private int[] nz; // [Basis]
+  private double[] alpha; // [Basis]
+  //private int[] atoms; // [Basis] An welchem Atom die Basis hängt
+  private double[] norm;
+  private Vector[] r; // [basis] Positionen der Basisfunktionen
 
-	private int count_atoms;
-	private Vector[] rN; // [Atom] Positionen der Atome
-	private int[] oz; // [Atom] Ordnungszahlen der Atome
+  private int count_atoms;
+  private Vector[] rN; // [Atom] Positionen der Atome
+  private int[] oz; // [Atom] Ordnungszahlen der Atome
 
-	private double minx,maxx,miny,maxy,minz,maxz;
+  private double minx,maxx,miny,maxy,minz,maxz;
 
-	public GaussiansBasis()
-	{
-	}
+  public GaussiansBasis()
+  {
+  }
 
-	public GaussiansBasis(int[] nx, int[] ny, int[] nz, double[] alpha, Vector[] r, Atom[] atoms)
-	{
-		setBasis(nx, ny, nz, alpha, r, atoms);
-	}
+  public GaussiansBasis(int[] nx, int[] ny, int[] nz, double[] alpha, Vector[] r, Atom[] atoms)
+  {
+    setBasis(nx, ny, nz, alpha, r, atoms);
+  }
 
-	protected void setBasis(int[] nx, int[] ny, int[] nz, double[] alpha, Vector[] r, Atom[] atoms)
-	{
-		int i;
+  protected void setBasis(int[] nx, int[] ny, int[] nz, double[] alpha, Vector[] r, Atom[] atoms)
+  {
+    int i;
 
-		//count_atoms = molecule.getSize();
-		count_atoms = atoms.length;
+    //count_atoms = molecule.getSize();
+    count_atoms = atoms.length;
     
     System.out.println("Anzahl der Atome: "+count_atoms);
     
@@ -80,79 +80,79 @@ public class GaussiansBasis implements Basis
     }
     System.out.println();
 
-		count = Math.min(nx.length,
-						Math.min(ny.length,
-						Math.min(nz.length,
-						Math.min(alpha.length, atoms.length))));
+    count = Math.min(nx.length,
+            Math.min(ny.length,
+            Math.min(nz.length,
+            Math.min(alpha.length, atoms.length))));
 
-		this.nx = new int[count];
-		this.ny = new int[count];
-		this.nz = new int[count];
-		this.alpha = new double[count];
-		//this.atoms = new int[count];
-		this.norm = new double[count];
-		this.r = new Vector[count];
+    this.nx = new int[count];
+    this.ny = new int[count];
+    this.nz = new int[count];
+    this.alpha = new double[count];
+    //this.atoms = new int[count];
+    this.norm = new double[count];
+    this.r = new Vector[count];
     this.oz = new int[count];
 
-		/*minx = r[atoms[0]].vector[0]; maxx = r[atoms[0]].vector[0];
+    /*minx = r[atoms[0]].vector[0]; maxx = r[atoms[0]].vector[0];
     miny = r[atoms[0]].vector[1]; maxy = r[atoms[0]].vector[1];
     minz = r[atoms[0]].vector[2]; maxz = r[atoms[0]].vector[2];*/
 
-		for(i=0; i<count; i++)
-		{
-			this.nx[i] = nx[i];
-			this.ny[i] = ny[i];
-			this.nz[i] = nz[i];
-			this.alpha[i] = alpha[i];
-			//this.atoms[i] = atoms[i];
-			this.r[i] = new Vector(atoms[i].getPoint3D()).mul(1.8897);
+    for(i=0; i<count; i++)
+    {
+      this.nx[i] = nx[i];
+      this.ny[i] = ny[i];
+      this.nz[i] = nz[i];
+      this.alpha[i] = alpha[i];
+      //this.atoms[i] = atoms[i];
+      this.r[i] = new Vector(atoms[i].getPoint3D()).mul(1.8897);
 
-			norm[i] = 1d;
-			norm[i] = 1d/Math.sqrt(calcS(i,i));
+      norm[i] = 1d;
+      norm[i] = 1d/Math.sqrt(calcS(i,i));
 
-			System.out.println((i+1)+".Basis nx="+nx[i]+" ny="+ny[i]+" nz="+nz[i]+" alpha="+
+      System.out.println((i+1)+".Basis nx="+nx[i]+" ny="+ny[i]+" nz="+nz[i]+" alpha="+
               alpha[i]+" atom="+atoms[i]+" r="+r[i]+" norm="+norm[i]);
 
-			if (i>0)
-			{
-	      minx = Math.min(minx,this.r[i].vector[0]); maxx = Math.max(maxx,this.r[i].vector[0]);
-  	    miny = Math.min(miny,this.r[i].vector[1]); maxy = Math.max(maxy,this.r[i].vector[1]);
-    	  minz = Math.min(minz,this.r[i].vector[2]); maxz = Math.max(maxz,this.r[i].vector[2]);
-			}
-			else
-			{
-				minx = r[0].vector[0]; maxx = r[0].vector[0];
-		    miny = r[0].vector[1]; maxy = r[0].vector[1];
-		    minz = r[0].vector[2]; maxz = r[0].vector[2];
-			}
+      if (i>0)
+      {
+        minx = Math.min(minx,this.r[i].vector[0]); maxx = Math.max(maxx,this.r[i].vector[0]);
+        miny = Math.min(miny,this.r[i].vector[1]); maxy = Math.max(maxy,this.r[i].vector[1]);
+        minz = Math.min(minz,this.r[i].vector[2]); maxz = Math.max(maxz,this.r[i].vector[2]);
+      }
+      else
+      {
+        minx = r[0].vector[0]; maxx = r[0].vector[0];
+        miny = r[0].vector[1]; maxy = r[0].vector[1];
+        minz = r[0].vector[2]; maxz = r[0].vector[2];
+      }
     }
 
     minx -= 2; maxx += 2;
     miny -= 2; maxy += 2;
     minz -= 2; maxz += 2;
 
-		System.out.println();
-	}
+    System.out.println();
+  }
 
-	/**
-	 * Liefert die Anzahl der Basis Vektoren
-	 */
-	public int getSize()
-	{
-		return count;
-	}
+  /**
+   * Liefert die Anzahl der Basis Vektoren
+   */
+  public int getSize()
+  {
+    return count;
+  }
 
-	public double getMinX()
-	{
-		return minx;
-	}
+  public double getMinX()
+  {
+    return minx;
+  }
 
-	public double getMaxX()
+  public double getMaxX()
   {
     return maxx;
   }
 
-	public double getMinY()
+  public double getMinY()
   {
     return miny;
   }
@@ -162,7 +162,7 @@ public class GaussiansBasis implements Basis
     return maxy;
   }
 
-	public double getMinZ()
+  public double getMinZ()
   {
     return minz;
   }
@@ -172,116 +172,116 @@ public class GaussiansBasis implements Basis
     return maxz;
   }
 
-	/**
-	 * Berechnet den Funktionswert ein Basis an dem Ort (x,y,z)
-	 */
-	public double getValue(int index, double x, double y, double z)
-	{
-		double dx = (x*1.8897)-r[index].vector[0];
+  /**
+   * Berechnet den Funktionswert ein Basis an dem Ort (x,y,z)
+   */
+  public double getValue(int index, double x, double y, double z)
+  {
+    double dx = (x*1.8897)-r[index].vector[0];
     double dy = (y*1.8897)-r[index].vector[1];
     double dz = (z*1.8897)-r[index].vector[2];
-		double result = 1d;
-		int i;
-		for(i=0; i<nx[index]; i++)
-			result *= dx;
-		for(i=0; i<ny[index]; i++)
+    double result = 1d;
+    int i;
+    for(i=0; i<nx[index]; i++)
+      result *= dx;
+    for(i=0; i<ny[index]; i++)
       result *= dy;
-		for(i=0; i<nz[index]; i++)
+    for(i=0; i<nz[index]; i++)
       result *= dz;
-		return result*Math.exp(-alpha[index]*(dx*dx+dy*dy+dz*dz));
-	}
+    return result*Math.exp(-alpha[index]*(dx*dx+dy*dy+dz*dz));
+  }
 
-	public Vector getValues(int index, Matrix m)
+  public Vector getValues(int index, Matrix m)
   {
-		if (m.rows!=3)
-			return null;
+    if (m.rows!=3)
+      return null;
 
-		double x,y,z,dx,dy,dz,mx,my,mz;
+    double x,y,z,dx,dy,dz,mx,my,mz;
 
-		x = m.matrix[0][0]; y = m.matrix[1][0]; z = m.matrix[2][0];
-						
+    x = m.matrix[0][0]; y = m.matrix[1][0]; z = m.matrix[2][0];
+            
     dx = (x*1.8897)-r[index].vector[0];
     dy = (y*1.8897)-r[index].vector[1];
     dz = (z*1.8897)-r[index].vector[2];
-		
+    
     Vector result = new Vector(m.columns);
     int i,j; 
 
-		mx = 1d;
+    mx = 1d;
     for(i=0; i<nx[index]; i++)
       mx *= dx;
 
-		my = 1d;
+    my = 1d;
     for(i=0; i<ny[index]; i++)
       my *= dy;
 
-		mz = 1d;
+    mz = 1d;
     for(i=0; i<nz[index]; i++)
       mz *= dz;
 
-		dx *= dx; dy *= dy; dz *= dz;
+    dx *= dx; dy *= dy; dz *= dz;
 
-		result.vector[0] = mx*my*mz*Math.exp(-alpha[index]*(dx+dy+dz));
+    result.vector[0] = mx*my*mz*Math.exp(-alpha[index]*(dx+dy+dz));
 
-		for(j=1; j<m.columns; j++)
-		{
-			if (x!=m.matrix[0][j])
-			{
-				x = m.matrix[0][j];
-				dx = (x*1.8897)-r[index].vector[0];
-				mx = 1d;
-				for(i=0; i<nx[index]; i++)
-		      mx *= dx;
-				dx *= dx;
-			}
+    for(j=1; j<m.columns; j++)
+    {
+      if (x!=m.matrix[0][j])
+      {
+        x = m.matrix[0][j];
+        dx = (x*1.8897)-r[index].vector[0];
+        mx = 1d;
+        for(i=0; i<nx[index]; i++)
+          mx *= dx;
+        dx *= dx;
+      }
 
-			if (y!=m.matrix[1][j])
+      if (y!=m.matrix[1][j])
       {
         y = m.matrix[1][j];
         dy = (y*1.8897)-r[index].vector[1];
         my = 1d; 
         for(i=0; i<ny[index]; i++)
           my *= dy;
-				dy *= dy;
+        dy *= dy;
       }
 
-			if (z!=m.matrix[2][j])
+      if (z!=m.matrix[2][j])
       {
         z = m.matrix[2][j];
         dz = (z*1.8897)-r[index].vector[2];
         mz = 1d; 
         for(i=0; i<nz[index]; i++)
           mz *= dz;
-				dz *= dz;
+        dz *= dz;
       }
 
-			result.vector[j] = mx*my*mz*Math.exp(-alpha[index]*(dx+dy+dz));
-		}
+      result.vector[j] = mx*my*mz*Math.exp(-alpha[index]*(dx+dy+dz));
+    }
 
     return result;
   }
 
-	public Vector getPosition(int index)
-	{
-		return r[index].duplicate().mul(0.52918);
-	}
+  public Vector getPosition(int index)
+  {
+    return r[index].duplicate().mul(0.52918);
+  }
 
-	/**
-	 * Für die Berechnung der Überlappungsintegrale
-	 */
-	public double calcD(double normi, double normj, double alphai, double alphaj, Vector ri, Vector rj)
-	{
-		double dx = ri.vector[0]-rj.vector[0];
-		double dy = ri.vector[1]-rj.vector[1];
-		double dz = ri.vector[2]-rj.vector[2];
-		return Math.exp(-((alphai*alphaj)/(alphai+alphaj))*(dx*dx+dy*dy+dz*dz))*normi*normj;
-	}
+  /**
+   * Für die Berechnung der Überlappungsintegrale
+   */
+  public double calcD(double normi, double normj, double alphai, double alphaj, Vector ri, Vector rj)
+  {
+    double dx = ri.vector[0]-rj.vector[0];
+    double dy = ri.vector[1]-rj.vector[1];
+    double dz = ri.vector[2]-rj.vector[2];
+    return Math.exp(-((alphai*alphaj)/(alphai+alphaj))*(dx*dx+dy*dy+dz*dz))*normi*normj;
+  }
 
-	/**
+  /**
    * Transfer Gleichung
    * für die Berechnung der Überlappungsintegrale
    */
-	private double calcI(int ni, int nj, double alphai, double alphaj, double xi, double xj)
+  private double calcI(int ni, int nj, double alphai, double alphaj, double xi, double xj)
   {
     if ((ni<0) || (nj<0))
     {
@@ -316,19 +316,19 @@ public class GaussiansBasis implements Basis
     return I[nj][ni];
   }
 
-	/**
+  /**
    * Für die Berechnung der Überlappungsintegrale
    */
   public double calcS(int i, int j)
   {
-		//System.out.println("S: i="+i+" j="+j+" r[i]="+r[i]+" r[j]="+r[j]);
+    //System.out.println("S: i="+i+" j="+j+" r[i]="+r[i]+" r[j]="+r[j]);
     return calcD(norm[i], norm[j], alpha[i],alpha[j],r[i],r[j]) * 
-					 calcI(nx[i],nx[j],alpha[i],alpha[j],r[i].vector[0],r[j].vector[0]) *
-					 calcI(ny[i],ny[j],alpha[i],alpha[j],r[i].vector[1],r[j].vector[1]) * 
-					 calcI(nz[i],nz[j],alpha[i],alpha[j],r[i].vector[2],r[j].vector[2]);
+           calcI(nx[i],nx[j],alpha[i],alpha[j],r[i].vector[0],r[j].vector[0]) *
+           calcI(ny[i],ny[j],alpha[i],alpha[j],r[i].vector[1],r[j].vector[1]) * 
+           calcI(nz[i],nz[j],alpha[i],alpha[j],r[i].vector[2],r[j].vector[2]);
   }
 
-	/**
+  /**
    * Transfergleichung für die Berechnung des Impulses
    */
   public double calcJ(int ni, int nj, double alphai, double alphaj, double xi, double xj)
@@ -348,26 +348,26 @@ public class GaussiansBasis implements Basis
     return Double.NaN; // Falls fehlerhafte Parameter
   }
 
-	/**
-	 * Berechnet den Impuls -<d^2/dx^2 chi_i | chi_j>
-	 */
-	public double calcJ(int i, int j)
-	{
+  /**
+   * Berechnet den Impuls -<d^2/dx^2 chi_i | chi_j>
+   */
+  public double calcJ(int i, int j)
+  {
     return calcD(norm[i], norm[j], alpha[i],alpha[j],r[i],r[j])*
            (calcJ(nx[i],nx[j],alpha[i],alpha[j],r[i].vector[0],r[j].vector[0])*
             calcI(ny[i],ny[j],alpha[i],alpha[j],r[i].vector[1],r[j].vector[1])*
             calcI(nz[i],nz[j],alpha[i],alpha[j],r[i].vector[2],r[j].vector[2])+
 
-						calcI(nx[i],nx[j],alpha[i],alpha[j],r[i].vector[0],r[j].vector[0])*
-						calcJ(ny[i],ny[j],alpha[i],alpha[j],r[i].vector[1],r[j].vector[1])*
+            calcI(nx[i],nx[j],alpha[i],alpha[j],r[i].vector[0],r[j].vector[0])*
+            calcJ(ny[i],ny[j],alpha[i],alpha[j],r[i].vector[1],r[j].vector[1])*
             calcI(nz[i],nz[j],alpha[i],alpha[j],r[i].vector[2],r[j].vector[2])+
 
-						calcI(nx[i],nx[j],alpha[i],alpha[j],r[i].vector[0],r[j].vector[0])*
-						calcI(ny[i],ny[j],alpha[i],alpha[j],r[i].vector[1],r[j].vector[1])*
-						calcJ(nz[i],nz[j],alpha[i],alpha[j],r[i].vector[2],r[j].vector[2]));
+            calcI(nx[i],nx[j],alpha[i],alpha[j],r[i].vector[0],r[j].vector[0])*
+            calcI(ny[i],ny[j],alpha[i],alpha[j],r[i].vector[1],r[j].vector[1])*
+            calcJ(nz[i],nz[j],alpha[i],alpha[j],r[i].vector[2],r[j].vector[2]));
   }
 
-	/**
+  /**
    * Transfer Gleichung
    * für die Berechnung des Kernpotentials
    */
@@ -390,7 +390,7 @@ public class GaussiansBasis implements Basis
     return Double.NaN; // Falls fehlerhafte Parameter
   }
 
-	/**
+  /**
    * Transfer Gleichung
    * für die Berechnung des Kernpotentials
    */
@@ -407,55 +407,55 @@ public class GaussiansBasis implements Basis
     return Double.NaN; // Falls fehlerhafte Parameter
   }
 
-	public double calcV(int i, int j, Vector rN, double Z)
+  public double calcV(int i, int j, Vector rN, double Z)
   {
-		double f,t;
+    double f,t;
 
-		double sum1,sum2;
-		double f1,f2;
+    double sum1,sum2;
+    double f1,f2;
 
-		// Berechnen der Integration nach Simson
-		int steps = 10;
-		double h = 1d/steps;
+    // Berechnen der Integration nach Simson
+    int steps = 10;
+    double h = 1d/steps;
 
-		double alphaij = alpha[i]+alpha[j];
+    double alphaij = alpha[i]+alpha[j];
 
-		double rxij = (alpha[i]*r[i].vector[0]+alpha[j]*r[j].vector[0])/alphaij;
-		double ryij = (alpha[i]*r[i].vector[1]+alpha[j]*r[j].vector[1])/alphaij;
-		double rzij = (alpha[i]*r[i].vector[2]+alpha[j]*r[j].vector[2])/alphaij;
+    double rxij = (alpha[i]*r[i].vector[0]+alpha[j]*r[j].vector[0])/alphaij;
+    double ryij = (alpha[i]*r[i].vector[1]+alpha[j]*r[j].vector[1])/alphaij;
+    double rzij = (alpha[i]*r[i].vector[2]+alpha[j]*r[j].vector[2])/alphaij;
 
-		double X = alphaij*((rxij-rN.vector[0])*(rxij-rN.vector[0]) +
-											  (ryij-rN.vector[1])*(ryij-rN.vector[1]) +
-												(rzij-rN.vector[2])*(rzij-rN.vector[2]));
+    double X = alphaij*((rxij-rN.vector[0])*(rxij-rN.vector[0]) +
+                        (ryij-rN.vector[1])*(ryij-rN.vector[1]) +
+                        (rzij-rN.vector[2])*(rzij-rN.vector[2]));
 
-		double C = 2*calcD(norm[i], norm[j], 
-							alpha[i], alpha[j], r[i], r[j])*Math.sqrt(alphaij)/Math.sqrt(Math.PI);
+    double C = 2*calcD(norm[i], norm[j], 
+              alpha[i], alpha[j], r[i], r[j])*Math.sqrt(alphaij)/Math.sqrt(Math.PI);
 
-		sum1 = 0;
-		for(f = 1; f<steps; f=f+2)
-		{
-			t = f*h;
-			sum1 += Math.exp(-X*t*t)*calcI(nx[i], nx[j], t, alpha[i], alpha[j], 
-																		 r[i].vector[0], r[j].vector[0], rN.vector[0]) *
-															 calcI(ny[i], ny[j], t, alpha[i], alpha[j], 
-																		 r[i].vector[1], r[j].vector[1], rN.vector[1]) *
-															 calcI(nz[i], nz[j], t, alpha[i], alpha[j], 
-																		 r[i].vector[2], r[j].vector[2], rN.vector[2]);
-		}
-
-		sum2 = 0;
-		for(f = 2; f<steps; f=f+2)
-		{
-			t = f*h;
-			sum2 += Math.exp(-X*t*t)*calcI(nx[i], nx[j], t, alpha[i], alpha[j],
+    sum1 = 0;
+    for(f = 1; f<steps; f=f+2)
+    {
+      t = f*h;
+      sum1 += Math.exp(-X*t*t)*calcI(nx[i], nx[j], t, alpha[i], alpha[j], 
                                      r[i].vector[0], r[j].vector[0], rN.vector[0]) *
                                calcI(ny[i], ny[j], t, alpha[i], alpha[j], 
                                      r[i].vector[1], r[j].vector[1], rN.vector[1]) *
                                calcI(nz[i], nz[j], t, alpha[i], alpha[j], 
                                      r[i].vector[2], r[j].vector[2], rN.vector[2]);
-		}
+    }
 
-		t = 0d;
+    sum2 = 0;
+    for(f = 2; f<steps; f=f+2)
+    {
+      t = f*h;
+      sum2 += Math.exp(-X*t*t)*calcI(nx[i], nx[j], t, alpha[i], alpha[j],
+                                     r[i].vector[0], r[j].vector[0], rN.vector[0]) *
+                               calcI(ny[i], ny[j], t, alpha[i], alpha[j], 
+                                     r[i].vector[1], r[j].vector[1], rN.vector[1]) *
+                               calcI(nz[i], nz[j], t, alpha[i], alpha[j], 
+                                     r[i].vector[2], r[j].vector[2], rN.vector[2]);
+    }
+
+    t = 0d;
     f1 = Math.exp(-X*t*t)*calcI(nx[i], nx[j], t, alpha[i], alpha[j],
                                      r[i].vector[0], r[j].vector[0], rN.vector[0]) *
                                calcI(ny[i], ny[j], t, alpha[i], alpha[j], 
@@ -463,114 +463,114 @@ public class GaussiansBasis implements Basis
                                calcI(nz[i], nz[j], t, alpha[i], alpha[j], 
                                      r[i].vector[2], r[j].vector[2], rN.vector[2]);
 
-		t = 1d;
-		f2 = Math.exp(-X*t*t)*calcI(nx[i], nx[j], t, alpha[i], alpha[j],
+    t = 1d;
+    f2 = Math.exp(-X*t*t)*calcI(nx[i], nx[j], t, alpha[i], alpha[j],
                                      r[i].vector[0], r[j].vector[0], rN.vector[0]) *
                                calcI(ny[i], ny[j], t, alpha[i], alpha[j], 
                                      r[i].vector[1], r[j].vector[1], rN.vector[1]) *
                                calcI(nz[i], nz[j], t, alpha[i], alpha[j], 
                                      r[i].vector[2], r[j].vector[2], rN.vector[2]);
 
-		return (h/3)*(f1 + 4*sum1 + 2*sum2 + f2)*Z*C;
-	}
+    return (h/3)*(f1 + 4*sum1 + 2*sum2 + f2)*Z*C;
+  }
 
-	public double calcV(int i, int j)
-	{
-		double result = 0d;
-		for(int k=0; k<count_atoms; k++)
+  public double calcV(int i, int j)
+  {
+    double result = 0d;
+    for(int k=0; k<count_atoms; k++)
     { 
       //System.out.println("k="+k+" r="+r[k]);
       result += calcV(i,j, rN[k], oz[k]);
     }
     return -result; // Vorsicht negatives Vorzeichen
-	}
+  }
 
-	public double calcG(int n, int m, double u, 
- 		double alphai, double alphaj, double alphak, double alphal, double xi, double xj, double xk, double xl)
-	{
-		if ((n<0) || (m<0))
-		{
-			System.out.println("Error(CalcG):Fehlerhafte Parameter n="+n+" m="+m);
-	    return Double.NaN;
-		}
+  public double calcG(int n, int m, double u, 
+     double alphai, double alphaj, double alphak, double alphal, double xi, double xj, double xk, double xl)
+  {
+    if ((n<0) || (m<0))
+    {
+      System.out.println("Error(CalcG):Fehlerhafte Parameter n="+n+" m="+m);
+      return Double.NaN;
+    }
 
-		double alphaij = alphai+alphaj;
-		double alphakl = alphak+alphal;
+    double alphaij = alphai+alphaj;
+    double alphakl = alphak+alphal;
 
-		double xij = (alphai*xi+alphaj*xj)/alphaij;
-		double xkl = (alphak*xk+alphal*xl)/alphakl;
+    double xij = (alphai*xi+alphaj*xj)/alphaij;
+    double xkl = (alphak*xk+alphal*xl)/alphakl;
 
-		double C00 = (xij-xi)-((u*u*alphakl*(xij-xkl))/(u*u*(alphaij+alphakl)+alphaij*alphakl));
-		double Cs00 = (xkl-xk)+((u*u*alphaij*(xij-xkl))/(u*u*(alphaij+alphakl)+alphaij*alphakl));
-		double B00 = u*u/(2*(u*u*(alphaij+alphakl)+alphaij*alphakl));
-		double B10 = (u*u+alphakl)/(2*(u*u*(alphaij+alphakl)+alphaij*alphakl));
-		double Bs01 = (u*u+alphaij)/(2*(u*u*(alphaij+alphakl)+alphaij*alphakl));
+    double C00 = (xij-xi)-((u*u*alphakl*(xij-xkl))/(u*u*(alphaij+alphakl)+alphaij*alphakl));
+    double Cs00 = (xkl-xk)+((u*u*alphaij*(xij-xkl))/(u*u*(alphaij+alphakl)+alphaij*alphakl));
+    double B00 = u*u/(2*(u*u*(alphaij+alphakl)+alphaij*alphakl));
+    double B10 = (u*u+alphakl)/(2*(u*u*(alphaij+alphakl)+alphaij*alphakl));
+    double Bs01 = (u*u+alphaij)/(2*(u*u*(alphaij+alphakl)+alphaij*alphakl));
 
-		double[][] G = new double[n+1][m+1];
+    double[][] G = new double[n+1][m+1];
 
-		int i,j;
+    int i,j;
 
-		G[0][0] = 1d;
-		
-		// Nach 1)
-		if (n>0)
-			G[1][0] = C00;
+    G[0][0] = 1d;
+    
+    // Nach 1)
+    if (n>0)
+      G[1][0] = C00;
 
-		// Nach 1)
-		for(i=2; i<=n; i++)
-			G[i][0] = (i-1)*B10   *G[i-2][0]+
-              	C00         *G[i-1][0];
+    // Nach 1)
+    for(i=2; i<=n; i++)
+      G[i][0] = (i-1)*B10   *G[i-2][0]+
+                C00         *G[i-1][0];
 
-		// Nach 2)
-		if (m>0)
+    // Nach 2)
+    if (m>0)
       G[0][1] = Cs00;
 
-		// Nach 2)
-		for(i=2; i<=m; i++)
-			G[0][i] = (i-1)*Bs01 *G[0][i-2]+
-	              Cs00  		 *G[0][i-1];
+    // Nach 2)
+    for(i=2; i<=m; i++)
+      G[0][i] = (i-1)*Bs01 *G[0][i-2]+
+                Cs00       *G[0][i-1];
 
-		// Nach 1)
-		if (n>0)
-			for(i=1; i<=m; i++)
-	      G[1][i] = i*B00       *G[0][i-1]+
-  	            	C00         *G[0][i];
+    // Nach 1)
+    if (n>0)
+      for(i=1; i<=m; i++)
+        G[1][i] = i*B00       *G[0][i-1]+
+                  C00         *G[0][i];
 
-		// Nach 1)
-		for(i=2; i<=n; i++)
-			for(j=1; j<=m; j++)
-				G[i][j] = (i-1)*B10   *G[i-2][j]+
-		              j*B00       *G[i-1][j-1]+
-    		          C00         *G[i-1][j];
+    // Nach 1)
+    for(i=2; i<=n; i++)
+      for(j=1; j<=m; j++)
+        G[i][j] = (i-1)*B10   *G[i-2][j]+
+                  j*B00       *G[i-1][j-1]+
+                  C00         *G[i-1][j];
 
-		return G[n][m];
-	}	
+    return G[n][m];
+  }  
 
-	public double calcI(int ni, int nj, int nk, int nl, double u, 
-											double alphai, double alphaj, double alphak, double alphal,
-											double xi, double xj, double xk, double xl)
-	{
-		if (nj>0)
-			return 				 calcI(ni+1,nj-1,nk  ,nl  ,u,alphai,alphaj,alphak,alphal,xi,xj,xk,xl)+
-						 (xj-xi)*calcI(ni  ,nj-1,nk  ,nl  ,u,alphai,alphaj,alphak,alphal,xi,xj,xk,xl);
+  public double calcI(int ni, int nj, int nk, int nl, double u, 
+                      double alphai, double alphaj, double alphak, double alphal,
+                      double xi, double xj, double xk, double xl)
+  {
+    if (nj>0)
+      return          calcI(ni+1,nj-1,nk  ,nl  ,u,alphai,alphaj,alphak,alphal,xi,xj,xk,xl)+
+             (xj-xi)*calcI(ni  ,nj-1,nk  ,nl  ,u,alphai,alphaj,alphak,alphal,xi,xj,xk,xl);
 
-		if (nl>0)
-			return 				 calcI(ni  ,nj  ,nk+1,nl-1,u,alphai,alphaj,alphak,alphal,xi,xj,xk,xl)+
-						 (xl-xk)*calcI(ni  ,nj  ,nk  ,nl-1,u,alphai,alphaj,alphak,alphal,xi,xj,xk,xl);
+    if (nl>0)
+      return          calcI(ni  ,nj  ,nk+1,nl-1,u,alphai,alphaj,alphak,alphal,xi,xj,xk,xl)+
+             (xl-xk)*calcI(ni  ,nj  ,nk  ,nl-1,u,alphai,alphaj,alphak,alphal,xi,xj,xk,xl);
 
-		if ((ni==0) && (nj==0) && (nk==0) && (nl==0))
+    if ((ni==0) && (nj==0) && (nk==0) && (nl==0))
       return 1d;
 
-		if ((nj==0) && (nl==0))
-			return calcG(ni,nk,u,alphai,alphaj,alphak,alphal,xi,xj,xk,xl);
+    if ((nj==0) && (nl==0))
+      return calcG(ni,nk,u,alphai,alphaj,alphak,alphal,xi,xj,xk,xl);
 
-		System.out.println("Error(CalcI):Fehlerhafte Parameter ni="+ni+" nj="+nj+" nk="+nk+" nl="+nl);
-		return Double.NaN;
-	}
+    System.out.println("Error(CalcI):Fehlerhafte Parameter ni="+ni+" nj="+nj+" nk="+nk+" nl="+nl);
+    return Double.NaN;
+  }
 
-	public double calcI(int i, int j, int k, int l)
-	{
-		double f,t;
+  public double calcI(int i, int j, int k, int l)
+  {
+    double f,t;
     
     double sum1,sum2;
     double f1,f2;
@@ -580,28 +580,28 @@ public class GaussiansBasis implements Basis
     double h = 1d/steps;
     //double h2 = 2d*h;
 
-		double alphaij = alpha[i]+alpha[j];
-		double alphakl = alpha[k]+alpha[l];
+    double alphaij = alpha[i]+alpha[j];
+    double alphakl = alpha[k]+alpha[l];
 
     double rxij = (alpha[i]*r[i].vector[0]+alpha[j]*r[j].vector[0])/alphaij;
     double ryij = (alpha[i]*r[i].vector[1]+alpha[j]*r[j].vector[1])/alphaij;
     double rzij = (alpha[i]*r[i].vector[2]+alpha[j]*r[j].vector[2])/alphaij;
 
-		double rxkl = (alpha[k]*r[k].vector[0]+alpha[l]*r[l].vector[0])/alphakl;
+    double rxkl = (alpha[k]*r[k].vector[0]+alpha[l]*r[l].vector[0])/alphakl;
     double rykl = (alpha[k]*r[k].vector[1]+alpha[l]*r[l].vector[1])/alphakl;
     double rzkl = (alpha[k]*r[k].vector[2]+alpha[l]*r[l].vector[2])/alphakl;
 
-		double alpha0 = alphaij*alphakl/(alphaij+alphakl);
+    double alpha0 = alphaij*alphakl/(alphaij+alphakl);
 
     double X = alpha0*((rxij-rxkl)*(rxij-rxkl) +
                        (ryij-rykl)*(ryij-rzkl) +
                        (rzij-rzkl)*(rzij-rzkl));
     
     double C = (Math.PI*Math.PI*Math.PI/Math.pow((alpha[i]+alpha[j])*(alpha[k]+alpha[l]),1.5))*
-							 Math.sqrt(alpha0)*
-							 calcD(norm[i], norm[j], alpha[i], alpha[j], r[i], r[j])*
-							 calcD(norm[k], norm[l], alpha[k], alpha[l], r[k], r[l])*
-							 (2d/Math.sqrt(Math.PI));
+               Math.sqrt(alpha0)*
+               calcD(norm[i], norm[j], alpha[i], alpha[j], r[i], r[j])*
+               calcD(norm[k], norm[l], alpha[k], alpha[l], r[k], r[l])*
+               (2d/Math.sqrt(Math.PI));
 
     sum1 = 0;
     for(f = 1; f<steps; f=f+2)
@@ -616,7 +616,7 @@ public class GaussiansBasis implements Basis
 
     }
 
-		sum2 = 0;
+    sum2 = 0;
     for(f = 2; f<steps; f=f+2)
     {
       t = f*h;
@@ -645,11 +645,11 @@ public class GaussiansBasis implements Basis
                  r[i].vector[2], r[j].vector[2], r[k].vector[2], r[l].vector[2]);
 
     return C * (h/3)*(f1 + 4*sum1 + 2*sum2 + f2);
-	}
+  }
 
-	/*public static GaussiansBasis read(InputStream in, Molecule molecule) throws IOException
-	{
-		StreamTokenizer stok = new StreamTokenizer(in);
+  /*public static GaussiansBasis read(InputStream in, Molecule molecule) throws IOException
+  {
+    StreamTokenizer stok = new StreamTokenizer(in);
     stok.resetSyntax();
     stok.commentChar('!');
     stok.whitespaceChars(0, 32);
@@ -657,29 +657,29 @@ public class GaussiansBasis implements Basis
     stok.parseNumbers();
     stok.eolIsSignificant(true);
 
-		int count = (int) readValue(stok);
+    int count = (int) readValue(stok);
 
-		int[] n = new int[count];
+    int[] n = new int[count];
     int[] l = new int[count];
     int[] m = new int[count];
     double[] alpha = new double[count];
-		int[] atoms = new int[count];
+    int[] atoms = new int[count];
 
-		for(int i=0; i<count; i++)
-		{
-			n[i] = (int) readValue(stok);
-			l[i] = (int) readValue(stok);
-			m[i] = (int) readValue(stok);
-			alpha[i] = readValue(stok);
-			atoms[i] = (int)readValue(stok)-1;
-		}
+    for(int i=0; i<count; i++)
+    {
+      n[i] = (int) readValue(stok);
+      l[i] = (int) readValue(stok);
+      m[i] = (int) readValue(stok);
+      alpha[i] = readValue(stok);
+      atoms[i] = (int)readValue(stok)-1;
+    }
 
-		return new GaussiansBasis(n, l, m, alpha, atoms, molecule);
-	}
+    return new GaussiansBasis(n, l, m, alpha, atoms, molecule);
+  }
 
-	private static double readValue(StreamTokenizer stok) throws IOException
-	{
-		int type;
+  private static double readValue(StreamTokenizer stok) throws IOException
+  {
+    int type;
     do
     {
       type = stok.nextToken();
@@ -690,5 +690,5 @@ public class GaussiansBasis implements Basis
     
     stok.pushBack();
     return Double.NaN;
-	}*/
+  }*/
 }

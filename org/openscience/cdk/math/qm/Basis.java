@@ -33,23 +33,23 @@ import org.openscience.cdk.math.*;
  
 public interface Basis
 {
-	public int getSize();
+  public int getSize();
 
-	public double getMinX();
-	public double getMaxX();
-	public double getMinY();
+  public double getMinX();
+  public double getMaxX();
+  public double getMinY();
   public double getMaxY();
-	public double getMinZ();
+  public double getMinZ();
   public double getMaxZ();
 
-	public double getValue(int index, double x, double y, double z);
-	public Vector getValues(int index, Matrix x);
+  public double getValue(int index, double x, double y, double z);
+  public Vector getValues(int index, Matrix x);
 
-	public double calcS(int i, int j);
+  public double calcS(int i, int j);
 
-	public double calcJ(int i, int j);
+  public double calcJ(int i, int j);
 
-	public double calcV(int i, int j);
+  public double calcV(int i, int j);
 
-	public double calcI(int i, int j, int k, int l);
+  public double calcI(int i, int j, int k, int l);
 }
