@@ -116,13 +116,18 @@ public class PopupController2D extends Controller2D {
 	 *@return             The popupMenu value
 	 */
 	public CDKPopupMenu getPopupMenu(ChemObject chemObject) {
-		if (this.popupMenus.containsKey(chemObject.getClass().getName()))
-		{
-			return (CDKPopupMenu) this.popupMenus.get(chemObject.getClass().getName());
-		} else
-		{
-			return null;
+        Class classSearched = chemObject.getClass();
+        logger.debug("Searching popup for: ", classSearched.getName());
+        while (classSearched.getName().startsWith("org.openscience.cdk")) {
+            logger.debug("Searching popup for: ", classSearched.getName());
+            if (this.popupMenus.containsKey(classSearched.getName())) {
+                return (CDKPopupMenu) this.popupMenus.get(classSearched.getName());
+            } else {
+                logger.debug("  recursing into super class");
+                classSearched = classSearched.getSuperclass();
+            }
 		}
+        return null;
 	}
 
 	/**
