@@ -166,8 +166,9 @@ public class AtomTypeFactory {
             atom.setMaxBondOrderSum(at.getMaxBondOrderSum());
             atom.setVanderwaalsRadius(at.getVanderwaalsRadius());
             atom.setCovalentRadius(at.getCovalentRadius());
-            atom.setProperty("org.openscience.jmol.color",
-                             atom.getProperty("org.openscience.jmol.color"));
+            Object color = at.getProperty("org.openscience.jmol.color");
+            if (color != null)
+              atom.setProperty("org.openscience.jmol.color", color);
             if (at.getAtomicNumber() != 0) {
                 atom.setAtomicNumber(at.getAtomicNumber());
             } else {

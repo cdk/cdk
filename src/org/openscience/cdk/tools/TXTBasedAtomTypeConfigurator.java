@@ -103,10 +103,10 @@ public class TXTBasedAtomTypeConfigurator implements AtomTypeConfigurator {
                             mass = new Double(sam).doubleValue();
                             vdw = new Double(svdw).doubleValue();
                             covalent = new Double(scov).doubleValue();
-                            an = new Integer(san).intValue();
-                            rl = new Integer(sr).intValue();
-                            gl = new Integer(sg).intValue();
-                            bl = new Integer(sb).intValue();
+                            an = Integer.parseInt(san);
+                            rl = Integer.parseInt(sr);
+                            gl = Integer.parseInt(sg);
+                            bl = Integer.parseInt(sb);
                         } catch (NumberFormatException nfe) {
                             throw new IOException("AtomTypeTable.ReadAtypes: " +
                             "Malformed Number");
@@ -117,10 +117,9 @@ public class TXTBasedAtomTypeConfigurator implements AtomTypeConfigurator {
                         at.setExactMass(mass);
                         at.setVanderwaalsRadius(vdw);
                         at.setCovalentRadius(covalent);
-                        at.setProperty("org.openscience.jmol.color", new Color(rl, gl, bl));
-                        
+                        Color co = new Color(rl, gl, bl);
+                        at.setProperty("org.openscience.jmol.color", co);
                         atomTypes.addElement(at);
-                        
                     } else {
                         throw new IOException("AtomTypeTable.ReadAtypes: " + 
                         "Wrong Number of fields");
