@@ -284,11 +284,13 @@ public class CMLWriter implements ChemObjectWriter {
     }
     
     private void write(Bond bonds[]) {
-		write("  <bondArray>\n");
-		for (int i = 0; i < bonds.length; i++) {
-		    write(bonds[i]);
-		}
-		write("  </bondArray>\n");
+        if (bonds.length > 0) {
+            write("  <bondArray>\n");
+            for (int i = 0; i < bonds.length; i++) {
+                write(bonds[i]);
+            }
+            write("  </bondArray>\n");
+        }
     }
 
     private void writeAtomID(Atom atom) {
