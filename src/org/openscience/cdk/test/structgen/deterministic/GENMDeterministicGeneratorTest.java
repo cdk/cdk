@@ -43,6 +43,7 @@ import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.structgen.RandomGenerator;
 import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.smiles.SmilesParser;
 
 /**
  * @cdk.module test
@@ -80,7 +81,7 @@ public class GENMDeterministicGeneratorTest extends TestCase
 	{
 		try
 		{	
-			GENMDeterministicGenerator gdg = new GENMDeterministicGenerator("C6H6");
+			GENMDeterministicGenerator gdg = new GENMDeterministicGenerator("C8H10O1");
 			Vector structures=gdg.getStructures();
 			everythingOk(structures);
 		}
@@ -91,6 +92,72 @@ public class GENMDeterministicGeneratorTest extends TestCase
 	}
 
 
+	
+	
+	 /**  
+	  * For SMILES test
+	  */
+	public void testSMILES()
+	{
+		try
+		{	
+			GENMDeterministicGenerator gdg = new GENMDeterministicGenerator("C8H12");
+			Vector smiles=gdg.getSMILES();
+			//for(int i=0;i<smiles.size();i++)
+			//	System.out.println(smiles.get(i));
+			//everythingOk(structures);
+			displaySMILES(smiles);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+	
+	private boolean displaySMILES(Vector structures)
+	{
+		SmilesParser sp = new SmilesParser();
+		StructureDiagramGenerator sdg = null;
+		MoleculeViewer2D mv = null;
+		Molecule mol = null;
+		for (int f = 0; f<structures.size(); f++)
+		{
+		//	System.out.println(structures.get(f));
+			try
+			{
+				mol=sp.parseSmiles((String)(structures.get(f)));
+				sdg = new StructureDiagramGenerator();
+
+			//mol = (Molecule)structures.elementAt(f);
+			//System.out.println(mol.getAtomCount());
+			//System.out.println(mol.getBondCount());
+				sdg.setMolecule((Molecule)mol.clone());
+			//sdg.setMolecule(mol);
+			
+				sdg.generateCoordinates(new Vector2d(0,1));
+			}
+			catch(Exception exc)
+			{
+				exc.printStackTrace();
+				fail("*** Exit due to an unexpected error during coordinate generation ***");
+			}
+            if (standAlone) {
+                
+                mv = new MoleculeViewer2D();
+		mv.setAtomContainer(sdg.getMolecule());
+                //			Renderer2DModel r2dm = new Renderer2DModel();
+                //			r2dm.setDrawNumbers(true);
+                //			mv.setRenderer2DModel(r2dm);
+                moleculeListViewer.addStructure(mv, "Structure no. " + (f + 1));
+            }
+		}
+		return true;
+	}
+	
+	
+	
+	
 	private boolean everythingOk(Vector structures)
 	{
 		StructureDiagramGenerator sdg = null;
@@ -131,7 +198,8 @@ public class GENMDeterministicGeneratorTest extends TestCase
 	{
 		GENMDeterministicGeneratorTest test = new GENMDeterministicGeneratorTest();
 		test.setStandAlone(true);
-		test.testIt();
+		//test.testIt();
+		test.testSMILES();
 	}
 }
 
