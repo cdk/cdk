@@ -1,8 +1,6 @@
 #! /bin/sh -e
 
 PREFIX=@prefix@
-XERCESJAR=@PATHTOXERCES@
-LOGJAVA=@PATHTOLOGJAVA@
 RTJAR=@PATHTORTJAR@
 JAVA=@PATHTOJAVA@
 CDKLIBDIR=@CDKLIBDIR@
@@ -10,7 +8,7 @@ CDKJARDIR=@CDKJARDIR@
 
 JARLIBS=`ls -1 ${CDKLIBDIR}/*.jar | perl -ne "s/\n|\r/:/g; print;"`
 CDKLIBS=`ls -1 ${CDKJARDIR}/*.jar | perl -ne "s/\n|\r/:/g; print;"`
-CLASSPATH=${RTJAR}:${LOGJAVA}:${XERCESJAR}:${JARLIBS}:${CDKLIBS}
+CLASSPATH=${RTJAR}:${JARLIBS}:${CDKLIBS}
 
 # Collect -D options as java arguments
 command=${JAVA}
@@ -19,13 +17,13 @@ while [ `echo $1 | egrep '^-D' | wc -l` != 0 ]; do
         shift
 done
 
-junit_gui="-Dcdk.debugging=true junit.awtui.TestRunner"
+junit_gui="junit.awtui.TestRunner"
 while getopts t o; do
     case $o in
         t)
-            junit_gui="-Dcdk.debugging=false junit.textui.TestRunner"
+            junit_gui="junit.textui.TestRunner"
             ;;
     esac
 done
 
-${command} -cp ${CLASSPATH} ${junit_gui} $*
+${command} -Dcdk.debugging=true -cp ${CLASSPATH} ${junit_gui} $*

@@ -1,5 +1,5 @@
 
-PREFIX="@prefix@"
+PREFIX=@prefix@
 
 SUBDIRS=jar doc bin man
 
@@ -21,13 +21,13 @@ CLEANFILES=cdk-core.jar cdk-extra.jar \
         dist/jar/cdk-test.jar
 
 dist/jar/cdk-core.jar:
-	ant dist-core
+	ant -Dbuild.compiler=jikes dist-core
 
 cdk-test.jar: dist/jar/cdk-test.jar
 	cp dist/jar/cdk-test.jar .
 
 dist/jar/cdk-test.jar:
-	ant dist-test
+	ant -Dbuild.compiler=jikes dist-test
 
 cdk-core.jar: dist/jar/cdk-core.jar
 	cp dist/jar/cdk-core.jar .
