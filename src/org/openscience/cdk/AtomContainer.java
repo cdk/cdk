@@ -631,15 +631,15 @@ public class AtomContainer extends ChemObject implements Cloneable
      *
      * @keyword adjecency matrix
      */
-    public int[][] getAdjecencyMatrix() {
+    public int[][] getAdjecencyMatrix() throws org.openscience.cdk.exception.NoSuchAtomException {
         Bond bond = null;
         int i;
         int j;
         int[][] conMat = new int[getAtomCount()][getAtomCount()];
         for (int f = 0; f < getBondCount(); f++) {
             bond = getBondAt(f);
-            i = bond.getAtomAt(0);
-            j = bond.getAtomAt(1);
+            i = getAtomNumber(bond.getAtomAt(0));
+            j = getAtomNumber(bond.getAtomAt(1));
             conMat[i][j] = 1;
             conMat[j][i] = 1;
         }
