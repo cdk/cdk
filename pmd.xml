@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<project name="CDK" default="pmd" basedir=".">
+
+    <property name="lib" value="jar" />
+    <property name="build" value="build" />
+    <property name="src" value="src" />
+    <property name="reports.tests" value="reports" />
+    
+    <path id="pmd.classpath">
+        <pathelement location="${build}"/>
+        <fileset dir="${lib}">
+            <include name="jaxen-core-1.0-fcs.jar"/>
+            <include name="pmd-1.5.jar"/>
+            <include name="saxpath-1.0-fcs.jar"/>
+        </fileset>
+    </path>
+
+    <taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask" 
+                        classpathref="pmd.classpath"/>
+
+    <target name="pmd" depends="pmd-core, pmd-standard, pmd-io, pmd-extra, pmd-render"/>
+    
+    <target name="pmd-core">
+        <mkdir dir="${reports.tests}/pmd"/>
+        <pmd rulesetfiles="rulesets/basic.xml, rulesets/naming.xml, rulesets/unusedcode.xml, rulesets/imports.xml, rulesets/strings.xml, rulesets/codesize.xml">
+            <formatter type="net.sourceforge.pmd.renderers.HTMLRenderer" 
+                     toFile="${reports.tests}/pmd/core.html"/>
+            <fileset dir="${src}">
+                <includesfile name="${src}/core.javafiles"/>
+            </fileset>
+        </pmd>
+    </target>
+
+    <target name="pmd-standard">
+        <mkdir dir="${reports.tests}/pmd"/>
+        <pmd rulesetfiles="rulesets/basic.xml, rulesets/naming.xml, rulesets/unusedcode.xml, rulesets/imports.xml, rulesets/strings.xml, rulesets/codesize.xml">
+            <formatter type="net.sourceforge.pmd.renderers.HTMLRenderer" 
+                     toFile="${reports.tests}/pmd/core.html"/>
+            <fileset dir="${src}">
+                <includesfile name="${src}/standard.javafiles"/>
+            </fileset>
+        </pmd>
+    </target>
+
+    <target name="pmd-io">
+        <mkdir dir="${reports.tests}/pmd"/>
+        <pmd rulesetfiles="rulesets/basic.xml, rulesets/naming.xml, rulesets/unusedcode.xml, rulesets/imports.xml, rulesets/strings.xml, rulesets/codesize.xml">
+            <formatter type="net.sourceforge.pmd.renderers.HTMLRenderer" 
+                     toFile="${reports.tests}/pmd/core.html"/>
+            <fileset dir="${src}">
+                <includesfile name="${src}/io.javafiles"/>
+            </fileset>
+        </pmd>
+    </target>
+
+    <target name="pmd-render">
+        <mkdir dir="${reports.tests}/pmd"/>
+        <pmd rulesetfiles="rulesets/basic.xml, rulesets/naming.xml, rulesets/unusedcode.xml, rulesets/imports.xml, rulesets/strings.xml, rulesets/codesize.xml">
+            <formatter type="net.sourceforge.pmd.renderers.HTMLRenderer" 
+                     toFile="${reports.tests}/pmd/core.html"/>
+            <fileset dir="${src}">
+                <includesfile name="${src}/render.javafiles"/>
+            </fileset>
+        </pmd>
+    </target>
+
+    <target name="pmd-extra">
+        <mkdir dir="${reports.tests}/pmd"/>
+        <pmd rulesetfiles="rulesets/basic.xml, rulesets/naming.xml, rulesets/unusedcode.xml, rulesets/imports.xml, rulesets/strings.xml, rulesets/codesize.xml">
+            <formatter type="net.sourceforge.pmd.renderers.HTMLRenderer" 
+                     toFile="${reports.tests}/pmd/core.html"/>
+            <fileset dir="${src}">
+                <includesfile name="${src}/extra.javafiles"/>
+            </fileset>
+        </pmd>
+    </target>
+
+</project>
