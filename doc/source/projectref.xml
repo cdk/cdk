@@ -315,6 +315,73 @@
 	 </para>
 </section>
 <section>
+  <title>Introduction from the handling of orbitals</title>
+  <section>
+    <title>Basics</title>
+    <para>
+      A orbtial were handled through a vector and a basis set. The
+      elements were the coefficients for the basis set. A example
+      for a basis set are the gauss functions
+    </para>
+    <para>
+      basis_i(x,y,z) = C_i * (x_i - x)^nx_i *  (y_i - y)^ny_i * (z_i - z)^nz_i *
+      exp(-alpha * (x_i - x)^2 * (y_i - y)^2 * (z_i - z)^2)
+      r_i = [x_i , y_i , z_i]
+    </para>
+    <para>
+      The class GaussiansBasis will used to calculates the basis. For 
+      example, we want construct a px, py and a pz-Orbital. The coefficient
+      for the basis are nx=[1,0,0], ny=[0,1,0], nz=[0,0,1]. Was the position
+      of these orbitals at the center of an atom, were x_i,y_i,z_i the
+      coordinates of the atom.
+    </para>
+    <programlisting>
+      int[] nx = new int[3]{1,0,0};
+      int[] ny = new int[3]{0,1,0};
+      int[] ny = new int[3]{0,0,1};
+      double[] alpha = new double[3]{1d,1d,1d};
+      Vector[] r = new Vector[3]{new Vector(atom.getPoint3D())
+                                 new Vector(atom.getPoint3D())
+                                 new Vector(atom.getPoint3D())};
+      Atom[] atoms = new Atom[]{atom};
+
+      GaussiansBasis basis = new GaussiansBasis(nx,ny,nz,alpha,r,atoms);
+    </programlisting>
+    <para>
+      For the declaration of the orbials we need the coefficients for the
+      basis. The px Orbital got the vector O_1=[1,0,0], the py Orbital O_2=[0,1,0]
+      and the pz orbital O_3=[0,0,1]
+    </para>
+    <para>
+      f_i(x,y,z) = O_i * basis_i
+    </para>
+    <para>
+      The class orbitals used to store the coefficients. The class stores the
+      coefficients in a matrix. Each column are a orbital.
+    </para>
+    <programlisting>
+      Matrix coeff = new Matrix(new double[][]
+        {
+          {1d, 0d, 0d},
+          {0d, 1d, 0d},
+          {0d, 0d, 1d}
+        });
+      Orbitals orbitals = new Orbitals(basis, coeff);
+    </programlisting>
+    <para>
+      To render the orbitals we could use the AcceleratedRenderer3D
+    </para>
+    <programlisting>
+      int currentorbital = 0;
+      AcceleratedRenderer3DModel model = new AcceleratedRenderer3DModel(orbitals, currentorbital);
+      AcceleratedRenderer3D renderer = new AcceleratedRenderer3D(model);
+    
+      frame.add(renderer, BorderLayout.CENTER);
+    </programlisting>
+  </section>
+</section>
+
+<section>
 <title>Unit Testing the CDK</title>
 <para>
 A word about testing in the CDK: 
