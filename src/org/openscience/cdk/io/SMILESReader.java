@@ -67,14 +67,14 @@ public class SMILESReader implements ChemObjectReader {
     public ChemObject read(ChemObject object) throws CDKException {
         if (object instanceof SetOfMolecules) {
             return (ChemObject)readSetOfMolecules();
-				} else if (object instanceof ChemFile) {
-					  ChemFile file = new ChemFile();
-						ChemSequence sequence = new ChemSequence();
-						ChemModel chemModel = new ChemModel();
-						chemModel.setSetOfMolecules(readSetOfMolecules());
-						sequence.addChemModel(chemModel);
-						file.addChemSequence(sequence);
-						return (ChemObject) file;
+        } else if (object instanceof ChemFile) {
+            ChemFile file = new ChemFile();
+            ChemSequence sequence = new ChemSequence();
+            ChemModel chemModel = new ChemModel();
+            chemModel.setSetOfMolecules(readSetOfMolecules());
+            sequence.addChemModel(chemModel);
+            file.addChemSequence(sequence);
+            return (ChemObject) file;
         } else {
             throw new CDKException("Only supported is reading of SetOfMolecules objects.");
         }
@@ -95,8 +95,8 @@ public class SMILESReader implements ChemObjectReader {
             while (line != null) {
                 //System.out.println(line);
                 try {
-                    Molecule m = sp.parseSmiles(line);
-                    som.addMolecule(m);
+                    Molecule molecule = sp.parseSmiles(line);
+                    som.addMolecule(molecule);
                 } catch (Exception e) {
                     // should make some noise now, but for now: just skip this line
                 }
