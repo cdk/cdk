@@ -51,6 +51,13 @@
               <entry>pending</entry>
               <entry></entry>
             </row>
+            <row>
+              <entry>3</entry>
+              <entry><ulink url="rfc3.html">Tests in org.openscience.cdk.test Use Same Directory Structure as Tested Classes</ulink></entry>
+              <entry>30-07-2002</entry>
+              <entry>pending</entry>
+              <entry></entry>
+            </row>
           </tbody>
         </tgroup>
       </informaltable>
