@@ -57,7 +57,8 @@ public class AtomPlacer
 	 *  Description of the Field
 	 */
 	public static boolean debug = true;
-	private static org.openscience.cdk.tools.LoggingTool logger;
+	private static org.openscience.cdk.tools.LoggingTool logger =
+  new org.openscience.cdk.tools.LoggingTool(AtomPlacer.class.getName());
 
 	/**
 	 *  The molecule to be laid out. To be assigned from outside
@@ -91,7 +92,6 @@ public class AtomPlacer
 	 */
 	public AtomPlacer()
 	{
-		logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName(), true);
 	}
 
 
@@ -348,8 +348,11 @@ public class AtomPlacer
 	 */
 	protected Vector2d getNextBondVector(Atom atom, Atom previousAtom, Point2d distanceMeasure)
 	{
-		logger.debug("Entering AtomPlacer.getNextBondVector()");
-		logger.debug("Arguments are atom: " + atom + ", previousAtom: " + previousAtom + ", distanceMeasure: " + distanceMeasure);
+    if (logger.isDebugEnabled())
+    {
+		  logger.debug("Entering AtomPlacer.getNextBondVector()");
+		  logger.debug("Arguments are atom: " + atom + ", previousAtom: " + previousAtom + ", distanceMeasure: " + distanceMeasure);
+    }  
 		double angle = GeometryTools.getAngle(previousAtom.getX2D() - atom.getX2D(), previousAtom.getY2D() - atom.getY2D());
 		double addAngle = Math.toRadians(120);
 		angle += addAngle;
@@ -415,7 +418,9 @@ public class AtomPlacer
 			newX = x + rotationCenter.x;
 			newY = y + rotationCenter.y;
 			points.addElement(new Point2d(newX, newY));
-			try
+			
+      if (logger.isDebugEnabled())
+      try
 			{
 				logger.debug("populatePolygonCorners->connectAtom: " + (molecule.getAtomNumber(connectAtom) + 1) + " placed at " + connectAtom.getPoint2D());
 			} catch (Exception exc)
