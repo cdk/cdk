@@ -166,8 +166,8 @@ public class RSSHandler extends DefaultHandler {
                 model.setProperty(ChemicalRSSReader.RSS_ITEM_TITLE, objectTitle);
                 model.setProperty(ChemicalRSSReader.RSS_ITEM_DATE, objectDate);
                 model.setProperty(ChemicalRSSReader.RSS_ITEM_LINK, objectLink);
-                model.setProperty(ChemicalRSSReader.RSS_ITEM_DESCRIPTION, objectDesc);                    
-                model.setProperty(ChemicalRSSReader.RSS_ITEM_CREATOR, dcCreator);                    
+                if (objectDesc != null) model.setProperty(ChemicalRSSReader.RSS_ITEM_DESCRIPTION, objectDesc);
+                model.setProperty(ChemicalRSSReader.RSS_ITEM_CREATOR, dcCreator);
                 channelSequence.addChemModel(model);
                 cmlString = "";
             } else if (local.equals("title")) {
