@@ -34,8 +34,8 @@ import java.math.BigInteger;
  * }
  * </pre></code>
  *
- * @author     Michael Gilleland, Merriam Park Software
- * @created    04 February 2004
+ * @author       Michael Gilleland, Merriam Park Software
+ * @cdk.created  04 February 2004
  */
 public class PermutationGenerator {
 

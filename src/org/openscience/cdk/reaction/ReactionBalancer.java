@@ -53,8 +53,8 @@ import java.util.*;
  *
  * @author        Kai Hartmann
  * @author        Bart Geurten
- * @created       2004-02-20
- * @cdkPackage    experimental
+ * @cdk.created   2004-02-20
+ * @cdk.module    experimental
  */
 public class ReactionBalancer {
 
