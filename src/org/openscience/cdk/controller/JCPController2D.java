@@ -231,25 +231,7 @@ public class JCPController2D {
             
             if (event.isPopupTrigger() || event.getButton() == MouseEvent.BUTTON3) {
                 logger.info("Popup menu triggered...");
-                
-                Atom atomInRange = getAtomInRange(mouseX, mouseY);
-                Bond bondInRange = getBondInRange(mouseX, mouseY);
-                if (atomInRange != null) {
-                    JPopupMenu atomPopup = getPopupMenu(atomInRange);
-                    if (atomPopup != null ) {
-                        atomPopup.show(event.getComponent(), event.getX(), event.getY());
-                    }
-                } else if (bondInRange != null) {
-                    JPopupMenu bondPopup = getPopupMenu(bondInRange);
-                    if (bondPopup != null ) {
-                        bondPopup.show(event.getComponent(), event.getX(), event.getY());
-                    }
-                } else {
-                    JPopupMenu modelPopup = getPopupMenu(chemModel);
-                    if (modelPopup != null ) {
-                        modelPopup.show(event.getComponent(), event.getX(), event.getY());
-                    }
-                }
+                popupMenuForNearestChemObject(mouseX, mouseY, event);
             } else {
                 Atom atomInRange;
                 int startX = 0, startY = 0;
@@ -265,39 +247,7 @@ public class JCPController2D {
                 }
                 
                 if (c2dm.getDrawMode() == c2dm.MOVE) {
-                    AtomContainer container = r2dm.getSelectedPart();
-                    if (container == null || (container.getAtomCount() == 0)) {
-                        // if no atoms are selected, then temporarily select nearest
-                        // to make sure to original state is reached again when the
-                        // mouse is released, the draggingSelected boolean is set
-                        logger.warn("No atoms selected: temporarily selecting nearest atom/bond");
-                        draggingSelected = false;
-                        AtomContainer selected = new AtomContainer();
-                        if (atomInRange != null) {
-                            selected.addAtom(atomInRange);
-                            r2dm.setSelectedPart(selected);
-                        } else {
-                            Bond bondInRange = getBondInRange(mouseX, mouseY);
-                            // because only atoms are dragged, select the atoms
-                            // in the bond, instead of the bond itself
-                            if (bondInRange != null) {
-                                Atom[] atoms = bondInRange.getAtoms();
-                                for (int i=0; i<atoms.length; i++) {
-                                    selected.addAtom(atoms[i]);
-                                }
-                                r2dm.setSelectedPart(selected);
-                            }
-                        }
-                        logger.debug("Selected: " + selected.toString());
-		    /* PRESERVE THIS. This notifies the 
-		     * the listener responsible for 
-		     * undo and redo storage that it
-		     * should not store this change
-		     */
-		    isUndoableChange = false;
-		    /* --- */
-                        fireChange();
-                    }
+                    selectNearestChemObjectIfNoneSelected(mouseX, mouseY);
                 }
             }
         }
@@ -1167,4 +1117,61 @@ public class JCPController2D {
             }
         }
     }
+    
+    private void popupMenuForNearestChemObject(int mouseX, int mouseY, MouseEvent event) {
+        Atom atomInRange = getAtomInRange(mouseX, mouseY);
+        Bond bondInRange = getBondInRange(mouseX, mouseY);
+        if (atomInRange != null) {
+            JPopupMenu atomPopup = getPopupMenu(atomInRange);
+            if (atomPopup != null ) {
+                atomPopup.show(event.getComponent(), event.getX(), event.getY());
+            }
+        } else if (bondInRange != null) {
+            JPopupMenu bondPopup = getPopupMenu(bondInRange);
+            if (bondPopup != null ) {
+                bondPopup.show(event.getComponent(), event.getX(), event.getY());
+            }
+        } else {
+            JPopupMenu modelPopup = getPopupMenu(chemModel);
+            if (modelPopup != null ) {
+                modelPopup.show(event.getComponent(), event.getX(), event.getY());
+            }
+        }
+    }
+    
+    private void selectNearestChemObjectIfNoneSelected(int mouseX, int mouseY) {
+        AtomContainer container = r2dm.getSelectedPart();
+        if (container == null || (container.getAtomCount() == 0)) {
+            // if no atoms are selected, then temporarily select nearest
+            // to make sure to original state is reached again when the
+            // mouse is released, the draggingSelected boolean is set
+            logger.warn("No atoms selected: temporarily selecting nearest atom/bond");
+            draggingSelected = false;
+            AtomContainer selected = new AtomContainer();
+            if (atomInRange != null) {
+                selected.addAtom(atomInRange);
+                r2dm.setSelectedPart(selected);
+            } else {
+                Bond bondInRange = getBondInRange(mouseX, mouseY);
+                // because only atoms are dragged, select the atoms
+                // in the bond, instead of the bond itself
+                if (bondInRange != null) {
+                    Atom[] atoms = bondInRange.getAtoms();
+                    for (int i=0; i<atoms.length; i++) {
+                        selected.addAtom(atoms[i]);
+                    }
+                    r2dm.setSelectedPart(selected);
+                }
+            }
+            logger.debug("Selected: " + selected.toString());
+            /* PRESERVE THIS. This notifies the 
+            * the listener responsible for 
+            * undo and redo storage that it
+            * should not store this change
+            */
+            isUndoableChange = false;
+            /* --- */
+            fireChange();
+        }
+    }    
 }
