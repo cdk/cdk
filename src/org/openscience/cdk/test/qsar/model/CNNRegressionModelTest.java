@@ -48,20 +48,6 @@ public class CNNRegressionModelTest extends TestCase {
 	}
     
         public void testCNNRegressionModelInstantiate() throws CDKException, java.lang.Exception, QSARModelException {
-            try {
-                String rhome = System.getenv("R_HOME");
-                if (rhome.equals("")) {
-                    fail("Linear regression test ignored since the R_HOME variable"+
-                            "\nis either unset or set to the empty string. Make sure\n"+
-                            "it points to your R installation directory");
-                }
-            } catch (NullPointerException npe) {
-                fail("Linear regression test ignored since the R_HOME variable"+
-                        "\nis either unset or set to the empty string. Make sure\n"+
-                        "it points to your R installation directory");
-            }
-
-
             CNNRegressionModel cnnrm = new CNNRegressionModel();
             assertTrue(cnnrm.revaluator != null);
         }

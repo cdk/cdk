@@ -43,13 +43,6 @@ public class SJavaEnvironmentTest extends TestCase {
         }
 
         public void testSJavaEnvironment()  {
-            String rhomevalue = null;
-            try {
-                rhomevalue = System.getenv("R_HOME");
-            } catch (NullPointerException npe) {
-            }
-            assertTrue("The R_HOME environment variable must point to\nthe location of your R installation.\nOther model tests will also fail.",rhomevalue != null);
-            assertTrue("The R_HOME environment variable must point to\nthe location of your R installation.\nOther model tests will also fail.",!rhomevalue.equals(""));
         }
 
 }

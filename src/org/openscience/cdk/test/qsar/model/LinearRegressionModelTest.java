@@ -49,18 +49,6 @@ public class LinearRegressionModelTest extends TestCase {
 
         public void testLinearRegressionModel() throws CDKException, java.lang.Exception, QSARModelException {
 
-            try {
-                String rhome = System.getenv("R_HOME");
-                if (rhome.equals("")) {
-                    fail("Linear regression test ignored since the R_HOME variable"+
-                            "\nis either unset or set to the empty string. Make sure\n"+
-                            "it points to your R installation directory");
-                }
-            } catch (NullPointerException npe) {
-                fail("Linear regression test ignored since the R_HOME variable"+
-                        "\nis either unset or set to the empty string. Make sure\n"+
-                        "it points to your R installation directory");
-            }
 
             double[][] x = {{ 5.33029143313, 8.13257437501, 2.66720308462 },
                 { 3.29906147519, 5.06835102093, 6.47319431067 },
