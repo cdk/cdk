@@ -38,6 +38,7 @@ Fixes:
 * Fixed showing ElectronContainers in the cdk.apps.swing.ChemObectTree
 * The IteratingMDLReader can now also read MDL molfiles with only one
   molecule (closes #1172425)
+* Fixed output of CML2 for reactions with IDs
 
 API changes:
 * Moved IsotopeFactory from cdk-standard to the cdk-core module

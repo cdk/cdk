@@ -66,7 +66,7 @@ import org.openscience.cdk.tools.*;
 
 /**
  * Class that provides convertor procedures to
- * convert CDK classes to CMLDOM 4.x classes/documents.
+ * convert CDK classes to CMLDOM 4.6 classes/documents.
  *
  * <p>
  * <table>
@@ -157,7 +157,7 @@ public class Convertor {
         if (object instanceof SetOfMolecules) {
             writeSetOfMolecules((SetOfMolecules)object, element);
         } else if (object instanceof Molecule) {
-            writeMolecule((Molecule)object, element);
+            writeWrappedMolecule((Molecule)object, element);
         } else if (object instanceof AtomContainer) {
             writeWrappedAtomContainer((AtomContainer)object, element);
         } else if (object instanceof Crystal) {
@@ -342,6 +342,10 @@ public class Convertor {
     
     private void writeReaction(Reaction reaction, Element nodeToAppend) throws CMLException{
         logger.debug("Writing Reaction...");
+        // create CML atom and bond ids
+        if (useCmlIdentifiers) {
+            new IDCreator().createIDs(reaction);
+        }
         ReactionImpl reactionimpl=new ReactionImpl(doc);
         namespace="http://www.xml-cml.org/schema/cml2/react";
         nodeToAppend.appendChild(reactionimpl);
@@ -390,7 +394,7 @@ public class Convertor {
         return false;
     }
 
-    private void writeMolecule(Molecule mol, Element nodeToAppend) throws CMLException{
+    private void writeWrappedMolecule(Molecule mol, Element nodeToAppend) throws CMLException{
         logger.debug("Writing molecule");
         // create CML atom and bond ids
         if (useCmlIdentifiers) {
@@ -400,7 +404,11 @@ public class Convertor {
         addID(mol, molecule);
         addTitle(mol, molecule);
         nodeToAppend.appendChild(molecule);
-        writeAtomContainer(mol,molecule);
+        writeMolecule(mol, molecule);
+    }
+        
+    private void writeMolecule(Molecule mol, Element nodeToAppend) throws CMLException{
+        writeAtomContainer(mol,nodeToAppend);
     }
 
     private void writeAtomArray(AtomContainer container, Atom atoms[], Element nodeToAppend) throws CMLException {
