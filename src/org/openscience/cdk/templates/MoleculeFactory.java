@@ -653,6 +653,30 @@ public class MoleculeFactory {
 		return mol;
 	}
 	
+		public static Molecule makeQuinone()
+	{
+		Molecule mol = new Molecule();
+		mol.addAtom(new Atom("O")); // 0
+		mol.addAtom(new Atom("C")); // 1
+		mol.addAtom(new Atom("C")); // 2
+		mol.addAtom(new Atom("C")); // 3
+		mol.addAtom(new Atom("C")); // 4
+		mol.addAtom(new Atom("C")); // 5
+		mol.addAtom(new Atom("C")); // 6
+		mol.addAtom(new Atom("O")); // 7
+		
+		mol.addBond(0, 1, 2.0); // 1
+		mol.addBond(1, 2, 1.0); // 2
+		mol.addBond(2, 3, 2.0); // 3
+		mol.addBond(3, 4, 1.0); // 4
+		mol.addBond(4, 5, 1.0); // 5
+		mol.addBond(5, 6, 2.0); // 6
+		mol.addBond(6, 1, 1.0); // 7
+		mol.addBond(4, 7, 2.0); // 8
+		return mol;
+	}
+	
+	
 	
 	public static Molecule loadMolecule(String inFile)
 	{
