@@ -19,6 +19,7 @@ New:
 * CMLReader reads dictRef of <atom> and <bond>
 * Core CDK classes are now serializable
 * Added Manipulator classes that relay methods to 'lower' classes
+* Added classes for chemical semantic validation
 
 Changes:
 * Added one-click (not-patented ;) deselect of atoms in lasso mode
