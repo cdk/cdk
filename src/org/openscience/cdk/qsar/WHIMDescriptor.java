@@ -1,0 +1,452 @@
+/*
+ *  Copyright (C) 2004  The Chemistry Development Kit (CDK) project
+ *
+ *  Contact: cdk-devel@lists.sourceforge.net
+ *
+ *  This program is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public License
+ *  as published by the Free Software Foundation; either version 2.1
+ *  of the License, or (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+package org.openscience.cdk.qsar;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.HydrogenAdder;
+import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
+import org.openscience.cdk.charges.Polarizability;
+import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+
+import java.lang.Math;
+import java.util.Vector;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.Hashtable;
+
+import Jama.Matrix;
+import Jama.EigenvalueDecomposition;
+
+
+
+/**
+ * Holistic descriptors described by Todeschini et al. ({@cdk.cite TOD98}) 
+ * The descriptors are based on a number of atom weightings. There are 6 different
+ * possible weightings:
+ * <ol>
+ * <li>unit weights
+ * <li>atomic masses
+ * <li>van der Waals volumes
+ * <li>Mulliken atomic electronegativites
+ * <li>atomic polarizabilities
+ * <li>E-state values described by Kier &amp; Hall
+ * </ol>
+ * Currently weighting schemes 1,2,3,4 &amp; 5 are implemented. The weight values
+ * are taken from {@cdk.cite TOD98} and as a result 19 elements are considered.
+ * For each weighting scheme we can obtain 
+ * <ul>
+ * <li>11 directional WHIM descriptors (&lambda;<sub>1 .. 3</sub>, &nu;<sub>1 .. 2</sub>, &gamma;<sub>1 .. 3</sub>,  &eta;<sub>1 .. 3</sub>)
+ * <li>6 non-directional WHIM descriptors (T, A, V, K, G, D)
+ * </ul>
+ * Though {@cdk.cite TOD98} mentions that for planar molecules only 8 directional WHIM
+ * descriptors are required the current code will return all 11.
+ * 
+ * @todo        Fix up the &gamm; descriptors
+ * 
+ * @author      Rajarshi Guha
+ * @created     2004-12-1
+ * 
+ * @cdk.builddepends Jama-1.0.1.jar
+ * @cdk.depends Jama-1.0.1.jar
+ *
+ * @cdk.module qsar
+ */
+public class WHIMDescriptor implements Descriptor {
+
+    String type = "";
+    Hashtable hashatwt,hashvdw,hasheneg,hashpol;
+    
+    public WHIMDescriptor() {
+        this.type = "unity"; // default weighting scheme
+
+        // set up the values from TOD98
+
+        this.hashatwt = new Hashtable();
+        this.hashvdw = new Hashtable();
+        this.hasheneg = new Hashtable();
+        this.hashpol = new Hashtable();
+
+        this.hashatwt.put("H", new Double(0.084));
+        this.hashatwt.put("B", new Double(0.900));
+        this.hashatwt.put("C", new Double(1.000));
+        this.hashatwt.put("N", new Double(1.166));
+        this.hashatwt.put("O", new Double(1.332));
+        this.hashatwt.put("F", new Double(1.582));
+        this.hashatwt.put("Al", new Double(2.246));
+        this.hashatwt.put("Si", new Double(2.339));
+        this.hashatwt.put("P", new Double(2.579));
+        this.hashatwt.put("S", new Double(2.670));
+        this.hashatwt.put("Cl", new Double(2.952));
+        this.hashatwt.put("Fe", new Double(4.650));
+        this.hashatwt.put("Co", new Double(4.907));
+        this.hashatwt.put("Ni", new Double(4.887));
+        this.hashatwt.put("Cu", new Double(5.291));
+        this.hashatwt.put("Zn", new Double(5.445));
+        this.hashatwt.put("Br", new Double(6.653));
+        this.hashatwt.put("Sn", new Double(9.884));
+        this.hashatwt.put("I", new Double(10.566));
+
+        this.hashvdw.put("H", new Double(0.299));
+        this.hashvdw.put("B", new Double(0.796));
+        this.hashvdw.put("C", new Double(1.000));
+        this.hashvdw.put("N", new Double(0.695));
+        this.hashvdw.put("O", new Double(0.512));
+        this.hashvdw.put("F", new Double(0.410));
+        this.hashvdw.put("Al", new Double(1.626));
+        this.hashvdw.put("Si", new Double(1.424));
+        this.hashvdw.put("P", new Double(1.181));
+        this.hashvdw.put("S", new Double(1.088));
+        this.hashvdw.put("Cl", new Double(1.035));
+        this.hashvdw.put("Fe", new Double(1.829));
+        this.hashvdw.put("Co", new Double(1.561));
+        this.hashvdw.put("Ni", new Double(0.764));
+        this.hashvdw.put("Cu", new Double(0.512));
+        this.hashvdw.put("Zn", new Double(1.708));
+        this.hashvdw.put("Br", new Double(1.384));
+        this.hashvdw.put("Sn", new Double(2.042));
+        this.hashvdw.put("I", new Double(1.728));
+
+        this.hasheneg.put("H", new Double(0.944));
+        this.hasheneg.put("B", new Double(0.828));
+        this.hasheneg.put("C", new Double(1.000));
+        this.hasheneg.put("N", new Double(1.163));
+        this.hasheneg.put("O", new Double(1.331));
+        this.hasheneg.put("F", new Double(1.457));
+        this.hasheneg.put("Al", new Double(0.624));
+        this.hasheneg.put("Si", new Double(0.779));
+        this.hasheneg.put("P", new Double(0.916));
+        this.hasheneg.put("S", new Double(1.077));
+        this.hasheneg.put("Cl", new Double(1.265));
+        this.hasheneg.put("Fe", new Double(0.728));
+        this.hasheneg.put("Co", new Double(0.728));
+        this.hasheneg.put("Ni", new Double(0.728));
+        this.hasheneg.put("Cu", new Double(0.740));
+        this.hasheneg.put("Zn", new Double(0.810));
+        this.hasheneg.put("Br", new Double(1.172));
+        this.hasheneg.put("Sn", new Double(0.837));
+        this.hasheneg.put("I", new Double(1.012));
+
+        this.hashpol.put("H", new Double(0.379));
+        this.hashpol.put("B", new Double(1.722));
+        this.hashpol.put("C", new Double(1.000));
+        this.hashpol.put("N", new Double(0.625));
+        this.hashpol.put("O", new Double(0.456));
+        this.hashpol.put("F", new Double(0.316));
+        this.hashpol.put("Al", new Double(3.864));
+        this.hashpol.put("Si", new Double(3.057));
+        this.hashpol.put("P", new Double(2.063));
+        this.hashpol.put("S", new Double(1.648));
+        this.hashpol.put("Cl", new Double(1.239));
+        this.hashpol.put("Fe", new Double(4.773));
+        this.hashpol.put("Co", new Double(4.261));
+        this.hashpol.put("Ni", new Double(3.864));
+        this.hashpol.put("Cu", new Double(3.466));
+        this.hashpol.put("Zn", new Double(4.034));
+        this.hashpol.put("Br", new Double(1.733));
+        this.hashpol.put("Sn", new Double(4.375));
+        this.hashpol.put("I", new Double(3.040));
+    }
+
+    public Map getSpecification() {
+        Hashtable specs = new Hashtable();
+        specs.put("Specification-Reference", "http://qsar.sourceforge.net/dicts/qsar-descriptors:WHIM");
+        specs.put("Implementation-Title", this.getClass().getName());
+        specs.put("Implementation-Identifier", "$Id$"); // added by CVS
+        specs.put("Implementation-Vendor", "The Chemistry Development Kit");
+        return specs;
+    };
+
+    /**
+     *  Sets the parameters attribute of the WHIMDescriptor object
+     *
+     *@param  params            The new parameter values. The Object array should have a single element
+     *                          which should be a String. The possible values of this String are: unity,
+     *                          mass, volume, eneg, polar
+     *@exception  CDKException  Description of the Exception
+     */
+    public void setParameters(Object[] params) throws CDKException {
+        if (params.length != 1) {
+            throw new CDKException("BCUTDescriptor requires 1 parameter");
+        }
+        if (!(params[0] instanceof String)) {
+            throw new CDKException("Parameters must be of type String");
+        }
+        this.type = (String)params[0];
+        if (!this.type.equals("unity") && 
+                !this.type.equals("mass") && 
+                !this.type.equals("volume") && 
+                !this.type.equals("eneg") && 
+                !this.type.equals("polar")) 
+            throw new CDKException("Weighting scheme must be one of those specified in the API");
+    }
+
+    /**
+     *  Gets the parameters attribute of the WHIMDescriptor object
+     *
+     *@return    Two element array of Integer representing number of highest and lowest eigenvalues
+     *           to return respectively
+     */
+    public Object[] getParameters() {
+        Object[] o =new Object[1];
+        o[0] = new String(this.type);
+        return(o);
+    }
+    /**
+     *  Gets the parameterNames attribute of the WHIMDescriptor object
+     *
+     *@return    The parameterNames value
+     */
+    public String[] getParameterNames() {
+       String[] pname = new String[1];
+       pname[0] = "type";
+       return(pname);
+    }
+
+
+    /**
+     *  Gets the parameterType attribute of the WHIMDescriptor object
+     *
+     *@param  name  Description of the Parameter 
+     *@return       The parameterType value
+     */
+    public Object getParameterType(String name) {
+        Object o = new String();
+        return(o);
+    }
+
+
+   /**
+     *  Calculates 11 directional and 6 non-directional WHIM descriptors for 
+     *  the specified weighting scheme
+     *
+     *@param  container  Parameter is the atom container.
+     *@return            An ArrayList containing the descriptors in the order described above. 
+     */
+    public Object calculate(AtomContainer container) throws CDKException {
+        double sum = 0.0;
+        Molecule ac = new Molecule(container);
+
+        // do aromaticity detecttion for calculating polarizability later on
+        //HueckelAromaticityDetector had = new HueckelAromaticityDetector();
+        //had.detectAromaticity(ac);
+
+        // get the coordinate matrix
+        double[][] cmat = new double[ac.getAtomCount()][3];
+        for (int i = 0; i < ac.getAtomCount(); i++) {
+            cmat[i][0] = ac.getAtomAt(i).getX3d();
+            cmat[i][1] = ac.getAtomAt(i).getY3d();
+            cmat[i][2] = ac.getAtomAt(i).getZ3d();
+        }
+
+        // set up the weight vector
+        Hashtable hash = null;
+        double[] wt = new double[ac.getAtomCount()];
+        
+        if (this.type.equals("unity")) {
+            for (int i = 0; i < ac.getAtomCount(); i++) wt[i] = 1.0;
+        } else {
+            if (this.type.equals("mass")) { 
+                hash = this.hashatwt;
+            } else if (this.type.equals("volume")) {
+                hash = this.hashvdw;
+            } else if (this.type.equals("eneg")) {
+                hash = this.hasheneg;
+            } else if (this.type.equals("polar")) {
+                hash = this.hashpol;
+            }
+            for (int i = 0; i < ac.getAtomCount(); i++) {
+                String sym = ac.getAtomAt(i).getSymbol();
+                wt[i] =  ((Double)hash.get(sym)).doubleValue();
+            }
+        }
+
+        PCA pcaobject = null;
+        try {
+            pcaobject = new PCA(cmat,wt);
+        } catch (CDKException cdke) {
+        }
+
+        // directional WHIM's
+        double[] lambda = pcaobject.getEigenvalues();
+        double[] gamma = new double[3];
+        double[] nu = new double[3];
+        double[] eta = new double[3];
+
+        for (int i = 0; i < 3; i++) sum += lambda[i];
+        for (int i = 0; i < 3; i++) nu[i] = lambda[i] / sum;
+
+        double[][] scores = pcaobject.getScores();
+        for (int i = 0; i < 3; i++) {
+            sum = 0.0;
+            for (int j = 0; j < ac.getAtomCount(); j++) 
+                sum += scores[j][i] * scores[j][i] * scores[j][i] * scores[j][i];
+            sum = sum / (lambda[i]*lambda[i]*ac.getAtomCount());
+            eta[i] = 1.0 / sum;
+        }
+
+        // look for symmetric & asymmetric atoms for the gamma descriptor
+        for (int i = 0; i < 3; i++) {
+            double ns = 0.0; double na = 0.0;
+            for (int j = 0; j < ac.getAtomCount(); j++) {
+                boolean foundmatch = false;
+                for (int k = 0; k < ac.getAtomCount(); k++) {
+                    if (k == j) continue;
+                    if (scores[j][i] == -1*scores[k][i]) {
+                        ns++;
+                        foundmatch = true;
+                        break;
+                    }
+                }
+                if (!foundmatch) na++;
+            }
+            double n = (double)ac.getAtomCount();
+            gamma[i] = -1.0 * ( (ns/n)*Math.log(ns/n)/Math.log(2.0) + (na/n)*Math.log(1.0/n)/Math.log(2.0) );
+            gamma[i] = 1.0 / (1.0 + gamma[i]);
+            System.out.println("ns = "+ns+" na = "+na+"  gamma = "+gamma[i]);
+        }
+                
+                
+        // non directional WHIMS's
+        double T = lambda[0] + lambda[1] + lambda[2];
+        double A = lambda[0]*lambda[1] + lambda[0]*lambda[2] + lambda[1]*lambda[2];
+        double V = T + A + lambda[0]*lambda[1]*lambda[2];
+
+        double K = 0.0;
+        sum = 0.0;
+        for (int i = 0; i < 3; i++) sum += lambda[i];
+        for (int i = 0; i < 3; i++) K = (lambda[i] / sum) - (1.0/3.0);
+        K = K / (4.0/3.0);
+
+        double G = Math.pow( gamma[0]*gamma[1]*gamma[2], 1.0/3.0);
+        double D = eta[0] + eta[1] + eta[2];
+
+        // return all the stuff we calculated
+        ArrayList retval = new ArrayList(11+6);
+        retval.add( new Double(lambda[0]) );
+        retval.add( new Double(lambda[1]) );
+        retval.add( new Double(lambda[2]) );
+        
+        retval.add( new Double(nu[0]) );
+        retval.add( new Double(nu[1]) );
+
+        retval.add( new Double(gamma[0]) );
+        retval.add( new Double(gamma[1]) );
+        retval.add( new Double(gamma[2]) );
+
+        retval.add( new Double(eta[0]) );
+        retval.add( new Double(eta[1]) );
+        retval.add( new Double(eta[2]) );
+
+        retval.add( new Double(T) );
+        retval.add( new Double(A) );
+        retval.add( new Double(V) );
+        retval.add( new Double(K) );
+        retval.add( new Double(G) );
+        retval.add( new Double(D) );
+        
+        return (retval);
+    }
+
+
+    class PCA {
+
+        Matrix evec;
+        Matrix t;
+        double[] eval;
+
+
+        public PCA(double[][] cmat, double[] wt) throws CDKException{
+
+            int ncol = 3;
+            int nrow = wt.length;
+
+            if (cmat.length != wt.length ) {
+                throw new CDKException("WHIMDescriptor: number of weights should be equal to number of atoms");
+            }
+
+            // make a copy of the coordinate matrix
+            double[][] d = new double[nrow][ncol];
+            for (int i = 0; i < nrow; i++) {
+                for (int j = 0; j < ncol; j++) 
+                    d[i][j] = cmat[i][j];
+            }
+
+            // do mean centering - though the first paper used
+            // barymetric centering
+            for (int i = 0; i < ncol; i++) {
+                double mean = 0.0;
+                for (int j = 0; j < nrow; j++) 
+                    mean += d[j][i];
+                mean = mean / (double)nrow;
+                for (int j = 0; j < nrow; j++) 
+                    d[j][i] = (d[j][i] - mean);
+            }
+
+            // get the covariance matrix
+            double[][] covmat = new double[ncol][ncol];
+            double sumwt = 0.;
+            for (int i = 0; i < nrow; i++) sumwt += wt[i];
+            for (int i = 0; i < ncol; i++) {
+                double meanx = 0;
+                for (int k = 0; k < nrow; k++) meanx += d[k][i];
+                meanx = meanx / (double)nrow;
+                for (int j = 0; j < ncol; j++) {
+                    double meany = 0.0;
+                    for (int k = 0; k < nrow; k++) meany += d[k][j];
+                    meany = meany / (double)nrow;
+
+                    double sum = 0.;
+                    for (int k = 0; k < nrow; k++) {
+                        double dd =  wt[k] * (d[k][i] - meanx) * (d[k][j] - meany);
+                        //System.out.println("("+i+","+j+") "+wts[k] + " * " + d[k][i] + "-" + meanx + " * " + d[k][j] + "-" + meany + "==" + dd);
+                        sum += wt[k] * (d[k][i] - meanx) * (d[k][j] - meany);
+                    }
+                    //System.out.println(sum+" / "+sumwt+"="+sum/sumwt);
+                    covmat[i][j] = sum / sumwt;
+                }
+            }
+
+            // get the loadings (ie eigenvector matrix)
+            Matrix m = new Matrix(covmat);
+            EigenvalueDecomposition ed = m.eig();
+            this.eval = ed.getRealEigenvalues();
+            this.evec = ed.getV();
+            Matrix x = new Matrix(d);
+            this.t = x.times(this.evec);
+        }
+
+        double[] getEigenvalues() {
+            return(this.eval);
+        }
+        double[][] getScores() {
+            return(t.getArray());
+        }
+    }
+
+}
+
+
