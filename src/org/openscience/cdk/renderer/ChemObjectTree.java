@@ -39,6 +39,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import java.lang.reflect.*;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 
 /**
  * Displays a ChemObject as a tree. An example tree looks like this:
@@ -70,8 +71,10 @@ public class ChemObjectTree extends JPanel {
 	 */
 	public ChemObjectTree() {
         logger = new LoggingTool(this.getClass().getName());
+        this.setLayout(new FlowLayout(FlowLayout.LEFT));
         this.tree = new JTree(new DefaultMutableTreeNode("empty"));
         this.add(tree);
+        this.setBackground(tree.getBackground());
 	}
 
     /**
@@ -95,8 +98,17 @@ public class ChemObjectTree extends JPanel {
      * Creates a node with the object name.
      */
     private DefaultMutableTreeNode getObjectName(Object object) {
-        return new DefaultMutableTreeNode(object.getClass()
+        StringBuffer name = new StringBuffer();
+        name.append(object.getClass()
             .getName().substring("org.openscience.cdk.".length()));
+        if (object instanceof Atom) {
+            Atom atom = (Atom)object;
+            name.append(" " + atom.getSymbol());
+        } else if (object instanceof Bond) {
+            Bond bond = (Bond)object;
+            name.append(" " + bond.getOrder());
+        }
+        return new DefaultMutableTreeNode(name.toString());
     }
     
     /**
