@@ -155,11 +155,7 @@ public class HydrogenAdder {
         
         Isotope isotope = IsotopeFactory.getInstance().getMajorIsotope("H");
         atom.setHydrogenCount(0);
-	
-	
-	double bondLength = GeometryTools.getBondLengthAverage(container);
-	logger.debug("Average bondlength in current molecule: " + bondLength);
-        	
+        
         // set number of implicit hydrogens to zero
         // add explicit hydrogens
         int missingHydrogens = satChecker.calculateMissingHydrogen(atom, container);
@@ -173,8 +169,9 @@ public class HydrogenAdder {
         // now create coordinates for new hydrogens
         if (create2DCoordinates) {
             logger.debug("Creating 2D coordinates for new hydrogens");
+            double bondLength = GeometryTools.getBondLengthAverage(container);
+            logger.debug("Average bondlength in current molecule: " + bondLength);
             HydrogenPlacer.placeHydrogens2D(container, bondLength);
-
         }
     }
     

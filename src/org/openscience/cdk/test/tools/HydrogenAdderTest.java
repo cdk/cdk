@@ -3,7 +3,7 @@
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2003  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -83,6 +83,8 @@ public class HydrogenAdderTest extends TestCase {
         try {
             adder.addExplicitHydrogensToSatisfyValency(mol);
         } catch (Exception exception) {
+            System.err.println(exception);
+            exception.printStackTrace();
             fail();
         }
         
@@ -99,6 +101,8 @@ public class HydrogenAdderTest extends TestCase {
         try {
             adder.addExplicitHydrogensToSatisfyValency(mol);
         } catch (Exception exception) {
+            System.err.println(exception);
+            exception.printStackTrace();
             fail();
         }
         
@@ -116,6 +120,8 @@ public class HydrogenAdderTest extends TestCase {
         try {
             adder.addExplicitHydrogensToSatisfyValency(mol);
         } catch (Exception exception) {
+            System.err.println(exception);
+            exception.printStackTrace();
             fail();
         }
         
@@ -132,6 +138,8 @@ public class HydrogenAdderTest extends TestCase {
         try {
             adder.addExplicitHydrogensToSatisfyValency(mol);
         } catch (Exception exception) {
+            System.err.println(exception);
+            exception.printStackTrace();
             fail();
         }
         
@@ -149,6 +157,8 @@ public class HydrogenAdderTest extends TestCase {
         try {
             adder.addExplicitHydrogensToSatisfyValency(mol);
         } catch (Exception exception) {
+            System.err.println(exception);
+            exception.printStackTrace();
             fail();
         }
         
@@ -166,6 +176,8 @@ public class HydrogenAdderTest extends TestCase {
         try {
             adder.addExplicitHydrogensToSatisfyValency(mol);
         } catch (Exception exception) {
+            System.err.println(exception);
+            exception.printStackTrace();
             fail();
         }
         
@@ -189,6 +201,8 @@ public class HydrogenAdderTest extends TestCase {
         try {
             adder.addExplicitHydrogensToSatisfyValency(mol);
         } catch (Exception exception) {
+            System.err.println(exception);
+            exception.printStackTrace();
             fail();
         }
         
@@ -205,6 +219,8 @@ public class HydrogenAdderTest extends TestCase {
         try {
             adder.addExplicitHydrogensToSatisfyValency(mol);
         } catch (Exception exception) {
+            System.err.println(exception);
+            exception.printStackTrace();
             fail();
         }
         
@@ -233,6 +249,8 @@ public class HydrogenAdderTest extends TestCase {
         try {
             adder.addExplicitHydrogensToSatisfyValency(mol);
         } catch (Exception exception) {
+            System.err.println(exception);
+            exception.printStackTrace();
             fail();
         }
         
@@ -257,6 +275,8 @@ public class HydrogenAdderTest extends TestCase {
         try {
             adder.addExplicitHydrogensToSatisfyValency(mol);
         } catch (Exception exception) {
+            System.err.println(exception);
+            exception.printStackTrace();
             fail();
         }
         
@@ -279,7 +299,9 @@ public class HydrogenAdderTest extends TestCase {
         try {
             adder.addExplicitHydrogensToSatisfyValency(mol);
         } catch (Exception exception) {
-            fail();
+            System.err.println(exception);
+            exception.printStackTrace();
+           fail();
         }
         
         assertEquals(6, mol.getAtomCount());
@@ -301,6 +323,8 @@ public class HydrogenAdderTest extends TestCase {
         try {
             adder.addExplicitHydrogensToSatisfyValency(mol);
         } catch (Exception exception) {
+            System.err.println(exception);
+            exception.printStackTrace();
             fail();
         }
         
@@ -339,7 +363,9 @@ public class HydrogenAdderTest extends TestCase {
         try {
             adder.addHydrogensToSatisfyValency(mol);
             new SaturationChecker().saturate(mol);
-        } catch(Exception exc) {
+        } catch(Exception exception) {
+            System.err.println(exception);
+            exception.printStackTrace();
             fail();	
         }
         MFAnalyser mfa = new MFAnalyser(mol);
@@ -359,6 +385,7 @@ public class HydrogenAdderTest extends TestCase {
             adder.addHydrogensToSatisfyValency(molecule);
         } catch (Exception exc) {
             exc.printStackTrace();
+            fail();
         } 
         if (standalone) {
             MoleculeViewer2D.display(molecule, true);

@@ -321,8 +321,7 @@ public class Bond extends ElectronContainer implements java.io.Serializable, Clo
 	 *
 	 * @return The geometric length of this bond
 	 */
-	public double getLength()
-	{
+	public double getLength() {
 		Point2d p1 = getAtomAt(0).getPoint2D();
 		Point2d p2 = getAtomAt(1).getPoint2D();
 		return p1.distance(p2);

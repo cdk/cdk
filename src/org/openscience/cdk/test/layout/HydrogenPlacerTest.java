@@ -109,12 +109,11 @@ public class HydrogenPlacerTest extends TestCase {
 		    Molecule mol = model.getSetOfMolecules().getMolecule(0);
 		    HydrogenAdder ha = new HydrogenAdder();
 		    ha.addExplicitHydrogensToSatisfyValency(mol);
-		    HydrogenPlacer.placeHydrogens2D(mol);
+		    HydrogenPlacer.placeHydrogens2D(mol, 1.0);
             if (standAlone) {
                 MoleculeViewer2D.display(mol, false);
             }
-		} catch (Exception e) 
-		{
+		} catch (Exception e) {
 		    e.printStackTrace();
 		    fail(e.toString());
 		}
