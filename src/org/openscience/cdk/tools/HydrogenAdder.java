@@ -30,7 +30,6 @@ package org.openscience.cdk.tools;
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.layout.HydrogenPlacer;
 import org.openscience.cdk.geometry.GeometryTools;
 import java.util.Vector;
 import java.io.*;
@@ -96,6 +95,12 @@ public class HydrogenAdder {
 
     /**
      * Method that saturates a molecule by adding explicit hydrogens.
+     * In order to get coordinates for these Hydrogens, you need to 
+     * remember the average bondlength of you molecule (coordinates for 
+     * all atoms should be available) by using
+     * double bondLength = GeometryTools.getBondLengthAverage(atomContainer);
+     * and then use this method here and then use
+     * org.openscience.cdk.HydrogenPlacer(atomContainer, bondLength);
      *
      * @param  molecule  Molecule to saturate
      * @keyword          hydrogen, adding
@@ -103,11 +108,19 @@ public class HydrogenAdder {
      */
     public void addHydrogensToSatisfyValency(Molecule molecule) throws IOException, ClassNotFoundException
     {
+	    logger.debug("Start of addHydrogensToSatisfyValency");
         addExplicitHydrogensToSatisfyValency(molecule);
+	logger.debug("End of addHydrogensToSatisfyValency");
     }
 
     /**
      * Method that saturates a molecule by adding explicit hydrogens.
+     * In order to get coordinates for these Hydrogens, you need to 
+     * remember the average bondlength of you molecule (coordinates for 
+     * all atoms should be available) by using
+     * double bondLength = GeometryTools.getBondLengthAverage(atomContainer);
+     * and then use this method here and then use
+     * org.openscience.cdk.HydrogenPlacer(atomContainer, bondLength);
      *
      * @param  molecule  Molecule to saturate
      * @keyword          hydrogen, adding
@@ -115,14 +128,22 @@ public class HydrogenAdder {
      */
     public void addExplicitHydrogensToSatisfyValency(Molecule molecule) throws IOException, ClassNotFoundException
     {
+	    logger.debug("Start of addExplicitHydrogensToSatisfyValency");
         Atom[] atoms = molecule.getAtoms();
         for (int i = 0; i < atoms.length; i++) {
             addHydrogensToSatisfyValency(molecule, atoms[i]);
         }
+	logger.debug("End of addExplicitHydrogensToSatisfyValency");
     }
 
     /**
      * Method that saturates an atom in a molecule by adding explicit hydrogens.
+     * In order to get coordinates for these Hydrogens, you need to 
+     * remember the average bondlength of you molecule (coordinates for 
+     * all atoms should be available) by using
+     * double bondLength = GeometryTools.getBondLengthAverage(atomContainer);
+     * and then use this method here and then use
+     * org.openscience.cdk.HydrogenPlacer(atomContainer, bondLength);
      *
      * @param  atom      Atom to saturate
      * @param  container AtomContainer containing the atom
@@ -135,11 +156,19 @@ public class HydrogenAdder {
     public void addHydrogensToSatisfyValency(AtomContainer container, Atom atom) 
         throws IOException, ClassNotFoundException
     {
+	logger.debug("Start of addHydrogensToSatisfyValency(AtomContainer container, Atom atom)");
         addExplicitHydrogensToSatisfyValency(container, atom);
+	logger.debug("End of addHydrogensToSatisfyValency(AtomContainer container, Atom atom)");
     }
 
     /**
      * Method that saturates an atom in a molecule by adding explicit hydrogens.
+     * In order to get coordinates for these Hydrogens, you need to 
+     * remember the average bondlength of you molecule (coordinates for 
+     * all atoms should be available) by using
+     * double bondLength = GeometryTools.getBondLengthAverage(atomContainer);
+     * and then use this method here and then use
+     * org.openscience.cdk.HydrogenPlacer(atomContainer, bondLength);
      *
      * @param  atom      Atom to saturate
      * @param  container AtomContainer containing the atom
@@ -152,8 +181,11 @@ public class HydrogenAdder {
     {
         // set number of implicit hydrogens to zero
         // add explicit hydrogens
+	logger.debug("Start of addExplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom)");
         int missingHydrogens = satChecker.calculateMissingHydrogen(atom, container);
+	logger.debug("According to satChecker, " + missingHydrogens + " are missing");
         addExplicitHydrogensToSatisfyValency(container, atom, missingHydrogens);
+	logger.debug("End of addExplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom)");
     }
     
     /**
@@ -182,13 +214,15 @@ public class HydrogenAdder {
             Bond newBond = new Bond(atom, hydrogen, 1.0);
             container.addBond(newBond);
         }
-        // now create coordinates for new hydrogens
-        if (create2DCoordinates) {
+        /* The following code has been removed for a clearer separation
+	 * between adding (in HydrogenAdder) and placing the hydrogens (in HydrogenPlacer)
+	
+        /*if (create2DCoordinates) {
             logger.debug("Creating 2D coordinates for new hydrogens");
             double bondLength = GeometryTools.getBondLengthAverage(container);
             logger.debug("Average bondlength in current molecule: " + bondLength);
             HydrogenPlacer.placeHydrogens2D(container, bondLength);
-        }
+        }*/
     }
     
     /**
