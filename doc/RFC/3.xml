@@ -1,0 +1,39 @@
+<refentry id="cdk-rfc-3">
+
+  <refentryinfo>
+    <revhistory>
+      <revision>
+        <revnumber>1</revnumber>
+        <date>30 July 2002</date>
+        <authorinitials>elw</authorinitials>
+        <revremark>
+          See <ulink url="http://sourceforge.net/mailarchive/forum.php?thread_id=939989&forum_id=2178">email archive</ulink>.
+        </revremark>
+      </revision>
+    </revhistory>
+  </refentryinfo>
+
+
+  <refnamediv>
+    <refname>Tests in org.openscience.cdk.test Use Same Directory Structure as Tested Classes</refname>
+  </refnamediv>
+
+  <refsect1>
+    <title>Proposal</title>
+    <para>
+      The test classes in org.openscience.cdk.test follow the same directory 
+      structures as the classes which are tested.
+    </para>
+    <para>
+      Example: The class cdk.io.XYZReader is tested in a class cdk.test.io.XYZReaderTest.
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>Reason</title>
+    <para>
+      Directory org/openscience/cdk/test is getting clouded by many classes.
+    </para>
+  </refsect1>
+
+</refentry>
