@@ -4,7 +4,7 @@
  * $Revision$
  *
  * Copyright (C) 2001-2003  Jmol Project
- * Copyright (C) 2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2003-2004  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -50,7 +50,25 @@ import java.util.Vector;
  */
 public class ReaderFactory {
     
-    public ReaderFactory() {}
+    private int headerLength;
+    
+    /**
+     * Constructs a ReaderFactory which tries to detect the format in the
+     * first 65536 chars.
+     */
+    public ReaderFactory() {
+        this(65536);
+    }
+    
+    /**
+     * Constructs a ReaderFactory which tries to detect the format in the
+     * first given number of chars.
+     *
+     * @param headerLength length of the header in number of chars
+     */
+    public ReaderFactory(int headerLength) {
+        this.headerLength = headerLength;
+    }
     
     /**
      * Creates a String of the Class name of the ChemObject reader
@@ -79,7 +97,7 @@ public class ReaderFactory {
             throw new IllegalArgumentException("input cannot be null");
         }
 
-        int bufferSize = 65536;
+        int bufferSize = this.headerLength;
         BufferedReader originalBuffer = new BufferedReader(input, bufferSize);
         char[] header = new char[bufferSize];
         if (!originalBuffer.markSupported()) {
@@ -248,7 +266,9 @@ public class ReaderFactory {
                     return new org.openscience.cdk.io.XYZReader(originalBuffer);
                 }
             }
-        } catch (NumberFormatException exception) {}
+        } catch (NumberFormatException exception) {
+            logger.info("No, it's not a XYZ file");
+        }
         // is it a SMILES file?
         try {
             SmilesParser sp = new SmilesParser();
@@ -256,6 +276,7 @@ public class ReaderFactory {
             return new org.openscience.cdk.io.SMILESReader(originalBuffer);
         } catch (InvalidSmilesException ise) {
             // no, it is not
+            logger.info("No, it's not a SMILES file");
         }
 
         logger.warn("File format undetermined");
