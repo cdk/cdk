@@ -186,6 +186,8 @@ public class FileConvertor {
             return new SVGWriter(fw);
         } else if (format.equalsIgnoreCase("XYZ")) {
             return new XYZWriter(fw);
+				} else if (format.equalsIgnoreCase("PDB")) {
+            return new PDBWriter(fw);
         }
         return null;
     }
