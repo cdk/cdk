@@ -33,6 +33,9 @@ public class LoggingTool {
     public LoggingTool() {
         try {
             logger = org.apache.log4j.Category.getInstance( LoggingTool.class.getName());
+
+            // configure Log4J
+            (org.apache.log4j.PropertyConfigurator).configure("org/openscience/cdk/config/log4j.properties");
         } catch (NoClassDefFoundError e) {
             tostdout = true;
         }

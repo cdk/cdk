@@ -1,4 +1,4 @@
-<project name="CDK" default="compile" basedir=".">	
+<project name="CDK" default="compile" basedir=".">
 
         <property name="build" value="build" />
 
@@ -111,6 +111,9 @@
                 <copy
                 file="org/openscience/cdk/config/structgen_atomtypes.xml"
                 tofile="${build}/org/openscience/cdk/config/structgen_atomtypes.xml" />
+                <copy
+                file="org/openscience/cdk/config/log4j.properties"
+                tofile="${build}/org/openscience/cdk/config/log4j.properties" />
 
                 <mkdir
                 dir="${build}/org/openscience/cdk/io/cml/data" />
@@ -225,7 +228,7 @@
         </target>
 
         <target name="run" depends="dist">
-                <java classname="org.openscience.cdk.test.RandomStructureGeneratorTest" fork="yes">
+                <java classname="org.openscience.cdk.test.FileReaderTest" fork="yes">
                         <classpath>
                                 <pathelement
                                 location="${dist}/jar/cdk.jar" />

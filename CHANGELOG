@@ -3,8 +3,10 @@ CHANGELOG
 
 changes since "cdk preview 20010909"
 ------------------------------------
-* several small other things
+* Improvements to SingleRandomStructureGenerator
 * Added Log4J as (optional) logging tool
+* Fixed a problem in PathTools.breadthFirstTargetSearch()
+* Added to convenience methods to XMLTools for serializing and de-serializing
 
 changes since "cdk preview 20010807"
 ------------------------------------
