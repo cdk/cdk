@@ -62,12 +62,13 @@ public class Normalizer {
    *
    * @param  ac                          The atomcontainer to normalize.
    * @param  doc                         The configuration file.
-   * @return                             The normalized atomcontainer.
+   * @return                             Did a replacement take place?
    * @exception  InvalidSmilesException  doc contains an invalid smiles.
    */
-  public static AtomContainer normalize(AtomContainer ac, Document doc) throws InvalidSmilesException {
+  public static boolean normalize(AtomContainer ac, Document doc) throws InvalidSmilesException {
     NodeList nl = doc.getElementsByTagName("replace-set");
     SmilesParser sp = new SmilesParser();
+    boolean change=false;
     for (int i = 0; i < nl.getLength(); i++) {
       Element child = (Element) nl.item(i);
       NodeList replaces = child.getElementsByTagName("replace");
@@ -93,6 +94,7 @@ public class Normalizer {
             Bond acbond = ac.getBondAt(rmap.getId1());
             Bond replacebond = replacementStructure.getBondAt(rmap.getId2());
             acbond.setOrder(replacebond.getOrder());
+            change=true;
           }
           Iterator atomit = l2.iterator();
           while (atomit.hasNext()) {
@@ -100,11 +102,12 @@ public class Normalizer {
             Atom acatom = ac.getAtomAt(rmap.getId1());
             Atom replaceatom = replacementStructure.getAtomAt(rmap.getId2());
             acatom.setFormalCharge(replaceatom.getFormalCharge());
+            change=true;
           }
         }
       }
     }
-    return (ac);
+    return (change);
   }
 }
 
