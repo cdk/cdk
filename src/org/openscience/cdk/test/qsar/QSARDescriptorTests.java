@@ -42,8 +42,8 @@ import org.openscience.cdk.test.qsar.*;
         
         suite.addTest(AtomCountDescriptorTest.suite());
         suite.addTest(BondCountDescriptorTest.suite());
-        
         suite.addTest(QsarDescriptors2DTest.suite());
+        suite.addTest(GravitationalIndexDescriptorTest.suite());
         return suite;
     }
     
