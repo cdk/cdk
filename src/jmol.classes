@@ -1,0 +1,15 @@
+org/openscience/cdk/AtomContainer.java
+org/openscience/cdk/Atom.java
+org/openscience/cdk/AtomType.java
+org/openscience/cdk/Bond.java
+org/openscience/cdk/ChemObject.java
+org/openscience/cdk/ChemObjectListener.java
+org/openscience/cdk/ChemSequence.java
+org/openscience/cdk/ElectronContainer.java
+org/openscience/cdk/Element.java
+org/openscience/cdk/Isotope.java
+org/openscience/cdk/Molecule.java
+org/openscience/cdk/SetOfMolecules.java
+org/openscience/cdk/renderer/color/AtomColorer.java
+org/openscience/cdk/renderer/color/PartialAtomicChargeColors.java
+org/openscience/cdk/tools/IsotopeFactory.java
