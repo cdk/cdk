@@ -102,11 +102,11 @@ public class SimpleCycleBasisTest extends TestCase {
 		g.addEdge( "d", "e" );
 		
 		basis = new SimpleCycleBasis( g );
-		assertTrue(basis.cycles().size() == g.edgeSet().size() - g.vertexSet().size() + 1);
+		assertEquals(g.edgeSet().size() - g.vertexSet().size() + 1, basis.cycles().size());
 		assertTrue(Arrays.equals(basis.weightVector(), new int[] {3,3,3,3,3,3}) );
-		assertTrue(basis.relevantCycles().size() == 10);
-		assertTrue(basis.essentialCycles().size() == 0);
-		assertTrue(basis.equivalenceClasses().size() == 1);
+		assertEquals(10, basis.relevantCycles().size());
+		assertEquals(0, basis.essentialCycles().size());
+		assertEquals(1, basis.equivalenceClasses().size());
 	}
 	
 	public void testWeightVector() {
@@ -114,91 +114,91 @@ public class SimpleCycleBasisTest extends TestCase {
 	}
 	
 	public void testRelevantCycles() {
-		assertTrue(basis.relevantCycles().size() == 10);
+		assertEquals(10, basis.relevantCycles().size());
 	}
 	
 	public void testEssentialCycles() {
-		assertTrue(basis.essentialCycles().size() == 2);
+		assertEquals(2, basis.essentialCycles().size());
 	}
-	
+		
 	public void testEquivalenceClasses() {
-		assertTrue(basis.equivalenceClasses().size() == 4);
+		assertEquals(4, basis.equivalenceClasses().size());
 	}
-		
-	public void testEquivalenceClassesEmptyIntersection() {
-		SimpleGraph g = new SimpleGraph(  );
-		
-		g.addVertex( "a" );
-		g.addVertex( "b" );
-		g.addVertex( "c" );
-		g.addVertex( "d" );
-		g.addVertex( "e" );
-		g.addVertex( "f" );
-		g.addVertex( "g" );
-		g.addVertex( "h" );
-		g.addVertex( "i" );
-		g.addVertex( "j" );
-		g.addVertex( "k" );
-		g.addVertex( "l" );
-		g.addVertex( "m" );
-		g.addVertex( "n" );
-		g.addVertex( "o" );
-		g.addVertex( "p" );
-		g.addVertex( "q" );
-		g.addVertex( "r" );
-		g.addVertex( "s" );
-		g.addVertex( "t" );
-		g.addVertex( "u" );
-		g.addVertex( "v" );
-		g.addVertex( "w" );
-		
-		g.addEdge( "a", "b" );
-		g.addEdge( "a", "c" );
-		g.addEdge( "a", "g" );
-		g.addEdge( "b", "d" );
-		g.addEdge( "b", "m" );
-		g.addEdge( "c", "d" );
-		g.addEdge( "c", "e" );
-		g.addEdge( "c", "h" );
-		g.addEdge( "d", "f" );
-		g.addEdge( "d", "l" );
-		g.addEdge( "e", "f" );
-		g.addEdge( "e", "i" );
-		g.addEdge( "e", "j" );
-		g.addEdge( "f", "j" );
-		g.addEdge( "f", "k" );
-		g.addEdge( "g", "h" );
-		g.addEdge( "g", "v" );
-		g.addEdge( "g", "r" );
-		g.addEdge( "h", "i" );
-		g.addEdge( "h", "p" );
-		g.addEdge( "h", "t" );
-		g.addEdge( "i", "j" );
-		g.addEdge( "i", "n" );
-		g.addEdge( "j", "k" );
-		g.addEdge( "j", "n" );
-		g.addEdge( "j", "o" );
-		g.addEdge( "k", "l" );
-		g.addEdge( "k", "o" );
-		g.addEdge( "l", "m" );
-		g.addEdge( "l", "q" );
-		g.addEdge( "l", "u" );
-		g.addEdge( "m", "s" );
-		g.addEdge( "m", "w" );
-		g.addEdge( "n", "o" );
-		g.addEdge( "n", "p" );
-		g.addEdge( "o", "q" );
-		g.addEdge( "p", "q" );
-		g.addEdge( "p", "r" );
-		g.addEdge( "q", "s" );
-		g.addEdge( "r", "s" );
-		g.addEdge( "t", "u" );
-		g.addEdge( "v", "w" );
-		
-		CycleBasis basis = new CycleBasis( g );
 
-		assertTrue(basis.equivalenceClasses().size() == 19);		
-		assertTrue(basis.essentialCycles().size() == 18);
+	public void testEquivalenceClassesEmptyIntersection() {
+		SimpleGraph h = new SimpleGraph(  );
+		
+		h.addVertex( "a" );
+		h.addVertex( "b" );
+		h.addVertex( "c" );
+		h.addVertex( "d" );
+		h.addVertex( "e" );
+		h.addVertex( "f" );
+		h.addVertex( "g" );
+		h.addVertex( "h" );
+		h.addVertex( "i" );
+		h.addVertex( "j" );
+		h.addVertex( "k" );
+		h.addVertex( "l" );
+		h.addVertex( "m" );
+		h.addVertex( "n" );
+		h.addVertex( "o" );
+		h.addVertex( "p" );
+		h.addVertex( "q" );
+		h.addVertex( "r" );
+		h.addVertex( "s" );
+		h.addVertex( "t" );
+		h.addVertex( "u" );
+		h.addVertex( "v" );
+		h.addVertex( "w" );
+		
+		h.addEdge( "a", "b" );
+		h.addEdge( "a", "c" );
+		h.addEdge( "a", "g" );
+		h.addEdge( "b", "d" );
+		h.addEdge( "b", "m" );
+		h.addEdge( "c", "d" );
+		h.addEdge( "c", "e" );
+		h.addEdge( "c", "h" );
+		h.addEdge( "d", "f" );
+		h.addEdge( "d", "l" );
+		h.addEdge( "e", "f" );
+		h.addEdge( "e", "i" );
+		h.addEdge( "e", "j" );
+		h.addEdge( "f", "j" );
+		h.addEdge( "f", "k" );
+		h.addEdge( "g", "h" );
+		h.addEdge( "g", "v" );
+		h.addEdge( "g", "r" );
+		h.addEdge( "h", "i" );
+		h.addEdge( "h", "p" );
+		h.addEdge( "h", "t" );
+		h.addEdge( "i", "j" );
+		h.addEdge( "i", "n" );
+		h.addEdge( "j", "k" );
+		h.addEdge( "j", "n" );
+		h.addEdge( "j", "o" );
+		h.addEdge( "k", "l" );
+		h.addEdge( "k", "o" );
+		h.addEdge( "l", "m" );
+		h.addEdge( "l", "q" );
+		h.addEdge( "l", "u" );
+		h.addEdge( "m", "s" );
+		h.addEdge( "m", "w" );
+		h.addEdge( "n", "o" );
+		h.addEdge( "n", "p" );
+		h.addEdge( "o", "q" );
+		h.addEdge( "p", "q" );
+		h.addEdge( "p", "r" );
+		h.addEdge( "q", "s" );
+		h.addEdge( "r", "s" );
+		h.addEdge( "t", "u" );
+		h.addEdge( "v", "w" );
+		
+		CycleBasis b = new CycleBasis( h );
+		
+		assertEquals(19, b.equivalenceClasses().size());		
+		assertEquals(18, b.essentialCycles().size());
 		
 	}
 

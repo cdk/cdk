@@ -648,9 +648,17 @@ public class SimpleCycleBasis {
 	}
 	
 	public Collection essentialCycles() {
+		//System.out.println("essentialCycles");
 		Collection result = new HashSet();
 		minimize();
 		
+		Map edgeMap = new HashMap();
+		
+		for (int i=0; i<edgeList.size(); i++) {
+			Edge edge = (Edge) edgeList.get(i);
+			
+			edgeMap.put(edge, new Integer(i));
+		}
 		
 		boolean[][] a = getCycleEdgeIncidenceMatrix();
 		
@@ -670,41 +678,57 @@ public class SimpleCycleBasis {
 			boolean isEssential = true;
 			
 			Iterator vertexIterator = graph.vertexSet().iterator();
-			while (vertexIterator.hasNext()) {
+			while (isEssential && vertexIterator.hasNext()) {
 				Object vertex = vertexIterator.next();
 				
-				Object auxVertex0 = gu.auxVertex0(vertex);
-				Object auxVertex1 = gu.auxVertex1(vertex);
+				Collection incidentEdges = graph.edgesOf(vertex);
 				
+				// check if the vertex is incident to an edge with u[edge] == 1
+				boolean shouldSearchCycle = false;
 				
-				// Search for shortest paths
-				
-				for (Iterator minPaths = new MinimalPathIterator(gu, auxVertex0, auxVertex1); minPaths.hasNext();) {
-					List auxPath = (List) minPaths.next();
-					List edgesOfNewCycle = new ArrayList(auxPath.size());
-					
-					Iterator edgeIterator = auxPath.iterator();
-					while (edgeIterator.hasNext()) {
-						Edge auxEdge = (Edge) edgeIterator.next();
-						
-						// Get the edge corresponding to the aux. edge
-						Edge e = (Edge) gu.edge(auxEdge);
-						
-						edgesOfNewCycle.add(e);
-						
-					}
-					
-					
-					SimpleCycle cycle = new SimpleCycle(graph, edgesOfNewCycle);
-					
-					
-					if (cycle.weight() > ((SimpleCycle)cycles.get(i)).weight()) {
+				for (Iterator it = incidentEdges.iterator(); it.hasNext();) {
+					Object edge = it.next();
+					int index = ((Integer) edgeMap.get(edge)).intValue();
+					if (u[index]) {
+						shouldSearchCycle = true;
 						break;
 					}
+				}
+				
+				if (shouldSearchCycle) {
 					
-					if (!cycle.equals((SimpleCycle)cycles.get(i))) {
-						isEssential = false;
-						break;
+					Object auxVertex0 = gu.auxVertex0(vertex);
+					Object auxVertex1 = gu.auxVertex1(vertex);
+					
+					
+					// Search for shortest paths
+					for (Iterator minPaths = new MinimalPathIterator(gu, auxVertex0, auxVertex1); minPaths.hasNext();) {
+						List auxPath = (List) minPaths.next();
+						List edgesOfNewCycle = new ArrayList(auxPath.size());
+						
+						for (Iterator it = auxPath.iterator(); it.hasNext();) {
+							Edge auxEdge = (Edge) it.next();
+							
+							// Get the edge corresponding to the aux. edge
+							Edge e = (Edge) gu.edge(auxEdge);
+							
+							edgesOfNewCycle.add(e);
+							
+						}
+						
+						
+						SimpleCycle cycle = new SimpleCycle(graph, edgesOfNewCycle);
+						
+						
+						if (cycle.weight() > ((SimpleCycle)cycles.get(i)).weight()) {
+							break;
+						}
+						
+						if (!cycle.equals((SimpleCycle)cycles.get(i))) {
+							isEssential = false;
+							break;
+						}
+						
 					}
 					
 				}
@@ -725,6 +749,14 @@ public class SimpleCycleBasis {
 		Map result = new HashMap();
 		minimize();
 		
+		Map edgeMap = new HashMap();
+		
+		for (int i=0; i<edgeList.size(); i++) {
+			Edge edge = (Edge) edgeList.get(i);
+			
+			edgeMap.put(edge, new Integer(i));
+		}
+		
 		boolean[][] a = getCycleEdgeIncidenceMatrix();
 		
 		boolean[][] ai = inverseBinaryMatrix(a, cycles.size());
@@ -744,34 +776,52 @@ public class SimpleCycleBasis {
 			while (vertexIterator.hasNext()) {
 				Object vertex = vertexIterator.next();
 				
-				Object auxVertex0 = gu.auxVertex0(vertex);
-				Object auxVertex1 = gu.auxVertex1(vertex);
+				Collection incidentEdges = graph.edgesOf(vertex);
 				
-				// Search for shortest paths
+				// check if the vertex is incident to an edge with u[edge] == 1
+				boolean shouldSearchCycle = false;
 				
-				for (Iterator minPaths = new MinimalPathIterator(gu, auxVertex0, auxVertex1); minPaths.hasNext();) {
-					List auxPath = (List) minPaths.next();
-					List edgesOfNewCycle = new ArrayList(auxPath.size());
-					
-					Iterator edgeIterator = auxPath.iterator();
-					while (edgeIterator.hasNext()) {
-						Edge auxEdge = (Edge) edgeIterator.next();
-						
-						// Get the edge corresponding to the aux. edge
-						Edge e = (Edge) gu.edge(auxEdge);
-						
-						edgesOfNewCycle.add(e);
-						
-					}
-					
-					
-					SimpleCycle cycle = new SimpleCycle(graph, edgesOfNewCycle);
-					
-					if (cycle.weight() > ((SimpleCycle)cycles.get(i)).weight()) {
+				for (Iterator it = incidentEdges.iterator(); it.hasNext();) {
+					Object edge = it.next();
+					int index = ((Integer) edgeMap.get(edge)).intValue();
+					if (u[index]) {
+						shouldSearchCycle = true;
 						break;
 					}
+				}
+				
+				if (shouldSearchCycle) {
 					
-					result.put(cycle, (SimpleCycle)cycles.get(i));
+					Object auxVertex0 = gu.auxVertex0(vertex);
+					Object auxVertex1 = gu.auxVertex1(vertex);
+					
+					// Search for shortest paths
+					
+					for (Iterator minPaths = new MinimalPathIterator(gu, auxVertex0, auxVertex1); minPaths.hasNext();) {
+						List auxPath = (List) minPaths.next();
+						List edgesOfNewCycle = new ArrayList(auxPath.size());
+						
+						Iterator edgeIterator = auxPath.iterator();
+						while (edgeIterator.hasNext()) {
+							Edge auxEdge = (Edge) edgeIterator.next();
+							
+							// Get the edge corresponding to the aux. edge
+							Edge e = (Edge) gu.edge(auxEdge);
+							
+							edgesOfNewCycle.add(e);
+							
+						}
+						
+						
+						SimpleCycle cycle = new SimpleCycle(graph, edgesOfNewCycle);
+						
+						if (cycle.weight() > ((SimpleCycle)cycles.get(i)).weight()) {
+							break;
+						}
+						
+						result.put(cycle, (SimpleCycle)cycles.get(i));
+					}
+					
 				}
 				
 			}
@@ -948,11 +998,11 @@ public class SimpleCycleBasis {
 				//vertexArray[j] = vertex;
 				//vertexArray[j + graph.vertexSet().size()] = vertex;
 				
-				Object newVertex0 = new Integer(k);
+				Object newVertex0 = vertex + "-0";
 				vertexMap0.put(vertex, newVertex0);
 				addVertex(newVertex0);
 				
-				Object newVertex1 = new Integer(-k);
+				Object newVertex1 = vertex + "-1";
 				vertexMap1.put(vertex, newVertex1);
 				addVertex(newVertex1);
 			}

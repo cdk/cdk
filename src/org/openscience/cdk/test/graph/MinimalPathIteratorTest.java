@@ -59,6 +59,9 @@ public class MinimalPathIteratorTest extends TestCase {
 		 g.addVertex( "k" );
 		 g.addVertex( "l" );
 		 
+		 g.addVertex( "m" );
+		 g.addVertex( "n" );
+		 
 		 g.addEdge( "a", "b" );
 		 g.addEdge( "b", "c" );
 		 g.addEdge( "c", "d" );
@@ -81,6 +84,10 @@ public class MinimalPathIteratorTest extends TestCase {
 		 g.addEdge( "j", "k" );
 		 g.addEdge( "k", "l" );
 		 
+		 g.addEdge( "l", "m" );
+		 g.addEdge( "l", "n" );
+		 g.addEdge( "m", "n" );
+
 		 int count = 0;
 		 for (MinimalPathIterator i = new MinimalPathIterator(g, "a", "l"); i.hasNext();) {
 		 	assertTrue(((List)i.next()).size() == 5);

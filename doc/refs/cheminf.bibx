@@ -5,6 +5,23 @@
 
   <!-- This file is preferable edited in jEdit with the XML plugin installed -->
   
+  <bibtex:entry id="BGdV04a">
+    <bibtex:unpublished>
+      <bibtex:title>Minimum cycle bases for network graphs</bibtex:title>
+      <bibtex:journal>Algorithmica</bibtex:journal>
+      <bibtex:note>To appear.</bibtex:note>
+      <bibtex:year>2004</bibtex:year>
+    </bibtex:unpublished>
+  </bibtex:entry>
+  
+  <bibtex:entry id="BGdV04b">
+    <bibtex:unpublished>
+      <bibtex:title>Computing Cyclic Invariants for Molecular Graphs</bibtex:title>
+      <bibtex:note>In preperation.</bibtex:note>
+      <bibtex:year>2004</bibtex:year>
+    </bibtex:unpublished>
+  </bibtex:entry>
+
   <bibtex:entry id="BLE91">
     <bibtex:article>
       <bibtex:author>Bley, K. and Brandt, J. and Dengler, A. and

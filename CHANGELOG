@@ -5,6 +5,7 @@ Changes in CVS
 ------------------------------------
 New:
 Fixes:
+* Faster SSSR algorithms
 API changes:
 
 20040917 Release

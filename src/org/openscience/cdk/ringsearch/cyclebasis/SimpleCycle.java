@@ -145,9 +145,8 @@ public class SimpleCycle extends UndirectedSubgraph {
 		return vertexList().toString();
 	}
 	
-    public int hashCode() {
-        return edgeSet().hashCode();
-}
+	public int hashCode() {
+		return edgeSet().hashCode();
+	}
 
-	
 }
