@@ -118,7 +118,7 @@ public class SmilesGenerator {
   /**
    * Gives the angle between two lines starting at atom from and going to
    * to1 and to2. If bool=false the angle starts from the middle line and goes from
-   * 0 to PI or o to -PI if the to2 is on the left or right side of the line. If bool=true
+   * 0 to PI or 0 to -PI if the to2 is on the left or right side of the line. If bool=true
    * the angle goes from 0 to 2PI.
    *
    * @param from  the atom to view from.
@@ -953,31 +953,11 @@ public class SmilesGenerator {
    *
    */
   private boolean isLeft(Atom whereIs, Atom viewFrom, Atom viewTo){
-    double[] A=new double[2];
-    viewFrom.getPoint2D().get(A);
-    double[] B=new double[2];
-    viewTo.getPoint2D().get(B);
-    double[] C=new double[2];
-    whereIs.getPoint2D().get(C);
-    double[] D=new double[2];
-    whereIs.getPoint2D().get(D);
-    D[0]=D[0]-1;
-    double d0 = A[0]*B[1] - A[1]*B[0];
-    double d1 = C[0]*D[1] - C[1]*D[0];
-    double den = (B[1]-A[1])*(C[0]-D[0]) - (A[0]-B[0])*(D[1]-C[1]);
-    double x = (d0*(C[0]-D[0]) - d1*(A[0]-B[0])) / den;
-    double y = (d1*(B[1]-A[1]) - d0*(D[1]-C[1])) / den;
-    if(y>C[1]){
-      if(x>C[0])
-        return false;
-      else
-        return true;
-    } else {
-      if(x>C[0])
-        return true;
-      else
-        return false;
-    }
+    double angle=giveAngleBothMethods(viewFrom, viewTo, whereIs, false);
+    if(angle<0)
+      return(false);
+    else
+      return(true);
   }
 
   /**
