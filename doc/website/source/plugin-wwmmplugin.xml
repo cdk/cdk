@@ -26,7 +26,7 @@
         <title>Query WWMM Xindice Database</title>
         <mediaobject>
           <imageobject>
-            <imagedata fileref="graphics/screenshots/plugin-wwmmplugin.screenshot1.png" format="PNG"/>
+            <imagedata fileref="graphics/screenshots/plugin-wwmmplugin.screenshot1.png" width="640px" format="PNG"/>
           </imageobject>
         </mediaobject>
       </figure>
