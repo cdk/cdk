@@ -55,9 +55,8 @@
     &website-development;
   </part>
 
-  <part id="part:packages">
-    <title>Binary Packages</title>
-    &packages;
-  </part>
+  
+  <!-- PART on package development -->
+  &packages;
 
 </book>

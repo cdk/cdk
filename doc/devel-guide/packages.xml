@@ -1,3 +1,6 @@
+  <part id="part:packages">
+    <title>Binary Packages</title>
+
     <chapter id="sect:tarpackages">
       <title>Tar packages</title>
       <para>
@@ -70,3 +73,4 @@ ant dist-all
         Compilation requires that you have Java3D installed.
       </para>
     </chapter>
+  </part>
