@@ -800,22 +800,22 @@ public class Controller2D {
         private ChemObject getChemObjectInRange(int X, int Y) {
             ChemObject objectInRange = getAtomInRange(X,Y);
             if (objectInRange != null) {
-                logger.debug("Returning nearest Atom: " + objectInRange);
+                // logger.debug("Returning nearest Atom: " + objectInRange);
                 return objectInRange;
             }
             objectInRange = getBondInRange(X,Y);
             if (objectInRange != null) {
-                logger.debug("Returning nearest Bond: " + objectInRange);
+                // logger.debug("Returning nearest Bond: " + objectInRange);
                 return objectInRange;
             }
             objectInRange = getReactionInRange(X,Y);
             if (objectInRange != null) {
-                logger.debug("Returning nearest Reaction: " + objectInRange);
+                // logger.debug("Returning nearest Reaction: " + objectInRange);
                 return objectInRange;
             }
             /* chemModel covers whole of editing window, and if nothing
                more interesting is near, then them model is in range. */
-            logger.debug("Returning nearest ChemModel: " + chemModel);
+            // logger.debug("Returning nearest ChemModel: " + chemModel);
             return chemModel;
         }
 
