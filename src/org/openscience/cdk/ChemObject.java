@@ -58,7 +58,7 @@ public class ChemObject implements java.io.Serializable, Cloneable {
 	 * flag array with self-defined constants (flags[VISITED] = true).
 	 * 100 flags per object should be more than enough.
 	 */
-    private boolean[] flags = new boolean[CDKConstants.MAX_FLAG_INDEX + 1];
+    private boolean[] flags;
 
 	/** 
      * Array of multipurpose vectors. Handle like described for the
@@ -101,7 +101,7 @@ public class ChemObject implements java.io.Serializable, Cloneable {
 	 * @param   col  the ChemObjectListener
      * @see     #removeListener
 	 */
-	public void addListener(final ChemObjectListener col)
+	public void addListener(ChemObjectListener col)
 	{
 	    Vector listeners = lazyChemObjects();
 
@@ -122,7 +122,7 @@ public class ChemObject implements java.io.Serializable, Cloneable {
 	 * @param   col  The ChemObjectListener to be removed
      * @see     #addListener
 	 */
-	public void removeListener(final ChemObjectListener col)
+	public void removeListener(ChemObjectListener col)
 	{
 	    Vector listeners = lazyChemObjects();
 
@@ -165,7 +165,7 @@ public class ChemObject implements java.io.Serializable, Cloneable {
      * @see     #getProperty
      * @see     #removeProperty
 	 */
-	public void setProperty(final Object description, final Object property) {
+	public void setProperty(Object description, Object property) {
 		lazyProperties().put(description, property);
 	}
 
@@ -176,7 +176,7 @@ public class ChemObject implements java.io.Serializable, Cloneable {
      * @see     #setProperty
      * @see     #getProperty
 	 */
-	public void removeProperty(final Object description) {
+	public void removeProperty(Object description) {
 		lazyProperties().remove(description);
 	}
 
@@ -188,7 +188,7 @@ public class ChemObject implements java.io.Serializable, Cloneable {
      * @see     #setProperty
      * @see     #removeProperty
 	 */
-	public Object getProperty(final Object description) {
+	public Object getProperty(Object description) {
 		return lazyProperties().get(description);
 	}
 
@@ -203,25 +203,21 @@ public class ChemObject implements java.io.Serializable, Cloneable {
     }
 	
 	/**
-	 * Clones this object.
+	 * Clones this <code>ChemObject</code> by applying a deep copy.
 	 *
 	 * @return  The cloned object
 	 */
-	public Object clone()
-	{
+	public Object clone() {
 		Object clone = null;
-		try
-		{
+		try {
 			clone = super.clone();
-		}
-		catch (CloneNotSupportedException e)
-		{
+		} catch (CloneNotSupportedException e) {
 			e.printStackTrace(System.err);
 		}
+        // clone the flags
 		((ChemObject)clone).flags = new boolean[CDKConstants.MAX_FLAG_INDEX + 1];
-		for (int f = 0; f < flags.length; f++)
-		{
-			((ChemObject)clone).flags[f] = flags[f];	
+		for (int f = 0; f < flags.length; f++) {
+			((ChemObject)clone).flags[f] = flags[f];
 		}
 		return clone;
 	}
@@ -232,7 +228,7 @@ public class ChemObject implements java.io.Serializable, Cloneable {
      * @param  object Object of type AtomType
      * @return        Return true, if the atomtypes are equal
      */
-    public boolean compare(final Object object) {
+    public boolean compare(Object object) {
         if (!(object instanceof ChemObject)) {
             return false;
         }
@@ -259,7 +255,7 @@ public class ChemObject implements java.io.Serializable, Cloneable {
      * @param identifier  a String representing the ID value
      * @see #getID
      */
-    public void setID(final String identifier) {
+    public void setID(String identifier) {
         this.identifier = identifier;
     }
     
@@ -270,7 +266,7 @@ public class ChemObject implements java.io.Serializable, Cloneable {
      * @param  flag_value Value to assign to flag
      * @see    #getFlag
      */
-    public void setFlag(final int flag_type, final boolean flag_value) {
+    public void setFlag(int flag_type, boolean flag_value) {
         flags[flag_type] = flag_value;
     }
     
@@ -281,7 +277,7 @@ public class ChemObject implements java.io.Serializable, Cloneable {
      * @return true if the flag <code>flag_type</code> is set
      * @see    #setFlag
      */
-    public boolean getFlag(final int flag_type) {
+    public boolean getFlag(int flag_type) {
         return flags[flag_type];
     }
 
@@ -325,13 +321,30 @@ public class ChemObject implements java.io.Serializable, Cloneable {
      * @param properties  a Hashtable specifying the property values
      * @see #getProperties
 	 */
-	public void setProperties(final Hashtable properties) {
+	public void setProperties(Hashtable properties) {
         Enumeration keys = properties.keys();
         while (keys.hasMoreElements()) {
             Object key = keys.nextElement();
-            this.properties.put(key, properties.get(key));
+            lazyProperties().put(key, properties.get(key));
         }
 	}
+
+
+    /**
+     * Clones this <code>ChemObject</code>, but preserves references to <code>Object</code>s.
+     *
+     * @return    Shallow copy of this ChemObject
+     * @see       #clone
+     */
+    public Object shallowCopy() {
+        Object copy = null;
+        try {
+            copy = super.clone();
+        } catch (Exception e) {
+            e.printStackTrace(System.err);
+        }
+        return copy;
+    }
 
 }
 
