@@ -28,14 +28,21 @@
     </target>
 
     <target id="convertToBibTex" name="convertToBibTex">
-        <!-- biblio.bib is used for latex source -->
-        
+        <!-- cheminf.bib is used for latex source -->
         <java jar="../jar/jabref.jar" fork="yes">
             <arg value="--nogui"/>
             <arg value="--import"/>
             <arg value="cheminf.bibx,bibtexml"/>
             <arg value="--output"/>
             <arg value="cheminf.bib"/>
+        </java>
+        <!-- cdknews.bib is used for on the website -->
+        <java jar="../jar/jabref.jar" fork="yes">
+            <arg value="--nogui"/>
+            <arg value="--import"/>
+            <arg value="cdknews.bibx,bibtexml"/>
+            <arg value="--output"/>
+            <arg value="cdknews.bib"/>
         </java>
     </target>
 
