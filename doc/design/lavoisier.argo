@@ -33,15 +33,15 @@
     <stat name="dblClicksInToDoPane"
          value="0" />
     <stat name="longestToDoList"
-         value="122" />
+         value="52" />
     <stat name="longestAdd"
          value="0" />
     <stat name="longestHot"
          value="0" />
     <stat name="numCriticsFired"
-         value="146487" />
+         value="25790" />
     <stat name="numNotValid"
-         value="99" />
+         value="10" />
     <stat name="numCriticsApplied"
          value="0" />
     <stat name="toDoPerspectivesChanged"
@@ -49,7 +49,7 @@
     <stat name="navPerspectivesChanged"
          value="0" />
     <stat name="clicksInNavPane"
-         value="90" />
+         value="0" />
     <stat name="numFinds"
          value="0" />
     <stat name="numJumpToRelated"
@@ -67,10 +67,10 @@
     <stat name="numChecks"
          value="0" />
     <stat name="Num_Button_Clicks"
-         value="24" />
+         value="2" />
     <stat name="Drags_To_New"
          value="1" />
     <stat name="Drags_To_Existing"
-         value="23" />
+         value="3" />
   </stats>
 </argo>
