@@ -49,52 +49,52 @@ public class AtomValenceDescriptor implements Descriptor {
 
 	private int targetPosition = 0;
 	private LoggingTool logger;
-	private static Hashtable valences;
+	public Hashtable valencesTable;
 	
 	/**
 	 *  Constructor for the AtomValenceDescriptor object
 	 */
 	public AtomValenceDescriptor() {
 		logger = new LoggingTool(this);
-		if (valences == null) { 
-		valences = new Hashtable();
-		valences.put("Li", new Integer(1));
-		valences.put("Be", new Integer(2));
-		valences.put("B", new Integer(3));
-		valences.put("C", new Integer(4));
-		valences.put("N", new Integer(5));
-		valences.put("O", new Integer(6));
-		valences.put("F", new Integer(7));
-		valences.put("Na", new Integer(1));
-		valences.put("Mg", new Integer(2));
-		valences.put("Al", new Integer(3));
-		valences.put("Si", new Integer(4));
-		valences.put("P", new Integer(5));
-		valences.put("S", new Integer(6));
-		valences.put("Cl", new Integer(7));
-		valences.put("K", new Integer(1));
-		valences.put("Ca", new Integer(2));
-		valences.put("Ga", new Integer(3));
-		valences.put("Ge", new Integer(4));
-		valences.put("As", new Integer(5));
-		valences.put("Se", new Integer(6));
-		valences.put("Br", new Integer(7));
-		valences.put("Rb", new Integer(1));
-		valences.put("Sr", new Integer(2));
-		valences.put("In", new Integer(3));
-		valences.put("Sn", new Integer(4));
-		valences.put("Sb", new Integer(5));
-		valences.put("Te", new Integer(6));
-		valences.put("I", new Integer(7));
-		valences.put("Cs", new Integer(1));
-		valences.put("Ba", new Integer(2));
-		valences.put("Tl", new Integer(3));
-		valences.put("Pb", new Integer(4));
-		valences.put("Bi", new Integer(5));
-		valences.put("Po", new Integer(6));
-		valences.put("At", new Integer(7));
-		valences.put("Fr", new Integer(1));
-		valences.put("Ra", new Integer(2));	    
+		if (valencesTable == null) { 
+		valencesTable = new Hashtable();
+		valencesTable.put("Li", new Integer(1));
+		valencesTable.put("Be", new Integer(2));
+		valencesTable.put("B", new Integer(3));
+		valencesTable.put("C", new Integer(4));
+		valencesTable.put("N", new Integer(5));
+		valencesTable.put("O", new Integer(6));
+		valencesTable.put("F", new Integer(7));
+		valencesTable.put("Na", new Integer(1));
+		valencesTable.put("Mg", new Integer(2));
+		valencesTable.put("Al", new Integer(3));
+		valencesTable.put("Si", new Integer(4));
+		valencesTable.put("P", new Integer(5));
+		valencesTable.put("S", new Integer(6));
+		valencesTable.put("Cl", new Integer(7));
+		valencesTable.put("K", new Integer(1));
+		valencesTable.put("Ca", new Integer(2));
+		valencesTable.put("Ga", new Integer(3));
+		valencesTable.put("Ge", new Integer(4));
+		valencesTable.put("As", new Integer(5));
+		valencesTable.put("Se", new Integer(6));
+		valencesTable.put("Br", new Integer(7));
+		valencesTable.put("Rb", new Integer(1));
+		valencesTable.put("Sr", new Integer(2));
+		valencesTable.put("In", new Integer(3));
+		valencesTable.put("Sn", new Integer(4));
+		valencesTable.put("Sb", new Integer(5));
+		valencesTable.put("Te", new Integer(6));
+		valencesTable.put("I", new Integer(7));
+		valencesTable.put("Cs", new Integer(1));
+		valencesTable.put("Ba", new Integer(2));
+		valencesTable.put("Tl", new Integer(3));
+		valencesTable.put("Pb", new Integer(4));
+		valencesTable.put("Bi", new Integer(5));
+		valencesTable.put("Po", new Integer(6));
+		valencesTable.put("At", new Integer(7));
+		valencesTable.put("Fr", new Integer(1));
+		valencesTable.put("Ra", new Integer(2));	    
 	    }
 	}
 
@@ -153,7 +153,7 @@ public class AtomValenceDescriptor implements Descriptor {
 	public DescriptorValue calculate(AtomContainer container) throws CDKException {
 		int atomValence = 0;
 		String symbol = container.getAtomAt(targetPosition).getSymbol();
-		atomValence = ((Integer)valences.get(symbol)).intValue();
+		atomValence = ((Integer)valencesTable.get(symbol)).intValue();
 		return new DescriptorValue(getSpecification(), getParameters(), new IntegerResult(atomValence));
 	}
 
