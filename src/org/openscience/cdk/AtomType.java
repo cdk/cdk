@@ -238,7 +238,7 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
      */
     public void setHybridization(int hybridization) {
         this.hybridization = hybridization;
-	notifyChanged();
+        notifyChanged();
     }
     
     /**
