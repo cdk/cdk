@@ -36,17 +36,14 @@ import java.util.Vector;
   *
   * @keyword    ring
   */
-public class Ring extends AtomContainer
-{
+public class Ring extends AtomContainer {
 
 	/**
 	 * constructs an empty ring.
 	 *
 	 */
-	public Ring()
-	{
+	public Ring() {
 		super();
-		
 	}
 	
 	/**
@@ -55,29 +52,26 @@ public class Ring extends AtomContainer
 	 * @param   ringSize   The number of atoms and bonds the ring will have
 	 * @param   elementSymbol   The element of the atoms the ring will have
 	 */
-	public Ring(int ringSize, String elementSymbol)
-	{
-		super(ringSize, ringSize);
+	public Ring(int ringSize, String elementSymbol) {
+		this(ringSize);
 		Atom[] atoms = new Atom[ringSize];
 		atoms[0] = new Atom(elementSymbol);
-		for (int i = 1; i < ringSize; i++)
-		{
+		for (int i = 1; i < ringSize; i++) {
 			atoms[i] = new Atom(elementSymbol);
-			super.addElectronContainer(new Bond(atoms[i - 1], atoms[i], 1));
+			addElectronContainer(new Bond(atoms[i - 1], atoms[i], 1));
 		}
-		super.addElectronContainer(new Bond(atoms[ringSize - 1], atoms[0], 1));
-		super.atoms = atoms;
+		addElectronContainer(new Bond(atoms[ringSize - 1], atoms[0], 1));
+		setAtoms(atoms);
 	}
 	
 		
 	/**
-	 * constructs a ring that will have a certain size.
+	 * Constructs an empty ring that will have a certain size.
 	 *
 	 * @param   ringSize  The size (number of atoms) the ring will have
 	 */
 
-	public Ring(int ringSize)
-	{
+	public Ring(int ringSize) {
 		super(ringSize, ringSize);
 	}
 	
@@ -88,8 +82,7 @@ public class Ring extends AtomContainer
 	 * @return   The number of atoms\edges in this ring   
 	 */
 
-	public int getRingSize()
-	{
+	public int getRingSize() {
 		return this.atomCount;
 	}
 	
