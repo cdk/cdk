@@ -206,7 +206,7 @@ public class ReactionTest extends TestCase {
         reaction.addReactant(sodiumhydroxide);
         reaction.addReactant(aceticAcid);
         reaction.addReactant(water);
-        assertEquals(3, reaction.getReactants().length);
+        assertEquals(3, reaction.getReactants().getMolecules().length);
     }
 	
     public void testGetProducts() {
@@ -217,7 +217,7 @@ public class ReactionTest extends TestCase {
         reaction.addProduct(sodiumhydroxide);
         reaction.addProduct(aceticAcid);
         reaction.addProduct(water);
-        assertEquals(3, reaction.getProducts().length);
+        assertEquals(3, reaction.getProducts().getMolecules().length);
     }
     
     public void testSetDirection() {

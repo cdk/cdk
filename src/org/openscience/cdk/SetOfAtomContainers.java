@@ -75,6 +75,45 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
 	}
 
 	/**
+     * Sets the coefficient of a AtomContainer to a given value.
+     *
+     * @return  true if AtomContainer was found and multiplier set.
+     */
+    public boolean setMultiplier(AtomContainer container, double multiplier) {
+        for (int i=0; i<atomContainers.length; i++) {
+            if (atomContainers[i] == container) {
+                multipliers[i] = multiplier;
+                return true;
+            }
+        }
+        return false;
+    }
+
+	/**
+     * Returns an array of double with the stoichiometric coefficients
+	 * of the products.
+     */
+    public double[] getMultipliers() {
+        double[] returnArray = new double[this.atomContainerCount];
+        System.arraycopy(this.multipliers, 0, returnArray, 0, this.atomContainerCount);
+        return returnArray;
+    }
+    
+	/**
+     * Sets the multipliers of the AtomContainers.
+     *
+     * @return  true if multipliers have been set.
+     */
+    public boolean setMultipliers(double[] newMultipliers) {
+        if (newMultipliers.length == atomContainerCount) {
+			System.arraycopy(newMultipliers, 0, multipliers, 0, atomContainerCount);
+			return true;
+		}
+		
+        return false;
+    }
+
+	/**
 	 * Adds an atomContainer to this container with the given
      * multiplier.
 	 *

@@ -138,12 +138,12 @@ public class BasicValidator implements ValidatorInterface {
     public ValidationReport validateReaction(Reaction subject) {
         ValidationReport report = new ValidationReport();
         AtomContainer container1 = new AtomContainer();
-        Molecule[] reactants = subject.getReactants();
+        Molecule[] reactants = subject.getReactants().getMolecules();
         for (int i=0; i<reactants.length; i++) {
             container1.add(reactants[i]);
         }
         AtomContainer container2 = new AtomContainer();
-        Molecule[] products = subject.getProducts();
+        Molecule[] products = subject.getProducts().getMolecules();
         for (int i=0; i<products.length; i++) {
             container2.add(products[i]);
         }

@@ -341,7 +341,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
         // first reaction properties
         writeProperties(reaction);
         // now come reactants and products
-        Molecule[] reactants = reaction.getReactants();
+        Molecule[] reactants = reaction.getReactants().getMolecules();
         if (reactants.length > 0) {
             writeOpenTag("reactantList");
             for (int i=0; i<reactants.length; i++) {
@@ -351,7 +351,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
             }
             writeCloseTag("reactantList");
         }
-        Molecule[] products = reaction.getProducts();
+        Molecule[] products = reaction.getProducts().getMolecules();
         if (products.length > 0) {
             writeOpenTag("productList");
             for (int i=0; i<products.length; i++) {

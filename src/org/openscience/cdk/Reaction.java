@@ -51,13 +51,8 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
     
 	protected int growArraySize = 3;
 
-    protected Molecule[] reactants;
-    protected double[] reactantStoichiometry;
-    protected int reactantCount;
-
-    protected Molecule[] products;
-    protected double[] productStoichiometry;
-    protected int productCount;
+    protected SetOfMolecules reactants;
+    protected SetOfMolecules products;
     
     protected Mapping[] map;
     protected int mappingCount;
@@ -68,12 +63,8 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      * Constructs an empty, forward reaction.
      */
     public Reaction() {
-        this.reactants = new Molecule[growArraySize];
-        this.reactantStoichiometry = new double[growArraySize];
-        reactantCount = 0;
-        this.products = new Molecule[growArraySize];
-        this.productStoichiometry = new double[growArraySize];
-        productCount = 0;
+        this.reactants = new SetOfMolecules();
+        this.products = new SetOfMolecules();
         this.map = new Mapping[growArraySize];
         mappingCount = 0;
         reactionDirection = FORWARD;
@@ -83,34 +74,30 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      * Returns the number of reactants in this reaction.
      */
     public int getReactantCount() {
-        return reactantCount;
+        return reactants.getAtomContainerCount();
     }
     
     /**
      * Returns the number of products in this reaction.
      */
     public int getProductCount() {
-        return productCount;
+        return products.getAtomContainerCount();
     }
 
     /**
      * Returns an array of Molecule with a length matching he number
      * of reactants in this reaction.
      */
-    public Molecule[] getReactants() {
-        Molecule[] returnReactants = new Molecule[getReactantCount()];
-        System.arraycopy(this.reactants, 0, returnReactants, 0, returnReactants.length);
-        return returnReactants;
+    public SetOfMolecules getReactants() {
+        return reactants;
     }
 
     /**
      * Returns an array of Molecule with a length matching he number
      * of products in this reaction.
      */
-    public Molecule[] getProducts() {
-        Molecule[] returnProducts = new Molecule[getProductCount()];
-        System.arraycopy(this.products, 0, returnProducts, 0, returnProducts.length);
-        return returnProducts;
+    public SetOfMolecules getProducts() {
+        return products;
     }
     
     /**
@@ -129,7 +116,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      * @param reactant   Molecule added as reactant to this reaction
      */
     public void addReactant(Molecule reactant) {
-        this.addReactant(reactant, 1.0);
+        addReactant(reactant, 1.0);
     }
     
     /**
@@ -139,10 +126,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      * @param coefficient Stoichiometry coefficient for this molecule
      */
     public void addReactant(Molecule reactant, double coefficient) {
-        if (reactantCount + 1 >= reactants.length) growReactantArray();
-        reactants[reactantCount] = reactant;
-        reactantStoichiometry[reactantCount] = coefficient;
-        reactantCount++;
+        reactants.addAtomContainer(reactant, coefficient);
     }
     
     /**
@@ -161,10 +145,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      * @param coefficient Stoichiometry coefficient for this molecule
      */
     public void addProduct(Molecule product, double coefficient) {
-        if (productCount + 1 >= products.length) growProductArray();
-        products[productCount] = product;
-        productStoichiometry[productCount] = coefficient;
-        productCount++;
+        products.addAtomContainer(product, coefficient);
     }
     
     /**
@@ -173,12 +154,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      * @return -1, if the given molecule is not a product in this Reaction
      */
     public double getReactantCoefficient(Molecule reactant) {
-        for (int i=0; i<reactantCount; i++) {
-            if (reactants[i].equals(reactant)) {
-                return reactantStoichiometry[i];
-            }
-        }
-        return -1.0;
+        return reactants.getAtomContainerMultiplier(reactant);
     }
     
     /**
@@ -187,12 +163,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      * @return -1, if the given molecule is not a product in this Reaction
      */
     public double getProductCoefficient(Molecule product) {
-        for (int i=0; i<productCount; i++) {
-            if (products[i].equals(product)) {
-                return productStoichiometry[i];
-            }
-        }
-        return -1.0;
+        return products.getAtomContainerMultiplier(product);
     }
 	
 	/**
@@ -201,13 +172,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      * @return  true if Molecule has been found and stoichiometry has been set.
      */
     public boolean setReactantCoefficient(Molecule reactant, double coefficient) {
-        for (int i=0; i<reactantCount; i++) {
-            if (reactants[i].equals(reactant)) {
-                reactantStoichiometry[i] = coefficient;
-				return true;
-            }
-        }
-        return false;
+        return reactants.setMultiplier(reactant, coefficient);
     }
 	
 	    
@@ -217,13 +182,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      * @return  true if Molecule has been found and stoichiometry has been set.
      */
     public boolean setProductCoefficient(Molecule product, double coefficient) {
-        for (int i=0; i<productCount; i++) {
-            if (products[i].equals(product)) {
-                productStoichiometry[i] = coefficient;
-				return true;
-            }
-        }
-        return false;
+        return products.setMultiplier(product, coefficient);
     }
 	
 	/**
@@ -231,9 +190,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
 	 * of the reactants.
      */
     public double[] getReactantCoefficients() {
-        double[] returnCoeff = new double[this.reactantCount];
-        System.arraycopy(this.reactantStoichiometry, 0, returnCoeff, 0, this.reactantCount);
-        return returnCoeff;
+        return reactants.getMultipliers();
     }
 	
 	/**
@@ -241,9 +198,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
 	 * of the products.
      */
     public double[] getProductCoefficients() {
-        double[] returnCoeff = new double[this.productCount];
-        System.arraycopy(this.productStoichiometry, 0, returnCoeff, 0, this.productCount);
-        return returnCoeff;
+        return products.getMultipliers();
     }
 	
 	
@@ -253,12 +208,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      * @return  true if coefficients have been set.
      */
     public boolean setReactantCoefficients(double[] reactantCoefficients) {
-        if (reactantCoefficients.length == reactantCount) {
-			System.arraycopy(reactantCoefficients, 0, reactantStoichiometry, 0, reactantCount);
-			return true;
-		}
-		
-        return false;
+        return reactants.setMultipliers(reactantCoefficients);
     }
 	
 	/**
@@ -267,12 +217,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      * @return  true if coefficients have been set.
      */
     public boolean setProductCoefficients(double[] productCoefficients) {
-        if (productCoefficients.length == productCount) {
-			System.arraycopy(productCoefficients, 0, productStoichiometry, 0, productCount);
-			return true;
-		}
-		
-        return false;
+        return products.setMultipliers(productCoefficients);
     }
 	
     /**
@@ -295,24 +240,6 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
         mappingCount++;
     }
     
-    protected void growReactantArray() {
-        Molecule[] newReactants = new Molecule[reactants.length + growArraySize];
-        System.arraycopy(reactants, 0, newReactants, 0, reactants.length);
-        reactants = newReactants;
-        double[] newCoeffs = new double[reactantStoichiometry.length + growArraySize];
-        System.arraycopy(reactantStoichiometry, 0, newCoeffs, 0, reactantStoichiometry.length);
-        reactantStoichiometry = newCoeffs;
-    }
-    
-    protected void growProductArray() {
-        Molecule[] newProducts = new Molecule[products.length + growArraySize];
-        System.arraycopy(products, 0, newProducts, 0, products.length);
-        products = newProducts;
-        double[] newCoeffs = new double[productStoichiometry.length + growArraySize];
-        System.arraycopy(productStoichiometry, 0, newCoeffs, 0, productStoichiometry.length);
-        productStoichiometry = newCoeffs;
-    }
-
     protected void growMappingArray() {
         Mapping[] newMap = new Mapping[map.length + growArraySize];
         System.arraycopy(map, 0, newMap, 0, map.length);
@@ -329,17 +256,9 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
         StringBuffer description = new StringBuffer();
         description.append("Reaction(");
         description.append(getID() + ", ");
-        description.append("#R:" + reactantCount + ", ");
-        description.append("#P:" + productCount + ", ");
         description.append("#M:" + mappingCount + ", ");
-        Molecule[] reactants = getReactants();
-        for (int i=0; i<reactantCount; i++) {
-            description.append(reactants[i].toString());
-        }
-        Molecule[] products = getProducts();
-        for (int i=0; i<productCount; i++) {
-            description.append(products[i].toString());
-        }
+        description.append("reactants=" + reactants.toString() + ", ");
+        description.append("products=" + products.toString() + ", ");
         description.append(")");
         return description.toString();
     }

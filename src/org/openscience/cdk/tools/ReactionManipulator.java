@@ -42,14 +42,14 @@ import org.openscience.cdk.SetOfMolecules;
 public class ReactionManipulator {
     
     public static void removeAtomAndConnectedElectronContainers(Reaction reaction, Atom atom) {
-        Molecule[] reactants = reaction.getReactants();
+        Molecule[] reactants = reaction.getReactants().getMolecules();
         for (int i=0; i<reactants.length; i++) {
             Molecule mol = reactants[i];
             if (mol.contains(atom)) {
                 mol.removeAtomAndConnectedElectronContainers(atom);
             }
         }
-        Molecule[] products = reaction.getProducts();
+        Molecule[] products = reaction.getProducts().getMolecules();
         for (int i=0; i<products.length; i++) {
             Molecule mol = products[i];
             if (mol.contains(atom)) {
@@ -59,14 +59,14 @@ public class ReactionManipulator {
     }
     
     public static void removeElectronContainer(Reaction reaction, ElectronContainer electrons) {
-        Molecule[] reactants = reaction.getReactants();
+        Molecule[] reactants = reaction.getReactants().getMolecules();
         for (int i=0; i<reactants.length; i++) {
             Molecule mol = reactants[i];
             if (mol.contains(electrons)) {
                 mol.removeElectronContainer(electrons);
             }
         }
-        Molecule[] products = reaction.getProducts();
+        Molecule[] products = reaction.getProducts().getMolecules();
         for (int i=0; i<products.length; i++) {
             Molecule mol = products[i];
             if (mol.contains(electrons)) {
@@ -80,12 +80,12 @@ public class ReactionManipulator {
         if (reaction == null) {
             return container;
         }
-        Molecule[] reactants = reaction.getReactants();
+        Molecule[] reactants = reaction.getReactants().getMolecules();
         for (int i=0; i<reactants.length; i++) {
             Molecule molecule = reactants[i];
             container.add(molecule);
         }
-        Molecule[] products = reaction.getProducts();
+        Molecule[] products = reaction.getProducts().getMolecules();
         for (int i=0; i<products.length; i++) {
             Molecule molecule = products[i];
             container.add(molecule);
@@ -95,11 +95,11 @@ public class ReactionManipulator {
     
     public static SetOfMolecules getAllMolecules(Reaction reaction) {
         SetOfMolecules moleculeSet = new SetOfMolecules();
-        Molecule[] reactants = reaction.getReactants();
+        Molecule[] reactants = reaction.getReactants().getMolecules();
         for (int i=0; i<reactants.length; i++) {
             moleculeSet.addMolecule(reactants[i]);
         }
-        Molecule[] products = reaction.getProducts();
+        Molecule[] products = reaction.getProducts().getMolecules();
         for (int i=0; i<products.length; i++) {
             moleculeSet.addMolecule(products[i]);
         }
@@ -119,12 +119,12 @@ public class ReactionManipulator {
         } else if (reaction.getDirection() == Reaction.BACKWARD) {
             reversedReaction.setDirection(Reaction.FORWARD);
         }
-        Molecule[] reactants = reaction.getReactants();
+        Molecule[] reactants = reaction.getReactants().getMolecules();
         for (int i=0; i<reactants.length; i++) {
             double coefficient = reaction.getReactantCoefficient(reactants[i]);
             reversedReaction.addProduct(reactants[i], coefficient);
         }
-        Molecule[] products = reaction.getProducts();
+        Molecule[] products = reaction.getProducts().getMolecules();
         for (int i=0; i<products.length; i++) {
             double coefficient = reaction.getProductCoefficient(products[i]);
             reversedReaction.addReactant(products[i], coefficient);
@@ -146,13 +146,13 @@ public class ReactionManipulator {
      * ChemModel is best suited to contain added Atom's and Bond's.
      */
     public static AtomContainer getRelevantAtomContainer(Reaction reaction, Atom atom) {
-        Molecule[] reactants = reaction.getReactants();
+        Molecule[] reactants = reaction.getReactants().getMolecules();
         for (int j=0; j<reactants.length;j++) {
             if (reactants[j].contains(atom)) {
                 return reactants[j];
             }
         }
-        Molecule[] products = reaction.getProducts();
+        Molecule[] products = reaction.getProducts().getMolecules();
         for (int j=0; j<products.length; j++) {
             if (products[j].contains(atom)) {
                 return products[j];

@@ -312,11 +312,11 @@ public class ValidatorEngine implements ValidatorInterface {
         // traverse into super class
         report.addReport(validateChemObject(subject));
         // traverse into hierarchy
-        Molecule[] reactants = subject.getReactants();
+        Molecule[] reactants = subject.getReactants().getMolecules();
         for (int i=0; i<reactants.length; i++) {
             report.addReport(validateMolecule(reactants[i]));
         }
-        Molecule[] products = subject.getProducts();
+        Molecule[] products = subject.getProducts().getMolecules();
         for (int i=0; i<products.length; i++) {
             report.addReport(validateMolecule(products[i]));
         }

@@ -67,7 +67,7 @@ public class MDLRXNReaderTest extends TestCase {
 			assertEquals(2, reaction1.getReactantCount());
 			assertEquals(1, reaction1.getProductCount());
 			
-			Molecule[] educts = reaction1.getReactants();
+			Molecule[] educts = reaction1.getReactants().getMolecules();
 			// Check Atom symbols of first educt
 			String[] atomSymbolsOfEduct1 = { "C", "C", "O", "Cl"};
 			for (int i = 0; i < educts[0].getAtomCount(); i++) {
@@ -80,7 +80,7 @@ public class MDLRXNReaderTest extends TestCase {
 			}
 			
 			// Check Atom symbols of first product
-			Molecule[] products = reaction1.getProducts();
+			Molecule[] products = reaction1.getProducts().getMolecules();
 			String[] atomSymbolsOfProduct1 = { 
 				"C",
 				"C",

@@ -126,7 +126,7 @@ public class IDCreator {
     }
     public static void createIDs(Reaction reaction,
                            int containerOffset, int atomOffset, int bondOffset) {
-        AtomContainer[] reactants = reaction.getReactants();
+        AtomContainer[] reactants = reaction.getReactants().getAtomContainers();
         int atomCount = atomOffset;
         int bondCount = bondOffset;
         for (int i=0; i<reactants.length; i++) {
@@ -136,7 +136,7 @@ public class IDCreator {
             atomCount += container.getAtomCount();
             bondCount += container.getBondCount();
         }
-        AtomContainer[] products = reaction.getProducts();
+        AtomContainer[] products = reaction.getProducts().getAtomContainers();
         for (int i=0; i<products.length; i++) {
             AtomContainer container = products[i];
             container.setID("m" + (i+1+containerOffset));

@@ -148,13 +148,13 @@ public class Renderer2D implements MouseMotionListener   {
     public void paintReaction(Reaction reaction, Graphics graphics) {
         // calculate some boundaries
         AtomContainer reactantContainer = new AtomContainer();
-        Molecule[] reactants = reaction.getReactants();
+        Molecule[] reactants = reaction.getReactants().getMolecules();
         for (int i=0; i<reactants.length; i++) {
             reactantContainer.add(reactants[i]);
         }
         double[] minmaxReactants = GeometryTools.getMinMax(reactantContainer);
         AtomContainer productContainer = new AtomContainer();
-        Molecule[] products = reaction.getProducts();
+        Molecule[] products = reaction.getProducts().getMolecules();
         for (int i=0; i<products.length; i++) {
             productContainer.add(products[i]);
         }
