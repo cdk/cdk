@@ -8,19 +8,16 @@ import org.openscience.cdk.*;
 import org.openscience.cdk.modeling.forcefield.*;
 
 /**
- *  Potential function for testing
+ *  Potential function for testing forcefield classes
  *
- * @cdk.module applications
+ *@author     vlabarta
  *
- *@author     labarta
- *@created    2004-12-03
  */
 public class TestPotentialFunction implements PotentialFunction {
 	String functionShape = " f(X,Y) = X2 + 2 Y2 ";
 	String gradientShape = " g = ( 2x , 4y )";
 	double functionInWishedPoint = 0;
 	GVector gradientInWishedPoint = new GVector(3);
-	double slopeInWishedPoint = 1;
 
 
 	/**
@@ -34,7 +31,7 @@ public class TestPotentialFunction implements PotentialFunction {
 	/**
 	 *  Constructor for the TestPotentialFunction object
 	 *
-	 *@param  point  Description of the Parameter
+	 *@param  point  Coordinates from current point
 	 */
 	public TestPotentialFunction(GVector point) {
 		System.out.println("function shape : " + functionShape);
@@ -45,10 +42,10 @@ public class TestPotentialFunction implements PotentialFunction {
 
 
 	/**
-	 *  Description of the Method
+	 *  Evaluate the potential energy function in a given point
 	 *
-	 *@param  point  Description of the Parameter
-	 *@return        Description of the Return Value
+	 *@param  point  Coordinates from current point
+	 *@return        Function value
 	 */
 	public double functionInPoint(GVector point) {
 		functionInWishedPoint = ((point.getElement(0)) * (point.getElement(0))) + (2 * (point.getElement(1)) * (point.getElement(1)));
@@ -59,10 +56,10 @@ public class TestPotentialFunction implements PotentialFunction {
 //	public getFunctionInWishedPoint
 
 	/**
-	 *  Description of the Method
+	 *  Evaluate the gradient for the potential energy function in a given point
 	 *
-	 *@param  point  Description of the Parameter
-	 *@return        Description of the Return Value
+	 *@param  point  Coordinates from current point
+	 *@return        Gradient value
 	 */
 	public GVector gradientInPoint(GVector point) {
 	//	System.out.println("Evaluation of the gradient in point: " + point);
@@ -77,16 +74,5 @@ public class TestPotentialFunction implements PotentialFunction {
 		return gradientInWishedPoint;
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  point  Description of the Parameter
-	 *@return        Description of the Return Value
-	 */
-	public double slopeInPoint(GVector point) {
-		slopeInWishedPoint = (gradientInWishedPoint.getElement(1)) / (gradientInWishedPoint.getElement(0));
-		return slopeInWishedPoint;
-	}
 }
 
