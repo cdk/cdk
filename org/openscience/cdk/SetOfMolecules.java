@@ -1,4 +1,4 @@
-/* SeTOfMolecules.java
+/*
  * 
  * $RCSfile$    $Author$    $Date$    $Revision$
  * 

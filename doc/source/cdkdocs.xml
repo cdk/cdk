@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
-<!DOCTYPE book SYSTEM "file:/z:/documents/config/xml/dtd/docbookx/docbookx.dtd" [
+<!DOCTYPE book SYSTEM "file:/c:/home/documents/config/xml/dtd/docbookx/docbookx.dtd" [
 <!ENTITY about SYSTEM "about.xml">
 <!ENTITY intro SYSTEM "intro.xml">
 <!ENTITY projectref SYSTEM "projectref.xml">
+<!ENTITY projectref SYSTEM "reference.xml">
 ]>
 
 <book>
@@ -55,5 +56,6 @@
   </bookinfo>
   &intro;
   &projectref;
+  &progref;
   
   </book>

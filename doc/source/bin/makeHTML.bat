@@ -1,11 +1,12 @@
 set JAVA_HOME=c:\programme\jdk1.3\bin
 set XMLSOURCE=..\jcpdocs.xml
+set MY_HOME=c:\home
 REM set STYLESHEET=z:\documents\config\xml\xsl\docbook\html\chunk.xsl
 REM set STYLESHEET=z:\documents\config\xml\xsl\docbookx\docbook\html\docbook.xsl
 set STYLESHEET=..\lib\jcpdocs.xsl
 set OUTPUTFILE=..\..\htdocs\index.html
 set OUTPUTDIR="..\..\htdocs\"
-set CLASSPATH=z:\develop\classes\jar\xerces.jar;z:\develop\classes\jar\xalan.jar;z:\develop\classes\jar\saxon.jar;z:\develop\classes\jar\bsf.jar
+set CLASSPATH=%MY_HOME%\develop\classes\jar\xerces.jar;%MY_HOME%\develop\classes\jar\xalan.jar;%MY_HOME%\develop\classes\jar\saxon.jar;%MY_HOME%\develop\classes\jar\bsf.jar
 
 REM %JAVA_HOME%\java org.apache.xalan.xslt.Process -in %XMLSOURCE% -xsl %STYLESHEET% -out %OUTPUTDIR%
 

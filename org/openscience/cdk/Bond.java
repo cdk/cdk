@@ -237,6 +237,12 @@ public class Bond extends ElectronContainer implements Cloneable
 		this.stereo = stereo;
 	}
 	
+
+	/**
+	 * Returns the geometric 2D center of the bond
+	 *
+	 * @return The geometric 2D center of the bond
+	 */
 	public Point2d get2DCenter()
 	{
 		double x = 0, y = 0;
@@ -249,6 +255,12 @@ public class Bond extends ElectronContainer implements Cloneable
 	}
 	
 
+
+	/**
+	 * Returns the geometric 3D center of the bond
+	 *
+	 * @return The geometric 3D center of the bond    
+	 */
 	public Point3d get3DCenter()
 	{
 		double x = 0, y = 0, z = 0;
@@ -261,6 +273,21 @@ public class Bond extends ElectronContainer implements Cloneable
 		return new Point3d(x / getAtomCount(), y / getAtomCount(), z / getAtomCount());
 		
 	}
+
+	
+
+	/**
+	 * Returns the geometric length of this bond
+	 *
+	 * @return The geometric length of this bond
+	 */
+	public double getLength()
+	{
+		Point2d p1 = getAtomAt(0).getPoint2D();		
+		Point2d p2 = getAtomAt(1).getPoint2D();				
+		return p1.distance(p2);
+	}
+
 
 
 	/**
