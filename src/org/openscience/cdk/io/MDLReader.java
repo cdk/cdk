@@ -5,7 +5,7 @@
  *
  *  Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  *
- *  Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ *  Contact: cdk-devel@lists.sourceforge.net
  *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public License
@@ -45,17 +45,18 @@ import javax.vecmath.*;
  * <p>Additionally, it reads M  CHG and M  ISO lines from the property
  * block.
  *
- *@author     steinbeck
- *@created    October 2, 2000
- *@keyword    file format, MDL molfile
- *@keyword    file format, SDF
+ * @author     steinbeck
+ * @author     Egon Willighagen
+ * @created    October 2, 2000
+ * @keyword    file format, MDL molfile
+ * @keyword    file format, SDF
  */
 public class MDLReader implements ChemObjectReader
 {
 
-	BufferedReader input;
-
-	private org.openscience.cdk.tools.LoggingTool logger;
+    BufferedReader input = null;
+    private org.openscience.cdk.tools.LoggingTool logger = null;
+    private IsotopeFactory isotopeFactory = null;
 
 	/**
 	 *  Contructs a new MDLReader that can read Molecule from a given InputStream
@@ -73,8 +74,13 @@ public class MDLReader implements ChemObjectReader
 	 *@param  in  The Reader to read from
 	 */
 	public MDLReader(Reader in) {
-		logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
-		input = new BufferedReader(in);
+        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        input = new BufferedReader(in);
+        try {
+            isotopeFactory = IsotopeFactory.getInstance();
+        } catch (Exception exception) {
+            logger.error("Failed to initiate isotope factory: " + exception.toString());
+        }
 	}
 
 
@@ -182,14 +188,18 @@ public class MDLReader implements ChemObjectReader
             logger.info("Reading header");
             line = input.readLine(); linecount++;
             logger.debug("Line " + linecount + ": " + line);
-			String title = line + "\n";
+            if (line.length() > 0) {
+                molecule.setProperty(CDKConstants.TITLE, line);
+            }
             line = input.readLine(); linecount++;
             logger.debug("Line " + linecount + ": " + line);
-            title = line + "\n";
             line = input.readLine(); linecount++;
             logger.debug("Line " + linecount + ": " + line);
-            title = line + "\n";
-			molecule.setProperty(CDKConstants.TITLE, title);
+            if (line.length() > 0) {
+                molecule.setProperty(CDKConstants.REMARK, line);
+            }
+            
+            logger.info("Reading rest of file");
             line = input.readLine(); linecount++;
             logger.debug("Line " + linecount + ": " + line);
 			StringBuffer strBuff = new StringBuffer(line);
@@ -204,6 +214,8 @@ public class MDLReader implements ChemObjectReader
             logger.info("Reading atom block");
 			for (int f = 0; f < atoms; f++) {
                 line = input.readLine(); linecount++;
+                // FIXME: MDL molfile does not use whitespace, but column based
+                // field! This StringBuffer should not be used!
 				strBuff = new StringBuffer(line);
 				strTok = new StringTokenizer(strBuff.toString().trim());
 				x = new Double(strTok.nextToken()).doubleValue();
@@ -216,7 +228,19 @@ public class MDLReader implements ChemObjectReader
 				atom.setPoint2D(new Point2d(x, y));
 
                 // parse further fields
-                String dummy = strTok.nextToken();
+                String massDiffString = strTok.nextToken();
+                logger.debug("Mass difference: " + massDiffString);
+                try {
+                    int massDiff = Integer.parseInt(massDiffString);
+                    if (massDiff != 0) { 
+                        Isotope major = isotopeFactory.getMajorIsotope(element);
+                        atom.setAtomicNumber(major.getAtomicNumber() + massDiff);
+                    }
+                } catch (Exception exception) {
+                    logger.error("Could not parse mass difference field");
+                }
+                
+                
                 String chargeCodeString = strTok.nextToken();
                 logger.debug("Atom charge code: " + chargeCodeString);
                 int chargeCode = Integer.parseInt(chargeCodeString);
@@ -324,8 +348,12 @@ public class MDLReader implements ChemObjectReader
                         for (int i=1; i <= infoCount; i++) {
                             StringTokenizer st = new StringTokenizer(line.substring(9));
                             int atomNumber = Integer.parseInt(st.nextToken().trim());
-                            int mass       = Integer.parseInt(st.nextToken().trim());
-                            molecule.getAtomAt(atomNumber - 1).setAtomicMass(mass);
+                            int massDiff = Integer.parseInt(st.nextToken().trim());
+                            if (massDiff != 0) { 
+                                Atom isotope = molecule.getAtomAt(atomNumber - 1);
+                                Isotope major = isotopeFactory.getMajorIsotope(isotope.getSymbol());
+                                isotope.setAtomicNumber(major.getAtomicNumber() + massDiff);
+                            }
                         }
                     } catch (NumberFormatException exception) {
                         String error = "Error (" + exception.toString() + ") while parsing line "
