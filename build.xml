@@ -210,7 +210,7 @@
                 </javac>
         </target>
 
-        <target name="compile-with-java3d" depends="clean, init">
+        <target name="compile-with-java3d" depends="compile">
                 <mkdir dir="${build}" />
 
                 <javac destdir="${build}" optimize="on" deprecation="off" debug="on">
