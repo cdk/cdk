@@ -7,44 +7,77 @@ import javax.vecmath.*;
 import org.openscience.cdk.*;
 
 /**
- *  Steepest Descents Method for optimisation
+ *  Conjugate Gradient Method for optimisation
  *
- *@author     Labarta
- *@created    2004-12-03
+ *@author     labarta
+ *@created    2004-12-16
  */
-public class SteepestDescentsMethod {
+public class ConjugateGradientMethod {
 	double arbitraryStepSize = 2;
 	double stepSize = 2;
 	GVector newCoordinates = new GVector(3);
-	GVector sk = new GVector(3);
-
-
-	public SteepestDescentsMethod() {}
-
+	double 탃 = 0;
+	GVector vk = new GVector(3);
+	GVector vkminus1 = new GVector(3);
+	GVector temporalVector = new GVector(3);
 
 	/**
-	 *  Constructor for the SteepestDescentsMethod object
-	 *
-	 *@param  point  Description of the Parameter
+	 *  Constructor for the ConjugateGradientMethod object
 	 */
-	public SteepestDescentsMethod(GVector point) {
+	public ConjugateGradientMethod() { }
+
+
+	public ConjugateGradientMethod(GVector point) {
 		newCoordinates.setSize(point.getSize());
-		sk.setSize(point.getSize());
+		vk.setSize(point.getSize());
+		temporalVector.setSize(point.getSize());
+
 	}
 
 
 	/**
-	 *  sk=-gK/|gk|
+	 *  uk = gk gk / gk-1 gk-1
+	 *
+	 */
+	public void 탃Calculation(GVector xkminus1, GVector xk,  PotentialFunction forceFieldFunction) {
+		temporalVector.set(forceFieldFunction.gradientInPoint(xk));
+		System.out.println("temporalVector = " + temporalVector);
+		탃 = temporalVector.dot(temporalVector);
+		System.out.println("탃 = " + 탃);
+		temporalVector.set(forceFieldFunction.gradientInPoint(xkminus1));
+		System.out.println("temporalVector = " + temporalVector);
+		탃 = 탃 / temporalVector.dot(temporalVector);
+		System.out.println("temporalVector = " + temporalVector);
+		System.out.println("탃 = " + 탃);
+		return;
+	}
+
+	/**
+	 *  vk=-gk + 탃 vk-1
 	 *
 	 *@param  gK  Description of the Parameter
 	 */
-	public void setSk(GVector gk) {
+	public void setvk(GVector gk, int iterN) {
 
-		System.out.println("Start sk calculation with gK = " + gk);
-		sk.set(gk);
-		sk.normalize();
-		sk.scale(-1);
-		System.out.println("vectorSk : " + sk);
+		if (iterN != 1) {
+			vkminus1.set(vk);
+			System.out.println("Start vk calculation with gK = " + gk + " and vk-1 = " + vkminus1);
+			vk.set(gk);
+			System.out.println("vector vk : vk.set(gk) : " + vk);
+			vk.scale(-1);
+			System.out.println("vector vk : vk.scale(-1) : " + vk);
+			vkminus1.scale(탃);
+			System.out.println("vector vk : vkminus1.scale(탃) : " + vkminus1);
+			vk.add(vkminus1);
+			System.out.println("vector vk : vk.add(vkminus1) : " + vk);
+		}
+		else {
+		System.out.println("Start vk calculation with gk = " + gk);
+		vk.set(gk);
+		//vk.normalize();
+		vk.scale(-1);
+		System.out.println("vectorvk : " + vk);
+		}
 		return;
 	}
 
@@ -64,7 +97,7 @@ public class SteepestDescentsMethod {
 		if (forceFieldFunction.functionInPoint(kplus1Point) < forceFieldFunction.functionInPoint(kPoint)) {
 			System.out.println("The energy drops and the arbitrary step size will be increase by 20% to");
 			System.out.println("accelerate the convergence");
-			arbitraryStepSize = arbitraryStepSize + (arbitraryStepSize * 0.2);
+			arbitraryStepSize = 1.2 * arbitraryStepSize;
 		} else {
 			System.out.println("the energy was risen, the minimum was overshot, then the arbitrary step size is halved");
 			arbitraryStepSize = arbitraryStepSize / 2;
@@ -92,8 +125,11 @@ public class SteepestDescentsMethod {
 	 *@return            New coordinates of the atoms, k+1 step
 	 */
 	public GVector newCoordinatesCalculation(GVector oldCoordinates, double stepSizeK) {
-		newCoordinates.set(sk);
+		newCoordinates.set(vk);
+		System.out.println("New coordinates : newCoordinates.set(vk) : " + newCoordinates);
 		newCoordinates.scale(stepSizeK);
+		newCoordinates.scale(-1);
+		System.out.println("New coordinates : newCoordinates.scale(stepSizeK) : " + newCoordinates);
 		newCoordinates.add(oldCoordinates);
 		System.out.println("New coordinates : " + newCoordinates);
 		return newCoordinates;

@@ -33,7 +33,7 @@ public class ForceField {
 		//	output: GVector with 3N coordinates (N: atom numbers)
 		
 	//	System.out.println("molecule to optimize: " + molecule.toString());
-		System.out.println("Atoms number = " + molecule.getAtomCount());
+	//	System.out.println("Atoms number = " + molecule.getAtomCount());
 		GVector point0 = new GVector(3 * (molecule.getAtomCount()));
 	//	System.out.println("point0 = " + point0);
 		Atom thisAtom = new Atom();
