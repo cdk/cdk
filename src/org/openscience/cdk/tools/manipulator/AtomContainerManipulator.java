@@ -232,5 +232,39 @@ public class AtomContainerManipulator {
         }
     }
 
+	/**
+	 *  A method to remove ElectronContainerListeners. 
+	 *  ElectronContainerListeners are used to detect changes 
+	 *  in ElectronContainers (like bonds) and to notifiy
+	 *  registered Listeners in the event of a change.
+	 *  If an object looses interest in such changes, it should 
+	 *  unregister with this AtomContainer in order to improve 
+	 *  performance of this class.
+	 */
+	public static void unregisterElectronContainerListeners(AtomContainer container)
+	{
+		for (int f = 0; f < container.getElectronContainerCount(); f++)
+		{
+			container.getElectronContainerAt(f).removeListener(container);	
+		}
+	}
+
+	/**
+	 *  A method to remove AtomListeners. 
+	 *  AtomListeners are used to detect changes 
+	 *  in Atom objects within this AtomContainer and to notifiy
+	 *  registered Listeners in the event of a change.
+	 *  If an object looses interest in such changes, it should 
+	 *  unregister with this AtomContainer in order to improve 
+	 *  performance of this class.
+	 */
+	public static void unregisterAtomListeners(AtomContainer container)
+	{
+		for (int f = 0; f < container.getAtomCount(); f++)
+		{
+			container.getAtomAt(f).removeListener(container);	
+		}
+	}
+
 }
 

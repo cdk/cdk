@@ -55,6 +55,8 @@ API changes:
 * Removed deprecated method AtomContainer.getHighestCurrentBondOrder()
 * Fixed signature to AtomContainer.setElectronContainers[ElectronContainers[])
   which has Bond[] as parameter
+* Moved AtomContainer.unregisterAtomListeners() and .unregisterElectronContainerListeners()
+  to AtomContainerManipulator
 
 20041201 Release
 ------------------------------------
