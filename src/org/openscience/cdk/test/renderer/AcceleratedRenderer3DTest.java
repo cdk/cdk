@@ -1,7 +1,7 @@
 /* AcceleratedRenderer3DTest.java
  * 
  * Autor: Stephan Michels
- * Wohnort: Seestraﬂe 117 / 13353 Berlin
+ * Wohnort: Seestra?e 117 / 13353 Berlin
  * Telefon: +49-0173-6160804
  * EMail: stephan@vern.chem.tu-berlin.de
  * Datum: 20.7.2001
@@ -65,7 +65,7 @@ public class AcceleratedRenderer3DTest
 
 			ChemSequence[] chemSequence = chemFile.getChemSequences();
 			ChemModel[] chemModels = chemSequence[0].getChemModels();
-			AtomContainer atomContainer = chemModels[0].getAllInOneContainer();
+			AtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModels[0]);
       atomContainer.addBonds(1.2); // new!!!
 
 			JFrame frame = new JFrame("AcceleratedRenderer3DTest");

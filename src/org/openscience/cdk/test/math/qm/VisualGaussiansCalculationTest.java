@@ -33,6 +33,7 @@ import org.openscience.cdk.math.*;
 import org.openscience.cdk.math.qm.*;
 import org.openscience.cdk.io.*;
 import org.openscience.cdk.renderer.*;
+import org.openscience.cdk.tools.*;
 import java.io.*;
 import javax.swing.*;
 import java.awt.*;
@@ -55,8 +56,7 @@ public class VisualGaussiansCalculationTest {
   private AcceleratedRenderer3DModel model;
 
   public VisualGaussiansCalculationTest(String inFile) { 
-    try      
-    {        
+    try {
       ChemObjectReader reader;
       System.out.println("Loading: " + inFile);
       if (inFile.endsWith(".xyz"))
@@ -76,11 +76,11 @@ public class VisualGaussiansCalculationTest {
 
       ChemSequence[] chemSequence = chemFile.getChemSequences();
       ChemModel[] chemModels = chemSequence[0].getChemModels();
-      AtomContainer atomContainer = chemModels[0].getAllInOneContainer();
+      AtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModels[0]);
       atomContainer.addBonds(1.2); // new!!!
-			Atom[] atoms = atomContainer.getAtoms();
+      Atom[] atoms = atomContainer.getAtoms();
 
-			GaussiansBasis basis = new SimpleBasisSet(atoms);
+      GaussiansBasis basis = new SimpleBasisSet(atoms);
         
       Orbitals orbitals = new Orbitals(basis);
       
