@@ -253,7 +253,7 @@ public class MDLReader extends DefaultChemObjectReader {
                 atom.setPoint3D(new Point3d(x, y, z));
                 
                 // parse further fields
-                String massDiffString = line.substring(24,26).trim();
+                String massDiffString = line.substring(34,36).trim();
                 logger.debug("Mass difference: " + massDiffString);
                 if (!(atom instanceof PseudoAtom)) {
                     try {
@@ -270,7 +270,7 @@ public class MDLReader extends DefaultChemObjectReader {
                 }
                 
                 
-                String chargeCodeString = line.substring(26,29).trim();
+                String chargeCodeString = line.substring(36,39).trim();
                 logger.debug("Atom charge code: " + chargeCodeString);
                 int chargeCode = Integer.parseInt(chargeCodeString);
                 if (chargeCode == 0) {
