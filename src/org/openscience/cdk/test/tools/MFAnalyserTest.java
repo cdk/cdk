@@ -161,7 +161,7 @@ public class MFAnalyserTest extends TestCase {
     
     public void testGetNaturalMass_ELement() throws Exception {
         MFAnalyser mfa = new MFAnalyser("CH4");
-        assertEquals(100.81313, mfa.getNaturalMass(new Element("H")), 0.1);
+        assertEquals(1.0079760, mfa.getNaturalMass(new Element("H")), 0.1);
     }
 }
 
