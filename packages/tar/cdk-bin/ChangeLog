@@ -1,6 +1,7 @@
 20020518
 =================
 * removed bugs in detection of Java3D
+* JAVA_HOME is now used for detecting java jars and executables
 * added Java3D jars to cdk-view classpath
 
 20020419

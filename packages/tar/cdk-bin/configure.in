@@ -56,15 +56,23 @@ then
     AC_MSG_RESULT($CDKLIBDIR)
 else
     AC_MSG_RESULT(no)
-	echo "The required libraries for CDK are not installed. Please download and install"
-	echo "the cdk-libs distribution."
+    echo "The required libraries for CDK are not installed. Please download and install"
+    echo "the cdk-libs distribution."
     exit 1
 fi
 
-AC_CHECK_PROG(HASJAVA, java, yes, no)
-if test "xyes" = "x$HASJAVA"
+if test -x "$JAVA_HOME/bin/java"
 then
+    AC_MSG_CHECKING(for java)
+    AC_MSG_RESULT($JAVA_HOME/bin/java)
+    PATHTOJAVA=$JAVA_HOME/bin/java
+    AC_SUBST(PATHTOJAVA)
+else
+    AC_CHECK_PROG(HASJAVA, java, yes, no)
+    if test "xyes" = "x$HASJAVA"
+    then
         AC_PATH_PROG(PATHTOJAVA, java, no)
+    fi
 fi
 
 AC_MSG_CHECKING(for rt.jar lib)
@@ -96,12 +104,12 @@ else
         try_dirs="$prefix"
     fi
 
-    # Debian GNU/Linux Blackdown path
-    try_dirs="$try_dirs /usr/lib/j2re1.3"
+    # Debian GNU/Linux Blackdown path: /usr/lib/j2re1.3
+    try_dirs="$try_dirs /usr/lib/j2re1.3 $JAVA_HOME $JAVA_HOME/jre"
 
     for d in $try_dirs
     do
-        if test -f "$d/lib/ext/j3dcore.jar"
+        if test -e "$d/lib/ext/j3dcore.jar"
         then
             PATHTO3DJAR="$d/lib/ext/j3dcore.jar:$d/lib/ext/j3dutils.jar:$d/lib/ext/vecmath.jar"
         fi
