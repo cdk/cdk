@@ -96,7 +96,6 @@ public class Renderer2D
 		if (r2dm.getPointerVectorStart() != null && r2dm.getPointerVectorEnd() != null) 
 		{ 
 			paintPointerVector();
-			System.out.println("repaint");
 		}
 		paintBonds(atomCon, ringSet);
 		paintAtoms(atomCon);
@@ -104,6 +103,12 @@ public class Renderer2D
 		{
 			paintNumbers(atomCon.getAtoms(), atomCon.getAtomCount());
 		}
+		if (r2dm.getSelectRect() != null)
+		{
+			g.setColor(r2dm.getHighlightColor());
+			g.drawPolygon(r2dm.getSelectRect());
+		}
+		
 	}
 	
 
@@ -236,7 +241,6 @@ public class Renderer2D
 	 */
 	private void paintBonds(AtomContainer atomCon, RingSet ringSet)
 	{
-		System.out.println("number of bonds  "+ atomCon.getBondCount());
 		Color bondColor;
 		Ring ring;
 		Bond bond;
@@ -254,7 +258,6 @@ public class Renderer2D
 				}
 			}
 			ring = ringSet.getHeaviestRing(bond);
-			System.out.println("heaviestring  "+ ring);
 			if (ring != null)
 			{
 					paintRingBond(bond, ring, bondColor);

@@ -208,9 +208,6 @@ public class PathTools implements CDKConstants
 			breadthFirstSearch(ac, newSphere, molecule);
 		}
 	}
-
-
-
 }
 
 

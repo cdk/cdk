@@ -103,10 +103,12 @@ public class ConnectivityChecker implements CDKConstants
 		Vector sphere = new Vector();
 		for (int f = 0; f < atomContainer.getAtomCount(); f++)
 		{
+			atomContainer.getAtomAt(f).flags[VISITED] = false;
 			ac.addAtom(atomContainer.getAtomAt(f));
 		}
 		for (int f = 0; f < atomContainer.getBondCount(); f++)
 		{
+			atomContainer.getBondAt(f).flags[VISITED] = false;
 			ac.addBond(atomContainer.getBondAt(f));
 		}
 //		System.out.println("atomcontainer  "+ ac);
@@ -119,10 +121,8 @@ public class ConnectivityChecker implements CDKConstants
 			atom.flags[VISITED] = true;
 			PathTools.breadthFirstSearch(ac, sphere, molecule);
 			molecules.addElement(molecule);
-//			System.out.println("wie oft "+ molecules.elementAt(0));
 			ac.remove(molecule);
 		}while(ac.getAtomCount() > 0);
 		return molecules;
 	}
-
 }

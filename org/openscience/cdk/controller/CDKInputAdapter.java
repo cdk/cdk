@@ -28,14 +28,14 @@ package org.openscience.cdk.controller;
 
 
 import java.awt.event.*;
-import org.openscience.cdk.controller.Controller2D;
+import org.openscience.cdk.controller.JCPController2D;
 import org.openscience.cdk.renderer.*;
 import org.openscience.cdk.*;
 import java.awt.*;
 
 
 
-public class CDKInputAdapter extends Controller2D implements MouseMotionListener, MouseListener, KeyListener
+public class CDKInputAdapter extends JCPController2D implements MouseMotionListener, MouseListener, KeyListener
 {
 //	public CDKInputAdapter(SetOfMolecules setOfMolecules, Renderer2DModel r2dm)
 //	{
