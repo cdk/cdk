@@ -71,7 +71,7 @@ public class RandomStructureGeneratorTest extends TestCase
 		Vector structures = new Vector();	
 		Molecule mol = null;
 		Molecule molecule = MoleculeFactory.loadMolecule("data/mdl/a-pinene.mol");
-
+		//System.out.println(molecule);
 		RandomGenerator rg = new RandomGenerator();
 		rg.setMolecule(molecule);
 	

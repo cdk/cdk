@@ -617,7 +617,7 @@ public class RingPlacer
 					newRingCenterVector = new Vector2d(tempVector);
 					newRingCenterVector.sub(new Vector2d(oldRingCenter));
 					oldRingCenterVector = new Vector2d(newRingCenterVector);
-					logger.debug("placeConnectedRing -> tempVector: " + tempVector + ", tempVector.length: " + tempVector.length()); System.out.println("placeConnectedRing -> tempVector: " + tempVector + ", tempVector.length: " + tempVector.length());
+					logger.debug("placeConnectedRing -> tempVector: " + tempVector + ", tempVector.length: " + tempVector.length()); 
 					logger.debug("placeConnectedRing -> bondCenter: " + sharedAtomsCenter);
 					logger.debug("placeConnectedRing -> oldRingCenterVector.length(): " + oldRingCenterVector.length());
 					logger.debug("placeConnectedRing -> newRingCenterVector.length(): " + newRingCenterVector.length());					

@@ -118,7 +118,7 @@ public class HOSECodeTest extends TestCase
 			Molecule molecule = (new SmilesParser()).parseSmiles("O=C1C=Cc2ccc4c5ccccc5Oc3c(OC)cc1c2c34");
 			
 
-			MoleculeViewer2D.display(molecule, true);
+			//MoleculeViewer2D.display(molecule, true);
 			boolean isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
 			HOSECodeGenerator hcg = new HOSECodeGenerator();
 			String s = null;

@@ -230,27 +230,27 @@ public class SaturationCheckerTest extends TestCase
     public void testBug772316() {
 		// test methane with explicit hydrogen
 		Molecule m = new Molecule();
-		Atom s = new Atom("S");
+		Atom sulphur = new Atom("S");
 		Atom o1 = new Atom("O");
 		Atom o2 = new Atom("O");
 		Atom o3 = new Atom("O");
 		Atom o4 = new Atom("O");
 		Atom h1 = new Atom("H");
 		Atom h2 = new Atom("H");
-		m.addAtom(s);
+		m.addAtom(sulphur);
 		m.addAtom(o1);
 		m.addAtom(o2);
 		m.addAtom(o3);
 		m.addAtom(o4);
 		m.addAtom(h1);
 		m.addAtom(h2);
-		m.addBond(new Bond(s, o1, 2));
-		m.addBond(new Bond(s, o2, 2));
-		m.addBond(new Bond(s, o3, 1));
-		m.addBond(new Bond(s, o4, 1));
+		m.addBond(new Bond(sulphur, o1, 2));
+		m.addBond(new Bond(sulphur, o2, 2));
+		m.addBond(new Bond(sulphur, o3, 1));
+		m.addBond(new Bond(sulphur, o4, 1));
 		m.addBond(new Bond(h1, o3, 1));
 		m.addBond(new Bond(h2, o4, 1));
-		assertTrue(satcheck.isSaturated(s, m));
+		assertTrue(satcheck.isSaturated(sulphur, m));
 		assertTrue(satcheck.isSaturated(o1, m));
 		assertTrue(satcheck.isSaturated(o2, m));
 		assertTrue(satcheck.isSaturated(o3, m));

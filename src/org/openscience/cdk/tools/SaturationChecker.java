@@ -107,6 +107,8 @@ public class SaturationChecker
 
 	public boolean isSaturated(Atom atom, AtomContainer ac)
 	{
+		//System.out.println("In here :-), checking atom " + atom.getSymbol());
+		
 		AtomType[] atomTypes = atf.getAtomTypes(atom.getSymbol(), atf.ATOMTYPE_ID_STRUCTGEN);
 		double bondOrderSum = ac.getBondOrderSum(atom);
 		double maxBondOrder = ac.getMaximumBondOrder(atom);
@@ -118,7 +120,7 @@ public class SaturationChecker
 			logger.debug("maxBondOrder: " + maxBondOrder);
 			logger.debug("hcount: " + hcount);
 		} catch (Exception exc) {
-            logger.debug(exc);
+			logger.debug(exc);
 		}
 		for (int f = 0; f < atomTypes.length; f++)
 		{
@@ -130,6 +132,7 @@ public class SaturationChecker
 			}
 		}
 		logger.debug("*** Bad ! ***");
+		//System.out.println("Done checking atom " + atom.getSymbol());
 		return false;
 	}
 
