@@ -119,7 +119,7 @@ public class TXTBasedAtomTypeConfigurator implements AtomTypeConfigurator {
                         at.setVanderwaalsRadius(vdw);
                         at.setCovalentRadius(covalent);
                         Color co = new Color(rl, gl, bl);
-                        at.setProperty("org.openscience.jmol.color", co);
+                        at.setProperty("org.openscience.cdk.renderer.color", co);
                         atomTypes.addElement(at);
                     } else {
                         throw new IOException("AtomTypeTable.ReadAtypes: " + 

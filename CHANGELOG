@@ -23,6 +23,7 @@ Fixes:
 API changes:
 * SetOfMolecules now extends SetOfAtomContainers which gives it additional
   methods like addAtomContainer().
+* Renamed color property to have the org.openscience.cdk prefix
 
 20031017 Release
 ------------------------------------
