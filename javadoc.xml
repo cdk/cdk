@@ -90,6 +90,29 @@
       javacchome="jar"/>
   </target>
 
+    <target name="doccheck">
+        <!-- The doclet used here cannot be put in CVS because it is licensed
+             otherwise, but it can be downloaded from:
+             
+             http://java.sun.com/j2se/javadoc/doccheck/
+             
+          -->
+        <mkdir dir="report/doccheck"/>
+        <javadoc private="false" public="true"
+                 destdir="report/doccheck/"
+                 excludepackagenames="org.openscience.cdk.test.*">
+            <classpath refid="project.class.path" />
+
+            <doclet name="com.sun.tools.doclets.doccheck.DocCheck"
+                    path="jar/doccheck.jar" />
+            <package name="org.openscience.cdk"/>
+            <sourcepath>
+                <pathelement path="${src}"/>
+            </sourcepath>
+        </javadoc>
+    </target>
+
+
 </project>
 
 
