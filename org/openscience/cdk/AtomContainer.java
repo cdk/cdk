@@ -630,9 +630,6 @@ public class AtomContainer extends ChemObject implements Cloneable
 	 */
 	public void addBond(Bond bond)
 	{
-    if (contains(bond))
-      return;
-
 		if (bondCount + 1 >= bonds.length)
 		{
 			growBondArray();
@@ -823,9 +820,6 @@ public class AtomContainer extends ChemObject implements Cloneable
 	{
     Bond bond = new Bond(getAtomAt(atom1), getAtomAt(atom2), order);
     
-    if (contains(bond))
-      return;
-
 		if (bondCount >= bonds.length)
 		{
 			growBondArray();
@@ -845,7 +839,7 @@ public class AtomContainer extends ChemObject implements Cloneable
 	{
 		for (int i = 0; i < getBondCount(); i++)
 		{
-			if (bond.equals(bonds[i]))
+			if (bond==bonds[i])
 			{
 				return true;
 			}
@@ -865,7 +859,7 @@ public class AtomContainer extends ChemObject implements Cloneable
 	{
 		for (int i = 0; i < getAtomCount(); i++)
 		{
-			if (atom.equals(atoms[i]))
+			if (atom==atoms[i])
 			{
 				return true;
 			}

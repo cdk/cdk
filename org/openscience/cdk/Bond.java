@@ -294,7 +294,7 @@ public class Bond extends ElectronContainer implements Cloneable
    *
    * @return Return true, if the bond is equal to this bond
    */
-  public boolean equals(Object object)
+  public boolean compare(Object object)
   {
     if (object instanceof Bond)
     {

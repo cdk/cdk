@@ -158,7 +158,7 @@ public class AtomType extends Element
    * @return Return true, if the atomtypes are equal
    * 
    */
-  public boolean equals(Object object)
+  public boolean compare(Object object)
   { 
     if (object instanceof AtomType)
     {

@@ -51,7 +51,7 @@ public class CDKTests {
 		suite.addTest(ChemObjectTest.suite());
 		suite.addTest(IsotopeFactoryTest.suite());
 		suite.addTest(ElementFactoryTest.suite());
-		suite.addTest(AtomTypeFactoryTest.suite());		
+		//suite.addTest(AtomTypeFactoryTest.suite());	//Can't find a class like AtomTypeFactoryTest, Stephan
 		
 	    return suite;
 	}

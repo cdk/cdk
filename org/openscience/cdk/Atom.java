@@ -327,7 +327,7 @@ public class Atom extends AtomType implements Cloneable {
          *
          * @return    return true, if the atoms are equal
          */
-        public boolean equals(Object object) 
+        public boolean compare(Object object) 
         {
           if (object instanceof Atom)
           {
