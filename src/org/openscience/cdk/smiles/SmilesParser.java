@@ -79,21 +79,21 @@ public class SmilesParser
 	Molecule molecule = null;
 	String currentSymbol = null;
 
-
-	/**
-	 *  Parses a SMILES string and returns a Molecule object
-	 *
-	 *@param  smiles                      A SMILES string
-	 *@return                             A molecule representing the constitution
-	 *      given in the SMILES string
-	 *@exception  InvalidSmilesException  Description of the Exception
-	 */
-	public Molecule parseSmiles(String smiles) throws InvalidSmilesException
-	{
+    /**
+     * Parses a SMILES string and returns a Molecule object. The SMILES string
+     * may not contain any '.' characters.
+     *
+     * @param  smiles    A SMILES string
+     * @return           A Molecule representing the constitution
+     *                   given in the SMILES string
+     * @exception        InvalidSmilesException  Description of the Exception
+     */
+    public Molecule parseSmiles(String smiles) throws InvalidSmilesException {
 		Bond bond = null;
 		boolean aromaticAtom = false;
 		nodeCounter = 0;
 		bondStatus = 0;
+        boolean bondExists = true;
 		thisRing = -1;
 		currentSymbol = null;
 		molecule = new Molecule();
@@ -157,6 +157,7 @@ public class SmilesParser
 					lastNode = atom;
 					nodeCounter++;
 					position = position + currentSymbol.length();
+                    bondExists = true;
 				} else if (mychar == '=')
 				{
 					bondStatus = CDKConstants.BONDORDER_DOUBLE;
@@ -225,6 +226,9 @@ public class SmilesParser
 					lastNode = atom;
 					nodeCounter++;
 					position = position + currentSymbol.length() + 2; // plus two for [ and ]
+                } else if (mychar == '.'){
+                    bondExists = false;
+                    position++;
 				} else if (mychar == '/' || mychar == '\\') {
                     logger.warn("Ignoring stereo information for double bond");
                     position++;
