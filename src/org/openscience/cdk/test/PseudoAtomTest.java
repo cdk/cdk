@@ -124,8 +124,14 @@ public class PseudoAtomTest extends TestCase {
 
     public void testSetCharge_double() {
         PseudoAtom atom = new PseudoAtom("Whatever");
-        atom.setHydrogenCount(+5);
-        assertEquals(0, atom.getHydrogenCount());
+        atom.setCharge(0.78);
+        assertEquals(0.0, atom.getCharge(), 0.001);
+    }
+
+    public void testSetExactMass_double() {
+        PseudoAtom atom = new PseudoAtom("Whatever");
+        atom.setExactMass(12.001);
+        assertEquals(0.0, atom.getExactMass(), 0.001);
     }
 
     public void testSetStereoParity_int() {

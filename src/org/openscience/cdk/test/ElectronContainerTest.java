@@ -61,7 +61,7 @@ public class ElectronContainerTest extends TestCase {
         ec.setElectronCount(3);
         assertEquals(3, ec.getElectronCount());
     }
-    public void getElectronCount() {
+    public void testGetElectronCount() {
         testSetElectronCount_int();
     }
 

@@ -80,7 +80,7 @@ public class CrystalTest extends TestCase {
         assertEquals(3, crystal.getBondCount());
     }
     
-    public void testAddl_AtomContainer() {
+    public void testAdd_AtomContainer() {
         AtomContainer acetone = new AtomContainer();
         Atom c1 = new Atom("C");
         Atom c2 = new Atom("C");
@@ -103,6 +103,13 @@ public class CrystalTest extends TestCase {
         assertEquals(3, crystal.getBondCount());
     }
     
+    public void testAdd_Atom() {
+        Atom c1 = new Atom("C");
+        Crystal crystal = new Crystal();
+        crystal.addAtom(c1);
+        assertEquals(1, crystal.getAtomCount());
+    }
+
     public void testSetA_Vector3d() {
         Crystal crystal = new Crystal();
         
@@ -118,7 +125,7 @@ public class CrystalTest extends TestCase {
         
         crystal.setA(new Vector3d(1.0, 2.0, 3.0));
         Vector3d a = crystal.getA();
-	assertNotNull(a);
+        assertNotNull(a);
     }
     
     public void testGetB() {

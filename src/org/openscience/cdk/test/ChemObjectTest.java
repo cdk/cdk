@@ -125,7 +125,7 @@ public class ChemObjectTest extends TestCase {
         chemObject.setFlag(0, true);
         assertTrue(chemObject.getFlag(0));
     }
-    public void testGetFlag() {
+    public void testGetFlag_int() {
         testSetFlag_int_boolean();
     }
     

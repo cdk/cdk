@@ -149,5 +149,12 @@ public class SetOfMoleculesTest extends TestCase {
         }
     }
 
+    /**
+     * This test is not implemented. I don't know how this test can be
+     * done with JUnit.
+     */
+    public void testStateChanged_ChemObjectChangeEvent() {
+        // dunno how to test this!
+    }
 
 }

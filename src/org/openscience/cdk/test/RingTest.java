@@ -29,7 +29,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.Ring;
+import org.openscience.cdk.*;
 
 /**
  * Checks the funcitonality of the Ring class.
@@ -74,14 +74,32 @@ public class RingTest extends TestCase {
         assertEquals(5, r.getOrderSum());
     }
     
-    public void testRingSize() {
-        Ring r = new Ring(5, "C");
-	assertNotNull(r);
-    }
-    
     public void testGetRingSize() {
         Ring r = new Ring(5, "C");
         assertEquals(5, r.getRingSize());
+    }
+    
+    public void testGetNextBond_Bond_Atom() {
+        Ring ring = new Ring();
+        Atom c1 = new Atom("C");
+        Atom c2 = new Atom("C");
+        Atom c3 = new Atom("C");
+        Bond b1 = new Bond(c1, c2, 1.0);
+        Bond b2 = new Bond(c3, c2, 1.0);
+        Bond b3 = new Bond(c1, c3, 1.0);
+        ring.addAtom(c1);
+        ring.addAtom(c2);
+        ring.addAtom(c3);
+        ring.addBond(b1);
+        ring.addBond(b2);
+        ring.addBond(b3);
+        
+        assertEquals(b1, ring.getNextBond(b2,c2));
+        assertEquals(b1, ring.getNextBond(b3,c1));
+        assertEquals(b2, ring.getNextBond(b1,c2));
+        assertEquals(b2, ring.getNextBond(b3,c3));
+        assertEquals(b3, ring.getNextBond(b1,c1));
+        assertEquals(b3, ring.getNextBond(b2,c3));
     }
     
     public void testToString() {
