@@ -178,6 +178,7 @@
                     <or>
                         <available file="/usr/lib/R/library/SJava/" />
                         <available file="/usr/local/lib/R/library/SJava/" />
+                        <available file="/usr/local/lib/R/site-library/SJava/" />
                     </or>
                 </and>
             </condition>
