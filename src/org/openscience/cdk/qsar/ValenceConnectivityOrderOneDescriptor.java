@@ -165,7 +165,7 @@ public class ValenceConnectivityOrderOneDescriptor implements Descriptor {
 		Bond[] bonds = ac.getBonds();
 		for (int b = 0; b < bonds.length; b++) {
 			atoms = bonds[b].getAtoms();
-			if ((!atoms[0].getSymbol().equals("H")) || (!atoms[1].getSymbol().equals("H"))) {
+			if ((!atoms[0].getSymbol().equals("H")) && (!atoms[1].getSymbol().equals("H"))) {
 				val0 = 0;
 				val1 = 0;
 				chiAtom.clear();
@@ -194,17 +194,20 @@ public class ValenceConnectivityOrderOneDescriptor implements Descriptor {
 					}
 					hcount += atoms[a].getHydrogenCount();
 					atomValue = (valence - hcount) / (atomicNumber - valence - 1);
-					if(atomValue > 0) {
+					//if(atomValue > 0) {
 						chiAtom.add(new Double(atomValue));
-						System.out.println(symbol+"= atomvalue: "+atomValue+",val: "+valence+",h:"+hcount);
-					}
+						//System.out.println(symbol+"= atomvalue: "+atomValue+",val: "+valence);
+					//}
 				}
 				val0 = ( (Double)chiAtom.get(0) ).doubleValue();
 				val1 = ( (Double)chiAtom.get(1) ).doubleValue();
-				if((atoms[0].getSymbol().equals("C")) && (atoms[1].getSymbol().equals("C"))) {
-					chi1v_C += 1/(Math.sqrt(val0 * val1));
+				if(val0 > 0 && val1 >0) {
+					if((atoms[0].getSymbol().equals("C")) && (atoms[1].getSymbol().equals("C"))) {
+						chi1v_C += 1/(Math.sqrt(val0 * val1));
+					}
+					chi1v += 1/(Math.sqrt(val0 * val1));
 				}
-				chi1v += 1/(Math.sqrt(val0 * val1));
+				//System.out.println("---");
 			}
 		}
 		chiValuesVCOO.add(chi1v);

@@ -159,6 +159,7 @@ public class ValenceConnectivityOrderZeroDescriptor implements Descriptor {
 		String symbol = null;
 		for (int i = 0; i < atoms.length; i++) {
 			symbol = atoms[i].getSymbol();
+			if(!symbol.equals("H")) {
 			try {
 				elfac = IsotopeFactory.getInstance();
 			} catch (Exception exc) {
@@ -186,6 +187,7 @@ public class ValenceConnectivityOrderZeroDescriptor implements Descriptor {
 					chi0v_C  += (1/(Math.sqrt(atomValue))); // chi0v_C
 				}
 				chi0v += (1/(Math.sqrt(atomValue))); // chi0v
+			}
 			}
 		}
 		chiValuesVCOZ.add(chi0v);
