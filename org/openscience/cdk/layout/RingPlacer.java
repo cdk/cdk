@@ -48,7 +48,7 @@ public class RingPlacer
 
 	public static void placeRing(Ring ring, Bond bond, Vector2d ringCenterVector, double bondLength)
 	{
-		Point2d ringCenter = bond.get2DCenter();
+		Point2d ringCenter = bond.get2DCenter(), newAtomPoint;
 		ringCenter.add(ringCenterVector);
 		double ringRadius = Math.sqrt(Math.pow(ringCenterVector.length(), 2) + Math.pow(bondLength / 2, 2));
 		if (debug) System.out.println("ringRadius: " + ringRadius);
@@ -56,6 +56,15 @@ public class RingPlacer
 		if (debug) System.out.println("occupiedAngle: " + occupiedAngle + " (" + occupiedAngle / Math.PI * 180 + ")");
 		double remainingAngle = (2 * Math.PI) - occupiedAngle;
 		if (debug) System.out.println("remainingAngle: " + remainingAngle + " (" + remainingAngle / Math.PI * 180 + ")");
+		double addAngle = remainingAngle / ring.getRingSize();
+		double currentAngle = occupiedAngle / 2;
+		for (int i = 0; i < ring.getRingSize(); i++)
+		{
+			currentAngle += addAngle;
+			Vector2d newVector = new Vector2d(Math.cos(currentAngle) * bondLength, Math.sin(currentAngle) * bondLength); 
+			newAtomPoint = ringCenter;
+			newAtomPoint.add(newVector);
+		}
 							
 	}
 	
