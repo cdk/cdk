@@ -227,12 +227,12 @@ public class MDLWriter implements ChemObjectWriter {
                 }
 			}
             // write formal atomic charges
-		    for (int f = 0; f < molecule.getAtomCount(); f++) {
-				Atom atom = molecule.getAtomAt(f);
+		    for (int atomNumber = 1; atomNumber < molecule.getAtomCount(); atomNumber++) {
+                Atom atom = molecule.getAtomAt(atomNumber-1);
                 int charge = atom.getFormalCharge();
                 if (charge != 0) {
                     writer.write("M  CHG  1 ");
-                    writer.write(formatMDLInt(f,3));
+                    writer.write(formatMDLInt(atomNumber,3));
                     writer.write(" ");
                     writer.write(formatMDLInt(charge,3));
                     writer.newLine();
