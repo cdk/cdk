@@ -51,8 +51,8 @@ import org.openscience.cdk.io.CMLReader;
   *
   * @deprecated
   * @keyword MySQL
-  * @depends postgresql7.0-1.2.jar
-  * @depends mysql-2.0.4.jar
+  * @cdk.depends postgresql7.0-1.2.jar
+  * @cdk.depends mysql-2.0.4.jar
   */
 public class DBAdmin {
 

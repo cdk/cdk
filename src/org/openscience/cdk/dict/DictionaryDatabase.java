@@ -40,8 +40,8 @@ import java.util.Hashtable;
  * @author     Egon Willighagen
  * @created    2003-04-06
  * @keyword    dictionary
- * @depends    stmml.jar
- * @depends    castor.jar
+ * @cdk.depends    stmml.jar
+ * @cdk.depends    castor.jar
  */
 public class DictionaryDatabase {
 

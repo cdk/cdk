@@ -63,11 +63,11 @@ import org.w3c.dom.Document;
  * @author  Egon Willighagen
  * @created 2002-09-30
  *
- * @builddepends batik-awt-util.jar
- * @builddepends batik-dom.jar
- * @builddepends batik-svggen.jar
- * @builddepends batik-util.jar
- * @builddepends batik-xml.jar
+ * @cdk.builddepends batik-awt-util.jar
+ * @cdk.builddepends batik-dom.jar
+ * @cdk.builddepends batik-svggen.jar
+ * @cdk.builddepends batik-util.jar
+ * @cdk.builddepends batik-xml.jar
  */
 public class SVGWriter extends DefaultChemObjectWriter {
 

@@ -37,8 +37,8 @@
             <classpath refid="project.class.path" />
             <tag name="keyword" scope="all" description="Keywords:" />
             <tag name="created" scope="all" description="Created on:" />
-            <tag name="depends" scope="all" description="Required library to be able to run this class:" />
-            <tag name="builddepends" scope="all" description="Required library to be able to compile this class:" />
+            <tag name="cdk.depends" scope="all" description="Required library to be able to run this class:" />
+            <tag name="cdk.builddepends" scope="all" description="Required library to be able to compile this class:" />
             <tag name="cdkPackage" scope="all" description="Belongs to cdk package:" />
             <packageset dir="${build}/${src}" defaultexcludes="yes">
                 <include name="org/openscience/cdk/**" />
