@@ -221,14 +221,14 @@ public class MDLWriter implements ChemObjectWriter {
                         line += formatMDLInt(molecule.getAtomNumber(bond.getAtomAt(1)) + 1,3);
                         line += formatMDLInt((int)bond.getOrder(),3);
                         line += "  ";
-                        switch(bond.getStereo){
+                        switch(bond.getStereo()) {
                           case CDKConstants.STEREO_BOND_UP:
                             line += "1";
                             break;
                           case CDKConstants.STEREO_BOND_DOWN:
                             line += "6";
                             break;
-                          case STEREO_BOND_UNDEFINED:
+                          case CDKConstants.STEREO_BOND_UNDEFINED:
                             line += "4";
                             break;
                           default:
