@@ -52,7 +52,7 @@ public class GeometryToolsTest extends TestCase {
      * with JUnit.
      */
     public static Test suite() {
-        TestSuite suite = new TestSuite(CrystalGeometryToolsTest.class);
+        TestSuite suite = new TestSuite(GeometryToolsTest.class);
         return suite;
     }
     
