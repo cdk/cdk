@@ -445,6 +445,14 @@
     </bibtex:article>
   </bibtex:entry>
 
+  <bibtex:entry id="PMR2002">
+    <bibtex:misc>
+      <bibtex:author>Murray-Rust, P. and Rzepa, H.S.</bibtex:author>
+      <bibtex:title>STMML. A MARKUP LANGUAGE FOR SCIENTIFIC, TECHNICAL AND MEDICAL PUBLISHING</bibtex:title>
+      <bibtex:url>http://www.ch.ic.ac.uk/rzepa/codata2/</bibtex:url>
+    </bibtex:misc>
+  </bibtex:entry>
+
   <bibtex:entry id="RZEPA04">
     <bibtex:article>
       <bibtex:author>Murray-Rust, P. and Rzepa, H.S. and Williamson, M.J. and Willighagen, E.L.</bibtex:author>
