@@ -61,7 +61,7 @@ public class BondValidator {
     private static Vector validateMaxBondOrder(Bond bond) {
         Vector errors = new Vector();
         try {
-            AtomTypeFactory atf = new AtomTypeFactory();
+            AtomTypeFactory atf = AtomTypeFactory.getInstance();
             for (int i=0; i<bond.getAtomCount(); i++) {
                 Atom atom = bond.getAtomAt(i);
                 Atom copy = (Atom)atom.clone();

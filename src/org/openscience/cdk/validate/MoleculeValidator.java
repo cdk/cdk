@@ -56,9 +56,11 @@ public class MoleculeValidator {
             errors.addAll(validateAtomValency(atoms[i], molecule));
             errors.addAll(validateBondOrderSum(atoms[i], molecule));
         }
-        errors.add(
-            new ValidationWarning(molecule, "Molecule contains PseudoAtom's. Won't be able to calculate some properties, like molecular mass.")
-        );
+        if (foundMassCalcProblem) {
+            errors.add(
+                new ValidationWarning(molecule, "Molecule contains PseudoAtom's. Won't be able to calculate some properties, like molecular mass.")
+            );
+        }
         return errors;
     }
     
@@ -79,7 +81,7 @@ public class MoleculeValidator {
     private static Vector validateBondOrderSum(Atom atom, Molecule molecule) {
         Vector errors = new Vector();
         try {
-            AtomTypeFactory atf = new AtomTypeFactory();
+            AtomTypeFactory atf = AtomTypeFactory.getInstance();
             int bos = (int)molecule.getBondOrderSum(atom);
             Atom copy = (Atom)atom.clone();
             atf.configure(copy);

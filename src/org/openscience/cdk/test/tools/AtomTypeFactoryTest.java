@@ -42,7 +42,7 @@ public class AtomTypeFactoryTest extends TestCase {
 	
 	public void setUp() {
 		try {
-			atf = new AtomTypeFactory();
+			atf = AtomTypeFactory.getInstance();
 		} catch(Exception exc) {
             System.out.println("AtomTypeFactoryTest.setup: ");
             exc.printStackTrace();
@@ -60,7 +60,7 @@ public class AtomTypeFactoryTest extends TestCase {
     }
     
     public void testGetAtomType() {
-		AtomType atomType = null;        
+		AtomType atomType = null;
 		try {
 			atomType = atf.getAtomType("structgen.C4");
 		} catch(Exception exc) {

@@ -29,76 +29,83 @@ import java.io.*;
 import org.openscience.cdk.*;
 import org.openscience.cdk.exception.*;
 
-import org.xml.sax.*;
-import javax.xml.parsers.*;
-import org.w3c.dom.*;
-
-import JSX.*;
-
 /**
  *  General class for defining AtomTypes. This class itself does not define the
  *  items types; for this classes implementing the AtomTypeConfiguration
- *  interface are used. <p>
+ *  interface are used.
  *
- *  To see which AtomTypeConfigurator's CDK provides, one should check the
+ *  <p>To see which AtomTypeConfigurator's CDK provides, one should check the
  *  AtomTypeConfigurator API.
+ *
+ *  <p>The AtomTypeFactory is a singleton class, which means that there exists
+ *  only one instance of the class. Well, almost. For each atom type table,
+ *  there is one AtomTypeFactory instance. An instance of this class is
+ *  obtained with:
+ *  <pre>
+ *  AtomTypeFactory factory = AtomTypeFactory.getInstance();
+ *  </pre>
  *
  * @author     steinbeck
  * @created    2001-08-29
  * @keyword    atom, type
  * @see        AtomTypeConfigurator
  */
-public class AtomTypeFactory
-{
+public class AtomTypeFactory {
 
-	/**
-	 *  Used as an ID to describe the atom type
-	 */
-	public static String ATOMTYPE_ID_STRUCTGEN = "structgen";
-	/**
-	 *  Used as an ID to describe the atom type
-	 */
-	public static String ATOMTYPE_ID_MODELING = "modeling";
-	// these are not available
-	/**
-	 *  Used as an ID to describe the atom type
-	 */
-	public static String ATOMTYPE_ID_JMOL = "jmol";
+    /**
+     *  Used as an ID to describe the atom type
+     */
+    public static String ATOMTYPE_ID_STRUCTGEN = "structgen";
+    /**
+     *  Used as an ID to describe the atom type
+     */
+    public static String ATOMTYPE_ID_MODELING = "modeling";
+    // these are not available
+    /**
+     *  Used as an ID to describe the atom type
+     */
+    public static String ATOMTYPE_ID_JMOL = "jmol";
+    
+    private static org.openscience.cdk.tools.LoggingTool logger;
 
-	private Vector atomTypes = null;
-	private org.openscience.cdk.tools.LoggingTool logger;
-
-
+    private static Hashtable tables = null;
+    
+    private Vector atomTypes = null;
+    
 	/**
-	 *  Constructor for the AtomTypeFactory object
+	 * Private constructor for the AtomTypeFactory singleton.
 	 *
-	 *@exception  IOException             Thrown if something goes wrong with reading the config
-	 *@exception  OptionalDataException   What ever that may be
-	 *@exception  ClassNotFoundException  Thrown if a class was not found :-)
+	 * @exception  IOException             Thrown if something goes wrong with reading the config
+	 * @exception  OptionalDataException   What ever that may be
+	 * @exception  ClassNotFoundException  Thrown if a class was not found :-)
 	 */
-	public AtomTypeFactory() throws IOException, OptionalDataException, ClassNotFoundException
-	{
-		this("org/openscience/cdk/config/structgen_atomtypes.xml");
-	}
+    private AtomTypeFactory(String configFile) throws IOException, OptionalDataException, ClassNotFoundException {
+        if (logger == null) {
+            logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        }
+        atomTypes = new Vector(30);
+        readConfiguration(configFile);
+    }
 
+    /**
+     * Method to create a default AtomTypeFactory.
+     */
+    public static AtomTypeFactory getInstance() throws IOException, OptionalDataException, ClassNotFoundException {
+        return getInstance("org/openscience/cdk/config/structgen_atomtypes.xml");
+    }
 
-	/**
-	 *  Constructor for the AtomTypeFactory object
-	 *
-	 *@param  configFile                  The file with atom type configs
-	 *@exception  IOException             A problem with reading the atomtypes.xml
-	 *      file
-	 *@exception  OptionalDataException   Unexpected data appeared in the atomtype
-	 *      ObjectInputStream
-	 *@exception  ClassNotFoundException  A problem instantiating the atomtypes
-	 */
-	public AtomTypeFactory(String configFile)
-			 throws IOException, OptionalDataException, ClassNotFoundException
-	{
-		logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
-		readConfiguration(configFile);
-	}
-
+    /**
+     * Method to create a default AtomTypeFactory.
+     */
+    public static AtomTypeFactory getInstance(String configFile) throws IOException, OptionalDataException, ClassNotFoundException {
+        if (tables == null) {
+            tables = new Hashtable();
+        }
+        if (!(tables.containsKey(configFile))) {
+            tables.put(configFile, new AtomTypeFactory(configFile));
+        }
+        return (AtomTypeFactory)tables.get(configFile);
+    }
 
 	/**
 	 *  Read the config from a text file
@@ -129,7 +136,7 @@ public class AtomTypeFactory
                 /*
                 *  this has to be this.getClass.getClassLoader.getResource,
                 *  getClass.getResource fails, elw
-                */            
+                */
                 ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
             }
             

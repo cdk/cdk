@@ -51,7 +51,7 @@ public class SaturationChecker
 
 	public SaturationChecker() throws IOException, ClassNotFoundException
 	{
-		atf = new AtomTypeFactory();
+		atf = AtomTypeFactory.getInstance();
 		logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
 	}
 
