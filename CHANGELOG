@@ -22,6 +22,9 @@ Fixes:
   the renderer model
 * Removed obsolote cdk-cml module and tasks
 
+API chages:
+* Implemented RFC #11 as a patch (which is applied by default)
+
 20030217 Release
 ------------------------------------
 New:
