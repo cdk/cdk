@@ -30,6 +30,8 @@
 package org.openscience.cdk.fingerprint;
 
 import org.openscience.cdk.*;
+import org.openscience.cdk.aromaticity.*;
+import org.openscience.cdk.exception.*;
 import java.util.*;
 
 /**
@@ -44,7 +46,7 @@ import java.util.*;
 public class Fingerprinter implements CDKConstants
 {
 	static int defaultSize = 1024;
-	static int searchDepth = 7;
+	static int searchDepth = 6;
 	static Hashtable pathes;
 	static boolean debug = false;
 	static int debugCounter = 0;
@@ -56,7 +58,7 @@ public class Fingerprinter implements CDKConstants
 	 * @param  ac  The AtomContainer for which a Fingerprint is generated
 	 * @return     The Fingerprint (A one-dimensional bit array)
 	 */
-	public static BitSet getFingerprint(AtomContainer ac)
+	public static BitSet getFingerprint(AtomContainer ac) throws NoSuchAtomException
 	{
 		return getFingerprint(ac, defaultSize);
 	}
@@ -69,15 +71,20 @@ public class Fingerprinter implements CDKConstants
 	 * @param  size  The desired size of the fingerprint
 	 * @return       The Fingerprint (A one-dimensional bit array)
 	 */
-	public static BitSet getFingerprint(AtomContainer ac, int size)
+	public static BitSet getFingerprint(AtomContainer ac, int size) throws NoSuchAtomException
 	{
 		String path = null;
+		int position = -1;
+		boolean isAromatic = false;
+		isAromatic = HueckelAromaticityDetector.detectAromaticity(ac);
 		findPathes(ac);
 		BitSet bs = new BitSet(size);
 		for (Enumeration e = pathes.elements(); e.hasMoreElements(); )
 		{
 			path = (String) e.nextElement();
-			bs.set(new java.util.Random(path.hashCode()).nextInt(defaultSize));
+			position = new java.util.Random(path.hashCode()).nextInt(defaultSize); 
+			if (debug) System.out.println("Setting bit " + position + " for " + path);
+			bs.set(position);
 		}
 		return bs;
 	}
@@ -115,11 +122,9 @@ public class Fingerprinter implements CDKConstants
 		debugCounter = 0;
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
-			for (int g = 0; g < ac.getAtomCount(); g++)
-			{
-				ac.getAtomAt(g).flags[VISITED] = false;
-			}
-			depthFirstSearch(ac, ac.getAtomAt(f), "", 0);
+			checkAndStore(ac.getAtomAt(f).getSymbol());
+			if (debug) System.out.println("Starting at atom " + f + " with symbol " + ac.getAtomAt(f).getSymbol());
+			depthFirstSearch(ac, ac.getAtomAt(f), ac.getAtomAt(f).getSymbol(), 0);
 		}
 	}
 
@@ -136,54 +141,80 @@ public class Fingerprinter implements CDKConstants
 	{
 		Bond[] bonds = ac.getConnectedBonds(root);
 		Atom nextAtom = null;
-		root.flags[VISITED] = true;
+		String newPath = null;
+
 		currentDepth++;
-		String newPath = new String(currentPath);
-		String reversePath = null;
-		StringBuffer strBuff = null;
 		for (int f = 0; f < bonds.length; f++)
 		{
+			if (currentDepth == 1)
+			{
+				for (int g = 0; g < ac.getAtomCount(); g++)
+				{
+					ac.getAtomAt(g).flags[VISITED] = false;
+				}
+				root.flags[VISITED] = true;
+			}
 			nextAtom = bonds[f].getConnectedAtom(root);
 			if (!nextAtom.flags[VISITED])
 			{
-				newPath += nextAtom.getSymbol();
-				reversePath = new StringBuffer(newPath).reverse().toString();
-				if (!pathes.containsKey(newPath) && !pathes.containsKey(reversePath))
-				{
-					pathes.put(newPath, newPath);
-					if (debug)
-					{
-						debugCounter++;
-						if (debug) System.out.println("Path no. " + debugCounter + ": " + newPath + ", Hash: " + newPath.hashCode());
-					}
-				}
-				if (currentDepth == searchDepth)
-				{
-					return;
-				}
-				if (bonds[f].getOrder() == 1)
-				{
-					newPath += "-";
-				}
-				if (bonds[f].getOrder() == 1.5)
+				newPath = new String(currentPath);
+				if (bonds[f].flags[Bond.ISAROMATIC])
 				{
 					newPath += ":";
 				}
-				if (bonds[f].getOrder() == 2)
+				else if (bonds[f].getOrder() == 1)
+				{
+					newPath += "-";
+				}
+				else if (bonds[f].getOrder() == 2)
 				{
 					newPath += "=";
 				}
-				if (bonds[f].getOrder() == 3)
+				else if (bonds[f].getOrder() == 3)
 				{
 					newPath += "#";
 				}
 
-				if (currentDepth < searchDepth - 1)
+				newPath += nextAtom.getSymbol();
+				nextAtom.flags[VISITED] = true;
+				checkAndStore(newPath);
+				if (currentDepth == searchDepth)
+				{
+					return;
+				}
+				if (currentDepth < searchDepth)
 				{
 					depthFirstSearch(ac, nextAtom, newPath, currentDepth);
 				}
 			}
 		}
+	}
+	
+	private static void checkAndStore(String newPath)
+	{
+		String storePath = new String(newPath);
+		String reversePath = new StringBuffer(storePath).reverse().toString();
+		
+		if (reversePath.compareTo(newPath) < 0)
+		{
+			/* reversePath is smaller than newPath
+			   so we keep reversePath */
+			storePath = reversePath;	
+		}
+		if (debug) System.out.println("Checking for existence of Path " +  storePath);				
+		/* At this point we need to check wether the 
+		same path has already been found in reversed order. If so, we need to store the 
+		lexicographically smaller path (This is an arbitrary choice) */
+		if (!pathes.containsKey(storePath))
+		{
+			pathes.put(storePath, storePath);
+			if (debug)
+			{
+				debugCounter++;
+				if (debug) System.out.println("Storing path no. " + debugCounter + ": " +  storePath + ", Hash: " + storePath.hashCode());
+			}
+		}
+		
 	}
 }
 
