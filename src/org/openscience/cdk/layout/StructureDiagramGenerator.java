@@ -73,6 +73,7 @@ public class StructureDiagramGenerator
 	AtomPlacer atomPlacer = new AtomPlacer();
 	Vector ringSystems = null;
 	final static String disconnectedMessage = "Molecule not connected. Use ConnectivityChecker.partitionIntoMolecules() and do the layout for every single component.";
+	boolean useTemplates = true;
 
 
 	/**
@@ -95,6 +96,7 @@ public class StructureDiagramGenerator
 		this();
 		setMolecule(molecule, false);
 	}
+
 
 
 	/**
@@ -127,6 +129,29 @@ public class StructureDiagramGenerator
 		ringPlacer.setMolecule(this.molecule);
 		ringPlacer.setAtomPlacer(this.atomPlacer);
 	}
+
+
+	/**
+	 *  Sets the useTemplates attribute of the StructureDiagramGenerator object
+	 *
+	 *@param  useTemplates  The new useTemplates value
+	 */
+	public void setUseTemplates(boolean useTemplates)
+	{
+		this.useTemplates = useTemplates;
+	}
+
+
+	/**
+	 *  Gets the useTemplates attribute of the StructureDiagramGenerator object
+	 *
+	 *@return    The useTemplates value
+	 */
+	public boolean getUseTemplates()
+	{
+		return useTemplates;
+	}
+
 
 
 	/**
@@ -269,13 +294,16 @@ public class StructureDiagramGenerator
 		 *  First we check if we can map any templates with predifined coordinates
 		 *  Those are stored as MDL molfiles in data/templates
 		 */
-		logger.debug("Initializing TemplateHandler");
-		TemplateHandler templateHandler = new TemplateHandler();
-		logger.debug("TemplateHander initialized");
-		logger.debug("Now starting Template Detection in Molecule...");
-		templateMapped = templateHandler.mapTemplates(molecule);
-		logger.debug("Template Detection finished");
-		logger.debug("Template found: " + templateMapped);
+		if (useTemplates)
+		{
+			logger.debug("Initializing TemplateHandler");
+			TemplateHandler templateHandler = new TemplateHandler();
+			logger.debug("TemplateHander initialized");
+			logger.debug("Now starting Template Detection in Molecule...");
+			templateMapped = templateHandler.mapTemplates(molecule);
+			logger.debug("Template Detection finished");
+			logger.debug("Template found: " + templateMapped);
+		}
 		int expectedRingCount = nrOfEdges - molecule.getAtomCount() + 1;
 		if (expectedRingCount > 0)
 		{
@@ -308,7 +336,6 @@ public class StructureDiagramGenerator
 			/*
 			 *  We got our ring systems now
 			 */
-
 			/*
 			 *  Do the layout for the first connected ring system ...
 			 */
@@ -342,14 +369,13 @@ public class StructureDiagramGenerator
 			 *  so we get the longest chain in the molecule and placed in
 			 *  on a horizontal axis
 			 */
-			
 			logger.debug("Searching initialLongestChain for this purely aliphatic molecule");
 			AtomContainer longestChain = atomPlacer.getInitialLongestChain(molecule);
 			logger.debug("Found linear chain of length " + longestChain.getAtomCount());
 			logger.debug("Setting coordinated of first atom to 0,0");
 			longestChain.getAtomAt(0).setPoint2D(new Point2d(0, 0));
 			longestChain.getAtomAt(0).setFlag(CDKConstants.ISPLACED, true);
-			
+
 			/*
 			 *  place the first bond such that the whole chain will be horizontally
 			 *  alligned on the x axis
@@ -364,7 +390,8 @@ public class StructureDiagramGenerator
 		 *  Now, do the layout of the rest of the molecule
 		 */
 		do
-		{	safetyCounter ++;
+		{
+			safetyCounter++;
 			logger.debug("*** Start of handling the rest of the molecule. ***");
 			/*
 			 *  do layout for all aliphatic parts of the molecule which are
@@ -494,7 +521,7 @@ public class StructureDiagramGenerator
 		boolean done;
 		do
 		{
-			safetyCounter ++;
+			safetyCounter++;
 			done = false;
 			atom = getNextAtomWithAliphaticUnplacedNeigbors();
 			if (atom != null)
@@ -532,7 +559,7 @@ public class StructureDiagramGenerator
 						logger.debug("Less than one atoms placed already");
 						logger.debug("Trying to get next bond vector.");
 						direction = atomPlacer.getNextBondVector(atom, placedAtoms.getAtomAt(0), molecule.get2DCenter());
-						
+
 					}
 
 					for (int f = 1; f < longestUnplacedChain.getAtomCount(); f++)
@@ -782,7 +809,8 @@ public class StructureDiagramGenerator
 			sharedAtoms.addAtom(bond.getAtomAt(0));
 			sharedAtoms.addAtom(bond.getAtomAt(1));
 		} catch (Exception exc)
-		{}
+		{
+		}
 		return sharedAtoms;
 	}
 
