@@ -343,7 +343,7 @@
                 </java>
         </target>
 
-        <target name="test" depends="clean,dist">
+        <target name="test" depends="clean,dist-core, dist-extra, dist-test">
                 <junit printsummary="yes" haltonfailure="yes">
                         <classpath>
                                 <pathelement
@@ -405,11 +405,12 @@
                 </java>
         </target>
 
-        <target name="run" depends="dist">
-                <java classname="org.openscience.cdk.test.smiles.SmilesParserTest" fork="yes">
+        <target name="run" depends="dist-core, dist-extra, dist-apps">
+                <java classname="org.openscience.cdk.applications.PublicJmol" fork="yes">
                         <classpath>
                                 <pathelement location="${dist}/jar/cdk-core.jar" />
                                 <pathelement location="${dist}/jar/cdk-extra.jar" />
+                                <pathelement location="${dist}/jar/cdk-apps.jar" />				
                                 <pathelement path="${java.class.path}" />
                                 <pathelement location="." />
                                 <fileset dir="${lib}">
