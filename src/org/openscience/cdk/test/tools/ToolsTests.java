@@ -46,6 +46,7 @@ public class ToolsTests {
         suite.addTest(ReactionManipulatorTest.suite());
         suite.addTest(SaturationCheckerTest.suite());
 		suite.addTest(SetOfMoleculesManipulatorTest.suite());
+        suite.addTest(NormalizerTest.suite());
         return suite;
     }
 
