@@ -9,7 +9,7 @@
   <property name="javancsslib" value="javancss21.41"/>
   <property name="javancsslib.dir" value="${javancsslib}"/>
 
-  <target id="layout" name="layout" depends="checks, includes">
+  <target id="layout" name="layout" depends="includes">
     <xslt in="${source.dir}/layout.xml" out="${source.dir}/autolayout.xml" 
           style="${website-docbook-xsl}/xsl/autolayout.xsl"/>
   </target>
@@ -72,9 +72,10 @@
   </target>
 
   <target name="includes" id="includes" 
-      depends="checks, javancss, keyword.index, bibliography, dicts, atlists, depends"/>
+      depends="check.buildsystem, check.includes,
+               javancss, keyword.index, bibliography, dicts, atlists, depends"/>
   
-  <target name="setup" id="setup">
+  <target name="setup.buildsystem" id="setup.buildsystem">
     <uptodate property="website-docbook-xsl.uptodate"
 	      targetfile="${website-docbook-xsl}"
 	      srcfile="${website-docbook-xsl}.tar.gz" />
@@ -86,17 +87,17 @@
 	      srcfile="${javancsslib}.zip" />
   </target>
 
-  <target name="checks" id="checks" 
+  <target name="check.buildsystem" id="check.buildsystem" 
       depends="check.docbook, check.docbook-xsl, check.javancss"/>
   
-  <target name="check.docbook" depends="setup" unless="docbook-xsl.uptodate" >
+  <target name="check.docbook" depends="setup.buildsystem" unless="docbook-xsl.uptodate" >
     <delete dir="${docbook-xsl}" />
     <mkdir dir="${docbook-xsl}" />
     <untar src="${docbook-xsl}.tar.gz" dest="."
 	   compression="gzip" />
   </target>
   
-  <target name="check.docbook-xsl" depends="setup" unless="website-docbook-xsl.uptodate" >
+  <target name="check.docbook-xsl" depends="setup.buildsystem" unless="website-docbook-xsl.uptodate" >
     <mkdir dir="${website-docbook-xsl}" />
     <untar src="${website-docbook-xsl}.tar.gz" dest="." compression="gzip" />
     <echo message="Making ${website-docbook-xsl}/xsl/autolayout.xsl internet independent..."/>
@@ -111,7 +112,7 @@
     </replace>
   </target>
 
-  <target name="check.javancss" depends="setup, checks" unless="javancss.uptodate" >
+  <target name="check.javancss" depends="setup.buildsystem" unless="javancss.uptodate" >
     <mkdir dir="${javancsslib.dir}" />
     <unzip src="${javancsslib}.zip" dest="." />
   </target>
