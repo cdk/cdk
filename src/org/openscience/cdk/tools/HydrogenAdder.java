@@ -38,6 +38,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Provides methods for adding missing hydrogen atoms.
@@ -83,7 +84,7 @@ import org.openscience.cdk.geometry.GeometryTools;
 public class HydrogenAdder {
 
     private LoggingTool logger;
-    private ValencyCheckerInterface satChecker;
+    private ValencyCheckerInterface valencyChecker;
 
     /**
      * Creates a tool to add missing hydrogens using the SaturationChecker class.
@@ -100,15 +101,15 @@ public class HydrogenAdder {
      * @see org.openscience.cdk.tools.ValencyCheckerInterface
      */
     public HydrogenAdder(String valencyCheckerInterfaceClassName) {
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        logger = new LoggingTool(this);
         try {
             if (valencyCheckerInterfaceClassName.equals("org.openscience.cdk.tools.ValencyChecker")) {
-                satChecker = new ValencyChecker();
+                valencyChecker = new ValencyChecker();
             } else if (valencyCheckerInterfaceClassName.equals("org.openscience.cdk.tools.SaturationChecker")) {
-                satChecker = new SaturationChecker();
+                valencyChecker = new SaturationChecker();
             } else {
                 logger.error("Cannot instantiate unknown ValencyCheckerInterface; using SaturationChecker");
-                satChecker = new SaturationChecker();
+                valencyChecker = new SaturationChecker();
             }
         } catch (Exception exception) {
             logger.error("Could not intantiate a SaturationChecker.");
@@ -212,8 +213,8 @@ public class HydrogenAdder {
         // set number of implicit hydrogens to zero
         // add explicit hydrogens
 	logger.debug("Start of addExplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom)");
-        int missingHydrogens = satChecker.calculateMissingHydrogen(atom, container);
-	logger.debug("According to satChecker, " + missingHydrogens + " are missing");
+        int missingHydrogens = valencyChecker.calculateMissingHydrogen(atom, container);
+	logger.debug("According to valencyChecker, " + missingHydrogens + " are missing");
         addExplicitHydrogensToSatisfyValency(container, atom, missingHydrogens, totalContainer);
 	logger.debug("End of addExplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom)");
     }
@@ -285,9 +286,19 @@ public class HydrogenAdder {
      */
     public void addImplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom) throws CDKException
     {
-        int missingHydrogens = satChecker.calculateMissingHydrogen(atom, container);
+        int missingHydrogens = valencyChecker.calculateMissingHydrogen(atom, container);
         atom.setHydrogenCount(missingHydrogens);
     }
 
+    /**
+     * Method that saturates an atom by adding implicit hydrogens.
+     *
+     * @param  atom      Atom to satureate.
+     */
+    public void addImplicitHydrogensToSatisfyValency(Atom atom) throws CDKException
+    {
+        int missingHydrogens = valencyChecker.calculateMissingHydrogen(atom);
+        atom.setHydrogenCount(missingHydrogens);
+    }
 }
 
