@@ -39,7 +39,8 @@ import java.io.*;
 import java.net.*;
 
 /**
- * Reads a molecule in CML format from a Reader.
+ * Reads a molecule in CML 1.0 and 1.1 format from a Reader.
+ * CML 2.0 is not yet supported.
  *
  * References:
  *   <a href="http://cdk.sf.net/biblio.html#PMR99">PMR99</a>,
