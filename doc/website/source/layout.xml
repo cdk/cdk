@@ -16,9 +16,11 @@
 
   <toc page="website.xml" filename="index.html">
     <tocentry page="intro.xml" filename="intro.html">
-      <tocentry page="software.xml" filename="software.html"/>
+      <tocentry page="screenshots.xml" filename="screenshots.html"/>
     </tocentry>
-    <tocentry page="screenshots.xml" filename="screenshots.html"/>
+    <tocentry page="software.xml" filename="software.html">
+      <tocentry page="plugins.xml" filename="plugins.html"/>
+    </tocentry>
     <tocentry page="documentation.xml" filename="documentation.html">
       <tocentry page="reference.xml" filename="reference.html">
         <tocentry page="user-core.xml" filename="user-core.html"/>

@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.0b1//EN" "dtd/website.dtd" []>
+<webpage id="software">
+  <config param="last-change-by" value="$Author$"/>
+  <config param="rcsdate" value="$Date$"/>
+
+  <head>
+    <title>Plugins for CDK Software</title>
+    <titleabbrev>CDK Plugins</titleabbrev>
+    <summary>Information about CDK plugins.</summary>
+  </head>
+
+  <section>
+    <title>CDK Plugins</title>
+    <para>
+      Since october 2003 CDK features a plugin API. All programs implementing this
+      API can make use of CDK plugins, one plugin that can run in all CDK based programs.
+      At this moment there are two programs that implement the plugin API, and thus two
+      programs in which the plugins can be run: Jmol and JChemPaint.
+    </para>
+    <para>
+      Below is a list of plugins that are currently available.
+    </para>
+
+    <section>
+      <title>RSSViewer</title>
+      <para>
+        Plugin that convert Jmol/JChemPaint into a CMLRSS reader. It extract chemical
+        information from an RSS newsfeed and displays it in Jmol or JChemPaint.
+      </para>
+      <para>
+        The source code can be found in the cdk-plugins module in CDK cvs.
+      </para>
+    </section>
+
+  </section>
+
+</webpage>
