@@ -31,9 +31,10 @@ package org.openscience.cdk.tools;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
+import org.openscience.cdk.SetOfAtomContainers;
 
 /**
- * Class that provides method to give unique IDs to ChemObjects.
+ * Class that provides methods to give unique IDs to ChemObjects.
  *
  * @author   Egon Willighagen
  * @created  2003-04-01
@@ -43,17 +44,74 @@ import org.openscience.cdk.Bond;
 public class IDCreator {
 
     /**
-     * Label the Atom's and Bond's in the AtomContainer using the a1, a2, b1, b2
-     * scheme often used in CML.
+     * Labels the Atom's and Bond's in the AtomContainer using the a1, a2, b1, b2
+     * scheme often used in CML. It will not set an id for the AtomContainer.
+     *
+     * @see createAtomContainerAndAtomAndBondIDs(SetOfAtomContainers)
      */
     public static void createAtomAndBondIDs(AtomContainer container) {
+        IDCreator.createAtomAndBondIDs(container, 0, 0);
+    }
+
+    /**
+     * Labels the Atom's and Bond's in the AtomContainer using the a1, a2, b1, b2
+     * scheme often used in CML. It will not set an id for the AtomContainer.
+     *
+     * <p>An offset can be used to start numbering at, for example, a3 instead
+     * of a1 using an offset = 2.
+     *
+     * @param atomOffset  Lowest ID number to be used for the Atoms
+     * @param bondOffset  Lowest ID number to be used for the Bonds
+     *
+     * @see createAtomContainerAndAtomAndBondIDs(SetOfAtomContainers)
+     */
+    public static void createAtomAndBondIDs(AtomContainer container,
+                                            int atomOffset, int bondOffset) {
         Atom[] atoms = container.getAtoms();
         for (int i=0; i<atoms.length; i++) {
-            atoms[i].setID("a" + (i+1));
+            atoms[i].setID("a" + (i+1+atomOffset));
         }
         Bond[] bonds = container.getBonds();
         for (int i=0; i<bonds.length; i++) {
-            bonds[i].setID("b" + (i+1));
+            bonds[i].setID("b" + (i+1+bondOffset));
+        }
+    }
+
+    /**
+     * Labels the Atom's and Bond's in each AtomContainer using the a1, a2, b1, b2
+     * scheme often used in CML. It will also set id's for all AtomContainers, naming
+     * them m1, m2, etc.
+     * It will not the SetOfAtomContainers itself.
+     *
+     * @see createAtomAndBondIDs(SetOfAtomContainers)
+     */
+    public static void createAtomContainerAndAtomAndBondIDs(SetOfAtomContainers containerSet) {
+        IDCreator.createAtomContainerAndAtomAndBondIDs(containerSet, 0, 0, 0);
+    }
+
+    /**
+     * Labels the Atom's and Bond's in each AtomContainer using the a1, a2, b1, b2
+     * scheme often used in CML. It will also set id's for all AtomContainers, naming
+     * them m1, m2, etc.
+     * It will not the SetOfAtomContainers itself.
+     *
+     * @param containerOffset  Lowest ID number to be used for the AtomContainers
+     * @param atomOffset  Lowest ID number to be used for the Atoms
+     * @param bondOffset  Lowest ID number to be used for the Bonds
+     *
+     * @see createAtomAndBondIDs(SetOfAtomContainers)
+     */
+    public static void createAtomContainerAndAtomAndBondIDs(SetOfAtomContainers containerSet,
+                           int containerOffset, int atomOffset, int bondOffset) {
+        AtomContainer[] containers = containerSet.getAtomContainers();
+        int atomCount = atomOffset;
+        int bondCount = bondOffset;
+        for (int i=0; i<containers.length; i++) {
+            AtomContainer container = containers[i];
+            container.setID("m" + (i+1+containerOffset));
+            IDCreator.createAtomAndBondIDs(container, atomCount, bondCount);
+            atomCount += container.getAtomCount();
+            bondCount += container.getBondCount();
         }
     }
 }
