@@ -412,6 +412,8 @@
                 <jar jarfile="${dist}/jar/cdk-io.jar">
                     <fileset dir="${build}">
                         <include name="org/openscience/cdk/io/**/*" />
+                        <include name="org/openscience/cdk/ChemFile.class" />
+                        <include name="org/openscience/cdk/exception/UnsupportedChemObjectException.class" />
                     </fileset>
                 </jar>
         </target>
@@ -504,6 +506,26 @@
                 <test name="org.openscience.cdk.test.StandardClassesTests"
                       haltonfailure="no" todir="${reports.tests}"
                       outfile="result.standard">
+                    <formatter type="brief" />
+                </test>
+            </junit>
+        </target>
+	
+	<target name="test-io" depends="dist-core, dist-standard, dist-test, dist-io">
+            <junit printsummary="yes" haltonfailure="yes">
+                <classpath refid="project.class.path" />
+                <classpath>
+                    <fileset dir="${dist}/jar">
+                        <include name="cdk-core.jar" />
+                        <include name="cdk-standard.jar" />
+                        <include name="cdk-io.jar" />
+                        <include name="cdk-test.jar" />
+                    </fileset>
+                </classpath>
+
+                <test name="org.openscience.cdk.test.io.IOTests"
+                      haltonfailure="no" todir="${reports.tests}"
+                      outfile="result.io">
                     <formatter type="brief" />
                 </test>
             </junit>
