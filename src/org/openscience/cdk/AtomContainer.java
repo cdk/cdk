@@ -712,8 +712,44 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 		}
 		return count;
 	}
-
-
+	/**
+	 *  Returns an array of all SingleElectron connected to the given atom.
+	 *
+	 *@param  atom  Description of the Parameter
+	 *@return       The array of SingleElectron of this AtomContainer
+	 */
+	public SingleElectron[] getSingleElectron(Atom atom)
+	{
+		Vector lps = new Vector();
+		for (int i = 0; i < getElectronContainerCount(); i++)
+		{
+			if ((electronContainers[i] instanceof SingleElectron) && (((SingleElectron) electronContainers[i]).contains(atom)))
+			{
+				lps.add(electronContainers[i]);
+			}
+		}
+		SingleElectron[] result = new SingleElectron[lps.size()];
+		lps.copyInto(result);
+		return result;
+	}
+	/**
+	 *  Returns the sum of the SingleElectron for a given Atom.
+	 *
+	 *@param  atom  Description of the Parameter
+	 *@return       The array of SingleElectron of this AtomContainer
+	 */
+	public int getSingleElectronSum(Atom atom)
+	{
+		int count = 0;
+		Vector lps = new Vector();
+		for (int i = 0; i <  getElectronContainerCount(); i++)
+		{if ((electronContainers[i] instanceof SingleElectron) && (((SingleElectron) electronContainers[i]).contains(atom)))
+			{
+				count++;
+			}
+		}
+		return count;
+	}
 	/**
 	 * Returns the sum of the bond orders for a given Atom.
 	 *
@@ -1362,12 +1398,8 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 				Atom atom = ((LonePair) electronContainer).getAtom();
 				newEC = (LonePair)electronContainer.clone();
 				((LonePair) newEC).setAtom(clone.getAtomAt(getAtomNumber(atom)));
-			} else if (electronContainer instanceof SingleElectron) {
-				Atom atom = ((SingleElectron) electronContainer).getAtom();
-				newEC = (SingleElectron)electronContainer.clone();
-				((SingleElectron) newEC).setAtom(clone.getAtomAt(getAtomNumber(atom)));
 			} else {
-				System.out.println("Expecting EC, got: " + electronContainer.getClass().getName());
+				//System.out.println("Expecting EC, got: " + electronContainer.getClass().getName());
 				newEC = (ElectronContainer) electronContainer.clone();
 			}
 			clone.addElectronContainer(newEC);
