@@ -3,16 +3,21 @@ CHANGELOG $Date$
 
 Changes in CVS
 ------------------------------------
+
+20030217 Release
+------------------------------------
 New:
 * Added Reaction and SetOfReactions to CDK's core classes
 * Zoom functionality for the Renderer2D (including in editing mode)
 * Added method in GeometryTools to center a molecule around a point
 
 Changes:
-* Renamed io.cml.Convention to io.cml.CMLCoreConvention
+* Renamed io.cml.Convention to io.cml.CMLCoreModule
 
 Fixes:
-none
+* Rendering of Atom Labels in 2D
+* Fixed build process from sourcedist generated with Ant buildfile
+* Removed classes in cdk-extra module that belong elsewhere
 
 API changes:
 none
