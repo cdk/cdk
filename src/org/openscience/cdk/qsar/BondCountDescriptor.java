@@ -34,6 +34,20 @@ import java.util.Hashtable;
 /**
  *  Descriptor based on the number of bonds of a certain bond order.
  *
+ * <p>This descriptor uses these parameters:
+ * <table border="1">
+ *   <tr>
+ *     <td>Name</td>
+ *     <td>Default</td>
+ *     <td>Description</td>
+ *   </tr>
+ *   <tr>
+ *     <td>order</td>
+ *     <td>1.0</td>
+ *     <td>The bond order</td>
+ *   </tr>
+ * </table>
+ *
  * @author      mfe4
  * @cdk.created 2004-11-13
  * @cdk.module  qsar
@@ -41,7 +55,7 @@ import java.util.Hashtable;
  */
 public class BondCountDescriptor implements Descriptor {
 
-	private double order = -1.0;
+	private double order = 1.0;
 
 
 	/**
@@ -120,7 +134,7 @@ public class BondCountDescriptor implements Descriptor {
 	 */
 	public String[] getParameterNames() {
 		String[] params = new String[1];
-		params[0] = "Bond Order";
+		params[0] = "order";
 		return params;
 	}
 

@@ -39,6 +39,25 @@ import javax.vecmath.*;
 /**
  *  This class returns the 3D distance between two atoms.
  *
+ * <p>This descriptor uses these parameters:
+ * <table border="1">
+ *   <tr>
+ *     <td>Name</td>
+ *     <td>Default</td>
+ *     <td>Description</td>
+ *   </tr>
+ *   <tr>
+ *     <td>targetPosition</td>
+ *     <td>0</td>
+ *     <td>The position of the first atom</td>
+ *   </tr>
+ *   <tr>
+ *     <td>focusPosition</td>
+ *     <td>0</td>
+ *     <td>The position of the second atom</td>
+ *   </tr>
+ * </table>
+ *
  *@author         mfe4
  *@cdk.created    2004-11-13
  *@cdk.module     qsar

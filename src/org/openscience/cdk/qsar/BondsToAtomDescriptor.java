@@ -38,6 +38,25 @@ import org.openscience.cdk.graph.matrix.*;
 /**
  *  This class returns the number of bonds on the shortest path between two atoms.
  *
+ * <p>This descriptor uses these parameters:
+ * <table border="1">
+ *   <tr>
+ *     <td>Name</td>
+ *     <td>Default</td>
+ *     <td>Description</td>
+ *   </tr>
+ *   <tr>
+ *     <td>targetPosition</td>
+ *     <td>0</td>
+ *     <td>The position of the first atom</td>
+ *   </tr>
+ *   <tr>
+ *     <td>focusPosition</td>
+ *     <td>0</td>
+ *     <td>The position of the second atom</td>
+ *   </tr>
+ * </table>
+ *
  *@author         mfe4
  *@created        24 febbraio 2005
  *@cdk.created    2004-11-13
@@ -140,8 +159,8 @@ public class BondsToAtomDescriptor implements Descriptor {
 	 */
 	public String[] getParameterNames() {
 		String[] params = new String[2];
-		params[0] = "The position of the target atom";
-		params[1] = "The position of the focus atom";
+		params[0] = "targetPosition";
+		params[1] = "focusPosition";
 		return params;
 	}
 

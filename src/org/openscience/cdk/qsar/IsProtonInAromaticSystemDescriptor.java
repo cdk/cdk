@@ -39,6 +39,25 @@ import org.openscience.cdk.qsar.result.*;
  *  it returns 2 if the distance between aromatic system and proton is 2 bonds, 
  *  and it return 0 for other positions. It is needed to use addExplicitHydrogensToSatisfyValency method.
  *
+ * <p>This descriptor uses these parameters:
+ * <table>
+ *   <tr>
+ *     <td>Name</td>
+ *     <td>Default</td>
+ *     <td>Description</td>
+ *   </tr>
+ *   <tr>
+ *     <td>checkAromaticity</td>
+ *     <td>false</td>
+ *     <td>True is the aromaticity has to be checked</td>
+ *   </tr>
+ *   <tr>
+ *     <td>atomPosition</td>
+ *     <td> </td>
+ *     <td>Position of the proton</td>
+ *   </tr>
+ * </table>
+ *
  * @author      mfe4
  * @cdk.created 2004-11-03
  * @cdk.module  qsar
@@ -158,8 +177,8 @@ public class IsProtonInAromaticSystemDescriptor implements Descriptor {
 	 */
 	public String[] getParameterNames() {
 		String[] params = new String[2];
-		params[0] = "The position of the atom bonded to this proton";
-		params[1] = "False if the aromaticity has been already checked";
+		params[0] = "atomPosition";
+		params[1] = "checkAromaticity";
 		return params;
 	}
 

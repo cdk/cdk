@@ -39,6 +39,20 @@ import java.util.Hashtable;
 /**
  *  This class returns the valence of an atom.
  *
+ * <p>This descriptor uses these parameters:
+ * <table border="1">
+ *   <tr>
+ *     <td>Name</td>
+ *     <td>Default</td>
+ *     <td>Description</td>
+ *   </tr>
+ *   <tr>
+ *     <td>targetPosition</td>
+ *     <td>1</td>
+ *     <td>The position of the target atom</td>
+ *   </tr>
+ * </table>
+ *
  *@author         mfe4
  *@cdk.created    2004-11-13
  *@cdk.module     qsar
@@ -164,7 +178,7 @@ public class AtomValenceDescriptor implements Descriptor {
 	 */
 	public String[] getParameterNames() {
 		String[] params = new String[1];
-		params[0] = "The position of the target atom";
+		params[0] = "targetPosition";
 		return params;
 	}
 

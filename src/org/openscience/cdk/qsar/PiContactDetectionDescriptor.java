@@ -41,6 +41,30 @@ import org.openscience.cdk.qsar.result.*;
  *  one and the same conjugated pi-system which contains both atoms, or directly
  *  linked neighboors of the atoms).
  *
+ * <p>This descriptor uses these parameters:
+ * <table border="1">
+ *   <tr>
+ *     <td>Name</td>
+ *     <td>Default</td>
+ *     <td>Description</td>
+ *   </tr>
+ *   <tr>
+ *     <td>firstAtom</td>
+ *     <td>0</td>
+ *     <td>The position of the first atom</td>
+ *   </tr>
+ *   <tr>
+ *     <td>secondAtom</td>
+ *     <td>0</td>
+ *     <td>The position of the second atom</td>
+ *   </tr>
+ *   <tr>
+ *     <td>checkAromaticity</td>
+ *     <td>false</td>
+ *     <td>True is the aromaticity has to be checked</td>
+ *   </tr>
+ * </table>
+ *
  *@author         mfe4
  *@cdk.created    2004-11-03
  *@cdk.module     qsar
@@ -186,9 +210,9 @@ public class PiContactDetectionDescriptor implements Descriptor {
 	 */
 	public String[] getParameterNames() {
 		String[] params = new String[3];
-		params[0] = "The position of the first atom";
-		params[1] = "The position of the second atom";
-		params[2] = "False if the aromaticity has been already checked";
+		params[0] = "firstAtom";
+		params[1] = "secondAtom";
+		params[2] = "checkAromaticity";
 		return params;
 	}
 

@@ -42,6 +42,20 @@ import java.util.Hashtable;
  * heteroaromatic oxygen, sulphur and pyrrole N. Higher oxidation levels of N,P,S are excluded. 
  * Note P(III) is currently included. Zeneca's work would imply that (O=S=O) shoud also be excluded".
  *
+ * <p>This descriptor uses these parameters:
+ * <table>
+ *   <tr>
+ *     <td>Name</td>
+ *     <td>Default</td>
+ *     <td>Description</td>
+ *   </tr>
+ *   <tr>
+ *     <td>checkAromaticity</td>
+ *     <td>false</td>
+ *     <td>True is the aromaticity has to be checked</td>
+ *   </tr>
+ * </table>
+ *
  * @author      mfe4
  * @cdk.created 2004-11-03
  * @cdk.module  qsar
@@ -171,7 +185,7 @@ public class HBondAcceptorCountDescriptor implements Descriptor {
 	 */
 	public String[] getParameterNames() {
 		String[] params = new String[1];
-		params[0] = "If true: aromaticity has to be checked";
+		params[0] = "checkAromaticity";
 		return params;
 	}
 

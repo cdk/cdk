@@ -37,7 +37,26 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.qsar.result.*;
 
 /**
- *  Description of the Class
+ *  This class evaluates if a proton is joined to a conjugated system.
+ *
+ * <p>This descriptor uses these parameters:
+ * <table>
+ *   <tr>
+ *     <td>Name</td>
+ *     <td>Default</td>
+ *     <td>Description</td>
+ *   </tr>
+ *   <tr>
+ *     <td>checkAromaticity</td>
+ *     <td>false</td>
+ *     <td>True is the aromaticity has to be checked</td>
+ *   </tr>
+ *   <tr>
+ *     <td>atomPosition</td>
+ *     <td> </td>
+ *     <td>Position of the proton</td>
+ *   </tr>
+ * </table>
  *
  * @author      mfe4
  * @cdk.created 2004-11-03
@@ -109,7 +128,7 @@ public class IsProtonInConjugatedPiSystemDescriptor implements Descriptor {
 
 
 	/**
-	 *  The method is a proton descriptor that evaluate if protons of a given atom are bonded to a conjugated system
+	 *  The method is a proton descriptor that evaluates if a proton is joined to a conjugated system.
 	 *
 	 *@param  ac                AtomContainer
 	 *@return                   true if the proton is bonded to a conjugated system
@@ -125,14 +144,16 @@ public class IsProtonInConjugatedPiSystemDescriptor implements Descriptor {
 			Atom target = ac.getAtomAt(atomPosition);
 			if(target.getSymbol().equals("H")) {
 				SetOfAtomContainers acSet = ConjugatedPiSystemsDetector.detect(mol);
-				AtomContainer detected = acSet.getAtomContainer(0);
+				AtomContainer[] detected = acSet.getAtomContainers();
 				Atom[] neighboors = mol.getConnectedAtoms(target);
 				for (int i = 0; i < neighboors.length; i++) {
-					if ((detected != null) && (detected.contains(neighboors[i]))) {
-						counter += 1;
-					}
-					else {
-						counter += 0;
+					for(int d = 0; d < detected.length; d++) {
+						if ((detected[d]!= null) && (detected[d].contains(neighboors[i]))) {
+							counter += 1;
+						}
+						else {
+							counter += 0;
+						}
 					}
 				}
 				if(counter > 0) {
@@ -154,8 +175,8 @@ public class IsProtonInConjugatedPiSystemDescriptor implements Descriptor {
 	 */
 	public String[] getParameterNames() {
 		String[] params = new String[2];
-		params[0] = "The position of the atom bonded to this proton";
-		params[1] = "False if the aromaticity has been already checked";
+		params[0] = "atomPosition";
+		params[1] = "checkAromaticity";
 		return params;
 	}
 

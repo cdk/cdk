@@ -39,6 +39,20 @@ import java.util.Hashtable;
  *  The number of hydrogen bond donors is defined by Daylight in the
  *  <a href="http://www.daylight.com/dayhtml_tutorials/languages/smarts/smarts_examples.html#EXMPL">SMARTS tutorial</a>
  *
+ * <p>This descriptor uses these parameters:
+ * <table>
+ *   <tr>
+ *     <td>Name</td>
+ *     <td>Default</td>
+ *     <td>Description</td>
+ *   </tr>
+ *   <tr>
+ *     <td>checkAromaticity</td>
+ *     <td>false</td>
+ *     <td>True is the aromaticity has to be checked</td>
+ *   </tr>
+ * </table>
+ *
  * @author      mfe4
  * @cdk.created 2004-11-03
  * @cdk.module  qsar
@@ -163,7 +177,7 @@ public class HBondDonorCountDescriptor implements Descriptor {
 	 */
 	public String[] getParameterNames() {
 		String[] params = new String[1];
-		params[0] = "If true: aromaticity has to be checked";
+		params[0] = "checkAromaticity";
 		return params;
 	}
 

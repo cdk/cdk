@@ -40,6 +40,20 @@ import java.util.Hashtable;
  * Descriptor based on the number of atoms of a certain element type. It is
  * possible to use the wild card symbol * as element type to get the count of
  * all atoms.
+ * <p>This descriptor uses these parameters:
+ * <table border="1">
+ *   <tr>
+ *     <td>Name</td>
+ *     <td>Default</td>
+ *     <td>Description</td>
+ *   </tr>
+ *   <tr>
+ *     <td>elementName</td>
+ *     <td>*</td>
+ *     <td>Symbol of the element we want to count</td>
+ *   </tr>
+ * </table>
+ *
  *
  * @author      mfe4
  * @cdk.created 2004-11-13
@@ -141,7 +155,7 @@ public class AtomCountDescriptor implements Descriptor {
 	 */
 	public String[] getParameterNames() {
 		String[] params = new String[1];
-		params[0] = "Element Symbol";
+		params[0] = "elementName";
 		return params;
 	}
 
