@@ -197,7 +197,10 @@
 
                 <copy
                 file="org/openscience/cdk/io/cml/data/cml.dtd"
-                tofile="${build}/org/openscience/cdk/io/cml/data/cml.dtd" />
+                tofile="${build}/org/openscience/cdk/io/cml/data/cml1_0.dtd" />
+                <copy
+                file="org/openscience/cdk/io/cml/data/cml.dtd"
+                tofile="${build}/org/openscience/cdk/io/cml/data/cml1_0_1.dtd" />
 
                 <jar jarfile="${dist}/jar/cdk-with-java3d.jar"
                 basedir="${build}" />
