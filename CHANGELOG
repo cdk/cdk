@@ -16,6 +16,7 @@ New:
 * Different build procedure to allow for patches
 * Added a color scheme for atoms based on the partial
   atomic charge
+* A LonePair class is implemented (RFC #5)
 
 Fixes:
 * HOSECodeGenerator now generates correctly ranked n-sphere codes.
@@ -34,6 +35,7 @@ API changes:
 * Two getBondNumber() methods are added to AtomContainer.
 * The method tools.SaturationChecker.saturateWithHydrogen() got
   renamed to addHydrogensToSatisfyValency() (thanks to Peter)
+* Major changes in the AtomContainer API (RFC #5)
 
 20021012 Release
 ------------------------------------
