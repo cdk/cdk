@@ -701,6 +701,17 @@ public class SmilesParserTest extends TestCase
 		}
     }
 
+    public void testSFBug1095696() {
+		try {
+			String smiles = "Nc1ncnc2[nH]cnc12";
+			Molecule mol = sp.parseSmiles(smiles);
+			assertEquals(10, mol.getAtomCount());
+            assertEquals(1, mol.getAtomAt(6).getHydrogenCount());
+		} catch (Exception e) {
+			fail(e.toString());
+		}
+    }
+
     /**
      * Example taken from 'Handbook of Chemoinformatics', Gasteiger, 2003,
      * page 89 (Part I).
