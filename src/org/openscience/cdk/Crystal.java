@@ -1,6 +1,6 @@
-/* $RCSfile$    
- * $Author$    
- * $Date$    
+/* $RCSfile$
+ * $Author$
+ * $Date$
  * $Revision$
  * 
  * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
@@ -190,25 +190,13 @@ public class Crystal extends AtomContainer implements java.io.Serializable, Clon
     }
 
     /**
-     * Sets the space group of this crystal. If not space group
-     * is not recognized then P1 is assumed.
-     *
-     * Recognized space group strings:
-     *   "P1"
-     *   "P 2_1 2_1 2_1"
+     * Sets the space group of this crystal.
      *
      * @param   group  the space group of this crystal structure
      *
      * @see       #getSpaceGroup
      */
     public void setSpaceGroup(String group) {
-        if ("P1".equals(group)) {
-            setZ(1);
-        } else if ("P 2_1 2_1 2_1".equals(group)) {
-            setZ(4);
-        } else {
-            return;
-        }
         spaceGroup = group;
     }
 
@@ -219,6 +207,16 @@ public class Crystal extends AtomContainer implements java.io.Serializable, Clon
      */
     public int getZ() {
         return Z;
+    }
+
+    /**
+     * Sets the number of asymmetric parts in the unit cell.
+     *
+     * @param   z Z
+     * @see     getZ()
+     */
+    public void setZ(int z) {
+        Z = z;
     }
 
     /**
@@ -245,14 +243,13 @@ public class Crystal extends AtomContainer implements java.io.Serializable, Clon
      */
     public String toString() {
         StringBuffer sb = new StringBuffer();
-        sb.append("Crystal:\n");
-        sb.append("  space group: " + getSpaceGroup() + "\n");
-        sb.append("  Z: " + getZ() + "\n");
-        sb.append("  a : " + ax + ", " + ay + ", " + az + "\n");
-        sb.append("  b : " + bx + ", " + by + ", " + bz + "\n");
-        sb.append("  c : " + cx + ", " + cy + ", " + cz + "\n");
-        sb.append("  atoms: " + getAtomCount()*getZ() + "\n");
-        sb.append("  assym atoms: " + getAtomCount() + "\n");
+        sb.append("Crystal{");
+        sb.append("SG=" + getSpaceGroup() + ", ");
+        sb.append("Z=" + getZ() + ", ");
+        sb.append("a=(" + ax + ", " + ay + ", " + az + "), ");
+        sb.append("b=(" + bx + ", " + by + ", " + bz + "), ");
+        sb.append("c=(" + cx + ", " + cy + ", " + cz + "), ");
+        sb.append("#A=" + getAtomCount() + "}");
         return sb.toString();
     }
 
@@ -263,17 +260,6 @@ public class Crystal extends AtomContainer implements java.io.Serializable, Clon
         ax = 0.0; ay = 0.0; az = 0.0;
         bx = 0.0; by = 0.0; bz = 0.0;
         cx = 0.0; cy = 0.0; cz = 0.0;
-    }
-
-    /**
-     * Sets the number of asymmetric parts in the unit cell.
-     * This is used internally only by setSpaceGroup()
-     *
-     * @param   z Z
-     * @see     setSpaceGroup()
-     */
-    public void setZ(int z) {
-        Z = z;
     }
 
 }
