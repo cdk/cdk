@@ -488,41 +488,29 @@
                 <mkdir dir="${build}/org/openscience/cdk/iupac/generator/data" />
 
                 <copy
-                file="${src}/org/openscience/cdk/config/data/isotopes.xml"
-                tofile="${build}/org/openscience/cdk/config/data/isotopes.xml" />
+                  file="${src}/org/openscience/cdk/config/data/isotopes.xml"
+                  tofile="${build}/org/openscience/cdk/config/data/isotopes.xml" />
+                <copy todir="${build}/org/openscience/cdk/config/data/">
+                  <fileset dir="${src}/org/openscience/cdk/config/data/" includes="*_atomtypes.xml"/>
+                  <fileset dir="${src}/org/openscience/cdk/config/data/" includes="jmol_atomtypes.txt"/>
+                </copy>
                 <copy
-                file="${src}/org/openscience/cdk/config/data/structgen_atomtypes.xml"
-                tofile="${build}/org/openscience/cdk/config/data/structgen_atomtypes.xml" />
+                  file="${src}/org/openscience/cdk/config/data/log4j.properties"
+                  tofile="${build}/org/openscience/cdk/config/data/log4j.properties" />
                 <copy
-                file="${src}/org/openscience/cdk/config/data/valency_atomtypes.xml"
-                tofile="${build}/org/openscience/cdk/config/data/valency_atomtypes.xml" />
+                  file="${src}/org/openscience/cdk/io/cml/data/cml1_0.dtd"
+                  tofile="${build}/org/openscience/cdk/io/cml/data/cml1_0.dtd" />
                 <copy
-                file="${src}/org/openscience/cdk/config/data/mol2_atomtypes.xml"
-                tofile="${build}/org/openscience/cdk/config/data/mol2_atomtypes.xml" />
-                <copy
-                file="${src}/org/openscience/cdk/config/data/jmol_atomtypes.txt"
-                tofile="${build}/org/openscience/cdk/config/data/jmol_atomtypes.txt" />
-                <copy
-                file="${src}/org/openscience/cdk/config/data/log4j.properties"
-                tofile="${build}/org/openscience/cdk/config/data/log4j.properties" />
+                  file="${src}/org/openscience/cdk/io/cml/data/cml1_0_1.dtd"
+                  tofile="${build}/org/openscience/cdk/io/cml/data/cml1_0_1.dtd" />
 
                 <copy
-                file="${src}/org/openscience/cdk/io/cml/data/cml1_0.dtd"
-                tofile="${build}/org/openscience/cdk/io/cml/data/cml1_0.dtd" />
-                <copy
-                file="${src}/org/openscience/cdk/io/cml/data/cml1_0_1.dtd"
-                tofile="${build}/org/openscience/cdk/io/cml/data/cml1_0_1.dtd" />
+                  file="${src}/org/openscience/cdk/iupac/generator/data/IUPACNames.properties"
+                  tofile="${build}/org/openscience/cdk/iupac/generator/data/IUPACNames.properties" />
 
-                <copy
-                file="${src}/org/openscience/cdk/iupac/generator/data/IUPACNames.properties"
-                tofile="${build}/org/openscience/cdk/iupac/generator/data/IUPACNames.properties" />
-
-                <copy
-                file="${src}/org/openscience/cdk/dict/data/chemical.xml"
-                tofile="${build}/org/openscience/cdk/dict/data/chemical.xml" />
-                <copy 
-                file="${src}/org/openscience/cdk/dict/data/elements.xml"
-                tofile="${build}/org/openscience/cdk/dict/data/elements.xml" />
+                <copy todir="${build}/org/openscience/cdk/dict/data/">
+                  <fileset dir="${src}/org/openscience/cdk/dict/data/" includes="*.xml"/>
+                </copy>
         </target>
 
         <target id="dist-core" name="dist-core" depends="compile-core, dist.init">
