@@ -266,30 +266,29 @@ public class BondStretching {
 				for (int k=0; k < bondsNumber; k++) {
 					
 					if ((bondAtomPosition[k][0] == atomNumberj) | (bondAtomPosition[k][1] == atomNumberj)) {
-						//System.out.println("r[" + k + "] = " + r[k]);
-						ddDeltar1 = (-1) / Math.pow(r[k],3);
-						ddDeltar2 = 1 / r[k];
-						//System.out.println("OK: had d1");
+						if ((bondAtomPosition[k][0] == atomNumberi) | (bondAtomPosition[k][1] == atomNumberi)) {
+							ddDeltar1 = (-1) / Math.pow(r[k],3);
+							ddDeltar2 = 1 / r[k];
+							//System.out.println("OK: had d1 and have the atomNumberi");
+					
+							switch (coordinatej) {
+								case 0: ddDeltar1 = (coord3d.getElement(3 * bondAtomPosition[k][0]) - coord3d.getElement(3 * bondAtomPosition[k][1])) * ddDeltar[i][j][k];
+									//System.out.println("OK: d1 x");
+									break;
+								case 1:	ddDeltar1 = (coord3d.getElement(3 * bondAtomPosition[k][0] + 1) - coord3d.getElement(3 * bondAtomPosition[k][1] + 1)) * ddDeltar[i][j][k];
+									//System.out.println("OK: d1 y");
+									break;
+								case 2:	ddDeltar1 = (coord3d.getElement(3 * bondAtomPosition[k][0] + 2) - coord3d.getElement(3 * bondAtomPosition[k][1] + 2)) * ddDeltar[i][j][k];
+									//System.out.println("OK: d1 z");
+									break;
+							}
 						
-						switch (coordinatej) {
-							case 0: ddDeltar1 = (coord3d.getElement(3 * bondAtomPosition[k][0]) - coord3d.getElement(3 * bondAtomPosition[k][1])) * ddDeltar[i][j][k];
-								//System.out.println("OK: d1 x");
-								break;
-							case 1:	ddDeltar1 = (coord3d.getElement(3 * bondAtomPosition[k][0] + 1) - coord3d.getElement(3 * bondAtomPosition[k][1] + 1)) * ddDeltar[i][j][k];
-								//System.out.println("OK: d1 y");
-								break;
-							case 2:	ddDeltar1 = (coord3d.getElement(3 * bondAtomPosition[k][0] + 2) - coord3d.getElement(3 * bondAtomPosition[k][1] + 2)) * ddDeltar[i][j][k];
-								//System.out.println("OK: d1 z");
-								break;
-						}
-						
-						if (bondAtomPosition[k][1] == atomNumberj) {
+							if (bondAtomPosition[k][1] == atomNumberj) {
 								ddDeltar1 = (-1) * ddDeltar1;
 								ddDeltar2 = (-1) * ddDeltar2;
 								//System.out.println("OK: bond 1");
-						} 
+							} 
 	
-						if ((bondAtomPosition[k][0] == atomNumberi) | (bondAtomPosition[k][1] == atomNumberi)) {
 							switch (coordinatei) {
 								case 0: ddDeltar1 = ddDeltar1 * (coord3d.getElement(3 * bondAtomPosition[k][0]) - coord3d.getElement(3 * bondAtomPosition[k][1]));
 									//System.out.println("OK: have d2 x");
@@ -301,13 +300,15 @@ public class BondStretching {
 									//System.out.println("OK: have d2 z");
 									break;
 							}
+							
 							if (bondAtomPosition[k][1] == atomNumberi) {
 								ddDeltar1 = (-1) * ddDeltar1;
 								ddDeltar2 = (-1) * ddDeltar2;
 								//System.out.println("OK: d2 bond 1");
 							}
+							
+							ddDeltar[i][j][k] = ddDeltar1 + ddDeltar2;
 						}
-						ddDeltar[i][j][k] = ddDeltar1 + ddDeltar2;
 					} else {
 						ddDeltar[i][j][k] = 0;
 						//System.out.println("OK: 0");

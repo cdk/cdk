@@ -201,33 +201,34 @@ public class AngleBending {
 					if (angleAtomPosition[l][0] == atomNumber) {
 
 						switch (coordinate) {
-							case 0: dDeltav[m][l] = dDeltav[m][l] * ((xk.x-xj.x) * rij * rkj - (xij.dot(xkj)) * rkj * (1/rij));
+							case 0: dDeltav[m][l] = dDeltav[m][l] * ((xk.x-xj.x) * rij * rkj - (xij.dot(xkj)) * rkj * ((xi.x-xj.x)/rij));
 								break;
-							case 1:	dDeltav[m][l] = dDeltav[m][l] * ((xk.y-xj.y) * rij * rkj - (xij.dot(xkj)) * rkj * (1/rij));
+							case 1:	dDeltav[m][l] = dDeltav[m][l] * ((xk.y-xj.y) * rij * rkj - (xij.dot(xkj)) * rkj * ((xi.y-xj.y)/rij));
 								break;
-							case 2: dDeltav[m][l] = dDeltav[m][l] * ((xk.z-xj.z) * rij * rkj - (xij.dot(xkj)) * rkj * (1/rij));
+							case 2: dDeltav[m][l] = dDeltav[m][l] * ((xk.z-xj.z) * rij * rkj - (xij.dot(xkj)) * rkj * ((xi.z-xj.z)/rij));
 								break;
 						}
 					}
 					if (angleAtomPosition[l][1] == atomNumber) {
 
 						switch (coordinate) {
-							case 0: dDeltav[m][l] = dDeltav[m][l] * ((2 * xj.x - xk.x - xi.x) * rij * rkj - (xij.dot(xkj)) * ((-1/rij) * rkj + (-1/rkj) * rij));
+							case 0: dDeltav[m][l] = dDeltav[m][l] * ((2 * xj.x - xk.x - xi.x) * rij * rkj - (xij.dot(xkj)) * ((-(xi.x-xj.x)/rij) * rkj + (-(xk.x-xj.x)/rkj) * rij));
 								break;
-							case 1:	dDeltav[m][l] = dDeltav[m][l] * ((2 * xj.y - xk.y - xi.y) * rij * rkj - (xij.dot(xkj)) * ((-1/rij) * rkj + (-1/rkj) * rij));
+							case 1:	dDeltav[m][l] = dDeltav[m][l] * ((2 * xj.y - xk.y - xi.y) * rij * rkj - (xij.dot(xkj)) * ((-(xi.y-xj.y)/rij) * rkj + (-(xk.y-xj.y)/rkj) * rij));
 								break;
-							case 2: dDeltav[m][l] = dDeltav[m][l] * ((2 * xj.z - xk.z - xi.z) * rij * rkj - (xij.dot(xkj)) * ((-1/rij) * rkj + (-1/rkj) * rij));
+							case 2: dDeltav[m][l] = dDeltav[m][l] * ((2 * xj.z - xk.z - xi.z) * rij * rkj - (xij.dot(xkj)) * ((-(xi.z-xj.z)/rij) * rkj + (-(xk.z-xj.z)/rkj) * rij));
 								break;
 						}
 					}
+
 					if (angleAtomPosition[l][2] == atomNumber) {
 
 						switch (coordinate) {
-							case 0: dDeltav[m][l] = dDeltav[m][l] * ((xi.x-xj.x) * rij * rkj - (xij.dot(xkj)) * rij * (1/rkj));
+							case 0: dDeltav[m][l] = dDeltav[m][l] * ((xi.x-xj.x) * rij * rkj - (xij.dot(xkj)) * rij * ((xk.x-xj.x)/rkj));
 								break;
-							case 1:	dDeltav[m][l] = dDeltav[m][l] * ((xi.y-xj.y) * rij * rkj - (xij.dot(xkj)) * rij * (1/rkj));
+							case 1:	dDeltav[m][l] = dDeltav[m][l] * ((xi.y-xj.y) * rij * rkj - (xij.dot(xkj)) * rij * ((xk.y-xj.y)/rkj));
 								break;
-							case 2: dDeltav[m][l] = dDeltav[m][l] * ((xi.z-xj.z) * rij * rkj - (xij.dot(xkj)) * rij * (1/rkj));
+							case 2: dDeltav[m][l] = dDeltav[m][l] * ((xi.z-xj.z) * rij * rkj - (xij.dot(xkj)) * rij * ((xk.z-xj.z)/rkj));
 								break;
 						}
 					}
@@ -244,7 +245,7 @@ public class AngleBending {
 
 
 	/**
-	 *  Get the bond lengths derivative respect to the cartesian coordinates of the atoms.
+	 *  Get the bond lengths first derivative respect to the cartesian coordinates of the atoms.
 	 *
 	 *@return        Delta angle bending first derivative value [dimension(3xN)] [angles Number]
 	 */
@@ -292,26 +293,450 @@ public class AngleBending {
 
 
 	/**
+	 *  Calculate the angle bending second derivative respect to the cartesian coordinates of the atoms.
+	 *
+	 *@param  coord3d  Current molecule coordinates.
+	 */
+	public void setAngleBendingSecondDerivative(GVector coord3d) {
+		
+		ddDeltav = new double[coord3d.getSize()][][];
+		
+		Double forAtomNumber = null;
+		int atomNumbern;
+		int atomNumberm;
+		int coordinaten;
+		int coordinatem;
+		
+		double ddDeltav1;
+		double ddDeltav2;
+		
+		double ddDeltav2a;
+		double ddDeltav2b;
+		
+		double ddDeltav2a1;
+		double ddDeltav2a2;
+		double ddDeltav2a3;
+		double ddDeltav2a4;
+
+		double ddDeltav2a1a;
+		double ddDeltav2a1b;
+		
+		double ddDeltav2a4a1;
+		double ddDeltav2a4a1a;
+		double ddDeltav2a4a1b;
+		double ddDeltav2a4a1c;
+		double ddDeltav2a4a2;
+
+		double ddDeltav2a4b;
+
+		double ddDeltav2a4c1;
+		double ddDeltav2a4c1a;
+		double ddDeltav2a4c1b;
+		double ddDeltav2a4c1c;
+		double ddDeltav2a4c2;
+
+		double ddDeltav2a4d;
+
+		setAngleBendingFirstDerivative(coord3d);
+		
+		for (int n=0; n<coord3d.getSize(); n++) {
+			ddDeltav[n] = new double[coord3d.getSize()][];
+			
+			forAtomNumber = new Double(n/3);
+			coordinaten = n % 3;
+			//System.out.println("coordinaten = " + coordinaten);
+				
+			atomNumbern = forAtomNumber.intValue();
+			//System.out.println("atomNumbern = " + atomNumbern);
+				
+			for (int m = 0; m < coord3d.getSize(); m++) {
+			
+				ddDeltav[n][m] = new double[angleNumber];
+			
+				forAtomNumber = new Double(m/3);
+				coordinatem = m % 3;
+				//System.out.println("coordinatem = " + coordinatem);
+
+				atomNumberm = forAtomNumber.intValue();
+				//System.out.println("atomNumberm = " + atomNumberm);
+
+				for (int l = 0; l < angleNumber; l++) {
+				
+					if ((angleAtomPosition[l][0] == atomNumberm) | (angleAtomPosition[l][1] == atomNumberm) | (angleAtomPosition[l][2] == atomNumberm)) {
+						if ((angleAtomPosition[l][0] == atomNumbern) | (angleAtomPosition[l][1] == atomNumbern) | (angleAtomPosition[l][2] == atomNumbern)) {
+
+							Point3d xi = new Point3d(coord3d.getElement(3 * angleAtomPosition[l][0]), coord3d.getElement(3 * angleAtomPosition[l][0] + 1),coord3d.getElement( 3 * angleAtomPosition[l][0] + 2));
+							//System.out.println("xi = " + xi);
+							Point3d xj = new Point3d(coord3d.getElement(3 * angleAtomPosition[l][1]), coord3d.getElement(3 * angleAtomPosition[l][1] + 1),coord3d.getElement( 3 * angleAtomPosition[l][1] + 2));
+							//System.out.println("xj = " + xj);
+							Point3d xk = new Point3d(coord3d.getElement(3 * angleAtomPosition[l][2]), coord3d.getElement(3 * angleAtomPosition[l][2] + 1),coord3d.getElement( 3 * angleAtomPosition[l][2] + 2));
+							//System.out.println("xk = " + xk);
+				
+							Vector3d xij = new Vector3d();
+							xij.sub(xi,xj);
+							//System.out.println("xij = " + xij);
+							Vector3d xkj = new Vector3d();
+							xkj.sub(xk,xj);
+							//System.out.println("xkj = " + xkj);
+					
+							double rij = xi.distance(xj);
+							//System.out.println("rij = " + rij);
+							double rkj = xk.distance(xj);
+							//System.out.println("rkj = " + rkj);
+
+							ddDeltav1 = (-1/Math.sqrt(Math.pow(1-Math.pow(xij.dot(xkj)/(rij * rkj),2),3)))
+									* (xij.dot(xkj)/(rij * rkj))
+									* (1/(Math.pow(rij,2) * Math.pow(rkj,2)));
+							
+							ddDeltav2 = (-1/Math.sqrt(1-Math.pow(xij.dot(xkj)/(rij * rkj),2))) 
+									* (1/(Math.pow(rij,4) * Math.pow(rkj,4)));
+							
+							ddDeltav2a = Math.pow(rij,2) * Math.pow(rkj,2);
+							
+							ddDeltav2a1 = rij * rkj;
+							ddDeltav2a1a = 0;
+							ddDeltav2a1b = 0;
+							ddDeltav2a2 = 0;
+							ddDeltav2a3 = 0;
+							ddDeltav2a4 = xij.dot(xkj);
+							ddDeltav2a4a1a = 0;
+							ddDeltav2a4a1b = 0;
+							ddDeltav2a4a1c = 0;
+							ddDeltav2a4a2 = 0;
+							ddDeltav2b = 0;
+
+							ddDeltav2a4a1 = 0;
+
+							ddDeltav2a4b = 0;
+
+							ddDeltav2a4c1 = 0;
+							ddDeltav2a4c1a = 0;
+							ddDeltav2a4c1b = 0;
+							ddDeltav2a4c1c = 0;
+							ddDeltav2a4c2 = 0;
+
+							ddDeltav2a4d = 0;
+
+							//System.out.println("OK: had d1 and have the atomNumbern");
+						
+							if (angleAtomPosition[l][0] == atomNumberm) {
+
+								switch (coordinatem) {
+									case 0: ddDeltav1 = ddDeltav1 * ((xk.x-xj.x) * rij * rkj - (xij.dot(xkj)) * rkj * ((xi.x-xj.x)/rij));
+										ddDeltav2b = (xk.x-xj.x) * rij * rkj - (xij.dot(xkj)) * rkj * ((xi.x-xj.x)/rij);
+										ddDeltav2a1a = 1;
+										ddDeltav2a1b = 0;
+										ddDeltav2a2 = xk.x-xj.x;
+										ddDeltav2a3 = rkj * ((xi.x-xj.x)/rij);
+										ddDeltav2a4a1a = 1;
+										ddDeltav2a4a2 = xi.x-xj.x;
+										ddDeltav2a4c1a = 0;
+										ddDeltav2a4c2 = 0;
+										ddDeltav2a4b = (xi.x-xj.x)/rij;
+										ddDeltav2a4d = 0;
+										break;
+									case 1:	ddDeltav1 = ddDeltav1 * ((xk.y-xj.y) * rij * rkj - (xij.dot(xkj)) * rkj * ((xi.y-xj.y)/rij));
+										ddDeltav2b = (xk.y-xj.y) * rij * rkj - (xij.dot(xkj)) * rkj * ((xi.y-xj.y)/rij);
+										ddDeltav2a1a = 1;
+										ddDeltav2a1b = 0;
+										ddDeltav2a2 = xk.y-xj.y;
+										ddDeltav2a3 = rkj * ((xi.y-xj.y)/rij);
+										ddDeltav2a4a1b = 1;
+										ddDeltav2a4a2 = xi.y-xj.y;
+										ddDeltav2a4c1b = 0;
+										ddDeltav2a4c2 = 0;
+										ddDeltav2a4b = (xi.y-xj.y)/rij;
+										ddDeltav2a4d = 0;
+										break;
+									case 2: ddDeltav1 = ddDeltav1 * ((xk.z-xj.z) * rij * rkj - (xij.dot(xkj)) * rkj * ((xi.z-xj.z)/rij));
+										ddDeltav2b = (xk.z-xj.z) * rij * rkj - (xij.dot(xkj)) * rkj * ((xi.z-xj.z)/rij);
+										ddDeltav2a1a = 1;
+										ddDeltav2a1b = 0;
+										ddDeltav2a2 = xk.z-xj.z;
+										ddDeltav2a3 = rkj * ((xi.z-xj.z)/rij);
+										ddDeltav2a4a1c = 1;
+										ddDeltav2a4a2 = xi.z-xj.z;
+										ddDeltav2a4c1c = 0;
+										ddDeltav2a4c2 = 0;
+										ddDeltav2a4b = (xi.z-xj.z)/rij;
+										ddDeltav2a4d = 0;
+										break;
+								}
+							}
+							if (angleAtomPosition[l][1] == atomNumberm) {
+
+								switch (coordinatem) {
+									case 0: ddDeltav1 = ddDeltav1 * ((2 * xj.x - xk.x - xi.x) * rij * rkj - (xij.dot(xkj)) * ((-(xi.x-xj.x)/rij) * rkj + (-(xk.x-xj.x)/rkj) * rij));
+										ddDeltav2b = (2 * xj.x - xk.x - xi.x) * rij * rkj - (xij.dot(xkj)) * ((-(xi.x-xj.x)/rij) * rkj + (-(xk.x-xj.x)/rkj) * rij);
+										ddDeltav2a1a = -1;
+										ddDeltav2a1b = -1;
+										ddDeltav2a2 = 2 * xj.x - xk.x - xi.x;
+										ddDeltav2a3 = (-(xi.x-xj.x)/rij) * rkj + (-(xk.x-xj.x)/rkj) * rij;
+										ddDeltav2a4a1a = -1;
+										ddDeltav2a4a2 = -(xi.x-xj.x);
+										ddDeltav2a4c1a = -1;
+										ddDeltav2a4c2 = -(xk.x-xj.x);
+										ddDeltav2a4b = -(xi.x-xj.x)/rij;
+										ddDeltav2a4d = -(xk.x-xj.x)/rkj;
+										break;
+									case 1:	ddDeltav1 = ddDeltav1 * ((2 * xj.y - xk.y - xi.y) * rij * rkj - (xij.dot(xkj)) * ((-(xi.y-xj.y)/rij) * rkj + (-(xk.y-xj.y)/rkj) * rij));
+										ddDeltav2b = (2 * xj.y - xk.y - xi.y) * rij * rkj - (xij.dot(xkj)) * ((-(xi.y-xj.y)/rij) * rkj + (-(xk.y-xj.y)/rkj) * rij);
+										ddDeltav2a1a = -1;
+										ddDeltav2a1b = -1;
+										ddDeltav2a2 = 2 * xj.y - xk.y - xi.y;
+										ddDeltav2a3 = (-(xi.y-xj.y)/rij) * rkj + (-(xk.y-xj.y)/rkj) * rij;
+										ddDeltav2a4a1b = -1;
+										ddDeltav2a4a2 = -(xi.y-xj.y);
+										ddDeltav2a4c1b = -1;
+										ddDeltav2a4c2 = -(xk.y-xj.y);
+										ddDeltav2a4b = -(xi.y-xj.y)/rij;
+										ddDeltav2a4d = -(xk.y-xj.y)/rkj;
+										break;
+									case 2: ddDeltav1 = ddDeltav1 * ((2 * xj.z - xk.z - xi.z) * rij * rkj - (xij.dot(xkj)) * ((-(xi.z-xj.z)/rij) * rkj + (-(xk.z-xj.z)/rkj) * rij));
+										ddDeltav2b = (2 * xj.z - xk.z - xi.z) * rij * rkj - (xij.dot(xkj)) * ((-(xi.z-xj.z)/rij) * rkj + (-(xk.z-xj.z)/rkj) * rij);
+										ddDeltav2a1a = -1;
+										ddDeltav2a1b = -1;
+										ddDeltav2a2 = 2 * xj.z - xk.z - xi.z;
+										ddDeltav2a3 = (-(xi.z-xj.z)/rij) * rkj + (-(xk.z-xj.z)/rkj) * rij;
+										ddDeltav2a4a1c = -1;
+										ddDeltav2a4a2 = -(xi.z-xj.z);
+										ddDeltav2a4c1c = -1;
+										ddDeltav2a4c2 = -(xk.z-xj.z);
+										ddDeltav2a4b = -(xi.z-xj.z)/rij;
+										ddDeltav2a4d = -(xk.z-xj.z)/rkj;
+										break;
+								}
+							}
+							if (angleAtomPosition[l][2] == atomNumberm) {
+
+								switch (coordinatem) {
+									case 0: ddDeltav1 = ddDeltav1 * ((xi.x-xj.x) * rij * rkj - (xij.dot(xkj)) * rij * ((xk.x-xj.x)/rkj));
+										ddDeltav2b = (xi.x-xj.x) * rij * rkj - (xij.dot(xkj)) * rij * ((xk.x-xj.x)/rkj);
+										ddDeltav2a1a = 0;
+										ddDeltav2a1b = 1;
+										ddDeltav2a2 = xi.x-xj.x;
+										ddDeltav2a3 = rij * ((xk.x-xj.x)/rkj);
+										ddDeltav2a4a1a = 0;
+										ddDeltav2a4a2 = 0;
+										ddDeltav2a4c1a = 1;
+										ddDeltav2a4c2 = xk.x-xj.x;
+										ddDeltav2a4b = 0;
+										ddDeltav2a4d = (xk.x-xj.x)/rkj;
+										break;
+									case 1:	ddDeltav1 = ddDeltav1 * ((xi.y-xj.y) * rij * rkj - (xij.dot(xkj)) * rij * ((xk.y-xj.y)/rkj));
+										ddDeltav2b = (xi.y-xj.y) * rij * rkj - (xij.dot(xkj)) * rij * ((xk.y-xj.y)/rkj);
+										ddDeltav2a1a = 0;
+										ddDeltav2a1b = 1;
+										ddDeltav2a2 = xi.y-xj.y;
+										ddDeltav2a3 = rij * ((xk.y-xj.y)/rkj);
+										ddDeltav2a4a1b = 0;
+										ddDeltav2a4a2 = 0;
+										ddDeltav2a4c1b = 1;
+										ddDeltav2a4c2 = xk.y-xj.y;
+										ddDeltav2a4b = 0;
+										ddDeltav2a4d = (xk.y-xj.y)/rkj;
+										break;
+									case 2: ddDeltav1 = ddDeltav1 * ((xi.z-xj.z) * rij * rkj - (xij.dot(xkj)) * rij * ((xk.z-xj.z)/rkj));
+										ddDeltav2b = (xi.z-xj.z) * rij * rkj - (xij.dot(xkj)) * rij * ((xk.z-xj.z)/rkj);
+										ddDeltav2a1a = 0;
+										ddDeltav2a1b = 1;
+										ddDeltav2a2 = xi.z-xj.z;
+										ddDeltav2a3 = rij * ((xk.z-xj.z)/rkj);
+										ddDeltav2a4a1c = 0;
+										ddDeltav2a4a2 = 0;
+										ddDeltav2a4c1c = 1;
+										ddDeltav2a4c2 = xk.z-xj.z;
+										ddDeltav2a4b = 0;
+										ddDeltav2a4d = (xk.z-xj.z)/rkj;
+										break;
+								}
+							}
+							
+							if (angleAtomPosition[l][0] == atomNumbern) {
+
+								switch (coordinaten) {
+									case 0: ddDeltav1 = ddDeltav1 * ((xk.x-xj.x) * rij * rkj - (xij.dot(xkj)) * rkj * ((xi.x-xj.x)/rij));
+										ddDeltav2b = ddDeltav2b * 2 * rij * ((xi.x-xj.x)/rij) * Math.pow(rkj,2);
+										ddDeltav2a1a = ddDeltav2a1a * 0;
+										ddDeltav2a1b = ddDeltav2a1b * 1;
+										ddDeltav2a2 = ddDeltav2a2 * rkj * ((xi.x-xj.x)/rij);
+										ddDeltav2a3 = ddDeltav2a3 * (xk.x-xj.x);
+										ddDeltav2a4a1a = ddDeltav2a4a1a * 1;
+										ddDeltav2a4a2 = ddDeltav2a4a2 * ((xi.x-xj.x)/rij);
+										ddDeltav2a4c1a = ddDeltav2a4c1a * 0;
+										ddDeltav2a4c2 = ddDeltav2a4c2 * 0;
+										ddDeltav2a4b = ddDeltav2a4b * 0;
+										ddDeltav2a4d = ddDeltav2a4d * ((xi.x-xj.x)/rij);
+										break;
+									case 1:	ddDeltav1 = ddDeltav1 * ((xk.y-xj.y) * rij * rkj - (xij.dot(xkj)) * rkj * ((xi.y-xj.y)/rij));
+										ddDeltav2b = ddDeltav2b * 2 * rij * ((xi.y-xj.y)/rij) * Math.pow(rkj,2);
+										ddDeltav2a1a = ddDeltav2a1a * 0;
+										ddDeltav2a1b = ddDeltav2a1b * 1;
+										ddDeltav2a2 = ddDeltav2a2 * rkj * ((xi.y-xj.y)/rij);
+										ddDeltav2a3 = ddDeltav2a3 * (xk.y-xj.y);
+										ddDeltav2a4a1b = ddDeltav2a4a1b * 1;
+										ddDeltav2a4a2 = ddDeltav2a4a2 * ((xi.y-xj.y)/rij);
+										ddDeltav2a4c1b = ddDeltav2a4c1b * 0;
+										ddDeltav2a4c2 = ddDeltav2a4c2 * 0;
+										ddDeltav2a4b = ddDeltav2a4b * 0;
+										ddDeltav2a4d = ddDeltav2a4d * ((xi.y-xj.y)/rij);
+										break;
+									case 2: ddDeltav1 = ddDeltav1 * ((xk.z-xj.z) * rij * rkj - (xij.dot(xkj)) * rkj * ((xi.z-xj.z)/rij));
+										ddDeltav2b = ddDeltav2b * 2 * rij * ((xi.z-xj.z)/rij) * Math.pow(rkj,2);
+										ddDeltav2a1a = ddDeltav2a1a * 0;
+										ddDeltav2a1b = ddDeltav2a1b * 1;
+										ddDeltav2a2 = ddDeltav2a2 * rkj * ((xi.z-xj.z)/rij);
+										ddDeltav2a3 = ddDeltav2a3 * (xk.z-xj.z);
+										ddDeltav2a4a1c = ddDeltav2a4a1c * 1;
+										ddDeltav2a4a2 = ddDeltav2a4a2 * ((xi.z-xj.z)/rij);
+										ddDeltav2a4c1c = ddDeltav2a4c1c * 0;
+										ddDeltav2a4c2 = ddDeltav2a4c2 * 0;
+										ddDeltav2a4b = ddDeltav2a4b * 0;
+										ddDeltav2a4d = ddDeltav2a4d * ((xi.z-xj.z)/rij);
+										break;
+								}
+							}
+							if (angleAtomPosition[l][1] == atomNumbern) {
+
+								switch (coordinaten) {
+									case 0: ddDeltav1 = ddDeltav1 * ((2 * xj.x - xk.x - xi.x) * rij * rkj - (xij.dot(xkj)) * ((-(xi.x-xj.x)/rij) * rkj + (-(xk.x-xj.x)/rkj) * rij));
+										ddDeltav2b = ddDeltav2b * (2 * rij * (-(xi.x-xj.x)/rij) * Math.pow(rkj,2) + Math.pow(rij,2) * 2 * rkj * (-(xk.x-xj.x)/rkj));
+										ddDeltav2a1a = ddDeltav2a1a * -1;
+										ddDeltav2a1b = ddDeltav2a1b * -1;
+										ddDeltav2a2 = ddDeltav2a2 * ((-(xi.x-xj.x)/rij) * rkj + (-(xk.x-xj.x)/rkj) * rij);
+										ddDeltav2a3 = ddDeltav2a3 * (2 * xj.x - xk.x - xi.x);
+										ddDeltav2a4a1a = ddDeltav2a4a1a * (-1);
+										ddDeltav2a4a2 = ddDeltav2a4a2 * (-(xi.x-xj.x)/rij);
+										ddDeltav2a4c1a = ddDeltav2a4c1a * (-1);
+										ddDeltav2a4c2 = ddDeltav2a4c2 * (-(xk.x-xj.x)/rkj);
+										ddDeltav2a4b = ddDeltav2a4b * (-(xk.x-xj.x)/rkj);
+										ddDeltav2a4d = ddDeltav2a4d * (-(xi.x-xj.x)/rij);
+										break;
+									case 1:	ddDeltav1 = ddDeltav1 * ((2 * xj.y - xk.y - xi.y) * rij * rkj - (xij.dot(xkj)) * ((-(xi.y-xj.y)/rij) * rkj + (-(xk.y-xj.y)/rkj) * rij));
+										ddDeltav2b = ddDeltav2b * (2 * rij * (-(xi.y-xj.y)/rij) * Math.pow(rkj,2) + Math.pow(rij,2) * 2 * rkj * (-(xk.y-xj.y)/rkj));
+										ddDeltav2a1a = ddDeltav2a1a * -1;
+										ddDeltav2a1b = ddDeltav2a1b * -1;
+										ddDeltav2a2 = ddDeltav2a2 * ((-(xi.y-xj.y)/rij) * rkj + (-(xk.y-xj.y)/rkj) * rij);
+										ddDeltav2a3 = ddDeltav2a3 * (2 * xj.y - xk.y - xi.y);
+										ddDeltav2a4a1b = ddDeltav2a4a1b * (-1);
+										ddDeltav2a4a2 = ddDeltav2a4a2 * (-(xi.y-xj.y)/rij);
+										ddDeltav2a4c1b = ddDeltav2a4c1b * (-1);
+										ddDeltav2a4c2 = ddDeltav2a4c2 * (-(xk.y-xj.y)/rkj);
+										ddDeltav2a4b = ddDeltav2a4b * (-(xk.y-xj.y)/rkj);
+										ddDeltav2a4d = ddDeltav2a4d * (-(xi.y-xj.y)/rij);
+										break;
+									case 2: ddDeltav1 = ddDeltav1 * ((2 * xj.z - xk.z - xi.z) * rij * rkj - (xij.dot(xkj)) * ((-(xi.z-xj.z)/rij) * rkj + (-(xk.z-xj.z)/rkj) * rij));
+										ddDeltav2b = ddDeltav2b * (2 * rij * (-(xi.z-xj.z)/rij) * Math.pow(rkj,2) + Math.pow(rij,2) * 2 * rkj * (-(xk.z-xj.z)/rkj));
+										ddDeltav2a1a = ddDeltav2a1a * -1;
+										ddDeltav2a1b = ddDeltav2a1b * -1;
+										ddDeltav2a2 = ddDeltav2a2 * ((-(xi.z-xj.z)/rij) * rkj + (-(xk.z-xj.z)/rkj) * rij);
+										ddDeltav2a3 = ddDeltav2a3 * (2 * xj.z - xk.z - xi.z);
+										ddDeltav2a4a1c = ddDeltav2a4a1c * (-1);
+										ddDeltav2a4a2 = ddDeltav2a4a2 * (-(xi.z-xj.z)/rij);
+										ddDeltav2a4c1c = ddDeltav2a4c1c * (-1);
+										ddDeltav2a4c2 = ddDeltav2a4c2 * (-(xk.z-xj.z)/rkj);
+										ddDeltav2a4b = ddDeltav2a4b * (-(xk.z-xj.z)/rkj);
+										ddDeltav2a4d = ddDeltav2a4d * (-(xi.z-xj.z)/rij);
+										break;
+								}
+							}
+							if (angleAtomPosition[l][2] == atomNumbern) {
+
+								switch (coordinaten) {
+									case 0: ddDeltav1 = ddDeltav1 * ((xi.x-xj.x) * rij * rkj - (xij.dot(xkj)) * rij * ((xk.x-xj.x)/rkj));
+										ddDeltav2b = ddDeltav2b * Math.pow(rij,2) * 2 * rkj * ((xk.x-xj.x)/rkj);
+										ddDeltav2a1a = ddDeltav2a1a * 1;
+										ddDeltav2a1b = ddDeltav2a1b * 0;
+										ddDeltav2a2 = ddDeltav2a2 * rij * ((xk.x-xj.x)/rkj);
+										ddDeltav2a3 = ddDeltav2a3 * (xi.x-xj.x);
+										ddDeltav2a4a1a = ddDeltav2a4a1a * 0;
+										ddDeltav2a4a2 = ddDeltav2a4a2 * 0;
+										ddDeltav2a4c1a = ddDeltav2a4c1a * 1;
+										ddDeltav2a4c2 = ddDeltav2a4c2 * ((xk.x-xj.x)/rkj);
+										ddDeltav2a4b = ddDeltav2a4b * ((xk.x-xj.x)/rkj);
+										ddDeltav2a4d = ddDeltav2a4d * 0;
+										break;
+									case 1:	ddDeltav1 = ddDeltav1 * ((xi.y-xj.y) * rij * rkj - (xij.dot(xkj)) * rij * ((xk.y-xj.y)/rkj));
+										ddDeltav2b = ddDeltav2b * Math.pow(rij,2) * 2 * rkj * ((xk.y-xj.y)/rkj);
+										ddDeltav2a1a = ddDeltav2a1a * 1;
+										ddDeltav2a1b = ddDeltav2a1b * 0;
+										ddDeltav2a2 = ddDeltav2a2 * rij * ((xk.y-xj.y)/rkj);
+										ddDeltav2a3 = ddDeltav2a3 * (xi.y-xj.y);
+										ddDeltav2a4a1b = ddDeltav2a4a1b * 0;
+										ddDeltav2a4a2 = ddDeltav2a4a2 * 0;
+										ddDeltav2a4c1b = ddDeltav2a4c1b * 1;
+										ddDeltav2a4c2 = ddDeltav2a4c2 * ((xk.y-xj.y)/rkj);
+										ddDeltav2a4b = ddDeltav2a4b * ((xk.y-xj.y)/rkj);
+										ddDeltav2a4d = ddDeltav2a4d * 0;
+										break;
+									case 2: ddDeltav1 = ddDeltav1 * ((xi.z-xj.z) * rij * rkj - (xij.dot(xkj)) * rij * ((xk.z-xj.z)/rkj));
+										ddDeltav2b = ddDeltav2b * Math.pow(rij,2) * 2 * rkj * ((xk.z-xj.z)/rkj);
+										ddDeltav2a1a = ddDeltav2a1a * 1;
+										ddDeltav2a1b = ddDeltav2a1b * 0;
+										ddDeltav2a2 = ddDeltav2a2 * rij * ((xk.z-xj.z)/rkj);
+										ddDeltav2a3 = ddDeltav2a3 * (xi.z-xj.z);
+										ddDeltav2a4a1c = ddDeltav2a4a1c * 0;
+										ddDeltav2a4a2 = ddDeltav2a4a2 * 0;
+										ddDeltav2a4c1c = ddDeltav2a4c1c * 1;
+										ddDeltav2a4c2 = ddDeltav2a4c2 * ((xk.z-xj.z)/rkj);
+										ddDeltav2a4b = ddDeltav2a4b * ((xk.z-xj.z)/rkj);
+										ddDeltav2a4d = ddDeltav2a4d * 0;
+										break;
+								}
+							}
+
+							ddDeltav2a4a1 = (ddDeltav2a4a1a + ddDeltav2a4a1b + ddDeltav2a4a1c) * rij;
+							ddDeltav2a4c1 = (ddDeltav2a4c1a + ddDeltav2a4c1b + ddDeltav2a4c1c) * rkj;
+							ddDeltav2a4 = ddDeltav2a4 * (((ddDeltav2a4a1 - ddDeltav2a4a2) / Math.pow(rij,2)) * rkj + ddDeltav2a4b + ((ddDeltav2a4c1 + ddDeltav2a4c2) / Math.pow(rkj,2)) * rij + ddDeltav2a4d);
+							ddDeltav2 = ddDeltav2 * (((ddDeltav2a1a + ddDeltav2a1b) * ddDeltav2a1 + ddDeltav2a2 - ddDeltav2a3 - ddDeltav2a4) * ddDeltav2a - ddDeltav2b);
+							ddDeltav[n][m][l] = ddDeltav1 + ddDeltav2;
+						}
+					}
+					else {
+						ddDeltav[n][m][l] = 0;
+					}
+					//System.out.println("ddDeltav[" + n + "][" + m + "][" + l + "] = " + ddDeltav[n][m][l]);
+				}
+			}
+		}
+		
+	}
+
+
+	/**
+	 *  Get the bond lengths second derivative respect to the cartesian coordinates of the atoms.
+	 *
+	 *@return        Delta angle bending second derivative value [dimension(3xN)] [angles Number]
+	 */
+	public double[][][] getAngleBendingSecondDerivative() {
+		return ddDeltav;
+	}
+
+
+	/**
 	 *  Evaluate the hessian for the angle bending.
 	 *
 	 *@param  coord3d  Current molecule coordinates.
 	 */
 	public void setHessianMMFF94SumEA(GVector coord3d) {
 
+
 		double[] forHessian = new double[coord3d.getSize() * coord3d.getSize()];
+		
+		setAngleBendingSecondDerivative(coord3d);
+		
 		double sumHessianEA = 0;
 
-		GMatrix ddDeltar = new GMatrix(coord3d.getSize(),coord3d.getSize());
-		ddDeltar.setZero();
-
 		int forHessianIndex;
-		for (int i = 0; i < coord3d.getSize(); i++) {
-			for (int j = 0; j < coord3d.getSize(); j++) {
-				for (int k = 0; k < angleNumber; k++) {
-					sumHessianEA = sumHessianEA + (2 * k2[k] + 6 * k3[k] * deltav[k]) * dDeltav[i][k] * dDeltav[j][k]
-							+ (k2[k] * 2 * deltav[k] + k3[k] * 3 * Math.pow(deltav[k],2)) * ddDeltar.getElement(0,0);
+
+		for (int n = 0; n < coord3d.getSize(); n++) {
+			for (int m= 0; m < coord3d.getSize(); m++) {
+				for (int l = 0; l < angleNumber; l++) {
+					sumHessianEA = sumHessianEA + (2 * k2[l] + 6 * k3[l] * deltav[l]) * dDeltav[n][l] * dDeltav[m][l]
+							+ (k2[l] * 2 * deltav[l] + k3[l] * 3 * Math.pow(deltav[l],2)) * ddDeltav[n][m][l];
 				}
-				forHessianIndex = i*coord3d.getSize()+j;
+
+				forHessianIndex = n*coord3d.getSize()+m;
 				forHessian[forHessianIndex] = sumHessianEA;
 			}
 		}
