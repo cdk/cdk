@@ -222,7 +222,7 @@ public class SaturationCheckerTest extends TestCase
 		m.addAtom(c2);
 		m.addBond(b);
 		satcheck.saturate(m);
-		assertTrue(2.0 == b.getOrder());
+		assertEquals(2.0, b.getOrder(), 0.0001);
 	}
 
     /**
