@@ -24,84 +24,174 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- *  */
+ */
 package org.openscience.cdk;
 
 import java.util.Collection;
+import java.util.Enumeration;
 import java.util.Hashtable;
 
 /**
- * Subclass of Molecule to store Poymer specific attributes a Polymer has.
+ * Subclass of Molecule to store Polymer specific attributes a Polymer has.
  *
  * @cdk.module data
  *
- * @author     Edgar Luttmann <edgar@uni-paderborn.de>
- * @cdk.created    2001-08-06
- * @cdk.keyword    polymer
+ * @author      Edgar Luttmann <edgar@uni-paderborn.de>
+ * @cdk.created 2001-08-06
+ * @cdk.keyword polymer
  *
  */
 public class Polymer extends Molecule implements java.io.Serializable, Cloneable
-{
-	private Hashtable monomers;	// the list of all the contained Monomers. 
-
+{ 
+	private Hashtable strands;	// the list of all the contained Strands.
+	
 	/**
-	 *
-	 * Contructs a new Polymer to store the Monomers.
-	 *
+	 * Contructs a new Polymer to store the Strands.
 	 */	
 	public Polymer() {
 		super();
-		monomers = new Hashtable();
-		Monomer oMonomer = new Monomer();
-		oMonomer.setMonomerName("");
-		oMonomer.setMonomerType("UNKNOWN");
-		monomers.put("", oMonomer);
+		// Strand stuff
+		strands = new Hashtable();
+		Strand oStrand = new Strand();
+		oStrand.setStrandName("");
+		oStrand.setStrandType("UNKNOWN");
+		strands.put("", oStrand);		
 	}
 	
 	/**
-	 *
-	 * Adds the atom oAtom without specifying a Monomer. Therefore the
-	 * atom gets added to a Monomer of type UNKNOWN.
+	 * Adds the atom oAtom without specifying a Monomer or a Strand. Therefore the
+	 * atom gets added to a Monomer of type UNKNOWN in a Strand of type UNKNOWN.
 	 *
 	 * @param oAtom  The atom to add
 	 *
 	 */
 	public void addAtom(Atom oAtom) {
-		addAtom(oAtom, getMonomer(""));
+		addAtom(oAtom, getStrand(""));
 		/* notifyChanged() is called by addAtom in
-		   AtomContainer */
+		 AtomContainer */
 	}
 	
 	/**
-	 *
-	 * Adds the atom oAtom with specifying a Monomer.
+	 * Adds the atom oAtom to a specified Strand, whereas the Monomer is unspecified. Hence
+	 * the atom will be added to a Monomer of type UNKNOWN in the specified Strand.
 	 *
 	 * @param oAtom  The atom to add
-	 * @param oMonomer  The monomer the atom belongs to
+	 * @param oMonomer  The strand the atom belongs to
 	 *
 	 */
-	public void addAtom(Atom oAtom, Monomer oMonomer) {
+	public void addAtom(Atom oAtom, Strand oStrand) {
 		super.addAtom(oAtom);
-		if (oMonomer == null) {
-			oMonomer = getMonomer("");
+		if (oStrand == null) {
+			oStrand = getStrand("");
 		}
-		oMonomer.addAtom(oAtom);
-		if (! monomers.contains(oMonomer.getMonomerName())) {
-			monomers.put(oMonomer.getMonomerName(), oMonomer);
+		oStrand.addAtom(oAtom);
+		if (!strands.contains(oStrand.getStrandName())) {
+			strands.put(oStrand.getStrandName(), oStrand);
 		}
 		/* notifyChanged() is called by addAtom in
-		   AtomContainer */
+		 AtomContainer */
 	}
 	
 	/**
+	 * Adds the atom to a specified Strand and a specified Monomer.
+	 * 
+	 * @param oAtom
+	 * @param oMonomer
+	 * @param oStrand
+	 */
+	public void addAtom(Atom oAtom, Monomer oMonomer, Strand oStrand)	{
+		// Add atom to AtomContainer
+		super.addAtom(oAtom);
+		
+		if(oStrand == null)	{
+			oStrand = getStrand("");
+		}
+		
+		if (oMonomer == null) {
+			oMonomer = getMonomer("", "");
+		}
+		// Add atom to Strand (also adds the atom to the monomer).
+		oStrand.addAtom(oAtom, oMonomer);
+		String tmp = (String)oStrand.getStrandName();
+		if (!strands.containsKey(oStrand.getStrandName())) {
+			strands.put(oStrand.getStrandName(), oStrand);
+		}
+	}
+	
+	/**
+	 * Return the number of monomers present in Polymer.
 	 *
-	 * Return the amount of monomers present in the Poymer.
-	 *
-	 * @return amout of monomers
+	 * @return number of monomers
 	 *
 	 */
 	public int getMonomerCount() {
-		return monomers.size() - 1;
+		Enumeration keys = strands.keys();
+		int number = 0;
+		
+		while(keys.hasMoreElements())	{
+			Strand tmp = (Strand)strands.get(keys.nextElement());	// Cast exception?!
+			number += (tmp.getMonomers()).size() - 1;
+		}
+		return number;
+	}
+	
+	/**
+	 * Retrieve a Monomer object by specifying its name. [You have to specify the strand to enable
+	 * monomers with the same name in different strands. There is at least one such case: every
+	 * strand contains a monomer called "".]
+	 *
+	 * @param cName  The name of the monomer to look for
+	 * @return The Monomer object which was asked for
+	 *
+	 */
+	public Monomer getMonomer(String monName, String strandName) {
+		return ((Strand)strands.get(strandName)).getMonomer(monName);
+	}
+	
+	/*	Could look like this if you ensured individual name giving for ALL monomers:
+	 * 	
+	 public Monomer getMonomer(String cName) {
+	 Enumeration keys = strands.keys();
+	 Monomer oMonomer = null;
+	 
+	 while(keys.hasMoreElements())	{
+	 
+	 if(((Strand)strands.get(keys.nextElement())).getMonomers().containsKey(cName))	{
+	 Strand oStrand = (Strand)strands.get(keys.nextElement());
+	 oMonomer = oStrand.getMonomer(cName);
+	 break;
+	 }
+	 }
+	 return oMonomer;
+	 }
+	 */	
+	
+	/**
+	 * Returns a collection of the names of all <code>Monomer</code>s in this
+	 * polymer.
+	 *
+	 * @return a <code>Collection</code> of all the monomer names.
+	 */
+	public Collection getMonomerNames() {
+		Enumeration keys = strands.keys();
+		Hashtable monomers = new Hashtable();
+		
+		while(keys.hasMoreElements())	{
+			Strand oStrand = (Strand)strands.get(keys.nextElement());
+			monomers.putAll(oStrand.getMonomers());
+		}		
+		return monomers.keySet();
+	}
+	
+	/**
+	 *
+	 * Return the number of strands present in the Polymer.
+	 *
+	 * @return number of strands
+	 *
+	 */
+	public int getStrandCount() {
+		return strands.size() - 1;
 	}
 	
 	/**
@@ -112,17 +202,36 @@ public class Polymer extends Molecule implements java.io.Serializable, Cloneable
 	 * @return The Monomer object which was asked for
 	 *
 	 */
-	public Monomer getMonomer(String cName) {
-		return (Monomer)monomers.get(cName);
+	public Strand getStrand(String cName) {
+		return (Strand)strands.get(cName);
 	}
-
-  /**
-   * Returns a collection of the names of all <code>Monomer</code>s in this
-   * polymer.
-   *
-   * @return a <code>Collection</code> of all the monomer names.
-   */
-  public Collection getMonomerNames() {
-    return monomers.keySet();
-  }
+	
+	/**
+	 * Returns a collection of the names of all <code>Strand</code>s in this
+	 * polymer.
+	 *
+	 * @return a <code>Collection</code> of all the strand names.
+	 */
+	public Collection getStrandNames() {
+		return strands.keySet();
+	}
+	
+	/**
+	 * @author mek
+	 * 
+	 * Removes a particular monomer, specified by its name.
+	 * @param name
+	 */
+	public void removeStrand(String name)	{
+		strands.remove(name);
+	}
+	
+	/**
+	 * @author mek
+	 * 
+	 * @return hashtable containing the monomers in the strand.
+	 */
+	public Hashtable getStrands()	{
+		return strands;
+	}	
 }

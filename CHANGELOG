@@ -11,12 +11,14 @@ New:
   hardcoding the recognized formats
 * The PluginManager now adds the plugin menu to the plugin
   window (implements RFE #954356)
+* A Strand data class for use in biopolymers.
 
 Fixes:
 * Fixed junit-test and run-test: missing cdk-data.jar
 
 API changes:
 * Moved IsotopeFactory from cdk-standard to the cdk-core module
+* A Polymer now consist of Strand's which consist Monomer's
 
 20050125 Release
 ------------------------------------

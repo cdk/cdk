@@ -37,6 +37,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.BioPolymer;
+import org.openscience.cdk.Bond;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemSequence;
@@ -117,7 +118,7 @@ public class PDBReaderTest extends TestCase {
             BioPolymer oMol = (BioPolymer)oModel.getSetOfMolecules().getMolecule(0);
             assertNotNull(oMol);
             assertEquals(oMol.getAtomCount(), 14);
-            assertNotNull(oMol.getMonomer("MOL1"));
+            assertNotNull(oMol.getMonomer("MOL1", "A"));
 
             oMol.setProperty(new String("test.molecule"), new String("test.molecule")); 
             assertEquals(new String("test.molecule"), oMol.getProperty("test.molecule"));
@@ -201,10 +202,10 @@ public class PDBReaderTest extends TestCase {
       assertNotNull(mol);
       assertEquals(327, mol.getAtomCount());
       assertEquals(46, mol.getMonomerCount());
-      assertNotNull(mol.getMonomer("THR1"));
-      assertEquals(7, mol.getMonomer("THR1").getAtomCount());
-      assertNotNull(mol.getMonomer("ILE7"));
-      assertEquals(8, mol.getMonomer("ILE7").getAtomCount());
+      assertNotNull(mol.getMonomer("THR1", "A"));
+      assertEquals(7, mol.getMonomer("THR1", "A").getAtomCount());
+      assertNotNull(mol.getMonomer("ILE7", "A"));
+      assertEquals(8, mol.getMonomer("ILE7", "A").getAtomCount());
       
       Atom atom = mol.getAtomAt(94);
       assertNotNull(atom);
@@ -221,6 +222,14 @@ public class PDBReaderTest extends TestCase {
       assertEquals(null, atom.getProperty("pdb.segID"));
       assertEquals(null, atom.getProperty("pdb.element"));
       assertEquals(null, atom.getProperty("pdb.charge"));
+      
+      Bond bond = mol.getBondAt(95);
+      assertNotNull(bond);
+      assertEquals("Test failed. Bond order not the same.", 2.0, bond.getOrder(), 0.001);
+      Atom[] atoms = bond.getAtoms();
+      assertEquals("C", atoms[0].getSymbol());
+      assertEquals("C", atoms[1].getSymbol());
+      assertEquals(null, bond.getProperties());
 
     } catch (Exception ex) {
       fail(ex.toString());
