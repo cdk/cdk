@@ -60,6 +60,14 @@
         called #cdk. The developers are not online 100%, but you might
         catch us there for a chat.
       </para>
+      <para>
+        A permanent visitor of this channel is the 
+        <ulink url="http://navi.picogui.org/svn/picogui/trunk/tools/irc/cia.html">CIA bot</ulink>
+        which posts live messages from the activiteis in CVS. Besides posting the cdk commit
+        messages to the #cdk channel, they are duplicated to #commits, where many other projects
+        can be live followed too. Statistics from the bot can be found
+        <ulink url="http://navi.picogui.org/cgi-bin/cia_stats.cgi">here</ulink>.
+      </para>
     </section>
 
     <section>
