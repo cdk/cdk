@@ -5,7 +5,7 @@
  *
  * Copyright (C) 2003  The Chemistry Development Kit (CDK) project
  * 
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@slists.sourceforge.net
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -93,18 +93,6 @@ public class MDLReaderTest extends TestCase {
 
     public void testAPinene() {
         String filename = "data/mdl/a-pinene.mol";
-        logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            MDLReader reader = new MDLReader(new InputStreamReader(ins));
-            ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
-        } catch (Exception e) {
-            fail(e.toString());
-        }
-    }
-
-    public void testBug642426() {
-        String filename = "data/mdl/bug642426.mol";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
