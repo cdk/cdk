@@ -24,14 +24,10 @@
  */
 package org.openscience.cdk.test.config.isotopes;
 
-import junit.framework.AssertionFailedError;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import org.openscience.cdk.Element;
-import org.openscience.cdk.Isotope;
-import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.isotopes.IsotopeHandler;
 
 /**
  * Checks the funcitonality of the IsotopeFactory
@@ -50,4 +46,36 @@ public class IsotopeHandlerTest extends TestCase {
 		return new TestSuite(IsotopeHandlerTest.class);
 	}
 
+    // serious testing is done in IsotopeFactoryTest; the factory
+    // requires this class to work properly. But nevertheless:
+
+    public void testIsotopeHandler() {
+        IsotopeHandler handler = new IsotopeHandler();
+    }
+    
+    public void testGetIsotopes() {
+        IsotopeHandler handler = new IsotopeHandler();
+        // nothing is read
+        assertNull(handler.getIsotopes());
+    }
+    
+    public void testStartDocument() {
+        IsotopeHandler handler = new IsotopeHandler();
+        // nothing is read, but Vector is initialized
+        assertNotNull(handler.getIsotopes());
+        assertEquals(0, handler.getIsotopes().size());
+    }
+    
+    public void testCharacters_arraychar_int_int() {
+        // nothing I can test here that IsotopeFactoryTest doesn't do
+    }
+    
+    public void testStartElement_String_String_String_Attributes() {
+        // nothing I can test here that IsotopeFactoryTest doesn't do
+    }
+    
+    public void testEndElement_String_String_String() {
+        // nothing I can test here that IsotopeFactoryTest doesn't do
+    }
+    
 }

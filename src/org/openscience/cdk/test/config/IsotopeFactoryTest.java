@@ -29,8 +29,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.Element;
-import org.openscience.cdk.Isotope;
+import org.openscience.cdk.*;
 import org.openscience.cdk.config.IsotopeFactory;
 
 /**
@@ -42,97 +41,104 @@ public class IsotopeFactoryTest extends TestCase
 {
 	boolean standAlone = false;
 	
-	public IsotopeFactoryTest(String name)
-	{
+	public IsotopeFactoryTest(String name) {
 		super(name);
 	}
 	
-	public void setUp()
-	{
-
-	}
+	public void setUp() {}
 	
-	public static Test suite() 
-	{
+	public static Test suite() {
 		return new TestSuite(IsotopeFactoryTest.class);
 	}
 
-	public void testIsotopeFactory() {
-		Isotope isotope = null;
-		IsotopeFactory isofac = null;
-		try {
-			isofac = IsotopeFactory.getInstance();
-		} catch (Exception exc) {
-			throw new AssertionFailedError("Problem instantiating IsotopeFactory: " +  exc.toString());
-		}
-		if (standAlone) System.out.println("isoFac.getSize(): " + isofac.getSize());
+    public void testGetInstance() throws Exception {
+		IsotopeFactory isofac = IsotopeFactory.getInstance();
+    }
+    
+	public void testGetSize() throws Exception {
+		IsotopeFactory isofac = IsotopeFactory.getInstance();
 		assertTrue(isofac.getSize() > 0);
     }
 	
-	public void testGetMajorIsotope() {
-		Isotope isotope = null;
-		IsotopeFactory isofac = null;
-		try {
-			isofac = IsotopeFactory.getInstance();
-		} catch (Exception exc) {
-			throw new AssertionFailedError("Problem instantiating IsotopeFactory: " +  exc.toString());
-		}
-		if (standAlone) System.out.println("isoFac.getSize(): " + isofac.getSize());
-
-		try {
-			isotope = isofac.getMajorIsotope("Te");
-			if (standAlone) System.out.println("Isotope: " + isotope);
-		} catch(Exception exc) {
-			throw new AssertionFailedError("Problem getting isotope 'Te' from IsotopeFactory: "  +  exc.toString());
-		}
-		assertTrue(isotope.getExactMass() == 129.906229);
-
-		try {
-			isotope = isofac.getMajorIsotope(17);
-		} catch(Exception exc) {
-			throw new AssertionFailedError("Problem getting Isotope 'Cl' from IsotopeFactory by atomicNumber 17: "  +  exc.toString());
-		}
-		assertTrue(isotope.getSymbol().equals("Cl"));
+	public void testConfigure_Atom() throws Exception {
+		IsotopeFactory isofac = IsotopeFactory.getInstance();
+		Atom atom = new Atom("H");
+        isofac.configure(atom);
+        assertEquals(1, atom.getAtomicNumber());
+    }
+	
+	public void testConfigure_Atom_Isotope() throws Exception {
+		IsotopeFactory isofac = IsotopeFactory.getInstance();
+		Atom atom = new Atom("H");
+        Isotope isotope = new Isotope("H", 2);
+        isofac.configure(atom, isotope);
+        assertEquals(2, atom.getMassNumber());
+    }
+	
+	public void testGetMajorIsotope_String() throws Exception {
+		IsotopeFactory isofac = IsotopeFactory.getInstance();
+        Isotope isotope = isofac.getMajorIsotope("Te");
+        if (standAlone) System.out.println("Isotope: " + isotope);
+		assertEquals(129.906229, isotope.getExactMass(), 0.0001);
 	}
     
-	public void testElementFactory() {
-		Element element = null;
-		IsotopeFactory elfac = null;
-		try {
-			elfac = IsotopeFactory.getInstance();
-		} catch (Exception exc) {
-			throw new AssertionFailedError("Problem instantiating IsotopeFactory: " + exc.toString());
-		}
-		assertTrue(elfac.getSize() > 0);
-    }
+	public void testGetMajorIsotope_int() throws Exception {
+		IsotopeFactory isofac = IsotopeFactory.getInstance();
+        Isotope isotope = isofac.getMajorIsotope(17);
+		assertEquals("Cl", isotope.getSymbol());
+	}
     
-    public void testGetElement() {
-		Element element = null;
-		IsotopeFactory elfac = null;
-		String findThis = "Br";
-		try {
-			elfac = IsotopeFactory.getInstance();
-		} catch (Exception exc) {
-			throw new AssertionFailedError("Problem instantiating IsotopeFactory: " + exc.toString());
-		}
-
-		try {
-			element = elfac.getElement(findThis);
-		} catch (Exception exc) {
-			throw new AssertionFailedError("Problem getting isotope " + findThis + " from ElementFactory: " + exc.toString());
-		}
-		assertTrue(element.getAtomicNumber() == 35);
+    public void testGetElement_String() throws Exception {
+		IsotopeFactory elfac = IsotopeFactory.getInstance();
+        Element element = elfac.getElement("Br");
+		assertEquals(35, element.getAtomicNumber());
 	}    
 
-	public static void main(String[] args)
-	{
-		try{
+    public void testGetElement_int() throws Exception {
+		IsotopeFactory elfac = IsotopeFactory.getInstance();
+        Element element = elfac.getElement(6);
+		assertEquals("C", element.getSymbol());
+	}    
+
+    public void testGetElementSymbol_int() throws Exception {
+		IsotopeFactory elfac = IsotopeFactory.getInstance();
+        String symbol = elfac.getElementSymbol(8);
+		assertEquals("O", symbol);
+	}    
+
+    public void testGetIsotopes_String() throws Exception {
+		IsotopeFactory isofac = IsotopeFactory.getInstance();
+        Isotope[] list = isofac.getIsotopes("He");
+		assertEquals(2, list.length);
+	}    
+
+    public void testIsElement_String() throws Exception {
+		IsotopeFactory isofac = IsotopeFactory.getInstance();
+		assertTrue(isofac.isElement("C"));
+	}
+    
+    public void testConfigureAtoms_AtomContainer() throws Exception {
+        AtomContainer container = new AtomContainer();
+        container.addAtom(new Atom("C"));
+        container.addAtom(new Atom("H"));
+        container.addAtom(new Atom("N"));
+        container.addAtom(new Atom("O"));
+        container.addAtom(new Atom("F"));
+        container.addAtom(new Atom("Cl"));
+		IsotopeFactory isofac = IsotopeFactory.getInstance();
+        isofac.configureAtoms(container);
+        Atom[] atoms = container.getAtoms();
+        for (int i=0; i<atoms.length; i++) {
+            assertTrue(0 < atoms[i].getAtomicNumber());
+        }
+    }
+
+	public static void main(String[] args) {
+		try {
 			IsotopeFactoryTest ift = new IsotopeFactoryTest("IsotopeFactoryTest");
 			ift.standAlone = true;
-			ift.testIsotopeFactory();
-		}
-		catch(Exception exc)
-		{
+			ift.testGetInstance();
+		} catch(Exception exc) {
 			exc.printStackTrace();
 		}
 	}

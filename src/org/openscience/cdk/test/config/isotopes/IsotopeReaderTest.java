@@ -29,9 +29,11 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.Element;
-import org.openscience.cdk.Isotope;
-import org.openscience.cdk.config.IsotopeFactory;
+import java.util.*;
+import java.io.*;
+
+import org.openscience.cdk.*;
+import org.openscience.cdk.config.isotopes.IsotopeReader;
 
 /**
  * Checks the funcitonality of the IsotopeFactory
@@ -50,4 +52,56 @@ public class IsotopeReaderTest extends TestCase {
 		return new TestSuite(IsotopeReaderTest.class);
 	}
 
+    public void testIsotopeReader_Reader() {
+        IsotopeReader reader = new IsotopeReader(
+            new StringReader("")
+        );
+        assertNotNull(reader);
+    }
+    
+    public void testReadIsotopes() {
+        IsotopeReader reader = new IsotopeReader(
+            new StringReader("")
+        );
+        assertNotNull(reader);
+        Vector isotopes = reader.readIsotopes();
+        assertNotNull(isotopes);
+        assertEquals(0, isotopes.size());
+    }
+    
+    public void testReadIsotopes2() {
+        String isotopeData = 
+            "<?xml version=\"1.0\"?>" +
+            "<list xmlns=\"http://www.xml-cml.org/schema/cml2/core\"" +
+            "    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"" +
+            "    xsi:schemaLocation=\"http://www.xml-cml.org/schema/cml2/core ../../io/cml/data/cmlCore.xsd\">" +
+            "" +
+            "    <isotopeList id=\"H\">" +
+            "        <isotope id=\"H1\" isotopeNumber=\"1\" elementType=\"H\">" +
+            "            <abundance dictRef=\"cdk:relativeAbundance\">100.0</abundance>" +
+            "            <scalar dictRef=\"cdk:exactMass\">1.00782504</scalar>" +
+            "            <scalar dictRef=\"cdk:atomicNumber\">1</scalar>" +
+            "        </isotope>" +
+            "        <isotope id=\"H2\" isotopeNumber=\"2\" elementType=\"H\">" +
+            "            <abundance dictRef=\"cdk:relativeAbundance\">0.015</abundance>" +
+            "            <scalar dictRef=\"cdk:exactMass\">2.01410179</scalar>" +
+            "            <scalar dictRef=\"cdk:atomicNumber\">1</scalar>" +
+            "        </isotope>" +
+            "        <isotope id=\"D2\" isotopeNumber=\"2\" elementType=\"D\">" +
+            "            <abundance dictRef=\"cdk:relativeAbundance\">0.015</abundance>" +
+            "            <scalar dictRef=\"cdk:exactMass\">2.01410179</scalar>" +
+            "            <scalar dictRef=\"cdk:atomicNumber\">1</scalar>" +
+            "        </isotope>" +
+            "    </isotopeList>" +
+            "</list>";
+        
+        IsotopeReader reader = new IsotopeReader(
+            new StringReader(isotopeData)
+        );
+        assertNotNull(reader);
+        Vector isotopes = reader.readIsotopes();
+        assertNotNull(isotopes);
+        assertEquals(3, isotopes.size());
+    }
+    
 }
