@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2002-2003  The Jmol Development Team
+ * Copyright (C) 2002-2004  The Jmol Development Team
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -76,6 +76,10 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         /* compile patterns */
         keyValueTuple = Pattern.compile("\\s*(\\w+)=([^\\s]*)(.*)"); // e.g. CHG=-1
         keyValueTuple2 = Pattern.compile("\\s*(\\w+)=\\(([^\\)]*)\\)(.*)"); // e.g. ATOMS=(1 31)
+    }
+
+    public String getFormatName() {
+        return "MDL Mol/SDF V3000";
     }
 
     public ChemObject read(ChemObject object) throws CDKException {

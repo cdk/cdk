@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2001-2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2001-2004  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -70,6 +70,9 @@ public class CMLReader extends DefaultChemObjectReader {
         this.input = input;
     }
 
+    public String getFormatName() {
+        return "Chemical Markup Language";
+    }
     /**
      * Define this CMLReader to take the input from a java.io.Reader
      * class. Possible readers are (among others) StringReader and FileReader.

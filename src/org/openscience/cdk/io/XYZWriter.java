@@ -4,7 +4,7 @@
  * $Revision$
  * 
  * Copyright (C) 2002  The Jmol Development Team
- * Copyright (C) 2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2003-2004  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -50,6 +50,10 @@ public class XYZWriter extends DefaultChemObjectWriter {
         writer = new BufferedWriter(out);
     }
 
+    public String getFormatName() {
+        return "XYZ";
+    }
+    
     /**
      * Flushes the output and closes this object.
      */

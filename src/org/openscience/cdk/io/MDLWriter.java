@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  * 
- * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2004  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -69,6 +69,10 @@ public class MDLWriter extends DefaultChemObjectWriter {
         this(new BufferedWriter(new OutputStreamWriter(out)));
     }
 
+    public String getFormatName() {
+        return "MDL Mol/SDF";
+    }
+    
     /**
      * Contructs a new MDLWriter that can write an array of 
      * Molecules to a Writer.

@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2002-2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2002-2004  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -81,6 +81,10 @@ public class PMPReader extends DefaultChemObjectReader {
         atomTypePattern = Pattern.compile("^(\\d+)\\s+(\\w+)$");
     }
 
+    public String getFormatName() {
+        return "PolyMorph Predictor (Cerius)";
+    }
+    
     /**
      * reads the content from a PMP input. It can only return a
      * ChemObject of type ChemFile

@@ -3,7 +3,7 @@
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 1997-2004  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -75,6 +75,9 @@ public class MDLReader extends DefaultChemObjectReader {
 		this(new InputStreamReader(in));
 	}
 
+    public String getFormatName() {
+        return "MDL Mol/SDF";
+    }
 
 	/**
 	 *  Contructs a new MDLReader that can read Molecule from a given Reader.

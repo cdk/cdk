@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2002-2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2002-2004  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -73,6 +73,10 @@ public class IChIReader extends DefaultChemObjectReader {
         this.input = input;
     }
 
+    public String getFormatName() {
+        return "IUPAC Chemical Identifier";
+    }
+    
     /**
      * Initializes this reader.
      */

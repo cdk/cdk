@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2003-2004  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -31,4 +31,7 @@ public class ADFReader extends DummyReader {
     public ADFReader(Reader input) {
     }
 
+    public String getFormatName() {
+        return "ABINIT (not implemented, post a feature request if you need it)";
+    }
 }

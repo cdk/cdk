@@ -4,7 +4,7 @@
  * $Revision$
  *
  * Copyright (C) 2003  The Jmol Development Team (v. 1.1.2.2)
- * Copyright (C) 2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2003-2004  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -88,6 +88,10 @@ public class VASPReader extends DefaultChemObjectReader {
         }
     }
 
+    public String getFormatName() {
+        return "VASP";
+    }
+    
     public ChemObject read(ChemObject object) throws CDKException {
         if (object instanceof ChemFile) {
             ChemFile cf = null;

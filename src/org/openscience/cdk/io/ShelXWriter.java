@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2001-2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2001-2004  The Chemistry Development Kit (CDK) project
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -56,6 +56,10 @@ public class ShelXWriter extends DefaultChemObjectWriter {
         output = out;
     }
 
+    public String getFormatName() {
+        return "ShelX";
+    }
+    
     /**
      * Flushes the output and closes this object
      */

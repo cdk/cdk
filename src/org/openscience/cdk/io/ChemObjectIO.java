@@ -3,7 +3,7 @@
  * $Date$  
  * $Revision$
  *
- * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2004  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -50,6 +50,12 @@ import javax.vecmath.*;
  **/
 public interface ChemObjectIO {
 
+    /**
+     * Returns a one-lined format name of the format that this
+     * IO filter supports.
+     */
+    public String getFormatName();
+    
     /**
      * Returns whether the given ChemObject can be read or not.
      */

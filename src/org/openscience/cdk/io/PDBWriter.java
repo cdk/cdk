@@ -4,7 +4,7 @@
  * $Revision$
  *
  * Copyright (C) 2000-2002  The Jmol Development Team
- * Copyright (C) 2003  The CDK Project
+ * Copyright (C) 2003-2004  The CDK Project
  *
  * Contact: cdk-devel@lists.sf.net
  *
@@ -48,6 +48,10 @@ public class PDBWriter extends DefaultChemObjectWriter {
         writer = new BufferedWriter(out);
     }
 
+    public String getFormatName() {
+        return "Protein Brookhaven Database";
+    }
+    
     public void write(ChemObject object) throws CDKException {
         if (object instanceof Molecule){
             writeMolecule((Molecule)object);

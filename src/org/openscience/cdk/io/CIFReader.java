@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2003-2004  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -68,13 +68,17 @@ public class CIFReader extends DefaultChemObjectReader {
     private double gamma = 0.0;
     
     /**
-     * Create an ShelX file reader.
+     * Create an CIF like file reader.
      *
-     * @param input source of ShelX data
+     * @param input source of CIF data
      */
     public CIFReader(Reader input) {
         this.input = new BufferedReader(input);
         this.logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+    }
+    
+    public String getFormatName() {
+        return "CIF-like (not CIF)";
     }
 
     /**

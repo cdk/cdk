@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2002-2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2002-2004  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -64,6 +64,10 @@ public class ShelXReader extends DefaultChemObjectReader {
     public ShelXReader(Reader input) {
         this.input = new BufferedReader(input);
         this.logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+    }
+
+    public String getFormatName() {
+        return "ShelXL";
     }
 
     /**

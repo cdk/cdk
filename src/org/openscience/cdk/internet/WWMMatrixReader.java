@@ -79,6 +79,10 @@ public class WWMMatrixReader extends DefaultChemObjectReader {
         this.server = server;
     }
 
+    public String getFormatName() {
+        return "World Wide Molecular Matrix";
+    }
+    
     /**
      * Sets the query.
      *

@@ -72,6 +72,10 @@ public class DADMLReader extends DefaultChemObjectReader {
 		this.superdb = superdb;
 	}
 
+    public String getFormatName() {
+        return "DADML network";
+    }
+    
 	/**
 	 * Sets the query.
 	 *

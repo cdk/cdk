@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2003-2004  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -65,6 +65,10 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
     public IteratingMDLReader(Reader in) {
         logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
         input = new BufferedReader(in);
+    }
+
+    public String getFormatName() {
+        return "MDL SDF";
     }
 
     public boolean hasNext() {

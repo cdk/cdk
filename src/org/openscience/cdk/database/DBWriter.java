@@ -53,7 +53,10 @@ public class DBWriter extends DefaultChemObjectWriter {
 		this.con = con;
 	}
 
-
+    public String getFormatName() {
+        return "JDBC database";
+    }
+    
     /**
      * Flushes the output and closes this object
      */

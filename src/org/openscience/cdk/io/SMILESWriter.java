@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  * 
- * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2004  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -60,6 +60,9 @@ public class SMILESWriter extends DefaultChemObjectWriter {
         }
     }
 
+    public String getFormatName() {
+        return "SMILES";
+    }
 
     /**
      * Contructs a new SMILESWriter that can write an list of SMILES to a given OutputStream

@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2001-2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2001-2004  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -54,6 +54,10 @@ public class XYZReader extends DefaultChemObjectReader {
         this.input = new BufferedReader(input);
     }
 
+    public String getFormatName() {
+        return "XYZ";
+    }
+    
     /**
      * reads the content from a XYZ input. It can only return a
      * ChemObject of type ChemFile

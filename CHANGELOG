@@ -11,6 +11,7 @@ New:
   algorithms (closes #825454)
 * The Controller2D now maintains an active draw element. Changing the element of
   an existing atom using the SYMBOL mode, also changes the draw element.
+* Added a SingleElectron class to be able to represent radicals
 * Added method for id-ing SetOfAtomContainers, Reaction and SetOfReactions
 * Added trigger to auto update of number of implicit hydrogens 
   (implements JCP RFE #813152)
@@ -33,6 +34,7 @@ API changes:
 * Renamed color property to have the org.openscience.cdk prefix
 * The coordinate system of Renderer2D has been fixed
 * Renderer2DModel.getBackgroundDimension() now returns the active dimensions
+* Added a getFormatName() method to the ChemObjectIO interface
 
 20031017 Release
 ------------------------------------

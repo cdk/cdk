@@ -50,6 +50,10 @@ public class DBReader extends DefaultChemObjectReader {
 		this.con = con;
 	}
 
+    public String getFormatName() {
+        return "JDBC database";
+    }
+    
     public ChemObject read(ChemObject object) throws CDKException {
 	    if (object instanceof Molecule) {
 	        return (ChemObject)readMolecule();

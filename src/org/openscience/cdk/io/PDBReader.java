@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2004  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -78,6 +78,9 @@ public class PDBReader extends DefaultChemObjectReader {
     _oInput = new BufferedReader(oIn);
   }
 
+    public String getFormatName() {
+        return "Protein Brookhave Database (PDB)";
+    }
   /**
    *
    * Takes an object which subclasses ChemObject, e.g. Molecule, and will

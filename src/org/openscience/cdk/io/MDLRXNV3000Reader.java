@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2002-2003  The Jmol Development Team
+ * Copyright (C) 2002-2004  The Jmol Development Team
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -56,7 +56,11 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
         initIOSettings();
     }
 
-     public ChemObject read(ChemObject object) throws CDKException {
+    public String getFormatName() {
+        return "MDL RXN V3000";
+    }
+
+    public ChemObject read(ChemObject object) throws CDKException {
          if (object instanceof Reaction) {
              return (ChemObject) readReaction();
          } else if (object instanceof ChemModel) {

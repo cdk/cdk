@@ -71,6 +71,10 @@ public class XindiceReader extends DefaultChemObjectReader {
         this.collection = collection;
     }
 
+    public String getFormatName() {
+        return "Xindice database";
+    }
+    
     public void setQuery(String xpath) {
         logger.info("Xindice query set to " + xpath);
         this.xpath = xpath;

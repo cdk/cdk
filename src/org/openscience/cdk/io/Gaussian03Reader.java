@@ -4,7 +4,7 @@
  * $Revision$
  *
  * Copyright (C) 2002-2003  The Jmol Development Team
- * Copyright (C) 2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2003-2004  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -83,6 +83,10 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
         }
     }
 
+    public String getFormatName() {
+        return "Gaussian 2003";
+    }
+    
     public boolean accepts(ChemObject object) {
         if (object instanceof ChemSequence) {
             return true;
