@@ -27,6 +27,14 @@ import java.net.*;
 import java.io.*;
 import java.util.*;
 
+/**
+ * Useful for logging messages. Often used as a class static variable instantiated like:
+ * <pre>
+ * private static org.openscience.cdk.tools.LoggingTool logger = new LoggingTool(ThisClass.class.getName(), true);
+ * </pre>
+ *
+ * <p>Uses log4j as a backend if available, and System.out otherwise.
+ */
 public class LoggingTool {
 
     private boolean debug = false;
@@ -134,19 +142,19 @@ public class LoggingTool {
     }
 
     public void debug(Exception exception) {
-        StackTraceElement[] stack = exception.getStackTrace();
-        String string = "Exception: " + exception.toString();
-        this.debug(string);
-        for (int i=0; i<stack.length; i++) {
-            string = "       in: " + stack[i].getClassName() +
-                     "." + stack[i].getMethodName();
-            String filename = stack[i].getFileName();
-            if (filename != null) {
-                string = string + "(" + filename + " line: " +
-                         stack[i].getLineNumber() + ")";
+        debug("Exception: " + exception.getMessage());
+        java.io.StringWriter stackTraceWriter = new java.io.StringWriter();
+        exception.printStackTrace(new PrintWriter(stackTraceWriter));
+        String trace = stackTraceWriter.toString();
+        try {
+            BufferedReader reader = new BufferedReader(new StringReader(trace));
+            while (reader.ready()) {
+                String traceLine = reader.readLine();
+                debug(traceLine);
             }
-            this.debug(string);
-            if (i == this.stackLength) i = stack.length;
+        } catch (Exception ioException) {
+            error("Serious error in LoggingTool while printing exception stack trace: " + 
+            ioException.getMessage());
         }
     }
     
