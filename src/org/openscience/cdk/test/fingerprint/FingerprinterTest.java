@@ -91,10 +91,47 @@ public class FingerprinterTest extends TestCase
 			System.out.println("isSubset? " + isSubset);
 		}
 		assertTrue(isSubset);
+	}
+	
+	/** This is a test for bug [ 771485 ] Problems with different aromaticity concepts */
+	public void testBug771485() throws java.lang.Exception
+	{
+		Molecule structure1 = null;
+		Molecule structure2 = null;
+		/* We make a specifically substituted chromane here 
+		 * as well as the pure chromane skeleton, which should
+		 * be a substructure of the first.
+		 */
+		String filename = "data/mdl/bug771485-1.mol";
+		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+		MDLReader reader = new MDLReader(new InputStreamReader(ins));
+		structure1 = (Molecule) reader.read((ChemObject) new Molecule());
+		filename = "data/mdl/bug771485-2.mol";
+		ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+		reader = new MDLReader(new InputStreamReader(ins));
+		structure2 = (Molecule) reader.read((ChemObject) new Molecule());
+		/* now we've read the two chromanes and we are going to check now
+		 * whether the latter is likely to be a substructure of the first by
+		 * using the fingerprinter.
+		*/
 		
+		BitSet superBS = Fingerprinter.getFingerprint(structure1);
+		BitSet subBS = Fingerprinter.getFingerprint(structure2);
+		boolean isSubset = Fingerprinter.isSubset(superBS, subBS);
+		MoleculeViewer2D.display(structure1, false);
+		MoleculeViewer2D.display(structure1, false);
+
+		if (standAlone)
+		{
+			System.out.println("BitString 1: " + superBS);
+			System.out.println("BitString 2: " + subBS);
+			System.out.println("isSubset? " + isSubset);
+		}
+		assertTrue(isSubset);
+	}
+
 
 	
-	}
 	
 	public void testFingerprinter() throws java.lang.Exception
 	{
@@ -183,7 +220,8 @@ public class FingerprinterTest extends TestCase
 			FingerprinterTest fpt = new FingerprinterTest("FingerprinterTest");
 			fpt.standAlone = true;
 			//fpt.testFingerprinter();	
-			fpt.testBug706786();
+			//fpt.testBug706786();
+			fpt.testBug771485();
 		}
 		catch(Exception exc)
 		{
