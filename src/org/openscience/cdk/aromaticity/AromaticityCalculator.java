@@ -60,14 +60,12 @@ public class AromaticityCalculator
 	 */
 	protected static boolean isAromatic(Ring ring, AtomContainer atomContainer)
 	{
-//    System.out.println("calculating aromaticity");
-		int twoElectronContributors = 0;
-		int oneElectronContributors = 0;
+		
 		Atom[] ringAtoms = ring.getAtoms();
 		int eCount = 0;
 		Bond[] conectedBonds;
 		int numDoubleBond = 0;
-
+		
 		for (int i = 0; i < ringAtoms.length; i++)
 		{
 			Atom atom = ringAtoms[i];

@@ -123,7 +123,6 @@ public class HueckelAromaticityDetector {
 		}
 		
 		Ring ring = null;
-		Atom atom = null;
 		ringSet.sort();
 		for (int f = 0; f < ringSet.size(); f++) {
 			ring = (Ring) ringSet.elementAt(f);
