@@ -53,8 +53,11 @@ import JSX.*;
 
 public class AtomTypeFactory {
     
+    public static String ATOMTYPE_ID_STRUCTGEN = "structgen";
+    public static String ATOMTYPE_ID_MODELING = "modeling"; // these are not available
+    public static String ATOMTYPE_ID_JMOL = "jmol";
+    
 	private Vector atomTypes = null;
-
     private org.openscience.cdk.tools.LoggingTool logger;
 
 	public AtomTypeFactory() throws IOException, OptionalDataException, ClassNotFoundException
@@ -74,6 +77,10 @@ public class AtomTypeFactory {
         throws IOException, OptionalDataException, ClassNotFoundException
     {
         logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        readConfiguration(configFile);
+    }
+    
+    private void readConfiguration(String configFile) {
         AtomTypeConfigurator atc = null;
         try {
             /* This class loading mechanism is used to not depend on JSX,
@@ -127,16 +134,17 @@ public class AtomTypeFactory {
 	/**
 	 *  Get an array of all atomTypes known to the AtomTypeFactory for the given element symbol and atomtype class
 	 *
-	 * @param  symbol  An element symbol to search for
-	 * @return         An array of atomtypes that matches the given element symbol and atomtype class
+	 * @param  symbol An element symbol to search for
+	 * @param  id     The configuration file
+	 * @return        An array of atomtypes that matches the given element symbol and atomtype class
 	 */
 	public AtomType[] getAtomTypes(String symbol, String id) {
 		ArrayList al = new ArrayList();
 		AtomType atomType = null;
 		for (int f = 0; f < atomTypes.size(); f++){
-			if (((AtomType) atomTypes.elementAt(f)).getSymbol().equals(symbol) && ((AtomType) atomTypes.elementAt(f)).getID().indexOf(id) > -1)
-			{
-				al.add((AtomType) ((AtomType) atomTypes.elementAt(f)).clone());
+            AtomType at = (AtomType) atomTypes.elementAt(f); 
+			if (at.getSymbol().equals(symbol) && (at.getID().indexOf(id) > -1)) {
+				al.add((AtomType)at.clone());
 			}
 		}
 		AtomType[] atomTypes = new AtomType[al.size()];
