@@ -41,6 +41,7 @@ public class IOTests {
         suite.addTest(PDBReaderTest.suite());
         suite.addTest(MDLReaderTest.suite());
         suite.addTest(SMILESReaderTest.suite());
+        suite.addTest(GhemicalReaderTest.suite());
         /* suite.addTest(ZMatrixReaderTest.suite()); This is not a JUnit test uet! */
         
         suite.addTest(ReaderFactoryTest.suite());
