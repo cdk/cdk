@@ -1,0 +1,23 @@
+website: intro.html thelibrary.html libraries.html related.html development.html whoiswho.html agenda.html changelog.html documentation.html reference.html api.html manpages.html screenshots.html maillinglists.html download.html biblio.html index.html 
+
+index.html: website.xml
+intro.html: intro.xml
+thelibrary.html: thelibrary.xml
+libraries.html: libraries.xml
+related.html: related.xml
+development.html: development.xml
+whoiswho.html: whoiswho.xml
+agenda.html: agenda.xml
+changelog.html: changelog.xml
+documentation.html: documentation.xml
+reference.html: reference.xml
+api.html: api.xml
+manpages.html: manpages.xml
+screenshots.html: screenshots.xml
+maillinglists.html: maillinglists.xml
+download.html: download.xml
+biblio.html: biblio.xml
+
+clean:
+	rm -f intro.html thelibrary.html libraries.html related.html development.html whoiswho.html agenda.html changelog.html documentation.html reference.html api.html manpages.html screenshots.html maillinglists.html download.html biblio.html index.html 
+
