@@ -81,8 +81,19 @@ public class MDLRXNReader extends DefaultChemObjectReader {
              model.setSetOfReactions(reactionSet);
              return model;
          } else {
-             throw new CDKException("Only supported are Reaction and ChemModel.");
+             throw new CDKException("Only supported are Reaction and ChemModel, and not " +
+                 object.getClass().getName() + "."
+             );
          }
+     }
+     
+     public boolean accepts(ChemObject object) {
+         if (object instanceof Reaction) {
+             return true;
+         } else if (object instanceof ChemModel) {
+             return true;
+         }
+         return false;
      }
 
 
