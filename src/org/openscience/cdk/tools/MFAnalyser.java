@@ -29,7 +29,7 @@
 package org.openscience.cdk.tools;
 
 import org.openscience.cdk.*;
-import java.util.Vector;
+import java.util.*;
 
 /** 
   * Analyses a molecular formula given in String format and builds 
@@ -159,7 +159,7 @@ public class MFAnalyser{
     }
     
     
- /** 
+	 /** 
 	 * Analyses a set of Nodes that has been changed or recently loaded
 	 * and  returns a molecular formula
 	 *
@@ -168,46 +168,58 @@ public class MFAnalyser{
 	public String analyseAtomContainer(AtomContainer ac)
 	{
 		String symbol, mf = "";
-		String[] symbols;
-		int[] elementCount;
+		SortedMap symbols=new TreeMap();
 		int HCount = 0;
 		int numberOfElements = 0;
-		boolean done;
 		Atom atom = null;
-		symbols = new String[ac.getAtomCount()];
-		elementCount = new int[ac.getAtomCount()];
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
 			atom = ac.getAtomAt(f);
 			symbol = atom.getSymbol();	
 			if (atom.getHydrogenCount() > 0) HCount += atom.getHydrogenCount();		
-			done = false;
-			for (int g = 0; g < numberOfElements ; g++){
-				if (symbols[g].equals(symbol)){
-					elementCount[g]++;
-					done = true;
-					break;	
-				}	
-			}
-			if (!done){
-				symbols[numberOfElements] = symbol;
-				elementCount[numberOfElements]++;
-				numberOfElements++;
-			}	
+			if(symbols.get(symbol)!=null)
+				symbols.put(symbol,new Integer(((Integer)symbols.get(symbol)).intValue()+1));
+			else
+				symbols.put(symbol,new Integer(1));
 		}
-		for (int g = 0; g < numberOfElements ; g++){
-			mf += symbols[g];
-			if (elementCount[g] > 1) mf += new Integer(elementCount[g]).toString();
-			if (g == 0 && HCount > 0){
-				mf += "H";
-				if (HCount > 1) mf += new Integer(HCount).toString();
-			} 
-
+		mf = addSymbolToFormula(symbols, "C", mf);
+		mf = addSymbolToFormula(symbols, "H", mf);
+		if (HCount > 0){
+			mf += "H";
+			if (HCount > 1) mf += new Integer(HCount).toString();
+		}
+		mf = addSymbolToFormula(symbols, "N", mf);
+		mf = addSymbolToFormula(symbols, "O", mf);
+		mf = addSymbolToFormula(symbols, "S", mf);
+		mf = addSymbolToFormula(symbols, "P", mf);
+		Iterator it = symbols.keySet().iterator();
+		while (it.hasNext()) {
+			Object key = it.next();
+			if(!((String)key).equals("C")&&!((String)key).equals("H")&&!((String)key).equals("N")&&!((String)key).equals("O")&&!((String)key).equals("S")&&!((String)key).equals("P")){
+				mf=addSymbolToFormula(symbols, (String)key, mf);
+			}
 		}
 		this.HCount = HCount;
 		return mf;
 	}
 	
+ 	/** 
+	 * Adds an element to a chemical formual string
+	 *
+	 * @param   sm         The map containing the elements
+	 * @param   symbol     The symbol to add
+	 * @param   formula    The chemical formula
+	 */
+	private String addSymbolToFormula(SortedMap sm, String symbol, String formula){
+		if(sm.get(symbol)!=null){
+			formula += symbol;
+			if (!sm.get(symbol).equals(new Integer(1)))
+				formula += sm.remove(symbol).toString();
+		}
+		return(formula);
+	}
+
+
  	/** 
 	 * Checks a set of Nodes for the occurence of a particular
 	 * element.
@@ -235,3 +247,4 @@ public class MFAnalyser{
 		this.verbose = verbose;
 	}
 }
+
