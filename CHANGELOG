@@ -27,6 +27,7 @@ API changes:
 * Descriptor.getSpecification() now returns a DescriptorSpecification object
 * The build.xml now builds cdk-$version.jar instead of cdk-all.jar
 * Descriptor.calculate() now returns a DescriptorResult object
+* Moved SmilesViewerforDeterministicGenerator into cdk.applications.demo
 
 20041201 Release
 ------------------------------------

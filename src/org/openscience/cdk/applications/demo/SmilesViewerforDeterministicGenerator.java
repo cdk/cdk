@@ -1,11 +1,12 @@
-
- /* SmilesViewerforDeterministicGenerator.java
+/* $RCSfile$
+ * $Author$
+ * $Date$
+ * $Revision$
  *
- * $RCSfile$    $Author$    $Date$    $Revision$
- *
- * Copyright (C) 1997, 1998, 1999, 2000  The JChemPaint project
+ * Copyright (C) 1997-2000  The JChemPaint project
+ * Copyright (C) 2000-2004  The Chemistry Development Kit (CDK) project
  * 
- * Contact: steinbeck@ice.mpg.de
+ * Contact: cdk-devel@lists.sourceforge.net
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -26,7 +27,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
  * 
  */
-package org.openscience.cdk.structgen.deterministic;
+package org.openscience.cdk.applications.demo;
 
 import java.util.Vector;
 import java.applet.*;
@@ -34,10 +35,6 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.vecmath.Vector2d;
-
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.structgen.deterministic.*;
@@ -52,6 +49,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.smiles.SmilesParser;
 
 /**
+ * @cdk.require applications
  * @cdk.require swing
  */
 public class SmilesViewerforDeterministicGenerator extends JApplet implements ActionListener{
@@ -71,7 +69,7 @@ public class SmilesViewerforDeterministicGenerator extends JApplet implements Ac
 		SmilesViewerforDeterministicGenerator sv = new SmilesViewerforDeterministicGenerator();
 		sv.init();
 		frame.addWindowListener(sv.getAWindowAdapter());
-		frame.add(sv);
+		frame.getContentPane().add(sv);
 		frame.pack();
 		frame.show();
 
