@@ -86,40 +86,46 @@ public class HOSECodeTest extends TestCase
 	 */
 	public void test1Sphere()
 	{
-		String[] result = { 
-     "O-1;=C(//)",
-     "C-3;=OCC(//)",
-     "C-2;CC(//)",
-     "C-2;CC(//)",
-     "C-3;CCC(//)",
-     "C-2;CC(//)",
-     "C-2;CC(//)",
-     "C-3;CCC(//)",
-     "C-3;CCC(//)",
-     "C-2;CC(//)",
-     "C-2;CC(//)",
-     "C-2;CC(//)",
-     "C-2;CC(//)",
-     "C-3;CCO(//)",
-     "O-2;CC(//)",
-     "C-3;CCO(//)",
-     "C-3;CCO(//)",
-     "O-2;CC(//)",
-     "C-1;O(//)",
-     "C-2;CC(//)",
-     "C-3;CCC(//)",
-     "C-3;CCC(//)",
-     "C-3;CCC(//)"};
+		String[] result = 
+		{ 
+			"O-1;=C(//)",
+			"C-3;=OCC(//)",
+			"C-2;=CC(//)",
+			"C-2;=CC(//)",
+			"C-3;*C*CC(//)",
+			"C-2;*C*C(//)",
+			"C-2;*C*C(//)",
+			"C-3;*C*CC(//)",
+			"C-3;*C*CC(//)",
+			"C-2;*C*C(//)",
+			"C-2;*C*C(//)",
+			"C-2;*C*C(//)",
+			"C-2;*C*C(//)",
+			"C-3;*C*CO(//)",
+			"O-2;CC(//)",
+			"C-3;*C*CO(//)",
+			"C-3;*C*CO(//)",
+			"O-2;CC(//)",
+			"C-1;O(//)",
+			"C-2;*C*C(//)",
+			"C-3;*C*CC(//)",
+			"C-3;*C*C*C(//)",
+			"C-3;*C*C*C(//)"
+		};
 		
 		try
 		{
-			Molecule molecule = (new SmilesParser()).parseSmiles("O=c1ccc2ccc4c5ccccc5Oc3c(OC)cc1c2c34");
+			Molecule molecule = (new SmilesParser()).parseSmiles("O=C1C=Cc2ccc4c5ccccc5Oc3c(OC)cc1c2c34");
+			
+
+			MoleculeViewer2D.display(molecule, true);
 			boolean isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
 			HOSECodeGenerator hcg = new HOSECodeGenerator();
 			String s = null;
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
 				s = hcg.getHOSECode(molecule, molecule.getAtomAt(f), 1);
+				//System.out.println("|" + s + "|,");
 				assertTrue(result[f].equals(s));
 				
 			}
@@ -211,35 +217,35 @@ public class HOSECodeTest extends TestCase
 	public void test4Sphere()
 	{
 		String[] result = { 
-		     "O-1;=C(CC/CC,C/CC,C,&)",
-     "C-3;=OCC(,CC,C/CC,C,&/CC,&C,&O)",
-     "C-2;CC(=OC,C/,CC,&C/C&,C,C)",
-     "C-2;CC(C,CC/=OC,C&,C/,&C,CC,&)",
-     "C-3;CCC(CC,C,C/CC,CC,&,&/=O&,C,C&,&O)",
-     "C-2;CC(CC,C/CC,C,&C/C&,CC,&,CC)",
-     "C-2;CC(CC,C/CC,CC,&C/C&,CO,C&,C,C)",
-     "C-3;CCC(CC,CC,C/CC,CO,C&,C,&/CC,C&,&O,&,C,&)",
-     "C-3;CCC(CC,OC,C/CC,C,&,C,&/CC,C&,&,&)",
-     "C-2;CC(CC,C/CC,CO,&/CC,C,&,&)",
-     "C-2;CC(C,C/CC,&/CC,&O)",
-     "C-2;CC(C,C/CO,&/C&,C)",
-     "C-2;CC(CO,C/CC,C,&/CC,&,&C)",
-     "C-3;COC(CC,C,C/CC,C,&C,&/C&,C,&,CO)",
-     "O-2;CC(CC,CC/CC,CO,&C,C/CC,&C,&,C,C,&)",
-     "C-3;CCO(CC,CO,C/CC,CC,&,C,&C/&C,CC,&C,&,,C)",
-     "C-3;CCO(C,CO,C/CC,&C,C,/=OC,&C,CC,&C)",
-     "O-2;CC(CC,/CO,C/CC,C,&C)",
-     "C-1;O(C/CC/CO,C)",
-     "C-2;CC(CC,CO/=OC,CC,&O,C/,C,&C,&C,C,)",
-     "C-3;CCC(=OC,CC,C/,C,CC,&C,&O/&,CC,&O,&,C)",
-     "C-3;CCC(CC,CC,CC/=OC,C,CC,&O,&,&/,&,&O,CC,&,&)",
-     "C-3;CCC(CC,CC,CO/CC,CC,CC,&,&O,&/=OC,&,&,&,C&,C,C)"
+			
+"O-1;=C(CC/*C*C,=C/*C*C,*C,&)",
+"C-3;CC=O(*C*C,=C,/*C*C,*C,&/*C*C,*C&,*&O)",
+"C-2;C=C(C=O,C/*C*C,,*&*C/*C*&,*C,*C)",
+"C-2;C=C(*C*C,C/*C*C,*C,&=O/*C*C,*C&,*&,)",
+"C-3;*C*CC(*C*C,*C,=C/*C*C,C*C,*&,&/*&C,*CO,=O&,*&)",
+"C-2;*C*C(*CC,*C/*C*C,=C,*&C/*C*&,*CC,&,*C*C)",
+"C-2;*C*C(*CC,*C/*C*C,*C*C,*&C/*C*&,*CO,*C&,*C,=C)",
+"C-3;*CC*C(*C*C,*C*C,*C/*C*C,*CO,*C&,*C,*&/*CC,*&C,*&O,&,*C,*&)",
+"C-3;C*C*C(*C*C,*CO,*C/*C*C,*C,*C,&,*&/*C*C,*C&,*&,*&)",
+"C-2;*C*C(C*C,*C/*C*C,*CO,*&/*C*C,*C,*&,&)",
+"C-2;*C*C(*C,*C/C*C,*&/*C*C,*&O)",
+"C-2;*C*C(*C,*C/*CO,*&/*&C,C)",
+"C-2;*C*C(*CO,*C/C*C,C,*&/*C*C,*&,*&*C)",
+"C-3;*CO*C(C*C,C,*C/*C*C,*C,*&*C,*&/*C*&,*C,*&,*CO)",
+"O-2;CC(*C*C,*C*C/*C*C,*CO,&*C,*C/*C*C,*C&,*&,C,*C,*&)",
+"C-3;*C*CO(*C*C,*CO,C/*C*C,C*C,*&,C,*&*C/*&C,*CC,*&*C,*&,,*C)",
+"C-3;*C*CO(*CO,*C,C/*C*C,C,*&C,/*&*C,*CC,*&*C,=OC)",
+"O-2;CC(*C*C,/*CO,*C/*C*C,C,*&C)",
+"C-1;O(C/*C*C/*CO,*C)",
+"C-2;*C*C(*CC,*CO/*C*C,C=O,*&O,C/*&*C,*CC,=&,,C,)",
+"C-3;*C*CC(*C*C,*C,C=O/*C*C,*CC,*&O,=&,/*CC,*&O,*&,=&,C)",
+"C-3;*C*C*C(*C*C,C*C,*CC/C*C,*CO,C=O,*&,*&,=&/*C*C,*&,*&O,&,=&,)",
+"C-3;*C*C*C(*C*C,C*C,*CO/C*C,*CC,*C*C,*&,*&O,&/=OC,*&,*&,=&,*C&,*C,C)"
 		};
-		
 		
 		try
 		{
-			Molecule molecule = (new SmilesParser()).parseSmiles("O=c1ccc2ccc4c5ccccc5Oc3c(OC)cc1c2c34");
+			Molecule molecule = (new SmilesParser()).parseSmiles("O=C1C=Cc2ccc4c5ccccc5Oc3c(OC)cc1c2c34");
 			boolean isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
 			HOSECodeGenerator hcg = new HOSECodeGenerator();
 			String s = null;
@@ -371,6 +377,7 @@ public class HOSECodeTest extends TestCase
 	{
 		standAlone = true;
 		HOSECodeTest hct = new HOSECodeTest("HOSECodeTest");
+		hct.test4Sphere();
 		//hct.testBug655169();
 	}
 }
