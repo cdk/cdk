@@ -14,6 +14,8 @@ New:
 * Controller2D now supports context dependent popup menu's
   for atoms and bonds
 * Added a RFC #8 non-compliant PseudoAtom class 
+* Added (framework for) editor table for dictionary 
+  references in ChemObject's
 
 Changes:
 * Added one-click (not-patented ;) deselect of atoms in lasso mode
