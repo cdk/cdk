@@ -28,8 +28,10 @@ package org.openscience.cdk;
  * An interface providing predefined values for a number of 
  * parameters used throughout the cdk. Classes using these Constants should 
  * implement this interface.
+ *
+ * @keyword bond order
+ * @keyword stereochemistry
  */
-
 public interface CDKConstants
 {
 	/** A bond of degree 1 */

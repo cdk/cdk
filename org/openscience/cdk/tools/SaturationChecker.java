@@ -38,6 +38,9 @@ import java.io.*;
  *
  * @author     steinbeck
  * @created    September 4, 2001
+ *
+ * @keyword saturation
+ * @keyword valency
  */
 public class SaturationChecker
 {

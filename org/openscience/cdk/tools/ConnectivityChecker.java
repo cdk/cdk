@@ -30,8 +30,9 @@ import java.util.*;
 /**
  * Tool class for checking whether the (sub)structure in an 
  * AtomContainer is connected
- */
- 
+ *
+ * @keyword connectivity
+ */ 
 public class ConnectivityChecker implements CDKConstants
 {
 	/**

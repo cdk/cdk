@@ -34,6 +34,11 @@ import java.io.*;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Command line utility for viewing chemical information from files.
+ *
+ *  @keyword command line util
+ */
 public class Viewer {
 
     private org.openscience.cdk.tools.LoggingTool logger;

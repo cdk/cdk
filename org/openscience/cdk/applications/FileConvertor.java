@@ -34,6 +34,9 @@ import java.util.*;
  * Supported formats are:
  *   input: CML, XYZ, MDLMolfile
  *  output: CML, MDL Molfile
+ *
+ *  @keyword command line util
+ *  @keyword file format
  */
 public class FileConvertor {
 

@@ -39,6 +39,8 @@ import org.openscience.cdk.io.*;
   *
   * @author unknown
   * @author egonw
+  *
+  * @keyword MySQL
   */
 public class DBAdmin {
 

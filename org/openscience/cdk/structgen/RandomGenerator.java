@@ -39,6 +39,7 @@ import java.util.Vector;
  * This generator was first suggested by
  * Faulon, J.-L. Journal of Chemical Information and Computer Sciences 1996, 36, 731-740. 
  * 
+ * @keyword structure generator
  **/
  
 public class RandomGenerator

@@ -32,6 +32,9 @@ package org.openscience.cdk.tools;
 
 import java.util.Hashtable;
 
+/**
+ * @keyword HOSE code
+ */
 public class BremserOneSphereHOSECodePredictor implements java.io.Serializable
 {
 	Hashtable ht;

@@ -34,6 +34,8 @@ import org.openscience.cdk.*;
 
 /** StandardsIsotopes.java
  *    Used to store data of a particular isotope
+ *
+ * @keyword isotope
  */
 
 public class StandardIsotopes

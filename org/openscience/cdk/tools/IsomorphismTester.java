@@ -31,6 +31,8 @@ import java.util.*;
  *
  * @author     steinbeck
  * @created    September 10, 2001
+ *
+ * @keyword isomorphism
  */
 public class IsomorphismTester implements java.io.Serializable
 {

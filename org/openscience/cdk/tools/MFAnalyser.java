@@ -34,6 +34,9 @@ import java.util.Vector;
 /** 
   * Analyses a molecular formula given in String format and builds 
   * an AtomContainer with the Atoms in the molecular formula.
+  *
+  * @keyword molecular mass
+  * @keyword molecular formula
   */
 public class MFAnalyser{
 	

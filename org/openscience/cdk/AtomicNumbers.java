@@ -28,8 +28,9 @@ package org.openscience.cdk;
 /**
  * Implements the idea of an element in the periodic table.
  * Use an element factory to get a ready-to-use element by name or number
+ *
+ * @keyword atomic number
  */
-
 public class AtomicNumbers {
 
     public static final int HYDROGEN       = 1;

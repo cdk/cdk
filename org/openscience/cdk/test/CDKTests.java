@@ -56,7 +56,7 @@ public class CDKTests {
 		suite.addTest(AllRingsFinderTest.suite());
 		suite.addTest(FingerprinterTest.suite());
 		suite.addTest(AtomTypeFactoryTest.suite());
-		suite.addTest(JumboTest.suite());
+		suite.addTest(CMLIOTests.suite());
 
 	    return suite;
 	}
