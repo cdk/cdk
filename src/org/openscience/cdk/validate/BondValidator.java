@@ -52,7 +52,7 @@ public class BondValidator {
         Vector errors = new Vector();
         if (bond.getStereo() != CDKConstants.STEREO_BOND_NONE) {
             errors.add(new ValidationWarning(bond,
-              "Defining stereochemistry on bonds is not save. Use atom based stereochemistry instead."
+              "Defining stereochemistry on bonds is not safe. Use atom based stereochemistry instead."
             ));
         }
         return errors;
