@@ -1,0 +1,6 @@
+Converted from Christoph's EndNote database:
+1. export in BibTex format from EndNote
+2. sanatized that output (e.g. added refid) with 
+   JReferences 0.7.1's endnote-sanatize
+3. converted to BibTeXML with JReferences 0.7.1's
+   bibtex-xml
