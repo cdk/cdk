@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE molecule SYSTEM "cml.dtd" []>
+<molecule id="butadiene.cml" convention="CML-1999-05-15">
+  <atom id="a0">
+    <string builtin="elementType">C</string>
+    <coordinate2 builtin="xy2">84 138</coordinate2>
+  </atom>
+  <atom id="a1">
+    <string builtin="elementType">C</string>
+    <coordinate2 builtin="xy2">105.651 125.5</coordinate2>
+  </atom>
+  <atom id="a2">
+    <string builtin="elementType">C</string>
+    <coordinate2 builtin="xy2">127.301 138</coordinate2>
+  </atom>
+  <atom id="a3">
+    <string builtin="elementType">C</string>
+    <coordinate2 builtin="xy2">148.952 125.5</coordinate2>
+  </atom>
+  <bond id="b0" atomRefs="a0 a1">
+    <string builtin="order">D</string>
+  </bond>
+  <bond id="b1" atomRefs="a1 a2">
+    <string builtin="order">S</string>
+  </bond>
+  <bond id="b2" atomRefs="a2 a3">
+    <string builtin="order">D</string>
+  </bond>
+</molecule>

@@ -635,7 +635,18 @@ public class Convention implements ConventionInterface {
           cdo.startObject("Bond");
           cdo.setObjectProperty("Bond", "atom1", new Integer(elid.indexOf((String)bar1s.nextElement())).toString());
           cdo.setObjectProperty("Bond", "atom2", new Integer(elid.indexOf((String)bar2s.nextElement())).toString());
-          cdo.setObjectProperty("Bond", "order", (String)orders.nextElement());
+          String bondOrder = (String)orders.nextElement();
+          if ("S".equals(bondOrder)) {
+              cdo.setObjectProperty("Bond", "order", "1");
+          } else if ("D".equals(bondOrder)) {
+              cdo.setObjectProperty("Bond", "order", "2");
+          } else if ("T".equals(bondOrder)) {
+              cdo.setObjectProperty("Bond", "order", "3");
+          } else if ("A".equals(bondOrder)) {
+              cdo.setObjectProperty("Bond", "order", "1.5");
+          } else {
+              cdo.setObjectProperty("Bond", "order", bondOrder);
+          }
           if (stereos.hasMoreElements()) {
             cdo.setObjectProperty("Bond", "stereo", (String)stereos.nextElement()); 
           }

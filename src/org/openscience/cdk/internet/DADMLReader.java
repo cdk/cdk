@@ -168,7 +168,9 @@ public class DADMLReader implements ChemObjectReader {
 				  logger.info("Rejected: " + f.getMIMETYPE() + "," + f.getTYPE());
 			    }
 			  }
-		   }
+		    } else {
+                logger.warn("Database does not have index: " + index);
+            }
 		}
 		return molecule;
 	}

@@ -247,9 +247,19 @@ public class CMLWriter implements ChemObjectWriter {
 			  atoms[i].hashCode() + 
 			  "</string>\n");
 		}
-		write("<string builtin=\"order\">" +
-		      + bond.getOrder() +
-		      "</string>\n");
+        double border = bond.getOrder();
+        if (border == CDKConstants.BONDORDER_SINGLE) {
+            write("<string builtin=\"order\">S</string>\n");
+        } else if (border == CDKConstants.BONDORDER_DOUBLE) {
+            write("<string builtin=\"order\">D</string>\n");
+        } else if (border == CDKConstants.BONDORDER_TRIPLE) {
+            write("<string builtin=\"order\">T</string>\n");
+        } else if (border == CDKConstants.BONDORDER_AROMATIC) {
+            write("<string builtin=\"order\">A</string>\n");
+        } else {
+            write("<string builtin=\"order\" convention=\"CDK\">" + 
+                  bond.getOrder() + "</string>\n");
+        }
 		if (bond.getStereo() != CDKConstants.STEREO_BOND_UNDEFINED) {
 		    write("<string builtin=\"stereo\" convention=\"MDLMol\">");
 		    if (bond.getStereo() == CDKConstants.STEREO_BOND_UP) {
