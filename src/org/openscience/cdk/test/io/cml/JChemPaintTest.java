@@ -86,4 +86,36 @@ public class JChemPaintTest extends TestCase {
         }
     }
 
+    /**
+     * This one tests reading of output from the WWMM matrix (KEGG collection).
+     */
+    public void testWWMMOutput() {
+        String filename = "data/cmltest/keggtest.cml";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        try {
+            CMLReader reader = new CMLReader(new InputStreamReader(ins));
+            ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+
+            // test the resulting ChemFile content
+            assertNotNull(chemFile);
+            assertEquals(1, chemFile.getChemSequenceCount());
+            ChemSequence seq = chemFile.getChemSequence(0);
+            assertNotNull(seq);
+            assertEquals(1, seq.getChemModelCount());
+            ChemModel model = seq.getChemModel(0);
+            assertNotNull(model);
+            SetOfMolecules moleculeSet = model.getSetOfMolecules();
+            assertNotNull(moleculeSet);
+            assertEquals(1, moleculeSet.getMoleculeCount());
+
+            // test the molecule
+            Molecule mol = moleculeSet.getMolecule(0);
+            assertNotNull(mol);
+            assertEquals(2, mol.getAtomCount());
+            assertTrue(GeometryTools.has3DCoordinates(mol));
+        } catch (Exception exception) {
+            fail(exception.toString());
+        }
+    }
 }
