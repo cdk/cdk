@@ -20,8 +20,6 @@
 
 package org.openscience.cdk.qsar.model;
 
-import org.openscience.cdk.qsar.model.QSARModelException;
-
 /**
  * Classes that implement this interface will build statistical models.
  * 

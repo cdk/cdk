@@ -75,7 +75,7 @@ public abstract class RModel implements Model {
     private static boolean doneInit = false;
     private LoggingTool logger;
         
-    private void loadRFunctions(REvaluator e) {
+    private void loadRFunctions(REvaluator evaluator) {
         String scriptLocator = "org/openscience/cdk/qsar/model/data/cdkSJava.R";
         try {
             File scriptFile = File.createTempFile("XXXXX",".R");
@@ -96,7 +96,7 @@ public abstract class RModel implements Model {
             inFile.close();
             outFile.close();
 
-            e.voidEval("source(\""+scriptFile.getAbsolutePath()+"\")");
+            evaluator.voidEval("source(\""+scriptFile.getAbsolutePath()+"\")");
 
         } catch (Exception exception) {
             logger.error("Could not load CDK-SJava R script: ", scriptLocator);
@@ -110,7 +110,7 @@ public abstract class RModel implements Model {
      * @param args A String[] containing the command line parameters as elements
      */
     public RModel(String[] args) {
-        logger = new LoggingTool(true);
+        logger = new LoggingTool(this);
         if (!doneInit) {
             this.interp = new ROmegahatInterpreter(ROmegahatInterpreter.fixArgs(args), false);
             this.revaluator = new REvaluator();

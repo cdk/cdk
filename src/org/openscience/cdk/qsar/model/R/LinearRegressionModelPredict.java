@@ -36,45 +36,45 @@ package org.openscience.cdk.qsar.model.R;
  */
 public class LinearRegressionModelPredict {
     double[] pred, lwr, upr, sefit;
-    int df;
+    int degreesOfFreedom;
     double residualScale;
 
-    public LinearRegressionModelPredict(double[] p, double[] se,
-            double[] l, double[] u,
-            int df, double residualScale) {
-        setPredicted(p);
-        setSEFit(se);
-        setLower(l);
-        setUpper(u);
-        setDF(df);
+    public LinearRegressionModelPredict(double[] predicted, double[] standardErrors,
+            double[] lowerBounds, double[] upperBounds,
+            int degreesOfFreedom, double residualScale) {
+        setPredicted(predicted);
+        setSEFit(standardErrors);
+        setLower(lowerBounds);
+        setUpper(upperBounds);
+        setDF(degreesOfFreedom);
         setResidualScale(residualScale);
     }
 
-    public int getDF() { return(this.df); }
-    public void setDF(int df) { this.df = df; }
+    public int getDF() { return(this.degreesOfFreedom); }
+    public void setDF(int degreesOfFreedom) { this.degreesOfFreedom = degreesOfFreedom; }
 
     public double getResidualScale() { return(this.residualScale); }
     public void setResidualScale(double scale) { this.residualScale = scale; }
 
     public double[] getPredicted() { return(this.pred); }
-    public void setPredicted(double[] v) { 
-        this.pred = new double[v.length];
-        for (int i = 0; i < v.length; i++) this.pred[i] = v[i];
+    public void setPredicted(double[] predicted) { 
+        this.pred = new double[predicted.length];
+        for (int i = 0; i < predicted.length; i++) this.pred[i] = predicted[i];
     }
     public double[] getLower() { return(this.lwr); }
-    public void setLower(double[] v) { 
-        this.lwr = new double[v.length];
-        for (int i = 0; i < v.length; i++) this.lwr[i] = v[i];
+    public void setLower(double[] lowerBounds) { 
+        this.lwr = new double[lowerBounds.length];
+        for (int i = 0; i < lowerBounds.length; i++) this.lwr[i] = lowerBounds[i];
     }
     public double[] getUpper() { return(this.upr); }
-    public void setUpper(double[] v) { 
-        this.upr = new double[v.length];
-        for (int i = 0; i < v.length; i++) this.upr[i] = v[i];
+    public void setUpper(double[] upperBounds) { 
+        this.upr = new double[upperBounds.length];
+        for (int i = 0; i < upperBounds.length; i++) this.upr[i] = upperBounds[i];
     }
     public double[] getSEFit() { return(this.sefit); }
-    public void setSEFit(double[] v) { 
-        this.sefit = new double[v.length];
-        for (int i = 0; i < v.length; i++) this.sefit[i] = v[i];
+    public void setSEFit(double[] standardErrors) { 
+        this.sefit = new double[standardErrors.length];
+        for (int i = 0; i < standardErrors.length; i++) this.sefit[i] = standardErrors[i];
     }
 
 }

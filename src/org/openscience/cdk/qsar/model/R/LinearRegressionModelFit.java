@@ -39,35 +39,35 @@ public class LinearRegressionModelFit {
     double[] coeff, res, fitted;
     int rank, dfResidual;
 
-    public LinearRegressionModelFit(double[] coeff, double[] res, double[] fitted, int rank, int df) {
+    public LinearRegressionModelFit(double[] coeff, double[] res, double[] fitted, int rank, int degreesOfFreedom) {
         setCoefficients(coeff);
         setResiduals(res);
         setFitted(fitted);
         setRank(rank);
-        setdfResidual(df);
+        setdfResidual(degreesOfFreedom);
     }
     public int getRank() { return(this.rank); }
-    public void setRank(int v) { this.rank = v; };
+    public void setRank(int rank) { this.rank = rank; };
 
     public double[] getResiduals() { return(this.res); }
-    public void setResiduals(double[] v) { 
-        this.res = new double[v.length];
-        for (int i = 0; i < v.length; i++) this.res[i] = v[i];
+    public void setResiduals(double[] residuals) { 
+        this.res = new double[residuals.length];
+        for (int i = 0; i < residuals.length; i++) this.res[i] = residuals[i];
     }
 
     public double[] getCoefficients() { return(this.coeff); }
-    public void setCoefficients(double[] v) { 
-        this.coeff = new double[v.length];
-        for (int i = 0; i < v.length; i++) this.coeff[i] = v[i];
+    public void setCoefficients(double[] coeff) { 
+        this.coeff = new double[coeff.length];
+        for (int i = 0; i < coeff.length; i++) this.coeff[i] = coeff[i];
     }
 
     public int getdfResidual() { return(this.dfResidual); }
-    public void setdfResidual(int df) { this.dfResidual = df; }
+    public void setdfResidual(int degreesOfFreedom) { this.dfResidual = degreesOfFreedom; }
 
     public double[] getFitted() { return(this.fitted); }
-    public void setFitted(double[] v) { 
-        this.fitted = new double[v.length];
-        for (int i = 0; i < v.length; i++) this.fitted[i] = v[i];
+    public void setFitted(double[] fitted) { 
+        this.fitted = new double[fitted.length];
+        for (int i = 0; i < fitted.length; i++) this.fitted[i] = fitted[i];
     }
 }
 
