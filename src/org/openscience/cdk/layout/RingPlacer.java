@@ -122,7 +122,7 @@ public class RingPlacer
 					{ 
 						for (int f = 0; f < unplacedPartners.getAtomCount(); f++)
 						{
-							System.out.println("placeRingSubstituents->unplacedPartners: " + molecule.getAtomNumber(unplacedPartners.getAtomAt(f)));
+							System.out.println("placeRingSubstituents->unplacedPartners: " + (molecule.getAtomNumber(unplacedPartners.getAtomAt(f)) + 1));
 						}
 					}
 				}
@@ -261,7 +261,7 @@ public class RingPlacer
 			try
 			{
 				System.out.println("placeBridgedRing->atomsToPlace: " + atomPlacer.listNumbers(molecule, atomsToDraw));
-				System.out.println("placeBridgedRing->startAtom is: " + molecule.getAtomNumber(startAtom));
+				System.out.println("placeBridgedRing->startAtom is: " + (molecule.getAtomNumber(startAtom) + 1));
 				System.out.println("placeBridgedRing->startAngle: " + Math.toDegrees(startAngle));
 				System.out.println("placeBridgedRing->addAngle: " + Math.toDegrees(addAngle));		
 			}
@@ -448,7 +448,7 @@ public class RingPlacer
 			{
 				System.out.println("placeFusedRing->startAngle: " + Math.toDegrees(startAngle));
 				System.out.println("placeFusedRing->addAngle: " + Math.toDegrees(addAngle));		
-				System.out.println("placeFusedRing->startAtom is: " + molecule.getAtomNumber(startAtom));
+				System.out.println("placeFusedRing->startAtom is: " + (molecule.getAtomNumber(startAtom) + 1));
 				System.out.println("AtomsToDraw: " + atomPlacer.listNumbers(molecule, atomsToDraw));
 			}
 			catch(Exception exc)

@@ -46,7 +46,7 @@ import java.awt.*;
 
 public class AtomPlacer 
 {
-	public boolean debug = false;
+	public static boolean debug = false;
 	
 	/** The molecule to be laid out. To be assigned from outside */
 	Molecule molecule = null;
@@ -125,8 +125,8 @@ public class AtomPlacer
 		{
 			try
 			{
-				System.out.println("distributePartners->sortedAtoms[0]: " + molecule.getAtomNumber(sortedAtoms[0]));
-				System.out.println("distributePartners->sortedAtoms[1]: " + molecule.getAtomNumber(sortedAtoms[1]));		
+				System.out.println("distributePartners->sortedAtoms[0]: " + (molecule.getAtomNumber(sortedAtoms[0]) + 1));
+				System.out.println("distributePartners->sortedAtoms[1]: " + (molecule.getAtomNumber(sortedAtoms[1]) + 1));		
 				System.out.println("distributePartners->angle1: " + Math.toDegrees(angle1));
 				System.out.println("distributePartners->angle2: " + Math.toDegrees(angle2));
 			}
@@ -168,7 +168,7 @@ public class AtomPlacer
 		{
 			try
 			{
-				System.out.println("distributePartners->startAtom: " + molecule.getAtomNumber(startAtom));
+				System.out.println("distributePartners->startAtom: " + (molecule.getAtomNumber(startAtom) + 1));
 				System.out.println("distributePartners->remainingAngle: " + Math.toDegrees(remainingAngle));
 				System.out.println("distributePartners->addAngle: " + Math.toDegrees(addAngle));
 				System.out.println("distributePartners-> partners.getAtomCount(): " + partners.getAtomCount());
@@ -287,7 +287,7 @@ public class AtomPlacer
 		connectAtom.setPoint2D(new Point2d(newX, newY));				
 			try
 			{
-				if (debug) System.out.println("populatePolygonCorners->connectAtom: " + molecule.getAtomNumber(connectAtom) + " placed at " + connectAtom.getPoint2D());
+				if (debug) System.out.println("populatePolygonCorners->connectAtom: " + (molecule.getAtomNumber(connectAtom) + 1)+ " placed at " + connectAtom.getPoint2D());
 			}
 			catch(Exception exc)
 			{
@@ -378,6 +378,8 @@ public class AtomPlacer
 	 */
 	public AtomContainer getLongestUnplacedChain(Molecule molecule, Atom startAtom) throws org.openscience.cdk.exception.NoSuchAtomException
 	{
+		if (debug) System.out.println("Start of getLongestUnplacedChain.");
+		//ConnectivityChecker cc = new ConnectivityChecker();
 		int longest = 0;
 		int longestPathLength = 0;
 		AtomContainer[] pathes = new AtomContainer[molecule.getAtomCount()];
@@ -430,34 +432,41 @@ public class AtomPlacer
 			if (!atom.flags[CDKConstants.ISINRING])
 			{
 				atomNr = ac.getAtomNumber(atom);
+				if (debug)
+				{
+					System.out.println("BreadthFirstSearch around atom " + (atomNr + 1));
+				}
+
 				Bond[] bonds = ac.getConnectedBonds(atom);
 				for (int g = 0; g < bonds.length; g++)
 				{
 					nextAtom = bonds[g].getConnectedAtom(atom);
 					if (!nextAtom.flags[CDKConstants.VISITED] && !nextAtom.flags[CDKConstants.ISPLACED])
 					{
-						nextAtomNr = ac.getAtomNumber(nextAtom);
-						pathes[nextAtomNr] = (AtomContainer)pathes[atomNr].shallowCopy();
-						pathes[nextAtomNr].addAtom(nextAtom);
-						pathes[nextAtomNr].addBond(bonds[g]);
-						newSphere.addElement(nextAtom);
-						//nextAtom.flags[CDKConstants.VISITED] = true;					
-					}
+						if (debug)
+						{
+							System.out.println("BreadthFirstSearch is meeting new atom " + (ac.getAtomNumber(nextAtom) + 1));
+						}
 
+						nextAtomNr = ac.getAtomNumber(nextAtom);
+						pathes[nextAtomNr] = getCopy(pathes[atomNr]);
+						pathes[nextAtomNr].addAtom(nextAtom);
+						if (debug) System.out.println("Adding atom " + (nextAtomNr + 1) + " to path " + (nextAtomNr + 1));
+						pathes[nextAtomNr].addBond(bonds[g]);
+						if (ac.getBondCount(nextAtom) > 1) newSphere.addElement(nextAtom);
+					}
 				}
 			}
 		}
-		if (newSphere.size() >0)
+		if (newSphere.size() > 0)
 		{
 			for (int f = 0; f < newSphere.size(); f++)
 			{
 				((Atom)newSphere.elementAt(f)).flags[CDKConstants.VISITED] = true;			
 			}
-		
 			breadthFirstSearch(ac, newSphere, pathes);
 		}
 	}
-
 
 	/**
 	 * Returns a string with the numbers of all placed atoms in an AtomContainer
@@ -472,11 +481,11 @@ public class AtomPlacer
 		{
 			if (ac.getAtomAt(f).flags[CDKConstants.ISPLACED]) 
 			{
-				s += f + "+ ";
+				s += (f + 1) + "+ ";
 			}
 			else
 			{
-				s += f + "- ";
+				s += (f + 1) + "- ";
 			}
 		}
 		return s;
@@ -496,7 +505,7 @@ public class AtomPlacer
 		String s = "Numbers: ";
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
-			s += mol.getAtomNumber(ac.getAtomAt(f)) +  " ";
+			s += (mol.getAtomNumber(ac.getAtomAt(f)) + 1) +  " ";
 		}
 		return s;
 	}
@@ -515,7 +524,7 @@ public class AtomPlacer
 	String s = "Numbers: ";
 	for (int f = 0; f < ac.size(); f++)
 	{
-		s += mol.getAtomNumber((Atom)ac.elementAt(f)) +  " ";
+		s += (mol.getAtomNumber((Atom)ac.elementAt(f)) + 1) +  " ";
 	}
 	return s;
 	}
@@ -584,6 +593,25 @@ public class AtomPlacer
 		return ret;
 	}
 
-
+	/**
+	 * Get a new AtomContainer with a copy of the all bonds and atom of the given one
+	 *
+	 * @param   ac  The AtomContainer to be copied
+	 * @return  An AtomContainer containing all bond and atom of the old one
+	 */
+	public  static AtomContainer getCopy(AtomContainer ac)
+	{
+		AtomContainer ret = new AtomContainer();
+		for (int f = 0; f < ac.getAtomCount(); f++)
+		{
+			ret.addAtom(ac.getAtomAt(f));
+		}
+		for (int f = 0; f < ac.getBondCount(); f++)
+		{
+			ret.addBond(ac.getBondAt(f));
+		}
+		return ret;
+	}
+	
 
 }

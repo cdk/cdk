@@ -163,6 +163,7 @@ public class StructureDiagramGenerator
 		if (expectedRingCount > 0)
 		{
 		
+			logger.debug("*** Start of handling rings. ***");
 			/*
 			 * Get the smallest set of smallest rings on this molecule
 			 */
@@ -205,6 +206,7 @@ public class StructureDiagramGenerator
 		}
 		else
 		{
+			logger.debug("*** Start of handling purely aliphatic molecules. ***");
 			/* We are here because there are no rings in the molecule
 			 * so we get the longest chain in the molecule and placed in 
 			 * on a horizontal axis
@@ -222,10 +224,11 @@ public class StructureDiagramGenerator
 		/* Now, do the layout of the rest of the molecule */
 		do
 		{
+			logger.debug("*** Start of handling the rest of the molecule. ***");
 			/* do layout for all aliphatic parts of the molecule which are 
 			 * connected to the parts which have already been laid out.
 			 */
-			handleAliphatics();
+			 handleAliphatics();
 			/* do layout for the next ring aliphatic parts of the molecule which are 
 			 * connected to the parts which have already been laid out.
 			 */
@@ -322,7 +325,18 @@ public class StructureDiagramGenerator
 				placedAtoms = getPlacedAtoms(atom);
 
 				longestUnplacedChain = atomPlacer.getLongestUnplacedChain(molecule, atom);
-		
+				
+				logger.debug("---start of longest unplaced chain---");
+					try{
+						logger.debug("Start at atom no. " + molecule.getAtomNumber(atom));
+						logger.debug(atomPlacer.listNumbers(molecule, longestUnplacedChain));
+					}
+					catch(Exception exc)
+					{
+						exc.printStackTrace();
+					}
+					logger.debug("---end of longest unplaced chain---");
+				
 				if (longestUnplacedChain.getAtomCount() > 1)
 				{
 					
@@ -542,12 +556,12 @@ public class StructureDiagramGenerator
 			Atom atom;
 			Point2d point = new Point2d(0, 0);
 			atom = bond.getAtomAt(0);
-			logger.debug("Atom 1 of first Bond: " + molecule.getAtomNumber(atom));
+			logger.debug("Atom 1 of first Bond: " + (molecule.getAtomNumber(atom) + 1));
 			atom.setPoint2D(point);
 			atom.flags[CDKConstants.ISPLACED] = true;
 			point = new Point2d(0, 0);
 			atom = bond.getAtomAt(1);
-			logger.debug("Atom 2 of first Bond: " + molecule.getAtomNumber(atom));
+			logger.debug("Atom 2 of first Bond: " + (molecule.getAtomNumber(atom) + 1));
 			point.add(bondVector);
 			atom.setPoint2D(point);
 			atom.flags[CDKConstants.ISPLACED] = true;
