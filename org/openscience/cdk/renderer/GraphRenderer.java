@@ -36,6 +36,9 @@ import java.util.*;
 import javax.swing.*;
 import java.text.DecimalFormat;
  
+/**
+ * This class is a function plotter
+ */
 public class GraphRenderer extends JComponent
 {
   private int xpad = 70;
@@ -50,6 +53,9 @@ public class GraphRenderer extends JComponent
 
   private GraphRendererModel model;
 
+  /**
+   * Creates a GraphRenderer
+   */
   public GraphRenderer(GraphRendererModel model)
   {
     this.model = model;
@@ -61,7 +67,7 @@ public class GraphRenderer extends JComponent
   }
 
   /**
-   *  Rechnet x aus dem Funktionsraum in den Darstellungsraum um
+   * Transform x from the function space to the viewing space
    */
   public int translateX(double x)
   { 
@@ -74,7 +80,7 @@ public class GraphRenderer extends JComponent
   }
   
   /**
-   *  Rechnet y aus dem Funktionsraum in den Darstellungsraum um
+   * Transform y from the function space to the viewing space
    */
   public int translateY(double y)
   { 

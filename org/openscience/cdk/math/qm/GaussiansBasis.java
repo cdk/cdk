@@ -34,33 +34,57 @@ import java.io.InputStream;
 import java.io.IOException;
 import org.openscience.cdk.math.*;
 import org.openscience.cdk.Atom;
- 
+
+/**
+ * This class contains the information to use gauss function as a base 
+ * for calculation of quantum mechanics
+ *
+ * f(x,y,z) = (x-rx)^nx * (y-ry)^ny * (z-rz)^nz * exp(-alpha*(r-ri)^2)
+ *
+ * S = <phi_i|phi_j>
+ * J = <d/dr phi_i | d/dr phi_j>
+ * V = <phi_i | 1/r | phi_j>
+ */ 
 public class GaussiansBasis implements Basis
 {
-  private int count; // Anzahl der Basis(Basen)
-  private int[] nx; // [Basis]
-  private int[] ny; // [Basis]
-  private int[] nz; // [Basis]
-  private double[] alpha; // [Basis]
-  //private int[] atoms; // [Basis] An welchem Atom die Basis hängt
-  private double[] norm;
-  private Vector[] r; // [basis] Positionen der Basisfunktionen
+  private int count; // count of the bases
+  private int[] nx; // [base]
+  private int[] ny; // [base]
+  private int[] nz; // [base]
+  private double[] alpha; // [base]
+  private double[] norm; // Normalize the bases
+  private Vector[] r; // [basis] Positions of base functions
 
-  private int count_atoms;
-  private Vector[] rN; // [Atom] Positionen der Atome
-  private int[] oz; // [Atom] Ordnungszahlen der Atome
-
-  private double minx,maxx,miny,maxy,minz,maxz;
+  private int count_atoms; // count of the atoms
+  private Vector[] rN; // [atom] Positions of the atoms
+  private int[] oz; // [atom] Atomic numbers of the atoms
+  
+  // For the volume
+  private double minx = 0; private double maxx = 0;
+  private double miny = 0; private double maxy = 0;
+  private double minz = 0; private double maxz = 0;
 
   public GaussiansBasis()
   {
   }
 
+  /**
+   * Set up basis with gauss funktions
+   * f(x,y,z) = (x-rx)^nx * (y-ry)^ny * (z-rz)^nz * exp(-alpha*(r-ri)^2)
+   *
+   * @param atoms The atom will need to calculate the core potential
+   */
   public GaussiansBasis(int[] nx, int[] ny, int[] nz, double[] alpha, Vector[] r, Atom[] atoms)
   {
     setBasis(nx, ny, nz, alpha, r, atoms);
   }
 
+  /**
+   * Set up basis with gauss funktions
+   * f(x,y,z) = (x-rx)^nx * (y-ry)^ny * (z-rz)^nz * exp(-alpha*(r-ri)^2)
+   *
+   * @param atoms The atom will need to calculate the core potential
+   */
   protected void setBasis(int[] nx, int[] ny, int[] nz, double[] alpha, Vector[] r, Atom[] atoms)
   {
     int i;
@@ -68,7 +92,7 @@ public class GaussiansBasis implements Basis
     //count_atoms = molecule.getSize();
     count_atoms = atoms.length;
     
-    System.out.println("Anzahl der Atome: "+count_atoms);
+    System.out.println("Count of atoms: "+count_atoms);
     
     this.rN = new Vector[count_atoms];
     this.oz = new int[count_atoms];
@@ -82,8 +106,9 @@ public class GaussiansBasis implements Basis
 
     count = Math.min(nx.length,
             Math.min(ny.length,
-            Math.min(nz.length,
-            Math.min(alpha.length, atoms.length))));
+            Math.min(nz.length,alpha.length)));
+
+    System.out.println("Count of bases: "+count);
 
     this.nx = new int[count];
     this.ny = new int[count];
@@ -94,10 +119,6 @@ public class GaussiansBasis implements Basis
     this.r = new Vector[count];
     this.oz = new int[count];
 
-    /*minx = r[atoms[0]].vector[0]; maxx = r[atoms[0]].vector[0];
-    miny = r[atoms[0]].vector[1]; maxy = r[atoms[0]].vector[1];
-    minz = r[atoms[0]].vector[2]; maxz = r[atoms[0]].vector[2];*/
-
     for(i=0; i<count; i++)
     {
       this.nx[i] = nx[i];
@@ -105,13 +126,17 @@ public class GaussiansBasis implements Basis
       this.nz[i] = nz[i];
       this.alpha[i] = alpha[i];
       //this.atoms[i] = atoms[i];
-      this.r[i] = new Vector(atoms[i].getPoint3D()).mul(1.8897);
+      //this.r[i] = new Vector(atoms[i].getPoint3D()).mul(1.8897);
+      this.r[i] = r[i].mul(1.8897);
 
-      norm[i] = 1d;
-      norm[i] = 1d/Math.sqrt(calcS(i,i));
+      norm[i] = Math.sqrt(calcS(i,i));
+      if (norm[i]==0d) 
+        norm[i] = 1d;
+      else
+        norm[i] = 1/norm[i];
 
-      System.out.println((i+1)+".Basis nx="+nx[i]+" ny="+ny[i]+" nz="+nz[i]+" alpha="+
-              alpha[i]+" atom="+atoms[i]+" r="+r[i]+" norm="+norm[i]);
+      System.out.println((i+1)+".Base nx="+nx[i]+" ny="+ny[i]+" nz="+nz[i]+" alpha="+
+              alpha[i]+" r="+r[i]+" norm="+norm[i]);
 
       if (i>0)
       {
@@ -135,45 +160,64 @@ public class GaussiansBasis implements Basis
   }
 
   /**
-   * Liefert die Anzahl der Basis Vektoren
+   * Get the count of base vectors
    */
   public int getSize()
   {
     return count;
   }
 
+  /**
+   * Get the dimension of the volume, which descripes the base
+   */
   public double getMinX()
   {
     return minx;
   }
 
+  /**
+   * Get the dimension of the volume, which descripes the base
+   */
   public double getMaxX()
   {
     return maxx;
   }
 
+  /**
+   * Get the dimension of the volume, which descripes the base
+   */
   public double getMinY()
   {
     return miny;
   }
   
+  /**
+   * Get the dimension of the volume, which descripes the base
+   */
   public double getMaxY()
   {
     return maxy;
   }
 
+  /**
+   * Get the dimension of the volume, which descripes the base
+   */
   public double getMinZ()
   {
     return minz;
   }
   
+  /**
+   * Get the dimension of the volume, which descripes the base
+   */
   public double getMaxZ()
   {
     return maxz;
   }
 
   /**
-   * Berechnet den Funktionswert ein Basis an dem Ort (x,y,z)
+   * Calculates the function value an (x,y,z)
+   * @param index The number of the base 
    */
   public double getValue(int index, double x, double y, double z)
   {
@@ -191,6 +235,10 @@ public class GaussiansBasis implements Basis
     return result*Math.exp(-alpha[index]*(dx*dx+dy*dy+dz*dz));
   }
 
+  /**
+   * Calculates the function values
+   * @param index The number of the base 
+   */
   public Vector getValues(int index, Matrix m)
   {
     if (m.rows!=3)
@@ -261,13 +309,16 @@ public class GaussiansBasis implements Basis
     return result;
   }
 
+  /**
+   * Get the position of a base
+   */
   public Vector getPosition(int index)
   {
     return r[index].duplicate().mul(0.52918);
   }
 
   /**
-   * Für die Berechnung der Überlappungsintegrale
+   * Calculates the "Überlappungsintegrale"
    */
   public double calcD(double normi, double normj, double alphai, double alphaj, Vector ri, Vector rj)
   {
@@ -278,8 +329,7 @@ public class GaussiansBasis implements Basis
   }
 
   /**
-   * Transfer Gleichung
-   * für die Berechnung der Überlappungsintegrale
+   * Transfer equation for the calculation of the "Überlappungsintegrale"
    */
   private double calcI(int ni, int nj, double alphai, double alphaj, double xi, double xj)
   {
@@ -317,7 +367,8 @@ public class GaussiansBasis implements Basis
   }
 
   /**
-   * Für die Berechnung der Überlappungsintegrale
+   * Calculate the "Überlappungsintegrale"
+   * S = <phi_i|phi_j>
    */
   public double calcS(int i, int j)
   {
@@ -329,7 +380,7 @@ public class GaussiansBasis implements Basis
   }
 
   /**
-   * Transfergleichung für die Berechnung des Impulses
+   * Transfer equation the the calculation of the impulse
    */
   public double calcJ(int ni, int nj, double alphai, double alphaj, double xi, double xj)
   {
@@ -349,7 +400,8 @@ public class GaussiansBasis implements Basis
   }
 
   /**
-   * Berechnet den Impuls -<d^2/dx^2 chi_i | chi_j>
+   * Berechnet den Impuls 
+   * J = -<d/dr chi_i | d/dr chi_j>
    */
   public double calcJ(int i, int j)
   {
@@ -368,8 +420,7 @@ public class GaussiansBasis implements Basis
   }
 
   /**
-   * Transfer Gleichung
-   * für die Berechnung des Kernpotentials
+   * Transfer equation for the calculation of core potentials
    */
   public double calcG(int n, double t, double alphai, double alphaj, double xi, double xj, double xN)
   {
@@ -391,10 +442,10 @@ public class GaussiansBasis implements Basis
   }
 
   /**
-   * Transfer Gleichung
-   * für die Berechnung des Kernpotentials
+   * Transfer equation for the calculation of core potentials
    */
-  private double calcI(int ni, int nj, double t, double alphai, double alphaj, double xi, double xj, double xN)
+  private double calcI(int ni, int nj, double t, double alphai, double alphaj, 
+                        double xi, double xj, double xN)
   {
     if (nj>0)
       return calcI(ni+1, nj-1, t, alphai, alphaj, xi, xj, xN)+
@@ -407,6 +458,15 @@ public class GaussiansBasis implements Basis
     return Double.NaN; // Falls fehlerhafte Parameter
   }
 
+  /**
+   * Calculates the core potential
+   * It use a 10 point simpson formula
+   *
+   * @param i Index of the first base
+   * @param j Index of the second base
+   * @param rN Position the core potential
+   * @param Z Atomic number of the nucleous
+   */
   public double calcV(int i, int j, Vector rN, double Z)
   {
     double f,t;
@@ -474,6 +534,15 @@ public class GaussiansBasis implements Basis
     return (h/3)*(f1 + 4*sum1 + 2*sum2 + f2)*Z*C;
   }
 
+  /**
+   * Calculates the core potential
+   * It use a 10 point simpson formula
+   *
+   * @param i Index of the first base
+   * @param j Index of the second base
+   * @param rN Position the core potential
+   * @param Z Atomic number of the nucleous
+   */
   public double calcV(int i, int j)
   {
     double result = 0d;
@@ -485,12 +554,15 @@ public class GaussiansBasis implements Basis
     return -result; // Vorsicht negatives Vorzeichen
   }
 
+  /**
+   * Transfer equation for a four center integral
+   */
   public double calcG(int n, int m, double u, 
      double alphai, double alphaj, double alphak, double alphal, double xi, double xj, double xk, double xl)
   {
     if ((n<0) || (m<0))
     {
-      System.out.println("Error(CalcG):Fehlerhafte Parameter n="+n+" m="+m);
+      System.out.println("Error(CalcG):Bad parameter n="+n+" m="+m);
       return Double.NaN;
     }
 
@@ -546,6 +618,9 @@ public class GaussiansBasis implements Basis
     return G[n][m];
   }  
 
+  /**
+   * Transfer equation for a four center integral
+   */
   public double calcI(int ni, int nj, int nk, int nl, double u, 
                       double alphai, double alphaj, double alphak, double alphal,
                       double xi, double xj, double xk, double xl)
@@ -564,10 +639,17 @@ public class GaussiansBasis implements Basis
     if ((nj==0) && (nl==0))
       return calcG(ni,nk,u,alphai,alphaj,alphak,alphal,xi,xj,xk,xl);
 
-    System.out.println("Error(CalcI):Fehlerhafte Parameter ni="+ni+" nj="+nj+" nk="+nk+" nl="+nl);
+    System.out.println("Error(CalcI):Bad parameter ni="+ni+" nj="+nj+" nk="+nk+" nl="+nl);
     return Double.NaN;
   }
 
+  /**
+   * Calculates a four center integral
+   * @param i Index of the first base
+   * @param j Index of the second base
+   * @param k Index of the third base
+   * @param l Index of the fourth base 
+   */
   public double calcI(int i, int j, int k, int l)
   {
     double f,t;
@@ -646,49 +728,4 @@ public class GaussiansBasis implements Basis
 
     return C * (h/3)*(f1 + 4*sum1 + 2*sum2 + f2);
   }
-
-  /*public static GaussiansBasis read(InputStream in, Molecule molecule) throws IOException
-  {
-    StreamTokenizer stok = new StreamTokenizer(in);
-    stok.resetSyntax();
-    stok.commentChar('!');
-    stok.whitespaceChars(0, 32);
-    stok.wordChars(34, 126);
-    stok.parseNumbers();
-    stok.eolIsSignificant(true);
-
-    int count = (int) readValue(stok);
-
-    int[] n = new int[count];
-    int[] l = new int[count];
-    int[] m = new int[count];
-    double[] alpha = new double[count];
-    int[] atoms = new int[count];
-
-    for(int i=0; i<count; i++)
-    {
-      n[i] = (int) readValue(stok);
-      l[i] = (int) readValue(stok);
-      m[i] = (int) readValue(stok);
-      alpha[i] = readValue(stok);
-      atoms[i] = (int)readValue(stok)-1;
-    }
-
-    return new GaussiansBasis(n, l, m, alpha, atoms, molecule);
-  }
-
-  private static double readValue(StreamTokenizer stok) throws IOException
-  {
-    int type;
-    do
-    {
-      type = stok.nextToken();
-    } while ((type!=stok.TT_NUMBER) &&  (type!=stok.TT_EOF));
-    
-    if (type==stok.TT_NUMBER)
-      return stok.nval;
-    
-    stok.pushBack();
-    return Double.NaN;
-  }*/
 }

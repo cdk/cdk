@@ -38,13 +38,20 @@ import javax.media.j3d.*;
 import org.openscience.cdk.math.*;
 import org.openscience.cdk.math.qm.*;
 
+/**
+ * This class render orbitals
+ * The algorithm was from following site:
+ * http://www.swin.edu.au/astronomy/pbourke/modelling/polygonise/
+ */
 public class OrbitalsRenderer3D extends Switch
 {
 	private double isolevel = 0.1;
 	private Orbitals orbitals;
+  private int index = 0; //Index of the current orbital
 	private int parts;
-	//private Shape3D[] shapes;
-	private Shape3D shape;
+  private Shape3D[] shapes;
+  private boolean[] calculated;
+	//private Shape3D shape;
 	double minx, maxx, miny, maxy, minz, maxz;
 
   private double[][][] values,px,py,pz,gx,gy,gz;
@@ -66,9 +73,12 @@ public class OrbitalsRenderer3D extends Switch
 		miny = basis.getMinY(); maxy = basis.getMaxY();
 		minz = basis.getMinZ(); maxz = basis.getMaxZ();
 
-		System.out.println("Berechne die Orbitale für die Visualisierung");
-		System.out.print("["+orbitals.getCountOrbitals()+"] : ");
-		//shapes = new Shape3D[orbitals.getCountOrbitals()];
+    //System.out.println("minx="+minx+" maxx="+maxx+" miny="+miny+" maxy="+maxy+" minz="+minz+" maxz="+maxz);
+
+		System.out.println("Calculation from the orbital for the visualisation");
+		//System.out.print("["+orbitals.getCountOrbitals()+"] : ");
+		shapes = new Shape3D[orbitals.getCountOrbitals()];
+    calculated = new boolean[orbitals.getCountOrbitals()];
 
 		values = new double[parts+1][parts+1][parts+1];
     px = new double[parts+1][parts+1][parts+1];
@@ -78,35 +88,38 @@ public class OrbitalsRenderer3D extends Switch
     gy = new double[parts+1][parts+1][parts+1];
     gz = new double[parts+1][parts+1][parts+1];
 
-		/*for(int i=0; i<orbitals.getCountOrbitals(); i++)
+		for(int i=0; i<orbitals.getCountOrbitals(); i++)
 		{
-			System.out.print((i+1)+"  ");
+			//System.out.print((i+1)+"  ");
 			shapes[i] = new Shape3D();
     
-			geometry = createGeometry(orbitals, i, parts, minx, maxx, miny, maxy, minz, maxz);
+			/*geometry = createGeometry(orbitals, i, parts, minx, maxx, miny, maxy, minz, maxz);
     	if (geometry!=null)
-      	shapes[i].setGeometry(geometry);
+      	shapes[i].setGeometry(geometry);*/
     
 			shapes[i].setCapability(Shape3D.ALLOW_APPEARANCE_WRITE);
+      shapes[i].setCapability(Shape3D.ALLOW_GEOMETRY_WRITE);
     	shapes[i].setAppearance(appearance);
     
 			addChild(shapes[i]);
 
-			System.gc();
-		}
-		System.out.println();*/
+      calculated[i] = false;
 
-		shape = new Shape3D();
+			//System.gc();
+		}
+
+		//shape = new Shape3D();
     
     geometry = createGeometry(orbitals, 0, parts, minx, maxx, miny, maxy, minz, maxz);
     if (geometry!=null)
-      shape.setGeometry(geometry);
+      shapes[0].setGeometry(geometry);
+    calculated[0] = true;
     
-    shape.setCapability(Shape3D.ALLOW_APPEARANCE_WRITE);
-		shape.setCapability(Shape3D.ALLOW_GEOMETRY_WRITE);
-    shape.setAppearance(appearance);
+    /*shapes.setCapability(Shape3D.ALLOW_APPEARANCE_WRITE);
+		shapes.setCapability(Shape3D.ALLOW_GEOMETRY_WRITE);
+    shapes.setAppearance(appearance);*/
     
-    addChild(shape);
+    //addChild(shape);
     System.gc();
 		System.out.println();
 
@@ -114,26 +127,38 @@ public class OrbitalsRenderer3D extends Switch
 		setWhichChild(0);
   }
 
+  /**
+   * Sets the current orbital
+   */
 	public void setCurrentOrbital(int index)
 	{
-		if ((index>=0) && (index<orbitals.getCountOrbitals()))
+    //System.out.println("setCurrentOrbital("+index+")");
+		if ((index>=0) && (index<orbitals.getCountOrbitals()) && (index!=this.index))
 		{
-			//setWhichChild(index);
-			Geometry geometry = createGeometry(orbitals, index, parts, minx, maxx, miny, maxy, minz, maxz);
-	    if (geometry!=null)
-  	    shape.setGeometry(geometry);
-      
-	    System.gc();
-  	  System.out.println();
+      if (!calculated[index])
+      {
+  			Geometry geometry = createGeometry(orbitals, index, parts, minx, maxx, miny, maxy, minz, maxz);
+	      if (geometry!=null)
+  	      shapes[index].setGeometry(geometry);
+        calculated[index] = true;
+        System.gc();
+        System.out.println();
+      }
+      setWhichChild(index);
+
+      this.index = index;
 		}
 	}
 
+  /**
+   * Set if the orbital should be opqque
+   */
 	public void setOpaque(boolean flag)
 	{
 		Appearance appearance = createAppearance(flag);
 		for(int i=0; i<orbitals.getCountOrbitals(); i++)
 			//shapes[i].setAppearance(appearance);
-			shape.setAppearance(appearance);
+			shapes[index].setAppearance(appearance);
 	}
 
   // from http://www.swin.edu.au/astronomy/pbourke/modelling/polygonise/

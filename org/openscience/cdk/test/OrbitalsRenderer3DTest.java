@@ -31,139 +31,94 @@
 package org.openscience.cdk.test;
 
 import org.openscience.cdk.*;
+import org.openscience.cdk.math.*;
 import org.openscience.cdk.math.qm.*;
-import org.openscience.cdk.io.*;
 import org.openscience.cdk.renderer.*;
-import org.openscience.cdk.tools.*;
-import org.openscience.cdk.geometry.*;
-import java.util.*;
-import java.io.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
 /**
- *  Description of the Class
+ * This class test the OrbitalRenderer3D
  *
- * @author     steinbeck
- * @created    July 22, 2001
+ * @author     benedikta
  */
 public class OrbitalsRenderer3DTest {
 	private AcceleratedRenderer3DModel model;
 
+  private int[] nx = new int[]{0, 1, 1};
+  private int[] ny = new int[]{0, 0, 1};
+  private int[] nz = new int[]{0, 0, 1};
+
+  private double[] alpha = new double[]{1d, 1d, 1d};
+
+  private Vector[] r = new Vector[]
+  {
+    new Vector(new double[]{0d,0d,0d}),
+    new Vector(new double[]{0d,0d,0d}),
+    new Vector(new double[]{0d,0d,0d})
+  };
+
+  private double[][] orbitalvalues = new double[][]
+  {
+    {1d, 0d, 0d},
+    {0d, 1d, 0d},
+    {0d, 0d, 4d}
+  };
 
 	/**
 	 *  Constructor for the OrbitalsRenderer3DTest object
-	 *
-	 * @param  inFile  Description of Parameter
 	 */
-	public OrbitalsRenderer3DTest(String inFile) {
-		try {
-			ChemObjectReader reader;
-			System.out.println("Loading: " + inFile);
-			if (inFile.endsWith(".xyz")) {
-				reader = new XYZReader(new FileReader(inFile));
-				System.out.println("Expecting XYZ format...");
-			}
-			else if (inFile.endsWith(".cml")) {
-				reader = new CMLReader(new FileReader(inFile));
-				System.out.println("Expecting CML format...");
-			}
-			else {
-				reader = new MDLReader(new FileInputStream(inFile));
-				System.out.println("Expecting MDL MolFile format...");
-			}
-			ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
+	public OrbitalsRenderer3DTest() 
+  {
+    GaussiansBasis basis = new GaussiansBasis(nx,ny,nz,alpha,r,new Atom[0]);
+    Matrix coeff = new Matrix(orbitalvalues);
+	  Orbitals orbitals = new Orbitals(basis, coeff);
 
-			ChemSequence[] chemSequence = chemFile.getChemSequences();
-			ChemModel[] chemModels = chemSequence[0].getChemModels();
-			AtomContainer atomContainer = chemModels[0].getAllInOneContainer();
-			Atom[] atoms = atomContainer.getAtoms();
-			System.out.println("Setting up Gaussian calculation ...");
-			GaussiansBasis basis = new SimpleBasisSet(atoms);
+	  JFrame frame = new JFrame("OrbitalsRenderer3DTest");
+	  frame.getContentPane().setLayout(new BorderLayout());
 
-			Orbitals orbitals = new Orbitals(basis);
+    model = new AcceleratedRenderer3DModel(orbitals, 0);
+    AcceleratedRenderer3D renderer = new AcceleratedRenderer3D(model);
 
-			int count_electrons = 0;
-			for (int i = 0; i < atoms.length; i++) {
-				count_electrons += atoms[i].getAtomicNumber();
+    frame.getContentPane().add(renderer, BorderLayout.CENTER);
+  
+    JComboBox orbitalChooser = new JComboBox();
+    orbitalChooser.setLightWeightPopupEnabled(false);
+		for (int i = 0; i < coeff.rows; i++) 
+    {
+		  orbitalChooser.addItem((i + 1) + ".Orbital");
+		}
+
+		orbitalChooser.addItemListener(new ItemListener() 
+    {
+		  public void itemStateChanged(ItemEvent e) 
+      {
+		    model.setCurrentOrbital(((JComboBox) e.getSource()).getSelectedIndex());
 			}
-			orbitals.setCountElectrons(count_electrons);
-			System.out.println("Running Gaussian calculation ...");
-			ClosedShellJob job = new ClosedShellJob(orbitals);
+		});
+		frame.getContentPane().add(orbitalChooser, BorderLayout.SOUTH);
+
+		JCheckBox opaque = new JCheckBox("Opaque", true);
+		opaque.addItemListener(new ItemListener() 
+    {
+		  public void itemStateChanged(ItemEvent e) 
+      {
+			  model.setOrbitalOpaque(((JCheckBox) e.getSource()).isSelected());
+			}
 			
-			orbitals = job.calculate();
-			System.out.println("Gaussian calculation finished");
-			JFrame frame = new JFrame("OrbitalsRenderer3DTest");
-			frame.getContentPane().setLayout(new BorderLayout());
+    });
+		frame.getContentPane().add(opaque, BorderLayout.NORTH);
 
-			model = new AcceleratedRenderer3DModel(atomContainer, orbitals, 0);
-			AcceleratedRenderer3D renderer = new AcceleratedRenderer3D(model);
-
-			frame.getContentPane().add(renderer, BorderLayout.CENTER);
-
-			JComboBox orbitalChooser = new JComboBox();
-			orbitalChooser.setLightWeightPopupEnabled(false);
-			for (int i = 0; i < orbitals.getCountOrbitals(); i++) {
-				orbitalChooser.addItem((i + 1) + ".Orbital");
-			}
-
-			orbitalChooser.addItemListener(
-				new ItemListener() {
-					/**
-					 *  Description of the Method
-					 *
-					 * @param  e  Description of Parameter
-					 */
-					public void itemStateChanged(ItemEvent e) {
-						model.setCurrentOrbital(((JComboBox) e.getSource()).getSelectedIndex());
-					}
-				});
-			frame.getContentPane().add(orbitalChooser, BorderLayout.SOUTH);
-
-			JCheckBox opaque = new JCheckBox("Opaque", true);
-			opaque.addItemListener(
-				new ItemListener() {
-					/**
-					 *  Description of the Method
-					 *
-					 * @param  e  Description of Parameter
-					 */
-					public void itemStateChanged(ItemEvent e) {
-						model.setOrbitalOpaque(((JCheckBox) e.getSource()).isSelected());
-					}
-				});
-			frame.getContentPane().add(opaque, BorderLayout.NORTH);
-
-			//frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-			frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-			frame.setSize(500, 500);
-			frame.setVisible(true);
-		}
-		catch (Exception exc) {
-			exc.printStackTrace();
-		}
+		//frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		frame.setSize(500, 500);
+		frame.setVisible(true);
 	}
 
-
-	/**
-	 *  The main program for the OrbitalsRenderer3DTest class
-	 *
-	 * @param  args  The command line arguments
-	 */
-	public static void main(String[] args) {
-		if (args.length == 1) {
-			String filename = args[0];
-			if (new File(filename).canRead()) {
-				new OrbitalsRenderer3DTest(filename);
-			}
-			else {
-				System.out.println("File " + filename + " does not exist!");
-			}
-		}
-		else {
-			System.out.println("Syntax: OrbitalsRenderer3DTest <inputfile>");
-		}
+	public static void main(String[] args) 
+  {
+	  new OrbitalsRenderer3DTest();
 	}
 }
 

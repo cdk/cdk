@@ -41,7 +41,7 @@ import org.openscience.cdk.math.qm.Orbitals;
 
 public class AcceleratedRenderer3DModel
 {
-	private TransformGroup root;
+	private TransformGroup root = new TransformGroup();
 
 	private Vector atomObjects = new Vector();
 	private Vector atomTransfroms = new Vector();
@@ -62,7 +62,6 @@ public class AcceleratedRenderer3DModel
 
 	public AcceleratedRenderer3DModel(AtomContainer container)
 	{
-		root = new TransformGroup();
 		Atom[] atoms = container.getAtoms();
 		Bond[] bonds = container.getBonds();
 
@@ -119,6 +118,14 @@ public class AcceleratedRenderer3DModel
 			orbitalsscene.setCurrentOrbital(orbital);
 		root.addChild(orbitalsscene);
 	}
+
+  public AcceleratedRenderer3DModel(Orbitals orbitals, int orbital)
+  {
+    orbitalsscene = new OrbitalsRenderer3D(orbitals, 40);
+    if (orbital!=0)
+      orbitalsscene.setCurrentOrbital(orbital);
+    root.addChild(orbitalsscene);
+  }
 
 	public TransformGroup getRoot()
 	{
