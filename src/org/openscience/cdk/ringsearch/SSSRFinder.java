@@ -40,7 +40,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.RingSet;
 import org.openscience.cdk.graph.MoleculeGraphs;
-import org.openscience.cdk.ringsearch.cyclebasis.Cycle;
+import org.openscience.cdk.ringsearch.cyclebasis.SimpleCycle;
 import org.openscience.cdk.ringsearch.cyclebasis.CycleBasis;
 
 /**
@@ -94,7 +94,7 @@ public class SSSRFinder {
 			return null;
 		}
 		
-		return toRingSet(cycleBasis().cycles());	  
+		return toRingSet(mol, cycleBasis().cycles());	  
 
 	}
 	
@@ -110,7 +110,7 @@ public class SSSRFinder {
 			return null;
 		}
 		
-		return toRingSet(cycleBasis().essentialCycles());	  
+		return toRingSet(mol, cycleBasis().essentialCycles());	  
 
 	}
 	
@@ -126,7 +126,7 @@ public class SSSRFinder {
 			return null;
 		}
 		
-		return toRingSet(cycleBasis().relevantCycles().keySet());	  
+		return toRingSet(mol, cycleBasis().relevantCycles().keySet());	  
 
 	}
 	
@@ -143,7 +143,7 @@ public class SSSRFinder {
 		
 		List equivalenceClasses = new ArrayList();
 		for (Iterator i=cycleBasis().equivalenceClasses().iterator(); i.hasNext();) {
-			equivalenceClasses.add(toRingSet((Collection) i.next()));
+			equivalenceClasses.add(toRingSet(mol, (Collection) i.next()));
 		}
 		
 		return equivalenceClasses;	  
@@ -193,7 +193,7 @@ public class SSSRFinder {
 		
 		CycleBasis cycleBasis = new CycleBasis(molGraph);
 		
-		return toRingSet(cycleBasis.cycles());  
+		return toRingSet(mol, cycleBasis.cycles());  
 	}
 	
 	private CycleBasis cycleBasis() {
@@ -205,14 +205,14 @@ public class SSSRFinder {
 		return cycleBasis;
 	}
 	
-	private static RingSet toRingSet(Collection cycles) {
+	private static RingSet toRingSet(Molecule mol, Collection cycles) {
 		
 		RingSet ringSet = new RingSet();
 
 		Iterator cycleIterator = cycles.iterator();
 		
 		while (cycleIterator.hasNext()) {
-			Cycle cycle = (Cycle) cycleIterator.next();
+			SimpleCycle cycle = (SimpleCycle) cycleIterator.next();
 			
 			Ring ring = new Ring();
 			
@@ -222,9 +222,9 @@ public class SSSRFinder {
 			atoms[0] = (Atom) vertices.get(0);
 			for (int i = 1; i < vertices.size(); i++) {
 				atoms[i] = (Atom) vertices.get(i);
-				ring.addElectronContainer(new Bond(atoms[i - 1], atoms[i], 1));
+				ring.addElectronContainer(mol.getBond(atoms[i-1], atoms[i]));
 			}
-			ring.addElectronContainer(new Bond(atoms[vertices.size() - 1], atoms[0], 1));
+			ring.addElectronContainer(mol.getBond(atoms[vertices.size() - 1], atoms[0]));
 			ring.setAtoms(atoms);
 
 			ringSet.add(ring);

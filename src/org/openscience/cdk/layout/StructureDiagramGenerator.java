@@ -30,7 +30,6 @@
 package org.openscience.cdk.layout;
 
 import java.util.Vector;
-import java.util.Enumeration;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
@@ -45,10 +44,9 @@ import org.openscience.cdk.Ring;
 import org.openscience.cdk.RingSet;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
-import org.openscience.cdk.ringsearch.RingPartitioner;
-import org.openscience.cdk.ringsearch.FiguerasSSSRFinder;
 import org.openscience.cdk.graph.ConnectivityChecker;
-import org.openscience.cdk.tools.HydrogenAdder;
+import org.openscience.cdk.ringsearch.RingPartitioner;
+import org.openscience.cdk.ringsearch.SSSRFinder;
 
 /**
  * Generates 2D coordinates for a molecule for which only connectivity is known
@@ -83,7 +81,7 @@ public class StructureDiagramGenerator
 	RingSet sssr;
 	double bondLength = 1.5;
 	Vector2d firstBondVector;
-	FiguerasSSSRFinder sssrf = new FiguerasSSSRFinder();
+	SSSRFinder sssrf = new SSSRFinder();
 	RingPlacer ringPlacer = new RingPlacer();
 	AtomPlacer atomPlacer = new AtomPlacer();
 	Vector ringSystems = null;

@@ -84,7 +84,7 @@ public class SimpleCycleBasis {
 		this.edgeList = new ArrayList();
 		this.graph = graph;
 		
-		createMinimalCycleBase();
+		createMinimumCycleBasis();
 		
 	}
 	
@@ -195,7 +195,7 @@ public class SimpleCycleBasis {
 						// add the edge to the index list for the incidence matrix
 						edgeList.add(edge);
 						
-						Cycle newCycle = new Cycle(graph, edgesOfCycle);
+						SimpleCycle newCycle = new SimpleCycle(graph, edgesOfCycle);
 						
 						cycles.add(newCycle);
 						
@@ -209,7 +209,7 @@ public class SimpleCycleBasis {
 		
 	}
 	
-	private void createMinimalCycleBase() {
+	private void createMinimumCycleBasis() {
 		
 		Graph subgraph = new Subgraph(graph, null, null);
 		
@@ -224,15 +224,14 @@ public class SimpleCycleBasis {
 			// Compute a shortest cycle through edge
 			List path = DijkstraShortestPath.findPathBetween(subgraph, edge.getSource(), edge.getTarget());
 			path.add(edge);
-			Cycle cycle = new Cycle(graph, path);
+			SimpleCycle cycle = new SimpleCycle(graph, path);
 			
 			subgraph.addEdge(edge);
 			
 			selectedEdges.add(edge);
 			
-			
-			cycles.add(cycle);
-			edgeList.add(edge);
+			cycles.add(0, cycle);
+			edgeList.add(0, edge);
 			
 			remainingEdges.removeAll(path);
 		}
@@ -347,7 +346,7 @@ public class SimpleCycleBasis {
 						// add the edge to the index list for the incidence matrix
 						edgeList.add(edge);
 						
-						Cycle newCycle = new Cycle(graph, edgesOfCycle);
+						SimpleCycle newCycle = new SimpleCycle(graph, edgesOfCycle);
 						
 						cycles.add(newCycle);
 						
@@ -378,7 +377,7 @@ public class SimpleCycleBasis {
 		boolean[][] result = new boolean[cycleArray.length][edgeList.size()];
 		
 		for (int i=0; i<cycleArray.length; i++) {
-			Cycle cycle = (Cycle) cycleArray[i];
+			SimpleCycle cycle = (SimpleCycle) cycleArray[i];
 			for (int j=0; j<edgeList.size(); j++) {
 				Edge edge = (Edge)edgeList.get(j);
 				result[i][j] = cycle.containsEdge(edge);
@@ -418,6 +417,7 @@ public class SimpleCycleBasis {
 		
 		boolean[][] a = getCycleEdgeIncidenceMatrix();
 		
+		/*
 		// perform gaussian elimination on the incidence matrix
 		// to bring it to upper triangular form
 		for (int i=0; i<startIndex; i++) {
@@ -429,6 +429,7 @@ public class SimpleCycleBasis {
 				}
 			}
 		}
+		*/
 		
 		for (int i=startIndex; i<cycles.size(); i++) {
 			// "Subroutine 2"
@@ -439,7 +440,7 @@ public class SimpleCycleBasis {
 			// Construct auxiliary graph gu
 			AuxiliaryGraph gu = new AuxiliaryGraph(graph, edgeList, u);
 			
-			Cycle shortestCycle = (Cycle) cycles.get(i);
+			SimpleCycle shortestCycle = (SimpleCycle) cycles.get(i);
 			
 			Iterator vertexIterator = graph.vertexSet().iterator();
 			while (vertexIterator.hasNext()) {
@@ -506,7 +507,7 @@ public class SimpleCycleBasis {
 					
 					if (pathIsCycle) {
 						
-						Cycle newCycle = new Cycle(graph, edgesOfNewCycle);
+						SimpleCycle newCycle = new SimpleCycle(graph, edgesOfNewCycle);
 						
 						if (newCycle.weight() < shortestCycle.weight()) {
 							shortestCycle = newCycle;
@@ -539,19 +540,19 @@ public class SimpleCycleBasis {
 		
 	}
 	
-	static boolean[] constructKernelVector(int m, boolean[][] am, int i) {
+	static boolean[] constructKernelVector(int m, boolean[][] a, int i) {
 		// Construct kernel vector u by setting u[i] = true ...
 		boolean[] u = new boolean[m];
 		u[i] = true;
 		
 		// ... u[j] = 0 (false) for j > i (by initialization)...
 		
-		// ... and solving Am u = 0
+		// ... and solving A u = 0
 		
 		for (int j=i-1; j>=0; j--) {
 			u[j] = false;
 			for (int k=i; k>j; k--) {
-				u[j] = (u[j] != (am[j][k] && u[k]));
+				u[j] = (u[j] != (a[j][k] && u[k]));
 			}
 		}
 		return u;
@@ -588,7 +589,7 @@ public class SimpleCycleBasis {
 		
 		int[] result = new int[cycles.size()];
 		for (int i=0; i<cycles.size(); i++) {
-			Cycle cycle = (Cycle) cycles.get(i);
+			SimpleCycle cycle = (SimpleCycle) cycles.get(i);
 			result[i] = (int) cycle.weight();
 		}
 		Arrays.sort(result);
@@ -694,14 +695,14 @@ public class SimpleCycleBasis {
 					}
 					
 					
-					Cycle cycle = new Cycle(graph, edgesOfNewCycle);
+					SimpleCycle cycle = new SimpleCycle(graph, edgesOfNewCycle);
 					
 					
-					if (cycle.weight() > ((Cycle)cycles.get(i)).weight()) {
+					if (cycle.weight() > ((SimpleCycle)cycles.get(i)).weight()) {
 						break;
 					}
 					
-					if (!cycle.equals((Cycle)cycles.get(i))) {
+					if (!cycle.equals((SimpleCycle)cycles.get(i))) {
 						isEssential = false;
 						break;
 					}
@@ -711,7 +712,7 @@ public class SimpleCycleBasis {
 			}
 			
 			if (isEssential) {
-				result.add((Cycle)cycles.get(i));
+				result.add((SimpleCycle)cycles.get(i));
 			}
 			
 		}
@@ -764,13 +765,13 @@ public class SimpleCycleBasis {
 					}
 					
 					
-					Cycle cycle = new Cycle(graph, edgesOfNewCycle);
+					SimpleCycle cycle = new SimpleCycle(graph, edgesOfNewCycle);
 					
-					if (cycle.weight() > ((Cycle)cycles.get(i)).weight()) {
+					if (cycle.weight() > ((SimpleCycle)cycles.get(i)).weight()) {
 						break;
 					}
 					
-					result.put(cycle, (Cycle)cycles.get(i));
+					result.put(cycle, (SimpleCycle)cycles.get(i));
 				}
 				
 			}
@@ -786,7 +787,7 @@ public class SimpleCycleBasis {
 		Object[] cyclesArray = (Object[]) cycles.toArray();
 		Arrays.sort(cyclesArray, new Comparator() {
 			public int compare(Object o1, Object o2) {
-				return (int) (((Cycle)o1).weight() - ((Cycle)o2).weight());
+				return (int) (((SimpleCycle)o1).weight() - ((SimpleCycle)o2).weight());
 			}
 		});
 		
@@ -818,11 +819,11 @@ public class SimpleCycleBasis {
 			// cyclesArray[left] to cyclesArray[right] have same weight
 			
 			for (int i=left; i<=right; i++) {
-				if (essentialCycles.contains((Cycle) cyclesArray[i]))
+				if (essentialCycles.contains((SimpleCycle) cyclesArray[i]))
 					continue;
 				
 				for (int j=i+1; j<=right; j++) {
-					if (essentialCycles.contains((Cycle) cyclesArray[j]))
+					if (essentialCycles.contains((SimpleCycle) cyclesArray[j]))
 						continue;
 					
 					// check if cyclesArray[i] and cyclesArray[j] are already in the same class
@@ -856,11 +857,11 @@ public class SimpleCycleBasis {
 			}
 			
 			for (int i=left; i<=right; i++) {
-				if (essentialCycles.contains((Cycle) cyclesArray[i]))
+				if (essentialCycles.contains((SimpleCycle) cyclesArray[i]))
 					continue;
 				
 				for (int j=i+1; j<=right; j++) {
-					if (essentialCycles.contains((Cycle) cyclesArray[j]))
+					if (essentialCycles.contains((SimpleCycle) cyclesArray[j]))
 						continue;
 					
 					// check if cyclesArray[i] and cyclesArray[j] are already in the same class
@@ -869,18 +870,18 @@ public class SimpleCycleBasis {
 					
 					boolean sameClass = false;
 
-					for (int k=0; ((Cycle)cyclesArray[k]).weight() < weight[left]; k++) {
+					for (int k=0; ((SimpleCycle)cyclesArray[k]).weight() < weight[left]; k++) {
 						
-						AuxiliaryGraph2 auxGraph1 = new AuxiliaryGraph2(graph, edgeList, u[i], u[k]);
+						AuxiliaryGraph2 auxGraph = new AuxiliaryGraph2(graph, edgeList, u[i], u[k]);
 						
 						boolean shortestPathFound = false;
 						for (Iterator it = graph.vertexSet().iterator(); it.hasNext();) {
 							Object vertex = it.next();
 							
-							Object auxVertex00 = auxGraph1.vertexMap00.get(vertex);
-							Object auxVertex11 = auxGraph1.vertexMap11.get(vertex);
+							Object auxVertex00 = auxGraph.vertexMap00.get(vertex);
+							Object auxVertex11 = auxGraph.vertexMap11.get(vertex);
 							
-							List auxPath = DijkstraShortestPath.findPathBetween(auxGraph1, auxVertex00, auxVertex11);
+							List auxPath = DijkstraShortestPath.findPathBetween(auxGraph, auxVertex00, auxVertex11);
 							
 							double pathWeight = auxPath.size();
 							
@@ -893,15 +894,15 @@ public class SimpleCycleBasis {
 						if (!shortestPathFound) 
 							continue;
 						
-						AuxiliaryGraph2 auxGraph2 = new AuxiliaryGraph2(graph, edgeList, u[j], u[k]);
+						auxGraph = new AuxiliaryGraph2(graph, edgeList, u[j], u[k]);
 						
 						for (Iterator it = graph.vertexSet().iterator(); it.hasNext();) {
 							Object vertex = it.next();
 							
-							Object auxVertex00 = auxGraph2.vertexMap00.get(vertex);
-							Object auxVertex11 = auxGraph2.vertexMap11.get(vertex);
+							Object auxVertex00 = auxGraph.vertexMap00.get(vertex);
+							Object auxVertex11 = auxGraph.vertexMap11.get(vertex);
 							
-							List auxPath = DijkstraShortestPath.findPathBetween(auxGraph2, auxVertex00, auxVertex11);
+							List auxPath = DijkstraShortestPath.findPathBetween(auxGraph, auxVertex00, auxVertex11);
 							
 							double pathWeight = auxPath.size();
 							

@@ -125,7 +125,7 @@ public class CycleBasis {
 						edgesOfCycle.addAll(DijkstraShortestPath.findPathBetween(simpleGraph, u, v));
 						
 						multiEdgeList.add(nextEdge);
-						mulitEdgeCycles.add(new Cycle(baseGraph, edgesOfCycle));
+						mulitEdgeCycles.add(new SimpleCycle(baseGraph, edgesOfCycle));
 						
 					} 
 				}
@@ -214,7 +214,7 @@ public class CycleBasis {
 		
 		int[] result = new int[cycles.size()];
 		for (int i=0; i<cycles.size(); i++) {
-			Cycle cycle = (Cycle) cycles.get(i);
+			SimpleCycle cycle = (SimpleCycle) cycles.get(i);
 			result[i] = (int) cycle.weight();
 		}
 		Arrays.sort(result);

@@ -56,7 +56,7 @@ import org._3pq.jgrapht.graph.UndirectedSubgraph;
  * @cdk.depends jgrapht-0.5.3.jar
  */
 
-public class Cycle extends UndirectedSubgraph {
+public class SimpleCycle extends UndirectedSubgraph {
 
 	/**
 	 * Constructs a cycle in a graph consisting of the specified edges.
@@ -64,7 +64,7 @@ public class Cycle extends UndirectedSubgraph {
 	 * @param   g the graph in which the cycle is contained
 	 * @param   edges the edges of the cycle
 	 */
-	public Cycle (UndirectedGraph g, Collection edges) {
+	public SimpleCycle (UndirectedGraph g, Collection edges) {
 		this(g, new HashSet(edges));
 	}
 	
@@ -74,7 +74,7 @@ public class Cycle extends UndirectedSubgraph {
 	 * @param   g the graph in which the cycle is contained
 	 * @param   edges the edges of the cycle
 	 */
-	public Cycle (UndirectedGraph g, Set edges) {
+	public SimpleCycle (UndirectedGraph g, Set edges) {
 		super(g, inducedVertices(g, edges), edges);
 	}
 	
@@ -138,7 +138,7 @@ public class Cycle extends UndirectedSubgraph {
 	}
 	
 	public boolean equals(Object obj) {
-		return (obj instanceof Cycle && edgeSet().equals(((Cycle) obj).edgeSet()));
+		return (obj instanceof SimpleCycle && edgeSet().equals(((SimpleCycle) obj).edgeSet()));
 	}
 
 	public String toString() {

@@ -41,6 +41,7 @@ import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
+import org.openscience.cdk.ringsearch.FiguerasSSSRFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
@@ -96,7 +97,6 @@ public class HueckelAromaticityDetectorTest extends TestCase
 	public void testSetRingFlags()
 	{
 		boolean isAromatic = false;
-		boolean testResults[] = {false, true};
 		try
 		{
 			SmilesParser sp = new SmilesParser();
@@ -107,9 +107,13 @@ public class HueckelAromaticityDetectorTest extends TestCase
 			
 			RingSet ringset = (new SSSRFinder()).findSSSR(mol);
 			HueckelAromaticityDetector.setRingFlags(ringset);
+			
+			int numberOfAromaticRings = 0;
 			for (int i = 0; i < ringset.size(); i++) {
-				assertTrue( ( (Ring)ringset.get(i) ).getFlag(CDKConstants.ISAROMATIC) == testResults[i] );
+				if (((Ring)ringset.get(i)).getFlag(CDKConstants.ISAROMATIC))
+					numberOfAromaticRings++;
 			}
+			assertEquals(numberOfAromaticRings, 1);
 		} catch (Exception exc)
 		{
 			if (standAlone)
