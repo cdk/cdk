@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2003  The Chemistry Development Kit (CDK) Project
+ * Copyright (C) 2003-2004  The Chemistry Development Kit (CDK) Project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -52,7 +52,7 @@ public class IDCreator {
      * Labels the Atom's and Bond's in the AtomContainer using the a1, a2, b1, b2
      * scheme often used in CML. It will not set an id for the AtomContainer.
      *
-     * @see createAtomContainerAndAtomAndBondIDs(SetOfAtomContainers)
+     * @see #createAtomContainerAndAtomAndBondIDs(SetOfAtomContainers)
      */
     public static void createAtomAndBondIDs(AtomContainer container) {
         IDCreator.createAtomAndBondIDs(container, 0, 0);
@@ -68,7 +68,7 @@ public class IDCreator {
      * @param atomOffset  Lowest ID number to be used for the Atoms
      * @param bondOffset  Lowest ID number to be used for the Bonds
      *
-     * @see createAtomContainerAndAtomAndBondIDs(SetOfAtomContainers)
+     * @see #createAtomContainerAndAtomAndBondIDs(SetOfAtomContainers)
      */
     public static void createAtomAndBondIDs(AtomContainer container,
                                             int atomOffset, int bondOffset) {
@@ -87,8 +87,6 @@ public class IDCreator {
      * scheme often used in CML. It will also set id's for all AtomContainers, naming
      * them m1, m2, etc.
      * It will not the SetOfAtomContainers itself.
-     *
-     * @see createAtomAndBondIDs(SetOfAtomContainers)
      */
     public static void createAtomContainerAndAtomAndBondIDs(SetOfAtomContainers containerSet) {
         IDCreator.createAtomContainerAndAtomAndBondIDs(containerSet, 0, 0, 0);
@@ -103,8 +101,6 @@ public class IDCreator {
      * @param containerOffset  Lowest ID number to be used for the AtomContainers
      * @param atomOffset  Lowest ID number to be used for the Atoms
      * @param bondOffset  Lowest ID number to be used for the Bonds
-     *
-     * @see createAtomAndBondIDs(SetOfAtomContainers)
      */
     public static void createAtomContainerAndAtomAndBondIDs(SetOfAtomContainers containerSet,
                            int containerOffset, int atomOffset, int bondOffset) {
