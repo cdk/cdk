@@ -20,7 +20,7 @@
     </delete>
   </target>
   
-  <target id="website" name="website" depends="layout, javancss, keyword.index">
+  <target id="website" name="website" depends="layout, javancss, keyword.index, bibliography">
     <!-- note the duplication. If I understand the Ant website correctly, it should
          be possible to use the includes="*.xml" instead with Ant 1.5.2/Xalan and the
          reloadstylesheet attribute. But I only have Ant 1.5.1 at the moment :( -->
@@ -95,7 +95,12 @@
   
   <target id="keyword.index" name="keyword.index">
     <ant dir="../../javadoc/" antfile="build.xml" target="keyword.index"/>
-    <move file="keyword.index.xml" todir="../../javadoc"/>
+    <move file="keyword.index.xml" todir="../../javadoc"
+        failonerror="false"/>
+  </target>
+
+  <target id="bibliography" name="bibliography">
+    <ant dir="../../refs/" antfile="build.xml" target="all"/>
   </target>
 
 </project>
