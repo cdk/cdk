@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  * 
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  * 
@@ -479,7 +479,9 @@ public class Atom extends AtomType implements Cloneable {
                 s.append("2D:[" + getPoint2D() + "], ");
                 s.append("3D:[" + getPoint3D() + "], ");
                 s.append("C:" + getCharge() + ", ");
-                s.append("FC:" + getFormalCharge() + ")");
+                s.append("FC:" + getFormalCharge());
+                s.append(", " + super.toString());
+                s.append(")");
                 return s.toString();
         }
         

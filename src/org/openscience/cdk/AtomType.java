@@ -181,6 +181,7 @@ public class AtomType extends Isotope
         sb.append(getID() + ", ");
         sb.append("MB:" + getMaxBondOrder() + ", ");
         sb.append("TBS:" + getMaxBondOrderSum());
+        sb.append(super.toString());
         sb.append(")");
         return sb.toString(); 
     }

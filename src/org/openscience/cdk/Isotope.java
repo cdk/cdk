@@ -4,7 +4,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  *
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  *
@@ -157,10 +157,11 @@ public class Isotope extends Element implements Cloneable {
 	 */
 	public String toString() {
         StringBuffer sb = new StringBuffer();
-		sb.append("Iso{"); sb.append(atomicMass);
+		sb.append("Isotope("); sb.append(atomicMass);
 		sb.append(", EM:"); sb.append(exactMass);
 		sb.append(", AB:"); sb.append(naturalAbundance);
-        sb.append("}");
+        sb.append(", "); sb.append(super.toString());
+        sb.append(")");
 		return sb.toString();
 	}
 }
