@@ -1,0 +1,51 @@
+--- src/org/openscience/cdk/tools/AtomTypeFactory.java	Sun Mar  2 14:19:23 2003
++++ src/org/openscience/cdk/tools/AtomTypeFactory.java.noFile	Sun Mar  2 14:17:30 2003
+@@ -113,26 +113,28 @@
+ 		InputStream ins = null;
+ 		{
+ 			// try to see if this configFile is an actual file
+-			File f = new File(configFile);
+-            if (f.exists()) {
+-                logger.debug("configFile is a File");
+-                // what's next?
+-                try {
+-                    ins = new FileInputStream(f);
+-                } catch (Exception exc) {
+-                    logger.error(exc.toString());
+-                }
+-			} else {
+-			 
+-                logger.debug("configFile must be a stream");
+-                // assume it is a default config file in distro
+-                /*
+-                *  this has to be this.getClass.getClassLoader.getResource,
+-                *  getClass.getResource fails, elw
+-                */            
+-                ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
+-            }
+-            
++			// FIXME mth -- this call cannot be used on browsers because
++			// checking for the existence of a file is a security violation
++			// we need another mechanism to deal with this.
++			/*
++			 *  File f = new File(configFile);
++			 *  if (f.exists()) {
++			 *  logger.debug("configFile is a File");
++			 *  / what's next?
++			 *  try {
++			 *  ins = new FileInputStream(f);
++			 *  } catch (Exception exc) {
++			 *  logger.error(exc.toString());
++			 *  }
++			 *  } else
++			 */
++			logger.debug("configFile must be a stream");
++			// assume it is a default config file in distro
++			/*
++			 *  this has to be this.getClass.getClassLoader.getResource,
++			 *  getClass.getResource fails, elw
++			 */
++			ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
+ 			if (ins == null)
+ 			{
+ 				logger.error("There was a problem getting a stream for " +

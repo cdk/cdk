@@ -21,16 +21,22 @@
       <include name="jmol.jar" />
     </fileset>
   </path>
-  
-  <target name="compile-applet">
+
+  <target name="init">
     <ant antfile="build.xml" target="clean"/>
     <ant antfile="build.xml" target="init"/>
+  </target>  
+    
+  <target name="compile-applet">
 
     <patch patchfile="${src}/patches/org.openscience.cdk.toold.LoggingTool.java.MakeUsableInJmolApplet"
            originalfile="${build.src}/org/openscience/cdk/tools/LoggingTool.java"
            dir="${build.src}/org/openscience/cdk/tools"/>
+    <patch patchfile="${src}/patches/org.openscience.cdk.tools.AtomTypeFactory-noFileCheck"
+           originalfile="${build.src}/org/openscience/cdk/tools/AtomTypeFactory.java"
+           dir="${build.src}/org/openscience/cdk/tools"/>
 
-    <!-- do them one by one, compile-extra, compile-io requires 1.4 -->
+    <!-- do them one by one, compile-extra, compile-io require 1.4 -->
     <javac srcdir="${build.src}" destdir="${build}" optimize="off" 
            debug="on" deprecation="off" target="1.1"
            includesfile="${src}/jmol.javafiles">
@@ -39,8 +45,6 @@
   </target>
 
   <target name="compile">
-    <ant antfile="build.xml" target="clean"/>
-    <ant antfile="build.xml" target="init"/>
 
     <!-- do them one by one, compile-extra, compile-io requires 1.4 -->
     <javac srcdir="${build.src}" destdir="${build}" optimize="off" 
@@ -92,6 +96,6 @@
     </jar>
   </target>
   
-  <target name="dist-both" depends="dist, dist-applet"/>
+  <target name="dist-both" depends="init, dist, dist-applet"/>
   
 </project>

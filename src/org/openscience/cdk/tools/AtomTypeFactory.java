@@ -113,28 +113,26 @@ public class AtomTypeFactory
 		InputStream ins = null;
 		{
 			// try to see if this configFile is an actual file
-			// FIXME mth -- this call cannot be used on browsers because
-			// checking for the existence of a file is a security violation
-			// we need another mechanism to deal with this.
-			/*
-			 *  File f = new File(configFile);
-			 *  if (f.exists()) {
-			 *  logger.debug("configFile is a File");
-			 *  / what's next?
-			 *  try {
-			 *  ins = new FileInputStream(f);
-			 *  } catch (Exception exc) {
-			 *  logger.error(exc.toString());
-			 *  }
-			 *  } else
-			 */
-			logger.debug("configFile must be a stream");
-			// assume it is a default config file in distro
-			/*
-			 *  this has to be this.getClass.getClassLoader.getResource,
-			 *  getClass.getResource fails, elw
-			 */
-			ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
+			File f = new File(configFile);
+            if (f.exists()) {
+                logger.debug("configFile is a File");
+                // what's next?
+                try {
+                    ins = new FileInputStream(f);
+                } catch (Exception exc) {
+                    logger.error(exc.toString());
+                }
+			} else {
+			 
+                logger.debug("configFile must be a stream");
+                // assume it is a default config file in distro
+                /*
+                *  this has to be this.getClass.getClassLoader.getResource,
+                *  getClass.getResource fails, elw
+                */            
+                ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
+            }
+            
 			if (ins == null)
 			{
 				logger.error("There was a problem getting a stream for " +
