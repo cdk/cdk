@@ -53,19 +53,19 @@ public class CNNRegressionModel extends RModel {
         // lets set the default values of the arguments that are specified
         // to have default values in ?nnet
         this.params.put("subset", new Integer(0));
-        this.params.put("mask", false );
+        this.params.put("mask", new Boolean(false) );
         this.params.put("Wts", new Double(0));
 
-        this.params.put("linout", true); // we want only regression
-        this.params.put("entropy", false);
-        this.params.put("softmax",false);
-        this.params.put("censored", false);
-        this.params.put("skip", false);
+        this.params.put("linout", new Boolean(true)); // we want only regression
+        this.params.put("entropy", new Boolean(false));
+        this.params.put("softmax",new Boolean(false));
+        this.params.put("censored", new Boolean(false));
+        this.params.put("skip", new Boolean(false));
         this.params.put("rang", new Double(0.7));
         this.params.put("decay", new Double(0.0));
         this.params.put("maxit", new Integer(100));
-        this.params.put("Hess", false);
-        this.params.put("trace", false); // no need to see output
+        this.params.put("Hess", new Boolean(false));
+        this.params.put("trace", new Boolean(false)); // no need to see output
         this.params.put("MaxNWts", new Integer(1000));
         this.params.put("abstol", new Double(1.0e-4));
         this.params.put("reltol", new Double(1.0e-8));
