@@ -12,6 +12,8 @@
     <summary>Information about the Java classes of the CDK.</summary>
   </head>
 
-  &core-api;
+  <para>
+    Download the <ulink url="http://sourceforge.net/project/showfiles.php?group_id=20024&amp;release_id=90195">cdk-doc</ulink> package.
+  </para>
 
 </webpage>

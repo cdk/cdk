@@ -3,7 +3,7 @@
   <refentryinfo>
     <revhistory>
       <revision>
-        <revnumer>2</revnumber>
+        <revnumber>2</revnumber>
         <date>30 July 2002</date>
         <authorinitials>elw</authorinitials>
         <revremark>
@@ -13,7 +13,7 @@
         </revremark>
       </revision>
       <revision>
-        <revnumer>1</revnumber>
+        <revnumber>1</revnumber>
         <date>22 May 2002</date>
         <authorinitials>elw</authorinitials>
         <revremark>
@@ -25,7 +25,7 @@
 
 
   <refnamediv>
-    <refname>RFC CDK #2</refname>
+    <refname>List of CDK Core Classes</refname>
   </refnamediv>
 
   <refsect1>

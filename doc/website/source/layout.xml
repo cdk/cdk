@@ -31,7 +31,9 @@
       <tocentry page="whoiswho.xml" filename="whoiswho.html"/>
       <tocentry page="agenda.xml" filename="agenda.html"/>
       <tocentry page="changelog.xml" filename="changelog.html"/>
-      <tocentry page="rfc.xml" filename="rfc.html"/>
+      <tocentry page="rfc.xml" filename="rfc.html">
+        <tocentry page="rfc2.xml" filename="rfc2.html"/>
+      </tocentry>
     </tocentry>
     <tocentry page="documentation.xml" filename="documentation.html">
       <tocentry page="reference.xml" filename="reference.html"/>

@@ -27,11 +27,11 @@ javadoc-stats.html: autolayout.xml javadoc-data.xml javadoc-stats.xml
 javancss-stats.html: autolayout.xml javancss-data.xml javancss-stats.xml
 	$(PROC) ${STYLEOPT} ${STYLESHEET} javancss-stats.xml > javancss-stats.html
 
-%.html: autolayout.xml
-	$(PROC) ${STYLEOPT} ${STYLESHEET} $(filter-out autolayout.xml,$^) > $@
+%.html:
+	$(PROC) ${STYLEOPT} ${STYLESHEET} $^ > $@
 
 depends: autolayout.xml
-	$(PROC) ${STYLEDIR}/makefile-dep.xsl $< > depends.tabular
+	$(PROC) ${STYLEDIR}/makefile-dep.xsl $^ > depends.tabular
 
 javancss-tmp.xml:
 	cd javancss/bin; ./javancss -package -xml -recursive ../../../../../org > ../../javancss-tmp.xml
