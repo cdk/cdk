@@ -82,31 +82,44 @@ public class MMFF94PartialCharges {
 		double formalCharge = 0;
 		double formalChargeNeigh = 0;
 		double theta = 0;
-		double thetaNeigh = 0;
+		double bondIncrement = 0;
 		double sumOfFormalCharges = 0;
-		double sumOfThetaNeigh = 0;
+		double sumOfBondIncrements = 0;
 		Atom thisAtom = null;
 		Atom[] neighboors = null;
 		Vector data = null;
+		Vector bondData = null;
 		Vector dataNeigh = null;
-		for(int i= 0; i < ac.getAtomCount(); i++) {
-			thisAtom = ac.getAtomAt(i);
+		Atom[] atoms = ac.getAtoms();
+		for(int i= 0; i < atoms.length; i++) {
+			//System.out.println("ATOM "+i+ " " +atoms[i].getSymbol());
+			thisAtom = atoms[i];
 			data = (Vector) parameterSet.get("data"+thisAtom.getID());
 			neighboors = ac.getConnectedAtoms(thisAtom);
 			formalCharge = ((Double)data.get(3)).doubleValue();
 			theta = ((Double)data.get(4)).doubleValue();
 			charge = formalCharge * (1 - (neighboors.length * theta));
 			sumOfFormalCharges = 0;
-			sumOfThetaNeigh = 0;
+			sumOfBondIncrements = 0;
 			for(int n = 0; n < neighboors.length; n++) {
+				if (parameterSet.containsKey("bond"+thisAtom.getID()+";"+neighboors[n].getID())) {
+					bondData = (Vector) parameterSet.get("bond"+thisAtom.getID()+";"+neighboors[n].getID());
+					bondIncrement = ((Double) bondData.get(4)).doubleValue();
+				}
+				if (parameterSet.containsKey("bond"+neighboors[n].getID()+";"+thisAtom.getID())) {
+					bondData = (Vector) parameterSet.get("bond"+neighboors[n].getID()+";"+thisAtom.getID());
+					bondIncrement = ((Double) bondData.get(4)).doubleValue();
+					bondIncrement = (-1) * bondIncrement;
+				}
+				//System.out.println( "BOND VALUE "+n+" : " + ((Double) bondData.get(4)).doubleValue() );
+				//bondIncrement = ((Double) bondData.get(4)).doubleValue();
+				sumOfBondIncrements += bondIncrement;
 				dataNeigh = (Vector) parameterSet.get("data"+neighboors[n].getID());
-				formalChargeNeigh = ((Double)dataNeigh.get(3)).doubleValue();
-				thetaNeigh = ((Double)dataNeigh.get(4)).doubleValue();
+				formalChargeNeigh = ((Double) dataNeigh.get(3)).doubleValue();
 				sumOfFormalCharges += formalChargeNeigh;
-				sumOfThetaNeigh += (theta - thetaNeigh);
 			}
 			charge += sumOfFormalCharges * theta;
-			charge += sumOfThetaNeigh;
+			charge += sumOfBondIncrements;
 			thisAtom.setProperty("MMFF94charge", new Double(charge));
 			//System.out.println( "CHARGE :"+thisAtom.getProperty("MMFF94charge") );
 		}
