@@ -27,6 +27,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.test.config.isotopes.*;
+import org.openscience.cdk.test.config.atomtypes.*;
 
 /**
  * TestSuite that runs all the sample tests in the
@@ -41,9 +42,13 @@ public class ConfigTests {
         suite.addTest(AtomTypeFactoryTest.suite());
         suite.addTest(IsotopeFactoryTest.suite());
         suite.addTest(TXTBasedAtomTypeConfiguratorTest.suite());
+        suite.addTest(CDKBasedAtomTypeConfiguratorTest.suite());
         // config.isotopes package
         suite.addTest(IsotopeHandlerTest.suite());
         suite.addTest(IsotopeReaderTest.suite());
+        // config.atomtypes package
+        suite.addTest(AtomTypeHandlerTest.suite());
+        suite.addTest(AtomTypeReaderTest.suite());
         return suite;
     }
 
